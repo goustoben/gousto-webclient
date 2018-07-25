@@ -1,0 +1,21 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.container {
+	composes: paddingXXLTop paddingXXXXLLeftRight from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		padding: 0px;
+		padding-top: 40px;
+		min-height: inherit;
+	}
+}
+
+.flex {
+	composes: container;
+	composes: column flex spaceBetween from 'styles/flex.css';
+}
+
+.block {
+	composes: container;
+	composes: block from 'styles/display.css';
+}

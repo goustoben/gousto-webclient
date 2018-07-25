@@ -1,0 +1,32 @@
+@value sizeXS from 'styles/typography.css';
+@value ScreenMLMax from 'styles/screenSizes.css';
+
+.desktopText {
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+	font-size: 15px;
+
+	@media ScreenMLMax {
+		display: none;
+	}
+}
+
+.mobileText {
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+	color: White;
+}
+
+.descriptiondesktop {
+	composes: desktopText;
+	composes: paragraphXS noTransform from 'styles/typography.css';
+	color: inherit;
+	font-size: sizeXS;
+}
+
+.descriptionmobile {
+	composes: mobileText;
+	composes: paragraphXS from 'styles/typography.css';
+}
+
+.warningIcon {
+	composes: fa-exclamation-triangle fa-fw from 'styles/vendor/font-awesome-module.css';
+}

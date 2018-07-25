@@ -1,0 +1,106 @@
+/* Generates padding and margin classes in the format:
+
+	.[padding|margin] [Size: XS|SM|MD|LG|XL|XXL] [Position: Top|Left|Right|Bottom|TopBottom|LeftRight] {
+		padding-[top|left|bottom|right]: [value];
+	}
+	Example:
+	.paddingXS { padding: 7px; }
+
+	.paddingXSTop { padding-top: 7px; }
+	.paddingMDTop { padding-top: 10px; }
+	...
+	.marginXSTop { padding-top: 7px; }
+	.marginMDTop { padding-top: 10px; }
+
+	Convenience classes: ...TopBottom and ...LeftRight, eg:
+	.paddingXSTopBottom {
+		padding-top: 7px;
+		padding-bottom: 7px;
+  	}
+  	.paddingXSLeftRight {
+		padding-left: 7px;
+		padding-right: 7px;
+	}
+
+	Responsiveness: each class will have a mobile counterpart, eg:
+	.paddingXLTop { padding-top: 25px; }
+
+	@media (max-width: 767px) {
+		.paddingXLTop { padding-top: 15px; }
+	}
+
+ */
+
+$spacingValues: (
+	XXS: (desktop: 5px, mobile: 5px),
+	XS: (desktop: 7px, mobile: 7px),
+	SM: (desktop: 10px, mobile: 10px),
+	MD: (desktop: 15px, mobile: 10px),
+	LG: (desktop: 20px, mobile: 15px),
+	XL: (desktop: 25px, mobile: 15px),
+	XXL: (desktop: 30px, mobile: 15px),
+	XXXL: (desktop: 50px, mobile: 25px),
+	XXXXL: (desktop: 75px, mobile: 45px),
+	XXXXXL: (desktop: 100px, mobile: 50px),
+	Zero: (desktop: 0px, mobile: 0px)
+);
+
+/* Export variables, should not be used too much */
+@value SpacingZero 0px;
+@value SpacingXXS 5px;
+@value SpacingXS 7px;
+@value SpacingSM 10px;
+@value SpacingMD 15px;
+@value SpacingLG 20px;
+@value SpacingXL 25px;
+@value SpacingXXL 30px;
+@value SpacingXXXL 50px;
+@value SpacingXXXXXL 100px;
+
+
+@mixin generateClass($spacingType:'', $sizeName:'', $value:'', $className:'', $propName:'') {
+	.#{$spacingType}#{$sizeName}#{$className} {
+		#{$spacingType}-#{$propName}: $value;
+	}
+}
+
+@mixin classesList($spacingType, $sizeName, $values, $screen) {
+	@include generateClass($spacingType, $sizeName, map-get($values, $screen), 'Top', 'top');
+	@include generateClass($spacingType, $sizeName, map-get($values, $screen), 'Right', 'right');
+	@include generateClass($spacingType, $sizeName, map-get($values, $screen), 'Bottom', 'bottom');
+	@include generateClass($spacingType, $sizeName, map-get($values, $screen), 'Left', 'left');
+
+	.#{$spacingType}#{$sizeName} {
+		#{$spacingType}: map-get($values, $screen);
+	}
+
+	.#{$spacingType}#{$sizeName}TopBottom {
+		#{$spacingType}-top: map-get($values, $screen);
+		#{$spacingType}-bottom: map-get($values, $screen);
+	}
+
+	.#{$spacingType}#{$sizeName}LeftRight {
+		#{$spacingType}-left: map-get($values, $screen);
+		#{$spacingType}-right: map-get($values, $screen);
+	}
+}
+
+@mixin generateSpacing($spacingType, $spacingValues) {
+	@each $sizeName, $values in $spacingValues {
+		@include classesList($spacingType, $sizeName, $values, 'desktop');
+
+		@media (max-width: 767px) {
+			@include classesList($spacingType, $sizeName, $values, 'mobile');
+		}
+	}
+}
+
+.noMargin {
+	margin: 0;
+}
+.noPadding {
+	padding: 0;
+}
+
+@include generateSpacing('padding', $spacingValues);
+@include generateSpacing('margin', $spacingValues);

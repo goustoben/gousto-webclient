@@ -1,0 +1,30 @@
+@value Bronze from 'styles/colors.css';
+@value ScreenXXSMin, ScreenMDMin, ScreenLGMin from 'styles/screenSizes.css';
+
+.container {
+	position: relative;
+}
+
+.content {
+	width: 100%;
+	position: absolute;
+	bottom: 40px;
+}
+
+.mask {
+	margin-top: -7px;
+	padding-bottom: 100px;
+	background-color: Bronze;
+
+	@media ScreenXXSMin {
+		padding-bottom: 60px;
+	}
+
+	@media ScreenMDMin {
+		padding-bottom: 30px;
+	}
+
+	@media ScreenLGMin {
+		padding-bottom: 0px;
+	}
+}

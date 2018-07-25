@@ -1,0 +1,34 @@
+@import '../config/main';
+
+%galert{
+	@include font-text-bold;
+	text-align: center;
+	font-size: 14px;
+	padding: 15px;
+	color: $color_gradient_1;
+	margin-bottom: 15px;
+}
+
+.galert-error {
+	@extend %galert;
+	background-color: $color_primary;
+
+	a {
+		color: $color_gradient_9;
+	}
+	a:hover {
+		color: $color_gradient_9;
+	}
+}
+
+.galert-info {
+	@extend %galert;
+	background-color: $color_gradient_9;
+
+	a {
+		color: $color_primary;
+	}
+	a:hover {
+		color: $color_primary_hover;
+	}
+}

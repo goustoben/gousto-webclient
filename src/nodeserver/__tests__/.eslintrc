@@ -1,0 +1,13 @@
+{
+	"env": {
+		"jest": true
+	},
+	"rules": {
+		"prefer-arrow-callback": "off",
+		"global-require": "off",
+		"space-before-function-paren": "off",
+		"func-names": "off",
+		"padded-blocks": "off",
+		"no-unused-expressions": "off"
+	}
+}

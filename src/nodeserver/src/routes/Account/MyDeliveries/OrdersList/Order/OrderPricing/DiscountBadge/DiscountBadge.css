@@ -1,0 +1,25 @@
+@value Haricot, White from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.discountBadge {
+	composes: centerCenter from 'styles/position.css';
+	height: 70px;
+	width: 70px;
+	border-radius: 50%;
+	background-color: Haricot;
+	@media ScreenXSMax {
+		height: 53px;
+		width: 53px;
+	}
+}
+
+.discountCopy {
+	composes: avenirHeavy from 'styles/typography.css';
+	font-size: 18px;
+	line-height: 16px;
+	color: White;
+	@media ScreenXSMax {
+		font-size: 16px;
+		line-height: 14px;
+	}
+}

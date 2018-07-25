@@ -1,0 +1,3 @@
+.bold {
+	composes: textBold from 'styles/typography.css';
+}

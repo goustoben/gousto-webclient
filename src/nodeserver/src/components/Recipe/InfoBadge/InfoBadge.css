@@ -1,0 +1,31 @@
+@value Haricot, Radish, Carrot, White, DarkChilli, White from 'styles/colors.css';
+
+.badge {
+	composes: paddingSMLeftRight marginXSRight marginXSBottom from 'sass-loader!styles/spacing.scss';
+	composes: inlineBlock from 'styles/display.css';
+	composes: textXS from 'styles/typography.css';
+	font-weight: bold;
+	border-radius: 1.4em;
+	border: 1px solid
+}
+
+.newRecipe {
+	color: Haricot;
+	border-color: Haricot;
+}
+
+.stockInfo {
+	color: Radish;
+	border-color: Radish;
+}
+
+.recommended {
+	color: Carrot;
+	border-color: Carrot;
+}
+
+.inverse {
+	color: White;
+	border: none;
+	background-color: DarkChilli;
+}

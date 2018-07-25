@@ -1,0 +1,13 @@
+@value bodyFontStackNormal, sizeSM from 'styles/typography.css';
+
+.count {
+	margin-left: 10px;
+	vertical-align: text-bottom;
+	padding: 3px 6px;
+	border-radius: 10px;
+	background-color: #EAEBEC;
+	text-align: center;
+	font-weight: 900;
+	font-size: sizeSM;
+	font-family: bodyFontStackNormal;
+}

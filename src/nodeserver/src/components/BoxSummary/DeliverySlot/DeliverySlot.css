@@ -1,0 +1,116 @@
+@value Blackberry, Radish from 'styles/colors.css';
+@value SpacingSM, SpacingXS, SpacingXXS from 'sass-loader!styles/spacing.scss';
+@value sizeXS, sizeMD from 'styles/typography.css';
+
+.title {
+	composes: headerMD headlineFont textCenter from 'styles/typography.css';
+}
+.row {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	composes: textCenter from 'styles/typography.css';
+}
+.supportingText {
+	composes: paragraphXS textLeft from 'styles/typography.css';
+}
+.leadingText {
+	composes: textBold from 'styles/typography.css';
+}
+.bsRow {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+	margin-bottom: SpacingSM;
+}
+.half {
+	composes: col-xs-12 col-sm-6 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.halfLeft {
+	composes: half;
+
+	@media (min-width: 544px) {
+		padding-right: SpacingXXS;
+	}
+}
+
+.halfRight {
+	composes: half;
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+
+	@media (min-width: 544px) {
+		padding-left: SpacingXXS;
+		margin-top: 0;
+	}
+}
+
+.clear {
+	font-size: sizeXS;
+	font-weight: bold;
+	margin-right: SpacingSM;
+	position: absolute;
+	right: 0;
+	text-transform: none;
+}
+
+.clearIcon {
+	composes: fa-pencil from 'styles/vendor/font-awesome-module.css';
+	margin-right: 2px;
+}
+.truckIcon {
+	composes: fa-truck from 'styles/vendor/font-awesome-module.css';
+	font-size: sizeMD;
+}
+.upcomingOrder {
+	composes: fa-truck fa-fw from 'styles/vendor/font-awesome-module.css';
+	color: Blackberry;
+}
+
+.textInput {
+	composes: textBold from 'styles/typography.css';
+}
+
+.cancelRow {
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+	composes: textCenter from 'styles/typography.css';
+}
+.cancelLink {
+	composes: textSM textCenter from 'styles/typography.css';
+	cursor: pointer;
+}
+
+.dropdown :global .Select-menu {
+	max-height: 100px;
+}
+
+.hide {
+	composes: none from 'styles/display.css';
+}
+
+.limitedLength {
+	composes: inlineBlock from 'styles/display.css';
+	composes: textCenter from 'styles/typography.css';
+	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	width: 100%;
+	height: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.limitedLengthPadding {
+	composes: limitedLength;
+	padding-right: 52px;
+}
+
+.disabledRow {
+	composes: row;
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.errorText {
+	composes: textBold from 'styles/typography.css';
+	color: Radish;
+}
+
+.warningTriangle {
+	composes: fa-fw fa-exclamation-triangle from 'styles/vendor/font-awesome-module.css';
+}

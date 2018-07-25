@@ -1,0 +1,16 @@
+---
+
+- name: Create dir for logs
+  file: path=/var/log/pm2 state=directory
+
+- name: Install pm2
+  npm:
+    name: pm2
+    global: yes
+    version: "{{ pm2_version | default(omit) }}"
+
+- name: installing startup script
+  command: >
+    pm2 startup {{ pm2_startup }}
+  environment:
+    HOME: /root

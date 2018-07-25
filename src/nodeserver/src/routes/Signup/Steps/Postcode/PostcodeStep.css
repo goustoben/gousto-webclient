@@ -1,0 +1,53 @@
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value Radish from 'styles/colors.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+
+.xsMaxHidden {
+	display: inherit;
+	@media ScreenXSMax {
+		display: none;
+	}
+}
+.smMinHidden {
+	display: inherit;
+	@media ScreenSMMin {
+		display: none;
+	}
+}
+
+.inputContainer {
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+	composes: basicInputContainer from 'routes/Signup/Signup.css';
+	margin-left: auto;
+	margin-right: auto;
+	@media ScreenXSMax {
+		min-width: 291px;
+	}
+}
+
+.row {
+	white-space: nowrap;
+	&:after {
+		clear: both;
+		content: '';
+		display: table;
+	}
+}
+
+.left, .right {
+	@media ScreenXSMax {
+		display: inline-block;
+	}
+}
+.right {
+	composes: smMinHidden;
+	@media ScreenXSMax {
+		width: 60px;
+		margin-left: 10px;
+	}
+}
+
+.errorText {
+	composes: bodyText from 'routes/Signup/Signup.css';
+	color: Radish;
+}

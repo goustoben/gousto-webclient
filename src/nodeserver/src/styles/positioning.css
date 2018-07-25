@@ -1,0 +1,51 @@
+.fullWidth {
+	width: 100%;
+}
+
+.halfWidth {
+	width: 50%;
+}
+
+.fullHeight {
+	min-height: 100%;
+}
+
+.halfHeight {
+	height: 50%;
+}
+
+.topLeft {
+	top: 0;
+	left: 0;
+}
+
+.bottomLeft {
+	left: 0;
+	bottom: 0;
+}
+
+.centerBase {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.centerHorizontal {
+	composes: centerBase;
+	height: auto;
+	width: 102%;
+}
+
+.centerVertical {
+	composes: centerBase;
+	height: 102%;
+	width: auto;
+}
+
+.fullScreen {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}

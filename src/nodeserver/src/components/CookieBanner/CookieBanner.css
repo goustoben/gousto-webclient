@@ -1,0 +1,67 @@
+@value Blackberry, White from 'styles/colors.css';
+@value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
+
+.container {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	background-color: Blackberry;
+	width: 100%;
+	padding: 5px 10px;
+}
+
+.description {
+	color: White;
+	font-size: 12px;
+	align-self: center;
+	padding-right: 5px;
+	margin: 0;
+}
+
+.container > div {
+	display: inline-flex;
+}
+
+.linkMessage {
+	color: White;
+	text-decoration: underline;
+}
+
+.button {
+	color: White;
+	border: 1px solid White;
+	border-radius: 3px;
+	border-color: White;
+	cursor: pointer;
+	min-width: 110px;
+	align-self: center;
+	text-align: center;
+	padding: 5px 0;
+	font-size: 14px;
+}
+
+.button:hover {
+	color: White;
+	text-decoration: none;
+}
+
+@media ScreenXXSMin {
+	.container {
+		flex-direction: row;
+		text-align: center;
+	}
+
+	.button {
+		margin-left: 15px;
+	}
+}
+
+@media ScreenMDMin {
+	.container {
+		padding: 10px 30px;
+	}
+	
+	.description {
+		font-size: 14px;
+	}
+}

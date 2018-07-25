@@ -1,0 +1,57 @@
+@value Bluecheese, Blueberry from 'styles/colors.css';
+@value sizeMD from 'styles/typography.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.heading {
+	composes: textCenter textBold from 'styles/typography.css';
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	font-size: 24px;
+}
+
+.modalContent {
+	composes: marginXLTopBottom marginXXLLeftRight paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.flex {
+	composes: flex row spaceBetween verticalCenter from 'styles/flex.css';
+}
+
+.hide {
+	composes: none from 'styles/display.css';
+}
+
+.error {
+	composes: error from 'styles/layout.css';
+}
+
+.link {
+	composes: paragraphMD from 'styles/typography.css';
+	color: Bluecheese;
+
+	&:hover, &:focus {
+		color: Blueberry;
+	}
+}
+
+.confirmMsg {
+	composes: textCenter from 'styles/typography.css';
+	padding: 80px 140px;
+	@media ScreenXSMax {
+		padding-left: 40px;
+		padding-right: 40px;
+	}
+}
+
+.confirm {
+	composes: fa-check from 'styles/vendor/font-awesome-module.css';
+	composes: marginXSLeft from 'sass-loader!styles/spacing.scss';
+}
+
+.input {
+	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+	font-size: sizeMD;
+}
+
+.row {
+	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
+}

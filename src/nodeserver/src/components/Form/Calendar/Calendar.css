@@ -1,0 +1,75 @@
+@value Bluecheese, Bluecheese50, White from 'styles/colors.css';
+@value sizeXS from 'styles/typography.css';
+
+@value borderRadius: 5px;
+
+.calendar {
+	width: 100%;
+	position: relative;
+}
+
+.borderBase {
+	composes: borderBase from 'styles/borders.css';
+	border-color: Bluecheese;
+}
+
+.grid {
+	composes: flex row flexStart from 'styles/flex.css';
+	composes: borderBase;
+	border-radius: borderRadius;
+}
+
+.column {
+	flex: 1 0 0;
+
+	&:first-child {
+		border-top-left-radius: borderRadius;
+		border-bottom-left-radius: borderRadius;
+
+		& .dayName {
+			border-top-left-radius: calc(borderRadius - 1px);
+		}
+
+		& .day:last-child {
+			border-bottom-left-radius: calc(borderRadius - 1px);
+		}
+	}
+
+	&:last-child {
+		border-top-left-radius: borderRadius;
+		border-bottom-left-radius: borderRadius;
+
+		& .day, & .dayName {
+			border-right-width: 0;
+		}
+
+		& .dayName {
+			border-top-right-radius: calc(borderRadius - 1px);
+		}
+
+		& .day:last-child {
+			border-bottom-right-radius: calc(borderRadius - 1px);
+		}
+	}
+}
+
+.bottomRightBorder {
+	composes: borderBase;
+	border-top-width: 0;
+	border-left-width: 0;
+}
+
+.day {
+
+}
+
+.dayName {
+	composes: textCenter textBold textUpper from 'styles/typography.css';
+	composes: bottomRightBorder;
+	padding-top: 2px;
+	padding-bottom: 2px;
+
+	background: Bluecheese50;
+	color: White;
+	font-size: sizeXS;
+}

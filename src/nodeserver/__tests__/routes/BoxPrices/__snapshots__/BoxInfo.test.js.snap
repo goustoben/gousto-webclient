@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BoxInfo Will snap BoxInfo 1`] = `
+<div
+  className="container"
+>
+  <p
+    className="recipes"
+  >
+    2
+     Recipes
+  </p>
+  <p>
+    <span
+      className="portionPrice"
+    >
+      £
+      2.25
+    </span>
+    <small>
+      per serving
+    </small>
+  </p>
+  <p>
+    <small>
+      Box price
+    </small>
+    <span
+      className="boxPrice"
+    >
+      £
+      10.10
+    </span>
+  </p>
+</div>
+`;

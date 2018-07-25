@@ -1,0 +1,21 @@
+.preventScroll {
+	-webkit-overflow-scrolling: touch !important;
+	overflow: auto !important;
+	height: 100% !important;
+}
+
+.left {
+	composes: textLeft from 'styles/typography.css';
+}
+.center {
+	composes: textCenter from 'styles/typography.css';
+}
+.right {
+	composes: textRight from 'styles/typography.css';
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

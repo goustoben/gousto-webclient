@@ -1,0 +1,28 @@
+@value Blueberry, Bluecheese from 'styles/colors.css';
+
+.body {
+	composes: marginXLTopBottom marginXXLLeftRight paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	max-width: 490px;
+}
+
+.bottom {
+	margin-top: 15px;
+}
+
+.link {
+	display: inline-block;
+	color: Bluecheese;
+	border-bottom: 1px solid Bluecheese;
+	padding-bottom: 2px;
+	margin-right: 25px;
+	margin-bottom: 20px;
+
+	&, &:hover, &:focus {
+		text-decoration: none;
+	}
+
+	&:hover, &:focus {
+		color: Blueberry !important;
+		border-bottom-color: Blueberry !important;
+	}
+}

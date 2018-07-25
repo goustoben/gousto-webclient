@@ -1,0 +1,5 @@
+Components that dictate major page structure
+ie.
+[Header]
+<dynamic content>
+[Footer]

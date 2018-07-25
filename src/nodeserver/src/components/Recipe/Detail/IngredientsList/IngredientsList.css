@@ -1,0 +1,16 @@
+.insetSection {
+	composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.section {
+	composes: paddingMDBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.heading {
+	composes: headerXL from 'styles/typography.css';
+	composes: paddingMDBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.bold {
+	composes: textBold from 'styles/typography.css';
+}

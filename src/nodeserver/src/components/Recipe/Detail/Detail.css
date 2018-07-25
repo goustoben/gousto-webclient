@@ -1,0 +1,18 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value Coconut from 'styles/colors.css';
+
+.container {
+	composes: relative from 'styles/position.css';
+	composes: container from 'sass-loader!styles/bootstrap.scss';
+
+	padding: 0;
+	top: 0;
+	z-index: 1000;
+	background-color: Coconut;
+	width: 72%;
+	height: 100%;
+
+	@media ScreenXSMax {
+		width: 100%;
+	}
+}

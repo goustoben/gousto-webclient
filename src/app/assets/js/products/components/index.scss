@@ -1,0 +1,41 @@
+/*TEMPORARILY COPIED IT FROM BUTTONS.SCSS*/
+%gbtn-default-temp {
+	@include font-text-bold;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 14px;
+	border-radius: 5px;
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	&:hover, &:active, &:link, &:visited {
+		text-decoration: none;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+
+@mixin gbtn-default-temp($btn-color) {
+	@extend %gbtn-default-temp;
+	padding: 8px 15px;
+	border: $btn-color;
+	color: $btn-color;
+	background: $color_gradient_1;
+}
+
+.gousto-market {
+	$image-height: 274px;
+	$details-height: 82px;
+
+	$mobile_breakpoint: 767px;
+
+	$qty-grid-width: 77px;
+	$qty-details-width: 147px;
+
+	@import "header/header";
+	@import "category/category";
+	@import "product/product";
+	@import "product/details";
+
+}

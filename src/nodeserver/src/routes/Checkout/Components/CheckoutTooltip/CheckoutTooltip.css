@@ -1,0 +1,86 @@
+@value Blackberry, White from 'styles/colors.css';
+@value ScreenXXSMax from 'styles/screenSizes.css';
+@value arrowSize: 9px;
+@value boxShadowColor: rgba(0, 0, 0, 0.15);
+
+:global [class*=checkoutTooltip-] {
+    box-shadow: 0 0 3px 1px boxShadowColor;
+
+    @media ScreenXXSMax {
+        max-width: 220px;
+    }
+}
+
+:global [class*=checkoutTooltip-] .rc-tooltip-arrow:after {
+    content: "";
+    position: absolute;
+    width: arrowSize;
+    height: arrowSize;
+    background: White;
+    transform: rotate(45deg);
+}
+:global [class*=checkoutTooltip-].rc-tooltip-placement-topRight .rc-tooltip-arrow,
+:global [class*=checkoutTooltip-].rc-tooltip-placement-bottomRight .rc-tooltip-arrow {
+    right: 16px;
+}
+:global [class*=checkoutTooltip-].rc-tooltip-placement-topLeft .rc-tooltip-arrow,
+:global [class*=checkoutTooltip-].rc-tooltip-placement-bottomLeft .rc-tooltip-arrow {
+    left: 7px;
+}
+:global [class*=checkoutTooltip-].rc-tooltip-placement-top .rc-tooltip-arrow,
+:global [class*=checkoutTooltip-].rc-tooltip-placement-bottom .rc-tooltip-arrow {
+    left: calc(50% - 12px);
+}
+:global [class*=checkoutTooltip-].rc-tooltip-placement-bottomRight .rc-tooltip-arrow {
+    top: -6px;
+}
+:global [class*=checkoutTooltip-].rc-tooltip-placement-bottomLeft .rc-tooltip-arrow {
+    bottom: 10px;
+}
+:global [class*=checkoutTooltip-].rc-tooltip-placement-left .rc-tooltip-arrow {
+    top: calc(50% - 8px);
+}
+:global [class*=checkoutTooltip-].rc-tooltip-placement-right .rc-tooltip-arrow{
+    top: calc(50% - 5px);
+}
+:global [class*=checkoutTooltip-].rc-tooltip-placement-left .rc-tooltip-arrow:after {
+    top: -2px;
+    left: -10px;
+    box-shadow: 1px -1px 1px boxShadowColor;
+}
+:global [class*=checkoutTooltip-].rc-tooltip-placement-right .rc-tooltip-arrow:after {
+    top: -6px;
+    left: 0;
+    box-shadow: -1px 1px 1px boxShadowColor;
+}
+:global [class*=checkoutTooltip-][class*=rc-tooltip-placement-bottom] .rc-tooltip-arrow:after {
+    top: 1px;
+    left: -3px;
+    box-shadow: -1px -1px 1px boxShadowColor;
+}
+:global [class*=checkoutTooltip-][class*=rc-tooltip-placement-top] .rc-tooltip-arrow:after {
+    top: -10px;
+    left: -3px;
+    box-shadow: 1px 1px 1px boxShadowColor;
+}
+
+.tooltipTrigger {
+    composes: fa-question-circle from 'styles/vendor/font-awesome-module.css';
+    composes: marginXXSTop from 'sass-loader!styles/spacing.scss';
+    padding: 2px 10px 2px 2px;
+    color: Blackberry;
+    font-size: 1.6em;
+    min-width: 28px;
+}
+
+.tooltipContent {
+    composes: paddingSM from 'sass-loader!styles/spacing.scss';
+}
+
+.onDesktop {
+    composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.onMobile {
+    composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}

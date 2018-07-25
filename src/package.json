@@ -1,0 +1,157 @@
+{
+  "name": "gousto2frontend",
+  "version": "0.0.0",
+  "description": "The frontend of the Gousto website",
+  "main": "index.php",
+  "keywords": "Gousto",
+  "contributors": "https://github.com/Gousto",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Gousto/Gousto2-FrontEnd.git"
+  },
+  "author": "Gousto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gousto/Gousto2-FrontEnd/issues"
+  },
+  "private": true,
+  "homepage": "https://github.com/Gousto/Gousto2-FrontEnd",
+  "scripts": {
+    "test": "yarn run test:jest:ci",
+    "test:jest": "jest app/assets/__tests__",
+    "test:jest:ci": "jest app/assets/__tests__ --ci -w=4",
+    "test:jest:one": "jest",
+    "test:jest:one:watch": "jest --watch",
+    "test:jest:watch": "jest --watchAll",
+    "test:jest:coverage": "jest app/assets/__tests__ --coverage",
+    "test:jest:ci:coverage": "jest app/assets/__tests__  --ci -w=4 --coverage",
+    "legacy": "gulp --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js legacy",
+    "watch": "gulp --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js css --watch",
+    "build": "gulp --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js production",
+    "build-dev": "gulp --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js",
+    "deploy": "cd nodeserver && yarn run deploy:sentry-upload && cd .. && yarn run deploy:cleanup-assets",
+    "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js",
+    "deploy:cleanup-assets": "cd public && rm -f *.js.map && cd ..",
+    "start": "yarn config set userconfig .yarnrc && gulp --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js",
+    "once": "yarn config set userconfig .yarnrc && gulp once --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js"
+  },
+  "dependencies": {
+    "@fe/gousto-config": "file:app/assets/js/config",
+    "@fe/gousto-generic": "file:app/assets/js/generic",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "clipboard": "1.5.12",
+    "cookie": "0.3.1",
+    "cookies-js": "1.2.3",
+    "gousto-gulp": "git+ssh://git@github.com/Gousto/gousto-gulp.git#v3.0.2",
+    "notify-send": "^0.1.2",
+    "raven-js": "3.7.0",
+    "rc-tooltip": "3.3.2",
+    "react": "15.0.1",
+    "react-dom": "15.0.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "6.0.4",
+    "babel-jest": "23.0.0-alpha.0",
+    "babel-loader": "6.2.3",
+    "babel-plugin-transform-async-to-generator": "6.8.0",
+    "babel-plugin-transform-class-properties": "6.11.5",
+    "babel-plugin-transform-object-rest-spread": "6.8.0",
+    "babel-plugin-transform-strict-mode": "6.11.3",
+    "babel-preset-es2015": "6.3.13",
+    "babel-preset-react": "6.3.13",
+    "babel-preset-stage-0": "6.5.0",
+    "babelify": "7.2.0",
+    "browser-sync": "*",
+    "browserify": "13.0.0",
+    "chai": "3.5.0",
+    "classnames": "2.2.3",
+    "enzyme": "2.4.1",
+    "eslint": "3.2.2",
+    "eslint-config-airbnb": "9.0.1",
+    "eslint-loader": "1.3.0",
+    "eslint-plugin-import": "1.8.0",
+    "eslint-plugin-jest": "21.15.0",
+    "eslint-plugin-jsx-a11y": "1.2.0",
+    "eslint-plugin-react": "5.1.1",
+    "event-stream": "3.3.2",
+    "fastclick": "1.0.6",
+    "gulp": "3.9.0",
+    "gulp-livereload": "*",
+    "gulp-sass": "2.3.1",
+    "gulp.spritesmith": "6.0.0",
+    "immutable": "3.7.6",
+    "istanbul-instrumenter-loader": "0.2.0",
+    "jest": "22.4.2",
+    "jquery": "2.2.2",
+    "jsdom": "11.2.0",
+    "lodash": "4.5.1",
+    "merge-stream": "1.0.0",
+    "moment": "2.11.2",
+    "path": "0.12.7",
+    "psi": "*",
+    "react-addons-pure-render-mixin": "15.0.1",
+    "react-addons-test-utils": "15.0.1",
+    "react-redux": "4.0.0",
+    "react-router": "2.0.1",
+    "react-router-redux": "4.0.2",
+    "react-select": "1.0.0-beta13",
+    "react-test-renderer": "15.5.4",
+    "redux": "3.3.1",
+    "redux-logger": "2.6.1",
+    "redux-mock-store": "1.2.2",
+    "redux-thunk": "2.0.1",
+    "rimraf": "2.5.0",
+    "run-sequence": "1.1.5",
+    "sinon": "1.17.7",
+    "sinon-chai": "2.8.0",
+    "vinyl-source-stream": "1.1.0",
+    "watchify": "3.6.0",
+    "webpack": "^3.6.0",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/__tests__/**/[^.]*.js?(x)",
+      "**/?(*.)(spec|test).js?(x)"
+    ],
+    "moduleNameMapper": {
+      "@fe/gousto-generic": "<rootDir>/node_modules/@fe/gousto-generic",
+      "..config": "<rootDir>/node_modules/@fe/gousto-config/index.js",
+      "@fe/gousto-config": "<rootDir>/node_modules/@fe/gousto-config"
+    },
+    "transform": {
+      "^/node_modules/@fe/.+js?$": "babel-jest",
+      "^.+\\.js?$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@fe)"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/app/assets/__tests__/.setup.js",
+    "collectCoverageFrom": [
+      "<rootDir>/app/assets/js/**/*.{js}"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "<rootDir>/app/assets/js"
+    ],
+    "globals": {
+      "__DEV__": false,
+      "__PROD__": true,
+      "__HMR__": false,
+      "__SERVER__": false,
+      "__CLIENT__": true,
+      "__CLOUDFRONT_URL__": "test.com",
+      "__CLIENT_PROTOCOL__": "https",
+      "__ENV__": "production",
+      "__DOMAIN__": "gousto.local",
+      "__TEST__": true,
+      "process.env.NODE_ENV": "production",
+      "__GIT_HASH__": "production"
+    },
+    "coverageReporters": [
+      "lcov"
+    ]
+  }
+}

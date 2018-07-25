@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="142px" height="26px" viewBox="0 0 142 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>5-stars-trustpilot</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="5-stars-trustpilot">
+            <g id="star">
+                <rect id="Rectangle" fill="#007F4E" x="0" y="0" width="26" height="26" rx="4"></rect>
+                <polygon id="Star" fill="#FFFFFF" points="13.0100002 18.999109 7.13249685 22.0890954 8.25500011 15.5443992 3.5 10.9094196 10.0712485 9.9545613 13.0100002 4 15.9487519 9.9545613 22.5200005 10.9094196 17.7650003 15.5443992 18.8875036 22.0890954"></polygon>
+            </g>
+            <g id="star" transform="translate(29.000000, 0.000000)">
+                <rect id="Rectangle" fill="#007F4E" x="0" y="0" width="26" height="26" rx="4"></rect>
+                <polygon id="Star" fill="#FFFFFF" points="13.0100002 18.999109 7.13249685 22.0890954 8.25500011 15.5443992 3.5 10.9094196 10.0712485 9.9545613 13.0100002 4 15.9487519 9.9545613 22.5200005 10.9094196 17.7650003 15.5443992 18.8875036 22.0890954"></polygon>
+            </g>
+            <g id="star" transform="translate(58.000000, 0.000000)">
+                <rect id="Rectangle" fill="#007F4E" x="0" y="0" width="26" height="26" rx="4"></rect>
+                <polygon id="Star" fill="#FFFFFF" points="13.0100002 18.999109 7.13249685 22.0890954 8.25500011 15.5443992 3.5 10.9094196 10.0712485 9.9545613 13.0100002 4 15.9487519 9.9545613 22.5200005 10.9094196 17.7650003 15.5443992 18.8875036 22.0890954"></polygon>
+            </g>
+            <g id="star" transform="translate(87.000000, 0.000000)">
+                <rect id="Rectangle" fill="#007F4E" x="0" y="0" width="26" height="26" rx="4"></rect>
+                <polygon id="Star" fill="#FFFFFF" points="13.0100002 18.999109 7.13249685 22.0890954 8.25500011 15.5443992 3.5 10.9094196 10.0712485 9.9545613 13.0100002 4 15.9487519 9.9545613 22.5200005 10.9094196 17.7650003 15.5443992 18.8875036 22.0890954"></polygon>
+            </g>
+            <g id="star" transform="translate(116.000000, 0.000000)">
+                <rect id="Rectangle" fill="#007F4E" x="0" y="0" width="26" height="26" rx="4"></rect>
+                <polygon id="Star" fill="#FFFFFF" points="13.0100002 18.999109 7.13249685 22.0890954 8.25500011 15.5443992 3.5 10.9094196 10.0712485 9.9545613 13.0100002 4 15.9487519 9.9545613 22.5200005 10.9094196 17.7650003 15.5443992 18.8875036 22.0890954"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,27 @@
+@value White, Blackberry from 'styles/colors.css';
+
+.arrowRight {
+	composes: absolute from 'styles/position.css';
+	left: 50%;
+	border-top: 40px solid transparent;
+	border-bottom: 40px solid transparent;
+	border-left: 30px solid White;
+	margin-top: -10px;
+}
+
+.recipeSection {
+	composes: paddingSMTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: row flex flexStart from 'styles/flex.css';
+	width: 50%;
+	background-color: White;
+	border-top: 1px solid Blackberry;
+}
+
+.recipeSectionMobile {
+	width: 70%;
+	composes: row flex spaceAround from 'styles/flex.css';
+}
+
+.invisible {
+	visibility: hidden;
+}

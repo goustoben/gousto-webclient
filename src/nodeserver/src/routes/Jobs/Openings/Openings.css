@@ -1,0 +1,89 @@
+@value White, Blueberry, Bluecheese, Chia, White from 'styles/colors.css';
+@value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
+@value sizeMD, sizeLG from 'styles/typography.css';
+
+.headerBase {
+	composes: headerBase from '../Jobs.css';
+}
+
+.header {
+	composes: header from '../Jobs.css';
+}
+
+.preHeader {
+	composes: preHeader from '../Jobs.css';
+}
+
+.container {
+	composes: container from 'sass-loader!styles/bootstrap.scss';
+	top: 0;
+	z-index: 1000;
+	composes: paddingXXXXXLTopBottom paddingZeroLeftRight from 'sass-loader!styles/spacing.scss';
+	@media ScreenSMMax {
+		width: 100%;
+		padding: 20px 0 20px 0;
+	}
+}
+
+.background {
+	background-color: White;
+}
+
+.openingRow {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+.noJobsText {
+	composes: fontBase textCenter from 'styles/typography.css';
+	color: Blackberry;
+	font-size: sizeMD;
+	padding: 0 200px 0 200px;
+	@media ScreenXSMax {
+		padding: 50px 20px;
+	}
+}
+
+.jobSelector {
+	composes: inline from 'styles/display.css';
+	composes: borderSM from 'styles/borders.css';
+	border-color: Bluecheese;
+	color: Bluecheese;
+	composes: paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: paddingXXSTopBottom from 'sass-loader!styles/spacing.scss';
+	margin: 5px 6.5px 5px 6.5px;
+	cursor: pointer;
+	&:hover {
+		background-color: Blueberry;
+		color: White;
+	}
+}
+
+.activeJobSelector {
+	composes: inline from 'styles/display.css';
+	composes: borderSM from 'styles/borders.css';
+	border-color: Bluecheese;
+	background-color: Blueberry;
+	color: White;
+	composes: paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: paddingXXSTopBottom from 'sass-loader!styles/spacing.scss';
+	margin: 5px 6.5px 5px 6.5px;
+}
+
+.jobSelectorText {
+	font-size: 20px;
+	margin: 0px;
+	@media ScreenXSMax {
+		font-size: sizeLG;
+	}
+}
+
+.deptContainer {
+	composes: flex from 'styles/display.css';
+	composes: row wrap center from 'styles/flex.css';
+	max-width: 1400px;
+	margin: 50px auto;
+	@media ScreenXSMax {
+		margin: 20px auto;
+	}
+}

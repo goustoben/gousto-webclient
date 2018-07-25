@@ -1,0 +1,36 @@
+@import '../config/main';
+
+@value White from 'styles/colors.css';
+
+.banner {
+	background: #FD836E;
+	composes: paddingXXXLTopBottom paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
+	h1 {
+		@include font-text-regular;
+		color: White;
+	}
+}
+.bannerInner {
+	max-width: 1170px;
+	margin: auto;
+}
+
+.nav {
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.navContainer {
+	margin: auto;
+	box-shadow: inset 0px -2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+.navInner {
+	max-width: 1170px;
+	margin: auto;
+}
+
+.link {
+	text-transform: uppercase;
+}

@@ -1,0 +1,42 @@
+@value Radish, Pepper from 'styles/colors.css';
+
+.row {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	composes: textCenter from 'styles/typography.css';
+}
+
+.supportingText {
+	composes: paragraphXS from 'styles/typography.css';
+}
+
+.leadingText {
+	composes: textBold from 'styles/typography.css';
+}
+
+.textInput {
+	composes: textLG textCenter textUpper textBold from 'styles/typography.css';
+	width: 100%;
+}
+
+.errorText {
+	composes: supportingText;
+	color: Radish;
+}
+
+.title {
+	composes: headerMD headlineFont textCenter from 'styles/typography.css';
+	color: Pepper;
+}
+
+.cancelRow {
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+	composes: textCenter from 'styles/typography.css';
+}
+.cancelLink {
+	composes: textSM textCenter from 'styles/typography.css';
+	cursor: pointer;
+}
+
+.hide {
+	composes: none from 'styles/display.css';
+}

@@ -1,0 +1,114 @@
+@value Bluecheese, Chia, Radish, White from 'styles/colors.css';
+@value avenirBookFontStack from 'styles/typography.css';
+
+.aboutYouContainer {
+	background-color: White;
+	composes: textBold from 'styles/typography.css';
+	composes: paddingLG from 'sass-loader!styles/spacing.scss';
+}
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.col {
+	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.colMD {
+	composes: col;
+	composes: col-md-8 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colSM {
+	composes: col;
+	composes: col-md-4 col-xs-6 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colHalf {
+	composes: col;
+	composes: col-lg-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.link {
+	color: Bluecheese;
+
+	&:hover {
+		text-decoration: underline;
+		cursor: pointer;
+	}
+}
+
+.header {
+	composes: headerMD headlineFont from 'styles/typography.css';
+	composes: inlineBlock from 'styles/display.css';
+}
+
+.arrowRight {
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	font-size: 10px;
+}
+
+.textSM {
+	composes: textSM from 'styles/typography.css';
+	font-family: avenirBookFontStack;
+}
+
+.textSMNoMargin {
+	composes: textSM;
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.textXS {
+	composes: textXS from 'styles/typography.css';
+}
+
+.boldInfo {
+	composes: textSM;
+	composes: textBold from 'styles/typography.css';
+	float:right;
+}
+
+.labelWithMargin {
+	color: Chia;
+	composes: textMD textBold from 'styles/typography.css';
+}
+
+.label {
+	composes: labelWithMargin;
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.errorMsg {
+	color: Radish;
+	composes: textXS from 'styles/typography.css';
+	composes: paddingXXSTop noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.modal {
+	position: relative !important;
+	left: inherit !important;
+	top: inherit !important;
+	transform: inherit !important;
+	width: 60% !important;
+	margin: auto !important;
+	box-shadow: none !important;
+	margin-top: 50px;
+	max-width: 650px;
+	border-radius: 2px !important;
+	@media ScreenXSMax {
+		width: 98% !important;
+	}
+}
+
+.modalContainer {
+	margin-top: 50px;
+}
+
+.aboutYouContainer :global .Select-value {
+	text-transform: none;
+}
+
+.infoSection {
+	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
+}

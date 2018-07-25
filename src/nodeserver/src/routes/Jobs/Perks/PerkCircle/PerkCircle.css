@@ -1,0 +1,13 @@
+@value ScreenMLMax from 'styles/screenSizes.css';
+
+.flexContainer {
+	composes: flex from 'styles/display.css';
+	composes: row wrap center from 'styles/flex.css';
+	padding-top: 30px;
+	max-width: 1400px;
+	margin: 0 auto;
+	@media ScreenMLMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}

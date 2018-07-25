@@ -1,0 +1,6 @@
+[{{ cfn_service_resource_apitimelog }}]
+file = {{ directory }}/app/storage/logs/apitime.log
+log_group_name = {{ cfn_service_resource_apitimelog }}
+log_stream_name = {instance_id}
+datetime_format =
+multi_line_start_pattern = {datetime_format}

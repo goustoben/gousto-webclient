@@ -1,0 +1,75 @@
+@value White from 'styles/colors.css';
+@value sizeXL from 'styles/typography.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value SpacingMD, SpacingXXL from 'sass-loader!styles/spacing.scss';
+
+.modalOverlay {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 2000;
+}
+
+.modal {
+	composes: borderSM from 'styles/borders.css';
+	position: absolute;
+	border: 1px solid #999;
+	outline: none;
+	background-clip: padding-box;
+	top: SpacingXXL;
+	left: 50%;
+	transform: translateX(-50%);
+	min-width: 321px;
+	width: auto;
+	max-width: 900px;
+	height: auto;
+	background-color: White;
+	z-index: 2001;
+
+	@media ScreenXSMax {
+		top: SpacingMD;
+		width: 100%;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+}
+
+.controlContainer {
+	cursor: pointer;
+	position: absolute;
+	top: SpacingMD;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: sizeXL;
+	line-height: sizeXL;
+}
+
+.leftControl {
+	composes: controlContainer;
+	left: SpacingMD;
+}
+
+.rightControl {
+	composes: controlContainer;
+	right: SpacingMD;
+}
+
+.icon {
+	composes: noPadding from 'sass-loader!styles/spacing.scss';
+	font-size: sizeXL;
+	z-index: 2002;
+	cursor: pointer;
+}
+
+.close {
+	composes: icon;
+	composes: fa-times from 'styles/vendor/font-awesome-module.css';
+}
+
+.back {
+	composes: icon;
+	composes: fa-chevron-left from 'styles/vendor/font-awesome-module.css';
+}

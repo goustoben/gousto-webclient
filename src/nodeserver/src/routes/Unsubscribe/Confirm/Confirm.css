@@ -1,0 +1,8 @@
+.confirmContentError {
+	color: #FF0000;
+	margin-top: 15px;
+}
+
+.submitButton {
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+}

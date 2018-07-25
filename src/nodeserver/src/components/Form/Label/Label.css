@@ -1,0 +1,13 @@
+.labelContainer {
+	margin: 0;
+	display: block;
+}
+
+.label {
+	composes: textMD textBold from 'styles/typography.css';
+}
+
+.subLabel {
+	composes: textXS from 'styles/typography.css';
+	margin-top: -8px;
+}

@@ -1,0 +1,16 @@
+@value Coconut from 'styles/colors.css';
+@value ScreenXSMax, HeightSMMax from 'styles/screenSizes.css';
+
+.pageContainer {
+	position: relative;
+	background: Coconut;
+	min-height: 100%;
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+}
+
+.headerContainer {
+	width: 100%;
+	display: block;
+}

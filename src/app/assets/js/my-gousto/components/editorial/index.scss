@@ -1,0 +1,77 @@
+.editorial {
+	background: $color_gradient_1;
+	position: relative;
+
+	&-image {
+		&--container {
+			margin: 0;
+			padding: 10px;
+			display: flex !important;
+			justify-content: center;
+  			align-items: center;
+
+			height: 100%;
+			overflow: hidden;
+
+			@media (max-width: $mobile_breakpoint) {
+				display: block !important;
+				position: relative;
+				display: block;
+				height: 240px;
+			}
+		}
+
+		height: 100%;
+		max-width: none;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+
+		@media (min-width: $screen-lg-min) {
+			padding: 7px 0;
+			height: 100%;
+			width: auto;
+			margin-left: -1px;
+		}
+	}
+	&-content {
+		padding: 30px 60px;
+		float: right;
+
+		@media (max-width: $mobile_breakpoint) {
+			float: right;
+			padding: 20px;
+		}
+
+		&-signature {
+			@include font-text-bold;
+			text-align: right;
+			margin: 0;
+		}
+	}
+	&-merch {
+		&-container {
+			display: flex;
+			justify-content: center;
+  			align-items: center;
+			margin: 0 auto;
+			background-color: $color_tertiary;
+			height: 200px;
+			width: 200px;
+			border-radius: 100px;
+		}
+		&-inner {
+			@include font-text-bold;
+			color: $color_gradient_1;
+			margin: 0;
+		}
+		&-text {
+			@include font-heading-bold;
+			color: $color_gradient_1;
+			margin: 0;
+			font-size: 30px;
+			text-align: center;
+		}
+	}
+}

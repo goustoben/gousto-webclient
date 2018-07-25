@@ -1,0 +1,41 @@
+@value ScreenXSMax, ScreenMLMax, ScreenMDMax from 'styles/screenSizes.css';
+@value Blackberry from 'styles/colors.css';
+@value sizeLG, sizeMD from 'styles/typography.css';
+
+.headerBase {
+	composes: headerBase from '../Jobs.css'
+}
+
+.header {
+	composes: header from '../Jobs.css'
+}
+
+.preHeader {
+	composes: preHeader from '../Jobs.css'
+}
+
+.container {
+	composes: container from '../Jobs.css'
+}
+
+.perkCopy {
+	composes: sizeLG headerLG fontBase textLeft from 'styles/typography.css';
+	color: Blackberry;
+	padding: 0 120px 0 120px;
+	composes: marginZeroBottom marginLGBottom from 'sass-loader!styles/spacing.scss';
+	@media ScreenMDMax {
+		padding: 0 80px;
+	}
+	@media ScreenMLMax {
+		padding: 0 50px;
+	}
+	@media ScreenXSMax {
+		font-size: sizeMD;
+		padding: 0 20px;
+	}
+}
+
+.perkRow {
+	composes: row from 'styles/flex.css';
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+}

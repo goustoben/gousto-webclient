@@ -1,0 +1,10 @@
+[*]
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[**.{js, css}]
+indent_style = tabs
+
+[**.{sh}]
+indent_style = spaces
+indent_size = 2

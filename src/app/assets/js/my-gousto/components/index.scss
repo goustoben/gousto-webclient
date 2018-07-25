@@ -1,0 +1,37 @@
+/*LEGACY OVERRIDES*/
+
+body.account .wrapper {
+	max-width: none !important;
+	margin-top: -25px;
+}
+
+.my-gousto {
+	margin-bottom: 30px;
+
+	p {
+		@include font-text-regular;
+		color: $color_secondary;
+		font-size: 16px;
+	}
+
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	.fade-in {
+		animation: fadeIn .25s;
+	}
+
+	@import 'editorial/index.scss';
+	@import 'cookbook/index.scss';
+	@import 'header/index.scss';
+	@import 'featured-recipes/index.scss';
+	@import 'widget/index.scss';
+	@import 'referfriend/index.scss';
+	@import 'stats/index.scss';
+	@import 'notification/index.scss';
+}

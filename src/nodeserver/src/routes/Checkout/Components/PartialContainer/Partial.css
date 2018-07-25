@@ -1,0 +1,9 @@
+@value White from 'styles/colors.css';
+
+.hidden{
+	composes: hidden-xs-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.container {
+	composes: marginLGBottom from 'sass-loader!styles/spacing.scss';
+}

@@ -1,0 +1,51 @@
+@value Blueberry, Bluecheese from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value sizeXL, sizeMD from 'styles/typography.css';
+
+.body {
+	composes: marginXXLTop marginXLBottom marginXXLLeftRight from 'sass-loader!styles/spacing.scss';
+	max-width: 100%;
+}
+
+.bottom {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 15px;
+	@media ScreenXSMax {
+		flex-direction: column;
+	}
+}
+
+.modal {
+	max-width: 600px;
+	width: 100%;
+	@media ScreenXSMax {
+		max-width: 100%;
+	}
+}
+
+.firstButton {
+	margin-right: 20px;
+	@media ScreenXSMax {
+		margin-right: 0px;
+		margin-bottom: 10px;
+	}
+}
+
+.secondButton {
+	width: 100%;
+}
+
+.modalTitle {
+	font-size: sizeXL;
+	composes: comfortaa from 'styles/typography.css';
+}
+
+.modalBodyText {
+	font-size: sizeMD;
+	composes: paddingXLTop from 'sass-loader!styles/spacing.scss';
+}
+
+.pendingOrders {
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+}

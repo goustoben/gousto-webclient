@@ -1,0 +1,11 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value SpacingMD from 'sass-loader!styles/spacing.scss';
+
+.button {
+	margin-top: SpacingMD;
+
+	@media ScreenXSMax {
+		display: flex;
+		justify-content: flex-end;
+	}
+}

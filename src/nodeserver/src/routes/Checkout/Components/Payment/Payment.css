@@ -1,0 +1,251 @@
+@value SpacingSM, SpacingLG from 'sass-loader!styles/spacing.scss';
+@value ScreenSMMin, ScreenMDMin from 'styles/screenSizes.css';
+@value Blueberry, Blueberry20, Bluecheese, Radish, Radish40, DarkRadish from 'styles/colors.css';
+@value SpacingLG from 'sass-loader!styles/spacing.scss';
+
+.container {
+	composes: textBold from 'styles/typography.css';
+	composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	max-height: 119px;
+}
+
+.containerWithBottomMargin {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.col {
+	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colMD {
+	composes: col-md-8 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colMDhalf {
+	composes: col;
+	composes: col-md-6 col-xs-8 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colMDquarter {
+	composes: col-md-3 col-xs-4 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colSM {
+	composes: col;
+	composes: col-md-2 col-xs-3 from 'sass-loader!styles/bootstrap.scss';
+	padding: 0;
+	margin: 0;
+}
+
+.colXS {
+	composes: col;
+	composes: col-md-1 from 'sass-loader!styles/bootstrap.scss';
+	padding: 0;
+	margin: 0;
+}
+.colXL {
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.wrapper {
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+:root .wrapper {
+	@media ScreenSMMin {
+		margin-top: SpacingLG;
+		flex-direction: row-reverse;
+	}
+}
+
+.main, .icons {
+	flex: 1 100%;
+}
+
+.main {
+	@media ScreenSMMin {
+		flex: 4 0;
+		composes: marginMDRight from 'sass-loader!styles/spacing.scss';
+	}
+}
+
+.icons {
+	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+	@media ScreenSMMin {
+		text-align: right;
+		flex: 1 0;
+	}
+}
+
+.dropdownWrapper {
+	composes: flex rowWrap verticalCenter from 'styles/flex.css';
+	align-items: flex-start;
+}
+
+.month {
+	flex: 3 0;
+}
+
+.year {
+	flex: 4 0;
+}
+
+.divisor {
+	flex: 1 auto;
+	text-align: center;
+	padding-top: 9px;
+}
+
+.header {
+	composes: headerMD headlineFont from 'styles/typography.css';
+	composes: inlineBlock from 'styles/display.css';
+}
+
+.paymentContainer {
+	composes: textBold from 'styles/typography.css';
+	padding: SpacingLG;
+	background-color: Blueberry20;
+}
+
+.paymentContainer :global .Select-control {
+	min-height: 40px;
+}
+.paymentContainer :global .Select-value {
+	line-height: 38px;
+}
+
+.padlockIcon {
+	composes: padlockIcon from 'styles/icons.css';
+}
+
+.subLabel {
+	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+	float: left;
+	line-height: 36px;
+}
+
+.textSM {
+	composes: textSM from 'styles/typography.css';
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.textSMWithBottomMargin {
+	composes: textSM from 'styles/typography.css';
+	composes: marginXXSBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.boldInfo{
+	composes: textSM;
+	composes: textBold from 'styles/typography.css';
+	float:right;
+}
+
+.linkRight {
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	font-size: 10px;
+}
+
+.errorInput {
+	border-color: DarkRadish;
+	background-color: Radish40;
+}
+
+.errorMsgSimple {
+	color: Radish;
+	composes: textXS from 'styles/typography.css';
+}
+
+.errorMsg {
+	composes: errorMsgSimple;
+	composes: paddingXXSTop noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.tooltipCardContainer {
+	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.cardDetails {
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+}
+.cardNumberWrapper {
+	flex: 1 100%;
+	composes: marginMDRight from 'sass-loader!styles/spacing.scss';
+	@media ScreenSMMin {
+		flex: 5 0;
+	}
+}
+.cardTypeWrapper {
+	flex: 1 100%;
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+	@media ScreenSMMin {
+		margin-top: 0;
+		flex: 4 0;
+	}
+}
+.iconCard {
+	width: 80px;
+	height: 48px;
+}
+
+.iconCardObverse {
+	composes: iconCard;
+	margin-right: 5px;
+}
+
+.link {
+	color: Bluecheese;
+	text-decoration: underline;
+	composes: textSM from 'styles/typography.css';
+	cursor: pointer;
+
+	&:hover {
+		color: Blueberry;
+	}
+}
+
+.iconCardReverse {
+	composes: iconCard;
+	float: left;
+}
+
+.labelWithoutMargin {
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.creditCard {
+	composes: flex rowReverse flexEnd verticalCenter from 'styles/flex.css';
+}
+
+.cardIcon {
+	composes: flex flexEnd verticalCenter rowReverse from 'styles/flex.css';
+}
+
+.visa {
+	composes: fa-cc-visa from 'styles/vendor/font-awesome-module.css';
+	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+}
+
+.mc {
+	composes: fa-cc-mastercard from 'styles/vendor/font-awesome-module.css';
+	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+}
+
+.alt {
+	composes: fa-credit-card from 'styles/vendor/font-awesome-module.css';
+	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+}
+
+.alt2 {
+	composes: fa-credit-card-alt from 'styles/vendor/font-awesome-module.css';
+	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+}
+
+:global .ccNumberDropdown select{
+	width: 100%;
+}

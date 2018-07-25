@@ -1,0 +1,16 @@
+@value Carrot, White from 'styles/colors.css';
+
+.notification {
+	composes: textBold from 'styles/typography.css';
+	display: inline-block;
+	font-size: 14px;
+	color: White;
+	background-color: Carrot;
+	border-radius: 3px;
+	padding: 7px 15px;
+	margin-bottom: 5px;
+}
+
+.oldDeliveryDay {
+	text-decoration: line-through;
+}

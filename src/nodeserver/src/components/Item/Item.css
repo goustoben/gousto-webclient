@@ -1,0 +1,109 @@
+@value ScreenXXSMaxDEPRECATED from 'styles/screenSizes.css';
+@value SpacingXXS, SpacingSM, SpacingXXXL from 'sass-loader!styles/spacing.scss';
+@value Pepper30 from 'styles/colors.css';
+
+@value holderHeight: 60px;
+@value desktopWidth: 60px;
+
+
+.item {
+	composes: flex spaceBetween flexStart from 'styles/flex.css';
+	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';
+	composes: relative from 'styles/position.css';
+}
+
+.itemUnavailable {
+	composes: item;
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.details {
+	composes: flexGrow from 'styles/flex.css';
+	composes: paddingSMLeft paddingLGRight from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXXSMaxDEPRECATED {
+		padding-left: 0;
+		padding-right: SpacingXXXL;
+		width: 100%;
+	}
+}
+
+.title {
+	composes: headerSM textBold from 'styles/typography.css';
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXXSMaxDEPRECATED {
+		display: block;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+}
+
+.quantity {
+	composes: paragraphXS from 'styles/typography.css';
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.freeGift {
+	composes: paragraphXS from 'styles/typography.css';
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.url {
+	composes: paragraphXS from 'styles/typography.css';
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.hideMobile {
+	min-width: 70px;
+	@media ScreenXXSMaxDEPRECATED {
+		display: none;
+	}
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.minusIcon {
+	composes: itemCenter from 'styles/flex.css';
+	composes: fa-fw fa-minus-circle from 'styles/vendor/font-awesome-module.css';
+	composes: pointer;
+
+	color: Blackberry;
+	user-select: none;
+
+	font-size: 1.4em;
+
+	margin-left: -5px;
+
+	@media ScreenXXSMaxDEPRECATED {
+		position: absolute;
+		margin-left: 0;
+		right: 0;
+		width: auto;
+		font-size: 1.8em;
+	}
+
+	&:hover {
+		opacity: 0.9;
+	}
+}
+
+.view {
+	composes: paragraphXS from 'styles/typography.css';
+}
+
+.img {
+	height: holderHeight;
+	width: desktopWidth;
+	border-radius:100%;
+	object-fit: cover;
+}
+
+.horizontalLine {
+	border-bottom: 1px solid Pepper30;
+	composes: marginXSTopBottom from 'sass-loader!styles/spacing.scss';
+}

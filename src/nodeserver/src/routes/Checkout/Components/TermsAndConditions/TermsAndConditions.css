@@ -1,0 +1,17 @@
+@value Blueberry, Bluecheese from 'styles/colors.css';
+
+.centeredSmallTextWithTopMargin {
+	composes: textCenter textSM from 'styles/typography.css';
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+.link {
+	color: Bluecheese;
+	text-decoration: underline;
+	cursor: pointer;
+
+	&:hover {
+		 color: Blueberry;
+	 }
+}
+

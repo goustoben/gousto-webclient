@@ -1,0 +1,24 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value Mushroom50 from 'styles/colors.css';
+@value SpacingLG from 'sass-loader!styles/spacing.scss';
+
+.content {
+	composes: paddingXXLLeftRight marginLGTop marginXXLBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.carouselContainer {
+	width: 100%;
+	background: Mushroom50;
+}
+
+.contentInner {
+	@media ScreenXSMax {
+		padding-left: SpacingLG;
+		padding-right: SpacingLG;
+	}
+}

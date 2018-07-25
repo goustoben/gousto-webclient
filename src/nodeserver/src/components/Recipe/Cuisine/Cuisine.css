@@ -1,0 +1,7 @@
+.description {
+	composes: paragraphXS from 'styles/typography.css';
+}
+
+.icon {
+	composes: fa-map-marker fa-fw from 'styles/vendor/font-awesome-module.css';
+}

@@ -1,0 +1,102 @@
+@value Haricot, Radish, Carrot from 'styles/colors.css';
+
+.red {
+	color: Radish;
+}
+
+.orange {
+	color: Carrot;
+}
+
+.green {
+	color: Haricot;
+}
+
+.state {
+	composes: inline from 'styles/display.css';
+	composes: headerMD textBold from 'styles/typography.css';
+	composes: marginZeroTopBottom, marginZeroLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.stateScheduled {
+	composes: green;
+	composes: state;
+	opacity: 0.5;
+	padding-left: 5px;
+}
+
+.stateMenuOpen {
+	composes: orange;
+	composes: state;
+	padding-left: 5px;
+}
+
+.stateRecipesChosen {
+	composes: green;
+	composes: state;
+	padding-left: 5px;
+}
+
+.stateConfirmed {
+	composes: green;
+	composes: state;
+	padding-left: 5px;
+}
+
+.stateCancelled {
+	composes: red;
+	composes: state;
+	padding-left: 5px;
+}
+
+.stateDispatched {
+	composes: green;
+	composes: state;
+	padding-left: 5px;
+}
+
+.icon {
+	display: inline;
+	font-size: 16px;
+}
+
+.iconScheduled {
+	composes: green;
+	composes: icon;
+	opacity: 0.5;
+	composes: fa-pause-circle from 'styles/vendor/font-awesome-module.css';
+}
+
+.iconMenuOpen {
+	composes: orange;
+	composes: icon;
+	composes: fa-plus-circle from 'styles/vendor/font-awesome-module.css';
+}
+
+.iconRecipesChosen {
+	composes: green;
+	composes: icon;
+	composes: fa-check-circle from 'styles/vendor/font-awesome-module.css';
+}
+
+.iconConfirmed {
+	composes: green;
+	composes: icon;
+	composes: fa-check-circle from 'styles/vendor/font-awesome-module.css';
+}
+
+.iconCancelled {
+	composes: red;
+	composes: icon;
+	composes: fa-times-circle from 'styles/vendor/font-awesome-module.css';
+}
+
+.iconDispatched {
+	composes: green;
+	composes: icon;
+	composes: fa-check-circle from 'styles/vendor/font-awesome-module.css';
+}
+
+.orderStateWrap {
+	composes: paddingSMTop paddingXXSTop from 'sass-loader!styles/spacing.scss';
+}

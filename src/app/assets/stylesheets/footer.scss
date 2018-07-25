@@ -1,0 +1,168 @@
+@import 'config/colors';
+@import 'config/fonts';
+@import 'config/mixins';
+#footer-strip {
+	background: url('/images/icons/footer-grass.jpg') 0px 0px repeat-x $color_secondary;
+	padding: 35px 0px 25px 0px;
+	color: $color_gradient_1;
+	margin-bottom: 0px;
+	min-height: 80px;
+	.container {
+		padding: 0;
+	}
+	p.tasty {
+		@include font-text-bold;
+		display: inline;
+		font-size: 20px;
+		padding-right: 4px;
+		@media(max-width: 767px) {
+			margin-bottom: 10px;
+			display: block;
+		}
+	}
+	.newsletter-container {
+		padding: 15px 0 20px 0px;
+	}
+	.breadcrumb-signup-form {
+		display: inline;
+		@include placeholder {
+			color: $color_secondary;
+		}
+		.popover {
+			color: $color_gradient_5;
+		}
+		.glyphicon-chevron-right {
+			display: none;
+		}
+		input {
+			width: calc(80% - 225px);
+			display: inline-block;
+			@media(max-width: 767px) {
+				width: calc(100% - 95px);
+				margin-top: 0px;
+			}
+		}
+	}
+	.copyright {
+		margin-top: 25px;
+	}
+	span.pipe {
+		padding: 6px;
+		border-right: 1px solid $color_gradient_1;
+		margin-right: 15px;
+		@media(max-width: 767px) {
+			margin-right: 6px;
+		}
+	}
+	.glyphicon-earphone {
+		font-size: 18px;
+		padding-right: 7px;
+		top: 5px;
+	}
+}
+
+.footer-appstore-link {
+	display: inline-block;
+	overflow: hidden;
+	background: url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_appstore-lrg.svg) no-repeat;
+	width: 135px;
+	height: 40px;
+	vertical-align: middle;
+	margin: 7px;
+	&.play {
+		background: none;
+	}
+}
+
+.footer-nav {
+	ul {
+		list-style: none;
+		display: inline;
+		padding: 0;
+		li {
+			display: inline-block;
+			font-size: 14px;
+			line-height: 24px;
+			.no-content{
+				&:after{
+					content: '';
+				}
+			}
+			&:after {
+				content: '|';
+				padding: 0px 5px;
+			}
+			&:last-child {
+				&:after {
+					content: '';
+				}
+			}
+		}
+	}
+	ul.footer-links {
+		display: inline-block;
+		li {
+			&:after {
+				content: '';
+				padding: 0px;
+			}
+		}
+		.footer-icon {
+			padding: 0px 5px;
+			display: inline-block;
+			vertical-align: top;
+			svg {
+				width: 22px;
+				height: 22px;
+				fill: $color_gradient_1;
+			}
+			&:hover {
+				svg {
+					fill: rgba($color_gradient_1, 0.5);
+				}
+			}
+		}
+	}
+}
+
+footer.container {
+	max-width: 100%;
+	margin: 0;
+	font-size: 13px;
+	background-color: $color_secondary;
+	padding: 0;
+}
+
+footer .row {
+	margin-bottom: 0;
+}
+
+footer.nodeFooter {
+	@extend .row;
+	margin-bottom: 0;
+	margin-top: -20px;
+	background: white;
+}
+
+footer.container.row [data-reactroot] {
+	background: white;
+	margin-top: -20px
+}
+
+@media (max-width: 767px) {
+	hr {
+		width: 100%;
+		display: block;
+		margin: 20px auto;
+		border-color: transparentize($color_gradient_1, 0.6);
+	}
+	.footer-links {
+		padding: 0;
+		margin: 15px 0 10px;
+	}
+}
+
+.newsletterlab {
+	color: $color_secondary;
+	margin-bottom: 0;
+}

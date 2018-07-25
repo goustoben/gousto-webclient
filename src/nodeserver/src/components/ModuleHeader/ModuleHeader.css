@@ -1,0 +1,18 @@
+.container {
+	composes: marginXLBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.header {
+	line-height: 1;
+	text-align: center;
+	margin: 0;
+}
+
+.big {
+	composes: headerXXL from 'styles/typography.css';
+}
+
+.small {
+	composes: textXL from 'styles/typography.css';
+	margin-top: -5px;
+}

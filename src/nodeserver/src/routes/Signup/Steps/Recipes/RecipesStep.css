@@ -1,0 +1,51 @@
+@value ScreenXSMax, HeightMDMax from 'styles/screenSizes.css';
+@value SpacingXXS, SpacingXS from 'sass-loader!styles/spacing.scss';
+@value sizeSM from 'styles/typography.css';
+@value Bluecheese from 'styles/colors.css';
+
+.container {
+	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
+}
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+	composes: marginXSTop from 'sass-loader!styles/spacing.scss';
+	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.rowFirst {
+	composes: row;
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}
+
+.left, .right {
+	width: 50%;
+}
+
+.left {
+	padding-right: calc(SpacingXS * .5);
+	@media ScreenXSMax and HeightMDMax {
+		padding-right: calc(SpacingXXS * .5);
+	}
+}
+
+.right {
+	padding-left: calc(SpacingXS * .5);
+	@media ScreenXSMax and HeightMDMax {
+		padding-left: calc(SpacingXXS * .5);
+	}
+}
+
+.row :global .recipesType {
+	@media ScreenXSMax and HeightMDMax {
+		font-size: sizeSM;
+	}
+}
+
+.link {
+	composes: textBold from 'styles/typography.css';
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+	color: Bluecheese;
+	cursor: pointer;
+	text-decoration: underline;
+}

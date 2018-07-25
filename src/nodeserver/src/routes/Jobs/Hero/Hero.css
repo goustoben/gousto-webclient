@@ -1,0 +1,35 @@
+@value ScreenXSMax, ScreenXXSMax, HeightMDMax from 'styles/screenSizes.css';
+@value Blackberry from 'styles/colors.css';
+
+.container {
+	height:75vh;
+	composes: relative from 'styles/position.css';
+	background: url('routes/Jobs/Hero/hero.jpg') no-repeat center center;
+	background-size: cover;
+	@media ScreenXSMax {
+		height:50vh;
+	}
+}
+
+.textContainer {
+	top: 30%;
+	height: 70%;
+	width: 100%;
+	composes: relative from 'styles/position.css';
+	@media HeightMDMax {
+		top: 21%;
+	}
+	@media ScreenXXSMax {
+		top: 25%;
+	}
+}
+
+.header {
+	composes: headerXXL2 textBold textCenter from 'styles/typography.css';
+	composes: marginZeroTopBottom from 'sass-loader!styles/spacing.scss';
+	color: Blackberry;
+	@media ScreenXSMax {
+		font-size: sizeMD;
+	}
+}
+

@@ -1,0 +1,71 @@
+---
+- name: Run build script for frontend
+  command: composer install --no-interaction --prefer-dist
+  args:
+    chdir: "{{ directory }}"
+
+- name: setup npmrc file
+  template: src=build/yarnrc.j2 dest="{{ directory }}/.yarnrc"
+
+- name: install node
+  shell: bash -lc "nvm install {{ node_version }}"
+  register: output
+  changed_when: "'already installed.' not in output.stderr"
+
+- name: create alias directory
+  file: path="{{ nvm_root }}/alias" state=directory
+
+- name: set {{ node_version }} as default version
+  copy: dest="{{ nvm_root }}/alias/default" content="{{ node_version }}"
+
+- name: Install yarn
+  sudo: yes
+  command: npm install -g yarn
+
+- name: Install gulp
+  command: yarn add gulp
+
+- name: yarn cache clean
+  command: yarn cache clean
+  args:
+    chdir: "{{ directory }}"
+
+- name: yarn cache clean
+  command: yarn cache clean
+  args:
+    chdir: "{{ directory }}/nodeserver"
+
+- name: yarn install
+  command: yarn install
+  args:
+    chdir: "{{ directory }}"
+
+- name: yarn install nodeserver
+  command: yarn install
+  args:
+    chdir: "{{ directory }}/nodeserver"
+
+- name: yarn link generic
+  command: yarn link
+  args:
+    chdir: "{{ directory }}/app/assets/js/generic"
+
+- name: yarn link config
+  command: yarn link
+  args:
+    chdir: "{{ directory }}/app/assets/js/config"
+
+- name: yarn link
+  command: yarn link
+  args:
+    chdir: "{{ directory }}"
+
+- name: yarn run script once
+  command: yarn run once
+  args:
+    chdir: "{{ directory }}"
+
+- name: yarn run build nodeserver
+  command: yarn run build:dev
+  args:
+    chdir: "{{ directory }}/nodeserver"

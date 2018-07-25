@@ -1,0 +1,86 @@
+@value ScreenMLMax, ScreenMLMin from 'styles/screenSizes.css';
+@value SpacingLG as GutterSize from 'sass-loader!styles/spacing.scss';
+@value sizeMD from 'styles/typography.css';
+@value White from 'styles/colors.css';
+
+@value attributesLineHeight 1.8;
+@value chefTtileWidth calc(100% - 85px);
+
+.featuredRecipe {
+	@media ScreenMLMin {
+		width: 100%;
+		height: 100%;
+		height: 645px;
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-start;
+		overflow: hidden;
+		position: relative;
+	}
+}
+
+.recipeDetails {
+	composes: relative from 'styles/position.css';
+}
+
+.featuredDetails {
+	composes: col-xs-12 col-lg-5 from 'sass-loader!styles/bootstrap.scss';
+	composes: recipeDetails;
+
+	@media ScreenMLMin {
+		background: White;
+		padding: 0;
+		padding-bottom: 5px;
+		margin-right: GutterSize;
+		margin-left: GutterSize;
+		margin-top: 40px;
+	}
+	@media ScreenMLMax {
+		width: 100%;
+		max-width: 100%;
+		padding: 0;
+	}
+}
+
+.featuredDetailsWithTag {
+	composes: featuredDetails;
+	@media ScreenMLMin {
+		margin-top: 50px;
+	}
+}
+
+.textContainer {
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+}
+
+.link {
+	cursor: pointer;
+}
+
+.linkUnderlined {
+	composes: link;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.linkIfChefFeatured {
+	@media ScreenMLMax {
+		max-width: chefTtileWidth;
+	}
+}
+
+.chefLogo {
+	@media ScreenMLMin {
+		display: none;
+	}
+}
+
+.attributes {
+	line-height: attributesLineHeight;
+	font-size: sizeMD;
+}
+
+.attributeMinHeight {
+	min-height: calc(sizeMD * attributesLineHeight);
+}

@@ -1,0 +1,14 @@
+@import 'config/main';
+body.cancel {
+	p {
+		font-size: 14px;
+	}
+}
+@media (max-width: 767px) {
+	#cancel-modal-button {
+		width: 100%;
+	}
+	.v-center-items {
+		display: block;
+	}
+}

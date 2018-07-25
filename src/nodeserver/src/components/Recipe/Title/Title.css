@@ -1,0 +1,116 @@
+@value ScreenXXSMax, ScreenXSMax, ScreenSMMax, ScreenMDMin, ScreenMLMax from 'styles/screenSizes.css';
+@value sizeXXL, sizeXL, sizeLG, sizeMD, sizeSM, bodyFontStackBold from 'styles/typography.css';
+@value Cacao, White from 'styles/colors.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+
+.base {
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+	composes: textBold from 'styles/typography.css';
+}
+
+.container {
+	composes: headerMD textBold from 'styles/typography.css';
+	composes: base;
+	font-size: sizeSM;
+}
+
+.containerLG {
+	composes: headerLG from 'styles/typography.css';
+	composes: base;
+	margin-top: 0;
+	@media ScreenXSMax {
+		font-size: sizeMD;
+	}
+}
+
+.largeHeading {
+	composes: headerXL from 'styles/typography.css';
+	font-family: bodyFontStackBold;
+	font-weight: normal;
+	@media ScreenMLMax {
+		font-size: sizeLG;
+	}
+
+	@media ScreenXSMax {
+		font-size: sizeMD;
+	}
+}
+
+.detailHeading {
+	composes: paddingMDLeft from 'sass-loader!styles/spacing.scss';
+	font-family: bodyFontStackBold;
+	margin-top: SpacingSM;
+	margin-bottom: 0;
+	font-size: sizeXXL;
+	@media ScreenSMMax {
+		font-size: sizeXL;
+	}
+	@media ScreenXSMax {
+		font-size: sizeLG;
+	}
+	@media ScreenXXSMax {
+		margin-top: 0;
+	}
+}
+
+.simpleHeading {
+	composes: textCenter headerLG from 'styles/typography.css';
+	composes: block from 'styles/display.css';
+	min-height: 50px;
+	-webkit-font-smoothing: auto;
+	font-smoothing: auto;
+	height: 50px;
+	font-weight: normal;
+
+	@media ScreenSMMax {
+		font-size: 15px;
+	}
+
+	@media (width > 1280px) {
+		height: 70px;
+	}
+
+	@media (width > 1500px) {
+		height: 50px;
+	}
+}
+
+/* HP carousel hack */
+:global .homepageSlider .slick-center :local .simpleHeading {
+	font-weight: bold;
+}
+
+.icon {
+	composes: fa-angle-right from 'styles/vendor/font-awesome-module.css';
+}
+.largeIcon {
+	@media ScreenSMMin {
+		display: none;
+	}
+}
+
+.link {
+	cursor: pointer;
+}
+
+.linkUnderlined {
+	composes: link;
+	&:hover {
+		 text-decoration: underline;
+	 }
+}
+
+.fineDineInHeading {
+	color: White;
+}
+
+.fineDineInDetailHeading {
+	composes: headlineFont from 'styles/typography.css';
+	margin-top: SpacingSM;
+	margin-bottom: 0;
+	font-size: sizeMD;
+
+	@media ScreenMDMin {
+		font-size: sizeXXL;
+	}
+}

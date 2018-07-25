@@ -1,0 +1,116 @@
+@import '../config/main';
+
+body.modal-open {
+	margin-right: 0;
+	overflow: hidden;
+}
+
+@media(min-width: 768px) {
+	body.modal-open {
+		overflow: scroll;
+	}
+}
+
+.gmodal {
+	.row { //fix main.scss
+		float: none;
+		margin-right: -15px;
+		margin-left: -15px;
+		width: inherit;
+	}
+
+	.close {
+		@include opacity(0.8);
+		font-size: 32px;
+		position: absolute;
+		top: 5px;
+		right: 15px;
+		z-index: 2;
+	}
+
+	.control {
+		@include opacity(0.8);
+		font-size: 32px;
+		position: absolute;
+		top: 5px;
+		z-index: 2;
+		text-decoration: none;
+		@include font-text-bold;
+		line-height: 1;
+		color: #000;
+		text-shadow: 0 1px 0 #ffffff;
+		cursor: pointer;
+
+		&-text {
+			font-size: 18px;
+			position: relative;
+			top: -4px;
+			left: -4px;
+		}
+
+		&-back {
+			left: 15px;
+		}
+	}
+
+	.modal-header {
+		border-bottom: none;
+		.modal-title {
+			@include font-text-bold;
+		}
+
+		.close {
+			top: 10px;
+		}
+
+		@media(min-width: 768px) {
+			padding: 30px 30px 0;
+			.close {
+				margin-top: -5px;
+			}
+		}
+		@media(max-width: 767px) {
+			padding: 8px 15px 0;
+			.close {
+				margin-top: -5px;
+			}
+		}
+	}
+
+	.modal-body {
+		font-size: 16px;
+
+		@media(min-width: 768px) {
+			padding: 20px 30px 20px;
+		}
+		@media(max-width: 767px) {
+			padding: 10px 15px 10px;
+		}
+	}
+
+	.modal-body-constrain {
+		margin: 0 auto;
+
+		@media(min-width: 600px) {
+			padding: 20px 85px;
+		}
+	}
+
+	.modal-footer {
+		margin-top: 0;
+		border-top: none;
+
+		@media(min-width: 768px) {
+			padding: 0 30px 30px;
+			.gbtn-secondary {
+				margin-left: 15px;
+			}
+		}
+		@media(max-width: 767px) {
+			padding: 0 8px 8px;
+			.gbtn-secondary {
+				margin-left: 5px;
+			}
+		}
+	}
+}

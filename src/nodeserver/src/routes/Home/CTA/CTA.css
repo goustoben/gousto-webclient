@@ -1,0 +1,57 @@
+@value sizeLG, sizeXL from 'styles/typography.css';
+@value ScreenXXSMax, ScreenMDMax, HeightMDMax from 'styles/screenSizes.css';
+
+.buttonSimple {
+	text-align: center;
+	width: 240px;
+
+	@media ScreenMDMax {
+		padding-top: 0;
+	}
+
+	@media HeightMDMax {
+		padding-top: 0;
+	}
+}
+
+.buttonContainer {
+	composes: buttonSimple;
+	composes: marginXXLTop paddingXXLTop from 'sass-loader!styles/spacing.scss';
+}
+
+.buttonResponsive {
+	/*543*/
+	@media ScreenXXSMax {
+		margin-top: 0;
+		width: 170px;
+	}
+}
+
+.segment {
+	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+	font-size: sizeXL;
+	max-height: none;
+	min-height: 45px;
+	padding-top: 2px;
+}
+
+.left {}
+
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.right {
+	margin-left: auto;
+}
+
+.segmentResponsive {
+	composes: segment;
+
+	/*543*/
+	@media ScreenXXSMax {
+		min-height: 40px;
+		font-size: sizeLG;
+	}
+}

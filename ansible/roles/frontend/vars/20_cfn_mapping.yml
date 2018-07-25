@@ -1,0 +1,27 @@
+---
+directory: /var/www/frontend
+domain: "{{ cfn_service_resource_dnsrecord }}"
+tld: "{{ cfn_defaults_output_domain }}"
+secure: "{{cfn_defaults_output_secure}}"
+error_log: frontend_error.log
+access_log: frontend_access.log
+session_driver: memcached
+session_domain: ".{{ cfn_defaults_output_domain }}"
+assets_base: "{{ 'https' if cfn_defaults_output_secure == 'True' else 'http' }}://{{ cfn_content_output_assetsdistributiondomainname }}"
+assets_js: /
+assets_css: /
+assets_fonts: /
+assets_images: /
+cache_driver: memcached
+memcached_host: "{{ cfn_data_output_cacheclusterhost }}"
+memcached_port: "{{ cfn_data_output_cacheclusterport }}"
+
+admin_domain: "{{ environment_name }}-admin.{{ cfn_defaults_output_domain }}"
+core_domain: "{{ environment_name }}-core.{{ cfn_defaults_output_domain }}"
+products_domain: "{{ environment_name }}-products.{{ cfn_defaults_output_domain }}"
+auth_service_domain: "http://{{ environment_name }}-auth.{{ cfn_defaults_output_domain }}"
+optimizely_account: "{{ 3732210624 if environment_name == 'production' else 7728010866 }}"
+debug_passthrough: true
+api_verify_peer: false
+api_verify_host: false
+api_certificate: ""

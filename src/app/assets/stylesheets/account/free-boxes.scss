@@ -1,0 +1,52 @@
+@import '../config/main';
+
+body.free-boxes {
+	#referral-container-mobile {
+		p {
+			padding: 0 10px;
+		}
+		img {
+			width: 100%;
+		}
+	}
+	#referral-container-bottom {
+		margin-top: 10px;
+		#referral-code-container {
+			padding: 0;
+			margin-bottom: 10px;
+		}
+
+		@media screen and (max-width: $screen-sm-max){
+			padding: 10px;
+		}
+	}
+	#referral-code {
+		font-size: 17px;
+		@include font-text-bold;
+		padding-left: 10px;
+	}
+
+	#referral-code-box {
+		overflow: hidden;
+	}
+
+
+	#referral-code-container {
+		margin-right: 25px;
+	}
+
+	#referral-code-copied {
+		opacity: 0;
+		padding: 5px;
+		text-align: center;
+		color: white;
+		display: block;
+		background-color: $color_secondary;
+
+		min-height: 30px;
+
+		transition: 0.2s opacity;
+		-webkit-transition: 0.2s opacity;
+	}
+
+}

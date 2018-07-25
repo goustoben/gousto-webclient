@@ -1,0 +1,73 @@
+@value ScreenXSMax, ScreenXXSMax, HeightMDMax, ScreenMLMax, ScreenLGMax, ScreenMDMax from 'styles/screenSizes.css';
+@value Blackberry from 'styles/colors.css';
+@value sizeXXL, sizeLG from 'styles/typography.css';
+
+.headerBase {
+	text-align: center;
+	color: Blackberry;
+}
+
+.circleCopy {
+	composes: center sizeLG from 'styles/typography.css';
+	composes: headerBase;
+	color: Blackberry;
+	margin-bottom: 0px;
+	@media ScreenXXSMax {
+		font-size: 14px;
+	}
+}
+
+
+.perkBase {
+	composes: center from 'styles/typography.css';
+	color: Blackberry;
+}
+/* Layout + structure */
+
+.col {
+	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
+	@media ScreenXSMax {
+		margin: 0;
+	}
+}
+
+.container {
+	composes: container from 'sass-loader!styles/bootstrap.scss';
+	top: 0;
+	z-index: 1000;
+	@media ScreenXSMax {
+		width: 100%;
+	}
+}
+
+.perkContainer {
+	padding: 0px 40px 0px 40px;
+	text-align: center;
+	@media ScreenXSMax {
+		padding: 10px;
+	}
+	@media ScreenXXSMax {
+		padding: 0;
+	}
+}
+
+.perkInner {
+	display: inline-block;
+}
+
+.perkCircle {
+	border-radius: 50%;
+ 	width: 200px;
+ 	height: 150px;
+ 	display: flex;
+ 	justify-content: center;
+ 	@media ScreenXXSMax {
+		width: 150px;
+ 		height: 150px;
+	}
+
+}
+
+.perkVerticalCenter {
+	align-self: top;
+}

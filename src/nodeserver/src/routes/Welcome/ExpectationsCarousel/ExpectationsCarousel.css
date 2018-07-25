@@ -1,0 +1,47 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value Coconut from 'styles/colors.css';
+@value SpacingLG from 'sass-loader!styles/spacing.scss';
+
+.content {
+	composes: paddingXXLLeftRight marginLGTop marginXXLBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.contentInner {
+	@media ScreenXSMax {
+		padding-left: SpacingLG;
+		padding-right: SpacingLG;
+	}
+}
+
+.boxImage {
+	width: 100%;
+}
+
+.slideTitle {
+	composes: textLG textBold from 'styles/typography.css';
+	display: block;
+	font-size: 24px;
+	margin-bottom: 12px;
+}
+
+.slideContent {
+	padding-left: 0px 30px;
+}
+
+.imageContainer {
+	composes: relative from 'styles/position.css';
+}
+
+.carouselContainer {
+	width: 100%;
+	background: Coconut;
+}
+
+.slideCopy {
+	display: block;
+}

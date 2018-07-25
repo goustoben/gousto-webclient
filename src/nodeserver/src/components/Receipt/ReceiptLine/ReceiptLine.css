@@ -1,0 +1,56 @@
+@value Haricot, Blackberry from 'styles/colors.css';
+@value sizeMD, sizeXL, avenirHeavyFontStack from 'styles/typography.css';
+@value Pepper30 from 'styles/colors.css';
+
+.receiptLine {
+	composes: paragraphMD from 'styles/typography.css';
+	composes: flex spaceBetween from 'styles/flex.css';
+	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.label {
+	white-space: nowrap;
+}
+
+.content {
+	text-align: right;
+}
+
+.truncateLabel {
+	composes: textTruncate from 'styles/typography.css';
+}
+
+.normal {
+	font-size: sizeMD;
+	font-weight: normal;
+}
+
+.primary {
+	font-size: sizeMD;
+	font-family: avenirHeavyFontStack;
+	color: Haricot;
+}
+
+.bold {
+	font-size: sizeMD;
+	font-family: avenirHeavyFontStack;
+}
+
+.highlighted {
+	font-size: sizeMD;
+}
+
+.highlighted :local .label {
+	align-self: flex-end;
+	text-transform: uppercase;
+}
+
+.highlighted :local .content {
+	color: Blackberry;
+	font-size: sizeXL;
+}
+
+.horizontalLineAbove {
+	border-bottom: 1px solid Pepper30;
+	composes: marginXSTopBottom from 'sass-loader!styles/spacing.scss';
+}

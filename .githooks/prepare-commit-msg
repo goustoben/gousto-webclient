@@ -1,0 +1,24 @@
+#!/bin/bash
+errorHeaderColor='\e[101m'
+errorMessageColor='\e[41m'
+endColor='\e[0m'
+
+# This way you can customize which branches should be skipped when
+# prepending commit message.
+if [ -z "$BRANCHES_TO_SKIP" ]; then
+  BRANCHES_TO_SKIP=(master develop)
+fi
+
+BRANCH_NAME=$(git symbolic-ref --short HEAD)
+BRANCH_PREFIX_NAME="${BRANCH_NAME%%/*}"
+BRANCH_EXCLUDED=$(printf "%s\n" "${BRANCHES_TO_SKIP[@]}" | grep -c "^$BRANCH_NAME$")
+
+if [ -n "$BRANCH_NAME" ] && ! [[ $BRANCH_EXCLUDED -eq 1 ]]; then
+  if ! [[ $BRANCH_NAME =~ TECH-([a-z]+|[A-Z]+|[0-9]+)\/ ]]
+    then
+      printf "${errorHeaderColor}ERROR:\n${endColor}"
+      printf "${errorMessageColor}Branch name is incompatible with Gousto standard. Use TECH-XXXX/branch-description (TECH-XXXX being JIRA ticket number) to prefix your branch name${endColor}\n"
+      exit 21
+  fi
+  sed -i.bak -e "1s/^/[$BRANCH_PREFIX_NAME] /" $1
+fi

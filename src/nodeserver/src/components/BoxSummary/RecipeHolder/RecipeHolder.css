@@ -1,0 +1,81 @@
+@value White, Pepper from 'styles/colors.css';
+@value sizeXXL, sizeXS from 'styles/typography.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value SpacingXXS, SpacingLG, SpacingMD from 'sass-loader!styles/spacing.scss';
+
+@value holderHeight 54px;
+@value desktopWidth 70px;
+@value mobileWidth 64px;
+
+.desktopIcon {
+	max-height: holderHeight;
+	min-width: desktopWidth;
+	border-radius: 6px;
+	font-size: sizeXXL;
+	margin-left: 40px;
+}
+
+.mobileIcon {
+	composes: marginLGLeft marginMDTop from 'sass-loader!styles/spacing.scss';
+	font-size: sizeXXL;
+}
+
+.checkIcon {
+	composes: absolute from 'styles/position.css';
+	composes: fa-check from 'styles/vendor/font-awesome-module.css';
+	color: White;
+}
+
+.recipeImg {
+	max-height: holderHeight;
+	min-width: desktopWidth;
+}
+
+.imgMobile {
+	composes: noRadius from 'styles/borders.css';
+	width:100%;
+}
+
+.placeHolder {
+	composes: textCenter from 'styles/typography.css';
+	composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
+	padding-top: SpacingMD;
+	padding-bottom: SpacingLG;
+	font-size: 11px;
+
+	@media ScreenXSMax {
+		margin-left: 0;
+		margin-right: 0;
+		padding-bottom: 0;
+		padding-left: SpacingXXS;
+		padding-right: SpacingXXS;
+	}
+}
+
+.inline {
+	composes: inlineBlock from 'styles/display.css';
+}
+
+.mobile {
+	composes: inline;
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+	background-color: Pepper;
+}
+
+.desktop {
+	composes: inline recipeImg;
+	composes: borderBase borderDashed from 'styles/borders.css';
+}
+
+.borderNone {
+	composes: borderNone from 'styles/borders.css';
+	composes: paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		padding: 0;
+	}
+}
+
+.widthMobile {
+	width: 25%;
+}

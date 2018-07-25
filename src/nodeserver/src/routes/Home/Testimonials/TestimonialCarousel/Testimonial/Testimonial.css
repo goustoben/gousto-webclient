@@ -1,0 +1,126 @@
+@value White, Blackberry from 'styles/colors.css';
+@value ScreenXXSMax, ScreenSMMin, ScreenMDMin, ScreenLGMin, HeightSMMax from 'styles/screenSizes.css';
+@value SpacingMD, SpacingSM, SpacingXS from 'sass-loader!styles/spacing.scss';
+@value sizeXS, sizeSM, sizeMD, sizeLG from 'styles/typography.css';
+
+.testimonial {
+	composes: borderXS from 'styles/borders.css';
+
+	border-radius: 3px;
+
+	width: 100%;
+	height: 200px;
+
+	background: White;
+	padding: 18px;
+	margin: 0;
+
+	@media (width > 1240px) {
+		width: 405px;
+		height: 365px;
+	}
+
+	@media (width <= 1240px) {
+		height: 300px;
+	}
+
+	@media (width <= 994px) {
+		height: 280px;
+	}
+
+	@media (width <= 910px) {
+		height: 300px;
+	}
+
+	@media (width <= 490px) {
+		height: 350px;
+		padding: 10px;
+	}
+
+	@media (width <= 400px) {
+		height: 410px;
+	}
+
+	@media (width <= 350px) {
+		height: 460px;
+	}
+}
+
+.starIcons, .stars {
+	width: 100%;
+}
+
+.author, .body {
+	composes: textMD from 'styles/typography.css';
+	@media ScreenXXSMax {
+		font-size: sizeMD;
+	}
+	@media ScreenSMMin {
+		font-size: sizeSM;
+	}
+	@media ScreenLGMin {
+		font-size: sizeMD;
+	}
+}
+
+.title {
+	composes: textLG textBold from 'styles/typography.css';
+	@media ScreenXXSMax {
+		font-size: sizeSM;
+	}
+	@media ScreenSMMin {
+		font-size: sizeSM;
+	}
+	@media ScreenMDMin {
+		font-size: sizeMD;
+	}
+	@media ScreenLGMin {
+		font-size: sizeLG;
+	}
+}
+
+.link {
+	color: Blackberry;
+
+	&:hover {
+		text-decoration: underline;
+		color: Blackberry;
+	}
+}
+
+.title, .body {
+	@media ScreenXXSMax {
+		margin-top: SpacingXS;
+	}
+}
+
+.starIcons, .stars {
+	height: 22px;
+	@media ScreenXXSMax {
+		height: 18px;
+	}
+	@media ScreenSMMin {
+		height: 18px;
+	}
+	@media ScreenLGMin {
+		height: 22px;
+	}
+}
+
+.author, .stars {
+	margin-bottom: SpacingMD;
+
+	@media ScreenXXSMax {
+		margin-bottom: SpacingSM;
+	}
+
+	@media ScreenXXSMax and HeightSMMax {
+		margin-bottom: SpacingXS;
+	}
+}
+
+.title {
+	@media ScreenLGMin {
+		margin-bottom: SpacingXS;
+	}
+}

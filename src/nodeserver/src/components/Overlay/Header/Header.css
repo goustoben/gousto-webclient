@@ -1,0 +1,14 @@
+@value White from 'styles/colors.css';
+
+.container {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+	background: White;
+	padding: 0;
+	z-index: 1;
+}
+
+
+.content {
+	composes: d-flex justify-content-between w-100 from 'sass-loader!styles/bootstrap.scss';
+	composes: paddingLGBottom from 'sass-loader!styles/spacing.scss';
+}

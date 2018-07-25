@@ -1,0 +1,97 @@
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+
+.overlayContainer {
+	composes: absolute from 'styles/position.css';
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-height: 100%;
+	overflow: hidden;
+}
+
+.grey {
+	composes: absolute from 'styles/position.css';
+	composes: fadeIn from 'styles/effects.css';
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1001;
+	background-color: #000;
+	opacity: 0.4;
+
+	@media ScreenSMMin {
+		transition: opacity 0.3s ease-in-out;
+	}
+}
+
+.greyFadeOut {
+	composes: grey;
+	opacity: 0;
+}
+
+.content {
+	composes: relative from 'styles/position.css';
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	z-index: 1002;
+	transition: transform 0.2s ease-in-out;
+}
+
+.contentFromright {
+	composes: content;
+	composes: slideInFromRight from 'styles/effects.css';
+}
+
+.contentSlideOutFromright {
+	composes: contentFromright;
+	transform: translateX(100%);
+}
+
+.contentFromleft {
+	composes: content;
+	composes: slideInFromLeft from 'styles/effects.css';
+}
+
+.contentSlideOutFromleft {
+	composes: contentFromleft;
+	transform: translateX(-100%);
+}
+
+.contentFrombottom {
+	composes: content;
+	composes: slideInFromBottom from 'styles/effects.css';
+}
+
+.contentFromtop {
+	composes: content;
+	composes: slideInFromTop from 'styles/effects.css';
+}
+
+.contentSlideOutFrombottom {
+	composes: contentFrombottom;
+	transform: translateY(100%);
+}
+
+.contentSlideOutFromtop {
+	composes: contentFromtop;
+	transform: translateY(-100%);
+}
+
+.reactRootOverlayBlurIn {
+	composes: willBlur from 'styles/effects.css';
+	composes: fixed from 'styles/position.css';
+	left: 0;
+	width: 100%;
+	overflow: hidden;
+	@media ScreenXSMax {
+		-webkit-filter: none;
+	}
+}
+
+.reactRootOverlay {
+	composes: reactRootOverlayBlurIn;
+	composes: blur from 'styles/effects.css';
+}

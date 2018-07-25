@@ -1,0 +1,94 @@
+@value Coriander from 'styles/colors.css';
+@value ScreenSMMax from 'styles/screenSizes.css';
+
+.container {
+	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
+}
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.fullWidthCol {
+	composes: col-md-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.errorWrapSmall {
+	composes: col-md-7 from 'sass-loader!styles/bootstrap.scss';
+	composes: center-block from 'sass-loader!styles/bootstrap.scss';
+	composes: paddingXXXLTopBottom from 'sass-loader!styles/spacing.scss';
+	composes: paddingXLLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.phoneNumber:hover {
+	text-decoration: none;
+}
+
+.textHeading {
+	composes: HeaderXXL from 'styles/typography.css';
+	text-align: center;
+	composes: block from 'styles/display.css';
+	width: 100%;
+}
+
+.description {
+	composes: headerLG from 'styles/typography.css';
+	text-align: center;
+	width: 100%;
+	margin-bottom: 0;
+}
+
+.contact {
+	composes: headerLG from 'styles/typography.css';
+	color: Coriander;
+	fill: Coriander;
+	composes: block from 'styles/display.css';
+	text-align: center;
+	width: 100%;
+}
+
+.contact, .description, .goustoIsotype {
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+.descriptionSM {
+	composes: description;
+	margin-top: 0;
+	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.contactLink {
+	color: Coriander;
+
+	@media ScreenSMMax {
+		display: block;
+		composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+	}
+}
+
+.contactLink svg {
+	@media ScreenSMMax {
+		margin-left: 0;
+	}
+
+}
+
+.email {
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	margin-top: -4px;
+	margin-right: 6px;
+	margin-left: 30px;
+}
+
+.goustoIsotype {
+	height: 200px;
+	width: 200px;
+	composes: center-block from 'sass-loader!styles/bootstrap.scss';
+}
+
+.iconEarphone {
+	composes: fa-phone from 'styles/vendor/font-awesome-module.css';
+	margin-right: 5px;
+}

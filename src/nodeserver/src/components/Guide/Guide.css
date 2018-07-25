@@ -1,0 +1,12 @@
+.container {
+	composes: pageContainer from 'styles/layout.css';
+}
+
+.panels {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.description {
+	composes: textCenter textXL from 'styles/typography.css';
+	composes: marginXLBottom from 'sass-loader!styles/spacing.scss';
+}

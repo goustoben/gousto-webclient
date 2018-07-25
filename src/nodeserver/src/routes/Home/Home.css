@@ -1,0 +1,61 @@
+@value Coconut, InYourBoxBg, White from 'styles/colors.css';
+@value ScreenXSMax, ScreenSMMax, ScreenXXSMax from 'styles/screenSizes.css';
+
+.section {
+	composes: paddingXXXXLTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.inverseSection {
+	composes: section;
+	background-color: Coconut;
+}
+
+.sectionContainer {
+	position: relative;
+}
+
+.heroSection {
+	display: inline;
+}
+
+.whatsInYourBox-section {
+	padding: 0px 0px 20px 0px;
+	background: url('routes/Home/InYourBox/unboxing-x1200.jpg') no-repeat InYourBoxBg;
+	background-position: 100% bottom;
+	background-size: auto 100%;
+
+	@media (width <= 1215px) {
+		background-position: calc(100% + 150px) bottom;
+	}
+
+	@media ScreenSMMax {
+		background-image: url('routes/Home/InYourBox/unboxing-x543.jpg');
+		height: calc(100% - 52px);
+		background-position: center top;
+		background-size: contain;
+		padding-top: 83%;
+		padding-bottom: 0;
+		background-color: White;
+	}
+
+	@media ScreenXXSMax {
+		background: url('routes/Home/InYourBox/unboxing-x543.jpg') no-repeat center top;
+		background-size: 100%;
+	}
+}
+
+.recipes-section, .subscription-section {
+	@media ScreenXSMax {
+		padding-bottom: 90px;
+	}
+}
+
+.testedAndLovedBy-section {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.emailForm-section {
+	padding-top: 0;
+	padding-bottom: 0;
+}

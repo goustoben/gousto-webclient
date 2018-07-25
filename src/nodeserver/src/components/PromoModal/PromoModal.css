@@ -1,0 +1,17 @@
+.body {
+	composes: marginXLTopBottom marginXXLLeftRight paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.buttonContainer {
+	display: inline-block;
+	text-align: right;
+	width: 100%;
+}
+
+.giftPreviews {
+	composes: marginXLTop from 'sass-loader!styles/spacing.scss';
+}
+
+.buttonSegment {
+	font-size: 14px;
+}

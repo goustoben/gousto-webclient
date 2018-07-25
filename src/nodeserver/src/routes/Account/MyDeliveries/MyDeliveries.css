@@ -1,0 +1,8 @@
+.button {
+	composes: flex flexEnd from 'sass-loader!styles/flex.css';
+	composes: paddingSMLeftRight paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.spinner {
+	text-align: center;
+}

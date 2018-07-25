@@ -1,0 +1,77 @@
+@value ScreenXSMax, ScreenSMMax, MaxBreakPointXS from 'styles/screenSizes.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+@value Coconut, White from 'styles/colors.css';
+@value gridGutterWidth from 'sass-loader!styles/bootstrap.scss';
+
+.container {
+	composes: paddingXXLBottom from 'sass-loader!styles/spacing.scss';
+	background: Coconut;
+	overflow-x: hidden;
+}
+
+.contentContainer {
+	composes: pageContainerLG from 'styles/layout.css';
+
+	@media ScreenSMMax {
+		max-width: MaxBreakPointXS;
+	}
+
+	@media ScreenXSMax {
+		max-width: none;
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.welcomeCol {
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+	composes: col-sm-12 from 'sass-loader!styles/bootstrap.scss';
+	composes: col-md-12 from 'sass-loader!styles/bootstrap.scss';
+	min-height: 0;
+	min-width: 0;
+	order: 1;
+}
+
+.colSmall {
+	composes: col-lg-4 from 'sass-loader!styles/bootstrap.scss';
+	composes: welcomeCol;
+}
+
+.colMedium {
+	composes: col-lg-8 from 'sass-loader!styles/bootstrap.scss';
+	composes: welcomeCol;
+}
+
+.colFull {
+	composes: col-md-12 from 'sass-loader!styles/bootstrap.scss';
+	composes: welcomeCol;
+}
+
+.welcomeColInner {
+	margin: gridGutterWidth 0 0;
+	composes: relative from 'styles/position.css';
+	composes: borderXS from 'styles/borders.css';
+	background: White;
+	min-height: 300px;
+
+	@media ScreenXSMax {
+		margin: calc(gridGutterWidth / 2) 0 0;
+	}
+}
+
+.colTopXS {
+	@media ScreenSMMax {
+		order: 0;
+	}
+}
+
+.colTopXSInner {
+	@media ScreenXSMax {
+		min-height: 0;
+		margin-top: 0;
+	}
+}

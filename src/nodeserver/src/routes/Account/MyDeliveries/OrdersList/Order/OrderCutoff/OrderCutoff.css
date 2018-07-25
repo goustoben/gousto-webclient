@@ -1,0 +1,4 @@
+.cutoff {
+	composes: headerMD textBold from 'styles/typography.css';
+	composes: marginZeroTopBottom, marginZeroLeftRight from 'sass-loader!styles/spacing.scss';
+}

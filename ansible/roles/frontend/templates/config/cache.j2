@@ -1,0 +1,11 @@
+<?php
+return array(
+	'driver' => '{{ cache_driver }}',
+	'memcached' => array(
+		array(
+			'host' => '{{ memcached_host }}',
+			'port' => {{ memcached_port }},
+			'weight' => 100
+		)
+	)
+);

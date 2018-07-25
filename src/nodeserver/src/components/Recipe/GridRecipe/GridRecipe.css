@@ -1,0 +1,36 @@
+@value sizeMD from 'styles/typography.css';
+
+@value attributesLineHeight 1.8;
+@value chefTtileWidth calc(100% - 85px);
+
+.recipeDetails {
+	composes: relative from 'styles/position.css';
+}
+
+.link {
+	cursor: pointer;
+}
+
+.textContainer {
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+}
+
+.linkUnderlined {
+	composes: link;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.linkIfChef {
+	max-width: chefTtileWidth;
+}
+
+.attributes {
+	line-height: attributesLineHeight;
+	font-size: sizeMD;
+}
+
+.attributeMinHeight {
+	min-height: calc(sizeMD * attributesLineHeight);
+}

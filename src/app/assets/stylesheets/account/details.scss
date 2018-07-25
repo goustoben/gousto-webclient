@@ -1,0 +1,153 @@
+@import '../config/main';
+body.account {
+	#details-content-row {
+		.account-block-outer {
+			&:first-child {
+				padding-right: 14px;
+			}
+			&:nth-child(2) {
+				padding: 0 7px;
+			}
+			&:last-child {
+				padding-left: 14px;
+			}
+			.account-block-inner {
+				min-height: 315px;
+				&:not(:first-child) {
+					margin-top: 20px;
+				}
+				label {
+					font-weight: normal;
+				}
+				#third-party-opt-in-container {
+					margin-top: 14px;
+				}
+				#account-comms-pref-submit {
+					margin: 14px 0;
+				}
+				.details-section-heading {
+					border-bottom: 1px solid $color_gradient_4;
+					padding: 20px 0;
+					margin-bottom: 15px;
+					font-size: 16px;
+					p {
+						text-transform: uppercase;
+						@include font-text-bold;
+						margin: 0 5px;
+						color: $color_gradient_9;
+						text-align: center;
+					}
+				}
+				.details-section-content {
+					.details-section-row {
+						display: block;
+						margin-bottom: 10px;
+						.detail-title {
+							text-transform: uppercase;
+							font-size: 14px;
+						}
+						.text-success {
+							color: $color_green;
+						}
+						.change-detail-heading {
+							overflow: auto;
+							font-size: 14px;
+							p {
+								padding-left: 10px;
+								padding-top: 2px;
+								margin-bottom: 0;
+								&.detail-original {
+									max-width: 70%;
+								}
+							}
+							button {
+								padding-top: 2px;
+							}
+							> .glyphicon {
+								font-size: 18px;
+							}
+						}
+						.billing-form{
+							margin-top: -20px;
+						}
+						.detail-edit, .detail-cancel {
+							color: $color_secondary;
+							text-transform: uppercase;
+							.glyphicon {
+								padding-right: 5px;
+							}
+							&:hover {
+								text-decoration: none;
+								color: $color_primary;
+							}
+						}
+						.detail-cancel:hover {
+							color: $color_primary;
+						}
+					}
+					#change-password-section {
+						margin: 20px 0;
+					}
+					#cancel-account-section {
+						padding: 20px 0 10px;
+						border-top: 1px solid $color_gradient_4;
+
+					}
+					#account-balance-section {
+						margin: 20px 0;
+						.balance-text {
+							clear: both;
+						}
+					}
+				}
+			}
+		}
+	}
+	@media (max-width: 767px) {
+		#details-content-row {
+			.account-block-outer {
+				overflow: auto;
+				&:nth-child(n) {
+					padding-left: 0;
+					padding-right: 0;
+				}
+				border-top: 1px solid $color_gradient_4;
+				&:last-child {
+					border-bottom: 1px solid $color_gradient_4;
+				}
+				.details-section-edit, .details-section-close, .address-section-edit, .address-section-close {
+					text-transform: uppercase;
+					color: $color_secondary;
+				}
+				.account-block-inner {
+					min-height: 0;
+					background-color: $color_gradient_1;
+					transition: background-color 500ms cubic-bezier(0.4, 0, 1, 1);
+					-moz-transition: background-color 500ms cubic-bezier(0.4, 0, 1, 1);
+					-o-transition: background-color 500ms cubic-bezier(0.4, 0, 1, 1);
+					-webkit-transition: background-color 500ms cubic-bezier(0.4, 0, 1, 1);
+					padding: 0 10px;
+					&:not(:first-child) {
+						border-top: 1px solid $color_gradient_4;
+						margin-top: 0;
+					}
+					&.active {
+						background-color: $color_gradient_3;
+					}
+					.details-section-heading {
+						overflow: auto;
+						border-bottom: none;
+						padding: 20px 0;
+						margin-bottom: 0;
+						font-size: 14px;
+						p {
+							text-transform: none;
+							font-weight: normal;
+							margin: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}

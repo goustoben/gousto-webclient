@@ -1,0 +1,222 @@
+@value ScreenXXSMin, ScreenXXSMax, ScreenXSMax, ScreenSMMin, ScreenSMMax, ScreenMDMin, ScreenMLMin, ScreenMLMax, ScreenMDMax, ScreenLGMin, ScreenLGMax, ScreenXLMin, HeightMDMax from 'styles/screenSizes.css';
+@value sizeSM, sizeXL, sizeXXL, sizeXXL2 from 'styles/typography.css';
+@value Chia from 'styles/colors.css';
+
+.container {
+	width: 100%;
+	position: relative;
+	background: url('routes/Home/Hero2/hero-2-box.jpg') no-repeat top center;
+	background-size: cover;
+	height: 215px;
+
+/**
+544 - 767
+ */
+	@media ScreenXXSMin and ScreenXSMax {
+		height: 303px;
+	}
+
+/**
+768 - 859
+ */
+	@media ScreenSMMin and (max-width: 859px) {
+		height: 315px;
+	}
+
+/**
+860 - 991
+ */
+	@media (min-width: 860px) and ScreenSMMax {
+		height: 355px;
+	}
+
+/**
+992 - 1024
+ */
+	@media ScreenMDMin and ScreenMLMax {
+		height: 405px;
+	}
+
+/**
+1025 - 1199
+ */
+	@media ScreenMLMin and (max-width: 1199px){
+		height: 430px;
+	}
+
+/**
+1200 - 1280
+ */
+	@media (min-width: 1200px) and (max-width: 1280px) {
+		height: 475px;
+	}
+
+/**
+1281 - 1366
+ */
+	@media (min-width: 1281px) and (max-width: 1366px) {
+		height: 500px;
+	}
+
+/**
+1367 - 1599
+ */
+	@media (min-width: 1367px) and ScreenLGMax {
+		height: 580px;
+	}
+
+/**
+1600 - 1899
+ */
+	@media ScreenXLMin  and (max-width: 1899px){
+		height: 633px;
+	}
+
+/**
+1900
+ */
+	@media (min-width: 1900px) {
+		height: 740px;
+	}
+}
+
+.textContainer {
+	position: absolute;
+	top: 44px;
+	right: 5%;
+	width: 40%;
+	max-width: 595px;
+
+/**
+544 - 767
+ */
+	@media ScreenXXSMin and ScreenXSMax {
+		top: 61px;
+		width: 45%;
+		right: 10px;
+	}
+
+/**
+768
+ */
+	@media ScreenSMMin {
+		right: 15px;
+		width: 45%;
+		max-width: 395px;
+	}
+
+/**
+768 - 859
+ */
+	@media ScreenSMMin and (max-width: 859px) {
+		top: 65px;
+	}
+
+/**
+860 - 991
+ */
+	@media (min-width: 860px) and ScreenSMMax {
+		top: 73px;
+	}
+
+/**
+992 - 1024
+ */
+	@media ScreenMDMin and ScreenMLMax {
+		top: 83px;
+	}
+
+/**
+1025
+ */
+	@media ScreenMLMin {
+		max-width: 440px;
+	}
+
+/**
+1025 - 1199
+ */
+	@media ScreenMLMin and (max-width: 1199px){
+		top: 90px;
+	}
+
+/**
+1200 - 1280
+ */
+	@media (min-width: 1200px) and (max-width: 1280px) {
+		top: 103px;
+	}
+
+/**
+1281
+ */
+	@media (min-width: 1281px) {
+		right: 10%;
+	}
+
+/**
+1281 - 1366
+ */
+	@media (min-width: 1281px) and (max-width: 1366px) {
+		top: 110px;
+	}
+
+/**
+1367 - 1599
+ */
+	@media (min-width: 1367px) and ScreenLGMax {
+		top: 122px;
+	}
+
+/**
+1600 - 1899
+ */
+	@media ScreenXLMin  and (max-width: 1899px){
+		top: 136px;
+	}
+
+/**
+1900
+ */
+	@media (min-width: 1900px) {
+		top: 160px;
+		right: 15%;
+	}
+}
+
+.headerBase {
+	color: Chia;
+}
+
+.header {
+	composes: headerBase;
+	composes: headerXXL from 'styles/typography.css';
+	line-height: 1.2em;
+
+/**
+860
+ */
+	@media (min-width: 860px) {
+		font-size: sizeXXL;
+	}
+
+/**
+992
+ */
+	@media ScreenMDMin {
+		font-size: sizeXXL2;
+	}
+}
+
+.subHeader {
+	composes: headerBase;
+	composes: textBold from 'styles/typography.css';
+	font-size: sizeSM;
+	margin-top: -5px;
+
+	/*544-767*/
+	@media ScreenXXSMin {
+		font-size: sizeXL;
+		margin-top: 0;
+	}
+}

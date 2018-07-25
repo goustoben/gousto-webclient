@@ -1,0 +1,56 @@
+@value Radish, White from 'styles/colors.css';
+@value sizeSM from 'styles/typography.css';
+@value SpacingMD from 'sass-loader!styles/spacing.scss';
+
+.base {
+	background: White;
+	composes: block from 'styles/display.css';
+	color: Radish;
+	width: 100%;
+}
+
+.tagBase {
+	composes: textBold textUpper from 'styles/typography.css';
+	composes: base;
+}
+
+.tagCentered {
+	composes: textCenter from 'styles/typography.css';
+}
+
+.tagSpaced {
+	composes: paddingXSTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.recipeTag {
+	composes: paragraphMD from 'styles/typography.css';
+	composes: tagBase;
+}
+
+.recipeTagSmall {
+	composes: paragraphSM from 'styles/typography.css';
+	composes: tagBase;
+}
+
+.recipeTagSmallSimple {
+	composes: recipeTagSmall;
+	padding-top: 3px;
+}
+
+.detail {
+	composes: paddingMDBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: textLeft paragraphSM from 'styles/typography.css';
+	composes: base;
+	font-size: sizeSM;
+	margin-top: calc(SpacingMD * -1);
+}
+
+.lowStock {
+	composes: paragraphMD from 'styles/typography.css';
+	composes: tagBase;
+}
+
+.hide {
+	composes: noPadding noMargin from 'sass-loader!styles/spacing.scss';
+	composes: none from 'styles/display.css';
+}

@@ -1,0 +1,84 @@
+@value sizeMD from 'styles/typography.css';
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value Blackberry from 'styles/colors.css';
+@value SpacingMD, SpacingLG, SpacingXXXL, SpacingZero from 'sass-loader!styles/spacing.scss';
+@value sizeMD from 'styles/typography.css';
+
+@value minWidth: 400px;
+@value minHeight: 600px;
+@value maxWidth: 600px;
+
+.modal {
+	composes: modal from 'styles/overlays.css';
+	composes: textCenter from 'styles/typography.css';
+	composes: flex column flexStart from 'styles/flex.css';
+	padding: 25px;
+
+	@media ScreenSMMin {
+		padding: 35px;
+	}
+
+	margin-top: SpacingLG !important;
+	min-width: minWidth;
+	min-height: minHeight;
+	max-width: maxWidth;
+
+	@media ScreenXSMax {
+		min-height: 100vh;
+		margin-top: SpacingZero !important;
+		height: 100%;
+		min-width: SpacingZero;
+		border-radius: SpacingZero;
+		padding: 30px 15px;
+	}
+}
+
+.loading {
+	composes: absolute from 'styles/position.css';
+
+	top: 50%;
+	left: 50%;
+
+	transform: translate(-50%, -50%);
+}
+
+.title {
+	composes: textXL textBold from 'styles/typography.css';
+	width: 100%;
+	margin-bottom: 0;
+	margin-top: 0.5rem;
+}
+
+.preTitle {
+	composes: textMD textBold from 'styles/typography.css';
+	composes: paddingLGTop from 'sass-loader!styles/spacing.scss';
+	width: 100%;
+	margin-bottom: -0.5rem;
+}
+
+.container {
+	min-height: 100vh;
+	width: 100%;
+}
+
+.content {
+	flex: 1 1 auto;
+	display: flex;
+	width: 100%;
+}
+
+.back {
+	composes: absolute from 'styles/position.css';
+
+	left: SpacingMD;
+	top: SpacingMD;
+	font-size: sizeMD;
+
+	&:hover {
+		cursor: pointer;
+	};
+}
+
+.backIcon {
+	composes: fa-chevron-left from 'styles/vendor/font-awesome-module.css';
+}

@@ -1,0 +1,16 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.horizontalScrollWrapper {
+	composes: flex flexStart from 'styles/flex.css';
+	composes: fullWidth from 'styles/positioning.css';
+	height: auto;
+	@media ScreenXSMax {
+		overflow-x: scroll;
+		-webkit-overflow-scrolling: touch;
+		white-space: nowrap;
+	}
+}
+
+.horizontalScrollWrapper::-webkit-scrollbar {
+	display: none;
+}

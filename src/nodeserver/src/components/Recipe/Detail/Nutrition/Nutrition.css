@@ -1,0 +1,50 @@
+@value RadiusXS from 'styles/borders.css';
+@value Basa, White from 'styles/colors.css';
+
+.container {
+	composes: paddingLGTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: col-lg-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.subContainer {
+	composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	background-color: White;
+}
+
+.header {
+	composes: paddingMDBottom from 'sass-loader!styles/spacing.scss';
+	composes: headerXL from 'styles/typography.css';
+}
+
+.insetHeader {
+	composes: paddingMDTop from 'sass-loader!styles/spacing.scss';
+	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.tableBorder {
+	border-bottom: RadiusXS solid Basa;
+}
+
+.table {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	composes: borderNone from 'styles/borders.css';
+	composes: paragraphSM from 'styles/typography.css';
+	border-collapse: collapse;
+	width: 95%;
+}
+
+.tableMargins {
+	composes: marginMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.tablePadding {
+	composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.extraNutritionalInformation {
+	composes: textSM from 'styles/typography.css';
+}
+
+.extraInfoMargins {
+	composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
+}

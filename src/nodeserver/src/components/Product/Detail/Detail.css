@@ -1,0 +1,72 @@
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value White, Mushroom50 from 'styles/colors.css';
+
+.fullHeight {
+	composes: absolute from 'styles/position.css';
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+
+.container {
+	composes: relative from 'styles/position.css';
+	composes: container from 'sass-loader!styles/bootstrap.scss';
+	top: 0;
+	z-index: 1000;
+	background-color: Mushroom50;
+	width: 72%;
+
+	@media ScreenXSMax {
+		width: 100%;
+	}
+}
+
+.content {
+	composes: paddingLGBottom marginLGLeftRight marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.image {
+	width: 100%;
+}
+
+.row {
+	composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+	background-color: White;
+}
+
+
+.col {
+	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		margin: 0;
+	}
+}
+
+.colSM {
+	composes: col;
+	composes: col-lg-5 col-md-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colMD {
+	composes: col;
+	composes: col-lg-7 col-md-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colFull {
+	composes: col;
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.detailContainer {
+	composes: flex from 'styles/display.css';
+	flex-flow: column;
+}
+
+.detailButtons {
+	@media ScreenSMMin {
+		order: 2;
+	}
+}

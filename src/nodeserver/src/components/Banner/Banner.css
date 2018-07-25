@@ -1,0 +1,26 @@
+@value Bluecheese, White from 'styles/colors.css';
+
+.container {
+  composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
+  text-align: center;
+  background: Bluecheese;
+}
+
+.hide {
+	composes: none from 'styles/display.css';
+}
+
+.text {
+  composes: inlineBlock from 'styles/display.css';
+  composes: marginXXS from 'sass-loader!styles/spacing.scss';
+  composes: textXL bodyFont textBold from 'styles/typography.css';
+  color: White;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.linkUnderlined {
+  text-decoration: underline;
+}

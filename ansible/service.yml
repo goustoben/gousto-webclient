@@ -1,0 +1,13 @@
+---
+# This playbook is used to build dev machines
+
+- name: apply common configuration to all nodes
+  hosts: all
+  remote_user: ubuntu
+  sudo: yes
+
+  roles:
+    - frontend
+
+  vars:
+    nodejs_version: "8.11.3"

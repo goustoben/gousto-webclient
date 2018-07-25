@@ -1,0 +1,62 @@
+@value SpacingMD from 'sass-loader!styles/spacing.scss';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+	width: 100%;
+	margin: 0 auto;
+}
+
+.col {
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.section {
+	composes: col;
+	composes: col-md-7 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.aside {
+	composes: col;
+	composes: col-md-5 from 'sass-loader!styles/bootstrap.scss';
+	@media ScreenXSMax {
+		margin-top: SpacingMD;
+	}
+}
+
+.content {
+	composes: row;
+	composes: pageContainerLG from 'styles/layout.css';
+	composes: marginXXLTopBottom from 'sass-loader!styles/spacing.scss';
+	padding-top: 20px;
+	padding-bottom: 15px;
+}
+
+.menuTitle {
+	composes: headerXXL from 'styles/typography.css';
+	composes: noMargin noPadding from 'sass-loader!styles/spacing.scss';
+}
+
+.subHeader {
+	composes: relative from 'styles/position.css';
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	background: White;
+	z-index: 1;
+}
+
+.subHeaderContent {
+	composes: pageContainer from 'styles/layout.css';
+	composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.mobileButton {
+	composes: fixed from 'styles/position.css';
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	border-radius: 0;
+}
+
+.errorContainer {
+	margin-top: 10px;
+}

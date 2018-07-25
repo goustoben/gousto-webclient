@@ -1,0 +1,59 @@
+@import 'config/main';
+
+.alertify {
+	margin-top: 60px;
+	background-color: $color_gradient_3;
+	border-radius: 0;
+	box-shadow: 0 0 10px rgba($color_gradient_10, 0.5);
+	border: none;
+	color: $color_gradient_7;
+	.alertify-title {
+		display: block;
+		font-size: 18px;
+		text-transform: uppercase;
+	}
+	.alertify-buttons {
+		background: none;
+		margin: 0 auto;
+		padding: 10px 0;
+		text-align: center;
+	}
+	.alertify-button {
+		display: inline-block;
+		width: 46%;
+		padding: 8px;
+		margin-top: 20px 5px 0;
+		border-radius: 3px;
+		font-size: 14px;
+		text-transform: uppercase;
+		text-align: center;
+		&:focus {
+			outline: none;
+			box-shadow: none;
+		}
+	}
+	@media (max-width: 767px) {
+		.alertify-inner {
+			text-align: center;
+		}
+		.alertify-buttons {
+			padding: 10px
+		}
+		.alertify-button {
+			display: block;
+			width: 100%;
+			&:first-child {
+				margin: 0 0 10px 0;
+			}
+			&:last-child {
+				margin: 0;
+			}
+		}
+	}
+}
+
+.remeberme-label {
+	display: inline;
+	font-weight: normal;
+	font-size: 12px;
+}

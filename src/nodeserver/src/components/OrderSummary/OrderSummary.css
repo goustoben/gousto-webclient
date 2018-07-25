@@ -1,0 +1,70 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.container {
+	composes: paddingXXLLeftRight marginLGTop marginXXLBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.disclaimer {
+	composes: marginXLTop from 'sass-loader!styles/spacing.scss';
+	composes: paragraphXS textCenter from 'styles/typography.css';
+}
+
+.button {
+	composes: paddingSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+.textblock {
+	composes: marginSMTop marginZeroBottom from 'sass-loader!styles/spacing.scss';
+	composes: textCenter from 'styles/typography.css';
+	font-size: 0.95rem;
+}
+
+.subheader {
+	composes: textblock;
+	font-weight: bold;
+}
+
+.error {
+	composes: textblock;
+	composes: error from 'styles/layout.css';
+}
+
+.success {
+	composes: textblock;
+	composes: success from 'styles/layout.css';
+}
+
+.mobileOnly {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.details {
+	composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		overflow-y: hidden;
+		transition: max-height 0.5s ease-in-out, margin 0.25s ease-in-out 0.25s;
+		height: auto;
+		max-height: 1000px;
+	}
+}
+
+.slideUp {
+	@media ScreenXSMax {
+		margin-top: 0;
+		margin-bottom: 0;
+		max-height: 0;
+	}
+}
+
+.toggleLink {
+	composes: textLink from 'styles/typography.css';
+}
+
+.receipt {
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+}

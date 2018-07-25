@@ -1,0 +1,7 @@
+.clearAllFilters {
+	composes: clearAll from '../FilterMenu/FilterMenu.css';
+	white-space: nowrap;
+	text-align: center;
+	display: table;
+	margin: 0 auto;
+}

@@ -1,0 +1,82 @@
+@value ScreenLGMin, ScreenXSMax, ScreenMDMax from 'styles/screenSizes.css';
+@value Blackberry, White from 'styles/colors.css';
+
+.container {
+	padding-top: 125px;
+	padding-bottom: 125px;
+	background: Blackberry;
+}
+
+.title {
+	composes: headerXL from 'styles/typography.css';
+	composes: marginXXXLBottom from 'sass-loader!styles/spacing.scss';
+
+	text-align: center;
+	color: White;
+	font-size: 28px;
+}
+
+.logos {
+	height: 100%;
+	width: 100%;
+	margin: auto;
+	max-width: 1280px;
+	position: relative;
+
+	@media ScreenMDMax {
+		padding-left: 25px;
+		padding-right: 25px;
+	}
+
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+.logo {
+	float: left;
+	width: calc(20% - 50px);
+	height: 50px;
+	margin-left: 50px;
+
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+
+	@media ScreenMDMax {
+		margin-left: 20px;
+		width: calc(33% - 14px);
+
+		&:nth-child(n+4) {
+			margin-top: 35px;
+		}
+	}
+
+	@media ScreenXSMax {
+		margin-top: 5px;
+	}
+
+	&:first-child {
+		margin-left: 0;
+
+		@media ScreenLGMin {
+			margin-left: 25px;
+		}
+	}
+}
+
+.fourthLogo {
+	composes: logo;
+	@media ScreenMDMax {
+		margin-left: 0px;
+	}
+}
+
+.mobileSpacer {
+	composes: logo;
+	@media ScreenLGMin {
+		display: none;
+	}
+}

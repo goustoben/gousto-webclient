@@ -1,0 +1,20 @@
+@value White from 'styles/colors.css';
+@value gridGutterWidth from 'sass-loader!styles/bootstrap.scss';
+@value ScreenXXSMax from 'styles/screenSizes.css';
+
+.container {
+	composes: pageContainer from 'styles/layout.css';
+}
+
+.fullBleedMobile {
+	@media ScreenXXSMax {
+		margin-left: calc(gridGutterWidth * -1);
+		margin-right: calc(gridGutterWidth * -1);
+	}
+}
+
+.shadowBlock {
+	composes: borderXS from 'styles/borders.css';
+	background-color: White;
+	position: relative;
+}

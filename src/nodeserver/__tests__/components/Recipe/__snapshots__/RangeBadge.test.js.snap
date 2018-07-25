@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[
+	`<RangeBadge /> snapshots should render when given a preconfigured range 1`
+] = `
+<span
+  className="badge"
+  style={
+    Object {
+      "backgroundColor": "Carrot",
+      "borderColor": "Carrot",
+      "color": "White",
+    }
+  }
+>
+  Ten to Table
+</span>
+`

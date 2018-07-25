@@ -1,0 +1,3 @@
+.orderItemSummary {
+	composes: textMD from 'styles/typography.css';
+}

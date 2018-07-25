@@ -1,0 +1,20 @@
+/**
+ * All Fonts
+ */
+
+@mixin font-heading-bold {
+	font-family: 'ComfortaaRegular', 'Helvetica', sans-serif;
+	font-weight: bold;
+	-webkit-font-smoothing: antialiased;
+}
+@mixin font-text-regular {
+	font-family: 'AvenirBook', 'Helvetica', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	text-transform: none;
+}
+@mixin font-text-bold {
+	font-family: 'AvenirHeavy', 'Helvetica', sans-serif;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+	text-transform: none;
+}

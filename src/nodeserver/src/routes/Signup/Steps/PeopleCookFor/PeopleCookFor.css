@@ -1,0 +1,28 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+@value Bluecheese from 'styles/colors.css';
+
+.container {
+	composes: flex row noWrap spaceBetween from 'styles/flex.css';
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+	max-width: 430px;
+	margin-left: auto;
+	margin-right: auto;
+
+	@media ScreenXSMax {
+		margin: SpacingSM 40px;
+	}
+}
+
+.button {
+	flex-grow: 1;
+	margin: 0 4px;
+}
+
+.link {
+	composes: textBold from 'styles/typography.css';
+	color: Bluecheese;
+	margin-top: 30px;
+	cursor: pointer;
+	text-decoration: underline;
+}

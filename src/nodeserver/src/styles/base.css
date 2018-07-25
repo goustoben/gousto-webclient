@@ -1,0 +1,28 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value Blackberry, Bluecheese, Blueberry from 'styles/colors.css';
+
+:global body {
+	color: Blackberry;
+}
+
+:global a {
+	color: Bluecheese;
+
+	&:hover, &:active, &:focus {
+		color: Blueberry;
+	}
+}
+
+.button {
+	cursor: pointer;
+	user-select: none;
+}
+
+:global body[data-gousto-overlay-open] .zopim {
+	-webkit-filter: blur(3px);
+	z-index: 10 !important;
+}
+
+:global .disabled[role="button"] {
+	cursor: default;
+}

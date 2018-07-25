@@ -1,0 +1,28 @@
+@value ScreenXSMax, ScreenXXSMax, HeightMDMax from 'styles/screenSizes.css';
+@value SpacingXXXXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
+@value Coconut, White from 'styles/colors.css';
+@value desktopInfoSize: 470px;
+@value mobileInfoSize: 300px;
+@value mobileInfoBgSize: 220px;
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 210px;
+	width: 100%;
+	position: relative;
+	background-position: center center / cover no-repeat;
+	background-size: cover;
+}
+
+.headerBase {
+	text-align: center;
+	width: 100%;
+}
+
+.header {
+	composes: headerBase;
+	composes: headerXXL2 headlineFont from 'styles/typography.css';
+	margin-bottom: auto;
+}

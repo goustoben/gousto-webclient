@@ -1,0 +1,116 @@
+@value ScreenXSMax, ScreenSMMin, MinBreakPointXL, ScreenMDMin from 'styles/screenSizes.css';
+@value SpacingXXL, SpacingLG, SpacingMD as GutterSize, SpacingSM, SpacingXS from 'sass-loader!styles/spacing.scss';
+@value sizeMD, sizeSM, sizeXL from 'styles/typography.css';
+@value Coconut, Mushroom50, Oyster, White  from 'styles/colors.css';
+@value headerHeight from 'components/Header/Header.css';
+
+@value ColumnWidth 33.333%;
+@value MobColumnWidth 100%;
+@value MobGridWidth 50%;
+@value HeaderLimit 1214px;
+@value oneHundrendPercent 100%;
+
+.container {
+	background: Coconut;
+	padding-bottom: 75px;
+}
+
+
+.willBlur {
+	composes: willBlur from 'styles/effects.css';
+}
+.blur {
+	composes: blur from 'styles/effects.css';
+	@media ScreenXSMax {
+		-webkit-filter: none;
+	}
+}
+
+.greyOverlay {
+	composes: fixed from 'styles/position.css';
+	left: 0;
+	top: 0;
+
+	width: 100%;
+	height: 100%;
+	background-color: #000;
+	opacity: 0;
+	z-index: 100;
+	pointer-events: none;
+
+	@media ScreenSMMin {
+		transition: opacity 0.3s ease-in-out;
+	}
+
+	@media ScreenXSMax {
+		transition: none;
+	}
+
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		margin-top: -15px;
+	}
+}
+
+.greyOverlayShow {
+	composes: greyOverlay;
+	composes: fadeIn from 'styles/effects.css';
+
+	pointer-events: all;
+	opacity: 0.4;
+
+	@media ScreenXSMax {
+		animation: none;
+	}
+}
+
+.masonryContainer {
+	composes: pageContainer from 'styles/layout.css';
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.masonryContainerWithCollectionsNav {
+	composes: masonryContainer;
+	padding-top: 60px;
+	@media ScreenXSMax {
+		padding-top: 43px;
+	}
+}
+
+.masonryContainerWithMenuFilterNav {
+	composes: masonryContainer;
+	margin-top: -15px;
+}
+
+.legal {
+	composes: textXS textCenter from 'styles/typography.css';
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+	color: Oyster;
+}
+
+.willFade {
+	opacity: 1;
+	transition: 0.5s opacity;
+}
+
+.fadeOut {
+	composes: willFade;
+	opacity: 0.4;
+	pointer-events: none;
+}
+
+.loadingContainer {
+	position: fixed;
+	z-index: 1;
+	width: 100%;
+}
+
+.loading {
+	display: block;
+	margin: auto;
+	width: 100px;
+	margin-top: 60px;
+	pointer-events: none;
+}

@@ -1,0 +1,56 @@
+@import '../config/main';
+
+// Form Validation Styling
+div.error, label.error {
+	color: $color_primary;
+	@include font-text-bold;
+	display: block;
+	margin: 0;
+}
+
+/* Error pages */
+.error-page .wrapper {
+	max-width: 1170px;
+	margin-right: auto;
+	margin-left: auto;
+	float: none;
+}
+#errorwrap {
+	width: 80%;
+	margin: 0 auto;
+	padding-top: 25px;
+}
+#errorwrap-small {
+	width: 60%;
+	margin: 0 auto;
+	padding-top: 25px;
+}
+.error-page{
+	&-container{
+		display: flex;
+		justify-content: center;
+		@media (max-width: $screen-sm-max) {
+			display: block;
+		}
+	}
+	&-contact{
+		color: $color_secondary;
+		fill: $color_secondary;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	&-email{
+		max-width: 24px;
+		max-height: 24px;
+		vertical-align: bottom;
+	}
+	&-link {
+		color: $color_primary;
+		&:hover{
+			color: $color_primary_hover;
+		}
+	}
+	&-isotype{
+		height: 200px;
+	}
+}

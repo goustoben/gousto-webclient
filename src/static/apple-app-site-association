@@ -1,0 +1,21 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "BD9LGV9V9T.uk.co.gousto.Gousto",
+                "paths": [ "/menu", "/menu/*", "/my-referrals", "/my-deliveries" ,"/my-details" ]
+            },
+            {
+                "appID": "BD9LGV9V9T.uk.co.gousto.gousto.staging",
+                "paths": [ "/menu", "/menu/*", "/my-referrals", "/my-deliveries", "/my-details" ]
+            }
+        ]
+    },
+    "webcredentials": {
+       "apps": [ 
+            "BD9LGV9V9T.uk.co.gousto.Gousto",
+            "BD9LGV9V9T.uk.co.gousto.gousto.staging"
+        ]
+    }
+}

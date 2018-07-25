@@ -1,0 +1,7 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.container {
+	@media ScreenXSMax {
+		margin-bottom: -5px;
+	}
+}

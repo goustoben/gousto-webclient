@@ -1,0 +1,19 @@
+query GetBoxPrices {
+	boxPrices {
+		gourmet {
+			num_persons
+			num_portions
+			price_per_portion
+			price_per_portion_discounted
+			product_total
+			recipe_total
+			recipe_discount
+			promo_code
+			promo_code_valid
+			delivery_total
+			gross_total
+			vat_charged
+			total
+		}
+	}
+}

@@ -1,0 +1,100 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value White from 'styles/colors.css';
+
+.order {
+	composes: borderXS from 'styles/borders.css';
+	composes: clearfix from 'styles/layout.css';
+	composes: paddingLGTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
+	background: White;
+	border-radius: 0;
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+	&:hover {
+		box-shadow: 0px 2px 4px 0 rgba(0, 0, 0, 0.2);
+	}
+}
+
+.orderRow {
+	composes: flex from 'styles/flex.css';
+}
+
+.orderMain {
+	composes: flex from 'styles/flex.css';
+	composes: paddingXXLLeft paddingXXXLRight  from 'sass-loader!styles/spacing.scss';
+	composes: fullWidth from 'styles/positioning.css';
+	@media ScreenXSMax {
+		align-items: flex-start;
+		margin: 0;
+		padding-left: 10px;
+		padding-right: 10px;
+		padding-bottom: 10px;
+	}
+}
+
+.orderDetail {
+	margin-left: 190px;
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+		margin: 0;
+	}
+}
+
+.orderColLeft {
+	composes: flex flexStart verticalCenter from 'styles/flex.css';
+	composes: fullWidth from 'styles/positioning.css';
+	@media ScreenXSMax {
+		align-items: flex-start;
+	}
+}
+
+.orderColRight {
+	composes: flex flexEnd verticalCenter from 'styles/flex.css';
+	margin-left: auto;
+	@media ScreenXSMax {
+		justify-content: flex-end;
+		align-self:stretch;
+		flex-direction: column;
+	}
+}
+
+.orderSummaryContainer {
+	composes: paddingXXLRight paddingXLTopBottom from 'sass-loader!styles/spacing.scss';
+	composes: fullWidth from 'styles/positioning.css';
+	@media ScreenXSMax {
+		justify-content: flex-start;
+		padding: 0;
+	}
+}
+
+.collapseArrow {
+	@media ScreenXSMax {
+		flex: 1;
+	}
+}
+
+.orderWrap {
+	composes: paddingSMLeftRight paddingSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+.link {
+	composes: noDecor from 'styles/typography.css';
+	cursor: pointer;
+}
+
+.top {
+	@media ScreenXSMax {
+		align-self: flex-start;
+		margin-bottom: auto;
+	}
+}
+
+.bottom {
+	@media ScreenXSMax {
+		align-self: flex-end;
+		margin-top: auto;
+	}
+}

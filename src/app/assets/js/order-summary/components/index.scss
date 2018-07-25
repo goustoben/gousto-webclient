@@ -1,0 +1,67 @@
+/* ADDING SUPPORT USING/OVERRIDING LEGACY CLASSES */
+
+.ordersummary-products {
+	&.ordersummary-recipes {
+		margin-top: -5px;
+	}
+
+	.ordersummary-recipe {
+		position: relative;
+	}
+
+	&-picture-container {
+		overflow: hidden;
+		width: 65px;
+		height: 70px;
+		display: inline-block;
+		position: absolute;
+		left: 5px;
+		top: 0;
+
+		img {
+			margin: 5px;
+			height: 100%;
+			max-width: none;
+			margin-left: -15px;
+		}
+	}
+
+	.order-summary-recipe-title--container {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.ordersummary-recipe-overview {
+		padding-left: 80px;
+		height: 75px;
+		display: block;
+		position: relative;
+		max-width: none;
+	}
+
+	.glyphicon-remove {
+		width: 20px;
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		font-size: 11px;
+		padding: 0px;
+
+		position: absolute;
+		top: 50%;
+		right: 10px;
+		margin-top: -8px;
+		display: inline-block;
+		border-radius: 15px;
+		color: $color_gradient_1;
+		background-color: $color_gradient_5;
+		cursor: pointer;
+	}
+}
+
+.ordersummary-vat {
+	font-weight: normal;
+	text-align: left;
+	font-size: 12px;
+}

@@ -1,0 +1,173 @@
+@value Coconut, Pomegranate, White from 'styles/colors.css';
+@value SpacingXS, SpacingLG, SpacingXXL from 'sass-loader!styles/spacing.scss';
+@value ScreenMDMax, ScreenSMMin, ScreenSMMax, ScreenXSMax from 'styles/screenSizes.css';
+
+@value maxWidth 1540px;
+@value navBarHeight 43px;
+
+.navBarContainer {
+	composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
+	background: White;
+	width: 100%;
+	position: absolute;
+	z-index: 0;
+
+	overflow-y: hidden;
+	height: navBarHeight;
+
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.navBarContainerFixed {
+	composes: navBarContainer;
+	@media ScreenXSMax {
+		z-index: 100;
+		position: fixed;
+		top: 0;
+	}
+}
+
+.navBarContainerFixedTransition {
+	composes: navBarContainerFixed;
+	animation-duration: 0.5s;
+	animation-name: navBarTransition;
+}
+
+@keyframes navBarTransition {
+	from {
+		top: -50px;
+	}
+
+	to {
+		top: 0;
+	}
+}
+
+.nav {
+	composes: relative from 'styles/position.css';
+	width: 100%;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	max-width: maxWidth;
+	margin: auto;
+
+	&::-webkit-scrollbar {
+	    -webkit-appearance: none;
+	}
+}
+
+.navBar {
+	composes: flex row noWrap from 'styles/flex.css';
+	height: navBarHeight;
+}
+
+.item {
+	composes: marginLGLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: paddingXSLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: headlineFont textCenter from 'styles/typography.css';
+	border-bottom: 2px solid transparent;
+	white-space: nowrap;
+	user-select: none;
+
+	font-weight: normal;
+	cursor: pointer;
+	flex-shrink: 0;
+
+	&:first-child {
+		@media ScreenSMMin {
+			margin-left: 0;
+		}
+	}
+
+	&:last-child {
+		margin-right: SpacingXS;
+	}
+}
+
+.itemTitle {
+	line-height: 3em;
+}
+
+.currentItem {
+	composes: item;
+	color: Pomegranate;
+	border-color: Pomegranate;
+	font-weight: bold;
+}
+
+.arrow {
+	position: absolute;
+	top: 0;
+	height: navBarHeight;
+	width: 25px;
+	padding-top: 12px;
+	z-index: 10;
+	cursor: pointer;
+
+	@media ScreenSMMax {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+
+.arrowLeft {
+	composes: arrow;
+	composes: fa-fw fa-chevron-left from 'styles/vendor/font-awesome-module.css';
+	background-image: linear-gradient(to right, Coconut, rgba(255,255,255,0));
+
+	left: SpacingXXL;
+	@media ScreenSMMax {
+		left: 0;
+	}
+	@media screen and (min-width: maxWidth) {
+		left: calc((100% - maxWidth) / 2);
+	}
+}
+
+.arrowLeftFixed {
+	composes: arrowLeft;
+	@media ScreenXSMax {
+		position: fixed;
+	}
+}
+
+.arrowLeftFixedTransition {
+	composes: arrowLeftFixed;
+	animation-duration: 0.5s;
+	animation-name: navBarTransition;
+}
+
+
+.arrowRight {
+	composes: arrow;
+	composes: fa-fw fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	background-image: linear-gradient(to right, rgba(255,255,255,0), Coconut);
+
+	right: SpacingXXL;
+	@media ScreenSMMax {
+		right: 0;
+	}
+	@media screen and (min-width: maxWidth) {
+		right: calc((100% - maxWidth) / 2);
+	}
+}
+
+.arrowRightFixed {
+	composes: arrowRight;
+	@media ScreenXSMax {
+		position: fixed;
+	}
+}
+
+.arrowRightFixedTransition {
+	composes: arrowRightFixed;
+	animation-duration: 0.5s;
+	animation-name: navBarTransition;
+}
+
+.hideMobile {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}

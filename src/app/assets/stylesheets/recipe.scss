@@ -1,0 +1,464 @@
+@import 'config/main';
+
+/**********************************/
+/***** Individual Recipe Page *****/
+/**********************************/
+
+.indivrecipe-page{
+	.text-danger {
+		color: $color_primary;
+	}
+	@media (max-width: 767px) {
+		.container {
+			padding: 0;
+		}
+	}
+}
+
+/* Title & Share */
+.indivrecipe-title {
+	@include font-heading-bold;
+	font-size: 32px;
+	color: $color_gradient_9;
+	margin-top: 0px;
+	@media (max-width: 767px) {
+		bottom: 0;
+		padding: 10px;
+		margin-bottom: 0;
+		text-align: center;
+		font-size: 26px;
+		background-color: rgba($color_gradient_1, 0.8);
+	}
+}
+.indivrecipe-rating {
+	.stocklabel {
+		display: none;
+	}
+}
+.indivrecipe-share {
+	margin-top: 25px;
+}
+.indivrecipe-share-step {
+	padding: 0;
+}
+.indivrecipe-share-title {
+	@media (min-width: 767px) {
+		padding-top: 7px;
+		padding-right: 10px;
+	}
+}
+.indivrecipe-share-yours {
+	font-size: 15px;
+	padding-top: 0;
+	margin-top: -15px;
+	h2 {
+		font-size: 15px;
+		color: $color_primary;
+	}
+	p {
+		margin-bottom: 4px;
+	}
+	ul {
+		list-style-type: none;
+		padding: 0px 0px 10px 10px;
+		li {
+			margin-bottom: 5px;
+		}
+	}
+	.share {
+		span.social-icon {
+			@include circle($color_gradient_10, $color_primary, $color_primary, 25px);
+			display: inline-block;
+			text-align: center;
+			&.facebook {
+				padding-left: 4px;
+			}
+		}
+		span.text {
+			padding-left: 5px;
+		}
+		svg {
+			width: 14px;
+			height: 14px;
+			fill: $color_gradient_1;
+		}
+	}
+}
+
+/* Product photo & details */
+.indivrecipe-product-photo {
+	max-height: 425px;
+	overflow: hidden;
+	img {
+		margin-top: -15%;
+	}
+	@media (min-width: 767px) {
+		margin-bottom: 20px;
+	}
+	@media (max-width: 767px) {
+		padding-left: 0;
+		padding-right: 0;
+		img {
+			margin-top: -15%;
+		}
+	}
+}
+.indivrecipe-product-description {
+	font-size: 15px;
+	color: $color_text;
+	margin-bottom: 20px;
+}
+.indivrecipe-product-wishlist-left {
+	padding-left: 0;
+	@media (max-width: 767px) {
+		padding-left: 15px;
+		text-align: justify;
+	}
+}
+.indivrecipe-product-wishlist-right {
+	padding-right: 0;
+	@media (max-width: 767px) {
+		margin-top: 15px;
+	}
+}
+.indivrecipe-product-wishlist-info-icon {
+	border: 1px solid $color_gradient_9;
+	border-radius: 50%;
+	height: 25px;
+	width: 25px;
+	font-size: 17px;
+	color: $color_gradient_9;
+	padding-left: 9px;
+	margin-top: 5px;
+	margin-right: 10px;
+}
+.indivrecipe-product-wishlist-info-text {
+	font-style: italic;
+	@media (max-width: 767px) {
+		font-size: 14px;
+	}
+}
+.indivrecipe-product-rating {
+	position: absolute;
+	.stars-full {
+		min-width: 80px;
+		max-width: 80px;
+	}
+	.star-overflow {
+		overflow: hidden;
+		position: absolute;
+		bottom: 0px;
+	}
+}
+.indivrecipe-product-rating-count {
+	position: absolute;
+	left: 100px;
+}
+
+/* Product Panels */
+.indivrecipe-panel-wrapper {
+	@media (max-width: 767px) {
+		padding: 0;
+		min-height: 0;
+	}
+}
+.panel-subheading {
+	@include font-text-regular;
+	font-size: 14px;
+}
+.indivrecipe-panel {
+	@include vendor-prefix(box-shadow, none);
+	.panel-heading {
+		padding: 10px;
+	}
+	@media (min-width: 767px) {
+		@include vendor-prefix(border-radius, 0);
+		border: 0px;
+		@include vendor-prefix(box-shadow, none);
+		margin-bottom: 40px;
+		.panel-heading {
+			@include font-heading-bold;
+			font-size: 20px;
+			color: $color_text;
+			@include vendor-prefix(border-radius, 0);
+		}
+	}
+
+	@media (max-width: 767px) {
+		border: none;
+		border-radius: 0;
+		@include vendor-prefix(box-shadow, none);
+		padding: 10px 20px;
+		margin-bottom: 10px;
+		.panel-heading {
+			@include font-heading-bold;
+			font-size: 20px;
+			text-align: center;
+			padding: 10px 0;
+			margin-bottom: 5px;
+		}
+		.panel-body {
+			padding: 0;
+		}
+	}
+}
+
+/* Tabs for mobile */
+.indivrecipe-tabs {
+	list-style: none;
+	padding: 0;
+	margin-bottom: 0;
+	li {
+		@include font-text-bold;
+		display: inline;
+		border-top: 3px solid lighten($color_secondary, 20%);
+		border-right: 1px solid $color_gradient_3;
+		border-bottom: 1px solid $color_gradient_3;
+		border-left: 1px solid $color_gradient_3;
+		font-size: 16px;
+		color: $color_gradient_4;
+		text-align: center;
+		padding: 20px 10px;
+		&.active {
+			background-color: $color_gradient_3;
+			color: $color_secondary;
+			border-top: 3px solid $color_secondary;
+			border-bottom: 1px solid $color_gradient_3;
+		}
+	}
+}
+
+/* Ingredients */
+.indivrecipe-ingredients {
+	padding: 5px;
+	&:nth-of-type(3n+1) {
+		clear: both;
+	}
+}
+
+.indivrecipe-ingredients-img {
+	@include vendor-prefix(border-radius, 50%);
+	@media (min-width: 767px) {
+		max-width: 80%;
+		margin: 20px 0 5px;
+	}
+}
+svg.icon-vegs {
+	fill: $color_gradient_5;
+	display: block;
+	width: 80%;
+	padding: 20px;
+	margin: 20px auto 5px auto;
+	max-width: 200px;
+	@media (max-width: 767px) {
+		width: 100%;
+		padding: 40px;
+		margin: 0 auto;
+	}
+}
+.indivrecipe-ingredients-text {
+	text-transform: lowercase;
+	@media (max-width: 767px) {
+		font-size: 12px;
+		line-height: 16px;
+		padding-top: 2px;
+		text-align: center;
+	}
+}
+
+/* Nutrition */
+.indivrecipe-nutrition {
+	padding: 10px;
+	.nutritional-info-table {
+		text-align: center;
+		border: 0;
+		thead {
+			border: 0;
+			* {
+				border: 0;
+				text-align: center;
+			}
+		}
+		tbody {
+			td {
+				border: 0;
+			}
+			tr {
+				border-top: 1px solid $color_gradient_4;
+			}
+		}
+		.key {
+			text-align: left;
+		}
+	}
+	.row {
+		margin: 0;
+	}
+	.ingredients {
+		display: none;
+	}
+	.sub-ingredients {
+		list-style: none;
+		padding: 0 0 10px 0;
+		text-transform: capitalize;
+		&.ingredient-name {
+			@include font-heading-bold;
+		}
+		&.ingredient-description {
+			@include font-text-regular;
+		}
+		dl.ingredient-description {
+			margin: 0;
+		}
+	}
+	.allergens {
+		list-style: none;
+		@include font-text-bold;
+		margin: 0 0 5px 0;
+		padding: 0;
+	}
+	.extra-nutritional-information {
+		font-size: 14px;
+		margin-bottom: 30px;
+	}
+}
+.indivrecipe-nutrition-text {
+	display: none;
+	font-size: 14px;
+	margin-bottom: 15px;
+}
+.indivrecipe-nutrition-box {
+	background-color: $color_gradient_3;
+	padding: 20px 5px;
+	border-bottom: 1px solid $color_gradient_1;
+	&:nth-child(odd) {
+		border-right: 1px solid $color_gradient_1;
+	}
+	&:nth-last-child(2), &:last-child {
+		border-bottom: none;
+	}
+}
+.indivrecipe-nutrition-box-title {
+	font-size: 15px;
+	margin-bottom: 0;
+}
+.indivrecipe-nutrition-box-value {
+	font-size: 20px;
+	color: $color_primary;
+	margin-bottom: 0;
+}
+
+/* Cooking instruction */
+.indivrecipe-cooking-more {
+	@media(min-width: 767px) {
+		display: none!important;
+	}
+}
+.indivrecipe-cooking-step {
+	@include font-heading-bold;
+	background-color: $color_secondary;
+	position: absolute;
+	color: $color_gradient_1;
+	font-size: 20px;
+	padding: 6px 16px;
+}
+.indivrecipe-cooking-placeholder {
+	height: 180px;
+	background: $color_gradient_4;
+	padding: 15px;
+	.icon-pots-vegs {
+		fill: $color_gradient_9;
+		width: 100%;
+		height: 150px;
+		@media (min-width: 767px) and (max-width: 992px) {
+			height: 75px;
+		}
+	}
+}
+
+.indivrecipe-cooking-img {
+	@media(min-width: 767px) {
+		overflow: hidden;
+		@include aspect-ratio(7,5);
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
+	@media(max-width: 767px) {
+		padding: 0;
+	}
+}
+.indivrecipe-cooking-number {
+	@include font-text-bold;
+	font-size: 18px;
+	color: $color_primary;
+	margin-right: 5px;
+}
+.indivrecipe-cooking-text-wrapper {
+	@media (max-width: 767px) {
+		padding: 0;
+	}
+}
+.indivrecipe-cooking-text {
+	font-size: 16px;
+	@media (max-width: 767px) {
+		margin-top: 15px;
+		padding: 0;
+	}
+}
+.indivrecipe-cooking-text-firstword {
+	@include font-text-bold;
+	text-transform: capitalize;
+}
+#instructions {
+	@media(max-width: 767px) {
+		padding-right: 0;
+		.panel-body {
+			overflow: scroll;
+		}
+		.indivrecipe-steps-container {
+			width: calc(100vw * 7);
+			.row {
+				width: calc(100vw - 75px);
+				margin-right: 20px;
+			}
+		}
+	}
+}
+.indivrecipe-steps-container {
+	width: 100%;
+	.row {
+		display: inline-block;
+	}
+	.indivrecipe-cooking-step.step-8 {
+		display: none;
+	}
+}
+.indivrecipe-trygousto {
+	border: 5px solid $color_gradient_4;
+	position: relative;
+	width: 40vw;
+	@media (max-width: $screen-xs-max) {
+		width: auto;
+		margin-right: 15px;
+		margin-left: 15px;
+	}
+	&-icon {
+		max-height: 50px;
+		max-width: 100px;
+	}
+	&-cta {
+		text-align: center;
+		padding-top: 10px;
+	}
+	&-title {
+		@include font-text-bold;
+	}
+}
+
+@media (min-width: 768px){
+	.cookbook-gap {
+		margin-top: 20px;
+	}
+}

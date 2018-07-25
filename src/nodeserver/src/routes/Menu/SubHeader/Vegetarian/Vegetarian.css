@@ -1,0 +1,24 @@
+.checkbox {
+	composes: textLeft from 'styles/typography.css';
+	composes: marginXXSLeft from 'sass-loader!styles/spacing.scss';
+	width: 1.3em;
+}
+
+.checkboxEmpty {
+	composes: checkbox;
+	composes: fa-square-o from 'styles/vendor/font-awesome-module.css';
+}
+
+.checkboxChecked {
+	composes: checkbox;
+	composes: fa-check-square-o from 'styles/vendor/font-awesome-module.css';
+}
+
+.checkboxMobile {
+	margin-left: 0;
+	margin-right: -2px;
+}
+
+.vegetarian {
+	composes: button from 'styles/base.css';
+}

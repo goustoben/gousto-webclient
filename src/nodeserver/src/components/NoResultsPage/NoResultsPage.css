@@ -1,0 +1,28 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.page {
+    display: table;
+    position: relative;
+    text-align: center;
+    height: 405px;
+    width: 502px;
+    margin: 0 auto;
+    @media ScreenXSMax {
+        width: 355px;
+    }
+}
+
+.image {
+    width: 248px;
+    height: 248px;
+    position: relative;
+    margin-top: 20px;
+}
+
+.title {
+    display: table-row;
+}
+
+.description{
+    display: table-row;
+}

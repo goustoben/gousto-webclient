@@ -1,0 +1,35 @@
+#box-prices-container {
+	background: $color_gradient_3;
+}
+
+.box-prices {
+	background: $color_background;
+	&-ghero {
+		background-image: url('/images/photos/box-prices-hero.png');
+		padding: 60px 0px;
+		background-position: 0% 66%;
+	}
+	&-hero-title {
+		color: $color_secondary;
+		text-shadow: none;
+	}
+	.text {
+		font-size: 15px;
+	}
+	.heading {
+		color: $color_secondary;
+		@include font-heading-bold;
+	}
+	.sub-heading {
+		margin-top: 40px;
+	}
+
+	.outer-container {
+		background: $color_gradient_1;
+	}
+
+	@import './box-info';
+	@import './box-prices-list';
+	@import './box-prices-content';
+}
+

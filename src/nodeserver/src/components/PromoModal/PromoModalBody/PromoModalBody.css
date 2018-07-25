@@ -1,0 +1,9 @@
+.heading {
+	composes: textBold from 'styles/typography.css';
+	composes: marginSMTop marginLGBottom from 'sass-loader!styles/spacing.scss';
+	font-size: 32px;
+}
+
+.body {
+	font-size: 16px;
+}

@@ -1,0 +1,25 @@
+@value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
+@value sizeXXL, sizeXL, sizeLG, sizeMD, sizeSM from 'styles/typography.css';
+@value Cacao from 'styles/colors.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+
+.base {
+	composes: textBold from 'styles/typography.css';
+	composes: headlineFont from 'styles/typography.css';
+	color: Cacao;
+}
+
+.heading {
+	composes: base;
+	composes: headerLG from 'styles/typography.css';
+	composes: paddingMDLeft marginSMTop marginZeroBottom from 'sass-loader!styles/spacing.scss';
+	font-size: sizeXXL;
+
+	@media ScreenSMMax {
+		font-size: sizeXL;
+	}
+
+	@media ScreenXSMax {
+		font-size: sizeLG;
+	}
+}

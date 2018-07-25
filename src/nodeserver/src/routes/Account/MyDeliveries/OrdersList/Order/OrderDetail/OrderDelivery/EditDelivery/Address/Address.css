@@ -1,0 +1,42 @@
+@value Bluecheese from 'styles/colors.css';
+
+.addressContainer {
+	padding-left: 20px;
+	align-self: center;
+}
+
+.checkbox {
+	align-self: flex-start;
+	padding-top:5px;
+}
+
+.square {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	border: 1px solid #DBDBDB;
+	border-radius: 4px;
+	background-color: white;
+	cursor: pointer;
+}
+
+.deliveryContainer {
+	display: flex;
+}
+
+.name {
+	composes: textBold from 'styles/typography.css';
+	margin-bottom: 0px;
+}
+
+.tick {
+	color: Bluecheese;
+	font-size: 20px;
+	composes: fa-check from 'styles/vendor/font-awesome-module.css';
+	padding-left: 5px;
+	padding-top: 3px;
+}
+
+.cantClick {
+	cursor: auto;
+}

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Gel /> snapshots should render children 1`] = `
+<div
+  className="gel medium white"
+>
+  <div
+    className="gelContent"
+  >
+    <h1>
+      A Gel's child
+    </h1>
+  </div>
+</div>
+`

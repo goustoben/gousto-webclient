@@ -1,0 +1,62 @@
+@value sizeXXS from 'styles/typography.css';
+@value checkRadioSize, checkRadioColor, checkRadioBgColorUnchecked, checkRadioBorderColorUnchecked, checkRadioBgColorChecked, checkRadioBorderColorChecked, checkRadioBorderColorFocus from 'styles/forms.css';
+
+.container {
+	composes: block from 'styles/display.css';
+}
+
+.indicator {
+	composes: c-indicator from 'sass-loader!styles/bootstrap.scss';
+	background-color: checkRadioBgColorUnchecked;
+	box-shadow: 0 0 0 1px checkRadioBorderColorUnchecked;
+	background-size: 60% 60%;
+	width: checkRadioSize;
+	height: checkRadioSize;
+}
+
+.label {
+	composes: c-input c-checkbox from 'sass-loader!styles/bootstrap.scss';
+	composes: paragraphXS from 'styles/typography.css';
+	padding: 2px 0;
+
+	& .indicator {
+		border-radius: 5px;
+	}
+
+	& .text {
+		padding-left: calc(checkRadioSize + 10px);
+	}
+
+	& > input {
+		&:focus ~ .indicator,
+		&:active ~ .indicator {
+			box-shadow: 0 0 0 1px checkRadioBorderColorUnchecked;
+		}
+
+		&:checked ~ .indicator,
+		&:checked::focus ~ .indicator,
+		&:checked:active ~ .indicator {
+			box-shadow: inset 0 0 0 1px checkRadioBorderColorChecked;
+			box-shadow: 0 0 0 1px checkRadioBorderColorChecked;
+		}
+	}
+
+	&:hover > input ~ .indicator {
+		box-shadow: 0 0 0 1px checkRadioBorderColorFocus;
+	}
+}
+
+.input {
+	composes: c-input from 'sass-loader!styles/bootstrap.scss';
+}
+
+.disclaimer {
+	& .label {
+		font-size: sizeXXS;
+	}
+
+	& .text {
+		display: inline-block;
+		vertical-align: middle;
+	}
+}

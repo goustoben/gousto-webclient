@@ -1,0 +1,37 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value Oyster, Blackberry, Mackerel from 'styles/colors.css';
+
+.textarea {
+	composes: fullWidth from 'styles/positioning.css';
+	composes: marginSMTopBottom paddingSMTopBottom paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
+ 	height: 160px;
+ 	color: Blackberry;
+ 	border-color: Mackerel;
+ 	&:focus {
+		border-color: Oyster;
+		box-shadow: none;
+		outline: none;
+	}
+}
+
+.feedback {
+	text-align: center;
+	composes: fullWidth from 'styles/positioning.css';
+	composes: block from 'styles/display.css';
+	composes: marginLGBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.controls {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+
+	@media ScreenXSMax {
+		flex-wrap: wrap;
+
+		& > div {
+			min-width: 100%;
+			margin-top: 15px;
+		}
+	}
+}

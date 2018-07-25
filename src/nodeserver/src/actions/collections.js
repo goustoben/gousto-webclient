@@ -1,0 +1,117 @@
+/* eslint no-use-before-define: ["error", { "functions": false }] */
+import GoustoException from 'utils/GoustoException'
+import * as collectionsApi from 'apis/collections'
+import actionTypes from 'actions/actionTypes'
+import statusActions from 'actions/status'
+
+const collectionActions = {
+	collectionsLoadCollectionBySlug,
+	collectionsLoadCollectionRecipes,
+	collectionsLoadCollections,
+}
+
+function collectionsLoadCollections({ date, limit, offset, type } = {}) {
+	return async (dispatch, getState) => {
+		try {
+			dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, true))
+			dispatch(statusActions.error(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, null))
+			const accessToken = getState().auth.get('accessToken')
+			let filters
+
+			if (type) {
+				filters = { type }
+			}
+
+			if (date) {
+				filters = {
+					...filters,
+					available_on: date,
+				}
+			}
+
+			const args = {
+				limit,
+				filters,
+				offset,
+			}
+
+			try {
+				const { data: collections } = await collectionsApi.fetchCollections(accessToken, '', args)
+				dispatch({
+					type: actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS,
+					collections,
+				})
+			} catch (err) {
+				throw new GoustoException(`Failed to load collections with args: ${JSON.stringify(args)}`, {
+					error: 'fetch-collections-fail',
+					level: 'notice',
+				})
+			}
+		} catch (err) {
+			dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, err))
+		} finally {
+			dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, false))
+		}
+	}
+}
+
+function collectionsLoadCollectionBySlug(collectionSlug) {
+	return async dispatch => {
+		try {
+			dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, collectionSlug))
+			dispatch(statusActions.error(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, null))
+
+			let collection
+			try {
+				const { data } = await collectionsApi.fetchCollectionBySlug(collectionSlug)
+				collection = data
+			} catch (err) {
+				throw new GoustoException(`Failed to load collection by slug: ${collectionSlug}`, {
+					error: 'fetch-collection-fail',
+					level: 'notice',
+				})
+			}
+
+			dispatch({
+				type: actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS,
+				collections: [collection],
+			})
+		} catch (err) {
+			dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, err))
+		} finally {
+			dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, false))
+		}
+	}
+}
+
+function collectionsLoadCollectionRecipes(collectionId) {
+	return async dispatch => {
+		try {
+			dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, true))
+			dispatch(statusActions.error(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, null))
+
+			let items
+			try {
+				const { data } = await collectionsApi.fetchCollectionRecipes(null, collectionId)
+				items = data
+			} catch (err) {
+				throw new GoustoException(`Failed to load collection recipes by collection id: ${collectionId}`, {
+					error: 'fetch-collection-recipes-fail',
+					level: 'notice',
+				})
+			}
+
+			dispatch({
+				type: actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES,
+				collectionId,
+				recipes: items.recipes,
+			})
+		} catch (err) {
+			dispatch(statusActions.errorLoad(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, err))
+		} finally {
+			dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, false))
+		}
+	}
+}
+
+export default collectionActions

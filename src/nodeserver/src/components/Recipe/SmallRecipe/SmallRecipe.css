@@ -1,0 +1,18 @@
+.recipeDetails {
+	composes: relative from 'styles/position.css';
+}
+
+.link {
+	cursor: pointer;
+}
+
+.linkUnderlined {
+	composes: link;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.textContainer {
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+}

@@ -1,0 +1,113 @@
+@value Blackberry, Bluecheese, Blueberry, Carrot, DarkHaricot, DarkHaricot05, Mackerel, Oyster, Radish, Radish05, White from 'styles/colors.css';
+
+@value inputPlaceholderColor Oyster;
+@value inputDisabledColor Oyster;
+
+@value inputColor Blackberry;
+@value inputBgColor White;
+@value inputBorderColor Mackerel;
+@value inputBorderColorFocus Oyster;
+
+@value dropdownSelectedColor White;
+@value dropdownSelectedBgColor Bluecheese;
+
+@value inputSecondaryColor Bluecheese;
+@value inputSecondaryBgColor White;
+@value inputSecondaryBorderColor Bluecheese;
+@value inputSecondaryBorderColorFocus Blueberry;
+
+@value dropdownSecondarySelectedColor White;
+@value dropdownSecondarySelectedBgColor Blueberry;
+
+@value checkRadioSize 18px;
+@value checkRadioBgColorUnchecked White;
+@value checkRadioBorderColorUnchecked Mackerel;
+@value checkRadioBgColorChecked Bluecheese;
+@value checkRadioBorderColorChecked Bluecheese;
+@value checkRadioBorderColorFocus Oyster;
+
+@value errorColor Radish;
+@value errorBgColor Radish05;
+@value errorBorderColor Radish;
+
+@value successColor DarkHaricot;
+@value successBgColor DarkHaricot05;
+@value successBorderColor DarkHaricot;
+
+@value infoColor: Carrot;
+
+.input {
+	composes: block from 'styles/display.css';
+	composes: borderSM from 'styles/borders.css';
+	composes: textLG from 'styles/typography.css';
+	composes: paddingXSTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	width: 100%;
+	outline: none;
+
+	&::placeholder {
+		color: inputPlaceholderColor;
+		text-transform: none;
+	}
+
+	&:not(.inputError):not(.inputSuccess) {
+		background-color: inputBgColor;
+		color: inputColor;
+		border-color: inputBorderColor;
+
+		&:hover, &:active, &:focus {
+			border-color: inputBorderColorFocus;
+		}
+
+		&.secondary {
+			background-color: inputSecondaryBgColor;
+			color: inputSecondaryColor;
+			border-color: inputSecondaryBorderColor;
+
+			&:hover, &:active, &:focus {
+				border-color: inputSecondaryBorderColorFocus;
+			}
+		}
+	}
+}
+
+.inputSuccess {
+	background-color: successBgColor;
+	color: successColor;
+
+	&, &:hover, &:active, &:focus {
+		border-color: successBorderColor;
+	}
+}
+
+.inputError {
+	background-color: errorBgColor;
+	color: errorColor;
+
+	&, &:hover, &:active, &:focus {
+		border-color: errorBorderColor;
+	}
+}
+
+.msg {
+	composes: textXS from 'styles/typography.css';
+	composes: paddingXXSTop noMargin from 'sass-loader!styles/spacing.scss';
+
+	&:first-letter {
+		text-transform: capitalize;
+	}
+}
+
+.infoMsg {
+	composes: msg;
+	color: infoColor;
+}
+
+.errorMsg {
+	composes: msg;
+	color: errorColor;
+}
+
+.successMsg {
+	composes: msg;
+	color: successColor;
+}

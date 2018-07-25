@@ -1,0 +1,59 @@
+@value Radish from 'styles/colors.css';
+@value ScreenXXSMin from 'styles/screenSizes.css';
+
+.container {
+	background:#333D47;
+	padding-top:30px;
+	padding-bottom:30px;
+}
+
+.title {
+	composes: headerLG from 'styles/typography.css';
+	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+
+	text-align: center;
+	color: White;
+	font-size: 24px;
+}
+
+.description {
+	composes: textCenter textMD from 'styles/typography.css';
+	composes: marginXLBottom from 'sass-loader!styles/spacing.scss';
+	color: white;
+}
+
+.form {
+	composes: marginXLTop marginXXLLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.input {
+	width: 350px;
+	@media ScreenXXSMin {
+		margin-right: 15px;
+	}
+}
+
+.inputs {
+	composes: marginSMBottom noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.msg {
+	composes: textXS from 'styles/typography.css';
+	/* composes: paddingXXSTop noMargin from 'sass-loader!styles/spacing.scss'; */
+
+	&:first-letter {
+		text-transform: capitalize;
+	}
+}
+
+.errorMsg {
+	composes: msg;
+	color: white;
+}

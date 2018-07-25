@@ -1,0 +1,27 @@
+.block {
+	display: block;
+}
+
+.inlineBlock {
+	display: inline-block;
+}
+
+.inline {
+	display: inline;
+}
+
+.table {
+	display: table;
+}
+
+.none {
+	display: none;
+}
+
+.flex {
+	display: flex;
+}
+
+.inlineFlex {
+	display: inline-flex;
+}

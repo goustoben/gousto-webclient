@@ -1,0 +1,27 @@
+@value White from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.imageContainer {
+	height:600px;
+	width: auto;
+	composes: relative from 'styles/position.css';
+	margin: auto;
+	composes: paddingZeroTopBottom paddingZeroLeftRight from 'sass-loader!styles/spacing.scss';
+	background: url('routes/Jobs/FadeHero/fadeImage.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	@media ScreenXSMax {
+		height:200px;
+	}
+}
+
+.fadeContainer {
+	width: 100%;
+	height: 200px;
+	background: White;
+	background: linear-gradient(White, rgba(0,0,0,0));
+	@media ScreenXSMax {
+		height:50px;
+	}
+}

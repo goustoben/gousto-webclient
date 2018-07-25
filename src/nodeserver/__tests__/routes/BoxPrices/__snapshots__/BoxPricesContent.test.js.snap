@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BoxPricesContent Will snap BoxPricesContent 1`] = `
+<div>
+  <div
+    className="container"
+  >
+    <div
+      className="row"
+    >
+      <div
+        className="content"
+      >
+        <h3
+          className="title"
+        >
+          You're in control
+        </h3>
+        <p>
+          Choose from over 20 recipes a week: meat, fish and vegetarian. That’s more than other recipe boxes. Choose the recipes you want, the day of the week you want them delivered, and how many servings
+        </p>
+      </div>
+      <div
+        className="content"
+      >
+        <h3
+          className="title"
+        >
+          Won't be home for delivery?
+        </h3>
+        <p>
+          No problem. Choose a safe place where we can leave your box. Ice and insulation help keep your ingredients cool.
+        </p>
+      </div>
+    </div>
+    <div
+      className="row centered"
+    >
+      <div
+        className="svg icon-hearts icon"
+        style={
+          Object {
+            "backgroundImage": "url(icon-hearts.svg)",
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="quotes column"
+  >
+    <blockquote
+      className="quote"
+    >
+      <p>
+        Exceptionally high quality ingredients, superb meat, great big portions. No waste - one of the best bits - and a significant saving on our weekly food bill. Super excited when the box arrives each week!
+      </p>
+      <span
+        className="source"
+      >
+        Rachel, Leeds
+      </span>
+    </blockquote>
+    <blockquote
+      className="quote"
+    >
+      <p>
+        Our boring meals are once again adventurous! Food bill is reduced as I no longer buy veg and meat that I forget to use. On to our third week of orders now - delicious!
+      </p>
+      <span
+        className="source"
+      >
+        Alison, St Albans
+      </span>
+    </blockquote>
+  </div>
+</div>
+`;

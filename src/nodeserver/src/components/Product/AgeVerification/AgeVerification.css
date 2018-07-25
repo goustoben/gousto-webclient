@@ -1,0 +1,15 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value SpacingMD from from 'sass-loader!styles/spacing.scss';
+
+.checkbox {
+	@media ScreenXSMax {
+		margin-top: SpacingMD;
+	}
+}
+
+.error {
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+	composes: textCenter from 'styles/typography.css';
+	composes: fadeIn from 'styles/effects.css';
+	composes: error from 'styles/layout.css';
+}

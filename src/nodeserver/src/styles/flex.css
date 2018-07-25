@@ -1,0 +1,82 @@
+/* Flex container */
+
+.flex {
+	composes: flex from './display.css';
+}
+
+.inlineFlex {
+	composes: inlineFlex from './display.css';
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
+.noWrap {
+	flex-wrap: nowrap;
+}
+
+.center {
+	justify-content: center;
+}
+
+.spaceBetween {
+	justify-content: space-between;
+}
+
+.spaceAround {
+	justify-content: space-around;
+}
+
+.flexStart {
+	justify-content: flex-start;
+}
+
+.flexEnd {
+	justify-content: flex-end;
+}
+
+.column {
+	flex-direction: column;
+}
+
+.row {
+	flex-direction: row;
+}
+.rowReverse {
+	flex-direction: row-reverse;
+}
+
+.verticalCenter {
+	align-items: center;
+}
+
+.stretch {
+	align-items: stretch;
+}
+
+.flexStart {
+	align-items: flex-start;
+}
+
+.contentCenter {
+	align-content: center;
+}
+
+/* Items */
+
+.itemStart {
+	align-self: start;
+}
+
+.itemCenter {
+	align-self: center;
+}
+
+.rowWrap{
+	flex-flow: row wrap;
+}
+
+.flexGrow {
+	flex-grow: 1;
+}

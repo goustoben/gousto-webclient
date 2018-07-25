@@ -1,0 +1,15 @@
+@value ScreenMDMin from 'styles/screenSizes.css';
+
+.boxPriceList {
+    composes: accountContainer from 'styles/layout.css';
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 15px;
+
+    @media ScreenMDMin {
+        flex-direction: row;
+    }
+
+}

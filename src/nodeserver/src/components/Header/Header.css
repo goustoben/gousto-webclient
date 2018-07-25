@@ -1,0 +1,277 @@
+@value White, Pomegranate, Blackberry from 'styles/colors.css';
+@value MainFontColor White;
+@value sizeXXL from 'styles/typography.css';
+@value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+@value desktopHeaderHeight 89px;
+@value mobileHeaderHeight 53px;
+@value mobileLogoSize 25px;
+
+.header {
+	position: relative;
+	height: desktopHeaderHeight;
+	margin-bottom: -1px;
+	@media ScreenXSMax {
+		height: mobileHeaderHeight;
+	}
+}
+
+.headerNoContactBar {
+	composes: header;
+	height: 64px;
+}
+
+.smallContainer {
+	@media ScreenXSMax {
+		height: 40px;
+	}
+}
+
+.overlay {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	background: Blackberry;
+	visibility: hidden;
+	transition: visibility 0.3s, opacity 0.3s ease-in-out;
+	z-index: -1;
+}
+
+.overlayOpen {
+	composes: overlay;
+
+	z-index: 101;
+	opacity: 0.4;
+	visibility: visible;
+}
+
+span:target .overlay {
+
+	z-index: 101;
+	opacity: 0.4;
+	visibility: visible;
+
+	@media (min-width: 768px) {
+		display: none;
+	}
+}
+
+.container {
+	composes: pageContainer from 'styles/layout.css';
+
+	max-width: none;
+	padding: 0;
+}
+
+.contactBar {
+	composes: pageContainer from 'styles/layout.css';
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	composes: noPadding from 'sass-loader!styles/spacing.scss';
+	max-width: none;
+	background: White;
+}
+
+.contactContent {
+	composes: paragraphXS from 'styles/typography.css';
+	composes: paddingXSTopBottom from 'sass-loader!styles/spacing.scss';
+	composes: bodyFont textBold from 'styles/typography.css';
+	margin: 0 auto;
+	line-height: 1;
+	text-align: right;
+	color: Blackberry;
+	text-transform: uppercase;
+}
+
+.info {
+	composes: marginSMLeft from 'sass-loader!styles/spacing.scss';
+	composes: paddingSMLeft from 'sass-loader!styles/spacing.scss';
+	border-left: 1px solid Blackberry;
+}
+
+.info:first-of-type {
+	border: none;
+	padding-left: 0;
+	margin-left: 0;
+}
+
+.mainBar {
+	background: Pomegranate;
+	position: absolute;
+	width: 100%;
+	z-index: 9;
+	min-height: mobileHeaderHeight;
+}
+
+.mainContent {
+	padding-top: 12px;
+	padding-bottom: 9px;
+	composes: pageContainer from 'styles/layout.css';
+	composes: paragraphXS from 'styles/typography.css';
+	composes: flex spaceBetween verticalCenter from 'styles/flex.css';
+	composes: relative from 'styles/position.css';
+	line-height: 1;
+
+	@media ScreenXSMax {
+		padding-top: 8px;
+		padding-bottom: 7px;
+	}
+}
+
+.logoDesktop {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	height: 30px;
+	width: 131px;
+}
+
+.logoMobile {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+	height: mobileLogoSize;
+	width: mobileLogoSize;
+}
+
+.logoLink {
+	padding-top: 7px;
+
+	@media ScreenXSMax {
+		padding-top: 10px;
+	}
+}
+
+.linkDesktopContainer {
+	composes: hidden-sm-down d-flex flex-nowrap align-items-center from 'sass-loader!styles/bootstrap.scss';
+}
+
+.linkDesktop {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	composes: marginSMLeftRight paddingXXSTopBottom paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: headlineFont textBold textCenter textUpper noDecor from 'styles/typography.css';
+	color: MainFontColor;
+	border-bottom: 2px solid transparent;
+
+	&:not(.btn) {
+		&.disabled, &:hover, &:focus, &:active {
+			border-bottom-color: MainFontColor;
+		}
+	}
+
+	&:not(.disabled) {
+		&:hover, &:focus, &:active {
+			cursor: pointer;
+			text-decoration: none;
+			color: MainFontColor;
+		}
+	}
+
+	&:last-child {
+		margin-right: 0;
+	}
+}
+
+.btn {
+	composes: linkDesktop;
+	composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: inlineBlock from 'styles/display.css';
+	composes: textCenter noDecor from 'styles/typography.css';
+	color: MainFontColor !important;
+	border: 1px solid MainFontColor;
+	border-radius: 3px;
+	overflow: hidden;
+	transition: width 0.2s linear;
+	height: 35px;
+	cursor: pointer;
+	margin: 0;
+}
+
+.btnLink {
+	composes: block from 'styles/display.css';
+	composes: textRight noDecor from 'styles/typography.css';
+	width: 100%;
+	height: 13px;
+	overflow: hidden;
+	color: MainFontColor !important;
+}
+
+.authButtonsContainer {
+	composes: d-flex flex-nowrap align-items-center justify-content-end from 'sass-loader!styles/bootstrap.scss';
+	margin-left: SpacingSM;
+	transition: all 0.3s ease-in-out;
+	min-width: 0;
+}
+
+.loggingOut {
+	min-width: calc(SpacingSM + 190px);
+}
+
+.loggedIn {
+	min-width: calc(SpacingSM + 200px);
+}
+
+.loggedOut {
+	min-width: calc(SpacingSM + 73px);
+}
+
+.linkMobileContainer {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.confirm {
+	composes: fa-check from 'styles/vendor/font-awesome-module.css';
+}
+
+.menuTitle {
+	composes: headerXXL bodyFont textBold from 'styles/typography.css';
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+	color: White;
+}
+
+.burgerIcon {
+	composes: fa-bars from 'styles/vendor/font-awesome-module.css';
+	font-size: sizeXXL;
+
+	&, &:hover {
+		color: White;
+		text-decoration: none;
+	}
+}
+
+.modal {
+	position: relative !important;
+	left: inherit !important;
+	top: inherit !important;
+	transform: inherit !important;
+	width: 60% !important;
+	margin: auto !important;
+	box-shadow: none !important;
+	margin-top: 50px !important;
+	max-width: 650px !important;
+	border-radius: 2px !important;
+	@media ScreenXSMax {
+		width: 98% !important;
+	}
+}
+
+.modalContainer {
+	margin-top: 50px;
+}
+
+.mobileTitle {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+	composes: headerXXL textCenter from 'styles/typography.css';
+	composes: inlineBlock from 'styles/display.css';
+	width: 100%;
+	margin-left: calc(mobileLogoSize * -1);
+	color: White;
+}
+
+.fullWidthPrefix {
+	composes: hidden-md-down from 'sass-loader!styles/bootstrap.scss';
+
+	&:after {
+		content: '\0020';
+	}
+}

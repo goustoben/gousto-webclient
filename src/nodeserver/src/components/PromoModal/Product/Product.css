@@ -1,0 +1,57 @@
+@value ScreenXXSMax from 'styles/screenSizes.css';
+
+.container {
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+	&:after {
+		display: table;
+		content: '';
+		clear: both;
+	}
+}
+
+.image {
+	width: 100%;
+}
+
+.image {
+	height: auto;
+}
+
+.left, .right {
+	float: left;
+	width: 50%;
+
+	@media ScreenXXSMax {
+		float: none;
+		width: 100%;
+	}
+}
+
+.left {
+	max-width: 300px;
+	@media ScreenXXSMax {
+		max-width: none;
+	}
+}
+
+.title {
+	margin-top: 0;
+	line-height: 18px;
+	@media ScreenXXSMax {
+		max-width: none;
+	}
+}
+
+.right {
+	padding-left: 15px;
+	min-width: calc(100% - 300px);
+
+	@media ScreenXXSMax {
+		margin-top: 15px;
+		min-width: 0;
+		padding-left: 0;
+	}
+}

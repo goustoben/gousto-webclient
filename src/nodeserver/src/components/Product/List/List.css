@@ -1,0 +1,16 @@
+@value gridGutterWidth from 'sass-loader!styles/bootstrap.scss';
+
+.content {
+	composes: paddingXXLLeftRight marginLGTop marginXXLBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.button {
+	composes: textCenter from 'styles/typography.css';
+	composes: paddingMDTop from 'sass-loader!styles/spacing.scss';
+}
+

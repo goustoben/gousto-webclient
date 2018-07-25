@@ -1,0 +1,55 @@
+@value ScreenXXSMax from 'styles/screenSizes.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+@value Mushroom50 from 'styles/colors.css';
+
+.container {
+	width: 100%;
+}
+
+.container :global .slick-track {
+	padding: 28px 0;
+
+	@media (width > 767px) {
+		padding: 32px 0;
+	}
+	@media (width > 950px) {
+		padding: 42px 0;
+	}
+	@media (width > 1280px) {
+		padding: 38px 0;
+	}
+}
+
+.recipe {
+	margin: 0 15px;
+	position: relative;
+	z-index: 1;
+	transition: all .3s linear;
+
+	@media (width > 480px) and (width < 769px) {
+		margin: 0 5px;
+	}
+}
+
+.container :global .slick-center :local .recipe {
+	transform: scale(1.15);
+	z-index: 2;
+}
+
+.container :global .carousel-no-js .slick-list {
+	overflow-x: scroll;
+}
+
+.container :global .slick-initialized :local .recipeContainer {
+	min-width: 0;
+}
+
+.container :global .carousel-no-js :local .recipeContainer {
+	min-width: 270px;
+	width: 270px;
+}
+
+.container :global .carousel-no-js .slick-track {
+	display: flex;
+	flex-wrap: nowrap;
+}

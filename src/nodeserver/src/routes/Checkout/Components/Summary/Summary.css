@@ -1,0 +1,28 @@
+@value SpacingLG from 'sass-loader!styles/spacing.scss';
+@value White, Pepper30 from 'styles/colors.css';
+@value sizeXXS, sizeSM from 'styles/typography.css';
+
+.summaryContainer{
+	padding: SpacingLG;
+	background-color: White;
+}
+
+.loaderContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.details{
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+	font-weight: normal;
+}
+
+.link {
+	font-size: sizeSM;
+}
+
+.arrowRight {
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	font-size: sizeXXS;
+}

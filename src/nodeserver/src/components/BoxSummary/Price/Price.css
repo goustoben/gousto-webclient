@@ -1,0 +1,21 @@
+@value ScreenSMMin, ScreenMLMax from 'styles/screenSizes.css';
+
+.hide {
+	visibility: hidden;
+	float: left;
+}
+
+.total {
+	composes: textStrike from 'styles/typography.css';
+	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+	@media ScreenSMMin and ScreenMLMax {
+		display: block;
+	}
+}
+
+.dash {
+	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+	transform: scale(3,1);
+	transform-origin: left;
+	display: inline-block;
+}

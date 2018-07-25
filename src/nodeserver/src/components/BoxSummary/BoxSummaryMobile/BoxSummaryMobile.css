@@ -1,0 +1,131 @@
+@value Blackberry, DarkRadish, Radish, White from 'styles/colors.css';
+@value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
+@value sizeLG from 'styles/typography.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
+
+@value barMobileHeight 90px;
+/* for .mobileOverlay */
+@value 100percent 100%;
+
+.container {
+	z-index: 100;
+}
+
+.barmobile {
+	composes: container;
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+	composes: fixed from 'styles/position.css';
+
+	left: 0;
+	bottom: 0;
+	background-color: Blackberry;
+	width: 100percent;
+	height: barMobileHeight;
+}
+
+.mobileText {
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+	color: White;
+}
+
+.summaryMobile {
+	composes: flex spaceAround from 'styles/flex.css';
+	composes: marginXXSTop from 'sass-loader!styles/spacing.scss';
+}
+
+.circle {
+	composes: absolute from 'styles/position.css';
+	right: 10px;
+	width: 55px;
+	height: 40px;
+	background-color: Blackberry;
+	border-radius: 10px;
+}
+
+.iconMobile {
+	composes: circle;
+	composes: textCenter from 'styles/typography.css';
+	composes: relative from 'styles/position.css';
+	color: White;
+	margin-bottom: 0;
+	margin-top: -20px;
+}
+
+.arrowDown {
+	composes: fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+}
+
+.arrowUp {
+	composes: fa-chevron-up from 'styles/vendor/font-awesome-module.css';
+}
+
+.hide {
+	composes: none from 'styles/display.css';
+}
+
+.detailContainer {
+	composes: borderXS from 'styles/borders.css';
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+	background-color: White;
+}
+
+.detailContainermobile {
+	composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: detailContainer;
+	position: relative;
+	width: 100percent;
+	height: 100percent;
+	margin: auto;
+	overflow-x: auto;
+}
+
+.supercontainermobile {
+	height: 100percent;
+}
+
+.mobileOverlay {
+	/*  The preprocessor decided that when I put 100% in the calc here I meant 1,
+		so the 100percent @value is a workaround */
+	height: calc( 100percent - barMobileHeight );
+	min-height: calc( 100percent - barMobileHeight );
+}
+
+.mobileModalContent {
+	height: 100percent;
+	min-height: 100percent !important;
+}
+
+.closeBtn {
+	composes: fa-fw fa-close from 'styles/vendor/font-awesome-module.css';
+	composes: absolute from 'styles/position.css';
+
+	right: SpacingXXS;
+	top: SpacingSM;
+
+	font-size: sizeLG;
+	cursor: pointer;
+}
+
+.errorTooltipMobile {
+	position: fixed;
+	@media ScreenSMMin {
+		display: none;
+	}
+}
+.errorTooltipDesktop {
+	display: none;
+	position: fixed;
+	@media ScreenSMMin {
+		display: inherit;
+	}
+}
+
+.errorMessage {
+	composes: textRegular from 'styles/typography.css';
+	color: DarkRadish;
+	box-shadow: 0px 2px 5px Radish;
+}
+
+.hide {
+	composes: none from 'styles/display.css';
+}

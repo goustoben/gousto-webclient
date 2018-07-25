@@ -1,0 +1,325 @@
+@value sizeXS, sizeLG, sizeXL, sizeXXL from 'styles/typography.css';
+@value SpacingXXS, SpacingXS, SpacingSM, SpacingMD, SpacingLG, SpacingXL, SpacingXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
+@value Black, Blackberry, Cacao, Chia, Mushroom50, Spruce, White from 'styles/colors.css';
+@value MaxBreakPointXS from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMin, ScreenXXSMax, ScreenSMMax, ScreenMDMin, ScreenMLMin, ScreenLGMin, ScreenMDMax from 'styles/screenSizes.css';
+
+.superContainer {
+	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
+}
+
+.nav {
+	composes: container from 'sass-loader!styles/bootstrap.scss';
+	text-align: center;
+	/* if IE 11 */
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none), (max-width: MaxBreakPointXS) {
+		flex: 0 0 100%;
+	}
+}
+
+.links {
+	composes: noPadding noMargin from 'sass-loader!styles/spacing.scss';
+	padding-bottom: 20px;
+	list-style: none;
+}
+
+.link {
+	composes: textSM from 'styles/typography.css';
+	composes: inlineBlock from 'styles/display.css';
+}
+
+.icon {
+	composes: marginXSLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: inlineBlock from 'styles/display.css';
+	margin-top: calc(SpacingXXS * -1);
+	vertical-align: top;
+	color: inherit;
+}
+
+.patternSvg {
+	background-size: contain;
+	background-repeat: repeat-x;
+	width: 100%;
+	min-height: 500px;
+}
+
+.phone {
+	composes: textSM from 'styles/typography.css';
+	@media ScreenXSMax {
+		line-height: 3;
+	}
+}
+.phone, .phone:hover, .phone:active {
+	color: White !important;
+	text-decoration: none;
+	position: relative;
+	padding-left: 23px;
+}
+
+.earPhone {
+	composes: fa-phone from 'styles/vendor/font-awesome-module.css';
+	composes: paddingXSRight from 'sass-loader!styles/spacing.scss';
+	font-size: sizeLG;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.pipe {
+	composes: paddingXSTopBottom paddingXSLeftRight marginLGRight marginXXSLeft from 'sass-loader!styles/spacing.scss';
+	border-right: 1px solid White;
+}
+
+.mobilePipe {
+	composes: pipe;
+	height: 27px;
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.desktopHide {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.desktopShow {
+	composes: hidden-md-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobileFooter {
+	composes: row col-xs-3 center-block from 'sass-loader!styles/bootstrap.scss';
+	composes: desktopHide;
+}
+
+.newsletterContainer {
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.menu {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.menuList {
+	list-style: none;
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+	padding-bottom: 25px;
+	padding-top: 20px;
+
+	@media ScreenMLMin {
+		padding-top: 40px;
+	}
+}
+
+.menuList li {
+	@media ScreenLGMin {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}
+
+.menuItem {
+	composes: inlineBlock from 'styles/display.css';
+	composes: sizeMD comfortaa from 'styles/typography.css';
+	@media ScreenSMMax {
+		font-weight: normal;
+	}
+
+	&:not(:last-child):after{
+		 content: '';
+		 padding: SpacingSM;
+		 padding-top: 0;
+		 padding-bottom: 0;
+		 @media ScreenSMMax {content: '|';}
+	 }
+}
+
+.separator {
+	composes: desktopHide;
+	width: 100%;
+	height: 1px;
+	border: none;
+	background: White;
+	opacity: 0.4;
+}
+
+.copyright {
+	composes: paragraphXS from 'styles/typography.css';
+	composes: textXXS from 'styles/typography.css';
+	padding-bottom: 5px;
+	/*color: White;*/
+}
+
+.contact {
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}
+
+.appStoreLinksContainer {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.contact, .appStoreLinksContainer {
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.footer {
+	composes: textCenter from 'styles/typography.css';
+	background: White;
+	padding-bottom: 0;
+}
+
+.appLinks {
+	composes: paddingXXXXLTopBottom from 'sass-loader!styles/spacing.scss';
+	padding-bottom: 15px;
+}
+
+.icon {
+	composes: marginXSLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: inlineBlock from 'styles/display.css';
+	margin-top: calc(SpacingXXS * -1);
+	vertical-align: top;
+	font-size: sizeXXL;
+}
+
+.facebook{
+	composes: icon;
+	composes: fa-facebook from 'styles/vendor/font-awesome-module.css';
+}
+
+.twitter{
+	composes: icon;
+	composes: fa-twitter from 'styles/vendor/font-awesome-module.css';
+}
+
+.youtube{
+	composes: icon;
+	composes: fa-youtube from 'styles/vendor/font-awesome-module.css';
+}
+
+.instagram{
+	composes: icon;
+	composes: fa-instagram from 'styles/vendor/font-awesome-module.css';
+}
+
+.gplus{
+	composes: icon;
+	composes: fa-google-plus from 'styles/vendor/font-awesome-module.css';
+}
+
+.checkoutFooterContainer {
+	composes: paddingMDTop from 'sass-loader!styles/spacing.scss';
+	margin: auto;
+	width: 100%;
+	min-height: 100%;
+	background: Blackberry;
+	height: 175px;
+	color: White;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	@media ScreenSMMin {
+		margin-top: -156px;
+	}
+
+	@media ScreenXSMax {
+		margin-top: -90px;
+	}
+}
+
+.footerFlexContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	flex-wrap: wrap;
+	max-width: 700px;
+
+	@media ScreenXXSMax {
+		flex-direction: column;
+		align-items: center;
+		max-width: 100%;
+		width: 100%;
+		margin-right: 0px;
+	}
+}
+
+.greatValue {
+	display: flex;
+	justify-content: center;
+	max-width: 230px;
+	flex-wrap: wrap;
+	margin-right: 60px;
+	max-width: auto;
+	width: auto;
+
+	@media ScreenXXSMax {
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		margin-right: 0px;
+	}
+
+	@media ScreenXSMax {
+		max-width: 158px;
+	}
+}
+
+.greatValueTitle {
+	margin: 0;
+	margin-right: 10px;
+}
+
+.greatValueDescription {
+	margin-top: 10px;
+	font-size: 0.8rem;
+}
+
+.trustpilotContainer {
+	width: auto;
+
+	@media ScreenXXSMax {
+		width: 100%;
+		margin-bottom: 10px;
+		margin-top: 10px;
+	}
+}
+
+.iconTrustpilot {
+	height: 30px;
+	width: 200px;
+
+	@media ScreenSMMin {
+		margin-top: -15px;
+	}
+
+	@media ScreenXSMax {
+		height: 30px;
+		width: 130px;
+	}
+}
+
+.icon5Stars {
+	height: 29px;
+	width: 150px;
+
+	@media ScreenXSMax {
+		height: 20px;
+		width: 100px;
+	}
+}
+
+.copyrightCheckout {
+	margin-top: -15px;
+	width: 100%;
+	font-size: 0.9rem;
+
+	@media ScreenXSMax {
+		font-size: 0.7rem;
+	}
+}

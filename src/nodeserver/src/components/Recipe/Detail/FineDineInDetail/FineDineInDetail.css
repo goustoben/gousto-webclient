@@ -1,0 +1,139 @@
+@value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
+@value Basa, White from 'styles/colors.css';
+
+.rating {
+	composes: marginMDRight from 'sass-loader!styles/spacing.scss';
+	padding-top: 3px;
+}
+
+.container {
+	composes: col-xs-12 pull-left from 'sass-loader!styles/bootstrap.scss';
+	padding: 0 0 70px 0;
+	background-color: White;
+
+	@media ScreenMDMin {
+		padding: 0
+	}
+}
+
+.block ~ .block {
+	margin: 15px 0;
+
+	@media ScreenMDMin {
+		margin: 30px 0;
+	}
+}
+
+.rule {
+	composes: marginXXLTopBottom from 'sass-loader!styles/spacing.scss';
+	border-style: solid;
+	border-bottom: 0;
+	color: Basa;
+}
+
+.contentContainer {
+	margin: 15px;
+	padding: 0;
+
+	@media ScreenMDMin {
+		max-width: 880px;
+		margin: 15px auto;
+		padding: 0 15px;
+	}
+}
+
+.tabletOnly {
+	display: none;
+
+	@media ScreenXXSMin {
+		display: block;
+	}
+
+	@media ScreenMDMin {
+		display: none;
+	}
+}
+
+.desktopOnly {
+	display: none;
+	@media ScreenMDMin {
+		display: block;
+	}
+}
+
+.headerButton {
+	composes: desktopOnly;
+	width: 327px;
+	flex-shrink: 0;
+	composes: marginSMLeft from 'sass-loader!styles/spacing.scss';
+}
+
+.header {
+	composes: flex spaceBetween row from 'styles/flex.css';
+	composes: paddingSMBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.heading {
+	composes: headerLG headlineFont from 'styles/typography.css';
+}
+
+.text {
+	composes: block;
+	composes: paragraphSM from 'styles/typography.css';
+	line-height: 1.4;
+}
+
+.overlay {
+	composes: fixed from 'styles/position.css';
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	background: rgba(0,0,0,0.5);
+}
+
+.twoColumnContainer {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.oneColumnContainer {
+	composes: col-lg-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.stickyContainer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: White;
+	border-top: 1px solid Basa;
+
+	@media ScreenXXSMin {
+		display: none;
+	}
+}
+
+.stickyButton {
+	margin: 12px 15px;
+}
+
+.carousel {
+	position: relative;
+}
+
+.closeButton {
+	position: absolute;
+	display: flex;
+	top: 7px;
+	right: 7px;
+	width: 32px;
+	height: 32px;	
+	background-color: White;
+	border-radius: 50%;
+}
+
+.closeIcon {
+	composes: closeIcon from 'styles/icons.css';
+	padding: 0;
+	margin: 1px auto auto auto;
+}

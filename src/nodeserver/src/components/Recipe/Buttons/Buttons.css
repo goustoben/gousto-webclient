@@ -1,0 +1,22 @@
+@value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
+
+.tooltipWidth {
+	@media ScreenSMMax {
+		max-width: 150px;
+	}
+	@media ScreenXSMax {
+		max-width: 100%;
+	}
+}
+
+.tooltipMobileGrid {
+	max-width: 120px;
+}
+
+.btnWrapper {
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+.btnCheckout {
+	composes: marginMDLeftRight from 'sass-loader!styles/spacing.scss';
+}

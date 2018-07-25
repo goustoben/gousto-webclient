@@ -1,0 +1,7 @@
+.widget--cookbook {
+	& > .container {
+		padding: 0;
+	}
+}
+
+@import 'cookbook-panel';

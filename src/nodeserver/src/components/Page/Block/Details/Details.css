@@ -1,0 +1,44 @@
+@value White from 'styles/colors.css';
+@value SpacingMD from 'sass-loader!styles/spacing.scss';
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value sizeLG, sizeSM, normalLineHeight from 'styles/typography.css';
+
+@value margins calc(SpacingMD + SpacingMD);
+@value titleHeightLG calc(sizeLG * normalLineHeight);
+@value titleHeightSM calc(sizeSM * normalLineHeight);
+
+.content {
+	width: 100%;
+	background: White;
+	position: absolute;
+	bottom: 0;
+}
+
+.fixedBottom {
+	position: absolute;
+	bottom: 0;
+}
+
+.singleLineTitleContainer {
+	margin-top: calc(titleHeightLG + margins);
+
+	@media ScreenXSMax {
+		margin-top: calc(titleHeightSM + margins);
+	}
+}
+
+.singleLineTitleContent {
+	composes: fixedBottom;
+}
+
+.doubleLineTitleContainer {
+	margin-top: calc(titleHeightLG * 2  + margins);
+
+	@media ScreenXSMax {
+		margin-top: calc(titleHeightSM * 2 + margins);
+	}
+}
+
+.doubleLineTitleContent {
+	composes: fixedBottom;
+}

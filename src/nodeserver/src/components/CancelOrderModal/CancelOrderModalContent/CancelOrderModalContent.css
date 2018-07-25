@@ -1,0 +1,27 @@
+@value Blueberry, Bluecheese from 'styles/colors.css';
+@value sizeXL, sizeMD from 'styles/typography.css';
+
+.body {
+	composes: marginXXLTop marginXLBottom marginXXLLeftRight from 'sass-loader!styles/spacing.scss';
+	max-width: 490px;
+}
+
+.bottom {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 15px;
+}
+
+.firstButton {
+	margin-right: 20px;
+}
+
+.modalTitle {
+	font-size: sizeXL;
+	composes: comfortaa from 'styles/typography.css';
+}
+
+.modalBodyText {
+	font-size: sizeMD;
+	composes: paddingXLTop from 'sass-loader!styles/spacing.scss';
+}

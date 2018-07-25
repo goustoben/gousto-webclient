@@ -1,0 +1,128 @@
+@value ScreenXXSMin, ScreenMDMin, ScreenLGMin from 'styles/screenSizes.css';
+@value White from 'styles/colors.css';
+@value sizeSM, sizeLG from 'styles/typography.css';
+
+@value DotsOffset 50px;
+
+.carousel {
+	width: 100%;
+	height: 420px;
+
+	@media ScreenXXSMin {
+		height: 485px;
+	}
+
+	@media ScreenMDMin {
+		height: 550px;
+	}
+
+	@media ScreenLGMin {
+		height: 615px;
+	}
+}
+
+.slide {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.slideContent {
+	margin: 0 auto 5px !important;
+	padding: 0 15px !important;
+	text-align: center;
+	max-width: 500px;
+}
+
+.imageTitle {
+	composes: slideContent;
+	font-size: sizeLG;
+}
+
+.imageDescription {
+	composes: slideContent;
+	font-size: sizeSM;
+}
+
+.mask {
+	position: absolute;
+	z-index: 1;
+	bottom: 0;
+	width: 100%;
+}
+
+.dots {
+	position: absolute;
+	bottom: DotsOffset;
+	display: block;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	font-size: 0;
+	list-style: none;
+	text-align: center;
+}
+
+.dots li {
+	position: relative;
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin: 0 5px;
+	padding: 0;
+	cursor: pointer;
+}
+
+.dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 12px;
+    height: 12px;
+    padding: 0;
+    border-radius: 12px;
+    cursor: pointer;
+    color: transparent;
+    border: 1px solid White;
+    outline: none;
+    background: transparent;
+
+	&:before {
+		content: ' ';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 12px;
+		height: 12px;
+		border-radius: 20px;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+}
+
+.dots li:global.slick-active :local button:before {
+    background: White;
+}
+
+:global .slick-prev {
+	left: 25px;
+}
+
+:global .next {
+	right: 25px;
+}
+
+:global .prev, :global .next {
+	font-size: 0;
+	line-height: 0;
+	position: absolute;
+	top: 50%;
+	display: block;
+	font-size: 30px;
+	padding: 0;
+	transform: translate(0, -50%);
+	cursor: pointer;
+	border: none;
+	outline: none;
+	color: White;
+}

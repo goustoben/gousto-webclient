@@ -1,0 +1,60 @@
+@value ScreenXXSMax, ScreenXXSMin, ScreenXSMax, ScreenSMMin, ScreenSMMax, ScreenMDMax, ScreenMDMin, ScreenLGMin, ScreenLGMax, ScreenXLMin from 'styles/screenSizes.css';
+@value Blackberry, Mushroom50, White, Pepper60 from 'styles/colors.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+
+.tips {
+	@media ScreenSMMax {
+		order: -1;
+	}
+}
+
+.recipeContainer {
+	@media ScreenSMMax {
+		margin-top: calc(SpacingSM * -1);
+		margin-bottom: calc(SpacingSM * -1);
+	}
+}
+
+.recipe {
+	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
+	composes: borderXS from 'styles/borders.css';
+	background-color: White;
+	position: relative;
+	cursor: pointer;
+
+	&:hover {
+		 border-color: Pepper60;
+		 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.6);
+	 }
+
+	 @media ScreenXXSMin and ScreenXSMax {
+		 height: 280px;
+	 }
+
+	 @media ScreenSMMin and ScreenSMMax {
+		 height: 384px;
+	 }
+
+	 @media ScreenMDMin and ScreenMDMax {
+		 height: 349px;
+	 }
+
+	 @media ScreenLGMin and ScreenLGMax{
+		 height: 360px;
+	 }
+
+	 @media ScreenXLMin{
+		 height: 404px;
+	 }
+}
+
+.cookbookLink {
+	color: Blackberry;
+	&:hover, &:active, &:focus {
+		 text-decoration: none;
+	 }
+}
+
+.recipeInfo {
+	composes: flex column spaceBetween from 'styles/flex.css';
+}

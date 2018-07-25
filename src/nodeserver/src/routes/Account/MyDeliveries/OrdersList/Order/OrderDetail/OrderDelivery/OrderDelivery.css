@@ -1,0 +1,24 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.bold {
+	composes: textBold from 'styles/typography.css';
+}
+
+.header {
+	margin-bottom: 20px;
+}
+
+.subSection {
+	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+
+.button {
+	@media ScreenXSMax {
+		display: flex;
+		justify-content: flex-end;
+	}
+}

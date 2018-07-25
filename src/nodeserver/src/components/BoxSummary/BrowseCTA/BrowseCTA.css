@@ -1,0 +1,107 @@
+@value Coconut from 'styles/colors.css';
+@value SpacingMD from 'sass-loader!styles/spacing.scss';
+
+@keyframes drop-desktop {
+	from {
+		transform: translateY(0px);
+	}
+
+	to {
+		transform: translateY(30px);
+	}
+}
+
+@keyframes drop-mobile {
+	from {
+		transform: translateY(0px);
+	}
+
+	to {
+		transform: translateY(15px);
+	}
+}
+
+.containerHidden-mobile {
+	composes: absolute from 'styles/position.css';
+	z-index: -1;
+}
+
+.container-mobile {
+	composes: containerHidden-mobile;
+	z-index: 1;
+	top: -280px;
+	left: 0;
+	width: 100%;
+}
+
+.containerHidden-desktop {
+	composes: absolute from 'styles/position.css';
+	z-index: -1;
+	height: 0;
+	right: 160px;
+}
+
+.container-desktop {
+	composes: containerHidden-desktop;
+	z-index: 1;
+	height: auto;
+	top: -250px;
+}
+
+.hidden {
+	composes: textCenter from 'styles/typography.css';
+	opacity: 0;
+	transform: scale(0.1);
+	transition: all 0.3s cubic-bezier(.39,1.55,.68,.98);
+	width: 260px;
+	height: 210px;
+	margin: 0 auto;
+}
+
+.show {
+	composes: hidden;
+	opacity: 1;
+}
+
+.show-desktop {
+	composes: show;
+	animation: drop-desktop 0.1s ease-in-out 0.3s forwards;
+	transform: scale(1);
+}
+
+.show-mobile {
+	composes: show;
+	top: -285px;
+	transform: scale(1);
+	animation: drop-mobile 0.1s ease-in-out 0.3s forwards;
+}
+
+.textContainer {
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+	height: 210px;
+	background-color: Coconut;
+}
+
+.header {
+	composes: headerMD headlineFont from 'styles/typography.css';
+}
+
+.text {
+	composes: paragraphMD textBold textCenter from 'styles/typography.css';
+	max-width: 230px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.arrow {
+	composes: inlineBlock from 'styles/display.css';
+	width: 0;
+	height: 0;
+	border-left: 30px solid transparent;
+	border-right: 30px solid transparent;
+	border-top: 30px solid Coconut;
+}
+
+.button {
+	margin-top: SpacingMD;
+}

@@ -1,0 +1,3 @@
+.hideMobile {
+	composes: hidden-xs-down from 'sass-loader!styles/bootstrap.scss';
+}

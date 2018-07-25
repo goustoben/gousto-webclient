@@ -1,0 +1,75 @@
+@value Tomato #D36148;
+@value Chilli #E0674E;
+@value Chilli50 #FAB0A3;
+@value DarkChilli #C74E35;
+@value Chilli60 #eaa192;
+@value Chilli40 #f2c7bf;
+@value Aubergine #804D59;
+
+@value Apricot #FFC587;
+@value Cumin #D8A958;
+@value Maize #FFE4A3;
+@value Oregano #94B277;
+@value Artichoke #CADAAA;
+@value DarkArtichoke #8AB077;
+@value Coriander #00937E;
+@value Mint #6ACBB8;
+
+@value Blueberry20 #D3E1EA;
+@value Chocolate #89674C;
+@value Cacao #645B57;
+@value Pepper #938D88;
+@value Pepper30 #D8D8D6;
+@value Pepper40 #CBC8C6;
+@value Pepper60 #A6A19D;
+@value Oyster #9E9492;
+@value Oyster50 #CEC9C8;
+@value Mushroom #F9F5F3;
+@value Ginger #F8EEE4;
+@value Eggshell #FFFDFA;
+@value Chia #35231B;
+@value Parsley #44884F;
+@value DarkParsley #2B6F36;
+@value Parsley60 #8cb594;
+@value Parsley40 #b3ceb8;
+@value White #FFFFFF;
+@value Mushroom50 #FBF9F6;
+@value DarkGrey #868F94;
+
+/* Rebrand */
+
+@value DarkPomegranate #C42833;
+@value Pomegranate #F6323E;
+@value Bluecheese #7290FF;
+@value Blueberry #4968D8;
+@value Duckegg #00D5E0;
+@value Kale #028289;
+@value Coconut #F7FBFA;
+@value Blackberry #333D47;
+@value Oyster #999EA3;
+@value Mackerel #D6D8DA;
+@value Basa #EAEBEC;
+@value Haricot #01A92B;
+@value DarkHaricot #018F25;
+@value Carrot #FB6126;
+@value DarkCarrot #BB481C;
+@value Radish #B6252E;
+@value DarkRadish #9B222A;
+@value Bronze #E8C776;
+
+@value Black #333D47;
+@value BlueBase #7290FF;
+@value BlueBaseDarker #4968D8;
+@value Bluecheese50 rgba(114, 144, 255, 0.5);
+@value Bluecheese30 rgba(114, 144, 255, 0.3);
+@value Blueberry30 rgba(73, 104, 216, 0.3);
+
+/* Variations */
+@value Radish05 #FBF4F4;
+@value Radish25 #ECC8CA;
+@value Radish40 #FFBEC7;
+@value Radish60 #FF8B94;
+@value DarkHaricot05 #F2F9F4;
+
+/* Contextual */
+@value InYourBoxBg #D1DCE2;

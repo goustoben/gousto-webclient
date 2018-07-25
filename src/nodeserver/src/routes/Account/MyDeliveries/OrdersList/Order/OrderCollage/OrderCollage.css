@@ -1,0 +1,31 @@
+@value Blueberry30, Blackberry, White from 'styles/colors.css';
+@value sizeLG from 'styles/typography.css';
+
+.collageContainer {
+	composes: flex from 'styles/display.css';
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	composes: wrap verticalCenter contentCenter spaceBetween row from 'styles/flex.css';
+	width: 190px;
+	composes: marginZeroTopBottom marginZeroLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.collageItem {
+	composes: flex from 'styles/display.css';
+	composes: row center contentCenter verticalCenter from 'styles/flex.css';
+	height: 85px;
+	width: 85px;
+	margin: 5px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.emptyItem {
+	composes: flex from 'styles/display.css';
+	composes: row center contentCenter verticalCenter from 'styles/flex.css';
+	border: 1px dashed Blackberry;
+	height: 85px;
+	width: 85px;
+	margin: 5px;
+	border-radius: 50%;
+	overflow: hidden;
+}

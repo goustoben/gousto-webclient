@@ -1,0 +1,14 @@
+---
+- name: Make healthcheck directory
+  file: path="/var/www/health" state=directory
+
+- name: Add healthcheck file
+  copy: src="files/healthcheck/health.html" dest="/var/www/health/health.html" owner="www-data"
+
+- name: Add healthcheck apache config
+  template: src="files/healthcheck/health.conf" dest="{{ '/etc/apache2/sites-available/10-frontend-health.conf' }}" owner=root mode=0600
+  notify: restart apache2
+
+- name: Enable apache2 core site
+  command: "a2ensite 10-frontend-health"
+  notify: restart apache2

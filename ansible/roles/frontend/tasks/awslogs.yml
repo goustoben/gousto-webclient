@@ -1,0 +1,8 @@
+---
+- name: Download base AWS logs conf file
+  template: src="{{ item }}" dest="/etc/awslogs/{{ item | basename | regex_replace('\\.j2', '') }}"
+  with_fileglob:
+  - templates/awslogs/*
+  notify:
+  - assemble awslogs conf
+  - restart awslogs

@@ -1,0 +1,139 @@
+@value SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
+@value ScreenSMMin, ScreenMLMax from 'styles/screenSizes.css';
+@value Blackberry, Oyster, White from 'styles/colors.css';
+@value RadiusSM from 'styles/borders.css';
+@value desktopHeight 40px;
+@value mobileHeight 30px;
+
+.list {
+	overflow: hidden;
+	padding-left: SpacingSM;
+}
+
+.content {
+	margin-left: calc(SpacingSM * -1);
+	margin-bottom: 0;
+	border: 1px solid;
+	border-right-width: 0;
+	height: mobileHeight;
+	line-height: mobileHeight;
+
+	& .number {
+		margin-left: 0;
+	}
+
+	@media ScreenSMMin {
+		padding-left: 10%;
+		height: desktopHeight;
+		line-height: desktopHeight;
+
+		& .number {
+			margin-left: SpacingXXS;
+		}
+	}
+}
+
+.listItem:first-child {
+	& .content {
+		border-radius: RadiusSM 0 0 RadiusSM;
+
+		& .number {
+			margin-left: 0;
+		}
+	}
+}
+
+.arrow {
+	content: "";
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-color: transparent;
+	border-right: 0;
+	border-left-color: Blackberry;
+	right: 0;
+	bottom: 0;
+	border-top-width: calc(mobileHeight / 2);
+	border-bottom-width: calc(mobileHeight / 2);
+	border-right-width: 10px;
+	border-left-width: 10px;
+	z-index: 1;
+
+	@media ScreenSMMin {
+		 border-top-width: calc(desktopHeight / 2);
+		 border-bottom-width: calc(desktopHeight / 2);
+	}
+
+	&:after {
+		content: "";
+		position: absolute;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-color: transparent;
+		border-right: 0;
+		border-left-color: White;
+		right: 1px;
+		bottom: calc(mobileHeight / 2 * -1);
+		border-top-width: calc(mobileHeight / 2);
+		border-bottom-width: calc(mobileHeight / 2);
+		border-right-width: 10px;
+		border-left-width: 10px;
+
+		@media ScreenSMMin {
+			bottom: calc(desktopHeight / 2 * -1);
+			border-top-width: calc(desktopHeight / 2);
+			border-bottom-width: calc(desktopHeight / 2);
+		}
+	}
+}
+
+.futureItem {
+	& .content {
+		background: White;
+		color: Oyster;
+		border-color: Oyster;
+	}
+
+	& .arrow {
+		border-left-color: Oyster;
+
+		&:after {
+			 border-left-color: White;
+		}
+	}
+}
+
+.activeItem {
+	& .content {
+		background-color: White;
+		color: Blackberry;
+		border-color: Blackberry;
+	}
+
+	& .arrow {
+		border-left-color: Blackberry;
+
+		&:after {
+			 border-left-color: White;
+		}
+	}
+}
+
+.pastItem {
+	& .content {
+		background-color: Blackberry;
+		color: White;
+		border-color: Blackberry;
+		border-right-color: White;
+	}
+
+	& .arrow {
+		border-left-color: White;
+
+		&:after {
+			 border-left-color: Blackberry;
+		}
+	}
+}

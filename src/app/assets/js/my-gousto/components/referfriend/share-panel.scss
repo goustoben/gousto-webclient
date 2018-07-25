@@ -1,0 +1,34 @@
+.share {
+	@media (max-width: $screen-sm-max) {
+		text-align: center;
+		margin: 30px 0;
+	}
+
+	&-heading{
+		@include font-text-bold;
+		font-size: 24;
+		margin-top: 40px !important;
+		@media (max-width: $screen-md-max) {
+			margin-top: 20px !important;
+		}
+	}
+	&-body{
+		margin-bottom: 15px;
+		@media (max-width: $screen-md-max) {
+			margin-bottom: 20px;
+		}
+	}
+	&-large{
+		text-align: center;
+	}
+	&-invite-friend {
+		font-size: 14;
+		text-transform: uppercase;
+		padding: 15px 30px;
+		&.small{
+			@media (max-width: $screen-lg-min) {
+				padding: 15px 10px;
+			}
+		}
+	}
+}

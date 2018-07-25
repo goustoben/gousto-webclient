@@ -1,0 +1,25 @@
+@value White from 'styles/colors.css';
+@value SpacingLG from 'sass-loader!styles/spacing.scss';
+@value avenirBookFontStack from 'styles/typography.css';
+
+.container {
+	background-color: White;
+	composes: textBold from 'styles/typography.css';
+	padding: SpacingLG;
+	margin-bottom: 20px;
+}
+
+.header {
+	composes: headerMD headlineFont from 'styles/typography.css';
+}
+
+.text {
+	composes: textSM from 'styles/typography.css';
+	font-family: avenirBookFontStack;
+	margin-bottom:15px;
+}
+
+.options {
+	display: flex;
+	flex-wrap: wrap;
+}

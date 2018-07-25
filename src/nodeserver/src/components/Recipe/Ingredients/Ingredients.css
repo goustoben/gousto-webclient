@@ -1,0 +1,48 @@
+@value White, Bluecheese from 'styles/colors.css';
+@value ScreenLGMin, ScreenMDMax, ScreenXSMax from 'styles/screenSizes.css';
+@value SpacingMD, SpacingSM from 'sass-loader!styles/spacing.scss';
+
+.ingredientsContainer {
+	composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+	@media ScreenLGMin {
+		margin-left: -20px;
+		margin-right: -20px;
+	}
+}
+
+.ingredientsContainer:after {
+	clear: both;
+	display: table;
+	content: '';
+}
+
+.ingredient {
+	composes: marginMDTopBottom marginLGLeftRight from 'sass-loader!styles/spacing.scss';
+	float: left;
+
+	@media ScreenMDMax {
+		margin: SpacingMD;
+	}
+
+	@media ScreenXSMax {
+		margin-left: SpacingSM;
+		margin-right: SpacingSM;
+		zoom: 0.8;
+	}
+}
+
+.leadingText {
+	composes: textRegular from 'styles/typography.css';
+}
+
+.highlightText {
+	color: Bluecheese;
+}
+
+.heading {
+	composes: headerLG headlineFont from 'styles/typography.css';
+}
+
+.insetHeading {
+	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+}

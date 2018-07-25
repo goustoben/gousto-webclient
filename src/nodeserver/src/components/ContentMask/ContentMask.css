@@ -1,0 +1,5 @@
+.container {
+	composes: w-100 from 'sass-loader!styles/bootstrap.scss';
+	position: absolute;
+	bottom: 0;
+}

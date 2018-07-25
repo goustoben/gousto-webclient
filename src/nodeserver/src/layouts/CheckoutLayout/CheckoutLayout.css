@@ -1,0 +1,33 @@
+@value Coconut from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+html, body {
+	height: 100%;
+}
+
+.container {
+	height: 100%;
+}
+
+.layoutContainer {
+	height: 100%;
+	background: Coconut;
+
+	@media ScreenXSMax {
+		height: auto;
+	}
+}
+
+.pageContainer {
+	background: Coconut;
+	min-height: 100%;
+}
+
+.pageContainer:after {
+	content: "";
+	display: block;
+}
+
+.pageContainer:after {
+	height: 156px;
+}

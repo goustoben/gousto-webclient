@@ -1,0 +1,38 @@
+@value ScreenXSMax, ScreenXXSMax from 'styles/screenSizes.css';
+@value sizeXXS, sizeXS from 'styles/typography.css';
+@value Blackberry, Pomegranate from 'styles/colors.css';
+
+.tab {
+	composes: textCenter from 'styles/typography.css';
+	composes: paddingSMTopBottom marginXXLRight from 'sass-loader!styles/spacing.scss';
+	color: Blackberry;
+	position: relative;
+	@media ScreenXSMax {
+		margin-right: 0px;
+	}
+
+	&:hover, &:focus, &:active {
+		cursor: pointer;
+		border-bottom: solid 2px Pomegranate;
+		padding-bottom: 8px;
+		color: Pomegranate;
+	}
+}
+
+.active {
+	border-bottom: solid 2px Pomegranate;
+	padding-bottom: 8px;
+	color: Pomegranate;
+	&:hover, &:focus, &:active {
+		cursor: default;
+	}
+}
+
+.active span:hover {
+	text-decoration: none;
+}
+
+.bold {
+	composes: textBold from 'styles/typography.css';
+	color: Pomegranate;
+}

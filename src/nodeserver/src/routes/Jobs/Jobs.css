@@ -1,0 +1,40 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value Blackberry,  Oyster from 'styles/colors.css';
+@value sizeLG from 'styles/typography.css';
+@value sizeXL, sizeMD, sizeSM from 'styles/typography.css';
+
+.headerBase {
+	composes: fontBase textCenter from 'styles/typography.css';
+	color: Blackberry;
+}
+
+.header {
+	composes: headerBase;
+	composes: textBold from 'styles/typography.css';
+	composes: marginXLBottom from 'sass-loader!styles/spacing.scss';
+	font-size: sizeXXL;
+	@media ScreenXSMax {
+		font-size: 24px;
+	}
+}
+
+.preHeader {
+	composes: headerBase;
+	composes: sizeLG textBold from 'styles/typography.css';
+	color: Oyster;
+	composes: marginZeroBottom from 'sass-loader!styles/spacing.scss';
+	@media ScreenXSMax {
+		font-size: sizeLG;
+	}
+}
+
+.container {
+	composes: container from 'sass-loader!styles/bootstrap.scss';
+	top: 0;
+	z-index: 1000;
+	composes: paddingXXXXXLTopBottom paddingZeroLeftRight from 'sass-loader!styles/spacing.scss';
+	@media ScreenXSMax {
+		width: 100%;
+		padding: 20px 10px;
+	}
+}

@@ -1,0 +1,11 @@
+---
+# startup system
+pm2_startup: ubuntu
+# service name for startup system
+pm2_service_name: pm2-init.sh
+# start on boot
+pm2_service_enabled: yes
+# current state: started, stopped
+pm2_service_state: started
+# version
+pm2_version: "1.1.3"

@@ -1,0 +1,77 @@
+@value Bluecheese, Bluecheese50, White from 'styles/colors.css';
+@value sizeXXS from 'styles/typography.css';
+
+.day {
+	composes: relative from 'styles/position.css';
+	composes: textBold from 'styles/typography.css';
+	composes: bottomRightBorder from '../Calendar.css';
+	color: Bluecheese;
+
+	background: White;
+	cursor: pointer;
+
+	&:last-child {
+		border-bottom-width: 0;
+	}
+}
+
+.currentDay {
+	composes: day;
+	background: Bluecheese;
+	color: White;
+}
+
+.emptyDay {
+	composes: day;
+	cursor: default;
+	color: Bluecheese50;
+}
+
+.icon {
+	composes: absolute from 'styles/position.css';
+	composes: fa-fw from 'styles/vendor/font-awesome-module.css';
+	font-size: sizeXXS;
+
+	top: 2px;
+	left: 0;
+}
+
+.icon-truck {
+	composes: icon;
+	composes: fa-truck from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-truck-empty {
+	composes: icon;
+	composes: fa-truck from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-truck-empty-child {
+	composes: absolute from 'styles/position.css';
+	composes: block from 'styles/display.css';
+
+	width: 6px;
+	height: 5px;
+	right: 2px;
+	top: 2px;
+
+	background: White;
+}
+
+.currentDay .icon-truck-empty-child {
+	background: Bluecheese;
+}
+
+.square {
+	width: 100%;
+	padding-bottom : 100%; /* = width for a 1:1 aspect ratio */
+}
+
+.content {
+	position:absolute;
+	height:100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

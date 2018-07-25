@@ -1,0 +1,190 @@
+@value Oyster from 'styles/colors.css';
+@value ScreenSMMax, ScreenMDMin from 'styles/screenSizes.css';
+@value sizeMD, bodyFontStackNormal from 'styles/typography.css';
+@value SpacingLG, SpacingMD, SpacingXXS from 'sass-loader!styles/spacing.scss';
+@value dropdownSelectedColor, dropdownSelectedBgColor, inputColor, inputBgColor, inputBorderColor, inputBorderColorFocus, inputDisabledColor, inputSecondaryColor, inputSecondaryBgColor, inputSecondaryBorderColor, inputSecondaryBorderColorFocus, dropdownSecondarySelectedColor, dropdownSecondarySelectedBgColor from 'styles/forms.css';
+
+@value selectWidth 100%;
+
+.mobileHide {
+	@media ScreenSMMax {
+		display: none;
+	}
+}
+.mobileOnly {
+	@media ScreenMDMin {
+		display: none;
+	}
+}
+
+.dropdown {
+	position: relative;
+}
+
+.subLabel {
+	composes: textSM textItalic from 'styles/typography.css';
+}
+
+.selectuppercase {
+	text-transform: uppercase;
+}
+
+/* Base */
+.native {
+	composes: textMD textBold from 'styles/typography.css';
+	composes: paddingXSTopBottom from 'sass-loader!styles/spacing.scss';
+	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: borderSM from 'styles/borders.css';
+	width: selectWidth;
+	appearance: none;
+	outline: none;
+	box-shadow: none;
+}
+
+.nativeSelectArrow {
+	border-style: solid;
+	border-width: 5px 5px 2.5px;
+	composes: inlineBlock from 'styles/display.css';
+	height: 0;
+	width: 0;
+	margin-left: calc(SpacingLG * -1);
+}
+
+.select {
+	position: relative;
+	max-width: selectWidth;
+
+	& :global .Select-arrow {
+		font-size: sizeMD;
+	}
+
+	& :global .Select-menu {
+		max-height: 160px;
+	}
+
+	& :global .Select-menu-outer {
+		margin-top: SpacingXXS;
+		box-shadow: 1px 2px 4px 0px rgba(0,0,0,0.45);
+	}
+
+	& :global .is-focused:not(.is-open) > .Select-control {
+		box-shadow: none;
+	}
+
+	& :global .Select-option,
+	& :global .Select-value,
+	& :global .Select-value-label {
+		font-family: bodyFontStackNormal;
+		font-smoothing: antialiased;
+		font-size: sizeMD;
+	}
+
+	& :global .Select-placeholder
+	& :global .Select-control {
+		box-shadow: none;
+		width: selectWidth;
+		padding-left: SpacingMD;
+		padding-right: SpacingMD;
+	}
+
+	& :global .Select-control:hover {
+		box-shadow: none;
+	}
+
+	& :global .Select-option.is-disabled {
+		color: inputDisabledColor !important;
+	}
+}
+
+/* Colors */
+.primary.native {
+	color: inputColor;
+	border-color: inputBorderColor;
+	background: inputBgColor;
+}
+
+.primary.nativeSelectArrow {
+	border-color: inputColor transparent transparent;
+}
+
+.primary.select {
+	& :global .Select-arrow {
+		border-color: inputColor transparent transparent;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-option,
+	& :global .Select-value,
+	& :global .Select-value-label {
+		color: inputColor !important;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-control {
+		border-color: inputBorderColor !important;
+	}
+
+	& :global .is-open > .Select-control,
+	& :global .Select-control:hover {
+		border-color: inputBorderColorFocus !important;
+	}
+
+	& :global .Select-option.is-selected,
+	& :global .Select-option.is-focused {
+		background-color: dropdownSelectedBgColor;
+		color: dropdownSelectedColor !important;
+	}
+}
+
+.secondary.native {
+	color: inputSecondaryColor;
+	border-color: inputSecondaryBorderColor;
+	background: inputSecondaryBgColor;
+}
+
+.secondary.nativeSelectArrow {
+	border-color: inputSecondaryColor transparent transparent;
+}
+
+.secondary.select {
+	& :global .Select-arrow {
+		border-color: inputSecondaryColor transparent transparent;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-option,
+	& :global .Select-value,
+	& :global .Select-value-label {
+		color: inputSecondaryColor !important;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-control {
+		border-color: inputSecondaryBorderColor !important;
+	}
+
+	& :global .is-open > .Select-control,
+	& :global .Select-control:hover {
+		border-color: inputSecondaryBorderColorFocus !important;
+	}
+
+	& :global .Select-option.is-selected,
+	& :global .Select-option.is-focused {
+		background-color: dropdownSecondarySelectedBgColor;
+		color: dropdownSecondarySelectedColor !important;
+	}
+}
+
+.disabled {
+	color: Oyster;
+}
+
+.icon {
+	composes: fa-fw from 'styles/vendor/font-awesome-module.css';
+	font-size: sizeMD;
+}
+
+.icon-truck {
+	composes: icon;
+	composes: fa-truck from 'styles/vendor/font-awesome-module.css';
+}

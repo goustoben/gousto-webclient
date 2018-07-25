@@ -1,0 +1,33 @@
+@value sizeLG from 'styles/typography.css';
+@value White, Blackberry from 'styles/colors.css';
+@value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
+
+.title {
+	cursor: pointer;
+	display: inline-block;
+
+	@media ScreenXSMax {
+		width: 100%;
+	}
+
+	@media ScreenSMMax {
+		width: 100%;
+	}
+}
+
+.message {
+	composes: paddingSM from 'sass-loader!styles/spacing.scss';
+	box-shadow: 0 0 100px 0 rgba(0, 0, 0, 0.3);
+	position: relative;
+	background: White;
+}
+
+.close {
+	composes: fa-fw fa-times from 'styles/vendor/font-awesome-module.css';
+	color: Blackberry;
+	cursor: pointer;
+	top: 5px;
+	right: 5px;
+	position: absolute;
+	font-size: sizeLG;
+}

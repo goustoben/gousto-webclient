@@ -1,0 +1,122 @@
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value SpacingXS, SpacingMD from 'sass-loader!styles/spacing.scss';
+@value Blueberry, Bluecheese, Parsley, Bronze, Blackberry from 'styles/colors.css';
+@value sizeXXS from 'styles/typography.css';
+
+@value imgLarge 80px;
+@value imgSmall 60px;
+
+p {
+	margin-bottom: SpacingXS;
+}
+
+.boxdetailsImg {
+	width: imgLarge;
+	height: imgLarge;
+	border-radius: 100%;
+}
+
+.summaryImg {
+	width: imgSmall;
+	height: imgSmall;
+	border-radius: 100%;
+}
+
+.heading {
+	color: Parsley;
+}
+
+.link {
+	color: Bluecheese;
+
+	&:hover {
+		color: Blueberry;
+		cursor: pointer; 
+		text-decoration: underline;
+	}
+}
+
+.basics {
+	composes: textSM from 'styles/typography.css';
+}
+
+.arrowRight {
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+}
+
+.detailsRow {
+	width: 100%;
+}
+
+.fineDineIn{
+	background: Bronze;
+	color: Blackberry;
+	font-size: 12px;
+	display: inline-block;
+	border-radius: 4px;
+	padding: 2px 5px;
+	line-height: 18px;
+	margin: 2px 0;
+	vertical-align: middle;
+}
+
+.recipeContainer {
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: marginLGLeft from 'sass-loader!styles/spacing.scss';
+	width: calc(100% - 90px);
+	@media ScreenSMMin {
+		flex-flow: row;
+	}
+}
+
+.boxdetailsFlex {
+	composes: row spaceBetween from 'styles/flex.css';
+}
+
+.summaryFlex {
+	composes: column flexStart from 'styles/flex.css';
+	margin-top: 0;
+}
+
+.recipeSubContainer, .receipeName {
+	composes: flex from 'styles/flex.css';
+	flex: 1 100%;
+}
+
+.staplesContainer {
+	@media ScreenSMMin {
+		flex: 1 100%;
+	}
+}
+
+.details {
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+	flex: 1 100%;
+}
+
+.receipeName {
+	composes: column from 'styles/flex.css';
+	align-content: flex-start;
+	@media ScreenSMMin {
+		flex: 3 0;
+	}
+}
+
+.textBold {
+	composes: textBold from 'styles/typography.css';
+}
+
+.textSM {
+	composes: textSM from 'styles/typography.css';
+}
+
+.container {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+	composes: paddingSMTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: noWrap from 'styles/flex.css';
+}
+
+.strike {
+	composes: textStrike from 'styles/typography.css';
+	composes: paddingSMRight paddingSMRight from 'sass-loader!styles/spacing.scss';
+}

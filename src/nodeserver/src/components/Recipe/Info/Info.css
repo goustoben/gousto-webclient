@@ -1,0 +1,25 @@
+@value ScreenXXSMin, ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value White from 'styles/colors.css';
+
+.container {
+	composes: flex from 'styles/flex.css';
+	background-color: White;
+	bottom: 0;
+
+	@media ScreenXXSMin {
+		position: absolute;
+		width: 100%;
+	}
+
+	@media ScreenXXSMin and ScreenXSMax {
+		min-height: 120px;
+	}
+
+	@media ScreenSMMin {
+		min-height: 136px;
+	}
+}
+
+.regular {
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+}

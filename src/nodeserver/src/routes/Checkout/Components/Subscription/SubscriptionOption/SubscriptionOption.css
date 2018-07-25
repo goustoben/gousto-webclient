@@ -1,0 +1,43 @@
+@value ScreenXXSMin, ScreenMDMin, ScreenLGMin from 'styles/screenSizes.css';
+@value avenirBookFontStack from 'styles/typography.css';
+@value Bluecheese from 'styles/colors.css';
+
+.container {
+	display: flex;
+	width: 96%;
+	height: 100%;
+	flex-direction: row;
+	flex-shrink: 0;
+	border: 1px solid Bluecheese;
+	border-radius: 3px;
+	margin: 2%;
+	padding: 10px;
+
+	@media ScreenXXSMin {
+		width: 46%;
+	}
+
+	@media ScreenLGMin {
+		width: 29%;
+	}
+}
+
+.radio {
+	margin-right: 7px;
+	margin-top: 1px;
+}
+
+.title {
+	text-transform: uppercase;
+	color: Bluecheese;
+	margin: 0;
+}
+
+.description {
+	composes: textSM from 'styles/typography.css';
+	font-family: avenirBookFontStack;
+	margin: 0;
+	display: block;
+	margin-top: 7px;
+}
+

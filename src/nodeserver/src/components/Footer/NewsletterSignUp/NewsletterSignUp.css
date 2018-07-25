@@ -1,0 +1,106 @@
+@value SpacingXXS, SpacingXS, SpacingSM, SpacingMD, SpacingLG from 'sass-loader!styles/spacing.scss';
+@value ScreenLGMax, ScreenSMMax, ScreenXSMin, ScreenXSMax, MinBreakPointSM, MaxBreakPointXS, MaxBreakPointSM from 'styles/screenSizes.css';
+@value White, Artichoke, Chocolate from 'styles/colors.css';
+@value sizeSM, sizeLG, sizeXL from 'styles/typography.css';
+
+.form {
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.formGroup {
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+	composes: flex center wrap verticalCenter from 'styles/flex.css';
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.desktopHide {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.email {
+	font-size: sizeSM;
+
+	height: 36px;
+	width: 100%;
+
+	border-radius: SpacingXS;
+	border: 1px solid #ccc;
+
+	composes: paddingXSTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+	color: Aubergine;
+	background-color: White;
+
+	&:focus {
+		outline: none;
+		box-shadow: 0 0 3px 1px Artichoke;
+		border-radius: SpacingXS;
+	}
+
+}
+
+.formElement {
+	composes: paddingXSTopBottom paddingXXSLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.label {
+	composes: textLeft from 'styles/typography.css';
+	composes: formElement;
+
+	@media ScreenLGMax {
+		text-align: center;
+	}
+
+	/* if IE 11 */
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none), (min-width: MinBreakPointSM) , (max-width: MaxBreakPointSM)  {
+		flex: 0 0 24%;
+	}
+}
+.inputContainer {
+	composes: formElement;
+	width: 70%;
+	max-width: 300px;
+}
+.buttonContainer {
+	composes: formElement;
+	composes: flex from 'styles/flex.css';
+	/* if IE 11 */
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none), (max-width: MaxBreakPointSM) {
+		flex: 0 0 20%;
+	}
+	/* if IE 11 */
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none), (max-width: MaxBreakPointXS)  {
+		flex: 0 0 14%;
+	}
+}
+
+.tasty {
+	composes: paddingXSRight from 'sass-loader!styles/spacing.scss';
+	composes: paragraphLG from 'styles/typography.css';
+	color: White;
+
+	/* if IE 11 */
+	@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+		font-size: sizeLG;
+	}
+}
+
+.success {
+	color: White;
+}
+
+.error {
+	color: Chocolate;
+}
+
+.success, .error {
+	&::first-letter {
+		text-transform: uppercase;
+	}
+}

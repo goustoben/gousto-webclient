@@ -1,0 +1,17 @@
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+
+.list {
+	composes: marginZero paddingZero from 'sass-loader!styles/spacing.scss';
+	margin-left: calc(0px - SpacingSM);
+	margin-right: calc(0px - SpacingSM);
+}
+
+.listItem {
+	composes: inlineBlock from 'styles/display.css';
+	composes: marginSMLeftRight marginZeroTopBottom from 'sass-loader!styles/spacing.scss';
+	list-style-type: none;
+}
+
+.textBold {
+	composes: textBold from 'styles/typography.css';
+}

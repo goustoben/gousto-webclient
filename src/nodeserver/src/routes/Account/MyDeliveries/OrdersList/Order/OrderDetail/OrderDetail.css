@@ -1,0 +1,31 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value Basa from 'styles/colors.css';
+
+.orderDetail {
+	width: 100%;
+}
+
+.section {
+	@media ScreenXSMax {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+}
+
+.openCardSection {
+	composes: section;
+	composes: paddingXXLTopBottom marginXXLLeft marginXXXLRight from 'sass-loader!styles/spacing.scss';
+	border-top: 2px solid Basa;
+}
+
+.openCardSectionNoBorder {
+	composes: section;
+	composes: paddingZeroTop paddingXXLBottom marginXXLLeft marginXXXLRight from 'sass-loader!styles/spacing.scss';
+}
+
+.button {
+	@media ScreenXSMax {
+		display: flex;
+		justify-content: flex-end;
+	}
+}

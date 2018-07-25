@@ -1,0 +1,133 @@
+@value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
+@value headingFontStackBold, sizeSM, sizeLG, sizeXL, sizeXL from 'styles/typography.css';
+@value ScreenXXXSMin: (min-width: 400px);
+@value BalanceBoost #F4A965;
+
+.container {
+	composes: inlineBlock from 'styles/display.css';
+	width: 100%;
+	height: 200px;
+	background-image: url('media/images/menu/balance-boost-banner-mobile.jpg');
+	background-position: center;
+	background-size: cover;
+
+	@media ScreenXXSMin {
+		background-image: url('media/images/menu/balance-boost-banner-tablet.jpg')
+	}
+
+	@media ScreenMDMin {
+		background-image: url('media/images/menu/balance-boost-banner-desktop.jpg');
+	}
+}
+
+.contentBase {
+	composes: flex from 'styles/flex.css';
+}
+
+.contentContainer {
+	composes: contentBase;
+	position: relative;
+	max-width: 1600px;
+	margin: 0 auto;
+	height: 100%;
+}
+
+.button {
+	composes: itemCenter from 'styles/flex.css';
+	position: absolute;
+	right: 8%;
+	width: 20%;
+	max-width: 250px;
+	min-width: 125px;
+
+	@media ScreenXXSMin {
+		width: 25%;
+	}
+
+	@media ScreenXXXSMin {
+		min-width: 170px;
+	}
+}
+
+.mobileHide {
+	display: none;
+
+	@media ScreenXXXSMin {
+		display: inline;
+	}
+}
+
+.gel {
+	font-family: headingFontStackBold;
+	font-size: sizeSM;
+}
+
+.gelTitle {
+	font-size: sizeXL;
+	font-weight: 600;
+	color: BalanceBoost;
+	margin: 0;
+
+	@media ScreenMDMin {
+		font-size: 24px;
+	}
+}
+
+.gelMain {
+	composes: gel;
+	left: 26%;
+	top: 50%;
+
+	@media ScreenMDMin {
+		left: 20%;
+	}
+}
+
+.gelMainTitle {
+	composes: gelTitle;
+	font-size: 24px;
+	font-weight: bold;
+
+	@media ScreenMDMin {
+		font-size: 30px;
+	}
+}
+
+.gelMainText {
+	font-size: sizeSM;
+
+	@media ScreenMDMin {
+		font-size: sizeLG;
+	}
+}
+
+.gelOne, .gelTwo {
+	composes: gel;
+	display: none;
+
+	@media ScreenMDMin {
+		display: block;
+	}
+
+	.gelTitle {
+		font-size: 20px;
+	}
+}
+
+.gelOne {
+	left: 39%;
+	top: 35%;
+}
+
+.gelOneTitle {
+	composes: gelTitle;
+}
+
+.gelTwo {
+	left: 64%;
+	top: 62%;
+}
+
+.gelTwoTitle {
+	composes: gelTitle;
+}

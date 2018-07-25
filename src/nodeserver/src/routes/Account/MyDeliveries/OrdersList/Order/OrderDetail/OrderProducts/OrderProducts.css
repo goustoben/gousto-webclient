@@ -1,0 +1,74 @@
+@value ScreenXXSMax, ScreenXSMax from 'styles/screenSizes.css';
+@value SpacingXXS, SpacingSM, SpacingXXL from 'sass-loader!styles/spacing.scss';
+
+.header {
+	composes: textBold from 'styles/typography.css';
+	margin-bottom: SpacingXXL;
+}
+
+.productContainer {
+	display: flex;
+	margin-bottom: SpacingXXL;
+}
+
+.randomProductsContainer {
+	margin-left: calc(0px - SpacingXXS);
+	margin-bottom: SpacingXXL;
+}
+
+.productImage {
+	width: 100px;
+	height: 85px;
+
+	@media ScreenXXSMax {
+		width: 90px;
+		height: 77px;
+	}
+}
+
+.productInfo {
+	width: 260px;
+	margin-left: SpacingSM;
+	display: flex;
+	flex-direction: column;
+
+	@media ScreenXXSMax {
+		width: 0;
+		flex-grow: 1;
+		font-size: 14px;
+	}
+}
+
+.randomProductImage {
+	width: 100px;
+	height: 85px;
+	display: inline-block;
+	margin-left: SpacingXXS;
+	margin-bottom: SpacingXXS;
+
+	@media ScreenXXSMax {
+		width: 70px;
+		height: 60px;
+	}
+}
+
+.price {
+	composes: textBold from 'styles/typography.css';
+	margin-top: auto;
+}
+
+.hideInMobile {
+	composes: hidden-xs-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.hideInDesktop {
+	composes: hidden-sm-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.buttonRow {
+	display: flex;
+
+	@media ScreenXSMax {
+		justify-content: flex-end;
+	}
+}

@@ -1,0 +1,20 @@
+@value White from 'styles/colors.css';
+
+/* Make sure bootstrap is included */
+.bootstrap {
+	composes: container from 'sass-loader!styles/bootstrap.scss';
+}
+
+.pageContainer {
+	position: relative;
+	min-height: 500px;
+	background: White;
+}
+
+.pullUp {
+	margin-top: -20px;
+}
+
+.withBottomBar {
+	padding-bottom: 75px;
+}

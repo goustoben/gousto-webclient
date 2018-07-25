@@ -1,0 +1,70 @@
+@value ScreenSMMax, ScreenXXSMax from 'styles/screenSizes.css';
+@value InYourBoxBg, White from 'styles/colors.css';
+@value cutleryIconSize 125px;
+
+.container {
+	composes: pageContainer from 'styles/layout.css';
+	composes: paddingXXXXLTopBottom from 'sass-loader!styles/spacing.scss';
+	max-width: 1375px;
+	height: 100%;
+	width: 100%;
+	margin: auto;
+	position: relative;
+
+	@media ScreenSMMax {
+		background-color: InYourBoxBg;
+	}
+
+	&:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
+}
+
+.content {
+	composes: paddingXXLTopBottom paddingXXLLeftRight marginXXLLeft from 'sass-loader!styles/spacing.scss';
+	width: 100%;
+	max-width: 500px;
+	float: left;
+	background: White;
+
+	@media (width <= 1150px) {
+		max-width: 435px;
+	}
+
+	@media ScreenSMMax {
+		max-width: 500px;
+		float: none;
+		margin: auto;
+	}
+
+	@media ScreenXXSMax {
+		max-width: 500px;
+	}
+}
+
+.inverseContent {
+	composes: content;
+	background: White;
+}
+
+.list {
+	composes: textCenter textLG from 'styles/typography.css';
+	composes: paddingLGLeftRight marginLGTop marginXLBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.listItem {
+	list-style: none;
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}
+
+.bodyText {
+	composes: textCenter textLG from 'styles/typography.css';
+	composes: paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.tick {
+	composes: fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
+	margin-right: 5px;
+}

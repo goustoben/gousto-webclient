@@ -1,0 +1,3 @@
+Reusable Container Components
+Containers only connect presentational components to actions/state
+Rule of thumb: no JSX in containers!

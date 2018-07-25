@@ -1,0 +1,4 @@
+.unsubscribePage {
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+	text-align: center
+}

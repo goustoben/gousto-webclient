@@ -1,0 +1,4 @@
+.container {
+	composes: marginLGBottom from 'sass-loader!styles/spacing.scss';
+	composes: textXL textBold from 'styles/typography.css';
+}

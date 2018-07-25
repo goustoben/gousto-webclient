@@ -1,0 +1,22 @@
+@value Apricot from 'styles/colors.css';
+
+.ratingContainer{
+	composes: marginSMRight from 'sass-loader!styles/spacing.scss';
+}
+.starColor {
+	color: Apricot;
+}
+.starFull {
+	composes: fa-star from 'styles/vendor/font-awesome-module.css';
+}
+.starHalf {
+	composes: fa-star-half-o from 'styles/vendor/font-awesome-module.css';
+}
+.starEmpty {
+	composes: fa-star-o from 'styles/vendor/font-awesome-module.css';
+}
+
+.description {
+	composes: paragraphXS from 'styles/typography.css';
+	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
+}

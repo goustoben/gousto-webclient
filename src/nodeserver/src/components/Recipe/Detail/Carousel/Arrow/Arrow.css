@@ -1,0 +1,30 @@
+@value White from 'styles/colors.css';
+@value ScreenMDMin from 'styles/screenSizes.css';
+
+.resetButton {
+	background: transparent;
+	border: none;
+}
+
+.arrow {
+	display: none;
+	composes: resetButton;
+	position: absolute;
+	z-index: 1;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 30px;
+	color: White;
+
+	@media ScreenMDMin {
+		display: block;
+	}
+}
+
+.left {
+	left: 25px;
+}
+
+.right {
+	right: 25px;
+}

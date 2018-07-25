@@ -1,0 +1,43 @@
+@value MinBreakPointXL, MinBreakPointLG, ScreenXSMax from './screenSizes.css';
+@value Radish, Radish60, Radish40, Parsley, Parsley60, Parsley40 from 'styles/colors.css';
+@value SpacingXXXL from 'sass-loader!styles/spacing.scss';
+
+.pageContainer {
+	composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
+	max-width: MinBreakPointXL;
+	margin: 0 auto;
+}
+
+.pageContainerLG {
+	composes: pageContainer;
+	max-width: MinBreakPointLG;
+}
+
+.textblock {
+	composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+	composes: borderSM from 'styles/borders.css';
+}
+
+.error {
+	composes: textblock;
+	color: Radish;
+	background-color: Radish40;
+	border-color: Radish60;
+}
+
+.success {
+	composes: textblock;
+	color: Parsley;
+	background-color: Parsley40;
+	border-color: Parsley60;
+}
+
+.contain {
+	max-width: 100%;
+}
+
+.accountContainer {
+	max-width: 1170px;
+	margin: auto;
+}

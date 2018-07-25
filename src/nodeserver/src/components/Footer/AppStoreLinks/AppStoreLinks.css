@@ -1,0 +1,27 @@
+@value SpacingXXL, SpacingMD from 'sass-loader!styles/spacing.scss';
+@value ScreenSMMax from 'styles/screenSizes.css';
+
+
+.storeSVG {
+	width: 135px;
+	height: 50px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.footerAppstoreLink {
+	composes: storeSVG;
+
+	@media ScreenSMMax {
+		margin-top: SpacingMD;
+	}
+}
+
+.footerAppleAppstoreLink {
+	composes: footerAppstoreLink;
+}
+
+.playStoreLink {
+	composes: storeSVG;
+
+}

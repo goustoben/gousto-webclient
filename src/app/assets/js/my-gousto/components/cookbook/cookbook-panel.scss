@@ -1,0 +1,71 @@
+.cookbook{
+	&-image{
+		position: absolute;
+		width: auto;
+		min-height: 100%;
+		min-width: 100%;
+		&-container{
+			min-height: 165px;
+			overflow: hidden;
+			margin-bottom: 10px;
+			position: relative;
+			@media (max-width: $screen-md-max) {
+				min-height: 132px;
+			}
+			@media (max-width: $screen-sm-max) {
+				min-height: 300px;
+			}
+			@media (max-width: $screen-xs-max) {
+				min-height: 132px;
+			}
+		}
+	}
+
+	&-title{
+		min-height: 43px;
+		margin-bottom: 0;
+		@media (max-width: $screen-md-max) {
+			font-size: 14px;
+		}
+		@media (max-width: $screen-sm-max) {
+			font-size: 16px;
+			margin-bottom: 0;
+		}
+		@media (max-width: $screen-xs-max) {
+			min-height: 65px;
+			font-size: 14px;
+		}
+		&-glyph{
+			display: inline-block;
+		}
+	}
+	&-glyph{
+		font-size: 12px;
+		@media (max-width: $screen-md-max) {
+			font-size: 10px;
+		}
+		@media (max-width: $screen-sm-max) {
+			font-size: 12px;
+		}
+		@media (max-width: $screen-xs-max) {
+			font-size: 10px;
+		}
+	}
+
+	&-empty{
+		padding: 0 10px;
+		text-align: center;
+	}
+
+	&-link{
+		&:hover{
+			color: $color_gradient_10;
+			.cookbook-title-glyph {
+				text-decoration: underline;
+			}
+		}
+		@media (max-width: $screen-sm-max) {
+			margin-bottom: 10px;
+		}
+	}
+}

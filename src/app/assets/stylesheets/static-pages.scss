@@ -1,0 +1,35 @@
+@import 'config/main';
+
+.static-pages {
+	//fonts style
+	h1,h4,h5 {
+		@include font-heading-bold;
+	}
+	h1 {
+		text-align: center;
+		margin-bottom: 30px;
+	}
+	h5 {
+		margin-top: 25px;
+	}
+
+	//lists style
+	ol {
+		counter-reset: item;
+		@media (max-width: 767px) {
+			padding-left: 5px;
+		}
+	}
+	ol li {
+		display: block;
+		position: relative;
+		font-size: 14px;
+	}
+	ol li:before {
+		content: counters(item, ".")".";
+		counter-increment: item;
+		position: absolute;
+		margin-right: 100%;
+		right: 10px;
+	}
+}

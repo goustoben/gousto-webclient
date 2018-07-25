@@ -1,0 +1,25 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.headerBase {
+	text-align: center;
+}
+
+.subHeader {
+	composes: headerBase;
+	composes: headerXL from 'styles/typography.css';
+}
+
+.testimonials {
+	composes: paddingXXXLTop from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		padding-top: 55px;
+		padding-bottom: 55px;
+	}
+}
+
+.storystreamContainer {
+	width: 100%;
+	max-width: 1280px;
+	margin: auto;
+}

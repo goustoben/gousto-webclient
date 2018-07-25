@@ -1,0 +1,23 @@
+@value White from 'styles/colors.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
+
+.filterTagContainer {
+    composes: paddingMDTop paddingXLBottom from 'sass-loader!styles/spacing.scss';
+    background: White;
+    display: none;
+
+    @media ScreenSMMin {
+        display: flex;
+    }
+}
+
+.filterListContainer {
+    composes: pageContainer from 'styles/layout.css';
+    width: 100%;
+    display: flex;
+    padding: 0 30px;
+}
+
+.filtersCTA {
+    min-width: 12%;
+}

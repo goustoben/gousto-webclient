@@ -1,0 +1,27 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value SpacingXXL from 'sass-loader!styles/spacing.scss';
+
+.buttonRow {
+	display: flex;
+
+	@media ScreenXSMax {
+		justify-content: flex-end;
+	}
+}
+
+.textRow {
+	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.header {
+	composes: textBold from 'styles/typography.css';
+	margin-bottom: SpacingXXL;
+}
+
+.hideInMobile {
+	composes: hidden-xs-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.subHeader {
+	composes: textBold from 'styles/typography.css';
+}

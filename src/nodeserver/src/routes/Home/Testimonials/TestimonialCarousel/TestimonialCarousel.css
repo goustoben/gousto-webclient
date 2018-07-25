@@ -1,0 +1,81 @@
+@value ScreenXXSMax from 'styles/screenSizes.css';
+@value SpacingSM from 'sass-loader!styles/spacing.scss';
+@value Chia, Mushroom50, Pepper from 'styles/colors.css';
+
+.container {
+	width: 100%;
+	max-width: 1280px;
+	margin: auto;
+	position: relative;
+}
+
+.testimonial {
+	margin: 0 15px;
+	position: relative;
+	z-index: 1;
+	transition: all .3s linear;
+
+	@media (width > 480px) and (width < 769px) {
+		margin: 0 5px;
+	}
+}
+
+.container :global .carousel-dotted .slick-slider {
+	padding-bottom: 0;
+}
+
+.container :global .slick-dots {
+    margin: 20px 0 30px 0;
+}
+
+.container :global .slick-dots li,  .container :global .slick-dots li button {
+	width: 15px;
+	height: 15px;
+}
+
+.container :global .slick-dots li {
+	margin: 0 2px;
+}
+
+.container :global .slick-dots li.slick-active button {
+	background: Chia;
+}
+
+.container :global .slick-dots li button:before {
+	display: none;
+}
+
+.container :global .slick-dots li button {
+	border-radius: 100%;
+	border-width: 2px;
+	border-color: Pepper;
+}
+
+.container :global .slick-center :local .testimonial {
+	z-index: 2;
+}
+
+.container :global .carousel-no-js .slick-list {
+	overflow-x: scroll;
+}
+
+.container :global [class^="carousel-items-"] .slick-slide {
+	min-width: auto;
+}
+
+.container :global .carousel-dotted .slick-slide {
+	min-width: 0;
+}
+
+.container :global .carousel-no-js :local .testimonialContainer {
+	min-width: 270px;
+}
+
+.container :global .carousel-no-js .slick-track {
+	display: flex;
+	flex-wrap: nowrap;
+}
+
+.container :global .carousel-dotted .slick-list {
+	padding: 25px 0;
+}

@@ -1,0 +1,80 @@
+@value Coconut, Bluecheese, Blackberry, Oyster from 'styles/colors.css';
+@value ScreenMDMax, ScreenSMMax from 'styles/screenSizes.css';
+@value sizeLG, sizeMD from 'styles/typography.css';
+
+.card {
+	composes: paddingXXXXXLLeftRight paddingZeroTopBottom from 'sass-loader!styles/spacing.scss';
+	@media ScreenMDMax {
+		padding: 0 50px;
+	}
+	@media ScreenSMMax {
+		padding: 0 20px;
+	}
+}
+
+.cardTitle {
+	composes: row d-block from 'sass-loader!styles/bootstrap.scss';
+	composes: paddingSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+.jobTitle {
+	composes: fontBase textRegular sizeLG textBold from 'styles/typography.css';
+	color: Blackberry;
+	composes: marginZeroTopBottom, marginZeroLeftRight from 'sass-loader!styles/spacing.scss';
+	@media ScreenSMMax {
+		padding: 0 20px;
+		font-size: sizeLG;
+	}
+}
+
+.jobDepartment {
+	composes: fontBase textRegular sizeSM from 'styles/typography.css';
+	color: Oyster;
+	font-weight: 300;
+	composes: marginZeroTopBottom marginZeroLeftRight from 'sass-loader!styles/spacing.scss';
+	@media ScreenSMMax {
+		padding: 0 20px;
+		font-size: sizeLG;
+	}
+}
+
+.jobCTA {
+	composes: fontBase textRegular sizeMD textBold from 'styles/typography.css';
+	color: Bluecheese;
+	display: inline-block;
+	@media ScreenSMMax {
+		padding: 0 20px;
+		font-size: sizeLG;
+	}
+}
+
+.cardCTA {
+	padding-bottom: 10px;
+	text-align: right;
+}
+
+.isOdd {
+	background-color: Coconut;
+	@media ScreenMDMax {
+		composes: fullWidth from 'styles/positioning.css';
+	}
+}
+
+.isEven {
+	background-color: White;
+}
+
+.fontAwesomeBase {
+	font-size: sizeMD;
+	color: Bluecheese;
+	composes: paddingSMLeft from 'sass-loader!styles/spacing.scss';
+	composes: inlineBlock from 'styles/display.css';
+	@media ScreenSMMax {
+		font-size: sizeLG;
+	}
+}
+/* Font Awesome classes */
+.chevronRight {
+	composes:fontAwesomeBase;
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+}

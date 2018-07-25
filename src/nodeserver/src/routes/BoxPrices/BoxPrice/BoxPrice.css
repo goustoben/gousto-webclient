@@ -1,0 +1,48 @@
+@value ScreenMDMin from 'styles/screenSizes.css';
+
+.container {
+	max-width: 80%;
+  padding: 30px 15px;
+  margin: 40px auto;
+  background-color: #fff;
+  text-align: center;
+
+	@media ScreenMDMin {
+		max-width: 41.66666666666667%;
+	}
+}
+
+.boxInfoList {
+  display: flex;
+	flex-direction: column;
+  justify-content: space-evenly;
+
+	@media ScreenMDMin {
+		flex-direction: row;
+		align-items: center;
+	}
+
+}
+
+.title {
+	composes: headerXXL from 'styles/typography.css';
+	text-align: center;
+}
+
+.link {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	align-items: center;
+
+	@media ScreenMDMin {
+		flex-direction: row;
+		align-items: baseline;
+	}
+}
+
+
+.uppercase {
+	text-transform: uppercase;
+}

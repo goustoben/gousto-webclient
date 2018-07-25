@@ -1,0 +1,137 @@
+@import '../config/main';
+
+/**
+ * Define all the website buttons
+ */
+
+button {
+	-webkit-appearance: none;
+}
+
+.btn {
+	@include font-text-bold;
+	border-radius: 5px;
+	text-transform: uppercase;
+	color: $color_gradient_1;
+
+	min-height: 36px;
+
+	&:disabled {
+		border: none;
+	}
+}
+
+// To be used with <a>, <button> or <input>
+
+/*** Gousto buttons ***/
+%gbtn-default {
+	@include font-text-bold;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 14px;
+	border-radius: 5px;
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	&:hover, &:active, &:link, &:visited {
+		text-decoration: none;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+
+@mixin gbtn-default(
+		$btn-background-color:$color_primary,
+		$btn-color:$color_primary,
+		$btn-border-color:$color_primary,
+		$btn-background-color-hover:$color_primary_hover,
+		$btn-hover-color:$color_gradient_1,
+		$btn-border-color-hover: $color_primary_hover
+	) {
+	@extend %gbtn-default;
+	padding: 8px 15px;
+	border: none;
+	color: $btn-color;
+	background: $btn-background-color;
+	&:hover, &:active, &:focus {
+		background: $btn-background-color-hover;
+		color: $btn-hover-color;
+	}
+	&.disabled, &[disabled], &:disabled {
+		background: $btn-background-color;
+		opacity: 0.3;
+		cursor: not-allowed;
+	}
+}
+
+@mixin gbtn-outline(
+		$btn-background-color:$color_primary,
+		$btn-color:$color_primary,
+		$btn-border-color:$color_primary,
+		$btn-background-color-hover:$color_primary_hover,
+		$btn-color-hover:$color_gradient_1,
+		$btn-border-color-hover:$color_primary
+	) {
+	@extend %gbtn-default;
+	padding: 8px 15px;
+	border: 1px solid $btn-border-color;
+	color: $btn-color;
+	background: $btn-background-color;
+	&:hover, &:active, &:focus {
+		background: $btn-background-color-hover;
+		border-color: $btn-border-color-hover;
+		color: $btn-color-hover;
+	}
+	&.disabled, &[disabled], &:disabled {
+		background: $btn-background-color;
+		color: $btn-color;
+		opacity: 0.3;
+	}
+}
+
+.gbtn-primary {
+	@include gbtn-default($color_primary, $color_gradient_1, $color_primary, $color_primary_hover, $color_gradient_1, $color_gradient_1);
+}
+.gbtn-secondary {
+	@include gbtn-outline($color_gradient_1, $color_primary, $color_primary, $color_primary, $color_gradient_1, $color_primary);
+}
+.gbtn-cancel {
+	@include gbtn-outline($color_gradient_1, $color_red, $color_red, $color_red, $color_gradient_1, $color_red);
+ }
+.gbtn-tertiary {
+	@include gbtn-default($color_gradient_7, $color_gradient_1, $color_gradient_7, darken($color_gradient_7, 10%), $color_gradient_1, $color_gradient_7);
+}
+
+.gbtn-primary-outline {
+	@include gbtn-outline($color_primary);
+}
+.gbtn-secondary-outline {
+	@include gbtn-outline($color_secondary);
+}
+.gbtn-tertiary-outline {
+	@include gbtn-outline($color_gradient_7);
+}
+
+.gbtn-secondary-outline-add {
+	@extend .gbtn-secondary-outline;
+	font-size: 12px;
+	padding: 10px 24px;
+	&:hover {
+		color: $color_gradient_1;
+		background: $color_secondary;
+	}
+}
+
+
+/*** Gousto size overwrite ***/
+.gbtn--lg {
+	font-size: 18px;
+
+	@media(max-width: 991px) {
+		padding: 10px 20px;
+	}
+	@media(min-width: 992px) {
+		padding: 15px 25px;
+	}
+}

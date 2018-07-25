@@ -1,0 +1,7 @@
+.flexRow {
+	composes: flex row noWrap verticalCenter from 'styles/flex.css';
+}
+
+.flexItem {
+	flex-grow: 1;
+}

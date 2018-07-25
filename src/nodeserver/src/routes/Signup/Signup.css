@@ -1,0 +1,208 @@
+@value White, Chia, DarkChilli from 'styles/colors.css';
+@value ScreenXXSMax, ScreenSMMax, ScreenXSMax, HeightSMMax, HeightMDMin, HeightMDMax, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.css';
+@value SpacingLG, SpacingMD, SpacingXS, ScreenXXSMin, SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
+
+@value minHeight 485px;
+@value maxWidth 750px;
+@value maxElWidth calc(maxWidth - 2px);
+
+.signupContainer {
+	composes: flex from 'styles/display.css';
+	composes: column from 'styles/flex.css';
+	width: 100%;
+	height: 100%;
+
+	padding-top: 40px;
+
+	@media ScreenXSMax {
+		padding-top: SpacingXXS;
+	}
+}
+
+.stepsContainer {
+	composes: borderXS from 'styles/borders.css';
+	max-width: maxWidth;
+	margin: auto;
+	position: relative;
+	border-radius: 0;
+	background: White;
+}
+
+.stepContainer {
+	composes: flex from 'styles/display.css';
+	composes: column spaceBetween verticalCenter from 'styles/flex.css';
+	max-width: maxElWidth;
+
+	@media ScreenXXSMax {
+		justify-content: flex-start;
+	}
+}
+
+.fullWidth {
+	width: 100%;
+}
+
+.step {
+	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
+	max-width: maxElWidth;
+	flex-direction: column;
+	width: 100%;
+	padding: 0;
+}
+
+.stepsContainer, .stepContainer, .step {
+	composes: flex from 'styles/display.css';
+	min-height: 520px;
+	height: 100%;
+	width: 100%;
+	float: left;
+
+	@media HeightSMMax {
+		min-height: minHeight;
+	}
+
+	@media ScreenXSMax {
+		width: 380px;
+	}
+
+	@media ScreenXXSMax {
+		width: 345px;
+	}
+
+	@media HeightMDMax and ScreenXXSMax {
+		width: 350px;
+	}
+
+	@media HeightSMMax and ScreenXXSMax {
+		width: 315px;
+	}
+}
+
+.dotsContainer {
+	text-align: center;
+	margin-top: SpacingMD;
+
+	@media HeightSMMax and ScreenXSMax {
+		margin-top: SpacingSM;
+	}
+}
+
+.header, .regularHeader, .body, .footer {
+	width: 100%;
+}
+
+.header {
+	composes: textCenter from 'styles/typography.css';
+	min-height: 205px;
+
+	@media HeightMDMin and ScreenXSMax {
+		min-height: calc((minHeight - 10px) * 0.5);
+	}
+
+	@media ScreenSMMin {
+		min-height: 285px;
+	}
+}
+
+.heading {
+	composes: headerLG headlineFont from 'styles/typography.css';
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+	composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
+	margin-bottom: 0;
+	-webkit-font-smoothing: antialiased;
+
+	@media ScreenXXSMax {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
+
+.headingHilight {
+	composes: headerXL from 'styles/typography.css';
+	color: DarkChilli;
+}
+
+.body {
+	composes: textCenter from 'styles/typography.css';
+}
+
+.bodyText {
+	composes: textRegular from 'styles/typography.css';
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+	composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.basicInputContainer {
+	min-width: 150px;
+	width: 60%;
+	display: block;
+	@media ScreenXSMax {
+		min-width: 200px;
+	}
+}
+
+.inputContainer {
+	composes: basicInputContainer;
+	margin: 0 auto;
+}
+
+.animationContainer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	overflow: hidden;
+}
+
+.animation {
+	composes: row from 'styles/flex.css';
+	height: 100%;
+	width: 100%;
+	transition: all .5s cubic-bezier(.77,0,.175,1);
+	margin-left: 0;
+}
+
+.footer {
+	composes: marginLGBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXXSMax {
+		margin-top: 10px;
+	}
+}
+
+.containerFluid {
+	composes: container-fluid from 'sass-loader!styles/bootstrap.scss';
+}
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}
+
+.left, .right {
+	width: 50%;
+
+	@media ScreenXSMax and HeightMDMax  {
+		width: 100%;
+	}
+}
+
+.left {
+	padding-left: SpacingMD;
+	padding-right: calc(SpacingXS * .5);
+
+	@media ScreenXSMax and HeightMDMax {
+		padding: 0 SpacingSM;
+	}
+}
+
+.right {
+	padding-left: calc(SpacingXS * .5);
+	padding-right: SpacingMD;
+
+	@media ScreenXSMax and HeightMDMax {
+		margin-top: SpacingSM;
+		padding: 0 SpacingSM;
+	}
+}
+

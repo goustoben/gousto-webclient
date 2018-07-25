@@ -1,0 +1,25 @@
+@value sizeXL, avenirHeavyFontStack from 'styles/typography.css';
+@value SpacingLG from 'styles/spacing.css';
+
+.titleSection {
+	font-family: avenirHeavyFontStack;
+	font-size: sizeXL;
+	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';		
+	margin-top: SpacingLG;		
+}
+
+.row {
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.dash {
+	composes: inlineBlock from 'styles/display.css';
+	composes: marginSMRight from 'sass-loader!styles/spacing.scss';
+	transform: scale(3,1);
+	transform-origin: left;
+}
+
+.undiscountedBoxPrice {
+	composes: textStrike from 'styles/typography.css';
+	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
+}

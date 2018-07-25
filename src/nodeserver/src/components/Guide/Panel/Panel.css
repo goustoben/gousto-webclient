@@ -1,0 +1,56 @@
+@value ScreenXXSMax, ScreenXXSMin from 'styles/screenSizes.css';
+@value SpacingXXL from 'sass-loader!styles/spacing.scss';
+@value graphicMinSize 150px;
+@value graphicMaxSize 250px;
+
+.container {
+	composes: col-xs-12 col-sm-4 from 'sass-loader!styles/bootstrap.scss';
+
+	@media ScreenXXSMax {
+		margin-bottom: SpacingXXL;
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.imageContainer {
+	text-align: center;
+}
+
+.image {
+	width: 50%;
+	max-width: graphicMaxSize;
+	min-width: graphicMinSize;
+	border-radius: 50%;
+}
+
+.svg {
+	width: 50%;
+	min-height: 200px;
+	display: block;
+	margin: auto;
+	background-position: center top;
+
+	@media ScreenXXSMin {
+		width: graphicMinSize;
+		min-height: graphicMinSize;
+	}
+}
+
+.title {
+	composes: textXL textBold from 'styles/typography.css';
+	composes: marginXLTopBottom from 'sass-loader!styles/spacing.scss';
+	text-align: center;
+}
+
+.descriptionContainer {
+	min-height: 50px;
+}
+
+.description {
+	composes: textLG from 'styles/typography.css';
+	text-align: center;
+	margin: -5px auto 0 auto;
+	max-width: 310px;
+}

@@ -1,0 +1,35 @@
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value White, Mushroom50, Parsley from 'styles/colors.css';
+
+.header {
+	composes: headerMD headlineFont from 'styles/typography.css';
+}
+
+.boxDetailsContainer {
+	composes: flex column stretch from 'styles/flex.css';
+	composes: paddingLG from 'sass-loader!styles/spacing.scss';
+	background-color: White;
+}
+
+.col {
+	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		margin: 0;
+	}
+}
+
+.colSM {
+	composes: col;
+	composes: col-lg-4 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.arrowRight {
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	font-size: 10px;
+}
+
+.text {
+	composes: textSM from 'styles/typography.css';
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}

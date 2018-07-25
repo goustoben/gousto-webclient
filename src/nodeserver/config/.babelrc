@@ -1,0 +1,26 @@
+{
+  "plugins": [
+    ["lodash",
+      "transform-runtime", {
+      "helpers": false,
+      "polyfill": true,
+      "regenerator": true,
+      "moduleName": "babel-runtime"
+    }],
+    "transform-async-to-generator",
+    "transform-strict-mode",
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "syntax-dynamic-import"
+  ],
+  "presets": [
+    ["env", {
+      "loose": true,
+      "modules": false
+    }],
+		"react",
+		"stage-0"
+    ]
+}
+
+

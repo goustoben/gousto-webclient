@@ -1,0 +1,33 @@
+@value size 125px;
+
+.ingredient {
+	composes: textCenter from 'styles/typography.css';
+	width: 135px;
+	height: 160px;
+}
+
+.imageContainer {
+	width: calc(size + 2px);
+	height: calc(size + 2px);
+	border-radius: 100%;
+	margin: auto;
+}
+
+.image {
+	width: size;
+	height: size;
+	border-radius: 100%;
+}
+
+.placeholder {
+	width: size;
+	height: size;
+	opacity: 0.7;
+	padding: 20%;
+	padding-top: 15%;
+}
+
+.label {
+	composes: textXS textBold from 'styles/typography.css';
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}

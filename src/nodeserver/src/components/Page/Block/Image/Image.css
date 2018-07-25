@@ -1,0 +1,19 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.container {
+	position: relative;
+	overflow: hidden;
+
+	/*4:3*/
+	padding-bottom: 75%;
+
+	@media ScreenXSMax {
+		/*16:9*/
+		padding-bottom: 56.25%;
+	}
+}
+
+.image {
+	composes: centerHorizontal from 'styles/positioning.css';
+	min-height: 160px;
+}

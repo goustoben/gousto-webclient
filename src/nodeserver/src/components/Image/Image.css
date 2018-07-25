@@ -1,0 +1,3 @@
+.contain {
+	composes: contain from 'styles/layout.css';
+}

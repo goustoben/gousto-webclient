@@ -1,0 +1,218 @@
+@value SpacingLG, SpacingSM from 'sass-loader!styles/spacing.scss';
+@value ScreenMDMin, ScreenSMMax from 'styles/screenSizes.css';
+@value Bluecheese, Cacao, Radish, Radish40, DarkRadish, Mushroom, Pepper60, White from 'styles/colors.css';
+@value avenirBookFontStack from 'styles/typography.css';
+
+.row {
+	composes: row from 'sass-loader!styles/bootstrap.scss';
+}
+
+.flex {
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: rowWrap flex from 'styles/flex.css';
+}
+
+.col {
+	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.colMD {
+	composes: col-md-8 col-xs-10 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colLG {
+	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colOneThrice {
+	composes: col-md-4 col-xs-6 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colMDhalf {
+	composes: col-md-6 col-xs-8 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.colXS {
+	composes: col-md-1 col-xs-2 from 'sass-loader!styles/bootstrap.scss';
+	padding: 0;
+}
+
+.linkBase {
+	composes: textSM from 'styles/typography.css';
+	color: Bluecheese;
+	text-decoration: underline;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.addressToggle {
+	float: right;
+}
+
+.errorInput {
+	border-color: DarkRadish;
+	background-color: Radish40;
+}
+
+.errorMsg {
+	color: Radish;
+	composes: textXS from 'styles/typography.css';
+	composes: paddingXXSTop from 'sass-loader!styles/spacing.scss';
+}
+
+.hidden {
+	composes: hidden-xs-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.header {
+	composes: headerMD headlineFont from 'styles/typography.css';
+}
+
+.deliveryContainer {
+	background-color: White;
+	composes: textBold from 'styles/typography.css';
+	padding: SpacingLG;
+}
+
+.linkRight {
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	font-size: 10px;
+}
+
+.tooltipTrigger {
+	color: Cacao;
+	composes: fa-question-circle from 'styles/vendor/font-awesome-module.css';
+	font-size: 1.6em;
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.tooltipContent {
+	composes: paddingXS from 'sass-loader!styles/spacing.scss';
+	background-color: Mushroom;
+}
+
+.labelWithoutMargin {
+	composes: textMD textBold from 'styles/typography.css';
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.deliveryField {
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+}
+
+.deliveryFieldWrapper{
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+}
+
+.labelWithMargin {
+	composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}
+
+.textSM {
+	composes: textSM from 'styles/typography.css';
+	font-family: avenirBookFontStack;
+}
+
+.textInput {
+	composes: textRegular from 'styles/typography.css';
+}
+
+.inputContainer {
+	composes: marginSMTopBottom marginXSLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.inputContainerInline {
+	composes: inputContainer;
+	composes: inlineBlock from 'styles/display.css';
+	vertical-align: top;
+}
+
+.errorMsg {
+	color: Radish;
+	composes: textXS from 'styles/typography.css';
+}
+
+.inputError {
+	background-color: Radish40;
+	border: solid 1px Radish;
+}
+
+.upperCase {
+	composes: textUpper from 'styles/typography.css';
+}
+
+.inlineButton {
+	composes: inputContainerInline;
+	composes: paddingXXLTop from 'sass-loader!styles/spacing.scss';
+}
+
+.postCodeField, .findAddressButton {
+	flex: 1 50%;
+	@media ScreenMDMin {
+		flex: 1 auto;
+	}
+}
+
+.postCodeField {
+	composes: paddingMDRight from 'sass-loader!styles/spacing.scss';
+	max-width: 180px;
+}
+
+.prefix:before {
+	font-weight: normal;
+	display: inline-block;
+	content: "+44";
+	width: 35px;
+	padding-right: SpacingSM;
+}
+
+.withZero:before, .withoutZero:before {
+	font-weight: normal;
+	display: inline-block;
+	content: "(0)";
+	width: 25px;
+	padding-right: SpacingSM;
+}
+
+.withoutZero {
+	color: Pepper60;
+}
+
+.phonePrefix{
+	min-width: 60px;
+}
+
+:global .deliveryDropdown select{
+	width: 100%;
+}
+
+.deliveryInfoContainer {
+	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+}
+
+.checkoutTooltip {
+	composes: marginSMLeft from 'sass-loader!styles/spacing.scss';
+}
+
+.iconDeliverySection {
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: rowWrap flex from 'styles/flex.css';
+	composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.iconDelivery {
+	max-width: 60px;
+	height: 60px;
+	flex: 1 0 0%;
+	margin-right: 10px;
+}
+
+.iconDeliveryDescription {
+	flex: 2 0 0%;
+	padding-top:10px;
+	@media ScreenSMMax {
+		padding-top: 5px;
+	}
+}

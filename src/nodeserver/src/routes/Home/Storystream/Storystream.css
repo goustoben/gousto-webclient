@@ -1,0 +1,10 @@
+.storystreamContainer {
+	width: 100%;
+	height: 500px;
+	margin-top: 20px;
+}
+
+.storystreamContainer :global #StoryStreamWidgetApp {
+	width: 100%;
+	height: 500px;
+}

@@ -1,0 +1,134 @@
+@value Chia, Cacao, Tomato, Mushroom50, White, Blackberry from 'styles/colors.css';
+@value SpacingXL from 'sass-loader!styles/spacing.scss';
+@value MainColor Blackberry;
+
+.container {
+	composes: flex column spaceBetween from 'styles/flex.css';
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+	transition: 0.1s ease-in-out;
+	position: fixed;
+	top: 0;
+	right: 0;
+	background: White;
+	height: 100%;
+	z-index: -1;
+}
+
+.hidden {
+	composes: container;
+	transform: translateX(100%);
+}
+
+.show {
+	composes: container;
+	transform: translateX(0);
+	z-index: 102;
+}
+
+span:target .hidden {
+	transform: translateX(0);
+	z-index: 102;
+}
+
+.list {
+	composes: paddingLGTopBottom paddingLGLeft paddingXXLRight from 'sass-loader!styles/spacing.scss';
+	list-style-type: none;
+}
+
+.menuItemBase {
+	composes: paragraphMD from 'styles/typography.css';
+	composes: paddingLGTopBottom from 'sass-loader!styles/spacing.scss';
+	composes: block from 'styles/display.css';
+	@media ScreenXSMax {
+		composes: inline from 'styles/display.css';
+	}
+}
+
+.menuItem {
+	composes: menuItemBase;
+	composes: bodyFont noDecor textBoldHover textBoldActive textBoldFocus from 'styles/typography.css';
+	color: MainColor;
+	border-bottom: 3px solid transparent;
+	cursor: pointer;
+
+	&.disabled, &:hover, &:focus, &:active {
+		color: MainColor;
+		border-color: MainColor;
+	}
+
+	&.disabled :local .listElement {
+		border-bottom: 2px solid;
+	}
+}
+
+.listElement {
+	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.disabled {
+	composes: textBold from 'styles/typography.css';
+}
+
+.menuIcon {
+	composes: fa-lg fa-fw from 'styles/vendor/font-awesome-module.css';
+	composes: paddingLGRight from 'sass-loader!styles/spacing.scss';
+	font-size: 1.4em;
+	width: 1.5em;
+	color: MainColor;
+}
+
+.icon-home {
+	composes: menuIcon;
+	composes: fa-home from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-login {
+	composes: menuIcon;
+	composes: fa-user from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-logout {
+	composes: menuIcon;
+	composes: fa-sign-out from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-box {
+	composes: menuIcon;
+	composes: fa-archive from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-menu {
+	composes: menuIcon;
+	composes: fa-cutlery from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-faq {
+	composes: menuIcon;
+	composes: fa-question-circle from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-contactUs {
+	composes: menuIcon;
+	composes: fa-comment from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-heart {
+	composes: menuIcon;
+	composes: fa-heart from 'styles/vendor/font-awesome-module.css';
+}
+
+.icon-tree {
+	composes: menuIcon;
+	composes: fa-tree from 'styles/vendor/font-awesome-module.css';
+}
+
+.boxContainer {
+	text-align: center;
+	padding: 0 SpacingXL;
+}
+
+.box {
+	width: 100px;
+	height: 115px;
+	margin: 0 20px;
+}

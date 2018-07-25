@@ -1,0 +1,87 @@
+@value ScreenXSMax, ScreenMLMax, ScreenMDMax from 'styles/screenSizes.css';
+@value Blackberry from 'styles/colors.css';
+@value sizeMD from 'styles/typography.css';
+
+.headerBase {
+	composes: headerBase from '../Jobs.css'
+}
+
+.header {
+	composes: header from '../Jobs.css'
+}
+
+.preHeader {
+	composes: preHeader from '../Jobs.css'
+}
+
+.container {
+	composes: container from '../Jobs.css'
+}
+
+.valueBase {
+	text-align: center;
+	color: Blackberry;
+}
+
+.introText {
+	composes: sizeLG headerLG fontBase textLeft from 'styles/typography.css';
+	color: Blackberry;
+	padding: 0 120px 0 120px;
+	composes: marginLGBottom from 'sass-loader!styles/spacing.scss';
+	@media ScreenXSMax {
+		padding: 0 20px 0 20px;
+		font-size: sizeMD;
+	}
+}
+
+.valueRow {
+	display: flex;
+	flex-basis: 0;
+	padding-top: 50px;
+	padding-bottom: 0px;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+
+.colThird {
+	width: 30%;
+	composes: paddingLGTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
+	@media ScreenXSMax {
+		width: 100%;
+	}
+}
+
+.valueHeader {
+	composes: valueBase;
+	composes: textBold from 'styles/typography.css';
+	composes: paddingXLTop from 'sass-loader!styles/spacing.scss';
+	font-size: 24px;
+}
+
+.valueCopy {
+	composes: valueBase;
+	composes: headerLG from 'styles/typography.css';
+}
+
+.svg {
+	width: 50%;
+	min-height: 72px;
+	display: block;
+	margin: auto;
+	background-position: center top;
+	@media ScreenXXSMin {
+		width: graphicMinSize;
+		min-height: graphicMinSize;
+	}
+}
+
+
+.valueListItem {
+	composes: headerLG from 'styles/typography.css';
+	text-align: left;
+	color: Blackberry;
+	padding-bottom: 18px;
+	@media ScreenXSMax {
+		font-size: sizeMD;
+	}
+}

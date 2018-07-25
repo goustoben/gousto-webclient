@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="138px" height="87px" viewBox="0 0 138 87" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>delivery copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M83.282496,69.3945313 L4.79814919,69.3945313 C2.14820456,69.3945313 0,67.2415954 0,64.5973847 L0,4.79714658 C0,2.14775568 2.1554136,0 4.79814919,0 L84.2277038,0.00694921491 C86.8776484,0.00694921491 89.025853,2.16203392 89.025853,4.79714658 L89.025853,16.4916344" id="path-1"></path>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="89.025853" height="69.3945313" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <path d="M85,57.9945445 L85,13 C85,13 116.259557,27.8743277 123.848405,38.172526 C129.480892,45.8159093 128.467023,51.94438 128.467023,64.7717487 C128.467023,67.3073335 127.17119,69.5656616 121.737064,69.5656616 C109.515849,69.5656616 85,69.5656616 85,69.5656616" id="path-3"></path>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="43.5380666" height="56.5656616" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="delivery-copy" stroke="#7290ff">
+            <g id="Group-14" transform="translate(6.000000, 4.000000)">
+                <g id="Group-15" fill="#FFFFFF">
+                    <use id="Rectangle-2" mask="url(#mask-2)" stroke-width="9" stroke-linecap="round" xlink:href="#path-1"></use>
+                    <ellipse id="Oval-4" stroke-width="4.5" cx="27" cy="67.9604146" rx="11" ry="10.9604146"></ellipse>
+                    <use id="Rectangle-2-Copy" mask="url(#mask-4)" stroke-width="9" stroke-linecap="round" xlink:href="#path-3"></use>
+                    <ellipse id="Oval-4-Copy-2" stroke-width="4.5" cx="94" cy="67.9604146" rx="11" ry="10.9604146"></ellipse>
+                </g>
+                <path d="M40.9859739,56 L76.6407447,56" id="Path-16" stroke-width="4.5" stroke-linecap="round"></path>
+                <path d="M100,42.25 L123.640745,42.25" id="Path-16-Copy-2" stroke-width="4.5" stroke-linecap="round"></path>
+                <path d="M10.9859739,56 L13,56" id="Path-16-Copy" stroke-width="4.5" stroke-linecap="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

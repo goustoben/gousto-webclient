@@ -1,0 +1,8 @@
+@value Blackberry from 'styles/colors.css';
+
+.date {
+	composes: avenirBook textBold noDecor textXL from 'styles/typography.css';
+	color: Blackberry;
+	composes: marginZeroTopBottom, marginZeroLeftRight from 'sass-loader!styles/spacing.scss';
+}
+

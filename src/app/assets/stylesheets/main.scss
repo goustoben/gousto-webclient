@@ -1,0 +1,65 @@
+/*
+*= depend_on config
+*/
+
+@import 'config/main';
+
+body {
+	background-color: $color_background;
+	padding-top: 0px;
+	margin-top: 0px;
+}
+
+.row.cmain {
+	background: $color_background;
+	margin-bottom: 0;
+	&-join {
+		margin-top: -7px;
+		background: $color_gradient_1;
+		margin-bottom: 0;
+	}
+	@media (max-width: 767px) {
+		margin-top: 0;
+	}
+}
+.row {
+	margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 25px;
+	width: 100%;
+	float: left;
+}
+.page-wrapper {
+	height: 100vh;
+	background-color: $color_mushroom50;
+}
+
+.wrapper {
+	background: $color_background;
+	padding: 0;
+	padding: 0;
+	max-width: 100%;
+	margin-bottom: 0;
+}
+.wrapper-min-h {
+	min-height: 76vh;
+}
+.container.header {
+	max-width: 1024px;
+	margin-left: auto;
+	margin-right: auto;
+	@media (max-width: 1170px) {
+		max-width: 100%;
+		margin: 0 30px;
+	}
+	@media (max-width: 767px) {
+		margin: 0;
+	}
+}
+
+#home-no-voucher {
+	color: inherit !important;
+}
+
+/********REACT COMPONENTS - NEW STRUCTURE********/
+@import '../js/index';

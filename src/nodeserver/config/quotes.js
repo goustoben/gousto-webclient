@@ -1,0 +1,15 @@
+module.exports = [
+	'1 + 1 = 3!',
+	'Chocolate fridaayyyyyy',
+	'If I had 3 hours to chop down a tree, I would spend 2 of those hours sharpening my axe.',
+	'To err is human, but to really foul things up you need a computer.',
+	'I would love to change the world, but they won\'t give me the source code.',
+	'I\'m not anti-social; I\'m just not user friendly',
+	'My software never has bugs. It just develops random features.',
+	'The only problem with troubleshooting is that sometimes trouble shoots back.',
+	'Mmmmmmmmmmmmmmmmmmmmmmmm',
+	'Stories of imagination tend to upset those without one',
+	'I remember when all this was PHP... as far as the eye could see!',
+	'Have a SUPER day!',
+	'If in doubt, blame platform',
+]

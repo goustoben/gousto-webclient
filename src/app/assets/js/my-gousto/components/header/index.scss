@@ -1,0 +1,17 @@
+.header {
+	margin-top: -5px;
+	margin-bottom: 35px;
+	@media (min-width: $mobile_breakpoint) {
+		margin-left: -15px; /* Counter the Bootstrap .container padding */
+	}
+
+	&-text {
+		margin: 0 auto;
+		font-size: 18px;
+
+		&-icon {
+			font-size: 14px;
+		}
+
+	}
+}

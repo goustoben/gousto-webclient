@@ -1,0 +1,8 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.button {
+	@media ScreenXSMax {
+		display: flex;
+		justify-content: flex-end;
+	}
+}

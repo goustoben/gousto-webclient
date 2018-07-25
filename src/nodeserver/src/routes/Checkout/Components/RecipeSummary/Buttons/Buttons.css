@@ -1,0 +1,34 @@
+@value ScreenMDMax, ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
+@value sizeSM sizeXL from 'styles/typography.css';
+@value Parsley from 'styles/colors.css';
+
+.tooltipWidth {
+	@media ScreenSMMax {
+		max-width: 150px;
+	}
+	@media ScreenXSMax {
+		max-width: 100%;
+	}
+}
+
+.btnCheckout {
+	composes: marginXSTop from 'sass-loader!styles/spacing.scss';
+	font-size: sizeSM;
+	max-height: 35px;
+}
+
+.parsley {
+	color: Parsley;
+	composes: textBold from 'styles/typography.css';
+	min-width: 100px;
+}
+
+.noControl {
+	composes: parsley;
+	border: none;
+}
+
+.segmentSmall {
+	background: transparent;
+	composes: textBold from 'styles/typography.css';
+}

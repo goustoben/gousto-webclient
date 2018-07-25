@@ -1,0 +1,27 @@
+@value Blackberry from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.pricingContainer {
+	composes: paddingXXLRight from 'sass-loader!styles/spacing.scss';
+	@media ScreenXSMax {
+		padding: 0px;
+	}
+}
+
+.fullPrice {
+	text-decoration: line-through;
+	composes: headerMD textRight from 'styles/typography.css';
+	color: Blackberry;
+	@media ScreenXSMax {
+		font-size: 16px;
+	}
+}
+
+.total {
+	composes: avenirBook textRight noDecor from 'styles/typography.css';
+	color: Blackberry;
+	font-size: 35px;
+	@media ScreenXSMax {
+		font-size: 24px;
+	}
+}

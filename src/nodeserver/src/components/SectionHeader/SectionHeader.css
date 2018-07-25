@@ -1,0 +1,70 @@
+@value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
+@value White from 'styles/colors.css';
+@value sizeMD from 'styles/typography.css';
+
+.pageContainer {
+	composes: relative from 'styles/position.css';
+	background: White;
+	z-index: 1;
+
+	@media ScreenXSMax {
+		margin-top: 0;
+	}
+}
+
+.pageContent {
+	composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		text-align: center;
+	}
+}
+
+.pageContentMax {
+	composes: pageContainer from 'styles/layout.css';
+}
+
+.pageContentMaxLG {
+	composes: pageContainerLG from 'styles/layout.css';
+}
+
+.articleContent {
+	composes: paddingXXXLLeftRight from 'sass-loader!styles/spacing.scss';
+	composes: textCenter from 'styles/typography.css';
+
+	@media ScreenSMMax {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+
+.pageTitle {
+	composes: headerXXL from 'styles/typography.css';
+	composes: noMargin noPadding from 'sass-loader!styles/spacing.scss';
+}
+
+.articleTitle {
+	composes: pageTitle;
+}
+
+.minorArticleContent {
+	composes: textXS from 'styles/typography.css';
+}
+
+.minorArticleTitle {
+	composes: pageTitle;
+	composes: headerLG from 'styles/typography.css';
+	font-size: sizeMD;
+}
+
+.leftAlign {
+	composes: textLeft from 'styles/typography.css';
+}
+
+.centerAlign {
+	composes: textCenter from 'styles/typography.css';
+}
+
+.rightAlign {
+	composes: textRight from 'styles/typography.css';
+}

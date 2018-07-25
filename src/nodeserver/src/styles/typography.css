@@ -1,0 +1,350 @@
+@value Blueberry, Bluecheese, Chia, Cacao, Pepper from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+@value sizeXXS 11px;
+@value sizeXS 13px;
+@value sizeSM 14px;
+@value sizeMD 16px;
+@value sizeLG 18px;
+@value sizeXL 20px;
+@value sizeXXL 28px;
+@value sizeXXL2 48px;
+@value normalLineHeight 1.4;
+
+@value comfortaaFontStack Comfortaa,Helvetica,sans-serif;
+@value avenirBookFontStack AvenirBook,Helvetica,sans-serif;
+@value avenirHeavyFontStack AvenirHeavy,Helvetica,sans-serif;
+
+@value headingFontStackBold comfortaaFontStack;
+@value headingFontWeightBold bold;
+@value bodyFontStackNormal avenirBookFontStack;
+@value bodyFontWeightNormal normal;
+@value bodyFontStackBold avenirHeavyFontStack;
+@value bodyFontWeightBold normal;
+
+/* Fonts */
+
+@font-face {
+	font-family: 'AvenirBook';
+	src: url('styles/fonts/AvenirLTW04-45Book.eot');
+	src: url('styles/fonts/AvenirLTW04-45Book.eot?#iefix') format('embedded-opentype'),
+		url('styles/fonts/AvenirLTW04-45Book.woff2') format('woff2'),
+		url('styles/fonts/AvenirLTW04-45Book.woff') format('woff'),
+		url('styles/fonts/AvenirLTW04-45Book.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'AvenirHeavy';
+	src: url('styles/fonts/AvenirLTW04-85Heavy.eot');
+	src: url('styles/fonts/AvenirLTW04-85Heavy.eot?#iefix') format('embedded-opentype'),
+		url('styles/fonts/AvenirLTW04-85Heavy.woff2') format('woff2'),
+		url('styles/fonts/AvenirLTW04-85Heavy.woff') format('woff'),
+		url('styles/fonts/AvenirLTW04-85Heavy.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Comfortaa';
+	src: url('styles/fonts/Comfortaa-Bold.eot');
+	src: url('styles/fonts/Comfortaa-Bold.eot?#iefix') format('embedded-opentype'),
+		url('styles/fonts/Comfortaa-Bold.woff2') format('woff2'),
+		url('styles/fonts/Comfortaa-Bold.woff') format('woff'),
+		url('styles/fonts/Comfortaa-Bold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Comfortaa';
+	src: url('styles/fonts/Comfortaa-Light.eot');
+	src: url('styles/fonts/Comfortaa-Light.eot?#iefix') format('embedded-opentype'),
+		url('styles/fonts/Comfortaa-Light.woff2') format('woff2'),
+		url('styles/fonts/Comfortaa-Light.woff') format('woff'),
+		url('styles/fonts/Comfortaa-Light.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Comfortaa';
+	src: url('styles/fonts/Comfortaa-Regular.eot');
+	src: url('styles/fonts/Comfortaa-Regular.eot?#iefix') format('embedded-opentype'),
+		url('styles/fonts/Comfortaa-Regular.woff2') format('woff2'),
+		url('styles/fonts/Comfortaa-Regular.woff') format('woff'),
+		url('styles/fonts/Comfortaa-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Font utility classes */
+.comfortaa {
+	font-family: comfortaaFontStack;
+}
+
+.avenirBook {
+	font-family: avenirBookFontStack;
+
+	&.textBold,
+	&.textBoldHover:hover,
+	&.textBoldActive:active,
+	&.textBoldFocus:focus {
+		font-weight: normal;
+	}
+}
+
+.avenirHeavy {
+	font-family: avenirHeavyFontStack;
+
+	&.textBold,
+	&.textBoldHover:hover,
+	&.textBoldActive:active,
+	&.textBoldFocus:focus {
+		font-weight: normal;
+	}
+}
+
+/* Base typography */
+:global body,
+:global button,
+:global input,
+:global select,
+:global textarea {
+	font-family: bodyFontStackNormal;
+	font-weight: bodyFontWeightNormal;
+	line-height: normalLineHeight;
+	-webkit-font-smoothing: antialiased;
+
+	& :local {
+		& .textBold,
+		& .textBoldHover:hover,
+		& .textBoldActive:active,
+		& .textBoldFocus:focus {
+			font-family: bodyFontStackBold;
+			font-weight: bodyFontWeightBold;
+		}
+	}
+}
+
+:global a :local .textRegular {
+	cursor: pointer;
+
+	&:hover {
+		 text-decoration: underline;
+	}
+}
+
+.bodyFont {
+	font-family: bodyFontStackNormal;
+	font-weight: bodyFontWeightNormal;
+
+	&.textBold,
+	&.textBoldHover:hover,
+	&.textBoldActive:active,
+	&.textBoldFocus:focus {
+		font-family: bodyFontStackBold;
+		font-weight: bodyFontWeightBold;
+	}
+}
+
+.headlineFont {
+	&,
+	&.textBold,
+	&.textBoldHover:hover,
+	&.textBoldActive:active,
+	&.textBoldFocus:focus {
+		font-family: headingFontStackBold;
+		font-weight: headingFontWeightBold;
+	}
+}
+
+/* Text utility classes */
+.textRegular {
+	line-height: normalLineHeight;
+}
+
+.textTruncate {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.textStrike {
+	text-decoration: line-through;
+}
+
+.textUpper {
+	text-transform: uppercase;
+}
+
+.textCenter {
+	text-align: center;
+}
+
+.textRight {
+	text-align: right;
+}
+
+.textLeft {
+	text-align: left;
+}
+
+.textBold,
+.textBoldHover:hover,
+.textBoldActive:active,
+.textBoldFocus:focus {
+	font-weight: bold;
+}
+
+.textItalic {
+	font-style: italic;
+}
+
+.textXS {
+	composes: textRegular;
+	font-size: sizeXS;
+}
+
+.textSM {
+	composes: textRegular;
+	font-size: sizeSM;
+}
+
+.textMD {
+	composes: textRegular;
+	font-size: sizeMD;
+}
+
+.textLG {
+	composes: textRegular;
+	font-size: sizeLG;
+}
+
+.textXL {
+	composes: textRegular;
+	font-size: sizeXL;
+}
+
+.textXXL {
+	composes: textRegular;
+	font-size: sizeXXL;
+}
+
+.textXXL2 {
+	composes: textRegular;
+	font-size: sizeXXL2;
+}
+
+/* Home Heading */
+.headerXXL2 {
+	composes: textRegular;
+	font-size: sizeXXL2;
+	line-height: 1.2;
+
+	@media ScreenXSMax {
+		font-size: sizeXXL;
+	}
+}
+
+/* Main Heading */
+.headerXXL {
+	composes: textRegular;
+	composes: headlineFont;
+	font-size: sizeXXL;
+
+	@media ScreenXSMax {
+		font-size: sizeXL;
+	}
+}
+
+/* Featured Recipe Title */
+.headerXL {
+	composes: headlineFont;
+	font-size: sizeXL;
+
+	@media ScreenXSMax {
+		font-size: sizeMD;
+	}
+}
+
+/* Collection Title */
+.headerLG {
+	composes: textRegular;
+	font-size: sizeLG;
+
+	@media ScreenXSMax {
+		font-size: sizeSM;
+	}
+}
+
+/* Recipe Title */
+.headerMD {
+	composes: textRegular textBold;
+	font-size: sizeMD;
+}
+
+.paragraphMD {
+	composes: textMD;
+}
+
+.paragraphSM {
+	composes: textSM;
+}
+
+.paragraphXS {
+	composes: textXS;
+}
+
+.icon {
+	font-size: sizeMD;
+}
+
+.noTransform {
+	text-transform: none;
+}
+
+.noDecor {
+	text-decoration: none;
+
+	&:hover, &:focus, &:active {
+		text-decoration: none;
+	}
+}
+
+/* Link */
+.textLinkBase {
+	color: Bluecheese;
+	composes: noDecor noTransform;
+	color: Bluecheese;
+	cursor: pointer;
+
+	&:hover, &:focus, &:active {
+		color: Blueberry;
+	}
+}
+
+.textLinkXS {
+	composes: textLinkBase textXS;
+}
+
+.textLinkSM {
+	composes: textLinkBase textSM;
+}
+
+.textLinkMD {
+	composes: textLinkBase textMD;
+}
+
+.textLinkLG {
+	composes: textLinkBase textLG;
+}
+
+.textLinkXL {
+	composes: textLinkBase textXL;
+}
+
+.textLink {
+	composes: textLinkBase textLinkSM;
+}

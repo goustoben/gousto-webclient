@@ -1,0 +1,65 @@
+@value SpacingXXL from 'sass-loader!styles/spacing.scss';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.content {
+	composes: textMD from 'styles/typography.css';
+
+	flex: 1 1 auto;
+	text-align: left;
+	line-height: 1.5em;
+}
+
+.bottom {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	@media ScreenXSMax {
+		flex-wrap: wrap-reverse;
+
+		& > div {
+			min-width: 100%;
+			margin-top: 15px;
+		}
+	}
+}
+
+.bottomCentered {
+	composes: bottom;
+	justify-content: center;
+}
+
+.cta {
+	flex: 1;
+}
+
+.contentItem {
+	composes: marginXLTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.copy {
+	composes: marginXSTopBottom from 'sass-loader!styles/spacing.scss';
+	composes: textMD from 'styles/typography.css';
+
+	white-space: pre-line;
+}
+
+.quoteBlock {
+	composes: marginXXXLTop from 'sass-loader!styles/spacing.scss';
+}
+
+.quote {
+	composes: copy;
+	composes: textItalic from 'styles/typography.css';
+}
+
+.footer {
+	composes: bottom;
+	composes: marginXLTop from 'sass-loader!styles/spacing.scss';
+}

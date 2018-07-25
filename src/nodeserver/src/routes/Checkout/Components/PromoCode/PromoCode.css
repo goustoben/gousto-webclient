@@ -1,0 +1,76 @@
+@value sizeXL from 'styles/typography.css';
+@value RadiusSM from 'styles/borders.css';
+@value successColor from 'styles/forms.css';
+@value inputHeight: 41px;
+
+.inputContainer {
+	composes: flex column flexGrow center from 'styles/flex.css';
+}
+
+.inputGroup {
+	composes: flex from 'styles/flex.css';
+	composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
+	width: 100%;
+}
+
+.inputAddon {
+	composes: flex column from 'styles/flex.css';
+}
+
+.inputBase {
+	composes: input from 'styles/forms.css';
+	height: inputHeight;
+}
+
+.input {
+	composes: inputBase;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.inputError {
+	composes: inputBase;
+	composes: inputError from 'styles/forms.css';
+}
+
+.inputSuccess {
+	composes: inputBase;
+	color: successColor !important;
+	composes: inputSuccess from 'styles/forms.css';
+}
+
+.applyButton {
+	cursor: pointer;
+	composes: paddingXSTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+	border-top-right-radius: RadiusSM;
+	border-bottom-right-radius: RadiusSM;
+	border-bottom-width: 0;
+	max-height: none;
+	height: inputHeight;
+	line-height: inputHeight;
+}
+
+.buttonContainer {
+	border: 0;
+}
+
+.removeButton {
+	composes: applyButton;
+	font-size: sizeXL;
+}
+
+.buttonRemove {
+	border-width: 0;
+}
+
+.icon {
+	composes: fa-times from 'styles/vendor/font-awesome-module.css';
+}
+
+.successMsg {
+	composes: msg from 'styles/forms.css'
+}
+
+.errorMsg {
+	composes: errorMsg from 'styles/forms.css'
+}

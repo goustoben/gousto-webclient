@@ -1,0 +1,31 @@
+@value ScreenSMMax from 'styles/screenSizes.css';
+@value avenirBookFontStack from 'styles/typography.css';
+
+.infoContainer {
+	composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.flex {
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: rowWrap flex from 'styles/flex.css';
+}
+
+.iconFrequency {
+	max-width: 60px;
+	height: 60px;
+	flex: 1 0 0%;
+	margin-right: 10px;
+}
+
+.iconFrequencyDescription {
+	flex: 2 0 0%;
+	padding-top: 10px;
+	@media ScreenSMMax {
+		padding-top: 5px;
+	}
+}
+
+.iconFrequencyText {
+	composes: textSM from 'styles/typography.css';
+	font-family: avenirBookFontStack;
+}

@@ -1,0 +1,107 @@
+@value ScreenXSMin, ScreenXXSMin, ScreenXSMax, ScreenSMMmax, ScreenSMMin, ScreenMDMin, ScreenMLMin, ScreenLGMax, ScreenLGMin from 'styles/screenSizes.css';
+@value White, Cacao from 'styles/colors.css';
+
+.recipeImg {
+	composes: centerHorizontal from 'styles/positioning.css';
+}
+
+.container {
+	position: relative;
+	overflow: hidden;
+}
+
+.grid {
+	composes: container;
+	width: 100%;
+	/*4:3*/
+	padding-bottom: 75%;
+
+	@media ScreenXSMax {
+		/*16:9*/
+		padding-bottom: 56.25%;
+	}
+}
+
+.gridSmall {
+	padding-bottom: 75%;
+}
+
+.list {
+	composes: container;
+	width: 80px;
+	min-width: 80px;
+	height: 55px;
+}
+
+.featured {
+	composes: grid;
+	@media ScreenMLMin {
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+}
+
+.simple {
+	min-height: 160px;
+}
+
+.detail {
+	composes: container;
+	width: 100%;
+	/*4:3*/
+	padding-bottom: 56.25%;
+}
+
+.fineDineInDetail {
+	height: 420px;
+
+	@media ScreenXXSMin {
+		height: 485px;
+	}
+
+	@media ScreenMDMin {
+		height: 550px;
+	}
+
+	@media ScreenLGMin {
+		height: 615px;
+	}
+}
+
+.fineDineInDetail img {
+	max-width: 100%;
+	width: auto;
+	top: 45%;
+
+	@media ScreenXXSMin {
+		top: 65%;
+	}
+
+	@media ScreenMDMin {
+		top: 65%;
+	}
+
+	@media ScreenLGMin {
+		top: 70%;
+	}
+}
+
+.featured .recipeImg {
+
+	@media ScreenMLMin {
+		height: 100%;
+		width: auto;
+	}
+
+	@media ScreenMDMin {
+		height: auto;
+		width: 102%;
+	}
+}
+
+.placeholder {
+	background-image: url('media/images/recipe-placeholder.jpg');
+	background-size: cover;
+}

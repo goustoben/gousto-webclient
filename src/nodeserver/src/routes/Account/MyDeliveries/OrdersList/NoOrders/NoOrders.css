@@ -1,0 +1,38 @@
+@value Blackberry from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.messageCopy {
+	font-weight: bold;
+	margin-bottom: 0px;
+	font-size: 16px;
+	color: Blackberry;
+}
+
+.twrCopy {
+	font-size: 16px;
+	color: Blackberry;
+	padding-bottom: 20px;
+}
+
+.orderWrap {
+	composes: orderWrap from '../Order/Order.css';
+}
+
+.order {
+	composes: order from '../Order/Order.css';
+}
+
+.noShadow {
+	&:hover {
+		box-shadow: none;
+	}
+}
+
+.buttonRow {
+	display: flex;
+	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenXSMax {
+		justify-content: flex-end;
+	}
+}

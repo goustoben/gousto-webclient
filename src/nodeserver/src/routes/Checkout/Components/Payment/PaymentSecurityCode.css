@@ -1,0 +1,14 @@
+.securityCodeWrapper {
+	composes: flex rowWrap verticalCenter from 'styles/flex.css';
+	align-items: flex-start;
+}
+
+.securityCodeField {
+	flex: 1 0;
+}
+
+.securityCodeTooltip {
+	flex: 2 0;
+	composes: marginSMLeft from 'sass-loader!styles/spacing.scss';
+	padding-top: 30px;
+}

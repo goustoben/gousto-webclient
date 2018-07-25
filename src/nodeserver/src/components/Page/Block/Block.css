@@ -1,0 +1,13 @@
+@value White, Pepper60 from 'styles/colors.css';
+
+.container {
+	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
+	composes: borderXS from 'styles/borders.css';
+	background-color: White;
+	position: relative;
+}
+
+:global a :local .container:hover {
+	border-color: Pepper60;
+	box-shadow: 0 4px 4px 0 rgba(51,61,71,0.40);
+}

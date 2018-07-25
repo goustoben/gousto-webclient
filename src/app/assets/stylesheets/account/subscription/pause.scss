@@ -1,0 +1,53 @@
+@import '../../config/main';
+
+.account-subscription-pause-title {
+	@include font-text-bold;
+	font-size: 25px;
+}
+
+.account-subscription-pause-box {
+	padding: 1px 0 15px 0;
+	background-color: $color_background;
+}
+
+.account-subscription-pause-body {
+	font-size: 15px;
+	margin-top: 15px;
+}
+
+.account-subscription-pause-formsection {
+	input {
+		display: none;
+	}
+}
+
+.account-subscription-pause-btn {
+	@include cursor-pointer;
+	display: inline-block;
+	padding: 7px 15px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	font-size: 12px;
+	font-weight: normal;
+	color: $color_gradient_7;
+	background-color: $color_gradient_1;
+	border: 1px solid $color_gradient_4;
+	border-radius: 3px;
+	text-align: center;
+	&:hover {
+		text-decoration: none;
+		color: $color_secondary;
+		border-color: $color_secondary;
+	}
+	&.active {
+		color: $color_primary;
+		border-color: $color_primary;
+	}
+
+	@media (max-width: 767px) {
+		display: block;
+		font-size: 14px;
+		margin-right: 0;
+		margin-bottom: 10px;
+	}
+}

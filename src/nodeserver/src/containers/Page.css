@@ -1,0 +1,24 @@
+@keyframes delayedShow {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.container {
+	height: 100%;
+}
+
+.loadingContainer {
+	opacity: 0;
+	animation: delayedShow 0.2s linear 0.5s forwards;
+}
+
+.blurStyle {
+	height: 100%;
+	filter: blur(12px);
+	transform: translateZ(0);
+	will-change: transform;
+}

@@ -1,0 +1,68 @@
+@value ScreenXSMax, ScreenMLMin from 'styles/screenSizes.css';
+@value SpacingLG as GutterSize, SpacingXS from 'sass-loader!styles/spacing.scss';
+@value White from 'styles/colors.css';
+
+@value ColumnWidth 33.333%;
+@value FeaturedWidth 66.666%;
+@value MobColumnWidth 100%;
+@value MobGridWidth 50%;
+
+.grid {
+	composes: marginMDRight marginMDBottom from 'sass-loader!styles/spacing.scss';
+	composes: borderXS from 'styles/borders.css';
+	composes: flex, verticalCenter from 'styles/flex.css';
+	background: White;
+	border-radius: 0;
+	height: auto;
+	vertical-align: top;
+	composes: inlineBlock from 'styles/display.css';
+	position: relative;
+	width: calc(ColumnWidth - 15px);
+	@media ScreenXSMax {
+		width: MobColumnWidth;
+		border-left-width: 0;
+		border-right-width: 0;
+	}
+}
+
+.grid:nth-child(3) {
+	@media ScreenXSMax {
+		border-top: none;
+	}
+}
+
+
+.gridHover {
+	&:hover {
+		box-shadow: 0 4px 4px 0 rgba(51,61,71,0.40);
+	}
+}
+
+.gridSmall {
+	composes: grid;
+	width: calc(MobGridWidth - SpacingXS);
+}
+
+.simple {
+	composes: grid;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	cursor: default;
+	margin: 0;
+	padding: 0;
+}
+
+.featured {
+	composes: grid;
+	@media ScreenMLMin {
+		width: calc(FeaturedWidth - GutterSize);
+	}
+	@media ScreenXSMax {
+		width: MobColumnWidth;
+	}
+}
+
+.fineDineIn {
+	composes: grid;
+}

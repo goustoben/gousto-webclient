@@ -1,0 +1,25 @@
+
+@value Blackberry, Blueberry, Bluecheese, Mackerel, Oyster, White, Radish from 'styles/colors.css';
+@value PrimaryColor Bluecheese;
+@value PrimaryBgColor White;
+@value PrimaryBorderColor Bluecheese;
+@value PrimaryHoverColor White;
+@value PrimaryHoverBgColor Blueberry;
+@value PrimaryHoverBorderColor Blueberry;
+
+@value SecondaryColor Blackberry;
+@value SecondaryBgColor White;
+@value SecondaryHoverColor Bluecheese;
+@value SecondaryHoverActiveColor Blueberry;
+
+@value TertiaryColor Oyster;
+@value TertiaryBgColor White;
+@value TertiaryBorderColor Mackerel;
+@value TertiaryHoverColor Bluecheese;
+@value TertiaryHoverActiveColor Blueberry;
+
+@value NegativeColor Radish;
+@value NegativeBgColor White;
+@value NegativeHoverColor White;
+@value NegativeHoverBgColor Radish;
+@value NegativeBorderColor Radish;

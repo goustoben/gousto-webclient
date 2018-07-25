@@ -1,0 +1,66 @@
+@value sizeSM from 'styles/typography.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+@value Blackberry, Radish25 from 'styles/colors.css';
+
+@value fontColor: Blackberry;
+@value dangerBgColor: Radish25;
+
+.alert {
+	composes: bodyFont textBold from 'styles/typography.css';
+	composes: alert from 'sass-loader!styles/bootstrap.scss';
+	border-radius: 3px;
+	border-color: transparent;
+	color: fontColor;
+	font-size: sizeSM;
+	margin: 20px 0;
+	padding: 11px 20px 13px;
+	min-height: 50px;
+	line-height: 1;
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+
+	& a {
+		text-decoration: underline;
+		font-weight: bold;
+		color: fontColor;
+	}
+
+	& > * {
+		display: table-cell;
+		vertical-align: middle;
+		width: 100%;
+	}
+
+	@media ScreenXSMax {
+		margin: 10px 0;
+	}
+}
+
+.danger {
+	composes: alert;
+	composes: alert-danger from 'sass-loader!styles/bootstrap.scss';
+	background-color: dangerBgColor;
+}
+
+.info {
+	composes: alert;
+	composes: alert-info from 'sass-loader!styles/bootstrap.scss';
+}
+
+.success {
+	composes: alert;
+	composes: alert-success from 'sass-loader!styles/bootstrap.scss';
+}
+
+.warning {
+	composes: alert;
+	composes: alert-warning from 'sass-loader!styles/bootstrap.scss';
+}
+
+.icon {
+	font-size: 24px;
+	padding-left: 5px;
+	width: 40px;
+	composes: fa-exclamation-circle from 'styles/vendor/font-awesome-module.css';
+}

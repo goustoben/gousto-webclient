@@ -1,0 +1,89 @@
+@value ScreenXSMax, ScreenXXSMax, HeightMDMax from 'styles/screenSizes.css';
+@value SpacingXXXXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
+@value Coconut, White from 'styles/colors.css';
+@value desktopInfoSize: 470px;
+@value mobileInfoSize: 300px;
+@value mobileInfoBgSize: 220px;
+
+.container {
+	height: calc(100vh - 90px);
+	min-height: calc(desktopInfoSize + 150px);
+	width: 100%;
+	position: relative;
+	background: url('routes/Home/Hero/hero-1920w.jpg') center center / cover no-repeat;
+
+	@media ScreenXSMax {
+		min-height: 0;
+		height: 300px;
+		background: url('routes/Home/Hero/hero-700w.jpg') center top / cover no-repeat;
+		margin-bottom: mobileInfoBgSize;
+	}
+}
+
+.spacer {
+	height: 0;
+	background-color: Coconut;
+
+	@media ScreenXSMax {
+		height: mobileInfoBgSize;
+	}
+}
+
+.textContainer {
+	composes: d-flex align-items-start flex-column from 'sass-loader!styles/bootstrap.scss';
+	position: absolute;
+	border-radius: 100%;
+	background-color: White;
+	width: desktopInfoSize;
+	height: desktopInfoSize;
+	top: 100px;
+	left: 8%;
+	padding: SpacingXXXXXL SpacingXXXL;
+	z-index: 2;
+
+	@media HeightMDMax {
+		top: 50px;
+	}
+
+	@media ScreenXSMax {
+		position: relative;
+		width: mobileInfoSize;
+		height: mobileInfoSize;
+		top: 220px;
+		left: auto;
+		padding: SpacingXXXL SpacingXXXL;
+		margin: 0 auto;
+	}
+}
+
+.headerBase {
+	text-align: center;
+	width: 100%;
+}
+
+.header {
+	composes: headerBase;
+	composes: headerXXL2 headlineFont from 'styles/typography.css';
+	margin-bottom: auto;
+}
+
+.subHeader {
+	composes: headerBase;
+	composes: headerXL from 'styles/typography.css';
+}
+
+.cta {
+	composes: textCenter from 'styles/typography.css';
+	margin-top: auto;
+	width: 100%;
+
+	& > div {
+		margin: 0 auto;
+	}
+
+	@media ScreenXSMax {
+		& > div {
+			width: auto;
+		}
+	}
+}

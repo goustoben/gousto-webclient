@@ -1,0 +1,14 @@
+@value sizeXL from 'styles/typography.css';
+
+.control {
+	font-size: sizeXL;
+	line-height: 100%;
+	margin-left: -3px;
+}
+
+.left {
+	composes: inlineBlock from 'styles/display.css';
+	composes: control;
+	transform: scale(2,1);
+	margin-left: 0;
+}

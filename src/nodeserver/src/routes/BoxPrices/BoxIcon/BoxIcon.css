@@ -1,0 +1,18 @@
+@value ScreenMDMin from 'styles/screenSizes.css';
+
+.container {
+	position: relative;
+}
+
+.icon {
+	position: absolute;
+	width: 80px;
+	height: 80px;
+	right: -55px;
+	bottom: 20px;
+
+	@media ScreenMDMin {
+		right: -70px;
+		bottom: 40px;
+	}
+}

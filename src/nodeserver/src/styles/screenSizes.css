@@ -1,0 +1,34 @@
+@value ScreenXXSMax (max-width: 543px);
+@value ScreenXXSMin (min-width: 544px);
+@value ScreenXXSMaxDEPRECATED (max-width: 475px);
+@value ScreenXSMax (max-width: 767px);
+@value ScreenSMMin (min-width: 768px);
+@value ScreenSMMax (max-width: 991px);
+@value ScreenMDMin (min-width: 992px);
+@value ScreenMLMin (min-width: 1025px);
+@value ScreenMLMax (max-width: 1024px);
+@value ScreenMDMax (max-width: 1199px);
+@value ScreenLGMin (min-width: 1200px);
+@value ScreenLGMax (max-width: 1599px);
+@value ScreenXLMin (min-width: 1600px);
+
+
+
+
+@value MaxBreakPointXXS 475px;
+@value MaxBreakPointXS 767px;
+@value MaxBreakPointSM 991px;
+@value MaxBreakPointMD 1199px;
+@value MaxBreakPointLG 1599px;
+
+@value MinBreakPointXS 476px;
+@value MinBreakPointSM 768px;
+@value MinBreakPointMD 992px;
+@value MinBreakPointLG 1200px;
+@value MinBreakPointXL 1600px;
+
+@value HeightXSMax (max-height: 549px);
+@value HeightSMMin (min-height: 550px);
+@value HeightSMMax (max-height: 639px);
+@value HeightMDMin (min-height: 640px);
+@value HeightMDMax (max-height: 768px);

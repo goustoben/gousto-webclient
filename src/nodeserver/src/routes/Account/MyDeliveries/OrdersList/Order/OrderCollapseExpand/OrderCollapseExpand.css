@@ -1,0 +1,27 @@
+@value Blackberry from 'styles/colors.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.arrow {
+    composes: noDecor from 'styles/typography.css';
+    font-size: 60px;
+    color: Blackberry;
+    @media ScreenXSMax {
+		padding-right: 10px;
+		font-size: 40px;
+        padding-left: 0px;
+	}
+}
+
+.arrowDown {
+    composes: arrow;
+    composes: fa fa-angle-down from 'styles/vendor/font-awesome-module.css';
+}
+
+.arrowUp {
+    composes: arrow;
+    composes: fa fa-angle-up from 'styles/vendor/font-awesome-module.css';
+}
+
+.arrowBox {
+    align-self: start;
+}

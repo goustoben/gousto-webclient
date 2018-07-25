@@ -1,0 +1,54 @@
+@value Basa from 'styles/colors.css';
+
+@value RadiusXS 1px;
+@value RadiusSM 3px;
+@value RadiusMD 6px;
+@value RadiusLG 10px;
+@value RadiusXL 18px;
+
+.borderBase {
+	border-color: Basa;
+	border-style: solid;
+	border-width: RadiusXS;
+}
+
+.borderDashed {
+	border-style: dashed;
+}
+
+.borderXS {
+	composes: borderBase;
+	border-radius: RadiusXS;
+}
+
+.borderSM {
+	composes: borderBase;
+	border-radius: RadiusSM;
+}
+
+.borderMD {
+	composes: borderBase;
+	border-radius: RadiusMD;
+}
+
+.borderLG {
+	composes: borderBase;
+	border-radius: RadiusLG;
+}
+
+.borderXL {
+	composes: borderBase;
+	border-radius: RadiusXL;
+}
+
+.borderNone {
+	border: none;
+}
+
+.noRadius {
+	border-radius: 0;
+}
+
+.outlineNone {
+	outline: none;
+}

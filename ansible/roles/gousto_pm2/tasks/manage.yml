@@ -1,0 +1,9 @@
+---
+
+- name: Deleting all apps
+  command: >
+    pm2 delete all
+  register: command_result
+  failed_when: "'[ERROR]' in command_result.stderr"
+  environment:
+    HOME: /root

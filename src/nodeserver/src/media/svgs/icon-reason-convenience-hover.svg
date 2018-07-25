@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="95px" height="108px" viewBox="0 0 95 108" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>convenience copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="38" y="61" width="45" height="36" rx="3.735"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="45" height="36" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="convenience-copy">
+            <g id="Group-18" transform="translate(5.000000, 6.000000)">
+                <rect id="Rectangle-24" stroke="#7290ff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="#FFFFFF" x="7" y="0" width="50" height="95"></rect>
+                <ellipse id="Oval-9" fill="#7290ff" cx="17" cy="46" rx="4" ry="4"></ellipse>
+                <path d="M0.185793343,96.5 L85.5626049,96.5" id="Path-15" stroke="#7290ff" stroke-width="4.5" stroke-linecap="round"></path>
+                <use id="Rectangle" stroke="#7290ff" mask="url(#mask-2)" stroke-width="9" fill="#FFFFFF" xlink:href="#path-1"></use>
+                <path d="M60.25,64 L60.25,69" id="Path-6" stroke="#7290ff" stroke-width="4.5" stroke-linecap="round"></path>
+                <path d="M60.25,90 L60.25,95" id="Path-6-Copy-3" stroke="#7290ff" stroke-width="4.5" stroke-linecap="round"></path>
+            </g>
+        </g>
+    </g>
+</svg>

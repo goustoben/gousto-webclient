@@ -1,0 +1,10 @@
+<?php
+
+return array(
+	{% if assets_base %}
+	'base' => '{{ assets_base }}/build/latest',
+	{% else %}
+	'base' => '',
+	{% endif %}
+	'sprite_filename' => '{{ sprite_filename }}'
+);

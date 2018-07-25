@@ -1,0 +1,21 @@
+<IfModule mod_rewrite.c>
+	<IfModule mod_negotiation.c>
+    	Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    RewriteRule ^/?(bbq|currys)/?$ http://bbq.gousto.co.uk/products/gousto-bbq-box [R,L]
+    RewriteRule ^/?email_images/(.*)$ https://s3-eu-west-1.amazonaws.com/gousto2-media/cms/email-image/$1 [R=301,L]
+
+	RewriteRule ^api/ - [L]
+
+    # Redirect Trailing Slashes...
+	RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+	# Handle Front Controller...
+    RewriteRule ^/?wp-content/(.*)$ /blog/wp-content/$1 [R,L]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>

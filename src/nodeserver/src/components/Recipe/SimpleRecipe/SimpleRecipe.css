@@ -1,0 +1,32 @@
+@value SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
+
+.recipeDetails {
+	composes: relative from 'styles/position.css';
+}
+
+.link {
+	cursor: pointer;
+}
+
+.textContainer {
+	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+}
+
+.textContainerCenter {
+	composes: textContainer;
+	composes: textCenter from 'styles/typography.css';
+	padding-left: SpacingSM;
+	padding-right: SpacingSM;
+	padding-bottom: SpacingXXS;
+}
+
+.linkUnderlined {
+	composes: link;
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.simpleTagContainer {
+	height: 30px;
+}

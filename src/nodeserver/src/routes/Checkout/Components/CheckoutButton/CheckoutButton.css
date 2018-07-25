@@ -1,0 +1,3 @@
+.marginTop {
+    composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+}

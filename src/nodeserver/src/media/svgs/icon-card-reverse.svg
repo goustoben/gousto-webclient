@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="119px" height="75px" viewBox="0 0 119 75" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>card</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0.0720325351" y="0.141996574" width="98.9898343" height="61.8580034" rx="3.2187375"></rect>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-3">
+            <feMorphology radius="1.5729125" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="0" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="-1.0729125" y="-1.0729125" width="101.135659" height="64.0038284">
+            <rect x="-1.00087996" y="-0.930915926" width="101.135659" height="64.0038284" fill="white"></rect>
+            <use xlink:href="#path-1" fill="black"></use>
+        </mask>
+        <ellipse id="path-5" cx="82.1540968" cy="29.0452314" rx="10.1540968" ry="10.0452314"></ellipse>
+        <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="20.3081936" height="20.0904628" fill="white">
+            <use xlink:href="#path-5"></use>
+        </mask>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="card">
+            <g id="Back-card" transform="translate(10.000000, 6.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Card-BG">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-1"></use>
+                    <use fill="#D8DEEE" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <use stroke="#FFFFFF" mask="url(#mask-4)" stroke-width="2.145825" xlink:href="#path-1"></use>
+                </g>
+                <rect id="line-bg" fill="#645B57" mask="url(#mask-2)" x="-0.0297114023" y="7.39742489" width="99.0915782" height="11.495279"></rect>
+                <rect id="sign-bg" fill="#FFFFFF" mask="url(#mask-2)" x="8.61225511" y="23.6824034" width="82.1304191" height="11.495279" rx="1.0729125"></rect>
+                <text id="123" font-family="AvenirBook, Helvetica" font-size="6.437475" font-weight="normal" fill="#000000">
+                    <tspan x="76.2347276" y="31.5450644">123</tspan>
+                </text>
+                <use id="red-Oval" stroke="#D26651" mask="url(#mask-6)" stroke-width="4" xlink:href="#path-5"></use>
+            </g>
+        </g>
+    </g>
+</svg>

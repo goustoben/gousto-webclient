@@ -1,0 +1,176 @@
+@value ScreenXSMax, ScreenSMMax, ScreenXSMin, ScreenSMMin, MinBreakPointXL from 'styles/screenSizes.css';
+@value SpacingXXL, SpacingLG, SpacingMD as GutterSize, SpacingMD, SpacingSM from 'sass-loader!styles/spacing.scss';
+@value sizeMD, sizeSM, sizeXL from 'styles/typography.css';
+@value White, Mushroom, Chia from 'styles/colors.css';
+
+.subHeader {
+	composes: relative from 'styles/position.css';
+	background: White;
+}
+
+.subHeaderContent {
+	composes: pageContainer from 'styles/layout.css';
+	composes: paddingSMTop paddingXXSBottom from 'sass-loader!styles/spacing.scss';
+
+	@media ScreenSMMax {
+		padding-bottom: SpacingSM;
+	}
+}
+
+.filterBase {
+	composes: flex row from 'styles/flex.css';
+}
+
+.filter {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	composes: spaceBetween from 'styles/flex.css';
+	composes: filterBase;
+	font-size: sizeSM;
+}
+
+.subHeaderSimple {
+	composes: subHeader;
+	margin-top: -8px;
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobileOnly {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobile {
+	composes: textCenter from 'styles/typography.css';
+	composes: marginXXSTop paddingXXS from 'sass-loader!styles/spacing.scss';
+	composes: shadowStandardTopLight from 'styles/effects.css';
+	composes: mobileOnly;
+
+	background-color: Mushroom;
+	width: 100%;
+	font-size: sizeSM;
+}
+
+.noBullet {
+	list-style-type: none;
+}
+
+.filterMobile {
+	composes: textUpper from 'styles/typography.css';
+	composes: spaceBetween from 'styles/flex.css';
+	composes: filterBase mobileOnly;
+}
+
+.filterRight {
+	composes: itemCenter from 'styles/flex.css';
+}
+
+.filterSection {
+	composes: inlineBlock from 'styles/display.css';
+	composes: marginLGLeft from 'sass-loader!styles/spacing.scss';
+	composes: paragraphMD from 'styles/typography.css';
+}
+
+.tooltipTitle {
+	composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.tooltipText {
+	composes: comfortaa textXS from 'styles/typography.css';
+	font-weight: 300;
+}
+
+.menuTitle {
+	composes: headerXXL from 'styles/typography.css';
+	composes: noMargin noPadding from 'sass-loader!styles/spacing.scss';
+}
+.svgSize {
+	width: calc( SpacingXXL * 1.2 );
+	height: 22px;
+	margin-right: 7px;
+	vertical-align: middle;
+}
+.vanSvg {
+	composes: marginXXSRight from 'sass-loader!styles/spacing.scss';
+	composes: svgSize;
+}
+.headerText {
+	composes: paddingLGTop from 'sass-loader!styles/spacing.scss';
+}
+
+.hideHeader {
+	composes: headerText;
+	composes: hidden-lg-down from 'sass-loader!styles/bootstrap.scss';
+}
+.tooltipMsg {
+	composes: paddingSMTopBottom paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
+}
+.tooltipClose {
+	composes: fa-times from 'styles/vendor/font-awesome-module.css';
+	float: right;
+	font-size: sizeXL;
+}
+
+.iconDoubleColumn {
+	composes: fa-th-large fa-fw from 'styles/vendor/font-awesome-module.css';
+}
+.iconSingleColumn {
+	composes: fa-square fa-fw from 'styles/vendor/font-awesome-module.css';
+}
+.iconArrowDown {
+	composes: fa-angle-down from 'styles/vendor/font-awesome-module.css';
+	font-size: sizeMD;
+}
+
+.deliveryInfo {
+	composes: button from 'styles/base.css';
+}
+
+.mobileDeliveryInfo {
+	composes: deliveryInfo;
+	margin-top: 5px;
+}
+
+.infoBannerMessage {
+	composes: textLeft from 'styles/typography.css';
+	composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+
+	background-color: Mushroom;
+	padding-top: SpacingLG;
+
+	& ul {
+		padding-left: 17px;
+	}
+
+	& li {
+		margin-top: 5px;
+	}
+}
+
+.infoBanner {
+	composes: paddingXXSTopBottom paddingSMLeftRight marginXSTop from 'sass-loader!styles/spacing.scss';
+	composes: textBold textCenter from 'styles/typography.css';
+
+	background: rgb(255, 228, 163);
+
+	@media ScreenSMMax {
+		max-width: 226px;
+		margin-top: 20px;
+	}
+
+	@media ScreenXSMax {
+		max-width: 100%;
+	}
+}
+
+.infoIcon {
+	composes: fa-fw fa-info from 'styles/vendor/font-awesome-module.css';
+	font-size: 14px;
+	width: 20px;
+	height: 20px;
+	border: 2px solid Chia;
+	border-radius: 100%;
+	margin-left: 5px;
+	padding-top: 1px;
+}

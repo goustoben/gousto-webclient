@@ -1,0 +1,25 @@
+@value Haricot, Basa from 'styles/colors.css';
+
+.paymentInfo {
+	width: 200px;
+	white-space: nowrap;
+}
+
+.row {
+	width: 100%;
+	composes: flex spaceBetween from 'styles/flex.css';
+	composes: marginXSBottom paddingXXSBottom paddingLGRight from 'sass-loader!styles/spacing.scss';
+}
+
+.bold {
+	composes: textBold from 'styles/typography.css';
+}
+
+.green {
+	color: Haricot;
+}
+
+.separationBelow {
+	border-bottom: 2px solid Basa;
+}
+
