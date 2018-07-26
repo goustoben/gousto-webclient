@@ -2,7 +2,7 @@ function endpoint(service, version = '') {
 	let protocol
 	let domain
 
-	if (service === 'frontend') {
+	if (service === 'frontend-new') {
 		protocol = __CLIENT_PROTOCOL__
 		domain = `${__ENV__}-${service}.${__DOMAIN__}`
 		if (__SERVER__) {

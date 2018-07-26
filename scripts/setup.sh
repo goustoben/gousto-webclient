@@ -47,10 +47,10 @@ echo "CLOUDFRONT_URL: $CLOUDFRONT_URL"
 cd src
 
 # isomorphic: variables
-yarn config set gousto_frontend_environment_name "${ENVIRONMENT}"
-yarn config set gousto_frontend_domain "${DOMAIN}"
-yarn config set gousto_frontend_client_protocol "${CLIENT_PROTOCOL}"
-yarn config set gousto_frontend_cloudfront_url "${CLOUDFRONT_URL}"
+yarn config set gousto_frontend_new_environment_name "${ENVIRONMENT}"
+yarn config set gousto_frontend_new_domain "${DOMAIN}"
+yarn config set gousto_frontend_new_client_protocol "${CLIENT_PROTOCOL}"
+yarn config set gousto_frontend_new_cloudfront_url "${CLOUDFRONT_URL}"
 
 cd ../
 

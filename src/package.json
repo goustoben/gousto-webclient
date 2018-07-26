@@ -1,5 +1,5 @@
 {
-  "name": "gousto_frontend",
+  "name": "gousto_frontend_new",
   "version": "0.0.1",
   "description": "Isomorphic Gousto frontend",
   "main": "index.js",
@@ -38,7 +38,7 @@
     "test:mocha:coverage": "NODE_ENV=test nyc mocha-webpack --webpack-config config/webpack.test-mocha.js -r \"test/.setup.js\" \"test/**/*.js\" && nyc report --reporter=html",
     "deploy:sentry-upload": "chmod a+x getsentryUpload.sh && ./getsentryUpload.sh",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
-    "deploy": "cd nodeserver && yarn run deploy:sentry-upload && cd .. && yarn run deploy:cleanup-assets",
+    "deploy": "yarn run deploy:sentry-upload && cd .. && yarn run deploy:cleanup-assets",
     "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js",
     "deploy:cleanup-assets": "cd public && rm -f *.js.map && cd .."
   },

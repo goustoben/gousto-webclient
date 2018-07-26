@@ -140,7 +140,7 @@ if (__HMR__) {
 		historyApiFallback: false,
 		withCredentials: false,
 		proxy: {
-			'*': `http://frontend.gousto.local:${port}`,
+			'*': `http://frontend-new.gousto.local:${port}`,
 		},
 		headers: { 'Access-Control-Allow-Origin': '*' },
 		stats: {
@@ -153,7 +153,7 @@ if (__HMR__) {
 			chunkModules: false,
 		},
 	})
-	.listen(hotPort, 'frontend.gousto.local', (err) => {
+	.listen(hotPort, 'frontend-new.gousto.local', (err) => {
 		if (err) {
 			// eslint-disable-next-line no-console
 			console.error(err)

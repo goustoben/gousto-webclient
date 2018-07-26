@@ -20,10 +20,10 @@ const PostcssReporter = require('postcss-reporter')
 const PostcssFlexbugsFixed = require('postcss-flexbugs-fixes')
 
 const build = process.env.NODE_ENV || 'development'
-const envName = process.env.npm_config_gousto_frontend_environment_name || 'local'
-const domain = process.env.npm_config_gousto_frontend_domain || 'gousto.local'
-const clientProtocol = process.env.npm_config_gousto_frontend_client_protocol || 'http'
-const cloudfrontUrl = process.env.npm_config_gousto_frontend_cloudfront_url || ''
+const envName = process.env.npm_config_gousto_frontend_new_environment_name || 'local'
+const domain = process.env.npm_config_gousto_frontend_new_domain || 'gousto.local'
+const clientProtocol = process.env.npm_config_gousto_frontend_new_client_protocol || 'http'
+const cloudfrontUrl = process.env.npm_config_gousto_frontend_new_cloudfront_url || ''
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 

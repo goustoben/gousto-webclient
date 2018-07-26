@@ -33,7 +33,7 @@ const config = {
 	],
 	output: {
 		path: path.resolve('./dist'),
-		filename: 'frontend.js',
+		filename: 'frontend-new.js',
 		publicPath,
 		library: 'e2e',
 		libraryTarget: 'commonjs2',
