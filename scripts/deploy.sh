@@ -48,5 +48,5 @@ else
 
 	cd ..
 	# build service
-	python ./ci_scripts/deploy_service.py --service frontend
+	python ./ci_scripts/deploy_service.py --service frontend-new
 fi
