@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd src/nodeserver
+cd src
 npm run test:mocha

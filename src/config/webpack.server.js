@@ -128,12 +128,12 @@ const config = {
 	],
 	resolve: {
 		alias: {
-			spinkit: path.resolve(__dirname, '../../nodeserver/node_modules/spinkit'),
+			spinkit: path.resolve(__dirname, '../node_modules/spinkit'),
 		},
 		modules: [
 			path.resolve(__dirname, '../src'),
 			path.resolve(__dirname, '../src/components'),
-			path.resolve(__dirname, '../../nodeserver/node_modules/spinkit'),
+			path.resolve(__dirname, '../node_modules/spinkit'),
 		],
 		extensions: ['.js', '.json', '.css'],
 	},

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd src/nodeserver
+cd src
 if [[ $CIRCLE_BRANCH == "develop" ]]
 then
   npm run test:jest:ci:coverage
