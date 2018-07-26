@@ -1,8 +1,0 @@
----
-- name: Create legacy node link
-  file: src=/usr/bin/nodejs dest=/usr/bin/node state=link
-
-- name: run gulp for development
-  shell: gulp
-  args:
-    chdir: {{ frontend.directory }}

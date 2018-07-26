@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-cd src/nodeserver
+cd src
 
 # isomorphic: install
 yarn install

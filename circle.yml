@@ -10,8 +10,6 @@ dependencies:
 machine:
   environment:
     PATH: "$PATH:$HOME/.config/yarn/global/node_modules/.bin"
-  services:
-   - mysql
   node:
     version: 8.11.3
 

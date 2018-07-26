@@ -1,6 +1,0 @@
-Sitemap: https://www.gousto.co.uk/sitemap.xml
-User-agent: *
-Disallow: /admin
-Disallow: production-frontend.*
-Disallow: /home2
-Disallow: /check-out

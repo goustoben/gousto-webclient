@@ -1,0 +1,19 @@
+---
+- name: Set api token config for nodeserver
+  template: src="templates/nodeserver/config/env.j2" dest="{{ directory }}/config/env.json" mode=0644
+
+- name: starting pm2 app
+  command: "pm2 start dist/server.js --log /var/log/pm2/server-outerr.log --log-date-format '' --merge-logs"
+  args:
+    chdir: "{{ directory }}/"
+  environment:
+    HOME: /root
+  when: "{{ environment_name != 'dev' }}"
+
+- name: starting pm2 app
+  command: "pm2 start process.json"
+  args:
+    chdir: "{{ directory }}/"
+  environment:
+    HOME: /root
+  when: "{{ environment_name == 'dev' }}"

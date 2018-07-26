@@ -45,20 +45,6 @@ CLOUDFRONT_URL=$(python ./ci_scripts/describe_platform.py --name=content_output_
 echo "CLOUDFRONT_URL: $CLOUDFRONT_URL"
 
 cd src
-# set yarn environment variables
-yarn config set gousto2frontend_environment_name "${ENVIRONMENT}"
-
-yarn config set gousto2frontend_products_domain "${PRODUCT_SERVICE_DOMAIN}"
-yarn config set gousto2frontend_products_domain_path "${PRODUCTS_VERSION}"
-
-yarn config set gousto2frontend_deliveries_domain "${DELIVERY_SERVICE_DOMAIN}"
-yarn config set gousto2frontend_deliveries_domain_path "${DELIVERIES_VERSION}"
-
-yarn config set gousto2frontend_api_domain "${PRODUCT_SERVICE_DOMAIN}"
-yarn config set gousto2frontend_api_token ""
-# end set yarn environment variables
-
-cd nodeserver
 
 # isomorphic: variables
 yarn config set gousto_frontend_environment_name "${ENVIRONMENT}"
@@ -66,7 +52,7 @@ yarn config set gousto_frontend_domain "${DOMAIN}"
 yarn config set gousto_frontend_client_protocol "${CLIENT_PROTOCOL}"
 yarn config set gousto_frontend_cloudfront_url "${CLOUDFRONT_URL}"
 
-cd ../../
+cd ../
 
 if [[ "$CLOUDFRONT_URL" =~ .*\.(gousto|s3|amazon)\.[a-z\.]*$ ]]
 then
@@ -77,39 +63,27 @@ else
 fi
 
 yarn global add gulp
-yarn global add concurrently@2.2.0
 
 chmod a+x setup/setup-*.sh
 
-
-cd src
-composer install -o --prefer-dist --no-interaction
-cd ../
-
-./setup/setup-legacy.sh
-if [ $? -ne 0 ]
-then
-  export SETUP_FAILURE=true
-fi
 ./setup/setup-isomorphic.sh
 if [ $? -ne 0 ]
 then
   export SETUP_FAILURE=true
 fi
 
-echo "copying files..."
-cd src/nodeserver
+#REMOVING TO TEST IF IT IS WORKING WITHOUT THIS STEP
+#echo "copying files..."
+#cd src
 
-cp ./public/* ../public/
+#cd dist
+#cp -rf `ls -1 | grep -v "js" | grep -v "package.json" | grep -v "node_modules"` ../public/
+#cd ../../
+#echo "files copied."
 
-cd dist
-cp -rf `ls -1 | grep -v "js" | grep -v "package.json" | grep -v "node_modules"` ../../public/
-cd ../../../
-echo "files copied."
+#ls src/public
 
-ls src/public
-
-if [ $? -ne 0 ]
-then
-  export SETUP_FAILURE=true
-fi
+#if [ $? -ne 0 ]
+#then
+#  export SETUP_FAILURE=true
+#fi

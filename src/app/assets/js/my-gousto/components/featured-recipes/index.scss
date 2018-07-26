@@ -1,9 +1,0 @@
-.widget--featured-recipes {
-	& > .container {
-		box-sizing: content-box;
-		padding: 0;
-	}
-}
-
-@import 'recipe-item';
-@import 'recipe-list';

@@ -14,7 +14,7 @@ then
 		exit 1
 	else
 		yarn global add concurrently@2.2.0
-		concurrently --names "legacy,isomorphic-mocha,isomorphic-jest" --prefix "{time}-{name}" "./tests/legacy-test.sh" "./tests/isomorphic-mocha.sh" "./tests/isomorphic-jest.sh"
+		concurrently --names "isomorphic-mocha,isomorphic-jest" --prefix "{time}-{name}" "./tests/legacy-test.sh" "./tests/isomorphic-mocha.sh" "./tests/isomorphic-jest.sh"
 		if [ $? -ne 0 ]
 		then
 			echo "Unit tests Failed" >&2

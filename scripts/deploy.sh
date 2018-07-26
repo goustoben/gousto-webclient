@@ -9,14 +9,14 @@ echo "${ASSETS_BUCKET}"
 cd src
 
 # set yarn environment variables
-yarn config set gousto2frontend_asset_bucket "${ASSETS_BUCKET}"
-yarn config set gousto2frontend_environment_name "${ENVIRONMENT}"
-yarn config set gousto2frontend_products_domain "${PRODUCT_SERVICE_DOMAIN}"
-yarn config set gousto2frontend_api_domain "${PRODUCT_SERVICE_DOMAIN}"
-yarn config set gousto2frontend_api_token ""
-yarn config set gousto2frontend_products_domain_path "/products/v2.0"
-yarn config set gousto2frontend_deliveries_domain "${DELIVERY_SERVICE_DOMAIN}"
-yarn config set gousto2frontend_deliveries_domain_path "/deliveries/v1.0"
+yarn config set gousto3frontend_asset_bucket "${ASSETS_BUCKET}"
+yarn config set gousto3frontend_environment_name "${ENVIRONMENT}"
+yarn config set gousto3frontend_products_domain "${PRODUCT_SERVICE_DOMAIN}"
+yarn config set gousto3frontend_api_domain "${PRODUCT_SERVICE_DOMAIN}"
+yarn config set gousto3frontend_api_token ""
+yarn config set gousto3frontend_products_domain_path "/products/v2.0"
+yarn config set gousto3frontend_deliveries_domain "${DELIVERY_SERVICE_DOMAIN}"
+yarn config set gousto3frontend_deliveries_domain_path "/deliveries/v1.0"
 
 # end set yarn environment variables
 
@@ -29,7 +29,6 @@ then
 	cd ../
 	exit 1
 else
-	cd nodeserver
 
 	cp package.json dist/package.json
 	rm -rf node_modules
@@ -42,8 +41,6 @@ else
 	  export SETUP_FAILURE=true
 	  exit 1
 	fi
-
-	cd ..
 
 	cd ..
 
