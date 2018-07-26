@@ -57,6 +57,7 @@
     "graphql": "^0.11.7",
     "graphql-tag": "^2.5.0",
     "immutable": "3.8.2",
+    "gousto-gulp": "git+ssh://git@github.com/Gousto/gousto-gulp.git#v3.0.2",
     "isomorphic-fetch": "2.2.1",
     "jsdom": "11.3.0",
     "json-loader": "0.5.7",
@@ -175,10 +176,10 @@
     "webpack-hot-middleware": "2.22.2",
     "webpack-manifest-plugin": "2.0.3",
     "webpack-node-externals": "1.7.2",
-    "nyan-progress-webpack-plugin": "1.2.0",
     "postcss-flexbugs-fixes": "3.3.1",
     "postcss-nested": "3.0.0",
-    "postcss-safe-parser": "3.0.1"
+    "postcss-safe-parser": "3.0.1",
+    "simple-progress-webpack-plugin": "1.1.2"
   },
   "nyc": {
     "reporter": [

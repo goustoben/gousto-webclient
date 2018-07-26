@@ -20,15 +20,9 @@ yarn config set gousto3frontend_deliveries_domain_path "/deliveries/v1.0"
 
 # end set yarn environment variables
 
-yarn run deploy
+# yarn run deploy
 
-yarn run upload -- --upload_dir=${CI_BUILD_NUMBER}
-
-if [ $? -ne 0 ]
-then
-	cd ../
-	exit 1
-else
+# yarn run upload -- --upload_dir=${CI_BUILD_NUMBER}
 
 	cp package.json dist/package.json
 	rm -rf node_modules
@@ -49,4 +43,3 @@ else
 	cd ..
 	# build service
 	python ./ci_scripts/deploy_service.py --service frontend-new
-fi

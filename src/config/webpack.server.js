@@ -1,9 +1,8 @@
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
-const NyanProgressPlugin = require('nyan-progress-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
-const goustoQuotes = require('./quotes')
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
@@ -176,15 +175,9 @@ const config = {
 if (build === 'development') {
 	config.devtool = 'source-map'
 	config.plugins.push(
-	new NyanProgressPlugin({
-		nyanCatSays: (progress) => {
-			if (progress === 1) {
-				return (`Server Built!!! ${goustoQuotes[Math.floor(Math.random() * goustoQuotes.length)]}`)
-			}
-
-			return `${(progress * 100).toFixed(1)} % done...`
-		},
-	})
+		new SimpleProgressWebpackPlugin({ // Default options
+			format: 'compact'
+		})
 )
 } else {
 	config.devtool = false

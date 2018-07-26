@@ -1,12 +1,12 @@
+
 const webpack = require('webpack')
 const path = require('path')
 const ExtractPlugin = require('extract-text-webpack-plugin')
-const NyanProgressPlugin = require('nyan-progress-webpack-plugin')
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
 const ManifestPlugin = require('webpack-manifest-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const childProcess = require('child_process')
-const goustoQuotes = require('./quotes')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -29,10 +29,6 @@ const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/l
 
 const GIT_HASH = `${childProcess.execSync("git rev-parse --short HEAD | tr -d '\n'").toString()}`
 const debug = false
-let bundleAnalyzerPlugin
-if (build === 'development') {
-	bundleAnalyzerPlugin = new BundleAnalyzerPlugin({ analyzerMode: 'static', generateStatsFile: true })
-}
 // eslint-disable-next-line no-console
 console.log(`================\nCLIENT BUILD: ${build}, ENVIRONMENT: ${envName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}"\n================`)
 
@@ -175,7 +171,6 @@ const config = {
 		],
 	},
 	plugins: [
-		new ExtractPlugin({ filename: '[name].[chunkhash].css', allChunks: true, ignoreOrder: true }),
 		new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
 		ExitCodePlugin,
 		new LodashModuleReplacementPlugin(),
@@ -248,17 +243,11 @@ const config = {
 if (build === 'development') {
 	config.devtool = 'source-map'
 	config.plugins.push(
-		new LodashModuleReplacementPlugin(),
-		new NyanProgressPlugin({
-			nyanCatSays: (progress) => {
-				if (progress === 1) {
-					return (`client Built!!! ${goustoQuotes[Math.floor(Math.random() * goustoQuotes.length)]}`)
-				}
-
-				return `${(progress * 100).toFixed(1)} % done...`
-			},
+		new ExtractPlugin({ filename: '[name].css', allChunks: true, ignoreOrder: true }),
+		new SimpleProgressWebpackPlugin({ // Default options
+			format: 'compact'
 		}),
-		bundleAnalyzerPlugin
+		new webpack.HotModuleReplacementPlugin()
 	)
 } else if (build === 'production') {
 	config.devtool = false
@@ -266,7 +255,7 @@ if (build === 'development') {
 	config.output.chunkFilename = '[chunkhash].js'
 
 	config.plugins.push(
-		new LodashModuleReplacementPlugin(),
+		new ExtractPlugin({ filename: '[name].[chunkhash].css', allChunks: true, ignoreOrder: true }),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new UglifyJsPlugin({
 			parallel: true,
