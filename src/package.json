@@ -57,7 +57,6 @@
     "graphql": "^0.11.7",
     "graphql-tag": "^2.5.0",
     "immutable": "3.8.2",
-    "gousto-gulp": "git+ssh://git@github.com/Gousto/gousto-gulp.git#v3.0.2",
     "isomorphic-fetch": "2.2.1",
     "jsdom": "11.3.0",
     "json-loader": "0.5.7",
