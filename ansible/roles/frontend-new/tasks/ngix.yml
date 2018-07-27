@@ -1,0 +1,11 @@
+---
+- name: add nginx server config
+  template: src="templates/nginx_frontend-new.j2" dest="/etc/nginx/sites-available/25-frontend-new" owner=root mode=0600
+  notify: reload nginx
+
+- name: enable nginx server
+  file: src="/etc/nginx/sites-available/25-frontend-new" dest="/etc/nginx/sites-enabled/25-frontend-new" state=link owner=root mode=0600
+  notify: reload nginx
+
+- name: remove default nginx server
+  file: path="/etc/nginx/sites-enabled/default" state=absent

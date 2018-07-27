@@ -24,3 +24,5 @@
 
 - include: nodeserver.yml
 
+- include: ngix.yml
+
