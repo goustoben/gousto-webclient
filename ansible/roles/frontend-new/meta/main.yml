@@ -1,5 +1,6 @@
 dependencies:
 - { role: gousto_common }
+- { role: gousto_nginx }
 - { role: gousto_nodejs, nodejs_version: "8.x" }
 - { role: nvm, when: "{{ environment_name == 'dev' }}" }
 - { role: gousto_service, when: "{{ environment_name != 'dev' }}" }
