@@ -18,7 +18,7 @@ workable_api_key: 0feab78dfe7f06385c7599afb91dad1501cdc9cdef5035dbd94732486774c3
 
 admin_domain: admin.gousto.local
 core_domain: core.gousto.local
-nodeserver_host: localhost:3000
+nodeserver_host: localhost:8080
 products_domain: products.gousto.local
 debug_passthrough: true
 api_verify_peer: false
