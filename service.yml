@@ -16,6 +16,8 @@ alarms:
   elbLatencyRed: 1.2
 
 logs:
+  - name: accessLogGroup
+  - name: errorLogGroup
   - name: pm2Log
     filters:
       - name: warningCount

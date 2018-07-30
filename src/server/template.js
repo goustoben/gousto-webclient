@@ -23,7 +23,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, url =
 				window.__APOLLO_STATE__ = ${encodeState(apolloState)}
 			</script>
 			<link href="https://fonts.googleapis.com/css?family=Lato:400,700,300italic,400italic" rel="stylesheet" type="text/css">
-			${__HMR__ ? '' : `<link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">`}
+			${(__HMR__ || __DEV__) ? '' : `<link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">`}
 			${(helmetHead && helmetHead.link) ? helmetHead.link.toString() : ''}
 			${(helmetHead && helmetHead.style) ? helmetHead.style.toString() : ''}
 			${(helmetHead && helmetHead.script) ? helmetHead.script.toString() : ''}

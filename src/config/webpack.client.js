@@ -2,6 +2,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const ExtractPlugin = require('extract-text-webpack-plugin')
+
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
 const ManifestPlugin = require('webpack-manifest-plugin')
@@ -26,11 +27,55 @@ const clientProtocol = process.env.npm_config_gousto_frontend_new_client_protoco
 const cloudfrontUrl = process.env.npm_config_gousto_frontend_new_cloudfront_url || ''
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
+const devMode = process.env.NODE_ENV !== 'production'
 
 const GIT_HASH = `${childProcess.execSync("git rev-parse --short HEAD | tr -d '\n'").toString()}`
 const debug = false
 // eslint-disable-next-line no-console
 console.log(`================\nCLIENT BUILD: ${build}, ENVIRONMENT: ${envName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}"\n================`)
+
+const cssLoaders = [
+	{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
+	{
+		loader: 'postcss-loader',
+		options: {
+			ident: 'postcss',
+			parser: 'postcss-safe-parser',
+			plugins: [
+				PostcssImport({
+					path: path.resolve('./src/styles'),
+				}),
+				PostcssUrl(),
+				PostcssNested(),
+				PostcssPresetEnv(),
+				PostcssReporter(),
+				PostcssFlexbugsFixed()
+			]
+		}
+	},
+]
+
+const scssLoaders = [
+	{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
+	{ loader: 'postcss-loader',
+		options: {
+			ident: 'postcss',
+			parser: 'postcss-safe-parser',
+			plugins: [
+				PostcssImport({
+					path: path.resolve('./src/styles'),
+				}),
+				PostcssUrl(),
+				PostcssNested(),
+				PostcssPresetEnv(),
+				PostcssReporter(),
+				PostcssFlexbugsFixed(),
+			],
+		},
+	},
+	{ loader: 'sass-loader' }
+]
+
 
 const config = {
 	name: 'client',
@@ -82,54 +127,16 @@ const config = {
 			},
 			{
 				test: /\.css$/,
-				use: ExtractPlugin.extract({
+				use: devMode ? ['style-loader', ...cssLoaders] : ExtractPlugin.extract({
 					fallback: 'style-loader',
-					use: [
-						{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
-						{
-							loader: 'postcss-loader',
-							options: {
-								ident: 'postcss',
-								parser: 'postcss-safe-parser',
-								plugins: [
-									PostcssImport({
-										path: path.resolve('./src/styles'),
-									}),
-									PostcssUrl(),
-									PostcssNested(),
-									PostcssPresetEnv(),
-									PostcssReporter(),
-									PostcssFlexbugsFixed()
-								]
-							}
-						},
-					],
+					use: cssLoaders
 				})
 			},
 			{
 				test: /\.scss$/,
-				use: ExtractPlugin.extract({
+				use: devMode ? ['style-loader', ...scssLoaders] : ExtractPlugin.extract({
 					fallback: 'style-loader',
-					use: [
-						{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
-						{ loader: 'postcss-loader',
-							options: {
-								ident: 'postcss',
-								parser: 'postcss-safe-parser',
-								plugins: [
-									PostcssImport({
-										path: path.resolve('./src/styles'),
-									}),
-									PostcssUrl(),
-									PostcssNested(),
-									PostcssPresetEnv(),
-									PostcssReporter(),
-									PostcssFlexbugsFixed(),
-								],
-							},
-						},
-						{ loader: 'sass-loader' }
-					]
+					use: scssLoaders
 				})
 			},
 			{
@@ -188,7 +195,7 @@ const config = {
 			'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
 			__GIT_HASH__: JSON.stringify(GIT_HASH)
 		}),
-		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/) // only inlcude moment in English
+		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/) // only inlcude moment in English,
 	],
 	resolve: {
 		alias: {
@@ -242,7 +249,6 @@ const config = {
 if (build === 'development') {
 	config.devtool = 'source-map'
 	config.plugins.push(
-		new ExtractPlugin({ filename: '[name].css', allChunks: true, ignoreOrder: true }),
 		new SimpleProgressWebpackPlugin({ // Default options
 			format: 'compact'
 		}),
