@@ -25,3 +25,6 @@ debug_passthrough: true
 api_verify_peer: false
 api_verify_host: false
 api_certificate: ""
+
+node_env: production
+ngnix_port: 80

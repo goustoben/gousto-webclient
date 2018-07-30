@@ -41,11 +41,11 @@ const config = {
 		main: [
 			'babel-polyfill',
 			'./src/client.js',
-			'./src/styles/base.css',
+			'./src/styles/base.css'
 		],
 		legacy: [
 			'babel-polyfill',
-			'./src/legacy.js',
+			'./src/legacy.js'
 		],
 	},
 	output: {
@@ -62,12 +62,11 @@ const config = {
 				options: {
 					cache: false,
 					quiet: false,
-					failOnWarning: false,
+					failOnWarning: false
 				},
-
 				include: [
-					path.resolve('./src'),
-				],
+					path.resolve('./src')
+				]
 			},
 			{
 				test: /\.js$/,
@@ -78,8 +77,8 @@ const config = {
 					cacheDirectory: true,
 				},
 				include: [
-					path.resolve('./src'),
-				],
+					path.resolve('./src')
+				]
 			},
 			{
 				test: /\.css$/,
@@ -100,12 +99,12 @@ const config = {
 									PostcssNested(),
 									PostcssPresetEnv(),
 									PostcssReporter(),
-									PostcssFlexbugsFixed(),
-								],
-							},
+									PostcssFlexbugsFixed()
+								]
+							}
 						},
 					],
-				}),
+				})
 			},
 			{
 				test: /\.scss$/,
@@ -129,46 +128,46 @@ const config = {
 								],
 							},
 						},
-						{ loader: 'sass-loader' },
-					],
-				}),
+						{ loader: 'sass-loader' }
+					]
+				})
 			},
 			{
 				test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+				loader: 'url-loader?limit=10000&mimetype=application/font-woff'
 			},
 			{
 				test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: 'url-loader?limit=10000&mimetype=application/font-woff2',
+				loader: 'url-loader?limit=10000&mimetype=application/font-woff2'
 			},
 			{
 				test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: 'file-loader',
+				loader: 'file-loader'
 			},
 			{
 				test: /\.png$/,
-				loader: 'url-loader?limit=100000',
+				loader: 'url-loader?limit=100000'
 			},
 			{ 	test: /\.jpg$/,
-				loader: 'file-loader',
+				loader: 'file-loader'
 			},
 			{ 	test: /\.gif$/,
-				loader: 'file-loader',
+				loader: 'file-loader'
 			},
 			{ 	test: /\.ico$/,
-				loader: 'file-loader',
+				loader: 'file-loader'
 			},
 			{ 	test: /\.svg$/,
 				loaders: [
 					'svg-url-loader',
-					'image-webpack',
+					'image-webpack'
 				],
 			},
 			{
 				test: /\.(graphql|gql)$/,
-				loader: 'graphql-tag/loader',
-			},
-		],
+				loader: 'graphql-tag/loader'
+			}
+		]
 	},
 	plugins: [
 		new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
@@ -187,27 +186,27 @@ const config = {
 			__DOMAIN__: JSON.stringify(domain),
 			__CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
 			'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
-			__GIT_HASH__: JSON.stringify(GIT_HASH),
+			__GIT_HASH__: JSON.stringify(GIT_HASH)
 		}),
-		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only inlcude moment in English
+		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/) // only inlcude moment in English
 	],
 	resolve: {
 		alias: {
 			styles: path.resolve('./src/styles'),
-			jsdom: path.resolve('./fallbacks/jsdom'),
+			jsdom: path.resolve('./fallbacks/jsdom')
 		},
 		modules: [
 			path.resolve('./src'),
 			path.resolve('./src/components'),
-			path.resolve('./node_modules'),
+			path.resolve('./node_modules')
 		],
-		extensions: ['.js', '.json', '.css', '.scss'],
+		extensions: ['.js', '.json', '.css', '.scss']
 	},
 	resolveLoader: {
-		moduleExtensions: ['-loader'],
+		moduleExtensions: ['-loader']
 	},
 	node: {
-		fs: 'empty',
+		fs: 'empty'
 	},
 	stats: debug ? {
 		hash: true,
@@ -222,7 +221,7 @@ const config = {
 		errors: true,
 		errorDetails: true,
 		warnings: true,
-		publicPath: true,
+		publicPath: true
 	} : {
 		hash: false,
 		version: false,
@@ -236,8 +235,8 @@ const config = {
 		errors: true,
 		errorDetails: true,
 		warnings: false,
-		publicPath: false,
-	},
+		publicPath: false
+	}
 }
 
 if (build === 'development') {
@@ -268,7 +267,7 @@ if (build === 'development') {
 				output: {
 					comments: false
 				}
-			},
+			}
 		}),
 		new OptimizeCssAssetsPlugin()
 	)

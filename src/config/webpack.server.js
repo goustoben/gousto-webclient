@@ -197,7 +197,7 @@ if (build === 'development') {
 				},
 				warnings: true,
 			},
-		}),
+		})
 	)
 }
 
