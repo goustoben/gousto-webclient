@@ -30,6 +30,7 @@ jobs:
       - run:
           name: Install isomorphic yarn dependencies
           command: cd src && yarn install
+
       - save_cache:
           name: Save isomorphic Yarn Package Cache
           key: yarn-packages-isomorphic-v1-{{ .Branch }}-{{ checksum "src/yarn.lock" }}
@@ -91,6 +92,7 @@ jobs:
           root: ~/
           paths:
             - project
+            - .circlerc
 
   test-e2e-selenium:
     docker: *gousto_build_image

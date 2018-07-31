@@ -18,15 +18,15 @@ yarn config set gousto3frontend_deliveries_domain_path "/deliveries/v1.0"
 
 # end set yarn environment variables
 
-# yarn run deploy
+yarn run deploy
 
-# yarn run upload -- --upload_dir=${CI_BUILD_NUMBER}
+yarn run upload -- --upload_dir=${CI_BUILD_NUMBER}
 
 	cp package.json dist/package.json
 	rm -rf node_modules
 
 	cd dist
-
+    mkdir -p ~/.ssh && ssh-keyscan -H github.com >> ~/.ssh/known_hosts # workaround to enable yarn install from github
 	yarn install --production
 	if [ $? -ne 0 ]
 	then

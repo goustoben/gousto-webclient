@@ -1,5 +1,5 @@
 {
-  "name": "gousto_frontend-new",
+  "name": "gousto3frontend",
   "version": "0.0.1",
   "description": "Isomorphic Gousto frontend",
   "main": "index.js",
@@ -39,7 +39,7 @@
     "deploy:sentry-upload": "chmod a+x getsentryUpload.sh && ./getsentryUpload.sh",
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "deploy": "yarn run deploy:sentry-upload && yarn run deploy:cleanup-assets",
-    "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js",
+    "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js/tasks/upload.js",
     "deploy:cleanup-assets": "cd public && rm -f *.js.map && cd .."
   },
   "dependencies": {
@@ -56,6 +56,7 @@
     "global": "4.3.2",
     "graphql": "^0.11.7",
     "graphql-tag": "^2.5.0",
+    "gousto-gulp": "git+ssh://git@github.com/Gousto/gousto-gulp.git#v3.0.2",
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
     "jsdom": "11.3.0",
