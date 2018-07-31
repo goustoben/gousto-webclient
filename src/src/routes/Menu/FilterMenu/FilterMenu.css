@@ -44,6 +44,15 @@
 
 .close {
 	margin-right: auto;
+	@media ScreenXSMax {
+		display: none;
+	}
+}
+.closeMobile {
+	margin-right: auto;
+	@media ScreenSMMin {
+		display: none;
+	}
 }
 
 .closeIcon {

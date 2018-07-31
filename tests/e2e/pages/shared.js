@@ -1,5 +1,5 @@
 const faker = require('faker')
-const frontend = require('../../../src/nodeserver/dist/frontend').default
+const frontend = require('../src/dist/frontend').default
 const moment = require('moment')
 const Immutable = require('immutable')
 const RandExp = require('randexp')

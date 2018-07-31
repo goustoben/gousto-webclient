@@ -15,6 +15,13 @@ describe('<FilterMenu />', () => {
 
 			expect(filterMenuClose).toHaveBeenCalled()
 		})
+		test('should dispatch a filterMenuRevertFilters action on click', () => {
+			const filterMenuRevertFilters = jest.fn()
+			wrapper = shallow(<FilterMenu filterMenuRevertFilters={filterMenuRevertFilters} />)
+			wrapper.find('span').at(1).first().simulate('click')
+
+			expect(filterMenuRevertFilters).toHaveBeenCalled()
+		})
 	})
 
 	describe('filter button', () => {

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # upload to production
 ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
 echo "${ASSETS_BUCKET}"

@@ -1,19 +1,18 @@
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
+
 import FilterNav from './FilterNav'
-import filterActions from 'actions/filters'
 import withScroll from 'hoc/withScroll'
+import filterActions from 'actions/filters'
+import { getFilterCTAText } from 'selectors/filters'
 
 const handleScroll = withScroll({
 	height: 50,
 	propName: 'sticky',
 })
 
-const connected = connect(({ filters, menuCollections }) => ({
-	ctaText: menuCollections.getIn([
-		filters.get('currentCollectionId'),
-		'shortTitle',
-	]),
+const connected = connect((state) => ({
+	ctaText: getFilterCTAText(state),
 }), {
 	onClick: filterActions.filterMenuOpen,
 })

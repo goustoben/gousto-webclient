@@ -44,6 +44,10 @@ export const filtersClearAll = (collectionId) => ({
 	collectionId,
 })
 
+const filterMenuRevert = () => ({
+	type: actionTypes.FILTERS_RESET,
+})
+
 export function collectionFilterChange(collectionId) {
 	return (dispatch, getState) => {
 		const prevLoc = getState().routing.locationBeforeTransitions
@@ -66,7 +70,7 @@ export function collectionFilterChange(collectionId) {
 	}
 }
 
-const filterMenuOpen = () => (
+export const filterMenuOpen = () => (
 	(dispatch) => {
 		dispatch(filtersVisibilityChange(true))
 		dispatch(trackRecipeFiltersOpen())
@@ -137,6 +141,13 @@ export const filterDietaryAttributesChange = (dietaryAttribute) => (
 	}
 )
 
+export const filterMenuRevertFilters = () => (
+	(dispatch) => {
+		dispatch(filterMenuRevert())
+		dispatch(filtersVisibilityChange(false))
+	}
+)
+
 export default {
 	filtersVisibilityChange,
 	filterMenuOpen,
@@ -149,4 +160,5 @@ export default {
 	filterCurrentDietTypesChange,
 	filterDietaryAttributesChange,
 	filterCurrentTotalTimeChange,
+	filterMenuRevertFilters,
 }

@@ -12,7 +12,7 @@ const Allergens = ({ allergens, inset }) => (
 				</span>
 			</dl>
 		) : null}
-		<p>In addition to the recipe specific allergen information provided, due to production and packing methods Gousto boxes may also contain low levels of the following allergens: Fish; Eggs; Soya; Sesame; Sulphur dioxide and Sulphites; Mustard; Nuts.</p>
+		<p>In addition to the recipe specific allergen information provided, due to production and packing methods Gousto boxes may also contain low levels of the following allergens: Fish; Eggs; Soya; Sesame; Sulphur Dioxide and Sulphites; Mustard; Nuts and Peanuts.</p>
 	</div>
 )
 

@@ -14,7 +14,7 @@ const DietTypesFilter = ({ dietTypes, dietTypesFilters, filterCurrentDietTypesCh
 		</H2>
 		{Object.keys(dietTypesFilters).map((dietTypeKey, index) => {
 			const dietTypeFilter = dietTypesFilters[dietTypeKey]
-			const isChecked = !!dietTypes.has(dietTypeFilter.toLowerCase())
+			const isChecked = !!dietTypes.has(dietTypeKey)
 
 			return (
 				<FilterItem
@@ -24,7 +24,7 @@ const DietTypesFilter = ({ dietTypes, dietTypesFilters, filterCurrentDietTypesCh
 					value={dietTypeFilter}
 					identifier={`dietType-${index}`}
 					checked={isChecked}
-					onClick={() => { filterCurrentDietTypesChange(dietTypeFilter) }}
+					onClick={() => { filterCurrentDietTypesChange(dietTypeKey) }}
 				>
 					<span>{dietTypeFilter}</span>
 				</FilterItem>
