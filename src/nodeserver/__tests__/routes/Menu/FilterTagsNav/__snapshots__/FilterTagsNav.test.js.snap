@@ -74,7 +74,7 @@ exports[`FilterTag rendering Will render FilterTag component 1`] = `
           role="button"
           tabIndex="0"
         >
-          Filters
+          Filter by
         </div>
       </div>
     </div>

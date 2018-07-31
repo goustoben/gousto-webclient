@@ -2,8 +2,6 @@
 
 cd src
 
-yarn install
-
 # add gousto-generic and config to yarn packages
 cd ./app/assets/js/generic && yarn link && cd ../../../../
 cd ./app/assets/js/config && yarn link && cd ../../../../

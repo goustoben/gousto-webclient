@@ -6,31 +6,39 @@ exports[`FilterTagsList rendering Will render FilterTagsList component 1`] = `
 >
   <div
     className="filterTag"
+    onClick={[Function]}
   >
     <span
-      className="fa-times"
-      style={
-        Object {
-          "color": "#939596",
-          "fontSize": "inherit",
+      className="tagIcon"
+    >
+      <span
+        className="fa-times tagImageIcon"
+        style={
+          Object {
+            "fontSize": "inherit",
+          }
         }
-      }
-    />
+      />
+    </span>
     Gluten Free
   </div>
   <div
     className="filterTag"
+    onClick={[Function]}
   >
     <span
-      className="fa-times"
-      style={
-        Object {
-          "color": "#939596",
-          "fontSize": "inherit",
+      className="tagIcon"
+    >
+      <span
+        className="fa-times tagImageIcon"
+        style={
+          Object {
+            "fontSize": "inherit",
+          }
         }
-      }
-    />
-    Reactive
+      />
+    </span>
+    Meat
   </div>
 </div>
 `;

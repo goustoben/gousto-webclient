@@ -19,23 +19,24 @@ const getNoResultsPageProps = () => {
 	}
 }
 
-const MenuNoResults = ({ clearAllFilters }) => {
+const MenuNoResults = ({ clearAllFilters, hasFilters }) => {
 	const noResultsAtributs = getNoResultsPageProps()
 
 	return (
-		<div>
+		(hasFilters) ? <div>
 			<NoResultsPage
 				imageName={noResultsAtributs.imageName}
 				title={noResultsAtributs.title}
 				description={noResultsAtributs.description}
 			/>
 			<span className={css.clearAllFilters} onClick={() => clearAllFilters()}>Clear filters</span>
-		</div>
+		</div> : null
 	)
 }
 
 MenuNoResults.propTypes = {
 	clearAllFilters: PropTypes.func,
+	hasFilters: PropTypes.bool,
 }
 
 export default MenuNoResults

@@ -1,0 +1,330 @@
+---
+version: 2
+gousto_build_image: &gousto_build_image
+    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${GOUSTO_ENVIRONMENT}/circleci-image/php55:latest
+      aws_auth:
+        aws_access_key_id: $AWS_ERC_ACCESS_KEY
+        aws_secret_access_key: $AWS_ERC_SECRET_KEY
+
+jobs:
+  install-dependencies:
+    docker: *gousto_build_image
+    steps:
+      - checkout
+      - run:
+          name: Setup platform
+          command: /gousto/platform-setup.sh
+      - run:
+          name: Install global yarn dependencies
+          command: yarn global add gulp && yarn global add concurrently@2.2.0
+      - run:
+          name: Setup common
+          command: source ~/.circlerc && setup/setup-common.sh
+      - restore_cache:
+          name: Restore composer Package Cache
+          keys:
+            - composer-packages-v1-{{ .Branch }}-{{ checksum "src/composer.lock" }}
+            - composer-packages-v1-{{ .Branch }}
+            - composer-packages-v1-master
+            - composer-packages-v1-
+      - run:
+          name: Install composer dependencies
+          command: cd src && composer install --prefer-dist --no-interaction -o
+      - save_cache:
+          name: Save composer Package Cache
+          key: composer-packages-v1-{{ .Branch }}-{{ checksum "src/composer.lock" }}
+          paths:
+            - src/vendor/
+      - restore_cache:
+          name: Restore legacy Yarn Package Cache
+          keys:
+            - yarn-packages-legacy-v1-{{ .Branch }}-{{ checksum "src/yarn.lock" }}
+            - yarn-packages-legacy-v1-{{ .Branch }}
+            - yarn-packages-legacy-v1-master
+            - yarn-packages-legacy-v1-
+      - run:
+          name: Install legacy yarn dependencies
+          command: cd src && yarn install
+      - save_cache:
+          name: Save legacy Yarn Package Cache
+          key: yarn-packages-legacy-v1-{{ .Branch }}-{{ checksum "src/yarn.lock" }}
+          paths:
+            - src/node_modules/
+      - restore_cache:
+          name: Restore isomorphic Yarn Package Cache
+          keys:
+            - yarn-packages-isomorphic-v1-{{ .Branch }}-{{ checksum "src/nodeserver/yarn.lock" }}
+            - yarn-packages-isomorphic-v1-{{ .Branch }}
+            - yarn-packages-isomorphic-v1-master
+            - yarn-packages-isomorphic-v1-
+      - run:
+          name: Install isomorphic yarn dependencies
+          command: cd src/nodeserver && yarn install
+      - save_cache:
+          name: Save isomorphic Yarn Package Cache
+          key: yarn-packages-isomorphic-v1-{{ .Branch }}-{{ checksum "src/nodeserver/yarn.lock" }}
+          paths:
+            - src/nodeserver/node_modules/
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .circlerc
+
+  build-application:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Setup common
+          command: source ~/.circlerc && setup/setup-common.sh
+      - run:
+          name: Setup legacy
+          command: source ~/.circlerc && setup/setup-legacy.sh
+      - run:
+          name: Setup isomorphic
+          command: source ~/.circlerc && setup/setup-isomorphic.sh
+      - run:
+          name: Post setup operations
+          command: source ~/.circlerc && setup/setup-post-operations.sh
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .circlerc
+
+  code-analysis:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Code analysis
+          command: source ~/.circlerc && /bin/bash ./ci_scripts/code-analysis.sh
+
+  test-legacy:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run legacy tests
+          command: cd src && npm test
+
+  test-isomorphic-mocha:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run isomoprhic mocha tests
+          command: cd src/nodeserver && npm run test:mocha
+
+  test-isomorphic-jest:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run isomoprhic jest tests
+          command: cd src/nodeserver && npm run test:jest:ci -- --no-cache
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+
+  test-e2e-selenium:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run e2e selenium tests
+          command: source ~/.circlerc && scripts/validate.sh
+
+  deploy:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: source ~/.circlerc && scripts/deploy.sh
+
+workflows:
+  version: 2
+  pull-request-branch:
+    jobs:
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
+      - test-legacy:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
+      - test-isomorphic-mocha:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
+      - test-isomorphic-jest:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
+      - code-analysis:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
+
+  development-environment:
+    jobs:
+      - install-dependencies:
+          context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - test-legacy:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - test-isomorphic-mocha:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - test-isomorphic-jest:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - code-analysis:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - test-isomorphic-jest
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - build-application:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - test-legacy
+            - test-isomorphic-mocha
+            - test-isomorphic-jest
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - deploy:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-application
+            - code-analysis
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - test-e2e-selenium:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - deploy
+          filters:
+            branches:
+              only:
+                - develop
+
+  production-environment:
+    jobs:
+      - install-dependencies:
+          context: gousto-prod-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - master
+      - test-legacy:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - master
+      - test-isomorphic-mocha:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - master
+      - test-isomorphic-jest:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - master
+      - build-application:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - test-legacy
+            - test-isomorphic-mocha
+            - test-isomorphic-jest
+          filters:
+            branches:
+              only:
+                - master
+      - deploy:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - build-application
+          filters:
+            branches:
+              only:
+                - master

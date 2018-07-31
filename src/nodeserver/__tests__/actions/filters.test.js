@@ -1,8 +1,18 @@
 import Immutable from 'immutable'
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 
 import actionTypes from 'actions/actionTypes'
 
-import { collectionFilterChange, filterCurrentDietTypesChange, filterCurrentTotalTimeChange, clearAllFilters, filterDietaryAttributesChange } from 'actions/filters'
+import {
+	collectionFilterChange,
+	filterCurrentDietTypesChange,
+	filterCurrentTotalTimeChange,
+	clearAllFilters,
+	filterDietaryAttributesChange,
+	filterMenuOpen,
+	filterMenuRevertFilters,
+} from 'actions/filters'
 
 
 describe('filters actions', () => {
@@ -211,6 +221,29 @@ describe('filters actions', () => {
 				type: actionTypes.FILTERS_CLEAR_ALL,
 				collectionId: 'defaultCollectionId',
 			})
+		})
+	})
+
+	describe('resetFiltersOnMobile', () => {
+		test('should dispatch a FILTERS_RESET action when the x button on mobile is pressed', () => {
+			const mockStore = configureMockStore([thunk])
+			const store = mockStore({
+				filters: Immutable.Map({
+					currentCollectionId: 'current_collection',
+					totalTime: '0',
+					dietTypes: Immutable.Set(['meat']),
+					dietaryAttributes: Immutable.Set([]),
+				}),
+			})
+			store.dispatch(filterMenuOpen())
+			store.dispatch(filterDietaryAttributesChange('gluten-free'))
+			store.dispatch(filterMenuRevertFilters())
+			expect(store.getState().filters).toEqual(Immutable.Map({
+				currentCollectionId: 'current_collection',
+				totalTime: '0',
+				dietTypes: Immutable.Set(['meat']),
+				dietaryAttributes: Immutable.Set([]),
+			}))
 		})
 	})
 })

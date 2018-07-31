@@ -550,6 +550,12 @@ describe('Menu', () => {
 			getStateSpy = jest.fn().mockReturnValue({
 				basket: Immutable.Map({
 				}),
+				filters: Immutable.Map({
+					currentCollectionId: '',
+					totalTime: '0',
+					dietTypes: Immutable.Set(['meat']),
+					dietaryAttributes: Immutable.Set(['gluten-free']),
+				}),
 				content: Immutable.Map({}),
 			})
 		})

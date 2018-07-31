@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterTag rendering Will render FilterTag 1`] = `
+<div
+  className="filterTag"
+  onClick={[Function]}
+>
+  <span
+    className="tagIcon"
+  >
+    <span
+      className="fa-times tagImageIcon"
+      style={
+        Object {
+          "fontSize": "inherit",
+        }
+      }
+    />
+  </span>
+</div>
+`;

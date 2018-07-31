@@ -1,0 +1,21 @@
+@value Blackberry, Mackerel from 'styles/colors.css';
+
+.filterTag {
+    padding: 8px;
+    border: 1px solid Mackerel;
+    border-radius: 10px;
+    text-align: center;
+    margin-right: 10px;
+    cursor: pointer;
+    &:hover {
+        background-color: Mackerel;
+    }
+}
+
+.tagIcon {
+    padding-right: 5.5px;
+}
+
+.tagImageIcon {
+    color: Blackberry;
+}

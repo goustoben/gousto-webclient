@@ -8,7 +8,7 @@ const FilterTagsNav = ({ onCTAClick, tags }) => (
 		<div className={css.filterListContainer}>
 			<div className={css.filtersCTA}>
 				<Button fill width="full" onClick={onCTAClick}>
-					Filters
+					Filter by
 				</Button>
 			</div>
 			<FilterTagsList tags={tags} />
@@ -18,7 +18,13 @@ const FilterTagsNav = ({ onCTAClick, tags }) => (
 
 FilterTagsNav.propTypes = {
 	onCTAClick: PropTypes.func,
-	tags: PropTypes.arrayOf(PropTypes.string),
+	tags: PropTypes.arrayOf(
+		PropTypes.shape({
+			text: PropTypes.string,
+			type: PropTypes.string,
+			value: PropTypes.string,
+		}),
+	),
 }
 
 FilterTagsNav.defaultProps = {
