@@ -1,10 +1,10 @@
 ---
-directory: /var/www/frontend-new
+directory: /var/www/webclient
 domain: "{{ cfn_service_resource_dnsrecord }}"
 tld: "{{ cfn_defaults_output_domain }}"
 secure: "{{cfn_defaults_output_secure}}"
-error_log: frontend_new_error.log
-access_log: frontend_new_access.log
+error_log: webclient_error.log
+access_log: webclient_access.log
 session_driver: memcached
 session_domain: ".{{ cfn_defaults_output_domain }}"
 assets_base: "{{ 'https' if cfn_defaults_output_secure == 'True' else 'http' }}://{{ cfn_content_output_assetsdistributiondomainname }}"

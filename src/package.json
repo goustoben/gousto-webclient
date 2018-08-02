@@ -1,5 +1,5 @@
 {
-  "name": "gousto3frontend",
+  "name": "goustowebclient",
   "version": "0.0.1",
   "description": "Isomorphic Gousto frontend",
   "main": "index.js",

@@ -1,14 +1,14 @@
 ---
-directory: /var/www/frontend-new
-domain: frontend-new.gousto.local
+directory: /var/www/webclient
+domain: webclient.gousto.local
 tld: gousto.local
 secure: false
-error_log: frontend_new_error.log
-access_log: frontend_new_access.log
+error_log: webclient_error.log
+access_log: webclient_access.log
 session_driver: file
 session_domain: ""
-outbound_core_access_key: inbound_frontend_access_key_goes_here
-outbound_productservice_access_key: inbound_frontend_access_key_goes_here
+outbound_core_access_key: inbound_webclient_access_key_goes_here
+outbound_productservice_access_key: inbound_webclient_access_key_goes_here
 assets_base: ""
 sprite_filename: 'sprite.svg'
 cache_driver: memcached
@@ -29,7 +29,7 @@ segment_api_key: test_key
 # auth
 auth_service_domain: auth.gousto.local
 auth_client_id: 6
-auth_client_secret: frontend_new_service_secret
+auth_client_secret: webclient_service_secret
 
 # 3rd party config
 optimizely_account: 7728010866

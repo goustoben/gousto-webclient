@@ -1,11 +1,11 @@
 Gousto3 FrontEnd
 ====
 
-master: [![CircleCI](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/master.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/master)
-develop: [![CircleCI](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/develop.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/develop)
-env-carrots: [![CircleCI](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/env-carrots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/env-carrots)
-env-haricots: [![CircleCI](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/env-haricots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/env-haricots)
-env-radishes: [![CircleCI](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/env-radishes.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/Gousto3-FrontEnd/tree/env-radishes)
+master: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/master.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/master)
+develop: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/develop.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/develop)
+env-carrots: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-carrots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-carrots)
+env-haricots: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-haricots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-haricots)
+env-radishes: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-radishes.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-radishes)
 
 ## Getting Started
 ### Pre-requisites
