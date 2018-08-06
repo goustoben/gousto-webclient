@@ -1,4 +1,4 @@
-Gousto3 FrontEnd
+Gousto Web Client
 ====
 
 master: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/master.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/master)
@@ -19,18 +19,18 @@ yarn
 
 Although tasks can be run within the devbox, it's more performant to run tasks outside the devbox
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run watch
 ```
 
 ### Terminal 2: Starting
 ```shell
 cd ~/Vagrant && vagrant ssh
-cd /var/www/gousto2frontend/src/nodeserver
+cd /var/www/goustowebclient/src
 npm run start
 ```
 
-The site should now be available at http://frontend.gousto.local
+The site should now be available at http://webclient.gousto.local
 
 
 ## Testing
