@@ -6,7 +6,6 @@ const ExtractPlugin = require('extract-text-webpack-plugin')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
 const ManifestPlugin = require('webpack-manifest-plugin')
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const childProcess = require('child_process')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
