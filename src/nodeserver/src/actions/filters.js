@@ -1,9 +1,21 @@
 import { push } from 'react-router-redux'
 
 import actionTypes from './actionTypes'
-import { trackRecipeFiltersOpen, trackRecipeFiltersClose, trackRecipeFiltersApply, trackRecipeCollectionSelect } from './tracking'
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
 import { slugify } from 'utils/url'
+
+import {
+	trackRecipeFiltersOpened,
+	trackRecipeFiltersClosed,
+	trackRecipeFiltersCleared,
+	trackRecipeCollectionSelected,
+	trackRecipeTypeSelected,
+	trackRecipeTypeUnselected,
+	trackRecipeDietaryAttributeSelected,
+	trackRecipeDietaryAttributeUnselected,
+	trackRecipeTotalTimeSelected,
+	trackRecipeFiltersApplied,
+} from './tracking'
 
 const filtersVisibilityChange = (visible = true) => ({
 	type: actionTypes.MENU_FILTERS_VISIBILITY_CHANGE,
@@ -73,28 +85,33 @@ export function collectionFilterChange(collectionId) {
 export const filterMenuOpen = () => (
 	(dispatch) => {
 		dispatch(filtersVisibilityChange(true))
-		dispatch(trackRecipeFiltersOpen())
+		dispatch(trackRecipeFiltersOpened())
 	}
 )
 
 const filterMenuClose = () => (
 	(dispatch) => {
 		dispatch(filtersVisibilityChange(false))
-		dispatch(trackRecipeFiltersClose())
+		dispatch(trackRecipeFiltersClosed())
 	}
 )
 
 const filterMenuApply = () => (
 	(dispatch, getState) => {
 		dispatch(filtersVisibilityChange(false))
-		dispatch(trackRecipeFiltersApply(getState().filters.get('currentCollectionId')))
+		dispatch(trackRecipeFiltersApplied(
+			getState().filters.get('currentCollectionId'),
+			Array.from(getState().filters.get('dietTypes', [])),
+			Array.from(getState().filters.get('dietaryAttributes', [])),
+			getState().filters.get('totalTime'),
+		))
 	}
 )
 
 const filterCollectionChange = (collectionId) => (
 	(dispatch) => {
 		dispatch(collectionFilterChange(collectionId))
-		dispatch(trackRecipeCollectionSelect(collectionId))
+		dispatch(trackRecipeCollectionSelected(collectionId))
 	}
 )
 
@@ -103,10 +120,12 @@ export const filterCurrentDietTypesChange = (dietType) => (
 		const dietTypes = getState().filters.get('dietTypes')
 		let newDietTypes
 
-		if (dietTypes.has(dietType.toLowerCase())) {
-			newDietTypes = dietTypes.filterNot(dietTypeSelected => (dietTypeSelected === dietType.toLowerCase()))
+		if (dietTypes.has(dietType)) {
+			newDietTypes = dietTypes.filterNot(dietTypeSelected => (dietTypeSelected === dietType))
+			dispatch(trackRecipeTypeUnselected(dietType))
 		} else {
-			newDietTypes = dietTypes.add(dietType.toLowerCase())
+			newDietTypes = dietTypes.add(dietType)
+			dispatch(trackRecipeTypeSelected(dietType))
 		}
 		dispatch(currentDietTypesChange(newDietTypes))
 	}
@@ -115,6 +134,7 @@ export const filterCurrentDietTypesChange = (dietType) => (
 export const filterCurrentTotalTimeChange = (totalTime) => (
 	(dispatch) => {
 		dispatch(currentTotalTimeChange(totalTime))
+		dispatch(trackRecipeTotalTimeSelected(totalTime))
 	}
 )
 
@@ -122,6 +142,7 @@ export const clearAllFilters = () => (
 	(dispatch, getState) => {
 		const defaultCollection = getAllRecipesCollectionId(getState())
 		dispatch(filtersClearAll(defaultCollection))
+		dispatch(trackRecipeFiltersCleared())
 	}
 )
 
@@ -134,8 +155,10 @@ export const filterDietaryAttributesChange = (dietaryAttribute) => (
 			newDietaryAttributes = dietaryAttributes.filterNot((_dietaryAttribute) => (
 				_dietaryAttribute === dietaryAttribute
 			))
+			dispatch(trackRecipeDietaryAttributeUnselected(dietaryAttribute))
 		} else {
 			newDietaryAttributes = dietaryAttributes.add(dietaryAttribute)
+			dispatch(trackRecipeDietaryAttributeSelected(dietaryAttribute))
 		}
 		dispatch(currentDietaryAttributesChange(newDietaryAttributes))
 	}
