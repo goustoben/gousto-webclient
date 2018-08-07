@@ -4,6 +4,9 @@ export const recipeListViewed = (action) => ({
 		original_order: action.originalOrder,
 		displayed_order: action.displayedOrder,
 		collection_id: action.collectionId,
+		diet_types: action.dietTypes,
+		dietary_attributes: action.dietaryAttributes,
+		time_frame: action.totalTime,
 		delivery_day_id: action.deliveryDayId,
 		order_id: action.orderId,
 		recommended: action.recommended,
@@ -11,32 +14,80 @@ export const recipeListViewed = (action) => ({
 	},
 })
 
-export const recipeFiltersOpen = () => ({
-	type: 'RecipeFilters Open',
+export const recipeFiltersOpened = () => ({
+	type: 'RecipeFilters Opened',
 })
 
-export const recipeFiltersClose = () => ({
-	type: 'RecipeFilters Close',
+export const recipeFiltersClosed = () => ({
+	type: 'RecipeFilters Closed',
 })
 
-export const recipeCollectionSelect = (action) => ({
-	type: 'RecipeCollection Select',
+export const recipeFiltersCleared = () => ({
+	type: 'RecipeFilters Cleared',
+})
+
+export const recipeCollectionSelected = (action) => ({
+	type: 'RecipeCollection Selected',
 	data: {
 		collection_id: action.collectionId,
 	},
 })
 
-export const recipeFiltersApply = (action) => ({
-	type: 'RecipeFilters Apply',
+export const recipeFiltersApplied = (action) => ({
+	type: 'RecipeFilters Applied',
 	data: {
 		collection_id: action.collectionId,
+		diet_types: action.dietTypes,
+		dietary_attributes: action.dietaryAttributes,
+		time_frame: action.totalTime,
+	},
+})
+
+export const recipeTypeSelected = (action) => ({
+	type: 'RecipeType Selected',
+	data: {
+		recipe_type: action.dietType,
+	},
+})
+
+export const recipeTypeUnselected = (action) => ({
+	type: 'RecipeType Unselected',
+	data: {
+		recipe_type: action.dietType,
+	},
+})
+
+export const recipeDietaryAttributeSelected = (action) => ({
+	type: 'RecipeDietaryAttribute Selected',
+	data: {
+		dietary_attribute: action.dietaryAttribute,
+	},
+})
+
+export const recipeDietaryAttributeUnselected = (action) => ({
+	type: 'RecipeDietaryAttribute Unselected',
+	data: {
+		dietary_attribute: action.dietaryAttribute,
+	},
+})
+
+export const recipeTotalTimeSelected = (action) => ({
+	type: 'RecipeTimeFrame Selected',
+	data: {
+		time_frame: action.totalTime,
 	},
 })
 
 export default {
 	recipeListViewed,
-	recipeFiltersOpen,
-	recipeFiltersClose,
-	recipeCollectionSelect,
-	recipeFiltersApply,
+	recipeFiltersOpened,
+	recipeFiltersClosed,
+	recipeFiltersCleared,
+	recipeCollectionSelected,
+	recipeTypeSelected,
+	recipeTypeUnselected,
+	recipeDietaryAttributeSelected,
+	recipeDietaryAttributeUnselected,
+	recipeTotalTimeSelected,
+	recipeFiltersApplied,
 }

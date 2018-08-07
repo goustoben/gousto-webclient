@@ -298,44 +298,44 @@ describe('snowplowV2', function() {
 			expect(recipeListViewed).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
 		})
 
-		it('should call trackEventWithData with recipeFiltersOpen when action type is RECIPE_FILTERS_OPEN_TRACKING', function () {
-			const recipeFiltersOpen = sinon.spy(recipesTracking, 'recipeFiltersOpen')
+		it('should call trackEventWithData with recipeFiltersOpened when action type is RECIPE_FILTERS_OPEN_TRACKING', function () {
+			const recipeFiltersOpened = sinon.spy(recipesTracking, 'recipeFiltersOpened')
 			const action = {
-				type: actionTypes.RECIPE_FILTERS_OPEN_TRACKING,
+				type: actionTypes.RECIPE_FILTERS_OPENED_TRACKING,
 			}
 			snowplowV2(action, 'state', 'prevState')
-			expect(recipeFiltersOpen).to.have.been.calledOnce
-			expect(recipeFiltersOpen).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
+			expect(recipeFiltersOpened).to.have.been.calledOnce
+			expect(recipeFiltersOpened).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
 		})
 
-		it('should call trackEventWithData with recipeFiltersClose when action type is RECIPE_FILTERS_CLOSE_TRACKING', function () {
-			const recipeFiltersClose = sinon.spy(recipesTracking, 'recipeFiltersClose')
+		it('should call trackEventWithData with recipeFiltersClosed when action type is RECIPE_FILTERS_CLOSED_TRACKING', function () {
+			const recipeFiltersClosed = sinon.spy(recipesTracking, 'recipeFiltersClosed')
 			const action = {
-				type: actionTypes.RECIPE_FILTERS_CLOSE_TRACKING,
+				type: actionTypes.RECIPE_FILTERS_CLOSED_TRACKING,
 			}
 			snowplowV2(action, 'state', 'prevState')
-			expect(recipeFiltersClose).to.have.been.calledOnce
-			expect(recipeFiltersClose).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
+			expect(recipeFiltersClosed).to.have.been.calledOnce
+			expect(recipeFiltersClosed).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
 		})
 
-		it('should call trackEventWithData with recipeFiltersApply when action type is RECIPE_FILTERS_APPLY_TRACKING', function () {
-			const recipeFiltersApply = sinon.spy(recipesTracking, 'recipeFiltersApply')
+		it('should call trackEventWithData with recipeFiltersApplied when action type is RECIPE_FILTERS_APPLIED_TRACKING', function () {
+			const recipeFiltersApplied = sinon.spy(recipesTracking, 'recipeFiltersApplied')
 			const action = {
-				type: actionTypes.RECIPE_FILTERS_APPLY_TRACKING,
+				type: actionTypes.RECIPE_FILTERS_APPLIED_TRACKING,
 			}
 			snowplowV2(action, 'state', 'prevState')
-			expect(recipeFiltersApply).to.have.been.calledOnce
-			expect(recipeFiltersApply).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
+			expect(recipeFiltersApplied).to.have.been.calledOnce
+			expect(recipeFiltersApplied).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
 		})
 
-		it('should call trackEventWithData with recipeCollectionSelect when action type is RECIPE_COLLECTION_SELECT_TRACKING', function () {
-			const recipeCollectionSelect = sinon.spy(recipesTracking, 'recipeCollectionSelect')
+		it('should call trackEventWithData with recipeCollectionSelected when action type is RECIPE_COLLECTION_SELECT_TRACKING', function () {
+			const recipeCollectionSelected = sinon.spy(recipesTracking, 'recipeCollectionSelected')
 			const action = {
-				type: actionTypes.RECIPE_COLLECTION_SELECT_TRACKING,
+				type: actionTypes.RECIPE_COLLECTION_SELECTED_TRACKING,
 			}
 			snowplowV2(action, 'state', 'prevState')
-			expect(recipeCollectionSelect).to.have.been.calledOnce
-			expect(recipeCollectionSelect).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
+			expect(recipeCollectionSelected).to.have.been.calledOnce
+			expect(recipeCollectionSelected).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
 		})
 	})
 })

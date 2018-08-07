@@ -8,7 +8,6 @@ import RecipeList from './RecipeList'
 
 const mapStateToProps = (state) => ({
 	allRecipesList: state.menuRecipes,
-	currentCollectionId: state.filters.get('currentCollectionId'),
 	cutoffDate: getCutoffDate(state),
 	isLoading: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
 	features: state.features,

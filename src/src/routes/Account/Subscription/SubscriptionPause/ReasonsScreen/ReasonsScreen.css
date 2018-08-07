@@ -34,12 +34,13 @@
 .baseItem {
 	composes: borderMD from 'styles/borders.css';
 	composes: bodyFont textBoldHover textCenter from 'styles/typography.css';
+	display: inline-flex;
 	flex-direction: column;
 	flex: 1 1 auto;
-	display: flex;
 	margin: 10px;
 	align-items: center;
 	justify-content: center;
+	height: 145px;
 	width: 29%;
 	background-color: White;
 	border-color: Oyster;
@@ -59,10 +60,8 @@
 	padding-bottom: 15px;
 
 	@media ScreenXSMax {
-		min-width: 43%;
-		max-width: 43%;
-		min-height: 90px;
-		max-height: 90px;
+		width:43%;
+		height: 90px;
 	}
 
 	& .label {
@@ -81,6 +80,7 @@
 	margin-top: 0;
 	margin-left: 0;
 	margin-right: 0;
+	display: flex;
 
 	&:first-child {
 		margin-top: 0;
