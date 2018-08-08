@@ -557,6 +557,7 @@ describe('Menu', () => {
 					dietaryAttributes: Immutable.Set(['gluten-free']),
 				}),
 				content: Immutable.Map({}),
+				menu: Immutable.Map({}),
 			})
 		})
 
@@ -581,6 +582,7 @@ describe('Menu', () => {
 						store: {
 							getState: getStateSpy,
 							subscribe: () => {},
+							dispatch: () => {},
 						},
 					},
 				},
