@@ -192,11 +192,11 @@ describe('filters', () => {
 			},
 		])
 
-		const state = {
+		let state = {
 			filters: Immutable.Map({
 				currentCollectionId: '70c28cb0',
 				totalTime: '0',
-				dietTypes: Immutable.Set(['vegan']),
+				dietTypes: Immutable.Set(['vegan', 'vegetarian']),
 				dietaryAttributes: Immutable.Set(['gluten-free']),
 			}),
 			basket: Immutable.fromJS({
@@ -216,7 +216,10 @@ describe('filters', () => {
 				393: {
 					id: '393',
 					dietType: 'Vegetarian',
-					taxonomy: createTaxonomy([]),
+					taxonomy: createTaxonomy([
+						{ slug: 'gluten-free' },
+						{ slug: 'dairy-free' },
+					]),
 				},
 				929: {
 					id: '929',
@@ -233,7 +236,7 @@ describe('filters', () => {
 			}),
 			menuCollectionRecipes: Immutable.fromJS({
 				ca8f71be: ['327', '1589', '393'],
-				'70c28cb0': ['929', '1651'],
+				'70c28cb0': ['929', '1651', '393'],
 			}),
 			menuCollections: Immutable.fromJS({
 				ca8f71be: {
@@ -246,6 +249,7 @@ describe('filters', () => {
 				},
 			}),
 		}
+
 		test('get recipes for selected dietaryAttributes', () => {
 			expect(getFilteredRecipes(state)).toEqual(Immutable.List([
 				Immutable.Map({
@@ -258,6 +262,51 @@ describe('filters', () => {
 							slug: 'dietary-attributes',
 							tags: Immutable.List([
 								Immutable.Map({ slug: 'gluten-free' }),
+							]),
+						}),
+					]),
+				}),
+				Immutable.Map({
+					id: '393',
+					dietType: 'Vegetarian',
+					taxonomy: Immutable.List([
+						Immutable.Map({
+							id: 1,
+							name: 'Dietary attributes',
+							slug: 'dietary-attributes',
+							tags: Immutable.List([
+								Immutable.Map({ slug: 'gluten-free' }),
+								Immutable.Map({ slug: 'dairy-free' }),
+							]),
+						}),
+					]),
+				}),
+			]))
+		})
+
+		test('get recipes for selected dietaryAttributes', () => {
+			state = {
+				...state,
+				filters: Immutable.Map({
+					currentCollectionId: '70c28cb0',
+					totalTime: '0',
+					dietTypes: Immutable.Set([]),
+					dietaryAttributes: Immutable.Set(['dairy-free', 'gluten-free']),
+				})
+			}
+
+			expect(getFilteredRecipes(state)).toEqual(Immutable.List([
+				Immutable.Map({
+					id: '393',
+					dietType: 'Vegetarian',
+					taxonomy: Immutable.List([
+						Immutable.Map({
+							id: 1,
+							name: 'Dietary attributes',
+							slug: 'dietary-attributes',
+							tags: Immutable.List([
+								Immutable.Map({ slug: 'gluten-free' }),
+								Immutable.Map({ slug: 'dairy-free' }),
 							]),
 						}),
 					]),
