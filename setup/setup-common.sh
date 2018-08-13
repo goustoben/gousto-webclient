@@ -19,7 +19,7 @@ else
 fi
 export SETUP_FAILURE=false
 
-# frontend specific requirements
+# webclient specific requirements
 CLOUDFRONT_URL=$(python /root/project/ci_scripts/describe_platform.py --name=content_output_assetsdistributiondomainname --region=eu-west-1)
 
 echo "CLOUDFRONT_URL: $CLOUDFRONT_URL"

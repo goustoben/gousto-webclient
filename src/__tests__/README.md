@@ -14,7 +14,7 @@ These must be installed globally, for the script to find and use!
 
 ### How to run:
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 sh migrateTest.sh ./test/components/Component/Component.js
 ```
 
