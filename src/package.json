@@ -1,7 +1,7 @@
 {
   "name": "goustowebclient",
   "version": "0.0.1",
-  "description": "Isomorphic Gousto frontend",
+  "description": "Isomorphic Gousto WebClient",
   "main": "index.js",
   "author": "Gousto",
   "license": "ISC",

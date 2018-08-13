@@ -46,7 +46,7 @@ brew cask install java
 
 #### 2. Nightwatch / Selenium
 ```shell
-cd ~/code/gousto2frontend/tests/e2e
+cd ~/code/goustowebclient/tests/e2e
 npm i
 node installLocal.js
 ```
@@ -55,7 +55,7 @@ node installLocal.js
 
 ## Jest
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run test:jest
 ```
 
@@ -72,25 +72,25 @@ brew install watchman
 
 ## Mocha
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run test
 ```
 
 ### Running End-To-End tests
 #### Local environment
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run build:e2e:local
-cd ~/code/gousto2frontend/tests/e2e
+cd ~/code/goustowebclient/tests/e2e
 npm run test
 ```
 
 #### Staging environment
 Please ensure the selenium server is up and running at the host, e.g. AWS
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run build:e2e
-cd ~/code/gousto2frontend/tests/e2e
+cd ~/code/goustowebclient/tests/e2e
 npm run test:staging
 ```
 

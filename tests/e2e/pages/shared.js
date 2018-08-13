@@ -1,5 +1,5 @@
 const faker = require('faker')
-const frontend = require('../src/dist/frontend').default
+const webclient = require('../src/dist/webclient').default
 const moment = require('moment')
 const Immutable = require('immutable')
 const RandExp = require('randexp')
@@ -57,20 +57,20 @@ module.exports = {
 			},
 			commands: [{
 				fetchMenuLandingDays: function(cutoffDatetime = '') {
-					const cutoffDatetimeFrom = cutoffDatetime ? cutoffDatetime : frontend.cutoffDateTimeNow()
+					const cutoffDatetimeFrom = cutoffDatetime ? cutoffDatetime : webclient.cutoffDateTimeNow()
 
-					return frontend.apis.fetchAvailableDates()
+					return webclient.apis.fetchAvailableDates()
 						.then(function ({ data }) {
 							const availableDays = data.pop().until
 
-							return frontend.apis.fetchDeliveryDays('', {
+							return webclient.apis.fetchDeliveryDays('', {
 								'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
 								'filters[cutoff_datetime_until]': availableDays,
 								sort: 'date',
 								direction: 'asc',
 							})
 						}).then(function ({ data }) {
-							const availableDeliveryDays = frontend.getAvailableDeliveryDays(data, cutoffDatetimeFrom)
+							const availableDeliveryDays = webclient.getAvailableDeliveryDays(data, cutoffDatetimeFrom)
 							const immutableDays = Immutable.fromJS(availableDeliveryDays)
 							const state = {
 								basket: Immutable.Map({}),
@@ -78,7 +78,7 @@ module.exports = {
 								boxSummaryDeliveryDays: immutableDays,
 								user: Immutable.Map({}),
 							}
-							const landingDay = frontend.getLandingDay(state)
+							const landingDay = webclient.getLandingDay(state)
 
 							const coreDayId = immutableDays.getIn([landingDay.date, 'coreDayId'])
 							const slot = immutableDays.getIn([landingDay.date, 'slots']).find(slot => slot.get('id') === landingDay.slotId)
@@ -101,8 +101,8 @@ module.exports = {
 							order.delivery_slot_id = slot.get('coreSlotId')
 
 							return Promise.all([
-								frontend.apis.fetchRecipeStock('', coreDayId),
-								frontend.apis.fetchRecipes('', '', { 'filters[available_on]': slot.get('whenCutoff') })
+								webclient.apis.fetchRecipeStock('', coreDayId),
+								webclient.apis.fetchRecipes('', '', { 'filters[available_on]': slot.get('whenCutoff') })
 							])
 						}).then(function (menu) {
 							const stock = menu[0].data
@@ -128,7 +128,7 @@ module.exports = {
 
 							order.recipe_choices = recipeChoices
 
-							return frontend.apis.createPreviewOrder(order)
+							return webclient.apis.createPreviewOrder(order)
 						}).catch(function (error) {
 							console.log(Error(error))
 							throw error
@@ -201,7 +201,7 @@ module.exports = {
 							userData.subscription.box_id = data.order.boxId
 							userData.subscription.delivery_slot_id = slot.get('id')
 
-							return frontend.fetch('', `${frontend.endpoint('customers', 'v1')}/signup`, userData, 'POST')
+							return webclient.fetch('', `${webclient.endpoint('customers', 'v1')}/signup`, userData, 'POST')
 						}).then(function ({ data: user }) {
 							user.customer.password = pwd
 
