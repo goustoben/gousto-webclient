@@ -22,7 +22,6 @@ module.exports = {
 				shared.section.header.checkUserLoggedIn()
 				done()
 			})
-		browser
 			.perform(function(browser, done) {
 				menu.navigate()
 				shared.section.header.checkUserLoggedIn()
