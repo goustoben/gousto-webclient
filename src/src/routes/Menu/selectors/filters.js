@@ -40,9 +40,9 @@ const getRecipesFilteredByDietaryAttributes = createSelector(
 	(recipesFiltered, dietaryAttributes) => (
 		(dietaryAttributes.size)
 		? recipesFiltered.filter(recipe => {
-			const tags = getTaxonomyTags(recipe, 'dietary-attributes')
+			const tagSlugs = getTaxonomyTags(recipe, 'dietary-attributes').map(tag => tag.get('slug', '').toLowerCase())
 
-			return (tags.size) ? tags.some(tag => dietaryAttributes.has(tag.get('slug', '').toLowerCase())) : false
+			return (tagSlugs.size) ? dietaryAttributes.every(attribute => tagSlugs.includes(attribute)) : false
 		})
 		: recipesFiltered
 	)

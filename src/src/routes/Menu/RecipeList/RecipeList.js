@@ -13,7 +13,6 @@ import css from './RecipeList.css'
 class RecipeList extends React.Component {
 	static propTypes = {
 		allRecipesList: PropTypes.instanceOf(Immutable.List),
-		currentCollectionId: PropTypes.string,
 		cutoffDate: PropTypes.string,
 		isLoading: PropTypes.bool,
 		features: PropTypes.instanceOf(Immutable.Map),
@@ -60,12 +59,17 @@ class RecipeList extends React.Component {
 		return shouldUpdate
 	}
 
+	componentDidMount() {
+		this.trackRecipeOrderDisplayed()
+	}
+
 	componentDidUpdate(prevProps) {
 		const { mobileGridView } = this.props
 		if (prevProps.mobileGridView !== mobileGridView) {
 			this.masonry.options.columnWidth = (mobileGridView) ? '.gridSizerMobile' : '.gridSizer'
 			this.masonry.layout()
 		}
+		this.trackRecipeOrderDisplayed()
 	}
 
 	getView = (mobileGridView, isFeatured = false, isFineDineIn = false) => {
@@ -82,12 +86,11 @@ class RecipeList extends React.Component {
 	}
 
 	trackRecipeOrderDisplayed() {
-		const { filteredRecipeIds, featuredRecipes, remainingRecipes, currentCollectionId } = this.props
+		const { filteredRecipeIds, featuredRecipes, remainingRecipes } = this.props
 		this.context.store.dispatch(actions.trackRecipeOrderDisplayed(
 			filteredRecipeIds.toJS(),
-			(featuredRecipes.concat(remainingRecipes)).map(recipe => recipe.get('id')).toJS(),
-			currentCollectionId),
-		)
+			(featuredRecipes.concat(remainingRecipes)).map(recipe => recipe.get('id')).toJS()
+		))
 	}
 
 	render() {
@@ -104,7 +107,6 @@ class RecipeList extends React.Component {
 			outOfStockRecipes,
 		} = this.props
 		const gridSizer = mobileGridView ? 'gridSizerMobile' : 'gridSizer'
-		this.trackRecipeOrderDisplayed()
 		let index = 0
 
 		const sortedRecipes = featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)

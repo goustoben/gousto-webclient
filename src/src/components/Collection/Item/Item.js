@@ -4,8 +4,10 @@ import Link from 'Link'
 import Block from 'Page/Block'
 import Details from 'Page/Block/Details'
 import { Div } from 'Page/Elements'
-import Title from 'Page/Block/Title'
+import Icon from 'Icon'
+import { H2 } from 'Page/Header'
 import Image from 'Page/Block/Image'
+import css from './Item.css'
 
 const CollectionItem = ({ link, media, title }) => {
 	const CollectionContent = (
@@ -16,9 +18,15 @@ const CollectionItem = ({ link, media, title }) => {
 				media={media}
 			/>
 			<Details style="singleLineTitle">
-				<Title iconAfter="fa-angle-right" headlineFont>
-					{title}
-				</Title>
+				<div className={css.title}>
+					<H2 headlineFont>
+						{title}
+					</H2>
+				</div>
+				<Icon
+					className={css.icon}
+					name="fa-angle-right"
+				/>
 			</Details>
 		</Block>
 	)

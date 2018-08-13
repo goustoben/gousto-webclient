@@ -19,24 +19,37 @@ const getNoResultsPageProps = () => {
 	}
 }
 
-const MenuNoResults = ({ clearAllFilters, hasFilters }) => {
-	const noResultsAtributs = getNoResultsPageProps()
+class MenuNoResults extends React.PureComponent {
+	static propTypes = {
+		hasFilters: PropTypes.bool,
+		clearAllFilters: PropTypes.func,
+		filtersMenuVisible: PropTypes.bool,
+		trackRecipeOrderDisplayed: PropTypes.func,
+	}
 
-	return (
-		(hasFilters) ? <div>
-			<NoResultsPage
-				imageName={noResultsAtributs.imageName}
-				title={noResultsAtributs.title}
-				description={noResultsAtributs.description}
-			/>
-			<span className={css.clearAllFilters} onClick={() => clearAllFilters()}>Clear filters</span>
-		</div> : null
-	)
-}
+	componentDidMount() {
+		this.props.trackRecipeOrderDisplayed([], [])
+	}
 
-MenuNoResults.propTypes = {
-	clearAllFilters: PropTypes.func,
-	hasFilters: PropTypes.bool,
+	componentDidUpdate() {
+		this.props.trackRecipeOrderDisplayed([], [])
+	}
+
+	render() {
+		const { clearAllFilters, hasFilters } = this.props
+		const noResultsAtributs = getNoResultsPageProps()
+
+		return (
+			(hasFilters) ? <div>
+				<NoResultsPage
+					imageName={noResultsAtributs.imageName}
+					title={noResultsAtributs.title}
+					description={noResultsAtributs.description}
+				/>
+				<span className={css.clearAllFilters} onClick={() => clearAllFilters()}>Clear filters</span>
+			</div> : null
+		)
+	}
 }
 
 export default MenuNoResults

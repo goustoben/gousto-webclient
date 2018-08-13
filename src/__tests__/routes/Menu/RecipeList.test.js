@@ -149,6 +149,7 @@ describe('RecipeList', () => {
 			/>,
 			{ context },
 		)
+		wrapper.instance().componentDidUpdate(wrapper.props())
 
 		expect(context.store.dispatch).toHaveBeenCalledTimes(1)
 		expect(context.store.dispatch).toHaveBeenCalledWith(
@@ -158,7 +159,6 @@ describe('RecipeList', () => {
 		expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(
 			['1', '2', '3'],
 			['3', '1'],
-			'77',
 		)
 	})
 })
