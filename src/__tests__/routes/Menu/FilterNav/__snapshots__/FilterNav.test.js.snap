@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter Nav will render a FilterNav 1`] = `
+<div
+  className="filterNav"
+>
+  <div
+    className="filterCta"
+    onClick={[Function]}
+  >
+    <div
+      className="svg filter-icon filterIcon"
+      style={
+        Object {
+          "backgroundImage": "url(filter-icon.svg)",
+        }
+      }
+    />
+    <span
+      className="ctaText"
+    >
+      All recipes
+    </span>
+  </div>
+</div>
+`;

@@ -1,9 +1,9 @@
 ---
-serviceName: frontend
+serviceName: webclient
 region: eu-west-1
-exposure: public
-dns: frontend
-owner: squad-haricots
+exposure: private
+dns: webclient
+owner: squad-radishes
 
 messages:
  publish:
@@ -16,6 +16,8 @@ alarms:
   elbLatencyRed: 1.2
 
 logs:
+  - name: accessLogGroup
+  - name: errorLogGroup
   - name: pm2Log
     filters:
       - name: warningCount
@@ -30,27 +32,9 @@ logs:
       - name: unparseableCookieCount
         pattern: '[date, dash, status=\"error:\", exception=\"un-parsable cookie value*\"]'
         threshold: 1
-  - name: apacheAccessLog
-    filters:
-      - name: failedNewSubscriptionDueToSystemIssue
-        pattern: '[..., request=\"GET /contact HTTP/1.1\", status=200, a,b,from=\"https://www.gousto.co.uk/checkout\",d]'
-        threshold: 2
-  - name: apacheErrorLog
+ 
   - name: apiTimeLog
-  - name: laravelLog
-    filters:
-      - name: warningCount
-        pattern: '[date, status=local.WARNING*, ...]'
-        threshold: 20
-      - name: errorCount
-        pattern: '[date, status=local.ERROR*, ...]'
-        threshold: 15
-      - name: criticalCount
-        pattern: '[date, status=local.CRITICAL*, ...]'
-        threshold: 2
-      - name: csrfHeaderCount
-        pattern: '[date, status=local.WARNING*, exception, exception_type=*CsrfHeaderException*, ...]'
-        threshold: 15
+
 
 scaling:
   type: cpu

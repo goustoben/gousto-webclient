@@ -1,0 +1,28 @@
+---
+- name: Ensure role defaults are used for this role
+  include_vars: defaults/main.yml
+
+- name: Symlink src to directory
+  file: src=/var/www/goustowebclient/src dest="{{ directory }}" state=link
+  when: "{{ environment_name == 'dev' }}"
+
+- name: Copy cfn mappings to conf folder
+  copy: src=vars/20_cfn_mapping.yml dest=/mnt/playbooks/conf/20_cfn_mapping.yml mode=755
+
+# this should be moved to platform and be generic but take presedence over the cfn mappings
+- name: Map variables
+  include_vars: "{{ item }}"
+  with_fileglob:
+    - /mnt/playbooks/conf/*.yml
+  when: "{{ environment_name != 'dev' }}"
+
+- include: awslogs.yml
+  when: "{{ environment_name != 'dev' }}"
+
+- include: build.yml
+  when: "{{ environment_name == 'dev' }}"
+
+- include: nodeserver.yml
+
+- include: nginx.yml
+

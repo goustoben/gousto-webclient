@@ -1,19 +1,17 @@
-Gousto2 FrontEnd
+Gousto Web Client
 ====
 
-master: [![CircleCI](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/master.svg?style=svg&circle-token=d0c9c6676ead6759cf762f958042ebb722087f2f)](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/master)
-develop: [![CircleCI](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/develop.svg?style=svg&circle-token=d0c9c6676ead6759cf762f958042ebb722087f2f)](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/develop)
-env-carrots: [![CircleCI](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/env-carrots.svg?style=svg&circle-token=d0c9c6676ead6759cf762f958042ebb722087f2f)](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/env-carrots)
-env-haricots: [![CircleCI](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/env-haricots.svg?style=svg&circle-token=d0c9c6676ead6759cf762f958042ebb722087f2f)](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/env-haricots)
-env-radishes: [![CircleCI](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/env-radishes.svg?style=svg&circle-token=d0c9c6676ead6759cf762f958042ebb722087f2f)](https://circleci.com/gh/Gousto/Gousto2-FrontEnd/tree/env-radishes)
+master: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/master.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/master)
+develop: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/develop.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/develop)
+env-carrots: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-carrots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-carrots)
+env-haricots: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-haricots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-haricots)
+env-radishes: [![CircleCI](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-radishes.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/GoustoWebClient/tree/env-radishes)
 
 ## Getting Started
 ### Pre-requisites
 Please ensure the development box is setup: https://github.com/Gousto/Vagrant
 ```shell
-npm i
-npm i -g gulp  webpack concurrently nodemon
-gulp
+yarn
 ```
 
 ## New Stack Development
@@ -21,18 +19,18 @@ gulp
 
 Although tasks can be run within the devbox, it's more performant to run tasks outside the devbox
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run watch
 ```
 
 ### Terminal 2: Starting
 ```shell
 cd ~/Vagrant && vagrant ssh
-cd /var/www/gousto2frontend/src/nodeserver
+cd /var/www/goustowebclient/src
 npm run start
 ```
 
-The site should now be available at http://frontend.gousto.local
+The site should now be available at http://webclient.gousto.local
 
 
 ## Testing
@@ -48,7 +46,7 @@ brew cask install java
 
 #### 2. Nightwatch / Selenium
 ```shell
-cd ~/code/gousto2frontend/tests/e2e
+cd ~/code/goustowebclient/tests/e2e
 npm i
 node installLocal.js
 ```
@@ -57,7 +55,7 @@ node installLocal.js
 
 ## Jest
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run test:jest
 ```
 
@@ -74,25 +72,25 @@ brew install watchman
 
 ## Mocha
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run test
 ```
 
 ### Running End-To-End tests
 #### Local environment
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run build:e2e:local
-cd ~/code/gousto2frontend/tests/e2e
+cd ~/code/goustowebclient/tests/e2e
 npm run test
 ```
 
 #### Staging environment
 Please ensure the selenium server is up and running at the host, e.g. AWS
 ```shell
-cd ~/code/gousto2frontend/src/nodeserver
+cd ~/code/goustowebclient/src
 npm run build:e2e
-cd ~/code/gousto2frontend/tests/e2e
+cd ~/code/goustowebclient/tests/e2e
 npm run test:staging
 ```
 

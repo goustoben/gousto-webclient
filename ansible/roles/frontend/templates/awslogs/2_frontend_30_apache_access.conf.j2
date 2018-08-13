@@ -1,6 +1,0 @@
-[{{ cfn_service_resource_apacheaccesslog }}]
-file = /var/log/apache2/{{ access_log }}
-log_group_name = {{ cfn_service_resource_apacheaccesslog }}
-log_stream_name = {instance_id}
-datetime_format =
-multi_line_start_pattern = {datetime_format}

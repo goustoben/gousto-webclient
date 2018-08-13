@@ -1,11 +1,6 @@
 #!/bin/bash
 
-set -eo pipefail
-
-cd src/nodeserver
-
-# isomorphic: install
-yarn install
+cd src
 
 # isomorphic: build
 yarn run build

@@ -7,7 +7,7 @@
   sudo: yes
 
   roles:
-    - frontend
+    - webclient
 
   vars:
     nodejs_version: "8.11.3"

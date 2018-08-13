@@ -1,0 +1,122 @@
+@value White, Black, Mackerel, Mackerel, BlueBase from 'styles/colors.css';
+@value sizeMD from 'styles/typography.css';
+@value ScreenXXSMin, ScreenSMMin, ScreenXSMax from 'styles/screenSizes.css';
+
+@value CloseIconSize 22px;
+
+.container {
+	width: 100vw;
+	min-height: 100vh;
+	height: 100%;
+	background-color: White;
+
+	@media ScreenSMMin {
+		width: 25vw;
+	}
+}
+
+.content {
+	padding: 20px 20px 70px;
+}
+
+.header {
+	display: flex;
+    position: fixed;
+    background-color: white;
+	z-index: 100;
+	justify-content: center;
+	margin-top: -20px;
+	margin-left: -20px;
+	padding-top: 20px;
+	padding-right: CloseIconSize;
+	padding-bottom: 15px;
+	@media ScreenSMMin {
+		width: 25vw;
+	}
+	@media ScreenXSMax {
+		width: 100%;
+	}
+}
+
+.filters { 
+	margin-top: 50px;
+}
+
+.close {
+	margin-right: auto;
+	@media ScreenXSMax {
+		display: none;
+	}
+}
+.closeMobile {
+	margin-right: auto;
+	@media ScreenSMMin {
+		display: none;
+	}
+}
+
+.closeIcon {
+	display: flex;
+	fill: Black;
+}
+
+.closeIconMobile {
+	composes: closeIcon;
+	padding-left: 20px;
+	@media ScreenSMMin {
+		display: none;
+	}
+}
+
+.closeIconDesktop {
+	composes: closeIcon;
+	display: none;
+	@media ScreenSMMin {
+		padding-left: 20px;
+		display: flex;
+	}
+}
+
+.title {
+	font-size: sizeMD;
+	color: Black;
+	margin: 0 auto;
+}
+
+.stickyContainer {
+	position: fixed;
+	z-index: 101;
+	bottom: 0;
+	width: 100%;
+	background-color: White;
+	border-top: 1px solid Mackerel;
+
+	@media ScreenXXSMin {
+		display: none;
+	}
+}
+
+.stickyButton {
+	margin: 12px 15px;
+}
+
+.filter {
+	padding-bottom: 30px;
+}
+
+.filter:not(:first-child) {
+	border-top: 1px solid Mackerel;
+	padding-top: 30px;
+}
+
+.clearAll {	
+	height: 22px;
+	width: 62px;
+	color: BlueBase;
+	font-family: Avenir;
+	font-size: 16px;
+	font-weight: 900;
+	line-height: 22px;
+	text-align: right;
+	cursor: pointer;
+}

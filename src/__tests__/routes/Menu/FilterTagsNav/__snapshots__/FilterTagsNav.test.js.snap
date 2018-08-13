@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterTag rendering Will render FilterTag component 1`] = `
+<div
+  className="filterTagContainer"
+>
+  <div
+    className="filterListContainer"
+  >
+    <div
+      className="filtersCTA"
+    >
+      <div
+        className="container primary fill"
+      >
+        <div
+          className="spinnerContainer  base primary fill noHover autoWidthPadding"
+          onClick={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <span
+            className="spinner"
+          >
+            <div
+              className="fadingCircle"
+            >
+              <div
+                className="circle1 white"
+              />
+              <div
+                className="circle2 white"
+              />
+              <div
+                className="circle3 white"
+              />
+              <div
+                className="circle4 white"
+              />
+              <div
+                className="circle5 white"
+              />
+              <div
+                className="circle6 white"
+              />
+              <div
+                className="circle7 white"
+              />
+              <div
+                className="circle8 white"
+              />
+              <div
+                className="circle9 white"
+              />
+              <div
+                className="circle10 white"
+              />
+              <div
+                className="circle11 white"
+              />
+              <div
+                className="circle12 white"
+              />
+            </div>
+          </span>
+        </div>
+        <div
+          className="base primary fill"
+          onClick={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          role="button"
+          tabIndex="0"
+        >
+          Filter by
+        </div>
+      </div>
+    </div>
+    <div
+      className="filterTagList"
+    />
+  </div>
+</div>
+`;

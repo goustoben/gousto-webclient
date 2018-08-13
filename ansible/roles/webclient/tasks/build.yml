@@ -1,0 +1,39 @@
+---
+
+- name: install node
+  shell: bash -lc "nvm install {{ node_version }}"
+  register: output
+  changed_when: "'already installed.' not in output.stderr"
+
+- name: create alias directory
+  file: path="{{ nvm_root }}/alias" state=directory
+
+- name: set {{ node_version }} as default version
+  copy: dest="{{ nvm_root }}/alias/default" content="{{ node_version }}"
+
+- name: Install yarn
+  sudo: yes
+  command: npm install -g yarn
+
+- name: Install gulp
+  command: yarn add gulp
+
+- name: yarn cache clean
+  command: yarn cache clean
+  args:
+    chdir: "{{ directory }}"
+
+- name: yarn install
+  command: yarn install
+  args:
+    chdir: "{{ directory }}"
+
+- name: yarn link
+  command: yarn link
+  args:
+    chdir: "{{ directory }}"
+
+- name: yarn run build nodeserver
+  command: yarn run build:dev
+  args:
+    chdir: "{{ directory }}"
