@@ -3,7 +3,7 @@ const path = require('path')
 const webpack = require('webpack')
 
 module.exports = {
-	context: path.resolve(__dirname, '../../nodeserver/src'),
+	context: path.resolve(__dirname, '../src'),
 	mode: 'none',
 	target: 'node', // in order to ignore built-in modules like path, fs, etc.
 	externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
@@ -76,8 +76,8 @@ module.exports = {
 
 	resolve: {
 		alias: {
-			spinkit: path.resolve(__dirname, '../../nodeserver/node_modules/spinkit'),
-			bootstrap: path.resolve(__dirname, '../../nodeserver/node_modules/bootstrap'),
+			spinkit: path.resolve(__dirname, '..//node_modules/spinkit'),
+			bootstrap: path.resolve(__dirname, '../node_modules/bootstrap'),
 		},
 		modules: [
 			path.resolve(__dirname, '../src'),

@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
 const mapActionsToProps = {
 	filterMenuClose: actions.filterMenuClose,
 	filterMenuApply: actions.filterMenuApply,
+	filterMenuRevertFilters: actions.filterMenuRevertFilters,
 	clearAllFilters: actions.clearAllFilters,
 }
 

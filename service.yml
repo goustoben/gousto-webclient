@@ -1,8 +1,8 @@
 ---
-serviceName: frontend-new
+serviceName: webclient
 region: eu-west-1
-exposure: public
-dns: frontend-new
+exposure: private
+dns: webclient
 owner: squad-radishes
 
 messages:
@@ -16,6 +16,8 @@ alarms:
   elbLatencyRed: 1.2
 
 logs:
+  - name: accessLogGroup
+  - name: errorLogGroup
   - name: pm2Log
     filters:
       - name: warningCount

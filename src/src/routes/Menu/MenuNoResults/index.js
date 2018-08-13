@@ -1,1 +1,1 @@
-export default from './MenuNoResults.js'
+export default from './MenuNoResultsContainer'

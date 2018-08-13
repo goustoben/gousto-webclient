@@ -3,7 +3,7 @@
   include_vars: defaults/main.yml
 
 - name: Symlink src to directory
-  file: src=/var/www/gousto3frontend/src dest="{{ directory }}" state=link
+  file: src=/var/www/goustowebclient/src dest="{{ directory }}" state=link
   when: "{{ environment_name == 'dev' }}"
 
 - name: Copy cfn mappings to conf folder
@@ -23,4 +23,6 @@
   when: "{{ environment_name == 'dev' }}"
 
 - include: nodeserver.yml
+
+- include: nginx.yml
 

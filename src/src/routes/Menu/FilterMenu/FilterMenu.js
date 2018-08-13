@@ -9,7 +9,7 @@ import DietTypesFilter from './DietTypesFilter'
 import TotalTimeFilter from './TotalTimeFilter'
 import DietaryAttributesFilter from './DietaryAttributesFilter'
 
-const FilterMenu = ({ open, filterMenuClose, slideFrom, filterMenuApply, clearAllFilters }) => (
+const FilterMenu = ({ open, filterMenuClose, slideFrom, filterMenuApply, filterMenuRevertFilters, clearAllFilters }) => (
 	<Overlay open={open} from={slideFrom} resetScroll>
 		<div onClick={() => filterMenuClose()}>
 			<div className={css.container} onClick={(e) => e.stopPropagation()}>
@@ -17,9 +17,11 @@ const FilterMenu = ({ open, filterMenuClose, slideFrom, filterMenuApply, clearAl
 					<div className={css.header}>
 						<span className={css.close} onClick={() => filterMenuClose()}>
 							<Icon name="fa-angle-left" size={22} className={`${css.closeIconDesktop}`} />
+						</span>
+						<span className={css.closeMobile} onClick={() => filterMenuRevertFilters()}>
 							<Icon name="fa-times" size={22} className={`${css.closeIconMobile}`} />
 						</span>
-						<h2 className={css.title}>Filters</h2>
+						<h2 className={css.title}>Filter by</h2>
 						<span className={css.clearAll} onClick={() => clearAllFilters()}>Clear all</span>
 					</div>
 					<div className={css.filters}>
@@ -52,6 +54,7 @@ FilterMenu.propTypes = {
 	slideFrom: PropTypes.oneOf(['bottom', 'right']),
 	filterMenuClose: PropTypes.func,
 	filterMenuApply: PropTypes.func,
+	filterMenuRevertFilters: PropTypes.func,
 	clearAllFilters: PropTypes.func,
 }
 

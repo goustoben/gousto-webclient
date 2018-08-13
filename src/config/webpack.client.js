@@ -1,12 +1,12 @@
+
 const webpack = require('webpack')
 const path = require('path')
 const ExtractPlugin = require('extract-text-webpack-plugin')
-const NyanProgressPlugin = require('nyan-progress-webpack-plugin')
+
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
 const ManifestPlugin = require('webpack-manifest-plugin')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const childProcess = require('child_process')
-const goustoQuotes = require('./quotes')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
@@ -20,21 +20,61 @@ const PostcssReporter = require('postcss-reporter')
 const PostcssFlexbugsFixed = require('postcss-flexbugs-fixes')
 
 const build = process.env.NODE_ENV || 'development'
-const envName = process.env.npm_config_gousto_frontend_environment_name || 'local'
-const domain = process.env.npm_config_gousto_frontend_domain || 'gousto.local'
-const clientProtocol = process.env.npm_config_gousto_frontend_client_protocol || 'http'
-const cloudfrontUrl = process.env.npm_config_gousto_frontend_cloudfront_url || ''
+const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
+const domain = process.env.npm_config_gousto_webclient_domain || 'gousto.local'
+const clientProtocol = process.env.npm_config_gousto_webclient_client_protocol || 'http'
+const cloudfrontUrl = process.env.npm_config_gousto_webclient_cloudfront_url || ''
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
+const devMode = process.env.NODE_ENV !== 'production'
 
 const GIT_HASH = `${childProcess.execSync("git rev-parse --short HEAD | tr -d '\n'").toString()}`
 const debug = false
-let bundleAnalyzerPlugin
-if (build === 'development') {
-	bundleAnalyzerPlugin = new BundleAnalyzerPlugin({ analyzerMode: 'static', generateStatsFile: true })
-}
 // eslint-disable-next-line no-console
 console.log(`================\nCLIENT BUILD: ${build}, ENVIRONMENT: ${envName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}"\n================`)
+
+const cssLoaders = [
+	{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
+	{
+		loader: 'postcss-loader',
+		options: {
+			ident: 'postcss',
+			parser: 'postcss-safe-parser',
+			plugins: [
+				PostcssImport({
+					path: path.resolve('./src/styles'),
+				}),
+				PostcssUrl(),
+				PostcssNested(),
+				PostcssPresetEnv(),
+				PostcssReporter(),
+				PostcssFlexbugsFixed()
+			]
+		}
+	},
+]
+
+const scssLoaders = [
+	{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
+	{ loader: 'postcss-loader',
+		options: {
+			ident: 'postcss',
+			parser: 'postcss-safe-parser',
+			plugins: [
+				PostcssImport({
+					path: path.resolve('./src/styles'),
+				}),
+				PostcssUrl(),
+				PostcssNested(),
+				PostcssPresetEnv(),
+				PostcssReporter(),
+				PostcssFlexbugsFixed(),
+			],
+		},
+	},
+	{ loader: 'sass-loader' }
+]
+
 
 const config = {
 	name: 'client',
@@ -45,11 +85,11 @@ const config = {
 		main: [
 			'babel-polyfill',
 			'./src/client.js',
-			'./src/styles/base.css',
+			'./src/styles/base.css'
 		],
 		legacy: [
 			'babel-polyfill',
-			'./src/legacy.js',
+			'./src/legacy.js'
 		],
 	},
 	output: {
@@ -66,12 +106,11 @@ const config = {
 				options: {
 					cache: false,
 					quiet: false,
-					failOnWarning: false,
+					failOnWarning: false
 				},
-
 				include: [
-					path.resolve('./src'),
-				],
+					path.resolve('./src')
+				]
 			},
 			{
 				test: /\.js$/,
@@ -82,100 +121,61 @@ const config = {
 					cacheDirectory: true,
 				},
 				include: [
-					path.resolve('./src'),
-				],
+					path.resolve('./src')
+				]
 			},
 			{
 				test: /\.css$/,
-				use: ExtractPlugin.extract({
+				use: devMode ? ['style-loader', ...cssLoaders] : ExtractPlugin.extract({
 					fallback: 'style-loader',
-					use: [
-						{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
-						{
-							loader: 'postcss-loader',
-							options: {
-								ident: 'postcss',
-								parser: 'postcss-safe-parser',
-								plugins: [
-									PostcssImport({
-										path: path.resolve('./src/styles'),
-									}),
-									PostcssUrl(),
-									PostcssNested(),
-									PostcssPresetEnv(),
-									PostcssReporter(),
-									PostcssFlexbugsFixed(),
-								],
-							},
-						},
-					],
-				}),
+					use: cssLoaders
+				})
 			},
 			{
 				test: /\.scss$/,
-				use: ExtractPlugin.extract({
+				use: devMode ? ['style-loader', ...scssLoaders] : ExtractPlugin.extract({
 					fallback: 'style-loader',
-					use: [
-						{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
-						{ loader: 'postcss-loader',
-							options: {
-								ident: 'postcss',
-								parser: 'postcss-safe-parser',
-								plugins: [
-									PostcssImport({
-										path: path.resolve('./src/styles'),
-									}),
-									PostcssUrl(),
-									PostcssNested(),
-									PostcssPresetEnv(),
-									PostcssReporter(),
-									PostcssFlexbugsFixed(),
-								],
-							},
-						},
-						{ loader: 'sass-loader' },
-					],
-				}),
+					use: scssLoaders
+				})
 			},
 			{
 				test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+				loader: 'url-loader?limit=10000&mimetype=application/font-woff'
 			},
 			{
 				test: /\.woff2(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: 'url-loader?limit=10000&mimetype=application/font-woff2',
+				loader: 'url-loader?limit=10000&mimetype=application/font-woff2'
 			},
 			{
 				test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-				loader: 'file-loader',
+				loader: 'file-loader'
 			},
 			{
 				test: /\.png$/,
-				loader: 'url-loader?limit=100000',
+				loader: 'url-loader?limit=100000'
 			},
 			{ 	test: /\.jpg$/,
-				loader: 'file-loader',
+				loader: 'file-loader'
 			},
 			{ 	test: /\.gif$/,
-				loader: 'file-loader',
+				loader: 'file-loader'
 			},
 			{ 	test: /\.ico$/,
-				loader: 'file-loader',
+				loader: 'file-loader'
 			},
 			{ 	test: /\.svg$/,
 				loaders: [
 					'svg-url-loader',
-					'image-webpack',
+					'image-webpack'
 				],
 			},
 			{
 				test: /\.(graphql|gql)$/,
-				loader: 'graphql-tag/loader',
-			},
-		],
+				loader: 'graphql-tag/loader'
+			}
+		]
 	},
 	plugins: [
-		new ExtractPlugin({ filename: '[name].[chunkhash].css', allChunks: true, ignoreOrder: true }),
 		new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
 		ExitCodePlugin,
 		new LodashModuleReplacementPlugin(),
@@ -192,27 +192,27 @@ const config = {
 			__DOMAIN__: JSON.stringify(domain),
 			__CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
 			'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
-			__GIT_HASH__: JSON.stringify(GIT_HASH),
+			__GIT_HASH__: JSON.stringify(GIT_HASH)
 		}),
-		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/), // only inlcude moment in English
+		new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/) // only inlcude moment in English,
 	],
 	resolve: {
 		alias: {
 			styles: path.resolve('./src/styles'),
-			jsdom: path.resolve('./fallbacks/jsdom'),
+			jsdom: path.resolve('./fallbacks/jsdom')
 		},
 		modules: [
 			path.resolve('./src'),
 			path.resolve('./src/components'),
-			path.resolve('./node_modules'),
+			path.resolve('./node_modules')
 		],
-		extensions: ['.js', '.json', '.css', '.scss'],
+		extensions: ['.js', '.json', '.css', '.scss']
 	},
 	resolveLoader: {
-		moduleExtensions: ['-loader'],
+		moduleExtensions: ['-loader']
 	},
 	node: {
-		fs: 'empty',
+		fs: 'empty'
 	},
 	stats: debug ? {
 		hash: true,
@@ -227,7 +227,7 @@ const config = {
 		errors: true,
 		errorDetails: true,
 		warnings: true,
-		publicPath: true,
+		publicPath: true
 	} : {
 		hash: false,
 		version: false,
@@ -241,24 +241,17 @@ const config = {
 		errors: true,
 		errorDetails: true,
 		warnings: false,
-		publicPath: false,
-	},
+		publicPath: false
+	}
 }
 
 if (build === 'development') {
 	config.devtool = 'source-map'
 	config.plugins.push(
-		new LodashModuleReplacementPlugin(),
-		new NyanProgressPlugin({
-			nyanCatSays: (progress) => {
-				if (progress === 1) {
-					return (`client Built!!! ${goustoQuotes[Math.floor(Math.random() * goustoQuotes.length)]}`)
-				}
-
-				return `${(progress * 100).toFixed(1)} % done...`
-			},
+		new SimpleProgressWebpackPlugin({ // Default options
+			format: 'compact'
 		}),
-		bundleAnalyzerPlugin
+		new webpack.HotModuleReplacementPlugin()
 	)
 } else if (build === 'production') {
 	config.devtool = false
@@ -266,7 +259,7 @@ if (build === 'development') {
 	config.output.chunkFilename = '[chunkhash].js'
 
 	config.plugins.push(
-		new LodashModuleReplacementPlugin(),
+		new ExtractPlugin({ filename: '[name].[chunkhash].css', allChunks: true, ignoreOrder: true }),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 		new UglifyJsPlugin({
 			parallel: true,
@@ -279,7 +272,7 @@ if (build === 'development') {
 				output: {
 					comments: false
 				}
-			},
+			}
 		}),
 		new OptimizeCssAssetsPlugin()
 	)

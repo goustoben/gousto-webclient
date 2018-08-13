@@ -1,12 +1,14 @@
 import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 
-const initialState = () => Immutable.Map({
+export const initialState = () => Immutable.Map({
 	currentCollectionId: '',
 	totalTime: '0',
 	dietTypes: Immutable.Set([]),
 	dietaryAttributes: Immutable.Set([]),
 })
+
+let previousState = initialState()
 
 const filters = {
 	filters: (state, action) => {
@@ -35,6 +37,18 @@ const filters = {
 				const newState = initialState()
 
 				return newState.set('currentCollectionId', action.collectionId)
+			}
+
+			case actionTypes.MENU_FILTERS_VISIBILITY_CHANGE: {
+				if (action.visible) {
+					previousState = state
+				}
+
+				return state
+			}
+
+			case actionTypes.FILTERS_RESET: {
+				return previousState
 			}
 
 			default: {

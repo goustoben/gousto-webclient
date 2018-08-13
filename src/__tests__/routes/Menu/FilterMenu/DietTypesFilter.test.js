@@ -27,6 +27,6 @@ describe('<DietTypesFilter />', () => {
 
 		wrapper.find(FilterItem).first().simulate('click')
 
-		expect(filterCurrentDietTypesChange).toHaveBeenCalledWith('Meat')
+		expect(filterCurrentDietTypesChange).toHaveBeenCalledWith('meat')
 	})
 })

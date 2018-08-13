@@ -122,7 +122,7 @@ if (__PROD__ && __ENV__ === 'local') { // required for local PROD build
 
 app.use(processRequest)
 
-const port = 3000
+const port = 8080
 
 app.listen(port, () => {
 	logger.notice(`==> ✅  Koa Server is listening on port ${port}`)
@@ -140,7 +140,7 @@ if (__HMR__) {
 		historyApiFallback: false,
 		withCredentials: false,
 		proxy: {
-			'*': `http://frontend.gousto.local:${port}`,
+			'*': `http://webclient.gousto.local:${port}`,
 		},
 		headers: { 'Access-Control-Allow-Origin': '*' },
 		stats: {
@@ -153,7 +153,7 @@ if (__HMR__) {
 			chunkModules: false,
 		},
 	})
-	.listen(hotPort, 'frontend.gousto.local', (err) => {
+	.listen(hotPort, 'webclient.gousto.local', (err) => {
 		if (err) {
 			// eslint-disable-next-line no-console
 			console.error(err)

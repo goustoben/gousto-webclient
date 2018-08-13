@@ -1,17 +1,16 @@
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
-const NyanProgressPlugin = require('nyan-progress-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
-const goustoQuotes = require('./quotes')
+const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 const build = process.env.NODE_ENV || 'development'
-const envName = process.env.npm_config_gousto_frontend_environment_name || 'local'
-const domain = process.env.npm_config_gousto_frontend_domain || 'gousto.local'
-const clientProtocol = process.env.npm_config_gousto_frontend_client_protocol || 'http'
-const cloudfrontUrl = process.env.npm_config_gousto_frontend_cloudfront_url || ''
+const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
+const domain = process.env.npm_config_gousto_webclient_domain || 'gousto.local'
+const clientProtocol = process.env.npm_config_gousto_webclient_client_protocol || 'http'
+const cloudfrontUrl = process.env.npm_config_gousto_webclient_cloudfront_url || ''
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 // eslint-disable-next-line no-console
@@ -128,12 +127,12 @@ const config = {
 	],
 	resolve: {
 		alias: {
-			spinkit: path.resolve(__dirname, '../../nodeserver/node_modules/spinkit'),
+			spinkit: path.resolve(__dirname, '../node_modules/spinkit'),
 		},
 		modules: [
 			path.resolve(__dirname, '../src'),
 			path.resolve(__dirname, '../src/components'),
-			path.resolve(__dirname, '../../nodeserver/node_modules/spinkit'),
+			path.resolve(__dirname, '../node_modules/spinkit'),
 		],
 		extensions: ['.js', '.json', '.css'],
 	},
@@ -176,15 +175,9 @@ const config = {
 if (build === 'development') {
 	config.devtool = 'source-map'
 	config.plugins.push(
-	new NyanProgressPlugin({
-		nyanCatSays: (progress) => {
-			if (progress === 1) {
-				return (`Server Built!!! ${goustoQuotes[Math.floor(Math.random() * goustoQuotes.length)]}`)
-			}
-
-			return `${(progress * 100).toFixed(1)} % done...`
-		},
-	})
+		new SimpleProgressWebpackPlugin({ // Default options
+			format: 'compact'
+		})
 )
 } else {
 	config.devtool = false
@@ -204,7 +197,7 @@ if (build === 'development') {
 				},
 				warnings: true,
 			},
-		}),
+		})
 	)
 }
 

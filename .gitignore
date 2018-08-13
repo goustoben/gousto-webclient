@@ -46,6 +46,6 @@ tests/e2e/node_modules
 tests/e2e/selenium-debug.log
 tests/e2e/reports
 tests/e2e/screenshots
-src/nodeserver/.nyc_output/
-src/nodeserver/coverage/
+src/.nyc_output/
+src/coverage/
 yarn-error.log

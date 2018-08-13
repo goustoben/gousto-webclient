@@ -9,7 +9,7 @@ import templateConfig from 'config/template'
 import globals from 'config/globals'
 
 export const generateHref = url => {
-	const hostname = `${globals.env === 'production' ? 'www.' : `${globals.env}-frontend.`}${globals.domain}`
+	const hostname = `${globals.env === 'production' ? 'www.' : `${globals.env}-webclient.`}${globals.domain}`
 
 	return `${globals.protocol}://${hostname}${url || '/'}`
 }
