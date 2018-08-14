@@ -277,7 +277,7 @@ module.exports = {
 							.openBurgerMenu()
 							.burgerMenuNavigateLogin()
 					} else {
-						this.waitForElementVisible('@loginButton')
+						this.waitForElementVisible('@loginButton',15000)
 							.click('@loginButton')
 					}
 					this.expect.element('@loginCheckbox').to.be.selected
@@ -331,6 +331,7 @@ module.exports = {
 						this.openBurgerMenu()
 							.waitForElementVisible('@burgerMenuLogout')
 					} else {
+						this.waitForElementVisible('@myGoustoButtonLink', 15000)
 						this.expect.element('@myGoustoButtonLink').to.be.visible.before()
 					}
 
