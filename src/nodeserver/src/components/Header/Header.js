@@ -16,6 +16,7 @@ import SubscriptionPause from 'routes/Account/Subscription/SubscriptionPause'
 import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
+import OrderSkipRecovery from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery'
 
 const clientRoutes = config.routes.client
 
@@ -329,6 +330,7 @@ class Header extends React.PureComponent {
 				<DuplicateOrderModal />
 				<ExpiredBillingModal />
 				<SubscriptionPause />
+				<OrderSkipRecovery />
 				{this.props.path.indexOf('my-') !== -1 ? (<div><Account location={{ pathname: path }} /></div>) : null}
 			</span>
 		)

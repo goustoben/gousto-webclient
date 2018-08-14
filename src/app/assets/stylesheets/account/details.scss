@@ -42,6 +42,10 @@ body.account {
 					.details-section-row {
 						display: block;
 						margin-bottom: 10px;
+						.frames-container-details > iframe {
+							@include font-text-regular;
+							height: 150px;
+						}
 						.detail-title {
 							text-transform: uppercase;
 							font-size: 14px;

@@ -1,20 +1,23 @@
 'use strict';
+
 const path = require('path')
 var npmPackageName = process.env.npm_package_name;
-var npmconfig = process.env;
 var api_domain = process.env.npm_config_gousto2frontend_api_domain;
 var environment_name = process.env.npm_config_gousto2frontend_environment_name;
 var products_domain = process.env.npm_config_gousto2frontend_products_domain;
+var customer_domain = process.env.npm_config_gousto2frontend_customer_domain;
 var api_token = process.env.npm_config_gousto2frontend_api_token || '';
 var products_domain_path = process.env.npm_config_gousto2frontend_products_domain_path || '';
 var deliveries_domain = process.env.npm_config_gousto2frontend_deliveries_domain;
 var deliveries_domain_path = process.env.npm_config_gousto2frontend_deliveries_domain_path || '';
+var frameApiKey = 'pk_test_6ff46046-30af-41d9-bf58-929022d2cd14';
 
 console.log('Environment Variables:');
 console.log('package name: ' + npmPackageName);
 console.log('api_domain: ' + api_domain);
 console.log('environment_name: ' + environment_name);
 console.log('products_domain: ' + products_domain);
+console.log('customer_domain: ' + customer_domain);
 console.log('api_token: ' + api_token);
 console.log('products_domain_path: ' + products_domain_path);
 console.log('deliveries_domain: ' + deliveries_domain);
@@ -75,7 +78,8 @@ module.exports = {
 				[(/\[environment_name\]/g), environment_name ],
 				[(/\[api_token\]/g), api_token ],
 				[(/\[deliveries_domain\]/g), deliveries_domain ],
-				[(/\[deliveries_domain_path\]/g), deliveries_domain_path ]
+				[(/\[deliveries_domain_path\]/g), deliveries_domain_path ],
+				[(/\[frameApiKey\]/g), frameApiKey ],
 			],
 		},
 		legacy: {
@@ -113,8 +117,11 @@ module.exports = {
 				'./account/details.js',
 				'./account/ratings.js',
 				'./account/subscription.js',
+				'./payment/payment-form.style.js',
+				'./payment/payment-form.js',
 				'./homepage/home-d.js',
 				'./includes/modals/promo-apply.js',
+				'./includes/modals/billing-modal.js',
 				'../../../node_modules/clipboard/dist/clipboard.js',
 				'./refer.js',
 				'./confirmpage.js',
@@ -134,6 +141,7 @@ module.exports = {
 				'./vendor/retina.js',
 				'./retry-payment.js',
 				'./zendesk.js',
+				'./cookies-to-js.js',
 				'./users.js',
 				'./recipe/show.js',
 				'./wishlist.js',

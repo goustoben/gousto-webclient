@@ -556,6 +556,7 @@ class UserController extends BaseController
         if ($pending_free_box_data) {
             $pending_free_box_data['free_box_with_suffix'] = HTML::ordinal($pending_free_box_data['free_box_number']);
         }
+
         return View::make('pages.account.details', [
             'user' => $user_data['user'],
             'addresses' => $shipping_addresses,
@@ -567,6 +568,7 @@ class UserController extends BaseController
             'pending_free_box_data' => $pending_free_box_data,
             'first_box' => $first_box,
             'num_recipes_to_rate' => $num_recipes_to_rate,
+            'user_token' => Sentry::getAccessToken(),
         ]);
     }
 

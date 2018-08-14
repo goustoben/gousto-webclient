@@ -157,6 +157,10 @@ class SubscriptionController extends BaseController
             $subscription_data['next_pending_delivery_date'] = Carbon::parse($subscription_data['projected'][0]['date'])->format('l jS F Y');
             $subscription_data['pending_order_id'] = '';
         }
+        $subscription_data['cutoff_date_present'] = Carbon::parse($order['when_cutoff'])->format('l jS F Y');
+        $a_day_prior = Carbon::parse($order['when_cutoff'])->subHours(24);
+        $subscription_data['close_to_cutoff'] = $a_day_prior->lte(Carbon::now());
+
         return Response::json([
             'status' => 'ok',
             'data' => [

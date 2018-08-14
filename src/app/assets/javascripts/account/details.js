@@ -1,14 +1,42 @@
-(function() {
+var detailsModule = function() {
 	'use strict';
 
 	var $myDelivery = $('#my-delivery-container');
 	//form copies
 	var $customerAddressCopies = {};
+	var currentPaymentForm = null;
+	var formConfig = {};
 
 	var getFormButtons = function(form){
 		var navButtons = form.parents().find('.address-box .address-buttons').find('.address-cancel, .address-delete:not(:disabled)')
 		return navButtons.add(form.find('.account-address-details-edit'))
 	};
+
+	var paymentFormEl = document.getElementById('payment-form');
+	var payNowButton = document.getElementById('pay-now-button');
+	var paymentFormStyle = window.paymentFormStyle;
+
+	var cookieList = cookiesToJs();
+	var feature = JSON.parse(
+		JSON.parse(cookieList.v1_goustoStateStore_features)
+	);
+
+	if (feature && feature.featureCheckout && feature.featureCheckout.value) {
+		formConfig = {
+			style: paymentFormStyle(),
+			theme: 'simple',
+			containerSelector: '.frames-container-details',
+			localisation: {
+				cardNumberPlaceholder: 'Card number'
+			}
+		};
+		$('#detail-form-sage').addClass('hide');
+		$('#detail-form-checkout').removeClass('hide');
+		$('#detail-form-sage').removeClass('hide-soft');
+		$('#detail-form-checkout').addClass('hide-soft');
+
+		currentPaymentForm = window.paymentForm(paymentFormEl, payNowButton);
+	}
 
 	// DETAILS PAGE
 	// Mobile detail section show/hide
@@ -28,6 +56,14 @@
 	$('.detail-edit, .detail-cancel').on('click', function(e){
 		e.preventDefault();
 		switchAccountForm($(this).closest('.details-section-row'));
+	});
+
+	$('#my-details-payment-container .detail-edit').on('click', function(e){
+		e.preventDefault();
+
+		if (currentPaymentForm) {
+			currentPaymentForm.init(formConfig);
+		}
 	});
 
 	// Address form show/hide
@@ -506,6 +542,8 @@
 		var modalBody = $(this).closest('.modal-body');
 		callbackFadeSwitch(modalBody.children('#subscription-content'), modalBody.children('#free-box-content'));
 	});
-	// END DETAILS PAGE
+};
 
-})();
+$(document).ready(function() {
+	detailsModule();
+});

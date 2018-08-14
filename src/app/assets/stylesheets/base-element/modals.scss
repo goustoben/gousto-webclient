@@ -12,6 +12,11 @@ body.modal-open {
 }
 
 .gmodal {
+	.frames-container-modal > iframe {
+		@include font-text-regular;
+		height: 120px;
+	}
+
 	.row { //fix main.scss
 		float: none;
 		margin-right: -15px;

@@ -16,7 +16,7 @@ import { push } from 'react-router-redux'
 import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
-import redirect from './redirect'
+import { redirect } from './redirect'
 import menuConfig from 'config/menu'
 
 const menuActions = {
@@ -261,7 +261,7 @@ function menuLoadMenu(cutoffDateTime = null, background) {
 					logger.notice(error)
 				}
 
-				dispatch(redirect.redirect('/menu', true))
+				dispatch(redirect('/menu', true))
 			}
 		}
 	}

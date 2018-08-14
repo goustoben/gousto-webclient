@@ -37,7 +37,7 @@
 <div class="order-options">
 	<div class="order-option-buttons">
 		<div class="skip-order col-xs-5">
-			<a class="gbtn-cancel btn-block order-cancel" data-selid="cancel-order" cancel-handler="{{{ $state }}}" href="{{{ URL::route('order-cancel', ['order_id' => $order['id']]) }}}">Cancel Order</a>
+			<a class="gbtn-cancel btn-block order-cancel" data-selid="cancel-order" data-order-id="{{ $order['id'] }}" cancel-handler="{{{ $state }}}" href="{{{ URL::route('order-cancel', ['order_id' => $order['id']]) }}}">Cancel Order</a>
 		</div>
 		@if($order['phase'] !== 'pre_menu' && $order['box']['sku'] !== 'SKU-XMS-8-8')
 			<div class="edit-order col-xs-7">

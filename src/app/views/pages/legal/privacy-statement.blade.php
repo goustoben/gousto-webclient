@@ -6,7 +6,7 @@
 	<h1 data-selid="main-title">Privacy Statement</h1>
 	<div class="row">
 		<div class="col-sm-12 highlight-links">
-			<p>Effective Date: 06/06/2018 (Version 2.1)</p>
+			<p>Effective Date: 09/08/2018 (Version 2.2)</p>
 			<ol>
 				<li>
 					<h4>Who are we?</h4>
@@ -62,6 +62,8 @@
 						<li>We may allow access to your personal data by third parties who supply us with a service. Examples include e-commerce platform providers, couriers (to enable delivery of goods), website hosts, content delivery networks and businesses which assist us in undertaking communications, monitoring, testing or improving our website</li>
 						<li>We share your payment information with SagePay (our payment gateway) and First Data (our payment provider) in order to process the payments of your orders and any potential refund.</li>
 						<li>Your personal data may be supplied by our payment partners to relevant third parties including credit reference and fraud prevention agencies, who may keep a record of that information.</li>
+						<li>If you choose to opt-in to receive third party communications from selected partners, your personal data will be shared to relevant third parties to allow you to receive tailored communications about products that may be of interest to you.</li>
+						<li>We share the data with our partner Epsilon Abacus (registered as Epsilon International UK Ltd), a company that manages the Abacus Alliance on behalf of UK retailers. The participating retailers are active in the clothing, collectables, food & wine, gardening, gadgets & entertainment, health & beauty, household goods, and home interiors categories. They share information on what their customers buy. Epsilon Abacus analyses this pooled information to help the retailers understand consumers’ wider buying patterns. From this information, retailers can tailor their communications, sending people suitable offers that should be of interest to them, based on what they like to buy.</li>
 						<li>We may disclose your contact details to Trustpilot to enable it to email you inviting you to leave a review on our site.</li>
 						<li>We may disclose personal data so far as reasonably necessary if we have reason to believe that it breaches our terms and conditions, or that such steps are necessary to protect us or others, or that a criminal act has been committed, or if there has been a complaint about content posted by you, or if we are required to do so by law or appropriate authority.</li>
 					</ol>

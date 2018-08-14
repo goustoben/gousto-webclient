@@ -226,11 +226,11 @@
 				form.closest('.details-section-row').find('.detail-cancel').click();
 			});
 	});
-	
+
 	$('[skip-handler-order-number]').on('click', function() {
 		var skip = $(this);
 		var handler = parseInt(skip.attr('skip-handler-order-number'));
-		
+
 		switch(handler) {
 			case 2:
 				hj('trigger', 'skip-projected-second-box-poll');
@@ -251,7 +251,7 @@
 	$('[cancel-handler]').on('click', function() {
 		var skip = $(this);
 		var handler = skip.attr('cancel-handler');
-		
+
 		switch(handler) {
 			case 'isFirstPendingWithNoRecipes':
 				hj('trigger', 'cancel-pending-first-empty-box-poll');

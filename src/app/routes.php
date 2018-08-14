@@ -204,6 +204,7 @@ Route::group(['before' => 'require_login'], function () {
         'as' => 'user.payment-method.update',
         'uses' => 'UserController@paymentMethod'
     ]);
+
     Route::post('my-details/communication-preferences', [
         'as' => 'user-details.update-communication-preferences',
         'uses' => 'UserController@updateCommunicationPreferences'

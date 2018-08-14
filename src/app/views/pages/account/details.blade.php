@@ -90,7 +90,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="account-block-outer col-xs-12 col-sm-4">
+		<div id="my-details-payment-container" class="account-block-outer col-xs-12 col-sm-4">
 			<div class="account-block-inner">
 				@include('pages.account.includes.details-section-heading', array('section_title' => 'My Payment Info'))
 				<div class="details-section-content mobile-hide-soft">
@@ -101,7 +101,7 @@
 							<p class="pull-left detail-original">{{{ $payment_details['data']['card_number_masked'] }}}</p>
 							@include('pages.account.includes.change-detail-buttons')
 						</div>
-						<div class="change-detail-form hide-soft">
+						<div id="detail-form-sage" class="change-detail-form hide-soft">
 							{{ Form::open(['route' => ['user.payment-method.update', 'user_id' => 'current'], 'id' => 'account-payment-card', 'class' => 'account-form']); }}
 							{{ Form::select('card_type', Config::get('payment.card_types'), 'VISA', ['class' => 'form-control account-select']) }}
 							{{ Form::text('card_number', null, ['required', 'class' => 'form-control', 'placeholder' => 'Card number']) }}
@@ -116,6 +116,24 @@
 							<p class="detail-error text-danger hide-soft" data-for="general"></p>
 							{{ Form::submit('Save', ['class' => 'gbtn-secondary btn-block']) }}
 							{{ Form::close() }}
+						</div>
+						<div id="detail-form-checkout" class="change-detail-form hide">
+							<script src="https://cdn.checkout.com/js/frames.js"></script>
+							<form id="payment-form">
+								<input type="hidden" name="_id" value="{{ $user['id'] }}">
+								<input type="hidden" name="_token" value="{{ $user_token }}">
+								<div class="frames-container-details">
+								<!-- form will be added here -->
+								</div>
+								<!-- add submit button -->
+								@if(floatval($balance) < floatval('0.00'))
+									<p>
+										When you update your card details we will take payment for the 
+										outstanding account balance shown below.
+									</p>
+								@endif
+								<button id="pay-now-button" class="gbtn-secondary btn-block" type="submit">Save</button>
+							</form>
 						</div>
 					</div>
 					<div class="details-section-row">
