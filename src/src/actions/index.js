@@ -12,13 +12,14 @@ import login from './login'
 import menu from './menu'
 import newsletter from './newsletter'
 import order from './order'
+import * as orderSkipRecovery from './orderSkipRecovery'
 import page from './page'
 import persist from './persist'
 import products from './products'
 import promos from './promos'
 import pricing from './pricing'
 import recipes from './recipes'
-import redirect from './redirect'
+import redirectActions from './redirect'
 import signup from './signup'
 import status from './status'
 import subscription from './subscription'
@@ -47,13 +48,14 @@ const actions = {
 	...menu,
 	...newsletter,
 	...order,
+	...orderSkipRecovery,
 	...page,
 	...persist,
 	...products,
 	...promos,
 	...pricing,
 	...recipes,
-	...redirect,
+	...redirectActions,
 	...signup,
 	...status,
 	...subscription,

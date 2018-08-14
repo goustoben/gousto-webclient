@@ -1,0 +1,34 @@
+@value White from 'styles/colors.css';
+
+.modalComponent {
+    position: relative;
+    margin: 20px auto;
+    height: max-content;
+    width: 380px;
+    background: White;
+    border-radius: 12px;
+    padding: 20px;
+    @media (max-width: 380px) {
+        width: 300px;
+        margin: 10px auto;
+        padding: 10px;
+    }
+}
+
+.modalTitle {
+    text-align: center;
+    margin: 10px auto;
+}
+
+.modalContent {
+    position: relative;
+    text-align: center;
+    line-height: 30px;
+    margin: 10px auto;
+
+}
+
+.modalFooter {
+    margin: 10px auto;
+    position: relative;
+}

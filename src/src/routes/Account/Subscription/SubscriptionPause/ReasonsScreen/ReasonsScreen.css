@@ -124,3 +124,8 @@
 .cta {
 	float: left;
 }
+
+.button {
+	bottom: 30px;
+	position: relative;
+}

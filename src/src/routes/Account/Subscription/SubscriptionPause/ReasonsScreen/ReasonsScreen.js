@@ -20,7 +20,7 @@ const SubscriptionPauseReasonsScreen = ({ onReasonChoice, reasons, type }) => (
 			)).toArray()}
 		</div>
 
-		<div>
+		<div className={css.button}>
 			<Cancel />
 		</div>
 	</div>

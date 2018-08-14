@@ -7,28 +7,30 @@ function shouldUseReactRouter() {
 	return client && !legacy()
 }
 
-export default {
-	redirect: (url, clearCookies) => {
-		let action
+export const redirect = (url, clearCookies) => {
+	let action
 
-		if (shouldUseReactRouter()) {
-			action = push(url)
-		} else if (server) {
-			action = {
-				type: actionTypes.SERVER_REDIRECT,
-				url,
-				clearCookies,
-			}
-		} else {
-			windowUtils.redirect(url)
-
-			action = {
-				type: actionTypes.VOID,
-			}
+	if (shouldUseReactRouter()) {
+		action = push(url)
+	} else if (server) {
+		action = {
+			type: actionTypes.SERVER_REDIRECT,
+			url,
+			clearCookies,
 		}
+	} else {
+		windowUtils.redirect(url)
 
-		return action
-	},
+		action = {
+			type: actionTypes.VOID,
+		}
+	}
+
+	return action
+}
+
+export default {
+	redirect,
 	replace: (url) => {
 		let action
 
@@ -48,5 +50,5 @@ export default {
 		}
 
 		return action
-	},
+	}
 }
