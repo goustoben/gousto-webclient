@@ -1,8 +1,7 @@
 module.exports = {
 	'Successfully remember me on login': function (browser) {
-		const menu = browser.page.menu()
 		const shared = browser.page.shared()
-		const home = browser.page.home()
+		const menu = browser.page.menu()
 
 		let user
 
@@ -17,7 +16,7 @@ module.exports = {
 				})
 			})
 			.perform(function(browser, done) {
-				home.navigate()
+				menu.navigate()
 				shared.section.body.isRememberMeCheckboxVisible()
 				shared.section.body.login(user.customer.email, user.customer.password)
 				shared.section.header.checkUserLoggedIn()
@@ -25,7 +24,7 @@ module.exports = {
 			})
 			browser
 			.perform(function(browser, done) {
-				home.navigate()
+				menu.navigate()
 				shared.section.header.checkUserLoggedIn()
 				shared.section.body.logout()
 				shared.section.body.isRememberMeCheckboxVisible()
