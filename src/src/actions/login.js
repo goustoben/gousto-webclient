@@ -7,7 +7,6 @@ import orderActions from './order'
 import userActions from './user'
 import Cookies from 'utils/GoustoCookies'
 import config from 'config/routes'
-import persistAuth from 'utils/persistAuth'
 import { isOneOfPage } from 'utils/routes'
 import { isActive, isSuspended, needsReactivating, isAdmin, validateEmail } from 'utils/auth'
 import URL from 'url'
@@ -133,11 +132,10 @@ const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 }
 
 const postLogoutSteps = () => (
-	(dispatch, getState) => {
+	(dispatch) => {
 		dispatch({ type: actionTypes.BASKET_RESET })
 		dispatch({ type: actionTypes.USER_LOGGED_OUT }) // resets auth state
 		if (globals.client) {
-			persistAuth(getState(), Cookies)
 			logoutRedirect()
 		}
 	}
@@ -153,17 +151,12 @@ const login = (email, password, rememberMe, orderId = '') => (
 			if (rememberMe) {
 				dispatch({ type: actionTypes.LOGIN_REMEMBER_ME })
 			}
-			await dispatch(authActions.authAuthenticate(email, password))
-
-			const accessToken = getState().auth.get('accessToken')
-			await dispatch(authActions.authIdentify(accessToken))
+			await dispatch(authActions.authAuthenticate(email, password, rememberMe))
+			await dispatch(authActions.authIdentify())
 
 			const userRoles = getState().auth.get('roles', Immutable.List([]))
 			if (userRoles.size > 0 && authorise(userRoles)) {
 				dispatch(authActions.userRememberMe(rememberMe))
-				if (globals.client) {
-					persistAuth(getState(), Cookies) // write auth store to the cookies
-				}
 
 				await postLoginSteps(isAdmin(userRoles), orderId, getState().features)(dispatch, getState)
 			}

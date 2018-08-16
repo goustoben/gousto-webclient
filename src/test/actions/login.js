@@ -8,7 +8,7 @@ chai.use(sinonChai)
 import Immutable from 'immutable'
 
 describe('login actions', function() {
-	let actions, dispatch, getState, pending, error, authAuthenticate, authIdentify, auth, isActive, isSuspended, needsReactivating, isAdmin, persistAuth, userRememberMe, authClear, redirect, documentLocation, orderAssignToUser, validateEmail, getWindow
+	let actions, dispatch, getState, pending, error, authAuthenticate, authIdentify, auth, isActive, isSuspended, needsReactivating, isAdmin, userRememberMe, authClear, redirect, documentLocation, orderAssignToUser, validateEmail, getWindow
 
 	describe('login', function() {
 		beforeEach(function() {
@@ -88,7 +88,7 @@ describe('login actions', function() {
 			expect(isActive.getCall(0).args[0]).to.deep.equal(Immutable.fromJS(['user']))
 		})
 
-		it('should call userRememberMe, persistAuth and postLoginSteps - non admin, rememeber me, /menu, no redirect', async function() {
+		it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /menu, no redirect', async function() {
 			dispatch.onCall(4).returns(new Promise((resolve, reject) => { resolve() }))
 			dispatch.onCall(5).returns(new Promise((resolve, reject) => { resolve() }))
 			getState = sinon.stub().returns({
@@ -96,13 +96,11 @@ describe('login actions', function() {
 				routing: { locationBeforeTransitions: { pathname: '/menu' } },
 			})
 			isActive = sinon.stub().returns(true)
-			persistAuth = sinon.spy()
 			documentLocation = sinon.stub().returns({ pathname: '/menu' })
-			actions = require('inject-loader?./status&./auth&utils/auth&utils/persistAuth&utils/window!actions/login')({
+			actions = require('inject-loader?./status&./auth&utils/auth&utils/window!actions/login')({
 				'./status': { pending, error },
 				'./auth': auth,
 				'utils/auth': { isActive, isSuspended, needsReactivating, isAdmin },
-				'utils/persistAuth': persistAuth,
 				'utils/window': { redirect, documentLocation, getWindow },
 			}).default
 			await actions.loginUser('email', 'password', true)(dispatch, getState)
@@ -116,22 +114,19 @@ describe('login actions', function() {
 			expect(isActive).to.have.been.calledWith(Immutable.fromJS(['user']))
 			expect(isAdmin).to.have.been.calledWith(Immutable.fromJS(['user']))
 			expect(userRememberMe).to.have.been.calledWith(true)
-			expect(persistAuth).to.have.been.calledOnce
 			expect(redirect).to.have.not.been.called
 		})
 
-		it('should call userRememberMe, persistAuth and postLoginSteps - non admin, rememeber me, /home, no redirect', async function() {
+		it('should call userRememberMe and postLoginSteps - non admin, rememeber me, /home, no redirect', async function() {
 			dispatch.onCall(4).returns(new Promise((resolve, reject) => { resolve() }))
 			dispatch.onCall(5).returns(new Promise((resolve, reject) => { resolve() }))
 			getState.returns({ auth: Immutable.fromJS({ accessToken: 'acc-token', roles: ['user'] }) })
 			isActive = sinon.stub().returns(true)
-			persistAuth = sinon.spy()
 			documentLocation = sinon.stub().returns({ pathname: '/home' })
-			actions = require('inject-loader?./status&./auth&utils/auth&utils/persistAuth&utils/window!actions/login')({
+			actions = require('inject-loader?./status&./auth&utils/auth&utils/window!actions/login')({
 				'./status': { pending, error },
 				'./auth': auth,
 				'utils/auth': { isActive, isSuspended, needsReactivating, isAdmin },
-				'utils/persistAuth': persistAuth,
 				'utils/window': { redirect, documentLocation, getWindow },
 			}).default
 			await actions.loginUser('email', 'password', true)(dispatch, getState)
@@ -142,23 +137,20 @@ describe('login actions', function() {
 			expect(isActive).to.have.been.calledWith(Immutable.fromJS(['user']))
 			expect(isAdmin).to.have.been.calledWith(Immutable.fromJS(['user']))
 			expect(userRememberMe).to.have.been.calledWith(true)
-			expect(persistAuth).to.have.been.calledOnce
 			expect(redirect).to.have.been.calledWith('/my-gousto')
 		})
 
-		it('should call userRememberMe, persistAuth and postLoginSteps - admin, /home, no redirect', async function() {
+		it('should call userRememberMe and postLoginSteps - admin, /home, no redirect', async function() {
 			dispatch.onCall(4).returns(new Promise((resolve, reject) => { resolve() }))
 			dispatch.onCall(5).returns(new Promise((resolve, reject) => { resolve() }))
 			getState.returns({ auth: Immutable.fromJS({ accessToken: 'acc-token', roles: ['user'] }) })
 			isActive = sinon.stub().returns(true)
 			isAdmin = sinon.stub().returns(true)
 			documentLocation = sinon.stub().returns({ pathname: '/home' })
-			persistAuth = sinon.spy()
-			actions = require('inject-loader?./status&./auth&utils/auth&utils/persistAuth&utils/window!actions/login')({
+			actions = require('inject-loader?./status&./auth&utils/auth&utils/window!actions/login')({
 				'./status': { pending, error },
 				'./auth': auth,
 				'utils/auth': { isActive, isSuspended, needsReactivating, isAdmin },
-				'utils/persistAuth': persistAuth,
 				'utils/window': { redirect, documentLocation, getWindow },
 			}).default
 			await actions.loginUser('email', 'password', true)(dispatch, getState)
@@ -169,22 +161,19 @@ describe('login actions', function() {
 			expect(isActive).to.have.been.calledWith(Immutable.fromJS(['user']))
 			expect(isAdmin).to.have.been.calledWith(Immutable.fromJS(['user']))
 			expect(userRememberMe).to.have.been.calledWith(true)
-			expect(persistAuth).to.have.been.calledOnce
 			expect(redirect).to.have.been.calledWith('/menu?features[]=browse')
 		})
 
-		it('should call userRememberMe, persistAuth and postLoginSteps - user, /home, redirect', async function() {
+		it('should call userRememberMe and postLoginSteps - user, /home, redirect', async function() {
 			dispatch.onCall(4).returns(new Promise((resolve, reject) => { resolve() }))
 			dispatch.onCall(5).returns(new Promise((resolve, reject) => { resolve() }))
 			getState.returns({ auth: Immutable.fromJS({ accessToken: 'acc-token', roles: ['user'] }) })
 			isActive = sinon.stub().returns(true)
 			documentLocation = sinon.stub().returns({ pathname: '/home', search: '?target=http://gousto.co.uk/my-details' })
-			persistAuth = sinon.spy()
-			actions = require('inject-loader?./status&./auth&utils/auth&utils/persistAuth&utils/window!actions/login')({
+			actions = require('inject-loader?./status&./auth&utils/auth&utils/window!actions/login')({
 				'./status': { pending, error },
 				'./auth': auth,
 				'utils/auth': { isActive, isSuspended, needsReactivating, isAdmin },
-				'utils/persistAuth': persistAuth,
 				'utils/window': { redirect, documentLocation, getWindow },
 			}).default
 			await actions.loginUser('email', 'password', true)(dispatch, getState)
@@ -195,7 +184,6 @@ describe('login actions', function() {
 			expect(isActive).to.have.been.calledWith(Immutable.fromJS(['user']))
 			expect(isAdmin).to.have.been.calledWith(Immutable.fromJS(['user']))
 			expect(userRememberMe).to.have.been.calledWith(true)
-			expect(persistAuth).to.have.been.calledOnce
 			expect(redirect).to.have.been.calledWith('/my-details')
 		})
 
@@ -210,16 +198,14 @@ describe('login actions', function() {
 			const userPromoApplyCode = sinon.stub().returns(new Promise((resolve, reject) => { resolve() }))
 			isActive = sinon.stub().returns(true)
 			documentLocation = sinon.stub().returns({ pathname: '/home', search: '?target=http://gousto.co.uk/my-details' })
-			persistAuth = sinon.spy()
 
-			actions = require('inject-loader?./user&./status&./auth&utils/auth&utils/persistAuth&utils/window!actions/login')({
+			actions = require('inject-loader?./user&./status&./auth&utils/auth&utils/window!actions/login')({
 				'./status': { pending, error },
 				'./auth': auth,
 				'./user': {
 					userPromoApplyCode,
 				},
 				'utils/auth': { isActive, isSuspended, needsReactivating, isAdmin },
-				'utils/persistAuth': persistAuth,
 				'utils/window': { redirect, documentLocation, getWindow },
 			}).default
 
@@ -228,7 +214,7 @@ describe('login actions', function() {
 		})
 
 		it('should dispatch authClear and postLogoutSteps', async function() {
-			actions = require('inject-loader?./status&./auth&utils/auth&utils/persistAuth&utils/window!actions/login')({
+			actions = require('inject-loader?./status&./auth&utils/auth&utils/window!actions/login')({
 				'./status': { pending, error },
 				'./auth': auth,
 				'utils/window': {

@@ -1,4 +1,3 @@
-import Cookies from 'utils/GoustoCookies'
 import { authorise } from 'utils/clientAuthorise'
 import moment from 'moment'
 import config from 'config/auth'
@@ -6,7 +5,7 @@ import config from 'config/auth'
 let timeOutRef // eslint-disable-line no-unused-vars
 
 export async function clientAuthorise(store) {
-	return authorise(store, Cookies)
+	return authorise(store)
 }
 
 async function refreshClient(store) {

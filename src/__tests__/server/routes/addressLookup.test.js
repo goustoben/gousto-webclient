@@ -1,7 +1,7 @@
-jest.mock('../../../server/service/addressLookup')
-import lookupRoute from '../../../server/route/addressLookup'
+jest.mock('server/service/addressLookup')
+import lookupRoute from 'server/routes/addressLookup'
 
-describe('server/route/addressLookup', () => {
+describe('addressLookup', () => {
 	let next
 	let mock
 
@@ -20,7 +20,7 @@ describe('server/route/addressLookup', () => {
 	beforeEach(() => {
 		next = jest.fn()
 
-		mock = require('../../../server/service/addressLookup').default
+		mock = require('server/service/addressLookup').default
 		mock.mockImplementation(() => dummyLookupResponse)
 	})
 

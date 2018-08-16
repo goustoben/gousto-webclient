@@ -20,26 +20,29 @@ const processCookies = (cookies, store) => {
 	const fromJoin = cookies.get('from_join')
 	let affiliateSource = cookies.get('asource')
 
-	if ((__ENV__ === 'production') && cookies) {
-		cookies.set('oauth_refresh', null, { expires: new Date('1970-01-01'), httpOnly: false, domain: '.gousto.co.uk' })
-		cookies.set('oauth_token', null, { expires: new Date('1970-01-01'), httpOnly: false, domain: '.gousto.co.uk' })
-	}
-
 	try {
 		const refreshCookie = get(cookies, 'oauth_refresh')
 		const tokenCookie = get(cookies, 'oauth_token')
+		const expiryCookie = get(cookies, 'oauth_expiry')
+		const rememberCookie = get(cookies, 'oauth_remember')
 
 		let accessToken
-		let expiresAt
 		if (tokenCookie) {
-			accessToken = get(cookies, 'oauth_token').access_token
-			expiresAt = get(cookies, 'oauth_token').expires_at
+			accessToken = tokenCookie.access_token
+		}
+
+		let expiresAt
+		if (expiryCookie) {
+			expiresAt = expiryCookie.expires_at
 		}
 
 		let refreshToken
 		if (refreshCookie) {
 			refreshToken = refreshCookie.refresh_token
-			const rememberMe = refreshCookie.remember_me
+		}
+
+		if (rememberCookie) {
+			const rememberMe = rememberCookie.remember_me
 			if (typeof rememberMe !== 'undefined') {
 				store.dispatch(authActions.userRememberMe(rememberMe))
 			}

@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes'
-import { getUserToken, identifyUser, refreshUserToken, forgetUserToken, resetUserPassword } from 'apis/auth'
+import { serverAuthenticate, serverLogout, serverRefresh, serverIdentify, serverForget, resetUserPassword, identifyUser } from 'apis/auth'
 import { isActive } from 'utils/auth'
 import config from 'config/auth'
 import configRoutes from 'config/routes'
@@ -32,15 +32,15 @@ const userRememberMe = rememberMe => ({
 })
 
 /* auth */
-const authenticate = (email, password) => (
+const authenticate = (email, password, rememberMe) => (
 	async (dispatch) => {
 		try {
-			const { data = {} } = await getUserToken({ email, password })
+			const { data: authResponse } = await serverAuthenticate(email, password, rememberMe)
 			const {
 				accessToken,
 				refreshToken,
 				expiresIn,
-			} = data
+			} = authResponse.data
 			const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
 			dispatch(userAuthenticated(accessToken, refreshToken, expiresAt))
 		} catch (err) {
@@ -57,30 +57,41 @@ const authenticate = (email, password) => (
 	}
 )
 
-const refresh = (refreshToken) => (
-	async (dispatch) => {
-		const { data = {} } = await refreshUserToken({ refresh: refreshToken })
-		const {
-			accessToken,
-			refreshToken: newRefreshToken,
-			expiresIn,
-		} = data
-		const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
-		dispatch(userAuthenticated(accessToken, newRefreshToken, expiresAt))
+const refresh = () => (
+	async (dispatch, getState) => {
+		const rememberMe = getState().auth.get('rememberMe', false)
+		try {
+			const { data: refreshResponse = {} } = await serverRefresh(rememberMe)
+			const {
+				accessToken,
+				refreshToken,
+				expiresIn,
+			} = refreshResponse.data
+			const expiresAt = moment().add(expiresIn, 'seconds').toISOString()
+			dispatch(userAuthenticated(accessToken, refreshToken, expiresAt))
+		} catch (err) {
+			switch (err.status) {
+				default:
+					err.message = config.DEFAULT_ERROR
+					break
+			}
+		}
 	}
 )
 
 const identify = (accessToken) => (
 	async (dispatch) => {
-		if (accessToken) {
-			const { data: user = {} } = await identifyUser(accessToken)
-			dispatch(userIdentified(user))
-			if (isActive(user.roles)) {
-				dispatch(userLoggedIn())
-			}
+		let data = {}
+		if (__SERVER__) {
+			data = await identifyUser(accessToken)
 		} else {
-			const err = new Error('Access token not present')
-			throw err
+			data = await serverIdentify()
+		}
+
+		const user = data.data
+		dispatch(userIdentified(user))
+		if (isActive(user.roles)) {
+			dispatch(userLoggedIn())
 		}
 	}
 )
@@ -88,7 +99,9 @@ const identify = (accessToken) => (
 const clear = () => (
 	async (dispatch, getState) => {
 		const accessToken = getState().auth.get('accessToken')
-		await forgetUserToken(accessToken)
+
+		await serverLogout()
+		await serverForget(accessToken)
 	}
 )
 
