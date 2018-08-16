@@ -30,6 +30,7 @@ import collections from './collections'
 import cookbook from './cookbook'
 import pricing from './pricing'
 import cookies from './cookies'
+import orderSkipRecovery from './orderSkipRecovery'
 
 const reducers = {
 	...account,
@@ -49,6 +50,7 @@ const reducers = {
 	...home,
 	...menu,
 	...newsletter,
+	...orderSkipRecovery,
 	...persist,
 	...products,
 	...promos,

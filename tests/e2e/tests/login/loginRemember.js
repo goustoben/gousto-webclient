@@ -1,7 +1,7 @@
 module.exports = {
 	'Successfully remember me on login': function (browser) {
-		const menu = browser.page.menu()
 		const shared = browser.page.shared()
+		const menu = browser.page.menu()
 
 		let user
 
@@ -22,6 +22,7 @@ module.exports = {
 				shared.section.header.checkUserLoggedIn()
 				done()
 			})
+			browser
 			.perform(function(browser, done) {
 				menu.navigate()
 				shared.section.header.checkUserLoggedIn()

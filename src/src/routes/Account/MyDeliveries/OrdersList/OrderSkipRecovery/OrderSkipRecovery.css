@@ -1,0 +1,39 @@
+@value Bluecheese, White, Black from 'styles/colors.css';
+@value comfortaaFontStack, avenirHeavyFontStack from 'styles/typography.css';
+
+.keepButton {
+    display: block;
+    height: 50px;
+    width: 250px;
+    border: 0.75px solid Bluecheese;
+    border-radius: 25px;
+    background-color: Bluecheese;
+    margin: 20px auto;
+    font-family: avenirHeavyFontStack;
+    text-align: center;
+    line-height: 22px;
+    font-size: 16px;
+    font-weight: 900;
+    color: White;
+}
+
+.skipAnyWay {
+    display: block;
+    color: Bluecheese;
+    font-family: avenirHeavyFontStack;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 19px;
+    text-align: center;
+    margin: 15px auto;
+    cursor: pointer;
+}
+
+.orderSkipRecoveryMessage {
+    font-family: comfortaaFontStack;
+    font-size: 20px;
+    color: Black;
+    line-height: 30px;
+    font-weight: bold;
+    text-align: center;
+}

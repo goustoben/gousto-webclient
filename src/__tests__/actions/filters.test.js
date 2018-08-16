@@ -147,7 +147,7 @@ describe('filters actions', () => {
 				}),
 			})
 		})
-		
+
 		test('should dispatch a FILTERS_DIETARY_ATTRIBUTES_CHANGE action when adding a dietary attribute filter', () => {
 			filterDietaryAttributesChange('dairy-free')(dispatchSpy, getStateSpy)
 
