@@ -36,7 +36,7 @@ chances of your issue being dealt with quickly:
 ### <a name="pr"></a>Submitting a Pull Request
 Before you submit your pull request consider the following guidelines:
 
-* Search [GitHub](https://github.com/Gousto/GoustoWebClient/pulls) for an open or closed Pull Request
+* Search [GitHub](https://github.com/Gousto/gousto-webclient/pulls) for an open or closed Pull Request
   that relates to your submission. You don't want to duplicate effort.
 * Fork the main repository (my-forked-repo)
 * Make your changes in a new git branch:
@@ -61,7 +61,7 @@ Before you submit your pull request consider the following guidelines:
     git push my-forked-repo my-fix-branch
     ```
 
-* In GitHub, send a pull request to `GoustoWebClient:master`
+* In GitHub, send a pull request to `gousto-webclient:master`
 * Your PR should contain a high level description of the changes the PR makes
 * Ensure you label your PR appropriately from the available labels:
   * WIP
@@ -113,7 +113,7 @@ The **message** contains succinct description of the change:
 * no dot (.) at the end
 
 [jsfiddle]: http://jsfiddle.net
-[github]: https://github.com/Gousto/GoustoWebClient
+[github]: https://github.com/Gousto/gousto-webclient
 [gousto2-core]: https://github.com/Gousto/Gousto2-Core
 [js-style-guide]: http://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml
 [css-style-guide]: https://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml
