@@ -3,7 +3,7 @@ import css from './Diet.css'
 
 const Diet = ({ diet }) => (
 	<div>
-		<span className={css.icon}></span><span className={css.description}>&nbsp;{diet}</span>
+		<span className={css.icon}></span><span className={css.description}>&nbsp;{(diet === 'vegan') ? 'plant-based' : diet}</span>
 	</div>
 )
 
