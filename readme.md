@@ -10,8 +10,18 @@ env-radishes: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/
 ## Getting Started
 ### Pre-requisites
 Please ensure the development box is setup: https://github.com/Gousto/Vagrant
-```shell
-yarn
+
+##Webclient only provisioning
+### Pre-requisites
+Please ensure the development box is setup: https://github.com/Gousto/Vagrant
+Please ensure to have provisioned the Frontend: https://github.com/Gousto/Gousto2-FrontEnd
+
+### Connect to the devbox
+``` vagrant up && vagrant ssh ```
+
+### Provision the Webclient
+```cd /vagrant
+./provision-service.sh goustowebclient webclient
 ```
 
 ## New Stack Development
@@ -30,8 +40,21 @@ cd /var/www/goustowebclient/src
 npm run start
 ```
 
-The site should now be available at http://webclient.gousto.local
+The site should now be available at http://frontend.gousto.local (We use the Frontend as proxy to the NginX server)
 
+## Deployment
+### Proxy set
+If you are creating a new route, please ensure to add the proper Proxypass rule in the Frontend: https://github.com/Gousto/Gousto2-FrontEnd/blob/develop/ansible/roles/frontend/templates/apache2_frontend.j2 
+E.g. ```ProxyPass /mycoolpage {{ webclient_domain }}/mycoolpage```
+
+### Frontend deployment
+#### 1. No new route
+In case it haven't been created a new route (see above) it would be possible to deploy the webclient only (opening a PR)
+#### 2. New route
+In case a new route has been created:
+1) ensure to have properly set the proxy in the Frontend (see above) 
+2) deploy the Frontend first
+3) deploy the weclient
 
 ## Testing
 ### Installation
