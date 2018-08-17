@@ -1,34 +1,39 @@
 import React from 'react'
-
-import sinon from 'sinon'
-
 import { shallow } from 'enzyme'
 
 import Diet from 'Recipe/Diet'
 
 describe('<Diet />', () => {
+	let wrapper
 	let diet
-	beforeEach(() => {
-		diet = 'Meat'
-	})
 
 	test('should return a <div>', () => {
-		const wrapper = shallow(<Diet diet={diet} />)
+		wrapper = shallow(<Diet diet={'meat'} />)
+
 		expect(wrapper.type()).toEqual('div')
 	})
+
 	test('should have two span children', () => {
-		const wrapper = shallow(<Diet diet={diet} />)
+		wrapper = shallow(<Diet diet={'fish'} />)
+
 		wrapper.children().forEach(node => {
 			expect(node.type()).toEqual('span')
 		})
 	})
-	test('should display the diet correctly', () => {
-		const wrapper = shallow(<Diet diet={diet} />)
-		expect(
-			wrapper
-				.children()
-				.get(1)
-				.props.children.join(''),
-		).toContain('Meat')
+
+	test('should display the normal diet types correctly', () => {
+		const diets = ['meat', 'fish', 'vegetarian']
+
+		diets.forEach(diet => {
+			wrapper = shallow(<Diet diet={diet} />)
+
+			expect(wrapper.text()).toContain(diet)
+		})
+	})
+
+	test('should display the vegan diet type as plant-based', () => {
+		wrapper = shallow(<Diet diet="vegan" />)
+
+		expect(wrapper.text()).toContain('plant-based')
 	})
 })
