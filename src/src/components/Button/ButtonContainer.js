@@ -54,7 +54,7 @@ class Button extends React.PureComponent {
 				)
 			}
 
-			if (typeof child === 'string') {
+			if (typeof child === 'string' || (child.props && child.props.inButtonSegment)) {
 				return (
 					<Segment
 						{...props}

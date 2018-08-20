@@ -1,0 +1,55 @@
+@value White, Bluecheese from 'styles/colors.css';
+@value ScreenXXSMax, ScreenXSMax, HeightSMMax, HeightMDMax from 'styles/screenSizes.css';
+@value SpacingXXS from 'sass-loader!styles/spacing.scss';
+
+@value minHeight 485px;
+@value maxWidth 750px;
+@value maxElWidth calc(maxWidth - 2px);
+
+.refundContainer {
+	composes: flex from 'styles/display.css';
+	composes: column from 'styles/flex.css';
+	composes: flex from 'styles/display.css';
+	width: 100%;
+	height: 100%;
+	min-height: 520px;
+	float: left;
+
+	@media HeightSMMax {
+		min-height: minHeight;
+	}
+
+	@media ScreenXXSMax {
+		width: 345px;
+		margin: 0 auto;
+	}
+
+	@media HeightMDMax and ScreenXXSMax {
+		width: 350px;
+	}
+
+	@media HeightSMMax and ScreenXXSMax {
+		width: 315px;
+	}
+
+	@media ScreenXSMax {
+		padding-top: SpacingXXS;
+	}
+}
+
+.refundContent {
+	composes: borderXS from 'styles/borders.css';
+	max-width: maxWidth;
+	margin: 25px auto;
+	position: relative;
+	border-radius: 0;
+	background: White;
+	height: 100%;
+	width: 100%;
+	padding-top: 25px;
+
+	@media ScreenXXSMax {
+		justify-content: flex-start;
+		margin-top: 0;
+	}
+}

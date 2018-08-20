@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react'
 import Header from 'Header'
 import CookieBanner from 'CookieBanner'
-import css from './SignupLayout.css'
+import css from './WizardLayout.css'
 
 
-class SignupLayout extends React.PureComponent {
+class WizardLayout extends React.PureComponent {
 	static propTypes = {
 		children: PropTypes.object.isRequired,
 	}
@@ -22,4 +22,4 @@ class SignupLayout extends React.PureComponent {
 	}
 }
 
-export default SignupLayout
+export default WizardLayout
