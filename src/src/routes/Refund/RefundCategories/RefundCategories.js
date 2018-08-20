@@ -1,6 +1,6 @@
 import React, { PropTypes, PureComponent } from 'react'
 
-import RefundItemList from './RefundItemList'
+import { RefundItemList } from './RefundItemList'
 import { PageContent, PageHeader } from 'Page'
 import { BottomBar } from 'BottomBar'
 import Button from 'Button'
@@ -12,7 +12,7 @@ import css from './RefundCategories.css'
 class RefundCategories extends PureComponent {
 	render() {
 		return (
-			<div className={css.refundCategoriesContainer}>
+			<div>
 				<PageHeader title={this.props.content.title} />
 				<PageContent>
 						<p>
