@@ -2,7 +2,7 @@
 
 .modalComponent {
     position: relative;
-    margin: 20px auto;
+    margin: 20vw auto;
     height: max-content;
     width: 380px;
     background: White;
@@ -10,7 +10,10 @@
     padding: 20px;
     @media (max-width: 380px) {
         width: 300px;
-        margin: 10px auto;
+        position: absolute;
+        left: 50vw;
+        top: 60vw;
+        transform: translate(-50%, -50%);
         padding: 10px;
     }
 }

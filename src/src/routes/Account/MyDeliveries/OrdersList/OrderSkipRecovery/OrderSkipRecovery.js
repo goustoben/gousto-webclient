@@ -1,22 +1,28 @@
 import React, { PropTypes } from 'react'
 
-import CancelPendingOrderModal from './CancelPendingOrderModal'
+import { CancelOrderModal } from './CancelOrderModal'
 
 // Switch between the modals for skip recovery
-const OrderSkipRecovery = ({ visible, orderId, keepOrder, cancelOrder }) => (
-	<CancelPendingOrderModal
+const OrderSkipRecovery = ({ visible, orderId, dayId, orderType, keepOrder, cancelPendingOrder, cancelProjectedOrder }) => (
+	<CancelOrderModal
 		visible={visible}
 		orderId={orderId}
+		dayId={dayId}
+		type={orderType}
 		keepOrder={keepOrder}
-		cancelOrder={cancelOrder}
+		cancelPendingOrder={cancelPendingOrder}
+		cancelProjectedOrder={cancelProjectedOrder}
 	/>
 )
 
 OrderSkipRecovery.propTypes = {
 	visible: PropTypes.bool,
 	orderId: PropTypes.string,
+	dayId: PropTypes.string,
+	orderType: PropTypes.string,
 	keepOrder: PropTypes.func,
-	cancelOrder: PropTypes.func,
+	cancelPendingOrder: PropTypes.func,
+	cancelProjectedOrder: PropTypes.func,
 }
 
-export default OrderSkipRecovery
+export { OrderSkipRecovery }

@@ -1,15 +1,45 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import CancelPendingOrderModal from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery/CancelPendingOrderModal'
+import { CancelOrderModal } from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery/CancelOrderModal'
 
 describe('CancelPendingOrderModal', () => {
 	const wrapper = shallow(
-		<CancelPendingOrderModal
+		<CancelOrderModal
 			visible
 			orderId={'123'}
+			type={'pending'}
 			dismiss={() => { }}
-			orderCancel={() => { }}
+			cancelPendingOrder={() => { }}
+			cancelProjectedOrder={() => { }}
+		/>
+	)
+
+	test('should render content cancelOrder', () => {
+		const contentChild = wrapper.find('.orderSkipRecoveryMessage').text()
+		expect(contentChild).toEqual('Are you sure you want to cancel?')
+	})
+
+	test('should render content cancelOrder keepBox', () => {
+		const keepButton = wrapper.find('.keepButton').text()
+		expect(keepButton).toEqual('Keep Box')
+	})
+
+	test('should render content cancelOrder skipAnyWay', () => {
+		const skipAnyWayButton = wrapper.find('.skipAnyWay').text()
+		expect(skipAnyWayButton).toEqual('Cancel anyway')
+	})
+})
+
+describe('CancelProjectedOrderModal', () => {
+	const wrapper = shallow(
+		<CancelOrderModal
+			visible
+			dayId={'123'}
+			type={'projected'}
+			dismiss={() => { }}
+			cancelPendingOrder={() => { }}
+			cancelProjectedOrder={() => { }}
 		/>
 	)
 
