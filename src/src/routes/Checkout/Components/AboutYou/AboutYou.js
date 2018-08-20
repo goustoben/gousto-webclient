@@ -9,6 +9,8 @@ import Overlay from 'Overlay'
 import css from './AboutYou.css'
 import ErrorMessage from '../ErrorMessage'
 
+const email = value => (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value) ? 'Invalid email address' : undefined)
+
 class AboutYou extends React.PureComponent {
 
 	static propTypes = {
@@ -123,6 +125,7 @@ class AboutYou extends React.PureComponent {
 								ref={this.props.receiveRef}
 								refId={`${sectionName}.email`}
 								dataTesting="checkoutEmailInput"
+								validate={email}
 							/>
 						</div>
 					</div>
