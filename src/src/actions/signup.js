@@ -55,7 +55,14 @@ function signupNextStep(stepName) {
 
 				return dispatch(redirectAction.redirect(routes.client.menu))
 			}
-			dispatch(push(`${client.signup}/${step.get('slug')}`))
+
+			try {
+				const search = getState().routing.locationBeforeTransitions.search
+				dispatch(push(`${client.signup}/${step.get('slug')}${search}`))
+			} catch (e) {
+				dispatch(push(`${client.signup}/${step.get('slug')}`))
+			}
+
 			dispatch(signupSetStep(step))
 		}
 
