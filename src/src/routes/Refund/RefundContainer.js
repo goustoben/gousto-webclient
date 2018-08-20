@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => (ownProps)
 const RefundContainer = connect(mapStateToProps, {})(Refund)
 
 RefundContainer.propTypes = {
-	children: PropTypes.node,
+	children: PropTypes.node.isRequired,
 }
 
 export default RefundContainer
