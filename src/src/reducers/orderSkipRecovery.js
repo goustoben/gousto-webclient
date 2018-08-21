@@ -19,16 +19,17 @@ const orderSkipRecovery = {
 		switch (action.type) {
             case actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE: {
                 let newState = state
-                if (action.orderId && action.modalVisibility) {
-                    newState = newState.set('orderId', action.orderId)
-                }
-                if (action.dayId && action.modalVisibility) {
-                    newState = newState.set('dayId', action.dayId)
-                }
+                if (action.modalVisibility) {
+                    if (action.orderId) {
+                        newState = newState.set('orderId', action.orderId)
+                    }
+                    if (action.dayId) {
+                        newState = newState.set('dayId', action.dayId)
+                    }
 
-                newState = newState.set('orderType', action.orderType)
+                    newState = newState.set('orderType', action.orderType)
 
-                if (!action.modalVisibility) {
+                } else {
                     newState = initialState()
                 }
                 newState = newState.set('modalVisibility', action.modalVisibility)
