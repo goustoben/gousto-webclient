@@ -16,7 +16,7 @@ import SubscriptionPause from 'routes/Account/Subscription/SubscriptionPause'
 import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
-import OrderSkipRecovery from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery'
+import { OrderSkipRecovery } from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery'
 
 const clientRoutes = config.routes.client
 

@@ -1,19 +1,21 @@
 import { connect } from 'react-redux'
 
-import { keepOrder, cancelPendingOrder } from 'actions/orderSkipRecovery'
+import { keepOrder, cancelPendingOrder, cancelProjectedOrder } from 'actions/orderSkipRecovery'
 
-import OrderSkipRecovery from './OrderSkipRecovery'
+import { OrderSkipRecovery } from './OrderSkipRecovery'
 
 const mapStateToProps = (state) => ({
     visible: state.orderSkipRecovery.get('modalVisibility'),
     orderId: state.orderSkipRecovery.get('orderId'),
+    dayId: state.orderSkipRecovery.get('dayId'),
+    orderType: state.orderSkipRecovery.get('orderType'),
+    boxNumber: state.orderSkipRecovery.get('boxNumber'),
 })
 
 const mapDispatchToProps = {
     keepOrder,
-    cancelOrder: cancelPendingOrder,
+    cancelPendingOrder,
+    cancelProjectedOrder,
 }
 
-const OrderSkipRecoveryContainer = connect(mapStateToProps, mapDispatchToProps)(OrderSkipRecovery)
-
-export default OrderSkipRecoveryContainer
+export const OrderSkipRecoveryContainer = connect(mapStateToProps, mapDispatchToProps)(OrderSkipRecovery)
