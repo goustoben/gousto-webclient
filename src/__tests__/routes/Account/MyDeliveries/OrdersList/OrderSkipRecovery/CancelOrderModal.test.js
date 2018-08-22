@@ -9,9 +9,11 @@ describe('CancelPendingOrderModal', () => {
 			visible
 			orderId={'123'}
 			type={'pending'}
-			dismiss={() => { }}
-			cancelPendingOrder={() => { }}
-			cancelProjectedOrder={() => { }}
+			boxNumber={1}
+			skipRecovery
+			keepOrder={() => {}}
+			cancelPendingOrder={() => {}}
+			cancelProjectedOrder={() => {}}
 		/>
 	)
 
@@ -29,6 +31,15 @@ describe('CancelPendingOrderModal', () => {
 		const skipAnyWayButton = wrapper.find('.skipAnyWay').text()
 		expect(skipAnyWayButton).toEqual('Cancel anyway')
 	})
+	test('should render value proposition title for cancel order', () => {
+		const valuePropTitle = wrapper.find('.valuePropositionTitle')
+		expect(valuePropTitle.length).toBe(1)
+	})
+
+	test('should render value proposition description for cancel order', () => {
+		const valuePropDescription = wrapper.find('.valuePropositionDescription')
+		expect(valuePropDescription.length).toBe(1)
+	})
 })
 
 describe('CancelProjectedOrderModal', () => {
@@ -36,10 +47,12 @@ describe('CancelProjectedOrderModal', () => {
 		<CancelOrderModal
 			visible
 			dayId={'123'}
+			boxNumber={1}
 			type={'projected'}
-			dismiss={() => { }}
-			cancelPendingOrder={() => { }}
-			cancelProjectedOrder={() => { }}
+			skipRecovery
+			keepOrder={() => {}}
+			cancelPendingOrder={() => {}}
+			cancelProjectedOrder={() => {}}
 		/>
 	)
 
@@ -56,5 +69,15 @@ describe('CancelProjectedOrderModal', () => {
 	test('should render content cancelOrder skipAnyWay', () => {
 		const skipAnyWayButton = wrapper.find('.skipAnyWay').text()
 		expect(skipAnyWayButton).toEqual('Skip anyway')
+	})
+
+	test('should render value proposition title for skip order', () => {
+		const valuePropTitle = wrapper.find('.valuePropositionTitle')
+		expect(valuePropTitle.length).toBe(1)
+	})
+
+	test('should render value proposition description for skip order', () => {
+		const valuePropDescription = wrapper.find('.valuePropositionDescription')
+		expect(valuePropDescription.length).toBe(1)
 	})
 })

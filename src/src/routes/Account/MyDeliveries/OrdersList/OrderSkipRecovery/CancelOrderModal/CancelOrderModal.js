@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import css from '../OrderSkipRecovery.css'
-import ModalComponent, { ModalContent, ModalFooter } from 'ModalComponent'
+import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
 
 const skipCancelOrder = (type, dayId, orderId, cancelOrder, skipOrder) => {
 	if (type === 'pending') {
@@ -11,11 +11,21 @@ const skipCancelOrder = (type, dayId, orderId, cancelOrder, skipOrder) => {
 	}
 }
 
-const CancelOrderModal = ({ visible, orderId, dayId, type, keepOrder, cancelPendingOrder, cancelProjectedOrder }) => (
-		<ModalComponent visible={visible}>
-				<ModalContent>
-						<div className={css.orderSkipRecoveryMessage}>Are you sure you want to {(type === 'pending') ? 'cancel' : 'skip'}?</div>
-				</ModalContent>
+class CancelOrderModal extends React.PureComponent {
+	render() {
+		const { visible, orderId, dayId, type, boxNumber, skipRecovery, keepOrder, cancelPendingOrder, cancelProjectedOrder } = this.props
+
+		return (
+			<ModalComponent visible={visible}>
+				<ModalTitle>
+					<div className={css.orderSkipRecoveryMessage}>Are you sure you want to {(type === 'pending') ? 'cancel' : 'skip'}?</div>
+				</ModalTitle>
+				{(boxNumber < 10 && skipRecovery) &&
+					<ModalContent>
+						<div className={css.valuePropositionTitle}>Not in on your delivery date?</div>
+						<div className={css.valuePropositionDescription}>Change your delivery day easily for any box you can choose recipes for.</div>
+					</ModalContent>
+				}
 				<ModalFooter>
 					<button
 						className={css.keepButton}
@@ -25,17 +35,21 @@ const CancelOrderModal = ({ visible, orderId, dayId, type, keepOrder, cancelPend
 						{type === 'pending' ? 'Cancel' : 'Skip'} anyway
 					</div>
 				</ModalFooter>
-		</ModalComponent>
-)
+			</ModalComponent>
+		)
+	}
+}
 
 CancelOrderModal.propTypes = {
-		visible: PropTypes.bool,
-		orderId: PropTypes.string,
-		dayId: PropTypes.string,
-		type: PropTypes.string,
-		keepOrder: PropTypes.func,
-		cancelOrder: PropTypes.func,
-		skipOrder: PropTypes.func,
+	visible: PropTypes.bool,
+	orderId: PropTypes.string,
+	dayId: PropTypes.string,
+	type: PropTypes.string,
+	boxNumber: PropTypes.number,
+	skipRecovery: PropTypes.bool,
+	keepOrder: PropTypes.func,
+	cancelOrder: PropTypes.func,
+	skipOrder: PropTypes.func,
 }
 
 export { CancelOrderModal }

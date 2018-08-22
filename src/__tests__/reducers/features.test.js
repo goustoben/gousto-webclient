@@ -28,7 +28,7 @@ describe('features reducers', () => {
 				},
 				recommendedBadge: {
 					experiment: false,
-					value: true,
+					value: false,
 				},
 				featureRecommendedRecipe: {
 					experiment: false,
@@ -38,6 +38,10 @@ describe('features reducers', () => {
 					experiment: false,
 					value: false,
 				},
+				skipRecovery: {
+					experiment: false,
+					value: false,
+				}
 			})
 			const result = features.features(state, action)
 			expect(Immutable.is(expected, result)).toEqual(true)
@@ -57,7 +61,7 @@ describe('features reducers', () => {
 				},
 				recommendedBadge: {
 					experiment: false,
-					value: true,
+					value: false,
 				},
 				featureRecommendedRecipe: {
 					experiment: false,
@@ -67,6 +71,10 @@ describe('features reducers', () => {
 					experiment: false,
 					value: false,
 				},
+				skipRecovery: {
+					experiment: false,
+					value: false,
+				}
 			})
 			const result = features.features(state, action)
 			expect(Immutable.is(expected, result)).toEqual(true)
@@ -94,7 +102,7 @@ describe('features reducers', () => {
 				},
 				recommendedBadge: {
 					experiment: false,
-					value: true,
+					value: false,
 				},
 				featureRecommendedRecipe: {
 					experiment: false,
@@ -104,6 +112,10 @@ describe('features reducers', () => {
 					experiment: false,
 					value: false,
 				},
+				skipRecovery: {
+					experiment: false,
+					value: false,
+				}
 			})
 			const result = features.features(state, action)
 			expect(Immutable.is(expected, result)).toEqual(true)

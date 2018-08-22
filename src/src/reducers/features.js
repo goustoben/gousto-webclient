@@ -16,7 +16,7 @@ const defaultFeatures = () => ({
 	},
 	recommendedBadge: {
 		experiment: false,
-		value: true,
+		value: false,
 	},
 	featureRecommendedRecipe: {
 		experiment: false,
@@ -26,6 +26,10 @@ const defaultFeatures = () => ({
 		experiment: false,
 		value: false,
 	},
+	skipRecovery: {
+		experiment: false,
+		value: false,
+	}
 })
 
 const featureToggles = {
