@@ -1,0 +1,31 @@
+.categoriesList {
+	padding: 0;
+	list-style: none;
+}
+
+.categoriesListItem {
+	border-bottom: 1px solid #ccc;
+	text-align: left;
+}
+
+.categoriesListItem:last-child {
+	border-bottom: 0;
+}
+
+.listItemLink:hover {
+	text-decoration: none;
+}
+
+.listItemLink {
+	display: block;
+	padding: 20px 0;
+	position: relative;
+}
+
+.itemArrowRight {
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	margin-top: -8px;
+}
