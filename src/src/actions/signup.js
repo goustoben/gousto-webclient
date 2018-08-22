@@ -15,14 +15,14 @@ const signupActions = {
 	signupNextStep,
 }
 
-function signupStepsReceive(steps) {
+export function signupStepsReceive(steps) {
 	return {
 		type: actionTypes.SIGNUP_STEPS_RECEIVE,
 		steps,
 	}
 }
 
-function signupSetStep(step) {
+export function signupSetStep(step) {
 	return (dispatch, getState) => {
 		const signupState = getState().signup
 		const steps = signupState.getIn(['wizard', 'steps'])
@@ -44,7 +44,7 @@ function signupSetStep(step) {
 	}
 }
 
-function signupNextStep(stepName) {
+export function signupNextStep(stepName) {
 	return (dispatch, getState) => {
 		const step = stepByName(stepName)
 		if (step) {
@@ -55,7 +55,14 @@ function signupNextStep(stepName) {
 
 				return dispatch(redirectAction.redirect(routes.client.menu))
 			}
-			dispatch(push(`${client.signup}/${step.get('slug')}`))
+
+			try {
+				const search = getState().routing.locationBeforeTransitions.search
+				dispatch(push(`${client.signup}/${step.get('slug')}${search}`))
+			} catch (e) {
+				dispatch(push(`${client.signup}/${step.get('slug')}`))
+			}
+
 			dispatch(signupSetStep(step))
 		}
 
@@ -63,7 +70,7 @@ function signupNextStep(stepName) {
 	}
 }
 
-function signupChangePostcode(postcode, nextStepName) {
+export function signupChangePostcode(postcode, nextStepName) {
 	return async (dispatch, getState) => {
 		await dispatch(basketActions.basketPostcodeChange(postcode))
 		if (!getState().error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false)) {
@@ -72,7 +79,7 @@ function signupChangePostcode(postcode, nextStepName) {
 	}
 }
 
-function signupCookForKidsChange(cookForKids) {
+export function signupCookForKidsChange(cookForKids) {
 	return (dispatch) => {
 		dispatch({
 			type: actionTypes.SIGNUP_COOK_FOR_KIDS,
@@ -85,7 +92,7 @@ function signupCookForKidsChange(cookForKids) {
 	}
 }
 
-function signupTracking() {
+export function signupTracking() {
 	return (dispatch, getState) => {
 		const basket = getState().basket
 		const postcode = basket.get('postcode')
