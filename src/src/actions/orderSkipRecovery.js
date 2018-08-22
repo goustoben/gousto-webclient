@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes'
-import { orderCancel } from './order'
+import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
 import logger from 'utils/logger'
 
@@ -26,12 +26,31 @@ export const cancelPendingOrder = (orderId) => (
         } catch (err) {
             logger.error(err.message)
         } finally {
-            dispatch({
-                type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-                modalVisibility: false,
-                orderId,
-            })
             dispatch(redirect('/my-deliveries'))
+            setTimeout(() => {
+                dispatch({
+                    type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+                    modalVisibility: false,
+                })
+            }, 500)
+        }
+    }
+)
+
+export const cancelProjectedOrder = (dayId) => (
+    async (dispatch) => {
+        try {
+            dispatch(projectedOrderCancel(dayId, dayId))
+        } catch (err) {
+            logger.error(err.message)
+        } finally {
+            dispatch(redirect('/my-deliveries'))
+            setTimeout(() => {
+                dispatch({
+                    type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+                    modalVisibility: false,
+                })
+            }, 500)
         }
     }
 )

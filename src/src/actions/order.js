@@ -183,7 +183,7 @@ const orderCheckPossibleDuplicate = (orderId) => (
 		}
 	})
 
-const projectedOrderCancel = (orderId, deliveryDayId) => (
+	export const projectedOrderCancel = (orderId, deliveryDayId) => (
 	async (dispatch, getState) => {
 		const showAllCancelledModalIfNecessary = () => {
 			const orders = getState().user.get('newOrders')
@@ -223,7 +223,7 @@ const projectedOrderCancel = (orderId, deliveryDayId) => (
 )
 
 
-const 	projectedOrderRestore = (orderId, userId, deliveryDayId) => (
+const	projectedOrderRestore = (orderId, userId, deliveryDayId) => (
 	async (dispatch, getState) => {
 		dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_RESTORE, null))
 		dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_RESTORE, true))
