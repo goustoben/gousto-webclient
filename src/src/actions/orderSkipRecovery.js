@@ -26,11 +26,13 @@ export const cancelPendingOrder = (orderId) => (
         } catch (err) {
             logger.error(err.message)
         } finally {
-            dispatch({
-                type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-                modalVisibility: false,
-            })
             dispatch(redirect('/my-deliveries'))
+            setTimeout(() => {
+                dispatch({
+                    type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+                    modalVisibility: false,
+                })
+            }, 500)
         }
     }
 )
@@ -42,11 +44,13 @@ export const cancelProjectedOrder = (dayId) => (
         } catch (err) {
             logger.error(err.message)
         } finally {
-            dispatch({
-                type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-                modalVisibility: false,
-            })
             dispatch(redirect('/my-deliveries'))
+            setTimeout(() => {
+                dispatch({
+                    type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+                    modalVisibility: false,
+                })
+            }, 500)
         }
     }
 )

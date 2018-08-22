@@ -60,10 +60,12 @@ describe('orderSkipRecovery', () => {
 
 		test('should toggle the cancel order modal visibility', () => {
 			cancelPendingOrder('64521')(dispatchSpy)
-			expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-				type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
-				modalVisibility: false,
-			}))
+			setTimeout(() => {
+				expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+					type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+					modalVisibility: false,
+				}))
+			}, 500)
 		})
 
 		test('should redirect to my-deliveries', () => {
@@ -89,10 +91,12 @@ describe('orderSkipRecovery', () => {
 
 		test('should toggle the skip order modal visibility', () => {
 			cancelProjectedOrder('1234')(dispatchSpy)
-			expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-				type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
-				modalVisibility: false,
-			}))
+			setTimeout(() => {
+				expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+					type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+					modalVisibility: false,
+				}))
+			}, 500)
 		})
 
 		test('should redirect to my-deliveries', () => {
