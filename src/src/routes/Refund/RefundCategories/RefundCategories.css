@@ -1,4 +1,46 @@
+@value ScreenXXSMin from 'styles/screenSizes.css';
+
+.flexColumnWrap {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.rootContainer {
+	composes: flexColumnWrap;
+}
+
+.pageContent {
+	composes: flexColumnWrap;
+	width: 100%;
+}
+
+.header {
+	display: inline-block;
+
+	@media ScreenXXSMin {
+		align-self: center;
+	}
+}
+
+.header h1 {
+	text-align: left;
+}
+
+.copy {
+	@media ScreenXXSMin {
+		align-self: center;
+	}
+}
+
+.issuesContainer {
+	@media ScreenXXSMin {
+		align-self: center;
+		width: 400px;
+	}
+}
+
 .button {
-	align-self: flex-start;
+	align-self: center;
 	flex-grow: 0.4;
 }
