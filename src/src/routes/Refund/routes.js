@@ -12,7 +12,7 @@ import RefundCategoriesContainer from './RefundCategories/RefundCategoriesContai
 
 export default (store) => (
 	<Route component={WizardLayout}>
-		<Route path={configRoutes.refund.index} component={RefundContainer} onEnter={checkValidSession(store, '/')}>
+		<Route path={configRoutes.getHelp.index} component={RefundContainer} onEnter={checkValidSession(store, '/')}>
 			{RefundCategories}
 			<IndexRoute component={RefundCategoriesContainer} />
 			<Redirect to={configRoutes.client.login} />

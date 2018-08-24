@@ -5,5 +5,5 @@ import configRoutes from 'config/routes'
 import RefundCategoriesContainer from './RefundCategoriesContainer'
 
 export default (
-    <Route path={configRoutes.refund.categories} component={RefundCategoriesContainer} />
+    <Route path={configRoutes.getHelp.categories} component={RefundCategoriesContainer} />
 )

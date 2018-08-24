@@ -4,6 +4,6 @@ module.exports = {
 		'homepage',
 		'welcome',
 		'unsubscribe',
-		'refund',
+		'get-help',
 	],
 }
