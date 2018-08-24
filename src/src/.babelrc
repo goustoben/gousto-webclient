@@ -1,0 +1,56 @@
+{
+  "plugins": [
+    "lodash",
+    "transform-async-to-generator",
+    "transform-strict-mode",
+    "transform-class-properties",
+    "transform-object-rest-spread",
+    "syntax-dynamic-import"
+  ],
+  "presets": [
+    "env",
+    "react",
+    "stage-0"
+  ],
+  "env": {
+    "production": {
+      "presets": [
+        ["env", {
+          "loose": true,
+          "targets": {
+            "browsers": ["safari >= 7", "iOS >= 7", "chrome >= 34", "and_chr >= 34", "explorer >= 11", "firefox >= 48", "edge >= 13", "samsung >= 3.3"]
+          },
+          "useBuiltIns": true
+        }],
+        "react",
+        "stage-0"
+      ],
+      "plugins": [
+        ["lodash",
+          "transform-async-to-generator",
+          "transform-strict-mode",
+          "transform-class-properties",
+          "transform-object-rest-spread",
+          "syntax-dynamic-import",
+          "transform-runtime", {
+            "helpers": true,
+            "polyfill": false,
+            "regenerator": true,
+            "moduleName": "babel-runtime"
+          }
+        ]
+      ]
+    },
+    "test": {
+      "plugins": [
+        [
+          "transform-runtime", {
+            "polyfill": false,
+            "regenerator": true
+          }
+        ],
+        "syntax-dynamic-import"
+      ]
+    }
+  }
+}
