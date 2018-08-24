@@ -212,6 +212,7 @@
     ],
     "moduleDirectories": [
       "node_modules",
+      "<rootDir>",
       "<rootDir>/src",
       "<rootDir>/src/components"
     ],

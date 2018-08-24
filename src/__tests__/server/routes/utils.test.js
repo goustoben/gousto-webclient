@@ -1,8 +1,7 @@
 import Cookies from 'cookies-js'
 import { get, set } from 'utils/cookieHelper2'
 
-import { routeMatches, addSessionCookies, removeSessionCookies } from 'server/routes/utils'
-import { getCookieValue } from '../../../server/routes/utils';
+import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'
 
 const getRoutingCtx = ({ path, method }) => ({
 	path,
