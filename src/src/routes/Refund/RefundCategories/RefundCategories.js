@@ -1,6 +1,6 @@
 import React, { PropTypes, PureComponent } from 'react'
 
-import { RefundItemList } from './RefundItemList'
+import { CategoriesList } from './CategoriesList'
 import { PageContent, PageHeader } from 'Page'
 import { BottomBar } from 'BottomBar'
 import Button from 'Button'
@@ -21,7 +21,7 @@ class RefundCategories extends PureComponent {
 						{this.props.content.body}
 					</p>
 					<div className={css.issuesContainer}>
-						<RefundItemList categories={this.props.categories} />
+						<CategoriesList categories={this.props.categories} />
 					</div>
 					<BottomBar>
 						<Button color="secondary" className={css.button}>
