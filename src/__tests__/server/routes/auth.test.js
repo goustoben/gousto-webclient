@@ -73,7 +73,12 @@ describe('auth', () => {
 			test('should request a user token using the request body variables', async () => {
 				await login(ctx)
 
-				expect(getUserToken).toHaveBeenCalledWith({ email: username, password })
+				expect(getUserToken).toHaveBeenCalledWith({
+					email: username,
+					password,
+					clientId: 'authClientId',
+					clientSecret: 'authClientSecret',
+				})
 			})
 
 			describe('and a successful getUserToken response', () => {

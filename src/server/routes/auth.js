@@ -10,7 +10,9 @@ import routes from 'config/routes'
 export async function login(ctx) { /* eslint-disable no-param-reassign */
 	try {
 		const { username, password, rememberMe } = ctx.request.body
-		const authResponse = await getUserToken({ email: username, password })
+		const { authClientId, authClientSecret } = env
+
+		const authResponse = await getUserToken({ email: username, password, clientId: authClientId, clientSecret: authClientSecret })
 
 		addSessionCookies(ctx, authResponse, rememberMe)
 		ctx.response.body = authResponse
