@@ -1,13 +1,17 @@
-@value Blackberry from 'styles/colors.css';
+@value ScreenXXSMax from 'styles/screenSizes.css';
 
 .bottomBar {
-	position: fixed;
 	display: flex;
 	justify-content: space-between;
-	bottom: 0;
-	left: 0;
 	width: 100%;
-	box-shadow: 0 10px 20px 10px Blackberry;
-	height: 85px;
-	padding: 15px;
+	margin-top: 80px;
+
+	@media ScreenXXSMax {
+		height: 85px;
+		padding: 15px;
+		bottom: 0;
+		left: 0;
+		position: fixed;
+		box-shadow: 0 -3px 15px 0 rgba(51, 61, 71, 0.3);
+	}
 }

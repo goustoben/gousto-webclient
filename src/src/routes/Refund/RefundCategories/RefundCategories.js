@@ -12,26 +12,30 @@ import css from './RefundCategories.css'
 class RefundCategories extends PureComponent {
 	render() {
 		return (
-			<div>
-				<PageHeader title={this.props.content.title} />
-				<PageContent>
-						<p>
-							{this.props.content.body}
-						</p>
+			<div className={css.rootContainer}>
+				<div className={css.header}>
+					<PageHeader title={this.props.content.title} />
+				</div>
+				<PageContent className={css.pageContent}>
+					<p className={css.copy}>
+						{this.props.content.body}
+					</p>
+					<div className={css.issuesContainer}>
 						<CategoriesList categories={this.props.categories} />
+					</div>
+					<BottomBar>
+						<Button color="secondary" className={css.button}>
+							<Link
+								inButtonSegment
+								noDecoration
+								clientRouted={false}
+								to={routes.myGousto}
+							>
+								BACK
+							</Link>
+						</Button>
+					</BottomBar>
 				</PageContent>
-				<BottomBar>
-					<Button color="secondary" className={css.button}>
-						<Link
-							inButtonSegment
-							noDecoration
-							clientRouted={false}
-							to={routes.myGousto}
-						>
-							BACK
-						</Link>
-					</Button>
-				</BottomBar>
 			</div>
 		)
 	}
