@@ -1,3 +1,4 @@
+@value White from 'styles/colors.css';
 @value ScreenXXSMax from 'styles/screenSizes.css';
 
 .bottomBar {
@@ -5,6 +6,7 @@
 	justify-content: space-between;
 	width: 100%;
 	margin-top: 80px;
+	background: White;
 
 	@media ScreenXXSMax {
 		height: 85px;
