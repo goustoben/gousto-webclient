@@ -1,5 +1,5 @@
 import Helmet from 'react-helmet'
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import css from './Refund.css'
 
@@ -15,5 +15,9 @@ const Refund = ({ children }) => (
 		</div>
 	</div>
 )
+
+Refund.propTypes = {
+	children: PropTypes.node.isRequired,
+}
 
 export default Refund

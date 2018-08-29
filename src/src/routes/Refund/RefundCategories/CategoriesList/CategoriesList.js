@@ -1,21 +1,17 @@
 import React from 'react'
-import Link from 'Link'
+import { CategoriesListItem } from './CategoriesListItem'
 
 import css from './CategoriesList.css'
 
-export const CategoriesListItem = ({ label, to }) => (
-	<li className={css.categoriesListItem}>
-		<Link to={to} clientRouted={false} className={css.listItemLink}>
-			{label}
-			<span className={css.itemArrowRight} />
-		</Link>
-	</li>
-)
-
-export const CategoriesList = ({ categories }) => (
+export const CategoriesList = ({ categories, orderIssueSelected }) => (
 	<ul className={css.categoriesList}>
-		{categories.map((category, key) => (
-			<CategoriesListItem key={`refund-item-${key}`} label={category.name} to={category.url} />
+		{categories.map((category) => (
+			<CategoriesListItem
+				key={`refund-item-${category.slug}`}
+				label={category.name}
+				to={category.url}
+				onClick={() => orderIssueSelected(category.slug)}
+			/>
 		))}
 	</ul>
 )

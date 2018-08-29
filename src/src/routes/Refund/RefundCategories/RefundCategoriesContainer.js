@@ -5,10 +5,10 @@ import RefundCategories from './RefundCategories'
 
 const mapStateToProps = (state) => ({
 	categories: [
-		{ name: 'Ingredients (missing, damaged, etc)', url: '/help' },
-		{ name: 'Recipe cards', url: '/help' },
-		{ name: 'Delivery', url: '/help' },
-		{ name: 'Other', url: '/help' }
+		{ slug: 'ingredients', name: 'Ingredients (missing, damaged, etc)', url: '/help' },
+		{ slug: 'recipe_card', name: 'Recipe cards', url: '/help' },
+		{ slug: 'delivery', name: 'Delivery', url: '/help' },
+		{ slug: 'other', name: 'Other', url: '/help' }
 	],
 	content: {
 		title: state.content.get('gethelpOrderissuesPageheaderHeader')

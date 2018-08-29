@@ -1,1 +1,1 @@
-export { CategoriesListItem, CategoriesList } from './CategoriesList'
+export default from './CategoriesListContainer'
