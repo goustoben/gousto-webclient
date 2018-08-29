@@ -18,7 +18,7 @@ describe('<BottomBar />', () => {
 			</BottomBar>,
 		)
 
-		expect(wrapper.find('div.bottomBar').length).toBe(1)
+		expect(wrapper.find('div.bottomBar')).toHaveLength(1)
 	})
 
 	test('it should render its children', () => {
@@ -28,7 +28,7 @@ describe('<BottomBar />', () => {
 			</BottomBar>,
 		)
 
-		expect(wrapper.find(TestComponent).length).toBe(1)
+		expect(wrapper.find(TestComponent)).toHaveLength(1)
 	})
 
 	test('it should use the className passed', () => {
