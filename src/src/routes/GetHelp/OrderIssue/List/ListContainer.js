@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 
-import { CategoriesList } from './CategoriesList'
+import { List } from './List'
 
 import { orderIssueSelected } from 'actions/getHelp'
 
 const mapStateToProps = (state, ownProps) => (ownProps)
 
-const CategoriesListContainer = connect(mapStateToProps, {
+const ListContainer = connect(mapStateToProps, {
 	orderIssueSelected,
-})(CategoriesList)
+})(List)
 
-export default CategoriesListContainer
+export default ListContainer

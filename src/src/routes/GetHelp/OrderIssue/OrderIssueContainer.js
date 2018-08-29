@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 
-// import actionTypes from 'actions/actionTypes'
-import RefundCategories from './RefundCategories'
+import OrderIssue from './OrderIssue'
 
 const mapStateToProps = (state) => ({
 	categories: [
@@ -18,6 +17,6 @@ const mapStateToProps = (state) => ({
 	}
 })
 
-const RefundCategoriesContainer = connect(mapStateToProps, {})(RefundCategories)
+const OrderIssueContainer = connect(mapStateToProps, {})(OrderIssue)
 
-export default RefundCategoriesContainer
+export default OrderIssueContainer

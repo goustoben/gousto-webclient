@@ -1,17 +1,17 @@
-.categoriesListItem {
+.item {
 	border-bottom: 1px solid #ccc;
 	text-align: left;
 }
 
-.categoriesListItem:last-child {
+.item:last-child {
 	border-bottom: 0;
 }
 
-.listItemLink:hover {
+.itemLink:hover {
 	text-decoration: none;
 }
 
-.listItemLink {
+.itemLink {
 	display: block;
 	padding: 20px 0;
 	position: relative;

@@ -1,23 +1,23 @@
 import Helmet from 'react-helmet'
 import React, { PropTypes } from 'react'
 
-import css from './Refund.css'
+import css from './GetHelp.css'
 
-const Refund = ({ children }) => (
-	<div className={css.refundContainer}>
+const GetHelp = ({ children }) => (
+	<div className={css.getHelpContainer}>
 		<Helmet
 			style={[{
 				cssText: '#react-root { height: 100%; }',
 			}]}
 		/>
-		<div className={css.refundContent}>
+		<div className={css.getHelpContent}>
 			{children}
 		</div>
 	</div>
 )
 
-Refund.propTypes = {
+GetHelp.propTypes = {
 	children: PropTypes.node.isRequired,
 }
 
-export default Refund
+export default GetHelp

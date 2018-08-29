@@ -6,7 +6,7 @@
 @value maxWidth 750px;
 @value maxElWidth calc(maxWidth - 2px);
 
-.refundContainer {
+.getHelpContainer {
 	composes: flex from 'styles/display.css';
 	composes: column from 'styles/flex.css';
 	composes: flex from 'styles/display.css';
@@ -37,7 +37,7 @@
 	}
 }
 
-.refundContent {
+.getHelpContent {
 	composes: borderXS from 'styles/borders.css';
 	max-width: maxWidth;
 	margin: 25px auto;

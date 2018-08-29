@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react'
 
-import CategoriesList from './CategoriesList'
+import List from './List'
 import { PageContent, PageHeader } from 'Page'
 import { BottomBar } from 'BottomBar'
 import Button from 'Button'
 import Link from 'Link'
 import { client as routes } from 'config/routes'
 
-import css from './RefundCategories.css'
+import css from './OrderIssue.css'
 
-const RefundCategories = ({ content: { title, body }, categories }) => (
+const OrderIssue = ({ content: { title, body }, categories }) => (
 	<div className={css.rootContainer}>
 		<div className={css.header}>
 			<PageHeader title={title} />
@@ -19,7 +19,7 @@ const RefundCategories = ({ content: { title, body }, categories }) => (
 				{body}
 			</p>
 			<div className={css.issuesContainer}>
-				<CategoriesList categories={categories} />
+				<List categories={categories} />
 			</div>
 			<BottomBar>
 				<Button color="secondary" className={css.button}>
@@ -37,7 +37,7 @@ const RefundCategories = ({ content: { title, body }, categories }) => (
 	</div>
 )
 
-RefundCategories.propTypes = {
+OrderIssue.propTypes = {
 	categories: PropTypes.arrayOf(
 		PropTypes.shape({
 			name: PropTypes.string.isRequired,
@@ -50,4 +50,4 @@ RefundCategories.propTypes = {
 	})
 }
 
-export default RefundCategories
+export default OrderIssue

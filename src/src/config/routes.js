@@ -139,6 +139,6 @@ module.exports = {
 	},
 	getHelp: {
 		index: 'get-help',
-		categories: 'categories',
+		orderIssue: 'order-issue',
 	},
 }
