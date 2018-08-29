@@ -10,8 +10,6 @@ const GoustoLink = (props, context) => {
 		[css.noDecor]: noDecoration,
 		[css.secondary]: secondary,
 	}
-	// Delete inButtonSegment from rest as we don't want to pass it to the react-router <Link> component or <a>
-	delete rest.inButtonSegment
 
 	if (context.router && clientRouted) {
 		link = <Link className={classnames(css.base, dynamicClasses, className)} {...rest} />
@@ -28,9 +26,6 @@ GoustoLink.contextTypes = {
 
 GoustoLink.propTypes = {
 	noDecoration: PropTypes.bool,
-	/* inButtonSegment is used by the <Button> component, to know whether it should render a
-	children component within a <Segment> or not */
-	inButtonSegment: PropTypes.bool,
 	to: PropTypes.string,
 	clientRouted: PropTypes.bool,
 	onClick: PropTypes.func,
@@ -38,7 +33,6 @@ GoustoLink.propTypes = {
 
 GoustoLink.defaultProps = {
 	clientRouted: true,
-	inButtonSegment: false,
 }
 
 export default GoustoLink
