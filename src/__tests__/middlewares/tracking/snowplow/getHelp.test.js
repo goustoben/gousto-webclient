@@ -1,10 +1,10 @@
 import getHelpTracking from 'middlewares/tracking/snowplow/getHelp'
-import seActions from 'middlewares/tracking/snowplow/getHelp/seActions'
+import actions from 'actions/actionTypes'
 
 describe('snowplow get help tracking events', () => {
 	describe('order issue', () => {
 		const action = {
-            type: seActions.GET_HELP_ORDER_ISSUE_SELECTED,
+            type: actions.GET_HELP_ORDER_ISSUE_SELECTED,
             issue: 'ingredients'
         }
 
@@ -14,7 +14,7 @@ describe('snowplow get help tracking events', () => {
                     order_issue: 'ingredients',
                 },
                 seCategory: 'Order Get Help',
-                type: undefined
+                type: 'OrderIssue Selected'
             })
         })
 	})
