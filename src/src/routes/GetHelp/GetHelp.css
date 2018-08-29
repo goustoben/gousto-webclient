@@ -1,10 +1,9 @@
-@value White, Bluecheese from 'styles/colors.css';
+@value White from 'styles/colors.css';
 @value ScreenXXSMax, ScreenXSMax, HeightSMMax, HeightMDMax from 'styles/screenSizes.css';
 @value SpacingXXS from 'sass-loader!styles/spacing.scss';
 
 @value minHeight 485px;
 @value maxWidth 750px;
-@value maxElWidth calc(maxWidth - 2px);
 
 .getHelpContainer {
 	composes: flex from 'styles/display.css';
