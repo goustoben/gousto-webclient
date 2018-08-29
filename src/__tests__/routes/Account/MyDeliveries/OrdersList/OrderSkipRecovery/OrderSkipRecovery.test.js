@@ -1,11 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { CancelOrderModal } from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery/CancelOrderModal'
+import { OrderSkipRecovery } from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery'
 
-describe('CancelPendingOrderModal', () => {
+describe('OrderSkipRecovery pending order', () => {
 	const wrapper = shallow(
-		<CancelOrderModal
+		<OrderSkipRecovery
 			visible
 			orderId={'123'}
 			type={'pending'}
@@ -42,9 +42,9 @@ describe('CancelPendingOrderModal', () => {
 	})
 })
 
-describe('CancelProjectedOrderModal', () => {
+describe('OrderSkipRecovery projected order', () => {
 	const wrapper = shallow(
-		<CancelOrderModal
+		<OrderSkipRecovery
 			visible
 			dayId={'123'}
 			boxNumber={1}
