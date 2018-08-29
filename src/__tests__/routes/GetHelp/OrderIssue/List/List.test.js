@@ -9,7 +9,7 @@ import { Item } from 'routes/GetHelp/OrderIssue/List/Item'
 describe('<List />', () => {
 	const categories = [{ name: 'test', url: '/test' }]
 
-	test('list component renders correctly', () => {
+	test('list component renders and works correctly', () => {
 		const orderIssueSelected = sinon.spy()
 		const wrapper = shallow(
 			<List categories={categories} orderIssueSelected={orderIssueSelected} />
