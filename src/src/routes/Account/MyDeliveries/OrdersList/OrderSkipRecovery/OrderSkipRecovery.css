@@ -8,7 +8,7 @@
     border: 0.75px solid Bluecheese;
     border-radius: 25px;
     background-color: Bluecheese;
-    margin: 20px auto;
+    margin: 23px auto;
     font-family: avenirHeavyFontStack;
     text-align: center;
     line-height: 22px;
@@ -20,12 +20,12 @@
 .skipAnyWay {
     display: block;
     color: Bluecheese;
-    font-family: avenirHeavyFontStack;
+    font-family: Avenir;
     font-size: 16px;
     font-weight: 900;
     line-height: 19px;
     text-align: center;
-    margin: 15px auto;
+    margin: 30px auto 10px;
     cursor: pointer;
 }
 
@@ -35,5 +35,24 @@
     color: Black;
     line-height: 30px;
     font-weight: bold;
+    text-align: center;
+}
+
+.valuePropositionTitle {
+    color: Black;
+    font-family: Avenir;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+    margin: 38px auto 10px;
+}
+
+.valuePropositionDescription{
+    color: Black;
+    font-family: Avenir;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 19px;
     text-align: center;
 }

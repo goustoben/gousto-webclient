@@ -10,7 +10,7 @@ export const keepOrder = ({ orderId, status }) => (
             modalVisibility: false,
             orderId,
             trackingData: {
-                type: 'Order Kept',
+                actionType: 'Order Kept',
                 order_id: orderId,
                 order_state: status,
                 recovery_reasons: [],
@@ -22,17 +22,15 @@ export const keepOrder = ({ orderId, status }) => (
 export const cancelPendingOrder = (orderId) => (
     async (dispatch) => {
         try {
-            dispatch(orderCancel(orderId))
+            await dispatch(orderCancel(orderId))
         } catch (err) {
             logger.error(err.message)
         } finally {
             dispatch(redirect('/my-deliveries'))
-            setTimeout(() => {
-                dispatch({
-                    type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-                    modalVisibility: false,
-                })
-            }, 500)
+            dispatch({
+                type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+                modalVisibility: false,
+            })
         }
     }
 )
@@ -40,17 +38,15 @@ export const cancelPendingOrder = (orderId) => (
 export const cancelProjectedOrder = (dayId) => (
     async (dispatch) => {
         try {
-            dispatch(projectedOrderCancel(dayId, dayId))
+           await dispatch(projectedOrderCancel(dayId, dayId))
         } catch (err) {
             logger.error(err.message)
         } finally {
             dispatch(redirect('/my-deliveries'))
-            setTimeout(() => {
-                dispatch({
-                    type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-                    modalVisibility: false,
-                })
-            }, 500)
+            dispatch({
+                type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+                modalVisibility: false,
+            })
         }
     }
 )

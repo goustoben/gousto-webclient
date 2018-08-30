@@ -1,6 +1,6 @@
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
-import fetch, * as fetchUtils from 'utils/fetch'
+import { fetch } from 'utils/fetch'
 
 export function applyPromo(accessToken, promoCode) {
 	return fetch(accessToken, `${endpoint('core')}/user/current/applyPromotionCode/${promoCode}`, {}, 'POST')
@@ -27,7 +27,7 @@ export function fetchUserOrdersNew(accessToken, reqData) {
 }
 
 export function fetchUserProjectedDeliveries(accessToken) {
-	return fetchUtils.fetch(accessToken, `${endpoint('core')}${routes.core.userProjectedDeliveries}`, {}, 'GET')
+	return fetch(accessToken, `${endpoint('core')}${routes.core.userProjectedDeliveries}`, {}, 'GET')
 }
 
 export function saveUserOrder(accessToken, reqData) {
@@ -35,17 +35,15 @@ export function saveUserOrder(accessToken, reqData) {
 }
 
 export function updateUserOrder(accessToken, reqData) {
-	return fetchUtils.fetch(accessToken, `${endpoint('core')}${routes.core.userOrder}`, reqData, 'PUT')
+	return fetch(accessToken, `${endpoint('core')}${routes.core.userOrder}`, reqData, 'PUT')
 }
 
 export function skipDelivery(accessToken, deliveryDayId) {
-	return fetchUtils.fetch(accessToken, `${endpoint('core')}${routes.core.userDelivery}/disable`, {
-		delivery_day_id: deliveryDayId,
-	}, 'PUT')
+	return fetch(accessToken, `${endpoint('core')}${routes.core.userDelivery}/disable`, { delivery_day_id: deliveryDayId }, 'PUT')
 }
 
 export function restoreDelivery(accessToken, userId, deliveryDayId) {
-	return fetchUtils.fetch(accessToken, `${endpoint('core')}${routes.core.user}/${userId}/subscription/delivery/enable`, {
+	return fetch(accessToken, `${endpoint('core')}${routes.core.user}/${userId}/subscription/delivery/enable`, {
 		delivery_day_id: deliveryDayId,
 	}, 'PUT')
 }
@@ -71,15 +69,15 @@ export function addPaymentMethod(accessToken, reqData, userId) {
 }
 
 export function fetchUserAddresses(accessToken, userId) {
-	return fetchUtils.fetch(accessToken, `${endpoint('customers', routes.version.customers)}/customers/${userId}/addresses`, {}, 'GET')
+	return fetch(accessToken, `${endpoint('customers', routes.version.customers)}/customers/${userId}/addresses`, {}, 'GET')
 }
 
 export function addNewAddress(accessToken, userId, reqData) {
-	return fetchUtils.fetch(accessToken, `${endpoint('customers', routes.version.customers)}/customers/${userId}/addresses`, reqData, 'POST')
+	return fetch(accessToken, `${endpoint('customers', routes.version.customers)}/customers/${userId}/addresses`, reqData, 'POST')
 }
 
 export function deleteMarketingSubscription(authUserId, marketingType, marketingUnsubscribeToken) {
-	return fetchUtils.fetch(
+	return fetch(
 		null,
 		`${endpoint('core')}/user/${authUserId}/marketing/${marketingType}`,
 		{ marketing_unsubscribe_token: marketingUnsubscribeToken },
