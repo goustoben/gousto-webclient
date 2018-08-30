@@ -34,7 +34,7 @@ export const orderCancel = (orderId) => (
 				type: actionTypes.ORDER_CANCEL,
 				orderId,
 				trackingData: {
-					type: 'Order Cancelled',
+					actionType: 'Order Cancelled',
 					order_id: orderId,
 					order_state: 'pending',
 					reasons: [],
@@ -210,6 +210,12 @@ const orderCheckPossibleDuplicate = (orderId) => (
 			dispatch({
 				type: actionTypes.PROJECTED_ORDER_CANCEL,
 				orderId,
+				trackingData: {
+					actionType: 'Order Skipped',
+					day_id: deliveryDayId,
+					order_state: 'projected',
+					reasons: [],
+				}
 			})
 			dispatch(userActions.userOpenCloseOrderCard(orderId, true))
 			scrollToCurrentCard()

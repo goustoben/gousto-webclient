@@ -43,7 +43,7 @@ describe('orderSkipRecovery', () => {
 			keepOrder({ orderId: '23214', status: 'projected' })(dispatchSpy)
 			expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
 				trackingData: {
-					type: 'Order Kept',
+					actionType: 'Order Kept',
 					order_id: '23214',
 					order_state: 'projected',
 					recovery_reasons: [],

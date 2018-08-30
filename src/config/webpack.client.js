@@ -85,7 +85,6 @@ const config = {
 		main: [
 			'babel-polyfill',
 			'./src/client.js',
-			'./src/styles/base.css'
 		],
 		legacy: [
 			'babel-polyfill',
@@ -106,7 +105,8 @@ const config = {
 				options: {
 					cache: false,
 					quiet: false,
-					failOnWarning: false
+					failOnWarning: false,
+					fix: true
 				},
 				include: [
 					path.resolve('./src')
@@ -265,7 +265,6 @@ if (build === 'development') {
 			parallel: true,
 			sourceMap: false,
 			uglifyOptions: {
-				ecma: 6,
 				mangle: true,
 				compress: true,
 				warnings: true,
