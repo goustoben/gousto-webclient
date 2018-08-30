@@ -43,4 +43,9 @@
 .button {
 	align-self: center;
 	flex-grow: 0.4;
+	width: 100px;
+}
+
+.buttonChild {
+	display: block;
 }

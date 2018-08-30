@@ -22,8 +22,13 @@ const OrderIssue = ({ content: { title, body }, categories }) => (
 				<List categories={categories} />
 			</div>
 			<BottomBar>
-				<Button color="secondary" className={css.button} areChildrenInSegment>
-					<Link noDecoration clientRouted={false} to={routes.myGousto}>
+				<Button color="secondary" width="50%" className={css.button} areChildrenInSegment>
+					<Link
+						noDecoration
+						className={css.buttonChild}
+						clientRouted={false}
+						to={routes.myGousto}
+					>
 						BACK
 					</Link>
 				</Button>
