@@ -54,7 +54,7 @@ healthCheck:
 
 environments:
   - name: staging
-    instanceType: t2.micro
+    instanceType: t2.small
     minInstanceSize: 1
     maxInstanceSize: 2
     desiredInstanceSize: 1

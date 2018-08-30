@@ -26,7 +26,6 @@ const config = {
 	entry: [
 		'babel-polyfill',
 		'./server/main.js',
-		'./src/styles/base.css',
 	],
 	output: {
 		path: path.resolve('./dist'),
@@ -43,6 +42,7 @@ const config = {
 					cache: false,
 					quiet: false,
 					failOnWarning: false,
+					fix: true
 				},
 				include: [
 					path.resolve(__dirname, '../src'),
@@ -189,7 +189,6 @@ if (build === 'development') {
 			parallel: true,
 			sourceMap: true,
 			uglifyOptions: {
-				ecma: 6,
 				mangle: false,
 				compress: true,
 				output: {

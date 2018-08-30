@@ -27,12 +27,6 @@ export default {
 		],
 	},
 
-	email: {
-		field: 'email',
-		rules: [
-			'isEmail',
-		],
-	},
 
 	password: {
 		field: 'password',

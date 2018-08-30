@@ -34,7 +34,7 @@ export const orderCancel = (orderId) => (
 				type: actionTypes.ORDER_CANCEL,
 				orderId,
 				trackingData: {
-					type: 'Order Cancelled',
+					actionType: 'Order Cancelled',
 					order_id: orderId,
 					order_state: 'pending',
 					reasons: [],
@@ -183,7 +183,7 @@ const orderCheckPossibleDuplicate = (orderId) => (
 		}
 	})
 
-const projectedOrderCancel = (orderId, deliveryDayId) => (
+	export const projectedOrderCancel = (orderId, deliveryDayId) => (
 	async (dispatch, getState) => {
 		const showAllCancelledModalIfNecessary = () => {
 			const orders = getState().user.get('newOrders')
@@ -210,6 +210,12 @@ const projectedOrderCancel = (orderId, deliveryDayId) => (
 			dispatch({
 				type: actionTypes.PROJECTED_ORDER_CANCEL,
 				orderId,
+				trackingData: {
+					actionType: 'Order Skipped',
+					day_id: deliveryDayId,
+					order_state: 'projected',
+					reasons: [],
+				}
 			})
 			dispatch(userActions.userOpenCloseOrderCard(orderId, true))
 			scrollToCurrentCard()
@@ -223,7 +229,7 @@ const projectedOrderCancel = (orderId, deliveryDayId) => (
 )
 
 
-const 	projectedOrderRestore = (orderId, userId, deliveryDayId) => (
+const	projectedOrderRestore = (orderId, userId, deliveryDayId) => (
 	async (dispatch, getState) => {
 		dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_RESTORE, null))
 		dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_RESTORE, true))

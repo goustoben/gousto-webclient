@@ -12,6 +12,10 @@ const SiteVerification = () => (
 				name: 'p:domain_verify',
 				content: 'adfa0b85592a79dcce9f843e17825583',
 			},
+			{
+				name: 'msvalidate.01',
+				content: 'F155B4DB69FB385148413701F29E16CF',
+			}
 		]}
 	/>
 )

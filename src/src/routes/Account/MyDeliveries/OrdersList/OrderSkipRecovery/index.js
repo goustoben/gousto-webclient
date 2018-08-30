@@ -1,1 +1,1 @@
-export default from './OrderSkipRecoveryContainer'
+export { OrderSkipRecoveryContainer as OrderSkipRecovery } from './OrderSkipRecoveryContainer'

@@ -2,15 +2,18 @@
 
 .modalComponent {
     position: relative;
-    margin: 20px auto;
+    margin: 20vh auto;
     height: max-content;
     width: 380px;
     background: White;
     border-radius: 12px;
     padding: 20px;
-    @media (max-width: 380px) {
+    @media (max-width: 420px) {
         width: 300px;
-        margin: 10px auto;
+        position: absolute;
+        left: 50vw;
+        top: 30vh;
+        transform: translate(-50%, -50%);
         padding: 10px;
     }
 }
@@ -24,7 +27,7 @@
     position: relative;
     text-align: center;
     line-height: 30px;
-    margin: 10px auto;
+    margin: 20px auto;
 
 }
 

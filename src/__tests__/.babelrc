@@ -1,13 +1,12 @@
 {
 	"presets": [
-		  "env",
-			"react",
-			"stage-0"
-			],
-			
+		"env",
+		"react",
+		"stage-0"
+	],
+
 	"plugins": [
-		"lodash",
-			"syntax-dynamic-import"
+		"syntax-dynamic-import"
 	],
 	"env": {
 		"test": {
