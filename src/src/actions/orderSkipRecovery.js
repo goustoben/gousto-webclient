@@ -10,7 +10,7 @@ export const keepOrder = ({ orderId, status }) => (
             modalVisibility: false,
             orderId,
             trackingData: {
-                type: 'Order Kept',
+                actionType: 'Order Kept',
                 order_id: orderId,
                 order_state: status,
                 recovery_reasons: [],
