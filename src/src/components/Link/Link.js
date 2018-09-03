@@ -7,14 +7,15 @@ const GoustoLink = (props, context) => {
 	let link
 	const { noDecoration, secondary, clientRouted, className, ...rest } = props
 	const dynamicClasses = {
+		[css.base]: !className,
 		[css.noDecor]: noDecoration,
 		[css.secondary]: secondary,
 	}
 
 	if (context.router && clientRouted) {
-		link = <Link className={classnames(css.base, dynamicClasses, className)} {...rest} />
+		link = <Link className={classnames(dynamicClasses, className)} {...rest} />
 	} else {
-		link = <a className={classnames(css.base, dynamicClasses, className)} href={rest.to} {...rest}></a>
+		link = <a className={classnames(dynamicClasses, className)} href={rest.to} {...rest}></a>
 	}
 
 	return link
