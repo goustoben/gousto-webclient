@@ -108,15 +108,15 @@ export function get(cookies, key, withVersionPrefix = true) {
 	return result
 }
 
-export function set(cookies, key, val, days, withVersionPrefix = true) {
+export function set(cookies, key, val, days, withVersionPrefix = true, httpOnly = false, overwrite = false) {
 	const prefixedKey = withVersionPrefix ? getKey(key) : key
 
 	if (cookies) {
 		if (days) {
 			const expires = moment().add(days * 24, 'hours')
-			cookies.set(prefixedKey, encode(val), { expires: expires.toDate(), httpOnly: false })
+			cookies.set(prefixedKey, encode(val), { expires: expires.toDate(), httpOnly, overwrite })
 		} else {
-			cookies.set(prefixedKey, encode(val), { httpOnly: false })
+			cookies.set(prefixedKey, encode(val), { httpOnly, overwrite })
 		}
 	} else {
 		logger.error('no cookies to set on')
