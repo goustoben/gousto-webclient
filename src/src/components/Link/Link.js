@@ -5,15 +5,16 @@ import css from './Link.css'
 
 const GoustoLink = (props, context) => {
 	let link
-	const { noDecoration, secondary, clientRouted, ...rest } = props
-	const className = {
+	const { noDecoration, secondary, clientRouted, className, ...rest } = props
+	const dynamicClasses = {
 		[css.noDecor]: noDecoration,
+		[css.secondary]: secondary,
 	}
 
 	if (context.router && clientRouted) {
-		link = <Link className={classnames(css.base, className, { [css.secondary]: secondary })} {...rest} />
+		link = <Link className={classnames(css.base, dynamicClasses, className)} {...rest} />
 	} else {
-		link = <a className={classnames(css.base, className, { [css.secondary]: secondary })} href={props.to} {...rest}></a>
+		link = <a className={classnames(css.base, dynamicClasses, className)} href={rest.to} {...rest}></a>
 	}
 
 	return link

@@ -18,6 +18,7 @@ import Jobs from './Jobs'
 import ResetPassword from './ResetPassword'
 import BoxPrices from './BoxPrices'
 import Unsubscribe from './Unsubscribe'
+import GetHelp from './GetHelp'
 
 import ErrorPage from 'components/ErrorPage'
 
@@ -32,6 +33,8 @@ export default (store) => (
 		{Jobs}
 		{ResetPassword}
 		{Unsubscribe}
+		{GetHelp(store)}
+
 		<Route component={MainLayout}>
 			{Auth.login}
 			{Auth.logout}
@@ -39,6 +42,7 @@ export default (store) => (
 			{Welcome(store)}
 			{Account(store)}
 		</Route>
+
 		{Checkout(store)}
 		<Route component={MainLayout}>
 			<Route path="*" component={ErrorPage} />

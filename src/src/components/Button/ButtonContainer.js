@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Segment from 'Button/Segment'
 import Tooltip from 'Tooltip'
 import css from './ButtonContainer.css'
@@ -7,28 +7,31 @@ import Spinner from 'Spinner'
 
 class Button extends React.PureComponent {
 	static propTypes = {
-		color: React.PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'negative']),
-		disabled: React.PropTypes.bool,
-		noDecoration: React.PropTypes.bool,
-		className: React.PropTypes.string,
-		width: React.PropTypes.oneOf(['auto', 'full']),
-		fill: React.PropTypes.bool,
-		children: React.PropTypes.oneOfType([
-			React.PropTypes.oneOf([
-				React.PropTypes.instanceOf(Segment),
-				React.PropTypes.instanceOf(Tooltip),
+		color: PropTypes.oneOf(['primary', 'secondary', 'tertiary', 'negative']),
+		disabled: PropTypes.bool,
+		noDecoration: PropTypes.bool,
+		className: PropTypes.string,
+		width: PropTypes.oneOf(['auto', 'full']),
+		fill: PropTypes.bool,
+		children: PropTypes.oneOfType([
+			PropTypes.oneOf([
+				PropTypes.instanceOf(Segment),
+				PropTypes.instanceOf(Tooltip),
 			]),
-			React.PropTypes.arrayOf([
-				React.PropTypes.instanceOf(Segment),
-				React.PropTypes.instanceOf(Tooltip),
+			PropTypes.arrayOf([
+				PropTypes.instanceOf(Segment),
+				PropTypes.instanceOf(Tooltip),
 			]),
-			React.PropTypes.node,
+			PropTypes.node,
 		]).isRequired,
-		onClick: React.PropTypes.func,
-		pending: React.PropTypes.bool,
-		spinnerClassName: React.PropTypes.string,
-		spinnerContainerClassName: React.PropTypes.string,
-		'data-testing': React.PropTypes.string,
+		onClick: PropTypes.func,
+		pending: PropTypes.bool,
+		spinnerClassName: PropTypes.string,
+		spinnerContainerClassName: PropTypes.string,
+		'data-testing': PropTypes.string,
+		/* indicates if the children should be always warpped in <Segment> (which has the
+		 * (filling styles), no matter the type of the children */
+		areChildrenInSegment: PropTypes.bool,
 	}
 
 	static defaultProps = {
@@ -42,6 +45,7 @@ class Button extends React.PureComponent {
 		pending: false,
 		spinnerClassName: '',
 		spinnerContainerClassName: '',
+		areChildrenInSegment: false,
 	}
 
 	cloneChildren = (children, props) => (
@@ -54,7 +58,7 @@ class Button extends React.PureComponent {
 				)
 			}
 
-			if (typeof child === 'string') {
+			if (typeof child === 'string' || props.areChildrenInSegment) {
 				return (
 					<Segment
 						{...props}
@@ -73,7 +77,7 @@ class Button extends React.PureComponent {
 	)
 
 	render() {
-		const { className, color, fill, disabled, pending, width } = this.props
+		const { className, color, fill, disabled, pending, width, areChildrenInSegment } = this.props
 		const classNames = {
 			[className]: className,
 			[css.disabled]: (disabled || pending),
@@ -103,6 +107,7 @@ class Button extends React.PureComponent {
 				{this.cloneChildren(this.props.children, {
 					color,
 					width,
+					areChildrenInSegment,
 					btnDisabled: disabled,
 					'data-testing': this.props['data-testing'],
 					noDecoration: this.props.noDecoration,

@@ -137,4 +137,8 @@ module.exports = {
 	workable: {
 		link: 'https://gousto.workable.com/',
 	},
+	getHelp: {
+		index: 'get-help',
+		orderIssue: 'order-issue',
+	},
 }

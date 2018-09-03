@@ -1,0 +1,26 @@
+.item {
+	border-bottom: 1px solid #ccc;
+	text-align: left;
+}
+
+.item:last-child {
+	border-bottom: 0;
+}
+
+.itemLink:hover {
+	text-decoration: none;
+}
+
+.itemLink {
+	display: block;
+	padding: 20px 0;
+	position: relative;
+}
+
+.itemArrowRight {
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	margin-top: -8px;
+}
