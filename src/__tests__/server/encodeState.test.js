@@ -1,8 +1,6 @@
-import sinon from 'sinon'
-
 import Immutable from 'immutable'
 import transit from 'transit-immutable-js'
-import encodeState from '../../server/encodeState'
+import encodeState from 'server/encodeState'
 
 describe('encodeState', () => {
 	test('should encode the given object', () => {
