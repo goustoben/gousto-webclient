@@ -28,5 +28,3 @@ api_certificate: ""
 
 node_env: production
 ngnix_port: 80
-
-auth_client_secret: "{{ auth_client_secret }}"
