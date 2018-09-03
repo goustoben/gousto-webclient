@@ -19,3 +19,4 @@ src/vendor
 .vs
 .vscode
 jsconfig.json
+.idea
