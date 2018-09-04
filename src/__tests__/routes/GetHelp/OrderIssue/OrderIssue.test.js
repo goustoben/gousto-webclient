@@ -39,7 +39,8 @@ describe('<OrderIssue />', () => {
 
 	test('bottom bar buttons is rendering correctly', () => {
 		const BottomBar = GetHelpLayout.find('BottomBar')
+		const Button1 = BottomBar.find('BottomButton').at(0)
 
-		expect(BottomBar.find('BottomButton').at(0).contains(content.buttonCopy)).toBe(true)
+		expect(Button1.contains(content.buttonCopy)).toBe(true)
 	})
 })

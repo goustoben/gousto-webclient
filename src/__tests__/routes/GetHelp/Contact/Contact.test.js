@@ -42,8 +42,10 @@ describe('<Contact />', () => {
 
 	test('bottom bar buttons is rendering correctly', () => {
 		const BottomBar = GetHelpLayout.find('BottomBar')
+		const Button1 = BottomBar.find('BottomButton').at(0)
+		const Button2 = BottomBar.find('BottomButton').at(1)
 
-		expect(BottomBar.find('BottomButton').at(0).contains(content.button1Copy)).toBe(true)
-		expect(BottomBar.find('BottomButton').at(1).contains(content.button2Copy)).toBe(true)
+		expect(Button1.contains(content.button1Copy)).toBe(true)
+		expect(Button2.contains(content.button2Copy)).toBe(true)
 	})
 })
