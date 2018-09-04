@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, IndexRoute } from 'react-router'
+import { Route, Redirect, IndexRoute } from 'react-router'
 
 import configRoutes from 'config/routes'
 import WizardLayout from 'layouts/WizardLayout'
@@ -8,15 +8,14 @@ import OrderIssueContainer from './OrderIssue/OrderIssueContainer'
 
 import Contact from './Contact'
 
-// import { checkValidSession } from './../../utils/routes'
+import { checkValidSession } from './../../utils/routes'
 
-export default () => (
+export default (store) => (
 	<Route component={WizardLayout}>
-		{/* <Route path={configRoutes.client.getHelp.index} component={GetHelpContainer} onEnter={checkValidSession(store, '/')}> */}
-		<Route path={configRoutes.client.getHelp.index} component={GetHelpContainer}>
+		<Route path={configRoutes.client.getHelp.index} component={GetHelpContainer} onEnter={checkValidSession(store, '/')}>
 			<IndexRoute component={OrderIssueContainer} />
 			{Contact}
-			{/* <Redirect to={configRoutes.client.login} /> */}
+			<Redirect to={configRoutes.client.login} />
 		</Route>
 	</Route>
 )
