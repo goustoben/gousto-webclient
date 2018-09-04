@@ -21,18 +21,22 @@ describe('GetHelpLayout', () => {
 	})
 
 	test('component is rendering button bar correctly', () => {
-		expect(
-			wrapper.find('PageContent').find('.bodyContent').find('BottomBar')
-		).toHaveLength(0)
+		const bodyContent = wrapper
+			.find('PageContent')
+			.find('.bodyContent')
+		const PageContent = wrapper
+			.find('PageContent')
 
-		expect(
-			wrapper.find('PageContent').find('BottomBar')
-		).toHaveLength(1)
+		expect(bodyContent.find('BottomBar')).toHaveLength(0)
+
+		expect(PageContent).toHaveLength(1)
 	})
 
 	test('component content is rendering correctly', () => {
-		expect(
-			wrapper.find('PageContent').find('.bodyContent').find('.unique')
-		).toHaveLength(1)
+		const bodyContent = wrapper
+			.find('PageContent')
+			.find('.bodyContent')
+
+		expect(bodyContent.find('.unique')).toHaveLength(1)
 	})
 })
