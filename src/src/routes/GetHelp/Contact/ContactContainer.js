@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import ContactUs from './ContactUs'
+import Contact from './Contact'
 
 const mapStateToProps = (state) => ({
 	categories: [
@@ -10,13 +10,13 @@ const mapStateToProps = (state) => ({
 		{ slug: 'other', name: 'Other' }
 	],
 	content: {
-		title: state.content.get('gethelpContactUsPageheaderHeader')
+		title: state.content.get('gethelpContactPageheaderHeader')
 		|| 'Contact us',
-		body: state.content.get('gethelpContactUsPagecontentCopy')
+		body: state.content.get('gethelpContactPagecontentCopy')
 		|| 'Please get in touch so one of our customer care agents can help resolve your issue.',
 	}
 })
 
-const ContactUsContainer = connect(mapStateToProps, {})(ContactUs)
+const ContactContainer = connect(mapStateToProps, {})(Contact)
 
-export default ContactUsContainer
+export default ContactContainer

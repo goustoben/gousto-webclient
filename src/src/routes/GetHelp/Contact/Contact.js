@@ -6,7 +6,7 @@ import Button from 'Button'
 import Link from 'Link'
 import { client as routes } from 'config/routes'
 
-import css from './ContactUs.css'
+import css from './Contact.css'
 
 const renderButtons = () => (
 	<BottomBar>
@@ -33,7 +33,7 @@ const renderButtons = () => (
 	</BottomBar>
 )
 
-const ContactUs = ({ content: { title, body } }) => (
+const Contact = ({ content: { title, body } }) => (
 	<div className={css.rootContainer}>
 		<div className={css.header}>
 			<PageHeader title={title} />
@@ -47,7 +47,7 @@ const ContactUs = ({ content: { title, body } }) => (
 	</div>
 )
 
-ContactUs.propTypes = {
+Contact.propTypes = {
 	categories: PropTypes.arrayOf(
 		PropTypes.shape({
 			name: PropTypes.string.isRequired,
@@ -60,4 +60,4 @@ ContactUs.propTypes = {
 	})
 }
 
-export default ContactUs
+export default Contact

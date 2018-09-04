@@ -6,7 +6,7 @@ import WizardLayout from 'layouts/WizardLayout'
 import GetHelpContainer from './GetHelpContainer'
 import OrderIssueContainer from './OrderIssue/OrderIssueContainer'
 
-import ContactUs from './ContactUs'
+import Contact from './Contact'
 
 // import { checkValidSession } from './../../utils/routes'
 
@@ -15,7 +15,7 @@ export default () => (
 		{/* <Route path={configRoutes.client.getHelp.index} component={GetHelpContainer} onEnter={checkValidSession(store, '/')}> */}
 		<Route path={configRoutes.client.getHelp.index} component={GetHelpContainer}>
 			<IndexRoute component={OrderIssueContainer} />
-			{ContactUs}
+			{Contact}
 			{/* <Redirect to={configRoutes.client.login} /> */}
 		</Route>
 	</Route>
