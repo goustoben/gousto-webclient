@@ -9,7 +9,7 @@ import { client as routes } from 'config/routes'
 
 import css from './OrderIssue.css'
 
-const OrderIssue = ({ content: { title, body }, categories }) => (
+const OrderIssue = ({ content: { title, body, buttonCopy }, categories }) => (
 	<div className={css.rootContainer}>
 		<div className={css.header}>
 			<PageHeader title={title} />
@@ -29,7 +29,7 @@ const OrderIssue = ({ content: { title, body }, categories }) => (
 						clientRouted={false}
 						to={routes.myGousto}
 					>
-						BACK
+						{buttonCopy}
 					</Link>
 				</Button>
 			</BottomBar>

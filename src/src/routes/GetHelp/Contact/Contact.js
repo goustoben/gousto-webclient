@@ -8,7 +8,7 @@ import { client as routes } from 'config/routes'
 
 import css from './Contact.css'
 
-const renderButtons = () => (
+const renderButtons = (button1Copy, button2Copy) => (
 	<BottomBar>
 		<Button color="secondary" width="no-auto" className={css.button} areChildrenInSegment>
 			<Link
@@ -17,7 +17,7 @@ const renderButtons = () => (
 				clientRouted
 				to={routes.getHelp.index}
 			>
-				BACK
+				{button1Copy}
 			</Link>
 		</Button>
 		<Button color="primary" width="no-auto" className={css.button} areChildrenInSegment>
@@ -27,13 +27,13 @@ const renderButtons = () => (
 				clientRouted={false}
 				to={routes.myGousto}
 			>
-				done
+				{button2Copy}
 			</Link>
 		</Button>
 	</BottomBar>
 )
 
-const Contact = ({ content: { title, body } }) => (
+const Contact = ({ content: { title, body, button1Copy, button2Copy } }) => (
 	<div className={css.rootContainer}>
 		<div className={css.header}>
 			<PageHeader title={title} />
@@ -42,7 +42,7 @@ const Contact = ({ content: { title, body } }) => (
 			<p className={css.copy}>
 				{body}
 			</p>
-			{renderButtons()}
+			{renderButtons(button1Copy, button2Copy)}
 		</PageContent>
 	</div>
 )

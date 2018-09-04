@@ -10,10 +10,12 @@ const mapStateToProps = (state) => ({
 		{ slug: 'other', name: 'Other', url: '/get-help/contact', clientRouted: true }
 	],
 	content: {
-		title: state.content.get('gethelpOrderissuesPageheaderHeader')
+		title: state.content.get('get-help_orderissues_pageheader_header')
 		|| 'Get help with your box',
-		body: state.content.get('gethelpOrderissuesPagecontentCopy')
+		body: state.content.get('get-help_orderissues_pagecontent_copy')
 		|| 'What part of your order had an issue?',
+		buttonCopy: state.content.get('get-help_orderissues_pagecontent_buttoncopy')
+		|| 'back',
 	}
 })
 
