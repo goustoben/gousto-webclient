@@ -12,8 +12,8 @@ import ContactUs from './ContactUs'
 
 export default () => (
 	<Route component={WizardLayout}>
-		{/* <Route path={configRoutes.getHelp.index} component={GetHelpContainer} onEnter={checkValidSession(store, '/')}> */}
-		<Route path={configRoutes.getHelp.index} component={GetHelpContainer}>
+		{/* <Route path={configRoutes.client.getHelp.index} component={GetHelpContainer} onEnter={checkValidSession(store, '/')}> */}
+		<Route path={configRoutes.client.getHelp.index} component={GetHelpContainer}>
 			<IndexRoute component={OrderIssueContainer} />
 			{ContactUs}
 			{/* <Redirect to={configRoutes.client.login} /> */}

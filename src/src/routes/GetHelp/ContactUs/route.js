@@ -6,5 +6,5 @@ import configRoutes from 'config/routes'
 import ContactUsContainer from './ContactUsContainer'
 
 export default (
-    <Route path={configRoutes.getHelp.contact} component={ContactUsContainer} />
+    <Route path={configRoutes.client.getHelp.contact} component={ContactUsContainer} />
 )
