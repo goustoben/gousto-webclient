@@ -1,50 +1,22 @@
 import React, { PropTypes } from 'react'
 
-import { PageContent, PageHeader } from 'Page'
+import BottomButton from '../components/BottomButton'
 import { BottomBar } from 'BottomBar'
-import Button from 'Button'
-import Link from 'Link'
 import { client as routes } from 'config/routes'
 
-import css from './Contact.css'
-
-const renderButtons = (button1Copy, button2Copy) => (
-	<BottomBar>
-		<Button color="secondary" width="no-auto" className={css.button} areChildrenInSegment>
-			<Link
-				noDecoration
-				className={css.buttonChild}
-				clientRouted
-				to={routes.getHelp.index}
-			>
-				{button1Copy}
-			</Link>
-		</Button>
-		<Button color="primary" width="no-auto" className={css.button} areChildrenInSegment>
-			<Link
-				noDecoration
-				className={css.buttonChild}
-				clientRouted={false}
-				to={routes.myGousto}
-			>
-				{button2Copy}
-			</Link>
-		</Button>
-	</BottomBar>
-)
+import GetHelpLayout from 'layouts/GetHelpLayout'
 
 const Contact = ({ content: { title, body, button1Copy, button2Copy } }) => (
-	<div className={css.rootContainer}>
-		<div className={css.header}>
-			<PageHeader title={title} />
-		</div>
-		<PageContent className={css.pageContent}>
-			<p className={css.copy}>
-				{body}
-			</p>
-			{renderButtons(button1Copy, button2Copy)}
-		</PageContent>
-	</div>
+	<GetHelpLayout title={title} body={body}>
+		<BottomBar>
+			<BottomButton color="secondary" url={routes.getHelp.index} clientRouted>
+				{button1Copy}
+			</BottomButton>
+			<BottomButton color="primary" url={routes.myGousto} clientRouted={false}>
+				{button2Copy}
+			</BottomButton>
+		</BottomBar>
+	</GetHelpLayout>
 )
 
 Contact.propTypes = {
