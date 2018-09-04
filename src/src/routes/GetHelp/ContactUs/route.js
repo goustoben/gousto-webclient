@@ -3,9 +3,7 @@ import { Route } from 'react-router'
 
 import configRoutes from 'config/routes'
 
-const ContactUsContainer = () => (
-    <div>Test</div>
-)
+import ContactUsContainer from './ContactUsContainer'
 
 export default (
     <Route path={configRoutes.getHelp.contactUs} component={ContactUsContainer} />
