@@ -27,25 +27,15 @@
 	text-align: left;
 }
 
-.copy {
+.bodyDescription {
 	@media ScreenXXSMin {
 		align-self: center;
 	}
 }
 
-.issuesContainer {
+.bodyContent {
 	@media ScreenXXSMin {
 		align-self: center;
 		width: 400px;
 	}
-}
-
-.button {
-	align-self: center;
-	flex-grow: 0.4;
-	width: 100px;
-}
-
-.buttonChild {
-	display: block;
 }
