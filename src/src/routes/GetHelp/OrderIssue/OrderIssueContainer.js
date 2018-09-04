@@ -4,10 +4,10 @@ import OrderIssue from './OrderIssue'
 
 const mapStateToProps = (state) => ({
 	categories: [
-		{ slug: 'ingredients', name: 'Ingredients (missing, damaged, etc)', url: '/help' },
-		{ slug: 'recipe_card', name: 'Recipe cards', url: '/help' },
-		{ slug: 'delivery', name: 'Delivery', url: '/help' },
-		{ slug: 'other', name: 'Other', url: '/help' }
+		{ slug: 'ingredients', name: 'Ingredients (missing, damaged, etc)', url: '/get-help/contact', clientRouted: true },
+		{ slug: 'recipe_card', name: 'Recipe cards', url: '/get-help/contact', clientRouted: true },
+		{ slug: 'delivery', name: 'Delivery', url: '/get-help/contact', clientRouted: true },
+		{ slug: 'other', name: 'Other', url: '/get-help/contact', clientRouted: true }
 	],
 	content: {
 		title: state.content.get('gethelpOrderissuesPageheaderHeader')

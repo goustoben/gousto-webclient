@@ -40,7 +40,7 @@ module.exports = {
 		rateRecipes2: '/rate-recipes',
 
 		getHelp: {
-			index: 'get-help',
+			index: '/get-help',
 			orderIssue: 'order-issue',
 			contact: 'contact',
 		},
