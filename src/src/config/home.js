@@ -1,5 +1,6 @@
 import React from 'react'
 import Icon from 'components/Icon'
+import Content from 'containers/Content'
 
 module.exports = {
 	hero: {
@@ -48,23 +49,23 @@ module.exports = {
 	},
 
 	howItWorks: {
-		header: 'Home cooking is important.',
-		description: 'Good intentions to cook can crumble on busy days. So we make it simple. (And tasty.)',
+		header: <Content contentKeys={'productBenefitTitle'}><span>Home cooking is important.</span></Content>,
+		description: <Content contentKeys={'productBenefitDescription'}><span>Good intentions to cook can crumble on busy days. So we make it simple. (And tasty.)</span></Content>,
 		steps: [
 			{
 				path: require('media/photos/quality.jpg'), // eslint-disable-line global-require
-				title: 'Quality',
-				description: 'Fresh ingredients, so you feel confident about every bite.',
+				title: <Content contentKeys={'firstProductBenefitTitle'}><span>Quality</span></Content>,
+				description: <Content contentKeys={'firstProductBenefitDescription'}><span>Fresh ingredients, so you feel confident about every bite.</span></Content>,
 			},
 			{
 				path: require('media/photos/simplicity.jpg'), // eslint-disable-line global-require
-				title: 'Simplicity',
-				description: 'Foolproof recipes, so anyone can cook a delicious meal. (Really.)',
+				title: <Content contentKeys={'secondProductBenefitTitle'}><span>Simplicity</span></Content>,
+				description: <Content contentKeys={'secondProductBenefitDescription'}><span>Foolproof recipes, so anyone can cook a delicious meal. (Really.)</span></Content>,
 			},
 			{
 				path: require('media/photos/variety.jpg'), // eslint-disable-line global-require
-				title: 'Variety',
-				description: 'Choose what you like: wholesome, adventurous, vegetarian, meat, fish.',
+				title: <Content contentKeys={'thirdProductBenefitTitle'}><span>Variety</span></Content>,
+				description: <Content contentKeys={'thirdProductBenefitDescription'}><span>Choose what you like: wholesome, adventurous, vegetarian, meat, fish.</span></Content>,
 			},
 		],
 	},
