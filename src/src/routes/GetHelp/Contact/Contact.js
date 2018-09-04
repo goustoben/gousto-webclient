@@ -29,6 +29,8 @@ Contact.propTypes = {
 	content: PropTypes.shape({
 		title: PropTypes.string.isRequired,
 		body: PropTypes.string.isRequired,
+		button1Copy: PropTypes.string.isRequired,
+		button2Copy: PropTypes.string.isRequired,
 	})
 }
 

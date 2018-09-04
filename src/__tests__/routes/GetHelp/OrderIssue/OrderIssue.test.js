@@ -1,16 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { PageHeader, PageContent } from 'Page'
-
-import List from 'routes/GetHelp/OrderIssue/List'
 import OrderIssue from 'routes/GetHelp/OrderIssue/OrderIssue'
 
 describe('<OrderIssue />', () => {
 	const categories = [{ name: 'test', url: '/test' }]
-	const content = { title: 'test title', body: 'text...' }
+	const content = { title: 'test title', body: 'text...', buttonCopy: 'Back' }
 
 	let wrapper
+	let GetHelpLayout
 
 	beforeEach(() => {
 		wrapper =  shallow(
@@ -19,16 +17,29 @@ describe('<OrderIssue />', () => {
 				categories={categories}
 			/>
 		)
+		GetHelpLayout = wrapper.find('GetHelpLayout')
+	})
+
+	test('layout is rendering correctly', () => {
+		const BottomBar = GetHelpLayout.find('BottomBar')
+
+		expect(GetHelpLayout).toHaveLength(1)
+		expect(BottomBar).toHaveLength(1)
+		expect(BottomBar.find('BottomButton')).toHaveLength(1)
+
 	})
 
 	test('header is rendering correctly', () => {
-		expect(wrapper.find(PageHeader)).toHaveLength(1)
-		expect(wrapper.find(PageHeader).prop('title')).toBe('test title')
+		expect(GetHelpLayout.prop('title')).toBe(content.title)
 	})
 
-	test('content is redering correctly', () => {
-		expect(wrapper.find(PageContent)).toHaveLength(1)
-		expect(wrapper.find(PageContent).find(List)).toHaveLength(1)
-		expect(wrapper.find(PageContent).contains(content.body)).toBe(true)
+	test('body description is redering correctly', () => {
+		expect(GetHelpLayout.prop('body')).toBe(content.body)
+	})
+
+	test('bottom bar buttons is rendering correctly', () => {
+		const BottomBar = GetHelpLayout.find('BottomBar')
+
+		expect(BottomBar.find('BottomButton').at(0).contains(content.buttonCopy)).toBe(true)
 	})
 })

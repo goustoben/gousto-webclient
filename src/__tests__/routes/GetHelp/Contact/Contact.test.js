@@ -4,9 +4,15 @@ import { shallow } from 'enzyme'
 import Contact from 'routes/GetHelp/Contact/Contact'
 
 describe('<Contact />', () => {
-	const content = { title: 'test title', body: 'text...' }
+	const content = {
+		title: 'test title',
+		body: 'text...',
+		button1Copy: 'Back',
+		button2Copy: 'Done'
+	}
 
 	let wrapper
+	let GetHelpLayout
 
 	beforeEach(() => {
 		wrapper =  shallow(
@@ -14,27 +20,30 @@ describe('<Contact />', () => {
 				content={content}
 			/>
 		)
+		GetHelpLayout = wrapper.find('GetHelpLayout')
+	})
+
+	test('layout is rendering correctly', () => {
+		const BottomBar = GetHelpLayout.find('BottomBar')
+
+		expect(GetHelpLayout).toHaveLength(1)
+		expect(BottomBar).toHaveLength(1)
+		expect(BottomBar.find('BottomButton')).toHaveLength(2)
+
 	})
 
 	test('header is rendering correctly', () => {
-		const pageHeader = wrapper.find('PageHeader')
-
-		expect(pageHeader).toHaveLength(1)
-		expect(pageHeader.prop('title')).toBe('test title')
+		expect(GetHelpLayout.prop('title')).toBe(content.title)
 	})
 
-	test('content is redering correctly', () => {
-		const pageContent = wrapper.find('PageContent')
-
-		expect(pageContent).toHaveLength(1)
-		expect(pageContent.contains(content.body)).toBe(true)
+	test('body description is redering correctly', () => {
+		expect(GetHelpLayout.prop('body')).toBe(content.body)
 	})
 
-	test('bottom bar is rendering correctly', () => {
-		const bottomBar = wrapper.find('BottomBar')
-		const buttons = wrapper.find('Button')
+	test('bottom bar buttons is rendering correctly', () => {
+		const BottomBar = GetHelpLayout.find('BottomBar')
 
-		expect(bottomBar).toHaveLength(1)
-		expect(buttons).toHaveLength(2)
+		expect(BottomBar.find('BottomButton').at(0).contains(content.button1Copy)).toBe(true)
+		expect(BottomBar.find('BottomButton').at(1).contains(content.button2Copy)).toBe(true)
 	})
 })
