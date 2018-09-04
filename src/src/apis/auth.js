@@ -1,28 +1,19 @@
 import fetch from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
-import env from 'utils/env'
+
 const version = routes.version.auth
 
-export function getUserToken(reqData) {
-	return fetch(null, `${endpoint('auth', version)}${routes.auth.userToken}`, { grant_type: 'password', username: reqData.email, password: reqData.password }, 'POST', 'no-cache', {}, false)
+export function getUserToken({ email, password, clientId, clientSecret }) {
+	return fetch(null, `${endpoint('auth', version)}${routes.auth.userToken}`, { grant_type: 'password', username: email, password, client_id: clientId, client_secret: clientSecret }, 'POST', 'no-cache')
 }
 
 export function identifyUser(accessToken) {
 	return fetch(accessToken, `${endpoint('auth', version)}${routes.auth.identifyUser}`, {}, 'GET', 'no-cache')
 }
 
-export function refreshUserToken(reqData) {
-	const body = {
-		grant_type: 'refresh_token',
-		refresh_token: reqData.refresh,
-	}
-	if (__SERVER__ && env) {
-		body.client_id = env.authClientId
-		body.client_secret = env.authClientSecret
-	}
-
-	return fetch(null, `${endpoint('auth', version)}${routes.auth.refreshToken}`, body, 'POST', 'no-cache', {}, false)
+export function refreshUserToken(refreshToken, clientId, clientSecret) {
+	return fetch(null, `${endpoint('auth', version)}${routes.auth.refreshToken}`, { grant_type: 'refresh_token', refresh_token: refreshToken, client_id: clientId, client_secret: clientSecret }, 'POST', 'no-cache', {}, false)
 }
 
 export function forgetUserToken(accessToken) {
@@ -38,4 +29,28 @@ export function resetUserPassword(password, passwordToken) {
 		password,
 		password_token: passwordToken,
 	}, 'POST', 'no-cache')
+}
+
+export function serverAuthenticate(email, password, rememberMe) {
+	return fetch(null, `${routes.auth.login}`, { grant_type: 'password', username: email, password, rememberMe }, 'POST', 'no-cache', {}, null, true, false)
+}
+
+export function serverLogout() {
+	return fetch(null, `${routes.auth.logout}`, {}, 'POST', 'no-cache', {}, null, true, false)
+}
+
+export function serverRefresh(rememberMe) {
+	return fetch(null, `${routes.auth.refresh}`, { rememberMe }, 'POST', 'no-cache', {}, null, true, false)
+}
+
+export function serverIdentify() {
+	return fetch(null, `${routes.auth.identify}`, {}, 'POST', 'no-cache', {}, null, true, false)
+}
+
+export function serverForget(accessToken) {
+	return fetch(null, `${routes.auth.forget}`, { accessToken }, 'POST', 'no-cache', {}, null, true, false)
+}
+
+export function serverValidatePassword(password) {
+	return fetch(null, `${routes.auth.validate}`, { password }, 'POST', 'no-cache', {}, null, true, false)
 }

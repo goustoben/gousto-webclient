@@ -18,6 +18,12 @@ module.exports = {
 		identifyUser: '/oauth/identify',
 		validateUserPassword: '/passwords/validate',
 		resetUserPassword: '/passwords',
+		login: '/login',
+		logout: '/logout',
+		refresh: '/refresh',
+		identify: '/identify',
+		forget: '/forget',
+		validate: '/validate',
 	},
 	client: {
 		blog: '/blog',
@@ -136,5 +142,9 @@ module.exports = {
 	},
 	workable: {
 		link: 'https://gousto.workable.com/',
+	},
+	getHelp: {
+		index: 'get-help',
+		orderIssue: 'order-issue',
 	},
 }

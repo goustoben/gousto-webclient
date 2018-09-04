@@ -311,4 +311,19 @@ describe('Button', () => {
 			).toBe(onClickSpy)
 		})
 	})
+
+	describe('when the prop areChildrenInSegment is true', () => {
+		test('should render the children in <Segment>s', () => {
+			const SimpleComponent = () => (<div>'hi'</div>)
+			const wrapper = shallow(
+				<Button areChildrenInSegment>
+					<SimpleComponent />
+					<SimpleComponent />
+				</Button>
+			)
+
+			// Expected to be 3 because the button also renders the spinner on a Segment
+			expect(wrapper.find(Segment).length).toBe(3)
+		})
+	})
 })

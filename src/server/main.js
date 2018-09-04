@@ -3,6 +3,7 @@ const React = require('react')
 const convert = require('koa-convert')
 const koaStatic = require('koa-static')
 const koaMount = require('koa-mount')
+const bodyParser = require('koa-body')
 const { renderToString } = require('react-dom/server')
 const Footer = require('Footer').default
 const logger = require('utils/logger').default
@@ -20,12 +21,14 @@ const Page = require('containers/Page').default
 const htmlTemplate = require('./template')
 const Helmet = require('react-helmet')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
+const routes = require('./routes').default
+
 
 const { clearPersistentStore } = require('middlewares/persist/persistStore')
 
 const withStatic = process.env.withStatic === 'true'
 
-const addressLookupRoute = require('./route/addressLookup').default
+const addressLookupRoute = require('./routes/addressLookup').default
 
 /* eslint-disable no-param-reassign */
 app.use(async (ctx, next) => {
@@ -86,6 +89,12 @@ app.use(async (ctx, next) => {
 app.use(appsRedirect)
 
 app.use(addressLookupRoute)
+
+/**
+ * Authentication Routes
+ */
+app.use(bodyParser({ multipart: true }))
+routes.auth(app)
 
 app.use(async (ctx, next) => {
 	if (ctx.request.path === '/ping') {

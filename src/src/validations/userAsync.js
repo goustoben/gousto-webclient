@@ -1,12 +1,12 @@
-import { validateUserPassword } from 'apis/auth'
+import { serverValidatePassword } from 'apis/auth'
 
 const validatePassword = async (password) => {
 	try {
-		await validateUserPassword(password)
+		await serverValidatePassword(password)
 
 		return true
 	} catch (err) {
-		if (err.code === 'validation-error') {
+		if (err.status === 406) {
 			return false
 		}
 

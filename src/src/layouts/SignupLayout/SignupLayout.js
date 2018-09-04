@@ -4,7 +4,7 @@ import CookieBanner from 'CookieBanner'
 import css from './SignupLayout.css'
 
 
-class CheckoutLayout extends React.PureComponent {
+class SignupLayout extends React.PureComponent {
 	static propTypes = {
 		children: PropTypes.object.isRequired,
 	}
@@ -22,4 +22,4 @@ class CheckoutLayout extends React.PureComponent {
 	}
 }
 
-export default CheckoutLayout
+export default SignupLayout
