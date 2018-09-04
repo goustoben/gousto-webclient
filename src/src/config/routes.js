@@ -146,5 +146,6 @@ module.exports = {
 	getHelp: {
 		index: 'get-help',
 		orderIssue: 'order-issue',
+		contactUs: 'contact-us',
 	},
 }

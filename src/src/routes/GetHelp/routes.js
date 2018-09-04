@@ -1,18 +1,22 @@
 import React from 'react'
-import { Route, Redirect, IndexRoute } from 'react-router'
+import { Route, IndexRoute } from 'react-router'
 
 import configRoutes from 'config/routes'
 import WizardLayout from 'layouts/WizardLayout'
 import GetHelpContainer from './GetHelpContainer'
 import OrderIssueContainer from './OrderIssue/OrderIssueContainer'
 
-import { checkValidSession } from './../../utils/routes'
+import ContactUs from './ContactUs'
 
-export default (store) => (
+// import { checkValidSession } from './../../utils/routes'
+
+export default () => (
 	<Route component={WizardLayout}>
-		<Route path={configRoutes.getHelp.index} component={GetHelpContainer} onEnter={checkValidSession(store, '/')}>
+		{/* <Route path={configRoutes.getHelp.index} component={GetHelpContainer} onEnter={checkValidSession(store, '/')}> */}
+		<Route path={configRoutes.getHelp.index} component={GetHelpContainer}>
 			<IndexRoute component={OrderIssueContainer} />
-			<Redirect to={configRoutes.client.login} />
+			{ContactUs}
+			{/* <Redirect to={configRoutes.client.login} /> */}
 		</Route>
 	</Route>
 )
