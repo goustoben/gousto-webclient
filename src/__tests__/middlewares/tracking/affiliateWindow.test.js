@@ -4,6 +4,7 @@ describe('affiliateWindow tracking middleware', () => {
 	beforeEach(() => {
 		window.dataLayer = []
 	})
+
 	test('should merge the given action with { eventType: \'affiliateEvent\' } and push it into window.dataLayer if asource is "awin"', () => {
 		affiliateWindow({ asource: 'awin', orderId: '1234' })
 		expect(window.dataLayer.length).toBe(1)
@@ -11,6 +12,21 @@ describe('affiliateWindow tracking middleware', () => {
 			asource: 'awin',
 			eventType: 'affiliateEvent',
 			orderId: '1234',
+			state: {},
+		})
+	})
+
+	test('should merge the given action with { eventType: \'affiliateEvent\' } and push it into window.dataLayer if asource is "awin"', () => {
+		affiliateWindow({
+			asource: ['awin', 'awin'],
+			orderId: '5678',
+		})
+
+		expect(window.dataLayer.length).toBe(1)
+		expect(window.dataLayer[0]).toEqual({
+			asource: 'awin',
+			eventType: 'affiliateEvent',
+			orderId: '5678',
 			state: {},
 		})
 	})
