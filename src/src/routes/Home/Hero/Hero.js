@@ -3,15 +3,20 @@ import ContentMask from 'ContentMask'
 import home from 'config/home'
 import config from 'config/routes'
 import CTAHomepage from '../CTA'
+import Content from 'containers/Content'
 import css from './Hero.css'
 
 const Hero = ({ redirect, ctaUri, ctaText, dataTesting }) => (
 	<div className={css.container} data-testing={dataTesting}>
 		<div className={css.textContainer}>
 			<h1 className={css.header}>
-				<span>{home.hero.header}</span>
+				<Content contentKeys="propositionMainHeadline">
+					<span>{home.hero.header}</span>
+				</Content>
 			</h1>
-			<h2 className={css.subHeader}>{home.hero.subheader}</h2>
+			<h2 className={css.subHeader}>
+				<Content contentKeys="propositionSupportingHeadline"><span>{home.hero.subheader}</span></Content>
+			</h2>
 			<div className={css.cta}>
 				<CTAHomepage
 					width={240}
