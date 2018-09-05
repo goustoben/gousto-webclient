@@ -29,7 +29,7 @@ describe('<BottomButton />', () => {
 		expect(link).toHaveLength(1)
 		expect(link.prop('clientRouted')).toBe(true)
 		expect(link.prop('to')).toBe('test-url')
-		expect(link.find('ChildComponent')).toBe(1)
+		expect(link.find('ChildComponent')).toHaveLength(1)
 	})
 
 	test('Link is passed clientRouted false when BottomButton has clientRouted false', () => {
