@@ -20,7 +20,7 @@ describe('GetHelpLayout', () => {
 		expect(wrapper.find('PageHeader').prop('title')).toBe('test title')
 	})
 
-	test('component is rendering button bar correctly', () => {
+	test('component is rendering bottom bar correctly', () => {
 		const bodyContent = wrapper
 			.find('PageContent')
 			.find('.bodyContent')
@@ -28,7 +28,6 @@ describe('GetHelpLayout', () => {
 			.find('PageContent')
 
 		expect(bodyContent.find('BottomBar')).toHaveLength(0)
-
 		expect(PageContent).toHaveLength(1)
 	})
 
