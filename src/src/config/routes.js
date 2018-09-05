@@ -39,6 +39,12 @@ module.exports = {
 		myReferral2: '/myreferrals',
 		rateRecipes2: '/rate-recipes',
 
+		getHelp: {
+			index: '/get-help',
+			orderIssue: 'order-issue',
+			contact: 'contact',
+		},
+
 		help: '/help',
 
 		home: '/',
@@ -142,9 +148,5 @@ module.exports = {
 	},
 	workable: {
 		link: 'https://gousto.workable.com/',
-	},
-	getHelp: {
-		index: 'get-help',
-		orderIssue: 'order-issue',
 	},
 }

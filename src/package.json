@@ -5,7 +5,7 @@
   "main": "index.js",
   "author": "Gousto",
   "license": "ISC",
-  "sideEffects" : "false",
+  "sideEffects": "false",
   "scripts": {
     "start": "node dist/server.js",
     "start:with-static": "withStatic=true npm run start",
