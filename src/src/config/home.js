@@ -26,9 +26,7 @@ module.exports = {
 			body: 'This is a simple and convenient way to cook restaurant quality food at home. The recipes are easy to follow with everything you need in exactly the right amounts. There is a good choice of meals with new recipes added every week. All ingredients are of a vey high quality and are packed in reusable/recyclable chilled packaging. With flexible delivery schedules I would highly recommend Gousto to anybody.',
 			url: 'https://uk.trustpilot.com/reviews/5824bee32ae760087caf0213',
 		},
-
 	],
-
 	subscription: {
 		header: 'How does Gousto work?',
 		description: '',
@@ -47,27 +45,26 @@ module.exports = {
 			description: 'Tasty, impressive meals you’re proud to share with the people you love.',
 		}],
 	},
-
 	howItWorks: {
 		header: <Content contentKeys={'productBenefitTitle'}><span>Home cooking is important.</span></Content>,
 		description: <Content contentKeys={'productBenefitDescription'}><span>Good intentions to cook can crumble on busy days. So we make it simple. (And tasty.)</span></Content>,
-		steps: [
+		steps: (variant) => ([
 			{
-				path: require('media/photos/quality.jpg'), // eslint-disable-line global-require
+				path: (variant === 'rebrand') ? require('media/photos/quality-alt.jpg') : require('media/photos/quality.jpg'), // eslint-disable-line global-require
 				title: <Content contentKeys={'firstProductBenefitTitle'}><span>Quality</span></Content>,
 				description: <Content contentKeys={'firstProductBenefitDescription'}><span>Fresh ingredients, so you feel confident about every bite.</span></Content>,
 			},
 			{
-				path: require('media/photos/simplicity.jpg'), // eslint-disable-line global-require
+				path: (variant === 'rebrand') ? require('media/photos/simplicity-alt.jpg') : require('media/photos/simplicity.jpg'), // eslint-disable-line global-require
 				title: <Content contentKeys={'secondProductBenefitTitle'}><span>Simplicity</span></Content>,
 				description: <Content contentKeys={'secondProductBenefitDescription'}><span>Foolproof recipes, so anyone can cook a delicious meal. (Really.)</span></Content>,
 			},
 			{
-				path: require('media/photos/variety.jpg'), // eslint-disable-line global-require
+				path: (variant === 'rebrand') ? require('media/photos/variety-alt.jpg') : require('media/photos/variety.jpg'), // eslint-disable-line global-require
 				title: <Content contentKeys={'thirdProductBenefitTitle'}><span>Variety</span></Content>,
 				description: <Content contentKeys={'thirdProductBenefitDescription'}><span>Choose what you like: wholesome, adventurous, vegetarian, meat, fish.</span></Content>,
 			},
-		],
+		]),
 	},
 	CTA: {
 		main: <span>Get started <Icon name="fa-angle-right" size="1.5rem" style={{ marginLeft: '8px', verticalAlign: 'text-top' }} /></span>,
