@@ -10,13 +10,29 @@
 	min-height: calc(desktopInfoSize + 150px);
 	width: 100%;
 	position: relative;
-	background: url('routes/Home/Hero/hero-1920w.jpg') center center / cover no-repeat;
 
 	@media ScreenXSMax {
 		min-height: 0;
 		height: 300px;
-		background: url('routes/Home/Hero/hero-700w.jpg') center top / cover no-repeat;
 		margin-bottom: mobileInfoBgSize;
+	}
+}
+
+.container--default {
+	composes: container;
+	background: url('routes/Home/Hero/hero-1920w.jpg') center center / cover no-repeat;
+
+	@media ScreenXSMax {
+		background: url('routes/Home/Hero/hero-700w.jpg') center top / cover no-repeat;
+	}
+}
+
+.container--rebrand {
+	composes: container;
+	background: url('routes/Home/Hero/hero-alt-1920w.jpg') center center / cover no-repeat;
+
+	@media ScreenXSMax {
+		background: url('routes/Home/Hero/hero-alt-700w.jpg') center top / cover no-repeat;
 	}
 }
 
@@ -33,11 +49,9 @@
 	composes: d-flex align-items-start flex-column from 'sass-loader!styles/bootstrap.scss';
 	position: absolute;
 	border-radius: 100%;
-	background-color: White;
 	width: desktopInfoSize;
 	height: desktopInfoSize;
 	top: 100px;
-	left: 8%;
 	padding: SpacingXXXXXL SpacingXXXL;
 	z-index: 2;
 
@@ -50,9 +64,29 @@
 		width: mobileInfoSize;
 		height: mobileInfoSize;
 		top: 220px;
-		left: auto;
 		padding: SpacingXXXL SpacingXXXL;
 		margin: 0 auto;
+	}
+}
+
+.textContainer--default {
+	composes: textContainer;
+	background-color: White;
+	left: 8%;
+
+	@media ScreenXSMax {
+		left: auto;
+	}
+}
+
+.textContainer--rebrand {
+	composes: textContainer;
+	background-color: #FFFFFF00;
+	right: 8%;
+
+	@media ScreenXSMax {
+		background-color: White;
+		right: auto;
 	}
 }
 
