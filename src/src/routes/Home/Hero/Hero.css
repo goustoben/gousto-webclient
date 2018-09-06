@@ -1,4 +1,4 @@
-@value ScreenXSMax, ScreenXXSMax, HeightMDMax from 'styles/screenSizes.css';
+@value ScreenSMMin, ScreenLGMin, ScreenXSMax from 'styles/screenSizes.css';
 @value SpacingXXXXXL, SpacingXXXL from 'sass-loader!styles/spacing.scss';
 @value Coconut, White from 'styles/colors.css';
 @value desktopInfoSize: 470px;
@@ -6,33 +6,38 @@
 @value mobileInfoBgSize: 220px;
 
 .container {
-	height: calc(100vh - 90px);
-	min-height: calc(desktopInfoSize + 150px);
 	width: 100%;
 	position: relative;
+	min-height: 0;
+	height: 300px;
+	margin-bottom: mobileInfoBgSize;
 
-	@media ScreenXSMax {
-		min-height: 0;
-		height: 300px;
-		margin-bottom: mobileInfoBgSize;
+	@media ScreenSMMin {
+		height: calc(100vh - 90px);
+		min-height: calc(desktopInfoSize + 150px);
+		margin-bottom: 0;
 	}
 }
 
 .container--default {
 	composes: container;
-	background: url('routes/Home/Hero/hero-1920w.jpg') center center / cover no-repeat;
+	background: url('routes/Home/Hero/hero-700w.jpg') center top / cover no-repeat;
 
-	@media ScreenXSMax {
-		background: url('routes/Home/Hero/hero-700w.jpg') center top / cover no-repeat;
+	@media ScreenSMMin {
+		background: url('routes/Home/Hero/hero-1920w.jpg') center center / cover no-repeat;
 	}
 }
 
 .container--rebrand {
 	composes: container;
-	background: url('routes/Home/Hero/hero-alt-1920w.jpg') center center / cover no-repeat;
+	background: url('routes/Home/Hero/hero-alt-700w.jpg') center top / cover no-repeat;
 
-	@media ScreenXSMax {
-		background: url('routes/Home/Hero/hero-alt-700w.jpg') center top / cover no-repeat;
+	@media ScreenSMMin {
+		background: url('routes/Home/Hero/hero-alt-1300w.jpg') center center / cover no-repeat;
+	}
+
+	@media ScreenLGMin {
+		background: url('routes/Home/Hero/hero-alt-1920w.jpg') center center / cover no-repeat;
 	}
 }
 
@@ -47,46 +52,55 @@
 
 .textContainer {
 	composes: d-flex align-items-start flex-column from 'sass-loader!styles/bootstrap.scss';
-	position: absolute;
+	position: relative;
+	width: mobileInfoSize;
+	height: mobileInfoSize;
+	top: 220px;
+	padding: SpacingXXXL SpacingXXXL;
 	border-radius: 100%;
-	width: desktopInfoSize;
-	height: desktopInfoSize;
-	top: 100px;
-	padding: SpacingXXXXXL SpacingXXXL;
 	z-index: 2;
+	margin: 0 auto;
 
-	@media HeightMDMax {
+	@media ScreenSMMin {
+		position: absolute;
+		width: desktopInfoSize;
+		height: desktopInfoSize;
 		top: 50px;
+		padding: SpacingXXXXXL SpacingXXXL;
+		margin: 0;
 	}
 
-	@media ScreenXSMax {
-		position: relative;
-		width: mobileInfoSize;
-		height: mobileInfoSize;
-		top: 220px;
-		padding: SpacingXXXL SpacingXXXL;
-		margin: 0 auto;
+	@media ScreenLGMin {
+		top: 100px;
 	}
 }
 
 .textContainer--default {
 	composes: textContainer;
 	background-color: White;
-	left: 8%;
+	left: auto;
 
-	@media ScreenXSMax {
-		left: auto;
-	}
+	@media ScreenSMMin {
+		left: 8%;
+		top: 50px;
+	}	
 }
 
 .textContainer--rebrand {
 	composes: textContainer;
-	background-color: #FFFFFF00;
-	right: 8%;
+	background-color: White;
+	right: auto;
 
-	@media ScreenXSMax {
-		background-color: White;
-		right: auto;
+	@media ScreenSMMin {
+		background-color: #FFFFFF00;
+		right: 0;
+		top: auto;
+		bottom: 10%;
+	}
+
+	@media ScreenLGMin {
+		right: 8%;
+		top: 100px;
 	}
 }
 
