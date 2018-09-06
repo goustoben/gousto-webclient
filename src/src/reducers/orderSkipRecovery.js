@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 
 export const initialState = () => Immutable.Map({
+    triggered: false,
     modalVisibility: false,
     orderId: '',
     dayId: '',
@@ -17,6 +18,18 @@ const orderSkipRecovery = {
 		}
 
 		switch (action.type) {
+            case actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED: {
+                let newState = state.set('triggered', action.triggered)
+                if (action.orderId) {
+                    newState = newState.set('orderId', action.orderId)
+                }
+                if (action.dayId) {
+                    newState = newState.set('dayId', action.dayId)
+                }
+                newState = newState.set('orderType', action.orderType)
+
+                return newState
+            }
             case actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE: {
                 let newState = state
                 if (action.modalVisibility) {
@@ -28,11 +41,10 @@ const orderSkipRecovery = {
                     }
 
                     newState = newState.set('orderType', action.orderType)
-
+                    newState = newState.set('modalVisibility', action.modalVisibility)
                 } else {
                     newState = initialState()
                 }
-                newState = newState.set('modalVisibility', action.modalVisibility)
 
                 return newState
             }
