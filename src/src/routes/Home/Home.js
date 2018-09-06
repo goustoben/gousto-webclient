@@ -18,6 +18,11 @@ class Home extends React.Component {
 		enableStorystream: PropTypes.bool,
 		moduleOrder: PropTypes.string,
 		isAuthenticated: PropTypes.bool,
+		variant: PropTypes.string,
+	}
+
+	static defaultProps = {
+		variant: 'default',
 	}
 
 	static fetchData({ store }) {
@@ -67,11 +72,12 @@ class Home extends React.Component {
 	}
 
 	render() {
+		const { isAuthenticated, enableStorystream, variant } = this.props
 		const modules = this.getModules()
 		let ctaUri
 		let ctaText
 
-		if (this.props.isAuthenticated) {
+		if (isAuthenticated) {
 			ctaUri = routes.client.menu
 			ctaText = home.CTA.loggedIn.main
 		} else {
@@ -107,12 +113,13 @@ class Home extends React.Component {
 					testimonials={{
 						ctaUri,
 						ctaText,
-						enableStorystream: this.props.enableStorystream,
+						enableStorystream,
 					}}
 					hero={{
 						ctaUri,
 						ctaText,
 						dataTesting: 'hero',
+						variant,
 					}}
 					recipes={{
 						ctaUri,
@@ -121,6 +128,9 @@ class Home extends React.Component {
 					whatsInYourBox={{
 						ctaUri,
 						ctaText,
+					}}
+					howItWorks={{
+						variant,
 					}}
 				/>
 			</span>

@@ -2,9 +2,7 @@ import { connect } from 'react-redux'
 import redirectAction from 'actions/redirect'
 import Hero from './Hero'
 
-const mapStateToProps = state => ({
-	variant: state.features.getIn(['rebrand', 'value'], false) ? 'rebrand' : 'default'
-})
+const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
 	redirect: redirectAction.redirect,
