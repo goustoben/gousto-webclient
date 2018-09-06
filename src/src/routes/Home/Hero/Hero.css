@@ -33,6 +33,10 @@
 	background: url('routes/Home/Hero/hero-alt-700w.jpg') center top / cover no-repeat;
 
 	@media ScreenSMMin {
+		background: url('routes/Home/Hero/hero-alt-1300w.jpg') center center / cover no-repeat;
+	}
+
+	@media ScreenLGMin {
 		background: url('routes/Home/Hero/hero-alt-1920w.jpg') center center / cover no-repeat;
 	}
 }
@@ -78,7 +82,8 @@
 
 	@media ScreenSMMin {
 		left: 8%;
-	}
+		top: 50px;
+	}	
 }
 
 .textContainer--rebrand {
@@ -89,10 +94,13 @@
 	@media ScreenSMMin {
 		background-color: #FFFFFF00;
 		right: 0;
+		top: auto;
+		bottom: 10%;
 	}
 
 	@media ScreenLGMin {
 		right: 8%;
+		top: 100px;
 	}
 }
 
