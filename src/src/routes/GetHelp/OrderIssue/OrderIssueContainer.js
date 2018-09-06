@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
 
+import { orderIssueSelected } from 'actions/getHelp'
+
 import OrderIssue from './OrderIssue'
 
 const mapStateToProps = (state) => ({
-	categories: [
+	orderIssues: [
 		{ slug: 'ingredients', name: 'Ingredients (missing, damaged, etc)', url: '/get-help/contact', clientRouted: true },
 		{ slug: 'recipe_card', name: 'Recipe cards', url: '/get-help/contact', clientRouted: true },
 		{ slug: 'delivery', name: 'Delivery', url: '/get-help/contact', clientRouted: true },
@@ -19,6 +21,8 @@ const mapStateToProps = (state) => ({
 	}
 })
 
-const OrderIssueContainer = connect(mapStateToProps, {})(OrderIssue)
+const OrderIssueContainer = connect(mapStateToProps, {
+	orderIssueSelected,
+})(OrderIssue)
 
 export default OrderIssueContainer
