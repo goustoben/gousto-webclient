@@ -1,13 +1,12 @@
 import { connect } from 'react-redux'
 
+import { zendesk } from 'config/routes'
+
 import Contact from './Contact'
 
 const mapStateToProps = (state) => ({
-	categories: [
-		{ slug: 'chat', name: 'Start live chat' },
-		{ slug: 'email', name: 'Contact us by email' },
-		{ slug: 'delivery', name: 'Delivery' },
-		{ slug: 'other', name: 'Other' }
+	contactChannels: [
+		{ slug: 'email', name: 'Contact us by email', url: zendesk.link, clientRouted: false },
 	],
 	content: {
 		title: state.content.get('get-help_contact_pageheader_header')

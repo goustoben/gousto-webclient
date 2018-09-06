@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Link from 'Link'
 
 import css from './Item.css'
 
-export const Item = ({ label, to, clientRouted, onClick }) => (
+const Item = ({ label, to, clientRouted, onClick }) => (
 	<li className={css.item} onClick={onClick}>
 		<Link to={to} clientRouted={clientRouted} className={css.itemLink}>
 			{label}
@@ -11,3 +11,16 @@ export const Item = ({ label, to, clientRouted, onClick }) => (
 		</Link>
 	</li>
 )
+
+Item.propTypes = {
+	label: PropTypes.string.isRequired,
+	to: PropTypes.string.isRequired,
+	clientRouted: PropTypes.bool,
+	onClick: PropTypes.func,
+}
+
+Item.defaultProps = {
+	onClick: () => {},
+}
+
+export default Item

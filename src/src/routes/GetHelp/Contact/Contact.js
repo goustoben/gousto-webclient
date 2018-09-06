@@ -1,13 +1,15 @@
 import React, { PropTypes } from 'react'
 
+import List from '../components/List'
 import BottomButton from '../components/BottomButton'
 import { BottomBar } from 'BottomBar'
 import { client as routes } from 'config/routes'
 
 import GetHelpLayout from 'layouts/GetHelpLayout'
 
-const Contact = ({ content: { title, body, button1Copy, button2Copy } }) => (
+const Contact = ({ contactChannels, content: { title, body, button1Copy, button2Copy } }) => (
 	<GetHelpLayout title={title} body={body}>
+		<List items={contactChannels} />
 		<BottomBar>
 			<BottomButton color="secondary" url={routes.getHelp.index} clientRouted>
 				{button1Copy}

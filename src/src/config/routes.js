@@ -149,4 +149,7 @@ module.exports = {
 	workable: {
 		link: 'https://gousto.workable.com/',
 	},
+	zendesk: {
+		link: 'https://gousto.zendesk.com/hc/en-gb/requests/new',
+	},
 }

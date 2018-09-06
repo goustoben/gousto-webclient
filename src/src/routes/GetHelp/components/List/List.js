@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import { Item } from './Item'
+import Item from './Item'
 
 import css from './List.css'
 
@@ -10,6 +10,7 @@ const List = ({ items, trackItemSelected }) => (
 				key={`list-${item.slug}`}
 				label={item.name}
 				to={item.url}
+				clientRouted={item.clientRouted}
 				onClick={() => trackItemSelected(item.slug)}
 			/>
 		))}
@@ -21,7 +22,8 @@ List.propTypes = {
 		PropTypes.shape({
 			slug: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
-			url: PropTypes.string.isRequired
+			url: PropTypes.string.isRequired,
+			clientRouted: PropTypes.bool,
 		})
 	),
 	trackItemSelected: PropTypes.func,
