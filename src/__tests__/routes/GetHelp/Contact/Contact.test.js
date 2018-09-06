@@ -1,20 +1,23 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import OrderIssue from 'routes/GetHelp/OrderIssue/OrderIssue'
+import Contact from 'routes/GetHelp/Contact/Contact'
 
-describe('<OrderIssue />', () => {
-	const categories = [{ name: 'test', url: '/test' }]
-	const content = { title: 'test title', body: 'text...', buttonCopy: 'Back' }
+describe('<Contact />', () => {
+	const content = {
+		title: 'test title',
+		body: 'text...',
+		button1Copy: 'Back',
+		button2Copy: 'Done'
+	}
 
 	let wrapper
 	let GetHelpLayout
 
 	beforeEach(() => {
 		wrapper =  shallow(
-			<OrderIssue
+			<Contact
 				content={content}
-				categories={categories}
 			/>
 		)
 		GetHelpLayout = wrapper.find('GetHelpLayout')
@@ -25,7 +28,7 @@ describe('<OrderIssue />', () => {
 
 		expect(GetHelpLayout).toHaveLength(1)
 		expect(BottomBar).toHaveLength(1)
-		expect(BottomBar.find('BottomButton')).toHaveLength(1)
+		expect(BottomBar.find('BottomButton')).toHaveLength(2)
 
 	})
 
@@ -40,7 +43,9 @@ describe('<OrderIssue />', () => {
 	test('bottom bar buttons is rendering correctly', () => {
 		const BottomBar = GetHelpLayout.find('BottomBar')
 		const Button1 = BottomBar.find('BottomButton').at(0)
+		const Button2 = BottomBar.find('BottomButton').at(1)
 
-		expect(Button1.contains(content.buttonCopy)).toBe(true)
+		expect(Button1.contains(content.button1Copy)).toBe(true)
+		expect(Button2.contains(content.button2Copy)).toBe(true)
 	})
 })

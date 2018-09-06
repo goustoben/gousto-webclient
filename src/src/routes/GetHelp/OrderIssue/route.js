@@ -5,5 +5,5 @@ import configRoutes from 'config/routes'
 import OrderIssueContainer from './OrderIssueContainer'
 
 export default (
-    <Route path={configRoutes.getHelp.orderIssue} component={OrderIssueContainer} />
+    <Route path={configRoutes.client.getHelp.orderIssue} component={OrderIssueContainer} />
 )

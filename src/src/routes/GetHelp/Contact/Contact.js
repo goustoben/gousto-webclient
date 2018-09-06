@@ -1,24 +1,25 @@
 import React, { PropTypes } from 'react'
 
-import List from './List'
-import { BottomBar } from 'BottomBar'
 import BottomButton from '../components/BottomButton'
+import { BottomBar } from 'BottomBar'
 import { client as routes } from 'config/routes'
 
 import GetHelpLayout from 'layouts/GetHelpLayout'
 
-const OrderIssue = ({ content: { title, body, buttonCopy }, categories }) => (
+const Contact = ({ content: { title, body, button1Copy, button2Copy } }) => (
 	<GetHelpLayout title={title} body={body}>
-		<List categories={categories} />
 		<BottomBar>
-			<BottomButton color="secondary" url={routes.myGousto} clientRouted={false}>
-				{buttonCopy}
+			<BottomButton color="secondary" url={routes.getHelp.index} clientRouted>
+				{button1Copy}
+			</BottomButton>
+			<BottomButton color="primary" url={routes.myGousto} clientRouted={false}>
+				{button2Copy}
 			</BottomButton>
 		</BottomBar>
 	</GetHelpLayout>
 )
 
-OrderIssue.propTypes = {
+Contact.propTypes = {
 	categories: PropTypes.arrayOf(
 		PropTypes.shape({
 			name: PropTypes.string.isRequired,
@@ -28,8 +29,9 @@ OrderIssue.propTypes = {
 	content: PropTypes.shape({
 		title: PropTypes.string.isRequired,
 		body: PropTypes.string.isRequired,
-		buttonCopy: PropTypes.string.isRequired,
+		button1Copy: PropTypes.string.isRequired,
+		button2Copy: PropTypes.string.isRequired,
 	})
 }
 
-export default OrderIssue
+export default Contact

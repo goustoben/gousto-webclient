@@ -77,9 +77,9 @@ environments:
 
   - name: production
     instanceType: t2.medium
-    minInstanceSize: 2
+    minInstanceSize: 4
     maxInstanceSize: 8
-    desiredInstanceSize: 2
+    desiredInstanceSize: 4
     availability: alwaysOn
 
     deployment:
