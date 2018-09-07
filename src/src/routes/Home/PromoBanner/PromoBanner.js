@@ -12,6 +12,7 @@ class PromoBanner extends React.Component {
 		promoToggleModalVisibility: PropTypes.func,
 		promoCode: PropTypes.string,
 		promoCurrent: PropTypes.string,
+		redirect: PropTypes.func,
 	}
 
 	static canApplyPromo(isAuthenticated, criteria) {
@@ -32,7 +33,7 @@ class PromoBanner extends React.Component {
 	}
 
 	async applyPromoCode(promoCode) {
-		const { isAuthenticated, promoChange, promoToggleModalVisibility } = this.props || {}
+		const { isAuthenticated, promoChange, promoToggleModalVisibility, redirect } = this.props || {}
 		const { query } = this.state
 
 		let error
@@ -44,6 +45,7 @@ class PromoBanner extends React.Component {
 				logger.warning(`error fetching promo code ${promoCode} - ${err.message}`, err)
 			}
 			if (!error) {
+				redirect('/signup/box-size', false)
 				promoToggleModalVisibility(true)
 			}
 		}
