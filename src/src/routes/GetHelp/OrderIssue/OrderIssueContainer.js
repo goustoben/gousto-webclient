@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { orderIssueSelected } from 'actions/getHelp'
+import { selectOrderIssue } from 'actions/getHelp'
 
 import OrderIssue from './OrderIssue'
 
@@ -22,7 +22,7 @@ const mapStateToProps = (state) => ({
 })
 
 const OrderIssueContainer = connect(mapStateToProps, {
-	orderIssueSelected,
+	selectOrderIssue,
 })(OrderIssue)
 
 export default OrderIssueContainer

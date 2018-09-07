@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 
+import { selectContactChannel } from 'actions/getHelp'
 import { zendesk } from 'config/routes'
 
 import Contact from './Contact'
@@ -20,6 +21,8 @@ const mapStateToProps = (state) => ({
 	}
 })
 
-const ContactContainer = connect(mapStateToProps, {})(Contact)
+const ContactContainer = connect(mapStateToProps, {
+	selectContactChannel,
+})(Contact)
 
 export default ContactContainer
