@@ -1,9 +1,7 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 import Contact from 'routes/GetHelp/Contact/Contact'
-import List from 'routes/GetHelp/components/List'
-import Item from 'routes/GetHelp/components/List/Item'
 
 describe('<Contact />', () => {
 	const content = {
@@ -20,12 +18,10 @@ describe('<Contact />', () => {
 	let GetHelpLayout
 
 	beforeEach(() => {
-		const selectContactChannelSpy = jest.fn()
 		wrapper = shallow(
 			<Contact
 				content={content}
 				contactChannels={contactChannels}
-				selectContactChannel={selectContactChannelSpy}
 			/>
 		)
 		GetHelpLayout = wrapper.find('GetHelpLayout')
@@ -48,11 +44,34 @@ describe('<Contact />', () => {
 		expect(GetHelpLayout.prop('body')).toBe(content.body)
 	})
 
-	test.only('items are rendered correctly', () => {
-		// console.log('wrapper', wrapper.find(Item))
-		const items = wrapper.find(Item)
+	test('items are rendered correctly', () => {
+		wrapper = mount(
+			<Contact
+				content={content}
+				contactChannels={contactChannels}
+			/>
+		)
+		const items = wrapper.find('Item')
 
 		expect(items).toHaveLength(1)
+		expect(items.at(0).text()).toBe('Contact us by email')
+		expect(items.at(0).prop('to')).toBe('/test')
+	})
+
+	test('items are rendered correctly', () => {
+		const selectContactChannelSpy = jest.fn()
+		wrapper = mount(
+			<Contact
+				content={content}
+				contactChannels={contactChannels}
+				selectContactChannel={selectContactChannelSpy}
+			/>
+		)
+		const items = wrapper.find('Item')
+		items.at(0).simulate('click')
+
+		expect(selectContactChannelSpy).toHaveBeenCalledTimes(1)
+		expect(selectContactChannelSpy).toHaveBeenCalledWith('email')
 	})
 
 	test('bottom bar buttons is rendering correctly', () => {
