@@ -77,10 +77,10 @@ module.exports = {
 	promo: {
 		// loggedIn|loggedOut|any
 		applyIf: 'loggedOut',
-		code: '',
+		code: 'DTI-SB-P03',
 		banner: {
 			text: 'Seen us on TV?',
-			linkText: 'Click here to claim your 1st & 2nd box at £14.99 each!',
+			linkText: 'Click here to get 50% OFF your first 2 boxes',
 		},
 	},
 	emailForm: {
