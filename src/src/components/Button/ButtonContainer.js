@@ -11,7 +11,7 @@ class Button extends React.PureComponent {
 		disabled: PropTypes.bool,
 		noDecoration: PropTypes.bool,
 		className: PropTypes.string,
-		width: PropTypes.oneOf(['auto', 'full']),
+		width: PropTypes.oneOf(['auto', 'full', 'no-auto']),
 		fill: PropTypes.bool,
 		children: PropTypes.oneOfType([
 			PropTypes.oneOf([

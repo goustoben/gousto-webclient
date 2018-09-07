@@ -19,7 +19,7 @@ class Segment extends React.PureComponent {
 		disabledClick: React.PropTypes.func,
 		disabled: React.PropTypes.bool,
 		btnDisabled: React.PropTypes.bool,
-		width: React.PropTypes.oneOf(['auto', 'full']),
+		width: React.PropTypes.oneOf(['auto', 'full', 'no-auto']),
 		size: React.PropTypes.string,
 		spinner: React.PropTypes.bool,
 		noDecoration: React.PropTypes.bool,

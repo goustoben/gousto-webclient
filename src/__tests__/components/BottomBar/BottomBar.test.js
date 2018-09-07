@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import { BottomBar } from 'BottomBar'
+import BottomBar from 'BottomBar'
 
 describe('<BottomBar />', () => {
 	let wrapper

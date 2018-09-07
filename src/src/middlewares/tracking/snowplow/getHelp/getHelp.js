@@ -2,7 +2,7 @@ import seActions from './seActions'
 
 const seCategory = 'Order Get Help'
 
-function orderIssueSelected(action) {
+function selectOrderIssue(action) {
 	return {
 		type: seActions[action.type],
 		data: { order_issue: action.issue },
@@ -10,6 +10,15 @@ function orderIssueSelected(action) {
 	}
 }
 
+function selectContactChannel(action) {
+	return {
+		type: seActions[action.type],
+		data: { channel: action.channel },
+		seCategory,
+	}
+}
+
 export {
-	orderIssueSelected,
+	selectOrderIssue,
+	selectContactChannel,
 }
