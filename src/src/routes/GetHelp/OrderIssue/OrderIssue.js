@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import List from '../components/List'
-import { BottomBar } from 'BottomBar'
+import BottomBar from 'BottomBar'
 import BottomButton from '../components/BottomButton'
 
 import { client as routes } from 'config/routes'

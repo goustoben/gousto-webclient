@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import { PageContent, PageHeader } from 'Page'
-import { BottomBar } from 'BottomBar'
+import BottomBar from 'BottomBar'
 
 import css from './GetHelpLayout.css'
 

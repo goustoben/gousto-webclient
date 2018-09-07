@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 
 import List from '../components/List'
 import BottomButton from '../components/BottomButton'
-import { BottomBar } from 'BottomBar'
+import BottomBar from 'BottomBar'
 import { client as routes } from 'config/routes'
 
 import GetHelpLayout from 'layouts/GetHelpLayout'
