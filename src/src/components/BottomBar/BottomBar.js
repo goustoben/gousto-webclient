@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import css from './BottomBar.css'
 
-export const BottomBar = ({ children, className }) => (
+const BottomBar = ({ children, className }) => (
 	<div className={classnames(css.bottomBar, className)}>
 		{children}
 	</div>
@@ -19,3 +19,5 @@ BottomBar.propTypes = {
 BottomBar.defaultProps = {
 	className: '',
 }
+
+export default BottomBar

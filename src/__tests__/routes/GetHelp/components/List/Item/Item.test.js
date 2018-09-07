@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Link from 'Link'
-import { Item } from 'routes/GetHelp/OrderIssue/List/Item'
+import Item from 'routes/GetHelp/components/List/Item'
 
 
 describe('<Item />', () => {
