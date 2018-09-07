@@ -2,6 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Contact from 'routes/GetHelp/Contact/Contact'
+import List from 'routes/GetHelp/components/List'
+import Item from 'routes/GetHelp/components/List/Item'
 
 describe('<Contact />', () => {
 	const content = {
@@ -10,14 +12,20 @@ describe('<Contact />', () => {
 		button1Copy: 'Back',
 		button2Copy: 'Done'
 	}
+	const contactChannels = [
+		{ slug: 'email', name: 'Contact us by email', url: '/test', clientRouted: false },
+	]
 
 	let wrapper
 	let GetHelpLayout
 
 	beforeEach(() => {
-		wrapper =  shallow(
+		const selectContactChannelSpy = jest.fn()
+		wrapper = shallow(
 			<Contact
 				content={content}
+				contactChannels={contactChannels}
+				selectContactChannel={selectContactChannelSpy}
 			/>
 		)
 		GetHelpLayout = wrapper.find('GetHelpLayout')
@@ -38,6 +46,13 @@ describe('<Contact />', () => {
 
 	test('body description is redering correctly', () => {
 		expect(GetHelpLayout.prop('body')).toBe(content.body)
+	})
+
+	test.only('items are rendered correctly', () => {
+		// console.log('wrapper', wrapper.find(Item))
+		const items = wrapper.find(Item)
+
+		expect(items).toHaveLength(1)
 	})
 
 	test('bottom bar buttons is rendering correctly', () => {

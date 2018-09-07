@@ -20,7 +20,6 @@ describe('GetHelpLayout', () => {
 	})
 
 	test('component is rendering bottom bar correctly', () => {
-		console.log('where is BottomBar', wrapper.html())
 		const PageContent = wrapper.find('PageContent')
 		const bodyContent = PageContent.find('.bodyContent')
 
