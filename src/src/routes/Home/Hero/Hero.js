@@ -6,9 +6,9 @@ import CTAHomepage from '../CTA'
 import Content from 'containers/Content'
 import css from './Hero.css'
 
-const Hero = ({ redirect, ctaUri, ctaText, dataTesting }) => (
-	<div className={css.container} data-testing={dataTesting}>
-		<div className={css.textContainer}>
+const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant }) => (
+	<div className={css[`container--${variant}`]} data-testing={dataTesting}>
+		<div className={css[`textContainer--${variant}`]}>
 			<h1 className={css.header}>
 				<Content contentKeys="propositionMainHeadline">
 					<span>{home.hero.header}</span>
@@ -27,7 +27,7 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting }) => (
 				</CTAHomepage>
 			</div>
 		</div>
-		<ContentMask fillColor="Coconut" />
+		{(variant === 'default') ? <ContentMask fillColor="Coconut" /> : null}
 		<div className={css.spacer} />
 	</div>
 )
@@ -37,11 +37,13 @@ Hero.propTypes = {
 	ctaUri: PropTypes.string,
 	ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	dataTesting: PropTypes.string,
+	variant: PropTypes.string,
 }
 
 Hero.defaultProps = {
 	ctaUri: config.client.menu,
 	ctaText: home.CTA.main,
+	variant: 'default',
 }
 
 export default Hero
