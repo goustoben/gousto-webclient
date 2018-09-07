@@ -26,8 +26,9 @@ Contact.propTypes = {
 		PropTypes.shape({
 			slug: PropTypes.string.isRequired,
 			name: PropTypes.string.isRequired,
-			url: PropTypes.string.isRequired,
+			url: PropTypes.string,
 			clientRouted: PropTypes.bool,
+			expandableContent: PropTypes.node,
 		})
 	),
 	content: PropTypes.shape({
