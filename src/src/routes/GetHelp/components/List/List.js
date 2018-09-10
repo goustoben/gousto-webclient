@@ -12,6 +12,8 @@ const List = ({ items, trackItemSelected }) => (
 				to={item.url}
 				clientRouted={item.clientRouted}
 				expandableContent={item.expandableContent}
+				isHiddenOnMobile={item.isHiddenOnMobile}
+				customOnClick={item.onClick}
 				onClick={() => trackItemSelected(item.slug)}
 			/>
 		))}

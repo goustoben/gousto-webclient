@@ -7,8 +7,13 @@ import { zendesk } from 'config/routes'
 import Contact from './Contact'
 import PhoneContent from './PhoneContent'
 
+const openLiveChat = () => {
+	window.$zopim.livechat.window.show()
+}
+
 const mapStateToProps = (state) => ({
 	contactChannels: [
+		{ slug: 'chat', name: 'Start live chat', onClick: openLiveChat, isHiddenOnMobile: true },
 		{ slug: 'email', name: 'Contact us by email', url: zendesk.link, clientRouted: false },
 		{ slug: 'phone', name: 'Contact us by phone', expandableContent: React.createElement(PhoneContent, null, null) },
 	],

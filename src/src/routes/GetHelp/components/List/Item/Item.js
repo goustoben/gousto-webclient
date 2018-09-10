@@ -10,10 +10,13 @@ export default class Item extends React.PureComponent {
 		to: PropTypes.string,
 		clientRouted: PropTypes.bool,
 		expandableContent: PropTypes.node,
+		isHiddenOnMobile: PropTypes.bool,
+		customOnClick: PropTypes.func,
 		onClick: PropTypes.func,
 	}
 
 	static defaultProps = {
+		isHiddenOnMobile: false,
 		onClick: () => {},
 	}
 
@@ -26,7 +29,15 @@ export default class Item extends React.PureComponent {
 	}
 
 	render() {
-		const { label, to, clientRouted, expandableContent, onClick } = this.props
+		const {
+			label,
+			to,
+			clientRouted,
+			expandableContent,
+			isHiddenOnMobile,
+			customOnClick,
+			onClick
+		} = this.props
 		const { isExpanded } = this.state
 		const arrowClass = classnames({
 			[css.itemArrowRight]: !isExpanded,
@@ -34,20 +45,26 @@ export default class Item extends React.PureComponent {
 		})
 
 		return (
-			<li className={css.item} onClick={onClick}>
+			<li className={classnames(css.item, { [css.hiddenOnMobile]: isHiddenOnMobile })} onClick={onClick}>
 				{to ?
 					<Link to={to} clientRouted={clientRouted} className={css.itemContent}>
 						{label}
 						<span className={css.itemArrowRight} />
 					</Link>
 					: null }
-				{!to && expandableContent ?
+				{!to && !customOnClick && expandableContent ?
 					<div>
 						<div className={css.itemContent} onClick={() => this.toggleContent()}>
 							{label}
 							<span className={classnames(arrowClass)} />
 						</div>
 						{isExpanded ? expandableContent : null}
+					</div>
+					: null }
+				{!to && !expandableContent && customOnClick ?
+					<div className={css.itemContent} onClick={() => customOnClick()}>
+						{label}
+						<span className={classnames(arrowClass)} />
 					</div>
 					: null }
 			</li>
