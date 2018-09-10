@@ -9,6 +9,7 @@ export default class Item extends React.PureComponent {
 		label: PropTypes.string.isRequired,
 		to: PropTypes.string,
 		clientRouted: PropTypes.bool,
+		expandableContent: PropTypes.node,
 		onClick: PropTypes.func,
 	}
 
@@ -26,9 +27,10 @@ export default class Item extends React.PureComponent {
 
 	render() {
 		const { label, to, clientRouted, expandableContent, onClick } = this.props
+		const { isExpanded } = this.state
 		const arrowClass = classnames({
-			[css.itemArrowRight]: !this.state.isExpanded,
-			[css.itemArrowDown]: this.state.isExpanded,
+			[css.itemArrowRight]: !isExpanded,
+			[css.itemArrowDown]: isExpanded,
 		})
 
 		return (
@@ -45,9 +47,7 @@ export default class Item extends React.PureComponent {
 							{label}
 							<span className={classnames(arrowClass)} />
 						</div>
-						{this.state.isExpanded ?
-							React.createElement(expandableContent, null, null)
-							: null}
+						{isExpanded ? expandableContent : null}
 					</div>
 					: null }
 			</li>

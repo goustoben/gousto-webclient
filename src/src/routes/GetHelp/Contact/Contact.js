@@ -22,15 +22,7 @@ const Contact = ({ content: { title, body, button1Copy, button2Copy }, contactCh
 )
 
 Contact.propTypes = {
-	contactChannels: PropTypes.arrayOf(
-		PropTypes.shape({
-			slug: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-			url: PropTypes.string,
-			clientRouted: PropTypes.bool,
-			expandableContent: PropTypes.node,
-		})
-	),
+	contactChannels: PropTypes.array,
 	content: PropTypes.shape({
 		title: PropTypes.string.isRequired,
 		body: PropTypes.string.isRequired,

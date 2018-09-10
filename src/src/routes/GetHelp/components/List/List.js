@@ -19,7 +19,11 @@ const List = ({ items, trackItemSelected }) => (
 )
 
 List.propTypes = {
-	items: PropTypes.array,
+	items: PropTypes.arrayOf(
+		PropTypes.shape({
+			slug: PropTypes.string.isRequired,
+		})
+	),
 	trackItemSelected: PropTypes.func,
 }
 
