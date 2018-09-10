@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 
-const PhoneContact = ({ content: { copy1, phoneNumber, copy2 } }) => (
+const PhoneContact = ({ content: { copy1, phoneNumber, phoneNumberLink, copy2 } }) => (
 	<div>
 		{copy1}
-		<a href={`tel:${phoneNumber}`}>{phoneNumber}</a>
+		<a href={`tel:${phoneNumberLink}`}>{phoneNumber}</a>
 		{copy2}
 	</div>
 )
