@@ -41,7 +41,7 @@ export default class Item extends React.PureComponent {
 						<span className={css.itemArrowRight} />
 					</Link>
 					: null }
-				{expandableContent ?
+				{!to && expandableContent ?
 					<div>
 						<div className={css.itemContent} onClick={() => this.toggleContent()}>
 							{label}
