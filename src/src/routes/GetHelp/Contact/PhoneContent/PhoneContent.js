@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react'
 
+import css from './PhoneContent.css'
+
 const PhoneContact = ({ content: { copy1, phoneNumber, phoneNumberLink, copy2 } }) => (
 	<div>
 		{copy1}
-		<a href={`tel:${phoneNumberLink}`}>{phoneNumber}</a>
+		<a className={css.visibleOnlyOnMobile} href={`tel:${phoneNumberLink}`}>{phoneNumber}</a>
+		<span className={css.hiddenOnMobile}>{phoneNumber}</span>
 		{copy2}
 	</div>
 )
