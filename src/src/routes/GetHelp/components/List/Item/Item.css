@@ -41,5 +41,6 @@
 
 .hiddenOnMobile {
 	@media ScreenXXSMax {
+		display: none;
 	}
 }
