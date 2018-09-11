@@ -11,6 +11,7 @@ const List = ({ items, trackItemSelected }) => (
 				label={item.name}
 				to={item.url}
 				clientRouted={item.clientRouted}
+				expandableContent={item.expandableContent}
 				onClick={() => trackItemSelected(item.slug)}
 			/>
 		))}
@@ -21,9 +22,6 @@ List.propTypes = {
 	items: PropTypes.arrayOf(
 		PropTypes.shape({
 			slug: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-			url: PropTypes.string.isRequired,
-			clientRouted: PropTypes.bool,
 		})
 	),
 	trackItemSelected: PropTypes.func,

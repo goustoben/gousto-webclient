@@ -1,3 +1,5 @@
+@value Bluecheese from 'styles/colors.css';
+
 .item {
 	border-bottom: 1px solid #ccc;
 	text-align: left;
@@ -7,20 +9,31 @@
 	border-bottom: 0;
 }
 
-.itemLink:hover {
+.itemContent:hover {
 	text-decoration: none;
+	cursor: pointer;
 }
 
-.itemLink {
+.itemContent {
+	color: Bluecheese;
 	display: block;
 	padding: 20px 0;
 	position: relative;
 }
 
-.itemArrowRight {
-	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+.itemArrow {
 	position: absolute;
 	right: 10px;
 	top: 50%;
 	margin-top: -8px;
+}
+
+.itemArrowRight {
+	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	composes: itemArrow;
+}
+
+.itemArrowDown {
+	composes: fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+	composes: itemArrow;
 }

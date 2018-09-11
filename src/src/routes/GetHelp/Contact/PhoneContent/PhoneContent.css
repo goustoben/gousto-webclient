@@ -1,0 +1,13 @@
+@value ScreenXXSMin, ScreenXXSMax from 'styles/screenSizes.css';
+
+.hiddenOnMobile {
+	@media ScreenXXSMax {
+		display: none;
+	}
+}
+
+.visibleOnlyOnMobile {
+	@media ScreenXXSMin {
+		display: none;
+	}
+}

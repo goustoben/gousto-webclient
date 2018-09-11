@@ -19,14 +19,7 @@ const OrderIssue = ({ content: { title, body, buttonCopy }, orderIssues, selectO
 )
 
 OrderIssue.propTypes = {
-	orderIssues: PropTypes.arrayOf(
-		PropTypes.shape({
-			slug: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-			url: PropTypes.string.isRequired,
-			clientRouted: PropTypes.bool,
-		})
-	),
+	orderIssues: PropTypes.array,
 	content: PropTypes.shape({
 		title: PropTypes.string.isRequired,
 		body: PropTypes.string.isRequired,
