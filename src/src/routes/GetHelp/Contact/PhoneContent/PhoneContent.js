@@ -1,22 +1,16 @@
 import React, { PropTypes } from 'react'
 
+import { telephone } from 'config/company'
+
 import css from './PhoneContent.css'
 
-const PhoneContact = ({ content: { copy1, phoneNumber, phoneNumberLink, copy2 } }) => (
+const PhoneContact = () => (
 	<div>
-		{copy1}
-		<a className={css.visibleOnlyOnMobile} href={`tel:${phoneNumberLink}`}>{phoneNumber}</a>
-		<span className={css.hiddenOnMobile}>{phoneNumber}</span>
-		{copy2}
+		Call us on&nbsp;
+		<a className={css.visibleOnlyOnMobile} href={`tel:${telephone.link}`}>{telephone.number}</a>
+		<span className={css.hiddenOnMobile}>{telephone.number}</span>
+		. We are available on weekdays from 9:00am - 7:45pm, and on weekends from 10:00am - 6:45pm
 	</div>
 )
-
-PhoneContact.propTypes = {
-	orderIssues: PropTypes.shape({
-		copy1: PropTypes.string.isRequired,
-		name: PropTypes.string.isRequired,
-		copy2: PropTypes.string.isRequired,
-	}),
-}
 
 export default PhoneContact

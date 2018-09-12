@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, PureComponent } from 'react'
 import Link from 'Link'
 import classnames from 'classnames'
 
 import css from './Item.css'
 
-export default class Item extends React.PureComponent {
+export default class Item extends PureComponent {
 	static propTypes = {
 		label: PropTypes.string.isRequired,
 		to: PropTypes.string,
