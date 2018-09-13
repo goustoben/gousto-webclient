@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import css from './Banner.css'
+import Button from 'Button'
 
 const Banner = ({ hide, onClick, text, linkText }) => (
 	<div
@@ -11,9 +12,12 @@ const Banner = ({ hide, onClick, text, linkText }) => (
 			{ [css.hide]: hide },
 		)}
 	>
-		<p className={css.text}>{text}&nbsp;
-			<span className={css.linkUnderlined} >{linkText}</span>
-		</p>
+		<p className={css.text}>{text}&nbsp;</p>
+		<Button
+			color="secondary"
+		>
+			{linkText}
+		</Button>
 	</div>
 )
 
