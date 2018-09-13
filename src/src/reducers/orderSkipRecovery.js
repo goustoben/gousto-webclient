@@ -9,6 +9,7 @@ export const initialState = () => Immutable.Map({
     dayId: '',
     boxNumber: '',
     orderType: '',
+    orderDate: '',
 })
 
 const orderSkipRecovery = {
@@ -19,14 +20,16 @@ const orderSkipRecovery = {
 
 		switch (action.type) {
             case actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED: {
-                let newState = state.set('triggered', action.triggered)
+                let newState = state.set('triggered', action.triggered).set('orderType', action.orderType)
                 if (action.orderId) {
                     newState = newState.set('orderId', action.orderId)
                 }
                 if (action.dayId) {
                     newState = newState.set('dayId', action.dayId)
                 }
-                newState = newState.set('orderType', action.orderType)
+                if (action.orderDate) {
+                    newState = newState.set('orderDate', actions.orderDate)
+                }
 
                 return newState
             }
