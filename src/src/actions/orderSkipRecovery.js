@@ -68,7 +68,7 @@ export const cancelProjectedOrder = (dayId) => (
     }
 )
 
-export const getSkipRecoveryContent = (orderId, dayId, status, actionTriggered) => (
+export const getSkipRecoveryContent = ({ orderId, dayId, status, actionTriggered }) => (
     async (dispatch, getState) => {
         const accessToken = getState().auth.get('accessToken')
 		try {

@@ -6,10 +6,16 @@ import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComp
 class OrderSkipRecovery extends React.PureComponent {
 
 	componentDidUpdate(prevProps) {
-		const { triggered, orderId, dayId, orderType } = this.props
+		const { triggered, orderId, dayId, orderType, getSkipRecoveryContent } = this.props
 		const actionTriggered = (orderType === 'pending') ? 'Cancel' : 'Skip'
+
 		if (triggered && prevProps.triggered !== triggered) {
-			this.props.getSkipRecoveryContent(orderId, dayId, orderType, actionTriggered)
+			getSkipRecoveryContent({
+				orderId,
+				dayId,
+				orderType,
+				actionTriggered,
+			})
 		}
 	}
 
