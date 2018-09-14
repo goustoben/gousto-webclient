@@ -13,10 +13,10 @@ exports[`Banner Initial Render should render with given text 1`] = `
      
   </p>
   <div
-    className="container secondary fill widthAuto"
+    className="container tertiary fill widthAuto"
   >
     <div
-      className="spinnerContainer  base secondary fill noHover autoWidthPadding"
+      className="spinnerContainer  base tertiary fill noHover autoWidthPadding"
       onClick={[Function]}
       onKeyUp={[Function]}
       onMouseEnter={[Function]}
@@ -29,40 +29,40 @@ exports[`Banner Initial Render should render with given text 1`] = `
           className="fadingCircle"
         >
           <div
-            className="circle1 bluecheese"
+            className="circle1 white"
           />
           <div
-            className="circle2 bluecheese"
+            className="circle2 white"
           />
           <div
-            className="circle3 bluecheese"
+            className="circle3 white"
           />
           <div
-            className="circle4 bluecheese"
+            className="circle4 white"
           />
           <div
-            className="circle5 bluecheese"
+            className="circle5 white"
           />
           <div
-            className="circle6 bluecheese"
+            className="circle6 white"
           />
           <div
-            className="circle7 bluecheese"
+            className="circle7 white"
           />
           <div
-            className="circle8 bluecheese"
+            className="circle8 white"
           />
           <div
-            className="circle9 bluecheese"
+            className="circle9 white"
           />
           <div
-            className="circle10 bluecheese"
+            className="circle10 white"
           />
           <div
-            className="circle11 bluecheese"
+            className="circle11 white"
           />
           <div
-            className="circle12 bluecheese"
+            className="circle12 white"
           />
         </div>
       </span>
