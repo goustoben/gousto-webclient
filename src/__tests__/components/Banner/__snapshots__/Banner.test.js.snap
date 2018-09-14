@@ -1,18 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Banner snapshots should render with given text 1`] = `
+exports[`Banner Initial Render should render with given text 1`] = `
 <div
   className="container link"
   onClick={[Function]}
+  role="button"
 >
   <p
     className="text"
   >
     A Banner's text
      
-    <span
-      className="linkUnderlined"
-    />
   </p>
+  <div
+    className="container secondary fill widthAuto"
+  >
+    <div
+      className="spinnerContainer  base secondary fill noHover autoWidthPadding"
+      onClick={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+    >
+      <span
+        className="spinner"
+      >
+        <div
+          className="fadingCircle"
+        >
+          <div
+            className="circle1 bluecheese"
+          />
+          <div
+            className="circle2 bluecheese"
+          />
+          <div
+            className="circle3 bluecheese"
+          />
+          <div
+            className="circle4 bluecheese"
+          />
+          <div
+            className="circle5 bluecheese"
+          />
+          <div
+            className="circle6 bluecheese"
+          />
+          <div
+            className="circle7 bluecheese"
+          />
+          <div
+            className="circle8 bluecheese"
+          />
+          <div
+            className="circle9 bluecheese"
+          />
+          <div
+            className="circle10 bluecheese"
+          />
+          <div
+            className="circle11 bluecheese"
+          />
+          <div
+            className="circle12 bluecheese"
+          />
+        </div>
+      </span>
+    </div>
+  </div>
 </div>
-`
+`;
