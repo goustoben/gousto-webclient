@@ -5,6 +5,7 @@ import Button from 'Button'
 
 const Banner = ({ hide, onClick, text, linkText }) => (
 	<div
+		role="button"
 		onClick={() => { onClick() }}
 		className={classnames(
 			css.container,
@@ -13,11 +14,7 @@ const Banner = ({ hide, onClick, text, linkText }) => (
 		)}
 	>
 		<p className={css.text}>{text}&nbsp;</p>
-		<Button
-			color="secondary"
-		>
-			{linkText}
-		</Button>
+		<Button color="secondary">{linkText}</Button>
 	</div>
 )
 
