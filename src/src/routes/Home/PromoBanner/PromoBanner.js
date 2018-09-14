@@ -34,11 +34,11 @@ class PromoBanner extends React.Component {
 
 	async applyPromoCode(promoCode) {
 		const { isAuthenticated, promoChange, promoToggleModalVisibility, redirect } = this.props || {}
-		const { query } = this.state
+        const { query } = this.state
 
 		let error
 		if (!(query.promo_code && query.promo_code.length > 0) && promoCode && PromoBanner.canApplyPromo(isAuthenticated, home.promo.applyIf)) {
-			try {
+            try {
 				await promoChange(promoCode)
 			} catch (err) {
 				error = err
@@ -65,7 +65,7 @@ class PromoBanner extends React.Component {
 			<Banner
 				text={home.promo.banner.text}
 				linkText={home.promo.banner.linkText}
-				onClick={() => { this.applyPromoCode(promoBannerCode) }}
+				onClick={() => this.applyPromoCode(promoBannerCode)}
 				hide={hide}
 			/>
 		)
