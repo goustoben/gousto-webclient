@@ -14,7 +14,7 @@ const Banner = ({ hide, onClick, text, linkText }) => (
 		)}
 	>
 		<p className={css.text}>{text}&nbsp;</p>
-		<Button color="secondary">{linkText}</Button>
+		<Button color="tertiary">{linkText}</Button>
 	</div>
 )
 
