@@ -10,6 +10,9 @@ export const initialState = () => Immutable.Map({
     boxNumber: '',
     orderType: '',
     orderDate: '',
+    title: '',
+    valueProposition: null,
+    callToActions: null,
 })
 
 const orderSkipRecovery = {
@@ -41,6 +44,15 @@ const orderSkipRecovery = {
                     }
                     if (action.dayId) {
                         newState = newState.set('dayId', action.dayId)
+                    }
+                    if (action.title) {
+                        newState = newState.set('title', action.title)
+                    }
+                    if (action.valueProposition) {
+                        newState = newState.set('valueProposition', action.valueProposition)
+                    }
+                    if (action.callToActions) {
+                        newState = newState.set('callToActions', action.callToActions)
                     }
 
                     newState = newState.set('orderType', action.orderType)
