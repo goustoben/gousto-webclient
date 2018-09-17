@@ -29,15 +29,6 @@
     cursor: pointer;
 }
 
-.orderSkipRecoveryMessage {
-    font-family: comfortaaFontStack;
-    font-size: 20px;
-    color: Black;
-    line-height: 30px;
-    font-weight: bold;
-    text-align: center;
-}
-
 .valuePropositionTitle {
     color: Black;
     font-family: Avenir;

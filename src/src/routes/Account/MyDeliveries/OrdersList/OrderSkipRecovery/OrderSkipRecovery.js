@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react'
 
 import css from './OrderSkipRecovery.css'
-import ModalComponent, { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
+import ModalComponent, { ModalContent, ModalFooter } from 'ModalComponent'
+
+import Title from './Title'
 
 class OrderSkipRecovery extends React.PureComponent {
 
@@ -29,13 +31,11 @@ class OrderSkipRecovery extends React.PureComponent {
 	}
 
 	render() {
-		const { visible, dayId, orderId, orderType, boxNumber, skipRecovery, keepOrder, cancelPendingOrder, cancelProjectedOrder } = this.props
+		const { visible, dayId, orderId, orderType, boxNumber, skipRecovery, keepOrder, cancelPendingOrder, cancelProjectedOrder, title } = this.props
 
 		return (
 			<ModalComponent visible={visible}>
-				<ModalTitle>
-					<div className={css.orderSkipRecoveryMessage}>Are you sure you want to {(orderType === 'pending') ? 'cancel' : 'skip'}?</div>
-				</ModalTitle>
+				<Title title={title} orderType={orderType} />
 				{(boxNumber < 10 && skipRecovery) &&
 					<ModalContent>
 						<div className={css.valuePropositionTitle}>Not in on your delivery date?</div>
@@ -66,6 +66,15 @@ OrderSkipRecovery.propTypes = {
 	keepOrder: PropTypes.func,
 	cancelPendingOrder: PropTypes.func,
 	cancelProjectedOrder: PropTypes.func,
+	title: PropTypes.string,
+	valueProposition: PropTypes.shape({
+		message: PropTypes.string,
+		title: PropTypes.string,
+	}),
+	callToActions: PropTypes.shape({
+		confirm: PropTypes.string,
+		keep: PropTypes.string,
+	})
 }
 
 export { OrderSkipRecovery }

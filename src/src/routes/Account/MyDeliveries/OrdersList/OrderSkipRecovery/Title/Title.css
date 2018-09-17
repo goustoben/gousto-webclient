@@ -1,0 +1,11 @@
+@value comfortaaFontStack from 'styles/typography.css';
+@value Black from 'styles/colors.css';
+
+.title {
+    font-family: comfortaaFontStack;
+    font-size: 20px;
+    color: Black;
+    line-height: 30px;
+    font-weight: bold;
+    text-align: center;
+}

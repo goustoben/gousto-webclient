@@ -10,8 +10,11 @@ const mapStateToProps = (state) => ({
     orderId: state.orderSkipRecovery.get('orderId'),
     dayId: state.orderSkipRecovery.get('dayId'),
     orderType: state.orderSkipRecovery.get('orderType'),
-    boxNumber: state.subscription.get('subscription').get('currentBoxNumber'),
-    skipRecovery: state.features.get('skipRecovery').get('value'),
+    boxNumber: state.subscription.getIn(['subscription', 'currentBoxNumber']),
+    skipRecovery: state.features.getIn(['skipRecovery', 'value']),
+    title: state.orderSkipRecovery.get('title'),
+    valueProposition: state.orderSkipRecovery.get('valueProposition'),
+    callToActions: state.orderSkipRecovery.get('callToActions'),
 })
 
 const mapDispatchToProps = {
