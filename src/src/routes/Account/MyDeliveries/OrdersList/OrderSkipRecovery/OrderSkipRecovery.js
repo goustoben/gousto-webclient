@@ -31,12 +31,12 @@ class OrderSkipRecovery extends React.PureComponent {
 	}
 
 	render() {
-		const { visible, dayId, orderId, orderType, boxNumber, skipRecovery, keepOrder, cancelPendingOrder, cancelProjectedOrder, title } = this.props
+		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title } = this.props
 
 		return (
 			<ModalComponent visible={visible}>
 				<Title title={title} orderType={orderType} />
-				{(boxNumber < 10 && skipRecovery) &&
+				{(featureFlag) &&
 					<ModalContent>
 						<div className={css.valuePropositionTitle}>Not in on your delivery date?</div>
 						<div className={css.valuePropositionDescription}>Change your delivery day easily for any box you can choose recipes for.</div>
@@ -61,8 +61,7 @@ OrderSkipRecovery.propTypes = {
 	orderId: PropTypes.string,
 	dayId: PropTypes.string,
 	orderType: PropTypes.string,
-	boxNumber: PropTypes.number,
-	skipRecovery: PropTypes.bool,
+	featureFlag: PropTypes.bool,
 	keepOrder: PropTypes.func,
 	cancelPendingOrder: PropTypes.func,
 	cancelProjectedOrder: PropTypes.func,
