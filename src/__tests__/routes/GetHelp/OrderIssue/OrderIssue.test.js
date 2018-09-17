@@ -1,10 +1,10 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 
 import OrderIssue from 'routes/GetHelp/OrderIssue/OrderIssue'
 
 describe('<OrderIssue />', () => {
-	const categories = [{ name: 'test', url: '/test' }]
+	const orderIssues = [{ slug: 'test-slug', name: 'test-name', url: '/test' }]
 	const content = { title: 'test title', body: 'text...', buttonCopy: 'Back' }
 
 	let wrapper
@@ -14,7 +14,7 @@ describe('<OrderIssue />', () => {
 		wrapper =  shallow(
 			<OrderIssue
 				content={content}
-				categories={categories}
+				orderIssues={orderIssues}
 			/>
 		)
 		GetHelpLayout = wrapper.find('GetHelpLayout')
@@ -35,6 +35,36 @@ describe('<OrderIssue />', () => {
 
 	test('body description is redering correctly', () => {
 		expect(GetHelpLayout.prop('body')).toBe(content.body)
+	})
+
+	test('items are rendered correctly', () => {
+		wrapper = mount(
+			<OrderIssue
+				content={content}
+				orderIssues={orderIssues}
+			/>
+		)
+		const items = wrapper.find('Item')
+
+		expect(items).toHaveLength(1)
+		expect(items.at(0).text()).toBe('test-name')
+		expect(items.at(0).prop('to')).toBe('/test')
+	})
+
+	test('items are rendered correctly', () => {
+		const selectOrderIssueSpy = jest.fn()
+		wrapper = mount(
+			<OrderIssue
+				content={content}
+				orderIssues={orderIssues}
+				selectOrderIssue={selectOrderIssueSpy}
+			/>
+		)
+		const items = wrapper.find('Item')
+		items.at(0).simulate('click')
+
+		expect(selectOrderIssueSpy).toHaveBeenCalledTimes(1)
+		expect(selectOrderIssueSpy).toHaveBeenCalledWith('test-slug')
 	})
 
 	test('bottom bar buttons is rendering correctly', () => {

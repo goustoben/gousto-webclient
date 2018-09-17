@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import { PageContent, PageHeader } from 'Page'
+import BottomBar from 'BottomBar'
 
 import css from './GetHelpLayout.css'
 
@@ -9,7 +10,7 @@ const GetHelpLayout = ({ title, body, children }) => {
 	const footerContent = []
 
 	React.Children.forEach(children, child => {
-		if (child.type.name === 'BottomBar') {
+		if (child.type === BottomBar) {
 			footerContent.push(child)
 		} else {
 			bodyContent.push(child)

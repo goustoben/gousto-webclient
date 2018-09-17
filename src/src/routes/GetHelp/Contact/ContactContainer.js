@@ -1,13 +1,16 @@
+import React from 'react'
 import { connect } from 'react-redux'
 
+import { selectContactChannel } from 'actions/getHelp'
+import { zendesk } from 'config/routes'
+
 import Contact from './Contact'
+import PhoneContent from './PhoneContent'
 
 const mapStateToProps = (state) => ({
-	categories: [
-		{ slug: 'chat', name: 'Start live chat' },
-		{ slug: 'email', name: 'Contact us by email' },
-		{ slug: 'delivery', name: 'Delivery' },
-		{ slug: 'other', name: 'Other' }
+	contactChannels: [
+		{ slug: 'email', name: 'Contact us by email', url: zendesk.link, clientRouted: false },
+		{ slug: 'phone', name: 'Contact us by phone', expandableContent: React.createElement(PhoneContent, null, null) },
 	],
 	content: {
 		title: state.content.get('get-help_contact_pageheader_header')
@@ -21,6 +24,8 @@ const mapStateToProps = (state) => ({
 	}
 })
 
-const ContactContainer = connect(mapStateToProps, {})(Contact)
+const ContactContainer = connect(mapStateToProps, {
+	selectContactChannel,
+})(Contact)
 
 export default ContactContainer
