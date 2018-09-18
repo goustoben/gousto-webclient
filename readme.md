@@ -96,7 +96,7 @@ brew install watchman
 ## Mocha
 ```shell
 cd ~/code/goustowebclient/src
-npm run test
+npm run test:mocha
 ```
 
 ### Running End-To-End tests
