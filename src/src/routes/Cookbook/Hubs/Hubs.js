@@ -8,6 +8,7 @@ import { PageContent, PageHeader } from 'Page'
 import { LoadingOverlay } from 'Loading'
 import CollectionList from './CollectionListContainer'
 import LoadMoreLink from 'LoadMoreLink'
+import Content from 'containers/Content'
 
 class Hubs extends React.PureComponent {
 	static PropTypes = {
@@ -78,16 +79,22 @@ class Hubs extends React.PureComponent {
 
 	render() {
 		const { endSet, isLoading, loadNextSet, totalSets } = this.props
+		const title = <Content contentKeys="cookbookMainTitle">
+			<span>
+				Recipe ideas from the Gousto Cookbook
+			</span></Content>
 
 		return (
 			<Section>
 				{this.renderMetaData()}
-				<PageHeader title="Recipe ideas from the Gousto Cookbook">
+				<PageHeader title={title}>
 					<p>
-						Browse our full collection of inspiring recipe ideas to cook at home.
-						It's a virtual world tour of cuisines, from the adventurous to the
-						familiar. You'll find quick meals, family favourites and lighter
-						dishes too.
+						<Content contentKeys="cookbookMainDescription">
+							<span>Browse our full collection of inspiring recipe ideas to cook at home.
+							It's a virtual world tour of cuisines, from the adventurous to the
+							familiar. You'll find quick meals, family favourites and lighter
+							dishes too.</span>
+						</Content>
 					</p>
 				</PageHeader>
 				{isLoading && <LoadingOverlay />}
