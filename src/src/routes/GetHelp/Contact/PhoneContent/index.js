@@ -1,1 +1,1 @@
-export default from './PhoneContentContainer'
+export default from './PhoneContent'
