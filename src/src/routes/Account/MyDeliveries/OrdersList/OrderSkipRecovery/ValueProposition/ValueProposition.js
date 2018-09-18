@@ -1,19 +1,9 @@
 import React, { PropTypes } from 'react'
-
 import { ModalContent } from 'ModalComponent'
-import css from './ValueProposition'
 
-const ValueProposition = ({ featureFlag, valueProposition }) => (
-    (featureFlag && valueProposition)
-    ? (
-        <ModalContent>
-            <div className={css.title}>{title}</div>
-            <div className={css.message}>{message}</div>
-        </ModalContent>
-    ) : null
-)
+import css from './ValueProposition.css'
 
-ValueProposition.prototype = {
+const prototype = {
     featureFlag: PropTypes.boolean,
     valueProposition: PropTypes.shape({
         title: PropTypes.string.isRequired,
@@ -21,11 +11,25 @@ ValueProposition.prototype = {
     })
 }
 
-ValueProposition.defaultProps = {
+const defaultProps = {
     valueProposition: {
         title: 'Not in on your delivery date?',
         message: 'Change your delivery day easily for any box you can choose recipes for.',
     }
 }
+
+const ValueProposition = ({ featureFlag, valueProposition }) => (
+    (featureFlag)
+    ? (
+        <ModalContent>
+            <div className={css.title}>{valueProposition.title}</div>
+            <div className={css.message}>{valueProposition.message}</div>
+        </ModalContent>
+    ) : null
+)
+
+ValueProposition.prototype = prototype
+
+ValueProposition.defaultProps = defaultProps
 
 export default ValueProposition
