@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
 
-import css from './OrderSkipRecovery.css'
-import ModalComponent, { ModalContent, ModalFooter } from 'ModalComponent'
+import ModalComponent from 'ModalComponent'
 
 import Title from './Title'
+import ValueProposition from './ValueProposition'
+import Footer from './Footer'
 
 class OrderSkipRecovery extends React.PureComponent {
 
@@ -31,26 +32,16 @@ class OrderSkipRecovery extends React.PureComponent {
 	}
 
 	render() {
-		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title } = this.props
+		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, valueProposition } = this.props
+
+        const onClickKeepOrder = keepOrder({ orderId, status: orderType })
+        const onClickSkipCancel = this.skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder)
 
 		return (
 			<ModalComponent visible={visible}>
 				<Title title={title} orderType={orderType} />
-				{(featureFlag) &&
-					<ModalContent>
-						<div className={css.valuePropositionTitle}>Not in on your delivery date?</div>
-						<div className={css.valuePropositionDescription}>Change your delivery day easily for any box you can choose recipes for.</div>
-					</ModalContent>
-				}
-				<ModalFooter>
-					<button
-						className={css.keepButton}
-						onClick={() => keepOrder({ orderId, status: orderType })}
-					>Keep Box</button>
-					<div className={css.skipAnyWay} onClick={() => this.skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder)}>
-						{orderType === 'pending' ? 'Cancel' : 'Skip'} anyway
-							</div>
-				</ModalFooter>
+                <ValueProposition featureFlag={featureFlag} valueProposition={valueProposition} />
+				<Footer callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
 			</ModalComponent>
 		)
 	}

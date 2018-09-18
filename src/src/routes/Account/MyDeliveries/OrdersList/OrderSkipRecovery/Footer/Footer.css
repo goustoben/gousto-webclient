@@ -1,5 +1,5 @@
-@value Bluecheese, White, Black from 'styles/colors.css';
-@value comfortaaFontStack, avenirHeavyFontStack from 'styles/typography.css';
+@value Bluecheese from 'styles/colors.css';
+@value avenirHeavyFontStack from 'styles/typography.css';
 
 .keepButton {
     display: block;
@@ -27,23 +27,4 @@
     text-align: center;
     margin: 30px auto 10px;
     cursor: pointer;
-}
-
-.valuePropositionTitle {
-    color: Black;
-    font-family: Avenir;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 16px;
-    text-align: center;
-    margin: 38px auto 10px;
-}
-
-.valuePropositionDescription{
-    color: Black;
-    font-family: Avenir;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 19px;
-    text-align: center;
 }
