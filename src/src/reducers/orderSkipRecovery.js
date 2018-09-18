@@ -31,7 +31,7 @@ const orderSkipRecovery = {
                     newState = newState.set('dayId', action.dayId)
                 }
                 if (action.orderDate) {
-                    newState = newState.set('orderDate', actions.orderDate)
+                    newState = newState.set('orderDate', action.orderDate)
                 }
 
                 return newState
