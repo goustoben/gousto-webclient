@@ -4,6 +4,16 @@ import { ModalTitle } from 'ModalComponent'
 
 import css from './Title'
 
+const prototype = {
+    title: PropTypes.string.isRequired,
+    orderType: PropTypes.string.isRequired,
+}
+
+const defaultProps = {
+    title: '',
+    orderType: '',
+}
+
 const Title = ({ title, orderType }) => {
     const titleCopy = title || `Are you sure you want to ${(orderType === 'pending') ? 'cancel' : 'skip'}?`
 
@@ -16,15 +26,8 @@ const Title = ({ title, orderType }) => {
     )
 }
 
-Title.prototype = {
-    title: PropTypes.string.isRequired,
-    orderType: PropTypes.string.isRequired,
-}
+Title.prototype = prototype
 
-Title.defaultProps = {
-    title: '',
-    orderType: '',
-}
-
+Title.defaultProps = defaultProps
 
 export default Title

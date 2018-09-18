@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer'
 
 import Footer from '../Footer'
 
-describe('Order Skip Recovery Footer', () => {
+describe('Order Skip Recovery Modal Footer', () => {
     const mockKeepOrder = jest.fn()
     const mockSkipOrder = jest.fn()
 
