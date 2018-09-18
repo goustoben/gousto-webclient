@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { OrderSkipRecovery } from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery/OrderSkipRecovery'
 
-describe('OrderSkipRecovery pending order', () => {
+describe.skip('OrderSkipRecovery pending order', () => {
 	const wrapper = shallow(
 		<OrderSkipRecovery
 			visible
@@ -42,7 +42,7 @@ describe('OrderSkipRecovery pending order', () => {
 	})
 })
 
-describe('OrderSkipRecovery projected order', () => {
+describe.skip('OrderSkipRecovery projected order', () => {
 	const wrapper = shallow(
 		<OrderSkipRecovery
 			visible

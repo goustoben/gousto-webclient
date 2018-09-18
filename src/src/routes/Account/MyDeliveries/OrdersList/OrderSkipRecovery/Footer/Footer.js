@@ -1,8 +1,19 @@
-import React, { Prototype } from 'react'
+import React, { PropTypes } from 'react'
 
 import { ModalFooter } from 'ModalComponent'
 
-const Footer = ({ callToActions, onClickKeepOrder, onClickSkipCancel }) => {
+import css from './Footer.css'
+
+const propTypes = {
+    callToActions: PropTypes.shape({
+		confirm: PropTypes.string,
+		keep: PropTypes.string,
+	}),
+    onClickKeepOrder: PropTypes.func,
+    onClickSkipCancel: PropTypes.func,
+}
+
+const Footer = ({ orderType, callToActions, onClickKeepOrder, onClickSkipCancel }) => {
     let keepCopy
     let confirmCopy
 
@@ -26,13 +37,6 @@ const Footer = ({ callToActions, onClickKeepOrder, onClickSkipCancel }) => {
     )
 }
 
-Footer.prototype = {
-    callToActions: PropTypes.shape({
-		confirm: PropTypes.string,
-		keep: PropTypes.string,
-	}),
-    onClickKeepOrder: Prototype.func,
-    onClickSkipCancel: Prototype.func,
-}
+Footer.propTypes = propTypes
 
 export default Footer

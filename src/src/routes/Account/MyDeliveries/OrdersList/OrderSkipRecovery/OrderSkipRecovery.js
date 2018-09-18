@@ -32,7 +32,7 @@ class OrderSkipRecovery extends React.PureComponent {
 	}
 
 	render() {
-		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, valueProposition } = this.props
+		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, valueProposition, callToActions } = this.props
 
         const onClickKeepOrder = keepOrder({ orderId, status: orderType })
         const onClickSkipCancel = this.skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder)
@@ -41,7 +41,7 @@ class OrderSkipRecovery extends React.PureComponent {
 			<ModalComponent visible={visible}>
 				<Title title={title} orderType={orderType} />
                 <ValueProposition featureFlag={featureFlag} valueProposition={valueProposition} />
-				<Footer callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
+				<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
 			</ModalComponent>
 		)
 	}

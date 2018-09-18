@@ -1,4 +1,4 @@
-import React, { Prototype } from 'react'
+import React, { PropTypes } from 'react'
 
 import { ModalTitle } from 'ModalComponent'
 
@@ -17,8 +17,8 @@ const Title = ({ title, orderType }) => {
 }
 
 Title.prototype = {
-    title: Prototype.string.isRequired,
-    orderType: Prototype.string.isRequired,
+    title: PropTypes.string.isRequired,
+    orderType: PropTypes.string.isRequired,
 }
 
 Title.defaultProps = {

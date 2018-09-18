@@ -4,7 +4,7 @@ import { redirect } from './redirect'
 import logger from 'utils/logger'
 import { fetchOrderSkipContent } from '../apis/orderSkipRecovery'
 
-const modalVisibilityChange = ({
+export const modalVisibilityChange = ({
     orderId,
     status,
     actionTriggered,

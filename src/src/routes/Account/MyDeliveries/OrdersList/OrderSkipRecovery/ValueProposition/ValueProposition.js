@@ -15,7 +15,7 @@ const ValueProposition = ({ featureFlag, valueProposition }) => (
 
 ValueProposition.prototype = {
     featureFlag: PropTypes.boolean,
-    valueProposition: PropTypes.shapes({
+    valueProposition: PropTypes.shape({
         title: PropTypes.string.isRequired,
         message: PropTypes.string.isRequired,
     })

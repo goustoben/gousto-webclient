@@ -3,8 +3,10 @@ import Immutable from 'immutable'
 import { orderCancel, projectedOrderCancel } from 'actions/order'
 import { fetchOrderSkipContent } from 'apis/orderSkipRecovery'
 import { redirect } from 'actions/redirect'
+import actionTypes from 'actions/actionTypes';
 
 import {
+    modalVisibilityChange,
 	keepOrder,
 	cancelPendingOrder,
 	cancelProjectedOrder,
@@ -31,7 +33,42 @@ describe('orderSkipRecovery', () => {
 	afterEach(() => {
 		dispatchSpy.mockClear()
 		getStateSpy.mockClear()
-	})
+    })
+
+    describe('modalVisibilityChange', () => {
+        test('should show order skip recovery modal', async () => {
+            const orderId = '234234'
+            const status = 'pending'
+            const actionTriggered = null // used for tracking
+            const title = 'Are you sure you want to skip?'
+            const valueProposition = {
+                title: 'value proposition title',
+                message: 'value proposition message',
+            }
+            const callToActions = {
+                confirm: 'confirm',
+                keep: 'keep',
+            }
+
+            modalVisibilityChange({
+                orderId,
+                status,
+                actionTriggered,
+                title,
+                value_proposition: valueProposition,
+                call_to_actions: callToActions,
+            })(dispatchSpy)
+
+            expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+                type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+                modalVisibility: true,
+                orderId,
+                title: 'Are you sure you want to skip?',
+                valueProposition,
+                callToActions,
+            }))
+        })
+    })
 
 	describe('keepOrder', () => {
 		getStateSpy.mockReturnValue({
