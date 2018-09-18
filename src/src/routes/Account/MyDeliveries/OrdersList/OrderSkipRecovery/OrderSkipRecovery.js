@@ -9,12 +9,13 @@ import Footer from './Footer'
 class OrderSkipRecovery extends React.PureComponent {
 
 	componentDidUpdate(prevProps) {
-		const { triggered, orderId, dayId, orderType, getSkipRecoveryContent } = this.props
+		const { triggered, orderId, orderDate, dayId, orderType, getSkipRecoveryContent } = this.props
 		const actionTriggered = (orderType === 'pending') ? 'Cancel' : 'Skip'
 
 		if (triggered && prevProps.triggered !== triggered) {
 			getSkipRecoveryContent({
 				orderId,
+				orderDate,
 				dayId,
 				orderType,
 				actionTriggered,

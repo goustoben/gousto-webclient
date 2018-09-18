@@ -82,11 +82,11 @@ export const cancelProjectedOrder = (dayId) => (
     }
 )
 
-export const getSkipRecoveryContent = ({ orderId, dayId, status, actionTriggered }) => (
+export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, actionTriggered }) => (
     async (dispatch, getState) => {
         const accessToken = getState().auth.get('accessToken')
 		try {
-            const { data }  = await fetchOrderSkipContent(accessToken, orderId)
+            const { data }  = await fetchOrderSkipContent(accessToken, orderId, orderDate)
 
             if (data.intervene) {
                 dispatch(modalVisibilityChange({
