@@ -25,8 +25,8 @@ export default class ItemExpandable extends PureComponent {
 		})
 
 		return (
-			<div>
-				<div className={css.itemContent} onClick={() => this.toggleContent()}>
+			<div onClick={() => this.toggleContent()}>
+				<div className={css.itemContent}>
 					{label}
 					<span className={classnames(arrowClass)} />
 				</div>

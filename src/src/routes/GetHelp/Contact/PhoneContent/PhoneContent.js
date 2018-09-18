@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 
 import css from './PhoneContent.css'
 
-const PhoneContact = ({ content: { copy1, phoneNumber, phoneNumberLink, copy2 } }) => (
+const PhoneContent = ({ content: { copy1, phoneNumber, phoneNumberLink, copy2 } }) => (
 	<div>
 		{copy1}
 		<a className={css.visibleOnlyOnMobile} href={`tel:${phoneNumberLink}`}>{phoneNumber}</a>
@@ -11,7 +11,7 @@ const PhoneContact = ({ content: { copy1, phoneNumber, phoneNumberLink, copy2 } 
 	</div>
 )
 
-PhoneContact.propTypes = {
+PhoneContent.propTypes = {
 	orderIssues: PropTypes.shape({
 		copy1: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
@@ -19,4 +19,4 @@ PhoneContact.propTypes = {
 	}),
 }
 
-export default PhoneContact
+export default PhoneContent

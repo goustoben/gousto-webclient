@@ -64,18 +64,19 @@ const Contact = ({
 )
 
 Contact.propTypes = {
-	contactChannels: PropTypes.array,
 	content: PropTypes.shape({
 		title: PropTypes.string.isRequired,
 		body: PropTypes.string.isRequired,
 		button1Copy: PropTypes.string.isRequired,
 		button2Copy: PropTypes.string.isRequired,
-	}),
+		chatItem: PropTypes.string.isRequired,
+		emailItem: PropTypes.string.isRequired,
+		phoneItem: PropTypes.string.isRequired,
+	}).isRequired,
 	selectContactChannel: PropTypes.func,
 }
 
 Contact.defaultProps = {
-	contactChannels: [],
 	selectContactChannel: () => {},
 }
 

@@ -63,17 +63,19 @@ const OrderIssue = ({
 )
 
 OrderIssue.propTypes = {
-	orderIssues: PropTypes.array,
 	content: PropTypes.shape({
 		title: PropTypes.string.isRequired,
 		body: PropTypes.string.isRequired,
 		buttonCopy: PropTypes.string.isRequired,
-	}),
+		ingredientsItem: PropTypes.string.isRequired,
+		recipeCardItem: PropTypes.string.isRequired,
+		deliveryItem: PropTypes.string.isRequired,
+		otherItem: PropTypes.string.isRequired,
+	}).isRequired,
 	selectOrderIssue: PropTypes.func,
 }
 
 OrderIssue.defaultProps = {
-	orderIssues: [],
 	selectOrderIssue: () => {},
 }
 
