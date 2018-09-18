@@ -79,15 +79,16 @@ class Hubs extends React.PureComponent {
 
 	render() {
 		const { endSet, isLoading, loadNextSet, totalSets } = this.props
-		const title = <Content contentKeys="cookbookMainTitle">
-			<span>
-				Recipe ideas from the Gousto Cookbook
-			</span></Content>
+		const mainTitle = (
+			<Content contentKeys="cookbookMainTitle">
+				<span>Recipe ideas from the Gousto Cookbook</span>
+			</Content>
+		)
 
 		return (
 			<Section>
 				{this.renderMetaData()}
-				<PageHeader title={title}>
+				<PageHeader title={mainTitle}>
 					<p>
 						<Content contentKeys="cookbookMainDescription">
 							<span>Browse our full collection of inspiring recipe ideas to cook at home.
