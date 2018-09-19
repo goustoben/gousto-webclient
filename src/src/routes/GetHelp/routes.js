@@ -14,12 +14,12 @@ export default (store) => {
 	const onEnterHandler = (routes, replace, next) => {
 		const state = store.getState()
 		const redirectTo = '/'
-		const hasEligibilityFlag = state.features.getIn(['featureEligibility', 'value'])
+		const hasGetHelpFlag = state.features.getIn(['getHelp', 'value'])
 
 		// redirect user to the `/` in case auth session is not found
 		checkValidSession(store, redirectTo)(routes, replace, next)
 
-		if (!hasEligibilityFlag) {
+		if (!hasGetHelpFlag) {
 			replace(redirectTo)
 			next()
 		}
