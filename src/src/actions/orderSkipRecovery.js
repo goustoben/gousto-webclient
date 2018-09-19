@@ -84,6 +84,8 @@ export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, acti
         const accessToken = getState().auth.get('accessToken')
 		try {
             const { data }  = await fetchOrderSkipContent(accessToken, orderId, orderDate)
+            console.log(data)
+            console.log(data.value_proposition)
 
             if (data.intervene) {
                 dispatch(modalVisibilityChange({
