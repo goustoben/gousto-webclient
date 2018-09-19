@@ -16,15 +16,15 @@ export const modalVisibilityChange = ({
             modalVisibility: true,
             orderId,
             title: data.title,
-            valueProposition: data.value_proposition,
-            callToActions: data.call_to_actions,
+            valueProposition: data.valueProposition,
+            callToActions: data.callToActions,
             trackingData: {
                 actionType: `Order ${actionTriggered}`,
                 order_id: orderId,
                 order_state: status,
                 cms_variation: data.variation || 'default',
                 recovery_reasons: [
-                    data.value_proposition,
+                    data.valueProposition,
                 ],
             },
         })
@@ -84,8 +84,6 @@ export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, acti
         const accessToken = getState().auth.get('accessToken')
 		try {
             const { data }  = await fetchOrderSkipContent(accessToken, orderId, orderDate)
-            console.log(data)
-            console.log(data.value_proposition)
 
             if (data.intervene) {
                 dispatch(modalVisibilityChange({
