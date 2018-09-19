@@ -12,7 +12,10 @@ class OrderSkipRecovery extends React.PureComponent {
 		const { triggered, orderId, orderDate, dayId, orderType, getSkipRecoveryContent } = this.props
 		const actionTriggered = (orderType === 'pending') ? 'Cancel' : 'Skip'
 
-		if (triggered && prevProps.triggered !== triggered) {
+		console.log('didUpdate', triggered)
+		if (triggered === true  && (prevProps.triggered !== triggered)) {
+			console.log('triggered', triggered)
+
 			getSkipRecoveryContent({
 				orderId,
 				orderDate,
