@@ -6,7 +6,7 @@ import { redirect } from 'actions/redirect'
 import actionTypes from 'actions/actionTypes';
 
 import {
-    modalVisibilityChange,
+  modalVisibilityChange,
 	keepOrder,
 	cancelPendingOrder,
 	cancelProjectedOrder,
@@ -48,15 +48,18 @@ describe('orderSkipRecovery', () => {
             const callToActions = {
                 confirm: 'confirm',
                 keep: 'keep',
-            }
+						}
+						const data = {
+								title,
+                value_proposition: valueProposition,
+                call_to_actions: callToActions,
+						}
 
             modalVisibilityChange({
                 orderId,
                 status,
                 actionTriggered,
-                title,
-                value_proposition: valueProposition,
-                call_to_actions: callToActions,
+                data
             })(dispatchSpy)
 
             expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({

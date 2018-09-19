@@ -42,7 +42,7 @@ class OrderSkipRecovery extends React.PureComponent {
 		return (
 			<ModalComponent visible={visible}>
 				<Title title={title} orderType={orderType} />
-                <ValueProposition featureFlag={featureFlag} valueProposition={valueProposition} />
+        <ValueProposition featureFlag={featureFlag} valueProposition={valueProposition} />
 				<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
 			</ModalComponent>
 		)

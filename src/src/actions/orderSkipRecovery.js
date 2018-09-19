@@ -8,26 +8,23 @@ export const modalVisibilityChange = ({
     orderId,
     status,
     actionTriggered,
-    title,
-    value_proposition: valueProposition,
-    call_to_actions: callToActions,
-    variation = 'default',
+    data = {},
 }) => (
     (dispatch) => {
         dispatch({
             type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
             modalVisibility: true,
             orderId,
-            title,
-            valueProposition,
-            callToActions,
+            title: data.title,
+            valueProposition: data.value_proposition,
+            callToActions: data.call_to_actions,
             trackingData: {
                 actionType: `Order ${actionTriggered}`,
                 order_id: orderId,
                 order_state: status,
-                cms_variation: variation,
+                cms_variation: data.variation || 'default',
                 recovery_reasons: [
-                    valueProposition,
+                    data.value_proposition,
                 ],
             },
         })
@@ -93,7 +90,7 @@ export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, acti
                     orderId,
                     status,
                     actionTriggered,
-                    ...data,
+                    data,
                 }))
             } else {
                 if (status === 'pending') {
