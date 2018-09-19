@@ -12,9 +12,7 @@ class OrderSkipRecovery extends React.PureComponent {
 		const { triggered, orderId, orderDate, dayId, orderType, getSkipRecoveryContent } = this.props
 		const actionTriggered = (orderType === 'pending') ? 'Cancel' : 'Skip'
 
-		console.log('didUpdate', triggered)
-		if (triggered === true  && (prevProps.triggered !== triggered)) {
-			console.log('triggered', triggered)
+		if (triggered && (prevProps.triggered !== triggered)) {
 
 			getSkipRecoveryContent({
 				orderId,
@@ -38,8 +36,8 @@ class OrderSkipRecovery extends React.PureComponent {
 	render() {
 		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, valueProposition, callToActions } = this.props
 
-        const onClickKeepOrder = keepOrder({ orderId, status: orderType })
-        const onClickSkipCancel = this.skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder)
+		const onClickKeepOrder = () => keepOrder({ orderId, status: orderType })
+		const onClickSkipCancel = () => this.skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder)
 
 		return (
 			<ModalComponent visible={visible}>
