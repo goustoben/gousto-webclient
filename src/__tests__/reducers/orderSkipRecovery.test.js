@@ -100,4 +100,156 @@ describe('orderSkipRecovery reducer', () => {
 			expect(result).toEqual(expected)
     })
   })
+
+  describe('orderSkipRecovery dispatch ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE', () => {
+    state = undefined
+    test('orderSkipRecovery dispatch trigger with modalVisibility false', () => {
+      const expected = Immutable.Map({
+        triggered: false,
+        modalVisibility: false,
+        orderId: '',
+        dayId: '',
+        boxNumber: '',
+        orderType: '',
+        orderDate: '',
+        title: '',
+        valueProposition: null,
+        callToActions: null,
+      })
+      const actionToCall = {
+        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+        modalVisibility: false,
+    }
+
+      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+			expect(result).toEqual(expected)
+    })
+
+    test('orderSkipRecovery dispatch trigger with modalVisibility true and orderId', () => {
+      const expected = Immutable.Map({
+        triggered: false,
+        modalVisibility: true,
+        orderId: '123',
+        dayId: '',
+        boxNumber: '',
+        orderType: 'pending',
+        orderDate: '',
+        title: 'Title',
+        valueProposition: null,
+        callToActions: null,
+      })
+      const actionToCall = {
+        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+        modalVisibility: true,
+        orderId: '123',
+        title: 'Title',
+        orderType: 'pending'
+    }
+
+      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+			expect(result).toEqual(expected)
+    })
+
+    test('orderSkipRecovery dispatch trigger with modalVisibility true and dayId', () => {
+      const expected = Immutable.Map({
+        triggered: false,
+        modalVisibility: true,
+        orderId: '',
+        dayId: '123',
+        boxNumber: '',
+        orderType: 'projected',
+        orderDate: '',
+        title: 'Title',
+        valueProposition: null,
+        callToActions: null,
+      })
+      const actionToCall = {
+        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+        modalVisibility: true,
+        dayId: '123',
+        title: 'Title',
+        orderType: 'projected'
+    }
+
+      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+			expect(result).toEqual(expected)
+    })
+
+    test('orderSkipRecovery dispatch trigger with modalVisibility true and value proposition', () => {
+      const expected = Immutable.Map({
+        triggered: false,
+        modalVisibility: true,
+        orderId: '',
+        dayId: '123',
+        boxNumber: '',
+        orderType: 'projected',
+        orderDate: '',
+        title: 'Title',
+        valueProposition: 'Value prop',
+        callToActions: null,
+      })
+      const actionToCall = {
+        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+        modalVisibility: true,
+        dayId: '123',
+        title: 'Title',
+        valueProposition: 'Value prop',
+        orderType: 'projected'
+    }
+
+      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+			expect(result).toEqual(expected)
+    })
+
+
+    test('orderSkipRecovery dispatch trigger with modalVisibility true and callToActions', () => {
+      const expected = Immutable.Map({
+        triggered: false,
+        modalVisibility: true,
+        orderId: '',
+        dayId: '123',
+        boxNumber: '',
+        orderType: 'projected',
+        orderDate: '',
+        title: 'Title',
+        valueProposition: null,
+        callToActions: 'Call to action',
+      })
+      const actionToCall = {
+        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+        modalVisibility: true,
+        dayId: '123',
+        title: 'Title',
+        callToActions: 'Call to action',
+        orderType: 'projected'
+    }
+
+      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+			expect(result).toEqual(expected)
+    })
+  })
+
+  describe('orderSkipRecovery dispatch ORDER_SKIP_RECOVERY_BOX_NUMBER_CHANGE', () => {
+    test('orderSkipRecovery dispatch trigger with orderDate', () => {
+      const expected = Immutable.Map({
+        triggered: false,
+        modalVisibility: false,
+        orderId: '',
+        dayId: '',
+        boxNumber: '5',
+        orderType: '',
+        orderDate: '',
+        title: '',
+        valueProposition: null,
+        callToActions: null,
+      })
+      const actionToCall = {
+        type: actionTypes.ORDER_SKIP_RECOVERY_BOX_NUMBER_CHANGE,
+				boxNumber: '5',
+      }
+
+      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+			expect(result).toEqual(expected)
+    })
+  })
 })
