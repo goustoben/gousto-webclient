@@ -39,3 +39,17 @@
 		width: 400px;
 	}
 }
+
+.bodyContent p {
+	margin-bottom: 20px;
+	
+	@media ScreenXXSMin {
+		text-align: center;
+	}
+}
+
+.bodyContentFullWidth {
+	@media ScreenXXSMin {
+		width: 100%;
+	}
+}

@@ -41,8 +41,9 @@ module.exports = {
 
 		getHelp: {
 			index: '/get-help',
-			orderIssue: 'order-issue',
+			refund: 'refund',
 			contact: 'contact',
+			orderIssue: 'order-issue',
 		},
 
 		help: '/help',
