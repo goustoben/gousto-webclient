@@ -1,7 +1,13 @@
+@value ScreenXXSMin from 'styles/screenSizes.css';
+
 .button {
 	align-self: center;
 	flex-grow: 0.4;
-	width: 100px;
+
+	@media ScreenXXSMin {
+		align-self: center;
+		width: 100%;
+	}
 }
 
 .buttonChild {
