@@ -8,10 +8,10 @@
   "sideEffects": "false",
   "scripts": {
     "start": "node dist/server.js",
-    "start:with-static": "withStatic=true npm run start",
+    "start:with-static": "withStatic=true yarn run start",
     "start:dev": "nodemon dist/server.js -L",
     "start:devlocal": "nodemon dist/server.js",
-    "start:hmr": "NODE_ENV=hmr npm run build:server && npm run start",
+    "start:hmr": "NODE_ENV=hmr yarn run build:server && yarn run start",
     "watch:client": "webpack --watch --config config/webpack.client.js",
     "watch:server": "webpack --watch --config config/webpack.server.js",
     "watch": "rm -rf dist/* && rm -rf public/* && run-p watch:client watch:server",
@@ -23,15 +23,14 @@
     "build:e2e": "NODE_ENV=staging webpack --config config/webpack.e2e.js --bail",
     "build:e2e:local": "NODE_ENV=local webpack --config config/webpack.e2e.js --bail",
     "build": "rm -rf dist/* && rm -rf public/* && NODE_ENV=production run-p build:server build:client",
-    "test": "mocha-webpack --webpack-config config/webpack.test-mocha.js -r \"test/.setup.js\" \"test/**/*.js\"",
-    "test:jest": "jest __tests__",
-    "test:jest:ci": "jest __tests__ --ci -w=4",
+    "test:jest": "jest",
+    "test:jest:ci": "jest --ci -w=4",
     "test:jest:one": "jest",
     "test:jest:one:watch": "jest --watch",
     "test:jest:watch": "jest --watchAll",
-    "test:jest:coverage": "jest __tests__ --coverage",
-    "test:jest:ci:coverage": "jest __tests__  --ci -w=4 --coverage",
-    "test:mocha": "npm test",
+    "test:jest:coverage": "jest --coverage",
+    "test:jest:ci:coverage": "jest --ci -w=4 --coverage",
+    "test:mocha": "mocha-webpack --webpack-config config/webpack.test-mocha.js -r \"test/.setup.js\" \"test/**/*.js\"",
     "test:mocha:one": "mocha-webpack --webpack-config config/webpack.test-mocha.js --recursive -r \"test/.setup.js\"",
     "test:mocha:one:watch": "mocha-webpack --webpack-config config/webpack.test-mocha.js --watch -r \"test/.setup.js\"",
     "test:mocha:watch": "mocha-webpack --webpack-config config/webpack.test-mocha.js --watch -r \"test/.setup.js\" \"test/**/*.js\"",
@@ -204,7 +203,7 @@
     "transform": {
       "^.+\\.js?$": "babel-jest",
       "\\.(gql|graphql)$": "jest-transform-graphql",
-      "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__tests__/.fileTransformer.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/.fileTransformer.js"
     },
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js}",
@@ -216,7 +215,7 @@
       "<rootDir>/src",
       "<rootDir>/src/components"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/.setup.js",
+    "setupTestFrameworkScriptFile": "<rootDir>/jest/.setup.js",
     "globals": {
       "__DEV__": false,
       "__PROD__": true,
