@@ -51,8 +51,8 @@ describe('orderSkipRecovery', () => {
 						}
 						const data = {
 								title,
-                value_proposition: valueProposition,
-                call_to_actions: callToActions,
+                valueProposition,
+                callToActions,
 						}
 
             modalVisibilityChange({
