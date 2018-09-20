@@ -1,35 +1,11 @@
-import React, { PropTypes } from 'react'
-import Item from './Item'
+import React from 'react'
 
 import css from './List.css'
 
-const List = ({ items, trackItemSelected }) => (
+const List = ({ children }) => (
 	<ul className={css.list}>
-		{items.map((item) => (
-			<Item
-				key={`list-${item.slug}`}
-				label={item.name}
-				to={item.url}
-				clientRouted={item.clientRouted}
-				expandableContent={item.expandableContent}
-				onClick={() => trackItemSelected(item.slug)}
-			/>
-		))}
+		{children}
 	</ul>
 )
-
-List.propTypes = {
-	items: PropTypes.arrayOf(
-		PropTypes.shape({
-			slug: PropTypes.string.isRequired,
-		})
-	),
-	trackItemSelected: PropTypes.func,
-}
-
-List.defaultProps = {
-	items: [],
-	trackItemSelected: () => {},
-}
 
 export default List

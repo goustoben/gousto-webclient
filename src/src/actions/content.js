@@ -3,7 +3,7 @@ import { fetchContentBySlug } from 'apis/content'
 import logger from 'utils/logger'
 import statusActions from './status'
 
-const contentLoadContentByPageSlug = (pageSlug = '', variation = ['default']) => (
+export const contentLoadContentByPageSlug = (pageSlug = '', variation = 'default') => (
 	async (dispatch, getState) => {
 		try {
 			dispatch(statusActions.pending(actionTypes.CONTENT_RECEIVE, true))
@@ -13,6 +13,15 @@ const contentLoadContentByPageSlug = (pageSlug = '', variation = ['default']) =>
 			logger.error(err.message)
 		}
 		dispatch(statusActions.pending(actionTypes.CONTENT_RECEIVE, false))
+	}
+)
+
+export const loadContentVariants = (variants = {}) => (
+	async (dispatch) => {
+		dispatch({
+			type: actionTypes.CONTENT_VARIANTS_RECEIVE,
+			variants,
+		})
 	}
 )
 

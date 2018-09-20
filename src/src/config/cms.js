@@ -5,5 +5,6 @@ module.exports = {
 		'welcome',
 		'unsubscribe',
 		'get-help',
+		'cookbook',
 	],
 }

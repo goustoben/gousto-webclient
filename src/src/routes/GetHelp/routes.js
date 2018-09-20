@@ -11,13 +11,33 @@ import Contact from './Contact'
 
 import { checkValidSession } from './../../utils/routes'
 
-export default (store) => (
-	<Route component={WizardLayout}>
-		<Route path={configRoutes.client.getHelp.index} component={GetHelpContainer} onEnter={checkValidSession(store, '/')}>
-			<IndexRoute component={OrderIssueContainer} />
-			{Refund}
-			{Contact}
-			<Redirect to={configRoutes.client.login} />
+export default (store) => {
+	const onEnterHandler = (routes, replace, next) => {
+		const state = store.getState()
+		const redirectTo = '/'
+		const hasGetHelpFlag = state.features.getIn(['getHelp', 'value'])
+
+		// redirect user to the `/` in case auth session is not found
+		checkValidSession(store, redirectTo)(routes, replace, next)
+
+		if (!hasGetHelpFlag) {
+			replace(redirectTo)
+			next()
+		}
+	}
+
+	return (
+		<Route component={WizardLayout}>
+			<Route
+				path={configRoutes.client.getHelp.index}
+				component={GetHelpContainer}
+				onEnter={onEnterHandler}
+			>
+				<IndexRoute component={OrderIssueContainer} />
+				{Refund}
+				{Contact}
+				<Redirect to={configRoutes.client.login} />
+			</Route>
 		</Route>
-	</Route>
-)
+	)
+}
