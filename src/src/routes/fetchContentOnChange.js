@@ -25,7 +25,7 @@ export async function fetchContentOnChange(pathname = '/', store) {
 	const variant = store.getState().variants.get(slug, 'default')
 
 	if (routes.includes(slug)) {
-		await store.dispatch(contentLoadContentByPageSlug(slug, variant))
+		await store.dispatch(contentLoadContentByPageSlug(slug, [variant]))
 	}
 }
 

@@ -60,7 +60,7 @@ describe('fetchContentOnChange', () => {
 			expect(dispatch).toHaveBeenCalled()
 			expect(contentLoadContentByPageSlug).toHaveBeenCalledWith(
 				'jobs',
-				'default',
+				['default'],
 			)
 		})
 	})
@@ -79,14 +79,14 @@ describe('fetchContentOnChange', () => {
 
 			expect(contentLoadContentByPageSlug).toHaveBeenCalledWith(
 				'my-gousto',
-				'osr-a',
+				['osr-a'],
 			)
 
 			fetchContentOnChange('/my-deliveries', store)
 
 			expect(contentLoadContentByPageSlug).toHaveBeenCalledWith(
 				'my-deliveries',
-				'default',
+				['default'],
 			)
 		})
 	})
