@@ -1,7 +1,7 @@
-import actions from 'actions'
+import { contentLoadContentByPageSlug } from 'actions/content'
 import config from 'config/cms'
 
-const pathToSlug = (path) => {
+export const pathToSlug = (path) => {
 	const mappings = [
 		{
 			path: /^welcome-to-gousto/i,
@@ -19,11 +19,13 @@ const pathToSlug = (path) => {
 	return ((mappedPath && mappedPath.slug) ? mappedPath.slug : path)
 }
 
-async function fetchContentOnChange(pathname = '/', store) {
+export async function fetchContentOnChange(pathname = '/', store) {
 	const slug = pathToSlug(pathname.split('/').slice(1)).toString()
 	const routes = config.allowedRoutes
+	const variant = store.getState().variants.get(slug, 'default')
+
 	if (routes.includes(slug)) {
-		await store.dispatch(actions.contentLoadContentByPageSlug(slug))
+		await store.dispatch(contentLoadContentByPageSlug(slug, [variant]))
 	}
 }
 

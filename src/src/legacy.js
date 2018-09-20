@@ -9,6 +9,7 @@ import actions from 'actions'
 import processFeaturesQuery from 'utils/processFeaturesQuery'
 import processQuery from 'utils/processQuery'
 import loadFeatures from 'utils/loadFeatures'
+import { loadVariants } from 'utils/loadVariants'
 import queryString from 'query-string'
 import Cookies from 'utils/GoustoCookies'
 import promosActions from 'actions/promos'
@@ -81,6 +82,8 @@ async function init() {
 	}
 
 	window.__loadFeatures__ = features => loadFeatures(features, store) // eslint-disable-line no-underscore-dangle
+
+	window.__loadVariants__ = variants => loadVariants(variants, store) // eslint-disable-line no-underscore-dangle
 
 	window.__store__ = store // eslint-disable-line no-underscore-dangle
 

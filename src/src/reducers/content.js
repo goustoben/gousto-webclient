@@ -27,6 +27,18 @@ const content = {
 			}
 		}
 	},
+
+	variants: (state = Immutable.Map({}), action) => {
+		switch (action.type) {
+			case actionTypes.CONTENT_VARIANTS_RECEIVE: {
+				return state.merge(Immutable.fromJS(action.variants))
+			}
+
+			default: {
+				return state
+			}
+		}
+	}
 }
 
 export default content

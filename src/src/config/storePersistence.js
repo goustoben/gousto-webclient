@@ -8,6 +8,7 @@ export default (store) => {
 		},
 		tracking: false,
 		promoAgeVerified: false,
+		variants: false,
 	}
 
 	if (!store.basket.get('orderId')) {
