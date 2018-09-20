@@ -5,24 +5,24 @@ import { getSkipRecoveryContent, keepOrder, cancelPendingOrder, cancelProjectedO
 import { OrderSkipRecovery } from './OrderSkipRecovery'
 
 const mapStateToProps = (state) => ({
-    triggered: state.orderSkipRecovery.get('triggered'),
-    visible: state.orderSkipRecovery.get('modalVisibility'),
-    orderId: state.orderSkipRecovery.get('orderId'),
-    orderDate: state.orderSkipRecovery.get('orderDate'),
-    dayId: state.orderSkipRecovery.get('dayId'),
-    orderType: state.orderSkipRecovery.get('orderType'),
-    boxNumber: state.subscription.getIn(['subscription', 'currentBoxNumber']),
-    featureFlag: state.features.getIn(['skipRecovery', 'value']),
-    title: state.orderSkipRecovery.get('title'),
-    valueProposition: state.orderSkipRecovery.get('valueProposition'),
-    callToActions: state.orderSkipRecovery.get('callToActions'),
+  triggered: state.orderSkipRecovery.get('triggered'),
+  visible: state.orderSkipRecovery.get('modalVisibility'),
+  orderId: state.orderSkipRecovery.get('orderId'),
+  orderDate: state.orderSkipRecovery.get('orderDate'),
+  dayId: state.orderSkipRecovery.get('dayId'),
+  orderType: state.orderSkipRecovery.get('orderType'),
+  boxNumber: state.subscription.getIn(['subscription', 'currentBoxNumber']),
+  featureFlag: state.features.getIn(['skipRecovery', 'value']),
+  title: state.orderSkipRecovery.get('title'),
+  valueProposition: state.orderSkipRecovery.get('valueProposition'),
+  callToActions: state.orderSkipRecovery.get('callToActions'),
 })
 
 const mapDispatchToProps = {
-    getSkipRecoveryContent,
-    keepOrder,
-    cancelPendingOrder,
-    cancelProjectedOrder,
+  getSkipRecoveryContent,
+  keepOrder,
+  cancelPendingOrder,
+  cancelProjectedOrder,
 
 }
 

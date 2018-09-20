@@ -1,14 +1,16 @@
 .title {
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 16px;
-    text-align: center;
-    margin: 38px auto 10px;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 16px;
+	text-align: center;
+	margin: 38px auto 10px;
+	font-family: Avenir;
 }
 
 .message{
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 19px;
-    text-align: center;
+	font-size: 14px;
+	font-weight: 300;
+	line-height: 19px;
+	text-align: center;
+	font-family: Avenir;
 }

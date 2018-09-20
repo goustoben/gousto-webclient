@@ -1,21 +1,21 @@
 @value White from 'styles/colors.css';
 
 .modalComponent {
-    position: relative;
-    margin: 20vh auto;
-    height: max-content;
-    width: 380px;
-    background: White;
-    border-radius: 12px;
-    padding: 20px;
-    @media (max-width: 420px) {
-        width: 300px;
-        position: absolute;
-        left: 50vw;
-        top: 30vh;
-        transform: translate(-50%, -50%);
-        padding: 10px;
-    }
+	position: relative;
+	margin: 20vh auto;
+	height: max-content;
+	width: 380px;
+	background: White;
+	border-radius: 12px;
+	padding: 20px;
+	@media (max-width: 420px) {
+		width: 300px;
+		position: absolute;
+		left: 50vw;
+		top: 30vh;
+		transform: translate(-50%, -50%);
+		padding: 10px;
+	}
 }
 
 .modalTitle {
@@ -24,14 +24,13 @@
 }
 
 .modalContent {
-    position: relative;
-    text-align: center;
-    line-height: 30px;
-    margin: 20px auto;
-
+	position: relative;
+	text-align: center;
+	line-height: 30px;
+	margin: 20px auto;
 }
 
 .modalFooter {
-    margin: 10px auto;
-    position: relative;
+	margin: 10px auto;
+	position: relative;
 }
