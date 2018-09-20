@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Order Skip Recovery Model Title Innitial Render should render snapshot 1`] = `
+<div
+  className="modalTitle"
+>
+  <div
+    className="title"
+  >
+    Are you sure you want to skip?
+  </div>
+</div>
+`;

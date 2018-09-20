@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Order Skip Recovery Modal Initial Render should render snapshot 1`] = `
+<Overlay
+  from="top"
+  open={false}
+>
+  <div
+    className="modalComponent"
+  >
+    <Title />
+    <ValueProposition />
+    <Footer
+      onClickKeepOrder={[Function]}
+      onClickSkipCancel={[Function]}
+    />
+  </div>
+</Overlay>
+`;
