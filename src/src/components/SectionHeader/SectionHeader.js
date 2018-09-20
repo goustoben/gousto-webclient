@@ -16,7 +16,7 @@ SectionHeader.propTypes = {
 	contentAlign: PropTypes.oneOf(['', 'left', 'center', 'right']),
 	contentSizeMax: PropTypes.oneOf(['', 'LG']),
 	type: PropTypes.oneOf(['', 'page', 'article', 'minorArticle']),
-	title: PropTypes.string.isRequired,
+	title: PropTypes.oneOf([PropTypes.node, PropTypes.string]).isRequired,
 }
 
 SectionHeader.defaultProps = {

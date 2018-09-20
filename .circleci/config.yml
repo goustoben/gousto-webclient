@@ -84,7 +84,7 @@ jobs:
           at: ~/
       - run:
           name: Run isomoprhic jest tests
-          command: cd src && npm run test:jest:ci -- --no-cache
+          command: cd src && yarn run test:jest:ci --no-cache
       - persist_to_workspace:
           root: ~/
           paths:
