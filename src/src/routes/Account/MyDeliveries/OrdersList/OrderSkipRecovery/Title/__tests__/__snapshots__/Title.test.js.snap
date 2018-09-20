@@ -4,7 +4,9 @@ exports[`Order Skip Recovery Model Title Innitial Render should render snapshot 
 <div
   className="modalTitle"
 >
-  <div>
+  <div
+    className="title"
+  >
     Are you sure you want to skip?
   </div>
 </div>

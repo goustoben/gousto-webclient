@@ -4,7 +4,7 @@ import { ModalTitle } from 'ModalComponent'
 
 import css from './Title.css'
 
-const prototype = {
+const propTypes = {
 	title: PropTypes.string.isRequired,
 	orderType: PropTypes.string.isRequired,
 }
@@ -26,7 +26,7 @@ const Title = ({ title, orderType }) => {
 	)
 }
 
-Title.prototype = prototype
+Title.PropTypes = propTypes
 
 Title.defaultProps = defaultProps
 
