@@ -26,7 +26,7 @@ const Title = ({ title, orderType }) => {
 	)
 }
 
-Title.PropTypes = propTypes
+Title.propTypes = propTypes
 
 Title.defaultProps = defaultProps
 

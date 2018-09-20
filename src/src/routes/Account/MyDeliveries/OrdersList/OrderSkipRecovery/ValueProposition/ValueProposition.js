@@ -3,7 +3,7 @@ import { ModalContent } from 'ModalComponent'
 
 import css from './ValueProposition.css'
 
-const prototype = {
+const propTypes = {
 	featureFlag: PropTypes.boolean,
 	valueProposition: PropTypes.shape({
 		title: PropTypes.string.isRequired,
@@ -28,7 +28,7 @@ const ValueProposition = ({ featureFlag, valueProposition }) => (
 		) : null
 )
 
-ValueProposition.prototype = prototype
+ValueProposition.propTypes = propTypes
 
 ValueProposition.defaultProps = defaultProps
 
