@@ -242,13 +242,13 @@ describe('orderSkipRecovery reducer', () => {
         basis: 'percentage_discount',
         details: {
           message: 'You only have 10% on all your orders until the 19th of October',
-          formatted_value: '10%',
-          raw_message: {
+          formattedValue: '10%',
+          rawMessage: {
             text: 'You only have {:value:} on all your orders until the {:date:}',
-            values: {
-              date: '19th of October',
-              value: '10%'
-            }
+            values: [
+							{ key: 'date', value: '19th of October' },
+							{ key: 'value', value: '£13' }
+						]
           }
         }
       }

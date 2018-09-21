@@ -8,13 +8,13 @@ describe('Order Skip Recovery Model Offer', () => {
 	let wrapper
 	const offer = {
 		message: 'You only have 10% on all your orders until the 19th of October',
-		formatted_value: '10%',
-		raw_message: {
+		formattedValue: '10%',
+		rawMessage: {
 			text: 'You only have {:value:} on all your orders until the {:date:}',
-			values: {
-				date: '19th of October',
-				value: '10%'
-			}
+			values: [
+				{ key: 'date', value: '19th of October' },
+				{ key: 'value', value: '£13' }
+			]
 		}
 	}
 
@@ -40,7 +40,7 @@ describe('Order Skip Recovery Model Offer', () => {
 		test('should render discount message', () => {
 			const discountMessage = wrapper.find('.messageDiscountOSR')
 
-			expect(discountMessage.text()).toBe('You only have 10% OFF on all your orders until the 19th of October')
+			expect(discountMessage.text()).toBe('You only have £13 on all your orders until the 19th of October')
 		})
 	})
 

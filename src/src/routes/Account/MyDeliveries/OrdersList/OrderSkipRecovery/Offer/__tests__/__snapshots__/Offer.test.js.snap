@@ -14,16 +14,11 @@ exports[`Order Skip Recovery Model Offer Innitial Render should render snapshot 
   </div>
   <div
     className="messageDiscountOSR"
-  >
-    You only have 
-    <strong>
-      10%
-       OFF
-    </strong>
-     on all your orders until the 
-    <strong>
-      19th of October
-    </strong>
-  </div>
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "You only have <strong>£13</strong> on all your orders until the <strong>19th of October</strong>",
+      }
+    }
+  />
 </div>
 `;
