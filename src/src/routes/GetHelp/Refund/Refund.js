@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { replaceWithValues } from 'utils/text'
 
 import BottomBar from 'BottomBar'
 import BottomButton from '../components/BottomButton'
@@ -6,25 +7,33 @@ import BottomButton from '../components/BottomButton'
 import { client as routes } from 'config/routes'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 
-const Refund = ({ content: { title }, refundAmount }) => {
+const Refund = ({
+	content: {
+		title,
+		infoBody,
+		confirmationBody,
+		button1,
+		button2
+	}, refundAmount
+}) => {
 	const { index, contact } = routes.getHelp
 	const contactUrl = `${index}/${contact}`
-	const bodyDescription = `We would like to offer you £${refundAmount} in Gousto credit, 
-	which will be applied to your next order.`
+	const infoBodyWithAmount = replaceWithValues(infoBody, { refundAmount })
+	const button2WithAmount = replaceWithValues(button2, { refundAmount })
 
 	return (
 		<GetHelpLayout
 			title={title}
-			body={bodyDescription}
+			body={infoBodyWithAmount}
 			fullWidthContent
 		>
-			<p>Would you like to accept the credit, or contact us for for further assistance?</p>
+			<p>{confirmationBody}</p>
 			<BottomBar>
 				<BottomButton color="secondary" url={contactUrl} clientRouted>
-					Contact Us
+					{button1}
 				</BottomButton>
-				<BottomButton color="secondary" url={contactUrl} clientRouted>
-					{`Accept £${refundAmount} credit`}
+				<BottomButton color="primary" url={contactUrl} clientRouted>
+					{button2WithAmount}
 				</BottomButton>
 			</BottomBar>
 		</GetHelpLayout>
