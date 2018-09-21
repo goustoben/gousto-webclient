@@ -37,7 +37,7 @@ const Header = ({ offer, featureFlag }) => (
 				</div>
 			</div>
 		</div>
-	) : null
+	) : <div style={{ paddingBottom: 20 }} />
 )
 
 Header.propTypes = propTypes
