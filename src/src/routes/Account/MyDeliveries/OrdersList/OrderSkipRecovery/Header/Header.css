@@ -1,0 +1,12 @@
+.header {
+	background-color: #E7F7F8;
+	height: 160px;
+	position: relative;
+	border-radius: 12px 12px 0 0;
+}
+
+.mask {
+		width: 100%;
+    position: absolute;
+    bottom: 0;
+}

@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react'
 
-import ModalComponent, { ModalContent } from 'ModalComponent'
+import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
 
+import css from './OrderSkipRecovery.css'
 
 import Title from './Title'
 import Offer from './Offer'
 import ValueProposition from './ValueProposition'
+import Header from './Header'
 import Footer from './Footer'
 
 const propTypes = {
@@ -62,14 +64,19 @@ class OrderSkipRecovery extends React.PureComponent {
 
 		return (
 			<ModalComponent visible={visible}>
-				<Title title={title} orderType={orderType} />
-				{(featureFlag) && (
-					<ModalContent>
-						<Offer offer={offer} />
-						<ValueProposition valueProposition={valueProposition} />
-					</ModalContent>
-				)}
-				<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
+				<Header offer={offer} featureFlag={featureFlag} />
+				<div className={css.container}>
+					<ModalTitle>
+						<Title title={title} orderType={orderType} />
+					</ModalTitle>
+					{(featureFlag) && (
+						<ModalContent>
+							<Offer offer={offer} />
+							<ValueProposition valueProposition={valueProposition} />
+						</ModalContent>
+					)}
+					<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
+				</div>
 			</ModalComponent>
 		)
 	}
