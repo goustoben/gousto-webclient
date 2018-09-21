@@ -13,6 +13,7 @@ import processCookies from 'utils/processCookies'
 import processFeaturesQuery from 'utils/processFeaturesQuery'
 import processQuery from 'utils/processQuery'
 import loadFeatures from 'utils/loadFeatures'
+import { loadVariants } from 'utils/loadVariants'
 import featuresLoadedFromStore from 'utils/featuresLoadedFromStore'
 import actions from 'actions'
 import docReady from 'utils/docReady'
@@ -99,6 +100,8 @@ window.onhashchange = () => {
 window.__store__ = store // eslint-disable-line no-underscore-dangle
 
 window.__loadFeatures__ = features => loadFeatures(features, store) // eslint-disable-line no-underscore-dangle
+
+window.__loadVariants__ = variants => loadVariants(variants, store) // eslint-disable-line no-underscore-dangle
 
 window.__featuresLoadedFromStore__ = features => featuresLoadedFromStore(features, store) // eslint-disable-line no-underscore-dangle
 

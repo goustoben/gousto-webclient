@@ -8,6 +8,7 @@ import authActions from 'actions/auth'
 import filterActions from 'actions/filters'
 import cookieActions from 'actions/cookies'
 import trackingActions from 'actions/tracking'
+import { loadContentVariants } from 'actions/content'
 import logger from 'utils/logger'
 import persist from 'actions/persist'
 import { get } from './cookieHelper2'
@@ -79,6 +80,7 @@ const processCookies = (cookies, store) => {
 	const cookiePolicy = get(cookies, 'cookie_policy')
 
 	let features = getCookieStoreValue(cookies, 'features')
+	let variants = getCookieStoreValue(cookies, 'variants')
 
 	if (cookiePolicy) {
 		store.dispatch(cookieActions.cookiePolicyAcceptanceChange(cookiePolicy.isAccepted))
@@ -218,6 +220,15 @@ const processCookies = (cookies, store) => {
 			store.dispatch(signupActions.signupStepsReceive(signupSteps))
 		} catch (err) {
 			logger.error('error parsing signup steps cookie value', err.message)
+		}
+	}
+
+	if (variants) {
+		try {
+			variants = JSON.parse(variants)
+			store.dispatch(loadContentVariants(variants))
+		} catch (err) {
+			logger.notice('error parsing variants cookie value', err.message)
 		}
 	}
 }
