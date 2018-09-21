@@ -7,7 +7,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import OrderRestoreButton from 'routes/Account/MyDeliveries/OrdersList/Order/OrderRestoreButton/OrderRestoreButton'
 import Button from 'Button'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 import Content from 'containers/Content'
 import orderActions from 'actions/order'
 

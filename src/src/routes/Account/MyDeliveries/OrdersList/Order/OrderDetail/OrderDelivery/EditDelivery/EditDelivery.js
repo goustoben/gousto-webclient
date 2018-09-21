@@ -9,7 +9,7 @@ import DropdownInput from 'Form/Dropdown'
 import css from './EditDelivery.css'
 import Content from 'containers/Content'
 import util, { DEFAULT_MESSAGE_ID } from './util'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 
 class EditDelivery extends React.PureComponent {
 	static propTypes = {

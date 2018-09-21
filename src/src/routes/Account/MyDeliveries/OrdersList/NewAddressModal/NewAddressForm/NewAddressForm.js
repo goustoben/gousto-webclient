@@ -7,7 +7,7 @@ import actions from 'actions/user.js'
 import configCheckout from 'config/checkout'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import classNames from 'classnames'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 import config from './NewAddressFormErrorsConfig.js'
 import Content from 'containers/Content'
 

@@ -6,7 +6,7 @@ import orderActions from 'actions/order'
 import EditDelivery from './EditDelivery'
 import Button from 'Button'
 import actions from 'actions/user'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 
 import css from './OrderDelivery.css'
 

@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import React from 'react'
 import { shallow } from 'enzyme'
 import ErrorMessage from 'routes/Checkout/Components/ErrorMessage/ErrorMessage'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 import config from 'config/checkout'
 
 describe('ErrorMessage', () => {

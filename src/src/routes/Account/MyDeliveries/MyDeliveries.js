@@ -6,7 +6,7 @@ import css from './MyDeliveries.css'
 import Button from 'Button'
 import Link from 'Link'
 import routes from 'config/routes'
-import Alert from 'components/Alert'
+import { Alert } from 'goustouicomponents'
 import Loading from 'Loading'
 
 class MyDeliveries extends React.PureComponent {

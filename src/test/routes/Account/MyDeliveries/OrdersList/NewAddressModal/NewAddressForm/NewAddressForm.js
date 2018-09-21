@@ -10,7 +10,7 @@ import { shallow, mount } from 'enzyme'
 import Input from 'Form/Input'
 import Button from 'Button'
 import Dropdown from 'Form/Dropdown'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 
 import NewAddressForm from 'routes/Account/MyDeliveries/OrdersList/NewAddressModal/NewAddressForm/NewAddressForm'
 import css from 'routes/Account/MyDeliveries/OrdersList/NewAddressModal/NewAddressForm/NewAddressForm.css'

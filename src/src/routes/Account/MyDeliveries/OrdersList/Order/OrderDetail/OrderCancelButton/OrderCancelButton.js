@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import Button from 'Button'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 import Content from 'containers/Content'
 
 import css from './OrderCancelButton.css'

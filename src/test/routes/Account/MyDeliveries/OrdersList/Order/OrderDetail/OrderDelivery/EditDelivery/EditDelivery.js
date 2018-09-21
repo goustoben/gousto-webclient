@@ -15,7 +15,7 @@ import userActions from 'actions/user'
 import orderActions from 'actions/order'
 import DropdownInput from 'components/Form/Dropdown/DropdownInput'
 import { DEFAULT_MESSAGE_ID } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/EditDelivery/util.js'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 
 describe('EditDelivery', function() {
 	const addresses = Immutable.fromJS({
