@@ -9,7 +9,10 @@ exports[`Order Skip Recovery Model Offer Innitial Render should render snapshot 
   >
     <div>
       10%
-       OFF
+       
+      <small>
+        OFF
+      </small>
     </div>
   </div>
   <div

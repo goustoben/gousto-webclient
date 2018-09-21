@@ -32,7 +32,7 @@ const Offer = ({ offer }) => {
 
   return (
     <div className={css.offerWrapper}>
-      <div className={css.discountOSR}><div>{offer.formattedValue} OFF</div></div>
+      <div className={css.discountOSR}><div>{offer.formattedValue} <small>OFF</small></div></div>
       <div className={css.messageDiscountOSR} dangerouslySetInnerHTML={{ __html: formattedMessage }} />
     </div>
   )
