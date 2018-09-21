@@ -21,6 +21,7 @@ const propTypes = {
 
 const defaultProps = {
 	offer: null,
+	featureFlag: false,
 }
 
 const Header = ({ offer, featureFlag }) => (

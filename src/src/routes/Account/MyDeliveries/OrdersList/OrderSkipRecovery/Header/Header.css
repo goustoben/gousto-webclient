@@ -34,9 +34,11 @@
 
 .boxText__title {
 	display: block;
+	text-align: center;
 }
 
 .boxText__sub {
 	display: block;
 	font-size: 10px;
+	text-align: center;
 }
