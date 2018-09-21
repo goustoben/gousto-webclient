@@ -115,13 +115,14 @@ const config = {
 			{
 				test: /\.js$/,
 
-				exclude: /node_modules/,
+		
 				loader: 'babel-loader',
 				options: {
 					cacheDirectory: true,
 				},
 				include: [
-					path.resolve('./src')
+					path.resolve('./src'),
+					path.resolve('./node_modules/goustouicomponents')
 				]
 			},
 			{
