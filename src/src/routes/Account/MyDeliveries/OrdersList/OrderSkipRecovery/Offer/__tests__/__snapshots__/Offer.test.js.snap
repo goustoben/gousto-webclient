@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Order Skip Recovery Model Offer Innitial Render should render snapshot 1`] = `
+<div
+  className="offerWrapper"
+>
+  <div
+    className="discountOSR"
+  >
+    <div>
+      10%
+       OFF
+    </div>
+  </div>
+  <div
+    className="messageDiscountOSR"
+  >
+    You only have 
+    <strong>
+      10%
+       OFF
+    </strong>
+     on all your orders until the 
+    <strong>
+      19th of October
+    </strong>
+  </div>
+</div>
+`;

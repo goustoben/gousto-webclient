@@ -12,7 +12,7 @@ const propTypes = {
         value: PropTypes.string,
       })
     })
-  })
+  }).isRequired
 }
 
 const transformMessage = (text) => {
@@ -28,8 +28,9 @@ const transformMessage = (text) => {
   }
 }
 
-
 const Offer = ({ offer }) => {
+	if (!offer) return null
+
   const offerValue = offer.raw_message.values.value
   const offerDate = offer.raw_message.values.date
 
