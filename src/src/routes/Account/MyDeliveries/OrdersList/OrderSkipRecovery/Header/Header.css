@@ -10,3 +10,12 @@
     position: absolute;
     bottom: 0;
 }
+
+.box {
+		width: 168px;
+    height: 116px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
+}

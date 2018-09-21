@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import ContentMask from 'ContentMask'
+import Svg from 'Svg'
 
 import css from './Header.css'
 
@@ -25,9 +26,10 @@ const defaultProps = {
 const Header = ({ offer, featureFlag }) => (
 	(offer && featureFlag) ? (
 		<div>
-			<div className={css.header}>
-				<div className={css.mask}>
-					<ContentMask />
+		<div className={css.header}>
+			<div className={css.mask}>
+				<Svg className={css.box} fileName="icon-box" />
+				<ContentMask />
 				</div>
 			</div>
 		</div>
