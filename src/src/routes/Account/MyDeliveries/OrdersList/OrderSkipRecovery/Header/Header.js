@@ -29,6 +29,10 @@ const Header = ({ offer, featureFlag }) => (
 		<div className={css.header}>
 			<div className={css.mask}>
 				<Svg className={css.box} fileName="icon-box" />
+				<div className={css.boxText}>
+					<span className={css.boxText__title}>{offer.formattedValue}</span>
+					<span className={css.boxText__sub}>OFF</span>
+				</div>
 				<ContentMask />
 				</div>
 			</div>

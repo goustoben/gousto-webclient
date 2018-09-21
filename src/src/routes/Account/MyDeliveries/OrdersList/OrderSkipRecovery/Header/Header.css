@@ -1,3 +1,6 @@
+@value White from 'styles/colors.css';
+@value comfortaaFontStack from 'styles/typography.css';
+
 .header {
 	background-color: #E7F7F8;
 	height: 160px;
@@ -12,10 +15,28 @@
 }
 
 .box {
-		width: 168px;
-    height: 116px;
+		width: 210px;
+    height: 145px;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     bottom: 10px;
+}
+
+.boxText {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	font-family: comfortaaFontStack;
+	bottom: 39px;
+	color: White;
+}
+
+.boxText__title {
+	display: block;
+}
+
+.boxText__sub {
+	display: block;
+	font-size: 10px;
 }
