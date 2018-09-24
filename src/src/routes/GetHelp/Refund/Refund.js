@@ -22,10 +22,6 @@ class Refund extends PureComponent {
 		}),
 	}
 
-	static defaultProps = {
-		orderIssues: [],
-	}
-
 	state = {
 		refundAmount: 0,
 		isFetchingAmount: true,
@@ -33,54 +29,52 @@ class Refund extends PureComponent {
 	}
 
 	componentDidMount() {
-		this.setState({ isFetchingAmount: true, didFetchAmountErrored: false })
-
 		fetchRefundAmount()
-			.then(() => {
-				this.setState({ isFetchingAmount: false, didFetchAmountErrored: true })
+			.then(response => {
+				this.setState({
+					refundAmount: response.data.refundValue,
+					isFetchingAmount: false,
+				})
 			})
 			.catch(() => {
-				this.setState({ isFetchingAmount: false, didFetchAmountErrored: true })
+				this.setState({
+					didFetchAmountErrored: true,
+					isFetchingAmount: false,
+				})
 			})
 	}
 
 	render() {
-		const { refundAmount, isFetchingAmount, didFetchAmountErrored } = this.state
-		const {
-			content: {
-				title,
-				infoBody,
-				confirmationBody,
-				errorBody,
-				button1,
-				button2,
-			}
-		} = this.props
+		const { content } = this.props
 		const { index, contact } = routes.getHelp
+		const { refundAmount, isFetchingAmount, didFetchAmountErrored } = this.state
 		const contactUrl = `${index}/${contact}`
-		const infoBodyWithAmount = replaceWithValues(infoBody, {
+		const infoBodyWithAmount = replaceWithValues(content.infoBody, {
 			refundAmount: refundAmount.toFixed(2)
 		})
-		const button2WithAmount = replaceWithValues(button2, {
+		const button2WithAmount = replaceWithValues(content.button2, {
 			refundAmount: refundAmount.toFixed(2)
 		})
-
-		const getHelpLayoutbody = (isFetchingAmount || didFetchAmountErrored) ? '' :  infoBodyWithAmount
+		const getHelpLayoutbody = (isFetchingAmount || didFetchAmountErrored)
+			? ''
+			:  infoBodyWithAmount
 
 		return (
 			<GetHelpLayout
-				title={title}
+				title={content.title}
 				body={getHelpLayoutbody}
 				fullWidthContent
 			>
-				{isFetchingAmount ?
-					<Loading/>
-				:
-					<div>
-						<p>{didFetchAmountErrored ? errorBody : confirmationBody}</p>
+				{(isFetchingAmount)
+					? <Loading/>
+					: <div>
+						<p>{(didFetchAmountErrored)
+							? content.errorBody
+							: content.confirmationBody}
+						</p>
 						<BottomBar>
 							<BottomButton color="secondary" url={contactUrl} clientRouted>
-								{button1}
+								{content.button1}
 							</BottomButton>
 							<BottomButton color="primary" url={contactUrl} clientRouted>
 								{button2WithAmount}
