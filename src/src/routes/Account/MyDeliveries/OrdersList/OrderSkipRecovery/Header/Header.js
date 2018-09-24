@@ -25,7 +25,7 @@ const defaultProps = {
 }
 
 const Header = ({ offer, featureFlag }) => (
-	(offer && featureFlag) ? (
+	(featureFlag && offer) ? (
 		<div>
 		<div className={css.header}>
 			<div className={css.mask}>
@@ -38,7 +38,7 @@ const Header = ({ offer, featureFlag }) => (
 				</div>
 			</div>
 		</div>
-	) : <div style={{ paddingBottom: 20 }} />
+	) : <div className={css.spacer} />
 )
 
 Header.propTypes = propTypes
