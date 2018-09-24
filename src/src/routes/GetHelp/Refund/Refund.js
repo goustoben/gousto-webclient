@@ -28,20 +28,28 @@ class Refund extends PureComponent {
 		didFetchAmountErrored: false,
 	}
 
+	getRefund = async () => {
+		const response = await fetchRefundAmount()
+
+		console.log('>>>', response)
+
+		let mergeState = (newState) => (Object.assign({}, this.state, newState))
+		let currentState = mergeState({
+			didFetchAmountErrored: false,
+			isFetchingAmount: false,
+		})
+
+		if (response.error) {
+			currentState = mergeState({
+				didFetchAmountErrored: true,
+			})
+		}
+
+		this.setState(currentState)
+	}
+
 	componentDidMount() {
-		fetchRefundAmount()
-			.then(response => {
-				this.setState({
-					refundAmount: response.data.refundValue,
-					isFetchingAmount: false,
-				})
-			})
-			.catch(() => {
-				this.setState({
-					didFetchAmountErrored: true,
-					isFetchingAmount: false,
-				})
-			})
+		this.getRefund()
 	}
 
 	render() {
