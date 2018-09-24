@@ -1,55 +1,103 @@
 {
   "plugins": [
-    "lodash",
-    "transform-async-to-generator",
-    "transform-strict-mode",
-    "transform-class-properties",
-    "transform-object-rest-spread",
-    "syntax-dynamic-import"
+    "@babel/plugin-transform-modules-commonjs",
+    "@babel/plugin-transform-async-to-generator",
+    "@babel/plugin-transform-strict-mode",
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-syntax-import-meta",
+    "@babel/plugin-proposal-json-strings",
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    "@babel/plugin-proposal-function-sent",
+    "@babel/plugin-proposal-export-namespace-from",
+    "@babel/plugin-proposal-numeric-separator",
+    "@babel/plugin-proposal-throw-expressions",
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-proposal-logical-assignment-operators",
+    "@babel/plugin-proposal-optional-chaining",
+    [
+      "@babel/plugin-proposal-pipeline-operator",
+      {
+        "proposal": "minimal"
+      }
+    ],
+    "@babel/plugin-proposal-nullish-coalescing-operator",
+    "@babel/plugin-proposal-do-expressions",
+    "@babel/plugin-proposal-function-bind"
   ],
   "presets": [
-    "env",
-    "react",
-    "stage-0"
+    "@babel/preset-env",
+    "@babel/preset-react"
   ],
   "env": {
     "production": {
       "presets": [
-        ["env", {
-          "loose": true,
-          "targets": {
-            "node": "8.11.3"
-          },
-          "useBuiltIns": true
-        }],
-        "react",
-        "stage-0"
+        [
+          "@babel/preset-env",
+          {
+            "loose": true,
+            "targets": {
+              "node": "8.11.3"
+            },
+            "useBuiltIns": "usage"
+          }
+        ],
+        "@babel/preset-react"
       ],
       "plugins": [
-        ["lodash",
-          "transform-async-to-generator",
-          "transform-strict-mode",
-          "transform-class-properties",
-          "transform-object-rest-spread",
-          "syntax-dynamic-import",
-          "transform-runtime", {
-            "helpers": true,
-            "polyfill": false,
-            "regenerator": true,
-            "moduleName": "babel-runtime"
+        "@babel/plugin-transform-modules-commonjs",
+        "@babel/plugin-transform-async-to-generator",
+        "@babel/plugin-transform-strict-mode",
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-proposal-object-rest-spread",
+        "@babel/plugin-syntax-dynamic-import",
+        "@babel/plugin-syntax-import-meta",
+        "@babel/plugin-proposal-json-strings",
+        [
+          "@babel/plugin-proposal-decorators",
+          {
+            "legacy": true
           }
-        ]
+        ],
+        [ "@babel/plugin-transform-runtime", {
+          "corejs": false,
+          "helpers": true,
+          "regenerator": true,
+          "useESModules": false
+        }],
+        "@babel/plugin-proposal-function-sent",
+        "@babel/plugin-proposal-export-namespace-from",
+        "@babel/plugin-proposal-numeric-separator",
+        "@babel/plugin-proposal-throw-expressions",
+        "@babel/plugin-proposal-export-default-from",
+        "@babel/plugin-proposal-logical-assignment-operators",
+        "@babel/plugin-proposal-optional-chaining",
+        [
+          "@babel/plugin-proposal-pipeline-operator",
+          {
+            "proposal": "minimal"
+          }
+        ],
+        "@babel/plugin-proposal-nullish-coalescing-operator",
+        "@babel/plugin-proposal-do-expressions",
+        "@babel/plugin-proposal-function-bind"
       ]
     },
     "test": {
       "plugins": [
         [
-          "transform-runtime", {
-            "polyfill": false,
+          "@babel/plugin-transform-runtime",
+          {
             "regenerator": true
           }
         ],
-        "syntax-dynamic-import"
+        "@babel/plugin-syntax-dynamic-import"
       ]
     }
   }
