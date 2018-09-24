@@ -9,11 +9,7 @@ exports[`Order Skip Recovery Modal Initial Render should render snapshot 1`] = `
     className="modalComponent"
   >
     <div
-      style={
-        Object {
-          "paddingBottom": 20,
-        }
-      }
+      className="spacer"
     />
     <div
       className="container"
