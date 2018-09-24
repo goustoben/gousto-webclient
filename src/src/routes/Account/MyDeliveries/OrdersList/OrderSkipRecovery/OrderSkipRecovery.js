@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react'
 
-import ModalComponent from 'ModalComponent'
+import ModalComponent, { ModalContent } from 'ModalComponent'
+
 
 import Title from './Title'
+import Offer from './Offer'
 import ValueProposition from './ValueProposition'
 import Footer from './Footer'
 
@@ -16,6 +18,7 @@ const propTypes = {
 	cancelPendingOrder: PropTypes.func.isRequired,
 	cancelProjectedOrder: PropTypes.func.isRequired,
 	title: PropTypes.string,
+	offer: PropTypes.object,
 	valueProposition: PropTypes.shape({
 		message: PropTypes.string,
 		title: PropTypes.string,
@@ -53,14 +56,19 @@ class OrderSkipRecovery extends React.PureComponent {
 	}
 
 	render() {
-		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, valueProposition, callToActions } = this.props
+		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, offer, valueProposition, callToActions } = this.props
 		const onClickKeepOrder = () => keepOrder({ orderId, status: orderType })
 		const onClickSkipCancel = () => this.skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder)
 
 		return (
 			<ModalComponent visible={visible}>
 				<Title title={title} orderType={orderType} />
-				<ValueProposition featureFlag={featureFlag} valueProposition={valueProposition} />
+				{(featureFlag) && (
+					<ModalContent>
+						<Offer offer={offer} />
+						<ValueProposition valueProposition={valueProposition} />
+					</ModalContent>
+				)}
 				<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
 			</ModalComponent>
 		)
