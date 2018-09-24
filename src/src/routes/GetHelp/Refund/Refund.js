@@ -31,23 +31,27 @@ class Refund extends PureComponent {
 	}
 
 	getRefund = async () => {
-		const response = await fetchRefundAmount()
-
-		console.log('>>>', response)
-
-		let mergeState = (newState) => (Object.assign({}, this.state, newState))
-		let currentState = mergeState({
-			didFetchAmountErrored: false,
-			isFetchingAmount: false,
-		})
-
-		if (response.error) {
-			currentState = mergeState({
-				didFetchAmountErrored: true,
-			})
+		const responseHandler = (updatedState) => {
+			const newState = {
+				...this.state,
+				...updatedState
+			}
+			this.setState(newState)
 		}
 
-		this.setState(currentState)
+		try {
+			const response = await fetchRefundAmount()
+
+			responseHandler({
+				refundAmount: response.data.refundValue,
+				isFetchingAmount: false,
+			})
+		} catch (err) {
+			responseHandler({
+				didFetchAmountErrored: true,
+				isFetchingAmount: false,
+			})
+		}
 	}
 
 	componentDidMount() {

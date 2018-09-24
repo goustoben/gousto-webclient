@@ -1,7 +1,6 @@
 import React from 'react'
 import { Div } from 'Page/Elements'
 import Image from 'Image'
-import css from './Loading.css'
 
 const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
 
