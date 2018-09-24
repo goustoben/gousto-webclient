@@ -11,10 +11,10 @@ import BoxSummary from 'BoxSummary/BoxSummary'
 import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
 import RecipeList from 'BoxSummary/RecipeList'
 import Description from 'BoxSummary/Description'
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 import BrowseCTAButton from 'BoxSummary/BrowseCTAButton'
 import BrowseCTA from 'BoxSummary/BrowseCTA'
-import Tooltip from 'Tooltip'
+import { Tooltip } from 'goustouicomponents'
 
 let BoxSummaryDesktop
 let sandbox

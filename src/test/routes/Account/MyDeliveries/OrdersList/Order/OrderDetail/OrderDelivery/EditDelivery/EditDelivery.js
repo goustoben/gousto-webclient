@@ -6,7 +6,7 @@ chai.use(sinonChai)
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import EditDelivery from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/EditDelivery/EditDelivery'
 import css from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/EditDelivery/EditDelivery.css'
 import util from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/EditDelivery/util'

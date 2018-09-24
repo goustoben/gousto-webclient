@@ -6,10 +6,10 @@ import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import BoxSummaryButton from 'BoxSummary/BoxSummaryButton/BoxSummaryButton'
 import CheckoutButton from 'BoxSummary/CheckoutButton'
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 import { boxSummaryViews } from 'utils/boxSummary'
 
 describe('BoxSummaryButton', function() {

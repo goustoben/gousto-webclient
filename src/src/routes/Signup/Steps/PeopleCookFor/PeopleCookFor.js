@@ -1,5 +1,5 @@
 import React from 'react'
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 import Button from '../../Button'
 
 import css from './PeopleCookFor.css'

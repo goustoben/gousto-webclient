@@ -3,8 +3,7 @@ import sinon from 'sinon'
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Buttons from 'routes/Checkout/Components/RecipeSummary/Buttons/Buttons'
-import Button from 'Button'
-import Segment from 'Button/Segment'
+
 
 describe('<Buttons />', () => {
 	let qty
@@ -40,11 +39,11 @@ describe('<Buttons />', () => {
 
 	describe('rendering', () => {
 		test('should return a <Button>', () => {
-			expect(wrapper.find(Button).length).toEqual(1)
+			expect(wrapper.find('Button').length).toEqual(1)
 		})
 
 		test('should return a <Button> with correct static width and color props', () => {
-			const button = wrapper.find(Button)
+			const button = wrapper.find('Button')
 
 			expect(button.prop('color')).toEqual('primary')
 			expect(button.prop('fill')).toEqual(true)
@@ -64,7 +63,7 @@ describe('<Buttons />', () => {
 				/>,
 			)
 
-			expect(wrapper.find(Segment).length).toEqual(1)
+			expect(wrapper.find('Segment').length).toEqual(1)
 		})
 
 		test('should return 3 <Segment> when qty is greater than 0 when showControl is true', () => {
@@ -80,7 +79,7 @@ describe('<Buttons />', () => {
 				/>,
 			)
 
-			expect(wrapper.find(Segment).length).toEqual(3)
+			expect(wrapper.find('Segment').length).toEqual(3)
 		})
 	})
 
@@ -97,11 +96,10 @@ describe('<Buttons />', () => {
 					showControl
 				/>,
 			)
+				console.log(wrapper
+					.find('Segment')
+					.last().debug())
 
-			wrapper
-				.find(Segment)
-				.last()
-				.simulate('click')
 
 			expect(onAdd.called).not.toBe(true)
 		})
@@ -119,7 +117,7 @@ describe('<Buttons />', () => {
 					showControl
 				/>,
 			)
-			wrapper.find('div').forEach(node => {
+			wrapper.find('Button').forEach(node => {
 				node.simulate('click')
 			})
 
@@ -157,7 +155,7 @@ describe('<Buttons />', () => {
 					showControl
 				/>,
 			)
-			wrapper.find('div').forEach(node => {
+			wrapper.find('Button').forEach(node => {
 				node.simulate('click')
 			})
 

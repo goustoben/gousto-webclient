@@ -7,7 +7,7 @@ import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
 import Portions from 'BoxSummary/Details/Portions'
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 
 describe('Portions', function() {
 	it('should not have filled Segment if portion is not 2 nor 4', function() {

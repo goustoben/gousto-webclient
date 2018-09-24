@@ -1,12 +1,11 @@
 import React, { PropTypes } from 'react'
-import Button from 'Button'
-import Segment from 'Button/Segment'
-import css from './DeliverySlot.css'
+import { Button, Segment } from 'goustouicomponents'
 import moment from 'moment'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import Calendar from 'Form/Calendar'
 import SlotPicker from './SlotPicker'
 import DropdownInput from 'Form/Dropdown'
+import css from './DeliverySlot.css'
 
 class DeliverySlot extends React.Component {
 

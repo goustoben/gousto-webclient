@@ -3,8 +3,7 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import classnames from 'classnames'
 import css from './BoxSummaryButton.css'
 
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button, Segment } from 'goustouicomponents'
 import CheckoutButton from 'BoxSummary/CheckoutButton'
 
 import config from 'config/basket'

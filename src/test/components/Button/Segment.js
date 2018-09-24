@@ -6,7 +6,7 @@ chai.use(sinonChai)
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 
 describe('Segment', function() {
 	const color = 'primary'

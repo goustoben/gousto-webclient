@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import NewsletterSignUp from 'Footer/NewsletterSignUp/NewsletterSignUp'
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button } from 'goustouicomponents'
+import { Segment } from 'goustouicomponents'
 import Immutable from 'immutable'
 
 let wrapper

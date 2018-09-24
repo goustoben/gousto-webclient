@@ -4,7 +4,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import createCtaContainer from 'utils/createCtaContainer'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Link from 'Link'
 
 describe('createCtaContainer', () => {

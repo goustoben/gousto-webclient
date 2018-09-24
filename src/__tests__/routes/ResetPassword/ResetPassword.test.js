@@ -5,7 +5,7 @@ import ResetPassword from 'routes/ResetPassword/ResetPassword'
 import { PageContent, PageHeader } from 'Page'
 import Input from 'Form/Input'
 import InputError from 'Form/InputError'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 
 describe('<ResetPassword />', () => {
 	let wrapper

@@ -5,8 +5,8 @@ import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button } from 'goustouicomponents'
+import { Segment } from 'goustouicomponents'
 import CheckoutButton from 'BoxSummary/CheckoutButton/CheckoutButton'
 
 describe('CheckoutButton', () => {

@@ -10,8 +10,8 @@ import TextInput from 'Form/Input'
 import Form from 'Form'
 import DropdownInput from 'Form/Dropdown'
 import css from 'BoxSummary/Postcode/Postcode.css'
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button } from 'goustouicomponents'
+import { Segment } from 'goustouicomponents'
 import Immutable from 'immutable'
 
 describe('Postcode', function() {

@@ -3,7 +3,7 @@ import moment from 'moment'
 import lodash from 'lodash'
 
 import css from './Address.css'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import AddressInputs from './AddressInputs'
 import Postcode from './Postcode'
 import DeliveryInfo from './DeliveryInfo'

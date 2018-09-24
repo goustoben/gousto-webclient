@@ -12,60 +12,64 @@ exports[`Banner Initial Render should render with given text 1`] = `
     A Banner's text
      
   </p>
-  <div
-    className="container tertiary fill widthAuto"
-  >
+  <div>
     <div
-      className="spinnerContainer  base tertiary fill noHover autoWidthPadding"
-      onClick={[Function]}
-      onKeyUp={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
+      className="container tertiary fill widthAuto"
     >
-      <span
-        className="spinner"
+      <div
+        className="spinnerContainer  base tertiary fill noHover autoWidthPadding"
+        onClick={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
       >
-        <div
-          className="fadingCircle"
+        <span
+          className="spinner"
         >
-          <div
-            className="circle1 white"
-          />
-          <div
-            className="circle2 white"
-          />
-          <div
-            className="circle3 white"
-          />
-          <div
-            className="circle4 white"
-          />
-          <div
-            className="circle5 white"
-          />
-          <div
-            className="circle6 white"
-          />
-          <div
-            className="circle7 white"
-          />
-          <div
-            className="circle8 white"
-          />
-          <div
-            className="circle9 white"
-          />
-          <div
-            className="circle10 white"
-          />
-          <div
-            className="circle11 white"
-          />
-          <div
-            className="circle12 white"
-          />
-        </div>
-      </span>
+          <div>
+            <div
+              className="fadingCircle"
+            >
+              <div
+                className="circle1 white"
+              />
+              <div
+                className="circle2 white"
+              />
+              <div
+                className="circle3 white"
+              />
+              <div
+                className="circle4 white"
+              />
+              <div
+                className="circle5 white"
+              />
+              <div
+                className="circle6 white"
+              />
+              <div
+                className="circle7 white"
+              />
+              <div
+                className="circle8 white"
+              />
+              <div
+                className="circle9 white"
+              />
+              <div
+                className="circle10 white"
+              />
+              <div
+                className="circle11 white"
+              />
+              <div
+                className="circle12 white"
+              />
+            </div>
+          </div>
+        </span>
+      </div>
     </div>
   </div>
 </div>

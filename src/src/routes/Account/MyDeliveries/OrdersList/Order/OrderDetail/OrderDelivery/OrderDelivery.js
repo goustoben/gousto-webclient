@@ -1,12 +1,9 @@
 import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
-
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
 import EditDelivery from './EditDelivery'
-import Button from 'Button'
-import actions from 'actions/user'
-import { Alert } from 'goustouicomponents'
+import { Alert, Button } from 'goustouicomponents'
 
 import css from './OrderDelivery.css'
 

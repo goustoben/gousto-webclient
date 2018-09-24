@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import css from './FilterButton.css'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 
 const FilterButton = ({ onClick, count }) => (
 	<Button className={css.button} onClick={onClick} disabled={count === 0}>

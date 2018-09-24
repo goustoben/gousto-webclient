@@ -7,7 +7,7 @@ import Immutable from 'immutable'
 import React from 'react'
 import DropdownInput from 'Form/Dropdown'
 import Button from 'routes/Signup/Button'
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 
 import DeliveryStep from 'routes/Signup/Steps/Delivery/DeliveryStep'
 import Image from 'routes/Signup/Image'

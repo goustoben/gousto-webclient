@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import moment from 'moment' /* eslint-disable new-cap */
 
 import css from './Title.css'
-import Spinner from 'Spinner'
+import { Spinner } from 'goustouicomponents'
 import Price from 'BoxSummary/Price'
 class Title extends React.PureComponent {
 	static propTypes = {

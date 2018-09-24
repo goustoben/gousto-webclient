@@ -1,6 +1,6 @@
 import React from 'react'
 import Immutable from 'immutable'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import css from './CheckoutButton.css'
 import config from 'config'
 

@@ -3,7 +3,7 @@ import sinon from 'sinon'
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import OrderProducts from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderProducts'
 import ProductImage from 'routes/Account/AccountComponents/ProductImage'
 

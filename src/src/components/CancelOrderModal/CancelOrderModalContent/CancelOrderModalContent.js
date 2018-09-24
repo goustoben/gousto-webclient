@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
-import Button from 'Button'
+import { Alert, Button } from 'goustouicomponents'
 import css from './CancelOrderModalContent.css'
-import { Alert } from 'goustouicomponents'
 
 class CancelOrderModalContent extends React.PureComponent {
 

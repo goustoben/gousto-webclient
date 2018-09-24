@@ -1,15 +1,14 @@
 import React, { PropTypes } from 'react'
-import Button from 'Button'
-import css from './NewAddressForm.css'
+import { Alert, Button } from 'goustouicomponents'
 import Input from 'Form/Input'
 import Dropdown from 'Form/Dropdown'
 import actions from 'actions/user.js'
 import configCheckout from 'config/checkout'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import classNames from 'classnames'
-import { Alert } from 'goustouicomponents'
 import config from './NewAddressFormErrorsConfig.js'
 import Content from 'containers/Content'
+import css from './NewAddressForm.css'
 
 const LEAVE_BOX_OPTIONS = configCheckout.leaveBoxOptions.map(option => ({ value: option, label: option }))
 

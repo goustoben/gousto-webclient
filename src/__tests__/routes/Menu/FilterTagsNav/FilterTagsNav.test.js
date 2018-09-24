@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme'
 import renderer from 'react-test-renderer';
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import FilterTagsNav from 'routes/Menu/FilterTagsNav/FilterTagsNav'
 
 describe("FilterTag", () => {

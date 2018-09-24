@@ -1,5 +1,5 @@
 import React from 'react'
-import Tooltip from 'Tooltip'
+import { Tooltip } from 'goustouicomponents'
 import css from './InfoToggle.css'
 
 class InfoToggle extends React.Component {

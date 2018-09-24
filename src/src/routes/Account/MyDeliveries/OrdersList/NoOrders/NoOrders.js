@@ -3,7 +3,7 @@ import SeeMenuSection from './SeeMenuSection'
 import css from './NoOrders.css'
 import classnames from 'classnames'
 import Immutable from 'immutable' // eslint-disable no-caps
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Link from 'Link'
 import routes from 'config/routes'
 import Content from 'containers/Content'

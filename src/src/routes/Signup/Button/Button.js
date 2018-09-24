@@ -1,6 +1,6 @@
 import React from 'react'
 import actual from 'actual'
-import GoustoButton from 'Button'
+import { Button as GoustoButton } from 'goustouicomponents'
 
 const ctaText = (isLastStep) => {
 	if (isLastStep) {
