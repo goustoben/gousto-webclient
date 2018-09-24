@@ -1,12 +1,11 @@
-@value ScreenXXSMin from 'styles/screenSizes.css';
+@value ScreenXXSMax from 'styles/screenSizes.css';
 
 .button {
 	align-self: center;
 	flex-grow: 0.4;
 
-	@media ScreenXXSMin {
+	@media ScreenXXSMax {
 		align-self: center;
-		width: 100%;
 	}
 }
 
