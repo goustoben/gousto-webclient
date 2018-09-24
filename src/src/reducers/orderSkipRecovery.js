@@ -11,6 +11,7 @@ export const initialState = () => Immutable.Map({
 	orderType: '',
 	orderDate: '',
 	title: '',
+	offer: null,
 	valueProposition: null,
 	callToActions: null,
 })
@@ -49,14 +50,19 @@ const orderSkipRecovery = {
 					if (action.title) {
 						newState = newState.set('title', action.title)
 					}
+					if (action.offer && action.offer.details) {
+						newState = newState.set('offer', action.offer.details)
+					}
 					if (action.valueProposition) {
 						newState = newState.set('valueProposition', action.valueProposition)
 					}
 					if (action.callToActions) {
 						newState = newState.set('callToActions', action.callToActions)
 					}
+					if (action.orderType) {
+						newState = newState.set('orderType', action.orderType)
+					}
 
-					newState = newState.set('orderType', action.orderType)
 					newState = newState.set('modalVisibility', action.modalVisibility)
 				} else {
 					newState = initialState()

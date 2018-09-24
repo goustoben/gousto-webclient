@@ -1,4 +1,4 @@
-require('babel-polyfill');
+require('@babel/polyfill');
 
 var jsdom = require('jsdom');
 global.window = new jsdom.JSDOM().window;

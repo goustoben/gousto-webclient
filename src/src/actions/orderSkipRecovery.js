@@ -16,8 +16,10 @@ export const modalVisibilityChange = ({
         modalVisibility: true,
         orderId,
         title: data.title,
-        valueProposition: data.valueProposition,
+        offer: data.offer,
+        orderType: status,
         callToActions: data.callToActions,
+        valueProposition: data.valueProposition,
         trackingData: {
           actionType: `Order ${actionTriggered}`,
           order_id: orderId,
@@ -25,6 +27,7 @@ export const modalVisibilityChange = ({
           cms_variation: data.variation || 'default',
           recovery_reasons: [
             data.valueProposition,
+            data.offer,
           ],
         },
       })

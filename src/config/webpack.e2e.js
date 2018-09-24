@@ -28,7 +28,7 @@ const config = {
 	context: path.resolve(__dirname, '..'),
 	target: 'node',
 	entry: [
-		'babel-polyfill',
+		'@babel/polyfill',
 		'./src/e2e.js',
 	],
 	output: {

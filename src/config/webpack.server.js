@@ -4,7 +4,6 @@ const nodeExternals = require('webpack-node-externals')
 const ExitCodePlugin = require('./exitCode')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 const build = process.env.NODE_ENV || 'development'
 const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
@@ -24,7 +23,7 @@ const config = {
 	context: path.resolve(__dirname, '..'),
 	target: 'node',
 	entry: [
-		'babel-polyfill',
+		'@babel/polyfill',
 		'./server/main.js',
 	],
 	output: {
@@ -182,7 +181,6 @@ if (build === 'development') {
 } else {
 	config.devtool = false
 	config.plugins.push(
-		new LodashModuleReplacementPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 
 		new UglifyJsPlugin({
