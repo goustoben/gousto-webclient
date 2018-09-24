@@ -96,11 +96,7 @@ describe('<Buttons />', () => {
 					showControl
 				/>,
 			)
-				console.log(wrapper
-					.find('Segment')
-					.last().debug())
-
-
+	
 			expect(onAdd.called).not.toBe(true)
 		})
 
