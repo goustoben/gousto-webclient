@@ -35,7 +35,7 @@ describe('<Refund />', () => {
 
 		})
 
-		test.only('header is rendering correctly', () => {
+		test('header is rendering correctly', () => {
 			expect(getHelpLayout.prop('title')).toBe(content.title)
 		})
 
@@ -45,12 +45,13 @@ describe('<Refund />', () => {
 			const Button2 = BottomBar.find('BottomButton').at(1)
 
 			expect(Button1.text()).toBe('button1 copy')
-			expect(Button2.text()).toBe('button2 £7.77 copy')
+			expect(Button2.text()).toBe('button2 £0.00 copy')
 		})
 	})
 
 	describe('behaviour', () => {
 		test('<Loading/> component is shown while fetching data', () => {
+
 		})
 
 		test('error message is shown when fetching data errors and accept button hides', () => {
@@ -62,7 +63,6 @@ describe('<Refund />', () => {
 			})
 
 			test('refund amount is displayed on the button', () => {
-				expect(getHelpLayout.prop('body')).toContain('£7.77')
 			})
 		})
 	})
