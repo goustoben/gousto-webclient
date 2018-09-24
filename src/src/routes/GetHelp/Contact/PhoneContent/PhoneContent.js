@@ -4,7 +4,7 @@ import { telephone } from 'config/company'
 
 import css from './PhoneContent.css'
 
-const PhoneContact = () => (
+const PhoneContent = () => (
 	<div>
 		Call us on&nbsp;
 		<a className={css.visibleOnlyOnMobile} href={`tel:${telephone.link}`}>{telephone.number}</a>
@@ -13,4 +13,4 @@ const PhoneContact = () => (
 	</div>
 )
 
-export default PhoneContact
+export default PhoneContent

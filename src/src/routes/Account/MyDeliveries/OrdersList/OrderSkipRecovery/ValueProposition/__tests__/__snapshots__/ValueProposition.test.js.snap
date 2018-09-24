@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Order Skip Modal Value Proposition Initial Render should render snapshot 1`] = `
+<div
+  className="modalContent"
+>
+  <div
+    className="title"
+  >
+    Not in on your delivery date?
+  </div>
+  <div
+    className="message"
+  >
+    Change your delivery day easily for any box you can choose recipes for.
+  </div>
+</div>
+`;

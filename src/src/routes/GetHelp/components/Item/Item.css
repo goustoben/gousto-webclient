@@ -1,0 +1,17 @@
+@value ScreenXXSMax from 'styles/screenSizes.css';
+@value Bluecheese from 'styles/colors.css';
+
+.item {
+	border-bottom: 1px solid #ccc;
+	text-align: left;
+}
+
+.item:last-child {
+	border-bottom: 0;
+}
+
+.hiddenOnMobile {
+	@media ScreenXXSMax {
+		display: none;
+	}
+}
