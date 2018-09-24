@@ -8,6 +8,7 @@ describe('<Refund />', () => {
 		title: 'test title',
 		infoBody: 'We would like to offer you £{{refundAmount}}',
 		confirmationBody: 'Confirmation body',
+		errorBody: 'Error body',
 		button1: 'button1 copy',
 		button2: 'button2 £{{refundAmount}} copy',
 	}
@@ -20,7 +21,6 @@ describe('<Refund />', () => {
 			wrapper =  mount(
 				<Refund
 					content={content}
-					refundAmount="7.77"
 				/>
 			)
 			getHelpLayout = wrapper.find('GetHelpLayout')
@@ -35,12 +35,8 @@ describe('<Refund />', () => {
 
 		})
 
-		test('header is rendering correctly', () => {
+		test.only('header is rendering correctly', () => {
 			expect(getHelpLayout.prop('title')).toBe(content.title)
-		})
-
-		test('refund amount is rendered correctly', () => {
-			expect(getHelpLayout.prop('body')).toContain('£7.77')
 		})
 
 		test('bottom bar buttons is rendering correctly', () => {
@@ -50,6 +46,24 @@ describe('<Refund />', () => {
 
 			expect(Button1.text()).toBe('button1 copy')
 			expect(Button2.text()).toBe('button2 £7.77 copy')
+		})
+	})
+
+	describe('behaviour', () => {
+		test('<Loading/> component is shown while fetching data', () => {
+		})
+
+		test('error message is shown when fetching data errors and accept button hides', () => {
+		})
+
+		describe('refund amount is fetched', () => {
+			test('refund amount is displayed on the body', () => {
+				expect(getHelpLayout.prop('body')).toContain('£7.77')
+			})
+
+			test('refund amount is displayed on the button', () => {
+				expect(getHelpLayout.prop('body')).toContain('£7.77')
+			})
 		})
 	})
 })
