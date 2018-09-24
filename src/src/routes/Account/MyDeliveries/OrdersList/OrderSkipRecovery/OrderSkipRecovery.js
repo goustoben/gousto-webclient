@@ -72,6 +72,7 @@ class OrderSkipRecovery extends React.PureComponent {
 					{(featureFlag) && (
 						<ModalContent>
 							<Offer offer={offer} />
+							{(offer && valueProposition) ? <hr className={css.rule} /> : null}
 							<ValueProposition valueProposition={valueProposition} />
 						</ModalContent>
 					)}

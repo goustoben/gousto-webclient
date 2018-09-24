@@ -1,3 +1,12 @@
+@value Basa from 'styles/colors.css';
+
 .container {
 	padding: 0 20px 20px;
+}
+
+.rule {
+	border: none;
+	height: 2px;
+	margin: 20px 0;
+	background-color: Basa;
 }
