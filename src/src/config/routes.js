@@ -8,6 +8,7 @@ module.exports = {
 		deliveries: 'v1.0',
 		orders: 'v1',
 		recipes: 'v2',
+		ssr: 'v1',
 	},
 	address: {
 		postcodeLookup: '/address/postcode-lookup',

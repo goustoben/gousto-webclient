@@ -5,7 +5,6 @@ import { selectOrderIssue } from 'actions/getHelp'
 import Refund from './Refund'
 
 const mapStateToProps = (state) => ({
-	refundAmount: '57.50',
 	content: {
 		title: state.content.get('get-help_refund_pageheader_header')
 		|| 'Get help with your box',
@@ -14,6 +13,8 @@ const mapStateToProps = (state) => ({
 		which will be applied to your next order.`,
 		confirmationBody: state.content.get('get-help_refund_pagecontent_confirmationbody')
 		|| 'Would you like to accept the credit, or contact us for further assistance?',
+		errorBody: state.content.get('get-help_refund_pagecontent_errorbody')
+		|| 'There was an error getting your automatic refund, please contact us or trying again later',
 		button1: state.content.get('get-help_refund_pagecontent_contactbtn_button1')
 		|| 'Contact Us',
 		button2: state.content.get('get-help_refund_pagecontent_contactbtn_button2')
