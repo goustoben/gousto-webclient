@@ -26,9 +26,12 @@ const transformMessage = (text, values) => {
 }
 
 const Offer = ({ offer }) => {
-	if (!offer) return null
+	if (!(offer && offer.message)) return null
 
-  const formattedMessage = transformMessage(offer.rawMessage.text, offer.rawMessage.values)
+  let formattedMessage = offer.message
+  if (offer.rawMessage && offer.rawMessage.text && offer.rawMessage.values) {
+    formattedMessage = transformMessage(offer.rawMessage.text, offer.rawMessage.values)
+  }
 
   return (
     <div className={css.offerWrapper}>
