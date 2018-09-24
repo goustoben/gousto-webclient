@@ -88,9 +88,12 @@ class Refund extends PureComponent {
 							<BottomButton color="secondary" url={contactUrl} clientRouted>
 								{content.button1}
 							</BottomButton>
-							<BottomButton color="primary" url={contactUrl} clientRouted>
-								{button2WithAmount}
-							</BottomButton>
+							{(didFetchAmountErrored)
+								? null
+								: <BottomButton color="primary" url={contactUrl} clientRouted>
+									{button2WithAmount}
+								</BottomButton>
+							}
 						</BottomBar>
 					</div>
 				}
