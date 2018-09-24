@@ -35,12 +35,11 @@ class Refund extends PureComponent {
 	componentDidMount() {
 		this.setState({ isFetchingAmount: true, didFetchAmountErrored: false })
 		fetchRefundAmount().then(response => {
-			// this.setState({
-			// 	refundAmount: response.data.refundValue,
-			// 	isFetchingAmount: false,
-			// })
-			this.setState({ didFetchAmountErrored: true, isFetchingAmount: false })
-		}).error(() => {
+			this.setState({
+				refundAmount: response.data.refundValue,
+				isFetchingAmount: false,
+			})
+		}).catch(() => {
 			this.setState({ didFetchAmountErrored: true, isFetchingAmount: false })
 		})
 	}
