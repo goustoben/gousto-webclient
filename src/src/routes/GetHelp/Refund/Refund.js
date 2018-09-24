@@ -10,6 +10,8 @@ import Loading from 'Loading'
 import { client as routes } from 'config/routes'
 import { fetchRefundAmount } from 'apis/getHelp'
 
+import css from './Refund.css'
+
 class Refund extends PureComponent {
 	static propTypes = {
 		content: PropTypes.shape({
@@ -78,7 +80,9 @@ class Refund extends PureComponent {
 				fullWidthContent
 			>
 				{(isFetchingAmount)
-					? <Loading/>
+					? <div className={css.center}>
+						<Loading className={css.loading} />
+					</div>
 					: <div>
 						<p>{(didFetchAmountErrored)
 							? content.errorBody
