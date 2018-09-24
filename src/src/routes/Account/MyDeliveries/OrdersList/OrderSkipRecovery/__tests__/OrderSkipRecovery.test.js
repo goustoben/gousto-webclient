@@ -126,8 +126,8 @@ describe('Order Skip Recovery Modal', () => {
 
 			wrapper.instance().skipCancelOrder('13123', '123123', 'pending', cancelPendingOrder, cancelProjectedOrder)
 
-			expect(cancelPendingOrder).toHaveBeenCalledTimes(1)
 			expect(cancelProjectedOrder).toHaveBeenCalledTimes(0)
+			expect(cancelPendingOrder).toHaveBeenCalledTimes(1)
 		})
 
 		test('should only call cancel projected order when order type is projected', () => {
@@ -143,6 +143,36 @@ describe('Order Skip Recovery Modal', () => {
 
 			expect(cancelPendingOrder).toHaveBeenCalledTimes(0)
 			expect(cancelProjectedOrder).toHaveBeenCalledTimes(1)
+		})
+
+		test('should call getSkipRecoveryContent with appropriate props', () => {
+			const getSkipRecoveryContent = jest.fn()
+			wrapper = shallow(
+				<OrderSkipRecovery
+					orderId="14245"
+					triggered={false}
+					orderDate="2018-09-24T13:27:09.487Z"
+					dayId="23001"
+					orderType="pending"
+					getSkipRecoveryContent={getSkipRecoveryContent}
+				/>
+			)
+
+			const prevProps = wrapper.props()
+
+			wrapper.setProps({
+				triggered: true,
+			})
+
+			wrapper.instance().componentDidUpdate(prevProps)
+
+			expect(getSkipRecoveryContent).toHaveBeenCalledWith({
+				actionTriggered: 'Cancel',
+				dayId: '23001',
+				orderDate: '2018-09-24T13:27:09.487Z',
+				orderId: '14245',
+				status: 'pending',
+			})
 		})
 	})
 })
