@@ -17,8 +17,9 @@ export const modalVisibilityChange = ({
         orderId,
         title: data.title,
         offer: data.offer,
-        valueProposition: data.valueProposition,
+        orderType: status,
         callToActions: data.callToActions,
+        valueProposition: data.valueProposition,
         trackingData: {
           actionType: `Order ${actionTriggered}`,
           order_id: orderId,

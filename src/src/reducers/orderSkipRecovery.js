@@ -59,8 +59,10 @@ const orderSkipRecovery = {
 					if (action.callToActions) {
 						newState = newState.set('callToActions', action.callToActions)
 					}
+					if (action.orderType) {
+						newState = newState.set('orderType', action.orderType)
+					}
 
-					newState = newState.set('orderType', action.orderType)
 					newState = newState.set('modalVisibility', action.modalVisibility)
 				} else {
 					newState = initialState()

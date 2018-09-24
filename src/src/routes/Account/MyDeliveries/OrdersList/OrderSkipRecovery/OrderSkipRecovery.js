@@ -41,7 +41,7 @@ class OrderSkipRecovery extends React.PureComponent {
 				orderId,
 				orderDate,
 				dayId,
-				orderType,
+				status: orderType,
 				actionTriggered,
 			})
 		}
