@@ -1,0 +1,17 @@
+@value Basa from 'styles/colors.css';
+
+.row {
+	display: flex;
+}
+ .firstParagraph {
+	composes: marginXXLBottom from 'sass-loader!styles/spacing.scss';
+}
+ .rafLink {
+	width: 50%;
+}
+ .socialButtons {
+	display: flex;
+	height: 40px;
+	composes: paddingMDLeft marginXXLLeft from 'sass-loader!styles/spacing.scss';
+	border-left: 1px solid Basa;
+}
