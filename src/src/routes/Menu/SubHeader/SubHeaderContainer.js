@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+import menuActions from 'actions/menu'
+
 import SubHeader from './SubHeader'
 
 const SubHeaderContainer = connect((state) => {
@@ -10,10 +12,22 @@ const SubHeaderContainer = connect((state) => {
 		showVegetarianFilter = false
 	}
 
+	let orderRecipesNo = 0
+
+	if (orderId !== '') {
+		orderRecipesNo = state.basket.get('recipes', Immutable.List([])).size
+	}
+	const filterVegetarian = state.menuFilterVegetarian
+
 	return {
+		filterVegetarian,
+		orderRecipesNo,
 		showVegetarianFilter,
 		isAuthenticated,
+		fromJoin: state.persist.get('simpleHeader', false),
 	}
-}, {})(SubHeader)
+}, {
+	onFilterVegetarianChange: menuActions.menuFilterVegetarianChange,
+})(SubHeader)
 
 export default SubHeaderContainer
