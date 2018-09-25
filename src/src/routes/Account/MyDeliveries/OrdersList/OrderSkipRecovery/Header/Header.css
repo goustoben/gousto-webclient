@@ -10,17 +10,17 @@
 
 .mask {
 		width: 100%;
-    position: absolute;
-    bottom: 0;
+		position: absolute;
+		bottom: 0;
 }
 
 .box {
 		width: 210px;
-    height: 145px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 10px;
+		height: 145px;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+		bottom: 10px;
 }
 
 .boxText {
