@@ -8,6 +8,7 @@ module.exports = {
 		deliveries: 'v1.0',
 		orders: 'v1',
 		recipes: 'v2',
+		ssr: 'v1',
 	},
 	address: {
 		postcodeLookup: '/address/postcode-lookup',
@@ -41,8 +42,9 @@ module.exports = {
 
 		getHelp: {
 			index: '/get-help',
-			orderIssue: 'order-issue',
+			refund: 'refund',
 			contact: 'contact',
+			orderIssue: 'order-issue',
 		},
 
 		help: '/help',

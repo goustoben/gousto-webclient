@@ -1,13 +1,17 @@
 import React, { PropTypes } from 'react'
+import classnames from 'classnames'
 
 import { PageContent, PageHeader } from 'Page'
 import BottomBar from 'BottomBar'
 
 import css from './GetHelpLayout.css'
 
-const GetHelpLayout = ({ title, body, children }) => {
+const GetHelpLayout = ({ title, body, children, fullWidthContent }) => {
 	const bodyContent = []
 	const footerContent = []
+	const bodyContentCss = classnames(css.bodyContent, {
+		[css.bodyContentFullWidth]: fullWidthContent
+	})
 
 	React.Children.forEach(children, child => {
 		if (child.type === BottomBar) {
@@ -26,7 +30,7 @@ const GetHelpLayout = ({ title, body, children }) => {
 				<p className={css.bodyDescription}>
 					{body}
 				</p>
-				<div className={css.bodyContent}>
+				<div className={bodyContentCss}>
 					{bodyContent}
 				</div>
 				{footerContent}
@@ -36,9 +40,14 @@ const GetHelpLayout = ({ title, body, children }) => {
 }
 
 GetHelpLayout.propTypes = {
-	title: PropTypes.string.isRequired,
 	body: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
 	children: PropTypes.node.isRequired,
+	fullWidthContent: PropTypes.bool,
+}
+
+GetHelpLayout.defaultProps = {
+	fullWidthContent: false
 }
 
 export default GetHelpLayout
