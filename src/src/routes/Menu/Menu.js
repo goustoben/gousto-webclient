@@ -33,20 +33,14 @@ import fetchData from './fetchData'
 class Menu extends React.Component {
 	static propTypes = {
 		basketOrderLoaded: PropTypes.func.isRequired,
-		recipes: PropTypes.instanceOf(Immutable.List).isRequired,
 		recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
-		menuLoadMenu: PropTypes.func.isRequired,
 		menuLoadBoxPrices: PropTypes.func.isRequired,
 		stock: PropTypes.instanceOf(Immutable.Map),
-		cutoffDate: PropTypes.string,
-		prevDate: PropTypes.string,
 		numPortions: PropTypes.number.isRequired,
 		basketRecipeIds: PropTypes.array.isRequired,
 		menuRecipeDetailShow: PropTypes.string,
 		detailVisibilityChange: PropTypes.func,
 		boxSummaryShow: PropTypes.bool,
-		filterVegetarian: PropTypes.bool,
-		filterVegetarianChange: PropTypes.func,
 		boxDetailsVisibilityChange: PropTypes.func.isRequired,
 		disabled: PropTypes.bool.isRequired,
 		boxSummaryDeliveryDaysLoad: PropTypes.func,
@@ -63,8 +57,6 @@ class Menu extends React.Component {
 		query: PropTypes.object,
 		orderId: PropTypes.string,
 		isLoading: PropTypes.bool,
-		orderRecipesNo: PropTypes.number,
-		fromJoin: PropTypes.bool.isRequired,
 		isAuthenticated: PropTypes.bool.isRequired,
 		tariffId: PropTypes.number,
 		menuLoadingBoxPrices: PropTypes.bool,
@@ -236,12 +228,8 @@ class Menu extends React.Component {
 				/>
 				<div className={classnames(css.container, overlayShowCSS)}>
 					<SubHeader
-						filterVegetarian={this.props.filterVegetarian}
-						onFilterVegetarianChange={this.props.filterVegetarianChange}
 						viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
 						onToggleGridView={this.toggleGridView}
-						orderRecipesNo={this.props.orderRecipesNo}
-						fromJoin={this.props.fromJoin}
 					/>
 					{menuFilterExperiment && <FilterTagsNav />}
 					{menuFilterExperiment && <FilterNav />}
@@ -259,7 +247,6 @@ class Menu extends React.Component {
 								data-testing="menuRecipesList"
 							>
 								<RecipeList
-									filterVegetarian={this.props.filterVegetarian}
 									mobileGridView={mobileGridView}
 									showDetailRecipe={this.showDetailRecipe}
 									menuCurrentCollectionId={this.props.menuCurrentCollectionId}
@@ -298,7 +285,6 @@ class Menu extends React.Component {
 															cookingTime={this.props.numPortions === 2 ? detailRecipe.get('cookingTime') : detailRecipe.get('cookingTimeFamily')}
 															description={detailRecipe.get('description')}
 															availability={detailRecipe.get('availability')}
-															cutoffDate={this.props.cutoffDate}
 															youWillNeed={detailRecipe.get('basics')}
 															cuisine={detailRecipe.get('cuisine')}
 															diet={detailRecipe.get('dietType')}
