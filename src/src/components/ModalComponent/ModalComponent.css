@@ -7,14 +7,12 @@
 	width: 380px;
 	background: White;
 	border-radius: 12px;
-	padding: 20px;
 	@media (max-width: 420px) {
 		width: 300px;
 		position: absolute;
 		left: 50vw;
 		top: 30vh;
 		transform: translate(-50%, -50%);
-		padding: 10px;
 	}
 }
 

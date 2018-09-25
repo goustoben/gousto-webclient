@@ -34,7 +34,8 @@ describe('Order Skip Recovery Model Offer', () => {
 		test('should render discount amount', () => {
 			const discountAmount = wrapper.find('.discountOSR')
 
-			expect(discountAmount.text()).toBe('10% OFF')
+			expect(discountAmount.text()).toContain('10%')
+			expect(discountAmount.text()).toContain('OFF')
 		})
 
 		test('should render discount message', () => {

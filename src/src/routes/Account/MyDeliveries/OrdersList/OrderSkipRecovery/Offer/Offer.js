@@ -26,13 +26,21 @@ const transformMessage = (text, values) => {
 }
 
 const Offer = ({ offer }) => {
-	if (!offer) return null
+	if (!(offer && offer.message)) return null
 
-  const formattedMessage = transformMessage(offer.rawMessage.text, offer.rawMessage.values)
+  let formattedMessage = offer.message
+  if (offer.rawMessage && offer.rawMessage.text && offer.rawMessage.values) {
+    formattedMessage = transformMessage(offer.rawMessage.text, offer.rawMessage.values)
+  }
 
   return (
     <div className={css.offerWrapper}>
-      <div className={css.discountOSR}><div>{offer.formattedValue} <small>OFF</small></div></div>
+      <div className={css.discountOSR}>
+        <div className={css.discountOSR__container}>
+          {offer.formattedValue}
+          <small className={css.discountOSR__sub}>OFF</small>
+        </div>
+      </div>
       <div className={css.messageDiscountOSR} dangerouslySetInnerHTML={{ __html: formattedMessage }} />
     </div>
   )
