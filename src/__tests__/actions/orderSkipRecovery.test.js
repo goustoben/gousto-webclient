@@ -40,7 +40,21 @@ describe('orderSkipRecovery', () => {
             const orderId = '234234'
             const status = 'pending'
             const actionTriggered = null // used for tracking
-            const title = 'Are you sure you want to skip?'
+						const title = 'Are you sure you want to skip?'
+						const offer = {
+							basis: 'percentage_discount',
+							details: {
+								message: 'You only have 10% on all your orders until the 19th of October',
+								formattedValue: '10%',
+								rawMessage: {
+									text: 'You only have {:value:} on all your orders until the {:date:}',
+									values: [
+										{ key: 'date', value: '19th of October' },
+										{ key: 'value', value: '£13' }
+									]
+								}
+							}
+						}
             const valueProposition = {
                 title: 'value proposition title',
                 message: 'value proposition message',
@@ -51,6 +65,7 @@ describe('orderSkipRecovery', () => {
 						}
 						const data = {
 								title,
+								offer,
                 valueProposition,
                 callToActions,
 						}
@@ -58,15 +73,16 @@ describe('orderSkipRecovery', () => {
             modalVisibilityChange({
                 orderId,
                 status,
-                actionTriggered,
-                data
+								actionTriggered,
+                data,
             })(dispatchSpy)
 
             expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
                 type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
                 modalVisibility: true,
                 orderId,
-                title: 'Are you sure you want to skip?',
+								title: 'Are you sure you want to skip?',
+								offer,
                 valueProposition,
                 callToActions,
             }))
