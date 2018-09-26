@@ -35,7 +35,10 @@ export const modalVisibilityChange = ({
   )
 
 export const keepOrder = ({ orderId, status }) => (
-  (dispatch) => {
+  (dispatch, getState) => {
+    const valueProposition = getState().orderSkipRecovery.get('valueProposition')
+		const offer = getState().orderSkipRecovery.get('offer')
+
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: false,
@@ -44,16 +47,19 @@ export const keepOrder = ({ orderId, status }) => (
         actionType: 'Order Kept',
         order_id: orderId,
         order_state: status,
-        recovery_reasons: [],
+        recovery_reasons: [
+          valueProposition,
+          offer,
+        ],
       },
     })
   }
 )
 
-export const cancelPendingOrder = (orderId) => (
+export const cancelPendingOrder = (orderId, variation = 'default') => (
   async (dispatch) => {
     try {
-      await dispatch(orderCancel(orderId))
+      await dispatch(orderCancel(orderId, variation))
     } catch (err) {
       logger.error(err.message)
     } finally {
@@ -66,10 +72,10 @@ export const cancelPendingOrder = (orderId) => (
   }
 )
 
-export const cancelProjectedOrder = (dayId) => (
+export const cancelProjectedOrder = (dayId, variation = 'default') => (
   async (dispatch) => {
     try {
-      await dispatch(projectedOrderCancel(dayId, dayId))
+      await dispatch(projectedOrderCancel(dayId, dayId, variation))
     } catch (err) {
       logger.error(err.message)
     } finally {
