@@ -23,6 +23,11 @@
 	z-index: 10 !important;
 }
 
+/* Avoid flickering when it's disabled from the JS*/
+:global .zEWidget-launcher {
+	display: none !important;
+}
+
 :global .disabled[role="button"] {
 	cursor: default;
 }
