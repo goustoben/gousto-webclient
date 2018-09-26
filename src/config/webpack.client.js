@@ -122,7 +122,8 @@ const config = {
 				},
 				include: [
 					path.resolve('./src'),
-					path.resolve('./node_modules/goustouicomponents')
+					path.resolve('./libs/goustouicomponents/src')
+
 				]
 			},
 			{
@@ -205,6 +206,7 @@ const config = {
 		modules: [
 			path.resolve('./src'),
 			path.resolve('./src/components'),
+			path.resolve('./libs/goustouicomponents/src'),
 			path.resolve('./node_modules')
 		],
 		extensions: ['.js', '.json', '.css', '.scss']
