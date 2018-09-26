@@ -60,9 +60,8 @@ class Refund extends PureComponent {
 
 	render() {
 		const { content } = this.props
-		const { index, contact } = routes.getHelp
+		const { index, contact, confirmation } = routes.getHelp
 		const { refundAmount, isFetchingAmount, didFetchAmountErrored } = this.state
-		const contactUrl = `${index}/${contact}`
 		const infoBodyWithAmount = replaceWithValues(content.infoBody, {
 			refundAmount: refundAmount.toFixed(2)
 		})
@@ -89,12 +88,20 @@ class Refund extends PureComponent {
 							: content.confirmationBody}
 						</p>
 						<BottomBar>
-							<BottomButton color="secondary" url={contactUrl} clientRouted>
+							<BottomButton
+								color="secondary"
+								url={`${index}/${contact}`}
+								clientRouted
+							>
 								{content.button1}
 							</BottomButton>
 							{(didFetchAmountErrored)
 								? null
-								: <BottomButton color="primary" url={contactUrl} clientRouted>
+								: <BottomButton
+									color="primary"
+									url={`${index}/${confirmation}`}
+									clientRouted
+								>
 									{button2WithAmount}
 								</BottomButton>
 							}
