@@ -23,6 +23,11 @@
 	z-index: 10 !important;
 }
 
+/* Disable rounded chat button */
+:global .zEWidget-launcher {
+	display: none !important;
+}
+
 :global .disabled[role="button"] {
 	cursor: default;
 }
