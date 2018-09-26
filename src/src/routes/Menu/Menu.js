@@ -37,7 +37,6 @@ class Menu extends React.Component {
 		menuLoadBoxPrices: PropTypes.func.isRequired,
 		stock: PropTypes.instanceOf(Immutable.Map),
 		numPortions: PropTypes.number.isRequired,
-		basketRecipeIds: PropTypes.array.isRequired,
 		menuRecipeDetailShow: PropTypes.string,
 		detailVisibilityChange: PropTypes.func,
 		boxSummaryShow: PropTypes.bool,
@@ -230,6 +229,7 @@ class Menu extends React.Component {
 					<SubHeader
 						viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
 						onToggleGridView={this.toggleGridView}
+						orderId={this.props.orderId}
 					/>
 					{menuFilterExperiment && <FilterTagsNav />}
 					{menuFilterExperiment && <FilterNav />}
@@ -279,7 +279,7 @@ class Menu extends React.Component {
 															ingredients={detailRecipe.get('ingredients', Immutable.List([]))}
 															allergens={detailRecipe.get('allergens', Immutable.List([]))}
 															id={detailRecipe.get('id')}
-															inBasket={this.props.basketRecipeIds.includes(recipeId)}
+															recipeId={recipeId}
 															stock={stock}
 															useWithin={detailRecipe.get('shelfLifeDays')}
 															cookingTime={this.props.numPortions === 2 ? detailRecipe.get('cookingTime') : detailRecipe.get('cookingTimeFamily')}
