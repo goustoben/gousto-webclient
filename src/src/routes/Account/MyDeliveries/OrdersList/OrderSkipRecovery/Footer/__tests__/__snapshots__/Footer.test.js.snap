@@ -4,17 +4,17 @@ exports[`Order Skip Recovery Modal Footer Initial Render should render snapshot 
 <div
   className="modalFooter"
 >
-  <button
-    className="keepButton"
-    onClick={[Function]}
-  >
-    Keep Box
-  </button>
   <div
     className="skipAnyWay"
     onClick={[Function]}
   >
     Skip anyway
   </div>
+  <button
+    className="keepButton"
+    onClick={[Function]}
+  >
+    Keep Box
+  </button>
 </div>
 `;
