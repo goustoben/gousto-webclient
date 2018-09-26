@@ -36,7 +36,6 @@ export const modalVisibilityChange = ({
 
 export const keepOrder = ({ orderId, status }) => (
   (dispatch, getState) => {
-    console.log(getState())
     const valueProposition = getState().orderSkipRecovery.get('valueProposition')
 		const offer = getState().orderSkipRecovery.get('offer')
 
