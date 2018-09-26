@@ -45,6 +45,7 @@ module.exports = {
 			refund: 'refund',
 			contact: 'contact',
 			orderIssue: 'order-issue',
+			confirmation: 'confirmation',
 		},
 
 		help: '/help',

@@ -8,6 +8,7 @@ import OrderIssueContainer from './OrderIssue/OrderIssueContainer'
 
 import Refund from './Refund'
 import Contact from './Contact'
+import Confirmation from './Confirmation'
 
 import { checkValidSession } from './../../utils/routes'
 
@@ -36,6 +37,7 @@ export default (store) => {
 				<IndexRoute component={OrderIssueContainer} />
 				{Refund}
 				{Contact}
+				{Confirmation}
 				<Redirect to={configRoutes.client.login} />
 			</Route>
 		</Route>
