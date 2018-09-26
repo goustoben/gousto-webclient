@@ -1,0 +1,10 @@
+.center {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+
+.loading {
+	width: 100px;
+	height: 100px;
+}

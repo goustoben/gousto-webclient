@@ -12,3 +12,15 @@ export const textReducer = (text, item) => {
 
 	return ''
 }
+
+export const replaceWithValues = (cmsString, values) => {
+	let result = cmsString
+	let regexp
+
+	Object.keys(values).forEach(key => {
+		regexp = new RegExp(`{{${key}}}`, 'g')
+		result = result.replace(regexp, values[key])
+	})
+
+	return result
+}

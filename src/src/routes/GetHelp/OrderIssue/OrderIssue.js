@@ -28,7 +28,7 @@ const OrderIssue = ({
 			<Item trackClick={trackClick(selectOrderIssue, 'ingredients')}>
 				<ItemLink
 					label={ingredientsItem}
-					to="/get-help/contact"
+					to="/get-help/refund"
 					clientRouted
 				/>
 			</Item>
