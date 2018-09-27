@@ -10,7 +10,9 @@ export const modalVisibilityChange = ({
   actionTriggered,
   data = {},
 }) => (
-    (dispatch) => {
+    (dispatch, getState) => {
+      const featureFlag = getState().features.getIn(['skipRecovery', 'value'])
+
       dispatch({
         type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: true,
@@ -25,6 +27,7 @@ export const modalVisibilityChange = ({
           order_id: orderId,
           order_state: status,
           cms_variation: data.variation || 'default',
+          featureFlag,
           recovery_reasons: [
             data.valueProposition,
             data.offer,
