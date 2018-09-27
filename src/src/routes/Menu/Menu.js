@@ -30,6 +30,8 @@ import { getFeaturedImage, getRangeImages } from 'utils/image'
 
 import fetchData from './fetchData'
 
+import browserHelper from '../../utils/browserHelper'
+
 class Menu extends React.Component {
 	static propTypes = {
 		basketOrderLoaded: PropTypes.func.isRequired,
@@ -83,24 +85,22 @@ class Menu extends React.Component {
 	}
 
 	componentDidMount() {
-		let isChrome = false
-		if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.indexOf('Chrome/') !== -1) {
-			isChrome = true
-		}
 		this.setState({ // eslint-disable-line react/no-did-mount-set-state
 			isClient: true,
-			isChrome,
+			isChrome: browserHelper.isChrome(),
 		})
 
 		const props = this.props
 		const store = this.context.store
 
+        const storeOrderId = store.getState().basket.get('orderId')
+
 		// if server rendered
-		if (props.params.orderId && props.params.orderId === store.getState().basket.get('orderId')) {
+		if (props.params.orderId && props.params.orderId === storeOrderId) {
 			props.basketOrderLoaded(props.params.orderId)
 		}
 
-		const forceLoad = (store.getState().basket.get('orderId') && store.getState().basket.get('orderId') !== props.params.orderId)
+		const forceLoad = (storeOrderId && storeOrderId !== props.params.orderId)
 		// TODO: Add back logic to check what needs to be reloaded
 		const query = props.query || {}
 		const params = props.params || {}
