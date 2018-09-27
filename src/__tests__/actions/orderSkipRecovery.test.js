@@ -98,6 +98,11 @@ describe('orderSkipRecovery', () => {
 					valueProposition: null,
 					offer: null,
 				}),
+				features: Immutable.Map({
+					skipRecovery: Immutable.Map({
+						value: false,
+					})
+				})
 			})
 		})
 
@@ -117,6 +122,7 @@ describe('orderSkipRecovery', () => {
 					actionType: 'Order Kept',
 					order_id: '23214',
 					order_state: 'projected',
+					featureFlag: false,
 					recovery_reasons: [
 						null,
 						null,

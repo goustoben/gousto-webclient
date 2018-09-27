@@ -30,6 +30,7 @@ export const orderCancel = (orderId, variation) => (
 		const accessToken = getState().auth.get('accessToken')
 		const valueProposition = getState().orderSkipRecovery.get('valueProposition')
 		const offer = getState().orderSkipRecovery.get('offer')
+		const featureFlag = getState().features.getIn(['skipRecovery', 'value'])
 
 		try {
 			await ordersApi.cancelOrder(accessToken, orderId)
@@ -41,6 +42,7 @@ export const orderCancel = (orderId, variation) => (
 					order_id: orderId,
 					order_state: 'pending',
 					cms_variation: variation,
+					featureFlag,
 					recovery_reasons: [
             valueProposition,
             offer,
@@ -214,6 +216,7 @@ const orderCheckPossibleDuplicate = (orderId) => (
 		const accessToken = getState().auth.get('accessToken')
 		const valueProposition = getState().orderSkipRecovery.get('valueProposition')
 		const offer = getState().orderSkipRecovery.get('offer')
+		const featureFlag = getState().features.getIn(['skipRecovery', 'value'])
 
 		try {
 			await userApi.skipDelivery(accessToken, deliveryDayId)
@@ -225,6 +228,7 @@ const orderCheckPossibleDuplicate = (orderId) => (
 					day_id: deliveryDayId,
 					order_state: 'projected',
 					cms_variation: variation,
+					featureFlag,
 					recovery_reasons: [
             valueProposition,
             offer,
