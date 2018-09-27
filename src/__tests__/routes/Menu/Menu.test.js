@@ -18,6 +18,8 @@ jest.mock('Recipe/Detail')
 jest.mock('routes/Menu/Banner')
 jest.mock('routes/Menu/SubHeader')
 jest.mock('routes/Menu/FilterMenu')
+jest.mock('routes/Menu/FilterTagsNav/FilterTagsNavContainer')
+jest.mock('routes/Menu/FilterNav')
 jest.mock('routes/Menu/RecipeList')
 jest.mock('BoxSummary/BoxSummaryMobile')
 jest.mock('BoxSummary/BoxSummaryDesktop')
@@ -47,7 +49,6 @@ describe('Menu', () => {
 					stock={Immutable.Map()}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					filteredRecipesNumber={30}
@@ -92,10 +93,10 @@ describe('Menu', () => {
 					stock={Immutable.Map()}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					clearAllFilters={() => {}}
+					basketOrderLoaded={() => {}}
 					isLoading
 				/>,
 			)
@@ -111,12 +112,12 @@ describe('Menu', () => {
 					stock={Immutable.Map()}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					isLoading
 					boxSummaryShow
 					clearAllFilters={() => {}}
+					basketOrderLoaded={() => {}}
 				/>,
 			)
 			expect(wrapper.find(Loading).length).toBe(0)
@@ -131,12 +132,12 @@ describe('Menu', () => {
 					stock={Immutable.Map()}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					isLoading
 					menuBrowseCTAShow
 					clearAllFilters={() => {}}
+					basketOrderLoaded={() => {}}
 				/>,
 			)
 			expect(wrapper.find(Loading).length).toBe(0)
@@ -184,14 +185,17 @@ describe('Menu', () => {
 						stock={stock}
 						cutoffDate="2016-06-26"
 						numPortions={2}
-						basketRecipeIds={[]}
 						recipesStore={recipesStore}
 						menuCollectionRecipes={Immutable.Map({})}
 						clearAllFilters={() => {}}
+						basketOrderLoaded={() => {}}
 						features={Immutable.fromJS({
 							collections: {
 								value: true,
 							},
+							filterMenu: {
+								value: false,
+							}
 						})}
 					/>,
 				)
@@ -211,7 +215,6 @@ describe('Menu', () => {
 							stock={stock}
 							cutoffDate="2016-06-26"
 							numPortions={2}
-							basketRecipeIds={[]}
 							recipesStore={recipesStore}
 							menuCollectionRecipes={Immutable.Map({})}
 							clearAllFilters={() => {}}
@@ -271,7 +274,6 @@ describe('Menu', () => {
 					stock={stock}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					recipesStore={recipesStore}
 					menuCollectionRecipes={Immutable.Map({})}
 					clearAllFilters={() => {}}
@@ -301,7 +303,6 @@ describe('Menu', () => {
 						stock={stock}
 						cutoffDate="2016-06-26"
 						numPortions={2}
-						basketRecipeIds={[]}
 						recipesStore={recipesStore}
 						menuCollectionRecipes={Immutable.Map({})}
 						clearAllFilters={() => {}}
@@ -335,7 +336,6 @@ describe('Menu', () => {
 					stock={Immutable.Map()}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					features={Immutable.Map({})}
 					filteredRecipesNumber={30}
 					clearAllFilters={() => {}}
@@ -358,6 +358,11 @@ describe('Menu', () => {
 				basket: Immutable.Map({
 					orderId: '',
 				}),
+				features: Immutable.Map({
+					filterMenu: Immutable.Map({
+						value: false,
+					})
+				})
 			})
 			menuLoadBoxPrices = jest.fn()
 			menuLoadDays = jest.fn().mockReturnValue(
@@ -381,11 +386,9 @@ describe('Menu', () => {
 		test('should load Box Prices for non admin users', () => {
 			wrapper = mount(
 				<Menu
-					recipes={Immutable.OrderedMap()}
 					stock={Immutable.Map()}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					boxSummaryDeliveryDays={Immutable.List([])}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
@@ -415,7 +418,6 @@ describe('Menu', () => {
 					stock={Immutable.Map()}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					boxSummaryDeliveryDays={Immutable.List([])}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
@@ -445,7 +447,6 @@ describe('Menu', () => {
 					stock={Immutable.Map()}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					boxSummaryDeliveryDays={Immutable.List([])}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
@@ -556,6 +557,11 @@ describe('Menu', () => {
 					dietTypes: Immutable.Set(['meat']),
 					dietaryAttributes: Immutable.Set(['gluten-free']),
 				}),
+				features: Immutable.Map({
+					filterMenu: Immutable.Map({
+						value: false,
+					})
+				}),
 				content: Immutable.Map({}),
 				menu: Immutable.Map({}),
 			})
@@ -564,11 +570,9 @@ describe('Menu', () => {
 		test('should render NoResultsPage', () => {
 			wrapper = mount(
 				<Menu
-					recipes={Immutable.OrderedMap()}
 					stock={Immutable.Map()}
 					cutoffDate="2016-06-26"
 					numPortions={2}
-					basketRecipeIds={[]}
 					boxSummaryDeliveryDays={Immutable.List([])}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
