@@ -69,13 +69,20 @@ describe('orderSkipRecovery', () => {
 				valueProposition,
 				callToActions,
 			}
+			getStateSpy.mockReturnValue({
+				features: Immutable.Map({
+					skipRecovery: Immutable.Map({
+						value: false,
+					})
+				})
+			})
 
 			modalVisibilityChange({
 				orderId,
 				status,
 				actionTriggered,
 				data,
-			})(dispatchSpy)
+			})(dispatchSpy, getStateSpy)
 
 			expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
 				type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
