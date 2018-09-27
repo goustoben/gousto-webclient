@@ -192,6 +192,7 @@ class Menu extends React.Component {
 		const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
 		const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
 		const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
+		const showLoading = this.props.isLoading && !overlayShow
 
 		let overlayShowCSS = null
 		if (this.state.isChrome) {
@@ -201,29 +202,9 @@ class Menu extends React.Component {
 		return (
 			<div data-testing="menuContainer">
 				<Helmet
-					title="Food Delivery | Try Our Recipe Kits | Gousto"
-					meta={[
-						{
-							name: 'description',
-							content: 'Food delivery is simple with Gousto\'s popular recipe kit boxes. Receive fresh and seasonal ingredients straight to your home with FREE delivery',
-						},
-						{
-							name: 'keywords',
-							content: 'Gousto, recipe delivery, ingredients, fresh, healthy food, cooking',
-						},
-					]}
-					style={[{
-						cssText: `
-							body .zopim {
-								bottom: 75px !important;
-								-webkit-transition: -webkit-filter 0.3s;
-								-webkit-filter: blur(0px);
-								@media (max-width: 767px) {
-									display: none !important;
-								}
-							}
-						`,
-					}]}
+					title={menu.helmet.title}
+					meta={menu.helmet.meta}
+					style={menu.helmet.style}
 				/>
 				<div className={classnames(css.container, overlayShowCSS)}>
 					<SubHeader
@@ -233,9 +214,10 @@ class Menu extends React.Component {
 					/>
 					<FilterTagsNav />
 					<FilterNav />
-					{this.props.isLoading && !overlayShow ? <div className={css.loadingContainer}><div className={css.loading}><Loading /></div></div> : null}
-					<div className={this.props.isLoading && !overlayShow ? css.fadeOut : css.willFade} data-testing="menuRecipes">
-						{collectionsNavEnabled && !menuFilterExperiment && <CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
+					{showLoading ? <div className={css.loadingContainer}><div className={css.loading}><Loading /></div></div> : null}
+					<div className={showLoading ? css.fadeOut : css.willFade} data-testing="menuRecipes">
+						{collectionsNavEnabled && !menuFilterExperiment &&
+							<CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
 						<FilterMenu />
 						{this.props.filteredRecipesNumber ?
 							<div
