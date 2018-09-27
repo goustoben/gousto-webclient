@@ -19,6 +19,12 @@ exports[`Order Skip Recovery Modal Initial Render should render snapshot 1`] = `
       >
         <Title />
       </div>
+      <div
+        className="modalContent"
+      >
+        <Offer />
+        <ValueProposition />
+      </div>
       <Footer
         onClickKeepOrder={[Function]}
         onClickSkipCancel={[Function]}
