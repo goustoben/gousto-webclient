@@ -15,9 +15,9 @@ const mapStateToProps = (state) => ({
 		|| 'Would you like to accept the credit, or contact us for further assistance?',
 		errorBody: state.content.get('get-help_refund_pagecontent_errorbody')
 		|| 'There was a problem in getting your refund. Please contact us below, or try again later.',
-		button1: state.content.get('get-help_refund_pagecontent_contactbtn_button1')
+		button1: state.content.get('get-help_refund_pagecontent_button1')
 		|| 'Contact Us',
-		button2: state.content.get('get-help_refund_pagecontent_contactbtn_button2')
+		button2: state.content.get('get-help_refund_pagecontent_button2')
 		|| 'Accept £{{refundAmount}} credit',
 	}
 })
