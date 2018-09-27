@@ -38,6 +38,8 @@ export const keepOrder = ({ orderId, status }) => (
   (dispatch, getState) => {
     const valueProposition = getState().orderSkipRecovery.get('valueProposition')
 		const offer = getState().orderSkipRecovery.get('offer')
+    const featureFlag = getState().features.getIn(['skipRecovery', 'value'])
+
 
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
@@ -47,6 +49,7 @@ export const keepOrder = ({ orderId, status }) => (
         actionType: 'Order Kept',
         order_id: orderId,
         order_state: status,
+        featureFlag,
         recovery_reasons: [
           valueProposition,
           offer,
