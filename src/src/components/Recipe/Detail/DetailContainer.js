@@ -3,6 +3,7 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 
 import actions from 'actions'
 import { getCutoffs } from 'utils/deliveries'
+import moment from 'moment'
 
 import Detail from './Detail'
 
