@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Order Skip Modal Value Proposition Initial Render should render snapshot 1`] = `
-<div>
+<div
+  className="modalContent"
+>
   <div
     className="title"
   >

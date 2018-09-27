@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react'
+import { ModalContent } from 'ModalComponent'
 
 import css from './ValueProposition.css'
 
@@ -17,11 +18,14 @@ const defaultProps = {
 	}
 }
 
-const ValueProposition = ({ valueProposition }) => (
-		<div>
-			<div className={css.title}>{valueProposition.title}</div>
-			<div className={css.message}>{valueProposition.message}</div>
-		</div>
+const ValueProposition = ({ featureFlag, valueProposition }) => (
+	(featureFlag)
+		? (
+			<ModalContent>
+				<div className={css.title}>{valueProposition.title}</div>
+				<div className={css.message}>{valueProposition.message}</div>
+			</ModalContent>
+		) : null
 )
 
 ValueProposition.propTypes = propTypes

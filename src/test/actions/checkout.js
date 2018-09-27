@@ -110,10 +110,10 @@ describe('checkout actions', function() {
 				{ id: 'recipe-id-2', quantity: 4, type: 'Recipe' },
 			],
 		}
-		addressCollection = {
+		addressCollection = [
 			1: 'a',
 			2: 'b',
-		}
+		]
 		addressItem = { id: '2000287', line_1: '3 Aldensley Road' }
 		redirect = sandbox.stub(redirectActions, 'redirect')
 		userSubscribeSpy = sandbox.stub(userActions, 'userSubscribe')

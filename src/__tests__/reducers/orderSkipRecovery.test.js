@@ -15,7 +15,6 @@ describe('orderSkipRecovery reducer', () => {
     orderType: '',
     orderDate: '',
     title: '',
-    offer: null,
     valueProposition: null,
     callToActions: null,
   })
@@ -38,7 +37,6 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'pending',
         orderDate: '',
         title: '',
-        offer: null,
         valueProposition: null,
         callToActions: null,
       })
@@ -50,7 +48,7 @@ describe('orderSkipRecovery reducer', () => {
       }
 
       const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
+			expect(result).toEqual(expected)
     })
 
     test('orderSkipRecovery dispatch trigger with dayId', () => {
@@ -63,7 +61,6 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected',
         orderDate: '',
         title: '',
-        offer: null,
         valueProposition: null,
         callToActions: null,
       })
@@ -75,7 +72,7 @@ describe('orderSkipRecovery reducer', () => {
       }
 
       const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
+			expect(result).toEqual(expected)
     })
 
     test('orderSkipRecovery dispatch trigger with orderDate', () => {
@@ -88,7 +85,6 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected',
         orderDate: '2018-09-18 00:00:00',
         title: '',
-        offer: null,
         valueProposition: null,
         callToActions: null,
       })
@@ -101,7 +97,7 @@ describe('orderSkipRecovery reducer', () => {
       }
 
       const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
+			expect(result).toEqual(expected)
     })
   })
 
@@ -117,17 +113,16 @@ describe('orderSkipRecovery reducer', () => {
         orderType: '',
         orderDate: '',
         title: '',
-        offer: null,
         valueProposition: null,
         callToActions: null,
       })
       const actionToCall = {
         type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: false,
-      }
+    }
 
       const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
+			expect(result).toEqual(expected)
     })
 
     test('orderSkipRecovery dispatch trigger with modalVisibility true and orderId', () => {
@@ -140,7 +135,6 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'pending',
         orderDate: '',
         title: 'Title',
-        offer: null,
         valueProposition: null,
         callToActions: null,
       })
@@ -150,10 +144,10 @@ describe('orderSkipRecovery reducer', () => {
         orderId: '123',
         title: 'Title',
         orderType: 'pending'
-      }
+    }
 
       const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
+			expect(result).toEqual(expected)
     })
 
     test('orderSkipRecovery dispatch trigger with modalVisibility true and dayId', () => {
@@ -166,7 +160,6 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected',
         orderDate: '',
         title: 'Title',
-        offer: null,
         valueProposition: null,
         callToActions: null,
       })
@@ -176,10 +169,10 @@ describe('orderSkipRecovery reducer', () => {
         dayId: '123',
         title: 'Title',
         orderType: 'projected'
-      }
+    }
 
       const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
+			expect(result).toEqual(expected)
     })
 
     test('orderSkipRecovery dispatch trigger with modalVisibility true and value proposition', () => {
@@ -192,7 +185,6 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected',
         orderDate: '',
         title: 'Title',
-        offer: null,
         valueProposition: 'Value prop',
         callToActions: null,
       })
@@ -203,10 +195,10 @@ describe('orderSkipRecovery reducer', () => {
         title: 'Title',
         valueProposition: 'Value prop',
         orderType: 'projected'
-      }
+    }
 
       const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
+			expect(result).toEqual(expected)
     })
 
 
@@ -220,7 +212,6 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected',
         orderDate: '',
         title: 'Title',
-        offer: null,
         valueProposition: null,
         callToActions: 'Call to action',
       })
@@ -231,84 +222,10 @@ describe('orderSkipRecovery reducer', () => {
         title: 'Title',
         callToActions: 'Call to action',
         orderType: 'projected'
-      }
+    }
 
       const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
-    })
-
-    test('should dispatch trigger with modalVisibility true and offer', () => {
-      const offer = {
-        basis: 'percentage_discount',
-        details: {
-          message: 'You only have 10% on all your orders until the 19th of October',
-          formattedValue: '10%',
-          rawMessage: {
-            text: 'You only have {:value:} on all your orders until the {:date:}',
-            values: [
-							{ key: 'date', value: '19th of October' },
-							{ key: 'value', value: '£13' }
-						]
-          }
-        }
-      }
-      const expected = Immutable.Map({
-        triggered: false,
-        modalVisibility: true,
-        orderId: '',
-        dayId: '123',
-        boxNumber: '',
-        orderType: 'projected',
-        orderDate: '',
-        title: 'Title',
-        offer: offer.details,
-        valueProposition: null,
-        callToActions: 'Call to action',
-      })
-      const actionToCall = {
-        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-        modalVisibility: true,
-        dayId: '123',
-        title: 'Title',
-        offer,
-        callToActions: 'Call to action',
-        orderType: 'projected',
-      }
-
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
-    })
-
-    test('should not update offer in state when offer.details is undefined', () => {
-      const offer = {
-        basis: 'percentage_discount',
-        details: undefined
-      }
-      const expected = Immutable.Map({
-        triggered: false,
-        modalVisibility: true,
-        orderId: '',
-        dayId: '123',
-        boxNumber: '',
-        orderType: 'projected',
-        orderDate: '',
-        title: 'Title',
-        offer: null,
-        valueProposition: null,
-        callToActions: 'Call to action',
-      })
-      const actionToCall = {
-        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-        modalVisibility: true,
-        dayId: '123',
-        title: 'Title',
-        offer,
-        callToActions: 'Call to action',
-        orderType: 'projected',
-      }
-
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
+			expect(result).toEqual(expected)
     })
   })
 
@@ -323,17 +240,16 @@ describe('orderSkipRecovery reducer', () => {
         orderType: '',
         orderDate: '',
         title: '',
-        offer: null,
         valueProposition: null,
         callToActions: null,
       })
       const actionToCall = {
         type: actionTypes.ORDER_SKIP_RECOVERY_BOX_NUMBER_CHANGE,
-        boxNumber: '5',
+				boxNumber: '5',
       }
 
       const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
-      expect(result).toEqual(expected)
+			expect(result).toEqual(expected)
     })
   })
 })
