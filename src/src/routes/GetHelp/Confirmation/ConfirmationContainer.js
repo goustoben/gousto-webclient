@@ -1,7 +1,5 @@
 import { connect } from 'react-redux'
 
-import { selectOrderIssue } from 'actions/getHelp'
-
 import Confirmation from './Confirmation'
 
 const mapStateToProps = (state) => ({
@@ -18,8 +16,6 @@ const mapStateToProps = (state) => ({
 	}
 })
 
-const ConfirmationContainer = connect(mapStateToProps, {
-	selectOrderIssue,
-})(Confirmation)
+const ConfirmationContainer = connect(mapStateToProps)(Confirmation)
 
 export default ConfirmationContainer
