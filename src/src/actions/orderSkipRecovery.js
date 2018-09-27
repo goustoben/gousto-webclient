@@ -115,13 +115,12 @@ export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, acti
         }
       }
     } catch (err) {
-      logger.notice(err)
-
-      modalVisibilityChange({
+      dispatch(modalVisibilityChange({
         orderId,
         status,
         actionTriggered,
-      })
+      }))
+      logger.notice(err)
     }
   }
 )

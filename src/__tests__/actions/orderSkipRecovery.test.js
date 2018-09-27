@@ -3,7 +3,8 @@ import Immutable from 'immutable'
 import { orderCancel, projectedOrderCancel } from 'actions/order'
 import { fetchOrderSkipContent } from 'apis/orderSkipRecovery'
 import { redirect } from 'actions/redirect'
-import actionTypes from 'actions/actionTypes';
+import actionTypes from 'actions/actionTypes'
+import { notice } from 'utils/logger'
 
 import {
 	modalVisibilityChange,
@@ -24,6 +25,10 @@ jest.mock('actions/redirect', () => ({
 
 jest.mock('apis/orderSkipRecovery', () => ({
 	fetchOrderSkipContent: jest.fn(),
+}))
+
+jest.mock('utils/logger', () => ({
+	notice: jest.fn(),
 }))
 
 describe('orderSkipRecovery', () => {
@@ -259,6 +264,24 @@ describe('orderSkipRecovery', () => {
 
 					expect(projectedOrderCancel).toHaveBeenCalled()
 				})
+			})
+		})
+
+		describe('when the service returns with an Error', () => {
+			test('should display a default cancel modal', async () => {
+				const error = new Error('error from the lambda')
+				fetchOrderSkipContent.mockReturnValue(Promise.reject(
+					error,
+				))
+
+				await getSkipRecoveryContent({
+					orderId: '33101',
+					dayId: '287420',
+					status: 'projected',
+				})(dispatchSpy, getStateSpy)
+
+				expect(dispatchSpy).toHaveBeenCalledTimes(1)
+				expect(notice).toHaveBeenCalledWith(error)
 			})
 		})
 	})
