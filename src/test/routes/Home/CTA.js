@@ -6,8 +6,7 @@ chai.use(sinonChai)
 import React from 'react'
 import CTAHomepage from 'routes/Home/CTA'
 import { shallow, mount } from 'enzyme'
-import { Button } from 'goustouicomponents'
-import { Segment } from 'goustouicomponents'
+import { Button, Segment } from 'goustouicomponents'
 
 describe('CTA', function() {
 	let wrapper

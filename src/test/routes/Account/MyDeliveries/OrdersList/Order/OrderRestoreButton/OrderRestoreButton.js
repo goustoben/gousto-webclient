@@ -6,8 +6,7 @@ chai.use(sinonChai)
 import React from 'react'
 import { shallow } from 'enzyme'
 import OrderRestoreButton from 'routes/Account/MyDeliveries/OrdersList/Order/OrderRestoreButton/OrderRestoreButton'
-import { Button } from 'goustouicomponents'
-import { Alert } from 'goustouicomponents'
+import { Alert, Button } from 'goustouicomponents'
 import Content from 'containers/Content'
 import orderActions from 'actions/order'
 

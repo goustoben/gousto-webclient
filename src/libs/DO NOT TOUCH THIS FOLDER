@@ -1,0 +1,2 @@
+This folder contains git submodules. DO NOT MODIFY any files inside. 
+If you want to modify a file, do it in the ui-components repo https://github.com/Gousto/ui-components and update it here with ```git submodule update```

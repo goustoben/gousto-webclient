@@ -6,8 +6,7 @@ import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 
-import { Button } from 'goustouicomponents'
-import { Segment } from 'goustouicomponents'
+import { Button, Segment } from 'goustouicomponents'
 import BrowseCTAButton from 'BoxSummary/BrowseCTAButton/BrowseCTAButton'
 
 describe('BrowseCTAButton', function() {

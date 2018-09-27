@@ -7,8 +7,7 @@ chai.use(sinonChai)
 import { shallow, mount } from 'enzyme'
 
 import Buttons from 'Recipe/Buttons/Buttons'
-import { Button } from 'goustouicomponents'
-import { Segment } from 'goustouicomponents'
+import { Button, Segment } from 'goustouicomponents'
 
 describe('<Buttons />', function() {
 	let qty

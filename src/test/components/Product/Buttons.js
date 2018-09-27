@@ -8,9 +8,7 @@ chai.use(sinonChai)
 import { shallow } from 'enzyme'
 import Buttons from 'Product/Buttons/Buttons'
 import AgeVerification from 'Product/AgeVerification'
-import { Button } from 'goustouicomponents'
-import { Segment } from 'goustouicomponents'
-import { Control } from 'goustouicomponents'
+import { Button, Control, Segment } from 'goustouicomponents'
 
 describe('Product Buttons', function() {
 	let wrapper
