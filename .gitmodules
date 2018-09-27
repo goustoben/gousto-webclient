@@ -1,3 +1,0 @@
-[submodule "src/libs/goustouicomponents"]
-	path = src/libs/goustouicomponents
-	url = git+ssh://git@github.com/Gousto/ui-components.git
