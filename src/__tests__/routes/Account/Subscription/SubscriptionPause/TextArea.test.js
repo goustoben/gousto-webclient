@@ -5,7 +5,6 @@ import { shallow } from 'enzyme'
 
 import TextArea from 'routes/Account/Subscription/SubscriptionPause/TextArea/TextArea'
 import { Button } from 'goustouicomponents'
-import { Segment } from 'goustouicomponents'
 
 describe('TextArea', () => {
 	describe('rendering', () => {

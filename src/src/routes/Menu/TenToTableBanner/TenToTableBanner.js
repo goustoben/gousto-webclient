@@ -5,8 +5,7 @@ import css from './TenToTableBanner.css'
 import config from 'config/menu'
 import Gel from 'Gel'
 import Icon from 'Icon'
-import { Button } from 'goustouicomponents'
-import { Segment } from 'goustouicomponents'
+import { Button, Segment } from 'goustouicomponents'
 
 class Banner extends React.PureComponent {
 	static defaultProps = {
