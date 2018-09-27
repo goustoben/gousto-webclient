@@ -6,7 +6,7 @@ import { redirect } from 'actions/redirect'
 import actionTypes from 'actions/actionTypes';
 
 import {
-  modalVisibilityChange,
+	modalVisibilityChange,
 	keepOrder,
 	cancelPendingOrder,
 	cancelProjectedOrder,
@@ -33,56 +33,76 @@ describe('orderSkipRecovery', () => {
 	afterEach(() => {
 		dispatchSpy.mockClear()
 		getStateSpy.mockClear()
-    })
+	})
 
-    describe('modalVisibilityChange', () => {
-        test('should show order skip recovery modal', async () => {
-            const orderId = '234234'
-            const status = 'pending'
-            const actionTriggered = null // used for tracking
-            const title = 'Are you sure you want to skip?'
-            const valueProposition = {
-                title: 'value proposition title',
-                message: 'value proposition message',
-            }
-            const callToActions = {
-                confirm: 'confirm',
-                keep: 'keep',
-						}
-						const data = {
-								title,
-                valueProposition,
-                callToActions,
-						}
+	describe('modalVisibilityChange', () => {
+		test('should show order skip recovery modal', async () => {
+			const orderId = '234234'
+			const status = 'pending'
+			const actionTriggered = null // used for tracking
+			const title = 'Are you sure you want to skip?'
+			const offer = {
+				basis: 'percentage_discount',
+				details: {
+					message: 'You only have 10% on all your orders until the 19th of October',
+					formattedValue: '10%',
+					rawMessage: {
+						text: 'You only have {:value:} on all your orders until the {:date:}',
+						values: [
+							{ key: 'date', value: '19th of October' },
+							{ key: 'value', value: '£13' }
+						]
+					}
+				}
+			}
+			const valueProposition = {
+				title: 'value proposition title',
+				message: 'value proposition message',
+			}
+			const callToActions = {
+				confirm: 'confirm',
+				keep: 'keep',
+			}
+			const data = {
+				title,
+				offer,
+				valueProposition,
+				callToActions,
+			}
 
-            modalVisibilityChange({
-                orderId,
-                status,
-                actionTriggered,
-                data
-            })(dispatchSpy)
+			modalVisibilityChange({
+				orderId,
+				status,
+				actionTriggered,
+				data,
+			})(dispatchSpy)
 
-            expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-                type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-                modalVisibility: true,
-                orderId,
-                title: 'Are you sure you want to skip?',
-                valueProposition,
-                callToActions,
-            }))
-        })
-    })
+			expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+				type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+				modalVisibility: true,
+				orderId,
+				title: 'Are you sure you want to skip?',
+				offer,
+				valueProposition,
+				callToActions,
+			}))
+		})
+	})
 
 	describe('keepOrder', () => {
-		getStateSpy.mockReturnValue({
-			orderSkipRecovery: Immutable.Map({
-				modalVisibility: true,
-				orderId: '',
-			}),
+		beforeEach(() => {
+			getStateSpy.mockReturnValue({
+				orderSkipRecovery: Immutable.Map({
+					modalVisibility: true,
+					orderId: '',
+					valueProposition: null,
+					offer: null,
+				}),
+			})
 		})
 
 		test('should set modal cancelOrder visibility to false', async () => {
-			keepOrder({ orderId: '83632', status: 'pending' })(dispatchSpy)
+			keepOrder({ orderId: '83632', status: 'pending' })(dispatchSpy, getStateSpy)
 			expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
 				type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
 				modalVisibility: false,
@@ -91,13 +111,16 @@ describe('orderSkipRecovery', () => {
 		})
 
 		test('should set modal cancelOrder visibility to false', async () => {
-			keepOrder({ orderId: '23214', status: 'projected' })(dispatchSpy)
+			keepOrder({ orderId: '23214', status: 'projected' })(dispatchSpy, getStateSpy)
 			expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
 				trackingData: {
 					actionType: 'Order Kept',
 					order_id: '23214',
 					order_state: 'projected',
-					recovery_reasons: [],
+					recovery_reasons: [
+						null,
+						null,
+					],
 				}
 			}))
 		})
@@ -105,8 +128,8 @@ describe('orderSkipRecovery', () => {
 
 	describe('cancelOrder', () => {
 		test('should call the order cancel action with the orderId', () => {
-			cancelPendingOrder('64521')(dispatchSpy)
-			expect(orderCancel).toHaveBeenCalledWith('64521')
+			cancelPendingOrder('64521', 'default')(dispatchSpy)
+			expect(orderCancel).toHaveBeenCalledWith('64521', 'default')
 		})
 
 		test('should toggle the cancel order modal visibility', () => {
@@ -120,7 +143,7 @@ describe('orderSkipRecovery', () => {
 		})
 
 		test('should redirect to my-deliveries', () => {
-			cancelPendingOrder('64521')(dispatchSpy)
+			cancelPendingOrder('64521', 'default')(dispatchSpy)
 			expect(redirect).toHaveBeenCalledWith('/my-deliveries')
 		})
 	})
@@ -137,7 +160,7 @@ describe('orderSkipRecovery', () => {
 
 		test('should call the skip cancel action with the dayId', () => {
 			cancelProjectedOrder('1234')(dispatchSpy)
-			expect(projectedOrderCancel).toHaveBeenCalledWith('1234', '1234')
+			expect(projectedOrderCancel).toHaveBeenCalledWith('1234', '1234', 'default')
 		})
 
 		test('should toggle the skip order modal visibility', () => {
@@ -157,10 +180,12 @@ describe('orderSkipRecovery', () => {
 	})
 
 	describe('getSkipRecoveryContent', () => {
-		getStateSpy.mockReturnValue({
-			auth: Immutable.Map({
-				accessToken: 'token',
-			}),
+		beforeEach(() => {
+			getStateSpy.mockReturnValue({
+				auth: Immutable.Map({
+					accessToken: 'token',
+				}),
+			})
 		})
 
 		test('should dispatch a fetchOrderSkipContent request', () => {

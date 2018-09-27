@@ -2,7 +2,7 @@
 
 exports[`Order Skip Modal Value Proposition Initial Render should render snapshot 1`] = `
 <div
-  className="modalContent"
+  className="container"
 >
   <div
     className="title"

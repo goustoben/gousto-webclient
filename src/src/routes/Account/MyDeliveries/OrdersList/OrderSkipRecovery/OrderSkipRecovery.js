@@ -1,9 +1,13 @@
 import React, { PropTypes } from 'react'
 
-import ModalComponent from 'ModalComponent'
+import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
+
+import css from './OrderSkipRecovery.css'
 
 import Title from './Title'
+import Offer from './Offer'
 import ValueProposition from './ValueProposition'
+import Header from './Header'
 import Footer from './Footer'
 
 const propTypes = {
@@ -16,6 +20,7 @@ const propTypes = {
 	cancelPendingOrder: PropTypes.func.isRequired,
 	cancelProjectedOrder: PropTypes.func.isRequired,
 	title: PropTypes.string,
+	offer: PropTypes.object,
 	valueProposition: PropTypes.shape({
 		message: PropTypes.string,
 		title: PropTypes.string,
@@ -38,7 +43,7 @@ class OrderSkipRecovery extends React.PureComponent {
 				orderId,
 				orderDate,
 				dayId,
-				orderType,
+				status: orderType,
 				actionTriggered,
 			})
 		}
@@ -53,15 +58,26 @@ class OrderSkipRecovery extends React.PureComponent {
 	}
 
 	render() {
-		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, valueProposition, callToActions } = this.props
+		const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, offer, valueProposition, callToActions } = this.props
 		const onClickKeepOrder = () => keepOrder({ orderId, status: orderType })
 		const onClickSkipCancel = () => this.skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder)
 
 		return (
 			<ModalComponent visible={visible}>
-				<Title title={title} orderType={orderType} />
-				<ValueProposition featureFlag={featureFlag} valueProposition={valueProposition} />
-				<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
+				<Header offer={offer} featureFlag={featureFlag} />
+				<div className={css.container}>
+					<ModalTitle>
+						<Title title={title} orderType={orderType} />
+					</ModalTitle>
+					{(featureFlag) && (
+						<ModalContent>
+							<Offer offer={offer} />
+							{(offer && valueProposition) ? <hr className={css.rule} /> : null}
+							<ValueProposition valueProposition={valueProposition} />
+						</ModalContent>
+					)}
+					<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
+				</div>
 			</ModalComponent>
 		)
 	}

@@ -23,11 +23,14 @@ const getPendingOrdersDates = (orders) => (
 		.map(order => order.get('deliveryDay'))
 )
 
-export const orderCancel = (orderId) => (
+export const orderCancel = (orderId, variation) => (
 	async (dispatch, getState) => {
 		dispatch(statusActions.error(actionTypes.ORDER_CANCEL, null))
 		dispatch(statusActions.pending(actionTypes.ORDER_CANCEL, true))
 		const accessToken = getState().auth.get('accessToken')
+		const valueProposition = getState().orderSkipRecovery.get('valueProposition')
+		const offer = getState().orderSkipRecovery.get('offer')
+
 		try {
 			await ordersApi.cancelOrder(accessToken, orderId)
 			dispatch({
@@ -37,7 +40,11 @@ export const orderCancel = (orderId) => (
 					actionType: 'Order Cancelled',
 					order_id: orderId,
 					order_state: 'pending',
-					reasons: [],
+					cms_variation: variation,
+					recovery_reasons: [
+            valueProposition,
+            offer,
+          ],
 				}
 			})
 		} catch (err) {
@@ -183,7 +190,7 @@ const orderCheckPossibleDuplicate = (orderId) => (
 		}
 	})
 
-	export const projectedOrderCancel = (orderId, deliveryDayId) => (
+	export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
 	async (dispatch, getState) => {
 		const showAllCancelledModalIfNecessary = () => {
 			const orders = getState().user.get('newOrders')
@@ -205,6 +212,9 @@ const orderCheckPossibleDuplicate = (orderId) => (
 		dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, null))
 		dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_CANCEL, true))
 		const accessToken = getState().auth.get('accessToken')
+		const valueProposition = getState().orderSkipRecovery.get('valueProposition')
+		const offer = getState().orderSkipRecovery.get('offer')
+
 		try {
 			await userApi.skipDelivery(accessToken, deliveryDayId)
 			dispatch({
@@ -214,7 +224,11 @@ const orderCheckPossibleDuplicate = (orderId) => (
 					actionType: 'Order Skipped',
 					day_id: deliveryDayId,
 					order_state: 'projected',
-					reasons: [],
+					cms_variation: variation,
+					recovery_reasons: [
+            valueProposition,
+            offer,
+          ],
 				}
 			})
 			dispatch(userActions.userOpenCloseOrderCard(orderId, true))

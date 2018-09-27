@@ -8,12 +8,22 @@ exports[`Order Skip Recovery Modal Initial Render should render snapshot 1`] = `
   <div
     className="modalComponent"
   >
-    <Title />
-    <ValueProposition />
-    <Footer
-      onClickKeepOrder={[Function]}
-      onClickSkipCancel={[Function]}
+    <div
+      className="spacer"
     />
+    <div
+      className="container"
+    >
+      <div
+        className="modalTitle"
+      >
+        <Title />
+      </div>
+      <Footer
+        onClickKeepOrder={[Function]}
+        onClickSkipCancel={[Function]}
+      />
+    </div>
   </div>
 </Overlay>
 `;

@@ -1,12 +1,13 @@
 import React from 'react'
 import { Div } from 'Page/Elements'
 import Image from 'Image'
+
 import css from './Loading.css'
 
 const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
 
-const Loading = () => (
-	<Image media={getImage('Loading-Icon.gif')} title="animation" className={css.gif} />
+const Loading = ({ className }) => (
+	<Image media={getImage('Loading-Icon.gif')} title="animation" className={`${css.gif} ${className}`} />
 )
 
 export const LoadingOverlay = () => (

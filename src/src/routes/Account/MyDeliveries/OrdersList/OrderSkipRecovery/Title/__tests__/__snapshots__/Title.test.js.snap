@@ -2,12 +2,8 @@
 
 exports[`Order Skip Recovery Model Title Innitial Render should render snapshot 1`] = `
 <div
-  className="modalTitle"
+  className="title"
 >
-  <div
-    className="title"
-  >
-    Are you sure you want to skip?
-  </div>
+  Are you sure you want to skip?
 </div>
 `;

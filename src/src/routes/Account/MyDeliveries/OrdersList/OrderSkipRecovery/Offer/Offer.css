@@ -1,0 +1,46 @@
+@value Haricot, White from 'styles/colors.css';
+@value comfortaaFontStack from 'styles/typography.css';
+
+.offerWrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.discountOSR {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  height: 78.44px;
+  width: 78.77px;
+  border: 1.44px solid #01A92B;
+  background-color: Haricot;
+  border-radius: 50%;
+  box-sizing: border-box;
+  line-height: 21px;
+}
+
+.discountOSR__container {
+  display: flex;
+  flex-direction: column;
+  max-width: 60px;
+  font-size: 22px;
+  font-family: comfortaaFontStack;
+  font-weight: bold;
+  color: White;
+}
+
+.discountOSR__sub {
+  font-size: 70%;
+  line-height: 1.2;
+}
+
+.messageDiscountOSR {
+  color: Haricot;
+  font-family: Avenir;
+  font-size: 16px;
+  line-height: 21px;
+  text-align: left;
+  margin-left: 20px;
+}
