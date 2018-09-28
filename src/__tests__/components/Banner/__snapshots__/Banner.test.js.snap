@@ -26,47 +26,45 @@ exports[`Banner Initial Render should render with given text 1`] = `
         <span
           className="spinner"
         >
-          <div>
+          <div
+            className="fadingCircle"
+          >
             <div
-              className="fadingCircle"
-            >
-              <div
-                className="circle1 white"
-              />
-              <div
-                className="circle2 white"
-              />
-              <div
-                className="circle3 white"
-              />
-              <div
-                className="circle4 white"
-              />
-              <div
-                className="circle5 white"
-              />
-              <div
-                className="circle6 white"
-              />
-              <div
-                className="circle7 white"
-              />
-              <div
-                className="circle8 white"
-              />
-              <div
-                className="circle9 white"
-              />
-              <div
-                className="circle10 white"
-              />
-              <div
-                className="circle11 white"
-              />
-              <div
-                className="circle12 white"
-              />
-            </div>
+              className="circle1 white"
+            />
+            <div
+              className="circle2 white"
+            />
+            <div
+              className="circle3 white"
+            />
+            <div
+              className="circle4 white"
+            />
+            <div
+              className="circle5 white"
+            />
+            <div
+              className="circle6 white"
+            />
+            <div
+              className="circle7 white"
+            />
+            <div
+              className="circle8 white"
+            />
+            <div
+              className="circle9 white"
+            />
+            <div
+              className="circle10 white"
+            />
+            <div
+              className="circle11 white"
+            />
+            <div
+              className="circle12 white"
+            />
           </div>
         </span>
       </div>
