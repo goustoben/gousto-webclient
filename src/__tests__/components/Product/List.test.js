@@ -1,7 +1,5 @@
 import React from 'react'
 
-import sinon from 'sinon'
-
 import { shallow } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import ProductList from 'Product/List'

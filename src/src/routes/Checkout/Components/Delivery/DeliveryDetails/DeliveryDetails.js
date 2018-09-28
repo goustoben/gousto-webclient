@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import PropTypes from 'prop-types'
+
 import React from 'react'
 import { showAddress } from 'routes/Checkout/utils/delivery'
 import css from './../Delivery.css'
@@ -9,10 +11,10 @@ import Svg from 'Svg'
 
 class DeliveryDetails extends React.PureComponent {
 	static propTypes = {
-		deliveryAddress: React.PropTypes.object,
-		formValues: React.PropTypes.object,
-		receiveRef: React.PropTypes.func,
-		sectionName: React.PropTypes.string,
+		deliveryAddress: PropTypes.object,
+		formValues: PropTypes.object,
+		receiveRef: PropTypes.func,
+		sectionName: PropTypes.string,
 	}
 
 	static defaultProps = {

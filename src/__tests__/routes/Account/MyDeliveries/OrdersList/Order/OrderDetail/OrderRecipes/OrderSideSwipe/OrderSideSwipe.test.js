@@ -45,7 +45,7 @@ describe('OrderSideSwipe', () => {
 			<OrderSideSwipe recipes={moreRecipes} />,
 		)
 
-		test('should render a <div>', () => {
+		test.only('should render a <div>', () => {
 			expect(wrapper.type()).toBe('div')
 		})
 
@@ -128,14 +128,14 @@ describe('OrderSideSwipe', () => {
 				wrapper
 					.children(OrderRecipe)
 					.at(2)
-					.prop('recipeTitle'),
-			).toBeUndefined()
+					.exists()
+			).toBe(false)
 			expect(
 				wrapper
 					.children(OrderRecipe)
 					.at(3)
-					.prop('recipeTitle'),
-			).toBeUndefined()
+					.exists()
+			).toBe(false)
 		})
 	})
 })

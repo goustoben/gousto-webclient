@@ -6,7 +6,7 @@ exports[`Filter Nav will render a FilterNav 1`] = `
 >
   <div
     className="filterCta"
-    onClick={[Function]}
+    onClick={[MockFunction]}
   >
     <div
       className="svg filter-icon filterIcon"

@@ -29,13 +29,13 @@ describe('<Image />', () => {
 		])
 	})
 
-	it('shouldn\'t render a GoustoImage without media', () => {
+	test('shouldn\'t render a GoustoImage without media', () => {
 		wrapper = shallow(<Image />)
 
 		expect(wrapper.find(GoustoImage)).toHaveLength(0)
 	})
 
-	it('should render a GoustoImage with media', () => {
+	test('should render a GoustoImage with media', () => {
 		wrapper = shallow(<Image media={media} />)
 
 		expect(wrapper.find(GoustoImage)).toHaveLength(1)

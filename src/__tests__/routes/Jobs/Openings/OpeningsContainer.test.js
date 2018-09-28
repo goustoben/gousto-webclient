@@ -2,7 +2,7 @@ import sinon from 'sinon'
 
 import { shallow } from 'enzyme'
 import React from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import OpeningsContainer from 'routes/Jobs/Openings/OpeningsContainer'
 
 describe('Openings Container', () => {
@@ -10,7 +10,6 @@ describe('Openings Container', () => {
 	let jobsFilterStub
 	let store
 	let jobsExpectedResult
-	// eslint-disable-next-line no-unused-vars
 
 	beforeEach(() => {
 		const jobs = {
@@ -26,12 +25,14 @@ describe('Openings Container', () => {
 		store = {
 			getState: () => ({
 				jobs: Immutable.Map({
-					jobs,
+					jobs
 				}),
 				jobsDepartment: Immutable.Map({
 					selectedDepartment,
 				}),
 			}),
+			subscribe: jest.fn(),
+			dispatch: jest.fn(),
 		}
 		sandbox = sinon.sandbox.create()
 		jobsFilterStub = sandbox.stub(jobs, 'filter')

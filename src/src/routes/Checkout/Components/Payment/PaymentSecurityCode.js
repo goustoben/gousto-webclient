@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Svg from 'Svg'
 import { Field } from 'redux-form'
@@ -62,8 +63,8 @@ const PaymentSecurityCode = ({ receiveRef, sectionName }) => (
 )
 
 PaymentSecurityCode.propTypes = {
-	receiveRef: React.PropTypes.func,
-	sectionName: React.PropTypes.string.isRequired,
+	receiveRef: PropTypes.func,
+	sectionName: PropTypes.string.isRequired,
 }
 
 PaymentSecurityCode.defaultProps = {

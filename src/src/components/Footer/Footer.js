@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import config from 'config'
@@ -171,9 +172,9 @@ const Footer = ({ simple, type, copyright }) => {
 }
 
 Footer.propTypes = {
-	simple: React.PropTypes.bool,
-	type: React.PropTypes.string,
-	copyright: React.PropTypes.bool,
+	simple: PropTypes.bool,
+	type: PropTypes.string,
+	copyright: PropTypes.bool,
 }
 
 Footer.defaultProps = {

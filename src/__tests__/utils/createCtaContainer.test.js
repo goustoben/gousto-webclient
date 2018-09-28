@@ -19,7 +19,7 @@ describe('createCtaContainer', () => {
 	}
 
 	test('should return connected Button by default', () => {
-		ConnectContainer = createCtaContainer()
+		ConnectContainer = createCtaContainer({ text: '' })
 
 		wrapper = shallow(<ConnectContainer store={store} />)
 
@@ -27,7 +27,7 @@ describe('createCtaContainer', () => {
 	})
 
 	test('should return connected Link if type is "Link"', () => {
-		ConnectContainer = createCtaContainer({ type: 'Link' })
+		ConnectContainer = createCtaContainer({ type: 'Link', text: '' })
 
 		wrapper = shallow(<ConnectContainer store={store} />)
 
@@ -52,7 +52,7 @@ describe('createCtaContainer', () => {
 
 	test('should map onClick to passed in action', () => {
 		const actionSpy = sinon.spy()
-		ConnectContainer = createCtaContainer({ action: actionSpy })
+		ConnectContainer = createCtaContainer({ action: actionSpy, text: '' })
 
 		wrapper = shallow(<ConnectContainer store={store} />)
 		wrapper.simulate('click')

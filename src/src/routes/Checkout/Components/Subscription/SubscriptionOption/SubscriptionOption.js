@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { Field } from 'redux-form'
 
 import css from './SubscriptionOption.css'
@@ -21,11 +22,13 @@ const SubscriptionOption = ({ name, id, title, description, checked }) => (
 	</label>
 )
 
-SubscriptionOption.defaultProps = {}
+SubscriptionOption.defaultProps = {
+	name: '',
+}
 
 SubscriptionOption.propTypes = {
 	name: PropTypes.string,
-	id: PropTypes.number,
+	id: PropTypes.string,
 	title: PropTypes.string,
 	description: PropTypes.string,
 	checked: PropTypes.bool,

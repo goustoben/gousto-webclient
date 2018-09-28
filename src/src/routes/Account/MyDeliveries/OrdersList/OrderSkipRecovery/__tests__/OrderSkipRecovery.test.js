@@ -155,6 +155,9 @@ describe('Order Skip Recovery Modal', () => {
 					dayId="23001"
 					orderType="pending"
 					getSkipRecoveryContent={getSkipRecoveryContent}
+					keepOrder={keepOrder}
+					cancelPendingOrder={cancelPendingOrder}
+					cancelProjectedOrder={cancelProjectedOrder}
 				/>
 			)
 

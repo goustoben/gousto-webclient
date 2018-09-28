@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import css from './ModalPanel.css'
@@ -5,14 +6,14 @@ import classNames from 'classnames'
 
 class ModalPanel extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.node,
-		closePortal: React.PropTypes.func,
-		closePortalFromButton: React.PropTypes.func,
-		className: React.PropTypes.string,
-		containerClassName: React.PropTypes.string,
-		disableOverlay: React.PropTypes.bool,
-		onGoBack: React.PropTypes.func,
-		disableClickOutside: React.PropTypes.bool,
+		children: PropTypes.node,
+		closePortal: PropTypes.func,
+		closePortalFromButton: PropTypes.func,
+		className: PropTypes.string,
+		containerClassName: PropTypes.string,
+		disableOverlay: PropTypes.bool,
+		onGoBack: PropTypes.func,
+		disableClickOutside: PropTypes.bool,
 	}
 
 	static defaultProps ={

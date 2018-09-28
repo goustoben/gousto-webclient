@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import configRoute from 'config/routes'
-import Immutable from 'immutable'  /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import { H3 } from 'Page/Header'
 import Receipt from 'Receipt'
 import Link from 'Link'
@@ -12,14 +13,14 @@ import { basketSum } from 'utils/basket'
 class Summary extends React.PureComponent {
 
 	static propTypes = {
-		prices: React.PropTypes.instanceOf(Immutable.Map),
-		basketRecipes: React.PropTypes.object,
-		deliveryDate: React.PropTypes.string,
-		slotId: React.PropTypes.string,
-		browser: React.PropTypes.string,
-		showPromocode: React.PropTypes.bool,
-		routing: React.PropTypes.object,
-		isLoading: React.PropTypes.bool,
+		prices: PropTypes.instanceOf(Immutable.Map),
+		basketRecipes: PropTypes.object,
+		deliveryDate: PropTypes.string,
+		slotId: PropTypes.string,
+		browser: PropTypes.string,
+		showPromocode: PropTypes.bool,
+		routing: PropTypes.object,
+		isLoading: PropTypes.bool,
 	}
 
 	static defaultProps = {
