@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { client as routes } from 'config/routes'
 
 jest.mock('utils/fetch')
 import fetch from 'utils/fetch'
@@ -47,9 +48,13 @@ describe('<Refund />', () => {
 			const BottomBar = getHelpLayout.find('BottomBar')
 			const Button1 = BottomBar.find('BottomButton').at(0)
 			const Button2 = BottomBar.find('BottomButton').at(1)
+			const { index, contact, confirmation } = routes.getHelp
 
 			expect(Button1.text()).toBe('button1 copy')
 			expect(Button2.text()).toBe('button2 £7.77 copy')
+
+			expect(Button1.prop('url')).toContain(`${index}/${contact}`)
+			expect(Button2.prop('url')).toContain(`${index}/${confirmation}`)
 		})
 	})
 
