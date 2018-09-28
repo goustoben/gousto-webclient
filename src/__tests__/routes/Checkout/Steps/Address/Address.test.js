@@ -5,7 +5,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Address from 'routes/Checkout/Components/Address/Address'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 import AddressInputs from 'routes/Checkout/Components/Address/AddressInputs'
 

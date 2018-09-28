@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Link from 'Link'
 
 export default function createCtaContainer({ action, text, type, additionalProps } = {}) {

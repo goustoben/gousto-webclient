@@ -25,6 +25,7 @@ const config = {
 	target: 'node',
 	entry: [
 		'babel-polyfill',
+		'./src/goustouicomponents.js',
 		'./server/main.js',
 	],
 	output: {
@@ -59,6 +60,7 @@ const config = {
 				include: [
 					path.resolve(__dirname, '../src'),
 					path.resolve(__dirname, '../server'),
+					path.resolve(__dirname, '../libs/goustouicomponents/src'),
 				],
 			},
 			{

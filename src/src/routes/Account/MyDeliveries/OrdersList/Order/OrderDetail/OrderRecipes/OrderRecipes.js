@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
 
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Link from 'Link'
 import routes from 'config/routes'
 import Content from 'containers/Content'

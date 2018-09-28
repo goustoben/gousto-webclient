@@ -9,7 +9,7 @@ import { shallow } from 'enzyme'
 import Ctas from 'containers/SubscriptionPause/callsToAction'
 import actions from 'actions/subscriptionPause'
 import routesConfig from 'config/routes'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Link from 'Link'
 
 describe('SubscriptionPause CTA containers', function() {

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import css from './ResetPassword.css'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Input from 'Form/Input'
 import configAuth from 'config/auth'
 import FormAlert from './FormAlert'

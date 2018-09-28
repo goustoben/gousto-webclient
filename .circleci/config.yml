@@ -16,7 +16,10 @@ jobs:
           command: /gousto/platform-setup.sh
       - run:
           name: Install global yarn dependencies
-          command: yarn global add gulp && yarn global add concurrently@2.2.0
+          command: yarn global add gulp && yarn global add concurrently@2.2.0 && yarn global add bower
+      - run:
+          name: Setup Bower
+          command: source ~/.circlerc && setup/setup-bower.sh          
       - run:
           name: Setup common
           command: source ~/.circlerc && setup/setup-common.sh

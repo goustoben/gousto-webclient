@@ -1,7 +1,7 @@
 import React from 'react'
 import css from './NewsletterSignUp.css'
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button } from 'goustouicomponents'
+import { Segment } from 'goustouicomponents'
 
 class NewsletterSignUp extends React.Component {
 

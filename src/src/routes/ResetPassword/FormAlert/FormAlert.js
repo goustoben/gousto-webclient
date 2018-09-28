@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import Link from 'Link'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 import Content from 'containers/Content'
 import config from 'config/resetPassword'
 import configRoutes from 'config/routes'

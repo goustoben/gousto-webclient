@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'routes/Signup/Image'
 import Button from 'routes/Signup/Button'
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 
 import chai, { expect } from 'chai'
 import sinon from 'sinon'

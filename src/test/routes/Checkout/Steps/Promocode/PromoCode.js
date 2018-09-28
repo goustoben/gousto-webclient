@@ -6,8 +6,7 @@ chai.use(sinonChai)
 import { shallow } from 'enzyme'
 import React from 'react'
 import PromoCode from 'routes/Checkout/Components/PromoCode/PromoCode'
-import Button from 'Button/ButtonContainer'
-import Segment from 'Button/Segment'
+import { Button, Segment } from 'goustouicomponents'
 import { promoValidationTime } from 'config/checkout'
 
 describe('PromoCode', function() {

@@ -6,7 +6,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import AgeVerification from 'Product/AgeVerification'
 import CheckBox from 'Form/CheckBox'
-import Tooltip from 'Tooltip'
+import { Tooltip } from 'goustouicomponents'
 
 describe('Product AgeVerification', () => {
 	let wrapper

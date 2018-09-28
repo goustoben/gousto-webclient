@@ -28,6 +28,15 @@ Please ensure to have provisioned the Frontend: https://github.com/Gousto/Gousto
 ```cd /vagrant
 ./provision-service.sh goustowebclient webclient
 ```
+### Use of UI components library
+Install Bower :
+```yarn global add bower```
+#### Pull UI-components Library
+It is required if you haven't done a provisioning or if you want to update the library
+```shell
+cd ~/code/goustowebclient/src
+bower install
+```
 
 ## New Stack Development
 ### Terminal 1: Building

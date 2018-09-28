@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 
 import InfoToggle from 'routes/Menu/SubHeader/InfoToggle'
-import Tooltip from 'Tooltip'
+import { Tooltip } from 'goustouicomponents'
 
 describe('InfoToggle', () => {
 	test('should render a Tooltip', () => {

@@ -6,14 +6,11 @@ import { getSlot } from 'utils/deliveries'
 import { getSurchargeItems } from 'utils/pricing'
 
 import config from 'config'
-import css from './Details.css'
-
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button, Segment, Spinner } from 'goustouicomponents'
 import RecipeItem from 'Recipe/RecipeItem'
 import Receipt from 'Receipt'
 import Portions from 'BoxSummary/Details/Portions'
-import Spinner from 'Spinner'
+import css from './Details.css'
 
 class Details extends React.Component {
 	static propTypes = {

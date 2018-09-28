@@ -9,7 +9,7 @@ chai.use(sinonChai)
 import Login from 'Login/Login'
 import TextInput from 'Form/Input'
 import CheckBox from 'Form/CheckBox'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Form from 'Form'
 
 describe('Login', () => {

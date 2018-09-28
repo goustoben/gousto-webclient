@@ -4,7 +4,7 @@ import React from 'react'
 import sinon from 'sinon'
 
 import Portions from 'BoxSummary/Details/Portions'
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 
 describe('Portions', () => {
 	test('should not have filled Segment if portion is not 2 nor 4', () => {

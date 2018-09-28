@@ -5,8 +5,8 @@ import sinon from 'sinon'
 
 import SlotPicker from 'BoxSummary/DeliverySlot/SlotPicker'
 
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button } from 'goustouicomponents'
+import { Segment } from 'goustouicomponents'
 
 describe('SlotPicker', () => {
 	let wrapper

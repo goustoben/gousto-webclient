@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import FilterTagsList from './FilterTagsList'
 import css from './FilterTagsNav.css'
 

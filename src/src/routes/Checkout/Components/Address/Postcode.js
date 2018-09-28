@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import addressCss from './Address.css'
 import postcodeCss from './Postcode.css'
 

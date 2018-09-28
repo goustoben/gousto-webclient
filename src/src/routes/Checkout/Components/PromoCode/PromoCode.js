@@ -1,6 +1,5 @@
 import React from 'react'
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button, Segment } from 'goustouicomponents'
 import logger from 'utils/logger'
 import Immutable from 'immutable'
 import classNames from 'classnames'

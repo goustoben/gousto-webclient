@@ -6,7 +6,7 @@ import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 import { shallow } from 'enzyme'
 import SaveButton from 'OrderSummary/SaveButton'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 
 describe('SaveButton', function() {
 	it('should return a <div>', function() {

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import moment from 'moment'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import { inferCardType } from 'utils/checkout'
 import config from 'config/checkout'
 import css from './BillingForm.css'

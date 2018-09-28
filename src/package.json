@@ -205,6 +205,9 @@
       "\\.(gql|graphql)$": "jest-transform-graphql",
       "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/.fileTransformer.js"
     },
+    "transformIgnorePatterns": [
+      "/node_modules/(?!goustouicomponents).+\\.js$"
+    ],
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js}",
       "<rootDir>/server/**/*.{js}"

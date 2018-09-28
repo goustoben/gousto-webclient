@@ -2,7 +2,7 @@ import React from 'react'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import ModalPanel from 'Modal/ModalPanel'
 import moment from 'moment'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import css from './DuplicateOrderModal.css'
 import Order from './Order'
 

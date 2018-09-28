@@ -5,7 +5,7 @@ chai.use(sinonChai)
 import { shallow } from 'enzyme'
 import React from 'react'
 import Button from 'routes/Signup/Button'
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 
 import WelcomeStep from 'routes/Signup/Steps/Welcome/WelcomeStep'
 import Image from 'routes/Signup/Image'

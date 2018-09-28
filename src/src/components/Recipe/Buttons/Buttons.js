@@ -1,11 +1,8 @@
 import React from 'react'
 
-import Button from 'Button'
-import Segment from 'Button/Segment'
-import Control from 'Button/Control'
-import css from './Buttons.css'
-import Tooltip from 'Tooltip'
+import { Button, Control, Segment, Tooltip } from 'goustouicomponents'
 import Surcharge from './Surcharge'
+import css from './Buttons.css'
 
 class Buttons extends React.Component {
 
