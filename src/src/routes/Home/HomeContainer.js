@@ -1,11 +1,15 @@
 import { connect } from 'react-redux'
 import Home from './Home'
 
-const HomeContainer = connect(state => ({
+const mapStateToProps = (state, props) => ({
 	enableStorystream: state.features.getIn(['enableStorystream', 'value'], false),
 	moduleOrder: state.features.getIn(['hp_module_order', 'value']),
 	isAuthenticated: state.auth.get('isAuthenticated'),
-	variant: state.features.getIn(['rebrand', 'value'], false) ? 'rebrand' : 'default'
-}), {})(Home)
+	variant: (props.location && props.location.query) ? props.location.query.variant : 'default'
+})
+
+const HomeContainer = connect(
+	mapStateToProps,
+)(Home)
 
 export default HomeContainer

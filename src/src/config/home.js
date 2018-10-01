@@ -50,17 +50,17 @@ module.exports = {
 		description: <Content contentKeys={'productBenefitDescription'}><span>Good intentions to cook can crumble on busy days. So we make it simple. (And tasty.)</span></Content>,
 		steps: (variant) => ([
 			{
-				path: (variant === 'rebrand') ? require('media/photos/quality-alt.jpg') : require('media/photos/quality.jpg'), // eslint-disable-line global-require
+				path: (variant === 'tv') ? require('media/photos/quality-alt.jpg') : require('media/photos/quality.jpg'), // eslint-disable-line global-require
 				title: <Content contentKeys={'firstProductBenefitTitle'}><span>Quality</span></Content>,
 				description: <Content contentKeys={'firstProductBenefitDescription'}><span>Fresh ingredients, so you feel confident about every bite.</span></Content>,
 			},
 			{
-				path: (variant === 'rebrand') ? require('media/photos/simplicity-alt.jpg') : require('media/photos/simplicity.jpg'), // eslint-disable-line global-require
+				path: (variant === 'tv') ? require('media/photos/simplicity-alt.jpg') : require('media/photos/simplicity.jpg'), // eslint-disable-line global-require
 				title: <Content contentKeys={'secondProductBenefitTitle'}><span>Simplicity</span></Content>,
 				description: <Content contentKeys={'secondProductBenefitDescription'}><span>Foolproof recipes, so anyone can cook a delicious meal. (Really.)</span></Content>,
 			},
 			{
-				path: (variant === 'rebrand') ? require('media/photos/variety-alt.jpg') : require('media/photos/variety.jpg'), // eslint-disable-line global-require
+				path: (variant === 'tv') ? require('media/photos/variety-alt.jpg') : require('media/photos/variety.jpg'), // eslint-disable-line global-require
 				title: <Content contentKeys={'thirdProductBenefitTitle'}><span>Variety</span></Content>,
 				description: <Content contentKeys={'thirdProductBenefitDescription'}><span>Choose what you like: wholesome, adventurous, vegetarian, meat, fish.</span></Content>,
 			},
