@@ -38,9 +38,6 @@ function mapStateToProps(state, ownProps) {
 	const orderId = (ownProps.params && ownProps.params.orderId) ? ownProps.params.orderId : ''
 
 	return {
-		recipesStore: state.recipes,
-		numPortions: state.basket.get('numPortions'),
-		stock: state.menuRecipeStock,
 		basketRecipeIds: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))),
 		menuRecipeDetailShow: (ownProps.location && ownProps.location.query) ? ownProps.location.query.recipeDetailId : '',
 		boxSummaryShow: state.boxSummaryShow.get('show'),
@@ -50,6 +47,7 @@ function mapStateToProps(state, ownProps) {
 		menuBrowseCTAShow: state.menuBrowseCTAShow,
 		boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
 		query: ownProps.location && ownProps.location.query ? ownProps.location.query : {},
+		storeOrderId: state.basket.get('orderId'),
 		orderId,
 		isLoading: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
 		disabled: state.auth.get('isAdmin'),
