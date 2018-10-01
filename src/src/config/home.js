@@ -87,4 +87,9 @@ module.exports = {
 		emailRequired: 'Please provide a valid email address',
 		serverError: 'There is a techinal issue, please try again later',
 	},
+	knownVariants: [
+		'default',
+		'tv',
+	],
+	defaultVariant: 'default',
 }
