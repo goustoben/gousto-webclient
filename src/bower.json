@@ -3,4 +3,5 @@
   "dependencies": {
     "goustouicomponents": "git+ssh://git@github.com/Gousto/ui-components.git"
   }
+  
 }
