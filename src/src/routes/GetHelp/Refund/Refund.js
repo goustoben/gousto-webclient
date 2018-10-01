@@ -8,6 +8,7 @@ import GetHelpLayout from 'layouts/GetHelpLayout'
 import Loading from 'Loading'
 
 import { client as routes } from 'config/routes'
+import { setComplaint } from 'apis/complaints'
 import { fetchRefundAmount } from 'apis/getHelp'
 
 import css from './Refund.css'
@@ -58,9 +59,45 @@ class Refund extends PureComponent {
 		this.getRefund()
 	}
 
+	onAcceptOffer = () => {
+		const { user } = this.props
+
+		setComplaint(user.accessToken, {
+			description: 'test',
+			channel_id: 3,
+			user_id: user.id,
+			order_id: 6078374,
+			issues: [{
+				category: {
+					id: 3,
+					name: 'Missing Ingredients',
+					department_id: 1,
+					tags: 'Picking Errors|Ingredients',
+					choosable: true,
+					attribute_types: [{
+						id: 3,
+						name: 'Missing Recipe Ingredient',
+						type: 'OrderIngredient',
+					}]
+				},
+				attributes: [
+					{
+						name: '1 seasonal British apple',
+						net_weight: 0.1350,
+						sub_ingredients: '',
+						has_allergens: false,
+						tags: 'Paprika Pork Burger, Apple Salad & Wedges',
+						type_id: 3,
+						reference: 21,
+					}
+				],
+			}]
+		})
+	}
+
 	render() {
 		const { content } = this.props
-		const { index, contact, confirmation } = routes.getHelp
+		const { index, contact } = routes.getHelp
 		const { refundAmount, isFetchingAmount, didFetchAmountErrored } = this.state
 		const infoBodyWithAmount = replaceWithValues(content.infoBody, {
 			refundAmount: refundAmount.toFixed(2)
@@ -99,8 +136,7 @@ class Refund extends PureComponent {
 								? null
 								: <BottomButton
 									color="primary"
-									url={`${index}/${confirmation}`}
-									clientRouted
+									onClick={this.onAcceptOffer}
 								>
 									{button2WithAmount}
 								</BottomButton>
