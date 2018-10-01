@@ -7,7 +7,6 @@ import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
 
-import Detail from 'Recipe/Detail'
 import MenuNoResults from './MenuNoResults'
 
 import Loading from 'Loading'
@@ -16,8 +15,7 @@ import FilterNav from './FilterNav'
 import FilterTagsNav from './FilterTagsNav/FilterTagsNavContainer'
 import css from './Menu.css'
 
-import Overlay from 'Overlay'
-
+import DetailOverlay from './DetailOverlay'
 import CollectionsNav from './CollectionsNav'
 import FilterMenu from './FilterMenu'
 
@@ -25,8 +23,7 @@ import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import RecipeList from './RecipeList'
 
-import { getLowStockTag, getSurcharge } from 'utils/recipe'
-import { getFeaturedImage, getRangeImages } from 'utils/image'
+
 
 import fetchData from './fetchData'
 
@@ -35,10 +32,7 @@ import browserHelper from '../../utils/browserHelper'
 class Menu extends React.Component {
 	static propTypes = {
 		basketOrderLoaded: PropTypes.func.isRequired,
-		recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
 		menuLoadBoxPrices: PropTypes.func.isRequired,
-		stock: PropTypes.instanceOf(Immutable.Map),
-		numPortions: PropTypes.number.isRequired,
 		menuRecipeDetailShow: PropTypes.string,
 		detailVisibilityChange: PropTypes.func,
 		boxSummaryShow: PropTypes.bool,
@@ -57,6 +51,7 @@ class Menu extends React.Component {
 		params: PropTypes.object,
 		query: PropTypes.object,
 		orderId: PropTypes.string,
+		storeOrderId: PropTypes.string,
 		isLoading: PropTypes.bool,
 		isAuthenticated: PropTypes.bool.isRequired,
 		tariffId: PropTypes.number,
@@ -93,14 +88,12 @@ class Menu extends React.Component {
 		const props = this.props
 		const store = this.context.store
 
-        const storeOrderId = store.getState().basket.get('orderId')
-
 		// if server rendered
-		if (props.params.orderId && props.params.orderId === storeOrderId) {
+		if (props.params.orderId && props.params.orderId === props.storeOrderId) {
 			props.basketOrderLoaded(props.params.orderId)
 		}
 
-		const forceLoad = (storeOrderId && storeOrderId !== props.params.orderId)
+		const forceLoad = (props.storeOrderId && props.storeOrderId !== props.params.orderId)
 		// TODO: Add back logic to check what needs to be reloaded
 		const query = props.query || {}
 		const params = props.params || {}
@@ -235,52 +228,10 @@ class Menu extends React.Component {
 								/>
 								<p className={css.legal}>{menu.legal}</p>
 								{(() => (
-									<Overlay open={!!this.props.menuRecipeDetailShow && this.state.isClient && this.props.recipesStore.has(this.props.menuRecipeDetailShow)}>
-										{(() => {
-											if (this.props.recipesStore) {
-												const recipeId = this.props.menuRecipeDetailShow
-												const detailRecipe = this.props.recipesStore.get(recipeId)
-												if (this.props.menuRecipeDetailShow && detailRecipe) {
-													const stock = this.props.stock.getIn([recipeId, String(this.props.numPortions)])
-													const surcharge = getSurcharge(detailRecipe.get('meals'), this.props.numPortions)
-													const IsFineDineIn = detailRecipe.get('range') === 'fine_dine_in'
-													const view = (IsFineDineIn) ? 'fineDineInDetail' : 'detail'
-													const images = (IsFineDineIn) ? getRangeImages(detailRecipe) : null
-
-													return (
-														<Detail
-															view={view}
-															tag={getLowStockTag(stock, detailRecipe.getIn(['rating', 'count']))}
-															media={getFeaturedImage(detailRecipe, 'detail')}
-															images={images}
-															title={detailRecipe.get('title', '')}
-															count={detailRecipe.getIn(['rating', 'count'], 0)}
-															average={detailRecipe.getIn(['rating', 'average'], 0)}
-															perPortion={detailRecipe.getIn(['nutritionalInformation', 'perPortion'], Immutable.Map({}))}
-															per100Grams={detailRecipe.getIn(['nutritionalInformation', 'per100g'], Immutable.Map({}))}
-															ingredients={detailRecipe.get('ingredients', Immutable.List([]))}
-															allergens={detailRecipe.get('allergens', Immutable.List([]))}
-															id={detailRecipe.get('id')}
-															recipeId={recipeId}
-															stock={stock}
-															useWithin={detailRecipe.get('shelfLifeDays')}
-															cookingTime={this.props.numPortions === 2 ? detailRecipe.get('cookingTime') : detailRecipe.get('cookingTimeFamily')}
-															description={detailRecipe.get('description')}
-															availability={detailRecipe.get('availability')}
-															youWillNeed={detailRecipe.get('basics')}
-															cuisine={detailRecipe.get('cuisine')}
-															diet={detailRecipe.get('dietType')}
-															equipment={detailRecipe.get('equipment')}
-															surcharge={surcharge}
-															range={detailRecipe.get('range', '')}
-														/>
-													)
-												}
-											}
-
-											return null
-										})()}
-									</Overlay>
+									<DetailOverlay
+										showOverlay={this.state.isClient}
+										menuRecipeDetailShow={this.props.menuRecipeDetailShow}
+									/>
 								))()}
 							</div>
 							:

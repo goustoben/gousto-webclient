@@ -7,7 +7,7 @@ import moment from 'moment'
 
 import Detail from './Detail'
 
-function mapStateToProps(state, props) {
+function mapStateToProps(state, ownProps) {
 	let [cutoffDate] = getCutoffs(state.basket, state.boxSummaryDeliveryDays) // eslint-disable-line prefer-const
 	if (!cutoffDate) {
 		cutoffDate = moment()
@@ -22,7 +22,7 @@ function mapStateToProps(state, props) {
 
 	return {
 		cutoffDate,
-		inBasket: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))).includes(props.recipeId),
+		inBasket: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))).includes(ownProps.recipeId),
 	}
 }
 
