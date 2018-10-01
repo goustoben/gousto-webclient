@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "actual": "0.4.0",
-    "apollo-cache-inmemory": "^1.1.1",
+    "apollo-cache-inmemory": "1.1.1",
     "apollo-client": "^2.0.3",
     "apollo-link": "^1.0.3",
     "apollo-link-context": "1.0.3",
@@ -55,7 +55,6 @@
     "global": "4.3.2",
     "graphql": "^0.11.7",
     "graphql-tag": "^2.5.0",
-    "graphql-anywhere": "4.1.19",
     "gousto-gulp": "git+ssh://git@github.com/Gousto/gousto-gulp.git#v3.0.2",
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
