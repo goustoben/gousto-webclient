@@ -1,6 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { mount, shallow } from 'enzyme'
+import Helmet from 'react-helmet'
 
 import home from 'config/home'
 import routes from 'config/routes'
@@ -202,6 +203,27 @@ describe('Home', () => {
 			expect(homeSectionsWrapper.prop('whatsInYourBox').ctaText).toEqual(
 				expectedCtaText,
 			)
+		})
+	})
+
+	describe('helmet', () => {
+		describe('when given a variant', () => {
+			test('should put a canonical tag in the url', () => {
+				wrapper = shallow(<Home variant="alt" />)
+
+				expect(wrapper.find(Helmet).first().prop('link')).toEqual([{
+						href: 'https://www.gousto.local/',
+						rel: 'canonical',
+					}])
+			})
+		})
+
+		describe('when not given a variant', () => {
+			test('should not put a canonical tag in the url', () => {
+				wrapper = shallow(<Home />)
+
+				expect(wrapper.find(Helmet).first().prop('link')).toEqual([])
+			})
 		})
 	})
 })
