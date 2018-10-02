@@ -3,6 +3,13 @@ import Svg from 'Svg'
 import classnames from 'classnames'
 import style from './FilterNav.css'
 
+const propTypes = {
+	onClick: PropTypes.func,
+	ctaText: PropTypes.string,
+	sticky: PropTypes.bool,
+	menuFilterExperiment: PropTypes.bool,
+}
+
 const FilterNav = ({ onClick, ctaText, sticky, menuFilterExperiment }) => (
 	(menuFilterExperiment) ? (
 		<div className={classnames(style.filterNav, { [style.navBarContainerFixed]: sticky })}>
@@ -14,12 +21,7 @@ const FilterNav = ({ onClick, ctaText, sticky, menuFilterExperiment }) => (
 	) : null
 )
 
-FilterNav.propTypes = {
-	onClick: PropTypes.func,
-	ctaText: PropTypes.string,
-	sticky: PropTypes.bool,
-	menuFilterExperiment: PropTypes.bool,
-}
+FilterNav.propTypes = propTypes
 
 FilterNav.defaultProps = {
 	onClick: () => { },

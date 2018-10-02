@@ -27,7 +27,7 @@ import RecipeList from './RecipeList'
 
 import fetchData from './fetchData'
 
-import browserHelper from '../../utils/browserHelper'
+import browserHelper from 'utils/browserHelper'
 
 class Menu extends React.Component {
 	static propTypes = {
@@ -227,12 +227,10 @@ class Menu extends React.Component {
 									menuCurrentCollectionId={this.props.menuCurrentCollectionId}
 								/>
 								<p className={css.legal}>{menu.legal}</p>
-								{(() => (
-									<DetailOverlay
-										showOverlay={this.state.isClient}
-										menuRecipeDetailShow={this.props.menuRecipeDetailShow}
-									/>
-								))()}
+								<DetailOverlay
+									showOverlay={this.state.isClient}
+									menuRecipeDetailShow={this.props.menuRecipeDetailShow}
+								/>
 							</div>
 							:
 							<MenuNoResults clearAllFilters={() => this.props.clearAllFilters()} />

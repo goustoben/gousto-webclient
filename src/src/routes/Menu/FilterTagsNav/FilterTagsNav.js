@@ -3,6 +3,18 @@ import { Button } from 'goustouicomponents'
 import FilterTagsList from './FilterTagsList'
 import css from './FilterTagsNav.css'
 
+const propTypes = {
+	onCTAClick: PropTypes.func,
+	menuFilterExperiment: PropTypes.bool,
+	tags: PropTypes.arrayOf(
+		PropTypes.shape({
+			text: PropTypes.string,
+			type: PropTypes.string,
+			value: PropTypes.string,
+		}),
+	),
+}
+
 const FilterTagsNav = ({ onCTAClick, tags, menuFilterExperiment }) => (
 	(menuFilterExperiment) ? (
 		<div className={css.filterTagContainer}>
@@ -14,20 +26,11 @@ const FilterTagsNav = ({ onCTAClick, tags, menuFilterExperiment }) => (
 				</div>
 				<FilterTagsList tags={tags} />
 			</div>
-		</div>) : null
+		</div>
+	) : null
 )
 
-FilterTagsNav.propTypes = {
-	onCTAClick: PropTypes.func,
-	menuFilterExperiment: PropTypes.bool,
-	tags: PropTypes.arrayOf(
-		PropTypes.shape({
-			text: PropTypes.string,
-			type: PropTypes.string,
-			value: PropTypes.string,
-		}),
-	),
-}
+FilterTagsNav.propTypes = propTypes
 
 FilterTagsNav.defaultProps = {
 	tags: [],
