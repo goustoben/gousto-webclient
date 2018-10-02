@@ -5,9 +5,9 @@ import Link from 'Link'
 
 import css from './BottomButton.css'
 
-const BottomButton = ({ color, url, clientRouted, children, onClick }) => {
-	const linkAsChild = (clientRouted && url)
-		? <Link
+const BottomButton = ({ color, url, clientRouted, children }) => (
+	<Button color={color} width="full" className={css.button} areChildrenInSegment>
+		<Link
 			noDecoration
 			className={css.buttonChild}
 			clientRouted={clientRouted}
@@ -15,25 +15,13 @@ const BottomButton = ({ color, url, clientRouted, children, onClick }) => {
 		>
 			{children}
 		</Link>
-		: null
-
-	return (
-		<Button
-			color={color}
-			width="full"
-			onClick={onClick}
-			className={css.button}
-			areChildrenInSegment
-		>
-			{linkAsChild || children}
-		</Button>
-	)
-}
+	</Button>
+)
 
 BottomButton.propTypes = {
-	url: PropTypes.string,
+	url: PropTypes.string.isRequired,
 	color: PropTypes.string.isRequired,
-	clientRouted: PropTypes.bool,
+	clientRouted: PropTypes.bool.isRequired,
 	children: PropTypes.node.isRequired,
 }
 

@@ -1,14 +1,14 @@
 import React, { PropTypes, PureComponent } from 'react'
-import { replaceWithValues } from 'utils/text'
-
+import Loading from 'Loading'
 import BottomBar from 'BottomBar'
 import BottomButton from '../components/BottomButton'
-
 import GetHelpLayout from 'layouts/GetHelpLayout'
-import Loading from 'Loading'
 
+import { Button } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
+import { redirect } from 'utils/window'
 import { setComplaint } from 'apis/complaints'
+import { replaceWithValues } from 'utils/text'
 import { fetchRefundAmount } from 'apis/getHelp'
 
 import css from './Refund.css'
@@ -59,40 +59,46 @@ class Refund extends PureComponent {
 		this.getRefund()
 	}
 
-	onAcceptOffer = () => {
+	onAcceptOffer = async () => {
+		const category = {
+			id: 3,
+			name: 'Missing Ingredients',
+			department_id: 1,
+			tags: 'Picking Errors|Ingredients',
+			choosable: true,
+			attribute_types: [{
+				id: 3,
+				name: 'Missing Recipe Ingredient',
+				type: 'OrderIngredient',
+			}]
+		}
+		const attribute = {
+			name: '1 seasonal British apple',
+			net_weight: 0.1350,
+			sub_ingredients: '',
+			has_allergens: false,
+			tags: 'Paprika Pork Burger, Apple Salad & Wedges',
+			type_id: 3,
+			reference: 21,
+		}
 		const { user } = this.props
 
-		setComplaint(user.accessToken, {
-			description: 'test',
-			channel_id: 3,
-			user_id: user.id,
-			order_id: 6078374,
-			issues: [{
-				category: {
-					id: 3,
-					name: 'Missing Ingredients',
-					department_id: 1,
-					tags: 'Picking Errors|Ingredients',
-					choosable: true,
-					attribute_types: [{
-						id: 3,
-						name: 'Missing Recipe Ingredient',
-						type: 'OrderIngredient',
-					}]
-				},
-				attributes: [
-					{
-						name: '1 seasonal British apple',
-						net_weight: 0.1350,
-						sub_ingredients: '',
-						has_allergens: false,
-						tags: 'Paprika Pork Burger, Apple Salad & Wedges',
-						type_id: 3,
-						reference: 21,
-					}
-				],
-			}]
-		})
+		try {
+			await setComplaint(user.accessToken, {
+				description: 'test',
+				channel_id: 3,
+				user_id: user.id,
+				order_id: 6078374,
+				issues: [{
+					category,
+					attributes: [attribute],
+				}]
+			})
+
+			redirect(routes.getHelp.confirmation)
+		} catch (err) {
+			console.error(error)
+		}
 	}
 
 	render() {
@@ -134,12 +140,13 @@ class Refund extends PureComponent {
 							</BottomButton>
 							{(didFetchAmountErrored)
 								? null
-								: <BottomButton
+								: <Button
+									className={css.button}
 									color="primary"
 									onClick={this.onAcceptOffer}
 								>
 									{button2WithAmount}
-								</BottomButton>
+								</Button>
 							}
 						</BottomBar>
 					</div>
