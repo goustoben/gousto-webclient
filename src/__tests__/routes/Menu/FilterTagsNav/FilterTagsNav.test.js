@@ -23,7 +23,7 @@ describe("FilterTag", () => {
 
     test("Will handle click on the CTA", () => {
       const clickHandler = jest.fn()
-      const component = <FilterTagsNav onCTAClick={clickHandler} />
+      const component = <FilterTagsNav onCTAClick={clickHandler} menuFilterExperiment />
       const wrapper = shallow(component)
 
       wrapper.find(Button).first().simulate('click')
