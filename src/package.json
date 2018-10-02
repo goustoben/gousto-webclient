@@ -232,9 +232,6 @@
       "__TEST__": true,
       "process.env.NODE_ENV": "production",
       "__GIT_HASH__": "production"
-    },
-    "coverageReporters": [
-      "lcov"
-    ]
+    }
   }
 }
