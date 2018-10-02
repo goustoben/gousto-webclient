@@ -6,7 +6,7 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import { getLowStockTag, getSurcharge } from 'utils/recipe'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
 
-const proprieties = {
+const propTypes = {
 	menuRecipeDetailShow: PropTypes.string,
 	stock: PropTypes.instanceOf(Immutable.Map),
 	numPortions: PropTypes.number.isRequired,
@@ -67,6 +67,6 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
 	)
 }
 
-DetailOverlay.propTypes = proprieties
+DetailOverlay.propTypes = propTypes
 
 export default DetailOverlay
