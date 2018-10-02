@@ -37,7 +37,8 @@ describe('<Refund />', () => {
 			expect(getHelpLayout).toHaveLength(1)
 			expect(getHelpLayout.prop('body')).toContain('We would like to offer you £7.77')
 			expect(BottomBar).toHaveLength(1)
-			expect(BottomBar.find('BottomButton')).toHaveLength(2)
+			expect(BottomBar.find('BottomButton')).toHaveLength(1)
+			expect(BottomBar.find('BottomBar')).toHaveLength(1)
 		})
 
 		test('header is rendering correctly', () => {
@@ -46,15 +47,13 @@ describe('<Refund />', () => {
 
 		test('bottom bar buttons are rendering correctly', () => {
 			const BottomBar = getHelpLayout.find('BottomBar')
-			const Button1 = BottomBar.find('BottomButton').at(0)
-			const Button2 = BottomBar.find('BottomButton').at(1)
-			const { index, contact, confirmation } = routes.getHelp
+			const Button1 = BottomBar.find('BottomButton')
+			const Button2 = BottomBar.find('Button').at(1)
+			const { index, contact } = routes.getHelp
 
-			expect(Button1.text()).toBe('button1 copy')
 			expect(Button2.text()).toBe('button2 £7.77 copy')
 
 			expect(Button1.prop('url')).toContain(`${index}/${contact}`)
-			expect(Button2.prop('url')).toContain(`${index}/${confirmation}`)
 		})
 	})
 
@@ -70,6 +69,10 @@ describe('<Refund />', () => {
 			expect(fetch.mock.calls[0][1]).toContain('/ssr/v1/ssr')
 			expect(fetch.mock.calls[0][2]).toBe(null)
 			expect(fetch.mock.calls[0][3]).toBe('GET')
+		})
+
+		test('accept refund offer button', {
+			// In Progress
 		})
 
 		test('error message is shown when fetching data errors and accept button hides', () => {
