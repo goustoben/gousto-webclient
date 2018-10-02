@@ -20,6 +20,9 @@ export default {
 			case regExp.latin:
 				message = 'Please use only letters (a-z) and European special characters.'
 				break
+			case regExp.name:
+				message = 'Please use only letters (a-z), hyphens (-) and European special characters.'
+				break
 			default:
 				message = 'Oops, this isn\'t a valid format, please double-check and try again.'
 		}

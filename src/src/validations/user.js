@@ -14,7 +14,7 @@ export default {
 		rules: [
 			{ name: 'isLength', options: { min: 1 } },
 			{ name: 'isLength', options: { max: 200 } },
-			{ name: 'matches', options: regExp.latin },
+			{ name: 'matches', options: regExp.name },
 		],
 	},
 
@@ -23,7 +23,7 @@ export default {
 		rules: [
 			{ name: 'isLength', options: { min: 1 } },
 			{ name: 'isLength', options: { max: 200 } },
-			{ name: 'matches', options: regExp.latin },
+			{ name: 'matches', options: regExp.name },
 		],
 	},
 
