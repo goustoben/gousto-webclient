@@ -73,6 +73,7 @@ describe('<Refund />', () => {
 			wrapper =  mount(
 				<Refund
 					content={content}
+					user={{ id: 0, accessToken: '123' }}
 				/>
 			)
 			getHelpLayout = wrapper.find('GetHelpLayout')
@@ -85,11 +86,31 @@ describe('<Refund />', () => {
 			expect(fetch.mock.calls[0][3]).toBe('GET')
 		})
 
-		test('accept refund offer button', () => {
+		test('call redirect when user accept refund offer', async () => {
+			setComplaint.mockImplementation(() => Promise.resolve({}))
+
 			const BottomBar = getHelpLayout.find('BottomBar')
 			const Button = BottomBar.find('Button').at(1)
 
-			Button.props().onClick()
+			window.location.assign = jest.fn()
+
+			await Button.props().onClick()
+
+			expect(window.location.assign).toHaveBeenCalledTimes(1)
+		})
+
+		test('call not redirect when user accept refund offer and get an error', async () => {
+			setComplaint.mockReset()
+			setComplaint.mockImplementation(() => { throw new Error('error') })
+
+			const BottomBar = getHelpLayout.find('BottomBar')
+			const Button = BottomBar.find('Button').at(1)
+
+			window.location.assign = jest.fn()
+
+			await Button.props().onClick()
+
+			expect(window.location.assign).toHaveBeenCalledTimes(0)
 		})
 
 		test('error message is shown when fetching data errors and accept button hides', () => {

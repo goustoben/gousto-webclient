@@ -28,7 +28,16 @@ class Refund extends PureComponent {
 	state = {
 		refundAmount: 0,
 		isFetchingAmount: true,
-		didFetchAmountErrored: false,
+		didFetchAmountError: false,
+		setComplainError: null,
+	}
+
+	formatErrors(errors) {
+		if (Array.isArray(errors)) {
+			return errors.reduce((str, error) => `${str} ${error.message}`, '')
+		}
+
+		return errors
 	}
 
 	getRefund = async () => {
@@ -49,7 +58,7 @@ class Refund extends PureComponent {
 			})
 		} catch (err) {
 			responseHandler({
-				didFetchAmountErrored: true,
+				didFetchAmountError: true,
 				isFetchingAmount: false,
 			})
 		}
@@ -84,7 +93,7 @@ class Refund extends PureComponent {
 		const { user } = this.props
 
 		try {
-			await setComplaint(user.accessToken, {
+			const response = await setComplaint(user.accessToken, {
 				description: 'test',
 				channel_id: 3,
 				user_id: user.id,
@@ -96,22 +105,32 @@ class Refund extends PureComponent {
 			})
 
 			redirect(routes.getHelp.confirmation)
+
+			return response
 		} catch (err) {
-			console.error(error)
+			this.setState({
+				...this.state,
+				setComplainError: this.formatErrors(err)
+			})
 		}
 	}
 
 	render() {
 		const { content } = this.props
 		const { index, contact } = routes.getHelp
-		const { refundAmount, isFetchingAmount, didFetchAmountErrored } = this.state
+		const {
+			refundAmount,
+			setComplainError,
+			isFetchingAmount,
+			didFetchAmountError
+		} = this.state
 		const infoBodyWithAmount = replaceWithValues(content.infoBody, {
 			refundAmount: refundAmount.toFixed(2)
 		})
 		const button2WithAmount = replaceWithValues(content.button2, {
 			refundAmount: refundAmount.toFixed(2)
 		})
-		const getHelpLayoutbody = (isFetchingAmount || didFetchAmountErrored)
+		const getHelpLayoutbody = (isFetchingAmount || didFetchAmountError)
 			? ''
 			:  infoBodyWithAmount
 
@@ -126,10 +145,11 @@ class Refund extends PureComponent {
 						<Loading className={css.loading} />
 					</div>
 					: <div>
-						<p>{(didFetchAmountErrored)
+						<p>{(didFetchAmountError)
 							? content.errorBody
 							: content.confirmationBody}
 						</p>
+						{setComplainError && <p>{setComplainError}</p>}
 						<BottomBar>
 							<BottomButton
 								color="secondary"
@@ -138,7 +158,7 @@ class Refund extends PureComponent {
 							>
 								{content.button1}
 							</BottomButton>
-							{(didFetchAmountErrored)
+							{(didFetchAmountError)
 								? null
 								: <Button
 									className={css.button}
