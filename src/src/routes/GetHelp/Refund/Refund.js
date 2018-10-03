@@ -7,9 +7,8 @@ import GetHelpLayout from 'layouts/GetHelpLayout'
 import { Button } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
 import { redirect } from 'utils/window'
-import { setComplaint } from 'apis/complaints'
 import { replaceWithValues } from 'utils/text'
-import { fetchRefundAmount } from 'apis/getHelp'
+import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 
 import css from './Refund.css'
 

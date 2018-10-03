@@ -5,8 +5,8 @@ import { client as routes } from 'config/routes'
 jest.mock('utils/fetch')
 import fetch from 'utils/fetch'
 
-jest.mock('apis/complaints')
-import { setComplaint } from 'apis/complaints'
+jest.mock('apis/getHelp')
+import { setComplaint } from 'apis/getHelp'
 
 import Refund from 'routes/GetHelp/Refund/Refund'
 
