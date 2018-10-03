@@ -143,7 +143,9 @@ class Refund extends PureComponent {
 								: <Button
 									className={css.button}
 									color="primary"
-									onClick={this.onAcceptOffer}
+									onClick={() => {
+										this.onAcceptOffer()
+									}}
 								>
 									{button2WithAmount}
 								</Button>

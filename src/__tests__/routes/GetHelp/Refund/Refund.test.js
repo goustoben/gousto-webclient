@@ -5,6 +5,9 @@ import { client as routes } from 'config/routes'
 jest.mock('utils/fetch')
 import fetch from 'utils/fetch'
 
+jest.mock('apis/complaints')
+import { setComplaint } from 'apis/complaints'
+
 import Refund from 'routes/GetHelp/Refund/Refund'
 
 describe('<Refund />', () => {
@@ -17,19 +20,21 @@ describe('<Refund />', () => {
 		button2: 'button2 £{{refundAmount}} copy',
 	}
 
-	let wrapper
-	let getHelpLayout
-
 	describe('rendering', () => {
-		fetch.mockImplementation(() => Promise.resolve({
-			data: { refundValue: 7.77 }
-		}))
-		wrapper =  mount(
-			<Refund
-				content={content}
-			/>
-		)
-		getHelpLayout = wrapper.find('GetHelpLayout')
+		let wrapper
+		let getHelpLayout
+
+		beforeAll(() => {
+			fetch.mockImplementation(() => Promise.resolve({
+				data: { refundValue: 7.77 }
+			}))
+			wrapper =  mount(
+				<Refund
+					content={content}
+				/>
+			)
+			getHelpLayout = wrapper.find('GetHelpLayout')
+		})
 
 		test('layout is rendering correctly', () => {
 			const BottomBar = getHelpLayout.find('BottomBar')
@@ -58,21 +63,33 @@ describe('<Refund />', () => {
 	})
 
 	describe('behaviour', () => {
-		test('refund data is fetched', () => {
+		let wrapper
+		let getHelpLayout
+
+		beforeAll(() => {
+			fetch.mockImplementation(() => Promise.resolve({
+				data: { refundValue: 7.77 }
+			}))
 			wrapper =  mount(
 				<Refund
 					content={content}
 				/>
 			)
+			getHelpLayout = wrapper.find('GetHelpLayout')
+		})
 
+		test('refund data is fetched', () => {
 			expect(fetch.mock.calls[0][0]).toBe(null)
 			expect(fetch.mock.calls[0][1]).toContain('/ssr/v1/ssr')
 			expect(fetch.mock.calls[0][2]).toBe(null)
 			expect(fetch.mock.calls[0][3]).toBe('GET')
 		})
 
-		test('accept refund offer button', {
-			// In Progress
+		test('accept refund offer button', () => {
+			const BottomBar = getHelpLayout.find('BottomBar')
+			const Button = BottomBar.find('Button').at(1)
+
+			Button.props().onClick()
 		})
 
 		test('error message is shown when fetching data errors and accept button hides', () => {
