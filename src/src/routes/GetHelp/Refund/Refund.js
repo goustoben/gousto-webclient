@@ -108,7 +108,7 @@ class Refund extends PureComponent {
 
 			return response
 		} catch (err) {
-			this.setState({
+			return this.setState({
 				...this.state,
 				setComplainError: this.formatErrors(err)
 			})
