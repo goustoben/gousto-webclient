@@ -120,7 +120,6 @@ describe('<Refund />', () => {
 		})
 
 		test('call not redirect when user accept refund offer and get an error', async () => {
-			setComplaint.mockReset()
 			setComplaint.mockImplementation(() => { throw new Error('error') })
 
 			const BottomBar = getHelpLayout.find('BottomBar')
