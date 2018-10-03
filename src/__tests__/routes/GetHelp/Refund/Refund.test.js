@@ -79,6 +79,26 @@ describe('<Refund />', () => {
 			getHelpLayout = wrapper.find('GetHelpLayout')
 		})
 
+		test('loading shows while fetching data', async () => {
+			let resolver
+			fetch.mockImplementation(() => new Promise((resolve) => {
+				resolver = resolve
+			}))
+			wrapper =  mount(
+				<Refund
+					content={content}
+				/>
+			)
+
+			expect(wrapper.find('Loading')).toHaveLength(1)
+
+			await resolver({
+				data: { refundValue: 8.77 }
+			})
+
+			expect(wrapper.find('Loading')).toHaveLength(0)
+		})
+
 		test('refund data is fetched', () => {
 			expect(fetch.mock.calls[0][0]).toBe(null)
 			expect(fetch.mock.calls[0][1]).toContain('/ssr/v1/ssr')
