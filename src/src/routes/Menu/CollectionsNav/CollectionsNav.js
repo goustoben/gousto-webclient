@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import classnames from 'classnames'
 import { top, left } from 'scroll'
 import Immutable from 'immutable' /* eslint-disable no-caps, new-cap */
 import actual from 'actual'
@@ -18,7 +17,6 @@ class CollectionsNav extends React.PureComponent {
 		menuCurrentCollectionId: PropTypes.string,
 		featureSet: PropTypes.func.isRequired,
 		masonryContainer: PropTypes.node,
-		hiddenMobile: PropTypes.bool.isRequired,
 	}
 
 	constructor(props) {
@@ -292,7 +290,7 @@ class CollectionsNav extends React.PureComponent {
 
 		return (
 			<div>
-				<div className={classnames(className, { [css.hideMobile]: this.props.hiddenMobile })}>
+				<div className={className}>
 					{this.state.showArrows && !isAtStart ? <div className={leftArrowClassName} onClick={this.prevCollection} /> : null}
 					<div className={css.nav} ref={ref => { this.eles.parent = ref }}>
 						<div className={css.navBar}>
@@ -303,6 +301,7 @@ class CollectionsNav extends React.PureComponent {
 
 								return (
 									<CollectionItem
+										key={collectionId}
 										dataId={collectionId}
 										className={isCurrent ? css.currentItem : css.item}
 										onClick={() => { this.changeCollection(collectionId) }}

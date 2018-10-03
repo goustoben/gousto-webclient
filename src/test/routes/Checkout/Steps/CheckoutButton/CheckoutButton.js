@@ -6,7 +6,7 @@ chai.use(sinonChai)
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import CheckoutButton from 'routes/Checkout/Components/CheckoutButton/CheckoutButton'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 
 describe('CheckoutButton', function() {
 	let wrapper

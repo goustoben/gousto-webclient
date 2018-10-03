@@ -1,15 +1,14 @@
 import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 
-import Button from 'Button'
+import { Alert, Button } from 'goustouicomponents'
 import Address from './Address/Address'
 import userActions from 'actions/user'
 import orderActions from 'actions/order'
 import DropdownInput from 'Form/Dropdown'
-import css from './EditDelivery.css'
 import Content from 'containers/Content'
 import util, { DEFAULT_MESSAGE_ID } from './util'
-import Alert from 'Alert'
+import css from './EditDelivery.css'
 
 class EditDelivery extends React.PureComponent {
 	static propTypes = {

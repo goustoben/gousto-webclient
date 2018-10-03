@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import sinon from 'sinon'
 
 import Gel from 'Gel'
-import Segment from 'Button/Segment'
+import { Segment } from 'goustouicomponents'
 
 import TenToTableBanner from 'routes/Menu/TenToTableBanner/TenToTableBanner'
 

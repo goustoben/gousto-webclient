@@ -6,7 +6,7 @@ chai.use(sinonChai)
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import Button from 'Button'
+import { Alert, Button } from 'goustouicomponents'
 import EditDelivery from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/EditDelivery/EditDelivery'
 import css from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/EditDelivery/EditDelivery.css'
 import util from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/EditDelivery/util'
@@ -15,7 +15,6 @@ import userActions from 'actions/user'
 import orderActions from 'actions/order'
 import DropdownInput from 'components/Form/Dropdown/DropdownInput'
 import { DEFAULT_MESSAGE_ID } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/EditDelivery/util.js'
-import Alert from 'Alert'
 
 describe('EditDelivery', function() {
 	const addresses = Immutable.fromJS({

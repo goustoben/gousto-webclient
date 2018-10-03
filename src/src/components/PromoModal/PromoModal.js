@@ -2,7 +2,7 @@ import React from 'react'
 import ModalPanel from 'Modal/ModalPanel'
 import PromoModalBody from './PromoModalBody'
 import css from './PromoModal.css'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import AgeVerify from './AgeVerify'
 
 const PromoModal = ({ text, title, error, buttonText, promoApply, close, needsAgeVerification, isAgeVerified, pending, justApplied }) => (

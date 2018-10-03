@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button, Segment } from 'goustouicomponents'
 import css from './BrowseCTAButton.css'
 
 const handleSetDeliveryDateClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow, view) => {

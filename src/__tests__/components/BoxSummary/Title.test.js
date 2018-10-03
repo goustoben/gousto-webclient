@@ -2,7 +2,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 import Title from 'BoxSummary/Title/Title'
-import Spinner from 'Spinner'
+import { Spinner } from 'goustouicomponents'
 import Price from 'BoxSummary/Price'
 
 describe('Title', () => {

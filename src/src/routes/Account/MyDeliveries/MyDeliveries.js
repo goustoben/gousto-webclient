@@ -3,10 +3,9 @@ import OrdersList from './OrdersList'
 import actions from 'actions/user'
 import accountCss from '../Account/Account.css'
 import css from './MyDeliveries.css'
-import Button from 'Button'
+import { Alert, Button } from 'goustouicomponents'
 import Link from 'Link'
 import routes from 'config/routes'
-import Alert from 'components/Alert'
 import Loading from 'Loading'
 
 class MyDeliveries extends React.PureComponent {

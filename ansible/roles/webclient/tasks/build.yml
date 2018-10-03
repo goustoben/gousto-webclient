@@ -18,6 +18,14 @@
 - name: Install gulp
   command: yarn add gulp
 
+- name: Install yarn
+  command: yarn global add bower  
+
+- name: Install Bower dependencies
+  command: bower install --allow-root
+  args:
+    chdir: "{{ directory }}"
+
 - name: yarn cache clean
   command: yarn cache clean
   args:

@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Form from 'Form'
 import TextInput from 'Form/Input'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import css from './Postcode.css'
 import DropdownInput from 'Form/Dropdown'
 

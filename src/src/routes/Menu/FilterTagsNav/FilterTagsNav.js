@@ -1,23 +1,11 @@
 import React, { PropTypes } from 'react'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import FilterTagsList from './FilterTagsList'
 import css from './FilterTagsNav.css'
 
-const FilterTagsNav = ({ onCTAClick, tags }) => (
-	<div className={css.filterTagContainer}>
-		<div className={css.filterListContainer}>
-			<div className={css.filtersCTA}>
-				<Button fill width="full" onClick={onCTAClick}>
-					Filter by
-				</Button>
-			</div>
-			<FilterTagsList tags={tags} />
-		</div>
-	</div>
-)
-
-FilterTagsNav.propTypes = {
-	onCTAClick: PropTypes.func,
+const propTypes = {
+	onCTAClick: PropTypes.func.require,
+	menuFilterExperiment: PropTypes.bool.require,
 	tags: PropTypes.arrayOf(
 		PropTypes.shape({
 			text: PropTypes.string,
@@ -27,9 +15,27 @@ FilterTagsNav.propTypes = {
 	),
 }
 
+const FilterTagsNav = ({ onCTAClick, tags, menuFilterExperiment }) => (
+	(menuFilterExperiment) ? (
+		<div className={css.filterTagContainer}>
+			<div className={css.filterListContainer}>
+				<div className={css.filtersCTA}>
+					<Button fill width="full" onClick={onCTAClick}>
+						Filter by
+				</Button>
+				</div>
+				<FilterTagsList tags={tags} />
+			</div>
+		</div>
+	) : null
+)
+
+FilterTagsNav.propTypes = propTypes
+
 FilterTagsNav.defaultProps = {
 	tags: [],
-	onCTAClick: () => {},
+	menuFilterExperiment: false,
+	onCTAClick: () => { },
 }
 
 export default FilterTagsNav

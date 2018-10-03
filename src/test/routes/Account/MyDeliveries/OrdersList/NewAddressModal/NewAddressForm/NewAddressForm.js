@@ -8,9 +8,8 @@ import actions from 'actions/user.js'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import { shallow, mount } from 'enzyme'
 import Input from 'Form/Input'
-import Button from 'Button'
+import { Alert, Button } from 'goustouicomponents'
 import Dropdown from 'Form/Dropdown'
-import Alert from 'Alert'
 
 import NewAddressForm from 'routes/Account/MyDeliveries/OrdersList/NewAddressModal/NewAddressForm/NewAddressForm'
 import css from 'routes/Account/MyDeliveries/OrdersList/NewAddressModal/NewAddressForm/NewAddressForm.css'

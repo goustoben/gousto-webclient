@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import css from './Banner.css'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 
 const Banner = ({ hide, onClick, text, linkText }) => (
 	<div

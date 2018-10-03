@@ -3,7 +3,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Link from 'Link'
 import ProductImage from 'routes/Account/AccountComponents/ProductImage'
 import routes from 'config/routes'

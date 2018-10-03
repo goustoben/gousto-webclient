@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import config from 'config/checkout'
-import Alert from 'Alert'
+import { Alert } from 'goustouicomponents'
 import css from './ErrorMessage.css'
 
 const ErrorMessage = ({ errorType }) => (

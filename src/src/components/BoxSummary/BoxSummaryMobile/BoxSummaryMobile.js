@@ -4,7 +4,7 @@ import Immutable from 'immutable' // eslint-disable no-caps
 import config from 'config/basket'
 import Overlay from 'Overlay'
 import Title from 'BoxSummary/Title'
-import Tooltip from 'Tooltip'
+import { Tooltip } from 'goustouicomponents'
 import BoxSummary from 'BoxSummary'
 import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
 import RecipeList from 'BoxSummary/RecipeList'

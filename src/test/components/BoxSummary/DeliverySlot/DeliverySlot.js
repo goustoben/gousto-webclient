@@ -8,8 +8,7 @@ chai.use(sinonChai)
 import Immutable from 'immutable'
 import DeliverySlot from 'BoxSummary/DeliverySlot/DeliverySlot'
 
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button, Segment } from 'goustouicomponents'
 
 import Calendar from 'Form/Calendar'
 import SlotPicker from 'BoxSummary/DeliverySlot/SlotPicker/SlotPicker'

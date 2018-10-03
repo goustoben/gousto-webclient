@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import css from './TextArea.css'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 
 class SubscriptionPauseTextArea extends React.PureComponent {
 	static propTypes = {

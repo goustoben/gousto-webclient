@@ -4,7 +4,7 @@ chai.use(sinonChai)
 
 import React from 'react'
 import { shallow } from 'enzyme'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Link from 'Link'
 
 describe('Subscription Pause CallToAction', function() {

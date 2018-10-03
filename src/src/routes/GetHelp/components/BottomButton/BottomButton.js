@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Link from 'Link'
 
 import css from './BottomButton.css'

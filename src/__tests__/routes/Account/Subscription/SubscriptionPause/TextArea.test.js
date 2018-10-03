@@ -4,8 +4,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import TextArea from 'routes/Account/Subscription/SubscriptionPause/TextArea/TextArea'
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button } from 'goustouicomponents'
 
 describe('TextArea', () => {
 	describe('rendering', () => {

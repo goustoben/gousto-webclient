@@ -3,8 +3,7 @@ import sinon from 'sinon'
 import React from 'react'
 import CTAHomepage from 'routes/Home/CTA'
 import { shallow, mount } from 'enzyme'
-import Button from 'Button'
-import Segment from 'Button/Segment'
+import { Button, Segment } from 'goustouicomponents'
 
 describe('CTA', () => {
 	let wrapper

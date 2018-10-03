@@ -1,10 +1,7 @@
 import React, { PropTypes } from 'react'
-import Button from 'Button'
-import Segment from 'Button/Segment'
-import Control from 'Button/Control'
-import css from './Buttons.css'
+import { Button, Control, Segment, Tooltip } from 'goustouicomponents'
 import AgeVerification from 'Product/AgeVerification'
-import Tooltip from 'Tooltip'
+import css from './Buttons.css'
 
 class Buttons extends React.PureComponent {
 	static propTypes = {

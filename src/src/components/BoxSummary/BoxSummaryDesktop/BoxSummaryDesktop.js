@@ -2,20 +2,18 @@ import React, { PropTypes } from 'react'
 import Immutable from 'immutable' // eslint-disable no-caps
 
 import config from 'config/basket'
-import Button from 'Button'
-import Segment from 'Button/Segment'
-import Tooltip from 'Tooltip'
+import { Button, Segment, Tooltip } from 'goustouicomponents'
 import BoxSummary from 'BoxSummary'
 import Title from 'BoxSummary/Title'
 import Description from 'BoxSummary/Description'
 import RecipeList from 'BoxSummary/RecipeList'
 import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
-import css from './BoxSummaryDesktop.css'
 import BrowseCTA from '../BrowseCTA'
 import BrowseCTAButton from '../BrowseCTAButton'
 
 import { basketSum, okRecipes } from 'utils/basket'
 import { getBoundingClientRect } from 'utils/DOMhelper'
+import css from './BoxSummaryDesktop.css'
 
 class BoxSummaryDesktop extends React.Component {
 	static propTypes = {

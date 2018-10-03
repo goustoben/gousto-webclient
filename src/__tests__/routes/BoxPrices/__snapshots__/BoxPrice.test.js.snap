@@ -199,6 +199,7 @@ exports[`BoxPrice Will snap BoxPrice 1`] = `
       </div>
       <div
         className="segment base primary fill autoWidthPadding"
+        data-testing=""
         onClick={[Function]}
         onKeyUp={[Function]}
         onMouseEnter={[Function]}

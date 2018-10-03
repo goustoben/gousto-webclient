@@ -6,7 +6,7 @@ chai.use(sinonChai)
 import React from 'react'
 import { shallow } from 'enzyme'
 import config from 'config/checkout'
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import Input from 'Form/Input'
 
 import BillingForm from 'ExpiredBillingModal/BillingForm/BillingForm.js'

@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme'
 import renderer from 'react-test-renderer';
-import Button from 'Button'
+import { Button } from 'goustouicomponents'
 import FilterTagsNav from 'routes/Menu/FilterTagsNav/FilterTagsNav'
 
 describe("FilterTag", () => {
@@ -23,7 +23,7 @@ describe("FilterTag", () => {
 
     test("Will handle click on the CTA", () => {
       const clickHandler = jest.fn()
-      const component = <FilterTagsNav onCTAClick={clickHandler} />
+      const component = <FilterTagsNav onCTAClick={clickHandler} menuFilterExperiment />
       const wrapper = shallow(component)
 
       wrapper.find(Button).first().simulate('click')

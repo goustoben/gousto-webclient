@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react'
-import Button from 'Button'
+import { Alert, Button } from 'goustouicomponents'
 import actions from 'actions/order'
-import css from './OrderRestoreButton.css'
-import Alert from 'Alert'
 import Content from 'containers/Content'
+import css from './OrderRestoreButton.css'
 
 class OrderRestoreButton extends React.PureComponent {
 

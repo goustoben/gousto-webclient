@@ -2,6 +2,7 @@ src/manifest.json
 src/node_modules
 src/public
 src/dist
+src/libs/goustouicomponents
 .DS_Store
 .FBCIndex
 Thumbs.db
