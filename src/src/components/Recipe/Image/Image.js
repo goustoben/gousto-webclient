@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import classnames from 'classnames'
 
@@ -32,12 +32,12 @@ const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize }) => 
 )
 
 Image.propTypes = {
-	media: React.PropTypes.instanceOf(Immutable.List).isRequired,
-	title: React.PropTypes.string,
-	view: React.PropTypes.string,
-	mouseEnter: React.PropTypes.func,
-	mouseLeave: React.PropTypes.func,
-	maxMediaSize: React.PropTypes.number,
+	media: PropTypes.instanceOf(Immutable.List).isRequired,
+	title: PropTypes.string,
+	view: PropTypes.string,
+	mouseEnter: PropTypes.func,
+	mouseLeave: PropTypes.func,
+	maxMediaSize: PropTypes.number,
 }
 
 Image.defaultProps = {
