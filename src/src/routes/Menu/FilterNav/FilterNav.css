@@ -26,6 +26,24 @@
     flex-shrink: 0;
 }
 
+.heartIcon {
+    display: inline-flex;
+	vertical-align: middle;
+	justify-content: center;
+	width: 21px;
+    height: 18px;
+    mask-image: url(../../../media/svgs/icon-heart.svg);
+    background-color: white;
+}
+
+.heartIconWhite {
+    display: inline-flex;
+	vertical-align: middle;
+	justify-content: center;
+	width: 21px;
+    height: 18px;
+}
+
 .ctaText {
     font-weight: bold;
     margin-left: 13px;

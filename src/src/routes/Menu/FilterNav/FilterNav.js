@@ -8,13 +8,17 @@ const propTypes = {
 	ctaText: PropTypes.string.require,
 	sticky: PropTypes.bool.require,
 	menuFilterExperiment: PropTypes.bool,
+	isLoadingHeart: PropTypes.bool,
+	ifRecommendationIsSelected: PropTypes.bool,
 }
 
-const FilterNav = ({ onClick, ctaText, sticky, menuFilterExperiment }) => (
+const FilterNav = ({ onClick, ctaText, sticky, menuFilterExperiment, isLoadingHeart, ifRecommendationIsSelected }) => (
 	(menuFilterExperiment) ? (
 		<div className={classnames(style.filterNav, { [style.navBarContainerFixed]: sticky })}>
 			<div className={style.filterCta} onClick={onClick}>
-				<Svg className={style.filterIcon} fileName="filter-icon" />
+				{(isLoadingHeart && ifRecommendationIsSelected) && <Svg className={style.heartIconWhite} fileName="heart-icon-w-outline" />}
+				{(!isLoadingHeart && ifRecommendationIsSelected) && <div className={style.heartIcon} />}
+				{(!ifRecommendationIsSelected) && <Svg className={style.filterIcon} fileName="filter-icon" />}
 				<span className={style.ctaText}>{ctaText}</span>
 			</div>
 		</div>
