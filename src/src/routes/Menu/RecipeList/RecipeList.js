@@ -163,6 +163,7 @@ class RecipeList extends React.Component {
 							features={features}
 							isRecommendedRecipe={isRecommendedRecipe(recipeId, allRecipesList, recipesStore)}
 							range={recipe.get('range', '')}
+							tasteScore={recipe.getIn(['recommendationData', 'score'])}
 						/>
 					)
 				}).toArray()}

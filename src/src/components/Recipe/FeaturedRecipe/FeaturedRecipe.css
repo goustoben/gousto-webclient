@@ -84,3 +84,13 @@
 .attributeMinHeight {
 	min-height: calc(sizeMD * attributesLineHeight);
 }
+
+.score {
+	position: absolute;
+	left: 10px;
+	margin-top: -40px;
+
+	@media ScreenMLMin {
+		top: 100%;
+	}
+}
