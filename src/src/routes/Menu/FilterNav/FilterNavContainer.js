@@ -16,8 +16,12 @@ const handleScroll = withScroll({
 const connected = connect((state) => ({
 	ctaText: getFilterCTAText(state),
 	menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
+<<<<<<< HEAD
 	ifRecommendationIsSelected: currentCollectionSlug(state) === 'recommendations',
 	isLoadingHeart: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
+=======
+	showHeart: true,
+>>>>>>> adding hearts
 }), {
 	onClick: filterActions.filterMenuOpen,
 })

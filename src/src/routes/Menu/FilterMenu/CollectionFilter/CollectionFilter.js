@@ -4,7 +4,10 @@ import Immutable from 'immutable'
 import { H2 } from 'components/Page/Header'
 import CollectionItem from 'routes/Menu/CollectionItem'
 import FilterItem from 'routes/Menu/FilterMenu/FilterItem'
+<<<<<<< HEAD
 import Svg from 'Svg'
+=======
+>>>>>>> adding hearts
 import css from '../../FilterTag/FilterTag.css'
 
 const CollectionFilter = ({ collections, filterCollectionChange, currentCollectionId }) => (
@@ -29,7 +32,11 @@ const CollectionFilter = ({ collections, filterCollectionChange, currentCollecti
 						collectionId={collectionId}
 					>
 						<span>{collection.get('shortTitle', '')}</span>
+<<<<<<< HEAD
 						{collection.get('slug') === 'recommendations' && <Svg className={css.filterTagHeart} fileName="icon-heart" />}
+=======
+						{collection.get('slug') === 'recommendations' && <div className={css.filterTagHeart} />}
+>>>>>>> adding hearts
 					</CollectionItem>
 				</FilterItem>
 			)
