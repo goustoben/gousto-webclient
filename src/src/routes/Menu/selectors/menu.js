@@ -9,12 +9,12 @@ export const getIsMenuRecommended = createSelector(
 	(recipes) => isMenuRecommended(recipes)
 )
 
-export const currentCollectionSlug = createSelector(
+export const getCurrentCollectionSlug = createSelector(
 	[getCurrentCollectionId, getMenuCollections],
 	(collectionId, menuCollections) => {
 		const currentCollection = menuCollections.get(collectionId)
 
-		return currentCollection.slug || null
+		return (currentCollection && currentCollection.get('slug')) || null
 	}
 )
 
