@@ -126,7 +126,6 @@ module.exports = {
 	craftyclicks: {
 		endpoint: 'http://pcls1.craftyclicks.co.uk/json/rapidaddress',
 	},
-	complaints: '/complaints',
 	customers: {
 		pauseReasons: '/subscription/pause-reasons',
 		signup: '/signup',
