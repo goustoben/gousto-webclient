@@ -74,7 +74,7 @@
 .addIcon {
 	color: Bluecheese;
 	font-size: 14px;
-	composes: fa-plus from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-plus from 'styles/vendor/font-awesome-module.css';
 	padding-right: 14px;
 	align-self: center;
 }

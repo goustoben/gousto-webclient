@@ -81,7 +81,7 @@
 }
 
 .icon {
-	composes: fa-angle-right from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-angle-right from 'styles/vendor/font-awesome-module.css';
 }
 .largeIcon {
 	@media ScreenSMMin {

@@ -4,7 +4,7 @@ import css from 'styles/vendor/font-awesome-module.css'
 
 const Icon = ({ name, fixedWidth, size, style, className }) => (
 	<span
-		className={classNames(css[name], {
+		className={classNames(css['fa-basic-class'], css[name], {
 			[css['fa-fw']]: fixedWidth,
 			[className]: className,
 		})}

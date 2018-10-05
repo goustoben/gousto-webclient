@@ -25,7 +25,7 @@
 }
 
 .arrowRight {
-	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
 	font-size: 10px;
 }
 

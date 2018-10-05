@@ -20,6 +20,6 @@
 }
 
 .itemArrowRight {
-	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
 	composes: itemArrow;
 }

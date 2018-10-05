@@ -66,10 +66,10 @@
 
 .close {
 	composes: icon;
-	composes: fa-times from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-times from 'styles/vendor/font-awesome-module.css';
 }
 
 .back {
 	composes: icon;
-	composes: fa-chevron-left from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-chevron-left from 'styles/vendor/font-awesome-module.css';
 }

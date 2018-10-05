@@ -69,7 +69,7 @@
 
 .minusIcon {
 	composes: itemCenter from 'styles/flex.css';
-	composes: fa-fw fa-minus-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-fw fa-minus-circle from 'styles/vendor/font-awesome-module.css';
 	composes: pointer;
 
 	color: Blackberry;

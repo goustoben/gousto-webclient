@@ -89,6 +89,6 @@
 }
 
 .iconEarphone {
-	composes: fa-phone from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-phone from 'styles/vendor/font-awesome-module.css';
 	margin-right: 5px;
 }

@@ -65,7 +65,7 @@
 }
 
 .tooltipTrigger {
-    composes: fa-question-circle from 'styles/vendor/font-awesome-module.css';
+    composes: fa-basic-class fa-question-circle from 'styles/vendor/font-awesome-module.css';
     composes: marginXXSTop from 'sass-loader!styles/spacing.scss';
     padding: 2px 10px 2px 2px;
     color: Blackberry;

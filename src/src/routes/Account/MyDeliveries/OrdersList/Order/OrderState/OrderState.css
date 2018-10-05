@@ -64,37 +64,37 @@
 	composes: green;
 	composes: icon;
 	opacity: 0.5;
-	composes: fa-pause-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-pause-circle from 'styles/vendor/font-awesome-module.css';
 }
 
 .iconMenuOpen {
 	composes: orange;
 	composes: icon;
-	composes: fa-plus-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-plus-circle from 'styles/vendor/font-awesome-module.css';
 }
 
 .iconRecipesChosen {
 	composes: green;
 	composes: icon;
-	composes: fa-check-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-check-circle from 'styles/vendor/font-awesome-module.css';
 }
 
 .iconConfirmed {
 	composes: green;
 	composes: icon;
-	composes: fa-check-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-check-circle from 'styles/vendor/font-awesome-module.css';
 }
 
 .iconCancelled {
 	composes: red;
 	composes: icon;
-	composes: fa-times-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-times-circle from 'styles/vendor/font-awesome-module.css';
 }
 
 .iconDispatched {
 	composes: green;
 	composes: icon;
-	composes: fa-check-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-check-circle from 'styles/vendor/font-awesome-module.css';
 }
 
 .orderStateWrap {
