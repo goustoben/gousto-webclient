@@ -7,7 +7,6 @@ import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
 
-import Detail from 'Recipe/Detail'
 import MenuNoResults from './MenuNoResults'
 
 import Loading from 'Loading'
@@ -16,8 +15,7 @@ import FilterNav from './FilterNav'
 import FilterTagsNav from './FilterTagsNav/FilterTagsNavContainer'
 import css from './Menu.css'
 
-import Overlay from 'Overlay'
-
+import DetailOverlay from './DetailOverlay'
 import CollectionsNav from './CollectionsNav'
 import FilterMenu from './FilterMenu'
 
@@ -25,28 +23,19 @@ import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import RecipeList from './RecipeList'
 
-import { getLowStockTag, getSurcharge } from 'utils/recipe'
-import { getFeaturedImage, getRangeImages } from 'utils/image'
+
 
 import fetchData from './fetchData'
+
+import browserHelper from 'utils/browserHelper'
 
 class Menu extends React.Component {
 	static propTypes = {
 		basketOrderLoaded: PropTypes.func.isRequired,
-		recipes: PropTypes.instanceOf(Immutable.List).isRequired,
-		recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
-		menuLoadMenu: PropTypes.func.isRequired,
 		menuLoadBoxPrices: PropTypes.func.isRequired,
-		stock: PropTypes.instanceOf(Immutable.Map),
-		cutoffDate: PropTypes.string,
-		prevDate: PropTypes.string,
-		numPortions: PropTypes.number.isRequired,
-		basketRecipeIds: PropTypes.array.isRequired,
 		menuRecipeDetailShow: PropTypes.string,
 		detailVisibilityChange: PropTypes.func,
 		boxSummaryShow: PropTypes.bool,
-		filterVegetarian: PropTypes.bool,
-		filterVegetarianChange: PropTypes.func,
 		boxDetailsVisibilityChange: PropTypes.func.isRequired,
 		disabled: PropTypes.bool.isRequired,
 		boxSummaryDeliveryDaysLoad: PropTypes.func,
@@ -62,9 +51,8 @@ class Menu extends React.Component {
 		params: PropTypes.object,
 		query: PropTypes.object,
 		orderId: PropTypes.string,
+		storeOrderId: PropTypes.string,
 		isLoading: PropTypes.bool,
-		orderRecipesNo: PropTypes.number,
-		fromJoin: PropTypes.bool.isRequired,
 		isAuthenticated: PropTypes.bool.isRequired,
 		tariffId: PropTypes.number,
 		menuLoadingBoxPrices: PropTypes.bool,
@@ -92,24 +80,20 @@ class Menu extends React.Component {
 	}
 
 	componentDidMount() {
-		let isChrome = false
-		if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.indexOf('Chrome/') !== -1) {
-			isChrome = true
-		}
 		this.setState({ // eslint-disable-line react/no-did-mount-set-state
 			isClient: true,
-			isChrome,
+			isChrome: browserHelper.isChrome(),
 		})
 
 		const props = this.props
 		const store = this.context.store
 
 		// if server rendered
-		if (props.params.orderId && props.params.orderId === store.getState().basket.get('orderId')) {
+		if (props.params.orderId && props.params.orderId === props.storeOrderId) {
 			props.basketOrderLoaded(props.params.orderId)
 		}
 
-		const forceLoad = (store.getState().basket.get('orderId') && store.getState().basket.get('orderId') !== props.params.orderId)
+		const forceLoad = (props.storeOrderId && props.storeOrderId !== props.params.orderId)
 		// TODO: Add back logic to check what needs to be reloaded
 		const query = props.query || {}
 		const params = props.params || {}
@@ -201,6 +185,7 @@ class Menu extends React.Component {
 		const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
 		const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
 		const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
+		const showLoading = this.props.isLoading && !overlayShow
 
 		let overlayShowCSS = null
 		if (this.state.isChrome) {
@@ -210,44 +195,22 @@ class Menu extends React.Component {
 		return (
 			<div data-testing="menuContainer">
 				<Helmet
-					title="Food Delivery | Try Our Recipe Kits | Gousto"
-					meta={[
-						{
-							name: 'description',
-							content: 'Food delivery is simple with Gousto\'s popular recipe kit boxes. Receive fresh and seasonal ingredients straight to your home with FREE delivery',
-						},
-						{
-							name: 'keywords',
-							content: 'Gousto, recipe delivery, ingredients, fresh, healthy food, cooking',
-						},
-					]}
-					style={[{
-						cssText: `
-							body .zopim {
-								bottom: 75px !important;
-								-webkit-transition: -webkit-filter 0.3s;
-								-webkit-filter: blur(0px);
-								@media (max-width: 767px) {
-									display: none !important;
-								}
-							}
-						`,
-					}]}
+					title={menu.helmet.title}
+					meta={menu.helmet.meta}
+					style={menu.helmet.style}
 				/>
 				<div className={classnames(css.container, overlayShowCSS)}>
 					<SubHeader
-						filterVegetarian={this.props.filterVegetarian}
-						onFilterVegetarianChange={this.props.filterVegetarianChange}
 						viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
 						onToggleGridView={this.toggleGridView}
-						orderRecipesNo={this.props.orderRecipesNo}
-						fromJoin={this.props.fromJoin}
+						orderId={this.props.orderId}
 					/>
-					{menuFilterExperiment && <FilterTagsNav />}
-					{menuFilterExperiment && <FilterNav />}
-					{this.props.isLoading && !overlayShow ? <div className={css.loadingContainer}><div className={css.loading}><Loading /></div></div> : null}
-					<div className={this.props.isLoading && !overlayShow ? css.fadeOut : css.willFade} data-testing="menuRecipes">
-						{collectionsNavEnabled && !menuFilterExperiment && <CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
+					<FilterTagsNav />
+					<FilterNav />
+					{showLoading ? <div className={css.loadingContainer}><div className={css.loading}><Loading /></div></div> : null}
+					<div className={showLoading ? css.fadeOut : css.willFade} data-testing="menuRecipes">
+						{collectionsNavEnabled && !menuFilterExperiment &&
+							<CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
 						<FilterMenu />
 						{this.props.filteredRecipesNumber ?
 							<div
@@ -259,61 +222,15 @@ class Menu extends React.Component {
 								data-testing="menuRecipesList"
 							>
 								<RecipeList
-									filterVegetarian={this.props.filterVegetarian}
 									mobileGridView={mobileGridView}
 									showDetailRecipe={this.showDetailRecipe}
 									menuCurrentCollectionId={this.props.menuCurrentCollectionId}
 								/>
 								<p className={css.legal}>{menu.legal}</p>
-								{(() => (
-									<Overlay open={!!this.props.menuRecipeDetailShow && this.state.isClient && this.props.recipesStore.has(this.props.menuRecipeDetailShow)}>
-										{(() => {
-											if (this.props.recipesStore) {
-												const recipeId = this.props.menuRecipeDetailShow
-												const detailRecipe = this.props.recipesStore.get(recipeId)
-												if (this.props.menuRecipeDetailShow && detailRecipe) {
-													const stock = this.props.stock.getIn([recipeId, String(this.props.numPortions)])
-													const surcharge = getSurcharge(detailRecipe.get('meals'), this.props.numPortions)
-													const IsFineDineIn = detailRecipe.get('range') === 'fine_dine_in'
-													const view = (IsFineDineIn) ? 'fineDineInDetail' : 'detail'
-													const images = (IsFineDineIn) ? getRangeImages(detailRecipe) : null
-
-													return (
-														<Detail
-															view={view}
-															tag={getLowStockTag(stock, detailRecipe.getIn(['rating', 'count']))}
-															media={getFeaturedImage(detailRecipe, 'detail')}
-															images={images}
-															title={detailRecipe.get('title', '')}
-															count={detailRecipe.getIn(['rating', 'count'], 0)}
-															average={detailRecipe.getIn(['rating', 'average'], 0)}
-															perPortion={detailRecipe.getIn(['nutritionalInformation', 'perPortion'], Immutable.Map({}))}
-															per100Grams={detailRecipe.getIn(['nutritionalInformation', 'per100g'], Immutable.Map({}))}
-															ingredients={detailRecipe.get('ingredients', Immutable.List([]))}
-															allergens={detailRecipe.get('allergens', Immutable.List([]))}
-															id={detailRecipe.get('id')}
-															inBasket={this.props.basketRecipeIds.includes(recipeId)}
-															stock={stock}
-															useWithin={detailRecipe.get('shelfLifeDays')}
-															cookingTime={this.props.numPortions === 2 ? detailRecipe.get('cookingTime') : detailRecipe.get('cookingTimeFamily')}
-															description={detailRecipe.get('description')}
-															availability={detailRecipe.get('availability')}
-															cutoffDate={this.props.cutoffDate}
-															youWillNeed={detailRecipe.get('basics')}
-															cuisine={detailRecipe.get('cuisine')}
-															diet={detailRecipe.get('dietType')}
-															equipment={detailRecipe.get('equipment')}
-															surcharge={surcharge}
-															range={detailRecipe.get('range', '')}
-														/>
-													)
-												}
-											}
-
-											return null
-										})()}
-									</Overlay>
-								))()}
+								<DetailOverlay
+									showOverlay={this.state.isClient}
+									menuRecipeDetailShow={this.props.menuRecipeDetailShow}
+								/>
 							</div>
 							:
 							<MenuNoResults clearAllFilters={() => this.props.clearAllFilters()} />

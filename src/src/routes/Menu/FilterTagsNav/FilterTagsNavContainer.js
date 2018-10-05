@@ -32,6 +32,7 @@ export default connect((state) => {
 
 		return {
 			tags,
+			menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
 		}
 }, {
 	onCTAClick: filterActions.filterMenuOpen,

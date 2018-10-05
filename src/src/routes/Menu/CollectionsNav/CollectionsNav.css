@@ -167,7 +167,3 @@
 	animation-duration: 0.5s;
 	animation-name: navBarTransition;
 }
-
-.hideMobile {
-	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
-}
