@@ -26,110 +26,61 @@ class Refund extends PureComponent {
 
 	state = {
 		refundAmount: 0,
-		isFetchingAmount: true,
-		didFetchAmountError: false,
-		setComplainError: null,
-	}
-
-	formatErrors(errors) {
-		if (Array.isArray(errors)) {
-			return errors.reduce((str, error) => `${str} ${error.message}`, '')
-		}
-
-		return errors
-	}
-
-	getRefund = async () => {
-		const responseHandler = (updatedState) => {
-			const newState = {
-				...this.state,
-				...updatedState
-			}
-			this.setState(newState)
-		}
-
-		try {
-			const response = await fetchRefundAmount()
-
-			responseHandler({
-				refundAmount: response.data.refundValue,
-				isFetchingAmount: false,
-			})
-		} catch (err) {
-			responseHandler({
-				didFetchAmountError: true,
-				isFetchingAmount: false,
-			})
-		}
+		isFetching: true,
+		didFetchError: false,
 	}
 
 	componentDidMount() {
 		this.getRefund()
 	}
 
-	onAcceptOffer = async () => {
-		const category = {
-			id: 3,
-			name: 'Missing Ingredients',
-			department_id: 1,
-			tags: 'Picking Errors|Ingredients',
-			choosable: true,
-			attribute_types: [{
-				id: 3,
-				name: 'Missing Recipe Ingredient',
-				type: 'OrderIngredient',
-			}]
-		}
-		const attribute = {
-			name: '1 seasonal British apple',
-			net_weight: 0.1350,
-			sub_ingredients: '',
-			has_allergens: false,
-			tags: 'Paprika Pork Burger, Apple Salad & Wedges',
-			type_id: 3,
-			reference: 21,
-		}
-		const { user } = this.props
+	getRefund = async () => {
+		try {
+			const response = await fetchRefundAmount()
 
+			this.setState({
+				...this.state,
+				isFetching: false,
+				refundAmount: response.data.refundValue
+			})
+		} catch (err) {
+			this.requestFailure()
+		}
+	}
+
+	onAcceptOffer = async ({ user }) => {
 		try {
 			const response = await setComplaint(user.accessToken, {
-				description: 'test',
-				channel_id: 3,
 				user_id: user.id,
 				order_id: 6078374,
-				issues: [{
-					category,
-					attributes: [attribute],
-				}]
 			})
 
 			redirect(routes.getHelp.confirmation)
 
 			return response
 		} catch (err) {
-			return this.setState({
-				...this.state,
-				setComplainError: this.formatErrors(err)
-			})
+			return this.requestFailure()
 		}
+	}
+
+	requestFailure = () => {
+		this.setState({
+			...this.state,
+			isFetching: false,
+			didFetchError: true
+		})
 	}
 
 	render() {
 		const { content } = this.props
-		const { index, contact } = routes.getHelp
-		const {
-			refundAmount,
-			setComplainError,
-			isFetchingAmount,
-			didFetchAmountError
-		} = this.state
+		const { refundAmount, isFetching, didFetchError } = this.state
 		const infoBodyWithAmount = replaceWithValues(content.infoBody, {
 			refundAmount: refundAmount.toFixed(2)
 		})
 		const button2WithAmount = replaceWithValues(content.button2, {
 			refundAmount: refundAmount.toFixed(2)
 		})
-		const getHelpLayoutbody = (isFetchingAmount || didFetchAmountError)
+		const getHelpLayoutbody = (isFetching || didFetchError)
 			? ''
 			:  infoBodyWithAmount
 
@@ -139,31 +90,30 @@ class Refund extends PureComponent {
 				body={getHelpLayoutbody}
 				fullWidthContent
 			>
-				{(isFetchingAmount)
+				{(isFetching)
 					? <div className={css.center}>
 						<Loading className={css.loading} />
 					</div>
 					: <div>
-						<p>{(didFetchAmountError)
+						<p>{(didFetchError)
 							? content.errorBody
 							: content.confirmationBody}
 						</p>
-						{setComplainError && <p>{setComplainError}</p>}
 						<BottomBar>
 							<BottomButton
 								color="secondary"
-								url={`${index}/${contact}`}
+								url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
 								clientRouted
 							>
 								{content.button1}
 							</BottomButton>
-							{(didFetchAmountError)
+							{(didFetchError)
 								? null
 								: <Button
 									className={css.button}
 									color="primary"
 									onClick={() => {
-										this.onAcceptOffer()
+										this.onAcceptOffer(this.props)
 									}}
 								>
 									{button2WithAmount}

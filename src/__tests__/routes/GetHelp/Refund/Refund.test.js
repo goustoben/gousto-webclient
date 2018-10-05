@@ -120,20 +120,20 @@ describe('<Refund />', () => {
 			expect(window.location.assign).toHaveBeenCalledTimes(1)
 		})
 
-		// test('call not redirect when user accept refund offer and get an error', async () => {
-		// 	getHelpApi.setComplaint = jest.fn(() => {
-		// 		throw new Error('error')
-		// 	})
+		test('call not redirect when user accept refund offer and get an error', async () => {
+			getHelpApi.setComplaint = jest.fn(() => {
+				throw new Error('error')
+			})
 
-		// 	const BottomBar = getHelpLayout.find('BottomBar')
-		// 	const Button = BottomBar.find('Button').at(1)
+			const BottomBar = getHelpLayout.find('BottomBar')
+			const Button = BottomBar.find('Button').at(1)
 
-		// 	window.location.assign = jest.fn()
+			window.location.assign = jest.fn()
 
-		// 	await Button.props().onClick()
+			await Button.props().onClick()
 
-		// 	expect(window.location.assign).toHaveBeenCalledTimes(0)
-		// })
+			expect(window.location.assign).toHaveBeenCalledTimes(0)
+		})
 
 		test('error message is shown when fetching data errors and accept button hides', () => {
 			fetch.mockImplementation(() => { throw new Error('error') })
