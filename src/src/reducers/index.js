@@ -7,6 +7,7 @@ import content from './content'
 import example from './example'
 import features from './features'
 import filters from './filters'
+import getHelp from './getHelp'
 import home from './home'
 import jobs from './jobs'
 import login from './login'
@@ -48,6 +49,7 @@ const reducers = {
 	...jobs,
 	...login,
 	...home,
+	...getHelp,
 	...menu,
 	...newsletter,
 	...orderSkipRecovery,
