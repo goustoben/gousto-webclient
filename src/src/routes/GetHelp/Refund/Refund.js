@@ -12,32 +12,20 @@ import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 
 import css from './Refund.css'
 
-const getRefund = async () => (
-	new Promise(async (resolve, reject) => {
-		try {
-			const response = await fetchRefundAmount()
+const getRefund = async () => {
+	const response = await fetchRefundAmount()
 
-			return resolve({ error: null, result: response.data })
-		} catch (error) {
-			return reject({ error })
-		}
+	return response.data
+}
+
+const sendAcceptedOffer = async ({ user, order }) => {
+	const response = await setComplaint(user.accessToken, {
+		user_id: user.id,
+		order_id: order.id,
 	})
-)
 
-const sendAcceptedOffer = async ({ user, order }) => (
-	new Promise(async (resolve, reject) => {
-		try {
-			const response = await setComplaint(user.accessToken, {
-				user_id: user.id,
-				order_id: order.id,
-			})
-
-			return resolve({ error: null, result: response.data })
-		} catch (error) {
-			return reject({ error })
-		}
-	})
-)
+	return response.data
+}
 
 class Refund extends PureComponent {
 	static propTypes = {
@@ -64,32 +52,27 @@ class Refund extends PureComponent {
 		didFetchError: false,
 	}
 
-	componentDidMount() {
-		const tryGetRefund = async () => {
-			const { error, result } = await getRefund()
+	async componentDidMount() {
+		try {
+			const result = await getRefund()
 
-			if (error) {
-				return this.requestFailure()
-			}
-
-			return this.setState({
+			this.setState({
 				...this.state,
 				isFetching: false,
 				refundAmount: result.refundValue
 			})
+		} catch (error) {
+			this.requestFailure()
 		}
-
-		tryGetRefund()
 	}
 
 	onAcceptOffer = async () => {
-		const { error } = await sendAcceptedOffer(this.props)
-
-		if (error) {
-			return this.requestFailure()
+		try {
+			await sendAcceptedOffer(this.props)
+			redirect(routes.getHelp.confirmation)
+		} catch (error) {
+			this.requestFailure()
 		}
-
-		return redirect(routes.getHelp.confirmation)
 	}
 
 	requestFailure = () => {
@@ -142,9 +125,7 @@ class Refund extends PureComponent {
 								: <Button
 									className={css.button}
 									color="primary"
-									onClick={() => {
-										this.onAcceptOffer(this.props)
-									}}
+									onClick={() => this.onAcceptOffer(this.props)}
 								>
 									{button2WithAmount}
 								</Button>
