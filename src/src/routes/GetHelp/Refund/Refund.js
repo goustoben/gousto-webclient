@@ -12,6 +12,33 @@ import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 
 import css from './Refund.css'
 
+const getRefund = async () => (
+	new Promise(async (resolve, reject) => {
+		try {
+			const response = await fetchRefundAmount()
+
+			return resolve({ error: null, result: response.data })
+		} catch (error) {
+			return reject({ error })
+		}
+	})
+)
+
+const sendAcceptedOffer = async ({ user, order }) => (
+	new Promise(async (resolve, reject) => {
+		try {
+			const response = await setComplaint(user.accessToken, {
+				user_id: user.id,
+				order_id: order.id,
+			})
+
+			return resolve({ error: null, result: response.data })
+		} catch (error) {
+			return reject({ error })
+		}
+	})
+)
+
 class Refund extends PureComponent {
 	static propTypes = {
 		content: PropTypes.shape({
@@ -22,6 +49,13 @@ class Refund extends PureComponent {
 			button1: PropTypes.string.isRequired,
 			button2: PropTypes.string.isRequired,
 		}),
+		user: PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			accessToken: PropTypes.string.isRequired,
+		}),
+		order: PropTypes.shape({
+			id: PropTypes.number.isRequired
+		}),
 	}
 
 	state = {
@@ -31,36 +65,31 @@ class Refund extends PureComponent {
 	}
 
 	componentDidMount() {
-		this.getRefund()
-	}
+		const tryGetRefund = async () => {
+			const { error, result } = await getRefund()
 
-	getRefund = async () => {
-		try {
-			const response = await fetchRefundAmount()
+			if (error) {
+				return this.requestFailure()
+			}
 
-			this.setState({
+			return this.setState({
 				...this.state,
 				isFetching: false,
-				refundAmount: response.data.refundValue
+				refundAmount: result.refundValue
 			})
-		} catch (err) {
-			this.requestFailure()
 		}
+
+		tryGetRefund()
 	}
 
-	onAcceptOffer = async ({ user }) => {
-		try {
-			const response = await setComplaint(user.accessToken, {
-				user_id: user.id,
-				order_id: 6078374,
-			})
+	onAcceptOffer = async () => {
+		const { error } = await sendAcceptedOffer(this.props)
 
-			redirect(routes.getHelp.confirmation)
-
-			return response
-		} catch (err) {
+		if (error) {
 			return this.requestFailure()
 		}
+
+		return redirect(routes.getHelp.confirmation)
 	}
 
 	requestFailure = () => {
@@ -83,6 +112,7 @@ class Refund extends PureComponent {
 		const getHelpLayoutbody = (isFetching || didFetchError)
 			? ''
 			:  infoBodyWithAmount
+
 
 		return (
 			<GetHelpLayout

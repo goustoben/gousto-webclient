@@ -30,7 +30,8 @@ describe('<Refund />', () => {
 			wrapper =  mount(
 				<Refund
 					content={content}
-					user={{ id: 0, accessToken: '123' }}
+					user={{ id: '0', accessToken: '123' }}
+					order={{ id: 0 }}
 				/>
 			)
 			getHelpLayout = wrapper.find('GetHelpLayout')
@@ -73,31 +74,42 @@ describe('<Refund />', () => {
 			wrapper =  mount(
 				<Refund
 					content={content}
-					user={{ id: 0, accessToken: '123' }}
+					user={{ id: '0', accessToken: '123' }}
+					order={{ id: 0 }}
 				/>
 			)
 			getHelpLayout = wrapper.find('GetHelpLayout')
 		})
 
-		test('loading shows while fetching data', async () => {
-			let resolver
-			fetch.mockImplementation(() => new Promise((resolve) => {
-				resolver = resolve
-			}))
+		test('loading does not show when data is fetched', async () => {
+			const getRefund = async () => (
+				new Promise(async (resolve, reject) => {
+					try {
+						const response = await fetch.mockImplementation(() => Promise.resolve({
+							data: { refundValue: 8.77 }
+						}))
+						resolve(response)
+					} catch (error) {
+						reject()
+					}
+				})
+			)
+
+			getRefund().then().then(() => {
+				expect(wrapper.find('Loading')).toHaveLength(0)
+			})
+		})
+
+		test('loading shows while fetching data', () => {
 			wrapper =  mount(
 				<Refund
 					content={content}
-					user={{ id: 0, accessToken: '123' }}
+					user={{ id: '0', accessToken: '123' }}
+					order={{ id: 0 }}
 				/>
 			)
 
 			expect(wrapper.find('Loading')).toHaveLength(1)
-
-			await resolver({
-				data: { refundValue: 8.77 }
-			})
-
-			expect(wrapper.find('Loading')).toHaveLength(0)
 		})
 
 		test('refund data is fetched', () => {
@@ -108,8 +120,6 @@ describe('<Refund />', () => {
 		})
 
 		test('call redirect when user accept refund offer', async () => {
-			getHelpApi.setComplaint = jest.fn(() => Promise.resolve({}))
-
 			const BottomBar = getHelpLayout.find('BottomBar')
 			const Button = BottomBar.find('Button').at(1)
 
@@ -136,19 +146,35 @@ describe('<Refund />', () => {
 		})
 
 		test('error message is shown when fetching data errors and accept button hides', () => {
-			fetch.mockImplementation(() => { throw new Error('error') })
+			const getRefund = async () => (
+				new Promise(async (resolve, reject) => {
+					try {
+						const response = await fetch.mockImplementation(() => { 
+							throw new Error('error')
+						})
+						resolve(response)
+					} catch (error) {
+						reject()
+					}
+				})
+			)
+
 			wrapper =  mount(
 				<Refund
 					content={content}
-					user={{ id: 0, accessToken: '123' }}
+					user={{ id: '0', accessToken: '123' }}
+					order={{ id: 0 }}
 				/>
 			)
-			getHelpLayout = wrapper.find('GetHelpLayout')
-			const wrapperText = wrapper.text()
 
-			expect(getHelpLayout.prop('body')).toBe('')
-			expect(wrapperText).toContain('Error body')
-			expect(wrapperText).not.toContain('button2')
+			getRefund().then().then(() => {
+				getHelpLayout = wrapper.find('GetHelpLayout')
+				const wrapperText = wrapper.text()
+
+				expect(getHelpLayout.prop('body')).toBe('')
+				expect(wrapperText).toContain('Error body')
+				expect(wrapperText).not.toContain('button2')
+			})
 		})
 	})
 })

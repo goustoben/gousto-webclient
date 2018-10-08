@@ -12,6 +12,9 @@ const mapStateToProps = (state) => {
 			id: auth.get('id'),
 			accessToken: auth.get('accessToken'),
 		},
+		order: {
+			id: 6078374
+		},
 		content: {
 			title: state.content.get('get-help_refund_pageheader_header')
 			|| 'Get help with your box',

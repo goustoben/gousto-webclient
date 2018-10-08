@@ -2,7 +2,7 @@ import fetch from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
-const SSR_URL_LOCAL = 'https://staging-api.gousto.info/ssr/v1/ssr'
+const SSR_URL_LOCAL = 'https://staging-api.gousto.info/ssr/v1'
 
 const getServiceUrl = (name) => (
 	(__ENV__ === 'local')
