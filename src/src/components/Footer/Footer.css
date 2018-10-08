@@ -57,7 +57,7 @@
 }
 
 .earPhone {
-	composes: fa-phone from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-phone from 'styles/vendor/font-awesome-module.css';
 	composes: paddingXSRight from 'sass-loader!styles/spacing.scss';
 	font-size: sizeLG;
 	position: absolute;
@@ -188,27 +188,27 @@
 
 .facebook{
 	composes: icon;
-	composes: fa-facebook from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-facebook from 'styles/vendor/font-awesome-module.css';
 }
 
 .twitter{
 	composes: icon;
-	composes: fa-twitter from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-twitter from 'styles/vendor/font-awesome-module.css';
 }
 
 .youtube{
 	composes: icon;
-	composes: fa-youtube from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-youtube from 'styles/vendor/font-awesome-module.css';
 }
 
 .instagram{
 	composes: icon;
-	composes: fa-instagram from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-instagram from 'styles/vendor/font-awesome-module.css';
 }
 
 .gplus{
 	composes: icon;
-	composes: fa-google-plus from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-google-plus from 'styles/vendor/font-awesome-module.css';
 }
 
 .checkoutFooterContainer {

@@ -63,11 +63,11 @@
 }
 
 .arrowDown {
-	composes: fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.css';
 }
 
 .arrowUp {
-	composes: fa-chevron-up from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class  fa-chevron-up from 'styles/vendor/font-awesome-module.css';
 }
 
 .hide {
@@ -134,7 +134,7 @@
 }
 
 .closeBtn {
-	composes: fa-fw fa-close from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-fw fa-close from 'styles/vendor/font-awesome-module.css';
 	composes: absolute from 'styles/position.css';
 
 	right: SpacingXXS;

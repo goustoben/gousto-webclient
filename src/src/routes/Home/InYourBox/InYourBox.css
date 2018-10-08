@@ -65,6 +65,6 @@
 }
 
 .tick {
-	composes: fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
 	margin-right: 5px;
 }

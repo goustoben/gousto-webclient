@@ -3,5 +3,5 @@
 }
 
 .icon {
-	composes: fa-thumbs-up fa-fw from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-thumbs-up fa-fw from 'styles/vendor/font-awesome-module.css';
 }

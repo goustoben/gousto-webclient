@@ -21,7 +21,7 @@
 }
 
 .chevron {
-	composes: fa-chevron-down from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.css';
 	font-size: 24px;
 	color: Bluecheese;
 	composes: paddingXLBottom from 'sass-loader!styles/spacing.scss';

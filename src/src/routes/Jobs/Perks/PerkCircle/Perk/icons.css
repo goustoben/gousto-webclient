@@ -9,65 +9,65 @@
 /* Font Awesome classes */
 .thumbsUp {
 	composes: fontAwesomeBase;
-	composes: fa-thumbs-o-up from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-thumbs-o-up from 'styles/vendor/font-awesome-module.css';
 }
 
 .cutlery {
 	composes: fontAwesomeBase;
-	composes: fa-cutlery from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-cutlery from 'styles/vendor/font-awesome-module.css';
 }
 
 .calendar {
 	composes: fontAwesomeBase;
-	composes: fa-calendar-check-o from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-calendar-check-o from 'styles/vendor/font-awesome-module.css';
 }
 
 .coffee {
 	composes: fontAwesomeBase;
-	composes: fa-coffee from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-coffee from 'styles/vendor/font-awesome-module.css';
 }
 
 .users {
 	composes: fontAwesomeBase;
-	composes: fa-users from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-users from 'styles/vendor/font-awesome-module.css';
 }
 
 .trophy {
 	composes: fontAwesomeBase;
-	composes: fa-trophy from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-trophy from 'styles/vendor/font-awesome-module.css';
 }
 
 .suitcase {
 	composes: fontAwesomeBase;
-	composes: fa-suitcase from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-suitcase from 'styles/vendor/font-awesome-module.css';
 }
 
 .bicycle {
 	composes: fontAwesomeBase;
-	composes: fa-bicycle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-bicycle from 'styles/vendor/font-awesome-module.css';
 }
 
 .bolt {
 	composes: fontAwesomeBase;
-	composes: fa-bolt from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-bolt from 'styles/vendor/font-awesome-module.css';
 }
 
 .smile-o {
 	composes: fontAwesomeBase;
-	composes: fa-smile-o from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-smile-o from 'styles/vendor/font-awesome-module.css';
 }
 
 .glass {
 	composes: fontAwesomeBase;
-	composes: fa-glass from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-glass from 'styles/vendor/font-awesome-module.css';
 }
 
 .child {
 	composes: fontAwesomeBase;
-	composes: fa-child from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-child from 'styles/vendor/font-awesome-module.css';
 }
 
 .star {
 	composes: fontAwesomeBase;
-	composes: fa-star from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-star from 'styles/vendor/font-awesome-module.css';
 }

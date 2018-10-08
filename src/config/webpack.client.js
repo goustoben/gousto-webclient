@@ -7,13 +7,11 @@ const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const childProcess = require('child_process')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 // POST CSS IMPORT
-const PostcssImport = require('postcss-import')
-const PostcssUrl = require('postcss-url')
 const PostcssNested = require('postcss-nested')
 const PostcssPresetEnv = require('postcss-preset-env')
 const PostcssReporter = require('postcss-reporter')
@@ -33,18 +31,16 @@ const debug = false
 // eslint-disable-next-line no-console
 console.log(`================\nCLIENT BUILD: ${build}, ENVIRONMENT: ${envName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}"\n================`)
 
+const cssHashPattern = devMode ? '[name]__[local]___[hash:base64:5]' : 'G[sha1:hash:hex:6]'
 const cssLoaders = [
-	{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
+	{ loader: `css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=${cssHashPattern}` },
 	{
 		loader: 'postcss-loader',
 		options: {
 			ident: 'postcss',
+			sourceMap: false,
 			parser: 'postcss-safe-parser',
 			plugins: [
-				PostcssImport({
-					path: path.resolve('./src/styles'),
-				}),
-				PostcssUrl(),
 				PostcssNested(),
 				PostcssPresetEnv(),
 				PostcssReporter(),
@@ -55,16 +51,13 @@ const cssLoaders = [
 ]
 
 const scssLoaders = [
-	{ loader: 'css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]' },
+	{ loader: `css-loader?modules&-minimize&-sourceMap&importLoaders=1&localIdentName=${cssHashPattern}` },
 	{ loader: 'postcss-loader',
 		options: {
 			ident: 'postcss',
+			sourceMap: false,
 			parser: 'postcss-safe-parser',
 			plugins: [
-				PostcssImport({
-					path: path.resolve('./src/styles'),
-				}),
-				PostcssUrl(),
 				PostcssNested(),
 				PostcssPresetEnv(),
 				PostcssReporter(),
@@ -96,6 +89,18 @@ const config = {
 		filename: '[name].bundle.js',
 		publicPath
 	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				vendor: {
+					chunks: chunk => chunk.name !== 'legacy',
+					name: 'vendors',
+					enforce: true,
+					test: /[\\/]node_modules[\\/]/
+				}
+			}
+		}
+	},
 	module: {
 		rules: [
 			{
@@ -114,8 +119,7 @@ const config = {
 			},
 			{
 				test: /\.js$/,
-
-		
+				exclude: /node_modules/,
 				loader: 'babel-loader',
 				options: {
 					cacheDirectory: true,
@@ -123,22 +127,15 @@ const config = {
 				include: [
 					path.resolve('./src'),
 					path.resolve('./libs/goustouicomponents/src')
-
 				]
 			},
 			{
 				test: /\.css$/,
-				use: devMode ? ['style-loader', ...cssLoaders] : ExtractPlugin.extract({
-					fallback: 'style-loader',
-					use: cssLoaders
-				})
+				use: devMode ? ['style-loader', ...cssLoaders] : ExtractPlugin.extract(cssLoaders)
 			},
 			{
 				test: /\.scss$/,
-				use: devMode ? ['style-loader', ...scssLoaders] : ExtractPlugin.extract({
-					fallback: 'style-loader',
-					use: scssLoaders
-				})
+				use: devMode ? ['style-loader', ...scssLoaders] : ExtractPlugin.extract(scssLoaders)
 			},
 			{
 				test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -152,16 +149,20 @@ const config = {
 				test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 				loader: 'file-loader'
 			},
+		/*	{
+        test: /\.(jpe?g|png|gif|svg)$/,
+        loader: 'image-webpack-loader',
+        // This will apply the loader before the other ones
+        enforce: 'pre',
+			}, */
 			{
-				test: /\.png$/,
-				loader: 'url-loader?limit=100000'
-			},
-			{ 	test: /\.jpg$/,
-				loader: 'file-loader'
-			},
-			{ 	test: /\.gif$/,
-				loader: 'file-loader'
-			},
+        test: /\.(jpe?g|png|gif)$/,
+				loader: 'url-loader',
+        options: {
+          // Images larger than 10 KB won’t be inlined
+          limit: 10 * 1024
+        }
+      },
 			{ 	test: /\.ico$/,
 				loader: 'file-loader'
 			},
@@ -259,15 +260,15 @@ if (build === 'development') {
 } else if (build === 'production') {
 	config.devtool = false
 	config.output.filename = '[name].bundle.[chunkhash].js'
-	config.output.chunkFilename = '[chunkhash].js'
+	config.output.chunkFilename = '[name].bundle.[chunkhash].js'
 
 	config.plugins.push(
 		new ExtractPlugin({ filename: '[name].[chunkhash].css', allChunks: true, ignoreOrder: true }),
 		new webpack.optimize.OccurrenceOrderPlugin(),
-		new UglifyJsPlugin({
+		new TerserPlugin({
 			parallel: true,
 			sourceMap: false,
-			uglifyOptions: {
+			terserOptions: {
 				mangle: true,
 				compress: true,
 				warnings: true,

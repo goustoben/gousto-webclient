@@ -34,12 +34,12 @@ button:focus {
 
 .buttonMinus {
 	composes: toggleButton;
-	composes: fa-minus from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-minus from 'styles/vendor/font-awesome-module.css';
 }
 
 .buttonPlus {
 	composes: toggleButton;
-	composes: fa-plus from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-plus from 'styles/vendor/font-awesome-module.css';
 }
 
 .stop {

@@ -115,7 +115,7 @@
 
 .arrowLeft {
 	composes: arrow;
-	composes: fa-fw fa-chevron-left from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-fw fa-chevron-left from 'styles/vendor/font-awesome-module.css';
 	background-image: linear-gradient(to right, Coconut, rgba(255,255,255,0));
 
 	left: SpacingXXL;
@@ -143,7 +143,7 @@
 
 .arrowRight {
 	composes: arrow;
-	composes: fa-fw fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-fw fa-chevron-right from 'styles/vendor/font-awesome-module.css';
 	background-image: linear-gradient(to right, rgba(255,255,255,0), Coconut);
 
 	right: SpacingXXL;

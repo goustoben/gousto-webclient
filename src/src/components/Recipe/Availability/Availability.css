@@ -1,7 +1,7 @@
 @value Cacao, Chia from 'styles/colors.css';
 
 .icon {
-  composes: fa-calendar fa-fw from 'styles/vendor/font-awesome-module.css';
+  composes: fa-basic-class fa-calendar fa-fw from 'styles/vendor/font-awesome-module.css';
   color: Cacao;
 }
 

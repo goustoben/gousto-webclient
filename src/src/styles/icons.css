@@ -3,7 +3,7 @@
 @value sizeXXL, sizeXL from 'styles/typography.css';
 
 .closeIcon {
-	composes: fa-times from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-times from 'styles/vendor/font-awesome-module.css';
 	composes: paddingMDTop paddingMDRight from 'sass-loader!styles/spacing.scss';
 	color: Cacao;
 	font-size: sizeXXL;
@@ -15,21 +15,21 @@
 }
 
 .padlockIcon {
-	composes: fa-lock from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-lock from 'styles/vendor/font-awesome-module.css';
 	composes: paddingSMRight paddingSMLeft from 'sass-loader!styles/spacing.scss';
 	color: Cacao;
 	font-size: sizeXL;
 }
 
 .creditCardIcon {
-	composes: fa-credit-card from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-credit-card from 'styles/vendor/font-awesome-module.css';
 	composes: paddingSMRight paddingSMLeft from 'sass-loader!styles/spacing.scss';
 	color: Cacao;
 	font-size: sizeXL;
 }
 
 .calendarIcon {
-	composes: fa-fw fa-calendar from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-fw fa-calendar from 'styles/vendor/font-awesome-module.css';
 	composes: paddingSMRight paddingSMLeft from 'sass-loader!styles/spacing.scss';
 	color: Blackberry;
 	font-size: sizeXL;
