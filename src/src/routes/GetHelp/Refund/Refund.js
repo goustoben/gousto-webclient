@@ -42,7 +42,7 @@ class Refund extends PureComponent {
 			accessToken: PropTypes.string.isRequired,
 		}),
 		order: PropTypes.shape({
-			id: PropTypes.number.isRequired
+			id: PropTypes.string.isRequired
 		}),
 	}
 

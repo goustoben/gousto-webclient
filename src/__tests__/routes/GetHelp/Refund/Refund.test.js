@@ -31,7 +31,7 @@ describe('<Refund />', () => {
 				<Refund
 					content={content}
 					user={{ id: '0', accessToken: '123' }}
-					order={{ id: 0 }}
+					order={{ id: '0' }}
 				/>
 			)
 			getHelpLayout = wrapper.find('GetHelpLayout')
@@ -75,7 +75,7 @@ describe('<Refund />', () => {
 				<Refund
 					content={content}
 					user={{ id: '0', accessToken: '123' }}
-					order={{ id: 0 }}
+					order={{ id: '0' }}
 				/>
 			)
 			getHelpLayout = wrapper.find('GetHelpLayout')
@@ -90,7 +90,7 @@ describe('<Refund />', () => {
 				<Refund
 					content={content}
 					user={{ id: '0', accessToken: '123' }}
-					order={{ id: 0 }}
+					order={{ id: '0' }}
 				/>
 			)
 
@@ -146,7 +146,7 @@ describe('<Refund />', () => {
 				<Refund
 					content={content}
 					user={{ id: '0', accessToken: '123' }}
-					order={{ id: 0 }}
+					order={{ id: '0' }}
 				/>
 			)
 			getHelpLayout = wrapper.find('GetHelpLayout')
