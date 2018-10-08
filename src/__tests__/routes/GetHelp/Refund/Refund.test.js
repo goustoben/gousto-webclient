@@ -100,8 +100,6 @@ describe('<Refund />', () => {
 				data: { refundValue: 8.77 }
 			})
 
-			await Promise.resolve()
-
 			expect(wrapper.find('Loading')).toHaveLength(0)
 		})
 
@@ -150,8 +148,6 @@ describe('<Refund />', () => {
 				/>
 			)
 			getHelpLayout = wrapper.find('GetHelpLayout')
-
-			await Promise.resolve()
 
 			const wrapperText = wrapper.text()
 			expect(getHelpLayout.prop('body')).toBe('')

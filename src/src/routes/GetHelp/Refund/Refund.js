@@ -12,21 +12,6 @@ import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 
 import css from './Refund.css'
 
-const getRefund = async () => {
-	const response = await fetchRefundAmount()
-
-	return response.data
-}
-
-const sendAcceptedOffer = async ({ user, order }) => {
-	const response = await setComplaint(user.accessToken, {
-		user_id: user.id,
-		order_id: order.id,
-	})
-
-	return response.data
-}
-
 class Refund extends PureComponent {
 	static propTypes = {
 		content: PropTypes.shape({
@@ -52,26 +37,36 @@ class Refund extends PureComponent {
 		didFetchError: false,
 	}
 
-	async componentDidMount() {
+	componentDidMount() {
+		this.getRefund()
+	}
+
+	getRefund = async () => {
 		try {
-			const result = await getRefund()
+			const response = await fetchRefundAmount()
 
 			this.setState({
 				...this.state,
 				isFetching: false,
-				refundAmount: result.refundValue
+				refundAmount: response.data.refundValue
 			})
-		} catch (error) {
+		} catch (err) {
 			this.requestFailure()
 		}
 	}
 
-	onAcceptOffer = async () => {
+	onAcceptOffer = async ({ user, order }) => {
 		try {
-			await sendAcceptedOffer(this.props)
+			const response = await setComplaint(user.accessToken, {
+				user_id: user.id,
+				order_id: order.id,
+			})
+
 			redirect(routes.getHelp.confirmation)
-		} catch (error) {
-			this.requestFailure()
+
+			return response
+		} catch (err) {
+			return this.requestFailure()
 		}
 	}
 

@@ -5,16 +5,15 @@ import { selectOrderIssue } from 'actions/getHelp'
 import Refund from './Refund'
 
 const mapStateToProps = (state) => {
-	const { auth } = state
+	const { auth, getHelp } = state
+	const order = getHelp.get('order').toJS()
 
 	return {
 		user: {
 			id: auth.get('id'),
 			accessToken: auth.get('accessToken'),
 		},
-		order: {
-			id: '6078374'
-		},
+		order,
 		content: {
 			title: state.content.get('get-help_refund_pageheader_header')
 			|| 'Get help with your box',
