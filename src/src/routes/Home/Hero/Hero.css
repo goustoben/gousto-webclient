@@ -28,7 +28,7 @@
 	}
 }
 
-.container--rebrand {
+.container--tv {
 	composes: container;
 	background: url('routes/Home/Hero/hero-alt-700w.jpg') center top / cover no-repeat;
 
@@ -86,7 +86,7 @@
 	}	
 }
 
-.textContainer--rebrand {
+.textContainer--tv {
 	composes: textContainer;
 	background-color: White;
 	right: auto;

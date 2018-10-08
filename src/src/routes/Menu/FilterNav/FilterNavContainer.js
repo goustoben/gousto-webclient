@@ -13,6 +13,7 @@ const handleScroll = withScroll({
 
 const connected = connect((state) => ({
 	ctaText: getFilterCTAText(state),
+	menuFilterExperiment: state.features.getIn(['filterMenu', 'value'])
 }), {
 	onClick: filterActions.filterMenuOpen,
 })

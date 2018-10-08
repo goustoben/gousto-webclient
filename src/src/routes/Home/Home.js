@@ -6,6 +6,7 @@ import HomeSections from './HomeSections'
 import PromoBanner from './PromoBanner'
 import home from 'config/home'
 import routes from 'config/routes'
+import { generateHref } from 'Helmet/GoustoHelmet'
 
 
 class Home extends React.Component {
@@ -85,6 +86,13 @@ class Home extends React.Component {
 			ctaText = home.CTA.main
 		}
 
+		let link = [
+				(variant !== 'default') ? {
+				rel: 'canonical',
+				href: generateHref(routes.client.home),
+			} : null
+		].filter(item => Boolean(item))
+
 		return (
 			<span>
 				<Helmet
@@ -99,6 +107,7 @@ class Home extends React.Component {
 							content: 'Gousto, recipe delivery, ingredients, fresh, healthy food, cooking',
 						},
 					]}
+					link={link}
 					style={[{
 						cssText: `
 							#react-root {

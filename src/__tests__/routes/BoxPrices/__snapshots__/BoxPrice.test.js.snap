@@ -142,84 +142,82 @@ exports[`BoxPrice Will snap BoxPrice 1`] = `
         Free
       </strong>
     </p>
-    <div>
+    <div
+      className="container primary fill widthAuto"
+    >
       <div
-        className="container primary fill widthAuto"
+        className="spinnerContainer  base primary fill noHover autoWidthPadding"
+        onClick={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
       >
-        <div
-          className="spinnerContainer  base primary fill noHover autoWidthPadding"
-          onClick={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
+        <span
+          className="spinner"
         >
-          <span
-            className="spinner"
+          <div
+            className="fadingCircle"
           >
             <div
-              className="fadingCircle"
-            >
-              <div
-                className="circle1 white"
-              />
-              <div
-                className="circle2 white"
-              />
-              <div
-                className="circle3 white"
-              />
-              <div
-                className="circle4 white"
-              />
-              <div
-                className="circle5 white"
-              />
-              <div
-                className="circle6 white"
-              />
-              <div
-                className="circle7 white"
-              />
-              <div
-                className="circle8 white"
-              />
-              <div
-                className="circle9 white"
-              />
-              <div
-                className="circle10 white"
-              />
-              <div
-                className="circle11 white"
-              />
-              <div
-                className="circle12 white"
-              />
-            </div>
-          </span>
-        </div>
-        <div
-          className="segment base primary fill autoWidthPadding"
-          data-testing=""
-          onClick={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          role="button"
-          tabIndex="0"
+              className="circle1 white"
+            />
+            <div
+              className="circle2 white"
+            />
+            <div
+              className="circle3 white"
+            />
+            <div
+              className="circle4 white"
+            />
+            <div
+              className="circle5 white"
+            />
+            <div
+              className="circle6 white"
+            />
+            <div
+              className="circle7 white"
+            />
+            <div
+              className="circle8 white"
+            />
+            <div
+              className="circle9 white"
+            />
+            <div
+              className="circle10 white"
+            />
+            <div
+              className="circle11 white"
+            />
+            <div
+              className="circle12 white"
+            />
+          </div>
+        </span>
+      </div>
+      <div
+        className="segment base primary fill autoWidthPadding"
+        data-testing=""
+        onClick={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        role="button"
+        tabIndex="0"
+      >
+        <a
+          className="base noDecor"
+          href="menu?num_portions=2"
+          to="menu?num_portions=2"
         >
-          <a
-            className="base noDecor"
-            href="menu?num_portions=2"
-            to="menu?num_portions=2"
+          <span
+            className="uppercase"
           >
-            <span
-              className="uppercase"
-            >
-              Build My Box
-            </span>
-          </a>
-        </div>
+            Build My Box
+          </span>
+        </a>
       </div>
     </div>
   </div>

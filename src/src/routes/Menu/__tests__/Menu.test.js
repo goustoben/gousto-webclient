@@ -2,9 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
-import Overlay from 'Overlay'
 import Loading from 'Loading'
-import Detail from 'Recipe/Detail'
 import Banner from 'routes/Menu/Banner'
 import fetchData from 'routes/Menu/fetchData'
 import SubHeader from 'routes/Menu/SubHeader'
@@ -12,15 +10,21 @@ import RecipeList from 'routes/Menu/RecipeList'
 import CollectionsNav from 'routes/Menu/CollectionsNav'
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
+import DetailOverlay from 'routes/Menu/DetailOverlay'
 import { forceCheck } from 'react-lazyload'
+import Menu from 'routes/Menu/Menu'
 
-jest.mock('Recipe/Detail')
+
 jest.mock('routes/Menu/Banner')
 jest.mock('routes/Menu/SubHeader')
 jest.mock('routes/Menu/FilterMenu')
+jest.mock('routes/Menu/FilterTagsNav/FilterTagsNavContainer')
+jest.mock('routes/Menu/FilterNav')
 jest.mock('routes/Menu/RecipeList')
 jest.mock('BoxSummary/BoxSummaryMobile')
 jest.mock('BoxSummary/BoxSummaryDesktop')
+jest.mock('routes/Menu/DetailOverlay')
+
 jest.mock('react-lazyload', () => ({
 	forceCheck: jest.fn(),
 }))
@@ -33,21 +37,13 @@ jest.mock('routes/Menu/fetchData', () => (
 	)
 ))
 
-import Menu from 'routes/Menu/Menu'
-
 describe('Menu', () => {
 	describe('rendering', () => {
 		let wrapper
 		beforeEach(() => {
 			wrapper = shallow(
 				<Menu
-					recipes={Immutable.OrderedMap()}
-					menuLoadMenu={function() {}}
-					menuLoadBoxPrices={function() {}}
-					stock={Immutable.Map()}
-					cutoffDate="2016-06-26"
-					numPortions={2}
-					basketRecipeIds={[]}
+					menuLoadBoxPrices={() => {}}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					filteredRecipesNumber={30}
@@ -71,10 +67,6 @@ describe('Menu', () => {
 			expect(wrapper.find(BoxSummaryDesktop).length).toBe(1)
 		})
 
-		test('should render 1 Overlay', () => {
-			expect(wrapper.find(Overlay).length).toBe(1)
-		})
-
 		test('should not show a collections nav', () => {
 			expect(wrapper.find(CollectionsNav).length).toBe(0)
 		})
@@ -86,16 +78,12 @@ describe('Menu', () => {
 		describe('with the isLoading prop set to true it should show a Loading', () => {
 			wrapper = shallow(
 				<Menu
-					recipes={Immutable.OrderedMap()}
-					menuLoadMenu={function() {}}
-					menuLoadBoxPrices={function() {}}
-					stock={Immutable.Map()}
-					cutoffDate="2016-06-26"
-					numPortions={2}
-					basketRecipeIds={[]}
+					menuRecipeDetailShow={false}
+					menuLoadBoxPrices={() => {}}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					clearAllFilters={() => {}}
+					basketOrderLoaded={() => {}}
 					isLoading
 				/>,
 			)
@@ -105,18 +93,15 @@ describe('Menu', () => {
 		describe('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
 			wrapper = shallow(
 				<Menu
-					recipes={Immutable.OrderedMap()}
-					menuLoadMenu={function() {}}
-					menuLoadBoxPrices={function() {}}
-					stock={Immutable.Map()}
-					cutoffDate="2016-06-26"
+					menuLoadBoxPrices={() => {}}
 					numPortions={2}
-					basketRecipeIds={[]}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					isLoading
+					storeOrderId={'1234'}
 					boxSummaryShow
 					clearAllFilters={() => {}}
+					basketOrderLoaded={() => {}}
 				/>,
 			)
 			expect(wrapper.find(Loading).length).toBe(0)
@@ -125,18 +110,14 @@ describe('Menu', () => {
 		describe('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
 			wrapper = shallow(
 				<Menu
-					recipes={Immutable.OrderedMap()}
-					menuLoadMenu={function() {}}
-					menuLoadBoxPrices={function() {}}
+					menuLoadBoxPrices={() => {}}
 					stock={Immutable.Map()}
-					cutoffDate="2016-06-26"
-					numPortions={2}
-					basketRecipeIds={[]}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					isLoading
 					menuBrowseCTAShow
 					clearAllFilters={() => {}}
+					basketOrderLoaded={() => {}}
 				/>,
 			)
 			expect(wrapper.find(Loading).length).toBe(0)
@@ -153,8 +134,6 @@ describe('Menu', () => {
 					2: { 2: 2 },
 					3: { 2: 2 },
 				})
-
-				recipes = Immutable.List(['1', '2', '3'])
 
 				recipesStore = Immutable.fromJS({
 					1: {
@@ -178,20 +157,17 @@ describe('Menu', () => {
 				})
 				wrapper = shallow(
 					<Menu
-						recipes={recipes}
-						menuLoadMenu={function() {}}
-						menuLoadBoxPrices={function() {}}
-						stock={stock}
-						cutoffDate="2016-06-26"
-						numPortions={2}
-						basketRecipeIds={[]}
-						recipesStore={recipesStore}
+						menuLoadBoxPrices={() => {}}
 						menuCollectionRecipes={Immutable.Map({})}
 						clearAllFilters={() => {}}
+						basketOrderLoaded={() => {}}
 						features={Immutable.fromJS({
 							collections: {
 								value: true,
 							},
+							filterMenu: {
+								value: false,
+							}
 						})}
 					/>,
 				)
@@ -205,14 +181,7 @@ describe('Menu', () => {
 				beforeEach(() => {
 					wrapper = shallow(
 						<Menu
-							recipes={recipes}
-							menuLoadMenu={function() {}}
-							menuLoadBoxPrices={function() {}}
-							stock={stock}
-							cutoffDate="2016-06-26"
-							numPortions={2}
-							basketRecipeIds={[]}
-							recipesStore={recipesStore}
+							menuLoadBoxPrices={() => {}}
 							menuCollectionRecipes={Immutable.Map({})}
 							clearAllFilters={() => {}}
 							features={Immutable.fromJS({
@@ -234,45 +203,12 @@ describe('Menu', () => {
 	})
 
 	describe('with the force collections feature enabled', () => {
-		let stock
-		let recipesStore
-		let recipes
 		let wrapper
 
 		beforeEach(() => {
-			stock = Immutable.fromJS({
-				1: { 2: 2 },
-				2: { 2: 2 },
-				3: { 2: 2 },
-			})
-
-			recipes = Immutable.List(['1', '2', '3'])
-
-			recipesStore = Immutable.fromJS({
-				1: {
-					id: '1',
-					availability: [],
-					boxType: 'vegetarian',
-					dietType: 'Fish',
-				},
-				2: {
-					id: '2',
-					availability: [],
-					boxType: 'vegetarian',
-					dietType: 'Vegetarian',
-				},
-				3: { id: '3', availability: [], boxType: 'gourmet', dietType: 'Meat' },
-			})
 			wrapper = shallow(
 				<Menu
-					recipes={recipes}
-					menuLoadMenu={function() {}}
-					menuLoadBoxPrices={function() {}}
-					stock={stock}
-					cutoffDate="2016-06-26"
-					numPortions={2}
-					basketRecipeIds={[]}
-					recipesStore={recipesStore}
+					menuLoadBoxPrices={() => {}}
 					menuCollectionRecipes={Immutable.Map({})}
 					clearAllFilters={() => {}}
 					features={Immutable.fromJS({
@@ -295,14 +231,7 @@ describe('Menu', () => {
 			beforeEach(() => {
 				wrapper = shallow(
 					<Menu
-						recipes={recipes}
-						menuLoadMenu={function() {}}
-						menuLoadBoxPrices={function() {}}
-						stock={stock}
-						cutoffDate="2016-06-26"
-						numPortions={2}
-						basketRecipeIds={[]}
-						recipesStore={recipesStore}
+						menuLoadBoxPrices={() => {}}
 						menuCollectionRecipes={Immutable.Map({})}
 						clearAllFilters={() => {}}
 						features={Immutable.fromJS({
@@ -325,27 +254,6 @@ describe('Menu', () => {
 		})
 	})
 
-	describe('recipe detail overlay', () => {
-		test('should be closed if no recipe id query parameter is set', () => {
-			const wrapper = shallow(
-				<Menu
-					recipes={Immutable.OrderedMap()}
-					menuLoadMenu={function() {}}
-					menuLoadBoxPrices={function() {}}
-					stock={Immutable.Map()}
-					cutoffDate="2016-06-26"
-					numPortions={2}
-					basketRecipeIds={[]}
-					features={Immutable.Map({})}
-					filteredRecipesNumber={30}
-					clearAllFilters={() => {}}
-				/>,
-			)
-
-			expect(wrapper.find(Overlay).node.props.open).toBe(false)
-		})
-	})
-
 	describe('componentDidMount', () => {
 		let menuLoadDays
 		let boxSummaryDeliveryDaysLoad
@@ -355,9 +263,11 @@ describe('Menu', () => {
 
 		beforeEach(() => {
 			getStateSpy = jest.fn().mockReturnValue({
-				basket: Immutable.Map({
-					orderId: '',
-				}),
+				features: Immutable.Map({
+					filterMenu: Immutable.Map({
+						value: false,
+					})
+				})
 			})
 			menuLoadBoxPrices = jest.fn()
 			menuLoadDays = jest.fn().mockReturnValue(
@@ -375,17 +285,13 @@ describe('Menu', () => {
 			RecipeList.mockReturnValue(<div />)
 			SubHeader.mockReturnValue(<div />)
 			Banner.mockReturnValue(<div />)
-			Detail.mockReturnValue(<div />)
+			DetailOverlay.mockReturnValue(<div />)
 		})
 
 		test('should load Box Prices for non admin users', () => {
 			wrapper = mount(
 				<Menu
-					recipes={Immutable.OrderedMap()}
-					stock={Immutable.Map()}
-					cutoffDate="2016-06-26"
-					numPortions={2}
-					basketRecipeIds={[]}
+					menuRecipeDetailShow={false}
 					boxSummaryDeliveryDays={Immutable.List([])}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
@@ -411,11 +317,7 @@ describe('Menu', () => {
 		test('should not load Box Prices for admin users', () => {
 			wrapper = mount(
 				<Menu
-					recipes={Immutable.OrderedMap()}
-					stock={Immutable.Map()}
-					cutoffDate="2016-06-26"
-					numPortions={2}
-					basketRecipeIds={[]}
+					menuRecipeDetailShow={false}
 					boxSummaryDeliveryDays={Immutable.List([])}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
@@ -441,11 +343,7 @@ describe('Menu', () => {
 		test('should call fetchData', () => {
 			wrapper = mount(
 				<Menu
-					recipes={Immutable.OrderedMap()}
-					stock={Immutable.Map()}
-					cutoffDate="2016-06-26"
-					numPortions={2}
-					basketRecipeIds={[]}
+					menuRecipeDetailShow={false}
 					boxSummaryDeliveryDays={Immutable.List([])}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
@@ -556,6 +454,11 @@ describe('Menu', () => {
 					dietTypes: Immutable.Set(['meat']),
 					dietaryAttributes: Immutable.Set(['gluten-free']),
 				}),
+				features: Immutable.Map({
+					filterMenu: Immutable.Map({
+						value: false,
+					})
+				}),
 				content: Immutable.Map({}),
 				menu: Immutable.Map({}),
 			})
@@ -564,11 +467,6 @@ describe('Menu', () => {
 		test('should render NoResultsPage', () => {
 			wrapper = mount(
 				<Menu
-					recipes={Immutable.OrderedMap()}
-					stock={Immutable.Map()}
-					cutoffDate="2016-06-26"
-					numPortions={2}
-					basketRecipeIds={[]}
 					boxSummaryDeliveryDays={Immutable.List([])}
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
