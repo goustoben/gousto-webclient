@@ -90,7 +90,7 @@ const config = {
 		publicPath
 	},
 	optimization: {
-	splitChunks: {
+		splitChunks: {
 			cacheGroups: {
 				vendor: {
 					chunks: chunk => chunk.name !== 'legacy',
