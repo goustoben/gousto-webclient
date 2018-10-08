@@ -6,6 +6,7 @@ import css from './FineDineInRecipe.css'
 import Title from '../Title'
 import AddButton from '../AddButton'
 import StockBadge from '../StockBadge'
+import TasteScore from '../TasteScore'
 import CookingTime from '../CookingTime'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
@@ -31,8 +32,7 @@ const FineDineInRecipe = (props) => {
 				>
 				</div>
 				<div className={css.recipeDetails}>
-					<span onClick={props.onClick} className={css.link}>
-					</span>
+					<TasteScore className={css.score} score={props.tasteScore} />
 					<div className={css.textContainer}>
 						<div onClick={props.onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(props.chef) })}>
 							<Title
@@ -91,6 +91,7 @@ FineDineInRecipe.propTypes = {
 	highlight: PropTypes.func,
 	unhighlight: PropTypes.func,
 	detailHover: PropTypes.bool,
+	tasteScore: PropTypes.number,
 }
 
 FineDineInRecipe.defaultProps = {
