@@ -13,6 +13,10 @@ export function isDefault(collection) {
 }
 
 export function getDefaultCollectionId(state) {
+	if (state.filters.get('currentCollectionId')) {
+		return state.filters.get('currentCollectionId')
+	}
+
 	return state.menuCollections
 		.find(isDefault, null, Immutable.Map())
 		.get('id', null)
