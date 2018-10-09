@@ -7,7 +7,6 @@ import content from './content'
 import example from './example'
 import features from './features'
 import filters from './filters'
-import getHelp from './getHelp'
 import home from './home'
 import jobs from './jobs'
 import login from './login'
@@ -32,6 +31,7 @@ import cookbook from './cookbook'
 import pricing from './pricing'
 import cookies from './cookies'
 import orderSkipRecovery from './orderSkipRecovery'
+import { getHelp } from './getHelp'
 
 const reducers = {
 	...account,
@@ -49,7 +49,6 @@ const reducers = {
 	...jobs,
 	...login,
 	...home,
-	...getHelp,
 	...menu,
 	...newsletter,
 	...orderSkipRecovery,
@@ -68,6 +67,7 @@ const reducers = {
 	...user,
 	...request,
 	...pricing,
+	getHelp,
 }
 
 export default reducers

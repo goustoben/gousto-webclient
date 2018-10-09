@@ -83,7 +83,7 @@ describe('<Refund />', () => {
 
 		test('loading shows while fetching data', async () => {
 			let resolver
-			fetch.mockImplementation(() => new Promise((resolve) => {
+			fetch.mockImplementationOnce(() => new Promise((resolve) => {
 				resolver = resolve
 			}))
 			wrapper =  mount(
@@ -111,22 +111,22 @@ describe('<Refund />', () => {
 		})
 
 		test('call redirect when user accept refund offer', async () => {
-			getHelpApi.setComplaint = jest.fn(() => Promise.resolve({}))
+			fetch.mockReturnValueOnce({})
 
+			const spy = jest.spyOn(window.location, 'assign')
 			const BottomBar = getHelpLayout.find('BottomBar')
 			const Button = BottomBar.find('Button').at(1)
 
-			window.location.assign = jest.fn()
+			spy.mockReturnValueOnce(null)
 
 			await Button.props().onClick()
 
-			expect(window.location.assign).toHaveBeenCalledTimes(1)
+			expect(spy).toHaveBeenCalledTimes(1)
+			spy.mockReset()
 		})
 
 		test('call not redirect when user accept refund offer and get an error', async () => {
-			getHelpApi.setComplaint = jest.fn(() => {
-				throw new Error('error')
-			})
+			fetch.mockImplementationOnce(() => { throw new Error('error') })
 
 			const BottomBar = getHelpLayout.find('BottomBar')
 			const Button = BottomBar.find('Button').at(1)
@@ -139,7 +139,8 @@ describe('<Refund />', () => {
 		})
 
 		test('error message is shown when fetching data errors and accept button hides', async () => {
-			fetch.mockImplementation(() => { throw new Error('error') })
+			fetch.mockImplementationOnce(() => { throw new Error('error') })
+
 			wrapper =  mount(
 				<Refund
 					content={content}

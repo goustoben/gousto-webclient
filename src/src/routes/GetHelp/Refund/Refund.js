@@ -80,17 +80,36 @@ class Refund extends PureComponent {
 
 	render() {
 		const { content } = this.props
-		const { refundAmount, isFetching, didFetchError } = this.state
-		const infoBodyWithAmount = replaceWithValues(content.infoBody, {
-			refundAmount: refundAmount.toFixed(2)
-		})
-		const button2WithAmount = replaceWithValues(content.button2, {
-			refundAmount: refundAmount.toFixed(2)
-		})
+		const {
+			isFetching,
+			refundAmount,
+			didFetchError
+		} = this.state
+		const infoBodyWithAmount = replaceWithValues(
+			content.infoBody, {
+				refundAmount: refundAmount.toFixed(2)
+			}
+		)
+		const button2WithAmount = replaceWithValues(
+			content.button2, {
+				refundAmount: refundAmount.toFixed(2)
+			}
+		)
 		const getHelpLayoutbody = (isFetching || didFetchError)
 			? ''
 			:  infoBodyWithAmount
-
+		const confirmationContent = (didFetchError)
+			? content.errorBody
+			: content.confirmationBody
+		const acceptButton = (didFetchError)
+			? null
+			: <Button
+				className={css.button}
+				color="primary"
+				onClick={() => this.onAcceptOffer(this.props)}
+			>
+				{button2WithAmount}
+			</Button>
 
 		return (
 			<GetHelpLayout
@@ -103,10 +122,7 @@ class Refund extends PureComponent {
 						<Loading className={css.loading} />
 					</div>
 					: <div>
-						<p>{(didFetchError)
-							? content.errorBody
-							: content.confirmationBody}
-						</p>
+						<p>{confirmationContent}</p>
 						<BottomBar>
 							<BottomButton
 								color="secondary"
@@ -115,16 +131,7 @@ class Refund extends PureComponent {
 							>
 								{content.button1}
 							</BottomButton>
-							{(didFetchError)
-								? null
-								: <Button
-									className={css.button}
-									color="primary"
-									onClick={() => this.onAcceptOffer(this.props)}
-								>
-									{button2WithAmount}
-								</Button>
-							}
+							{acceptButton}
 						</BottomBar>
 					</div>
 				}

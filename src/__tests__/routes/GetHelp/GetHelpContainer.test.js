@@ -1,9 +1,9 @@
 import React from 'react'
+import thunk from 'redux-thunk'
 import { mount } from 'enzyme'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
 
-import getHelpReducer, { getHelpInitialState } from 'reducers/getHelp'
+import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 import GetHelpContainer from 'routes/GetHelp/GetHelpContainer'
 
 describe('<GetHelpContainer />', () => {
@@ -11,7 +11,7 @@ describe('<GetHelpContainer />', () => {
 		test('order id passed as prop ends up in Redux store', () => {
 			const initialState = { getHelp: getHelpInitialState }
 			const store = createStore(
-				combineReducers(Object.assign({}, getHelpReducer)),
+				combineReducers(Object.assign({}, { getHelp })),
 				initialState,
 				compose(applyMiddleware(thunk))
 			)
