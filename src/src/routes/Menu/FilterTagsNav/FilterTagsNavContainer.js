@@ -12,6 +12,7 @@ export default connect((state) => {
 				text: menuCollections.getIn([filters.get('currentCollectionId'), 'shortTitle'], 'All Recipes'),
 				type: 'collection',
 				value: getAllRecipesCollectionId(state),
+				slug: menuCollections.getIn([filters.get('currentCollectionId'), 'slug'], ''),
 			},
 			...filters.get('dietTypes', []).map((dietType) => ({
 				text: config.dietTypes[dietType],

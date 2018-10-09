@@ -19,3 +19,12 @@
 .tagImageIcon {
     color: Blackberry;
 }
+
+.filterTagHeart {
+	display: inline-flex;
+	vertical-align: middle;
+	justify-content: center;
+	margin-left: 5px;
+	width: 21px;
+	height: 18px;
+}

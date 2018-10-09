@@ -16,7 +16,10 @@ describe('FilterTagsList', () => {
 						totalTime: '0',
 						dietTypes: Immutable.Set(['meat']),
 						dietaryAttributes: Immutable.Set(['gluten-free']),
-					})
+					}),
+					pending: Immutable.Map({
+						MENU_FETCH_DATA: false,
+					}),
 				}),
 				subscribe: () => {},
 			}
