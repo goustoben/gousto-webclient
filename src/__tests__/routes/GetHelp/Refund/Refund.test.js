@@ -128,14 +128,16 @@ describe('<Refund />', () => {
 		test('call not redirect when user accept refund offer and get an error', async () => {
 			fetch.mockImplementationOnce(() => { throw new Error('error') })
 
+			const spy = jest.spyOn(window.location, 'assign')
 			const BottomBar = getHelpLayout.find('BottomBar')
 			const Button = BottomBar.find('Button').at(1)
 
-			window.location.assign = jest.fn()
+			spy.mockReturnValueOnce(null)
 
 			await Button.props().onClick()
 
-			expect(window.location.assign).toHaveBeenCalledTimes(0)
+			expect(spy).toHaveBeenCalledTimes(0)
+			spy.mockReset()
 		})
 
 		test('error message is shown when fetching data errors and accept button hides', async () => {
