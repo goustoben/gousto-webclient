@@ -7,7 +7,7 @@ import css from 'routes/GetHelp/components/ItemLink/ItemLink.css'
 
 
 describe('<ItemLink />', () => {
-	describe('render', () => {
+	describe('rendering', () => {
 		const wrapper = mount(
 			<ItemLink
 				label="item-label"

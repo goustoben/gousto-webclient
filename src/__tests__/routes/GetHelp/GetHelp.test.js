@@ -5,7 +5,7 @@ import Helmet from 'react-helmet'
 import GetHelp from 'routes/GetHelp/GetHelp'
 
 describe('<GetHelp />', () => {
-	describe('redering', () => {
+	describe('rendering', () => {
 		test('component is redering correctly', () => {
 			const wrapper = shallow(
 				<GetHelp>

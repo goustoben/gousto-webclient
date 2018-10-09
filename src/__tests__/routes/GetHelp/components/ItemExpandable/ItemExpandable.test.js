@@ -19,7 +19,7 @@ describe('<ItemExpandable />', () => {
 		)
 	})
 
-	describe('render', () => {
+	describe('rendering', () => {
 		test('it renders the label', () => {
 			expect(wrapper.text()).toContain('item-label')
 		})
