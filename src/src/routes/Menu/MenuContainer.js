@@ -6,6 +6,7 @@ import Menu from './Menu'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { getFilteredRecipeIds } from './selectors/filters.js'
 import { slugify } from 'utils/url'
+import { getCurrentCollectionIsRecommendation } from './selectors/menu'
 
 function mapStateToProps(state, ownProps) {
 	function getBasketRecipes(recipes) {
@@ -32,7 +33,11 @@ function mapStateToProps(state, ownProps) {
 
 	let collectionId = getCollectionIdWithName(state, collectionName)
 	if (!collectionId) {
-		collectionId = getDefaultCollectionId(state)
+		if (getCurrentCollectionIsRecommendation(state)) {
+			collectionId = getCurrentCollectionIsRecommendation(state)
+		} else {
+			collectionId = getDefaultCollectionId(state)
+		}
 	}
 
 	const orderId = (ownProps.params && ownProps.params.orderId) ? ownProps.params.orderId : ''

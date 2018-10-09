@@ -13,8 +13,18 @@ export const getCurrentCollectionSlug = createSelector(
 	[getCurrentCollectionId, getMenuCollections],
 	(collectionId, menuCollections) => {
 		const currentCollection = menuCollections.get(collectionId)
+		const currentCollectionSlug = (currentCollection && currentCollection.get('slug')) || null
 
-		return (currentCollection && currentCollection.get('slug')) || null
+		return currentCollectionSlug
+	}
+)
+
+export const getCurrentCollectionIsRecommendation = createSelector(
+	[getCurrentCollectionId, getCurrentCollectionSlug],
+	(collectionId, slug) => {
+		const currentCollectionSlug = (slug === 'recommendations')
+
+		return currentCollectionSlug && collectionId
 	}
 )
 
