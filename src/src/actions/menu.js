@@ -163,11 +163,10 @@ function menuLoadCollections(date, noUrlChange) {
 
 			if (changeCollection && getState().menuCollections.size > 0) {
 				let recommendations = getState().menuCollections.find(collection => collection.get('slug') === 'recommendations')
-				let landingCollectionId
+				let landingCollectionId = preferredCollectionId || getDefaultCollectionId(getState())
+
 				if (recommendations) {
 					landingCollectionId = recommendations.get('id')
-				} else {
-					landingCollectionId = preferredCollectionId || getDefaultCollectionId(getState())
 				}
 				if (!landingCollectionId) {
 					landingCollectionId = getState().menuCollections.first().get('id')
@@ -211,8 +210,8 @@ function menuLoadCollectionsRecipes(date) {
 		}
 
 		return Promise.all(
-				ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
-			)
+			ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
+		)
 			.then(() => {
 				const state = getState()
 				const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock)
