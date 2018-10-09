@@ -10,6 +10,7 @@ import ChefQuote from 'Recipe/ChefQuote'
 import UseWithin from 'Recipe/UseWithin'
 import AddButton from 'Recipe/AddButton'
 import StockBadge from 'Recipe/StockBadge'
+import TasteScore from 'Recipe/TasteScore'
 import CookingTime from 'Recipe/CookingTime'
 import DisabledOverlay from 'Recipe/DisabledOverlay'
 import RecommendedBadge from 'Recipe/RecommendedBadge'
@@ -71,6 +72,13 @@ describe('<GridRecipe />', () => {
 			const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
 
 			expect(wrapper.find(Title).length).toEqual(1)
+		})
+
+		test('should contain one TasteScore component', () => {
+			const wrapper = shallow(<GridRecipe tasteScore={99} view={view} />)
+
+			expect(wrapper.find(TasteScore)).toHaveLength(1)
+			expect(wrapper.find(TasteScore).prop('score')).toEqual(99)
 		})
 
 		test('should contain one CookingTime component', () => {

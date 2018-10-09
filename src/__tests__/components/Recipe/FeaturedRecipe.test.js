@@ -6,6 +6,7 @@ import Immutable from 'immutable'
 import Image from 'Recipe/Image'
 import Title from 'Recipe/Title'
 import ChefQuote from 'Recipe/ChefQuote'
+import TasteScore from 'Recipe/TasteScore'
 import EquipmentRequired from 'Recipe/EquipmentRequired'
 
 import FeaturedRecipe from 'Recipe/FeaturedRecipe'
@@ -46,6 +47,13 @@ describe('<FeaturedRecipe />', () => {
 		const component = wrapper.find(EquipmentRequired)
 		expect(component.length).toBe(1)
 		expect(component.prop('view')).toBe('notice')
+	})
+
+	test('should contain one TasteScore component', () => {
+		wrapper = shallow(<FeaturedRecipe tasteScore={99} />)
+
+		expect(wrapper.find(TasteScore)).toHaveLength(1)
+		expect(wrapper.find(TasteScore).prop('score')).toEqual(99)
 	})
 
 	test('should contain one ChefQuote component', () => {

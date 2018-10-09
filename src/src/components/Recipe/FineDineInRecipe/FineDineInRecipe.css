@@ -1,5 +1,5 @@
 @value sizeMD from 'styles/typography.css';
-@value White, Blackberry from 'styles/colors.css';
+@value White, Black, Blackberry from 'styles/colors.css';
 @value ScreenMDMin, ScreenXXSMin from 'styles/screenSizes.css';
 
 @value attributesLineHeight 1.8;
@@ -95,4 +95,11 @@
 	background-size: cover;
 	color: White;
 	background-position: 50%;
+}
+
+.score {
+	position: absolute;
+	left: 10px;
+	margin-top: -25px;
+	background-color: Black;
 }
