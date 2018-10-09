@@ -7,14 +7,18 @@ class GetHelp extends PureComponent {
 	static propTypes = {
 		location: PropTypes.shape({
 			query: PropTypes.shape({
-				orderId: PropTypes.string.isRequired,
-			}).isRequired,
-		}).isRequired,
+				orderId: PropTypes.string,
+			}),
+		}),
 		children: PropTypes.node.isRequired,
 	}
 
 	componentDidMount() {
-		this.props.storeGetHelpOrderId(this.props.location.query.orderId)
+		const { query } = this.props.location
+
+		if (query && query.orderId) {
+			this.props.storeGetHelpOrderId(query.orderId)
+		}
 	}
 
 	render() {
