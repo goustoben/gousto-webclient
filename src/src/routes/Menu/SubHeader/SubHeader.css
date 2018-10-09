@@ -107,19 +107,19 @@
 	composes: paddingSMTopBottom paddingSMLeftRight from 'sass-loader!styles/spacing.scss';
 }
 .tooltipClose {
-	composes: fa-times from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-times from 'styles/vendor/font-awesome-module.css';
 	float: right;
 	font-size: sizeXL;
 }
 
 .iconDoubleColumn {
-	composes: fa-th-large fa-fw from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-th-large fa-fw from 'styles/vendor/font-awesome-module.css';
 }
 .iconSingleColumn {
-	composes: fa-square fa-fw from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-square fa-fw from 'styles/vendor/font-awesome-module.css';
 }
 .iconArrowDown {
-	composes: fa-angle-down from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-angle-down from 'styles/vendor/font-awesome-module.css';
 	font-size: sizeMD;
 }
 
@@ -165,7 +165,7 @@
 }
 
 .infoIcon {
-	composes: fa-fw fa-info from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-fw fa-info from 'styles/vendor/font-awesome-module.css';
 	font-size: 14px;
 	width: 20px;
 	height: 20px;

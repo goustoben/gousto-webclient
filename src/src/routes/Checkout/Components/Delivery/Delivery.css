@@ -77,13 +77,13 @@
 }
 
 .linkRight {
-	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
 	font-size: 10px;
 }
 
 .tooltipTrigger {
 	color: Cacao;
-	composes: fa-question-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-question-circle from 'styles/vendor/font-awesome-module.css';
 	font-size: 1.6em;
 	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
 }

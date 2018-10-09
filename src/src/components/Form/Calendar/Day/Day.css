@@ -29,7 +29,7 @@
 
 .icon {
 	composes: absolute from 'styles/position.css';
-	composes: fa-fw from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-fw from 'styles/vendor/font-awesome-module.css';
 	font-size: sizeXXS;
 
 	top: 2px;
@@ -38,12 +38,12 @@
 
 .icon-truck {
 	composes: icon;
-	composes: fa-truck from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-truck from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-truck-empty {
 	composes: icon;
-	composes: fa-truck from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-truck from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-truck-empty-child {

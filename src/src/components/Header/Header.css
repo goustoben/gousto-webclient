@@ -220,7 +220,7 @@ span:target .overlay {
 }
 
 .confirm {
-	composes: fa-check from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
 }
 
 .menuTitle {
@@ -230,7 +230,7 @@ span:target .overlay {
 }
 
 .burgerIcon {
-	composes: fa-bars from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-bars from 'styles/vendor/font-awesome-module.css';
 	font-size: sizeXXL;
 
 	&, &:hover {

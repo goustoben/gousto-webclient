@@ -3,7 +3,7 @@ const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const ExitCodePlugin = require('./exitCode')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 const build = process.env.NODE_ENV || 'development'
@@ -17,6 +17,9 @@ const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/l
 console.log(`================\nSERVER BUILD: ${build}, ENVIRONMENT: ${envName}, DOMAIN: ${domain}, CLIENT PROTOCOL: ${clientProtocol}, PUBLIC PATH: "${publicPath}"\n================`)
 
 const debug = false
+
+const devMode = process.env.NODE_ENV !== 'production'
+const cssHashPattern = devMode ? '[name]__[local]___[hash:base64:5]' : 'G[sha1:hash:hex:6]'
 
 const config = {
 	name: 'server',
@@ -65,12 +68,12 @@ const config = {
 			},
 			{
 				test: /\.css$/,
-				loader: 'css-loader/locals?modules&importLoaders=0&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader',
+				loader: `css-loader/locals?modules&importLoaders=0&localIdentName=${cssHashPattern}!postcss-loader`,
 			},
 
 			{
 				test: /\.scss$/,
-				loader: 'css-loader/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader!sass-loader',
+				loader: `css-loader/locals?modules&importLoaders=1&localIdentName=${cssHashPattern}!postcss-loader!sass-loader`,
 			},
 			{
 				test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -84,16 +87,20 @@ const config = {
 				test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 				loader: 'file-loader',
 			},
+			/* {
+        test: /\.(jpe?g|png|gif|svg)$/,
+        loader: 'image-webpack-loader',
+        // This will apply the loader before the other ones
+        enforce: 'pre',
+			}, */
 			{
-				test: /\.png$/,
-				loader: 'url-loader?limit=100000',
-			},
-			{	test: /\.jpg$/,
-				loader: 'file-loader',
-			},
-			{ 	test: /\.gif$/,
-				loader: 'file-loader',
-			},
+        test: /\.(jpe?g|png|gif)$/,
+				loader: 'url-loader',
+        options: {
+          // Images larger than 10 KB won’t be inlined
+          limit: 10 * 1024
+        }
+      },
 			{ 	test: /\.ico$/,
 				loader: 'file-loader',
 			},
@@ -187,10 +194,10 @@ if (build === 'development') {
 		new LodashModuleReplacementPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
 
-		new UglifyJsPlugin({
+		new TerserPlugin({
 			parallel: true,
 			sourceMap: true,
-			uglifyOptions: {
+			terserOptions: {
 				mangle: false,
 				compress: true,
 				output: {

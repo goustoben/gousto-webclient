@@ -28,7 +28,7 @@
 
 .question {
 	padding: 0 14px;
-	composes: fa-question-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-question-circle from 'styles/vendor/font-awesome-module.css';
 	font-size: 25px;
 	align-self: center;
 }
@@ -112,12 +112,12 @@
 }
 
 .visa {
-	composes: fa-cc-visa from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class  fa-cc-visa from 'styles/vendor/font-awesome-module.css';
 	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
 }
 
 .mc {
-	composes: fa-cc-mastercard from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-cc-mastercard from 'styles/vendor/font-awesome-module.css';
 	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
 }
 
