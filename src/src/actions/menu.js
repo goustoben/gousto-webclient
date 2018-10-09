@@ -162,7 +162,7 @@ function menuLoadCollections(date, noUrlChange) {
 			const preferredCollectionId = getCollectionIdWithName(getState(), preferredCollection)
 
 			if (changeCollection && getState().menuCollections.size > 0) {
-				let recommendations = getState().menuCollections.find(collection => collection.slug === 'recommendations')
+				let recommendations = getState().menuCollections.find(collection => collection.get('slug') === 'recommendations')
 				let landingCollectionId
 				if (recommendations) {
 					landingCollectionId = recommendations.get('id')
