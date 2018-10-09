@@ -206,7 +206,7 @@ class Menu extends React.Component {
 						orderId={this.props.orderId}
 					/>
 					<FilterTagsNav />
-					<FilterNav />
+					<FilterNav showLoading={this.props.isLoading} />
 					{showLoading ? <div className={css.loadingContainer}><div className={css.loading}><Loading /></div></div> : null}
 					<div className={showLoading ? css.fadeOut : css.willFade} data-testing="menuRecipes">
 						{collectionsNavEnabled && !menuFilterExperiment &&

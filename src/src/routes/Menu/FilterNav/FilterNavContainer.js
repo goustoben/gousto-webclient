@@ -6,18 +6,17 @@ import withScroll from 'hoc/withScroll'
 import filterActions from 'actions/filters'
 import { getFilterCTAText } from 'selectors/filters'
 import { getCurrentCollectionSlug } from '../selectors/menu'
-import actionTypes from 'actions'
 
 const handleScroll = withScroll({
 	height: 50,
 	propName: 'sticky',
 })
 
-const connected = connect((state) => ({
+const connected = connect((state, ownProp) => ({
 	ctaText: getFilterCTAText(state),
 	menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
 	ifRecommendationIsSelected: getCurrentCollectionSlug(state) === 'recommendations',
-	isLoadingHeart: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
+	isLoadingHeart: ownProp.showLoading,
 }), {
 	onClick: filterActions.filterMenuOpen,
 })

@@ -18,7 +18,7 @@ const proptypes =  {
 const filterTagIcon = ({ slug = null, isLoading }) => {
 	if (slug === 'recommendations') {
 		if (isLoading) {
-			return <Svg fileName="icon-heart-outline" className={css.filterTagHeart} />
+			return <Svg className={css.filterTagHeart} fileName="icon-heart-outline" />
 		}
 
 		return <Svg className={css.filterTagHeart} fileName="icon-heart" />
