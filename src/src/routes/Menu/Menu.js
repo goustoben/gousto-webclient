@@ -9,9 +9,9 @@ import menu from 'config/menu'
 
 import MenuNoResults from './MenuNoResults'
 
-import Loading from 'Loading'
 import SubHeader from './SubHeader'
 import FilterNav from './FilterNav'
+import Loading from './Loading'
 import FilterTagsNav from './FilterTagsNav/FilterTagsNavContainer'
 import css from './Menu.css'
 
@@ -39,6 +39,7 @@ class Menu extends React.Component {
 		boxDetailsVisibilityChange: PropTypes.func.isRequired,
 		disabled: PropTypes.bool.isRequired,
 		boxSummaryDeliveryDaysLoad: PropTypes.func,
+		hasRecommendations: PropTypes.bool,
 		menuLoadDays: PropTypes.func,
 		menuBrowseCTAShow: PropTypes.bool,
 		menuBrowseCTAVisibilityChange: PropTypes.func,
@@ -181,11 +182,21 @@ class Menu extends React.Component {
 
 
 	render() {
+		const { hasRecommendations } = this.props
 		const mobileGridView = this.state.mobileGridView
 		const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
 		const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
 		const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
 		const showLoading = this.props.isLoading && !overlayShow
+
+		let fadeCss = null
+		if (showLoading && hasRecommendations) {
+			fadeCss = css['fade--recommendations']
+		} else if (showLoading) {
+			fadeCss = css.fadeOut
+		} else {
+			fadeCss = css.willFade
+		}
 
 		let overlayShowCSS = null
 		if (this.state.isChrome) {
@@ -207,8 +218,8 @@ class Menu extends React.Component {
 					/>
 					<FilterTagsNav />
 					<FilterNav showLoading={this.props.isLoading} />
-					{showLoading ? <div className={css.loadingContainer}><div className={css.loading}><Loading /></div></div> : null}
-					<div className={showLoading ? css.fadeOut : css.willFade} data-testing="menuRecipes">
+					<Loading loading={showLoading} hasRecommendations={hasRecommendations} />
+					<div className={fadeCss} data-testing="menuRecipes">
 						{collectionsNavEnabled && !menuFilterExperiment &&
 							<CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
 						<FilterMenu />

@@ -101,16 +101,8 @@
 	pointer-events: none;
 }
 
-.loadingContainer {
-	position: fixed;
-	z-index: 1;
-	width: 100%;
-}
-
-.loading {
-	display: block;
-	margin: auto;
-	width: 100px;
-	margin-top: 60px;
+.fade--recommendations {
+	composes: willFade;
+	opacity: 0.1;
 	pointer-events: none;
 }

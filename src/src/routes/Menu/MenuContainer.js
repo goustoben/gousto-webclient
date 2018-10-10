@@ -1,12 +1,14 @@
-import { connect } from 'react-redux'
-import actions from 'actions'
 import Immutable from 'immutable' /* eslint-disable new-cap */
+import { connect } from 'react-redux'
+
+import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
-import Menu from './Menu'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { getFilteredRecipeIds } from './selectors/filters.js'
 import { slugify } from 'utils/url'
 import { getCurrentCollectionIsRecommendation } from './selectors/menu'
+
+import Menu from './Menu'
 
 function mapStateToProps(state, ownProps) {
 	function getBasketRecipes(recipes) {
@@ -51,6 +53,7 @@ function mapStateToProps(state, ownProps) {
 		features: state.features,
 		menuBrowseCTAShow: state.menuBrowseCTAShow,
 		boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
+		hasRecommendations: state.features.getIn(['justforyou', 'value']),
 		query: ownProps.location && ownProps.location.query ? ownProps.location.query : {},
 		storeOrderId: state.basket.get('orderId'),
 		orderId,
