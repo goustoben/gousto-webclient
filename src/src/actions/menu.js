@@ -141,6 +141,7 @@ function menuLoadCollections(date, noUrlChange) {
 			filters: {
 				available_on: date,
 			},
+			'experiments[justforyou]': true,
 		}
 		const { data: collections } = await fetchCollections(accessToken, '', args)
 		const filterExperiment = state.features.getIn(['filterMenu', 'value'])
@@ -161,7 +162,12 @@ function menuLoadCollections(date, noUrlChange) {
 			const preferredCollectionId = getCollectionIdWithName(getState(), preferredCollection)
 
 			if (changeCollection && getState().menuCollections.size > 0) {
+				let recommendations = getState().menuCollections.find(collection => collection.get('slug') === 'recommendations')
 				let landingCollectionId = preferredCollectionId || getDefaultCollectionId(getState())
+
+				if (recommendations) {
+					landingCollectionId = recommendations.get('id')
+				}
 				if (!landingCollectionId) {
 					landingCollectionId = getState().menuCollections.first().get('id')
 				}
@@ -178,6 +184,7 @@ function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
 		const reqData = {
 			'filters[available_on]': date,
 			includes: ['ingredients', 'allergens', 'taxonomy'],
+			'experiments[justforyou]': true,
 		}
 		if (idsOnly) {
 			reqData['fields[]'] = 'id'
@@ -203,8 +210,8 @@ function menuLoadCollectionsRecipes(date) {
 		}
 
 		return Promise.all(
-				ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
-			)
+			ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
+		)
 			.then(() => {
 				const state = getState()
 				const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock)

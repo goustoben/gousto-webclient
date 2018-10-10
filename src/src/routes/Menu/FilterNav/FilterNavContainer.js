@@ -5,19 +5,18 @@ import FilterNav from './FilterNav'
 import withScroll from 'hoc/withScroll'
 import filterActions from 'actions/filters'
 import { getFilterCTAText } from 'selectors/filters'
-import { currentCollectionSlug } from '../selectors/menu'
-import actionTypes from 'actions'
+import { getCurrentCollectionSlug } from '../selectors/menu'
 
 const handleScroll = withScroll({
 	height: 50,
 	propName: 'sticky',
 })
 
-const connected = connect((state) => ({
+const connected = connect((state, ownProp) => ({
 	ctaText: getFilterCTAText(state),
 	menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
-	ifRecommendationIsSelected: currentCollectionSlug(state) === 'recommendations',
-	isLoadingHeart: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
+	ifRecommendationIsSelected: getCurrentCollectionSlug(state) === 'recommendations',
+	isLoadingHeart: ownProp.showLoading,
 }), {
 	onClick: filterActions.filterMenuOpen,
 })
