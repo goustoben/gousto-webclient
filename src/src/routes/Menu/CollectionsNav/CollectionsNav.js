@@ -310,7 +310,7 @@ class CollectionsNav extends React.PureComponent {
 										collectionId={collectionId}
 									>
 										<span className={css.itemTitle}>
-											{collection.get('shortTitle')}
+											{collection.get('shortTitle') === 'Recommendations' ? 'Just For You' : collection.get('shortTitle')}
 										</span>
 									</CollectionItem>
 								)
