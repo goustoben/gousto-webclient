@@ -30,7 +30,8 @@
     display: inline-flex;
 	vertical-align: middle;
 	justify-content: center;
-	width: 21px;
+    width: 21px;
+    min-width: 21px;
     height: 18px;
     mask-image: url(../../../media/svgs/icon-heart.svg);
     background-color: white;
