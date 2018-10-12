@@ -14,11 +14,11 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, url =
 			<meta charset="utf-8" />
 			<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 			<meta name="viewport" content="width=device-width,initial-scale=1">
-			<script src="${newAssetPath('vendors.js')}" defer></script>
-			<script src="${newAssetPath('main.js')}" defer></script>
 			${(helmetHead && helmetHead.title) ? helmetHead.title.toString() : ''}
 			${(helmetHead && helmetHead.meta) ? helmetHead.meta.toString() : ''}
-
+			${noGTM ? '' : head.optimizely(initialState.features)}
+			<script src="${newAssetPath('vendors.js')}" defer></script>
+			<script src="${newAssetPath('main.js')}" defer></script>
 			${head.favicon()}
 			<script type="text/javascript">
 				window.__initialState__ = ${encodeState(initialState)}
@@ -31,7 +31,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, url =
 			${(helmetHead && helmetHead.style) ? helmetHead.style.toString() : ''}
 			${(helmetHead && helmetHead.script) ? helmetHead.script.toString() : ''}
 			${noGTM ? '' : head.pingdom()}
-			${noGTM ? '' : head.optimizely(initialState.features)}
+
 		</head>
 		<body>
 			${noGTM ? '' : head.fbTracking()}
