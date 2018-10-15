@@ -71,8 +71,8 @@ export const loadRecommendations = () => (
 		try {
 			const { data = {} } = await fetchRecommendations(accessToken)
 
-			if (data.properties && data.properties['just-for-you']) {
-				recommendations = data.properties['just-for-you']
+			if (data[0] && data[0].properties && data[0].properties['just-for-you']) {
+				recommendations = data[0].properties['just-for-you']
 			}
 		} catch (err) {
 			logger.notice('Error loading recommendation data for user: ', err)
