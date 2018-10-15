@@ -1,20 +1,28 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import css from './ItemExecutable.css'
+import NewItem from '../NewItem'
 
-const ItemExecutable = ({ label, onClick }) => (
-	<div className={css.itemContent} onClick={() => onClick()}>
-		{label}
-		<span className={css.itemArrowRight} />
+const ItemExecutable = ({ label, trackClick, isHiddenOnMobile, onClick }) => (
+	<div onClick={onClick}>
+		<NewItem
+			label={label}
+			trackClick={trackClick}
+			isHiddenOnMobile={isHiddenOnMobile}
+		/>
 	</div>
 )
 
 ItemExecutable.propTypes = {
 	label: PropTypes.string.isRequired,
+	isHiddenOnMobile: PropTypes.bool,
+	trackClick: PropTypes.func,
 	onClick: PropTypes.func,
 }
 
 ItemExecutable.defaultProps = {
+	isHiddenOnMobile: false,
+	trackClick: () => {},
 	onClick: () => {}
 }
 
