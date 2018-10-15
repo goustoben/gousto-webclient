@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
 	}
 })
 
-const IngredientsContainer = connect(mapStateToProps, {})(Ingredients)
+const IngredientsContainer = connect(mapStateToProps)(Ingredients)
 
 export {
 	IngredientsContainer
