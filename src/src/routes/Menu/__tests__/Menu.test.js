@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
-import Loading from 'Loading'
+import Loading from 'routes/Menu/Loading'
 import Banner from 'routes/Menu/Banner'
 import fetchData from 'routes/Menu/fetchData'
 import SubHeader from 'routes/Menu/SubHeader'
@@ -72,7 +72,7 @@ describe('Menu', () => {
 		})
 
 		test('should not show a Loading', () => {
-			expect(wrapper.find(Loading).length).toBe(0)
+			expect(wrapper.find(Loading).prop('loading')).toBe(false)
 		})
 
 		describe('with the isLoading prop set to true it should show a Loading', () => {
@@ -87,7 +87,7 @@ describe('Menu', () => {
 					isLoading
 				/>,
 			)
-			expect(wrapper.find(Loading).length).toBe(1)
+			expect(wrapper.find(Loading).prop('loading')).toBe(true)
 		})
 
 		describe('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
@@ -104,7 +104,7 @@ describe('Menu', () => {
 					basketOrderLoaded={() => {}}
 				/>,
 			)
-			expect(wrapper.find(Loading).length).toBe(0)
+			expect(wrapper.find(Loading).prop('loading')).toBe(false)
 		})
 
 		describe('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
@@ -120,7 +120,7 @@ describe('Menu', () => {
 					basketOrderLoaded={() => {}}
 				/>,
 			)
-			expect(wrapper.find(Loading).length).toBe(0)
+			expect(wrapper.find(Loading).prop('loading')).toBe(false)
 		})
 
 		describe('with the collections feature enabled', () => {

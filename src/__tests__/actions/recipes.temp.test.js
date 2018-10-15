@@ -38,7 +38,7 @@ describe('recipe actions', () => {
 		describe('when the api responds with no recommendations', () => {
 			test('should not dispatch a user recommendations available request', async () => {
 				fetchRecommendations.mockReturnValue(Promise.resolve({
-					data: {}
+					data: [],
 				}))
 
 				await loadRecommendations()(dispatch, getState)
@@ -50,9 +50,9 @@ describe('recipe actions', () => {
 		describe('when the api responds with recommendations turned off', () => {
 			test('should not dispatch a user recommendations available request', async () => {
 				fetchRecommendations.mockReturnValue(Promise.resolve({
-					data: {
-						properties: { 'just-for-you': false },
-					}
+					data: [
+						{ properties: { 'just-for-you': false }, },
+					],
 				}))
 
 				await loadRecommendations()(dispatch, getState)
@@ -65,9 +65,9 @@ describe('recipe actions', () => {
 		describe('when the api responds with recommendations turned on', () => {
 			test('should dispatch a user recommendations available request', async () => {
 				fetchRecommendations.mockReturnValue(Promise.resolve({
-					data: {
-						properties: { 'just-for-you': true },
-					}
+					data: [
+						{ properties: { 'just-for-you': true }, },
+					],
 				}))
 
 				await loadRecommendations()(dispatch, getState)
