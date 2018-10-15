@@ -5,6 +5,7 @@ import authActions from './auth'
 import statusActions from './status'
 import orderActions from './order'
 import userActions from './user'
+import { loadRecommendations } from './recipes'
 import Cookies from 'utils/GoustoCookies'
 import config from 'config/routes'
 import { isOneOfPage } from 'utils/routes'
@@ -119,6 +120,9 @@ const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 				if (promoCode) {
 					await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
 				}
+			}
+			if (!getState().features.get('just-for-you')) {
+				dispatch(loadRecommendations())
 			}
 			setTimeout(() => {
 				dispatch(loginVisibilityChange(false))

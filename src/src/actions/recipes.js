@@ -1,7 +1,8 @@
 import actionTypes from './actionTypes'
-import { fetchRecipes, fetchRecipesStockByDate } from 'apis/recipes'
-import logger from 'utils/logger'
 import statusActions from './status'
+import logger from 'utils/logger'
+import { featureSet } from 'actions/features'
+import { fetchRecipes, fetchRecipesStockByDate, fetchRecommendations } from 'apis/recipes'
 
 const recipesLoadRecipesById = (recipeIds = []) => (
 	async (dispatch, getState) => {
@@ -58,6 +59,27 @@ const recipesLoadStockByDate = (whenStart, whenCutoff) => (
 			logger.error(err.message)
 		} finally {
 			dispatch(statusActions.pending(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, false))
+		}
+	}
+)
+
+export const loadRecommendations = () => (
+	async (dispatch, getState) => {
+		const accessToken = getState().auth.get('accessToken')
+		let recommendations = false
+
+		try {
+			const { data = {} } = await fetchRecommendations(accessToken)
+
+			if (data.properties && data.properties['just-for-you']) {
+				recommendations = data.properties['just-for-you']
+			}
+		} catch (err) {
+			logger.notice('Error loading recommendation data for user: ', err)
+		} finally {
+			if (recommendations) {
+				dispatch(featureSet('justforyou', true, true))
+			}
 		}
 	}
 )
