@@ -9,6 +9,7 @@ import OrderIssueContainer from './OrderIssue/OrderIssueContainer'
 import Refund from './Refund'
 import Contact from './Contact'
 import Confirmation from './Confirmation'
+import { Ingredients } from './Ingredients'
 
 import { checkValidSession } from './../../utils/routes'
 
@@ -35,6 +36,7 @@ export default (store) => {
 				onEnter={onEnterHandler}
 			>
 				<IndexRoute component={OrderIssueContainer} />
+				{Ingredients}
 				{Refund}
 				{Contact}
 				{Confirmation}

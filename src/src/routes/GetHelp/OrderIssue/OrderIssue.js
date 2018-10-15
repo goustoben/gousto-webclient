@@ -28,28 +28,28 @@ const OrderIssue = ({
 			<Item trackClick={trackClick(selectOrderIssue, 'ingredients')}>
 				<ItemLink
 					label={ingredientsItem}
-					to="/get-help/refund"
+					to={`${routes.getHelp.index}/${routes.getHelp.ingredients}`}
 					clientRouted
 				/>
 			</Item>
 			<Item trackClick={trackClick(selectOrderIssue, 'recipe_card')}>
 				<ItemLink
 					label={recipeCardItem}
-					to="/get-help/contact"
+					to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
 					clientRouted
 				/>
 			</Item>
 			<Item trackClick={trackClick(selectOrderIssue, 'delivery')}>
 				<ItemLink
 					label={deliveryItem}
-					to="/get-help/contact"
+					to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
 					clientRouted
 				/>
 			</Item>
 			<Item trackClick={trackClick(selectOrderIssue, 'other')}>
 				<ItemLink
 					label={otherItem}
-					to="/get-help/contact"
+					to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
 					clientRouted
 				/>
 			</Item>
