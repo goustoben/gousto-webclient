@@ -87,7 +87,7 @@ const logoutRedirect = () => {
 	}
 }
 
-const postLoginSteps = (userIsAdmin, orderId = '', features) => {
+export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 	const location = documentLocation()
 	const onCheckout = location.pathname.includes('check-out')
 	let destination = false
@@ -121,7 +121,7 @@ const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 					await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
 				}
 			}
-			if (!getState().features.get('just-for-you')) {
+			if (!getState().features.get('justforyou')) {
 				dispatch(loadRecommendations())
 			}
 			setTimeout(() => {
