@@ -472,4 +472,24 @@ function menuMobileGridViewSet(from, to) {
 	}
 }
 
+const forceMenuLoad = (forceLoad) => ({
+	type: actionTypes.MENU_FORCE_LOAD,
+	forceLoad,
+})
+
+export const triggerMenuLoad = () => (
+	(dispatch, getState) => {
+		const initialLoad = !getState().menu.get('jfyLoaded')
+
+		if (initialLoad) {
+			dispatch(forceMenuLoad(true))
+
+			setTimeout(
+				() => dispatch(forceMenuLoad(false)),
+				2500,
+			)
+		}
+	}
+)
+
 export default menuActions

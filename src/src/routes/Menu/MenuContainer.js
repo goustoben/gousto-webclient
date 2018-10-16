@@ -2,11 +2,12 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import { connect } from 'react-redux'
 
 import actions from 'actions'
-import actionTypes from 'actions/actionTypes'
-import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
-import { getFilteredRecipeIds } from './selectors/filters.js'
 import { slugify } from 'utils/url'
+import actionTypes from 'actions/actionTypes'
+import { triggerMenuLoad } from 'actions/menu'
+import { getFilteredRecipeIds } from './selectors/filters.js'
 import { getCurrentCollectionIsRecommendation } from './selectors/menu'
+import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 
 import Menu from './Menu'
 
@@ -64,10 +65,11 @@ function mapStateToProps(state, ownProps) {
 		menuLoadingBoxPrices: state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
 		menuVariation: state.features.getIn(['menuRecipes', 'value']),
 		filteredRecipesNumber: getFilteredRecipeIds(state).size,
+		forceLoad: state.menu.get('forceLoad', false),
 	}
 }
 
-const MenuContainer = connect(mapStateToProps, {
+const mapDispatchToProps = {
 	basketOrderLoaded: actions.basketOrderLoaded,
 	menuLoadBoxPrices: actions.menuLoadBoxPrices,
 	detailVisibilityChange: actions.menuRecipeDetailVisibilityChange,
@@ -79,6 +81,9 @@ const MenuContainer = connect(mapStateToProps, {
 	menuLoadDays: actions.menuLoadDays,
 	loginVisibilityChange: actions.loginVisibilityChange,
 	clearAllFilters: actions.clearAllFilters,
-})(Menu)
+	triggerMenuLoad,
+}
+
+const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
 
 export default MenuContainer
