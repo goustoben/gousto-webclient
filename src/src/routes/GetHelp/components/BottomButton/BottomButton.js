@@ -6,7 +6,7 @@ import Link from 'Link'
 import css from './BottomButton.css'
 
 const BottomButton = ({ color, url, clientRouted, children }) => (
-	<Button color={color} width="no-auto" className={css.button} areChildrenInSegment>
+	<Button color={color} width="auto" className={css.button} areChildrenInSegment>
 		<Link
 			noDecoration
 			className={css.buttonChild}

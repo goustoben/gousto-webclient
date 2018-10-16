@@ -24,7 +24,7 @@ describe('<BottomButton />', () => {
 
 		expect(button).toHaveLength(1)
 		expect(button.prop('color')).toBe('test-color')
-		expect(button.prop('width')).not.toBe('auto')
+		expect(button.prop('width')).toBe('auto')
 		expect(button.prop('areChildrenInSegment')).toBe(true)
 		expect(link).toHaveLength(1)
 		expect(link.prop('clientRouted')).toBe(true)

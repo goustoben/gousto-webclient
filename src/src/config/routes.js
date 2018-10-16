@@ -46,6 +46,7 @@ module.exports = {
 			contact: 'contact',
 			orderIssue: 'order-issue',
 			confirmation: 'confirmation',
+			ingredients: 'ingredients',
 		},
 
 		help: '/help',

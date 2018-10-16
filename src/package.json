@@ -169,7 +169,7 @@
     "style-loader": "0.21.0",
     "svg-url-loader": "2.3.2",
     "terser-webpack-plugin": "1.1.0",
-    "terser": "3.9.2",    
+    "terser": "3.9.2",
     "url-loader": "1.0.1",
     "webpack": "4.17.1",
     "webpack-bundle-analyzer": "2.13.1",
