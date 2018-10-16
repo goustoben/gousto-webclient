@@ -5,7 +5,6 @@ import classnames from 'classnames'
 import css from './Item.css'
 
 const Item = ({ label, isHiddenOnMobile, trackClick, onClick, arrowExpanded }) => {
-	console.log('isHiddenOnMobile', isHiddenOnMobile)
 
 	const arrowClass = classnames({
 		[css.itemArrowRight]: !arrowExpanded,
@@ -14,7 +13,10 @@ const Item = ({ label, isHiddenOnMobile, trackClick, onClick, arrowExpanded }) =
 
 	return (
 		<div
-			className={css.item}
+			className={classnames(
+				css.item,
+				{ [css.hiddenOnMobile]: isHiddenOnMobile }
+			)}
 			onClick={() => trackClick()}
 		>
 			<div

@@ -47,8 +47,6 @@ describe('<Item />', () => {
 			expect(
 				wrapper.find('.itemContent').find('.itemArrowRight')
 			).toHaveLength(0)
-
-			// expect(wrapper.text()).toContain('item label')
 		})
 	})
 
