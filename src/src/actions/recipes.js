@@ -66,20 +66,18 @@ const recipesLoadStockByDate = (whenStart, whenCutoff) => (
 export const loadRecommendations = () => (
 	async (dispatch, getState) => {
 		const accessToken = getState().auth.get('accessToken')
-		let recommendations = false
 
 		try {
+			let recommendations = false
 			const { data = {} } = await fetchRecommendations(accessToken)
 
 			if (data[0] && data[0].properties && data[0].properties['just-for-you']) {
 				recommendations = data[0].properties['just-for-you']
 			}
+
+			dispatch(featureSet('justforyou', recommendations, true))
 		} catch (err) {
 			logger.notice('Error loading recommendation data for user: ', err)
-		} finally {
-			if (recommendations) {
-				dispatch(featureSet('justforyou', true, true))
-			}
 		}
 	}
 )
