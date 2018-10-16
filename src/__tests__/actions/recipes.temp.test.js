@@ -23,32 +23,35 @@ describe('recipe actions', () => {
 	})
 
 	describe('loadRecommendations', () => {
-		test('should dispatch a fetch request containing the accessToken', async () => {
+		beforeEach(() => {
 			getState.mockReturnValue({
 				auth: Immutable.Map({
 					accessToken: 'testToken1334',
 				}),
 			})
+		})
 
+		test('should dispatch a fetch request containing the accessToken', async () => {
 			await loadRecommendations()(dispatch, getState)
 
 			expect(fetchRecommendations).toHaveBeenCalledWith('testToken1334')
 		})
 
 		describe('when the api responds with no recommendations', () => {
-			test('should not dispatch a user recommendations available request', async () => {
+			test('should set user recommendations as not available', async () => {
 				fetchRecommendations.mockReturnValue(Promise.resolve({
 					data: [],
 				}))
 
 				await loadRecommendations()(dispatch, getState)
 
-				expect(dispatch).not.toHaveBeenCalled()
+				expect(dispatch).toHaveBeenCalled()
+				expect(featureSet).toHaveBeenCalledWith('justforyou', false, true)
 			})
 		})
 
 		describe('when the api responds with recommendations turned off', () => {
-			test('should not dispatch a user recommendations available request', async () => {
+			test('should set user recommendations as not available', async () => {
 				fetchRecommendations.mockReturnValue(Promise.resolve({
 					data: [
 						{ properties: { 'just-for-you': false }, },
@@ -57,8 +60,8 @@ describe('recipe actions', () => {
 
 				await loadRecommendations()(dispatch, getState)
 
-				expect(featureSet).not.toHaveBeenCalled()
-				expect(dispatch).not.toHaveBeenCalled()
+				expect(dispatch).toHaveBeenCalled()
+				expect(featureSet).toHaveBeenCalledWith('justforyou', false, true)
 			})
 		})
 

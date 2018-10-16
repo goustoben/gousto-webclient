@@ -47,6 +47,7 @@ describe('Menu', () => {
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					filteredRecipesNumber={30}
+					isLoading={false}
 				/>,
 			)
 		})
@@ -71,7 +72,7 @@ describe('Menu', () => {
 			expect(wrapper.find(CollectionsNav).length).toBe(0)
 		})
 
-		test('should not show a Loading', () => {
+		test('should not show as loading', () => {
 			expect(wrapper.find(Loading).prop('loading')).toBe(false)
 		})
 
