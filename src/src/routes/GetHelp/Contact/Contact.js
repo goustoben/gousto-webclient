@@ -1,10 +1,8 @@
 import React, { PropTypes } from 'react'
 
 import List from '../components/List'
-import Item from '../components/Item'
 import ItemLink from '../components/ItemLink'
-import NewItem from '../components/NewItem'
-import ItemExecutable from '../components/ItemExecutable'
+import Item from '../components/Item'
 import ItemExpandable from '../components/ItemExpandable'
 import PhoneContent from './PhoneContent'
 import BottomButton from '../components/BottomButton'
@@ -34,7 +32,7 @@ const Contact = ({
 }) => (
 	<GetHelpLayout title={title} body={body}>
 		<List>
-			<NewItem
+			<Item
 				label={chatItem}
 				trackClick={trackClick(selectContactChannel, 'chat')}
 				isHiddenOnMobile

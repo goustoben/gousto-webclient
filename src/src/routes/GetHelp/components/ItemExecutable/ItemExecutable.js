@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import NewItem from '../NewItem'
+import Item from '../Item'
 
 const ItemExecutable = ({ label, trackClick, isHiddenOnMobile, onClick }) => (
 	<div onClick={onClick}>
-		<NewItem
+		<Item
 			label={label}
 			trackClick={trackClick}
 			isHiddenOnMobile={isHiddenOnMobile}

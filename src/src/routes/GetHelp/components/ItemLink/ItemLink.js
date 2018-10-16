@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 import Link from 'Link'
 
-import NewItem from '../NewItem'
+import Item from '../Item'
 
 const ItemLink = ({ label, trackClick, isHiddenOnMobile, to, clientRouted }) => (
 	<Link to={to} clientRouted={clientRouted}>
-		<NewItem
+		<Item
 			label={label}
 			trackClick={trackClick}
 			isHiddenOnMobile={isHiddenOnMobile}

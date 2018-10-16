@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import NewItem from '../NewItem'
+import Item from '../Item'
 
 export default class ItemExpandable extends PureComponent {
 	static propTypes = {
@@ -29,7 +29,7 @@ export default class ItemExpandable extends PureComponent {
 
 		return (
 			<div onClick={() => this.toggleContent()}>
-				<NewItem
+				<Item
 					label={label}
 					trackClick={trackClick}
 					isHiddenOnMobile={isHiddenOnMobile}
