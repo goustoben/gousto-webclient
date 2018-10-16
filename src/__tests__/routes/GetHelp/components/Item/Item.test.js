@@ -48,6 +48,28 @@ describe('<Item />', () => {
 				wrapper.find('.itemContent').find('.itemArrowRight')
 			).toHaveLength(0)
 		})
+
+		test('item contains hiddenOnMobile when isHiddenOnMobile is passed', () => {
+			const wrapper = mount(
+				<Item
+					label="item label"
+					isHiddenOnMobile
+				/>
+			)
+
+			expect(wrapper.hasClass('hiddenOnMobile')).toBe(true)
+		})
+
+		test('item not contains hiddenOnMobile when isHiddenOnMobile is set to false', () => {
+			const wrapper = mount(
+				<Item
+					label="item label"
+					isHiddenOnMobile={false}
+				/>
+			)
+
+			expect(wrapper.hasClass('hiddenOnMobile')).toBe(false)
+		})
 	})
 
 	describe('behaviour', () => {
