@@ -6,47 +6,77 @@ import css from 'routes/GetHelp/components/Item/Item.css'
 
 
 describe('<Item />', () => {
-	const ChildComponent = () => (<div>Test child</div>)
-
 	describe('render', () => {
-		test('it renders the children', () => {
+		test('label is rendering correctly', () => {
 			const wrapper = mount(
-				<Item>
-					<ChildComponent/>
-					<ChildComponent/>
-				</Item>
+				<Item label="item label" />
 			)
 
-			expect(wrapper.find('li')).toHaveLength(1)
-			expect(wrapper.find(ChildComponent)).toHaveLength(2)
+			expect(wrapper.text()).toContain('item label')
 		})
 
-		test('it hides on mobile when the corresponding prop is passed', () => {
+		test('chevron-right is rendering correctly', () => {
 			const wrapper = mount(
-				<Item isHiddenOnMobile />
+				<Item
+					label="item label"
+					arrowExpanded={false}
+				/>
 			)
 
-			expect(wrapper.find(`.${css.hiddenOnMobile}`)).toHaveLength(1)
+			expect(
+				wrapper.find('.itemContent').find('.itemArrowRight')
+			).toHaveLength(1)
+
+			expect(
+				wrapper.find('.itemContent').find('.itemArrowDown')
+			).toHaveLength(0)
 		})
 
-		test('it does not hide on mobile when the corresponding prop is passed', () => {
+		test('chevron-down is rendering correctly', () => {
 			const wrapper = mount(
-				<Item isHiddenOnMobile={false} />
+				<Item
+					label="item label"
+					arrowExpanded
+				/>
 			)
 
-			expect(wrapper.find(`.${css.hiddenOnMobile}`)).toHaveLength(0)
+			expect(
+				wrapper.find('.itemContent').find('.itemArrowDown')
+			).toHaveLength(1)
+
+			expect(
+				wrapper.find('.itemContent').find('.itemArrowRight')
+			).toHaveLength(0)
+
+			// expect(wrapper.text()).toContain('item label')
 		})
 	})
 
 	describe('behaviour', () => {
-		test('it calls passed function when clicked', () => {
+		test('track click handler works correctly', () => {
 			const trackClickSpy = jest.fn()
 			const wrapper = mount(
-				<Item trackClick={trackClickSpy} />
+				<Item
+					label="item label"
+					trackClick={trackClickSpy}
+				/>
 			)
 			wrapper.simulate('click')
 
 			expect(trackClickSpy).toHaveBeenCalledTimes(1)
+		})
+
+		test('callback click handler works correctly', () => {
+			const cbClickSpy = jest.fn()
+			const wrapper = mount(
+				<Item
+					label="item label"
+					onClick={cbClickSpy}
+				/>
+			)
+			wrapper.find('.itemContent').simulate('click')
+
+			expect(cbClickSpy).toHaveBeenCalledTimes(1)
 		})
 	})
 })

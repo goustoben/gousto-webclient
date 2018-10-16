@@ -4,12 +4,9 @@ import classnames from 'classnames'
 
 import css from './Item.css'
 
-const handleClick = (trackClick, onClick) => {
-	trackClick()
-	onClick()
-}
-
 const Item = ({ label, isHiddenOnMobile, trackClick, onClick, arrowExpanded }) => {
+	console.log('isHiddenOnMobile', isHiddenOnMobile)
+
 	const arrowClass = classnames({
 		[css.itemArrowRight]: !arrowExpanded,
 		[css.itemArrowDown]: arrowExpanded,
@@ -17,10 +14,13 @@ const Item = ({ label, isHiddenOnMobile, trackClick, onClick, arrowExpanded }) =
 
 	return (
 		<div
-			className={classnames(css.item, { [css.hiddenOnMobile]: isHiddenOnMobile })}
-			onClick={() => handleClick(trackClick, onClick)}
+			className={css.item}
+			onClick={() => trackClick()}
 		>
-			<div className={css.itemContent}>
+			<div
+				className={css.itemContent}
+				onClick={() => onClick()}
+			>
 				{label}
 				<span className={classnames(arrowClass)} />
 			</div>
