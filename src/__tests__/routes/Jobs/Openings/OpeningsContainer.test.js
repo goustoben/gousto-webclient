@@ -12,16 +12,16 @@ describe('Openings Container', () => {
 	let jobsExpectedResult
 
 	beforeEach(() => {
-		const jobs = {
+		const jobs = Immutable.fromJS({
 			1: 'this',
 			2: 'that',
 			filter: () => {},
-		}
+		})
 		const selectedDepartment = 'Creative'
-		jobsExpectedResult = {
+		jobsExpectedResult = Immutable.Map({
 			1: 'this',
 			2: 'that',
-		}
+		})
 		store = {
 			getState: () => ({
 				jobs: Immutable.Map({

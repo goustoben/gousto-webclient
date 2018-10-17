@@ -69,6 +69,7 @@ PaymentSecurityCode.propTypes = {
 
 PaymentSecurityCode.defaultProps = {
 	receiveRef: () => {},
+	sectionName: '',
 }
 
 export default PaymentSecurityCode

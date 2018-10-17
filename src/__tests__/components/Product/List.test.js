@@ -31,16 +31,16 @@ describe('Product List images', () => {
 	})
 
 	test('should pass max number prop products to ImageSelection', () => {
-		const products = Immutable.fromJS({
-			product1: { id: 'product1', categories: [{ id: 1 }] },
-			product2: { id: 'product2', categories: [{ id: 2 }] },
-			product3: { id: 'product3', categories: [{ id: 3 }] },
-			product4: { id: 'product4', categories: [{ id: 4 }] },
-			product5: { id: 'product5', categories: [{ id: 5 }] },
-			product6: { id: 'product6', categories: [{ id: 6 }] },
-			product7: { id: 'product7', categories: [{ id: 7 }] },
-			product8: { id: 'product7', categories: [] },
-		})
+		const products = Immutable.fromJS([
+			{ id: 'product1', categories: [{ id: 1 }] },
+			{ id: 'product2', categories: [{ id: 2 }] },
+			{ id: 'product3', categories: [{ id: 3 }] },
+			{ id: 'product4', categories: [{ id: 4 }] },
+			{ id: 'product5', categories: [{ id: 5 }] },
+			{ id: 'product6', categories: [{ id: 6 }] },
+			{ id: 'product7', categories: [{ id: 7 }] },
+			{ id: 'product7', categories: [] },
+		])
 		wrapper = shallow(
 			<ProductList orderId={'1'} products={products} number={2} />,
 		)
