@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 
-import ItemLink from '../components/ItemLink'
+import { ItemLink } from '../components/ItemLink'
 import BottomBar from 'BottomBar'
 import { List } from '../components/List'
 import { BottomButton } from '../components/BottomButton'

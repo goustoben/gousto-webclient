@@ -2,8 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import Item from '../Item'
-
-export default class ItemExpandable extends PureComponent {
+class ItemExpandable extends PureComponent {
 	static propTypes = {
 		label: PropTypes.string.isRequired,
 		trackClick: PropTypes.func,
@@ -39,4 +38,9 @@ export default class ItemExpandable extends PureComponent {
 			</div>
 		)
 	}
+}
+
+
+export {
+	ItemExpandable
 }

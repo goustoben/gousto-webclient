@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 
 import { List } from '../components/List'
-import ItemLink from '../components/ItemLink'
+import { ItemLink } from '../components/ItemLink'
 import Item from '../components/Item'
-import ItemExpandable from '../components/ItemExpandable'
+import { ItemExpandable } from '../components/ItemExpandable'
 import PhoneContent from './PhoneContent'
 import BottomBar from 'BottomBar'
 import { BottomButton } from '../components/BottomButton'
