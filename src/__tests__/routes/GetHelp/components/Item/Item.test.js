@@ -2,7 +2,6 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import Item from 'routes/GetHelp/components/Item'
-import css from 'routes/GetHelp/components/Item/Item.css'
 
 
 describe('<Item />', () => {
@@ -57,7 +56,7 @@ describe('<Item />', () => {
 				/>
 			)
 
-			expect(wrapper.hasClass('hiddenOnMobile')).toBe(true)
+			expect(wrapper.find('.hiddenOnMobile')).toHaveLength(1)
 		})
 
 		test('item not contains hiddenOnMobile when isHiddenOnMobile is set to false', () => {
@@ -68,7 +67,7 @@ describe('<Item />', () => {
 				/>
 			)
 
-			expect(wrapper.hasClass('hiddenOnMobile')).toBe(false)
+			expect(wrapper.find('.hiddenOnMobile')).toHaveLength(0)
 		})
 	})
 

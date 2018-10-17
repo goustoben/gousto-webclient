@@ -3,7 +3,6 @@ import { mount } from 'enzyme'
 
 import Item from 'routes/GetHelp/components/Item'
 import ItemExpandable from 'routes/GetHelp/components/ItemExpandable'
-import css from 'routes/GetHelp/components/ItemExpandable/ItemExpandable.css'
 
 
 describe('<ItemExpandable />', () => {
@@ -20,14 +19,45 @@ describe('<ItemExpandable />', () => {
 	})
 
 	describe('render', () => {
-		test('it renders the label', () => {
-			expect(wrapper.text()).toContain('item-label')
+		test('an Item is rendered with the passed label', () => {
+			expect(wrapper.find(Item).text()).toContain('item-label')
 		})
 
-		test('by default, the arrow points right and the children are not shown', () => {
-			expect(wrapper.find(`.${css.itemArrowRight}`)).toHaveLength(1)
-			expect(wrapper.find(`.${css.itemArrowDown}`)).toHaveLength(0)
-			expect(wrapper.find(ChildComponent)).toHaveLength(0)
+		test('by default, indicates to Item that the arrow must be not in the expanded state', () => {
+			expect(wrapper.find(Item).prop('arrowExpanded')).toBe(false)
+		})
+
+		test('the trackClick function is passed to the Item', () => {
+			const aFunction = () => {}
+			const itemExpandable = mount(
+				<ItemExpandable
+					label="item-label"
+					to="/test" // TODO check
+					trackClick={aFunction}
+				/>
+			)
+
+			expect(itemExpandable.find(Item).prop('trackClick')).toBe(aFunction)
+		})
+
+		test('the isHiddenOnMobile value is passed to the Item', () => {
+			let itemExpandable = mount(
+				<ItemExpandable
+					label="item-label"
+					isHiddenOnMobile
+				/>
+			)
+
+			expect(itemExpandable.find(Item).prop('isHiddenOnMobile')).toBe(true)
+
+			itemExpandable = mount(
+				<ItemExpandable
+					label="item-label"
+					isHiddenOnMobile={false}
+				/>
+			)
+
+			expect(itemExpandable.find(Item).prop('isHiddenOnMobile')).toBe(false)
 		})
 	})
 
@@ -35,8 +65,7 @@ describe('<ItemExpandable />', () => {
 		test('when clicking the arrow points down', () => {
 			wrapper.simulate('click')
 
-			expect(wrapper.find(`.${css.itemArrowRight}`)).toHaveLength(0)
-			expect(wrapper.find(`.${css.itemArrowDown}`)).toHaveLength(1)
+			expect(wrapper.find(Item).prop('arrowExpanded')).toBe(true)
 		})
 
 		test('when clicking the children are shown, if clicked again it is hidden', () => {
@@ -47,20 +76,6 @@ describe('<ItemExpandable />', () => {
 			wrapper.simulate('click')
 
 			expect(wrapper.find(ChildComponent)).toHaveLength(0)
-		})
-
-		test('the click event is propagated, so the <Item> onClick function is called', () => {
-			const trackClickSpy =  jest.fn()
-			wrapper = mount(
-				<Item trackClick={trackClickSpy}>
-					<ItemExpandable label="item-label">
-						<ChildComponent/>
-					</ItemExpandable>
-				</Item>
-			)
-			wrapper.find(`.${css.itemContent}`).simulate('click')
-
-			expect(trackClickSpy).toHaveBeenCalledTimes(1)
 		})
 	})
 })
