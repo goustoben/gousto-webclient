@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Link from 'Link'
 
-import Item from '../Item'
+import { Item } from 'goustouicomponents'
 
 const ItemLink = ({ label, trackClick, isHiddenOnMobile, to, clientRouted }) => (
 	<Link to={to} clientRouted={clientRouted}>

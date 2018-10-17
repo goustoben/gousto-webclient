@@ -4,7 +4,7 @@ import { mount } from 'enzyme'
 import { zendesk } from 'config/routes'
 import { telephone } from 'config/company'
 
-import Item from 'routes/GetHelp/components/Item'
+import { Item } from 'goustouicomponents'
 import ItemLink from 'routes/GetHelp/components/ItemLink'
 import ItemExpandable from 'routes/GetHelp/components/ItemExpandable'
 import itemCSS from 'routes/GetHelp/components/Item/Item.css'

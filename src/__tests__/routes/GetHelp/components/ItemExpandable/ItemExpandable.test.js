@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import Item from 'routes/GetHelp/components/Item'
+import { Item } from 'goustouicomponents'
 import ItemExpandable from 'routes/GetHelp/components/ItemExpandable'
 
 

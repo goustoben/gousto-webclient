@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
-import Item from '../Item'
+import { Item } from 'goustouicomponents'
 
 export default class ItemExpandable extends PureComponent {
 	static propTypes = {
