@@ -5,8 +5,8 @@ import ItemLink from '../components/ItemLink'
 import Item from '../components/Item'
 import ItemExpandable from '../components/ItemExpandable'
 import PhoneContent from './PhoneContent'
-import BottomButton from '../components/BottomButton'
 import BottomBar from 'BottomBar'
+import { BottomButton } from '../components/BottomButton'
 
 import { client, zendesk } from 'config/routes'
 

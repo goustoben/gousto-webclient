@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react'
 
-import { List } from '../components/List'
 import ItemLink from '../components/ItemLink'
 import BottomBar from 'BottomBar'
-import BottomButton from '../components/BottomButton'
+import { List } from '../components/List'
+import { BottomButton } from '../components/BottomButton'
 
 import { client as routes } from 'config/routes'
 import GetHelpLayout from 'layouts/GetHelpLayout'

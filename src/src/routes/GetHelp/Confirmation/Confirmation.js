@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 
 import BottomBar from 'BottomBar'
-import BottomButton from '../components/BottomButton'
+import { BottomButton } from '../components/BottomButton'
 
 import GetHelpLayout from 'layouts/GetHelpLayout'
 
