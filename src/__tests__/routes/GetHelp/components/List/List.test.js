@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import List from 'routes/GetHelp/components/List'
+import { List } from 'routes/GetHelp/components/List'
 
 
 describe('<List />', () => {
