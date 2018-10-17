@@ -25,4 +25,6 @@ BottomButton.propTypes = {
 	children: PropTypes.node.isRequired,
 }
 
-export default BottomButton
+export {
+	BottomButton
+}

@@ -2,8 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import { Item } from 'goustouicomponents'
-import ItemExpandable from 'routes/GetHelp/components/ItemExpandable'
-
+import { ItemExpandable } from 'routes/GetHelp/components/ItemExpandable'
 
 describe('<ItemExpandable />', () => {
 	const ChildComponent = () => (<div>Test child</div>)

@@ -17,4 +17,6 @@ const List = ({ children }) => (
 		</ul>
 	)
 
-export default List
+export {
+	List
+}

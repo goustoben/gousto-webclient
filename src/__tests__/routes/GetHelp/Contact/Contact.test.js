@@ -5,8 +5,8 @@ import { zendesk } from 'config/routes'
 import { telephone } from 'config/company'
 
 import { Item } from 'goustouicomponents'
-import ItemLink from 'routes/GetHelp/components/ItemLink'
-import ItemExpandable from 'routes/GetHelp/components/ItemExpandable'
+import { ItemLink } from 'routes/GetHelp/components/ItemLink'
+import { ItemExpandable } from 'routes/GetHelp/components/ItemExpandable'
 import itemCSS from 'routes/GetHelp/components/Item/Item.css'
 import Contact from 'routes/GetHelp/Contact/Contact'
 

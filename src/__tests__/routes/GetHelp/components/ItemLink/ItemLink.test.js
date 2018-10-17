@@ -1,7 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import ItemLink from 'routes/GetHelp/components/ItemLink'
+import { ItemLink } from 'routes/GetHelp/components/ItemLink'
 import { Item } from 'goustouicomponents'
 import Link from 'Link'
 

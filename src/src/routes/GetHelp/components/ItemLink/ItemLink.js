@@ -29,4 +29,6 @@ ItemLink.defaultProps = {
 	clientRouted: true,
 }
 
-export default ItemLink
+export {
+	ItemLink
+}

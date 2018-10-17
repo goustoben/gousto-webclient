@@ -1,1 +1,1 @@
-export default from './ItemExpandable'
+export { ItemExpandable } from './ItemExpandable'
