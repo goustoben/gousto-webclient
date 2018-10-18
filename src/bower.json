@@ -1,7 +1,6 @@
 {
   "name": "goustouicomponents",
   "dependencies": {
-    "goustouicomponents": "git+ssh://git@github.com/Gousto/ui-components.git#v1.0.2"
+    "goustouicomponents": "git+ssh://git@github.com/Gousto/ui-components.git#v1.1.1"
   }
-  
 }
