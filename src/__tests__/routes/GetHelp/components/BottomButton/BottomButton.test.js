@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import BottomButton from 'routes/GetHelp/components/BottomButton'
+import { BottomButton } from 'routes/GetHelp/components/BottomButton'
 
 describe('<BottomButton />', () => {
 	const color = 'test-color'

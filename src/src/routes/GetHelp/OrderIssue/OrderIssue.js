@@ -1,10 +1,9 @@
 import React, { PropTypes } from 'react'
 
-import List from '../components/List'
-import Item from '../components/Item'
-import ItemLink from '../components/ItemLink'
+import { ItemLink } from '../components/ItemLink'
 import BottomBar from 'BottomBar'
-import BottomButton from '../components/BottomButton'
+import { List } from '../components/List'
+import { BottomButton } from '../components/BottomButton'
 
 import { client as routes } from 'config/routes'
 import GetHelpLayout from 'layouts/GetHelpLayout'
@@ -25,34 +24,30 @@ const OrderIssue = ({
 }) => (
 	<GetHelpLayout title={title} body={body}>
 		<List>
-			<Item trackClick={trackClick(selectOrderIssue, 'ingredients')}>
-				<ItemLink
-					label={ingredientsItem}
-					to={`${routes.getHelp.index}/${routes.getHelp.ingredients}`}
-					clientRouted
-				/>
-			</Item>
-			<Item trackClick={trackClick(selectOrderIssue, 'recipe_card')}>
-				<ItemLink
-					label={recipeCardItem}
-					to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-					clientRouted
-				/>
-			</Item>
-			<Item trackClick={trackClick(selectOrderIssue, 'delivery')}>
-				<ItemLink
-					label={deliveryItem}
-					to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-					clientRouted
-				/>
-			</Item>
-			<Item trackClick={trackClick(selectOrderIssue, 'other')}>
-				<ItemLink
-					label={otherItem}
-					to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-					clientRouted
-				/>
-			</Item>
+			<ItemLink
+				label={ingredientsItem}
+				trackClick={trackClick(selectOrderIssue, 'ingredients')}
+				to={`${routes.getHelp.index}/${routes.getHelp.ingredients}`}
+				clientRouted
+			/>
+			<ItemLink
+				label={recipeCardItem}
+				trackClick={trackClick(selectOrderIssue, 'recipe_card')}
+				to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+				clientRouted
+			/>
+			<ItemLink
+				label={deliveryItem}
+				trackClick={trackClick(selectOrderIssue, 'delivery')}
+				to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+				clientRouted
+			/>
+			<ItemLink
+				label={otherItem}
+				trackClick={trackClick(selectOrderIssue, 'other')}
+				to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+				clientRouted
+			/>
 		</List>
 		<BottomBar>
 			<BottomButton color="secondary" url={routes.myGousto} clientRouted={false}>

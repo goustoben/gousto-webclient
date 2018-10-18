@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import BottomButton from '../components/BottomButton'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
+import { BottomButton } from '../components/BottomButton'
 
 const propTypes = {
 	content: PropTypes.shape({

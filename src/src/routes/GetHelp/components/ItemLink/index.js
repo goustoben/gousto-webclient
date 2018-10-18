@@ -1,1 +1,1 @@
-export default from './ItemLink'
+export { ItemLink } from './ItemLink'

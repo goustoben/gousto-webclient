@@ -1,6 +1,7 @@
 export { Alert  } from '../libs/goustouicomponents/src/main'
 export { Button } from '../libs/goustouicomponents/src/main'
 export { Control } from '../libs/goustouicomponents/src/main'
+export { Item } from '../libs/goustouicomponents/src/main'
 export { Segment } from '../libs/goustouicomponents/src/main'
 export { Spinner } from '../libs/goustouicomponents/src/main'
 export { Tooltip } from '../libs/goustouicomponents/src/main'
