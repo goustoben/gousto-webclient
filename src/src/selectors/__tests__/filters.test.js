@@ -5,7 +5,7 @@ import { getFilterCTAText } from 'selectors/filters'
 describe('filters selectors', () => {
 	describe('getFilterCTAText', () => {
 		let state
-		const getFilterCTAState = (collectionId, dietTypes, dietaryAttributes, cookingTime) =>({
+		const getFilterCTAState = (collectionId, dietTypes, dietaryAttributes, cookingTime) => ({
 			menuCollections: Immutable.fromJS({
 				ca8f71be: {
 					default: true,
@@ -19,6 +19,11 @@ describe('filters selectors', () => {
 					defult: false,
 					shortTitle: 'Boost & Balance'
 				},
+				a49adbs: {
+					default: false,
+					slug: 'recommendations',
+					shortTitle: 'Recommendations'
+				}
 			}),
 			filters: Immutable.Map({
 					currentCollectionId: collectionId,
@@ -43,6 +48,17 @@ describe('filters selectors', () => {
 			)
 
 			expect(getFilterCTAText(state)).toBe('Boost & Balance, Meat, Vegetarian, Gluten-Free, Dairy-Free, 20 minutes or less')
+		})
+
+		test('should return a string containing the selected filters, in order', () => {
+			state = getFilterCTAState(
+				'a49adbs',
+				[''],
+				[''],
+				'0',
+			)
+
+			expect(getFilterCTAText(state)).toBe('Just For You, Any length')
 		})
 	})
 })

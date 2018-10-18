@@ -13,6 +13,21 @@ describe('FilterTag', () => {
 
         expect(tree).toMatchSnapshot()
     })
+
+    test('should render heart icon if tag for JFY collection', () => {
+      const wrapper = shallow(<FilterTag value="collectionId" type="collection" slug="recommendations" />)
+      expect(wrapper.find('.filterTagHeart[fileName="icon-heart"]').length).toBe(1)
+    })
+
+    test('should render outline heart icon if tag for JFY collection', () => {
+      const wrapper = shallow(<FilterTag value="collectionId" type="collection" slug="recommendations" isLoading />)
+      expect(wrapper.find('.filterTagHeart[fileName="icon-heart-outline"]').length).toBe(1)
+    })
+
+    test('should NOT render heart icon if no slug for JFY collection', () => {
+      const wrapper = shallow(<FilterTag value="collectionId" type="collection" slug="all" />)
+      expect(wrapper.find('.filterTagHeart').length).toBe(0)
+    })
   })
 
   describe('onClick', () => {

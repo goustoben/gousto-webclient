@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu Loading Initial Rendering should match snapshot 1`] = `
+<div
+  className="container"
+>
+  <div
+    className="container--recommendations"
+  >
+    <div
+      className="loading--recommendations"
+    >
+      <img
+        alt="animation"
+        className="spinner contain"
+        onClick={[Function]}
+        src="recommendations-loading.gif"
+      />
+      <p
+        className="loading-text"
+      >
+        <span
+          className="loading-text__title"
+        >
+          Stirring up recipes
+        </span>
+        <span
+          className="loading-text__sub"
+        >
+          Just for y
+        </span>
+        <div
+          className="svg icon-heart icon"
+          style={
+            Object {
+              "backgroundImage": "url(icon-heart.svg)",
+            }
+          }
+        />
+        <span
+          className="loading-text__sub"
+        >
+          u
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+`;

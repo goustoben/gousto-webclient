@@ -56,7 +56,7 @@ describe('<OrderIssue />', () => {
 			const itemLinks = wrapper.find('ItemLink')
 
 			expect(itemLinks).toHaveLength(4)
-			expect(itemLinks.at(0).prop('to')).toBe('/get-help/refund')
+			expect(itemLinks.at(0).prop('to')).toBe('/get-help/ingredients')
 			expect(itemLinks.at(1).prop('to')).toBe('/get-help/contact')
 			expect(itemLinks.at(2).prop('to')).toBe('/get-help/contact')
 			expect(itemLinks.at(3).prop('to')).toBe('/get-help/contact')

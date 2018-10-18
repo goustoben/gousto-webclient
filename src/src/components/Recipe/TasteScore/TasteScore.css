@@ -1,0 +1,19 @@
+.score {
+	composes: shadowStandard from 'styles/effects.css';
+	display: flex;
+	align-items: center;
+	background-color: white;
+	border-radius: 20px;
+	padding: 5px;
+}
+
+.score__icon {
+	height: 18px;
+	width: 21px;
+}
+
+.score__number {
+	margin: 0 6px 0 5px;
+	font-weight: 900;
+	line-height: 1;
+}

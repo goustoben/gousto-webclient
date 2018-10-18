@@ -5,6 +5,7 @@ import authActions from './auth'
 import statusActions from './status'
 import orderActions from './order'
 import userActions from './user'
+import { loadRecommendations } from './recipes'
 import Cookies from 'utils/GoustoCookies'
 import config from 'config/routes'
 import { isOneOfPage } from 'utils/routes'
@@ -86,7 +87,7 @@ const logoutRedirect = () => {
 	}
 }
 
-const postLoginSteps = (userIsAdmin, orderId = '', features) => {
+export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 	const location = documentLocation()
 	const onCheckout = location.pathname.includes('check-out')
 	let destination = false
@@ -119,6 +120,9 @@ const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 				if (promoCode) {
 					await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
 				}
+			}
+			if (!getState().features.get('justforyou')) {
+				dispatch(loadRecommendations())
 			}
 			setTimeout(() => {
 				dispatch(loginVisibilityChange(false))

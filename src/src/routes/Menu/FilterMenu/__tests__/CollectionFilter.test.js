@@ -1,8 +1,6 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-
-import CollectionItem from 'routes/Menu/CollectionItem'
 import FilterItem from 'routes/Menu/FilterMenu/FilterItem'
 
 import CollectionFilter from 'routes/Menu/FilterMenu/CollectionFilter/CollectionFilter'
@@ -11,9 +9,12 @@ describe('<CollectionFilter />', () => {
 	let wrapper
 	let collections
 
+	beforeEach(() => {
+		collections = Immutable.Map({ a: Immutable.Map(), b: Immutable.Map(), c: Immutable.Map({ id: 'c', slug: 'recommendations', }) })
+	})
+
 	test('should display a FilterItem for each collection passed', () => {
-		collections = Immutable.Map({ a: Immutable.Map(), b: Immutable.Map() })
-		wrapper = shallow(<CollectionFilter collections={collections} />)
+		wrapper = shallow(<CollectionFilter collections={collections}/>)
 
 		expect(wrapper.find(FilterItem)).toHaveLength(collections.size)
 	})
@@ -42,6 +43,14 @@ describe('<CollectionFilter />', () => {
 
 			expect(wrapper.find(FilterItem).at(0).prop('checked')).toBeFalsy()
 			expect(wrapper.find(FilterItem).at(1).prop('checked')).toBeTruthy()
+		})
+	})
+
+	describe('should display heart image', () => {
+		test('should display heart image if collection is recommandations', () => {
+			wrapper = shallow(<CollectionFilter collections={collections} currentCollectionId={'c'} filterCollectionChange={jest.fn()} />)
+
+			expect(wrapper.find('Svg').length).toBe(1)
 		})
 	})
 })

@@ -34,7 +34,7 @@ module.exports = {
 		steps: [{
 			path: 'icon-choose',
 			title: 'You choose',
-			description: 'From over 20 recipes a week. You can pause or skip boxes whenever you like.',
+			description: 'From over 30 recipes a week. You can pause or skip boxes whenever you like.',
 		}, {
 			path: 'icon-delivery',
 			title: 'We deliver',
@@ -77,9 +77,9 @@ module.exports = {
 	promo: {
 		// loggedIn|loggedOut|any
 		applyIf: 'loggedOut',
-		code: 'DTI-SB-5030',
+		code: 'DTI-SB-P36-35M',
 		banner: {
-			text: 'Get 50% off your first box and 30% off all boxes in your first month!',
+			text: 'Special offer! Click here to get 35% off all boxes in your first month',
 			linkText: 'Claim discount',
 		},
 	},

@@ -19,7 +19,7 @@ jobs:
           command: yarn global add gulp && yarn global add concurrently@2.2.0 && yarn global add bower
       - run:
           name: Setup Bower
-          command: source ~/.circlerc && setup/setup-bower.sh          
+          command: source ~/.circlerc && setup/setup-bower.sh
       - run:
           name: Setup common
           command: source ~/.circlerc && setup/setup-common.sh
@@ -87,7 +87,7 @@ jobs:
           at: ~/
       - run:
           name: Run isomoprhic jest tests
-          command: cd src && yarn run test:jest:ci --no-cache
+          command: cd src && yarn run test:jest:ci
       - persist_to_workspace:
           root: ~/
           paths:

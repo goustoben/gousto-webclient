@@ -1,0 +1,45 @@
+.container {
+	position: fixed;
+	z-index: 1;
+	width: 100%;
+}
+
+.loading {
+	display: block;
+	margin: auto;
+	width: 100px;
+	margin-top: 60px;
+	pointer-events: none;
+}
+
+.loading--recommendations {
+	display: block;
+	width: 160px;
+	margin: 100px auto 0;
+	text-align: center;
+}
+
+.spinner {
+	height: 150px;
+	width: 150px; 
+}
+
+.loading-text {
+	display: inline;
+	font-weight: 600;
+}
+
+	.loading-text__title {
+		display: inline-block;
+	}
+
+	.loading-text__sub {
+		font-size: 24px;
+		font-weight: 600;
+	}
+
+.icon {
+	height: 12px;
+	width: 14px;
+	margin: 0 1px;
+}
