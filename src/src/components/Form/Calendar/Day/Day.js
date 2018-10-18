@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Day.css'
 import classnames from 'classnames'
@@ -35,15 +36,15 @@ const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, 
 }
 
 Day.propTypes = {
-	date: React.PropTypes.string,
-	weekNo: React.PropTypes.string,
-	dayNo: React.PropTypes.string,
-	selected: React.PropTypes.bool,
-	disabled: React.PropTypes.bool,
-	onClick: React.PropTypes.func,
-	icon: React.PropTypes.string,
-	orderId: React.PropTypes.string,
-	className: React.PropTypes.string,
+	date: PropTypes.string,
+	weekNo: PropTypes.string,
+	dayNo: PropTypes.string,
+	selected: PropTypes.bool,
+	disabled: PropTypes.bool,
+	onClick: PropTypes.func,
+	icon: PropTypes.string,
+	orderId: PropTypes.string,
+	className: PropTypes.string,
 }
 
 export default Day

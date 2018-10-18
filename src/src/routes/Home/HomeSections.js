@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import config from 'config/home'
 import Hero from './Hero'
 import Hero2 from './Hero2'

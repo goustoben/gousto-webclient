@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import Svg from 'Svg'
 import css from './ReasonsScreen.css'
 import { Cancel } from 'containers/SubscriptionPause/callsToAction'
@@ -27,9 +28,9 @@ const SubscriptionPauseReasonsScreen = ({ onReasonChoice, reasons, type }) => (
 )
 
 SubscriptionPauseReasonsScreen.propTypes = {
-	onReasonChoice: React.PropTypes.func,
-	reasons: React.PropTypes.instanceOf(Immutable.Map),
-	type: React.PropTypes.oneOf(['reasonGrid', 'reasonList']),
+	onReasonChoice: PropTypes.func,
+	reasons: PropTypes.instanceOf(Immutable.Map),
+	type: PropTypes.oneOf(['reasonGrid', 'reasonList']),
 }
 
 SubscriptionPauseReasonsScreen.defaultProps = {

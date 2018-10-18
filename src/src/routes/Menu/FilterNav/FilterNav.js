@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Svg from 'Svg'
 import classnames from 'classnames'
 import style from './FilterNav.css'
 
 const propTypes = {
-	onClick: PropTypes.func.require,
-	ctaText: PropTypes.string.require,
-	sticky: PropTypes.bool.require,
+	onClick: PropTypes.func.isRequired,
+	ctaText: PropTypes.string.isRequired,
+	sticky: PropTypes.bool.isRequired,
 	menuFilterExperiment: PropTypes.bool,
 	isLoadingHeart: PropTypes.bool,
 	ifRecommendationIsSelected: PropTypes.bool,
@@ -28,7 +29,7 @@ const FilterNav = ({ onClick, ctaText, sticky, menuFilterExperiment, isLoadingHe
 FilterNav.propTypes = propTypes
 
 FilterNav.defaultProps = {
-	onClick: () => { },
+	onClick: () => {},
 	ctaText: 'Refine Recipes',
 	sticky: false,
 }

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Button from '../../Button'
 import css from '../../Signup.css'
@@ -39,8 +40,8 @@ const KidsCookForStep = ({ cookForKidsChange, next }) => (
 )
 
 KidsCookForStep.propTypes = {
-	cookForKidsChange: React.PropTypes.func.isRequired,
-	next: React.PropTypes.func.isRequired,
+	cookForKidsChange: PropTypes.func.isRequired,
+	next: PropTypes.func.isRequired,
 }
 
 export default KidsCookForStep

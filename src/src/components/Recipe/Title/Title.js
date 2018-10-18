@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Title.css'
 import typography from 'styles/typography.css'
@@ -29,15 +30,16 @@ const Title = ({ headlineFont, title, view, mouseEnter, mouseLeave, linkUnderlin
 }
 
 Title.propTypes = {
-	headlineFont: React.PropTypes.bool,
-	title: React.PropTypes.string.isRequired,
-	view: React.PropTypes.string,
-	mouseEnter: React.PropTypes.func,
-	mouseLeave: React.PropTypes.func,
-	linkUnderlined: React.PropTypes.bool,
+	headlineFont: PropTypes.bool,
+	title: PropTypes.string.isRequired,
+	view: PropTypes.string,
+	mouseEnter: PropTypes.func,
+	mouseLeave: PropTypes.func,
+	linkUnderlined: PropTypes.bool,
 }
 
 Title.defaultProps = {
+	title: '',
 	mouseEnter: () => {},
 	mouseLeave: () => {},
 	linkUnderlined: false,

@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
 import shallowCompare from 'react-addons-shallow-compare'
@@ -33,34 +34,45 @@ class Menu extends React.Component {
 	static propTypes = {
 		basketOrderLoaded: PropTypes.func.isRequired,
 		menuLoadBoxPrices: PropTypes.func.isRequired,
+		boxDetailsVisibilityChange: PropTypes.func.isRequired,
+		boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.List).isRequired,
+		disabled: PropTypes.bool.isRequired,
+		menuLoadDays: PropTypes.func.isRequired,
+		menuMobileGridViewSet: PropTypes.func.isRequired,
+		basketRestorePreviousValues: PropTypes.func.isRequired,
+		params: PropTypes.shape({
+			orderId: PropTypes.string.isRequired
+		}),
+		isAuthenticated: PropTypes.bool.isRequired,
 		menuRecipeDetailShow: PropTypes.string,
 		detailVisibilityChange: PropTypes.func,
 		boxSummaryShow: PropTypes.bool,
-		boxDetailsVisibilityChange: PropTypes.func.isRequired,
-		disabled: PropTypes.bool.isRequired,
 		boxSummaryDeliveryDaysLoad: PropTypes.func,
 		hasRecommendations: PropTypes.bool,
 		forceLoad: PropTypes.bool,
-		menuLoadDays: PropTypes.func,
 		menuBrowseCTAShow: PropTypes.bool,
 		menuBrowseCTAVisibilityChange: PropTypes.func,
 		loginVisibilityChange: PropTypes.func,
-		menuMobileGridViewSet: PropTypes.func.isRequired,
-		basketRestorePreviousValues: PropTypes.func.isRequired,
 		features: PropTypes.instanceOf(Immutable.Map),
 		menuCurrentCollectionId: PropTypes.string,
 		menuVariation: PropTypes.string,
-		params: PropTypes.object,
 		query: PropTypes.object,
 		orderId: PropTypes.string,
 		storeOrderId: PropTypes.string,
 		isLoading: PropTypes.bool,
-		isAuthenticated: PropTypes.bool.isRequired,
 		tariffId: PropTypes.number,
 		menuLoadingBoxPrices: PropTypes.bool,
 		filteredRecipesNumber: PropTypes.number,
 		clearAllFilters: PropTypes.func,
 		triggerMenuLoad: PropTypes.func,
+	}
+
+	static defaultProps = {
+		boxSummaryDeliveryDays: Immutable.List(),
+		boxSummaryDeliveryDaysLoad: () => {},
+		boxDetailsVisibilityChange: () => {},
+		disabled: false,
+		isAuthenticated: false,
 	}
 
 	static contextTypes = {

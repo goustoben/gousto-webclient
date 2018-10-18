@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable' // eslint-disable-line no-caps
 import classNames from 'classnames'
 
 import actions from 'actions/user'
@@ -18,7 +19,6 @@ import OrderRestoreButton from './OrderRestoreButton'
 import OrderRescheduledNotification from './OrderRescheduledNotification'
 
 import css from './Order.css'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 
 class Order extends React.PureComponent {
 	static propTypes = {
@@ -35,10 +35,10 @@ class Order extends React.PureComponent {
 		orderState: PropTypes.string,
 		orderWhenCutoff: PropTypes.string,
 		orderWhenMenuOpen: PropTypes.string,
-		products: ImmutablePropTypes.mapContains({
+		products: PropTypes.instanceOf(Immutable.Map({
 			total: PropTypes.number,
 			elements: PropTypes.instanceOf(Immutable.List),
-		}),
+		})),
 		recipes: PropTypes.instanceOf(Immutable.List),
 		priceBreakdown: PropTypes.instanceOf(Immutable.Map),
 		editDeliveryMode: PropTypes.bool,
@@ -79,7 +79,7 @@ class Order extends React.PureComponent {
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+		store: PropTypes.object.isRequired,
 	}
 
 	open = () => {

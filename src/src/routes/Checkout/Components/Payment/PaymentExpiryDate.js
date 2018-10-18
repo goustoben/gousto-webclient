@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
@@ -50,8 +51,8 @@ const PaymentExpiryDate = ({ receiveRef, sectionName }) => (
 )
 
 PaymentExpiryDate.propTypes = {
-	receiveRef: React.PropTypes.func,
-	sectionName: React.PropTypes.string.isRequired,
+	receiveRef: PropTypes.func,
+	sectionName: PropTypes.string.isRequired,
 }
 
 PaymentExpiryDate.defaultProps = {

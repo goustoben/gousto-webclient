@@ -1,7 +1,5 @@
-import sinon from 'sinon'
-
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import DuplicateOrderModal from 'DuplicateOrderModal/DuplicateOrderModal'
@@ -34,8 +32,8 @@ describe('DuplicateOrderModal', () => {
 	describe('with user orders', () => {
 		let closeOrders
 		beforeEach(() => {
-			closeOrders = Immutable.fromJS({
-				42: {
+			closeOrders = Immutable.fromJS([
+				{
 					id: '42',
 					deliveryDate: '1990-01-01T02:02:00Z',
 					box: {
@@ -43,7 +41,7 @@ describe('DuplicateOrderModal', () => {
 						numRecipes: '2',
 					},
 				},
-				52: {
+				{
 					id: '52',
 					deliveryDate: '1991-01-01T02:02:00Z',
 					box: {
@@ -51,7 +49,7 @@ describe('DuplicateOrderModal', () => {
 						numRecipes: '20',
 					},
 				},
-			})
+			])
 			wrapper = shallow(<DuplicateOrderModal closeOrders={closeOrders} />)
 		})
 

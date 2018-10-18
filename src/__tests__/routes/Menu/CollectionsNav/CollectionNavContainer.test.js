@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
@@ -37,8 +35,9 @@ describe('CollectionsNavContainer', () => {
 							c: ['', '', ''],
 						}),
 					}),
+					subscribe: jest.fn(),
+					dispatch: jest.fn(),
 				},
-				subscribe: () => {},
 			},
 		})
 
@@ -90,8 +89,9 @@ describe('CollectionsNavContainer', () => {
 							c: ['', '', ''],
 						}),
 					}),
+					subscribe: jest.fn(),
+					dispatch: jest.fn(),
 				},
-				subscribe: () => {},
 			},
 		})
 
@@ -139,8 +139,9 @@ describe('CollectionsNavContainer', () => {
 							c: ['', '', ''],
 						}),
 					}),
+					subscribe: jest.fn(),
+					dispatch: jest.fn(),
 				},
-				subscribe: () => {},
 			},
 		})
 
@@ -195,8 +196,9 @@ describe('CollectionsNavContainer', () => {
 							c: ['', '', ''],
 						}),
 					}),
+					subscribe: jest.fn(),
+					dispatch: jest.fn(),
 				},
-				subscribe: () => {},
 			},
 		})
 
@@ -215,7 +217,7 @@ describe('CollectionsNavContainer', () => {
 	})
 
 	test('should filter out empty collections', () => {
-		const wrapper = shallow(<CollectionsNavContainer />, {
+		const wrapper5 = shallow(<CollectionsNavContainer />, {
 			context: {
 				store: {
 					getState: () => ({
@@ -244,8 +246,9 @@ describe('CollectionsNavContainer', () => {
 							c: ['', '', ''],
 						}),
 					}),
+					subscribe: jest.fn(),
+					dispatch: jest.fn(),
 				},
-				subscribe: () => {},
 			},
 		})
 
@@ -259,7 +262,7 @@ describe('CollectionsNavContainer', () => {
 				published: true,
 			},
 		}).toOrderedMap()
-		const result = wrapper.prop('menuCollections')
+		const result = wrapper5.prop('menuCollections')
 		expect(Immutable.is(expected, result)).toEqual(true)
 	})
 })

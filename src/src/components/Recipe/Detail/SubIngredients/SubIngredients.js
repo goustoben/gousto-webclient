@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from '../SubIngredients/SubIngredients.css'
 import Immutable from 'immutable'
@@ -10,19 +11,13 @@ export const isAllergen = (allergens, subIngredient) => (
 
 const SubIngredients = ({ subIngredients, allergens }) => (
 	<span>
-		{subIngredients.map((subIngredient) => {
-			if (isAllergen(allergens, subIngredient)) {
-				return <span className={css.bold}>{subIngredient}</span>
-			}
-
-			return <span>{subIngredient}</span>
-		})}
+		{subIngredients.map((subIngredient, idx) => (<span key={idx} className={isAllergen(allergens, subIngredient) && css.bold}>{subIngredient}</span>))}
 	</span>
 )
 
 SubIngredients.propTypes = {
-	subIngredients: React.PropTypes.instanceOf(Immutable.List),
-	allergens: React.PropTypes.instanceOf(Immutable.List),
+	subIngredients: PropTypes.instanceOf(Immutable.List),
+	allergens: PropTypes.instanceOf(Immutable.List),
 }
 
 export default SubIngredients

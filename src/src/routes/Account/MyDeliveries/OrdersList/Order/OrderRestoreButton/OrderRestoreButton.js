@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { Alert, Button } from 'goustouicomponents'
 import actions from 'actions/order'
 import Content from 'containers/Content'
@@ -21,7 +22,7 @@ class OrderRestoreButton extends React.PureComponent {
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+		store: PropTypes.object.isRequired,
 	}
 
 	handleRestoreBox = () => {

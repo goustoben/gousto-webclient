@@ -12,7 +12,7 @@ describe('OrderCollage', () => {
 
 	beforeEach(() => {
 		sandbox = sinon.sandbox.create()
-		recipes = Immutable.fromJS({})
+		recipes = Immutable.fromJS([])
 	})
 	afterEach(done => {
 		sandbox.restore()
@@ -39,37 +39,43 @@ describe('OrderCollage', () => {
 		})
 		describe('Renders the correct number of images', () => {
 			test('should render n <img> components where n is recipes length', () => {
-				recipes = Immutable.fromJS({
-					1: {
+				recipes = Immutable.fromJS([
+					{
 						image: 'https://external-img.jpg',
 						recipeTitle: 'Cheesy Pangasius',
+						recipeId: '1',
 					},
-					2: {
+					{
 						image: 'https://external-img.jpg',
 						recipeTitle: 'Cheesy Pangasius',
+						recipeId: '2',
 					},
-					3: {
+					{
 						image: 'https://external-img.jpg',
 						recipeTitle: 'Cheesy Pangasius',
+						recipeId: '3',
 					},
-					4: {
+					{
 						image: 'https://external-img.jpg',
 						recipeTitle: 'Cheesy Pangasius',
+						recipeId: '4',
 					},
-				})
+				])
 				wrapper = mount(<OrderCollage isCommitted recipes={recipes} />)
 				expect(wrapper.find('img').length).toBe(4)
 
-				recipes = Immutable.fromJS({
-					1: {
+				recipes = Immutable.fromJS([
+					{
 						image: 'https://external-img.jpg',
 						recipeTitle: 'Cheesy Pangasius',
+						recipeId: '1',
 					},
-					2: {
+					{
 						image: 'https://external-img.jpg',
 						recipeTitle: 'Cheesy Pangasius',
+						recipeId: '2',
 					},
-				})
+				])
 				wrapper = mount(<OrderCollage recipes={recipes} />)
 				expect(wrapper.find('img').length).toBe(2)
 			})

@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import PropTypes from 'prop-types'
+
 import React from 'react'
 import CheckoutButton from '../CheckoutButton'
 import ErrorMessage from '../ErrorMessage'
@@ -6,7 +8,7 @@ import TermsAndConditions from '../TermsAndConditions'
 
 class SubmitButton extends React.PureComponent {
 	static propTypes = {
-		onClick: React.PropTypes.func,
+		onClick: PropTypes.func,
 	}
 
 	render() {

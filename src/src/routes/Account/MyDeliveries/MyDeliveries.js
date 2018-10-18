@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import OrdersList from './OrdersList'
 import actions from 'actions/user'
 import accountCss from '../Account/Account.css'
