@@ -2,7 +2,7 @@ import React, { PropTypes, PureComponent } from 'react'
 import { replaceWithValues } from 'utils/text'
 
 import BottomBar from 'BottomBar'
-import BottomButton from '../components/BottomButton'
+import { BottomButton } from '../components/BottomButton'
 
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import Loading from 'Loading'

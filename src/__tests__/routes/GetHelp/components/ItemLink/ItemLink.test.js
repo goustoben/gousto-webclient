@@ -1,10 +1,9 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import Item from 'routes/GetHelp/components/Item'
-import ItemLink from 'routes/GetHelp/components/ItemLink'
-import css from 'routes/GetHelp/components/ItemLink/ItemLink.css'
-
+import { ItemLink } from 'routes/GetHelp/components/ItemLink'
+import { Item } from 'goustouicomponents'
+import Link from 'Link'
 
 describe('<ItemLink />', () => {
 	describe('render', () => {
@@ -15,18 +14,14 @@ describe('<ItemLink />', () => {
 				clientRouted
 			/>
 		)
-		const link = wrapper.find('GoustoLink')
+		const link = wrapper.find(Link)
 
-		test('it renders the label', () => {
-			expect(wrapper.text()).toContain('item-label')
-		})
-
-		test('it renders the link', () => {
+		test('a Link is rendered with the correct props', () => {
 			expect(link.prop('to')).toBe('/test')
 			expect(link.prop('clientRouted')).toBe(true)
 		})
 
-		test('it renders the link with clientRouted false when that prop is passed', () => {
+		test('Link is passed the prop clientRouted false when that prop value is passed to ItemLink', () => {
 			const linkNoClientRouted = mount(
 				<ItemLink
 					label="item-label"
@@ -35,29 +30,46 @@ describe('<ItemLink />', () => {
 				/>
 			)
 
-			expect(linkNoClientRouted.find('GoustoLink').prop('clientRouted')).toBe(false)
+			expect(linkNoClientRouted.find(Link).prop('clientRouted')).toBe(false)
 		})
 
-		test('it renders the arrow right', () => {
-			expect(wrapper.find(`.${css.itemArrowRight}`)).toHaveLength(1)
+		test('an Item is rendered with the passed label', () => {
+			expect(wrapper.text()).toContain('item-label')
 		})
-	})
 
-	describe('behaviour', () => {
-		test('the click event is propagated, so the <Item> onClick function is called', () => {
-			const trackClickSpy =  jest.fn()
-			const wrapper = mount(
-				<Item trackClick={trackClickSpy}>
-					<ItemLink
-						label="item-label"
-						to="/test"
-					/>
-				</Item>
+		test('the trackClick function is passed to the Item', () => {
+			const aFunction = () => {}
+			const itemLinkWithTracking = mount(
+				<ItemLink
+					label="item-label"
+					to="/test"
+					trackClick={aFunction}
+				/>
 			)
-			const itemLink = wrapper.find('ItemLink')
-			itemLink.simulate('click')
 
-			expect(trackClickSpy).toHaveBeenCalledTimes(1)
+			expect(itemLinkWithTracking.find(Item).prop('trackClick')).toBe(aFunction)
+		})
+
+		test('the isHiddenOnMobile value is passed to the Item', () => {
+			let itemLink = mount(
+				<ItemLink
+					label="item-label"
+					to="/test"
+					isHiddenOnMobile
+				/>
+			)
+
+			expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(true)
+
+			itemLink = mount(
+				<ItemLink
+					label="item-label"
+					to="/test"
+					isHiddenOnMobile={false}
+				/>
+			)
+
+			expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(false)
 		})
 	})
 })

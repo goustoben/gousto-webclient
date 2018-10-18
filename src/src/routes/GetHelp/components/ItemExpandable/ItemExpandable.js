@@ -1,11 +1,18 @@
-import React, { PropTypes, PureComponent } from 'react'
-import classnames from 'classnames'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 
-import css from './ItemExpandable.css'
+import { Item } from 'goustouicomponents'
 
-export default class ItemExpandable extends PureComponent {
+class ItemExpandable extends PureComponent {
 	static propTypes = {
 		label: PropTypes.string.isRequired,
+		trackClick: PropTypes.func,
+		isHiddenOnMobile: PropTypes.bool,
+	}
+
+	static defaultProps = {
+		trackClick: () => {},
+		isHiddenOnMobile: false,
 	}
 
 	state = {
@@ -17,21 +24,24 @@ export default class ItemExpandable extends PureComponent {
 	}
 
 	render() {
-		const { label, children } = this.props
+		const { label, trackClick, isHiddenOnMobile, children } = this.props
 		const { isExpanded } = this.state
-		const arrowClass = classnames({
-			[css.itemArrowRight]: !isExpanded,
-			[css.itemArrowDown]: isExpanded,
-		})
 
 		return (
 			<div onClick={() => this.toggleContent()}>
-				<div className={css.itemContent}>
-					{label}
-					<span className={classnames(arrowClass)} />
-				</div>
+				<Item
+					label={label}
+					trackClick={trackClick}
+					isHiddenOnMobile={isHiddenOnMobile}
+					arrowExpanded={isExpanded}
+				/>
 				{isExpanded ? children : null}
 			</div>
 		)
 	}
+}
+
+
+export {
+	ItemExpandable
 }

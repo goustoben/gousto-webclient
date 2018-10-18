@@ -4,6 +4,10 @@ import { mount } from 'enzyme'
 import { zendesk } from 'config/routes'
 import { telephone } from 'config/company'
 
+import { Item } from 'goustouicomponents'
+import { ItemLink } from 'routes/GetHelp/components/ItemLink'
+import { ItemExpandable } from 'routes/GetHelp/components/ItemExpandable'
+import itemCSS from 'routes/GetHelp/components/Item/Item.css'
 import Contact from 'routes/GetHelp/Contact/Contact'
 
 describe('<Contact />', () => {
@@ -46,7 +50,7 @@ describe('<Contact />', () => {
 		})
 
 		test('items are rendered', () => {
-			const items = wrapper.find('Item')
+			const items = wrapper.find(Item)
 
 			expect(items).toHaveLength(3)
 			expect(items.at(0).text()).toContain('test chatItem')
@@ -62,12 +66,18 @@ describe('<Contact />', () => {
 			expect(Button1.text()).toContain(content.button1Copy)
 			expect(Button2.text()).toContain(content.button2Copy)
 		})
+
+		test('email link points to zendesk', () => {
+			const linkTo = wrapper.find(ItemLink).find('a').prop('href')
+
+			expect(linkTo).toContain(zendesk.link)
+		})
 	})
 
 	describe('behaviour', () => {
 		test('live chat opens the chat when clicked', () => {
 			const openLiveChatSpy = jest.fn()
-			const chatItem = wrapper.find('Item').at(0).find('ItemExecutable')
+			const chatItemContent = wrapper.find(Item).at(0).find(`.${itemCSS.itemContent}`)
 			window.$zopim = {
 				livechat: {
 					window: {
@@ -75,19 +85,13 @@ describe('<Contact />', () => {
 					},
 				},
 			}
-			chatItem.simulate('click')
+			chatItemContent.simulate('click')
 
 			expect(openLiveChatSpy).toHaveBeenCalledTimes(1)
 		})
 
-		test('email points to zendesk', () => {
-			const linkTo = wrapper.find('Item').at(1).find('a').prop('href')
-
-			expect(linkTo).toContain(zendesk.link)
-		})
-
 		test('phone number is shown when phone item is clicked', () => {
-			const phoneItem = wrapper.find('Item').at(2).find('ItemExpandable')
+			const phoneItem = wrapper.find(ItemExpandable)
 			phoneItem.simulate('click')
 
 			expect(phoneItem.text()).toContain(telephone.number)
