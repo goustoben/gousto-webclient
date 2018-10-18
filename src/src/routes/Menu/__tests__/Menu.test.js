@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
-import Loading from 'Loading'
+import Loading from 'routes/Menu/Loading'
 import Banner from 'routes/Menu/Banner'
 import fetchData from 'routes/Menu/fetchData'
 import SubHeader from 'routes/Menu/SubHeader'
@@ -47,35 +47,38 @@ describe('Menu', () => {
 					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					filteredRecipesNumber={30}
+					isLoading={false}
 				/>,
 			)
 		})
 
-		test('should return a div', () => {
-			expect(wrapper.type()).toBe('div')
+		describe('initial render', () => {
+			test('should return a div', () => {
+				expect(wrapper.type()).toBe('div')
+			})
+
+			test('should render 1 SubHeader', () => {
+				expect(wrapper.find(SubHeader).length).toBe(1)
+			})
+
+			test('should render 1 BoxSummaryMobile', () => {
+				expect(wrapper.find(BoxSummaryMobile).length).toBe(1)
+			})
+
+			test('should render 1 BoxSummaryDesktop', () => {
+				expect(wrapper.find(BoxSummaryDesktop).length).toBe(1)
+			})
+
+			test('should not show a collections nav', () => {
+				expect(wrapper.find(CollectionsNav).length).toBe(0)
+			})
+
+			test('should not show as loading', () => {
+				expect(wrapper.find(Loading).prop('loading')).toBe(false)
+			})
 		})
 
-		test('should render 1 SubHeader', () => {
-			expect(wrapper.find(SubHeader).length).toBe(1)
-		})
-
-		test('should render 1 BoxSummaryMobile', () => {
-			expect(wrapper.find(BoxSummaryMobile).length).toBe(1)
-		})
-
-		test('should render 1 BoxSummaryDesktop', () => {
-			expect(wrapper.find(BoxSummaryDesktop).length).toBe(1)
-		})
-
-		test('should not show a collections nav', () => {
-			expect(wrapper.find(CollectionsNav).length).toBe(0)
-		})
-
-		test('should not show a Loading', () => {
-			expect(wrapper.find(Loading).length).toBe(0)
-		})
-
-		describe('with the isLoading prop set to true it should show a Loading', () => {
+		test('with the isLoading prop set to true it should show a Loading', () => {
 			wrapper = shallow(
 				<Menu
 					menuRecipeDetailShow={false}
@@ -87,10 +90,10 @@ describe('Menu', () => {
 					isLoading
 				/>,
 			)
-			expect(wrapper.find(Loading).length).toBe(1)
+			expect(wrapper.find(Loading).prop('loading')).toBe(true)
 		})
 
-		describe('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
+		test('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
 			wrapper = shallow(
 				<Menu
 					menuLoadBoxPrices={() => {}}
@@ -104,10 +107,10 @@ describe('Menu', () => {
 					basketOrderLoaded={() => {}}
 				/>,
 			)
-			expect(wrapper.find(Loading).length).toBe(0)
+			expect(wrapper.find(Loading).prop('loading')).toBe(false)
 		})
 
-		describe('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
+		test('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
 			wrapper = shallow(
 				<Menu
 					menuLoadBoxPrices={() => {}}
@@ -120,7 +123,7 @@ describe('Menu', () => {
 					basketOrderLoaded={() => {}}
 				/>,
 			)
-			expect(wrapper.find(Loading).length).toBe(0)
+			expect(wrapper.find(Loading).prop('loading')).toBe(false)
 		})
 
 		describe('with the collections feature enabled', () => {
@@ -202,10 +205,62 @@ describe('Menu', () => {
 		})
 	})
 
+	describe('fadeCSS', () => {
+		let wrapper
+
+		test('should render fade--recommendations', () => {
+			wrapper = shallow(
+				<Menu
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
+					features={Immutable.Map({})}
+					filteredRecipesNumber={30}
+					isLoading
+					hasRecommendations
+				/>,
+			)
+			const elementWithFadeCSS = wrapper.find('.fade--recommendations')
+
+			expect(elementWithFadeCSS).toHaveLength(1)
+		})
+
+		test('should render fadeOut', () => {
+			wrapper = shallow(
+				<Menu
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
+					features={Immutable.Map({})}
+					filteredRecipesNumber={30}
+					isLoading
+					hasRecommendations={false}
+				/>,
+			)
+			const elementWithFadeCSS = wrapper.find('.fadeOut')
+
+			expect(elementWithFadeCSS).toHaveLength(1)
+		})
+
+		test('should render willFade', () => {
+			wrapper = shallow(
+				<Menu
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
+					features={Immutable.Map({})}
+					filteredRecipesNumber={30}
+					isLoading={false}
+					hasRecommendations={false}
+				/>,
+			)
+			const elementWithFadeCSS = wrapper.find('.willFade')
+
+			expect(elementWithFadeCSS).toHaveLength(1)
+		})
+	})
+
 	describe('with the force collections feature enabled', () => {
 		let wrapper
 
-		beforeEach(() => {
+		test('should show a collections nav', () => {
 			wrapper = shallow(
 				<Menu
 					menuLoadBoxPrices={() => {}}
@@ -221,36 +276,30 @@ describe('Menu', () => {
 					})}
 				/>,
 			)
-		})
 
-		test('should show a collections nav', () => {
 			expect(wrapper.find(CollectionsNav).length).toBe(1)
 		})
+		test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
+			wrapper = shallow(
+				<Menu
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
+					clearAllFilters={() => {}}
+					features={Immutable.fromJS({
+						collections: {
+							value: true,
+						},
+						forceCollections: {
+							value: true,
+						},
+						collectionsNav: {
+							value: false,
+						},
+					})}
+				/>,
+			)
 
-		describe('and the collectionsNav feature disabled', () => {
-			beforeEach(() => {
-				wrapper = shallow(
-					<Menu
-						menuLoadBoxPrices={() => {}}
-						menuCollectionRecipes={Immutable.Map({})}
-						clearAllFilters={() => {}}
-						features={Immutable.fromJS({
-							collections: {
-								value: true,
-							},
-							forceCollections: {
-								value: true,
-							},
-							collectionsNav: {
-								value: false,
-							},
-						})}
-					/>,
-				)
-			})
-			test('should still show the collections nav bar', () => {
-				expect(wrapper.find(CollectionsNav).length).toBe(1)
-			})
+			expect(wrapper.find(CollectionsNav).length).toBe(1)
 		})
 	})
 

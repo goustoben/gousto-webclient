@@ -141,7 +141,6 @@ function menuLoadCollections(date, noUrlChange) {
 			filters: {
 				available_on: date,
 			},
-			'experiments[justforyou]': true,
 		}
 		const { data: collections } = await fetchCollections(accessToken, '', args)
 		const filterExperiment = state.features.getIn(['filterMenu', 'value'])
@@ -184,7 +183,6 @@ function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
 		const reqData = {
 			'filters[available_on]': date,
 			includes: ['ingredients', 'allergens', 'taxonomy'],
-			'experiments[justforyou]': true,
 		}
 		if (idsOnly) {
 			reqData['fields[]'] = 'id'
@@ -473,5 +471,25 @@ function menuMobileGridViewSet(from, to) {
 		},
 	}
 }
+
+const forceMenuLoad = (forceLoad) => ({
+	type: actionTypes.MENU_FORCE_LOAD,
+	forceLoad,
+})
+
+export const triggerMenuLoad = () => (
+	(dispatch, getState) => {
+		const initialLoad = !getState().menu.get('jfyLoaded')
+
+		if (initialLoad) {
+			dispatch(forceMenuLoad(true))
+
+			setTimeout(
+				() => dispatch(forceMenuLoad(false)),
+				2500,
+			)
+		}
+	}
+)
 
 export default menuActions

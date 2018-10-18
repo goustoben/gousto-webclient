@@ -3,6 +3,7 @@ import logger from 'utils/logger'
 
 import actionTypes from 'actions/actionTypes'
 
+import { loadRecommendations } from 'actions/recipes'
 import { getCollectionIdWithName } from 'utils/collections'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
@@ -43,6 +44,10 @@ export default async function fetchData({ store, query, params }, force, backgro
 	*/
 	if (isAuthenticated && !store.getState().features.getIn(['forceCollections', 'value'])) {
 		store.dispatch(actions.featureSet('forceCollections', true))
+	}
+
+	if (isAuthenticated && !store.getState().features.get('justforyou')) {
+		store.dispatch(loadRecommendations())
 	}
 
 	let fetchDataPromise

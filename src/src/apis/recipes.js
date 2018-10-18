@@ -23,3 +23,7 @@ export function fetchRecipesStockByDate(reqData) {
 export function fetchAvailableDates(accessToken) {
 	return fetch(accessToken, `${endpoint('recipes', version)}${routes.recipes.availableDates}`, {}, 'GET')
 }
+
+export const fetchRecommendations = (accessToken) => (
+	fetch(accessToken, `${endpoint('recipes', routes.version.recipes)}${routes.recipes.recommendations}`, {}, 'GET')
+)

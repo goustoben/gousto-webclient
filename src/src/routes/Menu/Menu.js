@@ -9,9 +9,9 @@ import menu from 'config/menu'
 
 import MenuNoResults from './MenuNoResults'
 
-import Loading from 'Loading'
 import SubHeader from './SubHeader'
 import FilterNav from './FilterNav'
+import Loading from './Loading'
 import FilterTagsNav from './FilterTagsNav/FilterTagsNavContainer'
 import css from './Menu.css'
 
@@ -39,6 +39,8 @@ class Menu extends React.Component {
 		boxDetailsVisibilityChange: PropTypes.func.isRequired,
 		disabled: PropTypes.bool.isRequired,
 		boxSummaryDeliveryDaysLoad: PropTypes.func,
+		hasRecommendations: PropTypes.bool,
+		forceLoad: PropTypes.bool,
 		menuLoadDays: PropTypes.func,
 		menuBrowseCTAShow: PropTypes.bool,
 		menuBrowseCTAVisibilityChange: PropTypes.func,
@@ -58,25 +60,26 @@ class Menu extends React.Component {
 		menuLoadingBoxPrices: PropTypes.bool,
 		filteredRecipesNumber: PropTypes.number,
 		clearAllFilters: PropTypes.func,
+		triggerMenuLoad: PropTypes.func,
 	}
 
 	static contextTypes = {
 		store: PropTypes.object.isRequired,
 	}
 
+	static defaultProps = {
+		forceLoad: false,
+	}
+
 	static fetchData(args, force) {
 		return fetchData(args, force)
 	}
 
-	constructor() {
-		super()
-
-		this.state = {
-			mobileGridView: false,
-			detailRecipe: null,
-			isClient: false,
-			isChrome: false,
-		}
+	state = {
+		mobileGridView: false,
+		detailRecipe: null,
+		isClient: false,
+		isChrome: false,
 	}
 
 	componentDidMount() {
@@ -93,11 +96,14 @@ class Menu extends React.Component {
 			props.basketOrderLoaded(props.params.orderId)
 		}
 
-		const forceLoad = (props.storeOrderId && props.storeOrderId !== props.params.orderId)
+		const forceDataLoad = (props.storeOrderId && props.storeOrderId !== props.params.orderId)
 		// TODO: Add back logic to check what needs to be reloaded
 		const query = props.query || {}
 		const params = props.params || {}
-		Menu.fetchData({ store, query, params }, forceLoad)
+		if (props.hasRecommendations) {
+			props.triggerMenuLoad()
+		}
+		Menu.fetchData({ store, query, params }, forceDataLoad)
 
 		if (props.boxSummaryDeliveryDays.size === 0 && !props.disabled) {
 			props.menuLoadDays().then(() => {
@@ -181,11 +187,21 @@ class Menu extends React.Component {
 
 
 	render() {
-		const mobileGridView = this.state.mobileGridView
+		const { hasRecommendations, forceLoad } = this.props
+		const { mobileGridView } = this.state
 		const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
 		const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
 		const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
-		const showLoading = this.props.isLoading && !overlayShow
+		const showLoading = this.props.isLoading && !overlayShow || forceLoad
+
+		let fadeCss = null
+		if (showLoading && hasRecommendations) {
+			fadeCss = css['fade--recommendations']
+		} else if (showLoading) {
+			fadeCss = css.fadeOut
+		} else {
+			fadeCss = css.willFade
+		}
 
 		let overlayShowCSS = null
 		if (this.state.isChrome) {
@@ -207,8 +223,8 @@ class Menu extends React.Component {
 					/>
 					<FilterTagsNav />
 					<FilterNav showLoading={this.props.isLoading} />
-					{showLoading ? <div className={css.loadingContainer}><div className={css.loading}><Loading /></div></div> : null}
-					<div className={showLoading ? css.fadeOut : css.willFade} data-testing="menuRecipes">
+					<Loading loading={showLoading} hasRecommendations={hasRecommendations} />
+					<div className={fadeCss} data-testing="menuRecipes">
 						{collectionsNavEnabled && !menuFilterExperiment &&
 							<CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
 						<FilterMenu />
