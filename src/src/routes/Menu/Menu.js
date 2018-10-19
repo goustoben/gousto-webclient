@@ -35,7 +35,7 @@ class Menu extends React.Component {
 		basketOrderLoaded: PropTypes.func.isRequired,
 		menuLoadBoxPrices: PropTypes.func.isRequired,
 		boxDetailsVisibilityChange: PropTypes.func.isRequired,
-		boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.List).isRequired,
+		boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map).isRequired,
 		disabled: PropTypes.bool.isRequired,
 		menuLoadDays: PropTypes.func.isRequired,
 		menuMobileGridViewSet: PropTypes.func.isRequired,

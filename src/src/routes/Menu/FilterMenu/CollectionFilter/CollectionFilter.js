@@ -11,15 +11,16 @@ import css from '../../FilterTag/FilterTag.css'
 const CollectionFilter = ({ collections, filterCollectionChange, currentCollectionId }) => (
 	<div>
 		<H2 size="XL2" headlineFont={false}>Category</H2>
-		{collections.map((collection, index) => {
+		{collections.valueSeq().map((collection) => {
 			const collectionId = collection.get('id')
 
 			return (
 				<FilterItem
+					key={`collectionfilter-${collectionId}`}
 					type="radio"
 					groupName="collection"
 					value={collectionId}
-					identifier={`collectionfilter-${index}`}
+					identifier={`collectionfilter-${collectionId}`}
 					checked={currentCollectionId === collectionId}
 					onClick={() => { filterCollectionChange(collectionId) }}
 				>
