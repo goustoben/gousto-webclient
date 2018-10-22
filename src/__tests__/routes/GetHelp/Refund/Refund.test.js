@@ -34,19 +34,20 @@ describe('<Refund />', () => {
 					order={{ id: '0' }}
 				/>
 			)
-			getHelpLayout = wrapper.find('GetHelpLayout')
+			fetchPromise.then(() => {
+				wrapper.update()
+				getHelpLayout = wrapper.find('GetHelpLayout')
+			})
 		})
 
 		test('layout is rendering correctly', () => {
-			fetchPromise.then(() => {
-				const BottomBar = getHelpLayout.find('BottomBar')
+			const BottomBar = getHelpLayout.find('BottomBar')
 
-				expect(getHelpLayout).toHaveLength(1)
-				expect(getHelpLayout.prop('body')).toContain('We would like to offer you £7.77')
-				expect(BottomBar).toHaveLength(5)
-				expect(BottomBar.find('BottomButton')).toHaveLength(1)
-				expect(BottomBar.find('Button')).toHaveLength(1)
-			})
+			expect(getHelpLayout).toHaveLength(1)
+			expect(getHelpLayout.prop('body')).toContain('We would like to offer you £7.77')
+			expect(BottomBar).toHaveLength(1)
+			expect(BottomBar.find('BottomButton')).toHaveLength(1)
+			expect(BottomBar.find('BottomBar')).toHaveLength(1)
 		})
 
 		test('header is rendering correctly', () => {
@@ -54,15 +55,13 @@ describe('<Refund />', () => {
 		})
 
 		test('bottom bar buttons are rendering correctly', () => {
-			fetchPromise.then(() => {
-				const BottomBar = getHelpLayout.find('BottomBar')
-				const Button1 = BottomBar.find('BottomButton')
-				const Button2 = BottomBar.find('Button').at(1)
-				const { index, contact } = routes.getHelp
+			const BottomBar = getHelpLayout.find('BottomBar')
+			const Button1 = BottomBar.find('BottomButton')
+			const Button2 = BottomBar.find('Button').at(1)
+			const { index, contact } = routes.getHelp
 
-				expect(Button1.prop('url')).toContain(`${index}/${contact}`)
-				expect(Button2.text()).toBe('button2 £7.77 copy')
-			})
+			expect(Button1.prop('url')).toContain(`${index}/${contact}`)
+			expect(Button2.text()).toBe('button2 £7.77 copy')
 		})
 	})
 
