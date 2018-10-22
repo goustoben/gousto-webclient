@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React  from 'react'
+import PropTypes from 'prop-types'
 import Svg from 'Svg'
 import css from './SocialButton.css'
 
