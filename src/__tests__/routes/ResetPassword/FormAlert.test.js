@@ -16,7 +16,7 @@ describe('<FormAlert />', () => {
 	})
 
 	test('no alert when the errorResetPassword prop is false', () => {
-		wrapper = shallow(<FormAlert errorResetPassword={false} />)
+		wrapper = shallow(<FormAlert />)
 
 		expect(wrapper.find(Alert)).toHaveLength(0)
 	})

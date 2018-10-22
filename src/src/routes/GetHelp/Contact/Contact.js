@@ -1,13 +1,12 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import List from '../components/List'
-import Item from '../components/Item'
-import ItemLink from '../components/ItemLink'
-import ItemExecutable from '../components/ItemExecutable'
-import ItemExpandable from '../components/ItemExpandable'
+import { List } from '../components/List'
+import { ItemLink } from '../components/ItemLink'
+import { Item, ItemExpandable } from 'goustouicomponents'
 import PhoneContent from './PhoneContent'
-import BottomButton from '../components/BottomButton'
 import BottomBar from 'BottomBar'
+import { BottomButton } from '../components/BottomButton'
 
 import { client, zendesk } from 'config/routes'
 
@@ -33,24 +32,24 @@ const Contact = ({
 }) => (
 	<GetHelpLayout title={title} body={body}>
 		<List>
-			<Item trackClick={trackClick(selectContactChannel, 'chat')} isHiddenOnMobile>
-				<ItemExecutable
-					label={chatItem}
-					onClick={openLiveChat}
-				/>
-			</Item>
-			<Item trackClick={trackClick(selectContactChannel, 'email')}>
-				<ItemLink
-					label={emailItem}
-					to={zendesk.link}
-					clientRouted={false}
-				/>
-			</Item>
-			<Item trackClick={trackClick(selectContactChannel, 'phone')}>
-				<ItemExpandable label={phoneItem}>
-					<PhoneContent />
-				</ItemExpandable>
-			</Item>
+			<Item
+				label={chatItem}
+				trackClick={trackClick(selectContactChannel, 'chat')}
+				isHiddenOnMobile
+				onClick={openLiveChat}
+			/>
+			<ItemLink
+				label={emailItem}
+				trackClick={trackClick(selectContactChannel, 'email')}
+				to={zendesk.link}
+				clientRouted={false}
+			/>
+			<ItemExpandable
+				label={phoneItem}
+				trackClick={trackClick(selectContactChannel, 'phone')}
+			>
+				<PhoneContent />
+			</ItemExpandable>
 		</List>
 		<BottomBar>
 			<BottomButton color="secondary" url={client.getHelp.index} clientRouted>

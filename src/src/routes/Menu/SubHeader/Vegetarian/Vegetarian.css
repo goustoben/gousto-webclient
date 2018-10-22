@@ -6,12 +6,12 @@
 
 .checkboxEmpty {
 	composes: checkbox;
-	composes: fa-square-o from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-square-o from 'styles/vendor/font-awesome-module.css';
 }
 
 .checkboxChecked {
 	composes: checkbox;
-	composes: fa-check-square-o from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-check-square-o from 'styles/vendor/font-awesome-module.css';
 }
 
 .checkboxMobile {

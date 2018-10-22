@@ -12,6 +12,7 @@
 
 	@media ScreenSMMin {
 		width: 25vw;
+		min-width: 260px;
 	}
 }
 

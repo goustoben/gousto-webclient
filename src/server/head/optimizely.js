@@ -47,7 +47,7 @@ export default function optimizely(features) {
 				}
 
 			</script>
-			<script src="//cdn.optimizely.com/js/${config[__ENV__]}.js"></script>` // eslint-disable-line no-underscore-dangle
+			<script src="//cdn.optimizely.com/js/${config[__ENV__]}.js" defer></script>` // eslint-disable-line no-underscore-dangle
 	}
 
 	return script

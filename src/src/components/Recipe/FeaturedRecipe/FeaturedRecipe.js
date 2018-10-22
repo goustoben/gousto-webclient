@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
@@ -9,11 +10,12 @@ import Image from '../Image'
 import AddButton from '../AddButton'
 import ChefQuote from '../ChefQuote'
 import UseWithin from '../UseWithin'
+import TasteScore from '../TasteScore'
 import CookingTime from '../CookingTime'
 import RangeBadge from 'Recipe/RangeBadge'
+import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import EquipmentRequired from '../EquipmentRequired'
-import DisabledOverlay from '../DisabledOverlay'
 import { getChef } from 'utils/recipe'
 import { recipePropTypes } from 'Recipe'
 
@@ -29,6 +31,7 @@ const FeaturedRecipe = (props) => (
 					mouseLeave={props.unhighlight}
 				/>
 			</span>
+			<TasteScore className={css.score} score={props.tasteScore} />
 			<div className={css.chefLogo}>
 				<Chef chef={props.chef} />
 			</div>
@@ -99,6 +102,7 @@ FeaturedRecipe.propTypes = {
 	highlight: PropTypes.func,
 	unhighlight: PropTypes.func,
 	detailHover: PropTypes.bool,
+	tasteScore: PropTypes.number,
 }
 
 FeaturedRecipe.defaultProps = {
@@ -106,6 +110,7 @@ FeaturedRecipe.defaultProps = {
 	tag: '',
 	isRecommendedRecipe: false,
 	chef: Immutable.Map({}),
+	description: '',
 }
 
 export default FeaturedRecipe

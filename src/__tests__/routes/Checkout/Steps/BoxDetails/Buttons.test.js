@@ -16,7 +16,7 @@ describe('<Buttons />', () => {
 
 	beforeEach(() => {
 		qty = 0
-		recipeId = 1
+		recipeId = '1'
 		numPortions = 2
 		limitReached = false
 		onAdd = sinon.spy()
@@ -96,7 +96,7 @@ describe('<Buttons />', () => {
 					showControl
 				/>,
 			)
-	
+
 			expect(onAdd.called).not.toBe(true)
 		})
 

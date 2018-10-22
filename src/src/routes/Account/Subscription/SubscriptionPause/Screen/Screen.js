@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import css from './Screen.css'
 import ModalPanel from 'Modal/ModalPanel'
 import ReasonsScreen from '../ReasonsScreen'

@@ -47,6 +47,7 @@ module.exports = {
 			contact: 'contact',
 			orderIssue: 'order-issue',
 			confirmation: 'confirmation',
+			ingredients: 'ingredients',
 		},
 
 		help: '/help',
@@ -149,6 +150,7 @@ module.exports = {
 	},
 	recipes: {
 		availableDates: '/dates/available',
+		recommendations: '/recommendations',
 	},
 	workable: {
 		link: 'https://gousto.workable.com/',

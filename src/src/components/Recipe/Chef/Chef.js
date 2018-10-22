@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { Iterable } from 'immutable'
 
 import css from './Chef.css'
@@ -21,9 +22,9 @@ const Chef = ({ chef }) => {
 }
 
 Chef.propTypes = {
-	chef: React.PropTypes.shape({
-		media: React.PropTypes.shape({
-			images: React.PropTypes.Array,
+	chef: PropTypes.shape({
+		media: PropTypes.shape({
+			images: PropTypes.Array,
 		}),
 		name: PropTypes.string,
 		celebrity: PropTypes.bool,

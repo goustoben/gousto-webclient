@@ -6,26 +6,19 @@ import Immutable from 'immutable'
 import Image from 'Recipe/Image'
 import Title from 'Recipe/Title'
 import ChefQuote from 'Recipe/ChefQuote'
+import TasteScore from 'Recipe/TasteScore'
 import EquipmentRequired from 'Recipe/EquipmentRequired'
 
 import FeaturedRecipe from 'Recipe/FeaturedRecipe'
 
 describe('<FeaturedRecipe />', () => {
 	let wrapper
-	let recipe = Immutable.fromJS({
-		id: 1,
-		title: 'test',
-		rating: {
-			count: 1,
-			average: 4,
-		},
-		url: '',
+	let recipeProps = {
+		id: '1',
 		cookingTime: 1,
-		cookingTimeFamily: 1,
-		shelfLifeDays: '',
-		media: {
-			images: [
-				{
+		useWithin: '',
+		equipment: Immutable.List(),
+		media: Immutable.List([{
 					urls: [
 						{},
 						{},
@@ -34,18 +27,25 @@ describe('<FeaturedRecipe />', () => {
 						},
 					],
 				},
-			],
-		},
-	})
+			]),
+		features: Immutable.Map(),
+	}
 
 	beforeEach(() => {
-		wrapper = shallow(<FeaturedRecipe recipe={recipe} />)
+		wrapper = shallow(<FeaturedRecipe {...recipeProps} />)
 	})
 
 	test('should have a 1 EquipmentRequired with view "notice"', () => {
 		const component = wrapper.find(EquipmentRequired)
 		expect(component.length).toBe(1)
 		expect(component.prop('view')).toBe('notice')
+	})
+
+	test('should contain one TasteScore component', () => {
+		wrapper = shallow(<FeaturedRecipe {...recipeProps} tasteScore={99} />)
+
+		expect(wrapper.find(TasteScore)).toHaveLength(1)
+		expect(wrapper.find(TasteScore).prop('score')).toEqual(99)
 	})
 
 	test('should contain one ChefQuote component', () => {

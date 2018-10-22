@@ -70,8 +70,8 @@ span:target .hidden {
 }
 
 .menuIcon {
-	composes: fa-lg fa-fw from 'styles/vendor/font-awesome-module.css';
-	composes: paddingLGRight from 'sass-loader!styles/spacing.scss';
+	composes: fa-basic-class fa-lg fa-fw from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class paddingLGRight from 'sass-loader!styles/spacing.scss';
 	font-size: 1.4em;
 	width: 1.5em;
 	color: MainColor;
@@ -79,47 +79,47 @@ span:target .hidden {
 
 .icon-home {
 	composes: menuIcon;
-	composes: fa-home from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-home from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-login {
 	composes: menuIcon;
-	composes: fa-user from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-user from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-logout {
 	composes: menuIcon;
-	composes: fa-sign-out from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-sign-out from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-box {
 	composes: menuIcon;
-	composes: fa-archive from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-archive from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-menu {
 	composes: menuIcon;
-	composes: fa-cutlery from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-cutlery from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-faq {
 	composes: menuIcon;
-	composes: fa-question-circle from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-question-circle from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-contactUs {
 	composes: menuIcon;
-	composes: fa-comment from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-comment from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-heart {
 	composes: menuIcon;
-	composes: fa-heart from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-heart from 'styles/vendor/font-awesome-module.css';
 }
 
 .icon-tree {
 	composes: menuIcon;
-	composes: fa-tree from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-tree from 'styles/vendor/font-awesome-module.css';
 }
 
 .boxContainer {

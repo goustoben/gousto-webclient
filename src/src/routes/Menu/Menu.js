@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
 import shallowCompare from 'react-addons-shallow-compare'
@@ -9,9 +10,9 @@ import menu from 'config/menu'
 
 import MenuNoResults from './MenuNoResults'
 
-import Loading from 'Loading'
 import SubHeader from './SubHeader'
 import FilterNav from './FilterNav'
+import Loading from './Loading'
 import FilterTagsNav from './FilterTagsNav/FilterTagsNavContainer'
 import css from './Menu.css'
 
@@ -33,50 +34,64 @@ class Menu extends React.Component {
 	static propTypes = {
 		basketOrderLoaded: PropTypes.func.isRequired,
 		menuLoadBoxPrices: PropTypes.func.isRequired,
+		boxDetailsVisibilityChange: PropTypes.func.isRequired,
+		boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map).isRequired,
+		disabled: PropTypes.bool.isRequired,
+		menuLoadDays: PropTypes.func.isRequired,
+		menuMobileGridViewSet: PropTypes.func.isRequired,
+		basketRestorePreviousValues: PropTypes.func.isRequired,
+		params: PropTypes.shape({
+			orderId: PropTypes.string.isRequired
+		}),
+		isAuthenticated: PropTypes.bool.isRequired,
 		menuRecipeDetailShow: PropTypes.string,
 		detailVisibilityChange: PropTypes.func,
 		boxSummaryShow: PropTypes.bool,
-		boxDetailsVisibilityChange: PropTypes.func.isRequired,
-		disabled: PropTypes.bool.isRequired,
 		boxSummaryDeliveryDaysLoad: PropTypes.func,
-		menuLoadDays: PropTypes.func,
+		hasRecommendations: PropTypes.bool,
+		forceLoad: PropTypes.bool,
 		menuBrowseCTAShow: PropTypes.bool,
 		menuBrowseCTAVisibilityChange: PropTypes.func,
 		loginVisibilityChange: PropTypes.func,
-		menuMobileGridViewSet: PropTypes.func.isRequired,
-		basketRestorePreviousValues: PropTypes.func.isRequired,
 		features: PropTypes.instanceOf(Immutable.Map),
 		menuCurrentCollectionId: PropTypes.string,
 		menuVariation: PropTypes.string,
-		params: PropTypes.object,
 		query: PropTypes.object,
 		orderId: PropTypes.string,
 		storeOrderId: PropTypes.string,
 		isLoading: PropTypes.bool,
-		isAuthenticated: PropTypes.bool.isRequired,
 		tariffId: PropTypes.number,
 		menuLoadingBoxPrices: PropTypes.bool,
 		filteredRecipesNumber: PropTypes.number,
 		clearAllFilters: PropTypes.func,
+		triggerMenuLoad: PropTypes.func,
+	}
+
+	static defaultProps = {
+		boxSummaryDeliveryDays: Immutable.List(),
+		boxSummaryDeliveryDaysLoad: () => {},
+		boxDetailsVisibilityChange: () => {},
+		disabled: false,
+		isAuthenticated: false,
 	}
 
 	static contextTypes = {
 		store: PropTypes.object.isRequired,
 	}
 
+	static defaultProps = {
+		forceLoad: false,
+	}
+
 	static fetchData(args, force) {
 		return fetchData(args, force)
 	}
 
-	constructor() {
-		super()
-
-		this.state = {
-			mobileGridView: false,
-			detailRecipe: null,
-			isClient: false,
-			isChrome: false,
-		}
+	state = {
+		mobileGridView: false,
+		detailRecipe: null,
+		isClient: false,
+		isChrome: false,
 	}
 
 	componentDidMount() {
@@ -93,11 +108,14 @@ class Menu extends React.Component {
 			props.basketOrderLoaded(props.params.orderId)
 		}
 
-		const forceLoad = (props.storeOrderId && props.storeOrderId !== props.params.orderId)
+		const forceDataLoad = (props.storeOrderId && props.storeOrderId !== props.params.orderId)
 		// TODO: Add back logic to check what needs to be reloaded
 		const query = props.query || {}
 		const params = props.params || {}
-		Menu.fetchData({ store, query, params }, forceLoad)
+		if (props.hasRecommendations) {
+			props.triggerMenuLoad()
+		}
+		Menu.fetchData({ store, query, params }, forceDataLoad)
 
 		if (props.boxSummaryDeliveryDays.size === 0 && !props.disabled) {
 			props.menuLoadDays().then(() => {
@@ -181,11 +199,21 @@ class Menu extends React.Component {
 
 
 	render() {
-		const mobileGridView = this.state.mobileGridView
+		const { hasRecommendations, forceLoad } = this.props
+		const { mobileGridView } = this.state
 		const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
 		const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
 		const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
-		const showLoading = this.props.isLoading && !overlayShow
+		const showLoading = this.props.isLoading && !overlayShow || forceLoad
+
+		let fadeCss = null
+		if (showLoading && hasRecommendations) {
+			fadeCss = css['fade--recommendations']
+		} else if (showLoading) {
+			fadeCss = css.fadeOut
+		} else {
+			fadeCss = css.willFade
+		}
 
 		let overlayShowCSS = null
 		if (this.state.isChrome) {
@@ -206,9 +234,9 @@ class Menu extends React.Component {
 						orderId={this.props.orderId}
 					/>
 					<FilterTagsNav />
-					<FilterNav />
-					{showLoading ? <div className={css.loadingContainer}><div className={css.loading}><Loading /></div></div> : null}
-					<div className={showLoading ? css.fadeOut : css.willFade} data-testing="menuRecipes">
+					<FilterNav showLoading={this.props.isLoading} />
+					<Loading loading={showLoading} hasRecommendations={hasRecommendations} />
+					<div className={fadeCss} data-testing="menuRecipes">
 						{collectionsNavEnabled && !menuFilterExperiment &&
 							<CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
 						<FilterMenu />

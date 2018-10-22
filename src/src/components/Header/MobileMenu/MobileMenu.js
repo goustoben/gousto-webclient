@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import css from './MobileMenu.css'
@@ -6,13 +7,13 @@ import config from 'config'
 
 class MobileMenu extends React.PureComponent {
 	static propTypes = {
-		show: React.PropTypes.bool.isRequired,
-		menuItems: React.PropTypes.array.isRequired,
-		isAuthenticated: React.PropTypes.bool.isRequired,
-		loginFunc: React.PropTypes.func.isRequired,
-		logoutFunc: React.PropTypes.func.isRequired,
-		hideNav: React.PropTypes.bool.isRequired,
-		promoCodeUrl: React.PropTypes.string,
+		show: PropTypes.bool.isRequired,
+		menuItems: PropTypes.array.isRequired,
+		isAuthenticated: PropTypes.bool.isRequired,
+		loginFunc: PropTypes.func.isRequired,
+		logoutFunc: PropTypes.func.isRequired,
+		hideNav: PropTypes.bool.isRequired,
+		promoCodeUrl: PropTypes.string,
 	}
 	static defaultProps = {
 		isAuthenticated: false,

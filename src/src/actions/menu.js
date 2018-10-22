@@ -161,7 +161,12 @@ function menuLoadCollections(date, noUrlChange) {
 			const preferredCollectionId = getCollectionIdWithName(getState(), preferredCollection)
 
 			if (changeCollection && getState().menuCollections.size > 0) {
+				let recommendations = getState().menuCollections.find(collection => collection.get('slug') === 'recommendations')
 				let landingCollectionId = preferredCollectionId || getDefaultCollectionId(getState())
+
+				if (recommendations) {
+					landingCollectionId = recommendations.get('id')
+				}
 				if (!landingCollectionId) {
 					landingCollectionId = getState().menuCollections.first().get('id')
 				}
@@ -203,8 +208,8 @@ function menuLoadCollectionsRecipes(date) {
 		}
 
 		return Promise.all(
-				ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
-			)
+			ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
+		)
 			.then(() => {
 				const state = getState()
 				const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock)
@@ -466,5 +471,25 @@ function menuMobileGridViewSet(from, to) {
 		},
 	}
 }
+
+const forceMenuLoad = (forceLoad) => ({
+	type: actionTypes.MENU_FORCE_LOAD,
+	forceLoad,
+})
+
+export const triggerMenuLoad = () => (
+	(dispatch, getState) => {
+		const initialLoad = !getState().menu.get('jfyLoaded')
+
+		if (initialLoad) {
+			dispatch(forceMenuLoad(true))
+
+			setTimeout(
+				() => dispatch(forceMenuLoad(false)),
+				2500,
+			)
+		}
+	}
+)
 
 export default menuActions

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './NavBarItem.css'
 import classnames from 'classnames'
@@ -17,11 +18,11 @@ const NavBarItem = ({ isActive, children, className, pathName, clientRouted }) =
 )
 
 NavBarItem.propTypes = {
-	pathName: React.PropTypes.string,
-	isActive: React.PropTypes.bool,
-	children: React.PropTypes.node,
-	className: React.PropTypes.string,
-	clientRouted: React.PropTypes.bool,
+	pathName: PropTypes.string,
+	isActive: PropTypes.bool,
+	children: PropTypes.node,
+	className: PropTypes.string,
+	clientRouted: PropTypes.bool,
 }
 
 NavBarItem.defaultProps = {

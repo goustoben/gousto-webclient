@@ -1,8 +1,11 @@
-import React, { PropTypes, PureComponent } from 'react'
-import Loading from 'Loading'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+
 import BottomBar from 'BottomBar'
-import BottomButton from '../components/BottomButton'
+import { BottomButton } from '../components/BottomButton'
+
 import GetHelpLayout from 'layouts/GetHelpLayout'
+import Loading from 'Loading'
 
 import { Button } from 'goustouicomponents'
 import { client as routes } from 'config/routes'

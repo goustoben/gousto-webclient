@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
@@ -10,6 +11,7 @@ import Rating from '../Rating'
 import UseWithin from '../UseWithin'
 import AddButton from '../AddButton'
 import StockBadge from '../StockBadge'
+import TasteScore from '../TasteScore'
 import CookingTime from '../CookingTime'
 import RangeBadge from 'Recipe/RangeBadge'
 import DisabledOverlay from '../DisabledOverlay'
@@ -29,6 +31,7 @@ const GridRecipe = (props) => (
 					mouseLeave={props.unhighlight}
 				/>
 			</span>
+			<TasteScore className={css.score} score={props.tasteScore} />
 			<div>
 				<Chef chef={props.chef} />
 			</div>
@@ -98,6 +101,7 @@ GridRecipe.propTypes = {
 	highlight: PropTypes.func,
 	unhighlight: PropTypes.func,
 	detailHover: PropTypes.bool,
+	tasteScore: PropTypes.number,
 }
 
 GridRecipe.defaultProps = {

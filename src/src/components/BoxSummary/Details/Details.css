@@ -50,7 +50,7 @@
 }
 
 .clearIcon {
-	composes: fa-pencil from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-pencil from 'styles/vendor/font-awesome-module.css';
 	margin-right: 2px;
 }
 
@@ -68,7 +68,7 @@
 	cursor: pointer;
 }
 .warningIcon {
-	composes: fa-warning fa-fw from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-warning fa-fw from 'styles/vendor/font-awesome-module.css';
 }
 .recipeItems {
 	@media ScreenSMMin and HeightMDMax {

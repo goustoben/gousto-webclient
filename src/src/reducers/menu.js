@@ -5,15 +5,23 @@ import moment from 'moment'
 
 const menuInitialState = Immutable.Map({
 	filtersMenuVisible: false,
+	forceLoad: false,
+	jfyLoaded: false,
 })
 
 const menu = {
 	menu: (state = menuInitialState, action) => {
 		switch (action.type) {
-			case actionTypes.MENU_FILTERS_VISIBILITY_CHANGE:
+			case actionTypes.MENU_FILTERS_VISIBILITY_CHANGE: {
 				return state.merge({
 					filtersMenuVisible: action.visible,
 				})
+			}
+
+			case actionTypes.MENU_FORCE_LOAD: {
+				return state.set('forceLoad', action.forceLoad).set('jfyLoaded', true)
+			}
+
 			default:
 				return state
 		}

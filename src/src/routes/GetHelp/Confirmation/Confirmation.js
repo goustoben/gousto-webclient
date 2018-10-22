@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import BottomBar from 'BottomBar'
-import BottomButton from '../components/BottomButton'
+import { BottomButton } from '../components/BottomButton'
 
 import GetHelpLayout from 'layouts/GetHelpLayout'
 

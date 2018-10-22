@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import filterActions from 'actions/filters'
 import FilterTagsNav from './FilterTagsNav'
 import config from 'config/recipes'
+import { getShortTitle } from 'selectors/filters'
 
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters'
 
@@ -9,9 +10,10 @@ export default connect((state) => {
 	const { filters, menuCollections } = state
 	const tags = [
 			(menuCollections.getIn([filters.get('currentCollectionId'), 'shortTitle'], 'All Recipes') === 'All Recipes') ? null : {
-				text: menuCollections.getIn([filters.get('currentCollectionId'), 'shortTitle'], 'All Recipes'),
+				text: getShortTitle(menuCollections, filters.get('currentCollectionId')),
 				type: 'collection',
 				value: getAllRecipesCollectionId(state),
+				slug: menuCollections.getIn([filters.get('currentCollectionId'), 'slug'], ''),
 			},
 			...filters.get('dietTypes', []).map((dietType) => ({
 				text: config.dietTypes[dietType],

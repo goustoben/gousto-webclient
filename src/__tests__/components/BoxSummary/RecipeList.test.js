@@ -1,8 +1,6 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import sinon from 'sinon'
-
 import Immutable from 'immutable' // eslint-disable-line no-caps
 
 import RecipeList from 'BoxSummary/RecipeList/RecipeList'
@@ -14,10 +12,10 @@ describe('RecipeList', () => {
 
 	beforeEach(() => {
 		menuRecipesStore = Immutable.fromJS({
-			1: 'store1',
-			2: 'store2',
-			3: 'store3',
-			4: 'store4',
+			1: { id: 'store1' },
+			2: { id: 'store2' },
+			3: { id: 'store3' },
+			4: { id: 'store4' },
 		})
 		recipes = Immutable.fromJS({ 1: 1, 2: 1, 3: 1, 4: 1 })
 	})
@@ -39,7 +37,7 @@ describe('RecipeList', () => {
 
 		expect(wrapper.find(RecipeHolder).length).toEqual(4)
 		wrapper.find(RecipeHolder).forEach((node, index) => {
-			expect(node.prop('recipe')).toEqual(`store${index + 1}`)
+			expect(node.prop('recipe')).toEqual(Immutable.Map({ id: `store${index + 1}` }))
 		})
 	})
 
@@ -57,7 +55,7 @@ describe('RecipeList', () => {
 				.find(RecipeHolder)
 				.last()
 				.prop('recipe'),
-		).not.toBeInstanceOf(Immutable.Map)
+		).toBeInstanceOf(Immutable.Map)
 	})
 
 	test('should call detailsVisibilityChange once clicked', () => {

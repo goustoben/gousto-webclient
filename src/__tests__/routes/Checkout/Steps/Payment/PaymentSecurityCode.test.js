@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import sinon from 'sinon'
 
 import { Field } from 'redux-form'
 import PaymentSecurityCode from 'routes/Checkout/Components/Payment/PaymentSecurityCode'
@@ -8,10 +7,8 @@ import CheckoutTooltip from 'routes/Checkout/Components/CheckoutTooltip/Checkout
 
 describe('PaymentSecurityCode', () => {
 	let wrapper
-	let handleSecurityCodeChange
 
 	beforeEach(() => {
-		handleSecurityCodeChange = sinon.spy()
 		wrapper = shallow(<PaymentSecurityCode />)
 	})
 

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { H1 } from 'Page/Header'
 import Icon from 'Icon'
 
@@ -25,7 +26,7 @@ const Title = ({ children, iconAfter, iconBefore, headlineFont }) => (
 )
 
 Title.propTypes = {
-	children: PropTypes.node.isRequired,
+	children: PropTypes.node,
 	iconAfter: PropTypes.string,
 	iconBefore: PropTypes.string,
 	headlineFont: PropTypes.bool,

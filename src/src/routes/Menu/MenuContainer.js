@@ -1,11 +1,15 @@
-import { connect } from 'react-redux'
-import actions from 'actions'
 import Immutable from 'immutable' /* eslint-disable new-cap */
-import actionTypes from 'actions/actionTypes'
-import Menu from './Menu'
-import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
-import { getFilteredRecipeIds } from './selectors/filters.js'
+import { connect } from 'react-redux'
+
+import actions from 'actions'
 import { slugify } from 'utils/url'
+import actionTypes from 'actions/actionTypes'
+import { triggerMenuLoad } from 'actions/menu'
+import { getFilteredRecipeIds } from './selectors/filters.js'
+import { getCurrentCollectionIsRecommendation } from './selectors/menu'
+import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
+
+import Menu from './Menu'
 
 function mapStateToProps(state, ownProps) {
 	function getBasketRecipes(recipes) {
@@ -32,7 +36,11 @@ function mapStateToProps(state, ownProps) {
 
 	let collectionId = getCollectionIdWithName(state, collectionName)
 	if (!collectionId) {
-		collectionId = getDefaultCollectionId(state)
+		if (getCurrentCollectionIsRecommendation(state)) {
+			collectionId = getCurrentCollectionIsRecommendation(state)
+		} else {
+			collectionId = getDefaultCollectionId(state)
+		}
 	}
 
 	const orderId = (ownProps.params && ownProps.params.orderId) ? ownProps.params.orderId : ''
@@ -46,6 +54,7 @@ function mapStateToProps(state, ownProps) {
 		features: state.features,
 		menuBrowseCTAShow: state.menuBrowseCTAShow,
 		boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
+		hasRecommendations: state.features.getIn(['justforyou', 'value']),
 		query: ownProps.location && ownProps.location.query ? ownProps.location.query : {},
 		storeOrderId: state.basket.get('orderId'),
 		orderId,
@@ -56,10 +65,11 @@ function mapStateToProps(state, ownProps) {
 		menuLoadingBoxPrices: state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
 		menuVariation: state.features.getIn(['menuRecipes', 'value']),
 		filteredRecipesNumber: getFilteredRecipeIds(state).size,
+		forceLoad: state.menu.get('forceLoad', false),
 	}
 }
 
-const MenuContainer = connect(mapStateToProps, {
+const mapDispatchToProps = {
 	basketOrderLoaded: actions.basketOrderLoaded,
 	menuLoadBoxPrices: actions.menuLoadBoxPrices,
 	detailVisibilityChange: actions.menuRecipeDetailVisibilityChange,
@@ -71,6 +81,9 @@ const MenuContainer = connect(mapStateToProps, {
 	menuLoadDays: actions.menuLoadDays,
 	loginVisibilityChange: actions.loginVisibilityChange,
 	clearAllFilters: actions.clearAllFilters,
-})(Menu)
+	triggerMenuLoad,
+}
+
+const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
 
 export default MenuContainer

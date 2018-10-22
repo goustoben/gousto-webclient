@@ -16,7 +16,7 @@ describe('Item', () => {
 				})}
 				title="Chicken Curry"
 				quantity={2}
-				onRemove={function() {}}
+				onRemove={() => { }}
 			/>,
 		)
 		expect(wrapper.text().indexOf('Chicken Curry') > -1).toEqual(true)
@@ -32,7 +32,7 @@ describe('Item', () => {
 				})}
 				title="Chicken Curry"
 				quantity={2}
-				onRemove={function() {}}
+				onRemove={() => { }}
 			/>,
 		)
 		expect(wrapper.text().indexOf('2 servings') > -1).toEqual(true)
@@ -48,7 +48,7 @@ describe('Item', () => {
 				})}
 				title="Chicken Curry"
 				quantity={2}
-				onRemove={function() {}}
+				onRemove={() => { }}
 			/>,
 		)
 		expect(wrapper.find('span').length).toEqual(1)
@@ -80,7 +80,7 @@ describe('Item', () => {
 				})}
 				title="Chicken Curry"
 				quantity={2}
-				onRemove={function() {}}
+				onRemove={() => { }}
 			/>,
 		)
 		expect(
@@ -110,9 +110,9 @@ describe('Item', () => {
 	})
 
 	test('should pass onImageClick to Image', () => {
-		const onImageClick = function() {}
+		const onImageClick = () => { }
 		const wrapper = shallow(
-			<Item type="recipe" available media="" onImageClick={onImageClick} />,
+			<Item type="recipe" available media={Immutable.Map()} onImageClick={onImageClick} title="" quantity={2} />,
 		)
 		expect(wrapper.find(Image).prop('onClick')).toEqual(onImageClick)
 	})
@@ -130,7 +130,7 @@ describe('Item', () => {
 					})}
 					title="Chicken Curry"
 					quantity={2}
-					onRemove={function() {}}
+					onRemove={() => { }}
 				/>,
 			)
 			expect(wrapper.text()).toContain('Free Gift')
@@ -148,7 +148,7 @@ describe('Item', () => {
 					})}
 					title="Chicken Curry"
 					quantity={1}
-					onRemove={function() {}}
+					onRemove={() => { }}
 				/>,
 			)
 			expect(wrapper.text()).not.toContain('servings')
@@ -166,7 +166,7 @@ describe('Item', () => {
 					})}
 					title="Chicken Curry"
 					quantity={2}
-					onRemove={function() {}}
+					onRemove={() => { }}
 				/>,
 			)
 			expect(wrapper.text()).toContain('servings')
@@ -185,7 +185,7 @@ describe('Item', () => {
 					})}
 					title="Chicken Curry"
 					quantity={2}
-					onRemove={function() {}}
+					onRemove={() => { }}
 				/>,
 			)
 			expect(wrapper.text().indexOf('2 servings') > -1).toEqual(true)
@@ -202,7 +202,7 @@ describe('Item', () => {
 					})}
 					title="Chicken Curry"
 					quantity={2}
-					onRemove={function() {}}
+					onRemove={() => { }}
 				/>,
 			)
 			expect(wrapper.text().indexOf('2 items') > -1).toEqual(true)
@@ -219,7 +219,7 @@ describe('Item', () => {
 					})}
 					title="Chicken Curry"
 					quantity={2}
-					onRemove={function() {}}
+					onRemove={() => { }}
 				/>,
 			)
 			expect(wrapper.find('span').length).toEqual(0)
@@ -230,13 +230,31 @@ describe('Item', () => {
 		let wrapper
 
 		test('should not show by default', () => {
-			wrapper = shallow(<Item />)
+			wrapper = shallow(<Item
+				type="recipe"
+				media={Immutable.fromJS({
+					images: [{ urls: ['', '', { src: 'image_path' }] }],
+				})}
+				title="Chicken Curry"
+				quantity={2}
+				onRemove={() => { }}
+				showLine={false}
+			/>)
 
 			expect(wrapper.find('.horizontalLine')).toHaveLength(0)
 		})
 
 		test('should show when showLine prop is true', () => {
-			wrapper = shallow(<Item showLine />)
+			wrapper = shallow(<Item
+				showLine
+				type="recipe"
+				media={Immutable.fromJS({
+					images: [{ urls: ['', '', { src: 'image_path' }] }],
+				})}
+				title="Chicken Curry"
+				quantity={2}
+				onRemove={() => { }}
+			/>)
 
 			expect(wrapper.find('.horizontalLine')).toHaveLength(1)
 		})

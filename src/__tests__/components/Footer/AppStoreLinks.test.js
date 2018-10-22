@@ -5,7 +5,7 @@ import AppStoreLinks from 'Footer/AppStoreLinks'
 
 describe('<AppStoreLinks />', () => {
 	test('should return a <div>', () => {
-		const wrapper = shallow(<AppStoreLinks />)
+		const wrapper = shallow(<AppStoreLinks appStoreId="12345" playStoreId="67890" />)
 		expect(wrapper.type()).toEqual('div')
 	})
 

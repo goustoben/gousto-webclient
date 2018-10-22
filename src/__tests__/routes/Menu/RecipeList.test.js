@@ -76,6 +76,7 @@ describe('RecipeList', () => {
 				features={Immutable.Map({})}
 				filteredRecipeIds={Immutable.List(['1', '2', '3'])}
 				remainingRecipes={remainingRecipes}
+				recipesStore={Immutable.Map()}
 			/>,
 			{ context },
 		)
@@ -94,6 +95,8 @@ describe('RecipeList', () => {
 
 		wrapper = shallow(
 			<RecipeList
+				numPortions={2}
+				recipesStore={Immutable.Map()}
 				featuredRecipes={featuredRecipes}
 				remainingRecipes={remainingRecipes}
 				outOfStockRecipes={outOfStockRecipes}
@@ -151,11 +154,11 @@ describe('RecipeList', () => {
 		)
 		wrapper.instance().componentDidUpdate(wrapper.props())
 
-		expect(context.store.dispatch).toHaveBeenCalledTimes(1)
+		expect(context.store.dispatch).toHaveBeenCalledTimes(2)
 		expect(context.store.dispatch).toHaveBeenCalledWith(
 			'trackRecipeOrderDisplayed return value',
 		)
-		expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(1)
+		expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(2)
 		expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(
 			['1', '2', '3'],
 			['3', '1'],

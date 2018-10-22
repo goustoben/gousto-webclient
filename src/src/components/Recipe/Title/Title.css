@@ -78,10 +78,11 @@
 /* HP carousel hack */
 :global .homepageSlider .slick-center :local .simpleHeading {
 	font-weight: bold;
+	height: auto;
 }
 
 .icon {
-	composes: fa-angle-right from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-angle-right from 'styles/vendor/font-awesome-module.css';
 }
 .largeIcon {
 	@media ScreenSMMin {

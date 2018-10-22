@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
@@ -6,6 +7,7 @@ import css from './FineDineInRecipe.css'
 import Title from '../Title'
 import AddButton from '../AddButton'
 import StockBadge from '../StockBadge'
+import TasteScore from '../TasteScore'
 import CookingTime from '../CookingTime'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
@@ -15,7 +17,7 @@ import { recipePropTypes } from 'Recipe'
 
 
 const FineDineInRecipe = (props) => {
-	const image = props.media.find(url => url.get('width') === 700) || Immutable.Map({})
+	const image = props.media.find(urls => urls.get('width') === 700) || Immutable.Map({})
 
 	return (
 		<div className={css.overlay}>
@@ -31,8 +33,7 @@ const FineDineInRecipe = (props) => {
 				>
 				</div>
 				<div className={css.recipeDetails}>
-					<span onClick={props.onClick} className={css.link}>
-					</span>
+					<TasteScore className={css.score} score={props.tasteScore} />
 					<div className={css.textContainer}>
 						<div onClick={props.onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(props.chef) })}>
 							<Title
@@ -91,6 +92,7 @@ FineDineInRecipe.propTypes = {
 	highlight: PropTypes.func,
 	unhighlight: PropTypes.func,
 	detailHover: PropTypes.bool,
+	tasteScore: PropTypes.number,
 }
 
 FineDineInRecipe.defaultProps = {

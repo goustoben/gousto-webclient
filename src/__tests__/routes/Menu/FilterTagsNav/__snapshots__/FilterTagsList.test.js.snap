@@ -12,7 +12,7 @@ exports[`FilterTagsList rendering Will render FilterTagsList component 1`] = `
       className="tagIcon"
     >
       <span
-        className="fa-times tagImageIcon"
+        className="fa-basic-class fa-times tagImageIcon"
         style={
           Object {
             "fontSize": "inherit",
@@ -30,7 +30,7 @@ exports[`FilterTagsList rendering Will render FilterTagsList component 1`] = `
       className="tagIcon"
     >
       <span
-        className="fa-times tagImageIcon"
+        className="fa-basic-class fa-times tagImageIcon"
         style={
           Object {
             "fontSize": "inherit",

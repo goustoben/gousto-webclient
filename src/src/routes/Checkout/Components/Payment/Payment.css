@@ -146,7 +146,7 @@
 }
 
 .linkRight {
-	composes: fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
 	font-size: 10px;
 }
 
@@ -227,22 +227,22 @@
 }
 
 .visa {
-	composes: fa-cc-visa from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-cc-visa from 'styles/vendor/font-awesome-module.css';
 	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
 }
 
 .mc {
-	composes: fa-cc-mastercard from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-cc-mastercard from 'styles/vendor/font-awesome-module.css';
 	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
 }
 
 .alt {
-	composes: fa-credit-card from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-credit-card from 'styles/vendor/font-awesome-module.css';
 	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
 }
 
 .alt2 {
-	composes: fa-credit-card-alt from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-credit-card-alt from 'styles/vendor/font-awesome-module.css';
 	composes: paddingSMRight from 'sass-loader!styles/spacing.scss';
 }
 

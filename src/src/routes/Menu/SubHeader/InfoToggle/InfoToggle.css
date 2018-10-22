@@ -23,7 +23,7 @@
 }
 
 .close {
-	composes: fa-fw fa-times from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-fw fa-times from 'styles/vendor/font-awesome-module.css';
 	color: Blackberry;
 	cursor: pointer;
 	top: 5px;
