@@ -16,30 +16,29 @@ describe('<Refund />', () => {
 		button1: 'button1 copy',
 		button2: 'button2 £{{refundAmount}} copy',
 	}
+	let wrapper
+	let getHelpLayout
+	let fetchPromise
+
+	beforeEach(() => {
+		fetchPromise = Promise.resolve({
+			data: { refundValue: 7.77 }
+		})
+		fetch.mockImplementation(() => fetchPromise)
+		wrapper =  mount(
+			<Refund
+				content={content}
+				user={{ id: '0', accessToken: '123' }}
+				order={{ id: '0' }}
+			/>
+		)
+		fetchPromise.then(() => {
+			wrapper.update()
+			getHelpLayout = wrapper.find('GetHelpLayout')
+		})
+	})
 
 	describe('rendering', () => {
-		let wrapper
-		let getHelpLayout
-		let fetchPromise
-
-		beforeEach(() => {
-			fetchPromise = Promise.resolve({
-				data: { refundValue: 7.77 }
-			})
-			fetch.mockImplementation(() => fetchPromise)
-			wrapper =  mount(
-				<Refund
-					content={content}
-					user={{ id: '0', accessToken: '123' }}
-					order={{ id: '0' }}
-				/>
-			)
-			fetchPromise.then(() => {
-				wrapper.update()
-				getHelpLayout = wrapper.find('GetHelpLayout')
-			})
-		})
-
 		test('layout is rendering correctly', () => {
 			const BottomBar = getHelpLayout.find('BottomBar')
 
@@ -66,28 +65,6 @@ describe('<Refund />', () => {
 	})
 
 	describe('behaviour', () => {
-		let wrapper
-		let getHelpLayout
-		let fetchPromise
-
-		beforeEach(() => {
-			fetchPromise = Promise.resolve({
-				data: { refundValue: 7.77 }
-			})
-			fetch.mockImplementation(() => fetchPromise)
-			wrapper =  mount(
-				<Refund
-					content={content}
-					user={{ id: '0', accessToken: '123' }}
-					order={{ id: '0' }}
-				/>
-			)
-			fetchPromise.then(() => {
-				getHelpLayout = wrapper.find('GetHelpLayout')
-				console.log('promise finished')
-			})
-		})
-
 		test('loading shows while fetching data', async () => {
 			let resolver
 			fetchPromise = new Promise((resolve) => {
@@ -120,28 +97,23 @@ describe('<Refund />', () => {
 			expect(fetch.mock.calls[0][3]).toBe('GET')
 		})
 
-		test('call redirect when user accept refund offer', () => {
-			fetchPromise.then(async () => {
-				fetch.mockReturnValueOnce({})
-				console.log('getHelpLayout', getHelpLayout.debug())
-				const assignSpy = jest.spyOn(window.location, 'assign')
-				const BottomBar = getHelpLayout.find('BottomBar')
-				console.log('>> bottombar', BottomBar.debug())
-				const Button = BottomBar.find('Button').at(1)
-				assignSpy.mockReturnValueOnce(null)
-				await Button.props().onClick()
+		test('call redirect when user accept refund offer', async () => {
+			fetch.mockReturnValueOnce({})
+			const assignSpy = jest.spyOn(window.location, 'assign')
+			const BottomBar = getHelpLayout.find('BottomBar')
+			const Button = BottomBar.find('Button').at(1)
+			assignSpy.mockReturnValueOnce(null)
+			await Button.props().onClick()
 
-				expect(assignSpy).toHaveBeenCalledTimes(1)
+			expect(assignSpy).toHaveBeenCalledTimes(1)
 
-				assignSpy.mockReset()
-			})
+			assignSpy.mockReset()
 		})
 
 		test('call not redirect when user accept refund offer and get an error', async () => {
 			fetch.mockImplementationOnce(() => { throw new Error('error') })
 			const assignSpy = jest.spyOn(window.location, 'assign')
 			const BottomBar = getHelpLayout.find('BottomBar')
-			console.log('bottombar', BottomBar.html())
 			const Button = BottomBar.find('Button').at(1)
 			assignSpy.mockReturnValueOnce(null)
 			await Button.props().onClick()
