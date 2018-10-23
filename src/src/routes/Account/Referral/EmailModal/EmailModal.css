@@ -1,0 +1,33 @@
+.flex {
+	composes: flex row spaceBetween verticalCenter from 'styles/flex.css';
+}
+
+.heading {
+	composes: textCenter textBold from 'styles/typography.css';
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	font-size: 24px;
+}
+
+.modal {
+	position: relative !important;
+	left: inherit !important;
+	top: inherit !important;
+	transform: inherit !important;
+	width: 60% !important;
+	margin: auto !important;
+	box-shadow: none !important;
+	margin-top: 80px;
+	max-width: 650px;
+	border-radius: 2px !important;
+@media ScreenXSMax {
+	width: 98% !important;
+}
+}
+
+.modalContainer {
+	margin-top: 50px;
+}
+
+.modalContent {
+	composes: marginXLTopBottom marginXXLLeftRight paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
