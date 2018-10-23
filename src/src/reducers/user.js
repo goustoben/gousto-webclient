@@ -158,7 +158,7 @@ const user = {
 			}
 
 			case actionTypes.USER_LOAD_REFERRAL_DETAILS: {
-				return state.set('referralDetals', Immutable.fromJS(action.referralDetails))
+				return state.set('referralDetails', Immutable.fromJS(action.referralDetails))
 			}
 
 			case actionTypes.ORDER_DELIVERY_DAYS_RECEIVE: {
