@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import css from './Description.css'
 
 const Description = ({ numPortions, numRecipes, view, deliveryOptions, warning }) => {

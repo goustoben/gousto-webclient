@@ -28,7 +28,7 @@ describe('OrderItemSummary', () => {
 		})
 		test('should render recipes if present', () => {
 			wrapper = shallow(
-				<OrderItemSummary recipes={Immutable.Map({ recipe: 1 })} />,
+				<OrderItemSummary recipes={Immutable.List([{ recipe: 1 }])} />,
 			)
 			expect(wrapper.text()).toContain('recipes')
 		})
@@ -44,7 +44,7 @@ describe('OrderItemSummary', () => {
 			wrapper = shallow(
 				<OrderItemSummary
 					numberOfProducts={2}
-					recipes={Immutable.Map({ recipe: 1 })}
+					recipes={Immutable.List([{ recipe: 1 }])}
 				/>,
 			)
 			expect(wrapper.text()).toContain(',')

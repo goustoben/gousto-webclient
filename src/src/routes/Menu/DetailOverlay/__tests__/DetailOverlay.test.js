@@ -70,6 +70,6 @@ describe('recipe detail overlay', () => {
 		/>
 	)
 	test('should be closed if showOverlay flag is false', () => {
-		expect(wrapper.find(Overlay).node.props.open).toBe(false)
+		expect(wrapper.find(Overlay).prop('open')).toBe(false)
 	})
 })

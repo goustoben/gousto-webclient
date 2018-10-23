@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { Button, Control, Segment, Tooltip } from 'goustouicomponents'
 import AgeVerification from 'Product/AgeVerification'
 import css from './Buttons.css'

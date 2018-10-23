@@ -6,29 +6,29 @@ import renderer from 'react-test-renderer'
 describe('Banner', () => {
 	describe('Initial Render', () => {
 		test('should return a div', () => {
-			const wrapper = shallow(<Banner />)
+			const wrapper = shallow(<Banner linkText={''} />)
 			expect(wrapper.type()).toEqual('div')
 		})
 
 		test('should contain a paragraph', () => {
-			const wrapper = shallow(<Banner />)
+			const wrapper = shallow(<Banner linkText={''} />)
 			expect(wrapper.find('p').length).toEqual(1)
 		})
 
 		test('should render a button', () => {
-			const wrapper = shallow(<Banner />)
+			const wrapper = shallow(<Banner linkText={''} />)
 			expect(wrapper.find('Button').length).toEqual(1)
 		})
 
 		test('should render text if text prop is set', () => {
 			const text = 'Fusce a quam'
-			const wrapper = shallow(<Banner text={text} />)
+			const wrapper = shallow(<Banner text={text} linkText={''} />)
 			expect(wrapper.find('p').text()).toContain(text)
 		})
 
 		test('should render with given text', () => {
 			const text = "A Banner's text"
-			const tree = renderer.create(<Banner text={text} />).toJSON()
+			const tree = renderer.create(<Banner text={text} linkText={''} />).toJSON()
 
 			expect(tree).toMatchSnapshot()
 		})
@@ -36,17 +36,17 @@ describe('Banner', () => {
 
 	describe('Alternative Render', () => {
 		test('should hide banner if hidden is true', () => {
-			const wrapper = shallow(<Banner hide={true} />)
+			const wrapper = shallow(<Banner hide linkText={''} />)
 			expect(wrapper.find('div').hasClass('hide')).toBe(true)
 		})
 	})
 
 	describe('Functionality', () => {
 		test('should trigger passed onClick function when clicked', () => {
-			const clickFunMock = jest.fn();
-			const wrapper = shallow(<Banner onClick={clickFunMock} />)
-			wrapper.simulate('click');
-			expect(clickFunMock).toHaveBeenCalledTimes(1);
+			const clickFunMock = jest.fn()
+			const wrapper = shallow(<Banner onClick={clickFunMock} linkText={''} />)
+			wrapper.simulate('click')
+			expect(clickFunMock).toHaveBeenCalledTimes(1)
 		})
 	})
 })

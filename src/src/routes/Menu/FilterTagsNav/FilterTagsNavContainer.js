@@ -15,12 +15,12 @@ export default connect((state) => {
 				value: getAllRecipesCollectionId(state),
 				slug: menuCollections.getIn([filters.get('currentCollectionId'), 'slug'], ''),
 			},
-			...filters.get('dietTypes', []).map((dietType) => ({
+			...filters.get('dietTypes', []).toArray().map((dietType) => ({
 				text: config.dietTypes[dietType],
 				type: 'dietType',
 				value: dietType,
 			})),
-			...filters.get('dietaryAttributes', []).map((dietaryAttribute) => ({
+			...filters.get('dietaryAttributes', []).toArray().map((dietaryAttribute) => ({
 				text: config.dietaryAttributes[dietaryAttribute],
 				type: 'dietaryAttribute',
 				value: dietaryAttribute,

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import actual from 'actual'
 import TextInput from 'Form/Input'
 import Button from '../../Button'
@@ -120,11 +121,11 @@ PostcodeStep.propTypes = {
 	tempPostcode: PropTypes.string,
 	changeTempPostcode: PropTypes.func,
 	changePostcode: PropTypes.func,
-	nextStepName: React.PropTypes.oneOfType([
+	nextStepName: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.number,
 	]),
-	currentStepName: React.PropTypes.oneOfType([
+	currentStepName: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.number,
 	]),

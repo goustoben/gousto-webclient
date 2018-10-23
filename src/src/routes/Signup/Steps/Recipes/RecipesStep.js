@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import menu from 'config/menu'
 import Button from './../../Button'
@@ -68,8 +69,8 @@ const RecipesStep = ({ basketSignupCollectionReceive, next }) => {
 }
 
 RecipesStep.propTypes = {
-	basketSignupCollectionReceive: React.PropTypes.func.isRequired,
-	next: React.PropTypes.func.isRequired,
+	basketSignupCollectionReceive: PropTypes.func.isRequired,
+	next: PropTypes.func.isRequired,
 }
 
 RecipesStep.defaultProps = {

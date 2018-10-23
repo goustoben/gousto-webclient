@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, Segment, Control, Tooltip } from 'goustouicomponents'
 import config from 'config/checkout'
@@ -6,17 +7,21 @@ import css from './Buttons.css'
 class Buttons extends React.Component {
 
 	static propTypes = {
-		onAdd: React.PropTypes.func.isRequired,
-		onRemove: React.PropTypes.func.isRequired,
-		limitReached: React.PropTypes.bool.isRequired,
-		recipeId: React.PropTypes.string.isRequired,
-		qty: React.PropTypes.number.isRequired,
-		numPortions: React.PropTypes.number.isRequired,
-		view: React.PropTypes.string,
-		outOfstock: React.PropTypes.bool,
-		disabled: React.PropTypes.bool.isRequired,
-		stock: React.PropTypes.number,
-		showControl: React.PropTypes.bool,
+		onAdd: PropTypes.func.isRequired,
+		onRemove: PropTypes.func.isRequired,
+		limitReached: PropTypes.bool.isRequired,
+		recipeId: PropTypes.string.isRequired,
+		qty: PropTypes.number.isRequired,
+		numPortions: PropTypes.number.isRequired,
+		view: PropTypes.string,
+		outOfstock: PropTypes.bool,
+		disabled: PropTypes.bool,
+		stock: PropTypes.number,
+		showControl: PropTypes.bool,
+	}
+
+	static defaultProps = {
+		disabled: false,
 	}
 
 	constructor() {

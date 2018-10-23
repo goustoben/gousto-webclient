@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
@@ -109,6 +110,7 @@ FeaturedRecipe.defaultProps = {
 	tag: '',
 	isRecommendedRecipe: false,
 	chef: Immutable.Map({}),
+	description: '',
 }
 
 export default FeaturedRecipe

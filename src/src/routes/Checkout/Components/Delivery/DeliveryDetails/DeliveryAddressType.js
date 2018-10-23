@@ -1,4 +1,5 @@
-/* eslint-disable camelcase */
+import PropTypes from 'prop-types'
+
 import React from 'react'
 import classnames from 'classnames'
 import { Field } from 'redux-form'
@@ -11,9 +12,9 @@ const DELIVER_TO_OPTIONS = configCheckout.deliverToOptions
 
 class DeliveryAddressType extends React.PureComponent {
 	static propTypes = {
-		value: React.PropTypes.any,
-		reset: React.PropTypes.func.isRequired,
-		receiveRef: React.PropTypes.func,
+		value: PropTypes.any,
+		reset: PropTypes.func.isRequired,
+		receiveRef: PropTypes.func,
 	}
 
 	static defaultProps = {
