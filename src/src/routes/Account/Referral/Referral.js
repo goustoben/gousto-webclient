@@ -4,9 +4,11 @@ import { H2 } from 'Page/Header'
 import config from './config'
 import UserRAFLink from './UserRAFLink'
 import SocialButton from './SocialButton'
+import EmailModal from './EmailModal'
 import accountCSS from '../Account/Account.css'
 import css from './Referral.css'
 import globals from 'config/globals'
+import Overlay from '../../../components/Overlay/Overlay'
 const { whatsForYou, whatsForThem } = config
 
 const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
@@ -37,28 +39,53 @@ const fbMsgShare = (referralLink) => {
 	}
 }
 
-const Referral = () => (
-	<div className={`${accountCSS.accountContainer} ${accountCSS.container}`}>
-		<Image media={getImage('refer.jpg')} title={`You get ${whatsForYou}, they get ${whatsForThem} off their first 2 boxes!`} />
-		<H2 headlineFont>
-			{`Refer a friend – you get ${whatsForYou}, they get ${whatsForThem} off their first 2 boxes!`}
-		</H2>
-		<p className={css.firstParagraph}>{`Your ${whatsForYou} credit shows up in your account once your friend's first box is delivered. Make sure they use your link or promo code.`}</p>
-		<p>{'Send this unique link to your friends.'}</p>
-		<div className={css.row}>
-			<UserRAFLink className={css.rafLink} />
-			<div className={css.socialButtons}>
-				<SocialButton text="Email" type="email" />
-				{/*
-					TODO use the real referral link insted of this hardcoded one
-					TODO promote <Referral> to container and map the referral link in the state to a prop
-					(currently this is done in <UserRAFLink>, pass the link to <UserRafLink> as a prop, then <UserRafLink> does not need to be a container any more
-				*/}
-				<SocialButton text="Facebook" type="facebook" onClick={() => fbShare('https://www.gousto.co.uk/join?promo_code=DAVID259559')} />
-				<SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare('https://www.gousto.co.uk/join?promo_code=DAVID259559')} />
+
+
+class Referral extends React.Component {
+	constructor() {
+		super()
+
+		this.state = { isEmailModalOpen: false }
+	}
+
+	openEmailModal = () => {
+		this.setState({ isEmailModalOpen: true })
+	}
+
+	closeEmailModal = () => {
+		this.setState({ isEmailModalOpen: false })
+	}
+
+	render() {
+		return (
+			<div className={`${accountCSS.accountContainer} ${accountCSS.container}`}>
+				<Image media={getImage('refer.jpg')} title={`You get ${whatsForYou}, they get ${whatsForThem} off their first 2 boxes!`} />
+				<H2 headlineFont>
+					{`Refer a friend – you get ${whatsForYou}, they get ${whatsForThem} off their first 2 boxes!`}
+				</H2>
+				<p className={css.firstParagraph}>{`Your ${whatsForYou} credit shows up in your account once your friend's first box is delivered. Make sure they use your link or promo code.`}</p>
+				<p>{'Send this unique link to your friends.'}</p>
+				<div className={css.row}>
+					<UserRAFLink className={css.rafLink} />
+					<div className={css.socialButtons}>
+						<SocialButton text="Email" type="email" onClick={this.openEmailModal}/>
+						<Overlay open={this.state.isEmailModalOpen}>
+							<EmailModal
+								onClose={this.closeEmailModal}
+							/>
+						</Overlay>
+						{/*
+							TODO use the real referral link insted of this hardcoded one
+							TODO promote <Referral> to container and map the referral link in the state to a prop
+							(currently this is done in <UserRAFLink>, pass the link to <UserRafLink> as a prop, then <UserRafLink> does not need to be a container any more
+						*/}
+						<SocialButton text="Facebook" type="facebook" onClick={() => fbShare('https://www.gousto.co.uk/join?promo_code=DAVID259559')} />
+						<SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare('https://www.gousto.co.uk/join?promo_code=DAVID259559')} />
+					</div>
+				</div>
 			</div>
-		</div>
-	</div>
-)
+		)
+	}
+}
 
 export default Referral
