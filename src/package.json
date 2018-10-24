@@ -86,7 +86,7 @@
     "react-router-redux": "4.0.8",
     "react-router-scroll": "0.4.3",
     "react-select": "1.2.1",
-    "react-slick": "0.23.2",
+    "react-slick": "0.22.0",
     "recompose": "0.30.0",
     "redux": "4.0.1",
     "redux-form": "7.2.1",
