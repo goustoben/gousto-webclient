@@ -1,5 +1,7 @@
 import React from 'react'
 
+import sinon from 'sinon'
+
 import { shallow } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import OrderSummary from 'OrderSummary'
@@ -22,7 +24,7 @@ describe('OrderSummary', () => {
 					r1: {},
 				})}
 				products={Immutable.fromJS({
-					p1: { isVatable: true, title: 'p1 title', listPrice: '2.00', images: {} },
+					p1: { isVatable: true, title: 'p1 title', listPrice: '2.00' },
 					p2: {},
 				})}
 				recipeItems={Immutable.fromJS({
@@ -190,10 +192,15 @@ describe('OrderSummary', () => {
 				.text(),
 		).toContain('These items include VAT at 20%')
 		const products = Immutable.fromJS({
-			p1: { isVatable: false, title: 'p1 Tit', listPrice: '2.00', images: {} },
+			p1: { isVatable: false, title: 'p1 title', listPrice: '2.00' },
 		})
 		wrapper.setProps({ products })
-		expect(wrapper.find(Receipt).render().find('p.disclaimer').length).toEqual(0)
+		expect(
+			wrapper
+				.find('p')
+				.at(2)
+				.text(),
+		).toBe('')
 	})
 
 	test('should pass the onSave to the SaveButton', () => {
@@ -228,8 +235,7 @@ describe('OrderSummary SectionHeader', () => {
 				products={{}}
 				recipes={{}}
 				deliveryTotalPrice={'2.50'}
-				onSave={() => {}}
-				saveError={false}
+				onSave={function() {}}
 			/>,
 		)
 
@@ -271,8 +277,7 @@ describe('OrderSummary footer', () => {
 				products={{}}
 				recipes={{}}
 				deliveryTotalPrice={'2.50'}
-				onSave={() => {}}
-				saveError={false}
+				onSave={function() {}}
 			/>,
 		)
 	})

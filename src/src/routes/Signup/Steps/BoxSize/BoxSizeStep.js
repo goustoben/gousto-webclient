@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
 import Button from '../../Button'
@@ -42,8 +41,8 @@ const BoxSizeStep = ({ numPortionChange, next }) => {
 }
 
 BoxSizeStep.propTypes = {
-	numPortionChange: PropTypes.func.isRequired,
-	next: PropTypes.func.isRequired,
+	numPortionChange: React.PropTypes.func.isRequired,
+	next: React.PropTypes.func.isRequired,
 }
 
 export default BoxSizeStep

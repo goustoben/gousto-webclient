@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { Tooltip } from 'goustouicomponents'
 import css from './InfoToggle.css'
 
 class InfoToggle extends React.Component {
 	static propTypes = {
-		children: PropTypes.arrayOf(PropTypes.node),
+		children: React.PropTypes.arrayOf(React.PropTypes.node),
 	}
 
 	constructor() {

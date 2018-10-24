@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from '../IngredientsList/IngredientsList.css'
 import Immutable from 'immutable'
@@ -15,7 +14,7 @@ const IngredientsList = ({ ingredients, allergens, inset }) => (
 				<div className={css.heading}>Ingredients contain</div>
 				{ingredients.toArray().map((ingredient, index) => {
 					const subIngredients = ingredient.get('subIngredients')
-					const subIngredientsArray = Immutable.List(subIngredients.split(/([\s,()])/))
+					const subIngredientsArray = subIngredients.split(/([\s,()])/)
 
 					return (subIngredients) ? (
 						<dl key={index}>
@@ -30,9 +29,9 @@ const IngredientsList = ({ ingredients, allergens, inset }) => (
 )
 
 IngredientsList.propTypes = {
-	ingredients: PropTypes.instanceOf(Immutable.List),
-	allergens: PropTypes.instanceOf(Immutable.List),
-	inset: PropTypes.bool,
+	ingredients: React.PropTypes.instanceOf(Immutable.List),
+	allergens: React.PropTypes.instanceOf(Immutable.List),
+	inset: React.PropTypes.bool,
 }
 
 IngredientsList.defaultProps = {

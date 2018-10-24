@@ -1,3 +1,4 @@
+import sinon from 'sinon'
 import Immutable from 'immutable'
 
 import Svg from 'Svg'
@@ -69,7 +70,7 @@ describe('Testimonial rendering props modifiers', () => {
 			wrapper
 				.find('div')
 				.at(3)
-				.getElement().props.children[1],
+				.children().node,
 		).toBe('gousto is awesome!')
 	})
 

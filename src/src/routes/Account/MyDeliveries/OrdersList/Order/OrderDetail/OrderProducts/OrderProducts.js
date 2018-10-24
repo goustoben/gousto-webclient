@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
@@ -18,8 +18,26 @@ const limit = 7
 class OrderProducts extends React.PureComponent {
 
 	static propTypes = {
-		products: PropTypes.instanceOf(Immutable.List),
-		randomProducts: PropTypes.instanceOf(Immutable.List),
+		products: ImmutablePropTypes.listOf(
+			ImmutablePropTypes.mapContains({
+				id: PropTypes.string.isRequired,
+				image: PropTypes.string.isRequired,
+				title: PropTypes.string.isRequired,
+				quantity: PropTypes.number.isRequired,
+				unitPrice: PropTypes.number.isRequired,
+			})
+		),
+		randomProducts: ImmutablePropTypes.listOf(
+			ImmutablePropTypes.mapContains({
+				id: PropTypes.string.isRequired,
+				title: PropTypes.string.isRequired,
+				images: ImmutablePropTypes.mapContains({
+					[imagesWidth]: ImmutablePropTypes.mapContains({
+						src: PropTypes.string.isRequired,
+					}),
+				}),
+			})
+		),
 		orderId: PropTypes.string,
 	}
 
@@ -30,7 +48,7 @@ class OrderProducts extends React.PureComponent {
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	loadRandomProducts = ({ store }) => {

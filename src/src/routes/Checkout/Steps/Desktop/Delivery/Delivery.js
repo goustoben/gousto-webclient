@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import delivery from 'validations/delivery'
 import formContainer from '../../../Components/formContainer'

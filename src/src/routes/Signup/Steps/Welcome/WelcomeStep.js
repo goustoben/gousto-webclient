@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Image from '../../Image'
 import Button from './../../Button'
@@ -29,8 +28,8 @@ const WelcomeStep = ({ next }) => (
 )
 
 WelcomeStep.propTypes = {
-	next: PropTypes.func,
-	stepNumber: PropTypes.number.isRequired,
+	next: React.PropTypes.func,
+	stepNumber: React.PropTypes.number.isRequired,
 }
 
 export default WelcomeStep

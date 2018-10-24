@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Carousel from 'Carousel'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import Testimonial from './Testimonial'
 import css from './TestimonialCarousel.css'
 import config from 'config/home'
@@ -40,8 +39,8 @@ const TestimonialCarousel = ({ testimonials = config.testimonials, showLink }) =
 )
 
 TestimonialCarousel.propTypes = {
-	testimonials: PropTypes.array,
-	showLink: PropTypes.bool,
+	testimonials: React.PropTypes.array,
+	showLink: React.PropTypes.bool,
 }
 
 TestimonialCarousel.defaultProps = {
