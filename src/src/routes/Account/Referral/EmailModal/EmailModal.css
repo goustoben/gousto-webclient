@@ -31,3 +31,24 @@
 .modalContent {
 	composes: marginXLTopBottom marginXXLLeftRight paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
 }
+
+.row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.msg {
+	composes: textXS from 'styles/typography.css';
+/* composes: paddingXXSTop noMargin from 'sass-loader!styles/spacing.scss'; */
+
+&:first-letter {
+	 text-transform: capitalize;
+ }
+}
+
+.errorMsg {
+	composes: msg;
+	color: white;
+}
