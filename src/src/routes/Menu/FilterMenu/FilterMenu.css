@@ -92,9 +92,8 @@
 	background-color: White;
 	border-top: 1px solid Mackerel;
 
-	@media ScreenSMMin {
-		width: 25vw;
-		min-width: 260px;
+	@media ScreenXXSMin {
+		display: none;
 	}
 }
 

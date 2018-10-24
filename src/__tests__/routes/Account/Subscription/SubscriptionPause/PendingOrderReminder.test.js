@@ -30,7 +30,7 @@ describe('PendingOrderReminder', () => {
 				},
 			}
 			wrapper = shallow(
-				<PendingOrderReminder pendingOrders={Immutable.Map({ 1: mockOrder })} />,
+				<PendingOrderReminder pendingOrders={Immutable.fromJS([mockOrder])} />,
 			)
 			expect(wrapper.find(CallToAction).length).toEqual(2)
 		})

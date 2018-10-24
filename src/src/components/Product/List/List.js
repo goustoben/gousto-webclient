@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable' // eslint-disable new-cap
 import ImageSelection from 'ImageSelection'
 import LinkButton from 'LinkButton'
@@ -41,7 +40,7 @@ ProductList.propTypes = {
 }
 
 ProductList.defaultProps = {
-	products: Immutable.List(),
+	products: new Immutable.List(),
 	number: 6,
 }
 

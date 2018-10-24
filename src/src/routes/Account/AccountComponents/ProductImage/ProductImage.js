@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './ProductImage.css'
 
 class ProductImage extends React.PureComponent {
 	static propTypes = {
-		src: PropTypes.string,
-		alt: PropTypes.string,
+		src: React.PropTypes.string,
+		alt: React.PropTypes.string,
 	}
 
 	static defaultProps = {

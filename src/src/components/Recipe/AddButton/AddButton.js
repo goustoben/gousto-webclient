@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import Button from 'Recipe/Buttons'
 import config from 'config'
@@ -11,11 +10,11 @@ const AddButton = ({ id, inBasket, position, stock, view, surcharge }) => (
 )
 
 AddButton.propTypes = {
-	id: PropTypes.string.isRequired,
+	id: React.PropTypes.string.isRequired,
 	inBasket: PropTypes.bool,
-	position: PropTypes.number,
+	position: React.PropTypes.number,
 	stock: PropTypes.number,
-	view: PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn', 'fineDineInDetail', 'detail']).isRequired,
+	view: React.PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn', 'fineDineInDetail', 'detail']).isRequired,
 	surcharge: PropTypes.number,
 }
 

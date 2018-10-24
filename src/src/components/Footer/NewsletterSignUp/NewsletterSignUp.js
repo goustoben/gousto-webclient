@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react'
 import css from './NewsletterSignUp.css'
 import { Button } from 'goustouicomponents'
@@ -11,8 +10,8 @@ class NewsletterSignUp extends React.Component {
 	}
 
 	static propTypes = {
-		onSignup: PropTypes.func.isRequired,
-		signup: PropTypes.object.isRequired,
+		onSignup: React.PropTypes.func.isRequired,
+		signup: React.PropTypes.object.isRequired,
 	}
 
 	handleChange = (event) => {

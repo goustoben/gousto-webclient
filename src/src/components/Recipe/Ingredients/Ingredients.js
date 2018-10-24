@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 
 import css from './Ingredients.css'
 import Ingredient from './Ingredient.js'
@@ -22,9 +21,9 @@ const Ingredients = ({ ingredients, restrictedView, inset }) => (
 )
 
 Ingredients.propTypes = {
-	ingredients: PropTypes.instanceOf(Immutable.List),
-	restrictedView: PropTypes.bool,
-	inset: PropTypes.bool,
+	ingredients: React.PropTypes.instanceOf(Immutable.List),
+	restrictedView: React.PropTypes.bool,
+	inset: React.PropTypes.bool,
 }
 Ingredients.defaultProps = {
 	ingredients: Immutable.List([]),

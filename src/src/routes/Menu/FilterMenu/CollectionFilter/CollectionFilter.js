@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 
 import { H2 } from 'components/Page/Header'
-import CollectionItem from 'CollectionItem'
+import CollectionItem from 'routes/Menu/CollectionItem'
 import FilterItem from 'routes/Menu/FilterMenu/FilterItem'
 import Svg from 'Svg'
 import css from '../../FilterTag/FilterTag.css'
@@ -11,21 +10,19 @@ import css from '../../FilterTag/FilterTag.css'
 const CollectionFilter = ({ collections, filterCollectionChange, currentCollectionId }) => (
 	<div>
 		<H2 size="XL2" headlineFont={false}>Category</H2>
-		{collections.valueSeq().map((collection) => {
+		{collections.map((collection, index) => {
 			const collectionId = collection.get('id')
 
 			return (
 				<FilterItem
-					key={`collectionfilter-${collectionId}`}
 					type="radio"
 					groupName="collection"
 					value={collectionId}
-					identifier={`collectionfilter-${collectionId}`}
+					identifier={`collectionfilter-${index}`}
 					checked={currentCollectionId === collectionId}
 					onClick={() => { filterCollectionChange(collectionId) }}
 				>
 					<CollectionItem
-						count={null}
 						showCount={false}
 						dataId={collectionId}
 						identifier={`collectionfilter-${collectionId}`}

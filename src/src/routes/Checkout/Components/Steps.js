@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react'
 import Immutable from 'immutable'
 import config from 'config/checkout'
@@ -16,12 +15,12 @@ import PartialContainer from './PartialContainer'
 class Steps extends React.PureComponent {
 
 	static propTypes = {
-		step: PropTypes.string,
-		order: PropTypes.instanceOf(Immutable.List),
-		currentStep: PropTypes.string,
-		onStepChange: PropTypes.func,
-		nextStepName: PropTypes.string,
-		browser: PropTypes.string,
+		step: React.PropTypes.string,
+		order: React.PropTypes.instanceOf(Immutable.List),
+		currentStep: React.PropTypes.string,
+		onStepChange: React.PropTypes.func,
+		nextStepName: React.PropTypes.string,
+		browser: React.PropTypes.string,
 	}
 
 	static defaultProps = {

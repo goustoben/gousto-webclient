@@ -23,7 +23,6 @@ function mapStateToProps(state) {
 		menuRecipesStore: state.recipes,
 		orderId: state.basket.get('orderId'),
 		disabled: state.auth.get('isAdmin'),
-		basketCheckedOut: state.pending.get(actionTypes.BASKET_CHECKOUT),
 		hasUnavailableRecipes,
 		orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
 	}

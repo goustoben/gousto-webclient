@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Order.css'
 
@@ -15,9 +14,9 @@ const Order = ({ date, numPeople, numRecipes }) => (
 )
 
 Order.propTypes = {
-	date: PropTypes.string,
-	numPeople: PropTypes.string,
-	numRecipes: PropTypes.string,
+	date: React.PropTypes.string,
+	numPeople: React.PropTypes.string,
+	numRecipes: React.PropTypes.string,
 }
 
 export default Order

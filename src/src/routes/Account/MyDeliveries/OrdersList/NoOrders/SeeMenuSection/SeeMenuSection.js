@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable' // eslint-disable no-caps
 import css from './SeeMenuSection.css'
 
@@ -12,7 +11,7 @@ const SeeMenuSection = ({ recipes, boxType }) => {
 	}
 	slicedRecipes = slicedRecipes.slice(0, 5)
 	const recipeSection = slicedRecipes.map((recipe) =>
-		<OrderRecipe key={recipe.get('id')} recipeTitle={recipe.get('title')} recipeImage={recipe.getIn(['media', 'images', 0, 'urls', 1, 'src'])} />
+		<OrderRecipe recipeTitle={recipe.get('title')} recipeImage={recipe.getIn(['media', 'images', 0, 'urls', 1, 'src'])} />
 	)
 
 	return (
@@ -23,11 +22,11 @@ const SeeMenuSection = ({ recipes, boxType }) => {
 }
 
 SeeMenuSection.propTypes = {
-	recipes: PropTypes.instanceOf(Immutable.List),
+	recipes: PropTypes.instanceOf(Immutable.Map),
 	boxType: PropTypes.string,
 }
 SeeMenuSection.defaultProps = {
-	recipes: Immutable.List(),
+	recipes: Immutable.Map({}),
 	boxType: '',
 }
 

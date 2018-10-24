@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, Segment } from 'goustouicomponents'
 
@@ -23,10 +22,10 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => (
 )
 
 SlotPicker.propTypes = {
-	slots: PropTypes.object,
-	date: PropTypes.string,
-	slotId: PropTypes.string,
-	onClick: PropTypes.func,
+	slots: React.PropTypes.object,
+	date: React.PropTypes.string,
+	slotId: React.PropTypes.string,
+	onClick: React.PropTypes.func,
 }
 
 export default SlotPicker

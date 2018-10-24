@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import config from 'config/signup'
 import routes from 'config/routes'
 import actions from 'actions'
@@ -91,13 +90,13 @@ class Signup extends React.PureComponent {
 	}
 
 	static propTypes = {
-		stepName: PropTypes.string,
-		steps: PropTypes.instanceOf(Immutable.List),
-		goToStep: PropTypes.func,
+		stepName: React.PropTypes.string,
+		steps: React.PropTypes.instanceOf(Immutable.List),
+		goToStep: React.PropTypes.func,
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	componentDidMount() {

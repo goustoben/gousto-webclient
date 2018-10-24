@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Overlay from 'Overlay'
 import actions from 'actions/subscriptionPause'
@@ -7,8 +6,8 @@ import Screen from './Screen'
 
 class SubscriptionPause extends React.Component {
 	static propTypes = {
-		dataLoaded: PropTypes.bool,
-		showModal: PropTypes.bool,
+		dataLoaded: React.PropTypes.bool,
+		showModal: React.PropTypes.bool,
 	}
 
 	static defaultProps = {
@@ -16,7 +15,7 @@ class SubscriptionPause extends React.Component {
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	static fetchData = async ({ store }) => {

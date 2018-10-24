@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 
 import { Alert, Button } from 'goustouicomponents'
@@ -46,7 +45,7 @@ class EditDelivery extends React.PureComponent {
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	constructor(props) {

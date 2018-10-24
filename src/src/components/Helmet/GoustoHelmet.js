@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import CanonicalLink from './CanonicalLink'
 import Facebook from './Facebook'
 import OpenGraph from './OpenGraph'
@@ -30,9 +29,6 @@ const GoustoHelmet = ({ noGTM, requestUrl }) => (
 GoustoHelmet.propTypes = {
 	noGTM: PropTypes.bool,
 	requestUrl: PropTypes.string.isRequired,
-}
-GoustoHelmet.defaultProps = {
-	requestUrl: '',
 }
 
 export default GoustoHelmet
