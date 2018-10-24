@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import sinon from 'sinon'
+
 import Icon from 'Icon'
 import { H1 } from 'Page/Header'
 import Title from 'Page/Block/Title'

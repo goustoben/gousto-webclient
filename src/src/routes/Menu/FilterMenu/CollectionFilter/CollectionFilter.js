@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 
 import { H2 } from 'components/Page/Header'
-import CollectionItem from 'CollectionItem'
+import CollectionItem from 'routes/Menu/CollectionItem'
 import FilterItem from 'routes/Menu/FilterMenu/FilterItem'
 import Svg from 'Svg'
 import css from '../../FilterTag/FilterTag.css'
@@ -24,7 +23,6 @@ const CollectionFilter = ({ collections, filterCollectionChange, currentCollecti
 					onClick={() => { filterCollectionChange(collectionId) }}
 				>
 					<CollectionItem
-						count={null}
 						showCount={false}
 						dataId={collectionId}
 						identifier={`collectionfilter-${collectionId}`}

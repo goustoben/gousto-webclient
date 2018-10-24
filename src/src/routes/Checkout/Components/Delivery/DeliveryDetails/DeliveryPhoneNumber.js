@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
@@ -6,9 +5,9 @@ import css from '../Delivery.css'
 
 class DeliveryPhoneNumber extends React.PureComponent {
 	static propTypes = {
-		phone: PropTypes.string,
-		receiveRef: PropTypes.func,
-		sectionName: PropTypes.string,
+		phone: React.PropTypes.string,
+		receiveRef: React.PropTypes.func,
+		sectionName: React.PropTypes.string,
 	}
 
 	static defaultProps = {

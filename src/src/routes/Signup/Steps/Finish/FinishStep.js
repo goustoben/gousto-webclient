@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import { getSlot } from 'utils/deliveries'
 import Button from '../../Button'
 import basketConfig from 'config/basket'
@@ -73,29 +72,29 @@ const FinishStep = ({ style = 'default', next, ...bodyProps }) => {
 }
 
 DefaultBody.propTypes = {
-	boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
-	date: PropTypes.string,
-	slotId: PropTypes.string,
-	postcode: PropTypes.string,
-	numPortions: PropTypes.number,
+	boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
+	date: React.PropTypes.string,
+	slotId: React.PropTypes.string,
+	postcode: React.PropTypes.string,
+	numPortions: React.PropTypes.number,
 }
 
 FamilyBody.propTypes = {
-	boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
-	date: PropTypes.string,
-	slotId: PropTypes.string,
-	postcode: PropTypes.string,
-	numPortions: PropTypes.number,
+	boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
+	date: React.PropTypes.string,
+	slotId: React.PropTypes.string,
+	postcode: React.PropTypes.string,
+	numPortions: React.PropTypes.number,
 }
 
 FinishStep.propTypes = {
-	boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
-	date: PropTypes.string,
-	slotId: PropTypes.string,
-	postcode: PropTypes.string,
-	numPortions: PropTypes.number,
-	next: PropTypes.func,
-	style: PropTypes.string,
+	boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
+	date: React.PropTypes.string,
+	slotId: React.PropTypes.string,
+	postcode: React.PropTypes.string,
+	numPortions: React.PropTypes.number,
+	next: React.PropTypes.func,
+	style: React.PropTypes.string,
 }
 
 export default FinishStep

@@ -89,7 +89,6 @@ describe('Checkout', () => {
 				params={{ stepName: 'aboutyou' }}
 				checkoutLanding={onCheckoutSpy}
 			/>,
-			{ context }
 		)
 	})
 
@@ -107,7 +106,7 @@ describe('Checkout', () => {
 
 	describe('rendering', () => {
 		beforeEach(() => {
-			wrapper = shallow(<Checkout />, { context })
+			wrapper = shallow(<Checkout />)
 		})
 
 		test('should render a <Div> with no props', () => {
@@ -120,7 +119,6 @@ describe('Checkout', () => {
 					browser="mobile"
 					params={{ stepName: 'boxdetails' }}
 				/>,
-				{ context }
 			)
 			expect(mobileWrapper.find(ProgressBar)).toHaveLength(1)
 
@@ -129,7 +127,6 @@ describe('Checkout', () => {
 					browser="desktop"
 					params={{ stepName: 'boxdetails' }}
 				/>,
-				{ context }
 			)
 			expect(desktopWrapper.find(ProgressBar)).toHaveLength(1)
 		})
@@ -155,10 +152,10 @@ describe('Checkout', () => {
 				params: { stepName: '' },
 			})
 			expect(dispatch).toHaveBeenCalled()
-			expect(menuLoadDays).toHaveBeenCalledTimes(4)
-			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
-			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
-			expect(pricingRequest).toHaveBeenCalledTimes(2)
+			expect(menuLoadDays).toHaveBeenCalledTimes(2)
+			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(1)
+			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(1)
+			expect(pricingRequest).toHaveBeenCalledTimes(1)
 		})
 
 		test('should dispatch menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive', async () => {
@@ -185,9 +182,9 @@ describe('Checkout', () => {
 			})
 
 			expect(dispatch).toHaveBeenCalled()
-			expect(menuLoadDays).toHaveBeenCalledTimes(3)
-			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
-			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
+			expect(menuLoadDays).toHaveBeenCalledTimes(1)
+			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(1)
+			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(1)
 			expect(menuLoadBoxPrices).not.toHaveBeenCalled()
 		})
 
@@ -222,9 +219,9 @@ describe('Checkout', () => {
 			})
 
 			expect(dispatch.mock.calls.length).toBeGreaterThan(4)
-			expect(menuLoadDays).toHaveBeenCalledTimes(3)
-			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
-			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
+			expect(menuLoadDays).toHaveBeenCalledTimes(1)
+			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(1)
+			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(1)
 			expect(redirect).toHaveBeenCalledWith(
 				'/menu?from=newcheckout&error=no-stock',
 				true,
@@ -261,9 +258,9 @@ describe('Checkout', () => {
 			})
 
 			expect(dispatch.mock.calls.length).toBeGreaterThan(4)
-			expect(menuLoadDays).toHaveBeenCalledTimes(3)
-			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
-			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
+			expect(menuLoadDays).toHaveBeenCalledTimes(1)
+			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(1)
+			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(1)
 			expect(redirect).toHaveBeenCalledWith(
 				'/menu?from=newcheckout&error=basket-expired',
 				true,
@@ -296,9 +293,9 @@ describe('Checkout', () => {
 			})
 
 			expect(dispatch.mock.calls.length).toBeGreaterThan(4)
-			expect(menuLoadDays).toHaveBeenCalledTimes(3)
-			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
-			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(2)
+			expect(menuLoadDays).toHaveBeenCalledTimes(1)
+			expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(1)
+			expect(checkoutCreatePreviewOrder).toHaveBeenCalledTimes(1)
 			expect(redirect).toHaveBeenCalledWith(
 				'/menu?from=newcheckout&error=undefined-error',
 				true,
@@ -336,7 +333,6 @@ describe('Checkout', () => {
 					params={{ params: true }}
 					loadPrices={loadPrices}
 				/>,
-				{ context: { store } }
 			)
 		})
 

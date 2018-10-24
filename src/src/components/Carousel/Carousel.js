@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import globalCss from './ReactSlick.css' // eslint-disable-line no-unused-vars
 import scss from './Carousel.scss' // eslint-disable-line no-unused-vars

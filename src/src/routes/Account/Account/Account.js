@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import NavBar from './NavBar'
 import userActions from 'actions/user'
@@ -10,18 +9,18 @@ import Banner from './Banner'
 class Account extends React.PureComponent {
 
 	static propTypes = {
-		children: PropTypes.node,
-		renderChildren: PropTypes.bool,
-		location: PropTypes.shape({
-			pathname: PropTypes.string,
+		children: React.PropTypes.node,
+		renderChildren: React.PropTypes.bool,
+		location: React.PropTypes.shape({
+			pathname: React.PropTypes.string,
 		}).isRequired,
-		rateRecipeCount: PropTypes.number,
+		rateRecipeCount: React.PropTypes.number,
 	}
 	static defaultProps = {
 		renderChildren: false,
 	}
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	componentDidMount() {

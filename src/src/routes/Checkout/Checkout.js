@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 
 import logger from 'utils/logger'
@@ -55,7 +54,6 @@ class Checkout extends React.PureComponent {
 	}
 
 	static defaultProps = {
-		trackSignupStep: () => {},
 		params: {},
 		redirect: () => {},
 	}

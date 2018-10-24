@@ -18,28 +18,28 @@ describe('rendered output', () => {
 	})
 
 	test('should have a Hero element', () => {
-		wrapper = shallow(<HomeSections modules={['hero', 'recipes']} />)
+		wrapper = shallow(<HomeSections />)
 		expect(wrapper.find('Connect(Hero)')).toHaveLength(1)
 	})
 	test('should have a Carousel element', () => {
-		wrapper = shallow(<HomeSections modules={['hero', 'recipes']}/>)
+		wrapper = shallow(<HomeSections />)
 		expect(wrapper.find('Connect(Carousel)')).toHaveLength(1)
 	})
 	test('should have a Testimonials element', () => {
-		wrapper = shallow(<HomeSections modules={['hero', 'testimonials']} />)
+		wrapper = shallow(<HomeSections />)
 		expect(wrapper.find('Connect(Testimonials)')).toHaveLength(1)
 	})
 	test('should have a InYourBox element', () => {
-		wrapper = shallow(<HomeSections modules={['hero', 'whatsInYourBox']} />)
+		wrapper = shallow(<HomeSections />)
 		expect(wrapper.find('Connect(InYourBox)')).toHaveLength(1)
 	})
 	test('should have a TestedLoved element', () => {
-		wrapper = shallow(<HomeSections modules={['hero', 'testedAndLovedBy']}/>)
+		wrapper = shallow(<HomeSections />)
 		expect(wrapper.find('TestedLoved')).toHaveLength(1)
 	})
 
 	test('should not have a Storystream element', () => {
-		wrapper = shallow(<HomeSections modules={['hero', 'whatsInYourBox']}/>)
+		wrapper = shallow(<HomeSections />)
 		expect(wrapper.find('Storystream')).toHaveLength(0)
 	})
 

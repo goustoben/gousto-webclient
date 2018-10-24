@@ -1,3 +1,5 @@
+import sinon from 'sinon'
+
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
@@ -6,6 +8,7 @@ import OrderProducts from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDet
 import ProductImage from 'routes/Account/AccountComponents/ProductImage'
 
 describe('OrderProducts', () => {
+	let sandbox
 	let wrapper
 	const productsSample = Immutable.fromJS([
 		{ id: '1', title: 'title 1', quantity: 4, unitPrice: 14.323 },
@@ -22,6 +25,12 @@ describe('OrderProducts', () => {
 		{ id: 7 },
 	])
 
+	beforeEach(() => {
+		sandbox = sinon.sandbox.create()
+	})
+	afterEach(() => {
+		sandbox.restore()
+	})
 	describe('rendering', () => {
 		beforeEach(() => {
 			wrapper = shallow(
@@ -30,12 +39,7 @@ describe('OrderProducts', () => {
 					products={productsSample}
 					periodId={1}
 					randomProducts={randomProductsSample}
-					store={{}}
 				/>,
-				{ context: { store: {
-					subscribe: () => {},
-					dispatch: () => {},
-				} } }
 			)
 		})
 
@@ -66,10 +70,7 @@ describe('OrderProducts', () => {
 		})
 
 		test('should render as many <ProductImage> as random products are passed, when no products are passed', () => {
-			wrapper = shallow(<OrderProducts randomProducts={randomProductsSample} />, { context: { store: {
-				subscribe: () => {},
-				dispatch: () => {},
-			} } })
+			wrapper = shallow(<OrderProducts randomProducts={randomProductsSample} />)
 			expect(wrapper.find(ProductImage)).toHaveLength(7)
 		})
 

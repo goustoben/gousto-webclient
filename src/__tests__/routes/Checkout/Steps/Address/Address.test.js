@@ -1,3 +1,4 @@
+import sinon from 'sinon'
 import Immutable from 'immutable'
 
 import React from 'react'
