@@ -5,41 +5,69 @@ import css from './EmailModal.css'
 import TextInput from 'Form/Input'
 import { Button } from 'goustouicomponents'
 import Form from 'Form'
-
+import { referAFriend } from 'apis/user'
+import { validateEmail } from 'utils/auth'
 
 class EmailModal extends React.Component {
-	static propTypes = {
-		onClose: PropTypes.func
-	}
-
 	constructor(props) {
 		super(props)
 
 		this.state = {
 			email: '',
-			showForm: true
+			showEmailReferralForm: true,
+			isEmailValid: false
 		}
+	}
+
+	static propTypes = {
+		onClose: PropTypes.func
+	}
+
+	static contextTypes = {
+		store: PropTypes.object.isRequired,
+	}
+
+	static postReferral = (accessToken, email) => {
+		referAFriend(accessToken, { emails: [email] })
+	}
+
+	referAFriend = () => {
+		const email = this.state.email
+		const accessToken = this.context.store.getState().auth.get('accessToken')
+
+		EmailModal.postReferral(accessToken, email)
 	}
 
 	handleEmailChange = (value) => {
 		this.setState({ email: value })
+
+		if (value.length > 0 && validateEmail(value)) {
+			this.setState({ isEmailValid: true })
+		} else {
+			this.setState({ isEmailValid: false })
+		}
 	}
 
 	handleSubmit = (event) => {
 		event.preventDefault()
-		this.setState({ showForm: false })
-		console.log('submitted')
+		if (this.state.isEmailValid) {
+			this.setState({ showEmailReferralForm: false })
+			this.referAFriend()
+		} else {
+			console.log('invalid')
+		}
 	}
 
 	showEmailReferralForm = () => {
 		this.setState({
 			email: '',
-			showForm: true
+			showEmailReferralForm: true,
+			emailValid: false
 		})
 	}
 
 	getModalBody = () => {
-		if (this.state.showForm) {
+		if (this.state.showEmailReferralForm) {
 			return <EmailReferralForm
 				onSubmit={this.handleSubmit}
 				onEmailChange={this.handleEmailChange}
@@ -69,7 +97,7 @@ class EmailModal extends React.Component {
 const EmailReferralForm = (props) => (
 	<div>
 		Enter your friend's email below:
-		<Form onSubmit={props.onSubmit} method="post">
+		<Form onSubmit={props.onSubmit}>
 			<div>
 				<div>
 					<TextInput
@@ -81,6 +109,7 @@ const EmailReferralForm = (props) => (
 						value={props.email}
 					/>
 				</div>
+				<br />
 				<div className={css.flex}>
 					<Button
 						onClick={props.onSubmit}
@@ -102,6 +131,8 @@ EmailReferralForm.propTypes = {
 const EmailSentConfirmation = (props) => (
 	<div>
 		Email sent!
+		<br />
+		<br />
 		<Button
 			onClick={props.onButtonClick}
 		>

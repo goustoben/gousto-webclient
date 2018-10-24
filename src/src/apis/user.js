@@ -65,7 +65,11 @@ export function checkDuplicateUser(reqData) {
 }
 
 export function referralDetails(accessToken, reqData) {
-	return fetch(accessToken, `${endpoint('core')}user/current/referralDetails`, reqData, 'GET')
+	return fetch(accessToken, `${endpoint('core')}/user/current/referralDetails`, reqData, 'GET')
+}
+
+export function referAFriend(accessToken, reqData) {
+	return fetch(accessToken, `${endpoint('core')}/user/current/referral`, reqData, 'POST')
 }
 
 export function addPaymentMethod(accessToken, reqData, userId) {
