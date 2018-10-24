@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Masonry from 'react-masonry-component'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import classnames from 'classnames'
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
@@ -36,7 +35,7 @@ class RecipeList extends React.Component {
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	shouldComponentUpdate(nextProps) {

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import home from 'config/home'
 import config from 'config/routes'
@@ -25,11 +24,11 @@ const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, 
 )
 
 Testimonials.propTypes = {
-	redirect: PropTypes.func,
-	showLink: PropTypes.bool,
-	enableStorystream: PropTypes.bool,
-	ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-	ctaUri: PropTypes.string,
+	redirect: React.PropTypes.func,
+	showLink: React.PropTypes.bool,
+	enableStorystream: React.PropTypes.bool,
+	ctaText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.node]),
+	ctaUri: React.PropTypes.string,
 }
 
 Testimonials.defaultProps = {

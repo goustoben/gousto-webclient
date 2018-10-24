@@ -12,16 +12,19 @@ import SimpleRecipe from 'Recipe/SimpleRecipe'
 
 describe('<SimpleRecipe />', () => {
 	let wrapper
-	let	recipe = {
-		id: '1',
+	let recipe = Immutable.fromJS({
+		id: 1,
 		title: 'test',
-		useWithin: '',
+		rating: {
+			count: 1,
+			average: 4,
+		},
 		url: '',
 		cookingTime: 1,
-		features: Immutable.Map(),
-		equipment: Immutable.List(),
-		media: Immutable.fromJS(
-			[
+		cookingTimeFamily: 1,
+		shelfLifeDays: '',
+		media: {
+			images: [
 				{
 					urls: [
 						{},
@@ -31,12 +34,12 @@ describe('<SimpleRecipe />', () => {
 						},
 					],
 				},
-			]
-		),
-	}
+			],
+		},
+	})
 
 	beforeEach(() => {
-		wrapper = shallow(<SimpleRecipe {...recipe} />)
+		wrapper = shallow(<SimpleRecipe recipe={recipe} />)
 	})
 
 	test('should contain one Image component', () => {

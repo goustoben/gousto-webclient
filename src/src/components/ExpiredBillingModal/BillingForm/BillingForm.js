@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import moment from 'moment'
 import { Button } from 'goustouicomponents'
 import { inferCardType } from 'utils/checkout'
@@ -22,7 +21,7 @@ const divisor = String.fromCharCode(47)
 class BillingForm extends React.PureComponent {
 	static propTypes = {
 		isPosting: PropTypes.bool,
-		fetchError: PropTypes.func,
+		fetchError: React.PropTypes.func,
 	}
 
 	static defaultProps = {

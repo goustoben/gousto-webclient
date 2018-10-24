@@ -1,3 +1,5 @@
+import sinon from 'sinon'
+
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Field } from 'redux-form'
@@ -7,7 +9,7 @@ describe('DeliveryAddressType', () => {
 	let wrapper
 
 	beforeEach(() => {
-		wrapper = shallow(<DeliveryAddressType reset={jest.fn()} />)
+		wrapper = shallow(<DeliveryAddressType />)
 	})
 
 	describe('rendering', () => {
@@ -20,7 +22,7 @@ describe('DeliveryAddressType', () => {
 		})
 
 		test('should show an extra input with prop "mask", when the value prop is "other"', () => {
-			wrapper = shallow(<DeliveryAddressType value="other" reset={jest.fn()} />)
+			wrapper = shallow(<DeliveryAddressType value="other" />)
 			expect(wrapper.find(Field)).toHaveLength(2)
 			expect(
 				wrapper

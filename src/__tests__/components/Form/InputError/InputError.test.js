@@ -1,5 +1,7 @@
 import React from 'react'
 
+import sinon from 'sinon'
+
 import { shallow } from 'enzyme'
 import InputError from 'Form/InputError'
 
@@ -7,7 +9,7 @@ describe('InputError', () => {
 	let wrapper
 
 	test('should return a <p> tag', () => {
-		wrapper = shallow(<InputError>Error</InputError>)
+		wrapper = shallow(<InputError />)
 		expect(wrapper.type()).toEqual('p')
 	})
 

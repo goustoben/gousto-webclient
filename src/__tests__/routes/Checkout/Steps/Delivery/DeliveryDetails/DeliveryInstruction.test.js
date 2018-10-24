@@ -1,3 +1,5 @@
+import sinon from 'sinon'
+
 import React from 'react'
 import { Field } from 'redux-form'
 import { shallow } from 'enzyme'
@@ -7,7 +9,7 @@ describe('DeliveryInstruction', () => {
 	let wrapper
 
 	beforeEach(() => {
-		wrapper = shallow(<DeliveryInstruction reset={jest.fn()} />)
+		wrapper = shallow(<DeliveryInstruction />)
 	})
 
 	describe('rendering', () => {
@@ -20,7 +22,7 @@ describe('DeliveryInstruction', () => {
 		})
 
 		test('should show another input when the value prop is "other"', () => {
-			wrapper = shallow(<DeliveryInstruction value="other" reset={jest.fn()} />)
+			wrapper = shallow(<DeliveryInstruction value="other" />)
 
 			const inputFields = wrapper.find(Field)
 			const lastInput = inputFields.last()
@@ -32,7 +34,7 @@ describe('DeliveryInstruction', () => {
 		})
 
 		test('should show another input when the value prop is "neighbour"', () => {
-			wrapper = shallow(<DeliveryInstruction value="neighbour" reset={jest.fn()} />)
+			wrapper = shallow(<DeliveryInstruction value="neighbour" />)
 
 			const inputFields = wrapper.find(Field)
 			const lastInput = inputFields.last()
@@ -46,7 +48,7 @@ describe('DeliveryInstruction', () => {
 
 	describe('sensitive data masking', () => {
 		test('<Field /> component(s) should have prop "mask" when the value prop is "other"', () => {
-			wrapper = shallow(<DeliveryInstruction value="other" reset={jest.fn()} />)
+			wrapper = shallow(<DeliveryInstruction value="other" />)
 			expect(
 				wrapper
 					.find(Field)

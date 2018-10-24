@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Button, Segment } from 'goustouicomponents'
 import moment from 'moment'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import Calendar from 'Form/Calendar'
 import SlotPicker from './SlotPicker'
 import DropdownInput from 'Form/Dropdown'

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
 import { set } from 'utils/cookieHelper2'
@@ -12,9 +11,9 @@ class Join extends Home {
 
 	static propTypes = {
 		...Home.propTypes,
-		enableSubscription: PropTypes.bool,
-		heroLeftAlignedBox570: PropTypes.bool,
-		browser: PropTypes.string,
+		enableSubscription: React.PropTypes.bool,
+		heroLeftAlignedBox570: React.PropTypes.bool,
+		browser: React.PropTypes.string,
 	}
 	static defaultProps = {
 		...Home.defaultProps,

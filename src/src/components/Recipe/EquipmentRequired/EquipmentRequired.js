@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import Icon from 'Icon'
 import { Div, Span } from 'Page/Elements'

@@ -81,7 +81,7 @@ app.use(async (ctx, next) => {
 				</Page>
 			</Provider>
 		)
-		const helmetHead = __SERVER__ ? Helmet.rewind : Helmet.peek
+		const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
 		ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), {}, ctx.request.url, ctx.req.headers['user-agent'], noGTM, helmetHead)
 	}
 })

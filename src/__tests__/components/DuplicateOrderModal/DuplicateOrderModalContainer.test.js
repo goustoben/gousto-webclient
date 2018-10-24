@@ -1,3 +1,5 @@
+import sinon from 'sinon'
+
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
@@ -13,10 +15,9 @@ describe('DuplicateOrderModalContainer', () => {
 			context: {
 				store: {
 					getState: () => ({
-						temp: Immutable.Map(),
+						temp: Immutable.Map({}),
 					}),
 					subscribe: () => {},
-					dispatch: () => {},
 				},
 			},
 		})
@@ -26,8 +27,8 @@ describe('DuplicateOrderModalContainer', () => {
 		test('shouldnt blow up', () => {
 			expect(wrapper.type()).toBe(DuplicateOrderModal)
 		})
-		test('should set the closeOrders prop to an empty Immutable List', () => {
-			expect(Immutable.is(wrapper.prop('closeOrders'), Immutable.List([]))).toBe(
+		test('should set the closeOrders prop to an empty Immutable Map', () => {
+			expect(Immutable.is(wrapper.prop('closeOrders'), Immutable.Map([]))).toBe(
 				true,
 			)
 		})
@@ -52,7 +53,6 @@ describe('DuplicateOrderModalContainer', () => {
 							}),
 						}),
 						subscribe: () => {},
-						dispatch: () => {},
 					},
 				},
 			})

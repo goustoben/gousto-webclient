@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import SeeMenuSection from './SeeMenuSection'
 import css from './NoOrders.css'
 import classnames from 'classnames'
@@ -45,7 +44,7 @@ const NoOrders = ({ recipes, boxType }) => (
 )
 
 NoOrders.propTypes = {
-	recipes: PropTypes.instanceOf(Immutable.List),
+	recipes: PropTypes.instanceOf(Immutable.Map),
 	boxType: PropTypes.string,
 }
 NoOrders.defaultProps = {

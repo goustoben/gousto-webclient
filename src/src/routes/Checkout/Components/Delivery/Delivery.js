@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-import PropTypes from 'prop-types'
-
 import React from 'react'
 import { FormSection } from 'redux-form'
 import * as deliveryUtils from 'routes/Checkout/utils/delivery'
@@ -14,16 +12,16 @@ import Subscription from 'routes/Checkout/Components/Subscription'
 
 class Delivery extends React.PureComponent {
 	static propTypes = {
-		onStepChange: PropTypes.func,
-		formValues: PropTypes.object,
-		formName: PropTypes.string,
-		sectionName: PropTypes.string,
-		nextStepName: PropTypes.string,
-		clearErrors: PropTypes.func,
-		manualSubmit: PropTypes.func,
-		asyncValidate: PropTypes.func,
-		change: PropTypes.func,
-		receiveRef: PropTypes.func,
+		onStepChange: React.PropTypes.func,
+		formValues: React.PropTypes.object,
+		formName: React.PropTypes.string,
+		sectionName: React.PropTypes.string,
+		nextStepName: React.PropTypes.string,
+		clearErrors: React.PropTypes.func,
+		manualSubmit: React.PropTypes.func,
+		asyncValidate: React.PropTypes.func,
+		change: React.PropTypes.func,
+		receiveRef: React.PropTypes.func,
 	}
 
 	static defaultProps = {

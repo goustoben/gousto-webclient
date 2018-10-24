@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { Segment } from 'goustouicomponents'
 import Button from '../../Button'
@@ -55,10 +54,10 @@ const PeopleCookFor = ({ header, text, numPeopleChange, next }) => {
 }
 
 PeopleCookFor.propTypes = {
-	header: PropTypes.string,
-	text: PropTypes.string,
-	numPeopleChange: PropTypes.func.isRequired,
-	next: PropTypes.func.isRequired,
+	header: React.PropTypes.string,
+	text: React.PropTypes.string,
+	numPeopleChange: React.PropTypes.func.isRequired,
+	next: React.PropTypes.func.isRequired,
 }
 
 export default PeopleCookFor

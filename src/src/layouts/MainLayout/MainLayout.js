@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Header from 'Header'
 import Footer from 'Footer'
 import css from './MainLayout.css'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import classNames from 'classnames'
 import { Div } from 'Page/Elements'
 import CookieBanner from 'CookieBanner'
@@ -32,8 +31,8 @@ class MainLayout extends React.Component {
 		orders: Immutable.fromJS({}),
 		shippingAddresses: Immutable.List([]),
 		route: {
+
 		},
-		children: {}
 	}
 
 	componentDidMount() {

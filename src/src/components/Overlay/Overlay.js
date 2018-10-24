@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import ReactDOM from 'react-dom'
 import css from './Overlay.css'
 import classNames from 'classnames'
@@ -23,7 +22,6 @@ class Overlay extends React.Component {
 		rootId: 'react-root',
 		from: 'right',
 		resetScroll: false,
-		open: false,
 	}
 
 	static forceCloseAll() {
