@@ -50,5 +50,5 @@
 
 .errorMsg {
 	composes: msg;
-	color: white;
+	color: red;
 }
