@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 
@@ -10,7 +8,8 @@ describe('CancelOrderModal', () => {
 	let wrapper
 
 	beforeEach(() => {
-		wrapper = shallow(<ExpiredBillingModal />)
+		wrapper = shallow(<ExpiredBillingModal />,
+		{ context: { store: {} } })
 	})
 
 	test('should return an Overlay', () => {

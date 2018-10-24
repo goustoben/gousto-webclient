@@ -1,17 +1,14 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 
 import NewAddressForm from 'routes/Account/MyDeliveries/OrdersList/NewAddressModal//NewAddressForm'
 import NewAddressModal from 'routes/Account/MyDeliveries/OrdersList/NewAddressModal/NewAddressModal'
-import css from 'routes/Account/MyDeliveries/OrdersList/NewAddressModal/NewAddressModal.css'
 
 describe('NewAddressModal', () => {
 	let wrapper
 
 	beforeEach(() => {
-		wrapper = shallow(<NewAddressModal isModalOpen />)
+		wrapper = shallow(<NewAddressModal isModalOpen />, { context: { store: {} } })
 	})
 
 	test('should return a ModalPanel with no props', () => {

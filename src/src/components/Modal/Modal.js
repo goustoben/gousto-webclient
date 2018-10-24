@@ -1,18 +1,19 @@
+import PropTypes from 'prop-types';
 import React from 'react'
 import Portal from 'react-portal'
 import ModalPanel from './ModalPanel'
 
 class GoustoModal extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.node.isRequired,
-		openByClickOn: React.PropTypes.node,
-		closeOnEsc: React.PropTypes.bool,
-		closeOnOutsideClick: React.PropTypes.bool,
-		onOpen: React.PropTypes.func,
-		beforeClose: React.PropTypes.func,
-		isOpened: React.PropTypes.bool,
-		onClose: React.PropTypes.func,
-		onUpdate: React.PropTypes.func,
+		children: PropTypes.node.isRequired,
+		openByClickOn: PropTypes.node,
+		closeOnEsc: PropTypes.bool,
+		closeOnOutsideClick: PropTypes.bool,
+		onOpen: PropTypes.func,
+		beforeClose: PropTypes.func,
+		isOpened: PropTypes.bool,
+		onClose: PropTypes.func,
+		onUpdate: PropTypes.func,
 	}
 
 	static defaultProps = {

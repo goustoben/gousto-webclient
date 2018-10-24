@@ -59,7 +59,7 @@ describe('<Confirm />', () => {
 			/>
 		)
 
-		expect(wrapper.find(`.${css.confirmContentError}`).isEmpty()).toBe(true)
+		expect(wrapper.find(`.${css.confirmContentError}`).exists()).toBe(false)
 	})
 
 	test('button is not disabled if unsubscribe operation is not pending', () => {

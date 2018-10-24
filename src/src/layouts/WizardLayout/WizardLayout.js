@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Header from 'Header'
 import CookieBanner from 'CookieBanner'
 import css from './WizardLayout.css'

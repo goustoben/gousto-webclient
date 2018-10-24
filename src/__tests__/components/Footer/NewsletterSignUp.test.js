@@ -78,7 +78,7 @@ describe('<NewsletterSignUp />', () => {
 			).toEqual('')
 		})
 		test('should not show a spinner', () => {
-			expect(wrapper.find(Button).node.props.pending).toEqual(false)
+			expect(wrapper.find(Button).prop('pending')).toEqual(false)
 		})
 	})
 
@@ -108,7 +108,7 @@ describe('<NewsletterSignUp />', () => {
 			).toEqual('')
 		})
 		test('should show a spinner', () => {
-			expect(wrapper.find(Button).node.props.pending).toEqual(true)
+			expect(wrapper.find(Button).prop('pending')).toEqual(true)
 		})
 	})
 
@@ -138,7 +138,7 @@ describe('<NewsletterSignUp />', () => {
 			).toEqual('')
 		})
 		test('should not show a spinner', () => {
-			expect(wrapper.find(Button).node.props.pending).toEqual(false)
+			expect(wrapper.find(Button).prop('pending')).toEqual(false)
 		})
 	})
 
@@ -168,7 +168,7 @@ describe('<NewsletterSignUp />', () => {
 			).toEqual('An Error Message')
 		})
 		test('should not show a spinner', () => {
-			expect(wrapper.find(Button).node.props.pending).toEqual(false)
+			expect(wrapper.find(Button).prop('pending')).toEqual(false)
 		})
 	})
 })

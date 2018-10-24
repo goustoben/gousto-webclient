@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import queryString from 'query-string'
 import Banner from 'Banner'
 import home from 'config/home'

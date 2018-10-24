@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Helmet from 'react-helmet'
 import actions from 'actions'
 import menuFetchData from 'routes/Menu/fetchData'

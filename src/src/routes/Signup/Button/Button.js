@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import actual from 'actual'
 import { Button as GoustoButton } from 'goustouicomponents'
@@ -31,9 +32,9 @@ const Button = ({ children, onClick, isLastStep, ...buttonProps }) => {
 }
 
 Button.propTypes = {
-	isLastStep: React.PropTypes.bool.isRequired,
-	onClick: React.PropTypes.func,
-	children: React.PropTypes.node,
+	isLastStep: PropTypes.bool.isRequired,
+	onClick: PropTypes.func,
+	children: PropTypes.node,
 }
 
 export default Button

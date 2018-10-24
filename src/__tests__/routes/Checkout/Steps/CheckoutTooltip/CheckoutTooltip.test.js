@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { shallow, mount } from 'enzyme'
 import RCTooltip from 'rc-tooltip'
@@ -9,7 +7,7 @@ describe('CheckoutTooltip', () => {
 	let wrapper
 
 	beforeEach(() => {
-		wrapper = shallow(<CheckoutTooltip />)
+		wrapper = shallow(<CheckoutTooltip><div /></CheckoutTooltip>)
 	})
 
 	describe('rendering', () => {
@@ -27,18 +25,18 @@ describe('CheckoutTooltip', () => {
 
 		test('should have tooltipText prop equal to "sample tooltip text"', () => {
 			const text = 'sample tooltip text'
-			wrapper = mount(<CheckoutTooltip tooltipText={text} />)
+			wrapper = mount(<CheckoutTooltip tooltipText={text}><div /></CheckoutTooltip>)
 			expect(wrapper.props().tooltipText).toBe(text)
 		})
 
 		test('should have placement prop equal to "left"', () => {
-			wrapper = mount(<CheckoutTooltip placement="left" />)
+			wrapper = mount(<CheckoutTooltip placement="left"><div /></CheckoutTooltip>)
 			expect(wrapper.props().placement).toBe('left')
 		})
 
 		test('should have trigger prop equal to "["hover"]"', () => {
-			wrapper = mount(<CheckoutTooltip trigger="['hover']" />)
-			expect(wrapper.props().trigger).toBe("['hover']")
+			wrapper = mount(<CheckoutTooltip trigger={['hover']}><div /></CheckoutTooltip>)
+			expect(wrapper.props().trigger).toEqual(['hover'])
 		})
 	})
 })

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Cals.css'
 
@@ -8,7 +9,7 @@ const Cals = ({ cals }) => (
 )
 
 Cals.propTypes = {
-	cals: React.PropTypes.number.isRequired,
+	cals: PropTypes.number.isRequired,
 }
 
 export default Cals

@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import sinon from 'sinon'
 
 import React from 'react'
 import { shallow } from 'enzyme'
@@ -25,6 +24,7 @@ describe('Hub', () => {
 		beforeEach(() => {
 			const recipes = Immutable.fromJS([
 				{
+					id: '1',
 					slug: 'pasta',
 					pasta: {},
 				},
@@ -33,12 +33,40 @@ describe('Hub', () => {
 				recipes: ['pasta'],
 			})
 			wrapper = shallow(
-				<Hub recipes={recipes} collection={collection} slug="most-popular" />,
+				<Hub
+					recipes={recipes}
+					collection={collection}
+					slug="most-popular"
+					params={{}}
+					endSet={1}
+					fetchSetData={jest.fn()}
+					limit={1}
+					loadSets={jest.fn()}
+					loadNextSet={jest.fn()}
+					resetSets={jest.fn()}
+					startSet={1}
+					totalSets={1}
+					title={''}
+				/>,
+				{ context: { store: {} } }
 			)
 		})
 
 		test('should render a <Section> by default', () => {
-			wrapper = shallow(<Hub />)
+			wrapper = shallow(<Hub
+				endSet={1}
+				fetchSetData={jest.fn()}
+				limit={1}
+				loadSets={jest.fn()}
+				loadNextSet={jest.fn()}
+				params={{}}
+				resetSets={jest.fn()}
+				startSet={1}
+				totalSets={1}
+				title={''}
+			/>,
+				{ context: { store: {} } })
+
 			expect(wrapper.type()).toBe(Section)
 		})
 

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import SectionHeader from 'SectionHeader'
 import Content from 'containers/Content'
 
@@ -21,6 +22,8 @@ SubHeader.propTypes = {
 }
 
 SubHeader.defaultProps = {
+	contentKeys: '',
+	nameFirst: '',
 	message: 'You’ve just made your first step towards a life with more free time, better food and less hassle than ever before. Let the good times roll!',
 }
 

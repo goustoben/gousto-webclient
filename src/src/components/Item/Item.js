@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import css from './Item.css'
 import classnames from 'classnames'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import GoustoImage from 'Image'
 import { capitalizeFirstLetter } from 'utils/text'
 

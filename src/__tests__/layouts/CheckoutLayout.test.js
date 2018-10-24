@@ -6,19 +6,19 @@ import Footer from 'components/Footer/Footer'
 
 describe('CheckoutLayout', () => {
 	test('should return a <span>', () => {
-		const wrapper = shallow(<CheckoutLayout />)
+		const wrapper = shallow(<CheckoutLayout><div></div></CheckoutLayout>)
 
 		expect(wrapper.type()).toBe('span')
 	})
 
 	test('should return a <Header>', () => {
-		const wrapper = shallow(<CheckoutLayout />)
+		const wrapper = shallow(<CheckoutLayout><div></div></CheckoutLayout>)
 
 		expect(wrapper.find(Header).length).toBe(1)
 	})
 
 	test('should return a <Footer>', () => {
-		const wrapper = shallow(<CheckoutLayout />)
+		const wrapper = shallow(<CheckoutLayout><div></div></CheckoutLayout>)
 
 		expect(wrapper.find(Footer).length).toBe(1)
 	})

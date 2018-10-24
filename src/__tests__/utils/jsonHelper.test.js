@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import { processJSON } from 'utils/jsonHelper'
 
 describe('JSON Helper', () => {
@@ -23,7 +21,7 @@ describe('JSON Helper', () => {
 			},
 		}
 		const response = processJSON([serverResponse, 500])
-		expect(response).rejects.toBe(rejectionObj)
+		expect(response).rejects.toEqual(rejectionObj)
 	})
 
 	test('handle errors response as an array', () => {
@@ -40,10 +38,10 @@ describe('JSON Helper', () => {
 
 		const rejectionObj = {
 			code: '401',
-			message: '401 - Auth Exception!',
+			message: ', 401 - Auth Exception!',
 		}
 		const response = processJSON([serverResponse, 500])
-		expect(response).rejects.toBe(rejectionObj)
+		expect(response).rejects.toEqual(rejectionObj)
 	})
 
 	test('handle payment-required error response', () => {
@@ -53,10 +51,11 @@ describe('JSON Helper', () => {
 		}
 
 		const rejectionObj = {
-			code: 'payment-required',
+			code: 500,
+			errors: {},
 			message: serverResponse.error,
 		}
 		const response = processJSON([serverResponse, 500])
-		expect(response).rejects.toBe(rejectionObj)
+		expect(response).rejects.toEqual(rejectionObj)
 	})
 })

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './PromoModalBody.css'
 
@@ -29,9 +30,9 @@ const PromoModalBody = ({ text, title, error }) => (
 )
 
 PromoModalBody.propTypes = {
-	text: React.PropTypes.string,
-	title: React.PropTypes.string,
-	error: React.PropTypes.string,
+	text: PropTypes.string,
+	title: PropTypes.string,
+	error: PropTypes.string,
 }
 
 export default PromoModalBody

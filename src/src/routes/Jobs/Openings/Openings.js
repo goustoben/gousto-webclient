@@ -1,15 +1,16 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import css from './Openings.css'
 import JobCard from './JobCard/JobCard'
 import actions from 'actions/jobs'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import Link from 'Link'
 import Content from 'containers/Content'
 
 class Openings extends React.PureComponent {
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+		store: PropTypes.object.isRequired,
 	}
 
 	static fetchData = async ({ store }) => {
@@ -91,7 +92,7 @@ Openings.propTypes = {
 }
 
 Openings.defaultProps = {
-	jobs: {},
+	jobs: Immutable.Map(),
 	depts: ['All', 'Tech'],
 	selectDepartment: () => {},
 	selectedDepartment: 'All',

@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import moment from 'moment'
-import Immutable from 'immutable'  /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import { basketSum, okRecipes } from 'utils/basket'
 import { getSlot } from 'utils/deliveries'
 import { getSurchargeItems } from 'utils/pricing'
