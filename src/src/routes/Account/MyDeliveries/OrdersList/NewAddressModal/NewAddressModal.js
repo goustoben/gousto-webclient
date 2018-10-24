@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import css from './NewAddressModal.css'
@@ -13,7 +12,7 @@ class NewAddressModal extends React.PureComponent {
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	static defaultProps = {

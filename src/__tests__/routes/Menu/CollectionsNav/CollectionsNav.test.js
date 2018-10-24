@@ -1,5 +1,5 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
 jest.mock('utils/window', () => ({
@@ -8,7 +8,9 @@ jest.mock('utils/window', () => ({
 	}),
 }))
 
+import css from 'routes/Menu/CollectionsNav/CollectionsNav.css'
 import CollectionsNav from 'routes/Menu/CollectionsNav/CollectionsNav'
+import CollectionItem from 'routes/Menu/CollectionItem'
 
 describe('<CollectionsNav />', () => {
 	let wrapper
@@ -48,35 +50,32 @@ describe('<CollectionsNav />', () => {
 		collectionFilterChange = jest.fn()
 		featureSet = jest.fn()
 		menuCurrentCollectionId = '345-345-345'
-		wrapper = mount(
+		wrapper = shallow(
 			<CollectionsNav
 				menuCollections={menuCollections}
-				menuCollectionRecipes={Immutable.Map()}
 				collectionFilterChange={collectionFilterChange}
 				menuCurrentCollectionId={menuCurrentCollectionId}
 				featureSet={featureSet}
 				features={Immutable.fromJS({ menuStickyCollections: { value: true } })}
 			/>,
-			{ contest: { store: { } } }
 		)
 	})
 
 	test('should render a div', () => {
-		expect(wrapper.children().type()).toEqual('div')
+		expect(wrapper.type()).toEqual('div')
 	})
 
 	test('should render the given collection items as divs with their "shortTitle" in', () => {
-		items = wrapper.find('CollectionItem')
+		items = wrapper.find(CollectionItem)
 
 		expect(items.length).toEqual(3)
-		expect(items.at(0).find('span').at(0).text()).toEqual('Burgers!')
-		expect(items.at(1).find('span').at(0).text()).toEqual('Savour the Summer')
-		expect(items.at(2).find('span').at(0).text()).toEqual('Quick Meals')
+		expect(items.at(0).find('span').text()).toEqual('Burgers!')
+		expect(items.at(1).find('span').text()).toEqual('Savour the Summer')
+		expect(items.at(2).find('span').text()).toEqual('Quick Meals')
 	})
 
 	test('should call the collectionFilterChange function prop when a collection is clicked & sticky feature is enabled', () => {
-		items = wrapper.find('CollectionItem')
-
+		items = wrapper.find(CollectionItem)
 		items.at(2).simulate('click')
 
 		expect(collectionFilterChange).toHaveBeenCalledTimes(1)
@@ -97,39 +96,38 @@ describe('<CollectionsNav />', () => {
 		collectionFilterChange = jest.fn()
 		featureSet = jest.fn()
 		menuCurrentCollectionId = '345-345-345'
-		wrapper = mount(
+		wrapper = shallow(
 			<CollectionsNav
 				menuCollections={menuCollections}
 				collectionFilterChange={collectionFilterChange}
-				menuCollectionRecipes={Immutable.Map()}
 				menuCurrentCollectionId={menuCurrentCollectionId}
 				featureSet={featureSet}
 				features={Immutable.fromJS({ menuStickyCollections: { value: false } })}
 			/>,
-			{ contest: { store: { } } }
 		)
 
-		items = wrapper.find('CollectionItem')
-		expect(items.length).toBe(1)
+		items = wrapper.find(CollectionItem)
+		items.at(2).simulate('click')
+
+		expect(collectionFilterChange).not.toHaveBeenCalled()
 	})
 
 	test('should change the class of the current collection to be currentItem', () => {
-		const currentItems = wrapper.find('CollectionItem.currentItem')
+		const currentItems = wrapper.find(
+			`.${css.currentItem.split(' ').join('.')}`,
+		)
 		expect(currentItems.length).toEqual(1)
 	})
 
 	test('should always show collections which should always be shown on the menu', () => {
-		wrapper = mount(
+		wrapper = shallow(
 			<CollectionsNav
 				menuCollections={menuCollections}
-				menuCollectionRecipes={Immutable.Map()}
 				collectionFilterChange={collectionFilterChange}
 				menuCurrentCollectionId={menuCurrentCollectionId}
-				featureSet={jest.fn()}
 			/>,
-			{ contest: { store: { } } }
 		)
-		items = wrapper.find('CollectionItem')
+		items = wrapper.find(CollectionItem)
 		expect(items.length).toEqual(3)
 	})
 
@@ -153,18 +151,16 @@ describe('<CollectionsNav />', () => {
 			collectionFilterChange = jest.fn()
 			featureSet = jest.fn()
 
-			wrapper = mount(
+			wrapper = shallow(
 				<CollectionsNav
 					menuCollections={menuCollections}
 					menuCurrentCollectionId={menuCurrentCollectionId}
-					menuCollectionRecipes={Immutable.Map()}
 					collectionFilterChange={collectionFilterChange}
 					featureSet={featureSet}
 					features={Immutable.fromJS({
 						menuStickyCollections: { value: true },
 					})}
 				/>,
-				{ contest: { store: { } } }
 			)
 		})
 
@@ -180,11 +176,10 @@ describe('<CollectionsNav />', () => {
 
 			test('should not call collectionFilterChange if it is the last collection', () => {
 				menuCurrentCollectionId = '345-345-345'
-				wrapper = mount(
+				wrapper = shallow(
 					<CollectionsNav
 						menuCollections={menuCollections}
 						menuCurrentCollectionId={menuCurrentCollectionId}
-						menuCollectionRecipes={Immutable.Map()}
 						collectionFilterChange={collectionFilterChange}
 						featureSet={featureSet}
 					/>,
@@ -197,11 +192,10 @@ describe('<CollectionsNav />', () => {
 
 			test('should cope with an empty menuCollections list', () => {
 				menuCollections = Immutable.fromJS({}).toOrderedMap()
-				wrapper = mount(
+				wrapper = shallow(
 					<CollectionsNav
 						menuCollections={menuCollections}
 						menuCurrentCollectionId={menuCurrentCollectionId}
-						menuCollectionRecipes={Immutable.Map()}
 						collectionFilterChange={collectionFilterChange}
 						featureSet={featureSet}
 					/>,
@@ -224,11 +218,10 @@ describe('<CollectionsNav />', () => {
 
 			test('should not call collectionFilterChange if it is the first collection', () => {
 				menuCurrentCollectionId = '123-123-123'
-				wrapper = mount(
+				wrapper = shallow(
 					<CollectionsNav
 						menuCollections={menuCollections}
 						menuCurrentCollectionId={menuCurrentCollectionId}
-						menuCollectionRecipes={Immutable.Map()}
 						collectionFilterChange={collectionFilterChange}
 						featureSet={featureSet}
 					/>,
@@ -240,11 +233,10 @@ describe('<CollectionsNav />', () => {
 
 			test('should cope with an empty menuCollections list', () => {
 				menuCollections = Immutable.fromJS({}).toOrderedMap()
-				wrapper = mount(
+				wrapper = shallow(
 					<CollectionsNav
 						menuCollections={menuCollections}
 						menuCurrentCollectionId={menuCurrentCollectionId}
-						menuCollectionRecipes={Immutable.Map()}
 						collectionFilterChange={collectionFilterChange}
 						featureSet={featureSet}
 					/>,
@@ -280,16 +272,15 @@ describe('<CollectionsNav />', () => {
 
 		describe('click event', () => {
 			test('should call collectionFilterChange', () => {
-				wrapper = mount(
+				wrapper = shallow(
 					<CollectionsNav
 						menuCollections={menuCollections}
 						menuCurrentCollectionId={menuCurrentCollectionId}
 						collectionFilterChange={collectionFilterChange}
-						menuCollectionRecipes={Immutable.Map()}
 						featureSet={featureSet}
 					/>,
 				)
-				const collections = wrapper.find('CollectionItem').filterWhere(function(n) {
+				const collections = wrapper.find(CollectionItem).filterWhere(function(n) {
 					return n.prop('dataId') === '123-123-123'
 				})
 

@@ -1,3 +1,10 @@
+import chai, { expect } from 'chai'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
+import immutableChai from 'chai-immutable'
+chai.use(sinonChai)
+chai.use(immutableChai)
+
 import React from 'react'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import actions from 'actions'

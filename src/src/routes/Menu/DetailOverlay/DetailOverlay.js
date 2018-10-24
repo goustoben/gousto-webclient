@@ -1,5 +1,4 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { PropTypes } from 'react'
 import Overlay from 'Overlay'
 import Detail from 'Recipe/Detail'
 import Immutable from 'immutable' /* eslint-disable new-cap */

@@ -1,8 +1,3 @@
-var Enzyme = require('enzyme');
-var Adapter = require('enzyme-adapter-react-16.2');
-
-Enzyme.configure({ adapter: new Adapter() });
-
 window.matchMedia =
 	window.matchMedia ||
 	function() {
@@ -12,6 +7,7 @@ window.matchMedia =
 			removeListener: function() {},
 		}
 	}
+
 if (!Object.entries) {
 	Object.entries = function(obj) {
 		const ownProps = Object.keys(obj)

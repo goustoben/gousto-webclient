@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React, { createElement } from 'react'
+import React, { PropTypes, createElement } from 'react'
 import css from './ModuleHeader.css'
 
 const ModuleHeader = ({ children, size }) => {

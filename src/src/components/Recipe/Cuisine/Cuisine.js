@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Cuisine.css'
 
@@ -9,7 +8,7 @@ const Cuisine = ({ cuisine }) => (
 )
 
 Cuisine.propTypes = {
-	cuisine: PropTypes.string.isRequired,
+	cuisine: React.PropTypes.string.isRequired,
 }
 
 export default Cuisine

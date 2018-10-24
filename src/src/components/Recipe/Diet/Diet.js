@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Diet.css'
 
@@ -9,7 +8,7 @@ const Diet = ({ diet }) => (
 )
 
 Diet.propTypes = {
-	diet: PropTypes.string.isRequired,
+	diet: React.PropTypes.string.isRequired,
 }
 
 export default Diet
