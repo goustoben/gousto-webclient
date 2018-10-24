@@ -7,6 +7,7 @@ import { Button } from 'goustouicomponents'
 import Form from 'Form'
 import { referAFriend } from 'apis/user'
 import { validateEmail } from 'utils/auth'
+import config from 'config/home'
 
 class EmailModal extends React.Component {
 	constructor(props) {
@@ -15,7 +16,8 @@ class EmailModal extends React.Component {
 		this.state = {
 			email: '',
 			showEmailReferralForm: true,
-			isEmailValid: false
+			isEmailValid: false,
+			errorMessage: ''
 		}
 	}
 
@@ -51,10 +53,13 @@ class EmailModal extends React.Component {
 	handleSubmit = (event) => {
 		event.preventDefault()
 		if (this.state.isEmailValid) {
-			this.setState({ showEmailReferralForm: false })
+			this.setState({
+				showEmailReferralForm: false,
+				errorMessage: ''
+			})
 			this.referAFriend()
 		} else {
-			console.log('invalid')
+			this.setState({ errorMessage: config.emailForm.emailRequired })
 		}
 	}
 
@@ -62,20 +67,9 @@ class EmailModal extends React.Component {
 		this.setState({
 			email: '',
 			showEmailReferralForm: true,
-			emailValid: false
+			isEmailValid: false,
+			errorMessage: ''
 		})
-	}
-
-	getModalBody = () => {
-		if (this.state.showEmailReferralForm) {
-			return <EmailReferralForm
-				onSubmit={this.handleSubmit}
-				onEmailChange={this.handleEmailChange}
-				email={this.state.email}
-			/>
-		} else {
-			return <EmailSentConfirmation onButtonClick={this.showEmailReferralForm}/>
-		}
 	}
 
 	render() {
@@ -87,63 +81,49 @@ class EmailModal extends React.Component {
 			>
 				<div className={css.modalContent}>
 					<h4 className={css.heading}>Refer a friend - Get £15</h4>
-					{this.getModalBody()}
+					<span className={css.errorMsg}>{this.state.errorMessage}</span>
+					{
+						this.state.showEmailReferralForm ? (
+							<div>
+								Enter your friend's email below:
+								<Form onSubmit={this.handleSubmit}>
+									<div>
+										<div>
+											<TextInput
+												name="email"
+												color="primary"
+												textAlign="left"
+												placeholder="Your friend's email"
+												onChange={this.handleEmailChange}
+												value={this.state.email}
+											/>
+										</div>
+										<br />
+										<div className={css.flex}>
+											<Button
+												onClick={this.handleSubmit}
+											>
+												Send Email
+											</Button>
+										</div>
+									</div>
+								</Form>
+							</div>
+						) : (
+							<div>
+								Email sent!
+								<br />
+								<Button
+									onClick={this.showEmailReferralForm}
+								>
+									Invite more friends
+								</Button>
+							</div>)
+					}
 				</div>
 			</ModalPanel>
 		)
 	}
 }
-
-const EmailReferralForm = (props) => (
-	<div>
-		Enter your friend's email below:
-		<Form onSubmit={props.onSubmit}>
-			<div>
-				<div>
-					<TextInput
-						name="email"
-						color="primary"
-						textAlign="left"
-						placeholder="Your friend's email"
-						onChange={props.onEmailChange}
-						value={props.email}
-					/>
-				</div>
-				<br />
-				<div className={css.flex}>
-					<Button
-						onClick={props.onSubmit}
-					>
-						Send Email
-					</Button>
-				</div>
-			</div>
-		</Form>
-	</div>
-)
-
-EmailReferralForm.propTypes = {
-	onSubmit: PropTypes.func.isRequired,
-	onEmailChange: PropTypes.func.isRequired,
-	email: PropTypes.string.isRequired
-}
-
-const EmailSentConfirmation = (props) => (
-	<div>
-		Email sent!
-		<br />
-		<br />
-		<Button
-			onClick={props.onButtonClick}
-		>
-			Invite more friends
-		</Button>
-	</div>
-)
-
-EmailSentConfirmation.propTypes = {
-	onButtonClick: PropTypes.func.isRequired
-}
-
 
 export default EmailModal
