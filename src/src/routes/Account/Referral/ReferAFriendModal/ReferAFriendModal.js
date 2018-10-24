@@ -1,7 +1,7 @@
 import React  from 'react'
 import PropTypes from 'prop-types'
 import ModalPanel from 'Modal/ModalPanel'
-import css from './EmailModal.css'
+import css from './ReferAFriendModal.css'
 import TextInput from 'Form/Input'
 import { Button } from 'goustouicomponents'
 import Form from 'Form'
@@ -9,7 +9,7 @@ import { referAFriend } from 'apis/user'
 import { validateEmail } from 'utils/auth'
 import config from 'config/home'
 
-class EmailModal extends React.Component {
+class ReferAFriendModal extends React.Component {
 	constructor(props) {
 		super(props)
 
@@ -37,7 +37,7 @@ class EmailModal extends React.Component {
 		const email = this.state.email
 		const accessToken = this.context.store.getState().auth.get('accessToken')
 
-		EmailModal.postReferral(accessToken, email)
+		ReferAFriendModal.postReferral(accessToken, email)
 	}
 
 	handleEmailChange = (value) => {
@@ -126,4 +126,4 @@ class EmailModal extends React.Component {
 	}
 }
 
-export default EmailModal
+export default ReferAFriendModal

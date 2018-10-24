@@ -4,7 +4,7 @@ import { H2 } from 'Page/Header'
 import config from './config'
 import UserRAFLink from './UserRAFLink'
 import SocialButton from './SocialButton'
-import EmailModal from './EmailModal'
+import ReferAFriendModal from './ReferAFriendModal'
 import accountCSS from '../Account/Account.css'
 import css from './Referral.css'
 import globals from 'config/globals'
@@ -70,7 +70,7 @@ class Referral extends React.Component {
 					<div className={css.socialButtons}>
 						<SocialButton text="Email" type="email" onClick={this.openEmailModal}/>
 						<Overlay open={this.state.isEmailModalOpen}>
-							<EmailModal
+							<ReferAFriendModal
 								onClose={this.closeEmailModal}
 							/>
 						</Overlay>
