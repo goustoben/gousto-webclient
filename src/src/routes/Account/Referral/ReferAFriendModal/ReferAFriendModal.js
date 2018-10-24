@@ -22,11 +22,8 @@ class ReferAFriendModal extends React.Component {
 	}
 
 	static propTypes = {
-		onClose: PropTypes.func
-	}
-
-	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		onClose: PropTypes.func.isRequired,
+		accessToken: PropTypes.string.isRequired
 	}
 
 	static postReferral = (accessToken, email) => {
@@ -35,14 +32,13 @@ class ReferAFriendModal extends React.Component {
 
 	referAFriend = () => {
 		const email = this.state.email
-		const accessToken = this.context.store.getState().auth.get('accessToken')
+		const accessToken = this.props.accessToken
 
 		ReferAFriendModal.postReferral(accessToken, email)
 	}
 
 	handleEmailChange = (value) => {
 		this.setState({ email: value })
-
 		if (value.length > 0 && validateEmail(value)) {
 			this.setState({ isEmailValid: true })
 		} else {
