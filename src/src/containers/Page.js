@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
 import config from 'config'
@@ -8,7 +9,6 @@ import { LoadingOverlay } from 'Loading'
 import css from './Page.css'
 
 const imageUrl = require('media/photos/gousto-share-box.jpg')
-import ReactPerfHelper from 'utils/ReactPerfHelper/ReactPerfHelper'
 
 class Page extends React.PureComponent {
 
@@ -23,7 +23,7 @@ class Page extends React.PureComponent {
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+		store: PropTypes.object.isRequired,
 	}
 
 	static fetchData = ({ store }) => {
@@ -92,7 +92,6 @@ class Page extends React.PureComponent {
 							},
 						]}
 					/>
-					{__DEV__ ? <ReactPerfHelper /> : null}
 					{this.props.children}
 				</div>
 				{this.props.contentFetchPending && <div className={css.loadingContainer}><LoadingOverlay /></div>}

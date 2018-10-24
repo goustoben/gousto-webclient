@@ -1,7 +1,5 @@
 import React from 'react'
 
-import sinon from 'sinon'
-
 import { shallow } from 'enzyme'
 import Ingredient from 'Recipe/Ingredients/Ingredient.js'
 import Image from 'Image'
@@ -55,7 +53,7 @@ describe('<Ingredient />', () => {
 	test('should return a <span> with label', () => {
 		const label = wrapper.find('span')
 		expect(label.length).toEqual(1)
-		expect(label.node.props.children[0]).toEqual(ingredient.get('label'))
+		expect(label.getElement().props.children[0]).toEqual(ingredient.get('label'))
 	})
 
 	test('should render an Image', () => {
@@ -116,8 +114,8 @@ describe('<Ingredient />', () => {
 		const label = wrapper.find('span')
 		const cross = <span>&#8224;</span>
 		expect(label.length).toEqual(2)
-		expect(label.node.props.children[0]).toEqual(ingredient.get('label'))
-		expect(label.node.props.children[1].props.children).toEqual(
+		expect(label.first().childAt(0).text()).toEqual(ingredient.get('label'))
+		expect(label.last().childAt(0).text()).toEqual(
 			cross.props.children,
 		)
 	})

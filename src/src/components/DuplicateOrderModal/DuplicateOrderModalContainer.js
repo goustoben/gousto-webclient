@@ -7,7 +7,7 @@ function mapStateToProps(state) {
 	return {
 		closeOrders: state
 			.temp
-			.get('closeOrderIds', Immutable.Map([]))
+			.get('closeOrderIds', Immutable.List())
 			.map(orderId =>
 				state.user.get('orders')
 					.filter(order => order.get('id') === orderId)
@@ -18,7 +18,7 @@ function mapStateToProps(state) {
 }
 
 const DuplicateOrderModalContainer = connect(mapStateToProps, {
-	close: () => actions.temp('closeOrderIds', Immutable.Map([])),
+	close: () => actions.temp('closeOrderIds', Immutable.List()),
 })(DuplicateOrderModal)
 
 export default DuplicateOrderModalContainer

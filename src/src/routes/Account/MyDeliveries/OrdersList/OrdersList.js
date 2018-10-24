@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Order from './Order'
 import NoOrders from './NoOrders'
 import NewAddressModal from './NewAddressModal'
@@ -20,12 +21,12 @@ const OrdersList = ({ orders, recipes, boxType }) => (
 
 OrdersList.propTypes = {
 	orders: PropTypes.instanceOf(Immutable.Map),
-	recipes: PropTypes.instanceOf(Immutable.Map),
+	recipes: PropTypes.instanceOf(Immutable.List),
 	boxType: PropTypes.string,
 }
 OrdersList.defaultProps = {
 	orders: Immutable.fromJS({}),
-	recipes: Immutable.fromJS({}),
+	recipes: Immutable.fromJS([]),
 	boxType: '',
 }
 

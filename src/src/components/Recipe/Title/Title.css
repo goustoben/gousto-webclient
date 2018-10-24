@@ -78,6 +78,7 @@
 /* HP carousel hack */
 :global .homepageSlider .slick-center :local .simpleHeading {
 	font-weight: bold;
+	height: auto;
 }
 
 .icon {

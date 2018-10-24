@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Availability.css'
 import moment from 'moment'
@@ -57,8 +58,8 @@ const Availability = ({ availability, cutoffDate }) => {
 }
 
 Availability.propTypes = {
-	availability: React.PropTypes.instanceOf(Immutable.List),
-	cutoffDate: React.PropTypes.string,
+	availability: PropTypes.instanceOf(Immutable.List),
+	cutoffDate: PropTypes.string,
 }
 
 export default Availability

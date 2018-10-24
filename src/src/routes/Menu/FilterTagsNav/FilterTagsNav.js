@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { Button } from 'goustouicomponents'
 import FilterTagsList from './FilterTagsList'
 import css from './FilterTagsNav.css'
 
 const propTypes = {
-	onCTAClick: PropTypes.func.require,
-	menuFilterExperiment: PropTypes.bool.require,
+	onCTAClick: PropTypes.func.isRequired,
+	menuFilterExperiment: PropTypes.bool.isRequired,
 	tags: PropTypes.arrayOf(
 		PropTypes.shape({
 			text: PropTypes.string,

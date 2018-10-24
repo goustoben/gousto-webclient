@@ -1,4 +1,4 @@
-import { shallow } from 'enzyme'
+import { shallow, render } from 'enzyme'
 import React from 'react'
 
 import sinon from 'sinon'
@@ -38,25 +38,25 @@ describe('Receipt', () => {
 	test('show correct number of recipes', () => {
 		const recipeLine = wrapper.find(ReceiptLine).at(0)
 		expect(recipeLine.prop('label')).toBe('Recipes (3)')
-		expect(recipeLine.children().nodes).toEqual(['£29.99'])
+		expect(recipeLine.prop('children')).toEqual('£29.99')
 	})
 
 	test('show recipe discount if any', () => {
 		const recipeLine = wrapper.find(ReceiptLine).at(1)
 		expect(recipeLine.prop('label')).toBe('50% discount')
-		expect(recipeLine.children().nodes).toEqual(['-£15.00'])
+		expect(recipeLine.prop('children')).toEqual('-£15.00')
 	})
 
 	test('should show recipe surcharges if any', () => {
 		const recipeLine = wrapper.find(ReceiptLine).at(2)
 		expect(recipeLine.prop('label')).toBe('Recipe surcharge (1)')
-		expect(recipeLine.children().nodes).toEqual(['£4.99'])
+		expect(recipeLine.prop('children')).toEqual('£4.99')
 	})
 
 	test('should show extras price if extrasPrice is passed in', () => {
 		const recipeLine = wrapper.find(ReceiptLine).at(3)
 		expect(recipeLine.prop('label')).toBe('Extras')
-		expect(recipeLine.children().nodes).toEqual(['£2.00'])
+		expect(recipeLine.prop('children')).toEqual('£2.00')
 	})
 
 	test('should total price of the order', () => {
@@ -154,7 +154,7 @@ describe('Receipt', () => {
 		test('should show order number', () => {
 			const recipeLine = wrapper.find(ReceiptLine).at(7)
 			expect(recipeLine.prop('label')).toBe('Order number')
-			expect(recipeLine.children().nodes).toEqual(['6283494'])
+			expect(recipeLine.prop('children')).toEqual('6283494')
 		})
 	})
 

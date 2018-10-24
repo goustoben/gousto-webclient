@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import { BottomButton } from 'routes/GetHelp/components/BottomButton'
 
 describe('<BottomButton />', () => {
-	const color = 'test-color'
+	const color = 'primary'
 	const url = 'test-url'
 	const ChildComponent = () => (<div>I am a component</div>)
 
@@ -23,7 +23,7 @@ describe('<BottomButton />', () => {
 		const link = button.find('GoustoLink')
 
 		expect(button).toHaveLength(1)
-		expect(button.prop('color')).toBe('test-color')
+		expect(button.prop('color')).toBe('primary')
 		expect(button.prop('width')).toBe('auto')
 		expect(button.prop('areChildrenInSegment')).toBe(true)
 		expect(link).toHaveLength(1)

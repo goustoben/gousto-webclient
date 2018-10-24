@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import config from 'config'
@@ -58,7 +59,7 @@ const ErrorPage = ({ status }) => {
 }
 
 ErrorPage.propTypes = {
-	status: React.PropTypes.string,
+	status: PropTypes.string,
 }
 
 ErrorPage.defaultProps = {

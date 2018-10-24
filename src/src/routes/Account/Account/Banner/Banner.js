@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Banner.css'
 import classnames from 'classnames'
@@ -11,8 +12,8 @@ const Banner = ({ title, version }) => (
 )
 
 Banner.propTypes = {
-	title: React.PropTypes.string,
-	version: React.PropTypes.string,
+	title: PropTypes.string,
+	version: PropTypes.string,
 }
 
 Banner.defaultProps = {

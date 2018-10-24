@@ -9,8 +9,8 @@ import List from 'Collection/List'
 import { Col, Row } from 'Page/Grid'
 
 describe('Collection List', () => {
-	const collections = Immutable.fromJS({
-		collection1: {
+	const collections = Immutable.fromJS([
+		{
 			id: 'collection1',
 			media: {
 				images: {
@@ -24,7 +24,7 @@ describe('Collection List', () => {
 			slug: 'collection-1',
 			shortTitle: 'Collection 1',
 		},
-		collection2: {
+		{
 			id: 'collection2',
 			media: {
 				images: {
@@ -38,7 +38,7 @@ describe('Collection List', () => {
 			slug: 'collection-2',
 			shortTitle: 'Collection 2',
 		},
-	})
+	])
 
 	describe('rendering', () => {
 		test('should return a Row', () => {

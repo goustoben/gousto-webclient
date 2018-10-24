@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Login.css'
 import TextInput from 'Form/Input'
@@ -11,14 +12,14 @@ import { getWindow } from 'utils/window'
 
 class Login extends React.PureComponent {
 	static propTypes = {
-		onSubmit: React.PropTypes.func.isRequired,
-		onInvalid: React.PropTypes.func,
-		isOpen: React.PropTypes.bool,
-		isAuthenticated: React.PropTypes.bool,
-		isAuthenticating: React.PropTypes.bool,
-		statusText: React.PropTypes.oneOfType([
-			React.PropTypes.string,
-			React.PropTypes.bool,
+		onSubmit: PropTypes.func.isRequired,
+		onInvalid: PropTypes.func,
+		isOpen: PropTypes.bool,
+		isAuthenticated: PropTypes.bool,
+		isAuthenticating: PropTypes.bool,
+		statusText: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.bool,
 		]),
 	}
 

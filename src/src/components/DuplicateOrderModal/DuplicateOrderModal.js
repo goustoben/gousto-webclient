@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import ModalPanel from 'Modal/ModalPanel'
 import moment from 'moment'
 import { Button } from 'goustouicomponents'
@@ -24,7 +25,7 @@ const renderOrders = (closeOrders) => {
 	return ordersRendered
 }
 
-const DuplicateOrderModal = ({ closeOrders = Immutable.Map([]), close }) => (
+const DuplicateOrderModal = ({ closeOrders = Immutable.List([]), close }) => (
 	<ModalPanel closePortal={close} disableOverlay>
 		<div className={css.body}>
 			<h2>Your Upcoming Deliveries</h2>
@@ -43,8 +44,8 @@ const DuplicateOrderModal = ({ closeOrders = Immutable.Map([]), close }) => (
 )
 
 DuplicateOrderModal.propTypes = {
-	closeOrders: React.PropTypes.instanceOf(Immutable.Map),
-	close: React.PropTypes.func,
+	closeOrders: PropTypes.instanceOf(Immutable.List),
+	close: PropTypes.func,
 }
 
 export default DuplicateOrderModal

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { getNewTag } from 'utils/recipe'
 import css from './Rating.css'
@@ -6,9 +7,9 @@ import InfoBadge from '../InfoBadge'
 class RecipeRating extends React.Component {
 
 	static propTypes = {
-		count: React.PropTypes.number,
-		average: React.PropTypes.number,
-		view: React.PropTypes.string,
+		count: PropTypes.number,
+		average: PropTypes.number,
+		view: PropTypes.string,
 	}
 
 	static defaultProps = {

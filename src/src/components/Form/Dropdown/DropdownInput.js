@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './DropdownInput.css'
 import globalCss from './reactSelect.css' // eslint-disable-line no-unused-vars
@@ -9,17 +10,17 @@ import InputWrapper from 'Form/InputWrapper'
 export class DropdownInput extends React.Component {
 
 	static propTypes = {
-		additionalProps: React.PropTypes.object,
-		options: React.PropTypes.array,
-		onChange: React.PropTypes.func,
-		color: React.PropTypes.oneOf(['primary', 'secondary']),
-		value: React.PropTypes.any,
-		subLabelClassName: React.PropTypes.string,
-		labelClassName: React.PropTypes.string,
-		required: React.PropTypes.bool,
-		className: React.PropTypes.string,
-		uppercase: React.PropTypes.bool,
-		dataTesting: React.PropTypes.string,
+		additionalProps: PropTypes.object,
+		options: PropTypes.array,
+		onChange: PropTypes.func,
+		color: PropTypes.oneOf(['primary', 'secondary']),
+		value: PropTypes.any,
+		subLabelClassName: PropTypes.string,
+		labelClassName: PropTypes.string,
+		required: PropTypes.bool,
+		className: PropTypes.string,
+		uppercase: PropTypes.bool,
+		dataTesting: PropTypes.string,
 	}
 
 	static defaultProps = {
