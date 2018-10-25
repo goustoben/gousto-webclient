@@ -1,15 +1,12 @@
 import { connect } from 'react-redux'
+import { userReferFriends } from 'actions/user'
+
 import ReferAFriendModal from './ReferAFriendModal'
 
-function mapStateToProps(state, ownProps) {
-	return {
-		accessToken: state.auth.get('accessToken'),
-		...ownProps,
-	}
-}
+const mapStateToProps = () => ({})
 
 const ReferAFriendContainer = connect(mapStateToProps, {
-
+	userReferFriends,
 })(ReferAFriendModal)
 
 export default ReferAFriendContainer

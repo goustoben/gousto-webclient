@@ -662,4 +662,14 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
 	}
 }
 
+export const userReferFriends = (email) => (
+	(dispatch, getState) => {
+		const accessToken = getState().auth.get('accessToken')
+
+		if (accessToken) {
+			userApi.referAFriend(accessToken, { emails: [email] })
+		}
+	}
+)
+
 export default userActions
