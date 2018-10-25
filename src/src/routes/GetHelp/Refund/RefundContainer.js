@@ -7,6 +7,22 @@ import Refund from './Refund'
 const mapStateToProps = (state) => {
 	const { auth, getHelp } = state
 	const order = getHelp.get('order').toJS()
+	const recipes = state.recipes.toJS()
+
+	const selectedItems = Object.keys(recipes).reduce((acc, id) => {
+		const recipe = recipes[id]
+
+		acc.push({
+			recipeId: recipe.id,
+			ingredients: [{
+				id: recipe.ingredients[0].id,
+				issueId: 1
+			}],
+		})
+
+		return acc
+	}, [])
+
 
 	return {
 		user: {
@@ -14,6 +30,7 @@ const mapStateToProps = (state) => {
 			accessToken: auth.get('accessToken'),
 		},
 		order,
+		selectedItems,
 		content: {
 			title: state.content.get('get-help_refund_pageheader_header')
 			|| 'Get help with your box',

@@ -32,6 +32,17 @@ class Refund extends PureComponent {
 		order: PropTypes.shape({
 			id: PropTypes.string.isRequired
 		}),
+		selectedItems: PropTypes.arrayOf(
+			PropTypes.shape({
+				recipeId: PropTypes.string.isRequired,
+				ingredients: PropTypes.arrayOf(
+					PropTypes.shape({
+						id: PropTypes.string.isRequired,
+						issueId: PropTypes.number.isRequired
+					})
+				)
+			})
+		)
 	}
 
 	state = {
@@ -58,11 +69,14 @@ class Refund extends PureComponent {
 		}
 	}
 
-	onAcceptOffer = async ({ user, order }) => {
+	onAcceptOffer = async ({ user, order, selectedItems }, { refundAmount }) => {
 		try {
 			const response = await setComplaint(user.accessToken, {
 				user_id: user.id,
 				order_id: order.id,
+				type: 'test',
+				value: refundAmount,
+				ingredients: selectedItems
 			})
 
 			redirect(routes.getHelp.confirmation)
@@ -109,7 +123,7 @@ class Refund extends PureComponent {
 			: <Button
 				className={css.button}
 				color="primary"
-				onClick={() => this.onAcceptOffer(this.props)}
+				onClick={() => this.onAcceptOffer(this.props, this.state)}
 			>
 				{button2WithAmount}
 			</Button>
