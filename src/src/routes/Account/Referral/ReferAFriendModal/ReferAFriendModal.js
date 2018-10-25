@@ -1,40 +1,34 @@
 import React  from 'react'
 import PropTypes from 'prop-types'
-import ModalPanel from 'Modal/ModalPanel'
-import css from './ReferAFriendModal.css'
-import TextInput from 'Form/Input'
-import { Button } from 'goustouicomponents'
-import Form from 'Form'
-import { referAFriend } from 'apis/user'
-import { validateEmail } from 'utils/auth'
+
+
 import config from 'config/home'
+import css from './ReferAFriendModal.css'
+import Form from 'Form'
+import TextInput from 'Form/Input'
+import ModalPanel from 'Modal/ModalPanel'
+import { Button } from 'goustouicomponents'
+import { validateEmail } from 'utils/auth'
+
 
 class ReferAFriendModal extends React.Component {
-	constructor(props) {
-		super(props)
-
-		this.state = {
-			email: '',
-			showEmailReferralForm: true,
-			isEmailValid: false,
-			errorMessage: ''
-		}
-	}
-
 	static propTypes = {
 		onClose: PropTypes.func.isRequired,
-		accessToken: PropTypes.string.isRequired
+		userReferFriends: PropTypes.func.isRequired,
 	}
 
-	static postReferral = (accessToken, email) => {
-		referAFriend(accessToken, { emails: [email] })
+	state = {
+		email: '',
+		showEmailReferralForm: true,
+		isEmailValid: false,
+		errorMessage: ''
 	}
 
 	referAFriend = () => {
-		const email = this.state.email
-		const accessToken = this.props.accessToken
+		const { email } = this.state
+		const { userReferFriends } = this.props
 
-		ReferAFriendModal.postReferral(accessToken, email)
+		userReferFriends(email)
 	}
 
 	handleEmailChange = (value) => {
@@ -64,7 +58,7 @@ class ReferAFriendModal extends React.Component {
 			email: '',
 			showEmailReferralForm: true,
 			isEmailValid: false,
-			errorMessage: ''
+			errorMessage: '',
 		})
 	}
 
