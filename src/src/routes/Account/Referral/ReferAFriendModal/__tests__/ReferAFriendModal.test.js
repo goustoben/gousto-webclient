@@ -94,20 +94,20 @@ describe('ReferAFriendModal', () => {
 					})
 				})
 			})
+		})
 	})
 
-		describe('email sent view', () => {
-			beforeEach(() => {
-				wrapper.setState({
-					showReferralForm: false,
-				})
+	describe('email sent view', () => {
+		beforeEach(() => {
+			wrapper.setState({
+				showReferralForm: false,
 			})
+		})
 
-			describe('when invite more friends `Button` is pressed', () => {
-				it('should transition into initial view', () => {
-					expect(wrapper.state().showEmailReferralForm).toBe(true)
-					expect(wrapper.find(Button).html()).toContain('Send Email')
-				})
+		describe('when invite more friends `Button` is pressed', () => {
+			it('should transition into initial view', () => {
+				expect(wrapper.state().showEmailReferralForm).toBe(true)
+				expect(wrapper.find(Button).html()).toContain('Send Email')
 			})
 		})
 	})
