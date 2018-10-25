@@ -1,6 +1,5 @@
 import Helmet from 'react-helmet'
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
+import React, { PropTypes, PureComponent } from 'react'
 import { Error } from './components/Error'
 import css from './GetHelp.css'
 

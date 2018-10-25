@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import classNames from 'classnames'
 import { Div, Li, Span, Ul } from 'Page/Elements'
 import Icon from 'Icon'
@@ -80,7 +79,7 @@ ProgressBar.propTypes = {
 			PropTypes.number,
 		]).isRequired,
 		label: PropTypes.string.isRequired,
-	})),
+	})).isRequired,
 	currentId: PropTypes.oneOfType([
 		PropTypes.string,
 		PropTypes.number,

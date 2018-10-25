@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import css from './Offer.css'
 
@@ -8,10 +7,10 @@ const propTypes = {
     formattedValue: PropTypes.string,
     rawMessage: PropTypes.shape({
       text: PropTypes.string,
-      values: PropTypes.arrayOf(PropTypes.shape({
+      values: PropTypes.array({
         key: PropTypes.string,
         value: PropTypes.string,
-      }))
+      })
     })
   }).isRequired
 }

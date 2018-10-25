@@ -1,15 +1,29 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
 import Loading from 'routes/Menu/Loading'
+import Banner from 'routes/Menu/Banner'
 import fetchData from 'routes/Menu/fetchData'
 import SubHeader from 'routes/Menu/SubHeader'
+import RecipeList from 'routes/Menu/RecipeList'
 import CollectionsNav from 'routes/Menu/CollectionsNav'
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
+import DetailOverlay from 'routes/Menu/DetailOverlay'
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
+
+
+jest.mock('routes/Menu/Banner')
+jest.mock('routes/Menu/SubHeader')
+jest.mock('routes/Menu/FilterMenu')
+jest.mock('routes/Menu/FilterTagsNav/FilterTagsNavContainer')
+jest.mock('routes/Menu/FilterNav')
+jest.mock('routes/Menu/RecipeList')
+jest.mock('BoxSummary/BoxSummaryMobile')
+jest.mock('BoxSummary/BoxSummaryDesktop')
+jest.mock('routes/Menu/DetailOverlay')
 
 jest.mock('react-lazyload', () => ({
 	forceCheck: jest.fn(),
@@ -24,48 +38,21 @@ jest.mock('routes/Menu/fetchData', () => (
 ))
 
 describe('Menu', () => {
-	let wrapper
-	const menuLoadDays = jest.fn().mockReturnValue(
-		new Promise(resolve => {
-			resolve()
-		})
-	)
-	const boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
-		new Promise(resolve => {
-			resolve()
-		})
-	)
-
-	const menuLoadBoxPrices = jest.fn()
-	afterEach(() => {
-		menuLoadBoxPrices.mockClear()
-		boxSummaryDeliveryDaysLoad.mockClear()
-	})
-
 	describe('rendering', () => {
+		let wrapper
+		beforeEach(() => {
+			wrapper = shallow(
+				<Menu
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
+					features={Immutable.Map({})}
+					filteredRecipesNumber={30}
+					isLoading={false}
+				/>,
+			)
+		})
+
 		describe('initial render', () => {
-			beforeEach(() => {
-				wrapper = shallow(
-					<Menu
-						menuLoadBoxPrices={menuLoadBoxPrices}
-						features={Immutable.Map({})}
-						filteredRecipesNumber={30}
-						isLoading={false}
-						params={{ orderId: '123' }}
-						boxSummaryDeliveryDays={Immutable.List()}
-						menuLoadDays={menuLoadDays}
-						menuMobileGridViewSet={jest.fn()}
-						basketRestorePreviousValues={jest.fn()}
-						basketOrderLoaded={jest.fn()}
-						boxDetailsVisibilityChange={jest.fn()}
-						hasRecommendations={false}
-						disabled={false}
-						isAuthenticated={false}
-						boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
-					/>,
-					{ context: { store: {} } }
-				)
-			})
 			test('should return a div', () => {
 				expect(wrapper.type()).toBe('div')
 			})
@@ -87,100 +74,96 @@ describe('Menu', () => {
 			})
 
 			test('should not show as loading', () => {
-				expect(wrapper.find('Loading').getElement().props.loading).toBe(false)
+				expect(wrapper.find(Loading).prop('loading')).toBe(false)
 			})
 		})
-		describe('render Loading', () => {
-			test('with the isLoading prop set to true it should show a Loading', () => {
-				wrapper = shallow(
-					<Menu
-						menuMobileGridViewSet={jest.fn()}
-						menuLoadBoxPrices={menuLoadBoxPrices}
-						features={Immutable.Map({})}
-						clearAllFilters={() => { }}
-						basketOrderLoaded={() => { }}
-						isLoading
-						menuLoadDays={menuLoadDays}
-						params={{ orderId: '123' }}
-						boxSummaryDeliveryDays={Immutable.List()}
-						boxDetailsVisibilityChange={jest.fn()}
-						basketRestorePreviousValues={jest.fn()}
-						numPortions={2}
-						storeOrderId={'1234'}
-						boxSummaryShow={false}
-						triggerMenuLoad={jest.fn()}
-						disabled={false}
-						isAuthenticated={false}
-						boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
-					/>,
-					{ context: { store: {} } }
-				)
-				expect(wrapper.find(Loading).getElement().props.loading).toBe(true)
-			})
 
-			test('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
-				wrapper = shallow(
-					<Menu
-						menuLoadBoxPrices={menuLoadBoxPrices}
-						menuMobileGridViewSet={jest.fn()}
-						numPortions={2}
-						features={Immutable.Map({})}
-						isLoading
-						storeOrderId={'1234'}
-						boxSummaryShow
-						clearAllFilters={() => { }}
-						basketOrderLoaded={() => { }}
-						params={{ orderId: '123' }}
-						boxSummaryDeliveryDays={Immutable.List()}
-						boxDetailsVisibilityChange={jest.fn()}
-						menuLoadDays={menuLoadDays}
-						basketRestorePreviousValues={jest.fn()}
-						disabled={false}
-						isAuthenticated={false}
-						boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
-					/>,
-					{ context: { store: {} } }
-				)
-				expect(wrapper.find(Loading).getElement().props.loading).toBe(false)
-			})
+		test('with the isLoading prop set to true it should show a Loading', () => {
+			wrapper = shallow(
+				<Menu
+					menuRecipeDetailShow={false}
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
+					features={Immutable.Map({})}
+					clearAllFilters={() => {}}
+					basketOrderLoaded={() => {}}
+					isLoading
+				/>,
+			)
+			expect(wrapper.find(Loading).prop('loading')).toBe(true)
+		})
 
-			test('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
-				wrapper = shallow(
-					<Menu
-						menuLoadBoxPrices={menuLoadBoxPrices}
-						menuMobileGridViewSet={jest.fn()}
-						features={Immutable.Map({})}
-						isLoading
-						menuBrowseCTAShow
-						clearAllFilters={() => { }}
-						basketOrderLoaded={() => { }}
-						params={{ orderId: '123' }}
-						boxSummaryDeliveryDays={Immutable.List()}
-						menuLoadDays={menuLoadDays}
-						basketRestorePreviousValues={jest.fn()}
-						boxDetailsVisibilityChange={jest.fn()}
-						disabled={false}
-						isAuthenticated={false}
-						boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
-					/>,
-					{ context: { store: {} } }
-				)
-				expect(wrapper.find(Loading).getElement().props.loading).toBe(false)
-			})
+		test('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
+			wrapper = shallow(
+				<Menu
+					menuLoadBoxPrices={() => {}}
+					numPortions={2}
+					menuCollectionRecipes={Immutable.Map({})}
+					features={Immutable.Map({})}
+					isLoading
+					storeOrderId={'1234'}
+					boxSummaryShow
+					clearAllFilters={() => {}}
+					basketOrderLoaded={() => {}}
+				/>,
+			)
+			expect(wrapper.find(Loading).prop('loading')).toBe(false)
+		})
+
+		test('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
+			wrapper = shallow(
+				<Menu
+					menuLoadBoxPrices={() => {}}
+					stock={Immutable.Map()}
+					menuCollectionRecipes={Immutable.Map({})}
+					features={Immutable.Map({})}
+					isLoading
+					menuBrowseCTAShow
+					clearAllFilters={() => {}}
+					basketOrderLoaded={() => {}}
+				/>,
+			)
+			expect(wrapper.find(Loading).prop('loading')).toBe(false)
 		})
 
 		describe('with the collections feature enabled', () => {
-			test('should show a collections nav', () => {
+			let stock
+			let recipesStore
+			let recipes
+
+			beforeEach(() => {
+				stock = Immutable.fromJS({
+					1: { 2: 2 },
+					2: { 2: 2 },
+					3: { 2: 2 },
+				})
+
+				recipesStore = Immutable.fromJS({
+					1: {
+						id: '1',
+						availability: [],
+						boxType: 'vegetarian',
+						dietType: 'Fish',
+					},
+					2: {
+						id: '2',
+						availability: [],
+						boxType: 'vegetarian',
+						dietType: 'Vegetarian',
+					},
+					3: {
+						id: '3',
+						availability: [],
+						boxType: 'gourmet',
+						dietType: 'Meat',
+					},
+				})
 				wrapper = shallow(
 					<Menu
-						menuLoadBoxPrices={menuLoadBoxPrices}
-						menuMobileGridViewSet={jest.fn()}
-						boxSummaryDeliveryDays={Immutable.List()}
-						clearAllFilters={() => { }}
-						basketOrderLoaded={() => { }}
-						menuLoadDays={menuLoadDays}
-						params={{ orderId: '123' }}
-						basketRestorePreviousValues={jest.fn()}
+						menuLoadBoxPrices={() => {}}
+						menuCollectionRecipes={Immutable.Map({})}
+						clearAllFilters={() => {}}
+						basketOrderLoaded={() => {}}
 						features={Immutable.fromJS({
 							collections: {
 								value: true,
@@ -189,97 +172,68 @@ describe('Menu', () => {
 								value: false,
 							}
 						})}
-						boxDetailsVisibilityChange={jest.fn()}
-						disabled={false}
-						isAuthenticated={false}
 					/>,
-					{ context: { store: {} } }
 				)
+			})
+
+			test('should show a collections nav', () => {
 				expect(wrapper.find(CollectionsNav).length).toBe(1)
 			})
 
-			test('should not show the collections nav bar', () => {
-				wrapper = shallow(
-					<Menu
-						menuMobileGridViewSet={jest.fn()}
-						menuLoadBoxPrices={menuLoadBoxPrices}
-						boxSummaryDeliveryDays={Immutable.List()}
-						clearAllFilters={() => { }}
-						menuLoadDays={menuLoadDays}
-						params={{ orderId: '123' }}
-						basketOrderLoaded={jest.fn()}
-						basketRestorePreviousValues={jest.fn()}
-						features={Immutable.fromJS({
-							collections: {
-								value: true,
-							},
-							collectionsNav: {
-								value: false,
-							},
-						})}
-						boxDetailsVisibilityChange={jest.fn()}
-						disabled={false}
-						isAuthenticated={false}
-					/>,
-					{ context: { store: {} } }
-				)
-				expect(wrapper.find(CollectionsNav).length).toBe(0)
+			describe('and the collectionsNav feature disabled', () => {
+				beforeEach(() => {
+					wrapper = shallow(
+						<Menu
+							menuLoadBoxPrices={() => {}}
+							menuCollectionRecipes={Immutable.Map({})}
+							clearAllFilters={() => {}}
+							features={Immutable.fromJS({
+								collections: {
+									value: true,
+								},
+								collectionsNav: {
+									value: false,
+								},
+							})}
+						/>,
+					)
+				})
+				test('should not show the collections nav bar', () => {
+					expect(wrapper.find(CollectionsNav).length).toBe(0)
+				})
 			})
 		})
 	})
 
 	describe('fadeCSS', () => {
+		let wrapper
+
 		test('should render fade--recommendations', () => {
 			wrapper = shallow(
 				<Menu
-					basketOrderLoaded={() => { }}
-					menuLoadBoxPrices={menuLoadBoxPrices}
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
-					boxSummaryDeliveryDays={Immutable.List()}
 					filteredRecipesNumber={30}
-					menuLoadDays={menuLoadDays}
 					isLoading
 					hasRecommendations
-					params={{ orderId: '123' }}
-					menuMobileGridViewSet={jest.fn()}
-					menuBrowseCTAShow={false}
-					clearAllFilters={() => { }}
-					basketRestorePreviousValues={jest.fn()}
-					disabled={false}
-					isAuthenticated={false}
-					triggerMenuLoad={jest.fn()}
-					boxDetailsVisibilityChange={jest.fn()}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
 				/>,
-				{ context: { store: {} } }
 			)
 			const elementWithFadeCSS = wrapper.find('.fade--recommendations')
+
 			expect(elementWithFadeCSS).toHaveLength(1)
 		})
 
 		test('should render fadeOut', () => {
 			wrapper = shallow(
 				<Menu
-					basketOrderLoaded={() => { }}
-					menuLoadBoxPrices={menuLoadBoxPrices}
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
-					boxSummaryDeliveryDays={Immutable.List()}
 					filteredRecipesNumber={30}
-					menuLoadDays={menuLoadDays}
 					isLoading
 					hasRecommendations={false}
-					params={{ orderId: '123' }}
-					menuMobileGridViewSet={jest.fn()}
-					menuBrowseCTAShow={false}
-					clearAllFilters={() => { }}
-					basketRestorePreviousValues={jest.fn()}
-					disabled={false}
-					isAuthenticated={false}
-					triggerMenuLoad={jest.fn()}
-					boxDetailsVisibilityChange={jest.fn()}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
 				/>,
-				{ context: { store: {} } }
 			)
 			const elementWithFadeCSS = wrapper.find('.fadeOut')
 
@@ -289,26 +243,13 @@ describe('Menu', () => {
 		test('should render willFade', () => {
 			wrapper = shallow(
 				<Menu
-					basketOrderLoaded={() => { }}
-					menuLoadBoxPrices={menuLoadBoxPrices}
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
-					boxSummaryDeliveryDays={Immutable.List()}
 					filteredRecipesNumber={30}
-					menuLoadDays={menuLoadDays}
-					params={{ orderId: '123' }}
-					menuMobileGridViewSet={jest.fn()}
-					menuBrowseCTAShow={false}
-					clearAllFilters={() => { }}
-					basketRestorePreviousValues={jest.fn()}
-					disabled={false}
-					isAuthenticated={false}
-					triggerMenuLoad={jest.fn()}
-					boxDetailsVisibilityChange={jest.fn()}
 					isLoading={false}
 					hasRecommendations={false}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
 				/>,
-				{ context: { store: {} } }
 			)
 			const elementWithFadeCSS = wrapper.find('.willFade')
 
@@ -317,17 +258,14 @@ describe('Menu', () => {
 	})
 
 	describe('with the force collections feature enabled', () => {
+		let wrapper
+
 		test('should show a collections nav', () => {
 			wrapper = shallow(
 				<Menu
-					menuLoadBoxPrices={menuLoadBoxPrices}
-					clearAllFilters={() => { }}
-					menuLoadDays={menuLoadDays}
-					boxSummaryDeliveryDays={Immutable.List()}
-					menuMobileGridViewSet={jest.fn()}
-					params={{ orderId: '233' }}
-					basketOrderLoaded={jest.fn()}
-					basketRestorePreviousValues={jest.fn()}
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
+					clearAllFilters={() => {}}
 					features={Immutable.fromJS({
 						collections: {
 							value: true,
@@ -336,28 +274,17 @@ describe('Menu', () => {
 							value: true,
 						},
 					})}
-					disabled={false}
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
 				/>,
-				{ context: { store: {} } }
 			)
 
 			expect(wrapper.find(CollectionsNav).length).toBe(1)
 		})
-
 		test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
 			wrapper = shallow(
 				<Menu
-					params={{ orderId: '123' }}
-					menuLoadBoxPrices={menuLoadBoxPrices}
-					menuLoadDays={menuLoadDays}
-					basketOrderLoaded={jest.fn()}
-					basketRestorePreviousValues={jest.fn()}
-					boxSummaryDeliveryDays={Immutable.List()}
-					menuMobileGridViewSet={jest.fn()}
-					clearAllFilters={() => { }}
+					menuLoadBoxPrices={() => {}}
+					menuCollectionRecipes={Immutable.Map({})}
+					clearAllFilters={() => {}}
 					features={Immutable.fromJS({
 						collections: {
 							value: true,
@@ -369,56 +296,19 @@ describe('Menu', () => {
 							value: false,
 						},
 					})}
-					disabled={false}
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
 				/>,
-				{ context: { store: {} } }
 			)
+
 			expect(wrapper.find(CollectionsNav).length).toBe(1)
-		})
-
-
-		describe('and the collectionsNav feature disabled', () => {
-			beforeEach(() => {
-				wrapper = shallow(
-					<Menu
-						menuLoadBoxPrices={menuLoadBoxPrices}
-						menuMobileGridViewSet={jest.fn()}
-						clearAllFilters={() => { }}
-						menuLoadDays={menuLoadDays}
-						boxSummaryDeliveryDays={Immutable.List()}
-						params={{ orderId: '123' }}
-						basketOrderLoaded={jest.fn()}
-						basketRestorePreviousValues={jest.fn()}
-						features={Immutable.fromJS({
-							collections: {
-								value: true,
-							},
-							forceCollections: {
-								value: true,
-							},
-							collectionsNav: {
-								value: false,
-							},
-						})}
-						disabled={false}
-						isAuthenticated={false}
-						boxDetailsVisibilityChange={jest.fn()}
-						boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
-					/>,
-					{ context: { store: {} } }
-				)
-			})
-			test('should still show the collections nav bar', () => {
-				expect(wrapper.find(CollectionsNav).length).toBe(1)
-			})
 		})
 	})
 
 	describe('componentDidMount', () => {
+		let menuLoadDays
+		let boxSummaryDeliveryDaysLoad
+		let menuLoadBoxPrices
 		let getStateSpy
+		let wrapper
 
 		beforeEach(() => {
 			getStateSpy = jest.fn().mockReturnValue({
@@ -428,25 +318,39 @@ describe('Menu', () => {
 					})
 				})
 			})
+			menuLoadBoxPrices = jest.fn()
+			menuLoadDays = jest.fn().mockReturnValue(
+				new Promise(resolve => {
+					resolve()
+				})
+			)
+			boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
+				new Promise(resolve => {
+					resolve()
+				})
+			)
+			BoxSummaryMobile.mockReturnValue(<div />)
+			BoxSummaryDesktop.mockReturnValue(<div />)
+			RecipeList.mockReturnValue(<div />)
+			SubHeader.mockReturnValue(<div />)
+			Banner.mockReturnValue(<div />)
+			DetailOverlay.mockReturnValue(<div />)
 		})
 
 		test('should load Box Prices for non admin users', () => {
-			wrapper = shallow(
+			wrapper = mount(
 				<Menu
-					boxSummaryDeliveryDays={Immutable.List()}
+					menuRecipeDetailShow={false}
+					boxSummaryDeliveryDays={Immutable.List([])}
+					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					menuLoadDays={menuLoadDays}
 					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
 					menuLoadBoxPrices={menuLoadBoxPrices}
-					filteredRecipesNumber={30}
-					clearAllFilters={() => { }}
-					params={{ orderId: '123' }}
-					basketOrderLoaded={jest.fn()}
-					menuMobileGridViewSet={jest.fn()}
-					basketRestorePreviousValues={jest.fn()}
 					disabled={false}
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
+					filteredRecipesNumber={30}
+					clearAllFilters={() => {}}
+					params={{}}
 				/>,
 				{
 					context: {
@@ -460,22 +364,19 @@ describe('Menu', () => {
 		})
 
 		test('should not load Box Prices for admin users', () => {
-			wrapper = shallow(
+			wrapper = mount(
 				<Menu
-					boxSummaryDeliveryDays={Immutable.List()}
+					menuRecipeDetailShow={false}
+					boxSummaryDeliveryDays={Immutable.List([])}
+					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					menuLoadDays={menuLoadDays}
 					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
 					menuLoadBoxPrices={menuLoadBoxPrices}
-					filteredRecipesNumber={30}
-					clearAllFilters={() => { }}
-					menuMobileGridViewSet={jest.fn()}
-					basketOrderLoaded={jest.fn()}
-					params={{ orderId: '123' }}
-					basketRestorePreviousValues={jest.fn()}
 					disabled
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
+					filteredRecipesNumber={30}
+					clearAllFilters={() => {}}
+					params={{}}
 				/>,
 				{
 					context: {
@@ -489,22 +390,19 @@ describe('Menu', () => {
 		})
 
 		test('should call fetchData', () => {
-			wrapper = shallow(
+			wrapper = mount(
 				<Menu
-					boxSummaryDeliveryDays={Immutable.List()}
-					basketRestorePreviousValues={jest.fn()}
+					menuRecipeDetailShow={false}
+					boxSummaryDeliveryDays={Immutable.List([])}
+					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					menuLoadDays={menuLoadDays}
 					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
 					menuLoadBoxPrices={menuLoadBoxPrices}
-					filteredRecipesNumber={30}
-					clearAllFilters={() => { }}
-					menuMobileGridViewSet={jest.fn()}
-					basketOrderLoaded={jest.fn()}
-					params={{ orderId: '123' }}
 					disabled
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
+					filteredRecipesNumber={30}
+					clearAllFilters={() => {}}
+					params={{}}
 				/>,
 				{
 					context: {
@@ -524,23 +422,13 @@ describe('Menu', () => {
 		})
 
 		test('should call forceCheck', () => {
-			wrapper = shallow(
+			const wrapper = shallow(
 				<Menu
-					menuLoadBoxPrices={menuLoadBoxPrices}
-					boxSummaryDeliveryDays={Immutable.List()}
+					menuLoadBoxPrices={() => {}}
 					features={Immutable.Map({})}
-					clearAllFilters={() => { }}
-					menuLoadDays={menuLoadDays}
-					menuMobileGridViewSet={jest.fn()}
-					params={{ orderId: '123' }}
-					basketOrderLoaded={jest.fn()}
-					basketRestorePreviousValues={jest.fn()}
-					disabled
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
-				/>,
-				{ context: { store: {} } }
+					clearAllFilters={() => {}}
+					params={{}}
+				/>
 			)
 
 			wrapper.instance().componentDidUpdate()
@@ -554,75 +442,46 @@ describe('Menu', () => {
 		})
 
 		test('should call Menu.fetchData once if menuVariation has changed', () => {
-			wrapper = shallow(
+			const wrapper = shallow(
 				<Menu
-					menuLoadBoxPrices={menuLoadBoxPrices}
-					boxSummaryDeliveryDays={Immutable.List()}
+					menuLoadBoxPrices={() => {}}
 					features={Immutable.Map({})}
 					tariffId={1}
 					manuVariation="menuA"
-					clearAllFilters={() => { }}
-					menuLoadDays={menuLoadDays}
-					menuMobileGridViewSet={jest.fn()}
-					params={{ orderId: '' }}
-					basketOrderLoaded={jest.fn()}
-					basketRestorePreviousValues={jest.fn()}
-					disabled
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+					clearAllFilters={() => {}}
+					params={{}}
 				/>,
-				{ context: { store: {} } }
 			)
 			wrapper.instance().componentWillReceiveProps({ menuVariation: 'menuB' })
-			expect(fetchData).toHaveBeenCalledTimes(2)
+			expect(fetchData).toHaveBeenCalledTimes(1)
 		})
 
 		test('should call menuLoadBoxPrices once if not disabled & tariffId has changed', () => {
-			wrapper = shallow(
+			const menuLoadBoxPrices = jest.fn()
+			const wrapper = shallow(
 				<Menu
 					menuLoadBoxPrices={menuLoadBoxPrices}
-					boxSummaryDeliveryDays={Immutable.List()}
 					features={Immutable.Map({})}
-					menuLoadDays={menuLoadDays}
 					tariffId={1}
-					clearAllFilters={() => { }}
-					menuMobileGridViewSet={jest.fn()}
-					params={{ orderId: '' }}
-					basketOrderLoaded={jest.fn()}
-					basketRestorePreviousValues={jest.fn()}
-					disabled={false}
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+					clearAllFilters={() => {}}
+					params={{}}
 				/>,
-				{ context: { store: {} } }
 			)
 			wrapper.instance().componentWillReceiveProps({ tariffId: 2 })
-			expect(menuLoadBoxPrices).toHaveBeenCalledTimes(2)
-			expect(menuLoadBoxPrices).toHaveBeenCalled()
+			expect(menuLoadBoxPrices).toHaveBeenCalledTimes(1)
+			expect(menuLoadBoxPrices).toHaveBeenCalledWith()
 		})
 
 		test('should NOT call menuLoadBoxPrices if disabled', () => {
-			wrapper = shallow(
+			const menuLoadBoxPrices = jest.fn()
+			const wrapper = shallow(
 				<Menu
 					menuLoadBoxPrices={menuLoadBoxPrices}
-					menuLoadingBoxPrices
-					boxSummaryDeliveryDays={Immutable.List()}
 					features={Immutable.Map({})}
-					menuLoadDays={menuLoadDays}
 					tariffId={1}
-					clearAllFilters={() => { }}
-					menuMobileGridViewSet={jest.fn()}
-					params={{ orderId: '' }}
-					basketOrderLoaded={jest.fn()}
-					basketRestorePreviousValues={jest.fn()}
-					disabled
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+					clearAllFilters={() => {}}
+					params={{}}
 				/>,
-				{ context: { store: {} } }
 			)
 			wrapper
 				.instance()
@@ -632,10 +491,10 @@ describe('Menu', () => {
 	})
 
 	describe('NoResultsPage', () => {
+		let wrapper
 		let getStateSpy
 		beforeEach(() => {
 			getStateSpy = jest.fn().mockReturnValue({
-				auth: Immutable.Map({ isAuthenticated: true }),
 				basket: Immutable.Map({
 				}),
 				filters: Immutable.Map({
@@ -651,41 +510,31 @@ describe('Menu', () => {
 				}),
 				content: Immutable.Map({}),
 				menu: Immutable.Map({}),
-				persist: Immutable.fromJS({
-					simpleHeader: false,
-				})
 			})
 		})
 
 		test('should render NoResultsPage', () => {
-			wrapper = shallow(
+			wrapper = mount(
 				<Menu
-					boxSummaryDeliveryDays={Immutable.List()}
+					boxSummaryDeliveryDays={Immutable.List([])}
+					menuCollectionRecipes={Immutable.Map({})}
 					features={Immutable.Map({})}
 					disabled
 					filteredRecipesNumber={0}
-					clearAllFilters={() => { }}
-					params={{ orderId: '' }}
-					menuMobileGridViewSet={jest.fn()}
-					basketOrderLoaded={jest.fn()}
-					basketRestorePreviousValues={jest.fn()}
-					menuLoadBoxPrices={menuLoadBoxPrices}
-					menuLoadDays={menuLoadDays}
-					isAuthenticated={false}
-					boxDetailsVisibilityChange={jest.fn()}
-					boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+					clearAllFilters={() => {}}
+					params={{}}
 				/>,
 				{
 					context: {
 						store: {
 							getState: getStateSpy,
-							subscribe: () => { },
-							dispatch: () => { },
+							subscribe: () => {},
+							dispatch: () => {},
 						},
 					},
 				},
 			)
-			expect(wrapper.find('Connect(MenuNoResults)')).toHaveLength(1)
+			expect(wrapper.find('NoResultsPage')).toHaveLength(1)
 		})
 	})
 })

@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Image from 'Image'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import Svg from 'Svg'
 import { getMenuRecipeImage } from 'utils/image'
 import css from './Ingredient.css'
@@ -27,8 +26,8 @@ const Ingredient = ({ ingredient }) => {
 }
 
 Ingredient.propTypes = {
-	ingredient: PropTypes.instanceOf(Immutable.Map),
-	className: PropTypes.string,
+	ingredient: React.PropTypes.instanceOf(Immutable.Map),
+	className: React.PropTypes.string,
 }
 
 export default Ingredient

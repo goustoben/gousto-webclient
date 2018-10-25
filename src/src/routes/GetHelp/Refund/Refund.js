@@ -1,6 +1,4 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-
+import React, { PropTypes, PureComponent } from 'react'
 import BottomBar from 'BottomBar'
 import { BottomButton } from '../components/BottomButton'
 

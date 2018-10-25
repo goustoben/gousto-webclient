@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import formContainer from '../../../Components/formContainer'
 import SubmitButton from '../../../Components/SubmitButton'

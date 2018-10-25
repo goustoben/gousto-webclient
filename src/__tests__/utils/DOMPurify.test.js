@@ -1,35 +1,40 @@
+import sinon from 'sinon'
+
 import DOMPurify from 'dompurify'
 import * as DOMPurifyUtil from 'utils/DOMPurify'
 import globals from 'config/globals'
 import jsdom from 'jsdom'
 
 describe('DOMPurify util', () => {
-	let defaultGlobalServer
+	let sandbox
 	let jsdomSpy
 
 	beforeEach(() => {
-		defaultGlobalServer = globals.server
-		jsdomSpy = jest.spyOn(jsdom, 'JSDOM')
+		sandbox = sinon.sandbox.create()
+		jsdomSpy = sandbox.spy(jsdom, 'jsdom')
 	})
 
 	afterEach(() => {
-		jsdomSpy.mockClear()
-		globals.__defineGetter__('server', () => defaultGlobalServer)
+		sandbox.restore()
 	})
 
-	test('should return DOMPurify by default', function() {
+	xit('should return DOMPurify by default', function() {
 		expect(DOMPurifyUtil.default).toEqual(DOMPurify)
 	})
 
-	test('should not call jsdom if on client', function() {
-		globals.__defineGetter__('server', () => false)
+	xit('should not call jsdom if on client', function() {
+		sinon.stub(globals, 'server').get(function() {
+			return false
+		})
 		DOMPurifyUtil.getDOMPurify()
-		expect(jsdomSpy).toHaveBeenCalledTimes(0)
+		expect(jsdomSpy.callCount).toEqual(0)
 	})
 
-	test.skip('should call jsdom once if on server', function() {
-		globals.__defineGetter__('server', () => true)
+	xit('should call jsdom once if on server', function() {
+		sinon.stub(globals, 'server').get(function() {
+			return true
+		})
 		DOMPurifyUtil.getDOMPurify()
-		expect(jsdomSpy).toHaveBeenCalledTimes(1)
+		expect(jsdomSpy.callCount).toEqual(1)
 	})
 })

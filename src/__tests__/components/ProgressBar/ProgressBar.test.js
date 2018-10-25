@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import sinon from 'sinon'
+
 import ProgressBar from 'ProgressBar'
 import css from 'ProgressBar/ProgressBar.css'
 import Icon from 'Icon'
@@ -38,7 +40,7 @@ describe('ProgressBar', () => {
 		test('should contain 2 <Div>s per <Li>', () => {
 			const content = wrapper.children(Li)
 
-			content.forEach((contentItem) => {
+			content.forEach(function(contentItem) {
 				expect(contentItem.children(Div)).toHaveLength(2)
 			})
 		})
@@ -46,7 +48,7 @@ describe('ProgressBar', () => {
 		test('should contain 2 <Span>s in 1st <Div> for each item', () => {
 			const content = wrapper.children(Li)
 
-			content.forEach((contentItem) => {
+			content.forEach(function(contentItem) {
 				expect(
 					contentItem
 						.children(Div)
@@ -137,7 +139,7 @@ describe('ProgressBar', () => {
 		test('should contain className arrow in 2nd <Div> for each item ', () => {
 			const content = wrapper.children(Li)
 
-			content.forEach((contentItem) => {
+			content.forEach(function(contentItem) {
 				expect(
 					contentItem
 						.children(Div)

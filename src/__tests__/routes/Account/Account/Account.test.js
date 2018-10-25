@@ -1,12 +1,11 @@
+import sinon from 'sinon'
+
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import AccountComponent from 'routes/Account/Account/Account'
 import NavBar from 'routes/Account/Account/NavBar'
 import Banner from 'routes/Account/Account/Banner'
-import configureMockStore from 'redux-mock-store'
-const mockStore = configureMockStore()
-
 
 describe('Account', () => {
 	let wrapper
@@ -16,50 +15,54 @@ describe('Account', () => {
 	let dispatch
 	let subscribe
 	let getState
+	let store
 	let userRecipeRatings
-	let state
 
 	beforeEach(() => {
 		children = 'test'
-		dispatch = jest.fn()
-		subscribe = jest.fn()
-		userRecipeRatings = jest.fn()
+		dispatch = sinon.spy()
+		subscribe = sinon.spy()
+		userRecipeRatings = sinon.stub().returns()
 		location = { pathname: '/my-details' }
-		state = mockStore({
+		wrapper = shallow(
+			<AccountComponent location={location}>{children}</AccountComponent>,
+		)
+
+		store = {
 			user: Immutable.Map({
 				rateCount: 2,
 			}),
-		})
-		getState = () => ({
-			user: Immutable.Map({
-				rateCount: 2,
-			}),
-		})
+		}
+		getState = sinon.stub().returns(store)
+
 		context = {
 			store: {
 				getState,
 				subscribe,
 				dispatch,
-				userRecipeRatings,
-				state
 			},
 		}
-		wrapper = shallow(
-			<AccountComponent location={location}>{children}</AccountComponent>,
-			{ context }
-		)
 	})
 
 	describe('rendering', () => {
 		test('should render a <div>', () => {
+			wrapper = shallow(
+				<AccountComponent location={location}>{children}</AccountComponent>,
+			)
 			expect(wrapper.type()).toEqual('div')
 		})
 
 		test('should render 1 <NavBar> component(s)', () => {
+			wrapper = shallow(
+				<AccountComponent location={location}>{children}</AccountComponent>,
+			)
 			expect(wrapper.find(NavBar).length).toEqual(1)
 		})
 
 		test('should render 1 <Banner> component(s)', () => {
+			wrapper = shallow(
+				<AccountComponent location={location}>{children}</AccountComponent>,
+			)
 			expect(wrapper.find(Banner).length).toEqual(1)
 		})
 
@@ -67,7 +70,6 @@ describe('Account', () => {
 			location = { pathname: '/my-gousto' }
 			wrapper = shallow(
 				<AccountComponent location={location}>{children}</AccountComponent>,
-				{ context }
 			)
 			expect(wrapper.find(Banner).length).toEqual(0)
 		})
@@ -76,7 +78,6 @@ describe('Account', () => {
 			location = { pathname: '/mydeliveries' }
 			wrapper = shallow(
 				<AccountComponent location={location}>{children}</AccountComponent>,
-				{ context }
 			)
 			expect(wrapper.find(Banner).length).toEqual(1)
 		})

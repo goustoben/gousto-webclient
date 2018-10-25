@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 class DataSetsComponent extends React.PureComponent {
 	static contextTypes = {
@@ -13,14 +12,14 @@ class DataSetsComponent extends React.PureComponent {
 	}
 
 	static propTypes = {
-		Component: PropTypes.func.isRequired,
-		endSet: PropTypes.number,
-		fetchSetData: PropTypes.func.isRequired,
-		limit: PropTypes.number,
-		loadSets: PropTypes.func.isRequired,
-		params: PropTypes.object,
-		startSet: PropTypes.number,
-		totalSets: PropTypes.number.isRequired,
+		Component: React.PropTypes.func.isRequired,
+		endSet: React.PropTypes.number,
+		fetchSetData: React.PropTypes.func.isRequired,
+		limit: React.PropTypes.number,
+		loadSets: React.PropTypes.func.isRequired,
+		params: React.PropTypes.object,
+		startSet: React.PropTypes.number,
+		totalSets: React.PropTypes.number.isRequired,
 	}
 
 	fetchSetDataIfAvailable = setNum => {

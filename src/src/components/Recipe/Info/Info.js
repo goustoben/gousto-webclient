@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import css from './Info.css'
@@ -13,9 +12,9 @@ const Info = ({ type = 'div', children, regular, ...props }) => {
 }
 
 Info.propTypes = {
-	type: PropTypes.string,
-	children: PropTypes.node,
-	regular: PropTypes.bool,
+	type: React.PropTypes.string,
+	children: React.PropTypes.node,
+	regular: React.PropTypes.bool,
 }
 
 Info.defaultProps = {

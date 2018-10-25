@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Dots.css'
 
@@ -9,8 +8,8 @@ const Dots = ({ steps, stepNo }) => (
 )
 
 Dots.propTypes = {
-	stepNo: PropTypes.number,
-	steps: PropTypes.number,
+	stepNo: React.PropTypes.number,
+	steps: React.PropTypes.number,
 }
 
 export default Dots

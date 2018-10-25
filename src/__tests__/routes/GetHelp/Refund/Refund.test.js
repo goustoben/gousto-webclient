@@ -2,8 +2,8 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { client as routes } from 'config/routes'
 
-import fetch from 'utils/fetch'
 jest.mock('utils/fetch')
+import fetch from 'utils/fetch'
 
 import Refund from 'routes/GetHelp/Refund/Refund'
 
@@ -32,10 +32,11 @@ describe('<Refund />', () => {
 				order={{ id: '0' }}
 			/>
 		)
-		fetchPromise.then(() => {
-			wrapper.update()
-			getHelpLayout = wrapper.find('GetHelpLayout')
-		})
+		// fetchPromise.then(() => {
+		// 	wrapper.update()
+		// 	getHelpLayout = wrapper.find('GetHelpLayout')
+		// })
+		getHelpLayout = wrapper.find('GetHelpLayout')
 	})
 
 	describe('rendering', () => {

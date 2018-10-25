@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Title.css'
 
@@ -7,7 +6,7 @@ const Title = ({ title }) => (
 )
 
 Title.propTypes = {
-	title: PropTypes.string.isRequired,
+	title: React.PropTypes.string.isRequired,
 }
 
 export default Title

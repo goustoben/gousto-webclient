@@ -1,3 +1,5 @@
+import sinon from 'sinon'
+
 import React from 'react'
 import { shallow } from 'enzyme'
 import SubHeader from 'routes/Welcome/SubHeader'
