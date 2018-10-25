@@ -7,7 +7,7 @@ export default {
 		],
 		badges: {
 			ten_to_table: {
-				text: 'Ten to Table',
+				text: '10-Minute Meal',
 				color: 'White',
 				backgroundColor: 'Carrot',
 				borderColor: 'Carrot',
