@@ -1,7 +1,5 @@
-import sinon from 'sinon'
-
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 
 import Order from 'DuplicateOrderModal/Order'
 
@@ -13,8 +11,8 @@ describe('DuplicateOrderModal/Order', () => {
 
 	beforeEach(() => {
 		date = 'some time in the near future'
-		numPeople = 12
-		numRecipes = 90
+		numPeople = '12'
+		numRecipes = '90'
 		wrapper = shallow(
 			<Order date={date} numPeople={numPeople} numRecipes={numRecipes} />,
 		)

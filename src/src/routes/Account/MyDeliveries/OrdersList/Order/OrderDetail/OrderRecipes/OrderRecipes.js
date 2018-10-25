@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-import ImmutablePropTypes from 'react-immutable-proptypes'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 
 import { Button } from 'goustouicomponents'
@@ -46,12 +46,7 @@ const OrderRecipes = ({
 )
 
 OrderRecipes.propTypes = {
-	recipes: ImmutablePropTypes.listOf(
-		ImmutablePropTypes.contains({
-			recipeImage: PropTypes.string,
-			recipeTitle: PropTypes.string,
-		})
-	),
+	recipes: PropTypes.instanceOf(Immutable.List),
 	orderId: PropTypes.string,
 	orderState: PropTypes.string,
 	whenCutoff: PropTypes.string,

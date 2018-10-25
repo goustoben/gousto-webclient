@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import css from './CheckBox.css'
@@ -5,17 +6,17 @@ import InputWrapper from 'Form/InputWrapper'
 
 export class CheckBox extends React.PureComponent {
 	static propTypes = {
-		additionalProps: React.PropTypes.object,
-		onChange: React.PropTypes.func,
-		className: React.PropTypes.string,
-		labelClassName: React.PropTypes.string,
-		disabled: React.PropTypes.bool,
-		required: React.PropTypes.bool,
-		checked: React.PropTypes.bool,
-		label: React.PropTypes.string.isRequired,
-		name: React.PropTypes.string,
-		'data-testing': React.PropTypes.string,
-		style: React.PropTypes.oneOf([
+		additionalProps: PropTypes.object,
+		onChange: PropTypes.func,
+		className: PropTypes.string,
+		labelClassName: PropTypes.string,
+		disabled: PropTypes.bool,
+		required: PropTypes.bool,
+		checked: PropTypes.bool,
+		label: PropTypes.string.isRequired,
+		name: PropTypes.string,
+		'data-testing': PropTypes.string,
+		style: PropTypes.oneOf([
 			'',
 			'disclaimer',
 		]),

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import home from 'config/home'
 import config from 'config/routes'
 import CTAHomepage from '../CTA'

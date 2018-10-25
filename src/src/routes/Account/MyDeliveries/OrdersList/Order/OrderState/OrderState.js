@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import css from './OrderState.css'
 
 const initcap = (word) => word.charAt(0).toUpperCase() + word.slice(1)

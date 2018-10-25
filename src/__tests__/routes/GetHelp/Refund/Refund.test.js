@@ -2,8 +2,8 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { client as routes } from 'config/routes'
 
-jest.mock('utils/fetch')
 import fetch from 'utils/fetch'
+jest.mock('utils/fetch')
 
 import Refund from 'routes/GetHelp/Refund/Refund'
 
@@ -29,11 +29,12 @@ describe('<Refund />', () => {
 				content={content}
 			/>
 		)
+		wrapper.setState({ isFetchingAmount: false, refundAmount: 7.77 })
+		wrapper.update()
 		getHelpLayout = wrapper.find('GetHelpLayout')
 
 		test('layout is rendering correctly', () => {
 			const BottomBar = getHelpLayout.find('BottomBar')
-
 			expect(getHelpLayout).toHaveLength(1)
 			expect(getHelpLayout.prop('body')).toContain('We would like to offer you £7.77')
 			expect(BottomBar).toHaveLength(1)

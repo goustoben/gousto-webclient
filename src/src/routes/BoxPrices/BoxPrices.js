@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { propType } from 'graphql-anywhere'
 import css from './BoxPrices.css'
 import config from 'config/boxprices'

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
@@ -90,8 +91,8 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
 )
 
 AddressInputs.propTypes = {
-	receiveRef: React.PropTypes.func,
-	sectionName: React.PropTypes.string,
+	receiveRef: PropTypes.func,
+	sectionName: PropTypes.string,
 }
 
 AddressInputs.defaultProps = {

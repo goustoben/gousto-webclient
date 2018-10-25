@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 
 import css from './Carousel.css'
@@ -21,8 +22,8 @@ const Carousel = ({ images, media, view, dots, arrows }) => (
 				autoplaySpeed={5000}
 				speed={200}
 			>
-				{images.map((image) => (
-					<div className={css.slide} key={image.get('type')}>
+				{images.map((image, idx) => (
+					<div className={css.slide} key={idx}>
 						<ContentMask className={css.mask}>
 							<p className={css.imageTitle}>{image.get('title')}</p>
 							<p className={css.imageDescription}>{image.get('description')}</p>

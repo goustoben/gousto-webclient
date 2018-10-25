@@ -47,7 +47,7 @@ describe('Order Skip Recovery Model Offer', () => {
 
 	describe('Alternative Render', () => {
 		test('should not render component if no offer prop is passed', () => {
-			wrapper = mount(<Offer />)
+			wrapper = mount(<Offer offer={{}} />)
 
 			const wrapperDiv = wrapper.find('offerWrapper')
 

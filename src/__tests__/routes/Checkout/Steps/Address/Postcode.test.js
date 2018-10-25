@@ -1,14 +1,13 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Field } from 'redux-form'
-import Immutable from 'immutable' /* eslint-disable new-cap */
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 
 describe('Postcode', () => {
 	let wrapper
 
 	beforeEach(() => {
-		wrapper = shallow(<Postcode />)
+		wrapper = shallow(<Postcode addresses={[]} />)
 	})
 
 	describe('rendering', () => {
@@ -17,14 +16,14 @@ describe('Postcode', () => {
 		})
 	})
 
-	describe.skip('sensitive data masking', function() {
+	describe('sensitive data masking', function() {
 		test('all <Field /> component(s) should have prop "mask"', () => {
 			wrapper = shallow(
 				<Postcode
-					addresses={Immutable.fromJS([
+					addresses={[
 						{ id: 1, labels: [] },
 						{ id: 2, labels: [] },
-					])}
+					]}
 				/>,
 			)
 			expect(

@@ -67,6 +67,18 @@ exports[`Banner Initial Render should render with given text 1`] = `
         </div>
       </span>
     </div>
+    <div
+      className="base tertiary fill autoWidthPadding"
+      data-testing=""
+      onClick={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      role="button"
+      tabIndex="0"
+    >
+      
+    </div>
   </div>
 </div>
 `;

@@ -26,7 +26,7 @@ describe('OrderDetail', () => {
 	})
 	describe('rendering', () => {
 		beforeEach(() => {
-			wrapper = shallow(<OrderDetail />)
+			wrapper = shallow(<OrderDetail />, { context: { store: {} } })
 		})
 
 		test('should render a <div>', () => {
@@ -34,28 +34,28 @@ describe('OrderDetail', () => {
 		})
 
 		test('should render <OrderCancelButton> when the order is cancellable', () => {
-			wrapper = shallow(<OrderDetail cancellable />)
+			wrapper = shallow(<OrderDetail cancellable />, { context: { store: {} } })
 			expect(wrapper.find(OrderCancelButton)).toHaveLength(1)
 		})
 
 		test('should NOT render <OrderCancelButton> when the order state is not cancellable', () => {
-			wrapper = shallow(<OrderDetail cancellable={false} />)
+			wrapper = shallow(<OrderDetail cancellable={false} />, { context: { store: {} } })
 			expect(wrapper.find(OrderCancelButton)).toHaveLength(0)
 		})
 
 		test('should NOT render <OrderCancelButton> by default', () => {
-			wrapper = shallow(<OrderDetail orderState="something" />)
+			wrapper = shallow(<OrderDetail orderState="something" />, { context: { store: {} } })
 			expect(wrapper.find(OrderCancelButton)).toHaveLength(0)
 		})
 
 		test('should render a specific list of subcomponents when the order is menu open', () => {
-			wrapper = shallow(<OrderDetail orderState="menu open" />)
+			wrapper = shallow(<OrderDetail orderState="menu open" />, { context: { store: {} } })
 			expect(wrapper.find(OrderRecipes)).toHaveLength(1)
 			expect(wrapper.find(OrderDelivery)).toHaveLength(1)
 		})
 
 		test('should render a specific list of subcomponents when the order is dispatched', () => {
-			wrapper = shallow(<OrderDetail orderState="dispatched" />)
+			wrapper = shallow(<OrderDetail orderState="dispatched" />, { context: { store: {} } })
 			expect(wrapper.find(OrderRecipes)).toHaveLength(1)
 			expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
 			expect(wrapper.find(OrderDelivery)).toHaveLength(1)
@@ -63,7 +63,7 @@ describe('OrderDetail', () => {
 
 		test('should render a specific list of subcomponents when the order is confirmed', () => {
 			wrapper = shallow(
-				<OrderDetail orderState="confirmed" period={periodMap} />,
+				<OrderDetail orderState="confirmed" period={periodMap} />, { context: { store: {} } }
 			)
 			expect(wrapper.find(OrderRecipes)).toHaveLength(1)
 			expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
@@ -72,7 +72,7 @@ describe('OrderDetail', () => {
 
 		test('should render a specific list of subcomponents when the order is recipes chosen', () => {
 			wrapper = shallow(
-				<OrderDetail orderState="recipes chosen" period={periodMap} />,
+				<OrderDetail orderState="recipes chosen" period={periodMap} />, { context: { store: {} } }
 			)
 			expect(wrapper.find(OrderRecipes)).toHaveLength(1)
 			expect(wrapper.find(OrderProducts)).toHaveLength(1)

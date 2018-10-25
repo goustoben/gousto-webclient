@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { spacingPropValidation, getSpacingStyles } from 'styles/spacing'
 
 import css from './StyledElement.css'
