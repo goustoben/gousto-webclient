@@ -15,11 +15,34 @@ class GetHelp extends PureComponent {
 	}
 
 	componentDidMount() {
-		const { query } = this.props.location
+		const { orders } = this.props
+		const orderId = this.getOrderId(this.props)
 
-		if (query && query.orderId) {
-			this.props.storeGetHelpOrderId(query.orderId)
+		if (orderId && Object.keys(orders).length < 1) {
+			this.props.userLoadOrder(orderId).then(this.orderLoadComplete)
 		}
+	}
+
+	getOrderId({ location }) {
+		const { query } = location
+
+		return (query && query.orderId)
+			? query.orderId
+			: null
+	}
+
+	orderLoadComplete = () => {
+		const orderId = this.getOrderId(this.props)
+		const order = this.props.orders[orderId]
+		const recipeIds = order.recipeItems
+			.reduce((acc, recipe) => {
+				acc.push(recipe.recipeId)
+
+				return acc
+			}, [])
+
+		this.props.storeGetHelpOrderId(orderId)
+		this.props.recipesLoadRecipesById(recipeIds).then(this.recipesLoadComplete)
 	}
 
 	render() {
