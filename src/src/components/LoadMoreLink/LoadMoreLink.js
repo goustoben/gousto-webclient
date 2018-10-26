@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Div, Span } from 'Page/Elements'
 import Icon from 'Icon'
 import Link from 'Link'

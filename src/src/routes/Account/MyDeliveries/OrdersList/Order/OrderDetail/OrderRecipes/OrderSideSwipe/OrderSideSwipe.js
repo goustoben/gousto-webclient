@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
 
 import css from './OrderSideSwipe.css'
@@ -29,7 +29,12 @@ const OrderSideSwipe = ({
 }
 
 OrderSideSwipe.propTypes = {
-	recipes: PropTypes.instanceOf(Immutable.List),
+	recipes: ImmutablePropTypes.listOf(
+		ImmutablePropTypes.contains({
+			recipeImage: PropTypes.string,
+			recipeTitle: PropTypes.string,
+		})
+	),
 	orderState: PropTypes.string,
 }
 

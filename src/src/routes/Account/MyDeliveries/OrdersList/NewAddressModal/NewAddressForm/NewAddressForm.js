@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Alert, Button } from 'goustouicomponents'
 import Input from 'Form/Input'
 import Dropdown from 'Form/Dropdown'
 import actions from 'actions/user.js'
 import configCheckout from 'config/checkout'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import classNames from 'classnames'
 import config from './NewAddressFormErrorsConfig.js'
 import Content from 'containers/Content'
@@ -41,7 +40,7 @@ class NewAddressForm extends React.PureComponent {
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	constructor(props) {

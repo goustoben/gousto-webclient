@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import sinon from 'sinon'
 
 import Helmet from 'react-helmet'
 import OpenGraph from 'Helmet/OpenGraph'
@@ -7,7 +8,7 @@ import localisation from 'config/localisation'
 
 describe('Helmet OpenGraph', () => {
 	test('should return 1 Helmet', () => {
-		expect(shallow(<OpenGraph href={''} />).type()).toBe(Helmet)
+		expect(shallow(<OpenGraph />).type()).toBe(Helmet)
 	})
 
 	test('should set correct meta data', () => {

@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import css from './SmallRecipe.css'
 import Title from '../Title'
@@ -34,7 +33,7 @@ const SmallRecipe = (props) => (
 
 SmallRecipe.propTypes = {
 	...recipePropTypes,
-	id: PropTypes.string,
+	id: PropTypes.string.isRequired,
 	position: PropTypes.number,
 	inBasket: PropTypes.bool,
 }

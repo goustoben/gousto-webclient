@@ -1,21 +1,18 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-
+import React, { PropTypes } from 'react'
 import { top, left } from 'scroll'
-import Immutable from 'immutable'/* eslint-disable no-caps, new-cap */
+import Immutable from 'immutable' /* eslint-disable no-caps, new-cap */
 import actual from 'actual'
 
 import { getWindow } from 'utils/window'
 import { slugify } from 'utils/url'
 import css from './CollectionsNav.css'
-import CollectionItem from 'CollectionItem'
+import CollectionItem from '../CollectionItem'
 
 const MOBILE_BREAKPOINT = 543
 
 class CollectionsNav extends React.PureComponent {
 	static propTypes = {
 		menuCollections: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
-		menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
 		collectionFilterChange: PropTypes.func.isRequired,
 		menuCurrentCollectionId: PropTypes.string,
 		featureSet: PropTypes.func.isRequired,
@@ -274,8 +271,8 @@ class CollectionsNav extends React.PureComponent {
 		const {
 			menuCollections,
 			menuCurrentCollectionId,
-			menuCollectionRecipes,
 		} = this.props
+
 		let className = this.state.scrolledPastPoint ? css.navBarContainerFixed : css.navBarContainer
 		if (this.state.scrollJumped) {
 			className = css.navBarContainerFixedTransition
@@ -298,13 +295,12 @@ class CollectionsNav extends React.PureComponent {
 					<div className={css.nav} ref={ref => { this.eles.parent = ref }}>
 						<div className={css.navBar}>
 							{menuCollections
-							.map((collection) => {
+							.map(collection => {
 								const collectionId = collection.get('id')
 								const isCurrent = (menuCurrentCollectionId === collectionId)
 
 								return (
 									<CollectionItem
-										count={menuCollectionRecipes.get(collectionId, Immutable.List([])).size}
 										key={collectionId}
 										dataId={collectionId}
 										className={isCurrent ? css.currentItem : css.item}

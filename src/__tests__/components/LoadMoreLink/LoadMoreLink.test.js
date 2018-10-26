@@ -1,6 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import sinon from 'sinon'
+
 import { Div, Span } from 'Page/Elements'
 import Icon from 'Icon'
 import Link from 'Link'
@@ -11,7 +13,7 @@ describe('LoadMoreLink', () => {
 		let wrapper
 
 		beforeEach(() => {
-			wrapper = shallow(<LoadMoreLink onClick={jest.fn()} />)
+			wrapper = shallow(<LoadMoreLink />)
 		})
 
 		test('should return a Div', () => {
@@ -37,7 +39,7 @@ describe('LoadMoreLink', () => {
 
 		test('should render children in child Div', () => {
 			const child = <p>Child Text</p>
-			wrapper = shallow(<LoadMoreLink onClick={jest.fn()}>{child}</LoadMoreLink>)
+			wrapper = shallow(<LoadMoreLink>{child}</LoadMoreLink>)
 			expect(
 				wrapper
 					.children(Link)

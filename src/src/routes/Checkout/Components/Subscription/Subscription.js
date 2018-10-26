@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { FormSection } from 'redux-form'
 import Immutable from 'immutable'
 
@@ -32,7 +31,6 @@ Subscription.defaultProps = {
 	optionName: 'interval_id',
 	sectionName: '',
 	options: Immutable.List(),
-	features: Immutable.Map(),
 }
 
 Subscription.propTypes = {

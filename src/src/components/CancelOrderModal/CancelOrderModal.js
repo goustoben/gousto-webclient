@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import CancelOrderModalContent from './CancelOrderModalContent'

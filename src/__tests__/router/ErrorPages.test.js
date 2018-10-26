@@ -1,3 +1,5 @@
+import sinon from 'sinon'
+
 const { processRequest } = require('../../server/processRequest')
 
 describe('router', () => {

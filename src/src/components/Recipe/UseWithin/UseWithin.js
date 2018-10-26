@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './UseWithin.css'
 
@@ -13,7 +12,7 @@ const UseWithin = ({ useWithin }) => {
 }
 
 UseWithin.propTypes = {
-	useWithin: PropTypes.string.isRequired,
+	useWithin: React.PropTypes.string.isRequired,
 }
 
 export default UseWithin

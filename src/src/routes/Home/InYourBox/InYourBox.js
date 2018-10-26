@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import home from 'config/home'
 import config from 'config/routes'
@@ -23,10 +22,10 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri }) => (
 )
 
 InYourBox.propTypes = {
-	redirect: PropTypes.func,
-	inverse: PropTypes.bool,
-	ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-	ctaUri: PropTypes.string,
+	redirect: React.PropTypes.func,
+	inverse: React.PropTypes.bool,
+	ctaText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.node]),
+	ctaUri: React.PropTypes.string,
 }
 
 InYourBox.defaultProps = {

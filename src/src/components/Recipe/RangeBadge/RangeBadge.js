@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import InfoBadge from '../InfoBadge'
 import { getRangeBadge } from 'utils/recipe'

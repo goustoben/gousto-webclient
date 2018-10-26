@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Router, applyRouterMiddleware } from 'react-router'
 import { Provider } from 'react-redux'
 import apolloClient from 'apis/apollo'

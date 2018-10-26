@@ -2,7 +2,6 @@ import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue }
 import { identifyUser, getUserToken, refreshUserToken, forgetUserToken, validateUserPassword } from 'apis/auth'
 import env from 'utils/env'
 import routes from 'config/routes'
-const logger = require('utils/logger').default
 
 /**
  * Login Route
@@ -18,7 +17,6 @@ export async function login(ctx) { /* eslint-disable no-param-reassign */
 		addSessionCookies(ctx, authResponse, rememberMe)
 		ctx.response.body = authResponse
 	} catch (e) {
-		logger.error(e)
 		ctx.response.status = 401
 		ctx.response.body = {
 			error: 'invalid_credentials',
@@ -55,7 +53,6 @@ export async function refresh(ctx) {
 			throw new Error('Refresh token not present')
 		}
 	} catch (error) {
-		logger.error(error)
 		ctx.response.status = 401
 		ctx.response.body = {
 			error,
@@ -79,7 +76,6 @@ export async function identify(ctx) {
 			throw new Error('Access token not present')
 		}
 	} catch (error) {
-		logger.error(error)
 		ctx.response.status = 401
 		ctx.response.body = {
 			error,
@@ -101,7 +97,6 @@ export async function forget(ctx) {
 			throw new Error('Access token not present')
 		}
 	} catch (error) {
-		logger.error(error)
 		ctx.response.status = 401
 		ctx.response.body = {
 			error,
@@ -123,7 +118,6 @@ export async function validate(ctx) {
 			throw new Error('Password not present')
 		}
 	} catch (error) {
-		logger.error(error)
 		ctx.response.status = 406
 		ctx.response.body = {
 			error,

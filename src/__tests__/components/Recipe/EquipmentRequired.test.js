@@ -1,6 +1,8 @@
 import React from 'react'
 import Immutable from 'immutable'
 
+import sinon from 'sinon'
+
 import { shallow } from 'enzyme'
 
 import EquipmentRequired from 'Recipe/EquipmentRequired'
@@ -20,7 +22,7 @@ describe('<EquipmentRequired />', () => {
 	})
 
 	test('should return null by default', () => {
-		wrapper = shallow(<EquipmentRequired equipment={Immutable.List()} />)
+		wrapper = shallow(<EquipmentRequired />)
 		expect(wrapper.type()).toBe(null)
 	})
 
