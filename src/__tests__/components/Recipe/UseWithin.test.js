@@ -1,5 +1,7 @@
 import React from 'react'
 
+import sinon from 'sinon'
+
 import { shallow } from 'enzyme'
 
 import UseWithin from 'Recipe/UseWithin'
@@ -7,7 +9,7 @@ import UseWithin from 'Recipe/UseWithin'
 describe('<UseWithin />', () => {
 	let useWithin
 	beforeEach(() => {
-		useWithin = '1'
+		useWithin = 1
 	})
 
 	test('should return a <div>', () => {

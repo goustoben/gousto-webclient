@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import home from 'config/home'
 import config from 'config/routes'
 import ModuleHeader from 'ModuleHeader'
@@ -18,7 +17,7 @@ Carousel.propTypes = {
 	redirect: PropTypes.func,
 	numRecipes: PropTypes.number,
 	ctaUri: PropTypes.string,
-	ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	ctaText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.node]),
 }
 
 Carousel.defaultProps = {

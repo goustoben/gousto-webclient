@@ -38,7 +38,7 @@ logs:
 
 scaling:
   type: cpu
-  upAt: 50 # %
+  upAt: 60 # %
   upBy: 100 # %
   downAt: 30 # %
   downBy: 50 # %

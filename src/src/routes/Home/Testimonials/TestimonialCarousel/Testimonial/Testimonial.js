@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Testimonial.css'
 import Svg from 'Svg'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import nl2br from 'react-nl2br'
 
 const Testimonial = ({ testimonial, showLink }) => (
@@ -26,8 +25,8 @@ const Testimonial = ({ testimonial, showLink }) => (
 )
 
 Testimonial.propTypes = {
-	testimonial: PropTypes.instanceOf(Immutable.Map),
-	showLink: PropTypes.bool,
+	testimonial: React.PropTypes.instanceOf(Immutable.Map),
+	showLink: React.PropTypes.bool,
 }
 
 Testimonial.defaultProps = {

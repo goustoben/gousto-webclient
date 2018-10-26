@@ -1,5 +1,4 @@
 import addressLookup from '../service/addressLookup'
-const logger = require('utils/logger').default
 
 function isValidPayload(ctx) {
 	return ctx.query && ctx.query.postcode
@@ -29,7 +28,6 @@ export default async (ctx, next) => {
 				ctx.body = results.data
 				resolve()
 			} catch (err) {
-				logger.error(err)
 				reject(err)
 			}
 		})

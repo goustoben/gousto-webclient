@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
@@ -40,7 +39,7 @@ class OrderDelivery extends React.PureComponent {
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	onClickFunction() {

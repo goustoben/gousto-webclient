@@ -1,5 +1,6 @@
 import React from 'react'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
+import sinon from 'sinon'
 
 import { Field } from 'redux-form'
 import PaymentExpiryDate from 'routes/Checkout/Components/Payment/PaymentExpiryDate'
@@ -8,7 +9,7 @@ describe('PaymentExpiryDate', () => {
 	let wrapper
 
 	beforeEach(() => {
-		wrapper = shallow(<PaymentExpiryDate sectionName={''} />)
+		wrapper = shallow(<PaymentExpiryDate />)
 	})
 
 	describe('rendering', () => {

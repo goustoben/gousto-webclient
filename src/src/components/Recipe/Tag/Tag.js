@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Tag.css'
 import classnames from 'classnames'
@@ -20,10 +19,10 @@ const Tag = ({ tag, view, centered, spaced }) => (
 )
 
 Tag.propTypes = {
-	tag: PropTypes.string.isRequired,
-	view: PropTypes.string,
-	centered: PropTypes.bool,
-	spaced: PropTypes.bool,
+	tag: React.PropTypes.string.isRequired,
+	view: React.PropTypes.string,
+	centered: React.PropTypes.bool,
+	spaced: React.PropTypes.bool,
 }
 
 Tag.defaultProps = {

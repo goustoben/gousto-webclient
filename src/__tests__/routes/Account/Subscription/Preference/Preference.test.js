@@ -1,3 +1,5 @@
+import sinon from 'sinon'
+
 import React from 'react'
 import { shallow } from 'enzyme'
 import Preference from 'routes/Account/Subscription/Preference'

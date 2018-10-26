@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
@@ -17,7 +16,7 @@ import { recipePropTypes } from 'Recipe'
 
 
 const FineDineInRecipe = (props) => {
-	const image = props.media.find(urls => urls.get('width') === 700) || Immutable.Map({})
+	const image = props.media.find(url => url.get('width') === 700) || Immutable.Map({})
 
 	return (
 		<div className={css.overlay}>

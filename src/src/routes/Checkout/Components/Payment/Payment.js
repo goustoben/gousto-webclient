@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import { Field, FormSection } from 'redux-form'
@@ -15,17 +14,17 @@ import BillingAddress from './BillingAddress'
 class Payment extends React.PureComponent {
 
 	static propTypes = {
-		handleSubmit: PropTypes.func,
-		asyncValidate: PropTypes.func,
-		change: PropTypes.func,
-		untouch: PropTypes.func,
-		deliveryAddress: PropTypes.object,
-		form: PropTypes.string,
-		formValues: PropTypes.object,
-		nextStepName: PropTypes.string,
-		formSectionName: PropTypes.string,
-		clearErrors: PropTypes.func,
-		receiveRef: PropTypes.func,
+		handleSubmit: React.PropTypes.func,
+		asyncValidate: React.PropTypes.func,
+		change: React.PropTypes.func,
+		untouch: React.PropTypes.func,
+		deliveryAddress: React.PropTypes.object,
+		form: React.PropTypes.string,
+		formValues: React.PropTypes.object,
+		nextStepName: React.PropTypes.string,
+		formSectionName: React.PropTypes.string,
+		clearErrors: React.PropTypes.func,
+		receiveRef: React.PropTypes.func,
 	}
 
 	static defaultProps = {

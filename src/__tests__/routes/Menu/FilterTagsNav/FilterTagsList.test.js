@@ -22,7 +22,6 @@ describe('FilterTagsList', () => {
 					}),
 				}),
 				subscribe: () => {},
-				dispatch: () => {},
 			}
 			const component = <Provider store={store}>
 				<FilterTagsList

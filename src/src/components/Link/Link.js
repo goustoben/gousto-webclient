@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import classnames from 'classnames'
 import css from './Link.css'
@@ -23,7 +22,7 @@ const GoustoLink = (props, context) => {
 }
 
 GoustoLink.contextTypes = {
-	router: PropTypes.object,
+	router: React.PropTypes.object,
 }
 
 GoustoLink.propTypes = {

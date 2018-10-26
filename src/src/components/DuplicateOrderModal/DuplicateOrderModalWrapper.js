@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Overlay from 'Overlay'
 import DuplicateOrderModal from './DuplicateOrderModalContainer'
@@ -10,7 +9,7 @@ const DuplicateOrderModalWrapper = ({ visible }) => (
 )
 
 DuplicateOrderModalWrapper.propTypes = {
-	visible: PropTypes.bool,
+	visible: React.PropTypes.bool,
 }
 
 export default DuplicateOrderModalWrapper

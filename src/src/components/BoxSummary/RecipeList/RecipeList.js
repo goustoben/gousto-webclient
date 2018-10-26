@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import RecipeHolder from 'BoxSummary/RecipeHolder'
 import { basketSum } from 'utils/basket'
 import logger from 'utils/logger'
@@ -51,12 +50,12 @@ const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore,
 }
 
 RecipeList.propTypes = {
-	view: PropTypes.string,
-	recipes: PropTypes.instanceOf(Immutable.Map),
-	maxRecipesNum: PropTypes.number,
-	menuRecipesStore: PropTypes.instanceOf(Immutable.Map),
-	invisible: PropTypes.bool,
-	detailVisibilityChange: PropTypes.func,
+	view: React.PropTypes.string,
+	recipes: React.PropTypes.instanceOf(Immutable.Map),
+	maxRecipesNum: React.PropTypes.number,
+	menuRecipesStore: React.PropTypes.instanceOf(Immutable.Map),
+	invisible: React.PropTypes.bool,
+	detailVisibilityChange: React.PropTypes.func,
 }
 
 RecipeList.defaultProps = {

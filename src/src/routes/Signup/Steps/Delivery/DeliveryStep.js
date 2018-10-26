@@ -1,6 +1,4 @@
-import Immutable from 'immutable'
-import PropTypes from 'prop-types'
-/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import React from 'react'
 import moment from 'moment'
 import DropdownInput from 'Form/Dropdown'
@@ -105,14 +103,14 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
 }
 
 DeliveryStep.propTypes = {
-	boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
-	tempDate: PropTypes.string,
-	tempSlotId: PropTypes.string,
-	setTempDate: PropTypes.func,
-	setTempSlotId: PropTypes.func,
-	boxSummaryDeliverySlotChosen: PropTypes.func,
-	menuFetchDataPending: PropTypes.bool,
-	next: PropTypes.func,
+	boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
+	tempDate: React.PropTypes.string,
+	tempSlotId: React.PropTypes.string,
+	setTempDate: React.PropTypes.func,
+	setTempSlotId: React.PropTypes.func,
+	boxSummaryDeliverySlotChosen: React.PropTypes.func,
+	menuFetchDataPending: React.PropTypes.bool,
+	next: React.PropTypes.func,
 }
 
 export default DeliveryStep

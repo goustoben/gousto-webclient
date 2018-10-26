@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
 import ModalPanel from 'Modal/ModalPanel'
 import { Button } from 'goustouicomponents'
@@ -48,7 +48,7 @@ const CancelledAllBoxesModal = ({
 
 CancelledAllBoxesModal.propTypes = {
 	isModalOpen: PropTypes.bool,
-	pendingOrdersDates: PropTypes.instanceOf(Immutable.Map()),
+	pendingOrdersDates: ImmutablePropTypes.mapOf(PropTypes.string),
 	toggleModalVisibility: PropTypes.func,
 }
 

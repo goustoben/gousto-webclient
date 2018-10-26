@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { Button, Segment } from 'goustouicomponents'
 import logger from 'utils/logger'
@@ -10,14 +9,14 @@ import css from './PromoCode.css'
 
 class PromoCode extends React.PureComponent {
 	static propTypes = {
-		promoCode: PropTypes.string,
-		promoCodeApplied: PropTypes.bool,
-		prices: PropTypes.instanceOf(Immutable.Map),
-		loadPrices: PropTypes.func.isRequired,
-		basketPromoCodeChange: PropTypes.func.isRequired,
-		basketPromoCodeAppliedChange: PropTypes.func.isRequired,
-		recipes: PropTypes.instanceOf(Immutable.Map),
-		numPortions: PropTypes.number,
+		promoCode: React.PropTypes.string,
+		promoCodeApplied: React.PropTypes.bool,
+		prices: React.PropTypes.instanceOf(Immutable.Map),
+		loadPrices: React.PropTypes.func.isRequired,
+		basketPromoCodeChange: React.PropTypes.func.isRequired,
+		basketPromoCodeAppliedChange: React.PropTypes.func.isRequired,
+		recipes: React.PropTypes.instanceOf(Immutable.Map),
+		numPortions: React.PropTypes.number,
 	}
 
 	static defaultProps = {
