@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+import PropTypes from 'prop-types'
+
 import React from 'react'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
@@ -12,10 +14,10 @@ const LEAVE_BOX_OPTIONS = configCheckout.leaveBoxOptions.map(option => ({ value:
 class DeliveryInstruction extends React.PureComponent {
 
 	static propTypes = {
-		value: React.PropTypes.any,
-		reset: React.PropTypes.func.isRequired,
-		receiveRef: React.PropTypes.func,
-		sectionName: React.PropTypes.string,
+		value: PropTypes.any,
+		reset: PropTypes.func.isRequired,
+		receiveRef: PropTypes.func,
+		sectionName: PropTypes.string,
 	}
 
 	static defaultProps = {

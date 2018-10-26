@@ -5,7 +5,7 @@ import ImageSelection from 'ImageSelection'
 import Image from 'Image'
 
 describe('ImageSelection', () => {
-	const wrapper = shallow(<ImageSelection />)
+	const wrapper = shallow(<ImageSelection content={[]} />)
 
 	test('should return div', () => {
 		expect(wrapper.type()).toEqual('div')
@@ -13,22 +13,22 @@ describe('ImageSelection', () => {
 })
 
 describe('ImageSelection images', () => {
-	const content = Immutable.fromJS([
-		{
+	const content = [
+		Immutable.fromJS({
 			images: {
 				200: { src: '1', width: 200 },
 				400: { src: '2', width: 400 },
 			},
 			title: 'Title 1',
-		},
-		{
+		}),
+		Immutable.fromJS({
 			images: {
 				200: { src: '3', width: 200 },
 				400: { src: '4', width: 400 },
 			},
 			title: 'Title 2',
-		},
-	])
+		}),
+	]
 
 	const wrapper = shallow(<ImageSelection content={content} />)
 

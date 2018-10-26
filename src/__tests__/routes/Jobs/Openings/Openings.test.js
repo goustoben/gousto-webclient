@@ -1,7 +1,6 @@
 import React from 'react'
-import sinon from 'sinon'
 
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import config from 'config/jobs'
 
@@ -21,12 +20,12 @@ describe('Openings/Openings', () => {
 		selectedDepartment = 'All'
 
 		jobs = Immutable.fromJS({
-			1: { title: 'a job' },
-			2: { title: 'another job' },
-			3: { title: 'another job2' },
-			4: { title: 'another job3' },
+			1: { id: '1', title: 'a job' },
+			2: { id: '2', title: 'another job' },
+			3: { id: '3', title: 'another job2' },
+			4: { id: '4', title: 'another job3' },
 		})
-		wrapper = shallow(<Openings jobs={jobs} depts={departments} />)
+		wrapper = shallow(<Openings jobs={jobs} depts={departments } />, { context: { store: { dispatch: jest.fn() } } })
 	})
 	afterEach(() => {})
 	test('should contain an h1', () => {
@@ -40,7 +39,7 @@ describe('Openings/Openings', () => {
 		expect(wrapper.find(JobCard)).toHaveLength(4)
 	})
 	test('should render one deptContainer with a jobSelector per department', () => {
-		wrapper = shallow(<Openings jobs={jobs} depts={departments} />)
+		wrapper = shallow(<Openings jobs={jobs} depts={departments} store={{}} />, { context: { store: { dispatch: jest.fn() } } })
 		const jsclassName = `.${css.jobSelector.split(' ').join('.')}`
 		const dcclassName = `.${css.deptContainer.split(' ').join('.')}`
 		expect(wrapper.find(jsclassName)).toHaveLength(departments.length - 1)
@@ -52,9 +51,10 @@ describe('Openings/Openings', () => {
 				jobs={jobs}
 				depts={departments}
 				selectedDepartment={selectedDepartment}
+				store={{}}
 			/>,
+			{ context: { store: { dispatch: jest.fn() } } }
 		)
-		const className = `.${css.activeJobSelector.split(' ').join('.')}`
-		expect(wrapper.find(className)).toHaveLength(1)
+		expect(wrapper.find('.activeJobSelector')).toHaveLength(1)
 	})
 })

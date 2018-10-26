@@ -10,7 +10,7 @@ describe('GetHelpLayout', () => {
 		wrapper = shallow(
 			<GetHelpLayout title="test title" body="test body description">
 				<div className="unique" />
-				<BottomBar />
+				<BottomBar><div></div></BottomBar>
 			</GetHelpLayout>
 		)
 	})

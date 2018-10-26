@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './CookingTime.css'
 import { getCookingTime } from 'utils/recipe'
@@ -10,7 +11,11 @@ const CookingTime = ({ time }) => (
 
 
 CookingTime.propTypes = {
-	time: React.PropTypes.number.isRequired,
+	time: PropTypes.number.isRequired,
+}
+
+CookingTime.defaultProps = {
+	time: 0,
 }
 
 export default CookingTime

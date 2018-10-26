@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import ModalPanel from 'Modal/ModalPanel'
 import PromoModalBody from './PromoModalBody'
@@ -26,16 +27,16 @@ const PromoModal = ({ text, title, error, buttonText, promoApply, close, needsAg
 )
 
 PromoModal.propTypes = {
-	text: React.PropTypes.string,
-	title: React.PropTypes.string,
-	error: React.PropTypes.string,
-	promoApply: React.PropTypes.func,
-	close: React.PropTypes.func,
-	needsAgeVerification: React.PropTypes.bool,
-	isAgeVerified: React.PropTypes.bool,
-	buttonText: React.PropTypes.string,
-	pending: React.PropTypes.bool,
-	justApplied: React.PropTypes.bool,
+	text: PropTypes.string,
+	title: PropTypes.string,
+	error: PropTypes.string,
+	promoApply: PropTypes.func,
+	close: PropTypes.func,
+	needsAgeVerification: PropTypes.bool,
+	isAgeVerified: PropTypes.bool,
+	buttonText: PropTypes.string,
+	pending: PropTypes.bool,
+	justApplied: PropTypes.bool,
 }
 
 export default PromoModal

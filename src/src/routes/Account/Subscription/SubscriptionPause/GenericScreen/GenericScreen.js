@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import DOMPurify from 'dompurify'
 import css from './GenericScreen.css'
 import CallToAction from '../CallToAction'

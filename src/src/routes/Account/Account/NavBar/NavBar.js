@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import css from './NavBar.css'
@@ -71,8 +72,8 @@ const NavBar = (props) => {
 }
 
 NavBar.propTypes = {
-	currentPath: React.PropTypes.string,
-	rateRecipeCount: React.PropTypes.number,
+	currentPath: PropTypes.string,
+	rateRecipeCount: PropTypes.number,
 }
 
 NavBar.defaultProps = {

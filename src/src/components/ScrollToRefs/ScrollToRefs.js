@@ -1,10 +1,11 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import * as domHelper from 'utils/DOMhelper'
 
 export default class ScrollToRefs extends React.PureComponent {
 	static propTypes = {
-		refKeys: React.PropTypes.array,
-		scrollToRef: React.PropTypes.bool,
+		refKeys: PropTypes.array,
+		scrollToRef: PropTypes.bool,
 	}
 
 	static defaultProps = {

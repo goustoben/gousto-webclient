@@ -35,7 +35,7 @@ describe('OrdersList', () => {
 		let wrapper
 
 		beforeEach(() => {
-			wrapper = shallow(<OrdersList orders={ordersSample} />)
+			wrapper = shallow(<OrdersList orders={ordersSample} recipes={Immutable.List()} />)
 		})
 
 		test('should render a <div> with no props', () => {
@@ -64,7 +64,7 @@ describe('OrdersList with no orders', () => {
 		let wrapper
 
 		beforeEach(() => {
-			wrapper = shallow(<OrdersList orders={ordersSample} />)
+			wrapper = shallow(<OrdersList orders={ordersSample} recipes={Immutable.List()} />)
 		})
 
 		test('should render a <div> with no props', () => {

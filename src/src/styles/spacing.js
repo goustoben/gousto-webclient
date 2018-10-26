@@ -1,4 +1,4 @@
-import { PropTypes } from 'react'
+import PropTypes from 'prop-types'
 import spacingStyles from 'styles/spacing.css'
 
 const otherValues = [

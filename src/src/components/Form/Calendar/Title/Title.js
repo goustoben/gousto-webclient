@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Title.css'
 import moment from 'moment'
@@ -18,7 +19,7 @@ const Title = ({ dates }) => (
 )
 
 Title.propTypes = {
-	dates: React.PropTypes.array.isRequired,
+	dates: PropTypes.array.isRequired,
 }
 
 export default Title

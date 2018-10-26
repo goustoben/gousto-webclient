@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import Immutable from 'immutable'
@@ -23,21 +24,21 @@ const clientRoutes = config.routes.client
 class Header extends React.PureComponent {
 
 	static propTypes = {
-		logoutUser: React.PropTypes.func,
-		serverError: React.PropTypes.bool.isRequired,
-		isAuthenticated: React.PropTypes.bool.isRequired,
-		loginOpen: React.PropTypes.bool,
-		routing: React.PropTypes.object,
-		simple: React.PropTypes.bool,
-		disabled: React.PropTypes.bool,
-		path: React.PropTypes.string,
-		fromJoin: React.PropTypes.bool,
-		promoCodeUrl: React.PropTypes.string,
-		loginVisibilityChange: React.PropTypes.func,
-		features: React.PropTypes.instanceOf(Immutable.Map),
-		noContactBar: React.PropTypes.bool,
-		title: React.PropTypes.string,
-		small: React.PropTypes.bool,
+		logoutUser: PropTypes.func,
+		serverError: PropTypes.bool.isRequired,
+		isAuthenticated: PropTypes.bool.isRequired,
+		loginOpen: PropTypes.bool,
+		routing: PropTypes.object,
+		simple: PropTypes.bool,
+		disabled: PropTypes.bool,
+		path: PropTypes.string,
+		fromJoin: PropTypes.bool,
+		promoCodeUrl: PropTypes.string,
+		loginVisibilityChange: PropTypes.func,
+		features: PropTypes.instanceOf(Immutable.Map),
+		noContactBar: PropTypes.bool,
+		title: PropTypes.string,
+		small: PropTypes.bool,
 	}
 
 	static defaultProps = {

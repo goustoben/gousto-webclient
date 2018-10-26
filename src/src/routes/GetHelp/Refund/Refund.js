@@ -1,4 +1,6 @@
-import React, { PropTypes, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+
 import { replaceWithValues } from 'utils/text'
 
 import BottomBar from 'BottomBar'

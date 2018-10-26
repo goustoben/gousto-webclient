@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './ChefQuote.css'
 import Immutable from 'immutable'
@@ -43,8 +44,8 @@ const ChefQuote = ({ chef, quote }) => {
 }
 
 ChefQuote.propTypes = {
-	chef: React.PropTypes.instanceOf(Immutable.Map),
-	quote: React.PropTypes.string.isRequired,
+	chef: PropTypes.instanceOf(Immutable.Map),
+	quote: PropTypes.string.isRequired,
 }
 
 export default ChefQuote

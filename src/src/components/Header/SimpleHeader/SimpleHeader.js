@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from '../Header.css'
 import config from 'config'
@@ -38,16 +39,18 @@ const SimpleHeader = ({ serverError, className, homeUrl, noContactBar, title, sm
 )
 
 SimpleHeader.propTypes = {
-	serverError: React.PropTypes.bool.isRequired,
-	className: React.PropTypes.string.isRequired,
-	homeUrl: React.PropTypes.string.isRequired,
-	noContactBar: React.PropTypes.bool,
-	title: React.PropTypes.string,
-	small: React.PropTypes.bool,
+	serverError: PropTypes.bool.isRequired,
+	className: PropTypes.string.isRequired,
+	homeUrl: PropTypes.string.isRequired,
+	noContactBar: PropTypes.bool,
+	title: PropTypes.string,
+	small: PropTypes.bool,
 }
 
 SimpleHeader.defaultProps = {
+	serverError: false,
 	title: '',
+	homeUrl: '',
 }
 
 export default SimpleHeader

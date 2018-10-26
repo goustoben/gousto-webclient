@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import { Button } from 'goustouicomponents'
@@ -7,29 +8,29 @@ import config from 'config'
 class CheckoutButton extends React.Component {
 
 	static propTypes = {
-		promoCode: React.PropTypes.string,
-		postcode: React.PropTypes.string,
-		orderId: React.PropTypes.string,
-		buttonClass: React.PropTypes.string,
-		className: React.PropTypes.string,
-		numPortions: React.PropTypes.oneOf([2, 4]).isRequired,
-		deliveryDayId: React.PropTypes.string,
-		slotId: React.PropTypes.string.isRequired,
-		recipes: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-		children: React.PropTypes.oneOfType([
-			React.PropTypes.instanceOf(Button),
-			React.PropTypes.node,
-			React.PropTypes.element,
+		promoCode: PropTypes.string,
+		postcode: PropTypes.string,
+		orderId: PropTypes.string,
+		buttonClass: PropTypes.string,
+		className: PropTypes.string,
+		numPortions: PropTypes.oneOf([2, 4]).isRequired,
+		deliveryDayId: PropTypes.string,
+		slotId: PropTypes.string.isRequired,
+		recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+		children: PropTypes.oneOfType([
+			PropTypes.instanceOf(Button),
+			PropTypes.node,
+			PropTypes.element,
 		]).isRequired,
-		basketCheckedOut: React.PropTypes.func.isRequired,
-		basketProceedToCheckout: React.PropTypes.func.isRequired,
-		view: React.PropTypes.string,
-		addressId: React.PropTypes.string,
-		userOrders: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-		onClick: React.PropTypes.func,
-		orderUpdate: React.PropTypes.func,
-		isAuthenticated: React.PropTypes.bool.isRequired,
-		boxSummaryVisibilityChange: React.PropTypes.func.isRequired,
+		basketCheckedOut: PropTypes.func.isRequired,
+		basketProceedToCheckout: PropTypes.func.isRequired,
+		view: PropTypes.string,
+		addressId: PropTypes.string,
+		userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
+		onClick: PropTypes.func,
+		orderUpdate: PropTypes.func,
+		isAuthenticated: PropTypes.bool.isRequired,
+		boxSummaryVisibilityChange: PropTypes.func.isRequired,
 	}
 
 	static defaultProps = {

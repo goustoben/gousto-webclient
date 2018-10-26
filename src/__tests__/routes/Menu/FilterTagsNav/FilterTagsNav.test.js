@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 import { shallow } from 'enzyme'
-import renderer from 'react-test-renderer';
+import renderer from 'react-test-renderer'
 import { Button } from 'goustouicomponents'
 import FilterTagsNav from 'routes/Menu/FilterTagsNav/FilterTagsNav'
 
-describe("FilterTag", () => {
+describe('FilterTag', () => {
 
-  describe("rendering", () => {
+  describe('rendering', () => {
 
-    test("Will render FilterTag component", () => {
-      const component = <FilterTagsNav />
+    test('will render FilterTag component', () => {
+      const component = <FilterTagsNav onCTAClick={jest.fn()} menuFilterExperiment />
 
       const tree = renderer
       .create(component)
@@ -19,9 +19,9 @@ describe("FilterTag", () => {
     })
   })
 
-  describe("bahviour", () => {
+  describe('bahviour', () => {
 
-    test("Will handle click on the CTA", () => {
+    test('will handle click on the CTA', () => {
       const clickHandler = jest.fn()
       const component = <FilterTagsNav onCTAClick={clickHandler} menuFilterExperiment />
       const wrapper = shallow(component)

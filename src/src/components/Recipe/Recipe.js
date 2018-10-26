@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classnames from 'classnames'
 import Immutable from 'immutable'
 
@@ -10,11 +11,12 @@ import FeaturedRecipe from 'Recipe/FeaturedRecipe'
 import FineDineInRecipe from 'Recipe/FineDineInRecipe'
 
 export const recipePropTypes = {
+	id: PropTypes.string,
 	title: PropTypes.string.isRequired,
 	media: PropTypes.instanceOf(Immutable.List),
 	onClick: PropTypes.func,
 	stock: PropTypes.number,
-	view: React.PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn']).isRequired,
+	view: PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn']).isRequired,
 	surcharge: PropTypes.number,
 	range: PropTypes.string,
 }
@@ -23,6 +25,7 @@ class Recipe extends React.PureComponent {
 	static propTypes = recipePropTypes
 
 	static defaultProps = {
+		title: '',
 		view: 'grid',
 	}
 
@@ -36,15 +39,15 @@ class Recipe extends React.PureComponent {
 	get recipeComponent() {
 		switch (this.props.view) {
 			case 'gridSmall':
-				return <SmallRecipe />
+				return <SmallRecipe {...this.props} />
 			case 'featured':
 				return <FeaturedRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={this.state.detailHover} />
 			case 'simple':
 				return <SimpleRecipe {...this.props} />
 			case 'fineDineIn':
-				return <FineDineInRecipe {...this.props} {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={this.state.detailHover} />
+				return <FineDineInRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={this.state.detailHover} />
 			default:
-				return <GridRecipe {...this.props} {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={this.state.detailHover} />
+				return <GridRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={this.state.detailHover} />
 		}
 	}
 

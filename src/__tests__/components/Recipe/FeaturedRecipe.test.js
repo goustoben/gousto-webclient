@@ -13,20 +13,12 @@ import FeaturedRecipe from 'Recipe/FeaturedRecipe'
 
 describe('<FeaturedRecipe />', () => {
 	let wrapper
-	let recipe = Immutable.fromJS({
-		id: 1,
-		title: 'test',
-		rating: {
-			count: 1,
-			average: 4,
-		},
-		url: '',
+	let recipeProps = {
+		id: '1',
 		cookingTime: 1,
-		cookingTimeFamily: 1,
-		shelfLifeDays: '',
-		media: {
-			images: [
-				{
+		useWithin: '',
+		equipment: Immutable.List(),
+		media: Immutable.List([{
 					urls: [
 						{},
 						{},
@@ -35,12 +27,12 @@ describe('<FeaturedRecipe />', () => {
 						},
 					],
 				},
-			],
-		},
-	})
+			]),
+		features: Immutable.Map(),
+	}
 
 	beforeEach(() => {
-		wrapper = shallow(<FeaturedRecipe recipe={recipe} />)
+		wrapper = shallow(<FeaturedRecipe {...recipeProps} />)
 	})
 
 	test('should have a 1 EquipmentRequired with view "notice"', () => {
@@ -50,7 +42,7 @@ describe('<FeaturedRecipe />', () => {
 	})
 
 	test('should contain one TasteScore component', () => {
-		wrapper = shallow(<FeaturedRecipe tasteScore={99} />)
+		wrapper = shallow(<FeaturedRecipe {...recipeProps} tasteScore={99} />)
 
 		expect(wrapper.find(TasteScore)).toHaveLength(1)
 		expect(wrapper.find(TasteScore).prop('score')).toEqual(99)

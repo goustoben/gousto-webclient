@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Form.css'
 
@@ -9,7 +10,7 @@ const Form = (props) => (
 )
 
 Form.propTypes = {
-	children: React.PropTypes.node.isRequired,
+	children: PropTypes.node.isRequired,
 }
 
 Form.defaultProps = {
