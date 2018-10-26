@@ -137,6 +137,10 @@ app.listen(port, () => {
 	logger.notice(`==> ✅  Koa Server is listening on port ${port}`)
 })
 
+app.on('error', err => {
+  logger.error(err)
+})
+
 if (__HMR__) {
 	/* eslint-disable global-require */
 	const hotPort = port + 1
