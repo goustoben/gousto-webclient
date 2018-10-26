@@ -22,7 +22,7 @@ class GetHelp extends PureComponent {
 		const { orders } = this.props
 		const orderId = this.getOrderId(this.props)
 
-		if (orderId && Object.keys(orders).length < 1) {
+		if (orders && orderId && Object.keys(orders).length < 1) {
 			this.props.userLoadOrder(orderId)
 				.then(this.orderLoadComplete)
 				.catch(this.fetchError)
