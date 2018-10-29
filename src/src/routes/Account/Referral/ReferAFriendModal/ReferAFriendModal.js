@@ -74,10 +74,10 @@ class ReferAFriendModal extends React.Component {
 					{
 						this.state.showEmailReferralForm ? (
 							<div>
-								Enter your friend's email below:
+								<p>Enter your friend's email below:</p>
 								<Form onSubmit={this.handleSubmit}>
 									<div>
-										<div>
+										<div className={css.emailInput}>
 											<TextInput
 												name="email"
 												color="primary"
@@ -87,8 +87,7 @@ class ReferAFriendModal extends React.Component {
 												value={this.state.email}
 											/>
 										</div>
-										<br />
-										<div className={css.flex}>
+										<div className={css.button}>
 											<Button
 												onClick={this.handleSubmit}
 											>
@@ -99,11 +98,11 @@ class ReferAFriendModal extends React.Component {
 								</Form>
 							</div>
 						) : (
-							<div>
-								Email sent!
-								<br />
+							<div >
+								<p className={css.emailSentNotification}>Email sent!</p>
 								<Button
 									onClick={this.showEmailReferralForm}
+									className={css.button}
 								>
 									Invite more friends
 								</Button>
