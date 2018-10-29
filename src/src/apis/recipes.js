@@ -5,7 +5,7 @@ import routes from 'config/routes'
 const version = routes.version.recipes
 
 export function fetchRecipes(accessToken, path, reqData) {
-	return fetch('838r1KPxtkSCoIlA5oN6yys3AD9TznzxW4GvPfdR', `https://staging-api.gousto.info/recipes/${version}/recipes/${path}`, reqData, 'GET')
+	return fetch(accessToken, `${endpoint('recipes', version)}/recipes/${path}`, reqData, 'GET')
 }
 
 export function fetchRecipeStock(accessToken, dayId) {

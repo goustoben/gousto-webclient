@@ -3,7 +3,7 @@ import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
 export function fetchOrder(accessToken, orderId, reqData = {}) {
-	return fetch('838r1KPxtkSCoIlA5oN6yys3AD9TznzxW4GvPfdR', `https://staging-api.gousto.info/order/${orderId}`, reqData, 'GET')
+	return fetch(accessToken, `${endpoint('core')}/order/${orderId}`, reqData, 'GET')
 }
 
 export function createPreviewOrder(reqData = {}) {
