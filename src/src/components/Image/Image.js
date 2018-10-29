@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import config from 'config/media'
@@ -8,20 +7,19 @@ import css from './Image.css'
 
 class Image extends React.PureComponent {
 	static propTypes = {
-		contain: PropTypes.bool,
-		className: PropTypes.string,
-		media: PropTypes.oneOfType([
-			PropTypes.instanceOf(Immutable.List),
-			PropTypes.instanceOf(Immutable.Map),
-			PropTypes.string,
+		contain: React.PropTypes.bool,
+		className: React.PropTypes.string,
+		media: React.PropTypes.oneOfType([
+			React.PropTypes.instanceOf(Immutable.List),
+			React.PropTypes.string,
 		]).isRequired,
-		onClick: PropTypes.func,
-		title: PropTypes.string,
-		maxMediaSize: PropTypes.number,
-		lazy: PropTypes.bool,
-		once: PropTypes.bool,
-		offset: PropTypes.number,
-		placeholder: PropTypes.node,
+		onClick: React.PropTypes.func,
+		title: React.PropTypes.string,
+		maxMediaSize: React.PropTypes.number,
+		lazy: React.PropTypes.bool,
+		once: React.PropTypes.bool,
+		offset: React.PropTypes.number,
+		placeholder: React.PropTypes.node,
 	}
 
 	static defaultProps = {

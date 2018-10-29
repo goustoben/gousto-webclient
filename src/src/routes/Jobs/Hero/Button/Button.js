@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import css from './Button.css'
 import Link from 'Link'
@@ -17,8 +16,8 @@ const CTA = ({ children, link }) => (
 )
 
 CTA.propTypes = {
-	children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-	link: PropTypes.string,
+	children: React.PropTypes.string,
+	link: React.PropTypes.string,
 }
 
 export default CTA

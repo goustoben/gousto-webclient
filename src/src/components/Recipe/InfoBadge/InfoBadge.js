@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import css from './InfoBadge.css'
@@ -16,12 +15,12 @@ const InfoBadge = ({ type = 'span', children, newRecipe, stockInfo, recommended,
 }
 
 InfoBadge.propTypes = {
-	type: PropTypes.string,
-	children: PropTypes.node,
-	newRecipe: PropTypes.bool,
-	stockInfo: PropTypes.bool,
-	recommended: PropTypes.bool,
-	inverse: PropTypes.bool,
+	type: React.PropTypes.string,
+	children: React.PropTypes.node,
+	newRecipe: React.PropTypes.bool,
+	stockInfo: React.PropTypes.bool,
+	recommended: React.PropTypes.bool,
+	inverse: React.PropTypes.bool,
 }
 
 InfoBadge.defaultProps = {

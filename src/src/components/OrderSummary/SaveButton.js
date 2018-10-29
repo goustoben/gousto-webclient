@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Button } from 'goustouicomponents'
 import css from './OrderSummary.css'
 
@@ -7,7 +6,7 @@ class SaveButton extends React.PureComponent {
 
 	static propTypes = {
 		onClick: PropTypes.func,
-		error: PropTypes.bool,
+		error: PropTypes.string,
 		saving: PropTypes.bool,
 		saveRequired: PropTypes.bool.isRequired,
 	}

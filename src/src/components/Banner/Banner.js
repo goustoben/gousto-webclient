@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 import css from './Banner.css'
 import { Button } from 'goustouicomponents'
@@ -23,7 +22,7 @@ Banner.propTypes = {
 	hide: PropTypes.bool,
 	onClick: PropTypes.func,
 	text: PropTypes.string,
-	linkText: PropTypes.string.isRequired,
+	linkText: PropTypes.string,
 }
 
 Banner.defaultProps = {}

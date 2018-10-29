@@ -1,7 +1,6 @@
 import React  from 'react'
 import PropTypes from 'prop-types'
 
-
 import config from 'config/home'
 import css from './ReferAFriendModal.css'
 import Form from 'Form'

@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types'
-import React from 'react'
+import React, { PropTypes } from 'react'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import css from './ExpiredBillingModal.css'
@@ -9,7 +8,7 @@ class ExpiredBillingModal extends React.PureComponent {
 
 	static propTypes = {
 		expiredBillingModalOpen: PropTypes.bool,
-		closeExpiredBillingModal: PropTypes.func,
+		closeExpiredBillingModal: React.PropTypes.func,
 	}
 
 	static defaultProps = {
@@ -17,7 +16,7 @@ class ExpiredBillingModal extends React.PureComponent {
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 	}
 
 	onCloseExpiredBillingModal = () => {

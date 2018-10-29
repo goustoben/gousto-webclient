@@ -1,12 +1,13 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import sinon from 'sinon'
 
 import Helmet from 'react-helmet'
 import CanonicalLink from 'Helmet/CanonicalLink'
 
 describe('Helmet CanonicalLink', () => {
 	test('should return 1 Helmet', () => {
-		expect(shallow(<CanonicalLink href={''} />).type()).toBe(Helmet)
+		expect(shallow(<CanonicalLink />).type()).toBe(Helmet)
 	})
 
 	test('should set canonical to provided href', () => {

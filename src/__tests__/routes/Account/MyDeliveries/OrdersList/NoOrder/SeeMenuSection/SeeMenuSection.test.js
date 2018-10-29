@@ -12,49 +12,41 @@ describe('SeeMenuSection', () => {
 		let wrapper
 		const recipes = Immutable.fromJS([
 			{
-				id: '1',
 				recipeImage: 'http://image-url',
 				recipeTitle: 'A recipe title',
 				dietType: 'vegetarian',
 			},
 			{
-				id: '2',
 				recipeImage: 'http://image-url2',
 				recipeTitle: 'A recipe title 2',
 				dietType: 'gourmet',
 			},
 			{
-				id: '3',
 				recipeImage: 'http://image-url',
 				recipeTitle: 'A recipe title',
 				dietType: 'gourmet',
 			},
 			{
-				id: '4',
 				recipeImage: 'http://image-url2',
 				recipeTitle: 'A recipe title 2',
 				dietType: 'gourmet',
 			},
 			{
-				id: '5',
 				recipeImage: 'http://image-url',
 				recipeTitle: 'A recipe title',
 				dietType: 'gourmet',
 			},
 			{
-				id: '6',
 				recipeImage: 'http://image-url2',
 				recipeTitle: 'A recipe title 2',
 				dietType: 'gourmet',
 			},
 			{
-				id: '7',
 				recipeImage: 'http://image-url',
 				recipeTitle: 'A recipe title',
 				dietType: 'gourmet',
 			},
 			{
-				id: '8',
 				recipeImage: 'http://image-url2',
 				recipeTitle: 'A recipe title 2',
 				dietType: 'gourmet',

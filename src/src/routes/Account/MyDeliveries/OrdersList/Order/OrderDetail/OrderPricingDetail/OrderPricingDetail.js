@@ -1,6 +1,6 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import Immutable from 'immutable' // eslint-disable-line no-caps
+import React, { PropTypes } from 'react'
+import ImmutablePropTypes from 'react-immutable-proptypes'
+import Immutable from 'immutable'
 import Content from 'containers/Content'
 
 import css from './OrderPricingDetail.css'
@@ -90,7 +90,14 @@ const OrderPricingDetail = ({
 OrderPricingDetail.propTypes = {
 	paymentDate: PropTypes.string,
 	numberOfRecipes: PropTypes.number,
-	priceBreakdown: PropTypes.instanceOf(Immutable.Map),
+	priceBreakdown: ImmutablePropTypes.mapContains({
+		flatDiscountAmount: PropTypes.number,
+		percentageDiscountAmount: PropTypes.number,
+		grossRecipesPrice: PropTypes.number,
+		grossExtrasPrice: PropTypes.number,
+		grossShippingPrice: PropTypes.number,
+		netOrderPrice: PropTypes.number,
+	}),
 }
 
 OrderPricingDetail.defaultProps = {

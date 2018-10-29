@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import React, { PropTypes } from 'react'
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import Item from 'Item'
 
 const RecipeItem = (props) => (

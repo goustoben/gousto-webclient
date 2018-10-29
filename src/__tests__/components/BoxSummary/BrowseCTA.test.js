@@ -6,11 +6,12 @@ import sinon from 'sinon'
 import BrowseCTA from 'BoxSummary/BrowseCTA/BrowseCTA'
 
 describe('BrowseCTA', () => {
-	let boxDetailsVisibilityChange
-	let	menuBrowseCTAVisibilityChange
-	let	eventSpy
-	let	preventDefault
-	let	stopPropagation
+	let menuBrowseCTAShow,
+		boxDetailsVisibilityChange,
+		menuBrowseCTAVisibilityChange,
+		eventSpy,
+		preventDefault,
+		stopPropagation
 	const view = 'desktop'
 
 	beforeEach(() => {
@@ -21,8 +22,9 @@ describe('BrowseCTA', () => {
 			preventDefault,
 			stopPropagation,
 		}
-		boxDetailsVisibilityChange = sinon.stub().returns(function () { })
-		menuBrowseCTAVisibilityChange = sinon.stub().returns(function () { })
+		menuBrowseCTAShow = sinon.stub().returns(function() {})
+		boxDetailsVisibilityChange = sinon.stub().returns(function() {})
+		menuBrowseCTAVisibilityChange = sinon.stub().returns(function() {})
 	})
 
 	test('should return a div', () => {
@@ -33,7 +35,7 @@ describe('BrowseCTA', () => {
 	test('should return a div', () => {
 		const wrapper = shallow(
 			<BrowseCTA
-				menuBrowseCTAShow={false}
+				menuBrowseCTAShow={menuBrowseCTAShow}
 				boxDetailsVisibilityChange={boxDetailsVisibilityChange}
 				menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
 				view={view}

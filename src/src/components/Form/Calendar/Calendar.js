@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import css from './Calendar.css'
@@ -133,9 +132,9 @@ const Calendar = ({ dates, selected, onClick }) => {
 }
 
 Calendar.propTypes = {
-	dates: PropTypes.array.isRequired,
-	selected: PropTypes.string,
-	onClick: PropTypes.func.isRequired,
+	dates: React.PropTypes.array.isRequired,
+	selected: React.PropTypes.string,
+	onClick: React.PropTypes.func.isRequired,
 }
 
 export default Calendar
