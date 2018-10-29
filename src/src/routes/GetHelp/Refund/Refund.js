@@ -1,11 +1,9 @@
 import React, { PropTypes, PureComponent } from 'react'
 import BottomBar from 'BottomBar'
-import { BottomButton } from '../components/BottomButton'
-
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import Loading from 'Loading'
-
 import { Button } from 'goustouicomponents'
+import { BottomButton } from '../components/BottomButton'
 import { client as routes } from 'config/routes'
 import { redirect } from 'utils/window'
 import { replaceWithValues } from 'utils/text'
@@ -32,13 +30,8 @@ class Refund extends PureComponent {
 		}),
 		selectedItems: PropTypes.arrayOf(
 			PropTypes.shape({
-				recipeId: PropTypes.string.isRequired,
-				ingredients: PropTypes.arrayOf(
-					PropTypes.shape({
-						id: PropTypes.string.isRequired,
-						issueId: PropTypes.number.isRequired
-					})
-				)
+				ingredient_id: PropTypes.string.isRequired,
+				category_id: PropTypes.number.isRequired
 			})
 		)
 	}
@@ -74,7 +67,7 @@ class Refund extends PureComponent {
 				order_id: order.id,
 				type: 'credit',
 				value: refundAmount,
-				ingredients: selectedItems
+				issues: selectedItems
 			})
 
 			redirect(routes.getHelp.confirmation)

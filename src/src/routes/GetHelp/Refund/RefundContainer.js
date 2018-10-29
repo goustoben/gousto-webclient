@@ -9,20 +9,17 @@ const mapStateToProps = (state) => {
 	const order = getHelp.get('order').toJS()
 	const recipes = state.recipes.toJS()
 
+	// POC
 	const selectedItems = Object.keys(recipes).reduce((acc, id) => {
 		const recipe = recipes[id]
 
 		acc.push({
-			recipeId: recipe.id,
-			ingredients: [{
-				id: recipe.ingredients[0].id,
-				issueId: 1
-			}],
+			ingredient_id: recipe.ingredients[0].id,
+			category_id: 98
 		})
 
 		return acc
-	}, [])
-
+	}, []).splice(0, 1)
 
 	return {
 		user: {
