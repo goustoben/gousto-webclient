@@ -14,7 +14,7 @@ import { validateEmail } from 'utils/auth'
 class ReferAFriendModal extends React.Component {
 	static propTypes = {
 		onClose: PropTypes.func.isRequired,
-		userReferFriends: PropTypes.func.isRequired,
+		userReferAFriend: PropTypes.func.isRequired,
 	}
 
 	state = {
@@ -26,9 +26,9 @@ class ReferAFriendModal extends React.Component {
 
 	referAFriend = () => {
 		const { email } = this.state
-		const { userReferFriends } = this.props
+		const { userReferAFriend } = this.props
 
-		userReferFriends(email)
+		userReferAFriend(email)
 	}
 
 	handleEmailChange = (value) => {

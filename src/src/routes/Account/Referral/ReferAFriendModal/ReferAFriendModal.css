@@ -34,7 +34,6 @@
 
 .msg {
 	composes: textXS from 'styles/typography.css';
-/* composes: paddingXXSTop noMargin from 'sass-loader!styles/spacing.scss'; */
 
 &:first-letter {
 	 text-transform: capitalize;

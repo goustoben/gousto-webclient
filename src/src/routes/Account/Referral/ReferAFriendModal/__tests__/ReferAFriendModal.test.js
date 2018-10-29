@@ -8,11 +8,11 @@ import config from 'config/home'
 describe('ReferAFriendModal', () => {
 	let wrapper
 	const onClose = jest.fn()
-	const userReferFriends = jest.fn()
+	const userReferAFriend = jest.fn()
 
 	beforeEach(() => {
 		wrapper = shallow(
-			<ReferAFriendModal onClose={onClose} userReferFriends={userReferFriends}/>
+			<ReferAFriendModal onClose={onClose} userReferAFriend={userReferAFriend}/>
 		)
 	})
 
@@ -90,7 +90,7 @@ describe('ReferAFriendModal', () => {
 					})
 
 					it('should call userReferFriends with given email', () => {
-						expect(userReferFriends).toHaveBeenCalledWith('valid@email.com')
+						expect(userReferAFriend).toHaveBeenCalledWith('valid@email.com')
 					})
 				})
 			})
