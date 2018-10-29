@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
 	const recipes = state.recipes.toJS()
 
 	// POC
-	const selectedItems = Object.keys(recipes).reduce((acc, id) => {
+	const issues = Object.keys(recipes).reduce((acc, id) => {
 		const recipe = recipes[id]
 
 		acc.push({
@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
 			accessToken: auth.get('accessToken'),
 		},
 		order,
-		selectedItems,
+		issues,
 		content: {
 			title: state.content.get('get-help_refund_pageheader_header')
 			|| 'Get help with your box',
