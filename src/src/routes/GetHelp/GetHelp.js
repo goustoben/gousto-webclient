@@ -24,6 +24,7 @@ class GetHelp extends PureComponent {
 		if (!orderId) {
 			this.fetchError()
 		} else {
+			this.props.storeGetHelpOrderId(orderId)
 			this.props.userLoadOrder(orderId)
 				.then(this.orderLoadComplete)
 				.catch(this.fetchError)
@@ -64,7 +65,6 @@ class GetHelp extends PureComponent {
 				return acc
 			}, [])
 
-		this.props.storeGetHelpOrderId(orderId)
 		this.props.recipesLoadRecipesById(recipeIds)
 			.then(this.fetchSuccess)
 			.catch(this.fetchError)

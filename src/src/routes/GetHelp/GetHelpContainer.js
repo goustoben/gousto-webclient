@@ -7,10 +7,10 @@ import recipeActions from 'actions/recipes'
 import GetHelp from './GetHelp'
 
 const mapStateToProps = (state, ownProps) => ({
-		location: ownProps.location,
-		orders: state.user.get('orders').toJS(),
-		recipes: state.recipes.toJS(),
-	})
+	location: ownProps.location,
+	orders: state.user.get('orders').toJS(),
+	recipes: state.recipes.toJS(),
+})
 
 const GetHelpContainer = connect(mapStateToProps, {
 	storeGetHelpOrderId,
