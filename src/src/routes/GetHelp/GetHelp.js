@@ -27,7 +27,7 @@ class GetHelp extends PureComponent {
 				.then(this.orderLoadComplete)
 				.catch(this.fetchError)
 		} else {
-			fetchError()
+			this.fetchError()
 		}
 	}
 
