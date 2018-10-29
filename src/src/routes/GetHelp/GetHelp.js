@@ -19,15 +19,14 @@ class GetHelp extends PureComponent {
 	}
 
 	componentDidMount() {
-		const { orders } = this.props
 		const orderId = this.getOrderId(this.props)
 
-		if (orders && orderId && Object.keys(orders).length < 1) {
+		if (!orderId) {
+			this.fetchError()
+		} else {
 			this.props.userLoadOrder(orderId)
 				.then(this.orderLoadComplete)
 				.catch(this.fetchError)
-		} else {
-			this.fetchError()
 		}
 	}
 
