@@ -70,9 +70,9 @@ class Refund extends PureComponent {
 	onAcceptOffer = async ({ user, order, selectedItems }, { refundAmount }) => {
 		try {
 			const response = await setComplaint(user.accessToken, {
-				user_id: user.id,
+				customer_id: user.id,
 				order_id: order.id,
-				type: 'test',
+				type: 'credit',
 				value: refundAmount,
 				ingredients: selectedItems
 			})

@@ -26,6 +26,8 @@ class GetHelp extends PureComponent {
 			this.props.userLoadOrder(orderId)
 				.then(this.orderLoadComplete)
 				.catch(this.fetchError)
+		} else {
+			fetchError()
 		}
 	}
 
@@ -49,7 +51,7 @@ class GetHelp extends PureComponent {
 		this.setState({
 			...this.state,
 			didFetchError: true,
-			isFetching: true,
+			isFetching: false,
 		})
 	}
 
