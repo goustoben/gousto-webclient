@@ -22,7 +22,7 @@ describe('<Refund />', () => {
 
 	beforeEach(() => {
 		fetchPromise = Promise.resolve({
-			data: { refundValue: 7.77 }
+			data: { value: 7.77 }
 		})
 		fetch.mockImplementation(() => fetchPromise)
 		wrapper =  mount(

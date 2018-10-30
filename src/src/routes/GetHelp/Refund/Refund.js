@@ -37,7 +37,7 @@ class Refund extends PureComponent {
 	}
 
 	state = {
-		refundAmount: 0,
+		refund: { value: 0, type: 'credit' },
 		isFetching: true,
 		didFetchError: false,
 	}
@@ -49,24 +49,28 @@ class Refund extends PureComponent {
 	getRefund = async () => {
 		try {
 			const response = await fetchRefundAmount()
+			const { value, type } = response.data
 
 			this.setState({
 				...this.state,
 				isFetching: false,
-				refundAmount: response.data.refundValue
+				refund: {
+					type,
+					value
+				}
 			})
 		} catch (err) {
 			this.requestFailure()
 		}
 	}
 
-	onAcceptOffer = async ({ user, order, issues }, { refundAmount }) => {
+	onAcceptOffer = async ({ user, order, issues }, { refund }) => {
 		try {
 			const response = await setComplaint(user.accessToken, {
 				customer_id: user.id,
 				order_id: order.id,
-				type: 'credit',
-				value: refundAmount,
+				type: refund.type,
+				value: refund.value,
 				issues
 			})
 
@@ -90,17 +94,18 @@ class Refund extends PureComponent {
 		const { content } = this.props
 		const {
 			isFetching,
-			refundAmount,
+			refund,
 			didFetchError
 		} = this.state
+
 		const infoBodyWithAmount = replaceWithValues(
 			content.infoBody, {
-				refundAmount: refundAmount.toFixed(2)
+				refundAmount: refund.value.toFixed(2)
 			}
 		)
 		const button2WithAmount = replaceWithValues(
 			content.button2, {
-				refundAmount: refundAmount.toFixed(2)
+				refundAmount: refund.value.toFixed(2)
 			}
 		)
 		const getHelpLayoutbody = (isFetching || didFetchError)
