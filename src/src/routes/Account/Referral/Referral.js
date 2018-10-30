@@ -69,7 +69,7 @@ class Referral extends React.Component {
 					<UserRAFLink className={css.rafLink} />
 					<div className={css.socialButtons}>
 						<SocialButton text="Email" type="email" onClick={this.openEmailModal}/>
-						<Overlay open={this.state.isEmailModalOpen}>
+						<Overlay open={this.state.isEmailModalOpen} from="top">
 							<ReferAFriendModal
 								onClose={this.closeEmailModal}
 							/>

@@ -40,11 +40,6 @@
  }
 }
 
-.errorMsg {
-	composes: msg;
-	color: red;
-}
-
 .emailInput {
 	margin-bottom: 15px;
 }

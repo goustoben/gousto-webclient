@@ -8,6 +8,7 @@ import TextInput from 'Form/Input'
 import ModalPanel from 'Modal/ModalPanel'
 import { Button } from 'goustouicomponents'
 import { validateEmail } from 'utils/auth'
+import InputError from 'Form/InputError'
 
 
 class ReferAFriendModal extends React.Component {
@@ -67,10 +68,10 @@ class ReferAFriendModal extends React.Component {
 				closePortal={this.props.onClose}
 				className={css.modal}
 				containerClassName={css.modalContainer}
+				disableOverlay
 			>
 				<div className={css.modalContent}>
 					<h4 className={css.heading}>Refer a friend - Get £15</h4>
-					<span className={css.errorMsg}>{this.state.errorMessage}</span>
 					{
 						this.state.showEmailReferralForm ? (
 							<div>
@@ -86,6 +87,7 @@ class ReferAFriendModal extends React.Component {
 												onChange={this.handleEmailChange}
 												value={this.state.email}
 											/>
+											<InputError>{this.state.errorMessage}</InputError>
 										</div>
 										<div className={css.button}>
 											<Button
