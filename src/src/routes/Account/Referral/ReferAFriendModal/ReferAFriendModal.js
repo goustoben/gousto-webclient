@@ -101,12 +101,12 @@ class ReferAFriendModal extends React.Component {
 							</div>
 						) : (
 							<div >
-								<p className={css.emailSentNotification}>Email sent!</p>
+								<p className={css.emailSentNotification}>An invitation has been sent to your friend!</p>
 								<Button
 									onClick={this.showEmailReferralForm}
 									className={css.button}
 								>
-									Invite more friends
+									Invite another friend
 								</Button>
 							</div>)
 					}

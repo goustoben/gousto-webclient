@@ -87,7 +87,7 @@ describe('ReferAFriendModal', () => {
 
 					it('should transition into email sent view', () => {
 						expect(wrapper.state().showEmailReferralForm).toBe(false)
-						expect(wrapper.find(Button).html()).toContain('Invite more friends')
+						expect(wrapper.find(Button).html()).toContain('Invite another friend')
 					})
 
 					it('should call userReferFriends with given email', () => {
