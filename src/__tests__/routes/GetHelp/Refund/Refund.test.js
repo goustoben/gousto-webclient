@@ -44,7 +44,6 @@ describe('<Refund />', () => {
 			expect(getHelpLayout.prop('body')).toContain('We would like to offer you £7.77')
 			expect(BottomBar).toHaveLength(1)
 			expect(BottomBar.find('BottomButton')).toHaveLength(1)
-			expect(BottomBar.find('BottomBar')).toHaveLength(1)
 		})
 
 		test('header is rendering correctly', () => {
