@@ -2,6 +2,7 @@ import queryString from 'query-string'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import actionTypes from './actionTypes'
 import authActions from './auth'
+import { featureSet } from './features'
 import statusActions from './status'
 import orderActions from './order'
 import userActions from './user'
@@ -80,13 +81,12 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 	return destination
 }
 
-const logoutRedirect = () => {
-	const pathName = documentLocation().pathname
-	if (pathName.indexOf('/menu') === -1 && pathName !== '/') {
+const logoutRedirect = () => (
+	(dispatch) => {
 		redirect('/')
+		dispatch(featureSet('justforyou', recommendations, false))
 	}
-}
-
+)
 export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 	const location = documentLocation()
 	const onCheckout = location.pathname.includes('check-out')
