@@ -81,12 +81,13 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 	return destination
 }
 
-const logoutRedirect = () => (
-	(dispatch) => {
-		redirect('/')
+const logoutRedirect = () => {
+	redirect('/')
+
+	return (dispatch) => {
 		dispatch(featureSet('justforyou', recommendations, false))
 	}
-)
+}
 export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 	const location = documentLocation()
 	const onCheckout = location.pathname.includes('check-out')
