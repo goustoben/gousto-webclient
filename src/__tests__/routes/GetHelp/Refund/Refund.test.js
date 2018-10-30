@@ -32,10 +32,7 @@ describe('<Refund />', () => {
 				order={{ id: '0' }}
 			/>
 		)
-		// fetchPromise.then(() => {
-		// 	wrapper.update()
-		// 	getHelpLayout = wrapper.find('GetHelpLayout')
-		// })
+
 		getHelpLayout = wrapper.find('GetHelpLayout')
 	})
 
