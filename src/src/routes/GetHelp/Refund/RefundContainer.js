@@ -10,16 +10,10 @@ const mapStateToProps = (state) => {
 	const recipes = state.recipes.toJS()
 
 	// POC
-	const issues = Object.keys(recipes).reduce((acc, id) => {
-		const recipe = recipes[id]
-
-		acc.push({
-			ingredient_id: recipe.ingredients[0].id,
-			category_id: 98
-		})
-
-		return acc
-	}, []).splice(0, 1)
+	const issues = Object.keys(recipes).map((recipeId) => ({
+		ingredient_id: recipes[recipeId].ingredients[0].id,
+		category_id: 98,
+	})).splice(0, 1)
 
 	return {
 		user: {

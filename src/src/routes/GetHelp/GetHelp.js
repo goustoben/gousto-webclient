@@ -59,11 +59,7 @@ class GetHelp extends PureComponent {
 		const orderId = this.getOrderId(this.props)
 		const order = this.props.orders[orderId]
 		const recipeIds = order.recipeItems
-			.reduce((acc, recipe) => {
-				acc.push(recipe.recipeId)
-
-				return acc
-			}, [])
+			.map((recipe) => recipe.recipeId)
 
 		this.props.recipesLoadRecipesById(recipeIds)
 			.then(this.fetchSuccess)

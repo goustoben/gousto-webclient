@@ -2,7 +2,7 @@ import actionTypes from 'actions/actionTypes'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import { isAdmin } from 'utils/auth'
 
-const initialState = () => Immutable.fromJS({
+export const initialState = () => Immutable.fromJS({
 	accessToken: '',
 	refreshToken: '',
 	isAuthenticated: false,
