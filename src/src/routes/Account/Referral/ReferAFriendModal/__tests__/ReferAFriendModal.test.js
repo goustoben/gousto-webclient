@@ -2,6 +2,7 @@ import ReferAFriendModal from '../ReferAFriendModal'
 import React from 'react'
 import { shallow } from 'enzyme'
 import TextInput from 'Form/Input'
+import InputError from 'Form/InputError'
 import { Button } from 'goustouicomponents'
 import config from 'config/home'
 
@@ -60,7 +61,7 @@ describe('ReferAFriendModal', () => {
 					})
 
 					it('should display error message', () => {
-						expect(wrapper.find('.errorMsg').text()).toEqual(errorMessage)
+						expect(wrapper.find(InputError).html()).toContain(errorMessage)
 					})
 				})
 			})

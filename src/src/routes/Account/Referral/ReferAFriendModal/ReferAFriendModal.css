@@ -9,18 +9,18 @@
 }
 
 .modal {
-	position: relative !important;
-	left: inherit !important;
-	top: inherit !important;
-	transform: inherit !important;
-	width: 60% !important;
-	margin: auto !important;
-	box-shadow: none !important;
+	position: relative;
+	left: inherit;
+	top: inherit;
+	transform: inherit;
+	width: 60%;
+	margin: auto;
+	box-shadow: none;
 	margin-top: 80px;
 	max-width: 650px;
-	border-radius: 2px !important;
+	border-radius: 2px;
 @media ScreenXSMax {
-	width: 98% !important;
+	width: 98%;
 }
 }
 
@@ -38,11 +38,6 @@
 &:first-letter {
 	 text-transform: capitalize;
  }
-}
-
-.errorMsg {
-	composes: msg;
-	color: red;
 }
 
 .emailInput {
