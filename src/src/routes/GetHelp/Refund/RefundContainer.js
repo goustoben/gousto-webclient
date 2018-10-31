@@ -5,7 +5,7 @@ import { selectOrderIssue } from 'actions/getHelp'
 import Refund from './Refund'
 
 const mapStateToProps = (state) => {
-	const { auth, getHelp } = state
+	const { auth, user, getHelp } = state
 	const order = getHelp.get('order').toJS()
 	const recipes = state.recipes.toJS()
 
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
 
 	return {
 		user: {
-			id: auth.get('id'),
+			id: user.get('id'),
 			accessToken: auth.get('accessToken'),
 		},
 		order,

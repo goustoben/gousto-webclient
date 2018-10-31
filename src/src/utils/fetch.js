@@ -38,9 +38,18 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
 			requestUrl += `?${queryString}`
 		}
 	} else {
-		body = qs.stringify(requestData)
-		if (!requestHeaders['Content-Type']) {
-			requestHeaders = { ...requestHeaders, 'Content-Type': 'application/x-www-form-urlencoded' }
+		const contentType = requestHeaders['Content-Type']
+		const isContentTypeJSON = (contentType === 'application/json')
+
+		body = (isContentTypeJSON)
+			? JSON.stringify(requestData)
+			: qs.stringify(requestData)
+
+		if (!contentType) {
+			requestHeaders = {
+				...requestHeaders,
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
 		}
 	}
 
