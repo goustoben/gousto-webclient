@@ -122,7 +122,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 					await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
 				}
 			}
-			if (!getState().features.get('justforyou')) {
+			if (!getState().features.get('justforyou').get('value')) {
 				dispatch(loadRecommendations())
 			}
 			setTimeout(() => {
