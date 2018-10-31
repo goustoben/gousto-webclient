@@ -6,6 +6,7 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 
 import recipesReducer from 'reducers/recipes'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
+import contentReducer from 'reducers/content'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import { fetchRecipes } from 'apis/recipes'
 import { fetchOrder } from 'apis/orders'
@@ -20,18 +21,19 @@ describe('<GetHelpContainer />', () => {
 		let store
 		beforeAll(() => {
 			const initialState = {
-				getHelp: getHelpInitialState,
-				user: userDefaultState,
 				auth: authDefaultState(),
-				recipes: Map({})
+				getHelp: getHelpInitialState,
+				recipes: Map({}),
+				user: userDefaultState,
 			}
 
 			store = createStore(
 				combineReducers(Object.assign(
 					{},
 					{ getHelp },
-					{ ...userReducer },
+					{ ...contentReducer },
 					{ ...authReducer },
+					{ ...userReducer },
 					{ recipes: recipesReducer.recipes },
 				)),
 				initialState,

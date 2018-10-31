@@ -11,9 +11,14 @@ const mapStateToProps = (state, ownProps) => ({
 	orders: state.user.get('orders').toJS(),
 	recipes: state.recipes.toJS(),
 	content: {
-		title: 'Get help with your box',
-		errorBody: 'There was a problem in getting your default. Please contact us below, or try again later.',
-		button1: 'Contact Us',
+		content: {
+			title: state.content.get('get-help_default_pageheader_header')
+			|| 'Get help with your box',
+			errorBody: state.content.get('get-help_default_pagecontent_errorbody')
+			|| 'There was a problem in getting your default. Please contact us below, or try again later.',
+			button1: state.content.get('get-help_default_pagecontent_button1')
+			|| 'Contact Us',
+		}
 	}
 })
 
