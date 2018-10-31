@@ -80,6 +80,12 @@ describe('fetchData', () => {
 					auth: Immutable.Map({
 						isAuthenticated: true,
 					}),
+					features: Immutable.fromJS({
+						justforyou: {
+							experiment: false,
+							value: false,
+						}
+					})
 				}))
 
 				fetchData(fetchDataParams)
