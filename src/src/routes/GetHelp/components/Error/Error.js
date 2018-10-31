@@ -17,11 +17,13 @@ const propTypes = {
 }
 
 const defaultProps = {
-	button1: 'Contact Us',
-	errorBody: `There was a problem in getting your default.
-	Please contact us below, or try again later.`,
-	infoBody: '',
-	title: 'Get help with your box',
+	content: {
+		button1: 'Contact Us',
+		errorBody: `There was a problem in getting your default.
+		Please contact us below, or try again later.`,
+		infoBody: '',
+		title: 'Get help with your box',
+	},
 }
 
 const Error = ({ hasError, content, children }) => {

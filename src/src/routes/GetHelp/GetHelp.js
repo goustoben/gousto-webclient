@@ -11,6 +11,12 @@ class GetHelp extends PureComponent {
 			}),
 		}),
 		children: PropTypes.node.isRequired,
+		content: PropTypes.shape({
+			button1: PropTypes.string,
+			errorBody: PropTypes.string,
+			infoBody: PropTypes.string,
+			title: PropTypes.string,
+		}),
 	}
 
 	state = {
