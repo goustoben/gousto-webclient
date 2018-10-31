@@ -81,7 +81,12 @@ class GetHelp extends PureComponent {
 					}]}
 				/>
 				<div className={css.getHelpContent}>
-					{!isFetching && <Error hasError={didFetchError}>{children}</Error>}
+					{!isFetching && <Error
+						content={this.props.content}
+						hasError={didFetchError}
+					>
+						{children}
+					</Error>}
 				</div>
 			</div>
 		)
