@@ -11,7 +11,7 @@ import { validateEmail } from 'utils/auth'
 import InputError from 'Form/InputError'
 
 
-export class ReferAFriendModal extends React.PureComponent {
+class ReferAFriendModal extends React.PureComponent {
 	static propTypes = {
 		onClose: PropTypes.func.isRequired,
 		userReferAFriend: PropTypes.func.isRequired,
@@ -117,3 +117,5 @@ export class ReferAFriendModal extends React.PureComponent {
 		)
 	}
 }
+
+export { ReferAFriendModal }
