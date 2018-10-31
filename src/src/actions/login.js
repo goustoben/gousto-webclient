@@ -85,7 +85,7 @@ const logoutRedirect = () => {
 	redirect('/')
 
 	return (dispatch) => {
-		dispatch(featureSet('justforyou', recommendations, false))
+		dispatch(featureSet('justforyou', false, false))
 	}
 }
 export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
