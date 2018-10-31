@@ -50,7 +50,8 @@ const filters = {
 			case actionTypes.FILTERS_RESET: {
 				return previousState
 			}
-
+			case actionTypes.USER_LOGGED_OUT:
+				return initialState()
 			default: {
 				return state
 			}
