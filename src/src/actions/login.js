@@ -81,13 +81,13 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 	return destination
 }
 
-const logoutRedirect = () => {
-	redirect('/')
-
-	return (dispatch) => {
+const logoutRedirect = () => (
+	(dispatch) => {
+		redirect('/')
 		dispatch(featureSet('justforyou', false, false))
 	}
-}
+)
+
 export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 	const location = documentLocation()
 	const onCheckout = location.pathname.includes('check-out')
@@ -141,7 +141,7 @@ const postLogoutSteps = () => (
 		dispatch({ type: actionTypes.BASKET_RESET })
 		dispatch({ type: actionTypes.USER_LOGGED_OUT }) // resets auth state
 		if (globals.client) {
-			logoutRedirect()
+			dispatch(logoutRedirect())
 		}
 	}
 )
