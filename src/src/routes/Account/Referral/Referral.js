@@ -42,11 +42,7 @@ const fbMsgShare = (referralLink) => {
 
 
 class Referral extends React.Component {
-	constructor() {
-		super()
-
-		this.state = { isEmailModalOpen: false }
-	}
+	state = { isEmailModalOpen: false }
 
 	openEmailModal = () => {
 		this.setState({ isEmailModalOpen: true })

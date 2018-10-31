@@ -19,9 +19,9 @@
 	margin-top: 80px;
 	max-width: 650px;
 	border-radius: 2px;
-@media ScreenXSMax {
-	width: 98%;
-}
+	@media ScreenXSMax {
+		width: 98%;
+	}
 }
 
 .modalContainer {

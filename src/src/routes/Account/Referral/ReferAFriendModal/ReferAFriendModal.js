@@ -11,7 +11,7 @@ import { validateEmail } from 'utils/auth'
 import InputError from 'Form/InputError'
 
 
-class ReferAFriendModal extends React.Component {
+class ReferAFriendModal extends React.PureComponent {
 	static propTypes = {
 		onClose: PropTypes.func.isRequired,
 		userReferAFriend: PropTypes.func.isRequired,
@@ -34,10 +34,9 @@ class ReferAFriendModal extends React.Component {
 	handleEmailChange = (value) => {
 		this.setState({ email: value })
 		if (value.length > 0 && validateEmail(value)) {
-			this.setState({ isEmailValid: true })
-		} else {
-			this.setState({ isEmailValid: false })
+			return this.setState({ isEmailValid: true })
 		}
+		this.setState({ isEmailValid: false })
 	}
 
 	handleSubmit = (event) => {
@@ -63,9 +62,12 @@ class ReferAFriendModal extends React.Component {
 	}
 
 	render() {
+		const { showEmailReferralForm, email, errorMessage } = this.state
+		const { onClose } = this.props
+
 		return (
 			<ModalPanel
-				closePortal={this.props.onClose}
+				closePortal={onClose}
 				className={css.modal}
 				containerClassName={css.modalContainer}
 				disableOverlay
@@ -73,7 +75,7 @@ class ReferAFriendModal extends React.Component {
 				<div className={css.modalContent}>
 					<h4 className={css.heading}>Refer a friend - Get £15</h4>
 					{
-						this.state.showEmailReferralForm ? (
+						showEmailReferralForm ? (
 							<div>
 								<p>Enter your friend's email below:</p>
 								<Form onSubmit={this.handleSubmit}>
@@ -85,9 +87,9 @@ class ReferAFriendModal extends React.Component {
 												textAlign="left"
 												placeholder="Your friend's email"
 												onChange={this.handleEmailChange}
-												value={this.state.email}
+												value={email}
 											/>
-											<InputError>{this.state.errorMessage}</InputError>
+											<InputError>{errorMessage}</InputError>
 										</div>
 										<div className={css.button}>
 											<Button
@@ -116,4 +118,4 @@ class ReferAFriendModal extends React.Component {
 	}
 }
 
-export default ReferAFriendModal
+export ReferAFriendModal
