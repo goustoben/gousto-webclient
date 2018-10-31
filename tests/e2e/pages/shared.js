@@ -238,8 +238,8 @@ module.exports = {
 							.openBurgerMenu()
 							.burgerMenuNavigateLogout()
 					} else {
-						this.waitForElementVisible('@logoutButton')
-							.click('@logoutButton')
+						this.waitForElementVisible('@logoutButton', 15000)
+						.click('@logoutButton')
 					}
 				},
 				checkLoginErrMsg: function (msg) {
@@ -341,12 +341,12 @@ module.exports = {
 					if (this.api.globals.browser === 'mobile') {
 						const shared = this.api.page.shared()
 
-						shared.section.body.click('@modalClose')
 						shared.section.body.loginModalClosed()
 						this.openBurgerMenu()
-							.waitForElementVisible('@burgerMenuLogin')
+							.waitForElementVisible('@burgerMenuLogin', 15000)
 					} else {
-					return this.expect.element('@loginButton').to.be.visible.before()
+						return this.waitForElementPresent('@loginButton',1000,'Logout element is visible')
+						.assert.elementPresent('@loginButton')
 					}
 				}
 			}],
