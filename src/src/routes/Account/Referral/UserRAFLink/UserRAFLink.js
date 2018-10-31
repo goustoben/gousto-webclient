@@ -6,12 +6,8 @@ import actions from 'actions/user'
 import routes from 'config/routes'
 
 class UserRAFLink extends React.PureComponent {
+	state = { copiedMessageVisible: false }
 
-	constructor(props) {
-		super(props)
-
-		this.state = { copiedMessageVisible: false }
-	}
 	static propTypes = {
 		referralCode: PropTypes.string,
 		className: PropTypes.string,
