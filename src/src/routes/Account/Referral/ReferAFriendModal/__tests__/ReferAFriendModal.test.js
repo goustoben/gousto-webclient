@@ -1,4 +1,4 @@
-import ReferAFriendModal from '../ReferAFriendModal'
+import { ReferAFriendModal } from '../ReferAFriendModal'
 import React from 'react'
 import { shallow } from 'enzyme'
 import TextInput from 'Form/Input'
