@@ -1,6 +1,6 @@
 import config from 'config/head/gAnalitics'
 
-// const envTrackingId = config[__ENV__] // eslint-disable-line no-underscore-dangle
+const envTrackingId = config[__ENV__] // eslint-disable-line no-underscore-dangle
 
 function ga() {
   return (`<!-- Google Analytics -->
@@ -9,7 +9,7 @@ function ga() {
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', ${config.production}, 'auto')
+  ga('create', '${envTrackingId || config.radishes}', 'auto')
   ga('require', 'ec')
   </script>
   <!-- End Google Analytics -->`)
