@@ -30,7 +30,7 @@ const defaultFeatures = () => ({
 		experiment: false,
 		value: false,
 	},
-	justforyou: {
+	justForYou: {
 		experiment: false,
 		value: false,
 	}

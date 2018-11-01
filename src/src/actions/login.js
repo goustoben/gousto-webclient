@@ -84,7 +84,7 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 const logoutRedirect = () => (
 	(dispatch) => {
 		redirect('/')
-		dispatch(featureSet('justforyou', false, false))
+		dispatch(featureSet('justForYou', false, false))
 	}
 )
 
@@ -122,7 +122,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 					await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
 				}
 			}
-			if (!getState().features.get('justforyou').get('value')) {
+			if (!getState().features.getIn(['justForYou', 'value'])) {
 				dispatch(loadRecommendations())
 			}
 			setTimeout(() => {

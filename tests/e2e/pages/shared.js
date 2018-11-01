@@ -238,7 +238,7 @@ module.exports = {
 							.openBurgerMenu()
 							.burgerMenuNavigateLogout()
 					} else {
-						this.waitForElementVisible('@logoutButton', 15000)
+						this.waitForElementVisible('@logoutButton')
 						.click('@logoutButton')
 					}
 				},
@@ -345,7 +345,7 @@ module.exports = {
 						this.openBurgerMenu()
 							.waitForElementVisible('@burgerMenuLogin', 15000)
 					} else {
-						return this.waitForElementPresent('@loginButton',1000,'Logout element is visible')
+						return this.waitForElementPresent('@loginButton')
 						.assert.elementPresent('@loginButton')
 					}
 				}

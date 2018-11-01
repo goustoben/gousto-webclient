@@ -54,7 +54,7 @@ function mapStateToProps(state, ownProps) {
 		features: state.features,
 		menuBrowseCTAShow: state.menuBrowseCTAShow,
 		boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
-		hasRecommendations: state.features.getIn(['justforyou', 'value']),
+		hasRecommendations: state.features.getIn(['justForYou', 'value']),
 		query: ownProps.location && ownProps.location.query ? ownProps.location.query : {},
 		storeOrderId: state.basket.get('orderId'),
 		orderId,
