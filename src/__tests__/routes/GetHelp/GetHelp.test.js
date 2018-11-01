@@ -1,8 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Helmet from 'react-helmet'
-
 import GetHelp from 'routes/GetHelp/GetHelp'
+import { client as routes } from 'config/routes'
 
 describe('<GetHelp />', () => {
 	describe('rendering', () => {
@@ -83,6 +83,33 @@ describe('<GetHelp />', () => {
 
 			expect(wrapper.find('Error')).toHaveLength(0)
 			expect(wrapper.contains(<div className="test" />)).toBe(false)
+		})
+
+		test('when path is Contact Us page, data is not fetched', () => {
+			storeGetHelpOrderIdSpy.mockReset()
+			userLoadOrderSpy.mockReset()
+
+			const location = {
+				pathname: `${routes.getHelp.index}/${routes.getHelp.contact}`
+			}
+
+			wrapper = mount(
+				<GetHelp
+					location={location}
+					orders={{}}
+					recipes={{}}
+					recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+					storeGetHelpOrderId={storeGetHelpOrderIdSpy}
+					userLoadOrder={userLoadOrderSpy}
+				>
+					<div className="test" />
+				</GetHelp>
+			)
+
+			expect(storeGetHelpOrderIdSpy).not.toHaveBeenCalled()
+			expect(userLoadOrderSpy).not.toHaveBeenCalled()
+
+			expect(wrapper.contains(<div className="test" />)).toBe(true)
 		})
 	})
 

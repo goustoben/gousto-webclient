@@ -15,7 +15,7 @@ const fetchRefundAmount = () => {
 const setComplaint = (accessToken, body) => {
 	const url = (__ENV__ === 'local')
 		? `${SSR_URL_LOCAL}/ssr/refund`
-		: `${endpoint('ssr', routes.version.ssr)}/refund`
+		: `${endpoint('ssr', routes.version.ssr)}/ssr/refund`
 
 	return fetch(accessToken, url, body, 'POST', 'default', {
 		'Content-Type': 'application/json'
