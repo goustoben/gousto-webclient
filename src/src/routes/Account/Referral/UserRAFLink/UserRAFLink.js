@@ -64,4 +64,4 @@ class UserRAFLink extends React.PureComponent {
 	}
 }
 
-export default UserRAFLink
+export { UserRAFLink }

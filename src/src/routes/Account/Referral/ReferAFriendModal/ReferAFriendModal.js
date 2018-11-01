@@ -34,9 +34,10 @@ class ReferAFriendModal extends React.PureComponent {
 	handleEmailChange = (value) => {
 		this.setState({ email: value })
 		if (value.length > 0 && validateEmail(value)) {
-			return this.setState({ isEmailValid: true })
+			this.setState({ isEmailValid: true })
+		} else {
+			this.setState({ isEmailValid: false })
 		}
-		this.setState({ isEmailValid: false })
 	}
 
 	handleSubmit = (event) => {
