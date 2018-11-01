@@ -1,3 +1,5 @@
+@value ScreenXXSMax from 'styles/screenSizes.css';
+
 .center {
 	display: flex;
 	width: 100%;
@@ -7,4 +9,13 @@
 .loading {
 	width: 100px;
 	height: 100px;
+}
+
+.button {
+	align-self: center;
+	flex-grow: 0.4;
+
+	@media ScreenXXSMax {
+		align-self: center;
+	}
 }
