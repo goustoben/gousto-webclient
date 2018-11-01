@@ -39,7 +39,7 @@ const Error = ({ hasError, content, children }) => {
 					<BottomButton
 						color="secondary"
 						url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-						clientRouted
+						clientRouted={false}
 					>
 						{content.button1}
 					</BottomButton>

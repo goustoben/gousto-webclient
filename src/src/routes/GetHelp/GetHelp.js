@@ -1,7 +1,13 @@
 import Helmet from 'react-helmet'
 import React, { PropTypes, PureComponent } from 'react'
 import { Error } from './components/Error'
+import { client as routes } from 'config/routes'
 import css from './GetHelp.css'
+
+const skipFetchByRoute = ({ pathname }) => ([
+	`${routes.getHelp.index}/${routes.getHelp.contact}`,
+	`${routes.getHelp.index}/${routes.getHelp.confirmation}`,
+].includes(pathname))
 
 class GetHelp extends PureComponent {
 	static propTypes = {
@@ -27,14 +33,19 @@ class GetHelp extends PureComponent {
 	componentDidMount() {
 		const orderId = this.getOrderId(this.props)
 
-		if (!orderId) {
-			this.fetchError()
-		} else {
-			this.props.storeGetHelpOrderId(orderId)
-			this.props.userLoadOrder(orderId)
-				.then(this.orderLoadComplete)
-				.catch(this.fetchError)
+		if (skipFetchByRoute(this.props.location)) {
+			return this.fetchSuccess()
 		}
+
+		if (!orderId) {
+			return this.fetchError()
+		}
+
+		this.props.storeGetHelpOrderId(orderId)
+
+		return this.props.userLoadOrder(orderId)
+			.then(this.orderLoadComplete)
+			.catch(this.fetchError)
 	}
 
 	getOrderId({ location }) {
