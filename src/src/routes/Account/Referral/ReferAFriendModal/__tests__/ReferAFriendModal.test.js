@@ -86,11 +86,11 @@ describe('ReferAFriendModal', () => {
 					})
 
 					it('should transition into email sent view', () => {
-						expect(wrapper.state().showEmailReferralForm).toBe(false)
+						expect(wrapper.state().emailSent).toBe(true)
 						expect(wrapper.find(Button).html()).toContain('Invite another friend')
 					})
 
-					it('should call userReferFriends with given email', () => {
+					it('should call userReferAFriend with given email', () => {
 						expect(userReferAFriend).toHaveBeenCalledWith('valid@email.com')
 					})
 				})
@@ -101,13 +101,18 @@ describe('ReferAFriendModal', () => {
 	describe('email sent view', () => {
 		beforeEach(() => {
 			wrapper.setState({
-				showReferralForm: false,
+				emailSent: true,
 			})
 		})
 
-		describe('when invite more friends `Button` is pressed', () => {
+		describe('when invite another friend `Button` is pressed', () => {
+			beforeEach(() => {
+				const button = wrapper.find(Button)
+				button.simulate('click', { preventDefault: () => {} })
+			})
+
 			it('should transition into initial view', () => {
-				expect(wrapper.state().showEmailReferralForm).toBe(true)
+				expect(wrapper.state().emailSent).toBe(false)
 				expect(wrapper.find(Button).html()).toContain('Send Email')
 			})
 		})
