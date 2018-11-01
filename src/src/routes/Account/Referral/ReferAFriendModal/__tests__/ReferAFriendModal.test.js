@@ -86,7 +86,7 @@ describe('ReferAFriendModal', () => {
 					})
 
 					it('should transition into email sent view', () => {
-						expect(wrapper.state().emailSent).toBe(true)
+						expect(wrapper.state().isEmailSent).toBe(true)
 						expect(wrapper.find(Button).html()).toContain('Invite another friend')
 					})
 
@@ -101,7 +101,7 @@ describe('ReferAFriendModal', () => {
 	describe('email sent view', () => {
 		beforeEach(() => {
 			wrapper.setState({
-				emailSent: true,
+				isEmailSent: true,
 			})
 		})
 
@@ -112,7 +112,7 @@ describe('ReferAFriendModal', () => {
 			})
 
 			it('should transition into initial view', () => {
-				expect(wrapper.state().emailSent).toBe(false)
+				expect(wrapper.state().isEmailSent).toBe(false)
 				expect(wrapper.find(Button).html()).toContain('Send Email')
 			})
 		})
