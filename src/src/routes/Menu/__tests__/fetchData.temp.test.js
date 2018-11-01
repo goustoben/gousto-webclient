@@ -61,7 +61,7 @@ describe('fetchData', () => {
 			test('should not dispatch a loadRecommendations request', () => {
 				getState.mockReturnValue(createState({
 					features: Immutable.Map({
-						justforyou: Immutable.Map({
+						justForYou: Immutable.Map({
 							value: true,
 							experiment: true,
 						}),
@@ -80,6 +80,12 @@ describe('fetchData', () => {
 					auth: Immutable.Map({
 						isAuthenticated: true,
 					}),
+					features: Immutable.fromJS({
+						justForYou: {
+							experiment: false,
+							value: false,
+						}
+					})
 				}))
 
 				fetchData(fetchDataParams)

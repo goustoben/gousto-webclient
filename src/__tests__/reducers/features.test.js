@@ -41,6 +41,10 @@ describe('features reducers', () => {
 				skipRecovery: {
 					experiment: false,
 					value: false,
+				},
+				justForYou: {
+					experiment: false,
+					value: false,
 				}
 			})
 			const result = features.features(state, action)
@@ -72,6 +76,10 @@ describe('features reducers', () => {
 					value: false,
 				},
 				skipRecovery: {
+					experiment: false,
+					value: false,
+				},
+				justForYou: {
 					experiment: false,
 					value: false,
 				}
@@ -113,6 +121,10 @@ describe('features reducers', () => {
 					value: false,
 				},
 				skipRecovery: {
+					experiment: false,
+					value: false,
+				},
+				justForYou: {
 					experiment: false,
 					value: false,
 				}
