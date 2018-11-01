@@ -205,6 +205,15 @@ function checkoutPostSignup() {
 			const password = aboutYou.get('password')
 			const orderId = getState().basket.get('previewOrderId')
 			await dispatch(loginActions.loginUser(email, password, true, orderId))
+			const price = getState().price.get('grossTotal')
+			ga('ec:addImpression', {
+				id: orderId,
+				name: 'Signup',
+				category: 'SignUp',
+				brand: 'Gousto',
+				boxPrice: price,
+			})
+
 		} catch (err) {
 			logger.error(`${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`)
 			dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
