@@ -30,7 +30,7 @@ describe('<Contact />', () => {
 		getHelpLayout = wrapper.find('GetHelpLayout')
 	})
 
-	describe('render', () => {
+	describe('rendering', () => {
 		test('layout is rendering correctly', () => {
 			const BottomBar = getHelpLayout.find('BottomBar')
 

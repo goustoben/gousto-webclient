@@ -6,7 +6,7 @@ import { Item } from 'goustouicomponents'
 import Link from 'Link'
 
 describe('<ItemLink />', () => {
-	describe('render', () => {
+	describe('rendering', () => {
 		const wrapper = mount(
 			<ItemLink
 				label="item-label"
