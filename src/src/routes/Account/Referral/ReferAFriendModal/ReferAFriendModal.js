@@ -19,7 +19,7 @@ class ReferAFriendModal extends React.PureComponent {
 
 	state = {
 		email: '',
-		showEmailReferralForm: true,
+		emailSent: false,
 		isEmailValid: false,
 		errorMessage: ''
 	}
@@ -44,7 +44,7 @@ class ReferAFriendModal extends React.PureComponent {
 		event.preventDefault()
 		if (this.state.isEmailValid) {
 			this.setState({
-				showEmailReferralForm: false,
+				emailSent: true,
 				errorMessage: ''
 			})
 			this.referAFriend()
@@ -56,14 +56,14 @@ class ReferAFriendModal extends React.PureComponent {
 	showEmailReferralForm = () => {
 		this.setState({
 			email: '',
-			showEmailReferralForm: true,
+			emailSent: false,
 			isEmailValid: false,
 			errorMessage: '',
 		})
 	}
 
 	render() {
-		const { showEmailReferralForm, email, errorMessage } = this.state
+		const { emailSent, email, errorMessage } = this.state
 		const { onClose } = this.props
 
 		return (
@@ -76,7 +76,7 @@ class ReferAFriendModal extends React.PureComponent {
 				<div className={css.modalContent}>
 					<h4 className={css.heading}>Refer a friend - Get £15</h4>
 					{
-						showEmailReferralForm ? (
+						!emailSent ? (
 							<div>
 								<p>Enter your friend's email below:</p>
 								<Form onSubmit={this.handleSubmit}>
