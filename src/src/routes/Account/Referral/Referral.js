@@ -20,8 +20,6 @@ const fbShare = (referralLink) => {
 			mobile_iframe: true,
 			href: referralLink,
 			redirect_uri: referralLink,
-			title: 'Get 3 delicious meals for just £9.99!', // TODO WE SHOULD CHANGE THIS MESSAGE
-			description: `Thanks to Gousto, I'm cooking delicious recipes every week, and you can too! Use my personal code ${referralLink} and get ${whatsForThem} off your first box.`,
 		})
 	}
 }
@@ -33,8 +31,6 @@ const fbMsgShare = (referralLink) => {
 			mobile_iframe: true,
 			link: referralLink,
 			redirect_uri: referralLink,
-			// TODO WE SHOULD CHANGE THIS MESSAGE
-			message: `I enjoy cooking Gousto and think you should give it a try! I'm discovering new recipes and getting all the top-quality, pre-measured ingredients to cook them delivered straight to my home. Click on ${referralLink} and get up to £25 off your first box. That's 3 meals for just £9.99, don't miss it!`,
 		})
 	}
 }
