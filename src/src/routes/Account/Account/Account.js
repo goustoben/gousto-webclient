@@ -52,7 +52,6 @@ class Account extends React.PureComponent {
 			'/my-deliveries',
 			'/my-subscription',
 			'/my-details',
-			'/my-referrals',
 			'/rate-my-recipes',
 		]
 
