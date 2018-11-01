@@ -42,7 +42,7 @@ describe('features reducers', () => {
 					experiment: false,
 					value: false,
 				},
-				justForYou: {
+				justforyou: {
 					experiment: false,
 					value: false,
 				}
@@ -79,7 +79,7 @@ describe('features reducers', () => {
 					experiment: false,
 					value: false,
 				},
-				justForYou: {
+				justforyou: {
 					experiment: false,
 					value: false,
 				}
@@ -124,7 +124,7 @@ describe('features reducers', () => {
 					experiment: false,
 					value: false,
 				},
-				justForYou: {
+				justforyou: {
 					experiment: false,
 					value: false,
 				}
