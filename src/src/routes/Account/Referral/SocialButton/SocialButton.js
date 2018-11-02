@@ -10,11 +10,18 @@ const SocialButton = ({ text, type, onClick }) => (
 	</div>
 )
 
-SocialButton.propTypes = {
-	paymentDate: PropTypes.string,
+const propTypes = {
 	text: PropTypes.string,
-	type: PropTypes.string,
+	type: PropTypes.string.isRequired,
 	onClick: PropTypes.func,
 }
 
-export default SocialButton
+const defaultProps = {
+	text: '',
+	onClick: () => {}
+}
+
+SocialButton.propTypes = propTypes
+SocialButton.defaultProps = defaultProps
+
+export { SocialButton }

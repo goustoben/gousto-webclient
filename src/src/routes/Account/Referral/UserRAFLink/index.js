@@ -1,1 +1,1 @@
-export default from './UserRAFLinkContainer'
+export { UserRAFLink } from './UserRAFLink'

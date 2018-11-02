@@ -11,7 +11,7 @@ import { validateEmail } from 'utils/auth'
 import InputError from 'Form/InputError'
 
 
-class ReferAFriendModal extends React.Component {
+class ReferAFriendModal extends React.PureComponent {
 	static propTypes = {
 		onClose: PropTypes.func.isRequired,
 		userReferAFriend: PropTypes.func.isRequired,
@@ -19,7 +19,7 @@ class ReferAFriendModal extends React.Component {
 
 	state = {
 		email: '',
-		showEmailReferralForm: true,
+		wasEmailSent: false,
 		isEmailValid: false,
 		errorMessage: ''
 	}
@@ -44,7 +44,7 @@ class ReferAFriendModal extends React.Component {
 		event.preventDefault()
 		if (this.state.isEmailValid) {
 			this.setState({
-				showEmailReferralForm: false,
+				isEmailSent: true,
 				errorMessage: ''
 			})
 			this.referAFriend()
@@ -56,16 +56,19 @@ class ReferAFriendModal extends React.Component {
 	showEmailReferralForm = () => {
 		this.setState({
 			email: '',
-			showEmailReferralForm: true,
+			isEmailSent: false,
 			isEmailValid: false,
 			errorMessage: '',
 		})
 	}
 
 	render() {
+		const { isEmailSent, email, errorMessage } = this.state
+		const { onClose } = this.props
+
 		return (
 			<ModalPanel
-				closePortal={this.props.onClose}
+				closePortal={onClose}
 				className={css.modal}
 				containerClassName={css.modalContainer}
 				disableOverlay
@@ -73,7 +76,7 @@ class ReferAFriendModal extends React.Component {
 				<div className={css.modalContent}>
 					<h4 className={css.heading}>Refer a friend - Get £15</h4>
 					{
-						this.state.showEmailReferralForm ? (
+						!isEmailSent ? (
 							<div>
 								<p>Enter your friend's email below:</p>
 								<Form onSubmit={this.handleSubmit}>
@@ -85,9 +88,9 @@ class ReferAFriendModal extends React.Component {
 												textAlign="left"
 												placeholder="Your friend's email"
 												onChange={this.handleEmailChange}
-												value={this.state.email}
+												value={email}
 											/>
-											<InputError>{this.state.errorMessage}</InputError>
+											<InputError>{errorMessage}</InputError>
 										</div>
 										<div className={css.button}>
 											<Button
@@ -101,12 +104,12 @@ class ReferAFriendModal extends React.Component {
 							</div>
 						) : (
 							<div >
-								<p className={css.emailSentNotification}>Email sent!</p>
+								<p className={css.isEmailSentNotification}>An invitation has been sent to your friend!</p>
 								<Button
 									onClick={this.showEmailReferralForm}
 									className={css.button}
 								>
-									Invite more friends
+									Invite another friend
 								</Button>
 							</div>)
 					}
@@ -116,4 +119,4 @@ class ReferAFriendModal extends React.Component {
 	}
 }
 
-export default ReferAFriendModal
+export { ReferAFriendModal }

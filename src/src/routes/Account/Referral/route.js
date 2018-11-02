@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router'
-import Referral from './Referral'
+import Referral from './ReferralContainer'
 import config from 'config/routes'
 
 export default (
