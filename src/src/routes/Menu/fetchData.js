@@ -196,11 +196,14 @@ export default async function fetchData({ store, query, params }, force, backgro
 				const collectionId = getCollectionIdWithName(store.getState(), collectionName)
 				if (collectionId) {
 					store.dispatch(actions.filterCollectionChange(collectionId))
-				} else if (store.getState().features.get('justforyou').get('value')) {
-					store.dispatch(collectionFilterChange(store.getState(), getCollectionIdWithName('justforyou')))
 				}
 			})
+		} else if (store.getState().features.get('justforyou').get('value')) {
+			promises = promises.then(() => {
+				store.dispatch(collectionFilterChange(store.getState(), getCollectionIdWithName('justforyou')))
+			})
 		}
+
 
 		if (isAuthenticated && !isAdmin && query.recipes && !store.getState().basket.get('recipes').size) {
 			promises = promises.then(() => {
