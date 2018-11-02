@@ -4,7 +4,6 @@ import logger from 'utils/logger'
 import actionTypes from 'actions/actionTypes'
 
 import { loadRecommendations } from 'actions/recipes'
-import { collectionFilterChange } from 'actions/filters'
 import { getCollectionIdWithName } from 'utils/collections'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
@@ -199,12 +198,7 @@ export default async function fetchData({ store, query, params }, force, backgro
 					store.dispatch(actions.filterCollectionChange(collectionId))
 				}
 			})
-		} else if (store.getState().features.get('justforyou').get('value')) {
-			promises = promises.then(() => {
-				store.dispatch(collectionFilterChange(store.getState(), getCollectionIdWithName('recommendations')))
-			})
 		}
-
 
 		if (isAuthenticated && !isAdmin && query.recipes && !store.getState().basket.get('recipes').size) {
 			promises = promises.then(() => {
