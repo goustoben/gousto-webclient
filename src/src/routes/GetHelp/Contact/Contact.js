@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 
+import { trackClick } from 'utils/getHelp'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
 import { Item, ItemExpandable } from 'goustouicomponents'
@@ -10,8 +11,6 @@ import { BottomButton } from '../components/BottomButton'
 import { client, zendesk } from 'config/routes'
 
 import GetHelpLayout from 'layouts/GetHelpLayout'
-
-const trackClick = (selectContactChannel, channel) => () => selectContactChannel(channel)
 
 const openLiveChat = () => {
 	window.$zopim.livechat.window.show()
