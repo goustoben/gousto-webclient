@@ -204,7 +204,16 @@ function checkoutPostSignup() {
       const email = aboutYou.get('email')
       const password = aboutYou.get('password')
       const orderId = getState().basket.get('previewOrderId')
+      const promoCode = getState().basket.get('promoCode')
       await dispatch(loginActions.loginUser(email, password, true, orderId))
+      const price = getState().price.get('grossTotal')
+      ga('ec:setAction', 'purchase', {
+        id: orderId,
+        revenue: price,
+        shipping: '0.0',
+        coupon: promoCode
+      })
+      ga('send', 'pageview')
     } catch (err) {
       logger.error(`${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`)
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
