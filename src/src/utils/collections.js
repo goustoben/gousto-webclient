@@ -27,10 +27,6 @@ export function getCollectionIdWithName(state, name) {
 	return state.menuCollections
 		.filter(collection => allowUnpub || collection.get('published'))
 		.filter(collection => state.menuCollectionRecipes.get(collection.get('id'), []).size > 0)
-		.find(collection => {
-			console.log('collection name:', collection.get('shortTitle'))
-
-			return (slugify(collection.get('shortTitle')) === name, null, Immutable.Map())
-		})
+		.find(collection => slugify(collection.get('shortTitle')) === name, null, Immutable.Map())
 		.get('id', null)
 }
