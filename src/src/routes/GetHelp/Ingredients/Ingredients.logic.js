@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { client } from 'config/routes'
-import { trackClick } from 'utils/getHelp'
 import { List } from '../components/List'
 import { ItemExpandable } from 'goustouicomponents'
 import { IngredientsPresentation } from './Ingredients.presentation'
@@ -15,7 +14,7 @@ const propTypes = {
 	}).isRequired,
 }
 
-const RecipeList = ({ recipes, selectContactChannel }) => {
+const RecipeList = ({ recipes }) => {
 	const items = Object.keys(recipes).map((id) => {
 		const recipe = recipes[id]
 
@@ -23,7 +22,6 @@ const RecipeList = ({ recipes, selectContactChannel }) => {
 			<ItemExpandable
 				key={recipe.id}
 				label={recipe.title}
-				trackClick={trackClick(selectContactChannel, recipe.title)}
 			>
 				<div />
 			</ItemExpandable>
@@ -37,7 +35,7 @@ const RecipeList = ({ recipes, selectContactChannel }) => {
 	)
 }
 
-const Ingredients = ({ content, recipes, selectContactChannel }) => {
+const Ingredients = ({ content, recipes }) => {
 	const buttonLeftUrl = client.getHelp.index
 	const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
 
@@ -47,10 +45,7 @@ const Ingredients = ({ content, recipes, selectContactChannel }) => {
 			buttonLeftUrl={buttonLeftUrl}
 			buttonRightUrl={buttonRightUrl}
 		>
-			<RecipeList
-				recipes={recipes}
-				selectContactChannel={selectContactChannel}
-			/>
+			<RecipeList recipes={recipes} />
 		</IngredientsPresentation>
 	)
 }

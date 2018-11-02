@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 
 import { Ingredients } from './Ingredients.logic'
-import { selectContactChannel } from 'actions/getHelp'
 
 const mapStateToProps = (state) => ({
 	recipes: state.recipes.toJS(),
@@ -17,9 +16,7 @@ const mapStateToProps = (state) => ({
 	}
 })
 
-const IngredientsContainer = connect(mapStateToProps, {
-	selectContactChannel
-})(Ingredients)
+const IngredientsContainer = connect(mapStateToProps)(Ingredients)
 
 export {
 	IngredientsContainer

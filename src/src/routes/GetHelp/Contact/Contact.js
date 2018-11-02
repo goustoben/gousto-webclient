@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 
-import { trackClick } from 'utils/getHelp'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
 import { Item, ItemExpandable } from 'goustouicomponents'
@@ -15,6 +14,8 @@ import GetHelpLayout from 'layouts/GetHelpLayout'
 const openLiveChat = () => {
 	window.$zopim.livechat.window.show()
 }
+
+const trackClick = (selectContactChannel, channel) => () => selectContactChannel(channel)
 
 const Contact = ({
 	content: {
