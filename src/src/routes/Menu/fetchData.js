@@ -200,7 +200,8 @@ export default async function fetchData({ store, query, params }, force, backgro
 			})
 		} else if (store.getState().features.get('justforyou').get('value')) {
 			promises = promises.then(() => {
-				store.dispatch(collectionFilterChange(store.getState(), getCollectionIdWithName('justforyou')))
+				console.log('in promise')
+				store.dispatch(collectionFilterChange(store.getState(), getCollectionIdWithName('recommendations')))
 			})
 		}
 
