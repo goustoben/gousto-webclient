@@ -19,7 +19,7 @@ module.exports = {
 				menu.navigate()
 				body.login('invalidemail.com', user.password)
 				body.checkLoginErrMsg('The email address you\'ve entered is formatted incorrectly.')
-
+				shared.section.body.click('@modalClose')
 				shared.section.header.checkUserLoggedOut()
 				done()
 			})
@@ -27,7 +27,7 @@ module.exports = {
 				menu.navigate()
 				body.login('', user.password)
 				body.checkLoginErrMsg('Please enter an email address.')
-
+				shared.section.body.click('@modalClose')
 				shared.section.header.checkUserLoggedOut()
 				done()
 			})
@@ -35,7 +35,7 @@ module.exports = {
 				menu.navigate()
 				body.login(user.email, '')
 				body.checkLoginErrMsg('Please enter a password.')
-
+				shared.section.body.click('@modalClose')
 				shared.section.header.checkUserLoggedOut()
 				done()
 			})

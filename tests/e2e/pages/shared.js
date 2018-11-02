@@ -239,7 +239,7 @@ module.exports = {
 							.burgerMenuNavigateLogout()
 					} else {
 						this.waitForElementVisible('@logoutButton')
-							.click('@logoutButton')
+						.click('@logoutButton')
 					}
 				},
 				checkLoginErrMsg: function (msg) {
@@ -341,12 +341,12 @@ module.exports = {
 					if (this.api.globals.browser === 'mobile') {
 						const shared = this.api.page.shared()
 
-						shared.section.body.click('@modalClose')
 						shared.section.body.loginModalClosed()
 						this.openBurgerMenu()
-							.waitForElementVisible('@burgerMenuLogin')
+							.waitForElementVisible('@burgerMenuLogin', 15000)
 					} else {
-					return this.expect.element('@loginButton').to.be.visible.before()
+						return this.waitForElementPresent('@loginButton')
+						.assert.elementPresent('@loginButton')
 					}
 				}
 			}],

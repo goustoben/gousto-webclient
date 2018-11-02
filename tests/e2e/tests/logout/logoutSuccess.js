@@ -19,24 +19,18 @@ module.exports = {
 				menu.navigate()
 				shared.section.body.login(user.customer.email, user.customer.password)
 				shared.section.header.checkUserLoggedIn()
-
-				browser.url(function(result) {
-					browser.expect(result).text.to.contain("/menu")
-
-					done()
-				})
+				browser.assert.urlContains("/menu")
+				done()
 			})
+			browser
 			.perform(function(browser, done) {
+				browser.refresh()
 				shared.section.body.logout()
 				shared.section.header.checkUserLoggedOut()
-
-				browser.url(function(result) {
-					browser.expect(result).text.to.not.contain("/menu")
-
-					done()
-				})
+				browser.assert.title('Food Boxes | Get Fresh Food & Ingredients Delivered | Gousto')
+				done()
 			})
 			.end()
 	},
-	tags: ['login', 'login-success'],
+	tags: ['logout', 'logout-success'],
 };
