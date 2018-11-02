@@ -13,6 +13,12 @@ describe('menu memoized selectors', () => {
 					2: { id: '2', isRecommended: true },
 					3: { id: '3', isRecommended: false },
 				}),
+				features: Immutable.Map({
+						justforyou: Immutable.Map({
+							value: false,
+							experiments: false
+						})
+				})
 			}
 			expect(getIsMenuRecommended(state)).toBe(true)
 		})
@@ -24,6 +30,12 @@ describe('menu memoized selectors', () => {
 					5: { id: '5', isRecommended: false },
 					6: { id: '6', isRecommended: false },
 				}),
+				features: Immutable.Map({
+						justforyou: Immutable.Map({
+							value: false,
+							experiments: false
+						})
+				})
 			}
 			expect(getIsMenuRecommended(state)).toBe(false)
 		})
@@ -40,6 +52,12 @@ describe('menu memoized selectors', () => {
 						id: '1235v3v3',
 						slug: 'test',
 					}
+				}),
+				features: Immutable.Map({
+						justforyou: Immutable.Map({
+							value: false,
+							experiments: false
+						})
 				})
 			}
 			expect(getCurrentCollectionSlug(state)).toBe('test')

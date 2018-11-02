@@ -30,6 +30,12 @@ describe('filters selectors', () => {
 					totalTime: cookingTime,
 					dietTypes: Immutable.Set(dietTypes),
 					dietaryAttributes: Immutable.Set(dietaryAttributes),
+			}),
+			features: Immutable.Map({
+					justforyou: Immutable.Map({
+						value: false,
+						experiments: false
+					})
 			})
 		})
 

@@ -52,6 +52,12 @@ describe('sorting', () => {
 						8: 0,
 					},
 				}),
+				features: Immutable.Map({
+					justforyou: Immutable.Map({
+						value: false,
+						experiments: false
+					})
+				})
 			}
 
 			expect(getOutOfStockRecipes(state)).toEqual(Immutable.List([]))
@@ -133,6 +139,12 @@ describe('sorting', () => {
 					},
 				}),
 				temp: Immutable.Map({}),
+				features: Immutable.Map({
+					justforyou: Immutable.Map({
+						value: false,
+						experiments: false
+					})
+				})
 			}
 			expect(getOutOfStockRecipes(state)).toEqual(Immutable.fromJS([
 				Immutable.fromJS({
@@ -160,6 +172,12 @@ describe('sorting', () => {
 				totalTime: '0',
 				dietTypes: Immutable.Set([]),
 				dietaryAttributes: Immutable.Set([]),
+			}),
+			features: Immutable.Map({
+				justforyou: Immutable.Map({
+					value: false,
+					experiments: false
+				})
 			}),
 			recipes: Immutable.fromJS({
 				327: {
@@ -248,6 +266,12 @@ describe('sorting', () => {
 				totalTime: '0',
 				dietTypes: Immutable.Set([]),
 				dietaryAttributes: Immutable.Set([]),
+			}),
+			features: Immutable.Map({
+				justforyou: Immutable.Map({
+					value: false,
+					experiments: false
+				})
 			}),
 			recipes: Immutable.fromJS({
 				327: {
