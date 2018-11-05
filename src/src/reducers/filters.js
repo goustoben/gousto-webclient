@@ -12,13 +12,16 @@ let previousState = initialState()
 
 const filters = {
 	filters: (state, action) => {
+		console.log('hooray')
 		if (!state) {
 			return initialState()
 		}
 
 		switch (action.type) {
 			case actionTypes.FILTERS_COLLECTION_CHANGE: {
-				return state.set('currentCollectionId', action.collectionId)
+				console.log(action.collectionId)
+
+return state.set('currentCollectionId', action.collectionId)
 			}
 
 			case actionTypes.FILTERS_DIET_TYPES_CHANGE: {

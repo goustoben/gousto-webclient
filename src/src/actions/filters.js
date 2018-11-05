@@ -22,7 +22,10 @@ const filtersVisibilityChange = (visible = true) => ({
 	visible,
 })
 
-const filtersCollectionChange = (collectionName, collectionId) => ({
+const filtersCollectionChange = (collectionName, collectionId) => {
+console.log(collectionName, collectionId)
+
+	let action = ({
 	type: actionTypes.FILTERS_COLLECTION_CHANGE,
 	collectionName,
 	collectionId,
@@ -31,6 +34,10 @@ const filtersCollectionChange = (collectionName, collectionId) => ({
 		collectionId,
 	},
 })
+console.log(action)
+
+return action
+}
 
 export const collectionFilterIdRecieve = (collectionId) => ({
 	type: actionTypes.FILTERS_COLLECTION_CHANGE,
@@ -64,6 +71,7 @@ export function collectionFilterChange(collectionId) {
 	return (dispatch, getState) => {
 		const prevLoc = getState().routing.locationBeforeTransitions
 		const query = { ...prevLoc.query }
+
 		const collectionName = slugify(getState().menuCollections.getIn([collectionId, 'shortTitle'], ''))
 		if (collectionName) {
 			query.collection = collectionName
@@ -108,8 +116,9 @@ const filterMenuApply = () => (
 	}
 )
 
-const filterCollectionChange = (collectionId) => (
+export const filterCollectionChange = (collectionId) => (
 	(dispatch) => {
+		console.log(dispatch)
 		dispatch(collectionFilterChange(collectionId))
 		dispatch(trackRecipeCollectionSelected(collectionId))
 	}

@@ -1,17 +1,20 @@
 import actions from 'actions'
 
 export const preselectCollection = (state, collectionName, getCollectionIdWithName, dispatchCallback) => {
-	const isCollectionsFeatureAllowed = (collectionName && (state.features.getIn(['collections', 'value']) || state.features.getIn(['forceCollections', 'value'])))
-	const isJustForYouFeatureAllowed = state.features.get('justforyou').get('value')
+	const isCollectionsFeatureEnabled = (collectionName && (state.features.getIn(['collections', 'value']) || state.features.getIn(['forceCollections', 'value'])))
+	const isJustForYouFeatureEnabled = state.features.getIn(['justforyou', 'value'])
 
-	if (isCollectionsFeatureAllowed) {
+	if (isCollectionsFeatureEnabled) {
 		const queryParamCollectionId = getCollectionIdWithName(state, collectionName)
 		if (queryParamCollectionId) {
+			console.log(actions.filterCollectionChange)
 			dispatchCallback(actions.filterCollectionChange(queryParamCollectionId))
 		}
-	} else if (isJustForYouFeatureAllowed) {
+	} else if (isJustForYouFeatureEnabled) {
 		const justForYouCollectionId = getCollectionIdWithName(state, 'recommendations')
 		if (justForYouCollectionId) {
+			console.log(actions.filterCollectionChange)
+
 			dispatchCallback(actions.filterCollectionChange(justForYouCollectionId))
 		}
 	}

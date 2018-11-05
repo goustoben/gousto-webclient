@@ -1,46 +1,70 @@
 import Immutable from 'immutable'
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 
-import actions from 'actions'
+import { filterCollectionChange } from 'actions/filters'
 
 import { preselectCollection } from '../collectionsHelper'
 
-jest.mock('actions')
-jest.mock('utils/logger')
-
-
-jest.mock('actions', () => ({
-	filterCollectionChange: jest.fn()
-}))
 
 describe('when pre-selecting a collection', () => {
-	const getState = jest.fn()
-	const dispatch = jest.fn()
-
-	const initalState = {
-		features: Immutable.Map({ forceCollections: true })
+	let initalState = {
+		features: Immutable.Map({}),
+		routing: {
+			locationBeforeTransitions: { query: { collection: 'gluten-free' } },
+		},
+		menuCollections: Immutable.fromJS({
+			testCollectionId: {
+				shortTitle: 'Test Collection Name',
+				default: true,
+				id: 'testCollectionId',
+			},
+		}),
 	}
 
-	afterEach(() => {
-		dispatch.mockClear()
-		getState.mockClear()
-		actions.filterCollectionChange.mockClear()
+
+	describe('when collections feature is enabled  ', () => {
+		initalState.features = Immutable.Map(
+			// ...initalState.features,
+			// { collections: Immutable.Map({ value: true }) },
+			// { forceCollections: Immutable.Map({ value: false }) },
+			{ justforyou: Immutable.Map({ value: false }) }
+		)
+
+		initalState.filters = { currentCollectionId: '' }
+
+		test('then collection from the query parameter is pre-selected', () => {
+
+			const mockStore = configureMockStore([thunk])
+			const store = mockStore(initalState)
+			const collectionName = 'Test Collection Name'
+			const mockGetCollectionIdByName = () => 'testCollectionId'
+
+			expect(store.getState().filters).toEqual({ currentCollectionId: '' })
+
+			preselectCollection(store.getState(), collectionName, mockGetCollectionIdByName, store.dispatch)
+			store.dispatch(filterCollectionChange('testCollectionId'))
+			expect(store.getState().filters).toEqual({ currentCollectionId: 'testCollectionId' })
+
+			// store.dispatch(filterMenuOpen())
+			// store.dispatch(filterDietaryAttributesChange('gluten-free'))
+			// store.dispatch(filterMenuRevertFilters())
+			// expect(store.getState().filters).toEqual(Immutable.Map({
+			// 	currentCollectionId: 'current_collection',
+			// 	totalTime: '0',
+			// 	dietTypes: Immutable.Set(['meat']),
+			// 	dietaryAttributes: Immutable.Set([]),
+			// }))
+		})
 	})
 
-		describe('when just for you feature is turned on  ', () => {
-			initalState.features = [
-				...initalState.features,
-				{ justforyou: Immutable.Map({ value: true }) }
-			]
 
-			test('then just for you collection is pre-selected', () => {
-				const collectionId = 'mocked collection id'
-				// preselectCollection(initalState, collectionId, dispatch)
-
-				// expect(actions.filterCollectionChange).toHaveBeenCalledWith(collectionId)
-
-				// expect(dispatch).toHaveBeenCalledWith(actions.filterCollectionChange)
-			})
-		})
+	// describe('when just for you feature is turned on  ', () => {
+	// 	initalState.features = [
+	// 		...initalState.features,
+	// 		{ justforyou: Immutable.Map({ value: true }) }
+	// 	]
+	// })
 
 
 })
