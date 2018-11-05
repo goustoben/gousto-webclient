@@ -1,7 +1,9 @@
 .inputCheckContainer {
 	position: relative;
+	width: 100%;
 	min-height: 20px;
 	margin-bottom: 25px;
+	cursor: pointer;
 }
 
 .inputCheckContainer input[type=checkbox] {
