@@ -196,6 +196,9 @@ export default async function fetchData({ store, query, params }, force, backgro
 				const collectionId = getCollectionIdWithName(store.getState(), collectionName)
 				if (collectionId) {
 					store.dispatch(actions.filterCollectionChange(collectionId))
+				} else if (state.features.get('justforyou').get('value')) {
+					console.log('in just for you ')
+					store.dispatch(actions.filterCollectionChange('recommendations', getCollectionIdWithName(store.getState(), 'recommendations')))
 				}
 			})
 		}

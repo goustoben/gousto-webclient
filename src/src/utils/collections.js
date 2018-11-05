@@ -24,9 +24,11 @@ export function getCollectionIdWithName(state, name) {
 	}
 	const allowUnpub = state.features ? (state.features.getIn(['unpubCollections', 'value']) && !state.features.getIn(['forceCollections', 'value'])) : false
 
+	let collectionName = name ? name.toLowerCase() : name
+
 	return state.menuCollections
 		.filter(collection => allowUnpub || collection.get('published'))
 		.filter(collection => state.menuCollectionRecipes.get(collection.get('id'), []).size > 0)
-		.find(collection => slugify(collection.get('shortTitle')) === name, null, Immutable.Map())
+		.find(collection => slugify(collection.get('shortTitle').toLowerCase()) === collectionName, null, Immutable.Map())
 		.get('id', null)
 }
