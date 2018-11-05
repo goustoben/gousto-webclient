@@ -23,9 +23,8 @@ const filtersVisibilityChange = (visible = true) => ({
 })
 
 const filtersCollectionChange = (collectionName, collectionId) => {
-console.log(collectionName, collectionId)
 
-	let action = ({
+let action = ({
 	type: actionTypes.FILTERS_COLLECTION_CHANGE,
 	collectionName,
 	collectionId,
@@ -34,7 +33,6 @@ console.log(collectionName, collectionId)
 		collectionId,
 	},
 })
-console.log(action)
 
 return action
 }
@@ -118,7 +116,6 @@ const filterMenuApply = () => (
 
 export const filterCollectionChange = (collectionId) => (
 	(dispatch) => {
-		console.log(dispatch)
 		dispatch(collectionFilterChange(collectionId))
 		dispatch(trackRecipeCollectionSelected(collectionId))
 	}
