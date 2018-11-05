@@ -3,7 +3,12 @@ import { getCollectionIdWithName } from 'utils/collections'
 import config from 'config/recipes'
 
 export const getCurrentCollectionId = state => {
-	if (state.features.get('justforyou').get('value')) return getCollectionIdWithName('recommendations')
+	console.log('getting current collection id')
+	if (state.features.get('justforyou').get('value')) {
+		console.log('has just for you feature flag')
+
+		return getCollectionIdWithName(state, 'recommendations')
+	}
 
 	return state.filters.get('currentCollectionId')
 }
