@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { client } from 'config/routes'
-import { List } from '../components/List'
-import { ItemExpandable } from 'goustouicomponents'
 import { IngredientsPresentation } from './Ingredients.presentation'
+import { RecipeList } from '../components/RecipeList'
 
 const propTypes = {
 	content: PropTypes.shape({
@@ -12,27 +11,6 @@ const propTypes = {
 		button1Copy: PropTypes.string.isRequired,
 		button2Copy: PropTypes.string.isRequired,
 	}).isRequired,
-}
-
-const RecipeList = ({ recipes }) => {
-	const items = Object.keys(recipes).map((id) => {
-		const recipe = recipes[id]
-
-		return (
-			<ItemExpandable
-				key={recipe.id}
-				label={recipe.title}
-			>
-				<div />
-			</ItemExpandable>
-		)
-	})
-
-	return (
-		<List>
-			{items}
-		</List>
-	)
 }
 
 const Ingredients = ({ content, recipes }) => {
@@ -45,7 +23,9 @@ const Ingredients = ({ content, recipes }) => {
 			buttonLeftUrl={buttonLeftUrl}
 			buttonRightUrl={buttonRightUrl}
 		>
-			<RecipeList recipes={recipes} />
+			<div>
+				<RecipeList recipes={recipes}/>
+			</div>
 		</IngredientsPresentation>
 	)
 }

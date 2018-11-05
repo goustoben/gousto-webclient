@@ -1,0 +1,37 @@
+.inputCheckContainer {
+	position: relative;
+	width: 100%;
+	min-height: 20px;
+	margin-bottom: 25px;
+	cursor: pointer;
+}
+
+.inputCheckContainer input[type=checkbox] {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	z-index: 1;
+	opacity: 0;
+}
+
+.inputCheckMask {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	border: 1px solid black;
+	border-radius: 5px;
+	background: white;
+}
+
+.inputCheckLabel {
+	position: absolute;
+	left: 20px;
+	padding: 0 10px;
+}
+
+input[type=checkbox]:checked ~ .inputCheckMask {
+	background: #0074d9;
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4IDgiPjxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik02LjQgMWwtLjcuNy0yLjggMi44LS44LS44LS43LS43TDAgNC40bC43LjcgMS41IDEuNS43LjcuNy0uNyAzLjUtMy41LjctLjdMNi40IDF6Ii8+PC9zdmc+)
+}
