@@ -25,7 +25,7 @@ import RecipeList from './RecipeList'
 
 
 
-import fetchData from './fetchData'
+import FetchData from './FetchData'
 
 import browserHelper from 'utils/browserHelper'
 
@@ -72,7 +72,7 @@ class Menu extends React.Component {
 	}
 
 	static fetchData(args, force) {
-		return fetchData(args, force)
+		return FetchData(args, force)
 	}
 
 	state = {
@@ -103,6 +103,7 @@ class Menu extends React.Component {
 		if (props.hasRecommendations) {
 			props.triggerMenuLoad()
 		}
+		console.log('trying to fetch data')
 		Menu.fetchData({ store, query, params }, forceDataLoad)
 
 		if (props.boxSummaryDeliveryDays.size === 0 && !props.disabled) {
@@ -132,6 +133,7 @@ class Menu extends React.Component {
 			const store = this.context.store
 			const query = nextProps.query || {}
 			const params = nextProps.params || {}
+			console.log('trying to fetch data 2')
 			Menu.fetchData({ store, query, params }, true)
 		}
 

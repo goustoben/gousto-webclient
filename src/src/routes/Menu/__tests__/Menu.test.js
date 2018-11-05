@@ -4,7 +4,7 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 
 import Loading from 'routes/Menu/Loading'
 import Banner from 'routes/Menu/Banner'
-import fetchData from 'routes/Menu/fetchData'
+import fetchData from 'routes/Menu/FetchData'
 import SubHeader from 'routes/Menu/SubHeader'
 import RecipeList from 'routes/Menu/RecipeList'
 import CollectionsNav from 'routes/Menu/CollectionsNav'
@@ -29,7 +29,7 @@ jest.mock('react-lazyload', () => ({
 	forceCheck: jest.fn(),
 }))
 
-jest.mock('routes/Menu/fetchData', () => (
+jest.mock('routes/Menu/FetchData', () => (
 	jest.fn().mockReturnValue(
 		new Promise(resolve => {
 			resolve()

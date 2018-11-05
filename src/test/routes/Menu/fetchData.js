@@ -47,7 +47,7 @@ describe('fetchData', function () {
 			pending = sinon.spy()
 			menuCutoffUntilReceive = sinon.spy()
 
-			fetchData = require('inject-loader?actions!routes/Menu/fetchData')({
+			fetchData = require('inject-loader?actions!routes/Menu/FetchData')({
 				actions: {
 					menuLoadCollections,
 					menuLoadOrderDetails,
@@ -137,7 +137,7 @@ describe('fetchData', function () {
 			featureSet = sinon.stub().returns('featureSet')
 			temp = sinon.spy()
 
-			fetchData = require('inject-loader?actions!routes/Menu/fetchData')({
+			fetchData = require('inject-loader?actions!routes/Menu/FetchData')({
 				actions: {
 					menuLoadCollections,
 					menuLoadOrderDetails,

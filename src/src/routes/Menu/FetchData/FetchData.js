@@ -4,13 +4,15 @@ import logger from 'utils/logger'
 import actionTypes from 'actions/actionTypes'
 
 import { loadRecommendations } from 'actions/recipes'
-import { getCollectionIdWithName } from 'utils/collections'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
+import { getCollectionIdWithName } from 'utils/collections'
 
-import moment from 'moment'
+import { preselectCollection } from './helpers/collectionsHelper.js'
 
-export default async function fetchData({ store, query, params }, force, background) {
+// import moment from 'moment'
+
+export default async function FetchData({ store, query, params }, force, background) {
 	const isAuthenticated = store.getState().auth.get('isAuthenticated')
 	const isAdmin = store.getState().auth.get('isAdmin')
 	function chooseFirstDate() {
@@ -51,12 +53,12 @@ export default async function fetchData({ store, query, params }, force, backgro
 	}
 
 	let fetchDataPromise
-	const menuRecipes = store && store.getState().menuRecipes
-	const threshold = (__DEV__) ? 4 : 8
-	const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
-	const shouldFetch = force || !menuRecipes || (menuRecipes && menuRecipes.size <= threshold) || stale || requiresMenuRecipesClear()
+	// const menuRecipes = store && store.getState().menuRecipes
+	// const threshold = (__DEV__) ? 4 : 8
+	// const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
+	const shouldFetch =  true // force || !menuRecipes || (menuRecipes && menuRecipes.size <= threshold) || stale || requiresMenuRecipesClear()
 	const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
-
+	console.log('should fetch', shouldFetch)
 	if (!isPending && shouldFetch) {
 		store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, true))
 
@@ -191,17 +193,9 @@ export default async function fetchData({ store, query, params }, force, backgro
 			}
 		}
 
-		if (collectionName && (store.getState().features.getIn(['collections', 'value']) || store.getState().features.getIn(['forceCollections', 'value']))) {
-			promises = promises.then(() => {
-				const collectionId = getCollectionIdWithName(store.getState(), collectionName)
-				if (collectionId) {
-					store.dispatch(actions.filterCollectionChange(collectionId))
-				} else if (state.features.get('justforyou').get('value')) {
-					console.log('in just for you ')
-					store.dispatch(actions.filterCollectionChange('recommendations', getCollectionIdWithName(store.getState(), 'recommendations')))
-				}
-			})
-		}
+		promises = promises.then(() => {
+			preselectCollection(store.getState(), collectionName, getCollectionIdWithName, store.dispatch)
+		})
 
 		if (isAuthenticated && !isAdmin && query.recipes && !store.getState().basket.get('recipes').size) {
 			promises = promises.then(() => {

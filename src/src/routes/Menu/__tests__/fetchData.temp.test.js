@@ -1,14 +1,19 @@
 import Immutable from 'immutable'
 
 import { loadRecommendations } from 'actions/recipes'
+import { filterCollectionChange } from 'actions/filters'
 
-import fetchData from 'routes/Menu/fetchData'
+import fetchData from 'routes/Menu/FetchData'
 
 jest.mock('actions')
 jest.mock('utils/logger')
 
 jest.mock('actions/recipes', () => ({
 	loadRecommendations: jest.fn()
+}))
+
+jest.mock('actions/filters', () => ({
+	filterCollectionChange: jest.fn()
 }))
 
 describe('fetchData', () => {
@@ -40,6 +45,7 @@ describe('fetchData', () => {
 		dispatch.mockClear()
 		getState.mockClear()
 		loadRecommendations.mockClear()
+		filterCollectionChange.mockClear()
 	})
 
 	describe('loading recommendations', () => {

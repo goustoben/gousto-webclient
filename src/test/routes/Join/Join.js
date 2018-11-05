@@ -20,7 +20,7 @@ describe('Join', function() {
 		homeLoadCarouselSpy = sinon.stub().returns('returned from homeLoadCarouselSpy')
 		menuFetchData = sinon.spy()
 		Join = require('inject-loader!routes/Join/Join')({ // eslint-disable-line global-require
-			'routes/Menu/fetchData': menuFetchData,
+			'routes/Menu/FetchData': menuFetchData,
 			'./HomeSections': () => <div></div>,
 			actions: {
 				homeLoadCarousel: homeLoadCarouselSpy,
