@@ -1,0 +1,33 @@
+@value Blackberry, White, Basa from 'styles/colors.css';
+
+.linkContainer {
+	composes: borderXS from 'styles/borders.css';
+	height: 40px;
+	padding: 7px;
+	overflow: hidden;
+}
+
+.link {
+	composes: textBold from 'styles/typography.css';
+}
+
+.referralCodeCopied {
+	composes: paddingXXS from 'sass-loader!styles/spacing.scss';
+	composes: flex center from 'styles/flex.css';
+	background-color: Blackberry;
+	box-sizing: content-box;
+	color: White;
+	height: 20px;
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobileShow {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.invisible {
+	opacity: 0;
+}

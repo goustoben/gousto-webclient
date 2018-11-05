@@ -29,6 +29,11 @@ const fetchShippingAddressesError = message => ({
 	message,
 })
 
+const userLoadReferralDetails = referralDetails => ({
+	type: actionTypes.USER_LOAD_REFERRAL_DETAILS,
+	referralDetails,
+})
+
 const userActions = {
 	checkCardExpiry,
 	userOrderCancelNext,
@@ -36,6 +41,7 @@ const userActions = {
 	userSubscribe,
 	userRecipeRatings,
 	userLoadData,
+	userLoadReferralDetails,
 	userFetchShippingAddresses,
 	userClearData,
 	userLoadOrder,
@@ -655,5 +661,15 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
 		}
 	}
 }
+
+export const userReferAFriend = (email) => (
+	(dispatch, getState) => {
+		const accessToken = getState().auth.get('accessToken')
+
+		if (accessToken) {
+			userApi.referAFriend(accessToken, email)
+		}
+	}
+)
 
 export default userActions

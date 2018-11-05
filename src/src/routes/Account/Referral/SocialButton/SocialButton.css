@@ -1,0 +1,41 @@
+@value White, Bluecheese, colorFacebook, colorFacebookMessenger from 'styles/colors.css';
+@value SpacingXXS, SpacingSM, SpacingMD, SpacingLG from 'sass-loader!styles/spacing.scss';
+/* 5px, 10px, 15px, 20px */
+
+.button {
+	border-radius: SpacingXXS;
+	composes: paddingSM marginMDLeft from 'sass-loader!styles/spacing.scss';
+	box-sizing: content-box;
+	height: SpacingLG;
+	display: flex;
+	cursor: pointer;
+}
+
+.button-email {
+	composes: button;
+	background: Bluecheese;
+}
+
+.button-facebook {
+	composes: button;
+	background: colorFacebook;
+}
+
+.button-facebook-messenger {
+	composes: button;
+	background: colorFacebookMessenger;
+}
+
+.icon {
+	width: SpacingLG;
+	height: SpacingLG;
+	composes: marginSMRight from 'sass-loader!styles/spacing.scss';
+}
+
+.text {
+	text-transform: uppercase;
+	font-size: 14px;
+	composes: textBold from 'styles/typography.css';
+	align-self: center;
+	color: White;
+}

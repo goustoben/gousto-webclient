@@ -1,0 +1,53 @@
+.flex {
+	composes: flex row spaceBetween verticalCenter from 'styles/flex.css';
+}
+
+.heading {
+	composes: textCenter textBold from 'styles/typography.css';
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
+	font-size: 24px;
+}
+
+.modal {
+	position: relative;
+	left: inherit;
+	top: inherit;
+	transform: inherit;
+	width: 60%;
+	margin: auto;
+	box-shadow: none;
+	margin-top: 80px;
+	max-width: 650px;
+	border-radius: 2px;
+	@media ScreenXSMax {
+		width: 98%;
+	}
+}
+
+.modalContainer {
+	margin-top: 50px;
+}
+
+.modalContent {
+	composes: marginXLTopBottom marginXXLLeftRight paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.msg {
+	composes: textXS from 'styles/typography.css';
+
+&:first-letter {
+	 text-transform: capitalize;
+ }
+}
+
+.emailInput {
+	margin-bottom: 15px;
+}
+
+.emailSentNotification {
+	margin-bottom: 15px;
+}
+
+.button {
+	justify-content: right;
+}

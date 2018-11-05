@@ -157,6 +157,10 @@ const user = {
 					state.get('subscription').set('state', 'inactive'))
 			}
 
+			case actionTypes.USER_LOAD_REFERRAL_DETAILS: {
+				return state.set('referralDetails', Immutable.fromJS(action.referralDetails))
+			}
+
 			case actionTypes.ORDER_DELIVERY_DAYS_RECEIVE: {
 				return state.setIn(['newOrders', action.orderId, 'availableDeliveryDays'], Immutable.fromJS(action.availableDays))
 			}

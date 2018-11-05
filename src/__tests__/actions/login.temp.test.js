@@ -35,7 +35,12 @@ describe('login actions', () => {
 		describe('when the justforyou experiment is not set', () => {
 			beforeEach(() => {
 				getState.mockReturnValue({
-					features: Immutable.Map({}),
+					features: Immutable.Map({
+						justforyou: Immutable.Map({
+							value: false,
+							experiment: false,
+						}),
+					}),
 				})
 			})
 

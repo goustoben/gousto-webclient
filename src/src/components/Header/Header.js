@@ -196,7 +196,7 @@ class Header extends React.PureComponent {
 		} else {
 			buttonState = 'loggedOut'
 			button = (
-				<a className={css.btn}>
+				<a className={css.btn} 	data-testing="loginButton">
 					Login
 				</a>
 			)
@@ -214,7 +214,6 @@ class Header extends React.PureComponent {
 		return (
 			<span
 				className={classNames(css.authButtonsContainer, css[buttonState])}
-				data-testing="loginButton"
 				onClick={e => { if (!isAuthenticated) { this.onOpen(e) } }}
 			>
 				{button}

@@ -2,6 +2,7 @@ import queryString from 'query-string'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import actionTypes from './actionTypes'
 import authActions from './auth'
+import { featureSet } from './features'
 import statusActions from './status'
 import orderActions from './order'
 import userActions from './user'
@@ -80,12 +81,12 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 	return destination
 }
 
-const logoutRedirect = () => {
-	const pathName = documentLocation().pathname
-	if (pathName.indexOf('/menu') === -1 && pathName !== '/') {
+const logoutRedirect = () => (
+	(dispatch) => {
 		redirect('/')
+		dispatch(featureSet('justforyou', false, false))
 	}
-}
+)
 
 export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 	const location = documentLocation()
@@ -121,7 +122,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
 					await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
 				}
 			}
-			if (!getState().features.get('justforyou')) {
+			if (!getState().features.getIn(['justforyou', 'value'])) {
 				dispatch(loadRecommendations())
 			}
 			setTimeout(() => {
@@ -140,7 +141,7 @@ const postLogoutSteps = () => (
 		dispatch({ type: actionTypes.BASKET_RESET })
 		dispatch({ type: actionTypes.USER_LOGGED_OUT }) // resets auth state
 		if (globals.client) {
-			logoutRedirect()
+			dispatch(logoutRedirect())
 		}
 	}
 )

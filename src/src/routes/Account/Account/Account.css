@@ -1,5 +1,9 @@
 @value Coconut from 'styles/colors.css';
 
+.container {
+	composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
 .accountWrap {
 	background-color: Coconut;
 	margin-bottom: 25px;
