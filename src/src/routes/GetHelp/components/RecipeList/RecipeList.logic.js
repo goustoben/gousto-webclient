@@ -23,16 +23,20 @@ const InputCheck = ({ id, label, isChecked, onClick }) => (
 	</div>
 )
 
-const Recipe = ({ recipe, onClick }) => {
-	const ingredientList = recipe.ingredients.map((ingredient) => (
-		<InputCheck
-			key={ingredient.id}
-			id={ingredient.id}
-			label={ingredient.label}
-			isChecked={false}
-			onClick={onClick}
-		/>
-	))
+const Recipe = ({ recipe, selectedIngredients, onClick }) => {
+	const ingredientList = recipe.ingredients.map((ingredient) => {
+		console.log(selectedIngredients)
+
+		return (
+			<InputCheck
+				key={ingredient.id}
+				id={ingredient.id}
+				label={ingredient.label}
+				isChecked={false}
+				onClick={onClick}
+			/>
+		)
+	})
 
 	return (
 		<ItemExpandable
@@ -46,11 +50,24 @@ const Recipe = ({ recipe, onClick }) => {
 
 class RecipeList extends PureComponent {
 	state = {
-		itemsChecked: []
+		selectedIngredients: []
 	}
 
 	onClickHandler = (id) => {
-		console.log('onClickHandler', id)
+		let newState = []
+		const { selectedIngredients } = this.state
+		const currentIngredientId = selectedIngredients.find((ingredientId) => ingredientId === id)
+
+		if (currentIngredientId.length > 0) {
+			newState = selectedIngredients.filter((ingredientId) => ingredientId !== id)
+		} else {
+			newState.push(id)
+		}
+
+		this.setState({
+			...this.state,
+			selectedIngredients: newState
+		})
 	}
 
 	render() {
@@ -63,6 +80,7 @@ class RecipeList extends PureComponent {
 					key={recipe.id}
 					recipe={recipe}
 					onClick={this.onClickHandler}
+					selectedIngredient={this.state.selectedIngredients}
 				/>
 			)
 		})
