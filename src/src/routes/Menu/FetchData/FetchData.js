@@ -8,6 +8,7 @@ import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
 import { selectCollection } from 'utils/collections'
 import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/features'
+import { recommendationsShortTitle } from 'config/collections'
 
 import moment from 'moment'
 
@@ -195,9 +196,9 @@ export default async function FetchData({ store, query, params }, force, backgro
 				if (typeof featureCollectionFreeze === 'string' && featureCollectionFreeze.length > 0) {
 					collectionName = featureCollectionFreeze
 					console.log('inside freeze if')
-				} else if (isJustForYouFeatureEnabled(store.getState())) {
+				} else if (isJustForYouFeatureEnabled(store.getState()) && !collectionName) {
 					console.log('inside JFY if')
-					collectionName = 'recommendations'
+					collectionName = recommendationsShortTitle
 				}
 			}
 

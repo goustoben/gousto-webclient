@@ -32,8 +32,6 @@ export function getCollectionIdWithName(state, name) {
 		? state.features.getIn(['unpubCollections', 'value']) && !state.features.getIn(['forceCollections', 'value'])
 		: false
 
-	let collectionName = name ? name.toLowerCase() : name
-
 	return state.menuCollections
 		.filter(collection => allowUnpub || collection.get('published'))
 		.filter(
@@ -42,7 +40,7 @@ export function getCollectionIdWithName(state, name) {
 		)
 		.find(
 			collection =>
-				slugify(collection.get('shortTitle').toLowerCase()) === collectionName,
+				slugify(collection.get('shortTitle')) === name,
 			null,
 			Immutable.Map()
 		)
