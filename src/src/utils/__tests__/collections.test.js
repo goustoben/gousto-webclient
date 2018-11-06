@@ -24,17 +24,17 @@ describe('when selecting a collection', () => {
 			)
 		})
 
-		test('then FILTERS_COLLECTION_CHANGE event is dispatched with collection id', () => {
-			const mockStore = configureMockStore()
-			const store = mockStore(initalState)
+		// test('then FILTERS_COLLECTION_CHANGE event is dispatched with collection id', () => {
+		// 	const mockStore = configureMockStore()
+		// 	const store = mockStore(initalState)
 
-			selectCollection(store.getState(), collectionName, store.dispatch)
+		// 	selectCollection(store.getState(), collectionName, store.dispatch)
 
-			expect(store.getActions()).toContainEqual({
-				type: actionTypes.FILTERS_COLLECTION_CHANGE,
-				collectionId: 'testCollectionId',
-			})
-		})
+		// 	expect(store.getActions()).toContainEqual({
+		// 		type: actionTypes.FILTERS_COLLECTION_CHANGE,
+		// 		collectionId: 'testCollectionId',
+		// 	})
+		// })
 	})
 
 	describe('and collection id does not exist for the give collection name', () => {

@@ -58,6 +58,7 @@ export default async function FetchData({ store, query, params }, force, backgro
 	const shouldFetch = force || !menuRecipes || (menuRecipes && menuRecipes.size <= threshold) || stale || requiresMenuRecipesClear()
 	const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
 
+	console.log('isPending', isPending, shouldFetch)
 	if (!isPending && shouldFetch) {
 		store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, true))
 
@@ -184,19 +185,24 @@ export default async function FetchData({ store, query, params }, force, backgro
 			}
 		}
 
-		let collectionName = query.collection
-
-		if (!store.getState().features.getIn(['forceCollections', 'true'])) {
-			const featureCollectionFreeze = store.getState().features.getIn(['collectionFreeze', 'value'])
-			if (typeof featureCollectionFreeze === 'string' && featureCollectionFreeze.length > 0) {
-				collectionName = featureCollectionFreeze
-			}
-		} else if (isJustForYouFeatureEnabled(store.getState())) {
-			collectionName = 'recommendations'
-		}
-
 		promises = promises.then(() => {
+			let collectionName = query.collection
+
+			console.log('should go to JFY', isJustForYouFeatureEnabled(store.getState()))
+			if (!store.getState().features.getIn(['forceCollections', 'true'])) {
+				console.log('inside forceCollections condition')
+				const featureCollectionFreeze = store.getState().features.getIn(['collectionFreeze', 'value'])
+				if (typeof featureCollectionFreeze === 'string' && featureCollectionFreeze.length > 0) {
+					collectionName = featureCollectionFreeze
+					console.log('inside freeze if')
+				} else if (isJustForYouFeatureEnabled(store.getState())) {
+					console.log('inside JFY if')
+					collectionName = 'recommendations'
+				}
+			}
+
 			if (isCollectionsFeatureEnabled(store.getState()) || isJustForYouFeatureEnabled(store.getState())) {
+				console.log('collection name 2', collectionName)
 				selectCollection(store.getState(), collectionName, store.dispatch)
 			}
 		})
