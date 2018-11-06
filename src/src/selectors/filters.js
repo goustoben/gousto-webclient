@@ -1,3 +1,5 @@
+import Immutable from 'immutable' /* eslint-disable new-cap */
+
 import { textReducer } from 'utils/text'
 import config from 'config/recipes'
 
@@ -5,6 +7,14 @@ export const getCurrentCollectionId = state => state.filters.get('currentCollect
 export const getCurrentDietTypes = state => state.filters.get('dietTypes')
 export const getCurrentTotalTime = state => state.filters.get('totalTime')
 export const getDietaryAttributes = state => state.filters.get('dietaryAttributes')
+
+// TODO move these to separate selector file
+export const isCollectionsFeatureEnabled = state => (state.features.hasIn(['collections', 'value']) ||
+	state.features.hasIn(['forceCollections', 'value']))
+export const isJustForYouFeatureEnabled = state => state.features.hasIn(['justforyou', 'value'])
+export const getCollectionIdByName = (state, name) => state.menuCollections
+		.find(collection => collection.get('shortTitle') === name, null, Immutable.Map())
+		.get('id', null)
 
 export const getShortTitle = (menuCollections, currentCollectionId) => {
 	if (menuCollections.getIn([currentCollectionId, 'slug'], '') === 'recommendations') {
