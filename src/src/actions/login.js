@@ -164,6 +164,14 @@ const login = (email, password, rememberMe, orderId = '') => (
 				dispatch(authActions.userRememberMe(rememberMe))
 
 				await postLoginSteps(isAdmin(userRoles), orderId, getState().features)(dispatch, getState)
+				ga('ec:addImpression', {
+					id: orderId,
+					email,
+					name: 'Signup',
+					category: 'SignUp',
+					brand: 'Gousto',
+					boxPrice: 'price',
+				})
 			}
 		} catch (err) {
 			const errMsg = err.message ? err.message : 'Sorry, we were unable to log you in. Please contact customer care.'

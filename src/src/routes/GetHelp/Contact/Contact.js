@@ -11,11 +11,11 @@ import { client, zendesk } from 'config/routes'
 
 import GetHelpLayout from 'layouts/GetHelpLayout'
 
-const trackClick = (selectContactChannel, channel) => () => selectContactChannel(channel)
-
 const openLiveChat = () => {
 	window.$zopim.livechat.window.show()
 }
+
+const trackClick = (selectContactChannel, channel) => () => selectContactChannel(channel)
 
 const Contact = ({
 	content: {
