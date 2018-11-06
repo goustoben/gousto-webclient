@@ -7,7 +7,7 @@ import { loadRecommendations } from 'actions/recipes'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
 import { selectCollection } from 'utils/collections'
-import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/collections'
+import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/features'
 
 import moment from 'moment'
 
@@ -192,11 +192,11 @@ export default async function FetchData({ store, query, params }, force, backgro
 				collectionName = featureCollectionFreeze
 			}
 		} else if (isJustForYouFeatureEnabled(store.getState())) {
-			collectionName = 'reccomendations'
+			collectionName = 'recommendations'
 		}
 
 		promises = promises.then(() => {
-			if (isCollectionsFeatureEnabled(store.getState())) {
+			if (isCollectionsFeatureEnabled(store.getState()) || isJustForYouFeatureEnabled(store.getState())) {
 				selectCollection(store.getState(), collectionName, store.dispatch)
 			}
 		})
