@@ -1,5 +1,3 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
-
 import { textReducer } from 'utils/text'
 import config from 'config/recipes'
 
