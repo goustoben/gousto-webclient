@@ -7,7 +7,7 @@ import { loadRecommendations } from 'actions/recipes'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
 import { selectCollection } from 'utils/collections'
-import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/filters'
+import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/collections'
 
 import moment from 'moment'
 

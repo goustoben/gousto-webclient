@@ -1,7 +1,7 @@
 import { slugify } from 'utils/url'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
-import { getCollectionIdByName } from 'selectors/filters'
+import { getCollectionIdByName } from 'selectors/collections'
 import { collectionFilterIdRecieve } from 'actions/filters'
 
 
