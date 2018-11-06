@@ -205,13 +205,14 @@ export function checkoutPostSignup() {
       const password = aboutYou.get('password')
       const orderId = getState().basket.get('previewOrderId')
       const promoCode = getState().basket.get('promoCode')
-      const price = getState().price.get('grossTotal')
+      const totalPrice = getState().price.get('grossTotal')
+      const shippingPrice = getState().price.get('deliveryTotal')
       await dispatch(loginActions.loginUser(email, password, true, orderId))
       if (typeof ga !== 'undefined') {
         ga('ec:setAction', 'purchase', {
           id: orderId,
-          revenue: price,
-          shipping: '0.0',
+          revenue: totalPrice,
+          shipping: shippingPrice,
           coupon: promoCode
         })
         ga('send', 'pageview')
