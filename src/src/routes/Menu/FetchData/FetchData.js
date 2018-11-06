@@ -6,10 +6,10 @@ import actionTypes from 'actions/actionTypes'
 import { loadRecommendations } from 'actions/recipes'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
+import { selectCollection } from 'utils/collections'
+import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/filters'
 
-import { selectCollection, shouldPreselectCollection } from 'utils/collections'
-
-// import moment from 'moment'
+import moment from 'moment'
 
 export default async function FetchData({ store, query, params }, force, background) {
 	const isAuthenticated = store.getState().auth.get('isAuthenticated')
@@ -52,12 +52,12 @@ export default async function FetchData({ store, query, params }, force, backgro
 	}
 
 	let fetchDataPromise
-	// const menuRecipes = store && store.getState().menuRecipes
-	// const threshold = (__DEV__) ? 4 : 8
-	// const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
-	const shouldFetch =  true // force || !menuRecipes || (menuRecipes && menuRecipes.size <= threshold) || stale || requiresMenuRecipesClear()
+	const menuRecipes = store && store.getState().menuRecipes
+	const threshold = (__DEV__) ? 4 : 8
+	const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
+	const shouldFetch = force || !menuRecipes || (menuRecipes && menuRecipes.size <= threshold) || stale || requiresMenuRecipesClear()
 	const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
-	console.log('should fetch', shouldFetch)
+
 	if (!isPending && shouldFetch) {
 		store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, true))
 
@@ -185,15 +185,18 @@ export default async function FetchData({ store, query, params }, force, backgro
 		}
 
 		let collectionName = query.collection
+
 		if (!store.getState().features.getIn(['forceCollections', 'true'])) {
 			const featureCollectionFreeze = store.getState().features.getIn(['collectionFreeze', 'value'])
 			if (typeof featureCollectionFreeze === 'string' && featureCollectionFreeze.length > 0) {
 				collectionName = featureCollectionFreeze
 			}
+		} else if (isJustForYouFeatureEnabled(store.getState())) {
+			collectionName = 'reccomendations'
 		}
 
 		promises = promises.then(() => {
-			if (shouldPreselectCollection(store.getState())) {
+			if (isCollectionsFeatureEnabled(store.getState())) {
 				selectCollection(store.getState(), collectionName, store.dispatch)
 			}
 		})

@@ -15,6 +15,7 @@ export const isJustForYouFeatureEnabled = state => state.features.hasIn(['justfo
 export const getCollectionIdByName = (state, name) => state.menuCollections
 		.find(collection => collection.get('shortTitle') === name, null, Immutable.Map())
 		.get('id', null)
+export const getJustForYouCollection = state => state.menuCollections.filter(collection => collection.slug === 'recommendations')
 
 export const getShortTitle = (menuCollections, currentCollectionId) => {
 	if (menuCollections.getIn([currentCollectionId, 'slug'], '') === 'recommendations') {

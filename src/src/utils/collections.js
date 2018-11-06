@@ -1,7 +1,7 @@
 import { slugify } from 'utils/url'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
-import { isCollectionsFeatureEnabled, isJustForYouFeatureEnabled, getCollectionIdByName } from 'selectors/filters'
+import { getCollectionIdByName } from 'selectors/filters'
 import { collectionFilterIdRecieve } from 'actions/filters'
 
 
@@ -43,5 +43,3 @@ export const selectCollection = (state, collectionName, dispatch) => {
 		dispatch(collectionFilterIdRecieve(collectionId))
 	}
 }
-
-export const shouldPreselectCollection = state => isCollectionsFeatureEnabled(state) || isJustForYouFeatureEnabled(state)
