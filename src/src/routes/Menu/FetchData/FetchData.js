@@ -7,7 +7,7 @@ import { loadRecommendations } from 'actions/recipes'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
 
-import { selectCollection, shouldPreselectCollection } from './helpers/collectionsHelper.js'
+import { selectCollection, shouldPreselectCollection } from 'utils/collections'
 
 // import moment from 'moment'
 

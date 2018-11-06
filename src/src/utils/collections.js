@@ -1,6 +1,10 @@
 import { slugify } from 'utils/url'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
+import { isCollectionsFeatureEnabled, isJustForYouFeatureEnabled, getCollectionIdByName } from 'selectors/filters'
+import { collectionFilterIdRecieve } from 'actions/filters'
+
+
 export function isAllRecipes(collection) {
 	return collection.get('shortTitle')
 		.toLowerCase()
@@ -32,3 +36,12 @@ export function getCollectionIdWithName(state, name) {
 		.find(collection => slugify(collection.get('shortTitle').toLowerCase()) === collectionName, null, Immutable.Map())
 		.get('id', null)
 }
+
+export const selectCollection = (state, collectionName, dispatch) => {
+	const collectionId = getCollectionIdByName(state, collectionName)
+	if (collectionId) {
+		dispatch(collectionFilterIdRecieve(collectionId))
+	}
+}
+
+export const shouldPreselectCollection = state => isCollectionsFeatureEnabled(state) || isJustForYouFeatureEnabled(state)

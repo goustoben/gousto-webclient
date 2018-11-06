@@ -2,8 +2,7 @@ import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
 import actionTypes from 'actions/actionTypes'
-import { selectCollection } from '../collectionsHelper'
-
+import { selectCollection } from 'utils/collections'
 
 describe('when selecting a collection', () => {
 	let initalState = {
@@ -11,7 +10,7 @@ describe('when selecting a collection', () => {
 		menuCollections: Immutable.Map({}),
 	}
 
-	describe('and collectionId exists for the given collection name', () => {
+	describe('and collection id exists for the given collection name', () => {
 		const collectionName = 'test collection name'
 
 		beforeEach(() => {
@@ -25,7 +24,7 @@ describe('when selecting a collection', () => {
 			)
 		})
 
-		test('then collection from the query parameter is selected', () => {
+		test('then FILTERS_COLLECTION_CHANGE event is dispatched with collection id', () => {
 			const mockStore = configureMockStore()
 			const store = mockStore(initalState)
 
@@ -38,7 +37,7 @@ describe('when selecting a collection', () => {
 		})
 	})
 
-	describe('and collectionId does not exist for the give collection name', () => {
+	describe('and collection id does not exist for the give collection name', () => {
 		const collectionName = 'test collection name'
 
 		beforeEach(() => {
@@ -52,7 +51,7 @@ describe('when selecting a collection', () => {
 			)
 		})
 
-		test('then collection from the query parameter is selected', () => {
+		test('then no event is dispatched', () => {
 			const mockStore = configureMockStore()
 			const store = mockStore(initalState)
 
