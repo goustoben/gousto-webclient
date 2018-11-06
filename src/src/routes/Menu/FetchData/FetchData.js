@@ -7,7 +7,7 @@ import { loadRecommendations } from 'actions/recipes'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
 
-import { preselectCollection } from './helpers/collectionsHelper.js'
+import { selectCollection, shouldPreselectCollection } from './helpers/collectionsHelper.js'
 
 // import moment from 'moment'
 
@@ -193,7 +193,9 @@ export default async function FetchData({ store, query, params }, force, backgro
 		}
 
 		promises = promises.then(() => {
-			preselectCollection(store.getState(), collectionName, store.dispatch)
+			if (shouldPreselectCollection(store.getState())) {
+				selectCollection(store.getState(), collectionName, store.dispatch)
+			}
 		})
 
 		if (isAuthenticated && !isAdmin && query.recipes && !store.getState().basket.get('recipes').size) {
