@@ -218,7 +218,6 @@ export function checkoutPostSignup() {
         ga('send', 'pageview')
       }
     } catch (err) {
-      console.log(err)
       logger.error(`${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`)
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
       throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)

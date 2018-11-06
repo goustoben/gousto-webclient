@@ -40,9 +40,10 @@ import {
   checkoutPostSignup,
 } from 'actions/checkout'
 
-describe('checkout actions', function () {
+describe('checkout actions', function() {
   const dispatch = jest.fn()
   const getState = jest.fn()
+  const ga = jest.fn()
   let previewOrder
   let addressCollection
   let addressItem
@@ -307,8 +308,8 @@ describe('checkout actions', function () {
     })
   })
 
-  describe('checkoutPostSignup', function () {
-    it('should call post signup', async function () {
+  describe('checkoutPostSignup', function() {
+    beforeEach(() => {
       getState.mockReturnValue({
         basket: Immutable.fromJS({
           address: '3 Moris House, London',
@@ -322,6 +323,8 @@ describe('checkout actions', function () {
           stepsOrder: ['boxdetails', 'aboutyou', 'delivery', 'payment'],
           slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
           postcode: 'W6 0DH',
+          previewOrderId: 'test-order-id',
+          promoCode: 'TEST123'
         }),
         form: {
           checkout: {
@@ -338,11 +341,46 @@ describe('checkout actions', function () {
         }),
         price: Immutable.Map({
           grossTotal: 28.00,
+          deliveryTotal: 2.99,
         })
       })
+    })
 
+    afterEach(() => {
+      ga.mockClear()
+    })
+
+    it('should call post signup', async function() {
       await checkoutPostSignup()(dispatch, getState)
       expect(basketResetPersistent).toHaveBeenCalledTimes(1)
+    })
+
+    describe('when ga is undefined', () => {
+      beforeEach(() => {
+        global.ga = undefined
+      })
+
+      it('should not call ga with order details', async function() {
+        await checkoutPostSignup()(dispatch, getState)
+        expect(ga).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when ga is defined', () => {
+      beforeEach(() => {
+        global.ga = ga
+      })
+
+      it('should call ga with order details', async function() {
+        await checkoutPostSignup()(dispatch, getState)
+        expect(ga).toHaveBeenCalled()
+        expect(ga).toHaveBeenCalledWith('ec:setAction', 'purchase', {
+          id: 'test-order-id',
+          revenue: 28.00,
+          shipping: 2.99,
+          coupon: 'TEST123',
+        })
+      })
     })
   })
 
