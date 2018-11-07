@@ -12,6 +12,7 @@
 	left: 2px;
 	z-index: 1;
 	opacity: 0;
+	cursor: inherit;
 }
 
 .inputCheckMask {
@@ -23,12 +24,14 @@
 	border: 1px solid black;
 	border-radius: 5px;
 	background: white;
+	cursor: inherit;
 }
 
 .inputCheckLabel {
 	position: absolute;
 	left: 20px;
 	padding: 0 10px;
+	cursor: inherit;
 }
 
 input[type=checkbox]:checked ~ .inputCheckMask {

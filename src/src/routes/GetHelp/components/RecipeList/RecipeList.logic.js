@@ -6,28 +6,39 @@ import { List } from '../../components/List'
 import css from './InputCheck'
 
 const propTypes = {
-	recipes: PropTypes.object.isRequired
+	recipes: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			title: PropTypes.string,
+			ingredients: PropTypes.arrayOf(
+				PropTypes.shape({
+					id: PropTypes.string,
+					title: PropTypes.string,
+				})
+			)
+		})
+	).isRequired
 }
 
-const InputCheck = ({ id, label, isChecked, onClick }) => (
-	<div className={css.inputCheckContainer} onClick={() => onClick(id)}>
-		<input
-			id="inputCheck"
-			type="checkbox"
-			checked={isChecked}
-		/>
-		<div className={css.inputCheckMask}></div>
-		<label className={css.inputCheckLabel} htmlFor="inputCheck">
-			{label}
-		</label>
-	</div>
-)
+const InputCheck = ({ id, label, isChecked, onClick }) => {
+	console.log('InputCheck', isChecked)
 
-const Recipe = ({ recipe, selectedIngredients, onClick }) => {
-	const ingredientList = recipe.ingredients.map((ingredient) => {
-		console.log(selectedIngredients)
+	return (
+		<div className={css.inputCheckContainer} onClick={() => onClick(id)}>
+			<input
+				id="inputCheck"
+				type="checkbox"
+			/>
+			<div className={css.inputCheckMask}></div>
+			<label className={css.inputCheckLabel} htmlFor="inputCheck">
+				{label}
+			</label>
+		</div>
+	)
+}
 
-		return (
+const Recipe = ({ recipe, onClick }) => {
+	const ingredientList = recipe.ingredients.map((ingredient) => (
 			<InputCheck
 				key={ingredient.id}
 				id={ingredient.id}
@@ -35,8 +46,7 @@ const Recipe = ({ recipe, selectedIngredients, onClick }) => {
 				isChecked={false}
 				onClick={onClick}
 			/>
-		)
-	})
+		))
 
 	return (
 		<ItemExpandable
@@ -54,36 +64,19 @@ class RecipeList extends PureComponent {
 	}
 
 	onClickHandler = (id) => {
-		let newState = []
-		const { selectedIngredients } = this.state
-		const currentIngredientId = selectedIngredients.find((ingredientId) => ingredientId === id)
-
-		if (currentIngredientId.length > 0) {
-			newState = selectedIngredients.filter((ingredientId) => ingredientId !== id)
-		} else {
-			newState.push(id)
-		}
-
-		this.setState({
-			...this.state,
-			selectedIngredients: newState
-		})
+		console.log(id)
 	}
 
 	render() {
 		const { recipes } = this.props
-		const recipeList = Object.keys(recipes).map((id) => {
-			const recipe = recipes[id]
 
-			return (
-				<Recipe
-					key={recipe.id}
-					recipe={recipe}
-					onClick={this.onClickHandler}
-					selectedIngredient={this.state.selectedIngredients}
-				/>
-			)
-		})
+		const recipeList = recipes.map((recipe) => (
+			<Recipe
+				key={recipe.id}
+				recipe={recipe}
+				onClick={this.onClickHandler}
+			/>
+		))
 
 		return (
 			<List>
