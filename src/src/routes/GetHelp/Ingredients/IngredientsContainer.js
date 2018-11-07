@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => ({
+	recipes: state.recipes.toJS(),
 	content: {
 		title: state.content.get('get-help_contact_pageheader_header')
 		|| 'Get help with your box',

@@ -10,13 +10,21 @@ describe('<Ingredients />', () => {
 		button1Copy: 'Back',
 		button2Copy: 'Done',
 	}
-
+	const recipes = {
+		1: { id: 1, title: 'test 1' },
+		2: { id: 2, title: 'test 2' },
+		3: { id: 3, title: 'test 3' },
+		4: { id: 4, title: 'test 4' },
+	}
 	let wrapper
 	let getHelpLayout
 
 	beforeEach(() => {
 		wrapper = mount(
-			<Ingredients content={content} />
+			<Ingredients
+				recipes={recipes}
+				content={content}
+			/>
 		)
 		getHelpLayout = wrapper.find('GetHelpLayout')
 	})
@@ -55,6 +63,17 @@ describe('<Ingredients />', () => {
 
 			expect(Button1.prop('url')).toBe('/get-help')
 			expect(Button2.prop('url')).toBe('/get-help/refund')
+		})
+
+		test('recipes are being displayed', () => {
+			const items = getHelpLayout.find('Item')
+
+			expect(items).toHaveLength(4)
+
+			expect(items.at(0).text()).toBe('test 1')
+			expect(items.at(1).text()).toBe('test 2')
+			expect(items.at(2).text()).toBe('test 3')
+			expect(items.at(3).text()).toBe('test 4')
 		})
 	})
 })

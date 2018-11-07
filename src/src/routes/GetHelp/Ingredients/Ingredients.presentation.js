@@ -5,6 +5,7 @@ import GetHelpLayout from 'layouts/GetHelpLayout'
 import { BottomButton } from '../components/BottomButton'
 
 const propTypes = {
+	children: PropTypes.node.isRequired,
 	content: PropTypes.shape({
 		title: PropTypes.string.isRequired,
 		body: PropTypes.string.isRequired,
@@ -16,6 +17,7 @@ const propTypes = {
 }
 
 const IngredientsPresentation = ({
+	children,
 	content: {
 		title,
 		body,
@@ -26,6 +28,7 @@ const IngredientsPresentation = ({
 	buttonRightUrl,
 }) => (
 	<GetHelpLayout title={title} body={body}>
+		{children}
 		<BottomBar>
 			<BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
 				{button1Copy}

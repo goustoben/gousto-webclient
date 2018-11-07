@@ -6,6 +6,12 @@ export default {
 			'range-detail-2-image',
 		],
 		badges: {
+			sharers: {
+				text: 'Sharers',
+				color: 'White',
+				backgroundColor: 'Pomegranate',
+				borderColor: 'Pomegranate',
+			},
 			ten_to_table: {
 				text: '10-Minute Meal',
 				color: 'White',
