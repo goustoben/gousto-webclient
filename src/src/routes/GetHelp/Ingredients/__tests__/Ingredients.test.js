@@ -11,10 +11,10 @@ describe('<Ingredients />', () => {
 		button2Copy: 'Done',
 	}
 	const recipes = [
-		{ id: 1, title: 'test 1', ingredients: [{ id: 1, label: 'test' }] },
-		{ id: 2, title: 'test 2', ingredients: [{ id: 2, label: 'test' }] },
-		{ id: 3, title: 'test 3', ingredients: [{ id: 3, label: 'test' }] },
-		{ id: 4, title: 'test 4', ingredients: [{ id: 4, label: 'test' }] },
+		{ id: '1', title: 'test 1', ingredients: [{ id: '1', label: 'test' }] },
+		{ id: '2', title: 'test 2', ingredients: [{ id: '2', label: 'test' }] },
+		{ id: '3', title: 'test 3', ingredients: [{ id: '3', label: 'test' }] },
+		{ id: '4', title: 'test 4', ingredients: [{ id: '4', label: 'test' }] },
 	]
 	let wrapper
 	let getHelpLayout
@@ -74,6 +74,11 @@ describe('<Ingredients />', () => {
 			expect(items.at(1).text()).toBe('test 2')
 			expect(items.at(2).text()).toBe('test 3')
 			expect(items.at(3).text()).toBe('test 4')
+		})
+
+		test('recipe list is being rendered', () => {
+			expect(getHelpLayout.find('RecipeList')).toHaveLength(1)
+			expect(getHelpLayout.find('RecipeList').prop('recipes')).toBe(recipes)
 		})
 	})
 })

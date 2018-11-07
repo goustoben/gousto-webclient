@@ -12,23 +12,27 @@ const propTypes = {
 			ingredients: PropTypes.arrayOf(
 				PropTypes.shape({
 					id: PropTypes.string,
-					title: PropTypes.string,
+					label: PropTypes.string,
 				})
 			)
 		})
 	).isRequired
 }
 
-const Recipe = ({ recipe, onChange }) => {
-	const ingredientList = recipe.ingredients.map((ingredient) => (
-		<InputCheck
-			key={ingredient.id}
-			id={ingredient.id}
-			label={ingredient.label}
-			isChecked={false}
-			onChange={onChange}
-		/>
-	))
+const Recipe = ({ recipe, selectedIngredients, onChange }) => {
+	const ingredientList = recipe.ingredients.map((ingredient) => {
+		const isChecked = selectedIngredients.get(ingredient.id) || false
+
+		return (
+			<InputCheck
+				key={ingredient.id}
+				id={`${recipe.id}-${ingredient.id}`}
+				label={ingredient.label}
+				isChecked={isChecked}
+				onChange={onChange}
+			/>
+		)
+	})
 
 	return (
 		<ItemExpandable
@@ -42,30 +46,33 @@ const Recipe = ({ recipe, onChange }) => {
 
 class RecipeList extends PureComponent {
 	state = {
-		selectedIngredients: []
+		selectedIngredients: new Map()
 	}
 
 	onChangeHandler = ({ id, isChecked }) => {
-		const { selectedIngredients } = this.state
+		const newSelectedIngredients = new Map(this.state.selectedIngredients)
 
 		if (isChecked) {
-			selectedIngredients.push({ id, isChecked })
+			newSelectedIngredients.set(id, isChecked)
+		} else {
+			newSelectedIngredients.delete(id)
 		}
 
 		this.setState({
-			selectedIngredients: selectedIngredients.filter((ingredient) => (
-				(ingredient.id === id) ? isChecked : ingredient.isChecked
-			))
+			...this.state,
+			selectedIngredients: newSelectedIngredients
 		})
 	}
 
 	render() {
 		const { recipes } = this.props
+		const { selectedIngredients } = this.state
 
 		const recipeList = recipes.map((recipe) => (
 			<Recipe
 				key={recipe.id}
 				recipe={recipe}
+				selectedIngredients={selectedIngredients}
 				onChange={this.onChangeHandler}
 			/>
 		))
