@@ -31,12 +31,6 @@ describe('filters selectors', () => {
 					dietTypes: Immutable.Set(dietTypes),
 					dietaryAttributes: Immutable.Set(dietaryAttributes),
 			}),
-			features: Immutable.Map({
-					justforyou: Immutable.Map({
-						value: false,
-						experiments: false
-					})
-			})
 		})
 
 		test('should return "All Recipes" by default', () => {

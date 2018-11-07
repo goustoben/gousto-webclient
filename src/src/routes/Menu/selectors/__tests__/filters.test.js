@@ -11,12 +11,6 @@ describe('filters', () => {
 				dietTypes: Immutable.Set([]),
 				dietaryAttributes: Immutable.Set([]),
 			}),
-			features: Immutable.Map({
-					justforyou: Immutable.Map({
-						value: false,
-						experiments: false
-					})
-			}),
 			basket: Immutable.fromJS({
 				numPortions: 2,
 			}),
@@ -84,12 +78,6 @@ describe('filters', () => {
 				dietTypes: Immutable.Set([]),
 				dietaryAttributes: Immutable.Set([]),
 			}),
-			features: Immutable.Map({
-					justforyou: Immutable.Map({
-						value: false,
-						experiments: false
-					})
-			}),
 			basket: Immutable.fromJS({
 				numPortions: 2,
 			}),
@@ -143,12 +131,6 @@ describe('filters', () => {
 				totalTime: '0',
 				dietTypes: Immutable.Set(['meat']),
 				dietaryAttributes: Immutable.Set([]),
-			}),
-			features: Immutable.Map({
-					justforyou: Immutable.Map({
-						value: false,
-						experiments: false
-					})
 			}),
 			basket: Immutable.fromJS({
 				numPortions: 2,
@@ -216,12 +198,6 @@ describe('filters', () => {
 				totalTime: '0',
 				dietTypes: Immutable.Set(['vegan', 'vegetarian']),
 				dietaryAttributes: Immutable.Set(['gluten-free']),
-			}),
-			features: Immutable.Map({
-					justforyou: Immutable.Map({
-						value: false,
-						experiments: false
-					})
 			}),
 			basket: Immutable.fromJS({
 				numPortions: 2,
@@ -346,12 +322,6 @@ describe('filters', () => {
 				totalTime: '10',
 				dietTypes: Immutable.Set(['meat']),
 				dietaryAttributes: Immutable.Set([]),
-			}),
-			features: Immutable.Map({
-					justforyou: Immutable.Map({
-						value: false,
-						experiments: false
-					})
 			}),
 			basket: Immutable.fromJS({
 				numPortions: 2,
