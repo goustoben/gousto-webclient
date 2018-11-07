@@ -38,9 +38,10 @@ import {
   checkoutAddressLookup,
   checkoutSignup,
   checkoutPostSignup,
+  trackPurchase,
 } from 'actions/checkout'
 
-describe('checkout actions', function() {
+describe('checkout actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
   const ga = jest.fn()
@@ -49,7 +50,7 @@ describe('checkout actions', function() {
   let addressItem
   let store
 
-  beforeEach(function () {
+  beforeEach(() => {
     store = {
       basket: Immutable.fromJS({
         address: '3 Moris House, London',
@@ -128,22 +129,22 @@ describe('checkout actions', function() {
     addressCollection = [{ 1: 'a' }, { 2: 'b' }]
     addressItem = { id: '2000287', line_1: '3 Aldensley Road' }
     fetchAddressByPostcode.mockReturnValue(
-      new Promise(resolve => {
-        resolve({ data: { results: addressCollection } })
-      }),
-    )
+        new Promise(resolve => {
+          resolve({ data: { results: addressCollection } })
+        }),
+      )
     createPreviewOrder.mockReturnValue(
-      new Promise(resolve => {
-        resolve({
-          data: {
-            order: {
-              id: 1,
+        new Promise(resolve => {
+          resolve({
+            data: {
+              order: {
+                id: 1,
+              },
+              ...previewOrder,
             },
-            ...previewOrder,
-          },
-        })
-      }),
-    )
+          })
+        }),
+      )
 
     getSlot.mockReturnValue(
       Immutable.Map({
@@ -158,15 +159,15 @@ describe('checkout actions', function() {
     getState.mockClear()
   })
 
-  describe('checkoutClearErrors', function () {
-    it('should dispatch CHECKOUT_ERRORS_CLEAR', async function () {
+  describe('checkoutClearErrors', () => {
+    it('should dispatch CHECKOUT_ERRORS_CLEAR', async () => {
       const result = checkoutClearErrors()
       expect(result.type).toBe(actionTypes.CHECKOUT_ERRORS_CLEAR)
     })
   })
 
-  describe('checkoutCreatePreviewOrder', function () {
-    it('should call create preview order', async function () {
+  describe('checkoutCreatePreviewOrder', () => {
+    it('should call create preview order', async () => {
       await checkoutCreatePreviewOrder()(
         dispatch,
         getState,
@@ -174,7 +175,7 @@ describe('checkout actions', function() {
       expect(createPreviewOrder).toHaveBeenCalledTimes(1)
       expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
     })
-    it('should call create preview order and log the error, coreDayId empty', async function () {
+    it('should call create preview order and log the error, coreDayId empty', async () => {
       Object.assign(store, {
         boxSummaryDeliveryDays: Immutable.fromJS({
           '2016-11-21': {
@@ -205,7 +206,7 @@ describe('checkout actions', function() {
         },
       })
     })
-    it('should call create preview order and log the error, boxSummaryDeliveryDays empty', async function () {
+    it('should call create preview order and log the error, boxSummaryDeliveryDays empty', async () => {
       Object.assign(store, { boxSummaryDeliveryDays: null })
       getState.mockReturnValue(store)
       await checkoutCreatePreviewOrder()(
@@ -221,8 +222,8 @@ describe('checkout actions', function() {
     })
   })
 
-  describe('checkoutAddressLookup', function () {
-    it('should call fetchAddressByPostcode and dispatch pending CHECKOUT_ADDRESSES_RECEIVE with addresses', async function () {
+  describe('checkoutAddressLookup', () => {
+    it('should call fetchAddressByPostcode and dispatch pending CHECKOUT_ADDRESSES_RECEIVE with addresses', async () => {
       const postcode = 'W6 0DH'
       await checkoutAddressLookup(postcode)(dispatch)
       expect(dispatch).toHaveBeenCalledTimes(3)
@@ -234,8 +235,8 @@ describe('checkout actions', function() {
     })
   })
 
-  describe('checkoutSignup', function () {
-    it('should redirect to invalid step', async function () {
+  describe('checkoutSignup', () => {
+    it('should redirect to invalid step', async () => {
       getState.mockReturnValue({
         basket: Immutable.fromJS({
           address: '3 Moris House, London',
@@ -307,7 +308,54 @@ describe('checkout actions', function() {
     })
   })
 
-  describe('checkoutPostSignup', function() {
+  describe('trackPurchase', () => {
+    beforeEach(() => {
+      getState.mockReturnValue({
+        basket: Immutable.fromJS({
+          previewOrderId: 'test-order-id',
+          promoCode: 'TEST123'
+        }),
+        price: Immutable.Map({
+          grossTotal: 28.00,
+          deliveryTotal: 2.99,
+        })
+      })
+    })
+
+    afterEach(() => {
+      ga.mockClear()
+    })
+
+    describe('when ga is undefined', () => {
+      beforeEach(() => {
+        global.ga = undefined
+      })
+
+      it('should not call ga with order details', async () => {
+        trackPurchase()(dispatch, getState)
+        expect(ga).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when ga is defined', () => {
+      beforeEach(() => {
+        global.ga = ga
+      })
+
+      it('should call ga with order details', async () => {
+        trackPurchase()(dispatch, getState)
+        expect(ga).toHaveBeenCalled()
+        expect(ga).toHaveBeenCalledWith('ec:setAction', 'purchase', {
+          id: 'test-order-id',
+          revenue: 28.00,
+          shipping: 2.99,
+          coupon: 'TEST123',
+        })
+      })
+    })
+  })
+
+  describe('checkoutPostSignup', () => {
     beforeEach(() => {
       getState.mockReturnValue({
         basket: Immutable.fromJS({
@@ -349,42 +397,20 @@ describe('checkout actions', function() {
       ga.mockClear()
     })
 
-    it('should call post signup', async function() {
+    it('should call post signup', async () => {
       await checkoutPostSignup()(dispatch, getState)
       expect(basketResetPersistent).toHaveBeenCalledTimes(1)
     })
 
-    describe('when ga is undefined', () => {
-      beforeEach(() => {
-        global.ga = undefined
-      })
-
-      it('should not call ga with order details', async function() {
-        await checkoutPostSignup()(dispatch, getState)
-        expect(ga).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('when ga is defined', () => {
-      beforeEach(() => {
-        global.ga = ga
-      })
-
-      it('should call ga with order details', async function() {
-        await checkoutPostSignup()(dispatch, getState)
-        expect(ga).toHaveBeenCalled()
-        expect(ga).toHaveBeenCalledWith('ec:setAction', 'purchase', {
-          id: 'test-order-id',
-          revenue: 28.00,
-          shipping: 2.99,
-          coupon: 'TEST123',
-        })
-      })
+    it('should dispatch a call to trackPurchase', async () => {
+      global.ga = ga
+      await checkoutPostSignup()(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledTimes(6)
     })
   })
 
-  describe('checkoutSignup on MOBILE', function () {
-    it('should redirect to invalid step', async function () {
+  describe('checkoutSignup on MOBILE', () => {
+    it('should redirect to invalid step', async () => {
       getState.mockReturnValue({
         basket: Immutable.fromJS({
           address: '3 Moris House, London',

@@ -194,6 +194,25 @@ export function checkoutSignup() {
   }
 }
 
+export const trackPurchase = () => (
+  (dispatch, getState) => {
+    const orderId = getState().basket.get('previewOrderId')
+    const promoCode = getState().basket.get('promoCode')
+    const totalPrice = getState().price.get('grossTotal')
+    const shippingPrice = getState().price.get('deliveryTotal')
+
+    if (typeof ga !== 'undefined') {
+      ga('ec:setAction', 'purchase', {
+        id: orderId,
+        revenue: totalPrice,
+        shipping: shippingPrice,
+        coupon: promoCode
+      })
+      ga('send', 'pageview')
+    }
+  }
+)
+
 export function checkoutPostSignup() {
   return async (dispatch, getState) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
@@ -204,19 +223,8 @@ export function checkoutPostSignup() {
       const email = aboutYou.get('email')
       const password = aboutYou.get('password')
       const orderId = getState().basket.get('previewOrderId')
-      const promoCode = getState().basket.get('promoCode')
-      const totalPrice = getState().price.get('grossTotal')
-      const shippingPrice = getState().price.get('deliveryTotal')
       await dispatch(loginActions.loginUser(email, password, true, orderId))
-      if (typeof ga !== 'undefined') {
-        ga('ec:setAction', 'purchase', {
-          id: orderId,
-          revenue: totalPrice,
-          shipping: shippingPrice,
-          coupon: promoCode
-        })
-        ga('send', 'pageview')
-      }
+      dispatch(trackPurchase())
     } catch (err) {
       logger.error(`${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`)
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
