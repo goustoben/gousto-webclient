@@ -25,19 +25,16 @@ export function getCollectionIdWithName(state, name) {
 	}
 	const allowUnpub = state.features ? (state.features.getIn(['unpubCollections', 'value']) && !state.features.getIn(['forceCollections', 'value'])) : false
 
-	let collectionId =  state.menuCollections
+	return state.menuCollections
 		.filter(collection => allowUnpub || collection.get('published'))
 		.filter(collection => state.menuCollectionRecipes.get(collection.get('id'), []).size > 0)
 		.find(collection => slugify(collection.get('shortTitle')) === name, null, Immutable.Map())
 		.get('id', null)
-
-		return collectionId
 }
 
 export const selectCollection = (state, collectionName, dispatch) => {
-	console.log('inside select collection')
 	const collectionId = getCollectionIdWithName(state, collectionName)
-	console.log(collectionId, collectionName)
+
 	if (collectionId) {
 		dispatch(collectionFilterIdRecieve(collectionId))
 	}
