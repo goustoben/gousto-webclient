@@ -19,25 +19,25 @@ export function getDefaultCollectionId(state) {
 }
 
 export function getCollectionIdWithName(state, name) {
-	console.log('inside getCollectionIdWithName: ', name)
 	if (!state || !state.menuCollections) {
 		return null
 	}
 	const allowUnpub = state.features ? (state.features.getIn(['unpubCollections', 'value']) && !state.features.getIn(['forceCollections', 'value'])) : false
-	console.log('allowUnpub', allowUnpub)
-
-	let collectionName = name ? name.toLowerCase() : name
-
-	console.log('lowercase collection name: ', collectionName)
-
 
 	let collectionId =  state.menuCollections
 		.filter(collection => allowUnpub || collection.get('published'))
 		.filter(collection => state.menuCollectionRecipes.get(collection.get('id'), []).size > 0)
-		.find(collection => slugify(collection.get('shortTitle').toLowerCase()) === collectionName, null, Immutable.Map())
+		.find(collection => slugify(collection.get('shortTitle')) === name, null, Immutable.Map())
 		.get('id', null)
 
-		console.log('collection id found: ', collectionId)
-
 		return collectionId
+}
+
+export const selectCollection = (state, collectionName, dispatch) => {
+	console.log('inside select collection')
+	const collectionId = getCollectionIdWithName(state, collectionName)
+	console.log(collectionId, collectionName)
+	if (collectionId) {
+		dispatch(collectionFilterIdRecieve(collectionId))
+	}
 }

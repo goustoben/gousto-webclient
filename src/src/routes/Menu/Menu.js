@@ -103,7 +103,6 @@ class Menu extends React.Component {
 		if (props.hasRecommendations) {
 			props.triggerMenuLoad()
 		}
-		console.log('trying to fetch data')
 		Menu.fetchData({ store, query, params }, forceDataLoad)
 
 		if (props.boxSummaryDeliveryDays.size === 0 && !props.disabled) {
@@ -133,7 +132,6 @@ class Menu extends React.Component {
 			const store = this.context.store
 			const query = nextProps.query || {}
 			const params = nextProps.params || {}
-			console.log('trying to fetch data 2')
 			Menu.fetchData({ store, query, params }, true)
 		}
 
