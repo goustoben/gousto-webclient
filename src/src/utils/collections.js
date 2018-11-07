@@ -1,5 +1,6 @@
 import { slugify } from 'utils/url'
 import Immutable from 'immutable' /* eslint-disable new-cap */
+import { collectionFilterIdRecieve } from 'actions/filters'
 
 export function isAllRecipes(collection) {
 	return collection.get('shortTitle')
