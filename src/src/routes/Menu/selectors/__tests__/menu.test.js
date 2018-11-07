@@ -40,7 +40,7 @@ describe('menu memoized selectors', () => {
 						id: '1235v3v3',
 						slug: 'test',
 					}
-				}),
+				})
 			}
 			expect(getCurrentCollectionSlug(state)).toBe('test')
 		})

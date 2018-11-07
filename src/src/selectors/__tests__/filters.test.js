@@ -30,7 +30,7 @@ describe('filters selectors', () => {
 					totalTime: cookingTime,
 					dietTypes: Immutable.Set(dietTypes),
 					dietaryAttributes: Immutable.Set(dietaryAttributes),
-			}),
+			})
 		})
 
 		test('should return "All Recipes" by default', () => {
