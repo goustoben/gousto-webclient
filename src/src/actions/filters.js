@@ -22,9 +22,7 @@ const filtersVisibilityChange = (visible = true) => ({
 	visible,
 })
 
-const filtersCollectionChange = (collectionName, collectionId) => {
-
-let action = ({
+const filtersCollectionChange = (collectionName, collectionId) => ({
 	type: actionTypes.FILTERS_COLLECTION_CHANGE,
 	collectionName,
 	collectionId,
@@ -33,9 +31,6 @@ let action = ({
 		collectionId,
 	},
 })
-
-return action
-}
 
 export const collectionFilterIdRecieve = (collectionId) => ({
 	type: actionTypes.FILTERS_COLLECTION_CHANGE,

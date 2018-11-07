@@ -16,7 +16,6 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, url =
 			<meta name="viewport" content="width=device-width,initial-scale=1">
 			${(helmetHead && helmetHead.title) ? helmetHead.title.toString() : ''}
 			${(helmetHead && helmetHead.meta) ? helmetHead.meta.toString() : ''}
-			${head.ga()}
 			${noGTM ? '' : head.optimizely(initialState.features)}
 			<script src="${newAssetPath('vendors.js')}" defer></script>
 			<script src="${newAssetPath('main.js')}" defer></script>
