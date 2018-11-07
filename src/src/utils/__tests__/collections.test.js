@@ -13,7 +13,7 @@ describe('when selecting a collection', () => {
 		})
 	}
 
-	describe('and collection id exists for the given collection name', () => {
+	describe('and collection id exists for the given collection name and collection is published', () => {
 		const collectionName = 'test-collection-name'
 
 		beforeEach(() => {
