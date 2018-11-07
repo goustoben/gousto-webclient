@@ -2,8 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { ItemExpandable } from 'goustouicomponents'
 import { List } from '../../components/List'
-
-import css from './InputCheck'
+import { InputCheck } from './InputCheck'
 
 const propTypes = {
 	recipes: PropTypes.arrayOf(
@@ -20,33 +19,16 @@ const propTypes = {
 	).isRequired
 }
 
-const InputCheck = ({ id, label, isChecked, onClick }) => {
-	console.log('InputCheck', isChecked)
-
-	return (
-		<div className={css.inputCheckContainer} onClick={() => onClick(id)}>
-			<input
-				id="inputCheck"
-				type="checkbox"
-			/>
-			<div className={css.inputCheckMask}></div>
-			<label className={css.inputCheckLabel} htmlFor="inputCheck">
-				{label}
-			</label>
-		</div>
-	)
-}
-
-const Recipe = ({ recipe, onClick }) => {
+const Recipe = ({ recipe, onChange }) => {
 	const ingredientList = recipe.ingredients.map((ingredient) => (
-			<InputCheck
-				key={ingredient.id}
-				id={ingredient.id}
-				label={ingredient.label}
-				isChecked={false}
-				onClick={onClick}
-			/>
-		))
+		<InputCheck
+			key={ingredient.id}
+			id={ingredient.id}
+			label={ingredient.label}
+			isChecked={false}
+			onChange={onChange}
+		/>
+	))
 
 	return (
 		<ItemExpandable
@@ -63,8 +45,18 @@ class RecipeList extends PureComponent {
 		selectedIngredients: []
 	}
 
-	onClickHandler = (id) => {
-		console.log(id)
+	onChangeHandler = ({ id, isChecked }) => {
+		const { selectedIngredients } = this.state
+
+		if (isChecked) {
+			selectedIngredients.push({ id, isChecked })
+		}
+
+		this.setState({
+			selectedIngredients: selectedIngredients.filter((ingredient) => (
+				(ingredient.id === id) ? isChecked : ingredient.isChecked
+			))
+		})
 	}
 
 	render() {
@@ -74,7 +66,7 @@ class RecipeList extends PureComponent {
 			<Recipe
 				key={recipe.id}
 				recipe={recipe}
-				onClick={this.onClickHandler}
+				onChange={this.onChangeHandler}
 			/>
 		))
 

@@ -23,9 +23,7 @@ const Ingredients = ({ content, recipes }) => {
 			buttonLeftUrl={buttonLeftUrl}
 			buttonRightUrl={buttonRightUrl}
 		>
-			<div>
-				<RecipeList recipes={recipes}/>
-			</div>
+			<RecipeList recipes={recipes}/>
 		</IngredientsPresentation>
 	)
 }
