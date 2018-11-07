@@ -47,7 +47,6 @@ describe('checkout actions', function() {
   let previewOrder
   let addressCollection
   let addressItem
-
   let store
 
   beforeEach(function () {
