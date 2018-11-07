@@ -64,7 +64,6 @@ export function collectionFilterChange(collectionId) {
 	return (dispatch, getState) => {
 		const prevLoc = getState().routing.locationBeforeTransitions
 		const query = { ...prevLoc.query }
-
 		const collectionName = slugify(getState().menuCollections.getIn([collectionId, 'shortTitle'], ''))
 		if (collectionName) {
 			query.collection = collectionName
@@ -109,7 +108,7 @@ const filterMenuApply = () => (
 	}
 )
 
-export const filterCollectionChange = (collectionId) => (
+const filterCollectionChange = (collectionId) => (
 	(dispatch) => {
 		dispatch(collectionFilterChange(collectionId))
 		dispatch(trackRecipeCollectionSelected(collectionId))
