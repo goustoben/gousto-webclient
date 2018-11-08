@@ -33,7 +33,7 @@
       "import/no-named-default" : 2,
       "import/no-default-export" : 1,
       "import/no-anonymous-default-export" : 1,
-      "react/jsx-indent-props": ["error", 2],
+      "react/jsx-indent-props": ["warning", 2],
       "react/jsx-key": 1,
       "react/prefer-stateless-function": 1,
       "import/no-mutable-exports": 1,
@@ -43,7 +43,7 @@
       "no-shadow": ["error", {
         "allow": ["resolve", "reject", "done", "cb", "e", "err", "error", "mapStateToProps"]
       }],
-      "no-underscore-dangle": ["error", {
+      "no-underscore-dangle": [1, {
         "allow": ["__initialState__"]
       }],
       "import/prefer-default-export": 0,
@@ -105,6 +105,7 @@
       "no-lonely-if": 0,
       "react/no-find-dom-node": 1,
       "react/no-unused-state": 1,
+      "no-unused-vars": 1,
       "import/no-extraneous-dependencies": 1,
       "no-return-await": 1,
       "react/jsx-no-duplicate-props": 1,
@@ -115,7 +116,7 @@
       "no-mixed-operators": 1,
       "react/jsx-curly-spacing": 0,
       "jsx-a11y/interactive-supports-focus": 1,
-      "react/no-access-state-in-setstate": 2,
+      "react/no-access-state-in-setstate": 1,
       "jsx-a11y/no-autofocus": 1,
       "jsx-a11y/anchor-has-content": 1,
       "jsx-a11y/no-noninteractive-element-interactions": 1,
