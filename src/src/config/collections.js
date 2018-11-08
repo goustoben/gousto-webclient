@@ -1,3 +1,1 @@
-module.exports = {
-	recommendationsShortTitle: 'recommendations'
-}
+export const recommendationsShortTitle = 'recommendations'

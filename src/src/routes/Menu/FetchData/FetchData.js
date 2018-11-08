@@ -186,19 +186,20 @@ export default async function FetchData({ store, query, params }, force, backgro
 		}
 
 		promises = promises.then(() => {
+			const state = store.getState()
 			let collectionName = query.collection
 
-			if (!store.getState().features.getIn(['forceCollections', 'true'])) {
-				const featureCollectionFreeze = store.getState().features.getIn(['collectionFreeze', 'value'])
+			if (!state.features.getIn(['forceCollections', 'true'])) {
+				const featureCollectionFreeze = state.features.getIn(['collectionFreeze', 'value'])
 				if (typeof featureCollectionFreeze === 'string' && featureCollectionFreeze.length > 0) {
 					collectionName = featureCollectionFreeze
-				} else if (isJustForYouFeatureEnabled(store.getState()) && !collectionName) {
+				} else if (isJustForYouFeatureEnabled(state) && !collectionName) {
 					collectionName = recommendationsShortTitle
 				}
 			}
 
-			if (isCollectionsFeatureEnabled(store.getState()) || isJustForYouFeatureEnabled(store.getState())) {
-				selectCollection(store.getState(), collectionName, store.dispatch)
+			if (isCollectionsFeatureEnabled(state) || isJustForYouFeatureEnabled(state)) {
+				selectCollection(state, collectionName, store.dispatch)
 			}
 		})
 
