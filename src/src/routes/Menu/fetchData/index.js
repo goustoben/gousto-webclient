@@ -1,1 +1,1 @@
-export default from './FetchData'
+export default from './fetchData'
