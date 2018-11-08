@@ -12,7 +12,7 @@ import { recommendationsShortTitle } from 'config/collections'
 
 import moment from 'moment'
 
-export default async function FetchData({ store, query, params }, force, background) {
+export default async function fetchData({ store, query, params }, force, background) {
 	const isAuthenticated = store.getState().auth.get('isAuthenticated')
 	const isAdmin = store.getState().auth.get('isAdmin')
 	function chooseFirstDate() {

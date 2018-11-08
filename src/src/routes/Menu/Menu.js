@@ -25,7 +25,7 @@ import RecipeList from './RecipeList'
 
 
 
-import FetchData from './FetchData'
+import fetchData from './fetchData'
 
 import browserHelper from 'utils/browserHelper'
 
@@ -72,7 +72,7 @@ class Menu extends React.Component {
 	}
 
 	static fetchData(args, force) {
-		return FetchData(args, force)
+		return fetchData(args, force)
 	}
 
 	state = {

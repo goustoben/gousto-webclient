@@ -7,11 +7,11 @@ import home from 'config/home'
 import routes from 'config/routes'
 import HomeSections from 'routes/Home/HomeSections'
 import { homeLoadCarousel } from 'actions'
-import menuFetchData from 'routes/Menu/FetchData'
+import menuFetchData from 'routes/Menu/fetchData'
 
 import Home from 'routes/Home/Home'
 
-jest.mock('routes/Menu/FetchData')
+jest.mock('routes/Menu/fetchData')
 
 jest.mock('routes/Home/HomeSections', () => (
 	() => <div />

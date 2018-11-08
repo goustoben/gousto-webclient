@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 import { loadRecommendations } from 'actions/recipes'
 
-import fetchData from 'routes/Menu/FetchData'
+import fetchData from 'routes/Menu/fetchData'
 
 jest.mock('actions')
 jest.mock('utils/logger')
@@ -10,7 +10,6 @@ jest.mock('utils/logger')
 jest.mock('actions/recipes', () => ({
 	loadRecommendations: jest.fn()
 }))
-
 
 describe('fetchData', () => {
 	const getState = jest.fn()

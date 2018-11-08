@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Helmet from 'react-helmet'
 import actions from 'actions'
-import menuFetchData from 'routes/Menu/FetchData'
+import menuFetchData from 'routes/Menu/fetchData'
 import HomeSections from './HomeSections'
 import PromoBanner from './PromoBanner'
 import home from 'config/home'
