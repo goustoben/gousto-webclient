@@ -35,7 +35,7 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, url =
 		</head>
 		<body>
 			${noGTM ? '' : head.fbTracking()}
-			${noGTM ? '' : head.gtm(initialState, url, userAgent)}
+			${noGTM ? '' : head.gtm(initialState, userAgent)}
 			<div id="react-root">${reactHTML}</div>
 		</body>
 	</html>`
