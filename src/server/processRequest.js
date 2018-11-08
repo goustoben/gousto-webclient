@@ -64,19 +64,19 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
   let startTime = new Date
   const apollo = apolloClient(store)
   const components = (
-		<Provider store={store}>
-			<ApolloProvider client={apollo}>
-				<RouterContext {...renderProps} />
-			</ApolloProvider>
-		</Provider>
+    <Provider store={store}>
+      <ApolloProvider client={apollo}>
+        <RouterContext {...renderProps} />
+      </ApolloProvider>
+    </Provider>
   )
 
   startTime = new Date
   renderToString(
-		<GoustoHelmet
-		  noGTM={noGTM}
-		  requestUrl={url}
-		/>
+    <GoustoHelmet
+      noGTM={noGTM}
+      requestUrl={url}
+    />
   )
 
   return getDataFromTree(components)
@@ -86,7 +86,7 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
 
       startTime = new Date
       const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
-      const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), url, userAgent, noGTM, helmetHead)
+      const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, noGTM, helmetHead)
       logger.notice(`renderHTML/template -  ${new Date - startTime}ms`)
 
       return template
@@ -169,23 +169,23 @@ async function processRequest(ctx, next) {
     }
     const apollo = apolloClient(store)
     const reactHTML = (
-			<Provider store={store}>
-				<ApolloProvider client={apollo}>
-					<Header isAuthenticated={authenticated} simple={simple} path={path} />
-				</ApolloProvider>
-			</Provider>
+      <Provider store={store}>
+        <ApolloProvider client={apollo}>
+          <Header isAuthenticated={authenticated} simple={simple} path={path} />
+        </ApolloProvider>
+      </Provider>
     )
     getDataFromTree(reactHTML)
       .then(() => {
         ctx.body = `
-					<link rel="stylesheet" property="stylesheet" href="${newAssetPath('legacy.css')}">
-					<script type="text/javascript" src="${newAssetPath('legacy.js')}"></script>
-					<span id="nodeHeaderReactRoot">
-						<script type="text/javascript">window.__initialState__ = ${encodeState(store.getState())}</script>
-						<script type="text/javascript">window.__APOLLO_STATE__ = ${encodeState(apollo.cache.extract())}</script>
-						${renderToString(reactHTML)}
-					</span>
-				`
+          <link rel="stylesheet" property="stylesheet" href="${newAssetPath('legacy.css')}">
+          <script type="text/javascript" src="${newAssetPath('legacy.js')}"></script>
+          <span id="nodeHeaderReactRoot">
+            <script type="text/javascript">window.__initialState__ = ${encodeState(store.getState())}</script>
+            <script type="text/javascript">window.__APOLLO_STATE__ = ${encodeState(apollo.cache.extract())}</script>
+            ${renderToString(reactHTML)}
+          </span>
+        `
       })
   } else {
     await new Promise((resolve, reject) => {
