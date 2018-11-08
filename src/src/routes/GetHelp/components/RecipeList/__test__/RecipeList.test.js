@@ -3,14 +3,19 @@ import { mount } from 'enzyme'
 import { RecipeList } from 'routes/GetHelp/components/RecipeList'
 
 describe('<RecipeList />', () => {
+	const recipes = [
+		{ id: '1', title: 'test 1', ingredients: [{ id: '1', label: 'test' }] },
+		{
+			id: '2',
+			title: 'test 2',
+			ingredients: [{ id: '2', label: 'test' }, { id: '2222', label: 'test2' }]
+		},
+		{ id: '3', title: 'test 3', ingredients: [{ id: '3', label: 'test' }] },
+		{ id: '4', title: 'test 4', ingredients: [{ id: '4', label: 'test' }] },
+	]
+
 	describe('rendering', () => {
 		let wrapper
-		const recipes = [
-			{ id: '1', title: 'test 1', ingredients: [{ id: '1', label: 'test' }] },
-			{ id: '2', title: 'test 2', ingredients: [{ id: '2', label: 'test' }] },
-			{ id: '3', title: 'test 3', ingredients: [{ id: '3', label: 'test' }] },
-			{ id: '4', title: 'test 4', ingredients: [{ id: '4', label: 'test' }] },
-		]
 
 		beforeAll(() => {
 			wrapper = mount(
@@ -30,12 +35,37 @@ describe('<RecipeList />', () => {
 	})
 
 	describe('behaviour', () => {
-		test('when clicking on a recipe item its ingredients appear/disappear', () => {
+		let wrapper
 
+		beforeEach(() => {
+			wrapper = mount(
+				<RecipeList
+					recipes={recipes}
+				/>
+			)
+		})
+
+		test('when clicking on a recipe item its ingredients appear/disappear', () => {
+			const secondRecipe = wrapper.find('Recipe').at(1)
+			secondRecipe.simulate('click')
+			let ingredients = wrapper.find('InputCheck')
+
+			expect(ingredients).toHaveLength(2)
+
+			wrapper.find('Recipe').at(1).simulate('click')
+			ingredients = wrapper.find('InputCheck')
+
+			expect(ingredients).toHaveLength(0)
 		})
 
 		test('ingredients are unselected by default', () => {
+			const secondRecipe = wrapper.find('Recipe').at(1)
+			secondRecipe.simulate('click')
+			let ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
 
+			expect(ingredientsCheckboxes).toHaveLength(2)
+			expect(ingredientsCheckboxes.at(0).prop('checked')).toBeFalsy()
+			expect(ingredientsCheckboxes.at(1).prop('checked')).toBeFalsy()
 		})
 	})
 })
