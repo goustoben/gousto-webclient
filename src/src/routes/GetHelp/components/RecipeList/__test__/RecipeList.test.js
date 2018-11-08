@@ -47,12 +47,12 @@ describe('<RecipeList />', () => {
 
 		test('when clicking on a recipe item its ingredients appear/disappear', () => {
 			const secondRecipe = wrapper.find('Recipe').at(1)
-			secondRecipe.simulate('click')
+			secondRecipe.find('Item').simulate('click')
 			let ingredients = wrapper.find('InputCheck')
 
 			expect(ingredients).toHaveLength(2)
 
-			wrapper.find('Recipe').at(1).simulate('click')
+			secondRecipe.find('Item').simulate('click')
 			ingredients = wrapper.find('InputCheck')
 
 			expect(ingredients).toHaveLength(0)
@@ -60,7 +60,7 @@ describe('<RecipeList />', () => {
 
 		test('ingredients are unselected by default', () => {
 			const secondRecipe = wrapper.find('Recipe').at(1)
-			secondRecipe.simulate('click')
+			secondRecipe.find('Item').simulate('click')
 			let ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
 
 			expect(ingredientsCheckboxes).toHaveLength(2)

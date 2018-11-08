@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { ItemExpandable } from 'goustouicomponents'
+import { InputCheck, ItemExpandable } from 'goustouicomponents'
 import { List } from '../../components/List'
-import { InputCheck } from './InputCheck'
 
 const propTypes = {
 	recipes: PropTypes.arrayOf(
