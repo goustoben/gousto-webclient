@@ -1,7 +1,6 @@
 const blackListConfig = require('config/gtmBlacklist')
 
 function getDataLayer(userAgent) {
-  let dataLayer = '[]'
   let gtmScript = ''
 
   if (!userAgent.match(blackListConfig.user_agents)) {
@@ -16,7 +15,7 @@ function getDataLayer(userAgent) {
   }
 
   return (
-    `<script>dataLayer = window.dataLayer || ${dataLayer};</script>${gtmScript}`
+    `<script>dataLayer = window.dataLayer || [];</script>${gtmScript}`
   )
 }
 
