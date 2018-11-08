@@ -41,82 +41,106 @@ import {
   trackPurchase,
 } from 'actions/checkout'
 
+const createState = (stateOverrides) => ({
+  basket: Immutable.fromJS({
+    address: '3 Moris House, London',
+    date: '2016-11-21',
+    numPortions: 4,
+    recipes: {
+      'recipe-id-1': 1,
+      'recipe-id-2': 2,
+    },
+    stepsOrder: ['boxdetails', 'aboutyou', 'delivery', 'payment'],
+    slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
+    postcode: 'W6 0DH',
+    prevPostcode: 'OX18 1EN',
+  }),
+  boxSummaryDeliveryDays: Immutable.fromJS({
+    '2016-11-21': {
+      id: '3e9a2572-a778-11e6-bb0f-080027596944',
+      date: '2016-11-21',
+      coreDayId: '253',
+      slots: [
+        {
+          coreSlotId: '1',
+          id: '3e952522-a778-11e6-8197-080027596944',
+        },
+      ],
+    },
+  }),
+  checkout: Immutable.fromJS({
+    deliveryAddresses: Immutable.fromJS([
+      {
+        id: '2000287',
+        count: 1,
+      },
+    ]),
+    email: 'test@example.com',
+    password: 'testpassword',
+    validations: {
+      boxdetails: true,
+      aboutyou: true,
+      delivery: true,
+      payment: true,
+    },
+  }),
+  form: {
+    checkout: {
+      values: {
+        aboutyou: {
+          email: 'test@test.com',
+        },
+        payment: {
+          postcode: 'w37un',
+          houseNo: '1',
+        },
+        delivery: {
+          phone: '01234567890',
+          cardNumber: '1234567890',
+          cardExpiryDate: '12/24',
+        },
+      },
+    },
+  },
+  menuBoxPrices: Immutable.fromJS({
+    2: {
+      4: {
+        gourmet: {
+          promoCodeValid: false,
+          grossTotal: '34.99',
+          total: '34.99',
+          vatCharged: '0.00',
+          recipeDiscount: '0.00',
+          deliveryTotal: '0.00',
+          pricePerPortionDiscounted: '5.83',
+          pricePerPortion: '5.83',
+          productTotal: '0.00',
+          recipeTotalDiscounted: '34.99',
+          recipeTotal: '34.99',
+          promoCode: false,
+        },
+      },
+    },
+  }),
+  request: Immutable.fromJS({
+    browser: 'desktop',
+  }),
+  price: Immutable.Map({
+    grossTotal: 28.00,
+    deliveryTotal: 2.99,
+  }),
+  ...stateOverrides,
+})
+
 describe('checkout actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
   const ga = jest.fn()
   let previewOrder
   let addressCollection
-  let addressItem
-  let store
 
   beforeEach(() => {
-    store = {
-      basket: Immutable.fromJS({
-        address: '3 Moris House, London',
-        date: '2016-11-21',
-        numPortions: 4,
-        recipes: {
-          'recipe-id-1': 1,
-          'recipe-id-2': 2,
-        },
-        stepsOrder: ['boxdetails', 'aboutyou', 'delivery', 'payment'],
-        slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
-        postcode: 'W6 0DH',
-        prevPostcode: 'OX18 1EN',
-      }),
-      checkout: Immutable.fromJS({
-        deliveryAddresses: Immutable.fromJS([
-          {
-            id: '2000287',
-            count: 1,
-          },
-        ]),
-        email: 'test@example.com',
-        password: 'testpassword',
-        validations: {
-          boxdetails: true,
-          aboutyou: true,
-          delivery: true,
-          payment: true,
-        },
-      }),
-      form: {
-        checkout: {
-          values: {
-            aboutyou: {
-              email: 'test@test.com',
-            },
-            payment: {
-              postcode: 'w37un',
-              houseNo: '1',
-            },
-            delivery: {
-              phone: '01234567890',
-              cardNumber: '1234567890',
-              cardExpiryDate: '12/24',
-            },
-          },
-        },
-      },
-      boxSummaryDeliveryDays: Immutable.fromJS({
-        '2016-11-21': {
-          id: '3e9a2572-a778-11e6-bb0f-080027596944',
-          date: '2016-11-21',
-          coreDayId: '253',
-          slots: [
-            {
-              coreSlotId: '1',
-              id: '3e952522-a778-11e6-8197-080027596944',
-            },
-          ],
-        },
-      }),
-      request: Immutable.fromJS({
-        browser: 'desktop',
-      }),
-    }
-    getState.mockReturnValue(store)
+    getState.mockReturnValue(createState())
     previewOrder = {
       delivery_day_id: '253',
       delivery_slot_id: '4',
@@ -127,24 +151,23 @@ describe('checkout actions', () => {
       ],
     }
     addressCollection = [{ 1: 'a' }, { 2: 'b' }]
-    addressItem = { id: '2000287', line_1: '3 Aldensley Road' }
     fetchAddressByPostcode.mockReturnValue(
-        new Promise(resolve => {
-          resolve({ data: { results: addressCollection } })
-        }),
-      )
+      new Promise(resolve => {
+        resolve({ data: { results: addressCollection } })
+      }),
+    )
     createPreviewOrder.mockReturnValue(
-        new Promise(resolve => {
-          resolve({
-            data: {
-              order: {
-                id: 1,
-              },
-              ...previewOrder,
+      new Promise(resolve => {
+        resolve({
+          data: {
+            order: {
+              id: 1,
             },
-          })
-        }),
-      )
+            ...previewOrder,
+          },
+        })
+      }),
+    )
 
     getSlot.mockReturnValue(
       Immutable.Map({
@@ -176,7 +199,7 @@ describe('checkout actions', () => {
       expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
     })
     it('should call create preview order and log the error, coreDayId empty', async () => {
-      Object.assign(store, {
+      getState.mockReturnValue(createState({
         boxSummaryDeliveryDays: Immutable.fromJS({
           '2016-11-21': {
             id: '3e9a2572-a778-11e6-bb0f-080027596944',
@@ -190,8 +213,7 @@ describe('checkout actions', () => {
             ],
           },
         }),
-      })
-      getState.mockReturnValue(store)
+      }))
       await checkoutCreatePreviewOrder()(
         dispatch,
         getState,
@@ -207,8 +229,9 @@ describe('checkout actions', () => {
       })
     })
     it('should call create preview order and log the error, boxSummaryDeliveryDays empty', async () => {
-      Object.assign(store, { boxSummaryDeliveryDays: null })
-      getState.mockReturnValue(store)
+      getState.mockReturnValue(createState({
+        boxSummaryDeliveryDays: null,
+      }))
       await checkoutCreatePreviewOrder()(
         dispatch,
         getState,
@@ -237,72 +260,7 @@ describe('checkout actions', () => {
 
   describe('checkoutSignup', () => {
     it('should redirect to invalid step', async () => {
-      getState.mockReturnValue({
-        basket: Immutable.fromJS({
-          address: '3 Moris House, London',
-          date: '2016-11-21',
-          numPortions: 4,
-          recipes: {
-            10: 2,
-            17: 1,
-            44: 1,
-          },
-          stepsOrder: ['boxdetails', 'aboutyou', 'delivery', 'payment'],
-          slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
-          postcode: 'W6 0DH',
-        }),
-        checkout: Immutable.fromJS({
-          email: 'test@example.com',
-          password: 'testpassword',
-          validations: {
-            boxdetails: true,
-            aboutyou: true,
-            delivery: false,
-            payment: true,
-          },
-        }),
-        form: {
-          checkout: {
-            values: {},
-          },
-        },
-        boxSummaryDeliveryDays: Immutable.fromJS({
-          '2016-11-21': {
-            id: '3e9a2572-a778-11e6-bb0f-080027596944',
-            date: '2016-11-21',
-            coreDayId: '253',
-            slots: [
-              {
-                coreSlotId: '1',
-                id: '3e952522-a778-11e6-8197-080027596944',
-              },
-            ],
-          },
-        }),
-        menuBoxPrices: Immutable.fromJS({
-          2: {
-            4: {
-              gourmet: {
-                promoCodeValid: false,
-                grossTotal: '39.99',
-                total: '39.99',
-                vatCharged: '0.00',
-                recipeDiscount: '0.00',
-                deliveryTotal: '0.00',
-                pricePerPortionDiscounted: '5.00',
-                pricePerPortion: '5.00',
-                productTotal: '0.00',
-                recipeTotalDiscounted: '39.99',
-                recipeTotal: '39.99',
-                promoCode: false,
-              },
-            },
-          },
-        }),
-        request: Immutable.fromJS({
-          browser: 'desktop',
-        }),
-      })
+      getState.mockReturnValue(createState())
       await checkoutSignup()(dispatch, getState)
       expect(dispatch).toHaveBeenCalledTimes(8)
     })
@@ -357,40 +315,7 @@ describe('checkout actions', () => {
 
   describe('checkoutPostSignup', () => {
     beforeEach(() => {
-      getState.mockReturnValue({
-        basket: Immutable.fromJS({
-          address: '3 Moris House, London',
-          date: '2016-11-21',
-          numPortions: 4,
-          recipes: {
-            10: 2,
-            17: 1,
-            44: 1,
-          },
-          stepsOrder: ['boxdetails', 'aboutyou', 'delivery', 'payment'],
-          slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
-          postcode: 'W6 0DH',
-          previewOrderId: 'test-order-id',
-          promoCode: 'TEST123'
-        }),
-        form: {
-          checkout: {
-            values: {
-              aboutyou: {
-                email: 'test@gmail.com',
-                password: 'Test1234',
-              },
-            },
-          },
-        },
-        request: Immutable.fromJS({
-          browser: 'desktop',
-        }),
-        price: Immutable.Map({
-          grossTotal: 28.00,
-          deliveryTotal: 2.99,
-        })
-      })
+      getState.mockReturnValue(createState())
     })
 
     afterEach(() => {
@@ -411,72 +336,7 @@ describe('checkout actions', () => {
 
   describe('checkoutSignup on MOBILE', () => {
     it('should redirect to invalid step', async () => {
-      getState.mockReturnValue({
-        basket: Immutable.fromJS({
-          address: '3 Moris House, London',
-          date: '2016-11-21',
-          numPortions: 2,
-          recipes: {
-            10: 2,
-            17: 1,
-            44: 1,
-          },
-          stepsOrder: ['boxdetails', 'aboutyou', 'delivery', 'payment'],
-          slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
-          postcode: 'W6 0DH',
-        }),
-        checkout: Immutable.fromJS({
-          email: 'test@example.com',
-          password: 'testpassword',
-          validations: {
-            boxdetails: true,
-            aboutyou: true,
-            delivery: false,
-            payment: true,
-          },
-        }),
-        form: {
-          checkout: {
-            values: {},
-          },
-        },
-        boxSummaryDeliveryDays: Immutable.fromJS({
-          '2016-11-21': {
-            id: '3e9a2572-a778-11e6-bb0f-080027596944',
-            date: '2016-11-21',
-            coreDayId: '253',
-            slots: [
-              {
-                coreSlotId: '1',
-                id: '3e952522-a778-11e6-8197-080027596944',
-              },
-            ],
-          },
-        }),
-        menuBoxPrices: Immutable.fromJS({
-          2: {
-            4: {
-              gourmet: {
-                promoCodeValid: false,
-                grossTotal: '34.99',
-                total: '34.99',
-                vatCharged: '0.00',
-                recipeDiscount: '0.00',
-                deliveryTotal: '0.00',
-                pricePerPortionDiscounted: '5.83',
-                pricePerPortion: '5.83',
-                productTotal: '0.00',
-                recipeTotalDiscounted: '34.99',
-                recipeTotal: '34.99',
-                promoCode: false,
-              },
-            },
-          },
-        }),
-        request: Immutable.fromJS({
-          browser: 'desktop',
-        }),
-      })
+      getState.mockReturnValue(createState())
       await checkoutSignup()(dispatch, getState)
       expect(dispatch).toHaveBeenCalledTimes(8)
     })
