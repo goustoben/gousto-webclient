@@ -44,6 +44,7 @@ const Recipe = ({ recipe, selectedIngredients, onChange }) => {
 	)
 }
 
+
 class RecipeList extends PureComponent {
 	state = {
 		selectedIngredients: new Map()
