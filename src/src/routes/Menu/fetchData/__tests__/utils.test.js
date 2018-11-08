@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
-import { getCollectionName, selectCollection } from '../utils'
+import { getPreselectedCollectionName, selectCollection } from '../utils'
 import actionTypes from 'actions/actionTypes'
 import { recommendationsShortTitle } from 'config/collections'
 
@@ -20,7 +20,7 @@ describe('getCollection', () => {
 		})
 
 		it('should return value of collectionFreeze', () => {
-			expect(getCollectionName(state)).toEqual('non-empty string')
+			expect(getPreselectedCollectionName(state)).toEqual('non-empty string')
 		})
 	})
 
@@ -44,7 +44,7 @@ describe('getCollection', () => {
 			})
 
 			it('should return recommendations collection short title', () => {
-				expect(getCollectionName(state)).toEqual(recommendationsShortTitle)
+				expect(getPreselectedCollectionName(state)).toEqual(recommendationsShortTitle)
 			})
 		})
 
@@ -59,7 +59,7 @@ describe('getCollection', () => {
 			})
 
 			it('should return default collection name', () => {
-				expect(getCollectionName(state, 'default-collection-name')).toEqual('default-collection-name')
+				expect(getPreselectedCollectionName(state, 'default-collection-name')).toEqual('default-collection-name')
 			})
 		})
 	})

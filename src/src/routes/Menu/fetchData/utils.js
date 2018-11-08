@@ -3,7 +3,7 @@ import { recommendationsShortTitle } from 'config/collections'
 import { getCollectionIdWithName } from 'utils/collections'
 import { collectionFilterIdRecieve } from 'actions/filters'
 
-export const getCollectionName = (state, defaultCollectionName) => {
+export const getPreselectedCollectionName = (state, defaultCollectionName) => {
 	const featureCollectionFreeze = getCollectionFreezeValue(state)
 
 	if (typeof featureCollectionFreeze === 'string' && featureCollectionFreeze.length > 0) {

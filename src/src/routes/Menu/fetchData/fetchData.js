@@ -6,9 +6,8 @@ import actionTypes from 'actions/actionTypes'
 import { loadRecommendations } from 'actions/recipes'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
-import { selectCollection } from 'utils/collections'
+import { selectCollection, getPreselectedCollectionName } from './utils'
 import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/features'
-import { recommendationsShortTitle } from 'config/collections'
 
 import moment from 'moment'
 
@@ -187,18 +186,9 @@ export default async function fetchData({ store, query, params }, force, backgro
 
 		promises = promises.then(() => {
 			const state = store.getState()
-			let collectionName = query.collection
-
-			if (!state.features.getIn(['forceCollections', 'true'])) {
-				const featureCollectionFreeze = state.features.getIn(['collectionFreeze', 'value'])
-				if (typeof featureCollectionFreeze === 'string' && featureCollectionFreeze.length > 0) {
-					collectionName = featureCollectionFreeze
-				} else if (isJustForYouFeatureEnabled(state) && !collectionName) {
-					collectionName = recommendationsShortTitle
-				}
-			}
 
 			if (isCollectionsFeatureEnabled(state) || isJustForYouFeatureEnabled(state)) {
+				const collectionName = getPreselectedCollectionName(state, query.collection)
 				selectCollection(state, collectionName, store.dispatch)
 			}
 		})
