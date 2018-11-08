@@ -33,5 +33,9 @@ describe('<RecipeList />', () => {
 		test('when clicking on a recipe item its ingredients appear/disappear', () => {
 
 		})
+
+		test('ingredients are unselected by default', () => {
+
+		})
 	})
 })
