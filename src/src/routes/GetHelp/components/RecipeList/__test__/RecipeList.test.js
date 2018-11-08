@@ -25,11 +25,7 @@ describe('<RecipeList />', () => {
 		})
 
 		test('ingredients are invisible by default', () => {
-			console.log(wrapper.find('List').find('Recipe').at(0).html())
-		})
-
-		test('ingredients are unselected by default', () => {
-
+			expect(wrapper.find('InputCheck')).toHaveLength(0)
 		})
 	})
 
