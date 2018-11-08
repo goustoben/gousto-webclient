@@ -1,6 +1,5 @@
 import { slugify } from 'utils/url'
 import Immutable from 'immutable' /* eslint-disable new-cap */
-import { collectionFilterIdRecieve } from 'actions/filters'
 
 export function isAllRecipes(collection) {
 	return collection.get('shortTitle')
@@ -32,10 +31,3 @@ export function getCollectionIdWithName(state, name) {
 		.get('id', null)
 }
 
-export const selectCollection = (state, collectionName, dispatch) => {
-	const collectionId = getCollectionIdWithName(state, collectionName)
-
-	if (collectionId) {
-		dispatch(collectionFilterIdRecieve(collectionId))
-	}
-}

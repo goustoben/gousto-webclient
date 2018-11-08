@@ -1,6 +1,10 @@
 import Immutable from 'immutable'
 
-import { isCollectionsFeatureEnabled, isJustForYouFeatureEnabled } from 'selectors/features'
+import {
+	isCollectionsFeatureEnabled,
+	isJustForYouFeatureEnabled,
+	getCollectionFreezeValue
+} from 'selectors/features'
 
 
 describe('when features are undefined', () => {
@@ -12,6 +16,10 @@ describe('when features are undefined', () => {
 
 	it('isJustForYouFeatureEnabled should return false', () => {
 		expect(isJustForYouFeatureEnabled(state)).toBe(false)
+	})
+
+	it('getCollectionFreezeValue should return empty string', () => {
+		expect(getCollectionFreezeValue(state)).toBe('')
 	})
 })
 
@@ -56,14 +64,14 @@ describe('when features are defined', () => {
 		describe('when both collections and forceCollections are false', () => {
 			beforeEach(() => {
 				state.features = Immutable.fromJS({
-						collections: {
-							value: false
-						},
-						forceCollections: {
-							value: false
-						}
-					})
+					collections: {
+						value: false
+					},
+					forceCollections: {
+						value: false
+					}
 				})
+			})
 
 			it('should return false', () => {
 				expect(isCollectionsFeatureEnabled(state)).toBe(false)
@@ -75,11 +83,11 @@ describe('when features are defined', () => {
 		describe('when justforyou feature is enabled', () => {
 			beforeEach(() => {
 				state.features = Immutable.fromJS({
-						justforyou: {
-							value: true
-						}
-					})
+					justforyou: {
+						value: true
+					}
 				})
+			})
 
 			it('should return true', () => {
 				expect(isJustForYouFeatureEnabled(state)).toBe(true)
@@ -89,15 +97,27 @@ describe('when features are defined', () => {
 		describe('when justforyou feature is disabled', () => {
 			beforeEach(() => {
 				state.features = Immutable.fromJS({
-						justforyou: {
-							value: false
-						}
-					})
+					justforyou: {
+						value: false
+					}
 				})
+			})
 
 			it('should return false', () => {
 				expect(isJustForYouFeatureEnabled(state)).toBe(false)
 			})
+		})
+	})
+
+	describe('getCollectionFreezeValue', () => {
+		it('should return value of collection freeze', () => {
+			state.features = Immutable.fromJS({
+				collectionFreeze: {
+					value: 'test-value'
+				}
+			})
+
+			expect(getCollectionFreezeValue(state)).toEqual('test-value')
 		})
 	})
 })
