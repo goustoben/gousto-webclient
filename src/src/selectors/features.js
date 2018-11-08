@@ -1,5 +1,5 @@
 export const isCollectionsFeatureEnabled = state => (
-	state.features.getIn(['collections', 'value']) || state.features.getIn(['forceCollections', 'value'])
+	state.features ? (state.features.getIn(['collections', 'value']) || state.features.getIn(['forceCollections', 'value'])) : false
 )
 
-export const isJustForYouFeatureEnabled = state => state.features.getIn(['justforyou', 'value'])
+export const isJustForYouFeatureEnabled = state => (state.features ? state.features.getIn(['justforyou', 'value']) : false)
