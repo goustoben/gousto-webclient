@@ -67,5 +67,20 @@ describe('<RecipeList />', () => {
 			expect(ingredientsCheckboxes.at(0).prop('checked')).toBeFalsy()
 			expect(ingredientsCheckboxes.at(1).prop('checked')).toBeFalsy()
 		})
+
+		test('ingredients retain the selection state when thy are collapsed and then expanded', () => {
+			const secondRecipe = wrapper.find('Recipe').at(1)
+			secondRecipe.find('Item').simulate('click')
+			let ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
+			ingredientsCheckboxes.at(1).simulate('change')
+
+			expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
+
+			secondRecipe.find('Item').simulate('click')
+			secondRecipe.find('Item').simulate('click')
+			ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
+
+			expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
+		})
 	})
 })

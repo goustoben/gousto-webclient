@@ -20,7 +20,7 @@ const propTypes = {
 
 const Recipe = ({ recipe, selectedIngredients, onChange }) => {
 	const ingredientList = recipe.ingredients.map((ingredient) => {
-		const isChecked = selectedIngredients.get(ingredient.id) || false
+		const isChecked = selectedIngredients.get(`${recipe.id}-${ingredient.id}`) || false
 
 		return (
 			<InputCheck
@@ -49,13 +49,13 @@ class RecipeList extends PureComponent {
 		selectedIngredients: new Map()
 	}
 
-	onChangeHandler = ({ id, isChecked }) => {
+	onChangeHandler = (checkboxId, isChecked) => {
 		const newSelectedIngredients = new Map(this.state.selectedIngredients)
 
 		if (isChecked) {
-			newSelectedIngredients.set(id, isChecked)
+			newSelectedIngredients.set(checkboxId, isChecked)
 		} else {
-			newSelectedIngredients.delete(id)
+			newSelectedIngredients.delete(checkboxId)
 		}
 
 		this.setState({
