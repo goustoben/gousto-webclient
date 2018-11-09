@@ -7,23 +7,23 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import Attributes from 'Product/Attributes'
 
 describe('Product Attributes', () => {
-	let wrapper
-	let attributes
+  let wrapper
+  let attributes
 
-	beforeEach(() => {
-		attributes = Immutable.fromJS([
-			{ title: 'Allergens', value: 'Gluten, Soy', unit: null },
-			{ title: 'Volume', value: 261, unit: 'ml' },
-		])
+  beforeEach(() => {
+    attributes = Immutable.fromJS([
+      { title: 'Allergens', value: 'Gluten, Soy', unit: null },
+      { title: 'Volume', value: 261, unit: 'ml' },
+    ])
 
-		wrapper = shallow(<Attributes attributes={attributes} />)
-	})
+    wrapper = shallow(<Attributes attributes={attributes} />)
+  })
 
-	test('should return ul', () => {
-		expect(wrapper.type()).toEqual('ul')
-	})
+  test('should return ul', () => {
+    expect(wrapper.type()).toEqual('ul')
+  })
 
-	test('should contain 1 li per attibute', () => {
-		expect(wrapper.find('li').length).toEqual(2)
-	})
+  test('should contain 1 li per attibute', () => {
+    expect(wrapper.find('li').length).toEqual(2)
+  })
 })

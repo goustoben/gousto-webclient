@@ -7,63 +7,63 @@ import Slider from 'react-slick'
 
 class Carousel extends React.PureComponent {
 	static propTypes = {
-		arrows: PropTypes.bool,
-		children: PropTypes.oneOfType([
-			PropTypes.arrayOf(PropTypes.node),
-			PropTypes.node,
-		]).isRequired,
-		dots: PropTypes.bool,
-		infinite: PropTypes.bool,
-		speed: PropTypes.number,
-		slidesToShow: PropTypes.number,
-		slidesToScroll: PropTypes.number,
-		variableWidth: PropTypes.bool,
+	  arrows: PropTypes.bool,
+	  children: PropTypes.oneOfType([
+	    PropTypes.arrayOf(PropTypes.node),
+	    PropTypes.node,
+	  ]).isRequired,
+	  dots: PropTypes.bool,
+	  infinite: PropTypes.bool,
+	  speed: PropTypes.number,
+	  slidesToShow: PropTypes.number,
+	  slidesToScroll: PropTypes.number,
+	  variableWidth: PropTypes.bool,
 	}
 
 	static defaultProps = {
-		arrows: false,
-		autoplay: true,
-		dots: true,
-		infinite: true,
-		speed: 500,
-		autoplaySpeed: 8000,
-		slidesToShow: 1,
-		slidesToScroll: 1,
-		variableWidth: false,
+	  arrows: false,
+	  autoplay: true,
+	  dots: true,
+	  infinite: true,
+	  speed: 500,
+	  autoplaySpeed: 8000,
+	  slidesToShow: 1,
+	  slidesToScroll: 1,
+	  variableWidth: false,
 	}
 
 	constructor(props) {
-		super(props)
-		this.state = {
-			isClient: false,
-		}
+	  super(props)
+	  this.state = {
+	    isClient: false,
+	  }
 	}
 
 	componentDidMount() {
-		this.onMount()
+	  this.onMount()
 	}
 
 	onMount = () => {
-		this.setState({ isClient: true })
+	  this.setState({ isClient: true })
 	}
 
 	render() {
-		const { children, ...settings } = this.props
-		const childrenCount = React.Children.count(children)
+	  const { children, ...settings } = this.props
+	  const childrenCount = React.Children.count(children)
 
-		return (
+	  return (
 			<div
-				className={classnames(
-					`carousel-items-${childrenCount}`,
-					{ 'carousel-no-js': !this.state.isClient },
-					{ 'carousel-dotted': settings.dots },
-				)}
+			  className={classnames(
+			    `carousel-items-${childrenCount}`,
+			    { 'carousel-no-js': !this.state.isClient },
+			    { 'carousel-dotted': settings.dots },
+			  )}
 			>
 				<Slider {...settings}>
 					{children}
 				</Slider>
 			</div>
-		)
+	  )
 	}
 }
 

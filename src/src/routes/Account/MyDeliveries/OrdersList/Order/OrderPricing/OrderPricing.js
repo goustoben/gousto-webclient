@@ -5,10 +5,10 @@ import css from './OrderPricing.css'
 import DiscountBadge from './DiscountBadge'
 
 const OrderPricing = ({ pricing, orderState }) => {
-	const grossOrderPrice = pricing.get('grossOrderPrice')
-	const netOrderPrice = pricing.get('netOrderPrice')
+  const grossOrderPrice = pricing.get('grossOrderPrice')
+  const netOrderPrice = pricing.get('netOrderPrice')
 
-	return (
+  return (
 		<div className={css.pricingContainer}>
 			{['recipes chosen', 'confirmed', 'dispatched', 'cancelled'].indexOf(orderState) > -1 ?
 				<div>
@@ -19,22 +19,22 @@ const OrderPricing = ({ pricing, orderState }) => {
 						£{parseFloat(netOrderPrice).toFixed(2)}
 					</div>
 				</div>
-			: null}
+			  : null}
 			{(orderState === 'menu open' && (pricing.get('flatDiscountAmount') || pricing.get('percentageDiscountAmount'))) ?
 				<DiscountBadge flatDiscountAmount={pricing.get('flatDiscountAmount')} percentageDiscountAmount={pricing.get('percentageDiscountAmount')} />
-			: null}
+			  : null}
 		</div>
-	)
+  )
 }
 
 OrderPricing.propTypes = {
-	pricing: PropTypes.instanceOf(Immutable.Map),
-	orderState: PropTypes.string,
+  pricing: PropTypes.instanceOf(Immutable.Map),
+  orderState: PropTypes.string,
 }
 
 OrderPricing.defaultProps = {
-	pricing: Immutable.Map([]),
-	orderState: '',
+  pricing: Immutable.Map([]),
+  orderState: '',
 }
 
 export default OrderPricing

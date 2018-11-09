@@ -50,17 +50,17 @@ const FilterMenu = ({ open, filterMenuClose, slideFrom, filterMenuApply, filterM
 )
 
 FilterMenu.propTypes = {
-	open: PropTypes.bool,
-	slideFrom: PropTypes.oneOf(['bottom', 'left']),
-	filterMenuClose: PropTypes.func,
-	filterMenuApply: PropTypes.func,
-	filterMenuRevertFilters: PropTypes.func,
-	clearAllFilters: PropTypes.func,
+  open: PropTypes.bool,
+  slideFrom: PropTypes.oneOf(['bottom', 'left']),
+  filterMenuClose: PropTypes.func,
+  filterMenuApply: PropTypes.func,
+  filterMenuRevertFilters: PropTypes.func,
+  clearAllFilters: PropTypes.func,
 }
 
 FilterMenu.defaultProps = {
-	open: false,
-	slideFrom: 'bottom',
+  open: false,
+  slideFrom: 'bottom',
 }
 
 export default FilterMenu

@@ -19,9 +19,9 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant }) => (
 			</h2>
 			<div className={css.cta}>
 				<CTAHomepage
-					width={240}
-					onClick={() => redirect(ctaUri)}
-					dataTesting="homepageHeroCTA"
+				  width={240}
+				  onClick={() => redirect(ctaUri)}
+				  dataTesting="homepageHeroCTA"
 				>
 					{ctaText}
 				</CTAHomepage>
@@ -33,17 +33,17 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant }) => (
 )
 
 Hero.propTypes = {
-	redirect: PropTypes.func,
-	ctaUri: PropTypes.string,
-	ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-	dataTesting: PropTypes.string,
-	variant: PropTypes.string,
+  redirect: PropTypes.func,
+  ctaUri: PropTypes.string,
+  ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  dataTesting: PropTypes.string,
+  variant: PropTypes.string,
 }
 
 Hero.defaultProps = {
-	ctaUri: config.client.menu,
-	ctaText: home.CTA.main,
-	variant: 'default',
+  ctaUri: config.client.menu,
+  ctaText: home.CTA.main,
+  variant: 'default',
 }
 
 export default Hero

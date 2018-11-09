@@ -5,12 +5,12 @@ import moment from 'moment'
 const unique = arr => Array.from(new Set(arr))
 
 const getMonthsFromDates = dates => (
-	unique(
-		dates
-			.map(date => moment(date.date, 'YYYY-MM-DD'))
-			.sort((a, b) => a.diff(b))
-			.map(date => date.format('MMMM YYYY'))
-	)
+  unique(
+    dates
+      .map(date => moment(date.date, 'YYYY-MM-DD'))
+      .sort((a, b) => a.diff(b))
+      .map(date => date.format('MMMM YYYY'))
+  )
 )
 
 const Title = ({ dates }) => (
@@ -18,7 +18,7 @@ const Title = ({ dates }) => (
 )
 
 Title.propTypes = {
-	dates: React.PropTypes.array.isRequired,
+  dates: React.PropTypes.array.isRequired,
 }
 
 export default Title

@@ -9,12 +9,12 @@ export const getRecieveMenuPending = state => state.menuRecieveMenuPending
 export const getBoxSummaryDeliveryDays = state => state.boxSummaryDeliveryDays
 
 export default {
-	getStock,
-	getBasket,
-	getRecipes,
-	getMenuRecipes,
-	getMenuCollections,
-	getMenuCutoffUntil,
-	getRecieveMenuPending,
-	getBoxSummaryDeliveryDays,
+  getStock,
+  getBasket,
+  getRecipes,
+  getMenuRecipes,
+  getMenuCollections,
+  getMenuCutoffUntil,
+  getRecieveMenuPending,
+  getBoxSummaryDeliveryDays,
 }

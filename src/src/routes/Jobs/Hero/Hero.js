@@ -9,14 +9,14 @@ const Hero = () => (
 		<div className={css.textContainer}>
 			<h1 className={css.header}>
 				<Content
-					contentKeys="jobsHeaderHeroTitle"
+				  contentKeys="jobsHeaderHeroTitle"
 				>
 					<span>Join Gousto</span>
 				</Content>
 			</h1>
 			<Button link={config.jobs.openings}>
 				<Content
-					contentKeys="jobsHeaderHeroButton"
+				  contentKeys="jobsHeaderHeroButton"
 				>
 					<span>See Openings</span>
 				</Content>

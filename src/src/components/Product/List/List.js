@@ -14,14 +14,14 @@ const ProductList = ({ orderId, products, number, onProductClick }) => (
 			Here you can add lovely wines, craft beers, delicious desserts, staples, kitchen tools, and treats from artisan suppliers.
 		</SectionHeader>
 		<ImageSelection
-			content={products.slice(0, number).toArray()}
-			onImageClick={(itemId) => onProductClick(itemId)}
-			onTitleClick={(itemId) => onProductClick(itemId)}
+		  content={products.slice(0, number).toArray()}
+		  onImageClick={(itemId) => onProductClick(itemId)}
+		  onTitleClick={(itemId) => onProductClick(itemId)}
 		/>
 		<div className={css.button}>
 			<LinkButton
-				to={productsRoute.replace(':orderId', orderId)}
-				clientRouted={false}
+			  to={productsRoute.replace(':orderId', orderId)}
+			  clientRouted={false}
 			>
 				GO TO THE GOUSTO MARKET
 			</LinkButton>
@@ -30,18 +30,18 @@ const ProductList = ({ orderId, products, number, onProductClick }) => (
 )
 
 ProductList.propTypes = {
-	products: PropTypes.instanceOf(Immutable.List),
-	onProductClick: PropTypes.func,
-	number: PropTypes.number,
-	orderId: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.number,
-	]).isRequired,
+  products: PropTypes.instanceOf(Immutable.List),
+  onProductClick: PropTypes.func,
+  number: PropTypes.number,
+  orderId: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
 }
 
 ProductList.defaultProps = {
-	products: new Immutable.List(),
-	number: 6,
+  products: new Immutable.List(),
+  number: 6,
 }
 
 export default ProductList

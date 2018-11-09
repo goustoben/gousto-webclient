@@ -9,14 +9,14 @@ const Values = () => (
 		<div>
 			<h1 className={css.header}>
 				<Content
-					contentKeys="jobsValuesHeaderTitle"
+				  contentKeys="jobsValuesHeaderTitle"
 				>
 					<span>Our Ownership Principles</span>
 				</Content>
 			</h1>
 			<p className={css.introText}>
 				<Content
-					contentKeys="jobsValuesHeaderMessage"
+				  contentKeys="jobsValuesHeaderMessage"
 				>
 					<span>We call our three company values ‘Ownership Principles’ because all of us are responsible for the success of Gousto, and for helping each other to succeed. These principles are:</span>
 				</Content>
@@ -27,14 +27,14 @@ const Values = () => (
 				<Svg fileName={jobs2.values.dream.icon} className={css.svg} />
 				<h1 className={css.valueHeader}>
 					<Content
-						contentKeys="jobsValuesBodyTitle1"
+					  contentKeys="jobsValuesBodyTitle1"
 					>
 						<span>{jobs2.values.dream.value}</span>
 					</Content>
 				</h1>
 				<p className={css.valueListItem}>
 					<Content
-						contentKeys="jobsValuesBodyMessage1"
+					  contentKeys="jobsValuesBodyMessage1"
 					>
 						<span>{jobs2.values.dream.copy}</span>
 					</Content>
@@ -45,14 +45,14 @@ const Values = () => (
 				<Svg fileName={jobs2.values.deliver.icon} className={css.svg} />
 				<h1 className={css.valueHeader}>
 					<Content
-						contentKeys="jobsValuesBodyTitle2"
+					  contentKeys="jobsValuesBodyTitle2"
 					>
 						<span>{jobs2.values.deliver.value}</span>
 					</Content>
 				</h1>
 				<p className={css.valueListItem}>
 					<Content
-						contentKeys="jobsValuesBodyMessage2"
+					  contentKeys="jobsValuesBodyMessage2"
 					>
 						<span>{jobs2.values.deliver.copy}</span>
 					</Content>
@@ -63,14 +63,14 @@ const Values = () => (
 				<Svg fileName={jobs2.values.care.icon} className={css.svg} />
 				<h1 className={css.valueHeader}>
 					<Content
-						contentKeys="jobsValuesBodyTitle3"
+					  contentKeys="jobsValuesBodyTitle3"
 					>
 						<span>{jobs2.values.care.value}</span>
 					</Content>
 				</h1>
 				<p className={css.valueListItem}>
 					<Content
-						contentKeys="jobsValuesBodyMessage3"
+					  contentKeys="jobsValuesBodyMessage3"
 					>
 						<span>{jobs2.values.care.copy}</span>
 					</Content>

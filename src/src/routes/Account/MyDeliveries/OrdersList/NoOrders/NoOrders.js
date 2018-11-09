@@ -44,12 +44,12 @@ const NoOrders = ({ recipes, boxType }) => (
 )
 
 NoOrders.propTypes = {
-	recipes: PropTypes.instanceOf(Immutable.Map),
-	boxType: PropTypes.string,
+  recipes: PropTypes.instanceOf(Immutable.Map),
+  boxType: PropTypes.string,
 }
 NoOrders.defaultProps = {
-	recipes: Immutable.Map({}),
-	boxType: '',
+  recipes: Immutable.Map({}),
+  boxType: '',
 }
 
 export default NoOrders

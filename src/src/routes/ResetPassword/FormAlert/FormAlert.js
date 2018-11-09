@@ -7,9 +7,9 @@ import config from 'config/resetPassword'
 import configRoutes from 'config/routes'
 
 const FormAlert = ({ errorResetPassword }) => {
-	const errorMessage = config[errorResetPassword] || config.default
+  const errorMessage = config[errorResetPassword] || config.default
 
-	return (errorResetPassword) ? (
+  return (errorResetPassword) ? (
 		<Alert type="danger">
 			<span>
 				<Content contentKeys={errorMessage.key}>
@@ -23,14 +23,14 @@ const FormAlert = ({ errorResetPassword }) => {
 						</Link>
 						&nbsp;to reset your password!
 					</span>
-				: null}
+				  : null}
 			</span>
 		</Alert>
-	) : null
+  ) : null
 }
 
 FormAlert.propTypes = {
-	errorResetPassword: PropTypes.string,
+  errorResetPassword: PropTypes.string,
 }
 
 export default FormAlert

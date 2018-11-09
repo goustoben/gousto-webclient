@@ -4,19 +4,19 @@ import css from './InfoToggle.css'
 
 class InfoToggle extends React.Component {
 	static propTypes = {
-		children: React.PropTypes.arrayOf(React.PropTypes.node),
+	  children: React.PropTypes.arrayOf(React.PropTypes.node),
 	}
 
 	constructor() {
-		super()
+	  super()
 
-		this.state = {
-			visible: false,
-		}
+	  this.state = {
+	    visible: false,
+	  }
 	}
 
 	toggleVisibility = visible => {
-		this.setState({ visible })
+	  this.setState({ visible })
 	}
 
 	message = () => (
@@ -27,19 +27,19 @@ class InfoToggle extends React.Component {
 	)
 
 	render() {
-		return (
+	  return (
 			<Tooltip
-				placement="bottom"
-				message={this.message()}
-				visible={this.state.visible}
-				onVisibleChange={this.toggleVisibility}
-				triggers={['click']}
+			  placement="bottom"
+			  message={this.message()}
+			  visible={this.state.visible}
+			  onVisibleChange={this.toggleVisibility}
+			  triggers={['click']}
 			>
 				<span className={css.title}>
 					{this.props.children[0]}
 				</span>
 			</Tooltip>
-		)
+	  )
 	}
 }
 

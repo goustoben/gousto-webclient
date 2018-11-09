@@ -9,66 +9,66 @@ import RecipeList from 'BoxSummary/RecipeList/RecipeList'
 import RecipeHolder from 'BoxSummary/RecipeHolder'
 
 describe('RecipeList', () => {
-	let menuRecipesStore
-	let recipes
+  let menuRecipesStore
+  let recipes
 
-	beforeEach(() => {
-		menuRecipesStore = Immutable.fromJS({
-			1: 'store1',
-			2: 'store2',
-			3: 'store3',
-			4: 'store4',
-		})
-		recipes = Immutable.fromJS({ 1: 1, 2: 1, 3: 1, 4: 1 })
-	})
+  beforeEach(() => {
+    menuRecipesStore = Immutable.fromJS({
+      1: 'store1',
+      2: 'store2',
+      3: 'store3',
+      4: 'store4',
+    })
+    recipes = Immutable.fromJS({ 1: 1, 2: 1, 3: 1, 4: 1 })
+  })
 
-	test('should return a div', () => {
-		const wrapper = shallow(<RecipeList />)
-		expect(wrapper.type()).toEqual('div')
-	})
+  test('should return a div', () => {
+    const wrapper = shallow(<RecipeList />)
+    expect(wrapper.type()).toEqual('div')
+  })
 
-	test('should return 1 span when view is desktop', () => {
-		const wrapper = shallow(<RecipeList />)
-		expect(wrapper.find('span').length).toEqual(1)
-	})
+  test('should return 1 span when view is desktop', () => {
+    const wrapper = shallow(<RecipeList />)
+    expect(wrapper.find('span').length).toEqual(1)
+  })
 
-	test('should return 4 RecipeHolder', () => {
-		const wrapper = shallow(
+  test('should return 4 RecipeHolder', () => {
+    const wrapper = shallow(
 			<RecipeList recipes={recipes} menuRecipesStore={menuRecipesStore} />,
-		)
+    )
 
-		expect(wrapper.find(RecipeHolder).length).toEqual(4)
-		wrapper.find(RecipeHolder).forEach((node, index) => {
-			expect(node.prop('recipe')).toEqual(`store${index + 1}`)
-		})
-	})
+    expect(wrapper.find(RecipeHolder).length).toEqual(4)
+    wrapper.find(RecipeHolder).forEach((node, index) => {
+      expect(node.prop('recipe')).toEqual(`store${index + 1}`)
+    })
+  })
 
-	test('should return X RecipeHolder when max recipes specified', () => {
-		const wrapper = shallow(
+  test('should return X RecipeHolder when max recipes specified', () => {
+    const wrapper = shallow(
 			<RecipeList
-				maxRecipesNum={3}
-				recipes={recipes}
-				menuRecipesStore={menuRecipesStore}
+			  maxRecipesNum={3}
+			  recipes={recipes}
+			  menuRecipesStore={menuRecipesStore}
 			/>,
-		)
-		expect(wrapper.find(RecipeHolder).length).toEqual(3)
-		expect(
-			wrapper
-				.find(RecipeHolder)
-				.last()
-				.prop('recipe'),
-		).not.toBeInstanceOf(Immutable.Map)
-	})
+    )
+    expect(wrapper.find(RecipeHolder).length).toEqual(3)
+    expect(
+      wrapper
+        .find(RecipeHolder)
+        .last()
+        .prop('recipe'),
+    ).not.toBeInstanceOf(Immutable.Map)
+  })
 
-	test('should call detailsVisibilityChange once clicked', () => {
-		const detailsVisibilityChangeSpy = jest.fn()
-		const wrapper = shallow(
+  test('should call detailsVisibilityChange once clicked', () => {
+    const detailsVisibilityChangeSpy = jest.fn()
+    const wrapper = shallow(
 			<RecipeList
-				recipes={Immutable.Map({ 101: {} })}
-				detailVisibilityChange={detailsVisibilityChangeSpy}
+			  recipes={Immutable.Map({ 101: {} })}
+			  detailVisibilityChange={detailsVisibilityChangeSpy}
 			/>,
-		)
-		wrapper.find(RecipeHolder).first().simulate('click')
-		expect(detailsVisibilityChangeSpy).toHaveBeenCalled()
-	})
+    )
+    wrapper.find(RecipeHolder).first().simulate('click')
+    expect(detailsVisibilityChangeSpy).toHaveBeenCalled()
+  })
 })

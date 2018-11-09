@@ -15,8 +15,8 @@ const AppStoreLinks = ({ appStoreId, playStoreId }) => (
 )
 
 AppStoreLinks.propTypes = {
-	appStoreId: PropTypes.string.isRequired,
-	playStoreId: PropTypes.string.isRequired,
+  appStoreId: PropTypes.string.isRequired,
+  playStoreId: PropTypes.string.isRequired,
 }
 
 export default AppStoreLinks

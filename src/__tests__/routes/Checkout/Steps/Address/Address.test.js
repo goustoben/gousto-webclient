@@ -10,49 +10,49 @@ import Postcode from 'routes/Checkout/Components/Address/Postcode'
 import AddressInputs from 'routes/Checkout/Components/Address/AddressInputs'
 
 describe('Address', () => {
-	let wrapper
+  let wrapper
 
-	beforeEach(() => {
-		const selectedAddresses = Immutable.Map({})
-		wrapper = shallow(<Address selectedAddress={selectedAddresses} />)
-	})
+  beforeEach(() => {
+    const selectedAddresses = Immutable.Map({})
+    wrapper = shallow(<Address selectedAddress={selectedAddresses} />)
+  })
 
-	test('should return div', () => {
-		expect(wrapper.type()).toBe('div')
-	})
+  test('should return div', () => {
+    expect(wrapper.type()).toBe('div')
+  })
 
-	describe('rendering', () => {
-		beforeEach(() => {
-			wrapper.setState({ addressSaved: false })
-		})
+  describe('rendering', () => {
+    beforeEach(() => {
+      wrapper.setState({ addressSaved: false })
+    })
 
-		test('should render 1 <Postcode> component(s)', () => {
-			expect(wrapper.find(Postcode).length).toBe(1)
-		})
+    test('should render 1 <Postcode> component(s)', () => {
+      expect(wrapper.find(Postcode).length).toBe(1)
+    })
 
-		test('should not render <AddressInputs> component(s)', () => {
-			expect(wrapper.find(AddressInputs)).toHaveLength(0)
-		})
+    test('should not render <AddressInputs> component(s)', () => {
+      expect(wrapper.find(AddressInputs)).toHaveLength(0)
+    })
 
-		test('should render 1 <Button> component(s)', () => {
-			expect(wrapper.find(Button)).toHaveLength(1)
-		})
-	})
+    test('should render 1 <Button> component(s)', () => {
+      expect(wrapper.find(Button)).toHaveLength(1)
+    })
+  })
 
-	describe('Life cycle events', () => {
-		test('componentWillReceiveProps', ()=>{})
-		test('componentDidMount', ()=>{})
-	})
+  describe('Life cycle events', () => {
+    test('componentWillReceiveProps', ()=>{})
+    test('componentDidMount', ()=>{})
+  })
 
-	describe('Behaviour', () => {
-		test('handle address choise', ()=>{})
+  describe('Behaviour', () => {
+    test('handle address choise', ()=>{})
 
-		test('handle address change', ()=>{})
+    test('handle address change', ()=>{})
 
-		test('toggle address edit', ()=>{})
+    test('toggle address edit', ()=>{})
 
-		test('postcode lookup', ()=>{})
+    test('postcode lookup', ()=>{})
 
-		test('Set address details on inputs', ()=>{})
-	})
+    test('Set address details on inputs', ()=>{})
+  })
 })

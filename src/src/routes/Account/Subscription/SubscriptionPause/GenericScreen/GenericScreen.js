@@ -7,63 +7,63 @@ import TextArea from '../TextArea'
 import ReactMarkdown from 'react-markdown'
 
 export function renderContent(contents = []) {
-	return contents.map((contentItem, key) => {
-		const { type, ...content } = contentItem
-		let component = null
+  return contents.map((contentItem, key) => {
+    const { type, ...content } = contentItem
+    let component = null
 
-		switch (type) {
-			case 'copy': {
-				component = (content.copy &&
+    switch (type) {
+    case 'copy': {
+      component = (content.copy &&
 					<ReactMarkdown
-						source={DOMPurify.sanitize(content.copy)}
-						className={css.copy}
+					  source={DOMPurify.sanitize(content.copy)}
+					  className={css.copy}
 					/>
-				)
-				break
-			}
-			case 'image': {
-				component = (
+      )
+      break
+    }
+    case 'image': {
+      component = (
 					<Image {...content.image} />
-				)
-				break
-			}
-			case 'textarea': {
-				component = (
+      )
+      break
+    }
+    case 'textarea': {
+      component = (
 					<TextArea {...content} />
-				)
-				break
-			}
-			case 'quote': {
-				component = (
+      )
+      break
+    }
+    case 'quote': {
+      component = (
 					<div className={css.quoteBlock}>
 						<p className={css.quote}>{content.quote}</p>
 						<p className={css.quote}>-{content.quoteAuthor}</p>
 					</div>
-				)
-				break
-			}
-			default:
-				component = null
-		}
+      )
+      break
+    }
+    default:
+      component = null
+    }
 
-		return component ?
+    return component ?
 			<div
-				className={css.contentItem}
-				key={key}
+			  className={css.contentItem}
+			  key={key}
 			>
 				{component}
 			</div> :
-			null
-	})
+      null
+  })
 }
 
 export function renderActions(actions = []) {
-	return actions.map((props, key) => (
+  return actions.map((props, key) => (
 		<CallToAction
-			{...props}
-			key={key}
+		  {...props}
+		  key={key}
 		/>
-	))
+  ))
 }
 
 const SubscriptionPauseGenericScreen = ({ actions = [], allowCancel, content = [] }) => (
@@ -85,22 +85,22 @@ const SubscriptionPauseGenericScreen = ({ actions = [], allowCancel, content = [
 )
 
 SubscriptionPauseGenericScreen.propTypes = {
-	actions: PropTypes.arrayOf(
-		PropTypes.shape({
-			type: PropTypes.string,
-		})
-	),
-	allowCancel: PropTypes.bool,
-	content: PropTypes.arrayOf(
-		PropTypes.shape({
-			type: PropTypes.oneOf([
-				'copy',
-				'image',
-				'textarea',
-				'quote',
-			]),
-		})
-	),
+  actions: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.string,
+    })
+  ),
+  allowCancel: PropTypes.bool,
+  content: PropTypes.arrayOf(
+    PropTypes.shape({
+      type: PropTypes.oneOf([
+        'copy',
+        'image',
+        'textarea',
+        'quote',
+      ]),
+    })
+  ),
 }
 
 export default SubscriptionPauseGenericScreen

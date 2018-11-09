@@ -1,11 +1,11 @@
 function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min + 1)) + min
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 function pingdom() {
-	if (getRandomInt(0, 99) < 10) {
-		return (
-			`<script>
+  if (getRandomInt(0, 99) < 10) {
+    return (
+      `<script>
 			var _prum = [['id', '563b16e7abe53de96084ec42'],
 			['mark', 'firstbyte', (new Date()).getTime()]];
 			(function() {
@@ -16,10 +16,10 @@ function pingdom() {
 				s.parentNode.insertBefore(p, s);
 			})();
 			</script>`
-		)
-	}
+    )
+  }
 
-	return ''
+  return ''
 }
 
 export default pingdom

@@ -8,67 +8,67 @@ import OrderedRecipe from './OrderedRecipe'
 class RecipeSummary extends React.PureComponent {
 
 	static propTypes = {
-		menuRecipesStore: React.PropTypes.instanceOf(Immutable.Map),
-		recipes: React.PropTypes.instanceOf(Immutable.Map),
-		menuRecipeStock: React.PropTypes.instanceOf(Immutable.Map),
-		numPortions: React.PropTypes.number,
-		menuBoxPrices: React.PropTypes.instanceOf(Immutable.Map),
-		view: React.PropTypes.oneOf(['summary', 'boxdetails']),
+	  menuRecipesStore: React.PropTypes.instanceOf(Immutable.Map),
+	  recipes: React.PropTypes.instanceOf(Immutable.Map),
+	  menuRecipeStock: React.PropTypes.instanceOf(Immutable.Map),
+	  numPortions: React.PropTypes.number,
+	  menuBoxPrices: React.PropTypes.instanceOf(Immutable.Map),
+	  view: React.PropTypes.oneOf(['summary', 'boxdetails']),
 	}
 
 	static defaultProps = {
-		menuRecipesStore: Immutable.Map({}),
-		menuRecipeStock: Immutable.Map({}),
-		menuBoxPrices: Immutable.Map({}),
-		recipes: Immutable.Map({}),
-		numPortions: 2,
-		view: 'boxdetails',
+	  menuRecipesStore: Immutable.Map({}),
+	  menuRecipeStock: Immutable.Map({}),
+	  menuBoxPrices: Immutable.Map({}),
+	  recipes: Immutable.Map({}),
+	  numPortions: 2,
+	  view: 'boxdetails',
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+	  store: React.PropTypes.object.isRequired,
 	}
 
 	static fetchData({ store, orderRecipeIds }) {
-		store.dispatch(recipesActions.recipesLoadRecipesById(orderRecipeIds))
+	  store.dispatch(recipesActions.recipesLoadRecipesById(orderRecipeIds))
 	}
 
 	componentDidMount() {
-		if (this.props.menuRecipesStore && this.props.menuRecipesStore.size === 0) {
-			const store = this.context.store
-			const orderRecipeIds = this.props.recipes && this.props.recipes.size ? this.props.recipes.keySeq().toArray() : []
-			RecipeSummary.fetchData({ store, orderRecipeIds })
-		}
+	  if (this.props.menuRecipesStore && this.props.menuRecipesStore.size === 0) {
+	    const store = this.context.store
+	    const orderRecipeIds = this.props.recipes && this.props.recipes.size ? this.props.recipes.keySeq().toArray() : []
+	    RecipeSummary.fetchData({ store, orderRecipeIds })
+	  }
 	}
 
 	render() {
-		const recipes = this.props.recipes
-		const menuRecipesStore = this.props.menuRecipesStore
-		const menuRecipeStock = this.props.menuRecipeStock
-		const numPortions = this.props.numPortions
-		const menuBoxPrices = this.props.menuBoxPrices
-		const prices = menuBoxPrices.getIn([numPortions.toString(), (basketSum(recipes).toString()), 'gourmet'], Immutable.Map({}))
+	  const recipes = this.props.recipes
+	  const menuRecipesStore = this.props.menuRecipesStore
+	  const menuRecipeStock = this.props.menuRecipeStock
+	  const numPortions = this.props.numPortions
+	  const menuBoxPrices = this.props.menuBoxPrices
+	  const prices = menuBoxPrices.getIn([numPortions.toString(), (basketSum(recipes).toString()), 'gourmet'], Immutable.Map({}))
 
-		return (
+	  return (
 			<div data-testing="checkoutRecipeSummary">
 				{recipes.map((serving, recipeId) => (
 					<OrderedRecipe
-						key={recipeId}
-						recipeId={recipeId}
-						view={this.props.view}
-						featureBtn={false}
-						serving={numPortions * recipes.get(recipeId, 0)}
-						title={menuRecipesStore.getIn([recipeId, 'title'], '')}
-						basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
-						stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
-						media={menuRecipesStore.getIn([recipeId, 'media', 'images', 0, 'urls'], Immutable.List([]))}
-						range={menuRecipesStore.getIn([recipeId, 'range'], '')}
-						pricePerServing={Number(prices.get('pricePerPortion', 0))}
-						pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
+					  key={recipeId}
+					  recipeId={recipeId}
+					  view={this.props.view}
+					  featureBtn={false}
+					  serving={numPortions * recipes.get(recipeId, 0)}
+					  title={menuRecipesStore.getIn([recipeId, 'title'], '')}
+					  basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
+					  stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
+					  media={menuRecipesStore.getIn([recipeId, 'media', 'images', 0, 'urls'], Immutable.List([]))}
+					  range={menuRecipesStore.getIn([recipeId, 'range'], '')}
+					  pricePerServing={Number(prices.get('pricePerPortion', 0))}
+					  pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
 					/>
 				)).toArray()}
 			</div>
-		)
+	  )
 	}
 }
 

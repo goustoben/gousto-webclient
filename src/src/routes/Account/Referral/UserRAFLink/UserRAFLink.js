@@ -9,47 +9,47 @@ class UserRAFLink extends React.PureComponent {
 	state = { copiedMessageVisible: false }
 
 	static propTypes = {
-		referralCode: PropTypes.string,
-		className: PropTypes.string,
+	  referralCode: PropTypes.string,
+	  className: PropTypes.string,
 	}
 
 	static defaultProps = {
-		referralCode: '',
-		className: '',
+	  referralCode: '',
+	  className: '',
 	}
 
 	static fetchData = async ({ store }) => Promise.all([
-		store.dispatch(actions.userLoadReferralDetails()),
+	  store.dispatch(actions.userLoadReferralDetails()),
 	])
 
 	componentWillUnmount() {
-		clearTimeout(this.timeout)
+	  clearTimeout(this.timeout)
 	}
 
 	constructLink(referralCode, truncate = false) {
-		const link = truncate ? 'gousto.co.uk' : 'https://www.gousto.co.uk'
+	  const link = truncate ? 'gousto.co.uk' : 'https://www.gousto.co.uk'
 
-		return (`${link}${routes.client.join}?promo_code=${referralCode}`)
+	  return (`${link}${routes.client.join}?promo_code=${referralCode}`)
 	}
 
 	onCopy() {
-		clearTimeout(this.timeout)
-		this.setState({ copiedMessageVisible: true })
-		this.timeout = setTimeout(() => {
-			this.setState({ copiedMessageVisible: false })
-		}, 2000)
+	  clearTimeout(this.timeout)
+	  this.setState({ copiedMessageVisible: true })
+	  this.timeout = setTimeout(() => {
+	    this.setState({ copiedMessageVisible: false })
+	  }, 2000)
 	}
 
 	render() {
-		const desktopLink = this.constructLink(this.props.referralCode)
-		const mobileLink = this.constructLink(this.props.referralCode, true)
+	  const desktopLink = this.constructLink(this.props.referralCode)
+	  const mobileLink = this.constructLink(this.props.referralCode, true)
 
-		return (
+	  return (
 			<div className={this.props.className}>
 				<CopyToClipboard
-					className={css.linkContainer}
-					text={desktopLink}
-					onCopy={() => this.onCopy()}
+				  className={css.linkContainer}
+				  text={desktopLink}
+				  onCopy={() => this.onCopy()}
 				>
 					<div id="referral-code-box">
 						<span className={`${css.mobileHide} ${css.link}`}>{desktopLink}</span>
@@ -60,7 +60,7 @@ class UserRAFLink extends React.PureComponent {
 					{'Copied!'}
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

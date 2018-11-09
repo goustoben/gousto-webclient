@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import css from './OrderCollapseExpand.css'
 
 const OrderCollapseExpand = ({
-	collapsed,
+  collapsed,
 }) => (
 	<div className={css.arrowBox}>
 		<i className={collapsed ? css.arrowDown : css.arrowUp} aria-hidden="true"></i>
@@ -10,11 +10,11 @@ const OrderCollapseExpand = ({
 )
 
 OrderCollapseExpand.propTypes = {
-	collapsed: PropTypes.bool,
+  collapsed: PropTypes.bool,
 }
 
 OrderCollapseExpand.defaultProps = {
-	collapsed: true,
+  collapsed: true,
 }
 
 export default OrderCollapseExpand

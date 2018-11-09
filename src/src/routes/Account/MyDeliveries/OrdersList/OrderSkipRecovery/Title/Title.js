@@ -3,23 +3,23 @@ import React, { PropTypes } from 'react'
 import css from './Title.css'
 
 const propTypes = {
-	title: PropTypes.string.isRequired,
-	orderType: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  orderType: PropTypes.string.isRequired,
 }
 
 const defaultProps = {
-	title: '',
-	orderType: '',
+  title: '',
+  orderType: '',
 }
 
 const Title = ({ title, orderType }) => {
-	const titleCopy = title || `Are you sure you want to ${(orderType === 'pending') ? 'cancel' : 'skip'}?`
+  const titleCopy = title || `Are you sure you want to ${(orderType === 'pending') ? 'cancel' : 'skip'}?`
 
-	return (
+  return (
 		<div className={css.title}>
 			{titleCopy}
 		</div>
-	)
+  )
 }
 
 Title.propTypes = propTypes

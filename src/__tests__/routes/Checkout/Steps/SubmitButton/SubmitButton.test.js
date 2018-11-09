@@ -9,27 +9,27 @@ import TermsAndConditions from 'routes/Checkout/Components/TermsAndConditions'
 import CheckoutButton from 'routes/Checkout/Components/CheckoutButton'
 
 describe('SubmitButton', () => {
-	let wrapper
+  let wrapper
 
-	beforeEach(() => {
-		wrapper = shallow(<SubmitButton />)
-	})
+  beforeEach(() => {
+    wrapper = shallow(<SubmitButton />)
+  })
 
-	describe('rendering', () => {
-		test('should return div', () => {
-			expect(wrapper.type()).toBe('div')
-		})
+  describe('rendering', () => {
+    test('should return div', () => {
+      expect(wrapper.type()).toBe('div')
+    })
 
-		test('should render 1 <ErrorMessage> components', () => {
-			expect(wrapper.find(ErrorMessage)).toHaveLength(1)
-		})
+    test('should render 1 <ErrorMessage> components', () => {
+      expect(wrapper.find(ErrorMessage)).toHaveLength(1)
+    })
 
-		test('should render 1 <CheckoutButton> components', () => {
-			expect(wrapper.find(CheckoutButton)).toHaveLength(1)
-		})
+    test('should render 1 <CheckoutButton> components', () => {
+      expect(wrapper.find(CheckoutButton)).toHaveLength(1)
+    })
 
-		test('should render 1 <TermsAndConditions> components', () => {
-			expect(wrapper.find(TermsAndConditions)).toHaveLength(1)
-		})
-	})
+    test('should render 1 <TermsAndConditions> components', () => {
+      expect(wrapper.find(TermsAndConditions)).toHaveLength(1)
+    })
+  })
 })

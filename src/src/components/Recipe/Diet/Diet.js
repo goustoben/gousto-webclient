@@ -8,7 +8,7 @@ const Diet = ({ diet }) => (
 )
 
 Diet.propTypes = {
-	diet: React.PropTypes.string.isRequired,
+  diet: React.PropTypes.string.isRequired,
 }
 
 export default Diet

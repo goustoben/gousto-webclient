@@ -10,7 +10,7 @@ import RateRecipes from './RateRecipes'
 import Account from './Account'
 
 import config from 'config/routes'
-import { checkValidSession } from './../../utils/routes'
+import { checkValidSession } from "../../utils/routes"
 
 export default (store) => (
 	<Route component={Account} onEnter={checkValidSession(store, config.client.login)}>

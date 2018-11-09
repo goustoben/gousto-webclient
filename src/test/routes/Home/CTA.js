@@ -9,41 +9,41 @@ import { shallow, mount } from 'enzyme'
 import { Button, Segment } from 'goustouicomponents'
 
 describe('CTA', function() {
-	let wrapper
-	let onClickSpy
-	let width
+  let wrapper
+  let onClickSpy
+  let width
 
-	beforeEach(function() {
-		onClickSpy = sinon.spy()
-		width = 100
-		wrapper = shallow(<CTAHomepage onClick={onClickSpy} width={width}>click here</CTAHomepage>)
-	})
+  beforeEach(function() {
+    onClickSpy = sinon.spy()
+    width = 100
+    wrapper = shallow(<CTAHomepage onClick={onClickSpy} width={width}>click here</CTAHomepage>)
+  })
 
-	it('should render a Button and a Segment', function() {
-		expect(wrapper.find(Button).length).to.equal(1)
-		expect(wrapper.find(Segment).length).to.equal(1)
-	})
+  it('should render a Button and a Segment', function() {
+    expect(wrapper.find(Button).length).to.equal(1)
+    expect(wrapper.find(Segment).length).to.equal(1)
+  })
 
-	it('should put the text into the button', function() {
-		expect(wrapper.find(Segment).html().indexOf('click here')).not.to.equal(-1)
-	})
+  it('should put the text into the button', function() {
+    expect(wrapper.find(Segment).html().indexOf('click here')).not.to.equal(-1)
+  })
 
-	it('should map the onClick prop through to the Segment', function() {
-		expect(wrapper.find(Segment).prop('onClick')).to.equal(onClickSpy)
-	})
+  it('should map the onClick prop through to the Segment', function() {
+    expect(wrapper.find(Segment).prop('onClick')).to.equal(onClickSpy)
+  })
 
-	describe('default props', function() {
+  describe('default props', function() {
 
-		beforeEach(function() {
-			wrapper = mount(<CTAHomepage onClick={onClickSpy} width={width}>click here</CTAHomepage>)
-		})
+    beforeEach(function() {
+      wrapper = mount(<CTAHomepage onClick={onClickSpy} width={width}>click here</CTAHomepage>)
+    })
 
-		it('should be centered on default', function() {
-			expect(wrapper.prop('align')).to.equal('center')
-		})
+    it('should be centered on default', function() {
+      expect(wrapper.prop('align')).to.equal('center')
+    })
 
-		it('should not be responsive on default', function() {
-			expect(wrapper.prop('responsive')).to.be.false
-		})
-	})
+    it('should not be responsive on default', function() {
+      expect(wrapper.prop('responsive')).to.be.false
+    })
+  })
 })

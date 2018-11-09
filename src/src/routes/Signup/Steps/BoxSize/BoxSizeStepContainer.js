@@ -3,7 +3,7 @@ import BoxSizeStep from './BoxSizeStep'
 import actions from 'actions'
 
 const BoxSizeStepContainer = connect(() => ({}), {
-	numPortionChange: actions.basketNumPortionChange,
+  numPortionChange: actions.basketNumPortionChange,
 })(BoxSizeStep)
 
 export default BoxSizeStepContainer

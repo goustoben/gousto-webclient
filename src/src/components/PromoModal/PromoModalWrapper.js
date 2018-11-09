@@ -9,7 +9,7 @@ const PromoModalWrapper = ({ promoModalVisible }) => (
 )
 
 PromoModalWrapper.propTypes = {
-	promoModalVisible: React.PropTypes.bool,
+  promoModalVisible: React.PropTypes.bool,
 }
 
 export default PromoModalWrapper

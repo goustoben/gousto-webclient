@@ -11,9 +11,9 @@ const NoResultsPage = ({ imageName, title, description }) => (
 )
 
 NoResultsPage.propTypes = {
-	imageName: PropTypes.string,
-	title: PropTypes.node,
-	description: PropTypes.node,
+  imageName: PropTypes.string,
+  title: PropTypes.node,
+  description: PropTypes.node,
 }
 
 export default NoResultsPage

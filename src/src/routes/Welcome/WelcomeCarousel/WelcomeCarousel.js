@@ -6,18 +6,18 @@ import css from './WelcomeCarousel.css'
 import Content from 'containers/Content'
 
 const WelcomeCarousel = () => {
-	const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
+  const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
 
-	return (
+  return (
 		<article>
 			<section className={css.content}>
 				<Content
-					contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_title"
-					propNames="title"
+				  contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_title"
+				  propNames="title"
 				>
 					<SectionHeader title="Why Gousto" type="article">
 						<Content
-							contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_message"
+						  contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_message"
 						>
 							<p className={css.contentInner}>
 								We’re big believers in ‘lifestyle liberation’ (or, “making things that little bit easier”).
@@ -32,7 +32,7 @@ const WelcomeCarousel = () => {
 						<div>
 							<Image media={getImage('Onboarding-images--welcome-page-stoprepetition.jpg')} />
 							<Content
-								contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_slide_1_message"
+							  contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_slide_1_message"
 							>
 								<p>
 									With a new menu full of delicious recipes each week, you’ll liberate yourself from cooking
@@ -43,7 +43,7 @@ const WelcomeCarousel = () => {
 						<div>
 							<Image media={getImage('Onboarding-images--welcome-page-avoidsupermarket.jpg')} />
 							<Content
-								contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_slide_2_message"
+							  contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_slide_2_message"
 							>
 								<p>
 									If you’re sick of travelling to supermarkets to scour the shelves for obscure ingredients,
@@ -55,7 +55,7 @@ const WelcomeCarousel = () => {
 						<div>
 							<Image media={getImage('Onboarding-images--welcome-page-discoverfood.jpg')} />
 							<Content
-								contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_slide_3_message"
+							  contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_slide_3_message"
 							>
 								<p>
 									There is a whole world of recipes to discover with Gousto, from Southeast Asian pad Thais
@@ -67,7 +67,7 @@ const WelcomeCarousel = () => {
 						<div>
 							<Image media={getImage('Onboarding-images--welcome-page-forgetfoodwaste.jpg')} />
 							<Content
-								contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_slide_4_message"
+							  contentKeys="welcome.welcome_body.welcome_carousel.welcome_carousel_slide_4_message"
 							>
 								<p>
 									About 40% of food in the UK goes to waste. Our perfectly portioned ingredients and close
@@ -81,8 +81,7 @@ const WelcomeCarousel = () => {
 				</div>
 			</section>
 		</article>
-	)
+  )
 }
-
 
 export default WelcomeCarousel

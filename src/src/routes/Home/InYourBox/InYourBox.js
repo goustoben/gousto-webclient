@@ -22,15 +22,15 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri }) => (
 )
 
 InYourBox.propTypes = {
-	redirect: React.PropTypes.func,
-	inverse: React.PropTypes.bool,
-	ctaText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.node]),
-	ctaUri: React.PropTypes.string,
+  redirect: React.PropTypes.func,
+  inverse: React.PropTypes.bool,
+  ctaText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.node]),
+  ctaUri: React.PropTypes.string,
 }
 
 InYourBox.defaultProps = {
-	ctaText: home.CTA.main,
-	ctaUri: config.client.signup,
+  ctaText: home.CTA.main,
+  ctaUri: config.client.signup,
 }
 
 export default InYourBox

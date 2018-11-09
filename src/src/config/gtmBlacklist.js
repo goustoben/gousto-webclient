@@ -1,3 +1,3 @@
 module.exports = {
-	user_agents: '/Pingdom.com_bot/i',
+  user_agents: '/Pingdom.com_bot/i',
 }

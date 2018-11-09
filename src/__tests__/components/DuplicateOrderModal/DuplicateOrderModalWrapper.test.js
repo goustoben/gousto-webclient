@@ -8,23 +8,23 @@ import DuplicateOrderModal from 'DuplicateOrderModal/DuplicateOrderModalContaine
 import Overlay from 'Overlay'
 
 describe('DuplicateOrderModal/DuplicateOrderModalWrapper', () => {
-	let wrapper
+  let wrapper
 
-	beforeEach(() => {
-		wrapper = shallow(<DuplicateOrderModalWrapper visible />)
-	})
+  beforeEach(() => {
+    wrapper = shallow(<DuplicateOrderModalWrapper visible />)
+  })
 
-	test('should return an Overlay', () => {
-		expect(wrapper.type()).toEqual(Overlay)
-	})
+  test('should return an Overlay', () => {
+    expect(wrapper.type()).toEqual(Overlay)
+  })
 
-	test('should contain a DuplicateOrderModal', () => {
-		expect(wrapper.find(DuplicateOrderModal).length).toEqual(1)
-	})
+  test('should contain a DuplicateOrderModal', () => {
+    expect(wrapper.find(DuplicateOrderModal).length).toEqual(1)
+  })
 
-	test('should map the visible prop through to Overlay open', () => {
-		expect(wrapper.find(Overlay).prop('open')).toEqual(true)
-		wrapper = shallow(<DuplicateOrderModalWrapper visible={false} />)
-		expect(wrapper.find(Overlay).prop('open')).toEqual(false)
-	})
+  test('should map the visible prop through to Overlay open', () => {
+    expect(wrapper.find(Overlay).prop('open')).toEqual(true)
+    wrapper = shallow(<DuplicateOrderModalWrapper visible={false} />)
+    expect(wrapper.find(Overlay).prop('open')).toEqual(false)
+  })
 })

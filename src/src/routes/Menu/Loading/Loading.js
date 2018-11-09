@@ -5,19 +5,19 @@ import Svg from 'Svg'
 import css from './Loading.css'
 
 const propTypes = {
-	loading: PropTypes.bool,
-	hasRecommendations: PropTypes.bool,
+  loading: PropTypes.bool,
+  hasRecommendations: PropTypes.bool,
 }
 
 const defaultProps = {
-	loading: false,
-	hasRecommendations: false,
+  loading: false,
+  hasRecommendations: false,
 }
 
 const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
 
 const Loading = ({ loading, hasRecommendations }) => (
-	(loading) ? (
+  (loading) ? (
 		<div className={css.container}>
 			{(hasRecommendations) ? (
 				<div className={css['container--recommendations']}>
@@ -37,7 +37,7 @@ const Loading = ({ loading, hasRecommendations }) => (
 				</div>
 			)}
 		</div>
- ) : null
+  ) : null
 
 )
 

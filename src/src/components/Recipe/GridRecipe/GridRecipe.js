@@ -24,10 +24,10 @@ const GridRecipe = (props) => (
 		<div className={css.recipeDetails}>
 			<span onClick={props.onClick} className={css.link}>
 				<Image
-					media={props.media}
-					alt={props.title}
-					mouseEnter={props.highlight}
-					mouseLeave={props.unhighlight}
+				  media={props.media}
+				  alt={props.title}
+				  mouseEnter={props.highlight}
+				  mouseLeave={props.unhighlight}
 				/>
 			</span>
 			<TasteScore className={css.score} score={props.tasteScore} />
@@ -37,11 +37,11 @@ const GridRecipe = (props) => (
 			<div className={css.textContainer}>
 				<div onClick={props.onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(props.chef) })}>
 					<Title
-						title={props.title}
-						view={props.view}
-						mouseEnter={props.highlight}
-						mouseLeave={props.unhighlight}
-						detailHover={props.detailHover}
+					  title={props.title}
+					  view={props.view}
+					  mouseEnter={props.highlight}
+					  mouseLeave={props.unhighlight}
+					  detailHover={props.detailHover}
 					/>
 				</div>
 				<div>
@@ -51,23 +51,23 @@ const GridRecipe = (props) => (
 				</div>
 				<div className={css.attributes}>
 					<Rating
-						average={props.averageRating}
-						count={props.ratingCount}
+					  average={props.averageRating}
+					  count={props.ratingCount}
 					/>
 					<div className={css.attributeMinHeight}>
 						<CookingTime
-							time={props.cookingTime}
+						  time={props.cookingTime}
 						/>
 					</div>
 					<div className={css.attributeMinHeight}>
 						<UseWithin
-							useWithin={props.useWithin}
+						  useWithin={props.useWithin}
 						/>
 					</div>
 					<div className={css.attributeMinHeight}>
 						<EquipmentRequired
-							equipment={props.equipment}
-							view="notice"
+						  equipment={props.equipment}
+						  view="notice"
 						/>
 					</div>
 				</div>
@@ -79,36 +79,36 @@ const GridRecipe = (props) => (
 )
 
 GridRecipe.propTypes = {
-	...recipePropTypes,
-	id: PropTypes.string.isRequired,
-	position: PropTypes.number,
-	chef: PropTypes.shape({
-		media: PropTypes.shape({
-			images: PropTypes.Array,
-		}),
-		name: PropTypes.string,
-		celebrity: PropTypes.bool,
-	}),
-	isRecommendedRecipe: PropTypes.bool,
-	equipment: PropTypes.instanceOf(Immutable.List),
-	inBasket: PropTypes.bool,
-	averageRating: PropTypes.number,
-	cookingTime: PropTypes.number.isRequired,
-	ratingCount: PropTypes.number,
-	features: PropTypes.instanceOf(Immutable.Map).isRequired,
-	useWithin: PropTypes.string.isRequired,
-	highlight: PropTypes.func,
-	unhighlight: PropTypes.func,
-	detailHover: PropTypes.bool,
-	tasteScore: PropTypes.number,
+  ...recipePropTypes,
+  id: PropTypes.string.isRequired,
+  position: PropTypes.number,
+  chef: PropTypes.shape({
+    media: PropTypes.shape({
+      images: PropTypes.Array,
+    }),
+    name: PropTypes.string,
+    celebrity: PropTypes.bool,
+  }),
+  isRecommendedRecipe: PropTypes.bool,
+  equipment: PropTypes.instanceOf(Immutable.List),
+  inBasket: PropTypes.bool,
+  averageRating: PropTypes.number,
+  cookingTime: PropTypes.number.isRequired,
+  ratingCount: PropTypes.number,
+  features: PropTypes.instanceOf(Immutable.Map).isRequired,
+  useWithin: PropTypes.string.isRequired,
+  highlight: PropTypes.func,
+  unhighlight: PropTypes.func,
+  detailHover: PropTypes.bool,
+  tasteScore: PropTypes.number,
 }
 
 GridRecipe.defaultProps = {
-	view: 'grid',
-	isRecommendedRecipe: false,
-	chef: Immutable.Map({}),
-	averageRating: 0,
-	ratingCount: 0,
+  view: 'grid',
+  isRecommendedRecipe: false,
+  chef: Immutable.Map({}),
+  averageRating: 0,
+  ratingCount: 0,
 }
 
 export default GridRecipe

@@ -11,10 +11,10 @@ import css from './OrderRecipes.css'
 import OrderSideSwipe from './OrderSideSwipe/OrderSideSwipe'
 
 const OrderRecipes = ({
-	recipes,
-	orderId,
-	orderState,
-	whenCutoff,
+  recipes,
+  orderId,
+  orderState,
+  whenCutoff,
 }) => (
 	<div>
 		<div className={`${css.header} ${css.hideInMobile}`}>
@@ -32,7 +32,7 @@ const OrderRecipes = ({
 				</p>
 				<p>If you do not choose by <strong>{whenCutoff}</strong>, Gousto will send you a selection of recipes based on your subscription settings.</p>
 			</div>
-		: null}
+		  : null}
 		{['menu open', 'recipes chosen'].indexOf(orderState) > -1 ?
 			<div className={css.buttonRow}>
 				<Link to={`${routes.client.menu}/${orderId}`} clientRouted={false}>
@@ -41,27 +41,27 @@ const OrderRecipes = ({
 					</Button>
 				</Link>
 			</div>
-		: null}
+		  : null}
 	</div>
 )
 
 OrderRecipes.propTypes = {
-	recipes: ImmutablePropTypes.listOf(
-		ImmutablePropTypes.contains({
-			recipeImage: PropTypes.string,
-			recipeTitle: PropTypes.string,
-		})
-	),
-	orderId: PropTypes.string,
-	orderState: PropTypes.string,
-	whenCutoff: PropTypes.string,
+  recipes: ImmutablePropTypes.listOf(
+    ImmutablePropTypes.contains({
+      recipeImage: PropTypes.string,
+      recipeTitle: PropTypes.string,
+    })
+  ),
+  orderId: PropTypes.string,
+  orderState: PropTypes.string,
+  whenCutoff: PropTypes.string,
 }
 
 OrderRecipes.defaultProps = {
-	recipes: Immutable.List([]),
-	orderId: '',
-	orderState: '',
-	whenCutoff: '',
+  recipes: Immutable.List([]),
+  orderId: '',
+  orderState: '',
+  whenCutoff: '',
 }
 
 export default OrderRecipes

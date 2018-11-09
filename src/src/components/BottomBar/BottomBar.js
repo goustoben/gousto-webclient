@@ -9,15 +9,15 @@ const BottomBar = ({ children, className }) => (
 )
 
 BottomBar.propTypes = {
-	children: PropTypes.oneOfType([
-		PropTypes.node,
-		PropTypes.element,
-	]).isRequired,
-	className: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.element,
+  ]).isRequired,
+  className: PropTypes.string,
 }
 
 BottomBar.defaultProps = {
-	className: '',
+  className: '',
 }
 
 export default BottomBar

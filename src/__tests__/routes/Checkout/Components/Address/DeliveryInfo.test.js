@@ -6,39 +6,39 @@ import Svg from 'Svg'
 import DeliveryInfo from 'routes/Checkout/Components/Address/DeliveryInfo/DeliveryInfo'
 
 describe('DeliveryInfo', () => {
-	let wrapper
+  let wrapper
 
-	test('should render by default', () => {
-		wrapper = shallow(<DeliveryInfo />)
+  test('should render by default', () => {
+    wrapper = shallow(<DeliveryInfo />)
 
-		expect(wrapper.find(Svg)).toBeTruthy()
-	})
+    expect(wrapper.find(Svg)).toBeTruthy()
+  })
 
-	test('should format dates', () => {
-		wrapper = shallow(<DeliveryInfo deliveryDate="2018-06-04" cutOffDate="2018-06-01" />)
+  test('should format dates', () => {
+    wrapper = shallow(<DeliveryInfo deliveryDate="2018-06-04" cutOffDate="2018-06-01" />)
 
-		expect(wrapper.text()).toContain('will come on Mondays')
-		expect(wrapper.text()).toContain('until midday on Friday')
-	})
+    expect(wrapper.text()).toContain('will come on Mondays')
+    expect(wrapper.text()).toContain('until midday on Friday')
+  })
 
-	describe('frequency', () => {
-		test('should display weekly by default', () => {
-			wrapper = shallow(<DeliveryInfo />)
+  describe('frequency', () => {
+    test('should display weekly by default', () => {
+      wrapper = shallow(<DeliveryInfo />)
 
-			expect(wrapper.text()).toContain('Your weekly deliveries')
-			expect(wrapper.text()).toContain('each week')
-		})
+      expect(wrapper.text()).toContain('Your weekly deliveries')
+      expect(wrapper.text()).toContain('each week')
+    })
 
-		test('should display the passed frequency within the text', () => {
-			wrapper = shallow(<DeliveryInfo frequency="fortnightly" />)
+    test('should display the passed frequency within the text', () => {
+      wrapper = shallow(<DeliveryInfo frequency="fortnightly" />)
 
-			expect(wrapper.text()).toContain('Your fortnightly deliveries')
-			expect(wrapper.text()).toContain('each fortnight')
+      expect(wrapper.text()).toContain('Your fortnightly deliveries')
+      expect(wrapper.text()).toContain('each fortnight')
 
-			wrapper = shallow(<DeliveryInfo frequency="quarterly" />)
+      wrapper = shallow(<DeliveryInfo frequency="quarterly" />)
 
-			expect(wrapper.text()).toContain('Your quarterly deliveries')
-			expect(wrapper.text()).toContain('each quarter')
-		})
-	})
+      expect(wrapper.text()).toContain('Your quarterly deliveries')
+      expect(wrapper.text()).toContain('each quarter')
+    })
+  })
 })

@@ -9,13 +9,13 @@ import templateConfig from 'config/template'
 import globals from 'config/globals'
 
 export const generateHref = url => {
-	const hostname = `${globals.env === 'production' ? 'www.' : `${globals.env}-webclient.`}${globals.domain}`
+  const hostname = `${globals.env === 'production' ? 'www.' : `${globals.env}-webclient.`}${globals.domain}`
 
-	return `${globals.protocol}://${hostname}${url || '/'}`
+  return `${globals.protocol}://${hostname}${url || '/'}`
 }
 
 const GoustoHelmet = ({ noGTM, requestUrl }) => (
-	!noGTM ? (
+  !noGTM ? (
 		<span>
 			<CanonicalLink href={generateHref(requestUrl)} />
 			<Facebook admins={templateConfig.head.fbAdmins} appID={templateConfig.head.fbAppID} />
@@ -23,12 +23,12 @@ const GoustoHelmet = ({ noGTM, requestUrl }) => (
 			<Twitter href={generateHref(requestUrl)} />
 			<SiteVerification />
 		</span>
-	) : null
+  ) : null
 )
 
 GoustoHelmet.propTypes = {
-	noGTM: PropTypes.bool,
-	requestUrl: PropTypes.string.isRequired,
+  noGTM: PropTypes.bool,
+  requestUrl: PropTypes.string.isRequired,
 }
 
 export default GoustoHelmet

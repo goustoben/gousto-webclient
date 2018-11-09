@@ -3,36 +3,36 @@ import { H1 } from 'Page/Header'
 import Icon from 'Icon'
 
 const Title = ({ children, iconAfter, iconBefore, headlineFont }) => (
-	children ?
+  children ?
 		<H1 defaults="LG" headlineFont={headlineFont}>
 			{iconBefore && [
 				<Icon
-					key={0}
-					name={iconBefore}
+				  key={0}
+				  name={iconBefore}
 				/>,
 				' ',
 			]}
 			{children}
 			{iconAfter && [
-				' ',
+			  ' ',
 				<Icon
-					key={1}
-					name={iconAfter}
+				  key={1}
+				  name={iconAfter}
 				/>,
 			]}
 		</H1>
-		: null
+    : null
 )
 
 Title.propTypes = {
-	children: PropTypes.node.isRequired,
-	iconAfter: PropTypes.string,
-	iconBefore: PropTypes.string,
-	headlineFont: PropTypes.bool,
+  children: PropTypes.node.isRequired,
+  iconAfter: PropTypes.string,
+  iconBefore: PropTypes.string,
+  headlineFont: PropTypes.bool,
 }
 
 Title.defaultProps = {
-	headlineFont: false,
+  headlineFont: false,
 }
 
 export default Title

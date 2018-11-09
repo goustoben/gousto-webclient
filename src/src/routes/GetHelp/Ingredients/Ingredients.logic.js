@@ -6,52 +6,52 @@ import { ItemExpandable } from 'goustouicomponents'
 import { IngredientsPresentation } from './Ingredients.presentation'
 
 const propTypes = {
-	content: PropTypes.shape({
-		title: PropTypes.string.isRequired,
-		body: PropTypes.string.isRequired,
-		button1Copy: PropTypes.string.isRequired,
-		button2Copy: PropTypes.string.isRequired,
-	}).isRequired,
+  content: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    button1Copy: PropTypes.string.isRequired,
+    button2Copy: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 const RecipeList = ({ recipes }) => {
-	const items = Object.keys(recipes).map((id) => {
-		const recipe = recipes[id]
+  const items = Object.keys(recipes).map((id) => {
+    const recipe = recipes[id]
 
-		return (
+    return (
 			<ItemExpandable
-				key={recipe.id}
-				label={recipe.title}
+			  key={recipe.id}
+			  label={recipe.title}
 			>
 				<div />
 			</ItemExpandable>
-		)
-	})
+    )
+  })
 
-	return (
+  return (
 		<List>
 			{items}
 		</List>
-	)
+  )
 }
 
 const Ingredients = ({ content, recipes }) => {
-	const buttonLeftUrl = client.getHelp.index
-	const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
+  const buttonLeftUrl = client.getHelp.index
+  const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
 
-	return (
+  return (
 		<IngredientsPresentation
-			content={content}
-			buttonLeftUrl={buttonLeftUrl}
-			buttonRightUrl={buttonRightUrl}
+		  content={content}
+		  buttonLeftUrl={buttonLeftUrl}
+		  buttonRightUrl={buttonRightUrl}
 		>
 			<RecipeList recipes={recipes} />
 		</IngredientsPresentation>
-	)
+  )
 }
 
 Ingredients.propTypes = propTypes
 
 export {
-	Ingredients
+  Ingredients
 }

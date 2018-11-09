@@ -6,11 +6,11 @@ const OrderCutoff = ({ whenCutoff }) => (
 )
 
 OrderCutoff.propTypes = {
-	whenCutoff: PropTypes.string,
+  whenCutoff: PropTypes.string,
 }
 
 OrderCutoff.defaultProps = {
-	whenCutoff: '',
+  whenCutoff: '',
 }
 
 export default OrderCutoff

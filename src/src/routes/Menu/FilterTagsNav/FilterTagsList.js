@@ -10,18 +10,18 @@ const FilterTagList = ({ tags }) => (
 )
 
 FilterTagList.propTypes = {
-	tags: PropTypes.arrayOf(
-		PropTypes.shape({
-			text: PropTypes.string,
-			type: PropTypes.string,
-			value: PropTypes.string,
-			slug: PropTypes.string,
-		}),
-	),
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      type: PropTypes.string,
+      value: PropTypes.string,
+      slug: PropTypes.string,
+    }),
+  ),
 }
 
 FilterTagList.defaultProps = {
-	tags: [],
+  tags: [],
 }
 
 export default FilterTagList

@@ -14,45 +14,45 @@ import Introduction from 'routes/Account/Subscription/Introduction'
 import Preference from 'routes/Account/Subscription/Preference'
 
 describe('Subscription', function() {
-	let wrapper
-	let buttonClickSpy
+  let wrapper
+  let buttonClickSpy
 
-	beforeEach(function() {
-		buttonClickSpy = sinon.spy()
-		wrapper = shallow(<Subscription startSubscriptionPause={buttonClickSpy} />)
-	})
+  beforeEach(function() {
+    buttonClickSpy = sinon.spy()
+    wrapper = shallow(<Subscription startSubscriptionPause={buttonClickSpy} />)
+  })
 
-	describe('rendering', function() {
-		it('should render a <div>', function() {
-			expect(wrapper.type()).to.equal('div')
-		})
+  describe('rendering', function() {
+    it('should render a <div>', function() {
+      expect(wrapper.type()).to.equal('div')
+    })
 
-		it('should render one <Introduction> component', function() {
-			expect(wrapper.find(Introduction).length).to.equal(1)
-		})
+    it('should render one <Introduction> component', function() {
+      expect(wrapper.find(Introduction).length).to.equal(1)
+    })
 
-		it('should render one <Preference> component', function() {
-			expect(wrapper.find(Preference).length).to.equal(1)
-		})
+    it('should render one <Preference> component', function() {
+      expect(wrapper.find(Preference).length).to.equal(1)
+    })
 
-		it('should render one <LinkButton> component', function() {
-			expect(wrapper.find(LinkButton).length).to.equal(1)
-		})
+    it('should render one <LinkButton> component', function() {
+      expect(wrapper.find(LinkButton).length).to.equal(1)
+    })
 
-		it('should render one <Link> component', function() {
-			expect(wrapper.find(Link).length).to.equal(1)
-		})
-	})
+    it('should render one <Link> component', function() {
+      expect(wrapper.find(Link).length).to.equal(1)
+    })
+  })
 
-	describe('SubscriptionPause description', function () {
-		it('should link to /my-deliveries', function () {
-			expect(wrapper.find(LinkButton).at(0).prop('to')).to.equal(config.client.myDeliveries)
-		})
+  describe('SubscriptionPause description', function () {
+    it('should link to /my-deliveries', function () {
+      expect(wrapper.find(LinkButton).at(0).prop('to')).to.equal(config.client.myDeliveries)
+    })
 
-		it('should call pauseSubscription when clicked', function() {
-			wrapper.find(Link).at(0).simulate('click')
+    it('should call pauseSubscription when clicked', function() {
+      wrapper.find(Link).at(0).simulate('click')
 
-			expect(buttonClickSpy).to.be.calledOnce
-		})
-	})
+      expect(buttonClickSpy).to.be.calledOnce
+    })
+  })
 })

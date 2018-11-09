@@ -10,7 +10,7 @@ const Welcome = ({ user }) => (
 )
 
 Welcome.propTypes = {
-	user: PropTypes.instanceOf(Immutable.Map).isRequired,
+  user: PropTypes.instanceOf(Immutable.Map).isRequired,
 }
 
 export default Welcome

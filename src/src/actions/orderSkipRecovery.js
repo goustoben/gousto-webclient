@@ -10,39 +10,38 @@ export const modalVisibilityChange = ({
   actionTriggered,
   data = {},
 }) => (
-    (dispatch, getState) => {
-      const featureFlag = getState().features.getIn(['skipRecovery', 'value'])
+  (dispatch, getState) => {
+    const featureFlag = getState().features.getIn(['skipRecovery', 'value'])
 
-      dispatch({
-        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-        modalVisibility: true,
-        orderId,
-        title: data.title,
-        offer: data.offer,
-        orderType: status,
-        callToActions: data.callToActions,
-        valueProposition: data.valueProposition,
-        trackingData: {
-          actionType: `Order ${actionTriggered}`,
-          order_id: orderId,
-          order_state: status,
-          cms_variation: data.variation || 'default',
-          featureFlag,
-          recovery_reasons: [
-            data.valueProposition,
-            data.offer,
-          ],
-        },
-      })
-    }
-  )
+    dispatch({
+      type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+      modalVisibility: true,
+      orderId,
+      title: data.title,
+      offer: data.offer,
+      orderType: status,
+      callToActions: data.callToActions,
+      valueProposition: data.valueProposition,
+      trackingData: {
+        actionType: `Order ${actionTriggered}`,
+        order_id: orderId,
+        order_state: status,
+        cms_variation: data.variation || 'default',
+        featureFlag,
+        recovery_reasons: [
+          data.valueProposition,
+          data.offer,
+        ],
+      },
+    })
+  }
+)
 
 export const keepOrder = ({ orderId, status }) => (
   (dispatch, getState) => {
     const valueProposition = getState().orderSkipRecovery.get('valueProposition')
-		const offer = getState().orderSkipRecovery.get('offer')
+    const offer = getState().orderSkipRecovery.get('offer')
     const featureFlag = getState().features.getIn(['skipRecovery', 'value'])
-
 
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,

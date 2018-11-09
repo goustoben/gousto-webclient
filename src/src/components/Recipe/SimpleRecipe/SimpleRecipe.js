@@ -12,24 +12,24 @@ const SimpleRecipe = (props) => (
 		<div className={css.recipeDetails}>
 			<div className={css.link} onClick={props.onClick}>
 				<Image
-					media={props.media}
-					alt={props.title}
-					view={props.view}
-					maxMediaSize={props.maxMediaSize}
+				  media={props.media}
+				  alt={props.title}
+				  view={props.view}
+				  maxMediaSize={props.maxMediaSize}
 				/>
 			</div>
 			<div className={css.textContainerCenter}>
 				<span onClick={props.onClick} className={css.linkUnderlined}>
 					<Title
-						title={props.title}
-						view={props.view}
+					  title={props.title}
+					  view={props.view}
 					/>
 				</span>
 				<div className={css.simpleTagContainer}>
 					<Rating
-						average={props.averageRating}
-						count={props.ratingCount}
-						view={props.view}
+					  average={props.averageRating}
+					  count={props.ratingCount}
+					  view={props.view}
 					/>
 					<StockBadge stock={props.stock} />
 				</div>
@@ -39,16 +39,16 @@ const SimpleRecipe = (props) => (
 )
 
 SimpleRecipe.propTypes = {
-	...recipePropTypes,
-	maxMediaSize: PropTypes.number,
-	averageRating: PropTypes.number,
-	ratingCount: PropTypes.number,
+  ...recipePropTypes,
+  maxMediaSize: PropTypes.number,
+  averageRating: PropTypes.number,
+  ratingCount: PropTypes.number,
 }
 
 SimpleRecipe.defaultProps = {
-	view: 'simple',
-	averageRating: 0,
-	ratingCount: 0,
+  view: 'simple',
+  averageRating: 0,
+  ratingCount: 0,
 }
 
 export default SimpleRecipe

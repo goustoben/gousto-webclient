@@ -14,16 +14,16 @@ const Carousel = ({ redirect, numRecipes, ctaUri, ctaText }) => (
 )
 
 Carousel.propTypes = {
-	redirect: PropTypes.func,
-	numRecipes: PropTypes.number,
-	ctaUri: PropTypes.string,
-	ctaText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.node]),
+  redirect: PropTypes.func,
+  numRecipes: PropTypes.number,
+  ctaUri: PropTypes.string,
+  ctaText: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.node]),
 }
 
 Carousel.defaultProps = {
-	numRecipes: 0,
-	ctaUri: config.client.menu,
-	ctaText: home.CTA.main,
+  numRecipes: 0,
+  ctaUri: config.client.menu,
+  ctaText: home.CTA.main,
 }
 
 export default Carousel

@@ -6,11 +6,11 @@ const OrderDate = ({ date }) => (
 )
 
 OrderDate.propTypes = {
-	date: PropTypes.string,
+  date: PropTypes.string,
 }
 
 OrderDate.defaultProps = {
-	date: '',
+  date: '',
 }
 
 export default OrderDate

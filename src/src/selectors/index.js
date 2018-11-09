@@ -5,10 +5,10 @@ import temp from './temp'
 import root from './root'
 
 export default {
-	...auth,
-	...basket,
-	...filters,
-	...temp,
-	...root,
+  ...auth,
+  ...basket,
+  ...filters,
+  ...temp,
+  ...root,
 }
 
