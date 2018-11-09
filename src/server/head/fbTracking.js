@@ -1,8 +1,8 @@
 const fbAppID = require('config/template').head.fbAppID
 
 function fbTracking() {
-	return (
-		`<script>
+  return (
+    `<script>
 		window.fbAsyncInit = function() {
 			FB.init({
 				appId      : '${fbAppID}',
@@ -17,7 +17,7 @@ function fbTracking() {
 		js.src = "//connect.facebook.net/en_US/sdk.js";
 		fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));</script>`
-	)
+  )
 }
 
 export default fbTracking

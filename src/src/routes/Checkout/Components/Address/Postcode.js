@@ -13,23 +13,23 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
 			<div className={addressCss.flex}>
 				<div className={postcodeCss.postCodeField}>
 					<Field
-						name="postcodeTemp"
-						component={ReduxFormInput}
-						inputType="Input"
-						color="gray"
-						label="Postcode"
-						mask
-						withRef
-						ref={receiveRef}
+					  name="postcodeTemp"
+					  component={ReduxFormInput}
+					  inputType="Input"
+					  color="gray"
+					  label="Postcode"
+					  mask
+					  withRef
+					  ref={receiveRef}
 					/>
 				</div>
 
 				<div className={postcodeCss.findAddressButton}>
 					<Button
-						width="auto"
-						onClick={() => { onPostcodeLookup(postcodeTemp) }}
-						pending={postcodePending}
-						color="secondary"
+					  width="auto"
+					  onClick={() => { onPostcodeLookup(postcodeTemp) }}
+					  pending={postcodePending}
+					  color="secondary"
 					>
 						Find Address
 					</Button>
@@ -40,20 +40,20 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
 			<br />
 			<div className="deliveryDropdown" data-testing="checkoutAddressDropdown">
 				<Field
-					name="addressId"
-					component={ReduxFormInput}
-					options={
-						addresses.map(address => ({
-							value: address.id,
-							label: [...address.labels].reverse().join(', '),
-						}))
-					}
-					onChange={onSelectedAddressChange}
-					inputType="DropDown"
-					label="Select your address"
-					mask
-					withRef
-					ref={receiveRef}
+				  name="addressId"
+				  component={ReduxFormInput}
+				  options={
+				    addresses.map(address => ({
+				      value: address.id,
+				      label: [...address.labels].reverse().join(', '),
+				    }))
+				  }
+				  onChange={onSelectedAddressChange}
+				  inputType="DropDown"
+				  label="Select your address"
+				  mask
+				  withRef
+				  ref={receiveRef}
 				/>
 			</div>
 		</div> : null}
@@ -61,23 +61,23 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
 )
 
 Postcode.propTypes = {
-	postcodePending: PropTypes.bool,
-	onPostcodeLookup: PropTypes.func,
-	postcodeTemp: PropTypes.string,
-	addresses: PropTypes.array,
-	onSelectedAddressChange: PropTypes.func,
-	showDropdown: PropTypes.bool,
-	receiveRef: PropTypes.func,
+  postcodePending: PropTypes.bool,
+  onPostcodeLookup: PropTypes.func,
+  postcodeTemp: PropTypes.string,
+  addresses: PropTypes.array,
+  onSelectedAddressChange: PropTypes.func,
+  showDropdown: PropTypes.bool,
+  receiveRef: PropTypes.func,
 }
 
 Postcode.defaultProps = {
-	postcodePending: false,
-	onPostcodeLookup: () => {},
-	postcodeTemp: '',
-	addresses: [],
-	onSelectedAddressChange: () => {},
-	showDropdown: false,
-	receiveRef: () => {},
+  postcodePending: false,
+  onPostcodeLookup: () => {},
+  postcodeTemp: '',
+  addresses: [],
+  onSelectedAddressChange: () => {},
+  showDropdown: false,
+  receiveRef: () => {},
 }
 
 export default Postcode

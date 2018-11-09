@@ -11,22 +11,22 @@ const BoxDetails = ({ onStepChange }) => (
 		<Summary showPromocode />
 		<SectionContainer>
 			<CheckoutButton
-				onClick={onStepChange}
-				stepName="Checkout Securely"
+			  onClick={onStepChange}
+			  stepName="Checkout Securely"
 			/>
 		</SectionContainer>
 		<SectionContainer>
 			<BoxDetailsContainer />
 		</SectionContainer>
 		<CheckoutButton
-			onClick={onStepChange}
-			stepName="Checkout Securely"
+		  onClick={onStepChange}
+		  stepName="Checkout Securely"
 		/>
 	</div>
 )
 
 BoxDetails.propTypes = {
-	onStepChange: PropTypes.func.isRequired,
+  onStepChange: PropTypes.func.isRequired,
 }
 
 export default BoxDetails

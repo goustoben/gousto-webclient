@@ -97,12 +97,12 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
 )
 
 DefaultDetail.propTypes = {
-	...detailPropTypes,
-	scrolledPastPoint: PropTypes.bool,
+  ...detailPropTypes,
+  scrolledPastPoint: PropTypes.bool,
 }
 
 DefaultDetail.defaultProps = {
-	scrolledPastPoint: false,
+  scrolledPastPoint: false,
 }
 
 export default DefaultDetail

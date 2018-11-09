@@ -11,11 +11,11 @@ const Guide = ({ steps, header, description, graphicType }) => (
 		<div className={css.panels}>
 			{steps.map((step, index) => (
 				<Panel
-					key={index}
-					path={step.path}
-					graphicType={graphicType}
-					title={step.title}
-					description={step.description}
+				  key={index}
+				  path={step.path}
+				  graphicType={graphicType}
+				  title={step.title}
+				  description={step.description}
 				/>
 			))}
 		</div>
@@ -23,14 +23,14 @@ const Guide = ({ steps, header, description, graphicType }) => (
 )
 
 Guide.propTypes = {
-	header: PropTypes.string,
-	description: PropTypes.string,
-	steps: PropTypes.array,
-	graphicType: PropTypes.string,
+  header: PropTypes.string,
+  description: PropTypes.string,
+  steps: PropTypes.array,
+  graphicType: PropTypes.string,
 }
 
 Guide.defaultProps = {
-	steps: [],
+  steps: [],
 }
 
 export default Guide

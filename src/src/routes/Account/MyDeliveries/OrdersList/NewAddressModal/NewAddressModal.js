@@ -7,24 +7,24 @@ import NewAddressForm from './NewAddressForm'
 class NewAddressModal extends React.PureComponent {
 
 	static propTypes = {
-		isModalOpen: PropTypes.bool,
-		userToggleNewAddressModal: PropTypes.func,
+	  isModalOpen: PropTypes.bool,
+	  userToggleNewAddressModal: PropTypes.func,
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+	  store: React.PropTypes.object.isRequired,
 	}
 
 	static defaultProps = {
-		isModalOpen: false,
+	  isModalOpen: false,
 	}
 
 	closeModal = () => {
-		this.props.userToggleNewAddressModal(false)
+	  this.props.userToggleNewAddressModal(false)
 	}
 
 	render() {
-		return (
+	  return (
 			<Overlay open={Boolean(this.props.isModalOpen)} from="top">
 				<ModalPanel closePortal={() => this.closeModal()} disableClickOutside disableOverlay>
 					<div className={css.body}>
@@ -33,7 +33,7 @@ class NewAddressModal extends React.PureComponent {
 					</div>
 				</ModalPanel>
 			</Overlay>
-		)
+	  )
 	}
 }
 

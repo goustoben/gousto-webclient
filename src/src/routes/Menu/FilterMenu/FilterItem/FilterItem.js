@@ -11,17 +11,17 @@ const FilterItem = ({ children, value, type, groupName, checked, onClick }) => (
 )
 
 FilterItem.propTypes = {
-	value: PropTypes.string,
-	children: PropTypes.node,
-	type: PropTypes.string,
-	groupName: PropTypes.string,
-	checked: PropTypes.bool,
-	onClick: PropTypes.func,
+  value: PropTypes.string,
+  children: PropTypes.node,
+  type: PropTypes.string,
+  groupName: PropTypes.string,
+  checked: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 FilterItem.defaultProps = {
-	groupName: null,
-	checked: false,
+  groupName: null,
+  checked: false,
 }
 
 export default FilterItem

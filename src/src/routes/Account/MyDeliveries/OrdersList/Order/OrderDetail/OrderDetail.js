@@ -12,107 +12,107 @@ import OrderDelivery from './OrderDelivery'
 class OrderDetail extends React.PureComponent {
 
 	static propTypes = {
-		orderId: PropTypes.string,
-		deliveryDayId: PropTypes.string,
-		orderState: PropTypes.string,
-		close: PropTypes.func,
-		paymentDate: PropTypes.string,
-		recipes: PropTypes.instanceOf(Immutable.List),
-		products: PropTypes.instanceOf(Immutable.List),
-		randomProducts: PropTypes.instanceOf(Immutable.List),
-		priceBreakdown: PropTypes.instanceOf(Immutable.Map),
-		deliveryDate: PropTypes.string,
-		deliveryTimeStart: PropTypes.string,
-		deliveryTimeEnd: PropTypes.string,
-		whenCutoff: PropTypes.string,
-		editDeliveryMode: PropTypes.bool,
-		cancellable: PropTypes.bool,
-		orderDeliveryDaysFetchError: PropTypes.string,
-		recipesPeriodStockFetchError: PropTypes.string,
+	  orderId: PropTypes.string,
+	  deliveryDayId: PropTypes.string,
+	  orderState: PropTypes.string,
+	  close: PropTypes.func,
+	  paymentDate: PropTypes.string,
+	  recipes: PropTypes.instanceOf(Immutable.List),
+	  products: PropTypes.instanceOf(Immutable.List),
+	  randomProducts: PropTypes.instanceOf(Immutable.List),
+	  priceBreakdown: PropTypes.instanceOf(Immutable.Map),
+	  deliveryDate: PropTypes.string,
+	  deliveryTimeStart: PropTypes.string,
+	  deliveryTimeEnd: PropTypes.string,
+	  whenCutoff: PropTypes.string,
+	  editDeliveryMode: PropTypes.bool,
+	  cancellable: PropTypes.bool,
+	  orderDeliveryDaysFetchError: PropTypes.string,
+	  recipesPeriodStockFetchError: PropTypes.string,
 	}
 
 	static defaultProps = {
-		orderId: '',
-		deliveryDayId: '',
-		orderState: '',
-		close: () => {},
-		paymentDate: '',
-		recipes: Immutable.List([]),
-		products: Immutable.List([]),
-		randomProducts: Immutable.List([]),
-		priceBreakdown: Immutable.Map({}),
-		deliveryDate: '',
-		deliveryTimeStart: '',
-		deliveryTimeEnd: '',
-		whenCutoff: '',
-		editDeliveryMode: false,
-		cancellable: false,
+	  orderId: '',
+	  deliveryDayId: '',
+	  orderState: '',
+	  close: () => {},
+	  paymentDate: '',
+	  recipes: Immutable.List([]),
+	  products: Immutable.List([]),
+	  randomProducts: Immutable.List([]),
+	  priceBreakdown: Immutable.Map({}),
+	  deliveryDate: '',
+	  deliveryTimeStart: '',
+	  deliveryTimeEnd: '',
+	  whenCutoff: '',
+	  editDeliveryMode: false,
+	  cancellable: false,
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+	  store: React.PropTypes.object.isRequired,
 	}
 
 	render() {
-		const fetchSuccess = this.props.recipesPeriodStockFetchError === null && this.props.orderDeliveryDaysFetchError === null
+	  const fetchSuccess = this.props.recipesPeriodStockFetchError === null && this.props.orderDeliveryDaysFetchError === null
 
-		return (
+	  return (
 			<div className={css.orderDetail}>
 				{['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ?
 					<section className={css.openCardSection}>
 						<OrderRecipes
-							recipes={this.props.recipes}
-							orderId={this.props.orderId}
-							orderState={this.props.orderState}
-							whenCutoff={this.props.whenCutoff}
+						  recipes={this.props.recipes}
+						  orderId={this.props.orderId}
+						  orderState={this.props.orderState}
+						  whenCutoff={this.props.whenCutoff}
 						/>
 					</section>
-				: null}
+				  : null}
 				{this.props.orderState === 'recipes chosen' ?
 					<section className={css.openCardSection}>
 						<OrderProducts
-							orderId={this.props.orderId}
-							products={this.props.products}
-							randomProducts={this.props.randomProducts}
+						  orderId={this.props.orderId}
+						  products={this.props.products}
+						  randomProducts={this.props.randomProducts}
 						/>
 					</section>
-				: null}
+				  : null}
 				{['recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ?
 					<section className={css.openCardSection}>
 						<OrderPricingDetail
-							paymentDate={this.props.paymentDate}
-							numberOfRecipes={this.props.recipes.size}
-							priceBreakdown={this.props.priceBreakdown}
+						  paymentDate={this.props.paymentDate}
+						  numberOfRecipes={this.props.recipes.size}
+						  priceBreakdown={this.props.priceBreakdown}
 						/>
 					</section>
-				: null}
+				  : null}
 				{['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ?
 					<section className={this.props.editDeliveryMode && fetchSuccess ? css.openCardSectionNoBorder : css.openCardSection}>
 						<OrderDelivery
-							date={this.props.deliveryDate}
-							timeStart={this.props.deliveryTimeStart}
-							timeEnd={this.props.deliveryTimeEnd}
-							orderState={this.props.orderState}
-							orderId={this.props.orderId}
-							editDeliveryMode={this.props.editDeliveryMode}
-							orderDeliveryDaysFetchError={this.props.orderDeliveryDaysFetchError}
-							recipesPeriodStockFetchError={this.props.recipesPeriodStockFetchError}
-							fetchSuccess={fetchSuccess}
+						  date={this.props.deliveryDate}
+						  timeStart={this.props.deliveryTimeStart}
+						  timeEnd={this.props.deliveryTimeEnd}
+						  orderState={this.props.orderState}
+						  orderId={this.props.orderId}
+						  editDeliveryMode={this.props.editDeliveryMode}
+						  orderDeliveryDaysFetchError={this.props.orderDeliveryDaysFetchError}
+						  recipesPeriodStockFetchError={this.props.recipesPeriodStockFetchError}
+						  fetchSuccess={fetchSuccess}
 						/>
 					</section>
-				: null}
+				  : null}
 				{this.props.cancellable && this.props.orderState !== 'cancelled' ?
 					<section className={this.props.editDeliveryMode && fetchSuccess ? css.openCardSectionNoBorder : css.openCardSection}>
 						<OrderCancelButton
-							orderId={this.props.orderId}
-							deliveryDayId={this.props.deliveryDayId}
-							orderState={this.props.orderState}
-							close={this.props.close}
+						  orderId={this.props.orderId}
+						  deliveryDayId={this.props.deliveryDayId}
+						  orderState={this.props.orderState}
+						  close={this.props.close}
 						/>
 					</section>
-				: null}
+				  : null}
 			</div>
-		)
+	  )
 	}
 }
 

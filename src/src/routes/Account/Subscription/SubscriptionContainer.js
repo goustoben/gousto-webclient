@@ -3,11 +3,11 @@ import Subscription from './Subscription'
 import actions from 'actions/subscriptionPause'
 
 const mapStateToProps = (state) => ({
-	pendingOrders: state.user.get('orders'),
+  pendingOrders: state.user.get('orders'),
 })
 
 const SubscriptionContainer = connect(mapStateToProps, {
-	startSubscriptionPause: actions.subscriptionPauseStart,
+  startSubscriptionPause: actions.subscriptionPauseStart,
 })(Subscription)
 
 export default SubscriptionContainer

@@ -7,18 +7,18 @@ import windowUtils from 'utils/window'
  * @constructor
  */
 const getPathName = ({ prevState }) => {
-	let pathname
+  let pathname
 
-	try {
-		pathname = prevState.routing.locationBeforeTransitions.pathname
-	} catch (e) {
-		pathname = windowUtils.documentLocation().pathname
-	}
+  try {
+    pathname = prevState.routing.locationBeforeTransitions.pathname
+  } catch (e) {
+    pathname = windowUtils.documentLocation().pathname
+  }
 
-	return pathname
+  return pathname
 }
 
 export default {
-	getPathName,
+  getPathName,
 }
 

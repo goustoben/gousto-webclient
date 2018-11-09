@@ -6,11 +6,11 @@ import Link from 'Link'
 const LoadMoreButton = ({ children, onClick, ...restProps }) => (
 	<Div text-center {...restProps}>
 		<Link
-			onClick={onClick}
+		  onClick={onClick}
 		>
 			<Span
-				textLinkLG
-				textBold
+			  textLinkLG
+			  textBold
 			>
 				<Div style={{ lineHeight: 1 }}>
 					{children}
@@ -22,12 +22,12 @@ const LoadMoreButton = ({ children, onClick, ...restProps }) => (
 )
 
 LoadMoreButton.defaultProps = {
-	children: 'See more',
+  children: 'See more',
 }
 
 LoadMoreButton.propTypes = {
-	children: PropTypes.node,
-	onClick: PropTypes.func.isRequired,
+  children: PropTypes.node,
+  onClick: PropTypes.func.isRequired,
 }
 
 export default LoadMoreButton

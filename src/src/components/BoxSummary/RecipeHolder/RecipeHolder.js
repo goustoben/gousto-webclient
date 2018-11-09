@@ -6,36 +6,36 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 
 const RecipeHolder = ({ recipe, view, onClick }) => (
 	<span
-		className={classnames(
-			css[view],
-			{ [css.borderNone]: recipe.size > 0 },
-			{ [css.placeHolder]: recipe.size < 1 },
-			{ [css.recipeImg]: view !== 'mobile' },
-			{ [css.widthMobile]: view === 'mobile' }
-		)}
-		onClick={onClick}
+	  className={classnames(
+	    css[view],
+	    { [css.borderNone]: recipe.size > 0 },
+	    { [css.placeHolder]: recipe.size < 1 },
+	    { [css.recipeImg]: view !== 'mobile' },
+	    { [css.widthMobile]: view === 'mobile' }
+	  )}
+	  onClick={onClick}
 	>
 		{(recipe.size > 0) ?
 			<Image
-				media={recipe.getIn(['media', 'images', 0, 'urls'], '')}
-				className={classnames(
-					{ [css.recipeImg]: view !== 'mobile' },
-					{ [css.imgMobile]: view === 'mobile' }
-				)}
+			  media={recipe.getIn(['media', 'images', 0, 'urls'], '')}
+			  className={classnames(
+			    { [css.recipeImg]: view !== 'mobile' },
+			    { [css.imgMobile]: view === 'mobile' }
+			  )}
 			/>
-		: 'Add Recipe'}
+		  : 'Add Recipe'}
 	</span>
 )
 
 RecipeHolder.propTypes = {
-	recipe: React.PropTypes.instanceOf(Immutable.Map),
-	view: React.PropTypes.string,
-	onClick: React.PropTypes.func,
+  recipe: React.PropTypes.instanceOf(Immutable.Map),
+  view: React.PropTypes.string,
+  onClick: React.PropTypes.func,
 }
 
 RecipeHolder.defaultProps = {
-	recipe: Immutable.Map({}),
-	view: 'desktop',
+  recipe: Immutable.Map({}),
+  view: 'desktop',
 }
 
 export default RecipeHolder

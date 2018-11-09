@@ -3,17 +3,17 @@ import Helmet from 'react-helmet'
 
 const CanonicalLink = ({ href }) => (
 	<Helmet
-		link={[
-			{
-				rel: 'canonical',
-				href,
-			},
-		]}
+	  link={[
+	    {
+	      rel: 'canonical',
+	      href,
+	    },
+	  ]}
 	/>
 )
 
 CanonicalLink.propTypes = {
-	href: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
 }
 
 export default CanonicalLink

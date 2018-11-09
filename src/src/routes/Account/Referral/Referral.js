@@ -14,42 +14,42 @@ const { whatsForYou, whatsForThem } = config
 const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
 
 const fbShare = (referralLink) => {
-	if (globals.client) {
-		window.FB.ui({
-			method: 'share',
-			mobile_iframe: true,
-			href: referralLink,
-			redirect_uri: referralLink,
-		})
-	}
+  if (globals.client) {
+    window.FB.ui({
+      method: 'share',
+      mobile_iframe: true,
+      href: referralLink,
+      redirect_uri: referralLink,
+    })
+  }
 }
 
 const fbMsgShare = (referralLink) => {
-	if (globals.client) {
-		window.FB.ui({
-			method: 'send',
-			mobile_iframe: true,
-			link: referralLink,
-			redirect_uri: referralLink,
-		})
-	}
+  if (globals.client) {
+    window.FB.ui({
+      method: 'send',
+      mobile_iframe: true,
+      link: referralLink,
+      redirect_uri: referralLink,
+    })
+  }
 }
 
 class Referral extends React.Component {
 	state = { isEmailModalOpen: false }
 
 	openEmailModal = () => {
-		this.setState({ isEmailModalOpen: true })
+	  this.setState({ isEmailModalOpen: true })
 	}
 
 	closeEmailModal = () => {
-		this.setState({ isEmailModalOpen: false })
+	  this.setState({ isEmailModalOpen: false })
 	}
 
 	render() {
-		const { referralCode } = this.props
+	  const { referralCode } = this.props
 
-		return (
+	  return (
 			<div className={`${accountCSS.accountContainer} ${accountCSS.container}`}>
 				<Image media={getImage('refer.jpg')} title={`You get ${whatsForYou}, they get ${whatsForThem} off their first 2 boxes!`} />
 				<H2 headlineFont>
@@ -63,7 +63,7 @@ class Referral extends React.Component {
 						<SocialButton text="Email" type="email" onClick={this.openEmailModal}/>
 						<Overlay open={this.state.isEmailModalOpen} from="top">
 							<ReferAFriendModal
-								onClose={this.closeEmailModal}
+							  onClose={this.closeEmailModal}
 							/>
 						</Overlay>
 						<SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
@@ -71,7 +71,7 @@ class Referral extends React.Component {
 					</div>
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

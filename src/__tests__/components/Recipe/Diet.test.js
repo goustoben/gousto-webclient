@@ -4,36 +4,36 @@ import { shallow } from 'enzyme'
 import Diet from 'Recipe/Diet'
 
 describe('<Diet />', () => {
-	let wrapper
-	let diet
+  let wrapper
+  let diet
 
-	test('should return a <div>', () => {
-		wrapper = shallow(<Diet diet={'meat'} />)
+  test('should return a <div>', () => {
+    wrapper = shallow(<Diet diet={'meat'} />)
 
-		expect(wrapper.type()).toEqual('div')
-	})
+    expect(wrapper.type()).toEqual('div')
+  })
 
-	test('should have two span children', () => {
-		wrapper = shallow(<Diet diet={'fish'} />)
+  test('should have two span children', () => {
+    wrapper = shallow(<Diet diet={'fish'} />)
 
-		wrapper.children().forEach(node => {
-			expect(node.type()).toEqual('span')
-		})
-	})
+    wrapper.children().forEach(node => {
+      expect(node.type()).toEqual('span')
+    })
+  })
 
-	test('should display the normal diet types correctly', () => {
-		const diets = ['meat', 'fish', 'vegetarian']
+  test('should display the normal diet types correctly', () => {
+    const diets = ['meat', 'fish', 'vegetarian']
 
-		diets.forEach(diet => {
-			wrapper = shallow(<Diet diet={diet} />)
+    diets.forEach(diet => {
+      wrapper = shallow(<Diet diet={diet} />)
 
-			expect(wrapper.text()).toContain(diet)
-		})
-	})
+      expect(wrapper.text()).toContain(diet)
+    })
+  })
 
-	test('should display the vegan diet type as plant-based', () => {
-		wrapper = shallow(<Diet diet="vegan" />)
+  test('should display the vegan diet type as plant-based', () => {
+    wrapper = shallow(<Diet diet="vegan" />)
 
-		expect(wrapper.text()).toContain('plant-based')
-	})
+    expect(wrapper.text()).toContain('plant-based')
+  })
 })

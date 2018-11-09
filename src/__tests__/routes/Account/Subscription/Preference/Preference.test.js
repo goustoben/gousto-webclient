@@ -5,15 +5,15 @@ import { shallow } from 'enzyme'
 import Preference from 'routes/Account/Subscription/Preference'
 
 describe('Preference', () => {
-	describe('rendering', () => {
-		let wrapper
+  describe('rendering', () => {
+    let wrapper
 
-		beforeEach(() => {
-			wrapper = shallow(<Preference />)
-		})
+    beforeEach(() => {
+      wrapper = shallow(<Preference />)
+    })
 
-		test('should render a <div>', () => {
-			expect(wrapper.type()).toEqual('div')
-		})
-	})
+    test('should render a <div>', () => {
+      expect(wrapper.type()).toEqual('div')
+    })
+  })
 })

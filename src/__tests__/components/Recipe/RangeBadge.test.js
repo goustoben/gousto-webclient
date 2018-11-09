@@ -8,21 +8,21 @@ import InfoBadge from 'Recipe/InfoBadge'
 import colors from 'styles/colors.css'
 
 describe('<RangeBadge />', () => {
-	test('should not render by default', () => {
-		const wrapper = shallow(<RangeBadge />)
+  test('should not render by default', () => {
+    const wrapper = shallow(<RangeBadge />)
 
-		expect(wrapper.find(InfoBadge).length).toBe(0)
-	})
+    expect(wrapper.find(InfoBadge).length).toBe(0)
+  })
 
-	describe('snapshots', () => {
-		test('should render when given a preconfigured range', () => {
-			const whiteStub = sinon.stub(colors, 'White').get(() => '#FFFFFF')
-			const tree = renderer
-				.create(<RangeBadge range={'ten_to_table'} />)
-				.toJSON()
+  describe('snapshots', () => {
+    test('should render when given a preconfigured range', () => {
+      const whiteStub = sinon.stub(colors, 'White').get(() => '#FFFFFF')
+      const tree = renderer
+        .create(<RangeBadge range={'ten_to_table'} />)
+        .toJSON()
 
-			expect(tree).toMatchSnapshot()
-			whiteStub.reset()
-		})
-	})
+      expect(tree).toMatchSnapshot()
+      whiteStub.reset()
+    })
+  })
 })

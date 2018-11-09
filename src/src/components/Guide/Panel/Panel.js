@@ -16,17 +16,17 @@ const Panel = ({ path, title, description, graphicType }) => (
 )
 
 Panel.propTypes = {
-	path: PropTypes.string,
-	title: PropTypes.string,
-	description: PropTypes.string,
-	graphicType: PropTypes.oneOf(['img', 'svg']),
+  path: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  graphicType: PropTypes.oneOf(['img', 'svg']),
 }
 
 Panel.defaultProps = {
-	path: '',
-	title: [],
-	description: '',
-	graphicType: 'img',
+  path: '',
+  title: [],
+  description: '',
+  graphicType: 'img',
 }
 
 export default Panel

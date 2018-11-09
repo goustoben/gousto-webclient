@@ -16,53 +16,53 @@ import globals from 'config/globals'
 import { Iterable } from 'immutable'
 
 class GoustoStore {
-	constructor() {
-		this.store = {
-			getState: () => ({}),
-		}
-	}
+  constructor() {
+    this.store = {
+      getState: () => ({}),
+    }
+  }
 
-	configureStore(history, initialState, cookies) {
-		const middleware = [
-			thunk,
-			routerMiddleware(history),
-			trackingMiddleware(snowplow),
-			trackingMiddleware(affiliateWindow),
-			trackingMiddleware(facebookPixel, 'v2'),
-			trackingMiddleware(pinterestPixel, 'v2'),
-			trackingMiddleware(snowplowV2, 'v2'),
-		]
+  configureStore(history, initialState, cookies) {
+    const middleware = [
+      thunk,
+      routerMiddleware(history),
+      trackingMiddleware(snowplow),
+      trackingMiddleware(affiliateWindow),
+      trackingMiddleware(facebookPixel, 'v2'),
+      trackingMiddleware(pinterestPixel, 'v2'),
+      trackingMiddleware(snowplowV2, 'v2'),
+    ]
 
-		if (globals.dev && globals.client && !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) { // eslint-disable-line no-underscore-dangle
-			const stateTransformer = (state) => {
-				const newState = {}
-				for (const i of Object.keys(state)) {
-					if (Iterable.isIterable(state[i])) {
-						newState[i] = state[i].toJS()
-					} else {
-						newState[i] = state[i]
-					}
-				}
+    if (globals.dev && globals.client && !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) { // eslint-disable-line no-underscore-dangle
+      const stateTransformer = (state) => {
+        const newState = {}
+        for (const i of Object.keys(state)) {
+          if (Iterable.isIterable(state[i])) {
+            newState[i] = state[i].toJS()
+          } else {
+            newState[i] = state[i]
+          }
+        }
 
-				return newState
-			}
-			middleware.push(logger({ stateTransformer }))
-		}
+        return newState
+      }
+      middleware.push(logger({ stateTransformer }))
+    }
 
-		if (cookies && globals.client) {
-			middleware.push(persistenceMiddleware(persistenceConfig, cookies))
-		}
+    if (cookies && globals.client) {
+      middleware.push(persistenceMiddleware(persistenceConfig, cookies))
+    }
 
-		const composeEnhancers = globals.client && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose // eslint-disable-line no-underscore-dangle
+    const composeEnhancers = globals.client && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose // eslint-disable-line no-underscore-dangle
 
-		this.store = createStore(
-			combineReducers(Object.assign({}, reducers, { routing: routerReducer }, { form: reduxFormReducer })),
-			initialState,
-			composeEnhancers(applyMiddleware(...middleware))
-		)
+    this.store = createStore(
+      combineReducers(Object.assign({}, reducers, { routing: routerReducer }, { form: reduxFormReducer })),
+      initialState,
+      composeEnhancers(applyMiddleware(...middleware))
+    )
 
-		return this.store
-	}
+    return this.store
+  }
 }
 
 const goustoStore = new GoustoStore()

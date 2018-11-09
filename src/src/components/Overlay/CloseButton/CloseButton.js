@@ -6,7 +6,7 @@ const CloseButton = ({ onClose }) => (
 )
 
 CloseButton.propTypes = {
-	onClose: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 }
 
 export default CloseButton

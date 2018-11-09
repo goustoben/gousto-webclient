@@ -4,20 +4,20 @@ import { Alert } from 'goustouicomponents'
 import css from './ErrorMessage.css'
 
 const ErrorMessage = ({ errorType }) => (
-	errorType ? (
+  errorType ? (
 		<div className={css.container}>
 			<Alert type="danger">
 				{config.errorMessage[errorType] || config.errorMessage.generic}
 			</Alert>
 		</div>
-	) : null
+  ) : null
 )
 
 ErrorMessage.propTypes = {
-	errorType: PropTypes.oneOfType([
-		PropTypes.string,
-		PropTypes.number,
-	]),
+  errorType: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
 }
 
 export default ErrorMessage

@@ -6,33 +6,33 @@ import { Button } from 'goustouicomponents'
 import FilterButton from 'routes/Menu/FilterMenu/FilterButton/FilterButton'
 
 describe('<FilterButton />', () => {
-	let wrapper
+  let wrapper
 
-	test('should trigger onClick prop when button is pressed', () => {
-		const onClickSpy = jest.fn()
-		wrapper = shallow(<FilterButton onClick={onClickSpy} />)
-		wrapper.simulate('click')
+  test('should trigger onClick prop when button is pressed', () => {
+    const onClickSpy = jest.fn()
+    wrapper = shallow(<FilterButton onClick={onClickSpy} />)
+    wrapper.simulate('click')
 
-		expect(onClickSpy).toHaveBeenCalled()
-	})
+    expect(onClickSpy).toHaveBeenCalled()
+  })
 
-	describe('count', () => {
-		test('should display default text with no count provided', () => {
-			wrapper = shallow(<FilterButton count={0} />)
+  describe('count', () => {
+    test('should display default text with no count provided', () => {
+      wrapper = shallow(<FilterButton count={0} />)
 
-			expect(wrapper.find(Button).children().text()).toContain('No recipes found')
-		})
+      expect(wrapper.find(Button).children().text()).toContain('No recipes found')
+    })
 
-		test('should display results count when count prop provided', () => {
-			wrapper = shallow(<FilterButton count={30} />)
+    test('should display results count when count prop provided', () => {
+      wrapper = shallow(<FilterButton count={30} />)
 
-			expect(wrapper.find(Button).children().text()).toContain(30)
-		})
+      expect(wrapper.find(Button).children().text()).toContain(30)
+    })
 
-		test('should display disabled button for 0 recipes found', () => {
-			wrapper = shallow(<FilterButton count={0} />)
+    test('should display disabled button for 0 recipes found', () => {
+      wrapper = shallow(<FilterButton count={0} />)
 
-			expect(wrapper.find(Button).at(0).node.props.disabled).toBe(true)
-		})
-	})
+      expect(wrapper.find(Button).at(0).node.props.disabled).toBe(true)
+    })
+  })
 })

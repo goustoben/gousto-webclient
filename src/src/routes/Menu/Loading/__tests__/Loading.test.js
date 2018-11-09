@@ -4,34 +4,34 @@ import renderer from 'react-test-renderer'
 import Loading from '../Loading'
 
 describe('Menu Loading', () => {
-	let wrapper
+  let wrapper
 
-	describe('Initial Rendering', () => {
-		test('should match snapshot', () => {
-			const tree = renderer.create(<Loading loading hasRecommendations />).toJSON()
-			expect(tree).toMatchSnapshot()
-		})
+  describe('Initial Rendering', () => {
+    test('should match snapshot', () => {
+      const tree = renderer.create(<Loading loading hasRecommendations />).toJSON()
+      expect(tree).toMatchSnapshot()
+    })
 
-		test('should render loading gif', () => {
-			wrapper = shallow(<Loading loading hasRecommendations />)
-			const loadingGif = wrapper.find('Image')
+    test('should render loading gif', () => {
+      wrapper = shallow(<Loading loading hasRecommendations />)
+      const loadingGif = wrapper.find('Image')
 
-			expect(loadingGif).toHaveLength(1)
-		})
-	})
+      expect(loadingGif).toHaveLength(1)
+    })
+  })
 
-	describe('Alternative Rendering', () => {
-		test('should not render anything if loading is null', () => {
-			wrapper = shallow(<Loading />)
+  describe('Alternative Rendering', () => {
+    test('should not render anything if loading is null', () => {
+      wrapper = shallow(<Loading />)
 
-			expect(wrapper.type()).toBe(null)
-		})
+      expect(wrapper.type()).toBe(null)
+    })
 
-		test('should render loading component if hasRecommendations is false', () => {
-			wrapper = shallow(<Loading loading />)
-			const loadingComponent = wrapper.find('[className="loading"]')
+    test('should render loading component if hasRecommendations is false', () => {
+      wrapper = shallow(<Loading loading />)
+      const loadingComponent = wrapper.find('[className="loading"]')
 
-			expect(loadingComponent).toHaveLength(1)
-		})
-	})
+      expect(loadingComponent).toHaveLength(1)
+    })
+  })
 })

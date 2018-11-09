@@ -4,11 +4,11 @@ import css from './CookieBanner.css'
 import Link from 'Link'
 
 const CookieBanner = ({ copy, isCookiePolicyAccepted, cookiePolicyAcceptanceChange }) => {
-	if (isCookiePolicyAccepted) {
-		return null
-	}
+  if (isCookiePolicyAccepted) {
+    return null
+  }
 
-	return (
+  return (
 		<div className={css.container} data-testing="cookiePolicyBanner">
 			<div>
 				<p className={css.description}>
@@ -20,32 +20,32 @@ const CookieBanner = ({ copy, isCookiePolicyAccepted, cookiePolicyAcceptanceChan
 					</Link>
 				</p>
 				<a
-					role="button"
-					className={css.button}
-					data-testing="cookiePolicyBannerBtn"
-					onClick={() => {
-						cookiePolicyAcceptanceChange(true)
-					}}
+				  role="button"
+				  className={css.button}
+				  data-testing="cookiePolicyBannerBtn"
+				  onClick={() => {
+				    cookiePolicyAcceptanceChange(true)
+				  }}
 				>
 					{copy.button}
 				</a>
 			</div>
 		</div>
-	)
+  )
 }
 
 CookieBanner.propTypes = {
-	copy: React.PropTypes.shape({
-		button: React.PropTypes.string,
-		findMore: React.PropTypes.string,
-		description: React.PropTypes.string,
-	}).isRequired,
-	isCookiePolicyAccepted: React.PropTypes.bool,
-	cookiePolicyAcceptanceChange: React.PropTypes.func.isRequired,
+  copy: React.PropTypes.shape({
+    button: React.PropTypes.string,
+    findMore: React.PropTypes.string,
+    description: React.PropTypes.string,
+  }).isRequired,
+  isCookiePolicyAccepted: React.PropTypes.bool,
+  cookiePolicyAcceptanceChange: React.PropTypes.func.isRequired,
 }
 
 CookieBanner.defaultProps = {
-	isCookiePolicyAccepted: false,
+  isCookiePolicyAccepted: false,
 }
 
 export default CookieBanner

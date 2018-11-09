@@ -11,7 +11,7 @@ describe('FilterTag', () => {
         .create(<FilterTag>Facebook</FilterTag>)
         .toJSON()
 
-        expect(tree).toMatchSnapshot()
+      expect(tree).toMatchSnapshot()
     })
 
     test('should render heart icon if tag for JFY collection', () => {

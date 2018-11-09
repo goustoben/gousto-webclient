@@ -8,8 +8,8 @@ const Dots = ({ steps, stepNo }) => (
 )
 
 Dots.propTypes = {
-	stepNo: React.PropTypes.number,
-	steps: React.PropTypes.number,
+  stepNo: React.PropTypes.number,
+  steps: React.PropTypes.number,
 }
 
 export default Dots

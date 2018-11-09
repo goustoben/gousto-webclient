@@ -14,35 +14,35 @@ const sectionName = 'aboutyou'
 const AboutYouSection = AboutYouContainer(sectionName)
 
 const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkoutValid }) => {
-	const handleSubmit = () => {
-		if (checkoutValid) {
-			userProspect()
-		}
-		submit()
-	}
+  const handleSubmit = () => {
+    if (checkoutValid) {
+      userProspect()
+    }
+    submit()
+  }
 
-	return (
+  return (
 		<div>
 			<AboutYouSection receiveRef={receiveRef} />
 			<CheckoutButton
-				onClick={handleSubmit}
-				stepName={`next: ${nextStepName}`}
+			  onClick={handleSubmit}
+			  stepName={`next: ${nextStepName}`}
 			/>
 		</div>
-	)
+  )
 }
 
 AboutYouStep.propTypes = {
-	submit: PropTypes.func.isRequired,
-	userProspect: PropTypes.func,
-	receiveRef: PropTypes.func,
-	nextStepName: PropTypes.string,
-	checkoutValid: PropTypes.bool,
+  submit: PropTypes.func.isRequired,
+  userProspect: PropTypes.func,
+  receiveRef: PropTypes.func,
+  nextStepName: PropTypes.string,
+  checkoutValid: PropTypes.bool,
 }
 
 AboutYouStep.defaultProps = {
-	userProspect: () => {},
-	checkoutValid: false,
+  userProspect: () => {},
+  checkoutValid: false,
 }
 
 const AboutYouForm = formContainer(AboutYouStep, addPrefix(sectionName, userRules), {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports

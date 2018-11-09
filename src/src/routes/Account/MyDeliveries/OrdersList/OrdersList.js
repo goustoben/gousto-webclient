@@ -19,14 +19,14 @@ const OrdersList = ({ orders, recipes, boxType }) => (
 )
 
 OrdersList.propTypes = {
-	orders: PropTypes.instanceOf(Immutable.Map),
-	recipes: PropTypes.instanceOf(Immutable.Map),
-	boxType: PropTypes.string,
+  orders: PropTypes.instanceOf(Immutable.Map),
+  recipes: PropTypes.instanceOf(Immutable.Map),
+  boxType: PropTypes.string,
 }
 OrdersList.defaultProps = {
-	orders: Immutable.fromJS({}),
-	recipes: Immutable.fromJS({}),
-	boxType: '',
+  orders: Immutable.fromJS({}),
+  recipes: Immutable.fromJS({}),
+  boxType: '',
 }
 
 export default OrdersList

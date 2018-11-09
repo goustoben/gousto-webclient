@@ -3,9 +3,9 @@ import ExpiredBillingModal from './ExpiredBillingModal'
 import actions from 'actions'
 
 const mapStateToProps = (state) => ({
-	expiredBillingModalOpen: state.expiredBillingModalVisibility,
+  expiredBillingModalOpen: state.expiredBillingModalVisibility,
 })
 
 export default connect(mapStateToProps, {
-	closeExpiredBillingModal: actions.userToggleExpiredBillingModal,
+  closeExpiredBillingModal: actions.userToggleExpiredBillingModal,
 })(ExpiredBillingModal)

@@ -18,14 +18,14 @@ const OrderedRecipes = ({ title, recipeId, stock, media, basics, serving, featur
 				{(basics.size > 0 && view === 'boxdetails') ? <p className={css.details}><span className={css.basics}>You'll need: {basics.toJS().join(', ')}</span></p> : null}
 				{(featureBtn) ?
 					<Button
-						view="checkout"
-						recipeId={recipeId}
-						outOfstock={stock <= config.stockThreshold && stock !== null}
-						stock={stock}
-						disabled={false}
-						showControl
+					  view="checkout"
+					  recipeId={recipeId}
+					  outOfstock={stock <= config.stockThreshold && stock !== null}
+					  stock={stock}
+					  disabled={false}
+					  showControl
 					/>
-					:
+				  :
 					<span className={css.textSM}>{`${serving} Servings`}</span>
 				}
 			</div>
@@ -34,29 +34,29 @@ const OrderedRecipes = ({ title, recipeId, stock, media, basics, serving, featur
 )
 
 OrderedRecipes.propTypes = {
-	title: React.PropTypes.string.isRequired,
-	recipeId: React.PropTypes.string.isRequired,
-	basics: React.PropTypes.instanceOf(Immutable.List),
-	stock: React.PropTypes.number,
-	serving: React.PropTypes.number,
-	featureBtn: React.PropTypes.bool,
-	featureLink: React.PropTypes.bool,
-	media: React.PropTypes.instanceOf(Immutable.List),
-	view: React.PropTypes.oneOf(['boxdetails', 'summary']),
-	range: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string.isRequired,
+  recipeId: React.PropTypes.string.isRequired,
+  basics: React.PropTypes.instanceOf(Immutable.List),
+  stock: React.PropTypes.number,
+  serving: React.PropTypes.number,
+  featureBtn: React.PropTypes.bool,
+  featureLink: React.PropTypes.bool,
+  media: React.PropTypes.instanceOf(Immutable.List),
+  view: React.PropTypes.oneOf(['boxdetails', 'summary']),
+  range: React.PropTypes.string.isRequired,
 }
 
 OrderedRecipes.defaultProps = {
-	title: '',
-	recipeId: '',
-	basics: Immutable.List([]),
-	stock: 0,
-	serving: 0,
-	media: Immutable.List([]),
-	featureBtn: false,
-	featureLink: false,
-	view: 'boxdetails',
-	range: '',
+  title: '',
+  recipeId: '',
+  basics: Immutable.List([]),
+  stock: 0,
+  serving: 0,
+  media: Immutable.List([]),
+  featureBtn: false,
+  featureLink: false,
+  view: 'boxdetails',
+  range: '',
 }
 
 export default OrderedRecipes

@@ -23,249 +23,249 @@ const clientRoutes = config.routes.client
 class Header extends React.PureComponent {
 
 	static propTypes = {
-		logoutUser: React.PropTypes.func,
-		serverError: React.PropTypes.bool.isRequired,
-		isAuthenticated: React.PropTypes.bool.isRequired,
-		loginOpen: React.PropTypes.bool,
-		routing: React.PropTypes.object,
-		simple: React.PropTypes.bool,
-		disabled: React.PropTypes.bool,
-		path: React.PropTypes.string,
-		fromJoin: React.PropTypes.bool,
-		promoCodeUrl: React.PropTypes.string,
-		loginVisibilityChange: React.PropTypes.func,
-		features: React.PropTypes.instanceOf(Immutable.Map),
-		noContactBar: React.PropTypes.bool,
-		title: React.PropTypes.string,
-		small: React.PropTypes.bool,
+	  logoutUser: React.PropTypes.func,
+	  serverError: React.PropTypes.bool.isRequired,
+	  isAuthenticated: React.PropTypes.bool.isRequired,
+	  loginOpen: React.PropTypes.bool,
+	  routing: React.PropTypes.object,
+	  simple: React.PropTypes.bool,
+	  disabled: React.PropTypes.bool,
+	  path: React.PropTypes.string,
+	  fromJoin: React.PropTypes.bool,
+	  promoCodeUrl: React.PropTypes.string,
+	  loginVisibilityChange: React.PropTypes.func,
+	  features: React.PropTypes.instanceOf(Immutable.Map),
+	  noContactBar: React.PropTypes.bool,
+	  title: React.PropTypes.string,
+	  small: React.PropTypes.bool,
 	}
 
 	static defaultProps = {
-		serverError: false,
-		isAuthenticated: false,
-		simple: false,
-		path: '',
-		promoCodeUrl: '',
-		title: '',
-		small: false,
-		features: Immutable.Map({}),
+	  serverError: false,
+	  isAuthenticated: false,
+	  simple: false,
+	  path: '',
+	  promoCodeUrl: '',
+	  title: '',
+	  small: false,
+	  features: Immutable.Map({}),
 	}
 
 	constructor(props) {
-		super(props)
+	  super(props)
 
-		this.state = {
-			mobileMenuOpen: false,
-			loginPending: false,
-			logoutPending: false,
-		}
+	  this.state = {
+	    mobileMenuOpen: false,
+	    loginPending: false,
+	    logoutPending: false,
+	  }
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.isAuthenticated !== nextProps.isAuthenticated) {
-			if (nextProps.isAuthenticated) {
-				this.setState({ loginPending: true })
-			} else {
-				this.setState({ logoutPending: true })
-			}
-		}
+	  if (this.props.isAuthenticated !== nextProps.isAuthenticated) {
+	    if (nextProps.isAuthenticated) {
+	      this.setState({ loginPending: true })
+	    } else {
+	      this.setState({ logoutPending: true })
+	    }
+	  }
 	}
 
 	componentDidUpdate() {
-		if (this.state.loginPending) {
-			window.setTimeout(() => {
-				this.setState({ loginPending: false })
-			}, 1000)
-		}
-		if (this.state.logoutPending) {
-			window.setTimeout(() => {
-				this.setState({ logoutPending: false })
-			}, 1000)
-		}
+	  if (this.state.loginPending) {
+	    window.setTimeout(() => {
+	      this.setState({ loginPending: false })
+	    }, 1000)
+	  }
+	  if (this.state.logoutPending) {
+	    window.setTimeout(() => {
+	      this.setState({ logoutPending: false })
+	    }, 1000)
+	  }
 	}
 
 	onClose = () => {
-		this.props.loginVisibilityChange(false)
-		this.setState({ loginPending: false })
+	  this.props.loginVisibilityChange(false)
+	  this.setState({ loginPending: false })
 	}
 
 	onCloseCancelBoxModal = () => {
-		this.props.closeBoxModalVisibilityChange(false)
+	  this.props.closeBoxModalVisibilityChange(false)
 	}
 
 	onOpen = (e) => {
-		e.stopPropagation()
-		this.props.loginVisibilityChange(true)
+	  e.stopPropagation()
+	  this.props.loginVisibilityChange(true)
 	}
 
 	getMenuItems = (device, path) => {
-		const isAuthenticated = this.props.isAuthenticated
+	  const isAuthenticated = this.props.isAuthenticated
 
-		const home = { name: 'Home', icon: 'home', url: clientRoutes.home, clientRouted: true }
+	  const home = { name: 'Home', icon: 'home', url: clientRoutes.home, clientRouted: true }
 
-		const availableItems = {
-			home,
-			boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, icon: 'box', clientRouted: true },
-			menu: { name: 'Choose Recipes', url: clientRoutes.menu, icon: 'menu' },
-			faq: { name: 'Help', url: clientRoutes.help, icon: 'faq', clientRouted: false },
-			myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, icon: 'box', clientRouted: false },
-			referFriend: { name: 'Free Food', url: clientRoutes.referFriend, icon: 'heart', clientRouted: false },
-		}
+	  const availableItems = {
+	    home,
+	    boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, icon: 'box', clientRouted: true },
+	    menu: { name: 'Choose Recipes', url: clientRoutes.menu, icon: 'menu' },
+	    faq: { name: 'Help', url: clientRoutes.help, icon: 'faq', clientRouted: false },
+	    myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, icon: 'box', clientRouted: false },
+	    referFriend: { name: 'Free Food', url: clientRoutes.referFriend, icon: 'heart', clientRouted: false },
+	  }
 
-		let pathLocal = path
-		if (path.indexOf('/') === -1) {
-			pathLocal = `/${pathLocal}`
-		}
-		Object.keys(availableItems).forEach(menuItem => {
-			if (pathLocal.indexOf(availableItems[menuItem].url) > -1) {
-				availableItems[menuItem].disabled = true
-			}
-		})
+	  let pathLocal = path
+	  if (path.indexOf('/') === -1) {
+	    pathLocal = `/${pathLocal}`
+	  }
+	  Object.keys(availableItems).forEach(menuItem => {
+	    if (pathLocal.indexOf(availableItems[menuItem].url) > -1) {
+	      availableItems[menuItem].disabled = true
+	    }
+	  })
 
-		const homeMenuItem = availableItems.home
-		if (this.props.promoCodeUrl) {
-			homeMenuItem.url = `/${this.props.promoCodeUrl}`
-		} else if (path.includes('check-out')) {
-			homeMenuItem.url = clientRoutes.menu
-		} else if (path.includes('join') || this.props.fromJoin === 'join') {
-			homeMenuItem.url = clientRoutes.join
-		}
+	  const homeMenuItem = availableItems.home
+	  if (this.props.promoCodeUrl) {
+	    homeMenuItem.url = `/${this.props.promoCodeUrl}`
+	  } else if (path.includes('check-out')) {
+	    homeMenuItem.url = clientRoutes.menu
+	  } else if (path.includes('join') || this.props.fromJoin === 'join') {
+	    homeMenuItem.url = clientRoutes.join
+	  }
 
-		const items = [
-			(isAuthenticated ? availableItems.referFriend : availableItems.boxPrices),
-			availableItems.menu,
-			availableItems.faq,
-		]
+	  const items = [
+	    (isAuthenticated ? availableItems.referFriend : availableItems.boxPrices),
+	    availableItems.menu,
+	    availableItems.faq,
+	  ]
 
-		return (device === 'mobile') ? [homeMenuItem].concat(items) : items
+	  return (device === 'mobile') ? [homeMenuItem].concat(items) : items
 	}
 
 	handleQuery = () => {
-		let route = ''
-		let fromWizard = false
-		const routing = this.props.routing
-		if (routing && routing.locationBeforeTransitions) {
-			if (routing.locationBeforeTransitions.pathname) {
-				route = routing.locationBeforeTransitions.pathname
-			}
-			if (routing.locationBeforeTransitions.query && routing.locationBeforeTransitions.query.from_wizard) {
-				fromWizard = true
-			}
-		}
-		const path = this.props.path || route
+	  let route = ''
+	  let fromWizard = false
+	  const routing = this.props.routing
+	  if (routing && routing.locationBeforeTransitions) {
+	    if (routing.locationBeforeTransitions.pathname) {
+	      route = routing.locationBeforeTransitions.pathname
+	    }
+	    if (routing.locationBeforeTransitions.query && routing.locationBeforeTransitions.query.from_wizard) {
+	      fromWizard = true
+	    }
+	  }
+	  const path = this.props.path || route
 
-		return { fromWizard, path }
+	  return { fromWizard, path }
 	}
 
 	logoutFunc = () => {
-		this.props.logoutUser()
+	  this.props.logoutUser()
 	}
 
 	showMobileMenu = () => {
-		this.setState({ mobileMenuOpen: true })
+	  this.setState({ mobileMenuOpen: true })
 	}
 
 	hideMobileMenu = () => {
-		this.setState({ mobileMenuOpen: false })
+	  this.setState({ mobileMenuOpen: false })
 	}
 
 	renderAuthLink = () => {
-		const { isAuthenticated } = this.props
-		const { logoutPending } = this.state
-		let buttonState
-		let button
+	  const { isAuthenticated } = this.props
+	  const { logoutPending } = this.state
+	  let buttonState
+	  let button
 
-		if (logoutPending) {
-			buttonState = 'loggingOut'
-			button = (
+	  if (logoutPending) {
+	    buttonState = 'loggingOut'
+	    button = (
 				<a className={css.btn}>
 					You're logged out <span className={css.confirm} />
 				</a>
-			)
-		} else if (isAuthenticated) {
-			buttonState = 'loggedIn'
-			button = (
+	    )
+	  } else if (isAuthenticated) {
+	    buttonState = 'loggedIn'
+	    button = (
 				<a
-					className={css.btn}
-					href={clientRoutes.myGousto}
-					data-testing="myGoustoButtonLink"
+				  className={css.btn}
+				  href={clientRoutes.myGousto}
+				  data-testing="myGoustoButtonLink"
 				>
 					My Gousto
 				</a>
-			)
-		} else {
-			buttonState = 'loggedOut'
-			button = (
+	    )
+	  } else {
+	    buttonState = 'loggedOut'
+	    button = (
 				<a className={css.btn} 	data-testing="loginButton">
 					Login
 				</a>
-			)
-		}
-		const logoutLink = (
+	    )
+	  }
+	  const logoutLink = (
 			<span
-				className={css.linkDesktop}
-				onClick={this.logoutFunc}
-				data-testing="logoutButton"
+			  className={css.linkDesktop}
+			  onClick={this.logoutFunc}
+			  data-testing="logoutButton"
 			>
 				Logout
 			</span>
-		)
+	  )
 
-		return (
+	  return (
 			<span
-				className={classNames(css.authButtonsContainer, css[buttonState])}
-				onClick={e => { if (!isAuthenticated) { this.onOpen(e) } }}
+			  className={classNames(css.authButtonsContainer, css[buttonState])}
+			  onClick={e => { if (!isAuthenticated) { this.onOpen(e) } }}
 			>
 				{button}
 				{isAuthenticated && logoutLink}
 			</span>
-		)
+	  )
 	}
 	renderMenuItems = (menu, show) => (
-		(show) ? menu.map(menuItem => {
-			if (menuItem.disabled) {
-				return <span key={menuItem.name} className={css.linkDesktopDisabled}>{menuItem.name}</span>
-			}
+	  (show) ? menu.map(menuItem => {
+	    if (menuItem.disabled) {
+	      return <span key={menuItem.name} className={css.linkDesktopDisabled}>{menuItem.name}</span>
+	    }
 
-			return <Link key={menuItem.name} to={menuItem.url} className={css.linkDesktop}>{menuItem.name}</Link>
-		}) : ''
+	    return <Link key={menuItem.name} to={menuItem.url} className={css.linkDesktop}>{menuItem.name}</Link>
+	  }) : ''
 	)
 	render() {
-		const { fromWizard, path } = this.handleQuery()
-		const joinPage = path.indexOf('join') > -1 || this.props.fromJoin
-		const hideNav = fromWizard || joinPage || this.props.disabled || false
-		const noContactBar = joinPage || this.props.noContactBar
-		if (this.props.simple && !this.props.isAuthenticated) {
-			return (
+	  const { fromWizard, path } = this.handleQuery()
+	  const joinPage = path.indexOf('join') > -1 || this.props.fromJoin
+	  const hideNav = fromWizard || joinPage || this.props.disabled || false
+	  const noContactBar = joinPage || this.props.noContactBar
+	  if (this.props.simple && !this.props.isAuthenticated) {
+	    return (
 				<SimpleHeader
-					serverError={this.props.serverError}
-					className={this.state.mobileMenuOpen ? css.overlayOpen : css.overlay}
-					homeUrl={this.getMenuItems('mobile', path)[0].url}
-					noContactBar={noContactBar}
-					title={this.props.title}
-					small={this.props.small}
+				  serverError={this.props.serverError}
+				  className={this.state.mobileMenuOpen ? css.overlayOpen : css.overlay}
+				  homeUrl={this.getMenuItems('mobile', path)[0].url}
+				  noContactBar={noContactBar}
+				  title={this.props.title}
+				  small={this.props.small}
 				/>
-			)
-		}
+	    )
+	  }
 
-		return (
+	  return (
 			<span id={this.props.serverError ? 'mobileMenu' : null} data-testing="header">
 				<a
-					className={this.state.mobileMenuOpen ? css.overlayOpen : css.overlay}
-					href={this.props.serverError ? '#' : null}
-					onClick={this.hideMobileMenu}
+				  className={this.state.mobileMenuOpen ? css.overlayOpen : css.overlay}
+				  href={this.props.serverError ? '#' : null}
+				  onClick={this.hideMobileMenu}
 				/>
 				<header className={noContactBar ? css.headerNoContactBar : css.header}>
 					<div>
 						<MobileMenu
-							menuItems={this.getMenuItems('mobile', path)}
-							show={this.state.mobileMenuOpen}
-							onHide={this.hideMobileMenu}
-							hideNav={hideNav}
-							isAuthenticated={this.props.isAuthenticated}
-							loginFunc={this.onOpen}
-							logoutFunc={this.logoutFunc}
-							promoCodeUrl={this.props.promoCodeUrl}
+						  menuItems={this.getMenuItems('mobile', path)}
+						  show={this.state.mobileMenuOpen}
+						  onHide={this.hideMobileMenu}
+						  hideNav={hideNav}
+						  isAuthenticated={this.props.isAuthenticated}
+						  loginFunc={this.onOpen}
+						  logoutFunc={this.logoutFunc}
+						  promoCodeUrl={this.props.promoCodeUrl}
 						/>
 						<div className={css.container}>
 							{(!noContactBar) ? <div className={css.contactBar}>
@@ -285,29 +285,29 @@ class Header extends React.PureComponent {
 									{(path === '/menu') ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
 									<span className={css.linkDesktopContainer}>
 										{(!hideNav) ? this.getMenuItems('desktop', path).map(menuItem => {
-											if (menuItem.disabled) {
-												return (
+										  if (menuItem.disabled) {
+										    return (
 													<span
-														key={menuItem.name}
-														className={classNames(css.linkDesktop, css.disabled)}
+													  key={menuItem.name}
+													  className={classNames(css.linkDesktop, css.disabled)}
 													>
 														{menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
 														{menuItem.name}
 													</span>
-												)
-											}
+										    )
+										  }
 
-											return (
+										  return (
 												<Link
-													key={menuItem.name}
-													to={menuItem.url}
-													className={css.linkDesktop}
-													clientRouted={menuItem.clientRouted}
+												  key={menuItem.name}
+												  to={menuItem.url}
+												  className={css.linkDesktop}
+												  clientRouted={menuItem.clientRouted}
 												>
 													{menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
 													{menuItem.name}
 												</Link>
-											)
+										  )
 										}) : ''}
 										{this.renderAuthLink()}
 									</span>
@@ -332,7 +332,7 @@ class Header extends React.PureComponent {
 				<OrderSkipRecovery />
 				{this.props.path.indexOf('my-') !== -1 ? (<div><Account location={{ pathname: path }} /></div>) : null}
 			</span>
-		)
+	  )
 	}
 }
 export default Header

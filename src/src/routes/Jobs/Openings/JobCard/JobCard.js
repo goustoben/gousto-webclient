@@ -24,19 +24,19 @@ const JobCard = (props) => (
 )
 
 JobCard.propTypes = {
-	isOdd: PropTypes.bool,
-	jobTitle: PropTypes.string,
-	jobDepartment: PropTypes.string,
-	jobCopy: PropTypes.string,
-	jobLink: PropTypes.string,
+  isOdd: PropTypes.bool,
+  jobTitle: PropTypes.string,
+  jobDepartment: PropTypes.string,
+  jobCopy: PropTypes.string,
+  jobLink: PropTypes.string,
 }
 
 JobCard.defaultProps = {
-	isOdd: false,
-	jobTitle: 'Frontend Engineer',
-	jobDepartment: 'Tech',
-	jobCopy: 'We are looking for an Agile Coach to coach and enable our development teams to work efficiently and quickly together.',
-	jobLink: config.workable.link,
+  isOdd: false,
+  jobTitle: 'Frontend Engineer',
+  jobDepartment: 'Tech',
+  jobCopy: 'We are looking for an Agile Coach to coach and enable our development teams to work efficiently and quickly together.',
+  jobLink: config.workable.link,
 }
 
 export default JobCard

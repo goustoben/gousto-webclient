@@ -18,52 +18,52 @@ const limit = 7
 class OrderProducts extends React.PureComponent {
 
 	static propTypes = {
-		products: ImmutablePropTypes.listOf(
-			ImmutablePropTypes.mapContains({
-				id: PropTypes.string.isRequired,
-				image: PropTypes.string.isRequired,
-				title: PropTypes.string.isRequired,
-				quantity: PropTypes.number.isRequired,
-				unitPrice: PropTypes.number.isRequired,
-			})
-		),
-		randomProducts: ImmutablePropTypes.listOf(
-			ImmutablePropTypes.mapContains({
-				id: PropTypes.string.isRequired,
-				title: PropTypes.string.isRequired,
-				images: ImmutablePropTypes.mapContains({
-					[imagesWidth]: ImmutablePropTypes.mapContains({
-						src: PropTypes.string.isRequired,
-					}),
-				}),
-			})
-		),
-		orderId: PropTypes.string,
+	  products: ImmutablePropTypes.listOf(
+	    ImmutablePropTypes.mapContains({
+	      id: PropTypes.string.isRequired,
+	      image: PropTypes.string.isRequired,
+	      title: PropTypes.string.isRequired,
+	      quantity: PropTypes.number.isRequired,
+	      unitPrice: PropTypes.number.isRequired,
+	    })
+	  ),
+	  randomProducts: ImmutablePropTypes.listOf(
+	    ImmutablePropTypes.mapContains({
+	      id: PropTypes.string.isRequired,
+	      title: PropTypes.string.isRequired,
+	      images: ImmutablePropTypes.mapContains({
+	        [imagesWidth]: ImmutablePropTypes.mapContains({
+	          src: PropTypes.string.isRequired,
+	        }),
+	      }),
+	    })
+	  ),
+	  orderId: PropTypes.string,
 	}
 
 	static defaultProps = {
-		products: Immutable.List([]),
-		randomProducts: Immutable.List([]),
-		orderId: '',
+	  products: Immutable.List([]),
+	  randomProducts: Immutable.List([]),
+	  orderId: '',
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+	  store: React.PropTypes.object.isRequired,
 	}
 
 	loadRandomProducts = ({ store }) => {
-		store.dispatch(actions.productsLoadRandomProducts(limit, [imagesWidth]))
+	  store.dispatch(actions.productsLoadRandomProducts(limit, [imagesWidth]))
 	}
 
 	componentDidMount() {
-		const store = this.context.store
-		this.loadRandomProducts({ store })
+	  const store = this.context.store
+	  this.loadRandomProducts({ store })
 	}
 
 	render() {
-		const productsSize = this.props.products.size
+	  const productsSize = this.props.products.size
 
-		return (
+	  return (
 			<div>
 				<div className={`${css.header} ${css.hideInMobile}`}>
 					<Content contentKeys="mydeliveriesOrderOrderproductsHeader" >
@@ -90,7 +90,7 @@ class OrderProducts extends React.PureComponent {
 							</div>
 						)}
 					</div>
-					:
+				  :
 					<div className={css.randomProductsContainer}>
 						{this.props.randomProducts.map((product, index) =>
 							<div key={product.get('id')} className={classnames(css.randomProductImage, { [css.hideInMobile]: index > 3 })}>
@@ -107,7 +107,7 @@ class OrderProducts extends React.PureComponent {
 					</Link>
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

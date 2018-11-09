@@ -9,78 +9,78 @@ import CookieBanner from 'CookieBanner'
 
 class MainLayout extends React.Component {
 	static propTypes = {
-		children: PropTypes.object.isRequired,
-		isAuthenticated: PropTypes.bool.isRequired,
-		disabled: PropTypes.bool.isRequired,
-		orders: PropTypes.instanceOf(Immutable.Map),
-		shippingAddresses: PropTypes.instanceOf(Immutable.List),
-		userLoadData: PropTypes.func.isRequired,
-		userLoadOrders: PropTypes.func.isRequired,
-		userFetchShippingAddresses: PropTypes.func.isRequired,
-		userClearData: PropTypes.func.isRequired,
-		menuLoadingBoxPrices: PropTypes.bool,
-		menuLoadBoxPrices: PropTypes.func.isRequired,
-		location: PropTypes.object,
-		route: PropTypes.shape({
-			withRecipeBar: PropTypes.bool,
-		}),
+	  children: PropTypes.object.isRequired,
+	  isAuthenticated: PropTypes.bool.isRequired,
+	  disabled: PropTypes.bool.isRequired,
+	  orders: PropTypes.instanceOf(Immutable.Map),
+	  shippingAddresses: PropTypes.instanceOf(Immutable.List),
+	  userLoadData: PropTypes.func.isRequired,
+	  userLoadOrders: PropTypes.func.isRequired,
+	  userFetchShippingAddresses: PropTypes.func.isRequired,
+	  userClearData: PropTypes.func.isRequired,
+	  menuLoadingBoxPrices: PropTypes.bool,
+	  menuLoadBoxPrices: PropTypes.func.isRequired,
+	  location: PropTypes.object,
+	  route: PropTypes.shape({
+	    withRecipeBar: PropTypes.bool,
+	  }),
 	}
 
 	static defaultProps = {
-		isAuthenticated: false,
-		orders: Immutable.fromJS({}),
-		shippingAddresses: Immutable.List([]),
-		route: {
+	  isAuthenticated: false,
+	  orders: Immutable.fromJS({}),
+	  shippingAddresses: Immutable.List([]),
+	  route: {
 
-		},
+	  },
 	}
 
 	componentDidMount() {
-		if (!this.props.disabled) {
-			if (this.props.isAuthenticated) {
-				if (this.props.shippingAddresses.size < 1) {
-					this.props.userFetchShippingAddresses()
-				}
-				if (this.props.orders.size < 1) {
-					this.props.userLoadOrders()
-				}
-			} else {
-				if (this.props.isAuthenticated) {
-					this.props.userClearData()
-				}
-			}
-		}
+	  if (!this.props.disabled) {
+	    if (this.props.isAuthenticated) {
+	      if (this.props.shippingAddresses.size < 1) {
+	        this.props.userFetchShippingAddresses()
+	      }
+	      if (this.props.orders.size < 1) {
+	        this.props.userLoadOrders()
+	      }
+	    } else {
+	      if (this.props.isAuthenticated) {
+	        this.props.userClearData()
+	      }
+	    }
+	  }
 	}
 
 	componentWillReceiveProps(nextProp) {
-		if (!nextProp.disabled && !this.props.disabled) {
-			if (!this.props.isAuthenticated && nextProp.isAuthenticated) {
-				if (this.props.shippingAddresses.size < 1) {
-					this.props.userFetchShippingAddresses()
-				}
-				if (nextProp.orders.size < 1) {
-					this.props.userLoadOrders()
+	  if (!nextProp.disabled && !this.props.disabled) {
+	    if (!this.props.isAuthenticated && nextProp.isAuthenticated) {
+	      if (this.props.shippingAddresses.size < 1) {
+	        this.props.userFetchShippingAddresses()
+	      }
+	      if (nextProp.orders.size < 1) {
+	        this.props.userLoadOrders()
 
-					if (!nextProp.menuLoadingBoxPrices) {
-						this.props.menuLoadBoxPrices()
-					}
-				}
-			} else {
-				if (this.props.isAuthenticated && !nextProp.isAuthenticated) {
-					this.props.userClearData()
-					this.props.menuLoadBoxPrices()
-				}
-			}
-		}
+	        if (!nextProp.menuLoadingBoxPrices) {
+	          this.props.menuLoadBoxPrices()
+	        }
+	      }
+	    } else {
+	      if (this.props.isAuthenticated && !nextProp.isAuthenticated) {
+	        this.props.userClearData()
+	        this.props.menuLoadBoxPrices()
+	      }
+	    }
+	  }
 	}
 
 	render() {
-		const { children, route } = this.props
-		const footerBaseClass = classNames(css.pageContainer, {
-			[css.withBottomBar]: route.withRecipeBar,
-		})
+	  const { children, route } = this.props
+	  const footerBaseClass = classNames(css.pageContainer, {
+	    [css.withBottomBar]: route.withRecipeBar,
+	  })
 
-		return (
+	  return (
 			<Div className={footerBaseClass} backgroundColor="Coconut">
 				<CookieBanner />
 				<Header />
@@ -89,7 +89,7 @@ class MainLayout extends React.Component {
 					<Footer type={route.footerType} />
 				</Div>
 			</Div>
-		)
+	  )
 	}
 }
 

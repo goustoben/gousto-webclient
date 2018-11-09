@@ -6,9 +6,9 @@ import { H2 } from 'components/Page/Header'
 import FilterItem from 'routes/Menu/FilterMenu/FilterItem'
 
 const DietaryAttributesFilter = ({
-	dietaryAttributes,
-	dietaryAttributeTypes,
-	filterDietaryAttributesChange,
+  dietaryAttributes,
+  dietaryAttributeTypes,
+  filterDietaryAttributesChange,
 }) => (
 	<div>
 		<H2 size="XL2" headlineFont={false}>
@@ -17,33 +17,33 @@ const DietaryAttributesFilter = ({
 			</Content>
 		</H2>
 		{(Object.entries(dietaryAttributeTypes)).map(([dietaryAttributeType, dietaryAttributeName]) => {
-			const isChecked = dietaryAttributes.has(dietaryAttributeType)
+		  const isChecked = dietaryAttributes.has(dietaryAttributeType)
 
-			return (
+		  return (
 				<FilterItem
-					type="checkbox"
-					key={`dietaryAttribute-${dietaryAttributeType}`}
-					groupName="dietaryAttributes"
-					value={dietaryAttributeType}
-					identifier={`dietaryAttribute-${dietaryAttributeType}`}
-					checked={isChecked}
-					onClick={() => filterDietaryAttributesChange(dietaryAttributeType)}
+				  type="checkbox"
+				  key={`dietaryAttribute-${dietaryAttributeType}`}
+				  groupName="dietaryAttributes"
+				  value={dietaryAttributeType}
+				  identifier={`dietaryAttribute-${dietaryAttributeType}`}
+				  checked={isChecked}
+				  onClick={() => filterDietaryAttributesChange(dietaryAttributeType)}
 				><span>{dietaryAttributeName}</span>
 				</FilterItem>
-			)
+		  )
 		})}
 	</div>
 )
 
 DietaryAttributesFilter.propTypes = {
-	dietaryAttributes: PropTypes.instanceOf(Immutable.Set),
-	dietaryAttributeTypes: PropTypes.object,
-	filterDietaryAttributesChange: PropTypes.func,
+  dietaryAttributes: PropTypes.instanceOf(Immutable.Set),
+  dietaryAttributeTypes: PropTypes.object,
+  filterDietaryAttributesChange: PropTypes.func,
 }
 
 DietaryAttributesFilter.defaultProps = {
-	dietaryAttributes: Immutable.Set([]),
-	dietaryAttributeTypes: {},
+  dietaryAttributes: Immutable.Set([]),
+  dietaryAttributeTypes: {},
 }
 
 export default DietaryAttributesFilter

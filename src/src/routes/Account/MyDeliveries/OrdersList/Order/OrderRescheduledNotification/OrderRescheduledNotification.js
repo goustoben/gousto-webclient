@@ -7,18 +7,18 @@ const OrderRescheduledNotification = ({ oldDeliveryDay, reason }) => (
 		<span className={css.oldDeliveryDay}>{oldDeliveryDay}</span>
 		{reason ?
 			<span> ({reason})</span>
-		: null}
+		  : null}
 	</div>
 )
 
 OrderRescheduledNotification.propTypes = {
-	oldDeliveryDay: PropTypes.string,
-	reason: PropTypes.string,
+  oldDeliveryDay: PropTypes.string,
+  reason: PropTypes.string,
 }
 
 OrderRescheduledNotification.defaultProps = {
-	oldDeliveryDay: '',
-	reason: '',
+  oldDeliveryDay: '',
+  reason: '',
 }
 
 export default OrderRescheduledNotification

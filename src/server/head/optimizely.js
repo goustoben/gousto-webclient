@@ -1,10 +1,10 @@
 import config from 'config/head/optimizely'
 
 export default function optimizely(features) {
-	let script = ''
-	if (config[__ENV__]) { // eslint-disable-line no-underscore-dangle
-		const featuresSerialised = JSON.stringify(features.toJS())
-		script = `
+  let script = ''
+  if (config[__ENV__]) { // eslint-disable-line no-underscore-dangle
+    const featuresSerialised = JSON.stringify(features.toJS())
+    script = `
 			<script>
 				window.__stateFeatures__ = ${featuresSerialised}
 
@@ -48,7 +48,7 @@ export default function optimizely(features) {
 
 			</script>
 			<script src="//cdn.optimizely.com/js/${config[__ENV__]}.js" defer></script>` // eslint-disable-line no-underscore-dangle
-	}
+  }
 
-	return script
+  return script
 }

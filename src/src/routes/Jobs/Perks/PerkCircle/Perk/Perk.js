@@ -15,11 +15,11 @@ const Perk = (props) => (
 			</div>
 		</div>
 	</div>
-	)
+)
 
 Perk.propTypes = {
-	title: PropTypes.string,
-	copy: PropTypes.string,
+  title: PropTypes.string,
+  copy: PropTypes.string,
 }
 
 export default Perk

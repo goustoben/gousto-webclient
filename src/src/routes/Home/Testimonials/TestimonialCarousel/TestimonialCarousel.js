@@ -8,43 +8,43 @@ import config from 'config/home'
 const TestimonialCarousel = ({ testimonials = config.testimonials, showLink }) => (
 	<div className={css.container}>
 		<Carousel
-			dots
-			adaptiveHeight={false}
-			speed={400}
-			useCSS
-			autoplay={false}
-			slidesToShow={3}
-			slidesToScroll={0}
-			centerMode={false}
-			infinite={false}
-			focusOnSelect={false}
-			swipeToSlide={false}
-			dots={false}
-			responsive={[
-				{ breakpoint: 768, settings: { slidesToShow: 1, slidesToScroll: 1, focusOnSelect: true, swipeToSlide: true, infinite: true, dots: true } },
-				{ breakpoint: 1240, settings: { slidesToShow: 2, slidesToScroll: 1, focusOnSelect: true, swipeToSlide: true, infinite: true } },
-			]}
+		  dots
+		  adaptiveHeight={false}
+		  speed={400}
+		  useCSS
+		  autoplay={false}
+		  slidesToShow={3}
+		  slidesToScroll={0}
+		  centerMode={false}
+		  infinite={false}
+		  focusOnSelect={false}
+		  swipeToSlide={false}
+		  dots={false}
+		  responsive={[
+		    { breakpoint: 768, settings: { slidesToShow: 1, slidesToScroll: 1, focusOnSelect: true, swipeToSlide: true, infinite: true, dots: true } },
+		    { breakpoint: 1240, settings: { slidesToShow: 2, slidesToScroll: 1, focusOnSelect: true, swipeToSlide: true, infinite: true } },
+		  ]}
 		>
 			{testimonials
-				.map((testimonial, idx) => (
+			  .map((testimonial, idx) => (
 					<div className={css.testimonialContainer} key={idx}>
 						<div className={css.testimonial}>
 							<Testimonial testimonial={Immutable.Map(testimonial)} showLink={showLink} />
 						</div>
 					</div>
-				))
+			  ))
 			}
 		</Carousel>
 	</div>
 )
 
 TestimonialCarousel.propTypes = {
-	testimonials: React.PropTypes.array,
-	showLink: React.PropTypes.bool,
+  testimonials: React.PropTypes.array,
+  showLink: React.PropTypes.bool,
 }
 
 TestimonialCarousel.defaultProps = {
-	showLink: true,
+  showLink: true,
 }
 
 export default TestimonialCarousel

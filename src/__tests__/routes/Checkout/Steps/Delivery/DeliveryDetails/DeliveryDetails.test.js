@@ -9,27 +9,27 @@ import DeliveryPhoneNumber from 'routes/Checkout/Components/Delivery/DeliveryDet
 import DeliveryAddressType from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryAddressType'
 
 describe('DeliveryDetails', () => {
-	let wrapper
+  let wrapper
 
-	beforeEach(() => {
-		wrapper = shallow(<DeliveryDetailsComponent />)
-	})
+  beforeEach(() => {
+    wrapper = shallow(<DeliveryDetailsComponent />)
+  })
 
-	test('should return div', () => {
-		expect(wrapper.type()).toEqual('div')
-	})
+  test('should return div', () => {
+    expect(wrapper.type()).toEqual('div')
+  })
 
-	describe('rendering', () => {
-		test('should render 1 <DeliveryInstruction> component(s)', () => {
-			expect(wrapper.find(DeliveryInstruction).length).toEqual(1)
-		})
+  describe('rendering', () => {
+    test('should render 1 <DeliveryInstruction> component(s)', () => {
+      expect(wrapper.find(DeliveryInstruction).length).toEqual(1)
+    })
 
-		test('should render 1 <DeliveryPhoneNumber> component(s)', () => {
-			expect(wrapper.find(DeliveryPhoneNumber).length).toEqual(1)
-		})
+    test('should render 1 <DeliveryPhoneNumber> component(s)', () => {
+      expect(wrapper.find(DeliveryPhoneNumber).length).toEqual(1)
+    })
 
-		test('should render 1 <DeliveryAddressType> component(s)', () => {
-			expect(wrapper.find(DeliveryAddressType).length).toEqual(1)
-		})
-	})
+    test('should render 1 <DeliveryAddressType> component(s)', () => {
+      expect(wrapper.find(DeliveryAddressType).length).toEqual(1)
+    })
+  })
 })

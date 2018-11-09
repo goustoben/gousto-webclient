@@ -6,7 +6,7 @@ const ModalHeader = ({ children }) => (
 )
 
 ModalHeader.propTypes = {
-	children: PropTypes.node,
+  children: PropTypes.node,
 }
 
 export default ModalHeader

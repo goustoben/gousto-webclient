@@ -14,50 +14,50 @@ const emailValidator = value => (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2
 class AboutYou extends React.PureComponent {
 
 	static propTypes = {
-		loginVisibilityChange: React.PropTypes.func,
-		loginOpen: React.PropTypes.bool,
-		isAuthenticated: React.PropTypes.bool,
-		loginPending: React.PropTypes.bool,
-		sectionName: React.PropTypes.string,
-		clearErrors: React.PropTypes.func,
-		receiveRef: React.PropTypes.func,
+	  loginVisibilityChange: React.PropTypes.func,
+	  loginOpen: React.PropTypes.bool,
+	  isAuthenticated: React.PropTypes.bool,
+	  loginPending: React.PropTypes.bool,
+	  sectionName: React.PropTypes.string,
+	  clearErrors: React.PropTypes.func,
+	  receiveRef: React.PropTypes.func,
 	}
 
 	static defaultProps = {
-		clearErrors: () => {},
-		loginVisibilityChange: () => {},
-		loginOpen: false,
-		loginPending: false,
-		isAuthenticated: false,
-		sectionName: '',
-		receiveRef: () => {},
+	  clearErrors: () => {},
+	  loginVisibilityChange: () => {},
+	  loginOpen: false,
+	  loginPending: false,
+	  isAuthenticated: false,
+	  sectionName: '',
+	  receiveRef: () => {},
 	}
 
 	componentDidMount() {
-		this.props.clearErrors()
+	  this.props.clearErrors()
 	}
 
 	handleLoginClose = (e) => {
-		if (e) {
-			e.stopPropagation()
-		}
-		this.props.loginVisibilityChange(false)
-		this.setState({ loginPending: false })
+	  if (e) {
+	    e.stopPropagation()
+	  }
+	  this.props.loginVisibilityChange(false)
+	  this.setState({ loginPending: false })
 	}
 
 	handleLoginOpen = (e) => {
-		e.stopPropagation()
-		this.props.loginVisibilityChange(true)
+	  e.stopPropagation()
+	  this.props.loginVisibilityChange(true)
 	}
 
 	render() {
-		const { sectionName } = this.props
-		const titles = config.titles.map(title => ({
-			value: title,
-			label: capitalizeFirstLetter(title),
-		}))
+	  const { sectionName } = this.props
+	  const titles = config.titles.map(title => ({
+	    value: title,
+	    label: capitalizeFirstLetter(title),
+	  }))
 
-		return (
+	  return (
 			<FormSection name={sectionName}>
 				<div className={css.aboutYouContainer} data-testing="checkoutAboutYouSection">
 					<div>
@@ -72,125 +72,125 @@ class AboutYou extends React.PureComponent {
 					<div className={css.row}>
 						<div className={css.colSM}>
 							<Field
-								name="title"
-								component={ReduxFormInput}
-								options={titles}
-								inputType="DropDown"
-								label="Title"
-								withRef
-								ref={this.props.receiveRef}
-								refId={`${sectionName}.title`}
+							  name="title"
+							  component={ReduxFormInput}
+							  options={titles}
+							  inputType="DropDown"
+							  label="Title"
+							  withRef
+							  ref={this.props.receiveRef}
+							  refId={`${sectionName}.title`}
 							/>
 						</div>
 					</div>
 					<div className={css.row}>
 						<div className={css.colSM}>
 							<Field
-								name="firstName"
-								component={ReduxFormInput}
-								inputType="Input"
-								label="First name"
-								mask
-								withRef
-								ref={this.props.receiveRef}
-								refId={`${sectionName}.firstName`}
-								dataTesting="checkoutFirstNameInput"
+							  name="firstName"
+							  component={ReduxFormInput}
+							  inputType="Input"
+							  label="First name"
+							  mask
+							  withRef
+							  ref={this.props.receiveRef}
+							  refId={`${sectionName}.firstName`}
+							  dataTesting="checkoutFirstNameInput"
 							/>
 						</div>
 						<div className={css.colSM}>
 							<Field
-								name="lastName"
-								component={ReduxFormInput}
-								inputType="Input"
-								label="Last name"
-								mask
-								withRef
-								ref={this.props.receiveRef}
-								refId={`${sectionName}.lastName`}
-								dataTesting="checkoutLastNameInput"
+							  name="lastName"
+							  component={ReduxFormInput}
+							  inputType="Input"
+							  label="Last name"
+							  mask
+							  withRef
+							  ref={this.props.receiveRef}
+							  refId={`${sectionName}.lastName`}
+							  dataTesting="checkoutLastNameInput"
 							/>
 						</div>
 					</div>
 					<div className={css.row}>
 						<div className={css.colMD}>
 							<Field
-								name="email"
-								component={ReduxFormInput}
-								inputType="Input"
-								type="email"
-								label="Email address"
-								subLabel="You will use this to login to Gousto"
-								mask
-								withRef
-								ref={this.props.receiveRef}
-								refId={`${sectionName}.email`}
-								dataTesting="checkoutEmailInput"
-								validate={emailValidator}
+							  name="email"
+							  component={ReduxFormInput}
+							  inputType="Input"
+							  type="email"
+							  label="Email address"
+							  subLabel="You will use this to login to Gousto"
+							  mask
+							  withRef
+							  ref={this.props.receiveRef}
+							  refId={`${sectionName}.email`}
+							  dataTesting="checkoutEmailInput"
+							  validate={emailValidator}
 							/>
 						</div>
 					</div>
 					<div className={css.row}>
 						<div className={css.colMD}>
 							<Field
-								name="password"
-								component={ReduxFormInput}
-								inputType="Input"
-								type="password"
-								label="Password"
-								subLabel="Must be at least 8 characters"
-								mask
-								withRef
-								ref={this.props.receiveRef}
-								refId={`${sectionName}.password`}
-								dataTesting="checkoutPasswordInput"
+							  name="password"
+							  component={ReduxFormInput}
+							  inputType="Input"
+							  type="password"
+							  label="Password"
+							  subLabel="Must be at least 8 characters"
+							  mask
+							  withRef
+							  ref={this.props.receiveRef}
+							  refId={`${sectionName}.password`}
+							  dataTesting="checkoutPasswordInput"
 							/>
 						</div>
 					</div>
 					<div className={css.row}>
 						<div className={css.colHalf}>
 							<Field
-								name="allowEmail"
-								component={ReduxFormInput}
-								inputType="CheckBox"
-								childLabel="I'd like to receive the latest news and offers from Gousto, and be contacted occasionally for Customer Success purposes. I can unsubscribe at any time."
-								style="disclaimer"
-								mask
+							  name="allowEmail"
+							  component={ReduxFormInput}
+							  inputType="CheckBox"
+							  childLabel="I'd like to receive the latest news and offers from Gousto, and be contacted occasionally for Customer Success purposes. I can unsubscribe at any time."
+							  style="disclaimer"
+							  mask
 							/>
 						</div>
 						<div className={css.colHalf}>
 							<Field
-								name="allowThirdPartyEmail"
-								component={ReduxFormInput}
-								inputType="CheckBox"
-								childLabel="I would like to receive 3rd party communications from selected partners."
-								style="disclaimer"
-								mask
+							  name="allowThirdPartyEmail"
+							  component={ReduxFormInput}
+							  inputType="CheckBox"
+							  childLabel="I would like to receive 3rd party communications from selected partners."
+							  style="disclaimer"
+							  mask
 							/>
 						</div>
 					</div>
 					<Overlay
-						open={this.props.loginOpen}
-						className={css.mobileOverlay}
-						contentClassName={css.mobileModalContent}
-						from="top"
+					  open={this.props.loginOpen}
+					  className={css.mobileOverlay}
+					  contentClassName={css.mobileModalContent}
+					  from="top"
 					>
 						<ModalPanel
-							closePortal={this.handleLoginClose}
-							className={css.modal}
-							containerClassName={css.modalContainer}
-							disableOverlay
+						  closePortal={this.handleLoginClose}
+						  className={css.modal}
+						  containerClassName={css.modalContainer}
+						  disableOverlay
 						>
 							<Login
-								isAuthenticated={this.props.isAuthenticated}
-								isOpen={this.props.loginOpen}
-								isPending={this.props.loginPending}
+							  isAuthenticated={this.props.isAuthenticated}
+							  isOpen={this.props.loginOpen}
+							  isPending={this.props.loginPending}
 							/>
 						</ModalPanel>
 					</Overlay>
 				</div>
 				<ErrorMessage />
 			</FormSection>
-		)
+	  )
 	}
 }
 

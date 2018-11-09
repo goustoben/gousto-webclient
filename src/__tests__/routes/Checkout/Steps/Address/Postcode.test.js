@@ -5,34 +5,34 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 
 describe('Postcode', () => {
-	let wrapper
+  let wrapper
 
-	beforeEach(() => {
-		wrapper = shallow(<Postcode />)
-	})
+  beforeEach(() => {
+    wrapper = shallow(<Postcode />)
+  })
 
-	describe('rendering', () => {
-		test('should render 1 <Field> component by default', () => {
-			expect(wrapper.find(Field).length).toEqual(1)
-		})
-	})
+  describe('rendering', () => {
+    test('should render 1 <Field> component by default', () => {
+      expect(wrapper.find(Field).length).toEqual(1)
+    })
+  })
 
-	describe.skip('sensitive data masking', function() {
-		test('all <Field /> component(s) should have prop "mask"', () => {
-			wrapper = shallow(
+  describe.skip('sensitive data masking', function() {
+    test('all <Field /> component(s) should have prop "mask"', () => {
+      wrapper = shallow(
 				<Postcode
-					addresses={Immutable.fromJS([
-						{ id: 1, labels: [] },
-						{ id: 2, labels: [] },
-					])}
+				  addresses={Immutable.fromJS([
+				    { id: 1, labels: [] },
+				    { id: 2, labels: [] },
+				  ])}
 				/>,
-			)
-			expect(
-				wrapper
-					.find(Field)
-					.at(0)
-					.prop('mask'),
-			).toEqual(true)
-		})
-	})
+      )
+      expect(
+        wrapper
+          .find(Field)
+          .at(0)
+          .prop('mask'),
+      ).toEqual(true)
+    })
+  })
 })

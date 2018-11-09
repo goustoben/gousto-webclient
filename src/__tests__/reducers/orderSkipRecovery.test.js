@@ -209,7 +209,6 @@ describe('orderSkipRecovery reducer', () => {
       expect(result).toEqual(expected)
     })
 
-
     test('orderSkipRecovery dispatch trigger with modalVisibility true and callToActions', () => {
       const expected = Immutable.Map({
         triggered: false,
@@ -246,9 +245,9 @@ describe('orderSkipRecovery reducer', () => {
           rawMessage: {
             text: 'You only have {:value:} on all your orders until the {:date:}',
             values: [
-							{ key: 'date', value: '19th of October' },
-							{ key: 'value', value: '£13' }
-						]
+              { key: 'date', value: '19th of October' },
+              { key: 'value', value: '£13' }
+            ]
           }
         }
       }

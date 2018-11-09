@@ -10,83 +10,83 @@ import { H3 } from 'Page/Header'
 import Receipt from 'Receipt/Receipt'
 
 describe('Summary', () => {
-	let wrapper
-	let store
+  let wrapper
+  let store
 
-	beforeEach(() => {
-		store = {
-			getState: () => ({
-				basket: {
-					get: () => {},
-				},
-				pricing: Immutable.Map({
-					prices: Immutable.Map({}),
-				}),
-			}),
-			subscribe: () => {},
-		}
+  beforeEach(() => {
+    store = {
+      getState: () => ({
+        basket: {
+          get: () => {},
+        },
+        pricing: Immutable.Map({
+          prices: Immutable.Map({}),
+        }),
+      }),
+      subscribe: () => {},
+    }
 
-		wrapper = shallow(<Summary />)
-	})
+    wrapper = shallow(<Summary />)
+  })
 
-	test('should render a <div> with no props', () => {
-		expect(wrapper.type()).toBe('div')
-	})
+  test('should render a <div> with no props', () => {
+    expect(wrapper.type()).toBe('div')
+  })
 
-	test('should render 1 <H3 /> component(s)', () => {
-		expect(wrapper.find(H3).length).toBe(1)
-	})
+  test('should render 1 <H3 /> component(s)', () => {
+    expect(wrapper.find(H3).length).toBe(1)
+  })
 
-	test('should render 1 <Link> component(s)', () => {
-		expect(wrapper.find(Link).length).toBe(1)
-	})
+  test('should render 1 <Link> component(s)', () => {
+    expect(wrapper.find(Link).length).toBe(1)
+  })
 
-	test('should render 1 <Link> component(s) if box details step and desktop', () => {
-		wrapper = shallow(
+  test('should render 1 <Link> component(s) if box details step and desktop', () => {
+    wrapper = shallow(
 			<Summary
-				routing={{
-					locationBeforeTransitions: {
-						pathname: 'check-out/boxdetails',
-					},
-				}}
+			  routing={{
+			    locationBeforeTransitions: {
+			      pathname: 'check-out/boxdetails',
+			    },
+			  }}
 			/>,
-		)
-		expect(wrapper.find(Link).length).toBe(1)
-	})
+    )
+    expect(wrapper.find(Link).length).toBe(1)
+  })
 
-	test('should NOT render <Link> component(s) if mobile', () => {
-		wrapper = shallow(<Summary browser="mobile" />)
-		expect(wrapper.find(Link).length).toBe(0)
-	})
+  test('should NOT render <Link> component(s) if mobile', () => {
+    wrapper = shallow(<Summary browser="mobile" />)
+    expect(wrapper.find(Link).length).toBe(0)
+  })
 
-	test('should NOT render <Link> component(s) if box details step and mobile', () => {
-		wrapper = shallow(
+  test('should NOT render <Link> component(s) if box details step and mobile', () => {
+    wrapper = shallow(
 			<Summary
-				routing={{
-					locationBeforeTransitions: {
-						pathname: 'check-out/boxdetails',
-					},
-				}}
-				browser="mobile"
+			  routing={{
+			    locationBeforeTransitions: {
+			      pathname: 'check-out/boxdetails',
+			    },
+			  }}
+			  browser="mobile"
 			/>,
-		)
-		expect(wrapper.find(Link).length).toBe(0)
-	})
+    )
+    expect(wrapper.find(Link).length).toBe(0)
+  })
 
-	test('should NOT render <Link> component(s) if payment step', () => {
-		wrapper = shallow(
+  test('should NOT render <Link> component(s) if payment step', () => {
+    wrapper = shallow(
 			<Summary
-				routing={{
-					locationBeforeTransitions: {
-						pathname: 'check-out/payment',
-					},
-				}}
+			  routing={{
+			    locationBeforeTransitions: {
+			      pathname: 'check-out/payment',
+			    },
+			  }}
 			/>,
-		)
-		expect(wrapper.find(Link).length).toBe(0)
-	})
+    )
+    expect(wrapper.find(Link).length).toBe(0)
+  })
 
-	test('should render 1 <Receipt /> component', () => {
-		expect(wrapper.find(Receipt).length).toBe(1)
-	})
+  test('should render 1 <Receipt /> component', () => {
+    expect(wrapper.find(Receipt).length).toBe(1)
+  })
 })

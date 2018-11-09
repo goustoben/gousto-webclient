@@ -4,19 +4,19 @@ import FilterTagsList from './FilterTagsList'
 import css from './FilterTagsNav.css'
 
 const propTypes = {
-	onCTAClick: PropTypes.func.require,
-	menuFilterExperiment: PropTypes.bool.require,
-	tags: PropTypes.arrayOf(
-		PropTypes.shape({
-			text: PropTypes.string,
-			type: PropTypes.string,
-			value: PropTypes.string,
-		}),
-	),
+  onCTAClick: PropTypes.func.require,
+  menuFilterExperiment: PropTypes.bool.require,
+  tags: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      type: PropTypes.string,
+      value: PropTypes.string,
+    }),
+  ),
 }
 
 const FilterTagsNav = ({ onCTAClick, tags, menuFilterExperiment }) => (
-	(menuFilterExperiment) ? (
+  (menuFilterExperiment) ? (
 		<div className={css.filterTagContainer}>
 			<div className={css.filterListContainer}>
 				<div className={css.filtersCTA}>
@@ -27,15 +27,15 @@ const FilterTagsNav = ({ onCTAClick, tags, menuFilterExperiment }) => (
 				<FilterTagsList tags={tags} />
 			</div>
 		</div>
-	) : null
+  ) : null
 )
 
 FilterTagsNav.propTypes = propTypes
 
 FilterTagsNav.defaultProps = {
-	tags: [],
-	menuFilterExperiment: false,
-	onCTAClick: () => { },
+  tags: [],
+  menuFilterExperiment: false,
+  onCTAClick: () => { },
 }
 
 export default FilterTagsNav
