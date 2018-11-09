@@ -6,28 +6,28 @@ import { getBasket, getBoxSummaryDeliveryDays, getMenuCutoffUntil } from 'select
 import { getCutoffs, cutoffDateTimeNow } from 'utils/deliveries'
 
 export const getPreviousCutoffDate = createSelector(
-	[getBasket, getBoxSummaryDeliveryDays],
-	(basket, boxSummaryDeliveryDays) => (
-		getCutoffs(basket, boxSummaryDeliveryDays)[1]
-	)
+  [getBasket, getBoxSummaryDeliveryDays],
+  (basket, boxSummaryDeliveryDays) => (
+    getCutoffs(basket, boxSummaryDeliveryDays)[1]
+  )
 )
 
 export const getCutoffDate = createSelector(
-	[getBasket, getBoxSummaryDeliveryDays, getIsAdmin, getTempCutoffDate, getMenuCutoffUntil],
-	(basket, boxSummaryDeliveryDays, isAdmin, tempCutoffDate, menuCutoffUntil) => {
-		let [cutoffDate] = getCutoffs(basket, boxSummaryDeliveryDays)
-		if (!cutoffDate || isAdmin) {
-			cutoffDate = tempCutoffDate || menuCutoffUntil
-		}
-		if (!cutoffDate) {
-			cutoffDate = cutoffDateTimeNow()
-		}
+  [getBasket, getBoxSummaryDeliveryDays, getIsAdmin, getTempCutoffDate, getMenuCutoffUntil],
+  (basket, boxSummaryDeliveryDays, isAdmin, tempCutoffDate, menuCutoffUntil) => {
+    let [cutoffDate] = getCutoffs(basket, boxSummaryDeliveryDays)
+    if (!cutoffDate || isAdmin) {
+      cutoffDate = tempCutoffDate || menuCutoffUntil
+    }
+    if (!cutoffDate) {
+      cutoffDate = cutoffDateTimeNow()
+    }
 
-		return cutoffDate
-	}
+    return cutoffDate
+  }
 )
 
 export default {
-	getPreviousCutoffDate,
-	getCutoffDate,
+  getPreviousCutoffDate,
+  getCutoffDate,
 }

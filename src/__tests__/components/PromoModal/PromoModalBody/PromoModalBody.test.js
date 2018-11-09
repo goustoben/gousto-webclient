@@ -6,10 +6,10 @@ import { shallow } from 'enzyme'
 import PromoModalBody from 'components/PromoModal/PromoModalBody/PromoModalBody'
 
 describe('PromoModalBody', () => {
-	let wrapper
+  let wrapper
 
-	test('should return a PromoModalBody with no props', () => {
-		wrapper = shallow(<PromoModalBody />)
-		expect(wrapper.type()).toEqual('div')
-	})
+  test('should return a PromoModalBody with no props', () => {
+    wrapper = shallow(<PromoModalBody />)
+    expect(wrapper.type()).toEqual('div')
+  })
 })

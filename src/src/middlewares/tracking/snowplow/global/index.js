@@ -5,9 +5,9 @@ import loginVisibility from './loginVisibility'
 import logout from './logout'
 
 export default {
-	loginAttempt,
-	loginRememberMe,
-	loginFailed,
-	loginVisibility,
-	logout,
+  loginAttempt,
+  loginRememberMe,
+  loginFailed,
+  loginVisibility,
+  logout,
 }

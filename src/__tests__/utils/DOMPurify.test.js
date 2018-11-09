@@ -6,35 +6,35 @@ import globals from 'config/globals'
 import jsdom from 'jsdom'
 
 describe('DOMPurify util', () => {
-	let sandbox
-	let jsdomSpy
+  let sandbox
+  let jsdomSpy
 
-	beforeEach(() => {
-		sandbox = sinon.sandbox.create()
-		jsdomSpy = sandbox.spy(jsdom, 'jsdom')
-	})
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create()
+    jsdomSpy = sandbox.spy(jsdom, 'jsdom')
+  })
 
-	afterEach(() => {
-		sandbox.restore()
-	})
+  afterEach(() => {
+    sandbox.restore()
+  })
 
-	xit('should return DOMPurify by default', function() {
-		expect(DOMPurifyUtil.default).toEqual(DOMPurify)
-	})
+  xit('should return DOMPurify by default', function() {
+    expect(DOMPurifyUtil.default).toEqual(DOMPurify)
+  })
 
-	xit('should not call jsdom if on client', function() {
-		sinon.stub(globals, 'server').get(function() {
-			return false
-		})
-		DOMPurifyUtil.getDOMPurify()
-		expect(jsdomSpy.callCount).toEqual(0)
-	})
+  xit('should not call jsdom if on client', function() {
+    sinon.stub(globals, 'server').get(function() {
+      return false
+    })
+    DOMPurifyUtil.getDOMPurify()
+    expect(jsdomSpy.callCount).toEqual(0)
+  })
 
-	xit('should call jsdom once if on server', function() {
-		sinon.stub(globals, 'server').get(function() {
-			return true
-		})
-		DOMPurifyUtil.getDOMPurify()
-		expect(jsdomSpy.callCount).toEqual(1)
-	})
+  xit('should call jsdom once if on server', function() {
+    sinon.stub(globals, 'server').get(function() {
+      return true
+    })
+    DOMPurifyUtil.getDOMPurify()
+    expect(jsdomSpy.callCount).toEqual(1)
+  })
 })

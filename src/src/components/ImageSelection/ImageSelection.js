@@ -10,18 +10,18 @@ const ImageSelection = ({ content, children, onImageClick, onTitleClick }) => (
 			{content.map((item, key) =>
 				<div key={key} className={css.colSmall} >
 					<div
-						className={classnames(css.imageContainer, { [css.pointer]: onImageClick })}
-						onClick={onImageClick ? () => { onImageClick(item.get('id')) } : undefined}
+					  className={classnames(css.imageContainer, { [css.pointer]: onImageClick })}
+					  onClick={onImageClick ? () => { onImageClick(item.get('id')) } : undefined}
 					>
 						<Image
-							className={css.image}
-							media={item.get('images').toList().filter(x => x)}
-							title={item.get('title')}
+						  className={css.image}
+						  media={item.get('images').toList().filter(x => x)}
+						  title={item.get('title')}
 						/>
 					</div>
 					<p
-						className={classnames(css.imageTitle, { [css.pointer]: onTitleClick })}
-						onClick={onTitleClick ? () => { onTitleClick(item.get('id')) } : undefined}
+					  className={classnames(css.imageTitle, { [css.pointer]: onTitleClick })}
+					  onClick={onTitleClick ? () => { onTitleClick(item.get('id')) } : undefined}
 					>
 						{item.get('title')}
 					</p>
@@ -33,16 +33,16 @@ const ImageSelection = ({ content, children, onImageClick, onTitleClick }) => (
 )
 
 ImageSelection.propTypes = {
-	content: PropTypes.arrayOf(
-		PropTypes.instanceOf(Immutable.Map)
-	),
-	children: PropTypes.node,
-	onImageClick: PropTypes.func,
-	onTitleClick: PropTypes.func,
+  content: PropTypes.arrayOf(
+    PropTypes.instanceOf(Immutable.Map)
+  ),
+  children: PropTypes.node,
+  onImageClick: PropTypes.func,
+  onTitleClick: PropTypes.func,
 }
 
 ImageSelection.defaultProps = {
-	content: [],
+  content: [],
 }
 
 export default ImageSelection

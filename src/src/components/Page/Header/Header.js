@@ -6,61 +6,61 @@ import typography from 'styles/typography.css'
 import colors from 'styles/colors.css'
 
 function Header({ margin, padding, type, size, headlineFont, colorName, children, ...props }) {
-	const className = classNames(
-		typography[`header${size}`],
-		{
-			[typography.textBold]: true,
-			[typography.headlineFont]: headlineFont,
-		},
-	)
+  const className = classNames(
+    typography[`header${size}`],
+    {
+      [typography.textBold]: true,
+      [typography.headlineFont]: headlineFont,
+    },
+  )
 
-	const style = {
-		color: colors[colorName],
-		...getSpacingStyles('margin', margin),
-		...getSpacingStyles('padding', padding),
-	}
+  const style = {
+    color: colors[colorName],
+    ...getSpacingStyles('margin', margin),
+    ...getSpacingStyles('padding', padding),
+  }
 
-	return React.createElement(type, { className, style, ...props }, children)
+  return React.createElement(type, { className, style, ...props }, children)
 }
 
 const propTypes = {
-	colorName: PropTypes.string,
-	margin: spacingPropValidation,
-	padding: spacingPropValidation,
-	size: PropTypes.string,
-	headlineFont: PropTypes.bool,
-	children: PropTypes.node,
+  colorName: PropTypes.string,
+  margin: spacingPropValidation,
+  padding: spacingPropValidation,
+  size: PropTypes.string,
+  headlineFont: PropTypes.bool,
+  children: PropTypes.node,
 }
 
 Header.propTypes = {
-	type: PropTypes.string.isRequired,
-	...propTypes,
+  type: PropTypes.string.isRequired,
+  ...propTypes,
 }
 Header.defaultProps = {
-	margin: {},
-	padding: {},
+  margin: {},
+  padding: {},
 }
 
 const defaultsPropTypes = {
-	defaults: PropTypes.oneOf([
-		'XL', 'LG', 'MD',
-	]),
+  defaults: PropTypes.oneOf([
+    'XL', 'LG', 'MD',
+  ]),
 }
 
 const defaultProps = {
-	XL: {
-		size: 'XL',
-	},
-	LG: {
-		size: 'LG',
-		margin: {
-			top: 'MD',
-			bottom: 'MD',
-		},
-	},
-	MD: {
-		size: 'MD',
-	},
+  XL: {
+    size: 'XL',
+  },
+  LG: {
+    size: 'LG',
+    margin: {
+      top: 'MD',
+      bottom: 'MD',
+    },
+  },
+  MD: {
+    size: 'MD',
+  },
 }
 
 export const H1 = ({ defaults, ...props }) => Header({ ...Header.defaultProps, ...defaultProps[defaults], ...props, type: 'h1' })

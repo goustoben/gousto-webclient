@@ -11,78 +11,78 @@ import CheckoutTooltip from 'routes/Checkout/Components/CheckoutTooltip/Checkout
 
 const CURRENT_YEAR = Number(moment().format('YYYY'))
 const MONTHS = ['MM', ...Array.from({ length: 12 }, (v, k) => (k < 9 ? `0${k + 1}` : k + 1))].map(option => ({
-	value: option === 'MM' ? '' : String(option), label: String(option),
+  value: option === 'MM' ? '' : String(option), label: String(option),
 }))
 const YEARS = ['YYYY', ...Array.from({ length: 10 }, (v, k) => k + CURRENT_YEAR)].map(option => ({
-	value: option === 'YYYY' ? '' : String(option).slice(-2), label: String(option),
+  value: option === 'YYYY' ? '' : String(option).slice(-2), label: String(option),
 }))
 const divisor = String.fromCharCode(47)
 
 class BillingForm extends React.PureComponent {
 	static propTypes = {
-		isPosting: PropTypes.bool,
-		fetchError: React.PropTypes.func,
+	  isPosting: PropTypes.bool,
+	  fetchError: React.PropTypes.func,
 	}
 
 	static defaultProps = {
-		isPosting: false,
+	  isPosting: false,
 	}
 
 	paymentOptions() {
-		return config.cardTypeOptions.map((option) =>
-			Object.assign({}, option, { subLabel: (<span className={css[option.icon]} aria-hidden="true" />) })
-		)
+	  return config.cardTypeOptions.map((option) =>
+	    Object.assign({}, option, { subLabel: (<span className={css[option.icon]} aria-hidden="true" />) })
+	  )
 	}
 
 	constructor() {
-		super()
-		this.state = {
-			payment_type: 'card',
-			card_holder: '',
-			card_number: '',
-			card_type: '',
-			card_cvv2: '',
-			formCardExpiryYear: '',
-			formCardExpiryMonth: '',
-			card_expires: '',
-			cardNameError: false,
-			cardNumberError: false,
-			cardTypeError: false,
-			securityCodeError: false,
-			expiryMonthError: false,
-			expiryYearError: false,
-		}
+	  super()
+	  this.state = {
+	    payment_type: 'card',
+	    card_holder: '',
+	    card_number: '',
+	    card_type: '',
+	    card_cvv2: '',
+	    formCardExpiryYear: '',
+	    formCardExpiryMonth: '',
+	    card_expires: '',
+	    cardNameError: false,
+	    cardNumberError: false,
+	    cardTypeError: false,
+	    securityCodeError: false,
+	    expiryMonthError: false,
+	    expiryYearError: false,
+	  }
 	}
 
 	handleInputChange(label, value) {
-		let onlyDigits
-		if (label === 'card_number' || label === 'card_cvv2') {
-			onlyDigits = value.replace(/[^\d]/g, '')
-		}
-		if (label === 'card_cvv2') {
-			return this.setState({ [label]: onlyDigits.substring(0, 3) })
-		}
-		if (label === 'card_number') {
-			this.setState({ [label]: onlyDigits })
-			const cardType = inferCardType(onlyDigits)
-			if (config.supportedCardTypes.indexOf(cardType) !== -1 || cardType === '') {
-				return this.setState({ card_type: cardType })
-			}
-		}
-		if (label === 'formCardExpiryYear') {
-			const expiry = this.state.formCardExpiryMonth.concat(value)
-			this.setState({ card_expires: expiry })
-		} else if (label === 'formCardExpiryMonth') {
-			const expiry = value.concat(this.state.formCardExpiryYear)
-			this.setState({ card_expires: expiry })
-		}
+	  let onlyDigits
+	  if (label === 'card_number' || label === 'card_cvv2') {
+	    onlyDigits = value.replace(/[^\d]/g, '')
+	  }
+	  if (label === 'card_cvv2') {
+	    return this.setState({ [label]: onlyDigits.substring(0, 3) })
+	  }
+	  if (label === 'card_number') {
+	    this.setState({ [label]: onlyDigits })
+	    const cardType = inferCardType(onlyDigits)
+	    if (config.supportedCardTypes.indexOf(cardType) !== -1 || cardType === '') {
+	      return this.setState({ card_type: cardType })
+	    }
+	  }
+	  if (label === 'formCardExpiryYear') {
+	    const expiry = this.state.formCardExpiryMonth.concat(value)
+	    this.setState({ card_expires: expiry })
+	  } else if (label === 'formCardExpiryMonth') {
+	    const expiry = value.concat(this.state.formCardExpiryYear)
+	    this.setState({ card_expires: expiry })
+	  }
 
-		return this.setState({ [label]: value })
+	  return this.setState({ [label]: value })
 	}
 
 	static validateFormSubmit(formInput) {
-		return !!(
-			formInput.payment_type &&
+	  return !!(
+	    formInput.payment_type &&
 			formInput.card_holder &&
 			formInput.card_number &&
 			formInput.card_type &&
@@ -90,23 +90,23 @@ class BillingForm extends React.PureComponent {
 			formInput.card_cvv2.length === 3 &&
 			formInput.formCardExpiryYear &&
 			formInput.formCardExpiryMonth
-		)
+	  )
 	}
 
 	validateOnBlur(label, val) {
-		if (label === 'cardNumberError' && val) {
-			this.setState({ [label]: val.length < 10 })
-		} else if (label === 'securityCodeError') {
-			this.setState({ [label]: !val || val.length !== 3 })
-		} else {
-			this.setState({ [label]: !val })
-		}
+	  if (label === 'cardNumberError' && val) {
+	    this.setState({ [label]: val.length < 10 })
+	  } else if (label === 'securityCodeError') {
+	    this.setState({ [label]: !val || val.length !== 3 })
+	  } else {
+	    this.setState({ [label]: !val })
+	  }
 	}
 
 	render() {
-		const formInput = this.state
+	  const formInput = this.state
 
-		return (
+	  return (
 			<div>
 				<div className={css.formRow}>
 					<div>
@@ -121,11 +121,11 @@ class BillingForm extends React.PureComponent {
 							<div className={css.formItemName}>
 								<p className={css.inputTitle}>Name</p>
 								<Input
-									name="formCardName"
-									type="text"
-									value={formInput.card_holder}
-									onChange={(e) => this.handleInputChange('card_holder', e)}
-									onBlur={() => this.validateOnBlur('cardNameError', this.state.card_holder)}
+								  name="formCardName"
+								  type="text"
+								  value={formInput.card_holder}
+								  onChange={(e) => this.handleInputChange('card_holder', e)}
+								  onBlur={() => this.validateOnBlur('cardNameError', this.state.card_holder)}
 								/>
 								{this.state.cardNameError ? <p className={css.errorMessage}>Name is required</p> : null}
 							</div>
@@ -134,10 +134,10 @@ class BillingForm extends React.PureComponent {
 							<div className={css.formItemCardNumber}>
 								<p className={css.inputTitle}>Card number</p>
 								<Input
-									name="formCardNumber"
-									value={formInput.card_number}
-									onChange={(e) => this.handleInputChange('card_number', e)}
-									onBlur={() => this.validateOnBlur('cardNumberError', this.state.card_number)}
+								  name="formCardNumber"
+								  value={formInput.card_number}
+								  onChange={(e) => this.handleInputChange('card_number', e)}
+								  onBlur={() => this.validateOnBlur('cardNumberError', this.state.card_number)}
 								/>
 								{this.state.cardNumberError ? <p className={css.errorMessage}>Card number should be at least 10 digits</p> : null}
 							</div>
@@ -192,17 +192,17 @@ class BillingForm extends React.PureComponent {
 				</div>
 				<div className={css.bottom}>
 					<Button
-						color={'primary'}
-						noDecoration
-						onClick={() => this.props.submitCardDetails(formInput)}
-						disabled={!BillingForm.validateFormSubmit(formInput)}
-						pending={this.props.isPosting}
+					  color={'primary'}
+					  noDecoration
+					  onClick={() => this.props.submitCardDetails(formInput)}
+					  disabled={!BillingForm.validateFormSubmit(formInput)}
+					  pending={this.props.isPosting}
 					>
 						Update card details
 					</Button>
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

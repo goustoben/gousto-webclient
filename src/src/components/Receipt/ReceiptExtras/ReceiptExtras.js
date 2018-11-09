@@ -1,19 +1,19 @@
 import React, { PropTypes } from 'react'
-import Immutable from 'immutable'  /* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import ReceiptLine from 'Receipt/ReceiptLine'
 import { formatPrice } from 'utils/format'
 
 const ReceiptExtras = ({ items, vatableDisclaimerKey }) => {
-	const getCost = (item) => formatPrice((item.get('quantity') * item.get('listPrice')).toFixed(2))
+  const getCost = (item) => formatPrice((item.get('quantity') * item.get('listPrice')).toFixed(2))
 
-	const getLabel = (item) => {
-		let label = item.get('isVatable') ? vatableDisclaimerKey : ''
-		label += `${item.get('quantity')} x ${item.get('title')}`
+  const getLabel = (item) => {
+    let label = item.get('isVatable') ? vatableDisclaimerKey : ''
+    label += `${item.get('quantity')} x ${item.get('title')}`
 
-		return label
-	}
+    return label
+  }
 
-	return (
+  return (
 		<div>
 			{items.size ? <ReceiptLine label="Extras" /> : null}
 			{items.map((item, key) =>
@@ -22,18 +22,17 @@ const ReceiptExtras = ({ items, vatableDisclaimerKey }) => {
 				</ReceiptLine>
 			)}
 		</div>
-	)
+  )
 }
 
 ReceiptExtras.defaultProps = {
-	items: Immutable.Map(),
-	vatableDisclaimerKey: '*',
+  items: Immutable.Map(),
+  vatableDisclaimerKey: '*',
 }
 
-
 ReceiptExtras.propTypes = {
-	items: PropTypes.instanceOf(Immutable.Map),
-	vatableDisclaimerKey: PropTypes.string,
+  items: PropTypes.instanceOf(Immutable.Map),
+  vatableDisclaimerKey: PropTypes.string,
 }
 
 export default ReceiptExtras

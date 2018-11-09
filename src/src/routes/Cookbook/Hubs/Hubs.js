@@ -12,80 +12,80 @@ import Content from 'containers/Content'
 
 class Hubs extends React.PureComponent {
 	static PropTypes = {
-		collectionSets: PropTypes.instanceOf(Immutable.Map),
-		endSet: PropTypes.number.isRequired,
-		fetchSetData: PropTypes.func.isRequired,
-		isLoading: PropTypes.bool,
-		loadSets: PropTypes.func.isRequired,
-		loadNextSet: PropTypes.func.isRequired,
-		startSet: PropTypes.number.isRequired,
-		totalSets: PropTypes.number.isRequired,
+	  collectionSets: PropTypes.instanceOf(Immutable.Map),
+	  endSet: PropTypes.number.isRequired,
+	  fetchSetData: PropTypes.func.isRequired,
+	  isLoading: PropTypes.bool,
+	  loadSets: PropTypes.func.isRequired,
+	  loadNextSet: PropTypes.func.isRequired,
+	  startSet: PropTypes.number.isRequired,
+	  totalSets: PropTypes.number.isRequired,
 	}
 
 	static contextTypes = {
-		store: PropTypes.object.isRequired,
+	  store: PropTypes.object.isRequired,
 	}
 
 	static fetchData({ store, setNum = 1 }) {
-		return store.dispatch(cookbookActions.cookbookLoadCollections({ limit: Hubs.limit, setNum }))
+	  return store.dispatch(cookbookActions.cookbookLoadCollections({ limit: Hubs.limit, setNum }))
 	}
 
 	static limit = 20
 
 	async componentDidMount() {
-		const store = this.context.store
-		const { collectionSets, fetchSetData, startSet } = this.props
+	  const store = this.context.store
+	  const { collectionSets, fetchSetData, startSet } = this.props
 
-		if (!collectionSets.get(startSet)) {
-			await Hubs.fetchData({ store, setNum: startSet })
-		}
+	  if (!collectionSets.get(startSet)) {
+	    await Hubs.fetchData({ store, setNum: startSet })
+	  }
 
-		// preload next set data
-		return fetchSetData(startSet + 1)
+	  // preload next set data
+	  return fetchSetData(startSet + 1)
 	}
 
 	renderMetaData = () => {
-		const metaTitle = 'Recipes | Quick & Easy Dinner Ideas from Gousto'
-		const metaDescription = 'Quick and easy recipes to cook at home. Explore our online cookbook of recipe ideas, with a wide range of tasty meals to choose from.'
+	  const metaTitle = 'Recipes | Quick & Easy Dinner Ideas from Gousto'
+	  const metaDescription = 'Quick and easy recipes to cook at home. Explore our online cookbook of recipe ideas, with a wide range of tasty meals to choose from.'
 
-		return (
+	  return (
 			<Helmet
-				title={metaTitle}
-				meta={[
-					{
-						property: 'og:title',
-						content: metaTitle,
-					},
-					{
-						name: 'twitter:title',
-						content: metaTitle,
-					},
-					{
-						name: 'description',
-						content: metaDescription,
-					},
-					{
-						property: 'og:description',
-						content: metaDescription,
-					},
-					{
-						name: 'twitter:description',
-						content: metaDescription,
-					},
-				]}
+			  title={metaTitle}
+			  meta={[
+			    {
+			      property: 'og:title',
+			      content: metaTitle,
+			    },
+			    {
+			      name: 'twitter:title',
+			      content: metaTitle,
+			    },
+			    {
+			      name: 'description',
+			      content: metaDescription,
+			    },
+			    {
+			      property: 'og:description',
+			      content: metaDescription,
+			    },
+			    {
+			      name: 'twitter:description',
+			      content: metaDescription,
+			    },
+			  ]}
 			/>
-		)
+	  )
 	}
 
 	render() {
-		const { endSet, isLoading, loadNextSet, totalSets } = this.props
-		const mainTitle = (
+	  const { endSet, isLoading, loadNextSet, totalSets } = this.props
+	  const mainTitle = (
 			<Content contentKeys="cookbookMainTitle">
 				<span>Recipe ideas from the Gousto Cookbook</span>
 			</Content>
-		)
+	  )
 
-		return (
+	  return (
 			<Section>
 				{this.renderMetaData()}
 				<PageHeader title={mainTitle}>
@@ -101,13 +101,13 @@ class Hubs extends React.PureComponent {
 				{isLoading && <LoadingOverlay />}
 				<PageContent fadeOut={isLoading}>
 					<CollectionList
-						colSizes={{
-							xs: 12,
-							sm: 6,
-							lg: 4,
-							xl: 3,
-						}}
-						fullBleedMobile
+					  colSizes={{
+					    xs: 12,
+					    sm: 6,
+					    lg: 4,
+					    xl: 3,
+					  }}
+					  fullBleedMobile
 					/>
 					{endSet < totalSets &&
 						<Div margin={{ top: 'XXL', bottom: 'XXL' }}>
@@ -116,7 +116,7 @@ class Hubs extends React.PureComponent {
 					}
 				</PageContent>
 			</Section>
-		)
+	  )
 	}
 }
 

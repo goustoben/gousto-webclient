@@ -12,21 +12,21 @@ const Loading = ({ className }) => (
 
 export const LoadingOverlay = () => (
 	<Div
-		fixed
-		w-100
-		style={{ zIndex: 100, top: 0, left: 0 }}
+	  fixed
+	  w-100
+	  style={{ zIndex: 100, top: 0, left: 0 }}
 	>
 		<Div
-			d-block
-			margin={{
-				top: 'XXL',
-				right: 'auto',
-				left: 'auto',
-			}}
-			style={{
-				width: '100px',
-				pointerEvents: 'none',
-			}}
+		  d-block
+		  margin={{
+		    top: 'XXL',
+		    right: 'auto',
+		    left: 'auto',
+		  }}
+		  style={{
+		    width: '100px',
+		    pointerEvents: 'none',
+		  }}
 		>
 			<Loading />
 		</Div>

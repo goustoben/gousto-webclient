@@ -13,37 +13,37 @@ const DietTypesFilter = ({ dietTypes, dietTypesFilters, filterCurrentDietTypesCh
 			</Content>
 		</H2>
 		{Object.keys(dietTypesFilters).map((dietTypeKey, index) => {
-			const dietTypeFilter = dietTypesFilters[dietTypeKey]
-			const isChecked = !!dietTypes.has(dietTypeKey)
+		  const dietTypeFilter = dietTypesFilters[dietTypeKey]
+		  const isChecked = !!dietTypes.has(dietTypeKey)
 
-			return (
+		  return (
 				<FilterItem
-					type="checkbox"
-					key={index}
-					groupName="dietTypes"
-					value={dietTypeFilter}
-					identifier={`dietType-${index}`}
-					checked={isChecked}
-					onClick={() => { filterCurrentDietTypesChange(dietTypeKey) }}
+				  type="checkbox"
+				  key={index}
+				  groupName="dietTypes"
+				  value={dietTypeFilter}
+				  identifier={`dietType-${index}`}
+				  checked={isChecked}
+				  onClick={() => { filterCurrentDietTypesChange(dietTypeKey) }}
 				>
 					<span>{dietTypeFilter}</span>
 				</FilterItem>
-			)
+		  )
 		})
 		}
 	</div>
 )
 
 DietTypesFilter.propTypes = {
-	dietTypes: PropTypes.instanceOf(Immutable.Set),
-	dietTypesFilters: PropTypes.object,
-	filterCurrentDietTypesChange: PropTypes.func,
+  dietTypes: PropTypes.instanceOf(Immutable.Set),
+  dietTypesFilters: PropTypes.object,
+  filterCurrentDietTypesChange: PropTypes.func,
 }
 
 DietTypesFilter.defaultProps = {
-	filterCurrentDietTypesChange: () => {
-		// default function
-	},
+  filterCurrentDietTypesChange: () => {
+    // default function
+  },
 }
 
 export default DietTypesFilter

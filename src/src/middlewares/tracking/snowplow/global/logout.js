@@ -1,6 +1,6 @@
 export default function logout(action) {
-	return {
-		type: action.type,
-		data: {},
-	}
+  return {
+    type: action.type,
+    data: {},
+  }
 }

@@ -5,16 +5,16 @@ import BoxIcon from '../BoxIcon'
 
 class BoxInfo extends React.PureComponent {
 	static propTypes = {
-		numPortions: PropTypes.number,
-		totalPrice: PropTypes.string,
-		pricePerPortion: PropTypes.string,
-		numPersons: PropTypes.number,
+	  numPortions: PropTypes.number,
+	  totalPrice: PropTypes.string,
+	  pricePerPortion: PropTypes.string,
+	  numPersons: PropTypes.number,
 	}
 
 	render() {
-		const { numPortions, pricePerPortion, totalPrice, numPersons } = this.props
+	  const { numPortions, pricePerPortion, totalPrice, numPersons } = this.props
 
-		return (
+	  return (
 			<div className={css.container}>
 				<p className={css.recipes}>{numPortions} Recipes</p>
 				<p>
@@ -27,7 +27,7 @@ class BoxInfo extends React.PureComponent {
 				</p>
 				<BoxIcon className={css.icon} numPortions={numPortions} numPersons={numPersons} />
 			</div>
-		)
+	  )
 	}
 }
 

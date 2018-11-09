@@ -6,12 +6,12 @@ import css from './LinkButton.css'
 const LinkButton = ({ children, clientRouted, color, disabled, fill, to, width }) => (
 	<Button fill={fill}>
 		<Segment
-			className={css.segment}
-			color={color}
-			disabled={disabled}
-			fill={fill}
-			width={width}
-			onClick={() => {}}
+		  className={css.segment}
+		  color={color}
+		  disabled={disabled}
+		  fill={fill}
+		  width={width}
+		  onClick={() => {}}
 		>
 			<Link to={to} noDecoration clientRouted={clientRouted}>
 				{children}
@@ -21,22 +21,22 @@ const LinkButton = ({ children, clientRouted, color, disabled, fill, to, width }
 )
 
 LinkButton.propTypes = {
-	children: PropTypes.node,
-	color: PropTypes.oneOf(['primary']),
-	fill: PropTypes.bool,
-	to: PropTypes.string,
-	disabled: PropTypes.bool,
-	width: PropTypes.oneOf(['auto', 'full']),
-	clientRouted: PropTypes.bool,
+  children: PropTypes.node,
+  color: PropTypes.oneOf(['primary']),
+  fill: PropTypes.bool,
+  to: PropTypes.string,
+  disabled: PropTypes.bool,
+  width: PropTypes.oneOf(['auto', 'full']),
+  clientRouted: PropTypes.bool,
 }
 
 LinkButton.defaultProps = {
-	to: '#',
-	disabled: false,
-	width: 'auto',
-	color: 'primary',
-	fill: true,
-	clientRouted: true,
+  to: '#',
+  disabled: false,
+  width: 'auto',
+  color: 'primary',
+  fill: true,
+  clientRouted: true,
 }
 
 export default LinkButton

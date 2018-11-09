@@ -21,15 +21,14 @@ const Ingredients = ({ ingredients, restrictedView, inset }) => (
 )
 
 Ingredients.propTypes = {
-	ingredients: React.PropTypes.instanceOf(Immutable.List),
-	restrictedView: React.PropTypes.bool,
-	inset: React.PropTypes.bool,
+  ingredients: React.PropTypes.instanceOf(Immutable.List),
+  restrictedView: React.PropTypes.bool,
+  inset: React.PropTypes.bool,
 }
 Ingredients.defaultProps = {
-	ingredients: Immutable.List([]),
-	restrictedView: false,
-	inset: true,
+  ingredients: Immutable.List([]),
+  restrictedView: false,
+  inset: true,
 }
-
 
 export default Ingredients

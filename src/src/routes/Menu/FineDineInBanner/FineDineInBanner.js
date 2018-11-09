@@ -6,7 +6,7 @@ import config from 'config/menu'
 import Gel from 'Gel'
 
 const Banner = ({ hide }) => (
-	hide ? null :
+  hide ? null :
 		<div className={classnames(css.container, { [css.hide]: hide })}>
 			<div className={css.contentContainer}>
 				<Gel className={css.gelMain} size="large">
@@ -26,11 +26,11 @@ const Banner = ({ hide }) => (
 )
 
 Banner.defaultProps = {
-	hide: false,
+  hide: false,
 }
 
 Banner.propTypes = {
-	hide: PropTypes.bool,
+  hide: PropTypes.bool,
 }
 
 export default Banner

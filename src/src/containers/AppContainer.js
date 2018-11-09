@@ -14,23 +14,24 @@ const AppContainer = ({ history, routes, store }) => (
 	<Provider store={store}>
 		<ApolloProvider client={apolloClient(store)}>
 			<Router
-				history={history}
-				children={routes}
-				render={__CLIENT__ ? applyRouterMiddleware(useScroll(shouldScroll)) : undefined}
-				onUpdate={(() => {
-					trackPageChange(store)
-					hashLinkScroll()
-					fetchContentOnChange(documentLocation().pathname, store)
-				})}
-			/>
+			  history={history}
+			  render={__CLIENT__ ? applyRouterMiddleware(useScroll(shouldScroll)) : undefined}
+			  onUpdate={(() => {
+			    trackPageChange(store)
+			    hashLinkScroll()
+			    fetchContentOnChange(documentLocation().pathname, store)
+			  })}
+			>
+			{routes}
+			</Router>
 		</ApolloProvider>
 	</Provider>
 )
 
 AppContainer.propTypes = {
-	history: PropTypes.object.isRequired,
-	routes: PropTypes.object.isRequired,
-	store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  routes: PropTypes.object.isRequired,
+  store: PropTypes.object.isRequired,
 }
 
 export default AppContainer

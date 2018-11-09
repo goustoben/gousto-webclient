@@ -3,11 +3,11 @@ import { Button } from 'goustouicomponents'
 import css from './BrowseCTA.css'
 
 const handleClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, view) => ((e) => {
-	e.preventDefault()
-	e.stopPropagation()
+  e.preventDefault()
+  e.stopPropagation()
 
-	menuBrowseCTAVisibilityChange(false)
-	boxDetailsVisibilityChange(true, view)
+  menuBrowseCTAVisibilityChange(false)
+  boxDetailsVisibilityChange(true, view)
 })
 
 const BrowseCTA = ({ menuBrowseCTAShow, boxDetailsVisibilityChange, menuBrowseCTAVisibilityChange, view }) => (
@@ -28,10 +28,10 @@ const BrowseCTA = ({ menuBrowseCTAShow, boxDetailsVisibilityChange, menuBrowseCT
 )
 
 BrowseCTA.propTypes = {
-	menuBrowseCTAShow: PropTypes.bool,
-	boxDetailsVisibilityChange: PropTypes.func,
-	menuBrowseCTAVisibilityChange: PropTypes.func,
-	view: PropTypes.string,
+  menuBrowseCTAShow: PropTypes.bool,
+  boxDetailsVisibilityChange: PropTypes.func,
+  menuBrowseCTAVisibilityChange: PropTypes.func,
+  view: PropTypes.string,
 }
 
 export default BrowseCTA

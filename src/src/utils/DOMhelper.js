@@ -4,46 +4,46 @@ import scrollIntoView from 'scroll-into-view'
 import logger from 'utils/logger'
 
 const DOMHelper = {
-	getBoundingClientRect,
-	getFirstMatchingNode,
-	scrollToFirstMatchingNode,
+  getBoundingClientRect,
+  getFirstMatchingNode,
+  scrollToFirstMatchingNode,
 }
 
 export function getBoundingClientRect(ref) {
-	let size = {}
-	if (ref && ref.getBoundingClientRect) {
-		size = ref.getBoundingClientRect()
-	}
+  let size = {}
+  if (ref && ref.getBoundingClientRect) {
+    size = ref.getBoundingClientRect()
+  }
 
-	return size
+  return size
 }
 
 export function getFirstMatchingNode(keys = [], refs = {}) {
-	let matchingNode
+  let matchingNode
 
-	const matchFound = keys.some(key => {
-		if (refs[key]) {
-			try {
-				matchingNode = ReactDOM.findDOMNode(refs[key])
-			} catch (err) {
-				logger.warning(`getFirstMatchingNode: ${err}`)
-			}
-		}
+  const matchFound = keys.some(key => {
+    if (refs[key]) {
+      try {
+        matchingNode = ReactDOM.findDOMNode(refs[key])
+      } catch (err) {
+        logger.warning(`getFirstMatchingNode: ${err}`)
+      }
+    }
 
-		return matchingNode
-	})
+    return matchingNode
+  })
 
-	return matchFound ? matchingNode : undefined
+  return matchFound ? matchingNode : undefined
 }
 
 export function scrollToFirstMatchingNode(keys = [], refs = {}) {
-	const firstFoundErrorEl = DOMHelper.getFirstMatchingNode(keys, refs)
+  const firstFoundErrorEl = DOMHelper.getFirstMatchingNode(keys, refs)
 
-	if (firstFoundErrorEl) {
-		scrollIntoView(firstFoundErrorEl)
-	} else {
-		logger.warning('scrollToFirstMatchingNode: no matches found in refs')
-	}
+  if (firstFoundErrorEl) {
+    scrollIntoView(firstFoundErrorEl)
+  } else {
+    logger.warning('scrollToFirstMatchingNode: no matches found in refs')
+  }
 }
 
 export default DOMHelper

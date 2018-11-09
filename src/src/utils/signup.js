@@ -6,7 +6,7 @@ import config from 'config/signup'
  * @param stepName
  */
 export function stepByName(stepName) {
-	return Map(config.steps.find(step => step.name === stepName) || {})
+  return Map(config.steps.find(step => step.name === stepName) || {})
 }
 
 /**
@@ -14,7 +14,7 @@ export function stepByName(stepName) {
  * @param stepSlug
  */
 export function stepBySlug(stepSlug) {
-	return Map(config.steps.find(step => step.slug === stepSlug) || {})
+  return Map(config.steps.find(step => step.slug === stepSlug) || {})
 }
 
 /**
@@ -24,9 +24,9 @@ export function stepBySlug(stepSlug) {
  * @returns {*}
  */
 export function getPromocodeQueryParam(promocode, operator = '&') {
-	if (promocode) {
-		return `${operator}promo_code=${promocode}`
-	}
+  if (promocode) {
+    return `${operator}promo_code=${promocode}`
+  }
 
-	return ''
+  return ''
 }

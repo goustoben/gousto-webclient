@@ -11,29 +11,29 @@ import Contact from './Contact'
 import Confirmation from './Confirmation'
 import { Ingredients } from './Ingredients'
 
-import { checkValidSession } from './../../utils/routes'
+import { checkValidSession } from "../../utils/routes"
 
 export default (store) => {
-	const onEnterHandler = (routes, replace, next) => {
-		const state = store.getState()
-		const redirectTo = '/'
-		const hasGetHelpFlag = state.features.getIn(['getHelp', 'value'])
+  const onEnterHandler = (routes, replace, next) => {
+    const state = store.getState()
+    const redirectTo = '/'
+    const hasGetHelpFlag = state.features.getIn(['getHelp', 'value'])
 
-		// redirect user to the `/` in case auth session is not found
-		checkValidSession(store, redirectTo)(routes, replace, next)
+    // redirect user to the `/` in case auth session is not found
+    checkValidSession(store, redirectTo)(routes, replace, next)
 
-		if (!hasGetHelpFlag) {
-			replace(redirectTo)
-			next()
-		}
-	}
+    if (!hasGetHelpFlag) {
+      replace(redirectTo)
+      next()
+    }
+  }
 
-	return (
+  return (
 		<Route component={WizardLayout}>
 			<Route
-				path={configRoutes.client.getHelp.index}
-				component={GetHelpContainer}
-				onEnter={onEnterHandler}
+			  path={configRoutes.client.getHelp.index}
+			  component={GetHelpContainer}
+			  onEnter={onEnterHandler}
 			>
 				<IndexRoute component={OrderIssueContainer} />
 				{Ingredients}
@@ -43,5 +43,5 @@ export default (store) => {
 				<Redirect to={configRoutes.client.login} />
 			</Route>
 		</Route>
-	)
+  )
 }

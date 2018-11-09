@@ -3,8 +3,8 @@ import Immutable from 'immutable'
 import css from './OrderItemSummary.css'
 
 const OrderItemSummary = ({
-	recipes,
-	numberOfProducts,
+  recipes,
+  numberOfProducts,
 }) => (
 	<div className={css.orderItemSummary}>
 		{recipes.size ? `${recipes.size} recipes` : ''}
@@ -14,13 +14,13 @@ const OrderItemSummary = ({
 )
 
 OrderItemSummary.propTypes = {
-	recipes: PropTypes.instanceOf(Immutable.List),
-	numberOfProducts: PropTypes.number,
+  recipes: PropTypes.instanceOf(Immutable.List),
+  numberOfProducts: PropTypes.number,
 }
 
 OrderItemSummary.defaultProps = {
-	recipes: Immutable.List([]),
-	numberOfProducts: 0,
+  recipes: Immutable.List([]),
+  numberOfProducts: 0,
 }
 
 export default OrderItemSummary

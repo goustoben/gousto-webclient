@@ -5,53 +5,53 @@ import renderer from 'react-test-renderer'
 import Offer from '../Offer'
 
 describe('Order Skip Recovery Model Offer', () => {
-	let wrapper
-	const offer = {
-		message: 'You only have 10% on all your orders until the 19th of October',
-		formattedValue: '10%',
-		rawMessage: {
-			text: 'You only have {:value:} on all your orders until the {:date:}',
-			values: [
-				{ key: 'date', value: '19th of October' },
-				{ key: 'value', value: '£13' }
-			]
-		}
-	}
+  let wrapper
+  const offer = {
+    message: 'You only have 10% on all your orders until the 19th of October',
+    formattedValue: '10%',
+    rawMessage: {
+      text: 'You only have {:value:} on all your orders until the {:date:}',
+      values: [
+        { key: 'date', value: '19th of October' },
+        { key: 'value', value: '£13' }
+      ]
+    }
+  }
 
-	describe('Innitial Render', () => {
-		beforeAll(() => {
-			wrapper = mount(<Offer offer={offer} />)
-		})
+  describe('Innitial Render', () => {
+    beforeAll(() => {
+      wrapper = mount(<Offer offer={offer} />)
+    })
 
-		test('should render snapshot', () => {
-			const tree = renderer.create(
+    test('should render snapshot', () => {
+      const tree = renderer.create(
 				<Offer offer={offer} />
-			).toJSON()
+      ).toJSON()
 
-			expect(tree).toMatchSnapshot()
-		})
+      expect(tree).toMatchSnapshot()
+    })
 
-		test('should render discount amount', () => {
-			const discountAmount = wrapper.find('.discountOSR')
+    test('should render discount amount', () => {
+      const discountAmount = wrapper.find('.discountOSR')
 
-			expect(discountAmount.text()).toContain('10%')
-			expect(discountAmount.text()).toContain('OFF')
-		})
+      expect(discountAmount.text()).toContain('10%')
+      expect(discountAmount.text()).toContain('OFF')
+    })
 
-		test('should render discount message', () => {
-			const discountMessage = wrapper.find('.messageDiscountOSR')
+    test('should render discount message', () => {
+      const discountMessage = wrapper.find('.messageDiscountOSR')
 
-			expect(discountMessage.text()).toBe('You only have £13 on all your orders until the 19th of October')
-		})
-	})
+      expect(discountMessage.text()).toBe('You only have £13 on all your orders until the 19th of October')
+    })
+  })
 
-	describe('Alternative Render', () => {
-		test('should not render component if no offer prop is passed', () => {
-			wrapper = mount(<Offer />)
+  describe('Alternative Render', () => {
+    test('should not render component if no offer prop is passed', () => {
+      wrapper = mount(<Offer />)
 
-			const wrapperDiv = wrapper.find('offerWrapper')
+      const wrapperDiv = wrapper.find('offerWrapper')
 
-			expect(wrapperDiv.length).toBe(0)
-		})
-	})
+      expect(wrapperDiv.length).toBe(0)
+    })
+  })
 })

@@ -3,21 +3,21 @@ import React, { PropTypes } from 'react'
 import css from './SubHero.css'
 
 class SubHero extends React.PureComponent {
-	render() {
-		const imageUrl = require(`./${this.props.imageName}.jpg`)
+  render() {
+    const imageUrl = require(`./${this.props.imageName}.jpg`)
 
-		return (
+    return (
 			<div className={css.imageContainer} style={{ backgroundImage: `url(${imageUrl})` }} ></div>
-			)
-	}
+    )
+  }
 }
 
 SubHero.propTypes = {
-	imageName: PropTypes.number,
+  imageName: PropTypes.number,
 }
 
 SubHero.defaultProps = {
-	imageName: 4,
+  imageName: 4,
 }
 
 export default SubHero

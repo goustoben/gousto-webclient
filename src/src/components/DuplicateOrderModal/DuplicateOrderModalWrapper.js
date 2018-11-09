@@ -9,7 +9,7 @@ const DuplicateOrderModalWrapper = ({ visible }) => (
 )
 
 DuplicateOrderModalWrapper.propTypes = {
-	visible: React.PropTypes.bool,
+  visible: React.PropTypes.bool,
 }
 
 export default DuplicateOrderModalWrapper

@@ -6,52 +6,52 @@ import Gel from 'Gel'
 import css from 'Gel/Gel.css'
 
 describe('<Gel />', () => {
-	let wrapper
+  let wrapper
 
-	test('should render by default', () => {
-		wrapper = shallow(<Gel />)
+  test('should render by default', () => {
+    wrapper = shallow(<Gel />)
 
-		expect(wrapper.find('div').length).toBeGreaterThanOrEqual(1)
-	})
+    expect(wrapper.find('div').length).toBeGreaterThanOrEqual(1)
+  })
 
-	test("should render it's children", () => {
-		const TestComponent = () => (
+  test("should render it's children", () => {
+    const TestComponent = () => (
 			<div>
 				<p>A Test Component</p>
 			</div>
-		)
-		wrapper = shallow(
+    )
+    wrapper = shallow(
 			<Gel>
 				<TestComponent />
 			</Gel>,
-		)
+    )
 
-		expect(wrapper.find(TestComponent).length).toBe(1)
-	})
+    expect(wrapper.find(TestComponent).length).toBe(1)
+  })
 
-	test("should add a class with it's size prop", () => {
-		const size = 'medium'
-		wrapper = shallow(<Gel size={size} />)
+  test("should add a class with it's size prop", () => {
+    const size = 'medium'
+    wrapper = shallow(<Gel size={size} />)
 
-		expect(
-			wrapper
-				.find('div')
-				.first()
-				.hasClass(css[size]),
-		).toBe(true)
-	})
+    expect(
+      wrapper
+        .find('div')
+        .first()
+        .hasClass(css[size]),
+    ).toBe(true)
+  })
 
-	describe('snapshots', () => {
-		test('should render children', () => {
-			const tree = renderer
-				.create(
+  describe('snapshots', () => {
+    test('should render children', () => {
+      const tree = renderer
+        .create(
 					<Gel>
 						<h1>A Gel's child</h1>
 					</Gel>,
-				)
-				.toJSON()
+        )
+        .toJSON()
 
-			expect(tree).toMatchSnapshot()
-		})
-	})
+      expect(tree).toMatchSnapshot()
+    })
+  })
 })

@@ -6,28 +6,28 @@ import css from './BoxPriceList.css'
 import withError from 'utils/withError'
 
 const BoxPricesList = ({ boxPrices, type }) => {
-	const boxTypes = boxPrices[type]
-	const groupByNumPerson = groupBy(boxTypes, 'num_persons')
+  const boxTypes = boxPrices[type]
+  const groupByNumPerson = groupBy(boxTypes, 'num_persons')
 
-	return (
+  return (
 		<div className={css.boxPriceList}>
 			{Object.keys(groupByNumPerson)
-				.filter(numPersons => numPersons !== '8')
-				.map((numPersons) => (
+			  .filter(numPersons => numPersons !== '8')
+			  .map((numPersons) => (
 					<BoxPrice
-						key={`box-type-${numPersons}`}
-						numPersons={parseInt(numPersons, 10)}
-						boxInfo={groupByNumPerson[numPersons]}
+					  key={`box-type-${numPersons}`}
+					  numPersons={parseInt(numPersons, 10)}
+					  boxInfo={groupByNumPerson[numPersons]}
 					/>
-				)
-			)}
+			  )
+			  )}
 		</div>
-	)
+  )
 }
 
 BoxPricesList.propTypes = {
-	boxPrices: PropTypes.object,
-	type: PropTypes.oneOf(['gourmet', 'vegetarian']),
+  boxPrices: PropTypes.object,
+  type: PropTypes.oneOf(['gourmet', 'vegetarian']),
 }
 
 export default withError(BoxPricesList)

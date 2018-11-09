@@ -54,35 +54,35 @@ const NutritionInfo = ({ perPortion, per100Grams, restrictedView, inset }) => (
 )
 
 NutritionInfo.propTypes = {
-	restrictedView: React.PropTypes.bool,
-	inset: React.PropTypes.bool,
-	per100Grams: React.PropTypes.shape({
-		energyKj: React.PropTypes.number,
-		energyKcal: React.PropTypes.number,
-		fat: React.PropTypes.number,
-		fatSaturates: React.PropTypes.number,
-		carbs: React.PropTypes.number,
-		carbsSugars: React.PropTypes.number,
-		fibre: React.PropTypes.number,
-		protein: React.PropTypes.number,
-		salt: React.PropTypes.number,
-	}).isRequired,
-	perPortion: React.PropTypes.shape({
-		energyKj: React.PropTypes.number,
-		energyKcal: React.PropTypes.number,
-		fat: React.PropTypes.number,
-		fatSaturates: React.PropTypes.number,
-		carbs: React.PropTypes.number,
-		carbsSugars: React.PropTypes.number,
-		fibre: React.PropTypes.number,
-		protein: React.PropTypes.number,
-		salt: React.PropTypes.number,
-	}).isRequired,
+  restrictedView: React.PropTypes.bool,
+  inset: React.PropTypes.bool,
+  per100Grams: React.PropTypes.shape({
+    energyKj: React.PropTypes.number,
+    energyKcal: React.PropTypes.number,
+    fat: React.PropTypes.number,
+    fatSaturates: React.PropTypes.number,
+    carbs: React.PropTypes.number,
+    carbsSugars: React.PropTypes.number,
+    fibre: React.PropTypes.number,
+    protein: React.PropTypes.number,
+    salt: React.PropTypes.number,
+  }).isRequired,
+  perPortion: React.PropTypes.shape({
+    energyKj: React.PropTypes.number,
+    energyKcal: React.PropTypes.number,
+    fat: React.PropTypes.number,
+    fatSaturates: React.PropTypes.number,
+    carbs: React.PropTypes.number,
+    carbsSugars: React.PropTypes.number,
+    fibre: React.PropTypes.number,
+    protein: React.PropTypes.number,
+    salt: React.PropTypes.number,
+  }).isRequired,
 }
 
 NutritionInfo.defaultProps = {
-	restrictedView: false,
-	inset: true,
+  restrictedView: false,
+  inset: true,
 }
 
 export default NutritionInfo

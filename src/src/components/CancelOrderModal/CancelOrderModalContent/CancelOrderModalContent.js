@@ -5,31 +5,31 @@ import css from './CancelOrderModalContent.css'
 class CancelOrderModalContent extends React.PureComponent {
 
 	static propTypes = {
-		orderId: PropTypes.string,
-		didCancelOrderError: PropTypes.bool,
-		close: PropTypes.func,
-		orderCancel: PropTypes.func,
-		cancelOrderModalToggleVisibility: PropTypes.func,
+	  orderId: PropTypes.string,
+	  didCancelOrderError: PropTypes.bool,
+	  close: PropTypes.func,
+	  orderCancel: PropTypes.func,
+	  cancelOrderModalToggleVisibility: PropTypes.func,
 	}
 
 	static defaultProps = {
-		orderId: '',
-		didCancelOrderError: false,
-		close: () => {},
-		orderCancel: () => {},
-		cancelOrderModalToggleVisibility: () => {},
+	  orderId: '',
+	  didCancelOrderError: false,
+	  close: () => {},
+	  orderCancel: () => {},
+	  cancelOrderModalToggleVisibility: () => {},
 	}
 
 	handleCancelBox = () => {
-		const { orderCancel, cancelOrderModalToggleVisibility, orderId } = this.props
-		orderCancel(orderId)
-			.then(() => cancelOrderModalToggleVisibility(false, orderId))
+	  const { orderCancel, cancelOrderModalToggleVisibility, orderId } = this.props
+	  orderCancel(orderId)
+	    .then(() => cancelOrderModalToggleVisibility(false, orderId))
 	}
 
 	render() {
-		const { close, didCancelOrderError } = this.props
+	  const { close, didCancelOrderError } = this.props
 
-		return (
+	  return (
 			<div className={css.body}>
 				<h2 className={css.modalTitle}>Cancel this box?</h2>
 				<div className={css.modalBodyText}>
@@ -39,7 +39,7 @@ class CancelOrderModalContent extends React.PureComponent {
 					<Alert type="danger">
 						Whoops, there was a problem cancelling this order, please try again.
 					</Alert>
-				: null}
+				  : null}
 				<div className={css.bottom}>
 					<Button onClick={close} color={'negative'} className={css.firstButton} noDecoration>
 						Go Back
@@ -49,7 +49,7 @@ class CancelOrderModalContent extends React.PureComponent {
 					</Button>
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

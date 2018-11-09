@@ -9,44 +9,43 @@ import css from './DeliveryStep.css'
 import Image from '../../Image'
 
 const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
-	tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
+  tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
 )
 
 const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
-	const slots = {}
-	const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
-		const date = dd.get('date')
-		slots[date] = dd.get('slots').map(slot => ({
-			label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
-			subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
-			value: slot.get('id'),
-			coreSlotId: slot.get('coreSlotId'),
-		})).toArray()
+  const slots = {}
+  const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
+    const date = dd.get('date')
+    slots[date] = dd.get('slots').map(slot => ({
+      label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
+      subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
+      value: slot.get('id'),
+      coreSlotId: slot.get('coreSlotId'),
+    })).toArray()
 
-		let disabled = dd.get('alternateDeliveryDay') !== null
-		disabled = (dd && dd.get('alternateDeliveryDay') !== null)
+    let disabled = dd.get('alternateDeliveryDay') !== null
+    disabled = (dd && dd.get('alternateDeliveryDay') !== null)
 
-		return { date, value: date, disabled, label: moment(date).format('ddd D MMM') }
-	})
-	.toArray()
-	.sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
+    return { date, value: date, disabled, label: moment(date).format('ddd D MMM') }
+  })
+    .toArray()
+    .sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
 
-	return { slots, deliveryDays }
+  return { slots, deliveryDays }
 }
 
-
 const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, next }) => {
-	const { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
+  const { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
-	const onTempDateChange = (date) => {
-		setTempDate(date)
-		if (slots[date]) {
-			const slotId = slots[date][0].value
-			setTempSlotId(slotId)
-		}
-	}
+  const onTempDateChange = (date) => {
+    setTempDate(date)
+    if (slots[date]) {
+      const slotId = slots[date][0].value
+      setTempSlotId(slotId)
+    }
+  }
 
-	return (
+  return (
 		<span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
 			<div className={signupCss.fullWidth}>
 				<div className={signupCss.header}>
@@ -58,21 +57,21 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
 						<div className={css.row}>
 							<div className={css.left} data-testing="signupDeliveryDay">
 								<DropdownInput
-									color="secondary"
-									uppercase
-									className={css.dropdown}
-									options={deliveryDays}
-									onChange={onTempDateChange}
-									value={tempDate}
+								  color="secondary"
+								  uppercase
+								  className={css.dropdown}
+								  options={deliveryDays}
+								  onChange={onTempDateChange}
+								  value={tempDate}
 								/>
 							</div>
 							<div className={css.right} data-testing="signupDeliveryTime">
 								<DropdownInput
-									color="secondary"
-									uppercase
-									options={slots[tempDate] ? slots[tempDate] : []}
-									onChange={setTempSlotId}
-									value={tempSlotId}
+								  color="secondary"
+								  uppercase
+								  options={slots[tempDate] ? slots[tempDate] : []}
+								  onChange={setTempSlotId}
+								  value={tempSlotId}
 								/>
 							</div>
 						</div>
@@ -85,32 +84,32 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
 			<div className={signupCss.footer}>
 				<div className={signupCss.inputContainer}>
 					<Button
-						data-testing="signupDeliveryCTA"
-						disabled={!tempDate || !tempSlotId}
-						width="full"
-						onClick={() => (
-							boxSummaryDeliverySlotChosen({
-								date: tempDate,
-								slotId: tempSlotId,
-							}).then(next)
-						)}
-						pending={menuFetchDataPending}
+					  data-testing="signupDeliveryCTA"
+					  disabled={!tempDate || !tempSlotId}
+					  width="full"
+					  onClick={() => (
+					    boxSummaryDeliverySlotChosen({
+					      date: tempDate,
+					      slotId: tempSlotId,
+					    }).then(next)
+					  )}
+					  pending={menuFetchDataPending}
 					/>
 				</div>
 			</div>
 		</span>
-	)
+  )
 }
 
 DeliveryStep.propTypes = {
-	boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
-	tempDate: React.PropTypes.string,
-	tempSlotId: React.PropTypes.string,
-	setTempDate: React.PropTypes.func,
-	setTempSlotId: React.PropTypes.func,
-	boxSummaryDeliverySlotChosen: React.PropTypes.func,
-	menuFetchDataPending: React.PropTypes.bool,
-	next: React.PropTypes.func,
+  boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
+  tempDate: React.PropTypes.string,
+  tempSlotId: React.PropTypes.string,
+  setTempDate: React.PropTypes.func,
+  setTempSlotId: React.PropTypes.func,
+  boxSummaryDeliverySlotChosen: React.PropTypes.func,
+  menuFetchDataPending: React.PropTypes.bool,
+  next: React.PropTypes.func,
 }
 
 export default DeliveryStep

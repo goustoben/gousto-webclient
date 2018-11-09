@@ -9,30 +9,30 @@ import Link from 'Link'
 import AppStoreLinks from './AppStoreLinks/index'
 
 const Footer = ({ simple, type, copyright }) => {
-	const clientRoutes = config.routes.client
+  const clientRoutes = config.routes.client
 
-	const renderTermsLink = () => (
+  const renderTermsLink = () => (
 		<li className={css.menuItem}>
 			Terms
 			(<Link to={clientRoutes.termsOfUse} data-selid="footer-terms-of-use" title="Terms &amp; Conditions" clientRouted={false} secondary>Website</Link>)
 			(<Link to={clientRoutes.termsAndConditions} data-selid="footer-terms-and-conditions" title="Terms &amp; Conditions for Sale of Goods" clientRouted={false} secondary>Sale</Link>)
 		</li>
-	)
+  )
 
-	const renderPrivacyLink = () => (
+  const renderPrivacyLink = () => (
 		<li className={css.menuItem}>
 			<Link to={clientRoutes.privacyPolicy} data-selid="footer-privacy-statement" title="Privacy Policy" clientRouted={false} secondary>Privacy Policy</Link>
 		</li>
-	)
+  )
 
-	const renderSimpleList = () => (
+  const renderSimpleList = () => (
 		<ul className={css.menuList}>
 			{renderTermsLink()}
 			{renderPrivacyLink()}
 		</ul>
-	)
+  )
 
-	const renderFullList = () => (
+  const renderFullList = () => (
 		<ul className={css.menuList}>
 			<li className={classNames(css.mobileHide, css.menuItem)}>
 				<Link to={clientRoutes.home} data-selid="footer-home" title="Home" clientRouted={false} secondary>Home</Link>
@@ -61,9 +61,9 @@ const Footer = ({ simple, type, copyright }) => {
 			</li>
 			{renderPrivacyLink()}
 		</ul>
-	)
+  )
 
-	const renderSocial = () => (
+  const renderSocial = () => (
 		<div className={css.appLinks}>
 			<ul className={css.links}>
 				<li className={css.link}>
@@ -84,38 +84,38 @@ const Footer = ({ simple, type, copyright }) => {
 			</ul>
 			<AppStoreLinks appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />
 		</div>
-	)
+  )
 
-	const copyrightText = <p>&copy; Gousto {moment().format('YYYY')}. All rights reserved.</p>
+  const copyrightText = <p>&copy; Gousto {moment().format('YYYY')}. All rights reserved.</p>
 
-	const renderCopyright = () => (
+  const renderCopyright = () => (
 		<div id="copyright" className={css.copyright}>
 			{copyrightText}
 		</div>
-	)
+  )
 
-	const renderSimpleFooter = () => (
+  const renderSimpleFooter = () => (
 		<div>
 			{renderSimpleList()}
 			{renderCopyright()}
 		</div>
-	)
+  )
 
-	const renderMediumFooter = () => (
+  const renderMediumFooter = () => (
 		<div>
 			{renderSocial()}
 			{renderFullList()}
 			{copyright && renderCopyright()}
 		</div>
-	)
+  )
 
-	const renderLargeFooter = () => (
+  const renderLargeFooter = () => (
 		<div>
 			{renderMediumFooter()}
 		</div>
-	)
+  )
 
-	const renderCheckoutFooter = () => (
+  const renderCheckoutFooter = () => (
 		<div className={css.checkoutFooterContainer}>
 			<div className={css.footerFlexContainer}>
 				<div className={css.greatValue}>
@@ -131,55 +131,55 @@ const Footer = ({ simple, type, copyright }) => {
 				</div>
 			</div>
 		</div>
-	)
+  )
 
-	const renderFooter = () => {
-		let footer = null
+  const renderFooter = () => {
+    let footer = null
 
-		if (simple) {
-			// Back compatibility of simple prop
-			return renderSimpleFooter()
-		}
+    if (simple) {
+      // Back compatibility of simple prop
+      return renderSimpleFooter()
+    }
 
-		switch (type) {
-			case 'simple':
-				footer = renderSimpleFooter()
-				break
-			case 'medium':
-				footer = renderMediumFooter()
-				break
-			case 'large':
-				footer = renderLargeFooter()
-				break
-			case 'checkout':
-				footer = renderCheckoutFooter()
-				break
-			default: {
-				footer = renderMediumFooter()
-				break
-			}
-		}
+    switch (type) {
+    case 'simple':
+      footer = renderSimpleFooter()
+      break
+    case 'medium':
+      footer = renderMediumFooter()
+      break
+    case 'large':
+      footer = renderLargeFooter()
+      break
+    case 'checkout':
+      footer = renderCheckoutFooter()
+      break
+    default: {
+      footer = renderMediumFooter()
+      break
+    }
+    }
 
-		return footer
-	}
+    return footer
+  }
 
-	return (
+  return (
 		<div className={css.footer}>
 			{renderFooter()}
 		</div>
-	)
+  )
 }
 
 Footer.propTypes = {
-	simple: React.PropTypes.bool,
-	type: React.PropTypes.string,
-	copyright: React.PropTypes.bool,
+  simple: React.PropTypes.bool,
+  type: React.PropTypes.string,
+  copyright: React.PropTypes.bool,
 }
 
 Footer.defaultProps = {
-	simple: false,
-	type: 'medium',
-	copyright: true,
+  simple: false,
+  type: 'medium',
+  copyright: true,
 }
 
 export default Footer

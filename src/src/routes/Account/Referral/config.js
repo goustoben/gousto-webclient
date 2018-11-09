@@ -1,4 +1,4 @@
 export default {
-	whatsForYou: '£15',
-	whatsForThem: '50%',
+  whatsForYou: '£15',
+  whatsForThem: '50%',
 }

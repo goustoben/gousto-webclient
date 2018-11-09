@@ -4,29 +4,29 @@ import Details from './Details'
 import actionTypes from 'actions/actionTypes'
 
 function mapStateToProps(state) {
-	return {
-		accessToken: state.auth.get('accessToken'),
-		deliveryDays: state.boxSummaryDeliveryDays,
-		menuBoxPrices: state.menuBoxPrices,
-		promoCode: state.basket.get('promoCode'),
-		recipes: state.menuRecipes,
-		recipesStore: state.recipes,
-		slotId: state.basket.get('slotId'),
-		stock: state.menuRecipeStock,
-		menuFetchPending: state.pending.get(actionTypes.MENU_FETCH_DATA),
-		orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
-		pricingPending: state.pricing.get('pending'),
-		prices: state.pricing.get('prices'),
-	}
+  return {
+    accessToken: state.auth.get('accessToken'),
+    deliveryDays: state.boxSummaryDeliveryDays,
+    menuBoxPrices: state.menuBoxPrices,
+    promoCode: state.basket.get('promoCode'),
+    recipes: state.menuRecipes,
+    recipesStore: state.recipes,
+    slotId: state.basket.get('slotId'),
+    stock: state.menuRecipeStock,
+    menuFetchPending: state.pending.get(actionTypes.MENU_FETCH_DATA),
+    orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
+    pricingPending: state.pricing.get('pending'),
+    prices: state.pricing.get('prices'),
+  }
 }
 
 const DetailsContainer = connect(mapStateToProps, {
-	basketNumPortionChange: actions.basketNumPortionChange,
-	basketPostcodeChange: actions.basketPostcodeChange,
-	onRemove: actions.basketRecipeRemove,
-	clearSlot: actions.basketSlotClear,
-	basketRestorePreviousDate: actions.basketRestorePreviousDate,
-	boxSummaryVisibilityChange: actions.boxSummaryVisibilityChange,
+  basketNumPortionChange: actions.basketNumPortionChange,
+  basketPostcodeChange: actions.basketPostcodeChange,
+  onRemove: actions.basketRecipeRemove,
+  clearSlot: actions.basketSlotClear,
+  basketRestorePreviousDate: actions.basketRestorePreviousDate,
+  boxSummaryVisibilityChange: actions.boxSummaryVisibilityChange,
 })(Details)
 
 export default DetailsContainer

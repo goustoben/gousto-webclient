@@ -5,15 +5,15 @@ import { shallow } from 'enzyme'
 import RateRecipes from 'routes/Account/RateRecipes/RateRecipes'
 
 describe('RateRecipes', () => {
-	describe('rendering', () => {
-		let wrapper
+  describe('rendering', () => {
+    let wrapper
 
-		beforeEach(() => {
-			wrapper = shallow(<RateRecipes />)
-		})
+    beforeEach(() => {
+      wrapper = shallow(<RateRecipes />)
+    })
 
-		test('should render a <div> with no props', () => {
-			expect(wrapper.type()).toEqual('div')
-		})
-	})
+    test('should render a <div> with no props', () => {
+      expect(wrapper.type()).toEqual('div')
+    })
+  })
 })

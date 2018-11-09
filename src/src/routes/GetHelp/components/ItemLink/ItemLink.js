@@ -8,27 +8,27 @@ import { Item } from 'goustouicomponents'
 const ItemLink = ({ label, trackClick, isHiddenOnMobile, to, clientRouted }) => (
 	<Link to={to} clientRouted={clientRouted}>
 		<Item
-			label={label}
-			trackClick={trackClick}
-			isHiddenOnMobile={isHiddenOnMobile}
+		  label={label}
+		  trackClick={trackClick}
+		  isHiddenOnMobile={isHiddenOnMobile}
 		/>
 	</Link>
 )
 
 ItemLink.propTypes = {
-	label: PropTypes.string.isRequired,
-	trackClick: PropTypes.func,
-	isHiddenOnMobile: PropTypes.bool,
-	to: PropTypes.string.isRequired,
-	clientRouted: PropTypes.bool,
+  label: PropTypes.string.isRequired,
+  trackClick: PropTypes.func,
+  isHiddenOnMobile: PropTypes.bool,
+  to: PropTypes.string.isRequired,
+  clientRouted: PropTypes.bool,
 }
 
 ItemLink.defaultProps = {
-	trackClick: () => {},
-	isHiddenOnMobile: false,
-	clientRouted: true,
+  trackClick: () => {},
+  isHiddenOnMobile: false,
+  clientRouted: true,
 }
 
 export {
-	ItemLink
+  ItemLink
 }

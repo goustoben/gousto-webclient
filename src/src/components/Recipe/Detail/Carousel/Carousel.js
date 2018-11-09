@@ -8,18 +8,18 @@ import ContentMask from 'Recipe/Detail/Carousel/ContentMask'
 import Arrow from 'Recipe/Detail/Carousel/Arrow'
 
 const Carousel = ({ images, media, view, dots, arrows }) => (
-	(images.size)
-	? (
+  (images.size)
+    ? (
 		<div className={css.carousel}>
 			<SlickCarousel
-				dots={dots}
-				dotsClass={css.dots}
-				arrows={arrows}
-				prevArrow={<Arrow action="prev" direction="left" />}
-				nextArrow={<Arrow action="next" direction="right" />}
-				infinite
-				autoplaySpeed={5000}
-				speed={200}
+			  dots={dots}
+			  dotsClass={css.dots}
+			  arrows={arrows}
+			  prevArrow={<Arrow action="prev" direction="left" />}
+			  nextArrow={<Arrow action="next" direction="right" />}
+			  infinite
+			  autoplaySpeed={5000}
+			  speed={200}
 			>
 				{images.map((image) => (
 					<div className={css.slide} key={image.get('type')}>
@@ -32,25 +32,25 @@ const Carousel = ({ images, media, view, dots, arrows }) => (
 				))}
 			</SlickCarousel>
 		</div>
-	) : (
+    ) : (
 		<Image media={media} />
-	)
+    )
 )
 
 Carousel.propTypes = {
-	images: PropTypes.instanceOf(Immutable.List),
-	media: PropTypes.instanceOf(Immutable.List),
-	view: PropTypes.oneOf(['fineDineInDetail']),
-	dots: PropTypes.bool,
-	arrows: PropTypes.bool,
+  images: PropTypes.instanceOf(Immutable.List),
+  media: PropTypes.instanceOf(Immutable.List),
+  view: PropTypes.oneOf(['fineDineInDetail']),
+  dots: PropTypes.bool,
+  arrows: PropTypes.bool,
 }
 
 Carousel.defaultProps = {
-	images: Immutable.List([]),
-	media: Immutable.List([]),
-	view: 'fineDineInDetail',
-	dots: true,
-	arrows: true,
+  images: Immutable.List([]),
+  media: Immutable.List([]),
+  view: 'fineDineInDetail',
+  dots: true,
+  arrows: true,
 }
 
 export default Carousel

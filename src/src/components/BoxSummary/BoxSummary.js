@@ -6,74 +6,73 @@ import Postcode from './Postcode'
 import DeliverySlot from './DeliverySlot'
 import { boxSummaryViews } from 'utils/boxSummary'
 
-
 class BoxSummary extends React.PureComponent {
 
 	static propTypes = {
-		displayOptions: PropTypes.instanceOf(Immutable.List),
-		view: PropTypes.string,
-		date: PropTypes.string,
-		orderId: PropTypes.string,
-		numPortions: PropTypes.number.isRequired,
-		recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
-		boxSummaryCurrentView: PropTypes.string,
-		prices: PropTypes.instanceOf(Immutable.Map),
-		pricesLoading: PropTypes.bool,
+	  displayOptions: PropTypes.instanceOf(Immutable.List),
+	  view: PropTypes.string,
+	  date: PropTypes.string,
+	  orderId: PropTypes.string,
+	  numPortions: PropTypes.number.isRequired,
+	  recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+	  boxSummaryCurrentView: PropTypes.string,
+	  prices: PropTypes.instanceOf(Immutable.Map),
+	  pricesLoading: PropTypes.bool,
 	}
 
 	static defaultProps = {
-		prices: Immutable.Map({}),
-		pricesLoading: false,
+	  prices: Immutable.Map({}),
+	  pricesLoading: false,
 	}
 
 	componentDidMount() {
-		if (this.props.prices.size === 0 && this.props.pricesLoading === false) {
-			this.props.loadPrices()
-		}
+	  if (this.props.prices.size === 0 && this.props.pricesLoading === false) {
+	    this.props.loadPrices()
+	  }
 	}
 
 	componentWillReceiveProps(nextProps) {
-		const observableProps = ['date', 'orderId', 'slotId', 'numPortions', 'recipes']
+	  const observableProps = ['date', 'orderId', 'slotId', 'numPortions', 'recipes']
 
-		const shouldRefreshPrices = observableProps
-		.map(prop => this.props[prop] !== nextProps[prop])
-		.filter(needRefresh => needRefresh).length > 0
+	  const shouldRefreshPrices = observableProps
+	    .map(prop => this.props[prop] !== nextProps[prop])
+	    .filter(needRefresh => needRefresh).length > 0
 
-		if (shouldRefreshPrices) {
-			this.props.loadPrices()
-		}
+	  if (shouldRefreshPrices) {
+	    this.props.loadPrices()
+	  }
 	}
 
 	render() {
-		const { view = 'desktop', date, orderId, displayOptions, numPortions, recipes, boxSummaryCurrentView } = this.props
+	  const { view = 'desktop', date, orderId, displayOptions, numPortions, recipes, boxSummaryCurrentView } = this.props
 
-		let boxSummaryView
+	  let boxSummaryView
 
-		switch (boxSummaryCurrentView) {
-			case boxSummaryViews.POSTCODE:
-				boxSummaryView = <Postcode view={view} />
-				break
-			case boxSummaryViews.DELIVERY_SLOT:
-				boxSummaryView = <DeliverySlot view={view} displayOptions={displayOptions} />
-				break
-			case boxSummaryViews.DETAILS:
-				boxSummaryView = (<Details
-					view={view}
-					displayOptions={displayOptions}
-					date={date}
-					orderId={orderId}
-					numPortions={numPortions}
-					basketRecipes={recipes}
-				/>)
-				break
-			default:
-				boxSummaryView = null
-				break
-		}
+	  switch (boxSummaryCurrentView) {
+	  case boxSummaryViews.POSTCODE:
+	    boxSummaryView = <Postcode view={view} />
+	    break
+	  case boxSummaryViews.DELIVERY_SLOT:
+	    boxSummaryView = <DeliverySlot view={view} displayOptions={displayOptions} />
+	    break
+	  case boxSummaryViews.DETAILS:
+	    boxSummaryView = (<Details
+	      view={view}
+	      displayOptions={displayOptions}
+	      date={date}
+	      orderId={orderId}
+	      numPortions={numPortions}
+	      basketRecipes={recipes}
+	    />)
+	    break
+	  default:
+	    boxSummaryView = null
+	    break
+	  }
 
-		return (
+	  return (
 			<div>{boxSummaryView}</div>
-		)
+	  )
 	}
 }
 

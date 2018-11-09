@@ -17,64 +17,64 @@ jest.mock('apis/recipes')
 jest.mock('apis/orders')
 
 describe('<GetHelpContainer />', () => {
-	describe('behaviour', () => {
-		let store
-		beforeAll(() => {
-			const initialState = {
-				auth: authDefaultState(),
-				getHelp: getHelpInitialState,
-				recipes: Map({}),
-				user: userDefaultState,
-			}
+  describe('behaviour', () => {
+    let store
+    beforeAll(() => {
+      const initialState = {
+        auth: authDefaultState(),
+        getHelp: getHelpInitialState,
+        recipes: Map({}),
+        user: userDefaultState,
+      }
 
-			store = createStore(
-				combineReducers(Object.assign(
-					{},
-					{ getHelp },
-					{ ...contentReducer },
-					{ ...authReducer },
-					{ ...userReducer },
-					{ recipes: recipesReducer.recipes },
-				)),
-				initialState,
-				compose(applyMiddleware(thunk))
-			)
+      store = createStore(
+        combineReducers(Object.assign(
+          {},
+          { getHelp },
+          { ...contentReducer },
+          { ...authReducer },
+          { ...userReducer },
+          { recipes: recipesReducer.recipes },
+        )),
+        initialState,
+        compose(applyMiddleware(thunk))
+      )
 
-			fetchOrder.mockResolvedValue({
-				data: { id: '788', recipeItems: [{ id: '1' }, { id: '2' }] }
-			})
+      fetchOrder.mockResolvedValue({
+        data: { id: '788', recipeItems: [{ id: '1' }, { id: '2' }] }
+      })
 
-			fetchRecipes.mockResolvedValue({
-				data: [{ id: '123', ingredients: [{ id: '321' }] }]
-			})
+      fetchRecipes.mockResolvedValue({
+        data: [{ id: '123', ingredients: [{ id: '321' }] }]
+      })
 
-			mount(
+      mount(
 				<GetHelpContainer
-					location={{ query: { orderId: '788' } }}
-					store={store}
+				  location={{ query: { orderId: '788' } }}
+				  store={store}
 				>
 					<div>Required Child</div>
 				</GetHelpContainer>
-			)
-		})
-		test('order id passed as prop ends up in store', () => {
-			expect(store.getState().getHelp.getIn(['order', 'id'])).toBe('788')
-		})
+      )
+    })
+    test('order id passed as prop ends up in store', () => {
+      expect(store.getState().getHelp.getIn(['order', 'id'])).toBe('788')
+    })
 
-		test('fetched order ends up in the store', () => {
-			const expectedResult = fromJS([{ id: '1' }, { id: '2' }])
+    test('fetched order ends up in the store', () => {
+      const expectedResult = fromJS([{ id: '1' }, { id: '2' }])
 
-			expect(
-				store.getState().user.getIn(['orders', '788', 'recipeItems'])
-			).toEqual(expectedResult)
-		})
+      expect(
+        store.getState().user.getIn(['orders', '788', 'recipeItems'])
+      ).toEqual(expectedResult)
+    })
 
-		test('fetched recipes ends up in the store', () => {
-			const expectedResult = fromJS([{ id: '321' }])
+    test('fetched recipes ends up in the store', () => {
+      const expectedResult = fromJS([{ id: '321' }])
 
-			expect(
-				store.getState().recipes.getIn(['123', 'ingredients'])
-			).toEqual(expectedResult)
-		})
-	})
+      expect(
+        store.getState().recipes.getIn(['123', 'ingredients'])
+      ).toEqual(expectedResult)
+    })
+  })
 })

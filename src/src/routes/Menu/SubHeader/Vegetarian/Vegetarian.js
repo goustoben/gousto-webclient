@@ -12,9 +12,9 @@ const Vegetarian = ({ filterVegetarian, onFilterVegetarianChange, mobile }) => (
 )
 
 Vegetarian.propTypes = {
-	filterVegetarian: PropTypes.bool.isRequired,
-	onFilterVegetarianChange: PropTypes.func.isRequired,
-	mobile: PropTypes.bool.isRequired,
+  filterVegetarian: PropTypes.bool.isRequired,
+  onFilterVegetarianChange: PropTypes.func.isRequired,
+  mobile: PropTypes.bool.isRequired,
 }
 
 export default Vegetarian

@@ -3,7 +3,7 @@ export const getBasketRecipes = state => state.basket.get('recipes')
 export const getSignupChosenCollection = state => state.basket.get('collection')
 
 export default {
-	getNumPortions,
-	getBasketRecipes,
-	getSignupChosenCollection,
+  getNumPortions,
+  getBasketRecipes,
+  getSignupChosenCollection,
 }

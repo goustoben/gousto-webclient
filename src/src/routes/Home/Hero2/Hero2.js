@@ -20,15 +20,15 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting }) => (
 )
 
 Hero.propTypes = {
-	redirect: PropTypes.func,
-	ctaUri: PropTypes.string,
-	ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-	dataTesting: PropTypes.string,
+  redirect: PropTypes.func,
+  ctaUri: PropTypes.string,
+  ctaText: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+  dataTesting: PropTypes.string,
 }
 
 Hero.defaultProps = {
-	ctaUri: config.client.menu,
-	ctaText: home.CTA.main,
+  ctaUri: config.client.menu,
+  ctaText: home.CTA.main,
 }
 
 export default Hero

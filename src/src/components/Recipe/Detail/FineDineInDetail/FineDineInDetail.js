@@ -93,14 +93,14 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
 )
 
 FineDineInDetail.propTypes = {
-	...detailPropTypes,
-	scrolledPastPoint: PropTypes.bool,
-	images: PropTypes.instanceOf(Immutable.List),
+  ...detailPropTypes,
+  scrolledPastPoint: PropTypes.bool,
+  images: PropTypes.instanceOf(Immutable.List),
 }
 
 FineDineInDetail.defaultProps = {
-	scrolledPastPoint: false,
-	images: Immutable.List([]),
+  scrolledPastPoint: false,
+  images: Immutable.List([]),
 }
 
 export default FineDineInDetail

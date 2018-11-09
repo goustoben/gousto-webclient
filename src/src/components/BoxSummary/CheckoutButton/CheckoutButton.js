@@ -7,82 +7,82 @@ import config from 'config'
 class CheckoutButton extends React.Component {
 
 	static propTypes = {
-		promoCode: React.PropTypes.string,
-		postcode: React.PropTypes.string,
-		orderId: React.PropTypes.string,
-		buttonClass: React.PropTypes.string,
-		className: React.PropTypes.string,
-		numPortions: React.PropTypes.oneOf([2, 4]).isRequired,
-		deliveryDayId: React.PropTypes.string,
-		slotId: React.PropTypes.string.isRequired,
-		recipes: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-		children: React.PropTypes.oneOfType([
-			React.PropTypes.instanceOf(Button),
-			React.PropTypes.node,
-			React.PropTypes.element,
-		]).isRequired,
-		basketCheckedOut: React.PropTypes.func.isRequired,
-		basketProceedToCheckout: React.PropTypes.func.isRequired,
-		view: React.PropTypes.string,
-		addressId: React.PropTypes.string,
-		userOrders: React.PropTypes.instanceOf(Immutable.Map).isRequired,
-		onClick: React.PropTypes.func,
-		orderUpdate: React.PropTypes.func,
-		isAuthenticated: React.PropTypes.bool.isRequired,
-		boxSummaryVisibilityChange: React.PropTypes.func.isRequired,
+	  promoCode: React.PropTypes.string,
+	  postcode: React.PropTypes.string,
+	  orderId: React.PropTypes.string,
+	  buttonClass: React.PropTypes.string,
+	  className: React.PropTypes.string,
+	  numPortions: React.PropTypes.oneOf([2, 4]).isRequired,
+	  deliveryDayId: React.PropTypes.string,
+	  slotId: React.PropTypes.string.isRequired,
+	  recipes: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+	  children: React.PropTypes.oneOfType([
+	    React.PropTypes.instanceOf(Button),
+	    React.PropTypes.node,
+	    React.PropTypes.element,
+	  ]).isRequired,
+	  basketCheckedOut: React.PropTypes.func.isRequired,
+	  basketProceedToCheckout: React.PropTypes.func.isRequired,
+	  view: React.PropTypes.string,
+	  addressId: React.PropTypes.string,
+	  userOrders: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+	  onClick: React.PropTypes.func,
+	  orderUpdate: React.PropTypes.func,
+	  isAuthenticated: React.PropTypes.bool.isRequired,
+	  boxSummaryVisibilityChange: React.PropTypes.func.isRequired,
 	}
 
 	static defaultProps = {
-		addressId: '',
-		promoCode: '',
-		postcode: '',
-		orderId: '',
-		view: '',
-		onClick: () => {},
-		boxSummaryVisibilityChange: () => {},
+	  addressId: '',
+	  promoCode: '',
+	  postcode: '',
+	  orderId: '',
+	  view: '',
+	  onClick: () => {},
+	  boxSummaryVisibilityChange: () => {},
 	}
 
 	getOrderAction = () => {
-		const userOrder = this.props.userOrders.filter(order => order.get('id') === this.props.orderId).first()
-		const recipeAction = (userOrder && userOrder.get('recipeItems').size > 0) ? 'update' : 'choice'
-		const orderAction = this.props.orderId ? `recipe-${recipeAction}` : 'transaction'
+	  const userOrder = this.props.userOrders.filter(order => order.get('id') === this.props.orderId).first()
+	  const recipeAction = (userOrder && userOrder.get('recipeItems').size > 0) ? 'update' : 'choice'
+	  const orderAction = this.props.orderId ? `recipe-${recipeAction}` : 'transaction'
 
-		return orderAction
+	  return orderAction
 	}
 
 	handleClick = () => {
-		this.props.onClick()
-		this.props.boxSummaryVisibilityChange(false)
-		this.props.basketCheckedOut(this.props.recipes.size, this.props.view)
+	  this.props.onClick()
+	  this.props.boxSummaryVisibilityChange(false)
+	  this.props.basketCheckedOut(this.props.recipes.size, this.props.view)
 
-		if (this.props.orderId) {
-			this.props.orderUpdate(this.props.orderId, this.formatRecipes(this.props.recipes), this.props.deliveryDayId, this.props.slotId, this.props.numPortions, this.getOrderAction())
-		} else if (!this.props.isAuthenticated) {
-			this.props.basketProceedToCheckout()
-		} else {
-			this.refs.formCheckout.submit()
-		}
+	  if (this.props.orderId) {
+	    this.props.orderUpdate(this.props.orderId, this.formatRecipes(this.props.recipes), this.props.deliveryDayId, this.props.slotId, this.props.numPortions, this.getOrderAction())
+	  } else if (!this.props.isAuthenticated) {
+	    this.props.basketProceedToCheckout()
+	  } else {
+	    this.refs.formCheckout.submit()
+	  }
 	}
 
 	formatRecipes(recipes) {
-		return (
-			recipes.reduce((recipesArray, qty, recipeId) => {
-				for (let i = 1; i <= qty; i++) {
-					recipesArray.push(recipeId)
-				}
+	  return (
+	    recipes.reduce((recipesArray, qty, recipeId) => {
+	      for (let i = 1; i <= qty; i++) {
+	        recipesArray.push(recipeId)
+	      }
 
-				return recipesArray
-			}, [])
-		)
+	      return recipesArray
+	    }, [])
+	  )
 	}
 
 	render() {
-		const recipes = this.formatRecipes(this.props.recipes)
-		const orderAction = this.getOrderAction()
-		const segment = React.cloneElement(React.Children.only(this.props.children).props.children, { onClick: this.handleClick })
-		const button = React.cloneElement(this.props.children, { children: segment, className: this.props.buttonClass })
+	  const recipes = this.formatRecipes(this.props.recipes)
+	  const orderAction = this.getOrderAction()
+	  const segment = React.cloneElement(React.Children.only(this.props.children).props.children, { onClick: this.handleClick })
+	  const button = React.cloneElement(this.props.children, { children: segment, className: this.props.buttonClass })
 
-		return (
+	  return (
 			<div className={this.props.className}>
 				{button}
 				<form action={config.routes.client.checkout} ref="formCheckout" className={css.hide} method="post">
@@ -99,7 +99,7 @@ class CheckoutButton extends React.Component {
 					))}
 				</form>
 			</div>
-		)
+	  )
 	}
 }
 

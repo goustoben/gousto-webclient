@@ -8,26 +8,26 @@ import NewAddressModal from 'routes/Account/MyDeliveries/OrdersList/NewAddressMo
 import css from 'routes/Account/MyDeliveries/OrdersList/NewAddressModal/NewAddressModal.css'
 
 describe('NewAddressModal', () => {
-	let wrapper
+  let wrapper
 
-	beforeEach(() => {
-		wrapper = shallow(<NewAddressModal isModalOpen />)
-	})
+  beforeEach(() => {
+    wrapper = shallow(<NewAddressModal isModalOpen />)
+  })
 
-	test('should return a ModalPanel with no props', () => {
-		expect(wrapper.text()).toBe('<Overlay />')
-	})
+  test('should return a ModalPanel with no props', () => {
+    expect(wrapper.text()).toBe('<Overlay />')
+  })
 
-	test('should return a <ModalPanel>', () => {
-		expect(wrapper.find('ModalPanel').length).toBe(1)
-	})
+  test('should return a <ModalPanel>', () => {
+    expect(wrapper.find('ModalPanel').length).toBe(1)
+  })
 
-	test('should return the correct body text', () => {
-		expect(wrapper.find('h2')).toHaveLength(1)
-		expect(wrapper.find('h2').text()).toBe('Add new address')
-	})
+  test('should return the correct body text', () => {
+    expect(wrapper.find('h2')).toHaveLength(1)
+    expect(wrapper.find('h2').text()).toBe('Add new address')
+  })
 
-	test('Should render a newAddressForm component', () => {
-		expect(wrapper.find(NewAddressForm)).toHaveLength(1)
-	})
+  test('Should render a newAddressForm component', () => {
+    expect(wrapper.find(NewAddressForm)).toHaveLength(1)
+  })
 })

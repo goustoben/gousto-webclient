@@ -12,13 +12,13 @@ const CollectionList = ({ collections, colSizes, ...restProps }) => (
 	<Row {...restProps}>
 		{collections.map(collection =>
 			<Col
-				key={collection.get('id')}
-				{...getColSizes(colSizes)}
+			  key={collection.get('id')}
+			  {...getColSizes(colSizes)}
 			>
 				<CollectionItem
-					link={getLink(collection.get('slug'))}
-					media={collection.getIn(['media', 'images', 'urls'])}
-					title={collection.get('shortTitle')}
+				  link={getLink(collection.get('slug'))}
+				  media={collection.getIn(['media', 'images', 'urls'])}
+				  title={collection.get('shortTitle')}
 				/>
 			</Col>
 		)}
@@ -26,13 +26,13 @@ const CollectionList = ({ collections, colSizes, ...restProps }) => (
 )
 
 CollectionList.propTypes = {
-	collections: PropTypes.instanceOf(Immutable.List),
-	colSizes: PropTypes.object,
+  collections: PropTypes.instanceOf(Immutable.List),
+  colSizes: PropTypes.object,
 }
 
 CollectionList.defaultProps = {
-	collections: Immutable.List([]),
-	colSizes: {},
+  collections: Immutable.List([]),
+  colSizes: {},
 }
 
 export default CollectionList

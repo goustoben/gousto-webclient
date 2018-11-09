@@ -3,18 +3,18 @@ import actionTypes from './actionTypes'
 import subscriptionApi from 'apis/subscription'
 
 const subActions = {
-	subscriptionLoadData,
+  subscriptionLoadData,
 }
 
 function subscriptionLoadData() {
-	return async (dispatch, getState) => {
-		const accessToken = getState().auth.get('accessToken')
-		const { data = {} } = await subscriptionApi.fetchSubscription(accessToken)
-		dispatch({
-			type: actionTypes.SUBSCRIPTION_LOAD_DATA,
-			data,
-		})
-	}
+  return async (dispatch, getState) => {
+    const accessToken = getState().auth.get('accessToken')
+    const { data = {} } = await subscriptionApi.fetchSubscription(accessToken)
+    dispatch({
+      type: actionTypes.SUBSCRIPTION_LOAD_DATA,
+      data,
+    })
+  }
 }
 
 export default subActions

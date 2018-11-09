@@ -16,85 +16,85 @@ import ExpectationsCarousel from '../ExpectationsCarousel'
 import ProductDetailOverlay from '../ProductDetailOverlay'
 
 class Welcome extends React.PureComponent {
-	static fetchData({ store, params, query }) {
-		return store.dispatch(actions.userLoadOrders())
-			.then(() => {
-				const userOrder = userUtils.getUserOrderById(params.orderId, store.getState().user.get('orders'))
+  static fetchData({ store, params, query }) {
+    return store.dispatch(actions.userLoadOrders())
+      .then(() => {
+        const userOrder = userUtils.getUserOrderById(params.orderId, store.getState().user.get('orders'))
 
-				if (userOrder.get('phase') !== 'open') {
-					return Promise.reject({
-						level: 'warning',
-						message: `Can't view welcome page with non open order ${params.orderId}`,
-					})
-				}
+        if (userOrder.get('phase') !== 'open') {
+          return Promise.reject({
+            level: 'warning',
+            message: `Can't view welcome page with non open order ${params.orderId}`,
+          })
+        }
 
-				const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
-				const orderProductIds = [
-					...userUtils.getUserOrderProductIds(userOrder),
-					...userUtils.getUserOrderGiftProductIds(userOrder),
-				]
+        const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
+        const orderProductIds = [
+          ...userUtils.getUserOrderProductIds(userOrder),
+          ...userUtils.getUserOrderGiftProductIds(userOrder),
+        ]
 
-				return Promise.all([
-					store.dispatch(actions.productsLoadProducts()),
-					store.dispatch(actions.recipesLoadRecipesById(orderRecipeIds)),
-					store.dispatch(actions.productsLoadProductsById(orderProductIds)),
-					store.dispatch(actions.contentLoadContentByPageSlug('welcome_immediate', query.var)),
-				])
-			})
-			.catch(err => {
-				if (err && err.level && typeof logger[err.level] === 'function') {
-					logger[err.level](err.message)
-				} else {
-					logger.error(err.message)
-				}
-				store.dispatch(actions.redirect('/'))
-			})
-	}
+        return Promise.all([
+          store.dispatch(actions.productsLoadProducts()),
+          store.dispatch(actions.recipesLoadRecipesById(orderRecipeIds)),
+          store.dispatch(actions.productsLoadProductsById(orderProductIds)),
+          store.dispatch(actions.contentLoadContentByPageSlug('welcome_immediate', query.var)),
+        ])
+      })
+      .catch(err => {
+        if (err && err.level && typeof logger[err.level] === 'function') {
+          logger[err.level](err.message)
+        } else {
+          logger.error(err.message)
+        }
+        store.dispatch(actions.redirect('/'))
+      })
+  }
 
-	constructor() {
-		super()
+  constructor() {
+    super()
 
-		this.state = {
-			isClient: false,
-		}
-	}
+    this.state = {
+      isClient: false,
+    }
+  }
 
-	componentDidMount() {
-		this.setState({ isClient: true }) // eslint-disable-line react/no-did-mount-set-state
+  componentDidMount() {
+    this.setState({ isClient: true }) // eslint-disable-line react/no-did-mount-set-state
 
-		if (!this.props.user.get('orders').size) {
-			this.props.userLoadOrders()
-				.then(() => {
-					const userOrder = userUtils.getUserOrderById(this.props.orderId, this.props.user.get('orders'))
-					const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
-					const orderProductIds = [...userUtils.getUserOrderProductIds(userOrder), ...userUtils.getUserOrderGiftIds(userOrder)]
+    if (!this.props.user.get('orders').size) {
+      this.props.userLoadOrders()
+        .then(() => {
+          const userOrder = userUtils.getUserOrderById(this.props.orderId, this.props.user.get('orders'))
+          const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
+          const orderProductIds = [...userUtils.getUserOrderProductIds(userOrder), ...userUtils.getUserOrderGiftIds(userOrder)]
 
-					this.props.recipesLoadRecipesById(orderRecipeIds)
-					this.props.productsLoadProductsById(orderProductIds)
-				})
-		}
-	}
+          this.props.recipesLoadRecipesById(orderRecipeIds)
+          this.props.productsLoadProductsById(orderProductIds)
+        })
+    }
+  }
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return this.props.isAuthenticated && shallowCompare(this, nextProps, nextState)
-	}
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.isAuthenticated && shallowCompare(this, nextProps, nextState)
+  }
 
 	isProductDetailAvailable = () =>
-		!!this.props.productDetailId && this.props.products.has(this.props.productDetailId)
+	  !!this.props.productDetailId && this.props.products.has(this.props.productDetailId)
 
 	render() {
-		const userOrder = userUtils.getUserOrderById(this.props.orderId, this.props.user.get('orders'))
-		const randomProducts = productUtils.getOneProductFromEachCategory(this.props.products, this.props.orderId)
+	  const userOrder = userUtils.getUserOrderById(this.props.orderId, this.props.user.get('orders'))
+	  const randomProducts = productUtils.getOneProductFromEachCategory(this.props.products, this.props.orderId)
 
-		return (
+	  return (
 			<section className={css.container} data-testing="welcomeContainer">
 				<Content
-					contentKeys="welcome_immediate.welcome_immediate_header.welcome_immediate_title.welcome_immediate_title_message"
-					propnames="message"
+				  contentKeys="welcome_immediate.welcome_immediate_header.welcome_immediate_title.welcome_immediate_title_message"
+				  propnames="message"
 				>
 					<SubHeader
-						nameFirst={this.props.user.get('nameFirst')}
-						contentKeys="welcome_immediate.welcome_immediate_header.welcome_immediate_title.welcome_immediate_title_text"
+					  nameFirst={this.props.user.get('nameFirst')}
+					  contentKeys="welcome_immediate.welcome_immediate_header.welcome_immediate_title.welcome_immediate_title_text"
 					/>
 				</Content>
 
@@ -108,7 +108,7 @@ class Welcome extends React.PureComponent {
 						<div className={css.colSmall}>
 							<div className={css.welcomeColInner}>
 								<OrderSummary
-									order={userOrder}
+								  order={userOrder}
 								/>
 							</div>
 						</div>
@@ -117,9 +117,9 @@ class Welcome extends React.PureComponent {
 						<div className={css.colMedium}>
 							<div className={css.welcomeColInner}>
 								<ProductList
-									products={randomProducts}
-									number={6}
-									orderId={this.props.orderId}
+								  products={randomProducts}
+								  number={6}
+								  orderId={this.props.orderId}
 								/>
 							</div>
 						</div>
@@ -127,26 +127,26 @@ class Welcome extends React.PureComponent {
 				</div>
 
 				<ProductDetailOverlay
-					productId={this.props.productDetailId}
-					open={this.state.isClient && this.isProductDetailAvailable()}
+				  productId={this.props.productDetailId}
+				  open={this.state.isClient && this.isProductDetailAvailable()}
 				/>
 			</section>
-		)
+	  )
 	}
 }
 
 Welcome.propTypes = {
-	isAuthenticated: PropTypes.bool.isRequired,
-	orderId: PropTypes.string.isRequired,
-	productDetailId: PropTypes.string,
-	products: PropTypes.instanceOf(Immutable.Map).isRequired,
-	productsLoadProducts: PropTypes.func.isRequired,
-	productsLoadProductsById: PropTypes.func.isRequired,
-	recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
-	recipesLoadRecipesById: PropTypes.func.isRequired,
-	user: PropTypes.instanceOf(Immutable.Map).isRequired,
-	userLoadOrders: PropTypes.func.isRequired,
-	contentLoadContentByPageSlug: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  orderId: PropTypes.string.isRequired,
+  productDetailId: PropTypes.string,
+  products: PropTypes.instanceOf(Immutable.Map).isRequired,
+  productsLoadProducts: PropTypes.func.isRequired,
+  productsLoadProductsById: PropTypes.func.isRequired,
+  recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+  recipesLoadRecipesById: PropTypes.func.isRequired,
+  user: PropTypes.instanceOf(Immutable.Map).isRequired,
+  userLoadOrders: PropTypes.func.isRequired,
+  contentLoadContentByPageSlug: PropTypes.func.isRequired,
 }
 
 export default Welcome
