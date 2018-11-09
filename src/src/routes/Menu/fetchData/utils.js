@@ -3,16 +3,16 @@ import { recommendationsShortTitle } from 'config/collections'
 import { getCollectionIdWithName } from 'utils/collections'
 import { collectionFilterIdRecieve } from 'actions/filters'
 
-export const getPreselectedCollectionName = (state, defaultCollectionName) => {
+export const getPreselectedCollectionName = (state, collectionNameFromQueryParam) => {
 	const featureCollectionFreeze = getCollectionFreezeValue(state)
 
 	if (typeof featureCollectionFreeze === 'string' && featureCollectionFreeze.length > 0) {
 		return featureCollectionFreeze
-	} else if (isJustForYouFeatureEnabled(state)) {
+	} else if (isJustForYouFeatureEnabled(state) && !collectionNameFromQueryParam) {
 		return recommendationsShortTitle
 	}
 
-	return defaultCollectionName
+	return collectionNameFromQueryParam
 }
 
 export const selectCollection = (state, collectionName, dispatch) => {

@@ -5,7 +5,7 @@ import { getPreselectedCollectionName, selectCollection } from '../utils'
 import actionTypes from 'actions/actionTypes'
 import { recommendationsShortTitle } from 'config/collections'
 
-describe('getCollection', () => {
+describe('getPreselectedCollectionName', () => {
 	let state = {
 		features: {}
 	}
@@ -43,8 +43,20 @@ describe('getCollection', () => {
 				})
 			})
 
-			it('should return recommendations collection short title', () => {
-				expect(getPreselectedCollectionName(state)).toEqual(recommendationsShortTitle)
+			describe('and collection name from query param is empty', () => {
+				const collectionNameFormQueryParam = ''
+
+				it('should return recommendations collection short title', () => {
+					expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(recommendationsShortTitle)
+				})
+			})
+
+			describe('and collection name from query param is not empty', () => {
+				const collectionNameFormQueryParam = 'query-collection-name'
+
+				it('should return collection name from query param', () => {
+					expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(collectionNameFormQueryParam)
+				})
 			})
 		})
 
@@ -58,14 +70,14 @@ describe('getCollection', () => {
 				})
 			})
 
-			it('should return default collection name', () => {
+			it('should return collection name from query param', () => {
 				expect(getPreselectedCollectionName(state, 'default-collection-name')).toEqual('default-collection-name')
 			})
 		})
 	})
 })
 
-describe('when selecting a collection', () => {
+describe('selectCollection', () => {
 	let initalState = {
 		features: Immutable.Map({}),
 		menuCollections: Immutable.Map({}),
@@ -74,7 +86,7 @@ describe('when selecting a collection', () => {
 		})
 	}
 
-	describe('and collection id exists for the given collection name and collection is published', () => {
+	describe('when collection id exists for the given collection name and collection is published', () => {
 		const collectionName = 'test-collection-name'
 
 		beforeEach(() => {
