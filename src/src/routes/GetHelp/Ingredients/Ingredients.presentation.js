@@ -27,22 +27,22 @@ const IngredientsPresentation = ({
 	buttonLeftUrl,
 	buttonRightUrl,
 }) => (
-		<GetHelpLayout title={title} body={body}>
-			{children}
-			<BottomBar>
-				<BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
-					{button1Copy}
-				</BottomButton>
-				<BottomButton
-					color="primary"
-					url={buttonRightUrl}
-					clientRouted
-				>
-					{button2Copy}
-				</BottomButton>
-			</BottomBar>
-		</GetHelpLayout>
-	)
+	<GetHelpLayout title={title} body={body}>
+		{children}
+		<BottomBar>
+			<BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
+				{button1Copy}
+			</BottomButton>
+			<BottomButton
+				color="primary"
+				url={buttonRightUrl}
+				clientRouted
+			>
+				{button2Copy}
+			</BottomButton>
+		</BottomBar>
+	</GetHelpLayout>
+)
 
 IngredientsPresentation.propTypes = propTypes
 
