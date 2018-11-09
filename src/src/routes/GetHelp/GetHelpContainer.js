@@ -9,7 +9,6 @@ import GetHelp from './GetHelp'
 const mapStateToProps = (state, ownProps) => ({
 	location: ownProps.location,
 	orders: state.user.get('orders').toJS(),
-	recipes: state.recipes.toJS(),
 	content: {
 		title: state.content.get('get-help_default_pageheader_header')
 		|| 'Get help with your box',

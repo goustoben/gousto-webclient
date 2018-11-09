@@ -1,11 +1,33 @@
 import actionTypes from 'actions/actionTypes'
-import Immutable from 'immutable'
+import { fromJS } from 'immutable'
 
-const getHelpInitialState = Immutable.fromJS({
+const getHelpInitialState = fromJS({
 	order: {
 		id: '',
 	},
+	recipes: {
+		id: '',
+		title: '',
+		ingredients: {
+			id: '',
+			label: '',
+		}
+	}
 })
+
+const reduceRecipes = (recipes) => (
+	Object.keys(recipes).map((recipeId) => {
+		const recipe = recipes[recipeId]
+		const { id, title } = recipe
+		const ingredients = recipe.ingredients.map(
+			({ id: ingredientId, label: ingredientLabel }) => (
+				{ id: ingredientId, label: ingredientLabel }
+			)
+		)
+
+		return { id, title, ingredients }
+	})
+)
 
 const getHelp = (state, action) => {
 	if (!state) {
@@ -16,6 +38,11 @@ const getHelp = (state, action) => {
 		case actionTypes.GET_HELP_STORE_ORDER_ID: {
 			return state.setIn(['order', 'id'], action.id)
 		}
+		case actionTypes.RECIPES_RECEIVE: {
+			const recipes = fromJS(reduceRecipes(action.recipes))
+
+			return state.setIn(['recipes'], recipes)
+		}
 		default:
 			return state
 	}
@@ -23,5 +50,5 @@ const getHelp = (state, action) => {
 
 export {
 	getHelp,
-	getHelpInitialState
+	getHelpInitialState,
 }
