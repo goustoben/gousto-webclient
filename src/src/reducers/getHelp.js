@@ -41,7 +41,7 @@ const getHelp = (state, action) => {
 		case actionTypes.RECIPES_RECEIVE: {
 			const recipes = fromJS(reduceRecipes(action.recipes))
 
-			return state.setIn(['recipes'], recipes)
+			return state.set('recipes', recipes)
 		}
 		default:
 			return state
