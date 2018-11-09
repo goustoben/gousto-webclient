@@ -18,13 +18,13 @@ const Ingredients = ({ content, recipes }) => {
   const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
 
   return (
-		<IngredientsPresentation
-		  content={content}
-		  buttonLeftUrl={buttonLeftUrl}
-		  buttonRightUrl={buttonRightUrl}
-		>
-			<RecipeList recipes={recipes}/>
-		</IngredientsPresentation>
+    <IngredientsPresentation
+      content={content}
+      buttonLeftUrl={buttonLeftUrl}
+      buttonRightUrl={buttonRightUrl}
+    >
+      <RecipeList recipes={recipes}/>
+    </IngredientsPresentation>
   )
 }
 

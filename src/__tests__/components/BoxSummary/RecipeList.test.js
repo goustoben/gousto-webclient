@@ -1,9 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import sinon from 'sinon'
-
-import Immutable from 'immutable' // eslint-disable-line no-caps
+import Immutable from 'immutable'
 
 import RecipeList from 'BoxSummary/RecipeList/RecipeList'
 import RecipeHolder from 'BoxSummary/RecipeHolder'
@@ -34,7 +32,7 @@ describe('RecipeList', () => {
 
   test('should return 4 RecipeHolder', () => {
     const wrapper = shallow(
-			<RecipeList recipes={recipes} menuRecipesStore={menuRecipesStore} />,
+      <RecipeList recipes={recipes} menuRecipesStore={menuRecipesStore} />,
     )
 
     expect(wrapper.find(RecipeHolder).length).toEqual(4)
@@ -45,11 +43,11 @@ describe('RecipeList', () => {
 
   test('should return X RecipeHolder when max recipes specified', () => {
     const wrapper = shallow(
-			<RecipeList
-			  maxRecipesNum={3}
-			  recipes={recipes}
-			  menuRecipesStore={menuRecipesStore}
-			/>,
+      <RecipeList
+        maxRecipesNum={3}
+        recipes={recipes}
+        menuRecipesStore={menuRecipesStore}
+      />,
     )
     expect(wrapper.find(RecipeHolder).length).toEqual(3)
     expect(
@@ -63,10 +61,10 @@ describe('RecipeList', () => {
   test('should call detailsVisibilityChange once clicked', () => {
     const detailsVisibilityChangeSpy = jest.fn()
     const wrapper = shallow(
-			<RecipeList
-			  recipes={Immutable.Map({ 101: {} })}
-			  detailVisibilityChange={detailsVisibilityChangeSpy}
-			/>,
+      <RecipeList
+        recipes={Immutable.Map({ 101: {} })}
+        detailVisibilityChange={detailsVisibilityChangeSpy}
+      />,
     )
     wrapper.find(RecipeHolder).first().simulate('click')
     expect(detailsVisibilityChangeSpy).toHaveBeenCalled()
