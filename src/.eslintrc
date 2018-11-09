@@ -14,7 +14,7 @@
       "space-in-parens": 0,
       "semi": ["error", "never"],
       "function-paren-newline": 0,
-      "import/no-unresolved": 1,
+      "import/no-unresolved": 0,
       "import/named" : 1,
       "import/no-amd" : 1,
       "import/no-nodejs-modules" : 1,

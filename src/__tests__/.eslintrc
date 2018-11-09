@@ -12,6 +12,7 @@
 		"no-shadow": "off",
 		"jsx-a11y/aria-props": "off",
 		"react/jsx-no-bind": "off",
-		"no-global-assign": "off"
+		"no-global-assign": "off",
+		"no-console": "off"
 	}
 }
