@@ -4,9 +4,10 @@ import logger from 'utils/logger'
 import actionTypes from 'actions/actionTypes'
 
 import { loadRecommendations } from 'actions/recipes'
-import { getCollectionIdWithName } from 'utils/collections'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
+import { selectCollection, getPreselectedCollectionName } from './utils'
+import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/features'
 
 import moment from 'moment'
 
@@ -183,22 +184,14 @@ export default async function fetchData({ store, query, params }, force, backgro
       }
     }
 
-    let collectionName = query.collection
-    if (!store.getState().features.getIn(['forceCollections', 'true'])) {
-      const featureCollectionFreeze = store.getState().features.getIn(['collectionFreeze', 'value'])
-      if (typeof featureCollectionFreeze === 'string' && featureCollectionFreeze.length > 0) {
-        collectionName = featureCollectionFreeze
-      }
-    }
+    promises = promises.then(() => {
+      const state = store.getState()
 
-    if (collectionName && (store.getState().features.getIn(['collections', 'value']) || store.getState().features.getIn(['forceCollections', 'value']))) {
-      promises = promises.then(() => {
-        const collectionId = getCollectionIdWithName(store.getState(), collectionName)
-        if (collectionId) {
-          store.dispatch(actions.filterCollectionChange(collectionId))
-        }
-      })
-    }
+      if (isCollectionsFeatureEnabled(state) || isJustForYouFeatureEnabled(state)) {
+        const collectionName = getPreselectedCollectionName(state, query.collection)
+        selectCollection(state, collectionName, store.dispatch)
+      }
+    })
 
     if (isAuthenticated && !isAdmin && query.recipes && !store.getState().basket.get('recipes').size) {
       promises = promises.then(() => {

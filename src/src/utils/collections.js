@@ -30,3 +30,4 @@ export function getCollectionIdWithName(state, name) {
     .find(collection => slugify(collection.get('shortTitle')) === name, null, Immutable.Map())
     .get('id', null)
 }
+
