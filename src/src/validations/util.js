@@ -5,12 +5,12 @@
  * @returns {{}}
  */
 export function addPrefix(prefix, obj) {
-	const newObj = {}
-	Object.keys(obj).forEach((key) => {
-		newObj[`${prefix}.${key}`] = obj[key]
-	})
+  const newObj = {}
+  Object.keys(obj).forEach((key) => {
+    newObj[`${prefix}.${key}`] = obj[key]
+  })
 
-	return newObj
+  return newObj
 }
 
 /*
@@ -20,13 +20,13 @@ export function addPrefix(prefix, obj) {
  * @returns {*}
  */
 export function mapServerErrors(errors, maps) {
-	return Object.keys(errors).reduce((errorsMap, fieldName) => {
-		if (maps[fieldName]) {
-			errorsMap[maps[fieldName]] = errors[fieldName] // eslint-disable-line no-param-reassign
-		} else {
-			errorsMap[fieldName] = errors[fieldName] // eslint-disable-line no-param-reassign
-		}
+  return Object.keys(errors).reduce((errorsMap, fieldName) => {
+    if (maps[fieldName]) {
+      errorsMap[maps[fieldName]] = errors[fieldName] // eslint-disable-line no-param-reassign
+    } else {
+      errorsMap[fieldName] = errors[fieldName] // eslint-disable-line no-param-reassign
+    }
 
-		return errorsMap
-	}, {})
+    return errorsMap
+  }, {})
 }

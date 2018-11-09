@@ -12,13 +12,13 @@ const DiscountBadge = ({ flatDiscountAmount, percentageDiscountAmount }) => (
 )
 
 DiscountBadge.propTypes = {
-	flatDiscountAmount: PropTypes.number,
-	percentageDiscountAmount: PropTypes.number,
+  flatDiscountAmount: PropTypes.number,
+  percentageDiscountAmount: PropTypes.number,
 }
 
 DiscountBadge.defaultProps = {
-	flatDiscountAmount: null,
-	percentageDiscountAmount: null,
+  flatDiscountAmount: null,
+  percentageDiscountAmount: null,
 }
 
 export default DiscountBadge

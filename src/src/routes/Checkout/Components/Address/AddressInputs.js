@@ -7,82 +7,82 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
 		<br />
 		<div>
 			<Field
-				name="houseNo"
-				component={ReduxFormInput}
-				inputType="Input"
-				placeholder="House number or name"
-				required
-				color="gray"
-				label="House number or name"
-				mask
-				withRef
-				ref={receiveRef}
-				refId={`${sectionName}.houseNo`}
+			  name="houseNo"
+			  component={ReduxFormInput}
+			  inputType="Input"
+			  placeholder="House number or name"
+			  required
+			  color="gray"
+			  label="House number or name"
+			  mask
+			  withRef
+			  ref={receiveRef}
+			  refId={`${sectionName}.houseNo`}
 			/>
 		</div>
 		<br />
 		<div>
 			<Field
-				name="street"
-				component={ReduxFormInput}
-				inputType="Input"
-				placeholder="Enter Street name"
-				required
-				color="gray"
-				label="Street"
-				mask
-				withRef
-				ref={receiveRef}
-				refId={`${sectionName}.street`}
+			  name="street"
+			  component={ReduxFormInput}
+			  inputType="Input"
+			  placeholder="Enter Street name"
+			  required
+			  color="gray"
+			  label="Street"
+			  mask
+			  withRef
+			  ref={receiveRef}
+			  refId={`${sectionName}.street`}
 			/>
 		</div>
 		<br />
 		<div>
 			<Field
-				name="town"
-				component={ReduxFormInput}
-				inputType="Input"
-				placeholder="Enter Town"
-				required
-				color="gray"
-				label="Town"
-				mask
-				withRef
-				ref={receiveRef}
-				refId={`${sectionName}.town`}
+			  name="town"
+			  component={ReduxFormInput}
+			  inputType="Input"
+			  placeholder="Enter Town"
+			  required
+			  color="gray"
+			  label="Town"
+			  mask
+			  withRef
+			  ref={receiveRef}
+			  refId={`${sectionName}.town`}
 			/>
 		</div>
 		<br />
 		<div>
 			<Field
-				name="county"
-				component={ReduxFormInput}
-				inputType="Input"
-				placeholder="Enter County"
-				required
-				color="gray"
-				label="County"
-				mask
-				withRef
-				ref={receiveRef}
-				refId={`${sectionName}.county`}
+			  name="county"
+			  component={ReduxFormInput}
+			  inputType="Input"
+			  placeholder="Enter County"
+			  required
+			  color="gray"
+			  label="County"
+			  mask
+			  withRef
+			  ref={receiveRef}
+			  refId={`${sectionName}.county`}
 			/>
 		</div>
 		<br />
 		<div>
 			<Field
-				name="postcode"
-				component={ReduxFormInput}
-				inputType="Input"
-				placeholder="Enter Postcode"
-				required
-				color="gray"
-				label="Postcode"
-				mask
-				disabled
-				withRef
-				ref={receiveRef}
-				refId={`${sectionName}.postcode`}
+			  name="postcode"
+			  component={ReduxFormInput}
+			  inputType="Input"
+			  placeholder="Enter Postcode"
+			  required
+			  color="gray"
+			  label="Postcode"
+			  mask
+			  disabled
+			  withRef
+			  ref={receiveRef}
+			  refId={`${sectionName}.postcode`}
 			/>
 		</div>
 		<br />
@@ -90,12 +90,12 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
 )
 
 AddressInputs.propTypes = {
-	receiveRef: React.PropTypes.func,
-	sectionName: React.PropTypes.string,
+  receiveRef: React.PropTypes.func,
+  sectionName: React.PropTypes.string,
 }
 
 AddressInputs.defaultProps = {
-	receiveRef: () => {},
+  receiveRef: () => {},
 }
 
 export default AddressInputs

@@ -12,16 +12,16 @@ const SmallRecipe = (props) => (
 		<div className={css.recipeDetails}>
 			<div className={css.link} onClick={props.onClick}>
 				<Image
-					media={props.media}
-					alt={props.title}
-					view={props.view}
+				  media={props.media}
+				  alt={props.title}
+				  view={props.view}
 				/>
 			</div>
 			<div className={css.textContainer}>
 				<span onClick={props.onClick} className={css.linkUnderlined}>
 					<Title
-						title={props.title}
-						view={props.view}
+					  title={props.title}
+					  view={props.view}
 					/>
 				</span>
 				<AddButton id={props.id} stock={props.stock} inBasket={props.inBasket} view={props.view} position={props.position} surcharge={props.surcharge} />
@@ -32,14 +32,14 @@ const SmallRecipe = (props) => (
 )
 
 SmallRecipe.propTypes = {
-	...recipePropTypes,
-	id: PropTypes.string.isRequired,
-	position: PropTypes.number,
-	inBasket: PropTypes.bool,
+  ...recipePropTypes,
+  id: PropTypes.string.isRequired,
+  position: PropTypes.number,
+  inBasket: PropTypes.bool,
 }
 
 SmallRecipe.defaultProps = {
-	view: 'gridSmall',
+  view: 'gridSmall',
 }
 
 export default SmallRecipe

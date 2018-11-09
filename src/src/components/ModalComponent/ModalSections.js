@@ -21,19 +21,19 @@ const ModalFooter = ({ children }) => (
 )
 
 ModalTitle.propTypes = {
-	children: PropTypes.node,
+  children: PropTypes.node,
 }
 
 ModalContent.propTypes = {
-	children: PropTypes.node,
+  children: PropTypes.node,
 }
 
 ModalFooter.propTypes = {
-	children: PropTypes.node,
+  children: PropTypes.node,
 }
 
 export {
-    ModalTitle,
-    ModalContent,
-    ModalFooter,
+  ModalTitle,
+  ModalContent,
+  ModalFooter,
 }

@@ -6,17 +6,17 @@ import config from 'config'
 import DietaryAttributesFilter from './DietaryAttributesFilter'
 
 const mapStateToProps = (state) => ({
-	dietaryAttributes: state.filters.get('dietaryAttributes'),
-	dietaryAttributeTypes: config.recipes.dietaryAttributes,
+  dietaryAttributes: state.filters.get('dietaryAttributes'),
+  dietaryAttributeTypes: config.recipes.dietaryAttributes,
 })
 
 const mapActionsToProps = {
-	filterDietaryAttributesChange: actions.filterDietaryAttributesChange,
+  filterDietaryAttributesChange: actions.filterDietaryAttributesChange,
 }
 
 const DietaryAttributesFilterContainer = connect(
-	mapStateToProps,
-	mapActionsToProps,
+  mapStateToProps,
+  mapActionsToProps,
 )(DietaryAttributesFilter)
 
 export default DietaryAttributesFilterContainer

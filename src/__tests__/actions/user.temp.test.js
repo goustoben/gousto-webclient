@@ -5,49 +5,49 @@ import { referAFriend } from 'apis/user'
 import { userReferAFriend } from 'actions/user'
 
 jest.mock('apis/user', () => ({
-	referAFriend: jest.fn()
+  referAFriend: jest.fn()
 }))
 
 describe('user actions', () => {
-	const [dispatch, getState] = [jest.fn(), jest.fn()]
+  const [dispatch, getState] = [jest.fn(), jest.fn()]
 
-	describe('userReferAFriend action', () => {
-		const email = 'test@test.com'
+  describe('userReferAFriend action', () => {
+    const email = 'test@test.com'
 
-		afterEach(() => {
-			referAFriend.mockClear()
-		})
+    afterEach(() => {
+      referAFriend.mockClear()
+    })
 
-		describe('when an accessToken is not present in state', () => {
-			beforeEach(() => {
-				getState.mockReturnValue({
-					auth: Immutable.Map({
-						accessToken: ''
-					})
-				})
-			})
+    describe('when an accessToken is not present in state', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: ''
+          })
+        })
+      })
 
-			it('should not dispatch a referAFriend request', () => {
-				userReferAFriend(email)(dispatch, getState)
+      it('should not dispatch a referAFriend request', () => {
+        userReferAFriend(email)(dispatch, getState)
 
-				expect(referAFriend).not.toHaveBeenCalled()
-			})
-		})
+        expect(referAFriend).not.toHaveBeenCalled()
+      })
+    })
 
-		describe('when an accessToken is present in state', () => {
-			beforeEach(() => {
-				getState.mockReturnValue({
-					auth: Immutable.Map({
-						accessToken: 'user-access-token'
-					})
-				})
-			})
+    describe('when an accessToken is present in state', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: 'user-access-token'
+          })
+        })
+      })
 
-			it('should dispatch a referAFriend request with the given email and accessToken', () => {
-				userReferAFriend(email)(dispatch, getState)
+      it('should dispatch a referAFriend request with the given email and accessToken', () => {
+        userReferAFriend(email)(dispatch, getState)
 
-				expect(referAFriend).toHaveBeenCalledWith('user-access-token', email)
-			})
-		})
-	})
+        expect(referAFriend).toHaveBeenCalledWith('user-access-token', email)
+      })
+    })
+  })
 })

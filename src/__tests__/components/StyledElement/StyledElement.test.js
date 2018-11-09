@@ -6,25 +6,25 @@ import sinon from 'sinon'
 import StyledElement from 'StyledElement'
 
 describe('StyledElement', () => {
-	let wrapper
+  let wrapper
 
-	describe('rendering', () => {
-		test('should return an alament matching "type"', () => {
-			wrapper = shallow(<StyledElement type="div" />)
-			expect(wrapper.type()).toBe('div')
+  describe('rendering', () => {
+    test('should return an alament matching "type"', () => {
+      wrapper = shallow(<StyledElement type="div" />)
+      expect(wrapper.type()).toBe('div')
 
-			wrapper = shallow(<StyledElement type="aside" />)
-			expect(wrapper.type()).toBe('aside')
-		})
+      wrapper = shallow(<StyledElement type="aside" />)
+      expect(wrapper.type()).toBe('aside')
+    })
 
-		test('should render children', () => {
-			wrapper = shallow(
+    test('should render children', () => {
+      wrapper = shallow(
 				<StyledElement type="div">
 					<p />
 					<p />
 				</StyledElement>,
-			)
-			expect(wrapper.find('p')).toHaveLength(2)
-		})
-	})
+      )
+      expect(wrapper.find('p')).toHaveLength(2)
+    })
+  })
 })

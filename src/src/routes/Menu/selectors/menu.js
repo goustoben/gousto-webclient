@@ -5,29 +5,29 @@ import { isMenuRecommended } from 'utils/menu'
 import { getCurrentCollectionId } from 'selectors/filters'
 
 export const getIsMenuRecommended = createSelector(
-	[getRecipes],
-	(recipes) => isMenuRecommended(recipes)
+  [getRecipes],
+  (recipes) => isMenuRecommended(recipes)
 )
 
 export const getCurrentCollectionSlug = createSelector(
-	[getCurrentCollectionId, getMenuCollections],
-	(collectionId, menuCollections) => {
-		const currentCollection = menuCollections.get(collectionId)
-		const currentCollectionSlug = (currentCollection && currentCollection.get('slug')) || null
+  [getCurrentCollectionId, getMenuCollections],
+  (collectionId, menuCollections) => {
+    const currentCollection = menuCollections.get(collectionId)
+    const currentCollectionSlug = (currentCollection && currentCollection.get('slug')) || null
 
-		return currentCollectionSlug
-	}
+    return currentCollectionSlug
+  }
 )
 
 export const getCurrentCollectionIsRecommendation = createSelector(
-	[getCurrentCollectionId, getCurrentCollectionSlug],
-	(collectionId, slug) => {
-		const currentCollectionSlug = (slug === 'recommendations')
+  [getCurrentCollectionId, getCurrentCollectionSlug],
+  (collectionId, slug) => {
+    const currentCollectionSlug = (slug === 'recommendations')
 
-		return currentCollectionSlug && collectionId
-	}
+    return currentCollectionSlug && collectionId
+  }
 )
 
 export default {
-	getIsMenuRecommended,
+  getIsMenuRecommended,
 }

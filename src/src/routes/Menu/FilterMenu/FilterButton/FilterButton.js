@@ -10,9 +10,8 @@ const FilterButton = ({ onClick, count }) => (
 )
 
 FilterButton.propTypes = {
-	onClick: PropTypes.func,
-	count: PropTypes.number,
+  onClick: PropTypes.func,
+  count: PropTypes.number,
 }
-
 
 export default FilterButton

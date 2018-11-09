@@ -1,4 +1,4 @@
-export { Alert  } from '../libs/goustouicomponents/src/main'
+export { Alert } from '../libs/goustouicomponents/src/main'
 export { Button } from '../libs/goustouicomponents/src/main'
 export { Control } from '../libs/goustouicomponents/src/main'
 export { Item } from '../libs/goustouicomponents/src/main'

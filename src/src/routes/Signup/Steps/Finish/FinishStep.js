@@ -8,13 +8,13 @@ import css from '../../Signup.css'
 import Image from '../../Image'
 
 const formatSlot = (deliveryDays, date, slotId) => {
-	const chosenSlot = getSlot(deliveryDays, date, slotId)
-	let slotText = ''
-	if (chosenSlot) {
-		slotText = `${moment(`${date} ${chosenSlot.get('deliveryStartTime')}`).format('ha')} and ${moment(`${date} ${chosenSlot.get('deliveryEndTime')}`).format('ha')}`
-	}
+  const chosenSlot = getSlot(deliveryDays, date, slotId)
+  let slotText = ''
+  if (chosenSlot) {
+    slotText = `${moment(`${date} ${chosenSlot.get('deliveryStartTime')}`).format('ha')} and ${moment(`${date} ${chosenSlot.get('deliveryEndTime')}`).format('ha')}`
+  }
 
-	return slotText
+  return slotText
 }
 
 const formatDate = date => `${moment(date).format('dddd [the] Do [of] MMM')}`
@@ -45,11 +45,11 @@ const FamilyBody = ({ boxSummaryDeliveryDays, date, numPortions, postcode, slotI
 )
 
 const FinishStep = ({ style = 'default', next, ...bodyProps }) => {
-	const handleClick = () => {
-		next()
-	}
+  const handleClick = () => {
+    next()
+  }
 
-	return (
+  return (
 		<div className={css.stepContainer} data-testing="signupFinishStep">
 			<div className={css.fullWidth}>
 				<div className={css.regularHeader}>
@@ -60,41 +60,41 @@ const FinishStep = ({ style = 'default', next, ...bodyProps }) => {
 			<div className={css.footer}>
 				<div className={css.inputContainer}>
 					<Button
-						data-testing="signupFinishCTA"
-						fill
-						onClick={handleClick}
-						width="full"
+					  data-testing="signupFinishCTA"
+					  fill
+					  onClick={handleClick}
+					  width="full"
 					/>
 				</div>
 			</div>
 		</div>
-	)
+  )
 }
 
 DefaultBody.propTypes = {
-	boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
-	date: React.PropTypes.string,
-	slotId: React.PropTypes.string,
-	postcode: React.PropTypes.string,
-	numPortions: React.PropTypes.number,
+  boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
+  date: React.PropTypes.string,
+  slotId: React.PropTypes.string,
+  postcode: React.PropTypes.string,
+  numPortions: React.PropTypes.number,
 }
 
 FamilyBody.propTypes = {
-	boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
-	date: React.PropTypes.string,
-	slotId: React.PropTypes.string,
-	postcode: React.PropTypes.string,
-	numPortions: React.PropTypes.number,
+  boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
+  date: React.PropTypes.string,
+  slotId: React.PropTypes.string,
+  postcode: React.PropTypes.string,
+  numPortions: React.PropTypes.number,
 }
 
 FinishStep.propTypes = {
-	boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
-	date: React.PropTypes.string,
-	slotId: React.PropTypes.string,
-	postcode: React.PropTypes.string,
-	numPortions: React.PropTypes.number,
-	next: React.PropTypes.func,
-	style: React.PropTypes.string,
+  boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
+  date: React.PropTypes.string,
+  slotId: React.PropTypes.string,
+  postcode: React.PropTypes.string,
+  numPortions: React.PropTypes.number,
+  next: React.PropTypes.func,
+  style: React.PropTypes.string,
 }
 
 export default FinishStep

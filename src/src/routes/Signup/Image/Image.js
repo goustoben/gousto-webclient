@@ -7,7 +7,7 @@ const SignupImage = ({ name }) => (
 )
 
 SignupImage.propTypes = {
-	name: React.PropTypes.string,
+  name: React.PropTypes.string,
 }
 
 export default SignupImage

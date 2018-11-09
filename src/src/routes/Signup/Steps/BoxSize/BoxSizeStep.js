@@ -7,20 +7,20 @@ import signupCss from '../../Signup.css'
 import Image from '../../Image'
 
 const BoxSizeStep = ({ numPortionChange, next }) => {
-	const portions = [2, 4]
+  const portions = [2, 4]
 
-	const renderButtons = () => (portions.map((value, index) => (<div className={index % 2 === 0 ? css.left : css.right} key={`${value}_portions_${index}`}>
+  const renderButtons = () => (portions.map((value, index) => (<div className={index % 2 === 0 ? css.left : css.right} key={`${value}_portions_${index}`}>
 		<Button
-			data-testing={`signupBoxSize${value}Portions`}
-			fill={false}
-			onClick={() => { numPortionChange(value); next() }}
-			width="full"
+		  data-testing={`signupBoxSize${value}Portions`}
+		  fill={false}
+		  onClick={() => { numPortionChange(value); next() }}
+		  width="full"
 		>
 			{`${value} People`}
 		</Button>
 	</div>)))
 
-	return (
+  return (
 		<span className={signupCss.stepContainer} data-testing="signupBoxSizeStep">
 			<div className={css.fullWidth}>
 				<div className={signupCss.header}>
@@ -37,12 +37,12 @@ const BoxSizeStep = ({ numPortionChange, next }) => {
 				</div>
 			</div>
 		</span>
-	)
+  )
 }
 
 BoxSizeStep.propTypes = {
-	numPortionChange: React.PropTypes.func.isRequired,
-	next: React.PropTypes.func.isRequired,
+  numPortionChange: React.PropTypes.func.isRequired,
+  next: React.PropTypes.func.isRequired,
 }
 
 export default BoxSizeStep

@@ -9,11 +9,11 @@ const Form = (props) => (
 )
 
 Form.propTypes = {
-	children: React.PropTypes.node.isRequired,
+  children: React.PropTypes.node.isRequired,
 }
 
 Form.defaultProps = {
-	method: 'post',
+  method: 'post',
 }
 
 export default Form

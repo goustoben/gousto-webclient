@@ -25,12 +25,12 @@ const Testimonial = ({ testimonial, showLink }) => (
 )
 
 Testimonial.propTypes = {
-	testimonial: React.PropTypes.instanceOf(Immutable.Map),
-	showLink: React.PropTypes.bool,
+  testimonial: React.PropTypes.instanceOf(Immutable.Map),
+  showLink: React.PropTypes.bool,
 }
 
 Testimonial.defaultProps = {
-	showLink: true,
+  showLink: true,
 }
 
 export default Testimonial

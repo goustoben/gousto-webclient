@@ -12,28 +12,28 @@ const LEAVE_BOX_OPTIONS = configCheckout.leaveBoxOptions.map(option => ({ value:
 class DeliveryInstruction extends React.PureComponent {
 
 	static propTypes = {
-		value: React.PropTypes.any,
-		reset: React.PropTypes.func.isRequired,
-		receiveRef: React.PropTypes.func,
-		sectionName: React.PropTypes.string,
+	  value: React.PropTypes.any,
+	  reset: React.PropTypes.func.isRequired,
+	  receiveRef: React.PropTypes.func,
+	  sectionName: React.PropTypes.string,
 	}
 
 	static defaultProps = {
-		value: '',
-		receiveRef: () => {},
+	  value: '',
+	  receiveRef: () => {},
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.shouldShowOtherInput(this.props.value) && !this.shouldShowOtherInput(nextProps.value)) {
-			this.props.reset('deliveryInstructionsCustom')
-		}
+	  if (this.shouldShowOtherInput(this.props.value) && !this.shouldShowOtherInput(nextProps.value)) {
+	    this.props.reset('deliveryInstructionsCustom')
+	  }
 	}
 
 	shouldShowOtherInput = chosenValue =>
-		['neighbour', 'other'].includes(chosenValue.toLowerCase())
+	  ['neighbour', 'other'].includes(chosenValue.toLowerCase())
 
 	render() {
-		const inputSuffix = (<div className={css.checkoutTooltip}>
+	  const inputSuffix = (<div className={css.checkoutTooltip}>
 			<CheckoutTooltip version="Desktop">
 				{configCheckout.tooltip.leaveBox}
 			</CheckoutTooltip>
@@ -42,24 +42,24 @@ class DeliveryInstruction extends React.PureComponent {
 			</CheckoutTooltip>
 		</div>)
 
-		const showOtherInput = this.shouldShowOtherInput(this.props.value)
+	  const showOtherInput = this.shouldShowOtherInput(this.props.value)
 
-		return (
+	  return (
 			<div className={css.deliveryFieldWrapper}>
 				<div className={css.row}>
 					<div className={css.colMD}>
 						<div className="deliveryDropdown">
 							<Field
-								name="deliveryInstruction"
-								component={ReduxFormInput}
-								inputSuffix={inputSuffix}
-								options={LEAVE_BOX_OPTIONS}
-								inputType="DropDown"
-								label="Where should we leave your box if you aren't in?"
-								mask
-								withRef
-								ref={this.props.receiveRef}
-								refId={`${this.props.sectionName}.deliveryInstruction`}
+							  name="deliveryInstruction"
+							  component={ReduxFormInput}
+							  inputSuffix={inputSuffix}
+							  options={LEAVE_BOX_OPTIONS}
+							  inputType="DropDown"
+							  label="Where should we leave your box if you aren't in?"
+							  mask
+							  withRef
+							  ref={this.props.receiveRef}
+							  refId={`${this.props.sectionName}.deliveryInstruction`}
 							/>
 						</div>
 					</div>
@@ -68,22 +68,22 @@ class DeliveryInstruction extends React.PureComponent {
 					<div className={classnames(css.row, css.deliveryField)}>
 						<div className={css.colMD}>
 							<Field
-								name="deliveryInstructionsCustom"
-								component={ReduxFormInput}
-								inputType="Input"
-								required
-								color="gray"
-								label={configCheckout.leaveBoxDesc[this.props.value.toLowerCase()]}
-								mask
-								withRef
-								ref={this.props.receiveRef}
-								refId={`${this.props.sectionName}.deliveryInstructionsCustom`}
+							  name="deliveryInstructionsCustom"
+							  component={ReduxFormInput}
+							  inputType="Input"
+							  required
+							  color="gray"
+							  label={configCheckout.leaveBoxDesc[this.props.value.toLowerCase()]}
+							  mask
+							  withRef
+							  ref={this.props.receiveRef}
+							  refId={`${this.props.sectionName}.deliveryInstructionsCustom`}
 							/>
 						</div>
 					</div>
 				}
 			</div>
-		)
+	  )
 	}
 }
 

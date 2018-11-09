@@ -6,13 +6,13 @@ import globals from 'config/globals'
 import utils from '../utils'
 
 export const pinterestTracking = {
-	addRecipeToBasket,
-	showCollectionTracking,
-	initiateCheckout,
-	purchaseCompleted,
-	pageVisit,
-	getCallbacks,
-	Tracker,
+  addRecipeToBasket,
+  showCollectionTracking,
+  initiateCheckout,
+  purchaseCompleted,
+  pageVisit,
+  getCallbacks,
+  Tracker,
 }
 
 /**
@@ -21,7 +21,7 @@ export const pinterestTracking = {
  * @param data
  */
 function sendTrackingData(eventName, data, trackType = 'track') {
-	windowUtils.getWindow().pintrk(trackType, eventName, data)
+  windowUtils.getWindow().pintrk(trackType, eventName, data)
 }
 
 /**
@@ -29,9 +29,9 @@ function sendTrackingData(eventName, data, trackType = 'track') {
  * @param recipeId
  */
 function addRecipeToBasket({ recipeId }) {
-	sendTrackingData('AddToCart', {
-		value: parseInt(recipeId, 10),
-	})
+  sendTrackingData('AddToCart', {
+    value: parseInt(recipeId, 10),
+  })
 }
 
 /**
@@ -39,9 +39,9 @@ function addRecipeToBasket({ recipeId }) {
  * @param collectionId
  */
 function showCollectionTracking({ collectionId }) {
-	sendTrackingData('ViewCategory', {
-		product_category: collectionId,
-	})
+  sendTrackingData('ViewCategory', {
+    product_category: collectionId,
+  })
 }
 
 /**
@@ -49,11 +49,11 @@ function showCollectionTracking({ collectionId }) {
  * @param basket
  */
 function initiateCheckout(_, { basket }) {
-	const recipesIds = Array.from(basket.get('recipes').keys())
+  const recipesIds = Array.from(basket.get('recipes').keys())
 
-	sendTrackingData('InitiateCheckout', {
-		property: recipesIds,
-	})
+  sendTrackingData('InitiateCheckout', {
+    property: recipesIds,
+  })
 }
 
 /**
@@ -63,19 +63,19 @@ function initiateCheckout(_, { basket }) {
  * @param menuBoxPrices
  */
 function purchaseCompleted(_, { basket, menuBoxPrices }) {
-	const portions = basket.get('numPortions')
-	const recipes = basket.get('recipes')
-	const promocode = basket.get('promoCode')
-	const recipeCount = recipes.reduce((total, quantity) => (total + quantity), 0)
-	const boxPrice = menuBoxPrices.getIn([String(portions), String(recipeCount)], Immutable.Map())
-	const lineItems = Array.from(basket.get('recipes').keys()).map((recipeId) => ({ product_id: parseInt(recipeId, 10), product_quantity: Immutable.Iterable.isIterable(recipes) ? recipes.get(recipeId) : null }))
-	sendTrackingData('Signup', {
-		value: parseFloat(boxPrice.getIn(['gourmet', 'grossTotal'])),
-		order_quantity: recipeCount,
-		currency: 'GBP',
-		promo_code: promocode,
-		line_items: lineItems,
-	})
+  const portions = basket.get('numPortions')
+  const recipes = basket.get('recipes')
+  const promocode = basket.get('promoCode')
+  const recipeCount = recipes.reduce((total, quantity) => (total + quantity), 0)
+  const boxPrice = menuBoxPrices.getIn([String(portions), String(recipeCount)], Immutable.Map())
+  const lineItems = Array.from(basket.get('recipes').keys()).map((recipeId) => ({ product_id: parseInt(recipeId, 10), product_quantity: Immutable.Iterable.isIterable(recipes) ? recipes.get(recipeId) : null }))
+  sendTrackingData('Signup', {
+    value: parseFloat(boxPrice.getIn(['gourmet', 'grossTotal'])),
+    order_quantity: recipeCount,
+    currency: 'GBP',
+    promo_code: promocode,
+    line_items: lineItems,
+  })
 }
 
 /**
@@ -84,19 +84,19 @@ function purchaseCompleted(_, { basket, menuBoxPrices }) {
  * @param state
  */
 function pageVisit(action, state) {
-	sendTrackingData('PageVisit', {
-		property: state.routing && state.routing.locationBeforeTransitions && state.routing.locationBeforeTransitions.pathname,
-	})
+  sendTrackingData('PageVisit', {
+    property: state.routing && state.routing.locationBeforeTransitions && state.routing.locationBeforeTransitions.pathname,
+  })
 }
 
 function getCallbacks() {
-	return {
-		[actions.FILTERS_COLLECTION_CHANGE]: pinterestTracking.showCollectionTracking,
-		[actions.BASKET_RECIPE_ADD]: pinterestTracking.addRecipeToBasket,
-		[actions.BASKET_CHECKOUT]: pinterestTracking.initiateCheckout,
-		[actions.CHECKOUT_SIGNUP_SUCCESS]: pinterestTracking.purchaseCompleted,
-		[actions.__REACT_ROUTER_LOCATION_CHANGE]: pinterestTracking.pageVisit, // eslint-disable-line no-underscore-dangle
-	}
+  return {
+    [actions.FILTERS_COLLECTION_CHANGE]: pinterestTracking.showCollectionTracking,
+    [actions.BASKET_RECIPE_ADD]: pinterestTracking.addRecipeToBasket,
+    [actions.BASKET_CHECKOUT]: pinterestTracking.initiateCheckout,
+    [actions.CHECKOUT_SIGNUP_SUCCESS]: pinterestTracking.purchaseCompleted,
+    [actions.__REACT_ROUTER_LOCATION_CHANGE]: pinterestTracking.pageVisit, // eslint-disable-line no-underscore-dangle
+  }
 }
 
 /**
@@ -107,11 +107,11 @@ function getCallbacks() {
  * @param prevState
  */
 export default function Tracker(action, state = {}, prevState) {
-	if (globals.client && windowUtils.getWindow().pintrk) {
-		const callbacks = pinterestTracking.getCallbacks()
+  if (globals.client && windowUtils.getWindow().pintrk) {
+    const callbacks = pinterestTracking.getCallbacks()
 
-		if (action.type in callbacks) {
-			callbacks[action.type](action, state, prevState, utils.getPathName({ prevState }))
-		}
-	}
+    if (action.type in callbacks) {
+      callbacks[action.type](action, state, prevState, utils.getPathName({ prevState }))
+    }
+  }
 }

@@ -8,9 +8,8 @@ const CookingTime = ({ time }) => (
 	</div>
 )
 
-
 CookingTime.propTypes = {
-	time: React.PropTypes.number.isRequired,
+  time: React.PropTypes.number.isRequired,
 }
 
 export default CookingTime

@@ -5,67 +5,67 @@ import { Button } from 'goustouicomponents'
 
 class SubscriptionPauseTextArea extends React.PureComponent {
 	static propTypes = {
-		disabled: PropTypes.bool,
-		maxLength: React.PropTypes.number,
-		minLength: React.PropTypes.number,
-		minLengthValidationMessage: React.PropTypes.string,
-		onSubmit: PropTypes.func,
-		placeholder: PropTypes.string,
+	  disabled: PropTypes.bool,
+	  maxLength: React.PropTypes.number,
+	  minLength: React.PropTypes.number,
+	  minLengthValidationMessage: React.PropTypes.string,
+	  onSubmit: PropTypes.func,
+	  placeholder: PropTypes.string,
 	}
 
 	static defaultProps = {
-		onSubmit: () => {},
-		maxLength: 255,
-		minLength: 1,
-		minLengthValidationMessage: 'Please enter some information about why you\'d like to pause',
-		placeholder: 'Enter other reason here',
+	  onSubmit: () => {},
+	  maxLength: 255,
+	  minLength: 1,
+	  minLengthValidationMessage: 'Please enter some information about why you\'d like to pause',
+	  placeholder: 'Enter other reason here',
 	}
 
 	state = {
-		currentText: '',
-		validationMessage: '',
+	  currentText: '',
+	  validationMessage: '',
 	}
 
 	shouldComponentUpdate() {
-		return !this.props.disabled
+	  return !this.props.disabled
 	}
 
 	handleChange = (ev) => {
-		if (ev.target.value.length < this.props.maxLength) {
-			this.setState({
-				currentText: ev.target.value,
-				validationMessage: '',
-			})
-		} else {
-			this.setState({
-				currentText: ev.target.value.substring(0, this.props.maxLength),
-				validationMessage: `Maximum length of ${this.props.maxLength} characters reached`,
-			})
-		}
+	  if (ev.target.value.length < this.props.maxLength) {
+	    this.setState({
+	      currentText: ev.target.value,
+	      validationMessage: '',
+	    })
+	  } else {
+	    this.setState({
+	      currentText: ev.target.value.substring(0, this.props.maxLength),
+	      validationMessage: `Maximum length of ${this.props.maxLength} characters reached`,
+	    })
+	  }
 	}
 
 	handleSubmit = (ev) => {
-		ev.preventDefault()
+	  ev.preventDefault()
 
-		if (this.state.currentText.length < this.props.minLength) {
-			this.setState({
-				validationMessage: this.props.minLengthValidationMessage,
-			})
-		} else {
-			this.props.onSubmit(this.state.currentText)
-		}
+	  if (this.state.currentText.length < this.props.minLength) {
+	    this.setState({
+	      validationMessage: this.props.minLengthValidationMessage,
+	    })
+	  } else {
+	    this.props.onSubmit(this.state.currentText)
+	  }
 	}
 
 	render() {
-		return (
+	  return (
 			<div>
 				<textarea
-					className={css.textarea}
-					disabled={this.props.disabled}
-					maxLength={this.props.maxLength}
-					onChange={this.handleChange}
-					placeholder={this.props.placeholder}
-					value={this.state.currentText}
+				  className={css.textarea}
+				  disabled={this.props.disabled}
+				  maxLength={this.props.maxLength}
+				  onChange={this.handleChange}
+				  placeholder={this.props.placeholder}
+				  value={this.state.currentText}
 				/>
 
 				{!!this.state.validationMessage.length &&
@@ -78,7 +78,7 @@ class SubscriptionPauseTextArea extends React.PureComponent {
 					</Button>
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

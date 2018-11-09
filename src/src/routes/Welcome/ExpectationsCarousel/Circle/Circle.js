@@ -9,17 +9,17 @@ const Circle = ({ top, left, onClick, content, active }) => (
 )
 
 Circle.propTypes = {
-	content: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-	top: PropTypes.number,
-	left: PropTypes.number,
-	onClick: PropTypes.func,
-	active: PropTypes.bool,
+  content: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  top: PropTypes.number,
+  left: PropTypes.number,
+  onClick: PropTypes.func,
+  active: PropTypes.bool,
 }
 
 Circle.defaultProps = {
-	onClick: () => {
-	},
-	active: false,
+  onClick: () => {
+  },
+  active: false,
 }
 
 export default Circle

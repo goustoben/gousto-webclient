@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from '../../Image'
-import Button from './../../Button'
+import Button from "../../Button"
 import css from '../../Signup.css'
 
 const WelcomeStep = ({ next }) => (
@@ -17,10 +17,10 @@ const WelcomeStep = ({ next }) => (
 		<div className={css.footer}>
 			<div className={css.inputContainer}>
 				<Button
-					data-testing="signupWelcomeStepCTA"
-					fill
-					onClick={next}
-					width="full"
+				  data-testing="signupWelcomeStepCTA"
+				  fill
+				  onClick={next}
+				  width="full"
 				/>
 			</div>
 		</div>
@@ -28,8 +28,8 @@ const WelcomeStep = ({ next }) => (
 )
 
 WelcomeStep.propTypes = {
-	next: React.PropTypes.func,
-	stepNumber: React.PropTypes.number.isRequired,
+  next: React.PropTypes.func,
+  stepNumber: React.PropTypes.number.isRequired,
 }
 
 export default WelcomeStep

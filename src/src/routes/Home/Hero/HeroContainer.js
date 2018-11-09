@@ -5,12 +5,12 @@ import Hero from './Hero'
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = {
-	redirect: redirectAction.redirect,
+  redirect: redirectAction.redirect,
 }
 
 const HeroContainer = connect(
-	mapStateToProps,
-	mapDispatchToProps,
+  mapStateToProps,
+  mapDispatchToProps,
 )(Hero)
 
 export default HeroContainer

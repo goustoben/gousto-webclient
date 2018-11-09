@@ -1,5 +1,5 @@
 import React from 'react'
-import css from '../Allergens/Allergens.css'
+import css from "./Allergens.css"
 import Immutable from 'immutable'
 
 const Allergens = ({ allergens, inset }) => (
@@ -17,12 +17,12 @@ const Allergens = ({ allergens, inset }) => (
 )
 
 Allergens.propTypes = {
-	allergens: React.PropTypes.instanceOf(Immutable.List),
-	inset: React.PropTypes.bool,
+  allergens: React.PropTypes.instanceOf(Immutable.List),
+  inset: React.PropTypes.bool,
 }
 
 Allergens.defaultProps = {
-	inset: true,
+  inset: true,
 }
 
 export default Allergens

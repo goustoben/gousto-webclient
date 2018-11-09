@@ -16,8 +16,8 @@ const CTA = ({ children, link }) => (
 )
 
 CTA.propTypes = {
-	children: React.PropTypes.string,
-	link: React.PropTypes.string,
+  children: React.PropTypes.string,
+  link: React.PropTypes.string,
 }
 
 export default CTA

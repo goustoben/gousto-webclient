@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 import { shallow } from 'enzyme'
-import renderer from 'react-test-renderer';
+import renderer from 'react-test-renderer'
 import { Button } from 'goustouicomponents'
 import FilterTagsNav from 'routes/Menu/FilterTagsNav/FilterTagsNav'
 
@@ -12,8 +12,8 @@ describe("FilterTag", () => {
       const component = <FilterTagsNav />
 
       const tree = renderer
-      .create(component)
-      .toJSON()
+        .create(component)
+        .toJSON()
 
       expect(tree).toMatchSnapshot()
     })

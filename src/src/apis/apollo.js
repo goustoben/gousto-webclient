@@ -7,53 +7,53 @@ import endpoint from 'config/endpoint'
 import transit from 'transit-immutable-js'
 
 function authLink(store) {
-	return setContext((_, { headers }) => {
-		const token = store.getState().auth.get('accessToken')
-		const httpHeaders = {
-			...headers,
-		}
+  return setContext((_, { headers }) => {
+    const token = store.getState().auth.get('accessToken')
+    const httpHeaders = {
+      ...headers,
+    }
 
-		if (token) {
-			httpHeaders.authorization = `Bearer ${token}`
-		} else {
-			delete httpHeaders.authorization
-		}
+    if (token) {
+      httpHeaders.authorization = `Bearer ${token}`
+    } else {
+      delete httpHeaders.authorization
+    }
 
-		return {
-			headers: httpHeaders,
-		}
-	})
+    return {
+      headers: httpHeaders,
+    }
+  })
 }
 
 export default (store) => {
-	const inMemoryCache = new InMemoryCache()
+  const inMemoryCache = new InMemoryCache()
 
-	if (__CLIENT__ && !__TEST__) {
-		let initialState = {}
-		try {
-			initialState = decodeURIComponent(window.atob(window.__APOLLO_STATE__)) // eslint-disable-line no-underscore-dangle
-		} catch (error) {
-			//
-		}
+  if (__CLIENT__ && !__TEST__) {
+    let initialState = {}
+    try {
+      initialState = decodeURIComponent(window.atob(window.__APOLLO_STATE__)) // eslint-disable-line no-underscore-dangle
+    } catch (error) {
+      //
+    }
 
-		initialState = transit.fromJSON(initialState)
-		inMemoryCache.restore(initialState)
-	}
+    initialState = transit.fromJSON(initialState)
+    inMemoryCache.restore(initialState)
+  }
 
-	const httpLink = createHttpLink({
-		uri: `${endpoint('graphql', 'v1')}/graphql`,
-	})
+  const httpLink = createHttpLink({
+    uri: `${endpoint('graphql', 'v1')}/graphql`,
+  })
 
-	const link = ApolloLink.from([
-		authLink(store),
-		httpLink,
-	])
+  const link = ApolloLink.from([
+    authLink(store),
+    httpLink,
+  ])
 
-	const client = new ApolloClient({
-		link,
-		cache: inMemoryCache,
-		ssr: Boolean(__SERVER__),
-	})
+  const client = new ApolloClient({
+    link,
+    cache: inMemoryCache,
+    ssr: Boolean(__SERVER__),
+  })
 
-	return client
+  return client
 }

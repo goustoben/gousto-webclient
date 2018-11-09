@@ -15,9 +15,9 @@ const Header = ({ onClose, title, children }) => (
 )
 
 Header.propTypes = {
-	children: PropTypes.node,
-	onClose: PropTypes.func.isRequired,
-	title: PropTypes.string,
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+  title: PropTypes.string,
 }
 
 export default Header

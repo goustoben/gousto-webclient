@@ -5,27 +5,27 @@ import { ModalFooter } from 'ModalComponent'
 import css from './Footer.css'
 
 const propTypes = {
-    callToActions: PropTypes.shape({
-		confirm: PropTypes.string,
-		keep: PropTypes.string,
-	}),
-    onClickKeepOrder: PropTypes.func,
-    onClickSkipCancel: PropTypes.func,
+  callToActions: PropTypes.shape({
+    confirm: PropTypes.string,
+    keep: PropTypes.string,
+  }),
+  onClickKeepOrder: PropTypes.func,
+  onClickSkipCancel: PropTypes.func,
 }
 
 const Footer = ({ orderType, callToActions, onClickKeepOrder, onClickSkipCancel }) => {
-    let keepCopy
-    let confirmCopy
+  let keepCopy
+  let confirmCopy
 
-    if (callToActions) {
-        keepCopy = callToActions.keep
-        confirmCopy = callToActions.confirm
-    } else {
-        keepCopy = 'Keep Box'
-        confirmCopy = `${orderType === 'pending' ? 'Cancel' : 'Skip'} anyway`
-    }
+  if (callToActions) {
+    keepCopy = callToActions.keep
+    confirmCopy = callToActions.confirm
+  } else {
+    keepCopy = 'Keep Box'
+    confirmCopy = `${orderType === 'pending' ? 'Cancel' : 'Skip'} anyway`
+  }
 
-    return (
+  return (
         <ModalFooter>
         <div className={css.skipAnyWay} onClick={() => onClickSkipCancel() }>
                 {confirmCopy}
@@ -34,7 +34,7 @@ const Footer = ({ orderType, callToActions, onClickKeepOrder, onClickSkipCancel 
                 {keepCopy}
             </button>
         </ModalFooter>
-    )
+  )
 }
 
 Footer.propTypes = propTypes

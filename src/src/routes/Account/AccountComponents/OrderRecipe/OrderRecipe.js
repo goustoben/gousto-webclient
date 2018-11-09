@@ -4,13 +4,13 @@ import classNames from 'classnames'
 import css from './OrderRecipe.css'
 
 const OrderRecipe = ({
-	recipeImage,
-	recipeTitle,
+  recipeImage,
+  recipeTitle,
 }) => (
 	<div className={css.recipe}>
 		{recipeImage ?
 			<img className={css.image} src={recipeImage} alt={recipeTitle} />
-			:
+		  :
 			<div className={classNames(css.image, css.blankImage)}></div>
 		}
 		<div>{recipeTitle}</div>
@@ -18,13 +18,13 @@ const OrderRecipe = ({
 )
 
 OrderRecipe.propTypes = {
-	recipeImage: PropTypes.string,
-	recipeTitle: PropTypes.string,
+  recipeImage: PropTypes.string,
+  recipeTitle: PropTypes.string,
 }
 
 OrderRecipe.defaultProps = {
-	recipeImage: '',
-	recipeTitle: '',
+  recipeImage: '',
+  recipeTitle: '',
 }
 
 export default OrderRecipe

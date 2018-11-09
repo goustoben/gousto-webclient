@@ -6,39 +6,39 @@ import Image from 'Recipe/Image'
 import GoustoImage from 'Image'
 
 describe('<Image />', () => {
-	let wrapper
-	let media
-	beforeEach(() => {
-		media = Immutable.fromJS([
-			{
-				src: 'radish.small.jpg',
-				width: 100,
-			},
-			{
-				src: 'radish.medium.jpg',
-				width: 150,
-			},
-			{
-				src: 'radish.large.jpg',
-				width: 200,
-			},
-			{
-				src: 'radish.extraLarge.jpg',
-				width: 250,
-			},
-		])
-	})
+  let wrapper
+  let media
+  beforeEach(() => {
+    media = Immutable.fromJS([
+      {
+        src: 'radish.small.jpg',
+        width: 100,
+      },
+      {
+        src: 'radish.medium.jpg',
+        width: 150,
+      },
+      {
+        src: 'radish.large.jpg',
+        width: 200,
+      },
+      {
+        src: 'radish.extraLarge.jpg',
+        width: 250,
+      },
+    ])
+  })
 
-	it('shouldn\'t render a GoustoImage without media', () => {
-		wrapper = shallow(<Image />)
+  it('shouldn\'t render a GoustoImage without media', () => {
+    wrapper = shallow(<Image />)
 
-		expect(wrapper.find(GoustoImage)).toHaveLength(0)
-	})
+    expect(wrapper.find(GoustoImage)).toHaveLength(0)
+  })
 
-	it('should render a GoustoImage with media', () => {
-		wrapper = shallow(<Image media={media} />)
+  it('should render a GoustoImage with media', () => {
+    wrapper = shallow(<Image media={media} />)
 
-		expect(wrapper.find(GoustoImage)).toHaveLength(1)
-	})
+    expect(wrapper.find(GoustoImage)).toHaveLength(1)
+  })
 })
 

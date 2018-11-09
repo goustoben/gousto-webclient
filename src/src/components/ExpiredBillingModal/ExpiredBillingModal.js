@@ -7,24 +7,24 @@ import BillingForm from './BillingForm'
 class ExpiredBillingModal extends React.PureComponent {
 
 	static propTypes = {
-		expiredBillingModalOpen: PropTypes.bool,
-		closeExpiredBillingModal: React.PropTypes.func,
+	  expiredBillingModalOpen: PropTypes.bool,
+	  closeExpiredBillingModal: React.PropTypes.func,
 	}
 
 	static defaultProps = {
-		expiredBillingModalOpen: false,
+	  expiredBillingModalOpen: false,
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+	  store: React.PropTypes.object.isRequired,
 	}
 
 	onCloseExpiredBillingModal = () => {
-		this.props.closeExpiredBillingModal(false)
+	  this.props.closeExpiredBillingModal(false)
 	}
 
 	render() {
-		return (
+	  return (
 			<Overlay open={Boolean(this.props.expiredBillingModalOpen)} contentClassName={css.mobileModalContent} from="top">
 				<ModalPanel closePortal={this.onCloseExpiredBillingModal} disableOverlay disableClickOutside>
 					<div className={css.body}>
@@ -38,7 +38,7 @@ class ExpiredBillingModal extends React.PureComponent {
 					</div>
 				</ModalPanel>
 			</Overlay>
-		)
+	  )
 	}
 }
 

@@ -5,13 +5,13 @@ import { Button } from 'goustouicomponents'
 
 const Banner = ({ hide, onClick, text, linkText }) => (
 	<div
-		role="button"
-		onClick={() => { onClick() }}
-		className={classnames(
-			css.container,
-			css.link,
-			{ [css.hide]: hide },
-		)}
+	  role="button"
+	  onClick={() => { onClick() }}
+	  className={classnames(
+	    css.container,
+	    css.link,
+	    { [css.hide]: hide },
+	  )}
 	>
 		<p className={css.text}>{text}&nbsp;</p>
 		<Button color="tertiary">{linkText}</Button>
@@ -19,10 +19,10 @@ const Banner = ({ hide, onClick, text, linkText }) => (
 )
 
 Banner.propTypes = {
-	hide: PropTypes.bool,
-	onClick: PropTypes.func,
-	text: PropTypes.string,
-	linkText: PropTypes.string,
+  hide: PropTypes.bool,
+  onClick: PropTypes.func,
+  text: PropTypes.string,
+  linkText: PropTypes.string,
 }
 
 Banner.defaultProps = {}

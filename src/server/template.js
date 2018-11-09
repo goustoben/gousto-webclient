@@ -3,7 +3,7 @@ const newAssetPath = require('utils/media').newAssetPath
 const encodeState = require('./encodeState')
 
 const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, url = '/', userAgent = '', noGTM = false, helmetHead) => (
-	`<!doctype html>
+  `<!doctype html>
 	 <html ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
 		<head>
 			<!-- ********************************************************************

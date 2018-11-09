@@ -8,32 +8,32 @@ import { Segment } from 'goustouicomponents'
 import TenToTableBanner from 'routes/Menu/TenToTableBanner/TenToTableBanner'
 
 describe('<TenToTableBanner />', () => {
-	let wrapper
+  let wrapper
 
-	test('should render by default', () => {
-		wrapper = shallow(<TenToTableBanner />)
+  test('should render by default', () => {
+    wrapper = shallow(<TenToTableBanner />)
 
-		expect(wrapper.find(Gel).length).toBeGreaterThanOrEqual(1)
-	})
+    expect(wrapper.find(Gel).length).toBeGreaterThanOrEqual(1)
+  })
 
-	test('should not render when hide is true', () => {
-		wrapper = shallow(<TenToTableBanner hide />)
+  test('should not render when hide is true', () => {
+    wrapper = shallow(<TenToTableBanner hide />)
 
-		expect(wrapper.find(Gel).length).toBe(0)
-	})
+    expect(wrapper.find(Gel).length).toBe(0)
+  })
 
-	test('should trigger a menuCurrentCollectionChange when Button is clicked', () => {
-		const collectionFilterChangeSpy = sinon.spy()
-		wrapper = shallow(
+  test('should trigger a menuCurrentCollectionChange when Button is clicked', () => {
+    const collectionFilterChangeSpy = sinon.spy()
+    wrapper = shallow(
 			<TenToTableBanner
-				collectionFilterChange={collectionFilterChangeSpy}
+			  collectionFilterChange={collectionFilterChangeSpy}
 			/>,
-		)
-		wrapper
-			.find(Segment)
-			.first()
-			.simulate('click')
+    )
+    wrapper
+      .find(Segment)
+      .first()
+      .simulate('click')
 
-		expect(collectionFilterChangeSpy.callCount).toBeGreaterThanOrEqual(1)
-	})
+    expect(collectionFilterChangeSpy.callCount).toBeGreaterThanOrEqual(1)
+  })
 })

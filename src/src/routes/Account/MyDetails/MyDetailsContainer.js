@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 import MyDetails from './MyDetails'
 
 function mapStateToProps() {
-	return {
+  return {
 
-	}
+  }
 }
 
 const MyDetailsContainer = connect(mapStateToProps, {

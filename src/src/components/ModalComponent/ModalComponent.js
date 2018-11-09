@@ -11,9 +11,9 @@ const ModalComponent = ({ children, visible, styleName }) => (
 )
 
 ModalComponent.propTypes = {
-	children: PropTypes.node,
-	visible: PropTypes.bool,
-	className: PropTypes.string,
+  children: PropTypes.node,
+  visible: PropTypes.bool,
+  className: PropTypes.string,
 }
 
 export default ModalComponent

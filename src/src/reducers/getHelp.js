@@ -30,9 +30,9 @@ const reduceRecipes = (recipes) => (
 )
 
 const getHelp = (state, action) => {
-	if (!state) {
-		return getHelpInitialState
-	}
+  if (!state) {
+    return getHelpInitialState
+  }
 
 	switch (action.type) {
 		case actionTypes.GET_HELP_STORE_ORDER_ID: {

@@ -6,10 +6,10 @@ import { shallow } from 'enzyme'
 import AgeVerify from 'components/PromoModal/AgeVerify/AgeVerify'
 
 describe('AgeVerify', () => {
-	let wrapper
+  let wrapper
 
-	test('should return a div with no props', () => {
-		wrapper = shallow(<AgeVerify />)
-		expect(wrapper.type()).toEqual('div')
-	})
+  test('should return a div with no props', () => {
+    wrapper = shallow(<AgeVerify />)
+    expect(wrapper.type()).toEqual('div')
+  })
 })

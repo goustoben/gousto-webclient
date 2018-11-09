@@ -15,12 +15,12 @@ const FullPage = ({ children, route }) => (
 )
 
 FullPage.propTypes = {
-	children: PropTypes.object.isRequired,
-	route: PropTypes.object,
+  children: PropTypes.object.isRequired,
+  route: PropTypes.object,
 }
 
 FullPage.defaultProps = {
-	route: {},
+  route: {},
 }
 
 export default FullPage

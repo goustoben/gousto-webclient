@@ -5,37 +5,37 @@ import renderer from 'react-test-renderer'
 import Header from '../Header'
 
 describe('Header', () => {
-	let wrapper
+  let wrapper
 
-	describe('with no feature flag set', () => {
-		test('should render fallback', () => {
-			wrapper = mount(<Header featureFlag={false} />)
+  describe('with no feature flag set', () => {
+    test('should render fallback', () => {
+      wrapper = mount(<Header featureFlag={false} />)
 
-			expect(wrapper.find('.spacer')).toHaveLength(1)
-		})
-	})
+      expect(wrapper.find('.spacer')).toHaveLength(1)
+    })
+  })
 
-	describe('with no offer', () => {
-		test('should render fallback', () => {
-			wrapper = mount(<Header offer={null} />)
+  describe('with no offer', () => {
+    test('should render fallback', () => {
+      wrapper = mount(<Header offer={null} />)
 
-			expect(wrapper.find('.spacer')).toHaveLength(1)
-		})
-	})
+      expect(wrapper.find('.spacer')).toHaveLength(1)
+    })
+  })
 
-	describe('with an offer and feature flag', () => {
-		test('should match snapshot', () => {
-			const offer = {
-				formattedValue: '10%',
-			}
-			const tree = renderer.create(
+  describe('with an offer and feature flag', () => {
+    test('should match snapshot', () => {
+      const offer = {
+        formattedValue: '10%',
+      }
+      const tree = renderer.create(
 				<Header
-					offer={offer}
-					featureFlag
+				  offer={offer}
+				  featureFlag
 				/>
-			).toJSON()
+      ).toJSON()
 
-			expect(tree).toMatchSnapshot()
-		})
-	})
+      expect(tree).toMatchSnapshot()
+    })
+  })
 })

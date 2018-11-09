@@ -16,17 +16,17 @@ const propTypes = {
 }
 
 const transformMessage = (text, values) => {
-	let formattedText = text
+  let formattedText = text
 
-	values.forEach(item => {
-		formattedText = formattedText.replace(`{:${item.key}:}`, `<strong>${item.value}</strong>`)
-	})
+  values.forEach(item => {
+    formattedText = formattedText.replace(`{:${item.key}:}`, `<strong>${item.value}</strong>`)
+  })
 
-	return formattedText
+  return formattedText
 }
 
 const Offer = ({ offer }) => {
-	if (!(offer && offer.message)) return null
+  if (!(offer && offer.message)) return null
 
   let formattedMessage = offer.message
   if (offer.rawMessage && offer.rawMessage.text && offer.rawMessage.values) {

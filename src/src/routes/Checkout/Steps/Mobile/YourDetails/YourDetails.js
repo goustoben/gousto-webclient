@@ -22,15 +22,15 @@ const deliverySectionName = 'delivery'
 const DeliverySection = DeliveryContainer(deliverySectionName)
 
 const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef }) => {
-	const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
-	const handleSubmit = () => {
-		if (checkoutValid) {
-			userProspect()
-		}
-		submit()
-	}
+  const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
+  const handleSubmit = () => {
+    if (checkoutValid) {
+      userProspect()
+    }
+    submit()
+  }
 
-	return (
+  return (
 		<div>
 			<SectionContainer>
 				<AboutYouSection receiveRef={receiveRef} />
@@ -41,8 +41,8 @@ const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, check
 			{isAddressConfirmed && (
 				<SectionContainer>
 					<CheckoutButton
-						onClick={handleSubmit}
-						stepName={`next: ${nextStepName}`}
+					  onClick={handleSubmit}
+					  stepName={`next: ${nextStepName}`}
 					/>
 				</SectionContainer>
 			)}
@@ -53,33 +53,33 @@ const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, check
 				</Section>
 			</SectionContainer>
 			{isAddressConfirmed && <CheckoutButton
-				onClick={handleSubmit}
-				stepName={`next: ${nextStepName}`}
+			  onClick={handleSubmit}
+			  stepName={`next: ${nextStepName}`}
 			/>}
 		</div>
-	)
+  )
 }
 
 YourDetailsStep.propTypes = {
-	submit: PropTypes.func.isRequired,
-	userProspect: PropTypes.func,
-	nextStepName: PropTypes.string,
-	formValues: PropTypes.object,
-	receiveRef: PropTypes.func,
-	scrollToFirstMatchingRef: PropTypes.func,
-	checkoutValid: PropTypes.bool,
+  submit: PropTypes.func.isRequired,
+  userProspect: PropTypes.func,
+  nextStepName: PropTypes.string,
+  formValues: PropTypes.object,
+  receiveRef: PropTypes.func,
+  scrollToFirstMatchingRef: PropTypes.func,
+  checkoutValid: PropTypes.bool,
 }
 
 YourDetailsStep.defaultProps = {
-	userProspect: () => {},
-	receiveRef: () => {},
-	scrollToFirstMatchingRef: () => {},
-	checkoutValid: false,
+  userProspect: () => {},
+  receiveRef: () => {},
+  scrollToFirstMatchingRef: () => {},
+  checkoutValid: false,
 }
 
 const validationRules = [
-	addPrefix(aboutYouSectionName, userRules),
-	delivery(deliverySectionName),
+  addPrefix(aboutYouSectionName, userRules),
+  delivery(deliverySectionName),
 ]
 
 let YourDetailsForm = formContainer(YourDetailsStep, validationRules, deliveryValidationMessages(deliverySectionName)) // eslint-disable-line import/no-mutable-exports

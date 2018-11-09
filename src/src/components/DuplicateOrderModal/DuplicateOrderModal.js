@@ -7,21 +7,21 @@ import css from './DuplicateOrderModal.css'
 import Order from './Order'
 
 const renderOrders = (closeOrders) => {
-	const ordersRendered = []
-	closeOrders.forEach((order, orderId) => {
-		ordersRendered.push(
+  const ordersRendered = []
+  closeOrders.forEach((order, orderId) => {
+    ordersRendered.push(
 			<div key={orderId}>
 				<Order
-					id={orderId}
-					date={moment(order.get('deliveryDate')).format('dddd, Do MMMM')}
-					numPeople={order.getIn(['box', 'numPeople'])}
-					numRecipes={order.getIn(['box', 'numRecipes'])}
+				  id={orderId}
+				  date={moment(order.get('deliveryDate')).format('dddd, Do MMMM')}
+				  numPeople={order.getIn(['box', 'numPeople'])}
+				  numRecipes={order.getIn(['box', 'numRecipes'])}
 				/>
 			</div>
-		)
-	})
+    )
+  })
 
-	return ordersRendered
+  return ordersRendered
 }
 
 const DuplicateOrderModal = ({ closeOrders = Immutable.Map([]), close }) => (
@@ -43,8 +43,8 @@ const DuplicateOrderModal = ({ closeOrders = Immutable.Map([]), close }) => (
 )
 
 DuplicateOrderModal.propTypes = {
-	closeOrders: React.PropTypes.instanceOf(Immutable.Map),
-	close: React.PropTypes.func,
+  closeOrders: React.PropTypes.instanceOf(Immutable.Map),
+  close: React.PropTypes.func,
 }
 
 export default DuplicateOrderModal

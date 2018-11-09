@@ -9,24 +9,24 @@ import { Button, Segment } from 'goustouicomponents'
 
 class Banner extends React.PureComponent {
 	static defaultProps = {
-		hide: false,
+	  hide: false,
 	}
 
 	static propTypes = {
-		hide: PropTypes.bool,
-		collectionFilterChange: PropTypes.func,
+	  hide: PropTypes.bool,
+	  collectionFilterChange: PropTypes.func,
 	}
 
 	viewTenToTable = () => {
-		const { collectionFilterChange } = this.props
-		collectionFilterChange(config.tenToTableBanner.collection)
+	  const { collectionFilterChange } = this.props
+	  collectionFilterChange(config.tenToTableBanner.collection)
 	}
 
 	render() {
-		const { hide } = this.props
+	  const { hide } = this.props
 
-		return (
-			hide ? null :
+	  return (
+	    hide ? null :
 				<div className={classnames(css.container, { [css.hide]: hide })}>
 					<div className={css.contentContainer}>
 						<Gel className={css.gelMain} size="large">
@@ -48,7 +48,7 @@ class Banner extends React.PureComponent {
 						</Button>
 					</div>
 				</div>
-		)
+	  )
 	}
 }
 

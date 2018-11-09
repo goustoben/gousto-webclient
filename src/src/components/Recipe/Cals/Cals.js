@@ -8,7 +8,7 @@ const Cals = ({ cals }) => (
 )
 
 Cals.propTypes = {
-	cals: React.PropTypes.number.isRequired,
+  cals: React.PropTypes.number.isRequired,
 }
 
 export default Cals

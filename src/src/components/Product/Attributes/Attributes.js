@@ -13,7 +13,7 @@ const Attributes = ({ attributes }) => (
 )
 
 Attributes.propTypes = {
-	attributes: PropTypes.instanceOf(Immutable.List),
+  attributes: PropTypes.instanceOf(Immutable.List),
 }
 
 export default Attributes

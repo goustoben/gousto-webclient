@@ -5,10 +5,10 @@ import css from './DeliveryInfo.css'
 import Svg from 'Svg'
 
 const DeliveryInfo = ({ deliveryDate, cutOffDate, frequency }) => {
-	const deliveryDay = moment(deliveryDate).format('dddd')
-	const cutOffDay = moment(cutOffDate).format('dddd')
+  const deliveryDay = moment(deliveryDate).format('dddd')
+  const cutOffDay = moment(cutOffDate).format('dddd')
 
-	return (
+  return (
 		<div className={css.infoContainer}>
 			<div className={css.flex}>
 				<Svg fileName="icon-frequency" className={css.iconFrequency} />
@@ -17,17 +17,17 @@ const DeliveryInfo = ({ deliveryDate, cutOffDate, frequency }) => {
 				</div>
 			</div>
 		</div>
-	)
+  )
 }
 
 DeliveryInfo.propTypes = {
-	deliveryDate: PropTypes.string,
-	cutOffDate: PropTypes.string,
-	frequency: PropTypes.string,
+  deliveryDate: PropTypes.string,
+  cutOffDate: PropTypes.string,
+  frequency: PropTypes.string,
 }
 
 DeliveryInfo.defaultProps = {
-	frequency: 'weekly',
+  frequency: 'weekly',
 }
 
 export default DeliveryInfo

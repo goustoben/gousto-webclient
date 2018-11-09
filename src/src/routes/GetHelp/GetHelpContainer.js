@@ -12,17 +12,17 @@ const mapStateToProps = (state, ownProps) => ({
 	content: {
 		title: state.content.get('get-help_default_pageheader_header')
 		|| 'Get help with your box',
-		errorBody: state.content.get('get-help_default_pagecontent_errorbody')
+    errorBody: state.content.get('get-help_default_pagecontent_errorbody')
 		|| 'There was a problem in getting your default. Please contact us below, or try again later.',
-		button1: state.content.get('get-help_default_pagecontent_button1')
+    button1: state.content.get('get-help_default_pagecontent_button1')
 		|| 'Contact Us',
-	}
+  }
 })
 
 const GetHelpContainer = connect(mapStateToProps, {
-	storeGetHelpOrderId,
-	userLoadOrder: userActions.userLoadOrder,
-	recipesLoadRecipesById: recipeActions.recipesLoadRecipesById,
+  storeGetHelpOrderId,
+  userLoadOrder: userActions.userLoadOrder,
+  recipesLoadRecipesById: recipeActions.recipesLoadRecipesById,
 })(GetHelp)
 
 export default GetHelpContainer

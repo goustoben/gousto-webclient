@@ -12,36 +12,36 @@ const TotalTimeFilter = ({ totalTimeFilters, totalTimeSelected, filterCurrentTot
 			</Content>
 		</H2>
 		{Object.keys(totalTimeFilters).map((index) => {
-			const totalTimeFilter = totalTimeFilters[index]
+		  const totalTimeFilter = totalTimeFilters[index]
 
-			return (
+		  return (
 				<FilterItem
-					type="radio"
-					key={index}
-					groupName="totalTimeFilter"
-					value={totalTimeFilter}
-					identifier={`totalTimeFilter-${index}`}
-					checked={totalTimeSelected === index}
-					onClick={() => { filterCurrentTotalTimeChange(index) }}
+				  type="radio"
+				  key={index}
+				  groupName="totalTimeFilter"
+				  value={totalTimeFilter}
+				  identifier={`totalTimeFilter-${index}`}
+				  checked={totalTimeSelected === index}
+				  onClick={() => { filterCurrentTotalTimeChange(index) }}
 				>
 					<span>{totalTimeFilter}</span>
 				</FilterItem>
-			)
+		  )
 		})
 		}
 	</div>
 )
 
 TotalTimeFilter.propTypes = {
-	totalTimeFilters: PropTypes.object,
-	totalTimeSelected: PropTypes.string,
-	filterCurrentTotalTimeChange: PropTypes.func,
+  totalTimeFilters: PropTypes.object,
+  totalTimeSelected: PropTypes.string,
+  filterCurrentTotalTimeChange: PropTypes.func,
 }
 
 TotalTimeFilter.defaultProps = {
-	filterCurrentTotalTimeChange: () => {
-		// default function
-	},
+  filterCurrentTotalTimeChange: () => {
+    // default function
+  },
 }
 
 export default TotalTimeFilter

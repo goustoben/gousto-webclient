@@ -7,10 +7,10 @@ import PromoModalWrapper from 'components/PromoModal/PromoModalWrapper'
 import Overlay from 'Overlay'
 
 describe('PromoModalWrapper', () => {
-	let wrapper
+  let wrapper
 
-	test('should return a Overlay with no props', () => {
-		wrapper = shallow(<PromoModalWrapper />)
-		expect(wrapper.type()).toEqual(Overlay)
-	})
+  test('should return a Overlay with no props', () => {
+    wrapper = shallow(<PromoModalWrapper />)
+    expect(wrapper.type()).toEqual(Overlay)
+  })
 })

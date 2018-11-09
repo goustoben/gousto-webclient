@@ -9,15 +9,15 @@ import Link from 'Link'
 import css from './CancelledAllBoxesModal.css'
 
 const CancelledAllBoxesModal = ({
-	isModalOpen,
-	pendingOrdersDates,
-	toggleModalVisibility,
+  isModalOpen,
+  pendingOrdersDates,
+  toggleModalVisibility,
 }) => {
-	const closeModal = () => {
-		toggleModalVisibility(false)
-	}
+  const closeModal = () => {
+    toggleModalVisibility(false)
+  }
 
-	return (
+  return (
 		<Overlay open={Boolean(isModalOpen)} from="top">
 			<ModalPanel closePortal={() => closeModal()} disableClickOutside disableOverlay className={css.modal}>
 				<div className={css.body}>
@@ -43,19 +43,19 @@ const CancelledAllBoxesModal = ({
 				</div>
 			</ModalPanel>
 		</Overlay>
-	)
+  )
 }
 
 CancelledAllBoxesModal.propTypes = {
-	isModalOpen: PropTypes.bool,
-	pendingOrdersDates: ImmutablePropTypes.mapOf(PropTypes.string),
-	toggleModalVisibility: PropTypes.func,
+  isModalOpen: PropTypes.bool,
+  pendingOrdersDates: ImmutablePropTypes.mapOf(PropTypes.string),
+  toggleModalVisibility: PropTypes.func,
 }
 
 CancelledAllBoxesModal.defaultProps = {
-	isModalOpen: false,
-	pendingOrdersDates: Immutable.Map({}),
-	toggleModalVisibility: () => {},
+  isModalOpen: false,
+  pendingOrdersDates: Immutable.Map({}),
+  toggleModalVisibility: () => {},
 }
 
 export default CancelledAllBoxesModal

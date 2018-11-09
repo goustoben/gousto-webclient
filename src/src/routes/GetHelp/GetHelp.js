@@ -5,108 +5,108 @@ import { client as routes } from 'config/routes'
 import css from './GetHelp.css'
 
 const skipFetchByRoute = ({ pathname }) => ([
-	`${routes.getHelp.index}/${routes.getHelp.contact}`,
-	`${routes.getHelp.index}/${routes.getHelp.confirmation}`,
+  `${routes.getHelp.index}/${routes.getHelp.contact}`,
+  `${routes.getHelp.index}/${routes.getHelp.confirmation}`,
 ].includes(pathname))
 
 class GetHelp extends PureComponent {
 	static propTypes = {
-		location: PropTypes.shape({
-			query: PropTypes.shape({
-				orderId: PropTypes.string,
-			}),
-		}),
-		children: PropTypes.node.isRequired,
-		content: PropTypes.shape({
-			button1: PropTypes.string,
-			errorBody: PropTypes.string,
-			infoBody: PropTypes.string,
-			title: PropTypes.string,
-		}),
+	  location: PropTypes.shape({
+	    query: PropTypes.shape({
+	      orderId: PropTypes.string,
+	    }),
+	  }),
+	  children: PropTypes.node.isRequired,
+	  content: PropTypes.shape({
+	    button1: PropTypes.string,
+	    errorBody: PropTypes.string,
+	    infoBody: PropTypes.string,
+	    title: PropTypes.string,
+	  }),
 	}
 
 	state = {
-		didFetchError: false,
-		isFetching: true
+	  didFetchError: false,
+	  isFetching: true
 	}
 
 	componentDidMount() {
-		const orderId = this.getOrderId(this.props)
+	  const orderId = this.getOrderId(this.props)
 
-		if (skipFetchByRoute(this.props.location)) {
-			return this.fetchSuccess()
-		}
+	  if (skipFetchByRoute(this.props.location)) {
+	    return this.fetchSuccess()
+	  }
 
-		if (!orderId) {
-			return this.fetchError()
-		}
+	  if (!orderId) {
+	    return this.fetchError()
+	  }
 
-		this.props.storeGetHelpOrderId(orderId)
+	  this.props.storeGetHelpOrderId(orderId)
 
-		return this.props.userLoadOrder(orderId)
-			.then(this.orderLoadComplete)
-			.catch(this.fetchError)
+	  return this.props.userLoadOrder(orderId)
+	    .then(this.orderLoadComplete)
+	    .catch(this.fetchError)
 	}
 
 	getOrderId({ location }) {
-		const { query } = location
+	  const { query } = location
 
-		return (query && query.orderId)
-			? query.orderId
-			: null
+	  return (query && query.orderId)
+	    ? query.orderId
+	    : null
 	}
 
 	fetchSuccess = () => {
-		this.setState({
-			...this.state,
-			didFetchError: false,
-			isFetching: false,
-		})
+	  this.setState({
+	    ...this.state,
+	    didFetchError: false,
+	    isFetching: false,
+	  })
 	}
 
 	fetchError = () => {
-		this.setState({
-			...this.state,
-			didFetchError: true,
-			isFetching: false,
-		})
+	  this.setState({
+	    ...this.state,
+	    didFetchError: true,
+	    isFetching: false,
+	  })
 	}
 
 	orderLoadComplete = () => {
-		const orderId = this.getOrderId(this.props)
-		const order = this.props.orders[orderId]
-		const recipeIds = order.recipeItems
-			.map((recipe) => recipe.recipeId)
+	  const orderId = this.getOrderId(this.props)
+	  const order = this.props.orders[orderId]
+	  const recipeIds = order.recipeItems
+	    .map((recipe) => recipe.recipeId)
 
-		this.props.recipesLoadRecipesById(recipeIds)
-			.then(this.fetchSuccess)
-			.catch(this.fetchError)
+	  this.props.recipesLoadRecipesById(recipeIds)
+	    .then(this.fetchSuccess)
+	    .catch(this.fetchError)
 	}
 
 	render() {
-		const { children } = this.props
-		const {
-			isFetching,
-			didFetchError
-		} = this.state
+	  const { children } = this.props
+	  const {
+	    isFetching,
+	    didFetchError
+	  } = this.state
 
-		return (
+	  return (
 			<div className={css.getHelpContainer}>
 				<Helmet
-					style={[{
-						cssText: '#react-root { height: 100%; }',
-					}]}
+				  style={[{
+				    cssText: '#react-root { height: 100%; }',
+				  }]}
 				/>
 				<div className={css.getHelpContent}>
 					{!isFetching && <Error
-						content={this.props.content}
-						hasError={didFetchError}
+					  content={this.props.content}
+					  hasError={didFetchError}
 					>
 						{children}
 					</Error>}
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

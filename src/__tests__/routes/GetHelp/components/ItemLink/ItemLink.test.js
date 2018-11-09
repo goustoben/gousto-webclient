@@ -6,70 +6,70 @@ import { Item } from 'goustouicomponents'
 import Link from 'Link'
 
 describe('<ItemLink />', () => {
-	describe('rendering', () => {
-		const wrapper = mount(
+  describe('rendering', () => {
+    const wrapper = mount(
 			<ItemLink
-				label="item-label"
-				to="/test"
-				clientRouted
+			  label="item-label"
+			  to="/test"
+			  clientRouted
 			/>
-		)
-		const link = wrapper.find(Link)
+    )
+    const link = wrapper.find(Link)
 
-		test('a Link is rendered with the correct props', () => {
-			expect(link.prop('to')).toBe('/test')
-			expect(link.prop('clientRouted')).toBe(true)
-		})
+    test('a Link is rendered with the correct props', () => {
+      expect(link.prop('to')).toBe('/test')
+      expect(link.prop('clientRouted')).toBe(true)
+    })
 
-		test('Link is passed the prop clientRouted false when that prop value is passed to ItemLink', () => {
-			const linkNoClientRouted = mount(
+    test('Link is passed the prop clientRouted false when that prop value is passed to ItemLink', () => {
+      const linkNoClientRouted = mount(
 				<ItemLink
-					label="item-label"
-					to="/test"
-					clientRouted={false}
+				  label="item-label"
+				  to="/test"
+				  clientRouted={false}
 				/>
-			)
+      )
 
-			expect(linkNoClientRouted.find(Link).prop('clientRouted')).toBe(false)
-		})
+      expect(linkNoClientRouted.find(Link).prop('clientRouted')).toBe(false)
+    })
 
-		test('an Item is rendered with the passed label', () => {
-			expect(wrapper.text()).toContain('item-label')
-		})
+    test('an Item is rendered with the passed label', () => {
+      expect(wrapper.text()).toContain('item-label')
+    })
 
-		test('the trackClick function is passed to the Item', () => {
-			const aFunction = () => {}
-			const itemLinkWithTracking = mount(
+    test('the trackClick function is passed to the Item', () => {
+      const aFunction = () => {}
+      const itemLinkWithTracking = mount(
 				<ItemLink
-					label="item-label"
-					to="/test"
-					trackClick={aFunction}
+				  label="item-label"
+				  to="/test"
+				  trackClick={aFunction}
 				/>
-			)
+      )
 
-			expect(itemLinkWithTracking.find(Item).prop('trackClick')).toBe(aFunction)
-		})
+      expect(itemLinkWithTracking.find(Item).prop('trackClick')).toBe(aFunction)
+    })
 
-		test('the isHiddenOnMobile value is passed to the Item', () => {
-			let itemLink = mount(
+    test('the isHiddenOnMobile value is passed to the Item', () => {
+      let itemLink = mount(
 				<ItemLink
-					label="item-label"
-					to="/test"
-					isHiddenOnMobile
+				  label="item-label"
+				  to="/test"
+				  isHiddenOnMobile
 				/>
-			)
+      )
 
-			expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(true)
+      expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(true)
 
-			itemLink = mount(
+      itemLink = mount(
 				<ItemLink
-					label="item-label"
-					to="/test"
-					isHiddenOnMobile={false}
+				  label="item-label"
+				  to="/test"
+				  isHiddenOnMobile={false}
 				/>
-			)
+      )
 
-			expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(false)
-		})
-	})
+      expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(false)
+    })
+  })
 })

@@ -7,26 +7,26 @@ import FilterItem from 'routes/Menu/FilterMenu/FilterItem'
 import config from 'config'
 
 describe('<DietTypesFilter />', () => {
-	let wrapper
-	const dietTypesFilters = config.recipes.dietTypes
-	let dietTypes = Immutable.Set([])
-	test('should display a FilterItem for each diet type passed', () => {
-		wrapper = shallow(<DietTypesFilter dietTypes={dietTypes} dietTypesFilters={dietTypesFilters} />)
+  let wrapper
+  const dietTypesFilters = config.recipes.dietTypes
+  let dietTypes = Immutable.Set([])
+  test('should display a FilterItem for each diet type passed', () => {
+    wrapper = shallow(<DietTypesFilter dietTypes={dietTypes} dietTypesFilters={dietTypesFilters} />)
 
-		expect(wrapper.find(FilterItem)).toHaveLength(Object.keys(dietTypesFilters).length)
-	})
+    expect(wrapper.find(FilterItem)).toHaveLength(Object.keys(dietTypesFilters).length)
+  })
 
-	test('should dispatch a filterCurrentDietTypesAdd when clicked', () => {
-		const filterCurrentDietTypesChange = jest.fn()
+  test('should dispatch a filterCurrentDietTypesAdd when clicked', () => {
+    const filterCurrentDietTypesChange = jest.fn()
 
-		wrapper = shallow(<DietTypesFilter
-			dietTypes={dietTypes}
-			dietTypesFilters={dietTypesFilters}
-			filterCurrentDietTypesChange={filterCurrentDietTypesChange}
-  />)
+    wrapper = shallow(<DietTypesFilter
+      dietTypes={dietTypes}
+      dietTypesFilters={dietTypesFilters}
+      filterCurrentDietTypesChange={filterCurrentDietTypesChange}
+    />)
 
-		wrapper.find(FilterItem).first().simulate('click')
+    wrapper.find(FilterItem).first().simulate('click')
 
-		expect(filterCurrentDietTypesChange).toHaveBeenCalledWith('meat')
-	})
+    expect(filterCurrentDietTypesChange).toHaveBeenCalledWith('meat')
+  })
 })

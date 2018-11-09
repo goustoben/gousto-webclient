@@ -15,18 +15,18 @@ const KidsCookForStep = ({ cookForKidsChange, next }) => (
 				<div className={css.row}>
 					<div className={css.left}>
 						<Button
-							fill={false}
-							width="full"
-							onClick={() => { cookForKidsChange(true); next() }}
+						  fill={false}
+						  width="full"
+						  onClick={() => { cookForKidsChange(true); next() }}
 						>
 							Yes
 						</Button>
 					</div>
 					<div className={css.right}>
 						<Button
-							fill={false}
-							width="full"
-							onClick={() => { cookForKidsChange(false); next() }}
+						  fill={false}
+						  width="full"
+						  onClick={() => { cookForKidsChange(false); next() }}
 						>
 							No
 						</Button>
@@ -39,8 +39,8 @@ const KidsCookForStep = ({ cookForKidsChange, next }) => (
 )
 
 KidsCookForStep.propTypes = {
-	cookForKidsChange: React.PropTypes.func.isRequired,
-	next: React.PropTypes.func.isRequired,
+  cookForKidsChange: React.PropTypes.func.isRequired,
+  next: React.PropTypes.func.isRequired,
 }
 
 export default KidsCookForStep
