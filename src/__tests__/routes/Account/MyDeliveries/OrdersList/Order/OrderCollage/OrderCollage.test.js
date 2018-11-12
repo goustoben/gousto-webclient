@@ -7,72 +7,72 @@ import OrderCollage from 'routes/Account/MyDeliveries/OrdersList/Order/OrderColl
 import css from 'routes/Account/MyDeliveries/OrdersList/Order/OrderCollage/OrderCollage.css'
 
 describe('OrderCollage', () => {
-	let sandbox
-	let recipes
+  let sandbox
+  let recipes
 
-	beforeEach(() => {
-		sandbox = sinon.sandbox.create()
-		recipes = Immutable.fromJS({})
-	})
-	afterEach(done => {
-		sandbox.restore()
-		done()
-	})
-	describe('rendering', () => {
-		let wrapper
+  beforeEach(() => {
+    sandbox = sinon.sandbox.create()
+    recipes = Immutable.fromJS({})
+  })
+  afterEach(done => {
+    sandbox.restore()
+    done()
+  })
+  describe('rendering', () => {
+    let wrapper
 
-		beforeEach(() => {
-			wrapper = shallow(<OrderCollage recipes={recipes} />)
-		})
+    beforeEach(() => {
+      wrapper = shallow(<OrderCollage recipes={recipes} />)
+    })
 
-		test('should render a <div> with no props', () => {
-			expect(wrapper.type()).toBe('div')
-		})
-		test('should render one collageContainer', () => {
-			const className = `.${css.collageContainer.split(' ').join('.')}`
-			expect(wrapper.find(className)).toHaveLength(1)
-		})
-		test('should always render four elements with collageItem class', () => {
-			wrapper = mount(<OrderCollage recipes={recipes} />)
-			const className = `.${css.emptyItem.split(' ').join('.')}`
-			expect(wrapper.find(className)).toHaveLength(4)
-		})
-		describe('Renders the correct number of images', () => {
-			test('should render n <img> components where n is recipes length', () => {
-				recipes = Immutable.fromJS({
-					1: {
-						image: 'https://external-img.jpg',
-						recipeTitle: 'Cheesy Pangasius',
-					},
-					2: {
-						image: 'https://external-img.jpg',
-						recipeTitle: 'Cheesy Pangasius',
-					},
-					3: {
-						image: 'https://external-img.jpg',
-						recipeTitle: 'Cheesy Pangasius',
-					},
-					4: {
-						image: 'https://external-img.jpg',
-						recipeTitle: 'Cheesy Pangasius',
-					},
-				})
-				wrapper = mount(<OrderCollage isCommitted recipes={recipes} />)
-				expect(wrapper.find('img').length).toBe(4)
+    test('should render a <div> with no props', () => {
+      expect(wrapper.type()).toBe('div')
+    })
+    test('should render one collageContainer', () => {
+      const className = `.${css.collageContainer.split(' ').join('.')}`
+      expect(wrapper.find(className)).toHaveLength(1)
+    })
+    test('should always render four elements with collageItem class', () => {
+      wrapper = mount(<OrderCollage recipes={recipes} />)
+      const className = `.${css.emptyItem.split(' ').join('.')}`
+      expect(wrapper.find(className)).toHaveLength(4)
+    })
+    describe('Renders the correct number of images', () => {
+      test('should render n <img> components where n is recipes length', () => {
+        recipes = Immutable.fromJS({
+          1: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+          2: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+          3: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+          4: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+        })
+        wrapper = mount(<OrderCollage isCommitted recipes={recipes} />)
+        expect(wrapper.find('img').length).toBe(4)
 
-				recipes = Immutable.fromJS({
-					1: {
-						image: 'https://external-img.jpg',
-						recipeTitle: 'Cheesy Pangasius',
-					},
-					2: {
-						image: 'https://external-img.jpg',
-						recipeTitle: 'Cheesy Pangasius',
-					},
-				})
-				wrapper = mount(<OrderCollage recipes={recipes} />)
-				expect(wrapper.find('img').length).toBe(2)
-			})
-		})
-	})
+        recipes = Immutable.fromJS({
+          1: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+          2: {
+            image: 'https://external-img.jpg',
+            recipeTitle: 'Cheesy Pangasius',
+          },
+        })
+        wrapper = mount(<OrderCollage recipes={recipes} />)
+        expect(wrapper.find('img').length).toBe(2)
+      })
+    })
+  })
 })

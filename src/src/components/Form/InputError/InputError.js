@@ -6,7 +6,7 @@ const InputError = ({ children }) => (
 )
 
 InputError.propTypes = {
-	children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 export default InputError

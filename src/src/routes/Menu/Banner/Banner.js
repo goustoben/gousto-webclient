@@ -6,23 +6,23 @@ import FineDineInBanner from '../FineDineInBanner'
 import TenToTableBanner from '../TenToTableBanner'
 
 const tenToTableValid = () => (
-	new Date() > new Date(config.tenToTableBanner.startDate)
+  new Date() > new Date(config.tenToTableBanner.startDate)
 )
 
 const Banner = ({ isAuthenticated }) => {
-	if (tenToTableValid()) {
-		return <TenToTableBanner />
-	}
+  if (tenToTableValid()) {
+    return <TenToTableBanner />
+  }
 
-	return (isAuthenticated) ? <FineDineInBanner /> : <BoostAndBalanceBanner />
+  return (isAuthenticated) ? <FineDineInBanner /> : <BoostAndBalanceBanner />
 }
 
 Banner.propTypes = {
-	isAuthenticated: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
 }
 
 Banner.defaultProps = {
-	isAuthenticated: false,
+  isAuthenticated: false,
 }
 
 export default Banner

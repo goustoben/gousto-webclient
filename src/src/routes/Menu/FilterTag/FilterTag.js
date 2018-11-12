@@ -3,55 +3,55 @@ import Icon from 'Icon'
 import css from './FilterTag.css'
 import Svg from 'Svg'
 
-const proptypes =  {
-	type: PropTypes.string,
-	text: PropTypes.string,
-	value: PropTypes.string,
-	slug: PropTypes.string,
-	isLoading: PropTypes.bool,
-	collectionFilterChange: PropTypes.func,
-	filterCurrentDietTypesChange: PropTypes.func,
-	filterDietaryAttributesChange: PropTypes.func,
-	filterCurrentTotalTimeChange: PropTypes.func,
+const proptypes = {
+  type: PropTypes.string,
+  text: PropTypes.string,
+  value: PropTypes.string,
+  slug: PropTypes.string,
+  isLoading: PropTypes.bool,
+  collectionFilterChange: PropTypes.func,
+  filterCurrentDietTypesChange: PropTypes.func,
+  filterDietaryAttributesChange: PropTypes.func,
+  filterCurrentTotalTimeChange: PropTypes.func,
 }
 
 const filterTagIcon = ({ slug = null, isLoading }) => {
-	if (slug === 'recommendations') {
-		if (isLoading) {
-			return <Svg className={css.filterTagHeart} fileName="icon-heart-outline" />
-		}
+  if (slug === 'recommendations') {
+    if (isLoading) {
+      return <Svg className={css.filterTagHeart} fileName="icon-heart-outline" />
+    }
 
-		return <Svg className={css.filterTagHeart} fileName="icon-heart" />
-	}
+    return <Svg className={css.filterTagHeart} fileName="icon-heart" />
+  }
 
-	return null
+  return null
 }
 
 const onFilterClick = ({
-	type,
-	value,
-	collectionFilterChange,
-	filterCurrentDietTypesChange,
-	filterDietaryAttributesChange,
-	filterCurrentTotalTimeChange
+  type,
+  value,
+  collectionFilterChange,
+  filterCurrentDietTypesChange,
+  filterDietaryAttributesChange,
+  filterCurrentTotalTimeChange
 }) => {
-	switch (type) {
-		case 'collection':
-			return collectionFilterChange(value)
-		case 'dietType':
-			return filterCurrentDietTypesChange(value)
-		case 'dietaryAttribute':
-			return filterDietaryAttributesChange(value)
-		case 'totalTime':
-			return filterCurrentTotalTimeChange(value)
-		default:
-			return null
-	}
+  switch (type) {
+  case 'collection':
+    return collectionFilterChange(value)
+  case 'dietType':
+    return filterCurrentDietTypesChange(value)
+  case 'dietaryAttribute':
+    return filterDietaryAttributesChange(value)
+  case 'totalTime':
+    return filterCurrentTotalTimeChange(value)
+  default:
+    return null
+  }
 }
 const FilterTag = (props) => (
 	<div
-		className={css.filterTag}
-		onClick={() => onFilterClick(props)}
+	  className={css.filterTag}
+	  onClick={() => onFilterClick(props)}
 	>
 		<span className={css.tagIcon}>
 			<Icon name="fa-times" className={css.tagImageIcon} />
@@ -60,7 +60,6 @@ const FilterTag = (props) => (
 		{filterTagIcon(props)}
 	</div>
 )
-
 
 FilterTag.propTypes = proptypes
 

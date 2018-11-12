@@ -3,13 +3,13 @@ import TestedLoved from 'routes/Home/TestedLoved/TestedLoved'
 import { shallow } from 'enzyme'
 
 describe('TestedLoved', () => {
-	let wrapper
+  let wrapper
 
-	beforeEach(() => {
-		wrapper = shallow(<TestedLoved />)
-	})
+  beforeEach(() => {
+    wrapper = shallow(<TestedLoved />)
+  })
 
-	test('should render a div', () => {
-		expect(wrapper.type()).toBe('div')
-	})
+  test('should render a div', () => {
+    expect(wrapper.type()).toBe('div')
+  })
 })

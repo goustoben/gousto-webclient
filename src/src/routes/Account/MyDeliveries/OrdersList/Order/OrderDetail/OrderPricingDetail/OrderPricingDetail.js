@@ -6,28 +6,28 @@ import Content from 'containers/Content'
 import css from './OrderPricingDetail.css'
 
 const OrderPricingDetail = ({
-	paymentDate,
-	numberOfRecipes,
-	priceBreakdown,
+  paymentDate,
+  numberOfRecipes,
+  priceBreakdown,
 }) => {
-	const flatDiscountAmount = priceBreakdown.get('flatDiscountAmount') != null ? priceBreakdown.get('flatDiscountAmount') : 0
-	const percentageDiscountAmount = priceBreakdown.get('percentageDiscountAmount') != null ? priceBreakdown.get('percentageDiscountAmount') : 0
-	const grossRecipesPrice = priceBreakdown.get('grossRecipesPrice') != null ? priceBreakdown.get('grossRecipesPrice') : ''
-	const grossExtrasPrice = priceBreakdown.get('grossExtrasPrice') != null ? priceBreakdown.get('grossExtrasPrice') : 0
-	const grossShippingPrice = priceBreakdown.get('grossShippingPrice') != null ? priceBreakdown.get('grossShippingPrice') : 0
-	const netOrderPrice = priceBreakdown.get('netOrderPrice') != null ? priceBreakdown.get('netOrderPrice') : ''
+  const flatDiscountAmount = priceBreakdown.get('flatDiscountAmount') != null ? priceBreakdown.get('flatDiscountAmount') : 0
+  const percentageDiscountAmount = priceBreakdown.get('percentageDiscountAmount') != null ? priceBreakdown.get('percentageDiscountAmount') : 0
+  const grossRecipesPrice = priceBreakdown.get('grossRecipesPrice') != null ? priceBreakdown.get('grossRecipesPrice') : ''
+  const grossExtrasPrice = priceBreakdown.get('grossExtrasPrice') != null ? priceBreakdown.get('grossExtrasPrice') : 0
+  const grossShippingPrice = priceBreakdown.get('grossShippingPrice') != null ? priceBreakdown.get('grossShippingPrice') : 0
+  const netOrderPrice = priceBreakdown.get('netOrderPrice') != null ? priceBreakdown.get('netOrderPrice') : ''
 
-	let discountRender = null
-	if (percentageDiscountAmount && flatDiscountAmount) {
-		discountRender = (
+  let discountRender = null
+  if (percentageDiscountAmount && flatDiscountAmount) {
+    discountRender = (
 			<div className={`${css.row} ${css.green} ${css.separationBelow}`}>
 				<span>{percentageDiscountAmount}% Discount</span>
 				<span>-£{flatDiscountAmount.toFixed(2)}</span>
 			</div>
-		)
-	}
-	if (!percentageDiscountAmount && flatDiscountAmount) {
-		discountRender = (
+    )
+  }
+  if (!percentageDiscountAmount && flatDiscountAmount) {
+    discountRender = (
 			<div className={`${css.row} ${css.green} ${css.separationBelow}`}>
 				<span>
 					<Content contentKeys="mydeliveriesOrderOrderpricingDiscountcallout" >
@@ -36,10 +36,10 @@ const OrderPricingDetail = ({
 				</span>
 				<span>-£{flatDiscountAmount.toFixed(2)}</span>
 			</div>
-		)
-	}
+    )
+  }
 
-	return (
+  return (
 		<div className={css.paymentInfo} data-testing="recipesPricingDetailSection">
 			<div className={`${css.row} ${css.bold}`}>
 				Payment on {paymentDate}
@@ -48,7 +48,7 @@ const OrderPricingDetail = ({
 				<span>{numberOfRecipes} recipes</span>
 				{typeof(grossRecipesPrice) === 'number' ?
 					<span>£{grossRecipesPrice.toFixed(2)}</span>
-					: null}
+				  : null}
 			</div>
 			{discountRender}
 			{grossExtrasPrice ?
@@ -60,7 +60,7 @@ const OrderPricingDetail = ({
 					</span>
 					<span>£{grossExtrasPrice.toFixed(2)}</span>
 				</div>
-				: null}
+			  : null}
 			<div className={`${css.row} ${css.separationBelow}`}>
 				<span>
 					<Content contentKeys="mydeliveriesOrderOrderpricingDelivery" >
@@ -69,7 +69,7 @@ const OrderPricingDetail = ({
 				</span>
 				{grossShippingPrice ?
 					<span>£{grossShippingPrice.toFixed(2)}</span>
-					:
+				  :
 					<span>
 						<Content contentKeys="mydeliveriesOrderOrderpricingDeliveryfree" >
 							<span>Free</span>
@@ -81,29 +81,29 @@ const OrderPricingDetail = ({
 				<span>Total</span>
 				{typeof(netOrderPrice) === 'number' ?
 					<span>£{netOrderPrice.toFixed(2)}</span>
-					: null}
+				  : null}
 			</div>
 		</div>
-	)
+  )
 }
 
 OrderPricingDetail.propTypes = {
-	paymentDate: PropTypes.string,
-	numberOfRecipes: PropTypes.number,
-	priceBreakdown: ImmutablePropTypes.mapContains({
-		flatDiscountAmount: PropTypes.number,
-		percentageDiscountAmount: PropTypes.number,
-		grossRecipesPrice: PropTypes.number,
-		grossExtrasPrice: PropTypes.number,
-		grossShippingPrice: PropTypes.number,
-		netOrderPrice: PropTypes.number,
-	}),
+  paymentDate: PropTypes.string,
+  numberOfRecipes: PropTypes.number,
+  priceBreakdown: ImmutablePropTypes.mapContains({
+    flatDiscountAmount: PropTypes.number,
+    percentageDiscountAmount: PropTypes.number,
+    grossRecipesPrice: PropTypes.number,
+    grossExtrasPrice: PropTypes.number,
+    grossShippingPrice: PropTypes.number,
+    netOrderPrice: PropTypes.number,
+  }),
 }
 
 OrderPricingDetail.defaultProps = {
-	paymentDate: '',
-	numberOfRecipes: 0,
-	priceBreakdown: Immutable.Map({}),
+  paymentDate: '',
+  numberOfRecipes: 0,
+  priceBreakdown: Immutable.Map({}),
 }
 
 export default OrderPricingDetail

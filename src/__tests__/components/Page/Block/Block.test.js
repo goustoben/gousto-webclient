@@ -6,22 +6,22 @@ import sinon from 'sinon'
 import Block from 'Page/Block'
 
 describe('Page Block', () => {
-	let wrapper
+  let wrapper
 
-	describe('rendering', () => {
-		test('should return a <div>', () => {
-			wrapper = shallow(<Block />)
-			expect(wrapper.type()).toBe('div')
-		})
+  describe('rendering', () => {
+    test('should return a <div>', () => {
+      wrapper = shallow(<Block />)
+      expect(wrapper.type()).toBe('div')
+    })
 
-		test('should render children', () => {
-			wrapper = shallow(
+    test('should render children', () => {
+      wrapper = shallow(
 				<Block>
 					<p />
 					<p />
 				</Block>,
-			)
-			expect(wrapper.find('p')).toHaveLength(2)
-		})
-	})
+      )
+      expect(wrapper.find('p')).toHaveLength(2)
+    })
+  })
 })

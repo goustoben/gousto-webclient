@@ -5,44 +5,44 @@ import css from './Address.css'
 
 class Address extends React.PureComponent {
 	static propTypes = {
-		addressName: PropTypes.string,
-		address: PropTypes.string,
-		town: PropTypes.string,
-		postcode: PropTypes.string,
-		isSelected: PropTypes.bool,
-		addressId: PropTypes.string,
-		selectAddress: PropTypes.func,
+	  addressName: PropTypes.string,
+	  address: PropTypes.string,
+	  town: PropTypes.string,
+	  postcode: PropTypes.string,
+	  isSelected: PropTypes.bool,
+	  addressId: PropTypes.string,
+	  selectAddress: PropTypes.func,
 	}
 
 	static defaultProps = {
-		addressName: '',
-		address: '',
-		town: '',
-		postcode: '',
-		isSelected: false,
+	  addressName: '',
+	  address: '',
+	  town: '',
+	  postcode: '',
+	  isSelected: false,
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+	  store: React.PropTypes.object.isRequired,
 	}
 
 	onClick = (addressId) => {
-		this.props.selectAddress(addressId)
+	  this.props.selectAddress(addressId)
 	}
 
 	render() {
-		const { isSelected } = this.props
+	  const { isSelected } = this.props
 
-		return (
+	  return (
 			<div className={css.deliveryContainer}>
 				<div className={css.checkbox}>
 					<div
-						className={
-							classnames(
-								[css.square],
-								{ [css.cantClick]: isSelected })
-						}
-						onClick={!isSelected ? () => this.onClick(this.props.addressId) : null}
+					  className={
+					    classnames(
+					      [css.square],
+					      { [css.cantClick]: isSelected })
+					  }
+					  onClick={!isSelected ? () => this.onClick(this.props.addressId) : null}
 					>
 						{isSelected ? <div className={css.tick}></div> : null}
 					</div>
@@ -52,7 +52,7 @@ class Address extends React.PureComponent {
 					<p>{this.props.address}, {this.props.town}, {this.props.postcode}</p>
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

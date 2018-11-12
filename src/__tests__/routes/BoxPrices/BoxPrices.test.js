@@ -7,26 +7,28 @@ import boxPricesMock from './__mocks__/boxPrices.json'
 
 describe("Box Prices", () => {
 
-	it ("Will render a loading screen when fetching data", () => {
-		const component = shallow(
+  it ("Will render a loading screen when fetching data", () => {
+    const component = shallow(
 			<BoxPrices data={{
-				loading: true,
-			}}/>
-		)
+			  loading: true,
+			}}
+			/>
+    )
 
-		expect(component.find(Loading).length).toEqual(1)
-		expect(component.find(BoxPricesList).length).toEqual(0)
-	})
+    expect(component.find(Loading).length).toEqual(1)
+    expect(component.find(BoxPricesList).length).toEqual(0)
+  })
 
-	it ("Will render a BoxPriceList when data is returned", () => {
-		const component = shallow(
+  it ("Will render a BoxPriceList when data is returned", () => {
+    const component = shallow(
 			<BoxPrices data={{
-				loading: false,
-				boxPrices: boxPricesMock,
-			}}/>
-		)
+			  loading: false,
+			  boxPrices: boxPricesMock,
+			}}
+			/>
+    )
 
-		expect(component.find(Loading).length).toEqual(0)
-		expect(component.find(BoxPricesList).length).toEqual(1)
-	})
+    expect(component.find(Loading).length).toEqual(0)
+    expect(component.find(BoxPricesList).length).toEqual(1)
+  })
 })

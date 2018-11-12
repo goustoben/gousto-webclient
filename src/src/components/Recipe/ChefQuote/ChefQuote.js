@@ -6,11 +6,11 @@ import classNames from 'classnames'
 import { getMenuRecipeImage } from 'utils/image'
 
 const ChefQuote = ({ chef, quote }) => {
-	let chefProfile
-	if (Immutable.Iterable.isIterable(chef) && chef.size > 0) {
-		const chefImage = chef.getIn(['media', 'images']).find((value) => value.get('type') === 'headshot-image')
-		const signatureImage = chef.getIn(['media', 'images']).find((value) => value.get('type') === 'signature-image')
-		chefProfile = (
+  let chefProfile
+  if (Immutable.Iterable.isIterable(chef) && chef.size > 0) {
+    const chefImage = chef.getIn(['media', 'images']).find((value) => value.get('type') === 'headshot-image')
+    const signatureImage = chef.getIn(['media', 'images']).find((value) => value.get('type') === 'signature-image')
+    chefProfile = (
 			<div className={css.row}>
 				<div className={css.mainImage}>
 					<img src={getMenuRecipeImage(chefImage.get('urls'), 400)} alt={chefImage.get('title')} className={css.secondaryImage} />
@@ -21,10 +21,10 @@ const ChefQuote = ({ chef, quote }) => {
 						<span>{chef.get('name')}</span>}
 				</div>
 			</div>
-		)
-	}
+    )
+  }
 
-	return (
+  return (
 		<div className={css.container}>
 			<div className={css.headingContainer}>
 				{chefProfile}
@@ -39,12 +39,12 @@ const ChefQuote = ({ chef, quote }) => {
 				</div>
 			</div>
 		</div>
-	)
+  )
 }
 
 ChefQuote.propTypes = {
-	chef: React.PropTypes.instanceOf(Immutable.Map),
-	quote: React.PropTypes.string.isRequired,
+  chef: React.PropTypes.instanceOf(Immutable.Map),
+  quote: React.PropTypes.string.isRequired,
 }
 
 export default ChefQuote

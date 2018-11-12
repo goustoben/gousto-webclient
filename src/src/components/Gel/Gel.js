@@ -11,18 +11,18 @@ const Gel = ({ className, size, children, color }) => (
 )
 
 Gel.propTypes = {
-	color: PropTypes.oneOf(['white', 'bronze']),
-	className: PropTypes.string,
-	children: PropTypes.oneOfType([
-		PropTypes.node,
-		PropTypes.element,
-	]),
-	size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large']),
+  color: PropTypes.oneOf(['white', 'bronze']),
+  className: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.element,
+  ]),
+  size: PropTypes.oneOf(['xsmall', 'small', 'medium', 'large']),
 }
 
 Gel.defaultProps = {
-	size: 'medium',
-	color: 'white',
+  size: 'medium',
+  color: 'white',
 }
 
 export default Gel

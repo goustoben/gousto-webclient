@@ -6,92 +6,92 @@ import config from 'config'
 
 class MobileMenu extends React.PureComponent {
 	static propTypes = {
-		show: React.PropTypes.bool.isRequired,
-		menuItems: React.PropTypes.array.isRequired,
-		isAuthenticated: React.PropTypes.bool.isRequired,
-		loginFunc: React.PropTypes.func.isRequired,
-		logoutFunc: React.PropTypes.func.isRequired,
-		hideNav: React.PropTypes.bool.isRequired,
-		promoCodeUrl: React.PropTypes.string,
+	  show: React.PropTypes.bool.isRequired,
+	  menuItems: React.PropTypes.array.isRequired,
+	  isAuthenticated: React.PropTypes.bool.isRequired,
+	  loginFunc: React.PropTypes.func.isRequired,
+	  logoutFunc: React.PropTypes.func.isRequired,
+	  hideNav: React.PropTypes.bool.isRequired,
+	  promoCodeUrl: React.PropTypes.string,
 	}
 	static defaultProps = {
-		isAuthenticated: false,
+	  isAuthenticated: false,
 	}
 
 	renderAuthLink = (isAuthenticated, loginMenu) => {
-		if (!isAuthenticated) {
-			return loginMenu
-		}
+	  if (!isAuthenticated) {
+	    return loginMenu
+	  }
 
-		return (
+	  return (
 			<a href={config.routes.client.myGousto} className={css.menuItem}>
 				<li>
 					<span className={css['icon-login']} />
 					My Gousto
 				</li>
 			</a>
-		)
+	  )
 	}
 
 	renderMenuItems = () => (
-		this.props.menuItems.map(menuItem => {
-			if (menuItem.name === 'Home') {
-				return (
+	  this.props.menuItems.map(menuItem => {
+	    if (menuItem.name === 'Home') {
+	      return (
 					<Link
-						to={menuItem.url}
-						className={css.menuItem}
-						activeClassName={classNames(css.menuItem, css.disabled)}
-						key={menuItem.name}
-						clientRouted={!Boolean(this.props.promoCodeUrl)}
-						onlyActiveOnIndex
+					  to={menuItem.url}
+					  className={css.menuItem}
+					  activeClassName={classNames(css.menuItem, css.disabled)}
+					  key={menuItem.name}
+					  clientRouted={!Boolean(this.props.promoCodeUrl)}
+					  onlyActiveOnIndex
 					>
 						<li className={css.listElement}>
 							<span className={css[`icon-${menuItem.icon}`]} />
 							{menuItem.name}
 						</li>
 					</Link>
-				)
-			}
+	      )
+	    }
 
-			if (menuItem.disabled) {
-				return (
+	    if (menuItem.disabled) {
+	      return (
 					<span className={classNames(css.menuItem, css.disabled)} key={menuItem.name}>
 						<li className={css.listElement}>
 							<span className={css[`icon-${menuItem.icon}`]} />
 							{menuItem.name}
 						</li>
 					</span>
-				)
-			}
+	      )
+	    }
 
-			return (
+	    return (
 				<Link to={menuItem.url} className={css.menuItem} key={menuItem.name} clientRouted={menuItem.clientRouted}>
 					<li className={css.listElement}>
 						<span className={css[`icon-${menuItem.icon}`]} />
 						{menuItem.name}
 					</li>
 				</Link>
-			)
-		})
+	    )
+	  })
 	)
 
 	render() {
-		const show = this.props.show
-		const isAuthenticated = this.props.isAuthenticated
-		const testingId = isAuthenticated ? 'burgerMenuLogout' : 'burgerMenuLogin'
-		const loginMenu = (
+	  const show = this.props.show
+	  const isAuthenticated = this.props.isAuthenticated
+	  const testingId = isAuthenticated ? 'burgerMenuLogout' : 'burgerMenuLogin'
+	  const loginMenu = (
 			<span className={css.menuItem} onClick={(isAuthenticated) ? this.props.logoutFunc : this.props.loginFunc}>
 				<li className={css.listElement}>
 					<span className={(isAuthenticated) ? css['icon-logout'] : css['icon-login']} data-testing={testingId} />
 					{(isAuthenticated) ? 'Logout' : 'Login'}
 				</li>
 			</span>
-		)
+	  )
 
-		return (
+	  return (
 			<div
-				className={classNames({ [css.hidden]: !show, [css.show]: show })}
-				ref={ref => { this.domNode = ref }}
+			  className={classNames({ [css.hidden]: !show, [css.show]: show })}
+			  ref={ref => { this.domNode = ref }}
 			>
 				<ul className={css.list}>
 					{this.renderAuthLink(isAuthenticated, loginMenu)}
@@ -99,7 +99,7 @@ class MobileMenu extends React.PureComponent {
 					{(isAuthenticated) ? loginMenu : ''}
 				</ul>
 			</div>
-		)
+	  )
 	}
 }
 

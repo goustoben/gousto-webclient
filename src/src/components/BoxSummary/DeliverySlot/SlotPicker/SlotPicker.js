@@ -7,10 +7,10 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => (
 	<Button color="tertiary" width="full">
 		{slots[date] && slots[date].map(slot => (
 			<Segment
-				key={slot.value}
-				fill={slot.value === slotId}
-				onClick={() => { onClick(slot.value) }}
-				className={(slots[date].length > 2) ? css.compact : ''}
+			  key={slot.value}
+			  fill={slot.value === slotId}
+			  onClick={() => { onClick(slot.value) }}
+			  className={(slots[date].length > 2) ? css.compact : ''}
 			>
 				<span className={css.fullWidth}>
 					<span className={(slots[date].length > 2) ? css.blockLabel : css.label}>{slot.label}</span>
@@ -22,10 +22,10 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => (
 )
 
 SlotPicker.propTypes = {
-	slots: React.PropTypes.object,
-	date: React.PropTypes.string,
-	slotId: React.PropTypes.string,
-	onClick: React.PropTypes.func,
+  slots: React.PropTypes.object,
+  date: React.PropTypes.string,
+  slotId: React.PropTypes.string,
+  onClick: React.PropTypes.func,
 }
 
 export default SlotPicker

@@ -12,17 +12,17 @@ const SectionHeader = ({ title, children, type, contentAlign, contentSizeMax }) 
 )
 
 SectionHeader.propTypes = {
-	children: PropTypes.node,
-	contentAlign: PropTypes.oneOf(['', 'left', 'center', 'right']),
-	contentSizeMax: PropTypes.oneOf(['', 'LG']),
-	type: PropTypes.oneOf(['', 'page', 'article', 'minorArticle']),
-	title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+  children: PropTypes.node,
+  contentAlign: PropTypes.oneOf(['', 'left', 'center', 'right']),
+  contentSizeMax: PropTypes.oneOf(['', 'LG']),
+  type: PropTypes.oneOf(['', 'page', 'article', 'minorArticle']),
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
 }
 
 SectionHeader.defaultProps = {
-	contentAlign: '',
-	contentSizeMax: '',
-	type: 'page',
+  contentAlign: '',
+  contentSizeMax: '',
+  type: 'page',
 }
 
 export default SectionHeader

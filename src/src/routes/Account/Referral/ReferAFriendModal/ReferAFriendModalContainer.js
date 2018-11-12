@@ -6,7 +6,7 @@ import { ReferAFriendModal } from './ReferAFriendModal'
 const mapStateToProps = () => ({})
 
 const ReferAFriendContainer = connect(mapStateToProps, {
-	userReferAFriend,
+  userReferAFriend,
 })(ReferAFriendModal)
 
 export default ReferAFriendContainer

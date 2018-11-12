@@ -11,32 +11,32 @@ import BoxPricesContent from './BoxPricesContent'
 
 class BoxPrices extends React.PureComponent {
 	static propTypes = {
-		data: PropTypes.shape({
-			...propType(boxPriceQuery),
-			loading: PropTypes.boolean,
-			error: PropTypes.object,
-		}),
+	  data: PropTypes.shape({
+	    ...propType(boxPriceQuery),
+	    loading: PropTypes.boolean,
+	    error: PropTypes.object,
+	  }),
 	}
 
 	static defaultProps = {}
 
 	render() {
-		const { boxPrices, loading, error } = this.props.data
+	  const { boxPrices, loading, error } = this.props.data
 
-		return (
+	  return (
 			<div>
 				{loading && <div className={css.loadingOverlay}><Loading /></div>}
 				<div className={loading && css.loading}>
 					<Hero
-						style={{ backgroundPosition: '0 66%', backgroundSize: 'cover' }}
-						imageUrl={config.hero.image}
-						headerText={config.hero.header}
+					  style={{ backgroundPosition: '0 66%', backgroundSize: 'cover' }}
+					  imageUrl={config.hero.image}
+					  headerText={config.hero.header}
 					/>
 					{!loading && <BoxPricesList boxPrices={boxPrices || []} type="gourmet" error={error} />}
 					<BoxPricesContent />
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

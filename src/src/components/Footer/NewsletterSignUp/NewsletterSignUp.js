@@ -1,33 +1,32 @@
 import React from 'react'
 import css from './NewsletterSignUp.css'
-import { Button } from 'goustouicomponents'
-import { Segment } from 'goustouicomponents'
+import { Button, Segment } from 'goustouicomponents'
 
 class NewsletterSignUp extends React.Component {
 
 	static state = {
-		email: null,
+	  email: null,
 	}
 
 	static propTypes = {
-		onSignup: React.PropTypes.func.isRequired,
-		signup: React.PropTypes.object.isRequired,
+	  onSignup: React.PropTypes.func.isRequired,
+	  signup: React.PropTypes.object.isRequired,
 	}
 
 	handleChange = (event) => {
-		this.setState({ email: event.target.value })
+	  this.setState({ email: event.target.value })
 	}
 
 	handleSubmit = (e) => {
-		e.preventDefault()
-		const input = this.refs.email
-		if (!this.props.signup.get('pending') && input && input.checkValidity()) {
-			this.props.onSignup(this.state.email)
-		} else {
-			if (!input) {
-				this.props.onSignup(this.state.email)
-			}
-		}
+	  e.preventDefault()
+	  const input = this.refs.email
+	  if (!this.props.signup.get('pending') && input && input.checkValidity()) {
+	    this.props.onSignup(this.state.email)
+	  } else {
+	    if (!input) {
+	      this.props.onSignup(this.state.email)
+	    }
+	  }
 	}
 
 	render = () => (

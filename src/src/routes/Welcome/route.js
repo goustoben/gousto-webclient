@@ -4,7 +4,7 @@ import WelcomeContainer from './WelcomeContainer'
 import WelcomeImmediate from './VariationImmediate'
 import WelcomeSubscription from './VariationSubscription'
 import WelcomeStorytelling from './VariationStorytelling'
-import { checkValidSession } from './../../utils/routes'
+import { checkValidSession } from "../../utils/routes"
 
 export default (store) => (
 	<Route>

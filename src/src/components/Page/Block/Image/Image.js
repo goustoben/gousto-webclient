@@ -6,8 +6,8 @@ import css from './Image.css'
 const BlockImage = (props) => (
 	<div className={css.container}>
 		<Image
-			className={css.image}
-			{...props}
+		  className={css.image}
+		  {...props}
 		/>
 	</div>
 )

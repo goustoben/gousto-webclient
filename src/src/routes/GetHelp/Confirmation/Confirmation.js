@@ -21,12 +21,12 @@ const Confirmation = ({ content }) => (
 )
 
 Confirmation.propTypes = {
-	content: PropTypes.shape({
-		title: PropTypes.string.isRequired,
-		button1: PropTypes.string.isRequired,
-		button2: PropTypes.string.isRequired,
-		confirmationBody: PropTypes.string.isRequired,
-	}),
+  content: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    button1: PropTypes.string.isRequired,
+    button2: PropTypes.string.isRequired,
+    confirmationBody: PropTypes.string.isRequired,
+  }),
 }
 
 export default Confirmation

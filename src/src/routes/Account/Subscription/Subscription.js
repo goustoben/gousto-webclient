@@ -21,10 +21,10 @@ const Subscription = ({ startSubscriptionPause }) => (
 				</p>
 				<div className={css.linkWrapper}>
 					<LinkButton
-						fill
-						to={config.client.myDeliveries}
-						clientRouted={false}
-						className={css.linkBase}
+					  fill
+					  to={config.client.myDeliveries}
+					  clientRouted={false}
+					  className={css.linkBase}
 					>
 						Skip boxes
 					</LinkButton>
@@ -38,11 +38,11 @@ const Subscription = ({ startSubscriptionPause }) => (
 )
 
 Subscription.propTypes = {
-	startSubscriptionPause: React.PropTypes.func,
+  startSubscriptionPause: React.PropTypes.func,
 }
 
 Subscription.defaultProps = {
-	startSubscriptionPause: () => {},
+  startSubscriptionPause: () => {},
 }
 
 export default Subscription

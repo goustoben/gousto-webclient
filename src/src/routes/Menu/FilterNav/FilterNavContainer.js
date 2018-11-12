@@ -8,21 +8,21 @@ import { getFilterCTAText } from 'selectors/filters'
 import { getCurrentCollectionSlug } from '../selectors/menu'
 
 const handleScroll = withScroll({
-	height: 50,
-	propName: 'sticky',
+  height: 50,
+  propName: 'sticky',
 })
 
 const connected = connect((state, ownProp) => ({
-	ctaText: getFilterCTAText(state),
-	menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
-	ifRecommendationIsSelected: getCurrentCollectionSlug(state) === 'recommendations',
-	isLoadingHeart: ownProp.showLoading,
+  ctaText: getFilterCTAText(state),
+  menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
+  ifRecommendationIsSelected: getCurrentCollectionSlug(state) === 'recommendations',
+  isLoadingHeart: ownProp.showLoading,
 }), {
-	onClick: filterActions.filterMenuOpen,
+  onClick: filterActions.filterMenuOpen,
 })
 
 export default compose(
-	handleScroll,
-	connected,
-	pure,
+  handleScroll,
+  connected,
+  pure,
 )(FilterNav)

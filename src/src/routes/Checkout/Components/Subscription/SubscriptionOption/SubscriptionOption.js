@@ -6,13 +6,13 @@ import css from './SubscriptionOption.css'
 const SubscriptionOption = ({ name, id, title, description, checked }) => (
 	<label className={css.container}>
 		<Field
-			name={name}
-			value={id}
-			component="input"
-			type="radio"
-			checked={checked}
-			className={css.radio}
-			readOnly
+		  name={name}
+		  value={id}
+		  component="input"
+		  type="radio"
+		  checked={checked}
+		  className={css.radio}
+		  readOnly
 		/>
 		<div className={css.content}>
 			<p className={css.title}>{title}</p>
@@ -24,11 +24,11 @@ const SubscriptionOption = ({ name, id, title, description, checked }) => (
 SubscriptionOption.defaultProps = {}
 
 SubscriptionOption.propTypes = {
-	name: PropTypes.string,
-	id: PropTypes.number,
-	title: PropTypes.string,
-	description: PropTypes.string,
-	checked: PropTypes.bool,
+  name: PropTypes.string,
+  id: PropTypes.number,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  checked: PropTypes.bool,
 }
 
 export default SubscriptionOption

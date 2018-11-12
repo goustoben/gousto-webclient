@@ -3,11 +3,11 @@ import actions from 'actions'
 import NewsletterSignUp from './NewsletterSignUp'
 
 const mapStateToProps = (state) => (
-	{
-		signup: state.newsletterSignup,
-	}
+  {
+    signup: state.newsletterSignup,
+  }
 )
 
 export default connect(mapStateToProps, {
-	onSignup: actions.newsletterSignup,
+  onSignup: actions.newsletterSignup,
 })(NewsletterSignUp)

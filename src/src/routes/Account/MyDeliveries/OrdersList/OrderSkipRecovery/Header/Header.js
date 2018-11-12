@@ -6,7 +6,7 @@ import Svg from 'Svg'
 import css from './Header.css'
 
 const propTypes = {
-	offer: PropTypes.shape({
+  offer: PropTypes.shape({
     formatted_value: PropTypes.string,
     raw_message: PropTypes.shape({
       text: PropTypes.string,
@@ -14,18 +14,18 @@ const propTypes = {
         date: PropTypes.string,
         value: PropTypes.string,
       }),
-		}),
-	}),
-	featureFlag: PropTypes.bool,
+    }),
+  }),
+  featureFlag: PropTypes.bool,
 }
 
 const defaultProps = {
-	offer: null,
-	featureFlag: false,
+  offer: null,
+  featureFlag: false,
 }
 
 const Header = ({ offer, featureFlag }) => (
-	(featureFlag && offer) ? (
+  (featureFlag && offer) ? (
 		<div>
 		<div className={css.header}>
 			<div className={css.mask}>
@@ -38,7 +38,7 @@ const Header = ({ offer, featureFlag }) => (
 				</div>
 			</div>
 		</div>
-	) : <div className={css.spacer} />
+  ) : <div className={css.spacer} />
 )
 
 Header.propTypes = propTypes

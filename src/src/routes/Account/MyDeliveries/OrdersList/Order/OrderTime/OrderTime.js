@@ -6,13 +6,13 @@ const OrderTime = ({ start, end }) => (
 )
 
 OrderTime.propTypes = {
-	start: PropTypes.string,
-	end: PropTypes.string,
+  start: PropTypes.string,
+  end: PropTypes.string,
 }
 
 OrderTime.defaultProps = {
-	start: '',
-	end: '',
+  start: '',
+  end: '',
 }
 
 export default OrderTime

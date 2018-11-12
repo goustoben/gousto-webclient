@@ -11,13 +11,13 @@ const Banner = ({ title, version }) => (
 )
 
 Banner.propTypes = {
-	title: React.PropTypes.string,
-	version: React.PropTypes.string,
+  title: React.PropTypes.string,
+  version: React.PropTypes.string,
 }
 
 Banner.defaultProps = {
-	title: '',
-	version: 'Desktop',
+  title: '',
+  version: 'Desktop',
 }
 
 export default Banner

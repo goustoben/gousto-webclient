@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 import RateRecipes from './RateRecipes'
 
 function mapStateToProps() {
-	return {
+  return {
 
-	}
+  }
 }
 
 const RateRecipesContainer = connect(mapStateToProps, {

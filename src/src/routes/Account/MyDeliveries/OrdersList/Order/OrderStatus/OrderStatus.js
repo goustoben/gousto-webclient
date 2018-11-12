@@ -2,52 +2,51 @@ import React, { PropTypes } from 'react'
 import css from './OrderStatus.css'
 import Content from 'containers/Content'
 
-
 const OrderStatus = ({ orderState, whenCutoff, whenMenuOpen }) => (
 	<div>
 		{orderState === 'scheduled' ?
 			<p className={css.orderStatus}>Menu open {whenMenuOpen}</p>
-		: null}
+		  : null}
 		{orderState === 'menu open' ?
 			<p className={css.orderStatus}>{whenCutoff} left to choose recipes</p>
-		: null}
+		  : null}
 		{orderState === 'recipes chosen' ?
 			<p className={css.orderStatus}>{whenCutoff} left to edit this box</p>
-		: null}
+		  : null}
 		{orderState === 'confirmed' ?
 			<p className={css.orderStatus}>
 				<Content contentKeys="myDeliveriesOrderOrderStatusConfirmed" >
 					<span>This box is being prepared</span>
 				</Content>
 			</p>
-		: null}
+		  : null}
 		{orderState === 'dispatched' ?
 			<p className={css.orderStatus}>
 				<Content contentKeys="myDeliveriesOrderOrderStatusDispatched" >
 					<span>This box is out for delivery</span>
 				</Content>
 			</p>
-		: null}
+		  : null}
 		{orderState === 'cancelled' ?
 			<p className={css.orderStatus}>
 				<Content contentKeys="myDeliveriesOrderOrderStatusCancelled" >
 					<span>You cannot restore this box. Please add a new one.</span>
 				</Content>
 			</p>
-		: null}
+		  : null}
 	</div>
 )
 
 OrderStatus.propTypes = {
-	orderState: PropTypes.string,
-	whenCutoff: PropTypes.string,
-	whenMenuOpen: PropTypes.string,
+  orderState: PropTypes.string,
+  whenCutoff: PropTypes.string,
+  whenMenuOpen: PropTypes.string,
 }
 
 OrderStatus.defaultProps = {
-	orderState: '',
-	whenCutoff: '',
-	whenMenuOpen: '',
+  orderState: '',
+  whenCutoff: '',
+  whenMenuOpen: '',
 }
 
 export default OrderStatus

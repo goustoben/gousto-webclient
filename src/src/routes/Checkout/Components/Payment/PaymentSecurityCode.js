@@ -8,21 +8,21 @@ import cssPayment from './Payment.css'
 import cssSecurityCode from './PaymentSecurityCode.css'
 
 const css = {
-	...cssPayment,
-	...cssSecurityCode,
+  ...cssPayment,
+  ...cssSecurityCode,
 }
 
 const normalizeSecurityCode = (value) => {
-	if (!value) {
-		return value
-	}
-	const onlyNums = value.replace(/[^\d]/g, '')
+  if (!value) {
+    return value
+  }
+  const onlyNums = value.replace(/[^\d]/g, '')
 
-	if (onlyNums.length > 3) {
-		return onlyNums.substring(0, onlyNums.length - 1)
-	}
+  if (onlyNums.length > 3) {
+    return onlyNums.substring(0, onlyNums.length - 1)
+  }
 
-	return onlyNums
+  return onlyNums
 }
 
 /**
@@ -34,18 +34,18 @@ const PaymentSecurityCode = ({ receiveRef, sectionName }) => (
 		<div className={css.securityCodeWrapper}>
 			<div className={css.securityCodeField}>
 				<Field
-					name="cv2"
-					component={ReduxFormInput}
-					inputType="Input"
-					pattern="[0-9]*"
-					color="gray"
-					label="Security code"
-					mask
-					normalize={normalizeSecurityCode}
-					withRef
-					ref={receiveRef}
-					refId={`${sectionName}.cv2`}
-					data-testing="checkoutCardSecurityCodeInput"
+				  name="cv2"
+				  component={ReduxFormInput}
+				  inputType="Input"
+				  pattern="[0-9]*"
+				  color="gray"
+				  label="Security code"
+				  mask
+				  normalize={normalizeSecurityCode}
+				  withRef
+				  ref={receiveRef}
+				  refId={`${sectionName}.cv2`}
+				  data-testing="checkoutCardSecurityCodeInput"
 				/>
 			</div>
 			<div className={css.securityCodeTooltip}>
@@ -62,12 +62,12 @@ const PaymentSecurityCode = ({ receiveRef, sectionName }) => (
 )
 
 PaymentSecurityCode.propTypes = {
-	receiveRef: React.PropTypes.func,
-	sectionName: React.PropTypes.string.isRequired,
+  receiveRef: React.PropTypes.func,
+  sectionName: React.PropTypes.string.isRequired,
 }
 
 PaymentSecurityCode.defaultProps = {
-	receiveRef: () => {},
+  receiveRef: () => {},
 }
 
 export default PaymentSecurityCode

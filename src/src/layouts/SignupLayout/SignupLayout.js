@@ -3,14 +3,13 @@ import Header from 'Header'
 import CookieBanner from 'CookieBanner'
 import css from './SignupLayout.css'
 
-
 class SignupLayout extends React.PureComponent {
 	static propTypes = {
-		children: PropTypes.object.isRequired,
+	  children: PropTypes.object.isRequired,
 	}
 
 	render() {
-		return (
+	  return (
 			<div className={css.pageContainer}>
 				<div className={css.headerContainer}>
 					<CookieBanner />
@@ -18,7 +17,7 @@ class SignupLayout extends React.PureComponent {
 				</div>
 				{this.props.children}
 			</div>
-		)
+	  )
 	}
 }
 

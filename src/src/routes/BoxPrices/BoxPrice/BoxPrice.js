@@ -6,18 +6,17 @@ import BoxInfo from '../BoxInfo'
 import css from './BoxPrice.css'
 import config from 'config/boxprices'
 
-
 class BoxType extends React.PureComponent {
 	static propTypes = {
-		boxInfo: PropTypes.array,
-		numPersons: PropTypes.number,
+	  boxInfo: PropTypes.array,
+	  numPersons: PropTypes.number,
 	}
 
 	render() {
-		const { boxInfo, numPersons } = this.props
-		const boxType = config.boxTypes[numPersons]
+	  const { boxInfo, numPersons } = this.props
+	  const boxType = config.boxTypes[numPersons]
 
-		return (
+	  return (
 			<div className={css.container}>
 				<h2 className={css.title}>
 					{boxType.type} box
@@ -29,11 +28,11 @@ class BoxType extends React.PureComponent {
 				<div className={css.boxInfoList}>
 					{boxInfo.map(info => (
 						<BoxInfo
-							key={`box-info-${numPersons}-${info.num_portions}`}
-							numPortions={info.num_portions}
-							pricePerPortion={info.price_per_portion}
-							totalPrice={info.total}
-							numPersons={numPersons}
+						  key={`box-info-${numPersons}-${info.num_portions}`}
+						  numPortions={info.num_portions}
+						  pricePerPortion={info.price_per_portion}
+						  totalPrice={info.total}
+						  numPersons={numPersons}
 						/>
 					))}
 				</div>
@@ -45,7 +44,7 @@ class BoxType extends React.PureComponent {
 					</LinkButton>
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

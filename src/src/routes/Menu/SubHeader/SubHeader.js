@@ -9,25 +9,25 @@ import { H3 } from 'Page/Header'
 
 class SubHeader extends React.PureComponent {
 	static propTypes = {
-		filterVegetarian: PropTypes.bool,
-		onFilterVegetarianChange: PropTypes.func,
-		viewIcon: PropTypes.oneOf(['iconSingleColumn', 'iconDoubleColumn']),
-		onToggleGridView: PropTypes.func,
-		fromJoin: PropTypes.bool,
-		orderRecipesNo: PropTypes.number,
-		showVegetarianFilter: PropTypes.bool,
-		isAuthenticated: PropTypes.bool,
-		showFilters: PropTypes.bool,
+	  filterVegetarian: PropTypes.bool,
+	  onFilterVegetarianChange: PropTypes.func,
+	  viewIcon: PropTypes.oneOf(['iconSingleColumn', 'iconDoubleColumn']),
+	  onToggleGridView: PropTypes.func,
+	  fromJoin: PropTypes.bool,
+	  orderRecipesNo: PropTypes.number,
+	  showVegetarianFilter: PropTypes.bool,
+	  isAuthenticated: PropTypes.bool,
+	  showFilters: PropTypes.bool,
 	}
 
 	static defaultProps = {
-		showVegetarianFilter: true,
-		isAuthenticated: false,
-		fromJoin: false,
-		viewIcon: 'iconSingleColumn',
-		onToggleGridView: () => {},
-		onFilterVegetarianChange: () => {},
-		filterVegetarian: false,
+	  showVegetarianFilter: true,
+	  isAuthenticated: false,
+	  fromJoin: false,
+	  viewIcon: 'iconSingleColumn',
+	  onToggleGridView: () => {},
+	  onFilterVegetarianChange: () => {},
+	  filterVegetarian: false,
 	}
 
 	deliveryInfo = (mobile) => (
@@ -51,11 +51,11 @@ class SubHeader extends React.PureComponent {
 	)
 
 	notificationBanner = () => {
-		const info = config.notification.filter(message => moment().isBetween(message.isAfter, message.isBefore)).shift()
-		const showNotificaiton = info && (info.notifyGuests || this.props.isAuthenticated)
+	  const info = config.notification.filter(message => moment().isBetween(message.isAfter, message.isBefore)).shift()
+	  const showNotificaiton = info && (info.notifyGuests || this.props.isAuthenticated)
 
-		return (
-			showNotificaiton ? <InfoToggle>
+	  return (
+	    showNotificaiton ? <InfoToggle>
 				<div className={css.infoBanner}>
 					{info.title}&nbsp;<span className={css.infoIcon} />
 				</div>
@@ -66,16 +66,16 @@ class SubHeader extends React.PureComponent {
 					</ul>
 				</div>
 			</InfoToggle> : null
-		)
+	  )
 	}
 
 	render() {
-		return (
+	  return (
 			<div
-				className={classnames(
-					css[this.props.fromJoin ? 'subHeaderSimple' : 'subHeader'],
-					css.mobileHide,
-				)}
+			  className={classnames(
+			    css[this.props.fromJoin ? 'subHeaderSimple' : 'subHeader'],
+			    css.mobileHide,
+			  )}
 			>
 				<div className={css.subHeaderContent}>
 					<div className={css.filterMobile}>
@@ -106,7 +106,7 @@ class SubHeader extends React.PureComponent {
 					{this.notificationBanner()}
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

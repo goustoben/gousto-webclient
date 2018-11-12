@@ -25,11 +25,10 @@ const PaymentStep = ({ submit, receiveRef, scrollToFirstMatchingRef }) => (
 )
 
 PaymentStep.propTypes = {
-	submit: PropTypes.func.isRequired,
-	receiveRef: PropTypes.func,
-	scrollToFirstMatchingRef: PropTypes.func,
+  submit: PropTypes.func.isRequired,
+  receiveRef: PropTypes.func,
+  scrollToFirstMatchingRef: PropTypes.func,
 }
-
 
 const PaymentForm = formContainer(PaymentStep, getValidationRules(sectionName), {}) // eslint-disable-line import/no-mutable-exports
 

@@ -6,11 +6,11 @@ const OrderWhenMenuOpen = ({ whenMenuOpen }) => (
 )
 
 OrderWhenMenuOpen.propTypes = {
-	whenMenuOpen: PropTypes.string,
+  whenMenuOpen: PropTypes.string,
 }
 
 OrderWhenMenuOpen.defaultProps = {
-	whenMenuOpen: '',
+  whenMenuOpen: '',
 }
 
 export default OrderWhenMenuOpen

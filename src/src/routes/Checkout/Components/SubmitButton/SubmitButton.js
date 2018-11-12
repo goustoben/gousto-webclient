@@ -6,20 +6,20 @@ import TermsAndConditions from '../TermsAndConditions'
 
 class SubmitButton extends React.PureComponent {
 	static propTypes = {
-		onClick: React.PropTypes.func,
+	  onClick: React.PropTypes.func,
 	}
 
 	render() {
-		return (
+	  return (
 			<div>
 				<ErrorMessage />
 				<CheckoutButton
-					stepName="Submit Order"
-					onClick={this.props.onClick}
+				  stepName="Submit Order"
+				  onClick={this.props.onClick}
 				/>
 				<TermsAndConditions />
 			</div>
-		)
+	  )
 	}
 }
 

@@ -1,4 +1,4 @@
-import React  from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import config from 'config/home'
@@ -10,91 +10,90 @@ import { Button } from 'goustouicomponents'
 import { validateEmail } from 'utils/auth'
 import InputError from 'Form/InputError'
 
-
 class ReferAFriendModal extends React.PureComponent {
 	static propTypes = {
-		onClose: PropTypes.func.isRequired,
-		userReferAFriend: PropTypes.func.isRequired,
+	  onClose: PropTypes.func.isRequired,
+	  userReferAFriend: PropTypes.func.isRequired,
 	}
 
 	state = {
-		email: '',
-		wasEmailSent: false,
-		isEmailValid: false,
-		errorMessage: ''
+	  email: '',
+	  wasEmailSent: false,
+	  isEmailValid: false,
+	  errorMessage: ''
 	}
 
 	referAFriend = () => {
-		const { email } = this.state
-		const { userReferAFriend } = this.props
+	  const { email } = this.state
+	  const { userReferAFriend } = this.props
 
-		userReferAFriend(email)
+	  userReferAFriend(email)
 	}
 
 	handleEmailChange = (value) => {
-		this.setState({ email: value })
-		if (value.length > 0 && validateEmail(value)) {
-			this.setState({ isEmailValid: true })
-		} else {
-			this.setState({ isEmailValid: false })
-		}
+	  this.setState({ email: value })
+	  if (value.length > 0 && validateEmail(value)) {
+	    this.setState({ isEmailValid: true })
+	  } else {
+	    this.setState({ isEmailValid: false })
+	  }
 	}
 
 	handleSubmit = (event) => {
-		event.preventDefault()
-		if (this.state.isEmailValid) {
-			this.setState({
-				isEmailSent: true,
-				errorMessage: ''
-			})
-			this.referAFriend()
-		} else {
-			this.setState({ errorMessage: config.emailForm.emailRequired })
-		}
+	  event.preventDefault()
+	  if (this.state.isEmailValid) {
+	    this.setState({
+	      isEmailSent: true,
+	      errorMessage: ''
+	    })
+	    this.referAFriend()
+	  } else {
+	    this.setState({ errorMessage: config.emailForm.emailRequired })
+	  }
 	}
 
 	showEmailReferralForm = () => {
-		this.setState({
-			email: '',
-			isEmailSent: false,
-			isEmailValid: false,
-			errorMessage: '',
-		})
+	  this.setState({
+	    email: '',
+	    isEmailSent: false,
+	    isEmailValid: false,
+	    errorMessage: '',
+	  })
 	}
 
 	render() {
-		const { isEmailSent, email, errorMessage } = this.state
-		const { onClose } = this.props
+	  const { isEmailSent, email, errorMessage } = this.state
+	  const { onClose } = this.props
 
-		return (
+	  return (
 			<ModalPanel
-				closePortal={onClose}
-				className={css.modal}
-				containerClassName={css.modalContainer}
-				disableOverlay
+			  closePortal={onClose}
+			  className={css.modal}
+			  containerClassName={css.modalContainer}
+			  disableOverlay
 			>
 				<div className={css.modalContent}>
 					<h4 className={css.heading}>Refer a friend - Get £15</h4>
 					{
-						!isEmailSent ? (
+					  !isEmailSent ? (
 							<div>
 								<p>Enter your friend's email below:</p>
 								<Form onSubmit={this.handleSubmit}>
 									<div>
 										<div className={css.emailInput}>
 											<TextInput
-												name="email"
-												color="primary"
-												textAlign="left"
-												placeholder="Your friend's email"
-												onChange={this.handleEmailChange}
-												value={email}
+											  name="email"
+											  color="primary"
+											  textAlign="left"
+											  placeholder="Your friend's email"
+											  onChange={this.handleEmailChange}
+											  value={email}
 											/>
 											<InputError>{errorMessage}</InputError>
 										</div>
 										<div className={css.button}>
 											<Button
-												onClick={this.handleSubmit}
+											  onClick={this.handleSubmit}
 											>
 												Send Email
 											</Button>
@@ -102,12 +101,12 @@ class ReferAFriendModal extends React.PureComponent {
 									</div>
 								</Form>
 							</div>
-						) : (
+					  ) : (
 							<div >
 								<p className={css.isEmailSentNotification}>An invitation has been sent to your friend!</p>
 								<Button
-									onClick={this.showEmailReferralForm}
-									className={css.button}
+								  onClick={this.showEmailReferralForm}
+								  className={css.button}
 								>
 									Invite another friend
 								</Button>
@@ -115,7 +114,7 @@ class ReferAFriendModal extends React.PureComponent {
 					}
 				</div>
 			</ModalPanel>
-		)
+	  )
 	}
 }
 

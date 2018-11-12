@@ -3,9 +3,9 @@ import NewAddressModal from './NewAddressModal'
 import userActions from 'actions/user'
 
 const mapStateToProps = (state) => ({
-	isModalOpen: state.user.getIn(['deliveryAddressModal', 'visibility']),
+  isModalOpen: state.user.getIn(['deliveryAddressModal', 'visibility']),
 })
 
 export default connect(mapStateToProps, {
-	userToggleNewAddressModal: userActions.userToggleNewAddressModal,
+  userToggleNewAddressModal: userActions.userToggleNewAddressModal,
 })(NewAddressModal)

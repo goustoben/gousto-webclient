@@ -8,7 +8,7 @@ const Cuisine = ({ cuisine }) => (
 )
 
 Cuisine.propTypes = {
-	cuisine: React.PropTypes.string.isRequired,
+  cuisine: React.PropTypes.string.isRequired,
 }
 
 export default Cuisine

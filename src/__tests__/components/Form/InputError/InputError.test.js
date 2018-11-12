@@ -6,15 +6,15 @@ import { shallow } from 'enzyme'
 import InputError from 'Form/InputError'
 
 describe('InputError', () => {
-	let wrapper
+  let wrapper
 
-	test('should return a <p> tag', () => {
-		wrapper = shallow(<InputError />)
-		expect(wrapper.type()).toEqual('p')
-	})
+  test('should return a <p> tag', () => {
+    wrapper = shallow(<InputError />)
+    expect(wrapper.type()).toEqual('p')
+  })
 
-	test('should show the children', () => {
-		wrapper = shallow(<InputError>Error msg</InputError>)
-		expect(wrapper.text()).toEqual('Error msg')
-	})
+  test('should show the children', () => {
+    wrapper = shallow(<InputError>Error msg</InputError>)
+    expect(wrapper.text()).toEqual('Error msg')
+  })
 })

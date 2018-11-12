@@ -34,30 +34,30 @@ const Item = ({ available, disclaimerKey, type, media, title, quantity, onImageC
 )
 
 Item.propTypes = {
-	disclaimerKey: PropTypes.string,
-	type: PropTypes.oneOf(['product', 'recipe']),
-	media: PropTypes.oneOfType([
-		PropTypes.instanceOf(Immutable.List),
-		PropTypes.instanceOf(Immutable.Map),
-	]).isRequired,
-	title: PropTypes.string.isRequired,
-	quantity: PropTypes.number.isRequired,
-	onImageClick: PropTypes.oneOfType([
-		PropTypes.func,
-		PropTypes.oneOf([false]),
-	]),
-	onRemove: PropTypes.oneOfType([
-		PropTypes.func,
-		PropTypes.oneOf([false]),
-	]),
-	available: PropTypes.bool,
-	gift: PropTypes.bool,
-	url: PropTypes.string,
-	showLine: PropTypes.bool,
+  disclaimerKey: PropTypes.string,
+  type: PropTypes.oneOf(['product', 'recipe']),
+  media: PropTypes.oneOfType([
+    PropTypes.instanceOf(Immutable.List),
+    PropTypes.instanceOf(Immutable.Map),
+  ]).isRequired,
+  title: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+  onImageClick: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.oneOf([false]),
+  ]),
+  onRemove: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.oneOf([false]),
+  ]),
+  available: PropTypes.bool,
+  gift: PropTypes.bool,
+  url: PropTypes.string,
+  showLine: PropTypes.bool,
 }
 
 Item.defaultProps = {
-	showLine: false,
+  showLine: false,
 }
 
 export default Item

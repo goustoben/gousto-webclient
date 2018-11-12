@@ -21,7 +21,7 @@ const Product = ({ product }) => (
 )
 
 Product.propTypes = {
-	product: React.PropTypes.instanceOf(Immutable.Map),
+  product: React.PropTypes.instanceOf(Immutable.Map),
 }
 
 export default Product

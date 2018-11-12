@@ -4,11 +4,11 @@ import fetch from 'utils/fetch'
 import { getAvailableDeliveryDays, getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 
 export default {
-	apis,
-	endpoint,
-	fetch,
-	getAvailableDeliveryDays,
-	getLandingDay,
-	cutoffDateTimeNow,
+  apis,
+  endpoint,
+  fetch,
+  getAvailableDeliveryDays,
+  getLandingDay,
+  cutoffDateTimeNow,
 }
 

@@ -7,29 +7,29 @@ import css from './OrderRestoreButton.css'
 class OrderRestoreButton extends React.PureComponent {
 
 	static propTypes = {
-		userId: PropTypes.string,
-		orderId: PropTypes.string,
-		deliveryDayId: PropTypes.string,
-		projectedOrderRestoreError: PropTypes.string,
+	  userId: PropTypes.string,
+	  orderId: PropTypes.string,
+	  deliveryDayId: PropTypes.string,
+	  projectedOrderRestoreError: PropTypes.string,
 	}
 
 	static defaultProps = {
-		userId: '',
-		orderId: '',
-		deliveryDayId: '',
-		projectedOrderRestoreError: null,
+	  userId: '',
+	  orderId: '',
+	  deliveryDayId: '',
+	  projectedOrderRestoreError: null,
 	}
 
 	static contextTypes = {
-		store: React.PropTypes.object.isRequired,
+	  store: React.PropTypes.object.isRequired,
 	}
 
 	handleRestoreBox = () => {
-		this.context.store.dispatch(actions.projectedOrderRestore(this.props.orderId, this.props.userId, this.props.deliveryDayId))
+	  this.context.store.dispatch(actions.projectedOrderRestore(this.props.orderId, this.props.userId, this.props.deliveryDayId))
 	}
 
 	render() {
-		return (
+	  return (
 			<div>
 				{this.props.projectedOrderRestoreError ?
 					<Alert type="danger">
@@ -37,14 +37,14 @@ class OrderRestoreButton extends React.PureComponent {
 							<span>Whoops, there was a problem restoring this order, please try again.</span>
 						</Content>
 					</Alert>
-				: null}
+				  : null}
 				<div className={css.button}>
 					<Button onClick={() => this.handleRestoreBox()}>
 						Restore delivery
 					</Button>
 				</div>
 			</div>
-		)
+	  )
 	}
 }
 

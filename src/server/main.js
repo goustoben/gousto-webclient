@@ -23,7 +23,6 @@ const Helmet = require('react-helmet')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
 const routes = require('./routes').default
 
-
 const { clearPersistentStore } = require('middlewares/persist/persistStore')
 
 const withStatic = process.env.withStatic === 'true'
@@ -32,58 +31,58 @@ const addressLookupRoute = require('./routes/addressLookup').default
 
 /* eslint-disable no-param-reassign */
 app.use(async (ctx, next) => {
-	const startTime = new Date
-	const path = ctx.request.path
-	const writeLog = (__PROD__ && path.indexOf('/ping') === -1) || (__DEV__ && (path.indexOf('menu') > -1 || path.indexOf('welcome-to-gousto') > -1))
-	if (writeLog) {
-		logger.notice(`[START] REQUEST: ${ctx.request.path}`)
-	}
-	await next()
-	if (writeLog) {
-		logger.notice(`[END] REQUEST: ${ctx.request.path} finished in ${new Date - startTime}ms`)
-	}
+  const startTime = new Date
+  const path = ctx.request.path
+  const writeLog = (__PROD__ && path.indexOf('/ping') === -1) || (__DEV__ && (path.indexOf('menu') > -1 || path.indexOf('welcome-to-gousto') > -1))
+  if (writeLog) {
+    logger.notice(`[START] REQUEST: ${ctx.request.path}`)
+  }
+  await next()
+  if (writeLog) {
+    logger.notice(`[END] REQUEST: ${ctx.request.path} finished in ${new Date - startTime}ms`)
+  }
 })
 
 app.use(async (ctx, next) => {
-	try {
-		// Make cookies secure
-		ctx.cookies.secure = globals.secure
-		ctx.cookies.path = '/'
-		await next()
-	} catch (err) {
-		logger.critical(err)
+  try {
+    // Make cookies secure
+    ctx.cookies.secure = globals.secure
+    ctx.cookies.path = '/'
+    await next()
+  } catch (err) {
+    logger.critical(err)
 
-		if (err.networkError) {
-			err.status = err.networkError.statusCode
-		}
+    if (err.networkError) {
+      err.status = err.networkError.statusCode
+    }
 
-		if (Number(err.status) === 200) {
-			ctx.status = 500
-		} else {
-			ctx.status = Number(err.status)
-		}
-		clearPersistentStore(ctx.cookies)
+    if (Number(err.status) === 200) {
+      ctx.status = 500
+    } else {
+      ctx.status = Number(err.status)
+    }
+    clearPersistentStore(ctx.cookies)
 
-		const { store } = configureHistoryAndStore(ctx.request.url, { serverError: `${ctx.status}` })
-		let noGTM = ctx.request && ctx.request.query && ctx.request.query.no_gtm
-		renderToString(
-			<GoustoHelmet
-				noGTM={noGTM}
-				requestUrl={ctx.request.url}
-			/>
-		)
-		const reactHTML = (
-			<Provider store={store}>
-				<Page>
-					<MainLayout>
-						<ErrorPage status={`${ctx.status}`} />
-					</MainLayout>
-				</Page>
-			</Provider>
-		)
-		const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
-		ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), {}, ctx.request.url, ctx.req.headers['user-agent'], noGTM, helmetHead)
-	}
+    const { store } = configureHistoryAndStore(ctx.request.url, { serverError: `${ctx.status}` })
+    let noGTM = ctx.request && ctx.request.query && ctx.request.query.no_gtm
+    renderToString(
+      <GoustoHelmet
+        noGTM={noGTM}
+        requestUrl={ctx.request.url}
+      />
+    )
+    const reactHTML = (
+      <Provider store={store}>
+        <Page>
+          <MainLayout>
+            <ErrorPage status={`${ctx.status}`} />
+          </MainLayout>
+        </Page>
+      </Provider>
+    )
+    const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
+    ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), {}, ctx.req.headers['user-agent'], noGTM, helmetHead)
+  }
 })
 
 app.use(appsRedirect)
@@ -97,36 +96,36 @@ app.use(bodyParser({ multipart: true }))
 routes.auth(app)
 
 app.use(async (ctx, next) => {
-	if (ctx.request.path === '/ping') {
-		ctx.body = 'pong'
-	} else if (ctx.request.path === '/footer') {
-		const { store } = configureHistoryAndStore(ctx.request.url)
-		const reactHTML = (
-			<Provider store={store}>
-				<ApolloProvider
-					client={apolloClient(store)}
-				>
-					<Footer simple={Boolean(ctx.request.query.simple)} />
-				</ApolloProvider>
-			</Provider>
-		)
-		getDataFromTree(reactHTML)
-			.then(() => {
-				ctx.body = renderToString(reactHTML)
-			})
-	} else {
-		await next()
-	}
+  if (ctx.request.path === '/ping') {
+    ctx.body = 'pong'
+  } else if (ctx.request.path === '/footer') {
+    const { store } = configureHistoryAndStore(ctx.request.url)
+    const reactHTML = (
+      <Provider store={store}>
+        <ApolloProvider
+          client={apolloClient(store)}
+        >
+          <Footer simple={Boolean(ctx.request.query.simple)} />
+        </ApolloProvider>
+      </Provider>
+    )
+    getDataFromTree(reactHTML)
+      .then(() => {
+        ctx.body = renderToString(reactHTML)
+      })
+  } else {
+    await next()
+  }
 })
 
 if (__DEV__ || withStatic) { // required for local DEV build
-	logger.info('Serving static files in /nsassets from /public')
-	app.use(convert(koaMount('/nsassets/', koaStatic('public'))))
+  logger.info('Serving static files in /nsassets from /public')
+  app.use(convert(koaMount('/nsassets/', koaStatic('public'))))
 }
 
 if (__PROD__ && __ENV__ === 'local') { // required for local PROD build
-	app.use(convert(koaMount('/nsassets/', koaStatic('public'))))
-	app.use(convert(koaMount('/', koaStatic('public'))))
+  app.use(convert(koaMount('/nsassets/', koaStatic('public'))))
+  app.use(convert(koaMount('/', koaStatic('public'))))
 }
 
 app.use(processRequest)
@@ -134,39 +133,39 @@ app.use(processRequest)
 const port = 8080
 
 app.listen(port, () => {
-	logger.notice(`==> ✅  Koa Server is listening on port ${port}`)
+  logger.notice(`==> ✅  Koa Server is listening on port ${port}`)
 })
 
 if (__HMR__) {
-	/* eslint-disable global-require */
-	const hotPort = port + 1
-	const WebpackDevServer = require('webpack-dev-server')
-	const webpack = require('webpack')
-	const config = require('config/webpack.client.js')
-	new WebpackDevServer(webpack(config), {
-		port,
-		hot: true,
-		historyApiFallback: false,
-		withCredentials: false,
-		proxy: {
-			'*': `http://webclient.gousto.local:${port}`,
-		},
-		headers: { 'Access-Control-Allow-Origin': '*' },
-		stats: {
-			assets: false,
-			colors: true,
-			version: false,
-			hash: false,
-			timings: false,
-			chunks: false,
-			chunkModules: false,
-		},
-	})
-	.listen(hotPort, 'webclient.gousto.local', (err) => {
-		if (err) {
-			// eslint-disable-next-line no-console
-			console.error(err)
-		}
-		logger.info(`==> ✅  Hot-Reload listening on port ${hotPort}`)
-	})
+  /* eslint-disable global-require */
+  const hotPort = port + 1
+  const WebpackDevServer = require('webpack-dev-server')
+  const webpack = require('webpack')
+  const config = require('config/webpack.client.js')
+  new WebpackDevServer(webpack(config), {
+    port,
+    hot: true,
+    historyApiFallback: false,
+    withCredentials: false,
+    proxy: {
+      '*': `http://webclient.gousto.local:${port}`,
+    },
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    stats: {
+      assets: false,
+      colors: true,
+      version: false,
+      hash: false,
+      timings: false,
+      chunks: false,
+      chunkModules: false,
+    },
+  })
+    .listen(hotPort, 'webclient.gousto.local', (err) => {
+      if (err) {
+        // eslint-disable-next-line no-console
+        console.error(err)
+      }
+      logger.info(`==> ✅  Hot-Reload listening on port ${hotPort}`)
+    })
 }

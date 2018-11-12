@@ -14,9 +14,9 @@ const Unsubscribed = ({ copy }) => (
 )
 
 Unsubscribed.propTypes = {
-	copy: PropTypes.shape({
-		link: PropTypes.string,
-	}).isRequired,
+  copy: PropTypes.shape({
+    link: PropTypes.string,
+  }).isRequired,
 }
 
 export default Unsubscribed

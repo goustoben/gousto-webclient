@@ -5,7 +5,6 @@ import CheckoutLayout from 'layouts/CheckoutLayout'
 import config from 'config/routes'
 import { checkGuest } from 'utils/routes'
 
-
 const path = `${config.client['check-out']}(/:stepName)`
 
 export default (store) => (

@@ -1,6 +1,6 @@
 export default function loginRememberMe(action) {
-	return {
-		type: action.type,
-		data: {},
-	}
+  return {
+    type: action.type,
+    data: {},
+  }
 }
