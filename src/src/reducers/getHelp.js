@@ -5,13 +5,20 @@ const getHelpInitialState = fromJS({
   order: {
     id: '',
   },
-  recipes: {
+  recipes: [{
     id: '',
     title: '',
     ingredients: {
       id: '',
       label: '',
     }
+  }],
+})
+
+const getHelpRequestInitialState = fromJS({
+  status: {
+    pending: false,
+    error: ''
   }
 })
 
@@ -28,6 +35,29 @@ const reduceRecipes = (recipes) => (
     return { id, title, ingredients }
   })
 )
+
+const getHelpRequests = (state, action) => {
+  if (!state) {
+    return getHelpRequestInitialState
+  }
+
+  switch (action.type) {
+  case actionTypes.RECIPES_RECEIVE:
+  case actionTypes.USER_LOAD_ORDERS:
+  case actionTypes.GET_HELP_GET_INGREDIENTS: {
+    state
+      .setIn(['status', 'error'], state.error)
+      .setIn(['status', 'pending'], state.pending)
+
+    /* eslint-disable no-console */
+    console.log('>>>', state.get('status').toJS())
+
+    return state
+  }
+  default:
+    return state
+  }
+}
 
 const getHelp = (state, action) => {
   if (!state) {
@@ -50,5 +80,6 @@ const getHelp = (state, action) => {
 
 export {
   getHelp,
+  getHelpRequests,
   getHelpInitialState,
 }

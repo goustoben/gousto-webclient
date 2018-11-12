@@ -20,7 +20,7 @@ const defaultProps = {
   content: {
     button1: 'Contact Us',
     errorBody: `There was a problem in getting your default.
-		Please contact us below, or try again later.`,
+    Please contact us below, or try again later.`,
     infoBody: '',
     title: 'Get help with your box',
   },
@@ -29,22 +29,22 @@ const defaultProps = {
 const Error = ({ hasError, content, children }) => {
   if (hasError) {
     return (
-			<GetHelpLayout
-			  title={content.title}
-			  body={content.infoBody}
-			  fullWidthContent
-			>
-				<p>{content.errorBody}</p>
-				<BottomBar>
-					<BottomButton
-					  color="secondary"
-					  url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-					  clientRouted={false}
-					>
-						{content.button1}
-					</BottomButton>
-				</BottomBar>
-			</GetHelpLayout>
+      <GetHelpLayout
+        title={content.title}
+        body={content.infoBody}
+        fullWidthContent
+      >
+        <p>{content.errorBody}</p>
+        <BottomBar>
+          <BottomButton
+            color="secondary"
+            url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+            clientRouted={false}
+          >
+            {content.button1}
+          </BottomButton>
+        </BottomBar>
+      </GetHelpLayout>
     )
   }
 

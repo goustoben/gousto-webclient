@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { client } from 'config/routes'
-import { validateIngredients } from 'apis/getHelp'
 import { IngredientsPresentation } from './Ingredients.presentation'
 import { RecipeList } from '../components/RecipeList'
 
@@ -33,6 +32,7 @@ const propTypes = {
     button1Copy: PropTypes.string.isRequired,
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
+  validateSelectedIngredients: PropTypes.func.isRequired
 }
 
 class Ingredients extends PureComponent {
@@ -56,11 +56,11 @@ class Ingredients extends PureComponent {
     })
   }
 
-  continueClickHandler = () => {
+  continueClickHandler = async () => {
     // POST -> /validate-ingredients -> {customer_id: int, order_id: int, ingredients: array}
     // 200 -> {'valid': True}
 
-    const { order, user } = this.props
+    const { order, user, validateSelectedIngredients } = this.props
     const { selectedIngredients } = this.state
     const ingredients = []
 
@@ -68,15 +68,12 @@ class Ingredients extends PureComponent {
       ingredients.push(ingredientId)
     })
 
-    validateIngredients(
-      user.accessToken,
-      {
-        customer_id: Number(user.id),
-        order_id: Number(order.id),
-        ingredients
-      }
-    )
-
+    validateSelectedIngredients({
+      accessToken: user.accessToken,
+      costumerId: Number(user.id),
+      orderId: Number(order.id),
+      ingredients
+    })
   }
 
   render() {

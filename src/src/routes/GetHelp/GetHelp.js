@@ -9,105 +9,87 @@ const skipFetchByRoute = ({ pathname }) => ([
   `${routes.getHelp.index}/${routes.getHelp.confirmation}`,
 ].includes(pathname))
 
+const getOrderId = ({ location }) => {
+  const { query } = location
+
+  return (query && query.orderId)
+    ? query.orderId
+    : null
+}
+
 class GetHelp extends PureComponent {
-	static propTypes = {
-	  location: PropTypes.shape({
-	    query: PropTypes.shape({
-	      orderId: PropTypes.string,
-	    }),
-	  }),
-	  children: PropTypes.node.isRequired,
-	  content: PropTypes.shape({
-	    button1: PropTypes.string,
-	    errorBody: PropTypes.string,
-	    infoBody: PropTypes.string,
-	    title: PropTypes.string,
-	  }),
-	}
+  static propTypes = {
+    location: PropTypes.shape({
+      query: PropTypes.shape({
+        orderId: PropTypes.string,
+      }),
+    }),
+    children: PropTypes.node.isRequired,
+    content: PropTypes.shape({
+      button1: PropTypes.string,
+      errorBody: PropTypes.string,
+      infoBody: PropTypes.string,
+      title: PropTypes.string,
+    }),
+    error: PropTypes.string.isRequired,
+    pending: PropTypes.bool.isRequired,
+  }
 
-	state = {
-	  didFetchError: false,
-	  isFetching: true
-	}
+  componentDidMount() {
+    const orderId = getOrderId(this.props)
 
-	componentDidMount() {
-	  const orderId = this.getOrderId(this.props)
+    if (skipFetchByRoute(this.props.location)) {
+      return null
+    }
 
-	  if (skipFetchByRoute(this.props.location)) {
-	    return this.fetchSuccess()
-	  }
+    if (!orderId) {
+      return null
+    }
 
-	  if (!orderId) {
-	    return this.fetchError()
-	  }
+    const { storeGetHelpOrderId, userLoadOrder } = this.props
 
-	  this.props.storeGetHelpOrderId(orderId)
+    storeGetHelpOrderId(orderId)
 
-	  return this.props.userLoadOrder(orderId)
-	    .then(this.orderLoadComplete)
-	    .catch(this.fetchError)
-	}
+    return userLoadOrder(orderId).then(this.orderLoadComplete)
+  }
 
-	getOrderId({ location }) {
-	  const { query } = location
+  orderLoadComplete = () => {
+    const { orders, recipesLoadRecipesById } = this.props
+    const orderId = getOrderId(this.props)
+    const order = orders[orderId]
+    /* eslint-disable no-console */
+    console.log('order.recipeItems >>>', order.recipeItems)
 
-	  return (query && query.orderId)
-	    ? query.orderId
-	    : null
-	}
+    const recipeIds = order.recipeItems.map((recipe) => recipe.recipeId)
 
-	fetchSuccess = () => {
-	  this.setState({
-	    ...this.state,
-	    didFetchError: false,
-	    isFetching: false,
-	  })
-	}
+    recipesLoadRecipesById(recipeIds)
+  }
 
-	fetchError = () => {
-	  this.setState({
-	    ...this.state,
-	    didFetchError: true,
-	    isFetching: false,
-	  })
-	}
+  render() {
+    const { children, content, error, pending } = this.props
 
-	orderLoadComplete = () => {
-	  const orderId = this.getOrderId(this.props)
-	  const order = this.props.orders[orderId]
-	  const recipeIds = order.recipeItems
-	    .map((recipe) => recipe.recipeId)
+    /* eslint-disable no-console */
+    console.log('error', error, 'pending', pending)
 
-	  this.props.recipesLoadRecipesById(recipeIds)
-	    .then(this.fetchSuccess)
-	    .catch(this.fetchError)
-	}
-
-	render() {
-	  const { children } = this.props
-	  const {
-	    isFetching,
-	    didFetchError
-	  } = this.state
-
-	  return (
-			<div className={css.getHelpContainer}>
-				<Helmet
-				  style={[{
-				    cssText: '#react-root { height: 100%; }',
-				  }]}
-				/>
-				<div className={css.getHelpContent}>
-					{!isFetching && <Error
-					  content={this.props.content}
-					  hasError={didFetchError}
-					>
-						{children}
-					</Error>}
-				</div>
-			</div>
-	  )
-	}
+    return (
+      <div className={css.getHelpContainer}>
+        <Helmet
+          style={[{
+            cssText: '#react-root { height: 100%; }',
+          }]}
+        />
+        <div className={css.getHelpContent}>
+          {!pending &&
+            <Error
+              content={content}
+              hasError={error.length > 0}
+            >
+              {children}
+            </Error>}
+        </div>
+      </div>
+    )
+  }
 }
 
 export default GetHelp

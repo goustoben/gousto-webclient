@@ -31,7 +31,7 @@ import cookbook from './cookbook'
 import pricing from './pricing'
 import cookies from './cookies'
 import orderSkipRecovery from './orderSkipRecovery'
-import { getHelp } from './getHelp'
+import { getHelp, getHelpRequests } from './getHelp'
 
 const reducers = {
   ...account,
@@ -68,6 +68,7 @@ const reducers = {
   ...request,
   ...pricing,
   getHelp,
+  getHelpRequests,
 }
 
 export default reducers
