@@ -2,7 +2,6 @@ import React from 'react'
 import { mount } from 'enzyme'
 
 import { zendesk } from 'config/routes'
-import { telephone } from 'config/company'
 
 import { Item, ItemExpandable } from 'goustouicomponents'
 import { ItemLink } from 'routes/GetHelp/components/ItemLink'
@@ -93,7 +92,7 @@ describe('<Contact />', () => {
       const phoneItem = wrapper.find(ItemExpandable)
       phoneItem.simulate('click')
 
-      expect(phoneItem.text()).toContain(telephone.number)
+      expect(phoneItem.text()).toContain('test phoneItem')
     })
   })
 })
