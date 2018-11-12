@@ -29,13 +29,13 @@ const checkoutActions = {
   checkoutFetchIntervals,
 }
 
-function checkoutClearErrors() {
+export function checkoutClearErrors() {
   return {
     type: actionTypes.CHECKOUT_ERRORS_CLEAR,
   }
 }
 
-function checkoutAddressLookup(postcode) {
+export function checkoutAddressLookup(postcode) {
   return async (dispatch) => {
     dispatch(pending(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, true))
     dispatch(error(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, null))
@@ -63,7 +63,7 @@ function checkoutAddressLookup(postcode) {
   }
 }
 
-function checkoutCreatePreviewOrder() {
+export function checkoutCreatePreviewOrder() {
   return async (dispatch, getState) => {
     const state = getState()
     const basket = state.basket
@@ -148,7 +148,7 @@ function resetDuplicateCheck() {
   }
 }
 
-function checkoutFetchIntervals() {
+export function checkoutFetchIntervals() {
   return async (dispatch) => {
     dispatch(pending(actionTypes.CHECKOUT_INTERVALS_RECIEVE, true))
 
@@ -169,7 +169,7 @@ function checkoutFetchIntervals() {
   }
 }
 
-function checkoutSignup() {
+export function checkoutSignup() {
   return async (dispatch) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
@@ -194,7 +194,27 @@ function checkoutSignup() {
   }
 }
 
-function checkoutPostSignup() {
+export const trackPurchase = () => (
+  (dispatch, getState) => {
+    const { basket, price } = getState()
+    const orderId = basket.get('previewOrderId')
+    const promoCode = basket.get('promoCode')
+    const totalPrice = price.get('grossTotal')
+    const shippingPrice = price.get('deliveryTotal')
+
+    if (typeof ga !== 'undefined') {
+      ga('ec:setAction', 'purchase', {
+        id: orderId,
+        revenue: totalPrice,
+        shipping: shippingPrice,
+        coupon: promoCode
+      })
+      ga('send', 'pageview')
+    }
+  }
+)
+
+export function checkoutPostSignup() {
   return async (dispatch, getState) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
@@ -205,6 +225,7 @@ function checkoutPostSignup() {
       const password = aboutYou.get('password')
       const orderId = getState().basket.get('previewOrderId')
       await dispatch(loginActions.loginUser(email, password, true, orderId))
+      dispatch(trackPurchase())
     } catch (err) {
       logger.error(`${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`)
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
@@ -217,7 +238,7 @@ function checkoutPostSignup() {
   }
 }
 
-function trackSignupPageChange(step) {
+export function trackSignupPageChange(step) {
   return (dispatch) => {
     dispatch({ type: actionTypes.SIGNUP_TRACKING_STEP_CHANGE, step })
   }

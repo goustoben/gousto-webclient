@@ -66,22 +66,22 @@ app.use(async (ctx, next) => {
     const { store } = configureHistoryAndStore(ctx.request.url, { serverError: `${ctx.status}` })
     let noGTM = ctx.request && ctx.request.query && ctx.request.query.no_gtm
     renderToString(
-			<GoustoHelmet
-			  noGTM={noGTM}
-			  requestUrl={ctx.request.url}
-			/>
+      <GoustoHelmet
+        noGTM={noGTM}
+        requestUrl={ctx.request.url}
+      />
     )
     const reactHTML = (
-			<Provider store={store}>
-				<Page>
-					<MainLayout>
-						<ErrorPage status={`${ctx.status}`} />
-					</MainLayout>
-				</Page>
-			</Provider>
+      <Provider store={store}>
+        <Page>
+          <MainLayout>
+            <ErrorPage status={`${ctx.status}`} />
+          </MainLayout>
+        </Page>
+      </Provider>
     )
     const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
-    ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), {}, ctx.request.url, ctx.req.headers['user-agent'], noGTM, helmetHead)
+    ctx.body = htmlTemplate(renderToString(reactHTML), store.getState(), {}, ctx.req.headers['user-agent'], noGTM, helmetHead)
   }
 })
 
@@ -101,13 +101,13 @@ app.use(async (ctx, next) => {
   } else if (ctx.request.path === '/footer') {
     const { store } = configureHistoryAndStore(ctx.request.url)
     const reactHTML = (
-			<Provider store={store}>
-				<ApolloProvider
-				  client={apolloClient(store)}
-				>
-					<Footer simple={Boolean(ctx.request.query.simple)} />
-				</ApolloProvider>
-			</Provider>
+      <Provider store={store}>
+        <ApolloProvider
+          client={apolloClient(store)}
+        >
+          <Footer simple={Boolean(ctx.request.query.simple)} />
+        </ApolloProvider>
+      </Provider>
     )
     getDataFromTree(reactHTML)
       .then(() => {
