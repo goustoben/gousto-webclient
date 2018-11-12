@@ -16,27 +16,33 @@ describe('<Ingredients />', () => {
     { id: '3', title: 'test 3', ingredients: [{ id: '3', label: 'test' }] },
     { id: '4', title: 'test 4', ingredients: [{ id: '4', label: 'test' }] },
   ]
+  const user = {
+    id: 'user-id',
+    accessToken: 'user-access-token',
+  }
+  const order = {
+    id: 'order-id',
+  }
   let wrapper
   let getHelpLayout
 
-  beforeEach(() => {
-    wrapper = mount(
-			<Ingredients
-			  recipes={recipes}
-			  content={content}
-			/>
-    )
-    getHelpLayout = wrapper.find('GetHelpLayout')
-  })
+  describe('rendering', () => {
+    beforeAll(() => {
+      wrapper = mount(
+        <Ingredients
+          recipes={recipes}
+          content={content}
+        />
+      )
+      getHelpLayout = wrapper.find('GetHelpLayout')
+    })
 
-  describe('render', () => {
     test('layout is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomBar')
 
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
-      expect(BottomBar.find('BottomButton')).toHaveLength(2)
-
+      expect(BottomBar.find('Button')).toHaveLength(2)
     })
 
     test('header is rendering correctly', () => {
@@ -56,13 +62,17 @@ describe('<Ingredients />', () => {
       expect(Button2.text()).toContain(content.button2Copy)
     })
 
-    test('buttons link to correct urls', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
-      const Button1 = BottomBar.find('BottomButton').at(0)
-      const Button2 = BottomBar.find('BottomButton').at(1)
+    test('the Back button links to the correct url', () => {
+      const Button1 = getHelpLayout.find('BottomBar').find('BottomButton')
 
       expect(Button1.prop('url')).toBe('/get-help')
-      expect(Button2.prop('url')).toBe('/get-help/refund')
+    })
+
+    test('the Continue button is disable by default', () => {
+      const BottomBar = getHelpLayout.find('BottomBar')
+      const ContinueButton = BottomBar.find('Button').at(1)
+
+      expect(ContinueButton.prop('disabled')).toBe(true)
     })
 
     test('recipes are being displayed', () => {
@@ -79,6 +89,35 @@ describe('<Ingredients />', () => {
     test('recipe list is being rendered', () => {
       expect(getHelpLayout.find('RecipeList')).toHaveLength(1)
       expect(getHelpLayout.find('RecipeList').prop('recipes')).toBe(recipes)
+    })
+  })
+
+  describe('behaviour', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <Ingredients
+          order={order}
+          user={user}
+          recipes={recipes}
+          content={content}
+        />
+      )
+      getHelpLayout = wrapper.find('GetHelpLayout')
+    })
+
+    test('the Continue button is enabled only when one or more ingredients are selected', () => {
+      const recipe = getHelpLayout.find('ItemExpandable').at(0)
+      recipe.find('Item').simulate('click')
+      const ingredientCheckbox = recipe.find('input[type="checkbox"]')
+      ingredientCheckbox.simulate('change')
+      const BottomBar = getHelpLayout.find('BottomBar')
+      const ContinueButton = BottomBar.find('Button').at(1)
+
+      expect(ContinueButton.prop('disabled')).toBe(false)
+
+      ingredientCheckbox.simulate('change')
+
+      expect(ContinueButton.prop('disabled')).toBe(true)
     })
   })
 })
