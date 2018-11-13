@@ -44,7 +44,6 @@ const getHelpRequests = (state, action) => {
   const requestKeys = [
     actionTypes.RECIPES_RECEIVE,
     actionTypes.USER_LOAD_ORDERS,
-    actionTypes.GET_HELP_GET_INGREDIENTS,
   ]
 
   switch (action.type) {

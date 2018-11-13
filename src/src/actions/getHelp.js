@@ -37,6 +37,7 @@ export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, 
     }
     catch (error) {
       dispatch(statusActions.error(actionTypes.GET_HELP_GET_INGREDIENTS, error.message))
+      throw error
     }
     finally {
       dispatch(statusActions.pending(actionTypes.GET_HELP_GET_INGREDIENTS, false))

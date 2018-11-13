@@ -57,9 +57,6 @@ class Ingredients extends PureComponent {
   }
 
   continueClickHandler = async () => {
-    // POST -> /validate-ingredients -> {customer_id: int, order_id: int, ingredients: array}
-    // 200 -> {'valid': True}
-
     const { order, user, validateSelectedIngredients } = this.props
     const { selectedIngredients } = this.state
     const ingredients = []
@@ -68,12 +65,17 @@ class Ingredients extends PureComponent {
       ingredients.push(ingredientId)
     })
 
-    validateSelectedIngredients({
-      accessToken: user.accessToken,
-      costumerId: Number(user.id),
-      orderId: Number(order.id),
-      ingredients
-    })
+    try {
+      await validateSelectedIngredients({
+        accessToken: user.accessToken,
+        costumerId: Number(user.id),
+        orderId: Number(order.id),
+        ingredients
+      })
+    } catch (error) {
+      /* eslint-disable no-console */
+      console.log('response', error)
+    }
   }
 
   render() {
