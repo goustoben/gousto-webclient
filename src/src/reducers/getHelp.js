@@ -8,10 +8,10 @@ const getHelpInitialState = fromJS({
   recipes: [{
     id: '',
     title: '',
-    ingredients: {
+    ingredients: [{
       id: '',
       label: '',
-    }
+    }]
   }],
 })
 
