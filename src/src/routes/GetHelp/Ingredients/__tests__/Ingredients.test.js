@@ -30,8 +30,11 @@ describe('<Ingredients />', () => {
     beforeAll(() => {
       wrapper = mount(
         <Ingredients
+          order={order}
+          user={user}
           recipes={recipes}
           content={content}
+          validateSelectedIngredients={() => {}}
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
@@ -55,11 +58,10 @@ describe('<Ingredients />', () => {
 
     test('bottom bar buttons is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomBar')
-      const Button1 = BottomBar.find('BottomButton').at(0)
-      const Button2 = BottomBar.find('BottomButton').at(1)
+      const buttons = BottomBar.find('Button')
 
-      expect(Button1.text()).toContain(content.button1Copy)
-      expect(Button2.text()).toContain(content.button2Copy)
+      expect(buttons.at(0).text()).toContain(content.button1Copy)
+      expect(buttons.at(1).text()).toContain(content.button2Copy)
     })
 
     test('the Back button links to the correct url', () => {
@@ -100,6 +102,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
+          validateSelectedIngredients={() => {}}
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')

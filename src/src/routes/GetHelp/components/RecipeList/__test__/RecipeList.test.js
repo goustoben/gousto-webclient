@@ -21,6 +21,8 @@ describe('<RecipeList />', () => {
       wrapper = mount(
         <RecipeList
           recipes={recipes}
+          selectedIngredients={new Map()}
+          onChange={() => {}}
         />
       )
     })
@@ -41,6 +43,8 @@ describe('<RecipeList />', () => {
       wrapper = mount(
         <RecipeList
           recipes={recipes}
+          selectedIngredients={new Map()}
+          onChange={() => {}}
         />
       )
     })
