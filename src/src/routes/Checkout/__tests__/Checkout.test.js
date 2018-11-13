@@ -54,6 +54,7 @@ describe('Checkout', () => {
         validations: {
           summary: true,
           aboutyou: true,
+          payment: true,
           delivery: true,
         },
       }),
@@ -62,7 +63,7 @@ describe('Checkout', () => {
       }),
       params: { stepName: 'aboutyou' },
       pending: Immutable.Map({}),
-      stepsOrder: Immutable.List(['boxdetails', 'summary', 'aboutyou']),
+      stepsOrder: Immutable.List(['boxdetails', 'summary', 'aboutyou', 'payment', 'delivery']),
       recipes: Immutable.Map({}),
       request: Immutable.Map({
         browser: 'mobile',
@@ -88,7 +89,9 @@ describe('Checkout', () => {
 			<Checkout
 			  params={{ stepName: 'aboutyou' }}
 			  checkoutLanding={onCheckoutSpy}
+			  trackSignupStep={jest.fn()}
 			/>,
+			{ context }
     )
   })
 
@@ -106,7 +109,8 @@ describe('Checkout', () => {
 
   describe('rendering', () => {
     beforeEach(() => {
-      wrapper = shallow(<Checkout />)
+      wrapper = shallow(<Checkout trackSignupStep={jest.fn()}/>,
+        { context })
     })
 
     test('should render a <Div> with no props', () => {
@@ -118,7 +122,9 @@ describe('Checkout', () => {
 				<Checkout
 				  browser="mobile"
 				  params={{ stepName: 'boxdetails' }}
+				  trackSignupStep={jest.fn()}
 				/>,
+				{ context }
       )
       expect(mobileWrapper.find(ProgressBar)).toHaveLength(1)
 
@@ -126,7 +132,9 @@ describe('Checkout', () => {
 				<Checkout
 				  browser="desktop"
 				  params={{ stepName: 'boxdetails' }}
+				  trackSignupStep={jest.fn()}
 				/>,
+				{ context }
       )
       expect(desktopWrapper.find(ProgressBar)).toHaveLength(1)
     })
@@ -307,7 +315,7 @@ describe('Checkout', () => {
     beforeEach(() => {
       fetchData = Checkout.fetchData = jest.fn().mockReturnValue(Promise.resolve())
       wrapper = mount(
-				<Checkout query={{ query: true }} params={{ params: true }} />,
+				<Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} />,
 				{ context },
       )
     })
@@ -332,13 +340,31 @@ describe('Checkout', () => {
 				  query={{ query: true }}
 				  params={{ params: true }}
 				  loadPrices={loadPrices}
+				  trackSignupStep={jest.fn()}
 				/>,
+				{ context }
       )
     })
 
     test('should call loadPrices if tariffId has changed', async () => {
       await wrapper.instance().componentWillReceiveProps({ tariffId: 2 })
       expect(loadPrices).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('should render checkoutPayment component', () => {
+    test('should render checkoutPayment component', () => {
+      wrapper = shallow(
+        <Checkout
+          params={{ stepName: 'payment' }}
+          checkoutPayment
+          checkoutLanding={onCheckoutSpy}
+          trackSignupStep={jest.fn()}
+        />,
+        { context }
+      )
+      const paymentComponent = wrapper.instance().desktopStepMapping.payment.component()
+      expect(paymentComponent.props.children).toBe('CheckoutPayment')
     })
   })
 })
