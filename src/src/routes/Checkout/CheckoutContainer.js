@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import Checkout from './Checkout'
 import actions from 'actions'
+import Checkout from './Checkout'
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -10,6 +10,7 @@ function mapStateToProps(state, ownProps) {
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
     browser: state.request.get('browser'),
     tariffId: state.basket.get('tariffId'),
+    checkoutPayment: state.features.getIn(['checkoutPayment', 'value'])
   }
 }
 

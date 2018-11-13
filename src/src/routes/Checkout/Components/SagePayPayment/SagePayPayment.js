@@ -8,10 +8,10 @@ import { showAddress } from 'routes/Checkout/utils/delivery'
 import Svg from 'Svg'
 import PaymentSecurityCode from './PaymentSecurityCode'
 import PaymentExpiryDate from './PaymentExpiryDate'
-import css from './Payment.css'
+import css from './SagePayPayment.css'
 import BillingAddress from './BillingAddress'
 
-class Payment extends React.PureComponent {
+class SagePayPayment extends React.PureComponent {
 
 	static propTypes = {
 	  handleSubmit: React.PropTypes.func,
@@ -210,4 +210,4 @@ class Payment extends React.PureComponent {
 	}
 }
 
-export default Payment
+export { SagePayPayment }

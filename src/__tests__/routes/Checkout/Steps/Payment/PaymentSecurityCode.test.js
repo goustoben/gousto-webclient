@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import sinon from 'sinon'
 
 import { Field } from 'redux-form'
-import PaymentSecurityCode from 'routes/Checkout/Components/Payment/PaymentSecurityCode'
+import PaymentSecurityCode from 'routes/Checkout/Components/SagePayPayment/PaymentSecurityCode'
 import CheckoutTooltip from 'routes/Checkout/Components/CheckoutTooltip/CheckoutTooltip'
 
 describe('PaymentSecurityCode', () => {

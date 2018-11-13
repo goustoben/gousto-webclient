@@ -4,7 +4,7 @@ import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import config from 'config/checkout'
 import CheckoutTooltip from '../CheckoutTooltip/CheckoutTooltip'
-import cssPayment from './Payment.css'
+import cssPayment from './SagePayPayment.css'
 import cssSecurityCode from './PaymentSecurityCode.css'
 
 const css = {
