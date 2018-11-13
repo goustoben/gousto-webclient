@@ -35,25 +35,29 @@ class GetHelp extends PureComponent {
     pending: PropTypes.bool.isRequired,
   }
 
+  constructor(props) {
+    super(props)
+
+    this.orderId = getOrderId(this.props)
+  }
+
   componentDidMount() {
-    const orderId = getOrderId(this.props)
     const skipFetch = skipFetchByRoute(this.props.location)
 
-    if (!orderId || skipFetch ) {
+    if (!this.orderId || skipFetch ) {
       return null
     }
 
     const { storeGetHelpOrderId, userLoadOrder } = this.props
 
-    storeGetHelpOrderId(orderId)
+    storeGetHelpOrderId(this.orderId)
 
-    return userLoadOrder(orderId).then(this.orderLoadComplete)
+    return userLoadOrder(this.orderId).then(this.orderLoadComplete)
   }
 
   orderLoadComplete = () => {
     const { orders, recipesLoadRecipesById } = this.props
-    const orderId = getOrderId(this.props)
-    const order = orders[orderId]
+    const order = orders[this.orderId]
 
     const recipeIds = order.recipeItems.map((recipe) => recipe.recipeId)
 
@@ -62,8 +66,7 @@ class GetHelp extends PureComponent {
 
   render() {
     const { children, content, error, pending } = this.props
-    const orderId = getOrderId(this.props)
-    const hasError = !orderId || error.length > 0
+    const hasError = !this.orderId || error.length > 0
 
     return (
       <div className={css.getHelpContainer}>
