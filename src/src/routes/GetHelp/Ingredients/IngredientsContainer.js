@@ -3,9 +3,6 @@ import { validateSelectedIngredients } from 'actions/getHelp'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => {
-  /* eslint-disable no-console */
-  console.log('state.getHelp.get(recipes) >>>', state.getHelp.get('recipes').toJS())
-
   return {
     order: state.getHelp.get('order').toJS(),
     recipes: state.getHelp.get('recipes').toJS(),

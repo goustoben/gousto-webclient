@@ -41,16 +41,24 @@ const getHelpRequests = (state, action) => {
     return getHelpRequestInitialState
   }
 
-  switch (action.type) {
-  case actionTypes.RECIPES_RECEIVE:
-  case actionTypes.USER_LOAD_ORDERS:
-  case actionTypes.GET_HELP_GET_INGREDIENTS: {
-    state
-      .setIn(['status', 'error'], state.error)
-      .setIn(['status', 'pending'], state.pending)
+  const requestKeys = [
+    actionTypes.RECIPES_RECEIVE,
+    actionTypes.USER_LOAD_ORDERS,
+    actionTypes.GET_HELP_GET_INGREDIENTS,
+  ]
 
-    /* eslint-disable no-console */
-    console.log('>>>', state.get('status').toJS())
+  switch (action.type) {
+  case actionTypes.PENDING: {
+    if (requestKeys.includes(action.key)) {
+      return state.setIn(['status', 'pending'], action.value)
+    }
+
+    return state
+  }
+  case actionTypes.ERROR: {
+    if (requestKeys.includes(action.key)) {
+      return state.setIn(['status', 'error'], action.value || '')
+    }
 
     return state
   }

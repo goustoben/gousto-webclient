@@ -57,8 +57,6 @@ class GetHelp extends PureComponent {
     const { orders, recipesLoadRecipesById } = this.props
     const orderId = getOrderId(this.props)
     const order = orders[orderId]
-    /* eslint-disable no-console */
-    console.log('order.recipeItems >>>', order.recipeItems)
 
     const recipeIds = order.recipeItems.map((recipe) => recipe.recipeId)
 
@@ -67,9 +65,6 @@ class GetHelp extends PureComponent {
 
   render() {
     const { children, content, error, pending } = this.props
-
-    /* eslint-disable no-console */
-    console.log('error', error, 'pending', pending)
 
     return (
       <div className={css.getHelpContainer}>
