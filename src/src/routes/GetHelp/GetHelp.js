@@ -37,12 +37,9 @@ class GetHelp extends PureComponent {
 
   componentDidMount() {
     const orderId = getOrderId(this.props)
+    const skipFetch = skipFetchByRoute(this.props.location)
 
-    if (skipFetchByRoute(this.props.location)) {
-      return null
-    }
-
-    if (!orderId) {
+    if (!orderId || skipFetch ) {
       return null
     }
 
@@ -65,6 +62,8 @@ class GetHelp extends PureComponent {
 
   render() {
     const { children, content, error, pending } = this.props
+    const orderId = getOrderId(this.props)
+    const hasError = !orderId || error.length > 0
 
     return (
       <div className={css.getHelpContainer}>
@@ -77,7 +76,7 @@ class GetHelp extends PureComponent {
           {!pending &&
             <Error
               content={content}
-              hasError={error.length > 0}
+              hasError={hasError}
             >
               {children}
             </Error>}
