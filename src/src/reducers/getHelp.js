@@ -36,36 +36,6 @@ const reduceRecipes = (recipes) => (
   })
 )
 
-const getHelpRequests = (state, action) => {
-  if (!state) {
-    return getHelpRequestInitialState
-  }
-
-  const requestKeys = [
-    actionTypes.RECIPES_RECEIVE,
-    actionTypes.USER_LOAD_ORDERS,
-  ]
-
-  switch (action.type) {
-  case actionTypes.PENDING: {
-    if (requestKeys.includes(action.key)) {
-      return state.setIn(['status', 'pending'], action.value)
-    }
-
-    return state
-  }
-  case actionTypes.ERROR: {
-    if (requestKeys.includes(action.key)) {
-      return state.setIn(['status', 'error'], action.value || '')
-    }
-
-    return state
-  }
-  default:
-    return state
-  }
-}
-
 const getHelp = (state, action) => {
   if (!state) {
     return getHelpInitialState
@@ -87,6 +57,5 @@ const getHelp = (state, action) => {
 
 export {
   getHelp,
-  getHelpRequests,
   getHelpInitialState,
 }

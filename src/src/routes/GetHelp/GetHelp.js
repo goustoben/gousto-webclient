@@ -1,7 +1,8 @@
 import Helmet from 'react-helmet'
-import React, { PropTypes, PureComponent } from 'react'
-import { Error } from './components/Error'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { client as routes } from 'config/routes'
+import { Error } from './components/Error'
 import css from './GetHelp.css'
 
 const skipFetchByRoute = ({ pathname }) => ([
