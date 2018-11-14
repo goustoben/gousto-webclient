@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { IngredientsPresentation } from './Ingredients.presentation'
 import { RecipeList } from '../components/RecipeList'
@@ -72,9 +73,10 @@ class Ingredients extends PureComponent {
         orderId: Number(order.id),
         ingredients
       })
+
+      browserHistory.push(`${client.getHelp.index}/${client.getHelp.refund}`)
     } catch (error) {
-      /* eslint-disable no-console */
-      console.log('response', error)
+      browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
     }
   }
 
