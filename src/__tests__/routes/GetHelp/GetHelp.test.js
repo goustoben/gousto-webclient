@@ -19,16 +19,19 @@ describe('<GetHelp />', () => {
       }
 
       wrapper = mount(
-				<GetHelp
-				  location={location}
-				  orders={{ 7: { recipeItems: [{ recipeId: '123456' }] } }}
-				  recipes={{}}
-				  recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
-				  storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-				  userLoadOrder={userLoadOrderSpy}
-				>
-					<div className="test" />
-				</GetHelp>
+        <GetHelp
+          didRequestError={false}
+          isRequestPending={false}
+          pending={false}
+          location={location}
+          orders={{ 7: { recipeItems: [{ recipeId: '123456' }] } }}
+          recipes={{}}
+          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          storeGetHelpOrderId={storeGetHelpOrderIdSpy}
+          userLoadOrder={userLoadOrderSpy}
+        >
+          <div className="test" />
+        </GetHelp>
       )
     })
 
@@ -45,16 +48,18 @@ describe('<GetHelp />', () => {
       }
 
       wrapper = mount(
-				<GetHelp
-				  location={location}
-				  orders={{ 7: { recipeItems: [{ recipeId: '123456' }] } }}
-				  recipes={{}}
-				  recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
-				  storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-				  userLoadOrder={userLoadOrderSpy}
-				>
-					<div className="test" />
-				</GetHelp>
+        <GetHelp
+          didRequestError={false}
+          isRequestPending={false}
+          location={location}
+          orders={{ 7: { recipeItems: [{ recipeId: '123456' }] } }}
+          recipes={{}}
+          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          storeGetHelpOrderId={storeGetHelpOrderIdSpy}
+          userLoadOrder={userLoadOrderSpy}
+        >
+          <div className="test" />
+        </GetHelp>
       )
 
       expect(wrapper.find('Error')).toHaveLength(1)
@@ -69,16 +74,18 @@ describe('<GetHelp />', () => {
       }
 
       wrapper = mount(
-				<GetHelp
-				  location={location}
-				  orders={{}}
-				  recipes={{}}
-				  recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
-				  storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-				  userLoadOrder={userLoadOrderSpy}
-				>
-					<div className="test" />
-				</GetHelp>
+        <GetHelp
+          didRequestError={false}
+          location={location}
+          orders={{}}
+          recipes={{}}
+          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          storeGetHelpOrderId={storeGetHelpOrderIdSpy}
+          userLoadOrder={userLoadOrderSpy}
+          isRequestPending
+        >
+          <div className="test" />
+        </GetHelp>
       )
 
       expect(wrapper.find('Error')).toHaveLength(0)
@@ -94,16 +101,18 @@ describe('<GetHelp />', () => {
       }
 
       wrapper = mount(
-				<GetHelp
-				  location={location}
-				  orders={{}}
-				  recipes={{}}
-				  recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
-				  storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-				  userLoadOrder={userLoadOrderSpy}
-				>
-					<div className="test" />
-				</GetHelp>
+        <GetHelp
+          didRequestError={false}
+          isRequestPending={false}
+          location={location}
+          orders={{}}
+          recipes={{}}
+          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          storeGetHelpOrderId={storeGetHelpOrderIdSpy}
+          userLoadOrder={userLoadOrderSpy}
+        >
+          <div className="test" />
+        </GetHelp>
       )
 
       expect(storeGetHelpOrderIdSpy).not.toHaveBeenCalled()
@@ -126,16 +135,18 @@ describe('<GetHelp />', () => {
       }
 
       mount(
-				<GetHelp
-				  location={location}
-				  orders={{ 7: { recipeItems: [{ recipeId: '123456' }] } }}
-				  recipes={{}}
-				  recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
-				  storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-				  userLoadOrder={userLoadOrderSpy}
-				>
-					<div className="test" />
-				</GetHelp>
+        <GetHelp
+          didRequestError={false}
+          isRequestPending={false}
+          location={location}
+          orders={{ 7: { recipeItems: [{ recipeId: '123456' }] } }}
+          recipes={{}}
+          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          storeGetHelpOrderId={storeGetHelpOrderIdSpy}
+          userLoadOrder={userLoadOrderSpy}
+        >
+          <div className="test" />
+        </GetHelp>
       )
     })
 

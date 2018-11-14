@@ -15,13 +15,6 @@ const getHelpInitialState = fromJS({
   }],
 })
 
-const getHelpRequestInitialState = fromJS({
-  status: {
-    pending: false,
-    error: ''
-  }
-})
-
 const reduceRecipes = (recipes) => (
   Object.keys(recipes).map((recipeId) => {
     const recipe = recipes[recipeId]

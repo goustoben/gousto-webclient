@@ -8,7 +8,7 @@ import GetHelp from './GetHelp'
 const mapStateToProps = (state, ownProps) => {
   const error = state.error.get(actionTypes.RECIPES_RECEIVE)
     || state.error.get(actionTypes.USER_LOAD_ORDERS)
-  const isAnythingPending = state.pending.get(actionTypes.RECIPES_RECEIVE)
+  const isRequestPending = state.pending.get(actionTypes.RECIPES_RECEIVE)
     || state.pending.get(actionTypes.USER_LOAD_ORDERS)
   const content = {
     title: state.content.get('get-help_default_pageheader_header')
@@ -20,8 +20,8 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   return {
-    error,
-    isAnythingPending,
+    didRequestError: error !== null,
+    isRequestPending,
     location: ownProps.location,
     orders: state.user.get('orders').toJS(),
     content,

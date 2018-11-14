@@ -32,8 +32,8 @@ class GetHelp extends PureComponent {
       infoBody: PropTypes.string,
       title: PropTypes.string,
     }),
-    error: PropTypes.string.isRequired,
-    pending: PropTypes.bool.isRequired,
+    didRequestError: PropTypes.bool.isRequired,
+    isRequestPending: PropTypes.bool.isRequired,
   }
 
   constructor(props) {
@@ -66,8 +66,9 @@ class GetHelp extends PureComponent {
   }
 
   render() {
-    const { children, content, error, pending } = this.props
-    const hasError = !this.orderId || error.length > 0
+    const { children, content, didRequestError, location, isRequestPending } = this.props
+    const hasError = !this.orderId || didRequestError
+    const skipFetch = skipFetchByRoute(location)
 
     return (
       <div className={css.getHelpContainer}>
@@ -77,10 +78,10 @@ class GetHelp extends PureComponent {
           }]}
         />
         <div className={css.getHelpContent}>
-          {!pending &&
+          {!isRequestPending &&
             <Error
               content={content}
-              hasError={hasError}
+              hasError={(skipFetch) ? false : hasError}
             >
               {children}
             </Error>}
