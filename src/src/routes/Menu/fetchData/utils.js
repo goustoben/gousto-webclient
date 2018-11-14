@@ -1,6 +1,6 @@
 import { getCollectionFreezeValue, isJustForYouFeatureEnabled } from 'selectors/features'
 import { recommendationsShortTitle } from 'config/collections'
-import { getCollectionIdWithName } from 'utils/collections'
+import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { collectionFilterIdRecieve } from 'actions/filters'
 
 export const getPreselectedCollectionName = (state, collectionNameFromQueryParam) => {
@@ -16,9 +16,10 @@ export const getPreselectedCollectionName = (state, collectionNameFromQueryParam
 }
 
 export const selectCollection = (state, collectionName, dispatch) => {
-  const collectionId = getCollectionIdWithName(state, collectionName)
-
-  if (collectionId) {
-    dispatch(collectionFilterIdRecieve(collectionId))
+  let collectionId = getCollectionIdWithName(state, collectionName)
+  if (!collectionId) {
+    collectionId = getDefaultCollectionId(state)
   }
+
+  dispatch(collectionFilterIdRecieve(collectionId))
 }
