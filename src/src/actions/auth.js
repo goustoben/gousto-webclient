@@ -135,7 +135,7 @@ const resetPassword = (password, passwordToken) => (
       redirect(configRoutes.client.myDeliveries)
     } catch (err) {
       dispatch(statusActions.error(actionTypes.AUTH_PASSWORD_RESET, err.code))
-      logger.error(err.message)
+      logger.error(err)
     } finally {
       dispatch(statusActions.pending(actionTypes.AUTH_PASSWORD_RESET, false))
     }

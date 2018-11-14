@@ -22,7 +22,7 @@ const recipesLoadRecipesById = (recipeIds = []) => (
         dispatch({ type: actionTypes.RECIPES_RECEIVE, recipes })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.RECIPES_RECEIVE, err.message))
-        logger.error(err.message)
+        logger.error(err)
       } finally {
         dispatch(statusActions.pending(actionTypes.RECIPES_RECEIVE, false))
       }
@@ -57,7 +57,7 @@ const recipesLoadStockByDate = (whenStart, whenCutoff) => (
       dispatch({ type: actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, stock })
     } catch (err) {
       dispatch(statusActions.error(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, err.message))
-      logger.error(err.message)
+      logger.error(err)
     } finally {
       dispatch(statusActions.pending(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, false))
     }
@@ -78,7 +78,7 @@ export const loadRecommendations = () => (
 
       dispatch(featureSet('justforyou', recommendations, true))
     } catch (err) {
-      logger.notice('Error loading recommendation data for user: ', err)
+      logger.error({message: 'Error loading recommendation data for user', errors: [err]})
     }
   }
 )

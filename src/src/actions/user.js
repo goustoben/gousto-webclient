@@ -233,7 +233,7 @@ function userSubscribe() {
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, err.message))
-      logger.error(err.message)
+      logger.error(err)
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, false))
@@ -315,7 +315,7 @@ function userLoadOrder(orderId, forceRefresh = false) {
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
-      logger.error(err.message)
+      logger.error(err)
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
@@ -337,7 +337,7 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
-      logger.error(err.message)
+      logger.error(err)
       throw err
     }
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
@@ -384,7 +384,7 @@ function userLoadProjectedDeliveries(forceRefresh = false) {
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, err.message))
-      logger.error(err.message)
+      logger.error(err)
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, false))
@@ -433,7 +433,7 @@ function userVerifyAge(verified, hardSave) {
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_AGE_VERIFY, err.message))
       dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, false))
-      logger.error(err.message)
+      logger.error(err)
       throw err
     }
     dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, false))

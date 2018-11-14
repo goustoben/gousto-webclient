@@ -516,7 +516,7 @@ export default {
       try {
         dispatch(push(config.routes.client['check-out']))
       } catch (err) {
-        logger.error(err.message)
+        logger.error(err)
         dispatch(push(config.routes.client.menu))
         dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, err.message))
       } finally {
@@ -552,7 +552,7 @@ export default {
       } catch (err) {
         dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, err.message))
         dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
-        logger.error(err.message)
+        logger.error(err)
         throw err
       }
     }

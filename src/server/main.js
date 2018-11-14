@@ -28,33 +28,44 @@ const { clearPersistentStore } = require('middlewares/persist/persistStore')
 const withStatic = process.env.withStatic === 'true'
 
 const addressLookupRoute = require('./routes/addressLookup').default
+const uuidv1 = require('uuid/v1')
+const {loggerSetUuid} = require('actions/logger')
 
 /* eslint-disable no-param-reassign */
 app.use(async (ctx, next) => {
   const startTime = new Date
   const path = ctx.request.path
-  const writeLog = (__PROD__ && path.indexOf('/ping') === -1) || (__DEV__ && (path.indexOf('menu') > -1 || path.indexOf('welcome-to-gousto') > -1))
+  const writeLog = (path.indexOf('/ping') === -1) && (path.indexOf('/nsassets') === -1 )
+
   if (writeLog) {
-    logger.notice(`[START] REQUEST: ${ctx.request.path}`)
+    const uuid = uuidv1()
+    ctx.uuid = uuid
+    logger.notice({message: `[START] REQUEST`, requestUrl: ctx.request.path, uuid: ctx.uuid})
   }
+
   await next()
   if (writeLog) {
-    logger.notice(`[END] REQUEST: ${ctx.request.path} finished in ${new Date - startTime}ms`)
+    logger.notice({message: `[END] REQUEST`, requestUrl: ctx.request.path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime)})
   }
 })
 
 app.use(async (ctx, next) => {
+  if(ctx.uuid){
+    const { store } = configureHistoryAndStore(ctx.request.url)
+    store.dispatch(loggerSetUuid(ctx.uuid))
+  }
   try {
     // Make cookies secure
     ctx.cookies.secure = globals.secure
     ctx.cookies.path = '/'
+
     await next()
   } catch (err) {
-    logger.critical(err)
 
     if (err.networkError) {
       err.status = err.networkError.statusCode
     }
+    logger.critical({message: err.message, status: err.status, uuid: ctx.uuid})
 
     if (Number(err.status) === 200) {
       ctx.status = 500

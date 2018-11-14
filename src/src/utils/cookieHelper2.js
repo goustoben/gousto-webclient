@@ -101,7 +101,7 @@ export function get(cookies, key, withVersionPrefix = true) {
       }
     } catch (err) {
       logger.notice(`un-parsable cookie value for key: ${key}, value: ${cookies.get(key)}`)
-      logger.error(`un-parsable cookie value for key: ${key}`, err)
+      logger.error({message: `un-parsable cookie value for key: ${key}`, errors: [ err.toString() ]})
     }
   }
 

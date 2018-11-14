@@ -86,7 +86,7 @@ export default {
         dispatch(basketDeliveryDaysReceive(availableDeliveryDays))
       } catch (err) {
         if (err.message !== 'do-not-deliver') {
-          logger.error(err.message)
+          logger.error(err)
         }
 
         dispatch(status.error(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, err.message))

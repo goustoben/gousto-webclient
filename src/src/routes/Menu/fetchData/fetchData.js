@@ -102,7 +102,7 @@ export default async function fetchData({ store, query, params }, force, backgro
           .catch(err => {
             logger.error(`Debug fetchData: ${err}`)
             if (__SERVER__) {
-              logger.error(`Failed to fetch order: ${params.orderId}.`, err)
+              logger.error({message: `Failed to fetch order: ${params.orderId}.`, errors: [err]} )
               store.dispatch(actions.redirect('/menu', true))
             }
           })

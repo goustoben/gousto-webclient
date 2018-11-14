@@ -94,7 +94,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   }
 
   const startTime = new Date
-  logger.notice(`"[fetch start]" "${requestUrl}"`)
+  logger.notice({message: "[fetch start]", requestUrl: requestUrl})
   let status
 
   return isomorphicFetch(requestUrl, requestDetails)
@@ -107,11 +107,12 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     .then(response => [JSONParse(response), status]) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
-      logger.notice(`"[fetch end]" "[${status}]" "${new Date - startTime}ms" "${requestUrl}"`)
+      logger.notice({message: "[fetch end]", status: status, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl: requestUrl})
 
       return { data: response, meta }
     })
     .catch(e => {
+      
       const message = (e instanceof Error || e.message) ? e.message : e
       let log = logger.error
 
@@ -120,8 +121,11 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       }
 
       log({
-        message: `"[fetch failed]" "[${status}]" "${new Date - startTime}ms" "${requestUrl}"`,
-        error: e,
+        message: "[fetch end]",
+        status: status,
+        elapsedTime: `${(new Date() - startTime)}ms`,
+        requestUrl: requestUrl,
+        errors: [message],
       })
 
       if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {

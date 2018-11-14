@@ -127,7 +127,7 @@ class Checkout extends React.PureComponent {
     return store.dispatch(actions.pricingRequest())
       .catch((err) => {
         if (__SERVER__) {
-          logger.error('Failed to fetch prices.', err.message)
+          logger.error({ message: 'Failed to fetch prices.', errors: [err.toString()] })
           store.dispatch(actions.redirect(routesConfig.client.menu, true))
         }
       })
