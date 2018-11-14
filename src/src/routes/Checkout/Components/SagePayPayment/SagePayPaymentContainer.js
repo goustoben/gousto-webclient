@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import { getFormValues, change, untouch } from 'redux-form'
-import Payment from './Payment'
 import actions from 'actions'
 
 import deliveryRules from 'validations/delivery'
 import { addPrefix } from 'validations/util'
 import cardRules from 'validations/card'
+import { SagePayPayment } from './SagePayPayment'
 
 const form = 'checkout'
 
@@ -26,13 +26,13 @@ function mapStateToProps(sectionName) {
 }
 
 function connectComponent(sectionName) {
-  const PaymentContainer = connect(mapStateToProps(sectionName), {
+  const SagePayPaymentContainer = connect(mapStateToProps(sectionName), {
     clearErrors: actions.checkoutClearErrors,
     change,
     untouch,
-  })(Payment)
+  })(SagePayPayment)
 
-  return PaymentContainer
+  return SagePayPaymentContainer
 }
 
 export default sectionName => connectComponent(sectionName)

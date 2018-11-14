@@ -2,7 +2,7 @@ import React from 'react'
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import moment from 'moment'
-import css from './Payment.css'
+import css from './SagePayPayment.css'
 
 const CURRENT_YEAR = Number(moment().format('YYYY'))
 const MONTHS = ['MM', ...Array.from({ length: 12 }, (v, k) => (k < 9 ? `0${k + 1}` : k + 1))].map(option => ({ value: option === 'MM' ? '' : String(option), label: String(option) }))
