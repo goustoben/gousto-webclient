@@ -1,7 +1,8 @@
 import React from 'react'
 import { mount } from 'enzyme'
-
+import { browserHistory } from 'react-router'
 import { Ingredients } from 'routes/GetHelp/Ingredients/Ingredients.logic'
+import {getHelp} from "../../../../reducers/getHelp";
 
 describe('<Ingredients />', () => {
   const content = {
@@ -21,11 +22,11 @@ describe('<Ingredients />', () => {
     { id: '4', title: 'test 4', ingredients: [{ id: '4', label: 'test' }] },
   ]
   const user = {
-    id: 'user-id',
+    id: '777',
     accessToken: 'user-access-token',
   }
   const order = {
-    id: 'order-id',
+    id: '888',
   }
   let wrapper
   let getHelpLayout
@@ -99,57 +100,105 @@ describe('<Ingredients />', () => {
   })
 
   describe('behaviour', () => {
+    let validateSelectedIngredients
+    let ContinueButton
+
     beforeEach(() => {
+      validateSelectedIngredients = jest.fn()
+      browserHistory.push = jest.fn()
       wrapper = mount(
         <Ingredients
           order={order}
           user={user}
           recipes={recipes}
           content={content}
-          validateSelectedIngredients={() => {}}
+          validateSelectedIngredients={validateSelectedIngredients}
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
+      ContinueButton = getHelpLayout.find('BottomBar').find('Button').at(1)
     })
 
-    test('ingredients are unselected by default', () => {
-      const secondRecipe = getHelpLayout.find('Recipe').at(1)
-      secondRecipe.find('Item').simulate('click')
-      const ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
+    describe('ingredients', () => {
+      test('ingredients are unselected by default', () => {
+        const secondRecipe = getHelpLayout.find('Recipe').at(1)
+        secondRecipe.find('Item').simulate('click')
+        const ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
 
-      expect(ingredientsCheckboxes).toHaveLength(2)
-      expect(ingredientsCheckboxes.at(0).prop('checked')).toBeFalsy()
-      expect(ingredientsCheckboxes.at(1).prop('checked')).toBeFalsy()
+        expect(ingredientsCheckboxes).toHaveLength(2)
+        expect(ingredientsCheckboxes.at(0).prop('checked')).toBeFalsy()
+        expect(ingredientsCheckboxes.at(1).prop('checked')).toBeFalsy()
+      })
+
+      test('ingredients retain the selection state when thy are collapsed and then expanded', () => {
+        const secondRecipe = wrapper.find('Recipe').at(1)
+        secondRecipe.find('Item').simulate('click')
+        let ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
+        ingredientsCheckboxes.at(1).simulate('change')
+
+        expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
+
+        secondRecipe.find('Item').simulate('click')
+        secondRecipe.find('Item').simulate('click')
+        ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
+
+        expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
+      })
     })
 
-    test('ingredients retain the selection state when thy are collapsed and then expanded', () => {
-      const secondRecipe = wrapper.find('Recipe').at(1)
-      secondRecipe.find('Item').simulate('click')
-      let ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
-      ingredientsCheckboxes.at(1).simulate('change')
+    describe('Continue button', () => {
+      const selectIngredientAndGetCheckbox = (recipeAncestor) => {
+        const recipe = recipeAncestor.find('ItemExpandable').at(1)
+        recipe.find('Item').simulate('click')
+        const ingredientCheckbox = recipe.find('input[type="checkbox"]').at(1)
+        ingredientCheckbox.simulate('change')
 
-      expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
+        return ingredientCheckbox
+      }
 
-      secondRecipe.find('Item').simulate('click')
-      secondRecipe.find('Item').simulate('click')
-      ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
+      test('the button is enabled only when one or more ingredients are selected', () => {
+        const ingredientCheckbox = selectIngredientAndGetCheckbox(getHelpLayout)
 
-      expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
-    })
+        expect(ContinueButton.prop('disabled')).toBe(false)
 
-    test('the Continue button is enabled only when one or more ingredients are selected', () => {
-      const recipe = getHelpLayout.find('ItemExpandable').at(0)
-      recipe.find('Item').simulate('click')
-      const ingredientCheckbox = recipe.find('input[type="checkbox"]')
-      ingredientCheckbox.simulate('change')
-      const BottomBar = getHelpLayout.find('BottomBar')
-      const ContinueButton = BottomBar.find('Button').at(1)
+        ingredientCheckbox.simulate('change')
 
-      expect(ContinueButton.prop('disabled')).toBe(false)
+        expect(ContinueButton.prop('disabled')).toBe(true)
+      })
 
-      ingredientCheckbox.simulate('change')
+      test('validateIngredients is called with the selected ingredients when clicking the button', () => {
+        selectIngredientAndGetCheckbox(getHelpLayout)
+        ContinueButton.prop('onClick')()
 
-      expect(ContinueButton.prop('disabled')).toBe(true)
+        expect(validateSelectedIngredients).toHaveBeenCalledTimes(1)
+        expect(validateSelectedIngredients).toHaveBeenCalledWith({
+          accessToken: 'user-access-token',
+          costumerId: 777,
+          ingredients: ['2-2222'],
+          orderId: 888,
+        })
+      })
+
+      test('redirection to the Refund page happens when validateIngredients returns a valid response', async () => {
+        validateSelectedIngredients.mockResolvedValue({
+          status: 'ok',
+          data: {
+            valid: true,
+          }
+        })
+        selectIngredientAndGetCheckbox(getHelpLayout)
+        await ContinueButton.prop('onClick')()
+
+        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/refund')
+      })
+
+      test('redirection to the Contact Us page happens when validateIngredients errors', async () => {
+        validateSelectedIngredients.mockImplementation(() => { throw new Error('error')})
+        selectIngredientAndGetCheckbox(getHelpLayout)
+        await ContinueButton.prop('onClick')()
+
+        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
+      })
     })
   })
 })
