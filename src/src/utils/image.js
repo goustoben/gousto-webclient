@@ -50,9 +50,10 @@ export function getFeaturedImage(recipe, view) {
   }
 
   if(!recipeImage) {
-    recipeImage = recipe.getIn(['media', 'images'], Immutable.List([])).find(image => image.get('type') === 'mood-image') || recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))
+    const moodImage = recipe.getIn(['media', 'images'], Immutable.List([])).find(image => image.get('type') === 'mood-image')
+    recipeImage = (moodImage && moodImage.get('urls')) || recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))
   }
-
+  
   return recipeImage
 }
 
