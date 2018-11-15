@@ -52,11 +52,13 @@ class Checkout extends React.PureComponent {
     menuLoadBoxPrices: PropTypes.func,
     trackSignupStep: PropTypes.func,
     tariffId: PropTypes.string,
+    checkoutPaymentFeature: PropTypes.bool,
   }
 
   static defaultProps = {
     params: {},
     redirect: () => { },
+    checkoutPaymentFeature: false,
   }
 
   constructor(state, props) {
@@ -64,9 +66,9 @@ class Checkout extends React.PureComponent {
     this.state = {
       isCreatingPreviewOrder: true,
     }
-    const { checkoutPayment } = this.props
-    this.desktopStepMapping = desktopStepMapping(checkoutPayment)
-    this.mobileStepMapping = mobileStepMapping(checkoutPayment)
+    const { checkoutPaymentFeature } = this.props
+    this.desktopStepMapping = desktopStepMapping(checkoutPaymentFeature)
+    this.mobileStepMapping = mobileStepMapping(checkoutPaymentFeature)
   }
 
   static fetchData = async ({ store, query, params, browser }) => {
@@ -242,10 +244,12 @@ class Checkout extends React.PureComponent {
   )
 
   render() {
+    const { checkoutPaymentFeature } = this.props
     const renderSteps = this.props.browser === 'mobile' ? this.renderMobileSteps : this.renderDesktopSteps
 
     return (
       <Div className={css.checkoutContainer} data-testing="checkoutContainer">
+        {checkoutPaymentFeature && <script src="https://cdn.checkout.com/js/frames.js"></script>}
         <Div className={css.content}>
           {renderSteps()}
         </Div>
