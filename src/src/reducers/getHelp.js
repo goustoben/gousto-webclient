@@ -46,9 +46,14 @@ const getHelp = (state, action) => {
   }
   case actionTypes.USER_LOAD_ORDERS: {
     const order = action.orders[0]
-    const recipeItems = order.recipeItems.map((item) => (item.recipeId))
 
-    return state.setIn(['order', 'recipeItems'], fromJS(recipeItems))
+    if (order) {
+      const recipeItems = order.recipeItems.map((item) => (item.recipeId))
+
+      return state.setIn(['order', 'recipeItems'], fromJS(recipeItems))
+    }
+
+    return state
   }
   default:
     return state
