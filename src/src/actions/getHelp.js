@@ -22,8 +22,8 @@ export const storeGetHelpOrderId = (id) => dispatcher({
 
 export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredients }) => {
   return async (dispatch) => {
-    dispatch(statusActions.pending(actionTypes.GET_HELP_GET_INGREDIENTS, true))
-    dispatch(statusActions.error(actionTypes.GET_HELP_GET_INGREDIENTS, ''))
+    dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
+    dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
 
     try {
       await validateIngredients(
@@ -36,11 +36,11 @@ export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, 
       )
     }
     catch (error) {
-      dispatch(statusActions.error(actionTypes.GET_HELP_GET_INGREDIENTS, error.message))
+      dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, error.message))
       throw error
     }
     finally {
-      dispatch(statusActions.pending(actionTypes.GET_HELP_GET_INGREDIENTS, false))
+      dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, false))
     }
   }
 }

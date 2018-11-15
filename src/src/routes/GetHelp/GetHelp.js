@@ -18,24 +18,31 @@ const getOrderId = ({ location }) => {
     : null
 }
 
-class GetHelp extends PureComponent {
-  static propTypes = {
-    location: PropTypes.shape({
-      query: PropTypes.shape({
-        orderId: PropTypes.string,
-      }),
+const propTypes = {
+  location: PropTypes.shape({
+    query: PropTypes.shape({
+      orderId: PropTypes.string,
     }),
-    children: PropTypes.node.isRequired,
-    content: PropTypes.shape({
-      button1: PropTypes.string,
-      errorBody: PropTypes.string,
-      infoBody: PropTypes.string,
-      title: PropTypes.string,
-    }),
-    didRequestError: PropTypes.bool.isRequired,
-    isRequestPending: PropTypes.bool.isRequired,
-  }
+  }),
+  children: PropTypes.node.isRequired,
+  content: PropTypes.shape({
+    button1: PropTypes.string,
+    errorBody: PropTypes.string,
+    infoBody: PropTypes.string,
+    title: PropTypes.string,
+  }),
+  order: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    recipeItems: PropTypes.arrayOf(PropTypes.string).isRequired
+  }),
+  storeGetHelpOrderId: PropTypes.func.isRequired,
+  userLoadOrder: PropTypes.func.isRequired,
+  recipesLoadRecipesById: PropTypes.func.isRequired,
+  didRequestError: PropTypes.bool.isRequired,
+  isRequestPending: PropTypes.bool.isRequired,
+}
 
+class GetHelp extends PureComponent {
   constructor(props) {
     super(props)
 
@@ -43,7 +50,8 @@ class GetHelp extends PureComponent {
   }
 
   componentDidMount() {
-    const skipFetch = skipFetchByRoute(this.props.location)
+    const { location } = this.props
+    const skipFetch = skipFetchByRoute(location)
 
     if (!this.orderId || skipFetch ) {
       return null
@@ -57,12 +65,9 @@ class GetHelp extends PureComponent {
   }
 
   orderLoadComplete = () => {
-    const { orders, recipesLoadRecipesById } = this.props
-    const order = orders[this.orderId]
+    const { order, recipesLoadRecipesById } = this.props
 
-    const recipeIds = order.recipeItems.map((recipe) => recipe.recipeId)
-
-    recipesLoadRecipesById(recipeIds)
+    recipesLoadRecipesById(order.recipeItems)
   }
 
   render() {
@@ -90,5 +95,7 @@ class GetHelp extends PureComponent {
     )
   }
 }
+
+GetHelp.propTypes = propTypes
 
 export default GetHelp

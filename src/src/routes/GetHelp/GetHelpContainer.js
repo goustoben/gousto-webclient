@@ -23,7 +23,7 @@ const mapStateToProps = (state, ownProps) => {
     didRequestError: error !== null,
     isRequestPending,
     location: ownProps.location,
-    orders: state.user.get('orders').toJS(),
+    order: state.getHelp.get('order').toJS(),
     content,
   }
 }

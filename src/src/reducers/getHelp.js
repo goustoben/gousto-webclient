@@ -4,6 +4,7 @@ import { fromJS } from 'immutable'
 const getHelpInitialState = fromJS({
   order: {
     id: '',
+    recipeItems: []
   },
   recipes: [{
     id: '',
@@ -42,6 +43,12 @@ const getHelp = (state, action) => {
     const recipes = fromJS(reduceRecipes(action.recipes))
 
     return state.set('recipes', recipes)
+  }
+  case actionTypes.USER_LOAD_ORDERS: {
+    const order = action.orders[0]
+    const recipeItems = order.recipeItems.map((item) => (item.recipeId))
+
+    return state.setIn(['order', 'recipeItems'], fromJS(recipeItems))
   }
   default:
     return state
