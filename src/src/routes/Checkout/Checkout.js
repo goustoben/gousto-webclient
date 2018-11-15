@@ -10,7 +10,7 @@ import { Div } from 'Page/Elements'
 import ProgressBar from 'ProgressBar'
 
 import css from './Checkout.css'
-import CheckoutPayment from './Components/CheckoutPayment'
+import { CheckoutPayment } from './Components/CheckoutPayment'
 
 import DesktopAboutYou from './Steps/Desktop/AboutYou'
 import DesktopBoxDetails from './Steps/Desktop/BoxDetails'
