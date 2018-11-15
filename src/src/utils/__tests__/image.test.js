@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import {
   getMenuRecipeImage,
   getFeaturedImage,
@@ -123,6 +121,13 @@ describe('getFeaturedImage when there IS NOT a homepage image', () => {
 
   test('if it is a detail section should return the mood image if there is no homepage image', () => {
     expect(JSON.stringify(getFeaturedImage(recipe, 'detail'))).toContain(
+      'mood-image',
+    )
+  })
+
+  test('should return mood image if the home-page image doesn\'t exists end view is fineDineIn', () => {
+  
+    expect(JSON.stringify(getFeaturedImage(recipe, 'fineDineIn'))).toContain(
       'mood-image',
     )
   })
