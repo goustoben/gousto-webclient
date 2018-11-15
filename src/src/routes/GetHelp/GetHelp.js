@@ -5,7 +5,7 @@ import { client as routes } from 'config/routes'
 import { Error } from './components/Error'
 import css from './GetHelp.css'
 
-const skipFetchByRoute = ({ pathname }) => ([
+const skipErrorByRoute = ({ pathname }) => ([
   `${routes.getHelp.index}/${routes.getHelp.contact}`,
   `${routes.getHelp.index}/${routes.getHelp.confirmation}`,
 ].includes(pathname))
@@ -48,9 +48,9 @@ class GetHelp extends PureComponent {
 
   componentDidMount() {
     const { location } = this.props
-    const skipFetch = skipFetchByRoute(location)
+    const skipErrorPage = skipErrorByRoute(location)
 
-    if (!this.orderId || skipFetch ) {
+    if (!this.orderId || skipErrorPage ) {
       return null
     }
 
@@ -69,8 +69,9 @@ class GetHelp extends PureComponent {
 
   render() {
     const { children, content, didRequestError, location, isRequestPending } = this.props
-    const hasError = !this.orderId || didRequestError
-    const skipFetch = skipFetchByRoute(location)
+    const skipErrorPage = skipErrorByRoute(location)
+    const hasError = (skipErrorPage) ? false : (!this.orderId || didRequestError)
+    const isPending = (skipErrorPage) ? false : isRequestPending
 
     return (
       <div className={css.getHelpContainer}>
@@ -80,10 +81,10 @@ class GetHelp extends PureComponent {
           }]}
         />
         <div className={css.getHelpContent}>
-          {!isRequestPending &&
+          {!isPending &&
             <Error
               content={content}
-              hasError={(skipFetch) ? false : hasError}
+              hasError={hasError}
             >
               {children}
             </Error>}

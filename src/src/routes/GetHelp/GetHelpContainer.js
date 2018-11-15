@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => {
   const error = state.error.get(actionTypes.RECIPES_RECEIVE)
     || state.error.get(actionTypes.USER_LOAD_ORDERS)
 
-  const isRequestPending = state.pending.get(actionTypes.RECIPES_RECEIVE)
+  const pending = state.pending.get(actionTypes.RECIPES_RECEIVE)
     || state.pending.get(actionTypes.USER_LOAD_ORDERS)
 
   const content = {
@@ -21,9 +21,11 @@ const mapStateToProps = (state, ownProps) => {
       || 'Contact Us',
   }
 
+  const didRequestError = error !== null
+
   return {
-    didRequestError: error !== null,
-    isRequestPending,
+    didRequestError: (typeof error !== 'undefined') ? didRequestError : false,
+    isRequestPending: (typeof pending !== 'undefined') ? pending : true,
     location: ownProps.location,
     order: state.getHelp.get('order').toJS(),
     content,
