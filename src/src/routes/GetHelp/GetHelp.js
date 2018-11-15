@@ -11,11 +11,11 @@ const skipFetchByRoute = ({ pathname }) => ([
 ].includes(pathname))
 
 const getOrderId = ({ location }) => {
-  const { query } = location
-
-  return (query && query.orderId)
-    ? query.orderId
+  const orderId = location && location.query && location.query.orderId
+    ? location.query.orderId
     : null
+
+  return orderId
 }
 
 const propTypes = {
@@ -43,11 +43,8 @@ const propTypes = {
 }
 
 class GetHelp extends PureComponent {
-  constructor(props) {
-    super(props)
 
-    this.orderId = getOrderId(this.props)
-  }
+  orderId = getOrderId(this.props)
 
   componentDidMount() {
     const { location } = this.props

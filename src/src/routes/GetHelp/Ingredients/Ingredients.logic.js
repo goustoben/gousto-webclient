@@ -83,6 +83,7 @@ class Ingredients extends PureComponent {
   render() {
     const { content, recipes } = this.props
     const { selectedIngredients } = this.state
+    const hasSelectAnyIngredient = selectedIngredients.size > 0
     const buttonLeftUrl = client.getHelp.index
     const cssButton = css.button
 
@@ -91,7 +92,7 @@ class Ingredients extends PureComponent {
         content={content}
         buttonLeftUrl={buttonLeftUrl}
         cssButton={cssButton}
-        cannotContinue={selectedIngredients.size < 1}
+        cannotContinue={!hasSelectAnyIngredient}
         continueClick={this.continueClickHandler}
       >
         <RecipeList
