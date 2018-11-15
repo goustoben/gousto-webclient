@@ -1,15 +1,16 @@
 import React from 'react'
-import classnames from 'classnames'
 import { Field, FormSection } from 'redux-form'
-import ReduxFormInput from 'Form/ReduxFormInput'
+
+import Svg from 'Svg'
 import config from 'config/checkout'
 import { inferCardType } from 'utils/checkout'
+import ReduxFormInput from 'Form/ReduxFormInput'
 import { showAddress } from 'routes/Checkout/utils/delivery'
-import Svg from 'Svg'
 import PaymentSecurityCode from './PaymentSecurityCode'
 import PaymentExpiryDate from './PaymentExpiryDate'
-import css from './SagePayPayment.css'
+import { PaymentHeader } from '../PaymentHeader'
 import BillingAddress from './BillingAddress'
+import css from './SagePayPayment.css'
 
 class SagePayPayment extends React.PureComponent {
 
@@ -142,10 +143,7 @@ class SagePayPayment extends React.PureComponent {
 			<div>
 				<FormSection name={this.props.formSectionName}>
 					<div className={css.paymentContainer} data-testing="checkoutPaymentSection">
-						<h3 className={css.header}>Payment details</h3>
-						<span className={css.padlockIcon} />
-						<span className={classnames(css.boldInfo, css.onDesktop)}>All fields are required</span>
-						<p className={classnames(css.textSM, css.onDesktop)}>All transactions are secured using 128 bit SSL technology.</p>
+						<PaymentHeader />
 						<div className={css.wrapper}>
 							<div className={css.icons}>
 								<Svg fileName="icon-Maestro-dark" className={css.iconCardObverse} />
