@@ -2,7 +2,6 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { browserHistory } from 'react-router'
 import { Ingredients } from 'routes/GetHelp/Ingredients/Ingredients.logic'
-import {getHelp} from "../../../../reducers/getHelp";
 
 describe('<Ingredients />', () => {
   const content = {
