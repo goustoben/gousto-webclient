@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { client } from 'config/routes'
-import { IngredientsPresentation } from './Ingredients.presentation'
-import { RecipeList } from '../components/RecipeList'
+import { IngredientIssuesPresentation } from './IngredientIssues.presentation'
 
 const propTypes = {
   content: PropTypes.shape({
@@ -13,23 +12,23 @@ const propTypes = {
   }).isRequired,
 }
 
-const Ingredients = ({ content, recipes }) => {
-  const buttonLeftUrl = client.getHelp.index
-  const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.ingredientIssues}`
+const IngredientIssues = ({ content }) => {
+  const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredients}`
+  const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
 
   return (
-    <IngredientsPresentation
+    <IngredientIssuesPresentation
       content={content}
       buttonLeftUrl={buttonLeftUrl}
       buttonRightUrl={buttonRightUrl}
     >
-      <RecipeList recipes={recipes}/>
-    </IngredientsPresentation>
+      <div>Coming in the next ticket</div>
+    </IngredientIssuesPresentation>
   )
 }
 
-Ingredients.propTypes = propTypes
+IngredientIssues.propTypes = propTypes
 
 export {
-  Ingredients
+  IngredientIssues
 }

@@ -1,30 +1,23 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { Ingredients } from 'routes/GetHelp/Ingredients/Ingredients.logic'
+import { IngredientIssues } from 'routes/GetHelp/IngredientIssues/IngredientIssues.logic'
 
-describe('<Ingredients />', () => {
+describe('<IngredientIssues />', () => {
   const content = {
     title: 'test title',
     body: 'text...',
     button1Copy: 'Back',
     button2Copy: 'Done',
   }
-  const recipes = [
-    { id: '1', title: 'test 1', ingredients: [{ id: '1', label: 'test' }] },
-    { id: '2', title: 'test 2', ingredients: [{ id: '2', label: 'test' }] },
-    { id: '3', title: 'test 3', ingredients: [{ id: '3', label: 'test' }] },
-    { id: '4', title: 'test 4', ingredients: [{ id: '4', label: 'test' }] },
-  ]
   let wrapper
   let getHelpLayout
 
   beforeEach(() => {
     wrapper = mount(
-			<Ingredients
-			  recipes={recipes}
-			  content={content}
-			/>
+      <IngredientIssues
+        content={content}
+      />
     )
     getHelpLayout = wrapper.find('GetHelpLayout')
   })
@@ -61,24 +54,8 @@ describe('<Ingredients />', () => {
       const Button1 = BottomBar.find('BottomButton').at(0)
       const Button2 = BottomBar.find('BottomButton').at(1)
 
-      expect(Button1.prop('url')).toBe('/get-help')
-      expect(Button2.prop('url')).toBe('/get-help/ingredient-issues')
-    })
-
-    test('recipes are being displayed', () => {
-      const items = getHelpLayout.find('Item')
-
-      expect(items).toHaveLength(4)
-
-      expect(items.at(0).text()).toBe('test 1')
-      expect(items.at(1).text()).toBe('test 2')
-      expect(items.at(2).text()).toBe('test 3')
-      expect(items.at(3).text()).toBe('test 4')
-    })
-
-    test('recipe list is being rendered', () => {
-      expect(getHelpLayout.find('RecipeList')).toHaveLength(1)
-      expect(getHelpLayout.find('RecipeList').prop('recipes')).toBe(recipes)
+      expect(Button1.prop('url')).toBe('/get-help/ingredients')
+      expect(Button2.prop('url')).toBe('/get-help/refund')
     })
   })
 })
