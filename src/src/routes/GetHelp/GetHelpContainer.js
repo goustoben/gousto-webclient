@@ -39,6 +39,8 @@ const skipErrorByRoute = ({ pathname }) => ([
 const mapStateToProps = (state, ownProps) => {
   const { location } = ownProps
 
+  const order = state.getHelp.get('order').toJS()
+
   const error = getError(state)
 
   const pending = getPending(state)
@@ -47,11 +49,11 @@ const mapStateToProps = (state, ownProps) => {
 
   const orderId = (location && location.query && location.query.orderId)
     ? location.query.orderId
-    : ''
+    : (order.id || '')
 
   const didRequestError = (skipErrorPage)
     ? false
-    : (!orderId || error)
+    : (!orderId || error !== null)
 
   const isRequestPending = (!orderId || skipErrorPage)
     ? false
@@ -61,8 +63,8 @@ const mapStateToProps = (state, ownProps) => {
     didRequestError,
     isRequestPending,
     orderId,
+    order,
     location: ownProps.location,
-    order: state.getHelp.get('order').toJS(),
     content: getContent(state),
   }
 }
