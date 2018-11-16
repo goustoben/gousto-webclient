@@ -1,11 +1,12 @@
+import logger from 'utils/logger'
 import actionTypes from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
-import logger from 'utils/logger'
 import { fetchOrderSkipContent } from '../apis/orderSkipRecovery'
 
 export const modalVisibilityChange = ({
   orderId,
+  dayId,
   status,
   actionTriggered,
   data = {},
@@ -17,6 +18,7 @@ export const modalVisibilityChange = ({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: true,
       orderId,
+      dayId,
       title: data.title,
       offer: data.offer,
       orderType: status,
@@ -25,6 +27,7 @@ export const modalVisibilityChange = ({
       trackingData: {
         actionType: `Order ${actionTriggered}`,
         order_id: orderId,
+        delivery_day_id: dayId,
         order_state: status,
         cms_variation: data.variation || 'default',
         featureFlag,
@@ -37,7 +40,7 @@ export const modalVisibilityChange = ({
   }
 )
 
-export const keepOrder = ({ orderId, status }) => (
+export const keepOrder = ({ orderId, dayId, status }) => (
   (dispatch, getState) => {
     const valueProposition = getState().orderSkipRecovery.get('valueProposition')
     const offer = getState().orderSkipRecovery.get('offer')
@@ -50,6 +53,7 @@ export const keepOrder = ({ orderId, status }) => (
       trackingData: {
         actionType: 'Order Kept',
         order_id: orderId,
+        delivery_day_id: dayId,
         order_state: status,
         featureFlag,
         recovery_reasons: [
@@ -61,10 +65,10 @@ export const keepOrder = ({ orderId, status }) => (
   }
 )
 
-export const cancelPendingOrder = (orderId, variation = 'default') => (
+export const cancelPendingOrder = (orderId, dayId, variation = 'default') => (
   async (dispatch) => {
     try {
-      await dispatch(orderCancel(orderId, variation))
+      await dispatch(orderCancel(orderId, dayId, variation))
     } catch (err) {
       logger.error(err.message)
     } finally {
@@ -102,6 +106,7 @@ export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, acti
       if (data.intervene) {
         dispatch(modalVisibilityChange({
           orderId,
+          dayId,
           status,
           actionTriggered,
           data,
@@ -116,6 +121,7 @@ export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, acti
     } catch (err) {
       dispatch(modalVisibilityChange({
         orderId,
+        dayId,
         status,
         actionTriggered,
       }))

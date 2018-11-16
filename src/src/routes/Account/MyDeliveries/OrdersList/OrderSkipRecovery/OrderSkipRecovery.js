@@ -51,7 +51,7 @@ class OrderSkipRecovery extends React.PureComponent {
 
   skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder) {
     if (orderType === 'pending') {
-      cancelPendingOrder(orderId)
+      cancelPendingOrder(orderId, dayId)
     } else {
       cancelProjectedOrder(dayId)
     }
@@ -59,7 +59,7 @@ class OrderSkipRecovery extends React.PureComponent {
 
   render() {
     const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, offer, valueProposition, callToActions } = this.props
-    const onClickKeepOrder = () => keepOrder({ orderId, status: orderType })
+    const onClickKeepOrder = () => keepOrder({ orderId, dayId, status: orderType })
     const onClickSkipCancel = () => this.skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder)
 
     return (

@@ -1,18 +1,18 @@
-import actionTypes from './actionTypes'
 import moment from 'moment'
 import ordersApi from 'apis/orders'
 import * as userApi from 'apis/user'
 import { fetchDeliveryDays } from 'apis/deliveries'
-import statusActions from './status'
 import logger from 'utils/logger'
 import { redirect } from 'utils/window'
 import { getOrderDetails } from 'utils/basket'
 import { getAvailableDeliveryDays } from 'utils/deliveries'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import config from 'config/routes'
+import GoustoException from 'utils/GoustoException'
 import userActions from './user'
 import tempActions from './temp'
-import GoustoException from 'utils/GoustoException'
+import statusActions from './status'
+import actionTypes from './actionTypes'
 
 const checkAllScheduledCancelled = (orders) => (
   !orders.some(order => (order.get('orderState') === 'scheduled'))
@@ -23,7 +23,7 @@ const getPendingOrdersDates = (orders) => (
     .map(order => order.get('deliveryDay'))
 )
 
-export const orderCancel = (orderId, variation) => (
+export const orderCancel = (orderId, dayId, variation) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_CANCEL, null))
     dispatch(statusActions.pending(actionTypes.ORDER_CANCEL, true))
@@ -40,6 +40,7 @@ export const orderCancel = (orderId, variation) => (
         trackingData: {
           actionType: 'Order Cancelled',
           order_id: orderId,
+          delivery_day_id: dayId,
           order_state: 'pending',
           cms_variation: variation,
           featureFlag,
@@ -225,7 +226,7 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
         orderId,
         trackingData: {
           actionType: 'Order Skipped',
-          day_id: deliveryDayId,
+          delivery_day_id: deliveryDayId,
           order_state: 'projected',
           cms_variation: variation,
           featureFlag,
