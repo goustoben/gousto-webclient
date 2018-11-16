@@ -146,8 +146,8 @@ describe('orderSkipRecovery', () => {
 
   describe('cancelOrder', () => {
     test('should call the order cancel action with the orderId', () => {
-      cancelPendingOrder('64521', 'default')(dispatchSpy)
-      expect(orderCancel).toHaveBeenCalledWith('64521', 'default')
+      cancelPendingOrder('64521', '123', 'default')(dispatchSpy)
+      expect(orderCancel).toHaveBeenCalledWith('64521', '123', 'default')
     })
 
     test('should toggle the cancel order modal visibility', () => {
