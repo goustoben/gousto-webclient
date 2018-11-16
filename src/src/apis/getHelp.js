@@ -22,7 +22,18 @@ const setComplaint = (accessToken, body) => {
   }, null, false, false)
 }
 
+const validateIngredients = (accessToken, body) => {
+  const url = (__ENV__ === 'local')
+    ? `${SSR_URL_LOCAL}/ssr/validate-ingredients`
+    : `${endpoint('ssr', routes.version.ssr)}/ssr/validate-ingredients`
+
+  return fetch(accessToken, url, body, 'POST', 'default', {
+    'Content-Type': 'application/json'
+  }, null, false, false)
+}
+
 export {
   fetchRefundAmount,
   setComplaint,
+  validateIngredients,
 }
