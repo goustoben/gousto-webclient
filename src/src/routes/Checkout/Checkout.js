@@ -244,12 +244,12 @@ class Checkout extends React.PureComponent {
   )
 
   render() {
-    const { checkoutPaymentFeature } = this.props
-    const renderSteps = this.props.browser === 'mobile' ? this.renderMobileSteps : this.renderDesktopSteps
+    const { browser, checkoutPaymentFeature } = this.props
+    const renderSteps = browser === 'mobile' ? this.renderMobileSteps : this.renderDesktopSteps
 
     return (
       <Div className={css.checkoutContainer} data-testing="checkoutContainer">
-        {checkoutPaymentFeature && <script src="https://cdn.checkout.com/js/frames.js"></script>}
+        {(checkoutPaymentFeature) ? <script src="https://cdn.checkout.com/js/frames.js"></script> : null}
         <Div className={css.content}>
           {renderSteps()}
         </Div>

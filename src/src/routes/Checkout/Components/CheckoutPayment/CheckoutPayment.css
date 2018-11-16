@@ -1,0 +1,18 @@
+@value Blueberry20 from 'styles/colors.css';
+@value SpacingLG from 'sass-loader!styles/spacing.scss';
+
+.container {
+	composes: textBold from 'styles/typography.css';
+	padding: SpacingLG;
+	background-color: Blueberry20;
+  min-height: 450px;
+}
+
+.wrapper {
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+}
+
+.frame {
+	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+}
