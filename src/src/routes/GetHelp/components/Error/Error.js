@@ -9,7 +9,6 @@ const propTypes = {
   content: PropTypes.shape({
     button1: PropTypes.string,
     errorBody: PropTypes.string,
-    infoBody: PropTypes.string,
     title: PropTypes.string,
   }),
   children: PropTypes.node.isRequired,
@@ -21,7 +20,6 @@ const defaultProps = {
     button1: 'Contact Us',
     errorBody: `There was a problem in getting your default.
     Please contact us below, or try again later.`,
-    infoBody: '',
     title: 'Get help with your box',
   },
 }
@@ -31,7 +29,6 @@ const Error = ({ hasError, content, children }) => {
     return (
       <GetHelpLayout
         title={content.title}
-        body={content.infoBody}
         fullWidthContent
       >
         <p>{content.errorBody}</p>

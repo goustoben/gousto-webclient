@@ -12,18 +12,12 @@ describe('<GetHelp />', () => {
     const recipesLoadRecipesByIdSpy = jest.fn().mockResolvedValue({})
 
     beforeAll(() => {
-      const location = {
-        query: {
-          orderId: '7',
-        },
-      }
-
       wrapper = mount(
         <GetHelp
           didRequestError={false}
           isRequestPending={false}
           pending={false}
-          location={location}
+          orderId={"7"}
           order={{ id: 7, recipeItems: ['123456']}}
           recipes={{}}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
@@ -40,18 +34,12 @@ describe('<GetHelp />', () => {
       expect(wrapper.contains(<div className="test" />)).toBe(true)
     })
 
-    test('error component is being displayed when no order ID is passed', () => {
-      const location = {
-        query: {
-          orderId: '',
-        },
-      }
-
+    test('error component is being displayed', () => {
       wrapper = mount(
         <GetHelp
-          didRequestError={false}
+          didRequestError
           isRequestPending={false}
-          location={location}
+          orderId={""}
           order={{ id: 1, recipeItems: ['123456']}}
           recipes={{}}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
@@ -67,16 +55,10 @@ describe('<GetHelp />', () => {
     })
 
     test('when loading state is set neither Error or div is being displayed', () => {
-      const location = {
-        query: {
-          orderId: '7',
-        },
-      }
-
       wrapper = mount(
         <GetHelp
           didRequestError={false}
-          location={location}
+          orderId={"7"}
           order={{}}
           recipes={{}}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
@@ -96,15 +78,11 @@ describe('<GetHelp />', () => {
       storeGetHelpOrderIdSpy.mockReset()
       userLoadOrderSpy.mockReset()
 
-      const location = {
-        pathname: `${routes.getHelp.index}/${routes.getHelp.contact}`
-      }
-
       wrapper = mount(
         <GetHelp
           didRequestError={false}
           isRequestPending={false}
-          location={location}
+          orderId={""}
           order={{}}
           recipes={{}}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
@@ -128,17 +106,11 @@ describe('<GetHelp />', () => {
     const recipesLoadRecipesByIdSpy = jest.fn().mockResolvedValue({})
 
     beforeAll(() => {
-      const location = {
-        query: {
-          orderId: '7',
-        },
-      }
-
       mount(
         <GetHelp
           didRequestError={false}
           isRequestPending={false}
-          location={location}
+          orderId={"7"}
           order={{ id: 1, recipeItems: ['123456']}}
           recipes={{}}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}

@@ -1,29 +1,10 @@
 import Helmet from 'react-helmet'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { client as routes } from 'config/routes'
 import { Error } from './components/Error'
 import css from './GetHelp.css'
 
-const skipErrorByRoute = ({ pathname }) => ([
-  `${routes.getHelp.index}/${routes.getHelp.contact}`,
-  `${routes.getHelp.index}/${routes.getHelp.confirmation}`,
-].includes(pathname))
-
-const getOrderId = ({ location }) => {
-  const orderId = location && location.query && location.query.orderId
-    ? location.query.orderId
-    : null
-
-  return orderId
-}
-
 const propTypes = {
-  location: PropTypes.shape({
-    query: PropTypes.shape({
-      orderId: PropTypes.string,
-    }),
-  }),
   children: PropTypes.node.isRequired,
   content: PropTypes.shape({
     button1: PropTypes.string,
@@ -35,6 +16,7 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     recipeItems: PropTypes.arrayOf(PropTypes.string).isRequired
   }),
+  orderId: PropTypes.string.isRequired,
   storeGetHelpOrderId: PropTypes.func.isRequired,
   userLoadOrder: PropTypes.func.isRequired,
   recipesLoadRecipesById: PropTypes.func.isRequired,
@@ -44,21 +26,16 @@ const propTypes = {
 
 class GetHelp extends PureComponent {
 
-  orderId = getOrderId(this.props)
-
   componentDidMount() {
-    const { location } = this.props
-    const skipErrorPage = skipErrorByRoute(location)
+    const { storeGetHelpOrderId, orderId, userLoadOrder } = this.props
 
-    if (!this.orderId || skipErrorPage ) {
+    if (orderId.length < 1) {
       return null
     }
 
-    const { storeGetHelpOrderId, userLoadOrder } = this.props
+    storeGetHelpOrderId(orderId)
 
-    storeGetHelpOrderId(this.orderId)
-
-    return userLoadOrder(this.orderId).then(this.orderLoadComplete)
+    return userLoadOrder(orderId).then(this.orderLoadComplete)
   }
 
   orderLoadComplete = () => {
@@ -68,10 +45,7 @@ class GetHelp extends PureComponent {
   }
 
   render() {
-    const { children, content, didRequestError, location, isRequestPending } = this.props
-    const skipErrorPage = skipErrorByRoute(location)
-    const hasError = (skipErrorPage) ? false : (!this.orderId || didRequestError)
-    const isPending = (skipErrorPage) ? false : isRequestPending
+    const { children, content, didRequestError, isRequestPending } = this.props
 
     return (
       <div className={css.getHelpContainer}>
@@ -81,10 +55,10 @@ class GetHelp extends PureComponent {
           }]}
         />
         <div className={css.getHelpContent}>
-          {!isPending &&
+          {!isRequestPending &&
             <Error
               content={content}
-              hasError={hasError}
+              hasError={didRequestError}
             >
               {children}
             </Error>}
