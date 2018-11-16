@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { createElement } from 'react'
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
 import config from 'config/routes'
-import Checkout from 'routes/Checkout/Checkout'
-import Summary from 'routes/Checkout/Components/Summary'
 import { Div } from 'Page/Elements'
-import BoxDetails from 'routes/Checkout/Components/BoxDetails'
 import ProgressBar from 'ProgressBar'
-
+import Summary from 'routes/Checkout/Components/Summary'
+import BoxDetails from 'routes/Checkout/Components/BoxDetails'
+import MobilePayment from 'routes/Checkout/Steps/Mobile/Payment'
+import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
 import { menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
+
+import Checkout from 'routes/Checkout/Checkout'
 
 jest.mock('actions', () => ({
   replace: jest.fn().mockReturnValue(Promise.resolve()),
@@ -86,12 +88,12 @@ describe('Checkout', () => {
     onCheckoutSpy = jest.fn()
 
     wrapper = shallow(
-			<Checkout
-			  params={{ stepName: 'aboutyou' }}
-			  checkoutLanding={onCheckoutSpy}
-			  trackSignupStep={jest.fn()}
-			/>,
-			{ context }
+      <Checkout
+        params={{ stepName: 'aboutyou' }}
+        checkoutLanding={onCheckoutSpy}
+        trackSignupStep={jest.fn()}
+      />,
+      { context }
     )
   })
 
@@ -119,22 +121,22 @@ describe('Checkout', () => {
 
     test('should render 1 <ProgressBar> component(s)', () => {
       const mobileWrapper = shallow(
-				<Checkout
-				  browser="mobile"
-				  params={{ stepName: 'boxdetails' }}
-				  trackSignupStep={jest.fn()}
-				/>,
-				{ context }
+        <Checkout
+          browser="mobile"
+          params={{ stepName: 'boxdetails' }}
+          trackSignupStep={jest.fn()}
+        />,
+        { context }
       )
       expect(mobileWrapper.find(ProgressBar)).toHaveLength(1)
 
       const desktopWrapper = shallow(
-				<Checkout
-				  browser="desktop"
-				  params={{ stepName: 'boxdetails' }}
-				  trackSignupStep={jest.fn()}
-				/>,
-				{ context }
+        <Checkout
+          browser="desktop"
+          params={{ stepName: 'boxdetails' }}
+          trackSignupStep={jest.fn()}
+        />,
+        { context }
       )
       expect(desktopWrapper.find(ProgressBar)).toHaveLength(1)
     })
@@ -211,7 +213,7 @@ describe('Checkout', () => {
           BASKET_PREVIEW_ORDER_CHANGE: {
             code: 'out-of-stock',
             message:
-							'Item(s) out of stock: {"3":"Umbrian Wild Boar Salami Ragu with Ling"}',
+              'Item(s) out of stock: {"3":"Umbrian Wild Boar Salami Ragu with Ling"}',
             errors: {},
           },
         }),
@@ -315,8 +317,8 @@ describe('Checkout', () => {
     beforeEach(() => {
       fetchData = Checkout.fetchData = jest.fn().mockReturnValue(Promise.resolve())
       wrapper = mount(
-				<Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} />,
-				{ context },
+        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} />,
+        { context },
       )
     })
 
@@ -336,13 +338,13 @@ describe('Checkout', () => {
     beforeEach(() => {
       loadPrices = jest.fn()
       wrapper = shallow(
-				<Checkout
-				  query={{ query: true }}
-				  params={{ params: true }}
-				  loadPrices={loadPrices}
-				  trackSignupStep={jest.fn()}
-				/>,
-				{ context }
+        <Checkout
+          query={{ query: true }}
+          params={{ params: true }}
+          loadPrices={loadPrices}
+          trackSignupStep={jest.fn()}
+        />,
+        { context }
       )
     })
 
@@ -352,19 +354,46 @@ describe('Checkout', () => {
     })
   })
 
-  describe('should render checkoutPayment component', () => {
-    test('should render checkoutPayment component', () => {
-      wrapper = shallow(
-        <Checkout
-          params={{ stepName: 'payment' }}
-          checkoutPayment
-          checkoutLanding={onCheckoutSpy}
-          trackSignupStep={jest.fn()}
-        />,
-        { context }
-      )
-      const paymentComponent = wrapper.instance().desktopStepMapping.payment.component()
-      expect(paymentComponent.props.children).toBe('CheckoutPayment')
+  describe('payment component', () => {
+    const checkoutSrc = 'https://cdn.checkout.com/js/frames.js'
+
+    describe('when the checkoutPaymentFeature flag is set', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <Checkout
+            params={{ stepName: 'payment' }}
+            browser="mobile"
+            checkoutPaymentFeature
+          />
+        )
+      })
+
+      test('should render a CheckoutPayment component', () => {
+        expect(wrapper.find(CheckoutPayment)).toHaveLength(1)
+      })
+
+      test('should load the checkout.com scripts', () => {
+        expect(wrapper.find('script').filterWhere(script => script.prop('src') === checkoutSrc)).toHaveLength(1)
+      })
+    })
+
+    describe('when the checkoutPaymentFeature flag not set', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <Checkout
+            params={{ stepName: 'payment' }}
+            browser="mobile"
+          />
+        )
+      })
+
+      test('should not render a MobilePayment component', () => {
+        expect(wrapper.find(MobilePayment)).toHaveLength(1)
+      })
+
+      test('should not load the checkout.com scripts', () => {
+        expect(wrapper.find('script').filterWhere(script => script.prop('src') === checkoutSrc)).toHaveLength(0)
+      })
     })
   })
 })
