@@ -152,7 +152,7 @@ describe('Order Skip Recovery Modal', () => {
 				  orderId="14245"
 				  triggered={false}
 				  orderDate="2018-09-24T13:27:09.487Z"
-				  dayId="23001"
+				  deliveryDayId="23001"
 				  orderType="pending"
 				  getSkipRecoveryContent={getSkipRecoveryContent}
 				/>
@@ -168,7 +168,7 @@ describe('Order Skip Recovery Modal', () => {
 
       expect(getSkipRecoveryContent).toHaveBeenCalledWith({
         actionTriggered: 'Cancel',
-        dayId: '23001',
+        deliveryDayId: '23001',
         orderDate: '2018-09-24T13:27:09.487Z',
         orderId: '14245',
         status: 'pending',

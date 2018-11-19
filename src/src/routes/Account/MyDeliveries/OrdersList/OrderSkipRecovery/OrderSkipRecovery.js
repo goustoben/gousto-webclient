@@ -13,7 +13,7 @@ import Footer from './Footer'
 const propTypes = {
   visible: PropTypes.bool,
   orderId: PropTypes.string,
-  dayId: PropTypes.string,
+  deliveryDayId: PropTypes.string,
   orderType: PropTypes.string,
   featureFlag: PropTypes.bool,
   keepOrder: PropTypes.func.isRequired,
@@ -34,7 +34,7 @@ const propTypes = {
 class OrderSkipRecovery extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
-    const { triggered, orderId, orderDate, dayId, orderType, getSkipRecoveryContent } = this.props
+    const { triggered, orderId, orderDate, deliveryDayId, orderType, getSkipRecoveryContent } = this.props
     const actionTriggered = (orderType === 'pending') ? 'Cancel' : 'Skip'
 
     if (triggered && (prevProps.triggered !== triggered)) {
@@ -42,25 +42,25 @@ class OrderSkipRecovery extends React.PureComponent {
       getSkipRecoveryContent({
         orderId,
         orderDate,
-        dayId,
+        deliveryDayId,
         status: orderType,
         actionTriggered,
       })
     }
   }
 
-  skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder) {
+  skipCancelOrder(orderId, deliveryDayId, orderType, cancelPendingOrder, cancelProjectedOrder) {
     if (orderType === 'pending') {
-      cancelPendingOrder(orderId)
+      cancelPendingOrder(orderId, deliveryDayId)
     } else {
-      cancelProjectedOrder(dayId)
+      cancelProjectedOrder(deliveryDayId)
     }
   }
 
   render() {
-    const { visible, dayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, offer, valueProposition, callToActions } = this.props
-    const onClickKeepOrder = () => keepOrder({ orderId, status: orderType })
-    const onClickSkipCancel = () => this.skipCancelOrder(orderId, dayId, orderType, cancelPendingOrder, cancelProjectedOrder)
+    const { visible, deliveryDayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, offer, valueProposition, callToActions } = this.props
+    const onClickKeepOrder = () => keepOrder({ orderId, deliveryDayId, status: orderType })
+    const onClickSkipCancel = () => this.skipCancelOrder(orderId, deliveryDayId, orderType, cancelPendingOrder, cancelProjectedOrder)
 
     return (
 			<ModalComponent visible={visible}>
