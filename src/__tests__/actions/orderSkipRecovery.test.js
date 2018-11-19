@@ -119,20 +119,22 @@ describe('orderSkipRecovery', () => {
     })
 
     test('should set modal cancelOrder visibility to false', async () => {
-      keepOrder({ orderId: '83632', status: 'pending' })(dispatchSpy, getStateSpy)
+      keepOrder({ orderId: '83632', dayId: '123', status: 'pending' })(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
         orderId: '83632',
+        trackingData: expect.objectContaining({delivery_day_id: '123',})
       }))
     })
 
     test('should set modal cancelOrder visibility to false', async () => {
-      keepOrder({ orderId: '23214', status: 'projected' })(dispatchSpy, getStateSpy)
+      keepOrder({ orderId: '23214', dayId: '123', status: 'projected' })(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         trackingData: {
           actionType: 'Order Kept',
           order_id: '23214',
+          delivery_day_id: '123',
           order_state: 'projected',
           featureFlag: false,
           recovery_reasons: [
