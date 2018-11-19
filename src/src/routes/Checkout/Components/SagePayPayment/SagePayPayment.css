@@ -1,6 +1,6 @@
-@value SpacingSM, SpacingLG from 'sass-loader!styles/spacing.scss';
-@value ScreenSMMin, ScreenMDMin from 'styles/screenSizes.css';
-@value Blueberry, Blueberry20, Bluecheese, Radish, Radish40, DarkRadish from 'styles/colors.css';
+@value SpacingLG from 'sass-loader!styles/spacing.scss';
+@value ScreenSMMin from 'styles/screenSizes.css';
+@value Blueberry, Blueberry20, Radish, Radish40, DarkRadish from 'styles/colors.css';
 @value SpacingLG from 'sass-loader!styles/spacing.scss';
 
 .container {
@@ -125,11 +125,6 @@
 	composes: marginXXSBottom from 'sass-loader!styles/spacing.scss';
 }
 
-.linkRight {
-	composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
-	font-size: 10px;
-}
-
 .errorInput {
 	border-color: DarkRadish;
 	background-color: Radish40;
@@ -176,17 +171,6 @@
 .iconCardObverse {
 	composes: iconCard;
 	margin-right: 5px;
-}
-
-.link {
-	color: Bluecheese;
-	text-decoration: underline;
-	composes: textSM from 'styles/typography.css';
-	cursor: pointer;
-
-	&:hover {
-		color: Blueberry;
-	}
 }
 
 .iconCardReverse {
