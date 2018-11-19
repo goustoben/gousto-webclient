@@ -28,8 +28,8 @@ export class BillingAddress extends React.PureComponent {
   render() {
     const { formValues, sectionName, deliveryAddress, asyncValidate, form, receiveRef, scrollToFirstMatchingRef } = this.props
     const isBillingAddressDifferent = formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
+    const toggleAddressText = !isBillingAddressDifferent ? 'Enter new billing address' : 'Use Delivery address'
 
-    // TODO: Tidy up conditions
     return (
       <div>
         <p>Billing Address</p>
@@ -40,11 +40,11 @@ export class BillingAddress extends React.PureComponent {
             className={css.link}
             onClick={this.toggleDeliveryAddress}
           >
-            {!isBillingAddressDifferent ? 'Enter new billing address' : 'Use Delivery address'}&nbsp;
+            {toggleAddressText}&nbsp;
             <span className={css.linkRight} />
           </span>
         </p>
-        {isBillingAddressDifferent && <Address
+        {isBillingAddressDifferent ? <Address
           isDelivery={false}
           asyncValidate={asyncValidate}
           formName={form}
@@ -53,7 +53,7 @@ export class BillingAddress extends React.PureComponent {
           onSaveAction={this.toggleDeliveryAddress}
           receiveRef={receiveRef}
           scrollToFirstMatchingRef={scrollToFirstMatchingRef}
-        />}
+        /> : null}
       </div>
     )
   }
