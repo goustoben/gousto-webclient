@@ -51,13 +51,15 @@ export const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
     dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
 
     try {
-      await validateOrder(
+      const response = await validateOrder(
         accessToken,
         {
           customer_id: Number(costumerId),
           order_id: Number(orderId),
         }
       )
+
+      return response
     }
     catch (error) {
       dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, error.message))

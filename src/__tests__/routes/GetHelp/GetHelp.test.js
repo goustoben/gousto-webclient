@@ -9,7 +9,9 @@ describe('<GetHelp />', () => {
     let wrapper
     const storeGetHelpOrderIdSpy = jest.fn()
     const userLoadOrderSpy = jest.fn().mockResolvedValue({})
-    const validateLatestOrderSpy = jest.fn().mockResolvedValue({})
+    const validateLatestOrderSpy = jest.fn().mockResolvedValue(
+      { data: { valid: true } }
+    )
     const recipesLoadRecipesByIdSpy = jest.fn().mockResolvedValue({})
 
     beforeAll(() => {
@@ -113,7 +115,9 @@ describe('<GetHelp />', () => {
     const storeGetHelpOrderIdSpy = jest.fn()
     const userLoadOrderSpy = jest.fn().mockResolvedValue({})
     const recipesLoadRecipesByIdSpy = jest.fn().mockResolvedValue({})
-    const validateLatestOrderSpy = jest.fn().mockResolvedValue({})
+    const validateLatestOrderSpy = jest.fn().mockResolvedValue(
+      { data: { valid: true } }
+    )
 
     beforeAll(() => {
       mount(
