@@ -6,7 +6,7 @@ import { fetchOrderSkipContent } from '../apis/orderSkipRecovery'
 
 export const modalVisibilityChange = ({
   orderId,
-  dayId,
+  deliveryDayId,
   status,
   actionTriggered,
   data = {},
@@ -18,7 +18,7 @@ export const modalVisibilityChange = ({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: true,
       orderId,
-      dayId,
+      deliveryDayId,
       title: data.title,
       offer: data.offer,
       orderType: status,
@@ -27,7 +27,7 @@ export const modalVisibilityChange = ({
       trackingData: {
         actionType: `Order ${actionTriggered}`,
         order_id: orderId,
-        delivery_day_id: dayId,
+        delivery_day_id: deliveryDayId,
         order_state: status,
         cms_variation: data.variation || 'default',
         featureFlag,
@@ -40,7 +40,7 @@ export const modalVisibilityChange = ({
   }
 )
 
-export const keepOrder = ({ orderId, dayId, status }) => (
+export const keepOrder = ({ orderId, deliveryDayId, status }) => (
   (dispatch, getState) => {
     const valueProposition = getState().orderSkipRecovery.get('valueProposition')
     const offer = getState().orderSkipRecovery.get('offer')
@@ -53,7 +53,7 @@ export const keepOrder = ({ orderId, dayId, status }) => (
       trackingData: {
         actionType: 'Order Kept',
         order_id: orderId,
-        delivery_day_id: dayId,
+        delivery_day_id: deliveryDayId,
         order_state: status,
         featureFlag,
         recovery_reasons: [
@@ -65,10 +65,10 @@ export const keepOrder = ({ orderId, dayId, status }) => (
   }
 )
 
-export const cancelPendingOrder = (orderId, dayId, variation = 'default') => (
+export const cancelPendingOrder = (orderId, deliveryDayId, variation = 'default') => (
   async (dispatch) => {
     try {
-      await dispatch(orderCancel(orderId, dayId, variation))
+      await dispatch(orderCancel(orderId, deliveryDayId, variation))
     } catch (err) {
       logger.error(err.message)
     } finally {
@@ -81,10 +81,10 @@ export const cancelPendingOrder = (orderId, dayId, variation = 'default') => (
   }
 )
 
-export const cancelProjectedOrder = (dayId, variation = 'default') => (
+export const cancelProjectedOrder = (deliveryDayId, variation = 'default') => (
   async (dispatch) => {
     try {
-      await dispatch(projectedOrderCancel(dayId, dayId, variation))
+      await dispatch(projectedOrderCancel(deliveryDayId, deliveryDayId, variation))
     } catch (err) {
       logger.error(err.message)
     } finally {
@@ -97,7 +97,7 @@ export const cancelProjectedOrder = (dayId, variation = 'default') => (
   }
 )
 
-export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, actionTriggered }) => (
+export const getSkipRecoveryContent = ({ orderId, orderDate, deliveryDayId, status, actionTriggered }) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     try {
@@ -106,22 +106,22 @@ export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, acti
       if (data.intervene) {
         dispatch(modalVisibilityChange({
           orderId,
-          dayId,
+          deliveryDayId,
           status,
           actionTriggered,
           data,
         }))
       } else {
         if (status === 'pending') {
-          cancelPendingOrder(orderId)
+          cancelPendingOrder(orderId, deliveryDayId)
         } else {
-          cancelProjectedOrder(dayId)
+          cancelProjectedOrder(deliveryDayId)
         }
       }
     } catch (err) {
       dispatch(modalVisibilityChange({
         orderId,
-        dayId,
+        deliveryDayId,
         status,
         actionTriggered,
       }))

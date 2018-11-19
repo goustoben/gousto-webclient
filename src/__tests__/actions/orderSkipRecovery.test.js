@@ -119,7 +119,7 @@ describe('orderSkipRecovery', () => {
     })
 
     test('should set modal cancelOrder visibility to false', async () => {
-      keepOrder({ orderId: '83632', dayId: '123', status: 'pending' })(dispatchSpy, getStateSpy)
+      keepOrder({ orderId: '83632', deliveryDayId: '123', status: 'pending' })(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
@@ -129,7 +129,7 @@ describe('orderSkipRecovery', () => {
     })
 
     test('should set modal cancelOrder visibility to false', async () => {
-      keepOrder({ orderId: '23214', dayId: '123', status: 'projected' })(dispatchSpy, getStateSpy)
+      keepOrder({ orderId: '23214', deliveryDayId: '123', status: 'projected' })(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         trackingData: {
           actionType: 'Order Kept',
@@ -173,12 +173,12 @@ describe('orderSkipRecovery', () => {
       orderSkipRecovery: Immutable.Map({
         modalVisibility: true,
         orderId: '',
-        dayId: '',
+        deliveryDayId: '',
         orderType: '',
       }),
     })
 
-    test('should call the skip cancel action with the dayId', () => {
+    test('should call the skip cancel action with the deliveryDayId', () => {
       cancelProjectedOrder('1234')(dispatchSpy)
       expect(projectedOrderCancel).toHaveBeenCalledWith('1234', '1234', 'default')
     })
@@ -260,7 +260,7 @@ describe('orderSkipRecovery', () => {
 
           await getSkipRecoveryContent({
             orderId: '92839',
-            dayId: '582651',
+            deliveryDayId: '582651',
             status: 'pending',
           })(dispatchSpy, getStateSpy)
 
@@ -278,7 +278,7 @@ describe('orderSkipRecovery', () => {
 
         await getSkipRecoveryContent({
           orderId: '33101',
-          dayId: '287420',
+          deliveryDayId: '287420',
           status: 'projected',
         })(dispatchSpy, getStateSpy)
 

@@ -23,7 +23,7 @@ const getPendingOrdersDates = (orders) => (
     .map(order => order.get('deliveryDay'))
 )
 
-export const orderCancel = (orderId, dayId, variation) => (
+export const orderCancel = (orderId, deliveryDayId, variation) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_CANCEL, null))
     dispatch(statusActions.pending(actionTypes.ORDER_CANCEL, true))
@@ -40,7 +40,7 @@ export const orderCancel = (orderId, dayId, variation) => (
         trackingData: {
           actionType: 'Order Cancelled',
           order_id: orderId,
-          delivery_day_id: dayId,
+          delivery_day_id: deliveryDayId,
           order_state: 'pending',
           cms_variation: variation,
           featureFlag,
