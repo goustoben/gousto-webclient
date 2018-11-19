@@ -196,11 +196,12 @@ export function checkoutSignup() {
 
 export const trackPurchase = () => (
   (dispatch, getState) => {
-    const { basket, price } = getState()
+    const { basket, pricing } = getState()
+    const prices = pricing.get('prices')
     const orderId = basket.get('previewOrderId')
     const promoCode = basket.get('promoCode')
-    const totalPrice = price.get('grossTotal')
-    const shippingPrice = price.get('deliveryTotal')
+    const totalPrice = prices.get('grossTotal')
+    const shippingPrice = prices.get('deliveryTotal')
 
     if (typeof ga !== 'undefined') {
       ga('ec:setAction', 'purchase', {
