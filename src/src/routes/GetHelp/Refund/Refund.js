@@ -30,13 +30,7 @@ class Refund extends PureComponent {
       ingredientIds: PropTypes.arrayOf(
         PropTypes.string.isRequired
       ),
-    }),
-    issues: PropTypes.arrayOf(
-      PropTypes.shape({
-        ingredient_id: PropTypes.string.isRequired,
-        category_id: PropTypes.number.isRequired
-      })
-    )
+    })
   }
 
   state = {
@@ -74,8 +68,12 @@ class Refund extends PureComponent {
   }
 
   onAcceptOffer = async () => {
-    const { user, order, issues } = this.props
+    const { user, order } = this.props
     const { refund } = this.state
+
+    const issues = order.ingredientIds.map((ingredientId) => (
+      { ingredient_id: ingredientId, category_id: 98 }
+    ))
 
     try {
       const response = await setComplaint(user.accessToken, {

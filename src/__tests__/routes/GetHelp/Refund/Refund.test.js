@@ -30,7 +30,6 @@ describe('<Refund />', () => {
 			  content={content}
 			  user={{ id: '999', accessToken: '123' }}
 			  order={{ id: '888', ingredientIds: ['1234'] }}
-			  issues={[{ ingredient_id: '333', category_id: 444 }]}
 			/>
     )
 
@@ -153,7 +152,7 @@ describe('<Refund />', () => {
             order_id: 888,
             type: 'a-type',
             value: 7.77,
-            issues: [{ ingredient_id: '333', category_id: 444 }],
+            issues: [{ ingredient_id: '1234', category_id: 98 }],
           }
         )
       })
