@@ -20,15 +20,12 @@ class SagePayCardDetails extends React.PureComponent {
     form: PropTypes.string,
     formValues: PropTypes.object,
     formSectionName: PropTypes.string,
-    deliveryAddress: PropTypes.object,
-    billingAddress: PropTypes.object,
     clearErrors: PropTypes.func,
     receiveRef: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
   }
 
   static defaultProps = {
-    deliveryAddress: {},
     formSectionName: 'payment',
     clearErrors: () => {},
     receiveRef: () => {},
@@ -89,7 +86,7 @@ class SagePayCardDetails extends React.PureComponent {
   }
 
   render() {
-    const { formSectionName: sectionName, receiveRef, formValues, billingAddress, deliveryAddress, asyncValidate, form, scrollToFirstMatchingRef } = this.props
+    const { formSectionName: sectionName, receiveRef, asyncValidate, scrollToFirstMatchingRef } = this.props
 
     return (
       <div>
@@ -153,12 +150,7 @@ class SagePayCardDetails extends React.PureComponent {
               </div>
             </div>
             <BillingAddress
-              formValues={formValues}
-              sectionName={sectionName}
-              billingAddress={billingAddress}
-              deliveryAddress={deliveryAddress}
               asyncValidate={asyncValidate}
-              form={form}
               receiveRef={receiveRef}
               scrollToFirstMatchingRef={scrollToFirstMatchingRef}
             />

@@ -1,9 +1,24 @@
 import { connect } from 'react-redux'
-import { change } from 'redux-form'
+import { change, getFormValues } from 'redux-form'
+
+import { form, sectionName } from './config'
 
 import { BillingAddress } from './BillingAddress'
 
-const mapStateToProps = () => ({})
+const getDeliveryAddress = (formValues) => (
+  formValues && formValues.delivery ? formValues.delivery : {}
+)
+
+const mapStateToProps = (state) => {
+  const formValues = getFormValues(form)(state)
+
+  return {
+    form,
+    sectionName,
+    formValues,
+    deliveryAddress: getDeliveryAddress(formValues),
+  }
+}
 
 const mapDispatchToProps = {
   change,

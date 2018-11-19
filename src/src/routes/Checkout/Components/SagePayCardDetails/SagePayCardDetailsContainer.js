@@ -13,14 +13,12 @@ function mapStateToProps(sectionName) {
   return state => {
     const formValues = getFormValues(form)(state)
     const addressFormValues = getFormValues(form)(state)
-    const browser = state.request.get('browser')
 
     return ({
       form,
       formValues,
       deliveryAddress: addressFormValues && addressFormValues.delivery ? addressFormValues.delivery : {},
       formSectionName: sectionName,
-      browser,
     })
   }
 }
