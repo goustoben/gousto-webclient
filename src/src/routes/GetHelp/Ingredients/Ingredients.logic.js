@@ -69,8 +69,8 @@ class Ingredients extends PureComponent {
     try {
       await validateSelectedIngredients({
         accessToken: user.accessToken,
-        costumerId: Number(user.id),
-        orderId: Number(order.id),
+        costumerId: user.id,
+        orderId: order.id,
         ingredients
       })
 

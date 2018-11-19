@@ -1,4 +1,4 @@
-import { validateIngredients } from 'apis/getHelp'
+import { validateIngredients, validateOrder } from 'apis/getHelp'
 import actionTypes from './actionTypes'
 import statusActions from './status'
 
@@ -41,6 +41,40 @@ export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, 
     }
     finally {
       dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, false))
+    }
+  }
+}
+
+export const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
+  return async (dispatch) => {
+    dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, true))
+    dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
+
+    /* eslint-disable no-console */
+    console.log(
+      {
+        customer_id: Number(costumerId),
+        order_id: Number(orderId),
+      }
+    )
+
+    try {
+      await validateOrder(
+        accessToken,
+        {
+          customer_id: Number(costumerId),
+          order_id: Number(orderId),
+        }
+      )
+    }
+    catch (error) {
+      /* eslint-disable no-console */
+      console.log('actionTypes.GET_HELP_VALIDATE_ORDER', error)
+
+      dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, error.message))
+    }
+    finally {
+      dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, false))
     }
   }
 }

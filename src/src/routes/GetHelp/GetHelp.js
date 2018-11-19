@@ -17,19 +17,35 @@ const propTypes = {
     recipeItems: PropTypes.arrayOf(PropTypes.string).isRequired
   }),
   orderId: PropTypes.string.isRequired,
-  storeGetHelpOrderId: PropTypes.func.isRequired,
-  userLoadOrder: PropTypes.func.isRequired,
   recipesLoadRecipesById: PropTypes.func.isRequired,
   didRequestError: PropTypes.bool.isRequired,
   isRequestPending: PropTypes.bool.isRequired,
+  storeGetHelpOrderId: PropTypes.func.isRequired,
+  userLoadOrder: PropTypes.func.isRequired,
+  validateLatestOrder: PropTypes.func.isRequired,
 }
 
 class GetHelp extends PureComponent {
 
-  componentDidMount() {
-    const { storeGetHelpOrderId, orderId, userLoadOrder } = this.props
+  componentDidMount = async () => {
+    const { storeGetHelpOrderId, orderId, user, userLoadOrder, validateLatestOrder } = this.props
 
     if (orderId.length < 1) {
+      return null
+    }
+
+    try {
+      await validateLatestOrder({
+        accessToken: user.accessToken,
+        costumerId: user.id,
+        orderId: orderId,
+      })
+
+    } catch (error) {
+      /* eslint-disable no-console */
+      console.log('errpr', error)
+      /* eslint-enable no-console */
+
       return null
     }
 

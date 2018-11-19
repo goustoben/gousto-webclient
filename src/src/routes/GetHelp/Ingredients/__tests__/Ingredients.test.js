@@ -172,9 +172,9 @@ describe('<Ingredients />', () => {
         expect(validateSelectedIngredients).toHaveBeenCalledTimes(1)
         expect(validateSelectedIngredients).toHaveBeenCalledWith({
           accessToken: 'user-access-token',
-          costumerId: 777,
+          costumerId: '777',
           ingredients: ['2-2222'],
-          orderId: 888,
+          orderId: '888',
         })
       })
 

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { storeGetHelpOrderId } from 'actions/getHelp'
+import { storeGetHelpOrderId, validateLatestOrder } from 'actions/getHelp'
 import { client as routes } from 'config/routes'
 import userActions from 'actions/user'
 import recipeActions from 'actions/recipes'
@@ -20,6 +20,7 @@ const validState = (state) => (typeof state !== 'undefined')
 const getError = ({ error }) => {
   const errorRequest = error.get(actionTypes.RECIPES_RECEIVE)
     || error.get(actionTypes.USER_LOAD_ORDERS)
+    || error.get(actionTypes.GET_HELP_VALIDATE_ORDER)
 
   return validState(errorRequest) ? errorRequest : null
 }
@@ -27,6 +28,7 @@ const getError = ({ error }) => {
 const getPending = ({ pending }) => {
   const pendingRequest = pending.get(actionTypes.RECIPES_RECEIVE)
     || pending.get(actionTypes.USER_LOAD_ORDERS)
+    || pending.get(actionTypes.GET_HELP_VALIDATE_ORDER)
 
   return validState(pendingRequest) ? pendingRequest : true
 }
@@ -59,6 +61,11 @@ const mapStateToProps = (state, ownProps) => {
     ? false
     : pending
 
+  /* eslint-disable no-console */
+  // console.log('orderId', orderId, 'skipErrorPage', skipErrorPage, pending)
+  console.log('order', order)
+  /* eslint-enables no-console */
+
   return {
     didRequestError,
     isRequestPending,
@@ -66,11 +73,16 @@ const mapStateToProps = (state, ownProps) => {
     order,
     location: ownProps.location,
     content: getContent(state),
+    user: {
+      id: state.user.get('id'),
+      accessToken: state.auth.get('accessToken'),
+    },
   }
 }
 
 const GetHelpContainer = connect(mapStateToProps, {
   storeGetHelpOrderId,
+  validateLatestOrder,
   userLoadOrder: userActions.userLoadOrder,
   recipesLoadRecipesById: recipeActions.recipesLoadRecipesById,
 })(GetHelp)
