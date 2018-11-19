@@ -50,14 +50,6 @@ export const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
     dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, true))
     dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
 
-    /* eslint-disable no-console */
-    console.log(
-      {
-        customer_id: Number(costumerId),
-        order_id: Number(orderId),
-      }
-    )
-
     try {
       await validateOrder(
         accessToken,
@@ -68,9 +60,6 @@ export const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
       )
     }
     catch (error) {
-      /* eslint-disable no-console */
-      console.log('actionTypes.GET_HELP_VALIDATE_ORDER', error)
-
       dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, error.message))
     }
     finally {
