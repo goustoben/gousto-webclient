@@ -26,7 +26,10 @@ class Refund extends PureComponent {
       accessToken: PropTypes.string.isRequired,
     }),
     order: PropTypes.shape({
-      id: PropTypes.string.isRequired
+      id: PropTypes.string.isRequired,
+      ingredientIds: PropTypes.arrayOf(
+        PropTypes.string.isRequired
+      ),
     }),
     issues: PropTypes.arrayOf(
       PropTypes.shape({
@@ -47,8 +50,14 @@ class Refund extends PureComponent {
   }
 
   getRefund = async () => {
+    const { user, order } = this.props
+
     try {
-      const response = await fetchRefundAmount()
+      const response = await fetchRefundAmount({
+        customer_id: Number(user.id),
+        order_id: Number(order.id),
+        ingredientIds: order.ingredientIds
+      })
       const { value, type } = response.data
 
       this.setState({
@@ -64,7 +73,10 @@ class Refund extends PureComponent {
     }
   }
 
-  onAcceptOffer = async ({ user, order, issues }, { refund }) => {
+  onAcceptOffer = async () => {
+    const { user, order, issues } = this.props
+    const { refund } = this.state
+
     try {
       const response = await setComplaint(user.accessToken, {
         customer_id: Number(user.id),
@@ -119,7 +131,7 @@ class Refund extends PureComponent {
       : <Button
         className={css.button}
         color="primary"
-        onClick={() => this.onAcceptOffer(this.props, this.state)}
+        onClick={() => this.onAcceptOffer()}
       >
         {button2WithAmount}
       </Button>

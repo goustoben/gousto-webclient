@@ -33,7 +33,8 @@ const propTypes = {
     button1Copy: PropTypes.string.isRequired,
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
-  validateSelectedIngredients: PropTypes.func.isRequired
+  storeIngredientIds: PropTypes.func.isRequired,
+  validateSelectedIngredients: PropTypes.func.isRequired,
 }
 
 class Ingredients extends PureComponent {
@@ -58,7 +59,7 @@ class Ingredients extends PureComponent {
   }
 
   continueClickHandler = async () => {
-    const { order, user, validateSelectedIngredients } = this.props
+    const { order, user, storeIngredientIds, validateSelectedIngredients } = this.props
     const { selectedIngredients } = this.state
     const ingredients = []
 
@@ -73,6 +74,8 @@ class Ingredients extends PureComponent {
         orderId: order.id,
         ingredients
       })
+
+      storeIngredientIds(ingredients)
 
       browserHistory.push(`${client.getHelp.index}/${client.getHelp.refund}`)
     } catch (error) {

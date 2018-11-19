@@ -4,12 +4,14 @@ import routes from 'config/routes'
 
 const SSR_URL_LOCAL = 'https://staging-api.gousto.info/ssr/v1'
 
-const fetchRefundAmount = () => {
+const fetchRefundAmount = (accessToken, body) => {
   const url = (__ENV__ === 'local')
-    ? `${SSR_URL_LOCAL}/ssr`
-    : `${endpoint('ssr', routes.version.ssr)}/ssr`
+    ? `${SSR_URL_LOCAL}/ssr/value`
+    : `${endpoint('ssr', routes.version.ssr)}/ssr/value`
 
-  return fetch(null, url, null, 'GET')
+  return fetch(accessToken, url, body, 'POST', 'default', {
+    'Content-Type': 'application/json'
+  }, null, false, false)
 }
 
 const setComplaint = (accessToken, body) => {

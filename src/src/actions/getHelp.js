@@ -20,6 +20,11 @@ export const storeGetHelpOrderId = (id) => dispatcher({
   id,
 })
 
+export const storeIngredientIds = (ids) => dispatcher({
+  type: actionTypes.GET_HELP_STORE_INGREDIENT_IDS,
+  ids,
+})
+
 export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredients }) => {
   return async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
