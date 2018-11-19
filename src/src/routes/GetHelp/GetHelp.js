@@ -42,10 +42,6 @@ class GetHelp extends PureComponent {
       })
 
     } catch (error) {
-      /* eslint-disable no-console */
-      console.log('errpr', error)
-      /* eslint-enable no-console */
-
       return null
     }
 

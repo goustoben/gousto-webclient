@@ -61,11 +61,6 @@ const mapStateToProps = (state, ownProps) => {
     ? false
     : pending
 
-  /* eslint-disable no-console */
-  // console.log('orderId', orderId, 'skipErrorPage', skipErrorPage, pending)
-  console.log('order', order)
-  /* eslint-enables no-console */
-
   return {
     didRequestError,
     isRequestPending,
