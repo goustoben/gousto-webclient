@@ -1,5 +1,12 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import config from 'config/recipes'
+
+const getFineDineInImage = (recipe) => {
+  const fineDineImage = recipe.getIn(['media', 'images']).find(image => image.get('type') === 'range-main-image')
+  if (fineDineImage && fineDineImage.size > 0) {
+    return fineDineImage.get('urls', Immutable.List([]))
+  }
+}
 
 export function getMenuRecipeImage(imageUrls, imageSize) {
   const imageSrc = imageUrls.reduce((reducedImage, newImage) => {
@@ -37,18 +44,26 @@ export function getMenuRecipeImage(imageUrls, imageSize) {
 }
 
 export function getFeaturedImage(recipe, view) {
-  if (['featured', 'detail'].indexOf(view) > -1 && recipe.getIn(['media', 'images', 1, 'urls'], Immutable.List([])).size > 0 && recipe.getIn(['media', 'images', 1, 'type']) === 'homepage-image') {
-    return recipe.getIn(['media', 'images', 1, 'urls'], Immutable.List([]))
+  let recipeImage
+  if (['featured', 'detail'].indexOf(view) > -1 && recipe.getIn(['media', 'images', 1, 'urls'], Immutable.List([])).size > 0
+   && recipe.getIn(['media', 'images', 1, 'type']) === 'homepage-image') {
+    recipeImage = recipe.getIn(['media', 'images', 1, 'urls'], Immutable.List([]))
   }
 
-  if (view === 'fineDineIn') {
-    const fineDineImage = recipe.getIn(['media', 'images']).find(image => image.get('type') === 'range-main-image')
-    if (fineDineImage && fineDineImage.size > 0) {
-      return fineDineImage.get('urls')
+  if (!recipeImage) {
+
+    const moodImage = recipe.getIn(['media', 'images'], Immutable.List([])).find(image => image.get('type') === 'mood-image')
+    const moodImageUrls = moodImage ? moodImage.get('urls') : null
+    recipeImage = moodImageUrls || recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))
+
+    if(view === 'fineDineIn') {
+      return getFineDineInImage(recipe) || recipeImage
     }
+    
+    return recipeImage
   }
-
-  return recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))
+  
+  return recipeImage
 }
 
 export function getRangeImages(recipe = Immutable.Map()) {

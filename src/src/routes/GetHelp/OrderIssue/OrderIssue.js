@@ -22,39 +22,39 @@ const OrderIssue = ({
   },
   selectOrderIssue
 }) => (
-	<GetHelpLayout title={title} body={body}>
-		<List>
-			<ItemLink
-			  label={ingredientsItem}
-			  trackClick={trackClick(selectOrderIssue, 'ingredients')}
-			  to={`${routes.getHelp.index}/${routes.getHelp.ingredients}`}
-			  clientRouted
-			/>
-			<ItemLink
-			  label={recipeCardItem}
-			  trackClick={trackClick(selectOrderIssue, 'recipe_card')}
-			  to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-			  clientRouted
-			/>
-			<ItemLink
-			  label={deliveryItem}
-			  trackClick={trackClick(selectOrderIssue, 'delivery')}
-			  to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-			  clientRouted
-			/>
-			<ItemLink
-			  label={otherItem}
-			  trackClick={trackClick(selectOrderIssue, 'other')}
-			  to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-			  clientRouted
-			/>
-		</List>
-		<BottomBar>
-			<BottomButton color="secondary" url={routes.myGousto} clientRouted={false}>
-				{buttonCopy}
-			</BottomButton>
-		</BottomBar>
-	</GetHelpLayout>
+  <GetHelpLayout title={title} body={body}>
+    <List>
+      <ItemLink
+        label={ingredientsItem}
+        trackClick={trackClick(selectOrderIssue, 'ingredients')}
+        to={`${routes.getHelp.index}/${routes.getHelp.ingredients}`}
+        clientRouted
+      />
+      <ItemLink
+        label={recipeCardItem}
+        trackClick={trackClick(selectOrderIssue, 'recipe_card')}
+        to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+        clientRouted
+      />
+      <ItemLink
+        label={deliveryItem}
+        trackClick={trackClick(selectOrderIssue, 'delivery')}
+        to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+        clientRouted
+      />
+      <ItemLink
+        label={otherItem}
+        trackClick={trackClick(selectOrderIssue, 'other')}
+        to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+        clientRouted
+      />
+    </List>
+    <BottomBar>
+      <BottomButton color="secondary" url={routes.myGousto} clientRouted={false}>
+        {buttonCopy}
+      </BottomButton>
+    </BottomBar>
+  </GetHelpLayout>
 )
 
 OrderIssue.propTypes = {

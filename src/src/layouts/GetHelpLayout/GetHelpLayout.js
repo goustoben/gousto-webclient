@@ -6,6 +6,18 @@ import BottomBar from 'BottomBar'
 
 import css from './GetHelpLayout.css'
 
+const propTypes = {
+  body: PropTypes.string,
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  fullWidthContent: PropTypes.bool,
+}
+
+const defaultProps = {
+  fullWidthContent: false,
+  body: '',
+}
+
 const GetHelpLayout = ({ title, body, children, fullWidthContent }) => {
   const bodyContent = []
   const footerContent = []
@@ -22,32 +34,24 @@ const GetHelpLayout = ({ title, body, children, fullWidthContent }) => {
   })
 
   return (
-		<div className={css.rootContainer}>
-			<div className={css.header}>
-				<PageHeader title={title} />
-			</div>
-			<PageContent className={css.pageContent}>
-				<p className={css.bodyDescription}>
-					{body}
-				</p>
-				<div className={bodyContentCss}>
-					{bodyContent}
-				</div>
-				{footerContent}
-			</PageContent>
-		</div>
+    <div className={css.rootContainer}>
+      <div className={css.header}>
+        <PageHeader title={title} />
+      </div>
+      <PageContent className={css.pageContent}>
+        <p className={css.bodyDescription}>
+          {body}
+        </p>
+        <div className={bodyContentCss}>
+          {bodyContent}
+        </div>
+        {footerContent}
+      </PageContent>
+    </div>
   )
 }
 
-GetHelpLayout.propTypes = {
-  body: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
-  fullWidthContent: PropTypes.bool,
-}
-
-GetHelpLayout.defaultProps = {
-  fullWidthContent: false
-}
+GetHelpLayout.propTypes = propTypes
+GetHelpLayout.defaultProps = defaultProps
 
 export default GetHelpLayout
