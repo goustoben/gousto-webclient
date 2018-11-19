@@ -1,6 +1,8 @@
 import Helmet from 'react-helmet'
-import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import React, { PureComponent } from 'react'
+import { browserHistory } from 'react-router'
+import { client } from 'config/routes'
 import { Error } from './components/Error'
 import css from './GetHelp.css'
 
@@ -35,14 +37,22 @@ class GetHelp extends PureComponent {
     }
 
     try {
-      await validateLatestOrder({
+      const response = await validateLatestOrder({
         accessToken: user.accessToken,
         costumerId: user.id,
         orderId: orderId,
       })
 
+      if (response && response.data) {
+        const { valid } = response.data
+
+        if (!valid) {
+          return browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
+        }
+      }
+
     } catch (error) {
-      return null
+      return browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
     }
 
     storeGetHelpOrderId(orderId)
