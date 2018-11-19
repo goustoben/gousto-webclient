@@ -178,7 +178,7 @@ describe('<Ingredients />', () => {
         })
       })
 
-      test('redirection to the Refund page happens when validateIngredients returns a valid response', async () => {
+      test('redirection to the Ingredient issues page happens when validateIngredients returns a valid response', async () => {
         validateSelectedIngredients.mockResolvedValue({
           status: 'ok',
           data: {
@@ -188,7 +188,7 @@ describe('<Ingredients />', () => {
         selectIngredientAndGetCheckbox(getHelpLayout)
         await ContinueButton.prop('onClick')()
 
-        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/refund')
+        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/ingredient-issues')
       })
 
       test('redirection to the Contact Us page happens when validateIngredients errors', async () => {

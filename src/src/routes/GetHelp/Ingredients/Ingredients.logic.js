@@ -74,7 +74,7 @@ class Ingredients extends PureComponent {
         ingredients
       })
 
-      browserHistory.push(`${client.getHelp.index}/${client.getHelp.refund}`)
+      browserHistory.push(`${client.getHelp.index}/${client.getHelp.ingredientIssues}`)
     } catch (error) {
       browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
     }

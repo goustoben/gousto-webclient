@@ -22,7 +22,7 @@ const IngredientIssues = ({ content }) => {
       buttonLeftUrl={buttonLeftUrl}
       buttonRightUrl={buttonRightUrl}
     >
-      <div>Coming in the next ticket</div>
+      <div />
     </IngredientIssuesPresentation>
   )
 }
