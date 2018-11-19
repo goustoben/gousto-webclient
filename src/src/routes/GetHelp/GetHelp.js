@@ -18,6 +18,10 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     recipeItems: PropTypes.arrayOf(PropTypes.string).isRequired
   }),
+  user: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    accessToken: PropTypes.string.isRequired,
+  }),
   orderId: PropTypes.string.isRequired,
   recipesLoadRecipesById: PropTypes.func.isRequired,
   didRequestError: PropTypes.bool.isRequired,
