@@ -61,10 +61,10 @@ class Ingredients extends PureComponent {
   continueClickHandler = async () => {
     const { order, user, storeIngredientIds, validateSelectedIngredients } = this.props
     const { selectedIngredients } = this.state
-    const ingredients = []
+    const ingredientIds = []
 
     selectedIngredients.forEach((value, ingredientId) => {
-      ingredients.push(ingredientId)
+      ingredientIds.push(ingredientId)
     })
 
     try {
@@ -72,10 +72,10 @@ class Ingredients extends PureComponent {
         accessToken: user.accessToken,
         costumerId: user.id,
         orderId: order.id,
-        ingredients
+        ingredientIds
       })
 
-      storeIngredientIds(ingredients)
+      storeIngredientIds(ingredientIds)
 
       browserHistory.push(`${client.getHelp.index}/${client.getHelp.refund}`)
     } catch (error) {
