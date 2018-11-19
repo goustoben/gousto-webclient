@@ -6,13 +6,13 @@ import Svg from 'Svg'
 import config from 'config/checkout'
 import { inferCardType } from 'utils/checkout'
 import ReduxFormInput from 'Form/ReduxFormInput'
-import PaymentSecurityCode from './PaymentSecurityCode'
-import PaymentExpiryDate from './PaymentExpiryDate'
+import { PaymentSecurityCode } from './PaymentSecurityCode'
+import { PaymentExpiryDate } from './PaymentExpiryDate'
 import { PaymentHeader } from '../PaymentHeader'
 import { BillingAddress } from '../BillingAddress'
-import css from './SagePayPayment.css'
+import css from './SagePayCardDetails.css'
 
-class SagePayPayment extends React.PureComponent {
+class SagePayCardDetails extends React.PureComponent {
   static propTypes = {
     asyncValidate: PropTypes.func,
     change: PropTypes.func,
@@ -89,8 +89,7 @@ class SagePayPayment extends React.PureComponent {
   }
 
   render() {
-    const { formSectionName: sectionName, receiveRef, formValues, billingAddress, deliveryAddress,
-    asyncValidate, form, scrollToFirstMatchingRef } = this.props
+    const { formSectionName: sectionName, receiveRef, formValues, billingAddress, deliveryAddress, asyncValidate, form, scrollToFirstMatchingRef } = this.props
 
     return (
       <div>
@@ -170,4 +169,4 @@ class SagePayPayment extends React.PureComponent {
   }
 }
 
-export { SagePayPayment }
+export { SagePayCardDetails }

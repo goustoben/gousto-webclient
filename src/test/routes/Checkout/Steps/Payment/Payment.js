@@ -9,9 +9,9 @@ chai.use(sinonChai)
 import React from 'react'
 
 import Svg from 'Svg'
-import Payment from 'routes/Checkout/Components/SagePayPayment/SagePayPayment'
-import PaymentSecurityCode from 'routes/Checkout/Components/SagePayPayment/PaymentSecurityCode'
-import PaymentExpiryDate from 'routes/Checkout/Components/SagePayPayment/PaymentExpiryDate'
+import Payment from 'routes/Checkout/Components/SagePayCardDetails/SagePayCardDetails'
+import { PaymentSecurityCode } from 'routes/Checkout/Components/SagePayCardDetails/PaymentSecurityCode'
+import { PaymentExpiryDate } from 'routes/Checkout/Components/SagePayCardDetails/PaymentExpiryDate'
 
 describe('Payment', function() {
   let wrapper
