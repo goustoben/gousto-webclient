@@ -53,6 +53,8 @@ class GetHelp extends PureComponent {
         if (!valid) {
           return browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
         }
+      } else {
+        return browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
       }
 
     } catch (error) {

@@ -20,7 +20,6 @@ const validState = (state) => (typeof state !== 'undefined')
 const getError = ({ error }) => {
   const errorRequest = error.get(actionTypes.RECIPES_RECEIVE)
     || error.get(actionTypes.USER_LOAD_ORDERS)
-    || error.get(actionTypes.GET_HELP_VALIDATE_ORDER)
 
   return validState(errorRequest) ? errorRequest : null
 }
@@ -28,7 +27,6 @@ const getError = ({ error }) => {
 const getPending = ({ pending }) => {
   const pendingRequest = pending.get(actionTypes.RECIPES_RECEIVE)
     || pending.get(actionTypes.USER_LOAD_ORDERS)
-    || pending.get(actionTypes.GET_HELP_VALIDATE_ORDER)
 
   return validState(pendingRequest) ? pendingRequest : true
 }
