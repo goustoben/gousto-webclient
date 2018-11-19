@@ -4,6 +4,7 @@ import { mount } from 'enzyme'
 import { Map, fromJS } from 'immutable'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 
+import status from 'reducers/status'
 import recipesReducer from 'reducers/recipes'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import contentReducer from 'reducers/content'
@@ -25,6 +26,8 @@ describe('<GetHelpContainer />', () => {
         getHelp: getHelpInitialState,
         recipes: Map({}),
         user: userDefaultState,
+        error: Map({}),
+        pending: Map({}),
       }
 
       store = createStore(
@@ -34,6 +37,7 @@ describe('<GetHelpContainer />', () => {
           { ...contentReducer },
           { ...authReducer },
           { ...userReducer },
+          { ...status },
           { recipes: recipesReducer.recipes },
         )),
         initialState,
@@ -49,12 +53,12 @@ describe('<GetHelpContainer />', () => {
       })
 
       mount(
-				<GetHelpContainer
-				  location={{ query: { orderId: '788' } }}
-				  store={store}
-				>
-					<div>Required Child</div>
-				</GetHelpContainer>
+        <GetHelpContainer
+          location={{ query: { orderId: '788' } }}
+          store={store}
+        >
+          <div>Required Child</div>
+        </GetHelpContainer>
       )
     })
     test('order id passed as prop ends up in store', () => {
