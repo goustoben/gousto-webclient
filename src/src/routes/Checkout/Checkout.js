@@ -11,6 +11,7 @@ import ProgressBar from 'ProgressBar'
 
 import css from './Checkout.css'
 import { CheckoutPayment } from './Components/CheckoutPayment'
+import { loadCheckout } from './loadCheckout'
 
 import DesktopAboutYou from './Steps/Desktop/AboutYou'
 import DesktopBoxDetails from './Steps/Desktop/BoxDetails'
@@ -65,6 +66,7 @@ class Checkout extends React.PureComponent {
     super(state, props)
     this.state = {
       isCreatingPreviewOrder: true,
+      checkoutReady: false,
     }
     const { checkoutPaymentFeature } = this.props
     this.desktopStepMapping = desktopStepMapping(checkoutPaymentFeature)
@@ -138,18 +140,23 @@ class Checkout extends React.PureComponent {
   componentDidMount() {
     Overlay.forceCloseAll()
 
-    const store = this.context.store
-    const props = this.props
-    const query = props.query || {}
-    const params = props.params || {}
-    const browser = props.browser
+    const { store } = this.context
+    const { checkoutPaymentFeature, query = {}, params = {}, browser, trackSignupStep } = this.props
+
     Checkout.fetchData({ store, query, params, browser }).then(() => {
-      this.props.trackSignupStep(1)
+      trackSignupStep(1)
     }).then(() => {
       this.setState({
         isCreatingPreviewOrder: false,
       })
     })
+    if (checkoutPaymentFeature) {
+      loadCheckout(() => {
+        this.setState({
+          checkoutReady: true,
+        })
+      })
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -187,12 +194,15 @@ class Checkout extends React.PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
+    const { checkoutReady } = this.state
+
     const step = stepMapping[currentStep]
     const props = {
       onStepChange: this.onStepChange(steps, currentStep),
       isLastStep: this.isLastStep(steps, currentStep),
       nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
       submitOrder: this.props.submitOrder,
+      checkoutReady,
     }
 
     let element = <div />
@@ -244,12 +254,11 @@ class Checkout extends React.PureComponent {
   )
 
   render() {
-    const { browser, checkoutPaymentFeature } = this.props
+    const { browser } = this.props
     const renderSteps = browser === 'mobile' ? this.renderMobileSteps : this.renderDesktopSteps
 
     return (
       <Div className={css.checkoutContainer} data-testing="checkoutContainer">
-        {(checkoutPaymentFeature) ? <script src="https://cdn.checkout.com/js/frames.js"></script> : null}
         <Div className={css.content}>
           {renderSteps()}
         </Div>

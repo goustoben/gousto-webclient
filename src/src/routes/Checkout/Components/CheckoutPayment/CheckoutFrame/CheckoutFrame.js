@@ -1,10 +1,31 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import { publicKey } from '../config'
 
 /* global Frames */
 export class CheckoutFrame extends React.Component {
+  static propTypes = {
+    checkoutReady: PropTypes.bool,
+  }
+
   componentDidMount() {
+    const { checkoutReady } = this.props
+
+    if (checkoutReady) {
+      this.initFrames()
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { checkoutReady } = this.props
+
+    if (checkoutReady && prevProps.checkoutReady !== checkoutReady) {
+      this.initFrames()
+    }
+  }
+
+  initFrames = () => {
     const { paymentButton, paymentForm } = this
 
     Frames.init({

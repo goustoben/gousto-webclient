@@ -13,13 +13,15 @@ const propTypes = {
   receiveRef: PropTypes.func,
   sectionName: PropTypes.string,
   submit: PropTypes.func,
+  checkoutReady: PropTypes.bool,
 }
 const defaultProps = {
   receiveRef: () => {},
   sectionName: 'payment',
+  checkoutReady: false,
 }
 
-const CheckoutPayment = ({ receiveRef, sectionName, submit }) => (
+const CheckoutPayment = ({ checkoutReady, receiveRef, sectionName, submit }) => (
   <div>
     <div className={css.container}>
       <PaymentHeader />
@@ -40,7 +42,7 @@ const CheckoutPayment = ({ receiveRef, sectionName, submit }) => (
         </FormSection>
       </div>
       <div className={css.frame}>
-        <CheckoutFrame />
+        <CheckoutFrame checkoutReady={checkoutReady} />
       </div>
     </div>
     <SubmitButton onClick={submit} />
