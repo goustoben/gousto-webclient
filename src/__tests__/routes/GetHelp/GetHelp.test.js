@@ -1,14 +1,17 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import Helmet from 'react-helmet'
+import { browserHistory } from 'react-router'
 import GetHelp from 'routes/GetHelp/GetHelp'
-import { client as routes } from 'config/routes'
 
 describe('<GetHelp />', () => {
   describe('rendering', () => {
     let wrapper
     const storeGetHelpOrderIdSpy = jest.fn()
     const userLoadOrderSpy = jest.fn().mockResolvedValue({})
+    const validateLatestOrderSpy = jest.fn().mockResolvedValue(
+      { data: { valid: true } }
+    )
     const recipesLoadRecipesByIdSpy = jest.fn().mockResolvedValue({})
 
     beforeAll(() => {
@@ -16,13 +19,14 @@ describe('<GetHelp />', () => {
         <GetHelp
           didRequestError={false}
           isRequestPending={false}
-          pending={false}
           orderId={"7"}
-          order={{ id: 7, recipeItems: ['123456']}}
+          order={{ id: '7', recipeItems: ['123456']}}
+          user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
+          validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
         </GetHelp>
@@ -40,11 +44,13 @@ describe('<GetHelp />', () => {
           didRequestError
           isRequestPending={false}
           orderId={""}
-          order={{ id: 1, recipeItems: ['123456']}}
+          order={{ id: '1', recipeItems: ['123456']}}
+          user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
+          validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
         </GetHelp>
@@ -61,9 +67,11 @@ describe('<GetHelp />', () => {
           orderId={"7"}
           order={{}}
           recipes={{}}
+          user={{ id: '123', accessToken: 'test' }}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
+          validateLatestOrder={validateLatestOrderSpy}
           isRequestPending
         >
           <div className="test" />
@@ -77,6 +85,7 @@ describe('<GetHelp />', () => {
     test('when path is Contact Us page, data is not fetched', () => {
       storeGetHelpOrderIdSpy.mockReset()
       userLoadOrderSpy.mockReset()
+      validateLatestOrderSpy.mockReset()
 
       wrapper = mount(
         <GetHelp
@@ -85,9 +94,11 @@ describe('<GetHelp />', () => {
           orderId={""}
           order={{}}
           recipes={{}}
+          user={{ id: '123', accessToken: 'test' }}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
+          validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
         </GetHelp>
@@ -104,6 +115,9 @@ describe('<GetHelp />', () => {
     const storeGetHelpOrderIdSpy = jest.fn()
     const userLoadOrderSpy = jest.fn().mockResolvedValue({})
     const recipesLoadRecipesByIdSpy = jest.fn().mockResolvedValue({})
+    const validateLatestOrderSpy = jest.fn().mockResolvedValue(
+      { data: { valid: true } }
+    )
 
     beforeAll(() => {
       mount(
@@ -111,15 +125,81 @@ describe('<GetHelp />', () => {
           didRequestError={false}
           isRequestPending={false}
           orderId={"7"}
-          order={{ id: 1, recipeItems: ['123456']}}
+          order={{ id: '1', recipeItems: ['123456']}}
+          user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
           recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
+          validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
         </GetHelp>
       )
+    })
+
+    test('calls validate order endpoint when order ID is present', () => {
+      expect(validateLatestOrderSpy).toHaveBeenCalledWith(
+        { accessToken: 'test', costumerId: '123', orderId: '7' }
+      )
+    })
+
+    test('user is being redirected to /contact if validate order request fails', () => {
+      browserHistory.push = jest.fn()
+
+      validateLatestOrderSpy.mockImplementationOnce(() => {
+        throw new Error('error')
+      })
+
+      mount(
+        <GetHelp
+          didRequestError={false}
+          isRequestPending={false}
+          orderId={"7"}
+          order={{ id: '1', recipeItems: ['123456']}}
+          user={{ id: '123', accessToken: 'test' }}
+          recipes={{}}
+          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          storeGetHelpOrderId={storeGetHelpOrderIdSpy}
+          userLoadOrder={userLoadOrderSpy}
+          validateLatestOrder={validateLatestOrderSpy}
+        >
+          <div className="test" />
+        </GetHelp>
+      )
+
+      expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
+    })
+
+    test('error is not being displayed if order id is invalid', async () => {
+      browserHistory.push = jest.fn()
+
+      const fetchPromise = Promise.resolve({ data: { valid: false } })
+
+      validateLatestOrderSpy.mockImplementationOnce(() => fetchPromise)
+
+      mount(
+        <GetHelp
+          didRequestError={false}
+          isRequestPending={false}
+          orderId={"7"}
+          order={{ id: '1', recipeItems: ['123456']}}
+          user={{ id: '123', accessToken: 'test' }}
+          recipes={{}}
+          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          storeGetHelpOrderId={storeGetHelpOrderIdSpy}
+          userLoadOrder={userLoadOrderSpy}
+          validateLatestOrder={validateLatestOrderSpy}
+        >
+          <div className="test" />
+        </GetHelp>
+      )
+
+      return fetchPromise.then(async () => {
+        await fetchPromise
+
+        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
+      })
     })
 
     test('calls customers order endpoint', () => {

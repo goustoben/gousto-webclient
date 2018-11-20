@@ -29,8 +29,7 @@ describe('<Refund />', () => {
 			<Refund
 			  content={content}
 			  user={{ id: '999', accessToken: '123' }}
-			  order={{ id: '888' }}
-			  issues={[{ ingredient_id: '333', category_id: 444 }]}
+			  order={{ id: '888', ingredientIds: ['1234'] }}
 			/>
     )
 
@@ -77,7 +76,7 @@ describe('<Refund />', () => {
 				<Refund
 				  content={content}
 				  user={{ id: '0', accessToken: '123' }}
-				  order={{ id: '0' }}
+				  order={{ id: '0', ingredientIds: ['1234'] }}
 				/>
       )
 
@@ -93,7 +92,11 @@ describe('<Refund />', () => {
     })
 
     test('refund data is fetched', () => {
-      expect(fetchRefundAmount).toHaveBeenCalledTimes(1)
+      expect(fetchRefundAmount).toHaveBeenCalledWith({
+        customer_id: 999,
+        ingredientIds: ['1234'],
+        order_id: 888
+      })
     })
 
     test('error message is shown when fetching data errors and accept button hides', () => {
@@ -102,7 +105,7 @@ describe('<Refund />', () => {
 				<Refund
 				  content={content}
 				  user={{ id: '0', accessToken: '123' }}
-				  order={{ id: '0' }}
+				  order={{ id: '0', ingredientIds: ['1234'] }}
 				/>
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
@@ -149,7 +152,7 @@ describe('<Refund />', () => {
             order_id: 888,
             type: 'a-type',
             value: 7.77,
-            issues: [{ ingredient_id: '333', category_id: 444 }],
+            issues: [{ ingredient_id: '1234', category_id: 98 }],
           }
         )
       })
