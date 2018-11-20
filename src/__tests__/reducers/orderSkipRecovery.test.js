@@ -10,7 +10,7 @@ describe('orderSkipRecovery reducer', () => {
     triggered: false,
     modalVisibility: false,
     orderId: '',
-    dayId: '',
+    deliveryDayId: '',
     boxNumber: '',
     orderType: '',
     orderDate: '',
@@ -33,7 +33,7 @@ describe('orderSkipRecovery reducer', () => {
         triggered: true,
         modalVisibility: false,
         orderId: '1234',
-        dayId: '',
+        deliveryDayId: '',
         boxNumber: '',
         orderType: 'pending',
         orderDate: '',
@@ -53,12 +53,12 @@ describe('orderSkipRecovery reducer', () => {
       expect(result).toEqual(expected)
     })
 
-    test('orderSkipRecovery dispatch trigger with dayId', () => {
+    test('orderSkipRecovery dispatch trigger with deliveryDayId', () => {
       const expected = Immutable.Map({
         triggered: true,
         modalVisibility: false,
         orderId: '',
-        dayId: '1234',
+        deliveryDayId: '1234',
         boxNumber: '',
         orderType: 'projected',
         orderDate: '',
@@ -70,7 +70,7 @@ describe('orderSkipRecovery reducer', () => {
       const actionToCall = {
         type: actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED,
         triggered: true,
-        dayId: '1234',
+        deliveryDayId: '1234',
         orderType: 'projected',
       }
 
@@ -83,7 +83,7 @@ describe('orderSkipRecovery reducer', () => {
         triggered: true,
         modalVisibility: false,
         orderId: '',
-        dayId: '1234',
+        deliveryDayId: '1234',
         boxNumber: '',
         orderType: 'projected',
         orderDate: '2018-09-18 00:00:00',
@@ -95,7 +95,7 @@ describe('orderSkipRecovery reducer', () => {
       const actionToCall = {
         type: actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED,
         triggered: true,
-        dayId: '1234',
+        deliveryDayId: '1234',
         orderType: 'projected',
         orderDate: '2018-09-18 00:00:00',
       }
@@ -112,7 +112,7 @@ describe('orderSkipRecovery reducer', () => {
         triggered: false,
         modalVisibility: false,
         orderId: '',
-        dayId: '',
+        deliveryDayId: '',
         boxNumber: '',
         orderType: '',
         orderDate: '',
@@ -135,7 +135,7 @@ describe('orderSkipRecovery reducer', () => {
         triggered: false,
         modalVisibility: true,
         orderId: '123',
-        dayId: '',
+        deliveryDayId: '',
         boxNumber: '',
         orderType: 'pending',
         orderDate: '',
@@ -156,12 +156,12 @@ describe('orderSkipRecovery reducer', () => {
       expect(result).toEqual(expected)
     })
 
-    test('orderSkipRecovery dispatch trigger with modalVisibility true and dayId', () => {
+    test('orderSkipRecovery dispatch trigger with modalVisibility true and deliveryDayId', () => {
       const expected = Immutable.Map({
         triggered: false,
         modalVisibility: true,
         orderId: '',
-        dayId: '123',
+        deliveryDayId: '123',
         boxNumber: '',
         orderType: 'projected',
         orderDate: '',
@@ -173,7 +173,7 @@ describe('orderSkipRecovery reducer', () => {
       const actionToCall = {
         type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: true,
-        dayId: '123',
+        deliveryDayId: '123',
         title: 'Title',
         orderType: 'projected'
       }
@@ -187,7 +187,7 @@ describe('orderSkipRecovery reducer', () => {
         triggered: false,
         modalVisibility: true,
         orderId: '',
-        dayId: '123',
+        deliveryDayId: '123',
         boxNumber: '',
         orderType: 'projected',
         orderDate: '',
@@ -199,7 +199,7 @@ describe('orderSkipRecovery reducer', () => {
       const actionToCall = {
         type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: true,
-        dayId: '123',
+        deliveryDayId: '123',
         title: 'Title',
         valueProposition: 'Value prop',
         orderType: 'projected'
@@ -214,7 +214,7 @@ describe('orderSkipRecovery reducer', () => {
         triggered: false,
         modalVisibility: true,
         orderId: '',
-        dayId: '123',
+        deliveryDayId: '123',
         boxNumber: '',
         orderType: 'projected',
         orderDate: '',
@@ -226,7 +226,7 @@ describe('orderSkipRecovery reducer', () => {
       const actionToCall = {
         type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: true,
-        dayId: '123',
+        deliveryDayId: '123',
         title: 'Title',
         callToActions: 'Call to action',
         orderType: 'projected'
@@ -255,7 +255,7 @@ describe('orderSkipRecovery reducer', () => {
         triggered: false,
         modalVisibility: true,
         orderId: '',
-        dayId: '123',
+        deliveryDayId: '123',
         boxNumber: '',
         orderType: 'projected',
         orderDate: '',
@@ -267,7 +267,7 @@ describe('orderSkipRecovery reducer', () => {
       const actionToCall = {
         type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: true,
-        dayId: '123',
+        deliveryDayId: '123',
         title: 'Title',
         offer,
         callToActions: 'Call to action',
@@ -287,7 +287,7 @@ describe('orderSkipRecovery reducer', () => {
         triggered: false,
         modalVisibility: true,
         orderId: '',
-        dayId: '123',
+        deliveryDayId: '123',
         boxNumber: '',
         orderType: 'projected',
         orderDate: '',
@@ -299,7 +299,7 @@ describe('orderSkipRecovery reducer', () => {
       const actionToCall = {
         type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: true,
-        dayId: '123',
+        deliveryDayId: '123',
         title: 'Title',
         offer,
         callToActions: 'Call to action',
@@ -317,7 +317,7 @@ describe('orderSkipRecovery reducer', () => {
         triggered: false,
         modalVisibility: false,
         orderId: '',
-        dayId: '',
+        deliveryDayId: '',
         boxNumber: '5',
         orderType: '',
         orderDate: '',

@@ -7,6 +7,15 @@ import { getSlot } from 'utils/deliveries'
 import { createPreviewOrder } from 'apis/orders'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 
+import {
+  checkoutClearErrors,
+  checkoutCreatePreviewOrder,
+  checkoutAddressLookup,
+  checkoutSignup,
+  checkoutPostSignup,
+  trackPurchase,
+} from 'actions/checkout'
+
 jest.mock('utils/basket', () => ({
   basketResetPersistent: jest.fn()
 }))
@@ -31,15 +40,6 @@ jest.mock('actions/login')
 jest.mock('actions/menu')
 jest.mock('actions/user')
 jest.mock('actions/basket')
-
-import {
-  checkoutClearErrors,
-  checkoutCreatePreviewOrder,
-  checkoutAddressLookup,
-  checkoutSignup,
-  checkoutPostSignup,
-  trackPurchase,
-} from 'actions/checkout'
 
 const createState = (stateOverrides) => ({
   basket: Immutable.fromJS({
@@ -125,9 +125,11 @@ const createState = (stateOverrides) => ({
   request: Immutable.fromJS({
     browser: 'desktop',
   }),
-  price: Immutable.Map({
-    grossTotal: 28.00,
-    deliveryTotal: 2.99,
+  pricing: Immutable.fromJS({
+    prices: {
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+    }
   }),
   ...stateOverrides,
 })
@@ -273,10 +275,12 @@ describe('checkout actions', () => {
           previewOrderId: 'test-order-id',
           promoCode: 'TEST123'
         }),
-        price: Immutable.Map({
-          grossTotal: 28.00,
-          deliveryTotal: 2.99,
-        })
+        pricing: Immutable.fromJS({
+          prices: {
+            grossTotal: 28.00,
+            deliveryTotal: 2.99,
+          }
+        }),
       })
     })
 

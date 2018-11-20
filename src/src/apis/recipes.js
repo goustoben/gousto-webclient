@@ -8,8 +8,8 @@ export function fetchRecipes(accessToken, path, reqData) {
   return fetch(accessToken, `${endpoint('recipes', version)}/recipes/${path}`, reqData, 'GET')
 }
 
-export function fetchRecipeStock(accessToken, dayId) {
-  return fetch(accessToken, `${endpoint('core')}/delivery_day/${dayId}/stock`, {}, 'GET')
+export function fetchRecipeStock(accessToken, deliveryDayId) {
+  return fetch(accessToken, `${endpoint('core')}/delivery_day/${deliveryDayId}/stock`, {}, 'GET')
 }
 
 export function fetchRecipesStockByPeriod(periodId) {

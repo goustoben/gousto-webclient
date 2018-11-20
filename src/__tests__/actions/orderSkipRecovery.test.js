@@ -119,20 +119,22 @@ describe('orderSkipRecovery', () => {
     })
 
     test('should set modal cancelOrder visibility to false', async () => {
-      keepOrder({ orderId: '83632', status: 'pending' })(dispatchSpy, getStateSpy)
+      keepOrder({ orderId: '83632', deliveryDayId: '123', status: 'pending' })(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
         orderId: '83632',
+        trackingData: expect.objectContaining({delivery_day_id: '123',})
       }))
     })
 
     test('should set modal cancelOrder visibility to false', async () => {
-      keepOrder({ orderId: '23214', status: 'projected' })(dispatchSpy, getStateSpy)
+      keepOrder({ orderId: '23214', deliveryDayId: '123', status: 'projected' })(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         trackingData: {
           actionType: 'Order Kept',
           order_id: '23214',
+          delivery_day_id: '123',
           order_state: 'projected',
           featureFlag: false,
           recovery_reasons: [
@@ -146,8 +148,8 @@ describe('orderSkipRecovery', () => {
 
   describe('cancelOrder', () => {
     test('should call the order cancel action with the orderId', () => {
-      cancelPendingOrder('64521', 'default')(dispatchSpy)
-      expect(orderCancel).toHaveBeenCalledWith('64521', 'default')
+      cancelPendingOrder('64521', '123', 'default')(dispatchSpy)
+      expect(orderCancel).toHaveBeenCalledWith('64521', '123', 'default')
     })
 
     test('should toggle the cancel order modal visibility', () => {
@@ -171,12 +173,12 @@ describe('orderSkipRecovery', () => {
       orderSkipRecovery: Immutable.Map({
         modalVisibility: true,
         orderId: '',
-        dayId: '',
+        deliveryDayId: '',
         orderType: '',
       }),
     })
 
-    test('should call the skip cancel action with the dayId', () => {
+    test('should call the skip cancel action with the deliveryDayId', () => {
       cancelProjectedOrder('1234')(dispatchSpy)
       expect(projectedOrderCancel).toHaveBeenCalledWith('1234', '1234', 'default')
     })
@@ -258,7 +260,7 @@ describe('orderSkipRecovery', () => {
 
           await getSkipRecoveryContent({
             orderId: '92839',
-            dayId: '582651',
+            deliveryDayId: '582651',
             status: 'pending',
           })(dispatchSpy, getStateSpy)
 
@@ -276,7 +278,7 @@ describe('orderSkipRecovery', () => {
 
         await getSkipRecoveryContent({
           orderId: '33101',
-          dayId: '287420',
+          deliveryDayId: '287420',
           status: 'projected',
         })(dispatchSpy, getStateSpy)
 
