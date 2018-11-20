@@ -1,18 +1,18 @@
 export const loadCheckout = (callback) => {
-  if (document) {
+  if (document && callback) {
     const existingScript = document.getElementById('checkout-com-frames')
 
-    if (!existingScript) {
+    if (existingScript) {
+      callback()
+    } else {
       const script = document.createElement('script')
       script.src = 'https://cdn.checkout.com/js/frames.js'
       script.id = 'checkout-com-frames'
       document.body.appendChild(script)
 
       script.onload = () => {
-        if (callback) callback()
+        callback()
       }
     }
-
-    if (existingScript && callback) callback()
   }
 }
