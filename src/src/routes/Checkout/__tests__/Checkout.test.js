@@ -6,6 +6,7 @@ import config from 'config/routes'
 import { Div } from 'Page/Elements'
 import ProgressBar from 'ProgressBar'
 import Summary from 'routes/Checkout/Components/Summary'
+import { loadCheckout } from 'routes/Checkout/loadCheckout'
 import BoxDetails from 'routes/Checkout/Components/BoxDetails'
 import MobilePayment from 'routes/Checkout/Steps/Mobile/Payment'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
@@ -24,6 +25,10 @@ jest.mock('actions', () => ({
   basketProceedToCheckout: jest.fn().mockReturnValue(Promise.resolve()),
   boxSummaryDeliveryDaysLoad: jest.fn().mockReturnValue(Promise.resolve()),
   checkoutCreatePreviewOrder: jest.fn().mockReturnValue(Promise.resolve()),
+}))
+
+jest.mock('routes/Checkout/loadCheckout', () => ({
+  loadCheckout: jest.fn()
 }))
 
 describe('Checkout', () => {
@@ -100,6 +105,7 @@ describe('Checkout', () => {
   afterEach(() => {
     replace.mockClear()
     redirect.mockClear()
+    loadCheckout.mockClear()
     menuLoadDays.mockClear()
     pricingRequest.mockClear()
     menuLoadBoxPrices.mockClear()
@@ -355,8 +361,6 @@ describe('Checkout', () => {
   })
 
   describe('payment component', () => {
-    const checkoutSrc = 'https://cdn.checkout.com/js/frames.js'
-
     describe('when the checkoutPaymentFeature flag is set', () => {
       beforeEach(() => {
         wrapper = shallow(
@@ -370,10 +374,13 @@ describe('Checkout', () => {
 
       test('should render a CheckoutPayment component', () => {
         expect(wrapper.find(CheckoutPayment)).toHaveLength(1)
+        
       })
 
-      test('should load the checkout.com scripts', () => {
-        expect(wrapper.find('script').filterWhere(script => script.prop('src') === checkoutSrc)).toHaveLength(1)
+      test('should call loadCheckout', () => {
+        wrapper.instance().componentDidMount()
+          
+        expect(loadCheckout).toHaveBeenCalled()
       })
     })
 
@@ -391,8 +398,10 @@ describe('Checkout', () => {
         expect(wrapper.find(MobilePayment)).toHaveLength(1)
       })
 
-      test('should not load the checkout.com scripts', () => {
-        expect(wrapper.find('script').filterWhere(script => script.prop('src') === checkoutSrc)).toHaveLength(0)
+      test('should not call loadCheckout', () => {
+        wrapper.instance().componentDidMount()
+          
+        expect(loadCheckout).not.toHaveBeenCalled()
       })
     })
   })
