@@ -92,9 +92,9 @@ describe('<Refund />', () => {
     })
 
     test('refund data is fetched', () => {
-      expect(fetchRefundAmount).toHaveBeenCalledWith({
+      expect(fetchRefundAmount).toHaveBeenCalledWith('123', {
         customer_id: 999,
-        ingredientIds: ['1234'],
+        ingredient_ids: ['1234'],
         order_id: 888
       })
     })

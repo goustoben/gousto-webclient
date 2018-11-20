@@ -47,10 +47,10 @@ class Refund extends PureComponent {
     const { user, order } = this.props
 
     try {
-      const response = await fetchRefundAmount({
+      const response = await fetchRefundAmount(user.accessToken, {
         customer_id: Number(user.id),
         order_id: Number(order.id),
-        ingredientIds: order.ingredientIds
+        ingredient_ids: order.ingredientIds
       })
       const { value, type } = response.data
 
