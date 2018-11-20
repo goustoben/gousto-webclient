@@ -28,7 +28,7 @@ export class BillingAddress extends React.PureComponent {
   render() {
     const { formValues, sectionName, deliveryAddress, asyncValidate, form, receiveRef, scrollToFirstMatchingRef } = this.props
     const isBillingAddressDifferent = formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent
-    const toggleAddressText = !isBillingAddressDifferent ? 'Enter new billing address' : 'Use Delivery address'
+    const toggleAddressText = isBillingAddressDifferent ? 'Use Delivery address' : 'Enter new billing address'
 
     return (
       <div>
