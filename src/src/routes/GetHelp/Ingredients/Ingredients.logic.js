@@ -63,9 +63,9 @@ class Ingredients extends PureComponent {
     const { selectedIngredients } = this.state
     const ingredientIds = []
 
-    selectedIngredients.forEach((value, ingredientId) => {
-      const id = ingredientId.split('-')[1]
-      ingredientIds.push(id)
+    selectedIngredients.forEach((value, checkboxId) => {
+      const ingredientId = checkboxId.split('-')[1]
+      ingredientIds.push(ingredientId)
     })
 
     try {

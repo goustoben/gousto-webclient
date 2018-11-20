@@ -177,7 +177,7 @@ describe('<Ingredients />', () => {
         expect(validateSelectedIngredients).toHaveBeenCalledWith({
           accessToken: 'user-access-token',
           costumerId: '777',
-          ingredientIds: ['2-2222'],
+          ingredientIds: ['2222'],
           orderId: '888',
         })
       })
@@ -214,7 +214,7 @@ describe('<Ingredients />', () => {
         selectIngredientAndGetCheckbox(getHelpLayout)
         await ContinueButton.prop('onClick')()
 
-        expect(storeIngredientIds).toHaveBeenCalledWith(['2-2222'])
+        expect(storeIngredientIds).toHaveBeenCalledWith(['2222'])
       })
     })
   })
