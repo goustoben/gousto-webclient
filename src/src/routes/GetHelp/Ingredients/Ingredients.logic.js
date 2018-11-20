@@ -64,7 +64,8 @@ class Ingredients extends PureComponent {
     const ingredientIds = []
 
     selectedIngredients.forEach((value, ingredientId) => {
-      ingredientIds.push(ingredientId)
+      const id = ingredientId.split('-')[1]
+      ingredientIds.push(id)
     })
 
     try {
