@@ -19,24 +19,73 @@ describe('CheckoutFrame', () => {
   })
 
   describe('componentDidMount', () => {
-    describe('should call Frames.init', () => {
+    describe('with checkout script not ready', () => {
       beforeEach(() => {
         wrapper = mount(<CheckoutFrame />)
         wrapper.instance().componentDidMount()
       })
 
-      test('with the correct container selector', () => {
-        const selector = wrapper.find('div').first().prop('className')
+      test('should not call Frames.init', () => {
+        expect(Frames.init).not.toHaveBeenCalled()
+      })
+    })
 
-        expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
-          containerSelector: `.${selector}`,
-        }))
+    describe('with checkout script loaded', () => {
+      describe('should call Frames.init', () => {
+        beforeEach(() => {
+          wrapper = mount(<CheckoutFrame checkoutReady />)
+          wrapper.instance().componentDidMount()
+        })
+  
+        test('with the correct container selector', () => {
+          const selector = wrapper.find('div').first().prop('className')
+  
+          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
+            containerSelector: `.${selector}`,
+          }))
+        })
+  
+        test('with the correct public key', () => {
+          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
+            publicKey: 'checkout-com-public-key',
+          }))
+        })
+      })
+    })
+  })
+
+  describe('componentDidUpdate', () => {
+    describe('with a pending checkout script', () => {
+      beforeEach(() => {
+        wrapper = mount(<CheckoutFrame />)
+        wrapper.setProps({ checkoutReady: false })
       })
 
-      test('with the correct public key', () => {
-        expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
-          publicKey: 'checkout-com-public-key',
-        }))
+      test('should call Frames.init', () => {
+        expect(Frames.init).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('updating to a ready checkout script', () => {
+      beforeEach(() => {
+        wrapper = mount(<CheckoutFrame />)
+        wrapper.setProps({ checkoutReady: true })
+      })
+
+      test('should call Frames.init', () => {
+        expect(Frames.init).toHaveBeenCalled()
+      })
+    })
+
+    describe('with a ready checkout script', () => {
+      beforeEach(() => {
+        wrapper = mount(<CheckoutFrame checkoutReady />)
+        Frames.init.mockClear()
+        wrapper.setProps({ checkoutReady: true })
+      })
+
+      test('should not call Frames.init', () => {
+        expect(Frames.init).not.toHaveBeenCalled()
       })
     })
   })
