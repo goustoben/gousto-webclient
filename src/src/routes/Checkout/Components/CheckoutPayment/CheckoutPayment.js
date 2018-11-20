@@ -29,8 +29,8 @@ const CheckoutPayment = ({ checkoutScriptReady, receiveRef, sectionName, submit,
   <div>
     <div className={css.container}>
       <PaymentHeader />
-      <div className={css.wrapper}>
-        <FormSection name={sectionName}>
+      <FormSection name={sectionName}>
+        <div className={css.wrapper}>
           <Field
             name="cardName"
             component={ReduxFormInput}
@@ -43,16 +43,16 @@ const CheckoutPayment = ({ checkoutScriptReady, receiveRef, sectionName, submit,
             refId={`${sectionName}.cardName`}
             data-testing="checkoutCardNameInput"
           />
-        </FormSection>
-      </div>
-      <div className={css.frame}>
-        <CheckoutFrame checkoutScriptReady={checkoutScriptReady} />
-      </div>
-      <BillingAddress
-        asyncValidate={asyncValidate}
-        receiveRef={receiveRef}
-        scrollToFirstMatchingRef={scrollToFirstMatchingRef}
-      />
+        </div>
+        <div className={css.frame}>
+          <CheckoutFrame checkoutScriptReady={checkoutScriptReady} />
+        </div>
+        <BillingAddress
+          asyncValidate={asyncValidate}
+          receiveRef={receiveRef}
+          scrollToFirstMatchingRef={scrollToFirstMatchingRef}
+        />
+      </FormSection>
     </div>
     <SubmitButton onClick={submit} />
   </div>
