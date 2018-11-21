@@ -6,7 +6,7 @@ export const initialState = () => Immutable.Map({
   triggered: false,
   modalVisibility: false,
   orderId: '',
-  dayId: '',
+  deliveryDayId: '',
   boxNumber: '',
   orderType: '',
   orderDate: '',
@@ -28,8 +28,8 @@ const orderSkipRecovery = {
       if (action.orderId) {
         newState = newState.set('orderId', action.orderId)
       }
-      if (action.dayId) {
-        newState = newState.set('dayId', action.dayId)
+      if (action.deliveryDayId) {
+        newState = newState.set('deliveryDayId', action.deliveryDayId)
       }
       if (action.orderDate) {
         newState = newState.set('orderDate', action.orderDate)
@@ -44,8 +44,8 @@ const orderSkipRecovery = {
         if (action.orderId) {
           newState = newState.set('orderId', action.orderId)
         }
-        if (action.dayId) {
-          newState = newState.set('dayId', action.dayId)
+        if (action.deliveryDayId) {
+          newState = newState.set('deliveryDayId', action.deliveryDayId)
         }
         if (action.title) {
           newState = newState.set('title', action.title)

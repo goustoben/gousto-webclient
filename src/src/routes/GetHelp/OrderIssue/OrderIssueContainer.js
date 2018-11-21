@@ -7,19 +7,19 @@ import OrderIssue from './OrderIssue'
 const mapStateToProps = (state) => ({
   content: {
     title: state.content.get('get-help_orderissues_pageheader_header')
-		|| 'Get help with your box',
+    || 'Get help with your box',
     body: state.content.get('get-help_orderissues_pagecontent_copy')
-		|| 'What part of your order had an issue?',
+    || 'What part of your order had an issue?',
     buttonCopy: state.content.get('get-help_orderissues_pagecontent_buttoncopy')
-		|| 'back',
+    || 'back',
     ingredientsItem: state.content.get('get-help_orderissues_pagecontent_ingredientsitem')
-		|| 'Ingredients (missing, damaged, etc)',
+    || 'Ingredients (missing, damaged, etc)',
     recipeCardItem: state.content.get('get-help_orderissues_pagecontent_recipecarditem')
-		|| 'Recipe cards',
+    || 'Recipe cards',
     deliveryItem: state.content.get('get-help_orderissues_pagecontent_deliveryitem')
-		|| 'Delivery',
+    || 'Delivery',
     otherItem: state.content.get('get-help_orderissues_pagecontent_otheritem')
-		|| 'Other',
+    || 'Other',
   }
 })
 

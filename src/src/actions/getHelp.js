@@ -1,4 +1,4 @@
-import { validateIngredients } from 'apis/getHelp'
+import { validateIngredients, validateOrder } from 'apis/getHelp'
 import actionTypes from './actionTypes'
 import statusActions from './status'
 
@@ -20,7 +20,12 @@ export const storeGetHelpOrderId = (id) => dispatcher({
   id,
 })
 
-export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredients }) => {
+export const storeIngredientIds = (ids) => dispatcher({
+  type: actionTypes.GET_HELP_STORE_INGREDIENT_IDS,
+  ids,
+})
+
+export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredientIds }) => {
   return async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
     dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
@@ -31,7 +36,7 @@ export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, 
         {
           customer_id: Number(costumerId),
           order_id: Number(orderId),
-          ingredients
+          ingredient_ids: ingredientIds
         }
       )
     }
@@ -41,6 +46,31 @@ export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, 
     }
     finally {
       dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, false))
+    }
+  }
+}
+
+export const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
+  return async (dispatch) => {
+    dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, true))
+    dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
+
+    try {
+      const response = await validateOrder(
+        accessToken,
+        {
+          customer_id: Number(costumerId),
+          order_id: Number(orderId),
+        }
+      )
+
+      return response
+    }
+    catch (error) {
+      dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, error.message))
+    }
+    finally {
+      dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, false))
     }
   }
 }

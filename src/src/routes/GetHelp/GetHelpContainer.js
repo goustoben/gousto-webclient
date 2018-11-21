@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { storeGetHelpOrderId } from 'actions/getHelp'
+import { storeGetHelpOrderId, validateLatestOrder } from 'actions/getHelp'
 import { client as routes } from 'config/routes'
 import userActions from 'actions/user'
 import recipeActions from 'actions/recipes'
@@ -66,11 +66,16 @@ const mapStateToProps = (state, ownProps) => {
     order,
     location: ownProps.location,
     content: getContent(state),
+    user: {
+      id: state.user.get('id'),
+      accessToken: state.auth.get('accessToken'),
+    },
   }
 }
 
 const GetHelpContainer = connect(mapStateToProps, {
   storeGetHelpOrderId,
+  validateLatestOrder,
   userLoadOrder: userActions.userLoadOrder,
   recipesLoadRecipesById: recipeActions.recipesLoadRecipesById,
 })(GetHelp)

@@ -38,6 +38,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
+          storeIngredientIds={() => {}}
           validateSelectedIngredients={() => {}}
         />
       )
@@ -100,9 +101,11 @@ describe('<Ingredients />', () => {
 
   describe('behaviour', () => {
     let validateSelectedIngredients
+    let storeIngredientIds
     let ContinueButton
 
     beforeEach(() => {
+      storeIngredientIds = jest.fn()
       validateSelectedIngredients = jest.fn()
       browserHistory.push = jest.fn()
       wrapper = mount(
@@ -111,6 +114,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
+          storeIngredientIds={storeIngredientIds}
           validateSelectedIngredients={validateSelectedIngredients}
         />
       )
@@ -172,9 +176,9 @@ describe('<Ingredients />', () => {
         expect(validateSelectedIngredients).toHaveBeenCalledTimes(1)
         expect(validateSelectedIngredients).toHaveBeenCalledWith({
           accessToken: 'user-access-token',
-          costumerId: 777,
-          ingredients: ['2-2222'],
-          orderId: 888,
+          costumerId: '777',
+          ingredientIds: ['2222'],
+          orderId: '888',
         })
       })
 
@@ -197,6 +201,20 @@ describe('<Ingredients />', () => {
         await ContinueButton.prop('onClick')()
 
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
+      })
+
+      test('when validated it calls store ingredient ids action', async () => {
+        validateSelectedIngredients.mockResolvedValue({
+          status: 'ok',
+          data: {
+            valid: true,
+          }
+        })
+
+        selectIngredientAndGetCheckbox(getHelpLayout)
+        await ContinueButton.prop('onClick')()
+
+        expect(storeIngredientIds).toHaveBeenCalledWith(['2222'])
       })
     })
   })
