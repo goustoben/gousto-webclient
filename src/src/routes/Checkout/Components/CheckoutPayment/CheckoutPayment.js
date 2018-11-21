@@ -25,7 +25,7 @@ const defaultProps = {
   checkoutScriptReady: false,
 }
 
-const CheckoutPayment = ({ checkoutScriptReady, receiveRef, sectionName, submit, asyncValidate, scrollToFirstMatchingRef }) => (
+const CheckoutPayment = ({ asyncValidate, checkoutScriptReady, receiveRef, scrollToFirstMatchingRef, sectionName, submit }) => (
   <div>
     <div className={css.container}>
       <PaymentHeader />
