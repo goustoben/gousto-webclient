@@ -5,7 +5,7 @@ import actions from 'actions'
 import deliveryRules from 'validations/delivery'
 import { addPrefix } from 'validations/util'
 import cardRules from 'validations/card'
-import { SagePayPayment } from './SagePayPayment'
+import { SagePayCardDetails } from './SagePayCardDetails'
 
 const form = 'checkout'
 
@@ -13,26 +13,24 @@ function mapStateToProps(sectionName) {
   return state => {
     const formValues = getFormValues(form)(state)
     const addressFormValues = getFormValues(form)(state)
-    const browser = state.request.get('browser')
 
     return ({
       form,
       formValues,
       deliveryAddress: addressFormValues && addressFormValues.delivery ? addressFormValues.delivery : {},
       formSectionName: sectionName,
-      browser,
     })
   }
 }
 
 function connectComponent(sectionName) {
-  const SagePayPaymentContainer = connect(mapStateToProps(sectionName), {
+  const SagePayCardDetailsContainer = connect(mapStateToProps(sectionName), {
     clearErrors: actions.checkoutClearErrors,
     change,
     untouch,
-  })(SagePayPayment)
+  })(SagePayCardDetails)
 
-  return SagePayPaymentContainer
+  return SagePayCardDetailsContainer
 }
 
 export default sectionName => connectComponent(sectionName)

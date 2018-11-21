@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PaymentHeader will match snapshot 1`] = `
+<div>
+  <h3
+    className="header"
+  >
+    Payment details
+  </h3>
+  <span
+    className="padlockIcon"
+  />
+  <span
+    className="boldInfo"
+  >
+    All fields are required
+  </span>
+  <p
+    className="textSM"
+  >
+    All transactions are secured using 128 bit SSL technology.
+  </p>
+</div>
+`;

@@ -1,1 +1,1 @@
-export default from './CheckoutPayment'
+export { CheckoutPaymentContainer as CheckoutPayment } from './CheckoutPaymentContainer'

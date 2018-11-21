@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
 import { getFormSyncErrors, getFormAsyncErrors, change, untouch, touch, registerField } from 'redux-form'
-import Address from '../../Address'
-import actions from 'actions'
+
+import { checkoutAddressDetailLookup, checkoutAddressLookup } from 'actions/checkout'
+
+import Address from '../Address'
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -18,8 +20,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 const BillingAddressContainer = connect(mapStateToProps, {
-  checkoutAddressLookup: actions.checkoutAddressLookup,
-  checkoutAddressDetailLookup: actions.checkoutAddressDetailLookup,
+  checkoutAddressLookup,
+  checkoutAddressDetailLookup,
   change,
   untouch,
   touch,

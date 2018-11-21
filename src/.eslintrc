@@ -75,7 +75,6 @@
       "comma-dangle": 0,
       "react/jsx-tag-spacing": 0,
       "react/self-closing-comp": 0,
-      "react/self-closing-import/no-dynamic-require": 1,
       "lines-between-class-members": 0,
       "jsx-a11y/label-has-for": 0,
       "react/sort-comp": 0,
