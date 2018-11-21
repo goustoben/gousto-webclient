@@ -1,4 +1,4 @@
-import React, { createElement } from 'react'
+import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
