@@ -1,7 +1,7 @@
 import actionTypes from './actionTypes'
+import logger from 'utils/logger'
 import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
-import logger from 'utils/logger'
 import { fetchOrderSkipContent } from '../apis/orderSkipRecovery'
 
 export const modalVisibilityChange = ({
@@ -119,6 +119,7 @@ export const getSkipRecoveryContent = ({ orderId, orderDate, dayId, status, acti
         status,
         actionTriggered,
       }))
+
       logger.error(err)
     }
   }

@@ -31,7 +31,7 @@ export function JSONParse(text) { // eslint-disable-line new-cap
 
     return JSON.parse(camelCaseText)
   } catch (e) {
-    logger.error({ message:`JSONParse failed with text: "${text}"`, errors:  [e.toString()] })
+    logger.error({ message:`JSONParse failed with text: "${text}"`, errors:  [e] })
     throw new Error('An error occurred, please try again.')
   }
 }

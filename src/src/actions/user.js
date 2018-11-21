@@ -520,7 +520,7 @@ function userAddPaymentMethod(data) {
       dispatch({ type: actionTypes.USER_POST_PAYMENT_METHOD, userId })
       location.reload()
     } catch (err) {
-      logger.error(`${actionTypes.USER_POST_PAYMENT_METHOD} - ${err.message}`)
+      logger.error({message: `${actionTypes.USER_POST_PAYMENT_METHOD} - ${err.message}`, errors: [err]})
       dispatch(statusActions.error(actionTypes.USER_POST_PAYMENT_METHOD, err.code))
     } finally {
       dispatch({ type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, visibility: false })

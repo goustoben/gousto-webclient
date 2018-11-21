@@ -94,10 +94,10 @@ describe('recipe actions', () => {
       })
 
       test('should log a notice', async () => {
-        expect(logger.notice).toHaveBeenCalledWith(
-          'Error loading recommendation data for user: ',
-          error
-        )
+        expect(logger.error).toHaveBeenCalledWith({
+          message: 'Error loading recommendation data for user',
+          errors: [error]
+        })
       })
     })
   })

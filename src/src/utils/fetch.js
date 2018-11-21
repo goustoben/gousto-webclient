@@ -125,7 +125,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
         status: status,
         elapsedTime: `${(new Date() - startTime)}ms`,
         requestUrl: requestUrl,
-        errors: [message],
+        errors: [e],
       })
 
       if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {

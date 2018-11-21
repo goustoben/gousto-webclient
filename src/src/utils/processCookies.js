@@ -113,7 +113,7 @@ const processCookies = (cookies, store) => {
     try {
       affiliateSource = JSON.parse(tracking).asource || affiliateSource
     } catch (err) {
-      logger.error({message: 'error parsing tracking asource cookie value', errors: [err.toString()]})
+      logger.error({message: 'error parsing tracking asource cookie value', errors: [err]})
     }
   }
 
@@ -210,7 +210,7 @@ const processCookies = (cookies, store) => {
         store.dispatch(featureActions.featureSet(feature, value, experiment))
       })
     } catch (err) {
-      logger.error({message: 'error parsing features cookie value', errors: [err.toString()] })
+      logger.error({message: 'error parsing features cookie value', errors: [err] })
     }
   }
 
@@ -219,7 +219,7 @@ const processCookies = (cookies, store) => {
       signupSteps = JSON.parse(signupSteps)
       store.dispatch(signupActions.signupStepsReceive(signupSteps))
     } catch (err) {
-      logger.error({message: 'error parsing signup steps cookie value', errors: [err.toString()] })
+      logger.error({message: 'error parsing signup steps cookie value', errors: [err] })
     }
   }
 
@@ -228,7 +228,7 @@ const processCookies = (cookies, store) => {
       variants = JSON.parse(variants)
       store.dispatch(loadContentVariants(variants))
     } catch (err) {
-      logger.error({message: 'error parsing variants cookie value', errors: [err.toString()]})
+      logger.error({message: 'error parsing variants cookie value', errors: [err]})
     }
   }
 }

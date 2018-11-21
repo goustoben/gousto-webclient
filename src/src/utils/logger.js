@@ -46,6 +46,9 @@ const formatLogs = (args) => {
   const log = {}
   if( typeof args === "string" ) {
     log.message = args
+  }else if (isJSError(args)){
+    log.message = args.message
+    log.errors = [args.stack]
   }
 
   const {message, status, elapsedTime, errors, level, service, requestUrl, uuid} = args
@@ -71,7 +74,15 @@ const formatLogs = (args) => {
   }
 
   if(errors !== undefined){
-    log.errors = typeof errors === "string"? [errors] : errors
+    if(typeof errors === "string"){
+      log.errors = [errors]
+    }else{
+      log.errors = []
+      errors.map(error => {
+        const e = isJSError(error) ? {message: error.message, stack: error.stack } : error
+        log.errors.push(e)
+      })
+    }
   }
 
   if(requestUrl !== undefined){
@@ -91,5 +102,7 @@ const formatLogs = (args) => {
 
   return log
 }
+
+const isJSError = (e) => (e && e.stack && e.message)
 
 export default logger()
