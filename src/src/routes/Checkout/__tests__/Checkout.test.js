@@ -6,7 +6,7 @@ import config from 'config/routes'
 import { Div } from 'Page/Elements'
 import ProgressBar from 'ProgressBar'
 import Summary from 'routes/Checkout/Components/Summary'
-import { loadCheckout } from 'routes/Checkout/loadCheckout'
+import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import BoxDetails from 'routes/Checkout/Components/BoxDetails'
 import MobilePayment from 'routes/Checkout/Steps/Mobile/Payment'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
@@ -27,8 +27,8 @@ jest.mock('actions', () => ({
   checkoutCreatePreviewOrder: jest.fn().mockReturnValue(Promise.resolve()),
 }))
 
-jest.mock('routes/Checkout/loadCheckout', () => ({
-  loadCheckout: jest.fn()
+jest.mock('routes/Checkout/loadCheckoutScript', () => ({
+  loadCheckoutScript: jest.fn()
 }))
 
 describe('Checkout', () => {
@@ -105,7 +105,7 @@ describe('Checkout', () => {
   afterEach(() => {
     replace.mockClear()
     redirect.mockClear()
-    loadCheckout.mockClear()
+    loadCheckoutScript.mockClear()
     menuLoadDays.mockClear()
     pricingRequest.mockClear()
     menuLoadBoxPrices.mockClear()
@@ -377,10 +377,10 @@ describe('Checkout', () => {
         
       })
 
-      test('should call loadCheckout', () => {
+      test('should call loadCheckoutScript', () => {
         wrapper.instance().componentDidMount()
           
-        expect(loadCheckout).toHaveBeenCalled()
+        expect(loadCheckoutScript).toHaveBeenCalled()
       })
     })
 
@@ -398,10 +398,10 @@ describe('Checkout', () => {
         expect(wrapper.find(MobilePayment)).toHaveLength(1)
       })
 
-      test('should not call loadCheckout', () => {
+      test('should not call loadCheckoutScript', () => {
         wrapper.instance().componentDidMount()
           
-        expect(loadCheckout).not.toHaveBeenCalled()
+        expect(loadCheckoutScript).not.toHaveBeenCalled()
       })
     })
   })

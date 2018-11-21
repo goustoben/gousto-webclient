@@ -1,11 +1,11 @@
 import { JSDOM } from 'jsdom'
 
-import { loadCheckout } from 'routes/Checkout/loadCheckout'
+import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 
 const jsdom = new JSDOM('<!doctype html><html><body></body></html>')
 const { window } = jsdom
 
-describe('loadCheckout', () => {
+describe('loadCheckoutScript', () => {
   const callback = jest.fn()
   afterEach(() => {
     callback.mockClear()
@@ -17,7 +17,7 @@ describe('loadCheckout', () => {
     })
 
     test('should not call callback', () => {
-      loadCheckout(callback)
+      loadCheckoutScript(callback)
 
       expect(callback).not.toHaveBeenCalled()
     })
@@ -38,7 +38,7 @@ describe('loadCheckout', () => {
       })
 
       test('should invoke callback', () => {
-        loadCheckout(callback)
+        loadCheckoutScript(callback)
 
         expect(callback).toHaveBeenCalled()
       })
@@ -46,7 +46,7 @@ describe('loadCheckout', () => {
 
     describe(`when script doesn't exist`, () => {
       test('should create a new script element and append it to body', () => {
-        loadCheckout(callback)
+        loadCheckoutScript(callback)
 
         expect(document.getElementById('checkout-com-frames').getAttribute('src')).toEqual(
           'https://cdn.checkout.com/js/frames.js'
@@ -54,7 +54,7 @@ describe('loadCheckout', () => {
       })
 
       test('should invoke callback once script has loaded', () => {
-        loadCheckout(callback)
+        loadCheckoutScript(callback)
 
         expect(callback).toHaveBeenCalled()
       })

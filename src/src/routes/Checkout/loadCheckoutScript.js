@@ -1,4 +1,4 @@
-export const loadCheckout = (callback) => {
+export const loadCheckoutScript = (callback) => {
   if (document && callback) {
     const existingScript = document.getElementById('checkout-com-frames')
 

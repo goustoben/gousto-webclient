@@ -11,7 +11,7 @@ import ProgressBar from 'ProgressBar'
 
 import css from './Checkout.css'
 import { CheckoutPayment } from './Components/CheckoutPayment'
-import { loadCheckout } from './loadCheckout'
+import { loadCheckoutScript } from './loadCheckoutScript'
 
 import DesktopAboutYou from './Steps/Desktop/AboutYou'
 import DesktopBoxDetails from './Steps/Desktop/BoxDetails'
@@ -151,7 +151,7 @@ class Checkout extends React.PureComponent {
       })
     })
     if (checkoutPaymentFeature) {
-      loadCheckout(() => {
+      loadCheckoutScript(() => {
         this.setState({
           checkoutReady: true,
         })
