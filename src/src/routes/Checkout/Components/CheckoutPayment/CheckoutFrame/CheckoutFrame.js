@@ -26,32 +26,24 @@ export class CheckoutFrame extends React.Component {
   }
 
   initFrames = () => {
-    const { paymentButton, paymentForm } = this
+    const { paymentForm } = this
 
     Frames.init({
       publicKey,
       containerSelector: '.frames-container',
-      cardValidationChanged: () => {
-        paymentButton.disabled = !Frames.isCardValid()
-      },
-      cardSubmitted: () => {
-        paymentButton.disabled = true
-      },
+      cardValidationChanged: () => {},
+      cardSubmitted: () => {},
       cardTokenised: (e) => {
         const { cardToken } = e.data
         Frames.addCardToken(paymentForm, cardToken)
         paymentForm.submit(() => false)
       },
-      cardTokenisationFailed: (err) => {}
+      cardTokenisationFailed: () => {}
     })
     paymentForm.addEventListener('submit', (e) => {
       e.preventDefault()
       Frames.submitCard()
     })
-  }
-
-  setPaymentButtonRef = element => {
-    this.paymentButton = element
   }
 
   setPaymentFormRef = element => {
@@ -67,7 +59,6 @@ export class CheckoutFrame extends React.Component {
     return (
       <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" method="POST" action="https://merchant.com/charge-card">
         <div className="frames-container" />
-        <button ref={this.setPaymentButtonRef} type="submit" onClick={this.submitCard}>Submit Checkout Request</button>
       </form>
     )
   }
