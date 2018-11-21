@@ -6,21 +6,21 @@ import { publicKey } from '../config'
 /* global Frames */
 export class CheckoutFrame extends React.Component {
   static propTypes = {
-    checkoutReady: PropTypes.bool,
+    checkoutScriptReady: PropTypes.bool,
   }
 
   componentDidMount() {
-    const { checkoutReady } = this.props
+    const { checkoutScriptReady } = this.props
 
-    if (checkoutReady) {
+    if (checkoutScriptReady) {
       this.initFrames()
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { checkoutReady } = this.props
+    const { checkoutScriptReady } = this.props
 
-    if (checkoutReady && prevProps.checkoutReady !== checkoutReady) {
+    if (checkoutScriptReady && prevProps.checkoutScriptReady !== checkoutScriptReady) {
       this.initFrames()
     }
   }

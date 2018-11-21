@@ -66,7 +66,7 @@ class Checkout extends React.PureComponent {
     super(state, props)
     this.state = {
       isCreatingPreviewOrder: true,
-      checkoutReady: false,
+      checkoutScriptReady: false,
     }
     const { checkoutPaymentFeature } = this.props
     this.desktopStepMapping = desktopStepMapping(checkoutPaymentFeature)
@@ -153,7 +153,7 @@ class Checkout extends React.PureComponent {
     if (checkoutPaymentFeature) {
       loadCheckoutScript(() => {
         this.setState({
-          checkoutReady: true,
+          checkoutScriptReady: true,
         })
       })
     }
@@ -194,7 +194,7 @@ class Checkout extends React.PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
-    const { checkoutReady } = this.state
+    const { checkoutScriptReady } = this.state
 
     const step = stepMapping[currentStep]
     const props = {
@@ -202,7 +202,7 @@ class Checkout extends React.PureComponent {
       isLastStep: this.isLastStep(steps, currentStep),
       nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
       submitOrder: this.props.submitOrder,
-      checkoutReady,
+      checkoutScriptReady,
     }
 
     let element = <div />

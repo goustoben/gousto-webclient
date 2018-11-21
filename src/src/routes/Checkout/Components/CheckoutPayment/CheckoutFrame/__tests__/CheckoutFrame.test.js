@@ -33,7 +33,7 @@ describe('CheckoutFrame', () => {
     describe('with checkout script loaded', () => {
       describe('should call Frames.init', () => {
         beforeEach(() => {
-          wrapper = mount(<CheckoutFrame checkoutReady />)
+          wrapper = mount(<CheckoutFrame checkoutScriptReady />)
           wrapper.instance().componentDidMount()
         })
   
@@ -58,7 +58,7 @@ describe('CheckoutFrame', () => {
     describe('with a pending checkout script', () => {
       beforeEach(() => {
         wrapper = mount(<CheckoutFrame />)
-        wrapper.setProps({ checkoutReady: false })
+        wrapper.setProps({ checkoutScriptReady: false })
       })
 
       test('should call Frames.init', () => {
@@ -69,7 +69,7 @@ describe('CheckoutFrame', () => {
     describe('updating to a ready checkout script', () => {
       beforeEach(() => {
         wrapper = mount(<CheckoutFrame />)
-        wrapper.setProps({ checkoutReady: true })
+        wrapper.setProps({ checkoutScriptReady: true })
       })
 
       test('should call Frames.init', () => {
@@ -79,9 +79,9 @@ describe('CheckoutFrame', () => {
 
     describe('with a ready checkout script', () => {
       beforeEach(() => {
-        wrapper = mount(<CheckoutFrame checkoutReady />)
+        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
         Frames.init.mockClear()
-        wrapper.setProps({ checkoutReady: true })
+        wrapper.setProps({ checkoutScriptReady: true })
       })
 
       test('should not call Frames.init', () => {
