@@ -76,7 +76,9 @@ const formatLogs = (args) => {
   if(errors !== undefined){
     if(typeof errors === "string"){
       log.errors = [errors]
-    }else{
+    } else if(isJSError(errors)){
+      log.errors.push({ message:errors.message, stack: errors.stack })
+    } else{
       log.errors = []
       errors.map(error => {
         const e = isJSError(error) ? {message: error.message, stack: error.stack } : error
