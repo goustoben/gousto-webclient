@@ -47,8 +47,8 @@ const formatLogs = (args) => {
   if( typeof args === "string" ) {
     log.message = args
   }else if (isJSError(args)){
-    log.message = args.message
-    log.errors = [args.stack]
+    log.message = 'Error'
+    log.errors = [{message: args.message, stack: args.stack}]
   }
 
   const {message, status, elapsedTime, errors, level, service, requestUrl, uuid} = args
@@ -75,7 +75,7 @@ const formatLogs = (args) => {
 
   if(errors !== undefined){
     if(typeof errors === "string"){
-      log.errors = [errors]
+      log.errors = [{message: errors}]
     } else if(isJSError(errors)){
       log.errors.push({ message:errors.message, stack: errors.stack })
     } else{
