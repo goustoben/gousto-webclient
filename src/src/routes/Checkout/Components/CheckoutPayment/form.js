@@ -1,3 +1,5 @@
+import { connect } from 'react-redux'
+
 import { addPrefix } from 'validations/util'
 import deliveryRules from 'validations/delivery'
 import { validationRules } from 'validations/card-checkout'
@@ -11,4 +13,11 @@ export const getValidationRules = (sectionName) => (
 
     return rules
   }
+)
+
+export const addInitialValues = (Component) => (
+  connect(() => ({
+    cardName: '',
+    isBillingAddressDifferent: false,
+  }))(Component)
 )
