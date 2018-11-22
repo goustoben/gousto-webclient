@@ -153,6 +153,10 @@ describe('when features are defined', () => {
     })
 
     describe('checkoutPayment feature flag is undefined', () => {
+      beforeEach(() => {
+        state = {}
+      })
+
       it('should return value of checkoutPayment feature flag', () => {
         expect(isCheckoutPaymentFeatureEnabled(state)).toBe(false)
       })

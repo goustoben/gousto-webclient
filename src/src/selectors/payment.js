@@ -1,4 +1,5 @@
-import Immutable from "immutable"
+import Immutable from 'immutable'
+
 import { isCheckoutPaymentFeatureEnabled } from './features'
 
 export const getCardDetails = state => {
@@ -7,7 +8,7 @@ export const getCardDetails = state => {
     return {
       payment_provider: 'checkout',
       active: 1,
-      card_token: payment.get('token') || 'card_tok_831367E8-9FE6-438F-AC49-57C7C5E69D5B'
+      card_token: payment.get('token')
     }
   }
 
