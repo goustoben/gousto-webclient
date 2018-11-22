@@ -6,7 +6,7 @@ import { getBillingAddress } from './utils'
 
 import { CheckoutFrame } from './CheckoutFrame'
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   const formValues = getFormValues(formName)(state)
 
   return {

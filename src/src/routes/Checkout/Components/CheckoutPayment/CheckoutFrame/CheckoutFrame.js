@@ -20,7 +20,7 @@ export class CheckoutFrame extends React.Component {
   componentDidMount() {
     const { checkoutScriptReady } = this.props
 
-    if (checkoutScriptReady ) {
+    if (checkoutScriptReady) {
       this.initFrames()
     }
   }
@@ -50,7 +50,7 @@ export class CheckoutFrame extends React.Component {
     const { cardName, change, billingAddress, formName, sectionName, cardTokenReady } = this.props
 
     Frames.init({
-      publicKey: publicKey,
+      publicKey,
       containerSelector: '.frames-container',
       customerName: cardName,
       billingDetails: billingAddress,
