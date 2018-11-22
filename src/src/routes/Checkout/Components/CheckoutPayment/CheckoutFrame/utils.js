@@ -8,7 +8,8 @@ export const getBillingAddress = (formValues) => {
 }
 
 export const transformBillingAddress = ({ houseNo, street, postcode, town }) => ({
-  addressLine1: (street) ? `${houseNo} ${street}` : houseNo,
+  addressLine1: houseNo,
+  addressLine2: street,
   postcode,
   city: town
 })
