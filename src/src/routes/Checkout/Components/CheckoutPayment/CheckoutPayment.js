@@ -30,10 +30,15 @@ export class CheckoutPayment extends React.Component {
     submitCheckoutFrame: false,
   }
 
-  submit = () => {
+  submitPayment = () => {
     this.setState({
       submitCheckoutFrame: true,
     })
+  }
+
+  cardTokenReady = () => {
+    const { submit } = this.props
+    submit()
   }
 
   render() {
@@ -63,6 +68,7 @@ export class CheckoutPayment extends React.Component {
               <CheckoutFrame
                 checkoutScriptReady={checkoutScriptReady}
                 submitCheckoutFrame={submitCheckoutFrame}
+                cardTokenReady={this.cardTokenReady}
               />
             </div>
             <BillingAddress
@@ -72,7 +78,7 @@ export class CheckoutPayment extends React.Component {
             />
           </FormSection>
         </div>
-        <SubmitButton onClick={this.submit} />
+        <SubmitButton onClick={this.submitPayment} />
       </div>
     )
   }

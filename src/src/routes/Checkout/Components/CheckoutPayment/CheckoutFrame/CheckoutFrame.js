@@ -12,6 +12,7 @@ export class CheckoutFrame extends React.Component {
     formName: PropTypes.string,
     sectionName: PropTypes.string,
     billingAddress: PropTypes.object,
+    cardTokenReady: PropTypes.func,
     checkoutScriptReady: PropTypes.bool,
     submitCheckoutFrame: PropTypes.bool,
   }
@@ -46,7 +47,7 @@ export class CheckoutFrame extends React.Component {
 
   initFrames = () => {
     const { paymentForm } = this
-    const { cardName, change, billingAddress, formName, sectionName } = this.props
+    const { cardName, change, billingAddress, formName, sectionName, cardTokenReady } = this.props
 
     Frames.init({
       publicKey: publicKey,
@@ -60,6 +61,7 @@ export class CheckoutFrame extends React.Component {
 
         Frames.addCardToken(paymentForm, cardToken)
         change(formName, `${sectionName}.token"`, cardToken)
+        cardTokenReady()
       },
       cardTokenisationFailed: () => {}
     })

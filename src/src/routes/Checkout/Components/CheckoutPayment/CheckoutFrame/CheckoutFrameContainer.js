@@ -10,7 +10,6 @@ const mapStateToProps = (state, ownProps) => {
   const formValues = getFormValues(formName)(state)
 
   return {
-    checkoutScriptReady: ownProps.checkoutScriptReady,
     formName,
     sectionName,
     cardName: formValues && formValues[sectionName] && formValues[sectionName].cardName ? formValues[sectionName].cardName : '',
