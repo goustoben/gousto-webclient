@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { publicKey } from '../config'
+import { hasPropUpdated } from './utils'
 
 /* global Frames */
 export class CheckoutFrame extends React.Component {
@@ -12,6 +13,7 @@ export class CheckoutFrame extends React.Component {
     sectionName: PropTypes.string,
     billingAddress: PropTypes.object,
     checkoutScriptReady: PropTypes.bool,
+    submitCheckoutFrame: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -23,18 +25,22 @@ export class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, checkoutScriptReady } = this.props
+    const { billingAddress, cardName, checkoutScriptReady, submitCheckoutFrame } = this.props
 
-    if (cardName && prevProps.cardName !== cardName) {
+    if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
     }
 
-    if (billingAddress && prevProps.billingAddress !== billingAddress) {
+    if (hasPropUpdated(billingAddress, prevProps.billingAddress)) {
       Frames.setBillingDetails(billingAddress)
     }
 
-    if (checkoutScriptReady && prevProps.checkoutScriptReady !== checkoutScriptReady) {
+    if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
       this.initFrames()
+    }
+
+    if (hasPropUpdated(submitCheckoutFrame, prevProps.submitCheckoutFrame)) {
+      Frames.submitCard()
     }
   }
 
@@ -57,23 +63,16 @@ export class CheckoutFrame extends React.Component {
       },
       cardTokenisationFailed: () => {}
     })
-    paymentForm.addEventListener('submit', this.submitCard)
   }
 
   setPaymentFormRef = element => {
     this.paymentForm = element
   }
 
-  submitCard = (e) => {
-    e.preventDefault()
-    Frames.submitCard()
-  }
-
   render() {
     return (
-      <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form">
+      <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" >
         <div className="frames-container" />
-        <button type="submit">Checkout Now</button>
       </form>
     )
   }

@@ -12,3 +12,7 @@ export const transformBillingAddress = ({ houseNo, street, postcode, town }) => 
   postcode,
   city: town
 })
+
+export const hasPropUpdated = (prop, prevProp) => (
+  prop && prevProp !== prop
+)
