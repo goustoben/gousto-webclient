@@ -6,9 +6,12 @@ import { publicKey } from '../config'
 /* global Frames */
 export class CheckoutFrame extends React.Component {
   static propTypes = {
-    checkoutScriptReady: PropTypes.bool,
+    change: PropTypes.func,
+    cardName: PropTypes.string,
+    formName: PropTypes.string,
+    sectionName: PropTypes.string,
     billingAddress: PropTypes.object,
-    cardName: PropTypes.string
+    checkoutScriptReady: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -20,7 +23,7 @@ export class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { checkoutScriptReady , billingAddress, cardName} = this.props
+    const { billingAddress, cardName, checkoutScriptReady } = this.props
 
     if (cardName && prevProps.cardName !== cardName) {
       Frames.setCustomerName(cardName)
@@ -37,7 +40,7 @@ export class CheckoutFrame extends React.Component {
 
   initFrames = () => {
     const { paymentForm } = this
-    const { cardName, billingAddress } = this.props
+    const { cardName, change, billingAddress, formName, sectionName } = this.props
 
     Frames.init({
       publicKey: publicKey,
@@ -48,7 +51,9 @@ export class CheckoutFrame extends React.Component {
       cardSubmitted: () => {},
       cardTokenised: (e) => {
         const { cardToken } = e.data
+
         Frames.addCardToken(paymentForm, cardToken)
+        change(formName, `${sectionName}.token"`, cardToken)
       },
       cardTokenisationFailed: () => {}
     })
