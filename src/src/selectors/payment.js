@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 import { isCheckoutPaymentFeatureEnabled } from './features'
 
-export const getCardDetails = state => {
+export const getPaymentDetails = state => {
   const payment = Immutable.fromJS(state.form.checkout.values.payment)
   if (isCheckoutPaymentFeatureEnabled(state)) {
     return {

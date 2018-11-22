@@ -1,7 +1,7 @@
-import { getCardDetails } from 'selectors/payment'
+import { getPaymentDetails } from 'selectors/payment'
 import Immutable from "immutable";
 
-describe('getCardDetails', () => {
+describe('getPaymentDetails', () => {
   let state = {}
 
   describe('when checkout payment feature is enabled', () => {
@@ -11,26 +11,34 @@ describe('getCardDetails', () => {
           checkoutPayment: {
             value: true
           }
-        }),
-        form: {
-          checkout: {
-            values: {
-              payment: {
-                payment_provider: 'checkout',
-                active: 1,
-                token: 'test-token'
+        })
+      }
+    })
+
+    describe('and token is present', () => {
+      beforeEach(() => {
+        state = {
+          ...state,
+          form: {
+            checkout: {
+              values: {
+                payment: {
+                  payment_provider: 'checkout',
+                  active: 1,
+                  token: 'test-token'
+                }
               }
             }
           }
         }
-      }
-    })
+      })
 
-    it('should return payment details for checkout', () => {
-      expect(getCardDetails(state)).toEqual({
-        payment_provider: 'checkout',
-        active: 1,
-        card_token: 'test-token'
+      it('should return payment details for checkout', () => {
+        expect(getPaymentDetails(state)).toEqual({
+          payment_provider: 'checkout',
+          active: 1,
+          card_token: 'test-token'
+        })
       })
     })
   })
@@ -55,8 +63,8 @@ describe('getCardDetails', () => {
       }
     })
 
-    it('should return payment details for sage Pay', () => {
-      expect(getCardDetails(state)).toEqual({
+    it('should return payment details for sage pay', () => {
+      expect(getPaymentDetails(state)).toEqual({
         type: 'VISA',
         number: '4242424242424242',
         cvv2: 123,

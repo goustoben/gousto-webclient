@@ -15,10 +15,12 @@ export function fetchPauseReasons(accessToken, userId = null) {
   )
 }
 
-export function customerSignup(accessToken, reqData, isCheckout) {
-  const version = isCheckout ? routes.version.customers2 : routes.version.customers
+export function customerSignup(accessToken, reqData) {
+  return fetch(accessToken, `${endpoint('customers', routes.version.customers)}${routes.customers.signup}`, reqData, 'POST')
+}
 
-  return fetch(accessToken, `${endpoint('customers', version)}${routes.customers.signup}`, reqData, 'POST')
+export function customerSignupV2(accessToken, reqData) {
+  return fetch(accessToken, `${endpoint('customers', routes.version.customersV2)}${routes.customers.signup}`, reqData, 'POST')
 }
 
 export function newsletterSubscribe(email) {
@@ -32,5 +34,6 @@ export const fetchIntervals = () => (
 export default {
   fetchPauseReasons,
   customerSignup,
+  customerSignupV2,
   fetchIntervals,
 }

@@ -14,7 +14,7 @@ import statusActions from './status'
 import config from 'config/signup'
 import moment from 'moment'
 import { isCheckoutPaymentFeatureEnabled } from 'selectors/features'
-import { getCardDetails } from 'selectors/payment'
+import { getPaymentDetails } from 'selectors/payment'
 
 const fetchShippingAddressesPending = pending => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
@@ -192,7 +192,7 @@ function userSubscribe() {
           is_default: 1,
           type: config.payment_types.card,
           name: 'My Card',
-          card: getCardDetails(state)
+          card: getPaymentDetails(state)
         },
         addresses: {
           shipping_address: Object.assign({
@@ -210,7 +210,8 @@ function userSubscribe() {
         },
       }
 
-      const { data } = await customersApi.customerSignup(null, reqData, isCheckoutPaymentFeatureEnabled(state))
+      const endpointName = isCheckoutPaymentFeatureEnabled(state) ? 'customerSignupV2' : 'customerSignup'
+      const { data } = await customersApi[endpointName](null, reqData)
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {
         const { customer, addresses, subscription, orderId } = data
