@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
     button1Copy: state.content.get('get-help_ingredientissues_pagecontent_button1copy')
     || 'back',
     button2Copy: state.content.get('get-help_ingredientissues_pagecontent_button2copy')
-    || 'submit details',
+    || 'continue',
   }
 })
 
