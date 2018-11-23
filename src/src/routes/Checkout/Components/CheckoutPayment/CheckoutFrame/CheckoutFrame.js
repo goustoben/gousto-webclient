@@ -52,14 +52,20 @@ export class CheckoutFrame extends React.Component {
     Frames.init({
       publicKey,
       containerSelector: '.frames-container',
-      customerName: cardName,
-      billingDetails: billingAddress,
       cardValidationChanged: () => {},
       cardSubmitted: () => {},
       cardTokenised: (event) => {
         this.cardTokenised(event, paymentForm)
       },
-      cardTokenisationFailed: () => {}
+      cardTokenisationFailed: () => {},
+      frameActivated: () => {
+        if (cardName) {
+          Frames.setCustomerName(cardName)
+        }
+        if (billingAddress) {
+          Frames.setBillingDetails(billingAddress)
+        }
+      }
     })
   }
 
