@@ -61,7 +61,6 @@ describe('CheckoutFrame', () => {
 
         test('with the correct class callbacks', () => {
           expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
-            cardTokenised: wrapper.instance().cardTokenised,
             frameActivated: wrapper.instance().frameActivated,
           }))
         })
@@ -168,7 +167,10 @@ describe('CheckoutFrame', () => {
           cardToken: 'test-token'
         }
       }
-      wrapper.instance().cardTokenised(mockEvent)
+      wrapper.instance().cardTokenised(
+        mockEvent,
+        wrapper.instance().paymentForm,
+      )
     })
 
     test('should call Frames.addCardToken', () => {
