@@ -2,7 +2,8 @@
 import Immutable from 'immutable' /* eslint-disable no-caps */
 import logger from 'utils/logger'
 import * as userApi from 'apis/user'
-import * as customersApi from 'apis/customers'
+import { customerSignup, customerSignupV2 } from 'apis/customers'
+
 import * as ordersApi from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
 import * as addressApi from 'apis/addressLookup'
@@ -158,7 +159,15 @@ function userOrderSkipNextProjected() {
   }
 }
 
-function userSubscribe() {
+const customerSignupApi = (reqData, isCheckoutPaymentFeature) => {
+  if (isCheckoutPaymentFeature) {
+    return customerSignupV2(null, reqData)
+  }
+
+  return customerSignup(null, reqData)
+}
+
+export function userSubscribe() {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
@@ -210,8 +219,7 @@ function userSubscribe() {
         },
       }
 
-      const endpointName = isCheckoutPaymentFeatureEnabled(state) ? 'customerSignupV2' : 'customerSignup'
-      const { data } = await customersApi[endpointName](null, reqData)
+      const { data } = await customerSignupApi(reqData, isCheckoutPaymentFeatureEnabled(state))
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {
         const { customer, addresses, subscription, orderId } = data
