@@ -157,7 +157,7 @@ describe('when features are defined', () => {
         state = {}
       })
 
-      it('should return value of checkoutPayment feature flag', () => {
+      it('should return false', () => {
         expect(isCheckoutPaymentFeatureEnabled(state)).toBe(false)
       })
     })

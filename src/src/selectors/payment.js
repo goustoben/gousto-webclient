@@ -8,7 +8,7 @@ export const getPaymentDetails = state => {
     return {
       payment_provider: 'checkout',
       active: 1,
-      card_token: payment.get('token')
+      card_token: payment.get('token') || 'card_tok_E7A25A30-B600-4FE2-AD06-DC39A0E3DAC2'
     }
   }
 

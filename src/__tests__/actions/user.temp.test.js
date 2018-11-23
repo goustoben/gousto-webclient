@@ -136,9 +136,6 @@ describe('user actions', () => {
     })
 
     describe('checkoutPaymentFeature is not enabled', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(state)
-      })
       it('should call customerSignup', async () => {
         await userSubscribe()(dispatch, getState)
         expect(customerSignup).toHaveBeenCalled()
