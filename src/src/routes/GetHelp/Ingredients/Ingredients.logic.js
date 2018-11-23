@@ -73,12 +73,12 @@ class Ingredients extends PureComponent {
         accessToken: user.accessToken,
         costumerId: user.id,
         orderId: order.id,
-        ingredientIds
+        ingredientIds,
       })
 
       storeIngredientIds(ingredientIds)
 
-      browserHistory.push(`${client.getHelp.index}/${client.getHelp.refund}`)
+      browserHistory.push(`${client.getHelp.index}/${client.getHelp.ingredientIssues}`)
     } catch (error) {
       browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
     }
