@@ -11,5 +11,5 @@ export const isSubmitting = state => {
 }
 
 export const isBillingAddressDifferent = (formValues, sectionName) => (
-  formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent ? formValues[sectionName].cardName : false
+  formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent ? true : false
 )
