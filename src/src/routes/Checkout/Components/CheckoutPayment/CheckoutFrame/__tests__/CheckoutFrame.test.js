@@ -195,7 +195,15 @@ describe('CheckoutFrame', () => {
     let billingAddress
 
     const mountCheckoutFrameWithProps = (props) => (
-      mount(<CheckoutFrame change={change} formName="checkout" sectionName="payment" cardTokenReady={cardTokenReady} {...props} />)
+      mount(
+        <CheckoutFrame
+          change={change}
+          formName="checkout"
+          sectionName="payment"
+          cardTokenReady={cardTokenReady}
+          {...props}
+        />
+      )
     )
 
     describe('when props contain a valid customer name', () => {

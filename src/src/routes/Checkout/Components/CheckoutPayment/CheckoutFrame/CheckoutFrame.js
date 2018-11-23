@@ -53,7 +53,7 @@ export class CheckoutFrame extends React.Component {
       containerSelector: '.frames-container',
       cardValidationChanged: () => {},
       cardSubmitted: () => {},
-      cardTokenised: (e) => { 
+      cardTokenised: (e) => {
         this.cardTokenised(e, paymentForm)
       },
       cardTokenisationFailed: () => {},
