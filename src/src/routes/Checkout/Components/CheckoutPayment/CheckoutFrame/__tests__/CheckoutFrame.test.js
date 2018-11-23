@@ -22,6 +22,8 @@ describe('CheckoutFrame', () => {
 
   afterEach(() => {
     Frames.init.mockClear()
+    Frames.setCustomerName.mockClear()
+    Frames.setBillingDetails.mockClear()
   })
 
   describe('componentDidMount', () => {
@@ -54,6 +56,13 @@ describe('CheckoutFrame', () => {
         test('with the correct public key', () => {
           expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
             publicKey: 'checkout-com-public-key',
+          }))
+        })
+
+        test('with the correct class callbacks', () => {
+          expect(Frames.init).toHaveBeenCalledWith(expect.objectContaining({
+            cardTokenised: wrapper.instance().cardTokenised,
+            frameActivated: wrapper.instance().frameActivated,
           }))
         })
       })
@@ -150,20 +159,23 @@ describe('CheckoutFrame', () => {
     })
   })
 
-  describe('card tokenised', () => {
+  describe('cardTokenised', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame change={change} formName={"checkout"} sectionName={"payment"}cardTokenReady={cardTokenReady} />)
+      wrapper = mount(<CheckoutFrame change={change} formName={"checkout"} sectionName={"payment"} cardTokenReady={cardTokenReady} />)
 
       const mockEvent = {
         data: {
           cardToken: 'test-token'
         }
       }
-      wrapper.instance().cardTokenised(mockEvent,'form')
+      wrapper.instance().cardTokenised(mockEvent)
     })
 
     test('should call Frames.addCardToken', () => {
-      expect(Frames.addCardToken).toHaveBeenCalled()
+      expect(Frames.addCardToken).toHaveBeenCalledWith(
+        wrapper.instance().paymentForm,
+        'test-token',
+      )
     })
 
     test('should call change with the correct parameters', () => {
@@ -174,5 +186,75 @@ describe('CheckoutFrame', () => {
       expect(wrapper.find('.frames-container')).toHaveLength(1)
     })
 
+  })
+
+  describe('frameActivated', () => {
+    let cardName
+    let billingAddress
+
+    const mountCheckoutFrameWithProps = (props) => (
+      mount(<CheckoutFrame change={change} formName="checkout" sectionName="payment" cardTokenReady={cardTokenReady} {...props} />)
+    )
+
+    describe('when props contain a valid customer name', () => {
+      beforeEach(() => {
+        cardName = 'Joe Bloggs'
+      })
+
+      test('should call Frames.setCustomerName', () => {
+        wrapper = mountCheckoutFrameWithProps({ cardName })
+
+        wrapper.instance().frameActivated()
+
+        expect(Frames.setCustomerName).toHaveBeenCalledWith(cardName)
+      })
+    })
+
+    describe('when props do not contain a valid customer name', () => {
+      beforeEach(() => {
+        cardName = ''
+      })
+
+      test('should not call Frames.setCustomerName', () => {
+        wrapper = mountCheckoutFrameWithProps({ cardName })
+
+        wrapper.instance().frameActivated()
+
+        expect(Frames.setCustomerName).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when props contain a valid billing address', () => {
+      beforeEach(() => {
+        billingAddress = {
+          addressLine1: 'THE SHARD',
+          addressLine2: '32 LONDON BRIDGE STREET',
+          city: 'LONDON',
+          postcode: 'SE1 9SG',
+        }
+      })
+
+      test('should call Frames.setBillingDetails', () => {
+        wrapper = mountCheckoutFrameWithProps({ billingAddress })
+
+        wrapper.instance().frameActivated()
+
+        expect(Frames.setBillingDetails).toHaveBeenCalledWith(billingAddress)
+      })
+    })
+
+    describe('when props do not contain a valid billing address', () => {
+      beforeEach(() => {
+        billingAddress = null
+      })
+
+      test('should not call Frames.setBillingDetails', () => {
+        wrapper = mountCheckoutFrameWithProps({ billingAddress })
+
+        wrapper.instance().frameActivated()
+
+        expect(Frames.setBillingDetails).not.toHaveBeenCalled()
+      })
+    })
   })
 })
