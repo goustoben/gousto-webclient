@@ -48,7 +48,7 @@ export default async function fetchData({ store, query, params }, force, backgro
   }
 
   if (isAuthenticated && !store.getState().features.getIn(['justforyou', 'value'])) {
-    store.dispatch(loadRecommendations())
+    await store.dispatch(loadRecommendations())
   }
 
   let fetchDataPromise
