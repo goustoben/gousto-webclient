@@ -3,18 +3,10 @@ import React, { PropTypes } from 'react'
 import config from 'config/menu'
 import BoostAndBalanceBanner from '../BoostAndBalanceBanner'
 import FineDineInBanner from '../FineDineInBanner'
-import TenToTableBanner from '../TenToTableBanner'
-
-const tenToTableValid = () => (
-  new Date() > new Date(config.tenToTableBanner.startDate)
-)
+import ChristmasBanner from '../ChristmasBanner'
 
 const Banner = ({ isAuthenticated }) => {
-  if (tenToTableValid()) {
-    return <TenToTableBanner />
-  }
-
-  return (isAuthenticated) ? <FineDineInBanner /> : <BoostAndBalanceBanner />
+  return (isAuthenticated) ? <FineDineInBanner /> : <FineDineInBanner />
 }
 
 Banner.propTypes = {

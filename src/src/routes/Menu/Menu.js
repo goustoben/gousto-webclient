@@ -22,6 +22,7 @@ import FilterMenu from './FilterMenu'
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import RecipeList from './RecipeList'
+import Banner from './Banner'
 
 import fetchData from './fetchData'
 
@@ -212,6 +213,7 @@ class Menu extends React.Component {
 				  style={menu.helmet.style}
 				/>
 				<div className={classnames(css.container, overlayShowCSS)}>
+					<Banner />
 					<SubHeader
 					  viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
 					  onToggleGridView={this.toggleGridView}
