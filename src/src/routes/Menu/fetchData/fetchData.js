@@ -47,7 +47,7 @@ export default async function fetchData({ store, query, params }, force, backgro
     store.dispatch(actions.featureSet('forceCollections', true))
   }
 
-  if (isAuthenticated && !store.getState().features.getIn(['justforyou', 'value'])) {
+  if (isAuthenticated && !store.getState().features.getIn(['justforyou_v2', 'value'])) {
     await store.dispatch(loadRecommendations())
   }
 
