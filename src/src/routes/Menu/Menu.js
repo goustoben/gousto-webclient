@@ -220,9 +220,8 @@ class Menu extends React.Component {
 					<FilterTagsNav />
 					<FilterNav showLoading={this.props.isLoading} />
 					<Loading loading={showLoading} hasRecommendations={hasRecommendations} />
-					{ !showLoading &&
 					<div className={fadeCss} data-testing="menuRecipes">
-						{collectionsNavEnabled && !menuFilterExperiment &&
+						{!showLoading && collectionsNavEnabled && !menuFilterExperiment &&
 							<CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
 						<FilterMenu />
 						{this.props.filteredRecipesNumber ?
@@ -249,7 +248,6 @@ class Menu extends React.Component {
 							<MenuNoResults clearAllFilters={() => this.props.clearAllFilters()} />
 						}
 					</div>
-					}
 					<div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick}></div>
 				</div>
 				<BoxSummaryMobile />
