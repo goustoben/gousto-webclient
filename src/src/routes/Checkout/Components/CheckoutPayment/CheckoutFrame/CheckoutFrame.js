@@ -47,19 +47,17 @@ export class CheckoutFrame extends React.Component {
 
   initFrames = () => {
     const { paymentForm } = this
-    const { cardName, billingAddress } = this.props
 
     Frames.init({
       publicKey,
       containerSelector: '.frames-container',
-      customerName: cardName,
-      billingDetails: billingAddress,
       cardValidationChanged: () => {},
       cardSubmitted: () => {},
-      cardTokenised: (event) => {
-        this.cardTokenised(event, paymentForm)
+      cardTokenised: (e) => {
+        this.cardTokenised(e, paymentForm)
       },
-      cardTokenisationFailed: () => {}
+      cardTokenisationFailed: () => {},
+      frameActivated: this.frameActivated
     })
   }
 
@@ -67,13 +65,24 @@ export class CheckoutFrame extends React.Component {
     this.paymentForm = element
   }
 
-  cardTokenised = (event, form) => {
+  cardTokenised = (event, paymentForm) => {
     const { cardToken } = event.data
     const { change, cardTokenReady, formName, sectionName } = this.props
 
-    Frames.addCardToken(form, cardToken)
+    Frames.addCardToken(paymentForm, cardToken)
     change(formName, `${sectionName}.token`, cardToken)
     cardTokenReady()
+  }
+
+  frameActivated = () => {
+    const { cardName, billingAddress } = this.props
+
+    if (cardName) {
+      Frames.setCustomerName(cardName)
+    }
+    if (billingAddress) {
+      Frames.setBillingDetails(billingAddress)
+    }
   }
 
   render() {
