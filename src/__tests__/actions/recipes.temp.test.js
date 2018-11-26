@@ -46,7 +46,7 @@ describe('recipe actions', () => {
         await loadRecommendations()(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalled()
-        expect(featureSet).toHaveBeenCalledWith('justforyou', false, true)
+        expect(featureSet).toHaveBeenCalledWith('justforyou_v2', false, true)
       })
     })
 
@@ -61,7 +61,7 @@ describe('recipe actions', () => {
         await loadRecommendations()(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalled()
-        expect(featureSet).toHaveBeenCalledWith('justforyou', false, true)
+        expect(featureSet).toHaveBeenCalledWith('justforyou_v2', false, true)
       })
     })
 
@@ -75,7 +75,7 @@ describe('recipe actions', () => {
 
         await loadRecommendations()(dispatch, getState)
 
-        expect(featureSet).toHaveBeenCalledWith('justforyou', true, true)
+        expect(featureSet).toHaveBeenCalledWith('justforyou_v2', true, true)
         expect(dispatch).toHaveBeenCalled()
       })
     })
