@@ -2,11 +2,19 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { publicKey } from '../config'
+import { hasPropUpdated } from './utils'
 
 /* global Frames */
 export class CheckoutFrame extends React.Component {
   static propTypes = {
+    change: PropTypes.func,
+    cardName: PropTypes.string,
+    formName: PropTypes.string,
+    sectionName: PropTypes.string,
+    billingAddress: PropTypes.object,
+    cardTokenReady: PropTypes.func,
     checkoutScriptReady: PropTypes.bool,
+    submitCheckoutFrame: PropTypes.bool,
   }
 
   componentDidMount() {
@@ -18,56 +26,69 @@ export class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { checkoutScriptReady } = this.props
+    const { billingAddress, cardName, checkoutScriptReady, submitCheckoutFrame } = this.props
 
-    if (checkoutScriptReady && prevProps.checkoutScriptReady !== checkoutScriptReady) {
+    if (hasPropUpdated(cardName, prevProps.cardName)) {
+      Frames.setCustomerName(cardName)
+    }
+
+    if (hasPropUpdated(billingAddress, prevProps.billingAddress)) {
+      Frames.setBillingDetails(billingAddress)
+    }
+
+    if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
       this.initFrames()
+    }
+
+    if (hasPropUpdated(submitCheckoutFrame, prevProps.submitCheckoutFrame)) {
+      Frames.submitCard()
     }
   }
 
   initFrames = () => {
-    const { paymentButton, paymentForm } = this
+    const { paymentForm } = this
 
     Frames.init({
       publicKey,
       containerSelector: '.frames-container',
-      cardValidationChanged: () => {
-        paymentButton.disabled = !Frames.isCardValid()
-      },
-      cardSubmitted: () => {
-        paymentButton.disabled = true
-      },
+      cardValidationChanged: () => {},
+      cardSubmitted: () => {},
       cardTokenised: (e) => {
-        const { cardToken } = e.data
-        Frames.addCardToken(paymentForm, cardToken)
-        paymentForm.submit(() => false)
+        this.cardTokenised(e, paymentForm)
       },
-      cardTokenisationFailed: (err) => {}
+      cardTokenisationFailed: () => {},
+      frameActivated: this.frameActivated
     })
-    paymentForm.addEventListener('submit', (e) => {
-      e.preventDefault()
-      Frames.submitCard()
-    })
-  }
-
-  setPaymentButtonRef = element => {
-    this.paymentButton = element
   }
 
   setPaymentFormRef = element => {
     this.paymentForm = element
   }
 
-  submitCard = e => {
-    e.preventDefault()
-    document.forms['payment-form'].submit()
+  cardTokenised = (event, paymentForm) => {
+    const { cardToken } = event.data
+    const { change, cardTokenReady, formName, sectionName } = this.props
+
+    Frames.addCardToken(paymentForm, cardToken)
+    change(formName, `${sectionName}.token`, cardToken)
+    cardTokenReady()
   }
 
-  render() { 
+  frameActivated = () => {
+    const { cardName, billingAddress } = this.props
+
+    if (cardName) {
+      Frames.setCustomerName(cardName)
+    }
+    if (billingAddress) {
+      Frames.setBillingDetails(billingAddress)
+    }
+  }
+
+  render() {
     return (
-      <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" method="POST" action="https://merchant.com/charge-card">
+      <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" >
         <div className="frames-container" />
-        <button ref={this.setPaymentButtonRef} type="submit" onClick={this.submitCard}>Submit Checkout Request</button>
       </form>
     )
   }

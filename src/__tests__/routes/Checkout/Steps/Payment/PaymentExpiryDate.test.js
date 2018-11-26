@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme'
 import sinon from 'sinon'
 
 import { Field } from 'redux-form'
-import PaymentExpiryDate from 'routes/Checkout/Components/SagePayPayment/PaymentExpiryDate'
+import { PaymentExpiryDate } from 'routes/Checkout/Components/SagePayCardDetails/PaymentExpiryDate'
 
 describe('PaymentExpiryDate', () => {
   let wrapper

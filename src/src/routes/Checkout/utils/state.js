@@ -9,3 +9,7 @@ export const isSubmitting = state => {
 
   return submitting
 }
+
+export const isBillingAddressDifferent = (formValues, sectionName) => (
+  formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent ? true : false
+)

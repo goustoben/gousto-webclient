@@ -6,7 +6,7 @@ import Summary from '../../../Components/Summary'
 import BoxDetails from '../../../Components/BoxDetails'
 import SubmitButton from '../../../Components/SubmitButton'
 
-import PaymentContainer, { addInitialValues, getValidationRules } from '../../../Components/SagePayPayment'
+import PaymentContainer, { addInitialValues, getValidationRules } from '../../../Components/SagePayCardDetails'
 
 const sectionName = 'payment'
 

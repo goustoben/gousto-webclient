@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react'
 import formContainer from '../../../Components/formContainer'
 import SubmitButton from '../../../Components/SubmitButton'
 
-import PaymentContainer, { addInitialValues, getValidationRules } from '../../../Components/SagePayPayment'
+import PaymentContainer, { addInitialValues, getValidationRules } from '../../../Components/SagePayCardDetails'
 
 const sectionName = 'payment'
 

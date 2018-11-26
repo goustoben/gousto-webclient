@@ -1,0 +1,22 @@
+@value Blueberry, Bluecheese from 'styles/colors.css';
+
+.textSMWithBottomMargin {
+	composes: textSM from 'styles/typography.css';
+	composes: marginXXSBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.link {
+	color: Bluecheese;
+	text-decoration: underline;
+	composes: textSM from 'styles/typography.css';
+	cursor: pointer;
+
+	&:hover {
+		color: Blueberry;
+	}
+}
+
+.linkRight {
+	composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+	font-size: 10px;
+}
