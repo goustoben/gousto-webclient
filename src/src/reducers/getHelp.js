@@ -5,7 +5,6 @@ const getHelpInitialState = fromJS({
   order: {
     id: '',
     recipeItems: [],
-    ingredientIds: [],
   },
   recipes: [{
     id: '',
@@ -15,6 +14,7 @@ const getHelpInitialState = fromJS({
       label: '',
     }]
   }],
+  selectedIngredients: [],
 })
 
 const reduceRecipes = (recipes) => (
@@ -40,8 +40,8 @@ const getHelp = (state, action) => {
   case actionTypes.GET_HELP_STORE_ORDER_ID: {
     return state.setIn(['order', 'id'], action.id)
   }
-  case actionTypes.GET_HELP_STORE_INGREDIENT_IDS: {
-    return state.setIn(['order', 'ingredientIds'], action.ids)
+  case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
+    return state.set('selectedIngredients', action.selectedIngredients)
   }
   case actionTypes.RECIPES_RECEIVE: {
     const recipes = fromJS(reduceRecipes(action.recipes))

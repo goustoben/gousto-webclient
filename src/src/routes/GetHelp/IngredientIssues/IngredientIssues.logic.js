@@ -10,20 +10,25 @@ const propTypes = {
     button1Copy: PropTypes.string.isRequired,
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 }
 
-const IngredientIssues = ({ content }) => {
+const IngredientIssues = ({ content, ingredients }) => {
   const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredients}`
   const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
 
   return (
     <IngredientIssuesPresentation
       content={content}
+      ingredients={ingredients}
       buttonLeftUrl={buttonLeftUrl}
       buttonRightUrl={buttonRightUrl}
-    >
-      <div />
-    </IngredientIssuesPresentation>
+    />
   )
 }
 
