@@ -11,11 +11,15 @@ then
 	export DELIVERY_SERVICE_DOMAIN="https://api.gousto.co.uk"
 	export DOMAIN="gousto.co.uk"
 	export CLIENT_PROTOCOL="https"
+	export CHECKOUTCOM_PK=$CHECKOUTCOM_PK_PRODUCTION
 else
 	export DOMAIN="gousto.info"
 	export CLIENT_PROTOCOL="https"
 	export PRODUCT_SERVICE_DOMAIN="https://${ENVIRONMENT}-api.gousto.info"
 	export DELIVERY_SERVICE_DOMAIN="https://${ENVIRONMENT}-api.gousto.info"
+	envNameUppercase=$(echo $ENVIRONMENT | tr [a-z] [A-Z])
+	checkoutComEnvName="CHECKOUTCOM_PK_$envNameUppercase"
+	export CHECKOUTCOM_PK=${!checkoutComEnvName}
 fi
 export SETUP_FAILURE=false
 
@@ -31,6 +35,8 @@ yarn config set gousto_webclient_environment_name "${ENVIRONMENT}"
 yarn config set gousto_webclient_domain "${DOMAIN}"
 yarn config set gousto_webclient_client_protocol "${CLIENT_PROTOCOL}"
 yarn config set gousto_webclient_cloudfront_url "${CLOUDFRONT_URL}"
+
+yarn config set gousto_webclient_checkoutcom_pk "${CHECKOUTCOM_PK}"
 
 cd ../
 
