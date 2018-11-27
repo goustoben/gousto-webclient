@@ -6,6 +6,7 @@ const errorsToCapture = [
   actionTypes.CHECKOUT_SIGNUP,
   actionTypes.CHECKOUT_SIGNUP_LOGIN,
   actionTypes.ORDER_SAVE,
+  actionTypes.CARD_TOKENISATION_FAILED,
 ]
 
 const initialState = () => Immutable.fromJS({
@@ -80,6 +81,9 @@ const checkout = {
           if (value instanceof Error) {
             value = value.message
           }
+
+          // eslint-disable-next-line no-console
+          console.log('acton', action)
 
           return state.setIn(['errors', action.key], value)
         }

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import logger from 'utils/logger'
 import { publicKey } from '../config'
 import { hasPropUpdated } from './utils'
 
@@ -8,6 +9,7 @@ import { hasPropUpdated } from './utils'
 export class CheckoutFrame extends React.Component {
   static propTypes = {
     change: PropTypes.func,
+    cardTokenisationFailed: PropTypes.func,
     cardName: PropTypes.string,
     formName: PropTypes.string,
     sectionName: PropTypes.string,
@@ -56,7 +58,9 @@ export class CheckoutFrame extends React.Component {
       cardTokenised: (e) => {
         this.cardTokenised(e, paymentForm)
       },
-      cardTokenisationFailed: () => {},
+      cardTokenisationFailed: () => {
+        this.cardTokenisationFailed()
+      },
       frameActivated: this.frameActivated
     })
   }
@@ -71,6 +75,7 @@ export class CheckoutFrame extends React.Component {
 
     Frames.addCardToken(paymentForm, cardToken)
     change(formName, `${sectionName}.token`, cardToken)
+
     cardTokenReady()
   }
 
@@ -83,6 +88,14 @@ export class CheckoutFrame extends React.Component {
     if (billingAddress) {
       Frames.setBillingDetails(billingAddress)
     }
+  }
+
+  cardTokenisationFailed = () => {
+    const { cardTokenisationFailed } = this.props
+
+    // not sure if i can log the card number or not
+    logger.error('card tokenisation failure')
+    cardTokenisationFailed()
   }
 
   render() {
