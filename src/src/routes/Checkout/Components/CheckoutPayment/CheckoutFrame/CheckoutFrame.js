@@ -10,6 +10,7 @@ export class CheckoutFrame extends React.Component {
   static propTypes = {
     change: PropTypes.func,
     cardTokenisationFailed: PropTypes.func,
+    checkoutClearErrors: PropTypes.func,
     cardName: PropTypes.string,
     formName: PropTypes.string,
     sectionName: PropTypes.string,
