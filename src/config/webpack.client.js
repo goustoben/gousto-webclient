@@ -7,6 +7,7 @@ const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const childProcess = require('child_process')
 const TerserPlugin = require('terser-webpack-plugin')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 // POST CSS IMPORT
@@ -15,7 +16,6 @@ const PostcssPresetEnv = require('postcss-preset-env')
 const PostcssReporter = require('postcss-reporter')
 const PostcssFlexbugsFixed = require('postcss-flexbugs-fixes')
 const ExitCodePlugin = require('./exitCode')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 const build = process.env.NODE_ENV || 'development'
 const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'

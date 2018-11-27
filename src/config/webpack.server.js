@@ -195,7 +195,6 @@ if (build === 'development') {
   config.devtool = false
   config.plugins.push(
     new webpack.optimize.OccurrenceOrderPlugin(),
-
     new TerserPlugin({
       parallel: true,
       sourceMap: true,
