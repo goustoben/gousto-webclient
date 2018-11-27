@@ -8,7 +8,6 @@ const ExitCodePlugin = require('./exitCode')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const childProcess = require('child_process')
 const TerserPlugin = require('terser-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
 // POST CSS IMPORT
@@ -180,7 +179,6 @@ const config = {
   plugins: [
     new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
     ExitCodePlugin,
-    new LodashModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       __DEV__: build === ('development' || 'hmr'),
       __PROD__: build === 'production',

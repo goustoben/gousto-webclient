@@ -4,7 +4,6 @@ const nodeExternals = require('webpack-node-externals')
 const ExitCodePlugin = require('./exitCode')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 const build = process.env.NODE_ENV || 'development'
 const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
@@ -191,7 +190,6 @@ if (build === 'development') {
 } else {
   config.devtool = false
   config.plugins.push(
-    new LodashModuleReplacementPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
 
     new TerserPlugin({
