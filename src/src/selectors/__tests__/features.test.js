@@ -3,7 +3,8 @@ import Immutable from 'immutable'
 import {
   isCollectionsFeatureEnabled,
   isJustForYouFeatureEnabled,
-  getCollectionFreezeValue
+  getCollectionFreezeValue,
+  isCheckoutPaymentFeatureEnabled
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -118,5 +119,48 @@ describe('when features are defined', () => {
 
       expect(getCollectionFreezeValue(state)).toEqual('test-value')
     })
+  })
+
+  describe('isCheckoutPaymentFeatureEnabled', () => {
+    describe('checkoutPayment feature flag is defined', () => {
+      describe('and is set to true', () => {
+        beforeEach(() => {
+          state.features = Immutable.fromJS({
+            checkoutPayment: {
+              value: true
+            }
+          })
+        })
+
+        it('should return true', () => {
+          expect(isCheckoutPaymentFeatureEnabled(state)).toBe(true)
+        })
+      })
+
+      describe('and is set to false', () => {
+        beforeEach(() => {
+          state.features = Immutable.fromJS({
+            checkoutPayment: {
+              value: false
+            }
+          })
+        })
+
+        it('should return false', () => {
+          expect(isCheckoutPaymentFeatureEnabled(state)).toBe(false)
+        })
+      })
+    })
+
+    describe('checkoutPayment feature flag is undefined', () => {
+      beforeEach(() => {
+        state = {}
+      })
+
+      it('should return false', () => {
+        expect(isCheckoutPaymentFeatureEnabled(state)).toBe(false)
+      })
+    })
+
   })
 })

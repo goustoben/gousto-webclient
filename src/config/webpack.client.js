@@ -4,7 +4,6 @@ const path = require('path')
 const ExtractPlugin = require('extract-text-webpack-plugin')
 
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
-const ExitCodePlugin = require('./exitCode')
 const ManifestPlugin = require('webpack-manifest-plugin')
 const childProcess = require('child_process')
 const TerserPlugin = require('terser-webpack-plugin')
@@ -15,12 +14,14 @@ const PostcssNested = require('postcss-nested')
 const PostcssPresetEnv = require('postcss-preset-env')
 const PostcssReporter = require('postcss-reporter')
 const PostcssFlexbugsFixed = require('postcss-flexbugs-fixes')
+const ExitCodePlugin = require('./exitCode')
 
 const build = process.env.NODE_ENV || 'development'
 const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
 const domain = process.env.npm_config_gousto_webclient_domain || 'gousto.local'
 const clientProtocol = process.env.npm_config_gousto_webclient_client_protocol || 'http'
 const cloudfrontUrl = process.env.npm_config_gousto_webclient_cloudfront_url || ''
+const checkout_pk = process.env.npm_config_gousto_webclient_checkoutcom_pk || ''
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 const devMode = process.env.NODE_ENV !== 'production'
@@ -191,6 +192,7 @@ const config = {
       __ENV__: JSON.stringify(envName),
       __DOMAIN__: JSON.stringify(domain),
       __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
+      __CHECKOUT_PK__: JSON.stringify(checkout_pk),
       'process.env.NODE_ENV': JSON.stringify(build === 'legacy' ? 'production' : build),
       __GIT_HASH__: JSON.stringify(GIT_HASH)
     }),

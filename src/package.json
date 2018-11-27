@@ -229,6 +229,7 @@
       "__CLIENT__": true,
       "__CLOUDFRONT_URL__": "test.com",
       "__CLIENT_PROTOCOL__": "https",
+      "__CHECKOUT_PK__": "",
       "__ENV__": "production",
       "__DOMAIN__": "gousto.local",
       "__TEST__": true,

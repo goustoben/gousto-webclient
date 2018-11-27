@@ -1,10 +1,10 @@
 import formContainer from '../formContainer'
-import { getValidationRules } from './form'
+import { addInitialValues, getValidationRules } from './form'
 import { sectionName } from './config'
 
 import { CheckoutPayment } from './CheckoutPayment'
 
 export const CheckoutPaymentContainer = formContainer(
-  CheckoutPayment,
+  addInitialValues(CheckoutPayment),
   getValidationRules(sectionName)
 )

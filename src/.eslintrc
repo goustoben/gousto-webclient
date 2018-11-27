@@ -144,6 +144,7 @@
     "__DOMAIN__": false,
     "__CLIENT_PROTOCOL__": false,
     "__CLOUDFRONT_URL__": false,
+    "__CHECKOUT_PK__": false,
     "__TEST__": false,
     "__GIT_HASH__": false
   }
