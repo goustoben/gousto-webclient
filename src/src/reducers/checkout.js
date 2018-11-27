@@ -82,9 +82,6 @@ const checkout = {
             value = value.message
           }
 
-          // eslint-disable-next-line no-console
-          console.log('acton', action)
-
           return state.setIn(['errors', action.key], value)
         }
       }

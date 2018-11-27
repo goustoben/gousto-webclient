@@ -179,6 +179,7 @@ export function checkoutSignup() {
   return async (dispatch) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
+
     try {
       dispatch(checkoutActions.resetDuplicateCheck())
       dispatch(trackSignupPageChange('Submit'))
@@ -224,8 +225,6 @@ export function checkoutPostSignup() {
   return async (dispatch, getState) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
-    logger.notice(' in checkoutPostSignup')
-
     try {
       const checkoutInputs = Immutable.fromJS(getState().form.checkout.values)
       const aboutYou = checkoutInputs.get('aboutyou')

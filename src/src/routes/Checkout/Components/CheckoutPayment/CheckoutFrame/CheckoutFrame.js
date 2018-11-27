@@ -75,7 +75,6 @@ export class CheckoutFrame extends React.Component {
 
     Frames.addCardToken(paymentForm, cardToken)
     change(formName, `${sectionName}.token`, cardToken)
-
     cardTokenReady()
   }
 
