@@ -3,6 +3,7 @@ const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const ExitCodePlugin = require('./exitCode')
 
 const build = process.env.NODE_ENV || 'development'
@@ -118,6 +119,7 @@ const config = {
   },
   plugins: [
     ExitCodePlugin,
+    new LodashModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       __DEV__: build === 'development',
       __PROD__: build === 'production',

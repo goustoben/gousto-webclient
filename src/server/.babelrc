@@ -1,5 +1,6 @@
 {
   "plugins": [
+    "lodash",
     "transform-async-to-generator",
     "transform-strict-mode",
     "transform-class-properties",
@@ -25,7 +26,8 @@
         "stage-0"
       ],
       "plugins": [
-        [      
+        [
+          "lodash",
           "transform-async-to-generator",
           "transform-strict-mode",
           "transform-class-properties",

@@ -15,6 +15,7 @@ const PostcssPresetEnv = require('postcss-preset-env')
 const PostcssReporter = require('postcss-reporter')
 const PostcssFlexbugsFixed = require('postcss-flexbugs-fixes')
 const ExitCodePlugin = require('./exitCode')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 const build = process.env.NODE_ENV || 'development'
 const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
@@ -180,6 +181,7 @@ const config = {
   plugins: [
     new ManifestPlugin({ fileName: '../manifest.json', publicPath: '' }),
     ExitCodePlugin,
+    new LodashModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       __DEV__: build === ('development' || 'hmr'),
       __PROD__: build === 'production',
