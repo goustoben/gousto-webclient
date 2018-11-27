@@ -10,6 +10,7 @@ import Refund from './Refund'
 import Contact from './Contact'
 import Confirmation from './Confirmation'
 import { Ingredients } from './Ingredients'
+import { IngredientIssues } from './IngredientIssues'
 
 import { checkValidSession } from "../../utils/routes"
 
@@ -37,6 +38,7 @@ export default (store) => {
 			>
 				<IndexRoute component={OrderIssueContainer} />
 				{Ingredients}
+				{IngredientIssues}
 				{Refund}
 				{Contact}
 				{Confirmation}

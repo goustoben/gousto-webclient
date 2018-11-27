@@ -36,7 +36,7 @@ describe('login actions', () => {
       beforeEach(() => {
         getState.mockReturnValue({
           features: Immutable.Map({
-            justforyou: Immutable.Map({
+            justforyou_v2: Immutable.Map({
               value: false,
               experiment: false,
             }),
@@ -56,7 +56,7 @@ describe('login actions', () => {
       beforeEach(() => {
         getState.mockReturnValue({
           features: Immutable.Map({
-            justforyou: Immutable.Map({
+            justforyou_v2: Immutable.Map({
               value: true,
               experiment: true,
             }),

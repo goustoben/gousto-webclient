@@ -76,7 +76,7 @@ export const loadRecommendations = () => (
         recommendations = data[0].properties['just-for-you']
       }
 
-      dispatch(featureSet('justforyou', recommendations, true))
+      dispatch(featureSet('justforyou_v2', recommendations, true))
     } catch (err) {
       logger.notice('Error loading recommendation data for user: ', err)
     }

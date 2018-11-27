@@ -1,6 +1,7 @@
 module.exports = {
   version: {
     customers: 'v1',
+    customersV2: 'v2',
     complaints: 'v1',
     products: 'v2.0',
     auth: 'v1.0.0',
@@ -48,6 +49,7 @@ module.exports = {
       orderIssue: 'order-issue',
       confirmation: 'confirmation',
       ingredients: 'ingredients',
+      ingredientIssues: 'ingredient-issues',
     },
 
     help: '/help',
