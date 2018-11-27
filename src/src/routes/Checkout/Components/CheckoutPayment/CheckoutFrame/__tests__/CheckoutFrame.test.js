@@ -19,6 +19,7 @@ describe('CheckoutFrame', () => {
   global.Frames = Frames
   const change = jest.fn()
   const cardTokenReady = jest.fn()
+  const cardTokenisationFailed = jest.fn()
 
   afterEach(() => {
     Frames.init.mockClear()
@@ -265,6 +266,18 @@ describe('CheckoutFrame', () => {
 
         expect(Frames.setBillingDetails).not.toHaveBeenCalled()
       })
+    })
+  })
+
+  describe('cardTokenisationFailed', () => {
+    beforeEach(() => {
+      wrapper = mount(<CheckoutFrame cardTokenisationFailed={cardTokenisationFailed} />)
+
+      wrapper.instance().cardTokenisationFailed()
+    })
+
+    test('should call the cardTokenisationFailed prop', () => {
+      expect(cardTokenisationFailed).toHaveBeenCalled()
     })
   })
 })

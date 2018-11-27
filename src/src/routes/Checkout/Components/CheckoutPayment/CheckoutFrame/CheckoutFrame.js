@@ -92,7 +92,6 @@ export class CheckoutFrame extends React.Component {
   cardTokenisationFailed = () => {
     const { cardTokenisationFailed } = this.props
 
-    // not sure if i can log the card number or not
     logger.error('card tokenisation failure')
     cardTokenisationFailed()
   }
