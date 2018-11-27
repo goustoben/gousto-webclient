@@ -33,6 +33,8 @@ function mapStateToProps(state, ownProps) {
           errorType = 'generic'
           break
         }
+      } else if (errors.get(actionTypes.CARD_TOKENISATION_FAILED)) {
+        errorType = 'card-tokenisation-failed'
       } else {
         // find last error that is truthy
         errorType = errors.findLast(error => !!error)
