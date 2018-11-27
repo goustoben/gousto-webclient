@@ -221,7 +221,7 @@ class Menu extends React.Component {
 					<FilterNav showLoading={this.props.isLoading} />
 					<Loading loading={showLoading} hasRecommendations={hasRecommendations} />
 					<div className={fadeCss} data-testing="menuRecipes">
-						{collectionsNavEnabled && !menuFilterExperiment &&
+						{!showLoading && collectionsNavEnabled && !menuFilterExperiment &&
 							<CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
 						<FilterMenu />
 						{this.props.filteredRecipesNumber ?

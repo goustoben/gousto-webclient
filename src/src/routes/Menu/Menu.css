@@ -13,6 +13,7 @@
 .container {
 	background: Coconut;
 	padding-bottom: 75px;
+	min-height: 500px;
 }
 
 

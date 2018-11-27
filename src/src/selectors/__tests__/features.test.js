@@ -83,7 +83,7 @@ describe('when features are defined', () => {
     describe('when justforyou feature is enabled', () => {
       beforeEach(() => {
         state.features = Immutable.fromJS({
-          justforyou: {
+          justforyou_v2: {
             value: true
           }
         })
@@ -97,7 +97,7 @@ describe('when features are defined', () => {
     describe('when justforyou feature is disabled', () => {
       beforeEach(() => {
         state.features = Immutable.fromJS({
-          justforyou: {
+          justforyou_v2: {
             value: false
           }
         })
