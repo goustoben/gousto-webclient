@@ -28,7 +28,7 @@ export class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, checkoutScriptReady, submitCheckoutFrame } = this.props
+    const { billingAddress, cardName, checkoutScriptReady, submitCheckoutFrame, checkoutClearErrors } = this.props
 
     if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
@@ -43,6 +43,7 @@ export class CheckoutFrame extends React.Component {
     }
 
     if (hasPropUpdated(submitCheckoutFrame, prevProps.submitCheckoutFrame)) {
+      checkoutClearErrors()
       Frames.submitCard()
     }
   }
