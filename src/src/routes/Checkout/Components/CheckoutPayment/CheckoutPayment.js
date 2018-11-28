@@ -18,6 +18,8 @@ export class CheckoutPayment extends React.Component {
     checkoutScriptReady: PropTypes.bool,
     asyncValidate: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
+    isCardNameValid: PropTypes.bool,
+    isBillingAddressValid: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -30,10 +32,24 @@ export class CheckoutPayment extends React.Component {
     submitCheckoutFrame: false,
   }
 
+  isSubmittable = () => {
+    const { isCardNameValid, isBillingAddressValid } = this.props
+
+    if (isCardNameValid && isBillingAddressValid) {
+      return true
+    }
+
+    return false
+  }
+
   submitPayment = () => {
-    this.setState({
-      submitCheckoutFrame: true,
-    })
+    const { submitCheckoutFrame } = this.state
+
+    if (this.isSubmittable()) {
+      this.setState({
+        submitCheckoutFrame: true,
+      })
+    }
   }
 
   cardTokenReady = () => {
