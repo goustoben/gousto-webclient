@@ -5,6 +5,45 @@ import logger from 'utils/logger'
 import { publicKey } from '../config'
 import { hasPropUpdated } from './utils'
 
+import css from './CheckoutFrame.css'
+
+const checkoutStyle = {
+  '.embedded .card-form .input-group .input-control': {
+    fontSize: '14px'
+  },
+  '.embedded .card-form .input-group label.icon+*': {
+    paddingLeft: '10px'
+  },
+  '.embedded .card-form .input-group': {
+    borderRadius: '5px',
+    border: '1px solid #d6d8da',
+    margin: '5px 0'
+  },
+  '.embedded .card-form .input-group.focus:not(.error)': {
+    border: '1px solid green'
+  },
+  '.embedded .card-form .input-group .icon': {
+    display: 'none'
+  },
+  '.embedded .card-form .input-group.error': {
+    border: '1px solid red',
+    background: '#FBF4F4'
+  },
+  '.embedded .card-form .input-group.error .hint.error-message': {
+    color: 'red'
+  },
+  '.embedded .card-form .input-group.error .hint-icon:hover': {
+    color: 'red'
+  },
+  '.embedded .card-form .input-group.focus input': {
+    color: '#333D49',
+    borderColor: '#999ea3'
+  },
+  '.embedded .card-form .input-group.error input': {
+    color: 'red'
+  }
+}
+
 /* global Frames */
 export class CheckoutFrame extends React.Component {
   static propTypes = {
@@ -54,7 +93,8 @@ export class CheckoutFrame extends React.Component {
 
     Frames.init({
       publicKey,
-      containerSelector: '.frames-container',
+      style: checkoutStyle,
+      containerSelector: `.${css.framesContainer}`,
       cardValidationChanged: () => {},
       cardSubmitted: () => {},
       cardTokenised: (e) => {
@@ -101,7 +141,7 @@ export class CheckoutFrame extends React.Component {
   render() {
     return (
       <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" >
-        <div className="frames-container" />
+        <div className={css.framesContainer} />
       </form>
     )
   }

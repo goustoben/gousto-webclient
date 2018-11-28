@@ -1,0 +1,6 @@
+@value avenirHeavyFontStack from 'styles/typography.css';
+
+.framesContainer > iframe {
+    font-family: avenirHeavyFontStack;
+    min-height: 100px;
+}
