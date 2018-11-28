@@ -6,6 +6,7 @@ const errorsToCapture = [
   actionTypes.CHECKOUT_SIGNUP,
   actionTypes.CHECKOUT_SIGNUP_LOGIN,
   actionTypes.ORDER_SAVE,
+  actionTypes.CARD_TOKENISATION_FAILED,
 ]
 
 const initialState = () => Immutable.fromJS({

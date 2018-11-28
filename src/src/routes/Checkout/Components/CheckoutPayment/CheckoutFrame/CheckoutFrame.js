@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import logger from 'utils/logger'
 import { publicKey } from '../config'
 import { hasPropUpdated } from './utils'
 
@@ -8,6 +9,8 @@ import { hasPropUpdated } from './utils'
 export class CheckoutFrame extends React.Component {
   static propTypes = {
     change: PropTypes.func,
+    cardTokenisationFailed: PropTypes.func,
+    checkoutClearErrors: PropTypes.func,
     cardName: PropTypes.string,
     formName: PropTypes.string,
     sectionName: PropTypes.string,
@@ -26,7 +29,7 @@ export class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, checkoutScriptReady, submitCheckoutFrame } = this.props
+    const { billingAddress, cardName, checkoutScriptReady, submitCheckoutFrame, checkoutClearErrors } = this.props
 
     if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
@@ -41,6 +44,7 @@ export class CheckoutFrame extends React.Component {
     }
 
     if (hasPropUpdated(submitCheckoutFrame, prevProps.submitCheckoutFrame)) {
+      checkoutClearErrors()
       Frames.submitCard()
     }
   }
@@ -56,7 +60,9 @@ export class CheckoutFrame extends React.Component {
       cardTokenised: (e) => {
         this.cardTokenised(e, paymentForm)
       },
-      cardTokenisationFailed: () => {},
+      cardTokenisationFailed: () => {
+        this.cardTokenisationFailed()
+      },
       frameActivated: this.frameActivated
     })
   }
@@ -83,6 +89,13 @@ export class CheckoutFrame extends React.Component {
     if (billingAddress) {
       Frames.setBillingDetails(billingAddress)
     }
+  }
+
+  cardTokenisationFailed = () => {
+    const { cardTokenisationFailed } = this.props
+
+    logger.error('card tokenisation failure')
+    cardTokenisationFailed()
   }
 
   render() {

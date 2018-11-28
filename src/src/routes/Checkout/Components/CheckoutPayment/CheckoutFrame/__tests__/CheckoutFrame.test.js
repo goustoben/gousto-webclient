@@ -19,6 +19,8 @@ describe('CheckoutFrame', () => {
   global.Frames = Frames
   const change = jest.fn()
   const cardTokenReady = jest.fn()
+  const cardTokenisationFailed = jest.fn()
+  const checkoutClearErrors = jest.fn()
 
   afterEach(() => {
     Frames.init.mockClear()
@@ -132,9 +134,10 @@ describe('CheckoutFrame', () => {
     describe('submit checkout frame ', () => {
       test('should call Frames.submitCard when updated', () => {
         wrapper = mount(<CheckoutFrame />)
-        wrapper.setProps({ submitCheckoutFrame: true })
+        wrapper.setProps({ submitCheckoutFrame: true, checkoutClearErrors })
 
         expect(Frames.submitCard).toHaveBeenCalled()
+        expect(checkoutClearErrors).toHaveBeenCalled()
       })
 
       test('should not call Frames.submitCard when not updated', () => {
@@ -265,6 +268,18 @@ describe('CheckoutFrame', () => {
 
         expect(Frames.setBillingDetails).not.toHaveBeenCalled()
       })
+    })
+  })
+
+  describe('cardTokenisationFailed', () => {
+    beforeEach(() => {
+      wrapper = mount(<CheckoutFrame cardTokenisationFailed={cardTokenisationFailed} />)
+
+      wrapper.instance().cardTokenisationFailed()
+    })
+
+    test('should call the cardTokenisationFailed prop', () => {
+      expect(cardTokenisationFailed).toHaveBeenCalled()
     })
   })
 })

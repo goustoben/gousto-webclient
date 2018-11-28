@@ -169,6 +169,12 @@ export function checkoutFetchIntervals() {
   }
 }
 
+export const cardTokenisationFailed = () => {
+  return (dispatch) => {
+    dispatch(error(actionTypes.CARD_TOKENISATION_FAILED, true))
+  }
+}
+
 export function checkoutSignup() {
   return async (dispatch) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
