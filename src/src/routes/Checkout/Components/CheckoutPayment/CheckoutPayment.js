@@ -15,37 +15,66 @@ export class CheckoutPayment extends React.Component {
     submit: PropTypes.func,
     receiveRef: PropTypes.func,
     sectionName: PropTypes.string,
+    formName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
     asyncValidate: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
     isCardNameValid: PropTypes.bool,
     isBillingAddressValid: PropTypes.bool,
+    formErrors: PropTypes.object,
   }
 
   static defaultProps = {
     receiveRef: () => {},
     sectionName: 'payment',
     checkoutScriptReady: false,
+    formErrors: {},
   }
 
   state = {
     submitCheckoutFrame: false,
   }
 
-  isSubmittable = () => {
-    const { isCardNameValid, isBillingAddressValid } = this.props
+  validateBillingAddress = () => {
+    const { paymentForm } = this
 
-    if (isCardNameValid && isBillingAddressValid) {
-      return true
+    const valid = paymentForm.validate()
+
+    console.log('valid', valid) //eslint-disable-line
+
+  }
+
+  validate = () => {
+    const { formErrors, touch, formName, sectionName } = this.props
+    console.log('in validate')//eslint-disable-line
+    console.log('formErrors', formErrors)//eslint-disable-line
+    console.log(typeof formErrors.payment)//eslint-disable-line
+
+    if (formErrors && formErrors.payment) {
+      for (let formError in formErrors.payment) {
+        console.log(`${sectionName}[${formError}]`)//eslint-disable-line
+        touch(formName, `${sectionName}[${formError}]`)
+      }
+
+      return false
     }
 
-    return false
+    return true
+  }
+
+  isSubmittable = () => {
+    // const { isCardNameValid, isBillingAddressValid } = this.props
+
+    return this.validate()
   }
 
   submitPayment = () => {
     const { submitCheckoutFrame } = this.state
+    console.log('submitCheckoutFrame', submitCheckoutFrame) //eslint-disable-line
 
     if (this.isSubmittable()) {
+      console.log('isSubmittable') //eslint-disable-line
+
       this.setState({
         submitCheckoutFrame: true,
       })
