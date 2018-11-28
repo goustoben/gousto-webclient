@@ -3,11 +3,11 @@ import withError from 'utils/withError'
 import BoxPrice from '../BoxPrice'
 import css from './BoxPriceList.css'
 
-const groupBy = (xs, key) => {
-  return xs.reduce(function(rv, x) {
-    (rv[x[key]] = rv[x[key]] || []).push(x)
+const groupBy = (collection, key) => {
+  return collection.reduce(function(accumulator, currentValue) {
+    (accumulator[currentValue[key]] = accumulator[currentValue[key]] || []).push(currentValue)
 
-    return rv
+    return accumulator
   }, {})
 }
 
