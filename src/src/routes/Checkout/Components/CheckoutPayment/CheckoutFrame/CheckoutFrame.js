@@ -9,10 +9,10 @@ import css from './CheckoutFrame.css'
 
 const checkoutStyle = {
   '.embedded .card-form .input-group .input-control': {
-    fontSize: '14px'
+    fontSize: '18px'
   },
   '.embedded .card-form .input-group label.icon+*': {
-    paddingLeft: '10px'
+    paddingLeft: '15px'
   },
   '.embedded .card-form .input-group': {
     borderRadius: '5px',
@@ -35,12 +35,27 @@ const checkoutStyle = {
   '.embedded .card-form .input-group.error .hint-icon:hover': {
     color: 'red'
   },
+  '.embedded .card-form .input-group.focus': {
+    backgroundColor: '#fff'
+  },
   '.embedded .card-form .input-group.focus input': {
     color: '#333D49',
     borderColor: '#999ea3'
   },
   '.embedded .card-form .input-group.error input': {
     color: 'red'
+  },
+  '.embedded .card-form .input-group input::-webkit-input-placeholder': {
+    fontStyle: 'normal'
+  },
+  '.embedded .card-form .input-group input::-moz-placeholder': {
+    fontStyle: 'normal'
+  },
+  '.embedded .card-form .input-group input:-ms-input-placeholder': {
+    fontStyle: 'normal'
+  },
+  '.embedded .card-form .input-group input:-moz-placeholder': {
+    fontStyle: 'normal'
   }
 }
 
@@ -95,6 +110,9 @@ export class CheckoutFrame extends React.Component {
       publicKey,
       style: checkoutStyle,
       containerSelector: `.${css.framesContainer}`,
+      localisation: {
+        cardNumberPlaceholder: 'Card number'
+      },
       cardValidationChanged: () => {},
       cardSubmitted: () => {},
       cardTokenised: (e) => {

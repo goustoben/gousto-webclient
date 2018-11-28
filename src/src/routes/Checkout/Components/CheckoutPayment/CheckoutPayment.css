@@ -13,6 +13,11 @@
 	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
 }
 
+.wrapper > div {
+	width: 100%;
+}
+
 .frame {
 	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+	margin-top: 10px;
 }

@@ -65,6 +65,7 @@ export class CheckoutPayment extends React.Component {
               />
             </div>
             <div className={css.frame}>
+              <p>Card details</p>
               <CheckoutFrame
                 checkoutScriptReady={checkoutScriptReady}
                 submitCheckoutFrame={submitCheckoutFrame}
