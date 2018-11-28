@@ -47,7 +47,7 @@ export class CheckoutPayment extends React.Component {
 
     return (
       <div>
-        <div className={css.container}>
+        <div className={css.container} data-testing="checkoutPaymentSection">
           <PaymentHeader />
           <FormSection name={sectionName}>
             <div className={css.wrapper}>
