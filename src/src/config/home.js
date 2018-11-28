@@ -5,7 +5,7 @@ import Content from 'containers/Content'
 module.exports = {
   hero: {
     header: 'A recipe box. Simple.',
-    subheader: 'Fresh ingredients for you to cook and share. Good food all round.',
+    subheader: 'Precise ingredients, delicious recipes and a dollop of adventure.',
   },
   testimonials: [
     {
