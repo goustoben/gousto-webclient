@@ -18,6 +18,7 @@ export class CheckoutPayment extends React.Component {
     checkoutScriptReady: PropTypes.bool,
     asyncValidate: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
+    trackingOrderPlace: PropTypes.func,
   }
 
   static defaultProps = {
@@ -31,6 +32,8 @@ export class CheckoutPayment extends React.Component {
   }
 
   submitPayment = () => {
+    const { trackingOrderPlace } = this.props
+    trackingOrderPlace(true, 'checkout')
     this.setState({
       submitCheckoutFrame: true,
     })

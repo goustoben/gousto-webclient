@@ -40,7 +40,7 @@ describe('CheckoutPayment', () => {
 
   describe('submitPayment', () => {
     beforeEach(() => {
-      wrapper = shallow(<CheckoutPayment />)
+      wrapper = shallow(<CheckoutPayment trackingOrderPlace={ jest.fn() }/>)
     })
 
     test('should set submitCheckoutFrame prop to true', () => {
