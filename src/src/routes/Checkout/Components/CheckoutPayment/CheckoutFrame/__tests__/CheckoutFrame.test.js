@@ -14,7 +14,8 @@ describe('CheckoutFrame', () => {
     setCustomerName: jest.fn(),
     setBillingDetails: jest.fn(),
     submitCard: jest.fn(),
-    addCardToken: jest.fn()
+    addCardToken: jest.fn(),
+    unblockFields: jest.fn()
   }
   global.Frames = Frames
   Frames.submitCard.mockResolvedValue({})
@@ -116,7 +117,36 @@ describe('CheckoutFrame', () => {
       })
     })
 
-    describe('submit checkout frame ', () => {
+    describe('has checkout error ', () => {
+      const hasCheckoutError = true
+
+      test('should call Frames.unblockFields when updated and value is true', () => {
+        wrapper = mount(<CheckoutFrame />)
+        Frames.unblockFields.mockClear()
+        wrapper.setProps({ hasCheckoutError: hasCheckoutError })
+
+        expect(Frames.unblockFields).toHaveBeenCalled()
+      })
+
+      test('should call Frames.unblockFields when updated and value is false', () => {
+        wrapper = mount(<CheckoutFrame />)
+        Frames.unblockFields.mockClear()
+        wrapper.setProps({ hasCheckoutError: false })
+
+        expect(Frames.unblockFields).not.toHaveBeenCalled()
+      })
+
+      test('should not call Frames.unblockFields when not updated', () => {
+        wrapper = mount(<CheckoutFrame hasCheckoutError={hasCheckoutError} />)
+        Frames.unblockFields.mockClear()
+        wrapper.setProps({ hasCheckoutError: hasCheckoutError })
+
+        expect(Frames.unblockFields).not.toHaveBeenCalled()
+      })
+    })
+
+
+    describe('submit checkout frame', () => {
       test('should call submitCard when updated', () => {
         wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} />)
 
