@@ -17,6 +17,11 @@
 	color: Black;
 }
 
+.red {
+	background: #F6323E;
+	color: white;
+}
+
 .gelContent {
 	display: flex;
 	width: 100%;
