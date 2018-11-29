@@ -51,12 +51,15 @@ export class CheckoutPayment extends React.Component {
           <PaymentHeader />
           <FormSection name={sectionName}>
             <div className={css.wrapper}>
+              <p className={css.cardDetails}>
+                Card details
+              </p>
               <Field
                 name="cardName"
                 component={ReduxFormInput}
                 inputType="Input"
+                placeholder="Name on card"
                 color="gray"
-                label="Name"
                 mask
                 withRef
                 ref={receiveRef}

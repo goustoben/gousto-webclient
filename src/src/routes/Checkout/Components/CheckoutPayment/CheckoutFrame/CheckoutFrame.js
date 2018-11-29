@@ -5,8 +5,10 @@ import logger from 'utils/logger'
 import { publicKey } from '../config'
 import { hasPropUpdated } from './utils'
 
+import css from './CheckoutFrame.css'
+
 /* global Frames */
-export class CheckoutFrame extends React.Component {
+class CheckoutFrame extends React.Component {
   static propTypes = {
     change: PropTypes.func,
     cardTokenisationFailed: PropTypes.func,
@@ -54,7 +56,11 @@ export class CheckoutFrame extends React.Component {
 
     Frames.init({
       publicKey,
-      containerSelector: '.frames-container',
+      style: checkoutStyle,
+      containerSelector: `.${css.framesContainer}`,
+      localisation: {
+        cardNumberPlaceholder: 'Card number',
+      },
       cardValidationChanged: () => {},
       cardSubmitted: () => {},
       cardTokenised: (e) => {
@@ -101,8 +107,62 @@ export class CheckoutFrame extends React.Component {
   render() {
     return (
       <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" >
-        <div className="frames-container" />
+        <div className={css.framesContainer} />
       </form>
     )
   }
 }
+
+const checkoutStyle = {
+  '.embedded .card-form .input-group .input-control': {
+    fontSize: '18px'
+  },
+  '.embedded .card-form .input-group label.icon+*': {
+    paddingLeft: '15px'
+  },
+  '.embedded .card-form .input-group': {
+    borderRadius: '5px',
+    border: '1px solid #d6d8da',
+    margin: '10px 0'
+  },
+  '.embedded .card-form .input-group.focus:not(.error)': {
+    border: '1px solid #999EA3'
+  },
+  '.embedded .card-form .input-group .icon': {
+    display: 'none'
+  },
+  '.embedded .card-form .input-group.error': {
+    border: '1px solid #B6252E',
+    background: '#FBF4F4'
+  },
+  '.embedded .card-form .input-group.error .hint.error-message': {
+    color: '#fff'
+  },
+  '.embedded .card-form .input-group.error .hint-icon:hover': {
+    color: '#B6252E'
+  },
+  '.embedded .card-form .input-group.focus': {
+    backgroundColor: '#fff'
+  },
+  '.embedded .card-form .input-group.focus input': {
+    color: '#333D49',
+    borderColor: '#999ea3'
+  },
+  '.embedded .card-form .input-group.error input': {
+    color: '#B6252E'
+  },
+  '.embedded .card-form .input-group input::-webkit-input-placeholder': {
+    fontStyle: 'normal'
+  },
+  '.embedded .card-form .input-group input::-moz-placeholder': {
+    fontStyle: 'normal'
+  },
+  '.embedded .card-form .input-group input:-ms-input-placeholder': {
+    fontStyle: 'normal'
+  },
+  '.embedded .card-form .input-group input:-moz-placeholder': {
+    fontStyle: 'normal'
+  },
+}
+
+export { CheckoutFrame }
