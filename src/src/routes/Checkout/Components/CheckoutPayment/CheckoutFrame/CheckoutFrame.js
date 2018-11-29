@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import logger from 'utils/logger'
 import { publicKey } from '../config'
 import { hasPropUpdated } from './utils'
+import shallowCompare from 'react-addons-shallow-compare'
 
 /* global Frames */
 export class CheckoutFrame extends React.Component {
@@ -19,18 +20,40 @@ export class CheckoutFrame extends React.Component {
     checkoutScriptReady: PropTypes.bool,
     isSubmitCardEnabled: PropTypes.bool,
     disableCardSubmission: PropTypes.func,
+    validCardDetailsNotProvided: PropTypes.func,
+    hasCheckoutError: PropTypes.bool,
   }
 
   componentDidMount() {
     const { checkoutScriptReady } = this.props
 
     if (checkoutScriptReady) {
+      console.log('iniitFrames in componentDidMount') // eslint-disable-line
       this.initFrames()
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const { hasCheckoutError } = this.props
+
+    if (hasCheckoutError && hasCheckoutError !== nextProps.hasCheckoutError) {
+      return false
+    }
+
+    return shallowCompare(this, nextProps, nextState)
+  }
+
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, checkoutScriptReady, isSubmitCardEnabled, checkoutClearErrors, disableCardSubmission } = this.props
+    const {
+      billingAddress,
+      cardName,
+      checkoutScriptReady,
+      isSubmitCardEnabled,
+      checkoutClearErrors,
+      disableCardSubmission,
+      validCardDetailsNotProvided,
+      hasCheckoutError
+    } = this.props
 
     if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
@@ -41,24 +64,52 @@ export class CheckoutFrame extends React.Component {
     }
 
     if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
+      console.log('iniitFrames in componentDidUpdate') // eslint-disable-line
+
       this.initFrames()
     }
 
-    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled) {
-      // checkoutClearErrors()
+    // console.log('isSubmitCardEnabled', isSubmitCardEnabled) //eslint-disable-line
+    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled){
+      console.log('submitting card') //eslint-disable-line
+      console.log('isSubmitCardEnabled', isSubmitCardEnabled) //eslint-disable-line
+
+      Frames.removeAllEventHandlers(Events.CARD_TOKENISED)
+      Frames.removeAllEventHandlers(Events.CARD_SUBMITTED)
+      this.initFrames()
+      console.log('is card valid', Frames.isCardValid()) //eslint-disable-line
+
+      //checkoutClearErrors()
       Frames.submitCard()
+        .then(data => {
+          console.log('sybmit card succeeded') // eslint-disable-line
+          console.log('data', data) // eslint-disable-line
+        })
+        .catch(err => {
+          console.log('err', err) //eslint-disable-line
+          validCardDetailsNotProvided()
+        })
       disableCardSubmission()
     }
+
+    // if (hasCheckoutError) {
+    //
+    // }
+
   }
 
   initFrames = () => {
     const { paymentForm } = this
+    const { checkoutClearErrors } = this.props
 
     Frames.init({
       publicKey,
       containerSelector: '.frames-container',
       cardValidationChanged: () => {},
-      cardSubmitted: () => {},
+      cardSubmitted: () => {
+        // clear tokenisation errors
+        checkoutClearErrors()
+      },
       cardTokenised: (e) => {
         this.cardTokenised(e, paymentForm)
       },
@@ -76,6 +127,8 @@ export class CheckoutFrame extends React.Component {
   cardTokenised = (event, paymentForm) => {
     const { cardToken } = event.data
     const { change, cardTokenReady, formName, sectionName } = this.props
+
+    console.log('success card submit') //eslint-disable-line
 
     Frames.addCardToken(paymentForm, cardToken)
     change(formName, `${sectionName}.token`, cardToken)
