@@ -1,5 +1,6 @@
 export const formName = 'checkout'
 export const sectionName = 'payment'
 export const deliveryAddressSectionName = 'delivery'
-
-export const publicKey = __CHECKOUT_PK__ || ''
+// export const publicKey = __CHECKOUT_PK__ || ''
+// export const publicKey = 'pk_test_252a059e-8c44-40fe-9f4c-7acff20dd83a'
+export const publicKey = 'pk_78d1c4d6-8a05-4a61-a346-de32ae5df932'
