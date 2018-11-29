@@ -18,6 +18,5 @@
 }
 
 .frame {
-	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
-	margin-top: 10px;
+	composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
 }
