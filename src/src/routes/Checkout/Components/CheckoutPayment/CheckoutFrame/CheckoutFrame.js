@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import logger from 'utils/logger'
 import { publicKey } from '../config'
 import { hasPropUpdated } from './utils'
-import shallowCompare from 'react-addons-shallow-compare'
 
 /* global Frames */
 export class CheckoutFrame extends React.Component {
@@ -28,19 +27,8 @@ export class CheckoutFrame extends React.Component {
     const { checkoutScriptReady } = this.props
 
     if (checkoutScriptReady) {
-      console.log('initFrames in componentDidMount') // eslint-disable-line
       this.initFrames()
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const { hasCheckoutError } = this.props
-
-    if (hasCheckoutError && hasCheckoutError !== nextProps.hasCheckoutError) {
-      return false
-    }
-
-    return shallowCompare(this, nextProps, nextState)
   }
 
   componentDidUpdate(prevProps) {
@@ -72,8 +60,7 @@ export class CheckoutFrame extends React.Component {
 
     if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled){
       Frames.submitCard()
-        .catch(err => {
-          console.log('err', err) //eslint-disable-line
+        .catch(() => {
           validCardDetailsNotProvided()
         })
 
@@ -88,7 +75,6 @@ export class CheckoutFrame extends React.Component {
     Frames.init({
       publicKey,
       containerSelector: '.frames-container',
-      cardValidationChanged: () => {},
       cardSubmitted: () => {
         checkoutClearErrors()
       },
