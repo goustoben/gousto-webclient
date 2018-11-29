@@ -156,8 +156,8 @@ describe('CheckoutFrame', () => {
       wrapper = mount(<CheckoutFrame />)
     })
 
-    test('should create a frames-container for the iframe', () => {
-      expect(wrapper.find('.frames-container')).toHaveLength(1)
+    test('should create a framesContainer for the iframe', () => {
+      expect(wrapper.find('.framesContainer')).toHaveLength(1)
     })
   })
 
@@ -188,7 +188,7 @@ describe('CheckoutFrame', () => {
     })
 
     test('should call the cardTokenReady prop', () => {
-      expect(wrapper.find('.frames-container')).toHaveLength(1)
+      expect(wrapper.find('.framesContainer')).toHaveLength(1)
     })
 
   })
