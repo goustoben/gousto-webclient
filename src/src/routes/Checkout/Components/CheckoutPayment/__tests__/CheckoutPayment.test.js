@@ -43,18 +43,18 @@ describe('CheckoutPayment', () => {
       wrapper = shallow(<CheckoutPayment trackingOrderPlace={ jest.fn() }/>)
     })
 
-    test('should set submitCheckoutFrame prop to true', () => {
-      expect(wrapper.state().submitCheckoutFrame).toBe(false)
+    test('should set isSubmitCardEnabled prop to true', () => {
+      expect(wrapper.state().isSubmitCardEnabled).toBe(false)
 
       wrapper.find(SubmitButton).simulate('click')
 
-      expect(wrapper.state().submitCheckoutFrame).toBe(true)
+      expect(wrapper.state().isSubmitCardEnabled).toBe(true)
     })
   })
 
   describe('cardTokenReady', () => {
     const submit = jest.fn()
-    
+
     beforeEach(() => {
       wrapper = shallow(<CheckoutPayment submit={submit} />)
     })

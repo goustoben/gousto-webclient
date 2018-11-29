@@ -17,10 +17,12 @@ describe('CheckoutFrame', () => {
     addCardToken: jest.fn()
   }
   global.Frames = Frames
+  Frames.submitCard.mockResolvedValue({})
+
   const change = jest.fn()
   const cardTokenReady = jest.fn()
   const cardTokenisationFailed = jest.fn()
-  const checkoutClearErrors = jest.fn()
+  const disableCardSubmission = jest.fn()
 
   afterEach(() => {
     Frames.init.mockClear()
@@ -114,38 +116,28 @@ describe('CheckoutFrame', () => {
       })
     })
 
-    describe('checkout script ready ', () => {
-      test('should call Frames.init when updated', () => {
-        wrapper = mount(<CheckoutFrame />)
-        wrapper.setProps({ checkoutScriptReady: true })
-
-        expect(Frames.init).toHaveBeenCalled()
-      })
-
-      test('should not call Frames.init when not updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
-        Frames.init.mockClear()
-        wrapper.setProps({ checkoutScriptReady: true })
-
-        expect(Frames.init).not.toHaveBeenCalled()
-      })
-    })
-
     describe('submit checkout frame ', () => {
-      test('should call Frames.submitCard when updated', () => {
-        wrapper = mount(<CheckoutFrame />)
-        wrapper.setProps({ submitCheckoutFrame: true, checkoutClearErrors })
+      test('should call submitCard when updated', () => {
+        wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} />)
 
-        expect(Frames.submitCard).toHaveBeenCalled()
-        expect(checkoutClearErrors).toHaveBeenCalled()
+        const submitCard = jest.fn()
+        wrapper.instance().submitCard = submitCard
+        wrapper.update()
+
+        wrapper.setProps({ isSubmitCardEnabled: true })
+
+        expect(submitCard).toHaveBeenCalled()
       })
 
-      test('should not call Frames.submitCard when not updated', () => {
-        wrapper = mount(<CheckoutFrame submitCheckoutFrame />)
-        Frames.submitCard.mockClear()
-        wrapper.setProps({ submitCheckoutFrame: true })
+      test('should not call submitCard when not updated', () => {
+        wrapper = mount(<CheckoutFrame submitCheckoutFrame disableCardSubmission={disableCardSubmission} />)
+        wrapper.setProps({ isSubmitCardEnabled: true })
 
-        expect(Frames.submitCard).not.toHaveBeenCalled()
+        const submitCard = jest.fn()
+        wrapper.instance().submitCard = submitCard
+        wrapper.update()
+
+        expect(submitCard).not.toHaveBeenCalled()
       })
     })
 
