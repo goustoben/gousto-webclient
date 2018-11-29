@@ -17,7 +17,8 @@ export class CheckoutFrame extends React.Component {
     billingAddress: PropTypes.object,
     cardTokenReady: PropTypes.func,
     checkoutScriptReady: PropTypes.bool,
-    submitCheckoutFrame: PropTypes.bool,
+    isSubmitCardEnabled: PropTypes.bool,
+    disableCardSubmission: PropTypes.func,
   }
 
   componentDidMount() {
@@ -29,7 +30,7 @@ export class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, checkoutScriptReady, submitCheckoutFrame, checkoutClearErrors } = this.props
+    const { billingAddress, cardName, checkoutScriptReady, isSubmitCardEnabled, checkoutClearErrors, disableCardSubmission } = this.props
 
     if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
@@ -43,9 +44,10 @@ export class CheckoutFrame extends React.Component {
       this.initFrames()
     }
 
-    if (hasPropUpdated(submitCheckoutFrame, prevProps.submitCheckoutFrame)) {
-      checkoutClearErrors()
+    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled) {
+      // checkoutClearErrors()
       Frames.submitCard()
+      disableCardSubmission()
     }
   }
 
