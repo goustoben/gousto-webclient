@@ -123,23 +123,23 @@ const checkoutStyle = {
   '.embedded .card-form .input-group': {
     borderRadius: '5px',
     border: '1px solid #d6d8da',
-    margin: '5px 0'
+    margin: '10px 0'
   },
   '.embedded .card-form .input-group.focus:not(.error)': {
-    border: '1px solid green'
+    border: '1px solid #999EA3'
   },
   '.embedded .card-form .input-group .icon': {
     display: 'none'
   },
   '.embedded .card-form .input-group.error': {
-    border: '1px solid red',
+    border: '1px solid #B6252E',
     background: '#FBF4F4'
   },
   '.embedded .card-form .input-group.error .hint.error-message': {
     color: '#fff'
   },
   '.embedded .card-form .input-group.error .hint-icon:hover': {
-    color: 'red'
+    color: '#B6252E'
   },
   '.embedded .card-form .input-group.focus': {
     backgroundColor: '#fff'
@@ -149,7 +149,7 @@ const checkoutStyle = {
     borderColor: '#999ea3'
   },
   '.embedded .card-form .input-group.error input': {
-    color: 'red'
+    color: '#B6252E'
   },
   '.embedded .card-form .input-group input::-webkit-input-placeholder': {
     fontStyle: 'normal'

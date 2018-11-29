@@ -1,7 +1,7 @@
 @value avenirBookFontStack from 'styles/typography.css';
 
 .framesContainer iframe {
-    min-height: 100px;
+    min-height: 150px;
 }
 
 .framesContainer input {

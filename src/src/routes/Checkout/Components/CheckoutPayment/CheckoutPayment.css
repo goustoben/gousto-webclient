@@ -11,12 +11,17 @@
 .wrapper {
 	composes: flex rowWrap from 'styles/flex.css';
 	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+	margin-top: 25px;
 }
 
 .wrapper > div {
-	width: 100%;
+	width: 50%;
 }
 
 .frame {
 	composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.cardDetails {
+	width: 100%;
 }
