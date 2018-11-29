@@ -20,6 +20,7 @@ export class CheckoutPayment extends React.Component {
     asyncValidate: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
     formErrors: PropTypes.object,
+    trackingOrderPlace: PropTypes.func,
   }
 
   static defaultProps = {
@@ -62,6 +63,9 @@ export class CheckoutPayment extends React.Component {
   }
 
   handleClick = () => {
+    const { trackingOrderPlace } = this.props
+    trackingOrderPlace(true, 'checkout')
+
     this.validateFormInput()
 
     if (this.isValid()) {
@@ -84,16 +88,19 @@ export class CheckoutPayment extends React.Component {
 
     return (
       <div>
-        <div className={css.container}>
+        <div className={css.container} data-testing="checkoutPaymentSection">
           <PaymentHeader />
           <FormSection name={sectionName}>
             <div className={css.wrapper}>
+              <p className={css.cardDetails}>
+                Card details
+              </p>
               <Field
                 name="cardName"
                 component={ReduxFormInput}
                 inputType="Input"
+                placeholder="Name on card"
                 color="gray"
-                label="Name"
                 mask
                 withRef
                 ref={receiveRef}
