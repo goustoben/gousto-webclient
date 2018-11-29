@@ -55,7 +55,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
 
   if (accessToken) {
     if (accessToken.indexOf('//') > -1) {
-      logger.error(`accessToken in fetch.js does not look valid (${accessToken})`)
+      logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`})
     }
     requestHeaders = { ...requestHeaders, Authorization: `Bearer ${accessToken}` }
   }
@@ -125,7 +125,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
         status: status,
         elapsedTime: `${(new Date() - startTime)}ms`,
         requestUrl: requestUrl,
-        errors: [e],
+        errors: [e]
       })
 
       if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {

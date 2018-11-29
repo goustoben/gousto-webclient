@@ -40,12 +40,12 @@ app.use(async (ctx, next) => {
   if (writeLog) {
     const uuid = uuidv1()
     ctx.uuid = uuid
-    logger.notice({message: `[START] REQUEST`, requestUrl: ctx.request.path, uuid: ctx.uuid})
+    logger.notice({message: `[START] REQUEST`, requestUrl: ctx.request.path, uuid: ctx.uuid, headers: ctx.header})
   }
 
   await next()
   if (writeLog) {
-    logger.notice({message: `[END] REQUEST`, requestUrl: ctx.request.path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime)})
+    logger.notice({message: `[END] REQUEST`, requestUrl: ctx.request.path, uuid: ctx.uuid, elapsedTime: (new Date() - startTime), headers: ctx.header})
   }
 })
 

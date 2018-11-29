@@ -51,7 +51,7 @@ const formatLogs = (args) => {
     log.errors = [{message: args.message, stack: args.stack}]
   }
 
-  const {message, status, elapsedTime, errors, level, service, requestUrl, uuid} = args
+  const {message, status, elapsedTime, errors, level, service, requestUrl, uuid, extra, headers} = args
 
   if(level !== undefined){
     log['log_level'] = level.toUpperCase()
@@ -90,6 +90,7 @@ const formatLogs = (args) => {
   if(requestUrl !== undefined){
     log.requestUrl = requestUrl
   }
+  
   if(uuid !== undefined) {
     log['gousto-request-id'] = uuid
   }else{
@@ -97,6 +98,17 @@ const formatLogs = (args) => {
     const stateUuid = state && state.logger && state.logger.uuid
     if(stateUuid){
       log['gousto-request-id'] = stateUuid
+    }
+  }
+
+  if(extra !== undefined){
+    log.extra = extra
+  }
+
+  if(headers !== undefined){
+    log.headers = {
+      ...headers,
+      cookie: ''
     }
   }
 
