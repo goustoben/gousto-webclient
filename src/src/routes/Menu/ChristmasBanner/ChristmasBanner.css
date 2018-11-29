@@ -1,0 +1,84 @@
+@value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
+@value ScreenXXXSMin: (min-width: 400px);
+@value headingFontStackBold, sizeSM, sizeLG, sizeXL, sizeXL from 'styles/typography.css';
+
+.container {
+	composes: inlineBlock from 'styles/display.css';
+	width: 100%;
+	height: 200px;
+	background-image: url('media/images/menu/christmas-banner-mobile.jpg');
+	background-position: center;
+	background-size: cover;
+
+	@media ScreenXXSMin {
+		background-image: url('media/images/menu/christmas-banner-tablet.jpg')
+	}
+
+	@media ScreenMDMin {
+		background-image: url('media/images/menu/christmas-banner-desktop.jpg');
+	}
+}
+
+.contentBase {
+	composes: flex from 'styles/flex.css';
+}
+
+.contentContainer {
+	composes: contentBase;
+	position: relative;
+	max-width: 1600px;
+	margin: 0 auto;
+	height: 100%;
+}
+
+.mobileHide {
+	display: none;
+
+	@media ScreenXXXSMin {
+		display: inline;
+	}
+}
+
+.gel {
+	font-family: headingFontStackBold;
+	font-size: sizeSM;
+}
+
+.gelTitle {
+	font-size: sizeXL;
+	font-weight: 600;
+	margin: 0;
+
+	@media ScreenMDMin {
+		font-size: 24px;
+	}
+}
+
+.gelMain {
+	composes: gel;
+	left: 26%;
+	top: 50%;
+
+	@media ScreenMDMin {
+		left: 20%;
+	}
+}
+
+.gelMainTitle {
+	composes: gelTitle;
+	font-size: 24px;
+	font-weight: bold;
+
+	@media ScreenMDMin {
+		font-size: 30px;
+	}
+}
+
+.gelMainText {
+	font-size: sizeSM;
+
+	@media ScreenMDMin {
+		font-size: sizeLG;
+	}
+}
+
