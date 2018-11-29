@@ -34,15 +34,7 @@ class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      billingAddress,
-      cardName,
-      checkoutScriptReady,
-      isSubmitCardEnabled,
-      disableCardSubmission,
-      validCardDetailsNotProvided,
-      hasCheckoutError
-    } = this.props
+    const { billingAddress, cardName, isSubmitCardEnabled, hasCheckoutError } = this.props
 
     if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
@@ -52,21 +44,12 @@ class CheckoutFrame extends React.Component {
       Frames.setBillingDetails(billingAddress)
     }
 
-    if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
-      this.initFrames()
-    }
-
     if(hasPropUpdated(hasCheckoutError, prevProps.hasCheckoutError) && hasCheckoutError) {
       Frames.unblockFields()
     }
 
     if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled){
-      Frames.submitCard()
-        .catch(() => {
-          validCardDetailsNotProvided()
-        })
-
-      disableCardSubmission()
+      this.submitCard()
     }
   }
 
@@ -81,7 +64,6 @@ class CheckoutFrame extends React.Component {
       localisation: {
         cardNumberPlaceholder: 'Card number',
       },
-      cardValidationChanged: () => {},
       cardSubmitted: () => {
         checkoutClearErrors()
       },
@@ -97,6 +79,17 @@ class CheckoutFrame extends React.Component {
 
   setPaymentFormRef = element => {
     this.paymentForm = element
+  }
+
+  submitCard = () => {
+    const { disableCardSubmission, validCardDetailsNotProvided } = this.props
+
+    Frames.submitCard()
+      .catch(() => {
+        validCardDetailsNotProvided()
+      })
+
+    disableCardSubmission()
   }
 
   cardTokenised = (event, paymentForm) => {
@@ -120,12 +113,10 @@ class CheckoutFrame extends React.Component {
   }
 
   cardTokenisationFailed = () => {
-    const { cardTokenisationFailed, disableCardSubmission } = this.props
+    const { cardTokenisationFailed } = this.props
 
     logger.error('card tokenisation failure')
     cardTokenisationFailed()
-    Frames.unblockFields()
-    disableCardSubmission()
   }
 
   render() {
