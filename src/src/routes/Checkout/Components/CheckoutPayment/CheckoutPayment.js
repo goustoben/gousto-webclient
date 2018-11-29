@@ -14,20 +14,27 @@ export class CheckoutPayment extends React.Component {
   static propTypes = {
     submit: PropTypes.func,
     receiveRef: PropTypes.func,
+    scrollToFirstMatchingRef: PropTypes.func,
+    asyncValidate: PropTypes.func,
+    trackingOrderPlace: PropTypes.func,
+    touchInputsInForm: PropTypes.func,
+    formErrors: PropTypes.object,
     sectionName: PropTypes.string,
     formName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
-    asyncValidate: PropTypes.func,
-    scrollToFirstMatchingRef: PropTypes.func,
-    formErrors: PropTypes.object,
-    trackingOrderPlace: PropTypes.func,
   }
 
   static defaultProps = {
+    submit: () => {},
     receiveRef: () => {},
-    sectionName: 'payment',
-    checkoutScriptReady: false,
+    scrollToFirstMatchingRef: () => {},
+    asyncValidate: () => {},
+    trackingOrderPlace: () => {},
+    touchInputsInForm: () => {},
     formErrors: {},
+    sectionName: 'payment',
+    formName: 'checkout',
+    checkoutScriptReady: false,
   }
 
   state = {
@@ -35,12 +42,10 @@ export class CheckoutPayment extends React.Component {
   }
 
   validateFormInput = () => {
-    const { formErrors, touch, formName, sectionName } = this.props
+    const { formErrors, touchInputsInForm, formName, sectionName } = this.props
 
     if (formErrors && formErrors.payment) {
-      for (let formError in formErrors.payment) {
-        touch(formName, `${sectionName}[${formError}]`)
-      }
+      touchInputsInForm(formErrors.payment, formName, sectionName)
     }
   }
 
