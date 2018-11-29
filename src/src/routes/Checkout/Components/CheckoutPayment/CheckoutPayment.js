@@ -63,12 +63,12 @@ export class CheckoutPayment extends React.Component {
   }
 
   handleClick = () => {
-    const { trackingOrderPlace } = this.props
-    trackingOrderPlace(true, 'checkout')
-
     this.validateFormInput()
 
     if (this.isValid()) {
+      const { trackingOrderPlace } = this.props
+      trackingOrderPlace(true, 'checkout')
+
       this.enableCardSubmission()
     }
   }
