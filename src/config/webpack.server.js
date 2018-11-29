@@ -119,6 +119,7 @@ const config = {
   },
   plugins: [
     ExitCodePlugin,
+    new LodashModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       __DEV__: build === 'development',
       __PROD__: build === 'production',
@@ -193,9 +194,7 @@ if (build === 'development') {
 } else {
   config.devtool = false
   config.plugins.push(
-    new LodashModuleReplacementPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-
     new TerserPlugin({
       parallel: true,
       sourceMap: true,

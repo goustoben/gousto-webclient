@@ -68,7 +68,6 @@
     "koa-convert": "1.2.0",
     "koa-mount": "2.0.0",
     "koa-static": "3.0.0",
-    "lodash.groupby": "4.6.0",
     "moment": "2.22.2",
     "qs": "6.5.2",
     "query-string": "4.2.3",
@@ -143,7 +142,7 @@
     "inject-loader": "4.0.1",
     "jest": "23.4.0",
     "jest-transform-graphql": "2.1.0",
-    "gousto-gulp": "git+ssh://git@github.com/Gousto/gousto-gulp.git#v3.0.2",
+    "gousto-gulp": "git+ssh://git@github.com/Gousto/gousto-gulp.git#v3.1.0",
     "lodash-webpack-plugin": "0.11.5",
     "mocha": "5.2.0",
     "mocha-webpack": "1.1.0",
@@ -184,7 +183,8 @@
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-nested": "3.0.0",
     "postcss-safe-parser": "4.0.1",
-    "simple-progress-webpack-plugin": "1.1.2"
+    "simple-progress-webpack-plugin": "1.1.2",
+    "eslint-plugin-you-dont-need-lodash-underscore": "6.4.0"
 
   },
   "nyc": {

@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-import lodash from 'lodash'
 
 import css from './Address.css'
 import { Button } from 'goustouicomponents'
@@ -93,7 +92,7 @@ class Address extends React.PureComponent {
 	  }
 
 	  function generateDropdownOptions(addressData) {
-	    const addresses = lodash.map(addressData.deliveryPoints, deliveryPoint => (
+	    const addresses = addressData.deliveryPoints.map(deliveryPoint => (
 	      { id: deliveryPoint.udprn, labels: [generateAddressLabel(deliveryPoint)] }
 	    ))
 
@@ -197,7 +196,7 @@ class Address extends React.PureComponent {
 	    addressDetails = { line1: '', line2: '', town: '', county: '', postcode: '' }
 	    change(formName, `${sectionName}.notFound`, false)
 	  } else {
-	    const matchingDeliveryPoint = lodash.find(this.state.addressData.deliveryPoints, deliveryPoint => (
+	    const matchingDeliveryPoint = this.state.addressData.deliveryPoints.find(deliveryPoint => (
 	      deliveryPoint.udprn === addressId
 	    ))
 

@@ -3,9 +3,11 @@
     "extends": [
       "airbnb",
       "eslint:recommended",
-      "plugin:react/recommended"
+      "plugin:react/recommended",
+      "plugin:you-dont-need-lodash-underscore/compatible"
     ],
     "rules": {
+      "no-sparse-arrays": "error",
       "no-multiple-empty-lines": ["error", { "max": 1}],
       "object-curly-spacing": 0,
       "array-bracket-spacing": 0,
