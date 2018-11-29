@@ -1,17 +1,7 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 
 import ChristmasBanner from '../ChristmasBanner'
 
-const Banner = ({ isAuthenticated }) => {
-  return (isAuthenticated) ? <ChristmasBanner /> : <ChristmasBanner />
-}
-
-Banner.propTypes = {
-  isAuthenticated: PropTypes.bool,
-}
-
-Banner.defaultProps = {
-  isAuthenticated: false,
-}
+const Banner = () => (<ChristmasBanner />)
 
 export default Banner
