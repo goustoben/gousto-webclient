@@ -1,16 +1,16 @@
-import actionTypes from './actionTypes'
 import basketActions from 'actions/basket'
 import { limitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
 import { getUserOrderById } from 'utils/user'
-import boxSummaryActions from './boxSummary'
-import menuActions from './menu'
-import statusActions from './status'
 import config from 'config'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import { updateOrderItems } from 'apis/orders'
 import { getCollectionIdWithName } from 'utils/collections'
+import statusActions from './status'
+import menuActions from './menu'
+import boxSummaryActions from './boxSummary'
+import actionTypes from './actionTypes'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
   const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
@@ -486,7 +486,22 @@ export default {
   ),
 
   basketCheckedOut: (numRecipes, view) => (
-    (dispatch) => {
+    (dispatch, getState) => {
+      const { auth, tracking, pricing } = getState()
+
+      if(auth.get('isAuthenticated')) {
+        dispatch({
+          type: actionTypes.CHECKOUT_ORDER_PLACED,
+          trackingData: {
+            actionType: 'Order Placed',
+            asource: tracking.get('asource'),
+            order_total: pricing.get('prices').get('total'),
+            promo_code: pricing.get('prices').get('promoCode'),
+            signup: false,
+          }
+        })
+      }
+
       dispatch({
         type: actionTypes.BASKET_CHECKOUT,
         trackingData: {
