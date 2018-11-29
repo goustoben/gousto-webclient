@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import actionTypes from 'actions/actionTypes'
 import logger from 'utils/logger'
 import { publicKey } from '../config'
 import { hasPropUpdated } from './utils'
@@ -11,18 +12,32 @@ import css from './CheckoutFrame.css'
 class CheckoutFrame extends React.Component {
   static propTypes = {
     change: PropTypes.func,
-    cardTokenisationFailed: PropTypes.func,
+    fireCheckoutError: PropTypes.func,
     checkoutClearErrors: PropTypes.func,
+    disableCardSubmission: PropTypes.func,
+    cardTokenReady: PropTypes.func,
+    billingAddress: PropTypes.object,
     cardName: PropTypes.string,
     formName: PropTypes.string,
     sectionName: PropTypes.string,
-    billingAddress: PropTypes.object,
-    cardTokenReady: PropTypes.func,
     checkoutScriptReady: PropTypes.bool,
     isSubmitCardEnabled: PropTypes.bool,
-    disableCardSubmission: PropTypes.func,
-    validCardDetailsNotProvided: PropTypes.func,
     hasCheckoutError: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    change: () => {},
+    fireCheckoutError: () => {},
+    checkoutClearErrors: () => {},
+    disableCardSubmission: () => {},
+    cardTokenReady: () => {},
+    billingAddress: {},
+    cardName: '',
+    formName: 'checkout',
+    sectionName: 'payment',
+    checkoutScriptReady: false,
+    isSubmitCardEnabled: false,
+    hasCheckoutError: false,
   }
 
   componentDidMount() {
@@ -82,11 +97,11 @@ class CheckoutFrame extends React.Component {
   }
 
   submitCard = () => {
-    const { disableCardSubmission, validCardDetailsNotProvided } = this.props
+    const { disableCardSubmission, fireCheckoutError } = this.props
 
     Frames.submitCard()
       .catch(() => {
-        validCardDetailsNotProvided()
+        fireCheckoutError(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
       })
 
     disableCardSubmission()
@@ -113,10 +128,10 @@ class CheckoutFrame extends React.Component {
   }
 
   cardTokenisationFailed = () => {
-    const { cardTokenisationFailed } = this.props
+    const { fireCheckoutError } = this.props
 
     logger.error('card tokenisation failure')
-    cardTokenisationFailed()
+    fireCheckoutError(actionTypes.CARD_TOKENISATION_FAILED)
   }
 
   render() {

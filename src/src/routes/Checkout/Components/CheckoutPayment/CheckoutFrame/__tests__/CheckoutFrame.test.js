@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
+import actionTypes from 'actions/actionTypes'
 import { CheckoutFrame } from '../CheckoutFrame'
 
 jest.mock('routes/Checkout/Components/CheckoutPayment/config', () => ({
@@ -22,7 +23,7 @@ describe('CheckoutFrame', () => {
 
   const change = jest.fn()
   const cardTokenReady = jest.fn()
-  const cardTokenisationFailed = jest.fn()
+  const fireCheckoutError = jest.fn()
   const disableCardSubmission = jest.fn()
 
   afterEach(() => {
@@ -295,13 +296,13 @@ describe('CheckoutFrame', () => {
 
   describe('cardTokenisationFailed', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame cardTokenisationFailed={cardTokenisationFailed} />)
+      wrapper = mount(<CheckoutFrame fireCheckoutError={fireCheckoutError} />)
 
       wrapper.instance().cardTokenisationFailed()
     })
 
-    test('should call the cardTokenisationFailed prop', () => {
-      expect(cardTokenisationFailed).toHaveBeenCalled()
+    test('should call the fireCheckoutError prop with correct action type', () => {
+      expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.CARD_TOKENISATION_FAILED)
     })
   })
 })
