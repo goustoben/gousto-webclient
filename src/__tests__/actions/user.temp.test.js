@@ -62,6 +62,15 @@ describe('user actions', () => {
     beforeEach(() => {
       state = {
         basket: Immutable.fromJS({}),
+        pricing: Immutable.fromJS({
+          prices: {
+            total: '24.55',
+            promoCode: false,
+          }
+        }),
+        tracking: Immutable.fromJS({
+          asource: null,
+        }),
         form: {
           checkout: {
             values: {
@@ -99,7 +108,12 @@ describe('user actions', () => {
             },
             addresses: {},
             subscription: {},
-            orderId: {}
+            orderId: '12345',
+            paymentMethod: {
+              card: {
+                paymentProvider: 'sagepay'
+              }
+            }
           }
         })
       }))
@@ -112,7 +126,12 @@ describe('user actions', () => {
             },
             addresses: {},
             subscription: {},
-            orderId: {}
+            orderId: '12345',
+            paymentMethod: {
+              card: {
+                paymentProvider: 'checkout'
+              }
+            }
           }
         })
       }))
