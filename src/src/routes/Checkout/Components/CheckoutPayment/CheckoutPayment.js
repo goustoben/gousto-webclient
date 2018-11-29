@@ -12,7 +12,7 @@ import { CheckoutFrame } from './CheckoutFrame'
 
 export class CheckoutPayment extends React.Component {
   static propTypes = {
-    submit: PropTypes.func,
+    submit: PropTypes.func.isRequired,
     receiveRef: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
     asyncValidate: PropTypes.func,
@@ -25,7 +25,6 @@ export class CheckoutPayment extends React.Component {
   }
 
   static defaultProps = {
-    submit: () => {},
     receiveRef: () => {},
     scrollToFirstMatchingRef: () => {},
     asyncValidate: () => {},
@@ -41,11 +40,11 @@ export class CheckoutPayment extends React.Component {
     isSubmitCardEnabled: false,
   }
 
-  validateFormInput = () => {
+  applyValidationErrors = () => {
     const { formErrors, touchInputsInForm, formName, sectionName } = this.props
 
-    if (formErrors && formErrors.payment) {
-      touchInputsInForm(formErrors.payment, formName, sectionName)
+    if (formErrors && formErrors[sectionName]) {
+      touchInputsInForm(formErrors[sectionName], formName, sectionName)
     }
   }
 
@@ -61,20 +60,20 @@ export class CheckoutPayment extends React.Component {
     })
   }
 
-  isValid = () => {
-    const { formErrors } = this.props
+  isFormValid = () => {
+    const { formErrors, sectionName } = this.props
 
-    return !(formErrors && formErrors.payment)
+    return !(formErrors && formErrors[sectionName])
   }
 
   handleClick = () => {
-    this.validateFormInput()
+    const { trackingOrderPlace } = this.props
 
-    if (this.isValid()) {
-      const { trackingOrderPlace } = this.props
+    if (this.isFormValid()) {
       trackingOrderPlace(true, 'checkout')
-
       this.enableCardSubmission()
+    } else {
+      this.applyValidationErrors()
     }
   }
 
