@@ -175,6 +175,12 @@ export const cardTokenisationFailed = () => {
   }
 }
 
+export const validCardDetailsNotProvided = () => {
+  return (dispatch) => {
+    dispatch(error(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED, true))
+  }
+}
+
 export function checkoutSignup() {
   return async (dispatch) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
