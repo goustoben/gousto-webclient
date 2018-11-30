@@ -3,16 +3,16 @@ export const loadCheckoutScript = (callback) => {
     const existingScript = document.getElementById('checkout-com-frames')
 
     if (existingScript) {
-      callback()
-    } else {
-      const script = document.createElement('script')
-      script.src = 'https://cdn.checkout.com/js/frames.js'
-      script.id = 'checkout-com-frames'
-      document.body.appendChild(script)
+      existingScript.parentNode.removeChild(existingScript)
+    }
 
-      script.onload = () => {
-        callback()
-      }
+    const script = document.createElement('script')
+    script.src = 'https://cdn.checkout.com/js/frames.js'
+    script.id = 'checkout-com-frames'
+    document.body.appendChild(script)
+
+    script.onload = () => {
+      callback()
     }
   }
 }

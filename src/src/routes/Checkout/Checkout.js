@@ -74,6 +74,11 @@ class Checkout extends React.PureComponent {
     this.mobileStepMapping = mobileStepMapping(checkoutPaymentFeature)
   }
 
+  /* global Frames */
+  componentWillUnmount() {
+    Frames = undefined // eslint-disable-line no-global-assign
+  }
+
   static fetchData = async ({ store, query, params, browser }) => {
     const steps = browser === 'mobile' ? defaultMobile : defaultDesktop
 
