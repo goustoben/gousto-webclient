@@ -5,7 +5,9 @@ export const isSubmitting = state => {
     submitting = Object.keys(state.form).reduce((acc, val) =>
       acc || (state.form[val] && state.form[val].submitting)
     , false)
-  } else if (state.pending && state.pending.get('CHECKOUT_CARD_SUBMIT')) {
+  }
+
+  if (state.pending && state.pending.get('CHECKOUT_CARD_SUBMIT')) {
     submitting = true
   }
 
