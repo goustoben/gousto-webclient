@@ -86,8 +86,8 @@ class CheckoutFrame extends React.Component {
       cardTokenised: (e) => {
         this.cardTokenised(e, paymentForm)
       },
-      cardTokenisationFailed: () => {
-        this.cardTokenisationFailed()
+      cardTokenisationFailed: (e) => {
+        this.cardTokenisationFailed(e)
       },
       frameActivated: this.frameActivated
     })
@@ -131,12 +131,16 @@ class CheckoutFrame extends React.Component {
     }
   }
 
-  cardTokenisationFailed = () => {
+  cardTokenisationFailed = (e) => {
     const { fireCheckoutError, checkoutCardSubmit } = this.props
 
     logger.error('card tokenisation failure')
     checkoutCardSubmit(false)
-    fireCheckoutError(actionTypes.CARD_TOKENISATION_FAILED)
+
+    const isUnacceptedCardType = e.data.errorCode === '82031'
+    const errorType = isUnacceptedCardType ? actionTypes.CARD_TOKENISATION_FAILED : actionTypes.NETWORK_FAILURE
+
+    fireCheckoutError(errorType)
   }
 
   render() {

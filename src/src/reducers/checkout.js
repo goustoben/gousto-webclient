@@ -7,6 +7,7 @@ const errorsToCapture = [
   actionTypes.CHECKOUT_SIGNUP_LOGIN,
   actionTypes.ORDER_SAVE,
   actionTypes.CARD_TOKENISATION_FAILED,
+  actionTypes.NETWORK_FAILURE,
   actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED,
 ]
 
