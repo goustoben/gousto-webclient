@@ -146,6 +146,7 @@ module.exports = {
     'user-exists': 'An account with that e-mail address already exists',
     'user-promo-invalid': 'This discount code is only available for new customers. It looks like you or someone in your household already has a Gousto account.',
     'card-tokenisation-failed': 'Sorry, we don’t accept that type of card. Please try another one.',
+    'valid-card-details-not-provided': 'Your Card Number, Expiry Date and Security Number are required',
   },
   terms: 'By placing your order you agree to our',
   supportedCardTypes: ['VISA', 'MC', 'DELTA', 'MCDEBIT', 'UKE', 'MAESTRO'],

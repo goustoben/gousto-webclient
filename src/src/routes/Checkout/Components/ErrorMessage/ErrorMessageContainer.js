@@ -35,6 +35,8 @@ function mapStateToProps(state, ownProps) {
         }
       } else if (errors.get(actionTypes.CARD_TOKENISATION_FAILED)) {
         errorType = 'card-tokenisation-failed'
+      } else if (errors.get(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)) {
+        errorType = 'valid-card-details-not-provided'
       } else {
         // find last error that is truthy
         errorType = errors.findLast(error => !!error)

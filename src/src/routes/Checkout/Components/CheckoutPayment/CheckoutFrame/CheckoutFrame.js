@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import actionTypes from 'actions/actionTypes'
 import logger from 'utils/logger'
 import { publicKey } from '../config'
 import { hasPropUpdated } from './utils'
@@ -11,15 +12,32 @@ import css from './CheckoutFrame.css'
 class CheckoutFrame extends React.Component {
   static propTypes = {
     change: PropTypes.func,
-    cardTokenisationFailed: PropTypes.func,
+    fireCheckoutError: PropTypes.func,
     checkoutClearErrors: PropTypes.func,
+    disableCardSubmission: PropTypes.func,
+    cardTokenReady: PropTypes.func,
+    billingAddress: PropTypes.object,
     cardName: PropTypes.string,
     formName: PropTypes.string,
     sectionName: PropTypes.string,
-    billingAddress: PropTypes.object,
-    cardTokenReady: PropTypes.func,
     checkoutScriptReady: PropTypes.bool,
-    submitCheckoutFrame: PropTypes.bool,
+    isSubmitCardEnabled: PropTypes.bool,
+    hasCheckoutError: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    change: () => {},
+    fireCheckoutError: () => {},
+    checkoutClearErrors: () => {},
+    disableCardSubmission: () => {},
+    cardTokenReady: () => {},
+    billingAddress: {},
+    cardName: '',
+    formName: 'checkout',
+    sectionName: 'payment',
+    checkoutScriptReady: false,
+    isSubmitCardEnabled: false,
+    hasCheckoutError: false,
   }
 
   componentDidMount() {
@@ -31,7 +49,7 @@ class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, checkoutScriptReady, submitCheckoutFrame, checkoutClearErrors } = this.props
+    const { billingAddress, cardName, isSubmitCardEnabled, hasCheckoutError } = this.props
 
     if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
@@ -41,18 +59,18 @@ class CheckoutFrame extends React.Component {
       Frames.setBillingDetails(billingAddress)
     }
 
-    if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
-      this.initFrames()
+    if(hasPropUpdated(hasCheckoutError, prevProps.hasCheckoutError) && hasCheckoutError) {
+      Frames.unblockFields()
     }
 
-    if (hasPropUpdated(submitCheckoutFrame, prevProps.submitCheckoutFrame)) {
-      checkoutClearErrors()
-      Frames.submitCard()
+    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled){
+      this.submitCard()
     }
   }
 
   initFrames = () => {
     const { paymentForm } = this
+    const { checkoutClearErrors } = this.props
 
     Frames.init({
       publicKey,
@@ -61,8 +79,9 @@ class CheckoutFrame extends React.Component {
       localisation: {
         cardNumberPlaceholder: 'Card number',
       },
-      cardValidationChanged: () => {},
-      cardSubmitted: () => {},
+      cardSubmitted: () => {
+        checkoutClearErrors()
+      },
       cardTokenised: (e) => {
         this.cardTokenised(e, paymentForm)
       },
@@ -75,6 +94,17 @@ class CheckoutFrame extends React.Component {
 
   setPaymentFormRef = element => {
     this.paymentForm = element
+  }
+
+  submitCard = () => {
+    const { disableCardSubmission, fireCheckoutError } = this.props
+
+    Frames.submitCard()
+      .catch(() => {
+        fireCheckoutError(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
+      })
+
+    disableCardSubmission()
   }
 
   cardTokenised = (event, paymentForm) => {
@@ -98,10 +128,10 @@ class CheckoutFrame extends React.Component {
   }
 
   cardTokenisationFailed = () => {
-    const { cardTokenisationFailed } = this.props
+    const { fireCheckoutError } = this.props
 
     logger.error('card tokenisation failure')
-    cardTokenisationFailed()
+    fireCheckoutError(actionTypes.CARD_TOKENISATION_FAILED)
   }
 
   render() {

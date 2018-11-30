@@ -170,9 +170,9 @@ export function checkoutFetchIntervals() {
   }
 }
 
-export const cardTokenisationFailed = () => {
-  return (dispatch) => {
-    dispatch(error(actionTypes.CARD_TOKENISATION_FAILED, true))
+export const fireCheckoutError = (errorName, errorValue = true) => {
+  return dispatch => {
+    dispatch(error(errorName, errorValue))
   }
 }
 
