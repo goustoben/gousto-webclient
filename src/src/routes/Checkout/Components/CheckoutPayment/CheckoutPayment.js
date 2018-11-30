@@ -89,7 +89,7 @@ export class CheckoutPayment extends React.Component {
   }
 
   render() {
-    const { asyncValidate, checkoutScriptReady, receiveRef, scrollToFirstMatchingRef, sectionName } = this.props
+    const { asyncValidate, checkoutScriptReady, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName } = this.props
     const { isSubmitCardEnabled } = this.state
 
     return (
@@ -118,6 +118,7 @@ export class CheckoutPayment extends React.Component {
               <CheckoutFrame
                 checkoutScriptReady={checkoutScriptReady}
                 isSubmitCardEnabled={isSubmitCardEnabled}
+                reloadCheckoutScript={reloadCheckoutScript}
                 cardTokenReady={this.cardTokenReady}
                 disableCardSubmission={this.disableCardSubmission}
               />

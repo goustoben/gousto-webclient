@@ -15,6 +15,7 @@ class CheckoutFrame extends React.Component {
     fireCheckoutError: PropTypes.func,
     checkoutClearErrors: PropTypes.func,
     disableCardSubmission: PropTypes.func,
+    reloadCheckoutScript: PropTypes.func,
     cardTokenReady: PropTypes.func,
     billingAddress: PropTypes.object,
     cardName: PropTypes.string,
@@ -34,6 +35,7 @@ class CheckoutFrame extends React.Component {
     checkoutClearErrors: () => {},
     disableCardSubmission: () => {},
     cardTokenReady: () => {},
+    reloadCheckoutScript: () => {},
     billingAddress: {},
     cardName: '',
     formName: 'checkout',
@@ -52,7 +54,7 @@ class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, isSubmitCardEnabled, hasCheckoutError } = this.props
+    const { billingAddress, cardName, checkoutScriptReady, isSubmitCardEnabled, hasCheckoutError } = this.props
 
     if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
@@ -69,6 +71,19 @@ class CheckoutFrame extends React.Component {
     if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled){
       this.submitCard()
     }
+
+    if (hasPropUpdated(checkoutScriptReady,prevProps.checkoutScriptReady)) {
+      this.initFrames()
+    }
+  }
+
+  componentWillUnmount() {
+    const { reloadCheckoutScript } = this.props
+
+    if (Frames) {
+      Frames = undefined // eslint-disable-line no-global-assign
+    }
+    reloadCheckoutScript()
   }
 
   initFrames = () => {

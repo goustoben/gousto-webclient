@@ -74,11 +74,6 @@ class Checkout extends React.PureComponent {
     this.mobileStepMapping = mobileStepMapping(checkoutPaymentFeature)
   }
 
-  /* global Frames */
-  componentWillUnmount() {
-    Frames = undefined // eslint-disable-line no-global-assign
-  }
-
   static fetchData = async ({ store, query, params, browser }) => {
     const steps = browser === 'mobile' ? defaultMobile : defaultDesktop
 
@@ -165,6 +160,17 @@ class Checkout extends React.PureComponent {
     }
   }
 
+  reloadCheckoutScript = () => {
+    this.setState({
+      checkoutScriptReady: false,
+    })
+    loadCheckoutScript(() => {
+      this.setState({
+        checkoutScriptReady: true,
+      })
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.tariffId !== nextProps.tariffId) {
       this.props.loadPrices()
@@ -207,6 +213,7 @@ class Checkout extends React.PureComponent {
       onStepChange: this.onStepChange(steps, currentStep),
       isLastStep: this.isLastStep(steps, currentStep),
       nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
+      reloadCheckoutScript: this.reloadCheckoutScript,
       submitOrder,
       trackingOrderPlace,
       checkoutScriptReady,
