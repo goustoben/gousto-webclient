@@ -30,6 +30,13 @@ describe('CheckoutFrame', () => {
     Frames.init.mockClear()
     Frames.setCustomerName.mockClear()
     Frames.setBillingDetails.mockClear()
+    Frames.submitCard.mockClear()
+    Frames.addCardToken.mockClear()
+    Frames.unblockFields.mockClear()
+    change.mockClear()
+    cardTokenReady.mockClear()
+    fireCheckoutError.mockClear()
+    disableCardSubmission.mockClear()
   })
 
   describe('componentDidMount', () => {
@@ -145,7 +152,6 @@ describe('CheckoutFrame', () => {
         expect(Frames.unblockFields).not.toHaveBeenCalled()
       })
     })
-
 
     describe('submit checkout frame', () => {
       test('should call submitCard when updated', () => {
@@ -303,6 +309,32 @@ describe('CheckoutFrame', () => {
 
     test('should call the fireCheckoutError prop with correct action type', () => {
       expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.CARD_TOKENISATION_FAILED)
+    })
+  })
+
+  describe('submit card', () => {
+    beforeEach(async () => {
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} />)
+
+      await wrapper.instance().submitCard()
+    })
+
+    test('should call Frames.submitCard', () => {
+      expect(Frames.submitCard).toHaveBeenCalled()
+    })
+
+    test('should call fireCheckoutError if the Frames.submitCard call fails', async () => {
+      Frames.submitCard.mockClear()
+      Frames.submitCard.mockRejectedValue({})
+
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} />)
+
+      await wrapper.instance().submitCard()
+      expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
+    })
+
+    test('should call the disableCardSubmission prop', () => {
+      expect(disableCardSubmission).toHaveBeenCalled()
     })
   })
 })
