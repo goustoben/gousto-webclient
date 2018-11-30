@@ -272,4 +272,27 @@ export function trackingOrderPlace(isSignup, paymentProvider) {
   }
 }
 
+export function trackingCardTokenisationFailed(err){
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.CHECKOUT_CARD_TOKENIZATION_FAILED,
+      trackingData: {
+        actionType: 'CardTokenization Failed',
+        error_reason: err
+      }
+    })
+  }
+}
+
+export function trackingCardTokenisationSuccesfuly(){
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.CHECKOUT_CARD_TOKENIZATION_SUCCEEDED,
+      trackingData: {
+        actionType: 'CardTokenization Succeededs'
+      }
+    })
+  }
+}
+
 export default checkoutActions

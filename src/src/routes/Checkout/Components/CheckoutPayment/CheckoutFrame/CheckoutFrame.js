@@ -23,6 +23,9 @@ class CheckoutFrame extends React.Component {
     checkoutScriptReady: PropTypes.bool,
     isSubmitCardEnabled: PropTypes.bool,
     hasCheckoutError: PropTypes.bool,
+    trackingCardTokenizationSuccessful: PropTypes.func,
+    trackingCardTokenisationFailed: PropTypes.func,
+
   }
 
   static defaultProps = {
@@ -85,8 +88,8 @@ class CheckoutFrame extends React.Component {
       cardTokenised: (e) => {
         this.cardTokenised(e, paymentForm)
       },
-      cardTokenisationFailed: () => {
-        this.cardTokenisationFailed()
+      cardTokenisationFailed: (e) => {
+        this.cardTokenisationFailed(e)
       },
       frameActivated: this.frameActivated
     })
@@ -109,11 +112,13 @@ class CheckoutFrame extends React.Component {
 
   cardTokenised = (event, paymentForm) => {
     const { cardToken } = event.data
-    const { change, cardTokenReady, formName, sectionName } = this.props
+    const { change, cardTokenReady, formName, sectionName, trackingCardTokenizationSuccessful } = this.props
 
     Frames.addCardToken(paymentForm, cardToken)
     change(formName, `${sectionName}.token`, cardToken)
     cardTokenReady()
+    trackingCardTokenizationSuccessful()
+
   }
 
   frameActivated = () => {
@@ -127,11 +132,12 @@ class CheckoutFrame extends React.Component {
     }
   }
 
-  cardTokenisationFailed = () => {
-    const { fireCheckoutError } = this.props
-
+  cardTokenisationFailed = (e) => {
+    const { fireCheckoutError, trackingCardTokenisationFailed } = this.props
+    const errorMessage = e.data.message
     logger.error('card tokenisation failure')
     fireCheckoutError(actionTypes.CARD_TOKENISATION_FAILED)
+    trackingCardTokenisationFailed(errorMessage)
   }
 
   render() {
