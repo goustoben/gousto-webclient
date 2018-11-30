@@ -176,6 +176,12 @@ export const fireCheckoutError = (errorName, errorValue = true) => {
   }
 }
 
+export const checkoutCardSubmit = (checkoutValue = true) => {
+  return dispatch => {
+    dispatch(pending(actionTypes.CHECKOUT_CARD_SUBMIT, checkoutValue))
+  }
+}
+
 export function checkoutSignup() {
   return async (dispatch) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))

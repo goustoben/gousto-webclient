@@ -23,6 +23,7 @@ class CheckoutFrame extends React.Component {
     checkoutScriptReady: PropTypes.bool,
     isSubmitCardEnabled: PropTypes.bool,
     hasCheckoutError: PropTypes.bool,
+    checkoutCardSubmit: PropTypes.func
   }
 
   static defaultProps = {
@@ -97,11 +98,13 @@ class CheckoutFrame extends React.Component {
   }
 
   submitCard = () => {
-    const { disableCardSubmission, fireCheckoutError } = this.props
+    const { disableCardSubmission, fireCheckoutError, checkoutCardSubmit } = this.props
 
+    checkoutCardSubmit(true)
     Frames.submitCard()
       .catch(() => {
         fireCheckoutError(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
+        checkoutCardSubmit(false)
       })
 
     disableCardSubmission()
@@ -109,9 +112,10 @@ class CheckoutFrame extends React.Component {
 
   cardTokenised = (event, paymentForm) => {
     const { cardToken } = event.data
-    const { change, cardTokenReady, formName, sectionName } = this.props
+    const { change, cardTokenReady, formName, sectionName, checkoutCardSubmit } = this.props
 
     Frames.addCardToken(paymentForm, cardToken)
+    checkoutCardSubmit(false)
     change(formName, `${sectionName}.token`, cardToken)
     cardTokenReady()
   }
@@ -128,9 +132,10 @@ class CheckoutFrame extends React.Component {
   }
 
   cardTokenisationFailed = () => {
-    const { fireCheckoutError } = this.props
+    const { fireCheckoutError, checkoutCardSubmit } = this.props
 
     logger.error('card tokenisation failure')
+    checkoutCardSubmit(false)
     fireCheckoutError(actionTypes.CARD_TOKENISATION_FAILED)
   }
 
