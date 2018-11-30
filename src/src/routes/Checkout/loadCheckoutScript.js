@@ -3,7 +3,7 @@ export const loadCheckoutScript = (callback) => {
     const existingScript = document.getElementById('checkout-com-frames')
 
     if (existingScript) {
-      existingScript.parentNode.removeChild(existingScript)
+      existingScript.parentElement.removeChild(existingScript)
     }
 
     const script = document.createElement('script')
