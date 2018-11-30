@@ -486,21 +486,7 @@ export default {
   ),
 
   basketCheckedOut: (numRecipes, view) => (
-    (dispatch, getState) => {
-      const { auth, tracking, pricing } = getState()
-
-      if(auth.get('isAuthenticated')) {
-        dispatch({
-          type: actionTypes.CHECKOUT_ORDER_PLACED,
-          trackingData: {
-            actionType: 'Order Placed',
-            asource: tracking.get('asource'),
-            order_total: pricing.get('prices').get('total'),
-            promo_code: pricing.get('prices').get('promoCode'),
-            signup: false,
-          }
-        })
-      }
+    (dispatch) => {
 
       dispatch({
         type: actionTypes.BASKET_CHECKOUT,
