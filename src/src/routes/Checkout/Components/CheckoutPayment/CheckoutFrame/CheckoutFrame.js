@@ -134,7 +134,7 @@ class CheckoutFrame extends React.Component {
 
   cardTokenisationFailed = (e) => {
     const { fireCheckoutError, trackingCardTokenisationFailed } = this.props
-    const errorMessage = e.data.message
+    const errorMessage = e ? e.data.message : ''
     logger.error('card tokenisation failure')
     fireCheckoutError(actionTypes.CARD_TOKENISATION_FAILED)
     trackingCardTokenisationFailed(errorMessage)
