@@ -43,8 +43,8 @@ export class CheckoutPayment extends React.Component {
   applyValidationErrors = () => {
     const { formErrors, touch, formName, sectionName } = this.props
 
-    if (formErrors && formErrors.payment) {
-      for (let formError in formErrors.payment) {
+    if (formErrors && formErrors[sectionName]) {
+      for (let formError in formErrors[sectionName]) {
         touch(formName, `${sectionName}[${formError}]`)
       }
     }
