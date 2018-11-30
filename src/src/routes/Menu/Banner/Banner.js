@@ -1,28 +1,7 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 
-import config from 'config/menu'
-import BoostAndBalanceBanner from '../BoostAndBalanceBanner'
-import FineDineInBanner from '../FineDineInBanner'
-import TenToTableBanner from '../TenToTableBanner'
+import ChristmasBanner from '../ChristmasBanner'
 
-const tenToTableValid = () => (
-  new Date() > new Date(config.tenToTableBanner.startDate)
-)
-
-const Banner = ({ isAuthenticated }) => {
-  if (tenToTableValid()) {
-    return <TenToTableBanner />
-  }
-
-  return (isAuthenticated) ? <FineDineInBanner /> : <BoostAndBalanceBanner />
-}
-
-Banner.propTypes = {
-  isAuthenticated: PropTypes.bool,
-}
-
-Banner.defaultProps = {
-  isAuthenticated: false,
-}
+const Banner = () => (<ChristmasBanner />)
 
 export default Banner

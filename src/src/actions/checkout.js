@@ -27,6 +27,7 @@ const checkoutActions = {
   resetDuplicateCheck,
   trackSignupPageChange,
   checkoutFetchIntervals,
+  trackingOrderPlace,
 }
 
 export function checkoutClearErrors() {
@@ -169,9 +170,9 @@ export function checkoutFetchIntervals() {
   }
 }
 
-export const cardTokenisationFailed = () => {
-  return (dispatch) => {
-    dispatch(error(actionTypes.CARD_TOKENISATION_FAILED, true))
+export const fireCheckoutError = (errorName, errorValue = true) => {
+  return dispatch => {
+    dispatch(error(errorName, errorValue))
   }
 }
 
@@ -248,6 +249,49 @@ export function checkoutPostSignup() {
 export function trackSignupPageChange(step) {
   return (dispatch) => {
     dispatch({ type: actionTypes.SIGNUP_TRACKING_STEP_CHANGE, step })
+  }
+}
+
+export function trackingOrderPlace(isSignup, paymentProvider) {
+  return(dispatch, getState) => {
+    const { tracking, basket, pricing } = getState()
+    const prices = pricing.get('prices')
+
+    dispatch({
+      type: actionTypes.CHECKOUT_ORDER_PLACE,
+      trackingData: {
+        actionType: 'Order Place',
+        asource: tracking.get('asource'),
+        order_id: basket.get('previewOrderId'),
+        order_total: prices.get('grossTotal'),
+        promo_code: prices.get('promoCode'),
+        signup: isSignup,
+        payment_provider: paymentProvider,
+      }
+    })
+  }
+}
+
+export function trackingCardTokenisationFailed(err){
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.CHECKOUT_CARD_TOKENIZATION_FAILED,
+      trackingData: {
+        actionType: 'CardTokenization Failed',
+        error_reason: err
+      }
+    })
+  }
+}
+
+export function trackingCardTokenisationSuccessfully(){
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.CHECKOUT_CARD_TOKENIZATION_SUCCEEDED,
+      trackingData: {
+        actionType: 'CardTokenization Succeededs'
+      }
+    })
   }
 }
 

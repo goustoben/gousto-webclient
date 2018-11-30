@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
+import actionTypes from 'actions/actionTypes'
 import { CheckoutFrame } from '../CheckoutFrame'
 
 jest.mock('routes/Checkout/Components/CheckoutPayment/config', () => ({
@@ -14,18 +15,28 @@ describe('CheckoutFrame', () => {
     setCustomerName: jest.fn(),
     setBillingDetails: jest.fn(),
     submitCard: jest.fn(),
-    addCardToken: jest.fn()
+    addCardToken: jest.fn(),
+    unblockFields: jest.fn()
   }
   global.Frames = Frames
+  Frames.submitCard.mockResolvedValue({})
+
   const change = jest.fn()
   const cardTokenReady = jest.fn()
-  const cardTokenisationFailed = jest.fn()
-  const checkoutClearErrors = jest.fn()
+  const fireCheckoutError = jest.fn()
+  const disableCardSubmission = jest.fn()
 
   afterEach(() => {
     Frames.init.mockClear()
     Frames.setCustomerName.mockClear()
     Frames.setBillingDetails.mockClear()
+    Frames.submitCard.mockClear()
+    Frames.addCardToken.mockClear()
+    Frames.unblockFields.mockClear()
+    change.mockClear()
+    cardTokenReady.mockClear()
+    fireCheckoutError.mockClear()
+    disableCardSubmission.mockClear()
   })
 
   describe('componentDidMount', () => {
@@ -114,38 +125,56 @@ describe('CheckoutFrame', () => {
       })
     })
 
-    describe('checkout script ready ', () => {
-      test('should call Frames.init when updated', () => {
-        wrapper = mount(<CheckoutFrame />)
-        wrapper.setProps({ checkoutScriptReady: true })
+    describe('has checkout error ', () => {
+      const hasCheckoutError = true
 
-        expect(Frames.init).toHaveBeenCalled()
+      test('should call Frames.unblockFields when updated and value is true', () => {
+        wrapper = mount(<CheckoutFrame />)
+        Frames.unblockFields.mockClear()
+        wrapper.setProps({ hasCheckoutError: hasCheckoutError })
+
+        expect(Frames.unblockFields).toHaveBeenCalled()
       })
 
-      test('should not call Frames.init when not updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
-        Frames.init.mockClear()
-        wrapper.setProps({ checkoutScriptReady: true })
+      test('should call Frames.unblockFields when updated and value is false', () => {
+        wrapper = mount(<CheckoutFrame />)
+        Frames.unblockFields.mockClear()
+        wrapper.setProps({ hasCheckoutError: false })
 
-        expect(Frames.init).not.toHaveBeenCalled()
+        expect(Frames.unblockFields).not.toHaveBeenCalled()
+      })
+
+      test('should not call Frames.unblockFields when not updated', () => {
+        wrapper = mount(<CheckoutFrame hasCheckoutError={hasCheckoutError} />)
+        Frames.unblockFields.mockClear()
+        wrapper.setProps({ hasCheckoutError: hasCheckoutError })
+
+        expect(Frames.unblockFields).not.toHaveBeenCalled()
       })
     })
 
-    describe('submit checkout frame ', () => {
-      test('should call Frames.submitCard when updated', () => {
-        wrapper = mount(<CheckoutFrame />)
-        wrapper.setProps({ submitCheckoutFrame: true, checkoutClearErrors })
+    describe('submit checkout frame', () => {
+      test('should call submitCard when updated', () => {
+        wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} />)
 
-        expect(Frames.submitCard).toHaveBeenCalled()
-        expect(checkoutClearErrors).toHaveBeenCalled()
+        const submitCard = jest.fn()
+        wrapper.instance().submitCard = submitCard
+        wrapper.update()
+
+        wrapper.setProps({ isSubmitCardEnabled: true })
+
+        expect(submitCard).toHaveBeenCalled()
       })
 
-      test('should not call Frames.submitCard when not updated', () => {
-        wrapper = mount(<CheckoutFrame submitCheckoutFrame />)
-        Frames.submitCard.mockClear()
-        wrapper.setProps({ submitCheckoutFrame: true })
+      test('should not call submitCard when not updated', () => {
+        wrapper = mount(<CheckoutFrame submitCheckoutFrame disableCardSubmission={disableCardSubmission} />)
+        wrapper.setProps({ isSubmitCardEnabled: true })
 
-        expect(Frames.submitCard).not.toHaveBeenCalled()
+        const submitCard = jest.fn()
+        wrapper.instance().submitCard = submitCard
+        wrapper.update()
+
+        expect(submitCard).not.toHaveBeenCalled()
       })
     })
 
@@ -156,14 +185,21 @@ describe('CheckoutFrame', () => {
       wrapper = mount(<CheckoutFrame />)
     })
 
-    test('should create a frames-container for the iframe', () => {
-      expect(wrapper.find('.frames-container')).toHaveLength(1)
+    test('should create a framesContainer for the iframe', () => {
+      expect(wrapper.find('.framesContainer')).toHaveLength(1)
     })
   })
 
   describe('cardTokenised', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame change={change} formName={"checkout"} sectionName={"payment"} cardTokenReady={cardTokenReady} />)
+      wrapper = mount(<CheckoutFrame
+        change={change}
+        formName={"checkout"}
+        sectionName={"payment"}
+        cardTokenReady={cardTokenReady}
+        trackingCardTokenisationSuccessfully={jest.fn()}
+        trackingCardTokenisationFailed={jest.fn()}
+      />)
 
       const mockEvent = {
         data: {
@@ -188,7 +224,7 @@ describe('CheckoutFrame', () => {
     })
 
     test('should call the cardTokenReady prop', () => {
-      expect(wrapper.find('.frames-container')).toHaveLength(1)
+      expect(wrapper.find('.framesContainer')).toHaveLength(1)
     })
 
   })
@@ -273,13 +309,43 @@ describe('CheckoutFrame', () => {
 
   describe('cardTokenisationFailed', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame cardTokenisationFailed={cardTokenisationFailed} />)
+      wrapper = mount(<CheckoutFrame
+        fireCheckoutError={fireCheckoutError}
+        trackingCardTokenisationSuccessfully={jest.fn()}
+        trackingCardTokenisationFailed={jest.fn()}
+      />)
 
       wrapper.instance().cardTokenisationFailed()
     })
 
-    test('should call the cardTokenisationFailed prop', () => {
-      expect(cardTokenisationFailed).toHaveBeenCalled()
+    test('should call the fireCheckoutError prop with correct action type', () => {
+      expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.CARD_TOKENISATION_FAILED)
+    })
+  })
+
+  describe('submit card', () => {
+    beforeEach(async () => {
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} />)
+
+      await wrapper.instance().submitCard()
+    })
+
+    test('should call Frames.submitCard', () => {
+      expect(Frames.submitCard).toHaveBeenCalled()
+    })
+
+    test('should call fireCheckoutError if the Frames.submitCard call fails', async () => {
+      Frames.submitCard.mockClear()
+      Frames.submitCard.mockRejectedValue({})
+
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} />)
+
+      await wrapper.instance().submitCard()
+      expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
+    })
+
+    test('should call the disableCardSubmission prop', () => {
+      expect(disableCardSubmission).toHaveBeenCalled()
     })
   })
 })

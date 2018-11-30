@@ -12,6 +12,7 @@ import {
   checkoutCreatePreviewOrder,
   checkoutAddressLookup,
   checkoutSignup,
+  fireCheckoutError,
   checkoutPostSignup,
   trackPurchase,
 } from 'actions/checkout'
@@ -256,6 +257,32 @@ describe('checkout actions', () => {
         key: actionTypes.CHECKOUT_ADDRESSES_RECEIVE,
         type: 'PENDING',
         value: true,
+      })
+    })
+  })
+
+  describe('fireCheckoutError', () => {
+    it('should dispatch an error with no value', async () => {
+      getState.mockReturnValue(createState())
+      await fireCheckoutError('CARD_TOKENISATION_FAILED')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(dispatch).toHaveBeenCalledWith({
+        key: 'CARD_TOKENISATION_FAILED',
+        type: actionTypes.ERROR,
+        value: true,
+      })
+    })
+
+    it('should dispatch an error with an error value', async () => {
+      getState.mockReturnValue(createState())
+      const errorText = 'card not accepted'
+
+      await fireCheckoutError('CARD_TOKENISATION_FAILED', errorText)(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(dispatch).toHaveBeenCalledWith({
+        key: 'CARD_TOKENISATION_FAILED',
+        type: actionTypes.ERROR,
+        value: errorText,
       })
     })
   })

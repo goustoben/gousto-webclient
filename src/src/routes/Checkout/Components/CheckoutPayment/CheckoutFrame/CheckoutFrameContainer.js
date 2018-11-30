@@ -1,10 +1,15 @@
 import { connect } from 'react-redux'
 import { getFormValues, change } from 'redux-form'
 
+import { hasCheckoutError } from 'selectors/checkout'
+import { 
+  fireCheckoutError,
+  checkoutClearErrors,
+  trackingCardTokenisationSuccessfully,
+  trackingCardTokenisationFailed
+} from 'actions/checkout'
 import { formName, sectionName } from '../config'
 import { getBillingAddress } from './utils'
-import { cardTokenisationFailed, checkoutClearErrors } from 'actions/checkout'
-
 import { CheckoutFrame } from './CheckoutFrame'
 
 const mapStateToProps = state => {
@@ -15,13 +20,16 @@ const mapStateToProps = state => {
     sectionName,
     cardName: formValues && formValues[sectionName] && formValues[sectionName].cardName ? formValues[sectionName].cardName : '',
     billingAddress : getBillingAddress(formValues),
+    hasCheckoutError:  hasCheckoutError(state),
   }
 }
 
 const mapDispatchToProps = {
   change,
-  cardTokenisationFailed,
   checkoutClearErrors,
+  fireCheckoutError,
+  trackingCardTokenisationSuccessfully,
+  trackingCardTokenisationFailed,
 }
 
 export const CheckoutFrameContainer = connect(
