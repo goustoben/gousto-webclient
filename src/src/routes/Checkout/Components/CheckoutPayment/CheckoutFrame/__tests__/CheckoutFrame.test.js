@@ -25,7 +25,7 @@ describe('CheckoutFrame', () => {
   const cardTokenReady = jest.fn()
   const fireCheckoutError = jest.fn()
   const disableCardSubmission = jest.fn()
-  const checkoutCardSubmit = jest.fn()
+  const fireCheckoutPendingEvent = jest.fn()
 
   afterEach(() => {
     Frames.init.mockClear()
@@ -156,7 +156,7 @@ describe('CheckoutFrame', () => {
 
     describe('submit checkout frame', () => {
       test('should call submitCard when updated', () => {
-        wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} checkoutCardSubmit={checkoutCardSubmit} />)
+        wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
 
         const submitCard = jest.fn()
         wrapper.instance().submitCard = submitCard
@@ -168,7 +168,7 @@ describe('CheckoutFrame', () => {
       })
 
       test('should not call submitCard when not updated', () => {
-        wrapper = mount(<CheckoutFrame submitCheckoutFrame disableCardSubmission={disableCardSubmission} checkoutCardSubmit={checkoutCardSubmit}/>)
+        wrapper = mount(<CheckoutFrame submitCheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
         wrapper.setProps({ isSubmitCardEnabled: true })
 
         const submitCard = jest.fn()
@@ -193,7 +193,7 @@ describe('CheckoutFrame', () => {
 
   describe('cardTokenised', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame change={change} formName={"checkout"} sectionName={"payment"} cardTokenReady={cardTokenReady} checkoutCardSubmit={checkoutCardSubmit} />)
+      wrapper = mount(<CheckoutFrame change={change} formName={"checkout"} sectionName={"payment"} cardTokenReady={cardTokenReady} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
 
       const mockEvent = {
         data: {
@@ -310,7 +310,7 @@ describe('CheckoutFrame', () => {
           message:''
         }
       }
-      wrapper = mount(<CheckoutFrame fireCheckoutError={fireCheckoutError} checkoutCardSubmit={checkoutCardSubmit} checkoutCardSubmit={checkoutCardSubmit}/>)
+      wrapper = mount(<CheckoutFrame fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
 
       wrapper.instance().cardTokenisationFailed(event)
 
@@ -324,7 +324,7 @@ describe('CheckoutFrame', () => {
           message:'card tokenisation failure'
         }
       }
-      wrapper = mount(<CheckoutFrame fireCheckoutError={fireCheckoutError} checkoutCardSubmit={checkoutCardSubmit} checkoutCardSubmit={checkoutCardSubmit}/>)
+      wrapper = mount(<CheckoutFrame fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
       wrapper.instance().cardTokenisationFailed(event)
 
       expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.CARD_TOKENISATION_FAILED)
@@ -333,7 +333,7 @@ describe('CheckoutFrame', () => {
 
   describe('submit card', () => {
     beforeEach(async () => {
-      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} checkoutCardSubmit={checkoutCardSubmit}/>)
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
 
       await wrapper.instance().submitCard()
     })
@@ -346,7 +346,7 @@ describe('CheckoutFrame', () => {
       Frames.submitCard.mockClear()
       Frames.submitCard.mockRejectedValue({})
 
-      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} checkoutCardSubmit={checkoutCardSubmit}/>)
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
 
       await wrapper.instance().submitCard()
       expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)

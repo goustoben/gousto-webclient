@@ -176,9 +176,9 @@ export const fireCheckoutError = (errorName, errorValue = true) => {
   }
 }
 
-export const checkoutCardSubmit = (checkoutValue = true) => {
+export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => {
   return dispatch => {
-    dispatch(pending(actionTypes.CHECKOUT_CARD_SUBMIT, checkoutValue))
+    dispatch(pending(pendingName, checkoutValue))
   }
 }
 
