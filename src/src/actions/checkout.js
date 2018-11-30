@@ -284,7 +284,7 @@ export function trackingCardTokenisationFailed(err){
   }
 }
 
-export function trackingCardTokenisationSuccesfuly(){
+export function trackingCardTokenisationSuccessfully(){
   return (dispatch) => {
     dispatch({
       type: actionTypes.CHECKOUT_CARD_TOKENIZATION_SUCCEEDED,
