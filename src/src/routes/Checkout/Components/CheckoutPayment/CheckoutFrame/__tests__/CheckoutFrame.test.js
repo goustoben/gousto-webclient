@@ -192,7 +192,14 @@ describe('CheckoutFrame', () => {
 
   describe('cardTokenised', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame change={change} formName={"checkout"} sectionName={"payment"} cardTokenReady={cardTokenReady} />)
+      wrapper = mount(<CheckoutFrame
+        change={change}
+        formName={"checkout"}
+        sectionName={"payment"}
+        cardTokenReady={cardTokenReady}
+        trackingCardTokenizationSuccessful={jest.fn()}
+        trackingCardTokenisationFailed={jest.fn()}
+      />)
 
       const mockEvent = {
         data: {
@@ -302,7 +309,11 @@ describe('CheckoutFrame', () => {
 
   describe('cardTokenisationFailed', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame fireCheckoutError={fireCheckoutError} />)
+      wrapper = mount(<CheckoutFrame
+        fireCheckoutError={fireCheckoutError}
+        trackingCardTokenizationSuccessful={jest.fn()}
+        trackingCardTokenisationFailed={jest.fn()}
+      />)
 
       wrapper.instance().cardTokenisationFailed()
     })
