@@ -197,7 +197,7 @@ describe('CheckoutFrame', () => {
         formName={"checkout"}
         sectionName={"payment"}
         cardTokenReady={cardTokenReady}
-        trackingCardTokenizationSuccessful={jest.fn()}
+        trackingCardTokenisationSuccessfully={jest.fn()}
         trackingCardTokenisationFailed={jest.fn()}
       />)
 
@@ -311,7 +311,7 @@ describe('CheckoutFrame', () => {
     beforeEach(() => {
       wrapper = mount(<CheckoutFrame
         fireCheckoutError={fireCheckoutError}
-        trackingCardTokenizationSuccessful={jest.fn()}
+        trackingCardTokenisationSuccessfully={jest.fn()}
         trackingCardTokenisationFailed={jest.fn()}
       />)
 

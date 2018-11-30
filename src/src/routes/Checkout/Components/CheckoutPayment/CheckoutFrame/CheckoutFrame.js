@@ -23,7 +23,7 @@ class CheckoutFrame extends React.Component {
     checkoutScriptReady: PropTypes.bool,
     isSubmitCardEnabled: PropTypes.bool,
     hasCheckoutError: PropTypes.bool,
-    trackingCardTokenizationSuccessful: PropTypes.func,
+    trackingCardTokenisationSuccessfully: PropTypes.func,
     trackingCardTokenisationFailed: PropTypes.func,
 
   }
@@ -112,12 +112,12 @@ class CheckoutFrame extends React.Component {
 
   cardTokenised = (event, paymentForm) => {
     const { cardToken } = event.data
-    const { change, cardTokenReady, formName, sectionName, trackingCardTokenizationSuccessful } = this.props
+    const { change, cardTokenReady, formName, sectionName, trackingCardTokenisationSuccessfully } = this.props
 
     Frames.addCardToken(paymentForm, cardToken)
     change(formName, `${sectionName}.token`, cardToken)
     cardTokenReady()
-    trackingCardTokenizationSuccessful()
+    trackingCardTokenisationSuccessfully()
 
   }
 

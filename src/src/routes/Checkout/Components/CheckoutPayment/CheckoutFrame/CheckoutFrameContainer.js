@@ -5,7 +5,7 @@ import { hasCheckoutError } from 'selectors/checkout'
 import { 
   fireCheckoutError,
   checkoutClearErrors,
-  trackingCardTokenizationSuccessful,
+  trackingCardTokenisationSuccessfully,
   trackingCardTokenisationFailed
 } from 'actions/checkout'
 import { formName, sectionName } from '../config'
@@ -28,7 +28,7 @@ const mapDispatchToProps = {
   change,
   checkoutClearErrors,
   fireCheckoutError,
-  trackingCardTokenizationSuccessful,
+  trackingCardTokenisationSuccessfully,
   trackingCardTokenisationFailed,
 }
 
