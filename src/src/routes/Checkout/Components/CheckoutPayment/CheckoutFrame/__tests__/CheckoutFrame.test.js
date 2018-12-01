@@ -18,7 +18,10 @@ describe('CheckoutFrame', () => {
     addCardToken: jest.fn(),
     unblockFields: jest.fn()
   }
-  global.Frames = Frames
+
+  beforeEach(() => {
+    global.Frames = Frames
+  })
   Frames.submitCard.mockResolvedValue({})
 
   const change = jest.fn()
@@ -178,6 +181,25 @@ describe('CheckoutFrame', () => {
       })
     })
 
+  })
+
+  describe('componentWillUnmount', () => {
+    const reloadCheckoutScript = jest.fn()
+
+    beforeEach(() => {
+      wrapper = mount(<CheckoutFrame
+        reloadCheckoutScript={reloadCheckoutScript}
+      />)
+      wrapper.unmount()
+    })
+
+    test('should remove the global Frames reference', () => {
+      expect(global.Frames).toBe(undefined)
+    })
+
+    test('should call reloadCheckoutScript', () => {
+      expect(reloadCheckoutScript).toHaveBeenCalled()
+    })
   })
 
   describe('rendering', () => {
