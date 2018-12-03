@@ -2,6 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Field } from 'redux-form'
 
+import Loading from 'Loading'
 import SubmitButton from 'routes/Checkout/Components/SubmitButton'
 import { PaymentHeader } from 'routes/Checkout/Components/PaymentHeader'
 import { BillingAddress } from 'routes/Checkout/Components/BillingAddress'
@@ -51,6 +52,26 @@ describe('CheckoutPayment', () => {
 
     test('should render a SubmitButton', () => {
       expect(wrapper.find(SubmitButton)).toHaveLength(1)
+    })
+  })
+
+  describe('when loading', () => {
+    beforeEach(() => {
+      wrapper.setState({ loading: true })
+    })
+
+    test('should render a Loading spinner', () => {
+      expect(wrapper.find(Loading)).toHaveLength(1)
+    })
+  })
+
+  describe('when loaded', () => {
+    beforeEach(() => {
+      wrapper.setState({ loading: false })
+    })
+
+    test('should not render a Loading spinner', () => {
+      expect(wrapper.find(Loading)).toHaveLength(0)
     })
   })
 
@@ -108,6 +129,20 @@ describe('CheckoutPayment', () => {
       cardTokenReady()
 
       expect(submit).toHaveBeenCalled()
+    })
+  })
+
+  describe('checkoutFrameReady', () => {
+    beforeEach(() => {
+      wrapper.setState({ loading: true })
+    })
+
+    test('should set loading state to false', () => {
+      const checkoutFrameReady = wrapper.find(CheckoutFrame).prop('checkoutFrameReady')
+
+      checkoutFrameReady()
+
+      expect(wrapper.state('loading')).toBe(false)
     })
   })
 })

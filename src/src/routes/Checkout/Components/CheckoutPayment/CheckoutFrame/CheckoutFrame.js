@@ -22,6 +22,7 @@ class CheckoutFrame extends React.Component {
     formName: PropTypes.string,
     sectionName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
+    checkoutFrameReady: PropTypes.func,
     isSubmitCardEnabled: PropTypes.bool,
     hasCheckoutError: PropTypes.bool,
     fireCheckoutPendingEvent: PropTypes.func,
@@ -37,6 +38,7 @@ class CheckoutFrame extends React.Component {
     disableCardSubmission: () => {},
     cardTokenReady: () => {},
     reloadCheckoutScript: () => {},
+    checkoutFrameReady: () => {},
     billingAddress: {},
     cardName: '',
     formName: 'checkout',
@@ -141,7 +143,9 @@ class CheckoutFrame extends React.Component {
   }
 
   frameActivated = () => {
-    const { cardName, billingAddress } = this.props
+    const { billingAddress, cardName, checkoutFrameReady } = this.props
+
+    checkoutFrameReady()
 
     if (cardName) {
       Frames.setCustomerName(cardName)

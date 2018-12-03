@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, FormSection } from 'redux-form'
 
+import Loading from 'Loading'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import { BillingAddress } from '../BillingAddress'
 import { PaymentHeader } from '../PaymentHeader'
@@ -38,6 +39,7 @@ export class CheckoutPayment extends React.Component {
 
   state = {
     isSubmitCardEnabled: false,
+    loading: true,
   }
 
   applyValidationErrors = () => {
@@ -88,13 +90,24 @@ export class CheckoutPayment extends React.Component {
     submit()
   }
 
+  checkoutFrameReady = () => {
+    this.setState({
+      loading: false,
+    })
+  }
+
   render() {
     const { asyncValidate, checkoutScriptReady, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName } = this.props
-    const { isSubmitCardEnabled } = this.state
+    const { isSubmitCardEnabled, loading } = this.state
 
     return (
       <div>
         <div className={css.container} data-testing="checkoutPaymentSection">
+          {loading &&
+            <div className={css.loading}>
+              <Loading />
+            </div>
+          }
           <PaymentHeader />
           <FormSection name={sectionName}>
             <div className={css.wrapper}>
@@ -121,6 +134,7 @@ export class CheckoutPayment extends React.Component {
                 reloadCheckoutScript={reloadCheckoutScript}
                 cardTokenReady={this.cardTokenReady}
                 disableCardSubmission={this.disableCardSubmission}
+                checkoutFrameReady={this.checkoutFrameReady}
               />
             </div>
             <BillingAddress

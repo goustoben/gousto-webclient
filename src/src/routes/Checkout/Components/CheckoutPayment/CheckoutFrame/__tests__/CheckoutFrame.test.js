@@ -256,6 +256,7 @@ describe('CheckoutFrame', () => {
   describe('frameActivated', () => {
     let cardName
     let billingAddress
+    const checkoutFrameReady = jest.fn()
 
     const mountCheckoutFrameWithProps = (props) => (
       mount(
@@ -264,10 +265,19 @@ describe('CheckoutFrame', () => {
           formName="checkout"
           sectionName="payment"
           cardTokenReady={cardTokenReady}
+          checkoutFrameReady={checkoutFrameReady}
           {...props}
         />
       )
     )
+
+    test('should call checkoutFrameReady prop', () => {
+      wrapper = mountCheckoutFrameWithProps()
+
+      wrapper.instance().frameActivated()
+
+      expect(checkoutFrameReady).toHaveBeenCalled()
+    })
 
     describe('when props contain a valid customer name', () => {
       beforeEach(() => {
