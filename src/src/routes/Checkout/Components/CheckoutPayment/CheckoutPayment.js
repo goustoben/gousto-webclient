@@ -154,12 +154,10 @@ export class CheckoutPayment extends React.Component {
         { browser === 'mobile' &&
           <Summary />
         }
-        { browser === 'mobile' ?
+        { browser === 'mobile' &&
           <Section margin={{ top: 'LG' }}>
 			      <BoxDetails />
           </Section>
-          :
-          null
         }
       </div>
     )
