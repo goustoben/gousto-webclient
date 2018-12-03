@@ -10,6 +10,7 @@ import { CheckoutFrame } from 'routes/Checkout/Components/CheckoutPayment/Checko
 
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment/CheckoutPayment'
 import BoxDetails from '../../BoxDetails'
+import Summary from '../../Summary'
 
 describe('CheckoutPayment', () => {
   let wrapper
@@ -55,7 +56,7 @@ describe('CheckoutPayment', () => {
       expect(wrapper.find(SubmitButton)).toHaveLength(1)
     })
 
-    test('should render BoxDetail if view is mobile', () => {
+    test('should render BoxDetails and Summary if view is mobile', () => {
       wrapper = shallow(
         <CheckoutPayment
           trackingOrderPlace={trackingOrderPlace}
@@ -65,9 +66,10 @@ describe('CheckoutPayment', () => {
         />
       )
       expect(wrapper.find(BoxDetails)).toHaveLength(1)
+      expect(wrapper.find(Summary)).toHaveLength(1)
     })
 
-    test('should NOT render BoxDetail if view is desktop', () => {
+    test('should NOT render BoxDetails and Summary if view is desktop', () => {
       wrapper = shallow(
         <CheckoutPayment
           trackingOrderPlace={trackingOrderPlace}
@@ -77,6 +79,7 @@ describe('CheckoutPayment', () => {
         />
       )
       expect(wrapper.find(BoxDetails)).toHaveLength(0)
+      expect(wrapper.find(Summary)).toHaveLength(0)
     })
 
   })

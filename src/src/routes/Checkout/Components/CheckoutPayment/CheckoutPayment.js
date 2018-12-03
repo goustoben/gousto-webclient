@@ -6,6 +6,8 @@ import Loading from 'Loading'
 import { Section } from 'Page/Elements'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import BoxDetails from '../BoxDetails'
+import Summary from '../Summary'
+
 import { BillingAddress } from '../BillingAddress'
 import { PaymentHeader } from '../PaymentHeader'
 import SubmitButton from '../SubmitButton'
@@ -149,6 +151,9 @@ export class CheckoutPayment extends React.Component {
           </FormSection>
         </div>
         <SubmitButton onClick={this.handleClick} />
+        { browser === 'mobile' &&
+          <Summary />
+        }
         { browser === 'mobile' ?
           <Section margin={{ top: 'LG' }}>
 			      <BoxDetails />
