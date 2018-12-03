@@ -2,9 +2,10 @@ import { connect } from 'react-redux'
 import { getFormValues, change } from 'redux-form'
 
 import { hasCheckoutError } from 'selectors/checkout'
-import { 
+import {
   fireCheckoutError,
   checkoutClearErrors,
+  fireCheckoutPendingEvent,
   trackingCardTokenisationSuccessfully,
   trackingCardTokenisationFailed
 } from 'actions/checkout'
@@ -28,6 +29,7 @@ const mapDispatchToProps = {
   change,
   checkoutClearErrors,
   fireCheckoutError,
+  fireCheckoutPendingEvent,
   trackingCardTokenisationSuccessfully,
   trackingCardTokenisationFailed,
 }

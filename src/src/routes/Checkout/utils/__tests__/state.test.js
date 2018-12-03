@@ -1,7 +1,60 @@
-import { isBillingAddressDifferent } from '../state'
+import Immutable from 'immutable'
+import { isSubmitting, isBillingAddressDifferent } from '../state'
 
 let formValues = {}
 const sectionName = 'payment'
+let state = {}
+
+describe('is submitting', () => {
+
+  test('should return true if the form "submitting" value is true', () => {
+    state = {
+      pending: Immutable.Map({
+        "CHECKOUT_CARD_SUBMIT": false
+      }),
+      form: {
+        checkout: {
+          "submitting": true
+        }
+      }
+    }
+
+    expect(isSubmitting(state)).toEqual(true)
+  })
+
+  describe('when the form "submitting" value is false', () => {
+
+    test('and "CHECKOUT_CARD_SUBMIT" is pending it should return true', () => {
+      state = {
+        pending: Immutable.Map({
+          "CHECKOUT_CARD_SUBMIT": true
+        }),
+        form: {
+          checkout: {
+            "submitting": false
+          }
+        }
+      }
+      expect(isSubmitting(state)).toEqual(true)
+    })
+
+    test('and "CHECKOUT_CARD_SUBMIT" is not pending it should return false', () => {
+      state = {
+        pending: Immutable.Map({
+          "CHECKOUT_CARD_SUBMIT": false
+        }),
+        form: {
+          checkout: {
+            "submitting": false
+          }
+        }
+      }
+
+      expect(isSubmitting(state)).toEqual(false)
+    })
+  })
+
+})
 
 describe('is billing address different', () => {
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import actionTypes from 'actions/actionTypes'
 import logger from 'utils/logger'
 import { publicKey } from '../config'
-import { hasPropUpdated } from './utils'
+import { hasPropUpdated, getErrorType } from './utils'
 
 import css from './CheckoutFrame.css'
 
@@ -23,6 +23,7 @@ class CheckoutFrame extends React.Component {
     checkoutScriptReady: PropTypes.bool,
     isSubmitCardEnabled: PropTypes.bool,
     hasCheckoutError: PropTypes.bool,
+    fireCheckoutPendingEvent: PropTypes.func,
     trackingCardTokenisationSuccessfully: PropTypes.func,
     trackingCardTokenisationFailed: PropTypes.func,
 
@@ -100,11 +101,13 @@ class CheckoutFrame extends React.Component {
   }
 
   submitCard = () => {
-    const { disableCardSubmission, fireCheckoutError } = this.props
+    const { disableCardSubmission, fireCheckoutError, fireCheckoutPendingEvent } = this.props
 
+    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, true)
     Frames.submitCard()
       .catch(() => {
         fireCheckoutError(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
+        fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
       })
 
     disableCardSubmission()
@@ -112,9 +115,10 @@ class CheckoutFrame extends React.Component {
 
   cardTokenised = (event, paymentForm) => {
     const { cardToken } = event.data
-    const { change, cardTokenReady, formName, sectionName, trackingCardTokenisationSuccessfully } = this.props
+    const { change, cardTokenReady, formName, sectionName, fireCheckoutPendingEvent, trackingCardTokenisationSuccessfully } = this.props
 
     Frames.addCardToken(paymentForm, cardToken)
+    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
     change(formName, `${sectionName}.token`, cardToken)
     cardTokenReady()
     trackingCardTokenisationSuccessfully()
@@ -132,11 +136,14 @@ class CheckoutFrame extends React.Component {
     }
   }
 
-  cardTokenisationFailed = (e) => {
-    const { fireCheckoutError, trackingCardTokenisationFailed } = this.props
-    const errorMessage = e ? e.data.message : ''
+  cardTokenisationFailed = (event) => {
+    const { fireCheckoutError, fireCheckoutPendingEvent, trackingCardTokenisationFailed } = this.props
+    const errorMessage = event ? event.data.message : ''
+    const errorType = getErrorType(event.data.errorCode)
+
     logger.error('card tokenisation failure')
-    fireCheckoutError(actionTypes.CARD_TOKENISATION_FAILED)
+    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+    fireCheckoutError(errorType)
     trackingCardTokenisationFailed(errorMessage)
   }
 

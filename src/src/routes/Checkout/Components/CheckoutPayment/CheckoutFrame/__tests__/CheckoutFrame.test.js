@@ -25,6 +25,7 @@ describe('CheckoutFrame', () => {
   const cardTokenReady = jest.fn()
   const fireCheckoutError = jest.fn()
   const disableCardSubmission = jest.fn()
+  const fireCheckoutPendingEvent = jest.fn()
 
   afterEach(() => {
     Frames.init.mockClear()
@@ -155,7 +156,7 @@ describe('CheckoutFrame', () => {
 
     describe('submit checkout frame', () => {
       test('should call submitCard when updated', () => {
-        wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} />)
+        wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
 
         const submitCard = jest.fn()
         wrapper.instance().submitCard = submitCard
@@ -167,7 +168,7 @@ describe('CheckoutFrame', () => {
       })
 
       test('should not call submitCard when not updated', () => {
-        wrapper = mount(<CheckoutFrame submitCheckoutFrame disableCardSubmission={disableCardSubmission} />)
+        wrapper = mount(<CheckoutFrame submitCheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
         wrapper.setProps({ isSubmitCardEnabled: true })
 
         const submitCard = jest.fn()
@@ -199,6 +200,7 @@ describe('CheckoutFrame', () => {
         cardTokenReady={cardTokenReady}
         trackingCardTokenisationSuccessfully={jest.fn()}
         trackingCardTokenisationFailed={jest.fn()}
+        fireCheckoutPendingEvent={fireCheckoutPendingEvent}
       />)
 
       const mockEvent = {
@@ -313,19 +315,38 @@ describe('CheckoutFrame', () => {
         fireCheckoutError={fireCheckoutError}
         trackingCardTokenisationSuccessfully={jest.fn()}
         trackingCardTokenisationFailed={jest.fn()}
+        fireCheckoutPendingEvent={fireCheckoutPendingEvent}
       />)
-
-      wrapper.instance().cardTokenisationFailed()
     })
 
-    test('should call the fireCheckoutError prop with correct action type', () => {
+    test('should call the fireCheckoutError prop with correct action type when no error code in the event', () => {
+      const event = {
+        data: {
+          errorCode:'',
+          message:''
+        }
+      }
+      wrapper.instance().cardTokenisationFailed(event)
+
+      expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.NETWORK_FAILURE)
+    })
+
+    test('should call the fireCheckoutError prop with correct action type when error code in the event', () => {
+      const event = {
+        data: {
+          errorCode:'82031',
+          message:'card tokenisation failure'
+        }
+      }
+      wrapper.instance().cardTokenisationFailed(event)
+
       expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.CARD_TOKENISATION_FAILED)
     })
   })
 
   describe('submit card', () => {
     beforeEach(async () => {
-      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} />)
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
 
       await wrapper.instance().submitCard()
     })
@@ -338,7 +359,7 @@ describe('CheckoutFrame', () => {
       Frames.submitCard.mockClear()
       Frames.submitCard.mockRejectedValue({})
 
-      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} />)
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
 
       await wrapper.instance().submitCard()
       expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
