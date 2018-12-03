@@ -160,6 +160,17 @@ class Checkout extends React.PureComponent {
     }
   }
 
+  reloadCheckoutScript = () => {
+    this.setState({
+      checkoutScriptReady: false,
+    })
+    loadCheckoutScript(() => {
+      this.setState({
+        checkoutScriptReady: true,
+      })
+    })
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.tariffId !== nextProps.tariffId) {
       this.props.loadPrices()
@@ -196,13 +207,15 @@ class Checkout extends React.PureComponent {
 
   renderSteps = (stepMapping, steps, currentStep) => {
     const { checkoutScriptReady } = this.state
-    const { trackingOrderPlace, submitOrder } = this.props
+    const { trackingOrderPlace, submitOrder , browser} = this.props
     const step = stepMapping[currentStep]
     const props = {
       onStepChange: this.onStepChange(steps, currentStep),
       isLastStep: this.isLastStep(steps, currentStep),
       nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
+      reloadCheckoutScript: this.reloadCheckoutScript,
       submitOrder,
+      browser,
       trackingOrderPlace,
       checkoutScriptReady,
     }

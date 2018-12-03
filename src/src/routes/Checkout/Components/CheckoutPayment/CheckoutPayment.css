@@ -3,9 +3,24 @@
 
 .container {
 	composes: textBold from 'styles/typography.css';
+	position: relative;
+	min-height: 450px;
 	padding: SpacingLG;
 	background-color: Blueberry20;
-	min-height: 450px;
+}
+
+
+.loading {
+	position: absolute;
+	display: flex;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	background-color: #FFFFFFBB;
+	pointer-events: none;
 }
 
 .wrapper {

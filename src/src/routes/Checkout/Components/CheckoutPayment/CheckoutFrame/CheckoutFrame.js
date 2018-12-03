@@ -15,12 +15,14 @@ class CheckoutFrame extends React.Component {
     fireCheckoutError: PropTypes.func,
     checkoutClearErrors: PropTypes.func,
     disableCardSubmission: PropTypes.func,
+    reloadCheckoutScript: PropTypes.func,
     cardTokenReady: PropTypes.func,
     billingAddress: PropTypes.object,
     cardName: PropTypes.string,
     formName: PropTypes.string,
     sectionName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
+    checkoutFrameReady: PropTypes.func,
     isSubmitCardEnabled: PropTypes.bool,
     hasCheckoutError: PropTypes.bool,
     fireCheckoutPendingEvent: PropTypes.func,
@@ -35,6 +37,8 @@ class CheckoutFrame extends React.Component {
     checkoutClearErrors: () => {},
     disableCardSubmission: () => {},
     cardTokenReady: () => {},
+    reloadCheckoutScript: () => {},
+    checkoutFrameReady: () => {},
     billingAddress: {},
     cardName: '',
     formName: 'checkout',
@@ -53,7 +57,7 @@ class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, isSubmitCardEnabled, hasCheckoutError } = this.props
+    const { billingAddress, cardName, checkoutScriptReady, isSubmitCardEnabled, hasCheckoutError } = this.props
 
     if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
@@ -70,6 +74,19 @@ class CheckoutFrame extends React.Component {
     if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled){
       this.submitCard()
     }
+
+    if (hasPropUpdated(checkoutScriptReady,prevProps.checkoutScriptReady)) {
+      this.initFrames()
+    }
+  }
+
+  componentWillUnmount() {
+    const { reloadCheckoutScript } = this.props
+
+    if (Frames) {
+      Frames = undefined // eslint-disable-line no-global-assign
+    }
+    reloadCheckoutScript()
   }
 
   initFrames = () => {
@@ -126,7 +143,9 @@ class CheckoutFrame extends React.Component {
   }
 
   frameActivated = () => {
-    const { cardName, billingAddress } = this.props
+    const { billingAddress, cardName, checkoutFrameReady } = this.props
+
+    checkoutFrameReady()
 
     if (cardName) {
       Frames.setCustomerName(cardName)

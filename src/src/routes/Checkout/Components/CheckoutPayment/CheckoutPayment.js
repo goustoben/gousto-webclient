@@ -2,7 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Field, FormSection } from 'redux-form'
 
+import Loading from 'Loading'
+import { Section } from 'Page/Elements'
 import ReduxFormInput from 'Form/ReduxFormInput'
+import BoxDetails from '../BoxDetails'
+import Summary from '../Summary'
+
 import { BillingAddress } from '../BillingAddress'
 import { PaymentHeader } from '../PaymentHeader'
 import SubmitButton from '../SubmitButton'
@@ -20,6 +25,7 @@ export class CheckoutPayment extends React.Component {
     touch: PropTypes.func,
     formErrors: PropTypes.object,
     sectionName: PropTypes.string,
+    browser: PropTypes.string,
     formName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
   }
@@ -32,19 +38,21 @@ export class CheckoutPayment extends React.Component {
     touch: () => {},
     formErrors: {},
     sectionName: 'payment',
+    browser: 'mobile',
     formName: 'checkout',
     checkoutScriptReady: false,
   }
 
   state = {
     isSubmitCardEnabled: false,
+    loading: true,
   }
 
   applyValidationErrors = () => {
     const { formErrors, touch, formName, sectionName } = this.props
 
     if (formErrors && formErrors[sectionName]) {
-      for (let formError in formErrors[sectionName]) {
+      for (const formError in formErrors[sectionName]) {
         touch(formName, `${sectionName}[${formError}]`)
       }
     }
@@ -88,13 +96,24 @@ export class CheckoutPayment extends React.Component {
     submit()
   }
 
+  checkoutFrameReady = () => {
+    this.setState({
+      loading: false,
+    })
+  }
+
   render() {
-    const { asyncValidate, checkoutScriptReady, receiveRef, scrollToFirstMatchingRef, sectionName } = this.props
-    const { isSubmitCardEnabled } = this.state
+    const { asyncValidate, checkoutScriptReady, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName, browser } = this.props
+    const { isSubmitCardEnabled, loading } = this.state
 
     return (
       <div>
         <div className={css.container} data-testing="checkoutPaymentSection">
+          {loading &&
+            <div className={css.loading}>
+              <Loading />
+            </div>
+          }
           <PaymentHeader />
           <FormSection name={sectionName}>
             <div className={css.wrapper}>
@@ -118,8 +137,10 @@ export class CheckoutPayment extends React.Component {
               <CheckoutFrame
                 checkoutScriptReady={checkoutScriptReady}
                 isSubmitCardEnabled={isSubmitCardEnabled}
+                reloadCheckoutScript={reloadCheckoutScript}
                 cardTokenReady={this.cardTokenReady}
                 disableCardSubmission={this.disableCardSubmission}
+                checkoutFrameReady={this.checkoutFrameReady}
               />
             </div>
             <BillingAddress
@@ -130,6 +151,14 @@ export class CheckoutPayment extends React.Component {
           </FormSection>
         </div>
         <SubmitButton onClick={this.handleClick} />
+        { browser === 'mobile' &&
+          <Summary />
+        }
+        { browser === 'mobile' &&
+          <Section margin={{ top: 'LG' }}>
+			      <BoxDetails />
+          </Section>
+        }
       </div>
     )
   }
