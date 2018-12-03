@@ -242,6 +242,7 @@ export function userSubscribe() {
             order_total: prices.get('total'),
             promo_code: prices.get('promoCode'),
             signup: true,
+            event: 'firstPurchase',
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
             payment_provider: paymentProvider,
           }
