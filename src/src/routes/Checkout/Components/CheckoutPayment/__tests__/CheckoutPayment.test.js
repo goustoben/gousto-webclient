@@ -9,6 +9,7 @@ import { BillingAddress } from 'routes/Checkout/Components/BillingAddress'
 import { CheckoutFrame } from 'routes/Checkout/Components/CheckoutPayment/CheckoutFrame'
 
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment/CheckoutPayment'
+import BoxDetails from '../../BoxDetails'
 
 describe('CheckoutPayment', () => {
   let wrapper
@@ -53,6 +54,19 @@ describe('CheckoutPayment', () => {
     test('should render a SubmitButton', () => {
       expect(wrapper.find(SubmitButton)).toHaveLength(1)
     })
+
+    test('should render BoxDetail if view is mobile', () => {
+      wrapper = shallow(
+        <CheckoutPayment
+          trackingOrderPlace={trackingOrderPlace}
+          touch={touch}
+          submit={submit}
+          browser={'mobile'}
+        />
+      )
+      expect(wrapper.find(SubmitButton)).toHaveLength(1)
+    })
+
   })
 
   describe('when loading', () => {

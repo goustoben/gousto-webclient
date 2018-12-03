@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { Field, FormSection } from 'redux-form'
 
 import Loading from 'Loading'
+import { Section } from 'Page/Elements'
 import ReduxFormInput from 'Form/ReduxFormInput'
+import BoxDetails from '../BoxDetails'
 import { BillingAddress } from '../BillingAddress'
 import { PaymentHeader } from '../PaymentHeader'
 import SubmitButton from '../SubmitButton'
@@ -21,6 +23,7 @@ export class CheckoutPayment extends React.Component {
     touch: PropTypes.func,
     formErrors: PropTypes.object,
     sectionName: PropTypes.string,
+    browser: PropTypes.string,
     formName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
   }
@@ -33,6 +36,7 @@ export class CheckoutPayment extends React.Component {
     touch: () => {},
     formErrors: {},
     sectionName: 'payment',
+    browser: 'mobile',
     formName: 'checkout',
     checkoutScriptReady: false,
   }
@@ -46,7 +50,7 @@ export class CheckoutPayment extends React.Component {
     const { formErrors, touch, formName, sectionName } = this.props
 
     if (formErrors && formErrors[sectionName]) {
-      for (let formError in formErrors[sectionName]) {
+      for (const formError in formErrors[sectionName]) {
         touch(formName, `${sectionName}[${formError}]`)
       }
     }
@@ -97,7 +101,7 @@ export class CheckoutPayment extends React.Component {
   }
 
   render() {
-    const { asyncValidate, checkoutScriptReady, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName } = this.props
+    const { asyncValidate, checkoutScriptReady, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName, browser } = this.props
     const { isSubmitCardEnabled, loading } = this.state
 
     return (
@@ -145,6 +149,13 @@ export class CheckoutPayment extends React.Component {
           </FormSection>
         </div>
         <SubmitButton onClick={this.handleClick} />
+        { browser === 'mobile' ?
+          <Section margin={{ top: 'LG' }}>
+			      <BoxDetails />
+          </Section>
+          :
+          null
+        }
       </div>
     )
   }

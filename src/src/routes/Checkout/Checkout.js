@@ -207,7 +207,7 @@ class Checkout extends React.PureComponent {
 
   renderSteps = (stepMapping, steps, currentStep) => {
     const { checkoutScriptReady } = this.state
-    const { trackingOrderPlace, submitOrder } = this.props
+    const { trackingOrderPlace, submitOrder , browser} = this.props
     const step = stepMapping[currentStep]
     const props = {
       onStepChange: this.onStepChange(steps, currentStep),
@@ -215,6 +215,7 @@ class Checkout extends React.PureComponent {
       nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
       reloadCheckoutScript: this.reloadCheckoutScript,
       submitOrder,
+      browser,
       trackingOrderPlace,
       checkoutScriptReady,
     }
