@@ -1,5 +1,4 @@
 export const formName = 'checkout'
 export const sectionName = 'payment'
 export const deliveryAddressSectionName = 'delivery'
-export const unacceptedCardTypeErrorCode = '82031'
 export const publicKey = __CHECKOUT_PK__ || ''

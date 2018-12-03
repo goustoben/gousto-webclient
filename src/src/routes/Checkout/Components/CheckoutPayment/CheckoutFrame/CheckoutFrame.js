@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 
 import actionTypes from 'actions/actionTypes'
 import logger from 'utils/logger'
-import { publicKey, unacceptedCardTypeErrorCode } from '../config'
-import { hasPropUpdated } from './utils'
+import { publicKey } from '../config'
+import { hasPropUpdated, getErrorType } from './utils'
 
 import css from './CheckoutFrame.css'
 
@@ -131,15 +131,12 @@ class CheckoutFrame extends React.Component {
     }
   }
 
-  cardTokenisationFailed = (e) => {
+  cardTokenisationFailed = (event) => {
     const { fireCheckoutError, fireCheckoutPendingEvent } = this.props
+    const errorType = getErrorType(event.data.errorCode)
 
     logger.error('card tokenisation failure')
     fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
-
-    const isUnacceptedCardType = e.data.errorCode === unacceptedCardTypeErrorCode
-    const errorType = isUnacceptedCardType ? actionTypes.CARD_TOKENISATION_FAILED : actionTypes.NETWORK_FAILURE
-
     fireCheckoutError(errorType)
   }
 
