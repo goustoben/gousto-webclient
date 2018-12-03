@@ -20,7 +20,7 @@ const submitPayment = (trackingOrderPlace, submit) => {
 const PaymentStep = ({ submit, trackingOrderPlace, receiveRef, scrollToFirstMatchingRef }) => (
 	<div>
 		<PaymentSection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} />
-		<SubmitButton onClick={submit} />
+		<SubmitButton onClick={() => submitPayment(trackingOrderPlace, submit)} />
 		<Summary />
 		<Section margin={{ top: 'LG' }}>
 			<BoxDetails />
