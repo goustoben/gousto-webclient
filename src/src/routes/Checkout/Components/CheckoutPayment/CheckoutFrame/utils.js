@@ -1,5 +1,6 @@
 import { isBillingAddressDifferent } from 'routes/Checkout/utils/state'
 import { sectionName as billingAddressSection, deliveryAddressSectionName as deliveryAddressSection } from '../config'
+import actionTypes from 'actions/actionTypes'
 
 export const getBillingAddress = (formValues) => {
   const sectionName = isBillingAddressDifferent(formValues, billingAddressSection) ? billingAddressSection : deliveryAddressSection
@@ -17,3 +18,11 @@ export const transformBillingAddress = ({ houseNo, street, postcode, town }) => 
 export const hasPropUpdated = (prop, prevProp) => (
   prop && prevProp !== prop
 )
+
+export const getErrorType = (errorCode) => {
+  if (errorCode === '82031') {
+    return actionTypes.CARD_TOKENISATION_FAILED
+  }
+
+  return actionTypes.NETWORK_FAILURE
+}
