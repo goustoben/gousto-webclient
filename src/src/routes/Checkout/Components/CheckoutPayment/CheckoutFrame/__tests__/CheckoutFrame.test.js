@@ -193,7 +193,15 @@ describe('CheckoutFrame', () => {
 
   describe('cardTokenised', () => {
     beforeEach(() => {
-      wrapper = mount(<CheckoutFrame change={change} formName={"checkout"} sectionName={"payment"} cardTokenReady={cardTokenReady} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
+      wrapper = mount(<CheckoutFrame
+        change={change}
+        formName={"checkout"}
+        sectionName={"payment"}
+        cardTokenReady={cardTokenReady}
+        trackingCardTokenisationSuccessfully={jest.fn()}
+        trackingCardTokenisationFailed={jest.fn()}
+        fireCheckoutPendingEvent={fireCheckoutPendingEvent}
+      />)
 
       const mockEvent = {
         data: {
@@ -302,6 +310,14 @@ describe('CheckoutFrame', () => {
   })
 
   describe('cardTokenisationFailed', () => {
+    beforeEach(() => {
+      wrapper = mount(<CheckoutFrame
+        fireCheckoutError={fireCheckoutError}
+        trackingCardTokenisationSuccessfully={jest.fn()}
+        trackingCardTokenisationFailed={jest.fn()}
+        fireCheckoutPendingEvent={fireCheckoutPendingEvent}
+      />)
+    })
 
     test('should call the fireCheckoutError prop with correct action type when no error code in the event', () => {
       const event = {
@@ -310,8 +326,6 @@ describe('CheckoutFrame', () => {
           message:''
         }
       }
-      wrapper = mount(<CheckoutFrame fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
-
       wrapper.instance().cardTokenisationFailed(event)
 
       expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.NETWORK_FAILURE)
@@ -324,7 +338,6 @@ describe('CheckoutFrame', () => {
           message:'card tokenisation failure'
         }
       }
-      wrapper = mount(<CheckoutFrame fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
       wrapper.instance().cardTokenisationFailed(event)
 
       expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.CARD_TOKENISATION_FAILED)
