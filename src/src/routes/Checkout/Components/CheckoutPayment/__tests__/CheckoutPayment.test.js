@@ -64,7 +64,19 @@ describe('CheckoutPayment', () => {
           browser={'mobile'}
         />
       )
-      expect(wrapper.find(SubmitButton)).toHaveLength(1)
+      expect(wrapper.find(BoxDetails)).toHaveLength(1)
+    })
+
+    test('should NOT render BoxDetail if view is desktop', () => {
+      wrapper = shallow(
+        <CheckoutPayment
+          trackingOrderPlace={trackingOrderPlace}
+          touch={touch}
+          submit={submit}
+          browser={'desktop'}
+        />
+      )
+      expect(wrapper.find(BoxDetails)).toHaveLength(0)
     })
 
   })
