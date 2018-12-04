@@ -10,6 +10,10 @@ describe('<IngredientIssues />', () => {
     button1Copy: 'Back',
     button2Copy: 'Done',
   }
+  const ingredients = [
+    { id: 'ingId1', label: 'ingLabel1' },
+    { id: 'ingId2', label: 'ingLabel2' },
+  ]
   let wrapper
   let getHelpLayout
 
@@ -17,6 +21,7 @@ describe('<IngredientIssues />', () => {
     wrapper = mount(
       <IngredientIssues
         content={content}
+        ingredients={ingredients}
       />
     )
     getHelpLayout = wrapper.find('GetHelpLayout')
@@ -38,6 +43,11 @@ describe('<IngredientIssues />', () => {
 
     test('body description is redering correctly', () => {
       expect(getHelpLayout.prop('body')).toBe(content.body)
+    })
+
+    test('ingredients are rendering', () => {
+      expect(getHelpLayout.text()).toContain('ingLabel1')
+      expect(getHelpLayout.text()).toContain('ingLabel2')
     })
 
     test('bottom bar buttons is rendering correctly', () => {
