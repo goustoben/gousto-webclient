@@ -230,17 +230,18 @@ class Checkout extends React.PureComponent {
   }
 
   renderStaticPayment = (stepMapping, steps, currentStep) => {
-    const { checkoutScriptReady } = this.state
-    const { checkoutPaymentFeature, submitOrder } = this.props
+    const { browser, checkoutPaymentFeature, submitOrder } = this.props
     const onPaymentStep = currentStep === 'payment'
+    const { checkoutScriptReady } = this.state
 
     const checkoutProps = {
-      onStepChange: this.onStepChange(steps, currentStep),
-      isLastStep: this.isLastStep(steps, currentStep),
-      nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
+      browser,
       submitOrder,
       checkoutScriptReady,
       prerender: !onPaymentStep,
+      isLastStep: this.isLastStep(steps, currentStep),
+      onStepChange: this.onStepChange(steps, currentStep),
+      nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
     }
 
     return (checkoutPaymentFeature) ? (
