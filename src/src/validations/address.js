@@ -83,17 +83,17 @@ const rules = {
     field: 'dropdown',
     rules: [
       (data, props) => {
-        const { form: formName, section } = props
+        const { form: formName, sectionName } = props
         const state = goustoStore.store.getState()
         const formValues = getFormValues(formName)(state)
         const formFields = getFormMeta(formName)(state)
         const formErrors = getFormSyncErrors(formName)(state)
 
-        const errors = (formErrors && formErrors[section]) || {}
-        const meta = (formFields && formFields[section]) || {}
+        const errors = (formErrors && formErrors[sectionName]) || {}
+        const meta = (formFields && formFields[sectionName]) || {}
         const fields = ['postcode', 'houseNo', 'street', 'town', 'county']
 
-        const isAddressSelected = formValues && formValues[section] && formValues[section].addressId && (formValues[section].addressId !== 'placeholder')
+        const isAddressSelected = formValues && formValues[sectionName] && formValues[sectionName].addressId && (formValues[sectionName].addressId !== 'placeholder')
         const valid = isAddressSelected && !fields.find(field => errors[field] && meta[field] && meta[field].touched)
 
         return valid ? true : { errorMessage: 'Address is required' }
