@@ -99,33 +99,7 @@ export class DropdownInput extends React.Component {
     )
   }
 
-  renderSelect = (options, props) => {
-    const {error, uppercase, additionalProps, value, required, dataTesting, color } = this.props
-
-    const className = classNames(css.select, {
-      [css.primary]: !error && color == 'primary',
-      [css.secondary]: !error && color == 'secondary',
-      [css.error]: error,
-      [css.selectuppercase] : uppercase,
-    })
-
-    return (
-      <div>
-        <Select
-          {...additionalProps}
-          className={className}
-          options={this.mapToSelect(options)}
-          onChange={this.handleChange}
-          value={JSON.stringify(value)}
-          required={required}
-          {...props}
-          data-testing={dataTesting}
-        />
-      </div>
-    )
-  }
-
-  render = () => {
+  getSelectProps = () => {
     const defaultProps = {
       clearable: false,
       searchable: false,
@@ -143,14 +117,38 @@ export class DropdownInput extends React.Component {
       'error'
     ]
 
-    const { options, className } = this.props
+    return restrictProps(this.props, ourProps, defaultProps)
+  }
 
-    const selectProps = restrictProps(this.props, ourProps, defaultProps)
-    const defaultOptions = []
+  renderSelect = (options) => {
+    const {error, uppercase, additionalProps, value, required, dataTesting, color } = this.props
 
-    selectProps.className = classNames(className, css.dropdown, {
-      [formsCss.inputError]: true
+    const className = classNames(css.select, css.dropdown, {
+      [css.primary]: !error && color == 'primary',
+      [css.secondary]: !error && color == 'secondary',
+      [css.error]: error,
+      [css.selectuppercase] : uppercase,
     })
+
+    return (
+      <div>
+        <Select
+          {...additionalProps}
+          className={className}
+          options={this.mapToSelect(options)}
+          onChange={this.handleChange}
+          value={JSON.stringify(value)}
+          required={required}
+          {...this.getSelectProps()}
+          data-testing={dataTesting}
+        />
+      </div>
+    )
+  }
+
+  render = () => {
+    const { options } = this.props
+    const defaultOptions = []
 
     return (
       <div className={css.container}>
@@ -158,7 +156,7 @@ export class DropdownInput extends React.Component {
           {this.renderNative(options || defaultOptions)}
         </span>
         <span className={css.mobileHide}>
-          {this.renderSelect(options || defaultOptions, selectProps)}
+          {this.renderSelect(options || defaultOptions)}
         </span>
       </div>
     )
