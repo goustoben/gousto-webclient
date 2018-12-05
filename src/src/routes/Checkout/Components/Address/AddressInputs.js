@@ -18,6 +18,7 @@ const AddressInputs = ({ receiveRef, sectionName }) => (
 			  withRef
 			  ref={receiveRef}
 			  refId={`${sectionName}.houseNo`}
+			  data-testing="houseNo"
 			/>
 		</div>
 		<br />
