@@ -31,3 +31,6 @@
 	composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
+.hide {
+	display: none;
+}

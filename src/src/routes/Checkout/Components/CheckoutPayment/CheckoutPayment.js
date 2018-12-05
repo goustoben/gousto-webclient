@@ -101,7 +101,7 @@ export class CheckoutPayment extends React.Component {
     const { isSubmitCardEnabled } = this.state
 
     return (
-      <div>
+      <div className={(prerender) ? css.hide : ''}>
         <div className={css.container} data-testing="checkoutPaymentSection">
           <PaymentHeader />
           {prerender ? null : (
