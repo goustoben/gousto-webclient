@@ -1,12 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { Field } from 'redux-form'
 
-import Loading from 'Loading'
 import SubmitButton from 'routes/Checkout/Components/SubmitButton'
 import { PaymentHeader } from 'routes/Checkout/Components/PaymentHeader'
-import { BillingAddress } from 'routes/Checkout/Components/BillingAddress'
+import { CheckoutName } from 'routes/Checkout/Components/CheckoutPayment/CheckoutName'
 import { CheckoutFrame } from 'routes/Checkout/Components/CheckoutPayment/CheckoutFrame'
+import { CheckoutAddress } from 'routes/Checkout/Components/CheckoutPayment/CheckoutAddress'
 
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment/CheckoutPayment'
 import BoxDetails from '../../BoxDetails'
@@ -44,12 +43,12 @@ describe('CheckoutPayment', () => {
       expect(wrapper.find(CheckoutFrame)).toHaveLength(1)
     })
 
-    test('should render a Name input', () => {
-      expect(wrapper.find(Field).first().prop('name')).toBe('cardName')
+    test('should render a CheckoutName', () => {
+      expect(wrapper.find(CheckoutName)).toHaveLength(1)
     })
 
-    test('should render a BillingAddress', () => {
-      expect(wrapper.find(BillingAddress)).toHaveLength(1)
+    test('should render a CheckoutAddress', () => {
+      expect(wrapper.find(CheckoutAddress)).toHaveLength(1)
     })
 
     test('should render a SubmitButton', () => {
@@ -80,27 +79,6 @@ describe('CheckoutPayment', () => {
       )
       expect(wrapper.find(BoxDetails)).toHaveLength(0)
       expect(wrapper.find(Summary)).toHaveLength(0)
-    })
-
-  })
-
-  describe('when loading', () => {
-    beforeEach(() => {
-      wrapper.setState({ loading: true })
-    })
-
-    test('should render a Loading spinner', () => {
-      expect(wrapper.find(Loading)).toHaveLength(1)
-    })
-  })
-
-  describe('when loaded', () => {
-    beforeEach(() => {
-      wrapper.setState({ loading: false })
-    })
-
-    test('should not render a Loading spinner', () => {
-      expect(wrapper.find(Loading)).toHaveLength(0)
     })
   })
 
@@ -158,20 +136,6 @@ describe('CheckoutPayment', () => {
       cardTokenReady()
 
       expect(submit).toHaveBeenCalled()
-    })
-  })
-
-  describe('checkoutFrameReady', () => {
-    beforeEach(() => {
-      wrapper.setState({ loading: true })
-    })
-
-    test('should set loading state to false', () => {
-      const checkoutFrameReady = wrapper.find(CheckoutFrame).prop('checkoutFrameReady')
-
-      checkoutFrameReady()
-
-      expect(wrapper.state('loading')).toBe(false)
     })
   })
 })
