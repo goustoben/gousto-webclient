@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 
 import logger from 'utils/logger'
@@ -10,7 +11,6 @@ import { Div } from 'Page/Elements'
 import ProgressBar from 'ProgressBar'
 
 import css from './Checkout.css'
-import { CheckoutPayment } from './Components/CheckoutPayment'
 import { loadCheckoutScript } from './loadCheckoutScript'
 
 import DesktopAboutYou from './Steps/Desktop/AboutYou'
@@ -24,21 +24,23 @@ import MobileYourDetails from './Steps/Mobile/YourDetails'
 import MobileBoxDetails from './Steps/Mobile/BoxDetails'
 import MobilePayment from './Steps/Mobile/Payment'
 
+import { CheckoutPayment } from './Components/CheckoutPayment'
+
 const defaultDesktop = ['aboutyou', 'delivery', 'payment']
 const defaultMobile = ['boxdetails', 'yourdetails', 'payment']
 
-const desktopStepMapping = (checkoutPaymentFeature) => ({
+const desktopStepMapping = {
   boxdetails: { component: DesktopBoxDetails, humanName: 'Box Details' },
   aboutyou: { component: DesktopAboutYou, humanName: 'About You' },
   delivery: { component: DesktopDelivery, humanName: 'Delivery' },
-  payment: { component: checkoutPaymentFeature ? CheckoutPayment : DesktopPayment, humanName: 'Payment' },
-})
+  payment: { component: DesktopPayment, humanName: 'Payment' },
+}
 
-const mobileStepMapping = (checkoutPaymentFeature) => ({
+const mobileStepMapping = {
   boxdetails: { component: MobileBoxDetails, humanName: 'Box Details' },
   yourdetails: { component: MobileYourDetails, humanName: 'Your Details' },
-  payment: { component: checkoutPaymentFeature ? CheckoutPayment : MobilePayment, humanName: 'Payment' },
-})
+  payment: { component: MobilePayment, humanName: 'Payment' },
+}
 
 class Checkout extends React.PureComponent {
   static contextTypes = {
@@ -69,9 +71,6 @@ class Checkout extends React.PureComponent {
       isCreatingPreviewOrder: true,
       checkoutScriptReady: false,
     }
-    const { checkoutPaymentFeature } = this.props
-    this.desktopStepMapping = desktopStepMapping(checkoutPaymentFeature)
-    this.mobileStepMapping = mobileStepMapping(checkoutPaymentFeature)
   }
 
   static fetchData = async ({ store, query, params, browser }) => {
@@ -206,9 +205,10 @@ class Checkout extends React.PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
+    const { browser, checkoutPaymentFeature, submitOrder, trackingOrderPlace } = this.props
     const { checkoutScriptReady } = this.state
-    const { trackingOrderPlace, submitOrder , browser} = this.props
     const step = stepMapping[currentStep]
+    const isCheckoutPaymentStep = checkoutPaymentFeature && currentStep === 'payment'
     const props = {
       onStepChange: this.onStepChange(steps, currentStep),
       isLastStep: this.isLastStep(steps, currentStep),
@@ -222,25 +222,48 @@ class Checkout extends React.PureComponent {
 
     let element = <div />
 
-    if (step) {
+    if (step && (!isCheckoutPaymentStep)) {
       element = React.createElement(step.component, props)
     }
 
     return element
   }
 
+  renderStaticPayment = (stepMapping, steps, currentStep) => {
+    const { checkoutScriptReady } = this.state
+    const { checkoutPaymentFeature, submitOrder } = this.props
+    const onPaymentStep = currentStep === 'payment'
+
+    const checkoutProps = {
+      onStepChange: this.onStepChange(steps, currentStep),
+      isLastStep: this.isLastStep(steps, currentStep),
+      nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
+      submitOrder,
+      checkoutScriptReady,
+      prerender: !onPaymentStep,
+    }
+
+    return (checkoutPaymentFeature) ? (
+      <CheckoutPayment
+        {...checkoutProps}
+      />
+    ) : null
+  }
+
   renderMobileSteps = () => (
     <Div>
-      {this.renderProgressBar(this.mobileStepMapping, defaultMobile, this.props.params.stepName)}
-      {this.renderSteps(this.mobileStepMapping, defaultMobile, this.props.params.stepName)}
+      {this.renderProgressBar(mobileStepMapping, defaultMobile, this.props.params.stepName)}
+      {this.renderSteps(mobileStepMapping, defaultMobile, this.props.params.stepName)}
+      {this.renderStaticPayment(mobileStepMapping, defaultMobile, this.props.params.stepName)}
     </Div>
   )
 
   renderDesktopSteps = () => (
     <Div className={css.row}>
       <Div className={css.section}>
-        {this.renderProgressBar(this.desktopStepMapping, defaultDesktop, this.props.params.stepName)}
-        {this.renderSteps(this.desktopStepMapping, defaultDesktop, this.props.params.stepName)}
+        {this.renderProgressBar(desktopStepMapping, defaultDesktop, this.props.params.stepName)}
+        {this.renderSteps(desktopStepMapping, defaultDesktop, this.props.params.stepName)}
+        {this.renderStaticPayment(desktopStepMapping, defaultDesktop, this.props.params.stepName)}
       </Div>
 
       <Div className={css.aside}>
