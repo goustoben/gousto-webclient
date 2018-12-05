@@ -100,7 +100,7 @@ export default async function fetchData({ store, query, params }, force, backgro
             )))
           })
           .catch(err => {
-            logger.error(`Debug fetchData: ${err}`)
+            logger.error({message: `Debug fetchData: ${err}`, errors: [err]})
             if (__SERVER__) {
               logger.error({message: `Failed to fetch order: ${params.orderId}.`, errors: [err]} )
               store.dispatch(actions.redirect('/menu', true))
@@ -109,7 +109,7 @@ export default async function fetchData({ store, query, params }, force, backgro
       } else {
         if (__SERVER__) {
           if (!isFacebookUserAgent(store.getState().request.get('userAgent'))) {
-            logger.notice(`Unauthenticated user trying to edit: ${params.orderId}`)
+            logger.notice({message: `Unauthenticated user trying to edit: ${params.orderId}`})
           }
           store.dispatch(actions.redirect(`/menu?target=${encodeURIComponent(`${__CLIENT_PROTOCOL__}://${__DOMAIN__}/menu/${params.orderId}`)}#login`, true))
         }

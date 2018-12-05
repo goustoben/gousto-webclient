@@ -65,6 +65,7 @@ app.use(async (ctx, next) => {
     if (err.networkError) {
       err.status = err.networkError.statusCode
     }
+    console.error(err)
     logger.critical({message: err.message, status: err.status, uuid: ctx.uuid, errors: [err]})
 
     if (Number(err.status) === 200) {

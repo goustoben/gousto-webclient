@@ -8,7 +8,7 @@ if (__SERVER__) {
     const envPath = `${process.cwd()}/config/env.json`
     env = readFileSync(envPath)
   } catch (err) {
-    logger.critical('Reading config/env.json')
+    logger.critical({message: 'Reading config/env.json'})
   }
 }
 

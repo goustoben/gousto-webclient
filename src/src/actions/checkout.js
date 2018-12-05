@@ -54,7 +54,7 @@ export function checkoutAddressLookup(postcode) {
       addresses.county = lookupResults.data.traditionalCounty || ''
     } catch (err) {
       dispatch(error(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, err.message))
-      logger.error('Unable to look-up address')
+      logger.error({message: 'Unable to look-up address'})
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, false))
     }

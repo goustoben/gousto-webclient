@@ -9,7 +9,7 @@ if (!__DEV__) {
     const loc = path.resolve(process.cwd(), 'manifest.json')
     localManifest = jsonfile.readFileSync(loc)
   } catch (err) {
-    logger.critical('Missing manifest.json')
+    logger.critical({message: 'Missing manifest.json'})
   }
 }
 
