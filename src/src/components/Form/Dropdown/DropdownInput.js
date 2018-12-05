@@ -72,8 +72,8 @@ export class DropdownInput extends React.Component {
     )
   )
 
-  renderNative = (options ) => {
-    const {error, uppercase, additionalProps, value, required, dataTesting, color } = this.props
+  renderNative = (options) => {
+    const { error, uppercase, additionalProps, value, required, dataTesting, color } = this.props
 
     const className = classNames(css.native, {
       [css.primary]: !error && color == 'primary',
