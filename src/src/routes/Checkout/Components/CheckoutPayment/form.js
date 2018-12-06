@@ -15,9 +15,13 @@ export const getValidationRules = (sectionName) => (
   }
 )
 
-export const addInitialValues = (Component) => (
+export const addInitialValues = (Component,{ sectionName }) => (
   connect(() => ({
-    cardName: '',
-    isBillingAddressDifferent: false,
+    // needed for hacked custom validation in validation/address.js
+    sectionName,
+    initialValues: {
+      cardName: '',
+      isBillingAddressDifferent: false,
+    }
   }))(Component)
 )
