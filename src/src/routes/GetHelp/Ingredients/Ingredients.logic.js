@@ -33,7 +33,7 @@ const propTypes = {
     button1Copy: PropTypes.string.isRequired,
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
-  storeIngredientIds: PropTypes.func.isRequired,
+  storeSelectedIngredients: PropTypes.func.isRequired,
   validateSelectedIngredients: PropTypes.func.isRequired,
 }
 
@@ -59,13 +59,15 @@ class Ingredients extends PureComponent {
   }
 
   continueClickHandler = async () => {
-    const { order, user, storeIngredientIds, validateSelectedIngredients } = this.props
+    const { order, user, storeSelectedIngredients, validateSelectedIngredients } = this.props
     const { selectedIngredients } = this.state
     const ingredientIds = []
+    const recipeAndIngredientIds = []
 
     selectedIngredients.forEach((value, checkboxId) => {
-      const ingredientId = checkboxId.split('-')[1]
+      const [recipeId, ingredientId] = checkboxId.split('-')
       ingredientIds.push(ingredientId)
+      recipeAndIngredientIds.push({ recipeId, ingredientId })
     })
 
     try {
@@ -76,7 +78,7 @@ class Ingredients extends PureComponent {
         ingredientIds,
       })
 
-      storeIngredientIds(ingredientIds)
+      storeSelectedIngredients(recipeAndIngredientIds)
 
       browserHistory.push(`${client.getHelp.index}/${client.getHelp.ingredientIssues}`)
     } catch (error) {

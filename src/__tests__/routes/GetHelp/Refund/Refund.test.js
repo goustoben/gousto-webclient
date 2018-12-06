@@ -26,11 +26,12 @@ describe('<Refund />', () => {
     })
     fetchRefundAmount.mockImplementation(() => fetchPromise)
     wrapper = mount(
-			<Refund
-			  content={content}
-			  user={{ id: '999', accessToken: '123' }}
-			  order={{ id: '888', ingredientIds: ['1234'] }}
-			/>
+      <Refund
+        content={content}
+        user={{ id: '999', accessToken: '123' }}
+        order={{ id: '888' }}
+        selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+      />
     )
 
     getHelpLayout = wrapper.find('GetHelpLayout')
@@ -73,11 +74,12 @@ describe('<Refund />', () => {
       })
       fetchRefundAmount.mockImplementationOnce(() => fetchPromise)
       wrapper = mount(
-				<Refund
-				  content={content}
-				  user={{ id: '0', accessToken: '123' }}
-				  order={{ id: '0', ingredientIds: ['1234'] }}
-				/>
+        <Refund
+          content={content}
+          user={{ id: '0', accessToken: '123' }}
+          order={{ id: '0' }}
+          selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+        />
       )
 
       expect(wrapper.find('Loading')).toHaveLength(1)
@@ -102,11 +104,12 @@ describe('<Refund />', () => {
     test('error message is shown when fetching data errors and accept button hides', () => {
       fetchRefundAmount.mockImplementationOnce(() => { throw new Error('error') })
       wrapper = mount(
-				<Refund
-				  content={content}
-				  user={{ id: '0', accessToken: '123' }}
-				  order={{ id: '0', ingredientIds: ['1234'] }}
-				/>
+        <Refund
+          content={content}
+          user={{ id: '0', accessToken: '123' }}
+          order={{ id: '0' }}
+          selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+        />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
       const wrapperText = wrapper.text()

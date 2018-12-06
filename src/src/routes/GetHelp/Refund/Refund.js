@@ -20,17 +20,20 @@ class Refund extends PureComponent {
       errorBody: PropTypes.string.isRequired,
       button1: PropTypes.string.isRequired,
       button2: PropTypes.string.isRequired,
-    }),
+    }).isRequired,
     user: PropTypes.shape({
       id: PropTypes.string.isRequired,
       accessToken: PropTypes.string.isRequired,
-    }),
+    }).isRequired,
     order: PropTypes.shape({
       id: PropTypes.string.isRequired,
-      ingredientIds: PropTypes.arrayOf(
-        PropTypes.string.isRequired
-      ),
-    })
+    }).isRequired,
+    selectedIngredients: PropTypes.arrayOf(
+      PropTypes.shape({
+        recipeId: PropTypes.string.isRequired,
+        ingredientId: PropTypes.string.isRequired,
+      })
+    ).isRequired,
   }
 
   state = {
@@ -44,13 +47,15 @@ class Refund extends PureComponent {
   }
 
   getRefund = async () => {
-    const { user, order } = this.props
+    const { user, order, selectedIngredients } = this.props
 
     try {
       const response = await fetchRefundAmount(user.accessToken, {
         customer_id: Number(user.id),
         order_id: Number(order.id),
-        ingredient_ids: order.ingredientIds
+        ingredient_ids: selectedIngredients.map(
+          selectedIngredient => selectedIngredient.ingredientId
+        ),
       })
       const { value, type } = response.data
 
@@ -68,11 +73,11 @@ class Refund extends PureComponent {
   }
 
   onAcceptOffer = async () => {
-    const { user, order } = this.props
+    const { user, order, selectedIngredients } = this.props
     const { refund } = this.state
 
-    const issues = order.ingredientIds.map((ingredientId) => (
-      { ingredient_id: ingredientId, category_id: 98 }
+    const issues = selectedIngredients.map((selectedIngredient) => (
+      { ingredient_id: selectedIngredient.ingredientId, category_id: 98 }
     ))
 
     try {

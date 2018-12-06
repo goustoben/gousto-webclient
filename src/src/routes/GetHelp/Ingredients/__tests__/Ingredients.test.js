@@ -38,7 +38,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
-          storeIngredientIds={() => {}}
+          storeSelectedIngredients={() => {}}
           validateSelectedIngredients={() => {}}
         />
       )
@@ -101,11 +101,11 @@ describe('<Ingredients />', () => {
 
   describe('behaviour', () => {
     let validateSelectedIngredients
-    let storeIngredientIds
+    let storeSelectedIngredients
     let ContinueButton
 
     beforeEach(() => {
-      storeIngredientIds = jest.fn()
+      storeSelectedIngredients = jest.fn()
       validateSelectedIngredients = jest.fn()
       browserHistory.push = jest.fn()
       wrapper = mount(
@@ -114,7 +114,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
-          storeIngredientIds={storeIngredientIds}
+          storeSelectedIngredients={storeSelectedIngredients}
           validateSelectedIngredients={validateSelectedIngredients}
         />
       )
@@ -214,7 +214,7 @@ describe('<Ingredients />', () => {
         selectIngredientAndGetCheckbox(getHelpLayout)
         await ContinueButton.prop('onClick')()
 
-        expect(storeIngredientIds).toHaveBeenCalledWith(['2222'])
+        expect(storeSelectedIngredients).toHaveBeenCalledWith([{ ingredientId: '2222', recipeId: '2' }])
       })
     })
   })

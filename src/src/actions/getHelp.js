@@ -20,9 +20,9 @@ export const storeGetHelpOrderId = (id) => dispatcher({
   id,
 })
 
-export const storeIngredientIds = (ids) => dispatcher({
-  type: actionTypes.GET_HELP_STORE_INGREDIENT_IDS,
-  ids,
+export const storeSelectedIngredients = (selectedIngredients) => dispatcher({
+  type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS,
+  selectedIngredients,
 })
 
 export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredientIds }) => {
