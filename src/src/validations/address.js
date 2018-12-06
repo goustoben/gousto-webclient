@@ -32,7 +32,7 @@ const rules = {
         const addressesFetched = formValues && formValues[sectionName] && formValues[sectionName].addressesFetched
         const deliverable = formValues && formValues[sectionName] && formValues[sectionName].deliverable
 
-        if (addressesFetched && !deliverable) {
+        if (addressesFetched && !deliverable && (sectionName === 'delivery')) {
           valid = { errorMessage: 'Sorry, we don\'t deliver to this postcode yet' }
         }
 
@@ -84,6 +84,7 @@ const rules = {
     rules: [
       (data, props) => {
         const { form: formName, sectionName } = props
+
         const state = goustoStore.store.getState()
         const formValues = getFormValues(formName)(state)
         const formFields = getFormMeta(formName)(state)
