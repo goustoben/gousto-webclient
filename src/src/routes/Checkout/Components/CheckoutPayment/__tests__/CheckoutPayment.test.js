@@ -34,6 +34,26 @@ describe('CheckoutPayment', () => {
     submit.mockClear()
   })
 
+  describe('prerendering', () => {
+    beforeEach(() => {
+      wrapper.setProps({ 'prerender': true })
+    })
+
+    test('should not render Payment Form Sections', () => {
+      expect(wrapper.find(CheckoutAddress)).toHaveLength(0)
+      expect(wrapper.find(CheckoutName)).toHaveLength(0)
+      expect(wrapper.find(SubmitButton)).toHaveLength(0)
+    })
+
+    test('should render a CheckoutFrame', () => {
+      expect(wrapper.find(CheckoutFrame)).toHaveLength(1)
+    })
+
+    test('should render the component as hidden', () => {
+      expect(wrapper.find('div').first().hasClass('hide')).toBe(true)
+    })
+  })
+
   describe('rendering', () => {
     test('should render a PaymentHeader', () => {
       expect(wrapper.find(PaymentHeader)).toHaveLength(1)
