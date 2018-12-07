@@ -31,7 +31,7 @@ export class DropdownInput extends React.Component {
     required: false,
     color: 'primary',
     uppercase: false,
-    error: 'false'
+    error: false
   }
 
   handleChange = (obj) => {
@@ -78,7 +78,7 @@ export class DropdownInput extends React.Component {
     const className = classNames(css.native, {
       [css.primary]: !error && color == 'primary',
       [css.secondary]: !error && color == 'secondary',
-      [formsCss.inputError]: error && error !== 'false',
+      [formsCss.inputError]: error,
       [css.selectuppercase] : uppercase,
     })
 
@@ -126,7 +126,7 @@ export class DropdownInput extends React.Component {
     const className = classNames(css.select, css.dropdown, {
       [css.primary]: !error && color == 'primary',
       [css.secondary]: !error && color == 'secondary',
-      [css.error]: error && error !== 'false',
+      [css.error]: error,
       [css.selectuppercase] : uppercase,
     })
 
