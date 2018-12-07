@@ -27,6 +27,7 @@ export class CheckoutPayment extends React.Component {
     formName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
     reloadCheckoutScript: PropTypes.func,
+    /* prerender - We allow the iFrame to initialize before this component is shown by pre-rendering with CheckoutFrame only */
     prerender: PropTypes.bool,
   }
 
