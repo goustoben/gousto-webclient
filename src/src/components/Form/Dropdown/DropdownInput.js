@@ -31,7 +31,7 @@ export class DropdownInput extends React.Component {
     required: false,
     color: 'primary',
     uppercase: false,
-    error: 'false'
+    error: false
   }
 
   handleChange = (obj) => {
