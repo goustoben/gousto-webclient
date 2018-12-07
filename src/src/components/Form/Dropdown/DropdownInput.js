@@ -78,7 +78,7 @@ export class DropdownInput extends React.Component {
     const className = classNames(css.native, {
       [css.primary]: !error && color == 'primary',
       [css.secondary]: !error && color == 'secondary',
-      [formsCss.inputError]: error,
+      [formsCss.inputError]: error && error !== 'false',
       [css.selectuppercase] : uppercase,
     })
 
@@ -126,7 +126,7 @@ export class DropdownInput extends React.Component {
     const className = classNames(css.select, css.dropdown, {
       [css.primary]: !error && color == 'primary',
       [css.secondary]: !error && color == 'secondary',
-      [css.error]: error,
+      [css.error]: error && error !== 'false',
       [css.selectuppercase] : uppercase,
     })
 
