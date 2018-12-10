@@ -33,6 +33,5 @@ export const addInitialValues = (Component,{ sectionName }) => (
           }
         }
       }
-    }
-    , {})(Component)
+    })(Component)
 )
