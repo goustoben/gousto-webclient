@@ -124,7 +124,8 @@
       "no-bitwise": 1,
       "no-control-regex": 1,
       "react/no-children-prop": 2,
-      "jsx-a11y/label-has-associated-control": 0
+      "jsx-a11y/label-has-associated-control": 0,
+      "eol-last": 1
     
   },
   "env" : {
