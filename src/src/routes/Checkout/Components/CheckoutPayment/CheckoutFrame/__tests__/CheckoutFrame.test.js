@@ -89,7 +89,7 @@ describe('CheckoutFrame', () => {
     describe('card name', () => {
       const testName = 'test name'
       test('should call Frames.setCustomerName when updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = mount(<CheckoutFrame />)
         Frames.setCustomerName.mockClear()
         wrapper.setProps({ cardName: testName })
 
@@ -97,7 +97,7 @@ describe('CheckoutFrame', () => {
       })
 
       test('should not call Frames.setCustomerName when not updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady cardName={testName} />)
+        wrapper = mount(<CheckoutFrame cardName={testName} />)
         Frames.setCustomerName.mockClear()
         wrapper.setProps({ cardName: testName })
 
@@ -113,7 +113,7 @@ describe('CheckoutFrame', () => {
       }
 
       test('should call Frames.setBillingDetails when updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = mount(<CheckoutFrame />)
         Frames.setBillingDetails.mockClear()
         wrapper.setProps({ billingAddress: testAddress })
 
@@ -121,7 +121,7 @@ describe('CheckoutFrame', () => {
       })
 
       test('should not call Frames.setBillingDetails when not updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady billingAddress={testAddress} />)
+        wrapper = mount(<CheckoutFrame billingAddress={testAddress} />)
         Frames.setBillingDetails.mockClear()
         wrapper.setProps({ billingAddress: testAddress })
 
@@ -133,7 +133,7 @@ describe('CheckoutFrame', () => {
       const hasCheckoutError = true
 
       test('should call Frames.unblockFields when updated and value is true', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = mount(<CheckoutFrame />)
         Frames.unblockFields.mockClear()
         wrapper.setProps({ hasCheckoutError: hasCheckoutError })
 
@@ -141,7 +141,7 @@ describe('CheckoutFrame', () => {
       })
 
       test('should call Frames.unblockFields when updated and value is false', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady />)
+        wrapper = mount(<CheckoutFrame />)
         Frames.unblockFields.mockClear()
         wrapper.setProps({ hasCheckoutError: false })
 
@@ -149,7 +149,7 @@ describe('CheckoutFrame', () => {
       })
 
       test('should not call Frames.unblockFields when not updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady hasCheckoutError={hasCheckoutError} />)
+        wrapper = mount(<CheckoutFrame hasCheckoutError={hasCheckoutError} />)
         Frames.unblockFields.mockClear()
         wrapper.setProps({ hasCheckoutError: hasCheckoutError })
 
@@ -159,7 +159,7 @@ describe('CheckoutFrame', () => {
 
     describe('submit checkout frame', () => {
       test('should call submitCard when updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
+        wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
 
         const submitCard = jest.fn()
         wrapper.instance().submitCard = submitCard
@@ -171,7 +171,7 @@ describe('CheckoutFrame', () => {
       })
 
       test('should not call submitCard when not updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady submitCheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
+        wrapper = mount(<CheckoutFrame submitCheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
         wrapper.setProps({ isSubmitCardEnabled: true })
 
         const submitCard = jest.fn()
