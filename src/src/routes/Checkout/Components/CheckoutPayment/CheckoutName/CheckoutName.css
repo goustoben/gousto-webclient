@@ -1,9 +1,0 @@
-.wrapper {
-	composes: flex rowWrap from 'styles/flex.css';
-	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
-	margin-top: 25px;
-}
-
-.cardDetails {
-	width: 100%;
-}

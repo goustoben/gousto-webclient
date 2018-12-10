@@ -1,17 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Field, FormSection } from 'redux-form'
 
+import Loading from 'Loading'
 import { Section } from 'Page/Elements'
+import ReduxFormInput from 'Form/ReduxFormInput'
 import BoxDetails from '../BoxDetails'
 import Summary from '../Summary'
 
+import { BillingAddress } from '../BillingAddress'
 import { PaymentHeader } from '../PaymentHeader'
 import SubmitButton from '../SubmitButton'
 import css from './CheckoutPayment.css'
 
-import { CheckoutName } from './CheckoutName'
 import { CheckoutFrame } from './CheckoutFrame'
-import { CheckoutAddress } from './CheckoutAddress'
 
 export class CheckoutPayment extends React.Component {
   static propTypes = {
@@ -26,9 +28,6 @@ export class CheckoutPayment extends React.Component {
     browser: PropTypes.string,
     formName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
-    reloadCheckoutScript: PropTypes.func,
-    /* prerender - We allow the iFrame to initialize before this component is shown by pre-rendering with CheckoutFrame only */
-    prerender: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -36,7 +35,6 @@ export class CheckoutPayment extends React.Component {
     scrollToFirstMatchingRef: () => {},
     asyncValidate: () => {},
     trackingOrderPlace: () => {},
-    reloadCheckoutScript: () => {},
     touch: () => {},
     formErrors: {},
     sectionName: 'payment',
@@ -47,6 +45,7 @@ export class CheckoutPayment extends React.Component {
 
   state = {
     isSubmitCardEnabled: false,
+    loading: true,
   }
 
   applyValidationErrors = () => {
@@ -97,51 +96,69 @@ export class CheckoutPayment extends React.Component {
     submit()
   }
 
+  checkoutFrameReady = () => {
+    this.setState({
+      loading: false,
+    })
+  }
+
   render() {
-    const { asyncValidate, browser, checkoutScriptReady, prerender, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName } = this.props
-    const { isSubmitCardEnabled } = this.state
+    const { asyncValidate, checkoutScriptReady, receiveRef, reloadCheckoutScript, scrollToFirstMatchingRef, sectionName, browser } = this.props
+    const { isSubmitCardEnabled, loading } = this.state
 
     return (
-      <div className={(prerender) ? css.hide : ''}>
+      <div>
         <div className={css.container} data-testing="checkoutPaymentSection">
+          {loading &&
+            <div className={css.loading}>
+              <Loading />
+            </div>
+          }
           <PaymentHeader />
-          {prerender ? null : (
-            <CheckoutName
-              receiveRef={receiveRef}
-              sectionName={sectionName}
-            />
-          )}
-          <div className={css.frame}>
-            <CheckoutFrame
-              checkoutScriptReady={checkoutScriptReady}
-              isSubmitCardEnabled={isSubmitCardEnabled}
-              reloadCheckoutScript={reloadCheckoutScript}
-              cardTokenReady={this.cardTokenReady}
-              disableCardSubmission={this.disableCardSubmission}
-            />
-          </div>
-          {prerender ? null : (
-            <CheckoutAddress
-              sectionName={sectionName}
+          <FormSection name={sectionName}>
+            <div className={css.wrapper}>
+              <p className={css.cardDetails}>
+                Card details
+              </p>
+              <Field
+                name="cardName"
+                component={ReduxFormInput}
+                inputType="Input"
+                placeholder="Name on card"
+                color="gray"
+                mask
+                withRef
+                ref={receiveRef}
+                refId={`${sectionName}.cardName`}
+                data-testing="checkoutCardNameInput"
+              />
+            </div>
+            <div className={css.frame}>
+              <CheckoutFrame
+                checkoutScriptReady={checkoutScriptReady}
+                isSubmitCardEnabled={isSubmitCardEnabled}
+                reloadCheckoutScript={reloadCheckoutScript}
+                cardTokenReady={this.cardTokenReady}
+                disableCardSubmission={this.disableCardSubmission}
+                checkoutFrameReady={this.checkoutFrameReady}
+              />
+            </div>
+            <BillingAddress
               asyncValidate={asyncValidate}
               receiveRef={receiveRef}
               scrollToFirstMatchingRef={scrollToFirstMatchingRef}
             />
-          )}
+          </FormSection>
         </div>
-        {(prerender) ? null : (
-          <div>
-            <SubmitButton onClick={this.handleClick} />
-            {(browser === 'mobile') ? (
-              <div>
-                <Summary />
-                <Section margin={{ top: 'LG' }}>
-                  <BoxDetails />
-                </Section>
-              </div>
-            ) : null}
-          </div>
-        )}
+        <SubmitButton onClick={this.handleClick} />
+        { browser === 'mobile' &&
+          <Summary />
+        }
+        { browser === 'mobile' &&
+          <Section margin={{ top: 'LG' }}>
+			      <BoxDetails />
+          </Section>
+        }
       </div>
     )
   }
