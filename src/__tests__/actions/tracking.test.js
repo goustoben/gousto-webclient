@@ -49,6 +49,24 @@ describe('tracking actions', () => {
       getState = jest.fn().mockReturnValue(state)
     })
 
+    test('should dispatch TRACKING action', () => {
+      trackFirstPurchase('order-a')(dispatch, getState)
+      const dispatchData = dispatch.mock.calls[0][0]
+      
+      expect(dispatchData.type).toBe(actionTypes.TRACKING)
+    })
+    test('should dispatch correct trackingData', () => {
+      trackFirstPurchase('order-a')(dispatch, getState)
+      const trackingData = dispatch.mock.calls[0][0].trackingData
+
+      expect(trackingData.asource).toBe('test-source')
+      expect(trackingData.goustoReference).toBe('123')
+      expect(trackingData.event).toBe('firstPurchase')
+      expect(trackingData.orderId).toBe('order-a')
+      expect(trackingData.orderTotal).toBe('13.99')
+      expect(trackingData.voucher).toBe('10OFF')
+    })
+
     test('should log warning when no user is found', () => {
       warning.mockClear()
 
