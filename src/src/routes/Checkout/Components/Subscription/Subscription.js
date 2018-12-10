@@ -5,22 +5,36 @@ import Immutable from 'immutable'
 import css from './Subscription.css'
 import SubscriptionOption from './SubscriptionOption'
 
+const frequencyDescription = {
+  1: [
+    "60% off your first box + 30% off all boxes in your first month",
+    "Your choice of personalised recipes",
+    "Guaranteed delivery slots",
+    "Surprise gifts!",
+  ],
+  2: [
+    "No sign up discount",
+    "Your choice of personalised recipes",
+  ],
+}
+
 const Subscription = ({ chosenIntervalId, options, optionName, sectionName, features }) => (
   (options.size && features.getIn(['chooseSubscription', 'value'])) ? (
 		<div className={css.container}>
-			<h3 className={css.header}>Subscription frequency</h3>
-			<p className={css.text}>You can change, pause or cancel at any time, simply log-in and go to ‘Subscription’. No lock-in, no stress.</p>
+			<h3 className={css.header}>Your Gousto Plan</h3>
+			<p className={css.text}>Your plan, your rules. Choose between two and four recipes a week. Pause or cancel at any time.</p>
 			<FormSection name={sectionName} className={css.options}>
-				{options.map(option => (
-					<SubscriptionOption
-					  name={optionName}
-					  id={option.get('id')}
-					  key={`interval-${option.get('id')}`}
-					  title={option.get('title')}
-					  description={option.get('description')}
-					  checked={option.get('id') === chosenIntervalId}
-					/>
-				))}
+				{options.map(option => {
+				  if(option.get('id') == 1 || option.get('id') == 2)
+				    return	<SubscriptionOption
+				      name={optionName}
+				      id={option.get('id')}
+				      key={`interval-${option.get('id')}`}
+				      title={option.get('title')}
+				      description={frequencyDescription[option.get('id')]}
+				      checked={option.get('id') === chosenIntervalId}
+				    />
+				})}
 			</FormSection>
 		</div>
   ) : null
