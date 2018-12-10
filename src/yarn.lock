@@ -6627,9 +6627,9 @@ got@^7.0.0:
     vinyl-fs "2.4.3"
     webpack "3.6.0"
 
-"gousto-lumberjack-js@git+ssh://git@github.com/Gousto/gousto-lumberjack-js.git":
-  version "1.0.0"
-  resolved "git+ssh://git@github.com/Gousto/gousto-lumberjack-js.git#e015c3be1afc6946fdafc1d3dda6b3c1a6628e6d"
+"gousto-lumberjack-js@git+ssh://git@github.com/Gousto/lumberjack-js-package.git#v1.0.2":
+  version "1.0.2"
+  resolved "git+ssh://git@github.com/Gousto/lumberjack-js-package.git#843004da1a06ac74eeb3cd7ec03dd3606f95591e"
   dependencies:
     winston "3.1.0"
 
