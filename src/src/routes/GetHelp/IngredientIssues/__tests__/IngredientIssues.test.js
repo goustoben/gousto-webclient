@@ -22,6 +22,7 @@ describe('<IngredientIssues />', () => {
       <IngredientIssues
         content={content}
         ingredients={ingredients}
+        fetchIngredientIssues={() => {}}
       />
     )
     getHelpLayout = wrapper.find('GetHelpLayout')

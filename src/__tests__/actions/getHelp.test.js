@@ -2,35 +2,10 @@ import Immutable from 'immutable'
 
 import actionTypes from 'actions/actionTypes'
 import { fetchOrderIssues as fetchOrderIssuesApi } from 'apis/getHelp'
-import { fetchOrderIssues as fetchOrderIssuesAction } from 'actions/getHelp'
+import { fetchOrderIssuesMockResponse } from 'apis/__mocks__/getHelp'
+import { fetchIngredientIssues as fetchOrderIssuesAction } from 'actions/getHelp'
 
-const fetchOrderIssuesMockResponse = {
-  "status": "ok",
-  "data": [
-    {
-      "category": {
-        "require_description": false,
-        "id": 101,
-        "name": "Missing ingredients"
-      },
-      "type": "category",
-      "group_label": null
-    },
-    {
-      "category": {
-        "require_description": false,
-        "id": 102,
-        "name": "Wrong ingredients"
-      },
-      "type": "category",
-      "group_label": null
-    },
-  ],
-}
-
-jest.mock('apis/getHelp', () => ({
-  fetchOrderIssues: jest.fn(),
-}))
+jest.mock('apis/getHelp')
 
 describe('getHelp actions', () => {
   const dispatch = jest.fn()
@@ -41,10 +16,6 @@ describe('getHelp actions', () => {
     })
 
     beforeEach(() => {
-      fetchOrderIssuesApi.mockReturnValueOnce(
-        Promise.resolve(fetchOrderIssuesMockResponse)
-      )
-
       dispatch.mockClear()
     })
 
@@ -79,7 +50,6 @@ describe('getHelp actions', () => {
     })
 
     test('error action with corresponding error is dispatched if an error occurs', async () => {
-      fetchOrderIssuesApi.mockReset()
       fetchOrderIssuesApi.mockImplementationOnce(
         () => { throw new Error('error-message')}
       )

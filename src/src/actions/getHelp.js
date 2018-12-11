@@ -77,7 +77,7 @@ const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
   }
 }
 
-const fetchOrderIssues = () => {
+const fetchIngredientIssues = () => {
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, true))
     dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, null))
@@ -100,5 +100,5 @@ export {
   storeSelectedIngredients,
   validateSelectedIngredients,
   validateLatestOrder,
-  fetchOrderIssues,
+  fetchIngredientIssues,
 }

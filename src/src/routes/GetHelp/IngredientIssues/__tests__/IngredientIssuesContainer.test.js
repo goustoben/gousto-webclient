@@ -1,19 +1,28 @@
 import React from 'react'
 import thunk from 'redux-thunk'
 import { mount } from 'enzyme'
-import { fromJS } from 'immutable'
+import { Map, fromJS } from 'immutable'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+import { fetchOrderIssuesMockResponse } from 'apis/__mocks__/getHelp'
 
+import authReducer, { initialState as authDefaultState } from 'reducers/auth'
+import status from 'reducers/status'
 import contentReducer from 'reducers/content'
 import { getHelp } from 'reducers/getHelp'
 import { IngredientIssuesContainer } from 'routes/GetHelp/IngredientIssues/IngredientIssuesContainer'
 
+jest.mock('apis/getHelp')
+
 describe('<IngredientIssuesContainer />', () => {
   describe('behaviour', () => {
     let wrapper
+    let store
 
     beforeAll(() => {
       const initialState = {
+        auth: authDefaultState(),
+        error: Map({}),
+        pending: Map({}),
         getHelp: fromJS({
           order: {
             id: '6765330',
@@ -44,9 +53,11 @@ describe('<IngredientIssuesContainer />', () => {
         }),
       }
 
-      const store = createStore(
+      store = createStore(
         combineReducers(Object.assign(
           {},
+          { ...authReducer },
+          { ...status },
           { ...contentReducer },
           { getHelp },
         )),
@@ -66,6 +77,11 @@ describe('<IngredientIssuesContainer />', () => {
       expect(wrapper.text()).toContain('1/2 chicken stock cube')
       expect(wrapper.text()).not.toContain('1 beef stock cube')
       expect(wrapper.text()).not.toContain('1 can of kidney beans')
+    })
+
+    test('ingredient issues are fetched and placed in the store when mount', () => {
+      expect(store.getState().getHelp.get('ingredientIssues').toJS())
+        .toEqual(fetchOrderIssuesMockResponse)
     })
   })
 })
