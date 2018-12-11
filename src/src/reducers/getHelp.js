@@ -2,18 +2,12 @@ import actionTypes from 'actions/actionTypes'
 import { fromJS } from 'immutable'
 
 const getHelpInitialState = fromJS({
+  ingredientIssues: [],
   order: {
     id: '',
     recipeItems: [],
   },
-  recipes: [{
-    id: '',
-    title: '',
-    ingredients: [{
-      id: '',
-      label: '',
-    }]
-  }],
+  recipes: [],
   selectedIngredients: [],
 })
 
@@ -58,6 +52,9 @@ const getHelp = (state, action) => {
     }
 
     return state
+  }
+  case actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES: {
+    return state.set('ingredientIssues', fromJS(action.ingredientIssues))
   }
   default:
     return state

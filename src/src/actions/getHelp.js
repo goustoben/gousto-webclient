@@ -1,31 +1,35 @@
-import { validateIngredients, validateOrder } from 'apis/getHelp'
+import {
+  validateIngredients,
+  validateOrder,
+  fetchOrderIssues as fetchOrderIssuesApi,
+} from 'apis/getHelp'
 import actionTypes from './actionTypes'
 import statusActions from './status'
 
 const dispatcher = (action) => (dispatch) => dispatch(action)
 
 /* action creators */
-export const selectOrderIssue = (issue) => dispatcher({
+const selectOrderIssue = (issue) => dispatcher({
   type: actionTypes.GET_HELP_ORDER_ISSUE_SELECT,
   issue,
 })
 
-export const selectContactChannel = (channel) => dispatcher({
+const selectContactChannel = (channel) => dispatcher({
   type: actionTypes.GET_HELP_CONTACT_CHANNEL_SELECT,
   channel,
 })
 
-export const storeGetHelpOrderId = (id) => dispatcher({
+const storeGetHelpOrderId = (id) => dispatcher({
   type: actionTypes.GET_HELP_STORE_ORDER_ID,
   id,
 })
 
-export const storeSelectedIngredients = (selectedIngredients) => dispatcher({
+const storeSelectedIngredients = (selectedIngredients) => dispatcher({
   type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS,
   selectedIngredients,
 })
 
-export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredientIds }) => {
+const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredientIds }) => {
   return async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
     dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
@@ -50,21 +54,19 @@ export const validateSelectedIngredients = ({ accessToken, orderId, costumerId, 
   }
 }
 
-export const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
+const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
   return async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, true))
     dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, ''))
 
     try {
-      const response = await validateOrder(
+      return await validateOrder(
         accessToken,
         {
           customer_id: Number(costumerId),
           order_id: Number(orderId),
         }
       )
-
-      return response
     }
     catch (error) {
       dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_ORDER, error.message))
@@ -73,4 +75,30 @@ export const validateLatestOrder = ({ accessToken, orderId, costumerId }) => {
       dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_ORDER, false))
     }
   }
+}
+
+const fetchOrderIssues = () => {
+  return async (dispatch, getState) => {
+    dispatch(statusActions.pending(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, true))
+    dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, null))
+
+    try {
+      const ingredientIssues = await fetchOrderIssuesApi(getState().auth.get('accessToken'))
+      dispatch({ type: actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, ingredientIssues })
+    } catch (error) {
+      dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, error.message))
+    } finally {
+      dispatch(statusActions.pending(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, false))
+    }
+  }
+}
+
+export {
+  selectOrderIssue,
+  selectContactChannel,
+  storeGetHelpOrderId,
+  storeSelectedIngredients,
+  validateSelectedIngredients,
+  validateLatestOrder,
+  fetchOrderIssues,
 }
