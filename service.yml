@@ -29,7 +29,7 @@ logs:
       - name: unparseableCookieCount
         pattern: '{($.log_level = \"critical\") && ($.message =\"un-parsable cookie value*\"")}'
         threshold: 1
-  
+
   - name: apiTimeLog
 
 
