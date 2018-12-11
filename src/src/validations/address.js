@@ -32,7 +32,7 @@ const rules = {
         const addressesFetched = formValues && formValues[sectionName] && formValues[sectionName].addressesFetched
         const deliverable = formValues && formValues[sectionName] && formValues[sectionName].deliverable
 
-        if (addressesFetched && !deliverable) {
+        if (addressesFetched && !deliverable && (sectionName === 'delivery')) {
           valid = { errorMessage: 'Sorry, we don\'t deliver to this postcode yet' }
         }
 
@@ -84,6 +84,7 @@ const rules = {
     rules: [
       (data, props) => {
         const { form: formName, sectionName } = props
+
         const state = goustoStore.store.getState()
         const formValues = getFormValues(formName)(state)
         const formFields = getFormMeta(formName)(state)
@@ -93,10 +94,10 @@ const rules = {
         const meta = (formFields && formFields[sectionName]) || {}
         const fields = ['postcode', 'houseNo', 'street', 'town', 'county']
 
-        const isAddressSelected = formValues && formValues[sectionName] && (formValues[sectionName].addressId !== 'placeholder' || formValues[sectionName].notFound)
-        const valid = isAddressSelected || !fields.find(field => errors[field] && meta[field] && meta[field].touched)
+        const isAddressSelected = formValues && formValues[sectionName] && formValues[sectionName].addressId && (formValues[sectionName].addressId !== 'placeholder')
+        const valid = isAddressSelected && !fields.find(field => errors[field] && meta[field] && meta[field].touched)
 
-        return valid
+        return valid ? true : { errorMessage: 'Address is required' }
       },
     ],
   },

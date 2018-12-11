@@ -1,6 +1,4 @@
 import { addPrefix } from 'validations/util'
-import goustoStore from 'store'
-import { getFormValues, getFormMeta, getFormSyncErrors } from 'redux-form'
 import addressRules from 'validations/address'
 
 const rules = {
@@ -58,10 +56,15 @@ const deliveryExtraRules = (formValues, formSectionName = 'delivery') => {
  * @param formSectionName
  * @returns {{}}
  */
-export default formSectionName => formValues => (
-  addPrefix(formSectionName, {
+export default formSectionName => formValues => {
+  const combinedRulesWithPrefix = addPrefix(formSectionName, {
     ...rules,
-    ...addressRules(formValues, formSectionName),
     ...deliveryExtraRules(formValues, formSectionName),
   })
-)
+  const addressRulesWithPrefix = addressRules(formSectionName)(formValues)
+
+  return {
+    ...combinedRulesWithPrefix,
+    ...addressRulesWithPrefix
+  }
+}

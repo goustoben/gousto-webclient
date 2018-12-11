@@ -41,7 +41,7 @@ const getHelp = (state, action) => {
     return state.setIn(['order', 'id'], action.id)
   }
   case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
-    return state.set('selectedIngredients', action.selectedIngredients)
+    return state.set('selectedIngredients', fromJS(action.selectedIngredients))
   }
   case actionTypes.RECIPES_RECEIVE: {
     const recipes = fromJS(reduceRecipes(action.recipes))
