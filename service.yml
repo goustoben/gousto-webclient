@@ -20,7 +20,7 @@ logs:
   - name: errorLogGroup
   - name: pm2Log
     filters:
-       - name: errorCount
+      - name: errorCount
         pattern: '{$.log_level = \"error\"}'
         threshold: 7
       - name: criticalCount
