@@ -22,7 +22,7 @@ const recipesLoadRecipesById = (recipeIds = []) => (
         dispatch({ type: actionTypes.RECIPES_RECEIVE, recipes })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.RECIPES_RECEIVE, err.message))
-        logger.error(err.message)
+        logger.error(err)
       } finally {
         dispatch(statusActions.pending(actionTypes.RECIPES_RECEIVE, false))
       }
@@ -57,7 +57,7 @@ const recipesLoadStockByDate = (whenStart, whenCutoff) => (
       dispatch({ type: actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, stock })
     } catch (err) {
       dispatch(statusActions.error(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, err.message))
-      logger.error(err.message)
+      logger.error(err)
     } finally {
       dispatch(statusActions.pending(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, false))
     }
@@ -68,6 +68,7 @@ export const saveRecommendations = (recommendations) =>(
   (dispatch) => (
     dispatch(featureSet('justforyou_v2', recommendations, true))
   )
+
 )
 
 export default {

@@ -23,6 +23,7 @@ const Helmet = require('react-helmet')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
 const encodeState = require('./encodeState')
 const fetchContentOnChange = require('routes/fetchContentOnChange').default
+const {loggerSetUuid} = require('actions/logger')
 
 const fetchAllData = (renderProps, store) => {
   const { location, params } = renderProps
@@ -82,32 +83,39 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
   return getDataFromTree(components)
     .then(() => {
       const reactHTML = renderToString(components)
-      logger.notice(`renderHTML/reactHTML -  ${new Date - startTime}ms`)
+      logger.notice({message: `renderHTML/reactHTML`, elapsedTime: (new Date() - startTime)})
 
       startTime = new Date
       const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
       const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, noGTM, helmetHead)
-      logger.notice(`renderHTML/template -  ${new Date - startTime}ms`)
+      logger.notice({message: `renderHTML/template`, elapsedTime: (new Date() - startTime)})
 
       return template
     })
 }
 
 const createCookies = (ctx, store) => {
+
   // todo: make sure cookie is correctly set up
   if (ctx.cookies && ctx.request && ctx.request.query && ctx.request.query.promo) {
     ctx.cookies.set('promo_url', ctx.request.query.promo)
     store.dispatch(basketActions.basketPromoCodeUrlChange(ctx.request.query.promo))
+
   }
 }
 
 /* eslint-disable no-param-reassign */
 async function processRequest(ctx, next) {
+
   if (ctx.request.url === '/500pagetest') {
     throw new Error('500 page test error')
   }
 
   const { history, store } = configureHistoryAndStore(ctx.request.url, {})
+  if(ctx.uuid){
+    store.dispatch(loggerSetUuid(ctx.uuid))
+  }
+
   const routes = mainRoutes(store)
 
   if (ctx.cookies) {
@@ -149,6 +157,7 @@ async function processRequest(ctx, next) {
   }
 
   if (ctx.request.path === '/header') {
+
     let simple = false
     let path = ''
     if (ctx.request.query) {
@@ -210,6 +219,7 @@ async function processRequest(ctx, next) {
           const is404 = renderProps.routes.find(r => (r.component && r.component.displayName && r.component.displayName === 'Connect(ErrorPage)')) !== undefined
           fetchAllData(renderProps, store).then(async () => {
             const redirect = store.getState().redirect
+            
             if (redirect) {
               const clearCookies = store.getState().clearCookies
               if (clearCookies) {

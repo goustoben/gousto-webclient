@@ -4,7 +4,7 @@ import { orderCancel, projectedOrderCancel } from 'actions/order'
 import { fetchOrderSkipContent } from 'apis/orderSkipRecovery'
 import { redirect } from 'actions/redirect'
 import actionTypes from 'actions/actionTypes'
-import { notice } from 'utils/logger'
+import logger from 'utils/logger'
 
 import {
   modalVisibilityChange,
@@ -28,7 +28,7 @@ jest.mock('apis/orderSkipRecovery', () => ({
 }))
 
 jest.mock('utils/logger', () => ({
-  notice: jest.fn(),
+  error: jest.fn()
 }))
 
 describe('orderSkipRecovery', () => {
@@ -283,7 +283,7 @@ describe('orderSkipRecovery', () => {
         })(dispatchSpy, getStateSpy)
 
         expect(dispatchSpy).toHaveBeenCalledTimes(1)
-        expect(notice).toHaveBeenCalledWith(error)
+        expect(logger.error).toHaveBeenCalledWith(error)
       })
     })
   })

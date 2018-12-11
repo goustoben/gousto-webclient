@@ -53,7 +53,7 @@ export default {
             giftId,
           })
         } else {
-          logger.error(`Cannot add gift to basket since ${giftId} not found in products store`)
+          logger.error({message: `Cannot add gift to basket since ${giftId} not found in products store`})
         }
       } else {
         logger.info(`${type} gifts cannot be added to basket`)
@@ -149,7 +149,7 @@ export default {
             break
           }
           default:
-            logger.error(`Cannot add ${type} items to basket`)
+            logger.error({message: `Cannot add ${type} items to basket`})
           }
         })
       })
@@ -181,10 +181,10 @@ export default {
             })
           }
         } else {
-          logger.error(`Cannot add product ${productId} to basket`)
+          logger.error({message: `Cannot add product ${productId} to basket`})
         }
       } else {
-        logger.error(`Cannot add product to basket since ${productId} not found in product store`)
+        logger.error({message: `Cannot add product to basket since ${productId} not found in product store`})
       }
     }
   ),
@@ -210,7 +210,7 @@ export default {
           stock: { [productId]: 1 },
         })
       } else {
-        logger.error(`Cannot remove product from basket since ${productId} not found in product store`)
+        logger.error({message: `Cannot remove product from basket since ${productId} not found in product store`})
       }
     }
   ),
@@ -517,7 +517,7 @@ export default {
       try {
         dispatch(push(config.routes.client['check-out']))
       } catch (err) {
-        logger.error(err.message)
+        logger.error(err)
         dispatch(push(config.routes.client.menu))
         dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, err.message))
       } finally {
@@ -553,7 +553,7 @@ export default {
       } catch (err) {
         dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, err.message))
         dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
-        logger.error(err.message)
+        logger.error(err)
         throw err
       }
     }
