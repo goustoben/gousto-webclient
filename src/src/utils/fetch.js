@@ -52,10 +52,10 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       }
     }
   }
-  const { uuid } = goustoStore.store.getState().logger
+  const { uuid } = goustoStore.store.getState().logger || {}
   if (accessToken) {
     if (accessToken.indexOf('//') > -1) {
-      logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid: uuid})
+      logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid: uuid })
     }
     requestHeaders = { ...requestHeaders, Authorization: `Bearer ${accessToken}` }
   }
