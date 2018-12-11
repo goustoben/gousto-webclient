@@ -12,12 +12,6 @@ describe('Menu Loading', () => {
       expect(tree).toMatchSnapshot()
     })
 
-    test('should render loading gif', () => {
-      wrapper = shallow(<Loading loading hasRecommendations />)
-      const loadingGif = wrapper.find('Image')
-
-      expect(loadingGif).toHaveLength(1)
-    })
   })
 
   describe('Alternative Rendering', () => {

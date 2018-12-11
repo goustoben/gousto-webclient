@@ -37,7 +37,7 @@ describe('getPreselectedCollectionName', () => {
       beforeEach(() => {
         state.features = Immutable.fromJS({
           ...state.features.toJS(),
-          justforyou: {
+          justforyou_v2: {
             value: true
           }
         })
@@ -64,7 +64,7 @@ describe('getPreselectedCollectionName', () => {
       beforeEach(() => {
         state.features = Immutable.fromJS({
           ...state.features.toJS(),
-          justforyou: {
+          justforyou_v2: {
             value: false
           }
         })
@@ -101,7 +101,7 @@ describe('selectCollection', () => {
       )
     })
 
-    test('then FILTERS_COLLECTION_CHANGE event is dispatched with collection id', () => {
+    it('should dispatch FILTERS_COLLECTION_CHANGE event with collection id', () => {
       const mockStore = configureMockStore()
       const store = mockStore(initalState)
 
@@ -122,19 +122,28 @@ describe('selectCollection', () => {
         Immutable.fromJS({
           differentId: {
             id: 'differentId',
-            shortTitle: 'different name'
+            shortTitle: 'different name',
+            default: false
+          },
+          defaultCollection: {
+            id: 'defaultCollectionId',
+            shortTitle: 'default collection name',
+            default: true
           }
         })
       )
     })
 
-    test('then no event is dispatched', () => {
+    it('should dispatch FILTERS_COLLECTION_CHANGE event with default collection id', () => {
       const mockStore = configureMockStore()
       const store = mockStore(initalState)
 
       selectCollection(store.getState(), collectionName, store.dispatch)
 
-      expect(store.getActions()).toEqual([])
+      expect(store.getActions()).toContainEqual({
+        type: actionTypes.FILTERS_COLLECTION_CHANGE,
+        collectionId: 'defaultCollectionId',
+      })
     })
   })
 })

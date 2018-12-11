@@ -4,15 +4,18 @@ import { mount } from 'enzyme'
 import { Map, fromJS } from 'immutable'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 
+import status from 'reducers/status'
 import recipesReducer from 'reducers/recipes'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import contentReducer from 'reducers/content'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import { fetchRecipes } from 'apis/recipes'
 import { fetchOrder } from 'apis/orders'
+import { validateOrder } from 'apis/getHelp'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 import GetHelpContainer from 'routes/GetHelp/GetHelpContainer'
 
+jest.mock('apis/getHelp')
 jest.mock('apis/recipes')
 jest.mock('apis/orders')
 
@@ -25,6 +28,8 @@ describe('<GetHelpContainer />', () => {
         getHelp: getHelpInitialState,
         recipes: Map({}),
         user: userDefaultState,
+        error: Map({}),
+        pending: Map({}),
       }
 
       store = createStore(
@@ -34,6 +39,7 @@ describe('<GetHelpContainer />', () => {
           { ...contentReducer },
           { ...authReducer },
           { ...userReducer },
+          { ...status },
           { recipes: recipesReducer.recipes },
         )),
         initialState,
@@ -48,13 +54,17 @@ describe('<GetHelpContainer />', () => {
         data: [{ id: '123', ingredients: [{ id: '321' }] }]
       })
 
+      validateOrder.mockResolvedValue({
+        data: { valid: true }
+      })
+
       mount(
-				<GetHelpContainer
-				  location={{ query: { orderId: '788' } }}
-				  store={store}
-				>
-					<div>Required Child</div>
-				</GetHelpContainer>
+        <GetHelpContainer
+          location={{ query: { orderId: '788' } }}
+          store={store}
+        >
+          <div>Required Child</div>
+        </GetHelpContainer>
       )
     })
     test('order id passed as prop ends up in store', () => {

@@ -3,9 +3,11 @@
     "extends": [
       "airbnb",
       "eslint:recommended",
-      "plugin:react/recommended"
+      "plugin:react/recommended",
+      "plugin:you-dont-need-lodash-underscore/compatible"
     ],
     "rules": {
+      "no-sparse-arrays": "error",
       "no-multiple-empty-lines": ["error", { "max": 1}],
       "object-curly-spacing": 0,
       "array-bracket-spacing": 0,
@@ -122,7 +124,8 @@
       "no-bitwise": 1,
       "no-control-regex": 1,
       "react/no-children-prop": 2,
-      "jsx-a11y/label-has-associated-control": 0
+      "jsx-a11y/label-has-associated-control": 0,
+      "eol-last": 1
     
   },
   "env" : {
@@ -142,6 +145,7 @@
     "__DOMAIN__": false,
     "__CLIENT_PROTOCOL__": false,
     "__CLOUDFRONT_URL__": false,
+    "__CHECKOUT_PK__": false,
     "__TEST__": false,
     "__GIT_HASH__": false
   }

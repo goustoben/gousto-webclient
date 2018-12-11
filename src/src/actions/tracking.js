@@ -1,6 +1,6 @@
 import logger from 'utils/logger'
-import actionTypes from './actionTypes'
 import { getUserOrderById } from 'utils/user'
+import actionTypes from './actionTypes'
 
 export const trackFirstPurchase = orderId => (
   (dispatch, getState) => {
@@ -16,7 +16,7 @@ export const trackFirstPurchase = orderId => (
       logger.warning(`Missing order data for first purchase tracking: no user order "${orderId}" found in store`)
     }
 
-    dispatch({
+    dispatch({	
       type: actionTypes.TRACKING,
       trackingData: {
         actionType: actionTypes.TRACKING,
@@ -26,7 +26,7 @@ export const trackFirstPurchase = orderId => (
         orderId,
         orderTotal: order.getIn(['prices', 'total']),
         voucher: order.getIn(['prices', 'promoCode'], ''),
-      },
+      },	
     })
   }
 )

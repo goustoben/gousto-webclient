@@ -100,4 +100,10 @@ module.exports = {
       text: 'ingredients',
     },
   },
+  christmasBanner: {
+    gelMain: {
+      text: 'New range!',
+      title: 'Festive Flavours',
+    },
+  },
 }

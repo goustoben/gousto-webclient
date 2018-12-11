@@ -153,10 +153,11 @@ module.exports = {
     copy: 'Free beer, wine and\nsoft drinks on Friday!',
   }],
   Openings: {
-    All: ['Brand', 'Marketing', 'Tech', 'Food', 'Operations', 'People', 'Customer Care', 'Digital Product', 'Data', 'Engineering', 'Finance'],
+    All: ['Brand', 'Marketing', 'Tech', 'Food', 'Operations', 'People', 'Customer Care', 'Digital Product', 'Data', 'Engineering', 'Finance', 'Analytics', 'Data Science'],
     Brand: ['Brand'],
     Food: ['Food'],
-    Tech: ['Digital Product', 'Data', 'Tech', 'Engineering'],
+    Data: ['Analytics', 'Data', 'Data Science'],
+    Tech: ['Digital Product', 'Tech', 'Engineering'],
     Marketing: ['Marketing'],
     Operations: ['Operations', 'People'],
     'Customer Care': ['Customer Care'],

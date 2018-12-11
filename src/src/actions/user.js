@@ -2,17 +2,20 @@
 import Immutable from 'immutable' /* eslint-disable no-caps */
 import logger from 'utils/logger'
 import * as userApi from 'apis/user'
-import * as customersApi from 'apis/customers'
+import { customerSignup, customerSignupV2 } from 'apis/customers'
+
 import * as ordersApi from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
 import * as addressApi from 'apis/addressLookup'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
-import actionTypes from './actionTypes'
-import basketActions from './basket'
-import statusActions from './status'
 import config from 'config/signup'
 import moment from 'moment'
+import { isCheckoutPaymentFeatureEnabled } from 'selectors/features'
+import { getPaymentDetails } from 'selectors/payment'
+import statusActions from './status'
+import basketActions from './basket'
+import actionTypes from './actionTypes'
 
 const fetchShippingAddressesPending = pending => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
@@ -156,16 +159,26 @@ function userOrderSkipNextProjected() {
   }
 }
 
-function userSubscribe() {
+const customerSignupApi = (reqData, isCheckoutPaymentFeature) => {
+  if (isCheckoutPaymentFeature) {
+    return customerSignupV2(null, reqData)
+  }
+
+  return customerSignup(null, reqData)
+}
+
+export function userSubscribe() {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
+    const prices = getState().pricing.get('prices')
     try {
       const state = getState()
       const checkoutInputs = Immutable.fromJS(state.form.checkout.values)
       const aboutYou = checkoutInputs.get('aboutyou')
       const delivery = checkoutInputs.get('delivery')
       const payment = checkoutInputs.get('payment')
+      const tracking = state.tracking
 
       const deliveryAddress = getAddress(delivery)
       const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
@@ -190,15 +203,7 @@ function userSubscribe() {
           is_default: 1,
           type: config.payment_types.card,
           name: 'My Card',
-          card: {
-            type: payment.get('cardType'),
-            number: payment.get('cardNumber'),
-            cvv2: payment.get('cv2'),
-            holder: payment.get('cardName'),
-            expiry_month: payment.get('cardExpiryMonth'),
-            expiry_year: `20${payment.get('cardExpiryYear')}`,
-            active: 1,
-          },
+          card: getPaymentDetails(state)
         },
         addresses: {
           shipping_address: Object.assign({
@@ -216,7 +221,7 @@ function userSubscribe() {
         },
       }
 
-      const { data } = await customersApi.customerSignup(null, reqData)
+      const { data } = await customerSignupApi(reqData, isCheckoutPaymentFeatureEnabled(state))
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {
         const { customer, addresses, subscription, orderId } = data
@@ -226,6 +231,23 @@ function userSubscribe() {
           subscription,
         })
         user = user.set('goustoReference', user.get('goustoReference').toString())
+
+        const paymentProvider = data.paymentMethod.card ? data.paymentMethod.card.paymentProvider: ''
+        dispatch({
+          type: actionTypes.CHECKOUT_ORDER_PLACED,
+          trackingData: {
+            actionType: 'Order Placed',
+            asource: tracking.get('asource'),
+            order_id: orderId,
+            order_total: prices.get('total'),
+            promo_code: prices.get('promoCode'),
+            signup: true,
+            event: 'firstPurchase',
+            subscription_active: data.subscription.status ? data.subscription.status.slug : true,
+            payment_provider: paymentProvider,
+          }
+        })
+
         dispatch(basketActions.basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
       } else {
@@ -233,7 +255,20 @@ function userSubscribe() {
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, err.message))
-      logger.error(err)
+
+      const previewOrderId = getState().basket.get('previewOrderId')
+
+      dispatch({
+        type: actionTypes.CHECKOUT_ORDER_FAILED,
+        trackingData: {
+          actionType: 'Order Failed',
+          order_id: previewOrderId,
+          promo_code: prices.get('promoCode'),
+          signup: true,
+          error_reason: err.message,
+        }
+      })
+      logger.error({message: err.message, errors: [err]})
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, false))

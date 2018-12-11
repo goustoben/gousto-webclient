@@ -7,5 +7,13 @@ export const isSubmitting = state => {
     , false)
   }
 
+  if (state.pending && state.pending.get('CHECKOUT_CARD_SUBMIT')) {
+    submitting = true
+  }
+
   return submitting
 }
+
+export const isBillingAddressDifferent = (formValues, sectionName) => (
+  formValues && formValues[sectionName] && formValues[sectionName].isBillingAddressDifferent ? true : false
+)

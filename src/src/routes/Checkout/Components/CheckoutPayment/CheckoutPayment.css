@@ -1,0 +1,42 @@
+@value Blueberry20 from 'styles/colors.css';
+@value SpacingLG from 'sass-loader!styles/spacing.scss';
+
+.container {
+	composes: textBold from 'styles/typography.css';
+	position: relative;
+	min-height: 450px;
+	padding: SpacingLG;
+	background-color: Blueberry20;
+}
+
+
+.loading {
+	position: absolute;
+	display: flex;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	background-color: #FFFFFFBB;
+	pointer-events: none;
+}
+
+.wrapper {
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+	margin-top: 25px;
+}
+
+.wrapper > div {
+	width: 50%;
+}
+
+.frame {
+	composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.cardDetails {
+	width: 100%;
+}

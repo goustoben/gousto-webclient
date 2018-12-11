@@ -40,9 +40,9 @@ describe('features reducers', () => {
         },
         skipRecovery: {
           experiment: false,
-          value: false,
+          value: true,
         },
-        justforyou: {
+        justforyou_v2: {
           experiment: false,
           value: false,
         }
@@ -77,9 +77,9 @@ describe('features reducers', () => {
         },
         skipRecovery: {
           experiment: false,
-          value: false,
+          value: true,
         },
-        justforyou: {
+        justforyou_v2: {
           experiment: false,
           value: false,
         }
@@ -122,9 +122,9 @@ describe('features reducers', () => {
         },
         skipRecovery: {
           experiment: false,
-          value: false,
+          value: true,
         },
-        justforyou: {
+        justforyou_v2: {
           experiment: false,
           value: false,
         }

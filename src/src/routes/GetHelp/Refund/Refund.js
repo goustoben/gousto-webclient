@@ -12,145 +12,160 @@ import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 import css from './Refund.css'
 
 class Refund extends PureComponent {
-	static propTypes = {
-	  content: PropTypes.shape({
-	    title: PropTypes.string.isRequired,
-	    infoBody: PropTypes.string.isRequired,
-	    confirmationBody: PropTypes.string.isRequired,
-	    errorBody: PropTypes.string.isRequired,
-	    button1: PropTypes.string.isRequired,
-	    button2: PropTypes.string.isRequired,
-	  }),
-	  user: PropTypes.shape({
-	    id: PropTypes.string.isRequired,
-	    accessToken: PropTypes.string.isRequired,
-	  }),
-	  order: PropTypes.shape({
-	    id: PropTypes.string.isRequired
-	  }),
-	  issues: PropTypes.arrayOf(
-	    PropTypes.shape({
-	      ingredient_id: PropTypes.string.isRequired,
-	      category_id: PropTypes.number.isRequired
-	    })
-	  )
-	}
+  static propTypes = {
+    content: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      infoBody: PropTypes.string.isRequired,
+      confirmationBody: PropTypes.string.isRequired,
+      errorBody: PropTypes.string.isRequired,
+      button1: PropTypes.string.isRequired,
+      button2: PropTypes.string.isRequired,
+    }).isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      accessToken: PropTypes.string.isRequired,
+    }).isRequired,
+    order: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+    selectedIngredients: PropTypes.arrayOf(
+      PropTypes.shape({
+        recipeId: PropTypes.string.isRequired,
+        ingredientId: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  }
 
-	state = {
-	  refund: { value: 0, type: 'credit' },
-	  isFetching: true,
-	  didFetchError: false,
-	}
+  state = {
+    refund: { value: 0, type: 'credit' },
+    isFetching: true,
+    didFetchError: false,
+  }
 
-	componentDidMount() {
-	  this.getRefund()
-	}
+  componentDidMount() {
+    this.getRefund()
+  }
 
-	getRefund = async () => {
-	  try {
-	    const response = await fetchRefundAmount()
-	    const { value, type } = response.data
+  getRefund = async () => {
+    const { user, order, selectedIngredients } = this.props
 
-	    this.setState({
-	      ...this.state,
-	      isFetching: false,
-	      refund: {
-	        type,
-	        value
-	      }
-	    })
-	  } catch (err) {
-	    this.requestFailure()
-	  }
-	}
+    try {
+      const response = await fetchRefundAmount(user.accessToken, {
+        customer_id: Number(user.id),
+        order_id: Number(order.id),
+        ingredient_ids: selectedIngredients.map(
+          selectedIngredient => selectedIngredient.ingredientId
+        ),
+      })
+      const { value, type } = response.data
 
-	onAcceptOffer = async ({ user, order, issues }, { refund }) => {
-	  try {
-	    const response = await setComplaint(user.accessToken, {
-	      customer_id: Number(user.id),
-	      order_id: Number(order.id),
-	      type: refund.type,
-	      value: refund.value,
-	      issues
-	    })
+      this.setState({
+        ...this.state,
+        isFetching: false,
+        refund: {
+          type,
+          value
+        }
+      })
+    } catch (err) {
+      this.requestFailure()
+    }
+  }
 
-	    redirect(routes.getHelp.confirmation)
+  onAcceptOffer = async () => {
+    const { user, order, selectedIngredients } = this.props
+    const { refund } = this.state
 
-	    return response
-	  } catch (err) {
-	    return this.requestFailure()
-	  }
-	}
+    const issues = selectedIngredients.map((selectedIngredient) => (
+      { ingredient_id: selectedIngredient.ingredientId, category_id: 98 }
+    ))
 
-	requestFailure = () => {
-	  this.setState({
-	    ...this.state,
-	    isFetching: false,
-	    didFetchError: true
-	  })
-	}
+    try {
+      const response = await setComplaint(user.accessToken, {
+        customer_id: Number(user.id),
+        order_id: Number(order.id),
+        type: refund.type,
+        value: refund.value,
+        issues
+      })
 
-	render() {
-	  const { content } = this.props
-	  const {
-	    isFetching,
-	    refund,
-	    didFetchError
-	  } = this.state
+      redirect(routes.getHelp.confirmation)
 
-	  const infoBodyWithAmount = replaceWithValues(
-	    content.infoBody, {
-	      refundAmount: refund.value.toFixed(2)
-	    }
-	  )
-	  const button2WithAmount = replaceWithValues(
-	    content.button2, {
-	      refundAmount: refund.value.toFixed(2)
-	    }
-	  )
-	  const getHelpLayoutbody = (isFetching || didFetchError)
-	    ? ''
-	    : infoBodyWithAmount
-	  const confirmationContent = (didFetchError)
-	    ? content.errorBody
-	    : content.confirmationBody
-	  const acceptButton = (didFetchError)
-	    ? null
-	    : <Button
-	      className={css.button}
-	      color="primary"
-	      onClick={() => this.onAcceptOffer(this.props, this.state)}
-	    >
-				{button2WithAmount}
-			</Button>
+      return response
+    } catch (err) {
+      return this.requestFailure()
+    }
+  }
 
-	  return (
-			<GetHelpLayout
-			  title={content.title}
-			  body={getHelpLayoutbody}
-			  fullWidthContent
-			>
-				{(isFetching)
-				  ? <div className={css.center}>
-						<Loading className={css.loading} />
-					</div>
-				  : <div>
-						<p>{confirmationContent}</p>
-						<BottomBar>
-							<BottomButton
-							  color="secondary"
-							  url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-							  clientRouted
-							>
-								{content.button1}
-							</BottomButton>
-							{acceptButton}
-						</BottomBar>
-					</div>
-				}
-			</GetHelpLayout>
-	  )
-	}
+  requestFailure = () => {
+    this.setState({
+      ...this.state,
+      isFetching: false,
+      didFetchError: true
+    })
+  }
+
+  render() {
+    const { content } = this.props
+    const {
+      isFetching,
+      refund,
+      didFetchError
+    } = this.state
+
+    const infoBodyWithAmount = replaceWithValues(
+      content.infoBody, {
+        refundAmount: refund.value.toFixed(2)
+      }
+    )
+    const button2WithAmount = replaceWithValues(
+      content.button2, {
+        refundAmount: refund.value.toFixed(2)
+      }
+    )
+    const getHelpLayoutbody = (isFetching || didFetchError)
+      ? ''
+      : infoBodyWithAmount
+    const confirmationContent = (didFetchError)
+      ? content.errorBody
+      : content.confirmationBody
+    const acceptButton = (didFetchError)
+      ? null
+      : <Button
+        className={css.button}
+        color="primary"
+        onClick={() => this.onAcceptOffer()}
+      >
+        {button2WithAmount}
+      </Button>
+
+    return (
+      <GetHelpLayout
+        title={content.title}
+        body={getHelpLayoutbody}
+        fullWidthContent
+      >
+        {(isFetching)
+          ? <div className={css.center}>
+            <Loading className={css.loading} />
+          </div>
+          : <div>
+            <p>{confirmationContent}</p>
+            <BottomBar>
+              <BottomButton
+                color="secondary"
+                url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+                clientRouted
+              >
+                {content.button1}
+              </BottomButton>
+              {acceptButton}
+            </BottomBar>
+          </div>
+        }
+      </GetHelpLayout>
+    )
+  }
 }
 
 export default Refund

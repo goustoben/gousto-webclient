@@ -1,7 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 import PartialContainer from 'routes/Checkout/Components/PartialContainer'
-import Payment from 'routes/Checkout/Components/SagePayPayment'
+import Payment from 'routes/Checkout/Components/SagePayCardDetails'
 
 describe('PartialContainer', () => {
   let wrapper

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Button } from 'goustouicomponents'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import { BottomButton } from '../components/BottomButton'
@@ -12,8 +13,10 @@ const propTypes = {
     button1Copy: PropTypes.string.isRequired,
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
+  cssButton: PropTypes.string.isRequired,
+  cannotContinue: PropTypes.bool.isRequired,
+  continueClick: PropTypes.func.isRequired,
   buttonLeftUrl: PropTypes.string,
-  buttonRightUrl: PropTypes.string,
 }
 
 const IngredientsPresentation = ({
@@ -24,24 +27,27 @@ const IngredientsPresentation = ({
     button1Copy,
     button2Copy,
   },
+  cssButton,
+  cannotContinue,
+  continueClick,
   buttonLeftUrl,
-  buttonRightUrl,
 }) => (
-	<GetHelpLayout title={title} body={body}>
-		{children}
-		<BottomBar>
-			<BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
-				{button1Copy}
-			</BottomButton>
-			<BottomButton
-			  color="primary"
-			  url={buttonRightUrl}
-			  clientRouted
-			>
-				{button2Copy}
-			</BottomButton>
-		</BottomBar>
-	</GetHelpLayout>
+  <GetHelpLayout title={title} body={body}>
+    {children}
+    <BottomBar>
+      <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
+        {button1Copy}
+      </BottomButton>
+      <Button
+        className={cssButton}
+        color="primary"
+        disabled={cannotContinue}
+        onClick={continueClick}
+      >
+        {button2Copy}
+      </Button>
+    </BottomBar>
+  </GetHelpLayout>
 )
 
 IngredientsPresentation.propTypes = propTypes

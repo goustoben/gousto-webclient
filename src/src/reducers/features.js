@@ -28,9 +28,9 @@ const defaultFeatures = () => ({
   },
   skipRecovery: {
     experiment: false,
-    value: false,
+    value: true,
   },
-  justforyou: {
+  justforyou_v2: {
     experiment: false,
     value: false,
   }

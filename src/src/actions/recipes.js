@@ -2,7 +2,7 @@ import actionTypes from './actionTypes'
 import statusActions from './status'
 import logger from 'utils/logger'
 import { featureSet } from 'actions/features'
-import { fetchRecipes, fetchRecipesStockByDate, fetchRecommendations } from 'apis/recipes'
+import { fetchRecipes, fetchRecipesStockByDate } from 'apis/recipes'
 
 const recipesLoadRecipesById = (recipeIds = []) => (
   async (dispatch, getState) => {
@@ -64,23 +64,11 @@ const recipesLoadStockByDate = (whenStart, whenCutoff) => (
   }
 )
 
-export const loadRecommendations = () => (
-  async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
+export const saveRecommendations = (recommendations) =>(
+  (dispatch) => (
+    dispatch(featureSet('justforyou_v2', recommendations, true))
+  )
 
-    try {
-      let recommendations = false
-      const { data = {} } = await fetchRecommendations(accessToken)
-
-      if (data[0] && data[0].properties && data[0].properties['just-for-you']) {
-        recommendations = data[0].properties['just-for-you']
-      }
-
-      dispatch(featureSet('justforyou', recommendations, true))
-    } catch (err) {
-      logger.error({message: 'Error loading recommendation data for user', errors: [err]})
-    }
-  }
 )
 
 export default {

@@ -2,14 +2,36 @@ import actions from 'actions'
 import logger from 'utils/logger'
 
 import actionTypes from 'actions/actionTypes'
+import { saveRecommendations } from 'actions/recipes'
 
-import { loadRecommendations } from 'actions/recipes'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
-import { selectCollection, getPreselectedCollectionName } from './utils'
 import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/features'
+import { fetchRecommendations } from 'apis/recipes'
 
 import moment from 'moment'
+import { selectCollection, getPreselectedCollectionName } from './utils'
+
+const loadRecommendations = async(store) => {
+  const accessToken = store.getState().auth.get('accessToken')
+  
+  let recommendations = false
+  try {
+
+    const { data = {} } = await fetchRecommendations(accessToken)
+
+    if (data[0] && data[0].properties && data[0].properties['just-for-you']) {
+      recommendations = data[0].properties['just-for-you']
+    }
+
+  } catch (err) {
+    logger.error({message: 'Error loading recommendation data for user', errors: [err]})
+  }
+
+  store.dispatch(saveRecommendations(recommendations))
+
+  return recommendations
+}
 
 export default async function fetchData({ store, query, params }, force, background) {
   const isAuthenticated = store.getState().auth.get('isAuthenticated')
@@ -47,8 +69,8 @@ export default async function fetchData({ store, query, params }, force, backgro
     store.dispatch(actions.featureSet('forceCollections', true))
   }
 
-  if (isAuthenticated && !store.getState().features.getIn(['justforyou', 'value'])) {
-    store.dispatch(loadRecommendations())
+  if (isAuthenticated) {
+    await loadRecommendations(store)
   }
 
   let fetchDataPromise
@@ -216,3 +238,5 @@ export default async function fetchData({ store, query, params }, force, backgro
 
   return fetchDataPromise
 }
+
+export { loadRecommendations }

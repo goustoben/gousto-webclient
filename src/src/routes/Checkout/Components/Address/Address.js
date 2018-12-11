@@ -1,16 +1,15 @@
 import React from 'react'
 import moment from 'moment'
-import lodash from 'lodash'
 
-import css from './Address.css'
 import { Button } from 'goustouicomponents'
-import AddressInputs from './AddressInputs'
-import Postcode from './Postcode'
-import DeliveryInfo from './DeliveryInfo'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveryUtils from 'utils/deliveries'
 import logger from 'utils/logger'
 import dottify from 'utils/dottify'
+import DeliveryInfo from './DeliveryInfo'
+import Postcode from './Postcode'
+import AddressInputs from './AddressInputs'
+import css from './Address.css'
 
 class Address extends React.PureComponent {
 	static propTypes = {
@@ -93,7 +92,7 @@ class Address extends React.PureComponent {
 	  }
 
 	  function generateDropdownOptions(addressData) {
-	    const addresses = lodash.map(addressData.deliveryPoints, deliveryPoint => (
+	    const addresses = addressData.deliveryPoints.map(deliveryPoint => (
 	      { id: deliveryPoint.udprn, labels: [generateAddressLabel(deliveryPoint)] }
 	    ))
 
@@ -197,7 +196,7 @@ class Address extends React.PureComponent {
 	    addressDetails = { line1: '', line2: '', town: '', county: '', postcode: '' }
 	    change(formName, `${sectionName}.notFound`, false)
 	  } else {
-	    const matchingDeliveryPoint = lodash.find(this.state.addressData.deliveryPoints, deliveryPoint => (
+	    const matchingDeliveryPoint = this.state.addressData.deliveryPoints.find(deliveryPoint => (
 	      deliveryPoint.udprn === addressId
 	    ))
 
@@ -301,7 +300,7 @@ class Address extends React.PureComponent {
 				  receiveRef={this.props.receiveRef}
 				/>
 
-				{showDropdown && addresses.length > 1 && !isAddressSelected && <p><span onClick={this.handleCantFind} className={css.linkBase}>Can’t find your address?</span></p>}
+				{showDropdown && addresses.length > 1 && !isAddressSelected && <p><span data-testing="addressNotFound" onClick={this.handleCantFind} className={css.linkBase}>Can’t find your address?</span></p>}
 				{isAddressSelected && this.renderAddressInputs()}
 				<br />
 				{this.props.isDelivery &&

@@ -1,0 +1,20 @@
+.header {
+	composes: headerMD headlineFont from 'styles/typography.css';
+	composes: inlineBlock from 'styles/display.css';
+}
+
+.padlockIcon {
+	composes: padlockIcon from 'styles/icons.css';
+}
+
+.textSM {
+	composes: textSM from 'styles/typography.css';
+	composes: noMargin from 'sass-loader!styles/spacing.scss';
+}
+
+.boldInfo{
+	composes: textSM;
+	composes: textBold from 'styles/typography.css';
+	float:right;
+}
+

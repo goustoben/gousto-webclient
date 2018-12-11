@@ -4,15 +4,17 @@ import { fromJS } from 'immutable'
 const getHelpInitialState = fromJS({
   order: {
     id: '',
+    recipeItems: [],
   },
-  recipes: {
+  recipes: [{
     id: '',
     title: '',
-    ingredients: {
+    ingredients: [{
       id: '',
       label: '',
-    }
-  }
+    }]
+  }],
+  selectedIngredients: [],
 })
 
 const reduceRecipes = (recipes) => (
@@ -38,10 +40,24 @@ const getHelp = (state, action) => {
   case actionTypes.GET_HELP_STORE_ORDER_ID: {
     return state.setIn(['order', 'id'], action.id)
   }
+  case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
+    return state.set('selectedIngredients', fromJS(action.selectedIngredients))
+  }
   case actionTypes.RECIPES_RECEIVE: {
     const recipes = fromJS(reduceRecipes(action.recipes))
 
     return state.set('recipes', recipes)
+  }
+  case actionTypes.USER_LOAD_ORDERS: {
+    const order = action.orders[0]
+
+    if (order) {
+      const recipeItems = order.recipeItems.map((item) => (item.recipeId))
+
+      return state.setIn(['order', 'recipeItems'], fromJS(recipeItems))
+    }
+
+    return state
   }
   default:
     return state

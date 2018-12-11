@@ -6,21 +6,26 @@ import Summary from '../../../Components/Summary'
 import BoxDetails from '../../../Components/BoxDetails'
 import SubmitButton from '../../../Components/SubmitButton'
 
-import PaymentContainer, { addInitialValues, getValidationRules } from '../../../Components/SagePayPayment'
+import PaymentContainer, { addInitialValues, getValidationRules } from '../../../Components/SagePayCardDetails'
 
 const sectionName = 'payment'
 
 const PaymentSection = PaymentContainer(sectionName)
 
-const PaymentStep = ({ submit, receiveRef, scrollToFirstMatchingRef }) => (
+const submitPayment = (trackingOrderPlace, submit) => {
+  trackingOrderPlace(true, 'sagepay')
+  submit()
+}
+
+const PaymentStep = ({ submit, trackingOrderPlace, receiveRef, scrollToFirstMatchingRef }) => (
 	<div>
 		<PaymentSection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} />
-		<SubmitButton onClick={submit} />
+		<SubmitButton onClick={() => submitPayment(trackingOrderPlace, submit)} />
 		<Summary />
 		<Section margin={{ top: 'LG' }}>
 			<BoxDetails />
 		</Section>
-		<SubmitButton onClick={submit} />
+		<SubmitButton onClick={() => submitPayment(trackingOrderPlace, submit)} />
 	</div>
 )
 
@@ -28,6 +33,7 @@ PaymentStep.propTypes = {
   submit: PropTypes.func.isRequired,
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
+  trackingOrderPlace: PropTypes.func,
 }
 
 const PaymentForm = formContainer(PaymentStep, getValidationRules(sectionName), {}) // eslint-disable-line import/no-mutable-exports

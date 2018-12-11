@@ -7,6 +7,16 @@ import { getSlot } from 'utils/deliveries'
 import { createPreviewOrder } from 'apis/orders'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 
+import {
+  checkoutClearErrors,
+  checkoutCreatePreviewOrder,
+  checkoutAddressLookup,
+  checkoutSignup,
+  fireCheckoutError,
+  checkoutPostSignup,
+  trackPurchase,
+} from 'actions/checkout'
+
 jest.mock('utils/basket', () => ({
   basketResetPersistent: jest.fn()
 }))
@@ -31,15 +41,6 @@ jest.mock('actions/login')
 jest.mock('actions/menu')
 jest.mock('actions/user')
 jest.mock('actions/basket')
-
-import {
-  checkoutClearErrors,
-  checkoutCreatePreviewOrder,
-  checkoutAddressLookup,
-  checkoutSignup,
-  checkoutPostSignup,
-  trackPurchase,
-} from 'actions/checkout'
 
 const createState = (stateOverrides) => ({
   basket: Immutable.fromJS({
@@ -125,9 +126,11 @@ const createState = (stateOverrides) => ({
   request: Immutable.fromJS({
     browser: 'desktop',
   }),
-  price: Immutable.Map({
-    grossTotal: 28.00,
-    deliveryTotal: 2.99,
+  pricing: Immutable.fromJS({
+    prices: {
+      grossTotal: 28.00,
+      deliveryTotal: 2.99,
+    }
   }),
   ...stateOverrides,
 })
@@ -258,6 +261,32 @@ describe('checkout actions', () => {
     })
   })
 
+  describe('fireCheckoutError', () => {
+    it('should dispatch an error with no value', async () => {
+      getState.mockReturnValue(createState())
+      await fireCheckoutError('CARD_TOKENISATION_FAILED')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(dispatch).toHaveBeenCalledWith({
+        key: 'CARD_TOKENISATION_FAILED',
+        type: actionTypes.ERROR,
+        value: true,
+      })
+    })
+
+    it('should dispatch an error with an error value', async () => {
+      getState.mockReturnValue(createState())
+      const errorText = 'card not accepted'
+
+      await fireCheckoutError('CARD_TOKENISATION_FAILED', errorText)(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledTimes(1)
+      expect(dispatch).toHaveBeenCalledWith({
+        key: 'CARD_TOKENISATION_FAILED',
+        type: actionTypes.ERROR,
+        value: errorText,
+      })
+    })
+  })
+
   describe('checkoutSignup', () => {
     it('should redirect to invalid step', async () => {
       getState.mockReturnValue(createState())
@@ -273,10 +302,12 @@ describe('checkout actions', () => {
           previewOrderId: 'test-order-id',
           promoCode: 'TEST123'
         }),
-        price: Immutable.Map({
-          grossTotal: 28.00,
-          deliveryTotal: 2.99,
-        })
+        pricing: Immutable.fromJS({
+          prices: {
+            grossTotal: 28.00,
+            deliveryTotal: 2.99,
+          }
+        }),
       })
     })
 

@@ -1,9 +1,15 @@
 import React, { PropTypes } from 'react'
-import groupBy from 'lodash.groupby'
-
+import withError from 'utils/withError'
 import BoxPrice from '../BoxPrice'
 import css from './BoxPriceList.css'
-import withError from 'utils/withError'
+
+const groupBy = (collection, key) => {
+  return collection.reduce(function(accumulator, currentValue) {
+    (accumulator[currentValue[key]] = accumulator[currentValue[key]] || []).push(currentValue)
+
+    return accumulator
+  }, {})
+}
 
 const BoxPricesList = ({ boxPrices, type }) => {
   const boxTypes = boxPrices[type]
