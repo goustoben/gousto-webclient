@@ -26,10 +26,10 @@ logs:
       - name: criticalCount
         pattern: '{$.log_level = \"critical\"}'
         threshold: 1
-      - name: unparseableCookieCount	
-        pattern: '{($.log_level = \"critical\") && ($.message =\"un-parsable cookie value*\"")}'	
-        threshold: 1	
- 
+      - name: unparseableCookieCount
+        pattern: '{($.log_level = \"critical\") && ($.message =\"un-parsable cookie value*\"")}'
+        threshold: 1
+
   - name: apiTimeLog
 
 
