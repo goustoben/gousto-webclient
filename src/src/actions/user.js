@@ -247,6 +247,7 @@ export function userSubscribe() {
             signup: true,
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
             payment_provider: paymentProvider,
+            interval_id: delivery.get('interval_id', '1'),
           }
         })
 

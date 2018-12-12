@@ -263,8 +263,9 @@ export function trackSignupPageChange(step) {
 
 export function trackingOrderPlace(isSignup, paymentProvider) {
   return(dispatch, getState) => {
-    const { tracking, basket, pricing } = getState()
+    const { tracking, basket, pricing, form } = getState()
     const prices = pricing.get('prices')
+    const interval_id = form.getIn(['checkout', 'values', 'delivery', 'interval_id'], '1')
 
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE,
@@ -276,6 +277,7 @@ export function trackingOrderPlace(isSignup, paymentProvider) {
         promo_code: prices.get('promoCode'),
         signup: isSignup,
         payment_provider: paymentProvider,
+        interval_id: interval_id,
       }
     })
   }
@@ -299,6 +301,20 @@ export function trackingCardTokenisationSuccessfully(){
       type: actionTypes.CHECKOUT_CARD_TOKENIZATION_SUCCEEDED,
       trackingData: {
         actionType: 'CardTokenization Succeededs'
+      }
+    })
+  }
+}
+
+export function trackSubscriptionIntervalChanged(){
+  return (dispatch, getState) => {
+    const interval_id = getState().getIn(['form', 'checkout', 'values', 'delivery', 'interval_id'], '1')
+
+    dispatch({
+      type: actionTypes.CHECKOUT_SUBSCRIPTION_INTERVAL_CHANGED,
+      trackingData: {
+        actionType: 'SubscriptionFrequency Changed',
+        interval_id: interval_id,
       }
     })
   }
