@@ -306,18 +306,23 @@ export function trackingCardTokenisationSuccessfully(){
   }
 }
 
-export function trackSubscriptionIntervalChanged(){
-  return (dispatch, getState) => {
-    const interval_id = getState().getIn(['form', 'checkout', 'values', 'delivery', 'interval_id'], '1')
+export const trackSubscriptionIntervalChanged = () => (
+  (dispatch, getState) => {
+    try {
+      const checkoutInputs = Immutable.fromJS(getState().form.checkout.values)
+      const interval_id = checkoutInputs.getIn(['delivery', 'interval_id'], '1')
 
-    dispatch({
-      type: actionTypes.CHECKOUT_SUBSCRIPTION_INTERVAL_CHANGED,
-      trackingData: {
-        actionType: 'SubscriptionFrequency Changed',
-        interval_id: interval_id,
-      }
-    })
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'SubscriptionFrequency Changed',
+          interval_id,
+        }
+      })
+    } catch (e) {
+      logger.notice(e.message)
+    }
   }
-}
+)
 
 export default checkoutActions

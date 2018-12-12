@@ -18,7 +18,7 @@ const frequencyDescription = {
   ],
 }
 
-const Subscription = ({ chosenIntervalId, options, optionName, sectionName, features }) => (
+const Subscription = ({ chosenIntervalId, options, optionName, sectionName, features, trackSubscriptionIntervalChanged }) => (
   (options.size && features.getIn(['chooseSubscription', 'value'])) ? (
 		<div className={css.container}>
 			<h3 className={css.header}>Your Gousto Plan</h3>
@@ -33,6 +33,7 @@ const Subscription = ({ chosenIntervalId, options, optionName, sectionName, feat
 				      title={option.get('title')}
 				      description={frequencyDescription[option.get('id')]}
 				      checked={option.get('id') === chosenIntervalId}
+					  onClick={trackSubscriptionIntervalChanged}
 				    />
 				})}
 			</FormSection>
@@ -45,6 +46,7 @@ Subscription.defaultProps = {
   optionName: 'interval_id',
   sectionName: '',
   options: Immutable.List(),
+  trackSubscriptionIntervalChanged: () => {},
 }
 
 Subscription.propTypes = {
@@ -53,6 +55,7 @@ Subscription.propTypes = {
   sectionName: PropTypes.string,
   options: PropTypes.instanceOf(Immutable.List).isRequired,
   features: PropTypes.instanceOf(Immutable.Map).isRequired,
+  trackSubscriptionIntervalChanged: PropTypes.func,
 }
 
 export default Subscription

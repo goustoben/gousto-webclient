@@ -3,7 +3,7 @@ import { Field } from 'redux-form'
 
 import css from './SubscriptionOption.css'
 
-const SubscriptionOption = ({ name, id, title, description, checked }) => (
+const SubscriptionOption = ({ name, id, title, description, checked, onClick }) => (
 	<label className={css.container}>
     <div>
     	<Field
@@ -14,6 +14,7 @@ const SubscriptionOption = ({ name, id, title, description, checked }) => (
 			  checked={checked}
 			  className={css.radio}
 			  readOnly
+    	  onChange={onClick}
     	/>
     </div>
 		
@@ -35,6 +36,7 @@ SubscriptionOption.propTypes = {
   title: PropTypes.string,
   description: PropTypes.string,
   checked: PropTypes.bool,
+  onClick: PropTypes.func,
 }
 
 export default SubscriptionOption
