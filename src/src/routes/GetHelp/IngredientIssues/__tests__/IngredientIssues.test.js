@@ -14,6 +14,39 @@ describe('<IngredientIssues />', () => {
     { id: 'ingId1', label: 'ingLabel1' },
     { id: 'ingId2', label: 'ingLabel2' },
   ]
+  const issues = [
+    {
+      id: '101',
+      label: 'Missing ingredients',
+      requireDescription: false,
+    },
+    {
+      id: '102',
+      label: 'Wrong ingredients',
+      requireDescription: false,
+    },
+  ]
+  const subIssues = [
+    {
+      id: '104',
+      label: 'Fruit or Veg - Mouldy',
+      groupLabel: 'Ingredient quality',
+      requireDescription: true,
+    },
+    {
+      id: '105',
+      label: 'Fruit or Veg - not fresh',
+      groupLabel: 'Ingredient quality',
+      requireDescription: false,
+    },
+    {
+      id: '107',
+      label: 'Meat - gristle or bones',
+      groupLabel: 'Another group',
+      requireDescription: true,
+    },
+  ]
+
   let wrapper
   let getHelpLayout
 
@@ -23,6 +56,8 @@ describe('<IngredientIssues />', () => {
         content={content}
         ingredients={ingredients}
         fetchIngredientIssues={() => {}}
+        issues={issues}
+        subIssues={subIssues}
       />
     )
     getHelpLayout = wrapper.find('GetHelpLayout')
@@ -49,6 +84,50 @@ describe('<IngredientIssues />', () => {
     test('ingredients are rendering', () => {
       expect(getHelpLayout.text()).toContain('ingLabel1')
       expect(getHelpLayout.text()).toContain('ingLabel2')
+    })
+
+    test('dropdowns for each ingredient are rendering', () => {
+      const selects = getHelpLayout.find('select')
+      const options1 = selects.at(0).find('option')
+      const options2 = selects.at(1).find('option')
+      const group11 = selects.at(0).find('optgroup').at(0)
+      const group12 = selects.at(0).find('optgroup').at(1)
+      const group21 = selects.at(1).find('optgroup').at(0)
+      const group22 = selects.at(1).find('optgroup').at(1)
+      const suboptions11 = group11.find('option')
+      const suboptions12 = group12.find('option')
+      const suboptions21 = group21.find('option')
+      const suboptions22 = group22.find('option')
+
+      expect(selects).toHaveLength(2)
+
+      expect(selects.at(0).prop('id')).toBe('ingId1')
+      expect(options1.at(0).prop('value')).toBe('101')
+      expect(options1.at(1).prop('value')).toBe('102')
+      expect(options1.at(0).text()).toBe('Missing ingredients')
+      expect(options1.at(1).text()).toBe('Wrong ingredients')
+      expect(group11.prop('label')).toBe('Ingredient quality')
+      expect(suboptions11.at(0).prop('value')).toBe('104')
+      expect(suboptions11.at(0).text()).toBe('Fruit or Veg - Mouldy')
+      expect(suboptions11.at(1).prop('value')).toBe('105')
+      expect(suboptions11.at(1).text()).toBe('Fruit or Veg - not fresh')
+      expect(group12.prop('label')).toBe('Another group')
+      expect(suboptions12.at(0).prop('value')).toBe('107')
+      expect(suboptions12.at(0).text()).toBe('Meat - gristle or bones')
+
+      expect(selects.at(1).prop('id')).toBe('ingId2')
+      expect(options2.at(0).prop('value')).toBe('101')
+      expect(options2.at(1).prop('value')).toBe('102')
+      expect(options2.at(0).text()).toBe('Missing ingredients')
+      expect(options2.at(1).text()).toBe('Wrong ingredients')
+      expect(group21.prop('label')).toBe('Ingredient quality')
+      expect(suboptions21.at(0).prop('value')).toBe('104')
+      expect(suboptions21.at(0).text()).toBe('Fruit or Veg - Mouldy')
+      expect(suboptions21.at(1).prop('value')).toBe('105')
+      expect(suboptions21.at(1).text()).toBe('Fruit or Veg - not fresh')
+      expect(group22.prop('label')).toBe('Another group')
+      expect(suboptions22.at(0).prop('value')).toBe('107')
+      expect(suboptions22.at(0).text()).toBe('Meat - gristle or bones')
     })
 
     test('bottom bar buttons is rendering correctly', () => {

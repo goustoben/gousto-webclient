@@ -3,21 +3,48 @@ const fetchOrderIssuesMockResponse = {
   "data": [
     {
       "category": {
-        "require_description": false,
+        "requireDescription": false,
         "id": 101,
         "name": "Missing ingredients"
       },
       "type": "category",
-      "group_label": null
+      "groupLabel": null
     },
     {
       "category": {
-        "require_description": false,
+        "requireDescription": false,
         "id": 102,
         "name": "Wrong ingredients"
       },
       "type": "category",
-      "group_label": null
+      "groupLabel": null
+    },
+    {
+      "category": {
+        "requireDescription": true,
+        "id": 104,
+        "name": "Fruit or Veg - Mouldy"
+      },
+      "type": "subcategory",
+      "groupLabel": "Ingredient quality"
+    },
+    {
+      "category": {
+        "requireDescription": false,
+        "id": 105,
+        "name": "Fruit or Veg - not fresh"
+      },
+      "type": "subcategory",
+      "groupLabel": "Ingredient quality"
+    },
+    {
+      "category": {
+        "requireDescription": true,
+        "id": 107,
+        "name": "Meat - gristle or bones"
+      },
+      "type": "subcategory",
+      "groupLabel": "Another group"
     },
   ],
 }

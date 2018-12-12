@@ -33,7 +33,8 @@ const mapStateToProps = (state) => ({
     || 'continue',
   },
   ingredients: getSelectedIngredients(state),
-  issues: state.getHelp.get('ingredientIssues'),
+  issues: state.getHelp.get('ingredientIssues').toJS(),
+  subIssues: state.getHelp.get('ingredientSubIssues').toJS(),
 })
 
 const IngredientIssuesContainer = connect(mapStateToProps, {

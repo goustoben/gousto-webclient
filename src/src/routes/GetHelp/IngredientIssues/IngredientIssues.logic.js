@@ -17,6 +17,21 @@ const propTypes = {
       label: PropTypes.string.isRequired,
     })
   ).isRequired,
+  issues: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      requireDescription: PropTypes.bool.isRequired,
+    }).isRequired
+  ),
+  subIssues: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      groupLabel: PropTypes.string.isRequired,
+      requireDescription: PropTypes.bool.isRequired,
+    }).isRequired
+  )
 }
 
 class IngredientIssues extends PureComponent {
@@ -35,7 +50,7 @@ class IngredientIssues extends PureComponent {
   }
 
   render() {
-    const { content, ingredients } = this.props
+    const { content, ingredients, issues, subIssues } = this.props
 
     return (
       <IngredientIssuesPresentation
@@ -43,6 +58,8 @@ class IngredientIssues extends PureComponent {
         ingredients={ingredients}
         buttonLeftUrl={this.buttonLeftUrl}
         buttonRightUrl={this.buttonRightUrl}
+        issues={issues}
+        subIssues={subIssues}
       />
     )
   }

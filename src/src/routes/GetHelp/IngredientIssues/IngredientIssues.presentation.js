@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
+import { Dropdown } from 'goustouicomponents'
 import { BottomButton } from '../components/BottomButton'
 
 const propTypes = {
@@ -19,15 +20,38 @@ const propTypes = {
   ),
   buttonLeftUrl: PropTypes.string,
   buttonRightUrl: PropTypes.string,
+  issues: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      requireDescription: PropTypes.bool.isRequired,
+    }).isRequired
+  ),
+  subIssues: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      groupLabel: PropTypes.string.isRequired,
+      requireDescription: PropTypes.bool.isRequired,
+    }).isRequired
+  )
 }
 
 const defaultProps = {
   ingredients: []
 }
 
-const renderIngredients = (ingredients) => (
+const renderIngredientsIssues = (ingredients, issues, subIssues) => (
   ingredients.map((ingredient) => (
-    <p key={ingredient.id}>{ingredient.label}</p>
+    <div key={ingredient.id}>
+      <p>{ingredient.label}</p>
+      <Dropdown
+        id={ingredient.id}
+        options={issues}
+        groupedOptions={subIssues}
+        optionSelected={issues && issues[0] && issues[0].id}
+      />
+    </div>
   ))
 )
 
@@ -41,9 +65,11 @@ const IngredientIssuesPresentation = ({
   ingredients,
   buttonLeftUrl,
   buttonRightUrl,
+  issues,
+  subIssues,
 }) => (
   <GetHelpLayout title={title} body={body}>
-    {renderIngredients(ingredients)}
+    {renderIngredientsIssues(ingredients, issues, subIssues)}
     <BottomBar>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         {button1Copy}
