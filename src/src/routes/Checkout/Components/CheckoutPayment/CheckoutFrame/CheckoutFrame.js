@@ -71,7 +71,7 @@ class CheckoutFrame extends React.Component {
       Frames.unblockFields()
     }
 
-    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled)){
+    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled){
       this.submitCard()
     }
 
