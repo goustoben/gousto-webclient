@@ -167,6 +167,14 @@ const customerSignupApi = (reqData, isCheckoutPaymentFeature) => {
   return customerSignup(null, reqData)
 }
 
+const getPaymentInput = (state, isCheckoutPaymentFeature) => {
+  if (isCheckoutPaymentFeature) {
+    return Immutable.fromJS(state.form.payment.values).get('payment')
+  }
+
+  return Immutable.fromJS(state.form.checkout.values).get('payment')
+}
+
 export function userSubscribe() {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
@@ -177,7 +185,7 @@ export function userSubscribe() {
       const checkoutInputs = Immutable.fromJS(state.form.checkout.values)
       const aboutYou = checkoutInputs.get('aboutyou')
       const delivery = checkoutInputs.get('delivery')
-      const payment = checkoutInputs.get('payment')
+      const payment = getPaymentInput(state, isCheckoutPaymentFeatureEnabled(state))
       const tracking = state.tracking
 
       const deliveryAddress = getAddress(delivery)
