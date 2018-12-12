@@ -1,10 +1,13 @@
-@value Oyster from 'styles/colors.css';
+@value Oyster, Radish, Radish05 from 'styles/colors.css';
 @value ScreenSMMax, ScreenMDMin from 'styles/screenSizes.css';
 @value sizeMD, bodyFontStackNormal from 'styles/typography.css';
 @value SpacingLG, SpacingMD, SpacingXXS from 'sass-loader!styles/spacing.scss';
 @value dropdownSelectedColor, dropdownSelectedBgColor, inputColor, inputBgColor, inputBorderColor, inputBorderColorFocus, inputDisabledColor, inputSecondaryColor, inputSecondaryBgColor, inputSecondaryBorderColor, inputSecondaryBorderColorFocus, dropdownSecondarySelectedColor, dropdownSecondarySelectedBgColor from 'styles/forms.css';
 
 @value selectWidth 100%;
+@value errorColor Radish;
+@value errorBgColor Radish05;
+@value errorBorderColor Radish;
 
 .mobileHide {
 	@media ScreenSMMax {
@@ -121,18 +124,18 @@
 
 	& :global .Select-placeholder,
 	& :global .Select-control {
-		border-color: inputBorderColor !important;
+		border-color: inputBorderColor;
 	}
 
 	& :global .is-open > .Select-control,
 	& :global .Select-control:hover {
-		border-color: inputBorderColorFocus !important;
+		border-color: inputBorderColorFocus;
 	}
 
 	& :global .Select-option.is-selected,
 	& :global .Select-option.is-focused {
 		background-color: dropdownSelectedBgColor;
-		color: dropdownSelectedColor !important;
+		color: dropdownSelectedColor;
 	}
 }
 
@@ -160,24 +163,54 @@
 
 	& :global .Select-placeholder,
 	& :global .Select-control {
-		border-color: inputSecondaryBorderColor !important;
+		border-color: inputSecondaryBorderColor;
 	}
 
 	& :global .is-open > .Select-control,
 	& :global .Select-control:hover {
-		border-color: inputSecondaryBorderColorFocus !important;
+		border-color: inputSecondaryBorderColorFocus;
 	}
 
 	& :global .Select-option.is-selected,
 	& :global .Select-option.is-focused {
 		background-color: dropdownSecondarySelectedBgColor;
-		color: dropdownSecondarySelectedColor !important;
+		color: dropdownSecondarySelectedColor;
 	}
 }
 
 .disabled {
 	color: Oyster;
 }
+
+.error {
+	& :global .Select-arrow {
+		border-color: inputColor transparent transparent;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-option,
+	& :global .Select-value,
+	& :global .Select-value-label {
+		color: errorColor !important;
+	}
+
+	& :global .Select-placeholder,
+	& :global .Select-control {
+		border-color: errorBorderColor;
+	}
+
+	& :global .is-open > .Select-control,
+	& :global .Select-control:hover {
+		border-color: errorBorderColor;
+	}
+
+	& :global .Select-option.is-selected,
+	& :global .Select-option.is-focused {
+		background-color: errorBgColor;
+		color: errorColor;
+	}
+}
+
 
 .icon {
 	composes: fa-basic-class fa-fw from 'styles/vendor/font-awesome-module.css';

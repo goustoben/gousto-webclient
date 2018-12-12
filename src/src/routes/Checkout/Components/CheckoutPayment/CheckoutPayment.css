@@ -23,6 +23,12 @@
 	pointer-events: none;
 }
 
+.wrapper {
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+	margin-top: 25px;
+}
+
 .wrapper > div {
 	width: 50%;
 }
@@ -31,6 +37,6 @@
 	composes: paddingSMTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
-.hide {
-	display: none;
+.cardDetails {
+	width: 100%;
 }

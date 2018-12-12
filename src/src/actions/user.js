@@ -255,6 +255,7 @@ export function userSubscribe() {
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, err.message))
+
       const previewOrderId = getState().basket.get('previewOrderId')
 
       dispatch({
@@ -267,7 +268,7 @@ export function userSubscribe() {
           error_reason: err.message,
         }
       })
-      logger.error(err.message)
+      logger.error({message: err.message, errors: [err]})
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, false))
@@ -349,7 +350,7 @@ function userLoadOrder(orderId, forceRefresh = false) {
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
-      logger.error(err.message)
+      logger.error(err)
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
@@ -371,7 +372,7 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
-      logger.error(err.message)
+      logger.error(err)
       throw err
     }
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
@@ -418,7 +419,7 @@ function userLoadProjectedDeliveries(forceRefresh = false) {
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, err.message))
-      logger.error(err.message)
+      logger.error(err)
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, false))
@@ -467,7 +468,7 @@ function userVerifyAge(verified, hardSave) {
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_AGE_VERIFY, err.message))
       dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, false))
-      logger.error(err.message)
+      logger.error(err)
       throw err
     }
     dispatch(statusActions.pending(actionTypes.USER_AGE_VERIFY, false))
@@ -554,7 +555,7 @@ function userAddPaymentMethod(data) {
       dispatch({ type: actionTypes.USER_POST_PAYMENT_METHOD, userId })
       location.reload()
     } catch (err) {
-      logger.error(`${actionTypes.USER_POST_PAYMENT_METHOD} - ${err.message}`)
+      logger.error({message: `${actionTypes.USER_POST_PAYMENT_METHOD} - ${err.message}`, errors: [err]})
       dispatch(statusActions.error(actionTypes.USER_POST_PAYMENT_METHOD, err.code))
     } finally {
       dispatch({ type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, visibility: false })

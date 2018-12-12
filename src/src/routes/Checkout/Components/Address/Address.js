@@ -1,15 +1,15 @@
 import React from 'react'
 import moment from 'moment'
 
-import css from './Address.css'
 import { Button } from 'goustouicomponents'
-import AddressInputs from './AddressInputs'
-import Postcode from './Postcode'
-import DeliveryInfo from './DeliveryInfo'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveryUtils from 'utils/deliveries'
 import logger from 'utils/logger'
 import dottify from 'utils/dottify'
+import DeliveryInfo from './DeliveryInfo'
+import Postcode from './Postcode'
+import AddressInputs from './AddressInputs'
+import css from './Address.css'
 
 class Address extends React.PureComponent {
 	static propTypes = {
@@ -300,7 +300,7 @@ class Address extends React.PureComponent {
 				  receiveRef={this.props.receiveRef}
 				/>
 
-				{showDropdown && addresses.length > 1 && !isAddressSelected && <p><span onClick={this.handleCantFind} className={css.linkBase}>Can’t find your address?</span></p>}
+				{showDropdown && addresses.length > 1 && !isAddressSelected && <p><span data-testing="addressNotFound" onClick={this.handleCantFind} className={css.linkBase}>Can’t find your address?</span></p>}
 				{isAddressSelected && this.renderAddressInputs()}
 				<br />
 				{this.props.isDelivery &&

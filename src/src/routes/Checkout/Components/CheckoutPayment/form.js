@@ -15,9 +15,23 @@ export const getValidationRules = (sectionName) => (
   }
 )
 
-export const addInitialValues = (Component) => (
-  connect(() => ({
-    cardName: '',
-    isBillingAddressDifferent: false,
-  }))(Component)
+export const addInitialValues = (Component,{ sectionName }) => (
+  connect(
+    (state, ownProps) => {
+      const { checkout } = state.form
+      const initialValues = checkout && checkout.initial ? checkout.initial : {}
+
+      return {
+        // needed for hacked custom validation in validation/address.js
+        sectionName,
+        initialValues: {
+          ...ownProps.initialValues,
+          ...initialValues,
+          [sectionName]: {
+            cardName: '',
+            isBillingAddressDifferent: false,
+          }
+        }
+      }
+    })(Component)
 )

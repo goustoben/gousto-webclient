@@ -54,6 +54,7 @@
     "cookies-js": "1.2.3",
     "dompurify": "1.0.5",
     "global": "4.3.2",
+    "gousto-lumberjack-js": "git+ssh://git@github.com/Gousto/lumberjack-js-package.git#v1.0.2",
     "graphql": "0.11.7",
     "graphql-tag": "2.10.0",
     "graphql-anywhere": "4.1.22",
@@ -104,8 +105,10 @@
     "transit-immutable-js": "0.7.0",
     "url": "0.11.0",
     "validator": "10.4.0",
-    "winston": "2.2.0",
-    "xss": "1.0.3"
+    "winston": "3.1.0",
+    "xss": "1.0.3",
+    "uuid":"3.3.2"
+    
   },
   "devDependencies": {
     "babel-core": "6.26.3",
@@ -173,12 +176,12 @@
     "terser": "3.9.2",
     "terser-webpack-plugin": "1.1.0",
     "url-loader": "1.0.1",
-    "webpack": "4.17.1",
+    "webpack": "4.27.1",
     "webpack-bundle-analyzer": "2.13.1",
-    "webpack-cli": "3.1.0",
-    "webpack-dev-server": "3.1.5",
-    "webpack-hot-middleware": "2.22.3",
-    "webpack-manifest-plugin": "2.0.3",
+    "webpack-cli": "3.1.2",
+    "webpack-dev-server": "3.1.10",
+    "webpack-hot-middleware": "2.24.3",
+    "webpack-manifest-plugin": "2.0.4",
     "webpack-node-externals": "1.7.2",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-nested": "3.0.0",

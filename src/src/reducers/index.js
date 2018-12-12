@@ -32,6 +32,7 @@ import pricing from './pricing'
 import cookies from './cookies'
 import orderSkipRecovery from './orderSkipRecovery'
 import { getHelp } from './getHelp'
+import { logger } from './logger'
 
 const reducers = {
   ...account,
@@ -48,6 +49,7 @@ const reducers = {
   ...filters,
   ...jobs,
   ...login,
+  logger,
   ...home,
   ...menu,
   ...newsletter,

@@ -16,7 +16,7 @@ const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore,
     emptyRecipes = Array(maxRecipesNum - recipesNumber)
   } catch (error) {
     emptyRecipes = []
-    logger.error(`Invalid number of recipes: ${recipesNumber}. ${error.message}`)
+    logger.error({message:`Invalid number of recipes: ${recipesNumber}. ${error.message}`, errors: [error]})
   }
 
   const classes = classnames(

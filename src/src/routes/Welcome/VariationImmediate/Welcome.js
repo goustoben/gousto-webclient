@@ -45,7 +45,7 @@ class Welcome extends React.PureComponent {
         if (err && err.level && typeof logger[err.level] === 'function') {
           logger[err.level](err.message)
         } else {
-          logger.error(err.message)
+          logger.error(err)
         }
         store.dispatch(actions.redirect('/'))
       })

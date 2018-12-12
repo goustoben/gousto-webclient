@@ -82,10 +82,10 @@ class ReduxFormInput extends React.PureComponent {
 					{React.isValidElement(inputPrefix) && inputPrefix}
 					{inputEl && <div className={css.flexItem}>
 						{inputEl}
-					</div>}
+                 </div>}
 					{React.isValidElement(inputSuffix) && inputSuffix}
 				</div>
-				<div>{error && (<InputError>{meta.error}</InputError>)}</div>
+				<div data-testing={`${dataTesting}Error`}>{error && (<InputError>{meta.error}</InputError>)}</div>
 			</div>
 	  )
 	}

@@ -4,17 +4,27 @@ import logger from 'utils/logger'
 import { featureSet } from 'actions/features'
 import { fetchRecommendations } from 'apis/recipes'
 
+import { loadRecommendations } from ' ../../src/routes/Menu/fetchData/fetchData'
+import { saveRecommendations } from '../../src/actions/recipes'
+
 jest.mock('utils/logger')
-jest.mock('apis/recipes')
+jest.mock('apis/recipes', () => ({
+  fetchRecommendations: jest.fn(),
+}))
+jest.mock('actions/recipes', () => ({
+  saveRecommendations: jest.fn(),
+}))
 jest.mock('actions/features', () => ({
   featureSet: jest.fn(),
 }))
 
-import { loadRecommendations } from 'actions/recipes'
-
 describe('recipe actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
+  const store = {
+    getState,
+    dispatch
+  }
 
   afterEach(() => {
     dispatch.mockClear()
@@ -32,8 +42,8 @@ describe('recipe actions', () => {
     })
 
     test('should dispatch a fetch request containing the accessToken', async () => {
-      await loadRecommendations()(dispatch, getState)
-
+      await loadRecommendations(store)
+    
       expect(fetchRecommendations).toHaveBeenCalledWith('testToken1334')
     })
 
@@ -42,14 +52,15 @@ describe('recipe actions', () => {
         fetchRecommendations.mockReturnValue(Promise.resolve({
           data: [],
         }))
-
-        await loadRecommendations()(dispatch, getState)
-
+    
+        await loadRecommendations(store)
+    
         expect(dispatch).toHaveBeenCalled()
-        expect(featureSet).toHaveBeenCalledWith('justforyou_v2', false, true)
+
+        expect(saveRecommendations).toHaveBeenCalledWith(false)
       })
     })
-
+    
     describe('when the api responds with recommendations turned off', () => {
       test('should set user recommendations as not available', async () => {
         fetchRecommendations.mockReturnValue(Promise.resolve({
@@ -57,14 +68,14 @@ describe('recipe actions', () => {
             { properties: { 'just-for-you': false }, },
           ],
         }))
-
-        await loadRecommendations()(dispatch, getState)
-
+    
+        await loadRecommendations(store)
+    
         expect(dispatch).toHaveBeenCalled()
-        expect(featureSet).toHaveBeenCalledWith('justforyou_v2', false, true)
+        expect(saveRecommendations).toHaveBeenCalledWith(false)
       })
     })
-
+    
     describe('when the api responds with recommendations turned on', () => {
       test('should dispatch a user recommendations available request', async () => {
         fetchRecommendations.mockReturnValue(Promise.resolve({
@@ -72,11 +83,11 @@ describe('recipe actions', () => {
             { properties: { 'just-for-you': true }, },
           ],
         }))
-
-        await loadRecommendations()(dispatch, getState)
-
-        expect(featureSet).toHaveBeenCalledWith('justforyou_v2', true, true)
+    
+        await loadRecommendations(store)
+    
         expect(dispatch).toHaveBeenCalled()
+        expect(saveRecommendations).toHaveBeenCalledWith(true)
       })
     })
 
@@ -84,20 +95,20 @@ describe('recipe actions', () => {
       const error = new Error('NO RECOMMENDATIONS')
       beforeEach(async () => {
         fetchRecommendations.mockReturnValue(Promise.reject(error))
-
-        await loadRecommendations()(dispatch, getState)
+    
+        await loadRecommendations(store)
       })
-
+    
       test('should not dispatch a user recommendations available request', () => {
-        expect(featureSet).not.toHaveBeenCalled()
-        expect(dispatch).not.toHaveBeenCalled()
+        expect(dispatch).toHaveBeenCalled()
+        expect(saveRecommendations).toHaveBeenCalledWith(false)
       })
-
+    
       test('should log a notice', async () => {
-        expect(logger.notice).toHaveBeenCalledWith(
-          'Error loading recommendation data for user: ',
-          error
-        )
+        expect(logger.error).toHaveBeenCalledWith({
+          message: 'Error loading recommendation data for user',
+          errors: [error]
+        })
       })
     })
   })

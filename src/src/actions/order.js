@@ -311,7 +311,7 @@ const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, addressId
       })
     } catch (err) {
       if (err.message !== 'do-not-deliver') {
-        logger.error(err.message)
+        logger.error(err)
       }
       dispatch(statusActions.error(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, err.message))
     } finally {

@@ -39,7 +39,7 @@ const productsLoadCategories = (forceRefresh = false) => (
         dispatch({ type: actionTypes.PRODUCT_CATEGORIES_RECEIVE, categories })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCT_CATEGORIES_RECEIVE, err.message))
-        logger.error(err.message)
+        logger.error(err)
       } finally {
         dispatch(statusActions.pending(actionTypes.PRODUCT_CATEGORIES_RECEIVE, false))
       }
@@ -57,7 +57,7 @@ const productsLoadProducts = (cutoffDate) => (
         dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products, cutoffDate })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, err.message))
-        logger.error(err.message)
+        logger.error(err)
       } finally {
         dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, false))
       }
@@ -75,7 +75,7 @@ const productsLoadRandomProducts = (limit, imageSizes) => (
         dispatch({ type: actionTypes.PRODUCTS_RANDOM_RECEIVE, products })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RANDOM_RECEIVE, err.message))
-        logger.error(err.message)
+        logger.error(err)
       } finally {
         dispatch(statusActions.pending(actionTypes.PRODUCTS_RANDOM_RECEIVE, false))
       }
@@ -100,7 +100,7 @@ const productsLoadProductsById = (productIds = []) => (
         dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, err.message))
-        logger.error(err.message)
+        logger.error(err)
       } finally {
         dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, false))
       }
@@ -123,7 +123,7 @@ const productsLoadStock = (forceRefresh = false) => (
         dispatch({ type: actionTypes.PRODUCTS_STOCK_CHANGE, stock })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_STOCK_CHANGE, err.message))
-        logger.error(err.message)
+        logger.error(err)
       } finally {
         dispatch(statusActions.pending(actionTypes.PRODUCTS_STOCK_CHANGE, false))
       }
