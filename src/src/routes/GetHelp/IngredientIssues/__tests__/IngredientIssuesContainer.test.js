@@ -74,6 +74,7 @@ describe('<IngredientIssuesContainer />', () => {
               id: '1494',
               title: 'Creamy Chicken & Pesto Farfalle With Basil',
               ingredients: [
+                { id: 'bbb', label: '1 can of chopped tomatoes (210g)' },
                 { id: 'eee', label: '1/2 chicken stock cube' },
               ]
             },

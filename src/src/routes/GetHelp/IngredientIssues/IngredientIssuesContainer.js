@@ -4,15 +4,18 @@ import { fetchIngredientIssues } from 'actions/getHelp'
 import { IngredientIssues } from './IngredientIssues.logic'
 
 const getSelectedIngredients = (state) => {
-  const selectedRecipeAndIngredientIds = state.getHelp.get('selectedIngredients')
-  const selectedIngredientIds = selectedRecipeAndIngredientIds.map(
-    ingredient => ingredient.get('ingredientId')
+  const selectedRecipePlusIngredients = state.getHelp.get('selectedIngredients')
+  const selectedIngredientPlusRecipeIds = selectedRecipePlusIngredients.map(
+    ingredientAndRecipe =>
+      `${ingredientAndRecipe.get('recipeId')}-${ingredientAndRecipe.get('ingredientId')}`
   )
   const recipes = state.getHelp.get('recipes')
   const selectedIngredients = []
   recipes.forEach(recipe => {
     recipe.get('ingredients').forEach(ingredient => {
-      if (selectedIngredientIds.includes(ingredient.get('id'))) {
+      if (selectedIngredientPlusRecipeIds.includes(
+        `${recipe.get('id')}-${ingredient.get('id')}`)
+      ) {
         selectedIngredients.push(ingredient.toJS())
       }
     })
