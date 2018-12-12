@@ -22,6 +22,10 @@ describe('features reducers', () => {
           experiment: false,
           value: true,
         },
+        checkoutPayment: {
+          experiment: false,
+          value: true,
+        },
         landingOrder: {
           experiment: false,
           value: true,
@@ -56,6 +60,10 @@ describe('features reducers', () => {
       const action = { type: 'unknown' }
       const expected = Immutable.fromJS({
         collections: {
+          experiment: false,
+          value: true,
+        },
+        checkoutPayment: {
           experiment: false,
           value: true,
         },
@@ -97,6 +105,10 @@ describe('features reducers', () => {
       }
       const expected = Immutable.fromJS({
         collections: {
+          experiment: false,
+          value: true,
+        },
+        checkoutPayment: {
           experiment: false,
           value: true,
         },
