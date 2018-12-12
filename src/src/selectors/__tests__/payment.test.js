@@ -20,7 +20,7 @@ describe('getPaymentDetails', () => {
         state = {
           ...state,
           form: {
-            checkout: {
+            payment: {
               values: {
                 payment: {
                   payment_provider: 'checkout',
