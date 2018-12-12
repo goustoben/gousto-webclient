@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { client } from 'config/routes'
 import { IngredientIssuesPresentation } from './IngredientIssues.presentation'
 
+import css from './IngredientIssues.css'
+
 const propTypes = {
   content: PropTypes.shape({
     title: PropTypes.string.isRequired,
@@ -51,6 +53,7 @@ class IngredientIssues extends PureComponent {
 
   render() {
     const { content, ingredients, issues, subIssues } = this.props
+    const cssLabel = css.ingredientLabel
 
     return (
       <IngredientIssuesPresentation
@@ -60,6 +63,7 @@ class IngredientIssues extends PureComponent {
         buttonRightUrl={this.buttonRightUrl}
         issues={issues}
         subIssues={subIssues}
+        cssLabel={cssLabel}
       />
     )
   }

@@ -27,6 +27,7 @@ const propTypes = {
       requireDescription: PropTypes.bool.isRequired,
     }).isRequired
   ),
+  cssLabel: PropTypes.string.isRequired,
   subIssues: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -41,19 +42,26 @@ const defaultProps = {
   ingredients: []
 }
 
-const renderIngredientsIssues = (ingredients, issues, subIssues) => (
-  ingredients.map((ingredient) => (
-    <div key={ingredient.id}>
-      <p>{ingredient.label}</p>
-      <Dropdown
-        id={ingredient.id}
-        options={issues}
-        groupedOptions={subIssues}
-        optionSelected={issues && issues[0] && issues[0].id}
-      />
-    </div>
-  ))
-)
+const renderIngredientsIssues = (ingredients, issues, subIssues, cssLabel) => {
+
+  const renderedIngredients = ingredients.map((ingredient) => {
+    const optionSelected = issues && issues[0] && issues[0].id
+
+    return (
+      <div key={ingredient.id}>
+        <p className={cssLabel}>{ingredient.label}</p>
+        {optionSelected && <Dropdown
+          id={ingredient.id}
+          options={issues}
+          groupedOptions={subIssues}
+          optionSelected={optionSelected}
+        />}
+      </div>
+    )
+  })
+
+  return renderedIngredients
+}
 
 const IngredientIssuesPresentation = ({
   content: {
@@ -67,9 +75,10 @@ const IngredientIssuesPresentation = ({
   buttonRightUrl,
   issues,
   subIssues,
+  cssLabel
 }) => (
   <GetHelpLayout title={title} body={body}>
-    {renderIngredientsIssues(ingredients, issues, subIssues)}
+    {renderIngredientsIssues(ingredients, issues, subIssues, cssLabel)}
     <BottomBar>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         {button1Copy}
