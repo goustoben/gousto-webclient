@@ -9,7 +9,7 @@ module.exports = {
     const cookiePolicy = browser.page.cookiePolicy()
 
     browser
-      .url(home.api.launchUrl + '?promo_code=null&features[signupSteps]=welcome,boxSize,postcode,delivery,finish&features[checkoutPayment]=true')
+      .url(home.api.launchUrl)
       .perform(function (done) {
         cookiePolicy.section.cookiePolicyBanner.checkIfCookieBannerVisible()
         done()
@@ -24,10 +24,6 @@ module.exports = {
       })
       .perform(function (done) {
         home.section.hero.goToSignUp()
-        done()
-      })
-      .perform(function (done) {
-        signup.section.welcomeStep.goToNextStep()
         done()
       })
       .perform(function (done) {
@@ -48,10 +44,6 @@ module.exports = {
       })
       .perform(function (done) {
         signup.section.deliveryStep.goToNextStep()
-        done()
-      })
-      .perform(function (done) {
-        signup.section.finishStep.goToNextStep()
         done()
       })
       .perform(function (done) {
@@ -113,5 +105,5 @@ module.exports = {
       })
       .end()
   },
-  tags: ['sign-up', 'menu', 'checkout', 'my-deliveries'],
+  tags: ['sign-up-v2', 'menu', 'checkout', 'my-deliveries'],
 };
