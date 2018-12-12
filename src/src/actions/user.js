@@ -16,6 +16,7 @@ import { getPaymentDetails } from 'selectors/payment'
 import statusActions from './status'
 import basketActions from './basket'
 import actionTypes from './actionTypes'
+import { trackFirstPurchase } from './tracking'
 
 const fetchShippingAddressesPending = pending => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
@@ -237,16 +238,16 @@ export function userSubscribe() {
           type: actionTypes.CHECKOUT_ORDER_PLACED,
           trackingData: {
             actionType: 'Order Placed',
-            asource: tracking.get('asource'),
             order_id: orderId,
             order_total: prices.get('total'),
             promo_code: prices.get('promoCode'),
             signup: true,
-            event: 'firstPurchase',
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
             payment_provider: paymentProvider,
           }
         })
+
+        dispatch(trackFirstPurchase(orderId))
 
         dispatch(basketActions.basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
