@@ -5,15 +5,18 @@ import css from './SubscriptionOption.css'
 
 const SubscriptionOption = ({ name, id, title, description, checked }) => (
 	<label className={css.container}>
-		<Field
-		  name={name}
-		  value={id}
-		  component="input"
-		  type="radio"
-		  checked={checked}
-		  className={css.radio}
-		  readOnly
-		/>
+    <div>
+    	<Field
+			  name={name}
+			  value={id}
+			  component="input"
+			  type="radio"
+			  checked={checked}
+			  className={css.radio}
+			  readOnly
+    	/>
+    </div>
+		
 		<div className={css.content}>
 			<p className={css.title}>{title}</p>
 			{(description) ? description.map(descriptionOption => {
@@ -21,7 +24,7 @@ const SubscriptionOption = ({ name, id, title, description, checked }) => (
 			}) : null
 			}
 		</div>
-	</label>
+ </label>
 )
 
 SubscriptionOption.defaultProps = {}
