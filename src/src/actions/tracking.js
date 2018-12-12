@@ -15,6 +15,19 @@ export const trackFirstPurchase = orderId => (
     if (!order.get('prices')) {
       logger.warning(`Missing order data for first purchase tracking: no user order "${orderId}" found in store`)
     }
+
+    dispatch({	
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: actionTypes.TRACKING,
+        asource: getState().tracking.get('asource'),
+        goustoReference,
+        event: 'firstPurchase',
+        orderId,
+        orderTotal: order.getIn(['prices', 'total']),
+        voucher: order.getIn(['prices', 'promoCode'], ''),
+      },	
+    })
   }
 )
 

@@ -8,4 +8,5 @@ module.exports = {
   dev: __DEV__,
   domain: __DOMAIN__,
   protocol: __CLIENT_PROTOCOL__,
+  service: 'webclient'
 }

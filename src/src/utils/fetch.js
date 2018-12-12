@@ -52,10 +52,10 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       }
     }
   }
-
+  const { uuid } = goustoStore.store.getState().logger || {}
   if (accessToken) {
     if (accessToken.indexOf('//') > -1) {
-      logger.error(`accessToken in fetch.js does not look valid (${accessToken})`)
+      logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid: uuid })
     }
     requestHeaders = { ...requestHeaders, Authorization: `Bearer ${accessToken}` }
   }
@@ -64,7 +64,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     if (env && env.apiToken) {
       requestHeaders['API-Token'] = env.apiToken
     } else {
-      logger.error('Missing env.apiToken')
+      logger.error({message: 'Missing env.apiToken', uuid: uuid })
     }
   }
 
@@ -94,7 +94,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   }
 
   const startTime = new Date
-  logger.notice(`"[fetch start]" "${requestUrl}"`)
+  logger.notice({message: "[fetch start]", requestUrl: requestUrl, uuid: uuid})
   let status
 
   return isomorphicFetch(requestUrl, requestDetails)
@@ -107,7 +107,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     .then(response => [JSONParse(response), status]) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
-      logger.notice(`"[fetch end]" "[${status}]" "${new Date - startTime}ms" "${requestUrl}"`)
+      logger.notice({message: "[fetch end]", status: status, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl: requestUrl, uuid: uuid})
 
       return { data: response, meta }
     })
@@ -120,8 +120,12 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       }
 
       log({
-        message: `"[fetch failed]" "[${status}]" "${new Date - startTime}ms" "${requestUrl}"`,
-        error: e,
+        message: "[fetch end]",
+        status: status,
+        elapsedTime: `${(new Date() - startTime)}ms`,
+        requestUrl: requestUrl,
+        errors: [e],
+        uuid: uuid
       })
 
       if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {

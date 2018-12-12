@@ -55,7 +55,7 @@ export function checkoutAddressLookup(postcode) {
       addresses.county = lookupResults.data.traditionalCounty || ''
     } catch (err) {
       dispatch(error(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, err.message))
-      logger.error('Unable to look-up address')
+      logger.error({message: 'Unable to look-up address'})
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, false))
     }
@@ -194,7 +194,7 @@ export function checkoutSignup() {
       await dispatch(checkoutActions.checkoutPostSignup())
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS }) // used for facebook tracking
     } catch (err) {
-      logger.error(`${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`)
+      logger.error({message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err]})
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
       if (err.code === '409-duplicate-details') {
         dispatch(basketActions.basketPromoCodeChange(''))
@@ -241,7 +241,7 @@ export function checkoutPostSignup() {
       await dispatch(loginActions.loginUser(email, password, true, orderId))
       dispatch(trackPurchase())
     } catch (err) {
-      logger.error(`${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`)
+      logger.error({message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err]})
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
       throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)
     } finally {
