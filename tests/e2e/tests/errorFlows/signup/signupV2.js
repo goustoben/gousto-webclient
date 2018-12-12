@@ -9,7 +9,7 @@ module.exports = {
     const cookiePolicy = browser.page.cookiePolicy()
 
     browser
-      .url(home.api.launchUrl + '?features[checkoutPayment]=true')
+      .url(home.api.launchUrl)
       .perform(function (done) {
         cookiePolicy.section.cookiePolicyBanner.checkIfCookieBannerVisible()
         done()

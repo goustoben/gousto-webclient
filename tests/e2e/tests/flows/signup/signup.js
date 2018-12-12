@@ -9,7 +9,7 @@ module.exports = {
 		const cookiePolicy = browser.page.cookiePolicy()
 
 		browser
-			.url(home.api.launchUrl + '?promo_code=null&features[signupSteps]=welcome,boxSize,postcode,delivery,finish')
+			.url(home.api.launchUrl + '?promo_code=null&features[signupSteps]=welcome,boxSize,postcode,delivery,finish&features[checkoutPayment]=false')
 			.perform(function(done) {
 				cookiePolicy.section.cookiePolicyBanner.checkIfCookieBannerVisible()
 				done()
