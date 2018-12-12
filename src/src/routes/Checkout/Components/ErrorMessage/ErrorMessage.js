@@ -5,7 +5,7 @@ import css from './ErrorMessage.css'
 
 const ErrorMessage = ({ errorType }) => (
   errorType ? (
-		<div className={css.container}>
+		<div data-testing={`${errorType}`} className={css.container}>
 			<Alert type="danger">
 				{config.errorMessage[errorType] || config.errorMessage.generic}
 			</Alert>

@@ -70,7 +70,7 @@ export const cancelPendingOrder = (orderId, deliveryDayId, variation = 'default'
     try {
       await dispatch(orderCancel(orderId, deliveryDayId, variation))
     } catch (err) {
-      logger.error(err.message)
+      logger.error(err)
     } finally {
       dispatch(redirect('/my-deliveries'))
       dispatch({
@@ -86,7 +86,7 @@ export const cancelProjectedOrder = (deliveryDayId, variation = 'default') => (
     try {
       await dispatch(projectedOrderCancel(deliveryDayId, deliveryDayId, variation))
     } catch (err) {
-      logger.error(err.message)
+      logger.error(err)
     } finally {
       dispatch(redirect('/my-deliveries'))
       dispatch({
@@ -125,7 +125,8 @@ export const getSkipRecoveryContent = ({ orderId, orderDate, deliveryDayId, stat
         status,
         actionTriggered,
       }))
-      logger.notice(err)
+
+      logger.error(err)
     }
   }
 )

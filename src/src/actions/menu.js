@@ -263,7 +263,7 @@ function menuLoadMenu(cutoffDateTime = null, background) {
       if (__SERVER__) {
         if (!isFacebookUserAgent(state.request.get('userAgent'))) {
           const error = new Error('Slot is not found in menuLoadMenu')
-          logger.notice(error)
+          logger.error(error)
         }
 
         dispatch(redirect('/menu', true))

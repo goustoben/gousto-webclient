@@ -1,15 +1,11 @@
 import Immutable from 'immutable'
 
-import { loadRecommendations } from 'actions/recipes'
-
-import fetchData from 'routes/Menu/fetchData'
+import fetchData, { loadRecommendations } from '../fetchData/fetchData'
 
 jest.mock('actions')
 jest.mock('utils/logger')
 
-jest.mock('actions/recipes', () => ({
-  loadRecommendations: jest.fn()
-}))
+jest.mock('../fetchData/fetchData')
 
 describe('fetchData', () => {
   const getState = jest.fn()
@@ -46,52 +42,33 @@ describe('fetchData', () => {
     beforeEach(() => {
       dispatch.mockReturnValue(Promise.resolve())
     })
-
+  
     describe('when not authenticated ', () => {
       test('should not dispatch a loadRecommendations request', () => {
         getState.mockReturnValue(createState())
-
+      
         fetchData(fetchDataParams)
 
         expect(loadRecommendations).not.toHaveBeenCalled()
       })
     })
-
+  
     describe('when a just for you feature is found', () => {
       test('should not dispatch a loadRecommendations request', () => {
         getState.mockReturnValue(createState({
           features: Immutable.Map({
-            justforyou: Immutable.Map({
+            justforyou_v2: Immutable.Map({
               value: true,
               experiment: true,
             }),
           }),
         }))
-
+  
         fetchData(fetchDataParams)
-
+  
         expect(loadRecommendations).not.toHaveBeenCalled()
       })
     })
-
-    describe('when authenticated and no just for you feature is found', () => {
-      test('should dispatch a loadRecommendations request', () => {
-        getState.mockReturnValue(createState({
-          auth: Immutable.Map({
-            isAuthenticated: true,
-          }),
-          features: Immutable.fromJS({
-            justforyou: {
-              experiment: false,
-              value: false,
-            }
-          })
-        }))
-
-        fetchData(fetchDataParams)
-
-        expect(loadRecommendations).toHaveBeenCalled()
-      })
-    })
+  
   })
 })

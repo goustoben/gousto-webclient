@@ -1,20 +1,51 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import actionTypes from 'actions/actionTypes'
+import logger from 'utils/logger'
 import { publicKey } from '../config'
-import { hasPropUpdated } from './utils'
+import { hasPropUpdated, getErrorType } from './utils'
+
+import css from './CheckoutFrame.css'
 
 /* global Frames */
-export class CheckoutFrame extends React.Component {
+class CheckoutFrame extends React.Component {
   static propTypes = {
     change: PropTypes.func,
+    fireCheckoutError: PropTypes.func,
+    checkoutClearErrors: PropTypes.func,
+    disableCardSubmission: PropTypes.func,
+    reloadCheckoutScript: PropTypes.func,
+    cardTokenReady: PropTypes.func,
+    billingAddress: PropTypes.object,
     cardName: PropTypes.string,
     formName: PropTypes.string,
     sectionName: PropTypes.string,
-    billingAddress: PropTypes.object,
-    cardTokenReady: PropTypes.func,
     checkoutScriptReady: PropTypes.bool,
-    submitCheckoutFrame: PropTypes.bool,
+    checkoutFrameReady: PropTypes.func,
+    isSubmitCardEnabled: PropTypes.bool,
+    hasCheckoutError: PropTypes.bool,
+    fireCheckoutPendingEvent: PropTypes.func,
+    trackingCardTokenisationSuccessfully: PropTypes.func,
+    trackingCardTokenisationFailed: PropTypes.func,
+
+  }
+
+  static defaultProps = {
+    change: () => {},
+    fireCheckoutError: () => {},
+    checkoutClearErrors: () => {},
+    disableCardSubmission: () => {},
+    cardTokenReady: () => {},
+    reloadCheckoutScript: () => {},
+    checkoutFrameReady: () => {},
+    billingAddress: {},
+    cardName: '',
+    formName: 'checkout',
+    sectionName: 'payment',
+    checkoutScriptReady: false,
+    isSubmitCardEnabled: false,
+    hasCheckoutError: false,
   }
 
   componentDidMount() {
@@ -26,7 +57,7 @@ export class CheckoutFrame extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { billingAddress, cardName, checkoutScriptReady, submitCheckoutFrame } = this.props
+    const { billingAddress, cardName, checkoutScriptReady, isSubmitCardEnabled, hasCheckoutError } = this.props
 
     if (hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
@@ -36,27 +67,48 @@ export class CheckoutFrame extends React.Component {
       Frames.setBillingDetails(billingAddress)
     }
 
-    if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
-      this.initFrames()
+    if(hasPropUpdated(hasCheckoutError, prevProps.hasCheckoutError) && hasCheckoutError) {
+      Frames.unblockFields()
     }
 
-    if (hasPropUpdated(submitCheckoutFrame, prevProps.submitCheckoutFrame)) {
-      Frames.submitCard()
+    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled){
+      this.submitCard()
     }
+
+    if (hasPropUpdated(checkoutScriptReady,prevProps.checkoutScriptReady)) {
+      this.initFrames()
+    }
+  }
+
+  componentWillUnmount() {
+    const { reloadCheckoutScript } = this.props
+
+    if (Frames) {
+      Frames = undefined // eslint-disable-line no-global-assign
+    }
+    reloadCheckoutScript()
   }
 
   initFrames = () => {
     const { paymentForm } = this
+    const { checkoutClearErrors } = this.props
 
     Frames.init({
       publicKey,
-      containerSelector: '.frames-container',
-      cardValidationChanged: () => {},
-      cardSubmitted: () => {},
+      style: checkoutStyle,
+      containerSelector: `.${css.framesContainer}`,
+      localisation: {
+        cardNumberPlaceholder: 'Card number',
+      },
+      cardSubmitted: () => {
+        checkoutClearErrors()
+      },
       cardTokenised: (e) => {
         this.cardTokenised(e, paymentForm)
       },
-      cardTokenisationFailed: () => {},
+      cardTokenisationFailed: (e) => {
+        this.cardTokenisationFailed(e)
+      },
       frameActivated: this.frameActivated
     })
   }
@@ -65,17 +117,35 @@ export class CheckoutFrame extends React.Component {
     this.paymentForm = element
   }
 
+  submitCard = () => {
+    const { disableCardSubmission, fireCheckoutError, fireCheckoutPendingEvent } = this.props
+
+    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, true)
+    Frames.submitCard()
+      .catch(() => {
+        fireCheckoutError(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)
+        fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+      })
+
+    disableCardSubmission()
+  }
+
   cardTokenised = (event, paymentForm) => {
     const { cardToken } = event.data
-    const { change, cardTokenReady, formName, sectionName } = this.props
+    const { change, cardTokenReady, formName, sectionName, fireCheckoutPendingEvent, trackingCardTokenisationSuccessfully } = this.props
 
     Frames.addCardToken(paymentForm, cardToken)
+    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
     change(formName, `${sectionName}.token`, cardToken)
     cardTokenReady()
+    trackingCardTokenisationSuccessfully()
+
   }
 
   frameActivated = () => {
-    const { cardName, billingAddress } = this.props
+    const { billingAddress, cardName, checkoutFrameReady } = this.props
+
+    checkoutFrameReady()
 
     if (cardName) {
       Frames.setCustomerName(cardName)
@@ -85,11 +155,76 @@ export class CheckoutFrame extends React.Component {
     }
   }
 
+  cardTokenisationFailed = (event) => {
+    const { fireCheckoutError, fireCheckoutPendingEvent, trackingCardTokenisationFailed } = this.props
+    const errorMessage = event ? event.data.message : ''
+    const errorType = getErrorType(event.data.errorCode)
+
+    logger.error('card tokenisation failure')
+    fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
+    fireCheckoutError(errorType)
+    trackingCardTokenisationFailed(errorMessage)
+  }
+
   render() {
     return (
       <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" >
-        <div className="frames-container" />
+        <div className={css.framesContainer} />
       </form>
     )
   }
 }
+
+const checkoutStyle = {
+  '.embedded .card-form .input-group .input-control': {
+    fontSize: '18px'
+  },
+  '.embedded .card-form .input-group label.icon+*': {
+    paddingLeft: '15px'
+  },
+  '.embedded .card-form .input-group': {
+    borderRadius: '5px',
+    border: '1px solid #d6d8da',
+    margin: '10px 0'
+  },
+  '.embedded .card-form .input-group.focus:not(.error)': {
+    border: '1px solid #999EA3'
+  },
+  '.embedded .card-form .input-group .icon': {
+    display: 'none'
+  },
+  '.embedded .card-form .input-group.error': {
+    border: '1px solid #B6252E',
+    background: '#FBF4F4'
+  },
+  '.embedded .card-form .input-group.error .hint.error-message': {
+    color: '#fff'
+  },
+  '.embedded .card-form .input-group.error .hint-icon:hover': {
+    color: '#B6252E'
+  },
+  '.embedded .card-form .input-group.focus': {
+    backgroundColor: '#fff'
+  },
+  '.embedded .card-form .input-group.focus input': {
+    color: '#333D49',
+    borderColor: '#999ea3'
+  },
+  '.embedded .card-form .input-group.error input': {
+    color: '#B6252E'
+  },
+  '.embedded .card-form .input-group input::-webkit-input-placeholder': {
+    fontStyle: 'normal'
+  },
+  '.embedded .card-form .input-group input::-moz-placeholder': {
+    fontStyle: 'normal'
+  },
+  '.embedded .card-form .input-group input:-ms-input-placeholder': {
+    fontStyle: 'normal'
+  },
+  '.embedded .card-form .input-group input:-moz-placeholder': {
+    fontStyle: 'normal'
+  },
+}
+
+export { CheckoutFrame }

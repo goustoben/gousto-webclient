@@ -1,16 +1,17 @@
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
-const ExitCodePlugin = require('./exitCode')
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const ExitCodePlugin = require('./exitCode')
 
 const build = process.env.NODE_ENV || 'development'
 const envName = process.env.npm_config_gousto_webclient_environment_name || 'local'
 const domain = process.env.npm_config_gousto_webclient_domain || 'gousto.local'
 const clientProtocol = process.env.npm_config_gousto_webclient_client_protocol || 'http'
 const cloudfrontUrl = process.env.npm_config_gousto_webclient_cloudfront_url || ''
+const checkout_pk = process.env.npm_config_gousto_webclient_checkoutcom_pk || ''
 
 const publicPath = cloudfrontUrl ? `${clientProtocol}://${cloudfrontUrl}/build/latest/` : '/nsassets/'
 // eslint-disable-next-line no-console
@@ -118,6 +119,7 @@ const config = {
   },
   plugins: [
     ExitCodePlugin,
+    new LodashModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       __DEV__: build === 'development',
       __PROD__: build === 'production',
@@ -131,6 +133,7 @@ const config = {
       __DOMAIN__: JSON.stringify(domain),
       __CLIENT_PROTOCOL__: JSON.stringify(clientProtocol),
       __CLOUDFRONT_URL__: JSON.stringify(cloudfrontUrl),
+      __CHECKOUT_PK__: JSON.stringify(checkout_pk),
       'process.env.NODE_ENV': JSON.stringify(build),
     }),
   ],
@@ -191,9 +194,7 @@ if (build === 'development') {
 } else {
   config.devtool = false
   config.plugins.push(
-    new LodashModuleReplacementPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
-
     new TerserPlugin({
       parallel: true,
       sourceMap: true,

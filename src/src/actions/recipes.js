@@ -2,7 +2,7 @@ import actionTypes from './actionTypes'
 import statusActions from './status'
 import logger from 'utils/logger'
 import { featureSet } from 'actions/features'
-import { fetchRecipes, fetchRecipesStockByDate, fetchRecommendations } from 'apis/recipes'
+import { fetchRecipes, fetchRecipesStockByDate } from 'apis/recipes'
 
 const recipesLoadRecipesById = (recipeIds = []) => (
   async (dispatch, getState) => {
@@ -22,7 +22,7 @@ const recipesLoadRecipesById = (recipeIds = []) => (
         dispatch({ type: actionTypes.RECIPES_RECEIVE, recipes })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.RECIPES_RECEIVE, err.message))
-        logger.error(err.message)
+        logger.error(err)
       } finally {
         dispatch(statusActions.pending(actionTypes.RECIPES_RECEIVE, false))
       }
@@ -57,30 +57,18 @@ const recipesLoadStockByDate = (whenStart, whenCutoff) => (
       dispatch({ type: actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, stock })
     } catch (err) {
       dispatch(statusActions.error(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, err.message))
-      logger.error(err.message)
+      logger.error(err)
     } finally {
       dispatch(statusActions.pending(actionTypes.RECIPES_PERIOD_STOCK_RECEIVE, false))
     }
   }
 )
 
-export const loadRecommendations = () => (
-  async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
+export const saveRecommendations = (recommendations) =>(
+  (dispatch) => (
+    dispatch(featureSet('justforyou_v2', recommendations, true))
+  )
 
-    try {
-      let recommendations = false
-      const { data = {} } = await fetchRecommendations(accessToken)
-
-      if (data[0] && data[0].properties && data[0].properties['just-for-you']) {
-        recommendations = data[0].properties['just-for-you']
-      }
-
-      dispatch(featureSet('justforyou', recommendations, true))
-    } catch (err) {
-      logger.notice('Error loading recommendation data for user: ', err)
-    }
-  }
 )
 
 export default {

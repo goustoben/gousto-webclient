@@ -52,6 +52,7 @@ class Checkout extends React.PureComponent {
     submitOrder: PropTypes.func,
     menuLoadBoxPrices: PropTypes.func,
     trackSignupStep: PropTypes.func,
+    trackingOrderPlace: PropTypes.func,
     tariffId: PropTypes.string,
     checkoutPaymentFeature: PropTypes.bool,
   }
@@ -131,7 +132,7 @@ class Checkout extends React.PureComponent {
     return store.dispatch(actions.pricingRequest())
       .catch((err) => {
         if (__SERVER__) {
-          logger.error('Failed to fetch prices.', err.message)
+          logger.error({ message: 'Failed to fetch prices.', errors: [err] })
           store.dispatch(actions.redirect(routesConfig.client.menu, true))
         }
       })
@@ -157,6 +158,17 @@ class Checkout extends React.PureComponent {
         })
       })
     }
+  }
+
+  reloadCheckoutScript = () => {
+    this.setState({
+      checkoutScriptReady: false,
+    })
+    loadCheckoutScript(() => {
+      this.setState({
+        checkoutScriptReady: true,
+      })
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -195,13 +207,16 @@ class Checkout extends React.PureComponent {
 
   renderSteps = (stepMapping, steps, currentStep) => {
     const { checkoutScriptReady } = this.state
-
+    const { trackingOrderPlace, submitOrder , browser} = this.props
     const step = stepMapping[currentStep]
     const props = {
       onStepChange: this.onStepChange(steps, currentStep),
       isLastStep: this.isLastStep(steps, currentStep),
       nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
-      submitOrder: this.props.submitOrder,
+      reloadCheckoutScript: this.reloadCheckoutScript,
+      submitOrder,
+      browser,
+      trackingOrderPlace,
       checkoutScriptReady,
     }
 

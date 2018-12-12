@@ -27,6 +27,7 @@ const checkoutActions = {
   resetDuplicateCheck,
   trackSignupPageChange,
   checkoutFetchIntervals,
+  trackingOrderPlace,
 }
 
 export function checkoutClearErrors() {
@@ -54,7 +55,7 @@ export function checkoutAddressLookup(postcode) {
       addresses.county = lookupResults.data.traditionalCounty || ''
     } catch (err) {
       dispatch(error(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, err.message))
-      logger.error('Unable to look-up address')
+      logger.error({message: 'Unable to look-up address'})
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, false))
     }
@@ -169,6 +170,18 @@ export function checkoutFetchIntervals() {
   }
 }
 
+export const fireCheckoutError = (errorName, errorValue = true) => {
+  return dispatch => {
+    dispatch(error(errorName, errorValue))
+  }
+}
+
+export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => {
+  return dispatch => {
+    dispatch(pending(pendingName, checkoutValue))
+  }
+}
+
 export function checkoutSignup() {
   return async (dispatch) => {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
@@ -181,7 +194,7 @@ export function checkoutSignup() {
       await dispatch(checkoutActions.checkoutPostSignup())
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS }) // used for facebook tracking
     } catch (err) {
-      logger.error(`${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`)
+      logger.error({message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err]})
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
       if (err.code === '409-duplicate-details') {
         dispatch(basketActions.basketPromoCodeChange(''))
@@ -228,7 +241,7 @@ export function checkoutPostSignup() {
       await dispatch(loginActions.loginUser(email, password, true, orderId))
       dispatch(trackPurchase())
     } catch (err) {
-      logger.error(`${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`)
+      logger.error({message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err]})
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
       throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)
     } finally {
@@ -242,6 +255,49 @@ export function checkoutPostSignup() {
 export function trackSignupPageChange(step) {
   return (dispatch) => {
     dispatch({ type: actionTypes.SIGNUP_TRACKING_STEP_CHANGE, step })
+  }
+}
+
+export function trackingOrderPlace(isSignup, paymentProvider) {
+  return(dispatch, getState) => {
+    const { tracking, basket, pricing } = getState()
+    const prices = pricing.get('prices')
+
+    dispatch({
+      type: actionTypes.CHECKOUT_ORDER_PLACE,
+      trackingData: {
+        actionType: 'Order Place',
+        asource: tracking.get('asource'),
+        order_id: basket.get('previewOrderId'),
+        order_total: prices.get('grossTotal'),
+        promo_code: prices.get('promoCode'),
+        signup: isSignup,
+        payment_provider: paymentProvider,
+      }
+    })
+  }
+}
+
+export function trackingCardTokenisationFailed(err){
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.CHECKOUT_CARD_TOKENIZATION_FAILED,
+      trackingData: {
+        actionType: 'CardTokenization Failed',
+        error_reason: err
+      }
+    })
+  }
+}
+
+export function trackingCardTokenisationSuccessfully(){
+  return (dispatch) => {
+    dispatch({
+      type: actionTypes.CHECKOUT_CARD_TOKENIZATION_SUCCEEDED,
+      trackingData: {
+        actionType: 'CardTokenization Succeededs'
+      }
+    })
   }
 }
 

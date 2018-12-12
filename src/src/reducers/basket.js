@@ -100,7 +100,7 @@ const basket = {
     case actionTypes.BASKET_NUM_PORTION_CHANGE: {
       let portionSize = parseInt(action.numPortions, 10)
       if (basketConfig.portions.allowed.indexOf(portionSize) === -1) {
-        logger.error(`Invalid serving size: ${action.numPortions}`)
+        logger.error({message: `Invalid serving size: ${action.numPortions}`})
         portionSize = basketConfig.portions.default
       }
 

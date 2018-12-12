@@ -84,7 +84,7 @@ class Hub extends React.PureComponent {
 	  await store.dispatch(collectionActions.collectionsLoadCollectionBySlug(params.collectionSlug))
 
 	  if (store.getState().error.get(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS)) {
-	    logger.notice(`Cookbook hub not available for collection slug: ${params.collectionSlug}`)
+	    logger.error({message: `Cookbook hub not available for collection slug: ${params.collectionSlug}`})
 
 	    return store.dispatch(redirectActions.redirect(routesConfig.client.cookbook))
 	  }

@@ -101,7 +101,7 @@ export function get(cookies, key, withVersionPrefix = true) {
       }
     } catch (err) {
       logger.notice(`un-parsable cookie value for key: ${key}, value: ${cookies.get(key)}`)
-      logger.error(`un-parsable cookie value for key: ${key}`, err)
+      logger.critical({message: `un-parsable cookie value for key: ${key}`, errors: [ err ]})
     }
   }
 
@@ -119,7 +119,7 @@ export function set(cookies, key, val, days, withVersionPrefix = true, httpOnly 
       cookies.set(prefixedKey, encode(val), { httpOnly, overwrite })
     }
   } else {
-    logger.error('no cookies to set on')
+    logger.error({message: 'no cookies to set on'})
   }
 }
 
@@ -132,7 +132,7 @@ export function unset(cookies, key, withVersionPrefix = true, path = '/') {
       cookies.set(prefixedKey, null, { expires: new Date('1970-01-01'), httpOnly: false, domain: '.gousto.co.uk', path })
     }
   } else {
-    logger.error('no cookies to delete on')
+    logger.error({message: 'no cookies to delete on'})
   }
 }
 

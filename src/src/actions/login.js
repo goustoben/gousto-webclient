@@ -6,7 +6,6 @@ import { featureSet } from './features'
 import statusActions from './status'
 import orderActions from './order'
 import userActions from './user'
-import { loadRecommendations } from './recipes'
 import Cookies from 'utils/GoustoCookies'
 import config from 'config/routes'
 import { isOneOfPage } from 'utils/routes'
@@ -15,6 +14,7 @@ import URL from 'url'
 import { push } from 'react-router-redux'
 import windowUtils from 'utils/window'
 import globals from 'config/globals'
+import { loadRecommendations } from '../routes/Menu/fetchData/fetchData'
 
 const { pending, error } = statusActions
 const { redirect, documentLocation } = windowUtils
@@ -84,7 +84,7 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 const logoutRedirect = () => (
   (dispatch) => {
     redirect('/')
-    dispatch(featureSet('justforyou', false, false))
+    dispatch(featureSet('justforyou_v2', false, false))
   }
 )
 
@@ -122,9 +122,8 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
           await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
         }
       }
-      if (!getState().features.getIn(['justforyou', 'value'])) {
-        dispatch(loadRecommendations())
-      }
+      loadRecommendations()
+
       setTimeout(() => {
         dispatch(loginVisibilityChange(false))
 

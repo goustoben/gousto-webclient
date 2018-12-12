@@ -81,7 +81,7 @@ class PromoCode extends React.PureComponent {
 	  })
 	    .catch((err) => {
 	      this.setError(configCheckout.errorMessage.promoCode.invalid)
-	      logger.error(err.message)
+	      logger.error(err)
 	    })
 	}
 

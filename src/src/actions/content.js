@@ -10,7 +10,7 @@ export const contentLoadContentByPageSlug = (pageSlug = '', variation = 'default
       const { data: content } = await fetchContentBySlug(getState().auth.get('accessToken'), pageSlug, { vars: variation })
       dispatch({ type: actionTypes.CONTENT_RECEIVE, content })
     } catch (err) {
-      logger.error(err.message)
+      logger.critical(err)
     }
     dispatch(statusActions.pending(actionTypes.CONTENT_RECEIVE, false))
   }

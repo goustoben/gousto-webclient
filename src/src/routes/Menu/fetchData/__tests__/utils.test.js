@@ -37,7 +37,7 @@ describe('getPreselectedCollectionName', () => {
       beforeEach(() => {
         state.features = Immutable.fromJS({
           ...state.features.toJS(),
-          justforyou: {
+          justforyou_v2: {
             value: true
           }
         })
@@ -64,7 +64,7 @@ describe('getPreselectedCollectionName', () => {
       beforeEach(() => {
         state.features = Immutable.fromJS({
           ...state.features.toJS(),
-          justforyou: {
+          justforyou_v2: {
             value: false
           }
         })

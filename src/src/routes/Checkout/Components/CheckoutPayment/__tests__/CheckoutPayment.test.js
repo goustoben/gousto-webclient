@@ -2,21 +2,40 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Field } from 'redux-form'
 
+import Loading from 'Loading'
 import SubmitButton from 'routes/Checkout/Components/SubmitButton'
 import { PaymentHeader } from 'routes/Checkout/Components/PaymentHeader'
 import { BillingAddress } from 'routes/Checkout/Components/BillingAddress'
 import { CheckoutFrame } from 'routes/Checkout/Components/CheckoutPayment/CheckoutFrame'
 
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment/CheckoutPayment'
+import BoxDetails from '../../BoxDetails'
+import Summary from '../../Summary'
 
 describe('CheckoutPayment', () => {
   let wrapper
 
-  describe('rendering', () => {
-    beforeEach(() => {
-      wrapper = shallow(<CheckoutPayment />)
-    })
+  const trackingOrderPlace = jest.fn()
+  const touch = jest.fn()
+  const submit = jest.fn()
 
+  beforeEach(() => {
+    wrapper = shallow(
+      <CheckoutPayment
+        trackingOrderPlace={trackingOrderPlace}
+        touch={touch}
+        submit={submit}
+      />
+    )
+  })
+
+  afterEach(() => {
+    trackingOrderPlace.mockClear()
+    touch.mockClear()
+    submit.mockClear()
+  })
+
+  describe('rendering', () => {
     test('should render a PaymentHeader', () => {
       expect(wrapper.find(PaymentHeader)).toHaveLength(1)
     })
@@ -36,35 +55,123 @@ describe('CheckoutPayment', () => {
     test('should render a SubmitButton', () => {
       expect(wrapper.find(SubmitButton)).toHaveLength(1)
     })
-  })
 
-  describe('submitPayment', () => {
-    beforeEach(() => {
-      wrapper = shallow(<CheckoutPayment />)
+    test('should render BoxDetails and Summary if view is mobile', () => {
+      wrapper = shallow(
+        <CheckoutPayment
+          trackingOrderPlace={trackingOrderPlace}
+          touch={touch}
+          submit={submit}
+          browser={'mobile'}
+        />
+      )
+      expect(wrapper.find(BoxDetails)).toHaveLength(1)
+      expect(wrapper.find(Summary)).toHaveLength(1)
     })
 
-    test('should set submitCheckoutFrame prop to true', () => {
-      expect(wrapper.state().submitCheckoutFrame).toBe(false)
+    test('should NOT render BoxDetails and Summary if view is desktop', () => {
+      wrapper = shallow(
+        <CheckoutPayment
+          trackingOrderPlace={trackingOrderPlace}
+          touch={touch}
+          submit={submit}
+          browser={'desktop'}
+        />
+      )
+      expect(wrapper.find(BoxDetails)).toHaveLength(0)
+      expect(wrapper.find(Summary)).toHaveLength(0)
+    })
 
-      wrapper.find(SubmitButton).simulate('click')
+  })
 
-      expect(wrapper.state().submitCheckoutFrame).toBe(true)
+  describe('when loading', () => {
+    beforeEach(() => {
+      wrapper.setState({ loading: true })
+    })
+
+    test('should render a Loading spinner', () => {
+      expect(wrapper.find(Loading)).toHaveLength(1)
+    })
+  })
+
+  describe('when loaded', () => {
+    beforeEach(() => {
+      wrapper.setState({ loading: false })
+    })
+
+    test('should not render a Loading spinner', () => {
+      expect(wrapper.find(Loading)).toHaveLength(0)
+    })
+  })
+
+  describe('user clicks on submit button', () => {
+    describe('when form is valid', () => {
+      beforeEach(() => {
+        wrapper.setProps({ formErrors: {} })
+      })
+
+      test('should set isSubmitCardEnabled prop to true', () => {
+        expect(wrapper.state().isSubmitCardEnabled).toBe(false)
+
+        wrapper.find(SubmitButton).simulate('click')
+
+        expect(wrapper.state().isSubmitCardEnabled).toBe(true)
+      })
+
+      test('should call trackingOrderPlace prop with correct arguments', () => {
+        wrapper.find(SubmitButton).simulate('click')
+
+        expect(trackingOrderPlace).toHaveBeenCalledWith(true, 'checkout')
+      })
+    })
+
+    describe('when form errors do have error', () => {
+      const formErrors = {
+        payment: {
+          cardName: 'Card name is required',
+          town: 'Town is required',
+        }
+      }
+      const sectionName = 'payment'
+      const formName = 'exampleForm'
+
+      beforeEach(() => {
+        wrapper.setProps({ formErrors, sectionName, formName })
+      })
+      
+      test('should call touch for correct fields', () => {
+        wrapper.find(SubmitButton).simulate('click')
+
+        expect(touch.mock.calls.length).toBe(2)
+        expect(touch.mock.calls[0][0]).toBe(formName)
+        expect(touch.mock.calls[0][1]).toBe('payment[cardName]')
+        expect(touch.mock.calls[1][0]).toBe(formName)
+        expect(touch.mock.calls[1][1]).toBe('payment[town]')
+      })
     })
   })
 
   describe('cardTokenReady', () => {
-    const submit = jest.fn()
-    
-    beforeEach(() => {
-      wrapper = shallow(<CheckoutPayment submit={submit} />)
-    })
-
     test('should call props.submit', () => {
       const cardTokenReady = wrapper.find(CheckoutFrame).prop('cardTokenReady')
 
       cardTokenReady()
 
       expect(submit).toHaveBeenCalled()
+    })
+  })
+
+  describe('checkoutFrameReady', () => {
+    beforeEach(() => {
+      wrapper.setState({ loading: true })
+    })
+
+    test('should set loading state to false', () => {
+      const checkoutFrameReady = wrapper.find(CheckoutFrame).prop('checkoutFrameReady')
+
+      checkoutFrameReady()
+
+      expect(wrapper.state('loading')).toBe(false)
     })
   })
 })

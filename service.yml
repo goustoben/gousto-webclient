@@ -20,19 +20,16 @@ logs:
   - name: errorLogGroup
   - name: pm2Log
     filters:
-      - name: warningCount
-        pattern: '[date, dash, status=\"warning:\", ...]'
-        threshold: 50
       - name: errorCount
-        pattern: '[date, dash, status=\"error:\", ...]'
+        pattern: '{$.log_level = \"error\"}'
         threshold: 7
       - name: criticalCount
-        pattern: '[date, dash, status=\"critical:\", ...]'
+        pattern: '{$.log_level = \"critical\"}'
         threshold: 1
       - name: unparseableCookieCount
-        pattern: '[date, dash, status=\"error:\", exception=\"un-parsable cookie value*\"]'
+        pattern: '{($.log_level = \"critical\") && ($.message =\"un-parsable cookie value*\")}'
         threshold: 1
- 
+
   - name: apiTimeLog
 
 

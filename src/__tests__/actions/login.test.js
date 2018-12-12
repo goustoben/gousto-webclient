@@ -1,11 +1,11 @@
 import Immutable from 'immutable'
 
 import { documentLocation, getWindow, redirect } from 'utils/window'
-import { loadRecommendations } from 'actions/recipes'
+import { loadRecommendations } from ' ../../src/routes/Menu/fetchData/fetchData'
 
 import { postLoginSteps } from 'actions/login'
 
-jest.mock('actions/recipes', () => ({
+jest.mock('routes/Menu/fetchData/fetchData', () => ({
   loadRecommendations: jest.fn(),
 }))
 
@@ -36,7 +36,7 @@ describe('login actions', () => {
       beforeEach(() => {
         getState.mockReturnValue({
           features: Immutable.Map({
-            justforyou: Immutable.Map({
+            justforyou_v2: Immutable.Map({
               value: false,
               experiment: false,
             }),
@@ -46,30 +46,9 @@ describe('login actions', () => {
 
       test('should dispatch a loadRecommendations call', () => {
         postLoginSteps(false)(dispatch, getState)
-
         expect(loadRecommendations).toHaveBeenCalled()
-        expect(dispatch).toHaveBeenCalled()
       })
     })
 
-    describe('when the justforyou experiment is set', () => {
-      beforeEach(() => {
-        getState.mockReturnValue({
-          features: Immutable.Map({
-            justforyou: Immutable.Map({
-              value: true,
-              experiment: true,
-            }),
-          }),
-        })
-      })
-
-      test('should not dispatch a loadRecommendations call', () => {
-        postLoginSteps(false)(dispatch, getState)
-
-        expect(loadRecommendations).not.toHaveBeenCalled()
-        expect(dispatch).not.toHaveBeenCalled()
-      })
-    })
   })
 })

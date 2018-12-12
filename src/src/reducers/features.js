@@ -10,6 +10,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: true,
   },
+  checkoutPayment: {
+    experiment: false,
+    value: true,
+  },
   landingOrder: {
     experiment: false,
     value: true,
@@ -28,9 +32,9 @@ const defaultFeatures = () => ({
   },
   skipRecovery: {
     experiment: false,
-    value: false,
+    value: true,
   },
-  justforyou: {
+  justforyou_v2: {
     experiment: false,
     value: false,
   }
