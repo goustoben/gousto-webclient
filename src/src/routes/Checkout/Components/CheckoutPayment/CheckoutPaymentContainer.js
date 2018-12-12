@@ -23,4 +23,4 @@ const ConnectedCheckoutPaymentContainer = connect(
   mapDispatchToProps,
 )(CheckoutPayment)
 
-export const CheckoutPaymentContainer = addInitialValues(formContainer(ConnectedCheckoutPaymentContainer, getValidationRules(sectionName)))
+export const CheckoutPaymentContainer = addInitialValues(formContainer(ConnectedCheckoutPaymentContainer, getValidationRules(sectionName), formName))

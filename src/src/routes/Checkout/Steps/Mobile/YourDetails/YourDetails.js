@@ -82,7 +82,7 @@ const validationRules = [
   delivery(deliverySectionName),
 ]
 
-let YourDetailsForm = formContainer(YourDetailsStep, validationRules, deliveryValidationMessages(deliverySectionName)) // eslint-disable-line import/no-mutable-exports
+let YourDetailsForm = formContainer(YourDetailsStep, validationRules, 'checkout', deliveryValidationMessages(deliverySectionName)) // eslint-disable-line import/no-mutable-exports
 YourDetailsForm = aboutYouAddInitialValues(YourDetailsForm, { sectionName: aboutYouSectionName })
 YourDetailsForm = deliveryAddInitialValues(YourDetailsForm, { sectionName: deliverySectionName })
 

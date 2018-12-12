@@ -45,6 +45,6 @@ AboutYouStep.defaultProps = {
   checkoutValid: false,
 }
 
-const AboutYouForm = formContainer(AboutYouStep, addPrefix(sectionName, userRules), {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports
+const AboutYouForm = formContainer(AboutYouStep, addPrefix(sectionName, userRules), 'checkout', {}, {}, userAsyncValidation, ['aboutyou.password']) // eslint-disable-line import/no-mutable-exports
 
 export default addInitialValues(AboutYouForm, { sectionName })

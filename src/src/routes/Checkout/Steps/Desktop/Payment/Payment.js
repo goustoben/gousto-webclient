@@ -28,6 +28,6 @@ PaymentStep.propTypes = {
   trackingOrderPlace: PropTypes.func,
 }
 
-const PaymentForm = formContainer(PaymentStep, getValidationRules(sectionName), {}) // eslint-disable-line import/no-mutable-exports
+const PaymentForm = formContainer(PaymentStep, getValidationRules(sectionName)) // eslint-disable-line import/no-mutable-exports
 
 export default addInitialValues(PaymentForm, { sectionName })
