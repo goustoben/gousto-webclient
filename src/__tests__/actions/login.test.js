@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import { documentLocation, getWindow, redirect } from 'utils/window'
-import { loadRecommendations } from ' ../../src/routes/Menu/fetchData/fetchData'
+import { loadRecommendations } from '../../src/routes/Menu/fetchData/fetchData'
 
 import { postLoginSteps } from 'actions/login'
 
@@ -44,8 +44,8 @@ describe('login actions', () => {
         })
       })
 
-      test('should dispatch a loadRecommendations call', () => {
-        postLoginSteps(false)(dispatch, getState)
+      test('should dispatch a loadRecommendations call', async() => {
+        await postLoginSteps(false)(dispatch, getState)
         expect(loadRecommendations).toHaveBeenCalled()
       })
     })
