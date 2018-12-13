@@ -10,6 +10,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: true,
   },
+  checkoutPayment: {
+    experiment: false,
+    value: true,
+  },
   landingOrder: {
     experiment: false,
     value: true,
