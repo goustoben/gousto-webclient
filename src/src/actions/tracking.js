@@ -4,7 +4,7 @@ import actionTypes from './actionTypes'
 
 export const trackFirstPurchase = orderId => (
   (dispatch, getState) => {
-    const user = getState().user
+    const { user } = getState()
     const goustoReference = user.get('goustoReference')
     const order = getUserOrderById(orderId, user.get('orders'))
 
@@ -16,17 +16,14 @@ export const trackFirstPurchase = orderId => (
       logger.warning(`Missing order data for first purchase tracking: no user order "${orderId}" found in store`)
     }
 
-    dispatch({	
+    dispatch({
       type: actionTypes.TRACKING,
-      trackingData: {
-        actionType: actionTypes.TRACKING,
-        asource: getState().tracking.get('asource'),
-        goustoReference,
-        event: 'firstPurchase',
-        orderId,
-        orderTotal: order.getIn(['prices', 'total']),
-        voucher: order.getIn(['prices', 'promoCode'], ''),
-      },	
+      asource: getState().tracking.get('asource'),
+      goustoReference,
+      event: 'firstPurchase',
+      orderId,
+      orderTotal: order.getIn(['prices', 'total']),
+      voucher: order.getIn(['prices', 'promoCode'], ''),
     })
   }
 )
