@@ -123,7 +123,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
           await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
         }
       }
-      loadRecommendations(store)
+      loadRecommendations(goustoStore.store)
 
       setTimeout(() => {
         dispatch(loginVisibilityChange(false))
