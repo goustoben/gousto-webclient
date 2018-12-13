@@ -15,6 +15,7 @@ import { push } from 'react-router-redux'
 import windowUtils from 'utils/window'
 import globals from 'config/globals'
 import { loadRecommendations } from '../routes/Menu/fetchData/fetchData'
+import goustoStore from 'store'
 
 const { pending, error } = statusActions
 const { redirect, documentLocation } = windowUtils
@@ -122,7 +123,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
           await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
         }
       }
-      loadRecommendations()
+      loadRecommendations(store)
 
       setTimeout(() => {
         dispatch(loginVisibilityChange(false))
