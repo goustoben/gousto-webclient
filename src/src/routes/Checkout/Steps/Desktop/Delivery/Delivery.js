@@ -33,6 +33,6 @@ DeliveryStep.propTypes = {
   scrollToFirstMatchingRef: PropTypes.func,
 }
 
-const DeliveryYouForm = formContainer(DeliveryStep, delivery(sectionName), validationMessages(sectionName)) // eslint-disable-line import/no-mutable-exports
+const DeliveryYouForm = formContainer(DeliveryStep, delivery(sectionName), 'checkout', validationMessages(sectionName)) // eslint-disable-line import/no-mutable-exports
 
 export default addInitialValues(DeliveryYouForm, { sectionName })

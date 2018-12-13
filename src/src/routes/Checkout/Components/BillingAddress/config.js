@@ -1,2 +1,2 @@
 export const sectionName = 'payment'
-export const form = 'checkout'
+export const form = 'payment'
