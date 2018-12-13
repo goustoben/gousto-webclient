@@ -50,6 +50,7 @@ module.exports = {
       confirmation: 'confirmation',
       ingredients: 'ingredients',
       ingredientIssues: 'ingredient-issues',
+      ingredientReasons: 'ingredient-reasons',
     },
 
     help: '/help',

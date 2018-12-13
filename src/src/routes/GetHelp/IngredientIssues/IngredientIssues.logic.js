@@ -20,7 +20,7 @@ const propTypes = {
 
 const IngredientIssues = ({ content, ingredients }) => {
   const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredients}`
-  const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
+  const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.ingredientReasons}`
 
   return (
     <IngredientIssuesPresentation
