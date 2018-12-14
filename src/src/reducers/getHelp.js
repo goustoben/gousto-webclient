@@ -2,18 +2,13 @@ import actionTypes from 'actions/actionTypes'
 import { fromJS } from 'immutable'
 
 const getHelpInitialState = fromJS({
+  ingredientIssues: [],
+  ingredientSubIssues: [],
   order: {
     id: '',
     recipeItems: [],
   },
-  recipes: [{
-    id: '',
-    title: '',
-    ingredients: [{
-      id: '',
-      label: '',
-    }]
-  }],
+  recipes: [],
   selectedIngredients: [],
 })
 
@@ -58,6 +53,26 @@ const getHelp = (state, action) => {
     }
 
     return state
+  }
+  case actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES: {
+    const formattedIssues = action.ingredientIssues.data
+      .filter(ingredientIssue => ingredientIssue.type === 'category')
+      .map(ingredientIssue => ({
+        id: String(ingredientIssue.category.id),
+        label: ingredientIssue.category.name,
+        requireDescription: ingredientIssue.category.requireDescription,
+      }))
+    const formattedSubIssues = action.ingredientIssues.data
+      .filter(ingredientIssue => ingredientIssue.type === 'subcategory')
+      .map(ingredientIssue => ({
+        id: String(ingredientIssue.category.id),
+        label: ingredientIssue.category.name,
+        groupLabel: ingredientIssue.groupLabel,
+        requireDescription: ingredientIssue.category.requireDescription,
+      }))
+
+    return state.set('ingredientIssues', fromJS(formattedIssues))
+      .set('ingredientSubIssues', fromJS(formattedSubIssues))
   }
   default:
     return state
