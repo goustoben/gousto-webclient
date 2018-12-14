@@ -2,6 +2,8 @@ import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { browserHistory } from 'react-router'
+
+import Loading from 'Loading'
 import { client } from 'config/routes'
 import { Error } from './components/Error'
 import css from './GetHelp.css'
@@ -74,6 +76,10 @@ class GetHelp extends PureComponent {
 
   render() {
     const { children, content, didRequestError, isRequestPending } = this.props
+    const contentClasses = [
+      css.getHelpContent,
+      (isRequestPending) ? css.getHelpContent__loading : null,
+    ].filter(item => item !== null).join(' ')
 
     return (
       <div className={css.getHelpContainer}>
@@ -82,14 +88,16 @@ class GetHelp extends PureComponent {
             cssText: '#react-root { height: 100%; }',
           }]}
         />
-        <div className={css.getHelpContent}>
-          {!isRequestPending &&
-            <Error
-              content={content}
-              hasError={didRequestError}
-            >
+        <div className={contentClasses}>
+          {(isRequestPending) ? (
+            <div className={css.loading__container}>
+              <Loading className={css.loading__image} />
+            </div>
+          ) : (
+            <Error content={content} hasError={didRequestError}>
               {children}
-            </Error>}
+            </Error>
+          )}
         </div>
       </div>
     )
