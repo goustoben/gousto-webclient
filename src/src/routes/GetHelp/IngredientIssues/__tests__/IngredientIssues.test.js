@@ -147,7 +147,7 @@ describe('<IngredientIssues />', () => {
       const Button2 = BottomBar.find('BottomButton').at(1)
 
       expect(Button1.prop('url')).toBe('/get-help/ingredients')
-      expect(Button2.prop('url')).toBe('/get-help/refund')
+      expect(Button2.prop('url')).toBe('/get-help/ingredient-reasons')
     })
   })
 })
