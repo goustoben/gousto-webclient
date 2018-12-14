@@ -150,4 +150,12 @@ describe('<IngredientIssues />', () => {
       expect(Button2.prop('url')).toBe('/get-help/ingredient-reasons')
     })
   })
+
+  describe('behaviour', () => {
+    test('when an issue is selected an action is called with issueId and issueLabel', () => {
+      const select = getHelpLayout.find('select').at(0)
+
+      select.simulate('change', { target: { value: '104' } })
+    })
+  })
 })

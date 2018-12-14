@@ -51,6 +51,8 @@ class IngredientIssues extends PureComponent {
     this.fetchData()
   }
 
+  changeHandler = () => {}
+
   render() {
     const { content, ingredients, issues, subIssues } = this.props
     const cssLabel = css.ingredientLabel
@@ -64,6 +66,7 @@ class IngredientIssues extends PureComponent {
         issues={issues}
         subIssues={subIssues}
         cssLabel={cssLabel}
+        changeHandler={this.changeHandler}
       />
     )
   }

@@ -12,6 +12,7 @@ const propTypes = {
     button1Copy: PropTypes.string.isRequired,
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
+  changeHandler: PropTypes.func.isRequired,
   ingredients: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -42,7 +43,7 @@ const defaultProps = {
   ingredients: []
 }
 
-const renderIngredientsIssues = (ingredients, issues, subIssues, cssLabel) => {
+const renderIngredientsIssues = (ingredients, issues, subIssues, cssLabel, changeHandler) => {
 
   const renderedIngredients = ingredients.map((ingredient) => {
     const optionSelected = issues && issues[0] && issues[0].id
@@ -55,6 +56,7 @@ const renderIngredientsIssues = (ingredients, issues, subIssues, cssLabel) => {
           options={issues}
           groupedOptions={subIssues}
           optionSelected={optionSelected}
+          onChange={changeHandler}
         />}
       </div>
     )
@@ -75,10 +77,11 @@ const IngredientIssuesPresentation = ({
   buttonRightUrl,
   issues,
   subIssues,
-  cssLabel
+  cssLabel,
+  changeHandler
 }) => (
   <GetHelpLayout title={title} body={body}>
-    {renderIngredientsIssues(ingredients, issues, subIssues, cssLabel)}
+    {renderIngredientsIssues(ingredients, issues, subIssues, cssLabel, changeHandler)}
     <BottomBar>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         {button1Copy}

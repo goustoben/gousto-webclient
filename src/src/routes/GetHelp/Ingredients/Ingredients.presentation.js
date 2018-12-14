@@ -42,7 +42,7 @@ const IngredientsPresentation = ({
         className={cssButton}
         color="primary"
         disabled={cannotContinue}
-        onClick={continueClick}
+        onClick={(continueClick)}
       >
         {button2Copy}
       </Button>

@@ -9,7 +9,7 @@ const getHelpInitialState = fromJS({
     recipeItems: [],
   },
   recipes: [],
-  selectedIngredients: [],
+  selectedIngredients: {},
 })
 
 const reduceRecipes = (recipes) => (
@@ -36,7 +36,22 @@ const getHelp = (state, action) => {
     return state.setIn(['order', 'id'], action.id)
   }
   case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
-    return state.set('selectedIngredients', fromJS(action.selectedIngredients))
+    console.log('action.selectedIngredients', action.selectedIngredients)
+
+    const selectedIngredients = action.selectedIngredients.map(selectedIngredient => {
+      const currentRecipe = state.get('recipes')
+        .find(recipe => recipe.get('id') === selectedIngredient.recipeId)
+
+      const currentIngredient = currentRecipe && currentRecipe.ingredients
+        .find(ingredient => ingredient.get('id') === selectedIngredient.ingredientId)
+
+      return {
+        ...selectedIngredient,
+        label: currentIngredient.label,
+      }
+    })
+
+    return state.set('selectedIngredients', fromJS(selectedIngredients))
   }
   case actionTypes.RECIPES_RECEIVE: {
     const recipes = fromJS(reduceRecipes(action.recipes))
