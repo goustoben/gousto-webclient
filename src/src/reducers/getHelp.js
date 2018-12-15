@@ -1,5 +1,5 @@
 import actionTypes from 'actions/actionTypes'
-import { fromJS } from 'immutable'
+import { fromJS, Map } from 'immutable'
 
 const getHelpInitialState = fromJS({
   ingredientIssues: [],
@@ -36,22 +36,23 @@ const getHelp = (state, action) => {
     return state.setIn(['order', 'id'], action.id)
   }
   case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
-    console.log('action.selectedIngredients', action.selectedIngredients)
+    const selectedIngredients = action.selectedIngredientAndRecipeIds
+      .reduce((accumulator, selectedIngredientAndRecipeId) => {
+        const currentRecipe = state.get('recipes')
+          .find(recipe =>
+            recipe.get('id') === selectedIngredientAndRecipeId.recipeId)
 
-    const selectedIngredients = action.selectedIngredients.map(selectedIngredient => {
-      const currentRecipe = state.get('recipes')
-        .find(recipe => recipe.get('id') === selectedIngredient.recipeId)
+        const currentIngredient = currentRecipe && currentRecipe.get('ingredients')
+          .find(ingredient =>
+            ingredient.get('id') === selectedIngredientAndRecipeId.ingredientId)
 
-      const currentIngredient = currentRecipe && currentRecipe.ingredients
-        .find(ingredient => ingredient.get('id') === selectedIngredient.ingredientId)
+        return accumulator.set(currentIngredient.get('id'), fromJS({
+          ...selectedIngredientAndRecipeId,
+          label: currentIngredient.get('label'),
+        }))
+      }, Map())
 
-      return {
-        ...selectedIngredient,
-        label: currentIngredient.label,
-      }
-    })
-
-    return state.set('selectedIngredients', fromJS(selectedIngredients))
+    return state.set('selectedIngredients', selectedIngredients)
   }
   case actionTypes.RECIPES_RECEIVE: {
     const recipes = fromJS(reduceRecipes(action.recipes))

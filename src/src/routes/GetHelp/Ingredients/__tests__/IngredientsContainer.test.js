@@ -74,7 +74,7 @@ describe('<IngredientsContainer />', () => {
       )
     })
 
-    test('ingredientId, recipeId and label are set in the store', async () => {
+    test('selected ingredientId, recipeId and label are set in the store', async () => {
       const recipe = wrapper.find('ItemExpandable').at(0)
       recipe.find('Item').simulate('click')
 
@@ -84,9 +84,8 @@ describe('<IngredientsContainer />', () => {
       const ContinueButton = wrapper.find('Ingredients').find('BottomBar').find('Button').at(1)
       await ContinueButton.prop('onClick')()
 
-      expect(store.getState().getHelp.get('selectedIngredients').toJS())
-        .toEqual({})
-
+      expect(store.getState().getHelp.get('selectedIngredients'))
+        .toEqual(fromJS({"aaa": {"ingredientId": "aaa", "label": "1 beef stock cube", "recipeId": "1917"}}))
     })
   })
 })

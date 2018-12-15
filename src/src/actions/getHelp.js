@@ -24,9 +24,9 @@ const storeGetHelpOrderId = (id) => dispatcher({
   id,
 })
 
-const storeSelectedIngredients = (selectedIngredients) => dispatcher({
+const storeSelectedIngredients = (selectedIngredientAndRecipeIds) => dispatcher({
   type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS,
-  selectedIngredients,
+  selectedIngredientAndRecipeIds,
 })
 
 const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredientIds }) => {

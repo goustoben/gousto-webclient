@@ -3,27 +3,6 @@ import { connect } from 'react-redux'
 import { fetchIngredientIssues } from 'actions/getHelp'
 import { IngredientIssues } from './IngredientIssues.logic'
 
-const getSelectedIngredients = (state) => {
-  const selectedRecipePlusIngredients = state.getHelp.get('selectedIngredients')
-  const selectedIngredientPlusRecipeIds = selectedRecipePlusIngredients.map(
-    ingredientAndRecipe =>
-      `${ingredientAndRecipe.get('recipeId')}-${ingredientAndRecipe.get('ingredientId')}`
-  )
-  const recipes = state.getHelp.get('recipes')
-  const selectedIngredients = []
-  recipes.forEach(recipe => {
-    recipe.get('ingredients').forEach(ingredient => {
-      if (selectedIngredientPlusRecipeIds.includes(
-        `${recipe.get('id')}-${ingredient.get('id')}`)
-      ) {
-        selectedIngredients.push(ingredient.toJS())
-      }
-    })
-  })
-
-  return selectedIngredients
-}
-
 const mapStateToProps = (state) => ({
   content: {
     title: state.content.get('get-help_ingredientissues_pageheader_header')
@@ -35,7 +14,7 @@ const mapStateToProps = (state) => ({
     button2Copy: state.content.get('get-help_ingredientissues_pagecontent_button2copy')
     || 'continue',
   },
-  ingredients: getSelectedIngredients(state),
+  ingredients: state.getHelp.get('selectedIngredients').toJS(),
   issues: state.getHelp.get('ingredientIssues').toJS(),
   subIssues: state.getHelp.get('ingredientSubIssues').toJS(),
 })

@@ -80,8 +80,8 @@ describe('<IngredientIssuesContainer />', () => {
             },
           ],
           selectedIngredients: [
-            { recipeId: '1917', ingredientId: 'bbb' },
-            { recipeId: '1494', ingredientId: 'eee' },
+            { recipeId: '1917', ingredientId: 'bbb', label: 'ingredient 1' },
+            { recipeId: '1494', ingredientId: 'eee', label: 'ingredient 2' },
           ],
         })),
       }
