@@ -85,7 +85,7 @@ describe('<IngredientsContainer />', () => {
       await ContinueButton.prop('onClick')()
 
       expect(store.getState().getHelp.get('selectedIngredients'))
-        .toEqual(fromJS({"aaa": {"ingredientId": "aaa", "label": "1 beef stock cube", "recipeId": "1917"}}))
+        .toEqual(fromJS({"1917-aaa": {"ingredientId": "aaa", "label": "1 beef stock cube", "recipeId": "1917"}}))
     })
   })
 })

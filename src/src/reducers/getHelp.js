@@ -38,15 +38,14 @@ const getHelp = (state, action) => {
   case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
     const selectedIngredients = action.selectedIngredientAndRecipeIds
       .reduce((accumulator, selectedIngredientAndRecipeId) => {
+        const { recipeId, ingredientId } = selectedIngredientAndRecipeId
         const currentRecipe = state.get('recipes')
-          .find(recipe =>
-            recipe.get('id') === selectedIngredientAndRecipeId.recipeId)
+          .find(recipe => recipe.get('id') === recipeId)
 
         const currentIngredient = currentRecipe && currentRecipe.get('ingredients')
-          .find(ingredient =>
-            ingredient.get('id') === selectedIngredientAndRecipeId.ingredientId)
+          .find(ingredient => ingredient.get('id') === ingredientId)
 
-        return accumulator.set(currentIngredient.get('id'), fromJS({
+        return accumulator.set(`${recipeId}-${ingredientId}`, fromJS({
           ...selectedIngredientAndRecipeId,
           label: currentIngredient.get('label'),
         }))
