@@ -11,8 +11,9 @@ import Contact from './Contact'
 import Confirmation from './Confirmation'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
+import { IngredientReasons } from './IngredientReasons'
 
-import { checkValidSession } from "../../utils/routes"
+import { checkValidSession } from 'utils/routes'
 
 export default (store) => {
   const onEnterHandler = (routes, replace, next) => {
@@ -39,6 +40,7 @@ export default (store) => {
 				<IndexRoute component={OrderIssueContainer} />
 				{Ingredients}
 				{IngredientIssues}
+				{IngredientReasons}
 				{Refund}
 				{Contact}
 				{Confirmation}

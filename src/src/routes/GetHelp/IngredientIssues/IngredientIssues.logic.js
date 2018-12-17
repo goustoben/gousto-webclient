@@ -35,11 +35,10 @@ const propTypes = {
     }).isRequired
   )
 }
-
 class IngredientIssues extends PureComponent {
 
   buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredients}`
-  buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
+  buttonRightUrl = `${client.getHelp.index}/${client.getHelp.ingredientReasons}`
 
   fetchData() {
     const { fetchIngredientIssues } = this.props
