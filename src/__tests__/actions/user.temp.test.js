@@ -96,6 +96,19 @@ describe('user actions', () => {
                 postcode: '',
               }
             }
+          },
+          payment: {
+            values: {
+              payment: {
+                companyName: 'My Address',
+                houseNo: '',
+                street: '',
+                line3: '',
+                town: '',
+                county: '',
+                postcode: '',
+              }
+            }
           }
         }
       }

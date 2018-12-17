@@ -1,6 +1,7 @@
 export { Alert } from '../libs/goustouicomponents/src/main'
 export { Button } from '../libs/goustouicomponents/src/main'
 export { Control } from '../libs/goustouicomponents/src/main'
+export { Dropdown } from '../libs/goustouicomponents/src/main'
 export { Item } from '../libs/goustouicomponents/src/main'
 export { InputCheck } from '../libs/goustouicomponents/src/main'
 export { ItemExpandable } from '../libs/goustouicomponents/src/main'

@@ -59,24 +59,24 @@ class CheckoutFrame extends React.Component {
   componentDidUpdate(prevProps) {
     const { billingAddress, cardName, checkoutScriptReady, isSubmitCardEnabled, hasCheckoutError } = this.props
 
-    if (hasPropUpdated(cardName, prevProps.cardName)) {
+    if (hasPropUpdated(checkoutScriptReady, prevProps.checkoutScriptReady)) {
+      this.initFrames()
+    }
+
+    if (checkoutScriptReady && hasPropUpdated(cardName, prevProps.cardName)) {
       Frames.setCustomerName(cardName)
     }
 
-    if (hasPropUpdated(billingAddress, prevProps.billingAddress)) {
+    if (checkoutScriptReady && hasPropUpdated(billingAddress, prevProps.billingAddress)) {
       Frames.setBillingDetails(billingAddress)
     }
 
-    if(hasPropUpdated(hasCheckoutError, prevProps.hasCheckoutError) && hasCheckoutError) {
+    if(checkoutScriptReady && hasPropUpdated(hasCheckoutError, prevProps.hasCheckoutError)) {
       Frames.unblockFields()
     }
 
-    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled) && isSubmitCardEnabled){
+    if (hasPropUpdated(isSubmitCardEnabled, prevProps.isSubmitCardEnabled)){
       this.submitCard()
-    }
-
-    if (hasPropUpdated(checkoutScriptReady,prevProps.checkoutScriptReady)) {
-      this.initFrames()
     }
   }
 
@@ -86,6 +86,7 @@ class CheckoutFrame extends React.Component {
     if (Frames) {
       Frames = undefined // eslint-disable-line no-global-assign
     }
+
     reloadCheckoutScript()
   }
 
