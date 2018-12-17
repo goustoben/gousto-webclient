@@ -18,13 +18,8 @@ describe('<Refund />', () => {
   }
   let wrapper
   let getHelpLayout
-  let fetchPromise
 
   beforeEach(() => {
-    fetchPromise = Promise.resolve({
-      data: { value: 7.77, type: 'a-type' }
-    })
-    fetchRefundAmount.mockImplementation(() => fetchPromise)
     wrapper = mount(
       <Refund
         content={content}
@@ -35,10 +30,6 @@ describe('<Refund />', () => {
     )
 
     getHelpLayout = wrapper.find('GetHelpLayout')
-  })
-
-  afterEach(() => {
-    fetchRefundAmount.mockReset()
   })
 
   describe('rendering', () => {
@@ -69,7 +60,7 @@ describe('<Refund />', () => {
   describe('behaviour', () => {
     test('loading shows while fetching data', async () => {
       let resolver
-      fetchPromise = new Promise((resolve) => {
+      const fetchPromise = new Promise((resolve) => {
         resolver = resolve
       })
       fetchRefundAmount.mockImplementationOnce(() => fetchPromise)
@@ -124,7 +115,6 @@ describe('<Refund />', () => {
       let assignSpy
 
       beforeEach(() => {
-        setComplaint.mockResolvedValue({})
         getHelpLayout = wrapper.find('GetHelpLayout')
         assignSpy = jest.spyOn(window.location, 'assign')
         assignSpy.mockReturnValueOnce(null)
@@ -133,7 +123,6 @@ describe('<Refund />', () => {
       })
 
       afterEach(() => {
-        setComplaint.mockReset()
         assignSpy.mockReset()
       })
 

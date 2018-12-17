@@ -19,8 +19,6 @@ const mapStateToProps = (state) => {
       || 'back',
       button2Copy: state.content.get('get-help_orderissues_pagecontent_button2copy')
       || 'continue',
-      errorBody: state.content.get('get-help_default_pagecontent_errorbody')
-      || 'There was a problem in getting your default. Please contact us below, or try again later.',
     }
   }
 }

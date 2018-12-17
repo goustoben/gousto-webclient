@@ -44,9 +44,18 @@ const validateOrder = (accessToken, body) => {
   }, null, false, false)
 }
 
+const fetchOrderIssues = (accessToken) => {
+  const url = (__ENV__ === 'local')
+    ? `${SSR_URL_LOCAL}/ssr/categories`
+    : `${endpoint('ssr', routes.version.ssr)}/ssr/categories`
+
+  return fetch(accessToken, url, null, 'GET')
+}
+
 export {
   fetchRefundAmount,
   setComplaint,
   validateIngredients,
   validateOrder,
+  fetchOrderIssues,
 }

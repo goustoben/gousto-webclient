@@ -10,7 +10,7 @@ const getContent = ({ content }) => ({
   title: content.get('get-help_default_pageheader_header')
     || 'Get help with your box',
   errorBody: content.get('get-help_default_pagecontent_errorbody')
-    || 'There was a problem in getting your default. Please contact us below, or try again later.',
+    || 'There was a problem in getting your order information. Please contact us below, or try again later.',
   button1: content.get('get-help_default_pagecontent_button1')
     || 'Contact Us',
 })
