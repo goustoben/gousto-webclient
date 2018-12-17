@@ -28,12 +28,14 @@ describe('<IngredientReasons />', () => {
   }
   let wrapper
   let getHelpLayout
+  const storeSelectedIngredientIssueSpy = jest.fn()
 
   beforeAll(() => {
     wrapper = mount(
       <IngredientReasons
         content={content}
         ingredientsAndIssues={ingredientsAndIssues}
+        storeIngredientIssueDescription={storeSelectedIngredientIssueSpy}
       />
     )
     getHelpLayout = wrapper.find('GetHelpLayout')
@@ -128,6 +130,20 @@ describe('<IngredientReasons />', () => {
 
       expect(Button2.prop('disabled')).toBe(true)
       expect(Button2.find('GoustoLink')).toHaveLength(0)
+    })
+
+    test('action being called with issueId and issueDescription', () => {
+      const issueDetails = getHelpLayout.find('div.issueDetails')
+      const textarea = issueDetails.at(0).find('textarea')
+
+      textarea.simulate(
+        'change', { target: { value: 'This is my issue...' } }
+      )
+
+      expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith(
+        '1917-bbb',
+        'This is my issue...'
+      )
     })
   })
 })

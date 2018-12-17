@@ -76,7 +76,7 @@ const renderIngredientReasonsForm = (ingredientsAndIssues, textareaValue, onChan
           id={recipeIngredientAndIssueIds}
           value={textareaValue}
           onChange={
-            (event) => onChange(event.target.value)}
+            (event) => onChange(`${recipeId}-${ingredientId}`, event.target.value)}
         />
       </div>
     )

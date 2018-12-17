@@ -19,18 +19,27 @@ const propTypes = {
       label: PropTypes.string.isRequired,
     })
   ).isRequired,
+  storeIngredientIssueDescription: PropTypes.func.isRequired,
 }
+
+const TEXTAREA_VALID_LENGTH = 5
 
 class IngredientReasons extends PureComponent {
   state = {
     textareaValue: ''
   }
 
-  changeHandler = (textareaValue) => {
+  changeHandler = (recipeAndIngredientIds, textareaValue) => {
+    const { storeIngredientIssueDescription } = this.props
+
     this.setState({
       ...this.state,
       textareaValue
     })
+
+    if (textareaValue.length >= TEXTAREA_VALID_LENGTH) {
+      storeIngredientIssueDescription(recipeAndIngredientIds, textareaValue)
+    }
   }
 
   render() {
@@ -38,7 +47,7 @@ class IngredientReasons extends PureComponent {
     const { textareaValue } = this.state
     const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredientIssues}`
     const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
-    const disabledButton = textareaValue.length < 5
+    const disabledButton = textareaValue.length < TEXTAREA_VALID_LENGTH
 
     return (
       <IngredientReasonsPresentation
