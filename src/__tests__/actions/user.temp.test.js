@@ -71,22 +71,20 @@ describe('user actions', () => {
         tracking: Immutable.fromJS({
           asource: null,
         }),
+        request: Immutable.fromJS({
+          browser: 'desktop',
+        }),
         form: {
-          checkout: {
+          aboutyou: {
             values: {
               aboutyou: {
                 email: 'test_email@test.com',
               },
+            },
+          },
+          delivery: {
+            values: {
               delivery: {
-                companyName: 'My Address',
-                houseNo: '',
-                street: '',
-                line3: '',
-                town: '',
-                county: '',
-                postcode: '',
-              },
-              payment: {
                 companyName: 'My Address',
                 houseNo: '',
                 street: '',

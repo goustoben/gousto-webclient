@@ -9,15 +9,14 @@ import {
   trackingCardTokenisationSuccessfully,
   trackingCardTokenisationFailed
 } from 'actions/checkout'
-import { formName, sectionName } from '../config'
+import { sectionName } from '../config'
 import { getBillingAddress } from './utils'
 import { CheckoutFrame } from './CheckoutFrame'
 
 const mapStateToProps = state => {
-  const formValues = getFormValues(formName)(state)
+  const formValues = getFormValues(sectionName)(state)
 
   return {
-    formName,
     sectionName,
     cardName: formValues && formValues[sectionName] && formValues[sectionName].cardName ? formValues[sectionName].cardName : '',
     billingAddress : getBillingAddress(formValues),

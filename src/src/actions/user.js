@@ -168,26 +168,20 @@ const customerSignupApi = (reqData, isCheckoutPaymentFeature) => {
   return customerSignup(null, reqData)
 }
 
-const getPaymentInput = (state, isCheckoutPaymentFeature) => {
-  if (isCheckoutPaymentFeature) {
-    return Immutable.fromJS(state.form.payment.values).get('payment')
-  }
-
-  return Immutable.fromJS(state.form.checkout.values).get('payment')
-}
-
 export function userSubscribe() {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
     const prices = getState().pricing.get('prices')
     try {
+      const { form, request, tracking } = getState()
       const state = getState()
-      const checkoutInputs = Immutable.fromJS(state.form.checkout.values)
-      const aboutYou = checkoutInputs.get('aboutyou')
-      const delivery = checkoutInputs.get('delivery')
-      const payment = getPaymentInput(state, isCheckoutPaymentFeatureEnabled(state))
-      const tracking = state.tracking
+      const deliveryFormName = request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery'
+      const aboutYouFormName = request.get('browser') === 'mobile' ? 'yourDetails' : 'aboutyou'
+
+      const aboutYou = Immutable.fromJS(form[aboutYouFormName].values).get('aboutyou')
+      const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
+      const payment = Immutable.fromJS(form.payment.values).get('payment')
 
       const deliveryAddress = getAddress(delivery)
       const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
@@ -486,10 +480,11 @@ function userVerifyAge(verified, hardSave) {
 
 function userProspect() {
   return async (dispatch, getState) => {
-    const { basket, routing } = getState()
+    const { basket, routing, request } = getState()
+    const aboutYouFormName = request.get('browser') === 'mobile' ? 'yourDetails' : 'aboutyou'
     try {
       const step = routing.locationBeforeTransitions.pathname.split('/').pop()
-      const aboutyou = Immutable.fromJS(getState().form.checkout.values).get('aboutyou')
+      const aboutyou = Immutable.fromJS(getState().form[aboutYouFormName].values).get('aboutyou')
 
       const reqData = {
         email: aboutyou.get('email'),

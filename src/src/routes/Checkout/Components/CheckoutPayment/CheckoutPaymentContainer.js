@@ -3,13 +3,12 @@ import { connect } from 'react-redux'
 
 import formContainer from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
-import { formName, sectionName } from './config'
+import { sectionName } from './config'
 import { CheckoutPayment } from './CheckoutPayment'
 
 const mapStateToProps = state => {
   return {
-    formErrors: Object.assign({}, getFormSyncErrors(formName)(state), getFormAsyncErrors(formName)(state)),
-    formName,
+    formErrors: Object.assign({}, getFormSyncErrors(sectionName)(state), getFormAsyncErrors(sectionName)(state)),
     sectionName,
   }
 }
@@ -23,4 +22,4 @@ const ConnectedCheckoutPaymentContainer = connect(
   mapDispatchToProps,
 )(CheckoutPayment)
 
-export const CheckoutPaymentContainer = addInitialValues(formContainer(ConnectedCheckoutPaymentContainer, getValidationRules(sectionName), formName), { sectionName })
+export const CheckoutPaymentContainer = addInitialValues(formContainer(ConnectedCheckoutPaymentContainer, getValidationRules(sectionName), sectionName), { sectionName })

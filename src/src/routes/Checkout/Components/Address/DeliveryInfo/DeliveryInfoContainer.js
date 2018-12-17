@@ -4,9 +4,8 @@ import { getFormValues } from 'redux-form'
 
 import DeliveryInfo from './DeliveryInfo'
 
-const formName = 'checkout'
-
 const mapStateToProps = (state) => {
+  const formName = state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery'
   const formValues = getFormValues(formName)(state)
   const chosenId = (formValues.delivery) ? formValues.delivery.interval_id : '1'
 

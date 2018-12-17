@@ -19,7 +19,6 @@ class CheckoutFrame extends React.Component {
     cardTokenReady: PropTypes.func,
     billingAddress: PropTypes.object,
     cardName: PropTypes.string,
-    formName: PropTypes.string,
     sectionName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
     checkoutFrameReady: PropTypes.func,
@@ -41,7 +40,6 @@ class CheckoutFrame extends React.Component {
     checkoutFrameReady: () => {},
     billingAddress: {},
     cardName: '',
-    formName: 'checkout',
     sectionName: 'payment',
     checkoutScriptReady: false,
     isSubmitCardEnabled: false,
@@ -133,11 +131,11 @@ class CheckoutFrame extends React.Component {
 
   cardTokenised = (event, paymentForm) => {
     const { cardToken } = event.data
-    const { change, cardTokenReady, formName, sectionName, fireCheckoutPendingEvent, trackingCardTokenisationSuccessfully } = this.props
+    const { change, cardTokenReady, sectionName, fireCheckoutPendingEvent, trackingCardTokenisationSuccessfully } = this.props
 
     Frames.addCardToken(paymentForm, cardToken)
     fireCheckoutPendingEvent(actionTypes.CHECKOUT_CARD_SUBMIT, false)
-    change(formName, `${sectionName}.token`, cardToken)
+    change(sectionName, `${sectionName}.token`, cardToken)
     cardTokenReady()
     trackingCardTokenisationSuccessfully()
 

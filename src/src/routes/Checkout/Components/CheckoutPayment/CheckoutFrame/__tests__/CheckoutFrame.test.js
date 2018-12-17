@@ -244,7 +244,7 @@ describe('CheckoutFrame', () => {
     })
 
     test('should call change with the correct parameters', () => {
-      expect(change).toHaveBeenCalledWith('checkout', 'payment.token', 'test-token')
+      expect(change).toHaveBeenCalledWith('payment', 'payment.token', 'test-token')
     })
 
     test('should call the cardTokenReady prop', () => {

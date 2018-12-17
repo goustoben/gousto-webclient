@@ -233,8 +233,10 @@ export function checkoutPostSignup() {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     try {
-      const checkoutInputs = Immutable.fromJS(getState().form.checkout.values)
-      const aboutYou = checkoutInputs.get('aboutyou')
+      const { form, request } = getState()
+      const aboutYouFormName = request.get('browser') === 'mobile' ? 'yourDetails' : 'aboutyou'
+      const aboutYouValues = Immutable.fromJS(form[aboutYouFormName].values)
+      const aboutYou = aboutYouValues.get('aboutyou')
       const email = aboutYou.get('email')
       const password = aboutYou.get('password')
       const orderId = getState().basket.get('previewOrderId')

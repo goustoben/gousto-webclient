@@ -24,7 +24,6 @@ export class CheckoutPayment extends React.Component {
     formErrors: PropTypes.object,
     sectionName: PropTypes.string,
     browser: PropTypes.string,
-    formName: PropTypes.string,
     checkoutScriptReady: PropTypes.bool,
     reloadCheckoutScript: PropTypes.func,
     /* prerender - We allow the iFrame to initialize before this component is shown by pre-rendering with CheckoutFrame only */
@@ -41,7 +40,6 @@ export class CheckoutPayment extends React.Component {
     formErrors: {},
     sectionName: 'payment',
     browser: 'mobile',
-    formName: 'checkout',
     checkoutScriptReady: false,
   }
 
@@ -50,11 +48,11 @@ export class CheckoutPayment extends React.Component {
   }
 
   applyValidationErrors = () => {
-    const { formErrors, touch, formName, sectionName } = this.props
+    const { formErrors, touch, sectionName } = this.props
 
     if (formErrors && formErrors[sectionName]) {
       for (const formError in formErrors[sectionName]) {
-        touch(formName, `${sectionName}[${formError}]`)
+        touch(sectionName, `${sectionName}[${formError}]`)
       }
     }
   }

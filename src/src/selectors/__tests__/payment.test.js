@@ -1,5 +1,5 @@
 import { getPaymentDetails } from 'selectors/payment'
-import Immutable from "immutable";
+import Immutable from "immutable"
 
 describe('getPaymentDetails', () => {
   let state = {}
@@ -10,7 +10,7 @@ describe('getPaymentDetails', () => {
         features: Immutable.fromJS({
           checkoutPayment: {
             value: true
-          }
+          },
         })
       }
     })
@@ -47,7 +47,7 @@ describe('getPaymentDetails', () => {
     beforeEach(() => {
       state = {
         form: {
-          checkout: {
+          payment: {
             values: {
               payment: {
                 cardType: 'VISA',

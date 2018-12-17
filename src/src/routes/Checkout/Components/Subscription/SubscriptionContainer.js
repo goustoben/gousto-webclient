@@ -3,9 +3,10 @@ import { getFormValues } from 'redux-form'
 
 import Subscription from './Subscription'
 
-const formName = 'checkout'
-
 const mapStateToProps = (state) => {
+  const browser = state.request.get('browser')
+  const formName = (browser === 'mobile') ? 'yourDetails' : 'delivery'
+
   const formValues = getFormValues(formName)(state)
 
   return {

@@ -7,7 +7,7 @@ import { addPrefix } from 'validations/util'
 import cardRules from 'validations/card'
 import { SagePayCardDetails } from './SagePayCardDetails'
 
-const form = 'checkout'
+const form = 'payment'
 
 function mapStateToProps(sectionName) {
   return state => {

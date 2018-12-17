@@ -6,11 +6,10 @@ import actionTypes from 'actions/actionTypes'
 
 import Delivery from './Delivery'
 
-const formName = 'checkout'
-
 function mapStateToProps(sectionName) {
+
   return state => ({
-    formName,
+    formName: state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery',
     sectionName,
     addressDetail: state.checkout.get('selectedAddress'),
     addresses: state.checkout.get('deliveryAddresses'),
@@ -19,8 +18,8 @@ function mapStateToProps(sectionName) {
     deliveryAddress: state.checkout.get('deliveryAddress'),
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
 
-    formValues: getFormValues(formName)(state),
-    formFields: getFormMeta(formName)(state),
+    formValues: getFormValues(state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery')(state),
+    formFields: getFormMeta(state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery')(state),
   })
 }
 
@@ -42,8 +41,10 @@ export function validationMessages(sectionName) {
 export function addInitialValues(Component, { sectionName }) {
   return connect(
     (state, ownProps) => {
-      const { checkout } = state.form
-      const initialValues = checkout && checkout.initial ? checkout.initial : {}
+      const formName = state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery'
+      const delivery = state.form[formName]
+
+      const initialValues = delivery && delivery.initial ? delivery.initial : {}
 
       return {
         // needed for hacked custom validation in validation/delivery.js

@@ -11,7 +11,7 @@ function formatPhone(value) {
 
 export function getAvailableUserData(action, state = {}) {
   let data
-  const aboutYouFormName = 'checkout'
+  const aboutYouFormName = 'aboutyou'
   const aboutYouValues = (getFormValues(aboutYouFormName)(state) || {}).aboutyou || {}
 
   if (aboutYouValues.email) {
@@ -22,7 +22,7 @@ export function getAvailableUserData(action, state = {}) {
       zp: formatString(state.basket.get('postcode')),
     }
 
-    const deliveryFormName = 'checkout'
+    const deliveryFormName = 'delivery'
     const deliveryValues = (getFormValues(deliveryFormName)(state) || {}).delivery || {}
 
     if (deliveryValues.postcode) {
