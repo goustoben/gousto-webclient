@@ -138,6 +138,7 @@ class Checkout extends React.PureComponent {
   }
 
   componentDidMount() {
+    QueueIt.validateUser(true)
     Overlay.forceCloseAll()
 
     const { store } = this.context

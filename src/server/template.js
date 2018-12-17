@@ -25,6 +25,13 @@ const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userA
         window.__APOLLO_STATE__ = ${encodeState(apolloState)}
       </script>
 
+      <script type="text/javascript" src="//static.queue-it.net/script/queueclient.min.js"></script>
+      <script 
+          data-queueit-c="gousto" 
+          type="text/javascript" 
+          src="//static.queue-it.net/script/queueconfigloader.min.js">
+      </script>
+
       <link href="https://fonts.googleapis.com/css?family=Lato:400,700,300italic,400italic" rel="stylesheet" type="text/css">
       ${(__HMR__ || __DEV__) ? '' : `<link rel="stylesheet" href="${newAssetPath('main.css')}" type="text/css">`}
       ${(helmetHead && helmetHead.link) ? helmetHead.link.toString() : ''}

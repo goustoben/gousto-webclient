@@ -41,7 +41,13 @@ describe('Checkout', () => {
   let onCheckoutSpy
   let fetchData
 
+  const QueueIt = {
+    validateUser: jest.fn()
+  }
+
   beforeEach(() => {
+    global.QueueIt = QueueIt
+
     store = {
       basket: Immutable.Map({
         stepsOrder: Immutable.List(),
