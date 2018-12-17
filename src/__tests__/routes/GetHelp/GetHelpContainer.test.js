@@ -11,7 +11,6 @@ import contentReducer from 'reducers/content'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import { fetchRecipes } from 'apis/recipes'
 import { fetchOrder } from 'apis/orders'
-import { validateOrder } from 'apis/getHelp'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 import GetHelpContainer from 'routes/GetHelp/GetHelpContainer'
 
@@ -52,10 +51,6 @@ describe('<GetHelpContainer />', () => {
 
       fetchRecipes.mockResolvedValue({
         data: [{ id: '123', ingredients: [{ id: '321' }] }]
-      })
-
-      validateOrder.mockResolvedValue({
-        data: { valid: true }
       })
 
       mount(

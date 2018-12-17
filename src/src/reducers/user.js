@@ -2,6 +2,7 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import actionTypes from 'actions/actionTypes'
 
 export const defaultState = Immutable.fromJS({
+  id: '',
   ageVerified: false,
   orders: {},
   newOrders: {},
