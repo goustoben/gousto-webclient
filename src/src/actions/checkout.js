@@ -8,6 +8,7 @@ import { getSlot } from 'utils/deliveries'
 import { isValidPromoCode } from 'utils/order'
 import { basketResetPersistent } from 'utils/basket'
 
+import { getAboutYouFormName } from 'selectors/checkout'
 import actionTypes from './actionTypes'
 import basketActions from './basket'
 import loginActions from './login'
@@ -233,8 +234,8 @@ export function checkoutPostSignup() {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     try {
-      const { form, request } = getState()
-      const aboutYouFormName = request.get('browser') === 'mobile' ? 'yourDetails' : 'aboutyou'
+      const { form } = getState()
+      const aboutYouFormName = getAboutYouFormName(getState())
       const aboutYouValues = Immutable.fromJS(form[aboutYouFormName].values)
       const aboutYou = aboutYouValues.get('aboutyou')
       const email = aboutYou.get('email')

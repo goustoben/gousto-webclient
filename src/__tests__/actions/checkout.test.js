@@ -95,10 +95,6 @@ const createState = (stateOverrides) => ({
     },
     delivery: {
       values: {
-        payment: {
-          postcode: 'w37un',
-          houseNo: '1',
-        },
         delivery: {
           phone: '01234567890',
           cardNumber: '1234567890',
@@ -106,7 +102,7 @@ const createState = (stateOverrides) => ({
         },
       },
     },
-    payemnt: {
+    payment: {
       values: {
         payment: {
           postcode: 'w37un',

@@ -18,7 +18,7 @@ class SubmitButton extends React.PureComponent {
 
 	  this.props.manualSubmit('delivery')
 	  if (this.props.browser === 'mobile') {
-	    this.props.manualSubmit('yourDetails')
+	    this.props.manualSubmit('yourdetails')
 	    if (this.props.checkoutMobileInvalid) return Promise.resolve()
 	  }
 

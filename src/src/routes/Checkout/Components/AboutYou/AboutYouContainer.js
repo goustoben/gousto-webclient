@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { isValid } from 'redux-form'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
+import { getAboutYouFormName } from 'selectors/checkout'
 import AboutYou from './AboutYou'
 
 function mapStateToProps(sectionName) {
@@ -27,7 +28,7 @@ export default sectionName => connectComponent(sectionName)
 export function addInitialValues(Component, { sectionName }) {
   return connect(
     (state, ownProps) => {
-      const formName = state.request.get('browser') === 'mobile' ? 'yourDetails' : 'aboutyou'
+      const formName = getAboutYouFormName(state)
       const aboutyou = state.form[formName]
       const initialValues = aboutyou && aboutyou.initial ? aboutyou.initial : {}
 

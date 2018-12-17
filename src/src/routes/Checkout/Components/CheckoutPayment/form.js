@@ -18,8 +18,8 @@ export const getValidationRules = (sectionName) => (
 export const addInitialValues = (Component,{ sectionName }) => (
   connect(
     (state, ownProps) => {
-      const { checkout } = state.form
-      const initialValues = checkout && checkout.initial ? checkout.initial : {}
+      const { payment } = state.form
+      const initialValues = payment && payment.initial ? payment.initial : {}
 
       return {
         // needed for hacked custom validation in validation/address.js

@@ -13,6 +13,7 @@ import config from 'config/signup'
 import moment from 'moment'
 import { isCheckoutPaymentFeatureEnabled } from 'selectors/features'
 import { getPaymentDetails } from 'selectors/payment'
+import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import statusActions from './status'
 import basketActions from './basket'
 import actionTypes from './actionTypes'
@@ -174,10 +175,10 @@ export function userSubscribe() {
     dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
     const prices = getState().pricing.get('prices')
     try {
-      const { form, request, tracking } = getState()
+      const { form, basket, promoAgeVerified } = getState()
       const state = getState()
-      const deliveryFormName = request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery'
-      const aboutYouFormName = request.get('browser') === 'mobile' ? 'yourDetails' : 'aboutyou'
+      const deliveryFormName = getDeliveryFormName(state)
+      const aboutYouFormName = getAboutYouFormName(state)
 
       const aboutYou = Immutable.fromJS(form[aboutYouFormName].values).get('aboutyou')
       const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
@@ -187,17 +188,17 @@ export function userSubscribe() {
       const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
 
       const reqData = {
-        order_id: state.basket.get('previewOrderId'),
-        promocode: state.basket.get('promoCode', ''),
-        tariff_id: state.basket.get('tariffId', ''),
+        order_id: basket.get('previewOrderId'),
+        promocode: basket.get('promoCode', ''),
+        tariff_id: basket.get('tariffId', ''),
         customer: {
           phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
           email: aboutYou.get('email'),
           name_first: aboutYou.get('firstName'),
           name_last: aboutYou.get('lastName'),
-          promo_code: state.basket.get('promoCode', ''),
+          promo_code: basket.get('promoCode', ''),
           password: aboutYou.get('password'),
-          age_verified: Number(state.promoAgeVerified || false),
+          age_verified: Number(promoAgeVerified || false),
           salutation_id: aboutYou.get('title'),
           marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
           marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
@@ -219,8 +220,8 @@ export function userSubscribe() {
         },
         subscription: {
           interval_id: delivery.get('interval_id') || 1,
-          delivery_slot_id: state.basket.get('slotId'),
-          box_id: state.basket.get('boxId'),
+          delivery_slot_id: basket.get('slotId'),
+          box_id: basket.get('boxId'),
         },
       }
 
@@ -480,8 +481,8 @@ function userVerifyAge(verified, hardSave) {
 
 function userProspect() {
   return async (dispatch, getState) => {
-    const { basket, routing, request } = getState()
-    const aboutYouFormName = request.get('browser') === 'mobile' ? 'yourDetails' : 'aboutyou'
+    const { basket, routing } = getState()
+    const aboutYouFormName = getAboutYouFormName(getState())
     try {
       const step = routing.locationBeforeTransitions.pathname.split('/').pop()
       const aboutyou = Immutable.fromJS(getState().form[aboutYouFormName].values).get('aboutyou')

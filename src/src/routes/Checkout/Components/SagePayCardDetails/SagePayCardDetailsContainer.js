@@ -5,6 +5,7 @@ import actions from 'actions'
 import deliveryRules from 'validations/delivery'
 import { addPrefix } from 'validations/util'
 import cardRules from 'validations/card'
+import { getDeliveryFormName } from 'selectors/checkout'
 import { SagePayCardDetails } from './SagePayCardDetails'
 
 const form = 'payment'
@@ -12,7 +13,8 @@ const form = 'payment'
 function mapStateToProps(sectionName) {
   return state => {
     const formValues = getFormValues(form)(state)
-    const addressFormValues = getFormValues(form)(state)
+    const deliveryForm = getDeliveryFormName(state)
+    const addressFormValues = getFormValues(deliveryForm)(state)
 
     return ({
       form,
@@ -38,8 +40,8 @@ export default sectionName => connectComponent(sectionName)
 export function addInitialValues(Component) {
   return connect(
     (state) => {
-      const { checkout } = state.form
-      const initialValues = checkout && checkout.initial ? checkout.initial : {}
+      const { payment } = state.form
+      const initialValues = payment && payment.initial ? payment.initial : {}
 
       return ({
         initialValues,

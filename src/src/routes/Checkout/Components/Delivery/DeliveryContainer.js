@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getFormValues, submit, getFormMeta, change } from 'redux-form'
+import { getDeliveryFormName } from 'selectors/checkout'
 
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
@@ -9,7 +10,7 @@ import Delivery from './Delivery'
 function mapStateToProps(sectionName) {
 
   return state => ({
-    formName: state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery',
+    formName: getDeliveryFormName(state),
     sectionName,
     addressDetail: state.checkout.get('selectedAddress'),
     addresses: state.checkout.get('deliveryAddresses'),
@@ -18,8 +19,8 @@ function mapStateToProps(sectionName) {
     deliveryAddress: state.checkout.get('deliveryAddress'),
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
 
-    formValues: getFormValues(state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery')(state),
-    formFields: getFormMeta(state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery')(state),
+    formValues: getFormValues(getDeliveryFormName(state))(state),
+    formFields: getFormMeta(getDeliveryFormName(state))(state),
   })
 }
 
@@ -41,7 +42,7 @@ export function validationMessages(sectionName) {
 export function addInitialValues(Component, { sectionName }) {
   return connect(
     (state, ownProps) => {
-      const formName = state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery'
+      const formName = getDeliveryFormName(state)
       const delivery = state.form[formName]
 
       const initialValues = delivery && delivery.initial ? delivery.initial : {}

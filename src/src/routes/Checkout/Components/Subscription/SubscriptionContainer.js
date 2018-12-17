@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import { getFormValues } from 'redux-form'
+import { getDeliveryFormName } from 'selectors/checkout'
 
 import Subscription from './Subscription'
 
 const mapStateToProps = (state) => {
-  const browser = state.request.get('browser')
-  const formName = (browser === 'mobile') ? 'yourDetails' : 'delivery'
+  const formName = getDeliveryFormName(state)
 
   const formValues = getFormValues(formName)(state)
 

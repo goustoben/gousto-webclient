@@ -217,7 +217,7 @@ describe('CheckoutFrame', () => {
     beforeEach(() => {
       wrapper = mount(<CheckoutFrame
         change={change}
-        formName={"checkout"}
+        formName={"payment"}
         sectionName={"payment"}
         cardTokenReady={cardTokenReady}
         trackingCardTokenisationSuccessfully={jest.fn()}
@@ -262,7 +262,7 @@ describe('CheckoutFrame', () => {
       mount(
         <CheckoutFrame
           change={change}
-          formName="checkout"
+          formName="payment"
           sectionName="payment"
           cardTokenReady={cardTokenReady}
           checkoutFrameReady={checkoutFrameReady}

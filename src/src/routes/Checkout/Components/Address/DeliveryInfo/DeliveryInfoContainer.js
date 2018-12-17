@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import { getFormValues } from 'redux-form'
+import { getDeliveryFormName } from 'selectors/checkout'
 
 import DeliveryInfo from './DeliveryInfo'
 
 const mapStateToProps = (state) => {
-  const formName = state.request.get('browser') === 'mobile' ? 'yourDetails' : 'delivery'
+  const formName = getDeliveryFormName(state)
   const formValues = getFormValues(formName)(state)
   const chosenId = (formValues.delivery) ? formValues.delivery.interval_id : '1'
 
