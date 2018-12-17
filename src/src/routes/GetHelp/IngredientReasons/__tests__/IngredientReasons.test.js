@@ -61,7 +61,7 @@ describe('<IngredientReasons />', () => {
     })
 
     test('selected ingredients and issues are rendering', () => {
-      const issueDetails = getHelpLayout.find('div.issueDeatils')
+      const issueDetails = getHelpLayout.find('div.issueDetails')
 
       expect(issueDetails).toHaveLength(2)
       expect(issueDetails.at(0).text()).toContain('Missing ingredients - 1 can of chopped tomatoes (210g)')
@@ -69,7 +69,7 @@ describe('<IngredientReasons />', () => {
     })
 
     test('selected ingredients and issues corresponding textboxes are rendering with correct id', () => {
-      const issueDetails = getHelpLayout.find('div.issueDeatils')
+      const issueDetails = getHelpLayout.find('div.issueDetails')
 
       expect(issueDetails.at(0).find('textarea').prop('id')).toBe('1917-bbb-101')
       expect(issueDetails.at(1).find('textarea').prop('id')).toBe('1494-bbb-104')
