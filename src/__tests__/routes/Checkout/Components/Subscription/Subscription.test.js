@@ -13,19 +13,19 @@ const createFeatures = (value) => (Immutable.fromJS({
 
 const createOptions = () => (Immutable.fromJS([
   {
-    id: '1',
+    id: 1,
     slug: 'weekly',
     title: 'Weekly',
     description: 'Leave the weekly shop to us',
   },
   {
-    id: '2',
+    id: 2,
     slug: 'fortnightly',
     title: 'Fortnightly',
     description: 'Varied schedule? This box is for you',
   },
   {
-    id: '4',
+    id: 4,
     slug: 'monthly',
     title: 'Monthly',
     description: 'Perfect for the occasional treat',
@@ -71,7 +71,7 @@ describe('Subscription', () => {
 
   describe('SubscriptionOptions', () => {
     test('should be checked if id matches chosenIntervalId', () => {
-      const chosenIntervalId = '4'
+      const chosenIntervalId = 2
 
       wrapper = shallow(<Subscription
         features={createFeatures(true)}
@@ -85,5 +85,19 @@ describe('Subscription', () => {
 
       expect(checkedOption.prop('id')).toBe(chosenIntervalId)
     })
+
+    test('should not show the monthly interval option', () => {
+      wrapper = shallow(<Subscription
+        features={createFeatures(true)}
+        options={createOptions()}
+      />)
+
+      const monthlyOption = wrapper
+        .find(SubscriptionOption)
+        .filterWhere(opt => opt.prop('id') === 4)
+
+      expect(monthlyOption).toHaveLength(0)
+    })
+    
   })
 })
