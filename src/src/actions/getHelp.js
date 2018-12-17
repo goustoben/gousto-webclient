@@ -24,9 +24,16 @@ const storeGetHelpOrderId = (id) => dispatcher({
   id,
 })
 
-const storeSelectedIngredients = (selectedIngredients) => dispatcher({
+const storeSelectedIngredients = (selectedIngredientAndRecipeIds) => dispatcher({
   type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS,
-  selectedIngredients,
+  selectedIngredientAndRecipeIds,
+})
+
+const storeSelectedIngredientIssue = (ingredientAndRecipeId, issueId, issueName) => dispatcher({
+  type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE,
+  ingredientAndRecipeId,
+  issueId,
+  issueName,
 })
 
 const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredientIds }) => {
@@ -85,6 +92,18 @@ const fetchIngredientIssues = () => {
     try {
       const ingredientIssues = await fetchOrderIssuesApi(getState().auth.get('accessToken'))
       dispatch({ type: actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, ingredientIssues })
+
+      const selectedIngredients = getState().getHelp.get('selectedIngredients')
+      const { id, name } = ingredientIssues.data[0].category
+      selectedIngredients.forEach(selectedIngredient => {
+        const ingredientAndRecipeId = `${selectedIngredient.get('recipeId')}-${selectedIngredient.get('ingredientId')}`
+        dispatch({
+          type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE,
+          ingredientAndRecipeId,
+          issueId: id,
+          issueName: name,
+        })
+      })
     } catch (error) {
       dispatch(statusActions.error(actionTypes.GET_HELP_FETCH_INGREDIENT_ISSUES, error.message))
     } finally {
@@ -98,6 +117,7 @@ export {
   selectContactChannel,
   storeGetHelpOrderId,
   storeSelectedIngredients,
+  storeSelectedIngredientIssue,
   validateSelectedIngredients,
   validateLatestOrder,
   fetchIngredientIssues,
