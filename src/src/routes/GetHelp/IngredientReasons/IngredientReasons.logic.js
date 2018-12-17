@@ -38,10 +38,7 @@ class IngredientReasons extends PureComponent {
     const { textareaValue } = this.state
     const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredientIssues}`
     const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
-    const disabledButton = textareaValue.length < 1
-
-    console.log('disabledButton', disabledButton)
-
+    const disabledButton = textareaValue.length < 5
 
     return (
       <IngredientReasonsPresentation
