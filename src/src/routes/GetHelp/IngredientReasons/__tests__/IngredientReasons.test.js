@@ -91,7 +91,7 @@ describe('<IngredientReasons />', () => {
       expect(Button2.prop('url')).toBe('/get-help/refund')
     })
 
-    test('submit details button is disable when there no description set', () => {
+    test('submit button is disable when there no description set', () => {
       const Button2 = getHelpLayout.find('BottomButton').at(1)
 
       expect(Button2.prop('disabled')).toBe(true)
@@ -101,7 +101,8 @@ describe('<IngredientReasons />', () => {
   })
 
   describe('behaviour', () => {
-    test('submit details button is enabled when there is a description set', () => {
+    test('submit button is enabled when there is a description set', () => {
+      const Button2 = getHelpLayout.find('BottomButton').at(1)
       const issueDetails = getHelpLayout.find('div.issueDetails')
       const textarea = issueDetails.at(0).find('textarea')
 
@@ -109,13 +110,24 @@ describe('<IngredientReasons />', () => {
         'change', { target: { value: 'This is my issue...' } }
       )
 
-      const Button2 = getHelpLayout.find('BottomButton').at(1)
-
       expect(textarea.text()).toBe('This is my issue...')
 
       expect(Button2.prop('disabled')).toBe(false)
       expect(Button2.find('GoustoLink')).toHaveLength(1)
       expect(Button2.text()).toContain(content.button2Copy)
+    })
+
+    test('submit button is disabled when description length less than 5 characters', () => {
+      const Button2 = getHelpLayout.find('BottomButton').at(1)
+      const issueDetails = getHelpLayout.find('div.issueDetails')
+      const textarea = issueDetails.at(0).find('textarea')
+
+      textarea.simulate(
+        'change', { target: { value: '....' } }
+      )
+
+      expect(Button2.prop('disabled')).toBe(true)
+      expect(Button2.find('GoustoLink')).toHaveLength(0)
     })
   })
 })
