@@ -64,7 +64,7 @@ const renderIngredientReasonsForm = (ingredientsAndIssues) => {
     const recipeIngredientAndIssueIds = `${recipeId}-${ingredientId}-${issueId}`
 
     return (
-      <div key={recipeIngredientAndIssueIds} className={css.issueDeatils}>
+      <div key={recipeIngredientAndIssueIds} className={css.issueDetails}>
         <p>{issueName} - {label}</p>
         <textarea id={recipeIngredientAndIssueIds} />
       </div>
