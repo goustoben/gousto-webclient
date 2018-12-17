@@ -7,14 +7,12 @@ import SubscriptionOption from './SubscriptionOption'
 
 const frequencyDescription = {
   1: [
-    "60% off your first box + 30% off all boxes in your first month",
-    "Your choice of personalised recipes",
-    "Guaranteed delivery slots",
+    "50% off your first box + 30% off all boxes in your first month",
+    "Personalised recipes as we learn what you love",
     "Surprise gifts!",
   ],
   2: [
-    "No sign up discount",
-    "Your choice of personalised recipes",
+    "Personalised recipes as we learn what you love",
   ],
 }
 
@@ -22,7 +20,7 @@ const Subscription = ({ chosenIntervalId, options, optionName, sectionName, feat
   (options.size && features.getIn(['chooseSubscription', 'value'])) ? (
 		<div className={css.container}>
 			<h3 className={css.header}>Your Gousto Plan</h3>
-			<p className={css.text}>Your plan, your rules. Choose between two and four recipes a week. Pause or cancel at any time.</p>
+			<p className={css.text}>Your plan, your rules. Choose two, three or four recipes a week. Skip a box when you don’t want one. Pause or cancel at any time.</p>
 			<FormSection name={sectionName} className={css.options}>
 				{options.map(option => {
 				  if(option.get('id') == 1 || option.get('id') == 2)
