@@ -332,16 +332,20 @@ describe('Checkout', () => {
         <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} />,
         { context },
       )
+      wrapper.instance().componentDidMount()
     })
 
     test('should call fetchData', () => {
-      wrapper.instance().componentDidMount()
       expect(fetchData).toHaveBeenCalled()
       expect(fetchData).toHaveBeenCalledWith({
         store: context.store,
         query: { query: true },
         params: { params: true },
       })
+    })
+
+    test('should call QueueIt.validateUser', () => {
+      expect(QueueIt.validateUser).toHaveBeenCalled()
     })
   })
 
