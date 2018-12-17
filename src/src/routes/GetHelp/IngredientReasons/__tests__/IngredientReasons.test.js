@@ -10,6 +10,22 @@ describe('<IngredientReasons />', () => {
     button1Copy: 'Back',
     button2Copy: 'Done',
   }
+  const ingredientsAndIssues = {
+    '1917-bbb': {
+      recipeId: '1917',
+      ingredientId: 'bbb',
+      label: '1 can of chopped tomatoes (210g)',
+      issueId: '101',
+      issueName: 'Missing ingredients',
+    },
+    '1494-bbb': {
+      recipeId: '1494',
+      ingredientId: 'bbb',
+      label: '1 can of chopped tomatoes (210g)',
+      issueId: '104',
+      issueName: 'Fruit or Veg - Mouldy',
+    },
+  }
   let wrapper
   let getHelpLayout
 
@@ -18,6 +34,7 @@ describe('<IngredientReasons />', () => {
       wrapper = mount(
         <IngredientReasons
           content={content}
+          ingredientsAndIssues={ingredientsAndIssues}
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
@@ -41,6 +58,21 @@ describe('<IngredientReasons />', () => {
 
     test('second body description is redering correctly', () => {
       expect(getHelpLayout.find('p').at(1).text()).toBe('second body')
+    })
+
+    test('selected ingredients and issues are rendering', () => {
+      const issueDetails = getHelpLayout.find('div.issueDeatils')
+
+      expect(issueDetails).toHaveLength(2)
+      expect(issueDetails.at(0).text()).toContain('Missing ingredients - 1 can of chopped tomatoes (210g)')
+      expect(issueDetails.at(1).text()).toContain('Fruit or Veg - Mouldy - 1 can of chopped tomatoes (210g)')
+    })
+
+    test('selected ingredients and issues corresponding textboxes are rendering with correct id', () => {
+      const issueDetails = getHelpLayout.find('div.issueDeatils')
+
+      expect(issueDetails.at(0).find('textarea').prop('id')).toBe('1917-bbb-101')
+      expect(issueDetails.at(1).find('textarea').prop('id')).toBe('1494-bbb-104')
     })
 
     test('bottom bar buttons is rendering correctly', () => {

@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
       || 'back',
       button2Copy: state.content.get('get-help_ingredientreasons_pagecontent_button2copy')
       || 'submit details',
-    }
+    },
+    ingredientsAndIssues: state.getHelp.get('selectedIngredients').toJS(),
   }
 }
 

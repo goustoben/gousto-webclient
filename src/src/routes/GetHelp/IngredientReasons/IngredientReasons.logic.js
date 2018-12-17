@@ -10,9 +10,18 @@ const propTypes = {
     button1Copy: PropTypes.string.isRequired,
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
+  ingredientsAndIssues: PropTypes.objectOf(
+    PropTypes.shape({
+      recipeId: PropTypes.string.isRequired,
+      ingredientId: PropTypes.string.isRequired,
+      issueId: PropTypes.string.isRequired,
+      issueName: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 }
 
-const IngredientReasons = ({ content }) => {
+const IngredientReasons = ({ content, ingredientsAndIssues }) => {
   const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredientIssues}`
   const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
 
@@ -21,6 +30,7 @@ const IngredientReasons = ({ content }) => {
       content={content}
       buttonLeftUrl={buttonLeftUrl}
       buttonRightUrl={buttonRightUrl}
+      ingredientsAndIssues={ingredientsAndIssues}
     />
   )
 }
