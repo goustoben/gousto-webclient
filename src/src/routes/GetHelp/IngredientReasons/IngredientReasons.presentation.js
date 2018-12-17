@@ -15,6 +15,7 @@ const propTypes = {
   }).isRequired,
   buttonLeftUrl: PropTypes.string.isRequired,
   buttonRightUrl: PropTypes.string.isRequired,
+  disabledButton: PropTypes.bool.isRequired,
   ingredientsAndIssues: PropTypes.objectOf(
     PropTypes.shape({
       recipeId: PropTypes.string.isRequired,
@@ -24,6 +25,8 @@ const propTypes = {
       label: PropTypes.string.isRequired,
     })
   ).isRequired,
+  onChange: PropTypes.func.isRequired,
+  textareaValue: PropTypes.string.isRequired,
 }
 
 const IngredientReasonsPresentation = ({
@@ -36,23 +39,26 @@ const IngredientReasonsPresentation = ({
   },
   buttonLeftUrl,
   buttonRightUrl,
+  disabledButton,
   ingredientsAndIssues,
+  onChange,
+  textareaValue,
 }) => (
   <GetHelpLayout title={title} body={body}>
     <p>{secondBody}</p>
-    {renderIngredientReasonsForm(ingredientsAndIssues)}
+    {renderIngredientReasonsForm(ingredientsAndIssues, textareaValue, onChange)}
     <BottomBar>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         {button1Copy}
       </BottomButton>
-      <BottomButton color="primary" url={buttonRightUrl} clientRouted>
+      <BottomButton color="primary" url={buttonRightUrl} disabled={disabledButton} clientRouted>
         {button2Copy}
       </BottomButton>
     </BottomBar>
   </GetHelpLayout>
 )
 
-const renderIngredientReasonsForm = (ingredientsAndIssues) => {
+const renderIngredientReasonsForm = (ingredientsAndIssues, textareaValue, onChange) => {
   return Object.keys(ingredientsAndIssues).map(key => {
     const {
       recipeId,
@@ -66,7 +72,12 @@ const renderIngredientReasonsForm = (ingredientsAndIssues) => {
     return (
       <div key={recipeIngredientAndIssueIds} className={css.issueDetails}>
         <p>{issueName} - {label}</p>
-        <textarea id={recipeIngredientAndIssueIds} />
+        <textarea
+          id={recipeIngredientAndIssueIds}
+          value={textareaValue}
+          onChange={
+            (event) => onChange(event.target.value)}
+        />
       </div>
     )
   })

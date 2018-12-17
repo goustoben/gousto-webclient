@@ -29,17 +29,17 @@ describe('<IngredientReasons />', () => {
   let wrapper
   let getHelpLayout
 
-  describe('rendering', () => {
-    beforeAll(() => {
-      wrapper = mount(
-        <IngredientReasons
-          content={content}
-          ingredientsAndIssues={ingredientsAndIssues}
-        />
-      )
-      getHelpLayout = wrapper.find('GetHelpLayout')
-    })
+  beforeAll(() => {
+    wrapper = mount(
+      <IngredientReasons
+        content={content}
+        ingredientsAndIssues={ingredientsAndIssues}
+      />
+    )
+    getHelpLayout = wrapper.find('GetHelpLayout')
+  })
 
+  describe('rendering', () => {
     test('layout is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomBar')
 
@@ -90,7 +90,32 @@ describe('<IngredientReasons />', () => {
       expect(Button1.prop('url')).toBe('/get-help/ingredient-issues')
       expect(Button2.prop('url')).toBe('/get-help/refund')
     })
+
+    test('submit details button is disable when there no description set', () => {
+      const Button2 = getHelpLayout.find('BottomButton').at(1)
+
+      expect(Button2.prop('disabled')).toBe(true)
+      expect(Button2.find('GoustoLink')).toHaveLength(0)
+      expect(Button2.text()).toContain(content.button2Copy)
+    })
   })
 
-  describe('behaviour', () => {})
+  describe('behaviour', () => {
+    test('submit details button is enabled when there is a description set', () => {
+      const issueDetails = getHelpLayout.find('div.issueDetails')
+      const textarea = issueDetails.at(0).find('textarea')
+
+      textarea.simulate(
+        'change', { target: { value: 'This is my issue...' } }
+      )
+
+      const Button2 = getHelpLayout.find('BottomButton').at(1)
+
+      expect(textarea.text()).toBe('This is my issue...')
+
+      expect(Button2.prop('disabled')).toBe(false)
+      expect(Button2.find('GoustoLink')).toHaveLength(1)
+      expect(Button2.text()).toContain(content.button2Copy)
+    })
+  })
 })

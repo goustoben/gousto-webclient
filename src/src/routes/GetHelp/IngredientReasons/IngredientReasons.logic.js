@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { client } from 'config/routes'
 import { IngredientReasonsPresentation } from './IngredientReasons.presentation'
@@ -21,18 +21,40 @@ const propTypes = {
   ).isRequired,
 }
 
-const IngredientReasons = ({ content, ingredientsAndIssues }) => {
-  const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredientIssues}`
-  const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
+class IngredientReasons extends PureComponent {
+  state = {
+    textareaValue: ''
+  }
 
-  return (
-    <IngredientReasonsPresentation
-      content={content}
-      buttonLeftUrl={buttonLeftUrl}
-      buttonRightUrl={buttonRightUrl}
-      ingredientsAndIssues={ingredientsAndIssues}
-    />
-  )
+  changeHandler = (textareaValue) => {
+    this.setState({
+      ...this.state,
+      textareaValue
+    })
+  }
+
+  render() {
+    const { content, ingredientsAndIssues } = this.props
+    const { textareaValue } = this.state
+    const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredientIssues}`
+    const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
+    const disabledButton = textareaValue.length < 1
+
+    console.log('disabledButton', disabledButton)
+
+
+    return (
+      <IngredientReasonsPresentation
+        content={content}
+        buttonLeftUrl={buttonLeftUrl}
+        buttonRightUrl={buttonRightUrl}
+        ingredientsAndIssues={ingredientsAndIssues}
+        onChange={this.changeHandler}
+        textareaValue={textareaValue}
+        disabledButton={disabledButton}
+      />
+    )
+  }
 }
 
 IngredientReasons.propTypes = propTypes
