@@ -1,16 +1,16 @@
 import { connect } from 'react-redux'
 import { getFormValues, submit, getFormMeta, change } from 'redux-form'
+import { getDeliveryFormName } from 'selectors/checkout'
 
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 
 import Delivery from './Delivery'
 
-const formName = 'checkout'
-
 function mapStateToProps(sectionName) {
+
   return state => ({
-    formName,
+    formName: getDeliveryFormName(state),
     sectionName,
     addressDetail: state.checkout.get('selectedAddress'),
     addresses: state.checkout.get('deliveryAddresses'),
@@ -19,8 +19,8 @@ function mapStateToProps(sectionName) {
     deliveryAddress: state.checkout.get('deliveryAddress'),
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
 
-    formValues: getFormValues(formName)(state),
-    formFields: getFormMeta(formName)(state),
+    formValues: getFormValues(getDeliveryFormName(state))(state),
+    formFields: getFormMeta(getDeliveryFormName(state))(state),
   })
 }
 
@@ -42,8 +42,10 @@ export function validationMessages(sectionName) {
 export function addInitialValues(Component, { sectionName }) {
   return connect(
     (state, ownProps) => {
-      const { checkout } = state.form
-      const initialValues = checkout && checkout.initial ? checkout.initial : {}
+      const formName = getDeliveryFormName(state)
+      const delivery = state.form[formName]
+
+      const initialValues = delivery && delivery.initial ? delivery.initial : {}
 
       return {
         // needed for hacked custom validation in validation/delivery.js

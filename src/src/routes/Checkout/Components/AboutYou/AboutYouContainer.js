@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import { isValid } from 'redux-form'
-import AboutYou from './AboutYou'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
+import { getAboutYouFormName } from 'selectors/checkout'
+import AboutYou from './AboutYou'
 
 function mapStateToProps(sectionName) {
   return state => ({
@@ -27,11 +28,12 @@ export default sectionName => connectComponent(sectionName)
 export function addInitialValues(Component, { sectionName }) {
   return connect(
     (state, ownProps) => {
-      const { checkout } = state.form
-      const initialValues = checkout && checkout.initial ? checkout.initial : {}
+      const formName = getAboutYouFormName(state)
+      const aboutyou = state.form[formName]
+      const initialValues = aboutyou && aboutyou.initial ? aboutyou.initial : {}
 
       return {
-        checkoutValid: isValid('checkout')(state),
+        checkoutValid: isValid(formName)(state),
         initialValues: {
           ...ownProps.initialValues,
           ...initialValues,

@@ -131,7 +131,7 @@ describe('CheckoutPayment', () => {
         }
       }
       const sectionName = 'payment'
-      const formName = 'exampleForm'
+      const formName = 'payment'
 
       beforeEach(() => {
         wrapper.setProps({ formErrors, sectionName, formName })

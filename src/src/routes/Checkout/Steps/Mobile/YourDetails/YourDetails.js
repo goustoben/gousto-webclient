@@ -21,7 +21,8 @@ const AboutYouSection = AboutYouContainer(aboutYouSectionName)
 const deliverySectionName = 'delivery'
 const DeliverySection = DeliveryContainer(deliverySectionName)
 
-const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef }) => {
+const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser }) => {
+
   const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
   const handleSubmit = () => {
     if (checkoutValid) {
@@ -36,7 +37,7 @@ const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, check
 				<AboutYouSection receiveRef={receiveRef} />
 			</SectionContainer>
 			<SectionContainer>
-				<DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} />
+				<DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} browser={browser} />
 			</SectionContainer>
 			{isAddressConfirmed && (
 				<SectionContainer>
@@ -82,7 +83,7 @@ const validationRules = [
   delivery(deliverySectionName),
 ]
 
-let YourDetailsForm = formContainer(YourDetailsStep, validationRules, 'checkout', deliveryValidationMessages(deliverySectionName)) // eslint-disable-line import/no-mutable-exports
+let YourDetailsForm = formContainer(YourDetailsStep, validationRules, 'yourdetails', deliveryValidationMessages(deliverySectionName)) // eslint-disable-line import/no-mutable-exports
 YourDetailsForm = aboutYouAddInitialValues(YourDetailsForm, { sectionName: aboutYouSectionName })
 YourDetailsForm = deliveryAddInitialValues(YourDetailsForm, { sectionName: deliverySectionName })
 

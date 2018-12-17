@@ -3,7 +3,7 @@ import validate from 'Form/validate'
 import { scrollToRefsWrapper } from 'components/ScrollToRefs/ScrollToRefs'
 import dottify from 'utils/dottify'
 
-export default (Component, rules, formName = 'checkout', messages = {}, opts = {}, asyncValidate = async () => {}, asyncBlurFields = []) => (
+export default (Component, rules, formName, messages = {}, opts = {}, asyncValidate = async () => {}, asyncBlurFields = []) => (
   scrollToRefsWrapper(reduxForm({
     form: formName,
     destroyOnUnmount: false,

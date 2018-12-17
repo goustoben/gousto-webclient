@@ -19,7 +19,7 @@ describe('Billing Address', () => {
   beforeEach(() => {
     store = {
       form: {
-        checkout: {
+        payment: {
           values:{
             payment: {isBillingAddressDifferent: true}
           }
@@ -40,7 +40,7 @@ describe('Billing Address', () => {
     }
 
     deliveryAddress = {houseNo: '', street: '', town:'', postcode: ''}
-    form = "checkout"
+    form = "payment"
     sectionName = "payment"
     change = jest.fn()
 
@@ -144,7 +144,7 @@ describe('Billing Address', () => {
 
     test('should call the redux-form change() function with the correct parameters ', () => {
       wrapper.instance().toggleDeliveryAddress()
-      expect(change).toHaveBeenCalledWith('checkout', 'payment.isBillingAddressDifferent', true)
+      expect(change).toHaveBeenCalledWith('payment', 'payment.isBillingAddressDifferent', true)
     })
   })
 })
