@@ -13,9 +13,12 @@ const propTypes = {
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   fetchIngredientIssues: PropTypes.func.isRequired,
-  ingredients: PropTypes.arrayOf(
+  ingredients: PropTypes.objectOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      recipeId: PropTypes.string.isRequired,
+      ingredientId: PropTypes.string.isRequired,
+      issueId: PropTypes.string,
+      issueName: PropTypes.string,
       label: PropTypes.string.isRequired,
     })
   ).isRequired,
@@ -26,6 +29,7 @@ const propTypes = {
       requireDescription: PropTypes.bool.isRequired,
     }).isRequired
   ),
+  storeSelectedIngredientIssue: PropTypes.func.isRequired,
   subIssues: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -51,7 +55,14 @@ class IngredientIssues extends PureComponent {
     this.fetchData()
   }
 
-  changeHandler = () => {}
+  changeHandler = (ingredientAndRecipeId, issueId) => {
+    const { issues, subIssues, storeSelectedIngredientIssue } = this.props
+    const selectedIssue = issues.find(issue => issue.id === issueId)
+    const selectedSubIssue = subIssues.find(subIssue => subIssue.id === issueId)
+    const issueLabel = selectedIssue ? selectedIssue.label : selectedSubIssue.label
+
+    storeSelectedIngredientIssue(ingredientAndRecipeId, issueId, issueLabel)
+  }
 
   render() {
     const { content, ingredients, issues, subIssues } = this.props

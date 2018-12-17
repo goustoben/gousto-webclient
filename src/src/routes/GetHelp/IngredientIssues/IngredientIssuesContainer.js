@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { fetchIngredientIssues } from 'actions/getHelp'
+import { fetchIngredientIssues, storeSelectedIngredientIssue } from 'actions/getHelp'
 import { IngredientIssues } from './IngredientIssues.logic'
 
 const mapStateToProps = (state) => ({
@@ -21,6 +21,7 @@ const mapStateToProps = (state) => ({
 
 const IngredientIssuesContainer = connect(mapStateToProps, {
   fetchIngredientIssues,
+  storeSelectedIngredientIssue,
 })(IngredientIssues)
 
 export {

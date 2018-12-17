@@ -10,10 +10,18 @@ describe('<IngredientIssues />', () => {
     button1Copy: 'Back',
     button2Copy: 'Done',
   }
-  const ingredients = [
-    { id: 'ingId1', label: 'ingLabel1' },
-    { id: 'ingId2', label: 'ingLabel2' },
-  ]
+  const ingredients = {
+    'recipId1-ingId1': {
+      recipeId: 'recipId1',
+      ingredientId: 'ingId1',
+      label: 'ingLabel1'
+    },
+    'recipId2-ingId1': {
+      recipeId: 'recipId2',
+      ingredientId: 'ingId1',
+      label: 'ingLabel2'
+    },
+  }
   const issues = [
     {
       id: '101',
@@ -47,29 +55,25 @@ describe('<IngredientIssues />', () => {
     },
   ]
 
-  let wrapper
-  let getHelpLayout
-
-  beforeEach(() => {
-    wrapper = mount(
+  describe('render', () => {
+    const wrapper = mount(
       <IngredientIssues
         content={content}
         ingredients={ingredients}
         fetchIngredientIssues={() => {}}
         issues={issues}
+        storeSelectedIngredientIssue={() => {}}
         subIssues={subIssues}
       />
     )
-    getHelpLayout = wrapper.find('GetHelpLayout')
-  })
+    const getHelpLayout = wrapper.find('GetHelpLayout')
 
-  describe('render', () => {
     test('layout is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomBar')
 
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
-      expect(BottomBar.find('BottomButton')).toHaveLength(2)
+      expect(BottomBar.find('Button')).toHaveLength(2)
 
     })
 
@@ -104,7 +108,7 @@ describe('<IngredientIssues />', () => {
 
       expect(selects).toHaveLength(2)
 
-      expect(selects.at(0).prop('id')).toBe('ingId1')
+      expect(selects.at(0).prop('id')).toBe('recipId1-ingId1')
       expect(options1.at(0).prop('value')).toBe('101')
       expect(options1.at(1).prop('value')).toBe('102')
       expect(options1.at(0).text()).toBe('Missing ingredients')
@@ -117,7 +121,7 @@ describe('<IngredientIssues />', () => {
       expect(group12.text()).toBe('Another group')
       expect(suboptions13.prop('value')).toBe('107')
       expect(suboptions13.text()).toBe('Meat - gristle or bones')
-      expect(selects.at(1).prop('id')).toBe('ingId2')
+      expect(selects.at(1).prop('id')).toBe('recipId2-ingId1')
       expect(options2.at(0).prop('value')).toBe('101')
       expect(options2.at(1).prop('value')).toBe('102')
       expect(options2.at(0).text()).toBe('Missing ingredients')
@@ -152,10 +156,30 @@ describe('<IngredientIssues />', () => {
   })
 
   describe('behaviour', () => {
-    test('when an issue is selected an action is called with issueId and issueLabel', () => {
-      const select = getHelpLayout.find('select').at(0)
+    let wrapper
+    let getHelpLayout
+    let storeSelectedIngredientIssueSpy
 
+    beforeEach(() => {
+      storeSelectedIngredientIssueSpy = jest.fn()
+      wrapper = mount(
+        <IngredientIssues
+          content={content}
+          ingredients={ingredients}
+          fetchIngredientIssues={() => {}}
+          issues={issues}
+          storeSelectedIngredientIssue={storeSelectedIngredientIssueSpy}
+          subIssues={subIssues}
+        />
+      )
+      getHelpLayout = wrapper.find('GetHelpLayout')
+    })
+
+    test('when an issue is selected an action is called with issueId and issueLabel', () => {
+      const select = getHelpLayout.find('select[id="recipId1-ingId1"]')
       select.simulate('change', { target: { value: '104' } })
+
+      expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith('recipId1-ingId1', '104', 'Fruit or Veg - Mouldy')
     })
   })
 })

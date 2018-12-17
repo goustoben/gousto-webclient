@@ -13,9 +13,12 @@ const propTypes = {
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   changeHandler: PropTypes.func.isRequired,
-  ingredients: PropTypes.arrayOf(
+  ingredients: PropTypes.objectOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      recipeId: PropTypes.string.isRequired,
+      ingredientId: PropTypes.string.isRequired,
+      issueId: PropTypes.string,
+      issueName: PropTypes.string,
       label: PropTypes.string.isRequired,
     })
   ),
@@ -45,18 +48,19 @@ const defaultProps = {
 
 const renderIngredientsIssues = (ingredients, issues, subIssues, cssLabel, changeHandler) => {
 
-  const renderedIngredients = ingredients.map((ingredient) => {
+  const renderedIngredients = Object.keys(ingredients).map((ingredientAndRecipeId) => {
     const optionSelected = issues && issues[0] && issues[0].id
+    const ingredientLabel = ingredients[ingredientAndRecipeId].label
 
     return (
-      <div key={ingredient.id}>
-        <p className={cssLabel}>{ingredient.label}</p>
+      <div key={ingredientAndRecipeId}>
+        <p className={cssLabel}>{ingredientLabel}</p>
         {optionSelected && <Dropdown
-          id={ingredient.id}
+          id={ingredientAndRecipeId}
           options={issues}
           groupedOptions={subIssues}
           optionSelected={optionSelected}
-          onChange={changeHandler}
+          onChange={(issueId) => changeHandler(ingredientAndRecipeId, issueId)}
         />}
       </div>
     )
@@ -78,7 +82,7 @@ const IngredientIssuesPresentation = ({
   issues,
   subIssues,
   cssLabel,
-  changeHandler
+  changeHandler,
 }) => (
   <GetHelpLayout title={title} body={body}>
     {renderIngredientsIssues(ingredients, issues, subIssues, cssLabel, changeHandler)}

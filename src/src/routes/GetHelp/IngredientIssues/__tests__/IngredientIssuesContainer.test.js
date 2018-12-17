@@ -11,40 +11,6 @@ import { IngredientIssuesContainer } from 'routes/GetHelp/IngredientIssues/Ingre
 
 jest.mock('apis/getHelp')
 
-const expectedIssuesInStore = [
-  {
-    id: '101',
-    label: 'Missing ingredients',
-    requireDescription: false,
-  },
-  {
-    id: '102',
-    label: 'Wrong ingredients',
-    requireDescription: false,
-  },
-]
-
-const expectedSubIssuesInStore = [
-  {
-    id: '104',
-    label: 'Fruit or Veg - Mouldy',
-    groupLabel: 'Ingredient quality',
-    requireDescription: true,
-  },
-  {
-    id: '105',
-    label: 'Fruit or Veg - not fresh',
-    groupLabel: 'Ingredient quality',
-    requireDescription: false,
-  },
-  {
-    id: '107',
-    label: 'Meat - gristle or bones',
-    groupLabel: 'Another group',
-    requireDescription: true,
-  },
-]
-
 describe('<IngredientIssuesContainer />', () => {
   describe('behaviour', () => {
     let wrapper
@@ -79,10 +45,18 @@ describe('<IngredientIssuesContainer />', () => {
               ]
             },
           ],
-          selectedIngredients: [
-            { recipeId: '1917', ingredientId: 'bbb', label: 'ingredient 1' },
-            { recipeId: '1494', ingredientId: 'eee', label: 'ingredient 2' },
-          ],
+          selectedIngredients: {
+            '1917-bbb': {
+              recipeId: '1917',
+              ingredientId: 'bbb',
+              label: '1 can of chopped tomatoes (210g)'
+            },
+            '1494-bbb': {
+              recipeId:'1494',
+              ingredientId: 'bbb',
+              label: '1 can of chopped tomatoes (210g)'
+            },
+          },
         })),
       }
 
@@ -107,16 +81,96 @@ describe('<IngredientIssuesContainer />', () => {
 
     test('only selected ingredients are passed down', () => {
       expect(wrapper.text()).toContain('1 can of chopped tomatoes (210g)')
-      expect(wrapper.text()).toContain('1/2 chicken stock cube')
+      expect(wrapper.text()).not.toContain('1/2 chicken stock cube')
       expect(wrapper.text()).not.toContain('1 beef stock cube')
       expect(wrapper.text()).not.toContain('1 can of kidney beans')
     })
 
     test('ingredient issues and subissues are fetched, formatted and placed in the store when mount', () => {
+      const expectedIssuesInStore = [
+        {
+          id: '101',
+          label: 'Missing ingredients',
+          requireDescription: false,
+        },
+        {
+          id: '102',
+          label: 'Wrong ingredients',
+          requireDescription: false,
+        },
+      ]
+      const expectedSubIssuesInStore = [
+        {
+          id: '104',
+          label: 'Fruit or Veg - Mouldy',
+          groupLabel: 'Ingredient quality',
+          requireDescription: true,
+        },
+        {
+          id: '105',
+          label: 'Fruit or Veg - not fresh',
+          groupLabel: 'Ingredient quality',
+          requireDescription: false,
+        },
+        {
+          id: '107',
+          label: 'Meat - gristle or bones',
+          groupLabel: 'Another group',
+          requireDescription: true,
+        },
+      ]
+
       expect(store.getState().getHelp.get('ingredientIssues').toJS())
         .toEqual(expectedIssuesInStore)
       expect(store.getState().getHelp.get('ingredientSubIssues').toJS())
         .toEqual(expectedSubIssuesInStore)
+    })
+
+    test('default ingredient issues options are set in the store', () => {
+      const expectedSelectedIngredients = fromJS({
+        '1917-bbb': {
+          recipeId: '1917',
+          ingredientId: 'bbb',
+          label: '1 can of chopped tomatoes (210g)',
+          issueId: '101',
+          issueName: 'Missing ingredients',
+        },
+        '1494-bbb': {
+          recipeId: '1494',
+          ingredientId: 'bbb',
+          label: '1 can of chopped tomatoes (210g)',
+          issueId: '101',
+          issueName: 'Missing ingredients',
+        },
+      })
+
+      expect(store.getState().getHelp.get('selectedIngredients'))
+        .toEqual(expectedSelectedIngredients)
+    })
+
+    test('selected ingredient issues are changed in the store when selected', () => {
+      const expectedSelectedIngredients = fromJS({
+        '1917-bbb': {
+          recipeId: '1917',
+          ingredientId: 'bbb',
+          label: '1 can of chopped tomatoes (210g)',
+          issueId: '101',
+          issueName: 'Missing ingredients',
+        },
+        '1494-bbb': {
+          recipeId: '1494',
+          ingredientId: 'bbb',
+          label: '1 can of chopped tomatoes (210g)',
+          issueId: '104',
+          issueName: 'Fruit or Veg - Mouldy',
+        },
+      })
+      const secondDropdown = wrapper.find('Dropdown').at(1)
+      const secondOption = secondDropdown.find('option[value="104"]')
+      secondOption.simulate('change')
+
+      expect(store.getState().getHelp.get('selectedIngredients'))
+        .toEqual(expectedSelectedIngredients)
     })
   })
 })
