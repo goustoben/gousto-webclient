@@ -1,5 +1,14 @@
 @value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
 
+@value JWBlue #3B3FB2;
+@value JWSMImageSize 175px;
+@value JWLGImageSize 200px;
+@value SMImageOffset 0.8;
+@value LGImageOffset 0.9;
+@value GelSMLeft 60%;
+@value GelMDLeft 45%;
+@value GelLGLeft 40%;
+
 .container {
 	composes: inlineBlock from 'styles/display.css';
 	width: 100%;
@@ -15,4 +24,59 @@
 	@media ScreenMDMin {
 		background-image: url('media/images/menu/jw-banner-desktop.jpg');
 	}
+}
+
+.contentBase {
+	composes: flex from 'styles/flex.css';
+}
+
+.content {
+	composes: contentBase;
+	position: relative;
+	max-width: 1600px;
+	margin: 0 auto;
+	height: 100%;
+}
+
+.gelText {
+	left: GelSMLeft;
+	top: 50%;
+	padding: 14px;
+
+	@media ScreenXXSMin {
+		left: GelMDLeft;
+	}
+
+	@media ScreenMDMin {
+		left: GelLGLeft;
+		padding: 18px;
+	}
+}
+
+.gelText__svg {
+	height: 100%;
+	width: 86%;
+}
+
+.gelPortrait {
+	composes: gel from 'Gel/Gel.css';
+	left: calc(GelSMLeft - (SMImageOffset * JWSMImageSize));
+	top: 40%;
+	height: JWSMImageSize;
+	width: JWSMImageSize;
+
+	@media ScreenXXSMin {
+		left: calc(GelMDLeft - (SMImageOffset * JWSMImageSize));
+	}
+
+	@media ScreenMDMin {
+		left: calc(GelLGLeft - (LGImageOffset * JWLGImageSize));
+		height: JWLGImageSize;
+		width: JWLGImageSize;
+	}
+}
+
+.gelPortrait__image {
+	border-radius: 100%;
+	border: 3px solid JWBlue;
 }
