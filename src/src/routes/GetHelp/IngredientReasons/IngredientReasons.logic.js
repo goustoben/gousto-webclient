@@ -22,8 +22,6 @@ const propTypes = {
   storeIngredientIssueDescriptions: PropTypes.func.isRequired,
 }
 
-const TEXTAREA_VALID_LENGTH = 1
-
 class IngredientReasons extends PureComponent {
   state = {
     issueReasons: {}
@@ -35,10 +33,17 @@ class IngredientReasons extends PureComponent {
     const ingredientAndIssue = ingredientsAndIssues[id]
 
     const newIssueReasons = {
+      ...ingredientsAndIssues,
+      ...issueReasons,
       [id]: {
         ...ingredientAndIssue,
         issueDescription,
       }
+    }
+
+    const newState = {
+      ...this.state,
+      issueReasons: { ...issueReasons, ...newIssueReasons },
     }
 
     this.setState({
@@ -54,19 +59,39 @@ class IngredientReasons extends PureComponent {
     storeIngredientIssueDescriptions(issueReasons)
   }
 
+  isSubmitDisabled = () => {
+    const { issueReasons } = this.state
+    const issueReasonsKeys = Object.keys(issueReasons)
+
+    if (issueReasonsKeys.length === 0) {
+      return true
+    }
+
+    const result = issueReasonsKeys.some(key => {
+      const { issueDescription } = issueReasons[key]
+
+      return !issueDescription || issueDescription.length === 0
+    })
+
+    return result
+  }
+
   render() {
     const { content, ingredientsAndIssues } = this.props
     const { issueReasons } = this.state
     const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredientIssues}`
+    const ingredientsWithIssueReasons = Object.keys(issueReasons).length > 0
+      ? issueReasons
+      : ingredientsAndIssues
 
     return (
       <IngredientReasonsPresentation
         content={content}
         buttonLeftUrl={buttonLeftUrl}
-        ingredientsAndIssues={ingredientsAndIssues}
+        ingredientReasons={ingredientsWithIssueReasons}
         onChange={this.changeHandler}
         onSubmit={this.submitHandler}
-        disabledButton={false}
+        isSubmitDisabled={this.isSubmitDisabled()}
       />
     )
   }

@@ -29,7 +29,12 @@ class Refund extends PureComponent {
     order: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }).isRequired,
-    selectedIngredients: PropTypes.instanceOf(Map).isRequired,
+    selectedIngredients: PropTypes.objectOf(PropTypes.shape({
+      ingredientId: PropTypes.string.isRequired,
+      issueDescription: PropTypes.string.isRequired,
+      issueId: PropTypes.string.isRequired,
+      recipeId: PropTypes.string.isRequired,
+    })).isRequired,
   }
 
   state = {
@@ -49,8 +54,8 @@ class Refund extends PureComponent {
       const response = await fetchRefundAmount(user.accessToken, {
         customer_id: Number(user.id),
         order_id: Number(order.id),
-        ingredient_ids: selectedIngredients.map(
-          selectedIngredient => selectedIngredient.ingredientId
+        ingredient_ids: Object.keys(selectedIngredients).map(
+          key => selectedIngredients[key].ingredientId
         ),
       })
       const { value, type } = response.data
@@ -72,8 +77,12 @@ class Refund extends PureComponent {
     const { user, order, selectedIngredients } = this.props
     const { refund } = this.state
 
-    const issues = selectedIngredients.map((selectedIngredient) => (
-      { ingredient_id: selectedIngredient.ingredientId, category_id: 98 }
+    const issues = Object.keys(selectedIngredients).map(key => (
+      {
+        category_id: Number(selectedIngredients[key].issueId),
+        ingredient_id: selectedIngredients[key].ingredientId,
+        description: selectedIngredients[key].issueDescription,
+      }
     ))
 
     try {

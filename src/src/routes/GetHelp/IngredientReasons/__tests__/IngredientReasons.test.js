@@ -73,8 +73,8 @@ describe('<IngredientReasons />', () => {
     test('selected ingredients and issues corresponding textboxes are rendering with correct id', () => {
       const issueDetails = getHelpLayout.find('div.issueDetails')
 
-      expect(issueDetails.at(0).find('textarea').prop('id')).toBe('1917-bbb-101')
-      expect(issueDetails.at(1).find('textarea').prop('id')).toBe('1494-bbb-104')
+      expect(issueDetails.at(0).find('textarea').prop('id')).toBe('1917-bbb')
+      expect(issueDetails.at(1).find('textarea').prop('id')).toBe('1494-bbb')
     })
 
     test('bottom bar buttons is rendering correctly', () => {
@@ -100,31 +100,42 @@ describe('<IngredientReasons />', () => {
   })
 
   describe('behaviour', () => {
-    test('submit button is enabled when there is a description set', () => {
+    test('submit button is enabled when all descriptions are filled', () => {
       const Button2 = getHelpLayout.find('Button').at(1)
       const issueDetails = getHelpLayout.find('div.issueDetails')
-      const textarea = issueDetails.at(0).find('textarea')
+      const textarea1 = issueDetails.at(0).find('textarea')
+      const textarea2 = issueDetails.at(1).find('textarea')
 
-      textarea.simulate(
+      textarea1.simulate(
         'change', { target: { value: 'This is my issue...' } }
       )
+      textarea2.simulate(
+        'change', { target: { value: 'Another description...' } }
+      )
 
-      expect(textarea.text()).toBe('This is my issue...')
+      expect(textarea1.text()).toBe('This is my issue...')
+      expect(textarea2.text()).toBe('Another description...')
       expect(Button2.prop('disabled')).toBe(false)
       expect(Button2.text()).toContain(content.button2Copy)
     })
 
-    test('submit button is disabled when description length less than 1 character', () => {
+    test('submit button is disabled if some description becomes less than 1 character', () => {
       const Button2 = getHelpLayout.find('Button').at(1)
       const issueDetails = getHelpLayout.find('div.issueDetails')
-      const textarea = issueDetails.at(0).find('textarea')
+      const textarea1 = issueDetails.at(0).find('textarea')
+      const textarea2 = issueDetails.at(1).find('textarea')
 
-      textarea.simulate(
+      textarea1.simulate(
+        'change', { target: { value: 'This is my issue...' } }
+      )
+      textarea2.simulate(
+        'change', { target: { value: 'Another description...' } }
+      )
+      textarea1.simulate(
         'change', { target: { value: '' } }
       )
 
       expect(Button2.prop('disabled')).toBe(true)
-      expect(Button2.find('GoustoLink')).toHaveLength(0)
     })
 
     test('action being called with issue ids and issue descriptions when submit button is clicked', () => {

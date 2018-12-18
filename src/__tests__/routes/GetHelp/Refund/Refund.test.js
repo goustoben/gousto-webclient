@@ -16,6 +16,20 @@ describe('<Refund />', () => {
     button1: 'button1 copy',
     button2: 'button2 £{{refundAmount}} copy',
   }
+  const selectedIngredients = {
+    '1010-1234': {
+      recipeId: '1010',
+      ingredientId: '1234',
+      issueId: '999999',
+      issueDescription: 'a description'
+    },
+    '2020-1234': {
+      recipeId: '2020',
+      ingredientId: '1234',
+      issueId: '999999',
+      issueDescription: 'another description'
+    },
+  }
   let wrapper
   let getHelpLayout
 
@@ -25,7 +39,7 @@ describe('<Refund />', () => {
         content={content}
         user={{ id: '999', accessToken: '123' }}
         order={{ id: '888' }}
-        selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+        selectedIngredients={selectedIngredients}
       />
     )
 
@@ -134,7 +148,7 @@ describe('<Refund />', () => {
         assignSpy.mockReset()
       })
 
-      test('setComplaint is called', async () => {
+      test('setComplaint is called with correct parameters', async () => {
         await Button.props().onClick()
 
         expect(setComplaint).toHaveBeenCalledWith(
@@ -144,7 +158,18 @@ describe('<Refund />', () => {
             order_id: 888,
             type: 'a-type',
             value: 7.77,
-            issues: [{ ingredient_id: '1234', category_id: 98 }],
+            issues: [
+              {
+                ingredient_id: '1234',
+                category_id: 999999,
+                description: 'a description'
+              },
+              {
+                ingredient_id: '1234',
+                category_id: 999999,
+                description: 'another description'
+              },
+            ],
           }
         )
       })

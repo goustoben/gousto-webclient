@@ -15,19 +15,16 @@ const propTypes = {
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   buttonLeftUrl: PropTypes.string.isRequired,
-  disabledButton: PropTypes.bool.isRequired,
-  ingredientsAndIssues: PropTypes.objectOf(
+  isSubmitDisabled: PropTypes.bool.isRequired,
+  ingredientReasons: PropTypes.objectOf(
     PropTypes.shape({
-      recipeId: PropTypes.string.isRequired,
-      ingredientId: PropTypes.string.isRequired,
-      issueId: PropTypes.string.isRequired,
       issueName: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
+      issueDescription: PropTypes.string,
     })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  textareaValue: PropTypes.string.isRequired,
 }
 
 const IngredientReasonsPresentation = ({
@@ -39,22 +36,21 @@ const IngredientReasonsPresentation = ({
     button2Copy,
   },
   buttonLeftUrl,
-  disabledButton,
-  ingredientsAndIssues,
+  isSubmitDisabled,
+  ingredientReasons,
   onChange,
   onSubmit,
-  textareaValue,
 }) => (
   <GetHelpLayout title={title} body={body}>
     <p>{secondBody}</p>
-    {renderIngredientReasonsForm(ingredientsAndIssues, textareaValue, onChange)}
+    {renderIngredientReasonsForm(ingredientReasons, onChange)}
     <BottomBar>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         {button1Copy}
       </BottomButton>
       <Button
         color="primary"
-        disabled={disabledButton}
+        disabled={isSubmitDisabled}
         onClick={onSubmit}
       >
         {button2Copy}
@@ -63,25 +59,22 @@ const IngredientReasonsPresentation = ({
   </GetHelpLayout>
 )
 
-const renderIngredientReasonsForm = (ingredientsAndIssues, textareaValue, onChange) => {
-  return Object.keys(ingredientsAndIssues).map(key => {
+const renderIngredientReasonsForm = (ingredientReasons, onChange) => {
+  return Object.keys(ingredientReasons).map(key => {
     const {
-      recipeId,
-      ingredientId,
-      issueId,
       issueName,
       label
-    } = ingredientsAndIssues[key]
-    const recipeIngredientAndIssueIds = `${recipeId}-${ingredientId}-${issueId}`
+    } = ingredientReasons[key]
 
     return (
-      <div key={recipeIngredientAndIssueIds} className={css.issueDetails}>
+      <div key={key} className={css.issueDetails}>
         <p>{issueName} - {label}</p>
         <textarea
-          id={recipeIngredientAndIssueIds}
-          value={textareaValue}
+          id={key}
+          value={ingredientReasons[key].issueDescription}
           onChange={
-            (event) => onChange(`${recipeId}-${ingredientId}`, event.target.value)}
+            (event) => onChange(key, event.target.value)
+          }
         />
       </div>
     )
