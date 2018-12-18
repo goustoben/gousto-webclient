@@ -62,11 +62,17 @@ const getHelp = (state, action) => {
       .setIn(['selectedIngredients', ingredientAndRecipeId, 'issueId'], issueId)
       .setIn(['selectedIngredients', ingredientAndRecipeId, 'issueName'], issueName)
   }
-  case actionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_DESCRIPTION: {
-    const { ingredientAndRecipeId, issueDescription } = action
+  case actionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_REASONS: {
+    const issueReasons = action.issueReasons
+      .reduce((accumulator, issueReason) => {
+        const { recipeId, ingredientId } = issueReason
 
-    return state
-      .setIn(['selectedIngredients', ingredientAndRecipeId, 'issueDescription'], issueDescription)
+        return accumulator.set(`${recipeId}-${ingredientId}`, fromJS({
+          ...issueReason,
+        }))
+      }, state.get('selectedIngredients'))
+
+    return state.set('selectedIngredients', issueReasons)
   }
   case actionTypes.RECIPES_RECEIVE: {
     const recipes = fromJS(reduceRecipes(action.recipes))

@@ -35,7 +35,7 @@ describe('<IngredientReasons />', () => {
       <IngredientReasons
         content={content}
         ingredientsAndIssues={ingredientsAndIssues}
-        storeIngredientIssueDescription={storeSelectedIngredientIssueSpy}
+        storeIngredientIssueDescriptions={storeSelectedIngredientIssueSpy}
       />
     )
     getHelpLayout = wrapper.find('GetHelpLayout')
@@ -87,24 +87,21 @@ describe('<IngredientReasons />', () => {
 
     test('buttons link to correct urls', () => {
       const Button1 = getHelpLayout.find('BottomButton').at(0)
-      const Button2 = getHelpLayout.find('BottomButton').at(1)
 
       expect(Button1.prop('url')).toBe('/get-help/ingredient-issues')
-      expect(Button2.prop('url')).toBe('/get-help/refund')
     })
 
     test('submit button is disable when there no description set', () => {
-      const Button2 = getHelpLayout.find('BottomButton').at(1)
+      const Button2 = getHelpLayout.find('Button').at(1)
 
       expect(Button2.prop('disabled')).toBe(true)
-      expect(Button2.find('GoustoLink')).toHaveLength(0)
       expect(Button2.text()).toContain(content.button2Copy)
     })
   })
 
   describe('behaviour', () => {
     test('submit button is enabled when there is a description set', () => {
-      const Button2 = getHelpLayout.find('BottomButton').at(1)
+      const Button2 = getHelpLayout.find('Button').at(1)
       const issueDetails = getHelpLayout.find('div.issueDetails')
       const textarea = issueDetails.at(0).find('textarea')
 
@@ -113,37 +110,44 @@ describe('<IngredientReasons />', () => {
       )
 
       expect(textarea.text()).toBe('This is my issue...')
-
       expect(Button2.prop('disabled')).toBe(false)
-      expect(Button2.find('GoustoLink')).toHaveLength(1)
       expect(Button2.text()).toContain(content.button2Copy)
     })
 
-    test('submit button is disabled when description length less than 5 characters', () => {
-      const Button2 = getHelpLayout.find('BottomButton').at(1)
+    test('submit button is disabled when description length less than 1 character', () => {
+      const Button2 = getHelpLayout.find('Button').at(1)
       const issueDetails = getHelpLayout.find('div.issueDetails')
       const textarea = issueDetails.at(0).find('textarea')
 
       textarea.simulate(
-        'change', { target: { value: '....' } }
+        'change', { target: { value: '' } }
       )
 
       expect(Button2.prop('disabled')).toBe(true)
       expect(Button2.find('GoustoLink')).toHaveLength(0)
     })
 
-    test('action being called with issueId and issueDescription', () => {
+    test('action being called with issue ids and issue descriptions when submit button is clicked', () => {
+      const expectedIssueReasons = {
+        '1917-bbb': {
+          'ingredientId': 'bbb',
+          'issueDescription': 'This is my issue...',
+          'issueId': '101',
+          'issueName': 'Missing ingredients',
+          'label': '1 can of chopped tomatoes (210g)',
+          'recipeId': '1917'
+        }
+      }
       const issueDetails = getHelpLayout.find('div.issueDetails')
       const textarea = issueDetails.at(0).find('textarea')
+      const Button2 = getHelpLayout.find('Button').at(1)
 
       textarea.simulate(
         'change', { target: { value: 'This is my issue...' } }
       )
+      Button2.props().onClick()
 
-      expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith(
-        '1917-bbb',
-        'This is my issue...'
-      )
+      expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith(expectedIssueReasons)
     })
   })
 })

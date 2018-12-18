@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
+import { Button } from 'goustouicomponents'
 import { BottomButton } from '../components/BottomButton'
 import css from './IngredientReasons.css'
 
@@ -14,7 +15,6 @@ const propTypes = {
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   buttonLeftUrl: PropTypes.string.isRequired,
-  buttonRightUrl: PropTypes.string.isRequired,
   disabledButton: PropTypes.bool.isRequired,
   ingredientsAndIssues: PropTypes.objectOf(
     PropTypes.shape({
@@ -26,6 +26,7 @@ const propTypes = {
     })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
   textareaValue: PropTypes.string.isRequired,
 }
 
@@ -38,10 +39,10 @@ const IngredientReasonsPresentation = ({
     button2Copy,
   },
   buttonLeftUrl,
-  buttonRightUrl,
   disabledButton,
   ingredientsAndIssues,
   onChange,
+  onSubmit,
   textareaValue,
 }) => (
   <GetHelpLayout title={title} body={body}>
@@ -51,9 +52,13 @@ const IngredientReasonsPresentation = ({
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         {button1Copy}
       </BottomButton>
-      <BottomButton color="primary" url={buttonRightUrl} disabled={disabledButton} clientRouted>
+      <Button
+        color="primary"
+        disabled={disabledButton}
+        onClick={onSubmit}
+      >
         {button2Copy}
-      </BottomButton>
+      </Button>
     </BottomBar>
   </GetHelpLayout>
 )

@@ -19,45 +19,54 @@ const propTypes = {
       label: PropTypes.string.isRequired,
     })
   ).isRequired,
-  storeIngredientIssueDescription: PropTypes.func.isRequired,
+  storeIngredientIssueDescriptions: PropTypes.func.isRequired,
 }
 
-const TEXTAREA_VALID_LENGTH = 5
+const TEXTAREA_VALID_LENGTH = 1
 
 class IngredientReasons extends PureComponent {
   state = {
-    textareaValue: ''
+    issueReasons: {}
   }
 
-  changeHandler = (recipeAndIngredientIds, textareaValue) => {
-    const { storeIngredientIssueDescription } = this.props
+  changeHandler = (id, issueDescription) => {
+    const { issueReasons } = this.state
+    const { ingredientsAndIssues } = this.props
+    const ingredientAndIssue = ingredientsAndIssues[id]
+
+    const newIssueReasons = {
+      [id]: {
+        ...ingredientAndIssue,
+        issueDescription,
+      }
+    }
 
     this.setState({
       ...this.state,
-      textareaValue
+      issueReasons: { ...issueReasons, ...newIssueReasons },
     })
+  }
 
-    if (textareaValue.length >= TEXTAREA_VALID_LENGTH) {
-      storeIngredientIssueDescription(recipeAndIngredientIds, textareaValue)
-    }
+  submitHandler = () => {
+    const { storeIngredientIssueDescriptions } = this.props
+    const { issueReasons } = this.state
+
+    storeIngredientIssueDescriptions(issueReasons)
   }
 
   render() {
     const { content, ingredientsAndIssues } = this.props
-    const { textareaValue } = this.state
+    const { issueReasons } = this.state
     const buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredientIssues}`
-    const buttonRightUrl = `${client.getHelp.index}/${client.getHelp.refund}`
-    const disabledButton = textareaValue.length < TEXTAREA_VALID_LENGTH
 
     return (
       <IngredientReasonsPresentation
         content={content}
         buttonLeftUrl={buttonLeftUrl}
-        buttonRightUrl={buttonRightUrl}
         ingredientsAndIssues={ingredientsAndIssues}
         onChange={this.changeHandler}
-        textareaValue={textareaValue}
-        disabledButton={disabledButton}
+        onSubmit={this.submitHandler}
+        disabledButton={false}
       />
     )
   }

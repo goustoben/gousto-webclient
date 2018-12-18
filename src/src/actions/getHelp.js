@@ -36,10 +36,9 @@ const storeSelectedIngredientIssue = (ingredientAndRecipeId, issueId, issueName)
   issueName,
 })
 
-const storeIngredientIssueDescription = (ingredientAndRecipeId, issueDescription) => dispatcher({
-  type: actionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_DESCRIPTION,
-  ingredientAndRecipeId,
-  issueDescription,
+const storeIngredientIssueDescriptions = (issueReasons) => dispatcher({
+  type: actionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_REASONS,
+  issueReasons,
 })
 
 const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredientIds }) => {
@@ -122,7 +121,7 @@ export {
   selectOrderIssue,
   selectContactChannel,
   storeGetHelpOrderId,
-  storeIngredientIssueDescription,
+  storeIngredientIssueDescriptions,
   storeSelectedIngredients,
   storeSelectedIngredientIssue,
   validateSelectedIngredients,

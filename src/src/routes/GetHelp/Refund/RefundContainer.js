@@ -7,7 +7,7 @@ import Refund from './Refund'
 const mapStateToProps = (state) => {
   const { auth, user, getHelp } = state
   const order = getHelp.get('order').toJS()
-  const selectedIngredients = getHelp.get('selectedIngredients').toJS()
+  const selectedIngredients = getHelp.get('selectedIngredients')
 
   return {
     user: {

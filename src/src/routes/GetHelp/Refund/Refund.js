@@ -1,13 +1,14 @@
-import React, { PropTypes, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import Loading from 'Loading'
 import { Button } from 'goustouicomponents'
-import { BottomButton } from '../components/BottomButton'
 import { client as routes } from 'config/routes'
 import { redirect } from 'utils/window'
 import { replaceWithValues } from 'utils/text'
 import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
+import { BottomButton } from '../components/BottomButton'
 
 import css from './Refund.css'
 
@@ -28,12 +29,7 @@ class Refund extends PureComponent {
     order: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }).isRequired,
-    selectedIngredients: PropTypes.arrayOf(
-      PropTypes.shape({
-        recipeId: PropTypes.string.isRequired,
-        ingredientId: PropTypes.string.isRequired,
-      })
-    ).isRequired,
+    selectedIngredients: PropTypes.instanceOf(Map).isRequired,
   }
 
   state = {
@@ -136,8 +132,8 @@ class Refund extends PureComponent {
         color="primary"
         onClick={() => this.onAcceptOffer()}
       >
-        {button2WithAmount}
-      </Button>
+          {button2WithAmount}
+        </Button>
 
     return (
       <GetHelpLayout
