@@ -11,6 +11,7 @@ import statusActions from './status'
 import menuActions from './menu'
 import boxSummaryActions from './boxSummary'
 import actionTypes from './actionTypes'
+import { getCurrentCollectionId, getCurrentDietTypes, getDietaryAttributes, getCurrentTotalTime } from '../selectors/filters'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
   const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)
@@ -296,12 +297,12 @@ export default {
       const numPortions = getState().basket.get('numPortions')
 
       if (force) {
+        const state = getState()
         dispatch({
           type: actionTypes.BASKET_RECIPE_ADD,
           recipeId,
           ...recipeInfo,
         })
-        const state = getState()
         const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock, true)
         dispatch({
           type: actionTypes.BASKET_LIMIT_REACHED,
@@ -310,19 +311,27 @@ export default {
       } else {
         const outOfStock = isOutOfStock(recipeId, numPortions, getState().menuRecipeStock)
         let state = getState()
-        if (!limitReached(state.basket, state.menuRecipes, state.menuRecipeStock, undefined, maxRecipesNum) && !outOfStock) {
+        const { basket, menuRecipeStock, menuRecipes } = state
+        if (!limitReached(basket, menuRecipes, menuRecipeStock, undefined, maxRecipesNum) && !outOfStock) {
           if (recipeInfo) {
-            Object.assign(recipeInfo, { collection: getCollection(state) })
+            Object.assign(recipeInfo, { collection: getCurrentCollectionId(state) })
           }
+
           dispatch({
             type: actionTypes.BASKET_RECIPE_ADD,
             recipeId,
             ...recipeInfo,
             trackingData: {
-              actionType: actionTypes.BASKET_RECIPE_ADD,
+              actionType: actionTypes.RECIPE_ADDED,
               recipeId,
               view,
-              ...recipeInfo,
+              position: recipeInfo.position,
+              collection: getCurrentCollectionId(state),
+              recipe_type: getCurrentDietTypes(state),
+              dietary_attribute: getDietaryAttributes(state),
+              time_frame: getCurrentTotalTime(state),
+              taste_score: recipeInfo.score,
+              recipe_count: basket.get('recipes').size+1,// The action is performed in the same time so the size is not updated yet
             },
           })
 
@@ -344,7 +353,7 @@ export default {
                 actionType: actionTypes.BASKET_LIMIT_REACHED,
                 limitReached: reachedLimit,
                 view,
-                source: actionTypes.BASKET_RECIPE_ADD,
+                source: actionTypes.RECIPE_ADDED,
               },
             })
           }
@@ -353,18 +362,25 @@ export default {
     }
   ),
 
-  basketRecipeRemove: (recipeId, view, position) => (
+  basketRecipeRemove: (recipeId, view, position, score) => (
     (dispatch, getState) => {
-      const collection = getCollection(getState())
+      let state = getState()
+      const { basket } = state
+      const collection = getCurrentCollectionId(state)
       dispatch({
         type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId,
         trackingData: {
-          actionType: actionTypes.BASKET_RECIPE_REMOVE,
+          actionType: actionTypes.RECIPE_REMOVED,
           recipeId,
           view,
           position,
           collection,
+          recipe_type: getCurrentDietTypes(state),
+          dietary_attribute: getDietaryAttributes(state),
+          time_frame: getCurrentTotalTime(state),
+          taste_score: score,
+          recipe_count: basket.get('recipes').size - 1,// The action is performed in the same time so the size is not updated yet
         },
       })
 
@@ -374,7 +390,7 @@ export default {
         stock: { [recipeId]: { [numPortions]: 1 } },
       })
 
-      const state = getState()
+      state = getState()
       const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock)
       if (!reachedLimit) {
         dispatch({
@@ -384,7 +400,7 @@ export default {
             actionType: actionTypes.BASKET_LIMIT_REACHED,
             limitReached: reachedLimit,
             view,
-            source: actionTypes.BASKET_RECIPE_REMOVE,
+            source: actionTypes.RECIPE_REMOVED,
           },
         })
       }

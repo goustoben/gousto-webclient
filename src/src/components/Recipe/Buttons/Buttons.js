@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import { Button, Control, Segment, Tooltip } from 'goustouicomponents'
 import Surcharge from './Surcharge'
 import css from './Buttons.css'
@@ -7,20 +7,21 @@ import css from './Buttons.css'
 class Buttons extends React.Component {
 
 	static propTypes = {
-	  onAdd: React.PropTypes.func.isRequired,
-	  onRemove: React.PropTypes.func.isRequired,
-	  limitReached: React.PropTypes.bool.isRequired,
-	  recipeId: React.PropTypes.string.isRequired,
-	  position: React.PropTypes.number,
-	  qty: React.PropTypes.number.isRequired,
-	  numPortions: React.PropTypes.number.isRequired,
-	  view: React.PropTypes.string,
-	  outOfstock: React.PropTypes.bool,
-	  disable: React.PropTypes.bool.isRequired,
-	  stock: React.PropTypes.number,
-	  menuBrowseCTAVisibilityChange: React.PropTypes.func,
-	  menuRecipeDetailVisibilityChange: React.PropTypes.func,
-	  surcharge: React.PropTypes.number,
+	  onAdd: PropTypes.func.isRequired,
+	  onRemove: PropTypes.func.isRequired,
+	  limitReached: PropTypes.bool.isRequired,
+	  recipeId: PropTypes.string.isRequired,
+	  position: PropTypes.number,
+	  qty: PropTypes.number.isRequired,
+	  numPortions: PropTypes.number.isRequired,
+	  view: PropTypes.string,
+	  outOfstock: PropTypes.bool,
+	  disable: PropTypes.bool.isRequired,
+	  stock: PropTypes.number,
+	  menuBrowseCTAVisibilityChange: PropTypes.func,
+	  menuRecipeDetailVisibilityChange: PropTypes.func,
+	  surcharge: PropTypes.number,
+	  score: PropTypes.number,
 	}
 
 	constructor() {
@@ -102,7 +103,7 @@ class Buttons extends React.Component {
 	handleAdd = () => {
 	  if (!this.props.disable) {
 	    if (this.props.stock !== null) {
-	      this.props.onAdd(this.props.recipeId, this.props.view, false, { position: this.props.position })
+	      this.props.onAdd(this.props.recipeId, this.props.view, false, { position: this.props.position, score: this.props.score })
 	    } else if (['detail', 'fineDineInDetail'].includes(this.props.view)) {
 	      this.props.menuRecipeDetailVisibilityChange(false)
 	      setTimeout(() => { this.props.menuBrowseCTAVisibilityChange(true) }, 500)
@@ -113,7 +114,7 @@ class Buttons extends React.Component {
 	}
 
 	handleRemove = () => {
-	  this.props.onRemove(this.props.recipeId, this.props.view, this.props.position)
+	  this.props.onRemove(this.props.recipeId, this.props.view, this.props.position, this.props.score)
 	}
 
 	tooltipToggle = (visible) => {

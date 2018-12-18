@@ -8,6 +8,7 @@ function mapStateToProps(state, props) {
     numPortions: state.basket.get('numPortions'),
     limitReached: state.basket.get('limitReached'),
     disable: state.auth.get('isAdmin'),
+    score: props.score,
   }
 }
 

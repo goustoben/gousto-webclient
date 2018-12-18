@@ -1,8 +1,8 @@
 import { push } from 'react-router-redux'
 
-import actionTypes from './actionTypes'
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
 import { slugify } from 'utils/url'
+import actionTypes from './actionTypes'
 
 import {
   trackRecipeFiltersOpened,
@@ -27,7 +27,7 @@ const filtersCollectionChange = (collectionName, collectionId) => ({
   collectionName,
   collectionId,
   trackingData: {
-    actionType: actionTypes.FILTERS_COLLECTION_CHANGE,
+    actionType: actionTypes.RECIPE_COLLECTION_SELECTED,
     collectionId,
   },
 })
