@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 import { getFormValues } from 'redux-form'
 import { getDeliveryFormName } from 'selectors/checkout'
 
+import { trackSubscriptionIntervalChanged } from 'actions/checkout'
+
 import Subscription from './Subscription'
 
 const mapStateToProps = (state) => {
@@ -16,6 +18,13 @@ const mapStateToProps = (state) => {
   }
 }
 
-const SubscriptionContainer = connect(mapStateToProps)(Subscription)
+const mapDispatchToProps = {
+  trackSubscriptionIntervalChanged,
+}
+
+const SubscriptionContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Subscription)
 
 export default SubscriptionContainer
