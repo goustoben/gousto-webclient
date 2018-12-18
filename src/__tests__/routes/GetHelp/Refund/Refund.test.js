@@ -101,7 +101,7 @@ describe('<Refund />', () => {
     test('refund data is fetched', () => {
       expect(fetchRefundAmount).toHaveBeenCalledWith('123', {
         customer_id: 999,
-        ingredient_ids: ['1234'],
+        ingredient_ids: ['1234', '1234'],
         order_id: 888
       })
     })

@@ -147,15 +147,28 @@ describe('<IngredientReasons />', () => {
           'issueName': 'Missing ingredients',
           'label': '1 can of chopped tomatoes (210g)',
           'recipeId': '1917'
+        },
+        '1494-bbb': {
+          'ingredientId': 'bbb',
+          'issueDescription': 'And this is my other issue...',
+          'issueId': '104',
+          'issueName': 'Fruit or Veg - Mouldy',
+          'label': '1 can of chopped tomatoes (210g)',
+          'recipeId': '1494'
         }
       }
       const issueDetails = getHelpLayout.find('div.issueDetails')
-      const textarea = issueDetails.at(0).find('textarea')
+      const textarea1 = issueDetails.at(0).find('textarea')
+      const textarea2 = issueDetails.at(1).find('textarea')
       const Button2 = getHelpLayout.find('Button').at(1)
 
-      textarea.simulate(
+      textarea1.simulate(
         'change', { target: { value: 'This is my issue...' } }
       )
+      textarea2.simulate(
+        'change', { target: { value: 'And this is my other issue...' } }
+      )
+
       Button2.props().onClick()
 
       expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith(expectedIssueReasons)
