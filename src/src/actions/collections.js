@@ -16,6 +16,12 @@ function collectionsLoadCollections({ date, limit, offset, type } = {}) {
       dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, true))
       dispatch(statusActions.error(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, null))
       const accessToken = getState().auth.get('accessToken')
+      const isAuthenticated = getState().auth.get('isAuthenticated')
+      const experiments = (isAuthenticated) ? {
+        experiments: {
+          'justforyou_v2': true,
+        },
+      } : {}
       let filters
 
       if (type) {
@@ -33,6 +39,7 @@ function collectionsLoadCollections({ date, limit, offset, type } = {}) {
         limit,
         filters,
         offset,
+        ...experiments,
       }
 
       try {

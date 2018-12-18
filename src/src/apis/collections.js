@@ -4,8 +4,8 @@ import routes from 'config/routes'
 
 const version = routes.version.collections
 
-export function fetchCollections(accessToken, path, reqData, includeExperiments = true) {
-  return fetch(accessToken, `${endpoint('collections', version)}/collections/${path}`, reqData, 'GET', 'default', {}, null, false, includeExperiments)
+export function fetchCollections(accessToken, path, reqData) {
+  return fetch(accessToken, `${endpoint('collections', version)}/collections/${path}`, reqData, 'GET', 'default', {}, null, false, false)
 }
 
 export function fetchCollectionRecipes(accessToken, collectionId, reqData, includeExperiments = true) {

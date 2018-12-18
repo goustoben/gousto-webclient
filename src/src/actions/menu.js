@@ -137,10 +137,17 @@ function menuLoadCollections(date, noUrlChange) {
   return async (dispatch, getState) => {
     const state = getState()
     const accessToken = state.auth.get('accessToken')
+    const isAuthenticated = state.auth.get('isAuthenticated')
+    const experiments = (isAuthenticated) ? {
+      experiments: {
+        'justforyou_v2': true,
+      },
+    } : {}
     const args = {
       filters: {
         available_on: date,
       },
+      ...experiments,
     }
     const { data: collections } = await fetchCollections(accessToken, '', args)
     const filterExperiment = state.features.getIn(['filterMenu', 'value'])
