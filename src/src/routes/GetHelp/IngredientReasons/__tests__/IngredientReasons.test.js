@@ -1,4 +1,5 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import { mount } from 'enzyme'
 import { IngredientReasons } from 'routes/GetHelp/IngredientReasons/IngredientReasons.logic'
 
@@ -100,6 +101,18 @@ describe('<IngredientReasons />', () => {
   })
 
   describe('behaviour', () => {
+    beforeEach(() => {
+      browserHistory.push = jest.fn()
+      wrapper = mount(
+        <IngredientReasons
+          content={content}
+          ingredientsAndIssues={ingredientsAndIssues}
+          storeIngredientIssueDescriptions={storeSelectedIngredientIssueSpy}
+        />
+      )
+      getHelpLayout = wrapper.find('GetHelpLayout')
+    })
+
     test('submit button is enabled when all descriptions are filled', () => {
       const Button2 = getHelpLayout.find('Button').at(1)
       const issueDetails = getHelpLayout.find('div.issueDetails')
@@ -172,6 +185,13 @@ describe('<IngredientReasons />', () => {
       Button2.props().onClick()
 
       expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith(expectedIssueReasons)
+    })
+
+    test('redirect happens when the Submit button is clicked', () => {
+      const Button2 = getHelpLayout.find('Button').at(1)
+      Button2.props().onClick()
+
+      expect(browserHistory.push).toHaveBeenCalledWith('/get-help/refund')
     })
   })
 })
