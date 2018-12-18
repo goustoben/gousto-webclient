@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { browserHistory } from 'react-router'
 import { client as routes } from 'config/routes'
 import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 
@@ -126,26 +127,18 @@ describe('<Refund />', () => {
 
     describe('when user accepts the refund offer', () => {
       let Button
-      let assignSpy
 
       beforeEach(() => {
         getHelpLayout = wrapper.find('GetHelpLayout')
-        assignSpy = jest.spyOn(window.location, 'assign')
-        assignSpy.mockReturnValueOnce(null)
+        browserHistory.push = jest.fn()
         const BottomBar = getHelpLayout.find('BottomBar')
         Button = BottomBar.find('Button').at(1)
       })
 
-      afterEach(() => {
-        assignSpy.mockReset()
-      })
-
-      test('redirect is called', async () => {
+      test('redirection happens when clicking Accept Refund button', async () => {
         await Button.props().onClick()
 
-        expect(assignSpy).toHaveBeenCalledTimes(1)
-
-        assignSpy.mockReset()
+        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
       })
 
       test('setComplaint is called with correct parameters', async () => {
@@ -179,9 +172,7 @@ describe('<Refund />', () => {
           setComplaint.mockImplementationOnce(() => { throw new Error('error') })
           await Button.props().onClick()
 
-          expect(assignSpy).toHaveBeenCalledTimes(0)
-
-          assignSpy.mockReset()
+          expect(browserHistory.push).toHaveBeenCalledTimes(0)
         })
       })
     })

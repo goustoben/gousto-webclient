@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { browserHistory } from 'react-router'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import Loading from 'Loading'
 import { Button } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
-import { redirect } from 'utils/window'
 import { replaceWithValues } from 'utils/text'
 import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 import { BottomButton } from '../components/BottomButton'
@@ -94,7 +94,7 @@ class Refund extends PureComponent {
         issues
       })
 
-      redirect(routes.getHelp.confirmation)
+      browserHistory.push(`${routes.getHelp.index}/${routes.getHelp.confirmation}`)
 
       return response
     } catch (err) {

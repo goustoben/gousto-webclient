@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
 import { IngredientReasonsPresentation } from './IngredientReasons.presentation'
 
@@ -41,11 +42,6 @@ class IngredientReasons extends PureComponent {
       }
     }
 
-    const newState = {
-      ...this.state,
-      issueReasons: { ...issueReasons, ...newIssueReasons },
-    }
-
     this.setState({
       ...this.state,
       issueReasons: { ...issueReasons, ...newIssueReasons },
@@ -57,6 +53,7 @@ class IngredientReasons extends PureComponent {
     const { issueReasons } = this.state
 
     storeIngredientIssueDescriptions(issueReasons)
+    browserHistory.push(`${client.getHelp.index}/${client.getHelp.refund}`)
   }
 
   isSubmitDisabled = () => {
