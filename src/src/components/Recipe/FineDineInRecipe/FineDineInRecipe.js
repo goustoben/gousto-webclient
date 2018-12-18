@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
+import Svg from 'components/Svg'
+import { getChef } from 'utils/recipe'
 import css from './FineDineInRecipe.css'
 import Title from '../Title'
 import AddButton from '../AddButton'
@@ -10,8 +12,6 @@ import TasteScore from '../TasteScore'
 import CookingTime from '../CookingTime'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
-import Svg from 'components/Svg'
-import { getChef } from 'utils/recipe'
 import { recipePropTypes } from 'Recipe'
 
 const FineDineInRecipe = (props) => {
@@ -59,7 +59,7 @@ const FineDineInRecipe = (props) => {
 							</div>
 						</div>
 
-						<AddButton id={props.id} stock={props.stock} inBasket={props.inBasket} view={props.view} position={props.position} surcharge={props.surcharge} />
+						<AddButton id={props.id} stock={props.stock} inBasket={props.inBasket} view={props.view} position={props.position} surcharge={props.surcharge} score={props.tasteScore} />
 						<DisabledOverlay stock={props.stock} inBasket={props.inBasket} />
 					</div>
 				</div>

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
+import RangeBadge from 'Recipe/RangeBadge'
 import css from './FeaturedRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
@@ -11,7 +12,6 @@ import ChefQuote from '../ChefQuote'
 import UseWithin from '../UseWithin'
 import TasteScore from '../TasteScore'
 import CookingTime from '../CookingTime'
-import RangeBadge from 'Recipe/RangeBadge'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import EquipmentRequired from '../EquipmentRequired'
@@ -71,7 +71,7 @@ const FeaturedRecipe = (props) => (
 							</div>
 						</span>
 					</div>
-					<AddButton id={props.id} stock={props.stock} inBasket={props.inBasket} view={props.view} position={props.position} surcharge={props.surcharge} />
+					<AddButton id={props.id} stock={props.stock} inBasket={props.inBasket} view={props.view} position={props.position} surcharge={props.surcharge} score={props.tasteScore} />
 					<DisabledOverlay stock={props.stock} inBasket={props.inBasket} />
 				</div>
 			</div>

@@ -71,7 +71,7 @@ const GridRecipe = (props) => (
 						/>
 					</div>
 				</div>
-				<AddButton id={props.id} stock={props.stock} inBasket={props.inBasket} view={props.view} position={props.position} surcharge={props.surcharge} />
+				<AddButton id={props.id} stock={props.stock} inBasket={props.inBasket} view={props.view} position={props.position} surcharge={props.surcharge} score={props.tasteScore} />
 				<DisabledOverlay stock={props.stock} inBasket={props.inBasket} />
 			</div>
 		</div>
