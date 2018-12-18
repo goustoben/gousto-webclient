@@ -8,7 +8,7 @@ import { getSlot } from 'utils/deliveries'
 import { isValidPromoCode } from 'utils/order'
 import { basketResetPersistent } from 'utils/basket'
 
-import { getAboutYouFormName } from 'selectors/checkout'
+import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import actionTypes from './actionTypes'
 import basketActions from './basket'
 import loginActions from './login'
@@ -265,7 +265,9 @@ export function trackingOrderPlace(isSignup, paymentProvider) {
   return(dispatch, getState) => {
     const { tracking, basket, pricing, form } = getState()
     const prices = pricing.get('prices')
-    const interval_id = form.getIn(['checkout', 'values', 'delivery', 'interval_id'], '1')
+    const deliveryFormName = getDeliveryFormName(getState())
+    const deliveryInputs = Immutable.fromJS(form[deliveryFormName].values)
+    const interval_id = deliveryInputs.getIn(['delivery', 'interval_id'], '1')
 
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE,
@@ -309,7 +311,8 @@ export function trackingCardTokenisationSuccessfully(){
 export const trackSubscriptionIntervalChanged = () => (
   (dispatch, getState) => {
     try {
-      const checkoutInputs = Immutable.fromJS(getState().form.checkout.values)
+      const deliveryFormName = getDeliveryFormName(getState())
+      const checkoutInputs = Immutable.fromJS(getState().form[deliveryFormName].values)
       const interval_id = checkoutInputs.getIn(['delivery', 'interval_id'], '1')
 
       dispatch({
