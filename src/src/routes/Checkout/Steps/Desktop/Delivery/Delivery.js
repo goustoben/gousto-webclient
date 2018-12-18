@@ -12,6 +12,7 @@ const sectionName = 'delivery'
 const DeliverySection = DeliveryContainer(sectionName)
 
 const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFirstMatchingRef }) => {
+
   const isAddressConfirmed = formValues && formValues[sectionName] && formValues[sectionName].confirmed
 
   return (
@@ -33,6 +34,6 @@ DeliveryStep.propTypes = {
   scrollToFirstMatchingRef: PropTypes.func,
 }
 
-const DeliveryYouForm = formContainer(DeliveryStep, delivery(sectionName), 'checkout', validationMessages(sectionName)) // eslint-disable-line import/no-mutable-exports
+const DeliveryYouForm = formContainer(DeliveryStep, delivery(sectionName), sectionName, validationMessages(sectionName)) // eslint-disable-line import/no-mutable-exports
 
 export default addInitialValues(DeliveryYouForm, { sectionName })

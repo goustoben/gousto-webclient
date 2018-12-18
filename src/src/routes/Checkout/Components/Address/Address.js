@@ -52,7 +52,6 @@ class Address extends React.PureComponent {
 
 	componentWillMount() {
 	  const { initialPostcode, sectionName, formName, change, touch } = this.props
-
 	  // use initial postcode
 	  if (initialPostcode) {
 	    change(formName, `${sectionName}.postcodeTemp`, initialPostcode)

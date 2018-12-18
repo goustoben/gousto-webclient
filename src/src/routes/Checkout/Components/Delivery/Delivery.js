@@ -5,10 +5,10 @@ import * as deliveryUtils from 'routes/Checkout/utils/delivery'
 import globals from 'config/globals'
 import scrollIntoView from 'scroll-into-view'
 
+import Subscription from 'routes/Checkout/Components/Subscription'
 import css from './Delivery.css'
 import DeliveryDetails from './DeliveryDetails'
 import DeliveryAddress from './DeliveryAddress'
-import Subscription from 'routes/Checkout/Components/Subscription'
 
 class Delivery extends React.PureComponent {
 	static propTypes = {
@@ -83,6 +83,7 @@ class Delivery extends React.PureComponent {
 	)
 
 	render() {
+	  
 	  return (
 			<div ref={el => { this.container = el }}>
 				<Subscription sectionName={this.props.sectionName} />
