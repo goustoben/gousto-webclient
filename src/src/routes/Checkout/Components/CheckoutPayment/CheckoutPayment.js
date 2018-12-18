@@ -19,7 +19,9 @@ export class CheckoutPayment extends React.Component {
     receiveRef: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
     asyncValidate: PropTypes.func,
-    trackingOrderPlace: PropTypes.func,
+    trackingOrderPlaceAttempt: PropTypes.func,
+    trackingOrderPlaceAttemptFailed: PropTypes.func,
+    trackingOrderPlaceAttemptSucceeded: PropTypes.func,
     touch: PropTypes.func,
     formErrors: PropTypes.object,
     sectionName: PropTypes.string,
@@ -34,7 +36,9 @@ export class CheckoutPayment extends React.Component {
     receiveRef: () => {},
     scrollToFirstMatchingRef: () => {},
     asyncValidate: () => {},
-    trackingOrderPlace: () => {},
+    trackingOrderPlaceAttempt: () => {},
+    trackingOrderPlaceAttemptFailed: () => {},
+    trackingOrderPlaceAttemptSucceeded: () => {},
     reloadCheckoutScript: () => {},
     touch: () => {},
     formErrors: {},
@@ -76,12 +80,14 @@ export class CheckoutPayment extends React.Component {
   }
 
   handleClick = () => {
-    const { trackingOrderPlace } = this.props
+    const { trackingOrderPlaceAttempt, trackingOrderPlaceAttemptFailed, trackingOrderPlaceAttemptSucceeded } = this.props
+    trackingOrderPlaceAttempt()
 
     if (this.isFormValid()) {
-      trackingOrderPlace(true, 'checkout')
+      trackingOrderPlaceAttemptSucceeded(true)
       this.enableCardSubmission()
     } else {
+      trackingOrderPlaceAttemptFailed()
       this.applyValidationErrors()
     }
   }

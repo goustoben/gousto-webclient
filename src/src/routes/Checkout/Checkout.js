@@ -54,7 +54,6 @@ class Checkout extends React.PureComponent {
     submitOrder: PropTypes.func,
     menuLoadBoxPrices: PropTypes.func,
     trackSignupStep: PropTypes.func,
-    trackingOrderPlace: PropTypes.func,
     tariffId: PropTypes.string,
     checkoutPaymentFeature: PropTypes.bool,
   }
@@ -207,7 +206,7 @@ class Checkout extends React.PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
-    const { browser, checkoutPaymentFeature, submitOrder, trackingOrderPlace } = this.props
+    const { browser, checkoutPaymentFeature, submitOrder } = this.props
     const { checkoutScriptReady } = this.state
     const step = stepMapping[currentStep]
     const isCheckoutPaymentStep = checkoutPaymentFeature && currentStep === 'payment'
@@ -218,7 +217,6 @@ class Checkout extends React.PureComponent {
       reloadCheckoutScript: this.reloadCheckoutScript,
       submitOrder,
       browser,
-      trackingOrderPlace,
       checkoutScriptReady,
     }
 
