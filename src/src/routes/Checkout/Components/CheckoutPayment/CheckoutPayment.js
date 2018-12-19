@@ -84,7 +84,7 @@ export class CheckoutPayment extends React.Component {
     trackingOrderPlaceAttempt()
 
     if (this.isFormValid()) {
-      trackingOrderPlaceAttemptSucceeded(true)
+      trackingOrderPlaceAttemptSucceeded()
       this.enableCardSubmission()
     } else {
       trackingOrderPlaceAttemptFailed()
