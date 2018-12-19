@@ -84,7 +84,7 @@ describe('<Refund />', () => {
           content={content}
           user={{ id: '0', accessToken: '123' }}
           order={{ id: '0' }}
-          selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+          selectedIngredients={selectedIngredients}
         />
       )
 
@@ -114,7 +114,7 @@ describe('<Refund />', () => {
           content={content}
           user={{ id: '0', accessToken: '123' }}
           order={{ id: '0' }}
-          selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+          selectedIngredients={selectedIngredients}
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
