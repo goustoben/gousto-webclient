@@ -19,7 +19,6 @@ const CheckoutContainer = connect(mapStateToProps, {
   menuLoadDays: actions.menuLoadDays,
   redirect: actions.redirect,
   submitOrder: actions.checkoutSignup,
-  trackingOrderPlace: actions.trackingOrderPlace,
   menuLoadBoxPrices: actions.menuLoadBoxPrices,
   loadPrices: actions.pricingRequest,
   trackSignupStep: actions.trackSignupPageChange,

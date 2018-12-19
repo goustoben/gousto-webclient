@@ -1,5 +1,6 @@
 import { getFormAsyncErrors, getFormSyncErrors, touch } from 'redux-form'
 import { connect } from 'react-redux'
+import { trackingOrderPlaceAttemptSucceeded, trackingOrderPlaceAttempt, trackingOrderPlaceAttemptFailed } from 'actions/checkout'
 
 import formContainer from '../formContainer'
 import { addInitialValues, getValidationRules } from './form'
@@ -15,6 +16,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   touch,
+  trackingOrderPlaceAttempt,
+  trackingOrderPlaceAttemptFailed,
+  trackingOrderPlaceAttemptSucceeded
 }
 
 const ConnectedCheckoutPaymentContainer = connect(
