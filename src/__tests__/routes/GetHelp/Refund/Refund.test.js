@@ -22,13 +22,13 @@ describe('<Refund />', () => {
       recipeId: '1010',
       ingredientId: '1234',
       issueId: '999999',
-      issueDescription: 'a description'
+      issueDescription: 'a description <> <script>alert("hi")<script>'
     },
     '2020-1234': {
       recipeId: '2020',
       ingredientId: '1234',
       issueId: '999999',
-      issueDescription: 'another description'
+      issueDescription: 'another <> &description'
     },
   }
   let wrapper
@@ -141,7 +141,7 @@ describe('<Refund />', () => {
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
       })
 
-      test('setComplaint is called with correct parameters', async () => {
+      test('setComplaint is called with correct parameters and descriptions are sanitised', async () => {
         await Button.props().onClick()
 
         expect(setComplaint).toHaveBeenCalledWith(
@@ -155,12 +155,12 @@ describe('<Refund />', () => {
               {
                 ingredient_id: '1234',
                 category_id: 999999,
-                description: 'a description'
+                description: 'a description &lt;&gt; '
               },
               {
                 ingredient_id: '1234',
                 category_id: 999999,
-                description: 'another description'
+                description: 'another &lt;&gt; &amp;description'
               },
             ],
           }
