@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
+import { Button } from 'goustouicomponents'
 import { BottomButton } from '../components/BottomButton'
 import css from './IngredientReasons.css'
 
@@ -14,16 +15,16 @@ const propTypes = {
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   buttonLeftUrl: PropTypes.string.isRequired,
-  buttonRightUrl: PropTypes.string.isRequired,
-  ingredientsAndIssues: PropTypes.objectOf(
+  isSubmitDisabled: PropTypes.bool.isRequired,
+  ingredientReasons: PropTypes.objectOf(
     PropTypes.shape({
-      recipeId: PropTypes.string.isRequired,
-      ingredientId: PropTypes.string.isRequired,
-      issueId: PropTypes.string.isRequired,
       issueName: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
+      issueDescription: PropTypes.string,
     })
   ).isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 }
 
 const IngredientReasonsPresentation = ({
@@ -35,38 +36,46 @@ const IngredientReasonsPresentation = ({
     button2Copy,
   },
   buttonLeftUrl,
-  buttonRightUrl,
-  ingredientsAndIssues,
+  isSubmitDisabled,
+  ingredientReasons,
+  onChange,
+  onSubmit,
 }) => (
   <GetHelpLayout title={title} body={body}>
     <p>{secondBody}</p>
-    {renderIngredientReasonsForm(ingredientsAndIssues)}
+    {renderIngredientReasonsForm(ingredientReasons, onChange)}
     <BottomBar>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         {button1Copy}
       </BottomButton>
-      <BottomButton color="primary" url={buttonRightUrl} clientRouted>
+      <Button
+        color="primary"
+        disabled={isSubmitDisabled}
+        onClick={onSubmit}
+      >
         {button2Copy}
-      </BottomButton>
+      </Button>
     </BottomBar>
   </GetHelpLayout>
 )
 
-const renderIngredientReasonsForm = (ingredientsAndIssues) => {
-  return Object.keys(ingredientsAndIssues).map(key => {
+const renderIngredientReasonsForm = (ingredientReasons, onChange) => {
+  return Object.keys(ingredientReasons).map(key => {
     const {
-      recipeId,
-      ingredientId,
-      issueId,
       issueName,
       label
-    } = ingredientsAndIssues[key]
-    const recipeIngredientAndIssueIds = `${recipeId}-${ingredientId}-${issueId}`
+    } = ingredientReasons[key]
 
     return (
-      <div key={recipeIngredientAndIssueIds} className={css.issueDetails}>
+      <div key={key} className={css.issueDetails}>
         <p>{issueName} - {label}</p>
-        <textarea id={recipeIngredientAndIssueIds} />
+        <textarea
+          id={key}
+          value={ingredientReasons[key].issueDescription}
+          onChange={
+            (event) => onChange(key, event.target.value)
+          }
+        />
       </div>
     )
   })

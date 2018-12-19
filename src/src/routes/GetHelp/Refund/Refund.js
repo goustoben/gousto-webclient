@@ -1,13 +1,14 @@
-import React, { PropTypes, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import { browserHistory } from 'react-router'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import Loading from 'Loading'
 import { Button } from 'goustouicomponents'
-import { BottomButton } from '../components/BottomButton'
 import { client as routes } from 'config/routes'
-import { redirect } from 'utils/window'
 import { replaceWithValues } from 'utils/text'
 import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
+import { BottomButton } from '../components/BottomButton'
 
 import css from './Refund.css'
 
@@ -28,12 +29,12 @@ class Refund extends PureComponent {
     order: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }).isRequired,
-    selectedIngredients: PropTypes.arrayOf(
-      PropTypes.shape({
-        recipeId: PropTypes.string.isRequired,
-        ingredientId: PropTypes.string.isRequired,
-      })
-    ).isRequired,
+    selectedIngredients: PropTypes.objectOf(PropTypes.shape({
+      ingredientId: PropTypes.string.isRequired,
+      issueDescription: PropTypes.string.isRequired,
+      issueId: PropTypes.string.isRequired,
+      recipeId: PropTypes.string.isRequired,
+    })).isRequired,
   }
 
   state = {
@@ -53,8 +54,8 @@ class Refund extends PureComponent {
       const response = await fetchRefundAmount(user.accessToken, {
         customer_id: Number(user.id),
         order_id: Number(order.id),
-        ingredient_ids: selectedIngredients.map(
-          selectedIngredient => selectedIngredient.ingredientId
+        ingredient_ids: Object.keys(selectedIngredients).map(
+          key => selectedIngredients[key].ingredientId
         ),
       })
       const { value, type } = response.data
@@ -76,8 +77,12 @@ class Refund extends PureComponent {
     const { user, order, selectedIngredients } = this.props
     const { refund } = this.state
 
-    const issues = selectedIngredients.map((selectedIngredient) => (
-      { ingredient_id: selectedIngredient.ingredientId, category_id: 98 }
+    const issues = Object.keys(selectedIngredients).map(key => (
+      {
+        category_id: Number(selectedIngredients[key].issueId),
+        ingredient_id: selectedIngredients[key].ingredientId,
+        description: selectedIngredients[key].issueDescription,
+      }
     ))
 
     try {
@@ -89,7 +94,7 @@ class Refund extends PureComponent {
         issues
       })
 
-      redirect(routes.getHelp.confirmation)
+      browserHistory.push(`${routes.getHelp.index}/${routes.getHelp.confirmation}`)
 
       return response
     } catch (err) {
@@ -136,8 +141,8 @@ class Refund extends PureComponent {
         color="primary"
         onClick={() => this.onAcceptOffer()}
       >
-        {button2WithAmount}
-      </Button>
+          {button2WithAmount}
+        </Button>
 
     return (
       <GetHelpLayout

@@ -36,6 +36,11 @@ const storeSelectedIngredientIssue = (ingredientAndRecipeId, issueId, issueName)
   issueName,
 })
 
+const storeIngredientIssueDescriptions = (issueReasons) => dispatcher({
+  type: actionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_REASONS,
+  issueReasons,
+})
+
 const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredientIds }) => {
   return async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
@@ -116,6 +121,7 @@ export {
   selectOrderIssue,
   selectContactChannel,
   storeGetHelpOrderId,
+  storeIngredientIssueDescriptions,
   storeSelectedIngredients,
   storeSelectedIngredientIssue,
   validateSelectedIngredients,

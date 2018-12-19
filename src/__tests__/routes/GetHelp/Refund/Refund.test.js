@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { browserHistory } from 'react-router'
 import { client as routes } from 'config/routes'
 import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 
@@ -16,6 +17,20 @@ describe('<Refund />', () => {
     button1: 'button1 copy',
     button2: 'button2 £{{refundAmount}} copy',
   }
+  const selectedIngredients = {
+    '1010-1234': {
+      recipeId: '1010',
+      ingredientId: '1234',
+      issueId: '999999',
+      issueDescription: 'a description'
+    },
+    '2020-1234': {
+      recipeId: '2020',
+      ingredientId: '1234',
+      issueId: '999999',
+      issueDescription: 'another description'
+    },
+  }
   let wrapper
   let getHelpLayout
 
@@ -25,7 +40,7 @@ describe('<Refund />', () => {
         content={content}
         user={{ id: '999', accessToken: '123' }}
         order={{ id: '888' }}
-        selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+        selectedIngredients={selectedIngredients}
       />
     )
 
@@ -87,7 +102,7 @@ describe('<Refund />', () => {
     test('refund data is fetched', () => {
       expect(fetchRefundAmount).toHaveBeenCalledWith('123', {
         customer_id: 999,
-        ingredient_ids: ['1234'],
+        ingredient_ids: ['1234', '1234'],
         order_id: 888
       })
     })
@@ -112,29 +127,21 @@ describe('<Refund />', () => {
 
     describe('when user accepts the refund offer', () => {
       let Button
-      let assignSpy
 
       beforeEach(() => {
         getHelpLayout = wrapper.find('GetHelpLayout')
-        assignSpy = jest.spyOn(window.location, 'assign')
-        assignSpy.mockReturnValueOnce(null)
+        browserHistory.push = jest.fn()
         const BottomBar = getHelpLayout.find('BottomBar')
         Button = BottomBar.find('Button').at(1)
       })
 
-      afterEach(() => {
-        assignSpy.mockReset()
-      })
-
-      test('redirect is called', async () => {
+      test('redirection happens when clicking Accept Refund button', async () => {
         await Button.props().onClick()
 
-        expect(assignSpy).toHaveBeenCalledTimes(1)
-
-        assignSpy.mockReset()
+        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
       })
 
-      test('setComplaint is called', async () => {
+      test('setComplaint is called with correct parameters', async () => {
         await Button.props().onClick()
 
         expect(setComplaint).toHaveBeenCalledWith(
@@ -144,7 +151,18 @@ describe('<Refund />', () => {
             order_id: 888,
             type: 'a-type',
             value: 7.77,
-            issues: [{ ingredient_id: '1234', category_id: 98 }],
+            issues: [
+              {
+                ingredient_id: '1234',
+                category_id: 999999,
+                description: 'a description'
+              },
+              {
+                ingredient_id: '1234',
+                category_id: 999999,
+                description: 'another description'
+              },
+            ],
           }
         )
       })
@@ -154,9 +172,7 @@ describe('<Refund />', () => {
           setComplaint.mockImplementationOnce(() => { throw new Error('error') })
           await Button.props().onClick()
 
-          expect(assignSpy).toHaveBeenCalledTimes(0)
-
-          assignSpy.mockReset()
+          expect(browserHistory.push).toHaveBeenCalledTimes(0)
         })
       })
     })

@@ -1,28 +1,38 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import { Button } from 'goustouicomponents'
 import Link from 'Link'
 
 import css from './BottomButton.css'
 
-const BottomButton = ({ color, url, clientRouted, children }) => (
-	<Button color={color} width="auto" className={css.button} areChildrenInSegment>
-		<Link
-		  noDecoration
-		  className={css.buttonChild}
-		  clientRouted={clientRouted}
-		  to={url}
-		>
-			{children}
-		</Link>
-	</Button>
+const BottomButton = ({ color, clientRouted, url, children }) => (
+  <Button
+    areChildrenInSegment
+    color={color}
+    className={css.button}
+    width="auto"
+  >
+    <Link
+      noDecoration
+      className={css.buttonChild}
+      clientRouted={clientRouted}
+      to={url}
+    >
+      {children}
+    </Link>
+  </Button>
 )
 
+BottomButton.defaultProps = {
+  disabled: false
+}
+
 BottomButton.propTypes = {
-  url: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired,
-  clientRouted: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
+  clientRouted: PropTypes.bool.isRequired,
+  color: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 }
 
 export {
