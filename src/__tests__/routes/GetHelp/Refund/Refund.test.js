@@ -31,6 +31,7 @@ describe('<Refund />', () => {
       issueDescription: 'another description'
     },
   }
+  const trackAcceptRefundSpy = jest.fn()
   let wrapper
   let getHelpLayout
 
@@ -41,6 +42,7 @@ describe('<Refund />', () => {
         user={{ id: '999', accessToken: '123' }}
         order={{ id: '888' }}
         selectedIngredients={selectedIngredients}
+        trackAcceptRefund={trackAcceptRefundSpy}
       />
     )
 
@@ -85,6 +87,7 @@ describe('<Refund />', () => {
           user={{ id: '0', accessToken: '123' }}
           order={{ id: '0' }}
           selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+          trackAcceptRefund={() => {}}
         />
       )
 
@@ -115,6 +118,7 @@ describe('<Refund />', () => {
           user={{ id: '0', accessToken: '123' }}
           order={{ id: '0' }}
           selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+          trackAcceptRefund={() => {}}
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
@@ -165,6 +169,12 @@ describe('<Refund />', () => {
             ],
           }
         )
+      })
+
+      test('tracking action is being called when Accept offer button is clicked', async () => {
+        await Button.props().onClick()
+
+        expect(trackAcceptRefundSpy).toHaveBeenCalledWith(7.77)
       })
 
       describe('when setComplaint errors', () => {

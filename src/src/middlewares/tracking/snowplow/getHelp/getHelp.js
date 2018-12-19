@@ -2,6 +2,12 @@ import { seActions } from './seActions'
 
 const seCategory = 'Order Get Help'
 
+const acceptRefund = (action) => ({
+  type: seActions[action.type],
+  data: { amount: action.amount },
+  seCategory,
+})
+
 const selectContactChannel = (action) => ({
   type: seActions[action.type],
   data: { channel: action.channel },
@@ -27,6 +33,7 @@ const selectOrderIssue = (action) => ({
 })
 
 export {
+  acceptRefund,
   selectContactChannel,
   selectIngredients,
   selectIngredientIssues,

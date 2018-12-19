@@ -88,6 +88,7 @@ const Tracking = (action, state = {}, prevState = {}) => {
       [actions.RECIPE_FILTERS_DIETARY_ATTRIBUTE_SELECTED_TRACKING]: trackingUtils.trackEventWithData(recipesTracking.recipeDietaryAttributeSelected),
       [actions.RECIPE_FILTERS_DIETARY_ATTRIBUTE_UNSELECTED_TRACKING]: trackingUtils.trackEventWithData(recipesTracking.recipeDietaryAttributeUnselected),
       [actions.RECIPE_FILTERS_TOTAL_TIME_SELECTED_TRACKING]: trackingUtils.trackEventWithData(recipesTracking.recipeTotalTimeSelected),
+      [actions.GET_HELP_ACCEPT_REFUND]: trackingUtils.trackEventWithData(getHelpTracking.acceptRefund),
       [actions.GET_HELP_CONTACT_CHANNEL_SELECT]: trackingUtils.trackEventWithData(getHelpTracking.selectContactChannel),
       [actions.GET_HELP_STORE_SELECTED_INGREDIENTS]: trackingUtils.trackEventWithData(getHelpTracking.selectIngredients),
       [actions.GET_HELP_INGREDIENT_ISSUES_SELECT]: trackingUtils.trackEventWithData(getHelpTracking.selectIngredientIssues),

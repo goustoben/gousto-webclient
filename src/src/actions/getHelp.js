@@ -19,6 +19,11 @@ const trackIngredientIssues = (ingredientAndRecipeIdsWithIssueName) => dispatche
   ingredientAndRecipeIdsWithIssueName
 })
 
+const trackAcceptRefund = (amount) => dispatcher({
+  type: actionTypes.GET_HELP_ACCEPT_REFUND,
+  amount
+})
+
 const selectContactChannel = (channel) => dispatcher({
   type: actionTypes.GET_HELP_CONTACT_CHANNEL_SELECT,
   channel,
@@ -132,5 +137,6 @@ export {
   validateSelectedIngredients,
   validateLatestOrder,
   fetchIngredientIssues,
+  trackAcceptRefund,
   trackIngredientIssues,
 }

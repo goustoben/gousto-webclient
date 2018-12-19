@@ -3,6 +3,7 @@ import actions from 'actions/actionTypes'
 
 describe('snowplow get help tracking events', () => {
   const {
+    acceptRefund,
     selectOrderIssue,
     selectContactChannel,
     selectIngredients,
@@ -70,6 +71,21 @@ describe('snowplow get help tracking events', () => {
       }],
       seCategory: 'Order Get Help',
       type: 'IngredientsIssues Confirmed'
+    })
+  })
+
+  test('acceptRefund works correctly', () => {
+    const action = {
+      type: actions.GET_HELP_ACCEPT_REFUND,
+      amount: 2
+    }
+
+    expect(acceptRefund(action)).toEqual({
+      data: {
+        amount: 2
+      },
+      seCategory: 'Order Get Help',
+      type: 'Refund Accepted'
     })
   })
 })
