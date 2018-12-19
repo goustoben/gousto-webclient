@@ -10,7 +10,7 @@ const collectionActions = {
   collectionsLoadCollections,
 }
 
-function collectionsLoadCollections({ date, limit, offset, type } = {}) {
+export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
   return async (dispatch, getState) => {
     try {
       dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, true))
@@ -62,7 +62,7 @@ function collectionsLoadCollections({ date, limit, offset, type } = {}) {
   }
 }
 
-function collectionsLoadCollectionBySlug(collectionSlug) {
+export function collectionsLoadCollectionBySlug(collectionSlug) {
   return async dispatch => {
     try {
       dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, collectionSlug))
@@ -91,7 +91,7 @@ function collectionsLoadCollectionBySlug(collectionSlug) {
   }
 }
 
-function collectionsLoadCollectionRecipes(collectionId) {
+export function collectionsLoadCollectionRecipes(collectionId) {
   return async dispatch => {
     try {
       dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, true))
