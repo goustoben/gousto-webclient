@@ -7,4 +7,5 @@ export default {
   favicon: require('./favicon').default,
   mobileMeta: require('./mobileMeta').default,
   optimizely: require('./optimizely').default,
+  queueit: require('./queueit').default
 }

@@ -60,28 +60,36 @@ describe('<GetHelp />', () => {
       expect(wrapper.contains(<div className="test" />)).toBe(false)
     })
 
-    test('when loading state is set neither Error or div is being displayed', () => {
-      wrapper = mount(
-        <GetHelp
-          didRequestError={false}
-          orderId={"7"}
-          order={{}}
-          recipes={{}}
-          user={{ id: '123', accessToken: 'test' }}
-          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
-          storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          userLoadOrder={userLoadOrderSpy}
-          validateLatestOrder={validateLatestOrderSpy}
-          isRequestPending
-        >
-          <div className="test" />
-        </GetHelp>
-      )
+    describe('when loading', () => {
+      beforeEach(() => {
+        wrapper = mount(
+          <GetHelp
+            didRequestError={false}
+            orderId={"7"}
+            order={{}}
+            recipes={{}}
+            user={{ id: '123', accessToken: 'test' }}
+            recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+            storeGetHelpOrderId={storeGetHelpOrderIdSpy}
+            userLoadOrder={userLoadOrderSpy}
+            validateLatestOrder={validateLatestOrderSpy}
+            isRequestPending
+          >
+            <div className="test" />
+          </GetHelp>
+        )
+      })
 
-      expect(wrapper.find('Error')).toHaveLength(0)
-      expect(wrapper.contains(<div className="test" />)).toBe(false)
+      test('should not render Error or children', () => {
+        expect(wrapper.find('Error')).toHaveLength(0)
+        expect(wrapper.contains(<div className="test" />)).toBe(false)
+      })
+
+      test('should render a Loading animation', () => {
+        expect(wrapper.find('Loading')).toHaveLength(1)
+      })
     })
-
+    
     test('when path is Contact Us page, data is not fetched', () => {
       storeGetHelpOrderIdSpy.mockReset()
       userLoadOrderSpy.mockReset()

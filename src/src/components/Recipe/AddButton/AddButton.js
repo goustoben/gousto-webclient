@@ -3,9 +3,9 @@ import React, { PropTypes } from 'react'
 import Button from 'Recipe/Buttons'
 import config from 'config'
 
-const AddButton = ({ id, inBasket, position, stock, view, surcharge }) => (
+const AddButton = ({ id, inBasket, position, stock, view, surcharge, score }) => (
   (stock > config.menu.stockThreshold || stock === null || inBasket)
-    ? <Button position={position} recipeId={id} view={view} outOfstock={stock <= config.menu.stockThreshold && stock !== null} stock={stock} surcharge={surcharge} />
+    ? <Button position={position} recipeId={id} view={view} outOfstock={stock <= config.menu.stockThreshold && stock !== null} stock={stock} surcharge={surcharge} score={score} />
     : null
 )
 

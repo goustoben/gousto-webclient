@@ -8,6 +8,7 @@ import { getSlot } from 'utils/deliveries'
 import { isValidPromoCode } from 'utils/order'
 import { basketResetPersistent } from 'utils/basket'
 
+import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import actionTypes from './actionTypes'
 import basketActions from './basket'
 import loginActions from './login'
@@ -233,8 +234,10 @@ export function checkoutPostSignup() {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     try {
-      const checkoutInputs = Immutable.fromJS(getState().form.checkout.values)
-      const aboutYou = checkoutInputs.get('aboutyou')
+      const { form } = getState()
+      const aboutYouFormName = getAboutYouFormName(getState())
+      const aboutYouValues = Immutable.fromJS(form[aboutYouFormName].values)
+      const aboutYou = aboutYouValues.get('aboutyou')
       const email = aboutYou.get('email')
       const password = aboutYou.get('password')
       const orderId = getState().basket.get('previewOrderId')
@@ -260,8 +263,11 @@ export function trackSignupPageChange(step) {
 
 export function trackingOrderPlace(isSignup, paymentProvider) {
   return(dispatch, getState) => {
-    const { tracking, basket, pricing } = getState()
+    const { tracking, basket, pricing, form } = getState()
     const prices = pricing.get('prices')
+    const deliveryFormName = getDeliveryFormName(getState())
+    const deliveryInputs = Immutable.fromJS(form[deliveryFormName].values)
+    const interval_id = deliveryInputs.getIn(['delivery', 'interval_id'], '1')
 
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE,
@@ -273,6 +279,7 @@ export function trackingOrderPlace(isSignup, paymentProvider) {
         promo_code: prices.get('promoCode'),
         signup: isSignup,
         payment_provider: paymentProvider,
+        interval_id: interval_id,
       }
     })
   }
@@ -300,5 +307,25 @@ export function trackingCardTokenisationSuccessfully(){
     })
   }
 }
+
+export const trackSubscriptionIntervalChanged = () => (
+  (dispatch, getState) => {
+    try {
+      const deliveryFormName = getDeliveryFormName(getState())
+      const checkoutInputs = Immutable.fromJS(getState().form[deliveryFormName].values)
+      const interval_id = checkoutInputs.getIn(['delivery', 'interval_id'], '1')
+
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'SubscriptionFrequency Changed',
+          interval_id,
+        }
+      })
+    } catch (e) {
+      logger.notice(e.message)
+    }
+  }
+)
 
 export default checkoutActions

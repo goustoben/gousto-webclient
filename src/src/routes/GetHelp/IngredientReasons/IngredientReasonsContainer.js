@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { storeIngredientIssueDescriptions } from 'actions/getHelp'
 import { IngredientReasons } from './IngredientReasons.logic'
 
 const mapStateToProps = (state) => {
@@ -14,11 +15,15 @@ const mapStateToProps = (state) => {
       || 'back',
       button2Copy: state.content.get('get-help_ingredientreasons_pagecontent_button2copy')
       || 'submit details',
-    }
+    },
+    ingredientsAndIssues: state.getHelp.get('selectedIngredients').toJS(),
   }
 }
 
-const IngredientReasonsContainer = connect(mapStateToProps)(IngredientReasons)
+const IngredientReasonsContainer = connect(
+  mapStateToProps, {
+    storeIngredientIssueDescriptions,
+  })(IngredientReasons)
 
 export {
   IngredientReasonsContainer

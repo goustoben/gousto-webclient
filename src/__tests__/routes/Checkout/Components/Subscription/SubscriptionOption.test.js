@@ -20,7 +20,7 @@ describe('SubscriptionOption', () => {
     })
 
     test('should render when description prop is set', () => {
-      wrapper = shallow(<SubscriptionOption description="Leave the weekly shop to us" />)
+      wrapper = shallow(<SubscriptionOption description={["Leave the weekly shop to us"]} />)
 
       expect(wrapper.find('.description').length).toBe(1)
     })

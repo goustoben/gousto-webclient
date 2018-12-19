@@ -1,5 +1,5 @@
 import actionTypes from 'actions/actionTypes'
-import { fromJS } from 'immutable'
+import { fromJS, Map } from 'immutable'
 
 const getHelpInitialState = fromJS({
   ingredientIssues: [],
@@ -9,7 +9,7 @@ const getHelpInitialState = fromJS({
     recipeItems: [],
   },
   recipes: [],
-  selectedIngredients: [],
+  selectedIngredients: {},
 })
 
 const reduceRecipes = (recipes) => (
@@ -36,7 +36,43 @@ const getHelp = (state, action) => {
     return state.setIn(['order', 'id'], action.id)
   }
   case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS: {
-    return state.set('selectedIngredients', fromJS(action.selectedIngredients))
+    const selectedIngredients = action.selectedIngredientAndRecipeIds
+      .reduce((accumulator, selectedIngredientAndRecipeId) => {
+        const { recipeId, ingredientId } = selectedIngredientAndRecipeId
+
+        const currentRecipe = state.get('recipes')
+          .find(recipe => recipe.get('id') === recipeId)
+
+        const currentIngredient = currentRecipe && currentRecipe.get('ingredients')
+          .find(ingredient => ingredient.get('id') === ingredientId)
+
+        return accumulator.set(`${recipeId}-${ingredientId}`, fromJS({
+          ...selectedIngredientAndRecipeId,
+          label: currentIngredient.get('label'),
+        }))
+      }, Map())
+
+    return state.set('selectedIngredients', selectedIngredients)
+  }
+  case actionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE: {
+    const { ingredientAndRecipeId, issueName } = action
+    const issueId = String(action.issueId)
+
+    return state
+      .setIn(['selectedIngredients', ingredientAndRecipeId, 'issueId'], issueId)
+      .setIn(['selectedIngredients', ingredientAndRecipeId, 'issueName'], issueName)
+  }
+  case actionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_REASONS: {
+    const issueReasons = Object.keys(action.issueReasons)
+      .reduce((accumulator, key) => {
+        const { recipeId, ingredientId } = action.issueReasons[key]
+
+        return accumulator.set(`${recipeId}-${ingredientId}`, fromJS({
+          ...action.issueReasons[key],
+        }))
+      }, state.get('selectedIngredients'))
+
+    return state.set('selectedIngredients', issueReasons)
   }
   case actionTypes.RECIPES_RECEIVE: {
     const recipes = fromJS(reduceRecipes(action.recipes))

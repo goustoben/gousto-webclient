@@ -28,6 +28,8 @@
 }
 
 .bodyDescription {
+	font-weight: bold;
+
 	@media ScreenXXSMin {
 		align-self: center;
 	}

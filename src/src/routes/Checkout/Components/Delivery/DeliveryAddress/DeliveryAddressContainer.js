@@ -2,8 +2,8 @@ import { connect } from 'react-redux'
 import { Map } from 'immutable'
 import { getFormSyncErrors, getFormAsyncErrors, getFormMeta, change, untouch, touch, registerField } from 'redux-form'
 
-import Address from '../../Address'
 import actions from 'actions'
+import Address from '../../Address'
 
 function getCutoffDate(state) {
   const date = state.basket.get('date')
@@ -15,6 +15,7 @@ function getCutoffDate(state) {
 }
 
 function mapStateToProps(state, ownProps) {
+
   return {
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
     formValues: ownProps.formValues,

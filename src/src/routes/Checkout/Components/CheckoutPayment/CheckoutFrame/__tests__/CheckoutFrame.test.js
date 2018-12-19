@@ -217,7 +217,7 @@ describe('CheckoutFrame', () => {
     beforeEach(() => {
       wrapper = mount(<CheckoutFrame
         change={change}
-        formName={"checkout"}
+        formName={"payment"}
         sectionName={"payment"}
         cardTokenReady={cardTokenReady}
         trackingCardTokenisationSuccessfully={jest.fn()}
@@ -244,7 +244,7 @@ describe('CheckoutFrame', () => {
     })
 
     test('should call change with the correct parameters', () => {
-      expect(change).toHaveBeenCalledWith('checkout', 'payment.token', 'test-token')
+      expect(change).toHaveBeenCalledWith('payment', 'payment.token', 'test-token')
     })
 
     test('should call the cardTokenReady prop', () => {
@@ -262,7 +262,7 @@ describe('CheckoutFrame', () => {
       mount(
         <CheckoutFrame
           change={change}
-          formName="checkout"
+          formName="payment"
           sectionName="payment"
           cardTokenReady={cardTokenReady}
           checkoutFrameReady={checkoutFrameReady}

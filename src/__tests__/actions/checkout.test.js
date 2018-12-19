@@ -86,15 +86,15 @@ const createState = (stateOverrides) => ({
     },
   }),
   form: {
-    checkout: {
+    aboutyou: {
       values: {
         aboutyou: {
           email: 'test@test.com',
         },
-        payment: {
-          postcode: 'w37un',
-          houseNo: '1',
-        },
+      }
+    },
+    delivery: {
+      values: {
         delivery: {
           phone: '01234567890',
           cardNumber: '1234567890',
@@ -102,6 +102,14 @@ const createState = (stateOverrides) => ({
         },
       },
     },
+    payment: {
+      values: {
+        payment: {
+          postcode: 'w37un',
+          houseNo: '1',
+        },
+      }
+    }
   },
   menuBoxPrices: Immutable.fromJS({
     2: {

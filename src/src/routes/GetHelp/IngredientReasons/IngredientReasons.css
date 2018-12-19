@@ -1,0 +1,19 @@
+.issueDetails {
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.issueDetails textarea {
+	width: 100%;
+	height: 80px;
+	border: 1px solid black;
+}
+
+.button {
+	align-self: center;
+	flex-grow: 0.4;
+
+	@media ScreenXXSMax {
+		align-self: center;
+	}
+}
