@@ -1,3 +1,5 @@
-import * as getHelp from './getHelp'
+import * as getHelpTracking from './getHelp'
 
-export default getHelp
+export {
+  getHelpTracking
+}
