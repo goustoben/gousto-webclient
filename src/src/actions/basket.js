@@ -325,12 +325,12 @@ export default {
               actionType: actionTypes.RECIPE_ADDED,
               recipeId,
               view,
-              position: recipeInfo.position,
+              position: recipeInfo && recipeInfo.position,
               collection: getCurrentCollectionId(state),
               recipe_type: getCurrentDietTypes(state),
               dietary_attribute: getDietaryAttributes(state),
               time_frame: getCurrentTotalTime(state),
-              taste_score: recipeInfo.score,
+              taste_score: recipeInfo && recipeInfo.score,
               recipe_count: basket.get('recipes').size+1,// The action is performed in the same time so the size is not updated yet
             },
           })
