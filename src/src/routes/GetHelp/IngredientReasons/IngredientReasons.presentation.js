@@ -49,6 +49,7 @@ const IngredientReasonsPresentation = ({
         {button1Copy}
       </BottomButton>
       <Button
+        className={css.button}
         color="primary"
         disabled={isSubmitDisabled}
         onClick={onSubmit}
