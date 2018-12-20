@@ -49,6 +49,10 @@ describe('features reducers', () => {
         justforyou_v2: {
           experiment: false,
           value: false,
+        },
+        queueIt: {
+          experiment: false,
+          value: false,
         }
       })
       const result = features.features(state, action)
@@ -88,6 +92,10 @@ describe('features reducers', () => {
           value: true,
         },
         justforyou_v2: {
+          experiment: false,
+          value: false,
+        },
+        queueIt: {
           experiment: false,
           value: false,
         }
@@ -137,6 +145,10 @@ describe('features reducers', () => {
           value: true,
         },
         justforyou_v2: {
+          experiment: false,
+          value: false,
+        },
+        queueIt: {
           experiment: false,
           value: false,
         }
