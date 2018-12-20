@@ -213,7 +213,7 @@ class Menu extends React.Component {
 				  style={menu.helmet.style}
 				/>
 				<div className={classnames(css.container, overlayShowCSS)}>
-					<Banner />
+					<Banner switchoverDate={menu.jwBanner.switchoverDate} />
 					<SubHeader
 					  viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
 					  onToggleGridView={this.toggleGridView}
