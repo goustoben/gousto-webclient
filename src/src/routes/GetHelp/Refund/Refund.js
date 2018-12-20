@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
+import DOMPurify from 'dompurify'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import Loading from 'Loading'
@@ -82,7 +83,7 @@ class Refund extends PureComponent {
       {
         category_id: Number(selectedIngredients[key].issueId),
         ingredient_id: selectedIngredients[key].ingredientId,
-        description: selectedIngredients[key].issueDescription,
+        description: DOMPurify.sanitize(selectedIngredients[key].issueDescription),
       }
     ))
 
