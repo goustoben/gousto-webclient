@@ -16,6 +16,7 @@ import userActions from './user'
 import statusActions from './status'
 import GoustoException from '../utils/GoustoException'
 import Cookies from '../utils/GoustoCookies'
+import { getFormSyncErrors } from 'redux-form'
 
 const { pending, error } = statusActions
 
@@ -28,7 +29,9 @@ const checkoutActions = {
   resetDuplicateCheck,
   trackSignupPageChange,
   checkoutFetchIntervals,
-  trackingOrderPlace,
+  trackingOrderPlaceAttempt,
+  trackingOrderPlaceAttemptFailed,
+  trackingOrderPlaceAttemptSucceeded,
 }
 
 export function checkoutClearErrors() {
@@ -261,25 +264,55 @@ export function trackSignupPageChange(step) {
   }
 }
 
-export function trackingOrderPlace(isSignup, paymentProvider) {
+export function trackingOrderPlaceAttempt() {
   return(dispatch, getState) => {
-    const { tracking, basket, pricing, form } = getState()
+    const { basket, pricing } = getState()
+    const prices = pricing.get('prices')
+    
+    dispatch({
+      type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT,
+      trackingData: {
+        actionType: 'Order Place Attempt',
+        order_id: basket.get('previewOrderId'),
+        order_total: prices.get('grossTotal'),
+        promo_code: prices.get('promoCode'),
+        payment_provider: 'checkout'
+      }
+    })
+  }
+}
+
+export function trackingOrderPlaceAttemptFailed() {
+  return(dispatch, getState) => {
+    const errorMessages = getFormSyncErrors('payment')(getState()).payment
+
+    dispatch({
+      type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT_FAILED,
+      trackingData: {
+        actionType: 'Order Place Attempt Failed',
+        missing_fields: Object.values(errorMessages)
+      }
+    })
+  }
+}
+
+export function trackingOrderPlaceAttemptSucceeded() {
+  return(dispatch, getState) => {
+    const { basket, pricing, form } = getState()
     const prices = pricing.get('prices')
     const deliveryFormName = getDeliveryFormName(getState())
     const deliveryInputs = Immutable.fromJS(form[deliveryFormName].values)
     const interval_id = deliveryInputs.getIn(['delivery', 'interval_id'], '1')
 
     dispatch({
-      type: actionTypes.CHECKOUT_ORDER_PLACE,
+      type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT_SUCCEEDED,
       trackingData: {
-        actionType: 'Order Place',
-        asource: tracking.get('asource'),
+        actionType: 'Order Place Attempt Succeeded',
         order_id: basket.get('previewOrderId'),
         order_total: prices.get('grossTotal'),
         promo_code: prices.get('promoCode'),
-        signup: isSignup,
-        payment_provider: paymentProvider,
         interval_id: interval_id,
+        payment_provider: 'checkout'
       }
     })
   }

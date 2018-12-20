@@ -36,6 +36,7 @@ class Refund extends PureComponent {
       issueId: PropTypes.string.isRequired,
       recipeId: PropTypes.string.isRequired,
     })).isRequired,
+    trackAcceptRefund: PropTypes.func.isRequired,
   }
 
   state = {
@@ -75,7 +76,7 @@ class Refund extends PureComponent {
   }
 
   onAcceptOffer = async () => {
-    const { user, order, selectedIngredients } = this.props
+    const { user, order, selectedIngredients, trackAcceptRefund } = this.props
     const { refund } = this.state
 
     const issues = Object.keys(selectedIngredients).map(key => (
@@ -95,6 +96,7 @@ class Refund extends PureComponent {
         issues
       })
 
+      trackAcceptRefund(refund.value)
       browserHistory.push(`${routes.getHelp.index}/${routes.getHelp.confirmation}`)
 
       return response

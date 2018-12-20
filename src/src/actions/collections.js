@@ -10,12 +10,18 @@ const collectionActions = {
   collectionsLoadCollections,
 }
 
-function collectionsLoadCollections({ date, limit, offset, type } = {}) {
+export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
   return async (dispatch, getState) => {
     try {
       dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, true))
       dispatch(statusActions.error(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, null))
       const accessToken = getState().auth.get('accessToken')
+      const isAuthenticated = getState().auth.get('isAuthenticated')
+      const experiments = (isAuthenticated) ? {
+        experiments: {
+          'justforyou_v2': true,
+        },
+      } : {}
       let filters
 
       if (type) {
@@ -33,6 +39,7 @@ function collectionsLoadCollections({ date, limit, offset, type } = {}) {
         limit,
         filters,
         offset,
+        ...experiments,
       }
 
       try {
@@ -55,7 +62,7 @@ function collectionsLoadCollections({ date, limit, offset, type } = {}) {
   }
 }
 
-function collectionsLoadCollectionBySlug(collectionSlug) {
+export function collectionsLoadCollectionBySlug(collectionSlug) {
   return async dispatch => {
     try {
       dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS, collectionSlug))
@@ -84,7 +91,7 @@ function collectionsLoadCollectionBySlug(collectionSlug) {
   }
 }
 
-function collectionsLoadCollectionRecipes(collectionId) {
+export function collectionsLoadCollectionRecipes(collectionId) {
   return async dispatch => {
     try {
       dispatch(statusActions.pending(actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES, true))

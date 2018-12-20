@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-import css from './ChristmasBanner.css'
 import Gel from 'Gel'
 import config from 'config/menu'
+import css from './ChristmasBanner.css'
 
-const Banner = ({ hide }) => (
+const ChristmasBanner = ({ hide }) => (
   hide ? null :
     <div className={classnames(css.container, { [css.hide]: hide })}>
       <div className={css.contentContainer}>
@@ -17,12 +18,14 @@ const Banner = ({ hide }) => (
     </div>
 )
 
-Banner.defaultProps = {
+ChristmasBanner.defaultProps = {
   hide: false,
 }
 
-Banner.propTypes = {
+ChristmasBanner.propTypes = {
   hide: PropTypes.bool,
 }
 
-export default Banner
+export {
+  ChristmasBanner
+}

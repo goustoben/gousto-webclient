@@ -14,14 +14,18 @@ import Summary from '../../Summary'
 describe('CheckoutPayment', () => {
   let wrapper
 
-  const trackingOrderPlace = jest.fn()
+  const trackingOrderPlaceAttempt = jest.fn()
+  const trackingOrderPlaceAttemptFailed = jest.fn()
+  const trackingOrderPlaceAttemptSucceeded = jest.fn()
   const touch = jest.fn()
   const submit = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
       <CheckoutPayment
-        trackingOrderPlace={trackingOrderPlace}
+        trackingOrderPlaceAttempt={trackingOrderPlaceAttempt}
+        trackingOrderPlaceAttemptFailed={trackingOrderPlaceAttemptFailed}
+        trackingOrderPlaceAttemptSucceeded={trackingOrderPlaceAttemptSucceeded}
         touch={touch}
         submit={submit}
       />
@@ -29,7 +33,9 @@ describe('CheckoutPayment', () => {
   })
 
   afterEach(() => {
-    trackingOrderPlace.mockClear()
+    trackingOrderPlaceAttempt.mockClear()
+    trackingOrderPlaceAttemptFailed.mockClear()
+    trackingOrderPlaceAttemptSucceeded.mockClear()
     touch.mockClear()
     submit.mockClear()
   })
@@ -78,7 +84,9 @@ describe('CheckoutPayment', () => {
     test('should render BoxDetails and Summary if view is mobile', () => {
       wrapper = shallow(
         <CheckoutPayment
-          trackingOrderPlace={trackingOrderPlace}
+          trackingOrderPlaceAttempt={trackingOrderPlaceAttempt}
+          trackingOrderPlaceAttemptFailed={trackingOrderPlaceAttemptFailed}
+          trackingOrderPlaceAttemptSucceeded={trackingOrderPlaceAttemptSucceeded}
           touch={touch}
           submit={submit}
           browser={'mobile'}
@@ -91,7 +99,9 @@ describe('CheckoutPayment', () => {
     test('should NOT render BoxDetails and Summary if view is desktop', () => {
       wrapper = shallow(
         <CheckoutPayment
-          trackingOrderPlace={trackingOrderPlace}
+          trackingOrderPlaceAttempt={trackingOrderPlaceAttempt}
+          trackingOrderPlaceAttemptFailed={trackingOrderPlaceAttemptFailed}
+          trackingOrderPlaceAttemptSucceeded={trackingOrderPlaceAttemptSucceeded}
           touch={touch}
           submit={submit}
           browser={'desktop'}
@@ -103,6 +113,13 @@ describe('CheckoutPayment', () => {
   })
 
   describe('user clicks on submit button', () => {
+    
+    test('should call trackingOrderPlaceAttempt prop', () => {
+      wrapper.find(SubmitButton).simulate('click')
+
+      expect(trackingOrderPlaceAttempt).toHaveBeenCalled()
+    })
+
     describe('when form is valid', () => {
       beforeEach(() => {
         wrapper.setProps({ formErrors: {} })
@@ -116,13 +133,13 @@ describe('CheckoutPayment', () => {
         expect(wrapper.state().isSubmitCardEnabled).toBe(true)
       })
 
-      test('should call trackingOrderPlace prop with correct arguments', () => {
+      test('should call trackingOrderPlaceAttemptSucceeded prop', () => {
         wrapper.find(SubmitButton).simulate('click')
 
-        expect(trackingOrderPlace).toHaveBeenCalledWith(true, 'checkout')
+        expect(trackingOrderPlaceAttemptSucceeded).toHaveBeenCalled()
       })
     })
-
+    
     describe('when form errors do have error', () => {
       const formErrors = {
         payment: {
@@ -145,6 +162,12 @@ describe('CheckoutPayment', () => {
         expect(touch.mock.calls[0][1]).toBe('payment[cardName]')
         expect(touch.mock.calls[1][0]).toBe(formName)
         expect(touch.mock.calls[1][1]).toBe('payment[town]')
+      })
+
+      test('should call trackingOrderPlaceAttemptFailed prop', () => {
+        wrapper.find(SubmitButton).simulate('click')
+  
+        expect(trackingOrderPlaceAttemptFailed).toHaveBeenCalledWith()
       })
     })
   })

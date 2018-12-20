@@ -42,14 +42,14 @@ const menuActions = {
   menuReceiveBoxPrices,
 }
 
-function menuReceiveMenu(recipes) {
+export function menuReceiveMenu(recipes) {
   return ({
     type: actionTypes.RECIPES_RECEIVE,
     recipes,
   })
 }
 
-function menuReceiveCollectionRecipes(collectionId, recipes) {
+export function menuReceiveCollectionRecipes(collectionId, recipes) {
   return ({
     type: actionTypes.MENU_COLLECTION_RECIPES_RECEIVE,
     collectionId,
@@ -57,7 +57,7 @@ function menuReceiveCollectionRecipes(collectionId, recipes) {
   })
 }
 
-function menuReceiveBoxPrices(prices, tariffId) {
+export function menuReceiveBoxPrices(prices, tariffId) {
   return ({
     type: actionTypes.MENU_BOX_PRICES_RECEIVE,
     prices,
@@ -65,28 +65,28 @@ function menuReceiveBoxPrices(prices, tariffId) {
   })
 }
 
-function menuChangeRecipeStock(stock) {
+export function menuChangeRecipeStock(stock) {
   return ({
     type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
     stock,
   })
 }
 
-function menuReplaceRecipeStock(stock) {
+export function menuReplaceRecipeStock(stock) {
   return ({
     type: actionTypes.MENU_RECIPE_STOCK_REPLACE,
     stock,
   })
 }
 
-function menuRecieveMenuPending(pending) {
+export function menuRecieveMenuPending(pending) {
   return ({
     type: actionTypes.MENU_RECIPES_RECEIVE_PENDING,
     pending,
   })
 }
 
-function findSlot(deliveryDays, coreSlotId) {
+export function findSlot(deliveryDays, coreSlotId) {
   let slotId
   deliveryDays.some(deliveryDay => {
     const matchedSlot = deliveryDay.get('slots').find(slot => {
@@ -109,14 +109,14 @@ function findSlot(deliveryDays, coreSlotId) {
   return slotId
 }
 
-function menuCutoffUntilReceive(cutoffUntil) {
+export function menuCutoffUntilReceive(cutoffUntil) {
   return {
     type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
     cutoffUntil,
   }
 }
 
-function menuLoadDays() {
+export function menuLoadDays() {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const { data: dates = [] } = await fetchAvailableDates(accessToken)
@@ -126,21 +126,28 @@ function menuLoadDays() {
   }
 }
 
-function menuCollectionsReceive(collections) {
+export function menuCollectionsReceive(collections) {
   return {
     type: actionTypes.MENU_COLLECTIONS_RECEIVE,
     collections,
   }
 }
 
-function menuLoadCollections(date, noUrlChange) {
+export function menuLoadCollections(date, noUrlChange) {
   return async (dispatch, getState) => {
     const state = getState()
     const accessToken = state.auth.get('accessToken')
+    const isAuthenticated = state.auth.get('isAuthenticated')
+    const experiments = (isAuthenticated) ? {
+      experiments: {
+        'justforyou_v2': true,
+      },
+    } : {}
     const args = {
       filters: {
         available_on: date,
       },
+      ...experiments,
     }
     const { data: collections } = await fetchCollections(accessToken, '', args)
     const filterExperiment = state.features.getIn(['filterMenu', 'value'])
@@ -176,7 +183,7 @@ function menuLoadCollections(date, noUrlChange) {
   }
 }
 
-function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
+export function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
   return async (dispatch, getState) => {
     const state = getState()
     const accessToken = state.auth.get('accessToken')
@@ -197,7 +204,7 @@ function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
   }
 }
 
-function menuLoadCollectionsRecipes(date) {
+export function menuLoadCollectionsRecipes(date) {
   return (dispatch, getState) => {
     const allRecipesCollections = getState().menuCollections.filter(isAllRecipes)
     const ids = Array.from(getState().menuCollections.keys())
@@ -221,7 +228,7 @@ function menuLoadCollectionsRecipes(date) {
   }
 }
 
-function menuLoadMenu(cutoffDateTime = null, background) {
+export function menuLoadMenu(cutoffDateTime = null, background) {
   return async (dispatch, getState) => {
     const state = getState()
     const reqData = {
@@ -272,7 +279,7 @@ function menuLoadMenu(cutoffDateTime = null, background) {
   }
 }
 
-function menuLoadBoxPrices() {
+export function menuLoadBoxPrices() {
   return async (dispatch, getState) => {
     try {
       const promoCode = getState().basket.get('promoCode')
@@ -313,7 +320,7 @@ function menuLoadBoxPrices() {
   }
 }
 
-function menuLoadOrderDetails(orderId) {
+export function menuLoadOrderDetails(orderId) {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
@@ -360,13 +367,13 @@ function menuLoadOrderDetails(orderId) {
   }
 }
 
-function menuClearStock() {
+export function menuClearStock() {
   return {
     type: actionTypes.MENU_RECIPE_STOCK_CLEAR,
   }
 }
 
-function menuLoadStock(clearStock = true) {
+export function menuLoadStock(clearStock = true) {
   return async (dispatch, getState) => {
     let dispatchMethod = menuReplaceRecipeStock
     if (!clearStock) {
@@ -409,7 +416,7 @@ function menuLoadStock(clearStock = true) {
   }
 }
 
-function menuRecipeDetailVisibilityChange(recipeId) {
+export function menuRecipeDetailVisibilityChange(recipeId) {
   return (dispatch, getState) => {
     dispatch({
       type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
@@ -435,14 +442,14 @@ function menuRecipeDetailVisibilityChange(recipeId) {
   }
 }
 
-function menuFilterVegetarianChange(filter) {
+export function menuFilterVegetarianChange(filter) {
   return {
     type: actionTypes.MENU_FILTER_VEGETARIAN,
     filter,
   }
 }
 
-function menuAddEmptyStock() {
+export function menuAddEmptyStock() {
   return (dispatch, getState) => {
     const recipesIds = getState().menuRecipes
     const stocks = recipesIds.reduce((stock, recipeId) => ({ ...stock, [recipeId]: { 2: null, 4: null } }), {})
@@ -454,14 +461,14 @@ function menuAddEmptyStock() {
   }
 }
 
-function menuBrowseCTAVisibilityChange(show) {
+export function menuBrowseCTAVisibilityChange(show) {
   return {
     type: actionTypes.MENU_BROWSE_CTA_VISIBILITY_CHANGE,
     show,
   }
 }
 
-function menuMobileGridViewSet(from, to) {
+export function menuMobileGridViewSet(from, to) {
   return {
     type: actionTypes.MENU_MOBILE_GRID_VIEW_SET,
     trackingData: {
@@ -472,7 +479,7 @@ function menuMobileGridViewSet(from, to) {
   }
 }
 
-const forceMenuLoad = (forceLoad) => ({
+export const forceMenuLoad = (forceLoad) => ({
   type: actionTypes.MENU_FORCE_LOAD,
   forceLoad,
 })

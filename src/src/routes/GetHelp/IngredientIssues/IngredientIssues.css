@@ -4,3 +4,12 @@
 	text-align: left;
 	font-size: 18px;
 }
+
+.button {
+	align-self: center;
+	flex-grow: 0.4;
+
+	@media ScreenXXSMax {
+		align-self: center;
+	}
+}
