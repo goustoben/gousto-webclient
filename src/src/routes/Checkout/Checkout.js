@@ -137,13 +137,17 @@ class Checkout extends React.PureComponent {
   }
 
   componentDidMount() {
-    /* global QueueIt */
-    QueueIt.validateUser(true)
     Overlay.forceCloseAll()
-
+    
     const { store } = this.context
-    const { checkoutPaymentFeature, query = {}, params = {}, browser, trackSignupStep } = this.props
-
+    const { checkoutPaymentFeature, query = {}, params = {}, browser, trackSignupStep, queueItFeature } = this.props
+    
+    console.log("​componentDidMount -> queueItFeature", queueItFeature) //eslint-disable-line
+    /* global QueueIt */
+    if (queueItFeature) {
+      QueueIt.validateUser(true)
+    }
+    
     Checkout.fetchData({ store, query, params, browser }).then(() => {
       trackSignupStep(1)
     }).then(() => {

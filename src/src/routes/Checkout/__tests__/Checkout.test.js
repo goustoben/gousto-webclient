@@ -344,7 +344,23 @@ describe('Checkout', () => {
       })
     })
 
-    test('should call QueueIt.validateUser', () => {
+    test('should call QueueIt.validateUser if queueIt feature flag is set to true', () => {
+      wrapper = shallow(<Checkout
+        queueItFeature
+      />)
+
+      wrapper.instance().componentDidMount()
+      
+      expect(QueueIt.validateUser).toHaveBeenCalled()
+    })
+    
+    test('should call QueueIt.validateUser if queueIt feature flag is set to false', () => {
+      wrapper = shallow(<Checkout
+        queueItFeature={false}
+      />)
+
+      wrapper.instance().componentDidMount()
+
       expect(QueueIt.validateUser).toHaveBeenCalled()
     })
   })
