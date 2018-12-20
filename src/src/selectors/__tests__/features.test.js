@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 
 import {
   isCollectionsFeatureEnabled,
-  isJustForYouFeatureEnabled,
   getCollectionFreezeValue,
   isCheckoutPaymentFeatureEnabled
 } from 'selectors/features'
@@ -12,10 +11,6 @@ describe('when features are undefined', () => {
 
   it('isCollectionsFeatureEnabled should return false', () => {
     expect(isCollectionsFeatureEnabled(state)).toBe(false)
-  })
-
-  it('isJustForYouFeatureEnabled should return false', () => {
-    expect(isJustForYouFeatureEnabled(state)).toBe(false)
   })
 
   it('getCollectionFreezeValue should return empty string', () => {
@@ -75,36 +70,6 @@ describe('when features are defined', () => {
 
       it('should return false', () => {
         expect(isCollectionsFeatureEnabled(state)).toBe(false)
-      })
-    })
-  })
-
-  describe('isJustForYouFeatureEnabled', () => {
-    describe('when justforyou feature is enabled', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          justforyou_v2: {
-            value: true
-          }
-        })
-      })
-
-      it('should return true', () => {
-        expect(isJustForYouFeatureEnabled(state)).toBe(true)
-      })
-    })
-
-    describe('when justforyou feature is disabled', () => {
-      beforeEach(() => {
-        state.features = Immutable.fromJS({
-          justforyou_v2: {
-            value: false
-          }
-        })
-      })
-
-      it('should return false', () => {
-        expect(isJustForYouFeatureEnabled(state)).toBe(false)
       })
     })
   })

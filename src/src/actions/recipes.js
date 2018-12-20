@@ -64,13 +64,6 @@ const recipesLoadStockByDate = (whenStart, whenCutoff) => (
   }
 )
 
-export const saveRecommendations = (recommendations) =>(
-  (dispatch) => (
-    dispatch(featureSet('justforyou_v2', recommendations, true))
-  )
-
-)
-
 export default {
   recipesLoadRecipesById,
   recipesLoadStockByDate,

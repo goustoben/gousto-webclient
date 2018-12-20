@@ -33,13 +33,10 @@ describe('getPreselectedCollectionName', () => {
       })
     })
 
-    describe('and just for you feature is enabled', () => {
+    describe('and just for you collection is present', () => {
       beforeEach(() => {
-        state.features = Immutable.fromJS({
-          ...state.features.toJS(),
-          justforyou_v2: {
-            value: true
-          }
+        state.menuCollections = Immutable.fromJS({
+          recommendations: { slug: 'recommendations' },
         })
       })
 
@@ -60,14 +57,9 @@ describe('getPreselectedCollectionName', () => {
       })
     })
 
-    describe('and just for you feature is disabled', () => {
+    describe('and just for you collection is not present', () => {
       beforeEach(() => {
-        state.features = Immutable.fromJS({
-          ...state.features.toJS(),
-          justforyou_v2: {
-            value: false
-          }
-        })
+        state.menuCollections = Immutable.fromJS({})
       })
 
       it('should return collection name from query param', () => {

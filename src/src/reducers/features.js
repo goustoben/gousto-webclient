@@ -34,10 +34,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: true,
   },
-  justforyou_v2: {
-    experiment: false,
-    value: false,
-  }
 })
 
 const featureToggles = {
