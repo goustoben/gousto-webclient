@@ -83,7 +83,6 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 const logoutRedirect = () => (
   (dispatch) => {
     redirect('/')
-    dispatch(featureSet('justforyou_v2', false, false))
   }
 )
 
