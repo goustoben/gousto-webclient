@@ -12,8 +12,7 @@ const sectionName = 'payment'
 
 const PaymentSection = PaymentContainer(sectionName)
 
-const submitPayment = (trackingOrderPlace, submit) => {
-  trackingOrderPlace(true, 'sagepay')
+const submitPayment = (submit) => {
   submit()
 }
 
