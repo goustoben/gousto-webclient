@@ -49,6 +49,10 @@ describe('features reducers', () => {
         queueIt: {
           experiment: false,
           value: false,
+        },
+        queueIt: {
+          experiment: false,
+          value: false,
         }
       })
       const result = features.features(state, action)
@@ -86,6 +90,10 @@ describe('features reducers', () => {
         skipRecovery: {
           experiment: false,
           value: true,
+        },
+        queueIt: {
+          experiment: false,
+          value: false,
         },
         queueIt: {
           experiment: false,
@@ -135,6 +143,10 @@ describe('features reducers', () => {
         skipRecovery: {
           experiment: false,
           value: true,
+        },
+        queueIt: {
+          experiment: false,
+          value: false,
         },
         queueIt: {
           experiment: false,
