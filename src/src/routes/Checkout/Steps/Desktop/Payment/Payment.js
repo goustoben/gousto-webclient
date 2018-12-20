@@ -13,10 +13,10 @@ const submitPayment = (submit) => {
   submit()
 }
 
-const PaymentStep = ({ submit, trackingOrderPlace, receiveRef, scrollToFirstMatchingRef }) => (
+const PaymentStep = ({ submit, receiveRef, scrollToFirstMatchingRef }) => (
 	<div>
 		<PaymentSection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} />
-		<SubmitButton onClick={() => submitPayment(trackingOrderPlace, submit)} />
+		<SubmitButton onClick={() => submitPayment(submit)} />
 	</div>
 )
 
