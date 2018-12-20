@@ -3,9 +3,10 @@ import logger from 'utils/logger'
 
 import actionTypes from 'actions/actionTypes'
 
-import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
-import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/features'
+import { hasJustForYouCollection } from 'selectors/collections'
+import { isCollectionsFeatureEnabled } from 'selectors/features'
+import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 
 import moment from 'moment'
 import { selectCollection, getPreselectedCollectionName } from './utils'
@@ -182,7 +183,7 @@ export default async function fetchData({ store, query, params }, force, backgro
     promises = promises.then(() => {
       const state = store.getState()
 
-      if (isCollectionsFeatureEnabled(state) || isJustForYouFeatureEnabled(state)) {
+      if (isCollectionsFeatureEnabled(state) || hasJustForYouCollection(state)) {
         const collectionName = getPreselectedCollectionName(state, query.collection)
         selectCollection(state, collectionName, store.dispatch)
       }
