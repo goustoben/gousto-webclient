@@ -3,7 +3,7 @@ import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
 import Loading from 'routes/Menu/Loading'
-import Banner from 'routes/Menu/Banner'
+import { Banner } from 'routes/Menu/Banner'
 import fetchData from 'routes/Menu/fetchData'
 import SubHeader from 'routes/Menu/SubHeader'
 import RecipeList from 'routes/Menu/RecipeList'
