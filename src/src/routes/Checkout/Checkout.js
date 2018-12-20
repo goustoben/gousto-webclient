@@ -142,7 +142,6 @@ class Checkout extends React.PureComponent {
     const { store } = this.context
     const { checkoutPaymentFeature, query = {}, params = {}, browser, trackSignupStep, queueItFeature } = this.props
     
-    console.log("​componentDidMount -> queueItFeature", queueItFeature) //eslint-disable-line
     /* global QueueIt */
     if (queueItFeature) {
       QueueIt.validateUser(true)
