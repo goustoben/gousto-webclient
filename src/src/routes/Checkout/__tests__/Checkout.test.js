@@ -329,7 +329,7 @@ describe('Checkout', () => {
     beforeEach(() => {
       fetchData = Checkout.fetchData = jest.fn().mockReturnValue(Promise.resolve())
       wrapper = mount(
-        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} />,
+        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature={false}/>,
         { context },
       )
       wrapper.instance().componentDidMount()
@@ -344,9 +344,30 @@ describe('Checkout', () => {
       })
     })
 
-    test('should call QueueIt.validateUser', () => {
+    test('should call QueueIt.validateUser if queueIt feature flag is set to true', () => {
+      wrapper = mount(
+        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature/>,
+        { context },
+      )
+
+      wrapper.instance().componentDidMount()
+      
       expect(QueueIt.validateUser).toHaveBeenCalled()
     })
+
+    test('should not call QueueIt.validateUser if queueIt feature flag is set to false', () => {
+      wrapper = mount(
+        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature={false}/>,
+        { context },
+      )
+
+      QueueIt.validateUser.mockClear()
+
+      wrapper.instance().componentDidMount()
+
+      expect(QueueIt.validateUser).not.toHaveBeenCalled()
+    })
+
   })
 
   describe('componentWillReceiveProps', () => {
