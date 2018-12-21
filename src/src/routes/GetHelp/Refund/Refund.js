@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
+import DOMPurify from 'dompurify'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import Loading from 'Loading'
@@ -35,6 +36,7 @@ class Refund extends PureComponent {
       issueId: PropTypes.string.isRequired,
       recipeId: PropTypes.string.isRequired,
     })).isRequired,
+    trackAcceptRefund: PropTypes.func.isRequired,
   }
 
   state = {
@@ -74,14 +76,14 @@ class Refund extends PureComponent {
   }
 
   onAcceptOffer = async () => {
-    const { user, order, selectedIngredients } = this.props
+    const { user, order, selectedIngredients, trackAcceptRefund } = this.props
     const { refund } = this.state
 
     const issues = Object.keys(selectedIngredients).map(key => (
       {
         category_id: Number(selectedIngredients[key].issueId),
         ingredient_id: selectedIngredients[key].ingredientId,
-        description: selectedIngredients[key].issueDescription,
+        description: DOMPurify.sanitize(selectedIngredients[key].issueDescription),
       }
     ))
 
@@ -94,6 +96,7 @@ class Refund extends PureComponent {
         issues
       })
 
+      trackAcceptRefund(refund.value)
       browserHistory.push(`${routes.getHelp.index}/${routes.getHelp.confirmation}`)
 
       return response

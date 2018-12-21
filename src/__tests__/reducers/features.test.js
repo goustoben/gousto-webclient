@@ -46,7 +46,11 @@ describe('features reducers', () => {
           experiment: false,
           value: true,
         },
-        justforyou_v2: {
+        queueIt: {
+          experiment: false,
+          value: false,
+        },
+        queueIt: {
           experiment: false,
           value: false,
         }
@@ -87,7 +91,11 @@ describe('features reducers', () => {
           experiment: false,
           value: true,
         },
-        justforyou_v2: {
+        queueIt: {
+          experiment: false,
+          value: false,
+        },
+        queueIt: {
           experiment: false,
           value: false,
         }
@@ -136,7 +144,11 @@ describe('features reducers', () => {
           experiment: false,
           value: true,
         },
-        justforyou_v2: {
+        queueIt: {
+          experiment: false,
+          value: false,
+        },
+        queueIt: {
           experiment: false,
           value: false,
         }

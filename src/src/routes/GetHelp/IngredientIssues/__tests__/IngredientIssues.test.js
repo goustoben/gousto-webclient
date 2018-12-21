@@ -1,6 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
-
+import { browserHistory } from 'react-router'
 import { IngredientIssues } from 'routes/GetHelp/IngredientIssues/IngredientIssues.logic'
 
 describe('<IngredientIssues />', () => {
@@ -54,6 +54,18 @@ describe('<IngredientIssues />', () => {
       requireDescription: true,
     },
   ]
+  const selectedIngredients = {
+    '1010-1234': {
+      recipeId: '1010',
+      ingredientId: '1234',
+      issueName: 'issue name 1',
+    },
+    '2020-1234': {
+      recipeId: '2020',
+      ingredientId: '1234',
+      issueName: 'issue name 2',
+    },
+  }
 
   describe('render', () => {
     const wrapper = mount(
@@ -63,6 +75,8 @@ describe('<IngredientIssues />', () => {
         fetchIngredientIssues={() => {}}
         issues={issues}
         storeSelectedIngredientIssue={() => {}}
+        selectedIngredients={selectedIngredients}
+        trackIngredientIssues={() => {}}
         subIssues={subIssues}
       />
     )
@@ -139,19 +153,17 @@ describe('<IngredientIssues />', () => {
     test('bottom bar buttons is rendering correctly', () => {
       const BottomBar = getHelpLayout.find('BottomBar')
       const Button1 = BottomBar.find('BottomButton').at(0)
-      const Button2 = BottomBar.find('BottomButton').at(1)
+      const Button2 = BottomBar.find('Button').at(1)
 
       expect(Button1.text()).toContain(content.button1Copy)
       expect(Button2.text()).toContain(content.button2Copy)
     })
 
-    test('buttons link to correct urls', () => {
+    test('button link to correct urls', () => {
       const BottomBar = getHelpLayout.find('BottomBar')
       const Button1 = BottomBar.find('BottomButton').at(0)
-      const Button2 = BottomBar.find('BottomButton').at(1)
 
       expect(Button1.prop('url')).toBe('/get-help/ingredients')
-      expect(Button2.prop('url')).toBe('/get-help/ingredient-reasons')
     })
   })
 
@@ -159,9 +171,13 @@ describe('<IngredientIssues />', () => {
     let wrapper
     let getHelpLayout
     let storeSelectedIngredientIssueSpy
+    let trackIngredientIssuesSpy
+
+    browserHistory.push = jest.fn()
 
     beforeEach(() => {
       storeSelectedIngredientIssueSpy = jest.fn()
+      trackIngredientIssuesSpy = jest.fn()
       wrapper = mount(
         <IngredientIssues
           content={content}
@@ -169,6 +185,8 @@ describe('<IngredientIssues />', () => {
           fetchIngredientIssues={() => {}}
           issues={issues}
           storeSelectedIngredientIssue={storeSelectedIngredientIssueSpy}
+          selectedIngredients={selectedIngredients}
+          trackIngredientIssues={trackIngredientIssuesSpy}
           subIssues={subIssues}
         />
       )
@@ -180,6 +198,18 @@ describe('<IngredientIssues />', () => {
       select.simulate('change', { target: { value: '104' } })
 
       expect(storeSelectedIngredientIssueSpy).toHaveBeenCalledWith('recipId1-ingId1', '104', 'Fruit or Veg - Mouldy')
+    })
+
+    test('tracking action and redirect is being called when Continue button is clicked', () => {
+      const BottomBar = getHelpLayout.find('BottomBar')
+      const Button2 = BottomBar.find('Button').at(1)
+      Button2.props().onClick()
+
+      expect(trackIngredientIssuesSpy).toHaveBeenCalledWith([
+        { ingredientId: '1234', issueName: 'issue name 1', recipeId: '1010' },
+        { ingredientId: '1234', issueName: 'issue name 2', recipeId: '2020' }
+      ])
+      expect(browserHistory.push).toHaveBeenCalledTimes(1)
     })
   })
 })

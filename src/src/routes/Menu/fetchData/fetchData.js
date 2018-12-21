@@ -2,36 +2,14 @@ import actions from 'actions'
 import logger from 'utils/logger'
 
 import actionTypes from 'actions/actionTypes'
-import { saveRecommendations } from 'actions/recipes'
 
-import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { isFacebookUserAgent } from 'utils/request'
-import { isJustForYouFeatureEnabled, isCollectionsFeatureEnabled } from 'selectors/features'
-import { fetchRecommendations } from 'apis/recipes'
+import { hasJustForYouCollection } from 'selectors/collections'
+import { isCollectionsFeatureEnabled } from 'selectors/features'
+import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 
 import moment from 'moment'
 import { selectCollection, getPreselectedCollectionName } from './utils'
-
-const loadRecommendations = async(store) => {
-  const accessToken = store.getState().auth.get('accessToken')
-  
-  let recommendations = false
-  try {
-
-    const { data = {} } = await fetchRecommendations(accessToken)
-
-    if (data[0] && data[0].properties && data[0].properties['just-for-you']) {
-      recommendations = data[0].properties['just-for-you']
-    }
-
-  } catch (err) {
-    logger.error({message: 'Error loading recommendation data for user', errors: [err]})
-  }
-
-  store.dispatch(saveRecommendations(recommendations))
-
-  return recommendations
-}
 
 export default async function fetchData({ store, query, params }, force, background) {
   const isAuthenticated = store.getState().auth.get('isAuthenticated')
@@ -67,10 +45,6 @@ export default async function fetchData({ store, query, params }, force, backgro
 	*/
   if (isAuthenticated && !store.getState().features.getIn(['forceCollections', 'value'])) {
     store.dispatch(actions.featureSet('forceCollections', true))
-  }
-
-  if (isAuthenticated) {
-    await loadRecommendations(store)
   }
 
   let fetchDataPromise
@@ -209,7 +183,7 @@ export default async function fetchData({ store, query, params }, force, backgro
     promises = promises.then(() => {
       const state = store.getState()
 
-      if (isCollectionsFeatureEnabled(state) || isJustForYouFeatureEnabled(state)) {
+      if (isCollectionsFeatureEnabled(state) || hasJustForYouCollection(state)) {
         const collectionName = getPreselectedCollectionName(state, query.collection)
         selectCollection(state, collectionName, store.dispatch)
       }
@@ -238,5 +212,3 @@ export default async function fetchData({ store, query, params }, force, backgro
 
   return fetchDataPromise
 }
-
-export { loadRecommendations }

@@ -1,7 +1,16 @@
 import React from 'react'
+import moment from 'moment'
 
-import ChristmasBanner from '../ChristmasBanner'
+import { JoeWicksBanner } from '../JoeWicksBanner'
+import { ChristmasBanner } from '../ChristmasBanner'
 
-const Banner = () => (<ChristmasBanner />)
+export const Banner = ({ switchoverDate }) => {
+  const now = moment()
+  const switchoverTime = moment(switchoverDate)
 
-export default Banner
+  return (now.isSameOrAfter(switchoverTime, 'day')) ? (
+    <JoeWicksBanner />
+  ) : (
+    <ChristmasBanner />
+  )
+}

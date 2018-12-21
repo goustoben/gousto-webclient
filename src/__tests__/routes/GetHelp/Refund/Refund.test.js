@@ -22,15 +22,21 @@ describe('<Refund />', () => {
       recipeId: '1010',
       ingredientId: '1234',
       issueId: '999999',
-      issueDescription: 'a description'
+      issueDescription: 'a description <> <script>alert("hi")<script>' +
+        '<b onmouseover=alert(\'Wufff!\')>click me!</b>' +
+        '<img src="http://url.to.file.which/not.exist" onerror=alert(document.cookie);>'
     },
     '2020-1234': {
       recipeId: '2020',
       ingredientId: '1234',
       issueId: '999999',
-      issueDescription: 'another description'
+      issueDescription: 'another &description' +
+        '<IMG SRC=j&#X41vascript:alert(\'test2\')>' +
+        '<META HTTP-EQUIV="refresh"' +
+        'CONTENT="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg">'
     },
   }
+  const trackAcceptRefundSpy = jest.fn()
   let wrapper
   let getHelpLayout
 
@@ -41,6 +47,7 @@ describe('<Refund />', () => {
         user={{ id: '999', accessToken: '123' }}
         order={{ id: '888' }}
         selectedIngredients={selectedIngredients}
+        trackAcceptRefund={trackAcceptRefundSpy}
       />
     )
 
@@ -84,7 +91,8 @@ describe('<Refund />', () => {
           content={content}
           user={{ id: '0', accessToken: '123' }}
           order={{ id: '0' }}
-          selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+          selectedIngredients={selectedIngredients}
+          trackAcceptRefund={() => {}}
         />
       )
 
@@ -114,7 +122,8 @@ describe('<Refund />', () => {
           content={content}
           user={{ id: '0', accessToken: '123' }}
           order={{ id: '0' }}
-          selectedIngredients={[{ recipeId: '1010', ingredientId: '1234' }]}
+          selectedIngredients={selectedIngredients}
+          trackAcceptRefund={() => {}}
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
@@ -141,7 +150,7 @@ describe('<Refund />', () => {
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
       })
 
-      test('setComplaint is called with correct parameters', async () => {
+      test('setComplaint is called with correct parameters and descriptions are sanitised', async () => {
         await Button.props().onClick()
 
         expect(setComplaint).toHaveBeenCalledWith(
@@ -155,16 +164,22 @@ describe('<Refund />', () => {
               {
                 ingredient_id: '1234',
                 category_id: 999999,
-                description: 'a description'
+                description: 'a description &lt;&gt; '
               },
               {
                 ingredient_id: '1234',
                 category_id: 999999,
-                description: 'another description'
+                description: 'another &amp;description<img>'
               },
             ],
           }
         )
+      })
+
+      test('tracking action is being called when Accept offer button is clicked', async () => {
+        await Button.props().onClick()
+
+        expect(trackAcceptRefundSpy).toHaveBeenCalledWith(7.77)
       })
 
       describe('when setComplaint errors', () => {

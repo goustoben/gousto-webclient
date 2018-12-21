@@ -34,7 +34,7 @@ const defaultFeatures = () => ({
     experiment: false,
     value: true,
   },
-  justforyou_v2: {
+  queueIt: {
     experiment: false,
     value: false,
   }

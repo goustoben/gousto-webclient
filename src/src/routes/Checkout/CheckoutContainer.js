@@ -10,7 +10,8 @@ function mapStateToProps(state, ownProps) {
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
     browser: state.request.get('browser'),
     tariffId: state.basket.get('tariffId'),
-    checkoutPaymentFeature: state.features.getIn(['checkoutPayment', 'value'])
+    checkoutPaymentFeature: state.features.getIn(['checkoutPayment', 'value']),
+    queueItFeature: state.features.getIn(['queueIt', 'value']) 
   }
 }
 

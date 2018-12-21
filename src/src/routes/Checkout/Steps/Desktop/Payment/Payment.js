@@ -9,15 +9,14 @@ const sectionName = 'payment'
 
 const PaymentSection = PaymentContainer(sectionName)
 
-const submitPayment = (trackingOrderPlace, submit) => {
-  trackingOrderPlace(true, 'sagepay')
+const submitPayment = (submit) => {
   submit()
 }
 
-const PaymentStep = ({ submit, trackingOrderPlace, receiveRef, scrollToFirstMatchingRef }) => (
+const PaymentStep = ({ submit, receiveRef, scrollToFirstMatchingRef }) => (
 	<div>
 		<PaymentSection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} />
-		<SubmitButton onClick={() => submitPayment(trackingOrderPlace, submit)} />
+		<SubmitButton onClick={() => submitPayment(submit)} />
 	</div>
 )
 

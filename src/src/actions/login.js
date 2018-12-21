@@ -14,8 +14,6 @@ import URL from 'url'
 import { push } from 'react-router-redux'
 import windowUtils from 'utils/window'
 import globals from 'config/globals'
-import { loadRecommendations } from '../routes/Menu/fetchData/fetchData'
-import goustoStore from 'store'
 
 const { pending, error } = statusActions
 const { redirect, documentLocation } = windowUtils
@@ -85,7 +83,6 @@ export const loginRedirect = (location, userIsAdmin, features) => {
 const logoutRedirect = () => (
   (dispatch) => {
     redirect('/')
-    dispatch(featureSet('justforyou_v2', false, false))
   }
 )
 
@@ -123,7 +120,6 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
           await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
         }
       }
-      loadRecommendations(goustoStore.store)
 
       setTimeout(() => {
         dispatch(loginVisibilityChange(false))

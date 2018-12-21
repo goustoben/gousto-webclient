@@ -2,8 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BottomBar from 'BottomBar'
 import GetHelpLayout from 'layouts/GetHelpLayout'
-import { Dropdown } from 'goustouicomponents'
+import { Button, Dropdown } from 'goustouicomponents'
 import { BottomButton } from '../components/BottomButton'
+
+import css from './IngredientIssues.css'
 
 const propTypes = {
   content: PropTypes.shape({
@@ -13,6 +15,7 @@ const propTypes = {
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   changeHandler: PropTypes.func.isRequired,
+  continueHandler: PropTypes.func.isRequired,
   ingredients: PropTypes.objectOf(
     PropTypes.shape({
       recipeId: PropTypes.string.isRequired,
@@ -23,7 +26,6 @@ const propTypes = {
     })
   ),
   buttonLeftUrl: PropTypes.string,
-  buttonRightUrl: PropTypes.string,
   issues: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -31,7 +33,6 @@ const propTypes = {
       requireDescription: PropTypes.bool.isRequired,
     }).isRequired
   ),
-  cssLabel: PropTypes.string.isRequired,
   subIssues: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -46,7 +47,7 @@ const defaultProps = {
   ingredients: []
 }
 
-const renderIngredientsIssues = (ingredients, issues, subIssues, cssLabel, changeHandler) => {
+const renderIngredientsIssues = (ingredients, issues, subIssues, changeHandler) => {
 
   const renderedIngredients = Object.keys(ingredients).map((ingredientAndRecipeId) => {
     const optionSelected = issues && issues[0] && issues[0].id
@@ -54,7 +55,7 @@ const renderIngredientsIssues = (ingredients, issues, subIssues, cssLabel, chang
 
     return (
       <div key={ingredientAndRecipeId}>
-        <p className={cssLabel}>{ingredientLabel}</p>
+        <p className={css.ingredientLabel}>{ingredientLabel}</p>
         {optionSelected && <Dropdown
           id={ingredientAndRecipeId}
           options={issues}
@@ -78,21 +79,24 @@ const IngredientIssuesPresentation = ({
   },
   ingredients,
   buttonLeftUrl,
-  buttonRightUrl,
   issues,
   subIssues,
-  cssLabel,
   changeHandler,
+  continueHandler
 }) => (
   <GetHelpLayout title={title} body={body}>
-    {renderIngredientsIssues(ingredients, issues, subIssues, cssLabel, changeHandler)}
+    {renderIngredientsIssues(ingredients, issues, subIssues, changeHandler)}
     <BottomBar>
       <BottomButton color="secondary" url={buttonLeftUrl} clientRouted>
         {button1Copy}
       </BottomButton>
-      <BottomButton color="primary" url={buttonRightUrl} clientRouted>
+      <Button
+        className={css.button}
+        color="primary"
+        onClick={continueHandler}
+      >
         {button2Copy}
-      </BottomButton>
+      </Button>
     </BottomBar>
   </GetHelpLayout>
 )

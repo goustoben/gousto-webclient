@@ -6,7 +6,7 @@ import trackingGlobals from '../global'
 import basketTracking from '../basket'
 import pauseSubscriptionTracking from '../pauseSubscription'
 import recipesTracking from '../recipes'
-import getHelpTracking from '../getHelp'
+import { getHelpTracking } from '../getHelp'
 import trackingUtils from '../utils'
 
 const { loginAttempt, loginRememberMe, loginFailed, loginVisibility, logout } = trackingGlobals
@@ -88,8 +88,11 @@ const Tracking = (action, state = {}, prevState = {}) => {
       [actions.RECIPE_FILTERS_DIETARY_ATTRIBUTE_SELECTED_TRACKING]: trackingUtils.trackEventWithData(recipesTracking.recipeDietaryAttributeSelected),
       [actions.RECIPE_FILTERS_DIETARY_ATTRIBUTE_UNSELECTED_TRACKING]: trackingUtils.trackEventWithData(recipesTracking.recipeDietaryAttributeUnselected),
       [actions.RECIPE_FILTERS_TOTAL_TIME_SELECTED_TRACKING]: trackingUtils.trackEventWithData(recipesTracking.recipeTotalTimeSelected),
-      [actions.GET_HELP_ORDER_ISSUE_SELECT]: trackingUtils.trackEventWithData(getHelpTracking.selectOrderIssue),
+      [actions.GET_HELP_ACCEPT_REFUND]: trackingUtils.trackEventWithData(getHelpTracking.acceptRefund),
       [actions.GET_HELP_CONTACT_CHANNEL_SELECT]: trackingUtils.trackEventWithData(getHelpTracking.selectContactChannel),
+      [actions.GET_HELP_STORE_SELECTED_INGREDIENTS]: trackingUtils.trackEventWithData(getHelpTracking.selectIngredients),
+      [actions.GET_HELP_INGREDIENT_ISSUES_SELECT]: trackingUtils.trackEventWithData(getHelpTracking.selectIngredientIssues),
+      [actions.GET_HELP_ORDER_ISSUE_SELECT]: trackingUtils.trackEventWithData(getHelpTracking.selectOrderIssue),
       [actions.SIGNUP_TRACKING_STEP_CHANGE]: trackingUtils.trackEventWithData(basketTracking.signupCheckoutStepChange),
       [actions.__REACT_ROUTER_LOCATION_CHANGE]: pageChange, // eslint-disable-line no-underscore-dangle
     })(action, state, prevState, pathname)
