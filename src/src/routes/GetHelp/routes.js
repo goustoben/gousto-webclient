@@ -21,6 +21,11 @@ export default (store) => {
 
     // redirect user to the `/` in case auth session is not found
     checkValidSession(store, redirectTo)(routes, replace, next)
+
+    // [Disable SSR]
+    replace(redirectTo)
+    next()
+    // End [Disable SSR]
   }
 
   return (
