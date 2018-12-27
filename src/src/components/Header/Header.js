@@ -135,12 +135,17 @@ class Header extends React.PureComponent {
 
 	  const items = [
 	    (isAuthenticated ? availableItems.referFriend : availableItems.boxPrices),
-	    availableItems.menu,
-	    availableItems.faq,
-	    (device === 'mobile' && isAuthenticated) && availableItems.rateMyRecipes,
+	    availableItems.menu
 	  ]
+	  const rateMyRecipes = [availableItems.rateMyRecipes]
 
-	  return (device === 'mobile') ? [homeMenuItem].concat(items) : items
+	  let mobileMenu = [homeMenuItem].concat(items)
+		
+	  if (isAuthenticated) {
+	    mobileMenu = mobileMenu.concat(rateMyRecipes) 
+	  }
+	  
+	  return (device === 'mobile') ? mobileMenu.concat(availableItems.faq) : items.concat(availableItems.faq)
 	}
 
 	handleQuery = () => {
