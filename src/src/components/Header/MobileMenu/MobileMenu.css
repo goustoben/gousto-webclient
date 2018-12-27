@@ -121,6 +121,10 @@ span:target .hidden {
 	composes: menuIcon;
 	composes: fa-basic-class fa-tree from 'styles/vendor/font-awesome-module.css';
 }
+.icon-star {
+	composes: menuIcon;
+	composes: fa-basic-class fa-star from 'styles/vendor/font-awesome-module.css';
+}
 
 .boxContainer {
 	text-align: center;

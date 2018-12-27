@@ -1,10 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Immutable from 'immutable'
-import css from './Header.css'
 import config from 'config'
 import Svg from 'Svg'
-import MobileMenu from './MobileMenu'
 import Link from 'Link'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
@@ -17,27 +16,29 @@ import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import { OrderSkipRecovery } from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery'
+import MobileMenu from './MobileMenu'
+import css from './Header.css'
 
 const clientRoutes = config.routes.client
 
 class Header extends React.PureComponent {
 
 	static propTypes = {
-	  logoutUser: React.PropTypes.func,
-	  serverError: React.PropTypes.bool.isRequired,
-	  isAuthenticated: React.PropTypes.bool.isRequired,
-	  loginOpen: React.PropTypes.bool,
-	  routing: React.PropTypes.object,
-	  simple: React.PropTypes.bool,
-	  disabled: React.PropTypes.bool,
-	  path: React.PropTypes.string,
-	  fromJoin: React.PropTypes.bool,
-	  promoCodeUrl: React.PropTypes.string,
-	  loginVisibilityChange: React.PropTypes.func,
-	  features: React.PropTypes.instanceOf(Immutable.Map),
-	  noContactBar: React.PropTypes.bool,
-	  title: React.PropTypes.string,
-	  small: React.PropTypes.bool,
+	  logoutUser: PropTypes.func,
+	  serverError: PropTypes.bool.isRequired,
+	  isAuthenticated: PropTypes.bool.isRequired,
+	  loginOpen: PropTypes.bool,
+	  routing: PropTypes.object,
+	  simple: PropTypes.bool,
+	  disabled: PropTypes.bool,
+	  path: PropTypes.string,
+	  fromJoin: PropTypes.bool,
+	  promoCodeUrl: PropTypes.string,
+	  loginVisibilityChange: PropTypes.func,
+	  features: PropTypes.instanceOf(Immutable.Map),
+	  noContactBar: PropTypes.bool,
+	  title: PropTypes.string,
+	  small: PropTypes.bool,
 	}
 
 	static defaultProps = {
@@ -99,7 +100,7 @@ class Header extends React.PureComponent {
 	}
 
 	getMenuItems = (device, path) => {
-	  const isAuthenticated = this.props.isAuthenticated
+	  const { isAuthenticated } = this.props
 
 	  const home = { name: 'Home', icon: 'home', url: clientRoutes.home, clientRouted: true }
 
@@ -110,6 +111,7 @@ class Header extends React.PureComponent {
 	    faq: { name: 'Help', url: clientRoutes.help, icon: 'faq', clientRouted: false },
 	    myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, icon: 'box', clientRouted: false },
 	    referFriend: { name: 'Free Food', url: clientRoutes.referFriend, icon: 'heart', clientRouted: false },
+	    rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, icon: 'star', clientRouted: false},
 	  }
 
 	  let pathLocal = path
@@ -135,6 +137,7 @@ class Header extends React.PureComponent {
 	    (isAuthenticated ? availableItems.referFriend : availableItems.boxPrices),
 	    availableItems.menu,
 	    availableItems.faq,
+	    (device === 'mobile' && isAuthenticated) && availableItems.rateMyRecipes,
 	  ]
 
 	  return (device === 'mobile') ? [homeMenuItem].concat(items) : items
@@ -273,7 +276,7 @@ class Header extends React.PureComponent {
 									<span className={css.info}>Free delivery </span>
 									<span className={css.info}>{config.company.telephone.number}</span>
 								</p>
-							</div> : null}
+                          </div> : null}
 							<div className={css.mainBar}>
 								<div className={css.mainContent}>
 									<Link to={this.getMenuItems('mobile', path)[0].url} clientRouted={this.getMenuItems('mobile', path)[0].clientRouted && !Boolean(this.props.promoCodeUrl)} className={css.logoLink}>
