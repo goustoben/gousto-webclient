@@ -56,4 +56,7 @@ module.exports = {
       title: 'Festive Flavours',
     },
   },
+  jwBanner: {
+    switchoverDate: '2019-01-01T00:00:00+00:00',
+  },
 }

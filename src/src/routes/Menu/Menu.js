@@ -22,7 +22,7 @@ import FilterMenu from './FilterMenu'
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import RecipeList from './RecipeList'
-import Banner from './Banner'
+import { Banner } from './Banner'
 
 import fetchData from './fetchData'
 
