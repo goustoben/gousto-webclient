@@ -2,8 +2,8 @@ import React from 'react'
 import moment from 'moment'
 
 import config from 'config/menu'
-import ChristmasBanner from '../ChristmasBanner'
 import { JoeWicksBanner } from '../JoeWicksBanner'
+import { ChristmasBanner } from '../ChristmasBanner'
 
 const { switchoverDate } = config.jwBanner
 
