@@ -1,8 +1,5 @@
 import React from 'react'
-import Image from 'Image'
-import { H2 } from 'Page/Header'
 import globals from 'config/globals'
-import config from './config'
 import { UserRAFLink } from './UserRAFLink'
 import { SocialButton } from './SocialButton'
 import ReferAFriendModal from './ReferAFriendModal'
@@ -10,9 +7,7 @@ import { RAFTitle } from './RAFTitle'
 import accountCSS from '../Account/Account.css'
 import css from './Referral.css'
 import Overlay from '../../../components/Overlay/Overlay'
-const { whatsForYou, whatsForThem } = config
-
-const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
+import RAFOffer from './RAFOffer'
 
 const fbShare = (referralLink) => {
   if (globals.client) {
@@ -53,11 +48,7 @@ class Referral extends React.Component {
 	  return (
 			<div className={`${accountCSS.accountContainer} ${accountCSS.container}`}>
 				<RAFTitle />
-				<Image media={getImage('refer.jpg')} title={`You get ${whatsForYou}, they get ${whatsForThem} off their first 2 boxes!`} />
-				<H2 headlineFont>
-					{`Refer a friend – you get ${whatsForYou}, they get ${whatsForThem} off their first 2 boxes!`}
-				</H2>
-				<p className={css.firstParagraph}>{`Your ${whatsForYou} credit shows up in your account once your friend's first box is delivered. Make sure they use your link or promo code.`}</p>
+				<RAFOffer />
 				<p>{'Send this unique link to your friends.'}</p>
 				<div className={css.row}>
 					<UserRAFLink className={css.rafLink} referralCode={referralCode} />
