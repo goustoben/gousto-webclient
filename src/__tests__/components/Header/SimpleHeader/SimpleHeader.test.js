@@ -1,7 +1,3 @@
-import sinon from 'sinon'
-
-import PromoModal from 'PromoModal'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 
