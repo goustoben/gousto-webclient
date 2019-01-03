@@ -4,7 +4,7 @@ import Content from 'containers/Content'
 
 module.exports = {
   hero: {
-    header: 'A recipe box. Simple.',
+    header: 'A recipe box full of flavour',
     subheader: 'Precise ingredients, delicious recipes and a dollop of adventure.',
   },
   testimonials: [
@@ -34,35 +34,36 @@ module.exports = {
     steps: [{
       path: 'icon-choose',
       title: 'You choose',
-      description: 'From over 30 recipes a week. You can pause or skip boxes whenever you like.',
+      description: 'From over 30 exciting recipes each week.',
     }, {
       path: 'icon-delivery',
       title: 'We deliver',
-      description: 'Perfectly measured ingredients, any day of the week (to fit in with your life).',
+      description: '7 days a week.  Pause or skip anytime.',
     }, {
       path: 'icon-cook',
       title: 'You cook',
-      description: 'Tasty, impressive meals you’re proud to share with the people you love.',
+      description: 'Tasty home cooked meals, without all the fuss.',
     }],
   },
+  //ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
   howItWorks: {
-    header: <Content contentKeys={'productBenefitTitle'}><span>Home cooking is important.</span></Content>,
-    description: <Content contentKeys={'productBenefitDescription'}><span>Good intentions to cook can crumble on busy days. So we make it simple. (And tasty.)</span></Content>,
+    header: <Content contentKeys={'productBenefitTitleDefault'}><span>3 simple reasons to choose Gousto</span></Content>,
+    description: <Content contentKeys={'productBenefitDescriptionDefault'}><span>With the right ingredients, you can create something amazing.</span></Content>,
     steps: (variant) => ([
       {
         path: (variant === 'tv') ? require('media/photos/quality-alt.jpg') : require('media/photos/quality.jpg'), // eslint-disable-line global-require
-        title: <Content contentKeys={'firstProductBenefitTitle'}><span>Quality</span></Content>,
-        description: <Content contentKeys={'firstProductBenefitDescription'}><span>Fresh ingredients, so you feel confident about every bite.</span></Content>,
+        title: <Content contentKeys={'firstProductBenefitTitleDefault'}><span>Quality</span></Content>,
+        description: <Content contentKeys={'firstProductBenefitDescriptionDefault'}><span>Fresh ingredients for tasty, home-cooked dinners.</span></Content>,
       },
       {
         path: (variant === 'tv') ? require('media/photos/simplicity-alt.jpg') : require('media/photos/simplicity.jpg'), // eslint-disable-line global-require
-        title: <Content contentKeys={'secondProductBenefitTitle'}><span>Simplicity</span></Content>,
-        description: <Content contentKeys={'secondProductBenefitDescription'}><span>Foolproof recipes, so anyone can cook a delicious meal. (Really.)</span></Content>,
+        title: <Content contentKeys={'secondProductBenefitTitleDefault'}><span>Simplicity</span></Content>,
+        description: <Content contentKeys={'secondProductBenefitDescriptionDefault'}><span>Easy to follow recipes and perfectly measured ingredients.</span></Content>,
       },
       {
         path: (variant === 'tv') ? require('media/photos/variety-alt.jpg') : require('media/photos/variety.jpg'), // eslint-disable-line global-require
-        title: <Content contentKeys={'thirdProductBenefitTitle'}><span>Variety</span></Content>,
-        description: <Content contentKeys={'thirdProductBenefitDescription'}><span>Choose what you like: wholesome, adventurous, vegetarian, meat, fish.</span></Content>,
+        title: <Content contentKeys={'thirdProductBenefitTitleDefault'}><span>Variety</span></Content>,
+        description: <Content contentKeys={'thirdProductBenefitDescriptionDefault'}><span>From family classics and ten minute meals to Fine Dine In.</span></Content>,
       },
     ]),
   },
