@@ -1,0 +1,63 @@
+  .yourFriendOffer {
+    border-left: 1px black dashed;
+    padding-left: 40px;
+    width: 241px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+  }
+
+  .rafGelOffer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+  }
+  
+  .rafGel {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    border-radius: 100%;
+    transform: translate(0, 0);
+  }
+
+  .rafGelContent {
+    font-size: 32px;
+  }
+  
+  .rafGelContent > :first-child {
+    line-height: 40px;
+  }
+  
+  .rafGelContent > :last-child {
+    line-height: 30px;
+  }
+
+  .rafGelPlus {
+    position: relative;
+    display: inline-block;
+    transform: translate(-37%, 0);
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    z-index: 100;
+    font-size: 24px;
+  }
+
+  .rafGelLast {
+    transform: translate(-25%, 0);
+  }
+  
+  .yourFriendLabels {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 48px;
+  }
+  
+  .yourFriendLabels > p {
+    width: 92px;
+  }

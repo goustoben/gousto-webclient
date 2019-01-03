@@ -1,0 +1,36 @@
+  .youGetOffer {
+    margin-right: 40px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+  }  
+  
+  .rafGel {
+    position: relative;
+    width: 135px;
+    height: 135px;
+    border-radius: 100%;
+    transform: translate(0, 0);
+  }
+  
+  .rafGelContent {
+    height: 50px;
+  }
+  
+  .rafGelContent > :first-child {
+    font-size: 51px;
+    line-height: 40px
+  }
+  
+  .rafGelContent > :last-child {
+    font-size: 24px;
+    line-height: 25px;
+  }
+
+  .youGetLabel {
+    height: 48px;
+    margin-bottom: 0px;
+    width: 149px;
+  }
