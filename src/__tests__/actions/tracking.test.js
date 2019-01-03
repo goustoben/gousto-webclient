@@ -55,16 +55,16 @@ describe('tracking actions', () => {
       
       expect(dispatchData.type).toBe(actionTypes.TRACKING)
     })
-    test('should dispatch correct tracking action', () => {
+    test('should dispatch correct trackingData', () => {
       trackFirstPurchase('order-a')(dispatch, getState)
-      const action = dispatch.mock.calls[0][0]
+      const trackingData = dispatch.mock.calls[0][0].trackingData
 
-      expect(action.asource).toBe('test-source')
-      expect(action.goustoReference).toBe('123')
-      expect(action.event).toBe('firstPurchase')
-      expect(action.orderId).toBe('order-a')
-      expect(action.orderTotal).toBe('13.99')
-      expect(action.voucher).toBe('10OFF')
+      expect(trackingData.asource).toBe('test-source')
+      expect(trackingData.goustoReference).toBe('123')
+      expect(trackingData.event).toBe('firstPurchase')
+      expect(trackingData.orderId).toBe('order-a')
+      expect(trackingData.orderTotal).toBe('13.99')
+      expect(trackingData.voucher).toBe('10OFF')
     })
 
     test('should log warning when no user is found', () => {
