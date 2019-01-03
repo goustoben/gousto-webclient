@@ -6,16 +6,18 @@ import CTAHomepage from '../CTA'
 import Content from 'containers/Content'
 import css from './Hero.css'
 
+//ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
+
 const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant }) => (
 	<div className={css[`container--${variant}`]} data-testing={dataTesting}>
 		<div className={css[`textContainer--${variant}`]}>
 			<h1 className={css.header}>
-				<Content contentKeys="propositionMainHeadline">
+				<Content contentKeys="propositionMainHeadlineDefault">
 					<span>{home.hero.header}</span>
 				</Content>
 			</h1>
 			<h2 className={css.subHeader}>
-				<Content contentKeys="propositionSupportingHeadline"><span>{home.hero.subheader}</span></Content>
+				<Content contentKeys="propositionSupportingHeadlineDefault"><span>{home.hero.subheader}</span></Content>
 			</h2>
 			<div className={css.cta}>
 				<CTAHomepage
