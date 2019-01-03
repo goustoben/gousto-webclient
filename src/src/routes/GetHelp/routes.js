@@ -17,15 +17,17 @@ import { checkValidSession } from 'utils/routes'
 
 export default (store) => {
   const onEnterHandler = (routes, replace, next) => {
+    const state = store.getState()
     const redirectTo = '/'
+    const hasGetHelpFlag = state.features.getIn(['getHelp', 'value'])
 
     // redirect user to the `/` in case auth session is not found
     checkValidSession(store, redirectTo)(routes, replace, next)
 
-    // [Disable SSR]
-    replace(redirectTo)
-    next()
-    // End [Disable SSR]
+    if (!hasGetHelpFlag) {
+      replace(redirectTo)
+      next()
+    }
   }
 
   return (
