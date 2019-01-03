@@ -18,12 +18,15 @@ export const trackFirstPurchase = orderId => (
 
     dispatch({
       type: actionTypes.TRACKING,
-      asource: getState().tracking.get('asource'),
-      goustoReference,
-      event: 'firstPurchase',
-      orderId,
-      orderTotal: order.getIn(['prices', 'total']),
-      voucher: order.getIn(['prices', 'promoCode'], ''),
+      trackingData:{
+        actionType: actionTypes.TRACKING,
+        asource: getState().tracking.get('asource'),
+        goustoReference,
+        event: 'firstPurchase',
+        orderId,
+        orderTotal: order.getIn(['prices', 'total']),
+        voucher: order.getIn(['prices', 'promoCode'], ''),
+      },
     })
   }
 )
