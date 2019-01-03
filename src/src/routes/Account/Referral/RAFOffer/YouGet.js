@@ -6,7 +6,7 @@ import css from './YouGet.css'
 const YouGet = ({ youGetOffer, offerColour }) => {
   return (
     <div className={css.youGetOffer}>
-      <h3>You get</h3>
+      <h3 className={css.youGetOfferTitle}>You get</h3>
       <Gel className={css.rafGel} size="large" color={offerColour}>
         <div className={css.rafGelContent}>
           <div>{youGetOffer}</div>

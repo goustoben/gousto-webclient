@@ -7,7 +7,7 @@ import css from './YourFriendGets.css'
 const YourFriendGets = ({ yourFriendFirstBoxOffer, yourFriendFirstMonthOffer }) => {
   return (
     <div className={css.yourFriendOffer}>
-      <h3>Your friends get</h3>
+      <h3 className={css.yourFriendOfferTitle}>Your friends get</h3>
       <div className={css.rafGelOffer}>
         <Gel className={css.rafGel} size="medium" color="black">
           <div className={css.rafGelContent}>
