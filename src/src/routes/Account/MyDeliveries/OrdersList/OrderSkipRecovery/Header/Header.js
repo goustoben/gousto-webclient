@@ -21,7 +21,7 @@ const propTypes = {
 
 const defaultProps = {
   offer: null,
-  featureFlag: false,
+  featureFlag: true,
 }
 
 const Header = ({ offer, featureFlag }) => (
@@ -35,8 +35,8 @@ const Header = ({ offer, featureFlag }) => (
 					<span className={css.boxText__sub}>OFF</span>
 				</div>
 				<ContentMask />
-				</div>
-			</div>
+   </div>
+  </div>
 		</div>
   ) : <div className={css.spacer} />
 )
