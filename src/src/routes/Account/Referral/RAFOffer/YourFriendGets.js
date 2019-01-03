@@ -1,16 +1,17 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Gel from 'Gel'
 import classnames from 'classnames'
 import css from './YourFriendGets.css'
 
-const YourFriendGets = ({ yourFriendFirstBox, yourFriendFirstMonth }) => {
+const YourFriendGets = ({ yourFriendFirstBoxOffer, yourFriendFirstMonthOffer }) => {
   return (
     <div className={css.yourFriendOffer}>
       <h3>Your friends get</h3>
       <div className={css.rafGelOffer}>
         <Gel className={css.rafGel} size="medium" color="black">
           <div className={css.rafGelContent}>
-            <div>{yourFriendFirstBox}</div>
+            <div>{yourFriendFirstBoxOffer}</div>
             <div>OFF</div>
           </div>
         </Gel>
@@ -19,7 +20,7 @@ const YourFriendGets = ({ yourFriendFirstBox, yourFriendFirstMonth }) => {
         </Gel>
         <Gel className={classnames(css.rafGel, css.rafGelLast)} size="medium" color="black">
           <div className={css.rafGelContent}>
-            <div>{yourFriendFirstMonth}</div>
+            <div>{yourFriendFirstMonthOffer}</div>
             <div>OFF</div>
           </div>
         </Gel>
@@ -31,5 +32,12 @@ const YourFriendGets = ({ yourFriendFirstBox, yourFriendFirstMonth }) => {
     </div>
   )
 }
+
+const propTypes = {
+  yourFriendFirstBoxOffer: PropTypes.string,
+  yourFriendFirstMonthOffer: PropTypes.string,
+}
+
+YourFriendGets.propTypes = propTypes
 
 export { YourFriendGets }

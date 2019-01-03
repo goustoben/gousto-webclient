@@ -1,14 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Gel from 'Gel'
 import css from './YouGet.css'
 
-const YouGet = ({ youGet, colorOffer }) => {
+const YouGet = ({ youGetOffer, offerColour }) => {
   return (
     <div className={css.youGetOffer}>
       <h3>You get</h3>
-      <Gel className={css.rafGel} size="large" color={colorOffer}>
+      <Gel className={css.rafGel} size="large" color={offerColour}>
         <div className={css.rafGelContent}>
-          <div>{youGet}</div>
+          <div>{youGetOffer}</div>
           <div>credit</div>
         </div>
       </Gel>
@@ -16,5 +17,12 @@ const YouGet = ({ youGet, colorOffer }) => {
     </div>
   )
 }
+
+const propTypes = {
+  youGetOffer: PropTypes.string,
+  offerColour: PropTypes.string
+}
+
+YouGet.propTypes = propTypes
 
 export { YouGet }

@@ -2,10 +2,10 @@ import { connect } from 'react-redux'
 import { RAFOffer } from './RAFOffer'
 
 const mapStateToProps = () => ({
-  youGet: '£15',
-  yourFriendFirstBox: '50%',
-  yourFriendFirstMonth: ' 30%',
-  colorOffer: 'blue',
+  youGetOffer: '£15',
+  yourFriendFirstBoxOffer: '50%',
+  yourFriendFirstMonthOffer: ' 30%',
+  offerColour: 'blue',
 })
 
 const RAFOfferContainer = connect(mapStateToProps, {})(RAFOffer)

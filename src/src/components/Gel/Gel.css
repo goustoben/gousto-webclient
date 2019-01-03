@@ -32,6 +32,11 @@
 	color: white;
 }
 
+.gold {
+	background-color: #E8C776;
+	color: black;
+}
+
 .gelContent {
 	display: flex;
 	width: 100%;
