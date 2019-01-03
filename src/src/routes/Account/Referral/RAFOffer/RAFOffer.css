@@ -1,6 +1,22 @@
 .rafOffer {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  height: 230px;
+  font-weight: bold;
+  font-family: Comfortaa;
+}
+
+.rafOffer > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+}
+
+.rafOffer > :first-child {
+  margin-right: 40px;
 }
 
 .yourFriendOffer {
@@ -8,6 +24,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left: 40px;
+  width: 241px;
 }
 
 .yourFriendOffer .rafGel {
@@ -24,6 +42,11 @@
   display: inline-block;
 }
 
+.rafGel + p {
+  height: 48px;
+  margin-bottom: 0px;
+}
+
 .rafGelLast {
   transform: translate(-25%, 0);
 }
@@ -31,31 +54,55 @@
 .rafGelPlus {
   position: relative;
   display: inline-block;
-  transform: translate(-25%, 0);
+  transform: translate(-37%, 0);
   width: 30px;
   height: 30px;
   background-color: white;
   z-index: 100;
+  font-size: 24px;
 }
+
+.rafGelContent {
+  height: 50px;
+
+}
+
 .rafGelContent > :first-child {
-  font-weight: bold;
   font-size: 51px;
-  font-family: Comfortaa;
+  line-height: 40px
 }
 
 .rafGelContent > :last-child {
-  font-weight: bold;
   font-size: 24px;
-  font-family: Comfortaa;
+  line-height: 25px;
 }
 
 .rafGelContentFriends {
-  font-weight: bold;
   font-size: 32px;
-  font-family: Comfortaa;
+}
+
+.rafGelContentFriends > :first-child {
+  line-height: 40px;
+}
+
+.rafGelContentFriends > :last-child {
+  line-height: 30px;
 }
 
 .rafGelOffer {
   display: flex;
   align-items: center;
+  justify-content: center;
+  padding-left: 20px;
+}
+
+.yourFriendLabels {
+  display: flex;
+  justify-content: center;
+  width: 214px;
+  height: 48px;
+}
+
+.yourFriendLabels > p {
+  width: 92px;
 }

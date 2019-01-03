@@ -8,7 +8,7 @@ const RAFOffer = ({ youGet, yourFriendFirstBox, yourFriendFirstMonth, colorOffer
   return (
     <div className={css.rafOffer}>
       <div>
-        <h3>You Get</h3>
+        <h3>You get</h3>
         <Gel className={css.rafGel} size="large" color={colorOffer}>
           <div className={css.rafGelContent}>
             <div>{youGet}</div>
@@ -17,6 +17,7 @@ const RAFOffer = ({ youGet, yourFriendFirstBox, yourFriendFirstMonth, colorOffer
         </Gel>
         <p>towards your next box</p>
       </div>
+
       <div className={css.yourFriendOffer}>
         <h3>Your friends get</h3>
         <div className={css.rafGelOffer}>
@@ -36,10 +37,11 @@ const RAFOffer = ({ youGet, yourFriendFirstBox, yourFriendFirstMonth, colorOffer
             </div>
           </Gel>
         </div>
-        <div>
+        <div className={css.yourFriendLabels}>
           <p>their first box</p>
           <p>their first month</p>
         </div>
+
       </div>
     </div>
   )
