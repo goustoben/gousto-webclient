@@ -1,16 +1,16 @@
 import { connect } from 'react-redux'
 import { RAFOffer } from './RAFOffer'
-
+import { referralOffer } from 'selectors/account'
 import { userFetchReferralOffer } from 'actions/user'
 
 const mapStateToProps = (state) => {
-  const referralOffer = state.user.get('referralOffer')
+  const offer = referralOffer(state)
 
-  if (referralOffer) {
+  if (offer) {
     return {
-      youGetOffer: referralOffer.get('creditFormatted'),
-      yourFriendFirstBoxOffer: referralOffer.get('firstBoxDiscountFormatted'),
-      yourFriendFirstMonthOffer: referralOffer.get('firstMonthDiscountFormatted'),
+      youGetOffer: offer.get('creditFormatted'),
+      yourFriendFirstBoxOffer: offer.get('firstBoxDiscountFormatted'),
+      yourFriendFirstMonthOffer: offer.get('firstMonthDiscountFormatted'),
       offerColour: 'blue',
     }
   } else {
