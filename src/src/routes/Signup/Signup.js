@@ -170,8 +170,7 @@ class Signup extends React.PureComponent {
 	render() {
 	  const steps = this.getSteps()
 	  const stepNumber = this.getCurrentStepNumber(steps)
-	  const previousStep = stepNumber === 0 ? 0 : stepNumber
-
+	
 	  return (
 			<div className={css.signupContainer}>
 				<Helmet
@@ -191,7 +190,7 @@ class Signup extends React.PureComponent {
 					</div>
 				</div>
 				<div className={css.dotsContainer}>
-					<Dots steps={steps.size} stepNo={previousStep} />
+					<Dots steps={steps.size} stepNo={stepNumber} />
 				</div>
 			</div>
 	  )
