@@ -7,7 +7,7 @@ import { YourFriendGets } from './YourFriendGets.js'
 class RAFOffer extends React.Component {
   componentDidMount() {
     const { userFetchReferralOffer } = this.props
-    console.log("userFetchReferralOffer", userFetchReferralOffer()) //eslint-disable-line
+    userFetchReferralOffer()
   }
   render() {
     const {youGetOffer, offerColour, yourFriendFirstBoxOffer, yourFriendFirstMonthOffer} = this.props
@@ -21,20 +21,12 @@ class RAFOffer extends React.Component {
   }
 }
 
-// const RAFOffer = ({ youGetOffer, yourFriendFirstBoxOffer, yourFriendFirstMonthOffer, offerColour }) => {
-//   return (
-//     <div className={css.rafOffer}>
-//       <YouGet youGetOffer={youGetOffer} offerColour={offerColour} />
-//       <YourFriendGets yourFriendFirstBoxOffer={yourFriendFirstBoxOffer} yourFriendFirstMonthOffer={yourFriendFirstMonthOffer} />
-//     </div>
-//   )
-// }
-
 const propTypes = {
   youGetOffer: PropTypes.string,
   yourFriendFirstBoxOffer: PropTypes.string,
   yourFriendFirstMonthOffer: PropTypes.string,
-  offerColour: PropTypes.string
+  offerColour: PropTypes.string,
+  userFetchReferralOffer: PropTypes.func
 }
 
 RAFOffer.propTypes = propTypes

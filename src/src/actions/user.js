@@ -714,11 +714,10 @@ export const userReferAFriend = (email) => (
 
 export const userFetchReferralOffer = () => (
   async (dispatch, getState) => {
-    console.log("this was triggered") //eslint-disable-line
     const accessToken = getState().auth.get('accessToken')
 
     if (accessToken) {
-      const referralOffer = await userApi.fetchReferralOffer(accessToken)
+      const { data:referralOffer } = await userApi.fetchReferralOffer(accessToken)
       dispatch({type: actionTypes.USER_LOAD_REFERRAL_OFFER, referralOffer})
     }
   }

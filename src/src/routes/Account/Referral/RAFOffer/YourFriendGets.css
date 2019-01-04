@@ -11,7 +11,7 @@
 
     @media ScreenSMMin {
       padding-left: 40px;
-      width: 241px;
+      width: 250px;
     }
   }
 
@@ -38,7 +38,7 @@
     width: 72px;
     height: 72px;
     border-radius: 100%;
-    transform: translate(20%, 0);
+    transform: translate(10%, 0);
 
     @media ScreenSMMin {
       width: 92px;
@@ -71,7 +71,7 @@
   .rafGelPlus {
     position: relative;
     display: inline-block;
-    transform: translate(35%, 0);
+    transform: translate(0, 0);
     width: 20px;
     height: 20px;
     font-size: 14px;
@@ -82,11 +82,12 @@
       height: 30px;
       font-size: 24px;
       transform: translate(-37%, 0);
+      padding: 16px;
     }
   }
 
   .rafGelLast {
-    transform: translate(0, 0);
+    transform: translate(-10%, 0);
     @media ScreenSMMin {
       transform: translate(-25%, 0);
     }
@@ -106,9 +107,8 @@
   .yourFriendLabels > p {
     width: 77px;
     font-size: 12px;
-    padding-left: 15px;
     @media ScreenSMMin {
-      width: 92px;
+      width: 104px;
       font-size: 18px;
       padding-left: 0px;
     }

@@ -11,7 +11,7 @@ const Gel = ({ className, size, children, color }) => (
 )
 
 Gel.propTypes = {
-  color: PropTypes.oneOf(['white', 'bronze', 'red']),
+  color: PropTypes.oneOf(['white', 'bronze', 'red', 'blue', 'black', 'gold']),
   className: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.node,

@@ -68,6 +68,7 @@
   .youGetLabel {
     font-size: 14px;
     width: 99px;
+    height: 41px;
     @media ScreenSMMin {
       height: 48px;
       margin-bottom: 0px;

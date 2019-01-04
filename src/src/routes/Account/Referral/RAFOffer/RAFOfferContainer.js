@@ -3,16 +3,21 @@ import { RAFOffer } from './RAFOffer'
 
 import { userFetchReferralOffer } from 'actions/user'
 
-const mapStateToProps = async (state) => {
-  const referralOffer = await state.user.get('referralOffer')
+const mapStateToProps = (state) => {
+  const referralOffer = state.user.get('referralOffer')
 
-  return {
-    youGetOffer: referralOffer.credit_formatted,
-    yourFriendFirstBoxOffer: referralOffer.first_box_discount_formatted,
-    yourFriendFirstMonthOffer: referralOffer.first_month_discount_formatted,
-    offerColour: 'blue',
+  if (referralOffer) {
+    return {
+      youGetOffer: referralOffer.get('creditFormatted'),
+      yourFriendFirstBoxOffer: referralOffer.get('firstBoxDiscountFormatted'),
+      yourFriendFirstMonthOffer: referralOffer.get('firstMonthDiscountFormatted'),
+      offerColour: 'blue',
+    }
+  } else {
+    return {}
   }
 }
 
 const RAFOfferContainer = connect(mapStateToProps, {userFetchReferralOffer})(RAFOffer)
+
 export default RAFOfferContainer
