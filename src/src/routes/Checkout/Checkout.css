@@ -1,7 +1,7 @@
 @value SpacingMD from 'sass-loader!styles/spacing.scss';
 @value ScreenXSMax from 'styles/screenSizes.css';
 
-.row {
+.rowCheckout {
 	composes: row from 'sass-loader!styles/bootstrap.scss';
 	width: 100%;
 	margin: 0 auto;
@@ -24,8 +24,8 @@
 	}
 }
 
-.content {
-	composes: row;
+.checkoutContent {
+	composes: rowCheckout;
 	composes: pageContainerLG from 'styles/layout.css';
 	composes: marginXXLTopBottom from 'sass-loader!styles/spacing.scss';
 	padding-top: 20px;
