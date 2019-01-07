@@ -3,10 +3,19 @@ import Immutable from 'immutable'
 import { referAFriend } from 'apis/user'
 import { customerSignup, customerSignupV2 } from 'apis/customers'
 
-import { userReferAFriend, userSubscribe } from 'actions/user'
+import { userReferAFriend, userSubscribe, userFetchReferralOffer } from 'actions/user'
+import actionTypes from 'actions/actionTypes'
 
 jest.mock('apis/user', () => ({
-  referAFriend: jest.fn()
+  referAFriend: jest.fn(),
+  fetchReferralOffer: () => Promise.resolve({
+    data: {
+      creditFormatted: '£15',
+      firstBoxDiscountFormatted: '50%',
+      firstMonthDiscountFormatted: '30%',
+      expiry: ''
+    }
+  })
 }))
 
 jest.mock('apis/customers', () => ({
@@ -169,6 +178,30 @@ describe('user actions', () => {
       it('should call customerSignup', async () => {
         await userSubscribe()(dispatch, getState)
         expect(customerSignup).toHaveBeenCalled()
+      })
+    })
+  })
+
+  describe('userGetRafOffer', () => {
+    const dispatchSpy = jest.fn()
+    const getStateSpy = jest.fn()
+    getStateSpy.mockReturnValue({
+      auth: Immutable.fromJS({
+        accessToken: 'test-token'
+      })
+    })
+    const response = {
+      creditFormatted: '£15',
+      firstBoxDiscountFormatted: '50%',
+      firstMonthDiscountFormatted: '30%',
+      expiry: ''
+    }
+
+    test('should dispatch action for USER_LOAD_REFERRAL_OFFER', async () => {
+      await userFetchReferralOffer()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_LOAD_REFERRAL_OFFER,
+        referralOffer: response,
       })
     })
   })

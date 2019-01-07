@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import globals from 'config/globals'
 import { UserRAFLink } from './UserRAFLink'
 import { SocialButton } from './SocialButton'
@@ -42,14 +43,18 @@ class Referral extends React.Component {
 	  this.setState({ isEmailModalOpen: false })
 	}
 
+	componentDidMount() {
+	  const { userFetchReferralOffer } = this.props
+	  userFetchReferralOffer()
+	}
+
 	render() {
-	  const { referralCode } = this.props
+	  const { referralCode, rafOffer } = this.props
 
 	  return (
 			<div className={`${accountCSS.accountContainer} ${accountCSS.container}`}>
 				<RAFTitle />
-				<RAFOffer />
-				<p>{'Send this unique link to your friends.'}</p>
+				{rafOffer && <RAFOffer offer={rafOffer} />}
 				<div className={css.row}>
 					<UserRAFLink className={css.rafLink} referralCode={referralCode} />
 					<div className={css.socialButtons}>
@@ -66,6 +71,12 @@ class Referral extends React.Component {
 			</div>
 	  )
 	}
+}
+
+Referral.propTypes = {
+  referralCode: PropTypes.string,
+  rafOffer: PropTypes.shape({}),
+  userFetchReferralOffer: PropTypes.func,
 }
 
 export default Referral

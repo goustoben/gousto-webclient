@@ -1,23 +1,18 @@
 import { connect } from 'react-redux'
 import { RAFOffer } from './RAFOffer'
-import { referralOffer } from 'selectors/account'
-import { userFetchReferralOffer } from 'actions/user'
 
-const mapStateToProps = (state) => {
-  const offer = referralOffer(state)
-
-  if (offer) {
-    return {
-      youGetOffer: offer.get('creditFormatted'),
-      yourFriendFirstBoxOffer: offer.get('firstBoxDiscountFormatted'),
-      yourFriendFirstMonthOffer: offer.get('firstMonthDiscountFormatted'),
-      offerColour: 'blue',
-    }
-  } else {
-    return {}
+const mapStateToProps = (state, ownProps) => {
+  const { offer } = ownProps
+  
+  return {
+    youGetOffer: offer.get('creditFormatted'),
+    yourFriendFirstBoxOffer: offer.get('firstBoxDiscountFormatted'),
+    yourFriendFirstMonthOffer: offer.get('firstMonthDiscountFormatted'),
+    offerColour: offer.get('expiry') ? 'gold' : 'blue',
   }
+
 }
 
-const RAFOfferContainer = connect(mapStateToProps, {userFetchReferralOffer})(RAFOffer)
+const RAFOfferContainer = connect(mapStateToProps)(RAFOffer)
 
 export default RAFOfferContainer

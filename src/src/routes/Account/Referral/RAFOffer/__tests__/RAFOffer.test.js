@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { RAFOffer } from '../RAFOffer'
 import { userFetchReferralOffer } from 'actions'
+import { RAFOffer } from '../RAFOffer'
 import { YouGet } from '../YouGet.js'
 import { YourFriendGets } from '../YourFriendGets.js'
 
@@ -30,17 +30,6 @@ describe('RAFOffer', () => {
     
     it('should render 1 <YourFriendGets> component', () => {
       expect(wrapper.find(YourFriendGets))
-    })
-
-    describe('componentDidMount', () => {
-      beforeEach(() => {
-        wrapper.instance().componentDidMount()
-      })
-
-      it('should call userFetchReferralOffer', () => {
-        expect(userFetchReferralOffer).toHaveBeenCalled()
-      })
-
     })
   })
 })

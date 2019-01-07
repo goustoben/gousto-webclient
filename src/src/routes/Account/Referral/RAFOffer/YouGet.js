@@ -23,6 +23,11 @@ const propTypes = {
   offerColour: PropTypes.string
 }
 
+const defaultProps = {
+  offerColour: 'blue'
+}
+
 YouGet.propTypes = propTypes
+YouGet.defaultProps = defaultProps
 
 export { YouGet }

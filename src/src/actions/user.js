@@ -67,6 +67,7 @@ const userActions = {
   userAddNewAddress,
   userPendingAddressFormData,
   userUnsubscribe,
+  userFetchReferralOffer,
 }
 
 function userOrderCancelNext(afterBoxNum = 1) {
@@ -712,15 +713,16 @@ export const userReferAFriend = (email) => (
   }
 )
 
-export const userFetchReferralOffer = () => (
-  async (dispatch, getState) => {
+export function userFetchReferralOffer () { 
+ 
+  return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
-
     if (accessToken) {
-      const { data:referralOffer } = await userApi.fetchReferralOffer(accessToken)
+      const { data: referralOffer } = await userApi.fetchReferralOffer(accessToken)
       dispatch({type: actionTypes.USER_LOAD_REFERRAL_OFFER, referralOffer})
     }
   }
-)
+  
+}
 
 export default userActions
