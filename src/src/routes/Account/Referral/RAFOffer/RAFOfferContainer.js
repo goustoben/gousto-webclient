@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
-import actionTypes from 'actions/actionTypes'
+import { getLoadingStateForOffer } from 'selectors/user'
 import { RAFOffer } from './RAFOffer'
 
 const mapStateToProps = (state, ownProps) => {
   const { offer } = ownProps
-  const isLoading = state.pending.get(actionTypes.USER_LOAD_REFERRAL_OFFER, true)
+  const isLoading = getLoadingStateForOffer(state)
   const color = isLoading ? 'white' : (offer.get('expiry') ? 'gold' : 'blue')
   
   return {
