@@ -1,12 +1,28 @@
 @value Basa, BlueBase, Mackerel, White from 'styles/colors.css';
-@value ScreenMDMin, MinBreakPointSM from 'styles/screenSizes.css';
+@value ScreenMDMin, ScreenSMMin, MinBreakPointSM from 'styles/screenSizes.css';
 @value SpacingXXS, SpacingLG from 'sass-loader!styles/spacing.scss';
 /* 5px, 20px */
 
-.row {
+
+.rafPageTitle {
+	background-color: White;
+	margin-bottom: -1px;
+}
+
+.rafPageSection {
+	position: relative;
+	background: url('media/svgs/white-curve-mobile.svg') center top no-repeat;
+
+	@media ScreenSMMin {
+		background: url('media/svgs/white-curve.svg') center top no-repeat;
+	}
+}
+
+.rafRow {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	margin-top: 40px;
 }
 
  .firstParagraph {

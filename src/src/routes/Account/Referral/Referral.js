@@ -5,7 +5,6 @@ import { UserRAFLink } from './UserRAFLink'
 import { SocialButton } from './SocialButton'
 import ReferAFriendModal from './ReferAFriendModal'
 import { RAFTitle } from './RAFTitle'
-import accountCSS from '../Account/Account.css'
 import css from './Referral.css'
 import Overlay from '../../../components/Overlay/Overlay'
 import RAFOffer from './RAFOffer'
@@ -63,22 +62,26 @@ class Referral extends React.Component {
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
 
 	  return (
-			<div className={`${accountCSS.accountContainer} ${accountCSS.container}`}>
-				<RAFTitle />
-        {rafOffer && <RAFOffer offer={rafOffer} />}
-        <div className={`${css.row} ${css.mobileHide}`}>
-					<UserRAFLink className={css.rafLink} referralCode={referralCode} />
-					<div className={css.socialButtons}>
-						<SocialButton text="Email" type="email" onClick={this.openEmailModal}/>
-						<Overlay open={isEmailModalOpen} from="top">
-							<ReferAFriendModal
-							  onClose={this.closeEmailModal}
-							/>
-						</Overlay>
-						<SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
-						<SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
-					</div>
-        </div>
+			<div>
+				<div className={css.rafPageTitle}>
+					<RAFTitle />
+				</div>
+				<div className={css.rafPageSection}>
+					<RAFOffer offer={rafOffer} />
+          <div className={`${css.rafRow} ${css.mobileHide}`}>
+						<UserRAFLink className={css.rafLink} referralCode={referralCode} />
+						<div className={css.socialButtons}>
+							<SocialButton text="Email" type="email" onClick={this.openEmailModal} />
+							<Overlay open={this.state.isEmailModalOpen} from="top">
+								<ReferAFriendModal
+								  onClose={this.closeEmailModal}
+								/>
+							</Overlay>
+							<SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
+							<SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
+						</div>
+          </div>
+    </div>
 
         <div className={`${css.mobileCTAContainer} ${css.mobileShow}`}>
           <div className={css.mobileCTA} onClick={this.openShareYourLinkModal}>
@@ -103,7 +106,7 @@ Referral.propTypes = {
 Referral.defaultProps = {
   referralCode: '',
   rafOffer: defaultOffer,
-  userFetchReferralOffer: () => {},
+  userFetchReferralOffer: () => { },
 }
 
 export default Referral
