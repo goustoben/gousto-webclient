@@ -28,19 +28,13 @@ describe('<ChefQuote />', () => {
     })
   })
 
-  describe('with Chef prop with two images', () => {
-    const imageUrl =
-			'http://vignette2.wikia.nocookie.net/orange-is-the-new-black/images/7/76/Judyking.jpg'
+  describe('with chef prop containing a headshot image', () => {
     const chef = Immutable.fromJS({
       media: {
         images: [
           {
             type: 'headshot-image',
-            urls: [{ src: imageUrl }],
-          },
-          {
-            type: 'signature-image',
-            urls: [{ src: imageUrl }],
+            urls: [{ src: 'image-headshot.jpg' }],
           },
         ],
       },
@@ -51,7 +45,51 @@ describe('<ChefQuote />', () => {
       wrapper = shallow(<ChefQuote quote={quote} chef={chef} />)
     })
 
-    test("should show Judy King's second picture instead of her name", () => {
+    test("should show the headshot image as the primary image", () => {
+      expect(wrapper.find('span').length).toEqual(0)
+      expect(wrapper.find('img').length).toEqual(1)
+      expect(
+        wrapper
+          .find('img')
+          .at(0)
+          .prop('src'),
+      ).toEqual('image-headshot.jpg')
+    })
+  })
+
+  describe('with chef prop containing both headshot and signature images', () => {
+    const chef = Immutable.fromJS({
+      media: {
+        images: [
+          {
+            type: 'headshot-image',
+            urls: [{ src: 'image-headshot.jpg' }],
+          },
+          {
+            type: 'signature-image',
+            urls: [{ src: 'image-signature.jpg' }],
+          },
+        ],
+      },
+      name: 'Judy King',
+    })
+
+    beforeEach(() => {
+      wrapper = shallow(<ChefQuote quote={quote} chef={chef} />)
+    })
+
+    test("should show the headshot image as the primary image", () => {
+      expect(wrapper.find('span').length).toEqual(0)
+      expect(wrapper.find('img').length).toEqual(2)
+      expect(
+        wrapper
+          .find('img')
+          .at(0)
+          .prop('src'),
+      ).toEqual('image-headshot.jpg')
+    })
+
+    test("should show the signature image as the secondary image", () => {
       expect(wrapper.find('span').length).toEqual(0)
       expect(wrapper.find('img').length).toEqual(2)
       expect(
@@ -59,7 +97,7 @@ describe('<ChefQuote />', () => {
           .find('img')
           .at(1)
           .prop('src'),
-      ).toEqual(imageUrl)
+      ).toEqual('image-signature.jpg')
     })
   })
 })
