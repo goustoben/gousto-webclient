@@ -1,6 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Referral from 'routes/Account/Referral/Referral'
+import Immutable from 'immutable'
 
 describe('Referral', () => {
   describe('rendering', () => {
@@ -28,9 +29,15 @@ describe('Referral', () => {
       expect(wrapper.find('Connect(RAFOffer)').length).toEqual(1)
     })
 
-    test('should not render RAFOffer if have no raf data', () => {
+    test('should render default  RAFOffer if have no raf data', () => {
       wrapper = shallow(<Referral referralCode='RAF-TEST-1234' />)
-      expect(wrapper.find('Connect(RAFOffer)').length).toEqual(0)
+      expect(wrapper.instance().props.rafOffer).toEqual(
+        Immutable.Map ({
+          "creditFormatted": "£15",
+          "firstBoxDiscountFormatted": "50%",
+          "firstMonthDiscountFormatted": "30%",
+        })
+      )
     })
   })
 })
