@@ -9,6 +9,7 @@ import accountCSS from '../Account/Account.css'
 import css from './Referral.css'
 import Overlay from '../../../components/Overlay/Overlay'
 import RAFOffer from './RAFOffer'
+import defaultOffer from './config'
 
 const fbShare = (referralLink) => {
   if (globals.client) {
@@ -77,6 +78,12 @@ Referral.propTypes = {
   referralCode: PropTypes.string,
   rafOffer: PropTypes.shape({}),
   userFetchReferralOffer: PropTypes.func,
+}
+
+Referral.defaultProps = {
+  referralCode: '',
+  rafOffer: defaultOffer,
+  userFetchReferralOffer: () => {},
 }
 
 export default Referral

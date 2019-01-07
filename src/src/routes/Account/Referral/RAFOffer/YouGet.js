@@ -24,7 +24,7 @@ const propTypes = {
 }
 
 const defaultProps = {
-  offerColour: 'blue'
+  offerColour: 'grey'
 }
 
 YouGet.propTypes = propTypes

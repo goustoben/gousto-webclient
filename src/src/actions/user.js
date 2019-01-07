@@ -716,10 +716,12 @@ export const userReferAFriend = (email) => (
 export function userFetchReferralOffer () { 
  
   return async (dispatch, getState) => {
+    dispatch(statusActions.pending(actionTypes.USER_LOAD_REFERRAL_OFFER, true))
     const accessToken = getState().auth.get('accessToken')
     if (accessToken) {
       const { data: referralOffer } = await userApi.fetchReferralOffer(accessToken)
       dispatch({type: actionTypes.USER_LOAD_REFERRAL_OFFER, referralOffer})
+      dispatch(statusActions.pending(actionTypes.USER_LOAD_REFERRAL_OFFER, false))      
     }
   }
   

@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 
 import { userFetchReferralOffer } from 'actions/user'
-import { referralOffer } from 'selectors/account'
+import { getReferralOffer, getReferralCode } from 'selectors/user'
 
 import Referral from './Referral'
 
 const mapStateToProps = (state) => ({
-  referralCode: state.user.get('referral-code'),
-  rafOffer: referralOffer(state),
+  referralCode: getReferralCode(state),
+  rafOffer: getReferralOffer(state),
 })
 
 const ReferralContainer = connect(mapStateToProps, {userFetchReferralOffer})(Referral)
