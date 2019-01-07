@@ -50,12 +50,6 @@ module.exports = {
     { id: 'dairy-free', label: 'Dairy Free' },
     { id: 'gluten-free', label: 'Gluten Free' },
   ],
-  christmasBanner: {
-    gelMain: {
-      text: 'New range!',
-      title: 'Festive Flavours',
-    },
-  },
   jwBanner: {
     switchoverDate: '2019-01-01T00:00:00+00:00',
   },
