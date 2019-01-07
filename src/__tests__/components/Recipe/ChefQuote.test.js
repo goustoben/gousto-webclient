@@ -28,40 +28,6 @@ describe('<ChefQuote />', () => {
     })
   })
 
-  describe('with Chef prop with one image', () => {
-    const imageUrl =
-			'http://vignette2.wikia.nocookie.net/orange-is-the-new-black/images/7/76/Judyking.jpg'
-    const chef = Immutable.fromJS({
-      media: {
-        images: [
-          {
-            type: 'headshot-image',
-            urls: [
-              {
-                src: imageUrl,
-              },
-            ],
-          },
-        ],
-      },
-      name: 'Judy King',
-    })
-
-    beforeEach(() => {
-      wrapper = shallow(<ChefQuote quote={quote} chef={chef} />)
-    })
-
-    test('should show Judy King as the chef', () => {
-      expect(
-        wrapper
-          .find('span')
-          .at(0)
-          .text()
-          .indexOf('Judy King'),
-      ).not.toEqual(-1)
-    })
-  })
-
   describe('with Chef prop with two images', () => {
     const imageUrl =
 			'http://vignette2.wikia.nocookie.net/orange-is-the-new-black/images/7/76/Judyking.jpg'
