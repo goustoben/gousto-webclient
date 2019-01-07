@@ -162,6 +162,10 @@ const user = {
       return state.set('referralDetails', Immutable.fromJS(action.referralDetails))
     }
 
+    case actionTypes.USER_LOAD_REFERRAL_OFFER: {
+      return state.set('referralOffer', Immutable.fromJS(action.referralOffer))
+    }
+
     case actionTypes.ORDER_DELIVERY_DAYS_RECEIVE: {
       return state.setIn(['newOrders', action.orderId, 'availableDeliveryDays'], Immutable.fromJS(action.availableDays))
     }

@@ -22,6 +22,21 @@
 	color: white;
 }
 
+.blue {
+	background: #00D5E0;
+	color: black;
+}
+
+.black {
+	background-color: #333D47;
+	color: white;
+}
+
+.gold {
+	background-color: #E8C776;
+	color: black;
+}
+
 .gelContent {
 	display: flex;
 	width: 100%;

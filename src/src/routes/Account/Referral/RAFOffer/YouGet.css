@@ -1,0 +1,79 @@
+  @value ScreenSMMin from 'styles/screenSizes.css';
+
+
+  .youGetOffer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    width: 50%;
+
+    @media ScreenSMMin {
+      margin-right: 40px; 
+      width: auto;
+    }
+  }
+
+  .youGetOfferTitle {
+    font-size: 16px;
+    @media ScreenSMMin {
+      font-size: 24px;
+      width: 202px;
+      line-height: 32px;
+      height: 32px;
+    }
+  }
+  
+  .rafGel {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    border-radius: 100%;
+    transform: translate(0, 0);
+
+    @media ScreenSMMin {
+      width: 135px;
+      height: 135px;
+    }
+  }
+  
+  .rafGelContent {
+    height: 40px;
+
+    @media ScreenSMMin {
+      height: 50px;
+    }
+  }
+  
+  .rafGelContent > :first-child {
+    font-size: 34px;
+    line-height: 30px;
+
+    @media ScreenSMMin {
+      font-size: 51px;
+      line-height: 40px;
+    }
+  }
+  
+  .rafGelContent > :last-child {
+    font-size: 14px;
+    line-height: 15px;
+    @media ScreenSMMin {
+      font-size: 24px;
+      line-height: 25px;
+    }
+  }
+
+  .youGetLabel {
+    font-size: 14px;
+    width: 99px;
+    height: 41px;
+    @media ScreenSMMin {
+      height: 48px;
+      margin-bottom: 0px;
+      width: 149px;
+      font-size: 21px;
+      line-height: 29px;
+    }
+  }
