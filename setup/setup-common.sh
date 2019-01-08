@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # check env and set variables
-export NODE_VERSION=10.14.2
+export NODE_VERSION=10.15.0
 export PRODUCTS_VERSION="/products/v2.0"
 export DELIVERIES_VERSION="/deliveries/v1.0"
 
