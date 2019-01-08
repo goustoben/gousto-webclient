@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="37px" height="25px" viewBox="0 0 37 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>email</title>
+    <desc>Created with Sketch.</desc>
+    <g id="study-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="overlay" transform="translate(-30.000000, -136.000000)" stroke="#000000" stroke-width="2">
+            <g id="Group" transform="translate(31.000000, 137.200000)">
+                <g id="email">
+                    <polyline id="Stroke-7" points="-1.47058824e-05 2.00621353 17.46675 15.4842606 34.9333676 2.00621353"></polyline>
+                    <path d="M34.2035984,22 C30.5508207,22 27.8112374,22 25.9848485,22 C20.3548112,22 11.9097552,22 0.649680567,22 C0.290947734,22 4.61852778e-14,21.7516107 4.61852778e-14,21.4450717 L0.146720995,0.55492831 C0.146720995,0.248514643 0.437668729,2.48689958e-14 0.796401563,2.48689958e-14 L34.3503194,2.48689958e-14 C34.7090523,2.48689958e-14 35,0.248514643 35,0.55492831 L34.853279,21.4450717 C34.853279,21.7516107 34.5623313,22 34.2035984,22 Z" id="Path"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

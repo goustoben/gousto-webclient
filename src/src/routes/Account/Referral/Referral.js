@@ -94,7 +94,7 @@ class Referral extends React.Component {
         </div>
 
         <Overlay open={isShareYourLinkModalOpen} from="bottom">
-          <ShareYourLinkModal onClose={this.closeShareYourLinkModal} />
+          <ShareYourLinkModal onClose={this.closeShareYourLinkModal} referralCode={referralCode}/>
         </Overlay>
       </div>
     )
