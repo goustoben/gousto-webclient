@@ -9,7 +9,11 @@ import css from './Referral.css'
 import Overlay from '../../../components/Overlay/Overlay'
 import RAFOffer from './RAFOffer'
 import defaultOffer from './config'
+<<<<<<< HEAD
 import { ShareYourLinkModal } from './ShareYourLinkModal'
+=======
+import Svg from 'Svg'
+>>>>>>> Added box icons and background change based on campaign
 
 const fbShare = (referralLink) => {
   if (globals.client) {
@@ -34,15 +38,15 @@ const fbMsgShare = (referralLink) => {
 }
 
 class Referral extends React.Component {
-	state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
+  state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
 
-	openEmailModal = () => {
-	  this.setState({ isEmailModalOpen: true })
-	}
+  openEmailModal = () => {
+    this.setState({ isEmailModalOpen: true })
+  }
 
-	closeEmailModal = () => {
-	  this.setState({ isEmailModalOpen: false })
-	}
+  closeEmailModal = () => {
+    this.setState({ isEmailModalOpen: false })
+  }
 
   openShareYourLinkModal = () => {
     this.setState({ isShareYourLinkModalOpen: true })
@@ -53,47 +57,52 @@ class Referral extends React.Component {
   }
 
   componentDidMount() {
-	  const { userFetchReferralOffer } = this.props
-	  userFetchReferralOffer()
+    const { userFetchReferralOffer } = this.props
+    userFetchReferralOffer()
   }
 
   render() {
     const { referralCode, rafOffer } = this.props
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
+    const isDouble = rafOffer.get('expiry')
 
-	  return (
-			<div>
-				<div className={css.rafPageTitle}>
-					<RAFTitle />
-				</div>
-				<div className={css.rafPageSection}>
-					<RAFOffer offer={rafOffer} />
-          <div className={`${css.rafRow} ${css.mobileHide}`}>
-						<UserRAFLink className={css.rafLink} referralCode={referralCode} />
-						<div className={css.socialButtons}>
-							<SocialButton text="Email" type="email" onClick={this.openEmailModal} />
-							<Overlay open={this.state.isEmailModalOpen} from="top">
-								<ReferAFriendModal
-								  onClose={this.closeEmailModal}
-								/>
-							</Overlay>
-							<SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
-							<SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
-						</div>
+
+    return (
+      <div className={isDouble ? css.containerBackgroundDouble : css.containerBackground}>
+        <div className={css.rafPageTitle}>
+          <RAFTitle />
+        </div>
+        <div className={css.rafPageSection}>
+          <div className={css.rafPageBanner}>
+            <div className={isDouble ? css.iconReferDouble : css.iconRefer} />
+            <RAFOffer offer={rafOffer} />
           </div>
-    </div>
+          <div className={`${css.rafRow} ${css.mobileHide}`}>
+            <UserRAFLink className={css.rafLink} referralCode={referralCode} />
+            <div className={css.socialButtons}>
+              <SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
+              <SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
+              <SocialButton text="Email" type="email" onClick={this.openEmailModal} />
+              <Overlay open={isEmailModalOpen} from="top">
+                <ReferAFriendModal
+                  onClose={this.closeEmailModal}
+                />
+              </Overlay>
+            </div>
+          </div>
+        </div>
 
         <div className={`${css.mobileCTAContainer} ${css.mobileShow}`}>
           <div className={css.mobileCTA} onClick={this.openShareYourLinkModal}>
-              <span className={css.shareYourLinkText}>SHARE YOUR LINK</span>
+            <span className={css.shareYourLinkText}>SHARE YOUR LINK</span>
           </div>
         </div>
 
         <Overlay open={isShareYourLinkModalOpen} from="bottom">
-          <ShareYourLinkModal onClose={this.closeShareYourLinkModal}/>
+          <ShareYourLinkModal onClose={this.closeShareYourLinkModal} />
         </Overlay>
-			</div>
-	  )
+      </div>
+    )
   }
 }
 
