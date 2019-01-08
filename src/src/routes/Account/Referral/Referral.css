@@ -97,7 +97,6 @@
 	}
 }
 
-<<<<<<< HEAD
 .mobileHide {
 	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
 }
@@ -134,8 +133,6 @@
     font-size: 16px;
     font-weight: bold;
 }
-=======
 .rafLink {
 	display: flex;
 }
->>>>>>> Added box icons and background change based on campaign

@@ -9,11 +9,7 @@ import css from './Referral.css'
 import Overlay from '../../../components/Overlay/Overlay'
 import RAFOffer from './RAFOffer'
 import defaultOffer from './config'
-<<<<<<< HEAD
 import { ShareYourLinkModal } from './ShareYourLinkModal'
-=======
-import Svg from 'Svg'
->>>>>>> Added box icons and background change based on campaign
 
 const fbShare = (referralLink) => {
   if (globals.client) {
@@ -66,7 +62,6 @@ class Referral extends React.Component {
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
     const isDouble = rafOffer.get('expiry')
 
-
     return (
       <div className={isDouble ? css.containerBackgroundDouble : css.containerBackground}>
         <div className={css.rafPageTitle}>
@@ -77,9 +72,9 @@ class Referral extends React.Component {
             <div className={isDouble ? css.iconReferDouble : css.iconRefer} />
             <RAFOffer offer={rafOffer} />
           </div>
-          <div className={`${css.rafRow} ${css.mobileHide}`}>
+          <div className={css.rafRow}>
             <UserRAFLink className={css.rafLink} referralCode={referralCode} />
-            <div className={css.socialButtons}>
+            <div className={`${css.socialButtons} ${css.mobileHide}`}>
               <SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
               <SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
               <SocialButton text="Email" type="email" onClick={this.openEmailModal} />
