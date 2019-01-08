@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import colors from 'styles/colors.css'
 import css from './ContentMask.css'
+import colors from 'styles/colors.css'
 
 const ContentMask = ({ fillColor }) => (
 	<svg

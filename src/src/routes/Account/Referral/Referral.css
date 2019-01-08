@@ -19,7 +19,7 @@
 
 .rafPageSection {
 	position: relative;
-	background: url('media/svgs/white-curve-mobile.svg') center top no-repeat;
+	background: url('media/svgs/white-curve.svg') center top no-repeat;
 	background-size: 130% 20%;
 
 	@media ScreenSMMin {

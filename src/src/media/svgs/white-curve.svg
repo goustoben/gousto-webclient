@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="1330px" height="160px" viewBox="0 0 1330 160" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g id="desktop" transform="translate(0.000000, -200.000000)" fill="#FFFFFF">
-        <g id="Group-5" transform="translate(0.000000, 200.000000)">
-            <g id="Group-7">
-                <path d="M1330,73.7513464 C1330,73.7513464 1109.10362,173.5 671.043187,173.5 C232.981365,173.5 -3.46511014e-15,73.7513464 -3.46511014e-15,73.7513464 L-1.13686838e-12,0.7 L1330,0.7 L1330,73.7513464 Z" id="Fill-1"></path>
+<svg width="375px" height="43px" viewBox="0 0 375 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Fill 1</title>
+    <desc>Created with Sketch.</desc>
+    <g id="study-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="mobile" transform="translate(0.000000, -188.000000)" fill="#FFFFFF">
+            <g id="Group-6" transform="translate(0.000000, 145.000000)">
+                <path d="M375,57.8038313 C375,57.8038313 312.717187,86 189.203906,86 C65.6902344,86 0,57.8038313 0,57.8038313 L0,43 L375,43 L375,57.8038313 Z" id="Fill-1"></path>
             </g>
         </g>
     </g>
