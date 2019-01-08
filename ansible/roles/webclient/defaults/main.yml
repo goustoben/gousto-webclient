@@ -34,7 +34,7 @@ auth_client_secret: frontend_service_secret
 # 3rd party config
 optimizely_account: 7728010866
 
-node_version: 10.15.0
+node_version: 10.14.2
 nvm_root: "/opt/nvm"
 node_env: development
 node_server_port: 8080
