@@ -125,7 +125,7 @@
 	border-top: 1px Mackerel solid;
 	background-color: White;
 	padding: 12px 0;
-	z-index: 1;
+	z-index: 1000;
 }
 
 .mobileCTA {

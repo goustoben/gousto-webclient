@@ -14,7 +14,7 @@ const HowItWorks = ({ details }) => {
         {
           detailsSteps && detailsSteps.map((item, idx) => (
             <div className={css.howItWorksStep} key={`raf-how-it-works ${idx}`}>
-              <div className={css.howItWorksStepIdx}>{idx+1}</div>
+              <div className={css.howItWorksStepIdx}><span>{idx+1}</span></div>
               {
                 (idx === detailsSteps.size-1) ?
                 <div className={css.howItWorksStepContent} dangerouslySetInnerHTML={{__html: item}} />
