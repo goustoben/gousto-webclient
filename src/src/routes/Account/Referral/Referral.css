@@ -17,7 +17,7 @@
 	padding-top: 33px;
 }
 
-.rafPageSection {
+.rafOfferSection {
 	position: relative;
 	background: url('media/svgs/white-curve.svg') center top no-repeat;
 	background-size: 130% 23%;
@@ -38,7 +38,7 @@
 	}
 }
 
-.rafPageBanner {
+.rafOfferBanner {
 	display:  flex;
 	align-content: center;
 	justify-content: center;
@@ -90,7 +90,7 @@
 	margin: 0 auto;
 	border-radius: 5px 5px 0 0;
 	@media ScreenSMMin {
-		width: 80%;
+		width: 90%;
 	}
 }
 
