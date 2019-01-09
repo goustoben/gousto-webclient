@@ -1,1 +1,1 @@
-export default from './ReferAFriendModalContainer'
+export { ReferAFriendModal } from './ReferAFriendModal'

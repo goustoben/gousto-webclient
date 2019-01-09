@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ModalPanel from 'Modal/ModalPanel'
 import Svg from 'Svg'
-import { ReferAFriend } from '../ReferAFriend'
+import ReferAFriend from '../ReferAFriend'
 import css from './ShareYourLinkModal.css'
 import { getFacebookReferralLink, getMessengerReferralLink } from '../socialReferralHelper'
 
