@@ -3,7 +3,11 @@
 }
 
 .button {
-	justify-content: right;
+	width: 100%;
+}
+
+.button > :first-child {
+	width: 100%;
 }
 
 .emailSentNotification {
