@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import globals from 'config/globals'
 import { UserRAFLink } from './UserRAFLink'
 import { SocialButton } from './SocialButton'
 import ReferAFriendModal from './ReferAFriendModal'
@@ -10,28 +9,7 @@ import Overlay from '../../../components/Overlay/Overlay'
 import RAFOffer from './RAFOffer'
 import defaultOffer from './config'
 import { ShareYourLinkModal } from './ShareYourLinkModal'
-
-const fbShare = (referralLink) => {
-  if (globals.client) {
-    window.FB.ui({
-      method: 'share',
-      mobile_iframe: true,
-      href: referralLink,
-      redirect_uri: referralLink,
-    })
-  }
-}
-
-const fbMsgShare = (referralLink) => {
-  if (globals.client) {
-    window.FB.ui({
-      method: 'send',
-      mobile_iframe: true,
-      link: referralLink,
-      redirect_uri: referralLink,
-    })
-  }
-}
+import { getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
 
 class Referral extends React.Component {
   state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
@@ -75,8 +53,8 @@ class Referral extends React.Component {
           <div className={css.rafRow}>
             <UserRAFLink className={css.rafLink} referralCode={referralCode} />
             <div className={`${css.socialButtons} ${css.mobileHide}`}>
-              <SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
-              <SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
+              <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode)} />
+              <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode)} />
               <SocialButton text="Email" type="email" onClick={this.openEmailModal} />
               <Overlay open={isEmailModalOpen} from="top">
                 <ReferAFriendModal
