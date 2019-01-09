@@ -1,13 +1,20 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
 .emailInput {
 	margin-bottom: 15px;
 }
 
 .button {
-	width: 100%;
+	@media ScreenXSMax {
+		width: 100%;
+	}
+	
 }
 
 .button > :first-child {
-	width: 100%;
+	@media ScreenXSMax {
+		width: 100%;
+	}
 }
 
 .emailSentNotification {
