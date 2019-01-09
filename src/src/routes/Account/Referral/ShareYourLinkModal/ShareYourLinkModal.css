@@ -14,7 +14,7 @@
 .row {
 	padding: 0 15px;
 	height: 80px;
-    line-height: 80px;
+  line-height: 80px;
 	border-bottom: 1px Mackerel solid;
 }
 
@@ -23,7 +23,7 @@
 	font-family: Avenir;
 	font-size: 22px;
 	font-weight: bold;
-	line-height: 34px;
+	padding-left: 50px;
 }
 
 .icon {
