@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import globals from 'config/globals'
 import { UserRAFLink } from './UserRAFLink'
 import { SocialButton } from './SocialButton'
 import ReferAFriendModal from './ReferAFriendModal'
@@ -11,39 +10,18 @@ import Overlay from '../../../components/Overlay/Overlay'
 import RAFOffer from './RAFOffer'
 import defaultOffer from './config'
 import { ShareYourLinkModal } from './ShareYourLinkModal'
-
-const fbShare = (referralLink) => {
-  if (globals.client) {
-    window.FB.ui({
-      method: 'share',
-      mobile_iframe: true,
-      href: referralLink,
-      redirect_uri: referralLink,
-    })
-  }
-}
-
-const fbMsgShare = (referralLink) => {
-  if (globals.client) {
-    window.FB.ui({
-      method: 'send',
-      mobile_iframe: true,
-      link: referralLink,
-      redirect_uri: referralLink,
-    })
-  }
-}
+import { getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
 
 class Referral extends React.Component {
-	state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
+  state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
 
-	openEmailModal = () => {
-	  this.setState({ isEmailModalOpen: true })
-	}
+  openEmailModal = () => {
+    this.setState({ isEmailModalOpen: true })
+  }
 
-	closeEmailModal = () => {
-	  this.setState({ isEmailModalOpen: false })
-	}
+  closeEmailModal = () => {
+    this.setState({ isEmailModalOpen: false })
+  }
 
   openShareYourLinkModal = () => {
     this.setState({ isShareYourLinkModalOpen: true })
@@ -54,30 +32,30 @@ class Referral extends React.Component {
   }
 
   componentDidMount() {
-	  const { userFetchReferralOffer } = this.props
-	  userFetchReferralOffer()
+    const { userFetchReferralOffer } = this.props
+    userFetchReferralOffer()
   }
 
   render() {
     const { referralCode, rafOffer } = this.props
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
 
-	  return (
-			<div className={`${accountCSS.accountContainer} ${accountCSS.container}`}>
-				<RAFTitle />
+    return (
+      <div className={`${accountCSS.accountContainer} ${accountCSS.container}`}>
+        <RAFTitle />
         {rafOffer && <RAFOffer offer={rafOffer} />}
         <div className={`${css.row} ${css.mobileHide}`}>
-					<UserRAFLink className={css.rafLink} referralCode={referralCode} />
-					<div className={css.socialButtons}>
-						<SocialButton text="Email" type="email" onClick={this.openEmailModal}/>
-						<Overlay open={isEmailModalOpen} from="top">
-							<ReferAFriendModal
-							  onClose={this.closeEmailModal}
-							/>
-						</Overlay>
-						<SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_facebook_share`)} />
-						<SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare(`https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_messenger_share`)} />
-					</div>
+          <UserRAFLink className={css.rafLink} referralCode={referralCode} />
+          <div className={css.socialButtons}>
+            <SocialButton text="Email" type="email" onClick={this.openEmailModal}/>
+            <Overlay open={isEmailModalOpen} from="top">
+              <ReferAFriendModal
+                onClose={this.closeEmailModal}
+              />
+            </Overlay>
+            <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode)} />
+            <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode)} />
+          </div>
         </div>
 
         <div className={`${css.mobileCTAContainer} ${css.mobileShow}`}>
@@ -89,8 +67,8 @@ class Referral extends React.Component {
         <Overlay open={isShareYourLinkModalOpen} from="bottom">
           <ShareYourLinkModal onClose={this.closeShareYourLinkModal} referralCode={referralCode}/>
         </Overlay>
-			</div>
-	  )
+      </div>
+    )
   }
 }
 
