@@ -67,7 +67,7 @@ class ReferAFriend extends React.PureComponent {
         {
           !isEmailSent ? (
             <div>
-              <p>Enter your friend's email below:</p>
+              <p>Enter your friend&#8217;s email below:</p>
               <Form onSubmit={this.handleSubmit}>
                 <div>
                   <div className={css.emailInput}>
