@@ -1,6 +1,4 @@
-.flex {
-	composes: flex row spaceBetween verticalCenter from 'styles/flex.css';
-}
+
 
 .heading {
 	composes: textCenter textBold from 'styles/typography.css';

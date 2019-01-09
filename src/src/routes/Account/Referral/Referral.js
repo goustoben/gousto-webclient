@@ -75,8 +75,8 @@ class Referral extends React.Component {
 							  onClose={this.closeEmailModal}
 							/>
 						</Overlay>
-						<SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
-						<SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)} />
+						<SocialButton text="Facebook" type="facebook" onClick={() => fbShare(`https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_facebook_share`)} />
+						<SocialButton text="Messenger" type="facebook-messenger" onClick={() => fbMsgShare(`https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_messenger_share`)} />
 					</div>
         </div>
 
