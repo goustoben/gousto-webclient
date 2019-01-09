@@ -39,15 +39,3 @@
 	 text-transform: capitalize;
  }
 }
-
-.emailInput {
-	margin-bottom: 15px;
-}
-
-.emailSentNotification {
-	margin-bottom: 15px;
-}
-
-.button {
-	justify-content: right;
-}
