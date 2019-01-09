@@ -146,4 +146,10 @@
 }
 .rafLink {
 	display: flex;
+	flex-direction: column;
+	position: relative;
+
+	@media ScreenSMMin {
+		flex-direction: row;
+	}
 }

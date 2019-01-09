@@ -14,11 +14,12 @@
 
 .referralCodeCopied {
 	composes: paddingXXS from 'sass-loader!styles/spacing.scss';
-	composes: flex center from 'styles/flex.css';
 	background-color: Blackberry;
 	box-sizing: content-box;
 	color: White;
 	height: 20px;
+	position: absolute;
+	top: 45px;
 }
 
 .mobileHide {
