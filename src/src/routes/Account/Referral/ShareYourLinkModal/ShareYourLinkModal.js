@@ -5,7 +5,7 @@ import globals from 'config/globals'
 import ModalPanel from 'Modal/ModalPanel'
 import Svg from 'Svg'
 import { UserRAFLink } from '../UserRAFLink'
-import ReferAFriendModal from '../ReferAFriendModal'
+import { ReferAFriend } from '../ReferAFriend'
 import Overlay from '../../../../components/Overlay/Overlay'
 import css from './ShareYourLinkModal.css'
 
@@ -65,11 +65,9 @@ class ShareYourLinkModal extends React.PureComponent {
           <Svg fileName='icon-email-colour' className={css.icon} />
         </div>
         <span className={css.optionLabel}>E-mail</span>
-        {/* <Overlay open={isEmailModalOpen} from="top">
-          <ReferAFriendModal
+          <ReferAFriend
             onClose={this.closeEmailModal}
           />
-        </Overlay> */}
       </div>
       <div className={`${css.row}`} onClick={() => fbShare(`https://www.gousto.co.uk/join?promo_code=${referralCode}`)}>
         <div className={css.iconWrapper}>
