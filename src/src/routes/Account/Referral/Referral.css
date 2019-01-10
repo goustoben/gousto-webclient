@@ -1,6 +1,6 @@
 @value Basa, BlueBase, Mackerel, White, RafBgDefault from 'styles/colors.css';
-@value ScreenMDMin, ScreenSMMin, MinBreakPointSM from 'styles/screenSizes.css';
-@value SpacingXXS, SpacingLG from 'sass-loader!styles/spacing.scss';
+@value ScreenSMMin, MinBreakPointSM, ScreenMLMax, ScreenMLMin from 'styles/screenSizes.css';
+@value SpacingXXS from 'sass-loader!styles/spacing.scss';
 /* 5px, 20px */
 
 .containerBackground {
@@ -81,7 +81,6 @@
 
 .rafRow {
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: center;
 	background: White;
 	width: 95%;
@@ -92,6 +91,9 @@
 	@media ScreenSMMin {
 		width: 90%;
 	}
+	@media ScreenMLMax and ScreenSMMin {
+		flex-direction: column;
+	}
 }
 
  .firstParagraph {
@@ -100,10 +102,12 @@
 
  .socialButtons {
   height: 40px;
-  display: flex;
-	@media (min-width: 889px) {
+	display: flex;
+	margin: 20px auto;
+
+	@media ScreenMLMin {
 		padding-left: 15px;
-		margin-left: 30px;
+		margin: 0 0 0 30px;
 		border-left: 1px solid Basa;
 	}
 }

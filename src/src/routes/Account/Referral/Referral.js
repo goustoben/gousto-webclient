@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { UserRAFLink } from './UserRAFLink'
 import { SocialButton } from './SocialButton'
@@ -12,7 +12,7 @@ import { ShareYourLinkModal } from './ShareYourLinkModal'
 import { getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
 import { HowItWorks } from './HowItWorks'
 
-class Referral extends React.Component {
+class Referral extends Component {
   state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
 
   openEmailModal = () => {

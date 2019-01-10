@@ -10,6 +10,8 @@ const HowItWorks = ({ details }) => {
 
   return (
     <div className={css.howItWorks}>
+      <div className={css.borderTop}></div>
+      <h1>How It Works</h1>
       <div className={css.howItWorksWrapper}>
         {
           detailsSteps && detailsSteps.map((item, idx) => (

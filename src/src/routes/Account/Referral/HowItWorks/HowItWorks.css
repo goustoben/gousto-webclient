@@ -1,5 +1,5 @@
 @value White, RafBgDefault from 'styles/colors.css';
-@value ScreenSMMin from 'styles/screenSizes.css';
+@value ScreenMDMin, ScreenLGMin, ScreenMDMax, ScreenSMMax, ScreenSMMin from 'styles/screenSizes.css';
 
 .howItWorks {
   width: 100%;
@@ -7,24 +7,38 @@
   display: flex;
   padding-bottom: 100px;
   margin-bottom: -25px;
+  flex-direction: column;
+}
+
+.howItWorks .borderTop {
+  display: flex;
+  margin: 0px auto 25px;
+  width: 88%;
+  border-top: 1px solid RafBgDefault;
+}
+
+.howItWorks h1 {
+  display: flex;
+  justify-content: center;
 }
 .howItWorksWrapper {
+  
   width: 98%;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
   justify-content: center;
   
-  @media ScreenSMMin {
+  @media ScreenMDMin {
     flex-direction: row;
-    width: 88%;
+    width: 90%;
   }
 }
 
 .howItWorksStep {
   display: flex;
   flex-direction: column;
-  margin-top: 22px;
+  margin: 22px auto 0;
 }
 
 .howItWorksStepIdx {
@@ -33,7 +47,7 @@
   justify-content: left;
   display: flex;
   padding-left: 20px;
-  @media ScreenSMMin {
+  @media ScreenMDMin {
     justify-content: center;
     padding-left: 0;
   }
@@ -49,7 +63,7 @@
   display: flex;
   margin-bottom: -15px;
   z-index: 10;
-  @media ScreenSMMin {
+  @media ScreenMDMin {
     height: 50px;
     width: 50px;
   }
@@ -66,10 +80,27 @@
   box-shadow: 0 1px 7px 0 rgba(0,0,0,0.1);
   margin: 0 15px;
   padding: 0 15px;
-  @media ScreenSMMin {
+  @media ScreenLGMin {
     width: 355px;
     height: 195px;
     padding: 0 30px;
+  }
+
+  @media ScreenMDMax and ScreenMDMin {
+    width: 270px;
+    height: 175px;
+  }
+
+  @media ScreenSMMax and ScreenSMMin {
+    width: 500px;
+    height: 148px;
+    padding: 0 30px;
+  }
+
+/* Iphone5 and SE*/
+  @media (max-width: 320px) {
+    height: 150px;
+    width: 282px;
   }
 }
 
