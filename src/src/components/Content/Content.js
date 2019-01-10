@@ -43,8 +43,10 @@ const Content = (props) => {
     const contentKeyParts = props.contentKeys.split('.')
     const value = props.state.content.getIn(contentKeyParts)
     if (!value) {
-      logger.warning({message: 'failContentReplacement', errors: [`No value found for key: ${props.contentKeys}`]})
-
+      if(__CLIENT__){
+        logger.warning({message: 'failContentReplacement', errors: [`No value found for key: ${props.contentKeys}`]})
+      }
+      
       return null
     }
 

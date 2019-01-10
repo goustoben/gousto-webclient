@@ -263,7 +263,7 @@ class Checkout extends React.PureComponent {
   )
 
   renderDesktopSteps = () => (
-    <Div className={css.row}>
+    <Div className={css.rowCheckout}>
       <Div className={css.section}>
         {this.renderProgressBar(desktopStepMapping, defaultDesktop, this.props.params.stepName)}
         {this.renderSteps(desktopStepMapping, defaultDesktop, this.props.params.stepName)}
@@ -301,7 +301,7 @@ class Checkout extends React.PureComponent {
 
     return (
       <Div className={css.checkoutContainer} data-testing="checkoutContainer">
-        <Div className={css.content}>
+        <Div className={css.checkoutContent}>
           {renderSteps()}
         </Div>
       </Div>

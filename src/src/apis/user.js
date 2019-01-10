@@ -6,6 +6,10 @@ export function applyPromo(accessToken, promoCode) {
   return fetch(accessToken, `${endpoint('core')}/user/current/applyPromotionCode/${promoCode}`, {}, 'POST')
 }
 
+export function fetchReferralOffer(accessToken) {
+  return fetch(accessToken, `${endpoint('core')}/user/current/raf-campaign-details`, {}, 'GET')
+}
+
 export function fetchPromo(accessToken) {
   return fetch(accessToken, `${endpoint('core')}${routes.core.userPromo}`, {}, 'GET')
 }

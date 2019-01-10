@@ -1,10 +1,97 @@
-@value Basa from 'styles/colors.css';
-@value ScreenMDMin, MinBreakPointSM from 'styles/screenSizes.css';
+@value Basa, BlueBase, Mackerel, White, RafBgDefault from 'styles/colors.css';
+@value ScreenMDMin, ScreenSMMin, MinBreakPointSM from 'styles/screenSizes.css';
+@value SpacingXXS, SpacingLG from 'sass-loader!styles/spacing.scss';
+/* 5px, 20px */
 
-.row {
+.containerBackground {
+	background-color: RafBgDefault;
+}
+
+.containerBackgroundDouble {
+	background-color: rgba(232,199,118,0.3);
+}
+
+.rafPageTitle {
+	background-color: White;
+	margin-bottom: -1px;
+	padding-top: 33px;
+}
+
+.rafPageSection {
+	position: relative;
+	background: url('media/svgs/white-curve.svg') center top no-repeat;
+	background-size: 130% 23%;
+
+	@media ScreenSMMin {
+		background-size: 100% 35%;
+	}
+}
+@media not all and (min-resolution:.001dpcm) { 
+	@supports (-webkit-appearance:none) {
+
+	.rafPageSection { 
+		background-size: auto 23%; 
+		@media ScreenSMMin {
+				background-size: contain;
+			}
+		}
+	}
+}
+
+.rafPageBanner {
+	display:  flex;
+	align-content: center;
+	justify-content: center;
+	flex-direction: column;
+	margin-bottom: 10px;
+
+	
+	@media ScreenSMMin {
+		flex-direction: row;
+		margin-bottom: 50px;
+	}
+}
+
+.iconRefer {
+	min-height: 112px;
+	width: 100%;
+  margin: 15px auto;
+	background: url('media/svgs/icon-mobile-refer-box.svg') center center no-repeat;
+	
+	@media ScreenSMMin {
+		margin: 0;
+		width: 231px;
+		min-height: 142px;
+		background: url('media/svgs/icon-refer-box.svg') center center no-repeat;
+	}
+}
+.iconReferDouble {
+	min-height: 112px;
+	width: 100%;
+  margin: 15px auto;
+	background: url('media/svgs/icon-mobile-refer-box-double-credit.svg') center center no-repeat;
+
+	@media ScreenSMMin {
+		margin: 0;
+		width: 231px;
+		min-height: 142px;
+		background: url('media/svgs/icon-refer-box-double-credit.svg') center center no-repeat;
+	}
+}
+
+.rafRow {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	background: White;
+	width: 95%;
+	padding: 30px 21px;
+	align-items: center;
+	margin: 0 auto;
+	border-radius: 5px 5px 0 0;
+	@media ScreenSMMin {
+		width: 80%;
+	}
 }
 
  .firstParagraph {
@@ -19,4 +106,44 @@
 		margin-left: 30px;
 		border-left: 1px solid Basa;
 	}
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobileShow {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobileCTAContainer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+	border-top: 1px Mackerel solid;
+	background-color: White;
+	padding: 12px 0;
+	z-index: 1;
+}
+
+.mobileCTA {
+	width: 80%;
+	padding: 14px 0;
+	margin: 0 auto;
+	border-radius: SpacingXXS;
+	background-color:BlueBase;
+	cursor: pointer;
+	text-align: center;
+}
+
+.shareYourLinkText {
+    color: White;
+    font-family: Avenir;
+    font-size: 16px;
+    font-weight: bold;
+}
+.rafLink {
+	display: flex;
 }

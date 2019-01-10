@@ -1,0 +1,7 @@
+.rafOffer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-weight: bold;
+  font-family: Comfortaa;
+}

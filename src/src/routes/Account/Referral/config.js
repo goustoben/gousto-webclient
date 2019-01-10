@@ -1,4 +1,7 @@
-export default {
-  whatsForYou: '£15',
-  whatsForThem: '50%',
-}
+import Immutable from 'immutable'
+
+export default Immutable.fromJS({
+  creditFormatted: '£15',
+  firstBoxDiscountFormatted: '50%',
+  firstMonthDiscountFormatted: '30%',
+})
