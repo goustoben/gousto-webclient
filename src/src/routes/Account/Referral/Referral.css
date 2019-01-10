@@ -29,7 +29,7 @@
 @media not all and (min-resolution:.001dpcm) { 
 	@supports (-webkit-appearance:none) {
 
-	.rafPageSection { 
+	.rafOfferSection { 
 		background-size: auto 23%; 
 		@media ScreenSMMin {
 				background-size: contain;
