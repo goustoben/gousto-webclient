@@ -727,4 +727,49 @@ export function userFetchReferralOffer () {
   
 }
 
+export const trackingReferFriendShareSheetOpened = () => {
+  return(dispatch) => {    
+    dispatch({
+      type: actionTypes.REFER_FRIEND_SHARE_SHEET_OPENED,
+      trackingData: {
+        actionType: 'ReferFriendShareSheet Opened',
+      }
+    })
+  }
+}
+
+export const trackingReferFriendShareSheetClosed = () => {
+  return(dispatch) => {    
+    dispatch({
+      type: actionTypes.REFER_FRIEND_SHARE_SHEET_CLOSED,
+      trackingData: {
+        actionType: 'ReferFriendShareSheet Closed',
+      }
+    })
+  }
+}
+
+export const trackingReferFriendLinkCopied = () => {
+  return(dispatch) => {    
+    dispatch({
+      type: actionTypes.REFER_FRIEND_LINK_COPIED,
+      trackingData: {
+        actionType: 'ReferFriendLink Copied',
+      }
+    })
+  }
+}
+
+export const trackingReferFriendLinkShare = (channel) => {
+  return(dispatch) => {    
+    dispatch({
+      type: actionTypes.REFER_FRIEND_LINK_SHARE,
+      trackingData: {
+        actionType: 'ReferFriendLink Share',
+        channel: channel
+      }
+    })
+  }
+}
+
 export default userActions

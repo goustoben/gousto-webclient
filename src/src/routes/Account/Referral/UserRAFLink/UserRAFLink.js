@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-import css from './UserRAFLink.css'
 import actions from 'actions/user'
 import routes from 'config/routes'
+import css from './UserRAFLink.css'
 
 class UserRAFLink extends React.PureComponent {
 	state = { copiedMessageVisible: false }
@@ -11,6 +11,7 @@ class UserRAFLink extends React.PureComponent {
 	static propTypes = {
 	  referralCode: PropTypes.string,
 	  className: PropTypes.string,
+	  trackingReferFriendLinkCopied: PropTypes.func
 	}
 
 	static defaultProps = {
@@ -33,6 +34,8 @@ class UserRAFLink extends React.PureComponent {
 	}
 
 	onCopy() {
+	  const { trackingReferFriendLinkCopied } = this.props
+	  trackingReferFriendLinkCopied()
 	  clearTimeout(this.timeout)
 	  this.setState({ copiedMessageVisible: true })
 	  this.timeout = setTimeout(() => {

@@ -1,6 +1,8 @@
 import globals from 'config/globals'
 
-export const getFacebookReferralLink = (referralCode) => {
+export const getFacebookReferralLink = (referralCode, trackingReferFriendLinkShare) => {
+  trackingReferFriendLinkShare('Facebook')
+
   const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_facebook_share`
 
   if (globals.client) {
@@ -13,7 +15,9 @@ export const getFacebookReferralLink = (referralCode) => {
   }
 }
 
-export const getMessengerReferralLink = (referralCode) => {
+export const getMessengerReferralLink = (referralCode, trackingReferFriendLinkShare) => {
+  trackingReferFriendLinkShare('Messenger')
+
   const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_messenger_share`
 
   if (globals.client) {

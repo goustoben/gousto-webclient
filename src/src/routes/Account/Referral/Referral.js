@@ -23,10 +23,14 @@ class Referral extends React.Component {
   }
 
   openShareYourLinkModal = () => {
+    const { trackingReferFriendShareSheetOpened } = this.props
+    trackingReferFriendShareSheetOpened()
     this.setState({ isShareYourLinkModalOpen: true })
   }
 
   closeShareYourLinkModal = () => {
+    const { trackingReferFriendShareSheetClosed } = this.props
+    trackingReferFriendShareSheetClosed()
     this.setState({ isShareYourLinkModalOpen: false })
   }
 
@@ -36,7 +40,7 @@ class Referral extends React.Component {
   }
 
   render() {
-    const { referralCode, rafOffer } = this.props
+    const { referralCode, rafOffer, trackingReferFriendLinkCopied, trackingReferFriendLinkShare } = this.props
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
     const isDouble = rafOffer.get('expiry')
 
@@ -51,10 +55,10 @@ class Referral extends React.Component {
             <RAFOffer offer={rafOffer} />
           </div>
           <div className={css.rafRow}>
-            <UserRAFLink className={css.rafLink} referralCode={referralCode} />
+            <UserRAFLink className={css.rafLink} referralCode={referralCode} trackingReferFriendLinkCopied={trackingReferFriendLinkCopied} />
             <div className={`${css.socialButtons} ${css.mobileHide}`}>
-              <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode)} />
-              <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode)} />
+              <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode, trackingReferFriendLinkShare)} />
+              <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode, trackingReferFriendLinkShare)} />
               <SocialButton text="Email" type="email" onClick={this.openEmailModal} />
               <Overlay open={isEmailModalOpen} from="top">
                 <ReferAFriendModal
@@ -83,6 +87,10 @@ Referral.propTypes = {
   referralCode: PropTypes.string,
   rafOffer: PropTypes.shape({}),
   userFetchReferralOffer: PropTypes.func,
+  trackingReferFriendShareSheetOpened: PropTypes.func,
+  trackingReferFriendShareSheetClosed: PropTypes.func,
+  trackingReferFriendLinkCopied: PropTypes.func,
+  trackingReferFriendLinkShare: PropTypes.func
 }
 
 Referral.defaultProps = {
