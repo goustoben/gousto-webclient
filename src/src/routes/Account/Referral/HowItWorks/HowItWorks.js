@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Immutable from 'immutable'
 import { replaceLinkToTermsAndCondition } from 'utils/sanitizeText'
 import css from './HowItWorks.css'
 import { rafTermsLink } from '../config'
@@ -32,7 +33,7 @@ const HowItWorks = ({ details }) => {
 }
 
 HowItWorks.propTypes = {
-  details: PropTypes.arrayOf(PropTypes.string),
+  details: PropTypes.instanceOf(Immutable.List),
 }
 
 export { HowItWorks }

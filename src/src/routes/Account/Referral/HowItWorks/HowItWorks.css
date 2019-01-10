@@ -1,3 +1,5 @@
+
+@value avenirHeavyFontStack from 'styles/typography.css';
 @value White, RafBgDefault from 'styles/colors.css';
 @value ScreenMDMin, ScreenLGMin, ScreenMDMax, ScreenSMMax, ScreenSMMin from 'styles/screenSizes.css';
 
@@ -20,6 +22,9 @@
 .howItWorks h1 {
   display: flex;
   justify-content: center;
+  color: Blackberry;
+  font-family: avenirHeavyFontStack;
+  font-weight: 900;
 }
 .howItWorksWrapper {
   
