@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { userReferAFriend } from 'actions/user'
 
-import { ReferAFriend } from './ReferAFriend'
+import { ReferAFriend } from './ReferAFriend.logic'
 
 const mapStateToProps = () => ({})
 
