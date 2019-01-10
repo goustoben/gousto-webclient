@@ -83,13 +83,16 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
   return getDataFromTree(components)
     .then(() => {
       const reactHTML = renderToString(components)
-      logger.notice({message: `renderHTML/reactHTML`, elapsedTime: (new Date() - startTime)})
-
+      if(__CLIENT__){
+        logger.notice({message: `renderHTML/reactHTML`, elapsedTime: (new Date() - startTime)})
+      }
       startTime = new Date
       const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
       const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, noGTM, helmetHead)
-      logger.notice({message: `renderHTML/template`, elapsedTime: (new Date() - startTime)})
-
+      if(__CLIENT__){
+        logger.notice({message: `renderHTML/template`, elapsedTime: (new Date() - startTime)})
+      }
+      
       return template
     })
 }

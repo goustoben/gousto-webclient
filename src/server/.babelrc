@@ -18,7 +18,7 @@
         ["env", {
           "loose": true,
           "targets": {
-            "node": "8.11.3"
+            "node": "10.14.2"
           },
           "useBuiltIns": true
         }],

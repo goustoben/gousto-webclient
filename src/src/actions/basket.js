@@ -322,7 +322,7 @@ export default {
             recipeId,
             ...recipeInfo,
             trackingData: {
-              actionType: actionTypes.RECIPE_ADDED,
+              actionType: 'Recipe Added',
               recipeId,
               view,
               position: recipeInfo && recipeInfo.position,
@@ -371,7 +371,7 @@ export default {
         type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId,
         trackingData: {
-          actionType: actionTypes.RECIPE_REMOVED,
+          actionType: 'Recipe Removed',
           recipeId,
           view,
           position,

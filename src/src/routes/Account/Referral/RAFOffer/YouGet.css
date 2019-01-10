@@ -7,7 +7,7 @@
     justify-content: space-between;
     text-align: center;
     align-items: center;
-    width: 50%;
+    width: 47%;
 
     @media ScreenSMMin {
       margin-right: 40px; 

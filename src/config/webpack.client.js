@@ -44,8 +44,8 @@ const cssLoaders = [
       plugins: [
         PostcssNested(),
         PostcssPresetEnv(),
-        PostcssReporter(),
-        PostcssFlexbugsFixed()
+        PostcssFlexbugsFixed(),
+        PostcssReporter()
       ]
     }
   },
@@ -61,8 +61,8 @@ const scssLoaders = [
       plugins: [
         PostcssNested(),
         PostcssPresetEnv(),
-        PostcssReporter(),
         PostcssFlexbugsFixed(),
+        PostcssReporter()
       ],
     },
   },
@@ -149,12 +149,12 @@ const config = {
         test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
       },
-      /*	{
+      /*  {
         test: /\.(jpe?g|png|gif|svg)$/,
         loader: 'image-webpack-loader',
         // This will apply the loader before the other ones
         enforce: 'pre',
-			}, */
+      }, */
       {
         test: /\.(jpe?g|png|gif)$/,
         loader: 'url-loader',
@@ -163,10 +163,10 @@ const config = {
           limit: 10 * 1024
         }
       },
-      { 	test: /\.ico$/,
+      {   test: /\.ico$/,
         loader: 'file-loader'
       },
-      { 	test: /\.svg$/,
+      {   test: /\.svg$/,
         loaders: [
           'svg-url-loader',
           'image-webpack'
@@ -278,7 +278,29 @@ if (build === 'development') {
         }
       }
     }),
-    new OptimizeCssAssetsPlugin()
+    new OptimizeCssAssetsPlugin({
+      cssProcessor: require('cssnano'),
+      cssProcessorPluginOptions: {
+        preset: ['advanced',
+          { 
+            discardComments: { removeAll: true },
+            autoprefixer: {
+              browsers: ["safari >= 7", "iOS >= 7", "chrome >= 34", "and_chr >= 34", "android >= 36", "explorer >= 11", "firefox >= 48", "edge >= 13", "samsung >= 3.3", "opera >= 36"]
+            },
+            mergeIdents: {
+              exclude: true
+            },
+            reduceIdents: {
+              exclude: true
+            },
+            zindex: {
+              exclude: true
+            }
+          }
+        ]
+      },
+      canPrint: true
+    })
   )
 } else if (build === 'hmr') {
   config.output.publicPath = 'http://localhost:3001/'
@@ -301,3 +323,4 @@ if (build === 'development') {
 }
 
 module.exports = config
+

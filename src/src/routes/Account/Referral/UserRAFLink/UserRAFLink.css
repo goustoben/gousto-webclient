@@ -1,10 +1,11 @@
 @value Blackberry, White, Basa from 'styles/colors.css';
 
 .linkContainer {
-	composes: borderXS from 'styles/borders.css';
 	height: 40px;
 	padding: 7px;
 	overflow: hidden;
+	border: 1px #979797 dashed;
+	border-radius: 3px;
 }
 
 .link {
@@ -29,5 +30,5 @@
 }
 
 .invisible {
-	opacity: 0;
+	display: none;
 }
