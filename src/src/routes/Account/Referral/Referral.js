@@ -41,6 +41,7 @@ class Referral extends Component {
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
     const isDouble = rafOffer.get('expiry')
     const details = rafOffer.get('details')
+    const credit = rafOffer.get('creditFormatted')
 
     return (
       <div className={isDouble ? css.containerBackgroundDouble : css.containerBackground}>
@@ -61,6 +62,7 @@ class Referral extends Component {
               <Overlay open={isEmailModalOpen} from="top">
                 <ReferAFriendModal
                   onClose={this.closeEmailModal}
+                  credit={credit}
                 />
               </Overlay>
             </div>

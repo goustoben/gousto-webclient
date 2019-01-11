@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ModalPanel from 'Modal/ModalPanel'
 import css from './ReferAFriendModal.css'
 import ReferAFriend from '../ReferAFriend'
 
-class ReferAFriendModal extends React.PureComponent {
+class ReferAFriendModal extends PureComponent {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
+    credit: PropTypes.string.isRequired
   }
 
   render() {
-    const { onClose } = this.props
+    const { onClose, credit } = this.props
 
     return (
       <ModalPanel
@@ -20,7 +21,7 @@ class ReferAFriendModal extends React.PureComponent {
         disableOverlay
       >
       <div className={css.modalContent}>
-        <h4 className={css.heading}>Refer a friend - Get £15</h4>
+        <h4 className={css.heading}>Refer a friend - Get {credit}</h4>
         <ReferAFriend />
       </div>
       </ModalPanel>

@@ -9,7 +9,7 @@ describe('ReferAFriendModal', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <ReferAFriendModal onClose={onClose}/>
+      <ReferAFriendModal onClose={onClose} credit={'£15'}/>
     )
   })
 
