@@ -5,10 +5,11 @@ import { ReferAFriend } from '../ReferAFriend.logic'
 describe('Refer A Friend Logic', () => {
   let wrapper
   const userReferAFriend = jest.fn()
+  const trackingReferFriendSocialSharing = jest.fn()
 
   beforeEach(() => {
     wrapper = shallow(
-      <ReferAFriend userReferAFriend={userReferAFriend}/>
+      <ReferAFriend userReferAFriend={userReferAFriend} trackingReferFriendSocialSharing={trackingReferFriendSocialSharing} />
     )
   })
 
