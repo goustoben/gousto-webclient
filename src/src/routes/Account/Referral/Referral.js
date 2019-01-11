@@ -92,8 +92,9 @@ class Referral extends Component {
 }
 
 Referral.propTypes = {
-  referralCode: PropTypes.string,
+  referralCode: PropTypes.string.isRequired,
   rafOffer: PropTypes.shape({}),
+  userFirstName: PropTypes.string,
   userFetchReferralOffer: PropTypes.func,
   trackingReferFriend: PropTypes.func,
   trackingReferFriendSocialSharing: PropTypes.func

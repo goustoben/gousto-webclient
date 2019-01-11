@@ -45,12 +45,14 @@ class UserRAFLink extends React.PureComponent {
 	}
 
 	render() {
-	  const copyLink = `cook.gousto.co.uk/raf/?promo_code=${this.props.referralCode}&utm_source=weblink`
-	  const desktopLink = this.constructLink(this.props.referralCode)
-	  const mobileLink = this.constructLink(this.props.referralCode, true)
+	  const { referralCode, className } = this.props
+	  const { copiedMessageVisible } = this.state
+	  const copyLink = `cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_source=weblink`
+	  const desktopLink = this.constructLink(referralCode)
+	  const mobileLink = this.constructLink(referralCode, true)
 
 	  return (
-			<div className={this.props.className}>
+			<div className={className}>
 				<CopyToClipboard
 				  className={css.linkContainer}
 				  text={copyLink}
@@ -61,7 +63,7 @@ class UserRAFLink extends React.PureComponent {
 						<span className={`${css.mobileShow} ${css.link}`}>{mobileLink}</span>
 					</div>
 				</CopyToClipboard>
-				<div className={`${css.referralCodeCopied} ${!this.state.copiedMessageVisible ? css.invisible : ''}`}>
+				<div className={`${css.referralCodeCopied} ${!copiedMessageVisible ? css.invisible : ''}`}>
 					{'Copied!'}
 				</div>
 			</div>
