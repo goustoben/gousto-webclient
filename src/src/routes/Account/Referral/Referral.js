@@ -8,7 +8,7 @@ import css from './Referral.css'
 import Overlay from '../../../components/Overlay/Overlay'
 import RAFOffer from './RAFOffer'
 import defaultOffer from './config'
-import { ShareYourLinkModal } from './ShareYourLinkModal'
+import ShareYourLinkModal from './ShareYourLinkModal'
 import { getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
 
 class Referral extends React.Component {
