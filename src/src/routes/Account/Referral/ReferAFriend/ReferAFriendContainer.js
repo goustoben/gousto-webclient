@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { userReferAFriend, trackingReferFriendLinkShared } from 'actions/user'
+import { userReferAFriend, trackingReferFriendSocialSharing } from 'actions/user'
 
 import { ReferAFriend } from './ReferAFriend.logic'
 
@@ -7,7 +7,7 @@ const mapStateToProps = () => ({})
 
 const ReferAFriendContainer = connect(mapStateToProps, {
   userReferAFriend,
-  trackingReferFriendLinkShared,
+  trackingReferFriendSocialSharing,
 })(ReferAFriend)
 
 export default ReferAFriendContainer

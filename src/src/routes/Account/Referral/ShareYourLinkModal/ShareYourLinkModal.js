@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ModalPanel from 'Modal/ModalPanel'
 import Svg from 'Svg'
+import actionTypes from 'actions/actionTypes'
 import ReferAFriend from '../ReferAFriend'
 import css from './ShareYourLinkModal.css'
 import { getFacebookReferralLink, getMessengerReferralLink } from '../socialReferralHelper'
@@ -11,13 +12,13 @@ class ShareYourLinkModal extends React.PureComponent {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
     referralCode: PropTypes.string.isRequired,
-    trackingReferFriendLinkShare: PropTypes.func.isRequired
+    trackingReferFriendSocialSharing: PropTypes.func.isRequired
   }
 
   toggleEmailModal = () => {
-    const { trackingReferFriendLinkShare } = this.props
+    const { trackingReferFriendSocialSharing } = this.props
     const { isEmailFormOpen } = this.state
-    !isEmailFormOpen && trackingReferFriendLinkShare('Email')
+    !isEmailFormOpen && trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Email')
 
     this.setState(function(prevState) {
       return { isEmailFormOpen: !prevState.isEmailFormOpen }
@@ -26,7 +27,7 @@ class ShareYourLinkModal extends React.PureComponent {
   }
 
   render() {
-    const { onClose, referralCode, trackingReferFriendLinkShare } = this.props
+    const { onClose, referralCode, trackingReferFriendSocialSharing } = this.props
     const { isEmailFormOpen } = this.state
 
     return (
@@ -52,14 +53,14 @@ class ShareYourLinkModal extends React.PureComponent {
         </div>
       </div>
 
-      <div className={`${css.row}`} onClick={() => getFacebookReferralLink(referralCode, trackingReferFriendLinkShare)}>
+      <div className={`${css.row}`} onClick={() => getFacebookReferralLink(referralCode, trackingReferFriendSocialSharing)}>
         <div className={css.iconWrapper}>
           <Svg fileName='icon-facebook-colour' className={css.icon} />
         </div>
         <span>Facebook</span>
       </div>
 
-      <div className={`${css.row}`} onClick={() => getMessengerReferralLink(referralCode, trackingReferFriendLinkShare)}>
+      <div className={`${css.row}`} onClick={() => getMessengerReferralLink(referralCode, trackingReferFriendSocialSharing)}>
         <div className={css.iconWrapper}>
           <Svg fileName='icon-facebook-messenger-colour' className={css.icon} />
         </div>

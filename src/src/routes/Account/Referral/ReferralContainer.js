@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { userFetchReferralOffer, trackingReferFriendShareSheetOpened, trackingReferFriendShareSheetClosed, trackingReferFriendLinkCopied, trackingReferFriendLinkShare } from 'actions/user'
+import { userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
 import { getReferralOffer, getReferralCode } from 'selectors/user'
 
 import Referral from './Referral'
@@ -12,10 +12,8 @@ const mapStateToProps = (state) => ({
 
 const ReferralContainer = connect(mapStateToProps, {
   userFetchReferralOffer, 
-  trackingReferFriendShareSheetOpened,
-  trackingReferFriendShareSheetClosed,
-  trackingReferFriendLinkCopied,
-  trackingReferFriendLinkShare
+  trackingReferFriend,
+  trackingReferFriendSocialSharing,
 })(Referral)
 
 export default ReferralContainer

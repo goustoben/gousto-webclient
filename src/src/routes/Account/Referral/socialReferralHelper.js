@@ -1,7 +1,8 @@
 import globals from 'config/globals'
+import actionTypes from 'actions/actionTypes'
 
-export const getFacebookReferralLink = (referralCode, trackingReferFriendLinkShare) => {
-  trackingReferFriendLinkShare('Facebook')
+export const getFacebookReferralLink = (referralCode, trackingReferFriendSocialSharing) => {
+  trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Facebook')
 
   const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_facebook_share`
 
@@ -15,8 +16,8 @@ export const getFacebookReferralLink = (referralCode, trackingReferFriendLinkSha
   }
 }
 
-export const getMessengerReferralLink = (referralCode, trackingReferFriendLinkShare) => {
-  trackingReferFriendLinkShare('Messenger')
+export const getMessengerReferralLink = (referralCode, trackingReferFriendSocialSharing) => {
+  trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Messenger')
 
   const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_messenger_share`
 

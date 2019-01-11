@@ -724,63 +724,32 @@ export function userFetchReferralOffer () {
       dispatch(statusActions.pending(actionTypes.USER_LOAD_REFERRAL_OFFER, false))
     }
   }
-
 }
 
-export const trackingReferFriendShareSheetOpened = () => {
-  return(dispatch) => {
-    dispatch({
-      type: actionTypes.REFER_FRIEND_SHARE_SHEET_OPENED,
-      trackingData: {
-        actionType: 'ReferFriendShareSheet Opened',
-      }
-    })
+export const trackingReferFriend = (actionType, trackingType) => {
+  if(actionType && trackingType) {
+    return(dispatch) => {
+      dispatch({
+        type: actionType,
+        trackingData: {
+          actionType: trackingType,
+        }
+      })
+    }
   }
 }
 
-export const trackingReferFriendShareSheetClosed = () => {
-  return(dispatch) => {
-    dispatch({
-      type: actionTypes.REFER_FRIEND_SHARE_SHEET_CLOSED,
-      trackingData: {
-        actionType: 'ReferFriendShareSheet Closed',
-      }
-    })
-  }
-}
-
-export const trackingReferFriendLinkCopied = () => {
-  return(dispatch) => {
-    dispatch({
-      type: actionTypes.REFER_FRIEND_LINK_COPIED,
-      trackingData: {
-        actionType: 'ReferFriendLink Copied',
-      }
-    })
-  }
-}
-
-export const trackingReferFriendLinkShare = (channel) => {
-  return(dispatch) => {
-    dispatch({
-      type: actionTypes.REFER_FRIEND_LINK_SHARE,
-      trackingData: {
-        actionType: 'ReferFriendLink Share',
-        channel: channel
-      }
-    })
-  }
-}
-
-export const trackingReferFriendLinkShared = (channel) => {
-  return(dispatch) => {
-    dispatch({
-      type: actionTypes.REFER_FRIEND_LINK_SHARED,
-      trackingData: {
-        actionType: 'ReferFriendLink Shared',
-        channel: channel
-      }
-    })
+export const trackingReferFriendSocialSharing = (actionType, trackingType, channel) => {
+  if(actionType && trackingType) {
+    return(dispatch) => {
+      dispatch({
+        type: actionType,
+        trackingData: {
+          actionType: trackingType,
+          channel: channel
+        }
+      })
+    }
   }
 }
 

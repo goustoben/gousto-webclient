@@ -2,13 +2,14 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import config from 'config/home'
 import { validateEmail } from 'utils/auth'
+import actionTypes from 'actions/actionTypes'
 import { ReferAFriendPresentation } from './ReferAFriend.presentation'
 
 class ReferAFriend extends PureComponent {
 
   static propTypes = {
     userReferAFriend: PropTypes.func.isRequired,
-    trackingReferFriendLinkShared: PropTypes.func.isRequired,
+    trackingReferFriendSocialSharing: PropTypes.func.isRequired,
   }
 
   state = {
@@ -34,12 +35,12 @@ class ReferAFriend extends PureComponent {
   }
 
   handleSubmit = (event) => {
-    const { trackingReferFriendLinkShared } = this.props
+    const { trackingReferFriendSocialSharing } = this.props
 
     event.preventDefault()
     const { isEmailValid } = this.state
     if (isEmailValid) {
-      trackingReferFriendLinkShared('Email')
+      trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARED, 'ReferFriendLink Shared', 'Email')
       this.setState({
         isEmailSent: true,
         errorMessage: ''
