@@ -3,8 +3,8 @@ import actionTypes from 'actions/actionTypes'
 
 export const getFacebookReferralLink = (referralCode, trackingReferFriendSocialSharing) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Facebook')
-
-  const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_facebook_share`
+  const facebookUTM = '&utm_source=facebook&utm_medium=sharebutton_raf_page&utm_campaign=raf_facebook_share'
+  const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${facebookUTM}`
 
   if (globals.client) {
     window.FB.ui({
@@ -18,8 +18,8 @@ export const getFacebookReferralLink = (referralCode, trackingReferFriendSocialS
 
 export const getMessengerReferralLink = (referralCode, trackingReferFriendSocialSharing) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Messenger')
-
-  const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}&utm_campaign=raf_messenger_share`
+  const messengerUTM = '&utm_source=messenger&utm_medium=sharebutton_raf_page&utm_campaign=raf_messenger_share'
+  const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${messengerUTM}`
 
   if (globals.client) {
     window.FB.ui({

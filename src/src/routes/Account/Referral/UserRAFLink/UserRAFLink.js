@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import actions from 'actions/user'
 import routes from 'config/routes'
-import css from './UserRAFLink.css'
 import actionTypes from 'actions/actionTypes'
+import css from './UserRAFLink.css'
 
 class UserRAFLink extends React.PureComponent {
 	state = { copiedMessageVisible: false }
@@ -45,6 +45,7 @@ class UserRAFLink extends React.PureComponent {
 	}
 
 	render() {
+	  const copyLink = `cook.gousto.co.uk/raf/?promo_code=${this.props.referralCode}&utm_source=weblink`
 	  const desktopLink = this.constructLink(this.props.referralCode)
 	  const mobileLink = this.constructLink(this.props.referralCode, true)
 
@@ -52,7 +53,7 @@ class UserRAFLink extends React.PureComponent {
 			<div className={this.props.className}>
 				<CopyToClipboard
 				  className={css.linkContainer}
-				  text={desktopLink}
+				  text={copyLink}
 				  onCopy={() => this.onCopy()}
 				>
 					<div id="referral-code-box">
