@@ -727,8 +727,8 @@ export function userFetchReferralOffer () {
 }
 
 export const trackingReferFriend = (actionType, trackingType) => {
-  if(actionType && trackingType) {
-    return(dispatch) => {
+  return(dispatch) => {
+    if(actionType && trackingType) {
       dispatch({
         type: actionType,
         trackingData: {
@@ -737,11 +737,12 @@ export const trackingReferFriend = (actionType, trackingType) => {
       })
     }
   }
+
 }
 
 export const trackingReferFriendSocialSharing = (actionType, trackingType, channel) => {
-  if(actionType && trackingType) {
-    return(dispatch) => {
+  return(dispatch) => {
+    if(actionType && trackingType) {
       dispatch({
         type: actionType,
         trackingData: {
@@ -751,6 +752,7 @@ export const trackingReferFriendSocialSharing = (actionType, trackingType, chann
       })
     }
   }
+
 }
 
 export default userActions
