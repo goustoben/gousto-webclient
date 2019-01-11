@@ -1,6 +1,6 @@
 @value Basa, BlueBase, Mackerel, White, RafBgDefault from 'styles/colors.css';
-@value ScreenMDMin, ScreenSMMin, MinBreakPointSM from 'styles/screenSizes.css';
-@value SpacingXXS, SpacingLG from 'sass-loader!styles/spacing.scss';
+@value ScreenSMMin, MinBreakPointSM, ScreenMLMax, ScreenMLMin from 'styles/screenSizes.css';
+@value SpacingXXS from 'sass-loader!styles/spacing.scss';
 /* 5px, 20px */
 
 .containerBackground {
@@ -17,7 +17,7 @@
 	padding-top: 33px;
 }
 
-.rafPageSection {
+.rafOfferSection {
 	position: relative;
 	background: url('media/svgs/white-curve.svg') center top no-repeat;
 	background-size: 130% 23%;
@@ -29,7 +29,7 @@
 @media not all and (min-resolution:.001dpcm) { 
 	@supports (-webkit-appearance:none) {
 
-	.rafPageSection { 
+	.rafOfferSection { 
 		background-size: auto 23%; 
 		@media ScreenSMMin {
 				background-size: contain;
@@ -38,7 +38,7 @@
 	}
 }
 
-.rafPageBanner {
+.rafOfferBanner {
 	display:  flex;
 	align-content: center;
 	justify-content: center;
@@ -81,7 +81,6 @@
 
 .rafRow {
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: center;
 	background: White;
 	width: 95%;
@@ -90,7 +89,10 @@
 	margin: 0 auto;
 	border-radius: 5px 5px 0 0;
 	@media ScreenSMMin {
-		width: 80%;
+		width: 90%;
+	}
+	@media ScreenMLMax and ScreenSMMin {
+		flex-direction: column;
 	}
 }
 
@@ -100,10 +102,12 @@
 
  .socialButtons {
   height: 40px;
-  display: flex;
-	@media (min-width: 889px) {
+	display: flex;
+	margin: 20px auto;
+
+	@media ScreenMLMin {
 		padding-left: 15px;
-		margin-left: 30px;
+		margin: 0 0 0 30px;
 		border-left: 1px solid Basa;
 	}
 }
@@ -125,7 +129,7 @@
 	border-top: 1px Mackerel solid;
 	background-color: White;
 	padding: 12px 0;
-	z-index: 1;
+	z-index: 1000;
 }
 
 .mobileCTA {
@@ -146,4 +150,10 @@
 }
 .rafLink {
 	display: flex;
+	flex-direction: column;
+	position: relative;
+
+	@media ScreenSMMin {
+		flex-direction: row;
+	}
 }

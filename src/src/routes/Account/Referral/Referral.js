@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { UserRAFLink } from './UserRAFLink'
 import { SocialButton } from './SocialButton'
@@ -10,8 +10,9 @@ import RAFOffer from './RAFOffer'
 import defaultOffer from './config'
 import { ShareYourLinkModal } from './ShareYourLinkModal'
 import { getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
+import { HowItWorks } from './HowItWorks'
 
-class Referral extends React.Component {
+class Referral extends Component {
   state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
 
   openEmailModal = () => {
@@ -39,14 +40,16 @@ class Referral extends React.Component {
     const { referralCode, rafOffer } = this.props
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
     const isDouble = rafOffer.get('expiry')
+    const details = rafOffer.get('details')
+    const credit = rafOffer.get('creditFormatted')
 
     return (
       <div className={isDouble ? css.containerBackgroundDouble : css.containerBackground}>
         <div className={css.rafPageTitle}>
           <RAFTitle />
         </div>
-        <div className={css.rafPageSection}>
-          <div className={css.rafPageBanner}>
+        <div className={css.rafOfferSection}>
+          <div className={css.rafOfferBanner}>
             <div className={isDouble ? css.iconReferDouble : css.iconRefer} />
             <RAFOffer offer={rafOffer} />
           </div>
@@ -59,11 +62,13 @@ class Referral extends React.Component {
               <Overlay open={isEmailModalOpen} from="top">
                 <ReferAFriendModal
                   onClose={this.closeEmailModal}
+                  credit={credit}
                 />
               </Overlay>
             </div>
           </div>
         </div>
+        <HowItWorks details={details} />
 
         <div className={`${css.mobileCTAContainer} ${css.mobileShow}`}>
           <div className={css.mobileCTA} onClick={this.openShareYourLinkModal}>
