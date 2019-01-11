@@ -44,7 +44,7 @@ class Referral extends Component {
   }
 
   render() {
-    const { referralCode, rafOffer, trackingReferFriend, trackingReferFriendSocialSharing } = this.props
+    const { referralCode, rafOffer, userFirstName, trackingReferFriend, trackingReferFriendSocialSharing } = this.props
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
     const isDouble = rafOffer.get('expiry')
     const details = rafOffer.get('details')
@@ -63,8 +63,8 @@ class Referral extends Component {
           <div className={css.rafRow}>
             <UserRAFLink className={css.rafLink} referralCode={referralCode} trackingReferFriend={trackingReferFriend} />
             <div className={`${css.socialButtons} ${css.mobileHide}`}>
-              <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode, trackingReferFriendSocialSharing)} />
-              <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode, trackingReferFriendSocialSharing)} />
+              <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
+              <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
               <SocialButton text="Email" type="email" onClick={this.openEmailModal} />
               <Overlay open={isEmailModalOpen} from="top">
                 <ReferAFriendModal
@@ -92,8 +92,9 @@ class Referral extends Component {
 }
 
 Referral.propTypes = {
-  referralCode: PropTypes.string,
+  referralCode: PropTypes.string.isRequired,
   rafOffer: PropTypes.shape({}),
+  userFirstName: PropTypes.string,
   userFetchReferralOffer: PropTypes.func,
   trackingReferFriend: PropTypes.func,
   trackingReferFriendSocialSharing: PropTypes.func
