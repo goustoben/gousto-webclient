@@ -713,22 +713,22 @@ export const userReferAFriend = (email) => (
   }
 )
 
-export function userFetchReferralOffer () { 
- 
+export function userFetchReferralOffer () {
+
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.USER_LOAD_REFERRAL_OFFER, true))
     const accessToken = getState().auth.get('accessToken')
     if (accessToken) {
       const { data: referralOffer } = await userApi.fetchReferralOffer(accessToken)
       dispatch({type: actionTypes.USER_LOAD_REFERRAL_OFFER, referralOffer})
-      dispatch(statusActions.pending(actionTypes.USER_LOAD_REFERRAL_OFFER, false))      
+      dispatch(statusActions.pending(actionTypes.USER_LOAD_REFERRAL_OFFER, false))
     }
   }
-  
+
 }
 
 export const trackingReferFriendShareSheetOpened = () => {
-  return(dispatch) => {    
+  return(dispatch) => {
     dispatch({
       type: actionTypes.REFER_FRIEND_SHARE_SHEET_OPENED,
       trackingData: {
@@ -739,7 +739,7 @@ export const trackingReferFriendShareSheetOpened = () => {
 }
 
 export const trackingReferFriendShareSheetClosed = () => {
-  return(dispatch) => {    
+  return(dispatch) => {
     dispatch({
       type: actionTypes.REFER_FRIEND_SHARE_SHEET_CLOSED,
       trackingData: {
@@ -750,7 +750,7 @@ export const trackingReferFriendShareSheetClosed = () => {
 }
 
 export const trackingReferFriendLinkCopied = () => {
-  return(dispatch) => {    
+  return(dispatch) => {
     dispatch({
       type: actionTypes.REFER_FRIEND_LINK_COPIED,
       trackingData: {
@@ -761,11 +761,23 @@ export const trackingReferFriendLinkCopied = () => {
 }
 
 export const trackingReferFriendLinkShare = (channel) => {
-  return(dispatch) => {    
+  return(dispatch) => {
     dispatch({
       type: actionTypes.REFER_FRIEND_LINK_SHARE,
       trackingData: {
         actionType: 'ReferFriendLink Share',
+        channel: channel
+      }
+    })
+  }
+}
+
+export const trackingReferFriendLinkShared = (channel) => {
+  return(dispatch) => {
+    dispatch({
+      type: actionTypes.REFER_FRIEND_LINK_SHARED,
+      trackingData: {
+        actionType: 'ReferFriendLink Shared',
         channel: channel
       }
     })

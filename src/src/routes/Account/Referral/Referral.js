@@ -15,6 +15,8 @@ class Referral extends React.Component {
   state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
 
   openEmailModal = () => {
+    const { trackingReferFriendLinkShare } = this.props
+    trackingReferFriendLinkShare('Email')
     this.setState({ isEmailModalOpen: true })
   }
 

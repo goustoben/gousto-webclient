@@ -8,8 +8,9 @@ class ReferAFriend extends PureComponent {
 
   static propTypes = {
     userReferAFriend: PropTypes.func.isRequired,
+    trackingReferFriendLinkShared: PropTypes.func.isRequired,
   }
-  
+
   state = {
     email: '',
     isEmailValid: false,
@@ -33,9 +34,12 @@ class ReferAFriend extends PureComponent {
   }
 
   handleSubmit = (event) => {
+    const { trackingReferFriendLinkShared } = this.props
+
     event.preventDefault()
     const { isEmailValid } = this.state
     if (isEmailValid) {
+      trackingReferFriendLinkShared('Email')
       this.setState({
         isEmailSent: true,
         errorMessage: ''
@@ -54,22 +58,22 @@ class ReferAFriend extends PureComponent {
       errorMessage: '',
     })
   }
-  
+
   render() {
     const {isEmailSent, email, errorMessage} = this.state
 
     return (
-      <ReferAFriendPresentation 
-        isEmailSent={isEmailSent} 
+      <ReferAFriendPresentation
+        isEmailSent={isEmailSent}
         handleSubmit={this.handleSubmit}
         handleEmailChange={this.handleEmailChange}
-        email={email} 
+        email={email}
         errorMessage={errorMessage}
-        showEmailReferralForm={this.showEmailReferralForm} 
+        showEmailReferralForm={this.showEmailReferralForm}
       />
-      
+
     )
   }
 }
 
-export { ReferAFriend } 
+export { ReferAFriend }
