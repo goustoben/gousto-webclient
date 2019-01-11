@@ -1,12 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import TextInput from 'Form/Input'
-import InputError from 'Form/InputError'
-import { Button } from 'goustouicomponents'
-import config from 'config/home'
-import { ReferAFriend } from '../ReferAFriend'
+import { ReferAFriend } from '../ReferAFriend.logic'
 
-describe('ReferAFriendModal', () => {
+describe('Refer A Friend Logic', () => {
   let wrapper
   const userReferAFriend = jest.fn()
 
@@ -16,104 +12,100 @@ describe('ReferAFriendModal', () => {
     )
   })
 
-  describe('upon initial render', () => {
-    it('should have a `TextInput` component', () => {
-      expect(wrapper.find(TextInput).length).toEqual(1)
-    })
+  describe('Refer A Friend', () => {
 
-    it('should have a send email `Button` component', () => {
-      expect(wrapper.find(Button).length).toEqual(1)
-      expect(wrapper.find(Button).html()).toContain('Send Email')
-    })
+    test('should call userReferAFriend action with the email', () => {
+      const email = 'test email'
+      wrapper.setState({ email: email })
+      wrapper.instance().referAFriend()
 
-    describe('when the user populates input', () => {
-      let input
-
-      beforeEach(() => {
-        input = wrapper.find(TextInput)
-        input.simulate('change', 'test input')
-      })
-
-      it('should set state email prop to value of input', () => {
-        expect(wrapper.state().email).toEqual('test input')
-      })
-
-      describe('and types invalid email address', () => {
-        beforeEach(() => {
-          input.simulate('change', 'invalid-email')
-        })
-
-        it('should set isEmailValid state prop to false', () => {
-          expect(wrapper.state().isEmailValid).toBe(false)
-        })
-
-        describe('and presses `Button` to send emails', () => {
-          const errorMessage = config.emailForm.emailRequired
-
-          beforeEach(() => {
-            const button = wrapper.find(Button)
-            button.simulate('click', { preventDefault: () => {} })
-          })
-
-          it('should set errorMessage state prop to email required message', () => {
-            expect(wrapper.state().errorMessage).toEqual(errorMessage)
-          })
-
-          it('should display error message', () => {
-            expect(wrapper.find(InputError).html()).toContain(errorMessage)
-          })
-        })
-      })
-
-      describe('and types valid email address', () => {
-        beforeEach(() => {
-          input.simulate('change', 'valid@email.com')
-        })
-
-        it('should set isEmailValid state prop to true', () => {
-          expect(wrapper.state().isEmailValid).toBe(true)
-        })
-
-        describe('and presses `Button` to send emails', () => {
-          beforeEach(() => {
-            const button = wrapper.find(Button)
-            button.simulate('click', { preventDefault: () => {} })
-          })
-
-          it('should set errorMessage state prop to empty string', () => {
-            expect(wrapper.state().errorMessage).toEqual('')
-          })
-
-          it('should transition into email sent view', () => {
-            expect(wrapper.state().isEmailSent).toBe(true)
-            expect(wrapper.find(Button).html()).toContain('Invite another friend')
-          })
-
-          it('should call userReferAFriend with given email', () => {
-            expect(userReferAFriend).toHaveBeenCalledWith('valid@email.com')
-          })
-        })
-      })
+      expect(userReferAFriend).toHaveBeenCalledWith(email)
     })
   })
 
-  describe('email sent view', () => {
-    beforeEach(() => {
-      wrapper.setState({
-        isEmailSent: true,
-      })
+  describe('Handle Email Change', () => {
+    
+    test('should set email in state to value passed in', () => {
+      const email = '123@email.com'
+      wrapper.instance().handleEmailChange(email)
+      expect(wrapper.state().email).toEqual(email)
     })
 
-    describe('when invite another friend `Button` is pressed', () => {
-      beforeEach(() => {
-        const button = wrapper.find(Button)
-        button.simulate('click', { preventDefault: () => {} })
-      })
+    test('should set isEmailValid to true when given a valid email', () => {
+      const email = '123@email.com'
+      wrapper.instance().handleEmailChange(email)
+      expect(wrapper.state().isEmailValid).toEqual(true)
+    })
 
-      it('should transition into initial view', () => {
-        expect(wrapper.state().isEmailSent).toBe(false)
-        expect(wrapper.find(Button).html()).toContain('Send Email')
-      })
+    test('should set isEmailValid to false when given a invalid email', () => {
+      const email = 'invalid email'
+      wrapper.instance().handleEmailChange(email)
+      expect(wrapper.state().isEmailValid).toEqual(false)
+    })
+
+    test('should set isEmailValid to false when given an empty email', () => {
+      const email = ''
+      wrapper.instance().handleEmailChange(email)
+      expect(wrapper.state().isEmailValid).toEqual(false)
     })
   })
+
+  describe('Handle Submit', () => {
+
+    test('should set isEmailSent to true & no error message if the email is valid', () => {
+      wrapper.setState({ isEmailValid: true })
+
+      const mockEvent = {
+        preventDefault: () => {}
+      }
+
+      wrapper.instance().handleSubmit(mockEvent)
+
+      expect(wrapper.state().isEmailSent).toEqual(true)
+      expect(wrapper.state().errorMessage).toEqual('')
+      
+    })
+
+    test('should call referAFriend when the email is valid', () => {
+      wrapper.setState({ isEmailValid: true })
+
+      const mockEvent = {
+        preventDefault: () => {}
+      }
+    
+      const mockReferAFriend = jest.fn()
+      wrapper.instance().referAFriend = mockReferAFriend
+      wrapper.instance().handleSubmit(mockEvent)
+
+      expect(mockReferAFriend).toHaveBeenCalled()
+    })
+
+    test('should set the errorMessage if email is not valid', () => {
+      wrapper.setState({ isEmailValid: false })
+
+      const mockEvent = {
+        preventDefault: () => {}
+      }
+    
+      const mockReferAFriend = jest.fn()
+      wrapper.instance().referAFriend = mockReferAFriend
+      wrapper.instance().handleSubmit(mockEvent)
+
+      expect(wrapper.state().errorMessage).toEqual('Please provide a valid email address')
+    })
+  })
+
+  describe('Show Email Referral Form', () => {
+
+    test('should reset the state to initial values', () => {
+      wrapper.instance().showEmailReferralForm()
+
+      expect(wrapper.state().email).toEqual('')
+      expect(wrapper.state().isEmailSent).toEqual(false)
+      expect(wrapper.state().isEmailValid).toEqual(false)
+      expect(wrapper.state().errorMessage).toEqual('')
+
+    })
+  })
+
 })
