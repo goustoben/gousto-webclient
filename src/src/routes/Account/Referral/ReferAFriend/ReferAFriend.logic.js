@@ -1,10 +1,10 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import config from 'config/home'
 import { validateEmail } from 'utils/auth'
 import { ReferAFriendPresentation } from './ReferAFriend.presentation'
 
-class ReferAFriend extends React.PureComponent {
+class ReferAFriend extends PureComponent {
 
   static propTypes = {
     userReferAFriend: PropTypes.func.isRequired,

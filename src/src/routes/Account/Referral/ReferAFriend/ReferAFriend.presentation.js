@@ -6,6 +6,15 @@ import { Button } from 'goustouicomponents'
 import InputError from 'Form/InputError'
 import css from './ReferAFriend.css'
 
+const propTypes = {
+  isEmailSent: PropTypes.bool,
+  handleSubmit: PropTypes.func.isRequired,
+  handleEmailChange: PropTypes.func.isRequired, 
+  email: PropTypes.string.isRequired, 
+  errorMessage: PropTypes.string,
+  showEmailReferralForm: PropTypes.func.isRequired,
+}
+
 const ReferAFriendPresentation = ({isEmailSent, handleSubmit, handleEmailChange, email, errorMessage, showEmailReferralForm }) => {
   return (
     <div>
@@ -51,13 +60,6 @@ const ReferAFriendPresentation = ({isEmailSent, handleSubmit, handleEmailChange,
   )
 }
 
-ReferAFriendPresentation.propTypes = {
-  isEmailSent: PropTypes.bool,
-  handleSubmit: PropTypes.func.isRequired,
-  handleEmailChange: PropTypes.func.isRequired, 
-  email: PropTypes.string.isRequired, 
-  errorMessage: PropTypes.string,
-  showEmailReferralForm: PropTypes.func.isRequired,
-}
+ReferAFriendPresentation.propTypes = propTypes
 
 export { ReferAFriendPresentation }
