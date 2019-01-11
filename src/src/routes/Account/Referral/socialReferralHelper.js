@@ -1,10 +1,11 @@
 import globals from 'config/globals'
 import actionTypes from 'actions/actionTypes'
 
-export const getFacebookReferralLink = (referralCode, trackingReferFriendSocialSharing) => {
+export const getFacebookReferralLink = (referralCode, userFirstName, trackingReferFriendSocialSharing) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Facebook')
   const facebookUTM = '&utm_source=facebook&utm_medium=sharebutton_raf_page&utm_campaign=raf_facebook_share'
-  const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${facebookUTM}`
+  const userNameString = `&name=${userFirstName}`
+  const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${facebookUTM}`
 
   if (globals.client) {
     window.FB.ui({
@@ -16,10 +17,11 @@ export const getFacebookReferralLink = (referralCode, trackingReferFriendSocialS
   }
 }
 
-export const getMessengerReferralLink = (referralCode, trackingReferFriendSocialSharing) => {
+export const getMessengerReferralLink = (referralCode, userFirstName, trackingReferFriendSocialSharing) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Messenger')
   const messengerUTM = '&utm_source=messenger&utm_medium=sharebutton_raf_page&utm_campaign=raf_messenger_share'
-  const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${messengerUTM}`
+  const userNameString = `&name=${userFirstName}`
+  const referralLink = `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${messengerUTM}`
 
   if (globals.client) {
     window.FB.ui({
