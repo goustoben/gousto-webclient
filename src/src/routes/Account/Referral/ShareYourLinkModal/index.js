@@ -1,1 +1,1 @@
-export { ShareYourLinkModal } from './ShareYourLinkModal'
+export default from './ShareYourLinkModalContainer'

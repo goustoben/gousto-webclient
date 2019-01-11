@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { referAFriend } from 'apis/user'
 import { customerSignup, customerSignupV2 } from 'apis/customers'
 
-import { userReferAFriend, userSubscribe, userFetchReferralOffer } from 'actions/user'
+import { userReferAFriend, userSubscribe, userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
 import actionTypes from 'actions/actionTypes'
 
 jest.mock('apis/user', () => ({
@@ -203,6 +203,74 @@ describe('user actions', () => {
         type: actionTypes.USER_LOAD_REFERRAL_OFFER,
         referralOffer: response,
       })
+    })
+  })
+
+  describe('trackingReferFriend', () => {
+    let dispatchSpy = jest.fn()
+    const actionType = actionTypes.REFER_FRIEND_SHARE_SHEET_OPENED
+    const trackingType = "ReferFriendShareSheet Opened"
+
+    beforeEach(() => {
+      dispatchSpy = jest.fn()
+    })
+
+    it('should dispatch an action given as parameters', async () => {
+      await trackingReferFriend(actionType, trackingType)(dispatchSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionType,
+        trackingData: {
+          actionType: trackingType
+        }
+      })
+    })
+
+    it('should not dispatch an action if actionType is undefined', async () => {
+      await trackingReferFriend('', trackingType)(dispatchSpy)
+
+      expect(dispatchSpy).not.toHaveBeenCalled()
+    })
+
+    it('should not dispatch an action if trackingType is undefined', async () => {
+      await trackingReferFriend(actionType)(dispatchSpy)
+
+      expect(dispatchSpy).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('trackingReferFriendSocialSharing', () => {
+    let dispatchSpy = jest.fn()
+    const actionType = actionTypes.REFER_FRIEND_LINK_SHARE
+    const trackingType = "ReferFriendLink Share"
+    const channel = 'Email'
+
+    beforeEach(() => {
+      dispatchSpy = jest.fn()
+    })
+
+    it('should dispatch an action and channel given as parameters', async () => {
+      await trackingReferFriendSocialSharing(actionType, trackingType, channel)(dispatchSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionType,
+        trackingData: {
+          actionType: trackingType,
+          channel: channel
+        }
+      })
+    })
+
+    it('should not dispatch an action if actionType is undefined', async () => {
+      await trackingReferFriendSocialSharing('', trackingType, channel)(dispatchSpy)
+
+      expect(dispatchSpy).not.toHaveBeenCalled()
+    })
+
+    it('should not dispatch an action if trackingType is undefined', async () => {
+      await trackingReferFriendSocialSharing(actionType, '', channel)(dispatchSpy)
+
+      expect(dispatchSpy).not.toHaveBeenCalled()
     })
   })
 })
