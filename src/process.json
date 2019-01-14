@@ -7,8 +7,6 @@
 			usePolling: true
 		},
     merge_logs: true,
-    error_file: "/var/log/pm2/server-outerr.log",
-    log_date_format: "YYYY-MM-DD HH:mm:ss Z",
 		ignore_watch: ["node_modules", "test", "tests", "_coverage"],
     env: {
       "NODE_ENV": "local",

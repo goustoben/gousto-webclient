@@ -3,8 +3,8 @@ directory: /var/www/webclient
 domain: webclient.gousto.local
 tld: gousto.local
 secure: false
-error_log: webclient_error.log
-access_log: webclient_access.log
+pm2_log_directory: /var/log/pm2
+pm2_log_file: "${pm2_log_directory}/webclient.log"
 session_driver: file
 session_domain: ""
 outbound_core_access_key: inbound_frontend_access_key_goes_here
