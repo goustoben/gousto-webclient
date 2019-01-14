@@ -1,15 +1,16 @@
 import globals from 'config/globals'
 import actionTypes from 'actions/actionTypes'
+import defaultOffer from './config'
 
-const getMessage = (offer) => {
-  const firstBoxOffer = offer.get('firstBoxDiscountFormatted')
-  const firstMonthOffer = offer.get('firstMonthDiscountFormatted')
+export const getMessage = (offer) => {
+  const firstBoxOffer = offer ? offer.get('firstBoxDiscountFormatted') : defaultOffer.get('firstBoxDiscountFormatted')
+  const firstMonthOffer = offer ? offer.get('firstMonthDiscountFormatted') : defaultOffer.get('firstMonthDiscountFormatted')
 
   return `I love Gousto and I think you will too! Use my link to get an exclusive ${firstBoxOffer} off your first box, PLUS ${firstMonthOffer} off for a whole month. \r\n`
 }
 
-const getReferralLink = (referralCode, userFirstName, UTM) => {
-  const userNameString = `&name=${userFirstName}`
+export const getReferralLink = (referralCode, userFirstName = '', UTM = '') => {
+  const userNameString = userFirstName ? `&name=${userFirstName}` : ''
 
   return `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${UTM}`
 }
@@ -54,7 +55,7 @@ export const getWhatsappReferralLink = (referralCode, userFirstName, rafOffer, t
   const message = getMessage(rafOffer)
   const encodedMessage = encodeURIComponent(`${message}${referralLink}`)
 
-  return window.location.href =`https://wa.me/?text=${encodedMessage}`
+  return window.location.assign(`https://wa.me/?text=${encodedMessage}`)
 }
 
 export const getTextMessageReferralLink = (referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) => {
@@ -65,6 +66,6 @@ export const getTextMessageReferralLink = (referralCode, userFirstName, rafOffer
   const message = getMessage(rafOffer)
   const encodedMessage = encodeURIComponent(`${message}${referralLink}`)
 
-  return window.location.href =`sms:?&body=${encodedMessage}`
+  return window.location.assign(`sms:?&body=${encodedMessage}`)
 }
 
