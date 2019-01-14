@@ -5,7 +5,7 @@ import Svg from 'Svg'
 import actionTypes from 'actions/actionTypes'
 import ReferAFriend from '../ReferAFriend'
 import css from './ShareYourLinkModal.css'
-import { getFacebookReferralLink, getMessengerReferralLink } from '../socialReferralHelper'
+import { getFacebookReferralLink, getMessengerReferralLink, getWhatsappReferralLink, getTextMessageReferralLink} from '../socialReferralHelper'
 
 class ShareYourLinkModal extends React.PureComponent {
   state = { isEmailFormOpen: false }
@@ -14,6 +14,7 @@ class ShareYourLinkModal extends React.PureComponent {
     referralCode: PropTypes.string.isRequired,
     trackingReferFriendSocialSharing: PropTypes.func.isRequired,
     userFirstName: PropTypes.string.isRequired,
+    rafOffer: PropTypes.shape({}),
   }
 
   toggleEmailModal = () => {
@@ -27,8 +28,22 @@ class ShareYourLinkModal extends React.PureComponent {
 
   }
 
+  renderRow = (onClick, svgName, rowName, children) => {
+    return (
+      <div className={`${css.row}`} onClick={() => onClick()}>
+        <div className={css.iconWrapper}>
+          <Svg fileName={svgName} className={css.icon} />
+        </div>
+        <span>{rowName}</span>
+        {children}
+      </div>
+    )
+  }
+
   render() {
-    const { onClose, referralCode, trackingReferFriendSocialSharing, userFirstName } = this.props
+    const { onClose, referralCode, trackingReferFriendSocialSharing, userFirstName, rafOffer } = this.props
+    console.log('rafOffer', rafOffer) //eslint-disable-line
+
     const { isEmailFormOpen } = this.state
 
     return (
@@ -54,19 +69,11 @@ class ShareYourLinkModal extends React.PureComponent {
         </div>
       </div>
 
-      <div className={`${css.row}`} onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}>
-        <div className={css.iconWrapper}>
-          <Svg fileName='icon-facebook-colour' className={css.icon} />
-        </div>
-        <span>Facebook</span>
-      </div>
+      { this.renderRow(() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing) }, 'icon-facebook-colour', 'Facebook' ) }
+      { this.renderRow(() => { getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing) }, 'icon-facebook-messenger-colour', 'Messenger' ) }
+      { this.renderRow(() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }, 'icon-whatsapp-colour', 'Whatsapp' ) }
+      { this.renderRow(() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }, 'icon-text-message-colour', 'Text Message' ) }
 
-      <div className={`${css.row}`} onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}>
-        <div className={css.iconWrapper}>
-          <Svg fileName='icon-facebook-messenger-colour' className={css.icon} />
-        </div>
-        <span>Messenger</span>
-      </div>
     </ModalPanel>
     )
   }
