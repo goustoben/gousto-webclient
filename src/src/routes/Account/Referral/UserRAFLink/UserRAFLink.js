@@ -15,12 +15,14 @@ class UserRAFLink extends React.PureComponent {
     classLinkContainer: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
     trackingReferFriend: PropTypes.func,
+    isModal: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
     referralCode: '',
     classContainer: '',
-    classLinkContainer: ''
+    classLinkContainer: '',
+    isModal: false,
   }
 
   static fetchData = async ({ store }) => Promise.all([
@@ -41,7 +43,7 @@ class UserRAFLink extends React.PureComponent {
   }
 
   render() {
-    const { referralCode, classContainer, classLinkContainer,trackingReferFriend, children } = this.props
+    const { referralCode, classContainer, classLinkContainer,trackingReferFriend, children, isModal } = this.props
     const { copiedMessageVisible } = this.state
     const copyLink = getReferralLink(referralCode, '&utm_source=weblink')
     
@@ -54,7 +56,7 @@ class UserRAFLink extends React.PureComponent {
         >
           {children}
         </CopyToClipboard>
-        <div className={`${css.referralCodeCopied} ${!copiedMessageVisible ? css.invisible : ''}`}>
+        <div className={`${css.referralCodeCopied} ${isModal? '' : css.positionTop45} ${!copiedMessageVisible ? css.invisible : ''}`}>
           {'Copied!'}
         </div>
       </div>

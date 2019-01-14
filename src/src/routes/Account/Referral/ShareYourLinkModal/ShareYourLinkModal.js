@@ -62,7 +62,13 @@ class ShareYourLinkModal extends React.PureComponent {
       <LinkRow onClick={() => { getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}} svgName='icon-facebook-messenger-colour' rowName='Messenger'/>
       <LinkRow onClick={() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}} svgName='icon-facebook-colour' rowName='Facebook' />
       
-      <UserRAFLink classContainer={css.row} classLinkContainer={css.rafLinkWrapper} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
+      <UserRAFLink
+        classContainer={css.row}
+        classLinkContainer={css.rafLinkWrapper}
+        referralCode={referralCode}
+        trackingReferFriend={trackingReferFriend}
+        isModal
+      >
         <div>
           <div className={css.iconWrapper}>
             <Svg fileName='icon-link-colour' className={css.icon} />

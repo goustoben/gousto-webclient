@@ -10,10 +10,10 @@
 	height: 20px;
 	line-height: 20px;
 	position: absolute;
+}
 
-	@media ScreenSMMin {
-		top: 45px;
-	}
+.positionTop45 {
+	top: 45px;
 }
 
 .mobileHide {
