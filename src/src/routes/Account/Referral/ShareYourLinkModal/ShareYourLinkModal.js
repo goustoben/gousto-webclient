@@ -12,7 +12,8 @@ class ShareYourLinkModal extends React.PureComponent {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
     referralCode: PropTypes.string.isRequired,
-    trackingReferFriendSocialSharing: PropTypes.func.isRequired
+    trackingReferFriendSocialSharing: PropTypes.func.isRequired,
+    userFirstName: PropTypes.string.isRequired,
   }
 
   toggleEmailModal = () => {
@@ -27,7 +28,7 @@ class ShareYourLinkModal extends React.PureComponent {
   }
 
   render() {
-    const { onClose, referralCode, trackingReferFriendSocialSharing } = this.props
+    const { onClose, referralCode, trackingReferFriendSocialSharing, userFirstName } = this.props
     const { isEmailFormOpen } = this.state
 
     return (
@@ -53,14 +54,14 @@ class ShareYourLinkModal extends React.PureComponent {
         </div>
       </div>
 
-      <div className={`${css.row}`} onClick={() => getFacebookReferralLink(referralCode, trackingReferFriendSocialSharing)}>
+      <div className={`${css.row}`} onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}>
         <div className={css.iconWrapper}>
           <Svg fileName='icon-facebook-colour' className={css.icon} />
         </div>
         <span>Facebook</span>
       </div>
 
-      <div className={`${css.row}`} onClick={() => getMessengerReferralLink(referralCode, trackingReferFriendSocialSharing)}>
+      <div className={`${css.row}`} onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}>
         <div className={css.iconWrapper}>
           <Svg fileName='icon-facebook-messenger-colour' className={css.icon} />
         </div>
