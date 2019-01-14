@@ -1,16 +1,6 @@
 @value Blackberry, White, Basa from 'styles/colors.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
 
-.linkContainer {
-	min-height: 40px;
-	padding: 7px;
-	overflow: hidden;
-	border: 1px #979797 dashed;
-	border-radius: 3px;
-}
-
-.link {
-	composes: textBold from 'styles/typography.css';
-}
 
 .referralCodeCopied {
 	composes: paddingXXS from 'sass-loader!styles/spacing.scss';
@@ -18,8 +8,12 @@
 	box-sizing: content-box;
 	color: White;
 	height: 20px;
+	line-height: 20px;
 	position: absolute;
-	top: 45px;
+
+	@media ScreenSMMin {
+		top: 45px;
+	}
 }
 
 .mobileHide {

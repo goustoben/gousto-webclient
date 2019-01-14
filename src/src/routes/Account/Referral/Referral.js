@@ -10,7 +10,7 @@ import Overlay from '../../../components/Overlay/Overlay'
 import RAFOffer from './RAFOffer'
 import defaultOffer from './config'
 import ShareYourLinkModal from './ShareYourLinkModal'
-import { getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
+import { getReferralLink, getFacebookReferralLink, getMessengerReferralLink } from './referralHelper'
 import { HowItWorks } from './HowItWorks'
 
 class Referral extends Component {
@@ -49,6 +49,7 @@ class Referral extends Component {
     const isDouble = rafOffer.get('expiry')
     const details = rafOffer.get('details')
     const credit = rafOffer.get('creditFormatted')
+    const displayLink = getReferralLink(referralCode)
 
     return (
       <div className={isDouble ? css.containerBackgroundDouble : css.containerBackground}>
@@ -61,7 +62,11 @@ class Referral extends Component {
             <RAFOffer offer={rafOffer} />
           </div>
           <div className={css.rafRow}>
-            <UserRAFLink className={css.rafLink} referralCode={referralCode} trackingReferFriend={trackingReferFriend} />
+            <UserRAFLink classContainer={css.rafLink} classLinkContainer={css.linkContainer} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
+              <div id="referral-code-box">
+                <span className={`${css.displayedLink}`}>{displayLink}</span>
+              </div>
+            </UserRAFLink>
             <div className={`${css.socialButtons} ${css.mobileHide}`}>
               <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
               <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
