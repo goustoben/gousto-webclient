@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="24px" viewBox="0 0 36 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_Email Copy</title>
+    <desc>Created with Sketch.</desc>
+    <g id="study-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="overlay" transform="translate(-32.000000, -136.000000)" fill="#333D47" fill-rule="nonzero">
+            <g id="Group" transform="translate(32.000000, 135.200000)">
+                <path d="M2,5.28196592 L15.1157988,14.543955 C16.8447772,15.7649084 19.1552228,15.7649084 20.8842012,14.543955 L34,5.28196592 L34,2.8 L2,2.8 L2,5.28196592 Z M2,7.73037491 L2,22.8 L34,22.8 L34,7.73037491 L22.0378817,16.177669 C19.6173119,17.8870038 16.3826881,17.8870038 13.9621183,16.177669 L2,7.73037491 Z M1,0.8 L35,0.8 C35.5522847,0.8 36,1.24771525 36,1.8 L36,23.8 C36,24.3522847 35.5522847,24.8 35,24.8 L1,24.8 C0.44771525,24.8 0,24.3522847 0,23.8 L0,1.8 C0,1.24771525 0.44771525,0.8 1,0.8 Z" id="icon_Email-Copy"></path>
+            </g>
+        </g>
+    </g>
+</svg>

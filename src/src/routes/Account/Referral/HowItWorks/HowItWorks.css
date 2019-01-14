@@ -1,0 +1,114 @@
+
+@value avenirHeavyFontStack from 'styles/typography.css';
+@value White, RafBgDefault from 'styles/colors.css';
+@value ScreenMDMin, ScreenLGMin, ScreenMDMax, ScreenSMMax, ScreenSMMin from 'styles/screenSizes.css';
+
+.howItWorks {
+  width: 100%;
+  background-color: White;
+  display: flex;
+  padding-bottom: 100px;
+  margin-bottom: -25px;
+  flex-direction: column;
+}
+
+.howItWorks .borderTop {
+  display: flex;
+  margin: 0px auto 25px;
+  width: 88%;
+  border-top: 1px solid RafBgDefault;
+}
+
+.howItWorks h1 {
+  display: flex;
+  justify-content: center;
+  color: Blackberry;
+  font-family: avenirHeavyFontStack;
+  font-weight: 900;
+}
+.howItWorksWrapper {
+  
+  width: 98%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  justify-content: center;
+  
+  @media ScreenMDMin {
+    flex-direction: row;
+    width: 90%;
+  }
+}
+
+.howItWorksStep {
+  display: flex;
+  flex-direction: column;
+  margin: 22px auto 0;
+}
+
+.howItWorksStepIdx {
+  font-family: Avenir;
+  font-weight: bold;
+  justify-content: left;
+  display: flex;
+  padding-left: 20px;
+  @media ScreenMDMin {
+    justify-content: center;
+    padding-left: 0;
+  }
+}
+
+.howItWorksStepIdx span {
+  background-color: White;
+  border-radius: 50%;
+  height: 34px;
+  width: 34px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-bottom: -15px;
+  z-index: 10;
+  @media ScreenMDMin {
+    height: 50px;
+    width: 50px;
+  }
+}
+
+.howItWorksStepContent {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+	background-color: RafBgDefault;
+  height: 120px;
+	width: 344px;
+	border-radius: 3px;
+  box-shadow: 0 1px 7px 0 rgba(0,0,0,0.1);
+  margin: 0 15px;
+  padding: 0 15px;
+  @media ScreenLGMin {
+    width: 355px;
+    height: 195px;
+    padding: 0 30px;
+  }
+
+  @media ScreenMDMax and ScreenMDMin {
+    width: 270px;
+    height: 175px;
+  }
+
+  @media ScreenSMMax and ScreenSMMin {
+    width: 500px;
+    height: 148px;
+    padding: 0 30px;
+  }
+
+/* Iphone5 and SE*/
+  @media (max-width: 320px) {
+    height: 150px;
+    width: 282px;
+  }
+}
+
+.howItWorksStepContent a {
+  display: contents;
+}

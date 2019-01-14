@@ -32,10 +32,15 @@ describe('Referral', () => {
     test('should render default RAFOffer if have no raf data', () => {
       wrapper = shallow(<Referral referralCode='RAF-TEST-1234' />)
       expect(wrapper.instance().props.rafOffer).toEqual(
-        Immutable.Map ({
+        Immutable.fromJS ({
           "creditFormatted": "£15",
           "firstBoxDiscountFormatted": "50%",
           "firstMonthDiscountFormatted": "30%",
+          details: [
+            "Invite your friends to try Gousto. We’ll pop £15 in your account and your friends will get 50% off their first box",
+            "You can refer up to 20 friends every month. That’s £300 worth of Gousto credit to use on recipes and goodies from the Gousto market",
+            "Your credit shows up once your friend’s first box is delivered. See full T&Cs [tc]here.[/tc]"
+          ]
         })
       )
     })
@@ -56,6 +61,22 @@ describe('Referral', () => {
       
       expect(wrapper.find('.containerBackgroundDouble').length).toEqual(1)
       expect(wrapper.find('.iconReferDouble').length).toEqual(1)
+    })
+
+    test('should render HowItWork component', () => {
+      expect(wrapper.find('HowItWorks').length).toEqual(1)
+    })
+
+    test('should render HowItWork component with default details prop', () => {
+      wrapper = shallow(<Referral referralCode='RAF-TEST-1234' />)
+      const value = {
+        details: Immutable.fromJS([
+          "Invite your friends to try Gousto. We’ll pop £15 in your account and your friends will get 50% off their first box",
+          "You can refer up to 20 friends every month. That’s £300 worth of Gousto credit to use on recipes and goodies from the Gousto market",
+          "Your credit shows up once your friend’s first box is delivered. See full T&Cs [tc]here.[/tc]"
+        ])
+      }
+      expect(wrapper.find('HowItWorks').props('details')).toEqual(value)
     })
   })
 })

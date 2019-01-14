@@ -1,6 +1,4 @@
-.flex {
-	composes: flex row spaceBetween verticalCenter from 'styles/flex.css';
-}
+
 
 .heading {
 	composes: textCenter textBold from 'styles/typography.css';
@@ -38,16 +36,4 @@
 &:first-letter {
 	 text-transform: capitalize;
  }
-}
-
-.emailInput {
-	margin-bottom: 15px;
-}
-
-.emailSentNotification {
-	margin-bottom: 15px;
-}
-
-.button {
-	justify-content: right;
 }

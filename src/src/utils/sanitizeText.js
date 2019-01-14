@@ -114,6 +114,12 @@ for (let i = 0; i < defaultDiacriticsRemovalMap.length; i++) {
 
 const removeDiacritics = text => text.replace(/[^\u0000-\u007E]/g, (a) => (diacriticsMap[a] || a))
 
+export const replaceLinkToTermsAndCondition = (value, link) => {
+  const newValue = value.replace('[tc]', `<a href='${link}' target='_blank'>`).replace('[/tc]', `</a>`)
+
+  return newValue
+}
+
 export default {
-  removeDiacritics,
+  removeDiacritics
 }
