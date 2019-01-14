@@ -4,6 +4,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import Svg from 'Svg'
 import actionTypes from 'actions/actionTypes'
 import ReferAFriend from '../ReferAFriend'
+import { LinkRow } from './LinkRow'
 import css from './ShareYourLinkModal.css'
 import { getFacebookReferralLink, getMessengerReferralLink, getWhatsappReferralLink, getTextMessageReferralLink} from '../socialReferralHelper'
 
@@ -25,19 +26,6 @@ class ShareYourLinkModal extends React.PureComponent {
     this.setState(function(prevState) {
       return { isEmailFormOpen: !prevState.isEmailFormOpen }
     })
-
-  }
-
-  renderRow = (onClick, svgName, rowName, children) => {
-    return (
-      <div className={`${css.row}`} onClick={() => onClick()}>
-        <div className={css.iconWrapper}>
-          <Svg fileName={svgName} className={css.icon} />
-        </div>
-        <span>{rowName}</span>
-        {children}
-      </div>
-    )
   }
 
   render() {
@@ -67,10 +55,10 @@ class ShareYourLinkModal extends React.PureComponent {
         </div>
       </div>
 
-      { this.renderRow(() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing) }, 'icon-facebook-colour', 'Facebook' ) }
-      { this.renderRow(() => { getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing) }, 'icon-facebook-messenger-colour', 'Messenger' ) }
-      { this.renderRow(() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }, 'icon-whatsapp-colour', 'Whatsapp' ) }
-      { this.renderRow(() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) }, 'icon-text-message-colour', 'Text Message' ) }
+      <LinkRow onClick={() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing)}} svgName='icon-text-message-colour' rowName='Text Message'/>
+      <LinkRow onClick={() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing)}} svgName='icon-whatsapp-colour' rowName='Whatsapp'/>
+      <LinkRow onClick={() => { getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}} svgName='icon-facebook-messenger-colour' rowName='Messenger'/>
+      <LinkRow onClick={() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}} svgName='icon-facebook-colour' rowName='Facebook' />
 
     </ModalPanel>
     )
