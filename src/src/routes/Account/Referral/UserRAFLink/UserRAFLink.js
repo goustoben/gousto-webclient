@@ -56,7 +56,7 @@ class UserRAFLink extends React.PureComponent {
         >
           {children}
         </CopyToClipboard>
-        <div className={`${css.referralCodeCopied} ${isModal? '' : css.positionTop45} ${!copiedMessageVisible ? css.invisible : ''}`}>
+        <div className={`${css.referralCodeCopied} ${isModal ? '' : css.positionTop45} ${!copiedMessageVisible ? css.invisible : ''}`}>
           {'Copied!'}
         </div>
       </div>
