@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 export default Immutable.fromJS({
   creditFormatted: '£15',
-  firstBoxDiscountFormatted: '50%',
+  firstBoxDiscountFormatted: '60%',
   firstMonthDiscountFormatted: '30%',
   details: [
     "Invite your friends to try Gousto. We’ll pop £15 in your account and your friends will get 50% off their first box",
