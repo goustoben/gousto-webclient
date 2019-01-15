@@ -1,0 +1,18 @@
+.countdownWrapper {
+  background-color: white;
+  width: 90%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.countdown {
+  width: 298px;
+  height: 83px;
+  background-color: rgba(232,199,118,0.3);
+  margin: 0 auto;
+}
+
+.countdownUnit {
+  display: inline-block;
+  padding: 7px 22px;
+}
