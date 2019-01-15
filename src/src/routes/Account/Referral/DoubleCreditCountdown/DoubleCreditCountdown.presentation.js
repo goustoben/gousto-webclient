@@ -12,7 +12,7 @@ const proptypes = {
 
 const DoubleCreditCountdownPresentation = ({title, days, hours, minutes}) => (
   <div className={css.countdownWrapper}>
-    <h1>{title} Hurry up, offer expires in:</h1>
+    <div className={css.countdownTitle}>{title} Hurry up, offer expires in:</div>
     <div className={css.countdown}>
       <div className={css.countdownUnit}>
         <h2>{days}</h2>
