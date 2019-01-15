@@ -4,7 +4,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import actions from 'actions/user'
 import actionTypes from 'actions/actionTypes'
 import css from './UserRAFLink.css'
-import { getReferralLink } from '../referralHelper'
+import { getReferralLink } from '../socialReferralHelper'
 
 class UserRAFLink extends React.PureComponent {
   state = { copiedMessageVisible: false }

@@ -15,14 +15,6 @@ export const getReferralLink = (referralCode, userFirstName = '', UTM = '') => {
   return `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${UTM}`
 }
 
-export const getReferralLink = (referralCode, UTM, userFirstName) => {
-
-  const userNameString = userFirstName ? `&name=${userFirstName}` : ''
-  const utmString = UTM ? UTM : ''
-
-  return `cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${utmString}`
-}
-
 export const getFacebookReferralLink = (referralCode, userFirstName, trackingReferFriendSocialSharing) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Facebook')
 

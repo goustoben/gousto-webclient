@@ -7,7 +7,7 @@ import { UserRAFLink } from '../UserRAFLink'
 import ReferAFriend from '../ReferAFriend'
 import { LinkRow } from './LinkRow'
 import css from './ShareYourLinkModal.css'
-import { getFacebookReferralLink, getMessengerReferralLink, getWhatsappReferralLink, getTextMessageReferralLink} from '../referralHelper'
+import { getFacebookReferralLink, getMessengerReferralLink, getWhatsappReferralLink, getTextMessageReferralLink} from '../socialReferralHelper'
 
 class ShareYourLinkModal extends React.PureComponent {
   state = { isEmailFormOpen: false }

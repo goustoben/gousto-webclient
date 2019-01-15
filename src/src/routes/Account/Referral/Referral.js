@@ -10,8 +10,23 @@ import Overlay from '../../../components/Overlay/Overlay'
 import RAFOffer from './RAFOffer'
 import defaultOffer from './config'
 import ShareYourLinkModal from './ShareYourLinkModal'
-import { getReferralLink, getFacebookReferralLink, getMessengerReferralLink } from './referralHelper'
+import { getReferralLink, getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
 import { HowItWorks } from './HowItWorks'
+
+const proptypes = {
+  referralCode: PropTypes.string.isRequired,
+  rafOffer: PropTypes.shape({}),
+  userFirstName: PropTypes.string,
+  userFetchReferralOffer: PropTypes.func,
+  trackingReferFriend: PropTypes.func,
+  trackingReferFriendSocialSharing: PropTypes.func
+}
+
+const defaultProps = {
+  referralCode: '',
+  rafOffer: defaultOffer,
+  userFetchReferralOffer: () => { },
+}
 
 class Referral extends Component {
   state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
@@ -96,19 +111,8 @@ class Referral extends Component {
   }
 }
 
-Referral.propTypes = {
-  referralCode: PropTypes.string.isRequired,
-  rafOffer: PropTypes.shape({}),
-  userFirstName: PropTypes.string,
-  userFetchReferralOffer: PropTypes.func,
-  trackingReferFriend: PropTypes.func,
-  trackingReferFriendSocialSharing: PropTypes.func
-}
+Referral.propTypes = proptypes
 
-Referral.defaultProps = {
-  referralCode: '',
-  rafOffer: defaultOffer,
-  userFetchReferralOffer: () => { },
-}
+Referral.defaultProps = defaultProps
 
 export default Referral

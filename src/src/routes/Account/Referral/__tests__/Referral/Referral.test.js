@@ -8,7 +8,7 @@ describe('Referral', () => {
     let wrapper
     const rafOffer = Immutable.fromJS({
       creditFormatted: '£15',
-      firstBoxDiscountFormatted: '50%',
+      firstBoxDiscountFormatted: '60%',
       firstMonthDiscountFormatted: '30%',
       expiry: ''
     })
