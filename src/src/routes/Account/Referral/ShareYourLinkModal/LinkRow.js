@@ -9,9 +9,15 @@ const propTypes = {
   rowName: PropTypes.string.isRequired,
 }
 
+const defaultProps = {
+  onClick: () => {},
+  svgName: '',
+  rowName: '',
+}
+
 const LinkRow = ({onClick, svgName, rowName}) => {
   return (
-    <div className={`${css.row}`} onClick={() => onClick()}>
+    <div className={css.row} onClick={() => onClick()}>
       <div className={css.iconWrapper}>
         <Svg fileName={svgName} className={css.icon} />
       </div>
@@ -22,5 +28,7 @@ const LinkRow = ({onClick, svgName, rowName}) => {
 }
 
 LinkRow.propTypes = propTypes
+
+LinkRow.defaultProps = defaultProps
 
 export { LinkRow }
