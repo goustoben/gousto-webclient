@@ -78,7 +78,7 @@ class Referral extends Component {
             <div className={expiry ? css.iconReferDouble : css.iconRefer} />
             <RAFOffer offer={rafOffer} />
           </div>
-          <DoubleCreditCountdown description={description} expiry={expiry} />
+          {expiry && <DoubleCreditCountdown description={description} expiry={expiry} />}
           <div className={css.rafRow}>
             <UserRAFLink classContainer={css.rafLink} classLinkContainer={css.linkContainer} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
               <div id="referral-code-box">
