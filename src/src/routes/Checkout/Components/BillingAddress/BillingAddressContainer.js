@@ -5,8 +5,8 @@ import { form, sectionName } from './config'
 
 import { BillingAddress } from './BillingAddress'
 
-const getDeliveryAddress = (formValues) => (
-  formValues && formValues.delivery ? formValues.delivery : {}
+const getDeliveryAddress = (state) => (
+  state.form.delivery ? state.form.delivery.values.delivery : {}
 )
 
 const mapStateToProps = (state) => {
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
     form,
     sectionName,
     formValues,
-    deliveryAddress: getDeliveryAddress(formValues),
+    deliveryAddress: getDeliveryAddress(state),
   }
 }
 

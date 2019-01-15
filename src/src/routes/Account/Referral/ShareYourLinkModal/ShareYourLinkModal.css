@@ -10,6 +10,10 @@
 	top: 0;
 }
 
+.rafLinkWrapper {
+	height: 100%;
+}
+
 .row {
 	margin: 0 15px;
 	height: 80px;

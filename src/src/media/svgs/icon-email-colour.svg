@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="36px" height="24px" viewBox="0 0 36 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
-    <title>icon_Email Copy</title>
+    <title>icon_Email</title>
     <desc>Created with Sketch.</desc>
     <g id="study-8" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="overlay" transform="translate(-32.000000, -136.000000)" fill="#333D47" fill-rule="nonzero">
-            <g id="Group" transform="translate(32.000000, 135.200000)">
-                <path d="M2,5.28196592 L15.1157988,14.543955 C16.8447772,15.7649084 19.1552228,15.7649084 20.8842012,14.543955 L34,5.28196592 L34,2.8 L2,2.8 L2,5.28196592 Z M2,7.73037491 L2,22.8 L34,22.8 L34,7.73037491 L22.0378817,16.177669 C19.6173119,17.8870038 16.3826881,17.8870038 13.9621183,16.177669 L2,7.73037491 Z M1,0.8 L35,0.8 C35.5522847,0.8 36,1.24771525 36,1.8 L36,23.8 C36,24.3522847 35.5522847,24.8 35,24.8 L1,24.8 C0.44771525,24.8 0,24.3522847 0,23.8 L0,1.8 C0,1.24771525 0.44771525,0.8 1,0.8 Z" id="icon_Email-Copy"></path>
+        <g id="overlay-v2" transform="translate(-32.000000, -129.000000)">
+            <g id="Group" transform="translate(32.000000, 128.200000)">
+                <g id="icon_Email">
+                    <rect id="Bounding-box" opacity="0" x="0" y="0.8" width="40" height="40"></rect>
+                    <path d="M4,13.2819659 L17.1157988,22.543955 C18.8447772,23.7649084 21.1552228,23.7649084 22.8842012,22.543955 L36,13.2819659 L36,10.8 L4,10.8 L4,13.2819659 Z M4,15.7303749 L4,30.8 L36,30.8 L36,15.7303749 L24.0378817,24.177669 C21.6173119,25.8870038 18.3826881,25.8870038 15.9621183,24.177669 L4,15.7303749 Z M3,8.8 L37,8.8 C37.5522847,8.8 38,9.24771525 38,9.8 L38,31.8 C38,32.3522847 37.5522847,32.8 37,32.8 L3,32.8 C2.44771525,32.8 2,32.3522847 2,31.8 L2,9.8 C2,9.24771525 2.44771525,8.8 3,8.8 Z" id="icon_Email-Copy" fill="#333D47" fill-rule="nonzero"></path>
+                </g>
             </g>
         </g>
     </g>
