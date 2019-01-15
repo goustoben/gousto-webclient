@@ -27,6 +27,14 @@ describe('Share Your Link Modal', () => {
       expect(emailRow.find('span').text()).toEqual('E-mail')
     })
 
+    test('should render row containing link icon and text label', () => {
+      const copyLinkRow = wrapper.find('UserRAFLink')
+      const linkSvg = copyLinkRow.find('Svg').find({fileName:'icon-link-colour'})
+      
+      expect(linkSvg.length).toEqual(1)
+      expect(copyLinkRow.find('span').text()).toEqual('Copy link')
+    })
+
     test('should render ReferAFriend when isEmailFormOpen is true', () => {
       wrapper.setState({ isEmailFormOpen: true })
       expect(wrapper.find(ReferAFriend).length).toEqual(1)

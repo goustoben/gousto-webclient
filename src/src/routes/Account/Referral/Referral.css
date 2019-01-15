@@ -1,5 +1,5 @@
 @value Basa, BlueBase, Mackerel, White, RafBgDefault from 'styles/colors.css';
-@value ScreenSMMin, MinBreakPointSM, ScreenMLMax, ScreenMLMin from 'styles/screenSizes.css';
+@value ScreenSMMin, ScreenXXSMax, MinBreakPointSM, ScreenMLMax, ScreenMLMin from 'styles/screenSizes.css';
 @value SpacingXXS from 'sass-loader!styles/spacing.scss';
 /* 5px, 20px */
 
@@ -156,4 +156,23 @@
 	@media ScreenSMMin {
 		flex-direction: row;
 	}
+}
+
+.linkContainer {
+	min-height: 40px;
+	padding: 7px;
+	overflow: hidden;
+	border: 1px #979797 dashed;
+	border-radius: 3px;
+	user-select: none;
+	-webkit-user-select: none;
+	@media ScreenXXSMax {
+		overflow-wrap: break-word;
+		max-width: 85%;
+		margin: 0 auto;
+	}
+}
+
+.displayedLink {
+	composes: textBold from 'styles/typography.css';
 }

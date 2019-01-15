@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
-import { trackingReferFriendSocialSharing } from 'actions/user'
 import { getReferralOffer, getUserFirstName } from 'selectors/user'
+import { trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
+
 import { ShareYourLinkModal } from './ShareYourLinkModal'
 
 const mapStateToProps = (state) => ({
@@ -9,6 +10,7 @@ const mapStateToProps = (state) => ({
 })
 
 const ShareYourLinkModalContainer = connect(mapStateToProps, {
+  trackingReferFriend,
   trackingReferFriendSocialSharing,
 })(ShareYourLinkModal)
 
