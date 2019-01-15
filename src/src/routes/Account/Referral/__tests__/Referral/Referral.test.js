@@ -20,7 +20,7 @@ describe('Referral', () => {
     test('should render a <div> with no props', () => {
       expect(wrapper.type()).toEqual('div')
     })
-    
+
     test('should render RAFTitle', () => {
       expect(wrapper.find('RAFTitle').length).toEqual(1)
     })
@@ -34,7 +34,7 @@ describe('Referral', () => {
       expect(wrapper.instance().props.rafOffer).toEqual(
         Immutable.fromJS ({
           "creditFormatted": "£15",
-          "firstBoxDiscountFormatted": "50%",
+          "firstBoxDiscountFormatted": "60%",
           "firstMonthDiscountFormatted": "30%",
           details: [
             "Invite your friends to try Gousto. We’ll pop £15 in your account and your friends will get 50% off their first box",
@@ -49,7 +49,7 @@ describe('Referral', () => {
       expect(wrapper.find('.containerBackground').length).toEqual(1)
       expect(wrapper.find('.iconRefer').length).toEqual(1)
     })
-    
+
     test('should render double offer box icon and background when expiry is not empty', () => {
       const doubleRafOffer = Immutable.fromJS({
         creditFormatted: '£30',
@@ -58,7 +58,7 @@ describe('Referral', () => {
         expiry: '2019-01-01'
       })
       wrapper = shallow(<Referral referralCode='RAF-TEST-1234' rafOffer={doubleRafOffer} />)
-      
+
       expect(wrapper.find('.containerBackgroundDouble').length).toEqual(1)
       expect(wrapper.find('.iconReferDouble').length).toEqual(1)
     })
