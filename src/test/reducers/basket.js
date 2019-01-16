@@ -135,10 +135,10 @@ describe('basket reducer', function() {
     })
   })
 
-  describe('BASKET_NUM_PORTION_CHANGE action type', function() {
+  describe('PORTION_SIZE_SELECTED action type', function() {
     it('should put num portions into the state if valid', function() {
       const state = Immutable.Map({ numPortions: '' })
-      const result = basket(state, { type: 'BASKET_NUM_PORTION_CHANGE', numPortions: '4' })
+      const result = basket(state, { type: 'PORTION_SIZE_SELECTED', numPortions: '4' })
       const expected = Immutable.Map({ numPortions: 4, numPortionsChanged: true })
 
       expect(Immutable.is(result, expected)).to.equal(true)
@@ -150,7 +150,7 @@ describe('basket reducer', function() {
       const logger = { error: errorSpy }
       const basketReducer = require('inject-loader?utils/logger!reducers/basket')({ 'utils/logger': logger }).default
 
-      const result = basketReducer.basket(state, { type: 'BASKET_NUM_PORTION_CHANGE', numPortions: 'invalid-portion-size' })
+      const result = basketReducer.basket(state, { type: 'PORTION_SIZE_SELECTED', numPortions: 'invalid-portion-size' })
       const expected = Immutable.Map({ numPortions: config.basket.portions.default, numPortionsChanged: true })
 
       expect(errorSpy.calledOnce).to.equal(true)
@@ -159,7 +159,7 @@ describe('basket reducer', function() {
 
     it('should set the numPortionsChanged property to true', function() {
       const state = Immutable.Map({ numPortionsChanged: false })
-      const result = basket(state, { type: 'BASKET_NUM_PORTION_CHANGE', numPortions: '4' })
+      const result = basket(state, { type: 'PORTION_SIZE_SELECTED', numPortions: '4' })
       const expected = Immutable.Map({ numPortions: 4, numPortionsChanged: true })
       expect(Immutable.is(result, expected)).to.equal(true)
     })
