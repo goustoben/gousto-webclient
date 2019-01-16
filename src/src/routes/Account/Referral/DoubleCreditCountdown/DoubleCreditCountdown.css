@@ -6,6 +6,11 @@
   border-radius: 3px 3px 0 0;
 }
 
+.countdownTitle {	
+  font-size: 24px;
+  padding: 31px 0 25px 0;
+}
+
 .countdown {
   width: 298px;
   height: 83px;
@@ -13,12 +18,25 @@
   margin: 0 auto;
 }
 
-.countdownTitle {	
-  font-size: 24px;
-  padding: 31px 0 25px 0;
+.countdownUnit {
+  font-family: Avenir;
+  display: inline-block;
+  padding: 0 22px;
+  margin-top: 17px;
 }
 
-.countdownUnit {
-  display: inline-block;
-  padding: 7px 22px;
+.countdownUnit h2 {
+  font-size: 30px;
+  padding-bottom: 2px;
+  margin: 0;
+  line-height: 1;
+}
+
+.countdownUnit p {
+  font-size: 16px;
+}
+
+.borderCountdownUnit {
+  border-left: 2px solid #E8C776;
+  border-right: 2px solid #E8C776;
 }
