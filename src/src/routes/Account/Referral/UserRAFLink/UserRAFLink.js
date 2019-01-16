@@ -45,7 +45,7 @@ class UserRAFLink extends React.PureComponent {
   render() {
     const { referralCode, classContainer, classLinkContainer,trackingReferFriend, children, isModal } = this.props
     const { copiedMessageVisible } = this.state
-    const copyLink = getReferralLink(referralCode, '&utm_source=weblink')
+    const copyLink = getReferralLink(referralCode, '', '&utm_source=weblink')
     
     return (
       <div className={classContainer}>
