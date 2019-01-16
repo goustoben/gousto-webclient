@@ -18,7 +18,7 @@ const DoubleCreditCountdownPresentation = ({title, days, hours, minutes}) => (
         <h2>{days}</h2>
         <p>Days</p>
       </div>
-      <div className={css.countdownUnit}>
+      <div className={`${css.countdownUnit} ${css.borderCountdownUnit}`}>
         <h2>{hours}</h2>
         <p>Hours</p>
       </div>
