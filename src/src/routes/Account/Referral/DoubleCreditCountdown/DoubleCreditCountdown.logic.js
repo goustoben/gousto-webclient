@@ -36,7 +36,7 @@ class DoubleCreditCountdown extends PureComponent {
     const expiryMoment = moment(expiry)
     const timeDiff = expiryMoment.diff(moment())
     const diffDuration = moment.duration(timeDiff)
-    this.setState({days: diffDuration.days()}) 
+    this.setState({days: expiryMoment.diff(moment(), 'days')}) 
     this.setState({hours: diffDuration.hours()}) 
     this.setState({minutes: diffDuration.minutes()}) 
   }
@@ -45,7 +45,10 @@ class DoubleCreditCountdown extends PureComponent {
     const { description } = this.props
     const { days, hours, minutes } = this.state
 
-    return <DoubleCreditCountdownPresentation title={description} days={days} hours={hours} minutes={minutes}/>
+    return ((days <= 0 && hours <= 0 && minutes <= 0) ? 
+      <div>Offer expired</div>
+      :
+     <DoubleCreditCountdownPresentation title={description} days={days} hours={hours} minutes={minutes}/>)
   }
 }
 
