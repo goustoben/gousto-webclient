@@ -11,6 +11,10 @@
 	background-color: rgba(232,199,118,0.3);
 }
 
+.loadingContainer {
+	min-height: 350px;
+}
+
 .rafPageTitle {
 	background-color: White;
 	margin-bottom: -1px;

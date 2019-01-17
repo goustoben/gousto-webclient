@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import actionTypes from 'actions/actionTypes'
+import Loading from 'routes/Menu/Loading'
 import { UserRAFLink } from './UserRAFLink'
 import { SocialButton } from './SocialButton'
 import { ReferAFriendModal } from './ReferAFriendModal'
@@ -19,7 +20,8 @@ const proptypes = {
   userFirstName: PropTypes.string,
   userFetchReferralOffer: PropTypes.func,
   trackingReferFriend: PropTypes.func,
-  trackingReferFriendSocialSharing: PropTypes.func
+  trackingReferFriendSocialSharing: PropTypes.func,
+  isLoading: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -59,55 +61,69 @@ class Referral extends Component {
   }
 
   render() {
-    const { referralCode, rafOffer, userFirstName, trackingReferFriend, trackingReferFriendSocialSharing } = this.props
+    const {
+      referralCode,
+      rafOffer,
+      userFirstName,
+      trackingReferFriend,
+      trackingReferFriendSocialSharing,
+      isLoading
+    } = this.props
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
+    const offerTitle = rafOffer.get('title')
+    const offerCredit = rafOffer.get('creditFormatted')
+    const offerDetails = rafOffer.get('details')
     const isDouble = rafOffer.get('expiry')
-    const details = rafOffer.get('details')
-    const credit = rafOffer.get('creditFormatted')
     const displayLink = getReferralLink(referralCode)
 
-    return (
-      <div className={isDouble ? css.containerBackgroundDouble : css.containerBackground}>
-        <div className={css.rafPageTitle}>
-          <RAFTitle />
+    return isLoading ?
+      (
+        <div className={css.loadingContainer}>
+          <Loading loading={isLoading} />
         </div>
-        <div className={css.rafOfferSection}>
-          <div className={css.rafOfferBanner}>
-            <div className={isDouble ? css.iconReferDouble : css.iconRefer} />
-            <RAFOffer offer={rafOffer} />
+      ) :
+      (
+        <div className={isDouble ? css.containerBackgroundDouble : css.containerBackground}>
+          <div className={css.rafPageTitle}>
+            <RAFTitle title={offerTitle} />
           </div>
-          <div className={css.rafRow}>
-            <UserRAFLink classContainer={css.rafLink} classLinkContainer={css.linkContainer} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
-              <div id="referral-code-box">
-                <span className={`${css.displayedLink}`}>{displayLink}</span>
+          <div className={css.rafOfferSection}>
+            <div className={css.rafOfferBanner}>
+              <div className={isDouble ? css.iconReferDouble : css.iconRefer} />
+              <RAFOffer offer={rafOffer} />
+            </div>
+            <div className={css.rafRow}>
+              <UserRAFLink classContainer={css.rafLink} classLinkContainer={css.linkContainer} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
+                <div id="referral-code-box">
+                  <span className={`${css.displayedLink}`}>{displayLink}</span>
+                </div>
+              </UserRAFLink>
+              <div className={`${css.socialButtons} ${css.mobileHide}`}>
+                <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
+                <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
+                <SocialButton text="Email" type="email" onClick={this.openEmailModal} />
+                <Overlay open={isEmailModalOpen} from="top">
+                  <ReferAFriendModal
+                    onClose={this.closeEmailModal}
+                    credit={offerCredit}
+                  />
+                </Overlay>
               </div>
-            </UserRAFLink>
-            <div className={`${css.socialButtons} ${css.mobileHide}`}>
-              <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
-              <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
-              <SocialButton text="Email" type="email" onClick={this.openEmailModal} />
-              <Overlay open={isEmailModalOpen} from="top">
-                <ReferAFriendModal
-                  onClose={this.closeEmailModal}
-                  credit={credit}
-                />
-              </Overlay>
             </div>
           </div>
-        </div>
-        <HowItWorks details={details} />
+          <HowItWorks details={offerDetails} />
 
-        <div className={`${css.mobileCTAContainer} ${css.mobileShow}`}>
-          <div className={css.mobileCTA} onClick={this.openShareYourLinkModal}>
-            <span className={css.shareYourLinkText}>SHARE YOUR LINK</span>
+          <div className={`${css.mobileCTAContainer} ${css.mobileShow}`}>
+            <div className={css.mobileCTA} onClick={this.openShareYourLinkModal}>
+              <span className={css.shareYourLinkText}>SHARE YOUR LINK</span>
+            </div>
           </div>
-        </div>
 
-        <Overlay open={isShareYourLinkModalOpen} from="bottom">
-          <ShareYourLinkModal onClose={this.closeShareYourLinkModal} referralCode={referralCode}/>
-        </Overlay>
-      </div>
-    )
+          <Overlay open={isShareYourLinkModalOpen} from="bottom">
+            <ShareYourLinkModal onClose={this.closeShareYourLinkModal} referralCode={referralCode} />
+          </Overlay>
+        </div>
+      )
   }
 }
 
@@ -115,4 +131,5 @@ Referral.propTypes = proptypes
 
 Referral.defaultProps = defaultProps
 
-export default Referral
+export { Referral }
+
