@@ -102,9 +102,13 @@
 
 .rafCounterPresent {
 	composes: rafRow;
-	padding: 70px 21px 30px;
+	padding: 30px 21px;
 	width: 100%;
 	border-radius: 0px;
+
+	@media ScreenSMMin {
+		padding: 70px 21px 30px;
+	}
 }
 
  .firstParagraph {
