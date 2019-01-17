@@ -34,7 +34,7 @@ class DoubleCreditCountdown extends PureComponent {
   updateTime() {
     const { expiry } = this.props
     const expiryMoment = moment(expiry)
-    const timeDiff = expiryMoment.diff(moment())
+    const timeDiff = expiryMoment.diff(moment().format())
     const diffDuration = moment.duration(timeDiff)
     this.setState({days: expiryMoment.diff(moment(), 'days')}) 
     this.setState({hours: diffDuration.hours()}) 
