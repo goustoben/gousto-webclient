@@ -4,7 +4,7 @@ import { RAFTitle } from '../../RAFTitle'
 
 describe('RAFTitle', () => {
   describe('render', () => {
-    const wrapper = shallow(<RAFTitle/>)
+    const wrapper = shallow(<RAFTitle title={'Invite your friends to try out Gousto!'}/>)
 
     test('should render RAF title', () => {
       expect(wrapper.find('.rafTitle').length).toEqual(1)
