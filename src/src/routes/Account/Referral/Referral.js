@@ -74,6 +74,7 @@ class Referral extends Component {
     const offerTitle = rafOffer.get('title')
     const offerCredit = rafOffer.get('creditFormatted')
     const offerDetails = rafOffer.get('details')
+    const offerDescription = rafOffer.get('description')
     const expiry = rafOffer.get('expiry')
     const displayLink = getReferralLink(referralCode)
 
@@ -93,7 +94,7 @@ class Referral extends Component {
               <div className={expiry ? css.iconReferDouble : css.iconRefer} />
               <RAFOffer offer={rafOffer} />
             </div>
-            {expiry && <DoubleCreditCountdown description={offerDetails} expiry={expiry} />}
+            {expiry && <DoubleCreditCountdown description={offerDescription} expiry={expiry} />}
             <div className={expiry ? css.rafCounterPresent : css.rafRow}>
               <UserRAFLink classContainer={css.rafLink} classLinkContainer={css.linkContainer} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
                 <div id="referral-code-box">
