@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-
+import { getTimeDifference, isTimeInPast } from '../timeHelper'
 import { DoubleCreditCountdownPresentation } from './DoubleCreditCountdown.presentation'
 
 const propTypes = {
   description: PropTypes.string.isRequired,
   expiry: PropTypes.string.isRequired,
+  fetchOffer: PropTypes.func.isRequired,
 }
 
 class DoubleCreditCountdown extends PureComponent {
@@ -15,9 +15,8 @@ class DoubleCreditCountdown extends PureComponent {
     this.state = {
       days: 0,
       hours: 0,
-      minutes: 0, 
+      minutes: 1, 
     }
-    this.updateTime = this.updateTime.bind(this)
   }
 
   componentDidMount() {
@@ -31,24 +30,22 @@ class DoubleCreditCountdown extends PureComponent {
     clearInterval(intervalId)
   }
  
-  updateTime() {
+  updateTime = () => {
     const { expiry } = this.props
-    const expiryMoment = moment(expiry)
-    const timeDiff = expiryMoment.diff(moment().format())
-    const diffDuration = moment.duration(timeDiff)
-    this.setState({days: expiryMoment.diff(moment(), 'days')}) 
-    this.setState({hours: diffDuration.hours()}) 
-    this.setState({minutes: diffDuration.minutes()}) 
+    const { days, hours, minutes } = getTimeDifference(expiry)
+    this.setState({ days, hours, minutes }) 
   }
 
-  render () {
-    const { description } = this.props
+  render() {
+    const { description, fetchOffer } = this.props
     const { days, hours, minutes } = this.state
+    const offerExpired = isTimeInPast(days, hours, minutes)
 
-    return ((days <= 0 && hours <= 0 && minutes <= 0) ? 
-      <div>Offer expired</div>
-      :
-     <DoubleCreditCountdownPresentation title={description} days={days} hours={hours} minutes={minutes}/>)
+    if (offerExpired) {
+      fetchOffer() 
+    }
+
+    return !offerExpired && <DoubleCreditCountdownPresentation title={description} days={days} hours={hours} minutes={minutes}/>
   }
 }
 
