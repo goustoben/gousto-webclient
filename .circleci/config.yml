@@ -110,6 +110,15 @@ jobs:
           at: ~/
       - run: source ~/.circlerc && scripts/deploy.sh
 
+  build-image:
+    docker: *gousto_build_image
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run: /gousto/platform-setup.sh
+      - run: source ~/.circlerc && python ./ci_scripts/create_image.py
+
+
 workflows:
   version: 2
   pull-request-branch:
@@ -217,6 +226,11 @@ workflows:
             branches:
               only:
                 - develop
+      - build-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - test-isomorphic-mocha
+            - test-isomorphic-jest
 
   production-environment:
     jobs:
