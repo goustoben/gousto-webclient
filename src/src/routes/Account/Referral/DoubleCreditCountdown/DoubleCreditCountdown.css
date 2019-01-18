@@ -1,7 +1,8 @@
+@value White, Bronze from 'styles/colors.css';
 @value ScreenSMMin from 'styles/screenSizes.css';
 
 .countdownWrapper {
-  background-color: white;
+  background-color: White;
   width: 90%;
   text-align: center;
   margin: 0 auto;
@@ -48,6 +49,6 @@
 }
 
 .borderCountdownUnit {
-  border-left: 2px solid #E8C776;
-  border-right: 2px solid #E8C776;
+  border-left: 2px solid Bronze;
+  border-right: 2px solid Bronze;
 }
