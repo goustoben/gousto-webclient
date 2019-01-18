@@ -145,13 +145,13 @@ const config = {
       path.resolve(__dirname, '../src'),
       path.resolve(__dirname, '../src/components'),
       path.resolve(__dirname, '../node_modules/spinkit'),
-      path.resolve('./node_modules')
     ],
     extensions: ['.js', '.json', '.css'],
   },
   resolveLoader: {
     moduleExtensions: ['-loader'],
   },
+  externals: [nodeExternals()],
   devtool: 'sourcemap',
   stats: debug ? {
     hash: true,

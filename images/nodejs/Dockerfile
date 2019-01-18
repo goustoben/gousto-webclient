@@ -18,11 +18,7 @@ RUN apt-get install -y --force-yes nodejs npm
 
 RUN npm install -g yarn --silent
 
-RUN yarn install
-
-RUN yarn run build
-
-RUN yarn run start
+RUN yarn install --pure-lockfile
 
 EXPOSE 8080
 
