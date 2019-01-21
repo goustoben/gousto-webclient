@@ -6,11 +6,8 @@ cloudformation/
 scripts/
 setup/
 tests/
-src/src/
-src/server/
 src/__tests__/
-src/fallbacks/
+src/dist/
 src/jest/
-src/libs/
-src/test/
 src/node_modules/
+src/test/
