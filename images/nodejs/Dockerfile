@@ -7,6 +7,7 @@ WORKDIR /usr/src/webclient
 COPY src/ /usr/src/webclient/
 
 RUN sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./package.json
+RUN sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./bower.json
 
 RUN apt-get update && apt-get --yes --force-yes install git python make g++ 
 RUN npm install -g yarn --silent 
