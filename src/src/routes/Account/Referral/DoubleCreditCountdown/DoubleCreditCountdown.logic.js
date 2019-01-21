@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { getTimeDifference, isTimeInPast } from '../timeHelper'
+import { getTimeDifference, isTimeInPast, isTimeZero } from '../timeHelper'
 import { DoubleCreditCountdownPresentation } from './DoubleCreditCountdown.presentation'
 
 const propTypes = {
@@ -20,7 +20,7 @@ class DoubleCreditCountdown extends PureComponent {
   }
 
   componentDidMount() {
-    this.updateTime()
+    this.setInitialTime()
     const intervalId = setInterval(this.updateTime, 60000)
     this.setState({intervalId: intervalId})
   }
@@ -30,22 +30,29 @@ class DoubleCreditCountdown extends PureComponent {
     clearInterval(intervalId)
   }
  
-  updateTime = () => {
+  setInitialTime = () => {
     const { expiry } = this.props
     const { days, hours, minutes } = getTimeDifference(expiry)
-    this.setState({ days, hours, minutes }) 
+    this.setState({ days, hours, minutes })
+  }
+
+  updateTime = () => {
+    const { fetchOffer } = this.props
+    const { expiry } = this.props
+    const { days, hours, minutes } = getTimeDifference(expiry)
+    const isJustExpired = isTimeZero(days, hours, minutes)
+    this.setState({ days, hours, minutes })
+    if (isJustExpired) {
+      fetchOffer()
+    }
   }
 
   render() {
-    const { description, fetchOffer } = this.props
+    const { description } = this.props
     const { days, hours, minutes } = this.state
     const offerExpired = isTimeInPast(days, hours, minutes)
 
-    if (offerExpired) {
-      fetchOffer() 
-    }
-
-    return !offerExpired && <DoubleCreditCountdownPresentation title={description} days={days} hours={hours} minutes={minutes}/>
+    return (offerExpired ? null : <DoubleCreditCountdownPresentation title={description} days={days} hours={hours} minutes={minutes}/>)
   }
 }
 

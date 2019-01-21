@@ -14,7 +14,6 @@ import ShareYourLinkModal from './ShareYourLinkModal'
 import { getReferralLink, getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
 import { HowItWorks } from './HowItWorks'
 import { DoubleCreditCountdown } from './DoubleCreditCountdown'
-import { getTimeDifference, isTimeInPast } from './timeHelper'
 
 const proptypes = {
   referralCode: PropTypes.string.isRequired,
@@ -81,8 +80,6 @@ class Referral extends Component {
     const offerDetails = rafOffer.get('details')
     const offerDescription = rafOffer.get('description')
     const expiry = rafOffer.get('expiry')
-    const { days, hours, minutes } = getTimeDifference(expiry)
-    const isExpired = isTimeInPast(days, hours, minutes )
     const displayLink = getReferralLink(referralCode)
 
     return isLoading ?
@@ -101,7 +98,7 @@ class Referral extends Component {
               <div className={expiry ? css.iconReferDouble : css.iconRefer} />
               <RAFOffer offer={rafOffer} />
             </div>
-            {expiry && !isExpired && <DoubleCreditCountdown description={offerDescription} expiry={expiry} fetchOffer={this.fetchReferralOffer}/>}
+            {expiry && <DoubleCreditCountdown description={offerDescription} expiry={expiry} fetchOffer={this.fetchReferralOffer}/>}
             <div className={expiry ? css.rafCounterPresent : css.rafRow}>
               <UserRAFLink classContainer={css.rafLink} classLinkContainer={css.linkContainer} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
                 <div id="referral-code-box">

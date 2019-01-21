@@ -13,3 +13,4 @@ export const getTimeDifference = (expiry) => {
 }
 
 export const isTimeInPast = (days, hours, minutes) => (days <= 0 && hours <= 0 && minutes <= 0)
+export const isTimeZero = (days, hours, minutes) => (days === 0 && hours === 0 && minutes === 0)

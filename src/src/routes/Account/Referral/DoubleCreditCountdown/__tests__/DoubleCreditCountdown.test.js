@@ -34,7 +34,8 @@ describe('Double Credit Countdown logic', () => {
     
     test('should show zero days, hours and minutes when given correct expiry', () => {
       const todayExpiry = moment()
-      const wrapper = mount(<DoubleCreditCountdown description={description} expiry={todayExpiry} />)
+      const fetchReferralOffer = jest.fn()
+      const wrapper = mount(<DoubleCreditCountdown description={description} expiry={todayExpiry} fetchOffer={fetchReferralOffer} />)
 
       wrapper.instance().updateTime()
       expect(wrapper.state().days).toEqual(0)
@@ -43,7 +44,7 @@ describe('Double Credit Countdown logic', () => {
     })
   })
   
-  describe('set Interval', () => {
+  describe('Set Interval', () => {
     
     test('should call update time every minute', () => {
       const wrapper = mount(<DoubleCreditCountdown description={description} expiry={expiry} />)
@@ -51,14 +52,13 @@ describe('Double Credit Countdown logic', () => {
     })
   })
   
-  describe('render function', () => {
+  describe('Render Function', () => {
     
-    test('should show expiry div when less than zero days, hours and minutes when given correct expiry', () => {
+    test('should not show Double Credit Countdown when the offer has expired', () => { 
       const pastExpiry = moment().add(-1, 'minutes')
       const wrapper = mount(<DoubleCreditCountdown description={description} expiry={pastExpiry} />)
-  
-      const divs = wrapper.find("div")
-      expect(divs.length).toEqual(1)
+      
+      expect(wrapper.find(DoubleCreditCountdownPresentation).length).toBe(0)
     })
   
     test('should show Double Credit Countdown Presentation component when more than 1 minutes when given correct expiry', () => {
