@@ -4,6 +4,7 @@ import actions from 'actions'
 
 const BoxSizeStepContainer = connect(() => ({}), {
   numPortionChange: actions.basketNumPortionChange,
+  numPortionChangeTracking: actions.basketNumPortionChangeTracking,
 })(BoxSizeStep)
 
 export default BoxSizeStepContainer

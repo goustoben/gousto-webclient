@@ -94,7 +94,7 @@ export default {
     }
   ),
 
-  boxSummaryNext: () => (
+  boxSummaryNext: (numPortions) => (
     (dispatch, getState) => {
       const state = getState()
       const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
@@ -111,6 +111,7 @@ export default {
       const basketPostcode = state.basket.get('postcode')
 
       if (basketPostcode && !state.error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE)) {
+        dispatch(basket.basketNumPortionChangeTracking(numPortions))
         if (tempOrderId) {
           dispatch(push(`/menu/${tempOrderId}`))
           dispatch(boxSummaryVisibilityChange(false))

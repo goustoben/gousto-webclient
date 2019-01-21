@@ -12,6 +12,7 @@ import moment from 'moment'
 import { selectCollection, getPreselectedCollectionName } from './utils'
 
 export default async function fetchData({ store, query, params }, force, background) {
+  
   const isAuthenticated = store.getState().auth.get('isAuthenticated')
   const isAdmin = store.getState().auth.get('isAdmin')
   function chooseFirstDate() {
@@ -141,6 +142,7 @@ export default async function fetchData({ store, query, params }, force, backgro
       }
 
       if (query.num_portions && !store.getState().basket.get('numPortionsChanged')) {
+				console.log("​fetchData -> query.num_portions", query.num_portions) //eslint-disable-line
         store.dispatch(actions.basketNumPortionChange(query.num_portions))
       }
 

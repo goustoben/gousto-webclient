@@ -16,6 +16,7 @@ class Details extends React.Component {
 	static propTypes = {
 	  accessToken: PropTypes.string,
 	  basketNumPortionChange: PropTypes.func.isRequired,
+	  basketNumPortionChangeTracking: PropTypes.func.isRequired,
 	  basketRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
 	  basketRestorePreviousDate: PropTypes.func.isRequired,
 	  boxSummaryVisibilityChange: PropTypes.func.isRequired,
@@ -148,7 +149,7 @@ class Details extends React.Component {
 						  displayOptions.contains('hidePortions')
 						    ? null
 						    : (<div className={css.row}>
-									<Portions numPortions={this.props.numPortions} onNumPortionChange={this.props.basketNumPortionChange} />
+									<Portions numPortions={this.props.numPortions} onNumPortionChange={this.props.basketNumPortionChange} trackNumPortionChange={this.props.basketNumPortionChangeTracking} />
 								</div>)
 						}
 						<div className={css.row}>
