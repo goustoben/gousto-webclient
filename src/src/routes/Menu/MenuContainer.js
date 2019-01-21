@@ -12,7 +12,6 @@ import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collectio
 import Menu from './Menu'
 
 function mapStateToProps(state, ownProps) {
-	console.log("​mapStateToProps -> ownProps", ownProps) // eslint-disable-line
   function getBasketRecipes(recipes) {
     return Array.from(recipes.keys())
   }

@@ -329,7 +329,8 @@ export function menuLoadOrderDetails(orderId) {
 
     dispatch(basket.basketDateChange(order.deliveryDate))
     dispatch(basket.basketNumPortionChange(order.box.numPortions, orderId))
-
+    dispatch(basket.basketNumPortionChangeTracking(order.box.numPortions, orderId))
+    
     order.recipeItems.forEach(recipe => {
       const qty = Math.round(parseInt(recipe.quantity, 10) / parseInt(order.box.numPortions, 10))
 

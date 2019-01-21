@@ -12,7 +12,6 @@ import moment from 'moment'
 import { selectCollection, getPreselectedCollectionName } from './utils'
 
 export default async function fetchData({ store, query, params }, force, background) {
-  
   const isAuthenticated = store.getState().auth.get('isAuthenticated')
   const isAdmin = store.getState().auth.get('isAdmin')
   function chooseFirstDate() {
@@ -38,6 +37,12 @@ export default async function fetchData({ store, query, params }, force, backgro
 
   function requiresMenuRecipesClear() {
     return params.orderId && isAuthenticated && store.getState().basket.get('recipes').size && store.getState().features.getIn(['menuRecipes', 'experiment'])
+  }
+  
+  console.log('​fetchData -> query', query) //eslint-disable-line
+  
+  if (params.orderId) {
+    store.dispatch(actions.basketNumPortionChangeTracking(query.num_portions, params.orderId))
   }
 
   /*
@@ -117,6 +122,7 @@ export default async function fetchData({ store, query, params }, force, backgro
         store.dispatch(actions.basketReset())
         store.dispatch(actions.basketChosenAddressChange(store.getState().user.get('shippingAddresses').first()))
       }
+
       let fetchPromise = new Promise(resolve => { resolve() })
       let browseMode = true
       if (store.getState().request.get('browser', '') === 'mobile' && store.getState().features.getIn(['browse', 'value']) !== true) {
@@ -142,7 +148,6 @@ export default async function fetchData({ store, query, params }, force, backgro
       }
 
       if (query.num_portions && !store.getState().basket.get('numPortionsChanged')) {
-				console.log("​fetchData -> query.num_portions", query.num_portions) //eslint-disable-line
         store.dispatch(actions.basketNumPortionChange(query.num_portions))
       }
 
