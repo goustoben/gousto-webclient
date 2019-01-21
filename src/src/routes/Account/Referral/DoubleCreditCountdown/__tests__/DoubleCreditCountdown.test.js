@@ -41,6 +41,7 @@ describe('Double Credit Countdown logic', () => {
       expect(wrapper.state().days).toEqual(0)
       expect(wrapper.state().hours).toEqual(0)
       expect(wrapper.state().minutes).toEqual(0)
+      expect(fetchReferralOffer).toHaveBeenCalled()
     })
   })
   
