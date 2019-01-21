@@ -12,9 +12,31 @@ const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
   tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
 )
 
+const isAfterCutoff = () => moment().hours() >= 12
+
+const createNextDayDeliveryDays = () => {
+
+  const dayOffSet = isAfterCutoff ? 2 : 1
+
+  return [
+    {
+      date: moment().add(dayOffSet , 'day').format('YYYY-MM-DD'),
+      value: moment().add(dayOffSet , 'day').format('YYYY-MM-DD'),
+      disable: false,
+      label: `${moment().add(dayOffSet, 'day').format('ddd D MMM')} £2.99`
+    },
+    {
+      date: moment().add(dayOffSet + 1, 'day').format('YYYY-MM-DD'),
+      value: moment().add(dayOffSet + 1, 'day').format('YYYY-MM-DD'),
+      disable: false,
+      label: `${moment().add(dayOffSet + 1, 'day').format('ddd D MMM')} £2.99`
+    }
+  ]
+}
+
 const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   const slots = {}
-  const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
+  let deliveryDays = boxSummaryDeliveryDays.map((dd) => {
     const date = dd.get('date')
     slots[date] = dd.get('slots').map(slot => ({
       label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
@@ -30,6 +52,9 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   })
     .toArray()
     .sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
+
+  deliveryDays = [...createNextDayDeliveryDays(), ...deliveryDays]
+  createNextDayDeliveryDays().map(day => slots[day.date] = [{ label: "8AM - 7PM", subLabel: "FREE", value: "NULL", coreSlotId: "NULL" }])
 
   return { slots, deliveryDays }
 }
