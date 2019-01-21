@@ -36,7 +36,7 @@ const createNextDayDeliveryDays = () => {
 
 const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   const slots = {}
-  let deliveryDays = boxSummaryDeliveryDays.map((dd) => {
+  const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
     const date = dd.get('date')
     slots[date] = dd.get('slots').map(slot => ({
       label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
@@ -53,14 +53,16 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
     .toArray()
     .sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
 
-  deliveryDays = [...createNextDayDeliveryDays(), ...deliveryDays]
-  createNextDayDeliveryDays().map(day => slots[day.date] = [{ label: "8AM - 7PM", subLabel: "FREE", value: "NULL", coreSlotId: "NULL" }])
-
   return { slots, deliveryDays }
 }
 
-const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, next }) => {
-  const { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
+const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, next }) => {
+  let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
+
+  if (nextDayDeliveryPaintedDoorFeature) {
+    deliveryDays = [...createNextDayDeliveryDays(), ...deliveryDays]
+    createNextDayDeliveryDays().map(day => slots[day.date] = [{ label: "8AM - 7PM", subLabel: "FREE", value: "NULL", coreSlotId: "NULL" }])
+  }
 
   const onTempDateChange = (date) => {
     setTempDate(date)
@@ -134,6 +136,7 @@ DeliveryStep.propTypes = {
   setTempSlotId: React.PropTypes.func,
   boxSummaryDeliverySlotChosen: React.PropTypes.func,
   menuFetchDataPending: React.PropTypes.bool,
+  nextDayDeliveryPaintedDoorFeature: React.PropTypes.bool,
   next: React.PropTypes.func,
 }
 
