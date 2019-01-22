@@ -16,7 +16,7 @@ const isAfterCutoff = () => moment().hours() >= 12
 
 const createNextDayDeliveryDays = () => {
 
-  const dayOffSet = isAfterCutoff ? 2 : 1
+  const dayOffSet = isAfterCutoff() ? 2 : 1
 
   return [
     {
