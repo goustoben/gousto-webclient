@@ -149,7 +149,7 @@ class Details extends React.Component {
 						  displayOptions.contains('hidePortions')
 						    ? null
 						    : (<div className={css.row}>
-									<Portions numPortions={this.props.numPortions} onNumPortionChange={this.props.basketNumPortionChange} trackNumPortionChange={this.props.basketNumPortionChangeTracking} />
+									<Portions numPortions={this.props.numPortions} onNumPortionChange={this.props.basketNumPortionChange} trackNumPortionChange={this.props.basketNumPortionChangeTracking} orderId={this.props.orderId} />
 								</div>)
 						}
 						<div className={css.row}>

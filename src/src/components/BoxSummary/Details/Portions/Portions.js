@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Button, Segment } from 'goustouicomponents'
 
-const Portions = ({ numPortions, onNumPortionChange, trackNumPortionChange }) => (
+const Portions = ({ numPortions, onNumPortionChange, trackNumPortionChange, orderId }) => (
   <Button
     fill={false}
     width="full"
@@ -11,7 +11,7 @@ const Portions = ({ numPortions, onNumPortionChange, trackNumPortionChange }) =>
       fill={numPortions === 2}
       onClick={() => {
         onNumPortionChange(2)
-        trackNumPortionChange(2)
+        trackNumPortionChange(2, orderId)
       }}
     >
       2 People
@@ -21,7 +21,7 @@ const Portions = ({ numPortions, onNumPortionChange, trackNumPortionChange }) =>
       fill={numPortions === 4}
       onClick={() => {
         onNumPortionChange(4)
-        trackNumPortionChange(4)
+        trackNumPortionChange(4, orderId)
       }}
     >
       4 People
