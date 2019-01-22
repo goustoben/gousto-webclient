@@ -12,28 +12,6 @@ const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
   tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
 )
 
-const isAfterCutoff = () => moment().hours() >= 12
-
-const createNextDayDeliveryDays = () => {
-
-  const dayOffSet = isAfterCutoff() ? 2 : 1
-
-  return [
-    {
-      date: moment().add(dayOffSet , 'day').format('YYYY-MM-DD'),
-      value: moment().add(dayOffSet , 'day').format('YYYY-MM-DD'),
-      disable: false,
-      label: `${moment().add(dayOffSet, 'day').format('ddd D MMM')} £2.99`
-    },
-    {
-      date: moment().add(dayOffSet + 1, 'day').format('YYYY-MM-DD'),
-      value: moment().add(dayOffSet + 1, 'day').format('YYYY-MM-DD'),
-      disable: false,
-      label: `${moment().add(dayOffSet + 1, 'day').format('ddd D MMM')} £2.99`
-    }
-  ]
-}
-
 const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   const slots = {}
   const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
@@ -138,6 +116,28 @@ DeliveryStep.propTypes = {
   menuFetchDataPending: React.PropTypes.bool,
   nextDayDeliveryPaintedDoorFeature: React.PropTypes.bool,
   next: React.PropTypes.func,
+}
+
+const isAfterCutoff = () => moment().hours() >= 12
+
+export const createNextDayDeliveryDays = () => {
+
+  const dayOffSet = isAfterCutoff() ? 2 : 1
+
+  return [
+    {
+      date: moment().add(dayOffSet , 'day').format('YYYY-MM-DD'),
+      value: moment().add(dayOffSet , 'day').format('YYYY-MM-DD'),
+      disable: false,
+      label: `${moment().add(dayOffSet, 'day').format('ddd D MMM')} £2.99`
+    },
+    {
+      date: moment().add(dayOffSet + 1, 'day').format('YYYY-MM-DD'),
+      value: moment().add(dayOffSet + 1, 'day').format('YYYY-MM-DD'),
+      disable: false,
+      label: `${moment().add(dayOffSet + 1, 'day').format('ddd D MMM')} £1.99`
+    }
+  ]
 }
 
 export default DeliveryStep
