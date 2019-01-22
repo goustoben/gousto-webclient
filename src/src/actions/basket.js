@@ -83,14 +83,14 @@ export default {
     }
   ),
   
-  basketNumPortionChangeTracking: (numPortions, orderId) => (
+  basketNumPortionChangeTracking: (num_portion, order_id) => (
     (dispatch) => {
       dispatch({
         type: actionTypes.PORTION_SIZE_SELECTED_TRACKING,
         trackingData: {
           actionType: 'PortionSize Selected',
-          numPortions,
-          orderId: orderId ? orderId : null,
+          num_portion,
+          order_id: order_id ? order_id : null,
         },
       })
     }

@@ -12,17 +12,17 @@ describe('basket actions', () => {
 
   describe('basketNumPortionChangeTracking', () => {
     it('should dispatch with the right type and right params', async () => {
-      const numPortions = 2
-      const orderId = 5
+      const num_portion = 2
+      const order_id = 5
       const numPortionChangeTracking = {
         type: actionTypes.PORTION_SIZE_SELECTED_TRACKING,
         trackingData: {
           actionType: 'PortionSize Selected',
-          numPortions,
-          orderId: orderId ? orderId : null,
+          num_portion,
+          order_id: order_id ? order_id : null,
         },
       }
-      await basketNumPortionChangeTracking(numPortions, orderId)(dispatch)
+      await basketNumPortionChangeTracking(num_portion, order_id)(dispatch)
 
       expect(dispatch).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledWith(numPortionChangeTracking)
