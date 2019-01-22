@@ -38,12 +38,6 @@ export default async function fetchData({ store, query, params }, force, backgro
   function requiresMenuRecipesClear() {
     return params.orderId && isAuthenticated && store.getState().basket.get('recipes').size && store.getState().features.getIn(['menuRecipes', 'experiment'])
   }
-  
-  console.log('​fetchData -> query', query) //eslint-disable-line
-  
-  if (params.orderId) {
-    store.dispatch(actions.basketNumPortionChangeTracking(query.num_portions, params.orderId))
-  }
 
   /*
 	* TODO: remove forceCollections feature checks
