@@ -62,7 +62,7 @@ describe('Double Credit Countdown logic', () => {
       expect(wrapper.find(DoubleCreditCountdownPresentation).length).toBe(0)
     })
   
-    test('should show Double Credit Countdown Presentation component when more than 1 minutes when given correct expiry', () => {
+    test('should show Double Credit Countdown Presentation component when offer has not expired', () => {
       const oneMinuteExpiry = moment().add(1, 'minutes')
       const wrapper = mount(<DoubleCreditCountdown description={description} expiry={oneMinuteExpiry} />)
   
