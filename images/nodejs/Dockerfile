@@ -18,4 +18,4 @@ RUN yarn run build:server:prod
 
 EXPOSE 8080
 
-CMD ["pm2-runtime", "process-docker.json"]
+CMD ["pm2", "start", "process-docker.json", "--no-daemon"]
