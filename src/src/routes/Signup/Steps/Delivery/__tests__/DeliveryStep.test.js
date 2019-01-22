@@ -13,7 +13,7 @@ describe('Next Day Delivery Painted Door', () => {
     })
 
     test('when time D+2 when time is after cutoff (12pm)', () => {
-      Date.now = jest.fn(() => new Date(2019, 0, 22, 15).valueOf()) // mock 2019-01-22 10am
+      Date.now = jest.fn(() => new Date(2019, 0, 22, 15).valueOf()) // mock 2019-01-22 3pm
 
       const nextDayDeliveryDays = createNextDayDeliveryDays()
 
@@ -24,7 +24,7 @@ describe('Next Day Delivery Painted Door', () => {
 
   describe('48 hour delivery', () => {
     test('should be D+2 when time is before cutoff (12pm)', () => {
-      Date.now = jest.fn(() => new Date(2019, 0, 22, 10).valueOf()) // mock 2019-01-22 3pm
+      Date.now = jest.fn(() => new Date(2019, 0, 22, 10).valueOf()) // mock 2019-01-22 10pm
 
       const nextDayDeliveryDays = createNextDayDeliveryDays()
 
