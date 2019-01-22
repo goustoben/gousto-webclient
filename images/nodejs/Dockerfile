@@ -19,3 +19,4 @@ RUN yarn run build:server:prod
 EXPOSE 8080
 
 CMD ["pm2", "start", "process-docker.json", "--no-daemon"]
+# the --no-daemon is a minor workaround to prevent the docker container from thinking pm2 has stopped running and ending itself
