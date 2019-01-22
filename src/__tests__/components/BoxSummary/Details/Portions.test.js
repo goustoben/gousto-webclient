@@ -68,7 +68,7 @@ describe('Portions', () => {
   test('should call callback function with right portion number', () => {
     const onClickSpy = sinon.spy()
     const wrapper = shallow(
-			<Portions numPortions={2} onNumPortionChange={onClickSpy} />,
+			<Portions numPortions={2} onNumPortionChange={onClickSpy} trackNumPortionChange={function() {}} />,
     )
 
     wrapper
