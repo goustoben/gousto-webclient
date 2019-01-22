@@ -136,7 +136,6 @@ class Menu extends React.Component {
 	    const store = this.context.store
 	    const query = nextProps.query || {}
 	    const params = nextProps.params || {}
-			console.log('PORTIONS: menu page 1') // eslint-disable-line
 	    Menu.fetchData({ store, query, params }, true)
 	  }
 
