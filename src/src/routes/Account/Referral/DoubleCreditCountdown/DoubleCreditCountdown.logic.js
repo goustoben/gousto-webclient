@@ -40,9 +40,9 @@ class DoubleCreditCountdown extends PureComponent {
     const { fetchOffer } = this.props
     const { expiry } = this.props
     const { days, hours, minutes } = getTimeDifference(expiry)
-    const isJustExpired = isTimeZero(days, hours, minutes)
+    const hasExpiredInLastMinute = isTimeZero(days, hours, minutes)
     this.setState({ days, hours, minutes })
-    if (isJustExpired) {
+    if (hasExpiredInLastMinute) {
       fetchOffer()
     }
   }
