@@ -40,3 +40,8 @@
 	left: 10px;
 	margin-top: -40px;
 }
+
+.rangeBadgeWrapper{
+	margin-top: -15px;
+	position: absolute;
+}

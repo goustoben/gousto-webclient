@@ -208,3 +208,17 @@
 .stickyButton {
 	margin: 12px 15px;
 }
+
+.rangeBadgeDetails {
+	position: relative;
+	margin-left: -25px;
+	margin-bottom: 15px;
+}
+
+.rangeBadgeDetails > div > div:nth-child(2)  {
+	width: 10px;
+	top: 2px;
+	display: inline-flex;
+	flex-direction: column;
+	border-top: 1px solid #FFFFFF;
+}

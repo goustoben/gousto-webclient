@@ -1,22 +1,23 @@
-import React, { PropTypes } from 'react'
-
-import InfoBadge from '../InfoBadge'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { getRangeBadge } from 'utils/recipe'
-import colors from 'styles/colors.css'
+import classnames from 'classnames'
+import css from './RangeBadge.css'
 
 const RangeBadge = ({ range }) => {
   const rangeBadge = getRangeBadge(range)
+  const arrowTop = rangeBadge ? 'arrowTop' + rangeBadge.borderColor : ''
+  const arrowBottom = rangeBadge ? 'arrowBottom' + rangeBadge.borderColor: '' 
+  const textClass = rangeBadge ? 'ribbonText' + rangeBadge.backgroundColor: ''
 
   return (rangeBadge) ? (
-		<InfoBadge
-		  style={{
-		    color: colors[rangeBadge.color],
-		    backgroundColor: colors[rangeBadge.backgroundColor],
-		    borderColor: colors[rangeBadge.borderColor],
-		  }}
-		>
-			{rangeBadge.text}
-		</InfoBadge>
+    <div className={css.rangeBadge}>
+      <div className={css[textClass]}>{rangeBadge.text.toUpperCase()}</div>
+      <div className={classnames(css.ribbonContainer, css.ribbon)}>
+        <div className={css[arrowTop]}></div>
+        <div className={css[arrowBottom]}></div>
+      </div>
+    </div>
   ) : null
 }
 

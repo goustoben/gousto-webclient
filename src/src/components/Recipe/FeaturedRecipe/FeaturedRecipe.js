@@ -3,6 +3,8 @@ import Immutable from 'immutable'
 import classnames from 'classnames'
 
 import RangeBadge from 'Recipe/RangeBadge'
+import { getChef } from 'utils/recipe'
+import { recipePropTypes } from 'Recipe'
 import css from './FeaturedRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
@@ -15,8 +17,6 @@ import CookingTime from '../CookingTime'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import EquipmentRequired from '../EquipmentRequired'
-import { getChef } from 'utils/recipe'
-import { recipePropTypes } from 'Recipe'
 
 const FeaturedRecipe = (props) => (
 	<div>
@@ -36,6 +36,7 @@ const FeaturedRecipe = (props) => (
 			</div>
 			<div className={props.tag ? css.featuredDetailsWithTag : css.featuredDetails}>
 				<div className={css.textContainer}>
+				<RangeBadge range={props.range} />
 					<div onClick={props.onClick} className={classnames(css.linkUnderlined, { [css.linkIfChefFeatured]: getChef(props.chef) })}>
 						<Title
 						  title={props.title}
@@ -47,7 +48,7 @@ const FeaturedRecipe = (props) => (
 					</div>
 					<div>
 						<ChefQuote chef={props.chef} quote={props.description} />
-						<RangeBadge range={props.range} />
+						
 						<RecommendedBadge isRecommendedRecipe={props.isRecommendedRecipe} features={props.features} />
 						<span className={css.attributes}>
 							<div className={css.attributeMinHeight}>
