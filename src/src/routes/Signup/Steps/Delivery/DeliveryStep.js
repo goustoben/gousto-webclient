@@ -39,7 +39,7 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
 
   if (nextDayDeliveryPaintedDoorFeature) {
     deliveryDays = [...createNextDayDeliveryDays(), ...deliveryDays]
-    createNextDayDeliveryDays().map(day => slots[day.date] = [{ label: "8AM - 7PM", subLabel: "FREE", value: "NULL", coreSlotId: "NULL" }])
+    createNextDayDeliveryDays().map(day => slots[day.date] = [{ label: "8AM - 7PM", subLabel: "", value: "NULL", coreSlotId: "NULL" }])
   }
 
   const onTempDateChange = (date) => {
