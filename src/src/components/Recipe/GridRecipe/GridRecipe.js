@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
@@ -18,66 +19,76 @@ import CookingTime from '../CookingTime'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import EquipmentRequired from '../EquipmentRequired'
+import { FiveADay } from '../FiveADay'
 
-const GridRecipe = (props) => (
-	<div>
-		<div className={css.recipeDetails}>
-			<span onClick={props.onClick} className={css.link}>
-				<Image
-				  media={props.media}
-				  alt={props.title}
-				  mouseEnter={props.highlight}
-				  mouseLeave={props.unhighlight}
-				/>
-			</span>
-			<TasteScore className={css.score} score={props.tasteScore} />
-			<div>
-				<Chef chef={props.chef} />
+const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, surcharge, id, range, fiveADayValue}) => (
+  <div>
+    <div className={css.recipeDetails}>
+      <span onClick={onClick} className={css.link}>
+        <Image
+          media={media}
+          alt={title}
+          mouseEnter={highlight}
+          mouseLeave={unhighlight}
+        />
+      </span>
+      <TasteScore className={css.score} score={tasteScore} />
+      <div>
+        <Chef chef={chef} />
+      </div>
+      <div className={css.rangeBadgeWrapper}>
+				<RangeBadge range={range} />
 			</div>
-			<div className={css.rangeBadgeWrapper}>
-				<RangeBadge range={props.range} />
-			</div>
-			<div className={css.textContainer}>
-				<div onClick={props.onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(props.chef) })}>
-					<Title
-					  title={props.title}
-					  view={props.view}
-					  mouseEnter={props.highlight}
-					  mouseLeave={props.unhighlight}
-					  detailHover={props.detailHover}
-					/>
-				</div>
-				<div>
-					<RecommendedBadge isRecommendedRecipe={props.isRecommendedRecipe} features={props.features} />
-					<StockBadge stock={props.stock} />
-				</div>
-				<div className={css.attributes}>
-					<Rating
-					  average={props.averageRating}
-					  count={props.ratingCount}
-					/>
-					<div className={css.attributeMinHeight}>
-						<CookingTime
-						  time={props.cookingTime}
-						/>
-					</div>
-					<div className={css.attributeMinHeight}>
-						<UseWithin
-						  useWithin={props.useWithin}
-						/>
-					</div>
-					<div className={css.attributeMinHeight}>
-						<EquipmentRequired
-						  equipment={props.equipment}
-						  view="notice"
-						/>
-					</div>
-				</div>
-				<AddButton id={props.id} stock={props.stock} inBasket={props.inBasket} view={props.view} position={props.position} surcharge={props.surcharge} score={props.tasteScore} />
-				<DisabledOverlay stock={props.stock} inBasket={props.inBasket} />
-			</div>
-		</div>
-	</div>
+      <div className={css.textContainer}>
+        <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(chef) })}>
+          <Title
+            title={title}
+            view={view}
+            mouseEnter={highlight}
+            mouseLeave={unhighlight}
+            detailHover={detailHover}
+          />
+        </div>
+        <div>
+          <RangeBadge range={range} />
+          <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
+          <StockBadge stock={stock} />
+          <div>
+            <Rating
+              average={averageRating}
+              count={ratingCount}
+            />
+          </div>
+        </div>
+        <div className={css.attributes}>
+          <div className={css.attributeMinHeight}>
+            <CookingTime
+              time={cookingTime}
+            />
+          </div>
+          <div className={css.attributeMinHeight}>
+            <UseWithin
+              useWithin={useWithin}
+            />
+          </div>
+          <div className={css.attributeMinHeight}>
+            <EquipmentRequired
+              equipment={equipment}
+              view="notice"
+            />
+          </div>
+          <div className={css.attributeMinHeight}>
+            <FiveADay
+              fiveADayValue={fiveADayValue}
+            />
+          </div>
+        </div>
+        <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
+        <DisabledOverlay stock={stock} inBasket={inBasket} />
+      </div>
+    </div>
+  </div>
 )
 
 GridRecipe.propTypes = {
@@ -86,7 +97,7 @@ GridRecipe.propTypes = {
   position: PropTypes.number,
   chef: PropTypes.shape({
     media: PropTypes.shape({
-      images: PropTypes.Array,
+      images: PropTypes.array,
     }),
     name: PropTypes.string,
     celebrity: PropTypes.bool,
@@ -103,6 +114,8 @@ GridRecipe.propTypes = {
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
   tasteScore: PropTypes.number,
+  range: PropTypes.string,
+  fiveADayValue: PropTypes.number
 }
 
 GridRecipe.defaultProps = {
