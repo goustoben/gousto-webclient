@@ -15,6 +15,7 @@ RUN yarn global add pm2 bower
 RUN bower install --force --allow-root
 RUN yarn install --pure-lockfile 
 RUN yarn run build:server:prod
+RUN chown -R 1001:1001 /root/.pm2
 
 EXPOSE 8080
 
