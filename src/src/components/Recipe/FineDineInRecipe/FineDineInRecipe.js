@@ -1,7 +1,9 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
+import { recipePropTypes } from 'Recipe'
 import Svg from 'components/Svg'
 import { getChef } from 'utils/recipe'
 import css from './FineDineInRecipe.css'
@@ -9,62 +11,59 @@ import Title from '../Title'
 import AddButton from '../AddButton'
 import StockBadge from '../StockBadge'
 import TasteScore from '../TasteScore'
-import CookingTime from '../CookingTime'
+import { RecipeAttribute } from '../RecipeAttribute'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
-import { recipePropTypes } from 'Recipe'
 
-const FineDineInRecipe = (props) => {
-  const image = props.media.find(url => url.get('width') === 700) || Immutable.Map({})
+const FineDineInRecipe = ({media, onClick, highlight, unhighlight, tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe, features, stock, inBasket, position, surcharge, id}) => {
+  const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
 
   return (
-		<div className={css.overlay}>
-			<div style={{ backgroundImage: `url(${image.get('src')})` }} className={css.recipeCover}>
-				<Svg fileName="fine-dine-in-range" className={css.gel}>
-					Fine Dine In
-				</Svg>
-				<div
-				  className={css.clickContainer}
-				  onClick={props.onClick}
-				  onMouseEnter={props.highlight}
-				  onMouseLeave={props.unhighlight}
-				>
-				</div>
-				<div className={css.recipeDetails}>
-					<TasteScore className={css.score} score={props.tasteScore} />
-					<div className={css.textContainer}>
-						<div onClick={props.onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(props.chef) })}>
-							<Title
-							  title={props.title}
-							  view={props.view}
-							  mouseEnter={props.highlight}
-							  mouseLeave={props.unhighlight}
-							  detailHover={props.detailHover}
-							/>
-						</div>
-						<div className={css.alignBadges}>
-							<div className={css.badgeItem}>
-								<CookingTime
-								  time={props.cookingTime}
-								/>
-							</div>
-							<div className={css.badgeItem}>
-								<RecommendedBadge
-								  isRecommendedRecipe={props.isRecommendedRecipe}
-								  features={props.features}
-								/>
-							</div>
-							<div className={css.badgeItem}>
-								<StockBadge stock={props.stock} inverse />
-							</div>
-						</div>
+    <div className={css.overlay}>
+      <div style={{ backgroundImage: `url(${image.get('src')})` }} className={css.recipeCover}>
+        <Svg fileName="fine-dine-in-range" className={css.gel}>
+          Fine Dine In
+        </Svg>
+        <div
+          className={css.clickContainer}
+          onClick={onClick}
+          onMouseEnter={highlight}
+          onMouseLeave={unhighlight}
+        >
+        </div>
+        <div className={css.recipeDetails}>
+          <TasteScore className={css.score} score={tasteScore} />
+          <div className={css.textContainer}>
+            <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(chef) })}>
+              <Title
+                title={title}
+                view={view}
+                mouseEnter={highlight}
+                mouseLeave={unhighlight}
+                detailHover={detailHover}
+              />
+            </div>
+            <div className={css.alignBadges}>
+              <div className={css.badgeItem}>
+                <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
+              </div>
+              <div className={css.badgeItem}>
+                <RecommendedBadge
+                  isRecommendedRecipe={isRecommendedRecipe}
+                  features={features}
+                />
+              </div>
+              <div className={css.badgeItem}>
+                <StockBadge stock={stock} inverse />
+              </div>
+            </div>
 
-						<AddButton id={props.id} stock={props.stock} inBasket={props.inBasket} view={props.view} position={props.position} surcharge={props.surcharge} score={props.tasteScore} />
-						<DisabledOverlay stock={props.stock} inBasket={props.inBasket} />
-					</div>
-				</div>
-			</div>
-		</div>
+            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
+            <DisabledOverlay stock={stock} inBasket={inBasket} />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -74,7 +73,7 @@ FineDineInRecipe.propTypes = {
   position: PropTypes.number,
   chef: PropTypes.shape({
     media: PropTypes.shape({
-      images: PropTypes.Array,
+      images: PropTypes.array,
     }),
     name: PropTypes.string,
     celebrity: PropTypes.bool,
