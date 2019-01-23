@@ -2,6 +2,7 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import React from 'react'
 import moment from 'moment'
 import DropdownInput from 'Form/Dropdown'
+import deliverySlot from '../../../../utils/deliverySlot'
 import Button from '../../Button'
 
 import signupCss from '../../Signup.css'
@@ -38,8 +39,10 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
   if (nextDayDeliveryPaintedDoorFeature) {
-    deliveryDays = [...createNextDayDeliveryDays(), ...deliveryDays]
-    createNextDayDeliveryDays().map(day => slots[day.date] = [{ label: "8AM - 7PM", subLabel: "", value: "NULL", coreSlotId: "NULL" }])
+    const nextDayDeliveryDays = createNextDayDeliveryDays()
+    deliveryDays = [...nextDayDeliveryDays, ...deliveryDays]
+    slots = {...generateNextDatDeliverySlots(nextDayDeliveryDays), ...slots}
+    // createNextDayDeliveryDays().map(day => slots[day.date] = [{ label: "8AM - 7PM", subLabel: "", value: "NULL", coreSlotId: "NULL" }])
   }
 
   const onTempDateChange = (date) => {
@@ -120,22 +123,31 @@ DeliveryStep.propTypes = {
 
 const isAfterCutoff = () => moment().hours() >= 12
 
+const generateNextDatDeliverySlots = nextDayDeliveryDays => {
+  const slots = {}
+  nextDayDeliveryDays.map(day => {
+    slots[day.date] = [{ label: "8AM - 7PM", subLabel: "", value: "NULL", coreSlotId: "NULL" }]
+  })
+
+  return slots
+}
+
 export const createNextDayDeliveryDays = () => {
 
   const dayOffSet = isAfterCutoff() ? 2 : 1
 
   return [
     {
-      date: moment().add(dayOffSet , 'day').format('YYYY-MM-DD'),
-      value: moment().add(dayOffSet , 'day').format('YYYY-MM-DD'),
+      date: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet),
+      value: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet),
       disable: false,
-      label: `${moment().add(dayOffSet, 'day').format('ddd D MMM')} £2.99`
+      label: `${deliverySlot.formatNextDayDeliveryDayLabel(dayOffSet)} £2.99`
     },
     {
-      date: moment().add(dayOffSet + 1, 'day').format('YYYY-MM-DD'),
-      value: moment().add(dayOffSet + 1, 'day').format('YYYY-MM-DD'),
+      date: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet + 1),
+      value: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet + 1),
       disable: false,
-      label: `${moment().add(dayOffSet + 1, 'day').format('ddd D MMM')} £1.99`
+      label: `${deliverySlot.formatNextDayDeliveryDayLabel(dayOffSet + 1)} £1.99`
     }
   ]
 }

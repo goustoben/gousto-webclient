@@ -3,6 +3,7 @@ import DeliveryStep from './DeliveryStep'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
+import { isNextDayDeliveryPaintedDoorFeatureEnabled } from 'selectors/features'
 
 function mapStateToProps(state) {
   const landing = getLandingDay(
@@ -19,7 +20,7 @@ function mapStateToProps(state) {
     tempDate,
     tempSlotId,
     menuFetchDataPending: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
-    nextDayDeliveryPaintedDoorFeature: state.features.getIn(['nextDayDeliveryPaintedDoor', 'value']),
+    nextDayDeliveryPaintedDoorFeature: isNextDayDeliveryPaintedDoorFeatureEnabled(state),
     numPortions: state.basket.get('numPortions')
   }
 }
