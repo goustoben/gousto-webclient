@@ -25,4 +25,15 @@ describe('<RangeBadge />', () => {
       whiteStub.reset()
     })
   })
+
+  describe('render', () => {
+    test('should render badge for Ten to table', () => {
+      const wrapper = shallow(<RangeBadge range={'ten_to_table'}/>)
+      expect(wrapper.find('.rangeBadge').length).toEqual(1)
+    })
+    test('should render badge for Everydays favorites', () => {
+      const wrapper = shallow(<RangeBadge range={'everyday_favourites'}/>)
+      expect(wrapper.find('.rangeBadge').length).toEqual(1)
+    })
+  })
 })

@@ -147,5 +147,35 @@ describe('<GridRecipe />', () => {
 
       expect(wrapper.find(Title).prop('large')).toBe(undefined)
     })
+
+    test('should render range ribbon for 10 min range recipe', () => {
+      recipe = Immutable.fromJS({
+        id: 1,
+        title: 'test',
+        rating: {
+          count: 1,
+          average: 4,
+        },
+        url: '',
+        cookingTime: 1,
+        cookingTimeFamily: 1,
+        shelfLifeDays: '',
+        range: 'ten_to_table',
+        media: {
+          images: [
+            {
+              urls: [
+                {
+                  src: 'test',
+                },
+              ],
+            },
+          ],
+        },
+      })
+      view = 'grid'
+      const wrapper = shallow(<GridRecipe recipe={recipe} view={view} range={recipe.get('range')} />)
+      expect(wrapper.find('RangeBadge').prop('range')).toEqual('ten_to_table')
+    })
   })
 })
