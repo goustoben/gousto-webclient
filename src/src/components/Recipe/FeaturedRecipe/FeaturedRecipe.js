@@ -36,7 +36,9 @@ const FeaturedRecipe = (props) => (
 			</div>
 			<div className={props.tag ? css.featuredDetailsWithTag : css.featuredDetails}>
 				<div className={css.textContainer}>
-				<RangeBadge range={props.range} />
+					<div className={css.rangeBadgeFeatured}>		
+						<RangeBadge range={props.range} />
+					</div>
 					<div onClick={props.onClick} className={classnames(css.linkUnderlined, { [css.linkIfChefFeatured]: getChef(props.chef) })}>
 						<Title
 						  title={props.title}

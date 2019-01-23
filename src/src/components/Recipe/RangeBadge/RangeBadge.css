@@ -1,15 +1,19 @@
-@value Carrot, Pomegranate, White from 'styles/colors.css';
+@value Carrot, Pomegranate, JoeWicks, White from 'styles/colors.css';
 
 .borderLeftCarrot{
-  border-left: 10px solid Carrot;
+  border-left: 9px solid Carrot;
 }
 
 .borderLeftPomegranate {
-  border-left: 10px solid Pomegranate;
+  border-left: 9px solid Pomegranate;
+}
+
+.borderLeftJoeWicks{
+  border-left: 9px solid JoeWicks;
 }
 
 .rangeBadge{
-  display: relative;
+  position: relative;
   height:28px;
 }
 
@@ -32,6 +36,15 @@
 	height: 0; 
 }
 
+.arrowWhite  {
+	composes: arrow;
+  top: 0px;
+  border-right: none;
+  border-top: 0px solid transparent;
+  border-bottom: 16px solid transparent;
+  border-left: 10px solid White;
+}
+
 .arrowTop {
 	composes: arrow;
   top: 0px;
@@ -48,6 +61,11 @@
 .arrowTopPomegranate {
   composes: arrowTop;
   composes: borderLeftPomegranate;
+}
+
+.arrowTopJoeWicks {
+  composes: arrowTop;
+  composes: borderLeftJoeWicks;
 }
 
 .arrowBottom {
@@ -67,28 +85,33 @@
   composes: borderLeftPomegranate;
 }
 
+.arrowBottomJoeWicks {
+  composes: arrowBottom;
+  composes: borderLeftJoeWicks;
+}
+
 .ribbonText {
   z-index: 10;
   display: inline-flex;
 	align-items: center;
 	height: 100%;
   justify-content: center;
-  background-color: White;
   border: 1px solid White;
   border-right: none;
   color: White;
-  padding: 5px 15px;
+  padding: 5px 11px 5px 15px;
   font-size: 12px;
   font-weight: 700;
   font-family: Avenir-Black, Avenir;
 }
 
 .ribbonTextCarrot {
-  composes: ribbonText;
   background-color: Carrot;
 }
 
 .ribbonTextPomegranate {
-  composes: ribbonText;
   background-color: Pomegranate;
+}
+.ribbonTextJoeWicks {
+  background-color: JoeWicks;
 }

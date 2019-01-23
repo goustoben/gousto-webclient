@@ -7,7 +7,7 @@
 @value 100percent 100%;
 
 .container {
-	z-index: 100;
+	z-index: 500;
 }
 
 .desktop {
@@ -25,7 +25,7 @@
 	bottom: 0;
 	left: 0;
 	width: 100percent;
-	z-index: 101;
+	z-index: 501;
 	height: barDesktopHeight;
 }
 

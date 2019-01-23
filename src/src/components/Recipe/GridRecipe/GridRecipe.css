@@ -13,6 +13,7 @@
 
 .textContainer {
 	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+	margin-top: 15px;
 }
 
 .linkUnderlined {
@@ -43,5 +44,6 @@
 
 .rangeBadgeWrapper{
 	margin-top: -15px;
+	margin-left: -1px;
 	position: absolute;
 }
