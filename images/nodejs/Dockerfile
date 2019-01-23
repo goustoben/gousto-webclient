@@ -8,6 +8,11 @@ RUN apt-get update && apt-get --yes --force-yes install git python make g++ \
     && npm install -g yarn --silent \
     && yarn global add pm2
 
+RUN mkdir /.pm2 \ 
+    && chmod -R 777 /.pm2 \
+    && ls -la /
+#Fix to run pm2 as normal user
+
 ###END OF PLATFORM IMAGE###
 
 WORKDIR /usr/src/webclient
