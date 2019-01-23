@@ -22,7 +22,7 @@ function mapStateToProps(state) {
 
 const DetailsContainer = connect(mapStateToProps, {
   basketNumPortionChange: actions.basketNumPortionChange,
-  basketNumPortionChangeTracking: actions.basketNumPortionChangeTracking,
+  portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
   basketPostcodeChange: actions.basketPostcodeChange,
   onRemove: actions.basketRecipeRemove,
   clearSlot: actions.basketSlotClear,

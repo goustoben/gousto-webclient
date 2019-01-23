@@ -97,7 +97,7 @@ const basket = {
       return state.set('orderId', action.orderId)
     }
 
-    case actionTypes.PORTION_SIZE_SELECTED: {
+    case actionTypes.BASKET_NUM_PORTION_CHANGE: {
       let portionSize = parseInt(action.numPortions, 10)
       if (basketConfig.portions.allowed.indexOf(portionSize) === -1) {
         logger.error({message: `Invalid serving size: ${action.numPortions}`})

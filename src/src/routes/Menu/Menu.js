@@ -116,7 +116,7 @@ class Menu extends React.Component {
 	  }
 		
 	  if (props.params.orderId) {
-	    store.dispatch(props.basketNumPortionChangeTracking(props.numPortions, props.params.orderId))
+	    store.dispatch(props.portionSizeSelectedTracking(props.numPortions, props.params.orderId))
 	  }
 	}
 

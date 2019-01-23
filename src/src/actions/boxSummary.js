@@ -111,7 +111,7 @@ export default {
       const basketPostcode = state.basket.get('postcode')
 
       if (basketPostcode && !state.error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE)) {
-        dispatch(basket.basketNumPortionChangeTracking(numPortions))
+        dispatch(basket.portionSizeSelectedTracking(numPortions))
         if (tempOrderId) {
           dispatch(push(`/menu/${tempOrderId}`))
           dispatch(boxSummaryVisibilityChange(false))

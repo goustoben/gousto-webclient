@@ -65,7 +65,7 @@ export default {
   basketNumPortionChange: (numPortions) => (
     (dispatch, getState) => {
       dispatch({
-        type: actionTypes.PORTION_SIZE_SELECTED,
+        type: actionTypes.BASKET_NUM_PORTION_CHANGE,
         numPortions,
       })
 
@@ -83,7 +83,7 @@ export default {
     }
   ),
   
-  basketNumPortionChangeTracking: (num_portion, order_id) => (
+  portionSizeSelectedTracking: (num_portion, order_id) => (
     (dispatch) => {
       dispatch({
         type: actionTypes.PORTION_SIZE_SELECTED_TRACKING,

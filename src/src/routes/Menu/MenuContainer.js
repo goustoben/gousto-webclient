@@ -83,7 +83,7 @@ const mapDispatchToProps = {
   loginVisibilityChange: actions.loginVisibilityChange,
   clearAllFilters: actions.clearAllFilters,
   triggerMenuLoad,
-  basketNumPortionChangeTracking: actions.basketNumPortionChangeTracking,
+  portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
