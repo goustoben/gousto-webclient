@@ -16,6 +16,7 @@ class Details extends React.Component {
 	static propTypes = {
 	  accessToken: PropTypes.string,
 	  basketNumPortionChange: PropTypes.func.isRequired,
+	  portionSizeSelectedTracking: PropTypes.func.isRequired,
 	  basketRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
 	  basketRestorePreviousDate: PropTypes.func.isRequired,
 	  boxSummaryVisibilityChange: PropTypes.func.isRequired,
@@ -101,10 +102,10 @@ class Details extends React.Component {
 	)
 
 	render() {
-	  const { displayOptions, numPortions, pricingPending, prices } = this.props
-	  const okRecipeIds = okRecipes(this.props.basketRecipes, this.props.recipes, this.props.stock, this.props.numPortions)
+	  const { displayOptions, numPortions, pricingPending, prices, basketRecipes, recipes, stock, view, orderId, date, clearSlot, basketNumPortionChange, portionSizeSelectedTracking, onRemove, menuFetchPending } = this.props
+	  const okRecipeIds = okRecipes(basketRecipes, recipes, stock, numPortions)
 	  const okRecipeList = this.recipeList(okRecipeIds)
-	  const unavailableRecipeIds = this.props.basketRecipes.filter((obj, recipeId) => !okRecipeIds.has(recipeId))
+	  const unavailableRecipeIds = basketRecipes.filter((obj, recipeId) => !okRecipeIds.has(recipeId))
 	  const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
 
 	  const numRecipes = basketSum(okRecipeIds)
@@ -113,27 +114,27 @@ class Details extends React.Component {
 	  const displayCta = !displayOptions.contains('hideChooseRecipesCta') && ctaText
 
 	  return (
-			<div className={css[`supercontainer${this.props.view}`]}>
-				<div className={css[`container${this.props.view}`]}>
+			<div className={css[`supercontainer${view}`]}>
+				<div className={css[`container${view}`]}>
 					<div className={css.content}>
 						<div className={css.row}>
 							<p className={css.title}>Box Summary</p>
 						</div>
 						{(() => {
-						  if (this.props.orderId) {
+						  if (orderId) {
 						    return (
 									<div className={css.row}>
 										<p className={css.deliverySlotText}>Edit recipes for your upcoming box. To change date or cancel box, visit 'My Deliveries'</p>
-										<p className={css.dateText}>{`${moment(this.props.date).format('ddd Do MMM')}, ${this.slotTimes()}`}</p>
+										<p className={css.dateText}>{`${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`}</p>
 									</div>
 						    )
 						  }
-						  const text = `${moment(this.props.date).format('ddd Do MMM')}, ${this.slotTimes()}`
+						  const text = `${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`
 
 						  return (
 								<div className={css.rowSMMargin}>
 									<Button fill={false} width="full">
-										<Segment onClick={this.props.clearSlot} fill={false}>
+										<Segment onClick={clearSlot} fill={false}>
 											<span className={text.length > 21 ? css.limitedLengthPadding : css.limitedLength}>{text}</span>
 											<span className={css.clear}>
 												<span className={css.clearIcon}></span>
@@ -148,7 +149,7 @@ class Details extends React.Component {
 						  displayOptions.contains('hidePortions')
 						    ? null
 						    : (<div className={css.row}>
-									<Portions numPortions={this.props.numPortions} onNumPortionChange={this.props.basketNumPortionChange} />
+									<Portions numPortions={numPortions} onNumPortionChange={basketNumPortionChange} trackNumPortionChange={portionSizeSelectedTracking} orderId={orderId} />
 								</div>)
 						}
 						<div className={css.row}>
@@ -163,22 +164,22 @@ class Details extends React.Component {
 										  key={recipe.get('id')}
 										  media={recipe.get('media')}
 										  title={recipe.get('title')}
-										  numPortions={this.props.basketRecipes.get(recipe.get('id')) * numPortions}
-										  onRemove={() => this.props.onRemove(recipe.get('id'), 'boxsummary')}
+										  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+										  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
 										  available
 										  showLine
 										/>
 									)).toArray()}
-									<span className={!this.props.menuFetchPending ? css.notAvailable : ''}>
-										{(unavailableRecipeList.size > 0 && !this.props.menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, this.props.orderSaveError) : null}
+									<span className={!menuFetchPending ? css.notAvailable : ''}>
+										{(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, this.props.orderSaveError) : null}
 										{unavailableRecipeList.map(recipe => (
 											<RecipeItem
 											  key={recipe.get('id')}
 											  media={recipe.get('media')}
 											  title={recipe.get('title')}
-											  numPortions={this.props.basketRecipes.get(recipe.get('id')) * numPortions}
-											  onRemove={() => this.props.onRemove(recipe.get('id'), 'boxsummary')}
-											  available={this.props.menuFetchPending}
+											  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+											  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+											  available={menuFetchPending}
 											  showLine
 											/>
 										)).toArray()}
