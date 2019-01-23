@@ -82,6 +82,9 @@
 .attributes {
 	line-height: attributesLineHeight;
 	font-size: sizeMD;
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .attributeMinHeight {
