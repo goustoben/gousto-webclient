@@ -1,11 +1,12 @@
-@value chefImageBorderWidth 4px;
+@value chefImageBorderWidth 2px;
 @value chefImageSize calc(70px + chefImageBorderWidth);
 
 .chef {
 	height: chefImageSize;
-	margin-top: calc((chefImageSize)/-2);
+	margin-top: 10px;
 	position: absolute;
-	right: 15px;
+	right: 10px;
+	top: 0;
 }
 
 .chef :local img {

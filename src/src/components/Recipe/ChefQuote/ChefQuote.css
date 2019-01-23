@@ -13,13 +13,14 @@
 	align-items: center;
 	justify-content: center;
 	text-align: center;
+	float: left;
+	padding: 5px 8px 5px 0px;
 }
 
 .mainImage {
 	composes: col-xs-4 from 'sass-loader!styles/bootstrap.scss';
 	composes: paddingXXSTopBottom paddingXXSLeftRight from 'sass-loader!styles/spacing.scss';
 	padding-left: 0;
-	height: calc(Height - Padding*2);
 }
 
 .secondary {
@@ -37,8 +38,8 @@
 	width: 90px;
 }
 .secondaryImage {
-	width: auto;
-	height: 100%;
+	width: 66px;
+	height: auto;
 }
 .signature {
 	height: auto;
@@ -50,7 +51,8 @@
 	padding-right: 0;
 }
 .quoteContents {
-	composes: textSM from 'styles/typography.css';
+	font-size: 15px;
+	line-height: 20px;
 	composes: inline from 'styles/display.css';
 }
 .container {
