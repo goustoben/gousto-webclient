@@ -6,7 +6,7 @@ const UseWithin = ({ useWithin }) => {
 
   return (
 		<div>
-			<span className={css.icon} /><span className={css.description}>&nbsp;Use within {useWithinFormatted} days after delivery</span>
+			<span className={css.icon} /><span className={css.description}>&nbsp;Use within {useWithinFormatted} days</span>
 		</div>
   )
 }

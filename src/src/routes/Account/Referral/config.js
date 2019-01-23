@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 
 export default Immutable.fromJS({
+  title: 'Invite your friends to try out Gousto!',
   creditFormatted: '£15',
   firstBoxDiscountFormatted: '60%',
   firstMonthDiscountFormatted: '30%',

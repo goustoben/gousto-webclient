@@ -20,6 +20,7 @@ function mapStateToProps(state) {
     tempSlotId,
     menuFetchDataPending: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
     nextDayDeliveryPaintedDoorFeature: state.features.getIn(['nextDayDeliveryPaintedDoor', 'value']),
+    numPortions: state.basket.get('numPortions')
   }
 }
 

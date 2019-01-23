@@ -1,5 +1,4 @@
 import React from 'react'
-// import { shallow } from 'enzyme'
 import {getMessage, getReferralLink, getWhatsappReferralLink, getTextMessageReferralLink} from 'routes/Account/Referral/socialReferralHelper'
 import Immutable from 'immutable'
 

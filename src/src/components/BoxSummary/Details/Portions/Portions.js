@@ -1,14 +1,32 @@
 import React, { PropTypes } from 'react'
 import { Button, Segment } from 'goustouicomponents'
 
-const Portions = ({ numPortions, onNumPortionChange }) => (
-	<Button
-	  fill={false}
-	  width="full"
-	>
-		<Segment key={1} fill={numPortions === 2} onClick={() => { onNumPortionChange(2) }}>2 People</Segment>
-		<Segment key={2} fill={numPortions === 4} onClick={() => { onNumPortionChange(4) }}>4 People</Segment>
-	</Button>
+const Portions = ({ numPortions, onNumPortionChange, trackNumPortionChange, orderId }) => (
+  <Button
+    fill={false}
+    width="full"
+  >
+    <Segment
+      key={1}
+      fill={numPortions === 2}
+      onClick={() => {
+        onNumPortionChange(2)
+        trackNumPortionChange(2, orderId)
+      }}
+    >
+      2 People
+    </Segment>
+    <Segment
+      key={2}
+      fill={numPortions === 4}
+      onClick={() => {
+        onNumPortionChange(4)
+        trackNumPortionChange(4, orderId)
+      }}
+    >
+      4 People
+    </Segment>
+  </Button>
 )
 
 Portions.propTypes = {

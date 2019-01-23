@@ -7,9 +7,13 @@ import Portions from 'BoxSummary/Details/Portions'
 import { Segment } from 'goustouicomponents'
 
 describe('Portions', () => {
+
+  const onNumPortionChange = jest.fn()
+  const trackNumPortionChange = jest.fn()
+
   test('should not have filled Segment if portion is not 2 nor 4', () => {
     const wrapper = shallow(
-			<Portions numPortions={0} onNumPortionChange={function() {}} />,
+			<Portions numPortions={0} onNumPortionChange={onNumPortionChange} />,
     )
 
     expect(wrapper.find(Segment).length).toEqual(2)
@@ -29,7 +33,7 @@ describe('Portions', () => {
 
   test('should have filled Segment for the right portion size', () => {
     let wrapper = shallow(
-			<Portions numPortions={4} onNumPortionChange={function() {}} />,
+			<Portions numPortions={4} onNumPortionChange={onNumPortionChange} />,
     )
 
     expect(wrapper.find(Segment).length).toEqual(2)
@@ -47,7 +51,7 @@ describe('Portions', () => {
     ).toEqual(true)
 
     wrapper = shallow(
-			<Portions numPortions={2} onNumPortionChange={function() {}} />,
+			<Portions numPortions={2} onNumPortionChange={onNumPortionChange} />,
     )
 
     expect(wrapper.find(Segment).length).toEqual(2)
@@ -68,7 +72,7 @@ describe('Portions', () => {
   test('should call callback function with right portion number', () => {
     const onClickSpy = sinon.spy()
     const wrapper = shallow(
-			<Portions numPortions={2} onNumPortionChange={onClickSpy} />,
+			<Portions numPortions={2} onNumPortionChange={onClickSpy} trackNumPortionChange={trackNumPortionChange} />,
     )
 
     wrapper

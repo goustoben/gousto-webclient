@@ -34,7 +34,7 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   return { slots, deliveryDays }
 }
 
-const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, next }) => {
+const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, numPortions, next }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
   if (nextDayDeliveryPaintedDoorFeature) {

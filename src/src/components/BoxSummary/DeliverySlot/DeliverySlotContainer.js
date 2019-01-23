@@ -38,6 +38,7 @@ function mapStateToProps(state) {
     tempDate,
     tempSlotId,
     tempOrderId,
+    numPortions: state.basket.get('numPortions')
   }
 }
 
