@@ -52,9 +52,9 @@ const FeaturedRecipe = ({onClick, media, title, view, highlight, unhighlight, ta
             <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
             <span className={css.attributes}>
                 <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
+                <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' showAttribute={fiveADayValue > 1}/>
                 <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} />
                 <RecipeAttribute attributeName='equipmentRequired' attributeValue={equipment} view='notice' />
-                <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' />
             </span>
           </div>
           <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
@@ -96,6 +96,7 @@ FeaturedRecipe.defaultProps = {
   tag: '',
   isRecommendedRecipe: false,
   chef: Immutable.Map({}),
+  fiveADayValue: 0,
 }
 
 export default FeaturedRecipe

@@ -16,7 +16,7 @@ import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
 
-const DefaultDetail = ({ media, title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, availability, cutoffDate, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange, restrictedView, position, surcharge, range }) => (
+const DefaultDetail = ({ media, title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, availability, cutoffDate, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange, restrictedView, position, surcharge, range, fiveADayValue }) => (
   <div>
     <div className={css.container}>
       <div className={css.header}>
@@ -41,19 +41,22 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
             </div>
             <p className={css.infoBoxText}>{description}</p>
             <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
+            <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' showAttribute={fiveADayValue > 1} />
             <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} />
             <Availability availability={availability} date={cutoffDate} />
             <RecipeAttribute attributeName='cuisine' attributeValue={cuisine} />
-            {diet && ['vegetarian', 'vegan'].includes(diet.toLowerCase()) ? <RecipeAttribute attributeName='diet' attributeValue={diet} /> : null}
-            {!restrictedView && <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} />}
+            <RecipeAttribute attributeName='diet' attributeValue={diet} showAttribute={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
+            <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} showAttribute={!restrictedView}/>
             {equipment && equipment.size ? (
               <p className={css.additionalInfo}>
                 Equipment required: {equipment.toJS().join(', ')}
               </p>
             ) : null}
-            <p className={css.additionalInfo}>
+            {youWillNeed && youWillNeed.size ? (
+              <p className={css.additionalInfo}>
               What you'll need: {youWillNeed.map((item, idx) => <span key={idx}>{item}{(youWillNeed.size - 1) !== idx ? ', ' : null}</span>)}
-            </p>
+              </p>
+            ) : null }
             <span className={css.mobileHide}>
               <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
             </span>
@@ -102,6 +105,7 @@ DefaultDetail.propTypes = {
 
 DefaultDetail.defaultProps = {
   scrolledPastPoint: false,
+  fiveADayValue: 0
 }
 
 export default DefaultDetail

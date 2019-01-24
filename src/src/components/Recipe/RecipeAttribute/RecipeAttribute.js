@@ -6,9 +6,8 @@ import { getDescription } from './config'
 
 const blankSpace = String.fromCharCode(160)
 
-const RecipeAttribute = ({ svgFileName, attributeName, attributeValue, view }) => {
-
-  return (
+const RecipeAttribute = ({ svgFileName, attributeName, attributeValue, showAttribute, view }) => {
+  showAttribute !== false && (
     <div className={css.attribute}>
         { svgFileName ?
           <Svg
@@ -23,13 +22,13 @@ const RecipeAttribute = ({ svgFileName, attributeName, attributeValue, view }) =
         </span>
     </div>
   )
-
 }
 
 RecipeAttribute.propTypes = {
   svgFileName: PropTypes.string.isRequired,
   attributeName: PropTypes.string.isRequired,
   attributeValue: PropTypes.string.isRequired,
+  showAttribute: PropTypes.bool,
   view: PropTypes.string,
 }
 

@@ -62,7 +62,7 @@ const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, 
           <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
           <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} />
           <RecipeAttribute attributeName='equipmentRequired' attributeValue={equipment} view='notice' />
-          <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' />
+          <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' showAttribute={fiveADayValue > 1} />
         </div>
         <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
         <DisabledOverlay stock={stock} inBasket={inBasket} />
@@ -104,6 +104,7 @@ GridRecipe.defaultProps = {
   chef: Immutable.Map({}),
   averageRating: 0,
   ratingCount: 0,
+  fiveADayValue: 0,
 }
 
 export default GridRecipe

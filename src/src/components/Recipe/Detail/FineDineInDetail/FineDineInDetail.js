@@ -45,8 +45,8 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} />
             <Availability availability={availability} date={cutoffDate} />
             <RecipeAttribute attributeName='cuisine' attributeValue={cuisine} />
-            {diet && ['vegetarian', 'vegan'].includes(diet.toLowerCase()) ? <RecipeAttribute attributeName='diet' attributeValue={diet} /> : null}
-            {!restrictedView && <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} />}
+            <RecipeAttribute attributeName='diet' attributeValue={diet} showAttribute={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
+            <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} showAttribute={!restrictedView} />
           <hr className={css.rule} />
           {ingredients.size > 0 ? <Ingredients ingredients={ingredients} restrictedView={restrictedView} border={false} inset={false} /> : null}
           <hr className={css.rule} />
