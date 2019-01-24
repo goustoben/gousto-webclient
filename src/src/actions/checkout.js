@@ -221,14 +221,13 @@ export const trackPurchase = () => (
     const shippingPrice = prices.get('deliveryTotal')
 
     if (typeof ga !== 'undefined') {
-      ga('require', 'ec')
-      ga('ec:setAction', 'purchase', {
+      ga('gtm234.ec:setAction', 'purchase', {
         id: orderId,
         revenue: totalPrice,
         shipping: shippingPrice,
         coupon: promoCode
       })
-      ga('send', 'pageview')
+      ga('gtm234.send', 'pageview')
     }
   }
 )
