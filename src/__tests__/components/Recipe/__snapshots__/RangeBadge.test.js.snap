@@ -10,7 +10,7 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
     10-MINUTE MEAL
   </div>
   <div
-    className="ribbonContainer ribbon"
+    className="ribbon"
   >
     <div
       className="arrowWhite"
