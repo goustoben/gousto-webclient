@@ -18,6 +18,12 @@ export default {
         backgroundColor: 'Carrot',
         borderColor: 'Carrot',
       },
+      everyday_favourites: {
+        text: 'Everyday Favorites',
+        color: 'White',
+        backgroundColor: 'Pomegranate',
+        borderColor: 'Pomegranate',
+      },
     },
   },
   dietTypes: {

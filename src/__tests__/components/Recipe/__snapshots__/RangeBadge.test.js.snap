@@ -1,18 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[
-	`<RangeBadge /> snapshots should render when given a preconfigured range 1`
-] = `
-<span
-  className="badge"
-  style={
-    Object {
-      "backgroundColor": "Carrot",
-      "borderColor": "Carrot",
-      "color": "White",
-    }
-  }
+exports[`<RangeBadge /> snapshots should render when given a preconfigured range 1`] = `
+<div
+  className="rangeBadge"
 >
-  10-Minute Meal
-</span>
-`
+  <div
+    className="ribbonText ribbonTextCarrot"
+  >
+    10-MINUTE MEAL
+  </div>
+  <div
+    className="ribbon"
+  >
+    <div
+      className="arrowWhite"
+    />
+    <div
+      className="arrowTopCarrot"
+    />
+    <div
+      className="arrowBottomCarrot"
+    />
+  </div>
+</div>
+`;
