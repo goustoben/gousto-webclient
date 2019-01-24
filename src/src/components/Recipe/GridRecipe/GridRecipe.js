@@ -19,7 +19,7 @@ import RecommendedBadge from '../RecommendedBadge'
 import { RecipeAttribute } from '../RecipeAttribute'
 
 const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, surcharge, id, range, fiveADayValue}) => (
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, surcharge, id, fiveADayValue}) => (
   <div>
     <div className={css.recipeDetails}>
       <span onClick={onClick} className={css.link}>
@@ -36,7 +36,7 @@ const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, 
       </div>
       <div className={css.rangeBadgeWrapper}>
 				<RangeBadge range={range} />
-			</div>
+      </div>
       <div className={css.textContainer}>
         <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(chef) })}>
           <Title
@@ -48,7 +48,6 @@ const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, 
           />
         </div>
         <div>
-          <RangeBadge range={range} />
           <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
           <StockBadge stock={stock} />
           <div>
