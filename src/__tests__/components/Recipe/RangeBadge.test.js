@@ -27,13 +27,21 @@ describe('<RangeBadge />', () => {
   })
 
   describe('render', () => {
-    test('should render badge for Ten to table', () => {
+    test('should render range badge for Ten to table', () => {
       const wrapper = shallow(<RangeBadge range={'ten_to_table'}/>)
       expect(wrapper.find('.rangeBadge').length).toEqual(1)
     })
-    test('should render badge for Everydays favorites', () => {
+    test('should render range badge for Everydays favorites', () => {
       const wrapper = shallow(<RangeBadge range={'everyday_favourites'}/>)
       expect(wrapper.find('.rangeBadge').length).toEqual(1)
+    })
+    test('should render range badge with text Everyday Favorites', () => {
+      const wrapper = shallow(<RangeBadge range={'everyday_favourites'}/>)
+      expect(wrapper.find('.ribbonText').prop('children')).toEqual('EVERYDAY FAVORITES')
+    })
+    test('should render range badge with text 10-MINUTES MEAL', () => {
+      const wrapper = shallow(<RangeBadge range={'ten_to_table'}/>)
+      expect(wrapper.find('.ribbonText').prop('children')).toEqual('10-MINUTE MEAL')
     })
   })
 })
