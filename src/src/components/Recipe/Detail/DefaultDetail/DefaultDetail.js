@@ -40,13 +40,15 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
               <RangeBadge range={range} />
             </div>
             <p className={css.infoBoxText}>{description}</p>
-            <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
-            <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' showAttribute={fiveADayValue > 1} />
-            <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} />
-            <Availability availability={availability} date={cutoffDate} />
-            <RecipeAttribute attributeName='cuisine' attributeValue={cuisine} />
-            <RecipeAttribute attributeName='diet' attributeValue={diet} showAttribute={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
-            <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} showAttribute={!restrictedView}/>
+            <div className={css.attributes}>
+              <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
+              <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} svgFileName='icon-use-within' />
+              <Availability availability={availability} date={cutoffDate} />
+              <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' showAttribute={fiveADayValue > 1} />
+              <RecipeAttribute attributeName='diet' attributeValue={diet} svgFileName='icon-diet' showAttribute={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
+              <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} svgFileName='icon-calories' showAttribute={!restrictedView}/>
+              <RecipeAttribute attributeName='cuisine' attributeValue={cuisine} svgFileName='icon-cuisine' />
+            </div>
             {equipment && equipment.size ? (
               <p className={css.additionalInfo}>
                 Equipment required: {equipment.toJS().join(', ')}

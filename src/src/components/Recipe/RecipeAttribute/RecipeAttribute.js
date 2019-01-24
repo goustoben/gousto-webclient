@@ -9,16 +9,12 @@ const blankSpace = String.fromCharCode(160)
 const RecipeAttribute = ({ svgFileName, attributeName, attributeValue, showAttribute, view }) => (
   showAttribute !== false && (
     <div className={css.attribute}>
-        { svgFileName ?
-          <Svg
-            fileName={svgFileName}
-            className={css.icon}
-          />
-          :
-          <div className={css[`${attributeName}-icon`]}/>
-        }
+        <Svg
+          fileName={svgFileName}
+          className={css.icon}
+        />
         <span className={css.description}>
-          {blankSpace}{getDescription(attributeName, attributeValue, view)}
+          {blankSpace}{blankSpace}{getDescription(attributeName, attributeValue, view)}
         </span>
     </div>
   )

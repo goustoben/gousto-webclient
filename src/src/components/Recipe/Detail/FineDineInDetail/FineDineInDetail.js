@@ -42,11 +42,11 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
           </div>
           <p className={css.text}>{description}</p>
             <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
-            <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} />
+            <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} svgFileName='icon-use-within' />
             <Availability availability={availability} date={cutoffDate} />
-            <RecipeAttribute attributeName='cuisine' attributeValue={cuisine} />
-            <RecipeAttribute attributeName='diet' attributeValue={diet} showAttribute={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
-            <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} showAttribute={!restrictedView} />
+            <RecipeAttribute attributeName='diet' attributeValue={diet} svgFileName='icon-diet' showAttribute={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
+            <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} svgFileName='icon-calories' showAttribute={!restrictedView} />
+            <RecipeAttribute attributeName='cuisine' attributeValue={cuisine} svgFileName='icon-cuisine' />
           <hr className={css.rule} />
           {ingredients.size > 0 ? <Ingredients ingredients={ingredients} restrictedView={restrictedView} border={false} inset={false} /> : null}
           <hr className={css.rule} />

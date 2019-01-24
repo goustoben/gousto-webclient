@@ -8,26 +8,6 @@
 	composes: paragraphXS from 'styles/typography.css';
 }
 
-.useWithin-icon {
-	composes: fa-basic-class fa-calendar fa-fw from 'styles/vendor/font-awesome-module.css';
-}
-
-.equipmentRequired-icon {
-	composes: fa-basic-class fa-spoon fa-fw from 'styles/vendor/font-awesome-module.css';
-}
-
-.cuisine-icon {
-	composes: fa-basic-class  fa-map-marker fa-fw from 'styles/vendor/font-awesome-module.css';
-}
-
-.cals-icon {
-	composes: fa-basic-class fa-bar-chart fa-fw from 'styles/vendor/font-awesome-module.css';
-}
-
-.diet-icon {
-	composes: fa-basic-class fa-leaf fa-fw from 'styles/vendor/font-awesome-module.css';
-}
-
 .attribute {
 	min-height: calc(sizeMD * attributesLineHeight);
 	min-width: 50%;

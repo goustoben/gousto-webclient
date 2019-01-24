@@ -1,5 +1,5 @@
-@value ScreenXXSMax, ScreenXSMax, ScreenSMMin, ScreenXXSMin, ScreenSMMax, ScreenMDMax, ScreenLGMin from 'styles/screenSizes.css';
-@value White from 'styles/colors.css';
+@value ScreenXXSMax, ScreenXSMax, ScreenSMMin, ScreenXXSMin, ScreenSMMax, ScreenMDMin, ScreenMDMax, ScreenLGMin from 'styles/screenSizes.css';
+@value White, Basa from 'styles/colors.css';
 @value SpacingLG, SpacingMD, SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
 
 .headerContentContainer {
@@ -19,6 +19,21 @@
 	composes: row from 'sass-loader!styles/bootstrap.scss';
 	width: 100%;
 	margin: 0;
+}
+
+.attributes {
+	line-height: attributesLineHeight;
+	font-size: sizeMD;
+	border-top: 1px solid Basa;
+    border-bottom: 1px solid Basa;
+    padding: 10px 0;
+	margin-top: 5px;
+
+	@media ScreenMDMin {
+		display: flex;
+    	flex-wrap: wrap;
+		justify-content: space-between;
+	}
 }
 
 .closeIcon {
