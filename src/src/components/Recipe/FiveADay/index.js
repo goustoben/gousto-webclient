@@ -1,1 +1,0 @@
-export { FiveADay } from './FiveADay'

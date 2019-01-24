@@ -1,0 +1,22 @@
+.icon {
+    width: 21px;
+    height: 21px;
+    vertical-align: text-bottom;
+}
+
+.description {
+	composes: paragraphXS from 'styles/typography.css';
+}
+
+.useWithin-icon {
+	composes: fa-basic-class fa-calendar fa-fw from 'styles/vendor/font-awesome-module.css';
+}
+
+.equipmentRequired-icon {
+	composes: fa-basic-class fa-spoon fa-fw from 'styles/vendor/font-awesome-module.css';
+}
+
+.attribute {
+	min-height: calc(sizeMD * attributesLineHeight);
+	width: 50%;
+}

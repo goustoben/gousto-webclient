@@ -11,15 +11,12 @@ import Chef from '../Chef'
 import Title from '../Title'
 import Image from '../Image'
 import Rating from '../Rating'
-import UseWithin from '../UseWithin'
 import AddButton from '../AddButton'
 import StockBadge from '../StockBadge'
 import TasteScore from '../TasteScore'
-import CookingTime from '../CookingTime'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
-import EquipmentRequired from '../EquipmentRequired'
-import { FiveADay } from '../FiveADay'
+import { RecipeAttribute } from '../RecipeAttribute'
 
 const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
   features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, surcharge, id, range, fiveADayValue}) => (
@@ -62,27 +59,10 @@ const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, 
           </div>
         </div>
         <div className={css.attributes}>
-          <div className={css.attributeMinHeight}>
-            <CookingTime
-              time={cookingTime}
-            />
-          </div>
-          <div className={css.attributeMinHeight}>
-            <UseWithin
-              useWithin={useWithin}
-            />
-          </div>
-          <div className={css.attributeMinHeight}>
-            <EquipmentRequired
-              equipment={equipment}
-              view="notice"
-            />
-          </div>
-          <div className={css.attributeMinHeight}>
-            <FiveADay
-              fiveADayValue={fiveADayValue}
-            />
-          </div>
+          <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
+          <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} />
+          <RecipeAttribute attributeName='equipmentRequired' attributeValue={equipment} view='notice' />
+          <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' />
         </div>
         <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
         <DisabledOverlay stock={stock} inBasket={inBasket} />
