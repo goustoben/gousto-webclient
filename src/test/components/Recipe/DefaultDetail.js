@@ -3,7 +3,6 @@ import React from 'react'
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 import { shallow } from 'enzyme'
 
 import Image from 'Recipe/Image'
@@ -12,15 +11,12 @@ import Rating from 'Recipe/Rating'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import IngredientsList from 'Recipe/Detail/IngredientsList'
 import Allergens from 'Recipe/Detail/Allergens'
-import Immutable from 'immutable' /* eslint-disable new-cap */
-import CookingTime from 'Recipe/CookingTime'
-import UseWithin from 'Recipe/UseWithin'
+import Immutable from 'immutable'
+import { RecipeAttribute } from 'Recipe/RecipeAttribute'
 import Availability from 'Recipe/Availability'
-import Cuisine from 'Recipe/Cuisine'
-import Diet from 'Recipe/Diet'
-import Cals from 'Recipe/Cals'
 
 import DefaultDetail from 'Recipe/Detail/DefaultDetail'
+chai.use(sinonChai)
 
 describe('<DefaultDetail />', function() {
   let wrapper
@@ -82,28 +78,28 @@ describe('<DefaultDetail />', function() {
     expect(wrapper.find(Allergens).length).to.equal(1)
   })
 
-  it('should return a <CookingTime>', function() {
-    expect(wrapper.find(CookingTime).length).to.equal(1)
+  it('should contain one "cooking time" recipe attribute component', () => {
+    expect(wrapper.find(RecipeAttribute).find({attributeName:'cookingTime'}).length).to.equal(1)
   })
 
-  it('should return a <UseWithin>', function() {
-    expect(wrapper.find(UseWithin).length).to.equal(1)
+  it('should contain one "use within" recipe attribute component', () => {
+    expect(wrapper.find(RecipeAttribute).find({attributeName:'useWithin'}).length).to.equal(1)
   })
 
   it('should return a <Availability>', function() {
     expect(wrapper.find(Availability).length).to.equal(1)
   })
 
-  it('should return a <Cuisine>', function() {
-    expect(wrapper.find(Cuisine).length).to.equal(1)
+  it('should contain one "cuisine" recipe attribute component', () => {
+    expect(wrapper.find(RecipeAttribute).find({attributeName:'cuisine'}).length).to.equal(1)
   })
 
-  it('should return a <Diet>', function() {
-    expect(wrapper.find(Diet).length).to.equal(1)
+  it('should contain one "diet" recipe attribute component', () => {
+    expect(wrapper.find(RecipeAttribute).find({attributeName:'diet'}).length).to.equal(1)
   })
 
-  it('should return a <Cals>', function() {
-    expect(wrapper.find(Cals).length).to.equal(1)
+  it('should contain one "cals" recipe attribute component', () => {
+    expect(wrapper.find(RecipeAttribute).find({attributeName:'cals'}).length).to.equal(1)
   })
 
   it('should return 1 p with equipment required label and equipment list if equipment is required', function() {
@@ -141,17 +137,17 @@ describe('<DefaultDetail />', function() {
 
     it('should not return a <Diet> if the diet prop is not vegetarian or vegan', function() {
       wrapper = shallow(<DefaultDetail {...detailProps} diet="meat" />)
-      expect(wrapper.find(Diet).length).to.equal(0)
+      expect(wrapper.find(RecipeAttribute).find({attributeName:'diet'}).length).to.equal(0)
     })
 
     it('should return a <Diet> if the diet prop is vegetarian', function() {
       wrapper = shallow(<DefaultDetail {...detailProps} diet="vegetarian" />)
-      expect(wrapper.find(Diet).length).to.equal(1)
+      expect(wrapper.find(RecipeAttribute).find({attributeName:'diet'}).length).to.equal(1)
     })
 
     it('should return a <Diet> if the diet prop is vegan', function() {
       wrapper = shallow(<DefaultDetail {...detailProps} diet="vegan" />)
-      expect(wrapper.find(Diet).length).to.equal(1)
+      expect(wrapper.find(RecipeAttribute).find({attributeName:'diet'}).length).to.equal(1)
     })
   })
 })
