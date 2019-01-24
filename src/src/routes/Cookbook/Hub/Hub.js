@@ -23,7 +23,7 @@ import Info from 'Recipe/Info'
 import Rating from 'Recipe/Rating'
 import Tag from 'Recipe/Tag'
 import Title from 'Recipe/Title'
-import CookingTime from 'Recipe/CookingTime'
+import { RecipeAttribute } from 'Recipe/RecipeAttribute'
 
 import css from './Hub.css'
 
@@ -211,11 +211,9 @@ class Hub extends React.PureComponent {
 								  average={rating.average}
 								  count={rating.count}
 								/>
-								<CookingTime
-								  time={cookingTime}
-								/>
+								<RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
 							</span>
-						</div>}
+       </div>}
 					</Info>
 				</Link>
 			</div>

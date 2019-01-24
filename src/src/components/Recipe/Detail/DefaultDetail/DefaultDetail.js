@@ -1,16 +1,13 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
 import Image from 'Recipe/Image'
 import Title from 'Recipe/Title'
-import Diet from 'Recipe/Diet'
-import Cals from 'Recipe/Cals'
 import Rating from 'Recipe/Rating'
-import Cuisine from 'Recipe/Cuisine'
-import UseWithin from 'Recipe/UseWithin'
 import AddButton from 'Recipe/AddButton'
 import RangeBadge from 'Recipe/RangeBadge'
-import CookingTime from 'Recipe/CookingTime'
+import { RecipeAttribute } from 'Recipe/RecipeAttribute'
 import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import Availability from 'Recipe/Availability'
@@ -43,12 +40,12 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
               <RangeBadge range={range} />
             </div>
             <p className={css.infoBoxText}>{description}</p>
-            <CookingTime time={cookingTime} />
-            <UseWithin useWithin={useWithin} />
+            <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
+            <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} />
             <Availability availability={availability} date={cutoffDate} />
-            <Cuisine cuisine={cuisine} />
-            {diet && ['vegetarian', 'vegan'].includes(diet.toLowerCase()) ? <Diet diet={diet} /> : null}
-            {!restrictedView && <Cals cals={perPortion.get('energyKcal')} restrictedView={restrictedView} />}
+            <RecipeAttribute attributeName='cuisine' attributeValue={cuisine} />
+            {diet && ['vegetarian', 'vegan'].includes(diet.toLowerCase()) ? <RecipeAttribute attributeName='diet' attributeValue={diet} /> : null}
+            {!restrictedView && <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} />}
             {equipment && equipment.size ? (
               <p className={css.additionalInfo}>
                 Equipment required: {equipment.toJS().join(', ')}

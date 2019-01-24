@@ -15,7 +15,7 @@ import Info from 'Recipe/Info'
 import Rating from 'Recipe/Rating'
 import Tag from 'Recipe/Tag'
 import Title from 'Recipe/Title'
-import CookingTime from 'Recipe/CookingTime'
+import { RecipeAttribute } from 'Recipe/RecipeAttribute'
 import { H1 } from 'Page/Header'
 
 describe('Hub', () => {
@@ -141,14 +141,14 @@ describe('Hub', () => {
       ).toHaveLength(1)
     })
 
-    test('should have a CookingTime child in first Col', () => {
+    test('should have a RecipeAttribute child in first Col', () => {
       expect(
         wrapper
           .children(PageContent)
           .children(Row)
           .children(Col)
           .first()
-          .find(CookingTime),
+          .find(RecipeAttribute),
       ).toHaveLength(1)
     })
 

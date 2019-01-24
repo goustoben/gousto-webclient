@@ -1,9 +1,0 @@
-.description {
-	composes: paragraphXS from 'styles/typography.css';
-}
-
-.icon {
-	width: 21px;
-    height: 21px;
-    vertical-align: text-bottom;
-}
