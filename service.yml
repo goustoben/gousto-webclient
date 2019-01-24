@@ -4,6 +4,7 @@ region: eu-west-1
 exposure: private
 dns: webclient
 owner: squad-radishes
+rootVolumeSize: 16
 
 messages:
  publish:
