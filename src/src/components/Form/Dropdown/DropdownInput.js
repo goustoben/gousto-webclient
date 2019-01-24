@@ -104,6 +104,9 @@ export class DropdownInput extends React.Component {
       clearable: false,
       searchable: false,
       placeholder: '',
+      onOpen: () => {
+        setTimeout(() => document.getElementsByClassName('Select-option')[0].parentNode.scrollTop = 0, 0)
+      }
     }
     const ourProps = [
       'options',
