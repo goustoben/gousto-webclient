@@ -37,6 +37,10 @@ const defaultFeatures = () => ({
   queueIt: {
     experiment: false,
     value: false,
+  },
+  nextDayDeliveryPaintedDoor: {
+    experiment: true,
+    value: false
   }
 })
 

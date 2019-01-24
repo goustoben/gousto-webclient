@@ -2,6 +2,9 @@ import React, { PropTypes } from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 
+import RangeBadge from 'Recipe/RangeBadge'
+import { getChef } from 'utils/recipe'
+import { recipePropTypes } from 'Recipe'
 import css from './GridRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
@@ -12,12 +15,9 @@ import AddButton from '../AddButton'
 import StockBadge from '../StockBadge'
 import TasteScore from '../TasteScore'
 import CookingTime from '../CookingTime'
-import RangeBadge from 'Recipe/RangeBadge'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import EquipmentRequired from '../EquipmentRequired'
-import { getChef } from 'utils/recipe'
-import { recipePropTypes } from 'Recipe'
 
 const GridRecipe = (props) => (
 	<div>
@@ -34,6 +34,9 @@ const GridRecipe = (props) => (
 			<div>
 				<Chef chef={props.chef} />
 			</div>
+			<div className={css.rangeBadgeWrapper}>
+				<RangeBadge range={props.range} />
+			</div>
 			<div className={css.textContainer}>
 				<div onClick={props.onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(props.chef) })}>
 					<Title
@@ -45,7 +48,6 @@ const GridRecipe = (props) => (
 					/>
 				</div>
 				<div>
-					<RangeBadge range={props.range} />
 					<RecommendedBadge isRecommendedRecipe={props.isRecommendedRecipe} features={props.features} />
 					<StockBadge stock={props.stock} />
 				</div>
