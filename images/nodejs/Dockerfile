@@ -11,7 +11,7 @@ RUN apt-get update && apt-get --yes --force-yes install git python make g++ \
 RUN mkdir /.pm2 \ 
     && chmod -R 777 /.pm2 \
     && mkdir /var/log/pm2 \
-    && chmod -R 777 /var/log/pm2
+    && chmod -R 777 /var/log/pm2 
 #Fix to run pm2 as normal user
 
 ###END OF PLATFORM IMAGE###
