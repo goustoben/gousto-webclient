@@ -10,7 +10,8 @@ RUN apt-get update && apt-get --yes --force-yes install git python make g++ \
 
 RUN mkdir /.pm2 \ 
     && chmod -R 777 /.pm2 \
-    && ls -la /
+    && mkdir /var/log/pm2 \
+    && chmod -R 777 /var/log/pm2
 #Fix to run pm2 as normal user
 
 ###END OF PLATFORM IMAGE###
@@ -28,5 +29,5 @@ RUN sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./pa
 
 EXPOSE 8080
 
-ENTRYPOINT [ "/tmp/nodejs-entrypoint.sh" ]
+CMD [ "/tmp/nodejs-entrypoint.sh" ]
 # the --no-daemon is a minor workaround to prevent the docker container from thinking pm2 has stopped running and ending itself
