@@ -13,7 +13,7 @@ const RangeBadge = ({ range }) => {
   return (rangeBadge) ? (
     <div className={css.rangeBadge}>
       <div className={classnames(css.ribbonText, css[textClass])}>{rangeBadge.text.toUpperCase()}</div>
-      <div className={classnames(css.ribbonContainer, css.ribbon)}>
+      <div className={css.ribbon}>
         <div className={css.arrowWhite}></div>
         <div className={css[arrowTop]}></div>
         <div className={css[arrowBottom]}></div>

@@ -24,12 +24,6 @@ export default {
         backgroundColor: 'Pomegranate',
         borderColor: 'Pomegranate',
       },
-      // joe_wicks: {
-      //   text: 'Joe Wicks',
-      //   color: 'White',
-      //   backgroundColor: 'JoeWicks',
-      //   borderColor: 'JoeWicks',
-      // },
     },
   },
   dietTypes: {
