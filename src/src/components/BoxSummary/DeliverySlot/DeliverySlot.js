@@ -137,7 +137,7 @@ class DeliverySlot extends React.Component {
 	)
 
 	render = () => {
-	  const { displayOptions } = this.props
+	  const { displayOptions, numPortions } = this.props
 	  const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
 	  let deliveryLocationText = this.props.address ? `Address: ${this.props.address.get('name')}` : `${this.props.postcode}`
 	  let slotId = this.props.tempSlotId
@@ -246,7 +246,7 @@ class DeliverySlot extends React.Component {
 				</div>
 				<Button
 				  width="full"
-				  onClick={this.props.boxSummaryNext}
+				  onClick={() => this.props.boxSummaryNext(numPortions)}
 				  pending={this.props.menuPending || this.props.menuFetchDataPending}
 				  disabled={!this.props.tempOrderId && !chosen}
 				>

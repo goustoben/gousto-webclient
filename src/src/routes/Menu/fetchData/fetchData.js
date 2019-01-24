@@ -116,6 +116,7 @@ export default async function fetchData({ store, query, params }, force, backgro
         store.dispatch(actions.basketReset())
         store.dispatch(actions.basketChosenAddressChange(store.getState().user.get('shippingAddresses').first()))
       }
+
       let fetchPromise = new Promise(resolve => { resolve() })
       let browseMode = true
       if (store.getState().request.get('browser', '') === 'mobile' && store.getState().features.getIn(['browse', 'value']) !== true) {

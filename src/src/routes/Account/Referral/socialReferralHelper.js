@@ -12,7 +12,7 @@ export const getMessage = (offer) => {
 export const getReferralLink = (referralCode, userFirstName = '', UTM = '') => {
   const userNameString = userFirstName ? `&name=${userFirstName}` : ''
 
-  return `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${UTM}`
+  return `cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${UTM}`
 }
 
 export const getFacebookReferralLink = (referralCode, userFirstName, trackingReferFriendSocialSharing) => {
@@ -59,7 +59,7 @@ export const getWhatsappReferralLink = (referralCode, userFirstName, rafOffer, t
 }
 
 export const getTextMessageReferralLink = (referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) => {
-  trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Whatsapp')
+  trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Text Message')
 
   const textMessageUTM = '&utm_source=text_message&utm_medium=sharebutton_raf_page&utm_campaign=raf_text_message_share'
   const referralLink = getReferralLink(referralCode, userFirstName, textMessageUTM)

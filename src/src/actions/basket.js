@@ -62,15 +62,11 @@ export default {
     }
   ),
 
-  basketNumPortionChange: numPortions => (
+  basketNumPortionChange: (numPortions) => (
     (dispatch, getState) => {
       dispatch({
         type: actionTypes.BASKET_NUM_PORTION_CHANGE,
         numPortions,
-        trackingData: {
-          actionType: actionTypes.BASKET_NUM_PORTION_CHANGE,
-          numPortions,
-        },
       })
 
       const state = getState()
@@ -80,8 +76,21 @@ export default {
         limitReached: reachedLimit,
         trackingData: {
           actionType: actionTypes.BASKET_LIMIT_REACHED,
-          source: actionTypes.BASKET_NUM_PORTION_CHANGE,
+          source: 'PortionSize Selected',
           limitReached: reachedLimit,
+        },
+      })
+    }
+  ),
+  
+  portionSizeSelectedTracking: (num_portion, order_id) => (
+    (dispatch) => {
+      dispatch({
+        type: actionTypes.PORTION_SIZE_SELECTED_TRACKING,
+        trackingData: {
+          actionType: 'PortionSize Selected',
+          num_portion,
+          order_id: order_id ? order_id : null,
         },
       })
     }

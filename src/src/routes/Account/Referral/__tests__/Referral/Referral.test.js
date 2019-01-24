@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 
 describe('Referral', () => {
   describe('rendering', () => {
-    describe('render all secrtions', () => {
+    describe('render all sections', () => {
       let wrapper
       const rafOffer = Immutable.fromJS({
         title: 'Invite your friends to try out Gousto!',
@@ -68,6 +68,22 @@ describe('Referral', () => {
               ]
             })
           )
+        })
+      })
+
+      describe('DoubleCreditCountdown', () => {
+        test('should not render DoubleCreditCountdown if expiry date is empty string', () => {
+          expect(wrapper.find('DoubleCreditCountdown').length).toEqual(0)
+        })
+
+        test('should render DoubleCreditCountdown if expiry date is present', () => {
+          const expiryPresent = Immutable.fromJS({
+            expiry: '2019-01-21T12:17:00Z'
+          })
+
+          wrapper = shallow(<Referral referralCode='RAF-TEST-1234' rafOffer={expiryPresent} isLoading={false} />)
+          
+          expect(wrapper.find('DoubleCreditCountdown').length).toEqual(1)
         })
       })
   

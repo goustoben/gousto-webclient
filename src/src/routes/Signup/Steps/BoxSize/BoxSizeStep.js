@@ -6,14 +6,14 @@ import signupCss from '../../Signup.css'
 
 import Image from '../../Image'
 
-const BoxSizeStep = ({ numPortionChange, next }) => {
+const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next }) => {
   const portions = [2, 4]
 
   const renderButtons = () => (portions.map((value, index) => (<div className={index % 2 === 0 ? css.left : css.right} key={`${value}_portions_${index}`}>
 		<Button
 		  data-testing={`signupBoxSize${value}Portions`}
 		  fill={false}
-		  onClick={() => { numPortionChange(value); next() }}
+		  onClick={() => { numPortionChange(value); numPortionChangeTracking(value); next() }}
 		  width="full"
 		>
 			{`${value} People`}
@@ -42,6 +42,7 @@ const BoxSizeStep = ({ numPortionChange, next }) => {
 
 BoxSizeStep.propTypes = {
   numPortionChange: React.PropTypes.func.isRequired,
+  numPortionChangeTracking: React.PropTypes.func.isRequired,
   next: React.PropTypes.func.isRequired,
 }
 

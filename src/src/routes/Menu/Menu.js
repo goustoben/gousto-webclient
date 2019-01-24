@@ -7,6 +7,7 @@ import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
 
+import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import MenuNoResults from './MenuNoResults'
 
 import SubHeader from './SubHeader'
@@ -19,7 +20,6 @@ import DetailOverlay from './DetailOverlay'
 import CollectionsNav from './CollectionsNav'
 import FilterMenu from './FilterMenu'
 
-import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import RecipeList from './RecipeList'
 import { Banner } from './Banner'
@@ -102,6 +102,7 @@ class Menu extends React.Component {
 	  if (props.hasRecommendations) {
 	    props.triggerMenuLoad()
 	  }
+
 	  Menu.fetchData({ store, query, params }, forceDataLoad)
 
 	  if (props.boxSummaryDeliveryDays.size === 0 && !props.disabled) {
@@ -112,6 +113,10 @@ class Menu extends React.Component {
 
 	  if (!props.disabled && !props.menuLoadingBoxPrices) {
 	    props.menuLoadBoxPrices()
+	  }
+		
+	  if (props.params.orderId) {
+	    store.dispatch(props.portionSizeSelectedTracking(props.numPortions, props.params.orderId))
 	  }
 	}
 
