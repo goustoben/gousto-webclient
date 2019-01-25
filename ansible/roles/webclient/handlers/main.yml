@@ -1,0 +1,2 @@
+- name: start logrotate
+  shell: /usr/sbin/logrotate /etc/logrotate.d/pm2_{{ service_name }}
