@@ -25,13 +25,13 @@
 	line-height: attributesLineHeight;
 	font-size: sizeMD;
 	border-top: 1px solid Basa;
-    border-bottom: 1px solid Basa;
-    padding: 10px 0;
+	border-bottom: 1px solid Basa;
+	padding: 10px 0;
 	margin-top: 5px;
 
 	@media ScreenMDMin {
 		display: flex;
-    	flex-wrap: wrap;
+		flex-wrap: wrap;
 		justify-content: space-between;
 	}
 }
