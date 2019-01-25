@@ -79,11 +79,11 @@ describe('<DefaultDetail />', function() {
   })
 
   it('should contain one "cooking time" recipe attribute component', () => {
-    expect(wrapper.find(RecipeAttribute).find({attributeName:'cookingTime'}).length).to.equal(1)
+    expect(wrapper.find(RecipeAttribute).find({name:'cookingTime'}).length).to.equal(1)
   })
 
   it('should contain one "use within" recipe attribute component', () => {
-    expect(wrapper.find(RecipeAttribute).find({attributeName:'useWithin'}).length).to.equal(1)
+    expect(wrapper.find(RecipeAttribute).find({name:'useWithin'}).length).to.equal(1)
   })
 
   it('should return a <Availability>', function() {
@@ -91,15 +91,15 @@ describe('<DefaultDetail />', function() {
   })
 
   it('should contain one "cuisine" recipe attribute component', () => {
-    expect(wrapper.find(RecipeAttribute).find({attributeName:'cuisine'}).length).to.equal(1)
+    expect(wrapper.find(RecipeAttribute).find({name:'cuisine'}).length).to.equal(1)
   })
 
   it('should contain one "diet" recipe attribute component', () => {
-    expect(wrapper.find(RecipeAttribute).find({attributeName:'diet'}).length).to.equal(1)
+    expect(wrapper.find(RecipeAttribute).find({name:'diet'}).length).to.equal(1)
   })
 
   it('should contain one "cals" recipe attribute component', () => {
-    expect(wrapper.find(RecipeAttribute).find({attributeName:'cals'}).length).to.equal(1)
+    expect(wrapper.find(RecipeAttribute).find({name:'cals'}).length).to.equal(1)
   })
 
   it('should return 1 p with equipment required label and equipment list if equipment is required', function() {
@@ -137,17 +137,17 @@ describe('<DefaultDetail />', function() {
 
     it('should not return a <Diet> if the diet prop is not vegetarian or vegan', function() {
       wrapper = shallow(<DefaultDetail {...detailProps} diet="meat" />)
-      expect(wrapper.find(RecipeAttribute).find({attributeName:'diet'}).length).to.equal(0)
+      expect(wrapper.find(RecipeAttribute).find({name:'diet'}).length).to.equal(0)
     })
 
     it('should return a <Diet> if the diet prop is vegetarian', function() {
       wrapper = shallow(<DefaultDetail {...detailProps} diet="vegetarian" />)
-      expect(wrapper.find(RecipeAttribute).find({attributeName:'diet'}).length).to.equal(1)
+      expect(wrapper.find(RecipeAttribute).find({name:'diet'}).length).to.equal(1)
     })
 
     it('should return a <Diet> if the diet prop is vegan', function() {
       wrapper = shallow(<DefaultDetail {...detailProps} diet="vegan" />)
-      expect(wrapper.find(RecipeAttribute).find({attributeName:'diet'}).length).to.equal(1)
+      expect(wrapper.find(RecipeAttribute).find({name:'diet'}).length).to.equal(1)
     })
   })
 })

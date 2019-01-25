@@ -4,27 +4,25 @@ import Svg from 'Svg'
 import css from './RecipeAttribute.css'
 import { getDescription } from './config'
 
-const blankSpace = String.fromCharCode(160)
-
-const RecipeAttribute = ({ svgFileName, attributeName, attributeValue, showAttribute, view }) => (
-  showAttribute !== false && (
+const RecipeAttribute = ({ icon, name, value, show, view }) => (
+  show !== false && (
     <div className={css.attribute}>
         <Svg
-          fileName={svgFileName}
+          fileName={icon}
           className={css.icon}
         />
         <span className={css.description}>
-          {blankSpace}{blankSpace}{getDescription(attributeName, attributeValue, view)}
+          &nbsp;&nbsp;{getDescription(name, value, view)}
         </span>
     </div>
   )
 )
 
 RecipeAttribute.propTypes = {
-  svgFileName: PropTypes.string.isRequired,
-  attributeName: PropTypes.string.isRequired,
-  attributeValue: PropTypes.string.isRequired,
-  showAttribute: PropTypes.bool,
+  icon: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  show: PropTypes.bool,
   view: PropTypes.string,
 }
 

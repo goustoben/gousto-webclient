@@ -41,13 +41,13 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
             </div>
             <p className={css.infoBoxText}>{description}</p>
             <div className={css.attributes}>
-              <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
-              <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} svgFileName='icon-use-within' />
+              <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
+              <RecipeAttribute name='useWithin' value={useWithin} icon='icon-use-within' />
               <Availability availability={availability} date={cutoffDate} />
-              <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' showAttribute={fiveADayValue > 1} />
-              <RecipeAttribute attributeName='diet' attributeValue={diet} svgFileName='icon-diet' showAttribute={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
-              <RecipeAttribute attributeName='cals' attributeValue={perPortion.get('energyKcal')} svgFileName='icon-calories' showAttribute={!restrictedView}/>
-              <RecipeAttribute attributeName='cuisine' attributeValue={cuisine} svgFileName='icon-cuisine' />
+              <RecipeAttribute name='fiveADay' value={fiveADayValue} icon='icon-five-a-day' show={fiveADayValue > 1} />
+              <RecipeAttribute name='diet' value={diet} icon='icon-diet' show={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
+              <RecipeAttribute name='cals' value={perPortion.get('energyKcal')} icon='icon-calories' show={!restrictedView}/>
+              <RecipeAttribute name='cuisine' value={cuisine} icon='icon-cuisine' />
             </div>
             {equipment && equipment.size ? (
               <p className={css.additionalInfo}>

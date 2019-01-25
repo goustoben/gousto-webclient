@@ -82,13 +82,13 @@ describe('<GridRecipe />', () => {
     test('should contain one "cooking time" recipe attribute component', () => {
       const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
 
-      expect(wrapper.find(RecipeAttribute).find({attributeName:'cookingTime'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name:'cookingTime'}).length).toEqual(1)
     })
 
     test('should contain one "use within" recipe attribute component', () => {
       const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
 
-      expect(wrapper.find(RecipeAttribute).find({attributeName:'useWithin'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name:'useWithin'}).length).toEqual(1)
     })
 
     test('should contain one RecommendedBadge component', () => {
@@ -117,7 +117,7 @@ describe('<GridRecipe />', () => {
 
     test('should contain one "use within" recipe attribute component with view "notice"', () => {
       const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
-      const component = wrapper.find(RecipeAttribute).find({attributeName:'equipmentRequired'})
+      const component = wrapper.find(RecipeAttribute).find({name:'equipmentRequired'})
 
       expect(component.length).toBe(1)
       expect(component.prop('view')).toBe('notice')

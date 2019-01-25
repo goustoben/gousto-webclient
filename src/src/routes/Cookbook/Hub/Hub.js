@@ -211,7 +211,7 @@ class Hub extends React.PureComponent {
 								  average={rating.average}
 								  count={rating.count}
 								/>
-								<RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
+								<RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
 							</span>
        </div>}
 					</Info>

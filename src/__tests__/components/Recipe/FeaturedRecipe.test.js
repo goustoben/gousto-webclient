@@ -44,7 +44,7 @@ describe('<FeaturedRecipe />', () => {
   })
 
   test('should contain one "use within" recipe attribute component with view "notice"', () => {
-    const component = wrapper.find(RecipeAttribute).find({attributeName:'equipmentRequired'})
+    const component = wrapper.find(RecipeAttribute).find({name:'equipmentRequired'})
 
     expect(component.length).toBe(1)
     expect(component.prop('view')).toBe('notice')

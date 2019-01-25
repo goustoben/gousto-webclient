@@ -51,10 +51,10 @@ const FeaturedRecipe = ({onClick, media, title, view, highlight, unhighlight, ta
             <ChefQuote chef={chef} quote={description} />
             <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
             <span className={css.attributes}>
-                <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
-                <RecipeAttribute attributeName='fiveADay' attributeValue={fiveADayValue} svgFileName='icon-five-a-day' showAttribute={fiveADayValue > 1}/>
-                <RecipeAttribute attributeName='useWithin' attributeValue={useWithin} svgFileName='icon-use-within' />
-                <RecipeAttribute attributeName='equipmentRequired' attributeValue={equipment} svgFileName='icon-equipment' view='notice' />
+                <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
+                <RecipeAttribute name='fiveADay' value={fiveADayValue} icon='icon-five-a-day' show={fiveADayValue > 1}/>
+                <RecipeAttribute name='useWithin' value={useWithin} icon='icon-use-within' />
+                <RecipeAttribute name='equipmentRequired' value={equipment} icon='icon-equipment' view='notice' />
             </span>
           </div>
           <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />

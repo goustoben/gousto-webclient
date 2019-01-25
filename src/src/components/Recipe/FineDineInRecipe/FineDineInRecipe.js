@@ -45,7 +45,7 @@ const FineDineInRecipe = ({media, onClick, highlight, unhighlight, tasteScore, t
             </div>
             <div className={css.alignBadges}>
               <div className={css.badgeItem}>
-                <RecipeAttribute attributeName='cookingTime' attributeValue={cookingTime} svgFileName='icon-time' />
+                <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
               </div>
               <div className={css.badgeItem}>
                 <RecommendedBadge

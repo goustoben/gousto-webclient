@@ -13,4 +13,4 @@ const descriptions = {
   diet: diet => (diet === 'vegan') ? 'plant-based' : diet,
 }
 
-export const getDescription = (attributeName, attributeValue, view) => (descriptions[attributeName](attributeValue, view) || '')
+export const getDescription = (name, value, view) => (descriptions[name](value, view) || '')
