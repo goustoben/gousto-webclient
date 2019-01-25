@@ -54,7 +54,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             <div className={css.oneColumnContainer}>
               {youWillNeed && youWillNeed.size ? (
                 <div className={css.text}>
-                  <p className={css.heading}>What you'll need:</p>
+                  <p className={css.heading}>What you&#8217;ll need:</p>
                   <p>{youWillNeed.map((item, idx) => <span key={idx}>{item}{(youWillNeed.size - 1) !== idx ? ', ' : null}</span>)}</p>
                 </div>
               ) : null}
