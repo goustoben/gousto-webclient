@@ -3,8 +3,8 @@ import { Button, Segment } from 'goustouicomponents'
 import moment from 'moment'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import Calendar from 'Form/Calendar'
-import SlotPicker from './SlotPicker'
 import DropdownInput from 'Form/Dropdown'
+import SlotPicker from './SlotPicker'
 import css from './DeliverySlot.css'
 
 class DeliverySlot extends React.Component {
@@ -37,6 +37,8 @@ class DeliverySlot extends React.Component {
 	  setTempOrderId: PropTypes.func,
 	  boxSummaryNext: PropTypes.func,
 	  displayOptions: PropTypes.instanceOf(Immutable.List),
+	  isAuthenticated: PropTypes.bool,
+	  isSubscriptionActive: PropTypes.string
 	}
 
 	static defaultProps = {
@@ -47,20 +49,29 @@ class DeliverySlot extends React.Component {
 	  disableOnDelivery: false,
 	  basketRecipeNo: 0,
 	  displayOptions: Immutable.List([]),
+	  isAuthenticated: false, 
 	}
 
-	getDeliveryDaysAndSlots = (newDate) => {
+	getDeliveryDaysAndSlots = (newDate, blockedDate, blockedSlotNumber) => {
 	  const slots = {}
-	  const { disableOnDelivery, availableDaysOnly } = this.props
+	  const { disableOnDelivery, availableDaysOnly, isAuthenticated, isSubscriptionActive } = this.props
 	  let hasOrders = false
+	  
 	  const deliveryDays = this.props.deliveryDays.map(dd => {
 	    const date = dd.get('date')
-	    slots[date] = dd.get('slots').map(slot => ({
-	      label: this.formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime')),
-	      subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
-	      value: slot.get('id'),
-	      coreSlotId: slot.get('coreSlotId'),
-	    })).toArray()
+      
+	    slots[date] = dd.get('slots').map(slot => {
+	      const slotEndTime = slot.get('deliveryEndTime').substring(0, 2)
+	      const dateMatched = blockedDate.includes(date) && blockedSlotNumber.includes(slotEndTime)
+	      
+	      return {
+	        label: this.formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime')),
+	        subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
+	        value: slot.get('id'),
+	        coreSlotId: slot.get('coreSlotId'), 
+	        disabled: dateMatched && isAuthenticated && isSubscriptionActive === 'inactive'
+	      }
+	    }).toArray()
 
 	    const orderIds = this.props.userOrders.toArray().filter(order => (
 	      moment(date).isSame(moment(order.get('deliveryDate'))))
@@ -103,7 +114,7 @@ class DeliverySlot extends React.Component {
 
 	  let chosen
 	  if (slots[newDate]) {
-	    const slot = slots[newDate].filter(sl => sl.value === this.props.tempSlotId)
+		  const slot = slots[newDate].filter(sl => sl.value === this.props.tempSlotId)
 	    chosen = slot.length > 0
 	  }
 
@@ -138,7 +149,13 @@ class DeliverySlot extends React.Component {
 
 	render = () => {
 	  const { displayOptions, numPortions } = this.props
-	  const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
+    
+	  const blockedDateString = ["2019-01-30_19"]
+	  const blockedDate = blockedDateString.map(date => date.slice(0, 10))
+	  const blockedSlotNumber = blockedDateString.map(date => date.slice(-2))
+    
+	  const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate, blockedDate, blockedSlotNumber)
+    
 	  let deliveryLocationText = this.props.address ? `Address: ${this.props.address.get('name')}` : `${this.props.postcode}`
 	  let slotId = this.props.tempSlotId
 	  let chosenOrder
@@ -183,7 +200,7 @@ class DeliverySlot extends React.Component {
 				</div>
 				{!displayOptions.contains('hideDeliveryCopy') && <div className={css.row}>
 					<p className={css.leadingText}>Our menus change weekly. Please select a date so we can show you the latest recipes</p>
-				</div>}
+                                                     </div>}
 				<div className={this.props.tempOrderId ? css.disabledRow : css.row}>
 					<Button
 					  fill={false}
@@ -225,23 +242,24 @@ class DeliverySlot extends React.Component {
 							  className={css.dropdown}
 							/>
 						</div>
-					</div>) : null
+         </div>) : null
 				))()}
 				{(() => (
 				  !disableNewDatePicker ?
 				    (<div className={css.row}>
 						<Calendar dates={deliveryDays} selected={this.props.tempDate} onClick={this.handleDateChange} />
-					</div>) : null
+         </div>) : null
 				))()}
 				{(() => (
 				  !disableNewDatePicker ?
 				    (<div className={this.props.tempOrderId ? css.disabledRow : css.row}>
 						<SlotPicker slots={slots} date={this.props.tempDate} slotId={slotId} onClick={this.handleSlotChange} />
-					</div>) : null
+         </div>) : null
 				))()}
 				<div className={css.row}>
 					<span className={css.supportingText}>
 						{warningMessage ? <p className={css.errorText}>{warningMessage}</p> : <p>{deliveryCopy}</p>}
+						{blockedDate === this.props.tempDate ? <p className={css.errorText}>{warningMessage}</p> : <p>{deliveryCopy}</p>}
 					</span>
 				</div>
 				<Button

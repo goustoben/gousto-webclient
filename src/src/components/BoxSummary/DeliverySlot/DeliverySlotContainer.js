@@ -22,7 +22,7 @@ function mapStateToProps(state) {
   const tempDate = state.temp.get('date', landing.date)
   const tempSlotId = state.temp.get('slotId', landing.slotId)
   const tempOrderId = state.temp.get('orderId', landing.orderId)
-
+  
   return {
     address: state.basket.get('address'),
     date: state.basket.get('date'),
@@ -38,7 +38,10 @@ function mapStateToProps(state) {
     tempDate,
     tempSlotId,
     tempOrderId,
-    numPortions: state.basket.get('numPortions')
+    numPortions: state.basket.get('numPortions'),
+    unavailableSlots: state.features.get('unavailableSlots').value, 
+    isAuthenticated: state.auth.get('isAuthenticated'), 
+    isSubscriptionActive: state.user.getIn(['subscription', 'state'])
   }
 }
 
