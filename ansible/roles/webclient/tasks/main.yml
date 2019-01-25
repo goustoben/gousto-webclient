@@ -26,3 +26,6 @@
 
 - include: nginx.yml
 
+- include: logrotate.yml
+  when: "{{ environment_name != 'dev' }}"
+
