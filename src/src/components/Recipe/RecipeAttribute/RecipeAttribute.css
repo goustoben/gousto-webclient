@@ -1,3 +1,6 @@
+@value sizeMD from 'styles/typography.css';
+@value attributesLineHeight 1.8;
+
 .icon {
     width: 21px;
     height: 21px;
