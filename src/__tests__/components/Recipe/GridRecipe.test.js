@@ -7,16 +7,14 @@ import Title from 'Recipe/Title'
 import Image from 'Recipe/Image'
 import Rating from 'Recipe/Rating'
 import ChefQuote from 'Recipe/ChefQuote'
-import UseWithin from 'Recipe/UseWithin'
 import AddButton from 'Recipe/AddButton'
 import StockBadge from 'Recipe/StockBadge'
 import TasteScore from 'Recipe/TasteScore'
-import CookingTime from 'Recipe/CookingTime'
 import DisabledOverlay from 'Recipe/DisabledOverlay'
 import RecommendedBadge from 'Recipe/RecommendedBadge'
-import EquipmentRequired from 'Recipe/EquipmentRequired'
 
 import GridRecipe from 'Recipe/GridRecipe'
+import { RecipeAttribute } from 'Recipe/RecipeAttribute'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
@@ -81,16 +79,16 @@ describe('<GridRecipe />', () => {
       expect(wrapper.find(TasteScore).prop('score')).toEqual(99)
     })
 
-    test('should contain one CookingTime component', () => {
+    test('should contain one "cooking time" recipe attribute component', () => {
       const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
 
-      expect(wrapper.find(CookingTime).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name:'cookingTime'}).length).toEqual(1)
     })
 
-    test('should contain one UseWithin component', () => {
+    test('should contain one "use within" recipe attribute component', () => {
       const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
 
-      expect(wrapper.find(UseWithin).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name:'useWithin'}).length).toEqual(1)
     })
 
     test('should contain one RecommendedBadge component', () => {
@@ -117,9 +115,10 @@ describe('<GridRecipe />', () => {
       expect(wrapper.find(DisabledOverlay).length).toEqual(1)
     })
 
-    test('should have a 1 EquipmentRequired with view "notice"', () => {
+    test('should contain one "use within" recipe attribute component with view "notice"', () => {
       const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
-      const component = wrapper.find(EquipmentRequired)
+      const component = wrapper.find(RecipeAttribute).find({name:'equipmentRequired'})
+
       expect(component.length).toBe(1)
       expect(component.prop('view')).toBe('notice')
     })

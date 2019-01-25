@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
 import Detail from 'Recipe/Detail'
 import Immutable from 'immutable' /* eslint-disable new-cap */
@@ -7,6 +8,7 @@ import { getLowStockTag, getSurcharge } from 'utils/recipe'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
 
 const propTypes = {
+  showOverlay: PropTypes.bool,
   menuRecipeDetailShow: PropTypes.string,
   stock: PropTypes.instanceOf(Immutable.Map),
   numPortions: PropTypes.number.isRequired,
@@ -31,39 +33,40 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
   }
 
   return (
-		<Overlay open={showOverlay}>
-			{
-			  (showOverlay && detailRecipe && menuRecipeDetailShow) ? (
-					<Detail
-					  view={view}
-					  tag={getLowStockTag(stockRecipe, detailRecipe.getIn(['rating', 'count']))}
-					  media={getFeaturedImage(detailRecipe, 'detail')}
-					  images={images}
-					  title={detailRecipe.get('title', '')}
-					  count={detailRecipe.getIn(['rating', 'count'], 0)}
-					  average={detailRecipe.getIn(['rating', 'average'], 0)}
-					  perPortion={detailRecipe.getIn(['nutritionalInformation', 'perPortion'], Immutable.Map({}))}
-					  per100Grams={detailRecipe.getIn(['nutritionalInformation', 'per100g'], Immutable.Map({}))}
-					  ingredients={detailRecipe.get('ingredients', Immutable.List([]))}
-					  allergens={detailRecipe.get('allergens', Immutable.List([]))}
-					  id={detailRecipe.get('id')}
-					  recipeId={recipeId}
-					  stock={stockRecipe}
-					  useWithin={detailRecipe.get('shelfLifeDays')}
-					  cookingTime={numPortions === 2 ? detailRecipe.get('cookingTime') : detailRecipe.get('cookingTimeFamily')}
-					  description={detailRecipe.get('description')}
-					  availability={detailRecipe.get('availability')}
-					  youWillNeed={detailRecipe.get('basics')}
-					  cuisine={detailRecipe.get('cuisine')}
-					  diet={detailRecipe.get('dietType')}
-					  equipment={detailRecipe.get('equipment')}
-					  surcharge={surcharge}
-					  range={detailRecipe.get('range', '')}
-					/>
-			  )
-			    : null
-			}
-		</Overlay>
+    <Overlay open={showOverlay}>
+      {
+        (showOverlay && detailRecipe && menuRecipeDetailShow) ? (
+          <Detail
+            view={view}
+            tag={getLowStockTag(stockRecipe, detailRecipe.getIn(['rating', 'count']))}
+            media={getFeaturedImage(detailRecipe, 'detail')}
+            images={images}
+            title={detailRecipe.get('title', '')}
+            count={detailRecipe.getIn(['rating', 'count'], 0)}
+            average={detailRecipe.getIn(['rating', 'average'], 0)}
+            perPortion={detailRecipe.getIn(['nutritionalInformation', 'perPortion'], Immutable.Map({}))}
+            per100Grams={detailRecipe.getIn(['nutritionalInformation', 'per100g'], Immutable.Map({}))}
+            ingredients={detailRecipe.get('ingredients', Immutable.List([]))}
+            allergens={detailRecipe.get('allergens', Immutable.List([]))}
+            id={detailRecipe.get('id')}
+            recipeId={recipeId}
+            stock={stockRecipe}
+            useWithin={detailRecipe.get('shelfLifeDays')}
+            cookingTime={numPortions === 2 ? detailRecipe.get('cookingTime') : detailRecipe.get('cookingTimeFamily')}
+            description={detailRecipe.get('description')}
+            availability={detailRecipe.get('availability')}
+            youWillNeed={detailRecipe.get('basics')}
+            cuisine={detailRecipe.get('cuisine')}
+            diet={detailRecipe.get('dietType')}
+            equipment={detailRecipe.get('equipment')}
+            surcharge={surcharge}
+            range={detailRecipe.get('range', '')}
+            fiveADayValue={detailRecipe.get('fiveADay')}
+          />
+        )
+          : null
+      }
+    </Overlay>
   )
 }
 

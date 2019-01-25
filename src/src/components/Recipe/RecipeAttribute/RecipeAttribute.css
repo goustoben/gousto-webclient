@@ -1,0 +1,14 @@
+.icon {
+    width: 21px;
+    height: 21px;
+    vertical-align: text-bottom;
+}
+
+.description {
+	composes: paragraphXS from 'styles/typography.css';
+}
+
+.attribute {
+	min-height: calc(sizeMD * attributesLineHeight);
+	min-width: 50%;
+}
