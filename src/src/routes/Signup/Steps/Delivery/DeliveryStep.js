@@ -34,7 +34,7 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   return { slots, deliveryDays }
 }
 
-const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, next, numPortions }) => {
+const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, next, numPortions, trackDeliveryDayDropDownOpened, trackDeliveryDayDropDownClosed, trackDeliverySlotDropDownOpened, trackDeliveryDayEdited, trackDeliverySlotEdited }) => {
   const { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
   const onTempDateChange = (date) => {
@@ -45,11 +45,13 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
     }
   }
 
+  trackDeliveryDayDropDownOpened() // remve and move to relevant onOpening
+
   return (
 		<span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
 			<div className={signupCss.fullWidth}>
 				<div className={signupCss.header}>
-					<Image name="delivery-day" />
+          <Image name="delivery-day" />
 					<h1 className={signupCss.heading}>Which delivery day would you like?</h1>
 				</div>
 				<div className={signupCss.body}>
@@ -71,7 +73,7 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
 								  uppercase
 								  options={slots[tempDate] ? slots[tempDate] : []}
 								  onChange={setTempSlotId}
-								  value={tempSlotId}
+                  value={tempSlotId}
 								/>
 							</div>
 						</div>
@@ -108,6 +110,11 @@ DeliveryStep.propTypes = {
   setTempDate: React.PropTypes.func,
   setTempSlotId: React.PropTypes.func,
   boxSummaryDeliverySlotChosen: React.PropTypes.func,
+  trackDeliveryDayDropDownOpened: React.PropTypes.func,
+  trackDeliveryDayDropDownClosed: React.PropTypes.func,
+  trackDeliverySlotDropDownOpened: React.PropTypes.func,
+  trackDeliveryDayEdited: React.PropTypes.func,
+  trackDeliverySlotEdited: React.PropTypes.func,
   menuFetchDataPending: React.PropTypes.bool,
   next: React.PropTypes.func,
 }
