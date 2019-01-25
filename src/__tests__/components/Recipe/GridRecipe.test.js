@@ -14,7 +14,7 @@ import DisabledOverlay from 'Recipe/DisabledOverlay'
 import RecommendedBadge from 'Recipe/RecommendedBadge'
 
 import GridRecipe from 'Recipe/GridRecipe'
-import { RecipeAttribute } from '../../../src/components/Recipe/RecipeAttribute'
+import { RecipeAttribute } from 'Recipe/RecipeAttribute'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
