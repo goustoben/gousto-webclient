@@ -12,13 +12,15 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => (
 			  fill={slot.value === slotId && !slot.disabled}
 			  onClick={() => { slot.disabled ? null : onClick(slot.value)}}
 			  className={classnames(
-			    {[css.disabled]: slot.disabled }, 
+			    {[css.disabled]: slot.disabled },
+			    {[css.enabled]: !slot.disabled }, 
+			    {[css.selected]: slot.value === slotId }, 
 			    {[css.compact]: (slots[date].length > 2)}
-     		)}
+     	)}
 			  noHover={slot.disabled}
 			>
 				<span className={css.fullWidth}>
-					<span className={css.iconDisabled} />
+					{slot.disabled ? <div className={css.disabledLine}></div>: null}
 					<span className={(slots[date].length > 2) ? css.blockLabel : css.label}>{slot.label}</span>
 					<span className={(slots[date].length > 2) ? css.blockLabel : css.inlineLabel}>{slot.subLabel}</span>
 				</span>

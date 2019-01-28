@@ -1,6 +1,13 @@
 @value White from 'styles/colors.css';
 @value sizeSM, sizeXXS from 'styles/typography.css';
 @value SpacingXXS from 'sass-loader!styles/spacing.scss';
+@value (
+	PrimaryColor, PrimaryBgColor, PrimaryHoverColor, PrimaryHoverBgColor, 
+	SecondaryColor, SecondaryBgColor, SecondaryHoverColor, SecondaryHoverActiveColor,
+	TertiaryColor, TertiaryBgColor, TertiaryBorderColor, TertiaryHoverColor, TertiaryHoverActiveColor,
+	NegativeColor, NegativeBgColor, NegativeHoverColor, NegativeHoverBgColor
+) from 'styles/buttons.css';
+@value Bluecheese, Bluecheese50, White from 'styles/colors.css';
 
 .label {
 	composes: textBold from 'styles/typography.css';
@@ -17,20 +24,40 @@
 }
 .fullWidth {
 	composes: inlineBlock from 'styles/display.css';
-	width: 100%;
+    width: 100%;
+    position: relative;
 }
 .compact {
     line-height: 19px;    
 }
-.icon {
-	composes: absolute from 'styles/position.css';
-	composes: fa-basic-class fa-fw from 'styles/vendor/font-awesome-module.css';
-	font-size: sizeXXS;
 
-	top: 2px;
-	left: 0;
+.enabled {
+    color: Bluecheese !important;
+    /* border: 1px solid PrimaryColor !important */
 }
-.iconDisabled {
-	composes: icon;
-	composes: fas fa-ban from 'styles/vendor/font-awesome-module.css';
+
+.selected {
+    color: white !important;
+    background-color: Bluecheese !important;
+}
+
+.disabled {
+    color: TertiaryColor !important;
+	background-color: TertiaryBgColor !important;
+	/* border: 1px solid PrimaryColor !important; */
+}
+
+.disabledLine {
+    height: 1px;
+    width: 100%;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(20deg);
+    background-color: TertiaryColor;
+    position: absolute;
+    top: 17px;
+    /* position: absolute; */
+}
+
+.disabledText {
+
 }

@@ -11,12 +11,12 @@ const dateToDay = date => (
   moment(date, 'YYYY-MM-DD').format('DD')
 )
 
-const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, className }) => {
+const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, className, blockedDateString }) => {
   if (date && !disabled) {
     return (
 			<div
 			  className={classnames(selected ? css.currentDay : css.day, className, css.square)}
-			  onClick={() => { if (!disabled) { onClick(date, orderId) } }}
+			  onClick={() => { if (!disabled) { onClick(date, orderId, blockedDateString) } }}
 			>
 				<div className={css.content}>
 					{icon ? <span className={css[`icon-${icon}`]}><span className={css[`icon-${icon}-child`]} /></span> : null}
@@ -44,6 +44,8 @@ Day.propTypes = {
   icon: React.PropTypes.string,
   orderId: React.PropTypes.string,
   className: React.PropTypes.string,
+  blockedDate: React.PropTypes.string,
+  blockedSlotNumber: React.PropTypes.string,
 }
 
 export default Day
