@@ -50,7 +50,7 @@ describe('Recipe Attribute', () => {
   })
 
   test('should display the normal diet types correctly', () => {
-    const diets = ['meat', 'fish', 'vegetarian']
+    const diets = ['Meat', 'Fish', 'Vegetarian']
 
     diets.forEach(diet => {
       const wrapper = shallow(<RecipeAttribute name='diet' value={diet} />)
@@ -60,7 +60,7 @@ describe('Recipe Attribute', () => {
 
   test('should display the vegan diet type as plant-based', () => {
     const wrapper = shallow(<RecipeAttribute name='diet' value={'vegan'} />)
-    expect(wrapper.find('span').text()).toContain('plant-based')
+    expect(wrapper.find('span').text()).toContain('Plant-based')
   })
 
   test('should display equipment required label without the equipment listed ', () => {
