@@ -57,7 +57,7 @@ const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, 
             />
           </div>
         </div>
-        <AttributeGrid maxNoAttributes={4} showDetailed={false} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay}/>
+        <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay}/>
         <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
         <DisabledOverlay stock={stock} inBasket={inBasket} />
       </div>
