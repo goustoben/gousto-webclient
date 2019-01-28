@@ -31,7 +31,7 @@ export const trackDeliveryDayEdited = () => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_DAY_SELECTION_EDITED,
     trackingData: {
-      actionType: 'DeliveryDay Editied'
+      actionType: 'DeliveryDay Edited'
     }
   })
 }
@@ -40,7 +40,7 @@ export const trackDeliverySlotEdited = () => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_SLOT_SELECTION_EDITED,
     trackingData: {
-      actionType: 'DeliverySlot Editied'
+      actionType: 'DeliverySlot Edited'
     }
   })
 }
