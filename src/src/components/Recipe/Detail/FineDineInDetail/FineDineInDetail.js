@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import Title from 'Recipe/Title'
 import Rating from 'Recipe/Rating'
 import AddButton from 'Recipe/AddButton'
-import { RecipeAttribute } from 'Recipe/RecipeAttribute'
+import { AttributeGrid } from 'Recipe/AttributeGrid'
 import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import Availability from 'Recipe/Availability'
@@ -41,12 +41,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
           </div>
           <p className={css.text}>{description}</p>
-            <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
-            <RecipeAttribute name='useWithin' value={useWithin} icon='icon-use-within' />
-            <Availability availability={availability} date={cutoffDate} />
-            <RecipeAttribute name='diet' value={diet} icon='icon-diet' show={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
-            <RecipeAttribute name='cals' value={perPortion.get('energyKcal')} icon='icon-calories' show={!restrictedView} />
-            <RecipeAttribute name='cuisine' value={cuisine} icon='icon-cuisine' />
+          <AttributeGrid maxNoAttributes={20} showDetailedRecipe cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={perPortion.get('energyKcal')} cuisine={cuisine} />
           <hr className={css.rule} />
           {ingredients.size > 0 ? <Ingredients ingredients={ingredients} restrictedView={restrictedView} border={false} inset={false} /> : null}
           <hr className={css.rule} />

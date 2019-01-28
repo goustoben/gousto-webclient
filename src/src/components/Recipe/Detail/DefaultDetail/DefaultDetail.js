@@ -7,11 +7,11 @@ import Title from 'Recipe/Title'
 import Rating from 'Recipe/Rating'
 import AddButton from 'Recipe/AddButton'
 import RangeBadge from 'Recipe/RangeBadge'
-import { RecipeAttribute } from 'Recipe/RecipeAttribute'
 import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import Availability from 'Recipe/Availability'
 import { detailPropTypes } from 'Recipe/Detail/Detail'
+import { AttributeGrid } from 'Recipe/AttributeGrid'
 import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
@@ -40,15 +40,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
               <RangeBadge range={range} />
             </div>
             <p className={css.infoBoxText}>{description}</p>
-            <div className={css.attributes}>
-              <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
-              <RecipeAttribute name='useWithin' value={useWithin} icon='icon-use-within' />
-              <Availability availability={availability} date={cutoffDate} />
-              <RecipeAttribute name='fiveADay' value={fiveADay} icon='icon-five-a-day' show={fiveADay > 1} />
-              <RecipeAttribute name='diet' value={diet} icon='icon-diet' show={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
-              <RecipeAttribute name='cals' value={perPortion.get('energyKcal')} icon='icon-calories' show={!restrictedView}/>
-              <RecipeAttribute name='cuisine' value={cuisine} icon='icon-cuisine' />
-            </div>
+            <AttributeGrid maxNoAttributes={20} showDetailedRecipe cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={perPortion.get('energyKcal')} cuisine={cuisine} />
             {equipment && equipment.size ? (
               <p className={css.additionalInfo}>
                 Equipment required: {equipment.toJS().join(', ')}

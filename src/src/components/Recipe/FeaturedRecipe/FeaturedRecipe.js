@@ -50,7 +50,7 @@ const FeaturedRecipe = ({onClick, media, title, view, highlight, unhighlight, ta
           <div>
             <ChefQuote chef={chef} quote={description} />
             <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
-            <AttributeGrid cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay}/>
+            <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay}/>
           </div>
           <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
           <DisabledOverlay stock={stock} inBasket={inBasket} />
