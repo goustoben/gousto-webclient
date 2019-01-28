@@ -16,10 +16,10 @@ import StockBadge from '../StockBadge'
 import TasteScore from '../TasteScore'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
-import { RecipeAttribute } from '../RecipeAttribute'
+import { AttributeGrid } from '../AttributeGrid'
 
 const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, surcharge, id, fiveADayValue}) => (
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, surcharge, id, diet, fiveADay}) => (
   <div>
     <div className={css.recipeDetails}>
       <span onClick={onClick} className={css.link}>
@@ -35,7 +35,7 @@ const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, 
         <Chef chef={chef} />
       </div>
       <div className={css.rangeBadgeWrapper}>
-				<RangeBadge range={range} />
+        <RangeBadge range={range} />
       </div>
       <div className={css.textContainer}>
         <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(chef) })}>
@@ -57,12 +57,7 @@ const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, 
             />
           </div>
         </div>
-        <div className={css.attributes}>
-          <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
-          <RecipeAttribute name='equipmentRequired' value={equipment} icon='icon-equipment' view='notice' />
-          <RecipeAttribute name='useWithin' value={useWithin} icon='icon-use-within' />
-          <RecipeAttribute name='fiveADay' value={fiveADayValue} icon='icon-five-a-day' show={fiveADayValue > 1} />
-        </div>
+        <AttributeGrid cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay}/>
         <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
         <DisabledOverlay stock={stock} inBasket={inBasket} />
       </div>
@@ -94,7 +89,7 @@ GridRecipe.propTypes = {
   detailHover: PropTypes.bool,
   tasteScore: PropTypes.number,
   range: PropTypes.string,
-  fiveADayValue: PropTypes.number
+  fiveADay: PropTypes.number
 }
 
 GridRecipe.defaultProps = {
@@ -103,7 +98,7 @@ GridRecipe.defaultProps = {
   chef: Immutable.Map({}),
   averageRating: 0,
   ratingCount: 0,
-  fiveADayValue: 0,
+  fiveADay: 0,
 }
 
 export default GridRecipe

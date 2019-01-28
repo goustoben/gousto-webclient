@@ -15,9 +15,9 @@ import ChefQuote from '../ChefQuote'
 import TasteScore from '../TasteScore'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
-import { RecipeAttribute } from '../RecipeAttribute'
+import { AttributeGrid } from '../AttributeGrid'
 
-const FeaturedRecipe = ({onClick, media, title, view, highlight, unhighlight, tasteScore, chef, tag, detailHover, description, range, isRecommendedRecipe, features, cookingTime, useWithin, equipment, id, stock, inBasket, position, surcharge, fiveADayValue}) => (
+const FeaturedRecipe = ({onClick, media, title, view, highlight, unhighlight, tasteScore, chef, tag, detailHover, description, range, isRecommendedRecipe, features, cookingTime, useWithin, equipment, id, stock, inBasket, position, surcharge, fiveADay, diet}) => (
   <div>
     <div className={css.featuredRecipe}>
       <span onClick={onClick} className={css.link}>
@@ -50,12 +50,7 @@ const FeaturedRecipe = ({onClick, media, title, view, highlight, unhighlight, ta
           <div>
             <ChefQuote chef={chef} quote={description} />
             <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
-            <span className={css.attributes}>
-                <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
-                <RecipeAttribute name='fiveADay' value={fiveADayValue} icon='icon-five-a-day' show={fiveADayValue > 1}/>
-                <RecipeAttribute name='useWithin' value={useWithin} icon='icon-use-within' />
-                <RecipeAttribute name='equipmentRequired' value={equipment} icon='icon-equipment' view='notice' />
-            </span>
+            <AttributeGrid cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay}/>
           </div>
           <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
           <DisabledOverlay stock={stock} inBasket={inBasket} />
@@ -88,7 +83,7 @@ FeaturedRecipe.propTypes = {
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
   tasteScore: PropTypes.number,
-  fiveADayValue: PropTypes.number
+  fiveADay: PropTypes.number
 }
 
 FeaturedRecipe.defaultProps = {
@@ -96,7 +91,7 @@ FeaturedRecipe.defaultProps = {
   tag: '',
   isRecommendedRecipe: false,
   chef: Immutable.Map({}),
-  fiveADayValue: 0,
+  fiveADay: 0,
 }
 
 export default FeaturedRecipe
