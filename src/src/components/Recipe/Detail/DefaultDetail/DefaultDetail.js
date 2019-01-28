@@ -16,7 +16,7 @@ import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
 
-const DefaultDetail = ({ media, title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, availability, cutoffDate, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange, restrictedView, position, surcharge, range, fiveADayValue }) => (
+const DefaultDetail = ({ media, title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, availability, cutoffDate, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange, restrictedView, position, surcharge, range, fiveADay }) => (
   <div>
     <div className={css.container}>
       <div className={css.header}>
@@ -44,7 +44,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
               <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
               <RecipeAttribute name='useWithin' value={useWithin} icon='icon-use-within' />
               <Availability availability={availability} date={cutoffDate} />
-              <RecipeAttribute name='fiveADay' value={fiveADayValue} icon='icon-five-a-day' show={fiveADayValue > 1} />
+              <RecipeAttribute name='fiveADay' value={fiveADay} icon='icon-five-a-day' show={fiveADay > 1} />
               <RecipeAttribute name='diet' value={diet} icon='icon-diet' show={['vegetarian', 'vegan'].includes(diet.toLowerCase())} />
               <RecipeAttribute name='cals' value={perPortion.get('energyKcal')} icon='icon-calories' show={!restrictedView}/>
               <RecipeAttribute name='cuisine' value={cuisine} icon='icon-cuisine' />
@@ -107,7 +107,7 @@ DefaultDetail.propTypes = {
 
 DefaultDetail.defaultProps = {
   scrolledPastPoint: false,
-  fiveADayValue: 0
+  fiveADay: 0
 }
 
 export default DefaultDetail

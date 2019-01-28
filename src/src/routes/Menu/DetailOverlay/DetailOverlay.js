@@ -61,7 +61,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
             equipment={detailRecipe.get('equipment')}
             surcharge={surcharge}
             range={detailRecipe.get('range', '')}
-            fiveADayValue={detailRecipe.get('fiveADay')}
+            fiveADay={detailRecipe.get('fiveADay')}
           />
         )
           : null
