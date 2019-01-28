@@ -10,7 +10,7 @@ const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWit
   const attributes = [
     { name: 'cookingTime', value: cookingTime, icon:'icon-time'},
     { name: 'useWithin', value: useWithin, icon:'icon-use-within'},
-    { name: 'equipmentRequired', value: equipment, icon:'icon-equipment', show:equipment && equipment.length > 0},
+    { name: 'equipmentRequired', value: equipment, icon:'icon-equipment', show:equipment && equipment.size > 0},
     { name: 'diet', value: diet, icon:'icon-diet', show:['vegetarian', 'vegan'].includes(diet.toLowerCase())},
     { name: 'fiveADay', value: fiveADay, icon:'icon-five-a-day', show:fiveADay > 1},
     { name: 'cals', value: cals, icon:'icon-calories'},
