@@ -9,14 +9,13 @@ import AddButton from 'Recipe/AddButton'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
 import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
-import Availability from 'Recipe/Availability'
 import Carousel from 'Recipe/Detail/Carousel'
 import { detailPropTypes } from 'Recipe/Detail/Detail'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import Allergens from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
 
-const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, availability, cutoffDate, description, youWillNeed, cuisine, diet, equipment, restrictedView, position, surcharge, images, menuRecipeDetailVisibilityChange }) => (
+const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, position, surcharge, images, menuRecipeDetailVisibilityChange }) => (
   <div>
     <div className={css.container}>
       <div className={css.carousel}>
