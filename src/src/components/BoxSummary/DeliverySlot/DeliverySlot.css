@@ -63,6 +63,11 @@
 	color: Blackberry;
 }
 
+.iconDisabled {
+    composes: fa-basic-class fas fa-ban from 'styles/vendor/font-awesome-module.css';
+    color: black;
+}
+
 .textInput {
 	composes: textBold from 'styles/typography.css';
 }

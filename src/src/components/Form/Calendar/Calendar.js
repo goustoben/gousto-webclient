@@ -85,7 +85,7 @@ const minusOneWeek = (originalWeekNo) => {
   return weekNo
 }
 
-function dateToDay(columns, weekNo, dayNo, selected, onClick) {
+function dateToDay(columns, weekNo, dayNo, selected, onClick, blockedDateString) {
   const date = columns[dayNo][weekNo]
 
   return {
@@ -99,6 +99,7 @@ function dateToDay(columns, weekNo, dayNo, selected, onClick) {
     icon: date ? date.icon : null,
     orderId: date ? date.orderId : null,
     orderEmpty: date ? date.orderEmpty : null,
+    blockedDateString: date ? blockedDateString : null,
   }
 }
 
@@ -109,7 +110,7 @@ const noEmptyWeeks = (weekNo, columns) => (
     .length > 0
 )
 
-const Calendar = ({ dates, selected, onClick }) => {
+const Calendar = ({ dates, selected, onClick, blockedDateString }) => {
   const { header, columns, bumpedIds } = getCalendarGrid(dates)
 
   return (
@@ -121,11 +122,11 @@ const Calendar = ({ dates, selected, onClick }) => {
 						<div className={css.dayName}>{header[dayNo]}</div>
 						{Object.keys(columns[dayNo]).filter(weekNo => noEmptyWeeks(weekNo, columns)).map((weekNo) => {
 						  const weekNoToUse = (bumpedIds.indexOf(`${weekNo}${dayNo}`) !== -1 && !columns[dayNo][weekNo]) ? minusOneWeek(weekNo) : weekNo
-						  const day = dateToDay(columns, weekNoToUse, dayNo, selected, onClick)
+						  const day = dateToDay(columns, weekNoToUse, dayNo, selected, onClick, blockedDateString)
 
 						  return <Day {...day} className={css.day} />
 						})}
-					</div>),
+       </div>),
 				)}
 			</div>
 		</div>)
@@ -135,6 +136,8 @@ Calendar.propTypes = {
   dates: React.PropTypes.array.isRequired,
   selected: React.PropTypes.string,
   onClick: React.PropTypes.func.isRequired,
+  blockedDate: React.PropTypes.string,
+  blockedSlotNumber: React.PropTypes.string,
 }
 
 export default Calendar

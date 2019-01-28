@@ -22,7 +22,8 @@ function mapStateToProps(state) {
   const tempDate = state.temp.get('date', landing.date)
   const tempSlotId = state.temp.get('slotId', landing.slotId)
   const tempOrderId = state.temp.get('orderId', landing.orderId)
-  
+  const blockedDateString = ["2019-02-04_19", "2019-02-06_22", "2019-02-07_12", "2019-02-02_12", "2019-02-04_22", "2019-02-04_12", "2019-02-01_19"]
+
   return {
     address: state.basket.get('address'),
     date: state.basket.get('date'),
@@ -41,7 +42,8 @@ function mapStateToProps(state) {
     numPortions: state.basket.get('numPortions'),
     unavailableSlots: state.features.get('unavailableSlots').value, 
     isAuthenticated: state.auth.get('isAuthenticated'), 
-    isSubscriptionActive: state.user.getIn(['subscription', 'state'])
+    isSubscriptionActive: state.user.getIn(['subscription', 'state']),
+    blockedDateString
   }
 }
 

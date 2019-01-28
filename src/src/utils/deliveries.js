@@ -259,6 +259,17 @@ function getLandingOrder(userOrders, deliveryDays) {
   }
 }
 
+export const getDisabledSlots = (state) => {
+  const blockedDateString = state.features.getIn('unavailableSlots', 'value')
+  const deliveryDays = state.boxSummaryDeliveryDays
+
+  deliveryDays.map(dd => {
+    const date = dd.get('date')
+    
+    deliverySlotHelper(dd, blockedDateString, date, isAuthenticated, isSubscriptionActive, tempDate)
+  })
+}
+
 export function getLandingDay(state, currentSlot, cantLandOnOrderDate) {
   const date = state.basket.get('date')
   const defaultDate = state.features.getIn(['default_day', 'value'])
@@ -343,11 +354,12 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate) {
         slot.get('id') === slotId
       ))
       if (slotDay) {
+				console.log('​getLandingDay -> slotDay', slotDay) //eslint-disable-line
         foundSlotId = slotDay.get('id')
       }
     } else {
       // try to find the default slot for that day
-      let foundSlot = day.get('slots', Immutable.List([])).find(slot => slot.get('isDefault'))
+      let foundSlot = day.get('slots', Immutable.List([])).find(slot => slot.get('isDefault')) 
 
       if (!foundSlot) {
         // otherwise choose the first slot on that day
