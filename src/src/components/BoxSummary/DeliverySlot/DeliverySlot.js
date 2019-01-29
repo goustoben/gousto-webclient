@@ -37,6 +37,7 @@ class DeliverySlot extends React.Component {
 	  setTempOrderId: PropTypes.func,
 	  boxSummaryNext: PropTypes.func,
 	  displayOptions: PropTypes.instanceOf(Immutable.List),
+	  blockedDateString: PropTypes.arrayOf(PropTypes.string),
 	  isAuthenticated: PropTypes.bool,
 	  isSubscriptionActive: PropTypes.string
 	}
@@ -49,20 +50,21 @@ class DeliverySlot extends React.Component {
 	  disableOnDelivery: false,
 	  basketRecipeNo: 0,
 	  displayOptions: Immutable.List([]),
-	  isAuthenticated: false, 
+	  blockedDateString: [], 
+	  isAuthenticated: false,
 	}
 
-	getDeliveryDaysAndSlots = (newDate, blockedDateString) => {
+	getDeliveryDaysAndSlots = (newDate) => {
 	  const slots = {}
-	  const { disableOnDelivery, availableDaysOnly, isAuthenticated, isSubscriptionActive } = this.props
+	  const { disableOnDelivery, availableDaysOnly, blockedDateString, isAuthenticated, isSubscriptionActive } = this.props
 	  let hasOrders = false
 	  
 	  const deliveryDays = this.props.deliveryDays.map(dd => {
 	    const date = dd.get('date')
       
 	    slots[date] = dd.get('slots').map(slot => {
-
-	      const isSlotBlocked = blockedDateString.includes(slot.get('dateAndSlotCombined')) ? true : false
+				
+	      const isSlotBlocked = blockedDateString && blockedDateString.includes(slot.get('dateAndSlotCombined')) ? true : false
 		 
 	      return {
 	        label: this.formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime')),
@@ -121,9 +123,9 @@ class DeliverySlot extends React.Component {
 	  return { slots, deliveryDays, chosen, hasOrders }
 	}
 
-	handleDateChange = (date, orderId, blockedDateString) => {
+	handleDateChange = (date, orderId) => {
 	  if (!orderId) {
-	    const { slots, chosen } = this.getDeliveryDaysAndSlots(date, blockedDateString)
+	    const { slots, chosen } = this.getDeliveryDaysAndSlots(date)
 	    if (!chosen && slots[date]) {
 	      const unblockedSlots = slots[date].filter(slot => !slot.disabled)
 	      const slotId = unblockedSlots[0] && unblockedSlots[0].value
@@ -153,7 +155,7 @@ class DeliverySlot extends React.Component {
     
 	  const blockedDatesList = blockedDateString.map(date => date.slice(0, 10))
     
-	  const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate, blockedDateString)
+	  const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
     
 	  let deliveryLocationText = this.props.address ? `Address: ${this.props.address.get('name')}` : `${this.props.postcode}`
 	  let slotId = this.props.tempSlotId

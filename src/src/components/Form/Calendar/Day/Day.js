@@ -11,12 +11,12 @@ const dateToDay = date => (
   moment(date, 'YYYY-MM-DD').format('DD')
 )
 
-const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, className, blockedDateString }) => {
+const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, className }) => {
   if (date && !disabled) {
     return (
 			<div
 			  className={classnames(selected ? css.currentDay : css.day, className, css.square)}
-			  onClick={() => { if (!disabled) { onClick(date, orderId, blockedDateString) } }}
+			  onClick={() => { if (!disabled) { onClick(date, orderId) } }}
 			>
 				<div className={css.content}>
 					{icon ? <span className={css[`icon-${icon}`]}><span className={css[`icon-${icon}-child`]} /></span> : null}
