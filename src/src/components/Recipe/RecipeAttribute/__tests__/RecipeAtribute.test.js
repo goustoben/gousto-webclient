@@ -34,6 +34,16 @@ describe('Recipe Attribute', () => {
     expect(wrapper.find('span').text()).toContain('Use within 5 - 6 days')
   })
 
+  test('should display the gluten free correctly', () => {
+    const wrapper = shallow(<RecipeAttribute name='glutenFree' value />)
+    expect(wrapper.find('span').text()).toContain('Gluten Free')
+  })
+
+  test('should display the dairy free correctly', () => {
+    const wrapper = shallow(<RecipeAttribute name='dairyFree' value />)
+    expect(wrapper.find('span').text()).toContain('Dairy Free')
+  })
+
   test('should display the calorie count correctly', () => {
     const wrapper = shallow(<RecipeAttribute name='cals' value={123} />)
     expect(wrapper.find('span').text()).toContain('123 cals / serving')
