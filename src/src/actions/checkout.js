@@ -17,6 +17,7 @@ import userActions from './user'
 import statusActions from './status'
 import GoustoException from '../utils/GoustoException'
 import Cookies from '../utils/GoustoCookies'
+import gaID from '../config/head/gaTracking'
 
 const { pending, error } = statusActions
 
@@ -219,9 +220,10 @@ export const trackPurchase = () => (
     const promoCode = basket.get('promoCode')
     const totalPrice = prices.get('grossTotal')
     const shippingPrice = prices.get('deliveryTotal')
+    const gaIDTracking = gaID[__ENV__]// eslint-disable-line no-underscore-dangle
 
     if (typeof ga !== 'undefined') {
-      ga('create', 'UA-32127122-2', 'auto', 'gousto')
+      ga('create', gaIDTracking, 'auto', 'gousto')
       ga('gousto.require', 'ec')
       ga('gousto.ec:setAction', 'purchase', {
         id: orderId,
