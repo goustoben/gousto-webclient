@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
 import Detail from 'Recipe/Detail'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
-import { getLowStockTag, getSurcharge } from 'utils/recipe'
+import { getLowStockTag, getSurcharge, getTaxonomyTags} from 'utils/recipe'
 import { getFeaturedImage, getRangeImages } from 'utils/image'
 
 const propTypes = {
@@ -24,12 +24,20 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
   let IsFineDineIn
   let view
   let images
+  let dairyFree = false
+  let glutenFree = false
+
   if (menuRecipeDetailShow && detailRecipe) {
     stockRecipe = stock.getIn([recipeId, String(numPortions)])
     surcharge = getSurcharge(detailRecipe.get('meals'), numPortions)
     IsFineDineIn = detailRecipe.get('range') === 'fine_dine_in'
     view = (IsFineDineIn) ? 'fineDineInDetail' : 'detail'
     images = (IsFineDineIn) ? getRangeImages(detailRecipe) : null
+
+    getTaxonomyTags(detailRecipe, 'dietary-attributes').map((tag) => {
+      if (tag.get('slug') == 'gluten-free') glutenFree = true
+      if (tag.get('slug') == 'dairy-free') dairyFree = true
+    })
   }
 
   return (
@@ -62,6 +70,8 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
             surcharge={surcharge}
             range={detailRecipe.get('range', '')}
             fiveADay={detailRecipe.get('fiveADay')}
+            glutenFree={glutenFree}
+            dairyFree={dairyFree}
           />
         )
           : null

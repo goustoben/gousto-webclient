@@ -15,7 +15,7 @@ import IngredientsList from '../IngredientsList/IngredientsList'
 import Allergens from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
 
-const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, position, surcharge, images, menuRecipeDetailVisibilityChange }) => (
+const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree }) => (
   <div>
     <div className={css.container}>
       <div className={css.carousel}>
@@ -40,7 +40,19 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
           </div>
           <p className={css.text}>{description}</p>
-          <AttributeGrid maxNoAttributes={20} showDetailedRecipe cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={perPortion.get('energyKcal')} cuisine={cuisine} />
+          <AttributeGrid
+            maxNoAttributes={20}
+            showDetailedRecipe
+            cookingTime={cookingTime}
+            useWithin={useWithin}
+            equipment={equipment}
+            diet={diet}
+            fiveADay={fiveADay}
+            cals={perPortion.get('energyKcal')}
+            cuisine={cuisine}
+            glutenFree={glutenFree}
+            dairyFree={dairyFree}
+          />
           <hr className={css.rule} />
           {ingredients.size > 0 ? <Ingredients ingredients={ingredients} restrictedView={restrictedView} border={false} inset={false} /> : null}
           <hr className={css.rule} />

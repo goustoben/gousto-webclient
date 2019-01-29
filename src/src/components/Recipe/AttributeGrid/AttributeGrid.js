@@ -5,7 +5,7 @@ import css from './AttributeGrid.css'
 import { recipePriorityOrder, detailedRecipePriorityOrder} from './config'
 import { RecipeAttribute } from '../RecipeAttribute'
 
-const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWithin, equipment, diet, fiveADay, cals, cuisine}) => {
+const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWithin, equipment, diet, fiveADay, cals, cuisine, dairyFree, glutenFree}) => {
 
   const attributes = [
     { name: 'cookingTime', value: cookingTime, icon:'icon-time'},
@@ -15,6 +15,8 @@ const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWit
     { name: 'fiveADay', value: fiveADay, icon:'icon-five-a-day', show:fiveADay > 1},
     { name: 'cals', value: cals, icon:'icon-calories'},
     { name: 'cuisine', value: cuisine, icon:'icon-cuisine'},
+    { name: 'glutenFree', value: glutenFree, icon:'icon-gluten-free', show: !!glutenFree},
+    { name: 'dairyFree', value: dairyFree, icon:'icon-dairy-free', show: !!dairyFree},
   ]
 
   const getAttributesInPriorityOrder = priorityOrder => {

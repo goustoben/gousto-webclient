@@ -15,7 +15,7 @@ import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
 
-const DefaultDetail = ({ media, title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, availability, cutoffDate, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange, restrictedView, position, surcharge, range, fiveADay }) => (
+const DefaultDetail = ({ media, title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange, restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree }) => (
   <div>
     <div className={css.container}>
       <div className={css.header}>
@@ -39,7 +39,19 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
               <RangeBadge range={range} />
             </div>
             <p className={css.infoBoxText}>{description}</p>
-            <AttributeGrid maxNoAttributes={20} showDetailedRecipe cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={perPortion.get('energyKcal')} cuisine={cuisine} />
+            <AttributeGrid
+              maxNoAttributes={20}
+              showDetailedRecipe
+              cookingTime={cookingTime}
+              useWithin={useWithin}
+              equipment={equipment}
+              diet={diet}
+              fiveADay={fiveADay}
+              cals={perPortion.get('energyKcal')}
+              cuisine={cuisine}
+              glutenFree={glutenFree}
+              dairyFree={dairyFree}
+            />
             {equipment && equipment.size ? (
               <p className={css.additionalInfo}>
                 Equipment required: {equipment.toJS().join(', ')}

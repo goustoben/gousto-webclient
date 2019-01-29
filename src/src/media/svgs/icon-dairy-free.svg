@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="19px" viewBox="0 0 19 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>icon_DF</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon_DF" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g>
+            <rect id="Rectangle-Copy-25" x="0" y="0" width="19" height="19"></rect>
+            <g id="Group-28-Copy-5" transform="translate(1.000000, 0.000000)" fill="#333D47">
+                <path d="M11.0026358,4.00790745 L4,11.0105433 L4,10 L6,4 L11,4 L11.0026358,4.00790745 Z M12.063296,7.18988797 L13,10 L13,17 C12,17.6666667 10.5,18 8.5,18 C6.5,18 5,17.6666667 4,17 L4,15.253184 L12.063296,7.18988797 Z M6,1 L11,1 C11.5522847,1 12,1.44771525 12,2 C12,2.55228475 11.5522847,3 11,3 L6,3 C5.44771525,3 5,2.55228475 5,2 C5,1.44771525 5.44771525,1 6,1 Z M15.5563492,0.868407648 L16.263456,1.57551443 L0.707106781,17.1318636 L-8.95283847e-13,16.4247568 L15.5563492,0.868407648 Z" id="Combined-Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>
