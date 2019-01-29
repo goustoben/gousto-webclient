@@ -41,10 +41,17 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
   if (nextDayDeliveryPaintedDoorFeature) {
     const nextDayDeliveryDays = createNextDayDeliveryDays()
     deliveryDays = [...nextDayDeliveryDays, ...deliveryDays]
-    slots = {...generateNextDatDeliverySlots(nextDayDeliveryDays), ...slots}
+    slots = { ...generateNextDayDeliverySlots(nextDayDeliveryDays), ...slots }
   }
 
-  const onTempDateChange = (date) => {
+  const onTempDateChange = date => {
+    // If the date value has changed
+    if (date !== tempDate) {
+      // Track the edit
+      const slotId = slots[date] ? slots[date][0].value : null
+      trackDeliveryDayEdited(date, slotId)
+    }
+    
     setTempDate(date)
     if (slots[date]) {
       const slotId = slots[date][0].value
@@ -52,7 +59,26 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
     }
   }
 
-  trackDeliveryDayDropDownOpened() // remve and move to relevant onOpening
+  const onTempSlotChange = slotId => {
+    // If the slot id has changed
+    if (slotId !== tempSlotId) {
+      // Track the edit
+      trackDeliverySlotEdited(tempDate, slotId)
+    }
+    setTempSlotId(slotId)
+  }
+
+  const onDayDropdownOpen = e => {
+    trackDeliveryDayDropDownOpened(tempDate, tempSlotId)
+  }
+
+  const onDayDropdownClose = e => {
+    trackDeliveryDayDropDownClosed(tempDate, tempSlotId)
+  }
+
+  const onSlotDropdownOpen = e => {
+    trackDeliverySlotDropDownOpened(tempDate, tempSlotId)
+  }
 
   return (
     <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
@@ -72,6 +98,8 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
                   options={deliveryDays}
                   onChange={onTempDateChange}
                   value={tempDate}
+                  onOpen={onDayDropdownOpen}
+                  onClose={onDayDropdownClose}
                 />
               </div>
               <div className={css.right} data-testing="signupDeliveryTime">
@@ -79,8 +107,9 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
                   color="secondary"
                   uppercase
                   options={slots[tempDate] ? slots[tempDate] : []}
-                  onChange={setTempSlotId}
+                  onChange={onTempSlotChange}
                   value={tempSlotId}
+                  onOpen={onSlotDropdownOpen}
                 />
               </div>
             </div>
@@ -129,7 +158,7 @@ DeliveryStep.propTypes = {
 
 const isAfterCutoff = () => moment().hours() >= 12
 
-const generateNextDatDeliverySlots = nextDayDeliveryDays => {
+const generateNextDayDeliverySlots = nextDayDeliveryDays => {
   const slots = {}
   nextDayDeliveryDays.map(day => {
     slots[day.date] = [{ label: "8AM - 7PM", subLabel: "", value: "NULL", coreSlotId: "NULL" }]
