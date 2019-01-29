@@ -1,5 +1,5 @@
 @value sizeMD from 'styles/typography.css';
-
+@value Basa from 'styles/colors.css';
 @value attributesLineHeight 1.8;
 @value chefTtileWidth calc(100% - 85px);
 
@@ -13,6 +13,8 @@
 
 .textContainer {
 	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+	padding-top: 5px;
+	margin-top: 15px;
 }
 
 .linkUnderlined {
@@ -29,14 +31,27 @@
 .attributes {
 	line-height: attributesLineHeight;
 	font-size: sizeMD;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	border-top: 1px solid Basa;
+	padding-top: 10px;
+	margin-top: 5px;
 }
 
 .attributeMinHeight {
 	min-height: calc(sizeMD * attributesLineHeight);
+	width: 50%;
 }
 
 .score {
 	position: absolute;
 	left: 10px;
 	margin-top: -40px;
+}
+
+.rangeBadgeWrapper{
+	margin-top: -15px;
+	margin-left: -1px;
+	position: absolute;
 }

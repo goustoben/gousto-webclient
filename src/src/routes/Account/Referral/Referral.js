@@ -13,6 +13,7 @@ import defaultOffer from './config'
 import ShareYourLinkModal from './ShareYourLinkModal'
 import { getReferralLink, getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
 import { HowItWorks } from './HowItWorks'
+import { DoubleCreditCountdown } from './DoubleCreditCountdown'
 
 const proptypes = {
   referralCode: PropTypes.string.isRequired,
@@ -55,9 +56,13 @@ class Referral extends Component {
     this.setState({ isShareYourLinkModalOpen: false })
   }
 
-  componentDidMount() {
+  fetchReferralOffer = () => {
     const { userFetchReferralOffer } = this.props
     userFetchReferralOffer()
+  }
+
+  componentDidMount() {
+    this.fetchReferralOffer()
   }
 
   render() {
@@ -73,7 +78,8 @@ class Referral extends Component {
     const offerTitle = rafOffer.get('title')
     const offerCredit = rafOffer.get('creditFormatted')
     const offerDetails = rafOffer.get('details')
-    const isDouble = rafOffer.get('expiry')
+    const offerDescription = rafOffer.get('description')
+    const expiry = rafOffer.get('expiry')
     const displayLink = getReferralLink(referralCode)
 
     return isLoading ?
@@ -83,16 +89,17 @@ class Referral extends Component {
         </div>
       ) :
       (
-        <div className={isDouble ? css.containerBackgroundDouble : css.containerBackground}>
+        <div className={expiry ? css.containerBackgroundDouble : css.containerBackground}>
           <div className={css.rafPageTitle}>
             <RAFTitle title={offerTitle} />
           </div>
           <div className={css.rafOfferSection}>
             <div className={css.rafOfferBanner}>
-              <div className={isDouble ? css.iconReferDouble : css.iconRefer} />
+              <div className={expiry ? css.iconReferDouble : css.iconRefer} />
               <RAFOffer offer={rafOffer} />
             </div>
-            <div className={css.rafRow}>
+            {expiry && <DoubleCreditCountdown description={offerDescription} expiry={expiry} fetchOffer={this.fetchReferralOffer}/>}
+            <div className={expiry ? css.rafCounterPresent : css.rafRow}>
               <UserRAFLink classContainer={css.rafLink} classLinkContainer={css.linkContainer} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
                 <div id="referral-code-box">
                   <span className={`${css.displayedLink}`}>{displayLink}</span>

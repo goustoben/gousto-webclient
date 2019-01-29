@@ -4,6 +4,7 @@ region: eu-west-1
 exposure: private
 dns: webclient
 owner: squad-radishes
+rootVolumeSize: 16
 
 messages:
  publish:
@@ -55,7 +56,7 @@ environments:
     minInstanceSize: 1
     maxInstanceSize: 2
     desiredInstanceSize: 1
-    availability: businessHours
+    availability: alwaysOn
 
     deployment:
       style: immutable

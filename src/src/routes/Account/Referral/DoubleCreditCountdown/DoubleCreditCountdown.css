@@ -1,0 +1,54 @@
+@value White, Bronze from 'styles/colors.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
+
+.countdownWrapper {
+  background-color: White;
+  width: 90%;
+  text-align: center;
+  margin: 0 auto;
+  border-radius: 3px 3px 0 0;
+}
+
+.countdownTitle {	
+  font-size: 16px;
+  padding: 31px 10px 25px 10px;
+  font-weight: 500;
+
+  @media ScreenSMMin {
+    font-size: 24px;
+    padding: 31px 0 25px 0;
+
+	}
+}
+
+.countdown {
+  width: 298px;
+  height: 83px;
+  background-color: rgba(232,199,118,0.3);
+  margin: 0 auto;
+}
+
+.countdownUnit {
+  font-family: Avenir;
+  display: inline-block;
+  padding: 0 22px;
+  margin: 17px auto 13px;
+  width: 33%;
+}
+
+.countdownUnit h2 {
+  font-size: 30px;
+  padding-bottom: 2px;
+  margin: 0;
+  line-height: 1;
+}
+
+.countdownUnit p {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.borderCountdownUnit {
+  border-left: 2px solid Bronze;
+  border-right: 2px solid Bronze;
+}

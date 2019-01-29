@@ -1,0 +1,7 @@
+{{ pm2_log_file }} /root/.pm2/logs/*.log{
+    missingok
+    notifempty
+    compress
+    rotate 3
+    daily
+}

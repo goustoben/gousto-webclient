@@ -9,6 +9,7 @@ import { isValidPromoCode } from 'utils/order'
 import { basketResetPersistent } from 'utils/basket'
 
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { getFormSyncErrors } from 'redux-form'
 import actionTypes from './actionTypes'
 import basketActions from './basket'
 import loginActions from './login'
@@ -16,7 +17,6 @@ import userActions from './user'
 import statusActions from './status'
 import GoustoException from '../utils/GoustoException'
 import Cookies from '../utils/GoustoCookies'
-import { getFormSyncErrors } from 'redux-form'
 
 const { pending, error } = statusActions
 
@@ -221,13 +221,13 @@ export const trackPurchase = () => (
     const shippingPrice = prices.get('deliveryTotal')
 
     if (typeof ga !== 'undefined') {
-      ga('ec:setAction', 'purchase', {
+      ga('gtm234.ec:setAction', 'purchase', {
         id: orderId,
         revenue: totalPrice,
         shipping: shippingPrice,
         coupon: promoCode
       })
-      ga('send', 'pageview')
+      ga('gtm234.send', 'pageview')
     }
   }
 )

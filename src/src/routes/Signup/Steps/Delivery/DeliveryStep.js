@@ -2,6 +2,7 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import React from 'react'
 import moment from 'moment'
 import DropdownInput from 'Form/Dropdown'
+import deliverySlot from '../../../../utils/deliverySlot'
 import Button from '../../Button'
 
 import signupCss from '../../Signup.css'
@@ -34,8 +35,14 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   return { slots, deliveryDays }
 }
 
-const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, next, numPortions, trackDeliveryDayDropDownOpened, trackDeliveryDayDropDownClosed, trackDeliverySlotDropDownOpened, trackDeliveryDayEdited, trackDeliverySlotEdited }) => {
-  const { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
+const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, numPortions, next, trackDeliveryDayDropDownOpened, trackDeliveryDayDropDownClosed, trackDeliverySlotDropDownOpened, trackDeliveryDayEdited, trackDeliverySlotEdited }) => {
+  let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
+
+  if (nextDayDeliveryPaintedDoorFeature) {
+    const nextDayDeliveryDays = createNextDayDeliveryDays()
+    deliveryDays = [...nextDayDeliveryDays, ...deliveryDays]
+    slots = {...generateNextDatDeliverySlots(nextDayDeliveryDays), ...slots}
+  }
 
   const onTempDateChange = (date) => {
     setTempDate(date)
@@ -116,7 +123,39 @@ DeliveryStep.propTypes = {
   trackDeliveryDayEdited: React.PropTypes.func,
   trackDeliverySlotEdited: React.PropTypes.func,
   menuFetchDataPending: React.PropTypes.bool,
+  nextDayDeliveryPaintedDoorFeature: React.PropTypes.bool,
   next: React.PropTypes.func,
+}
+
+const isAfterCutoff = () => moment().hours() >= 12
+
+const generateNextDatDeliverySlots = nextDayDeliveryDays => {
+  const slots = {}
+  nextDayDeliveryDays.map(day => {
+    slots[day.date] = [{ label: "8AM - 7PM", subLabel: "", value: "NULL", coreSlotId: "NULL" }]
+  })
+
+  return slots
+}
+
+export const createNextDayDeliveryDays = () => {
+
+  const dayOffSet = isAfterCutoff() ? 2 : 1
+
+  return [
+    {
+      date: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet),
+      value: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet),
+      disable: false,
+      label: `${deliverySlot.formatNextDayDeliveryDayLabel(dayOffSet)} £2.99`
+    },
+    {
+      date: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet + 1),
+      value: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet + 1),
+      disable: false,
+      label: `${deliverySlot.formatNextDayDeliveryDayLabel(dayOffSet + 1)} £1.99`
+    }
+  ]
 }
 
 export default DeliveryStep

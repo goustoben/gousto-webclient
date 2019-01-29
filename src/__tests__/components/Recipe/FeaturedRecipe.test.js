@@ -7,13 +7,13 @@ import Image from 'Recipe/Image'
 import Title from 'Recipe/Title'
 import ChefQuote from 'Recipe/ChefQuote'
 import TasteScore from 'Recipe/TasteScore'
-import EquipmentRequired from 'Recipe/EquipmentRequired'
+import { RecipeAttribute } from 'Recipe/RecipeAttribute'
 
 import FeaturedRecipe from 'Recipe/FeaturedRecipe'
 
 describe('<FeaturedRecipe />', () => {
   let wrapper
-  let recipe = Immutable.fromJS({
+  const recipe = Immutable.fromJS({
     id: 1,
     title: 'test',
     rating: {
@@ -43,8 +43,9 @@ describe('<FeaturedRecipe />', () => {
     wrapper = shallow(<FeaturedRecipe recipe={recipe} />)
   })
 
-  test('should have a 1 EquipmentRequired with view "notice"', () => {
-    const component = wrapper.find(EquipmentRequired)
+  test('should contain one "use within" recipe attribute component with view "notice"', () => {
+    const component = wrapper.find(RecipeAttribute).find({name:'equipmentRequired'})
+
     expect(component.length).toBe(1)
     expect(component.prop('view')).toBe('notice')
   })

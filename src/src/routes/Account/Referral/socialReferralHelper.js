@@ -12,7 +12,7 @@ export const getMessage = (offer) => {
 export const getReferralLink = (referralCode, userFirstName = '', UTM = '') => {
   const userNameString = userFirstName ? `&name=${userFirstName}` : ''
 
-  return `https://cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${UTM}`
+  return `cook.gousto.co.uk/raf/?promo_code=${referralCode}${userNameString}${UTM}`
 }
 
 export const getFacebookReferralLink = (referralCode, userFirstName, trackingReferFriendSocialSharing) => {
