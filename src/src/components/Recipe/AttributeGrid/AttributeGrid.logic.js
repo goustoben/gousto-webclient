@@ -38,7 +38,7 @@ const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWit
         if(show !== false && attributeCount < maxNoAttributes) {
           attributeCount++
 
-          return <RecipeAttribute name={name} value={value} icon={icon} />
+          return <RecipeAttribute key={name} name={name} value={value} icon={icon} />
         }
       })}
     </div>
