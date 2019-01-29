@@ -2,8 +2,13 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import React from 'react'
 import moment from 'moment'
 import DropdownInput from 'Form/Dropdown'
-import deliverySlot from '../../../../utils/deliverySlot'
+
+import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
+
+import ModalPanel from 'Modal/ModalPanel'
+import Overlay from 'Overlay'
 import Button from '../../Button'
+import deliverySlot from '../../../../utils/deliverySlot'
 
 import signupCss from '../../Signup.css'
 import css from './DeliveryStep.css'
@@ -35,7 +40,7 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   return { slots, deliveryDays }
 }
 
-const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, numPortions, next }) => {
+const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, numPortions, isNDDPaintedDoorOpened, openNDDPaintedDoor, next }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
   if (nextDayDeliveryPaintedDoorFeature) {
@@ -46,6 +51,8 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
   }
 
   const onTempDateChange = (date) => {
+    openNDDPaintedDoor()
+
     setTempDate(date)
     if (slots[date]) {
       const slotId = slots[date][0].value
@@ -105,6 +112,21 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
 					/>
 				</div>
 			</div>
+      <Overlay open={isNDDPaintedDoorOpened} from="top">
+        <ModalPanel>
+          <div>
+            <h2>Express delivery is coming soon</h2>
+            <p>We're working on speeding up our deliveries.</p>
+            <p>Please help us improve and tell us which statement you agree with:</p>
+            <input type={"checkbox"}/><p>Next day delivery is very important to me</p>
+            <input type={"checkbox"}/><p>I am OK with 3 day delivery</p>
+            <img
+              src={"https://comps.canstockphoto.com/24-hour-delivery-symbol-with-truck-image_csp27988674.jpg"}
+              alt={"truck"}
+            />
+          </div>
+        </ModalPanel>
+      </Overlay>
 		</span>
   )
 }
@@ -118,6 +140,8 @@ DeliveryStep.propTypes = {
   boxSummaryDeliverySlotChosen: React.PropTypes.func,
   menuFetchDataPending: React.PropTypes.bool,
   nextDayDeliveryPaintedDoorFeature: React.PropTypes.bool,
+  isNDDPaintedDoorOpened: React.PropTypes.bool,
+  openNDDPaintedDoor: React.PropTypes.func,
   next: React.PropTypes.func,
 }
 
@@ -151,5 +175,19 @@ export const createNextDayDeliveryDays = () => {
     }
   ]
 }
+//
+// class DeliveryStepPaintedDoor extends React.PureComponent {
+//
+//
+//   render() {
+//     return (
+//       <Overlay open={isNDDPaintedDoorOpened} from="top">
+//         <ModalPanel>
+//           <div><h1>Hi</h1></div>
+//         </ModalPanel>
+//       </Overlay>
+//     )
+//   }
+// }
 
 export default DeliveryStep

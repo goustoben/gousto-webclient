@@ -14,6 +14,7 @@ function mapStateToProps(state) {
 
   const tempDate = state.temp.get('date', landing.date)
   const tempSlotId = state.temp.get('slotId', landing.slotId)
+  const isNDDPaintedDoorOpened = state.temp.get('isNDDPaintedDoorOpened', false)
 
   return {
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
@@ -21,6 +22,7 @@ function mapStateToProps(state) {
     tempSlotId,
     menuFetchDataPending: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
     nextDayDeliveryPaintedDoorFeature: isNextDayDeliveryPaintedDoorFeatureEnabled(state),
+    isNDDPaintedDoorOpened,
     numPortions: state.basket.get('numPortions')
   }
 }
@@ -28,6 +30,7 @@ function mapStateToProps(state) {
 const DeliveryStepContainer = connect(mapStateToProps, {
   setTempDate: date => actions.temp('date', date),
   setTempSlotId: slotId => actions.temp('slotId', slotId),
+  openNDDPaintedDoor: () => actions.temp('isNDDPaintedDoorOpened', true),
   boxSummaryDeliverySlotChosen: actions.boxSummaryDeliverySlotChosen,
 })(DeliveryStep)
 
