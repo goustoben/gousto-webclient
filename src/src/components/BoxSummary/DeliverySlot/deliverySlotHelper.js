@@ -4,7 +4,8 @@ const formatDateAndSlot = (deliveryDays) => {
     const slots = dd.get('slots')
 
     const newSlots = slots.map((slot) => {
-      const slotEndTime = slot.get('deliveryEndTime').substring(0, 2)
+      const deliveryEndTime = slot.get('deliveryEndTime')
+      const slotEndTime = deliveryEndTime && deliveryEndTime.substring(0, 2)
       const dateAndSlotCombined = `${date}_${slotEndTime}`
 
       return slot.set('dateAndSlotCombined', dateAndSlotCombined)

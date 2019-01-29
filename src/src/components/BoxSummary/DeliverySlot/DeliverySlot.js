@@ -5,6 +5,7 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import Calendar from 'Form/Calendar'
 import DropdownInput from 'Form/Dropdown'
 import SlotPicker from './SlotPicker'
+import Svg from 'Svg'
 import css from './DeliverySlot.css'
 
 class DeliverySlot extends React.Component {
@@ -37,7 +38,7 @@ class DeliverySlot extends React.Component {
 	  setTempOrderId: PropTypes.func,
 	  boxSummaryNext: PropTypes.func,
 	  displayOptions: PropTypes.instanceOf(Immutable.List),
-	  blockedDateString: PropTypes.arrayOf(PropTypes.string),
+	  limitedAvailabilitySlots: PropTypes.arrayOf(PropTypes.string),
 	  isAuthenticated: PropTypes.bool,
 	  isSubscriptionActive: PropTypes.string
 	}
@@ -50,13 +51,13 @@ class DeliverySlot extends React.Component {
 	  disableOnDelivery: false,
 	  basketRecipeNo: 0,
 	  displayOptions: Immutable.List([]),
-	  blockedDateString: [], 
+	  limitedAvailabilitySlots: [], 
 	  isAuthenticated: false,
 	}
 
 	getDeliveryDaysAndSlots = (newDate) => {
 	  const slots = {}
-	  const { disableOnDelivery, availableDaysOnly, blockedDateString, isAuthenticated, isSubscriptionActive } = this.props
+	  const { disableOnDelivery, availableDaysOnly, limitedAvailabilitySlots, isAuthenticated, isSubscriptionActive } = this.props
 	  let hasOrders = false
 	  
 	  const deliveryDays = this.props.deliveryDays.map(dd => {
@@ -64,7 +65,7 @@ class DeliverySlot extends React.Component {
       
 	    slots[date] = dd.get('slots').map(slot => {
 				
-	      const isSlotBlocked = blockedDateString && blockedDateString.includes(slot.get('dateAndSlotCombined')) ? true : false
+	      const isSlotBlocked = limitedAvailabilitySlots && limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined')) ? true : false
 		 
 	      return {
 	        label: this.formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime')),
@@ -151,9 +152,9 @@ class DeliverySlot extends React.Component {
 	)
 
 	render = () => {
-	  const { displayOptions, numPortions, blockedDateString } = this.props
+	  const { displayOptions, numPortions, limitedAvailabilitySlots } = this.props
     
-	  const blockedDatesList = blockedDateString.map(date => date.slice(0, 10))
+	  const datesOflimitedAvailabilitySlots = limitedAvailabilitySlots.map(date => date.slice(0, 10))
     
 	  const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
     
@@ -260,7 +261,7 @@ class DeliverySlot extends React.Component {
 				<div className={css.row}>
 					<span className={css.supportingText}>
 						{warningMessage ? <p className={css.errorText}>{warningMessage}</p> : <p>{deliveryCopy}</p>}
-						{blockedDatesList.includes(this.props.tempDate) ? <p><span className={css.iconDisabled}></span> Delivery time reserved for subscription customers</p> : null}
+						{datesOflimitedAvailabilitySlots.includes(this.props.tempDate) ? <p><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /> Unavailable due to high demand</p> : null}
 					</span>
 				</div>
 				<Button
