@@ -342,7 +342,7 @@ describe('checkout actions', () => {
       it('should call ga with order details', async () => {
         trackPurchase()(dispatch, getState)
         expect(ga).toHaveBeenCalled()
-        expect(ga).toHaveBeenCalledWith('gtm234.ec:setAction', 'purchase', {
+        expect(ga).toHaveBeenCalledWith('gousto.ec:setAction', 'purchase', {
           id: 'test-order-id',
           revenue: 28.00,
           shipping: 2.99,

@@ -221,13 +221,14 @@ export const trackPurchase = () => (
     const shippingPrice = prices.get('deliveryTotal')
 
     if (typeof ga !== 'undefined') {
-      ga('gtm234.ec:setAction', 'purchase', {
+      ga('create', 'UA-32127122-2', 'auto', 'gousto')
+      ga('gousto.ec:setAction', 'purchase', {
         id: orderId,
         revenue: totalPrice,
         shipping: shippingPrice,
         coupon: promoCode
       })
-      ga('gtm234.send', 'pageview')
+      ga('gousto.send', 'pageview')
     }
   }
 )
