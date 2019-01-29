@@ -248,7 +248,7 @@ class DeliverySlot extends React.Component {
 				{(() => (
 				  !disableNewDatePicker ?
 				    (<div className={css.row}>
-						<Calendar dates={deliveryDays} selected={this.props.tempDate} onClick={this.handleDateChange} blockedDateString={blockedDateString}/>
+						<Calendar dates={deliveryDays} selected={this.props.tempDate} onClick={this.handleDateChange}/>
          </div>) : null
 				))()}
 				{(() => (

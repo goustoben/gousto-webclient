@@ -85,7 +85,7 @@ const minusOneWeek = (originalWeekNo) => {
   return weekNo
 }
 
-function dateToDay(columns, weekNo, dayNo, selected, onClick, blockedDateString) {
+function dateToDay(columns, weekNo, dayNo, selected, onClick) {
   const date = columns[dayNo][weekNo]
 
   return {
@@ -99,7 +99,6 @@ function dateToDay(columns, weekNo, dayNo, selected, onClick, blockedDateString)
     icon: date ? date.icon : null,
     orderId: date ? date.orderId : null,
     orderEmpty: date ? date.orderEmpty : null,
-    blockedDateString: date ? blockedDateString : null,
   }
 }
 
@@ -136,8 +135,6 @@ Calendar.propTypes = {
   dates: React.PropTypes.array.isRequired,
   selected: React.PropTypes.string,
   onClick: React.PropTypes.func.isRequired,
-  blockedDate: React.PropTypes.string,
-  blockedSlotNumber: React.PropTypes.string,
 }
 
 export default Calendar

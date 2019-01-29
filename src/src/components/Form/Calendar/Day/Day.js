@@ -44,8 +44,6 @@ Day.propTypes = {
   icon: React.PropTypes.string,
   orderId: React.PropTypes.string,
   className: React.PropTypes.string,
-  blockedDate: React.PropTypes.string,
-  blockedSlotNumber: React.PropTypes.string,
 }
 
 export default Day
