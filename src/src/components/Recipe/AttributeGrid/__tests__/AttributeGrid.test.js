@@ -14,13 +14,15 @@ describe('AttributeGrid', () => {
   const fiveADay = 2
   const cals = 100
   const cuisine = 'Italian'
+  const dairyFree = true
+  const glutenFree = true
   let maxNoAttributes = 4
   let wrapper
 
   describe('Recipe Card', () => {
 
     beforeEach(() => {
-      wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine}/>)
+      wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine} />)
     })
 
     test('should contain the max number of attributes when all attributes meets show conditions', () => {
@@ -48,16 +50,18 @@ describe('AttributeGrid', () => {
   describe('Detailed Recipe Card', () => {
     beforeEach(() => {
       maxNoAttributes = 20
-      wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} showDetailedRecipe cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine}/>)
+      wrapper = shallow(<AttributeGrid maxNoAttributes={maxNoAttributes} showDetailedRecipe cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} cals={cals} cuisine={cuisine} dairyFree={dairyFree} glutenFree={glutenFree}/>)
     })
 
     test('should contain less than the max number of attributes', () => {
       expect(wrapper.find(RecipeAttribute).length).toBeLessThanOrEqual(maxNoAttributes)
     })
 
-    test('should contain cookingTime, useWithin, fiveADay, diet, cals and cuisine when all attributes meet show conditions ', () => {
+    test('should contain cookingTime, useWithin, glutenFree, dairyFree, fiveADay, diet, cals and cuisine when all attributes meet show conditions ', () => {
       expect(wrapper.find(RecipeAttribute).find({name:'cookingTime'}).length).toEqual(1)
       expect(wrapper.find(RecipeAttribute).find({name:'useWithin'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name:'glutenFree'}).length).toEqual(1)
+      expect(wrapper.find(RecipeAttribute).find({name:'dairyFree'}).length).toEqual(1)
       expect(wrapper.find(RecipeAttribute).find({name:'fiveADay'}).length).toEqual(1)
       expect(wrapper.find(RecipeAttribute).find({name:'diet'}).length).toEqual(1)
       expect(wrapper.find(RecipeAttribute).find({name:'cals'}).length).toEqual(1)
