@@ -55,6 +55,8 @@ AttributeGrid.propTypes = {
   fiveADay: PropTypes.number.isRequired,
   cals: PropTypes.number,
   cuisine: PropTypes.string,
+  glutenFree: PropTypes.bool,
+  dairyFree: PropTypes.bool,
 }
 
 AttributeGrid.defaultProps = {
