@@ -265,7 +265,7 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
   const deliveryDays = deliveryDaysWithBlockedSlots || state.boxSummaryDeliveryDays
   const userOrders = state.user.get('orders')
   const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
-  const blockedDateString = state.features.getIn(['features', 'unavailableSlots', 'value']) || []
+  const limitedAvailabilitySlots = state.features.getIn(['features', 'unavailableSlots', 'value']) || ['2019-02-04_19', '2019-02-04_22', '2019-02-04_12', '2019-02-03_19']
 
   // try and find the delivery day
   let day
@@ -349,7 +349,7 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
     } else {
       // try to find the default slot for that day
       let foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-        if (blockedDateString && !blockedDateString.includes(slot.get('dateAndSlotCombined'))) {
+        if (limitedAvailabilitySlots && !limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined'))) {
           return slot.get('isDefault')
         }
       }) 
@@ -357,7 +357,7 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
       if (!foundSlot) {
         // otherwise choose the first non disabled slot on that day
         foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-          if (blockedDateString && !blockedDateString.includes(slot.get('dateAndSlotCombined'))) {
+          if (limitedAvailabilitySlots && !limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined'))) {
             return slot
           }
         }) 

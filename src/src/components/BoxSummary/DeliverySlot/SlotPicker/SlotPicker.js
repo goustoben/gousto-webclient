@@ -20,7 +20,8 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => (
 			  noHover={slot.disabled}
 			>
 				<span className={css.fullWidth}>
-					{slot.disabled ? <div className={css.disabledLine}></div>: null}
+					{slot.disabled ? <div className={(slots[date].length > 2) ? css.disabledLine1 : css.bigDisabledLine1 }></div>: null}
+					{slot.disabled ? <div className={(slots[date].length > 2) ? css.disabledLine2 : css.bigDisabledLine2 }></div>: null}
 					<span className={(slots[date].length > 2) ? css.blockLabel : css.label}>{slot.label}</span>
 					<span className={(slots[date].length > 2) ? css.blockLabel : css.inlineLabel}>{slot.subLabel}</span>
 				</span>

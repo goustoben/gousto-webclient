@@ -42,22 +42,40 @@
 }
 
 .disabled {
-    color: TertiaryColor !important;
+    color: Bluecheese50 !important;
 	background-color: TertiaryBgColor !important;
 	/* border: 1px solid PrimaryColor !important; */
 }
 
 .disabledLine {
     height: 1px;
-    width: 100%;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(20deg);
-    background-color: TertiaryColor;
+    width: 113%;
+    background-color: Bluecheese50;
     position: absolute;
-    top: 17px;
-    /* position: absolute; */
+    top: 19px;
+
 }
 
-.disabledText {
+.disabledLine1 {
+    composes: disabledLine;
+    transform: rotate(20deg);
+    left: -3px;
+}
 
+.disabledLine2 {
+    composes: disabledLine;
+    transform: rotate(-20deg);
+    left: -10px;
+}
+
+.bigDisabledLine1 {
+    composes: disabledLine;
+    transform: rotate(7deg);
+}
+
+.bigDisabledLine2 {
+    composes: disabledLine;
+    transform: rotate(-7deg);
+    top: 19px;
+    left: -36px;
 }
