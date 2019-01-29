@@ -34,6 +34,16 @@ describe('Recipe Attribute', () => {
     expect(wrapper.find('span').text()).toContain('Use within 5 - 6 days')
   })
 
+  test('should display the gluten free correctly', () => {
+    const wrapper = shallow(<RecipeAttribute name='glutenFree' value />)
+    expect(wrapper.find('span').text()).toContain('Gluten free')
+  })
+
+  test('should display the dairy free correctly', () => {
+    const wrapper = shallow(<RecipeAttribute name='dairyFree' value />)
+    expect(wrapper.find('span').text()).toContain('Dairy free')
+  })
+
   test('should display the calorie count correctly', () => {
     const wrapper = shallow(<RecipeAttribute name='cals' value={123} />)
     expect(wrapper.find('span').text()).toContain('123 cals / serving')
@@ -50,7 +60,7 @@ describe('Recipe Attribute', () => {
   })
 
   test('should display the normal diet types correctly', () => {
-    const diets = ['meat', 'fish', 'vegetarian']
+    const diets = ['Meat', 'Fish', 'Vegetarian']
 
     diets.forEach(diet => {
       const wrapper = shallow(<RecipeAttribute name='diet' value={diet} />)
@@ -60,7 +70,7 @@ describe('Recipe Attribute', () => {
 
   test('should display the vegan diet type as plant-based', () => {
     const wrapper = shallow(<RecipeAttribute name='diet' value={'vegan'} />)
-    expect(wrapper.find('span').text()).toContain('plant-based')
+    expect(wrapper.find('span').text()).toContain('Plant-based')
   })
 
   test('should display equipment required label without the equipment listed ', () => {

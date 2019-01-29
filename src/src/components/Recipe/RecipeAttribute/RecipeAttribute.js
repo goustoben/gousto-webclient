@@ -21,7 +21,11 @@ const RecipeAttribute = ({ icon, name, value, show, view }) => (
 RecipeAttribute.propTypes = {
   icon: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool
+  ]).isRequired,
   show: PropTypes.bool,
   view: PropTypes.string,
 }

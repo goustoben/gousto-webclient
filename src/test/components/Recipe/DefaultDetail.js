@@ -13,7 +13,6 @@ import IngredientsList from 'Recipe/Detail/IngredientsList'
 import Allergens from 'Recipe/Detail/Allergens'
 import Immutable from 'immutable'
 import { RecipeAttribute } from 'Recipe/RecipeAttribute'
-import Availability from 'Recipe/Availability'
 
 import DefaultDetail from 'Recipe/Detail/DefaultDetail'
 chai.use(sinonChai)
@@ -39,7 +38,6 @@ describe('<DefaultDetail />', function() {
       id={123}
       useWithin="5 days"
       cookingTime={123}
-      availability={Immutable.List([{}])}
       cutoffDate={new Date()}
       description="amazing recipe"
       youWillNeed={Immutable.List(['spoon', 'fork'])}
@@ -86,10 +84,6 @@ describe('<DefaultDetail />', function() {
     expect(wrapper.find(RecipeAttribute).find({name:'useWithin'}).length).to.equal(1)
   })
 
-  it('should return a <Availability>', function() {
-    expect(wrapper.find(Availability).length).to.equal(1)
-  })
-
   it('should contain one "cuisine" recipe attribute component', () => {
     expect(wrapper.find(RecipeAttribute).find({name:'cuisine'}).length).to.equal(1)
   })
@@ -128,7 +122,6 @@ describe('<DefaultDetail />', function() {
       id: 123,
       useWithin: '5 days',
       cookingTime: 123,
-      availability: Immutable.List([{}]),
       cutoffDate: new Date(),
       description: 'amazing recipe',
       youWillNeed: Immutable.List(['spoon', 'fork']),

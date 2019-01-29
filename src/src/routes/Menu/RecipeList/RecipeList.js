@@ -165,7 +165,8 @@ class RecipeList extends React.Component {
               isRecommendedRecipe={isRecommendedRecipe(recipeId, allRecipesList, recipesStore)}
               range={recipe.get('range', '')}
               tasteScore={recipe.getIn(['recommendationData', 'score'])}
-              fiveADayValue={recipe.get('fiveADay')}
+              fiveADay={recipe.get('fiveADay')}
+              diet={recipe.get('dietType')}
             />
           )
         }).toArray()}
