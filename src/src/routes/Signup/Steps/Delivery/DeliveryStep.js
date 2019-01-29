@@ -48,58 +48,58 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
   trackDeliveryDayDropDownOpened() // remve and move to relevant onOpening
 
   return (
-		<span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
-			<div className={signupCss.fullWidth}>
-				<div className={signupCss.header}>
+    <span className={signupCss.stepContainer} data-testing="signupDeliveryStep">
+      <div className={signupCss.fullWidth}>
+        <div className={signupCss.header}>
           <Image name="delivery-day" />
-					<h1 className={signupCss.heading}>Which delivery day would you like?</h1>
-				</div>
-				<div className={signupCss.body}>
-					<div className={css.container}>
-						<div className={css.row}>
-							<div className={css.left} data-testing="signupDeliveryDay">
-								<DropdownInput
-								  color="secondary"
-								  uppercase
-								  className={css.dropdown}
-								  options={deliveryDays}
-								  onChange={onTempDateChange}
-								  value={tempDate}
-								/>
-							</div>
-							<div className={css.right} data-testing="signupDeliveryTime">
-								<DropdownInput
-								  color="secondary"
-								  uppercase
-								  options={slots[tempDate] ? slots[tempDate] : []}
-								  onChange={setTempSlotId}
+          <h1 className={signupCss.heading}>Which delivery day would you like?</h1>
+        </div>
+        <div className={signupCss.body}>
+          <div className={css.container}>
+            <div className={css.row}>
+              <div className={css.left} data-testing="signupDeliveryDay">
+                <DropdownInput
+                  color="secondary"
+                  uppercase
+                  className={css.dropdown}
+                  options={deliveryDays}
+                  onChange={onTempDateChange}
+                  value={tempDate}
+                />
+              </div>
+              <div className={css.right} data-testing="signupDeliveryTime">
+                <DropdownInput
+                  color="secondary"
+                  uppercase
+                  options={slots[tempDate] ? slots[tempDate] : []}
+                  onChange={setTempSlotId}
                   value={tempSlotId}
-								/>
-							</div>
-						</div>
-					</div>
-					<p className={signupCss.bodyText}>
-						Our insulated box and ice packs help keep your food cool. And if you're not home, we can leave your box in your chosen safe place.
-					</p>
-				</div>
-			</div>
-			<div className={signupCss.footer}>
-				<div className={signupCss.inputContainer}>
-					<Button
-					  data-testing="signupDeliveryCTA"
-					  disabled={!tempDate || !tempSlotId}
-					  width="full"
-					  onClick={() => (
-					    boxSummaryDeliverySlotChosen({
-					      date: tempDate,
-					      slotId: tempSlotId,
-					    }).then(next)
-					  )}
-					  pending={menuFetchDataPending}
-					/>
-				</div>
-			</div>
-		</span>
+                />
+              </div>
+            </div>
+          </div>
+          <p className={signupCss.bodyText}>
+            Our insulated box and ice packs help keep your food cool. And if you're not home, we can leave your box in your chosen safe place.
+          </p>
+        </div>
+      </div>
+      <div className={signupCss.footer}>
+        <div className={signupCss.inputContainer}>
+          <Button
+            data-testing="signupDeliveryCTA"
+            disabled={!tempDate || !tempSlotId}
+            width="full"
+            onClick={() => (
+              boxSummaryDeliverySlotChosen({
+                date: tempDate,
+                slotId: tempSlotId,
+              }).then(next)
+            )}
+            pending={menuFetchDataPending}
+          />
+        </div>
+      </div>
+    </span>
   )
 }
 
