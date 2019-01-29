@@ -12,7 +12,7 @@ function mapStateToProps(state) {
   if (disableNewDatePicker) { // if not logged in
     disableNewDatePicker = !state.features.getIn(['newDatePicker', 'value']) // allow enabling via feature flag
   }
-  const blockedDateString = state.features.getIn(['features', 'unavailableSlots', 'value'])
+  const blockedDateString = state.features.getIn(['features', 'unavailableSlots', 'value']) || []
   const deliveryDaysWithBlockedSlots = formatDateAndSlot(state.boxSummaryDeliveryDays)
   
   const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)

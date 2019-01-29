@@ -110,7 +110,7 @@ const noEmptyWeeks = (weekNo, columns) => (
     .length > 0
 )
 
-const Calendar = ({ dates, selected, onClick, blockedDateString }) => {
+const Calendar = ({ dates, selected, onClick }) => {
   const { header, columns, bumpedIds } = getCalendarGrid(dates)
 
   return (
@@ -122,7 +122,7 @@ const Calendar = ({ dates, selected, onClick, blockedDateString }) => {
 						<div className={css.dayName}>{header[dayNo]}</div>
 						{Object.keys(columns[dayNo]).filter(weekNo => noEmptyWeeks(weekNo, columns)).map((weekNo) => {
 						  const weekNoToUse = (bumpedIds.indexOf(`${weekNo}${dayNo}`) !== -1 && !columns[dayNo][weekNo]) ? minusOneWeek(weekNo) : weekNo
-						  const day = dateToDay(columns, weekNoToUse, dayNo, selected, onClick, blockedDateString)
+						  const day = dateToDay(columns, weekNoToUse, dayNo, selected, onClick)
 
 						  return <Day {...day} className={css.day} />
 						})}
