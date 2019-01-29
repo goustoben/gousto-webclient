@@ -1,56 +1,61 @@
 import actionTypes from './actionTypes'
 
-export const trackDeliveryDayDropDownOpened = (date, slotId) => dispatch => {
+export const trackDeliveryDayDropDownOpened = (date, day_offset, delivery_slot_id) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_DAY_DROPDOWN_OPEN,
     trackingData: {
       actionType: 'DeliveryDayDropDown Opened',
       date,
-      slotId
+      day_offset,
+      delivery_slot_id
     }
   })
 }
 
-export const trackDeliveryDayDropDownClosed = (date, slotId) => dispatch => {
+export const trackDeliveryDayDropDownClosed = (date, day_offset, delivery_slot_id) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_DAY_DROPDOWN_CLOSED,
     trackingData: {
       actionType: 'DeliveryDayDropDown Closed',
       date,
-      slotId
+      day_offset,
+      delivery_slot_id
     }
   })
 }
 
-export const trackDeliverySlotDropDownOpened = (date, slotId) => dispatch => {
+export const trackDeliverySlotDropDownOpened = (date, day_offset, delivery_slot_id) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_SLOT_DROPDOWN_OPEN,
     trackingData: {
       actionType: 'DeliverySlotDropDown Opened',
       date,
-      slotId
+      day_offset,
+      delivery_slot_id
     }
   })
 }
 
-export const trackDeliveryDayEdited = (date, slotId) => dispatch => {
+export const trackDeliveryDayEdited = (date, day_offset, delivery_slot_id) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_DAY_SELECTION_EDITED,
     trackingData: {
       actionType: 'DeliveryDay Edited',
       date,
-      slotId
+      day_offset,
+      delivery_slot_id
     }
   })
 }
 
-export const trackDeliverySlotEdited = (date, slotId) => dispatch => {
+export const trackDeliverySlotEdited = (date, day_offset, delivery_slot_id) => dispatch => {
   dispatch({
     type: actionTypes.DELIVERY_SLOT_SELECTION_EDITED,
     trackingData: {
       actionType: 'DeliverySlot Edited',
       date,
-      slotId
+      day_offset,
+      delivery_slot_id
     }
   })
 }

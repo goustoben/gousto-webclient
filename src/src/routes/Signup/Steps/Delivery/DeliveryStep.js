@@ -49,7 +49,7 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
     if (date !== tempDate) {
       // Track the edit
       const slotId = slots[date] ? slots[date][0].value : null
-      trackDeliveryDayEdited(date, slotId)
+      trackDeliveryDayEdited(date, getDateOffset(date), slotId)
     }
     
     setTempDate(date)
@@ -63,21 +63,21 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
     // If the slot id has changed
     if (slotId !== tempSlotId) {
       // Track the edit
-      trackDeliverySlotEdited(tempDate, slotId)
+      trackDeliverySlotEdited(tempDate, getDateOffset(tempDate), slotId)
     }
     setTempSlotId(slotId)
   }
 
   const onDayDropdownOpen = e => {
-    trackDeliveryDayDropDownOpened(tempDate, tempSlotId)
+    trackDeliveryDayDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 
   const onDayDropdownClose = e => {
-    trackDeliveryDayDropDownClosed(tempDate, tempSlotId)
+    trackDeliveryDayDropDownClosed(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 
   const onSlotDropdownOpen = e => {
-    trackDeliverySlotDropDownOpened(tempDate, tempSlotId)
+    trackDeliverySlotDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 
   return (
@@ -165,6 +165,15 @@ const generateNextDayDeliverySlots = nextDayDeliveryDays => {
   })
 
   return slots
+}
+
+const getDateOffset = date => {
+  const now = moment()
+  const then = moment(date)
+  const offset = then.diff(now, 'days')
+  const adjustedOffset = isAfterCutoff() ? offset : offset + 1
+
+  return adjustedOffset
 }
 
 export const createNextDayDeliveryDays = () => {
