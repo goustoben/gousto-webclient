@@ -36,12 +36,12 @@ describe('Recipe Attribute', () => {
 
   test('should display the gluten free correctly', () => {
     const wrapper = shallow(<RecipeAttribute name='glutenFree' value />)
-    expect(wrapper.find('span').text()).toContain('Gluten Free')
+    expect(wrapper.find('span').text()).toContain('Gluten free')
   })
 
   test('should display the dairy free correctly', () => {
     const wrapper = shallow(<RecipeAttribute name='dairyFree' value />)
-    expect(wrapper.find('span').text()).toContain('Dairy Free')
+    expect(wrapper.find('span').text()).toContain('Dairy free')
   })
 
   test('should display the calorie count correctly', () => {

@@ -12,8 +12,8 @@ const descriptions = {
   cuisine: cuisine => `${cuisine} Cuisine`,
   cals: cals => `${Math.round(cals)} cals / serving${asterisk}`,
   diet: diet => (diet === 'vegan') ? 'Plant-based' : capitalizeFirstLetter(diet),
-  glutenFree: glutenFree => glutenFree && 'Gluten Free',
-  dairyFree: dairyFree => dairyFree && 'Dairy Free',
+  glutenFree: glutenFree => glutenFree && 'Gluten free',
+  dairyFree: dairyFree => dairyFree && 'Dairy free',
 }
 
 export const getDescription = (name, value, view) => (descriptions[name](value, view) || '')
