@@ -222,6 +222,7 @@ export const trackPurchase = () => (
 
     if (typeof ga !== 'undefined') {
       ga('create', 'UA-32127122-2', 'auto', 'gousto')
+      ga('gousto.require', 'ec')
       ga('gousto.ec:setAction', 'purchase', {
         id: orderId,
         revenue: totalPrice,
