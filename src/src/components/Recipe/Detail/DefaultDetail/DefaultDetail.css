@@ -1,4 +1,4 @@
-@value ScreenXXSMax, ScreenXSMax, ScreenSMMin, ScreenXXSMin, ScreenSMMax, ScreenMDMin, ScreenMDMax, ScreenLGMin from 'styles/screenSizes.css';
+@value ScreenXXSMax, ScreenXSMax, ScreenSMMin, ScreenXXSMin, ScreenMDMin, ScreenMDMax, ScreenLGMin from 'styles/screenSizes.css';
 @value White, Basa from 'styles/colors.css';
 @value SpacingLG, SpacingMD, SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
 
@@ -92,31 +92,33 @@
   }
 
   .infoBox {
-    composes: col-xs-12 col-md-5 col-lg-4 float-left w-100 from 'sass-loader!styles/bootstrap.scss';
+    composes: col-xs-12 col-md-12 col-xl-4 float-left from 'sass-loader!styles/bootstrap.scss';
     composes: paddingMDLeftRight paddingLGTopBottom from 'sass-loader!styles/spacing.scss';
     position: absolute;
     background-color: White;
-
     right: 35px;
     top: SpacingMD;
-    z-index: 5;
-
-    @media ScreenSMMax {
+   
+    
+    @media ScreenLGMin {
       right: SpacingLG;
-      top: SpacingSM;
+      top: SpacingLG;
       padding: SpacingSM;
+      line-height: 1.8;
+      z-index: 5;
     }
-
-    @media ScreenXSMax {
+    
+    @media ScreenMDMax {
       position: relative;
       background: White;
       right: 0;
-      top: 0;
-      margin: 0 0 SpacingMD;
+      top: 15px;
+      margin: 0 20px SpacingMD;
     }
 
-    @media ScreenLGMin {
-      line-height: 1.8;
+    @media ScreenXSMax {
+      width: 100%;
+      margin: 0 0 SpacingMD;
     }
   }
 
@@ -160,7 +162,7 @@
   }
   .mobileHide {
     display: none;
-    @media ScreenSMMin {
+    @media ScreenXXSMin {
      display: block;
     }
   }
@@ -224,21 +226,21 @@
   }
 
   .rangeBadgeDetails {
-    margin-top: -24px;
-    margin-left: -10px;
+    margin-top: -44px;
+    margin-left: -15px;
     position: absolute;
 
     @media ScreenSMMin {
       position: relative;
-      margin-top: 0px;
-      margin-left: -25px;
-      margin-bottom: 13px;
+      margin-left: -35px;
+      margin-top: -50px;
+      margin-bottom: 32px;
     }
 
-    @media ScreenMDMin {
+    @media ScreenLGMin {
       position: relative;
       margin-left: -25px;
-      margin-top: -10px;
+      margin-top: 0px;
       margin-bottom: 13px;
     }
   }
