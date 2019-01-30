@@ -102,7 +102,7 @@
 
     @media ScreenLGMin {
       right: SpacingLG;
-      top: SpacingSM;
+      top: SpacingLG;
       padding: SpacingSM;
       line-height: 1.8;
       z-index: 5;
