@@ -1,7 +1,7 @@
 const formatDateAndSlot = (deliveryDays) => {
-  return deliveryDays.map(dd => {
-    const date = dd.get('date')
-    const slots = dd.get('slots')
+  return deliveryDays.map(deliveryDay => {
+    const date = deliveryDay.get('date')
+    const slots = deliveryDay.get('slots')
 
     const newSlots = slots.map((slot) => {
       const deliveryEndTime = slot.get('deliveryEndTime')
@@ -11,7 +11,7 @@ const formatDateAndSlot = (deliveryDays) => {
       return slot.set('dateAndSlotCombined', dateAndSlotCombined)
     })
 
-    return dd.set('slots', newSlots)
+    return deliveryDay.set('slots', newSlots)
   })
 }
 

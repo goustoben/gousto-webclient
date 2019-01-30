@@ -60,10 +60,10 @@ class DeliverySlot extends React.Component {
 	  const { disableOnDelivery, availableDaysOnly, limitedAvailabilitySlots, isAuthenticated, isSubscriptionActive } = this.props
 	  let hasOrders = false
 	  
-	  const deliveryDays = this.props.deliveryDays.map(dd => {
-	    const date = dd.get('date')
+	  const deliveryDays = this.props.deliveryDays.map(deliveryDay => {
+	    const date = deliveryDay.get('date')
       
-	    slots[date] = dd.get('slots').map(slot => {
+	    slots[date] = deliveryDay.get('slots').map(slot => {
 				
 	      const isSlotBlocked = limitedAvailabilitySlots && limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined')) ? true : false
 		 
@@ -92,13 +92,13 @@ class DeliverySlot extends React.Component {
 	    }
 
 	    const deliveryDisabled = hasOrdersToday && disableOnDelivery
-	    let disabled = deliveryDisabled || dd.get('alternateDeliveryDay') !== null
+	    let disabled = deliveryDisabled || deliveryDay.get('alternateDeliveryDay') !== null
 	    let legacyData = {}
 
 	    if (this.props.disableNewDatePicker) {
 	      const subLabel = hasOrdersToday ? (<span className={css.truckIcon} />) : ''
 	      legacyData = { label: moment(date).format('ddd D MMM'), subLabel, ordered: hasOrdersToday }
-	      disabled = (dd && dd.get('alternateDeliveryDay') !== null) || hasOrdersToday
+	      disabled = (deliveryDay && deliveryDay.get('alternateDeliveryDay') !== null) || hasOrdersToday
 	    }
 	    disabled = disabled || (!!availableDaysOnly.size && !availableDaysOnly.includes(date))
 
