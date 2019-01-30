@@ -92,14 +92,14 @@
   }
 
   .infoBox {
-    composes: col-xs-12 col-md-12 col-xl-4 float-left w-100 from 'sass-loader!styles/bootstrap.scss';
+    composes: col-xs-12 col-md-12 col-xl-4 float-left from 'sass-loader!styles/bootstrap.scss';
     composes: paddingMDLeftRight paddingLGTopBottom from 'sass-loader!styles/spacing.scss';
     position: absolute;
     background-color: White;
     right: 35px;
     top: SpacingMD;
    
-
+    
     @media ScreenLGMin {
       right: SpacingLG;
       top: SpacingLG;
@@ -107,12 +107,17 @@
       line-height: 1.8;
       z-index: 5;
     }
-
+    
     @media ScreenMDMax {
       position: relative;
       background: White;
       right: 0;
-      top: 0;
+      top: 15px;
+      margin: 0 20px SpacingMD;
+    }
+
+    @media ScreenXSMax {
+      width: 100%;
       margin: 0 0 SpacingMD;
     }
   }
@@ -221,15 +226,15 @@
   }
 
   .rangeBadgeDetails {
-    margin-top: -29px;
+    margin-top: -44px;
     margin-left: -15px;
     position: absolute;
 
     @media ScreenSMMin {
       position: relative;
-      margin-left: -16px;
-      margin-top: -34px;
-      margin-bottom: 13px;
+      margin-left: -35px;
+      margin-top: -50px;
+      margin-bottom: 32px;
     }
 
     @media ScreenLGMin {
