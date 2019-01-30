@@ -1,4 +1,4 @@
-@value White from 'styles/colors.css';
+@value Bluecheese, Bluecheese50, White from 'styles/colors.css';
 @value sizeSM, sizeXXS from 'styles/typography.css';
 @value SpacingXXS from 'sass-loader!styles/spacing.scss';
 @value (
@@ -7,7 +7,6 @@
 	TertiaryColor, TertiaryBgColor, TertiaryBorderColor, TertiaryHoverColor, TertiaryHoverActiveColor,
 	NegativeColor, NegativeBgColor, NegativeHoverColor, NegativeHoverBgColor
 ) from 'styles/buttons.css';
-@value Bluecheese, Bluecheese50, White from 'styles/colors.css';
 
 .label {
 	composes: textBold from 'styles/typography.css';
@@ -53,7 +52,6 @@
     background-color: Bluecheese50;
     position: absolute;
     top: 19px;
-
 }
 
 .disabledLine1 {
