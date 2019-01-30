@@ -1,5 +1,5 @@
 @value sizeMD from 'styles/typography.css';
-
+@value Basa from 'styles/colors.css';
 @value attributesLineHeight 1.8;
 @value chefTtileWidth calc(100% - 85px);
 
@@ -13,6 +13,7 @@
 
 .textContainer {
 	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+	padding-top: 5px;
 	margin-top: 15px;
 }
 
@@ -25,15 +26,6 @@
 
 .linkIfChef {
 	max-width: chefTtileWidth;
-}
-
-.attributes {
-	line-height: attributesLineHeight;
-	font-size: sizeMD;
-}
-
-.attributeMinHeight {
-	min-height: calc(sizeMD * attributesLineHeight);
 }
 
 .score {

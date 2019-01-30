@@ -1,25 +1,21 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
 import Image from 'Recipe/Image'
 import Title from 'Recipe/Title'
-import Diet from 'Recipe/Diet'
-import Cals from 'Recipe/Cals'
 import Rating from 'Recipe/Rating'
-import Cuisine from 'Recipe/Cuisine'
-import UseWithin from 'Recipe/UseWithin'
 import AddButton from 'Recipe/AddButton'
 import RangeBadge from 'Recipe/RangeBadge'
-import CookingTime from 'Recipe/CookingTime'
 import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
-import Availability from 'Recipe/Availability'
 import { detailPropTypes } from 'Recipe/Detail/Detail'
+import { AttributeGrid } from 'Recipe/AttributeGrid'
 import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
 
-const DefaultDetail = ({ media, title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, availability, cutoffDate, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange, restrictedView, position, surcharge, range }) => (
+const DefaultDetail = ({ media, title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange, restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree }) => (
   <div>
     <div className={css.container}>
       <div className={css.header}>
@@ -43,20 +39,29 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
               <RangeBadge range={range} />
             </div>
             <p className={css.infoBoxText}>{description}</p>
-            <CookingTime time={cookingTime} />
-            <UseWithin useWithin={useWithin} />
-            <Availability availability={availability} date={cutoffDate} />
-            <Cuisine cuisine={cuisine} />
-            {diet && ['vegetarian', 'vegan'].includes(diet.toLowerCase()) ? <Diet diet={diet} /> : null}
-            {!restrictedView && <Cals cals={perPortion.get('energyKcal')} restrictedView={restrictedView} />}
+            <AttributeGrid
+              maxNoAttributes={20}
+              showDetailedRecipe
+              cookingTime={cookingTime}
+              useWithin={useWithin}
+              equipment={equipment}
+              diet={diet}
+              fiveADay={fiveADay}
+              cals={perPortion.get('energyKcal')}
+              cuisine={cuisine}
+              glutenFree={glutenFree}
+              dairyFree={dairyFree}
+            />
             {equipment && equipment.size ? (
               <p className={css.additionalInfo}>
                 Equipment required: {equipment.toJS().join(', ')}
               </p>
             ) : null}
-            <p className={css.additionalInfo}>
+            {youWillNeed && youWillNeed.size ? (
+              <p className={css.additionalInfo}>
               What you'll need: {youWillNeed.map((item, idx) => <span key={idx}>{item}{(youWillNeed.size - 1) !== idx ? ', ' : null}</span>)}
-            </p>
+              </p>
+            ) : null }
             <span className={css.mobileHide}>
               <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
             </span>
@@ -105,6 +110,7 @@ DefaultDetail.propTypes = {
 
 DefaultDetail.defaultProps = {
   scrolledPastPoint: false,
+  fiveADay: 0
 }
 
 export default DefaultDetail

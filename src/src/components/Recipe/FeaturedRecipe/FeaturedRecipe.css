@@ -1,7 +1,7 @@
 @value ScreenMLMax, ScreenMLMin, ScreenSMMin from 'styles/screenSizes.css';
 @value SpacingLG as GutterSize from 'sass-loader!styles/spacing.scss';
 @value sizeMD from 'styles/typography.css';
-@value White from 'styles/colors.css';
+@value White, Basa from 'styles/colors.css';
 
 @value attributesLineHeight 1.8;
 @value chefTtileWidth calc(100% - 85px);
@@ -77,15 +77,6 @@
 	@media ScreenMLMin {
 		display: none;
 	}
-}
-
-.attributes {
-	line-height: attributesLineHeight;
-	font-size: sizeMD;
-}
-
-.attributeMinHeight {
-	min-height: calc(sizeMD * attributesLineHeight);
 }
 
 .score {
