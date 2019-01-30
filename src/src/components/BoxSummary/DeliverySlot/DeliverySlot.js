@@ -4,8 +4,8 @@ import moment from 'moment'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import Calendar from 'Form/Calendar'
 import DropdownInput from 'Form/Dropdown'
-import SlotPicker from './SlotPicker'
 import Svg from 'Svg'
+import SlotPicker from './SlotPicker'
 import css from './DeliverySlot.css'
 
 class DeliverySlot extends React.Component {
@@ -152,9 +152,10 @@ class DeliverySlot extends React.Component {
 	)
 
 	render = () => {
-	  const { displayOptions, numPortions, limitedAvailabilitySlots } = this.props
+	  const { displayOptions, numPortions, limitedAvailabilitySlots, isAuthenticated, isSubscriptionActive } = this.props
     
 	  const datesOflimitedAvailabilitySlots = limitedAvailabilitySlots.map(date => date.slice(0, 10))
+	  const showDatesOfLimitedAvailabilitySlots = datesOflimitedAvailabilitySlots.includes(this.props.tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
     
 	  const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
     
@@ -261,7 +262,7 @@ class DeliverySlot extends React.Component {
 				<div className={css.row}>
 					<span className={css.supportingText}>
 						{warningMessage ? <p className={css.errorText}>{warningMessage}</p> : <p>{deliveryCopy}</p>}
-						{datesOflimitedAvailabilitySlots.includes(this.props.tempDate) ? <p><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /> Unavailable due to high demand</p> : null}
+						{showDatesOfLimitedAvailabilitySlots ? <p><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /> Unavailable due to high demand</p> : null}
 					</span>
 				</div>
 				<Button
