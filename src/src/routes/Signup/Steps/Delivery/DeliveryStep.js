@@ -38,10 +38,10 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
 const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, numPortions, next, trackDeliveryDayDropDownOpened, trackDeliveryDayDropDownClosed, trackDeliverySlotDropDownOpened, trackDeliveryDayEdited, trackDeliverySlotEdited }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
-  if (nextDayDeliveryPaintedDoorFeature) {
-    const nextDayDeliveryDays = createNextDayDeliveryDays()
+  if (nextDayDeliveryPaintedDoorFeature) { 
+    const nextDayDeliveryDays = deliverySlot.createNextDayDeliveryDays()
     deliveryDays = [...nextDayDeliveryDays, ...deliveryDays]
-    slots = { ...generateNextDayDeliverySlots(nextDayDeliveryDays), ...slots }
+    slots = { ...deliverySlot.generateNextDayDeliverySlots(nextDayDeliveryDays), ...slots }
   }
 
   const onTempDateChange = date => {
@@ -49,7 +49,7 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
     if (date !== tempDate) {
       // Track the edit
       const slotId = slots[date] ? slots[date][0].value : null
-      trackDeliveryDayEdited(date, getDateOffset(date), slotId)
+      trackDeliveryDayEdited(date, deliverySlot.getDateOffset(date), slotId)
     }
     
     setTempDate(date)
@@ -63,21 +63,21 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
     // If the slot id has changed
     if (slotId !== tempSlotId) {
       // Track the edit
-      trackDeliverySlotEdited(tempDate, getDateOffset(tempDate), slotId)
+      trackDeliverySlotEdited(tempDate, deliverySlot.getDateOffset(tempDate), slotId)
     }
     setTempSlotId(slotId)
   }
 
   const onDayDropdownOpen = e => {
-    trackDeliveryDayDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
+    trackDeliveryDayDropDownOpened(tempDate, deliverySlot.getDateOffset(tempDate), tempSlotId)
   }
 
   const onDayDropdownClose = e => {
-    trackDeliveryDayDropDownClosed(tempDate, getDateOffset(tempDate), tempSlotId)
+    trackDeliveryDayDropDownClosed(tempDate, deliverySlot.getDateOffset(tempDate), tempSlotId)
   }
 
   const onSlotDropdownOpen = e => {
-    trackDeliverySlotDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
+    trackDeliverySlotDropDownOpened(tempDate, deliverySlot.getDateOffset(tempDate), tempSlotId)
   }
 
   return (
@@ -154,46 +154,6 @@ DeliveryStep.propTypes = {
   menuFetchDataPending: React.PropTypes.bool,
   nextDayDeliveryPaintedDoorFeature: React.PropTypes.bool,
   next: React.PropTypes.func,
-}
-
-const isAfterCutoff = () => moment().hours() >= 12
-
-const generateNextDayDeliverySlots = nextDayDeliveryDays => {
-  const slots = {}
-  nextDayDeliveryDays.map(day => {
-    slots[day.date] = [{ label: "8AM - 7PM", subLabel: "", value: "NULL", coreSlotId: "NULL" }]
-  })
-
-  return slots
-}
-
-const getDateOffset = date => {
-  const now = moment()
-  const then = moment(date)
-  const offset = then.diff(now, 'days')
-  const adjustedOffset = isAfterCutoff() ? offset : offset + 1
-
-  return adjustedOffset
-}
-
-export const createNextDayDeliveryDays = () => {
-
-  const dayOffSet = isAfterCutoff() ? 2 : 1
-
-  return [
-    {
-      date: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet),
-      value: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet),
-      disable: false,
-      label: `${deliverySlot.formatNextDayDeliveryDayLabel(dayOffSet)} £2.99`
-    },
-    {
-      date: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet + 1),
-      value: deliverySlot.formatNextDayDeliveryDayDate(dayOffSet + 1),
-      disable: false,
-      label: `${deliverySlot.formatNextDayDeliveryDayLabel(dayOffSet + 1)} £1.99`
-    }
-  ]
 }
 
 export default DeliveryStep
