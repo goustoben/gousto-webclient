@@ -125,18 +125,13 @@ class DeliverySlot extends React.Component {
 
   handleDateChange = (date, orderId) => {
     if (!orderId) {
-      const { slots, chosen } = this.getDeliveryDaysAndSlots(date)
+      const { slots } = this.getDeliveryDaysAndSlots(date)
+      const unblockedSlots = slots[date].filter(slot => !slot.disabled)
+      const slotId = unblockedSlots[0] && unblockedSlots[0].value
+      this.props.setTempSlotId(slotId)
+      this.props.setTempDate(date)
+      this.props.setTempOrderId(undefined)
       
-      if (!chosen && slots[date]) {
-        const unblockedSlots = slots[date].filter(slot => !slot.disabled)
-        const slotId = unblockedSlots[0] && unblockedSlots[0].value
-        this.props.setTempSlotId(slotId)
-        this.props.setTempDate(date)
-        this.props.setTempOrderId(undefined)
-      } else {
-        this.props.setTempDate(date)
-        this.props.setTempOrderId(undefined)
-      }
     } else {
       this.props.setTempDate(date)
       this.props.setTempOrderId(orderId)
