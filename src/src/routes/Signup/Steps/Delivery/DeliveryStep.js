@@ -2,7 +2,7 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import React from 'react'
 import moment from 'moment'
 import DropdownInput from 'Form/Dropdown'
-import deliverySlot from '../../../../utils/deliverySlot'
+import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset } from 'utils/deliverySlot'
 import Button from '../../Button'
 
 import signupCss from '../../Signup.css'
@@ -39,9 +39,9 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
   if (nextDayDeliveryPaintedDoorFeature) {
-    const nextDayDeliveryDays = deliverySlot.createNextDayDeliveryDays()
+    const nextDayDeliveryDays = createNextDayDeliveryDays()
     deliveryDays = [...nextDayDeliveryDays, ...deliveryDays]
-    slots = { ...deliverySlot.generateNextDayDeliverySlots(nextDayDeliveryDays), ...slots }
+    slots = { ...generateNextDayDeliverySlots(nextDayDeliveryDays), ...slots }
   }
 
   const onTempDateChange = date => {
@@ -49,7 +49,7 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
     if (date !== tempDate) {
       // Track the edit
       const slotId = slots[date] ? slots[date][0].value : null
-      trackDeliveryDayEdited(date, deliverySlot.getDateOffset(date), slotId)
+      trackDeliveryDayEdited(date, getDateOffset(date), slotId)
     }
 
     setTempDate(date)
@@ -63,21 +63,21 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
     // If the slot id has changed
     if (slotId !== tempSlotId) {
       // Track the edit
-      trackDeliverySlotEdited(tempDate, deliverySlot.getDateOffset(tempDate), slotId)
+      trackDeliverySlotEdited(tempDate, getDateOffset(tempDate), slotId)
     }
     setTempSlotId(slotId)
   }
 
   const onDayDropdownOpen = e => {
-    trackDeliveryDayDropDownOpened(tempDate, deliverySlot.getDateOffset(tempDate), tempSlotId)
+    trackDeliveryDayDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 
   const onDayDropdownClose = e => {
-    trackDeliveryDayDropDownClosed(tempDate, deliverySlot.getDateOffset(tempDate), tempSlotId)
+    trackDeliveryDayDropDownClosed(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 
   const onSlotDropdownOpen = e => {
-    trackDeliverySlotDropDownOpened(tempDate, deliverySlot.getDateOffset(tempDate), tempSlotId)
+    trackDeliverySlotDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 
   return (

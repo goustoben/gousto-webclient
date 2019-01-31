@@ -11,13 +11,11 @@ const roundTime = (_time) => {
 
 const formatTime = (time) => (roundTime(time).format('ha'))
 
-function toTimeRange(deliverySlot) {
-  return `${formatTime(deliverySlot.get('deliveryStart'))} - ${formatTime(deliverySlot.get('deliveryEnd'))}`
-}
+export const toTimeRange = deliverySlot => `${formatTime(deliverySlot.get('deliveryStart'))} - ${formatTime(deliverySlot.get('deliveryEnd'))}`
 
-const isAfterCutoff = () => moment().hours() >= 12
+export const isAfterCutoff = () => moment().hours() >= 12
 
-const getDateOffset = date => {
+export const getDateOffset = date => {
   const now = moment()
   const then = moment(date)
   const offset = Math.ceil(then.diff(now, 'hours') / 24)
@@ -30,15 +28,11 @@ const getDateOffset = date => {
  * Temp methods only for NDD painted door
  */
 
-function formatNextDayDeliveryDayDate(dayOffSet) {
-  return moment().add(dayOffSet, 'day').format('YYYY-MM-DD')
-}
+export const formatNextDayDeliveryDayDate = dayOffSet => moment().add(dayOffSet, 'day').format('YYYY-MM-DD')
 
-function formatNextDayDeliveryDayLabel(dayOffSet) {
-  return moment().add(dayOffSet, 'day').format('ddd D MMM')
-}
+export const formatNextDayDeliveryDayLabel = dayOffSet => moment().add(dayOffSet, 'day').format('ddd D MMM')
 
-const generateNextDayDeliverySlots = nextDayDeliveryDays => {
+export const generateNextDayDeliverySlots = nextDayDeliveryDays => {
   const slots = {}
   nextDayDeliveryDays.map(day => {
     slots[day.date] = [{ label: "8AM - 7PM", subLabel: "", value: "NULL", coreSlotId: "NULL" }]
@@ -47,7 +41,7 @@ const generateNextDayDeliverySlots = nextDayDeliveryDays => {
   return slots
 }
 
-const createNextDayDeliveryDays = () => {
+export const createNextDayDeliveryDays = () => {
   const dayOffSet = isAfterCutoff() ? 2 : 1
 
   return [
