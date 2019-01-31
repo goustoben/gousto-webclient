@@ -8,7 +8,7 @@ FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/devbox
 FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/devbox-platform/yarn10builder as yarnbuilder
 
 # Base node 10 runtime image using pm2
-FROM node10pm2-runtime as runtime
+FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/devbox-platform/node10runtime as runtime
 
 # Copy the dependencies from the builder image
 COPY --from=bowerbuilder /transient/bower_components /app/src/libs
