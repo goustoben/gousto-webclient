@@ -1,6 +1,7 @@
 import moment from 'moment'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import GoustoException from 'utils/GoustoException'
+import { getUnavailableSlots } from 'selectors/features'
 
 export function getSlot(deliveryDays, date, slotId) {
   if (deliveryDays && typeof deliveryDays.getIn === 'function') {
@@ -265,7 +266,7 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
   const deliveryDays = deliveryDaysWithBlockedSlots || state.boxSummaryDeliveryDays
   const userOrders = state.user.get('orders')
   const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
-  const limitedAvailabilitySlots = state.features.getIn(['features', 'unavailableSlots', 'value']) || ['2019-02-04_19', '2019-02-04_22', '2019-02-04_12', '2019-02-03_19']
+  const limitedAvailabilitySlots = getUnavailableSlots(state)
 
   // try and find the delivery day
   let day
