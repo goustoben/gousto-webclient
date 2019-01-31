@@ -6,13 +6,15 @@ import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
 import DeliverySlot from './DeliverySlot'
 import { formatDateAndSlot } from './deliverySlotHelper'
+import { getUnavailableSlots } from 'selectors/features'
 
 function mapStateToProps(state) {
   let disableNewDatePicker = !state.auth.get('isAuthenticated')
   if (disableNewDatePicker) { // if not logged in
     disableNewDatePicker = !state.features.getIn(['newDatePicker', 'value']) // allow enabling via feature flag
   }
-  const limitedAvailabilitySlots = state.features.getIn(['features', 'unavailableSlots', 'value']) || ['2019-02-04_19', '2019-02-04_22', '2019-02-04_12', '2019-02-03_19']
+  const limitedAvailabilitySlotsValues = getUnavailableSlots(state)
+  const limitedAvailabilitySlots = limitedAvailabilitySlotsValues.split(',')
   const deliveryDaysWithBlockedSlots = formatDateAndSlot(state.boxSummaryDeliveryDays)
   
   const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
