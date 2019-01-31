@@ -41,7 +41,7 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   return { slots, deliveryDays }
 }
 
-const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, numPortions, isNDDPaintedDoorOpened, openNDDPaintedDoor, next }) => {
+const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, numPortions, isNDDPaintedDoorOpened, openNDDPaintedDoor, closeNDDPaintedDoor, next }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
   if (nextDayDeliveryPaintedDoorFeature) {
@@ -52,12 +52,21 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
   }
 
   const onTempDateChange = (date) => {
-    openNDDPaintedDoor()
-
     setTempDate(date)
     if (slots[date]) {
       const slotId = slots[date][0].value
       setTempSlotId(slotId)
+    }
+  }
+
+  const onShowRecipe = () => {
+    if (slots[tempDate][0]["coreSlotId"] === "NULL") {
+      openNDDPaintedDoor()
+    } else {
+      boxSummaryDeliverySlotChosen({
+        date: tempDate,
+        slotId: tempSlotId,
+      }).then(next)
     }
   }
 
@@ -103,18 +112,13 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
 					  data-testing="signupDeliveryCTA"
 					  disabled={!tempDate || !tempSlotId}
 					  width="full"
-					  onClick={() => (
-					    boxSummaryDeliverySlotChosen({
-					      date: tempDate,
-					      slotId: tempSlotId,
-					    }).then(next)
-					  )}
+					  onClick={onShowRecipe}
 					  pending={menuFetchDataPending}
 					/>
 				</div>
 			</div>
       <Overlay open={isNDDPaintedDoorOpened} from="top">
-        <ModalPanel className={css.modal}>
+        <ModalPanel className={css.modal} closePortal={closeNDDPaintedDoor}>
           <h2>Express delivery is coming soon</h2>
           <div className={css.modalrow}>
             <p>We're working on speeding up our deliveries.</p>
@@ -133,7 +137,7 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
           <div className={css.iconDeliverySection}>
             <Svg fileName="icon-delivery" className={css.iconDelivery} />
           </div>
-          <GoustoButton width="full" >Back to delivery options</GoustoButton>
+          <GoustoButton width="full" onClick={closeNDDPaintedDoor}>Back to delivery options</GoustoButton>
         </ModalPanel>
       </Overlay>
 		</span>
@@ -151,6 +155,7 @@ DeliveryStep.propTypes = {
   nextDayDeliveryPaintedDoorFeature: React.PropTypes.bool,
   isNDDPaintedDoorOpened: React.PropTypes.bool,
   openNDDPaintedDoor: React.PropTypes.func,
+  closeNDDPaintedDoor: React.PropTypes.func,
   next: React.PropTypes.func,
 }
 

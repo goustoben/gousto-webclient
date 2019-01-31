@@ -31,6 +31,7 @@ const DeliveryStepContainer = connect(mapStateToProps, {
   setTempDate: date => actions.temp('date', date),
   setTempSlotId: slotId => actions.temp('slotId', slotId),
   openNDDPaintedDoor: () => actions.temp('isNDDPaintedDoorOpened', true),
+  closeNDDPaintedDoor: () => actions.temp('isNDDPaintedDoorOpened', false),
   boxSummaryDeliverySlotChosen: actions.boxSummaryDeliverySlotChosen,
 })(DeliveryStep)
 
