@@ -38,7 +38,7 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
 const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, numPortions, next, trackDeliveryDayDropDownOpened, trackDeliveryDayDropDownClosed, trackDeliverySlotDropDownOpened, trackDeliveryDayEdited, trackDeliverySlotEdited }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
-  if (nextDayDeliveryPaintedDoorFeature) { 
+  if (nextDayDeliveryPaintedDoorFeature) {
     const nextDayDeliveryDays = deliverySlot.createNextDayDeliveryDays()
     deliveryDays = [...nextDayDeliveryDays, ...deliveryDays]
     slots = { ...deliverySlot.generateNextDayDeliverySlots(nextDayDeliveryDays), ...slots }
@@ -51,7 +51,7 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
       const slotId = slots[date] ? slots[date][0].value : null
       trackDeliveryDayEdited(date, deliverySlot.getDateOffset(date), slotId)
     }
-    
+
     setTempDate(date)
     if (slots[date]) {
       const slotId = slots[date][0].value
