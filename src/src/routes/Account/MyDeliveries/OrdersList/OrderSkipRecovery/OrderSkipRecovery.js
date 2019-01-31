@@ -67,7 +67,7 @@ class OrderSkipRecovery extends React.PureComponent {
 				<Header offer={offer} featureFlag={featureFlag} />
 				<div className={css.container}>
 					<ModalTitle>
-						<Title title={title} orderType={orderType} />
+            <Title title={title} orderType={orderType} />
 					</ModalTitle>
 					{(featureFlag) && (
 						<ModalContent>

@@ -8,11 +8,14 @@ import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import Button from '../../Button'
+import { Button as GoustoButton } from 'goustouicomponents'
+
 import deliverySlot from '../../../../utils/deliverySlot'
 
 import signupCss from '../../Signup.css'
 import css from './DeliveryStep.css'
 import Image from '../../Image'
+// import Title from "../../../Account/MyDeliveries/OrdersList/OrderSkipRecovery/OrderSkipRecovery"
 
 const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
   tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
@@ -114,7 +117,8 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
 			</div>
       <Overlay open={isNDDPaintedDoorOpened} from="top">
         <ModalPanel>
-          <div>
+          <div style={{padding:'20px'}}>
+            {/*<Title title={"Express delivery is coming soon"}/>*/}
             <h2>Express delivery is coming soon</h2>
             <p>We're working on speeding up our deliveries.</p>
             <p>Please help us improve and tell us which statement you agree with:</p>
@@ -123,6 +127,15 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
             <img
               src={"https://comps.canstockphoto.com/24-hour-delivery-symbol-with-truck-image_csp27988674.jpg"}
               alt={"truck"}
+            />
+            <GoustoButton
+              width="full"
+              onClick={() => (
+                dispatch({
+                  type: actionTypes.NDD_PAINTED_DOOR,
+                  modalVisibility: true,
+                })
+              )}
             />
           </div>
         </ModalPanel>
