@@ -59,8 +59,6 @@ export const trackDeliverySlotEdited = (date, day_offset, delivery_slot_id) => d
     }
   })
 }
-// set up action types in ./actionType.js
-// set up other functions
 
 export default {
   trackDeliveryDayDropDownOpened,

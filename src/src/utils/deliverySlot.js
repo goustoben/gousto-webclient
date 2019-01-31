@@ -28,7 +28,7 @@ const getDateOffset = date => {
 
 /**
  * Temp methods only for NDD painted door
- */ 
+ */
 
 function formatNextDayDeliveryDayDate(dayOffSet) {
   return moment().add(dayOffSet, 'day').format('YYYY-MM-DD')
