@@ -4,8 +4,8 @@ ARG AWS_ACCOUNT_NUMBER
 ARG ENVIRONMENT
 
 # Dependency builder image - Create intermediate images pulling node and bower dependencies.
-FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/devbox-platform/bower10-builder as bowerbuilder
-FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/devbox-platform/yarn10-builder as yarnbuilder
+FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/devbox-platform/bower10builder as bowerbuilder
+FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/devbox-platform/yarn10builder as yarnbuilder
 
 # Base node 10 runtime image using pm2
 FROM node10pm2-runtime as runtime
