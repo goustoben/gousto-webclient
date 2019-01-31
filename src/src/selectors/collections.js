@@ -6,7 +6,8 @@ export const hasJustForYouCollection = ({ menuCollections }) => menuCollections.
 export const getRecipePosition = (state, recipeId) => {
   const menuCollectionRecipes = getMenuRecipes(state)
   const currentCollection = getCurrentCollectionId(state)
-  const indexOfRecipe = menuCollectionRecipes.get(currentCollection) && menuCollectionRecipes.get(currentCollection).indexOf(recipeId)
+  const currentCollectionRecipes = menuCollectionRecipes.get(currentCollection)
+  const indexOfRecipe = currentCollectionRecipes && currentCollectionRecipes.indexOf(recipeId)
 
   return (indexOfRecipe+1) || null
 }
