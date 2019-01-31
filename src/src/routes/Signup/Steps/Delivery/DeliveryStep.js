@@ -128,15 +128,7 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
               src={"https://comps.canstockphoto.com/24-hour-delivery-symbol-with-truck-image_csp27988674.jpg"}
               alt={"truck"}
             />
-            <GoustoButton
-              width="full"
-              onClick={() => (
-                dispatch({
-                  type: actionTypes.NDD_PAINTED_DOOR,
-                  modalVisibility: true,
-                })
-              )}
-            />
+            <GoustoButton width="full"git >Back to delivery options</GoustoButton>
           </div>
         </ModalPanel>
       </Overlay>
