@@ -53,3 +53,33 @@
 	}
 }
 
+.radio {
+	margin-right: 7px;
+	margin-top: 1px;
+}
+
+.modal {
+	padding: 2%;
+}
+
+.modalrow {
+	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.label {
+  margin-bottom: 0px;
+}
+
+.iconDeliverySection {
+	height: 170px;
+  composes: flex rowWrap from 'styles/flex.css';
+  composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.iconDelivery {
+  width: 250px;
+	height: 250px;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -20%);
+}
