@@ -13,9 +13,10 @@ const propTypes = {
   stock: PropTypes.instanceOf(Immutable.Map),
   numPortions: PropTypes.number.isRequired,
   recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
+  position: PropTypes.number,
 }
 
-const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, stock }) => {
+const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, stock, position }) => {
 
   const recipeId = menuRecipeDetailShow
   const detailRecipe = recipesStore.get(recipeId)
@@ -72,6 +73,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
             fiveADay={detailRecipe.get('fiveADay')}
             glutenFree={glutenFree}
             dairyFree={dairyFree}
+            position={position}
           />
         )
           : null
