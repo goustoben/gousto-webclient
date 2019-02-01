@@ -1,18 +1,19 @@
 import React, { PropTypes } from 'react'
 import { Iterable } from 'immutable'
 
-import css from './Chef.css'
 import { getMenuRecipeImage } from 'utils/image'
+import css from './Chef.css'
 
 const Chef = ({ chef }) => {
   const chefObj = Iterable.isIterable(chef) && chef.size > 0 ? chef : null
 
   if (chefObj) {
     const image = chefObj.getIn(['media', 'images']).find((value) => value.get('type') === 'headshot-image')
+    const imageUrls = image ? image.get('urls') : null
 
     return (
 			<div className={css.chef}>
-				<img src={getMenuRecipeImage(image.get('urls'), 70)} alt={image.get('title')} />
+				{imageUrls && <img src={getMenuRecipeImage(imageUrls, 70)} alt={image.get('title')} />}
 			</div>
     )
   }

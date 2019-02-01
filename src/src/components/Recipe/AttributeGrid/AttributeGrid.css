@@ -1,0 +1,18 @@
+@value sizeMD from 'styles/typography.css';
+@value Basa from 'styles/colors.css';
+@value attributesLineHeight 1.8;
+@value ScreenLGMin from 'styles/screenSizes.css';
+
+.attributes {
+	line-height: attributesLineHeight;
+	font-size: sizeMD;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+	border-top: 1px solid Basa;
+	padding-top: 10px;
+	margin-top: 5px;
+
+	@media ScreenLGMin {
+		grid-template-columns: repeat(2, minmax(145px, 1fr));
+	}
+}

@@ -29,6 +29,7 @@ import tracking from './tracking'
 import user from './user'
 import collections from './collections'
 import cookbook from './cookbook'
+import deliveries from './deliveries'
 
 const actions = {
   ...auth,
@@ -62,6 +63,7 @@ const actions = {
   ...temp,
   ...tracking,
   ...user,
+  ...deliveries
 }
 
 export default actions

@@ -79,24 +79,6 @@
 	}
 }
 
-.attributes {
-	line-height: attributesLineHeight;
-	font-size: sizeMD;
-	border-top: 1px solid Basa;
-	padding-top: 10px;
-	margin-top: 5px;
-
-	@media ScreenMDMin {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-	}
-}
-
-.attributeMinHeight {
-	min-height: calc(sizeMD * attributesLineHeight);
-}
-
 .score {
 	position: absolute;
 	left: 10px;
