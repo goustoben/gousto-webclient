@@ -52,12 +52,6 @@ class DeliverySlot extends React.Component {
 	  displayOptions: Immutable.List([]),
 	  isAuthenticated: false, 
 	}
-	
-	componentDidMount() {
-  	const { date, tempOrderId, blockedDateString } = this.props
-		console.log('blocked', blockedDateString) // eslint-disable-line
-	  this.handleDateChange(date, tempOrderId, blockedDateString)
-	}
 
 	getDeliveryDaysAndSlots = (newDate, blockedDateString) => {
 	  const slots = {}

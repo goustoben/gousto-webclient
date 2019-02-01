@@ -5,20 +5,11 @@ const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
 )
 
 const deliverySlotHelper = (dd, blockedDateString, date, isAuthenticated, isSubscriptionActive, tempDate) => {
+
   return dd.get('slots').map(slot => {
-    let isSlotBlocked = false
-    blockedDateString.map(dateToBlock => {
-              
-      const blockedDate = dateToBlock.slice(0, 10)
-      const blockedSlotNumber = dateToBlock.slice(-2)
-      const slotEndTime = slot.get('deliveryEndTime').substring(0, 2)
-      if (date === blockedDate) {
-        if (slotEndTime === blockedSlotNumber) {
-          isSlotBlocked = true
-        }
-      }
-    })
-    
+
+    const isSlotBlocked = blockedDateString.includes(slot.get('dateAndSlotFormat')) ? true : false
+ 
     return {
       label: formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
       subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
@@ -29,4 +20,25 @@ const deliverySlotHelper = (dd, blockedDateString, date, isAuthenticated, isSubs
   }).toArray()
 } 
 
-export {deliverySlotHelper}
+const formatDateAndSlot = (deliveryDays) => {
+  const result = deliveryDays.map(dd => {
+    const date = dd.get('date')
+    const slots = dd.get('slots')
+
+    const newSlots = slots.map((slot) => {
+      const slotEndTime = slot.get('deliveryEndTime').substring(0, 2)
+      const dateAndSlotFormat = `${date}_${slotEndTime}`
+      const newSlot = slot.set('dateAndSlotFormat', dateAndSlotFormat)
+
+      return newSlot
+    })
+
+    const newDD = dd.set('slots', newSlots)
+
+    return newDD
+  })
+
+  return result
+}
+
+export {deliverySlotHelper, formatDateAndSlot}

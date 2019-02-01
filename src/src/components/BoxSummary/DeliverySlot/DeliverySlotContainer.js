@@ -5,30 +5,33 @@ import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import DeliverySlot from './DeliverySlot'
 import { getLandingDay } from 'utils/deliveries'
+import { formatDateAndSlot } from './deliverySlotHelper'
 
 function mapStateToProps(state) {
   let disableNewDatePicker = !state.auth.get('isAuthenticated')
   if (disableNewDatePicker) { // if not logged in
     disableNewDatePicker = !state.features.getIn(['newDatePicker', 'value']) // allow enabling via feature flag
   }
+  const blockedDateString = ["2019-02-04_19", "2019-02-06_22", "2019-02-07_12", "2019-02-02_12", "2019-02-04_22", "2019-02-04_12", "2019-02-02_19"]
+  const deliveryDays = formatDateAndSlot(state.boxSummaryDeliveryDays)
   const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
 
   const landing = getLandingDay(
     state,
     true,
     !canLandOnOrder,
+    deliveryDays
   )
 
   const tempDate = state.temp.get('date', landing.date)
   const tempSlotId = state.temp.get('slotId', landing.slotId)
   const tempOrderId = state.temp.get('orderId', landing.orderId)
-  const blockedDateString = ["2019-02-04_19", "2019-02-06_22", "2019-02-07_12", "2019-02-02_12", "2019-02-04_22", "2019-02-04_12", "2019-02-01_19"]
 
   return {
     address: state.basket.get('address'),
     date: state.basket.get('date'),
     prevDate: state.basket.get('prevDate'),
-    deliveryDays: state.boxSummaryDeliveryDays,
+    deliveryDays: deliveryDays,
     postcode: state.basket.get('postcode'),
     menuPending: state.menuRecieveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
     prevSlotId: state.basket.get('prevSlotId'),
