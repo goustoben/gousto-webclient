@@ -62,8 +62,7 @@ class DeliverySlot extends React.Component {
 
     const deliveryDays = this.props.deliveryDays.map(deliveryDay => {
       const date = deliveryDay.get('date')
-
-      slots[date] = deliveryDay.get('slots').map(slot => {
+      slots[date] = deliveryDay.get('slots').map(slot => { 
         const isSlotBlocked = limitedAvailabilitySlots && limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined')) ? true : false
 
         return {
