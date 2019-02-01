@@ -58,7 +58,7 @@ const DeliveryStep = ({
   isNDDPaintedDoorOpened,
   openNDDPaintedDoor,
   closeNDDPaintedDoor,
-  updateNDDPreference,
+  setNDDPreference,
   trackDeliveryPreferenceModalViewed,
   trackDeliveryPreferenceModalClosed,
   preferNDD,
@@ -127,7 +127,7 @@ const DeliveryStep = ({
 
   const onClickNddPreference = event => {
     if (event.target.checked) {
-      updateNDDPreference(event.target.value)
+      setNDDPreference({answer: event.target.value})
       trackDeliveryPreferenceSelected(tempDate, getDateOffset(tempDate), tempSlotId, event.target.value)
     }
   }
@@ -226,7 +226,7 @@ DeliveryStep.propTypes = {
   isNDDPaintedDoorOpened: React.PropTypes.bool,
   openNDDPaintedDoor: React.PropTypes.func,
   closeNDDPaintedDoor: React.PropTypes.func,
-  updateNDDPreference: React.PropTypes.func,
+  setNDDPreference: React.PropTypes.func,
   trackDeliveryPreferenceModalViewed: React.PropTypes.func,
   trackDeliveryPreferenceModalClosed: React.PropTypes.func,
   preferNDD: React.PropTypes.string,
