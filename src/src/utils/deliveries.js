@@ -259,13 +259,13 @@ function getLandingOrder(userOrders, deliveryDays) {
   }
 }
 
-export function getLandingDay(state, currentSlot, cantLandOnOrderDate, newDeliveryDays) {
+export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryDaysWithBlockedSlots) {
   const date = state.basket.get('date')
   const defaultDate = state.features.getIn(['default_day', 'value'])
-  const deliveryDays = newDeliveryDays
+  const deliveryDays = deliveryDaysWithBlockedSlots || state.boxSummaryDeliveryDays
   const userOrders = state.user.get('orders')
   const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
-  const blockedDateString = ["2019-02-04_19", "2019-02-06_22", "2019-02-07_12", "2019-02-02_12", "2019-02-04_22", "2019-02-04_12", "2019-02-02_19"]
+  const blockedDateString = state.features.getIn(['features', 'unavailableSlots', 'value'])
 
   // try and find the delivery day
   let day
@@ -349,8 +349,7 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, newDelive
     } else {
       // try to find the default slot for that day
       let foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-        console.log('blockedDateString', blockedDateString) // eslint-disable-line
-        if (!blockedDateString.includes(slot.get('dateAndSlotFormat'))) {
+        if (!blockedDateString.includes(slot.get('dateAndSlotCombined'))) {
           return slot.get('isDefault')
         }
       }) 
@@ -358,14 +357,13 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, newDelive
       if (!foundSlot) {
         // otherwise choose the first non disabled slot on that day
         foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-          if (!blockedDateString.includes(slot.get('dateAndSlotFormat'))) {
+          if (!blockedDateString.includes(slot.get('dateAndSlotCombined'))) {
             return slot
           }
         }) 
       }
 
       if (foundSlot) {
-				console.log('​getLandingDay -> foundSlot', foundSlot.get('dateAndSlotFormat')) //eslint-disable-line
         foundSlotId = foundSlot.get('id')
       }
     }

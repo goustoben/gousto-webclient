@@ -5,7 +5,6 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import Calendar from 'Form/Calendar'
 import DropdownInput from 'Form/Dropdown'
 import SlotPicker from './SlotPicker'
-import {deliverySlotHelper} from './deliverySlotHelper'
 import css from './DeliverySlot.css'
 
 class DeliverySlot extends React.Component {
@@ -55,13 +54,24 @@ class DeliverySlot extends React.Component {
 
 	getDeliveryDaysAndSlots = (newDate, blockedDateString) => {
 	  const slots = {}
-	  const { disableOnDelivery, availableDaysOnly, isAuthenticated, isSubscriptionActive, tempDate } = this.props
+	  const { disableOnDelivery, availableDaysOnly, isAuthenticated, isSubscriptionActive } = this.props
 	  let hasOrders = false
 	  
 	  const deliveryDays = this.props.deliveryDays.map(dd => {
 	    const date = dd.get('date')
       
-	    slots[date] = deliverySlotHelper(dd, blockedDateString, date, isAuthenticated, isSubscriptionActive, tempDate)
+	    slots[date] = dd.get('slots').map(slot => {
+
+	      const isSlotBlocked = blockedDateString.includes(slot.get('dateAndSlotCombined')) ? true : false
+		 
+	      return {
+	        label: this.formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime')),
+	        subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
+	        value: slot.get('id'),
+	        coreSlotId: slot.get('coreSlotId'), 
+	        disabled: isSlotBlocked && isAuthenticated && isSubscriptionActive === 'inactive'
+	      }
+	    }).toArray()
 
 	    const orderIds = this.props.userOrders.toArray().filter(order => (
 	      moment(date).isSame(moment(order.get('deliveryDate'))))
@@ -133,6 +143,10 @@ class DeliverySlot extends React.Component {
 	handleSlotChange = (slotId) => {
 	  this.props.setTempSlotId(slotId)
 	}
+
+	formatTime = (deliveryStartTime, deliveryEndTime) => (
+	  `${moment(`${this.props.tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${this.props.tempDate} ${deliveryEndTime}`).format('ha')} `
+	)
 
 	render = () => {
 	  const { displayOptions, numPortions, blockedDateString } = this.props

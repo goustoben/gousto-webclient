@@ -3,8 +3,8 @@ import { push } from 'react-router-redux'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
-import DeliverySlot from './DeliverySlot'
 import { getLandingDay } from 'utils/deliveries'
+import DeliverySlot from './DeliverySlot'
 import { formatDateAndSlot } from './deliverySlotHelper'
 
 function mapStateToProps(state) {
@@ -12,15 +12,16 @@ function mapStateToProps(state) {
   if (disableNewDatePicker) { // if not logged in
     disableNewDatePicker = !state.features.getIn(['newDatePicker', 'value']) // allow enabling via feature flag
   }
-  const blockedDateString = ["2019-02-04_19", "2019-02-06_22", "2019-02-07_12", "2019-02-02_12", "2019-02-04_22", "2019-02-04_12", "2019-02-02_19"]
-  const deliveryDays = formatDateAndSlot(state.boxSummaryDeliveryDays)
+  const blockedDateString = state.features.getIn(['features', 'unavailableSlots', 'value'])
+  const deliveryDaysWithBlockedSlots = formatDateAndSlot(state.boxSummaryDeliveryDays)
+  
   const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
 
   const landing = getLandingDay(
     state,
     true,
     !canLandOnOrder,
-    deliveryDays
+    deliveryDaysWithBlockedSlots
   )
 
   const tempDate = state.temp.get('date', landing.date)
@@ -31,7 +32,7 @@ function mapStateToProps(state) {
     address: state.basket.get('address'),
     date: state.basket.get('date'),
     prevDate: state.basket.get('prevDate'),
-    deliveryDays: deliveryDays,
+    deliveryDays: deliveryDaysWithBlockedSlots,
     postcode: state.basket.get('postcode'),
     menuPending: state.menuRecieveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
     prevSlotId: state.basket.get('prevSlotId'),
