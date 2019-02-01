@@ -350,17 +350,13 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
     } else {
       // try to find the default slot for that day
       let foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-        if (limitedAvailabilitySlots && !limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined'))) {
-          return slot.get('isDefault')
-        }
-      }) 
+        return (!limitedAvailabilitySlots || !limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined'))) && slot.get('isDefault')
+      })
 
       if (!foundSlot) {
         // otherwise choose the first non disabled slot on that day
         foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-          if (limitedAvailabilitySlots && !limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined'))) {
-            return slot
-          }
+          return (!limitedAvailabilitySlots || !limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined'))) && slot
         }) 
       }
 
