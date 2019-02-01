@@ -10,6 +10,7 @@ import { Button, Segment } from 'goustouicomponents'
 describe('SlotPicker', () => {
   let wrapper
   let slots
+  let slotsDisabled
   let date
   let slotId
   let onClick
@@ -36,6 +37,30 @@ describe('SlotPicker', () => {
         },
       ],
     }
+    slotsDisabled = {
+      '2016-02-03': [
+        {
+          value: '123-123-123',
+          label: '1-2am',
+          subLabel: '£99.99',
+          disabled: true,
+        },
+        {
+          value: '234-234-234',
+          label: '3-5am',
+          subLabel: '£0.99',
+          disabled: true,
+        },
+      ],
+      '2017-02-03': [
+        {
+          value: '234-234-234',
+          label: '9-10pm',
+          subLabel: '£0.09',
+          disabled: true,
+        },
+      ],
+    }
     date = '2016-02-03'
     slotId = '234-234-234'
     onClick = sinon.spy()
@@ -53,13 +78,29 @@ describe('SlotPicker', () => {
     expect(wrapper.find(Button).length).toBe(1)
   })
 
-  test('should call the onClick prop with the slot ID of the clicked on slot', () => {
+  test('should call the onClick prop if slot is not disabled with the slot ID of the clicked on slot', () => {
     wrapper
       .find(Segment)
       .at(1)
       .simulate('click')
     expect(onClick.callCount).toBe(1)
     expect(onClick.getCall(0).args[0]).toBe('234-234-234')
+  })
+  
+  test('should not call the onClick prop if slot is disabled', () => {
+    wrapper = shallow(
+			<SlotPicker
+			  slots={slotsDisabled}
+			  date={date}
+			  slotId={slotId}
+			  onClick={onClick}
+			/>)
+      
+    wrapper
+      .find(Segment)
+      .at(1)
+      .simulate('click')
+    expect(onClick.callCount).toBe(0)
   })
 
   test('should put the label and sublabel for each slot into the respective segments', () => {
