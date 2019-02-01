@@ -31,19 +31,23 @@ export const getFacebookReferralLink = (referralCode, userFirstName, trackingRef
   }
 }
 
-export const getMessengerReferralLink = (referralCode, userFirstName, trackingReferFriendSocialSharing) => {
+export const getMessengerReferralLink = (referralCode, userFirstName, trackingReferFriendSocialSharing, device) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Messenger')
 
   const messengerUTM = '&utm_source=messenger&utm_medium=sharebutton_raf_page&utm_campaign=raf_messenger_share'
   const referralLink = getReferralLink(referralCode, userFirstName, messengerUTM)
-
-  if (globals.client) {
-    window.FB.ui({
-      method: 'send',
-      mobile_iframe: true,
-      link: referralLink,
-      redirect_uri: referralLink,
-    })
+  
+  if(device === 'desktop') {
+    if (globals.client) {
+      window.FB.ui({
+        method: 'send',
+        mobile_iframe: true,
+        link: referralLink,
+        redirect_uri: referralLink,
+      })
+    }
+  } else {
+    window.open('fb-messenger://share?link=' + encodeURIComponent(referralLink) + '&app_id=' + encodeURIComponent(294160790674968))
   }
 }
 

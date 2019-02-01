@@ -31,7 +31,8 @@ class ShareYourLinkModal extends React.PureComponent {
   }
 
   render() {
-    const { onClose, referralCode, trackingReferFriendSocialSharing, trackingReferFriend, userFirstName, rafOffer } = this.props
+    const { onClose, referralCode, trackingReferFriendSocialSharing, trackingReferFriend, userFirstName, rafOffer, device } = this.props
+		console.log('TCL: ShareYourLinkModal -> render -> device', device) //eslint-disable-line
     const { isEmailFormOpen } = this.state
 
     return (
@@ -59,7 +60,7 @@ class ShareYourLinkModal extends React.PureComponent {
 
       <LinkRow onClick={() => { getTextMessageReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing)}} svgName='icon-text-message-colour' rowName='Text Message'/>
       <LinkRow onClick={() => { getWhatsappReferralLink(referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing)}} svgName='icon-whatsapp-colour' rowName='Whatsapp'/>
-      <LinkRow onClick={() => { getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}} svgName='icon-facebook-messenger-colour' rowName='Messenger'/>
+      <LinkRow onClick={() => { getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing, device)}} svgName='icon-facebook-messenger-colour' rowName='Messenger'/>
       <LinkRow onClick={() => { getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)}} svgName='icon-facebook-colour' rowName='Facebook' />
       
       <UserRAFLink

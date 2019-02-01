@@ -72,7 +72,8 @@ class Referral extends Component {
       userFirstName,
       trackingReferFriend,
       trackingReferFriendSocialSharing,
-      isLoading
+      isLoading, 
+      device
     } = this.props
     const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
     const offerTitle = rafOffer.get('title')
@@ -107,7 +108,7 @@ class Referral extends Component {
               </UserRAFLink>
               <div className={`${css.socialButtons} ${css.mobileHide}`}>
                 <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
-                <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
+                <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing, device)} />
                 <SocialButton text="Email" type="email" onClick={this.openEmailModal} />
                 <Overlay open={isEmailModalOpen} from="top">
                   <ReferAFriendModal
