@@ -259,23 +259,13 @@ function getLandingOrder(userOrders, deliveryDays) {
   }
 }
 
-export const getDisabledSlots = (state) => {
-  const blockedDateString = state.features.getIn('unavailableSlots', 'value')
-  const deliveryDays = state.boxSummaryDeliveryDays
-
-  deliveryDays.map(dd => {
-    const date = dd.get('date')
-    
-    deliverySlotHelper(dd, blockedDateString, date, isAuthenticated, isSubscriptionActive, tempDate)
-  })
-}
-
-export function getLandingDay(state, currentSlot, cantLandOnOrderDate) {
+export function getLandingDay(state, currentSlot, cantLandOnOrderDate, newDeliveryDays) {
   const date = state.basket.get('date')
   const defaultDate = state.features.getIn(['default_day', 'value'])
-  const deliveryDays = state.boxSummaryDeliveryDays
+  const deliveryDays = newDeliveryDays
   const userOrders = state.user.get('orders')
   const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
+  const blockedDateString = ["2019-02-04_19", "2019-02-06_22", "2019-02-07_12", "2019-02-02_12", "2019-02-04_22", "2019-02-04_12", "2019-02-02_19"]
 
   // try and find the delivery day
   let day
@@ -354,19 +344,28 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate) {
         slot.get('id') === slotId
       ))
       if (slotDay) {
-				console.log('​getLandingDay -> slotDay', slotDay) //eslint-disable-line
         foundSlotId = slotDay.get('id')
       }
     } else {
       // try to find the default slot for that day
-      let foundSlot = day.get('slots', Immutable.List([])).find(slot => slot.get('isDefault')) 
+      let foundSlot = day.get('slots', Immutable.List([])).find(slot => {
+        console.log('blockedDateString', blockedDateString) // eslint-disable-line
+        if (!blockedDateString.includes(slot.get('dateAndSlotFormat'))) {
+          return slot.get('isDefault')
+        }
+      }) 
 
       if (!foundSlot) {
-        // otherwise choose the first slot on that day
-        foundSlot = day.get('slots', Immutable.List([])).first()
+        // otherwise choose the first non disabled slot on that day
+        foundSlot = day.get('slots', Immutable.List([])).find(slot => {
+          if (!blockedDateString.includes(slot.get('dateAndSlotFormat'))) {
+            return slot
+          }
+        }) 
       }
 
       if (foundSlot) {
+				console.log('​getLandingDay -> foundSlot', foundSlot.get('dateAndSlotFormat')) //eslint-disable-line
         foundSlotId = foundSlot.get('id')
       }
     }
