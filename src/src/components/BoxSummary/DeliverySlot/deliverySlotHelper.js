@@ -1,20 +1,24 @@
-const formatDateAndSlot = (deliveryDays) => {
-  return deliveryDays.map(deliveryDay => {
+const addDisabledSlotIds = deliveryDays => (
+  deliveryDays.map(deliveryDay => {
     const date = deliveryDay.get('date')
     const slots = deliveryDay.get('slots')
 
-    const newSlots = slots.map((slot) => {
+    const formattedSlots = slots.map(slot => {
       const deliveryStartTime = slot.get('deliveryStartTime')
       const deliveryEndTime = slot.get('deliveryEndTime')
-      const slotStartTime = deliveryStartTime && deliveryStartTime.substring(0, 2)
-      const slotEndTime = deliveryEndTime && deliveryEndTime.substring(0, 2)
-      const dateAndSlotCombined = `${date}_${slotStartTime}-${slotEndTime}`
 
-      return slot.set('dateAndSlotCombined', dateAndSlotCombined)
+      let disabledSlotId = ''
+      if( deliveryStartTime && deliveryEndTime) {
+        const slotStartTime = deliveryStartTime.substring(0, 2)
+        const slotEndTime = deliveryEndTime.substring(0, 2)
+        disabledSlotId = `${date}_${slotStartTime}-${slotEndTime}`
+      }
+
+      return slot.set('disabledSlotId', disabledSlotId)
     })
 
-    return deliveryDay.set('slots', newSlots)
+    return deliveryDay.set('slots', formattedSlots)
   })
-}
+)
 
-export {formatDateAndSlot}
+export { addDisabledSlotIds }

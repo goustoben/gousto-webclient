@@ -1,29 +1,27 @@
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
-import DeliverySlot from './DeliverySlot'
-import { formatDateAndSlot } from './deliverySlotHelper'
 import { getUnavailableSlots } from 'selectors/features'
+import DeliverySlot from './DeliverySlot'
+import { addDisabledSlotIds } from './deliverySlotHelper'
 
 function mapStateToProps(state) {
   let disableNewDatePicker = !state.auth.get('isAuthenticated')
   if (disableNewDatePicker) { // if not logged in
     disableNewDatePicker = !state.features.getIn(['newDatePicker', 'value']) // allow enabling via feature flag
   }
-  const limitedAvailabilitySlotsValues = getUnavailableSlots(state)
-  const limitedAvailabilitySlots = limitedAvailabilitySlotsValues.split(',')
-  const deliveryDaysWithBlockedSlots = formatDateAndSlot(state.boxSummaryDeliveryDays)
-  
+  const disabledSlots = getUnavailableSlots(state).split(',')
+  const deliveryDays = addDisabledSlotIds(state.boxSummaryDeliveryDays)
   const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
 
   const landing = getLandingDay(
     state,
     true,
     !canLandOnOrder,
-    deliveryDaysWithBlockedSlots
+    deliveryDays
   )
 
   const tempDate = state.temp.get('date', landing.date)
@@ -34,7 +32,7 @@ function mapStateToProps(state) {
     address: state.basket.get('address'),
     date: state.basket.get('date'),
     prevDate: state.basket.get('prevDate'),
-    deliveryDays: deliveryDaysWithBlockedSlots,
+    deliveryDays: deliveryDays,
     postcode: state.basket.get('postcode'),
     menuPending: state.menuRecieveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
     prevSlotId: state.basket.get('prevSlotId'),
@@ -46,10 +44,9 @@ function mapStateToProps(state) {
     tempSlotId,
     tempOrderId,
     numPortions: state.basket.get('numPortions'),
-    unavailableSlots: state.features.get('unavailableSlots').value, 
-    isAuthenticated: state.auth.get('isAuthenticated'), 
+    disabledSlots,
+    isAuthenticated: state.auth.get('isAuthenticated'),
     isSubscriptionActive: state.user.getIn(['subscription', 'state']),
-    limitedAvailabilitySlots
   }
 }
 
