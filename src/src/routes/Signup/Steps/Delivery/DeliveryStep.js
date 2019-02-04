@@ -87,8 +87,12 @@ const DeliveryStep = ({
     }
   }
 
+  const isRealSlotSelected = () => {
+    return slots[tempDate][0]["coreSlotId"] === "NULL"
+  }
+
   const onShowRecipe = () => {
-    if (slots[tempDate][0]["coreSlotId"] === "NULL") {
+    if (isRealSlotSelected()) {
       openNDDPaintedDoor()
       trackDeliveryPreferenceModalViewed(tempDate, getDateOffset(tempDate), tempSlotId)
     } else {
@@ -184,20 +188,27 @@ const DeliveryStep = ({
       </div>
       <Overlay open={isNDDPaintedDoorOpened} from="top">
         <ModalPanel className={css.modal} closePortal={onPopupClose}>
-          <h2>Express delivery is coming soon</h2>
+          <div className={css.modalTitleDiv}>
+            <h2 className={css.modalFirstTitle}>We're working on speeding</h2>
+            <h2 className={css.modalSecondTitle}>up our deliveries</h2>
+          </div>
           <div className={css.modalrow}>
-            <p>We're working on speeding up our deliveries.</p>
+            <p>The delivery date you selected isn't available yet but we would love to get your feedback about deliveries.</p>
           </div>
           <div className={css.modalrow}>
             <p>Please help us improve and tell us which statement you agree with:</p>
           </div>
           <div className={css.modalrow}>
-            <input className={css.radio} name="ndd" value="prefer ndd" type="radio" onClick={onClickNddPreference}/>
-            <label className={css.label}>Next day delivery is very important to me</label>
+            <label className={css.label}>
+              <input className={css.radio} name="ndd" value="prefer ndd" type="radio" onClick={onClickNddPreference}/>
+              <span>Fast delivery (24-48 hour) is very important to me</span>
+            </label>
           </div>
           <div className={css.modalrow}>
+            <label className={css.label}>
             <input className={css.radio} name="ndd" value="fine without ndd" type="radio" onClick={onClickNddPreference}/>
-            <label className={css.label}>I am OK with 3 day delivery</label>
+              <span>I am OK with 3 day delivery</span>
+            </label>
           </div>
           <div className={css.iconDeliverySection}>
             <Svg fileName="icon-delivery" className={css.iconDelivery} />
