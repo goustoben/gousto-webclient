@@ -2,6 +2,7 @@ import moment from 'moment'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import GoustoException from 'utils/GoustoException'
 import { getUnavailableSlots } from 'selectors/features'
+import { validateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
 
 export function getSlot(deliveryDays, date, slotId) {
   if (deliveryDays && typeof deliveryDays.getIn === 'function') {
@@ -266,7 +267,8 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
   const deliveryDays = deliveryDaysWithBlockedSlots || state.boxSummaryDeliveryDays
   const userOrders = state.user.get('orders')
   const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
-  const limitedAvailabilitySlots = getUnavailableSlots(state)
+  const nonValidatedDisabledSlots = getUnavailableSlots(state) || ''
+  const disabledSlots = validateDisabledSlots(nonValidatedDisabledSlots.split(','))
 
   // try and find the delivery day
   let day
@@ -350,13 +352,13 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
     } else {
       // try to find the default slot for that day
       let foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-        return (!limitedAvailabilitySlots || !limitedAvailabilitySlots.includes(slot.get('disabledSlotId'))) && slot.get('isDefault')
+        return (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot.get('isDefault')
       })
 
       if (!foundSlot) {
         // otherwise choose the first non disabled slot on that day
         foundSlot = day.get('slots', Immutable.List([])).find(slot => {
-          return (!limitedAvailabilitySlots || !limitedAvailabilitySlots.includes(slot.get('disabledSlotId'))) && slot
+          return (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot
         })
       }
 
