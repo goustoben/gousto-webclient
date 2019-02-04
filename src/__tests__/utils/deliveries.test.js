@@ -603,7 +603,7 @@ describe('utils/deliveries', () => {
         })
       })
       test('should return the default delivery slot if not disabled', () => {
-        getUnavailableSlots.mockImplementation(() => [''])
+        getUnavailableSlots.mockImplementation(() => '')
 
         const result = getLandingDay(state, false, true, deliveryDaysWithBlockedSlots)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
@@ -611,15 +611,15 @@ describe('utils/deliveries', () => {
       })
 
       test('should NOT return the default delivery slot if disabled', () => {
-        getUnavailableSlots.mockImplementation(() => ['2017-01-01_18-22'])
+        getUnavailableSlots.mockImplementation(() => '2017-01-01_18-22')
 
         const result = getLandingDay(state, false, true, deliveryDaysWithBlockedSlots)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
         expect(result).not.toEqual(expected)
       })
-      
+
       test('should return first non blocked slot if the default delivery slot if disabled', () => {
-        getUnavailableSlots.mockImplementation(() => ['2017-01-01_18-22'])
+        getUnavailableSlots.mockImplementation(() => '2017-01-01_18-22')
 
         const result = getLandingDay(state, false, true, deliveryDaysWithBlockedSlots)
         const expected = { date: '2017-01-01', slotId: '789-789-789' }
