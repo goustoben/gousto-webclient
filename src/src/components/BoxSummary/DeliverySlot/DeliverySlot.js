@@ -257,7 +257,7 @@ class DeliverySlot extends React.Component {
         <div className={css.row}>
           <span className={css.supportingText}>
             {warningMessage ? <p className={css.errorText}>{warningMessage}</p> : <p>{deliveryCopy}</p>}
-            {doesDateHaveDisabledSlots ? <p className={css.limitedAvailabilityText}><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /> Unavailable due to high demand</p> : null}
+            {doesDateHaveDisabledSlots ? <div><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /><p className={css.limitedAvailabilityText}> Unavailable due to high demand</p></div> : null}
           </span>
         </div>
         <Button

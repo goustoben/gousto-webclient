@@ -67,7 +67,8 @@
 	height: 14px;
 	width: 14px;
 	top: .125em;
-  position: relative;
+	position: relative;
+	margin-right: 5px;
 }
 
 .textInput {
@@ -120,4 +121,8 @@
 
 .warningTriangle {
 	composes: fa-basic-class fa-fw fa-exclamation-triangle from 'styles/vendor/font-awesome-module.css';
+}
+
+.limitedAvailabilityText {
+	display: inline-block;
 }
