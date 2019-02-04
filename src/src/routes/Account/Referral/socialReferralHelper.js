@@ -1,5 +1,6 @@
 import globals from 'config/globals'
 import actionTypes from 'actions/actionTypes'
+import fbSettings from 'config/template'
 import defaultOffer from './config'
 
 export const getMessage = (offer) => {
@@ -47,7 +48,12 @@ export const getMessengerReferralLink = (referralCode, userFirstName, trackingRe
       })
     }
   } else {
-    window.open('fb-messenger://share?link=' + encodeURIComponent(referralLink) + '&app_id=' + encodeURIComponent(294160790674968))
+    if (globals.client) {
+      const { fbAppID } = fbSettings.head
+      const shareurl = `https://www.facebook.com/dialog/share?app_id=${fbAppID}&display=popup&href=${referralLink}&redirect_uri=https://${referralLink}`
+
+      window.open(shareurl)
+    }
   }
 }
 
