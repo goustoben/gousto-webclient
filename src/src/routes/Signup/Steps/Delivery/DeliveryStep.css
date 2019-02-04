@@ -74,7 +74,7 @@
 .modalFirstTitle {
 	border-width: 0px;
 	position: absolute;
-	top: 34px; /* 45px; */
+	top: 34px;
 	left: 16px;
 	white-space: nowrap;
 }
@@ -82,7 +82,7 @@
 .modalSecondTitle {
 	border-width: 0px;
 	position: absolute;
-	top: 66px; /* 72px; */
+	top: 66px;
 	left: 80px;
 	white-space: nowrap;
 }
