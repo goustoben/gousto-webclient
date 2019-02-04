@@ -189,8 +189,9 @@ const DeliveryStep = ({
       <Overlay open={isNDDPaintedDoorOpened} from="top">
         <ModalPanel className={css.modal} closePortal={onPopupClose}>
           <div className={css.modalTitleDiv}>
-            <h2 className={css.modalFirstTitle}>We're working on speeding</h2>
-            <h2 className={css.modalSecondTitle}>up our deliveries</h2>
+            <h2 className={css.modalFirstTitle}>We're working on speeding
+              <span>up our deliveries</span>
+            </h2>
           </div>
           <div className={css.modalrow}>
             <p>The delivery date you selected isn't available yet but we would love to get your feedback about deliveries.</p>

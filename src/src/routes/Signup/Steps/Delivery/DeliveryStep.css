@@ -76,7 +76,15 @@
 	position: absolute;
 	top: 34px;
 	left: 16px;
+	text-align: center;
 	white-space: nowrap;
+	span {
+		&::before {
+			content: "\A";
+			white-space: pre;
+		}
+	}
+
 }
 
 .modalSecondTitle {
