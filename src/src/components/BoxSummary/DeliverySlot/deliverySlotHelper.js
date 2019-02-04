@@ -1,4 +1,4 @@
-const addDisabledSlotIds = deliveryDays => (
+export const addDisabledSlotIds = deliveryDays => (
   deliveryDays.map(deliveryDay => {
     const date = deliveryDay.get('date')
     const slots = deliveryDay.get('slots')
@@ -21,4 +21,10 @@ const addDisabledSlotIds = deliveryDays => (
   })
 )
 
-export { addDisabledSlotIds }
+export const validateDisabledSlots = (disabledSlots) => {
+  //date_slotStartTime-slotEndTime
+  //05-02-2019_08-19
+  const validFormat = /\d{4}-([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))_([0-1][0-9]|(2)[0-4])-([0-1][0-9]|(2)[0-4])/
+
+  return disabledSlots.filter((slot) => slot.match(validFormat))
+}
