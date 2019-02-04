@@ -63,6 +63,7 @@ class DeliverySlot extends React.Component {
     const deliveryDays = this.props.deliveryDays.map(deliveryDay => {
       const date = deliveryDay.get('date')
       slots[date] = deliveryDay.get('slots').map(slot => { 
+        // TODO: Write tests for the isSlotBlocked logic below
         const isSlotBlocked = limitedAvailabilitySlots && limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined')) ? true : false
 
         return {
@@ -148,8 +149,8 @@ class DeliverySlot extends React.Component {
   render = () => {
     const { displayOptions, numPortions, limitedAvailabilitySlots, isAuthenticated, isSubscriptionActive } = this.props
 
-    const datesOflimitedAvailabilitySlots = limitedAvailabilitySlots.map(date => date.slice(0, 10))
-    const showDatesOfLimitedAvailabilitySlots = datesOflimitedAvailabilitySlots.includes(this.props.tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
+    const limitedAvailabilityDates = limitedAvailabilitySlots.map(date => date.slice(0, 10))
+    const doesDateHaveDisabledSlots = limitedAvailabilityDates.includes(this.props.tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
 
     const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
 
@@ -256,7 +257,7 @@ class DeliverySlot extends React.Component {
         <div className={css.row}>
           <span className={css.supportingText}>
             {warningMessage ? <p className={css.errorText}>{warningMessage}</p> : <p>{deliveryCopy}</p>}
-            {showDatesOfLimitedAvailabilitySlots ? <p><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /> Unavailable due to high demand</p> : null}
+            {doesDateHaveDisabledSlots ? <p className={css.limitedAvailabilityText}><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /> Unavailable due to high demand</p> : null}
           </span>
         </div>
         <Button
