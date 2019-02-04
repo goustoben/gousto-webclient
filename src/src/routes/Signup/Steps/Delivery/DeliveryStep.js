@@ -87,12 +87,12 @@ const DeliveryStep = ({
     }
   }
 
-  const isRealSlotSelected = () => {
+  const isNDDSlotSelected = () => {
     return slots[tempDate][0]["coreSlotId"] === "NULL"
   }
 
   const onShowRecipe = () => {
-    if (isRealSlotSelected()) {
+    if (isNDDSlotSelected()) {
       openNDDPaintedDoor()
       trackDeliveryPreferenceModalViewed(tempDate, getDateOffset(tempDate), tempSlotId)
     } else {
