@@ -38,7 +38,7 @@ class DeliverySlot extends React.Component {
     setTempOrderId: PropTypes.func,
     boxSummaryNext: PropTypes.func,
     displayOptions: PropTypes.instanceOf(Immutable.List),
-    limitedAvailabilitySlots: PropTypes.arrayOf(PropTypes.string),
+    disabledSlots: PropTypes.arrayOf(PropTypes.string),
     isAuthenticated: PropTypes.bool,
     isSubscriptionActive: PropTypes.string
   }
@@ -51,20 +51,20 @@ class DeliverySlot extends React.Component {
     disableOnDelivery: false,
     basketRecipeNo: 0,
     displayOptions: Immutable.List([]),
-    limitedAvailabilitySlots: [],
+    disabledSlots: [],
     isAuthenticated: false,
   }
 
   getDeliveryDaysAndSlots = (newDate) => {
     const slots = {}
-    const { disableOnDelivery, availableDaysOnly, limitedAvailabilitySlots, isAuthenticated, isSubscriptionActive } = this.props
+    const { disableOnDelivery, availableDaysOnly, disabledSlots, isAuthenticated, isSubscriptionActive } = this.props
     let hasOrders = false
 
     const deliveryDays = this.props.deliveryDays.map(deliveryDay => {
       const date = deliveryDay.get('date')
-      slots[date] = deliveryDay.get('slots').map(slot => { 
+      slots[date] = deliveryDay.get('slots').map(slot => {
         // TODO: Write tests for the isSlotBlocked logic below
-        const isSlotBlocked = limitedAvailabilitySlots && limitedAvailabilitySlots.includes(slot.get('dateAndSlotCombined')) ? true : false
+        const isSlotBlocked = disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')) ? true : false
 
         return {
           label: this.formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime')),
@@ -131,7 +131,7 @@ class DeliverySlot extends React.Component {
       this.props.setTempSlotId(slotId)
       this.props.setTempDate(date)
       this.props.setTempOrderId(undefined)
-      
+
     } else {
       this.props.setTempDate(date)
       this.props.setTempOrderId(orderId)
@@ -147,9 +147,9 @@ class DeliverySlot extends React.Component {
   )
 
   render = () => {
-    const { displayOptions, numPortions, limitedAvailabilitySlots, isAuthenticated, isSubscriptionActive } = this.props
+    const { displayOptions, numPortions, disabledSlots, isAuthenticated, isSubscriptionActive } = this.props
 
-    const limitedAvailabilityDates = limitedAvailabilitySlots.map(date => date.slice(0, 10))
+    const limitedAvailabilityDates = disabledSlots.map(date => date.slice(0, 10))
     const doesDateHaveDisabledSlots = limitedAvailabilityDates.includes(this.props.tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
 
     const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
@@ -198,7 +198,7 @@ class DeliverySlot extends React.Component {
         </div>
         {!displayOptions.contains('hideDeliveryCopy') && <div className={css.row}>
           <p className={css.leadingText}>Our menus change weekly. Please select a date so we can show you the latest recipes</p>
-        </div>}
+                                                         </div>}
         <div className={this.props.tempOrderId ? css.disabledRow : css.row}>
           <Button
             fill={false}
@@ -213,7 +213,7 @@ class DeliverySlot extends React.Component {
               <span className={css.clear}>
                 <span className={css.clearIcon}></span>
                 edit
-							</span>
+              </span>
             </Segment>
           </Button>
         </div>
@@ -240,19 +240,19 @@ class DeliverySlot extends React.Component {
                   className={css.dropdown}
                 />
               </div>
-            </div>) : null
+             </div>) : null
         ))()}
         {(() => (
           !disableNewDatePicker ?
             (<div className={css.row}>
               <Calendar dates={deliveryDays} selected={this.props.tempDate} onClick={this.handleDateChange} />
-            </div>) : null
+             </div>) : null
         ))()}
         {(() => (
           !disableNewDatePicker ?
             (<div className={this.props.tempOrderId ? css.disabledRow : css.row}>
               <SlotPicker slots={slots} date={this.props.tempDate} slotId={slotId} onClick={this.handleSlotChange} />
-            </div>) : null
+             </div>) : null
         ))()}
         <div className={css.row}>
           <span className={css.supportingText}>
