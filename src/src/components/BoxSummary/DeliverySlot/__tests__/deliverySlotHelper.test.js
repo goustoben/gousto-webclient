@@ -1,0 +1,72 @@
+
+import Immutable from 'immutable'
+import { addDisabledSlotIds } from '../deliverySlotHelper'
+
+describe('Delivery Slot Helper', () => {
+
+  let deliveryDays
+
+  beforeEach(() => {
+    deliveryDays = Immutable.fromJS({
+      aaa: {
+        date: "2019-03-03",
+        id: "testId",
+        slots: [
+          {
+            deliveryStartTime: "18:00:00",
+            deliveryEndTime: "22:00:00",
+            id: "testSlotId1",
+            disabledSlotId: '2019-03-03_18-22'
+          },
+          {
+            deliveryStartTime: "08:00:00",
+            deliveryEndTime: "12:00:00",
+            id: "testSlotId2",
+            disabledSlotId: '2019-03-03_08-12'
+          },
+          {
+            deliveryStartTime: "08:00:00",
+            deliveryEndTime: "19:00:00",
+            id: "testSlotId3",
+            disabledSlotId: '2019-03-03_08-19'
+          }
+        ]
+      }
+    })
+  })
+
+  test('should return a map of deliveryDays where each slot has a disabledSlotId property', () => {
+    const result = addDisabledSlotIds(deliveryDays)
+    const slots = result.get('aaa').get('slots')
+
+    expect(slots.get(0).get('disabledSlotId')).toEqual('2019-03-03_18-22')
+    expect(slots.get(1).get('disabledSlotId')).toEqual('2019-03-03_08-12')
+    expect(slots.get(2).get('disabledSlotId')).toEqual('2019-03-03_08-19')
+  })
+
+  test('should return an empty disabledSlotId when slotStartTime is missing', () => {
+    deliveryDays = Immutable.fromJS({
+      aaa: {
+        date: "2019-03-03",
+        id: "testId",
+        slots: [
+          {
+            deliveryStartTime: "18:00:00",
+            id: "testSlotId1",
+            disabledSlotId: '2019-03-03_18-22'
+          },
+          {
+            deliveryEndTime: "12:00:00",
+            id: "testSlotId2",
+            disabledSlotId: '2019-03-03_08-12'
+          }
+        ]
+      }
+    })
+    const result = addDisabledSlotIds(deliveryDays)
+    const slots = result.get('aaa').get('slots')
+
+    expect(slots.get(0).get('disabledSlotId')).toEqual('')
+    expect(slots.get(1).get('disabledSlotId')).toEqual('')
+  })
+})
