@@ -553,7 +553,7 @@ describe('utils/deliveries', () => {
               {
                 id: '123-123-123',
                 whenCutoff: 'asdf',
-                dateAndSlotCombined: '2016-03-02_08-19',
+                disabledSlotId: '2016-03-02_08-19',
               },
             ],
           },
@@ -564,7 +564,7 @@ describe('utils/deliveries', () => {
               {
                 id: '321-321-321',
                 whenCutoff: 'qwerty',
-                dateAndSlotCombined: '2015-12-12_08-19'
+                disabledSlotId: '2015-12-12_08-19'
               },
             ],
           },
@@ -575,7 +575,7 @@ describe('utils/deliveries', () => {
               {
                 id: '456-456-456',
                 whenCutoff: 'zxcvb',
-                dateAndSlotCombined: '2014-12-12_08-19'
+                disabledSlotId: '2014-12-12_08-19'
               },
             ],
           },
@@ -586,12 +586,12 @@ describe('utils/deliveries', () => {
               {
                 id: '789-789-789',
                 whenCutoff: 'zxcvb',
-                dateAndSlotCombined: '2017-01-01_08-19'
+                disabledSlotId: '2017-01-01_08-19'
               },
               {
                 id: '123-123-123',
                 whenCutoff: 'jfklsad',
-                dateAndSlotCombined: '2017-01-01_18-22',
+                disabledSlotId: '2017-01-01_18-22',
                 isDefault: true,
               },
             ],
