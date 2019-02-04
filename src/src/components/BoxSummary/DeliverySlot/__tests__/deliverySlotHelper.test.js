@@ -1,9 +1,8 @@
 
 import Immutable from 'immutable'
-import { addDisabledSlotIds } from '../deliverySlotHelper'
+import { addDisabledSlotIds, validateDisabledSlots } from '../deliverySlotHelper'
 
 describe('Delivery Slot Helper', () => {
-
   let deliveryDays
 
   beforeEach(() => {
@@ -68,5 +67,22 @@ describe('Delivery Slot Helper', () => {
 
     expect(slots.get(0).get('disabledSlotId')).toEqual('')
     expect(slots.get(1).get('disabledSlotId')).toEqual('')
+  })
+})
+
+describe('Validate Disabled Slots', () => {
+  test('should return all valid disabled slots', () => {
+    const validDisabledSlots = ['2019-02-02_08-19', '2019-02-02_08-22', '2019-02-02_18-22']
+    const result = validateDisabledSlots(validDisabledSlots)
+
+    expect(result).toEqual(validDisabledSlots)
+  })
+
+  test('should filter out all invalid disabled slots', () => {
+    const validDisabledSlots = ['2019-02-02_08-19', '2019-02-02_08-22', '2019-02-02_18-22']
+    const invalidDisabledSlots = ['slot', '2019-02-02', '02-02-2019_00-00', '2019-02-02_00_00', '2019-02-02-00-00']
+    const result = validateDisabledSlots([...validDisabledSlots, ...invalidDisabledSlots])
+
+    expect(result).toEqual(validDisabledSlots)
   })
 })
