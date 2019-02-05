@@ -162,7 +162,7 @@ describe('DeliverySlot logic', () => {
           isSubscriptionActive={isSubscriptionActive}
           tempDate='2019-03-03'
         />)
-      expect(wrapper.find('.limitedAvailabilityText').text()).toContain('Unavailable due to high demand')
+      expect(wrapper.find('.disabledSlotText').text()).toContain('Unavailable due to high demand')
     })
 
     test('should NOT show limited availability text when doesDateHaveDisabledSlots is true, user is logged in but subscription is ACTIVE', () => {
@@ -174,7 +174,7 @@ describe('DeliverySlot logic', () => {
           isSubscriptionActive={'active'}
           tempDate='2019-03-03'
         />)
-      expect(wrapper.find('.limitedAvailabilityText').length).toEqual(0)
+      expect(wrapper.find('.disabledSlotText').length).toEqual(0)
     })
 
     test('should NOT show limited availability text when doesDateHaveDisabledSlots is true but user is NOT logged in', () => {
@@ -186,7 +186,7 @@ describe('DeliverySlot logic', () => {
           isSubscriptionActive={isSubscriptionActive}
           tempDate='2019-03-03'
         />)
-      expect(wrapper.find('.limitedAvailabilityText').length).toEqual(0)
+      expect(wrapper.find('.disabledSlotText').length).toEqual(0)
     })
 
     test('should NOT show limited availability text when doesDateHaveDisabledSlots is false', () => {
@@ -200,7 +200,7 @@ describe('DeliverySlot logic', () => {
           isSubscriptionActive={isSubscriptionActive}
           tempDate='2019-03-03'
         />)
-      expect(wrapper.find('.limitedAvailabilityText').length).toEqual(0)
+      expect(wrapper.find('.disabledSlotText').length).toEqual(0)
     })
   })
 })

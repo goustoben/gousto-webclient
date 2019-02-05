@@ -123,6 +123,6 @@
 	composes: fa-basic-class fa-fw fa-exclamation-triangle from 'styles/vendor/font-awesome-module.css';
 }
 
-.limitedAvailabilityText {
+.disabledSlotText {
 	display: inline-block;
 }

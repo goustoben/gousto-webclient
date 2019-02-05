@@ -42,7 +42,7 @@ const defaultFeatures = () => ({
     experiment: true,
     value: false
   },
-  unavailableSlots: {
+  disabledSlots: {
     experiment: false,
     value: '',
   }

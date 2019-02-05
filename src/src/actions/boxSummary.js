@@ -99,12 +99,12 @@ export default {
     (dispatch, getState) => {
       const state = getState()
       const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
-      const deliveryDaysWithBlockedSlots = addDisabledSlotIds(state.boxSummaryDeliveryDays)
+      const deliveryDays = addDisabledSlotIds(state.boxSummaryDeliveryDays)
       const landing = deliveryUtils.getLandingDay(
         state,
         true,
         !canLandOnOrder,
-        deliveryDaysWithBlockedSlots
+        deliveryDays
       )
 
       const tempDate = state.temp.get('date', landing.date)

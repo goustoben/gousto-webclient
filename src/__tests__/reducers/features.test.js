@@ -54,7 +54,7 @@ describe('features reducers', () => {
           experiment: true,
           value: false
         },
-        unavailableSlots: {
+        disabledSlots: {
           experiment: false,
           value: '',
         },
@@ -99,7 +99,7 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
-        unavailableSlots: {
+        disabledSlots: {
           experiment: false,
           value: '',
         },
@@ -156,7 +156,7 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
-        unavailableSlots: {
+        disabledSlots: {
           experiment: false,
           value: '',
         },

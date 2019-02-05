@@ -63,15 +63,15 @@ class DeliverySlot extends React.Component {
     const deliveryDays = this.props.deliveryDays.map(deliveryDay => {
       const date = deliveryDay.get('date')
       slots[date] = deliveryDay.get('slots').map(slot => {
-        // TODO: Write tests for the isSlotBlocked logic below
-        const isSlotBlocked = disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')) ? true : false
+        // TODO: Write tests for the isSlotDisabled logic below
+        const isSlotDisabled = disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')) ? true : false
 
         return {
           label: this.formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime')),
           subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
           value: slot.get('id'),
           coreSlotId: slot.get('coreSlotId'),
-          disabled: isSlotBlocked && isAuthenticated && isSubscriptionActive === 'inactive'
+          disabled: isSlotDisabled && isAuthenticated && isSubscriptionActive === 'inactive'
         }
       }).toArray()
 
@@ -149,8 +149,8 @@ class DeliverySlot extends React.Component {
   render = () => {
     const { displayOptions, numPortions, disabledSlots, isAuthenticated, isSubscriptionActive } = this.props
 
-    const limitedAvailabilityDates = disabledSlots.map(date => date.slice(0, 10))
-    const doesDateHaveDisabledSlots = limitedAvailabilityDates.includes(this.props.tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
+    const datesOfDisabledSlots = disabledSlots.map(date => date.slice(0, 10))
+    const doesDateHaveDisabledSlots = datesOfDisabledSlots.includes(this.props.tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
 
     const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
 
@@ -257,7 +257,7 @@ class DeliverySlot extends React.Component {
         <div className={css.row}>
           <span className={css.supportingText}>
             {warningMessage ? <p className={css.errorText}>{warningMessage}</p> : <p>{deliveryCopy}</p>}
-            {doesDateHaveDisabledSlots ? <div><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /><p className={css.limitedAvailabilityText}> Unavailable due to high demand</p></div> : null}
+            {doesDateHaveDisabledSlots ? <div><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /><p className={css.disabledSlotText}> Unavailable due to high demand</p></div> : null}
           </span>
         </div>
         <Button

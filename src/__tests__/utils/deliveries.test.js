@@ -9,10 +9,10 @@ import {
   getAvailableDeliveryDays,
 } from 'utils/deliveries'
 import Immutable from 'immutable' /* eslint-disable new-cap */
-import { getUnavailableSlots } from 'selectors/features'
+import { getDisabledSlots } from 'selectors/features'
 
 jest.mock('selectors/features', () => ({
-  getUnavailableSlots: jest.fn()
+  getDisabledSlots: jest.fn()
 }))
 
 describe('utils/deliveries', () => {
@@ -182,7 +182,7 @@ describe('utils/deliveries', () => {
     let state
     let date
     let deliveryDays
-    let deliveryDaysWithBlockedSlots
+    let deliveryDaysWithDisabledSlotIds
     let userOrders
     let slotId
     let prevSlotId
@@ -545,7 +545,7 @@ describe('utils/deliveries', () => {
             ],
           },
         })
-        deliveryDaysWithBlockedSlots = Immutable.fromJS({
+        deliveryDaysWithDisabledSlotIds = Immutable.fromJS({
           '2016-03-02': {
             date: '2016-03-02',
             isDefault: false,
@@ -603,25 +603,25 @@ describe('utils/deliveries', () => {
         })
       })
       test('should return the default delivery slot if not disabled', () => {
-        getUnavailableSlots.mockImplementation(() => '')
+        getDisabledSlots.mockImplementation(() => '')
 
-        const result = getLandingDay(state, false, true, deliveryDaysWithBlockedSlots)
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
         expect(result).toEqual(expected)
       })
 
       test('should NOT return the default delivery slot if disabled', () => {
-        getUnavailableSlots.mockImplementation(() => '2017-01-01_18-22')
+        getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
 
-        const result = getLandingDay(state, false, true, deliveryDaysWithBlockedSlots)
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
         expect(result).not.toEqual(expected)
       })
 
       test('should return first non blocked slot if the default delivery slot if disabled', () => {
-        getUnavailableSlots.mockImplementation(() => '2017-01-01_18-22')
+        getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
 
-        const result = getLandingDay(state, false, true, deliveryDaysWithBlockedSlots)
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
         const expected = { date: '2017-01-01', slotId: '789-789-789' }
         expect(result).toEqual(expected)
       })

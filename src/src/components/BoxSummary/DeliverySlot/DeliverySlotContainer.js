@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
-import { getUnavailableSlots } from 'selectors/features'
+import { getDisabledSlots } from 'selectors/features'
 import DeliverySlot from './DeliverySlot'
 import { addDisabledSlotIds, validateDisabledSlots } from './deliverySlotHelper'
 
@@ -14,7 +14,7 @@ function mapStateToProps(state) {
     disableNewDatePicker = !state.features.getIn(['newDatePicker', 'value']) // allow enabling via feature flag
   }
 
-  const nonValidatedDisabledSlots = getUnavailableSlots(state) || ''
+  const nonValidatedDisabledSlots = getDisabledSlots(state) || ''
   const disabledSlots = validateDisabledSlots(nonValidatedDisabledSlots.split(','))
   const deliveryDays = addDisabledSlotIds(state.boxSummaryDeliveryDays)
   const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
