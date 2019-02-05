@@ -9,6 +9,7 @@ import { isValidPromoCode } from 'utils/order'
 import { basketResetPersistent } from 'utils/basket'
 
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { getFormSyncErrors } from 'redux-form'
 import actionTypes from './actionTypes'
 import basketActions from './basket'
 import loginActions from './login'
@@ -16,7 +17,7 @@ import userActions from './user'
 import statusActions from './status'
 import GoustoException from '../utils/GoustoException'
 import Cookies from '../utils/GoustoCookies'
-import { getFormSyncErrors } from 'redux-form'
+import gaID from '../config/head/gaTracking'
 
 const { pending, error } = statusActions
 
@@ -219,15 +220,18 @@ export const trackPurchase = () => (
     const promoCode = basket.get('promoCode')
     const totalPrice = prices.get('grossTotal')
     const shippingPrice = prices.get('deliveryTotal')
+    const gaIDTracking = gaID[__ENV__]// eslint-disable-line no-underscore-dangle
 
     if (typeof ga !== 'undefined') {
-      ga('ec:setAction', 'purchase', {
+      ga('create', gaIDTracking, 'auto', 'gousto')
+      ga('gousto.require', 'ec')
+      ga('gousto.ec:setAction', 'purchase', {
         id: orderId,
         revenue: totalPrice,
         shipping: shippingPrice,
         coupon: promoCode
       })
-      ga('send', 'pageview')
+      ga('gousto.send', 'pageview')
     }
   }
 )

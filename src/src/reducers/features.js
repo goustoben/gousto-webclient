@@ -38,6 +38,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
+  nextDayDeliveryPaintedDoor: {
+    experiment: true,
+    value: false
+  },
   unavailableSlots: {
     experiment: false,
     value: [],

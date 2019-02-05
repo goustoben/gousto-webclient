@@ -14,7 +14,7 @@ const ChefQuote = ({ chef, quote }) => {
     chefProfile = (
       <div className={css.row}>
         <div className={css.mainImage}>
-          <img src={getMenuRecipeImage(chefImage.get('urls'), 400)} alt={chefImage.get('title')} className={css.secondaryImage} />
+          {chefImage && <img src={getMenuRecipeImage(chefImage.get('urls'), 400)} alt={chefImage.get('title')} className={css.secondaryImage} />}
         </div>
         <div className={classNames(css.secondary, css.secondaryText)}>
           {(Immutable.Iterable.isIterable(signatureImage) && signatureImage.size > 1) ? (

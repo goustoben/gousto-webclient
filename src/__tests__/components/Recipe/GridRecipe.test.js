@@ -7,16 +7,14 @@ import Title from 'Recipe/Title'
 import Image from 'Recipe/Image'
 import Rating from 'Recipe/Rating'
 import ChefQuote from 'Recipe/ChefQuote'
-import UseWithin from 'Recipe/UseWithin'
 import AddButton from 'Recipe/AddButton'
 import StockBadge from 'Recipe/StockBadge'
 import TasteScore from 'Recipe/TasteScore'
-import CookingTime from 'Recipe/CookingTime'
 import DisabledOverlay from 'Recipe/DisabledOverlay'
 import RecommendedBadge from 'Recipe/RecommendedBadge'
-import EquipmentRequired from 'Recipe/EquipmentRequired'
 
 import GridRecipe from 'Recipe/GridRecipe'
+import { AttributeGrid } from 'Recipe/AttributeGrid'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
@@ -81,16 +79,10 @@ describe('<GridRecipe />', () => {
       expect(wrapper.find(TasteScore).prop('score')).toEqual(99)
     })
 
-    test('should contain one CookingTime component', () => {
+    test('should contain one AttributeGrid component', () => {
       const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
 
-      expect(wrapper.find(CookingTime).length).toEqual(1)
-    })
-
-    test('should contain one UseWithin component', () => {
-      const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
-
-      expect(wrapper.find(UseWithin).length).toEqual(1)
+      expect(wrapper.find(AttributeGrid).length).toEqual(1)
     })
 
     test('should contain one RecommendedBadge component', () => {
@@ -117,13 +109,6 @@ describe('<GridRecipe />', () => {
       expect(wrapper.find(DisabledOverlay).length).toEqual(1)
     })
 
-    test('should have a 1 EquipmentRequired with view "notice"', () => {
-      const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
-      const component = wrapper.find(EquipmentRequired)
-      expect(component.length).toBe(1)
-      expect(component.prop('view')).toBe('notice')
-    })
-
     test('should not contain a ChefQuote component', () => {
       const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
 
@@ -146,6 +131,36 @@ describe('<GridRecipe />', () => {
       const wrapper = shallow(<GridRecipe recipe={recipe} view={view} />)
 
       expect(wrapper.find(Title).prop('large')).toBe(undefined)
+    })
+
+    test('should render range ribbon for 10 min range recipe', () => {
+      recipe = Immutable.fromJS({
+        id: 1,
+        title: 'test',
+        rating: {
+          count: 1,
+          average: 4,
+        },
+        url: '',
+        cookingTime: 1,
+        cookingTimeFamily: 1,
+        shelfLifeDays: '',
+        range: 'ten_to_table',
+        media: {
+          images: [
+            {
+              urls: [
+                {
+                  src: 'test',
+                },
+              ],
+            },
+          ],
+        },
+      })
+      view = 'grid'
+      const wrapper = shallow(<GridRecipe recipe={recipe} view={view} range={recipe.get('range')} />)
+      expect(wrapper.find('RangeBadge').prop('range')).toEqual('ten_to_table')
     })
   })
 })

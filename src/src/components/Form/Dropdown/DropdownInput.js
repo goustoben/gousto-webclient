@@ -14,6 +14,8 @@ export class DropdownInput extends React.Component {
     additionalProps: PropTypes.object,
     options: PropTypes.array,
     onChange: PropTypes.func,
+    onOpen: PropTypes.func,
+    onClose: PropTypes.func,
     color: PropTypes.oneOf(['primary', 'secondary']),
     value: PropTypes.any,
     subLabelClassName: PropTypes.string,
@@ -31,7 +33,9 @@ export class DropdownInput extends React.Component {
     required: false,
     color: 'primary',
     uppercase: false,
-    error: false
+    error: false,
+    onOpen: () => { },
+    onClose: () => { }
   }
 
   handleChange = (obj) => {
@@ -73,7 +77,7 @@ export class DropdownInput extends React.Component {
   )
 
   renderNative = (options) => {
-    const { error, uppercase, additionalProps, value, required, dataTesting, color } = this.props
+    const { error, uppercase, additionalProps, value, required, dataTesting, color, onOpen, onClose } = this.props
 
     const className = classNames(css.native, {
       [css.primary]: !error && color == 'primary',
@@ -88,6 +92,8 @@ export class DropdownInput extends React.Component {
           {...additionalProps}
           className={className}
           onChange={this.nativeChanged}
+          onFocus={onOpen}
+          onBlur={onClose}
           value={JSON.stringify(value)}
           required={required}
           data-testing={dataTesting}
@@ -100,11 +106,18 @@ export class DropdownInput extends React.Component {
   }
 
   getSelectProps = () => {
+    const { onOpen } = this.props
+
     const defaultProps = {
       clearable: false,
       searchable: false,
       placeholder: '',
+      onOpen: () => {
+        setTimeout(() => document.getElementsByClassName('Select-option')[0].parentNode.scrollTop = 0, 0)
+        onOpen()
+      }
     }
+
     const ourProps = [
       'options',
       'onChange',
@@ -114,14 +127,16 @@ export class DropdownInput extends React.Component {
       'color',
       'defaultValue',
       'subLabelClassName',
-      'error'
+      'error',
+      'onOpen',
+      'onClose'
     ]
 
     return restrictProps(this.props, ourProps, defaultProps)
   }
 
   renderSelect = (options) => {
-    const {error, uppercase, additionalProps, value, required, dataTesting, color } = this.props
+    const { error, uppercase, additionalProps, value, required, dataTesting, color, onOpen, onClose } = this.props
 
     const className = classNames(css.select, css.dropdown, {
       [css.primary]: !error && color == 'primary',
@@ -137,6 +152,8 @@ export class DropdownInput extends React.Component {
           className={className}
           options={this.mapToSelect(options)}
           onChange={this.handleChange}
+          onOpen={onOpen}
+          onClose={onClose}
           value={JSON.stringify(value)}
           required={required}
           {...this.getSelectProps()}

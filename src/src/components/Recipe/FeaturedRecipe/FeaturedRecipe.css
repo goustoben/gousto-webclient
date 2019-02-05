@@ -1,7 +1,7 @@
-@value ScreenMLMax, ScreenMLMin from 'styles/screenSizes.css';
+@value ScreenMLMax, ScreenMLMin, ScreenSMMin from 'styles/screenSizes.css';
 @value SpacingLG as GutterSize from 'sass-loader!styles/spacing.scss';
 @value sizeMD from 'styles/typography.css';
-@value White from 'styles/colors.css';
+@value White, Basa from 'styles/colors.css';
 
 @value attributesLineHeight 1.8;
 @value chefTtileWidth calc(100% - 85px);
@@ -51,6 +51,9 @@
 
 .textContainer {
 	composes: paddingMD from 'sass-loader!styles/spacing.scss';
+	@media ScreenMLMax {
+		margin-top: 15px;
+	}
 }
 
 .link {
@@ -76,15 +79,6 @@
 	}
 }
 
-.attributes {
-	line-height: attributesLineHeight;
-	font-size: sizeMD;
-}
-
-.attributeMinHeight {
-	min-height: calc(sizeMD * attributesLineHeight);
-}
-
 .score {
 	position: absolute;
 	left: 10px;
@@ -92,5 +86,21 @@
 
 	@media ScreenMLMin {
 		top: 100%;
+	}
+}
+
+.rangeBadgeFeatured {
+	position: absolute;
+	margin-left: -15px;
+	margin-top: -40px;
+
+	@media ScreenSMMin {
+		margin-top: -44px;
+	}
+	@media ScreenMLMin {
+		position: relative;
+		margin-left: -25px;
+		margin-bottom: 15px;
+		margin-top: 0px;
 	}
 }

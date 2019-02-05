@@ -50,6 +50,10 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
+        nextDayDeliveryPaintedDoor: {
+          experiment: true,
+          value: false
+        },
         unavailableSlots: {
           experiment: false,
           value: [],
@@ -94,9 +98,14 @@ describe('features reducers', () => {
         queueIt: {
           experiment: false,
           value: false,
-        },unavailableSlots: {
+        },
+        unavailableSlots: {
           experiment: false,
           value: [],
+        },
+        nextDayDeliveryPaintedDoor: {
+          experiment: true,
+          value: false
         },
       })
       const result = features.features(state, action)
@@ -146,9 +155,14 @@ describe('features reducers', () => {
         queueIt: {
           experiment: false,
           value: false,
-        },unavailableSlots: {
+        },
+        unavailableSlots: {
           experiment: false,
           value: [],
+        },
+        nextDayDeliveryPaintedDoor: {
+          experiment: true,
+          value: false
         },
       })
       const result = features.features(state, action)

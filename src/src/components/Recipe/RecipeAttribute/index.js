@@ -1,0 +1,1 @@
+export { RecipeAttribute } from './RecipeAttribute'

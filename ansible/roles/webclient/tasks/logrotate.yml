@@ -1,0 +1,11 @@
+---
+- name: Add logrotate config for pm2 logs
+  template: src="templates/pm2_logrotate/pm2.j2" dest="/etc/logrotate.d/pm2_{{ service_name }}" owner=root mode=0644
+  notify:
+    - start logrotate
+
+
+- name: Create cron to execute logrotate
+  cron: name="Logrotate Cron"
+        minute="*" hour="*" day="*"
+        job="/usr/sbin/logrotate /etc/logrotate.d/pm2_{{ service_name }}"
