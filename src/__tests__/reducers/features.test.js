@@ -56,7 +56,7 @@ describe('features reducers', () => {
         },
         unavailableSlots: {
           experiment: false,
-          value: [],
+          value: '',
         },
       })
       const result = features.features(state, action)
@@ -101,7 +101,7 @@ describe('features reducers', () => {
         },
         unavailableSlots: {
           experiment: false,
-          value: [],
+          value: '',
         },
         nextDayDeliveryPaintedDoor: {
           experiment: true,
@@ -158,7 +158,7 @@ describe('features reducers', () => {
         },
         unavailableSlots: {
           experiment: false,
-          value: [],
+          value: '',
         },
         nextDayDeliveryPaintedDoor: {
           experiment: true,
