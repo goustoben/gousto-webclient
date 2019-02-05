@@ -617,12 +617,20 @@ describe('utils/deliveries', () => {
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
         expect(result).not.toEqual(expected)
       })
-
-      test('should return first non blocked slot if the default delivery slot if disabled', () => {
+      
+      test('should return nothing if the default delivery slot if disabled and all other slots are disabled', () => {
         getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
 
         const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
-        const expected = { date: '2017-01-01', slotId: '789-789-789' }
+        const expected = { date: '2017-01-01', slotId: '123-123-123' }
+        expect(result).not.toEqual(expected)
+      })
+
+      test.only('should return first non blocked slot if the default delivery slot if disabled', () => {
+        getDisabledSlots.mockImplementation(() => '2017-01-01_18-22, 2017-01-01_08-19')
+
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+        const expected = { date: '2017-01-01', slotId: undefined }
         expect(result).toEqual(expected)
       })
     })

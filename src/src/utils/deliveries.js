@@ -2,7 +2,7 @@ import moment from 'moment'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import GoustoException from 'utils/GoustoException'
 import { getDisabledSlots } from 'selectors/features'
-import { validateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
+import { formatAndValidateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
 
 export function getSlot(deliveryDays, date, slotId) {
   if (deliveryDays && typeof deliveryDays.getIn === 'function') {
@@ -267,8 +267,8 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
   const deliveryDays = deliveryDaysWithDisabledSlotIds || state.boxSummaryDeliveryDays
   const userOrders = state.user.get('orders')
   const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
-  const nonValidatedDisabledSlots = getDisabledSlots(state) || ''
-  const disabledSlots = validateDisabledSlots(nonValidatedDisabledSlots.split(','))
+  const nonValidatedDisabledSlots = getDisabledSlots(state)
+  const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
 
   // try and find the delivery day
   let day

@@ -6,7 +6,7 @@ import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
 import { getDisabledSlots } from 'selectors/features'
 import DeliverySlot from './DeliverySlot'
-import { addDisabledSlotIds, validateDisabledSlots } from './deliverySlotHelper'
+import { addDisabledSlotIds, formatAndValidateDisabledSlots } from './deliverySlotHelper'
 
 function mapStateToProps(state) {
   let disableNewDatePicker = !state.auth.get('isAuthenticated')
@@ -14,8 +14,8 @@ function mapStateToProps(state) {
     disableNewDatePicker = !state.features.getIn(['newDatePicker', 'value']) // allow enabling via feature flag
   }
 
-  const nonValidatedDisabledSlots = getDisabledSlots(state) || ''
-  const disabledSlots = validateDisabledSlots(nonValidatedDisabledSlots.split(','))
+  const nonValidatedDisabledSlots = getDisabledSlots(state)
+  const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
   const deliveryDays = addDisabledSlotIds(state.boxSummaryDeliveryDays)
   const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
 

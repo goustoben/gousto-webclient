@@ -9,3 +9,4 @@ export const isCheckoutPaymentFeatureEnabled = state => (state.features ? state.
 export const isNextDayDeliveryPaintedDoorFeatureEnabled = state => (state.features ? state.features.getIn(['nextDayDeliveryPaintedDoor', 'value']) : false)
 
 export const getDisabledSlots = state => (state.features ? state.features.getIn(['disabledSlots', 'value']) : '')
+ 
