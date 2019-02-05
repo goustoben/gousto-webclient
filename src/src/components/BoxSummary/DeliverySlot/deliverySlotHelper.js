@@ -29,10 +29,10 @@ export const formatAndValidateDisabledSlots = (disabledSlots = '') => {
     return []
   }
 
-  const validFormat = /\d{4}-([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))_([0-1][0-9]|(2)[0-4])-([0-1][0-9]|(2)[0-4])/
+  const validFormat = /\d{4}-([0-][0-9]|(1)[0-2])-([0-2][0-9]|(3)[0-1])_([0-1][0-9]|(2)[0-4])-([0-1][0-9]|(2)[0-4])/
 
   return disabledSlots
     .split(/,\s+|\s+,|,/)
     .filter((slot) => slot.match(validFormat))
-    
+
 }
