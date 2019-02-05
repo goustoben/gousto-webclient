@@ -24,6 +24,11 @@ export const addDisabledSlotIds = deliveryDays => (
 export const formatAndValidateDisabledSlots = (disabledSlots = '') => {
   //date_slotStartTime-slotEndTime
   //05-02-2019_08-19
+
+  if(typeof disabledSlot !== 'string') {
+    return []
+  }
+
   const validFormat = /\d{4}-([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))_([0-1][0-9]|(2)[0-4])-([0-1][0-9]|(2)[0-4])/
 
   return disabledSlots
