@@ -99,4 +99,62 @@ describe('delivery actions', () => {
       })
     })
   })
+
+  describe('trackDeliveryPreferenceModalViewed', () => {
+    test('Should dispatch DELIVERY_PREFERENCE_MODAL_VIEWED action when ndd painted door modal is opened', () => {
+      const date = '2019-01-05'
+      const day_offset = 5
+      const delivery_slot_id = 'a5b2c3d4'
+      deliveries.trackDeliveryPreferenceModalViewed(date, day_offset, delivery_slot_id)(dispatch)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.DELIVERY_PREFERENCE_MODAL_VIEWED,
+        trackingData: {
+          actionType: 'DeliveryPreferenceModal Viewed',
+          date,
+          day_offset,
+          delivery_slot_id
+        }
+      })
+    })
+  })
+
+  describe('trackDeliveryPreferenceModalClosed', () => {
+    test('Should dispatch DELIVERY_PREFERENCE_MODAL_CLOSED action when ndd painted door modal is closed', () => {
+      const date = '2019-01-05'
+      const day_offset = 5
+      const delivery_slot_id = 'a5b2c3d4'
+      const delivery_preference = 'prefer ndd'
+      deliveries.trackDeliveryPreferenceModalClosed(date, day_offset, delivery_slot_id, delivery_preference)(dispatch)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.DELIVERY_PREFERENCE_MODAL_CLOSED,
+        trackingData: {
+          actionType: 'DeliveryPreferenceModal Closed',
+          date,
+          day_offset,
+          delivery_slot_id,
+          delivery_preference,
+        }
+      })
+    })
+  })
+
+  describe('trackDeliveryPreferenceSelected', () => {
+    test('Should dispatch DELIVERY_PREFERENCE_SELECTED action when any radio button selected in ndd painted door modal', () => {
+      const date = '2019-01-05'
+      const day_offset = 5
+      const delivery_slot_id = 'a5b2c3d4'
+      const delivery_preference = 'prefer ndd'
+      deliveries.trackDeliveryPreferenceSelected(date, day_offset, delivery_slot_id, delivery_preference)(dispatch)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.DELIVERY_PREFERENCE_SELECTED,
+        trackingData: {
+          actionType: 'DeliveryPreference Selected',
+          date: '2019-01-05',
+          day_offset: 5,
+          delivery_slot_id,
+          delivery_preference,
+        }
+      })
+    })
+  })
 })

@@ -14,6 +14,7 @@ function mapStateToProps(state) {
 
   const tempDate = state.temp.get('date', landing.date)
   const tempSlotId = state.temp.get('slotId', landing.slotId)
+  const isNDDPaintedDoorOpened = state.temp.get('isNDDPaintedDoorOpened', false)
 
   return {
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
@@ -21,19 +22,24 @@ function mapStateToProps(state) {
     tempSlotId,
     menuFetchDataPending: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
     nextDayDeliveryPaintedDoorFeature: isNextDayDeliveryPaintedDoorFeatureEnabled(state),
-    numPortions: state.basket.get('numPortions')
+    isNDDPaintedDoorOpened,
   }
 }
 
 const DeliveryStepContainer = connect(mapStateToProps, {
   setTempDate: date => actions.temp('date', date),
   setTempSlotId: slotId => actions.temp('slotId', slotId),
+  openNDDPaintedDoor: () => actions.temp('isNDDPaintedDoorOpened', true),
+  closeNDDPaintedDoor: () => actions.temp('isNDDPaintedDoorOpened', false),
   boxSummaryDeliverySlotChosen: actions.boxSummaryDeliverySlotChosen,
   trackDeliveryDayDropDownOpened: actions.trackDeliveryDayDropDownOpened,
   trackDeliveryDayDropDownClosed: actions.trackDeliveryDayDropDownClosed,
   trackDeliverySlotDropDownOpened: actions.trackDeliverySlotDropDownOpened,
   trackDeliveryDayEdited: actions.trackDeliveryDayEdited,
-  trackDeliverySlotEdited: actions.trackDeliverySlotEdited
+  trackDeliverySlotEdited: actions.trackDeliverySlotEdited,
+  trackDeliveryPreferenceModalViewed: actions.trackDeliveryPreferenceModalViewed,
+  trackDeliveryPreferenceModalClosed: actions.trackDeliveryPreferenceModalClosed,
+  trackDeliveryPreferenceSelected: actions.trackDeliveryPreferenceSelected,
 })(DeliveryStep)
 
 export default DeliveryStepContainer
