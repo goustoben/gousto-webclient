@@ -17,7 +17,7 @@ export class SpotlightWrapper extends Component {
     this.renderWrapper()
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     this.close()
   }
 
