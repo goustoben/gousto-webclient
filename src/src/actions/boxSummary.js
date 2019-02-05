@@ -1,4 +1,3 @@
-import actionTypes from './actionTypes'
 import basket from './basket'
 import menu from './menu'
 import status from './status'
@@ -8,7 +7,8 @@ import { okRecipes } from 'utils/basket'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import * as deliveryUtils from 'utils/deliveries'
-import { formatDateAndSlot } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
+import { addDisabledSlotIds } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
+import actionTypes from './actionTypes'
 
 function basketDeliveryDaysReceive(days) {
   return {
@@ -99,7 +99,7 @@ export default {
     (dispatch, getState) => {
       const state = getState()
       const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
-      const deliveryDaysWithBlockedSlots = formatDateAndSlot(state.boxSummaryDeliveryDays)
+      const deliveryDaysWithBlockedSlots = addDisabledSlotIds(state.boxSummaryDeliveryDays)
       const landing = deliveryUtils.getLandingDay(
         state,
         true,
