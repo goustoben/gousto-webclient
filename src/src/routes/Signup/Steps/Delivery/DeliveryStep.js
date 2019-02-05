@@ -58,10 +58,8 @@ const DeliveryStep = ({
   isNDDPaintedDoorOpened,
   openNDDPaintedDoor,
   closeNDDPaintedDoor,
-  setNDDPreference,
   trackDeliveryPreferenceModalViewed,
   trackDeliveryPreferenceModalClosed,
-  preferNDD,
   trackDeliveryPreferenceSelected
 }) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
@@ -123,13 +121,13 @@ const DeliveryStep = ({
   }
 
   const onPopupClose = () => {
-    trackDeliveryPreferenceModalClosed(tempDate, getDateOffset(tempDate), tempSlotId, preferNDD)
+    let answer = document.querySelector('[name="ndd"]:checked') ? document.querySelector('[name="ndd"]:checked').value : ''
+    trackDeliveryPreferenceModalClosed(tempDate, getDateOffset(tempDate), tempSlotId, answer)
     closeNDDPaintedDoor()
   }
 
   const onClickNddPreference = event => {
     if (event.target.checked) {
-      setNDDPreference({answer: event.target.value})
       trackDeliveryPreferenceSelected(tempDate, getDateOffset(tempDate), tempSlotId, event.target.value)
     }
   }
@@ -236,10 +234,8 @@ DeliveryStep.propTypes = {
   isNDDPaintedDoorOpened: React.PropTypes.bool,
   openNDDPaintedDoor: React.PropTypes.func,
   closeNDDPaintedDoor: React.PropTypes.func,
-  setNDDPreference: React.PropTypes.func,
   trackDeliveryPreferenceModalViewed: React.PropTypes.func,
   trackDeliveryPreferenceModalClosed: React.PropTypes.func,
-  preferNDD: React.PropTypes.string,
   trackDeliveryPreferenceSelected: React.PropTypes.func,
   next: React.PropTypes.func,
 }
