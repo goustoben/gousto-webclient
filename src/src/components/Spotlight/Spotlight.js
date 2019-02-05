@@ -1,58 +1,49 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import css from './Spotlight.css'
 import { getEllipse } from './ellipse'
+import css from './Spotlight.css'
 
-export class Spotlight extends PureComponent {
-  state = {
-    x: 0,
-    y: 0,
-    RADIUS: 200,
-    accuracy: 0.3,
-  }
+const RADIUS = 100
+const accuracy = 0.3
 
-  node = null
+const Spotlight = ({ x, y }) => {
+  const steps = getEllipse({
+    originX: x,
+    originY: y,
+    radius: RADIUS,
+    accuracy,
+  })
 
-  componentDidMount() {
-    document.addEventListener('mousemove', this.handleClick)
-  }
+  return (
+    <div
+      className={css.spotlight}
+      style={{
+        clipPath: `polygon(
+          0% 0%,
+          100% 0%,
+          100% ${y}px,
+          ${steps}
+          100% ${y}px,
+          100% 100%,
+          0% 100%
+        )`,
+      }}
+    >
+    </div>
+  )
+}
 
-  componentWillUnmount() {
-    document.removeEventListener('mousemove', this.handleClick)
-  }
+Spotlight.defaultProps = {
+  x: 0,
+  y: 0,
+}
 
-  handleClick = (e) => {
-    this.setState({
-      x: e.clientX,
-      y: e.clientY,
-    })
-  }
+Spotlight.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+}
 
-  render() {
-    const { x, y, RADIUS, accuracy } = this.state
-    const steps = getEllipse({
-      originX: x,
-      originY: y,
-      radius: RADIUS,
-      accuracy,
-    })
-
-    return (
-      <div
-        className={css.spotlight}
-        style={{
-          clipPath: `polygon(
-            0% 0%,
-            100% 0%,
-            100% ${y}px,
-            ${steps}
-            100% ${y}px,
-            100% 100%,
-            0% 100%
-          )`,
-        }}
-      >
-      </div>
-    )
-  }
+export {
+  Spotlight,
 }
