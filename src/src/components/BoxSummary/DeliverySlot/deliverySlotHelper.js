@@ -25,7 +25,7 @@ export const formatAndValidateDisabledSlots = (disabledSlots = '') => {
   //date_slotStartTime-slotEndTime
   //05-02-2019_08-19
 
-  if(typeof disabledSlot !== 'string') {
+  if(typeof disabledSlots !== 'string') {
     return []
   }
 
