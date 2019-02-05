@@ -32,7 +32,6 @@ class ShareYourLinkModal extends React.PureComponent {
 
   render() {
     const { onClose, referralCode, trackingReferFriendSocialSharing, trackingReferFriend, userFirstName, rafOffer, device } = this.props
-		console.log('TCL: ShareYourLinkModal -> render -> device', device) //eslint-disable-line
     const { isEmailFormOpen } = this.state
 
     return (
