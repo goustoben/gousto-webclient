@@ -1,0 +1,33 @@
+@value White from 'styles/colors.css';
+
+.arrow__container {
+  width: 100%;
+}
+
+.arrow {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  margin: 0 auto;
+}
+
+.arrow--top {
+  margin-bottom: -10px;
+  border-bottom: 30px solid White;
+}
+
+.arrow--bottom {
+  margin-top: -10px;
+  border-top: 30px solid White;
+}
+
+.arrow--left {
+  margin-left: 30px;
+  margin-right: auto;
+}
+
+.arrow--right {
+  margin-left: auto;
+  margin-right: 30px;
+}

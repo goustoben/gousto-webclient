@@ -1,15 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import css from './Tooltip.css'
+import { Arrow } from './Arrow'
 
-const Arrow = ({ position, orientation }) => (
-  (position === orientation) ? (
-    <div className={css.arrow__container}>
-      <div className={`${css.arrow} ${css[`arrow--${orientation}`]}`} />
-    </div>
-  ) : null
-)
+import css from './Tooltip.css'
 
 const Tooltip = ({ arrow, children, style }) => (
   <div className={css.container} style={style}>
@@ -29,6 +23,7 @@ Tooltip.defaultProps = {
 Tooltip.propTypes = {
   arrow: PropTypes.string,
   children: PropTypes.node,
+  style: PropTypes.objectOf(PropTypes.string),
 }
 
 export {
