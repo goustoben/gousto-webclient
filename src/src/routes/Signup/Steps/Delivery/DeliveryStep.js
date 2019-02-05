@@ -2,12 +2,17 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import React from 'react'
 import moment from 'moment'
 import DropdownInput from 'Form/Dropdown'
+
+import ModalPanel from 'Modal/ModalPanel'
+import Overlay from 'Overlay'
 import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset } from 'utils/deliverySlot'
 import Button from '../../Button'
+import { Button as GoustoButton } from 'goustouicomponents'
 
 import signupCss from '../../Signup.css'
 import css from './DeliveryStep.css'
 import Image from '../../Image'
+import Svg from 'Svg'
 
 const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
   tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
@@ -35,7 +40,28 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   return { slots, deliveryDays }
 }
 
-const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotId, setTempSlotId, boxSummaryDeliverySlotChosen, menuFetchDataPending, nextDayDeliveryPaintedDoorFeature, numPortions, next, trackDeliveryDayDropDownOpened, trackDeliveryDayDropDownClosed, trackDeliverySlotDropDownOpened, trackDeliveryDayEdited, trackDeliverySlotEdited }) => {
+const DeliveryStep = ({ 
+  boxSummaryDeliveryDays,
+  tempDate,
+  setTempDate,
+  tempSlotId,
+  setTempSlotId,
+  boxSummaryDeliverySlotChosen,
+  menuFetchDataPending,
+  nextDayDeliveryPaintedDoorFeature,
+  next,
+  trackDeliveryDayDropDownOpened,
+  trackDeliveryDayDropDownClosed,
+  trackDeliverySlotDropDownOpened,
+  trackDeliveryDayEdited,
+  trackDeliverySlotEdited,
+  isNDDPaintedDoorOpened,
+  openNDDPaintedDoor,
+  closeNDDPaintedDoor,
+  trackDeliveryPreferenceModalViewed,
+  trackDeliveryPreferenceModalClosed,
+  trackDeliveryPreferenceSelected
+}) => {
   let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
 
   if (nextDayDeliveryPaintedDoorFeature) {
@@ -59,6 +85,20 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
     }
   }
 
+  const isNDDSlotSelected = () => slots[tempDate][0]["coreSlotId"] === "NULL"
+
+  const onShowRecipe = () => {
+    if (isNDDSlotSelected()) {
+      openNDDPaintedDoor()
+      trackDeliveryPreferenceModalViewed(tempDate, getDateOffset(tempDate), tempSlotId)
+    } else {
+      boxSummaryDeliverySlotChosen({
+        date: tempDate,
+        slotId: tempSlotId,
+      }).then(next)
+    }
+  }
+
   const onTempSlotChange = slotId => {
     // If the slot id has changed
     if (slotId !== tempSlotId) {
@@ -78,6 +118,18 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
 
   const onSlotDropdownOpen = e => {
     trackDeliverySlotDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
+  }
+
+  const onPopupClose = () => {
+    let answer = document.querySelector('[name="ndd"]:checked') ? document.querySelector('[name="ndd"]:checked').value : ''
+    trackDeliveryPreferenceModalClosed(tempDate, getDateOffset(tempDate), tempSlotId, answer)
+    closeNDDPaintedDoor()
+  }
+
+  const onClickNddPreference = event => {
+    if (event.target.checked) {
+      trackDeliveryPreferenceSelected(tempDate, getDateOffset(tempDate), tempSlotId, event.target.value)
+    }
   }
 
   return (
@@ -125,16 +177,42 @@ const DeliveryStep = ({ boxSummaryDeliveryDays, tempDate, setTempDate, tempSlotI
             data-testing="signupDeliveryCTA"
             disabled={!tempDate || !tempSlotId}
             width="full"
-            onClick={() => (
-              boxSummaryDeliverySlotChosen({
-                date: tempDate,
-                slotId: tempSlotId,
-              }).then(next)
-            )}
+            onClick={onShowRecipe}
             pending={menuFetchDataPending}
           />
         </div>
       </div>
+      <Overlay open={isNDDPaintedDoorOpened} from="top">
+        <ModalPanel className={css.modal} closePortal={onPopupClose}>
+          <div className={css.modalTitleDiv}>
+            <h2 className={css.modalFirstTitle}>We're working on speeding
+              <span>up our deliveries</span>
+            </h2>
+          </div>
+          <div className={css.modalrow}>
+            <p>The delivery date you selected isn't available yet but we would love to get your feedback about deliveries.</p>
+          </div>
+          <div className={css.modalrow}>
+            <p>Please help us improve and tell us which statement you agree with:</p>
+          </div>
+          <div className={css.modalrow}>
+            <label className={css.label}>
+              <input className={css.radio} name="ndd" value="prefer ndd" type="radio" onClick={onClickNddPreference}/>
+              <span>Fast delivery (24-48 hour) is very important to me</span>
+            </label>
+          </div>
+          <div className={css.modalrow}>
+            <label className={css.label}>
+            <input className={css.radio} name="ndd" value="fine without ndd" type="radio" onClick={onClickNddPreference}/>
+              <span>I am OK with 3 day delivery</span>
+            </label>
+          </div>
+          <div className={css.iconDeliverySection}>
+            <Svg fileName="icon-delivery" className={css.iconDelivery} />
+          </div>
+          <GoustoButton width="full" onClick={onPopupClose}>Back to delivery options</GoustoButton>
+        </ModalPanel>
+      </Overlay>
     </span>
   )
 }
@@ -153,6 +231,12 @@ DeliveryStep.propTypes = {
   trackDeliverySlotEdited: React.PropTypes.func,
   menuFetchDataPending: React.PropTypes.bool,
   nextDayDeliveryPaintedDoorFeature: React.PropTypes.bool,
+  isNDDPaintedDoorOpened: React.PropTypes.bool,
+  openNDDPaintedDoor: React.PropTypes.func,
+  closeNDDPaintedDoor: React.PropTypes.func,
+  trackDeliveryPreferenceModalViewed: React.PropTypes.func,
+  trackDeliveryPreferenceModalClosed: React.PropTypes.func,
+  trackDeliveryPreferenceSelected: React.PropTypes.func,
   next: React.PropTypes.func,
 }
 

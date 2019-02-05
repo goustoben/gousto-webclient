@@ -60,10 +60,51 @@ export const trackDeliverySlotEdited = (date, day_offset, delivery_slot_id) => d
   })
 }
 
+export const trackDeliveryPreferenceModalViewed = (date, day_offset, delivery_slot_id) => dispatch => {
+  dispatch({
+    type: actionTypes.DELIVERY_PREFERENCE_MODAL_VIEWED,
+    trackingData: {
+      actionType: 'DeliveryPreferenceModal Viewed',
+      date,
+      day_offset,
+      delivery_slot_id
+    }
+  })
+}
+
+export const trackDeliveryPreferenceSelected = (date, day_offset, delivery_slot_id, delivery_preference) => dispatch => {
+  dispatch({
+    type: actionTypes.DELIVERY_PREFERENCE_SELECTED,
+    trackingData: {
+      actionType: 'DeliveryPreference Selected',
+      date,
+      day_offset,
+      delivery_slot_id,
+      delivery_preference
+    }
+  })
+}
+
+export const trackDeliveryPreferenceModalClosed = (date, day_offset, delivery_slot_id, delivery_preference) => dispatch => {
+  dispatch({
+    type: actionTypes.DELIVERY_PREFERENCE_MODAL_CLOSED,
+    trackingData: {
+      actionType: 'DeliveryPreferenceModal Closed',
+      date,
+      day_offset,
+      delivery_slot_id,
+      delivery_preference
+    }
+  })
+}
+
 export default {
   trackDeliveryDayDropDownOpened,
   trackDeliveryDayDropDownClosed,
   trackDeliverySlotDropDownOpened,
   trackDeliveryDayEdited,
-  trackDeliverySlotEdited
+  trackDeliverySlotEdited,
+  trackDeliveryPreferenceModalViewed,
+  trackDeliveryPreferenceSelected,
+  trackDeliveryPreferenceModalClosed,
 }
