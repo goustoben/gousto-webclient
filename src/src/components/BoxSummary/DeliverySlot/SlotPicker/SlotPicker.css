@@ -2,7 +2,7 @@
 @value sizeSM, sizeXXS from 'styles/typography.css';
 @value SpacingXXS from 'sass-loader!styles/spacing.scss';
 @value (
-	PrimaryColor, PrimaryBgColor, PrimaryHoverColor, PrimaryHoverBgColor, 
+	PrimaryColor, PrimaryBgColor, PrimaryHoverColor, PrimaryHoverBgColor,
 	SecondaryColor, SecondaryBgColor, SecondaryHoverColor, SecondaryHoverActiveColor,
 	TertiaryColor, TertiaryBgColor, TertiaryBorderColor, TertiaryHoverColor, TertiaryHoverActiveColor,
 	NegativeColor, NegativeBgColor, NegativeHoverColor, NegativeHoverBgColor
@@ -27,7 +27,7 @@
     position: relative;
 }
 .compact {
-    line-height: 19px;    
+    line-height: 19px;
 }
 
 .enabled {
@@ -48,27 +48,27 @@
 
 .disabledLine {
     height: 1px;
-    width: 113%;
     background-color: Bluecheese50;
     position: absolute;
-    top: 19px;
 }
 
 .disabledLine1 {
     composes: disabledLine;
-    transform: rotate(20deg);
-    left: -3px;
+    transform: translateY(18px) rotate(20deg);
+    width: 100%;
 }
 
 .disabledLine2 {
     composes: disabledLine;
-    transform: rotate(-20deg);
-    left: -10px;
+    transform: translateY(18px) rotate(-20deg);
+    width: 100%;
 }
 
 .bigDisabledLine1 {
     composes: disabledLine;
     transform: rotate(7deg);
+    top: 19px;
+    width: 113%;
 }
 
 .bigDisabledLine2 {
@@ -76,4 +76,5 @@
     transform: rotate(-7deg);
     top: 19px;
     left: -36px;
+    width: 113%;
 }
