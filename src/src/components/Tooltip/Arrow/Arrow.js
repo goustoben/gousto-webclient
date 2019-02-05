@@ -3,22 +3,28 @@ import PropTypes from 'prop-types'
 
 import css from './Arrow.css'
 
-const Arrow = ({ position, orientation }) => (
-  (position === orientation) ? (
+const arrowClasses = (position) => {
+  const [ positionY, positionX ] = position.split('-')
+
+  return `${css.arrow} ${css[`arrow--${positionY}`]} ${(positionX) ? css[`arrow--${positionX}`] : ''}`
+}
+
+const Arrow = ({ positionY, position }) => (
+  (position.includes(positionY)) ? (
     <div className={css.arrow__container}>
-      <div className={`${css.arrow} ${css[`arrow--${orientation}`]}`} />
+      <div className={arrowClasses(position)} />
     </div>
   ) : null
 )
 
 Arrow.defaultProps = {
+  positionY: 'top',
   position: 'top',
-  orientation: 'top',
 }
 
 Arrow.propTypes = {
+  positionY: PropTypes.string,
   position: PropTypes.string,
-  orientation: PropTypes.string,
 }
 
 export {

@@ -7,12 +7,12 @@ import css from './Tooltip.css'
 
 const Tooltip = ({ arrow, children, style, last }) => (
   <div className={css.container} style={style}>
-    <Arrow position="top" orientation={arrow} />
+    <Arrow positionY="top" position={arrow} />
     <div className={css.content}>
       {children}
       <p className={css.cta}>{(last) ? 'OK' : 'NEXT &rsaquo'}</p>
     </div>
-    <Arrow position="bottom" orientation={arrow} />
+    <Arrow positionY="bottom" position={arrow} />
   </div>
 )
 
