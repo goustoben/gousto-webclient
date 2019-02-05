@@ -7,7 +7,8 @@ export class Spotlight extends PureComponent {
   state = {
     x: 0,
     y: 0,
-    RADIUS: 100,
+    RADIUS: 200,
+    accuracy: 0.3,
   }
 
   node = null
@@ -28,11 +29,12 @@ export class Spotlight extends PureComponent {
   }
 
   render() {
-    const { x, y, RADIUS } = this.state
+    const { x, y, RADIUS, accuracy } = this.state
     const steps = getEllipse({
       originX: x,
       originY: y,
       radius: RADIUS,
+      accuracy,
     })
 
     return (
