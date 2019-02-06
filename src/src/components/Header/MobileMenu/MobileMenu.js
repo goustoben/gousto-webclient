@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Link from 'Link'
-import config from 'config'
 import css from './MobileMenu.css'
 
 class MobileMenu extends React.PureComponent {
@@ -17,21 +16,6 @@ class MobileMenu extends React.PureComponent {
 	}
 	static defaultProps = {
 	  isAuthenticated: false,
-	}
-
-	renderAuthLink = (isAuthenticated, loginMenu) => {
-	  if (!isAuthenticated) {
-	    return loginMenu
-	  }
-
-	  return (
-			<a href={config.routes.client.myGousto} className={css.menuItem}>
-				<li>
-					<span className={css['icon-login']} />
-					My Gousto
-				</li>
-			</a>
-	  )
 	}
 
 	renderMenuItems = () => (
@@ -64,6 +48,17 @@ class MobileMenu extends React.PureComponent {
 					</span>
 	      )
 	    }
+			
+	    if (menuItem.name === 'Home' || 'My Gousto') {
+	      return (
+				<Link to={menuItem.url} className={css.menuItemMain} key={menuItem.name} clientRouted={menuItem.clientRouted}>
+					<li className={css.listElement}>
+						<span className={css[`icon-${menuItem.icon}`]} />
+						{menuItem.name}
+					</li>
+				</Link>
+	      )
+	    }
 
 	    return (
 				<Link to={menuItem.url} className={css.menuItem} key={menuItem.name} clientRouted={menuItem.clientRouted}>
@@ -83,7 +78,6 @@ class MobileMenu extends React.PureComponent {
 	  const loginMenu = (
 			<span className={css.menuItem} onClick={(isAuthenticated) ? this.props.logoutFunc : this.props.loginFunc}>
 				<li className={css.listElement}>
-					<span className={(isAuthenticated) ? css['icon-logout'] : css['icon-login']} data-testing={testingId} />
 					{(isAuthenticated) ? 'Logout' : 'Login'}
 				</li>
 			</span>
@@ -95,9 +89,8 @@ class MobileMenu extends React.PureComponent {
 			  ref={ref => { this.domNode = ref }}
 			>
 				<ul className={css.list}>
-					{this.renderAuthLink(isAuthenticated, loginMenu)}
 					{(!this.props.hideNav) ? this.renderMenuItems() : ''}
-					{(isAuthenticated) ? loginMenu : ''}
+					{loginMenu}
 				</ul>
 			</div>
 	  )
