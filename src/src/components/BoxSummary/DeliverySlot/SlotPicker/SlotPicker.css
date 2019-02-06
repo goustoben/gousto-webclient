@@ -1,12 +1,7 @@
 @value Bluecheese, Bluecheese50, White from 'styles/colors.css';
-@value sizeSM, sizeXXS from 'styles/typography.css';
+@value sizeSM from 'styles/typography.css';
 @value SpacingXXS from 'sass-loader!styles/spacing.scss';
-@value (
-	PrimaryColor, PrimaryBgColor, PrimaryHoverColor, PrimaryHoverBgColor,
-	SecondaryColor, SecondaryBgColor, SecondaryHoverColor, SecondaryHoverActiveColor,
-	TertiaryColor, TertiaryBgColor, TertiaryBorderColor, TertiaryHoverColor, TertiaryHoverActiveColor,
-	NegativeColor, NegativeBgColor, NegativeHoverColor, NegativeHoverBgColor
-) from 'styles/buttons.css';
+@value TertiaryBgColor from 'styles/buttons.css';
 
 .label {
 	composes: textBold from 'styles/typography.css';
@@ -32,7 +27,6 @@
 
 .enabled {
     color: Bluecheese !important;
-    /* border: 1px solid PrimaryColor !important */
 }
 
 .selected {
@@ -43,7 +37,6 @@
 .disabled {
     color: Bluecheese50 !important;
 	background-color: TertiaryBgColor !important;
-	/* border: 1px solid PrimaryColor !important; */
 }
 
 .disabledLine {
