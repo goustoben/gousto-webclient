@@ -1,5 +1,6 @@
 import globals from 'config/globals'
 import actionTypes from 'actions/actionTypes'
+import fbSettings from 'config/template'
 import defaultOffer from './config'
 
 export const getMessage = (offer) => {
@@ -31,19 +32,28 @@ export const getFacebookReferralLink = (referralCode, userFirstName, trackingRef
   }
 }
 
-export const getMessengerReferralLink = (referralCode, userFirstName, trackingReferFriendSocialSharing) => {
+export const getMessengerReferralLink = (referralCode, userFirstName, trackingReferFriendSocialSharing, device) => {
   trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Messenger')
 
   const messengerUTM = '&utm_source=messenger&utm_medium=sharebutton_raf_page&utm_campaign=raf_messenger_share'
   const referralLink = getReferralLink(referralCode, userFirstName, messengerUTM)
+  
+  if(device === 'desktop') {
+    if (globals.client) {
+      window.FB.ui({
+        method: 'send',
+        mobile_iframe: true,
+        link: referralLink,
+        redirect_uri: referralLink,
+      })
+    }
+  } else {
+    if (globals.client) {
+      const { fbAppID } = fbSettings.head
+      const shareurl = `https://www.facebook.com/dialog/share?app_id=${fbAppID}&display=popup&href=${referralLink}&redirect_uri=https://${referralLink}`
 
-  if (globals.client) {
-    window.FB.ui({
-      method: 'send',
-      mobile_iframe: true,
-      link: referralLink,
-      redirect_uri: referralLink,
-    })
+      window.open(shareurl)
+    }
   }
 }
 
