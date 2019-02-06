@@ -13,6 +13,13 @@
   box-shadow: 0 2px 7px 0 rgba(0,0,0,0.5);
 }
 
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+
 .cta {
   margin-top: 20px;
   color: Bluecheese;
