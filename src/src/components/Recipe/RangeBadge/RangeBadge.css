@@ -1,17 +1,5 @@
 @value White from 'styles/colors.css';
 
-/* .borderLeftCarrot{
-  border-left: 9px solid Carrot;
-}
-
-.borderLeftPomegranate {
-  border-left: 9px solid Pomegranate;
-}
-
-.borderLeftBlackberry {
-  border-left: 9px solid Blackberry;
-} */
-
 .rangeBadge{
   position: relative;
   height:28px;
