@@ -8,7 +8,6 @@ import ProgressBar from 'ProgressBar'
 import Summary from 'routes/Checkout/Components/Summary'
 import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import BoxDetails from 'routes/Checkout/Components/BoxDetails'
-import MobilePayment from 'routes/Checkout/Steps/Mobile/Payment'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
 import { menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
 
@@ -82,6 +81,9 @@ describe('Checkout', () => {
         browser: 'mobile',
       }),
       error: Immutable.Map({}),
+      form: {
+        
+      }
     }
 
     getState = jest.fn().mockReturnValue(store)
@@ -412,27 +414,6 @@ describe('Checkout', () => {
         wrapper.instance().componentDidMount()
           
         expect(loadCheckoutScript).toHaveBeenCalled()
-      })
-    })
-
-    describe('when the checkoutPaymentFeature flag not set', () => {
-      beforeEach(() => {
-        wrapper = shallow(
-          <Checkout
-            params={{ stepName: 'payment' }}
-            browser="mobile"
-          />
-        )
-      })
-
-      test('should not render a MobilePayment component', () => {
-        expect(wrapper.find(MobilePayment)).toHaveLength(1)
-      })
-
-      test('should not call loadCheckoutScript', () => {
-        wrapper.instance().componentDidMount()
-          
-        expect(loadCheckoutScript).not.toHaveBeenCalled()
       })
     })
   })

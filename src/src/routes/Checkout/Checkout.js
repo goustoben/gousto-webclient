@@ -16,13 +16,11 @@ import { loadCheckoutScript } from './loadCheckoutScript'
 import DesktopAboutYou from './Steps/Desktop/AboutYou'
 import DesktopBoxDetails from './Steps/Desktop/BoxDetails'
 import DesktopDelivery from './Steps/Desktop/Delivery'
-import DesktopPayment from './Steps/Desktop/Payment'
 import Summary from './Components/Summary'
 import BoxDetails from './Components/BoxDetails'
 
 import MobileYourDetails from './Steps/Mobile/YourDetails'
 import MobileBoxDetails from './Steps/Mobile/BoxDetails'
-import MobilePayment from './Steps/Mobile/Payment'
 
 import { CheckoutPayment } from './Components/CheckoutPayment'
 
@@ -33,13 +31,13 @@ const desktopStepMapping = {
   boxdetails: { component: DesktopBoxDetails, humanName: 'Box Details' },
   aboutyou: { component: DesktopAboutYou, humanName: 'About You' },
   delivery: { component: DesktopDelivery, humanName: 'Delivery' },
-  payment: { component: DesktopPayment, humanName: 'Payment' },
+  payment: { component: CheckoutPayment, humanName: 'Payment' },
 }
 
 const mobileStepMapping = {
   boxdetails: { component: MobileBoxDetails, humanName: 'Box Details' },
   yourdetails: { component: MobileYourDetails, humanName: 'Your Details' },
-  payment: { component: MobilePayment, humanName: 'Payment' },
+  payment: { component: CheckoutPayment, humanName: 'Payment' },
 }
 
 class Checkout extends React.PureComponent {
@@ -55,13 +53,11 @@ class Checkout extends React.PureComponent {
     menuLoadBoxPrices: PropTypes.func,
     trackSignupStep: PropTypes.func,
     tariffId: PropTypes.string,
-    checkoutPaymentFeature: PropTypes.bool,
   }
 
   static defaultProps = {
     params: {},
     redirect: () => { },
-    checkoutPaymentFeature: false,
   }
 
   constructor(state, props) {
@@ -140,7 +136,7 @@ class Checkout extends React.PureComponent {
     Overlay.forceCloseAll()
     
     const { store } = this.context
-    const { checkoutPaymentFeature, query = {}, params = {}, browser, trackSignupStep, queueItFeature } = this.props
+    const { query = {}, params = {}, browser, trackSignupStep, queueItFeature } = this.props
     
     /* global QueueIt */
     if (queueItFeature) {
@@ -154,13 +150,12 @@ class Checkout extends React.PureComponent {
         isCreatingPreviewOrder: false,
       })
     })
-    if (checkoutPaymentFeature) {
-      loadCheckoutScript(() => {
-        this.setState({
-          checkoutScriptReady: true,
-        })
+    loadCheckoutScript(() => {
+      this.setState({
+        checkoutScriptReady: true,
       })
-    }
+    })
+
   }
 
   reloadCheckoutScript = () => {
@@ -209,10 +204,10 @@ class Checkout extends React.PureComponent {
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {
-    const { browser, checkoutPaymentFeature, submitOrder } = this.props
+    const { browser, submitOrder } = this.props
     const { checkoutScriptReady } = this.state
     const step = stepMapping[currentStep]
-    const isCheckoutPaymentStep = checkoutPaymentFeature && currentStep === 'payment'
+    const isCheckoutPaymentStep = (currentStep === 'payment')
     const props = {
       onStepChange: this.onStepChange(steps, currentStep),
       isLastStep: this.isLastStep(steps, currentStep),
@@ -233,8 +228,8 @@ class Checkout extends React.PureComponent {
   }
 
   renderStaticPayment = (stepMapping, steps, currentStep) => {
-    const { browser, checkoutPaymentFeature, submitOrder } = this.props
-    const onPaymentStep = currentStep === 'payment'
+    const { browser, submitOrder } = this.props
+    const onPaymentStep = (currentStep === 'payment')
     const { checkoutScriptReady } = this.state
 
     const checkoutProps = {
@@ -247,11 +242,11 @@ class Checkout extends React.PureComponent {
       nextStepName: this.getNextStepName(stepMapping, steps, currentStep),
     }
 
-    return (checkoutPaymentFeature) ? (
+    return (
       <CheckoutPayment
         {...checkoutProps}
       />
-    ) : null
+    )
   }
 
   renderMobileSteps = () => (
