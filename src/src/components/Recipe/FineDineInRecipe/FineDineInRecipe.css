@@ -23,15 +23,6 @@
 	z-index: 1;
 }
 
-.gel {
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	font-weight: bold;
-	height: 80px;
-	width: 80px;
-}
-
 .clickContainer {
 	width: 100%;
 	position: absolute;
@@ -56,6 +47,7 @@
 
 .badgeItem {
 	margin-right: 6px;
+	padding-top: 5px
 }
 
 .link {
@@ -68,6 +60,7 @@
 
 .linkUnderlined {
 	composes: link;
+	border-bottom: 1px solid  rgba(234, 235, 236, 0.4);
 	&:hover {
 		text-decoration: underline;
 	}
@@ -102,7 +95,6 @@
 
 .rangeBadgeWrapper {
 	margin-top: -20px;
-	margin-left: -1px;
 	position: absolute;
 	z-index: 100;
 }
