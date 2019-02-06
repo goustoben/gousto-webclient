@@ -116,8 +116,10 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: /gousto/platform-setup.sh
-      - run: source ~/.circlerc && python ./ci_scripts/create_image.py
-
+      - run: 
+          name: Create image
+          command: source ~/.circlerc && python ./ci_scripts/create_image.py
+          no_output_timeout: 60m
 
 workflows:
   version: 2
@@ -231,6 +233,13 @@ workflows:
           requires:
             - test-isomorphic-mocha
             - test-isomorphic-jest
+
+      - build-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - test-isomorphic-mocha
+            - test-isomorphic-jest
+
 
   production-environment:
     jobs:
