@@ -54,6 +54,10 @@ describe('features reducers', () => {
           experiment: true,
           value: false
         },
+        disabledSlots: {
+          experiment: false,
+          value: '',
+        },
       })
       const result = features.features(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
@@ -94,6 +98,10 @@ describe('features reducers', () => {
         queueIt: {
           experiment: false,
           value: false,
+        },
+        disabledSlots: {
+          experiment: false,
+          value: '',
         },
         nextDayDeliveryPaintedDoor: {
           experiment: true,
@@ -147,6 +155,10 @@ describe('features reducers', () => {
         queueIt: {
           experiment: false,
           value: false,
+        },
+        disabledSlots: {
+          experiment: false,
+          value: '',
         },
         nextDayDeliveryPaintedDoor: {
           experiment: true,
