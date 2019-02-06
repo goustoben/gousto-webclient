@@ -11,9 +11,7 @@ const arrowClasses = (position) => {
 
 const Arrow = ({ positionY, position }) => (
   (position.includes(positionY)) ? (
-    <div className={css.arrow__container}>
-      <div className={arrowClasses(position)} />
-    </div>
+    <div className={arrowClasses(position)} />
   ) : null
 )
 

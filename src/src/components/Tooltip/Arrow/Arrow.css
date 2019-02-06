@@ -1,33 +1,31 @@
 @value White from 'styles/colors.css';
-
-.arrow__container {
-  width: 100%;
-}
+@value ArrowHeight: 30px;
+@value NegativeArrowHeight: -30px;
 
 .arrow {
-  width: 0;
-  height: 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   border-left: 15px solid transparent;
   border-right: 15px solid transparent;
-  margin: 0 auto;
 }
 
 .arrow--top {
-  margin-bottom: -10px;
-  border-bottom: 30px solid White;
+  top: NegativeArrowHeight;
+  border-bottom: ArrowHeight solid White;
 }
 
 .arrow--bottom {
-  margin-top: -10px;
-  border-top: 30px solid White;
+  bottom: NegativeArrowHeight;
+  border-top: ArrowHeight solid White;
 }
 
 .arrow--left {
-  margin-left: 20%;
-  margin-right: auto;
+  left: 20%;
+  right: initial;
 }
 
 .arrow--right {
-  margin-left: auto;
-  margin-right: 20%;
+  left: initial;
+  right: 20%;
 }
