@@ -18,7 +18,7 @@ export const isAfterCutoff = () => moment().hours() >= 12
 export const getDateOffset = date => {
   const now = moment()
   const then = moment(date)
-  const offset = Math.ceil(then.diff(now, 'hours') / 24)
+  const offset = Math.ceil(then.diff(now, "seconds") / 86400)
   const adjustedOffset = isAfterCutoff() ? offset - 1 : offset
 
   return adjustedOffset
