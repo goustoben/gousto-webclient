@@ -1,12 +1,16 @@
-@value Carrot, Pomegranate, White from 'styles/colors.css';
+@value White from 'styles/colors.css';
 
-.borderLeftCarrot{
+/* .borderLeftCarrot{
   border-left: 9px solid Carrot;
 }
 
 .borderLeftPomegranate {
   border-left: 9px solid Pomegranate;
 }
+
+.borderLeftBlackberry {
+  border-left: 9px solid Blackberry;
+} */
 
 .rangeBadge{
   position: relative;
@@ -16,26 +20,24 @@
 }
 
 .ribbon {
- width: 10px;
- display: inline-flex;
- flex-direction: column;
- border-top: 1px solid White;
+  width: 10px;
+  display: inline-flex;
+  flex-direction: column;
 }
 
 .arrow {
   height: 28px;
   position: absolute;
   z-index: 200;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 }
 
-.arrowWhite  {
+.arrowTopBorder  {
 	composes: arrow;
   border-right: none;
   border-top: none;
   border-bottom: 16px solid transparent;
-  border-left: 10px solid White;
 }
 
 .arrowTop {
@@ -45,31 +47,19 @@
   border-bottom: 14px solid transparent;
 }
 
-.arrowTopCarrot {
-  composes: arrowTop;
-  composes: borderLeftCarrot;
-}
-
-.arrowTopPomegranate {
-  composes: arrowTop;
-  composes: borderLeftPomegranate;
-}
-
 .arrowBottom {
 	composes: arrow;
   top: 13px;
   border-right: none;
   border-top: 14px solid transparent;
-	border-bottom: none; 	
-}
-.arrowBottomCarrot {
-  composes: arrowBottom;
-  composes: borderLeftCarrot;
+  border-bottom: none;
 }
 
-.arrowBottomPomegranate {
-  composes: arrowBottom;
-  composes: borderLeftPomegranate;
+.arrowBottomBorder {
+	composes: arrowBottom;
+  top: 12px;
+  border-top: 15px solid transparent;
+  border-bottom: none;
 }
 
 .ribbonText {
@@ -85,12 +75,4 @@
   font-size: 12px;
   font-weight: 700;
   font-family: Avenir-Black, Avenir;
-}
-
-.ribbonTextCarrot {
-  background-color: Carrot;
-}
-
-.ribbonTextPomegranate {
-  background-color: Pomegranate;
 }
