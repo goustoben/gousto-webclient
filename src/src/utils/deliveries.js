@@ -1,6 +1,8 @@
 import moment from 'moment'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import GoustoException from 'utils/GoustoException'
+import { getDisabledSlots } from 'selectors/features'
+import { formatAndValidateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
 
 export function getSlot(deliveryDays, date, slotId) {
   if (deliveryDays && typeof deliveryDays.getIn === 'function') {
@@ -116,7 +118,7 @@ function getLandingOrder(userOrders, deliveryDays) {
     }
   }
 
-  const defaultDay = deliveryDays.find(dd => dd.get('isDefault'))
+  const defaultDay = deliveryDays.find(deliveryDay => deliveryDay.get('isDefault'))
   let defaultDayOrder
   if (defaultDay) {
     defaultDayOrder = futureOrders.find(futureOrder => moment(futureOrder.get('deliveryDate')).isSame(moment(defaultDay.get('date'))))
@@ -150,9 +152,9 @@ function getLandingOrder(userOrders, deliveryDays) {
 
   if (defaultDay && !disableDefault) {
     const possibleDeliveryDays = deliveryDays.sort((a, b) => moment(a.get('date')).diff(moment(b.get('date'))))
-      .filter(dd => !dd.get('alternateDeliveryDay'))
-      .filter(dd => !dd.get('isDefault'))
-      .filter(dd => !userOrders.some(userOrder => moment(dd.get('date')).isSame(moment(userOrder.get('deliveryDate')))))
+      .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
+      .filter(deliveryDay => !deliveryDay.get('isDefault'))
+      .filter(deliveryDay => !userOrders.some(userOrder => moment(deliveryDay.get('date')).isSame(moment(userOrder.get('deliveryDate')))))
 
     if (defaultDayOrder) {
       const defaultDayOrderFilled = defaultDayOrder.get('recipeItems').size > 0
@@ -212,17 +214,17 @@ function getLandingOrder(userOrders, deliveryDays) {
 
   if (!correspondingDay) {
     const okDays = deliveryDays
-      .filter(dd => !dd.get('alternateDeliveryDay'))
-      .filter(dd => !userOrders.some(userOrder => moment(dd.get('date')).isSame(moment(userOrder.get('deliveryDate')))))
+      .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
+      .filter(deliveryDay => !userOrders.some(userOrder => moment(deliveryDay.get('date')).isSame(moment(userOrder.get('deliveryDate')))))
 
-    const okDefaultDay = okDays.find(dd => dd.get('isDefault'))
+    const okDefaultDay = okDays.find(deliveryDay => deliveryDay.get('isDefault'))
 
     if (okDefaultDay) {
       day = okDefaultDay
       correspondingDay = moment(day.get('date'))
     } else if (defaultDay) {
       day = okDays
-        .filter(dd => moment(dd.get('date')).isAfter(moment(defaultDay.get('date'))))
+        .filter(deliveryDay => moment(deliveryDay.get('date')).isAfter(moment(defaultDay.get('date'))))
         .sort((a, b) => moment(a.get('date')).diff(moment(b.get('date'))))
         .first()
       if (day) {
@@ -236,7 +238,7 @@ function getLandingOrder(userOrders, deliveryDays) {
   }
 
   if (correspondingDay) {
-    day = deliveryDays.find(dd => moment(dd.get('date')).isSame(correspondingDay))
+    day = deliveryDays.find(deliveryDay => moment(deliveryDay.get('date')).isSame(correspondingDay))
     if (day) {
       foundDate = correspondingDay.format('YYYY-MM-DD')
       let foundSlot
@@ -259,12 +261,14 @@ function getLandingOrder(userOrders, deliveryDays) {
   }
 }
 
-export function getLandingDay(state, currentSlot, cantLandOnOrderDate) {
+export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryDaysWithDisabledSlotIds) {
   const date = state.basket.get('date')
   const defaultDate = state.features.getIn(['default_day', 'value'])
-  const deliveryDays = state.boxSummaryDeliveryDays
+  const deliveryDays = deliveryDaysWithDisabledSlotIds || state.boxSummaryDeliveryDays
   const userOrders = state.user.get('orders')
   const slotId = state.basket.get(currentSlot ? 'slotId' : 'prevSlotId')
+  const nonValidatedDisabledSlots = getDisabledSlots(state)
+  const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
 
   // try and find the delivery day
   let day
@@ -274,7 +278,7 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate) {
   if (deliveryDays && deliveryDays.size > 0) {
     if (date) {
       // if we have an explicit date use that
-      day = deliveryDays.find(dd => dd.get('date') === date)
+      day = deliveryDays.find(deliveryDay => deliveryDay.get('date') === date)
     }
 
     // if we have user orders
@@ -297,8 +301,8 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate) {
           // get the first day which doesn't have an order
           day = deliveryDays
             .sort((a, b) => moment(a.get('date')).diff(moment(b.get('date'))))
-            .filter(dd => !dd.get('alternateDeliveryDay'))
-            .filter(dd => !userOrders.some(order => moment(dd.get('date')).isSame(moment(order.get('deliveryDate')))))
+            .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
+            .filter(deliveryDay => !userOrders.some(order => moment(deliveryDay.get('date')).isSame(moment(order.get('deliveryDate')))))
             .first()
         }
       }
@@ -306,25 +310,25 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate) {
 
     // fall back to our feature-set default date, if we have one
     if (!day && defaultDate) {
-      day = deliveryDays.find(dd => dd.get('date') === defaultDate)
+      day = deliveryDays.find(deliveryDay => deliveryDay.get('date') === defaultDate)
     }
 
     // if we don't have user orders or an explicit date fall back to the default date
     if (!day) {
-      day = deliveryDays.find(dd => dd.get('isDefault'))
+      day = deliveryDays.find(deliveryDay => deliveryDay.get('isDefault'))
     }
 
     // if we don't have a default date fall back to the first date
     if (!day) {
       day = deliveryDays
         .sort((a, b) => moment(a.get('date')).diff(moment(b.get('date'))))
-        .filter(dd => !dd.get('alternateDeliveryDay'))
+        .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
         .first()
     }
 
     // if we have none of the above get the first one
     if (!day) {
-      day = deliveryDays.filter(dd => !dd.get('alternateDeliveryDay')).sort((a, b) => moment(a.get('date')).diff(moment(b.get('date')))).first()
+      day = deliveryDays.filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay')).sort((a, b) => moment(a.get('date')).diff(moment(b.get('date')))).first()
     }
   }
 
@@ -347,11 +351,15 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate) {
       }
     } else {
       // try to find the default slot for that day
-      let foundSlot = day.get('slots', Immutable.List([])).find(slot => slot.get('isDefault'))
+      let foundSlot = day.get('slots', Immutable.List([])).find(slot => {
+        return (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot.get('isDefault')
+      })
 
       if (!foundSlot) {
-        // otherwise choose the first slot on that day
-        foundSlot = day.get('slots', Immutable.List([])).first()
+        // otherwise choose the first non disabled slot on that day
+        foundSlot = day.get('slots', Immutable.List([])).find(slot => {
+          return (!disabledSlots || !disabledSlots.includes(slot.get('disabledSlotId'))) && slot
+        })
       }
 
       if (foundSlot) {

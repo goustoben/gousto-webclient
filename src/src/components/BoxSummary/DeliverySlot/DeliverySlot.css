@@ -1,4 +1,4 @@
-@value Blackberry, Radish from 'styles/colors.css';
+@value Blackberry, Radish, BlueCheese from 'styles/colors.css';
 @value SpacingSM, SpacingXS, SpacingXXS from 'sass-loader!styles/spacing.scss';
 @value sizeXS, sizeMD from 'styles/typography.css';
 
@@ -60,7 +60,15 @@
 }
 .upcomingOrder {
 	composes: fa-basic-class fa-truck fa-fw from 'styles/vendor/font-awesome-module.css';
-	color: Blackberry;
+	color: BlueCheese;
+}
+
+.iconDisabled {
+	height: 14px;
+	width: 14px;
+	top: .125em;
+	position: relative;
+	margin-right: 5px;
 }
 
 .textInput {
@@ -113,4 +121,8 @@
 
 .warningTriangle {
 	composes: fa-basic-class fa-fw fa-exclamation-triangle from 'styles/vendor/font-awesome-module.css';
+}
+
+.disabledSlotText {
+	display: inline-block;
 }

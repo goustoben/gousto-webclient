@@ -9,6 +9,11 @@ import {
   getAvailableDeliveryDays,
 } from 'utils/deliveries'
 import Immutable from 'immutable' /* eslint-disable new-cap */
+import { getDisabledSlots } from 'selectors/features'
+
+jest.mock('selectors/features', () => ({
+  getDisabledSlots: jest.fn()
+}))
 
 describe('utils/deliveries', () => {
   describe('getSlot', () => {
@@ -177,6 +182,7 @@ describe('utils/deliveries', () => {
     let state
     let date
     let deliveryDays
+    let deliveryDaysWithDisabledSlotIds
     let userOrders
     let slotId
     let prevSlotId
@@ -539,14 +545,92 @@ describe('utils/deliveries', () => {
             ],
           },
         })
+        deliveryDaysWithDisabledSlotIds = Immutable.fromJS({
+          '2016-03-02': {
+            date: '2016-03-02',
+            isDefault: false,
+            slots: [
+              {
+                id: '123-123-123',
+                whenCutoff: 'asdf',
+                disabledSlotId: '2016-03-02_08-19',
+              },
+            ],
+          },
+          '2015-12-12': {
+            date: '2015-12-12',
+            isDefault: false,
+            slots: [
+              {
+                id: '321-321-321',
+                whenCutoff: 'qwerty',
+                disabledSlotId: '2015-12-12_08-19'
+              },
+            ],
+          },
+          '2014-12-12': {
+            date: '2014-12-12',
+            isDefault: false,
+            slots: [
+              {
+                id: '456-456-456',
+                whenCutoff: 'zxcvb',
+                disabledSlotId: '2014-12-12_08-19'
+              },
+            ],
+          },
+          '2017-01-01': {
+            date: '2017-01-01',
+            isDefault: false,
+            slots: [
+              {
+                id: '789-789-789',
+                whenCutoff: 'zxcvb',
+                disabledSlotId: '2017-01-01_08-19'
+              },
+              {
+                id: '123-123-123',
+                whenCutoff: 'jfklsad',
+                disabledSlotId: '2017-01-01_18-22',
+                isDefault: true,
+              },
+            ],
+          },
+        })
         state = Object.assign({}, state, {
           basket: Immutable.Map({ date }),
           boxSummaryDeliveryDays: deliveryDays,
         })
       })
-      test('should return the default delivery slot', () => {
-        const result = getLandingDay(state, false, true)
+      test('should return the default delivery slot if not disabled', () => {
+        getDisabledSlots.mockImplementation(() => '')
+
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
+        expect(result).toEqual(expected)
+      })
+
+      test('should NOT return the default delivery slot if disabled', () => {
+        getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
+
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+        const expected = { date: '2017-01-01', slotId: '123-123-123' }
+        expect(result).not.toEqual(expected)
+      })
+      
+      test('should return nothing if the default delivery slot if disabled and all other slots are disabled', () => {
+        getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
+
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+        const expected = { date: '2017-01-01', slotId: '123-123-123' }
+        expect(result).not.toEqual(expected)
+      })
+
+      test.only('should return first non blocked slot if the default delivery slot if disabled', () => {
+        getDisabledSlots.mockImplementation(() => '2017-01-01_18-22, 2017-01-01_08-19')
+
+        const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
+        const expected = { date: '2017-01-01', slotId: undefined }
         expect(result).toEqual(expected)
       })
     })
