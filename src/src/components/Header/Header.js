@@ -106,15 +106,15 @@ class Header extends React.PureComponent {
 
 	  const availableItems = {
 	    home,
-	    boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, icon: '', clientRouted: true },
-	    menu: { name: 'Choose Recipes', url: clientRoutes.menu, icon: '' },
-	    faq: { name: 'Help', url: clientRoutes.help, icon: '', clientRouted: false },
-	    myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, icon: '', clientRouted: true },
-	    referFriend: { name: 'Free Food', url: clientRoutes.referFriend, icon: '', clientRouted: false },
-	    rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, icon: '', clientRouted: false},
-	    deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, icon: '', clientRouted: false},
-	    subscription: { name: 'Subscription', url: clientRoutes.mySubscription, icon: '', clientRouted: false},
-	    details: { name: 'Details', url: clientRoutes.myDetails, icon: '', clientRouted: false},
+	    boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true },
+	    menu: { name: 'Choose Recipes', url: clientRoutes.menu },
+	    faq: { name: 'Help', url: clientRoutes.help, clientRouted: false },
+	    myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: true },
+	    referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false },
+	    rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false},
+	    deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false},
+	    subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false},
+	    details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false},
 	  }
 
 	  let pathLocal = path

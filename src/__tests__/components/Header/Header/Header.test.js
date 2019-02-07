@@ -222,55 +222,46 @@ describe('Header', () => {
       const expected = [
         {
           "clientRouted": true,
-          "icon": "",
           "name": 'My Gousto',
           "url": "/my-gousto"
         },
         {
           "clientRouted": false,
-          "icon": "",
           "name": 'Deliveries',
           "url": "/my-deliveries"
         },
         {
           "clientRouted": false,
-          "icon": "",
           "name": 'Subscription',
           "url": "/my-subscription"
         },
         {
           "clientRouted": false,
-          "icon": "",
           "name": 'Details',
           "url": "/my-details"
         },
         {
           "clientRouted": false,
-          "icon": "",
           "name": "Free Food",
           "url": "/my-referrals"
         },
         {
           "clientRouted": false,
-          "icon": "", 
           "name": "Rate My Recipes",
           "url": "/rate-my-recipes"
         }, 
         {
           "clientRouted": true,
           "disabled": true,
-          "icon": "",
           "name": "Home",
           "url": "/"
         },
         {
-          "icon": "", 
           "name": "Choose Recipes",
           "url": "/menu"
         }, 
         {
           "clientRouted": false, 
-          "icon": "",
           "name": "Help", 
           "url": "/help"
         }
@@ -287,24 +278,20 @@ describe('Header', () => {
         {
           "clientRouted": true,
           "disabled": true,
-          "icon": "",
           "name": "Home",
           "url": "/"
         },
         {
           "clientRouted": true,
-          "icon": "",
           "name": "Box Prices",
           "url": "/box-prices"
         },
-        {
-          "icon": "", 
+        { 
           "name": "Choose Recipes",
           "url": "/menu"
         }, 
         {
           "clientRouted": false, 
-          "icon": "",
           "name": "Help", 
           "url": "/help"
         }
