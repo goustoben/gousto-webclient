@@ -216,37 +216,82 @@ describe('Header', () => {
     })
   })
 
-  describe('render MobileMenu with the right paths', () => {
+  describe('render MobileMenu with the right paths when authenticated', () => {
     const wrapper = shallow(<Header isAuthenticated config={config} />,)
-    test('should render Rate My Recipe', () => {
+    test('should render menu items in correct order when logged in', () => {
       const expected = [
         {
           "clientRouted": true,
-          "disabled": true,
-          "icon": "home",
-          "name": "Home",
-          "url": "/"
+          "name": 'My Gousto',
+          "url": "/my-gousto"
         },
         {
           "clientRouted": false,
-          "icon": "heart",
+          "name": 'Deliveries',
+          "url": "/my-deliveries"
+        },
+        {
+          "clientRouted": false,
+          "name": 'Subscription',
+          "url": "/my-subscription"
+        },
+        {
+          "clientRouted": false,
+          "name": 'Details',
+          "url": "/my-details"
+        },
+        {
+          "clientRouted": false,
           "name": "Free Food",
           "url": "/my-referrals"
         },
         {
-          "icon": "menu", 
-          "name": "Choose Recipes",
-          "url": "/menu"
-        }, 
-        {
           "clientRouted": false,
-          "icon": "star", 
           "name": "Rate My Recipes",
           "url": "/rate-my-recipes"
         }, 
         {
+          "clientRouted": true,
+          "disabled": true,
+          "name": "Home",
+          "url": "/"
+        },
+        {
+          "name": "Choose Recipes",
+          "url": "/menu"
+        }, 
+        {
           "clientRouted": false, 
-          "icon": "faq",
+          "name": "Help", 
+          "url": "/help"
+        }
+      ]
+      expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)  
+    })
+  })
+
+  describe('render MobileMenu with the right paths when not authenticated', () => {
+    const isAuthenticated = false 
+    const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} />,)
+    test('should render menu items in correct order when logged out', () => {
+      const expected = [
+        {
+          "clientRouted": true,
+          "disabled": true,
+          "name": "Home",
+          "url": "/"
+        },
+        {
+          "clientRouted": true,
+          "name": "Box Prices",
+          "url": "/box-prices"
+        },
+        { 
+          "name": "Choose Recipes",
+          "url": "/menu"
+        }, 
+        {
+          "clientRouted": false, 
           "name": "Help", 
           "url": "/help"
         }
@@ -255,3 +300,4 @@ describe('Header', () => {
     })
   })
 })
+

@@ -1,15 +1,16 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import MobileMenu from 'Header/MobileMenu'
+import Link from 'Link'
 
 describe('MobileMenu', () => {
   describe('should render all items in the menu', () => {
     describe('when is authenticated', () => {
       const menuItem = [
-        { name: 'Home', icon: 'home', url: '/home', clientRouted: true },
-        { name: 'Choose Recipes', url: '/menu', icon: 'menu' },
-        { name: 'Help', icon: 'faq', url: '/help', clientRouted: false },
-        { name: 'Rate My Recipes', icon: 'star', url: '/rate-my-recipes', clientRouted: false },
+        { name: 'Home', url: '/home', clientRouted: true },
+        { name: 'Choose Recipes', url: '/menu' },
+        { name: 'Help', url: '/help', clientRouted: false },
+        { name: 'Rate My Recipes', url: '/rate-my-recipes', clientRouted: false },
       ]
       const wrapper = shallow(<MobileMenu
         show
@@ -21,8 +22,12 @@ describe('MobileMenu', () => {
         promoCodeUrl={""}
       />)
 
-      test('should render Rate My Recipe on burger menu', () => {
-        expect(wrapper.find('.icon-star').length).toEqual(1)
+      test('should render all menu items provided as links', () => {
+        expect(wrapper.find(Link).length).toEqual(4)
+        expect(wrapper.find(Link).find({to:'/home'}).length).toEqual(1)
+        expect(wrapper.find(Link).find({to:'/menu'}).length).toEqual(1)
+        expect(wrapper.find(Link).find({to:'/help'}).length).toEqual(1)
+        expect(wrapper.find(Link).find({to:'/rate-my-recipes'}).length).toEqual(1)
       })
     })
   })
