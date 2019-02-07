@@ -5,21 +5,58 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
   className="rangeBadge"
 >
   <div
-    className="ribbonText ribbonTextCarrot"
+    className="ribbonText"
+    style={
+      Object {
+        "backgroundColor": "Carrot",
+        "border": "1px solid DarkCarrot",
+        "borderRight": "none",
+        "color": "White",
+      }
+    }
   >
     10-MINUTE MEAL
   </div>
   <div
     className="ribbon"
+    style={
+      Object {
+        "borderBottom": "1px solid DarkCarrot",
+        "borderTop": "1px solid DarkCarrot",
+      }
+    }
   >
     <div
-      className="arrowWhite"
+      className="arrowTopBorder"
+      style={
+        Object {
+          "borderLeft": "10px solid DarkCarrot",
+        }
+      }
     />
     <div
-      className="arrowTopCarrot"
+      className="arrowTop"
+      style={
+        Object {
+          "borderLeft": "9px solid Carrot",
+        }
+      }
     />
     <div
-      className="arrowBottomCarrot"
+      className="arrowBottomBorder"
+      style={
+        Object {
+          "borderLeft": "10px solid DarkCarrot",
+        }
+      }
+    />
+    <div
+      className="arrowBottom"
+      style={
+        Object {
+          "borderLeft": "9px solid Carrot",
+        }
+      }
     />
   </div>
 </div>

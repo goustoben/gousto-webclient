@@ -25,20 +25,6 @@
     line-height: 19px;
 }
 
-.enabled {
-    color: Bluecheese !important;
-}
-
-.selected {
-    color: white !important;
-    background-color: Bluecheese !important;
-}
-
-.disabled {
-    color: Bluecheese50 !important;
-	background-color: TertiaryBgColor !important;
-}
-
 .disabledLine {
     height: 1px;
     background-color: Bluecheese50;

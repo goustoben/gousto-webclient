@@ -42,38 +42,4 @@ describe('getPaymentDetails', () => {
       })
     })
   })
-
-  describe('when checkout payment feature is not enabled', () => {
-    beforeEach(() => {
-      state = {
-        form: {
-          payment: {
-            values: {
-              payment: {
-                cardType: 'VISA',
-                cardNumber: '4242424242424242',
-                cv2: 123,
-                cardName: 'Test Card',
-                cardExpiryMonth: 12,
-                cardExpiryYear: 23,
-              }
-            }
-          }
-        }
-      }
-    })
-
-    it('should return payment details for sage pay', () => {
-      expect(getPaymentDetails(state)).toEqual({
-        type: 'VISA',
-        number: '4242424242424242',
-        cvv2: 123,
-        holder: 'Test Card',
-        expiry_month: 12,
-        expiry_year: '2023',
-        active: 1,
-      })
-    })
-
-  })
 })

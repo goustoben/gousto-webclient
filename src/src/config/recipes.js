@@ -1,4 +1,4 @@
-export default {
+const config = {
   range: {
     imageTypes: [
       'range-main-image',
@@ -16,13 +16,19 @@ export default {
         text: '10-Minute Meal',
         color: 'White',
         backgroundColor: 'Carrot',
-        borderColor: 'Carrot',
+        borderColor: 'DarkCarrot',
       },
       everyday_favourites: {
         text: 'Everyday Favorites',
+        color: 'Pomegranate',
+        backgroundColor: 'Cauliflower',
+        borderColor: 'DarkCauliflower',
+      },
+      fine_dine_in: {
+        text: 'Fine Dine In',
         color: 'White',
-        backgroundColor: 'Pomegranate',
-        borderColor: 'Pomegranate',
+        backgroundColor: 'Blackberry',
+        borderColor: 'DarkBlackberry',
       },
     },
   },
@@ -43,3 +49,5 @@ export default {
     'dairy-free': 'Dairy-Free',
   },
 }
+
+export default config
