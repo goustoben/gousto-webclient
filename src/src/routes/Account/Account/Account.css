@@ -13,7 +13,3 @@
 	composes: accountContainer from 'styles/layout.css';
 	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
 }
-
-.mobileHide {
-	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
-}
