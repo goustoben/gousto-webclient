@@ -102,7 +102,7 @@ class Header extends React.PureComponent {
 	getMenuItems = (device, path) => {
 	  const { isAuthenticated } = this.props
 
-	  const home = { name: 'Home', icon: '', url: clientRoutes.home, clientRouted: true }
+	  const home = { name: 'Home', url: clientRoutes.home, clientRouted: true }
 
 	  const availableItems = {
 	    home,
