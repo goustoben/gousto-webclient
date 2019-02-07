@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import css from './SlotPicker.css'
 
 const SlotPicker = ({ slots, date, slotId, onClick }) => (
-	<Button color="tertiary" width="full">
+	<Button color="quaternary" width="full">
 		{slots[date] && slots[date].map(slot => (
 			<Segment
 			  key={slot.value}
@@ -18,6 +18,7 @@ const SlotPicker = ({ slots, date, slotId, onClick }) => (
 			    {[css.compact]: (slots[date].length > 2)}
      	)}
 			  noHover={slot.disabled}
+			  disabled={slot.disabled}
 			>
 				<span className={css.fullWidth}>
 					{slot.disabled ? <div className={(slots[date].length > 2) ? css.disabledLine1 : css.bigDisabledLine1 }></div>: null}
