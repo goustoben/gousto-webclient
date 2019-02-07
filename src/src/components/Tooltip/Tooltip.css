@@ -1,4 +1,4 @@
-@value Bluecheese, White from 'styles/colors.css';
+@value White from 'styles/colors.css';
 
 .container {
   position: absolute;
@@ -18,10 +18,4 @@
   top: 0;
   right: 0;
   padding: 10px;
-}
-
-.cta {
-  margin-top: 20px;
-  color: Bluecheese;
-  font-weight: 600;
 }

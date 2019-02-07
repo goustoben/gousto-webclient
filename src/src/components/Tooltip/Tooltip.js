@@ -6,15 +6,16 @@ import { Arrow } from './Arrow'
 
 import css from './Tooltip.css'
 
-const Tooltip = ({ arrow, children, style, last, onClose }) => (
+const Tooltip = ({ arrow, children, style, onClose }) => (
   <div className={css.container} style={style}>
     <Arrow positionY="top" position={arrow} />
-    <div className={css.close} onClick={onClose}>
-      <Icon name="fa-times" />
-    </div>
+    {(onClose) ? (
+      <div className={css.close} onClick={onClose}>
+        <Icon name="fa-times" />
+      </div>
+    ) : null}
     <div className={css.content}>
       {children}
-      <p className={css.cta}>{(last) ? 'OK' : 'NEXT &rsaquo'}</p>
     </div>
     <Arrow positionY="bottom" position={arrow} />
   </div>
@@ -22,13 +23,11 @@ const Tooltip = ({ arrow, children, style, last, onClose }) => (
 
 Tooltip.defaultProps = {
   arrow: 'top',
-  last: true,
 }
 
 Tooltip.propTypes = {
   arrow: PropTypes.string,
   children: PropTypes.node,
-  last: PropTypes.bool,
   onClose: PropTypes.func,
   style: PropTypes.objectOf(PropTypes.string),
 }
