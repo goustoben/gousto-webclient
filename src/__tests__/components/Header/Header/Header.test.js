@@ -216,37 +216,95 @@ describe('Header', () => {
     })
   })
 
-  describe('render MobileMenu with the right paths', () => {
+  describe('render MobileMenu with the right paths when authenticated', () => {
     const wrapper = shallow(<Header isAuthenticated config={config} />,)
-    test('should render Rate My Recipe', () => {
+    test('should render menu items in correct order when logged in', () => {
       const expected = [
         {
           "clientRouted": true,
-          "disabled": true,
-          "icon": "home",
-          "name": "Home",
-          "url": "/"
+          "icon": "",
+          "name": 'My Gousto',
+          "url": "/my-gousto"
         },
         {
           "clientRouted": false,
-          "icon": "heart",
+          "icon": "",
+          "name": 'Deliveries',
+          "url": "/my-deliveries"
+        },
+        {
+          "clientRouted": false,
+          "icon": "",
+          "name": 'Subscription',
+          "url": "/my-subscription"
+        },
+        {
+          "clientRouted": false,
+          "icon": "",
+          "name": 'Details',
+          "url": "/my-details"
+        },
+        {
+          "clientRouted": false,
+          "icon": "",
           "name": "Free Food",
           "url": "/my-referrals"
         },
         {
-          "icon": "menu", 
-          "name": "Choose Recipes",
-          "url": "/menu"
-        }, 
-        {
           "clientRouted": false,
-          "icon": "star", 
+          "icon": "", 
           "name": "Rate My Recipes",
           "url": "/rate-my-recipes"
         }, 
         {
+          "clientRouted": true,
+          "disabled": true,
+          "icon": "",
+          "name": "Home",
+          "url": "/"
+        },
+        {
+          "icon": "", 
+          "name": "Choose Recipes",
+          "url": "/menu"
+        }, 
+        {
           "clientRouted": false, 
-          "icon": "faq",
+          "icon": "",
+          "name": "Help", 
+          "url": "/help"
+        }
+      ]
+      expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)  
+    })
+  })
+
+  describe('render MobileMenu with the right paths when not authenticated', () => {
+    const isAuthenticated = false 
+    const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} />,)
+    test('should render menu items in correct order when logged out', () => {
+      const expected = [
+        {
+          "clientRouted": true,
+          "disabled": true,
+          "icon": "",
+          "name": "Home",
+          "url": "/"
+        },
+        {
+          "clientRouted": true,
+          "icon": "",
+          "name": "Box Prices",
+          "url": "/box-prices"
+        },
+        {
+          "icon": "", 
+          "name": "Choose Recipes",
+          "url": "/menu"
+        }, 
+        {
+          "clientRouted": false, 
+          "icon": "",
           "name": "Help", 
           "url": "/help"
         }
@@ -255,3 +313,4 @@ describe('Header', () => {
     })
   })
 })
+
