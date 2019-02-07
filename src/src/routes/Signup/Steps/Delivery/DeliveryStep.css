@@ -38,7 +38,7 @@
 
 .dropdown :global .Select-menu-outer {
 	max-height: 130px;
-	
+
 	@media HeightSMMax {
 		max-height: 92px;
 	}
@@ -53,3 +53,67 @@
 	}
 }
 
+.radio {
+	margin-right: 7px;
+	margin-top: 1px;
+}
+
+.modal {
+	padding: 22px;
+	min-width: 342px;
+	max-width: 342px;
+	min-height: 610px;
+}
+
+.modalTitleDiv {
+	font-family: 'Avenir-Heavy', 'Avenir Heavy', 'Avenir Book', 'Avenir';
+	width: 260px;
+	margin-bottom: 100px;
+}
+
+.modalFirstTitle {
+	border-width: 0px;
+	position: absolute;
+	top: 34px;
+	left: 16px;
+	text-align: center;
+	white-space: nowrap;
+	span {
+		&::before {
+			content: "\A";
+			white-space: pre;
+		}
+	}
+
+}
+
+.modalSecondTitle {
+	border-width: 0px;
+	position: absolute;
+	top: 66px;
+	left: 80px;
+	white-space: nowrap;
+}
+
+.modalrow {
+	display: block;
+	composes: marginMDTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.label {
+	margin-bottom: 0px;
+}
+
+.iconDeliverySection {
+	height: 170px;
+	composes: flex rowWrap from 'styles/flex.css';
+	composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.iconDelivery {
+	width: 250px;
+	height: 250px;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -20%);
+}

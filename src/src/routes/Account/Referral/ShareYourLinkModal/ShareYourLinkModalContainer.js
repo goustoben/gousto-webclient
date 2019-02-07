@@ -7,6 +7,7 @@ import { ShareYourLinkModal } from './ShareYourLinkModal'
 const mapStateToProps = (state) => ({
   userFirstName: getUserFirstName(state),
   rafOffer: getReferralOffer(state),
+  device: state.request.get('browser')
 })
 
 const ShareYourLinkModalContainer = connect(mapStateToProps, {
