@@ -35,7 +35,7 @@ span:target .hidden {
 	list-style-type: none;
 	padding-top: 15px;
 	padding-right: 0px;
-  padding-left: 0px;
+	padding-left: 0px;
 }
 
 .menuItemBase {
@@ -47,7 +47,7 @@ span:target .hidden {
 	}
 }
 
-.menuItem{
+.menuItem {
 	composes: menuItemBase;
 	composes: bodyFont noDecor textBoldHover textBoldActive textBoldFocus from 'styles/typography.css';
 	color: MainColor;

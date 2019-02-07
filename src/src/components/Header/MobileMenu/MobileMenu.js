@@ -21,7 +21,9 @@ class MobileMenu extends React.PureComponent {
 	renderMenuItems = () => (
 	  this.props.menuItems.map(menuItem => {
 	    const { isAuthenticated } = this.props
-	    if (menuItem.name === 'Home') {
+	    const myGoustoMenuItem = menuItem.name === 'My Gousto'
+	    const homeMenuItem = menuItem.name === 'Home'
+	    if (homeMenuItem) {
 	      return (
 					<Link
 					  to={menuItem.url}
@@ -39,7 +41,7 @@ class MobileMenu extends React.PureComponent {
 	    }
 
 	    if (menuItem.disabled) {
-	      const listType = menuItem.name === 'Home' && isAuthenticated && css.borderListElement || (menuItem.name === 'My Gousto' || menuItem.name === 'Home') && css.listElement
+	      const listType = homeMenuItem && isAuthenticated && css.borderListElement || (myGoustoMenuItem || homeMenuItem) && css.listElement
 				|| css.childListElement
 
 	      return (
@@ -53,7 +55,7 @@ class MobileMenu extends React.PureComponent {
 
 	    return (
 				<Link to={menuItem.url} className={css.menuItem} key={menuItem.name} clientRouted={menuItem.clientRouted}>
-					<li className={menuItem.name === 'My Gousto' ? css.listElement : css.childListElement}>
+					<li className={myGoustoMenuItem ? css.listElement : css.childListElement}>
 						{menuItem.name}
 					</li>
 				</Link>
