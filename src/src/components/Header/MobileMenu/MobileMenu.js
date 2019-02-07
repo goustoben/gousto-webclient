@@ -20,6 +20,7 @@ class MobileMenu extends React.PureComponent {
 
 	renderMenuItems = () => (
 	  this.props.menuItems.map(menuItem => {
+	    const { isAuthenticated } = this.props
 	    if (menuItem.name === 'Home') {
 	      return (
 					<Link
@@ -30,7 +31,7 @@ class MobileMenu extends React.PureComponent {
 					  clientRouted={!Boolean(this.props.promoCodeUrl)}
 					  onlyActiveOnIndex
 					>
-						<li className={css.borderListElement}>
+						<li className={isAuthenticated ? css.borderListElement : css.listElement}>
 							{menuItem.name}
 						</li>
 					</Link>
@@ -38,7 +39,7 @@ class MobileMenu extends React.PureComponent {
 	    }
 
 	    if (menuItem.disabled) {
-	      const listType = menuItem.name === 'Home' && css.borderListElement || menuItem.name === 'My Gousto' && css.listElement
+	      const listType = menuItem.name === 'Home' && isAuthenticated && css.borderListElement || (menuItem.name === 'My Gousto' || menuItem.name === 'Home') && css.listElement
 				|| css.childListElement
 
 	      return (
