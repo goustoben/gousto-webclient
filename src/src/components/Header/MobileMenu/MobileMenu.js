@@ -30,8 +30,7 @@ class MobileMenu extends React.PureComponent {
 					  clientRouted={!Boolean(this.props.promoCodeUrl)}
 					  onlyActiveOnIndex
 					>
-						<li className={css.listElement}>
-							<span className={css[`icon-${menuItem.icon}`]} />
+						<li className={css.borderListElement}>
 							{menuItem.name}
 						</li>
 					</Link>
@@ -39,31 +38,21 @@ class MobileMenu extends React.PureComponent {
 	    }
 
 	    if (menuItem.disabled) {
+	      const listType = menuItem.name === 'Home' && css.borderListElement || menuItem.name === 'My Gousto' && css.listElement
+				|| css.childListElement
+
 	      return (
 					<span className={classNames(css.menuItem, css.disabled)} key={menuItem.name}>
-						<li className={css.listElement}>
-							<span className={css[`icon-${menuItem.icon}`]} />
+						<li className={listType}>
 							{menuItem.name}
 						</li>
 					</span>
 	      )
-	    }
-			
-	    if (menuItem.name === 'Home' || 'My Gousto') {
-	      return (
-				<Link to={menuItem.url} className={css.menuItemMain} key={menuItem.name} clientRouted={menuItem.clientRouted}>
-					<li className={css.listElement}>
-						<span className={css[`icon-${menuItem.icon}`]} />
-						{menuItem.name}
-					</li>
-				</Link>
-	      )
-	    }
+	    } 
 
 	    return (
 				<Link to={menuItem.url} className={css.menuItem} key={menuItem.name} clientRouted={menuItem.clientRouted}>
-					<li className={css.listElement}>
-						<span className={css[`icon-${menuItem.icon}`]} />
+					<li className={menuItem.name === 'My Gousto' ? css.listElement : css.childListElement}>
 						{menuItem.name}
 					</li>
 				</Link>
@@ -77,7 +66,8 @@ class MobileMenu extends React.PureComponent {
 	  const testingId = isAuthenticated ? 'burgerMenuLogout' : 'burgerMenuLogin'
 	  const loginMenu = (
 			<span className={css.menuItem} onClick={(isAuthenticated) ? this.props.logoutFunc : this.props.loginFunc}>
-				<li className={css.listElement}>
+				<span className={(isAuthenticated) ? css['icon-logout'] : css['icon-login']} data-testing={testingId} />
+				<li className={css.borderListElement}>
 					{(isAuthenticated) ? 'Logout' : 'Login'}
 				</li>
 			</span>

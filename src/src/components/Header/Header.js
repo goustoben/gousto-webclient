@@ -161,12 +161,8 @@ class Header extends React.PureComponent {
 	  } else {
 	    mobileMenu = mobileMenu.concat(homeMenuItem, mobileItems) 
 	  }
-    console.log('mobileMenu', mobileMenu) // eslint-disable-line
     
-	  const result = (device === 'mobile') ? mobileMenu.concat(availableItems.faq) : items.concat(availableItems.faq)
-    console.log('mobileMenu second', result) // eslint-disable-line
-
-	  return result
+	  return (device === 'mobile') ? mobileMenu.concat(availableItems.faq) : items.concat(availableItems.faq)
 	}
 
 	handleQuery = () => {
