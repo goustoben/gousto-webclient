@@ -42,6 +42,12 @@ describe('utils/deliverySlot', () => {
 
       expect(getDateOffset('2019-01-03')).toEqual(1)
     })
+
+    test('it should return 1 when the day is two day away and the time is just before midnight', () => {
+      Date.now = jest.fn(() => new Date('2019-01-01T23:59:00').valueOf())
+
+      expect(getDateOffset('2019-01-03')).toEqual(1)
+    })
   })
 
   describe('Next Day Delivery Painted Door', () => {
