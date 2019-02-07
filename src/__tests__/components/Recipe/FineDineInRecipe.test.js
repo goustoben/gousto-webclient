@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import Title from 'Recipe/Title'
-import Svg from 'components/Svg'
+import RangeBadge from 'Recipe/RangeBadge'
 import AddButton from 'Recipe/AddButton'
 import StockBadge from 'Recipe/StockBadge'
 import TasteScore from 'Recipe/TasteScore'
@@ -55,10 +55,10 @@ describe('<FineDineInRecipe />', () => {
       expect(wrapper.find(Title).length).toEqual(1)
     })
 
-    test('should contain one Svg component', () => {
+    test('should contain one Range Badge component', () => {
       const wrapper = shallow(<FineDineInRecipe recipe={recipe} view={view} />)
 
-      expect(wrapper.find(Svg).length).toEqual(1)
+      expect(wrapper.find(RangeBadge).length).toEqual(1)
     })
 
     test('should contain one AddButton component', () => {
