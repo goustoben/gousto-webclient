@@ -4,8 +4,8 @@ import Immutable from 'immutable'
 import classnames from 'classnames'
 
 import { recipePropTypes } from 'Recipe'
-import Svg from 'components/Svg'
 import { getChef } from 'utils/recipe'
+import RangeBadge from 'Recipe/RangeBadge'
 import css from './FineDineInRecipe.css'
 import Title from '../Title'
 import AddButton from '../AddButton'
@@ -15,15 +15,15 @@ import { RecipeAttribute } from '../RecipeAttribute'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 
-const FineDineInRecipe = ({media, onClick, highlight, unhighlight, tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe, features, stock, inBasket, position, surcharge, id}) => {
+const FineDineInRecipe = ({media, onClick, highlight, unhighlight, tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe, features, stock, inBasket, position, surcharge, id, range}) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
 
   return (
     <div className={css.overlay}>
       <div style={{ backgroundImage: `url(${image.get('src')})` }} className={css.recipeCover}>
-        <Svg fileName="fine-dine-in-range" className={css.gel}>
-          Fine Dine In
-        </Svg>
+        <div className={css.rangeBadgeWrapper}>
+          <RangeBadge range={range} />
+        </div>
         <div
           className={css.clickContainer}
           onClick={onClick}
@@ -45,7 +45,7 @@ const FineDineInRecipe = ({media, onClick, highlight, unhighlight, tasteScore, t
             </div>
             <div className={css.alignBadges}>
               <div className={css.badgeItem}>
-                <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
+                <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time-white' />
               </div>
               <div className={css.badgeItem}>
                 <RecommendedBadge
