@@ -2,7 +2,7 @@
 import Immutable from 'immutable' /* eslint-disable no-caps */
 import logger from 'utils/logger'
 import * as userApi from 'apis/user'
-import { customerSignup, customerSignupV2 } from 'apis/customers'
+import { customerSignup } from 'apis/customers'
 
 import * as ordersApi from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
@@ -11,7 +11,6 @@ import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
 import config from 'config/signup'
 import moment from 'moment'
-import { isCheckoutPaymentFeatureEnabled } from 'selectors/features'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import statusActions from './status'
@@ -162,14 +161,6 @@ function userOrderSkipNextProjected() {
   }
 }
 
-const customerSignupApi = (reqData, isCheckoutPaymentFeature) => {
-  if (isCheckoutPaymentFeature) {
-    return customerSignupV2(null, reqData)
-  }
-
-  return customerSignup(null, reqData)
-}
-
 export function userSubscribe() {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
@@ -226,7 +217,7 @@ export function userSubscribe() {
         },
       }
 
-      const { data } = await customerSignupApi(reqData, isCheckoutPaymentFeatureEnabled(state))
+      const { data } = await customerSignup(null, reqData)
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {
         const { customer, addresses, subscription, orderId } = data

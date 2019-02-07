@@ -134,6 +134,37 @@ module.exports = {
 							throw error
 						})
 				},
+				getCardToken: function(billingAddress) {
+					const card = {
+						number:"4242424242424242",
+						expiryMonth:"09",
+						expiryYear:"23",
+						cvv:"100",
+						name:"Test Test",
+						billingDetails:{},
+						requestSource:"JS"
+					}
+
+					return fetch('https://sandbox.checkout.com/api2/v2/tokens/card',{
+						method: 'POST',
+						headers: {
+							'Authorization': 'pk_test_252a059e-8c44-40fe-9f4c-7acff20dd83a',
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							"name": "Test User",
+							"number": "4242424242424242",
+							"expiryMonth": "08",
+							"expiryYear": "2028",
+							"cvv": "100",
+							"billingDetails": billingAddress
+						})
+					})
+					.then(response => response.json())
+					.then(response => {
+						return Promise.resolve(response)
+					})
+				},
 
 				createUser: function(userName, password) {
 					const ukPostcode = new RandExp("^(GIR ?0AA|[A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]([0-9ABEHMNPRV-Y])?)|[0-9][A-HJKPS-UW]) ?[0-9][ABD-HJLNP-UW-Z]{2})$").gen()
@@ -156,13 +187,9 @@ module.exports = {
 							type: 'card',
 							name: 'My Card',
 							card: {
-								type: 'VISA',
-								number: '4929000000006',
-								cvv2: '123',
-								holder: 'card name',
-								expiry_month: '12',
-								expiry_year: `20${(new Date().getFullYear() + 2).toString().substr(2,2)}`,
-								active: 1,
+								payment_provider: 'checkout',
+     						active: 1,
+      					card_token: ''
 							},
 						},
 						addresses: {
@@ -193,15 +220,16 @@ module.exports = {
 						},
 					}
 
-					return Promise.all([ this.createOrder(), this.fetchMenuLandingDays() ])
+					return Promise.all([ this.createOrder(), this.fetchMenuLandingDays(), this.getCardToken(userData.addresses.billing_address) ])
 						.then(function (values) {
 							const data = values[0].data
 							const slot = values[1].slot
 							userData.order_id = data.order.id
 							userData.subscription.box_id = data.order.boxId
 							userData.subscription.delivery_slot_id = slot.get('id')
+							userData.payment_method.card.card_token = values[2].id
 
-							return webclient.fetch('', `${webclient.endpoint('customers', 'v1')}/signup`, userData, 'POST')
+							return webclient.fetch('', `${webclient.endpoint('customers', 'v2')}/signup`, userData, 'POST')
 						}).then(function ({ data: user }) {
 							user.customer.password = pwd
 

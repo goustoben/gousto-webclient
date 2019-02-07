@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import { referAFriend } from 'apis/user'
-import { customerSignup, customerSignupV2 } from 'apis/customers'
+import { customerSignup } from 'apis/customers'
 
 import { userReferAFriend, userSubscribe, userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
 import actionTypes from 'actions/actionTypes'
@@ -20,7 +20,6 @@ jest.mock('apis/user', () => ({
 
 jest.mock('apis/customers', () => ({
   customerSignup: jest.fn(),
-  customerSignupV2: jest.fn()
 }))
 
 describe('user actions', () => {
@@ -120,25 +119,8 @@ describe('user actions', () => {
         }
       }
       getState.mockReturnValue(state)
-      customerSignup.mockReturnValue(new Promise(resolve => {
-        resolve({
-          data: {
-            customer: {
-              goustoReference: '123'
-            },
-            addresses: {},
-            subscription: {},
-            orderId: '12345',
-            paymentMethod: {
-              card: {
-                paymentProvider: 'sagepay'
-              }
-            }
-          }
-        })
-      }))
 
-      customerSignupV2.mockReturnValue(new Promise(resolve => {
+      customerSignup.mockReturnValue(new Promise(resolve => {
         resolve({
           data: {
             customer: {
@@ -168,13 +150,6 @@ describe('user actions', () => {
         }
         getState.mockReturnValue(state)
       })
-      it('should call customerSignupV2', async () => {
-        await userSubscribe()(dispatch, getState)
-        expect(customerSignupV2).toHaveBeenCalled()
-      })
-    })
-
-    describe('checkoutPaymentFeature is not enabled', () => {
       it('should call customerSignup', async () => {
         await userSubscribe()(dispatch, getState)
         expect(customerSignup).toHaveBeenCalled()
