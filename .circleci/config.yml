@@ -119,7 +119,7 @@ jobs:
       - run: 
           name: Create image
           command: source ~/.circlerc && python ./ci_scripts/create_image.py
-          no_output_timeout: 60m
+          no_output_timeout: 20m
 
 workflows:
   version: 2
@@ -228,12 +228,6 @@ workflows:
             branches:
               only:
                 - develop
-      - build-image:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-isomorphic-mocha
-            - test-isomorphic-jest
-
       - build-image:
           context: gousto-beta-aws-app-circleci
           requires:
