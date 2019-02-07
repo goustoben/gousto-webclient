@@ -44,7 +44,7 @@ span:target .hidden {
 	}
 }
 
-.menuItem {
+.menuItem{
 	composes: menuItemBase;
 	composes: bodyFont noDecor textBoldHover textBoldActive textBoldFocus from 'styles/typography.css';
 	color: MainColor;
@@ -55,23 +55,29 @@ span:target .hidden {
 		color: MainColor;
 		border-color: MainColor;
 	}
-
-	&.disabled :local .listElement {
-		border-bottom: 2px solid;
-	}
 }
 
-.menuItemMain {
+.homeMenuItem {
 	composes: menuItem;
-	color: green;
+	border-top: 1px solid grey;
+}
+
+.disabled {
+	composes: textBold from 'styles/typography.css';
 }
 
 .listElement {
 	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
-.disabled {
-	composes: textBold from 'styles/typography.css';
+.childListElement {
+	composes: listElement;
+	padding-left: 10px;
+}
+
+.borderListElement {
+	composes: listElement;
+	border-top: 1px solid grey;
 }
 
 .boxContainer {
