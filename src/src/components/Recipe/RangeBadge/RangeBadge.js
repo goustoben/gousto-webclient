@@ -11,27 +11,24 @@ const RangeBadge = ({ range }) => {
   const backgroundColor = rangeBadge ? rangeBadge.backgroundColor: ''
   const borderColor = rangeBadge ? rangeBadge.borderColor: ''
 
-  const defaultBorder = colors.White
-  const defaultBackground = colors.Pomegranate
-
   const ribbonTextStyle = {
-    color: colors[textColor] || defaultBorder,
-    backgroundColor: colors[backgroundColor] || defaultBackground,
-    border: `1px solid ${colors[borderColor] || defaultBorder}`,
+    color: colors[textColor],
+    backgroundColor: colors[backgroundColor],
+    border: `1px solid ${colors[borderColor]}`,
     borderRight: 'none',
   }
 
   const ribbonStyle = {
-    borderTop: `1px solid ${colors[borderColor] || defaultBorder}`,
-    borderBottom: `1px solid ${colors[borderColor] || defaultBorder}`,
+    borderTop: `1px solid ${colors[borderColor]}`,
+    borderBottom: `1px solid ${colors[borderColor]}`,
   }
 
   const arrowStyle = {
-    borderLeft: `9px solid ${colors[backgroundColor] || defaultBackground}`,
+    borderLeft: `9px solid ${colors[backgroundColor]}`,
   }
 
   const arrowBorderStyle = {
-    borderLeft: `10px solid ${colors[borderColor] || defaultBorder}`,
+    borderLeft: `10px solid ${colors[borderColor]}`,
   }
 
   return (rangeBadge) ? (
