@@ -337,12 +337,12 @@ module.exports = {
 			},
 			commands: [{
 				openBurgerMenu: function () {
-					this.waitForElementVisible('@burgerMenu')
+					this.waitForElementVisible('@burgerMenu', 15000)
 						.click('@burgerMenu')
 					return this
 				},
 				burgerMenuNavigateLogin: function () {
-					this.waitForElementVisible('@burgerMenuLogin')
+					this.waitForElementVisible('@burgerMenuLogin', 15000)
 						.click('@burgerMenuLogin')
 					return this
 				},
@@ -373,7 +373,7 @@ module.exports = {
 						this.openBurgerMenu()
 							.waitForElementVisible('@burgerMenuLogin', 15000)
 					} else {
-						return this.waitForElementPresent('@loginButton')
+						return this.waitForElementPresent('@loginButton', 15000)
 						.assert.elementPresent('@loginButton')
 					}
 				}
