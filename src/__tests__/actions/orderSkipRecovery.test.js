@@ -136,7 +136,6 @@ describe('orderSkipRecovery', () => {
           order_id: '23214',
           delivery_day_id: '123',
           order_state: 'projected',
-          featureFlag: false,
           recovery_reasons: [
             null,
             null,
