@@ -1,10 +1,11 @@
+import Immutable from 'immutable'
 import basket from 'actions/basket'
 
 import actionTypes from 'actions/actionTypes'
 
 describe('basket actions', () => {
   const dispatch = jest.fn()
-  const {portionSizeSelectedTracking} = basket
+  const { portionSizeSelectedTracking, basketCheckedOut } = basket
 
   afterEach(() => {
     dispatch.mockClear()
@@ -28,5 +29,129 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith(numPortionChangeTracking)
     })
     
+  })
+
+  describe('basketCheckedOut', () => {
+    let getState = () => ({
+      auth: Immutable.Map({
+        isAuthenticated: true,
+      }),
+      basket: Immutable.fromJS({
+        orderId: '178',
+      }),
+      user: Immutable.fromJS({
+        orders: {
+          '178': {
+            'recipeItems': [
+              '1234'
+            ]
+          },
+        },  
+        subscription: {
+          state: 'active',
+        }
+      }),
+      pricing: Immutable.fromJS({
+        prices: {
+          total: '24.00',
+          promoCode: false,
+        }
+      })
+    })
+
+    test('should dispatch Order Edited tracking action', async() => {
+      await basketCheckedOut(2, 'grid')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'Order Edited',
+        trackingData: {
+          actionType: 'Order Edited',
+          order_id: '178',
+          order_total: '24.00',
+          promo_code: false,
+          signp: false,
+          subscription_active: true,
+        },
+      })
+    })
+
+    test('should dispatch Order Place tracking action for transactional box', async() => {
+      getState = () => ({
+        auth: Immutable.Map({
+          isAuthenticated: true,
+        }),
+        basket: Immutable.fromJS({
+          orderId: '',
+        }),
+        user: Immutable.fromJS({
+          orders: {
+            '178': {
+              'recipeItems': [
+                '1234'
+              ]
+            },
+          },  
+          subscription: {
+            state: 'active',
+          }
+        }),
+        pricing: Immutable.fromJS({
+          prices: {
+            total: '24.00',
+            promoCode: false,
+          }
+        })
+      })
+      await basketCheckedOut(2, 'grid')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'Order Placed',
+        trackingData: {
+          actionType: 'Order Placed',
+          order_id: '',
+          order_total: '24.00',
+          promo_code: false,
+          signp: false,
+          subscription_active: true,
+        },
+      })
+    })
+
+    test('should dispatch Order Place tracking action for subscription box', async() => {
+      getState = () => ({
+        auth: Immutable.Map({
+          isAuthenticated: true,
+        }),
+        basket: Immutable.fromJS({
+          orderId: '179',
+        }),
+        user: Immutable.fromJS({
+          orders: {
+            '179': {
+              'recipeItems': []
+            },
+          },  
+          subscription: {
+            state: 'active',
+          }
+        }),
+        pricing: Immutable.fromJS({
+          prices: {
+            total: '22.00',
+            promoCode: false,
+          }
+        })
+      })
+      await basketCheckedOut(2, 'grid')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'Order Placed',
+        trackingData: {
+          actionType: 'Order Placed',
+          order_id: '179',
+          order_total: '22.00',
+          promo_code: false,
+          signp: false,
+          subscription_active: true,
+        },
+      })
+    })
   })
 })
