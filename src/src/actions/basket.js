@@ -511,8 +511,62 @@ export default {
   ),
 
   basketCheckedOut: (numRecipes, view) => (
-    (dispatch) => {
+    (dispatch, getState) => {
 
+      const { auth, basket, user, pricing } = getState()
+      const isAuthenticated = auth.get('isAuthenticated')
+      const basketOrderId = basket.get('orderId')
+      const orders = user.get('orders')
+      const subscription = user.get('subscription')
+      const isActiveSubsc = subscription && (subscription.get('state') === 'active')
+      const prices = pricing.get('prices')
+      const orderTotal = prices && prices.get('total')
+      const promoCode = prices && prices.get('promoCode')
+    
+      if(isAuthenticated) {
+        if(orders.get(basketOrderId)) {
+          const orderItems = orders.get(basketOrderId).get('recipeItems')
+          if (orderItems.size) {
+            dispatch({
+              type: 'Order Edited',
+              trackingData: {
+                actionType: 'Order Edited',
+                order_id: basketOrderId,
+                order_total: orderTotal,
+                promo_code: promoCode,
+                signp: false,
+                subscription_active: isActiveSubsc,
+              },
+            })
+          } else {
+            dispatch({
+              type: 'Order Placed',
+              trackingData: {
+                actionType: 'Order Placed',
+                order_id: basketOrderId,
+                order_total: orderTotal,
+                promo_code: promoCode,
+                signp: false,
+                subscription_active: isActiveSubsc,
+              },
+            })
+          }
+  
+        } else {
+          dispatch({
+            type: 'Order Placed',
+            trackingData: {
+              actionType: 'Order Placed',
+              order_id: basketOrderId,
+              order_total: orderTotal,
+              promo_code: promoCode,
+              signp: false,
+              subscription_active: isActiveSubsc,
+            },
+          })
+        }
+      }
+     
       dispatch({
         type: actionTypes.BASKET_CHECKOUT,
         trackingData: {
