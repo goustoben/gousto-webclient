@@ -69,8 +69,7 @@ class MobileMenu extends React.PureComponent {
 	  const testingId = isAuthenticated ? 'burgerMenuLogout' : 'burgerMenuLogin'
 	  const loginMenu = (
 			<span className={css.menuItem} onClick={(isAuthenticated) ? this.props.logoutFunc : this.props.loginFunc}>
-				<span className={(isAuthenticated) ? css['icon-logout'] : css['icon-login']} data-testing={testingId} />
-				<li className={css.borderListElement}>
+				<li className={css.borderListElement} data-testing={testingId}>
 					{(isAuthenticated) ? 'Logout' : 'Login'}
 				</li>
 			</span>
