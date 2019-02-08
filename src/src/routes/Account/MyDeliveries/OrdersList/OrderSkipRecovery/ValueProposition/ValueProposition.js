@@ -3,7 +3,6 @@ import React, { PropTypes } from 'react'
 import css from './ValueProposition.css'
 
 const propTypes = {
-  featureFlag: PropTypes.boolean,
   valueProposition: PropTypes.shape({
     title: PropTypes.string.isRequired,
     message: PropTypes.string.isRequired,
