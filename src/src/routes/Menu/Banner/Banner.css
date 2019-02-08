@@ -13,9 +13,14 @@
 	composes: inlineBlock from 'styles/display.css';
 	width: 100%;
 	height: 200px;
-	background-image: url('media/images/menu/jw-banner-mobile.jpg');
+	
 	background-position: center;
 	background-size: cover;
+}
+
+.joe-wicks {
+	composes: container;
+	background-image: url('media/images/menu/jw-banner-mobile.jpg');
 
 	@media ScreenXXSMin {
 		background-image: url('media/images/menu/jw-banner-tablet.jpg')
@@ -23,6 +28,19 @@
 
 	@media ScreenMDMin {
 		background-image: url('media/images/menu/jw-banner-desktop.jpg');
+	}
+}
+
+.everyday-favourites {
+	composes: container;
+	background-image: url('media/images/menu/ef-banner-mobile.jpg');
+
+	@media ScreenXXSMin {
+		background-image: url('media/images/menu/ef-banner-tablet.jpg')
+	}
+
+	@media ScreenMDMin {
+		background-image: url('media/images/menu/ef-banner-desktop.jpg');
 	}
 }
 
@@ -53,11 +71,6 @@
 	}
 }
 
-.gelText__svg {
-	height: 100%;
-	width: 86%;
-}
-
 .gelPortrait {
 	composes: gel from 'Gel/Gel.css';
 	left: calc(GelSMLeft - (SMImageOffset * JWSMImageSize));
@@ -79,4 +92,9 @@
 .gelPortrait__image {
 	border-radius: 100%;
 	border: 3px solid JWBlue;
+}
+
+.efBannerGel {
+	background-color: Pomegranate;
+	color: #f4efe8
 }

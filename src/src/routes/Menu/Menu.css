@@ -1,7 +1,7 @@
 @value ScreenXSMax, ScreenSMMin, MinBreakPointXL, ScreenMDMin from 'styles/screenSizes.css';
 @value SpacingXXL, SpacingLG, SpacingMD as GutterSize, SpacingSM, SpacingXS from 'sass-loader!styles/spacing.scss';
 @value sizeMD, sizeSM, sizeXL from 'styles/typography.css';
-@value Coconut, Mushroom50, Oyster, White  from 'styles/colors.css';
+@value Coconut, Mushroom50, Oyster, White, Pomegranate from 'styles/colors.css';
 @value headerHeight from 'components/Header/Header.css';
 
 @value ColumnWidth 33.333%;
@@ -15,7 +15,6 @@
 	padding-bottom: 75px;
 	min-height: 500px;
 }
-
 
 .willBlur {
 	composes: willBlur from 'styles/effects.css';
@@ -106,4 +105,24 @@
 	composes: willFade;
 	opacity: 0;
 	pointer-events: none;
+}
+
+.gelText__svg {
+	height: 100%;
+	width: 86%;
+}
+
+.efBannerGel {
+	color: #f4efe8;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 23px;
+
+	@media ScreenMDMin {
+		font-size: 20px;
+		font-weight: 600;
+		line-height: 28px;
+	}
+
+	
 }

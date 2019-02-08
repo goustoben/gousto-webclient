@@ -53,4 +53,7 @@ module.exports = {
   jwBanner: {
     switchoverDate: '2019-01-01T00:00:00+00:00',
   },
+  efBanner: {
+    switchoverDate: '2019-02-08T12:00:00+00:00',
+  }
 }

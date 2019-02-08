@@ -1,1 +1,0 @@
-export { JoeWicksBanner } from './JoeWicksBanner'
