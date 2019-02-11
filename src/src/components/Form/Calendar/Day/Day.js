@@ -19,19 +19,21 @@ const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, 
 			  onClick={() => { if (!disabled) { onClick(date, orderId) } }}
 			>
 				<div className={css.content}>
-					{icon ? <span className={css[`icon-${icon}`]}><span className={css[`icon-${icon}-child`]} /></span> : null}
+					{icon ? <span className={css[`icon-${icon}`]}></span> : null}
 					{dateToDay(date)}
 				</div>
 			</div>
     )
   }
 
-  return (<div key={`${weekNo}-${dayNo}`} className={classnames(css.emptyDay, className, css.square)}>
-		<div className={css.content}>
-			{icon ? (<span className={css[`icon-${icon}`]}><span className={css[`icon-${icon}-child`]} /></span>) : null}
-			{date ? dateToDay(date) : weekNoDayNoToDay(weekNo, dayNo)}
-		</div>
-	</div>)
+  return (
+    <div key={`${weekNo}-${dayNo}`} className={classnames(css.emptyDay, className, css.square)}>
+      <div className={css.content}>
+        {icon ? (<span className={css[`icon-${icon}`]}></span>) : null}
+        {date ? dateToDay(date) : weekNoDayNoToDay(weekNo, dayNo)}
+      </div>
+    </div>
+  )
 }
 
 Day.propTypes = {

@@ -171,7 +171,7 @@ class DeliverySlot extends React.Component {
     }
     let deliveryCopy
     if (hasOrders) {
-      deliveryCopy = <span><span className={css.upcomingOrder}></span> Indicates your upcoming orders</span>
+      deliveryCopy = <div><Svg fileName="icon_Booked-delivery" className={css.upcomingOrder} /><span> Indicates your upcoming orders</span></div>
     } else if (!displayOptions.contains('hideDeliveryCopy')) {
       deliveryCopy = 'You choose how often you would like to receive boxes after checkout.'
     }
