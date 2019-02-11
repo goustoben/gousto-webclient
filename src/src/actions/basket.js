@@ -35,10 +35,16 @@ export default {
   // 	addressEdited,
   // }),
 
-  basketOrderLoaded: orderId => ({
-    type: actionTypes.BASKET_ORDER_LOADED,
-    orderId,
-  }),
+  basketOrderLoaded: (orderId) => {
+    return (dispatch, getState) => {
+      const editBox = getState().basket.get('recipes').size !== 0
+      dispatch({
+        type: actionTypes.BASKET_ORDER_LOADED,
+        orderId,
+        editBox,
+      })
+    }
+  },
 
   basketDateChange: date => ({
     type: actionTypes.BASKET_DATE_CHANGE,
@@ -121,7 +127,6 @@ export default {
       } else {
         logger.info(`Order already loaded into current basket: ${orderId}`)
       }
-
       dispatch(basketActions.basketOrderLoaded(orderId))
     }
   ),
@@ -516,6 +521,7 @@ export default {
       const { auth, basket, user, pricing } = getState()
       const isAuthenticated = auth.get('isAuthenticated')
       const basketOrderId = basket.get('orderId')
+      const editingBox = basket.get('editBox')
       const orders = user.get('orders')
       const subscription = user.get('subscription')
       const isActiveSubsc = subscription && (subscription.get('state') === 'active')
@@ -526,7 +532,7 @@ export default {
       if(isAuthenticated) {
         if(orders.get(basketOrderId)) {
           const orderItems = orders.get(basketOrderId).get('recipeItems')
-          if (orderItems.size) {
+          if (orderItems.size || editingBox) {
             dispatch({
               type: 'Order Edited',
               trackingData: {
