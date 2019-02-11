@@ -38,6 +38,6 @@ describe('RecipeHolder', () => {
     const wrapper = shallow(<RecipeHolder recipe={recipe} />)
     expect(wrapper.type()).toBe('span')
     expect(wrapper.find(Image).length).toBe(1)
-    expect(wrapper.find(Image).prop('media')).toEqual('')
+    expect(wrapper.find(Image).prop('media')).toEqual(Immutable.List([]))
   })
 })
