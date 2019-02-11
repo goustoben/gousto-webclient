@@ -1,18 +1,18 @@
 import React from 'react'
-import { mount } from 'enzyme'
+import { shallow } from 'enzyme'
 
-import { JoeWicksBanner } from 'routes/Menu/JoeWicksBanner'
-
-import { Banner } from 'routes/Menu/Banner'
+import { Banner } from '../index'
 
 describe('Banner', () => {
   let wrapper
 
-  beforeEach(() => {
-    wrapper = mount(<Banner />)
+  test('should render a Joe Wicks banner', () => {
+    wrapper = shallow(<Banner imageName={'menu/jw-portrait.jpg'} type={'joe-wicks'} color='white' fileName="jw-partner-text"/>)
+    expect(wrapper.find('.joe-wicks')).toHaveLength(1)
   })
-
-  test('should render a JoeWicksBanner', () => {
-    expect(wrapper.find(JoeWicksBanner)).toHaveLength(1)
+  
+  test('should render an Everyday Favourites banner', () => {
+    wrapper = shallow(<Banner imageName={'menu/jw-portrait.jpg'} type={'everyday-favourites'} color='red' fileName="jw-partner-text"/>)
+    expect(wrapper.find('.everyday-favourites')).toHaveLength(1)
   })
 })

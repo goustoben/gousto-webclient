@@ -1,7 +1,7 @@
 @value ScreenXSMax, ScreenSMMin, MinBreakPointXL, ScreenMDMin from 'styles/screenSizes.css';
 @value SpacingXXL, SpacingLG, SpacingMD as GutterSize, SpacingSM, SpacingXS from 'sass-loader!styles/spacing.scss';
 @value sizeMD, sizeSM, sizeXL from 'styles/typography.css';
-@value Coconut, Mushroom50, Oyster, White  from 'styles/colors.css';
+@value Coconut, Mushroom50, Oyster, White from 'styles/colors.css';
 @value headerHeight from 'components/Header/Header.css';
 
 @value ColumnWidth 33.333%;
@@ -15,7 +15,6 @@
 	padding-bottom: 75px;
 	min-height: 500px;
 }
-
 
 .willBlur {
 	composes: willBlur from 'styles/effects.css';

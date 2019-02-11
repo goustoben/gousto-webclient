@@ -2,12 +2,15 @@ import React, { PropTypes } from 'react'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
+import moment from 'moment'
 import shallowCompare from 'react-addons-shallow-compare'
 import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
 
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
+import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
+import browserHelper from 'utils/browserHelper'
 import MenuNoResults from './MenuNoResults'
 
 import SubHeader from './SubHeader'
@@ -20,13 +23,10 @@ import DetailOverlay from './DetailOverlay'
 import CollectionsNav from './CollectionsNav'
 import FilterMenu from './FilterMenu'
 
-import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import RecipeList from './RecipeList'
 import { Banner } from './Banner'
 
 import fetchData from './fetchData'
-
-import browserHelper from 'utils/browserHelper'
 
 class Menu extends React.Component {
 	static propTypes = {
@@ -188,7 +188,18 @@ class Menu extends React.Component {
 	  }
 	}
 
-	render() {
+  renderBanner = (switchoverDate) => {
+    const now = moment()
+    const switchoverTime = moment(switchoverDate)
+
+    return (now.isSameOrAfter(switchoverTime, 'day')) ? (
+      <Banner imageName={'menu/ef-gel.png'} type={'everyday-favourites'} color='red' fileName="ef-banner-text" />
+    ) : (
+      <Banner imageName={'menu/jw-portrait.jpg'} type={'joe-wicks'} color='white' fileName="jw-partner-text" />
+    )
+  }
+
+  render() {
 	  const { hasRecommendations, forceLoad } = this.props
 	  const { mobileGridView } = this.state
 	  const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
@@ -218,7 +229,7 @@ class Menu extends React.Component {
 				  style={menu.helmet.style}
 				/>
 				<div className={classnames(css.container, overlayShowCSS)}>
-					<Banner switchoverDate={menu.jwBanner.switchoverDate} />
+					{this.renderBanner(menu.efBanner.switchoverDate)}
 					<SubHeader
 					  viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
 					  onToggleGridView={this.toggleGridView}
@@ -261,7 +272,7 @@ class Menu extends React.Component {
 				<BoxSummaryDesktop />
 			</div>
 	  )
-	}
+  }
 }
 
 export default Menu

@@ -1,8 +1,9 @@
 import React from 'react'
-import css from './RecipeHolder.css'
 import Image from 'Image'
 import classnames from 'classnames'
 import Immutable from 'immutable' /* eslint-disable new-cap */
+import { getFeaturedImage } from 'utils/image'
+import css from './RecipeHolder.css'
 
 const RecipeHolder = ({ recipe, view, onClick }) => (
 	<span
@@ -17,7 +18,7 @@ const RecipeHolder = ({ recipe, view, onClick }) => (
 	>
 		{(recipe.size > 0) ?
 			<Image
-			  media={recipe.getIn(['media', 'images', 0, 'urls'], '')}
+			  media={getFeaturedImage(recipe, '')}
 			  className={classnames(
 			    { [css.recipeImg]: view !== 'mobile' },
 			    { [css.imgMobile]: view === 'mobile' }
