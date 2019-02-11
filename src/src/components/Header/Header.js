@@ -313,7 +313,7 @@ class Header extends React.PureComponent {
 									</Link>
 									{(path === '/menu') ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
 									<span className={css.linkDesktopContainer}>
-										{(!hideNav) ? this.getMenuItems('desktop', path).map(menuItem => {
+										{(!hideNav) ? desktopMenuItems.map(menuItem => {
 										  if (menuItem.disabled) {
 										    return (
 													<span
