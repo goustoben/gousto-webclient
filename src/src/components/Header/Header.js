@@ -109,7 +109,7 @@ class Header extends React.PureComponent {
 	    boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true },
 	    menu: { name: 'Choose Recipes', url: clientRoutes.menu },
 	    faq: { name: 'Help', url: clientRoutes.help, clientRouted: false },
-	    myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: true },
+	    myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false },
 	    referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false },
 	    rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false},
 	    deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false},
