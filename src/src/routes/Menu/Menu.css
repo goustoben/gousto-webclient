@@ -107,16 +107,11 @@
 	pointer-events: none;
 }
 
-.gelText__svg {
-	height: 100%;
-	width: 86%;
-}
-
 .efBannerGel {
 	color: #f4efe8;
 	font-size: 16px;
 	font-weight: 600;
-	line-height: 23px;
+	line-height: 21px;
 
 	@media ScreenMDMin {
 		font-size: 20px;

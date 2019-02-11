@@ -9,7 +9,6 @@ import { forceCheck } from 'react-lazyload'
 import menu from 'config/menu'
 
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
-import Svg from 'Svg'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import browserHelper from 'utils/browserHelper'
 import MenuNoResults from './MenuNoResults'
@@ -194,13 +193,9 @@ class Menu extends React.Component {
     const switchoverTime = moment(switchoverDate)
 
     return (now.isSameOrAfter(switchoverTime, 'day')) ? (
-      <Banner imageName={'menu/ef-gel.png'} type={'everyday-favourites'} color='red'>
-        <div className={css.efBannerGel}>Our beloved recipes, here to stay. Available now</div>
-      </Banner>
+      <Banner imageName={'menu/ef-gel.png'} type={'everyday-favourites'} color='red' fileName="ef-banner-text" />
     ) : (
-      <Banner imageName={'menu/jw-portrait.jpg'} type={'joe-wicks'} color='white'>
-        <Svg className={css.gelText__svg} fileName="jw-partner-text" />
-      </Banner>
+      <Banner imageName={'menu/jw-portrait.jpg'} type={'joe-wicks'} color='white' fileName="jw-partner-text" />
     )
   }
 

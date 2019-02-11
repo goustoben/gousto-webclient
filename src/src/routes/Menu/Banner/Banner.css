@@ -71,6 +71,10 @@
 	}
 }
 
+.everyday-favourites .gelText {
+	padding: 0px;
+}
+
 .gelPortrait {
 	composes: gel from 'Gel/Gel.css';
 	left: calc(GelSMLeft - (SMImageOffset * JWSMImageSize));
@@ -89,12 +93,23 @@
 	}
 }
 
-.gelPortrait__image {
+.everyday-favourites .gelPortrait {
+	z-index: 2;
+}
+
+.joe-wicks .gelPortrait__image {
 	border-radius: 100%;
 	border: 3px solid JWBlue;
 }
 
-.efBannerGel {
-	background-color: Pomegranate;
-	color: #f4efe8
+.gelText__svg {
+	height: 100%;
+	width: 86%;
+}
+
+.everyday-favourites .gelText__svg {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	right: 5px;
 }
