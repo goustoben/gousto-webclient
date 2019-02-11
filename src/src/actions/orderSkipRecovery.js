@@ -11,8 +11,7 @@ export const modalVisibilityChange = ({
   actionTriggered,
   data = {},
 }) => (
-  (dispatch, getState) => {
-    const featureFlag = getState().features.getIn(['skipRecovery', 'value'])
+  (dispatch) => {
 
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
@@ -30,7 +29,6 @@ export const modalVisibilityChange = ({
         delivery_day_id: deliveryDayId,
         order_state: status,
         cms_variation: data.variation || 'default',
-        featureFlag,
         recovery_reasons: [
           data.valueProposition,
           data.offer,
@@ -44,7 +42,6 @@ export const keepOrder = ({ orderId, deliveryDayId, status }) => (
   (dispatch, getState) => {
     const valueProposition = getState().orderSkipRecovery.get('valueProposition')
     const offer = getState().orderSkipRecovery.get('offer')
-    const featureFlag = getState().features.getIn(['skipRecovery', 'value'])
 
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
@@ -55,7 +52,6 @@ export const keepOrder = ({ orderId, deliveryDayId, status }) => (
         order_id: orderId,
         delivery_day_id: deliveryDayId,
         order_state: status,
-        featureFlag,
         recovery_reasons: [
           valueProposition,
           offer,

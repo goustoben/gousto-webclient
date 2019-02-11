@@ -152,7 +152,6 @@ const config = {
     moduleExtensions: ['-loader'],
   },
   externals: [nodeExternals()],
-  devtool: 'sourcemap',
   stats: debug ? {
     hash: true,
     version: true,

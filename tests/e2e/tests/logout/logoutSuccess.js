@@ -26,6 +26,7 @@ module.exports = {
 			.perform(function(browser, done) {
 				browser.refresh()
 				shared.section.body.logout()
+				browser.pause(3000)
 				shared.section.header.checkUserLoggedOut()
 				browser.assert.title('Food Boxes | Get Fresh Food & Ingredients Delivered | Gousto')
 				done()

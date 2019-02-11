@@ -1,0 +1,13 @@
+.circleci/
+.githooks/
+.git/
+ansible/
+cloudformation/
+scripts/
+setup/
+tests/
+src/__tests__/
+src/dist/
+src/jest/
+src/node_modules/
+src/test/

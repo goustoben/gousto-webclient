@@ -102,16 +102,19 @@ class Header extends React.PureComponent {
 	getMenuItems = (device, path) => {
 	  const { isAuthenticated } = this.props
 
-	  const home = { name: 'Home', icon: 'home', url: clientRoutes.home, clientRouted: true }
+	  const home = { name: 'Home', url: clientRoutes.home, clientRouted: true }
 
 	  const availableItems = {
 	    home,
-	    boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, icon: 'box', clientRouted: true },
-	    menu: { name: 'Choose Recipes', url: clientRoutes.menu, icon: 'menu' },
-	    faq: { name: 'Help', url: clientRoutes.help, icon: 'faq', clientRouted: false },
-	    myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, icon: 'box', clientRouted: false },
-	    referFriend: { name: 'Free Food', url: clientRoutes.referFriend, icon: 'heart', clientRouted: false },
-	    rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, icon: 'star', clientRouted: false},
+	    boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true },
+	    menu: { name: 'Choose Recipes', url: clientRoutes.menu },
+	    faq: { name: 'Help', url: clientRoutes.help, clientRouted: false },
+	    myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: true },
+	    referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false },
+	    rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false},
+	    deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false},
+	    subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false},
+	    details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false},
 	  }
 
 	  let pathLocal = path
@@ -137,14 +140,28 @@ class Header extends React.PureComponent {
 	    (isAuthenticated ? availableItems.referFriend : availableItems.boxPrices),
 	    availableItems.menu
 	  ]
-	  const rateMyRecipes = [availableItems.rateMyRecipes]
-
-	  let mobileMenu = [homeMenuItem].concat(items)
-		
-	  if (isAuthenticated) {
-	    mobileMenu = mobileMenu.concat(rateMyRecipes) 
+    
+	  const mobileItems = []
+	  if (!isAuthenticated) {
+	    mobileItems.push(availableItems.boxPrices)
 	  }
-	  
+	  mobileItems.push(availableItems.menu)
+
+	  const myGousto = [availableItems.myGousto]
+	  const rateMyRecipes = [availableItems.rateMyRecipes]
+	  const deliveries = [availableItems.deliveries]
+	  const subscription = [availableItems.subscription]
+	  const details = [availableItems.details]
+	  const referFriend = [availableItems.referFriend]
+
+	  let mobileMenu = []
+    
+	  if (isAuthenticated) {
+	    mobileMenu = myGousto.concat(deliveries, subscription, details, referFriend, rateMyRecipes, homeMenuItem, mobileItems)
+	  } else {
+	    mobileMenu = mobileMenu.concat(homeMenuItem, mobileItems) 
+	  }
+    
 	  return (device === 'mobile') ? mobileMenu.concat(availableItems.faq) : items.concat(availableItems.faq)
 	}
 

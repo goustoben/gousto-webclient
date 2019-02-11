@@ -101,20 +101,6 @@ describe('Order Skip Recovery Modal', () => {
   })
 
   describe('Alternative Render', () => {
-    test('should not render modal content if featureflag is false', () => {
-      wrapper = shallow(
-				<OrderSkipRecovery
-				  keepOrder={keepOrder}
-				  cancelPendingOrder={cancelPendingOrder}
-				  cancelProjectedOrder={cancelProjectedOrder}
-				/>
-      )
-
-      const modalValueProposition = wrapper.find('ValueProposition')
-
-      expect(modalValueProposition.length).toBe(0)
-    })
-
     test('should only call cancel pending order when order type is pending', () => {
       wrapper = shallow(
 				<OrderSkipRecovery

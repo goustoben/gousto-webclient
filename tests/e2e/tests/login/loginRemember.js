@@ -27,6 +27,7 @@ module.exports = {
 				menu.navigate()
 				shared.section.header.checkUserLoggedIn()
 				shared.section.body.logout()
+				browser.pause(15000)
 				shared.section.body.isRememberMeCheckboxVisible()
 				done()
 			})

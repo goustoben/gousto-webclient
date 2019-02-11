@@ -10,10 +10,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: true,
   },
-  checkoutPayment: {
-    experiment: false,
-    value: true,
-  },
   landingOrder: {
     experiment: false,
     value: true,
@@ -29,10 +25,6 @@ const defaultFeatures = () => ({
   filterMenu: {
     experiment: false,
     value: false,
-  },
-  skipRecovery: {
-    experiment: false,
-    value: true,
   },
   queueIt: {
     experiment: false,

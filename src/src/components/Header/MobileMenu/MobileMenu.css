@@ -1,4 +1,4 @@
-@value Chia, Cacao, Tomato, Mushroom50, White, Blackberry from 'styles/colors.css';
+@value Chia, Cacao, Tomato, Mushroom50, White, Blackberry, Basa from 'styles/colors.css';
 @value SpacingXL from 'sass-loader!styles/spacing.scss';
 @value MainColor Blackberry;
 
@@ -33,6 +33,9 @@ span:target .hidden {
 .list {
 	composes: paddingLGTopBottom paddingLGLeft paddingXXLRight from 'sass-loader!styles/spacing.scss';
 	list-style-type: none;
+	padding-top: 15px;
+	padding-right: 0px;
+	padding-left: 0px;
 }
 
 .menuItemBase {
@@ -55,75 +58,28 @@ span:target .hidden {
 		color: MainColor;
 		border-color: MainColor;
 	}
-
-	&.disabled :local .listElement {
-		border-bottom: 2px solid;
-	}
-}
-
-.listElement {
-	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .disabled {
 	composes: textBold from 'styles/typography.css';
 }
 
-.menuIcon {
-	composes: fa-basic-class fa-lg fa-fw from 'styles/vendor/font-awesome-module.css';
-	composes: fa-basic-class paddingLGRight from 'sass-loader!styles/spacing.scss';
-	font-size: 1.4em;
-	width: 1.5em;
-	color: MainColor;
+.listElement {
+	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
+	padding-left: 15px;
+	padding-right: 30px
 }
 
-.icon-home {
-	composes: menuIcon;
-	composes: fa-basic-class fa-home from 'styles/vendor/font-awesome-module.css';
+.childListElement {
+	composes: listElement;
+	padding-left: 30px;
 }
 
-.icon-login {
-	composes: menuIcon;
-	composes: fa-basic-class fa-user from 'styles/vendor/font-awesome-module.css';
-}
-
-.icon-logout {
-	composes: menuIcon;
-	composes: fa-basic-class fa-sign-out from 'styles/vendor/font-awesome-module.css';
-}
-
-.icon-box {
-	composes: menuIcon;
-	composes: fa-basic-class fa-archive from 'styles/vendor/font-awesome-module.css';
-}
-
-.icon-menu {
-	composes: menuIcon;
-	composes: fa-basic-class fa-cutlery from 'styles/vendor/font-awesome-module.css';
-}
-
-.icon-faq {
-	composes: menuIcon;
-	composes: fa-basic-class fa-question-circle from 'styles/vendor/font-awesome-module.css';
-}
-
-.icon-contactUs {
-	composes: menuIcon;
-	composes: fa-basic-class fa-comment from 'styles/vendor/font-awesome-module.css';
-}
-
-.icon-heart {
-	composes: menuIcon;
-	composes: fa-basic-class fa-heart from 'styles/vendor/font-awesome-module.css';
-}
-
-.icon-tree {
-	composes: menuIcon;
-	composes: fa-basic-class fa-tree from 'styles/vendor/font-awesome-module.css';
-}
-.icon-star {
-	composes: menuIcon;
-	composes: fa-basic-class fa-star from 'styles/vendor/font-awesome-module.css';
+.borderListElement {
+	composes: listElement;
+	border-top: 1px solid Basa;
+	padding-top: 20px;
+	margin-top: 10px
 }
 
 .boxContainer {
