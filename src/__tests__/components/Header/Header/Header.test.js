@@ -221,7 +221,7 @@ describe('Header', () => {
     test('should render menu items in correct order when logged in', () => {
       const expected = [
         {
-          "clientRouted": true,
+          "clientRouted": false,
           "name": 'My Gousto',
           "url": "/my-gousto"
         },
