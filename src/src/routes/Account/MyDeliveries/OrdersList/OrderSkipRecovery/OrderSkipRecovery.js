@@ -15,7 +15,6 @@ const propTypes = {
   orderId: PropTypes.string,
   deliveryDayId: PropTypes.string,
   orderType: PropTypes.string,
-  featureFlag: PropTypes.bool,
   keepOrder: PropTypes.func.isRequired,
   cancelPendingOrder: PropTypes.func.isRequired,
   cancelProjectedOrder: PropTypes.func.isRequired,
@@ -58,24 +57,22 @@ class OrderSkipRecovery extends React.PureComponent {
   }
 
   render() {
-    const { visible, deliveryDayId, orderId, orderType, featureFlag, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, offer, valueProposition, callToActions } = this.props
+    const { visible, deliveryDayId, orderId, orderType, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, offer, valueProposition, callToActions } = this.props
     const onClickKeepOrder = () => keepOrder({ orderId, deliveryDayId, status: orderType })
     const onClickSkipCancel = () => this.skipCancelOrder(orderId, deliveryDayId, orderType, cancelPendingOrder, cancelProjectedOrder)
 
     return (
 			<ModalComponent visible={visible}>
-				<Header offer={offer} featureFlag={featureFlag} />
+				<Header offer={offer} />
 				<div className={css.container}>
 					<ModalTitle>
 						<Title title={title} orderType={orderType} />
 					</ModalTitle>
-					{(featureFlag) && (
-						<ModalContent>
-							<Offer offer={offer} />
-							{(offer && valueProposition) ? <hr className={css.rule} /> : null}
-							<ValueProposition valueProposition={valueProposition} />
-						</ModalContent>
-					)}
+					<ModalContent>
+            <Offer offer={offer} />
+            {(offer && valueProposition) ? <hr className={css.rule} /> : null}
+            <ValueProposition valueProposition={valueProposition} />
+          </ModalContent>
 					<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
 				</div>
 			</ModalComponent>

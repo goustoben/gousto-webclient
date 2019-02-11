@@ -26,14 +26,14 @@ const Footer = ({ orderType, callToActions, onClickKeepOrder, onClickSkipCancel 
   }
 
   return (
-        <ModalFooter>
-        <div className={css.skipAnyWay} onClick={() => onClickSkipCancel() }>
-                {confirmCopy}
-            </div>
-            <button className={css.keepButton} onClick={() => onClickKeepOrder() }>
-                {keepCopy}
-            </button>
-        </ModalFooter>
+    <ModalFooter>
+      <div className={css.skipAnyWay} onClick={() => onClickSkipCancel() }>
+        {confirmCopy}
+      </div>
+      <button className={css.keepButton} onClick={() => onClickKeepOrder() }>
+        {keepCopy}
+      </button>
+    </ModalFooter>
   )
 }
 

@@ -12,7 +12,6 @@ const mapStateToProps = (state) => ({
   deliveryDayId: state.orderSkipRecovery.get('deliveryDayId'),
   orderType: state.orderSkipRecovery.get('orderType'),
   boxNumber: state.subscription.getIn(['subscription', 'currentBoxNumber']),
-  featureFlag: state.features.getIn(['skipRecovery', 'value']),
   title: state.orderSkipRecovery.get('title'),
   offer: state.orderSkipRecovery.get('offer'),
   valueProposition: state.orderSkipRecovery.get('valueProposition'),
