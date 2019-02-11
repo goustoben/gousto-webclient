@@ -260,19 +260,23 @@ class Header extends React.PureComponent {
 	  const joinPage = path.indexOf('join') > -1 || this.props.fromJoin
 	  const hideNav = fromWizard || joinPage || this.props.disabled || false
 	  const noContactBar = joinPage || this.props.noContactBar
+	  const mobileMenuItems = this.getMenuItems('mobile', path)
+	  const homeElementMobile = mobileMenuItems.find(item => (item.name === 'Home'))
+	  const desktopMenuItems = this.getMenuItems('desktop', path)
+
 	  if (this.props.simple && !this.props.isAuthenticated) {
 	    return (
 				<SimpleHeader
 				  serverError={this.props.serverError}
 				  className={this.state.mobileMenuOpen ? css.overlayOpen : css.overlay}
-				  homeUrl={this.getMenuItems('mobile', path)[0].url}
+				  homeUrl={mobileMenuItems[0].url}
 				  noContactBar={noContactBar}
 				  title={this.props.title}
 				  small={this.props.small}
 				/>
 	    )
 	  }
-
+	 
 	  return (
 			<span id={this.props.serverError ? 'mobileMenu' : null} data-testing="header">
 				<a
@@ -283,7 +287,7 @@ class Header extends React.PureComponent {
 				<header className={noContactBar ? css.headerNoContactBar : css.header}>
 					<div>
 						<MobileMenu
-						  menuItems={this.getMenuItems('mobile', path)}
+						  menuItems={mobileMenuItems}
 						  show={this.state.mobileMenuOpen}
 						  onHide={this.hideMobileMenu}
 						  hideNav={hideNav}
@@ -301,7 +305,7 @@ class Header extends React.PureComponent {
                           </div> : null}
 							<div className={css.mainBar}>
 								<div className={css.mainContent}>
-									<Link to={this.getMenuItems('mobile', path)[0].url} clientRouted={this.getMenuItems('mobile', path)[0].clientRouted && !Boolean(this.props.promoCodeUrl)} className={css.logoLink}>
+									<Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !Boolean(this.props.promoCodeUrl)} className={css.logoLink}>
 										<span>
 											<Svg fileName="icon-logo" className={css.logoDesktop} />
 											<Svg fileName="icon-logo-g" className={css.logoMobile} />
