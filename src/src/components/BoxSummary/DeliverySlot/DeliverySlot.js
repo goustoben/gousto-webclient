@@ -59,6 +59,7 @@ class DeliverySlot extends React.Component {
     const slots = {}
     const { disableOnDelivery, availableDaysOnly, disabledSlots, isAuthenticated, isSubscriptionActive } = this.props
     let hasOrders = false
+    let hasEmptyOrders = false
 
     const deliveryDays = this.props.deliveryDays.map(deliveryDay => {
       const date = deliveryDay.get('date')
@@ -80,11 +81,12 @@ class DeliverySlot extends React.Component {
       ).map(order => order.get('id'))
 
       const hasOrdersToday = orderIds.length > 0
-      let icon = hasOrdersToday > 0 ? 'truck' : ''
+      let icon = hasOrdersToday > 0 ? 'full-box' : ''
       const orderId = hasOrdersToday > 0 ? orderIds[0] : ''
       const orderEmpty = orderId ? this.props.userOrders.find(order => order.get('id') === orderId).get('recipeItems').size === 0 : null
       if (orderEmpty) {
-        icon = 'truck-empty'
+        icon = 'empty-box'
+        hasEmptyOrders = true
       }
       if (orderIds.length > 0) {
         hasOrders = true
@@ -95,7 +97,7 @@ class DeliverySlot extends React.Component {
       let legacyData = {}
 
       if (this.props.disableNewDatePicker) {
-        const subLabel = hasOrdersToday ? (<span className={css.truckIcon} />) : ''
+        const subLabel = hasOrdersToday ? (<span className={css.boxIcon} />) : ''
         legacyData = { label: moment(date).format('ddd D MMM'), subLabel, ordered: hasOrdersToday }
         disabled = (deliveryDay && deliveryDay.get('alternateDeliveryDay') !== null) || hasOrdersToday
       }
@@ -120,7 +122,7 @@ class DeliverySlot extends React.Component {
       chosen = slot.length > 0
     }
 
-    return { slots, deliveryDays, chosen, hasOrders }
+    return { slots, deliveryDays, chosen, hasOrders, hasEmptyOrders }
   }
 
   handleDateChange = (date, orderId) => {
@@ -152,7 +154,7 @@ class DeliverySlot extends React.Component {
     const datesOfDisabledSlots = disabledSlots.map(date => date.slice(0, 10))
     const doesDateHaveDisabledSlots = datesOfDisabledSlots.includes(this.props.tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
 
-    const { slots, deliveryDays, chosen, hasOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
+    const { slots, deliveryDays, chosen, hasOrders, hasEmptyOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
 
     let deliveryLocationText = this.props.address ? `Address: ${this.props.address.get('name')}` : `${this.props.postcode}`
     let slotId = this.props.tempSlotId
@@ -169,12 +171,18 @@ class DeliverySlot extends React.Component {
         // couldn't find slot id for that order on that date
       }
     }
+
     let deliveryCopy
     if (hasOrders) {
       deliveryCopy = <div><Svg fileName="icon_Booked-delivery" className={css.upcomingOrder} /><span> Indicates your upcoming orders</span></div>
     } else if (!displayOptions.contains('hideDeliveryCopy')) {
       deliveryCopy = 'You choose how often you would like to receive boxes after checkout.'
     }
+
+    let deliveryCopyEmpty
+    if (hasEmptyOrders) {
+      deliveryCopyEmpty = <div><Svg fileName="icon_Scheduled-delivery" className={css.upcomingOrder} /><span> Scheduled order (recipes not chosen)</span></div>}
+
     const disableNewDatePicker = this.props.disableNewDatePicker
     let buttonText = this.props.prevSlotId ? 'Update Delivery Date' : 'Continue'
     let warningMessage
@@ -257,6 +265,7 @@ class DeliverySlot extends React.Component {
         <div className={css.row}>
           <span className={css.supportingText}>
             {warningMessage ? <p className={css.errorText}>{warningMessage}</p> : <p>{deliveryCopy}</p>}
+            {warningMessage ? null : <p>{deliveryCopyEmpty}</p>}
             {doesDateHaveDisabledSlots ? <div><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /><p className={css.disabledSlotText}> Unavailable due to high demand</p></div> : null}
           </span>
         </div>
