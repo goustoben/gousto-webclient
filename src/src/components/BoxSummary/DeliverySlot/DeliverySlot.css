@@ -54,7 +54,7 @@
 	composes: fa-basic-class fa-pencil from 'styles/vendor/font-awesome-module.css';
 	margin-right: 2px;
 }
-.truckIcon {
+.boxIcon {
 	composes: absolute from 'styles/position.css';
 	top: 2px;
 	left: 2px;

@@ -217,7 +217,9 @@
 	font-size: sizeMD;
 }
 
-.icon-truck {
-	composes: icon;
-	composes: fa-basic-class fa-truck from 'styles/vendor/font-awesome-module.css';
+.icon-full-box {
+	font-size: sizeMD;
+	height: 10px;
+	width: 10px;
+	background: url('media/svgs/icon_Booked-delivery-small.svg') center top no-repeat;
 }

@@ -32,42 +32,38 @@
 	font-size: sizeXXS;
 	top: 2px;
 	left: 2px;
-}
-
-.icon-truck {
-	composes: icon;
 	height: 10px;
 	width: 10px;
+}
+
+.icon-full-box {
+	composes: icon;
 	background: url('media/svgs/icon_Booked-delivery-small.svg') center top no-repeat;
 }
 
-.icon-truck-empty {
+.icon-empty-box {
 	composes: icon;
-	height: 10px;
-	width: 10px;
 	background: url('media/svgs/icon_Scheduled-delivery-small.svg') center top no-repeat;
 }
 
-.icon-truck-empty-child {
-	composes: absolute from 'styles/position.css';
-	composes: block from 'styles/display.css';
-
-	width: 6px;
-	height: 5px;
-	right: 2px;
-	top: 2px;
-
-	background: White;
-}
-
-.currentDay .icon-truck-empty {
+.currentDay .icon-full-box {
 	position: absolute;
 	font-size: sizeXXS;
 	top: 2px;
 	left: 2px;
 	height: 10px;
 	width: 10px;
-	background: url('media/svgs/icon_Scheduled-delivery-small.svg') center top no-repeat;
+	background: url('media/svgs/icon_Booked-delivery-small-inverted.svg') center top no-repeat;
+}
+
+.currentDay .icon-empty-box {
+	position: absolute;
+	font-size: sizeXXS;
+	top: 2px;
+	left: 2px;
+	height: 10px;
+	width: 10px;
+	background: url('media/svgs/icon_Scheduled-delivery-small-inverted.svg') center top no-repeat;
 }
 
 .square {
