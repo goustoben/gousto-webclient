@@ -59,6 +59,7 @@ class DeliverySlot extends React.Component {
     const slots = {}
     const { disableOnDelivery, availableDaysOnly, disabledSlots, isAuthenticated, isSubscriptionActive } = this.props
     let hasOrders = false
+    let hasFullOrders = false
     let hasEmptyOrders = false
 
     const deliveryDays = this.props.deliveryDays.map(deliveryDay => {
@@ -83,11 +84,18 @@ class DeliverySlot extends React.Component {
       const hasOrdersToday = orderIds.length > 0
       let icon = hasOrdersToday > 0 ? 'full-box' : ''
       const orderId = hasOrdersToday > 0 ? orderIds[0] : ''
+
+      const orderFull = orderId ? this.props.userOrders.find(order => order.get('id') === orderId).get('recipeItems').size > 0 : null
+      if (orderFull) {
+        hasFullOrders = true
+      }
+
       const orderEmpty = orderId ? this.props.userOrders.find(order => order.get('id') === orderId).get('recipeItems').size === 0 : null
       if (orderEmpty) {
         icon = 'empty-box'
         hasEmptyOrders = true
-      }
+      } 
+
       if (orderIds.length > 0) {
         hasOrders = true
       }
@@ -122,7 +130,7 @@ class DeliverySlot extends React.Component {
       chosen = slot.length > 0
     }
 
-    return { slots, deliveryDays, chosen, hasOrders, hasEmptyOrders }
+    return { slots, deliveryDays, chosen, hasOrders, hasEmptyOrders, hasFullOrders }
   }
 
   handleDateChange = (date, orderId) => {
@@ -154,7 +162,7 @@ class DeliverySlot extends React.Component {
     const datesOfDisabledSlots = disabledSlots.map(date => date.slice(0, 10))
     const doesDateHaveDisabledSlots = datesOfDisabledSlots.includes(this.props.tempDate) && isAuthenticated && isSubscriptionActive === 'inactive'
 
-    const { slots, deliveryDays, chosen, hasOrders, hasEmptyOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
+    const { slots, deliveryDays, chosen, hasEmptyOrders, hasFullOrders } = this.getDeliveryDaysAndSlots(this.props.tempDate)
 
     let deliveryLocationText = this.props.address ? `Address: ${this.props.address.get('name')}` : `${this.props.postcode}`
     let slotId = this.props.tempSlotId
@@ -173,15 +181,15 @@ class DeliverySlot extends React.Component {
     }
 
     let deliveryCopy
-    if (hasOrders) {
-      deliveryCopy = <div><Svg fileName="icon_Booked-delivery" className={css.upcomingOrder} /><span> Indicates your upcoming orders</span></div>
+    if (hasFullOrders) {
+      deliveryCopy = <div><Svg fileName="icon_Booked-delivery" className={css.upcomingOrder} /><span> Upcoming delivery – recipes chosen</span></div>
     } else if (!displayOptions.contains('hideDeliveryCopy')) {
       deliveryCopy = 'You choose how often you would like to receive boxes after checkout.'
     }
-
+    
     let deliveryCopyEmpty
     if (hasEmptyOrders) {
-      deliveryCopyEmpty = <div><Svg fileName="icon_Scheduled-delivery" className={css.upcomingOrder} /><span> Scheduled order (recipes not chosen)</span></div>}
+      deliveryCopyEmpty = <div><Svg fileName="icon_Scheduled-delivery" className={css.upcomingOrder} /><span> Upcoming delivery – recipes not chosen</span></div>}
 
     const disableNewDatePicker = this.props.disableNewDatePicker
     let buttonText = this.props.prevSlotId ? 'Update Delivery Date' : 'Continue'
