@@ -11,7 +11,9 @@ const arrowClasses = (position) => {
 
 const Arrow = ({ positionY, position }) => (
   (position.includes(positionY)) ? (
-    <div className={arrowClasses(position)} />
+    <span className={arrowClasses(position)}>
+      {(position.includes('top')) ? '▲' : '▼'}
+    </span>
   ) : null
 )
 
