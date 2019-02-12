@@ -532,7 +532,7 @@ export default {
       if(isAuthenticated) {
         if(orders.get(basketOrderId)) {
           const orderItems = orders.get(basketOrderId).get('recipeItems')
-          if (orderItems.size || editingBox) {
+          if (orderItems.size) {
             dispatch({
               type: 'Order Edited',
               trackingData: {
@@ -558,6 +558,18 @@ export default {
             })
           }
   
+        } else if(editingBox) {
+          dispatch({
+            type: 'Order Edited',
+            trackingData: {
+              actionType: 'Order Edited',
+              order_id: basketOrderId,
+              order_total: orderTotal,
+              promo_code: promoCode,
+              signp: false,
+              subscription_active: isActiveSubsc,
+            },
+          })
         } else {
           dispatch({
             type: 'Order Placed',
