@@ -1,8 +1,8 @@
 @value White from 'styles/colors.css';
+@value ArrowHeight from './Arrow/Arrow.css';
 
 .container {
-  position: absolute;
-  z-index: 200;
+  padding: ArrowHeight 0;
 }
 
 .content {

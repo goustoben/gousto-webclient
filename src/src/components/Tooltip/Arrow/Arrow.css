@@ -1,6 +1,5 @@
 @value White from 'styles/colors.css';
 @value ArrowHeight: 30px;
-@value NegativeArrowHeight: -30px;
 
 .arrow {
   position: absolute;
@@ -11,12 +10,11 @@
 }
 
 .arrow--top {
-  top: NegativeArrowHeight;
+  top: 0;
   border-bottom: ArrowHeight solid White;
 }
 
 .arrow--bottom {
-  bottom: NegativeArrowHeight;
   border-top: ArrowHeight solid White;
 }
 
