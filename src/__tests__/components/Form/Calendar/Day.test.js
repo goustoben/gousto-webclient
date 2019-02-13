@@ -49,7 +49,7 @@ describe('Form/Calendar/Day', () => {
   })
 
   test('should have an icon', () => {
-    expect(wrapper.find('span').length).toEqual(2)
+    expect(wrapper.find('span').length).toEqual(1)
   })
 
   describe('without a date', () => {

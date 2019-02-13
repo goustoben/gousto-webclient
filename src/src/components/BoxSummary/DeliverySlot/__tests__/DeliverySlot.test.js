@@ -131,7 +131,7 @@ describe('DeliverySlot logic', () => {
       expect(tempSlotIdSpy).toHaveBeenCalledWith('987sddrdfst456')
     })
 
-    test.only('should call setTempSlotId passing undefined when all slots are disabled', () => {
+    test('should call setTempSlotId passing undefined when all slots are disabled', () => {
       const tempSlotIdSpy = jest.fn()
       const tempDateSpy = jest.fn()
       const tempOrderIdSpy = jest.fn()
