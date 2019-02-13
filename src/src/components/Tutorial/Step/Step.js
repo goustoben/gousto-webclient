@@ -35,6 +35,10 @@ export class Step extends PureComponent {
     window.removeEventListener('resize', this.recalculateLocations)
   }
 
+  componentDidUpdate() {
+    this.recalculateLocations()
+  }
+
   recalculateLocations = () => {
     const { selector } = this.props
     const { x, y } = getSpotlightLocation(selector)
