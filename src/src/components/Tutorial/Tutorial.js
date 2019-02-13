@@ -46,7 +46,7 @@ export class Tutorial extends PureComponent {
       cloneElement(children[step], {
         last: step === (children.length - 1),
         onClose: this.close,
-        onClick: this.next,
+        next: this.next,
       })
     )
   }

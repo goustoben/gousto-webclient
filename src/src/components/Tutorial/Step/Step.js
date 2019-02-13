@@ -14,8 +14,8 @@ export class Step extends PureComponent {
       PropTypes.node,
     ]),
     last: PropTypes.bool,
+    next: PropTypes.func,
     onClose: PropTypes.func,
-    onClick: PropTypes.func,
     selector: PropTypes.string.isRequired,
   }
 
@@ -50,19 +50,20 @@ export class Step extends PureComponent {
 
   render() {
     const { x, y, style, arrow } = this.state
-    const { children, last, onClose, onClick } = this.props
+    const { children, last, onClose, next } = this.props
 
     return (
       <div>
         <Spotlight
           x={x}
           y={y}
+          onClick={onClose}
         />
         <div className={css.tooltip} style={style}>
           <Tooltip arrow={arrow} onClose={onClose}>
             {children}
-            <div className={css.cta} onClick={onClick}>
-              <p>{(last) ? 'OK' : 'NEXT &rsaquo'}</p>
+            <div className={css.cta} onClick={next}>
+              {(last) ? <p>OK</p> : <p>NEXT &rsaquo;</p>}
             </div>
           </Tooltip>
         </div>
