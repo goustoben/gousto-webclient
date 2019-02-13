@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
+import Icon from 'Icon'
 import { Tooltip } from 'Tooltip'
 import { Spotlight } from 'Spotlight'
 
@@ -67,7 +68,11 @@ export class Step extends PureComponent {
           <Tooltip arrow={arrow} onClose={onClose}>
             {children}
             <div className={css.cta} onClick={next}>
-              {(last) ? <p>OK</p> : <p>NEXT &rsaquo;</p>}
+              {(last) ? (
+                <p>OK</p>
+              ): (
+                <p>NEXT <Icon name="fa-angle-right" size={30} className={css.cta__icon} /></p>
+              )}
             </div>
           </Tooltip>
         </div>

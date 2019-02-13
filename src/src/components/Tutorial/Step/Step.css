@@ -10,3 +10,8 @@
   position: absolute;
   z-index: 200;
 }
+
+.cta__icon {
+  vertical-align: sub;
+  margin-left: 4px;
+}
