@@ -124,7 +124,7 @@ describe('util', () => {
         disabled: false,
         icon: '',
       },
-      { value: '46', label: '2017-02-06', disabled: true, icon: 'truck' },
+      { value: '46', label: '2017-02-06', disabled: true, icon: 'full-box' },
       { value: '47', label: '2017-02-07', disabled: false, icon: '' },
     ])
     expect(slotsOptions).toEqual({

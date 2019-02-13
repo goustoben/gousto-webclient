@@ -54,13 +54,13 @@
 	composes: fa-basic-class fa-pencil from 'styles/vendor/font-awesome-module.css';
 	margin-right: 2px;
 }
-.truckIcon {
-	composes: fa-basic-class fa-truck from 'styles/vendor/font-awesome-module.css';
-	font-size: sizeMD;
-}
-.upcomingOrder {
-	composes: fa-basic-class fa-truck fa-fw from 'styles/vendor/font-awesome-module.css';
-	color: BlueCheese;
+.boxIcon {
+	composes: absolute from 'styles/position.css';
+	top: 2px;
+	left: 2px;
+	height: 10px;
+	width: 10px;
+	background: url('media/svgs/icon_Booked-delivery-small.svg') center top no-repeat;
 }
 
 .iconDisabled {
@@ -69,6 +69,9 @@
 	top: .125em;
 	position: relative;
 	margin-right: 5px;
+}
+.upcomingOrder {
+	composes: iconDisabled;
 }
 
 .textInput {

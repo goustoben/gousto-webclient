@@ -76,7 +76,7 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
       value: day.coreDayId,
       label: day.date,
       disabled: isDateTaken,
-      icon: isDateTaken ? 'truck' : '',
+      icon: isDateTaken ? 'full-box' : '',
     }
   }))
   const slotsOptions = {}
