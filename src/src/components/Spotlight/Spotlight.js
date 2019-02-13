@@ -7,7 +7,7 @@ import css from './Spotlight.css'
 const RADIUS = 100
 const accuracy = 0.3
 
-const Spotlight = ({ x, y }) => {
+const Spotlight = ({ x, y, onClick }) => {
   const steps = getEllipse({
     originX: x,
     originY: y,
@@ -29,6 +29,7 @@ const Spotlight = ({ x, y }) => {
           0% 100%
         )`,
       }}
+      onClick={onClick}
     >
     </div>
   )
@@ -42,6 +43,7 @@ Spotlight.defaultProps = {
 Spotlight.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
+  onClick: PropTypes.func,
 }
 
 export {
