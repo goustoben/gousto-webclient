@@ -88,7 +88,7 @@ class CollectionsNav extends React.PureComponent {
 	checkScroll = () => {
 	  if (this.hasScrolled) {
 	    this.hasScrolled = false
-	    const threshold = 150
+	    const threshold = 250
 	    const animationThreshold = 50
 
 	    if (window.pageYOffset < threshold && this.state.scrolledPastPoint) {
