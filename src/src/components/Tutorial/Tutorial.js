@@ -1,6 +1,7 @@
 import { cloneElement, PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
+import { isElementHidden } from 'Tutorial/helpers'
 import { Step } from './Step'
 
 export class Tutorial extends PureComponent {
@@ -14,9 +15,17 @@ export class Tutorial extends PureComponent {
     children: [],
   }
 
-  state = {
-    step: 0,
-    hide: false,
+  constructor(props) {
+    super(props)
+    const { children } = props
+    const visibleChildren = children.filter(
+      child => !isElementHidden(child.props.selector)
+    )
+    this.state = {
+      children: visibleChildren,
+      step: 0,
+      hide: false,
+    }
   }
 
   close = () => {
@@ -26,8 +35,7 @@ export class Tutorial extends PureComponent {
   }
 
   next = () => {
-    const { step } = this.state
-    const { children } = this.props
+    const { step, children } = this.state
 
     if (step === children.length - 1) {
       this.close()
@@ -39,8 +47,7 @@ export class Tutorial extends PureComponent {
   }
 
   render() {
-    const { step, hide } = this.state
-    const { children } = this.props
+    const { children, step, hide } = this.state
 
     return (hide) ? null : (
       cloneElement(children[step], {

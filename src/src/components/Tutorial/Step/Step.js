@@ -5,7 +5,7 @@ import Icon from 'Icon'
 import { Tooltip } from 'Tooltip'
 import { Spotlight } from 'Spotlight'
 
-import { getSpotlightLocation, getTooltipProperties } from 'Tutorial/helpers'
+import { isElementHidden, getSpotlightLocation, getTooltipProperties } from 'Tutorial/helpers'
 import css from './Step.css'
 
 export class Step extends PureComponent {
@@ -41,7 +41,12 @@ export class Step extends PureComponent {
   }
 
   recalculateLocations = () => {
-    const { selector } = this.props
+    const { selector, next } = this.props
+
+    if (isElementHidden(selector)) {
+      next()
+    }
+
     const { x, y } = getSpotlightLocation(selector)
     const { style, arrow } = getTooltipProperties(selector, 300)
 
