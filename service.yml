@@ -56,7 +56,7 @@ environments:
     minInstanceSize: 1
     maxInstanceSize: 2
     desiredInstanceSize: 1
-    availability: alwaysOn
+    availability: businessHours
 
     deployment:
       style: immutable
