@@ -37,10 +37,12 @@ const getTooltipDirection = ({ x, y, }, tooltipWidth) => {
     direction = 'bottom'
   }
 
-  if (x < 0 + tooltipWidth) {
-    direction += '-left'
-  } else if (x > viewportRect.right - tooltipWidth) {
-    direction += '-right'
+  if (viewportRect.right > tooltipWidth * 2) {
+    if (x < 0 + tooltipWidth) {
+      direction += '-left'
+    } else if (x > viewportRect.right - tooltipWidth) {
+      direction += '-right'
+    }
   }
 
   return direction
@@ -78,7 +80,8 @@ export const getSpotlightLocation = (selector) => {
 
 export const getTooltipProperties = (selector, width) => {
   const elementRect = getElementRectBySelector(selector)
-  const arrowDirection = getTooltipDirection(elementRect, width)
+  const elementCenter = getCenterFromElementRect(elementRect)
+  const arrowDirection = getTooltipDirection(elementCenter, width)
   const location = getTooltipLocation(selector, arrowDirection)
   const offset = getTransformOffset(arrowDirection)
 
@@ -92,3 +95,7 @@ export const getTooltipProperties = (selector, width) => {
     arrow: arrowDirection,
   }
 }
+
+export const isElementHidden = (selector) => (
+  document.querySelector(selector).offsetParent === null
+)
