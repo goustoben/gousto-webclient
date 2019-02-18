@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable' // eslint-disable no-caps
 
 import config from 'config/basket'
@@ -8,10 +9,10 @@ import { Tooltip } from 'goustouicomponents'
 import BoxSummary from 'BoxSummary'
 import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
 import RecipeList from 'BoxSummary/RecipeList'
+import { getBoundingClientRect } from 'utils/DOMhelper'
 import css from './BoxSummaryMobile.css'
 import BrowseCTA from '../BrowseCTA'
 import BrowseCTAButton from '../BrowseCTAButton'
-import { getBoundingClientRect } from 'utils/DOMhelper'
 import boxSummaryButtonCss from 'BoxSummary/BoxSummaryButton/BoxSummaryButton.css'
 
 class BoxSummaryMobile extends React.Component {

@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react'
-import css from './JobCard.css'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Link from 'Link'
 import classnames from 'classnames'
 import config from 'config/routes'
+import css from './JobCard.css'
 
 const JobCard = (props) => (
 	<Link to={props.jobLink} clientRouted={false} target="_blank" noDecoration >

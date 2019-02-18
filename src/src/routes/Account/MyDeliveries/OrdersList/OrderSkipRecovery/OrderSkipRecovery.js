@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
 
@@ -72,7 +73,7 @@ class OrderSkipRecovery extends React.PureComponent {
             <Offer offer={offer} />
             {(offer && valueProposition) ? <hr className={css.rule} /> : null}
             <ValueProposition valueProposition={valueProposition} />
-          </ModalContent>
+     </ModalContent>
 					<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
 				</div>
 			</ModalComponent>

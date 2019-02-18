@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import { ItemLink } from '../components/ItemLink'
 import BottomBar from 'BottomBar'
+import { ItemLink } from '../components/ItemLink'
 import { List } from '../components/List'
 import { BottomButton } from '../components/BottomButton'
 

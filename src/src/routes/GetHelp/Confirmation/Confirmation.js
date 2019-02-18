@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import BottomBar from 'BottomBar'
-import { BottomButton } from '../components/BottomButton'
 
 import GetHelpLayout from 'layouts/GetHelpLayout'
 
 import { client as routes } from 'config/routes'
+import { BottomButton } from '../components/BottomButton'
 
 const Confirmation = ({ content }) => (
 	<GetHelpLayout title={content.title} body={content.confirmationBody}>

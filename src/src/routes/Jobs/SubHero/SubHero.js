@@ -1,5 +1,7 @@
 /* eslint-disable global-require */
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+
+import React from 'react'
 import css from './SubHero.css'
 
 class SubHero extends React.PureComponent {

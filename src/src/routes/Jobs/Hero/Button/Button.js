@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Button.css'
 import Link from 'Link'
+import css from './Button.css'
 
 const CTA = ({ children, link }) => (
 	<div className={css.buttonContainer}>
@@ -16,8 +17,8 @@ const CTA = ({ children, link }) => (
 )
 
 CTA.propTypes = {
-  children: React.PropTypes.string,
-  link: React.PropTypes.string,
+  children: PropTypes.string,
+  link: PropTypes.string,
 }
 
 export default CTA

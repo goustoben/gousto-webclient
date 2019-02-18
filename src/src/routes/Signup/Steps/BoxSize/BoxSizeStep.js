@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import Button from '../../Button'
@@ -18,7 +19,7 @@ const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next }) => {
 		>
 			{`${value} People`}
 		</Button>
-	</div>)))
+                                                               </div>)))
 
   return (
 		<span className={signupCss.stepContainer} data-testing="signupBoxSizeStep">
@@ -41,9 +42,9 @@ const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next }) => {
 }
 
 BoxSizeStep.propTypes = {
-  numPortionChange: React.PropTypes.func.isRequired,
-  numPortionChangeTracking: React.PropTypes.func.isRequired,
-  next: React.PropTypes.func.isRequired,
+  numPortionChange: PropTypes.func.isRequired,
+  numPortionChangeTracking: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired,
 }
 
 export default BoxSizeStep

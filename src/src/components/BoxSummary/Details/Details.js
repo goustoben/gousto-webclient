@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import moment from 'moment'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import { basketSum, okRecipes } from 'utils/basket'
 import { getSlot } from 'utils/deliveries'
 import { getSurchargeItems } from 'utils/pricing'
@@ -150,7 +151,7 @@ class Details extends React.Component {
 						    ? null
 						    : (<div className={css.row}>
 									<Portions numPortions={numPortions} onNumPortionChange={basketNumPortionChange} trackNumPortionChange={portionSizeSelectedTracking} orderId={orderId} />
-								</div>)
+             </div>)
 						}
 						<div className={css.row}>
 							<p className={css.titleSection}>Recipe Box</p>
@@ -184,7 +185,7 @@ class Details extends React.Component {
 											/>
 										)).toArray()}
 									</span>
-								</div>)
+             </div>)
 						}
 						{
 						  displayOptions.contains('hideStatusMessaging')

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classnames from 'classnames'
 
 import css from './Address.css'
@@ -23,7 +24,7 @@ class Address extends React.PureComponent {
 	}
 
 	static contextTypes = {
-	  store: React.PropTypes.object.isRequired,
+	  store: PropTypes.object.isRequired,
 	}
 
 	onClick = (addressId) => {

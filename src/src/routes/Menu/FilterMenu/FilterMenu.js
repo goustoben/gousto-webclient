@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import css from './FilterMenu.css'
 import Icon from 'Icon'
 import Overlay from 'Overlay'
+import css from './FilterMenu.css'
 import FilterButton from './FilterButton'
 import CollectionFilter from './CollectionFilter'
 import DietTypesFilter from './DietTypesFilter'

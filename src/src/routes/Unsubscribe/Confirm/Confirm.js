@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import { Button } from 'goustouicomponents'
 
@@ -19,7 +20,7 @@ const Confirm = ({ pending, unsubscribeClick, isError, copy }) => (
 		</Button>
 		{isError && <p className={css.confirmContentError}>
 			{copy.defaultError}
-		</p>}
+              </p>}
 	</div>
 )
 

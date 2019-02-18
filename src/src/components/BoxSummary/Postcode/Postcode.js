@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Form from 'Form'
 import TextInput from 'Form/Input'
 import { Button } from 'goustouicomponents'
-import css from './Postcode.css'
 import DropdownInput from 'Form/Dropdown'
+import css from './Postcode.css'
 
 class Postcode extends React.Component {
 
@@ -105,7 +106,7 @@ class Postcode extends React.Component {
 			<div className={css.row}>
 				<p className={css.supportingText}>Your postcode will help us figure out which delivery slots are available in your area</p>
 			</div>
-		</span>)
+           </span>)
 	}
 
 	render = () => {

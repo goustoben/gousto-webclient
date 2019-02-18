@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import InfoBadge from '../InfoBadge'
 import { getStockTag } from 'utils/recipe'
+import InfoBadge from '../InfoBadge'
 
 const StockBadge = ({ stock, inverse }) => {
   const stockNumber = getStockTag(stock)

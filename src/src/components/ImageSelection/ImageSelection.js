@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 import Image from 'Image'
-import css from './ImageSelection.css'
 import classnames from 'classnames'
+import css from './ImageSelection.css'
 
 const ImageSelection = ({ content, children, onImageClick, onTitleClick }) => (
 	<div className={css.scroll}>

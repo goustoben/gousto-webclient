@@ -36,7 +36,7 @@ class RecipeList extends React.Component {
   }
 
   static contextTypes = {
-    store: React.PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired,
   }
 
   shouldComponentUpdate(nextProps) {

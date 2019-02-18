@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import config from 'config/checkout'
 import { Alert } from 'goustouicomponents'
 import css from './ErrorMessage.css'

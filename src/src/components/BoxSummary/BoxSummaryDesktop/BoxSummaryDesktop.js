@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable' // eslint-disable no-caps
 
 import config from 'config/basket'
@@ -8,11 +9,11 @@ import Title from 'BoxSummary/Title'
 import Description from 'BoxSummary/Description'
 import RecipeList from 'BoxSummary/RecipeList'
 import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
+import { basketSum, okRecipes } from 'utils/basket'
+import { getBoundingClientRect } from 'utils/DOMhelper'
 import BrowseCTA from '../BrowseCTA'
 import BrowseCTAButton from '../BrowseCTAButton'
 
-import { basketSum, okRecipes } from 'utils/basket'
-import { getBoundingClientRect } from 'utils/DOMhelper'
 import css from './BoxSummaryDesktop.css'
 
 class BoxSummaryDesktop extends React.Component {

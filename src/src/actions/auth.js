@@ -1,13 +1,21 @@
-import actionTypes from './actionTypes'
-import { serverAuthenticate, serverLogout, serverRefresh, serverIdentify, serverForget, resetUserPassword, identifyUser } from 'apis/auth'
+import {
+  serverAuthenticate,
+  serverLogout,
+  serverRefresh,
+  serverIdentify,
+  serverForget,
+  resetUserPassword,
+  identifyUser
+} from 'apis/auth'
 import { isActive } from 'utils/auth'
 import config from 'config/auth'
 import configRoutes from 'config/routes'
 import moment from 'moment'
-import statusActions from './status'
 import logger from 'utils/logger'
+import statusActions from './status'
 import loginActions from './login'
 import { redirect } from 'utils/window'
+import actionTypes from './actionTypes'
 
 /* action creators */
 const userAuthenticated = (accessToken, refreshToken, expiresAt) => ({

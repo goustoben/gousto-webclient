@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import moment from 'moment'
-import css from './DeliveryDetails.css'
-
 import deliverySlotUtils from 'utils/deliverySlot'
+import css from './DeliveryDetails.css'
 
 const DeliveryDetails = (props) => {
   const deliveryDate = moment(props.date).format('ddd, D MMM')

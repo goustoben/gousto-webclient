@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import css from './AgeVerification.css'
 import config from 'config/products'
 import CheckBox from 'Form/CheckBox'

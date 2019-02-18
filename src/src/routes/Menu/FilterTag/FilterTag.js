@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Icon from 'Icon'
-import css from './FilterTag.css'
 import Svg from 'Svg'
+import css from './FilterTag.css'
 
 const proptypes = {
   type: PropTypes.string,

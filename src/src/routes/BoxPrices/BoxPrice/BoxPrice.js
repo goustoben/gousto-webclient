@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import Image from 'Image'
 import LinkButton from 'LinkButton'
+import config from 'config/boxprices'
 import BoxInfo from '../BoxInfo'
 import css from './BoxPrice.css'
-import config from 'config/boxprices'
 
 class BoxType extends React.PureComponent {
 	static propTypes = {

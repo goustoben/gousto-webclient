@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import GoustoImage from 'Image'
 
 import reactnl2br from 'react-nl2br'
@@ -21,7 +22,7 @@ const Product = ({ product }) => (
 )
 
 Product.propTypes = {
-  product: React.PropTypes.instanceOf(Immutable.Map),
+  product: PropTypes.instanceOf(Immutable.Map),
 }
 
 export default Product

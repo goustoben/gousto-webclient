@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
-import css from './Detail.css'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import OverlayHeader from 'Overlay/Header'
 import Image from 'Image'
 import Attributes from 'Product/Attributes'
 import Buttons from 'Product/Buttons'
 import { formatPrice } from 'utils/format'
+import css from './Detail.css'
 
 const Detail = (props) => {
   const { attributes, description, listPrice, media, onVisibilityChange, title, ...buttonProps } = props

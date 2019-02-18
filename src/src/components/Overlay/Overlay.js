@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import ReactDOM from 'react-dom'
-import css from './Overlay.css'
 import classNames from 'classnames'
 import globals from 'config/globals'
 import { forceCheck } from 'react-lazyload'
+import css from './Overlay.css'
 
 let __scrollFromTop // eslint-disable-line no-underscore-dangle
 let __bodyPrevStyle // eslint-disable-line no-underscore-dangle

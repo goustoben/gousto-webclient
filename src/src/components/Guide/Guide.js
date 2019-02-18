@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import ModuleHeader from 'ModuleHeader'
 import { P } from 'Page/Elements'
 import css from './Guide.css'

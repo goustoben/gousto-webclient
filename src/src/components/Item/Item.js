@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react'
-import css from './Item.css'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classnames from 'classnames'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import GoustoImage from 'Image'
 import { capitalizeFirstLetter } from 'utils/text'
+import css from './Item.css'
 
 const Item = ({ available, disclaimerKey, type, media, title, quantity, onImageClick, onRemove, url, gift, showLine }) => (
 	<div>

@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import logger from 'utils/logger'
-import css from './Image.css'
 import Image from 'Image'
+import css from './Image.css'
 
 function getPhoto(filename) {
   let photoPath

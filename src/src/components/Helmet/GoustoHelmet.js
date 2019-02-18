@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import CanonicalLink from './CanonicalLink'
 import Facebook from './Facebook'
 import OpenGraph from './OpenGraph'

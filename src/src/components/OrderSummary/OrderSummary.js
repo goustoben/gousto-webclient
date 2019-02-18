@@ -1,14 +1,15 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import moment from 'moment'
 import Receipt from 'Receipt'
 import RecipeItem from 'Recipe/RecipeItem'
 import ProductItem from 'Product/ProductItem'
 import SaveButton from 'OrderSummary/SaveButton'
 import SectionHeader from 'SectionHeader'
-import css from './OrderSummary.css'
 import classnames from 'classnames'
 import productUtils from 'utils/products'
+import css from './OrderSummary.css'
 
 class OrderSummary extends React.PureComponent {
 	static propTypes = {

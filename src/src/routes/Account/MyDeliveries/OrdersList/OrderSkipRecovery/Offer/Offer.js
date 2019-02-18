@@ -1,18 +1,23 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import css from './Offer.css'
 
-const propTypes = {
+const propTypesOffer = {
   offer: PropTypes.shape({
     formattedValue: PropTypes.string,
     rawMessage: PropTypes.shape({
       text: PropTypes.string,
-      values: PropTypes.array({
+      values: PropTypes.arrayOf(PropTypes.shape({
         key: PropTypes.string,
         value: PropTypes.string,
-      })
+      }))
     })
   }).isRequired
+}
+
+const defaultProps = {
+  offer: {}
 }
 
 const transformMessage = (text, values) => {
@@ -46,6 +51,7 @@ const Offer = ({ offer }) => {
   )
 }
 
-Offer.propTypes = propTypes
+Offer.propTypes = propTypesOffer
+Offer.defaultProps = defaultProps
 
 export default Offer

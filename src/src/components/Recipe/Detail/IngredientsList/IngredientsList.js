@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import css from "./IngredientsList.css"
 import Immutable from 'immutable'
+import css from "./IngredientsList.css"
 import SubIngredients from '../SubIngredients/SubIngredients'
 
 const capitalizeFirstLetter = (string) => (
@@ -29,9 +30,9 @@ const IngredientsList = ({ ingredients, allergens, inset }) => (
 )
 
 IngredientsList.propTypes = {
-  ingredients: React.PropTypes.instanceOf(Immutable.List),
-  allergens: React.PropTypes.instanceOf(Immutable.List),
-  inset: React.PropTypes.bool,
+  ingredients: PropTypes.instanceOf(Immutable.List),
+  allergens: PropTypes.instanceOf(Immutable.List),
+  inset: PropTypes.bool,
 }
 
 IngredientsList.defaultProps = {

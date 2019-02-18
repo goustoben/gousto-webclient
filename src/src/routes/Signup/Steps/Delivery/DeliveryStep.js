@@ -1,4 +1,6 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+/* eslint-disable new-cap */
 import React from 'react'
 import moment from 'moment'
 import DropdownInput from 'Form/Dropdown'
@@ -6,8 +8,8 @@ import DropdownInput from 'Form/Dropdown'
 import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset } from 'utils/deliverySlot'
-import Button from '../../Button'
 import { Button as GoustoButton } from 'goustouicomponents'
+import Button from '../../Button'
 
 import signupCss from '../../Signup.css'
 import css from './DeliveryStep.css'
@@ -121,7 +123,7 @@ const DeliveryStep = ({
   }
 
   const onPopupClose = () => {
-    let answer = document.querySelector('[name="ndd"]:checked') ? document.querySelector('[name="ndd"]:checked').value : ''
+    const answer = document.querySelector('[name="ndd"]:checked') ? document.querySelector('[name="ndd"]:checked').value : ''
     trackDeliveryPreferenceModalClosed(tempDate, getDateOffset(tempDate), tempSlotId, answer)
     closeNDDPaintedDoor()
   }
@@ -218,26 +220,26 @@ const DeliveryStep = ({
 }
 
 DeliveryStep.propTypes = {
-  boxSummaryDeliveryDays: React.PropTypes.instanceOf(Immutable.Map),
-  tempDate: React.PropTypes.string,
-  tempSlotId: React.PropTypes.string,
-  setTempDate: React.PropTypes.func,
-  setTempSlotId: React.PropTypes.func,
-  boxSummaryDeliverySlotChosen: React.PropTypes.func,
-  trackDeliveryDayDropDownOpened: React.PropTypes.func,
-  trackDeliveryDayDropDownClosed: React.PropTypes.func,
-  trackDeliverySlotDropDownOpened: React.PropTypes.func,
-  trackDeliveryDayEdited: React.PropTypes.func,
-  trackDeliverySlotEdited: React.PropTypes.func,
-  menuFetchDataPending: React.PropTypes.bool,
-  nextDayDeliveryPaintedDoorFeature: React.PropTypes.bool,
-  isNDDPaintedDoorOpened: React.PropTypes.bool,
-  openNDDPaintedDoor: React.PropTypes.func,
-  closeNDDPaintedDoor: React.PropTypes.func,
-  trackDeliveryPreferenceModalViewed: React.PropTypes.func,
-  trackDeliveryPreferenceModalClosed: React.PropTypes.func,
-  trackDeliveryPreferenceSelected: React.PropTypes.func,
-  next: React.PropTypes.func,
+  boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
+  tempDate: PropTypes.string,
+  tempSlotId: PropTypes.string,
+  setTempDate: PropTypes.func,
+  setTempSlotId: PropTypes.func,
+  boxSummaryDeliverySlotChosen: PropTypes.func,
+  trackDeliveryDayDropDownOpened: PropTypes.func,
+  trackDeliveryDayDropDownClosed: PropTypes.func,
+  trackDeliverySlotDropDownOpened: PropTypes.func,
+  trackDeliveryDayEdited: PropTypes.func,
+  trackDeliverySlotEdited: PropTypes.func,
+  menuFetchDataPending: PropTypes.bool,
+  nextDayDeliveryPaintedDoorFeature: PropTypes.bool,
+  isNDDPaintedDoorOpened: PropTypes.bool,
+  openNDDPaintedDoor: PropTypes.func,
+  closeNDDPaintedDoor: PropTypes.func,
+  trackDeliveryPreferenceModalViewed: PropTypes.func,
+  trackDeliveryPreferenceModalClosed: PropTypes.func,
+  trackDeliveryPreferenceSelected: PropTypes.func,
+  next: PropTypes.func,
 }
 
 export default DeliveryStep
