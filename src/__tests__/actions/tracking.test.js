@@ -52,7 +52,7 @@ describe('tracking actions', () => {
     test('should dispatch TRACKING action', () => {
       trackFirstPurchase('order-a')(dispatch, getState)
       const dispatchData = dispatch.mock.calls[0][0]
-      
+
       expect(dispatchData.type).toBe(actionTypes.TRACKING)
     })
     test('should dispatch correct trackingData', () => {
@@ -65,6 +65,14 @@ describe('tracking actions', () => {
       expect(trackingData.orderId).toBe('order-a')
       expect(trackingData.orderTotal).toBe('13.99')
       expect(trackingData.voucher).toBe('10OFF')
+    })
+
+    test('should dispatch correct optimizely data', () => {
+      trackFirstPurchase('order-a')(dispatch, getState)
+      const optimizelyData = dispatch.mock.calls[0][0].optimizelyData
+
+      expect(optimizelyData.eventName).toBe('order_placed')
+      expect(optimizelyData.tags.revenue).toBe('13.99')
     })
 
     test('should log warning when no user is found', () => {
