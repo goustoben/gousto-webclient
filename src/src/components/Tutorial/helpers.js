@@ -1,25 +1,25 @@
-const DEFAULT_COORDINATES = { x: 0, y: 0 }
+export const DEFAULT_COORDINATES = { x: 0, y: 0 }
 
-const getElementRectBySelector = selector => (
+export const getElementRectBySelector = selector => (
   document.querySelector(selector) ? document.querySelector(selector).getBoundingClientRect() : null
 )
 
-const getCenterFromElementRect = ({ x, y, width, height }) => ({
+export const getCenterFromElementRect = ({ x, y, width, height }) => ({
   x: window.scrollX + x + (width / 2),
   y: window.scrollY + y + (height / 2),
 })
 
-const getBottomFromElementRect = ({ x, y, width, height }) => ({
+export const getBottomFromElementRect = ({ x, y, width, height }) => ({
   x: window.scrollX + x + (width / 2),
   y: window.scrollY + y + height,
 })
 
-const getTopFromElementRect = ({ x, y, width }) => ({
+export const getTopFromElementRect = ({ x, y, width }) => ({
   x: window.scrollX + x + (width / 2),
   y: window.scrollY + y,
 })
 
-const getViewportRect = () => ({
+export const getViewportRect = () => ({
   left: window.scrollX,
   top: window.scrollY,
   right: window.scrollX + window.innerWidth,
@@ -27,7 +27,7 @@ const getViewportRect = () => ({
   center: window.scrollY + (window.innerHeight / 2),
 })
 
-const getTooltipDirection = ({ x, y, }, tooltipWidth) => {
+export const getTooltipDirection = ({ x, y, }, tooltipWidth) => {
   const viewportRect = getViewportRect()
   let direction
 
@@ -48,14 +48,14 @@ const getTooltipDirection = ({ x, y, }, tooltipWidth) => {
   return direction
 }
 
-const getTooltipLocation = (selector, arrowDirection) => {
+export const getTooltipLocation = (selector, arrowDirection) => {
   const elementRect = getElementRectBySelector(selector)
   const getDirectionFunction = arrowDirection.includes('top') ? getBottomFromElementRect : getTopFromElementRect
 
   return (elementRect) ? getDirectionFunction(elementRect) : DEFAULT_COORDINATES
 }
 
-const getTransformOffset = (direction) => {
+export const getTransformOffset = (direction) => {
   let x = -50,
     y = 0
 
