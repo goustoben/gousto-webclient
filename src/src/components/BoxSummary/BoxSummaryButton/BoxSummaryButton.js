@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import classnames from 'classnames'
 
 import { Button, Segment } from 'goustouicomponents'
@@ -56,18 +57,18 @@ const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, b
 }
 
 BoxSummaryButton.propTypes = {
-  view: React.PropTypes.string,
-  recipes: React.PropTypes.instanceOf(Immutable.Map),
-  showDetails: React.PropTypes.bool.isRequired,
-  checkoutPending: React.PropTypes.bool,
-  open: React.PropTypes.func.isRequired,
-  boxSummaryCurrentView: React.PropTypes.string,
+  view: PropTypes.string,
+  recipes: PropTypes.instanceOf(Immutable.Map),
+  showDetails: PropTypes.bool.isRequired,
+  checkoutPending: PropTypes.bool,
+  open: PropTypes.func.isRequired,
+  boxSummaryCurrentView: PropTypes.string,
   numPortions: PropTypes.number.isRequired,
   menuRecipes: PropTypes.instanceOf(Immutable.List).isRequired,
   stock: PropTypes.instanceOf(Immutable.Map).isRequired,
-  boxSummaryNext: React.PropTypes.func.isRequired,
-  fullWidth: React.PropTypes.bool,
-  pricingPending: React.PropTypes.bool,
+  boxSummaryNext: PropTypes.func.isRequired,
+  fullWidth: PropTypes.bool,
+  pricingPending: PropTypes.bool,
 }
 
 BoxSummaryButton.defaultProps = {

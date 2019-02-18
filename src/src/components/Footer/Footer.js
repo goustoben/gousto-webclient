@@ -1,11 +1,12 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import config from 'config'
 import classNames from 'classnames'
 
-import css from './Footer.css'
 import Svg from 'components/Svg'
 import Link from 'Link'
+import css from './Footer.css'
 import AppStoreLinks from './AppStoreLinks/index'
 
 const Footer = ({ simple, type, copyright }) => {
@@ -171,9 +172,9 @@ const Footer = ({ simple, type, copyright }) => {
 }
 
 Footer.propTypes = {
-  simple: React.PropTypes.bool,
-  type: React.PropTypes.string,
-  copyright: React.PropTypes.bool,
+  simple: PropTypes.bool,
+  type: PropTypes.string,
+  copyright: PropTypes.bool,
 }
 
 Footer.defaultProps = {

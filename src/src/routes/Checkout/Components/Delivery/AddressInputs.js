@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import TextInput from 'Form/Input'
 
@@ -69,11 +70,11 @@ const AddressInputs = ({ houseNoVal, streetVal, townVal, countyVal, onChangeHand
 )
 
 AddressInputs.propTypes = {
-  houseNoVal: React.PropTypes.string,
-  streetVal: React.PropTypes.string,
-  townVal: React.PropTypes.string,
-  countyVal: React.PropTypes.string,
-  onChangeHandler: React.PropTypes.func,
+  houseNoVal: PropTypes.string,
+  streetVal: PropTypes.string,
+  townVal: PropTypes.string,
+  countyVal: PropTypes.string,
+  onChangeHandler: PropTypes.func,
 }
 
 AddressInputs.defaultProps = {

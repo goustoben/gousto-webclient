@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Header from 'Header'
 import Footer from 'Footer'
-import css from './MainLayout.css'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import classNames from 'classnames'
 import { Div } from 'Page/Elements'
 import CookieBanner from 'CookieBanner'
+import css from './MainLayout.css'
 
 class MainLayout extends React.Component {
 	static propTypes = {

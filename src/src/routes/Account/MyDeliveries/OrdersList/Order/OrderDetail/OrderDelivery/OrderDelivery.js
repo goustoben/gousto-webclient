@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
-import EditDelivery from './EditDelivery'
 import { Alert, Button } from 'goustouicomponents'
+import EditDelivery from './EditDelivery'
 
 import css from './OrderDelivery.css'
 
@@ -38,7 +39,7 @@ class OrderDelivery extends React.PureComponent {
 	}
 
 	static contextTypes = {
-	  store: React.PropTypes.object.isRequired,
+	  store: PropTypes.object.isRequired,
 	}
 
 	onClickFunction() {

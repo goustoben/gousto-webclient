@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 import cookbookActions from 'actions/cookbook'
 
@@ -6,9 +7,9 @@ import Helmet from 'react-helmet'
 import { Div, Section } from 'Page/Elements'
 import { PageContent, PageHeader } from 'Page'
 import { LoadingOverlay } from 'Loading'
-import CollectionList from './CollectionListContainer'
 import LoadMoreLink from 'LoadMoreLink'
 import Content from 'containers/Content'
+import CollectionList from './CollectionListContainer'
 
 class Hubs extends React.PureComponent {
 	static PropTypes = {
@@ -94,7 +95,8 @@ class Hubs extends React.PureComponent {
 							<span>Browse our full collection of inspiring recipe ideas to cook at home.
 							It's a virtual world tour of cuisines, from the adventurous to the
 							familiar. You'll find quick meals, family favourites and lighter
-							dishes too.</span>
+							dishes too.
+       </span>
 						</Content>
 					</p>
 				</PageHeader>

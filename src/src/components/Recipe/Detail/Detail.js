@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
-
-import css from './Detail.css'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 
 import DefaultDetail from 'Recipe/Detail/DefaultDetail'
 import FineDineInDetail from 'Recipe/Detail/FineDineInDetail'
+import css from './Detail.css'
 
 export const detailPropTypes = {
   media: PropTypes.instanceOf(Immutable.List),

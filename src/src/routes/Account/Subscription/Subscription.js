@@ -1,8 +1,9 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Subscription.css'
 import LinkButton from 'LinkButton'
 import Link from 'Link'
 import config from 'config/routes'
+import css from './Subscription.css'
 import Introduction from './Introduction'
 import Preference from './Preference'
 
@@ -38,7 +39,7 @@ const Subscription = ({ startSubscriptionPause }) => (
 )
 
 Subscription.propTypes = {
-  startSubscriptionPause: React.PropTypes.func,
+  startSubscriptionPause: PropTypes.func,
 }
 
 Subscription.defaultProps = {

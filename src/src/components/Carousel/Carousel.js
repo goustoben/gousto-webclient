@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classnames from 'classnames'
+import Slider from 'react-slick'
 import globalCss from './ReactSlick.css' // eslint-disable-line no-unused-vars
 import scss from './Carousel.scss' // eslint-disable-line no-unused-vars
 import css from './Carousel.css' // eslint-disable-line no-unused-vars
-import Slider from 'react-slick'
 
 class Carousel extends React.PureComponent {
 	static propTypes = {

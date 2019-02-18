@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import css from './Image.css'
@@ -7,7 +8,7 @@ const SignupImage = ({ name }) => (
 )
 
 SignupImage.propTypes = {
-  name: React.PropTypes.string,
+  name: PropTypes.string,
 }
 
 export default SignupImage

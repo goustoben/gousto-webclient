@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Content from 'containers/Content'
 
 import { H2 } from 'components/Page/Header'

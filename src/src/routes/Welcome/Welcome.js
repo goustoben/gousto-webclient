@@ -1,17 +1,18 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import shallowCompare from 'react-addons-shallow-compare'
 import actions from 'actions'
 import Content from 'containers/Content'
 import userUtils from 'utils/user'
 import logger from 'utils/logger'
 
-import css from './Welcome.css'
 import classnames from 'classnames'
 
 import SubHeader from './SubHeader'
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
+import css from './Welcome.css'
 import ExpectationsCarousel from './ExpectationsCarousel'
 import ProductDetailOverlay from './ProductDetailOverlay'
 

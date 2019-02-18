@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { Button } from 'goustouicomponents'
 import FilterTagsList from './FilterTagsList'
 import css from './FilterTagsNav.css'
@@ -22,7 +23,7 @@ const FilterTagsNav = ({ onCTAClick, tags, menuFilterExperiment }) => (
 				<div className={css.filtersCTA}>
 					<Button fill width="full" onClick={onCTAClick}>
 						Filter by
-				</Button>
+     </Button>
 				</div>
 				<FilterTagsList tags={tags} />
 			</div>

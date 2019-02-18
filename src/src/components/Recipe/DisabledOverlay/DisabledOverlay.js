@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import css from './DisabledOverlay.css'
 import config from 'config'
+import css from './DisabledOverlay.css'
 
 const DisabledOverlay = ({ inBasket, stock }) => (
   (stock <= config.menu.stockThreshold && stock !== null && !inBasket)

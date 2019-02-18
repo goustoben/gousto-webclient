@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import { formatPrice, formatLabelPlural, formatDashOrPrice, formatDeliveryTotal, formatRecipeDiscount } from 'utils/format'
 
+import PromoCode from 'routes/Checkout/Components/PromoCode'
 import css from './Receipt.css'
 import ReceiptLine from './ReceiptLine'
 import DeliveryDetails from './DeliveryDetails'
-import PromoCode from 'routes/Checkout/Components/PromoCode'
 
 class Receipt extends React.Component {
 	static propTypes = {

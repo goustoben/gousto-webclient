@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import withError from 'utils/withError'
 import BoxPrice from '../BoxPrice'
 import css from './BoxPriceList.css'

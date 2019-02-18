@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import config from 'config'
@@ -5,9 +6,8 @@ import Svg from 'Svg'
 
 import classNames from 'classnames'
 
-import css from './ErrorPage.css'
-
 import { connect } from 'react-redux'
+import css from './ErrorPage.css'
 
 const errors = {
   403: {
@@ -54,11 +54,11 @@ const ErrorPage = ({ status }) => {
 				</div>
 			</div>
 		</div>
-	</div>)
+          </div>)
 }
 
 ErrorPage.propTypes = {
-  status: React.PropTypes.string,
+  status: PropTypes.string,
 }
 
 ErrorPage.defaultProps = {

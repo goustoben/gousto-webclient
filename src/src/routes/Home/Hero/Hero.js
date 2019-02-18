@@ -1,9 +1,10 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import ContentMask from 'ContentMask'
 import home from 'config/home'
 import config from 'config/routes'
-import CTAHomepage from '../CTA'
 import Content from 'containers/Content'
+import CTAHomepage from '../CTA'
 import css from './Hero.css'
 
 //ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly

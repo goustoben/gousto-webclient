@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { spacingPropValidation, getSpacingStyles } from 'styles/spacing'
 
-import css from './StyledElement.css'
 import borders from 'styles/borders.css'
 import colors from 'styles/colors.css'
 import effects from 'styles/effects.css'
@@ -10,6 +10,7 @@ import position from 'styles/position.css'
 import typography from 'styles/typography.css'
 import layout from 'styles/layout.css'
 import bootstrap from 'styles/bootstrap.scss'
+import css from './StyledElement.css'
 
 const availableClassNames = {
   ...borders,

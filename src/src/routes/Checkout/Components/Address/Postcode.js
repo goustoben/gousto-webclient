@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
@@ -56,7 +57,7 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
 				  ref={receiveRef}
 				/>
 			</div>
-		</div> : null}
+                                            </div> : null}
 	</div>
 )
 

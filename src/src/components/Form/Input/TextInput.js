@@ -1,35 +1,36 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-import css from './input.css'
 import formsCss from 'styles/forms.css'
 import InputWrapper from 'Form/InputWrapper'
+import css from './input.css'
 
 export class TextInput extends React.Component {
 
 	static propTypes = {
-	  additionalProps: React.PropTypes.object,
-	  onChange: React.PropTypes.func,
-	  onBlur: React.PropTypes.func,
-	  onKeyUp: React.PropTypes.func,
-	  onKeyDown: React.PropTypes.func,
-	  onEnter: React.PropTypes.func,
-	  className: React.PropTypes.string,
-	  color: React.PropTypes.oneOf(['primary', 'secondary']),
-	  textAlign: React.PropTypes.oneOf(['left', 'center', 'right']),
-	  disabled: React.PropTypes.bool,
-	  placeholder: React.PropTypes.string,
-	  name: React.PropTypes.string,
-	  maxLength: React.PropTypes.number,
-	  validator: React.PropTypes.func,
-	  required: React.PropTypes.bool,
-	  isFixed: React.PropTypes.bool,
-	  autocompleteOff: React.PropTypes.bool,
-	  autoFocus: React.PropTypes.bool,
-	  value: React.PropTypes.string.isRequired,
-	  type: React.PropTypes.oneOf(['password', 'text', 'email', 'tel', 'number']),
-	  pattern: React.PropTypes.string,
-	  'data-testing': React.PropTypes.string,
-	  error: React.PropTypes.bool,
+	  additionalProps: PropTypes.object,
+	  onChange: PropTypes.func,
+	  onBlur: PropTypes.func,
+	  onKeyUp: PropTypes.func,
+	  onKeyDown: PropTypes.func,
+	  onEnter: PropTypes.func,
+	  className: PropTypes.string,
+	  color: PropTypes.oneOf(['primary', 'secondary']),
+	  textAlign: PropTypes.oneOf(['left', 'center', 'right']),
+	  disabled: PropTypes.bool,
+	  placeholder: PropTypes.string,
+	  name: PropTypes.string,
+	  maxLength: PropTypes.number,
+	  validator: PropTypes.func,
+	  required: PropTypes.bool,
+	  isFixed: PropTypes.bool,
+	  autocompleteOff: PropTypes.bool,
+	  autoFocus: PropTypes.bool,
+	  value: PropTypes.string.isRequired,
+	  type: PropTypes.oneOf(['password', 'text', 'email', 'tel', 'number']),
+	  pattern: PropTypes.string,
+	  'data-testing': PropTypes.string,
+	  error: PropTypes.bool,
 	}
 
 	static defaultProps = {

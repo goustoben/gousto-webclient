@@ -1,17 +1,18 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classNames from 'classnames'
-import moment from 'moment' /* eslint-disable new-cap */
+import moment from 'moment'/* eslint-disable new-cap */
 
-import css from './Title.css'
 import { Spinner } from 'goustouicomponents'
 import Price from 'BoxSummary/Price'
+import css from './Title.css'
 class Title extends React.PureComponent {
 	static propTypes = {
 	  date: PropTypes.string,
 	  view: PropTypes.string,
-	  spinnerClassName: React.PropTypes.string,
-	  spinnerContainerClassName: React.PropTypes.string,
-	  pending: React.PropTypes.bool,
+	  spinnerClassName: PropTypes.string,
+	  spinnerContainerClassName: PropTypes.string,
+	  pending: PropTypes.bool,
 	  recipeTotal: PropTypes.number,
 	  recipeDiscount: PropTypes.number,
 	  recipeTotalDiscounted: PropTypes.number,

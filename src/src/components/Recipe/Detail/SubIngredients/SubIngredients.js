@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import css from "./SubIngredients.css"
 import Immutable from 'immutable'
+import css from "./SubIngredients.css"
 
 export const isAllergen = (allergens, subIngredient) => (
   allergens.some((allergen) => (
@@ -21,8 +22,8 @@ const SubIngredients = ({ subIngredients, allergens }) => (
 )
 
 SubIngredients.propTypes = {
-  subIngredients: React.PropTypes.instanceOf(Immutable.List),
-  allergens: React.PropTypes.instanceOf(Immutable.List),
+  subIngredients: PropTypes.instanceOf(Immutable.List),
+  allergens: PropTypes.instanceOf(Immutable.List),
 }
 
 export default SubIngredients

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classNames from 'classnames'
 import css from 'styles/vendor/font-awesome-module.css'
 
@@ -9,7 +10,8 @@ const Icon = ({ name, fixedWidth, size, style, className }) => (
 	    [className]: className,
 	  })}
 	  style={{ fontSize: size || 'inherit', ...style }}
-	></span>
+	>
+ </span>
 )
 
 Icon.propTypes = {

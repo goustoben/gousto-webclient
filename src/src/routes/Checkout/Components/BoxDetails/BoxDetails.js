@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { basketSum } from 'utils/basket'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import routes from 'config/routes'
 import config from 'config/basket'
 import Link from 'Link'
@@ -19,7 +20,7 @@ const BoxDetails = ({ maxRecipesNum, recipes }) => (
 						Add another recipe&nbsp;
 						<span className={css.arrowRight} />
 					</Link>
-				</div>
+       </div>
 			  : null}
 		</div>
 	</div>

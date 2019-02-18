@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classnames from 'classnames'
+import reactnl2br from 'react-nl2br'
 import icons from './icons.css'
 import css from './Perk.css'
-import reactnl2br from 'react-nl2br'
 
 const Perk = (props) => (
 	<div className={css.perkContainer} key={props.title}>

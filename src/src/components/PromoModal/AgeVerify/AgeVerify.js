@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import CheckBox from 'Form/CheckBox'
 import css from './AgeVerify.css'
@@ -15,8 +16,8 @@ const AgeVerify = ({ verified, onChange }) => (
 )
 
 AgeVerify.propTypes = {
-  verified: React.PropTypes.bool,
-  onChange: React.PropTypes.func,
+  verified: PropTypes.bool,
+  onChange: PropTypes.func,
 }
 
 export default AgeVerify

@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
+import { PageContent, PageHeader } from 'Page'
 import Confirm from './Confirm'
 import Unsubscribed from './Unsubscribed'
-import { PageContent, PageHeader } from 'Page'
 
 import css from './Unsubscribe.css'
 

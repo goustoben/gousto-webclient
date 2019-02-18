@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Helmet from 'react-helmet'
 import actions from 'actions'
 import menuFetchData from 'routes/Menu/fetchData'
-import HomeSections from './HomeSections'
 import PromoBanner from './PromoBanner'
 import home from 'config/home'
 import routes from 'config/routes'
 import { generateHref } from 'Helmet/GoustoHelmet'
+import HomeSections from './HomeSections'
 
 class Home extends React.Component {
 
@@ -85,7 +86,7 @@ class Home extends React.Component {
 	    ctaText = home.CTA.main
 	  }
 
-	  let link = [
+	  const link = [
 	    (variant !== 'default') ? {
 	      rel: 'canonical',
 	      href: generateHref(routes.client.home),

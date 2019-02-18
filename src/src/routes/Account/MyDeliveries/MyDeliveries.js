@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import OrdersList from './OrdersList'
 import actions from 'actions/user'
-import accountCss from '../Account/Account.css'
 import css from './MyDeliveries.css'
 import { Alert, Button } from 'goustouicomponents'
 import Link from 'Link'
 import routes from 'config/routes'
 import Loading from 'Loading'
+import accountCss from '../Account/Account.css'
 
 class MyDeliveries extends React.PureComponent {
 	static propTypes = {

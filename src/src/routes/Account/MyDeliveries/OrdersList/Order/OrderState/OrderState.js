@@ -1,11 +1,12 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import css from './OrderState.css'
 
 const initcap = (word) => word.charAt(0).toUpperCase() + word.slice(1)
 const toCamelCase = (str) => str.replace(/\b\w/g, chr => chr.toUpperCase()).replace(' ', '')
 
 const OrderState = ({ orderState }) => {
-  let state = initcap(orderState)
+  const state = initcap(orderState)
   const iconClass = `icon${toCamelCase(state)}`
   const stateClass = `state${toCamelCase(state)}`
 

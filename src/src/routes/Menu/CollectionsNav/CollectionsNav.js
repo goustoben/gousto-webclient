@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { top, left } from 'scroll'
-import Immutable from 'immutable' /* eslint-disable no-caps, new-cap */
+import Immutable from 'immutable'/* eslint-disable no-caps, new-cap */
 import actual from 'actual'
 
 import { getWindow } from 'utils/window'

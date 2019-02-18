@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import css from "./Allergens.css"
 import Immutable from 'immutable'
+import css from "./Allergens.css"
 
 const Allergens = ({ allergens, inset }) => (
 	<div className={(inset) ? css.insetSection : css.section}>
@@ -17,8 +18,8 @@ const Allergens = ({ allergens, inset }) => (
 )
 
 Allergens.propTypes = {
-  allergens: React.PropTypes.instanceOf(Immutable.List),
-  inset: React.PropTypes.bool,
+  allergens: PropTypes.instanceOf(Immutable.List),
+  inset: PropTypes.bool,
 }
 
 Allergens.defaultProps = {

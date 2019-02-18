@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import config from 'config/menu'
 import GoustoImage from 'Image'
 import css from './OrderedRecipe.css'
@@ -34,16 +35,16 @@ const OrderedRecipes = ({ title, recipeId, stock, media, basics, serving, featur
 )
 
 OrderedRecipes.propTypes = {
-  title: React.PropTypes.string.isRequired,
-  recipeId: React.PropTypes.string.isRequired,
-  basics: React.PropTypes.instanceOf(Immutable.List),
-  stock: React.PropTypes.number,
-  serving: React.PropTypes.number,
-  featureBtn: React.PropTypes.bool,
-  featureLink: React.PropTypes.bool,
-  media: React.PropTypes.instanceOf(Immutable.List),
-  view: React.PropTypes.oneOf(['boxdetails', 'summary']),
-  range: React.PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  recipeId: PropTypes.string.isRequired,
+  basics: PropTypes.instanceOf(Immutable.List),
+  stock: PropTypes.number,
+  serving: PropTypes.number,
+  featureBtn: PropTypes.bool,
+  featureLink: PropTypes.bool,
+  media: PropTypes.instanceOf(Immutable.List),
+  view: PropTypes.oneOf(['boxdetails', 'summary']),
+  range: PropTypes.string.isRequired,
 }
 
 OrderedRecipes.defaultProps = {

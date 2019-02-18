@@ -3,13 +3,13 @@ import React from 'react'
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 import { shallow } from 'enzyme'
 import ReduxFormInput from 'Form/ReduxFormInput'
 import Label from 'Form/Label'
 import InputError from 'Form/InputError'
 import Dropdown from 'Form/Dropdown'
 import TextInput from 'Form/Input/TextInput'
+chai.use(sinonChai)
 
 describe('ReduxFormInput', function() {
   let wrapper

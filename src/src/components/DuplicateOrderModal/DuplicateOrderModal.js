@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import ModalPanel from 'Modal/ModalPanel'
 import moment from 'moment'
 import { Button } from 'goustouicomponents'
@@ -43,8 +44,8 @@ const DuplicateOrderModal = ({ closeOrders = Immutable.Map([]), close }) => (
 )
 
 DuplicateOrderModal.propTypes = {
-  closeOrders: React.PropTypes.instanceOf(Immutable.Map),
-  close: React.PropTypes.func,
+  closeOrders: PropTypes.instanceOf(Immutable.Map),
+  close: PropTypes.func,
 }
 
 export default DuplicateOrderModal
