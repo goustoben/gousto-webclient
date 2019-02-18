@@ -3,11 +3,11 @@
 @value JWBlue #3B3FB2;
 @value JWSMImageSize 175px;
 @value JWLGImageSize 200px;
-@value SMImageOffset 0.8;
+@value SMImageOffset 0.7;
 @value LGImageOffset 0.9;
-@value GelSMLeft 60%;
-@value GelMDLeft 45%;
-@value GelLGLeft 40%;
+@value GelSMLeft 58%;
+@value GelMDLeft 30%;
+@value GelLGLeft 45%;
 
 .container {
 	composes: inlineBlock from 'styles/display.css';
