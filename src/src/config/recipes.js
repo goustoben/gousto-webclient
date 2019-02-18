@@ -19,7 +19,7 @@ const config = {
         borderColor: 'DarkCarrot',
       },
       everyday_favourites: {
-        text: 'Everyday Favorites',
+        text: 'Everyday Favourites',
         color: 'Pomegranate',
         backgroundColor: 'Cauliflower',
         borderColor: 'DarkCauliflower',
