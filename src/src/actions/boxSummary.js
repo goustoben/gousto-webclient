@@ -61,7 +61,6 @@ const boxSummaryVisibilityChange = (show, view) => (
 
 const addOriginalPriceToTemp = (orderId) => (
   (dispatch, getState) => {
-    console.log('stuff is present') //eslint-disable-line
     const { user } = getState()
     if (user) {
       const order = getUserOrderById(orderId, user.get('orders'))
