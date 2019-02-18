@@ -1,6 +1,3 @@
-import basket from './basket'
-import menu from './menu'
-import status from './status'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import moment from 'moment'
 import { okRecipes } from 'utils/basket'
@@ -8,7 +5,12 @@ import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import * as deliveryUtils from 'utils/deliveries'
 import { addDisabledSlotIds } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
+import { getUserOrderById } from 'utils/user'
+import status from './status'
+import menu from './menu'
+import basket from './basket'
 import actionTypes from './actionTypes'
+import tempActions from './temp'
 
 function basketDeliveryDaysReceive(days) {
   return {
@@ -57,7 +59,19 @@ const boxSummaryVisibilityChange = (show, view) => (
   }
 )
 
-export default {
+const addOriginalPriceToTemp = (orderId) => (
+  (dispatch, getState) => {
+    console.log('stuff is present') //eslint-disable-line
+    const { user } = getState()
+    if (user) {
+      const order = getUserOrderById(orderId, user.get('orders'))
+      const orderTotal = order && order.getIn(['prices', 'total'])
+      dispatch(tempActions.temp('originalTotal', orderTotal))
+    }
+  }
+)
+
+const actions = {
   boxSummaryVisibilityChange,
 
   boxSummaryDeliverySlotChosen,
@@ -117,6 +131,7 @@ export default {
         dispatch(basket.portionSizeSelectedTracking(numPortions))
         if (tempOrderId) {
           dispatch(push(`/menu/${tempOrderId}`))
+          dispatch(addOriginalPriceToTemp(tempOrderId))
           dispatch(boxSummaryVisibilityChange(false))
         } else {
           dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
@@ -141,3 +156,5 @@ export default {
     }
   ),
 }
+
+export default actions
