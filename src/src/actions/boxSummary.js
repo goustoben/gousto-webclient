@@ -59,17 +59,6 @@ const boxSummaryVisibilityChange = (show, view) => (
   }
 )
 
-const addOriginalPriceToTemp = (orderId) => (
-  (dispatch, getState) => {
-    const { user } = getState()
-    if (user) {
-      const order = getUserOrderById(orderId, user.get('orders'))
-      const orderTotal = order && order.getIn(['prices', 'total'])
-      dispatch(tempActions.temp('originalTotal', orderTotal))
-    }
-  }
-)
-
 const actions = {
   boxSummaryVisibilityChange,
 
@@ -130,7 +119,6 @@ const actions = {
         dispatch(basket.portionSizeSelectedTracking(numPortions))
         if (tempOrderId) {
           dispatch(push(`/menu/${tempOrderId}`))
-          dispatch(addOriginalPriceToTemp(tempOrderId))
           dispatch(boxSummaryVisibilityChange(false))
         } else {
           dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
