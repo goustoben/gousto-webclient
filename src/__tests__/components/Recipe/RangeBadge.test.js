@@ -37,7 +37,7 @@ describe('<RangeBadge />', () => {
     })
     test('should render range badge with text Everyday Favorites', () => {
       const wrapper = shallow(<RangeBadge range={'everyday_favourites'}/>)
-      expect(wrapper.find('.ribbonText').prop('children')).toEqual('EVERYDAY FAVORITES')
+      expect(wrapper.find('.ribbonText').prop('children')).toEqual('EVERYDAY FAVOURITES')
     })
     test('should render range badge with text 10-MINUTES MEAL', () => {
       const wrapper = shallow(<RangeBadge range={'ten_to_table'}/>)
