@@ -45,6 +45,8 @@ export class Step extends PureComponent {
 
     if (isElementHidden(selector)) {
       next()
+
+      return
     }
 
     const { x, y } = getSpotlightLocation(selector)
