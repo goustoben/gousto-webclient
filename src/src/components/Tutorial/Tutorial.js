@@ -18,13 +18,15 @@ export class Tutorial extends PureComponent {
   constructor(props) {
     super(props)
     const { children } = props
+
     const visibleChildren = children.filter(
       child => !isElementHidden(child.props.selector)
     )
+
     this.state = {
       children: visibleChildren,
       step: 0,
-      hide: false,
+      hide: Boolean(!visibleChildren.length),
     }
   }
 
