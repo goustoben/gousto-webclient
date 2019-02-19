@@ -39,7 +39,7 @@ describe('Arrow', () => {
     })
 
     describe('when position includes positionY', () => {
-      describe('when postion is top*', () => {
+      describe('when position is top*', () => {
         test('should render a ▲', () => {
           wrapper = shallow(<Arrow positionY="top" position="top-left" />)
 
@@ -47,7 +47,7 @@ describe('Arrow', () => {
         })
       })
 
-      describe('when postion is bottom*', () => {
+      describe('when position is bottom*', () => {
         test('should render a ▼', () => {
           wrapper = shallow(<Arrow positionY="bottom" position="bottom-right" />)
 
