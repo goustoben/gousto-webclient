@@ -6,8 +6,8 @@ export const getEllipse = ({ originX, originY, radius, accuracy = 1 }) => {
 
   for(var i = 0; i <= n; i++) {
     angle = i * baseAngle
-    x = Math.cos(angle)
-    y = Math.sin(angle)
+    x = Math.cos(angle).toFixed(3)
+    y = Math.sin(angle).toFixed(3)
 
     steps += `${(originX + radius * x)}px ${(originY - radius * y)}px, `
   }
