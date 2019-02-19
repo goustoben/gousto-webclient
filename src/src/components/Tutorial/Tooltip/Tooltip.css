@@ -5,7 +5,7 @@
   padding: ArrowHeight 0;
 }
 
-.content {
+.tooltip__content {
   background-color: White;
   border-radius: 8px;
   padding: 20px;

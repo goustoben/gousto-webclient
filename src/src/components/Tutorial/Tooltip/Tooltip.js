@@ -14,7 +14,7 @@ const Tooltip = ({ arrow, children, style, onClose }) => (
         <Icon name="fa-times" />
       </div>
     ) : null}
-    <div className={css.content}>
+    <div className={css.tooltip__content}>
       {children}
     </div>
     <Arrow positionY="bottom" position={arrow} />
