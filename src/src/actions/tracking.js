@@ -29,7 +29,7 @@ export const trackFirstPurchase = orderId => (
         voucher: order.getIn(['prices', 'promoCode'], ''),
       },
       optimizelyData: {
-        eventName: "order_placed",
+        eventName: 'order_placed_gross',
         tags: {
           revenue: orderTotal
         }

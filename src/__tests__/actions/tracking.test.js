@@ -71,7 +71,7 @@ describe('tracking actions', () => {
       trackFirstPurchase('order-a')(dispatch, getState)
       const optimizelyData = dispatch.mock.calls[0][0].optimizelyData
 
-      expect(optimizelyData.eventName).toBe('order_placed')
+      expect(optimizelyData.eventName).toBe('order_placed_gross')
       expect(optimizelyData.tags.revenue).toBe('13.99')
     })
 

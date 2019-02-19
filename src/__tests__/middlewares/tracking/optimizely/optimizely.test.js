@@ -4,7 +4,7 @@ describe('optimizely middleware', () => {
   const action = {
     type: 'Order Placed',
     optimizelyData: {
-      eventName: 'order_placed',
+      eventName: 'order_placed_gross',
       tags: {
         revenue: '10.00'
       }
@@ -25,7 +25,7 @@ describe('optimizely middleware', () => {
 
     const result = {
       type: 'event',
-      eventName: 'order_placed',
+      eventName: 'order_placed_gross',
       tags: {
         revenue: 1000
       }

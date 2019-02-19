@@ -528,7 +528,8 @@ const actions = {
       const prices = pricing.get('prices')
       const originalTotal = temp.get('originalTotal')
       const orderTotal = prices && prices.get('total')
-      const editedTotal = originalTotal && orderTotal ? (orderTotal - originalTotal).toFixed(2) : ''
+      const grossTotal = prices && prices.get('grossTotal')
+      const editedTotal = originalTotal && grossTotal ? (grossTotal - originalTotal).toFixed(2) : ''
       const promoCode = prices && prices.get('promoCode')
 
       if(isAuthenticated) {
@@ -546,7 +547,7 @@ const actions = {
                 subscription_active: isActiveSubsc,
               },
               optimizelyData: {
-                eventName: "order_edited",
+                eventName: 'order_edited_gross',
                 tags: {
                   revenue: editedTotal
                 }
@@ -564,9 +565,9 @@ const actions = {
                 subscription_active: isActiveSubsc,
               },
               optimizelyData: {
-                eventName: "order_placed",
+                eventName: 'order_placed_gross',
                 tags: {
-                  revenue: orderTotal
+                  revenue: grossTotal
                 }
               }
             })
@@ -584,7 +585,7 @@ const actions = {
               subscription_active: isActiveSubsc,
             },
             optimizelyData: {
-              eventName: "order_edited",
+              eventName: 'order_edited_gross',
               tags: {
                 revenue: editedTotal
               }
@@ -602,9 +603,9 @@ const actions = {
               subscription_active: isActiveSubsc,
             },
             optimizelyData: {
-              eventName: "order_placed",
+              eventName: 'order_placed_gross',
               tags: {
-                revenue: orderTotal
+                revenue: grossTotal
               }
             }
           })

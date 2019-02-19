@@ -54,6 +54,7 @@ describe('basket actions', () => {
       pricing: Immutable.fromJS({
         prices: {
           total: '24.00',
+          grossTotal: '24.00',
           promoCode: false,
         }
       }),
@@ -62,7 +63,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch Order Edited tracking action for subscription box', async() => {
+    test('should dispatch Order Edited  tracking action for subscription box', async() => {
       await basketCheckedOut(2, 'grid')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'Order Edited',
@@ -75,7 +76,7 @@ describe('basket actions', () => {
           subscription_active: true,
         },
         optimizelyData: {
-          eventName: "order_edited",
+          eventName: 'order_edited_gross',
           tags: {
             revenue: '-0.99'
           }
@@ -106,6 +107,7 @@ describe('basket actions', () => {
         pricing: Immutable.fromJS({
           prices: {
             total: '24.00',
+            grossTotal: '24.00',
             promoCode: false,
           }
         }),
@@ -126,7 +128,7 @@ describe('basket actions', () => {
           subscription_active: false,
         },
         optimizelyData: {
-          eventName: "order_edited",
+          eventName: 'order_edited_gross',
           tags: {
             revenue: '-0.99'
           }
@@ -157,6 +159,7 @@ describe('basket actions', () => {
         pricing: Immutable.fromJS({
           prices: {
             total: '24.00',
+            grossTotal: '24.00',
             promoCode: false,
           }
         }),
@@ -176,7 +179,7 @@ describe('basket actions', () => {
           subscription_active: true,
         },
         optimizelyData: {
-          eventName: "order_placed",
+          eventName: 'order_placed_gross',
           tags: {
             revenue: '24.00'
           }
@@ -205,6 +208,7 @@ describe('basket actions', () => {
         pricing: Immutable.fromJS({
           prices: {
             total: '22.00',
+            grossTotal: '22.00',
             promoCode: false,
           }
         }),
@@ -224,7 +228,7 @@ describe('basket actions', () => {
           subscription_active: true,
         },
         optimizelyData: {
-          eventName: "order_placed",
+          eventName: 'order_placed_gross',
           tags: {
             revenue: '22.00'
           }
