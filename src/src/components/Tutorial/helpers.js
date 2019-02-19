@@ -97,5 +97,5 @@ export const getTooltipProperties = (selector, width) => {
 }
 
 export const isElementHidden = (selector) => (
-  document.querySelector(selector).offsetParent === null
+  (document.querySelector(selector)) ? document.querySelector(selector).offsetParent === null : true
 )
