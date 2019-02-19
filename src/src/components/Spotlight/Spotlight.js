@@ -49,4 +49,6 @@ Spotlight.propTypes = {
 
 export {
   Spotlight,
+  RADIUS,
+  accuracy,
 }
