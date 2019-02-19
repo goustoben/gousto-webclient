@@ -1,23 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { getEllipse } from './ellipse'
+import { getDocumentHeight, getEllipse } from './helpers'
 import css from './Spotlight.css'
 
 const RADIUS = 100
 const accuracy = 0.3
-
-const getDocumentHeight = () => {
-  const { body, documentElement } = document
-
-  return Math.max(
-    body.scrollHeight,
-    body.offsetHeight,
-    documentElement.clientHeight,
-    documentElement.scrollHeight,
-    documentElement.offsetHeight,
-  )
-}
 
 const Spotlight = ({ x, y, onClick }) => {
   const steps = getEllipse({

@@ -1,4 +1,4 @@
-import { getEllipse } from 'Spotlight/ellipse'
+import { getEllipse } from 'Spotlight/helpers'
 
 describe('getEllipse', () => {
   let accuracy
