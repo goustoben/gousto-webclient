@@ -8,6 +8,7 @@ export const trackFirstPurchase = orderId => (
     const goustoReference = user.get('goustoReference')
     const order = getUserOrderById(orderId, user.get('orders'))
     const orderTotal = order.getIn(['prices', 'total'])
+    const grossTotal = order.getIn(['prices', 'grossTotal'])
 
     if (!goustoReference) {
       logger.warning('Missing user data for first purchase tracking: no user found in store')
@@ -31,7 +32,7 @@ export const trackFirstPurchase = orderId => (
       optimizelyData: {
         eventName: 'order_placed_gross',
         tags: {
-          revenue: orderTotal
+          revenue: grossTotal
         }
       }
     })

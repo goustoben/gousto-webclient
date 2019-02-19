@@ -34,6 +34,7 @@ describe('tracking actions', () => {
             id: 'order-a',
             prices: {
               total: '13.99',
+              grossTotal: '13.99',
               promoCode: '10OFF',
             },
           },
