@@ -10,6 +10,7 @@ import facebookPixel from 'middlewares/tracking/facebook'
 import pinterestPixel from 'middlewares/tracking/pinterest'
 import snowplow from 'middlewares/tracking/snowplow'
 import snowplowV2 from 'middlewares/tracking/snowplow/V2'
+import { optimizelyTracker } from 'middlewares/tracking/optimizely'
 import affiliateWindow from 'middlewares/tracking/affiliateWindow'
 import persistenceConfig from 'config/storePersistence'
 import globals from 'config/globals'
@@ -31,6 +32,7 @@ class GoustoStore {
       trackingMiddleware(facebookPixel, 'v2'),
       trackingMiddleware(pinterestPixel, 'v2'),
       trackingMiddleware(snowplowV2, 'v2'),
+      optimizelyTracker,
     ]
 
     if (globals.dev && globals.client && !window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) { // eslint-disable-line no-underscore-dangle
