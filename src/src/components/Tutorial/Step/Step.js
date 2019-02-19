@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 import Icon from 'Icon'
-import { Tooltip } from 'Tooltip'
 import { Spotlight } from 'Spotlight'
+import { Tooltip } from 'Tutorial/Tooltip'
 
 import { isElementHidden, getSpotlightLocation, getTooltipProperties } from 'Tutorial/helpers'
 import css from './Step.css'
