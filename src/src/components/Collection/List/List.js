@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 import routeConfig from 'config/routes'
 import { getColSizes } from 'styles/grid'

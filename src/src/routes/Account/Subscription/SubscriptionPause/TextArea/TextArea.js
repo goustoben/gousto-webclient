@@ -1,14 +1,15 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import css from './TextArea.css'
 import { Button } from 'goustouicomponents'
+import css from './TextArea.css'
 
 class SubscriptionPauseTextArea extends React.PureComponent {
 	static propTypes = {
 	  disabled: PropTypes.bool,
-	  maxLength: React.PropTypes.number,
-	  minLength: React.PropTypes.number,
-	  minLengthValidationMessage: React.PropTypes.string,
+	  maxLength: PropTypes.number,
+	  minLength: PropTypes.number,
+	  minLengthValidationMessage: PropTypes.string,
 	  onSubmit: PropTypes.func,
 	  placeholder: PropTypes.string,
 	}

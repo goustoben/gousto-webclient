@@ -1,12 +1,13 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable'
 
 import { Alert, Button } from 'goustouicomponents'
-import Address from './Address/Address'
 import userActions from 'actions/user'
 import orderActions from 'actions/order'
 import DropdownInput from 'Form/Dropdown'
 import Content from 'containers/Content'
+import Address from './Address/Address'
 import util, { DEFAULT_MESSAGE_ID } from './util'
 import css from './EditDelivery.css'
 
@@ -45,7 +46,7 @@ class EditDelivery extends React.PureComponent {
 	}
 
 	static contextTypes = {
-	  store: React.PropTypes.object.isRequired,
+	  store: PropTypes.object.isRequired,
 	}
 
 	constructor(props) {

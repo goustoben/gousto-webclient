@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import { Alert, Button } from 'goustouicomponents'
 import Content from 'containers/Content'
@@ -30,7 +31,7 @@ class OrderCancelButton extends React.PureComponent {
 	}
 
 	static contextTypes = {
-	  store: React.PropTypes.object.isRequired,
+	  store: PropTypes.object.isRequired,
 	}
 
 	handleCancelBox = () => {

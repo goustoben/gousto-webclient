@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import DOMPurify from 'dompurify'
+import ReactMarkdown from 'react-markdown'
 import css from './GenericScreen.css'
 import CallToAction from '../CallToAction'
 import Image from '../Image'
 import TextArea from '../TextArea'
-import ReactMarkdown from 'react-markdown'
 
 export function renderContent(contents = []) {
   return contents.map((contentItem, key) => {

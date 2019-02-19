@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable' // eslint-disable new-cap
 import ImageSelection from 'ImageSelection'
 import LinkButton from 'LinkButton'
 import SectionHeader from 'SectionHeader'
-import css from './List.css'
 import config from 'config'
+import css from './List.css'
 
 const productsRoute = config.routes.client.orderSummary
 

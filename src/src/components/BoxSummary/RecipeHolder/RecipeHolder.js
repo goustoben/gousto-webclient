@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Image from 'Image'
 import classnames from 'classnames'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import { getFeaturedImage } from 'utils/image'
 import css from './RecipeHolder.css'
 
@@ -29,9 +30,9 @@ const RecipeHolder = ({ recipe, view, onClick }) => (
 )
 
 RecipeHolder.propTypes = {
-  recipe: React.PropTypes.instanceOf(Immutable.Map),
-  view: React.PropTypes.string,
-  onClick: React.PropTypes.func,
+  recipe: PropTypes.instanceOf(Immutable.Map),
+  view: PropTypes.string,
+  onClick: PropTypes.func,
 }
 
 RecipeHolder.defaultProps = {

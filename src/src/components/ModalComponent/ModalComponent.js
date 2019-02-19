@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classnames from 'classnames'
 
-import css from './ModalComponent.css'
 import Overlay from 'Overlay'
+import css from './ModalComponent.css'
 
 const ModalComponent = ({ children, visible, styleName }) => (
 	<Overlay open={Boolean(visible)} from="top">

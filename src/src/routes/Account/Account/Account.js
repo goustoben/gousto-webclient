@@ -1,26 +1,27 @@
+import PropTypes from 'prop-types'
 import React from 'react'
-import NavBar from './NavBar'
 import userActions from 'actions/user'
 import subscriptionActions from 'actions/subscriptionPause'
 import homeActions from 'actions/home'
+import NavBar from './NavBar'
 import css from './Account.css'
 import Banner from './Banner'
 
 class Account extends React.PureComponent {
 
 	static propTypes = {
-	  children: React.PropTypes.node,
-	  renderChildren: React.PropTypes.bool,
-	  location: React.PropTypes.shape({
-	    pathname: React.PropTypes.string,
+	  children: PropTypes.node,
+	  renderChildren: PropTypes.bool,
+	  location: PropTypes.shape({
+	    pathname: PropTypes.string,
 	  }).isRequired,
-	  rateRecipeCount: React.PropTypes.number,
+	  rateRecipeCount: PropTypes.number,
 	}
 	static defaultProps = {
 	  renderChildren: false,
 	}
 	static contextTypes = {
-	  store: React.PropTypes.object.isRequired,
+	  store: PropTypes.object.isRequired,
 	}
 
 	componentDidMount() {

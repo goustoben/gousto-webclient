@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Button } from 'goustouicomponents'
 import css from './CheckoutButton.css'
@@ -18,11 +19,11 @@ const CheckoutButton = ({ color, fill, onClick, stepName, submitting }) => (
 )
 
 CheckoutButton.propTypes = {
-  fill: React.PropTypes.bool,
-  stepName: React.PropTypes.string,
-  submitting: React.PropTypes.bool,
-  onClick: React.PropTypes.func,
-  color: React.PropTypes.string,
+  fill: PropTypes.bool,
+  stepName: PropTypes.string,
+  submitting: PropTypes.bool,
+  onClick: PropTypes.func,
+  color: PropTypes.string,
 }
 
 CheckoutButton.defaultProps = {

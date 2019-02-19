@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import Immutable from 'immutable' // eslint-disable no-caps
 
+import { boxSummaryViews } from 'utils/boxSummary'
 import Details from './Details'
 import Postcode from './Postcode'
 import DeliverySlot from './DeliverySlot'
-import { boxSummaryViews } from 'utils/boxSummary'
 
 class BoxSummary extends React.PureComponent {
 

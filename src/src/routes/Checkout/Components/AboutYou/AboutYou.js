@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Field, FormSection } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
@@ -14,13 +15,13 @@ const emailValidator = value => (value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2
 class AboutYou extends React.PureComponent {
 
 	static propTypes = {
-	  loginVisibilityChange: React.PropTypes.func,
-	  loginOpen: React.PropTypes.bool,
-	  isAuthenticated: React.PropTypes.bool,
-	  loginPending: React.PropTypes.bool,
-	  sectionName: React.PropTypes.string,
-	  clearErrors: React.PropTypes.func,
-	  receiveRef: React.PropTypes.func,
+	  loginVisibilityChange: PropTypes.func,
+	  loginOpen: PropTypes.bool,
+	  isAuthenticated: PropTypes.bool,
+	  loginPending: PropTypes.bool,
+	  sectionName: PropTypes.string,
+	  clearErrors: PropTypes.func,
+	  receiveRef: PropTypes.func,
 	}
 
 	static defaultProps = {

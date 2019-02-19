@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 const InputWrapper = (Component, { childLabel, inputType, mask, ...rest } = {}) => {
-  let additionalProps = {
+  const additionalProps = {
     'data-hj-masked': mask,
   }
 

@@ -1,13 +1,14 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import moment from 'moment'
 import { Button } from 'goustouicomponents'
 import { inferCardType } from 'utils/checkout'
 import config from 'config/checkout'
-import css from './BillingForm.css'
 import Input from 'Form/Input'
 import Dropdown from 'Form/Dropdown'
 import Svg from 'Svg'
 import CheckoutTooltip from 'routes/Checkout/Components/CheckoutTooltip/CheckoutTooltip'
+import css from './BillingForm.css'
 
 const CURRENT_YEAR = Number(moment().format('YYYY'))
 const MONTHS = ['MM', ...Array.from({ length: 12 }, (v, k) => (k < 9 ? `0${k + 1}` : k + 1))].map(option => ({
@@ -21,7 +22,7 @@ const divisor = String.fromCharCode(47)
 class BillingForm extends React.PureComponent {
 	static propTypes = {
 	  isPosting: PropTypes.bool,
-	  fetchError: React.PropTypes.func,
+	  fetchError: PropTypes.func,
 	}
 
 	static defaultProps = {

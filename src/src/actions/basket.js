@@ -11,7 +11,12 @@ import statusActions from './status'
 import menuActions from './menu'
 import boxSummaryActions from './boxSummary'
 import actionTypes from './actionTypes'
-import { getCurrentCollectionId, getCurrentDietTypes, getDietaryAttributes, getCurrentTotalTime } from '../selectors/filters'
+import {
+  getCurrentCollectionId,
+  getCurrentDietTypes,
+  getDietaryAttributes,
+  getCurrentTotalTime
+} from '../selectors/filters'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
   const stock = recipesStock.getIn([recipeId, String(numPortions)], 0)

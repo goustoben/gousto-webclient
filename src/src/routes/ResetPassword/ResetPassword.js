@@ -1,13 +1,14 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-import css from './ResetPassword.css'
 import { Button } from 'goustouicomponents'
 import Input from 'Form/Input'
 import configAuth from 'config/auth'
-import FormAlert from './FormAlert'
 import Content from 'containers/Content'
 import InputError from 'Form/InputError'
 import { PageContent, PageHeader } from 'Page'
+import css from './ResetPassword.css'
+import FormAlert from './FormAlert'
 
 class ResetPassword extends React.PureComponent {
 

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 
@@ -54,29 +55,29 @@ const NutritionInfo = ({ perPortion, per100Grams, restrictedView, inset }) => (
 )
 
 NutritionInfo.propTypes = {
-  restrictedView: React.PropTypes.bool,
-  inset: React.PropTypes.bool,
-  per100Grams: React.PropTypes.shape({
-    energyKj: React.PropTypes.number,
-    energyKcal: React.PropTypes.number,
-    fat: React.PropTypes.number,
-    fatSaturates: React.PropTypes.number,
-    carbs: React.PropTypes.number,
-    carbsSugars: React.PropTypes.number,
-    fibre: React.PropTypes.number,
-    protein: React.PropTypes.number,
-    salt: React.PropTypes.number,
+  restrictedView: PropTypes.bool,
+  inset: PropTypes.bool,
+  per100Grams: PropTypes.shape({
+    energyKj: PropTypes.number,
+    energyKcal: PropTypes.number,
+    fat: PropTypes.number,
+    fatSaturates: PropTypes.number,
+    carbs: PropTypes.number,
+    carbsSugars: PropTypes.number,
+    fibre: PropTypes.number,
+    protein: PropTypes.number,
+    salt: PropTypes.number,
   }).isRequired,
-  perPortion: React.PropTypes.shape({
-    energyKj: React.PropTypes.number,
-    energyKcal: React.PropTypes.number,
-    fat: React.PropTypes.number,
-    fatSaturates: React.PropTypes.number,
-    carbs: React.PropTypes.number,
-    carbsSugars: React.PropTypes.number,
-    fibre: React.PropTypes.number,
-    protein: React.PropTypes.number,
-    salt: React.PropTypes.number,
+  perPortion: PropTypes.shape({
+    energyKj: PropTypes.number,
+    energyKcal: PropTypes.number,
+    fat: PropTypes.number,
+    fatSaturates: PropTypes.number,
+    carbs: PropTypes.number,
+    carbsSugars: PropTypes.number,
+    fibre: PropTypes.number,
+    protein: PropTypes.number,
+    salt: PropTypes.number,
   }).isRequired,
 }
 

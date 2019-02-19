@@ -1,5 +1,7 @@
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 import config from 'config/home'
+import classnames from 'classnames'
 import Hero from './Hero'
 import Hero2 from './Hero2'
 import Carousel from './Carousel'
@@ -9,7 +11,6 @@ import Subscription from './Subscription'
 import InYourBox from './InYourBox'
 import TestedLoved from './TestedLoved'
 import EmailForm from './EmailForm'
-import classnames from 'classnames'
 import css from './Home.css'
 
 class HomeSections extends Component {

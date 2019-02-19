@@ -1,10 +1,11 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import Carousel from 'Carousel'
 import Recipe from 'Recipe'
+import { formatRecipeTitle } from 'utils/recipe'
 import css from './RecipeCarousel.css'
 import orderRecipes from './orderRecipes'
-import { formatRecipeTitle } from 'utils/recipe'
 
 const RecipeCarousel = ({ homeCarouselRecipes, cutoffDate }) => (
 	<div className={`homepageSlider ${css.container}`}>

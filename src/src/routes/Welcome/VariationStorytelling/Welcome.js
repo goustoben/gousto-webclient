@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import css from '../Welcome.css'
 import SubHeader from '../SubHeader'
 

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 
@@ -13,24 +14,24 @@ import css from './Address.css'
 
 class Address extends React.PureComponent {
 	static propTypes = {
-	  formName: React.PropTypes.string,
-	  sectionName: React.PropTypes.string,
-	  formErrors: React.PropTypes.object,
-	  formValues: React.PropTypes.object,
-	  formFields: React.PropTypes.object,
+	  formName: PropTypes.string,
+	  sectionName: PropTypes.string,
+	  formErrors: PropTypes.object,
+	  formValues: PropTypes.object,
+	  formFields: PropTypes.object,
 
-	  change: React.PropTypes.func,
-	  touch: React.PropTypes.func,
-	  untouch: React.PropTypes.func,
+	  change: PropTypes.func,
+	  touch: PropTypes.func,
+	  untouch: PropTypes.func,
 
-	  addressesPending: React.PropTypes.bool,
-	  initialPostcode: React.PropTypes.string,
-	  isDelivery: React.PropTypes.bool,
-	  deliveryDate: React.PropTypes.string,
-	  cutOffDate: React.PropTypes.string,
-	  menuCutoffUntil: React.PropTypes.string,
-	  receiveRef: React.PropTypes.func,
-	  scrollToFirstMatchingRef: React.PropTypes.func,
+	  addressesPending: PropTypes.bool,
+	  initialPostcode: PropTypes.string,
+	  isDelivery: PropTypes.bool,
+	  deliveryDate: PropTypes.string,
+	  cutOffDate: PropTypes.string,
+	  menuCutoffUntil: PropTypes.string,
+	  receiveRef: PropTypes.func,
+	  scrollToFirstMatchingRef: PropTypes.func,
 	}
 	static defaultProps = {
 	  formName: 'address',

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import Overlay from 'Overlay'
 import PromoModal from './PromoModalContainer'
@@ -9,7 +10,7 @@ const PromoModalWrapper = ({ promoModalVisible }) => (
 )
 
 PromoModalWrapper.propTypes = {
-  promoModalVisible: React.PropTypes.bool,
+  promoModalVisible: PropTypes.bool,
 }
 
 export default PromoModalWrapper

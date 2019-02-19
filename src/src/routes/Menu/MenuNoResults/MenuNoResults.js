@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 import NoResultsPage from 'NoResultsPage'
 import Content from 'containers/Content'
 import css from './MenuNoResults.css'
@@ -7,10 +8,10 @@ const getNoResultsPageProps = () => {
   const imageName = '0-result'
   const title = (<Content contentKeys="recipesNoResultTitle">
 		<span>Oh Crumbs! No recipes found</span>
-	</Content>)
+                 </Content>)
   const description = (<Content contentKeys="recipesNoResultDescription">
 		<span>Due to the filters you applied, we do not have any recipes that fit your dietary preferences. Clear filters to see all results.</span>
-	</Content>)
+                       </Content>)
 
   return {
     imageName,
@@ -47,7 +48,7 @@ class MenuNoResults extends React.PureComponent {
 				  description={noResultsAtributs.description}
 				/>
 				<span className={css.clearAllFilters} onClick={() => clearAllFilters()}>Clear filters</span>
-			</div> : null
+                    </div> : null
 	  )
 	}
 }

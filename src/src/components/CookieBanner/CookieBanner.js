@@ -1,7 +1,8 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import config from 'config/cookies'
-import css from './CookieBanner.css'
 import Link from 'Link'
+import css from './CookieBanner.css'
 
 const CookieBanner = ({ copy, isCookiePolicyAccepted, cookiePolicyAcceptanceChange }) => {
   if (isCookiePolicyAccepted) {
@@ -35,13 +36,13 @@ const CookieBanner = ({ copy, isCookiePolicyAccepted, cookiePolicyAcceptanceChan
 }
 
 CookieBanner.propTypes = {
-  copy: React.PropTypes.shape({
-    button: React.PropTypes.string,
-    findMore: React.PropTypes.string,
-    description: React.PropTypes.string,
+  copy: PropTypes.shape({
+    button: PropTypes.string,
+    findMore: PropTypes.string,
+    description: PropTypes.string,
   }).isRequired,
-  isCookiePolicyAccepted: React.PropTypes.bool,
-  cookiePolicyAcceptanceChange: React.PropTypes.func.isRequired,
+  isCookiePolicyAccepted: PropTypes.bool,
+  cookiePolicyAcceptanceChange: PropTypes.func.isRequired,
 }
 
 CookieBanner.defaultProps = {

@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 // import css from './RecipeSummary.css'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'/* eslint-disable new-cap */
 import { basketSum } from 'utils/basket'
 import recipesActions from 'actions/recipes'
 import OrderedRecipe from './OrderedRecipe'
@@ -8,12 +9,12 @@ import OrderedRecipe from './OrderedRecipe'
 class RecipeSummary extends React.PureComponent {
 
 	static propTypes = {
-	  menuRecipesStore: React.PropTypes.instanceOf(Immutable.Map),
-	  recipes: React.PropTypes.instanceOf(Immutable.Map),
-	  menuRecipeStock: React.PropTypes.instanceOf(Immutable.Map),
-	  numPortions: React.PropTypes.number,
-	  menuBoxPrices: React.PropTypes.instanceOf(Immutable.Map),
-	  view: React.PropTypes.oneOf(['summary', 'boxdetails']),
+	  menuRecipesStore: PropTypes.instanceOf(Immutable.Map),
+	  recipes: PropTypes.instanceOf(Immutable.Map),
+	  menuRecipeStock: PropTypes.instanceOf(Immutable.Map),
+	  numPortions: PropTypes.number,
+	  menuBoxPrices: PropTypes.instanceOf(Immutable.Map),
+	  view: PropTypes.oneOf(['summary', 'boxdetails']),
 	}
 
 	static defaultProps = {
@@ -26,7 +27,7 @@ class RecipeSummary extends React.PureComponent {
 	}
 
 	static contextTypes = {
-	  store: React.PropTypes.object.isRequired,
+	  store: PropTypes.object.isRequired,
 	}
 
 	static fetchData({ store, orderRecipeIds }) {

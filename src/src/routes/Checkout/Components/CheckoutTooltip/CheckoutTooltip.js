@@ -1,6 +1,7 @@
 import React from 'react'
-import css from './CheckoutTooltip.css'
+import PropTypes from 'prop-types'
 import RCTooltip from 'rc-tooltip'
+import css from './CheckoutTooltip.css'
 
 const CheckoutTooltip = (props) => (
 	<div className={props.version ? css[`on${props.version}`] : ''}>
@@ -15,10 +16,10 @@ const CheckoutTooltip = (props) => (
 	</div>)
 
 CheckoutTooltip.propTypes = {
-  children: React.PropTypes.node.isRequired,
-  placement: React.PropTypes.string,
-  version: React.PropTypes.string,
-  trigger: React.PropTypes.array,
+  children: PropTypes.node.isRequired,
+  placement: PropTypes.string,
+  version: PropTypes.string,
+  trigger: PropTypes.array,
 }
 
 CheckoutTooltip.defaultProps = {
