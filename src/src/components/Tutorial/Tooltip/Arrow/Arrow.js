@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import css from './Arrow.css'
 
-const arrowClasses = (position) => {
+const getArrowClasses = (position) => {
   const [ positionY, positionX ] = position.split('-')
 
   return `${css.arrow} ${css[`arrow--${positionY}`]} ${(positionX) ? css[`arrow--${positionX}`] : ''}`
@@ -11,7 +11,7 @@ const arrowClasses = (position) => {
 
 const Arrow = ({ positionY, position }) => (
   (position.includes(positionY)) ? (
-    <span className={arrowClasses(position)}>
+    <span className={getArrowClasses(position)}>
       {(position.includes('top')) ? '▲' : '▼'}
     </span>
   ) : null
@@ -29,4 +29,5 @@ Arrow.propTypes = {
 
 export {
   Arrow,
+  getArrowClasses,
 }
