@@ -1,14 +1,9 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
-import actionTypes from './actionTypes'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { fetchRecipes, fetchRecipeStock, fetchAvailableDates } from 'apis/recipes'
 import * as boxPricesApi from 'apis/boxPrices'
 import { fetchOrder } from 'apis/orders'
 import { getCutoffDateTime } from 'utils/deliveries'
-import basket from './basket'
-import products from './products'
-import statusActions from './status'
-import { collectionFilterChange } from './filters'
 import { limitReached } from 'utils/basket'
 import { fetchCollections, fetchCollectionRecipes } from 'apis/collections'
 import logger from 'utils/logger'
@@ -16,8 +11,14 @@ import { push } from 'react-router-redux'
 import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
-import { redirect } from './redirect'
 import menuConfig from 'config/menu'
+import statusActions from './status'
+import { collectionFilterChange } from './filters'
+import { redirect } from './redirect'
+import products from './products'
+import basket from './basket'
+import tempActions from './temp'
+import actionTypes from './actionTypes'
 
 const menuActions = {
   menuLoadMenu,
@@ -168,7 +169,7 @@ export function menuLoadCollections(date, noUrlChange) {
       const preferredCollectionId = getCollectionIdWithName(getState(), preferredCollection)
 
       if (changeCollection && getState().menuCollections.size > 0) {
-        let recommendations = getState().menuCollections.find(collection => collection.get('slug') === 'recommendations')
+        const recommendations = getState().menuCollections.find(collection => collection.get('slug') === 'recommendations')
         let landingCollectionId = preferredCollectionId || getDefaultCollectionId(getState())
 
         if (recommendations) {
@@ -256,7 +257,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
         dispatch(menuActions.menuReceiveMenu(recipes))
       }
 
-      logger.notice(`recipes fetch took ${new Date - startTime}ms`)
+      logger.notice(`recipes fetch took ${new Date() - startTime}ms`)
 
       dispatch(menuActions.menuRecieveMenuPending(false))
 
@@ -329,7 +330,7 @@ export function menuLoadOrderDetails(orderId) {
 
     dispatch(basket.basketDateChange(order.deliveryDate))
     dispatch(basket.basketNumPortionChange(order.box.numPortions, orderId))
-    
+
     order.recipeItems.forEach(recipe => {
       const qty = Math.round(parseInt(recipe.quantity, 10) / parseInt(order.box.numPortions, 10))
 
@@ -358,6 +359,10 @@ export function menuLoadOrderDetails(orderId) {
 
     dispatch(basket.basketIdChange(order.id))
     dispatch(basket.basketOrderLoaded(order.id))
+
+    const grossTotal = order && order.prices && order.prices.grossTotal
+
+    dispatch(tempActions.temp('originalTotal', grossTotal))
 
     await dispatch(basket.basketPostcodeChange(order.shippingAddress.postcode)).then(() => {
       const coreSlotId = order.deliverySlot.id

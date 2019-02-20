@@ -34,7 +34,7 @@ function getCollection(state) {
   return collection
 }
 
-export default {
+const actions = {
   // basketAddressEditChange: (addressEdited) => ({
   // 	type: actionTypes.BASKET_ADDRESS_EDIT_CHANGE,
   // 	addressEdited,
@@ -93,7 +93,7 @@ export default {
       })
     }
   ),
-  
+
   portionSizeSelectedTracking: (num_portion, order_id) => (
     (dispatch) => {
       dispatch({
@@ -523,7 +523,7 @@ export default {
   basketCheckedOut: (numRecipes, view) => (
     (dispatch, getState) => {
 
-      const { auth, basket, user, pricing } = getState()
+      const { auth, basket, user, pricing, temp } = getState()
       const isAuthenticated = auth.get('isAuthenticated')
       const basketOrderId = basket.get('orderId')
       const editingBox = basket.get('editBox')
@@ -531,9 +531,12 @@ export default {
       const subscription = user.get('subscription')
       const isActiveSubsc = subscription && (subscription.get('state') === 'active')
       const prices = pricing.get('prices')
+      const originalTotal = temp.get('originalTotal')
       const orderTotal = prices && prices.get('total')
+      const grossTotal = prices && prices.get('grossTotal')
+      const editedTotal = originalTotal && grossTotal ? (grossTotal - originalTotal).toFixed(2) : ''
       const promoCode = prices && prices.get('promoCode')
-    
+
       if(isAuthenticated) {
         if(orders.get(basketOrderId)) {
           const orderItems = orders.get(basketOrderId).get('recipeItems')
@@ -548,6 +551,12 @@ export default {
                 signp: false,
                 subscription_active: isActiveSubsc,
               },
+              optimizelyData: {
+                eventName: 'order_edited_gross',
+                tags: {
+                  revenue: editedTotal
+                }
+              }
             })
           } else {
             dispatch({
@@ -560,9 +569,15 @@ export default {
                 signp: false,
                 subscription_active: isActiveSubsc,
               },
+              optimizelyData: {
+                eventName: 'order_placed_gross',
+                tags: {
+                  revenue: grossTotal
+                }
+              }
             })
           }
-  
+
         } else if(editingBox) {
           dispatch({
             type: 'Order Edited',
@@ -574,6 +589,12 @@ export default {
               signp: false,
               subscription_active: isActiveSubsc,
             },
+            optimizelyData: {
+              eventName: 'order_edited_gross',
+              tags: {
+                revenue: editedTotal
+              }
+            }
           })
         } else {
           dispatch({
@@ -586,10 +607,16 @@ export default {
               signp: false,
               subscription_active: isActiveSubsc,
             },
+            optimizelyData: {
+              eventName: 'order_placed_gross',
+              tags: {
+                revenue: grossTotal
+              }
+            }
           })
         }
       }
-     
+
       dispatch({
         type: actionTypes.BASKET_CHECKOUT,
         trackingData: {
@@ -670,3 +697,5 @@ export default {
     collection,
   }),
 }
+
+export default actions

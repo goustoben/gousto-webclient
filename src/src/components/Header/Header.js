@@ -69,6 +69,7 @@ class Header extends React.PureComponent {
 	    } else {
 	      this.setState({ logoutPending: true })
 	    }
+	    this.hideMobileMenu()
 	  }
 	}
 

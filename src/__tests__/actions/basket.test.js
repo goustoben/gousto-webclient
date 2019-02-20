@@ -28,7 +28,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledWith(numPortionChangeTracking)
     })
-    
+
   })
 
   describe('basketCheckedOut', () => {
@@ -46,7 +46,7 @@ describe('basket actions', () => {
               '1234'
             ]
           },
-        },  
+        },
         subscription: {
           state: 'active',
         }
@@ -54,12 +54,16 @@ describe('basket actions', () => {
       pricing: Immutable.fromJS({
         prices: {
           total: '24.00',
+          grossTotal: '24.00',
           promoCode: false,
         }
+      }),
+      temp: Immutable.fromJS({
+        originalTotal: "24.99"
       })
     })
 
-    test('should dispatch Order Edited tracking action', async() => {
+    test('should dispatch Order Edited  tracking action for subscription box', async() => {
       await basketCheckedOut(2, 'grid')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'Order Edited',
@@ -71,6 +75,64 @@ describe('basket actions', () => {
           signp: false,
           subscription_active: true,
         },
+        optimizelyData: {
+          eventName: 'order_edited_gross',
+          tags: {
+            revenue: '-0.99'
+          }
+        }
+      })
+    })
+
+    test('should dispatch Order Edited tracking action for transactional box', async() => {
+      getState = () => ({
+        auth: Immutable.Map({
+          isAuthenticated: true,
+        }),
+        basket: Immutable.fromJS({
+          orderId: '178',
+        }),
+        user: Immutable.fromJS({
+          orders: {
+            '178': {
+              'recipeItems': [
+                '1234'
+              ]
+            },
+          },
+          subscription: {
+            state: 'inactive',
+          }
+        }),
+        pricing: Immutable.fromJS({
+          prices: {
+            total: '24.00',
+            grossTotal: '24.00',
+            promoCode: false,
+          }
+        }),
+        temp: Immutable.fromJS({
+          originalTotal: "24.99"
+        })
+      })
+
+      await basketCheckedOut(2, 'grid')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'Order Edited',
+        trackingData: {
+          actionType: 'Order Edited',
+          order_id: '178',
+          order_total: '24.00',
+          promo_code: false,
+          signp: false,
+          subscription_active: false,
+        },
+        optimizelyData: {
+          eventName: 'order_edited_gross',
+          tags: {
+            revenue: '-0.99'
+          }
+        }
       })
     })
 
@@ -89,7 +151,7 @@ describe('basket actions', () => {
                 '1234'
               ]
             },
-          },  
+          },
           subscription: {
             state: 'active',
           }
@@ -97,8 +159,12 @@ describe('basket actions', () => {
         pricing: Immutable.fromJS({
           prices: {
             total: '24.00',
+            grossTotal: '24.00',
             promoCode: false,
           }
+        }),
+        temp: Immutable.fromJS({
+          originalTotal: "24.99"
         })
       })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
@@ -112,6 +178,12 @@ describe('basket actions', () => {
           signp: false,
           subscription_active: true,
         },
+        optimizelyData: {
+          eventName: 'order_placed_gross',
+          tags: {
+            revenue: '24.00'
+          }
+        }
       })
     })
 
@@ -128,7 +200,7 @@ describe('basket actions', () => {
             '179': {
               'recipeItems': []
             },
-          },  
+          },
           subscription: {
             state: 'active',
           }
@@ -136,8 +208,12 @@ describe('basket actions', () => {
         pricing: Immutable.fromJS({
           prices: {
             total: '22.00',
+            grossTotal: '22.00',
             promoCode: false,
           }
+        }),
+        temp: Immutable.fromJS({
+          originalTotal: "24.99"
         })
       })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
@@ -151,6 +227,12 @@ describe('basket actions', () => {
           signp: false,
           subscription_active: true,
         },
+        optimizelyData: {
+          eventName: 'order_placed_gross',
+          tags: {
+            revenue: '22.00'
+          }
+        }
       })
     })
   })
