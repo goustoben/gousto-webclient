@@ -15,6 +15,7 @@ import basketActions from './basket'
 import loginActions from './login'
 import userActions from './user'
 import statusActions from './status'
+import tempActions from './temp'
 import GoustoException from '../utils/GoustoException'
 import Cookies from '../utils/GoustoCookies'
 import gaID from '../config/head/gaTracking'
@@ -241,7 +242,7 @@ export function checkoutPostSignup() {
     dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
     try {
-      const { form } = getState()
+      const { form, pricing } = getState()
       const aboutYouFormName = getAboutYouFormName(getState())
       const aboutYouValues = Immutable.fromJS(form[aboutYouFormName].values)
       const aboutYou = aboutYouValues.get('aboutyou')
@@ -249,7 +250,11 @@ export function checkoutPostSignup() {
       const password = aboutYou.get('password')
       const orderId = getState().basket.get('previewOrderId')
       await dispatch(loginActions.loginUser(email, password, true, orderId))
+      const prices = pricing.get('prices')
+      const grossTotal = prices && prices.get('grossTotal')
+      dispatch(tempActions.temp('originalTotal', grossTotal))
       dispatch(trackPurchase())
+
     } catch (err) {
       logger.error({message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err]})
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
@@ -272,7 +277,7 @@ export function trackingOrderPlaceAttempt() {
   return(dispatch, getState) => {
     const { basket, pricing } = getState()
     const prices = pricing.get('prices')
-    
+
     dispatch({
       type: actionTypes.CHECKOUT_ORDER_PLACE_ATTEMPT,
       trackingData: {
