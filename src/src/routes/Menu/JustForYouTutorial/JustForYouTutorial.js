@@ -1,5 +1,5 @@
 import React from 'react'
-import { Portal } from 'Spotlight'
+import { Portal } from 'Portal'
 import { Tutorial, Step } from 'Tutorial'
 import css from './JustForYouTutorial.css'
 
