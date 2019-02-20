@@ -1,6 +1,6 @@
-import Header from './Header'
 import { connect } from 'react-redux'
 import actions from 'actions'
+import Header from './Header'
 
 const mapStateToProps = (state) => ({
   serverError: state.serverError === '500',
@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
   disabled: state.auth.get('isAdmin'),
   features: state.features,
   fromJoin: !state.auth.get('isAuthenticated') ? state.persist.get('simpleHeader', false) : false,
+  forceSignupWizardFeature: state.features.getIn(['forceSignupWizard', 'value']),
 })
 
 export default connect(mapStateToProps, {
