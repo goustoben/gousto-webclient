@@ -31,7 +31,7 @@ describe('filters actions', () => {
             locationBeforeTransitions: { query: { collection: 'gluten-free' } },
           },
           menuCollections: Immutable.fromJS({
-            newCollectionId: { shortTitle: 'dairy-free' },
+            newCollectionId: { slug: 'dairy-free' },
           }),
         })
       })
@@ -63,7 +63,7 @@ describe('filters actions', () => {
             locationBeforeTransitions: { query: { collection: 'gluten-free' } },
           },
           menuCollections: Immutable.fromJS({
-            notNewCollectionId: { shortTitle: 'dairy-free' },
+            notNewCollectionId: { slug: 'dairy-free' },
           }),
         })
       })
@@ -96,7 +96,7 @@ describe('filters actions', () => {
           locationBeforeTransitions: { query: { collection: 'gluten-free' } },
         },
         menuCollections: Immutable.fromJS({
-          newCollectionId: { shortTitle: 'dairy-free' },
+          newCollectionId: { slug: 'dairy-free' },
         }),
         filters: Immutable.Map({
           currentCollectionId: '',
@@ -118,7 +118,7 @@ describe('filters actions', () => {
           locationBeforeTransitions: { query: { collection: 'gluten-free' } },
         },
         menuCollections: Immutable.fromJS({
-          newCollectionId: { shortTitle: 'dairy-free' },
+          newCollectionId: { slug: 'dairy-free' },
         }),
         filters: Immutable.Map({
           currentCollectionId: '',
@@ -176,7 +176,7 @@ describe('filters actions', () => {
           locationBeforeTransitions: { query: { collection: 'gluten-free' } },
         },
         menuCollections: Immutable.fromJS({
-          newCollectionId: { shortTitle: 'dairy-free' },
+          newCollectionId: { slug: 'dairy-free' },
         }),
         filters: Immutable.Map({
           currentCollectionId: '',
@@ -203,6 +203,7 @@ describe('filters actions', () => {
         menuCollections: Immutable.fromJS({
           defaultCollectionId: {
             shortTitle: 'All Recipes',
+            slug: 'all-recipes',
             default: true, id:
 						'defaultCollectionId',
           },

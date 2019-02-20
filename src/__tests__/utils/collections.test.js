@@ -50,15 +50,17 @@ describe('utils/collections', () => {
           {
             published: true,
             shortTitle: 'something',
+            slug: 'something',
             id: '123',
             default: true,
           },
           {
             published: true,
             shortTitle: 'some&thi!ng@s0m3where strange',
+            slug: 'somethings0m3where-strange',
             id: '234',
           },
-          { published: false, shortTitle: 'secret', id: '456' },
+          { published: false, shortTitle: 'secret', slug: 'secret', id: '456' },
         ]),
         menuCollectionRecipes: Immutable.fromJS({
           123: ['', '', ''],
@@ -94,12 +96,14 @@ describe('utils/collections', () => {
           {
             published: true,
             shortTitle: 'something',
+            slug: 'something',
             id: '123',
             default: true,
           },
           {
             published: true,
             shortTitle: 'some&thi!ng@s0m3where strange',
+            slug: 'some&thi!ng@s0m3where strange',
             id: '234',
           },
           { published: false, shortTitle: 'secret', id: '456' },
@@ -170,7 +174,10 @@ describe('utils/collections', () => {
     beforeEach(() => {
       state = {
         menuCollections: Immutable.fromJS([
-          { published: true, shortTitle: 'something', id: '123' },
+          { published: true,
+            shortTitle: 'something',
+            slug: 'something',
+            id: '123' },
           {
             published: true,
             shortTitle: 'some&thi!ng@s0m3where strange',

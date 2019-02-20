@@ -1,1 +1,1 @@
-export const recommendationsShortTitle = 'recommendations'
+export const recommendationsSlug = 'recommendations'

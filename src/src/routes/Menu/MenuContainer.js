@@ -5,9 +5,9 @@ import actions from 'actions'
 import { slugify } from 'utils/url'
 import actionTypes from 'actions/actionTypes'
 import { triggerMenuLoad } from 'actions/menu'
+import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { getFilteredRecipeIds } from './selectors/filters.js'
 import { getCurrentCollectionIsRecommendation } from './selectors/menu'
-import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 
 import Menu from './Menu'
 
