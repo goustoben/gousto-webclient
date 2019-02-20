@@ -9,6 +9,7 @@ export class Tutorial extends PureComponent {
     children: PropTypes.arrayOf(
       PropTypes.instanceOf(Step)
     ),
+    onClose: PropTypes.func,
   }
 
   static defaultProps = {
@@ -31,6 +32,11 @@ export class Tutorial extends PureComponent {
   }
 
   close = () => {
+    const { onClose } = this.props
+
+    if (onClose) {
+      onClose()
+    }
     this.setState({
       hide: true,
     })
