@@ -13,9 +13,9 @@ export const Banner = ({imageName, type, color, fileName}) => (
       <div className={css.gelPortrait}>
         <Image className={css.gelPortrait__image} media={getImage(imageName)} />
       </div>
-      {/* <Gel className={css.gelText} size="large" color={color}>
+       <Gel className={css.gelText} size="large" color={color}>
         <Svg className={css.gelText__svg} fileName={fileName} />
-      </Gel> */}
+       </Gel> 
     </div>
   </div>
 )
