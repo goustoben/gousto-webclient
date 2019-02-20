@@ -37,7 +37,11 @@ const defaultFeatures = () => ({
   disabledSlots: {
     experiment: false,
     value: '',
-  }
+  },
+  forceSignupWizard: {
+    experiment: false,
+    value: false,
+  },
 })
 
 const featureToggles = {
