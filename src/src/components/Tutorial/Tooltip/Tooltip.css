@@ -1,0 +1,21 @@
+@value White from 'styles/colors.css';
+@value ArrowHeight from './Arrow/Arrow.css';
+
+.container {
+  padding: ArrowHeight 0;
+}
+
+.tooltip__content {
+  background-color: White;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 7px 0 rgba(0,0,0,0.5);
+}
+
+.close {
+  position: absolute;
+  top: ArrowHeight;
+  right: 0;
+  padding: 10px;
+}
