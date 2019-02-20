@@ -1,4 +1,4 @@
-import { cloneElement, PureComponent } from 'react'
+import { cloneElement, PureComponent, Children } from 'react'
 import PropTypes from 'prop-types'
 
 import { isElementHidden } from 'Tutorial/helpers'
@@ -19,7 +19,7 @@ export class Tutorial extends PureComponent {
     super(props)
     const { children } = props
 
-    const visibleChildren = children.filter(
+    const visibleChildren = Children.toArray(children).filter(
       child => !isElementHidden(child.props.selector)
     )
 
