@@ -271,9 +271,9 @@ class Header extends React.PureComponent {
     }) : ''
   )
   render() {
-    const { fromJoin, disabled, noContactBar, simple, isAuthenticated, serverError, title, small, promoCodeUrl, loginOpen } = this.props
+    const { fromJoin, disabled, noContactBar, simple, isAuthenticated, serverError, title, small, promoCodeUrl, loginOpen, path } = this.props
     const { mobileMenuOpen, loginPending } = this.state
-    const { fromWizard, path } = this.handleQuery()
+    const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
     const hideNav = fromWizard || joinPage || disabled || false
     const newNoContactBar = joinPage || noContactBar
