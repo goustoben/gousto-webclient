@@ -6,7 +6,7 @@ import {
   unmountComponentAtNode,
 } from 'react-dom'
 
-export class SpotlightWrapper extends Component {
+export class Portal extends Component {
   node = null
 
   static propTypes = {
@@ -27,7 +27,7 @@ export class SpotlightWrapper extends Component {
 
     if (!node) {
       this.node = document.createElement('div')
-      this.node.className = '__goustoSpotlight__'
+      this.node.className = '__goustoPortal__'
       document.body.appendChild(this.node)
 
       unstable_renderSubtreeIntoContainer(this, children, this.node)

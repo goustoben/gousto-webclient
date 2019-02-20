@@ -1,10 +1,10 @@
 import React from 'react'
-import { SpotlightWrapper } from 'Spotlight'
+import { Portal } from 'Spotlight'
 import { Tutorial, Step } from 'Tutorial'
 import css from './JustForYouTutorial.css'
 
 const JustForYouTutorial = () => (
-  <SpotlightWrapper>
+  <Portal>
     <Tutorial onClose>
       <Step selector="[data-slug='recommendations']">
         <p className={css.intro}>Introducing</p>
@@ -15,7 +15,7 @@ const JustForYouTutorial = () => (
         <p className={css.text}>You can still browse all available recipes by clicking All Recipes.</p>
       </Step>
     </Tutorial>
-  </SpotlightWrapper>
+  </Portal>
 
 )
 
