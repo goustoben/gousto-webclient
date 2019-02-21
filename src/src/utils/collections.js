@@ -28,8 +28,7 @@ export function getCollectionIdWithName(state, name) {
     .filter(collection => state.menuCollectionRecipes.get(collection.get('id'), []).size > 0)
     .find(collection => (collection.get('slug') === name), Immutable.Map())
 
-  const collectionId = collectionToReturn && collectionToReturn.get('id', null)
-
+  const collectionId = collectionToReturn ? collectionToReturn.get('id', null) : null
 
   return collectionId
 }
