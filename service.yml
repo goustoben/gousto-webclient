@@ -6,6 +6,14 @@ dns: webclient
 owner: squad-radishes
 rootVolumeSize: 16
 
+alb:
+  type: private
+  rules:
+    - priority:  85
+      conditions:
+        - field: host-header
+          fieldValue: "[environment]-webclient.[cloudformation_output_domain]"
+
 messages:
  publish:
  consume:
