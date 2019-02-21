@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
+import { getForceSignupWizard } from 'selectors/features'
+import { getUserFromJoin } from 'selectors/user'
 import Header from './Header'
 
 const mapStateToProps = (state) => ({
@@ -10,8 +12,8 @@ const mapStateToProps = (state) => ({
   loginOpen: state.loginVisibility,
   disabled: state.auth.get('isAdmin'),
   features: state.features,
-  fromJoin: !state.auth.get('isAuthenticated') ? state.persist.get('simpleHeader', false) : false,
-  forceSignupWizardFeature: state.features.getIn(['forceSignupWizard', 'value']),
+  fromJoin: getUserFromJoin(state),
+  forceSignupWizardFeature: getForceSignupWizard(state),
 })
 
 export default connect(mapStateToProps, {
