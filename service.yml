@@ -9,7 +9,7 @@ rootVolumeSize: 16
 alb:
   type: private
   rules:
-    - priority: 85
+    - priority: 94
       conditions:
         - field: host-header
           value: "[environment]-webclient.[cloudformation_output_domain]"
