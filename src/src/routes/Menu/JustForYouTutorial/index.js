@@ -1,1 +1,1 @@
-export { JustForYouTutorial } from './JustForYouTutorial'
+export default from './JustForYouTutorialContainer'
