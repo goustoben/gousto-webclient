@@ -11,6 +11,7 @@ import statusActions from './status'
 import menuActions from './menu'
 import boxSummaryActions from './boxSummary'
 import actionTypes from './actionTypes'
+import tempActions from './temp'
 import {
   getCurrentCollectionId,
   getCurrentDietTypes,
@@ -669,6 +670,8 @@ const actions = {
       }
       const token = getState().auth.get('accessToken')
       const orderId = getState().basket.get('orderId')
+      const { temp } = getState()
+
       try {
         const { data: order } = await updateOrderItems(token, orderId, submitData)
         dispatch({
@@ -678,6 +681,22 @@ const actions = {
             order,
           },
         })
+
+        const originalTotal = temp.get('originalTotal')
+        const grossTotal = order && order.prices && order.prices.grossTotal
+        const editedTotal = originalTotal && grossTotal ? (grossTotal - originalTotal).toFixed(2) : ''
+
+        dispatch({
+          type: 'Order Edited',
+          optimizelyData: {
+            eventName: 'order_edited_gross',
+            tags: {
+              revenue: editedTotal
+            }
+          }
+        })
+
+        dispatch(tempActions.temp('originalTotal', grossTotal))
         dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
       } catch (err) {
         dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, err.message))
