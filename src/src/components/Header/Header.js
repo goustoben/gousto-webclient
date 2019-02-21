@@ -114,7 +114,7 @@ class Header extends React.PureComponent {
   }
 
   getMenuItems = (device, path) => {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated, promoCodeUrl, fromJoin } = this.props
 
     const home = { name: 'Home', url: clientRoutes.home, clientRouted: true }
 
@@ -142,11 +142,11 @@ class Header extends React.PureComponent {
     })
 
     const homeMenuItem = availableItems.home
-    if (this.props.promoCodeUrl) {
-      homeMenuItem.url = `/${this.props.promoCodeUrl}`
+    if (promoCodeUrl) {
+      homeMenuItem.url = `/${promoCodeUrl}`
     } else if (path.includes('check-out')) {
       homeMenuItem.url = clientRoutes.menu
-    } else if (path.includes('join') || this.props.fromJoin === 'join') {
+    } else if (path.includes('join') || fromJoin === 'join') {
       homeMenuItem.url = clientRoutes.join
     }
 
