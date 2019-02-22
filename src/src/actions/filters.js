@@ -1,7 +1,6 @@
 import { push } from 'react-router-redux'
 
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
-import { slugify } from 'utils/url'
 import actionTypes from './actionTypes'
 
 import {
@@ -64,7 +63,7 @@ export function collectionFilterChange(collectionId) {
   return (dispatch, getState) => {
     const prevLoc = getState().routing.locationBeforeTransitions
     const query = { ...prevLoc.query }
-    const collectionName = slugify(getState().menuCollections.getIn([collectionId, 'shortTitle'], ''))
+    const collectionName = getState().menuCollections.getIn([collectionId, 'slug'], '')
     if (collectionName) {
       query.collection = collectionName
     } else {

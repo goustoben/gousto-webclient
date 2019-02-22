@@ -1,16 +1,16 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
+
+import css from 'routes/Menu/CollectionsNav/CollectionsNav.css'
+import CollectionsNav from 'routes/Menu/CollectionsNav/CollectionsNav'
+import CollectionItem from 'routes/Menu/CollectionItem' /* eslint-disable new-cap */
 
 jest.mock('utils/window', () => ({
   getWindow: () => ({
     innerWidth: 200,
   }),
 }))
-
-import css from 'routes/Menu/CollectionsNav/CollectionsNav.css'
-import CollectionsNav from 'routes/Menu/CollectionsNav/CollectionsNav'
-import CollectionItem from 'routes/Menu/CollectionItem'
 
 describe('<CollectionsNav />', () => {
   let wrapper
@@ -137,14 +137,17 @@ describe('<CollectionsNav />', () => {
         '123-123-123': {
           id: '123-123-123',
           shortTitle: '123-123-123',
+          slug: '123-123-123',
         },
         '234-234-234': {
           id: '234-234-234',
           shortTitle: '234-234-234',
+          slug: '234-234-234',
         },
         '345-345-345': {
           id: '345-345-345',
           shortTitle: '345-345-345',
+          slug: '345-345-345',
         },
       }).toOrderedMap()
       menuCurrentCollectionId = '234-234-234'

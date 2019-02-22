@@ -29,7 +29,7 @@ const CollectionFilter = ({ collections, filterCollectionChange, currentCollecti
 					  identifier={`collectionfilter-${collectionId}`}
 					  collectionId={collectionId}
 					>
-						{collection.get('slug') === 'recommendations' ? <span>Just For You </span> : <span>{collection.get('shortTitle', '')}</span> }
+						<span>{collection.get('shortTitle', '')}</span>
 						{collection.get('slug') === 'recommendations' && <Svg className={css.filterTagHeart} fileName="icon-heart" />}
 					</CollectionItem>
 				</FilterItem>

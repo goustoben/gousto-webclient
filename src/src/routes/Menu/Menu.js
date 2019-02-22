@@ -194,7 +194,7 @@ class Menu extends React.Component {
     const switchoverTime = moment(switchoverDate)
 
     return (now.isSameOrAfter(switchoverTime, 'day')) ? (
-      <Banner imageName={'menu/ef-gel.png'} type={'everyday-favourites'} color='red' fileName="ef-banner-text" />
+      <Banner imageName={'menu/ef-gel.png'} type={'everyday-favourites'} color='red' />
     ) : (
       <Banner imageName={'menu/jw-portrait.jpg'} type={'joe-wicks'} color='white' fileName="jw-partner-text" />
     )

@@ -22,7 +22,7 @@ describe('filters selectors', () => {
         a49adbs: {
           default: false,
           slug: 'recommendations',
-          shortTitle: 'Recommendations'
+          shortTitle: 'Just For You'
         }
       }),
       filters: Immutable.Map({

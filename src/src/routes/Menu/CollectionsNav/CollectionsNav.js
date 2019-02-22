@@ -5,7 +5,6 @@ import Immutable from 'immutable'/* eslint-disable no-caps, new-cap */
 import actual from 'actual'
 
 import { getWindow } from 'utils/window'
-import { slugify } from 'utils/url'
 import css from './CollectionsNav.css'
 import CollectionItem from '../CollectionItem'
 
@@ -255,7 +254,7 @@ class CollectionsNav extends React.PureComponent {
 	  if (!collectionId) return
 	  this.props.collectionFilterChange(collectionId)
 	  if (this.props.features && this.props.features.getIn(['menuStickyCollections', 'value'], false)) {
-	    this.props.featureSet('preferredCollection', slugify(this.props.menuCollections.getIn([collectionId, 'shortTitle'], '')))
+	    this.props.featureSet('preferredCollection', this.props.menuCollections.getIn([collectionId, 'slug'], ''))
 	  }
 	  let position = 0
 	  if (this.props.masonryContainer && Number.isInteger(this.props.masonryContainer.offsetTop)) {
@@ -311,7 +310,7 @@ class CollectionsNav extends React.PureComponent {
 									  collectionId={collectionId}
 									>
 										<span className={css.itemTitle}>
-											{collection.get('shortTitle') === 'Recommendations' ? 'Just For You' : collection.get('shortTitle')}
+											{collection.get('shortTitle')}
 										</span>
 									</CollectionItem>
 							    )

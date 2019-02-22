@@ -7,9 +7,6 @@ export const getCurrentTotalTime = state => state.filters.get('totalTime')
 export const getDietaryAttributes = state => state.filters.get('dietaryAttributes')
 
 export const getShortTitle = (menuCollections, currentCollectionId) => {
-  if (menuCollections.getIn([currentCollectionId, 'slug'], '') === 'recommendations') {
-    return 'Just For You'
-  }
 
   return menuCollections.getIn([
     currentCollectionId,
