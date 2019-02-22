@@ -1,12 +1,12 @@
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
-import { getPreselectedCollectionName, selectCollection } from '../utils'
 import actionTypes from 'actions/actionTypes'
-import { recommendationsShortTitle } from 'config/collections'
+import { recommendationsSlug } from 'config/collections'
+import { getPreselectedCollectionName, selectCollection } from '../utils'
 
 describe('getPreselectedCollectionName', () => {
-  let state = {
+  const state = {
     features: {}
   }
 
@@ -44,7 +44,7 @@ describe('getPreselectedCollectionName', () => {
         const collectionNameFormQueryParam = ''
 
         it('should return recommendations collection short title', () => {
-          expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(recommendationsShortTitle)
+          expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(recommendationsSlug)
         })
       })
 
@@ -70,7 +70,7 @@ describe('getPreselectedCollectionName', () => {
 })
 
 describe('selectCollection', () => {
-  let initalState = {
+  const initalState = {
     features: Immutable.Map({}),
     menuCollections: Immutable.Map({}),
     menuCollectionRecipes: Immutable.Map({
@@ -87,6 +87,7 @@ describe('selectCollection', () => {
           testCollectionId: {
             id: 'testCollectionId',
             shortTitle: 'test collection name',
+            slug: 'test-collection-name',
             published: true
           }
         })
