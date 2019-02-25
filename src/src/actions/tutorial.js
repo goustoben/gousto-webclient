@@ -1,12 +1,14 @@
 import actionTypes from './actionTypes'
+import { jfyTutorial } from '../selectors/features'
 
-export const menuLoadJfyTutorial = () => {
+export const showJfyTutorial = () => {
   return (dispatch, getState) => {
-    const collectionsLoaded = getState().menu.get('menuCollections')
-    const seenJfyTutorial = false //add call to store when this data is added there
+    const state = getState()
+    const jfyCollectionLoaded = state.menuCollections.includes(collection => collection.slug === 'recommendations')
+    const shouldShowjfyTutorial = jfyTutorial(state)
     let value
 
-    if (collectionsLoaded && !seenJfyTutorial) {
+    if (shouldShowjfyTutorial && jfyCollectionLoaded) {
       value = true
     } else {
       value = false
@@ -17,5 +19,5 @@ export const menuLoadJfyTutorial = () => {
 }
 
 export default {
-  menuLoadJfyTutorial,
+  showJfyTutorial,
 }
