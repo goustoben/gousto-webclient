@@ -1,1 +1,1 @@
-export default from './JustForYouTutorialContainer'
+export { JustForYouTutorialContainer as JustForYouTutorial } from './JustForYouTutorialContainer'

@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
+
 import { JustForYouTutorial } from './JustForYouTutorial'
 
-const mapStateToProps = (state) => {
-  return {
-    showTutorial: state.tutorial && state.tutorial.get('showJfyTutorial')
-  }
+const mapStateToProps = (state) => ({
+  showTutorial: state.tutorial && state.tutorial.get('showJfyTutorial')
+})
+
+const JustForYouTutorialContainer = connect(mapStateToProps)(JustForYouTutorial)
+
+export {
+  JustForYouTutorialContainer,
 }
-
-const JustForYouTutorialContainer = connect(mapStateToProps, {})(JustForYouTutorial)
-
-export default JustForYouTutorialContainer
