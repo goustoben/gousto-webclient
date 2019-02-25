@@ -361,8 +361,10 @@ export function menuLoadOrderDetails(orderId) {
     dispatch(basket.basketOrderLoaded(order.id))
 
     const grossTotal = order && order.prices && order.prices.grossTotal
+    const netTotal = order && order.prices && order.prices.total
 
-    dispatch(tempActions.temp('originalTotal', grossTotal))
+    dispatch(tempActions.temp('originalGrossTotal', grossTotal))
+    dispatch(tempActions.temp('originalNetTotal', netTotal))
 
     await dispatch(basket.basketPostcodeChange(order.shippingAddress.postcode)).then(() => {
       const coreSlotId = order.deliverySlot.id

@@ -185,6 +185,16 @@ describe('basket actions', () => {
           }
         }
       })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'Order Placed',
+        optimizelyData: {
+          eventName: 'order_placed_net',
+          tags: {
+            revenue: '24.00'
+          }
+        }
+      })
     })
 
     test('should dispatch Order Place tracking action for subscription box', async() => {
@@ -229,6 +239,16 @@ describe('basket actions', () => {
         },
         optimizelyData: {
           eventName: 'order_placed_gross',
+          tags: {
+            revenue: '22.00'
+          }
+        }
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'Order Placed',
+        optimizelyData: {
+          eventName: 'order_placed_net',
           tags: {
             revenue: '22.00'
           }
