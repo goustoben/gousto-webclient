@@ -28,6 +28,7 @@ import RecipeList from './RecipeList'
 import { Banner } from './Banner'
 
 import fetchData from './fetchData'
+import JustForYouTutorial from './JustForYouTutorial'
 
 class Menu extends React.Component {
 	static propTypes = {
@@ -210,7 +211,7 @@ class Menu extends React.Component {
 	  const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
 	  const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
 	  const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
-	  const showLoading = this.props.isLoading && !overlayShow || forceLoad
+    const showLoading = this.props.isLoading && !overlayShow || forceLoad
 
 	  let fadeCss = null
 	  if (showLoading && hasRecommendations) {
@@ -233,6 +234,7 @@ class Menu extends React.Component {
 				  meta={menu.helmet.meta}
 				  style={menu.helmet.style}
 				/>
+				<JustForYouTutorial />
 				<div className={classnames(css.container, overlayShowCSS)}>
 					{this.renderBanner(menu.efBanner.switchoverDate)}
 					<SubHeader
