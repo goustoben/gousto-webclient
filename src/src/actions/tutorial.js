@@ -4,17 +4,14 @@ import { jfyTutorial } from '../selectors/features'
 export const showJfyTutorial = () => {
   return (dispatch, getState) => {
     const state = getState()
-    const jfyCollectionLoaded = state.menuCollections.includes(collection => collection.slug === 'recommendations')
+    const { menuCollections } = state
+    const jfyCollectionLoaded = menuCollections.some(
+      collection => collection.get('slug') === 'recommendations'
+    )
     const shouldShowjfyTutorial = jfyTutorial(state)
-    let value
+    const value = shouldShowjfyTutorial && jfyCollectionLoaded
 
-    if (shouldShowjfyTutorial && jfyCollectionLoaded) {
-      value = true
-    } else {
-      value = false
-    }
-
-    dispatch({type: actionTypes.TRIGGER_JFY_TUTORIAL, value: value})
+    dispatch({type: actionTypes.TRIGGER_JFY_TUTORIAL, value })
   }
 }
 
