@@ -545,7 +545,7 @@ const actions = {
           const orderItems = orders.get(basketOrderId).get('recipeItems')
           if (orderItems.size) {
             dispatch({
-              type: 'Order Edited',
+              type: actionTypes.TRACKING,
               trackingData: {
                 actionType: 'Order Edited',
                 order_id: basketOrderId,
@@ -562,7 +562,7 @@ const actions = {
               }
             })
             dispatch({
-              type: 'Order Edited',
+              type: actionTypes.TRACKING,
               optimizelyData: {
                 eventName: 'order_edited_net',
                 tags: {
@@ -572,7 +572,7 @@ const actions = {
             })
           } else {
             dispatch({
-              type: 'Order Placed',
+              type: actionTypes.TRACKING,
               trackingData: {
                 actionType: 'Order Placed',
                 order_id: basketOrderId,
@@ -589,7 +589,7 @@ const actions = {
               }
             })
             dispatch({
-              type: 'Order Placed',
+              type: actionTypes.TRACKING,
               optimizelyData: {
                 eventName: 'order_placed_net',
                 tags: {
@@ -601,7 +601,7 @@ const actions = {
 
         } else if(editingBox) {
           dispatch({
-            type: 'Order Edited',
+            type: actionTypes.TRACKING,
             trackingData: {
               actionType: 'Order Edited',
               order_id: basketOrderId,
@@ -618,7 +618,7 @@ const actions = {
             }
           })
           dispatch({
-            type: 'Order Edited',
+            type: actionTypes.TRACKING,
             optimizelyData: {
               eventName: 'order_edited_net',
               tags: {
@@ -628,7 +628,7 @@ const actions = {
           })
         } else {
           dispatch({
-            type: 'Order Placed',
+            type: actionTypes.TRACKING,
             trackingData: {
               actionType: 'Order Placed',
               order_id: basketOrderId,
@@ -645,7 +645,7 @@ const actions = {
             }
           })
           dispatch({
-            type: 'Order Placed',
+            type: actionTypes.TRACKING,
             optimizelyData: {
               eventName: 'order_placed_net',
               tags: {
@@ -728,7 +728,7 @@ const actions = {
         const editedNetTotal = originalNetTotal && orderTotal ? (orderTotal - originalNetTotal).toFixed(2) : ''
 
         dispatch({
-          type: 'Order Edited',
+          type: actionTypes.TRACKING,
           optimizelyData: {
             eventName: 'order_edited_gross',
             tags: {
@@ -737,7 +737,7 @@ const actions = {
           }
         })
         dispatch({
-          type: 'Order Edited',
+          type: actionTypes.TRACKING,
           optimizelyData: {
             eventName: 'order_edited_net',
             tags: {

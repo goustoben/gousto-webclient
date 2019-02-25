@@ -67,7 +67,7 @@ describe('basket actions', () => {
     test('should dispatch Order Edited tracking action for subscription box', async() => {
       await basketCheckedOut(2, 'grid')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
-        type: 'Order Edited',
+        type: 'TRACKING',
         trackingData: {
           actionType: 'Order Edited',
           order_id: '178',
@@ -85,7 +85,7 @@ describe('basket actions', () => {
       })
 
       expect(dispatch).toHaveBeenCalledWith({
-        type: 'Order Edited',
+        type: 'TRACKING',
         optimizelyData: {
           eventName: 'order_edited_net',
           tags: {
@@ -130,7 +130,7 @@ describe('basket actions', () => {
 
       await basketCheckedOut(2, 'grid')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
-        type: 'Order Edited',
+        type: 'TRACKING',
         trackingData: {
           actionType: 'Order Edited',
           order_id: '178',
@@ -148,7 +148,7 @@ describe('basket actions', () => {
       })
 
       expect(dispatch).toHaveBeenCalledWith({
-        type: 'Order Edited',
+        type: 'TRACKING',
         optimizelyData: {
           eventName: 'order_edited_net',
           tags: {
@@ -192,7 +192,7 @@ describe('basket actions', () => {
       })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
-        type: 'Order Placed',
+        type: 'TRACKING',
         trackingData: {
           actionType: 'Order Placed',
           order_id: '',
@@ -210,7 +210,7 @@ describe('basket actions', () => {
       })
 
       expect(dispatch).toHaveBeenCalledWith({
-        type: 'Order Placed',
+        type: 'TRACKING',
         optimizelyData: {
           eventName: 'order_placed_net',
           tags: {
@@ -252,7 +252,7 @@ describe('basket actions', () => {
       })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
-        type: 'Order Placed',
+        type: 'TRACKING',
         trackingData: {
           actionType: 'Order Placed',
           order_id: '179',
@@ -270,7 +270,7 @@ describe('basket actions', () => {
       })
 
       expect(dispatch).toHaveBeenCalledWith({
-        type: 'Order Placed',
+        type: 'TRACKING',
         optimizelyData: {
           eventName: 'order_placed_net',
           tags: {
