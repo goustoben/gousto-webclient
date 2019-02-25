@@ -23,6 +23,7 @@ jest.mock('routes/Menu/RecipeList')
 jest.mock('BoxSummary/BoxSummaryMobile')
 jest.mock('BoxSummary/BoxSummaryDesktop')
 jest.mock('routes/Menu/DetailOverlay')
+jest.mock('routes/Menu/JustForYouTutorial')
 
 jest.mock('react-lazyload', () => ({
   forceCheck: jest.fn(),
@@ -354,7 +355,7 @@ describe('Menu', () => {
 				{
 				  context: {
 				    store: {
-				      getState: getStateSpy,
+              getState: getStateSpy,
 				    },
 				  },
 				},

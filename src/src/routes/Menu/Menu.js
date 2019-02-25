@@ -28,7 +28,7 @@ import RecipeList from './RecipeList'
 import { Banner } from './Banner'
 
 import fetchData from './fetchData'
-import JustForYouTutorial from './JustForYouTutorial'
+import { JustForYouTutorial } from './JustForYouTutorial'
 
 class Menu extends React.Component {
 	static propTypes = {
