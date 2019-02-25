@@ -252,7 +252,9 @@ export function checkoutPostSignup() {
       await dispatch(loginActions.loginUser(email, password, true, orderId))
       const prices = pricing.get('prices')
       const grossTotal = prices && prices.get('grossTotal')
-      dispatch(tempActions.temp('originalTotal', grossTotal))
+      const netTotal = prices && prices.get('total')
+      dispatch(tempActions.temp('originalGrossTotal', grossTotal))
+      dispatch(tempActions.temp('originalNetTotal', netTotal))
       dispatch(trackPurchase())
 
     } catch (err) {

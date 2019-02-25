@@ -532,10 +532,12 @@ const actions = {
       const subscription = user.get('subscription')
       const isActiveSubsc = subscription && (subscription.get('state') === 'active')
       const prices = pricing.get('prices')
-      const originalTotal = temp.get('originalTotal')
+      const originalGrossTotal = temp.get('originalGrossTotal')
+      const originalNetTotal = temp.get('originalNetTotal')
       const orderTotal = prices && prices.get('total')
       const grossTotal = prices && prices.get('grossTotal')
-      const editedTotal = originalTotal && grossTotal ? (grossTotal - originalTotal).toFixed(2) : ''
+      const editedGrossTotal = originalGrossTotal && grossTotal ? (grossTotal - originalGrossTotal).toFixed(2) : ''
+      const editedNetTotal = originalNetTotal && orderTotal ? (orderTotal - originalNetTotal).toFixed(2) : ''
       const promoCode = prices && prices.get('promoCode')
 
       if(isAuthenticated) {
@@ -543,7 +545,7 @@ const actions = {
           const orderItems = orders.get(basketOrderId).get('recipeItems')
           if (orderItems.size) {
             dispatch({
-              type: 'Order Edited',
+              type: actionTypes.TRACKING,
               trackingData: {
                 actionType: 'Order Edited',
                 order_id: basketOrderId,
@@ -555,13 +557,22 @@ const actions = {
               optimizelyData: {
                 eventName: 'order_edited_gross',
                 tags: {
-                  revenue: editedTotal
+                  revenue: editedGrossTotal
+                }
+              }
+            })
+            dispatch({
+              type: actionTypes.TRACKING,
+              optimizelyData: {
+                eventName: 'order_edited_net',
+                tags: {
+                  revenue: editedNetTotal
                 }
               }
             })
           } else {
             dispatch({
-              type: 'Order Placed',
+              type: actionTypes.TRACKING,
               trackingData: {
                 actionType: 'Order Placed',
                 order_id: basketOrderId,
@@ -577,11 +588,20 @@ const actions = {
                 }
               }
             })
+            dispatch({
+              type: actionTypes.TRACKING,
+              optimizelyData: {
+                eventName: 'order_placed_net',
+                tags: {
+                  revenue: orderTotal
+                }
+              }
+            })
           }
 
         } else if(editingBox) {
           dispatch({
-            type: 'Order Edited',
+            type: actionTypes.TRACKING,
             trackingData: {
               actionType: 'Order Edited',
               order_id: basketOrderId,
@@ -593,13 +613,22 @@ const actions = {
             optimizelyData: {
               eventName: 'order_edited_gross',
               tags: {
-                revenue: editedTotal
+                revenue: editedGrossTotal
+              }
+            }
+          })
+          dispatch({
+            type: actionTypes.TRACKING,
+            optimizelyData: {
+              eventName: 'order_edited_net',
+              tags: {
+                revenue: editedNetTotal
               }
             }
           })
         } else {
           dispatch({
-            type: 'Order Placed',
+            type: actionTypes.TRACKING,
             trackingData: {
               actionType: 'Order Placed',
               order_id: basketOrderId,
@@ -612,6 +641,15 @@ const actions = {
               eventName: 'order_placed_gross',
               tags: {
                 revenue: grossTotal
+              }
+            }
+          })
+          dispatch({
+            type: actionTypes.TRACKING,
+            optimizelyData: {
+              eventName: 'order_placed_net',
+              tags: {
+                revenue: orderTotal
               }
             }
           })
@@ -682,21 +720,34 @@ const actions = {
           },
         })
 
-        const originalTotal = temp.get('originalTotal')
+        const originalGrossTotal = temp.get('originalGrossTotal')
+        const originalNetTotal = temp.get('originalNetTotal')
+        const orderTotal = order && order.prices && order.prices.total
         const grossTotal = order && order.prices && order.prices.grossTotal
-        const editedTotal = originalTotal && grossTotal ? (grossTotal - originalTotal).toFixed(2) : ''
+        const editedGrossTotal = originalGrossTotal && grossTotal ? (grossTotal - originalGrossTotal).toFixed(2) : ''
+        const editedNetTotal = originalNetTotal && orderTotal ? (orderTotal - originalNetTotal).toFixed(2) : ''
 
         dispatch({
-          type: 'Order Edited',
+          type: actionTypes.TRACKING,
           optimizelyData: {
             eventName: 'order_edited_gross',
             tags: {
-              revenue: editedTotal
+              revenue: editedGrossTotal
+            }
+          }
+        })
+        dispatch({
+          type: actionTypes.TRACKING,
+          optimizelyData: {
+            eventName: 'order_edited_net',
+            tags: {
+              revenue: editedNetTotal
             }
           }
         })
 
-        dispatch(tempActions.temp('originalTotal', grossTotal))
+        dispatch(tempActions.temp('originalGrossTotal', grossTotal))
+        dispatch(tempActions.temp('originalNetTotal', orderTotal))
         dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
       } catch (err) {
         dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, err.message))
