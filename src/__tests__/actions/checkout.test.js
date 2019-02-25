@@ -369,7 +369,7 @@ describe('checkout actions', () => {
     it('should dispatch a call to trackPurchase', async () => {
       global.ga = ga
       await checkoutPostSignup()(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledTimes(7)
+      expect(dispatch).toHaveBeenCalledTimes(8)
     })
   })
 
