@@ -8,7 +8,7 @@ import css from './JustForYouTutorial.css'
 const JustForYouTutorial = ({ showTutorial }) => (
   (showTutorial) ? (
     <Portal>
-      <Tutorial onClose>
+      <Tutorial>
         <Step selector="[data-slug='recommendations']">
           <p className={css.intro}>Introducing</p>
           <p className={css.main}>Just For You</p>
