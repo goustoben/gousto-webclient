@@ -59,11 +59,12 @@ describe('basket actions', () => {
         }
       }),
       temp: Immutable.fromJS({
-        originalTotal: "24.99"
+        originalGrossTotal: "24.99",
+        originalNetTotal: "24.99"
       })
     })
 
-    test('should dispatch Order Edited  tracking action for subscription box', async() => {
+    test('should dispatch Order Edited tracking action for subscription box', async() => {
       await basketCheckedOut(2, 'grid')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'Order Edited',
@@ -77,6 +78,16 @@ describe('basket actions', () => {
         },
         optimizelyData: {
           eventName: 'order_edited_gross',
+          tags: {
+            revenue: '-0.99'
+          }
+        }
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'Order Edited',
+        optimizelyData: {
+          eventName: 'order_edited_net',
           tags: {
             revenue: '-0.99'
           }
@@ -112,7 +123,8 @@ describe('basket actions', () => {
           }
         }),
         temp: Immutable.fromJS({
-          originalTotal: "24.99"
+          originalGrossTotal: "24.99",
+          originalNetTotal: "24.99"
         })
       })
 
@@ -129,6 +141,16 @@ describe('basket actions', () => {
         },
         optimizelyData: {
           eventName: 'order_edited_gross',
+          tags: {
+            revenue: '-0.99'
+          }
+        }
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'Order Edited',
+        optimizelyData: {
+          eventName: 'order_edited_net',
           tags: {
             revenue: '-0.99'
           }
@@ -164,7 +186,8 @@ describe('basket actions', () => {
           }
         }),
         temp: Immutable.fromJS({
-          originalTotal: "24.99"
+          originalGrossTotal: "24.99",
+          originalNetTotal: "24.99"
         })
       })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
@@ -223,7 +246,8 @@ describe('basket actions', () => {
           }
         }),
         temp: Immutable.fromJS({
-          originalTotal: "24.99"
+          originalGrossTotal: "24.99",
+          originalNetTotal: "24.99"
         })
       })
       await basketCheckedOut(2, 'grid')(dispatch, getState)
