@@ -9,6 +9,7 @@
 
 .ribbon {
   width: 10px;
+  position: relative;
   display: inline-flex;
   flex-direction: column;
   border-top: 1px solid White;
@@ -41,7 +42,7 @@
 
 .arrowBottom {
 	composes: arrow;
-  top: 13px;
+  top: 12px;
   border-right: none;
   border-top: 14px solid transparent;
   border-bottom: none;
@@ -50,7 +51,6 @@
 
 .arrowBottomBorder {
 	composes: arrowBottom;
-  top: 13px;
   right: -1px;
   border-top: 15px solid transparent;
   border-bottom: none;
