@@ -50,7 +50,8 @@
 
 .arrowBottomBorder {
 	composes: arrowBottom;
-  top: 12px;
+  top: 13px;
+  right: -1px;
   border-top: 15px solid transparent;
   border-bottom: none;
   border-left: 10px solid White;
