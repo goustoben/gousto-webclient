@@ -18,13 +18,18 @@ export const showJfyTutorial = () => {
 export const setTutorialViewed = (name, count) => (
   (dispatch) => {
     dispatch({
-      type: actionTypes.TUTORIAL_VIEWED,
+      type: actionTypes.SET_TUTORIAL_VIEWED,
       name,
       count,
     })
   }
 )
 
-export default {
-  showJfyTutorial,
-}
+export const incrementTutorialViewed = (name) => (
+  (dispatch) => {
+    dispatch({
+      type: actionTypes.INCREMENT_TUTORIAL_VIEWED,
+      name,
+    })
+  }
+)
