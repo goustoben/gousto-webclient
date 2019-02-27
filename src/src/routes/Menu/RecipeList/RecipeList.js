@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
 import { isRecommendedRecipe } from 'utils/menu'
-import { formatRecipeTitle, getSurcharge, getRecipeRange } from 'utils/recipe'
+import { formatRecipeTitle, getSurcharge } from 'utils/recipe'
 import actions from 'actions/tracking'
 
 import css from './RecipeList.css'
@@ -138,7 +138,6 @@ class RecipeList extends React.Component {
           const isFineDineIn = recipe.get('range') === 'fine_dine_in'
           const surcharge = getSurcharge(recipe.get('meals'), numPortions)
           const view = this.getView(mobileGridView, isFeatured, isFineDineIn)
-          const range = getRecipeRange(recipe)
 
           index += 1
 
@@ -164,7 +163,7 @@ class RecipeList extends React.Component {
               onClick={() => { showDetailRecipe(recipeId) }}
               features={features}
               isRecommendedRecipe={isRecommendedRecipe(recipeId, allRecipesList, recipesStore)}
-              range={range}
+              range={recipe.get('range', '')}
               tasteScore={recipe.getIn(['recommendationData', 'score'])}
               fiveADay={recipe.get('fiveADay')}
               diet={recipe.get('dietType')}

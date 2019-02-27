@@ -15,7 +15,7 @@ const OrderedRecipes = ({ title, recipeId, stock, media, basics, serving, featur
 				<span className={classnames((featureLink) ? css.link : '', css.details)}>
 					<span className={css.textBold}>{title}</span>&nbsp;{(featureLink) ? <span className={css.arrowRight} /> : null}
 				</span>
-				{(range === 'fine-dine-in') ? <span className={css.detailsRow}><span className={css.fineDineIn}>Fine Dine In</span></span> : null}
+				{(range === 'fine_dine_in') ? <span className={css.detailsRow}><span className={css.fineDineIn}>Fine Dine In</span></span> : null}
 				{(basics.size > 0 && view === 'boxdetails') ? <p className={css.details}><span className={css.basics}>You'll need: {basics.toJS().join(', ')}</span></p> : null}
 				{(featureBtn) ?
 					<Button
