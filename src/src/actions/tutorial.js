@@ -15,6 +15,16 @@ export const showJfyTutorial = () => {
   }
 }
 
+export const setTutorialViewed = (name, count) => (
+  (dispatch) => {
+    dispatch({
+      type: actionTypes.TUTORIAL_VIEWED,
+      name,
+      count,
+    })
+  }
+)
+
 export default {
   showJfyTutorial,
 }
