@@ -36,6 +36,15 @@ export const trackFirstPurchase = orderId => (
         }
       }
     })
+    dispatch({
+      type: actionTypes.TRACKING,
+      optimizelyData: {
+        eventName: 'order_placed_net',
+        tags: {
+          revenue: orderTotal
+        }
+      }
+    })
   }
 )
 

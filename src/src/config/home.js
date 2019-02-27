@@ -34,7 +34,7 @@ module.exports = {
     steps: [{
       path: 'icon-choose',
       title: 'You choose',
-      description: 'From over 30 exciting recipes each week.',
+      description: 'Up to 40 exciting recipes each week.',
     }, {
       path: 'icon-delivery',
       title: 'We deliver',

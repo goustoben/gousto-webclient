@@ -98,8 +98,8 @@
     background-color: White;
     right: 35px;
     top: SpacingMD;
-   
-    
+
+
     @media ScreenLGMin {
       right: SpacingLG;
       top: SpacingLG;
@@ -107,7 +107,7 @@
       line-height: 1.8;
       z-index: 5;
     }
-    
+
     @media ScreenMDMax {
       position: relative;
       background: White;
@@ -248,7 +248,6 @@
   .rangeBadgeDetails > div > div:nth-child(2)  {
     @media ScreenLGMin {
       width: 10px;
-      top: 1px;
       display: inline-flex;
       flex-direction: column;
       border-top: 1px solid White;

@@ -34,7 +34,7 @@ describe('tracking actions', () => {
             id: 'order-a',
             prices: {
               total: '13.99',
-              grossTotal: '13.99',
+              grossTotal: '15.99',
               promoCode: '10OFF',
             },
           },
@@ -73,7 +73,12 @@ describe('tracking actions', () => {
       const optimizelyData = dispatch.mock.calls[0][0].optimizelyData
 
       expect(optimizelyData.eventName).toBe('order_placed_gross')
-      expect(optimizelyData.tags.revenue).toBe('13.99')
+      expect(optimizelyData.tags.revenue).toBe('15.99')
+
+      const optimizelyData2 = dispatch.mock.calls[1][0].optimizelyData
+
+      expect(optimizelyData2.eventName).toBe('order_placed_net')
+      expect(optimizelyData2.tags.revenue).toBe('13.99')
     })
 
     test('should log warning when no user is found', () => {
