@@ -4,7 +4,6 @@ import React from 'react'
 import Immutable from 'immutable'/* eslint-disable new-cap */
 import { basketSum } from 'utils/basket'
 import recipesActions from 'actions/recipes'
-import { getRecipeRange } from 'utils/recipe'
 import OrderedRecipe from './OrderedRecipe'
 
 class RecipeSummary extends React.PureComponent {
@@ -53,11 +52,8 @@ class RecipeSummary extends React.PureComponent {
 
 	  return (
 			<div data-testing="checkoutRecipeSummary">
-				{recipes.map((serving, recipeId) => {
-				  const range = getRecipeRange(menuRecipesStore.get(recipeId)) || Immutable.Map()
-				  const rangeSlug = range.size ? range.get('slug') : null
-
-				  return (<OrderedRecipe
+				{recipes.map((serving, recipeId) => (
+					<OrderedRecipe
 					  key={recipeId}
 					  recipeId={recipeId}
 					  view={this.props.view}
@@ -67,11 +63,11 @@ class RecipeSummary extends React.PureComponent {
 					  basics={menuRecipesStore.getIn([recipeId, 'basics'], Immutable.List([]))}
 					  stock={menuRecipeStock.getIn([recipeId, String(numPortions)], 0)}
 					  media={menuRecipesStore.getIn([recipeId, 'media', 'images', 0, 'urls'], Immutable.List([]))}
-					  range={rangeSlug}
+					  range={menuRecipesStore.getIn([recipeId, 'range'], '')}
 					  pricePerServing={Number(prices.get('pricePerPortion', 0))}
 					  pricePerServingDiscounted={Number(prices.get('pricePerPortionDiscounted', 0))}
-				  />)
-				}).toArray()}
+					/>
+				)).toArray()}
 			</div>
 	  )
 	}

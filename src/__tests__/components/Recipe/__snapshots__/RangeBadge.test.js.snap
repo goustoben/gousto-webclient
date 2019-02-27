@@ -8,21 +8,21 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
     className="ribbonText"
     style={
       Object {
-        "backgroundColor": "#333D47",
-        "border": "1px solid #282B2F",
+        "backgroundColor": "Carrot",
+        "border": "1px solid DarkCarrot",
         "borderRight": "none",
-        "color": "#FFFFFF",
+        "color": "White",
       }
     }
   >
-    TEN TO TABLE
+    10-MINUTE MEAL
   </div>
   <div
     className="ribbon"
     style={
       Object {
-        "borderBottom": "1px solid #282B2F",
-        "borderTop": "1px solid #282B2F",
+        "borderBottom": "1px solid DarkCarrot",
+        "borderTop": "1px solid DarkCarrot",
       }
     }
   >
@@ -30,7 +30,7 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
       className="arrowTopBorder"
       style={
         Object {
-          "borderLeft": "10px solid #282B2F",
+          "borderLeft": "10px solid DarkCarrot",
         }
       }
     />
@@ -38,7 +38,7 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
       className="arrowTop"
       style={
         Object {
-          "borderLeft": "9px solid #333D47",
+          "borderLeft": "9px solid Carrot",
         }
       }
     />
@@ -46,7 +46,7 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
       className="arrowBottomBorder"
       style={
         Object {
-          "borderLeft": "10px solid #282B2F",
+          "borderLeft": "10px solid DarkCarrot",
         }
       }
     />
@@ -54,7 +54,7 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
       className="arrowBottom"
       style={
         Object {
-          "borderLeft": "9px solid #333D47",
+          "borderLeft": "9px solid Carrot",
         }
       }
     />

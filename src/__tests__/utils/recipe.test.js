@@ -1,14 +1,5 @@
 import Immutable from 'immutable'
 
-import {
-  getLowStockTag,
-  formatRecipeTitle,
-  getSurcharge,
-  getCookingTime,
-  getRecipeRange,
-  getTaxonomyTags,
-} from 'utils/recipe'
-
 jest.mock('config', () => ({
   menu: { stockTagTreshold: 10, stockThreshold: 0 },
   recipes: {
@@ -17,6 +8,15 @@ jest.mock('config', () => ({
     },
   },
 }))
+
+import {
+  getLowStockTag,
+  formatRecipeTitle,
+  getSurcharge,
+  getCookingTime,
+  getRangeBadge,
+  getTaxonomyTags,
+} from 'utils/recipe'
 
 describe('recipes', () => {
   describe('getLowStockTag', () => {
@@ -109,33 +109,13 @@ describe('recipes', () => {
 
   describe('getRangeBadge', () => {
     test('should return null if no item is found', () => {
-      expect(getRecipeRange('test')).toBe(Immutable.Map())
+      expect(getRangeBadge('test')).toBeNull()
     })
 
     test('should return an object if range name matches', () => {
-      const recipe = Immutable.fromJS({
-        taxonomy: [
-          {
-            id: 2,
-            name: "Food Brands",
-            slug: "food-brands",
-            tags: [
-              {
-                id: "9",
-                name: "Fine Dine In",
-                properties: { ribbon_color: "#333D47", border_color: "#282B2F", text_color: "#FFFFFF" },
-                slug: "fine-dine-in"
-              }
-            ]
-          }
-        ]
+      expect(getRangeBadge('testRange')).toEqual({
+        text: 'An Example Range',
       })
-      expect(getRecipeRange(recipe)).toEqual(Immutable.fromJS({
-        id: "9",
-        name: "Fine Dine In",
-        properties: { ribbon_color: "#333D47", border_color: "#282B2F", text_color: "#FFFFFF" },
-        slug: "fine-dine-in"
-      }))
     })
   })
 
