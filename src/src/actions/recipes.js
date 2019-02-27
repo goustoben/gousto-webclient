@@ -1,7 +1,8 @@
-import logger from 'utils/logger'
-import { fetchRecipes, fetchRecipesStockByDate } from 'apis/recipes'
-import statusActions from './status'
 import actionTypes from './actionTypes'
+import statusActions from './status'
+import logger from 'utils/logger'
+import { featureSet } from 'actions/features'
+import { fetchRecipes, fetchRecipesStockByDate } from 'apis/recipes'
 
 const recipesLoadRecipesById = (recipeIds = []) => (
   async (dispatch, getState) => {
@@ -12,7 +13,7 @@ const recipesLoadRecipesById = (recipeIds = []) => (
       dispatch(statusActions.pending(actionTypes.RECIPES_RECEIVE, true))
       try {
         const params = {
-          includes: ['ingredients', 'allergens', 'taxonomy'],
+          'includes[]': ['ingredients', 'allergens'],
           'filters[recipe_ids]': newRecipeIds,
         }
         const accessToken = getState().auth.get('accessToken')

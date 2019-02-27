@@ -1,4 +1,3 @@
-
 import config from 'config'
 import Immutable from 'immutable'
 
@@ -62,14 +61,8 @@ export function getCookingTime(time) {
   return `${time} mins`
 }
 
-export function getRecipeRange(recipe) {
-  const foodBrandTaxonomy = recipe && recipe.size && recipe.get('taxonomy')
-  const foodBrand = foodBrandTaxonomy ? foodBrandTaxonomy.find(tag => tag.get('slug') === 'food-brands') : null
-  if(foodBrand && foodBrand.get('tags').size) {    
-    return foodBrand.get('tags').get(0)
-  }
-
-  return Immutable.Map([])
+export function getRangeBadge(range) {
+  return (config.recipes.range.badges[range]) ? config.recipes.range.badges[range] : null
 }
 
 export function getTaxonomyTags(recipe, categorySlug) {

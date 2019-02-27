@@ -1,9 +1,11 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import renderer from 'react-test-renderer'
-import Immutable from 'immutable'
+import sinon from 'sinon'
+
 import RangeBadge from 'Recipe/RangeBadge'
 import InfoBadge from 'Recipe/InfoBadge'
+import colors from 'styles/colors.css'
 
 describe('<RangeBadge />', () => {
   test('should not render by default', () => {
@@ -14,80 +16,31 @@ describe('<RangeBadge />', () => {
 
   describe('snapshots', () => {
     test('should render when given a preconfigured range', () => {
-      const range = Immutable.fromJS({
-        id: '1',
-        name: 'Ten to table',
-        slug: 'ten-to-table',
-        properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
-        }
-      })
+      const whiteStub = sinon.stub(colors, 'White').get(() => '#FFFFFF')
       const tree = renderer
-        .create(<RangeBadge range={range} />)
+        .create(<RangeBadge range={'ten_to_table'} />)
         .toJSON()
 
       expect(tree).toMatchSnapshot()
-
+      whiteStub.reset()
     })
   })
 
   describe('render', () => {
     test('should render range badge for Ten to table', () => {
-      const range = Immutable.fromJS({
-        id: '1',
-        name: 'Ten to table',
-        slug: 'ten-to-table',
-        properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
-        }
-      })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={'ten_to_table'}/>)
       expect(wrapper.find('.rangeBadge').length).toEqual(1)
     })
     test('should render range badge for Everydays favorites', () => {
-      const range = Immutable.fromJS({
-        id: '1',
-        name: 'everyday favourites',
-        slug: 'everyday-favourites',
-        properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
-        }
-      })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={'everyday_favourites'}/>)
       expect(wrapper.find('.rangeBadge').length).toEqual(1)
     })
     test('should render range badge with text Everyday Favorites', () => {
-      const range = Immutable.fromJS({
-        id: '1',
-        name: 'everyday favourites',
-        slug: 'everyday-favourites',
-        properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
-        }
-      })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={'everyday_favourites'}/>)
       expect(wrapper.find('.ribbonText').prop('children')).toEqual('EVERYDAY FAVOURITES')
     })
     test('should render range badge with text 10-MINUTES MEAL', () => {
-      const range = Immutable.fromJS({
-        id: '1',
-        name: '10-MINUTE MEAL',
-        slug: 'ten-to-table',
-        properties: {
-          "ribbonColor": "#333D47",
-          "borderColor": "#282B2F",
-          "textColor": "#FFFFFF"
-        }
-      })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={'ten_to_table'}/>)
       expect(wrapper.find('.ribbonText').prop('children')).toEqual('10-MINUTE MEAL')
     })
   })
