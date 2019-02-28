@@ -5,8 +5,8 @@ import { Portal } from 'Portal'
 import { Tutorial, Step } from 'Tutorial'
 import css from './JustForYouTutorial.css'
 
-const JustForYouTutorial = ({ showTutorial, tutorialViewed, incrementTutorialViewed }) => (
-  (!tutorialViewed && showTutorial) ? (
+const JustForYouTutorial = ({ showTutorial, incrementTutorialViewed }) => (
+  (showTutorial) ? (
     <Portal>
       <Tutorial onClose={() => { incrementTutorialViewed('justforyou') }}>
         <Step selector="[data-slug='recommendations']">
@@ -24,13 +24,11 @@ const JustForYouTutorial = ({ showTutorial, tutorialViewed, incrementTutorialVie
 
 JustForYouTutorial.propTypes = {
   showTutorial: PropTypes.bool,
-  tutorialViewed: PropTypes.bool,
   incrementTutorialViewed: PropTypes.func,
 }
 
 JustForYouTutorial.defaultProps = {
   showTutorial: false,
-  tutorialViewed: false,
   incrementTutorialViewed: () => {},
 }
 

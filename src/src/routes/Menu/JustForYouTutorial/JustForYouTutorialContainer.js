@@ -4,10 +4,13 @@ import { incrementTutorialViewed } from 'actions/tutorial'
 
 import { JustForYouTutorial } from './JustForYouTutorial'
 
-const mapStateToProps = (state) => ({
-  showTutorial: state.tutorial && state.tutorial.get('showJfyTutorial'),
-  tutorialViewed: Boolean(state.tutorial && state.tutorial.getIn(['viewed', 'justforyou'])),
-})
+const mapStateToProps = (state) => {
+  console.log('TCL: mapStateToProps -> state.tutorial.getIn([visibile justforyou], false)', state.tutorial.getIn(['visible', 'justforyou'], false)) //eslint-disable-line
+  
+  return {
+    showTutorial: state.tutorial && state.tutorial.getIn(['visible', 'justforyou'], false),
+  }
+}
 
 const mapDispatchToProps = {
   incrementTutorialViewed,
