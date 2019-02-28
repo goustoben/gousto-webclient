@@ -1,16 +1,29 @@
 import actionTypes from './actionTypes'
 
-export const showJfyTutorial = () => (
+export const shouldJfyTutorialBeVisible = () => (
   (dispatch, getState) => {
-    const { menuCollections } = getState()
+    const { menuCollections, tutorial } = getState()
 
     const jfyCollectionLoaded = menuCollections.some(
       collection => collection.get('slug') === 'recommendations'
     )
 
+    const jfyTutorialSeen = Boolean(tutorial && tutorial.getIn(['viewed', 'justforyou']))
+
+    if (jfyCollectionLoaded && !jfyTutorialSeen) {
+      dispatch(setTutorialVisible('justforyou', true))
+    } else {
+      dispatch(setTutorialVisible('justforyou', false))
+    }
+  }
+)
+
+export const setTutorialVisible = (name, value) => (
+  (dispatch)=> {
     dispatch({
-      type: actionTypes.TRIGGER_JFY_TUTORIAL,
-      value: jfyCollectionLoaded
+      type: actionTypes.SET_TUTORIAL_VISIBLE,
+      name,
+      value,
     })
   }
 )

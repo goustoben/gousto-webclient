@@ -3,14 +3,17 @@ import actionTypes from 'actions/actionTypes'
 
 const defaultState = Immutable.Map({
   viewed: Immutable.Map({}),
-  showJfyTutorial: false,
+  visible: Immutable.Map({}),
 })
 
 const tutorial = {
   tutorial: (state = defaultState, action) => {
     switch (action.type) {
-    case actionTypes.TRIGGER_JFY_TUTORIAL: {
-      return state.set('showJfyTutorial', action.value)
+    case actionTypes.SET_TUTORIAL_VISIBLE: {
+      const { name, value } = action
+      const visibleState = state.get('visible').set(name, value)
+
+      return state.set('visible', visibleState)
     }
 
     case actionTypes.SET_TUTORIAL_VIEWED: {
