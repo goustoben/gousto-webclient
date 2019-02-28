@@ -62,7 +62,7 @@ class Menu extends React.Component {
     filteredRecipesNumber: PropTypes.number,
     clearAllFilters: PropTypes.func,
     triggerMenuLoad: PropTypes.func,
-    showJfyTutorial: PropTypes.func,
+    shouldJfyTutorialBeVisible: PropTypes.func,
   }
 
   static contextTypes = {
@@ -126,7 +126,7 @@ class Menu extends React.Component {
       store.dispatch(props.portionSizeSelectedTracking(props.numPortions, props.params.orderId))
     }
 
-    props.showJfyTutorial()
+    props.shouldJfyTutorialBeVisible()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -160,11 +160,11 @@ class Menu extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { showJfyTutorial, isLoading } = this.props
+    const { shouldJfyTutorialBeVisible, isLoading } = this.props
 
     forceCheck()
     if (!isLoading && prevProps.isLoading !== isLoading) {
-      showJfyTutorial()
+      shouldJfyTutorialBeVisible()
     }
   }
 

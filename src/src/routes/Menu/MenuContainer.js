@@ -5,7 +5,7 @@ import actions from 'actions'
 import { slugify } from 'utils/url'
 import actionTypes from 'actions/actionTypes'
 import { triggerMenuLoad } from 'actions/menu'
-import { showJfyTutorial } from 'actions/tutorial'
+import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 
 import { getFilteredRecipeIds } from './selectors/filters.js'
@@ -88,7 +88,7 @@ const mapDispatchToProps = {
   triggerMenuLoad,
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
   basketNumPortionChange: actions.basketNumPortionChange,
-  showJfyTutorial,
+  shouldJfyTutorialBeVisible,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
