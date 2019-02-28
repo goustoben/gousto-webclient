@@ -22,8 +22,12 @@ const tutorial = {
 
     case actionTypes.INCREMENT_TUTORIAL_VIEWED: {
       const { name } = action
-      const { count } = state.getIn(['viewed', name], 0)
-      const viewedState = state.get('viewed').set(name, count)
+      const count = state.getIn(['viewed', name], 0)
+
+      const viewedState = state.get('viewed').set(
+        name,
+        count + 1,
+      )
 
       return state.set('viewed', viewedState)
     }
