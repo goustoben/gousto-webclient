@@ -14,7 +14,7 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri }) => (
 			<ul className={css.list}>
 				<li className={css.listItem}><span className={css.tick} />Precise ingredients (no food waste)</li>
 				<li className={css.listItem}><span className={css.tick} />Quality produce from trusted suppliers</li>
-				<li className={css.listItem}><span className={css.tick} />100% British meat</li>
+				<li className={css.listItem}><span className={css.tick} />100% British fresh meat</li>
 				<li className={css.listItem}><span className={css.tick} />Easy to follow recipe cards</li>
 				<li className={css.listItem}><span className={css.tick} />Meals for 2 or 4 people</li>
 			</ul>
