@@ -19,7 +19,6 @@ import products from './products'
 import basket from './basket'
 import tempActions from './temp'
 import actionTypes from './actionTypes'
-import { showJfyTutorial } from './tutorial'
 
 const menuActions = {
   menuLoadMenu,
@@ -158,7 +157,6 @@ export function menuLoadCollections(date, noUrlChange) {
       :
       collections
     dispatch(menuActions.menuCollectionsReceive(collectionsFiltered))
-    dispatch(showJfyTutorial())
     if (!noUrlChange) {
       let changeCollection = true
       const prevLoc = getState().routing.locationBeforeTransitions
@@ -279,8 +277,6 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
         dispatch(redirect('/menu', true))
       }
     }
-
-    dispatch(showJfyTutorial())
   }
 }
 
