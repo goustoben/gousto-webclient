@@ -4,10 +4,23 @@ import { shallow } from 'enzyme'
 import { JustForYouTutorial } from '../JustForYouTutorial'
 
 describe('JustForYouTutorial Component', () => {
-  const wrapper = shallow(<JustForYouTutorial />)
+  const mockClose = jest.fn()
+  let wrapper
 
-  it('should render if showTutorial is true', () => {
+  beforeEach(() => {
+    wrapper = shallow(<JustForYouTutorial showTutorial tutorialViewed={false} incrementTutorialViewed={mockClose}/>)
+  })
+
+  it('should render if showTutorial is true and tutorialViewed is false', () => {
     expect(wrapper.find('Portal').length).toEqual(1)
+  })
+  it('should not render if showTutorial is false', () => {
+    wrapper = shallow(<JustForYouTutorial showTutorial={false} tutorialViewed={false} incrementTutorialViewed={mockClose}/>)
+    expect(wrapper.find('Portal').length).toEqual(0)
+  })
+  it('tutorialViewed is true', () => {
+    wrapper = shallow(<JustForYouTutorial showTutorial tutorialViewed incrementTutorialViewed={mockClose}/>)
+    expect(wrapper.find('Portal').length).toEqual(0)
   })
  
   it('should render Tutorial component', () => {
@@ -24,5 +37,11 @@ describe('JustForYouTutorial Component', () => {
   
   it('should render second Step component with 1 child', () => {
     expect(wrapper.find('Step').at(1).children().length).toEqual(1)
+  })
+
+  it('should call incrementTutorialViewed function when onClose is called', () => {
+    const onClose = wrapper.find('Tutorial').prop('onClose')
+    onClose()
+    expect(mockClose).toHaveBeenCalled()
   })
 })
