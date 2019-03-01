@@ -40,8 +40,8 @@ describe('Share Your Link Modal', () => {
       expect(wrapper.find(ReferAFriend).length).toEqual(1)
     })
 
-    test('should render four LinkRow components', () => {
-      expect(wrapper.find(LinkRow).length).toEqual(4)
+    test('should render three LinkRow components', () => {
+      expect(wrapper.find(LinkRow).length).toEqual(3)
     })
 
   })
