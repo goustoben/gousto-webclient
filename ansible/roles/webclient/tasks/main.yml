@@ -24,6 +24,10 @@
 
 - include: nodeserver.yml
 
+- name: Find resolver
+  shell: cat /etc/resolv.conf | grep nameserver | head -n1 | cut -d ' ' -f2
+  register: resolver
+
 - include: nginx.yml
 
 - include: logrotate.yml
