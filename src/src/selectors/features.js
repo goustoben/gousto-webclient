@@ -9,3 +9,7 @@ export const isNextDayDeliveryPaintedDoorFeatureEnabled = state => (state.featur
 export const getDisabledSlots = state => (state.features ? state.features.getIn(['disabledSlots', 'value']) : '')
 
 export const getForceSignupWizard = state => (state.features ? state.features.getIn(['forceSignupWizard', 'value']) : false )
+
+export const getGoToMyGousto = state => (state.features ? state.features.getIn(['goToMyGousto', 'value']) : false )
+
+export const getGoToMyDeliveries = state => (state.features ? state.features.getIn(['goToMyDeliveries', 'value']) : false )
