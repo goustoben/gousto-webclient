@@ -6,6 +6,7 @@ import {
   shouldJfyTutorialBeVisible,
   setTutorialViewed,
   incrementTutorialViewed,
+  setTutorialVisible,
 } from 'actions/tutorial'
 
 describe('tutorial actions', () => {
@@ -17,26 +18,29 @@ describe('tutorial actions', () => {
     getState.mockClear()
   })
 
-  describe('shouldJfyTutorialBeVisible', () => {
-    const getJFYState = (collections, viewed) => ({
-      menuCollections: [
-        Immutable.Map({
-          ...collections,
-        })
-      ],
-      tutorial: Immutable.Map({
-        viewed: Immutable.Map({
-          viewed,
-        })
+  const getTutorialState = ({ collections = {}, viewed = {}, visible = {} }) => ({
+    menuCollections: [
+      Immutable.Map({
+        ...collections,
+      })
+    ],
+    tutorial: Immutable.Map({
+      viewed: Immutable.Map({
+        ...viewed,
+      }),
+      visible: Immutable.Map({
+        ...visible,
       })
     })
+  })
 
+  describe('shouldJfyTutorialBeVisible', () => {
     describe("when tutorial has been seen and collection is present", () => {
       beforeEach(() => {
-        getState.mockReturnValueOnce(getJFYState(
-          { slug: 'recommendations' },
-          { justforyou: 2 },
-        ))
+        getState.mockReturnValueOnce(getTutorialState({
+          collections: { slug: 'recommendations' },
+          viewed: { justforyou: 2 },
+        }))
       })
 
       it('should call dispatch with correct action and properties', () => {
@@ -52,10 +56,10 @@ describe('tutorial actions', () => {
 
     describe("when tutorial hasn't been seen and collection isn't present", () => {
       beforeEach(() => {
-        getState.mockReturnValueOnce(getJFYState(
-          { slug: 'all-recipes' },
-          { justforyou: 0 },
-        ))
+        getState.mockReturnValueOnce(getTutorialState({
+          collections: { slug: 'all-recipes' },
+          viewed: { justforyou: 0 },
+        }))
       })
 
       it('should call dispatch with correct action and properties', () => {
@@ -71,10 +75,10 @@ describe('tutorial actions', () => {
 
     describe("when tutorial hasn't been seen and collection is present", () => {
       beforeEach(() => {
-        getState.mockReturnValueOnce(getJFYState(
-          { slug: 'recommendations' },
-          { justforyou: 0 },
-        ))
+        getState.mockReturnValueOnce(getTutorialState({
+          collections: { slug: 'recommendations' },
+          viewed: { justforyou: 0 },
+        }))
       })
 
       it('should call dispatch with correct action and properties', () => {
@@ -85,6 +89,36 @@ describe('tutorial actions', () => {
           name: 'justforyou',
           value: true
         })
+      })
+    })
+  })
+
+  describe('setTutorialVisible', () => {
+    test('should dispatch a SET_TUTORIAL_VISIBLE with the given name and value', () => {
+      const name = 'testTutorial'
+      const value = true
+
+      setTutorialVisible(name, value)(dispatch)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.SET_TUTORIAL_VISIBLE,
+        name,
+        value,
+      })
+    })
+  })
+
+  describe('setTutorialViewed', () => {
+    test('should dispatch a SET_TUTORIAL_VISIBLE with the given name and value', () => {
+      const name = 'testTutorial'
+      const value = true
+
+      setTutorialVisible(name, value)(dispatch)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.SET_TUTORIAL_VISIBLE,
+        name,
+        value,
       })
     })
   })
