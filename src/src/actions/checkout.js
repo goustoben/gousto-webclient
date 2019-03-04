@@ -34,6 +34,7 @@ const checkoutActions = {
   trackingOrderPlaceAttempt,
   trackingOrderPlaceAttemptFailed,
   trackingOrderPlaceAttemptSucceeded,
+  trackPromocodeChange
 }
 
 export function checkoutClearErrors() {
@@ -371,5 +372,15 @@ export const trackSubscriptionIntervalChanged = () => (
     }
   }
 )
+
+export function trackPromocodeChange (promocode, added) {
+  return (dispatch) => dispatch({
+    type: 'TRACKING_PROMOCODE_CHANGE',
+    trackingData: {
+      actionType: added ? 'Promocode Applied' : 'Promocode Removed',
+      promocode
+    }
+  })
+}
 
 export default checkoutActions

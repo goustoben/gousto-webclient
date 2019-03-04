@@ -18,6 +18,7 @@ class PromoCode extends React.PureComponent {
 	  basketPromoCodeAppliedChange: PropTypes.func.isRequired,
 	  recipes: PropTypes.instanceOf(Immutable.Map),
 	  numPortions: PropTypes.number,
+	  trackPromocodeChange: PropTypes.func,
 	}
 
 	static defaultProps = {
@@ -88,16 +89,20 @@ class PromoCode extends React.PureComponent {
 
 	applyPromoCode = () => {
 	  if (this.props.promoCode) {
+	    const { promoCode } = this.props
 	    this.props.basketPromoCodeAppliedChange(true)
 	    this.handlePromoCodeVerification()
+	    this.props.trackPromocodeChange(promoCode, true)
 	  }
 	}
 
 	removePromoCode = () => {
+	  const promocode = this.props.promoCode.valueOf()
 	  this.props.basketPromoCodeChange('')
 	  this.props.basketPromoCodeAppliedChange(false)
 	  if (this.state.successMsg) {
 	    this.props.loadPrices()
+	    this.props.trackPromocodeChange(promocode, false)
 	  }
 	  this.setState({
 	    errorMsg: '',
@@ -109,20 +114,7 @@ class PromoCode extends React.PureComponent {
 	  if (!event || !event.target) {
 	    return
 	  }
-	  clearTimeout(this.debounceTimeout)
 	  this.props.basketPromoCodeChange(event.target.value)
-	  if (event.target.value.length < 2) {
-	    this.props.basketPromoCodeAppliedChange(false)
-	    this.setState({
-	      errorMsg: '',
-	      successMsg: '',
-	    })
-
-	    return
-	  }
-	  this.debounceTimeout = setTimeout(() => {
-	    this.applyPromoCode()
-	  }, configCheckout.promoValidationTime)
 	}
 
 	handleButtonClick = () => (this.promoCodeAdded() ? this.removePromoCode() : this.applyPromoCode())
@@ -131,9 +123,8 @@ class PromoCode extends React.PureComponent {
 	 * handle enter and space
 	 * @param e
 	 */
-	handlePromoKeyUp = (e) => {
+	handleKeyUp = (e) => {
 	  if (e.keyCode && (e.keyCode === 13 || e.keyCode === 32)) {
-	    clearTimeout(this.debounceTimeout)
 	    this.applyPromoCode()
 	  }
 	}
@@ -155,7 +146,7 @@ class PromoCode extends React.PureComponent {
 						  placeholder="Enter promo code"
 						  value={this.props.promoCode}
 						  onInput={this.handleInput}
-						  onKeyUp={this.handlePromoKeyUp}
+						  onKeyUp={this.handleKeyUp}
 						  className={this.getInputClassName()}
 						/>
 					</div>
@@ -177,9 +168,10 @@ class PromoCode extends React.PureComponent {
 						</Button>
 					</div>
 				</div>
-				{(this.promoCodeAdded()) && <div>
+				{(this.promoCodeAdded()) && 
+					<div>
 						{this.renderMessage()}
-                                </div>}
+     </div>}
 			</div>
 	  )
 	}
