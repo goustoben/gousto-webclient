@@ -11,9 +11,9 @@ export const shouldJfyTutorialBeVisible = () => (
     const jfyTutorialSeen = Boolean(tutorial && tutorial.getIn(['viewed', 'justforyou']))
 
     if (jfyCollectionLoaded && !jfyTutorialSeen) {
-      dispatch(setTutorialVisible('justforyou', true))
+      setTutorialVisible('justforyou', true)(dispatch)
     } else {
-      dispatch(setTutorialVisible('justforyou', false))
+      setTutorialVisible('justforyou', false)(dispatch)
     }
   }
 )
