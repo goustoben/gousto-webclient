@@ -71,6 +71,8 @@ class Menu extends React.Component {
 
   static defaultProps = {
     forceLoad: false,
+    isLoading: false,
+    shouldJfyTutorialBeVisible: () => {},
   }
 
   static fetchData(args, force) {
