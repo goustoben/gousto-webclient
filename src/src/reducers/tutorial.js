@@ -1,12 +1,12 @@
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import actionTypes from 'actions/actionTypes'
 
-const defaultState = Immutable.Map({
+export const defaultState = Immutable.Map({
   viewed: Immutable.Map({}),
   visible: Immutable.Map({}),
 })
 
-const tutorial = {
+export const tutorial = {
   tutorial: (state = defaultState, action) => {
     switch (action.type) {
     case actionTypes.SET_TUTORIAL_VISIBLE: {
