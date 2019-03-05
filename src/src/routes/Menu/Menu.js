@@ -104,6 +104,10 @@ class Menu extends React.Component {
 	    props.triggerMenuLoad()
 	  }
 
+	  if (props.numPortionsChanged && query.num_portions) {
+	    props.basketNumPortionChange(query.num_portions)
+	  }
+
 	  Menu.fetchData({ store, query, params }, forceDataLoad)
 
 	  if (props.boxSummaryDeliveryDays.size === 0 && !props.disabled) {
@@ -115,7 +119,7 @@ class Menu extends React.Component {
 	  if (!props.disabled && !props.menuLoadingBoxPrices) {
 	    props.menuLoadBoxPrices()
 	  }
-		
+
 	  if (props.params.orderId) {
 	    store.dispatch(props.portionSizeSelectedTracking(props.numPortions, props.params.orderId))
 	  }
