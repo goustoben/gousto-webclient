@@ -15,6 +15,7 @@ import {
   fireCheckoutError,
   checkoutPostSignup,
   trackPurchase,
+  trackPromocodeChange,
 } from 'actions/checkout'
 
 jest.mock('utils/basket', () => ({
@@ -378,6 +379,30 @@ describe('checkout actions', () => {
       getState.mockReturnValue(createState())
       await checkoutSignup()(dispatch, getState)
       expect(dispatch).toHaveBeenCalledTimes(8)
+    })
+  })
+
+  describe('trackPromocodeChange', () => {
+    it('should dispatch trackPromocodeChange with actionType Promocode Applied', () => {
+      trackPromocodeChange('promo', true)(dispatch)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING_PROMOCODE_CHANGE',
+        trackingData: {
+          actionType: 'Promocode Applied' ,
+          promocode: 'promo'
+        }
+      })
+    })
+
+    it('should dispatch trackPromocodeChange with actionType Promocode Removed', () => {
+      trackPromocodeChange('promo', false)(dispatch)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'TRACKING_PROMOCODE_CHANGE',
+        trackingData: {
+          actionType: 'Promocode Removed' ,
+          promocode: 'promo'
+        }
+      })
     })
   })
 })
