@@ -413,6 +413,36 @@ describe('Menu', () => {
       )
       expect(fetchData).toHaveBeenCalled()
     })
+
+    test('should call basketNumPortionChange if num portions query parameter is given and numPortionsChanged is true', () => {
+      const basketNumPortionChangeSpy = jest.fn()
+      wrapper = mount(
+        <Menu
+          menuRecipeDetailShow={false}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          menuCollectionRecipes={Immutable.Map({})}
+          features={Immutable.Map({})}
+          menuLoadDays={menuLoadDays}
+          boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+          menuLoadBoxPrices={menuLoadBoxPrices}
+          disabled
+          filteredRecipesNumber={30}
+          clearAllFilters={() => {}}
+          params={{}}
+          basketNumPortionChange={basketNumPortionChangeSpy}
+          numPortionsChanged
+          query={{num_portions:'4'}}
+        />,
+        {
+          context: {
+            store: {
+              getState: getStateSpy,
+            },
+          },
+        },
+      )
+      expect(basketNumPortionChangeSpy).toHaveBeenCalled()
+    })
   })
 
   describe('componentDidUpdate', () => {
