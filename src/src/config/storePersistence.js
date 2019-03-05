@@ -43,4 +43,5 @@ export const cookieExpiries = {
   default: 2 / 24,
   features: 7,
   tracking: 30,
+  basket_promoCode: 60,
 }
