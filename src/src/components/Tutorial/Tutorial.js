@@ -33,9 +33,10 @@ export class Tutorial extends PureComponent {
 
   close = () => {
     const { onClose } = this.props
+    const { step } = this.state
 
     if (onClose) {
-      onClose()
+      onClose(step)
     }
     this.setState({
       hide: true,

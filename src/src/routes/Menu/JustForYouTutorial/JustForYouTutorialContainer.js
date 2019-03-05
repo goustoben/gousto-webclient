@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { incrementTutorialViewed } from 'actions/tutorial'
+import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 
 import { JustForYouTutorial } from './JustForYouTutorial'
 
@@ -10,6 +10,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   incrementTutorialViewed,
+  tutorialTracking
 }
 
 const JustForYouTutorialContainer = connect(

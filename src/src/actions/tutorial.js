@@ -46,3 +46,16 @@ export const incrementTutorialViewed = (name) => (
     })
   }
 )
+
+export const tutorialTracking = (tutorialName, turorialStep, dismissed) => (
+  (dispatch) => {
+    dispatch({
+      type: actionTypes.TUTORIAL_TRACKING,
+      trackingData: {
+        actionType: dismissed ? 'TutorialModal Dismissed' : 'TutorialModal Viewed',
+        tutorial_name: tutorialName,
+        turorial_step: turorialStep,
+      },
+    })
+  }
+)
