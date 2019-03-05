@@ -27,6 +27,11 @@ describe('PromoCode', function () {
         trackPromocodeChange={trackPromocodeChange}
       />
     )
+    wrapper.setState({
+      pending: false,
+      errorMsg: '',
+      successMsg: ''
+    })
   })
 
   afterEach(() => {
@@ -73,12 +78,12 @@ describe('PromoCode', function () {
       )
     })
 
-    it('should remove exisiting promocode', function () {
+    it('should remove exisiting promocode', async function () {
       wrapper.setState({ successMsg: 'Promocode applied' })
       wrapper.find(Segment).first().simulate('click')
       expect(basketPromoCodeChange).toHaveBeenCalledTimes(1)
       expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
-      expect(loadPrices).toHaveBeenCalledTimes(1)
+      await expect(loadPrices).toHaveBeenCalledTimes(1)
       expect(trackPromocodeChange).toHaveBeenCalled()
     })
 
@@ -93,7 +98,7 @@ describe('PromoCode', function () {
       })
     })
 
-    it('should apply promocode if button clicked', function () {
+    it('should apply promocode if button clicked', async function () {
       wrapper = shallow(
         <PromoCode
           promoCode='promo'
@@ -107,7 +112,7 @@ describe('PromoCode', function () {
       )
       wrapper.find(Segment).first().simulate('click')
 
-      expect(loadPrices).toHaveBeenCalledTimes(1)
+      await expect(loadPrices).toHaveBeenCalledTimes(1)
       expect(basketPromoCodeAppliedChange).toHaveBeenCalled()
       expect(trackPromocodeChange).toHaveBeenCalled()
     })
@@ -137,19 +142,19 @@ describe('PromoCode', function () {
         value = 'test'
       })
 
-      it('should call loadPrices and trackPromocodeChange when press enter', function () {
+      it('should call loadPrices and trackPromocodeChange when press enter', async function () {
         wrapper.find('input').simulate('input', { target: { value } })
         wrapper.find('input').simulate('keyup', {keyCode: 13})
 
-        expect(loadPrices).toHaveBeenCalled()
+        await expect(loadPrices).toHaveBeenCalled()
         expect(trackPromocodeChange).toHaveBeenCalled()
       })
 
-      it('should call loadPrices and trackPromocodeChange when press space', function () {
+      it('should call loadPrices and trackPromocodeChange when press space', async function () {
         wrapper.find('input').simulate('input', { target: { value } })
         wrapper.find('input').simulate('keyup', {keyCode: 32})
 
-        expect(loadPrices).toHaveBeenCalled()
+        await expect(loadPrices).toHaveBeenCalled()
         expect(trackPromocodeChange).toHaveBeenCalled()
       })
 
