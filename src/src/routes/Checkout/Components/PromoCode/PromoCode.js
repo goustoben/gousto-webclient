@@ -82,7 +82,6 @@ class PromoCode extends React.PureComponent {
     const { promoCode } = this.props
 
     this.props.loadPrices().then(() => {
-      console.log('loadPrice on handlePromocode')//eslint-disable-line
       this.setState({
         pending: false,
       })
@@ -120,7 +119,6 @@ class PromoCode extends React.PureComponent {
         this.setState({
           pending: false,
         })
-        console.log('trmov')//eslint-disable-line
         this.props.trackPromocodeChange(promocode, false)
       })
         .catch(() => {
