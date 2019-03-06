@@ -10,6 +10,10 @@ const SiteVerification = () => (
 	      content: 'DGVXZ3PvnmsDtu8yQMQ0sw5gADyU_gd_cbN7ZZXozQ4',
 	    },
 	    {
+	      name: 'google-site-verification',
+	      content: 'yHaW3pMjZbjSxh9XYcmSgcmd8FHN-9vJorgj3p0a7w0',
+	    },
+	    {
 	      name: 'p:domain_verify',
 	      content: 'adfa0b85592a79dcce9f843e17825583',
 	    },
