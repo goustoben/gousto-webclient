@@ -54,7 +54,7 @@ export const tutorialTracking = (tutorialName, turorialStep, dismissed) => (
       trackingData: {
         actionType: dismissed ? 'TutorialModal Dismissed' : 'TutorialModal Viewed',
         tutorial_name: tutorialName,
-        turorial_step: turorialStep,
+        turorial_step: turorialStep + 1,
       },
     })
   }
