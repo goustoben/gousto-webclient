@@ -129,5 +129,18 @@ describe('Tutorial', () => {
 
       expect(wrapper.html()).toBeNull()
     })
+
+    test('should invoke onClose prop', () => {
+      const onClose = jest.fn()
+
+      wrapper = mount(
+        <Tutorial onClose={onClose}>{generateSteps(2)}</Tutorial>
+      )
+
+      const { close } = wrapper.instance()
+      close()
+
+      expect(onClose).toHaveBeenCalled()
+    })
   })
 })

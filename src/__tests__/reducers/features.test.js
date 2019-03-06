@@ -62,6 +62,10 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
+        jfyTutorial: {
+          experiment: false,
+          value: false,
+        },
       })
       const result = features.features(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
@@ -112,6 +116,10 @@ describe('features reducers', () => {
           value: false,
         },
         goToMyDeliveries: {
+          experiment: false,
+          value: false,
+        },
+        jfyTutorial: {
           experiment: false,
           value: false,
         },
@@ -173,6 +181,10 @@ describe('features reducers', () => {
           value: false,
         },
         goToMyDeliveries: {
+          experiment: false,
+          value: false,
+        },
+        jfyTutorial: {
           experiment: false,
           value: false,
         },

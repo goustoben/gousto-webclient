@@ -1,4 +1,4 @@
-import { cloneElement, PureComponent } from 'react'
+import { cloneElement, PureComponent, Children } from 'react'
 import PropTypes from 'prop-types'
 
 import { isElementHidden } from 'Tutorial/helpers'
@@ -9,6 +9,7 @@ export class Tutorial extends PureComponent {
     children: PropTypes.arrayOf(
       PropTypes.instanceOf(Step)
     ),
+    onClose: PropTypes.func,
   }
 
   static defaultProps = {
@@ -19,7 +20,7 @@ export class Tutorial extends PureComponent {
     super(props)
     const { children } = props
 
-    const visibleChildren = children.filter(
+    const visibleChildren = Children.toArray(children).filter(
       child => !isElementHidden(child.props.selector)
     )
 
@@ -31,6 +32,11 @@ export class Tutorial extends PureComponent {
   }
 
   close = () => {
+    const { onClose } = this.props
+
+    if (onClose) {
+      onClose()
+    }
     this.setState({
       hide: true,
     })

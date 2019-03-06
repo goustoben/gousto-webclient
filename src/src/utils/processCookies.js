@@ -8,6 +8,7 @@ import authActions from 'actions/auth'
 import filterActions from 'actions/filters'
 import cookieActions from 'actions/cookies'
 import trackingActions from 'actions/tracking'
+import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
 import logger from 'utils/logger'
 import persist from 'actions/persist'
@@ -81,6 +82,7 @@ const processCookies = (cookies, store) => {
 
   let features = getCookieStoreValue(cookies, 'features')
   let variants = getCookieStoreValue(cookies, 'variants')
+  const tutorialsViewed = getCookieStoreValue(cookies, 'tutorial_viewed')
 
   if (cookiePolicy) {
     store.dispatch(cookieActions.cookiePolicyAcceptanceChange(cookiePolicy.isAccepted))
@@ -211,6 +213,20 @@ const processCookies = (cookies, store) => {
       })
     } catch (err) {
       logger.error({message: 'error parsing features cookie value', errors: [err] })
+    }
+  }
+
+  if (tutorialsViewed) {
+    try {
+      const tutorials = JSON.parse(tutorialsViewed)
+      Object.entries(tutorials).forEach(([name, count]) => {
+        store.dispatch(setTutorialViewed(name, count))
+      })
+    } catch (e) {
+      logger.notice({
+        message: 'error parsing tutorials cookie value',
+        errors: [e],
+      })
     }
   }
 

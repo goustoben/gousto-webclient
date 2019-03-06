@@ -1,0 +1,22 @@
+@value Blackberry, Pomegranate, Blueberry from 'styles/colors.css';
+
+.intro {
+  color: Blackberry;
+  font-family: Comfortaa;
+  text-align: center;
+}
+
+.main {
+  color: Pomegranate;
+  font-family: Comfortaa;
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 32px;
+  text-align: center;
+}
+
+.text {
+  color: Blackberry;
+  font-family: Comfortaa;
+  text-align: center;
+}
