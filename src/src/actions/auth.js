@@ -42,9 +42,12 @@ const userRememberMe = rememberMe => ({
 
 const redirectLoggedInUser = () => (
   async (dispatch, getState) => {
+    const { auth } = getState()
+    const isAuthenticated = auth.get('isAuthenticated')
+
     const { pathname } = documentLocation()
 
-    if (pathname === '/' ) {
+    if (pathname === '/' && isAuthenticated ) {
       if (getGoToMyGousto(getState())) return redirect(configRoutes.client.myGousto)
       if (getGoToMyDeliveries(getState())) return redirect(configRoutes.client.myDeliveries)
     }

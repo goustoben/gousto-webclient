@@ -46,7 +46,6 @@ const processCookies = (cookies, store) => {
       const rememberMe = rememberCookie.remember_me
       if (typeof rememberMe !== 'undefined') {
         store.dispatch(authActions.userRememberMe(rememberMe))
-        store.dispatch(authActions.redirectLoggedInUser())
       }
     }
 
