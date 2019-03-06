@@ -135,10 +135,10 @@ class RecipeList extends React.Component {
         {sortedRecipes.map((recipe) => {
           const recipeId = recipe.get('id')
           const isFeatured = featuredRecipes.includes(recipe)
-          const isFineDineIn = recipe.get('range') === 'fine_dine_in'
+          const range = getRecipeRange(recipe)
+          const isFineDineIn = range.get('slug') === 'fine-dine-in'
           const surcharge = getSurcharge(recipe.get('meals'), numPortions)
           const view = this.getView(mobileGridView, isFeatured, isFineDineIn)
-          const range = getRecipeRange(recipe)
 
           index += 1
 
