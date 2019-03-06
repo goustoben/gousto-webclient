@@ -14,13 +14,19 @@ class JustForYouTutorial extends React.PureComponent {
     tutorialTracking(tutorialName, step, true)
   }
 
+  trackStepViewed(step) {
+    const { tutorialTracking } = this.props
+    const tutorialName = 'just_for_you'
+    tutorialTracking(tutorialName, step, false)
+  }
+
   render() {
     const { showTutorial } = this.props
 
     return (
       (showTutorial) ? (
         <Portal>
-          <Tutorial onClose={ this.onCloseTutorial }>
+          <Tutorial onClose={(step) => this.onCloseTutorial(step)} trackStepViewed={(step) => this.trackStepViewed(step)}>
             <Step selector="[data-slug='recommendations']">
               <p className={css.intro}>Introducing</p>
               <p className={css.main}>Just For You</p>
