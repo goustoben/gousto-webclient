@@ -19,6 +19,9 @@ describe('redirectLoggedInUser', () => {
 
   test('should NOT redirect if neither feature is set to true', async() => {
     getState = () => ({
+      auth: Immutable.Map({
+        isAuthenticated: true,
+      }),
       features: Immutable.Map({
         goToMyGousto: Immutable.fromJS({
           value: false
@@ -38,6 +41,9 @@ describe('redirectLoggedInUser', () => {
     documentLocation.mockReturnValue({pathname: '/menu'})
 
     getState = () => ({
+      auth: Immutable.Map({
+        isAuthenticated: true,
+      }),
       features: Immutable.Map({
         goToMyGousto: Immutable.fromJS({
           value: false
@@ -55,6 +61,9 @@ describe('redirectLoggedInUser', () => {
 
   test('should redirect to my gousto if feature is set to true', async() => {
     getState = () => ({
+      auth: Immutable.Map({
+        isAuthenticated: true,
+      }),
       features: Immutable.Map({
         goToMyGousto: Immutable.fromJS({
           value: true
@@ -72,6 +81,9 @@ describe('redirectLoggedInUser', () => {
 
   test('should redirect to my deliveries if feature is set to true', async() => {
     getState = () => ({
+      auth: Immutable.Map({
+        isAuthenticated: true,
+      }),
       features: Immutable.Map({
         goToMyGousto: Immutable.fromJS({
           value: false
