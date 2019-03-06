@@ -100,16 +100,16 @@ class Menu extends React.Component {
       props.basketOrderLoaded(props.params.orderId)
     }
 
-    if (props.numPortionsChanged && query.num_portions) {
-      props.basketNumPortionChange(query.num_portions)
-    }
-
     const forceDataLoad = (props.storeOrderId && props.storeOrderId !== props.params.orderId)
     // TODO: Add back logic to check what needs to be reloaded
     const query = props.query || {}
     const params = props.params || {}
     if (props.hasRecommendations) {
       props.triggerMenuLoad()
+    }
+
+    if (props.numPortionsChanged && query.num_portions) {
+      props.basketNumPortionChange(query.num_portions)
     }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)

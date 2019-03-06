@@ -107,6 +107,7 @@ describe('Menu', () => {
           boxSummaryShow
           clearAllFilters={() => {}}
           basketOrderLoaded={() => {}}
+          query={{ num_portions: '4' }}
         />,
       )
       expect(wrapper.find(Loading).prop('loading')).toBe(false)
