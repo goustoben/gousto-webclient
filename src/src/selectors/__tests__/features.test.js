@@ -3,6 +3,8 @@ import Immutable from 'immutable'
 import {
   isCollectionsFeatureEnabled,
   getCollectionFreezeValue,
+  getGoToMyGousto,
+  getGoToMyDeliveries,
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -82,6 +84,42 @@ describe('when features are defined', () => {
       })
 
       expect(getCollectionFreezeValue(state)).toEqual('test-value')
+    })
+  })
+
+  describe('getGoToMyGousto', () => {
+    it('should return value of goToMyGousto', () => {
+      state.features = Immutable.fromJS({
+        goToMyGousto: {
+          value: true
+        }
+      })
+
+      expect(getGoToMyGousto(state)).toEqual(true)
+    })
+
+    it('should return false if features does not exist', () => {
+      state = Immutable.fromJS({})
+
+      expect(getGoToMyGousto(state)).toEqual(false)
+    })
+  })
+
+  describe('getGoToMyDeliveries', () => {
+    it('should return value of goToMyDeliveries', () => {
+      state.features = Immutable.fromJS({
+        goToMyDeliveries: {
+          value: true
+        }
+      })
+
+      expect(getGoToMyDeliveries(state)).toEqual(true)
+    })
+
+    it('should return false if features does not exist', () => {
+      state = Immutable.fromJS({})
+
+      expect(getGoToMyDeliveries(state)).toEqual(false)
     })
   })
 })

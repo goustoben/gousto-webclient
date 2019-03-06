@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import PromoCode from './PromoCode'
 import actions from 'actions'
+import PromoCode from './PromoCode'
 
 function mapStateToProps(state) {
   return {
@@ -17,6 +17,7 @@ const CheckoutContainer = connect(mapStateToProps, {
   basketPromoCodeChange: actions.basketPromoCodeChange,
   basketPromoCodeAppliedChange: actions.basketPromoCodeAppliedChange,
   loadPrices: actions.pricingRequest,
+  trackPromocodeChange: actions.trackPromocodeChange,
 })(PromoCode)
 
 export default CheckoutContainer

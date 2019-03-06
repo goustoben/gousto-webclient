@@ -66,7 +66,8 @@ function mapStateToProps(state, ownProps) {
     menuVariation: state.features.getIn(['menuRecipes', 'value']),
     filteredRecipesNumber: getFilteredRecipeIds(state).size,
     forceLoad: state.menu.get('forceLoad', false),
-    numPortions: state.basket.get('numPortions')
+    numPortions: state.basket.get('numPortions'),
+    numPortionsChanged: state.basket.get('numPortionsChanged')
   }
 }
 
@@ -84,6 +85,7 @@ const mapDispatchToProps = {
   clearAllFilters: actions.clearAllFilters,
   triggerMenuLoad,
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
+  basketNumPortionChange: actions.basketNumPortionChange,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
