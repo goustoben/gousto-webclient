@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 
 export const defaultState = Immutable.Map({
