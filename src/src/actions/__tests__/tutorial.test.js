@@ -7,6 +7,7 @@ import {
   setTutorialViewed,
   incrementTutorialViewed,
   setTutorialVisible,
+  tutorialTracking
 } from 'actions/tutorial'
 
 describe('tutorial actions', () => {
@@ -109,16 +110,52 @@ describe('tutorial actions', () => {
   })
 
   describe('setTutorialViewed', () => {
-    test('should dispatch a SET_TUTORIAL_VISIBLE with the given name and value', () => {
+    test('should dispatch a SET_TUTORIAL_VIEWED with the given name and value', () => {
       const name = 'testTutorial'
-      const value = true
+      const count = 1
 
-      setTutorialVisible(name, value)(dispatch)
+      setTutorialViewed(name, count)(dispatch)
 
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.SET_TUTORIAL_VISIBLE,
+        type: actionTypes.SET_TUTORIAL_VIEWED,
         name,
-        value,
+        count,
+      })
+    })
+  })
+
+  describe('tutorialTracking', () => {
+    test('should dispatch TUTORIAL_TRACKING with the given name, step and dismissed boolean', () => {
+      const tutorialName = 'testTutorial'
+      const turorialStep = 1
+      const dismissed = true
+
+      tutorialTracking(tutorialName, turorialStep, dismissed)(dispatch)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.TUTORIAL_TRACKING,
+        trackingData: {
+          actionType: 'TutorialModal Dismissed',
+          tutorial_name: tutorialName,
+          turorial_step: 2,
+        },
+      })
+    })
+
+    test('should return actionType as TutorialModal Viewed if dismissed is false', () => {
+      const tutorialName = 'testTutorial'
+      const turorialStep = 1
+      const dismissed = false
+
+      tutorialTracking(tutorialName, turorialStep, dismissed)(dispatch)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.TUTORIAL_TRACKING,
+        trackingData: {
+          actionType: 'TutorialModal Viewed',
+          tutorial_name: tutorialName,
+          turorial_step: 2,
+        },
       })
     })
   })
