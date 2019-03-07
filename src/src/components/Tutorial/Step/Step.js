@@ -44,7 +44,7 @@ export class Step extends PureComponent {
 
   recalculateLocations = () => {
     const { selector, next } = this.props
-
+    const stepWidth = (window.innerWidth < 456) ? 200 : (window.innerWidth < 756 ? 250 : 300)
     if (isElementHidden(selector)) {
       next()
 
@@ -52,7 +52,7 @@ export class Step extends PureComponent {
     }
 
     const { x, y } = getSpotlightLocation(selector)
-    const { style, arrow } = getTooltipProperties(selector, 300)
+    const { style, arrow } = getTooltipProperties(selector, stepWidth)
 
     this.setState({
       x,
