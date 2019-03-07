@@ -59,6 +59,7 @@ class Menu extends React.Component {
     isAuthenticated: PropTypes.bool.isRequired,
     tariffId: PropTypes.number,
     menuLoadingBoxPrices: PropTypes.bool,
+    jfyTutorialFlag: PropTypes.bool,
     filteredRecipesNumber: PropTypes.number,
     clearAllFilters: PropTypes.func,
     triggerMenuLoad: PropTypes.func,
@@ -218,7 +219,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { hasRecommendations, forceLoad } = this.props
+    const { hasRecommendations, forceLoad, jfyTutorialFlag } = this.props
     const { mobileGridView } = this.state
     const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
     const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
@@ -246,7 +247,7 @@ class Menu extends React.Component {
           meta={menu.helmet.meta}
           style={menu.helmet.style}
         />
-        <JustForYouTutorial />
+        {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
           {this.renderBanner(menu.efBanner.switchoverDate)}
           <SubHeader

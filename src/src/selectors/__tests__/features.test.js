@@ -5,6 +5,7 @@ import {
   getCollectionFreezeValue,
   getGoToMyGousto,
   getGoToMyDeliveries,
+  getJfyTutorial,
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -120,6 +121,24 @@ describe('when features are defined', () => {
       state = Immutable.fromJS({})
 
       expect(getGoToMyDeliveries(state)).toEqual(false)
+    })
+  })
+
+  describe('getJfyTutorial', () => {
+    it('should return value of goToMyDeliveries', () => {
+      state.features = Immutable.fromJS({
+        jfyTutorial: {
+          value: true
+        }
+      })
+
+      expect(getJfyTutorial(state)).toEqual(true)
+    })
+
+    it('should return false if features does not exist', () => {
+      state = Immutable.fromJS({})
+
+      expect(getJfyTutorial(state)).toEqual(false)
     })
   })
 })
