@@ -75,10 +75,14 @@ describe('Tutorial', () => {
     })
 
     test('should return the next valid step', () => {
+      const onClose = jest.fn()
+      const trackStepViewed = jest.fn()
       const children = generateSteps(2)
 
       wrapper = mount(
-        <Tutorial>{children}</Tutorial>
+        <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
+          {children} 
+        </Tutorial>
       )
 
       expect(wrapper.find('Step').html()).toContain('Step #0')
@@ -92,10 +96,14 @@ describe('Tutorial', () => {
     })
 
     test('should close if the current step is the last', () => {
+      const onClose = jest.fn()
+      const trackStepViewed = jest.fn()
       const children = generateSteps(2)
 
       wrapper = mount(
-        <Tutorial>{children}</Tutorial>
+        <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
+          {children} 
+        </Tutorial>
       )
 
       const { next } = wrapper.instance()
@@ -115,10 +123,13 @@ describe('Tutorial', () => {
     })
 
     test('should return the next valid step', () => {
-      const children = generateSteps(2)
+      const onClose = jest.fn()
+      const trackStepViewed = jest.fn()
 
       wrapper = mount(
-        <Tutorial>{children}</Tutorial>
+        <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
+          {generateSteps(2)} 
+        </Tutorial>
       )
 
       expect(wrapper.find('Step').html()).toContain('Step #0')
@@ -132,9 +143,12 @@ describe('Tutorial', () => {
 
     test('should invoke onClose prop', () => {
       const onClose = jest.fn()
+      const trackStepViewed = jest.fn()
 
       wrapper = mount(
-        <Tutorial onClose={onClose}>{generateSteps(2)}</Tutorial>
+        <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
+          {generateSteps(2)} 
+        </Tutorial>
       )
 
       const { close } = wrapper.instance()
@@ -142,5 +156,21 @@ describe('Tutorial', () => {
 
       expect(onClose).toHaveBeenCalled()
     })
+  })
+
+  test('should invoke trackStepViewed prop', () => {
+    const onClose = jest.fn()
+    const trackStepViewed = jest.fn()
+
+    wrapper = mount(
+      <Tutorial onClose={onClose} trackStepViewed={trackStepViewed}>
+        {generateSteps(2)} 
+      </Tutorial>
+    )
+
+    const { next } = wrapper.instance()
+    next()
+
+    expect(trackStepViewed).toHaveBeenCalled()
   })
 })
