@@ -12,8 +12,10 @@ import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import DetailOverlay from 'routes/Menu/DetailOverlay'
 import MenuNoResults from 'routes/Menu/MenuNoResults'
+
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
+import { JustForYouTutorial } from '../JustForYouTutorial'
 
 jest.mock('routes/Menu/Banner')
 jest.mock('routes/Menu/SubHeader')
@@ -50,6 +52,7 @@ describe('Menu', () => {
           features={Immutable.Map({})}
           filteredRecipesNumber={30}
           isLoading={false}
+          jfyTutorialFlag={false}
         />,
       )
     })
@@ -77,6 +80,24 @@ describe('Menu', () => {
 
       test('should not show as loading', () => {
         expect(wrapper.find(Loading).prop('loading')).toBe(false)
+      })
+
+      test('should not render JFY tutorial if feature flag is set to false', () => {
+        expect(wrapper.find(JustForYouTutorial).length).toBe(0)
+      })
+      
+      test('should render JFY tutorial if feature flag is set to true', () => {
+        wrapper = shallow(
+          <Menu
+            menuLoadBoxPrices={() => {}}
+            menuCollectionRecipes={Immutable.Map({})}
+            features={Immutable.Map({})}
+            filteredRecipesNumber={30}
+            isLoading={false}
+            jfyTutorialFlag
+          />,
+        )
+        expect(wrapper.find(JustForYouTutorial).length).toBe(1)
       })
     })
 
