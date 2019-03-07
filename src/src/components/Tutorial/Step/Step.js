@@ -36,8 +36,10 @@ export class Step extends PureComponent {
     window.removeEventListener('resize', this.recalculateLocations)
   }
 
-  componentDidUpdate() {
-    this.recalculateLocations()
+  componentDidUpdate(prevProps, prevState) {
+    if(JSON.stringify(prevState) !== JSON.stringify(this.state)) {
+      this.recalculateLocations()
+    }
   }
 
   recalculateLocations = () => {
