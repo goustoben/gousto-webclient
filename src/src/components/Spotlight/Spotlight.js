@@ -29,6 +29,15 @@ const Spotlight = ({ x, y, onClick }) => {
           100% 100%,
           0% 100%
         )`,
+        '-webkit-clip-path': `polygon(
+          0% 0%,
+          100% 0%,
+          100% ${y}px,
+          ${steps}
+          100% ${y}px,
+          100% 100%,
+          0% 100%
+        )`,
       }}
       onClick={onClick}
     >
