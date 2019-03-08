@@ -1,7 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 
 import { JustForYouTutorial } from '../JustForYouTutorial'
+import { JustForYouTutorial as JustForYouTutorialComponent } from '..'
 
 describe('JustForYouTutorial Component', () => {
   const incrementTutorialViewed = jest.fn()
@@ -52,5 +54,106 @@ describe('JustForYouTutorial Component', () => {
     onClose()
 
     expect(incrementTutorialViewed).toHaveBeenCalled()
+  })
+
+})
+
+describe('Check browser to show JFY', () => {
+  let getState 
+  let wrapper
+  it('should not render JFY if browser Edge', () => {
+    getState = () => ({
+      tutorial: Immutable.fromJS({
+        visible: {
+          justforyou: true,
+        }
+      }),
+      request: Immutable.fromJS({
+        userAgent: 'Edge'
+      }
+      )})
+  
+    wrapper = shallow(
+        <JustForYouTutorialComponent />, {
+          context: {
+            store: {
+              getState
+            },
+          }
+        }
+    )
+    expect(wrapper.instance().stateProps.showTutorial).toBe(false)
+  })
+
+  it('should not render JFY if browser IE', () => {
+    getState = () => ({
+      tutorial: Immutable.fromJS({
+        visible: {
+          justforyou: true,
+        }
+      }),
+      request: Immutable.fromJS({
+        userAgent: 'Trident'
+      }
+      )})
+  
+    wrapper = shallow(
+        <JustForYouTutorialComponent />, {
+          context: {
+            store: {
+              getState
+            },
+          }
+        }
+    )
+    expect(wrapper.instance().stateProps.showTutorial).toBe(false)
+  })
+
+  it('should not render JFY if browser Chrome but justforyou not present', () => {
+    getState = () => ({
+      tutorial: Immutable.fromJS({
+        visible: {
+          justforyou: false,
+        }
+      }),
+      request: Immutable.fromJS({
+        userAgent: 'Chrome'
+      }
+      )})
+  
+    wrapper = shallow(
+        <JustForYouTutorialComponent />, {
+          context: {
+            store: {
+              getState
+            },
+          }
+        }
+    )
+    expect(wrapper.instance().stateProps.showTutorial).toBe(false)
+  })
+
+  it('should render JFY if browser Chrome', () => {
+    getState = () => ({
+      tutorial: Immutable.fromJS({
+        visible: {
+          justforyou: true,
+        }
+      }),
+      request: Immutable.fromJS({
+        userAgent: 'Chrome'
+      }
+      )})
+  
+    wrapper = shallow(
+        <JustForYouTutorialComponent />, {
+          context: {
+            store: {
+              getState
+            },
+          }
+        }
+    )
+    expect(wrapper.instance().stateProps.showTutorial).toBe(true)
   })
 })
