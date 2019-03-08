@@ -28,13 +28,9 @@ const showTutorial = (state) => {
   return true
 }
 
-const mapStateToProps = (state) => {
-  const show = showTutorial(state)
-  
-  return {
-    showTutorial: show
-  }
-}
+const mapStateToProps = (state) => ({
+  showTutorial: showTutorial(state)
+})
 
 const mapDispatchToProps = {
   incrementTutorialViewed,
