@@ -2,11 +2,39 @@ import { connect } from 'react-redux'
 
 import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 
+import { getUserAgent } from 'selectors/root'
 import { JustForYouTutorial } from './JustForYouTutorial'
 
-const mapStateToProps = (state) => ({
-  showTutorial: state.tutorial && state.tutorial.getIn(['visible', 'justforyou'], false),
-})
+const getBrowser = (userAgent) => {
+  if(userAgent.indexOf('Edge') >= 0) {
+    return 'Edge'
+  }
+  if (userAgent.indexOf('Trident') >= 0) {
+    return 'IE'
+  }
+  
+  return null
+}
+
+const showTutorial = (state) => {
+  const userAgentFromState = getUserAgent(state)
+  const browser = getBrowser(userAgentFromState)
+  const jfyPresent = state.tutorial && state.tutorial.getIn(['visible', 'justforyou'], false)
+
+  if (browser === 'Edge' || browser === 'IE' || !jfyPresent) {    
+    return false
+  }
+
+  return true
+}
+
+const mapStateToProps = (state) => {
+  const show = showTutorial(state)
+  
+  return {
+    showTutorial: show
+  }
+}
 
 const mapDispatchToProps = {
   incrementTutorialViewed,
