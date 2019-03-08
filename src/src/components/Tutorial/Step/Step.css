@@ -9,7 +9,7 @@
 
 .tooltip {
   position: absolute;
-  z-index: 200;
+  z-index: 500;
 }
 
 .cta__icon {
