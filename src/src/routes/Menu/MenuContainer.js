@@ -5,7 +5,10 @@ import actions from 'actions'
 import { slugify } from 'utils/url'
 import actionTypes from 'actions/actionTypes'
 import { triggerMenuLoad } from 'actions/menu'
+import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
+
+import { getJfyTutorial } from 'selectors/features'
 import { getFilteredRecipeIds } from './selectors/filters.js'
 import { getCurrentCollectionIsRecommendation } from './selectors/menu'
 
@@ -67,7 +70,8 @@ function mapStateToProps(state, ownProps) {
     filteredRecipesNumber: getFilteredRecipeIds(state).size,
     forceLoad: state.menu.get('forceLoad', false),
     numPortions: state.basket.get('numPortions'),
-    numPortionsChanged: state.basket.get('numPortionsChanged')
+    numPortionsChanged: state.basket.get('numPortionsChanged'),
+    jfyTutorialFlag: getJfyTutorial(state)
   }
 }
 
@@ -86,6 +90,7 @@ const mapDispatchToProps = {
   triggerMenuLoad,
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
   basketNumPortionChange: actions.basketNumPortionChange,
+  shouldJfyTutorialBeVisible,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)

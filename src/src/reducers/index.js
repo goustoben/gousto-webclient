@@ -24,6 +24,7 @@ import subscription from './subscription'
 import subscriptionPause from './subscriptionPause'
 import temp from './temp'
 import tracking from './tracking'
+import { tutorial } from './tutorial'
 import user from './user'
 import request from './request'
 import collections from './collections'
@@ -66,6 +67,7 @@ const reducers = {
   ...subscriptionPause,
   ...temp,
   ...tracking,
+  ...tutorial,
   ...user,
   ...request,
   ...pricing,

@@ -1,11 +1,11 @@
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import Immutable from 'immutable'
 import React from 'react'
 import { shallow } from 'enzyme'
+chai.use(sinonChai)
 
 describe('MenuContainer', function () {
   let store
@@ -79,6 +79,9 @@ describe('MenuContainer', function () {
           },
           collectionFreeze: {
             value: 'frozen-collection',
+          },
+          jfyTutorial: {
+            value: false,
           },
         }),
         boxSummaryShow: Immutable.Map({ show: false }),
@@ -160,6 +163,9 @@ describe('MenuContainer', function () {
               },
               forceCollections: {
                 value: true,
+              },
+              jfyTutorial: {
+                value: false,
               },
             }),
             basket: Immutable.Map({}),
@@ -245,6 +251,9 @@ describe('MenuContainer', function () {
             },
             preferredCollection: {
               value: 'a-collection',
+            },
+            jfyTutorial: {
+              value: false,
             },
           }),
           basket: Immutable.Map({}),

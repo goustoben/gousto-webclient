@@ -6,16 +6,16 @@ import {
   unmountComponentAtNode,
 } from 'react-dom'
 
-import { SpotlightWrapper } from 'Spotlight/SpotlightWrapper'
+import { Portal } from 'Portal'
 
 jest.mock('react-dom', () => ({
   unstable_renderSubtreeIntoContainer: jest.fn(),
   unmountComponentAtNode: jest.fn(),
 }))
 
-describe('SpotlightWrapper', () => {
+describe('Portal', () => {
   let wrapper
-  const spotlightWrapperHtml = '<div class="__goustoSpotlight__"></div>'
+  const portalHtml = '<div class="__goustoPortal__"></div>'
 
   beforeEach(() => {
     document.body.innerHTML = ''
@@ -29,7 +29,7 @@ describe('SpotlightWrapper', () => {
 
   describe('rendering', () => {
     test('should render nothing by default', () => {
-      wrapper = shallow(<SpotlightWrapper />)
+      wrapper = shallow(<Portal />)
 
       expect(wrapper.html()).toBeNull()
     })
@@ -38,7 +38,7 @@ describe('SpotlightWrapper', () => {
   describe('lifecycle', () => {
     beforeEach(() => {
       wrapper = mount(
-        <SpotlightWrapper />
+        <Portal />
       )
     })
 
@@ -48,7 +48,7 @@ describe('SpotlightWrapper', () => {
 
     describe('componentDidMount', () => {
       test('should call renderWrapper', () => {
-        expect(document.body.innerHTML).toEqual(spotlightWrapperHtml)
+        expect(document.body.innerHTML).toEqual(portalHtml)
       })
     })
 
@@ -58,7 +58,7 @@ describe('SpotlightWrapper', () => {
 
         wrapper.unmount()
 
-        expect(document.body.innerHTML).not.toEqual(spotlightWrapperHtml)
+        expect(document.body.innerHTML).not.toEqual(portalHtml)
       })
     })
   })
@@ -66,7 +66,7 @@ describe('SpotlightWrapper', () => {
   describe('renderWrapper', () => {
     beforeEach(() => {
       wrapper = mount(
-        <SpotlightWrapper />
+        <Portal />
       )
     })
 
@@ -76,7 +76,7 @@ describe('SpotlightWrapper', () => {
 
     describe('when node does not exist', () => {
       test("should mount children and add render subtree into DOM", () => {
-        expect(document.body.innerHTML).toEqual(spotlightWrapperHtml)
+        expect(document.body.innerHTML).toEqual(portalHtml)
         expect(unstable_renderSubtreeIntoContainer).toHaveBeenCalled()
       })
     })
@@ -85,7 +85,7 @@ describe('SpotlightWrapper', () => {
       test("shouldn't mount component", () => {
         wrapper.instance().renderWrapper()
 
-        expect(document.body.innerHTML).toEqual(spotlightWrapperHtml)
+        expect(document.body.innerHTML).toEqual(portalHtml)
         expect(unstable_renderSubtreeIntoContainer).toHaveBeenCalledTimes(1)
       })
     })
@@ -94,7 +94,7 @@ describe('SpotlightWrapper', () => {
   describe('close', () => {
     beforeEach(() => {
       wrapper = mount(
-        <SpotlightWrapper />
+        <Portal />
       )
     })
 

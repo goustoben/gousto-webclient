@@ -308,6 +308,7 @@ class CollectionsNav extends React.PureComponent {
 									  idenifier={`collectionnav-${collectionId}`}
 									  element={ref => { this.eles[collectionId] = ref }}
 									  collectionId={collectionId}
+									  slug={collection.get('slug')}
 									>
 										<span className={css.itemTitle}>
 											{collection.get('shortTitle')}

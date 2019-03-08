@@ -4,11 +4,12 @@
   margin-top: 20px;
   color: Bluecheese;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .tooltip {
   position: absolute;
-  z-index: 200;
+  z-index: 500;
 }
 
 .cta__icon {

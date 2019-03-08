@@ -1,4 +1,4 @@
-import { cloneElement, PureComponent } from 'react'
+import { cloneElement, PureComponent, Children } from 'react'
 import PropTypes from 'prop-types'
 
 import { isElementHidden } from 'Tutorial/helpers'
@@ -9,6 +9,8 @@ export class Tutorial extends PureComponent {
     children: PropTypes.arrayOf(
       PropTypes.instanceOf(Step)
     ),
+    onClose: PropTypes.func,
+    trackStepViewed: PropTypes.func,
   }
 
   static defaultProps = {
@@ -19,7 +21,7 @@ export class Tutorial extends PureComponent {
     super(props)
     const { children } = props
 
-    const visibleChildren = children.filter(
+    const visibleChildren = Children.toArray(children).filter(
       child => !isElementHidden(child.props.selector)
     )
 
@@ -30,21 +32,35 @@ export class Tutorial extends PureComponent {
     }
   }
 
+  componentDidMount() {
+    const { trackStepViewed } = this.props
+    const { step } = this.state
+    trackStepViewed(step)
+  }
+
   close = () => {
+    const { onClose } = this.props
+    const { step } = this.state
+
+    if (onClose) {
+      onClose(step)
+    }
     this.setState({
       hide: true,
     })
   }
 
-  next = () => {
+  next = async () => {
+    const { trackStepViewed } = this.props
     const { step, children } = this.state
 
     if (step === children.length - 1) {
       this.close()
     } else {
-      this.setState({
+      await this.setState({
         step: step + 1,
       })
+      trackStepViewed(step + 1)
     }
   }
 

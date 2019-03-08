@@ -13,3 +13,6 @@ export const getForceSignupWizard = state => (state.features ? state.features.ge
 export const getGoToMyGousto = state => (state.features ? state.features.getIn(['goToMyGousto', 'value']) : false )
 
 export const getGoToMyDeliveries = state => (state.features ? state.features.getIn(['goToMyDeliveries', 'value']) : false )
+
+export const getJfyTutorial = state => (state.features ? state.features.getIn(['jfyTutorial', 'value']) : false)
+ 
