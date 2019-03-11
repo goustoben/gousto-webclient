@@ -109,7 +109,7 @@ class Menu extends React.Component {
       props.triggerMenuLoad()
     }
 
-    if (props.numPortionsChanged && query.num_portions) {
+    if (query.num_portions) {
       props.basketNumPortionChange(query.num_portions)
     }
 
