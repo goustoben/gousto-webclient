@@ -8,7 +8,7 @@ const PromoModalBody = ({ text, title, error }) => (
 		{text && !error && <span dangerouslySetInnerHTML={{ __html: text }} />}
 		{(() => {
 		  if (error) {
-		    if (error === 'new-customers-only') {
+		    if (error === 'Code is only applicable for new customers') {
 		      return (
 						<span>
 							<p>The promotion you tried to use is only for new customers.</p>
