@@ -76,6 +76,19 @@ const actions = {
 
   basketNumPortionChange: (numPortions) => (
     (dispatch, getState) => {
+      const { routing } = getState()
+      const prevLoc = routing ? routing.locationBeforeTransitions : null
+      const query = prevLoc.query || null
+
+      if (query && query.num_portions) {
+        const newLoc = {
+          ...prevLoc,
+          num_portions: numPortions
+        }
+
+        dispatch(push(newLoc))
+      }
+
       dispatch({
         type: actionTypes.BASKET_NUM_PORTION_CHANGE,
         numPortions,
