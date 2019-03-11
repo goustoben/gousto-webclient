@@ -75,8 +75,8 @@ const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions, order
     try {
       const { data: savedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
       if (savedOrder && savedOrder.id) {
-        const summaryUrl = config.client.orderSummary.replace(':orderId', savedOrder.id)
-        redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
+        const summaryUrl = config.client.orderConfirmation.replace(':orderId', savedOrder.id)
+        redirect(summaryUrl)
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
@@ -331,8 +331,23 @@ const cancelOrderModalToggleVisibility = (visibility, orderId) => (
   }
 )
 
+export const orderDetails = (orderId) => (
+  async (dispatch, getState) => {
+    const accessToken = getState().auth.get('accessToken')
+
+    const {data: order} = await ordersApi.fetchOrder(accessToken, orderId)
+    console.log('orderAction', order)//eslint-disable-line
+    dispatch({
+      type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
+      orderId,
+      orderDetails: order,
+    })
+  }
+)
+
 export default {
   orderCancel,
+  orderDetails,
   orderUpdate,
   orderUpdateDayAndSlot,
   orderAssignToUser,

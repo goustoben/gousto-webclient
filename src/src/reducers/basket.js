@@ -100,6 +100,9 @@ const basket = {
     case actionTypes.BASKET_ORDER_LOADED: {
       return state.set('editBox', action.editBox)
     }
+    case actionTypes.BASKET_ORDER_DETAILS_LOADED: {
+      return state.set('orderDetails', action.orderDetails)
+    }
 
     case actionTypes.BASKET_NUM_PORTION_CHANGE: {
       let portionSize = parseInt(action.numPortions, 10)
