@@ -1,22 +1,23 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
-import Immutable from 'immutable' /* eslint-disable no-caps */
+import moment from 'moment'
+import Immutable from 'immutable'
+
 import logger from 'utils/logger'
 import * as userApi from 'apis/user'
 import { customerSignup } from 'apis/customers'
-
 import * as ordersApi from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
 import * as addressApi from 'apis/addressLookup'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
 import config from 'config/signup'
-import moment from 'moment'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import statusActions from './status'
 import basketActions from './basket'
 import actionTypes from './actionTypes'
 import { trackFirstPurchase } from './tracking'
+import { subscriptionLoadData } from './subscription'
 
 const fetchShippingAddressesPending = pending => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
@@ -290,12 +291,14 @@ function userLoadData() {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const { data = {} } = await userApi.fetchUser(accessToken)
-    const user = data.user
+    const { user } = data
 
     dispatch({
       type: actionTypes.USER_LOAD_DATA,
       user,
     })
+
+    dispatch(subscriptionLoadData())
   }
 }
 
