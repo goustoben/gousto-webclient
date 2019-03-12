@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import css from './OrderConfirmationHeader.css'
 
 const OrderConfirmationHeader = ({deliveryDate, deliveryStart, deliveryEnd, whenCutoffTime, whenCutoffDate}) => (
-  <div className="gousto-market-header-confirmation">
-    <div className="col-md-12 wrap">
-      <h1>Thank you! Your order has been created.</h1>
-      <p>Delivery date: {deliveryDate} between {deliveryStart} - {deliveryEnd}</p>
-      <p>Your recipe choices have been saved and we will start picking your box soon.</p>
-      <p>You can edit your choices until {whenCutoffTime} on {whenCutoffDate}</p>
+  <div className={css.orderConfirmationHeader}>
+    <div className={css.orderConfirmationColumns}>
+      <h1 className={css.orderConfirmationTitle}>Thank you! Your order has been created.</h1>
+      <p className={css.orderConfirmationDetails}>Delivery date: {deliveryDate} between {deliveryStart} - {deliveryEnd}</p>
+      <p className={css.orderConfirmationDetails}>Your recipe choices have been saved and we will start picking your box soon.</p>
+      <p className={css.orderConfirmationDetails}>You can edit your choices until {whenCutoffTime} on {whenCutoffDate}</p>
     </div>
   </div>
 )
