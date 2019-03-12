@@ -34,14 +34,14 @@ export default (store) => (
 		{ResetPassword}
 		{Unsubscribe}
 		{GetHelp(store)}
-		{OrderConfirmation}
-
+		
 		<Route component={MainLayout}>
 			{Auth.login}
 			{Auth.logout}
 			{Example}
 			{Welcome(store)}
 			{Account(store)}
+			{OrderConfirmation(store)}
 		</Route>
 
 		{Checkout(store)}

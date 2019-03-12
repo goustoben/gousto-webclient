@@ -3,10 +3,6 @@ import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { getHeaderDetails } from './helper'
 
 class OrderConfirmation extends Component {
-  componentWillMount() {
-    const { orderNumber, loadOrder } = this.props
-    loadOrder(orderNumber)
-  }
 
   render() {
     const { order, showHeader } = this.props

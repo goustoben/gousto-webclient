@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { push } from 'react-router-redux'
 import ordersApi from 'apis/orders'
 import * as userApi from 'apis/user'
 import { fetchDeliveryDays } from 'apis/deliveries'
@@ -77,8 +78,9 @@ const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions, order
       const { data: savedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
       if (savedOrder && savedOrder.id) {
         const summaryUrl = config.client.orderConfirmation.replace(':orderId', savedOrder.id)
-        redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
-        dispatch(tempActions.temp('orderAction', orderAction))
+        dispatch(orderDetails(savedOrder.id))
+        dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
+        dispatch(tempActions.temp('showHeader', true))
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
