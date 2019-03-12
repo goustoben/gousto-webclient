@@ -13,6 +13,7 @@ import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
 import actionTypes from './actionTypes'
+import productActions from './products'
 
 const checkAllScheduledCancelled = (orders) => (
   !orders.some(order => (order.get('orderState') === 'scheduled'))
@@ -334,14 +335,19 @@ const cancelOrderModalToggleVisibility = (visibility, orderId) => (
 export const orderDetails = (orderId) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
-
-    const {data: order} = await ordersApi.fetchOrder(accessToken, orderId)
-    console.log('orderAction', order)//eslint-disable-line
-    dispatch({
-      type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
-      orderId,
-      orderDetails: order,
-    })
+    try {
+      dispatch(productActions.productsLoadCategories())
+      const {data: order} = await ordersApi.fetchOrder(accessToken, orderId)
+      dispatch(productActions.productsLoadProducts(order.whenCutOff))
+      dispatch({
+        type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
+        orderId,
+        orderDetails: order,
+      })
+    }
+    catch (err) {
+      logger.error(err)
+    }
   }
 )
 
