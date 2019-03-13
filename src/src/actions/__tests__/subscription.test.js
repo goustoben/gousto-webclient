@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 import { fetchSubscription } from 'apis/subscription'
 import { basketNumPortionChange } from 'actions/basket'
+import { notice } from 'utils/logger'
 
 import { subscriptionLoadData } from 'actions/subscription'
 
@@ -12,6 +13,10 @@ jest.mock('apis/subscription', () => ({
 
 jest.mock('actions/basket', () => ({
   basketNumPortionChange: jest.fn(),
+}))
+
+jest.mock('utils/logger', () => ({
+  notice: jest.fn(),
 }))
 
 describe('subscription actions', () => {
@@ -38,18 +43,45 @@ describe('subscription actions', () => {
       expect(fetchSubscription).toHaveBeenCalledWith('subscription-load-data')
     })
 
-    test('should dispatch a SUBSCRIPTION_LOAD_DATA action with returned data', async () => {
-      data = { test: 'test-value' }
-      fetchSubscription.mockReturnValue(Promise.resolve({
-        data,
-      }))
+    describe('when fetchSubscription fails', () => {
+      beforeEach(() => {
+        fetchSubscription.mockReturnValue(Promise.reject(
+          new Error('fetch-subscription-fail')
+        ))
+      })
 
-      await subscriptionLoadData()(dispatch, getState)
+      test('should not dispatch any actions', async () => {
+        await subscriptionLoadData()(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
-        type: actionTypes.SUBSCRIPTION_LOAD_DATA,
-        data,
-      }))
+        expect(dispatch).not.toHaveBeenCalled()
+      })
+
+      test('should log a notice with the error', async () => {
+        await subscriptionLoadData()(dispatch, getState)
+
+        expect(notice).toHaveBeenCalledWith(
+          'Subscription load error: Error: fetch-subscription-fail'
+        )
+      })
+    })
+
+    describe('when fetchSubscription succeeds with data', () => {
+      beforeEach(() => {
+        data = { test: 'test-value' }
+        fetchSubscription.mockReturnValue(Promise.resolve({
+          data,
+        }))
+      })
+
+      test('should dispatch a SUBSCRIPTION_LOAD_DATA action with returned data', async () => {
+        await subscriptionLoadData()(dispatch, getState)
+
+        expect(notice).not.toHaveBeenCalled()
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+          type: actionTypes.SUBSCRIPTION_LOAD_DATA,
+          data,
+        }))
+      })
     })
 
     describe('when data does not contain box numPortions', () => {
