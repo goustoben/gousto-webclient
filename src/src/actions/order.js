@@ -15,6 +15,7 @@ import tempActions from './temp'
 import statusActions from './status'
 import actionTypes from './actionTypes'
 import productActions from './products'
+import { getOrderConfirmation } from 'selectors/features'
 
 const checkAllScheduledCancelled = (orders) => (
   !orders.some(order => (order.get('orderState') === 'scheduled'))
@@ -77,10 +78,15 @@ const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions, order
     try {
       const { data: savedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
       if (savedOrder && savedOrder.id) {
-        const summaryUrl = config.client.orderConfirmation.replace(':orderId', savedOrder.id)
-        dispatch(orderDetails(savedOrder.id))
-        dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
-        dispatch(tempActions.temp('showHeader', true))
+        if (getOrderConfirmation(getState())) {
+          dispatch(orderDetails(savedOrder.id))
+          const summaryUrl = config.client.orderConfirmation.replace(':orderId', savedOrder.id)
+          dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
+          dispatch(tempActions.temp('showHeader', true))
+        } else {
+          const summaryUrl = config.client.orderSummary.replace(':orderId', savedOrder.id)
+          redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
+        }
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
