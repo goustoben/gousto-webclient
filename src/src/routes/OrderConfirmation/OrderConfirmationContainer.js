@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { orderDetails } from 'actions/order'
 import { locationQuery } from 'selectors/routing.js'
 import OrderConfirmation from './OrderConfirmation'
 
@@ -16,10 +15,6 @@ const mapStateToProps = (state) => {
   })
 }
 
-const mapDispatchToProps = ({
-  loadOrder:orderDetails,
-})
-
-const OrderConfirmationContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation))
+const OrderConfirmationContainer = withRouter(connect(mapStateToProps)(OrderConfirmation))
 
 export default OrderConfirmationContainer

@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router'
 import config from 'config/routes'
 import { checkValidSession } from 'utils/routes'
-import { orderDetails } from 'actions/order'
+import { orderDetails } from 'actions/orderConfirmation'
 
 import OrderConfirmation from './OrderConfirmationContainer'
 

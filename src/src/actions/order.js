@@ -14,7 +14,7 @@ import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
 import actionTypes from './actionTypes'
-import productActions from './products'
+import { orderDetails } from './orderConfirmation'
 import { getOrderConfirmation } from 'selectors/features'
 
 const checkAllScheduledCancelled = (orders) => (
@@ -80,6 +80,7 @@ const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions, order
       if (savedOrder && savedOrder.id) {
         if (getOrderConfirmation(getState())) {
           dispatch(orderDetails(savedOrder.id))
+
           const summaryUrl = config.client.orderConfirmation.replace(':orderId', savedOrder.id)
           dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
           dispatch(tempActions.temp('showHeader', true))
@@ -341,28 +342,8 @@ const cancelOrderModalToggleVisibility = (visibility, orderId) => (
   }
 )
 
-export const orderDetails = (orderId) => (
-  async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
-    try {
-      dispatch(productActions.productsLoadCategories())
-      const {data: order} = await ordersApi.fetchOrder(accessToken, orderId)
-      dispatch(productActions.productsLoadProducts(order.whenCutOff))
-      dispatch({
-        type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
-        orderId,
-        orderDetails: order,
-      })
-    }
-    catch (err) {
-      logger.error(err)
-    }
-  }
-)
-
 export default {
   orderCancel,
-  orderDetails,
   orderUpdate,
   orderUpdateDayAndSlot,
   orderAssignToUser,
