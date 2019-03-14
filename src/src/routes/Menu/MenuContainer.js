@@ -70,7 +70,6 @@ function mapStateToProps(state, ownProps) {
     filteredRecipesNumber: getFilteredRecipeIds(state).size,
     forceLoad: state.menu.get('forceLoad', false),
     numPortions: state.basket.get('numPortions'),
-    numPortionsChanged: state.basket.get('numPortionsChanged'),
     jfyTutorialFlag: getJfyTutorial(state)
   }
 }

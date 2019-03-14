@@ -439,13 +439,11 @@ describe('Menu', () => {
       expect(fetchData).toHaveBeenCalled()
     })
 
-    test('should call basketNumPortionChange if num portions query parameter is given and numPortionsChanged is true', () => {
-      const basketNumPortionChangeSpy = jest.fn()
-      const shouldJfyTutorialBeVisible = jest.fn()
+    test('should call basketNumPortionChange if num portions query parameter is given', () => {
+      const basketNumPortionChange = jest.fn()
 
       wrapper = mount(
         <Menu
-          shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -457,9 +455,8 @@ describe('Menu', () => {
           filteredRecipesNumber={30}
           clearAllFilters={() => { }}
           params={{}}
-          basketNumPortionChange={basketNumPortionChangeSpy}
-          numPortionsChanged
-          query={{ num_portions: '4' }}
+          basketNumPortionChange={basketNumPortionChange}
+          query={{ num_portions: 4 }}
         />,
         {
           context: {
@@ -470,9 +467,9 @@ describe('Menu', () => {
         },
       )
 
-      expect(basketNumPortionChangeSpy).toHaveBeenCalled()
+      expect(basketNumPortionChange).toHaveBeenCalledWith(4)
     })
-  
+
     test('should call shouldJfyTutorialBeVisible', () => {
       const shouldJfyTutorialBeVisible = jest.fn()
       const basketNumPortionChangeSpy = jest.fn()
@@ -492,7 +489,6 @@ describe('Menu', () => {
           clearAllFilters={() => {}}
           params={{}}
           basketNumPortionChange={basketNumPortionChangeSpy}
-          numPortionsChanged
           query={{num_portions:'4'}}
         />,
         {

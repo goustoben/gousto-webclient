@@ -33,7 +33,6 @@ const initialState = () => Immutable.fromJS({
   limitReached: false,
   numAdults: 0,
   numPortions: 2,
-  numPortionsChanged: false,
   orderId: '',
   postcode: '',
   prevDate: '',
@@ -103,14 +102,13 @@ const basket = {
 
     case actionTypes.BASKET_NUM_PORTION_CHANGE: {
       let portionSize = parseInt(action.numPortions, 10)
+
       if (basketConfig.portions.allowed.indexOf(portionSize) === -1) {
         logger.error({message: `Invalid serving size: ${action.numPortions}`})
         portionSize = basketConfig.portions.default
       }
 
-      const newState = state.set('numPortionsChanged', true)
-
-      return newState.set('numPortions', portionSize)
+      return state.set('numPortions', portionSize)
     }
 
     case actionTypes.BASKET_NUM_PEOPLE_CHANGE: {
