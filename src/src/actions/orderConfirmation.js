@@ -9,12 +9,12 @@ export const orderDetails = (orderId) => (
     try {
       dispatch(productActions.productsLoadCategories())
       const {data: order} = await ordersApi.fetchOrder(accessToken, orderId)
-      dispatch(productActions.productsLoadProducts(order.whenCutOff))
       dispatch({
         type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
         orderId,
         orderDetails: order,
       })
+      dispatch(productActions.productsLoadProducts(order.whenCutOff))
     }
     catch (err) {
       logger.error(err)
