@@ -27,6 +27,7 @@
 - name: Find resolver
   shell: cat /etc/resolv.conf | grep nameserver | head -n1 | cut -d ' ' -f2
   register: resolver
+  when: "{{ environment_name != 'dev' }}"
 
 - include: nginx.yml
 

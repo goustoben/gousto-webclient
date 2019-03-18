@@ -141,7 +141,7 @@ export default async function fetchData({ store, query, params }, force, backgro
         }
       }
 
-      if (query.num_portions && store.getState().basket.get('numPortionsChanged')) {
+      if (query.num_portions) {
         store.dispatch(actions.basketNumPortionChange(query.num_portions))
       }
 
