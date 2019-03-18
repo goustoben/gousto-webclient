@@ -128,19 +128,19 @@ const orderAssignToUser = (orderAction, existingOrderId) => (
     dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
     const accessToken = getState().auth.get('accessToken')
-    let orderDetails
+    let orderDetailsUtils
     let savedOrder
 
     try {
       try {
-        orderDetails = getOrderDetails(getState().basket, getState().boxSummaryDeliveryDays)
-        const { data } = await userApi.saveUserOrder(accessToken, orderDetails)
+        orderDetailsUtils = getOrderDetails(getState().basket, getState().boxSummaryDeliveryDays)
+        const { data } = await userApi.saveUserOrder(accessToken, orderDetailsUtils)
         savedOrder = data
       } catch (err) {
         if (existingOrderId && err.message === 'user already has an order for chosen delivery day') {
           try {
             const { data } = await userApi.updateUserOrder(accessToken, {
-              ...orderDetails,
+              ...orderDetailsUtils,
               order_id: existingOrderId,
             })
             savedOrder = data
