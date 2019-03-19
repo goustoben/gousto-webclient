@@ -1,26 +1,71 @@
 # Environment variables used to retrieve the image from the relevant ECR
-# docker build --no-cache -t webclient:1 --build-arg DEVBOX_ACCESS_TOKEN=[githubPersonalToken] AWS_ACCOUNT_NUMBER=[awsAccountNumber] ENVIRONMENT=[awsEnvironment] -f ./images/orderskiprecovery/Dockerfile .
-ARG AWS_ACCOUNT_NUMBER
-ARG ENVIRONMENT
+# docker build --no-cache -t webclient:1 --build-arg DEVBOX_ACCESS_TOKEN=[githubPersonalToken] AWS_ACCOUNT_NUMBER=[awsAccountNumber] ENVIRONMENT=[awsEnvironment] -f ./images/webclient/Dockerfile .
 
-# PULL DEPENDENCIES IN INTERMEDIATE IMAGES
-FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/platformbase-images/bower10builder as bowerbuilder
-FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/platformbase-images/yarn10builder as yarnbuilder
-FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/platformbase-images/node10runtime as runtime
+##### START BUILDER #####
+FROM node:10-jessie-slim as builder
 
-# COPY DEPENDENCIES FROM INTERMEDIATE IMAGES
-COPY --from=bowerbuilder /libraries/bower_components /home/docker/libraries/libs
-COPY --from=yarnbuilder /libraries/node_modules /home/docker/libraries/node_modules
-RUN sudo chown -R docker:docker /home/docker
+ARG DEVBOX_ACCESS_TOKEN
+ENV DEVBOX_ACCESS_TOKEN=$DEVBOX_ACCESS_TOKEN
 
+# APT DEPENDENCIES
+RUN apt-get update && apt-get install -y \
+    git \
+    g++ \
+    make \
+    python \
+    sed \
+    && rm -rf /var/lib/apt/lists/*
+
+# APPLICATION PACKAGE MANAGERS
+RUN npm install -g yarn \
+    && yarn global add bower
+
+# CREATE THE UNPRIVILEGED USER TO BUILD THE APPLICATION
+RUN useradd -r -u 1001 -d /home/docker docker && usermod -aG sudo docker
+RUN mkdir -p /home/docker/artifacts
+COPY --chown=docker:docker src /home/docker/artifacts
+RUN chown -R docker:docker /home/docker
+
+USER docker
 # BUILD APPLICATION
-RUN cp -r /home/docker/libraries/libs /home/docker/app 
-RUN cp -r /home/docker/libraries/node_modules /home/docker/app
-RUN yarn run build:server:prod
+RUN cd /home/docker/artifacts \
+    && sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./package.json \
+    && sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./bower.json \
+    && bower install --force \
+    && yarn install --pure-lockfile \
+    && yarn run build
+##### END BUILDER #####
 
-# SAVE BEFORE MOUNT OVERRIDE
-RUN cp -r /home/docker/app/dist /home/docker
-RUN sudo chown -R docker:docker /home/docker/dist
 
+
+##### START APPLICATION #####
+FROM node:10-jessie-slim
+
+# APPLICATION RUNTIME DEPENDENCIES
+RUN npm install -g yarn \
+    && yarn global add pm2
+
+# CREATE THE UNPRIVILEGED USER TO RUN PROCESSES
+RUN useradd -r -u 1001 -d /home/docker docker && usermod -aG sudo docker
+# LOG FOLDERS (NOTE THAT CHMOD 777 IS REALLY BAD, A BETTER SOLUTION HAS TO BE INVESTIGATED)
+RUN mkdir /var/log/pm2 && chmod -R 777 /var/log/pm2
+# This will be the PM2 working directory
+RUN mkdir -p /home/docker/app
+
+RUN chown -R docker:docker /home/docker
+
+
+# COPY BUILT APPLICATION TO RUN DIRECTORY FOR NON-DEVELOPERS
+COPY --from=builder  --chown=docker:docker  /home/docker/artifacts/dist /home/docker/app/dist
+COPY --from=builder  --chown=docker:docker  /home/docker/artifacts/node_modules /home/docker/app/node_modules
+COPY --from=builder  --chown=docker:docker  /home/docker/artifacts/process-docker.json /home/docker/app/process-docker.json
+
+# HERE WE START BUILDING THE APPPLICATION ARTIFACTS USING THE CORRECT USER
+USER docker
+EXPOSE 8080
+WORKDIR /home/docker/app
 # START APPLICATION
-ENTRYPOINT ["pm2-runtime", "start", "process-docker.json"]
+ENTRYPOINT ["pm2-runtime"]
+# HERE WE SPECIFY THE DEFAULT COMMANDS
+CMD ["start", "process-docker.json"]
+##### END APPLICATION #####
