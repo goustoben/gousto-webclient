@@ -23,6 +23,7 @@
     "build:e2e": "NODE_ENV=staging webpack --config config/webpack.e2e.js --bail",
     "build:e2e:local": "NODE_ENV=local webpack --config config/webpack.e2e.js --bail",
     "build": "rm -rf dist/* && rm -rf public/* && NODE_ENV=production run-p build:server build:client",
+    "build:docker:dev": "rm -rf dist/* && rm -rf public/* && NODE_ENV=production npm_config_gousto_webclient_environment_name=local npm_config_gousto_webclient_domain=gousto.local run-p build:server build:client",
     "test:jest": "jest",
     "test:jest:ci": "jest --ci -w=4",
     "test:jest:one": "jest",
