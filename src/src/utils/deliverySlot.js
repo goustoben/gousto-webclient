@@ -49,13 +49,13 @@ export const createNextDayDeliveryDays = () => {
       date: formatNextDayDeliveryDayDate(dayOffSet),
       value: formatNextDayDeliveryDayDate(dayOffSet),
       disable: false,
-      label: `${formatNextDayDeliveryDayLabel(dayOffSet)} £2.99`
+      label: `${formatNextDayDeliveryDayLabel(dayOffSet)} £1.99`
     },
     {
       date: formatNextDayDeliveryDayDate(dayOffSet + 1),
       value: formatNextDayDeliveryDayDate(dayOffSet + 1),
       disable: false,
-      label: `${formatNextDayDeliveryDayLabel(dayOffSet + 1)} £1.99`
+      label: `${formatNextDayDeliveryDayLabel(dayOffSet + 1)} £0.99`
     }
   ]
 }

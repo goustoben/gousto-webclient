@@ -59,7 +59,7 @@ describe('utils/deliverySlot', () => {
         const nextDayDeliveryDays = createNextDayDeliveryDays()
 
         expect(nextDayDeliveryDays[0].date).toBe('2019-01-23')
-        expect(nextDayDeliveryDays[0].label).toEqual(expect.stringContaining('£2.99'))
+        expect(nextDayDeliveryDays[0].label).toEqual(expect.stringContaining('£1.99'))
       })
 
       test('when time D+2 when time is after cutoff (12pm)', () => {
@@ -68,7 +68,7 @@ describe('utils/deliverySlot', () => {
         const nextDayDeliveryDays = createNextDayDeliveryDays()
 
         expect(nextDayDeliveryDays[0].date).toBe('2019-01-24')
-        expect(nextDayDeliveryDays[0].label).toEqual(expect.stringContaining('£2.99'))
+        expect(nextDayDeliveryDays[0].label).toEqual(expect.stringContaining('£1.99'))
       })
     })
 
@@ -79,7 +79,7 @@ describe('utils/deliverySlot', () => {
         const nextDayDeliveryDays = createNextDayDeliveryDays()
 
         expect(nextDayDeliveryDays[1].date).toBe('2019-01-24')
-        expect(nextDayDeliveryDays[1].label).toEqual(expect.stringContaining('£1.99'))
+        expect(nextDayDeliveryDays[1].label).toEqual(expect.stringContaining('£0.99'))
       })
 
       test('should be D+3 when time is after cutoff (12pm)', () => {
@@ -88,7 +88,7 @@ describe('utils/deliverySlot', () => {
         const nextDayDeliveryDays = createNextDayDeliveryDays()
 
         expect(nextDayDeliveryDays[1].date).toBe('2019-01-25')
-        expect(nextDayDeliveryDays[1].label).toEqual(expect.stringContaining('£1.99'))
+        expect(nextDayDeliveryDays[1].label).toEqual(expect.stringContaining('£0.99'))
       })
     })
   })
