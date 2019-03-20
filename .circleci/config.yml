@@ -6,6 +6,12 @@ gousto_build_image: &gousto_build_image
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
+gousto_build_image_docker: &gousto_build_image_docker
+    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/potatoes/circleci-image/node10builder:latest
+      aws_auth:
+        aws_access_key_id: $AWS_ERC_ACCESS_KEY
+        aws_secret_access_key: $AWS_ERC_SECRET_KEY
+
 jobs:
   install-dependencies:
     docker: *gousto_build_image
@@ -111,14 +117,23 @@ jobs:
       - run: source ~/.circlerc && scripts/deploy.sh
 
   build-image:
-    docker: *gousto_build_image
+    docker: *gousto_build_image_docker
     steps:
-      - checkout
       - setup_remote_docker
-      - run: /gousto/platform-setup.sh
+      - attach_workspace:
+          at: ~/
       - run:
-          name: Prepare .yarnrc file
-          command: source ~/.circlerc && setup/setup-common.sh && cp /usr/local/share/.yarnrc src/.yarnrc
+          name: Install global yarn dependencies
+          command: yarn global add gulp && yarn global add concurrently@2.2.0
+      - run:
+          name: Setup common
+          command: source ~/.circlerc && setup/setup-common.sh
+      - run:
+          name: Setup isomorphic
+          command: source ~/.circlerc && setup/setup-isomorphic.sh
+      - run:
+          name: Upload client to S3
+          command: source ~/.circlerc && source ~/.circlerc && scripts/deploy-docker.sh
       - run:
           name: Create image
           command: source ~/.circlerc && python ./ci_scripts/create_image.py
