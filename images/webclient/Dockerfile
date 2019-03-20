@@ -59,6 +59,7 @@ RUN chown -R docker:docker /home/docker
 COPY --from=builder  --chown=docker:docker  /home/docker/artifacts/dist /home/docker/app/dist
 COPY --from=builder  --chown=docker:docker  /home/docker/artifacts/node_modules /home/docker/app/node_modules
 COPY --from=builder  --chown=docker:docker  /home/docker/artifacts/process-docker.json /home/docker/app/process-docker.json
+COPY --from=builder  --chown=docker:docker  /home/docker/artifacts/manifest.json /home/docker/app/manifest.json
 
 # HERE WE START BUILDING THE APPPLICATION ARTIFACTS USING THE CORRECT USER
 USER docker
