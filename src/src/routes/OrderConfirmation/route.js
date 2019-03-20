@@ -10,8 +10,10 @@ export default (store) => {
   const onEnterHandler = (routes, replace, next) => {
     const redirectTo = config.client.orderConfirmation
     const path = store.getState().routing.locationBeforeTransitions.pathname
-    const orderId = parseInt(path.split('/order-confirmation/')[1])
-    store.dispatch(orderDetails(orderId))
+    const orderId = path.split('/order-confirmation/')[1]
+    if(typeof parseInt(orderId) === 'number') {
+      store.dispatch(orderDetails(orderId))
+    }
 
     checkValidSession(store, redirectTo)(routes, replace, next)
   }
