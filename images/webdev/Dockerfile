@@ -49,6 +49,7 @@ RUN cp -r   /home/docker/artifacts/dist \
             /home/docker/artifacts/node_modules \
             /home/docker/artifacts/public \
             /home/docker/artifacts/process-docker.json \
+            /home/docker/artifacts/manifest.json \
             /home/docker/app/
 
 EXPOSE 8080
