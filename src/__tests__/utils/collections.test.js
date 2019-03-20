@@ -224,7 +224,7 @@ describe('utils/collections', () => {
         ]),
       }
       const result = getDefaultCollectionId(newState)
-      expect(result).toEqual('123')
+      expect(result).toEqual(newState.menuCollections.first().get('id'))
     })
   })
 })
