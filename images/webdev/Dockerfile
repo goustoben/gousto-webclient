@@ -30,7 +30,6 @@ RUN npm install -g yarn \
     && yarn global add pm2 \
     && yarn global add bower
 
-
 # HERE WE START BUILDING THE APPPLICATION ARTIFACTS USING THE CORRECT USER
 USER docker
 
@@ -38,6 +37,9 @@ COPY --chown=docker:docker src /home/docker/artifacts
 
 # BUILD APPLICATION ARTIFACTS
 RUN cd /home/docker/artifacts \
+    ## This syntax will suppress errors and error code as well, because yarnrc is an optional
+    ## dependency generated in ci scripts. In this way we allow building the image locally.
+#    && cp ./ci_yarnrc ~/.yarnrc 2>/dev/null || : \
     && sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./package.json \
     && sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./bower.json \
     && bower install --force \
