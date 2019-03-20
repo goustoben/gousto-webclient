@@ -198,20 +198,33 @@ describe('utils/collections', () => {
       const result = getDefaultCollectionId(state)
       expect(result).toEqual('567')
     })
-    test('should return null if it cant find it', () => {
-      state = {
+
+    test('should return first collection id if no collection default', () => {
+      const newState = {
         menuCollections: Immutable.fromJS([
-          { published: true, shortTitle: 'something', id: '123' },
+          { published: true,
+            shortTitle: 'something',
+            slug: 'something',
+            id: '123',
+            default: false,
+          },
           {
             published: true,
             shortTitle: 'some&thi!ng@s0m3where strange',
             id: '234',
+            default: false,
           },
           { published: false, shortTitle: 'secret', id: '456' },
+          {
+            published: true,
+            shortTitle: 'all recipes',
+            id: '567',
+            default: false,
+          },
         ]),
       }
-      const result = getDefaultCollectionId(state)
-      expect(result).toEqual(null)
+      const result = getDefaultCollectionId(newState)
+      expect(result).toEqual(newState.menuCollections.first().get('id'))
     })
   })
 })

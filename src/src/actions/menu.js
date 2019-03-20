@@ -175,9 +175,6 @@ export function menuLoadCollections(date, noUrlChange) {
         if (recommendations) {
           landingCollectionId = recommendations.get('id')
         }
-        if (!landingCollectionId) {
-          landingCollectionId = getState().menuCollections.first().get('id')
-        }
         collectionFilterChange(landingCollectionId)(dispatch, getState)
       }
     }
