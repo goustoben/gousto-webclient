@@ -116,7 +116,10 @@ jobs:
       - checkout
       - setup_remote_docker
       - run: /gousto/platform-setup.sh
-      - run: 
+      - run:
+          name: Prepare .yarnrc file
+          command: source ~/.circlerc && setup/setup-common.sh && cp /usr/local/share/.yarnrc src/.yarnrc
+      - run:
           name: Create image
           command: source ~/.circlerc && python ./ci_scripts/create_image.py
           no_output_timeout: 20m

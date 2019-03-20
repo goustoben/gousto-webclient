@@ -29,6 +29,9 @@ RUN chown -R docker:docker /home/docker
 USER docker
 # BUILD APPLICATION
 RUN cd /home/docker/artifacts \
+    ## This syntax will suppress errors and error code as well, because yarnrc is an optional
+    ## dependency generated in ci scripts. In this way we allow building the image locally.
+#    && mv ./ci_yarnrc ~/.yarnrc 2>/dev/null || : \
     && sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./package.json \
     && sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./bower.json \
     && bower install --force \
