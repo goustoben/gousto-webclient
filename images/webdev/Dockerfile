@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
 # CREATE THE UNPRIVILEGED USER TO RUN PROCESSES
 RUN useradd -r -u 1001 -d /home/docker docker && usermod -aG sudo docker
 
-# FOLDERS (NOTE THAT CHMOD 777 IS REALLY BAD, A BETTER SOLUTION HAS TO BE INVESTIGATED)
+# FOLDERS (NOTE THAT CHMOD 777 IS REALLY BAD, A BETTER SOLUTION HAS TO BE IMPLEMENTED)
 RUN mkdir /var/log/pm2 && chmod -R 777 /var/log/pm2
 # This will be the PM2 working directory
 RUN mkdir -p /home/docker/app
@@ -30,16 +30,13 @@ RUN npm install -g yarn \
     && yarn global add pm2 \
     && yarn global add bower
 
-# HERE WE START BUILDING THE APPPLICATION ARTIFACTS USING THE CORRECT USER
+# HERE WE START BUILDING THE APPLICATION ARTIFACTS USING THE CORRECT USER
 USER docker
 
 COPY --chown=docker:docker src /home/docker/artifacts
 
 # BUILD APPLICATION ARTIFACTS
 RUN cd /home/docker/artifacts \
-    ## This syntax will suppress errors and error code as well, because yarnrc is an optional
-    ## dependency generated in ci scripts. In this way we allow building the image locally.
-#    && cp ./ci_yarnrc ~/.yarnrc 2>/dev/null || : \
     && sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./package.json \
     && sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./bower.json \
     && bower install --force \
