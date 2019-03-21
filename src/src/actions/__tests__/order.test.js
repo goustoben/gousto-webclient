@@ -155,6 +155,11 @@ describe('Order Actions', () => {
     })
   
     describe('Redirect to new stack orderConfirmation', () => {
+
+      afterEach(() => {
+        jest.resetAllMocks()
+      })
+
       let getStateSpy
       beforeEach(function () {
         getStateSpy = () => ({
@@ -194,7 +199,7 @@ describe('Order Actions', () => {
         })
       })
 
-      recipes = Immutable.List([1, 2, 3, 4, 5])
+      recipes = [1, 2, 3, 4, 5]
       orderApi.saveOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { resolve({ data: { id: '5678' } })})
       ))
@@ -288,45 +293,30 @@ describe('Order Actions', () => {
       })
     })
     
-    // test('should redirect the user to the order summary page if it succeeds on saving new order', async function() {
-    //   await orderActions.orderAssignToUser(orderAction)(dispatchSpy, getStateSpy)
+    test('should redirect the user to the order summary page if it succeeds on saving new order', async function() {
+      userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve, reject) => { resolve({ data: { id: '5678' } })})
+      ))
+
+      await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
     
-    //   expect(redirectSpy.withArgs('/order/5678/summary?order_action=transaction').calledOnce).to.be.true
-    // })
+      expect(redirectSpy).toHaveBeenCalledWith('/order/5678/summary?order_action=transaction')
+    })
     
-    // test('should redirect the user to the order summary page if it succeeds on updating existing order', async function() {
-    //   const orderSaveErr = new Error('user already has an order for chosen delivery day')
-    //   saveUserOrderSpy = () => new Promise((resolve, reject) => { reject(orderSaveErr) })
-    //   orderActions = require('inject-loader?apis/orders&apis/user&utils/window&utils/basket&./status&./checkout!actions/order')({ // eslint-disable-line global-require
-    //     'apis/orders': {
-    //       saveOrder: saveOrderSpy,
-    //     },
-    //     'apis/user': {
-    //       saveUserOrder: saveUserOrderSpy,
-    //       updateUserOrder: () => new Promise(resolve => { resolve({ data: { id: '5678' } }) }),
-    //     },
-    //     'utils/window': {
-    //       redirect: redirectSpy,
-    //     },
-    //     'utils/basket': {
-    //       getOrderDetails: sandbox.stub().returns({
-    //         recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
-    //         delivery_slot_id: coreSlotId,
-    //         delivery_day_id: coreDayId,
-    //       }),
-    //     },
-    //     './checkout': {
-    //       checkoutErrorHandling,
-    //     },
-    //     './status': {
-    //       pending: pendingSpy,
-    //       error: errorSpy,
-    //     },
-    //   }).default
-    //   await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
+    test('should redirect the user to the order summary page if it succeeds on updating existing order', async function() {
+      const orderSaveErr = new Error('user already has an order for chosen delivery day')
+      userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve, reject) => { reject(orderSaveErr)})
+      ))
+      
+      userApi.updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve, reject) => { resolve({ data: { id: '5678' } })})
+      ))
+
+      await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
     
-    //   expect(redirectSpy.withArgs('/order/5678/summary?order_action=transaction').calledOnce).to.be.true
-    // })
+      expect(redirectSpy).toHaveBeenCalledWith('/order/5678/summary?order_action=transaction')
+    })
 
   })
 })
