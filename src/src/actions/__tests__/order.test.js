@@ -4,6 +4,7 @@ import statusActions from '../status'
 import utils from 'utils/window'
 import orderConfirmation from '../orderConfirmation'
 import orderApi from 'apis/orders'
+import userApi from 'apis/user'
 import { getOrderDetails } from 'utils/basket'
 
 jest.mock('apis/orders')
@@ -25,7 +26,8 @@ jest.mock('../products', () => ({
 }))
 
 jest.mock('apis/user', () => ({
-  saveUserOrder: jest.fn()
+  saveUserOrder: jest.fn(),
+  updateUserOrder: jest.fn()
 }))
 
 jest.mock('utils/basket', () => ({
@@ -194,7 +196,7 @@ describe('Order Actions', () => {
 
       recipes = Immutable.List([1, 2, 3, 4])
       orderApi.saveOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { resolve(resolve)})
+        new Promise((resolve, reject) => { resolve({ data: { id: '5678' } })})
       ))
       orderApi.cancelOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { resolve()})
@@ -208,97 +210,55 @@ describe('Order Actions', () => {
         delivery_day_id: coreDayId,
       })
     })
-    test.only('should mark ORDER_SAVE as pending', async function(){
+    test.skip('should mark ORDER_SAVE as pending', async function(){
+      userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve, reject) => { resolve({ data: { id: '5678' } })})
+      ))
+      await orderActions.orderAssignToUser(orderAction)(dispatchSpy, getStateSpy)
+    
+      expect(pendingSpy.mock.calls.length).toBe(2)
+      expect(pendingSpy.mock.calls[0][0]).toEqual('ORDER_SAVE')
+      expect(pendingSpy.mock.calls[0][1]).toBe(true)
+      expect(pendingSpy.mock.calls[1][0]).toEqual('ORDER_SAVE')
+      expect(pendingSpy.mock.calls[1][1]).toBe(false)
+      expect(dispatchSpy.mock.calls.length).toBe(3)
+    })
+    
+    test.skip('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async function() {
+      const err = new Error('oops')
+      userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve, reject) => { reject(err)})
+      ))
       await orderActions.orderAssignToUser(orderAction)(dispatchSpy, getStateSpy)
     
       expect(pendingSpy.mock.calls.length).toBe(3)
       expect(pendingSpy.mock.calls[0][0]).toEqual('ORDER_SAVE')
       expect(pendingSpy.mock.calls[0][1]).toBe(true)
-      expect(pendingSpy.mock.calls[1][0]).toEqual('ORDER_SAVE')
+      expect(pendingSpy.mock.calls[1][0]).toEqual('BASKET_CHECKOUT')
       expect(pendingSpy.mock.calls[1][1]).toBe(false)
-      expect(dispatchSpy.mock.calls).toBe(true)
+      expect(pendingSpy.mock.calls[2][0]).toEqual('ORDER_SAVE')
+      expect(pendingSpy.mock.calls[2][1]).toBe(false)
+
+      expect(errorSpy.mock.calls.length).toBe(2)
+      expect(errorSpy.mock.calls[0][0]).toEqual('ORDER_SAVE')
+      expect(errorSpy.mock.calls[0][1]).toBe(null)
+      expect(errorSpy.mock.calls[1][0]).toEqual('ORDER_SAVE')
+      expect(errorSpy.mock.calls[1][1]).toBe('save-order-fail')
     })
     
-    // test('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async function() {
-    //   const err = new Error('oops')
-    //   saveUserOrderSpy = () => new Promise((resolve, reject) => { reject(err) })
-    //   orderActions = require('inject-loader?apis/orders&apis/user&utils/window&utils/basket&./status&./checkout!actions/order')({ // eslint-disable-line global-require
-    //     'apis/orders': {
-    //       saveOrder: saveOrderSpy,
-    //     },
-    //     'apis/user': {
-    //       saveUserOrder: saveUserOrderSpy,
-    //     },
-    //     'utils/window': {
-    //       redirect: redirectSpy,
-    //     },
-    //     'utils/basket': {
-    //       getOrderDetails: sandbox.stub().returns({
-    //         recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
-    //         delivery_slot_id: coreSlotId,
-    //         delivery_day_id: coreDayId,
-    //       }),
-    //     },
-    //     './checkout': {
-    //       checkoutErrorHandling,
-    //     },
-    //     './status': {
-    //       pending: pendingSpy,
-    //       error: errorSpy,
-    //     },
-    //   }).default
-    //   await orderActions.orderAssignToUser(orderAction)(dispatchSpy, getStateSpy)
+    test('should mark ORDER_SAVE as errored with "update-order-fail" if it fails on updating order', async function() {
+      const orderSaveErr = new Error('user already has an order for chosen delivery day')
+      const orderUpdateErr = new Error('user already has an order for chosen delivery day')
+      userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve, reject) => { reject(orderSaveErr)})
+      ))
+      userApi.updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve, reject) => { reject(orderUpdateErr)})
+      ))
+      await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
     
-    //   expect(pendingSpy.calledThrice).to.be.true
-    //   expect(pendingSpy.getCall(0).args[0]).to.equal('ORDER_SAVE')
-    //   expect(pendingSpy.getCall(0).args[1]).to.be.true
-    //   expect(pendingSpy.getCall(1).args[0]).to.equal('BASKET_CHECKOUT')
-    //   expect(pendingSpy.getCall(1).args[1]).to.be.false
-    //   expect(pendingSpy.getCall(2).args[0]).to.equal('ORDER_SAVE')
-    //   expect(pendingSpy.getCall(2).args[1]).to.be.false
-    
-    //   expect(errorSpy.calledTwice).to.be.true
-    //   expect(errorSpy.getCall(0).args[0]).to.equal('ORDER_SAVE')
-    //   expect(errorSpy.getCall(0).args[1]).to.be.null
-    //   expect(errorSpy.getCall(1).args[0]).to.equal('ORDER_SAVE')
-    //   expect(errorSpy.getCall(1).args[1]).to.equal('save-order-fail')
-    // })
-    
-    // test('should mark ORDER_SAVE as errored with "update-order-fail" if it fails on updating order', async function() {
-    //   const orderSaveErr = new Error('user already has an order for chosen delivery day')
-    //   const orderUpdateErr = new Error('user already has an order for chosen delivery day')
-    //   saveUserOrderSpy = () => new Promise((resolve, reject) => { reject(orderSaveErr) })
-    //   const updateUserOrderSpy = () => new Promise((resolve, reject) => { reject(orderUpdateErr) })
-    //   orderActions = require('inject-loader?apis/orders&apis/user&utils/window&utils/basket&./status&./checkout!actions/order')({ // eslint-disable-line global-require
-    //     'apis/orders': {
-    //       saveOrder: saveOrderSpy,
-    //     },
-    //     'apis/user': {
-    //       saveUserOrder: saveUserOrderSpy,
-    //       updateUserOrder: updateUserOrderSpy,
-    //     },
-    //     'utils/window': {
-    //       redirect: redirectSpy,
-    //     },
-    //     'utils/basket': {
-    //       getOrderDetails: sandbox.stub().returns({
-    //         recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
-    //         delivery_slot_id: coreSlotId,
-    //         delivery_day_id: coreDayId,
-    //       }),
-    //     },
-    //     './checkout': {
-    //       checkoutErrorHandling,
-    //     },
-    //     './status': {
-    //       pending: pendingSpy,
-    //       error: errorSpy,
-    //     },
-    //   }).default
-    //   await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
-    
-    //   expect(errorSpy).to.have.been.calledWithExactly(actionTypes.ORDER_SAVE, 'update-order-fail')
-    // })
+      expect(errorSpy).toHaveBeenCalledWith('ORDER_SAVE', 'update-order-fail')
+    })
     
     // test('should call updateUserOrder with orderDetails & existingOrderId if saving order fails due to an order already existing on given day & existingOrderId is provided', async function() {
     //   const orderSaveErr = new Error('user already has an order for chosen delivery day')
