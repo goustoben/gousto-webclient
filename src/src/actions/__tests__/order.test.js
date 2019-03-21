@@ -308,7 +308,7 @@ describe('Order Actions', () => {
       userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { reject(orderSaveErr)})
       ))
-      
+
       userApi.updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { resolve({ data: { id: '5678' } })})
       ))
@@ -316,6 +316,34 @@ describe('Order Actions', () => {
       await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
     
       expect(redirectSpy).toHaveBeenCalledWith('/order/5678/summary?order_action=transaction')
+    })
+
+    describe('Redirect to new stack orderConfirmation', () => {
+
+      afterEach(() => {
+        jest.resetAllMocks()
+      })
+
+      beforeEach(function () {
+        getStateSpy = () => ({
+          auth: Immutable.Map({ accessToken: 'access-token' }),
+          features: Immutable.Map({
+            orderConfirmation: Immutable.Map({
+              value: true,
+            })
+          })
+        })
+      })
+  
+      test('should call orderDetails action ', async () => {
+        userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
+          new Promise((resolve, reject) => { resolve({ data: { id: '5678' } })})
+        ))
+
+        const orderDetailsSpy = jest.spyOn(orderConfirmation, 'orderDetails')
+        await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
+        expect(orderDetailsSpy).toHaveBeenCalled()
+      })
     })
 
   })
