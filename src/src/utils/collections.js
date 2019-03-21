@@ -15,8 +15,8 @@ export function getDefaultCollectionId(state) {
   const defaultCollectionId = state.menuCollections
     .find(isDefault, null, Immutable.Map())
     .get('id', null)
- 
-  return (defaultCollectionId) ? defaultCollectionId : state.menuCollections.first().get('id')
+
+  return defaultCollectionId ? defaultCollectionId : (state.menuCollections.size ? state.menuCollections.first().get('id') : null)
 }
 
 export function getCollectionIdWithName(state, name) {
