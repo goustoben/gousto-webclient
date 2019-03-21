@@ -65,7 +65,7 @@ describe('Order Actions', () => {
     dispatchSpy = jest.fn()
   })
 
-  describe.skip('orderUpdate', () => {
+  describe('orderUpdate', () => {
     
     describe('Redirect to old stack orderSummary', () => {
       let getStateSpy
@@ -194,7 +194,7 @@ describe('Order Actions', () => {
         })
       })
 
-      recipes = Immutable.List([1, 2, 3, 4])
+      recipes = Immutable.List([1, 2, 3, 4, 5])
       orderApi.saveOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { resolve({ data: { id: '5678' } })})
       ))
@@ -210,7 +210,12 @@ describe('Order Actions', () => {
         delivery_day_id: coreDayId,
       })
     })
-    test.skip('should mark ORDER_SAVE as pending', async function(){
+
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    test('should mark ORDER_SAVE as pending', async function(){
       userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { resolve({ data: { id: '5678' } })})
       ))
@@ -224,7 +229,7 @@ describe('Order Actions', () => {
       expect(dispatchSpy.mock.calls.length).toBe(3)
     })
     
-    test.skip('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async function() {
+    test('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async function() {
       const err = new Error('oops')
       userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { reject(err)})
@@ -255,56 +260,33 @@ describe('Order Actions', () => {
       userApi.updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { reject(orderUpdateErr)})
       ))
+
       await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
     
-      expect(errorSpy).toHaveBeenCalledWith('ORDER_SAVE', 'update-order-fail')
+      expect(errorSpy).toHaveBeenCalledWith("ORDER_SAVE", 'update-order-fail')
     })
     
-    // test('should call updateUserOrder with orderDetails & existingOrderId if saving order fails due to an order already existing on given day & existingOrderId is provided', async function() {
-    //   const orderSaveErr = new Error('user already has an order for chosen delivery day')
-    //   saveUserOrderSpy = () => new Promise((resolve, reject) => { reject(orderSaveErr) })
-    //   const updateUserOrderSpy = sandbox.spy()
-    //   orderActions = require('inject-loader?apis/orders&apis/user&utils/window&utils/basket&./status&./checkout!actions/order')({ // eslint-disable-line global-require
-    //     'apis/orders': {
-    //       saveOrder: saveOrderSpy,
-    //     },
-    //     'apis/user': {
-    //       saveUserOrder: saveUserOrderSpy,
-    //       updateUserOrder: updateUserOrderSpy,
-    //     },
-    //     'utils/window': {
-    //       redirect: redirectSpy,
-    //     },
-    //     'utils/basket': {
-    //       getOrderDetails: sandbox.stub().returns({
-    //         recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
-    //         delivery_slot_id: coreSlotId,
-    //         delivery_day_id: coreDayId,
-    //       }),
-    //     },
-    //     './checkout': {
-    //       checkoutErrorHandling,
-    //     },
-    //     './status': {
-    //       pending: pendingSpy,
-    //       error: errorSpy,
-    //     },
-    //   }).default
-    //   await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
+    test('should call updateUserOrder with orderDetails & existingOrderId if saving order fails due to an order already existing on given day & existingOrderId is provided', async function() {
+      const orderSaveErr = new Error('user already has an order for chosen delivery day')
+      userApi.saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
+        new Promise((resolve, reject) => { reject(orderSaveErr)})
+      ))
+
+      await orderActions.orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
     
-    //   expect(updateUserOrderSpy).to.have.been.calledWithExactly('access-token', {
-    //     recipe_choices: [
-    //       { id: 1, quantity: 3, type: 'Recipe' },
-    //       { id: 2, quantity: 3, type: 'Recipe' },
-    //       { id: 3, quantity: 3, type: 'Recipe' },
-    //       { id: 4, quantity: 3, type: 'Recipe' },
-    //       { id: 5, quantity: 3, type: 'Recipe' },
-    //     ],
-    //     delivery_slot_id: coreSlotId,
-    //     delivery_day_id: coreDayId,
-    //     order_id: 'order-123',
-    //   })
-    // })
+      expect(userApi.updateUserOrder).toHaveBeenCalledWith('access-token', {
+        recipe_choices: [
+          { id: 1, quantity: 3, type: 'Recipe' },
+          { id: 2, quantity: 3, type: 'Recipe' },
+          { id: 3, quantity: 3, type: 'Recipe' },
+          { id: 4, quantity: 3, type: 'Recipe' },
+          { id: 5, quantity: 3, type: 'Recipe' },
+        ],
+        delivery_slot_id: coreSlotId,
+        delivery_day_id: coreDayId,
+        order_id: 'order-123',
+      })
+    })
     
     // test('should redirect the user to the order summary page if it succeeds on saving new order', async function() {
     //   await orderActions.orderAssignToUser(orderAction)(dispatchSpy, getStateSpy)
