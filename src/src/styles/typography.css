@@ -12,6 +12,7 @@
 @value normalLineHeight 1.4;
 
 @value comfortaaFontStack Comfortaa,Helvetica,sans-serif;
+@value comfortaaRegularFontStack ComfortaaRegular,Helvetica,sans-serif;
 @value avenirBookFontStack AvenirBook,Helvetica,sans-serif;
 @value avenirHeavyFontStack AvenirHeavy,Helvetica,sans-serif;
 
@@ -69,7 +70,7 @@
 }
 
 @font-face {
-	font-family: 'Comfortaa';
+	font-family: 'ComfortaaRegular';
 	src: url('styles/fonts/Comfortaa-Regular.eot');
 	src: url('styles/fonts/Comfortaa-Regular.eot?#iefix') format('embedded-opentype'),
 		url('styles/fonts/Comfortaa-Regular.woff2') format('woff2'),
