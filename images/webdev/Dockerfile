@@ -41,7 +41,8 @@ RUN cd /home/docker/artifacts \
     && sed -i 's#ssh://git#https://'"${DEVBOX_ACCESS_TOKEN}"':x-oauth-basic#g' ./bower.json \
     && bower install --force \
     && yarn install --pure-lockfile \
-    && ENV=local yarn run build:docker:dev
+    && ENV=local yarn run build:docker:dev \
+    && rm -rf /home/docker/artifacts/node_modules/.cache
 
 # COPY BUILT APPLICATION TO RUN DIRECTORY FOR NON-DEVELOPERS
 RUN cp -r   /home/docker/artifacts/dist \
