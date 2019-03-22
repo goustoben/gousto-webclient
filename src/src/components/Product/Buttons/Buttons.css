@@ -1,6 +1,10 @@
 @value ScreenMDMax, ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
 @value sizeMD, sizeXL from 'styles/typography.css';
 
+.buttonsContainer{
+	display: flex;
+}
 .btnWrapper {
-	composes: marginLGTopBottom from 'sass-loader!styles/spacing.scss';
+	margin: auto;
+	vertical-align: middle;
 }

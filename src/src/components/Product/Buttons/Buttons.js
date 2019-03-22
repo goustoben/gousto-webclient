@@ -188,7 +188,7 @@ class Buttons extends React.PureComponent {
 	  }
 
 	  return (
-			<div>
+			<div className={css.buttonsContainer}>
 				{this.props.ageVerificationRequired ?
 					<AgeVerification
 					  disabled={this.props.inProgress || !this.props.isAvailable}

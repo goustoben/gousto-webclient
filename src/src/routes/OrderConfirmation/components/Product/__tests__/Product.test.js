@@ -17,7 +17,7 @@ describe('Product component', () => {
         "ageRestricted": true,
         "boxLimit": 2,
         "images": {
-          "365": {
+          "400": {
             "src": "https://production-media.gousto.co.uk/cms/product-image-landscape/YAddOns-WhiteWines-Borsao_013244-x400.jpg",
             "url": "https://production-media.gousto.co.uk/cms/product-image-landscape/YAddOns-WhiteWines-Borsao_013244-x400.jpg",
             "width": 400
