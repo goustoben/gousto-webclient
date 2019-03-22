@@ -150,32 +150,32 @@ describe('<IngredientIssuesContainer />', () => {
 
     test('selected ingredient issues are changed in the store when selected', () => {
       // This is a trick to have the mount prepared when the test is runing
-      setTimeout(() => {
-        const expectedSelectedIngredients = fromJS({
-          '1917-bbb': {
-            recipeId: '1917',
-            ingredientId: 'bbb',
-            label: '1 can of chopped tomatoes (210g)',
-            issueId: '101',
-            issueName: 'Missing ingredients',
-          },
-          '1494-bbb': {
-            recipeId: '1494',
-            ingredientId: 'bbb',
-            label: '1 can of chopped tomatoes (210g)',
-            issueId: '104',
-            issueName: 'Fruit or Veg - Mouldy',
-          },
-        })
+      const expectedSelectedIngredients = fromJS({
+        '1917-bbb': {
+          recipeId: '1917',
+          ingredientId: 'bbb',
+          label: '1 can of chopped tomatoes (210g)',
+          issueId: '101',
+          issueName: 'Missing ingredients',
+        },
+        '1494-bbb': {
+          recipeId: '1494',
+          ingredientId: 'bbb',
+          label: '1 can of chopped tomatoes (210g)',
+          issueId: '104',
+          issueName: 'Fruit or Veg - Mouldy',
+        },
+      })
+
+      Promise.all(wrapper.find('Dropdown').at(1)).then(() => {
         const secondDropdown = wrapper.find('Dropdown').at(1)
-  
+    
         const secondOption = secondDropdown.find('option[value="104"]')
-        console.log(secondOption)//eslint-disable-line
         secondOption.simulate('change')
-  
+    
         expect(store.getState().getHelp.get('selectedIngredients'))
           .toEqual(expectedSelectedIngredients)
-      }, 3000)
+      })
     })
   })
 })
