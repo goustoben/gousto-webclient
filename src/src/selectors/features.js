@@ -15,4 +15,6 @@ export const getGoToMyGousto = state => (state.features ? state.features.getIn([
 export const getGoToMyDeliveries = state => (state.features ? state.features.getIn(['goToMyDeliveries', 'value']) : false )
 
 export const getJfyTutorial = state => (state.features ? state.features.getIn(['jfyTutorial', 'value']) : false)
+
+export const getOrderConfirmation = state => (state.features ? state.features.getIn(['orderConfirmation', 'value']) : false)
  

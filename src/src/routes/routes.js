@@ -4,6 +4,7 @@ import { Route } from 'react-router'
 import MainLayout from 'layouts/MainLayout'
 import Page from 'containers/PageContainer'
 
+import ErrorPage from 'components/ErrorPage'
 import Auth from './Auth'
 import Home from './Home'
 import Checkout from './Checkout' /* eslint-disable new-cap */
@@ -19,8 +20,7 @@ import ResetPassword from './ResetPassword'
 import BoxPrices from './BoxPrices'
 import Unsubscribe from './Unsubscribe'
 import GetHelp from './GetHelp'
-
-import ErrorPage from 'components/ErrorPage'
+import OrderConfirmation from './OrderConfirmation'
 
 export default (store) => (
 	<Route path="/" component={Page}>
@@ -34,13 +34,14 @@ export default (store) => (
 		{ResetPassword}
 		{Unsubscribe}
 		{GetHelp(store)}
-
+		
 		<Route component={MainLayout}>
 			{Auth.login}
 			{Auth.logout}
 			{Example}
 			{Welcome(store)}
 			{Account(store)}
+			{OrderConfirmation(store)}
 		</Route>
 
 		{Checkout(store)}

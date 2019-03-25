@@ -12,9 +12,11 @@ export function isDefault(collection) {
 }
 
 export function getDefaultCollectionId(state) {
-  return state.menuCollections
+  const defaultCollectionId = state.menuCollections
     .find(isDefault, null, Immutable.Map())
     .get('id', null)
+
+  return defaultCollectionId ? defaultCollectionId : (state.menuCollections.size ? state.menuCollections.first().get('id') : null)
 }
 
 export function getCollectionIdWithName(state, name) {

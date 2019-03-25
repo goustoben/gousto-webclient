@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { push } from 'react-router-redux'
 import ordersApi from 'apis/orders'
 import * as userApi from 'apis/user'
 import { fetchDeliveryDays } from 'apis/deliveries'
@@ -9,10 +10,12 @@ import { getAvailableDeliveryDays } from 'utils/deliveries'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import config from 'config/routes'
 import GoustoException from 'utils/GoustoException'
+import { getOrderConfirmation } from 'selectors/features'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
 import actionTypes from './actionTypes'
+import { orderDetails } from './orderConfirmation'
 
 const checkAllScheduledCancelled = (orders) => (
   !orders.some(order => (order.get('orderState') === 'scheduled'))
@@ -75,8 +78,16 @@ const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions, order
     try {
       const { data: savedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
       if (savedOrder && savedOrder.id) {
-        const summaryUrl = config.client.orderSummary.replace(':orderId', savedOrder.id)
-        redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
+        if (getOrderConfirmation(getState())) {
+          dispatch(orderDetails(savedOrder.id))
+
+          const summaryUrl = config.client.orderConfirmation.replace(':orderId', savedOrder.id)
+          dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
+          dispatch(tempActions.temp('showHeader', true))
+        } else {
+          const summaryUrl = config.client.orderSummary.replace(':orderId', savedOrder.id)
+          redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
+        }
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
@@ -117,19 +128,19 @@ const orderAssignToUser = (orderAction, existingOrderId) => (
     dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
     const accessToken = getState().auth.get('accessToken')
-    let orderDetails
+    let orderDetailsUtils
     let savedOrder
 
     try {
       try {
-        orderDetails = getOrderDetails(getState().basket, getState().boxSummaryDeliveryDays)
-        const { data } = await userApi.saveUserOrder(accessToken, orderDetails)
+        orderDetailsUtils = getOrderDetails(getState().basket, getState().boxSummaryDeliveryDays)
+        const { data } = await userApi.saveUserOrder(accessToken, orderDetailsUtils)
         savedOrder = data
       } catch (err) {
         if (existingOrderId && err.message === 'user already has an order for chosen delivery day') {
           try {
             const { data } = await userApi.updateUserOrder(accessToken, {
-              ...orderDetails,
+              ...orderDetailsUtils,
               order_id: existingOrderId,
             })
             savedOrder = data
@@ -146,8 +157,16 @@ const orderAssignToUser = (orderAction, existingOrderId) => (
       }
 
       if (savedOrder && savedOrder.id) {
-        const summaryUrl = config.client.orderSummary.replace(':orderId', savedOrder.id)
-        redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
+        if (getOrderConfirmation(getState())) {
+          dispatch(orderDetails(savedOrder.id))
+
+          const summaryUrl = config.client.orderConfirmation.replace(':orderId', savedOrder.id)
+          dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
+          dispatch(tempActions.temp('showHeader', true))
+        } else {
+          const summaryUrl = config.client.orderSummary.replace(':orderId', savedOrder.id)
+          redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
+        }
       } else {
         throw new GoustoException('Order could not be assigned to user', {
           error: 'assign-order-fail',
