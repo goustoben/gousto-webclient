@@ -23,5 +23,4 @@ USER docker
 EXPOSE 8080
 WORKDIR /home/docker/app
 # START APPLICATION
-CMD ["pm2-runtime", "start", "process-docker.json"]
-##### END APPLICATION #####
+CMD ["ecs_start.sh"]
