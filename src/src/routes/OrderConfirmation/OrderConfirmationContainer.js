@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { locationQuery } from 'selectors/routing.js'
+import { locationQuery } from 'selectors/routing'
+import { getAgeVerified } from 'selectors/user'
 import OrderConfirmation from './OrderConfirmation'
 
 const mapStateToProps = (state) => {
@@ -12,6 +13,8 @@ const mapStateToProps = (state) => {
   return ({
     showHeader,
     order,
+    products: state.products.toJS(),
+    ageVerified: getAgeVerified(state)
   })
 }
 
