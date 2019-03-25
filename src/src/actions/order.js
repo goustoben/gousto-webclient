@@ -10,12 +10,12 @@ import { getAvailableDeliveryDays } from 'utils/deliveries'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import config from 'config/routes'
 import GoustoException from 'utils/GoustoException'
+import { getOrderConfirmation } from 'selectors/features'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
 import actionTypes from './actionTypes'
 import { orderDetails } from './orderConfirmation'
-import { getOrderConfirmation } from 'selectors/features'
 
 const checkAllScheduledCancelled = (orders) => (
   !orders.some(order => (order.get('orderState') === 'scheduled'))
@@ -157,8 +157,16 @@ const orderAssignToUser = (orderAction, existingOrderId) => (
       }
 
       if (savedOrder && savedOrder.id) {
-        const summaryUrl = config.client.orderSummary.replace(':orderId', savedOrder.id)
-        redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
+        if (getOrderConfirmation(getState())) {
+          dispatch(orderDetails(savedOrder.id))
+
+          const summaryUrl = config.client.orderConfirmation.replace(':orderId', savedOrder.id)
+          dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
+          dispatch(tempActions.temp('showHeader', true))
+        } else {
+          const summaryUrl = config.client.orderSummary.replace(':orderId', savedOrder.id)
+          redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
+        }
       } else {
         throw new GoustoException('Order could not be assigned to user', {
           error: 'assign-order-fail',

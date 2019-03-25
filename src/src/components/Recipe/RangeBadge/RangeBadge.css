@@ -19,7 +19,7 @@
 .arrow {
   height: 28px;
   position: absolute;
-  z-index: 200;
+  z-index: 10;
 	width: 0;
 	height: 0;
 }
