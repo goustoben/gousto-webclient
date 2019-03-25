@@ -55,6 +55,4 @@ RUN cp -r   /home/docker/artifacts/dist \
 EXPOSE 8080
 WORKDIR /home/docker/app
 # START APPLICATION
-ENTRYPOINT ["pm2-runtime"]
-# HERE WE SPECIFY THE DEFAULT COMMANDS
-CMD ["start", "process-docker.json"]
+CMD ["pm2-runtime", "start", "process-docker.json"]
