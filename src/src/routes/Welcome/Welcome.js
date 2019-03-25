@@ -9,9 +9,9 @@ import logger from 'utils/logger'
 
 import classnames from 'classnames'
 
-import SubHeader from './SubHeader'
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
+import SubHeader from './SubHeader'
 import css from './Welcome.css'
 import ExpectationsCarousel from './ExpectationsCarousel'
 import ProductDetailOverlay from './ProductDetailOverlay'
@@ -73,7 +73,6 @@ class Welcome extends React.PureComponent {
 	    })
 	    .then(() => {
 	      store.dispatch(actions.basketOrderLoad(orderId))
-	      store.dispatch(actions.trackFirstPurchase(orderId))
 	    })
 	    .catch(err => {
 	      if (err && err.level && typeof logger[err.level] === 'function') {
