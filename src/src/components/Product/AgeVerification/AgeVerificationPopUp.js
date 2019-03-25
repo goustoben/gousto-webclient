@@ -5,15 +5,15 @@ import ModalPanel from 'Modal/ModalPanel'
 import { Button } from 'goustouicomponents'
 
 const AgeVerificationPopUp = ({visible, close}) => (
-  <Modal visible={visible} styleName={css.ageVerificationModal}>
-    <ModalPanel closePortal={close} disableOverlay>
-      <ModalTitle>
+  <Modal visible={visible}>
+    <ModalPanel closePortal={close} className={css.ageVerificationModal} disableOverlay>
+      <ModalTitle className={css.ageVerificationTitle}>
         Over 18?
       </ModalTitle>
-      <ModalContent>
+      <ModalContent className={css.ageVerificationContent}>
         To add this item to your order, please confirm you are over 18.
       </ModalContent>
-      <ModalFooter>
+      <ModalFooter position={css.ageVerificationFooter}>
         <Button fill={false} >
           NO, I'M UNDER 18
         </Button>
