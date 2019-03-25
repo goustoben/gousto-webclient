@@ -6,7 +6,7 @@ const products = {
     switch (action.type) {
     case actionTypes.PRODUCTS_RECEIVE: {
 
-      return action.productsInStock.reduce((reducerState, product) => {
+      return action.products.reduce((reducerState, product) => {
         let newProduct = reducerState.get(product.id, Immutable.Map()).mergeDeep(Immutable.fromJS(product))
 
         let media = Immutable.List()

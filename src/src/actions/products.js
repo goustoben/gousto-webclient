@@ -61,7 +61,7 @@ const productsLoadProducts = (cutoffDate) => (
             productsInStock.push(product)
           }
         })
-        dispatch({ type: actionTypes.PRODUCTS_RECEIVE, productsInStock, cutoffDate })
+        dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products: productsInStock, cutoffDate })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, err.message))
         logger.error(err)
