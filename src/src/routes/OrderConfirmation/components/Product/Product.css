@@ -1,5 +1,9 @@
 @value avenirHeavyFontStack from 'styles/typography.css';
 
+.productCardContainer{
+  display: inline-block;
+}
+
 .productWrapper {
   position: relative;
   max-width: 400px;

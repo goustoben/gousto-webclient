@@ -8,13 +8,17 @@ const propTypes = {
   title: PropTypes.string,
   listPrice: PropTypes.string,
   imgSource: PropTypes.string,
+  ageVerificationRequired: PropTypes.bool,
+  onAdd: PropTypes.func,
 }
 
 const ProductPresentation = ({
   id,
   title,
   listPrice,
-  imgSource
+  imgSource,
+  ageVerificationRequired,
+  onAdd
 }) => (
   <div className={css.productWrapper}>
     <div className={css.productCard}>
@@ -25,6 +29,9 @@ const ProductPresentation = ({
         <div className={css.productDetailsList}>
           <div className={css.productTitle}>{title}</div>
           <p className={css.productPrice}>£{listPrice}</p>
+        </div>
+        <div className={css.productAddButton}>
+          <Buttons productId={id} ageVerificationRequired={ageVerificationRequired} onAdd={onAdd} showPopUp />
         </div>
       </div>
     </div>
