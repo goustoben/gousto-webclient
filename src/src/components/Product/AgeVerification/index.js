@@ -1,1 +1,1 @@
-export default from './AgeVerification'
+export { AgeVerificationCheckBox } from './AgeVerificationCheckBox'
