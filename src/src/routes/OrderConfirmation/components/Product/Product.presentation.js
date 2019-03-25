@@ -3,6 +3,13 @@ import PropTypes from 'prop-types'
 import Buttons from 'Product/Buttons'
 import css from './Product.css'
 
+const propTypes = {
+  id: PropTypes.string,
+  title: PropTypes.string,
+  listPrice: PropTypes.string,
+  imgSource: PropTypes.string,
+}
+
 const ProductPresentation = ({
   id,
   title,
@@ -27,11 +34,6 @@ const ProductPresentation = ({
   </div>
 )
 
-ProductPresentation.propTypes = {
-  id: PropTypes.string,
-  title: PropTypes.string,
-  listPrice: PropTypes.string,
-  imgSource: PropTypes.string,
-}
+ProductPresentation.propTypes = propTypes
 
 export { ProductPresentation } 
