@@ -26,9 +26,6 @@ const ProductPresentation = ({
           <div className={css.productTitle}>{title}</div>
           <p className={css.productPrice}>£{listPrice}</p>
         </div>
-        <div className={css.productAddButton}>
-          <Buttons productId={id}/>
-        </div>
       </div>
     </div>
   </div>
