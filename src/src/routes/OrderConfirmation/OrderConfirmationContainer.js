@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { locationQuery } from 'selectors/routing'
+import { getBasket, getProductCategories } from 'selectors/root'
 import { getAgeVerified } from 'selectors/user'
+import { basketProductAdd, basketProductRemove } from 'actions/basket'
 import OrderConfirmation from './OrderConfirmation'
 
 const mapStateToProps = (state) => {
@@ -13,11 +15,18 @@ const mapStateToProps = (state) => {
   return ({
     showHeader,
     order,
+    basket: getBasket(state),
+    productsCategories: getProductCategories(state),
     products: state.products.toJS(),
     ageVerified: getAgeVerified(state)
   })
 }
 
-const OrderConfirmationContainer = withRouter(connect(mapStateToProps)(OrderConfirmation))
+const mapDispatchToProps = {
+  basketProductAdd,
+  basketProductRemove
+}
+
+const OrderConfirmationContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation))
 
 export default OrderConfirmationContainer

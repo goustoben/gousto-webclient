@@ -79,8 +79,7 @@ class Buttons extends React.PureComponent {
   }
 
   handleAdd = () => {
-
-    const { ageVerificationRequired, showPopUp, isAvailable, onAdd, productId } = this.props
+    const { ageVerificationRequired, showPopUp, isAvailable, onAdd, productId, limitReached } = this.props
     if (ageVerificationRequired && !showPopUp) {
       this.setState({ ageVerifyTooltipVisible: true })
     } else if (isAvailable) {

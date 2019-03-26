@@ -8,9 +8,9 @@ class Product extends PureComponent {
     super()
     this.state = {
       showAgeVerification: false,
-      qty: 0,
     }
   }
+
   closePopUp = () => {
     this.setState({
       showAgeVerification: false
@@ -18,37 +18,54 @@ class Product extends PureComponent {
   }
 
   onAddProduct = () => {
-    const { ageVerified, ageRestricted } = this.props
+    const { product, ageVerified, ageRestricted, basketProductAdd, limitReached } = this.props
+    const { id } = product
     const ageVerificationRequired = !ageVerified && ageRestricted
-
     if(ageVerificationRequired) {
       this.setState({
         showAgeVerification: true
       })
     }
-    this.setState(prevState => ({ qty: prevState.qty + 1 }))
-   
+    
+    if(!limitReached) {
+      basketProductAdd(id)
+    }
   }
 
   onRemoveProduct = () => {
-    this.setState(prevState => ({ qty: prevState.qty - 1 }))
+    const { product, basketProductRemove } = this.props
+    const { id } = product
+    basketProductRemove(id)
+  }
+
+  getProductDetails = () => {
+    const { ageVerified, product, limitReached } = this.props
+    const { id, title, listPrice, images, ageRestricted, quantity} = product
+
+    const imgSource = images && images['400']['src']
+    const ageVerificationRequired = !ageVerified && ageRestricted
+
+    return {
+      id,
+      title,
+      listPrice,
+      imgSource: imgSource,
+      ageVerificationRequired,
+      qty: quantity,
+      limitReached,
+    }
   }
 
   render() {
-    const { images, ageVerified, ageRestricted } = this.props
-    const imgSource = images && images['400']['src']
-    const ageVerificationRequired = !ageVerified && ageRestricted
-    const { showAgeVerification, qty } = this.state
+    const { showAgeVerification } = this.state
+    const productDetails = this.getProductDetails()
 
     return(
       <div className={css.productCardContainer}>
         <ProductPresentation
           onAdd={this.onAddProduct}
           onRemove={this.onRemoveProduct}
-          imgSource={imgSource}
-          ageVerificationRequired={ageVerificationRequired}
-          qty={qty}
-          {...this.props}
+          {...productDetails}
         />
         <AgeVerificationPopUp visible={showAgeVerification} close={this.closePopUp} />
       </div>
