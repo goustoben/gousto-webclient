@@ -8,6 +8,7 @@ export const getMenuCutoffUntil = state => state.menuCutoffUntil
 export const getRecieveMenuPending = state => state.menuRecieveMenuPending
 export const getBoxSummaryDeliveryDays = state => state.boxSummaryDeliveryDays
 export const getUserAgent = state => state.request.get('userAgent')
+export const getProductCategories = state => state.productsCategories
 
 export default {
   getStock,
