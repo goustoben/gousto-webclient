@@ -191,7 +191,7 @@ describe('OrderSummary', () => {
         .text(),
     ).toContain('These items include VAT at 20%')
     const products = Immutable.fromJS({
-      p1: { isVatable: false, title: 'p1 Tit', listPrice: '2.00', images: {} },
+      p1: { isVatable: false, title: 'p1 Title', listPrice: '2.00', images: {} },
     })
     wrapper.setProps({ products })
     expect(wrapper.find(Receipt).render().find('p.disclaimer').length).toEqual(0)
