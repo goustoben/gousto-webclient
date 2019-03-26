@@ -156,16 +156,16 @@ class Buttons extends React.PureComponent {
         <Segment
           key={0}
           onClick={this.handleRemove}
-          size="small"
+          className={css.segmentControler}
         >
           <Control placement="left" >-</Control>
         </Segment>,
         <Segment
           fill={false}
           key={1}
-          size="large"
+          className={css.qtySegment}
         >
-          {`${qty} Added`}
+          {`${qty}`}
         </Segment>,
         <Tooltip
           key={2}
@@ -179,10 +179,10 @@ class Buttons extends React.PureComponent {
             onClick={this.handleAdd}
             hover={this.tooltipHover}
             disabledClick={this.disabledClick}
-            size="small"
             disabled={!isAvailable}
+            className={css.segmentControler}
           >
-            <Control>+</Control>
+            <Control placement="right">+</Control>
           </Segment>
         </Tooltip>,
       ]
@@ -201,8 +201,10 @@ class Buttons extends React.PureComponent {
             disabledClick={this.disabledClick}
             disabled={!isAvailable}
             fill={false}
+            width={'auto'}
+            className={css.addButton}
           >
-            Add Product
+            Add
           </Segment>
         </Tooltip>,
       ]

@@ -7,7 +7,8 @@ class Product extends PureComponent {
   constructor() {
     super()
     this.state = {
-      showAgeVerification: false
+      showAgeVerification: false,
+      qty: 0,
     }
   }
   closePopUp = () => {
@@ -16,7 +17,7 @@ class Product extends PureComponent {
     })
   }
 
-  onAddProduct = (productId) => {
+  onAddProduct = () => {
     const { ageVerified, ageRestricted } = this.props
     const ageVerificationRequired = !ageVerified && ageRestricted
 
@@ -25,17 +26,30 @@ class Product extends PureComponent {
         showAgeVerification: true
       })
     }
+    this.setState(prevState => ({ qty: prevState.qty + 1 }))
+   
+  }
+
+  onRemoveProduct = () => {
+    this.setState(prevState => ({ qty: prevState.qty - 1 }))
   }
 
   render() {
     const { images, ageVerified, ageRestricted } = this.props
     const imgSource = images && images['400']['src']
     const ageVerificationRequired = !ageVerified && ageRestricted
-    const { showAgeVerification } = this.state
+    const { showAgeVerification, qty } = this.state
 
     return(
       <div className={css.productCardContainer}>
-        <ProductPresentation onAdd={this.onAddProduct} {...this.props} imgSource={imgSource} ageVerificationRequired={ageVerificationRequired} />
+        <ProductPresentation
+          onAdd={this.onAddProduct}
+          onRemove={this.onRemoveProduct}
+          imgSource={imgSource}
+          ageVerificationRequired={ageVerificationRequired}
+          qty={qty}
+          {...this.props}
+        />
         <AgeVerificationPopUp visible={showAgeVerification} close={this.closePopUp} />
       </div>
     )
