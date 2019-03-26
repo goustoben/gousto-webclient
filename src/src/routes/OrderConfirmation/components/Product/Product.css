@@ -1,0 +1,69 @@
+@value avenirHeavyFontStack from 'styles/typography.css';
+
+.productWrapper {
+  position: relative;
+  max-width: 400px;
+  margin: 5px;
+  display: inline-block;
+}
+
+.productCard{
+  background: #fff;
+  border: 1px solid #d6d8da;
+  margin-left: 0;
+  margin-bottom: 20px;
+  position: relative;
+  height: 365px;
+  overflow: hidden;
+}
+
+.productImage{
+  display: inline-flex;
+  height: 68%;
+}
+
+.productImage img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.productDetailsContainer{
+  display: inline-flex;
+  width: 100%;
+  height: 30%;
+  background-color: #fff;
+  padding: 0 5px;
+  margin: 0;
+}
+.productDetailsList{
+  display: inline-flex;
+  flex-direction: column;
+  width: 80%;
+  height: 60%;
+  background-color: #fff;
+  vertical-align: bottom;
+  justify-content: flex-end;
+  padding-left: 12px;
+}
+
+.productTitle{
+  font-family: avenirHeavyFontStack;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-transform: none;
+  width: 80%;
+}
+
+.productPrice{
+  font-family: avenirHeavyFontStack;
+  color: #777;
+  font-size: 14px;
+  position: absolute;
+  bottom: 20px;
+  margin-bottom: 0;
+}
+
+.productAddButton{
+  display: flex;
+  width: 77px;
+}
