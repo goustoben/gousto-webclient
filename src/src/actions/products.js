@@ -1,8 +1,8 @@
-import actionTypes from './actionTypes'
 import { push } from 'react-router-redux'
 import { fetchProduct, fetchRandomProducts, fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
 import { getProductsByCutoff } from 'utils/products'
 import logger from 'utils/logger'
+import actionTypes from './actionTypes'
 import statusActions from './status'
 
 const productDetailVisibilityChange = (productId) => (
@@ -50,11 +50,18 @@ const productsLoadCategories = (forceRefresh = false) => (
 const productsLoadProducts = (cutoffDate) => (
   async (dispatch, getState) => {
     if (!getState().products.size ||
-			(cutoffDate && !getProductsByCutoff(cutoffDate, getState().products).size)) {
+      (cutoffDate && !getProductsByCutoff(cutoffDate, getState().products).size)) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
         const { data: products } = await fetchProducts(getState().auth.get('accessToken'), cutoffDate)
-        dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products, cutoffDate })
+        const { productsStock } = getState()
+        const productsInStock = []
+        products.forEach(product => {
+          if(productsStock.get(product.id) > 0 && product.isForSale) {
+            productsInStock.push(product)
+          }
+        })
+        dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products: productsInStock, cutoffDate })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, err.message))
         logger.error(err)
