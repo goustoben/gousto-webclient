@@ -29,7 +29,6 @@ class OrderConfirmation extends Component {
           <div className={css.productList}>
            {products ? Object.keys(products).map(productKey => {
              const productProps = products[productKey]
-             productProps.quantity = basket.get('products').has(productProps.id) ? basket.getIn(['products', productProps.id]) : 0
              const limitReached = this.isLimitReached(productProps)
               
              return (
