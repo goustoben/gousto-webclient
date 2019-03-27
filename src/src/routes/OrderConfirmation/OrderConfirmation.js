@@ -8,9 +8,9 @@ import { getHeaderDetails } from './helper'
 
 class OrderConfirmation extends Component {
   isLimitReached = (product) => {
-    const { basket, productsCategories } = this.props
+    const { basket, productsCategories, products } = this.props
     const { id } = product
-    const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(product), productsCategories)
+    const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
 
     return limitReachedResult
   }

@@ -66,28 +66,28 @@ export function limitReached(basket, menuRecipes, menuRecipeStock, naive, maxRec
   return recipeCount >= (maxRecipesNum || config.basket.maxRecipesNum)
 }
 
-export function getProductsQtyInCategory(categoryId, basket, product, includeGiftProducts = true) {
+export function getProductsQtyInCategory(categoryId, basket, products, includeGiftProducts = true) {
   const productQtys = includeGiftProducts ? getAllBasketProducts(basket) : basket.get('products')
 
-  return productQtys.reduce((workingSumInCategory, itemQty) => {
-    const categoryFound = product.get('categories', []).some(category => category.get('id') === categoryId)
+  return productQtys.reduce((workingSumInCategory, itemQty, productId) => {
+    const categoryFound = products.getIn([productId, 'categories'], []).some(category => category.get('id') === categoryId)
 
     return workingSumInCategory + (categoryFound ? itemQty : 0)
   }, 0)
 }
 
-export function getProductLimitReached(productId, basket, product, productsCategories) {
+export function getProductLimitReached(productId, basket, products, productsCategories) {
   const overallLimitReached = productsOverallLimitReached(basket)
   if (overallLimitReached) {
     return { type: 'box', value: config.basket.maxProductsNum }
   }
 
-  const productItemAtLimit = getProductItemLimitReached(productId, basket, product)
+  const productItemAtLimit = getProductItemLimitReached(productId, basket, products)
   if (productItemAtLimit) {
     return { type: 'item', value: productItemAtLimit }
   }
 
-  const categoryAtLimit = getFirstProductCategoryAtLimit(productId, basket, product, productsCategories)
+  const categoryAtLimit = getFirstProductCategoryAtLimit(productId, basket, products, productsCategories)
   if (categoryAtLimit) {
     return { type: 'category', value: categoryAtLimit }
   }
