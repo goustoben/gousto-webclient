@@ -60,6 +60,7 @@ class Menu extends React.Component {
     tariffId: PropTypes.number,
     menuLoadingBoxPrices: PropTypes.bool,
     jfyTutorialFlag: PropTypes.bool,
+    changeBannerGelFlag: PropTypes.bool,
     filteredRecipesNumber: PropTypes.number,
     clearAllFilters: PropTypes.func,
     triggerMenuLoad: PropTypes.func,
@@ -210,11 +211,14 @@ class Menu extends React.Component {
   renderBanner = (switchoverDate) => {
     const now = moment()
     const switchoverTime = moment(switchoverDate)
+    const { changeBannerGelFlag } = this.props
+    const imageName = changeBannerGelFlag ? 'menu/10min-banner-gel-02.png' : 'menu/10min-banner-gel-01.png'
+    console.log('imageName', imageName) //eslint-disable-line
 
     return (now.isSameOrAfter(switchoverTime, 'day')) ? (
-      <Banner imageName={'menu/ef-gel.png'} type={'everyday-favourites'} color='red' />
+      <Banner imageName={imageName} type={'ten-min'}/>
     ) : (
-        <Banner imageName={'menu/jw-portrait.jpg'} type={'joe-wicks'} color='white' fileName="jw-partner-text" />
+      <Banner imageName={'menu/ef-gel.png'} type={'everyday-favourites'} color='red' />
     )
   }
 
@@ -249,7 +253,7 @@ class Menu extends React.Component {
         />
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
-          {this.renderBanner(menu.efBanner.switchoverDate)}
+          {this.renderBanner(menu.tenMinBanner.switchoverDate)}
           <SubHeader
             viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
             onToggleGridView={this.toggleGridView}
