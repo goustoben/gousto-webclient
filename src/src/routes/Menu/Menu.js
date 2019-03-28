@@ -213,7 +213,6 @@ class Menu extends React.Component {
     const switchoverTime = moment(switchoverDate)
     const { changeBannerGelFlag } = this.props
     const imageName = changeBannerGelFlag ? 'menu/10min-banner-gel-02.png' : 'menu/10min-banner-gel-01.png'
-    console.log('imageName', imageName) //eslint-disable-line
 
     return (now.isSameOrAfter(switchoverTime, 'day')) ? (
       <Banner imageName={imageName} type={'ten-min'}/>
