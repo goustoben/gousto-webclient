@@ -97,9 +97,8 @@
 	z-index: 2;
 }
 
-.joe-wicks .gelPortrait__image {
-	border-radius: 100%;
-	border: 3px solid JWBlue;
+.gelPortrait__image {
+  border-radius: 100%;
 }
 
 .gelText__svg {

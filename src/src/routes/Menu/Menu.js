@@ -212,7 +212,7 @@ class Menu extends React.Component {
     const now = moment()
     const switchoverTime = moment(switchoverDate)
     const { changeBannerGelFlag } = this.props
-    const imageName = changeBannerGelFlag ? 'menu/10min-banner-gel-02.png' : 'menu/10min-banner-gel-01.png'
+    const imageName = changeBannerGelFlag ? 'menu/10min-banner-gel-02.jpg' : 'menu/10min-banner-gel-01.jpg'
 
     return (now.isSameOrAfter(switchoverTime, 'day')) ? (
       <Banner imageName={imageName} type={'ten-min'}/>
