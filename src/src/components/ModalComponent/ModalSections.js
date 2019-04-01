@@ -16,8 +16,8 @@ const ModalContent = ({ children, className }) => (
     </div>
 )
 
-const ModalFooter = ({ children, position }) => (
-    <div className={classnames(css.modalFooter, position)}>
+const ModalFooter = ({ children, className }) => (
+    <div className={classnames(css.modalFooter, className)}>
         {children}
     </div>
 )
@@ -34,7 +34,7 @@ ModalContent.propTypes = {
 
 ModalFooter.propTypes = {
   children: PropTypes.node,
-  position: PropTypes.string,
+  className: PropTypes.string,
 }
 
 export {
