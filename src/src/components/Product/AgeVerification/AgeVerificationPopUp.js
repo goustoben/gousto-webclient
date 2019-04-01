@@ -4,9 +4,9 @@ import ModalPanel from 'Modal/ModalPanel'
 import { Button } from 'goustouicomponents'
 import css from './AgeVerification.css'
 
-const AgeVerificationPopUp = ({visible, close}) => (
-  <Modal visible={visible}>
-    <ModalPanel closePortal={close} className={css.ageVerificationModal} disableOverlay>
+const AgeVerificationPopUp = ({isVisible, onClose}) => (
+  <Modal visible={isVisible}>
+    <ModalPanel closePortal={onClose} className={css.ageVerificationModal} disableOverlay>
       <ModalTitle className={css.ageVerificationTitle}>
         Over 18?
       </ModalTitle>

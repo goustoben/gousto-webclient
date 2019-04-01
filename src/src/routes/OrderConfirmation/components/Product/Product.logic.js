@@ -69,14 +69,14 @@ class Product extends PureComponent {
     const quantity = basket && basket.get('products').has(product.id) ? basket.getIn(['products', product.id]) : 0
 
     const imgSource = images && images['400']['src']
-    const ageVerificationRequired = !ageVerified && ageRestricted
+    const isAgeVerificationRequired = !ageVerified && ageRestricted
 
     return {
       id,
       title,
       listPrice,
       imgSource: imgSource,
-      ageVerificationRequired,
+      isAgeVerificationRequired,
       qty: quantity,
       limitReached,
     }
@@ -93,7 +93,7 @@ class Product extends PureComponent {
           onRemove={this.onRemoveProduct}
           {...productDetails}
         />
-        <AgeVerificationPopUp visible={showAgeVerification} close={this.closePopUp} />
+        <AgeVerificationPopUp isVisible={showAgeVerification} onClose={this.closePopUp} />
       </div>
     )
   }
