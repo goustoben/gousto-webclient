@@ -5,10 +5,8 @@
 }
 
 .productWrapper {
-  position: relative;
   max-width: 400px;
   margin: 5px;
-  display: inline-block;
 }
 
 .productCard{
