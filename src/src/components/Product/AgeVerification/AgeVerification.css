@@ -21,17 +21,11 @@
 }
 
 .ageVerificationTitle{
-	position: relative;
-	float: left;
-}
-
-.ageVerificationContent{
-	clear: both;
+	text-align: left;
 }
 
 .ageVerificationFooter{
 	text-transform: uppercase;
-	position: relative;
 	float: right;
 	margin: 0;
 }
