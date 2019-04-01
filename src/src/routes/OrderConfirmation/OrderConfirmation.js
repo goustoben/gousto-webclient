@@ -16,7 +16,16 @@ class OrderConfirmation extends Component {
   }
 
   render() {
-    const { order, showHeader, products, ageVerified, basket, productsCategories, basketProductAdd, basketProductRemove } = this.props
+    const { 
+      order,
+      showHeader,
+      products,
+      ageVerified,
+      basket,
+      productsCategories,
+      basketProductAdd,
+      basketProductRemove,
+    } = this.props
     const headerDetails = order && getHeaderDetails(order)
 
     return (
