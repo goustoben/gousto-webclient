@@ -10,7 +10,8 @@
 }
 
 .addButton {
-	width: 75px;
+	width: 100%;
+	min-width: 75px;
 	border-radius: 3px;
 }
 
