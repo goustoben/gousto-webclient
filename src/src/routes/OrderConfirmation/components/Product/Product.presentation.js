@@ -39,7 +39,7 @@ const ProductPresentation = ({
           <div className={css.productTitle}>{title}</div>
           <p className={css.productPrice}>£{listPrice}</p>
         </div>
-        <div className={css.productAddButton} role="button" aria-label="Add/Remove Product">
+        <div className={css.productAddButton} role="button" aria-label="Add or Remove Product">
           <Buttons
             productId={id}
             ageVerificationRequired={ageVerificationRequired}
