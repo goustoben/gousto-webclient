@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
+import Overlay from 'Overlay'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
+import ProductDetailContainer from '../ProductDetails'
 import { ProductPresentation } from './Product.presentation'
 import css from './Product.css'
 
@@ -33,23 +35,22 @@ class Product extends PureComponent {
     super()
     this.state = {
       showAgeVerification: false,
+      showDetailsScreen: false,
     }
   }
 
-  closePopUp = () => {
-    this.setState({
-      showAgeVerification: false
-    })
+  toggleAgeVerificationPopUp = () => {
+    this.setState((prevState) => ({
+      showAgeVerification: !prevState.showAgeVerification
+    }))
   }
 
   onAddProduct = () => {
     const { product, ageVerified, basketProductAdd, limitReached } = this.props
     const { id, ageRestricted} = product
-    const ageVerificationRequired = !ageVerified && ageRestricted
-    if(ageVerificationRequired) {
-      this.setState({
-        showAgeVerification: true
-      })
+    const isAgeVerificationRequired = !ageVerified && ageRestricted
+    if(isAgeVerificationRequired) {
+      this.toggleAgeVerificationPopUp()
     }
     
     if(!limitReached) {
@@ -63,7 +64,13 @@ class Product extends PureComponent {
     basketProductRemove(id)
   }
 
-  getProductDetails = () => {
+  toggleDetailsVisibility = () => {
+    this.setState((prevState) => ({
+      showDetailsScreen: !prevState.showDetailsScreen
+    }))
+  }
+
+  getProductCardContent = () => {
     const { ageVerified, product, basket, limitReached } = this.props
     const { id, title, listPrice, images, ageRestricted} = product
     const quantity = basket && basket.get('products').has(product.id) ? basket.getIn(['products', product.id]) : 0
@@ -79,11 +86,31 @@ class Product extends PureComponent {
       isAgeVerificationRequired,
       qty: quantity,
       limitReached,
+      openDetailsScreen: this.toggleDetailsVisibility,
+    }
+  }
+  getProductDetails = () => {
+    const { ageVerified, product } = this.props
+    const { id, title, listPrice, images, ageRestricted, attributes, description } = product
+
+    const imgSource = images && images['400']['src']
+    const isAgeVerificationRequired = !ageVerified && ageRestricted
+
+    return {
+      attributes: Immutable.fromJS(attributes),
+      description,
+      isAgeVerificationRequired,
+      listPrice,
+      title,
+      media: imgSource,
+      productId: id,
+      onVisibilityChange: this.toggleDetailsVisibility,
     }
   }
 
   render() {
-    const { showAgeVerification } = this.state
+    const { showAgeVerification, showDetailsScreen } = this.state
+    const productCardContent = this.getProductCardContent()
     const productDetails = this.getProductDetails()
 
     return(
@@ -91,9 +118,16 @@ class Product extends PureComponent {
         <ProductPresentation
           onAdd={this.onAddProduct}
           onRemove={this.onRemoveProduct}
-          {...productDetails}
+          {...productCardContent}
         />
-        <AgeVerificationPopUp isVisible={showAgeVerification} onClose={this.closePopUp} />
+        <AgeVerificationPopUp isVisible={showAgeVerification} onClose={this.toggleAgeVerificationPopUp} />
+        <Overlay open={showDetailsScreen} onClose={this.toggleDetailsVisibility} >
+          <ProductDetailContainer
+            {...productDetails}
+            onAdd={this.onAddProduct}
+            onRemove={this.onRemoveProduct}
+          />
+        </Overlay>
       </div>
     )
   }
