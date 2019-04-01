@@ -30,6 +30,7 @@
 }
 
 .ageVerificationFooter{
+	text-transform: uppercase;
 	position: relative;
 	float: right;
 	margin: 0;

@@ -1,8 +1,8 @@
-import css from './AgeVerification.css'
 import React from 'react'
 import Modal, { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
 import ModalPanel from 'Modal/ModalPanel'
 import { Button } from 'goustouicomponents'
+import css from './AgeVerification.css'
 
 const AgeVerificationPopUp = ({visible, close}) => (
   <Modal visible={visible}>
@@ -15,10 +15,10 @@ const AgeVerificationPopUp = ({visible, close}) => (
       </ModalContent>
       <ModalFooter position={css.ageVerificationFooter}>
         <Button fill={false} >
-          NO, I&#8242;M UNDER 18
+          No, i&#8242;m under 18
         </Button>
         <Button fill color={'primary'} >
-          YES, I&#8242;M OVER 18
+          Yes, I&#8242;m over 18
         </Button>
       </ModalFooter>
     </ModalPanel>
