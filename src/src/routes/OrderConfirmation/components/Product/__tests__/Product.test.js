@@ -2,7 +2,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import { mount } from 'enzyme'
 import { Product } from '..'
-import { mockProduct } from './config'
+import { mockProduct } from '../config'
 
 describe('Product component', () => {
   let wrapper
