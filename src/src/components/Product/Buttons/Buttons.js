@@ -163,7 +163,7 @@ class Buttons extends React.PureComponent {
           key={1}
           className={css.qtySegment}
         >
-          {`${qty}`}
+          {qty}
         </Segment>,
         <Tooltip
           key={2}
