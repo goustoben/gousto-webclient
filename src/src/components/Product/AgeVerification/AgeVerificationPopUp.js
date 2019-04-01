@@ -13,7 +13,7 @@ const AgeVerificationPopUp = ({isVisible, onClose}) => (
       <ModalContent className={css.ageVerificationContent}>
         To add this item to your order, please confirm you are over 18.
       </ModalContent>
-      <ModalFooter position={css.ageVerificationFooter}>
+      <ModalFooter className={css.ageVerificationFooter}>
         <Button fill={false} >
           No, i&#8242;m under 18
         </Button>
