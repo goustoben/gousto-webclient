@@ -53,7 +53,7 @@ class Product extends PureComponent {
     if(isAgeVerificationRequired) {
       this.toggleAgeVerificationPopUp()
     }
-    
+
     if(!limitReached) {
       basketProductAdd(id)
     }
