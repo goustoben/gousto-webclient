@@ -53,6 +53,7 @@ describe('Menu', () => {
           filteredRecipesNumber={30}
           isLoading={false}
           jfyTutorialFlag={false}
+          changeBannerGelFlag={false}
         />,
       )
     })
@@ -85,7 +86,7 @@ describe('Menu', () => {
       test('should not render JFY tutorial if feature flag is set to false', () => {
         expect(wrapper.find(JustForYouTutorial).length).toBe(0)
       })
-      
+
       test('should render JFY tutorial if feature flag is set to true', () => {
         wrapper = shallow(
           <Menu
@@ -98,6 +99,11 @@ describe('Menu', () => {
           />,
         )
         expect(wrapper.find(JustForYouTutorial).length).toBe(1)
+      })
+
+      test('should render banner with an image name prop', () => {
+        expect(wrapper.find(Banner).length).toBe(1)
+        expect(wrapper.find(Banner).prop('imageName')).toBeTruthy()
       })
     })
 
