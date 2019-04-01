@@ -136,12 +136,7 @@ export const basketOrderLoad = orderId => (
 
 export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 'recipe', 'gift'], view = null) => (
   (dispatch, getState) => {
-    let userOrder
-    if (order) {
-      userOrder = order
-    } else {
-      userOrder= getUserOrderById(orderId, getState().user.get('orders'))
-    }
+    const userOrder = order || getUserOrderById(orderId, getState().user.get('orders'))
 
     types.forEach((type) => {
       userOrder.get(`${type}Items`, []).forEach((item) => {
