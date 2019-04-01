@@ -3,11 +3,11 @@
 .marketPlacetWrapper {
  max-width: 1170px;
  margin: 0 auto;
+ padding-top: 20px;
 }
 
 .marketPlaceTitle {
  text-align: center;
- margin-top: 20px;
  font-family: comfortaaRegularFontStack;
  font-weight: 700;
  font-size: 24px;
