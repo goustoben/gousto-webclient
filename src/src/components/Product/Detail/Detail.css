@@ -21,7 +21,7 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	
+
 	@media ScreenSMMin {
 		width: 100%;
 		height: auto;
@@ -79,7 +79,7 @@
 	}
 }
 
-.productDetailsTitle > span { 
+.productDetailsTitle > span {
 	padding: 0;
 }
 
