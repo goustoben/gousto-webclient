@@ -114,7 +114,7 @@ class Product extends PureComponent {
     const productDetails = this.getProductDetails()
 
     return(
-      <div className={css.productCardContainer}>
+      <section className={css.productWrapper}>
         <ProductPresentation
           onAdd={this.onAddProduct}
           onRemove={this.onRemoveProduct}
@@ -128,7 +128,7 @@ class Product extends PureComponent {
             onRemove={this.onRemoveProduct}
           />
         </Overlay>
-      </div>
+      </section>
     )
   }
 }

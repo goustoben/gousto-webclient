@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Buttons from 'Product/Buttons'
+import classnames from 'classnames'
 import css from './Product.css'
 
 const propTypes = {
@@ -34,28 +35,28 @@ const ProductPresentation = ({
   isAgeVerificationRequired,
   openDetailsScreen,
 }) => (
-  <div className={css.productWrapper}>
-    <div className={css.productCard}>
-      <div className={css.productImage} onClick={() => openDetailsScreen()} >
-        <img src={imgSource} alt={title}/>
+  <div className={css.productDetails}>
+    <button type="button" className={classnames(css.resetButtonStyle, css.productImage)} onClick={() => openDetailsScreen()}>
+      <img src={imgSource} alt={title}/>
+    </button>
+    <div className={css.productContent}>
+      <div>
+        <button type="button" className={classnames(css.resetButtonStyle, css.productInfo)} onClick={() => openDetailsScreen()}>
+          <h3 className={css.productTitle}>{title}</h3>
+          <span className={css.productPrice}>£{listPrice}</span>
+        </button>
       </div>
-      <div className={css.productDetailsContainer} >
-        <div className={css.productDetailsList} onClick={() => openDetailsScreen()}>
-          <div className={css.productTitle}>{title}</div>
-          <p className={css.productPrice}>£{listPrice}</p>
-        </div>
-        <div className={css.productAddButton} role="button" aria-label="Add or Remove Product">
-          <Buttons
-            productId={id}
-            isAgeVerificationRequired={isAgeVerificationRequired}
-            onAdd={onAdd}
-            onRemove={onRemove}
-            qty={qty}
-            limitReached={limitReached}
-            isAvailable={!limitReached}
-            showPopUp
-          />
-        </div>
+      <div className={css.productButtonWrapper} role="button" aria-label="Add or Remove Product">
+        <Buttons
+          productId={id}
+          isAgeVerificationRequired={isAgeVerificationRequired}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          qty={qty}
+          limitReached={limitReached}
+          isAvailable={!limitReached}
+          showPopUp
+        />
       </div>
     </div>
   </div>
