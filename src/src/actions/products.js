@@ -5,7 +5,7 @@ import logger from 'utils/logger'
 import actionTypes from './actionTypes'
 import statusActions from './status'
 
-const productDetailVisibilityChange = (productId) => (
+const productDetailVisibilityChange = (productId = false) => (
   (dispatch, getState) => {
     const prevLoc = getState().routing.locationBeforeTransitions
     const query = { ...prevLoc.query }
