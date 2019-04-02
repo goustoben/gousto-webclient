@@ -15,10 +15,10 @@ const AgeVerificationPopUp = ({isVisible, onClose}) => (
       </ModalContent>
       <ModalFooter className={css.ageVerificationFooter}>
         <Button fill={false} >
-          No, i&#8242;m under 18
+          No, i&#39;m under 18
         </Button>
         <Button fill color={'primary'} >
-          Yes, I&#8242;m over 18
+          Yes, I&#39;m over 18
         </Button>
       </ModalFooter>
     </ModalPanel>
