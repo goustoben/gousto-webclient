@@ -12,61 +12,53 @@
 .container {
 	composes: relative from 'styles/position.css';
 	composes: container from 'sass-loader!styles/bootstrap.scss';
-	top: 0;
+	top: 10%;
 	z-index: 1000;
 	background-color: Mushroom50;
-	width: 72%;
+	max-width: 800px;
 
 	@media ScreenXSMax {
 		width: 100%;
 	}
 }
 
-.content {
-	composes: paddingLGBottom marginLGLeftRight marginLGTopBottom from 'sass-loader!styles/spacing.scss';
-}
-
 .image {
+	overflow: hidden;
+	padding: 0 15px;
 	width: 100%;
-}
-
-.row {
-	composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-	composes: row from 'sass-loader!styles/bootstrap.scss';
-	background-color: White;
-}
-
-
-.col {
-	composes: marginSMTopBottom from 'sass-loader!styles/spacing.scss';
-
-	@media ScreenXSMax {
-		margin: 0;
-	}
-}
-
-.colSM {
-	composes: col;
-	composes: col-lg-5 col-md-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
-}
-
-.colMD {
-	composes: col;
-	composes: col-lg-7 col-md-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
-}
-
-.colFull {
-	composes: col;
-	composes: col-xs-12 from 'sass-loader!styles/bootstrap.scss';
 }
 
 .detailContainer {
 	composes: flex from 'styles/display.css';
 	flex-flow: column;
+	padding: 0 15px;
+	text-align: left;
 }
 
 .detailButtons {
 	@media ScreenSMMin {
 		order: 2;
 	}
+}
+
+.productDetailsTitle {
+	padding-top: 20px;
+	padding-left: 15px;
+	text-align: left;
+	font-weight: 700;
+	font-size: 24px;
+}
+
+.productDetailsContent {
+	display: flex;
+	flex-direction: column;
+}
+.productDetailsContentRow {
+	display: flex;
+	flex-direction: row;
+}
+
+.productDetailsAttributes {
+	padding: 15px;
+	text-align: left;
 }

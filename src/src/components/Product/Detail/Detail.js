@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'/* eslint-disable new-cap */
-import OverlayHeader from 'Overlay/Header'
 import Image from 'Image'
+import { ModalTitle, ModalContent } from 'ModalComponent'
 import Attributes from 'Product/Attributes'
 import Buttons from 'Product/Buttons'
 import { formatPrice } from 'utils/format'
@@ -48,36 +48,32 @@ const Detail = ({
   ...buttonProps
 }) => (
   <div className={css.fullHeight} onClick={() => { onVisibilityChange(false) }}>
-    <div className={css.container} onClick={(e) => { e.stopPropagation() }}>
-      <OverlayHeader title={title} onClose={() => { onVisibilityChange(false) }} />
-
-      <div className={css.content}>
-        <div className={css.row}>
-          <div className={css.colMD}>
-            <Image media={media} title={title} className={css.image} />
+    <div className={css.container}>
+      <ModalTitle className={css.productDetailsTitle}>{title}</ModalTitle>
+      <ModalContent className={css.productDetailsContent}>
+        <div className={css.productDetailsContentRow}>
+          <div className={css.image}>
+           <Image media={media} title={title} />
           </div>
-
-          <div className={css.colSM}>
-            <div className={css.detailContainer}>
-              {buttonProps.onAdd || buttonProps.onRemove ?
+          <div className={css.detailContainer}>
+            <p>{description}</p>
+              
+            <p>{formatPrice(listPrice)}</p>
+            {buttonProps.onAdd || buttonProps.onRemove ?
                 <span className={css.detailButtons}>
                   <Buttons {...buttonProps} qty={qty} />
                 </span> : null
-              }
+            }
 
-              <p>{description}</p>
-
-              <p>{formatPrice(listPrice)}</p>
-            </div>
           </div>
-
-          {!!attributes.size &&
-            <div className={css.colFull}>
-              <Attributes attributes={attributes} />
-            </div>
-          }
         </div>
-      </div>
+
+        {!!attributes.size &&
+          <div className={css.productDetailsAttributes}>
+            <Attributes attributes={attributes} />
+          </div>
+        }
+      </ModalContent>
     </div>
   </div>
 )
