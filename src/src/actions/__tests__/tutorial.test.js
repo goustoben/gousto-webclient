@@ -110,11 +110,17 @@ describe('tutorial actions', () => {
   })
 
   describe('setTutorialViewed', () => {
+    beforeEach(() => {
+      getState.mockReturnValueOnce(getTutorialState({
+        viewed: { justforyou: 2 },
+      }))
+    })
+
     test('should dispatch a SET_TUTORIAL_VIEWED with the given name and value', () => {
       const name = 'testTutorial'
       const count = 1
 
-      setTutorialViewed(name, count)(dispatch)
+      setTutorialViewed(name, count)(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.SET_TUTORIAL_VIEWED,
