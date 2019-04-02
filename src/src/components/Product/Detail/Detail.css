@@ -1,4 +1,4 @@
-@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMin, ScreenXXSMin, ScreenXXXSMax from 'styles/screenSizes.css';
 @value White, Mushroom50 from 'styles/colors.css';
 
 .fullHeight {
@@ -12,34 +12,52 @@
 .container {
 	composes: relative from 'styles/position.css';
 	composes: container from 'sass-loader!styles/bootstrap.scss';
-	top: 10%;
 	z-index: 1000;
-	background-color: Mushroom50;
-	max-width: 800px;
-	border-radius: 5px;
-	box-shadow: 0 5px 15px rgba(0,0,0, 0.5);
-
-	@media ScreenXSMax {
+	background-color: White;
+	padding: 0px 30px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	
+	@media ScreenSMMin {
 		width: 100%;
+		height: auto;
+		max-width: 800px;
+		margin: 10% auto;
+		border-radius: 5px;
+		box-shadow: 0 5px 15px rgba(0,0,0, 0.5);
 	}
 }
 
 .image {
-	overflow: hidden;
-	padding: 0 15px;
+	object-fit: cover;
 	width: 100%;
 }
 
 .detailContainer {
 	composes: flex from 'styles/display.css';
-	flex-flow: column;
-	padding: 0 15px;
+	flex-direction: column;
 	text-align: left;
 	justify-content: space-between;
+	padding-top: 20px;
+	font-size: 16px;
+	flex-grow: 1;
+
+	@media ScreenXXXSMax {
+		flex-grow: 0;
+	}
+
+	@media ScreenSMMin {
+		width: 50%;
+		padding-left: 30px;
+		padding-top: 0;
+		font-size: 18px;
+	}
 }
 
 .detailButtons {
 	width: 75px;
+	border:none;
 	@media ScreenSMMin {
 		order: 2;
 	};
@@ -47,28 +65,63 @@
 
 .productDetailsTitle {
 	padding-top: 20px;
-	padding-left: 15px;
 	text-align: left;
 	font-weight: 700;
-	font-size: 24px;
+	font-size: 18px;
+	display: flex;
+	justify-content: space-between;
+	margin: 0;
+
+	@media ScreenXXSMin {
+		font-size: 24px;
+	}
+}
+
+.productDetailsTitle > span { 
+	padding: 0;
 }
 
 .productDetailsContent {
 	display: flex;
 	flex-direction: column;
+	padding: 10px 0 30px;
+	margin: 0;
+	flex-grow: 1;
 }
 .productDetailsContentRow {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
+	flex-grow: 1;
+
+	@media ScreenSMMin {
+		flex-direction: row;
+	}
+}
+
+.productDetailsImage {
+	display: flex;
+	width: 100%;
+
+	@media ScreenXXXSMax {
+		height: 35%;
+	}
+
+	@media ScreenSMMin {
+		width: 50%;
+		height: 100%;
+	}
 }
 
 .productDetailsAttributes {
-	padding: 15px;
+	padding: 15px 0 0;
 	text-align: left;
+	@media ScreenXXXSMax {
+		line-height: 22px;
+	}
 }
 
 .productDetailsPrice {
-	font-size: 20px;
+	font-size: 16px;
 }
 
 .productDetailsDescription {

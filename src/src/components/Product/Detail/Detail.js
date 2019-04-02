@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'/* eslint-disable new-cap */
 import Image from 'Image'
+import CloseButton from 'Overlay/CloseButton'
 import { ModalTitle, ModalContent } from 'ModalComponent'
 import Attributes from 'Product/Attributes'
 import Buttons from 'Product/Buttons'
@@ -47,23 +48,26 @@ const Detail = ({
   qty,
   ...buttonProps
 }) => (
-  <div className={css.fullHeight} onClick={() => { onVisibilityChange(false) }}>
-    <div className={css.container}>
-      <ModalTitle className={css.productDetailsTitle}>{title}</ModalTitle>
+  <div className={css.fullHeight} onClick={() => { onVisibilityChange() }}>
+    <div className={css.container} onClick={(e) => { e.stopPropagation() }}>
+      <ModalTitle className={css.productDetailsTitle}>
+        {title}
+        <CloseButton onClose={onVisibilityChange} />
+      </ModalTitle>
       <ModalContent className={css.productDetailsContent}>
         <div className={css.productDetailsContentRow}>
-          <div className={css.image}>
-           <Image media={media} title={title} />
+          <div className={css.productDetailsImage}>
+            <Image media={media} title={title} className={css.image} />
           </div>
           <div className={css.detailContainer}>
             <p className={css.productDetailsDescription}>{description}</p>
-              
+
             <div>
               <p className={css.productDetailsPrice}>{formatPrice(listPrice)}</p>
               {buttonProps.onAdd || buttonProps.onRemove ?
-                  <div className={css.detailButtons}>
-                    <Buttons {...buttonProps} qty={qty} />
-                  </div> : null
+                <div className={css.detailButtons}>
+                  <Buttons {...buttonProps} qty={qty} />
+                </div> : null
               }
             </div>
 

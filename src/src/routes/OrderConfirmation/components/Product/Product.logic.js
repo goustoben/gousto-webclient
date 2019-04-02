@@ -102,6 +102,7 @@ class Product extends PureComponent {
       isAgeVerificationRequired,
       listPrice,
       title,
+      showPopUp: true,
       media: imgSource,
       productId: id,
       onVisibilityChange: this.toggleDetailsVisibility,
