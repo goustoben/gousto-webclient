@@ -1,5 +1,9 @@
 import actionTypes from './actionTypes'
 
+import { set } from 'utils/cookieHelper2'
+import Cookies from 'utils/GoustoCookies'
+import { tutorialViewedExpireTime } from 'config/cookies'
+
 export const shouldJfyTutorialBeVisible = () => (
   (dispatch, getState) => {
     const { menuCollections, tutorial } = getState()
@@ -28,22 +32,32 @@ export const setTutorialVisible = (name, value) => (
   }
 )
 
+export const persistTutorialViewed = (getState) => {
+  if (__CLIENT__) {
+    const viewed = getState().tutorial.get('viewed')
+
+    set(Cookies, 'tutorial_viewed', viewed, tutorialViewedExpireTime)
+  }
+}
+
 export const setTutorialViewed = (name, count) => (
-  (dispatch) => {
+  (dispatch, getState) => {
     dispatch({
       type: actionTypes.SET_TUTORIAL_VIEWED,
       name,
       count,
     })
+    persistTutorialViewed(getState)
   }
 )
 
 export const incrementTutorialViewed = (name) => (
-  (dispatch) => {
+  (dispatch, getState) => {
     dispatch({
       type: actionTypes.INCREMENT_TUTORIAL_VIEWED,
       name,
     })
+    persistTutorialViewed(getState)
   }
 )
 
