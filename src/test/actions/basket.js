@@ -3,10 +3,10 @@ import Immutable from 'immutable'
 import chai, {expect} from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import actionTypes from 'actions/actionTypes'
 import basket from 'actions/basket'
+chai.use(sinonChai)
 
 describe('basket actions', function () {
   let dispatchSpy
@@ -387,91 +387,6 @@ describe('basket actions', function () {
       expect(basketOrderItemsLoadSpy).to.have.not.been.called
       expect(basketOrderLoadedSpy).to.have.been.calledOnce
       expect(basketOrderLoadedSpy).to.have.been.calledWithExactly('123')
-    })
-  })
-
-  describe('basketOrderItemsLoad', function () {
-    let basketActions
-    let basketProductAddSpy
-    let basketRecipeAddSpy
-    let basketGiftAddSpy
-
-    beforeEach(function () {
-      getStateSpy = sinon.stub().returns({
-        basket: Immutable.fromJS({ orderId: '456' }),
-        products: Immutable.fromJS({
-          p1: { id: 'p1' },
-          p2: { id: 'p2' },
-          p3: { id: 'p3' },
-        }),
-        user: Immutable.fromJS({
-          orders: [
-            {
-              id: '123',
-              box: {
-                numPortions: 2,
-              },
-              giftItems: [
-                { id: 'gp1', itemableId: 'p1', itemableType: 'Product', quantity: 1 },
-                { id: 'gp3', itemableId: 'p1', itemableType: 'Gift', quantity: 1 },
-              ],
-              productItems: [
-                { id: 'p2', itemableId: 'p2', quantity: 3 },
-                { id: 'p3', itemableId: 'p3', quantity: 2 },
-              ],
-              recipeItems: [
-                { id: 'r1', itemableId: 'r1', quantity: 2 },
-                { id: 'r2', itemableId: 'r2', quantity: 4 },
-              ],
-            },
-            { id: '456' },
-          ],
-        }),
-      })
-
-      basketProductAddSpy = sinon.spy()
-      basketRecipeAddSpy = sinon.spy()
-      basketGiftAddSpy = sinon.spy()
-
-      basketActions = require('inject-loader?&actions/basket!actions/basket')({
-        'actions/basket': {
-          basketProductAdd: basketProductAddSpy,
-          basketRecipeAdd: basketRecipeAddSpy,
-          basketGiftAdd: basketGiftAddSpy,
-        },
-      }).default
-    })
-
-    it('should call basketProductAdd for each product in the given order if order is not already loaded', function () {
-      basketActions.basketOrderItemsLoad('123')(dispatchSpy, getStateSpy)
-      expect(basketProductAddSpy.callCount).to.equal(5)
-      expect(basketProductAddSpy.args[0]).to.deep.equal(['p2', null, '123'])
-      expect(basketProductAddSpy.args[1]).to.deep.equal(['p2', null, '123'])
-      expect(basketProductAddSpy.args[2]).to.deep.equal(['p2', null, '123'])
-      expect(basketProductAddSpy.args[3]).to.deep.equal(['p3', null, '123'])
-      expect(basketProductAddSpy.args[4]).to.deep.equal(['p3', null, '123'])
-    })
-
-    it('should call basketRecipeAdd for each recipe set (total recipes / number portions ) in the given order if order is not already loaded', function () {
-      basketActions.basketOrderItemsLoad('123')(dispatchSpy, getStateSpy)
-      expect(basketRecipeAddSpy.callCount).to.equal(3)
-      expect(basketRecipeAddSpy.args[0]).to.deep.equal(['r1', null, '123'])
-      expect(basketRecipeAddSpy.args[1]).to.deep.equal(['r2', null, '123'])
-      expect(basketRecipeAddSpy.args[2]).to.deep.equal(['r2', null, '123'])
-    })
-
-    it('should call basketGiftAdd for each gift product in the given order if order is not already loaded', function () {
-      basketActions.basketOrderItemsLoad('123')(dispatchSpy, getStateSpy)
-      expect(basketGiftAddSpy).to.have.been.calledTwice
-      expect(basketGiftAddSpy.args[0]).to.deep.equal(['p1', 'Product'])
-      expect(basketGiftAddSpy.args[1]).to.deep.equal(['p1', 'Gift'])
-    })
-
-    it('should NOT call basketProductAdd, basketRecipeAdd, or basketGiftAdd if order is already loaded', function () {
-      basketActions.basketOrderItemsLoad('456')(dispatchSpy, getStateSpy)
-      expect(basketProductAddSpy).to.have.not.been.called
-      expect(basketRecipeAddSpy).to.have.not.been.called
-      expect(basketGiftAddSpy).to.have.not.been.called
     })
   })
 
@@ -1322,26 +1237,6 @@ describe('basket actions', function () {
       expect(dispatchSpy.args[1][0]).to.deep.equal({
         type: actionTypes.BASKET_SLOT_CHANGE,
         slotId: '123-slot-id',
-      })
-    })
-  })
-
-  describe('basketCheckedOut', function () {
-    it('should dispatch BASKET_CHECKED_OUT with the numRecipes and view arguments in the trackingData', function () {
-      basket.basketCheckedOut(3, 'boxsummary')(dispatchSpy)
-      expect(dispatchSpy).to.have.been.calledTwice
-      expect(dispatchSpy.args[0][0]).to.deep.equal({
-        type: actionTypes.BASKET_CHECKOUT,
-        trackingData: {
-          actionType: actionTypes.BASKET_CHECKED_OUT,
-          numRecipes: 3,
-          view: 'boxsummary',
-        },
-      })
-      expect(dispatchSpy.args[1][0]).to.deep.equal({
-        type: actionTypes.PENDING,
-        key: actionTypes.BASKET_CHECKOUT,
-        value: true,
       })
     })
   })

@@ -8,13 +8,26 @@ const propTypes = {
   title: PropTypes.string,
   listPrice: PropTypes.string,
   imgSource: PropTypes.string,
+  ageVerificationRequired: PropTypes.bool,
+  limitReached: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
+  qty: PropTypes.number,
+  onAdd: PropTypes.func,
+  onRemove: PropTypes.func,
 }
 
 const ProductPresentation = ({
   id,
+  qty,
   title,
+  onAdd,
+  onRemove,
   listPrice,
-  imgSource
+  imgSource,
+  limitReached,
+  ageVerificationRequired,
 }) => (
   <div className={css.productWrapper}>
     <div className={css.productCard}>
@@ -25,6 +38,18 @@ const ProductPresentation = ({
         <div className={css.productDetailsList}>
           <div className={css.productTitle}>{title}</div>
           <p className={css.productPrice}>£{listPrice}</p>
+        </div>
+        <div className={css.productAddButton} role="button" aria-label="Add or Remove Product">
+          <Buttons
+            productId={id}
+            ageVerificationRequired={ageVerificationRequired}
+            onAdd={onAdd}
+            onRemove={onRemove}
+            qty={qty}
+            limitReached={limitReached}
+            isAvailable={!limitReached}
+            showPopUp
+          />
         </div>
       </div>
     </div>

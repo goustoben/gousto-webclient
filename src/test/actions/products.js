@@ -1,11 +1,11 @@
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import actionTypes from 'actions/actionTypes'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import actions from 'actions/products'
+chai.use(sinonChai)
 
 describe('products actions', function() {
   describe('productDetailVisibilityChange', function() {
@@ -119,98 +119,6 @@ describe('products actions', function() {
 
       const fetchProductCategoriesMockCalls = fetchProductCategoriesMock.args[0]
       expect(fetchProductCategoriesMockCalls[0]).to.equal('accessToken')
-    })
-  })
-
-  describe('productsLoadProducts', function() {
-    let fetchProductsMock
-    let statusPendingSpy
-    let statusErrorSpy
-    let dispatchSpy
-    let getStateSpy
-    let productActions
-
-    beforeEach(function() {
-      fetchProductsMock = sinon.stub().returns(Promise.resolve({ data: ['1', '2'] }))
-      statusPendingSpy = sinon.spy()
-      statusErrorSpy = sinon.spy()
-      dispatchSpy = sinon.spy()
-      getStateSpy = sinon.stub().returns({
-        auth: Immutable.fromJS({ accessToken: 'accessToken' }),
-        products: Immutable.OrderedMap({}),
-      })
-
-      productActions = require('inject-loader?apis/products&./status!actions/products')({
-        'apis/products': { fetchProducts: fetchProductsMock },
-        './status': { pending: statusPendingSpy, error: statusErrorSpy },
-      }).default
-    })
-
-    it('should dispatch status "pending" true for PRODUCTS_RECEIVE action before fetching products', async function() {
-      await productActions.productsLoadProducts()(dispatchSpy, getStateSpy)
-
-      expect(statusPendingSpy.args[0]).to.deep.equal([actionTypes.PRODUCTS_RECEIVE, true])
-    })
-
-    it('should dispatch status "pending" false for PRODUCTS_RECEIVE action after fetching products', async function() {
-      await productActions.productsLoadProducts()(dispatchSpy, getStateSpy)
-
-      expect(statusPendingSpy.args[1]).to.deep.equal([actionTypes.PRODUCTS_RECEIVE, false])
-    })
-
-    it('should dispatch status "error" true for PRODUCTS_RECEIVE action if an error occurs while fetching products', async function() {
-      fetchProductsMock.returns(new Promise(function() { throw new Error('error!') }))
-
-      productActions = require('inject-loader?apis/products&./status&!actions/products')({
-        'apis/products': { fetchProducts: fetchProductsMock },
-        './status': { pending: statusPendingSpy, error: statusErrorSpy },
-      }).default
-
-      await productActions.productsLoadProducts()(dispatchSpy, getStateSpy)
-
-      expect(statusErrorSpy.args[0]).to.deep.equal([actionTypes.PRODUCTS_RECEIVE, new Error('error!').message])
-    })
-
-    it('should fetch products by default if none have been fetched', async function() {
-      await productActions.productsLoadProducts()(dispatchSpy, getStateSpy)
-
-      const dispatchSpyCalls = dispatchSpy.args[1]
-      expect(dispatchSpyCalls[0]).to.deep.equal({
-        type: actionTypes.PRODUCTS_RECEIVE,
-        products: ['1', '2'],
-        cutoffDate: undefined,
-      })
-
-      const fetchProductsMockCalls = fetchProductsMock.args[0]
-      expect(fetchProductsMockCalls[0]).to.equal('accessToken')
-    })
-
-    it('should not fetch products by default if there are products in product store & no cutoffDate is passed in', async function() {
-      getStateSpy.returns({
-        auth: Immutable.fromJS({ accessToken: 'accessToken' }),
-        products: Immutable.fromJS({
-          1: { id: '1', title: 'Title 1' },
-        }),
-      })
-
-      await productActions.productsLoadProducts()(dispatchSpy, getStateSpy)
-
-      expect(fetchProductsMock).to.not.have.been.called
-    })
-
-    it('should fetch products for given cutoff date when cutoffDate is passed in', async function() {
-      await productActions.productsLoadProducts('whenCutoff timestamp')(dispatchSpy, getStateSpy)
-
-      const dispatchSpyCalls = dispatchSpy.args[1]
-      expect(dispatchSpyCalls[0]).to.deep.equal({
-        type: actionTypes.PRODUCTS_RECEIVE,
-        products: ['1', '2'],
-        cutoffDate: 'whenCutoff timestamp',
-      })
-
-      const fetchProductsMockCalls = fetchProductsMock.args[0]
-      expect(fetchProductsMockCalls[0]).to.equal('accessToken')
-      expect(fetchProductsMockCalls[1]).to.equal('whenCutoff timestamp')
     })
   })
 

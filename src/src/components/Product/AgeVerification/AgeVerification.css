@@ -13,3 +13,19 @@
 	composes: fadeIn from 'styles/effects.css';
 	composes: error from 'styles/layout.css';
 }
+
+.ageVerificationModal{
+	width: 600px;
+	border-radius: 5px;
+	padding: 30px;
+}
+
+.ageVerificationTitle{
+	text-align: left;
+}
+
+.ageVerificationFooter{
+	text-transform: uppercase;
+	float: right;
+	margin: 0;
+}
