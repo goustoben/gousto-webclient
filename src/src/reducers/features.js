@@ -54,6 +54,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
+  changeBannerGel: {
+    experiment: false,
+    value: false,
+  },
 })
 
 const featureToggles = {
