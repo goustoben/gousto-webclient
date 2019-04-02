@@ -12,7 +12,7 @@ const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWit
     { name: 'useWithin', value: useWithin, icon:'icon-use-within'},
     { name: 'equipmentRequired', value: equipment, icon:'icon-equipment', show:equipment && equipment.size > 0},
     { name: 'diet', value: diet, icon:'icon-diet', show:['vegetarian', 'vegan'].includes(diet.toLowerCase())},
-    { name: 'fiveADay', value: fiveADay, icon:'icon-five-a-day', show:fiveADay > 1},
+    { name: 'fiveADay', value: fiveADay, icon:'icon-five-a-day', show:fiveADay > 0},
     { name: 'cals', value: cals, icon:'icon-calories'},
     { name: 'cuisine', value: cuisine, icon:'icon-cuisine'},
     { name: 'glutenFree', value: glutenFree, icon:'icon-gluten-free', show: !!glutenFree},

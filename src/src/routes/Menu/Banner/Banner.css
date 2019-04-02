@@ -13,22 +13,9 @@
 	composes: inlineBlock from 'styles/display.css';
 	width: 100%;
 	height: 200px;
-	
+
 	background-position: center;
 	background-size: cover;
-}
-
-.joe-wicks {
-	composes: container;
-	background-image: url('media/images/menu/jw-banner-mobile.jpg');
-
-	@media ScreenXXSMin {
-		background-image: url('media/images/menu/jw-banner-tablet.jpg')
-	}
-
-	@media ScreenMDMin {
-		background-image: url('media/images/menu/jw-banner-desktop.jpg');
-	}
 }
 
 .everyday-favourites {
@@ -41,6 +28,19 @@
 
 	@media ScreenMDMin {
 		background-image: url('media/images/menu/ef-banner-desktop.jpg');
+	}
+}
+
+.ten-min {
+	composes: container;
+	background-image: url('media/images/menu/10min-banner-mobile.jpg');
+
+	@media ScreenXXSMin {
+		background-image: url('media/images/menu/10min-banner-tablet.jpg')
+	}
+
+	@media ScreenMDMin {
+		background-image: url('media/images/menu/10min-banner-desktop.jpg');
 	}
 }
 
@@ -97,9 +97,8 @@
 	z-index: 2;
 }
 
-.joe-wicks .gelPortrait__image {
-	border-radius: 100%;
-	border: 3px solid JWBlue;
+.gelPortrait__image {
+  border-radius: 100%;
 }
 
 .gelText__svg {

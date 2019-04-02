@@ -45,6 +45,12 @@ describe('tracking actions', () => {
       }),
     }
 
+    const pricing = Immutable.fromJS({
+      total: '13.99',
+      grossTotal: '15.99',
+      promoCode: '10OFF',
+    })
+
     beforeEach(() => {
       dispatch = jest.fn()
       getState = jest.fn().mockReturnValue(state)
@@ -57,7 +63,7 @@ describe('tracking actions', () => {
       expect(dispatchData.type).toBe(actionTypes.TRACKING)
     })
     test('should dispatch correct trackingData', () => {
-      trackFirstPurchase('order-a')(dispatch, getState)
+      trackFirstPurchase('order-a', pricing)(dispatch, getState)
       const trackingData = dispatch.mock.calls[0][0].trackingData
 
       expect(trackingData.asource).toBe('test-source')
@@ -69,7 +75,7 @@ describe('tracking actions', () => {
     })
 
     test('should dispatch correct optimizely data', () => {
-      trackFirstPurchase('order-a')(dispatch, getState)
+      trackFirstPurchase('order-a', pricing)(dispatch, getState)
       const optimizelyData = dispatch.mock.calls[0][0].optimizelyData
 
       expect(optimizelyData.eventName).toBe('order_placed_gross')

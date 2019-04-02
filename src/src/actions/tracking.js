@@ -2,13 +2,13 @@ import logger from 'utils/logger'
 import { getUserOrderById } from 'utils/user'
 import actionTypes from './actionTypes'
 
-export const trackFirstPurchase = orderId => (
+export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
     const { user } = getState()
     const goustoReference = user.get('goustoReference')
     const order = getUserOrderById(orderId, user.get('orders'))
-    const orderTotal = order.getIn(['prices', 'total'])
-    const grossTotal = order.getIn(['prices', 'grossTotal'])
+    const orderTotal = prices && prices.get('total')
+    const grossTotal = prices && prices.get('grossTotal')
 
     if (!goustoReference) {
       logger.warning('Missing user data for first purchase tracking: no user found in store')

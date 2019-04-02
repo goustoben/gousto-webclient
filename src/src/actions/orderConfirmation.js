@@ -8,6 +8,7 @@ export const orderDetails = (orderId) => (
     const accessToken = getState().auth.get('accessToken')
     try {
       dispatch(productActions.productsLoadCategories())
+      dispatch(productActions.productsLoadStock())
       const {data: order} = await ordersApi.fetchOrder(accessToken, orderId)
       dispatch({
         type: actionTypes.BASKET_ORDER_DETAILS_LOADED,

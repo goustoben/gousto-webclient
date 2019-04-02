@@ -5,6 +5,7 @@ import productActions from '../products'
 
 jest.mock('../products', () => ({
   productsLoadProducts: jest.fn(),
+  productsLoadStock: jest.fn(),
   productsLoadCategories: jest.fn()
 }))
 
@@ -21,7 +22,7 @@ describe('orderDetails', () => {
   })
   test('should get the order details for the orderId given', async () => {
     await orderApi.fetchOrder.mockImplementationOnce(jest.fn().mockReturnValueOnce(
-        new Promise((resolve, reject) => { resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00' } }) })
+      new Promise((resolve, reject) => { resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00' } }) })
     ))
     const fetchOrderSpy = jest.spyOn(orderApi, 'fetchOrder')
     await orderDetails('1234')(dispatchSpy, getStateSpy)
@@ -30,7 +31,7 @@ describe('orderDetails', () => {
 
   test('should fetch the products for the given cutoff date', async () => {
     await orderApi.fetchOrder.mockImplementationOnce(jest.fn().mockReturnValueOnce(
-        new Promise((resolve, reject) => { resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00' } }) })
+      new Promise((resolve, reject) => { resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00' } }) })
     ))
     const productsLoadProductsSpy = jest.spyOn(productActions, 'productsLoadProducts')
     await orderDetails('1234')(dispatchSpy, getStateSpy)
@@ -39,7 +40,7 @@ describe('orderDetails', () => {
 
   test('should fetch the products for the given cutoff date', async () => {
     await orderApi.fetchOrder.mockImplementationOnce(jest.fn().mockReturnValueOnce(
-        new Promise((resolve, reject) => { reject(reject) })
+      new Promise((resolve, reject) => { reject(reject) })
     ))
     const productsLoadProductsSpy = jest.spyOn(productActions, 'productsLoadProducts')
     await orderDetails('1234')(dispatchSpy, getStateSpy)

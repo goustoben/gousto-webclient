@@ -15,6 +15,7 @@ import basketActions from './basket'
 import loginActions from './login'
 import userActions from './user'
 import statusActions from './status'
+import pricingActions from './pricing'
 import tempActions from './temp'
 import GoustoException from '../utils/GoustoException'
 import Cookies from '../utils/GoustoCookies'
@@ -151,6 +152,7 @@ function resetDuplicateCheck() {
         dispatch(basketActions.basketPromoCodeChange(''))
         dispatch(basketActions.basketPromoCodeAppliedChange(false))
         dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
+        dispatch(pricingActions.pricingRequest())
       }
     }
   }
@@ -207,6 +209,7 @@ export function checkoutSignup() {
         dispatch(basketActions.basketPromoCodeChange(''))
         dispatch(basketActions.basketPromoCodeAppliedChange(false))
         dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
+        dispatch(pricingActions.pricingRequest())
       }
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP, false))

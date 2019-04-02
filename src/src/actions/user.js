@@ -244,7 +244,7 @@ export function userSubscribe() {
           }
         })
 
-        dispatch(trackFirstPurchase(orderId))
+        dispatch(trackFirstPurchase(orderId, prices))
 
         dispatch(basketActions.basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
         dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
