@@ -16,6 +16,8 @@
 	z-index: 1000;
 	background-color: Mushroom50;
 	max-width: 800px;
+	border-radius: 5px;
+	box-shadow: 0 5px 15px rgba(0,0,0, 0.5);
 
 	@media ScreenXSMax {
 		width: 100%;
@@ -33,12 +35,14 @@
 	flex-flow: column;
 	padding: 0 15px;
 	text-align: left;
+	justify-content: space-between;
 }
 
 .detailButtons {
+	width: 75px;
 	@media ScreenSMMin {
 		order: 2;
-	}
+	};
 }
 
 .productDetailsTitle {
@@ -61,4 +65,12 @@
 .productDetailsAttributes {
 	padding: 15px;
 	text-align: left;
+}
+
+.productDetailsPrice {
+	font-size: 20px;
+}
+
+.productDetailsDescription {
+	line-height: 22px;
 }

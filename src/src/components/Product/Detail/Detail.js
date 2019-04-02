@@ -56,14 +56,16 @@ const Detail = ({
            <Image media={media} title={title} />
           </div>
           <div className={css.detailContainer}>
-            <p>{description}</p>
+            <p className={css.productDetailsDescription}>{description}</p>
               
-            <p>{formatPrice(listPrice)}</p>
-            {buttonProps.onAdd || buttonProps.onRemove ?
-                <span className={css.detailButtons}>
-                  <Buttons {...buttonProps} qty={qty} />
-                </span> : null
-            }
+            <div>
+              <p className={css.productDetailsPrice}>{formatPrice(listPrice)}</p>
+              {buttonProps.onAdd || buttonProps.onRemove ?
+                  <div className={css.detailButtons}>
+                    <Buttons {...buttonProps} qty={qty} />
+                  </div> : null
+              }
+            </div>
 
           </div>
         </div>
