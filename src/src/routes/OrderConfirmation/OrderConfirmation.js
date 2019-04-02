@@ -16,7 +16,7 @@ class OrderConfirmation extends Component {
   }
 
   render() {
-    const { 
+    const {
       order,
       showHeader,
       products,
@@ -35,24 +35,26 @@ class OrderConfirmation extends Component {
         />}
         <div className={css.marketPlacetWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
-          <div className={css.productList}>
-           {!!products && Object.keys(products).map(productKey => {
-             const productProps = products[productKey]
-             const limitReached = this.isLimitReached(productProps)
-              
-             return (
-               <Product
-                 key={productProps.id}
-                 basket={basket}
-                 product={productProps}
-                 limitReached={limitReached}
-                 productsCategories={productsCategories}
-                 ageVerified={ageVerified}
-                 basketProductAdd={basketProductAdd}
-                 basketProductRemove={basketProductRemove}
-               />)
-           })}
-          </div>
+          <section className={css.marketPlaceContent}>
+            <div className={css.productList}>
+              {!!products && Object.keys(products).map(productKey => {
+                const productProps = products[productKey]
+                const limitReached = this.isLimitReached(productProps)
+
+                return (
+                  <Product
+                    key={productProps.id}
+                    basket={basket}
+                    product={productProps}
+                    limitReached={limitReached}
+                    productsCategories={productsCategories}
+                    ageVerified={ageVerified}
+                    basketProductAdd={basketProductAdd}
+                    basketProductRemove={basketProductRemove}
+                  />)
+              })}
+            </div>
+          </section>
         </div>
       </div>
     )
