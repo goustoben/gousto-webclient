@@ -1,61 +1,26 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'/* eslint-disable new-cap */
-import OverlayHeader from 'Overlay/Header'
 import Image from 'Image'
+import CloseButton from 'Overlay/CloseButton'
+import { ModalTitle, ModalContent } from 'ModalComponent'
 import Attributes from 'Product/Attributes'
 import Buttons from 'Product/Buttons'
 import { formatPrice } from 'utils/format'
 import css from './Detail.css'
 
-const Detail = (props) => {
-  const { attributes, description, listPrice, media, onVisibilityChange, title, ...buttonProps } = props
-
-  return (
-		<div className={css.fullHeight} onClick={() => { onVisibilityChange(false) }}>
-			<div className={css.container} onClick={(e) => { e.stopPropagation() }}>
-				<OverlayHeader title={title} onClose={() => { onVisibilityChange(false) }} />
-
-				<div className={css.content}>
-					<div className={css.row}>
-						<div className={css.colMD}>
-							<Image media={media} title={title} className={css.image} />
-						</div>
-
-						<div className={css.colSM}>
-							<div className={css.detailContainer}>
-								{buttonProps.onAdd || buttonProps.onRemove ?
-									<span className={css.detailButtons}>
-										<Buttons {...buttonProps} />
-									</span> : null
-								}
-
-								<p>{description}</p>
-
-								<p>{formatPrice(listPrice)}</p>
-							</div>
-						</div>
-
-						{!!attributes.size &&
-							<div className={css.colFull}>
-								<Attributes attributes={attributes} />
-							</div>
-						}
-					</div>
-				</div>
-			</div>
-		</div>
-  )
-}
-
-Detail.propTypes = {
-  ageVerificationRequired: PropTypes.bool.isRequired,
+const propTypes = {
+  isOpened: PropTypes.bool,
+  isAgeVerificationRequired: PropTypes.bool.isRequired,
   attributes: PropTypes.instanceOf(Immutable.List),
   description: PropTypes.string.isRequired,
   inProgress: PropTypes.bool,
   isAvailable: PropTypes.bool.isRequired,
   limitReached: PropTypes.oneOfType([
-    PropTypes.object,
+    PropTypes.shape({
+      value: PropTypes.string,
+      type: PropTypes.string,
+    }),
     PropTypes.bool,
   ]).isRequired,
   listPrice: PropTypes.string.isRequired,
@@ -73,4 +38,51 @@ Detail.propTypes = {
   title: PropTypes.string.isRequired,
 }
 
+const Detail = ({
+  attributes,
+  description,
+  listPrice,
+  media,
+  onVisibilityChange,
+  title,
+  qty,
+  ...buttonProps
+}) => (
+  <div className={css.fullHeight} onClick={() => { onVisibilityChange() }}>
+    <div className={css.container} onClick={(e) => { e.stopPropagation() }}>
+      <ModalTitle className={css.productDetailsTitle}>
+        {title}
+        <CloseButton onClose={onVisibilityChange} />
+      </ModalTitle>
+      <ModalContent className={css.productDetailsContent}>
+        <div className={css.productDetailsContentRow}>
+          <div className={css.productDetailsImage}>
+            <Image media={media} title={title} className={css.image} />
+          </div>
+          <div className={css.detailContainer}>
+            <p className={css.productDetailsDescription}>{description}</p>
+
+            <div>
+              <span className={css.productDetailsPrice}>{formatPrice(listPrice)}</span>
+              {buttonProps.onAdd || buttonProps.onRemove ?
+                <div className={css.detailButtons}>
+                  <Buttons {...buttonProps} qty={qty} />
+                </div> : null
+              }
+            </div>
+
+          </div>
+        </div>
+
+        {!!attributes.size &&
+          <div className={css.productDetailsAttributes}>
+            <Attributes attributes={attributes} />
+          </div>
+        }
+      </ModalContent>
+    </div>
+  </div>
+)
+
+Detail.propTypes = propTypes
 export default Detail
