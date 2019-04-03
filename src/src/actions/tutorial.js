@@ -34,7 +34,7 @@ export const setTutorialVisible = (name, value) => (
 
 export const persistTutorialViewed = (getState) => {
   if (__CLIENT__) {
-    const viewed = getState().tutorial.get('viewed')
+    const viewed = getState().tutorial.get('viewed').toJS()
 
     set(Cookies, 'tutorial_viewed', viewed, tutorialViewedExpireTime)
   }
