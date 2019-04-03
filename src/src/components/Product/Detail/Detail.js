@@ -63,7 +63,7 @@ const Detail = ({
             <p className={css.productDetailsDescription}>{description}</p>
 
             <div>
-              <p className={css.productDetailsPrice}>{formatPrice(listPrice)}</p>
+              <span className={css.productDetailsPrice}>{formatPrice(listPrice)}</span>
               {buttonProps.onAdd || buttonProps.onRemove ?
                 <div className={css.detailButtons}>
                   <Buttons {...buttonProps} qty={qty} />
