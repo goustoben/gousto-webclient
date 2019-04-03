@@ -46,16 +46,33 @@ class Product extends PureComponent {
     }))
   }
 
+  toggleDetailsVisibility = () => {
+    this.setState((prevState) => ({
+      showDetailsScreen: !prevState.showDetailsScreen
+    }))
+  }
+
+  toggleModal = () => {
+    this.isAgeVerificationRequired() ? this.toggleAgeVerificationPopUp() : this.toggleDetailsVisibility()
+  }
+
+  isAgeVerificationRequired = () => {
+    const { product, ageVerified } = this.props
+    const { ageRestricted} = product
+
+    return !ageVerified && ageRestricted
+  }
+
   onAddProduct = () => {
-    const { product, ageVerified, basketProductAdd, limitReached } = this.props
-    const { id, ageRestricted} = product
-    const isAgeVerificationRequired = !ageVerified && ageRestricted
+    const { product, basketProductAdd, limitReached } = this.props
+    const isAgeVerificationRequired = this.isAgeVerificationRequired()
+
     if(isAgeVerificationRequired) {
       this.toggleAgeVerificationPopUp()
     }
 
-    if(!limitReached) {
-      basketProductAdd(id)
+    if(!limitReached && !isAgeVerificationRequired) {
+      basketProductAdd(product.id)
     }
   }
 
@@ -63,12 +80,6 @@ class Product extends PureComponent {
     const { product, basketProductRemove } = this.props
     const { id } = product
     basketProductRemove(id)
-  }
-
-  toggleDetailsVisibility = () => {
-    this.setState((prevState) => ({
-      showDetailsScreen: !prevState.showDetailsScreen
-    }))
   }
 
   getProductCardContent = () => {
@@ -89,7 +100,7 @@ class Product extends PureComponent {
       limitReached,
       isAgeVerificationRequired,
       qty: quantity,
-      openDetailsScreen: this.toggleDetailsVisibility,
+      openDetailsScreen: this.toggleModal,
     }
   }
   getProductDetails = () => {
@@ -98,7 +109,7 @@ class Product extends PureComponent {
     return {
       ...product,
       showPopUp: true,
-      onVisibilityChange: this.toggleDetailsVisibility,
+      onVisibilityChange: this.toggleModal,
     }
   }
 
