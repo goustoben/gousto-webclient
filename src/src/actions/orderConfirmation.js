@@ -1,6 +1,8 @@
+import Immutable from 'immutable'
 import ordersApi from 'apis/orders'
 import logger from 'utils/logger'
 import productActions from './products'
+import { basketOrderItemsLoad } from './basket'
 import actionTypes from './actionTypes'
 
 export const orderDetails = (orderId) => (
@@ -15,7 +17,8 @@ export const orderDetails = (orderId) => (
         orderId,
         orderDetails: order,
       })
-      dispatch(productActions.productsLoadProducts(order.whenCutOff))
+      await dispatch(productActions.productsLoadProducts(order.whenCutOff))
+      dispatch(basketOrderItemsLoad(orderId, Immutable.fromJS(order)))
     }
     catch (err) {
       logger.error(err)
