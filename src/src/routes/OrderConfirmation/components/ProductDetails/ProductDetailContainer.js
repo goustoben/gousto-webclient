@@ -1,32 +1,43 @@
+import Immutable from 'immutable'
 import ProductDetails from 'Product/Detail'
 import { getProductLimitReached } from 'utils/basket'
+import { getAgeVerified } from 'selectors/user'
 import { connect } from 'react-redux'
 
 function mapStateToProps(state, props) {
-  const outOfStock = state.productsStock.get(props.productId, 0) === 0
-  const limitReached = getProductLimitReached(props.productId, state.basket, state.products, state.productsCategories)
-
-  const { 
-    isAgeVerificationRequired, 
+  const { productsStock, basket, products, productsCategories, pending } = state
+  const {
+    product
+  } = props
+  const {
+    id,
     attributes,
     description,
     listPrice,
-    media,
     title,
-  } = props
+    images,
+    ageRestricted
+  } = product
+
+  const imgSource = images && images['400']['src']
+  const ageVerified = getAgeVerified(state)
+  const isAgeVerificationRequired = !ageVerified && ageRestricted
+  const outOfStock = productsStock.get(id, 0) === 0
+  const limitReached = getProductLimitReached(id, basket, products, productsCategories)
 
   return {
+    productId: id,
     isAgeVerificationRequired,
-    attributes,
+    attributes: Immutable.fromJS(attributes),
     description,
     limitReached,
     listPrice,
     outOfStock,
-    media,
+    media: imgSource,
     title,
     isAvailable: !outOfStock && !limitReached,
-    inProgress: state.pending.get('USER_AGE_VERIFY', false),
-    qty: state.basket.getIn(['products', props.productId], 0),
+    inProgress: pending.get('USER_AGE_VERIFY', false),
+    qty: basket.getIn(['products', id], 0),
   }
 }
 

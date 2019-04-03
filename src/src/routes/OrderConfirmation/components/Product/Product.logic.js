@@ -90,21 +90,11 @@ class Product extends PureComponent {
     }
   }
   getProductDetails = () => {
-    const { ageVerified, product } = this.props
-    const { id, title, listPrice, images, ageRestricted, attributes, description } = product
-
-    const imgSource = images && images['400']['src']
-    const isAgeVerificationRequired = !ageVerified && ageRestricted
+    const { product } = this.props
 
     return {
-      attributes: Immutable.fromJS(attributes),
-      description,
-      isAgeVerificationRequired,
-      listPrice,
-      title,
+      product,
       showPopUp: true,
-      media: imgSource,
-      productId: id,
       onVisibilityChange: this.toggleDetailsVisibility,
     }
   }

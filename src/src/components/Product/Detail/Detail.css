@@ -14,7 +14,7 @@
 	composes: container from 'sass-loader!styles/bootstrap.scss';
 	z-index: 1000;
 	background-color: White;
-	padding: 0px 30px;
+	padding: 0 30px;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
