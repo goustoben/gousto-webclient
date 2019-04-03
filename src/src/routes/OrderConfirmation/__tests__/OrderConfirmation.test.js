@@ -45,4 +45,19 @@ describe('OrderConfirmation', () => {
       expect(wrapper.find('OrderConfirmationHeader').prop('whenCutoffDate')).toBe(headerTestProps.whenCutoffDate)
     })
   })
+
+  describe('Order Confirmation MarketPlace', () => {
+    const wrapper = shallow(<OrderConfirmation {...testProps} />)
+    test('should render marketPlace title', () => {
+      expect(wrapper.find('.marketPlaceTitle').length).toEqual(1)
+    })
+
+    test('should render market place content section', () => {
+      expect(wrapper.find('section.marketPlaceContent').length).toEqual(1)
+    })
+
+    test('should render product list', () => {
+      expect(wrapper.find('.productList').length).toEqual(1)
+    })
+  })
 })
