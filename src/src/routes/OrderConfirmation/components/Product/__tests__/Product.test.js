@@ -4,6 +4,8 @@ import { mount } from 'enzyme'
 import { Product } from '..'
 import { mockProduct } from '../config'
 
+jest.mock('../../ProductDetails', () => 'div')
+
 describe('Product component', () => {
   let wrapper
 
@@ -51,5 +53,24 @@ describe('Product component', () => {
       })
       expect(wrapper.text()).toContain('Add')
     })
+  })
+
+  describe('toggle description popup', () => {
+    beforeEach(() => {
+      wrapper = mount(<Product product={mockProduct} ageVerified limitReached={false} basketProductAdd={jest.fn()} basketProductRemove={jest.fn()} />)
+    })
+
+    test('should show description popup when click on the image', () => {
+      expect(wrapper.state().showDetailsScreen).toBe(false)
+      wrapper.find('button.productImage').simulate('click')
+      expect(wrapper.state().showDetailsScreen).toBe(true)
+    })
+
+    test('should show description popup when click on title', () => {
+      expect(wrapper.state().showDetailsScreen).toBe(false)
+      wrapper.find('button.productInfo').simulate('click')
+      expect(wrapper.state().showDetailsScreen).toBe(true)
+    })
+
   })
 })
