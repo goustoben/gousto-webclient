@@ -1,4 +1,4 @@
-@value ScreenXSMax, ScreenSMMin, ScreenXXSMin, ScreenSMaxiPhone5 from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMin, ScreenXXSMin, Screen3XSMax from 'styles/screenSizes.css';
 @value White, Mushroom50 from 'styles/colors.css';
 
 .fullHeight {
@@ -44,7 +44,7 @@
 	font-size: 16px;
 	flex-grow: 1;
 
-	@media ScreenSMaxiPhone5 {
+	@media Screen3XSMax {
 		flex-grow: 0;
 	}
 
@@ -103,7 +103,7 @@
 	display: flex;
 	width: 100%;
 
-	@media ScreenSMaxiPhone5 {
+	@media Screen3XSMax {
 		height: 35%;
 	}
 
@@ -116,7 +116,7 @@
 .productDetailsAttributes {
 	padding: 15px 0 0;
 	text-align: left;
-	@media ScreenSMaxiPhone5 {
+	@media Screen3XSMax {
 		line-height: 22px;
 	}
 }
