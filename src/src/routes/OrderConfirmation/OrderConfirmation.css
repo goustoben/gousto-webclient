@@ -1,5 +1,5 @@
 @value comfortaaRegularFontStack from ‘styles/typography.css’;
-@value ScreenSMMin from 'styles/screenSizes.css';
+@value ScreenSMMin, ScreenXXSMin from 'styles/screenSizes.css';
 
 .marketPlacetWrapper {
  max-width: 1170px;
@@ -26,4 +26,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  @media ScreenXXSMin {
+    width: calc(80% - 10px);
+    margin: 0 auto;
+  }
 }
