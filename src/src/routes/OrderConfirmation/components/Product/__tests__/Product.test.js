@@ -18,11 +18,11 @@ describe('Product component', () => {
     })
 
     test('should render title of product', () => {
-      expect(wrapper.find('div.productTitle').length).toBe(1)
+      expect(wrapper.find('.productTitle').length).toBe(1)
     })
 
     test('should render price of product', () => {
-      expect(wrapper.find('p.productPrice').length).toBe(1)
+      expect(wrapper.find('.productPrice').length).toBe(1)
     })
 
     test('should render add button', () => {
