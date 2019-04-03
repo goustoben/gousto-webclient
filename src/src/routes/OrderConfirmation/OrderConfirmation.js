@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { getProductLimitReached } from 'utils/basket'
 import css from './OrderConfirmation.css'
@@ -6,6 +7,21 @@ import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { Product } from './components/Product/Product.logic'
 import { getHeaderDetails } from './helper'
 
+const propTypes = {
+  showHeader: PropTypes.bool,
+  order: PropTypes.instanceOf(Immutable.Map),
+  basket: PropTypes.instanceOf(Immutable.Map),
+  productsCategories: PropTypes.instanceOf(Immutable.Map),
+  products: PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    listPrice: PropTypes.string,
+    images: PropTypes.array,
+    ageRestricted: PropTypes.bool,
+    quantity: PropTypes.number,
+  }),
+  ageVerified: PropTypes.bool,
+}
 class OrderConfirmation extends Component {
   isLimitReached = (product) => {
     const { basket, productsCategories, products } = this.props
@@ -60,5 +76,7 @@ class OrderConfirmation extends Component {
     )
   }
 }
+
+OrderConfirmation.propTypes = propTypes
 
 export default OrderConfirmation
