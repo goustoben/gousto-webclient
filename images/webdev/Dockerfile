@@ -10,14 +10,19 @@ RUN apt-get update && apt-get install -y \
     git \
     g++ \
     make \
+    nano \
     python \
     sed \
     curl \
     sudo \
+    vi \
     && rm -rf /var/lib/apt/lists/*
 
 # CREATE THE UNPRIVILEGED USER TO RUN PROCESSES
-RUN useradd -r -u 1001 -d /home/docker docker && usermod -aG sudo docker
+RUN useradd -r -u 1001 -d /home/docker docker \
+    && usermod -aG sudo docker \
+    && echo "user ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
+    chmod 0440 /etc/sudoers.d/user
 
 # FOLDERS (NOTE THAT CHMOD 777 IS REALLY BAD, A BETTER SOLUTION HAS TO BE IMPLEMENTED)
 RUN mkdir /var/log/pm2 && chmod -R 777 /var/log/pm2
