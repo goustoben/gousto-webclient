@@ -7,17 +7,16 @@ import { connect } from 'react-redux'
 function mapStateToProps(state, props) {
   const { productsStock, basket, products, productsCategories, pending } = state
   const {
-    product
-  } = props
-  const {
     id,
     attributes,
     description,
     listPrice,
     title,
     images,
-    ageRestricted
-  } = product
+    ageRestricted,
+    showPopUp,
+    onVisibilityChange,
+  } = props
 
   const imgSource = images && images['400']['src']
   const ageVerified = getAgeVerified(state)
@@ -38,6 +37,8 @@ function mapStateToProps(state, props) {
     isAvailable: !outOfStock && !limitReached,
     inProgress: pending.get('USER_AGE_VERIFY', false),
     qty: basket.getIn(['products', id], 0),
+    showPopUp,
+    onVisibilityChange,
   }
 }
 

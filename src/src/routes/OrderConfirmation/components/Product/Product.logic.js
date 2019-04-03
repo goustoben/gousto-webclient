@@ -93,7 +93,7 @@ class Product extends PureComponent {
     const { product } = this.props
 
     return {
-      product,
+      ...product,
       showPopUp: true,
       onVisibilityChange: this.toggleDetailsVisibility,
     }
