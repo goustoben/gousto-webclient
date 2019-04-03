@@ -2,13 +2,28 @@ import Immutable from 'immutable'
 
 import actionTypes from 'actions/actionTypes'
 
+import { set } from 'utils/cookieHelper2'
+import Cookies from 'utils/GoustoCookies'
+import { tutorialViewedExpireTime } from 'config/cookies'
+
 import {
   shouldJfyTutorialBeVisible,
   setTutorialViewed,
   incrementTutorialViewed,
   setTutorialVisible,
-  tutorialTracking
+  tutorialTracking,
+  persistTutorialViewed,
 } from 'actions/tutorial'
+
+jest.mock('utils/cookieHelper2', () => ({
+  set: jest.fn(),
+}))
+
+jest.mock('utils/GoustoCookies')
+
+jest.mock('config/cookies', () => ({
+  tutorialViewedExpireTime: 60,
+}))
 
 describe('tutorial actions', () => {
   const dispatch = jest.fn()
@@ -17,6 +32,7 @@ describe('tutorial actions', () => {
   afterEach(() => {
     dispatch.mockClear()
     getState.mockClear()
+    set.mockClear()
   })
 
   const getTutorialState = ({ collections = {}, viewed = {}, visible = {} }) => ({
@@ -126,6 +142,44 @@ describe('tutorial actions', () => {
         type: actionTypes.SET_TUTORIAL_VIEWED,
         name,
         count,
+      })
+    })
+  })
+
+  describe('persistTutorialViewed', ()=> {
+    const viewed = { justforyou: 2 }
+    beforeEach(() => {
+      getState.mockReturnValueOnce(getTutorialState({
+        viewed,
+      }))
+    })
+
+    describe('when on the server', () => {
+      beforeEach(() => {
+        global.__CLIENT__ = false
+      })
+
+      test('should not set a cookie', () => {
+        persistTutorialViewed(getState)
+
+        expect(set).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when on the client', () => {
+      beforeEach(() => {
+        global.__CLIENT__  = true
+      })
+
+      test('should set a tutorial viewed cookie with tutorial viewed state', () => {
+        persistTutorialViewed(getState)
+
+        expect(set).toHaveBeenCalledWith(
+          Cookies,
+          'tutorial_viewed',
+          viewed,
+          tutorialViewedExpireTime,
+        )
       })
     })
   })
