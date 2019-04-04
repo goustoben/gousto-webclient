@@ -6,15 +6,15 @@ module.exports = {
   stockThreshold: 3,
   legal: 'In addition to the recipe specific allergen information provided, due to production and packing methods Gousto boxes may also contain low levels of the following allergens: Fish; Eggs; Soya; Sesame; Sulphur Dioxide and Sulphites; Mustard; Nuts and Peanuts.',
   helmet: {
-    title: 'Food Delivery | Try Our Recipe Kits | Gousto',
+    title: "This Week's Menu | Choose From Up To 40 Recipes | Gousto",
     meta: [
       {
         name: 'description',
-        content: 'Food delivery is simple with Gousto\'s popular recipe kit boxes. Receive fresh and seasonal ingredients straight to your home with FREE delivery',
+        content: "Explore this week's new Gousto menu. Receive delicious recipes and pre-portioned, fresh ingredients to your door. Choose from up to 40 recipes now!",
       },
       {
         name: 'keywords',
-        content: 'Gousto, recipe delivery, organic ingredients, fresh, healthy food, cooking',
+        content: 'Gousto, recipe delivery, organic ingredients, fresh, healthy food, cooking, recipe box',
       },
     ],
     style: [
