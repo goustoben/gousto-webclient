@@ -2,7 +2,6 @@ module.exports = {
   head: {
     title: 'Food Delivery | Try Our Recipe Kits | Gousto',
     keywords: 'Gousto,recipe delivery,ingredients,fresh,healthy food,cooking',
-    googleplus: 'https://plus.google.com/+GoustoCoUk',
     fbAppID: '294160790674968',
     fbAdmins: [
       '100008548455745',
