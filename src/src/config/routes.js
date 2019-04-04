@@ -75,7 +75,7 @@ module.exports = {
 
     nwr: '/menu',
 
-    ourSuppliers: '/our-suppliers',
+    ourSuppliers: '/blog/suppliers',
 
     privacyPolicy: '/privacy-statement',
 
@@ -90,7 +90,7 @@ module.exports = {
     termsOfUse: '/terms-of-use',
     twr: '/menu',
 
-    weCare: '/we-care',
+    weCare: '/blog/sustainability',
 
     referFriend: '/my-referrals',
     signup: '/signup',
