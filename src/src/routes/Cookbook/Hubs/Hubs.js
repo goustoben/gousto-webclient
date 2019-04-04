@@ -46,8 +46,8 @@ class Hubs extends React.PureComponent {
 	}
 
 	renderMetaData = () => {
-	  const metaTitle = 'Recipes | Quick & Easy Dinner Ideas from Gousto'
-	  const metaDescription = 'Quick and easy recipes to cook at home. Explore our online cookbook of recipe ideas, with a wide range of tasty meals to choose from.'
+	  const metaTitle = 'Recipes | Quick and Easy Dinner Ideas | Gousto'
+	  const metaDescription = 'Quick and easy dinner recipes to cook at home. Explore our online cookbook of recipe ideas, with a wide range of tasty meals to choose from.'
 
 	  return (
 			<Helmet

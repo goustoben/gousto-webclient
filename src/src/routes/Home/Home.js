@@ -3,10 +3,10 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import actions from 'actions'
 import menuFetchData from 'routes/Menu/fetchData'
-import PromoBanner from './PromoBanner'
 import home from 'config/home'
 import routes from 'config/routes'
 import { generateHref } from 'Helmet/GoustoHelmet'
+import PromoBanner from './PromoBanner'
 import HomeSections from './HomeSections'
 
 class Home extends React.Component {
@@ -99,15 +99,15 @@ class Home extends React.Component {
     return (
       <span>
         <Helmet
-          title="Food Boxes | Get Fresh Food &amp; Ingredients Delivered | Gousto"
+          title="Recipe Boxes | Get Fresh Food &amp; Recipes Delivered | Gousto"
           meta={[
             {
               name: 'description',
-              content: 'Choose recipes and get fresh ingredients delivered to your door. Our award-winning food boxes include FREE delivery. Enjoy a new menu each week!',
+              content: 'Our award-winning food boxes make home cooking simple and tasty. We deliver fresh ingredients and delicious recipes 7 days a week. Get started now!',
             },
             {
               name: 'keywords',
-              content: 'Gousto, recipe delivery, ingredients, fresh, healthy food, cooking',
+              content: 'Gousto, recipe delivery, ingredients, fresh, healthy food, cooking, recipe box',
             },
           ]}
           link={link}
