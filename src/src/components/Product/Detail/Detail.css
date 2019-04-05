@@ -3,7 +3,7 @@
 
 .fullHeight {
 	composes: absolute from 'styles/position.css';
-	height: 100%;
+	height: 100vh;
 	width: 100%;
 	top: 0;
 	left: 0;
@@ -102,12 +102,7 @@
 }
 
 .productDetailsImage {
-	display: flex;
 	width: 100%;
-
-	@media Screen3XSMax {
-		height: 35%;
-	}
 
 	@media ScreenSMMin {
 		width: 50%;

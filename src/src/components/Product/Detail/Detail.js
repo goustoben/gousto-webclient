@@ -52,7 +52,7 @@ const Detail = ({
     <div className={css.container} onClick={(e) => { e.stopPropagation() }}>
       <ModalTitle className={css.productDetailsTitle}>
         {title}
-        <CloseButton onClose={onVisibilityChange} />
+        <CloseButton onClose={() => onVisibilityChange()} />
       </ModalTitle>
       <ModalContent className={css.productDetailsContent}>
         <div className={css.productDetailsContentRow}>
