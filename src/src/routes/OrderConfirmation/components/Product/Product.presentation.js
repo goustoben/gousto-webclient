@@ -9,6 +9,7 @@ const propTypes = {
   title: PropTypes.string,
   listPrice: PropTypes.string,
   imgSource: PropTypes.string,
+  lowStock: PropTypes.bool,
   isAgeVerificationRequired: PropTypes.bool,
   limitReached: PropTypes.oneOfType([
     PropTypes.shape({
@@ -27,6 +28,7 @@ const ProductPresentation = ({
   id,
   qty,
   title,
+  lowStock,
   onAdd,
   onRemove,
   listPrice,
@@ -39,6 +41,7 @@ const ProductPresentation = ({
     <button type="button" className={classnames(css.resetButtonStyle, css.productImage)} onClick={() => openDetailsScreen()}>
       <img src={imgSource} alt={title}/>
     </button>
+    {lowStock && <span className={css.productLowStock}>low stock</span>}
     <div className={css.productContent}>
       <div>
         <button type="button" className={classnames(css.resetButtonStyle, css.productInfo)} onClick={() => openDetailsScreen()}>
