@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import { mount } from 'enzyme'
 import { Product } from '..'
 import { mockProduct } from '../config'
+global.scrollTo = jest.fn()
 
 jest.mock('../../ProductDetails', () => 'div')
 
@@ -29,6 +30,18 @@ describe('Product component', () => {
 
     test('should render add button', () => {
       expect(wrapper.find('Button').length).toBe(1)
+    })
+
+    test('should render low stock ribbon if stock less than lowStockThreshold', () => {
+      mockProduct.stock = 9
+      wrapper = mount(<Product product={mockProduct} ageVerified />)
+      expect(wrapper.find('.productLowStock').length).toBe(1)
+    })
+
+    test('should NOT render low stock ribbon if stock more than lowStockThreshold', () => {
+      mockProduct.stock = 12
+      wrapper = mount(<Product product={mockProduct} ageVerified />)
+      expect(wrapper.find('.productLowStock').length).toBe(0)
     })
   })
 
