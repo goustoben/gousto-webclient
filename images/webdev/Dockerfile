@@ -51,15 +51,7 @@ RUN cd /home/docker/artifacts \
     && ENV=local yarn run build:docker:dev \
     && rm -rf /home/docker/artifacts/node_modules/.cache
 
-# COPY BUILT APPLICATION TO RUN DIRECTORY FOR NON-DEVELOPERS
-RUN cp -r   /home/docker/artifacts/dist \
-            /home/docker/artifacts/node_modules \
-            /home/docker/artifacts/public \
-            /home/docker/artifacts/process-docker.json \
-            /home/docker/artifacts/manifest.json \
-            /home/docker/app/
-
 EXPOSE 8080
 WORKDIR /home/docker/app
 # START APPLICATION
-CMD ["pm2-runtime", "start", "process-docker.json"]
+CMD ["devbox_start.sh"]
