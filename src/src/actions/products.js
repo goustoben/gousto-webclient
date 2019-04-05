@@ -55,7 +55,12 @@ const productsLoadProducts = (cutoffDate) => (
       try {
         const { data: products } = await fetchProducts(getState().auth.get('accessToken'), cutoffDate)
         const { productsStock } = getState()
-        const productsInStock = products.filter(product => productsStock.get(product.id) > 0 && product.isForSale)
+        const productsInStock = products.filter(product => {
+          product.stock = productsStock.get(product.id)
+
+          return productsStock.get(product.id) > 0 && product.isForSale
+        })
+
         dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products: productsInStock, cutoffDate })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, err.message))
