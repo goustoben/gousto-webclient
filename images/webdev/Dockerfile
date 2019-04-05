@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 # CREATE THE UNPRIVILEGED USER TO RUN PROCESSES
 RUN useradd -r -u 1001 -d /home/docker docker \
     && usermod -aG sudo docker \
-    && echo "docker ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/user && \
+    && echo "docker ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/user && \
     chmod 0440 /etc/sudoers.d/user
 
 # FOLDERS (NOTE THAT CHMOD 777 IS REALLY BAD, A BETTER SOLUTION HAS TO BE IMPLEMENTED)
