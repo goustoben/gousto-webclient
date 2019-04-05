@@ -60,25 +60,14 @@ class OrderConfirmation extends PureComponent {
     })
   }
 
-  setIsOver18 = () => {
-    this.setState({
-      isOver18: true
-    })
-  }
-
   render() {
-    const {
-      showHeader,
-      products,
-      headerDetails,
-    } = this.props
-
+    const { products, headerDetails, showHeader } = this.props
     const { showAgeVerification, isOver18, hasConfirmedAge } = this.state
     const isUnderAge = hasConfirmedAge && !isOver18
 
     return (
       <div>
-        {(showHeader && headerDetails) && <OrderConfirmationHeader
+        {showHeader && <OrderConfirmationHeader
           {...headerDetails}
         />}
         <Overlay open={showAgeVerification} from="top">

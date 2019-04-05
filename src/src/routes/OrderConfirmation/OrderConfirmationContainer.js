@@ -5,9 +5,7 @@ import { getBasket, getProductCategories } from 'selectors/root'
 import { getAgeVerified } from 'selectors/user'
 import { getBasketOrderDetails } from 'selectors/basket'
 import { basketProductAdd, basketProductRemove } from 'actions/basket'
-import tempActions from 'actions/temp'
 import OrderConfirmation from './OrderConfirmation'
-import { getHeaderDetails } from './helper'
 
 const mapStateToProps = (state) => {
   const locationQueryParam = locationQuery(state)
@@ -17,20 +15,16 @@ const mapStateToProps = (state) => {
 
   return ({
     showHeader,
-    headerDetails,
     basket: getBasket(state),
     productsCategories: getProductCategories(state),
     products: state.products.toJS(),
     ageVerified: getAgeVerified(state),
-    productId: state.temp.get('productId'),
-    addProduct: state.temp.get('addProduct'),
   })
 }
 
 const mapDispatchToProps = {
   basketProductAdd,
   basketProductRemove,
-  temp: tempActions.temp
 }
 
 const OrderConfirmationContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation))
