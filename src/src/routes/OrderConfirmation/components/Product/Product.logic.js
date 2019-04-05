@@ -83,12 +83,12 @@ class Product extends PureComponent {
     return {
       id,
       title,
-      listPrice,
       lowStock,
+      listPrice,
+      imgSource,
       limitReached,
       isAgeVerificationRequired,
       qty: quantity,
-      imgSource: imgSource,
       openDetailsScreen: this.toggleDetailsVisibility,
     }
   }
