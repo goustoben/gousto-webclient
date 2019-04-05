@@ -1,18 +1,39 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import Modal, { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
 import ModalPanel from 'Modal/ModalPanel'
+import { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
 import { Button } from 'goustouicomponents'
 import css from './AgeVerification.css'
 class AgeVerificationPopUp extends PureComponent {
 
-  renderFooter = () => {
-    const { onAgeConfirmation, isOver18 } = this.props
+  constructor() {
+    super()
+    this.state = {
+      hasSelectedUnder18: false
+    }
+  }
 
-    if(isOver18) {
+  setHasSelectedUnder18 = () => {
+    this.setState({
+      hasSelectedUnder18: true
+    })
+  }
+
+  onUnderageConfirmation = () => {
+    const { onAgeConfirmation } = this.props
+
+    this.setHasSelectedUnder18()
+    onAgeConfirmation(false)
+  }
+
+  renderFooter = () => {
+    const { onAgeConfirmation, isUnderAge, onClose} = this.props
+    const { hasSelectedUnder18 } = this.state
+
+    if(isUnderAge || hasSelectedUnder18) {
       return (
       <ModalFooter className={css.ageVerificationFooter}>
-        <Button fill={false}>
+        <Button fill={false} onClick={() => onClose()}>
           Close
         </Button>
       </ModalFooter>
@@ -21,7 +42,7 @@ class AgeVerificationPopUp extends PureComponent {
 
     return (
     <ModalFooter className={css.ageVerificationFooter}>
-      <Button className={css.noAgeVerificationButton} fill={false} onClick={() => onAgeConfirmation(false)} >
+      <Button className={css.noAgeVerificationButton} fill={false} onClick={() => this.onUnderageConfirmation()} >
         No, i&#8242;m under 18
       </Button>
       <Button className={css.yesAgeVerificationButton} fill color={'primary'} onClick={() => onAgeConfirmation(true)} >
@@ -31,33 +52,32 @@ class AgeVerificationPopUp extends PureComponent {
   }
 
   getContent = () => {
-    const { isOver18 } = this.props
+    const { isUnderAge } = this.props
+    const { hasSelectedUnder18 } = this.state
 
-    return isOver18 ? 'Sorry, 18 is the minimum legal age required for this item' : ' To add this item to your order, please confirm you are over 18.'
+    return isUnderAge || hasSelectedUnder18 ? 'Sorry, 18 is the minimum legal age required for this item' : ' To add this item to your order, please confirm you are over 18.'
   }
 
   render() {
-    const {isVisible, onClose} = this.props
+    const { onClose } = this.props
 
     return (
-    <Modal visible={isVisible}>
       <ModalPanel closePortal={onClose} className={css.ageVerificationModal} disableOverlay>
-        <ModalTitle className={css.ageVerificationTitle}>
-          Over 18?
-        </ModalTitle>
-        <ModalContent className={css.ageVerificationContent}>
-          {this.getContent()}
-        </ModalContent>
-          {this.renderFooter()}
+          <ModalTitle className={css.ageVerificationTitle}>
+            Over 18?
+          </ModalTitle>
+          <ModalContent className={css.ageVerificationContent}>
+            {this.getContent()}
+          </ModalContent>
+            {this.renderFooter()}
       </ModalPanel>
-    </Modal>
+
     )
   }
 }
 
 AgeVerificationPopUp.propTypes = {
-  isVisible: PropTypes.bool,
-  isOver18: PropTypes.bool,
+  isUnderAge: PropTypes.bool,
   onClose: PropTypes.func,
   onAgeConfirmation: PropTypes.func
 }

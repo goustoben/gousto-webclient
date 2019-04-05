@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { getProductLimitReached } from 'utils/basket'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
+import Overlay from 'Overlay'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
@@ -79,12 +80,16 @@ class OrderConfirmation extends PureComponent {
     } = this.props
 
     const { showAgeVerification, isOver18, hasConfirmedAge } = this.state
+    const isUnderAge = hasConfirmedAge && !isOver18
 
     return (
       <div>
         {(showHeader && headerDetails) && <OrderConfirmationHeader
           {...headerDetails}
         />}
+        <Overlay open={showAgeVerification} from="top">
+          <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation}/>
+        </Overlay>
         <div className={css.marketPlaceWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
           <section className={css.marketPlaceContent}>
