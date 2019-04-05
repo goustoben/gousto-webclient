@@ -1,1 +1,1 @@
-export { Product } from './Product.logic'
+export { ProductContainer as Product } from './ProductContainer'

@@ -7,7 +7,6 @@ import Overlay from 'Overlay'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
-import { Product } from './components/Product/Product.logic'
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
@@ -71,14 +70,7 @@ class OrderConfirmation extends PureComponent {
     const {
       showHeader,
       products,
-      basket,
-      productsCategories,
-      basketProductAdd,
-      basketProductRemove,
       headerDetails,
-      temp,
-      productId,
-      addProduct
     } = this.props
 
     const { showAgeVerification, isOver18, hasConfirmedAge } = this.state
@@ -95,7 +87,6 @@ class OrderConfirmation extends PureComponent {
         <div className={css.marketPlaceWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
           <section className={css.marketPlaceContent}>
-          <AgeVerificationPopUp isVisible={showAgeVerification} onClose={this.toggleAgeVerificationPopUp} isOver18={isOver18} onAgeConfirmation={this.onAgeConfirmation}/>
             <ProductList
               products={products}
               ageVerified={ageVerified}
