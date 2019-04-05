@@ -206,11 +206,6 @@
 	composes: fa-basic-class fa-instagram from 'styles/vendor/font-awesome-module.css';
 }
 
-.gplus{
-	composes: icon;
-	composes: fa-basic-class fa-google-plus from 'styles/vendor/font-awesome-module.css';
-}
-
 .checkoutFooterContainer {
 	composes: paddingMDTop from 'sass-loader!styles/spacing.scss';
 	margin: auto;

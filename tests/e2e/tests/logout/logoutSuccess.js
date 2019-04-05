@@ -28,7 +28,7 @@ module.exports = {
 				shared.section.body.logout()
 				browser.pause(3000)
 				shared.section.header.checkUserLoggedOut()
-				browser.assert.title('Food Boxes | Get Fresh Food & Ingredients Delivered | Gousto')
+				browser.assert.title('Recipe Boxes | Get Fresh Food & Recipes Delivered | Gousto')
 				done()
 			})
 			.end()

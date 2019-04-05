@@ -6,7 +6,7 @@ import css from './Buttons.css'
 
 class Buttons extends React.PureComponent {
   static propTypes = {
-    ageVerificationRequired: PropTypes.bool,
+    isAgeVerificationRequired: PropTypes.bool,
     inProgress: PropTypes.bool,
     isAvailable: PropTypes.bool,
     limitReached: PropTypes.oneOfType([
@@ -23,7 +23,7 @@ class Buttons extends React.PureComponent {
   }
 
   static defaultProps = {
-    ageVerificationRequired: false,
+    isAgeVerificationRequired: false,
     inProgress: false,
     isAvailable: true,
     limitReached: false,
@@ -79,8 +79,8 @@ class Buttons extends React.PureComponent {
   }
 
   handleAdd = () => {
-    const { ageVerificationRequired, showPopUp, isAvailable, onAdd, productId } = this.props
-    if (ageVerificationRequired && !showPopUp) {
+    const { isAgeVerificationRequired, showPopUp, isAvailable, onAdd, productId } = this.props
+    if (isAgeVerificationRequired && !showPopUp) {
       this.setState({ ageVerifyTooltipVisible: true })
     } else if (isAvailable) {
       onAdd(productId)
@@ -130,10 +130,10 @@ class Buttons extends React.PureComponent {
   }
 
   renderAgeVerificationComponent = () => {
-    const { ageVerificationRequired, isAvailable, inProgress, showPopUp } = this.props
+    const { isAgeVerificationRequired, isAvailable, inProgress, showPopUp } = this.props
     const { ageVerifyShowError, ageVerifyTooltipVisible } = this.state
 
-    return (ageVerificationRequired && !showPopUp) &&
+    return (isAgeVerificationRequired && !showPopUp) &&
       (<AgeVerificationCheckBox
         disabled={inProgress || !isAvailable}
         onCheckBoxChange={this.handleAgeVerify}

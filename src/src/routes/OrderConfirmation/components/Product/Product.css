@@ -1,71 +1,83 @@
 @value avenirHeavyFontStack from 'styles/typography.css';
+@value DarkGrey, Mackerel, White from 'styles/colors.css';
+@value ScreenXXSMin, ScreenSMMin, ScreenMDMin from 'styles/screenSizes.css';
 
-.productCardContainer{
-  display: inline-block;
+.resetButtonStyle {
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .productWrapper {
-  max-width: 400px;
-  margin: 5px;
-}
-
-.productCard{
-  background: #fff;
-  border: 1px solid #d6d8da;
-  margin-left: 0;
+  background:White;
+  border: 1px solid Mackerel;
   margin-bottom: 20px;
-  position: relative;
-  height: 365px;
-  overflow: hidden;
+  transition: box-shadow 200ms ease-in;
+  width: 100%;
+
+  @media ScreenMDMin {
+    width: calc(50% - 10px);
+  }
 }
 
-.productImage{
-  display: inline-flex;
-  height: 68%;
+.productWrapper:hover {
+  box-shadow: 0 4px 4px 0 rgba(0,0,0,0.10);
+}
+
+.productDetails {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.productImage {
+  width: 100%;
+  padding-bottom: 66%; /* ratio of the image */
+  height: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 .productImage img {
+  display: block;
   width: 100%;
-  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.productDetailsContainer{
-  display: inline-flex;
-  width: 100%;
-  height: 30%;
-  background-color: #fff;
-  padding: 0 5px;
-  margin: 0;
-}
-.productDetailsList{
-  display: inline-flex;
-  flex-direction: column;
-  width: 80%;
-  height: 60%;
-  background-color: #fff;
-  vertical-align: bottom;
-  justify-content: flex-end;
-  padding-left: 12px;
+.productContent {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
 }
 
-.productTitle{
+.productInfo {
+  text-align: left;
+}
+
+.productInfo:hover .productTitle {
+  text-decoration: underline;
+}
+
+.productTitle {
+  font-size: 18px;
   font-family: avenirHeavyFontStack;
   font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  text-transform: none;
-  width: 80%;
+  margin-bottom: 5px;
 }
 
-.productPrice{
+.productPrice {
   font-family: avenirHeavyFontStack;
-  color: #777;
+  color: DarkGrey;
   font-size: 14px;
-  position: absolute;
-  bottom: 20px;
   margin-bottom: 0;
 }
 
-.productAddButton{
-  display: flex;
-  width: 75px;
+.productButtonWrapper {
+  align-self: flex-end;
 }

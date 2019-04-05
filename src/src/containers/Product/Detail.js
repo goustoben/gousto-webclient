@@ -10,7 +10,7 @@ function mapStateToProps(state, props) {
   const outOfStock = state.productsStock.get(props.productId, 0) === 0
 
   return {
-    ageVerificationRequired: product.get('ageRestricted') && !state.user.get('ageVerified'),
+    isAgeVerificationRequired: product.get('ageRestricted') && !state.user.get('ageVerified'),
     attributes: product.get('attributes', Immutable.List()),
     description: product.get('description', ''),
     isAvailable: !outOfStock && !limitReached,
