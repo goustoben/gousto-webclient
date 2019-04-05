@@ -1,9 +1,12 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import { getProductLimitReached } from 'utils/basket'
+import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
+import { Product } from './components/Product/Product.logic'
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
@@ -38,9 +41,33 @@ const defaultProps = {
 }
 class OrderConfirmation extends PureComponent {
 
+  isLimitReached = (product) => {
+    const { basket, productsCategories, products } = this.props
+    const { id } = product
+    const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
+  }
+
+  toggleAgeVerificationPopUp = () => {
+    this.setState((prevState) => ({
+      showAgeVerification: !prevState.showAgeVerification
+    }))
+  }
+
+  onAgeConfirmation = (isOver18) => {
+    this.setState({
+      hasConfirmedAge: true,
+      isOver18: isOver18,
+    })
+  }
+
+  setIsOver18 = () => {
+    this.setState({
+      isOver18: true
+    })
+  }
+
   render() {
     const {
-      headerDetails,
       showHeader,
       products,
       ageVerified,
@@ -48,16 +75,20 @@ class OrderConfirmation extends PureComponent {
       productsCategories,
       basketProductAdd,
       basketProductRemove,
+      headerDetails,
     } = this.props
+
+    const { showAgeVerification, isOver18, hasConfirmedAge } = this.state
 
     return (
       <div>
-        {showHeader && <OrderConfirmationHeader
+        {(showHeader && headerDetails) && <OrderConfirmationHeader
           {...headerDetails}
         />}
-        <div className={css.marketPlacetWrapper}>
+        <div className={css.marketPlaceWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
           <section className={css.marketPlaceContent}>
+          <AgeVerificationPopUp isVisible={showAgeVerification} onClose={this.toggleAgeVerificationPopUp} isOver18={isOver18} onAgeConfirmation={this.onAgeConfirmation}/>
             <ProductList
               products={products}
               ageVerified={ageVerified}

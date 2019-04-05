@@ -1,9 +1,8 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
 import configProducts from 'config/products'
-import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import ProductDetailContainer from '../ProductDetails'
 import { ProductPresentation } from './Product.presentation'
 import css from './Product.css'
@@ -31,19 +30,12 @@ const propTypes = {
   basketProductRemove: PropTypes.func,
 }
 
-class Product extends PureComponent {
+class Product extends Component {
   constructor() {
     super()
     this.state = {
-      showAgeVerification: false,
       showDetailsScreen: false,
     }
-  }
-
-  toggleAgeVerificationPopUp = () => {
-    this.setState((prevState) => ({
-      showAgeVerification: !prevState.showAgeVerification
-    }))
   }
 
   toggleDetailsVisibility = () => {
@@ -53,7 +45,8 @@ class Product extends PureComponent {
   }
 
   toggleModal = () => {
-    this.isAgeVerificationRequired() ? this.toggleAgeVerificationPopUp() : this.toggleDetailsVisibility()
+    const { toggleAgeVerificationPopUp } = this.props
+    this.isAgeVerificationRequired() ? toggleAgeVerificationPopUp() : this.toggleDetailsVisibility()
   }
 
   isAgeVerificationRequired = () => {
@@ -64,11 +57,11 @@ class Product extends PureComponent {
   }
 
   onAddProduct = () => {
-    const { product, basketProductAdd, limitReached } = this.props
+    const { product, basketProductAdd, limitReached, toggleAgeVerificationPopUp } = this.props
     const isAgeVerificationRequired = this.isAgeVerificationRequired()
 
     if(isAgeVerificationRequired) {
-      this.toggleAgeVerificationPopUp()
+      toggleAgeVerificationPopUp()
     }
 
     if(!limitReached && !isAgeVerificationRequired) {
@@ -114,7 +107,8 @@ class Product extends PureComponent {
   }
 
   render() {
-    const { showAgeVerification, showDetailsScreen } = this.state
+    const { showDetailsScreen } = this.state
+    const { toggleAgeVerificationPopUp } = this.props
     const productCardContent = this.getProductCardContent()
     const productDetails = this.getProductDetails()
 
@@ -123,9 +117,9 @@ class Product extends PureComponent {
         <ProductPresentation
           onAdd={this.onAddProduct}
           onRemove={this.onRemoveProduct}
+          toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
           {...productCardContent}
         />
-        <AgeVerificationPopUp isVisible={showAgeVerification} onClose={this.toggleAgeVerificationPopUp} />
         <Overlay open={showDetailsScreen} onClose={this.toggleDetailsVisibility} >
           <ProductDetailContainer
             {...productDetails}
