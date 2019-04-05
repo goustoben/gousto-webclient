@@ -59,7 +59,6 @@
 }
 
 .detailButtons {
-	width: 75px;
 	border:none;
 	@media ScreenSMMin {
 		order: 2;
