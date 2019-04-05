@@ -1,0 +1,11 @@
+.productList{
+  padding-top: 25px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  @media ScreenXXSMin {
+    width: calc(80% - 10px);
+    margin: 0 auto;
+  }
+}

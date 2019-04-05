@@ -56,7 +56,7 @@ describe('OrderConfirmation', () => {
     })
 
     test('should render product list', () => {
-      expect(wrapper.find('.productList').length).toEqual(1)
+      expect(wrapper.find('ProductList').length).toEqual(1)
     })
   })
 })

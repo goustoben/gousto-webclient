@@ -1,10 +1,9 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { getProductLimitReached } from 'utils/basket'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
-import { Product } from './components/Product/Product.logic'
+import { ProductList } from './components/ProductList'
 
 const propTypes = {
   showHeader: PropTypes.bool,
@@ -32,13 +31,6 @@ const propTypes = {
   basketProductAdd: PropTypes.func,
   basketProductRemove: PropTypes.func,
 }
-  isLimitReached = (product) => {
-    const { basket, productsCategories, products } = this.props
-    const { id } = product
-    const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
-
-    return limitReachedResult
-  }
 class OrderConfirmation extends PureComponent {
 
   render() {
@@ -61,24 +53,14 @@ class OrderConfirmation extends PureComponent {
         <div className={css.marketPlacetWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
           <section className={css.marketPlaceContent}>
-            <div className={css.productList}>
-              {!!products && Object.keys(products).map(productKey => {
-                const productProps = products[productKey]
-                const limitReached = this.isLimitReached(productProps)
-
-                return (
-                  <Product
-                    key={productProps.id}
-                    basket={basket}
-                    product={productProps}
-                    limitReached={limitReached}
-                    productsCategories={productsCategories}
-                    ageVerified={ageVerified}
-                    basketProductAdd={basketProductAdd}
-                    basketProductRemove={basketProductRemove}
-                  />)
-              })}
-            </div>
+            <ProductList
+              products={products}
+              ageVerified={ageVerified}
+              basket={basket}
+              productsCategories={productsCategories}
+              basketProductAdd={basketProductAdd}
+              basketProductRemove={basketProductRemove}
+            />
           </section>
         </div>
       </div>
