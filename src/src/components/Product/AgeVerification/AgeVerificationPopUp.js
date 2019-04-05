@@ -19,15 +19,15 @@ class AgeVerificationPopUp extends PureComponent {
     })
   }
 
-  onUnderageConfirmation = () => {
-    const { onAgeConfirmation } = this.props
+  onConfirmation = (isOver18) => {
+    const { onAgeConfirmation, onClose } = this.props
 
-    this.setHasSelectedUnder18()
-    onAgeConfirmation(false)
+    onAgeConfirmation(isOver18)
+    isOver18 ? onClose() : this.setHasSelectedUnder18()
   }
 
   renderFooter = () => {
-    const { onAgeConfirmation, isUnderAge, onClose} = this.props
+    const { isUnderAge, onClose} = this.props
     const { hasSelectedUnder18 } = this.state
 
     if(isUnderAge || hasSelectedUnder18) {
@@ -42,10 +42,10 @@ class AgeVerificationPopUp extends PureComponent {
 
     return (
     <ModalFooter className={css.ageVerificationFooter}>
-      <Button className={css.noAgeVerificationButton} fill={false} onClick={() => this.onUnderageConfirmation()} >
+      <Button className={css.noAgeVerificationButton} fill={false} onClick={() => this.onConfirmation(false)} >
         No, i&#8242;m under 18
       </Button>
-      <Button className={css.yesAgeVerificationButton} fill color={'primary'} onClick={() => onAgeConfirmation(true)} >
+      <Button className={css.yesAgeVerificationButton} fill color={'primary'} onClick={() => this.onConfirmation(true)} >
         Yes, I&#8242;m over 18
       </Button>
     </ModalFooter>)

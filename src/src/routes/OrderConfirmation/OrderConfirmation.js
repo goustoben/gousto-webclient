@@ -71,12 +71,14 @@ class OrderConfirmation extends PureComponent {
     const {
       showHeader,
       products,
-      ageVerified,
       basket,
       productsCategories,
       basketProductAdd,
       basketProductRemove,
       headerDetails,
+      temp,
+      productId,
+      addProduct
     } = this.props
 
     const { showAgeVerification, isOver18, hasConfirmedAge } = this.state

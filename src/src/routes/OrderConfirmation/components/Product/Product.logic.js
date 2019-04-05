@@ -38,6 +38,15 @@ class Product extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { ageVerified, isSelectedProduct, addProduct, product, basketProductAdd } = this.props
+    const ageVerifiedChanged = !Object.is(ageVerified, prevProps.ageVerified)
+
+    if (ageVerified && ageVerifiedChanged && isSelectedProduct) {
+      addProduct ? basketProductAdd(product.id) : this.toggleModal()
+    }
+  }
+
   toggleDetailsVisibility = () => {
     this.setState((prevState) => ({
       showDetailsScreen: !prevState.showDetailsScreen
@@ -45,8 +54,14 @@ class Product extends Component {
   }
 
   toggleModal = () => {
-    const { toggleAgeVerificationPopUp } = this.props
-    this.isAgeVerificationRequired() ? toggleAgeVerificationPopUp() : this.toggleDetailsVisibility()
+    const { toggleAgeVerificationPopUp, product, temp } = this.props
+    if (this.isAgeVerificationRequired()) {
+      toggleAgeVerificationPopUp()
+      temp('productId', product.id)
+      temp('addProduct', false)
+    } else {
+      this.toggleDetailsVisibility()
+    }
   }
 
   isAgeVerificationRequired = () => {
@@ -57,15 +72,17 @@ class Product extends Component {
   }
 
   onAddProduct = () => {
-    const { product, basketProductAdd, limitReached, toggleAgeVerificationPopUp } = this.props
+    const { product, basketProductAdd, limitReached, toggleAgeVerificationPopUp, temp } = this.props
     const isAgeVerificationRequired = this.isAgeVerificationRequired()
 
-    if(isAgeVerificationRequired) {
-      toggleAgeVerificationPopUp()
-    }
-
-    if(!limitReached && !isAgeVerificationRequired) {
-      basketProductAdd(product.id)
+    if(!limitReached){
+      if (isAgeVerificationRequired) {
+        toggleAgeVerificationPopUp()
+        temp('productId', product.id)
+        temp('addProduct', true)
+      } else {
+        basketProductAdd(product.id)
+      }
     }
   }
 
