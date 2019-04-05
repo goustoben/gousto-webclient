@@ -8,13 +8,16 @@ import { Product } from './components/Product/Product.logic'
 
 const propTypes = {
   showHeader: PropTypes.bool,
-  headerDetails: PropTypes.shape({
-    deliveryDate: PropTypes.string,
-    deliveryStart: PropTypes.string,
-    deliveryEnd: PropTypes.string,
-    whenCutoffTime: PropTypes.string,
-    whenCutoffDate: PropTypes.string,
-  }),
+  headerDetails: PropTypes.oneOfType([
+    PropTypes.shape({
+      deliveryDate: PropTypes.string,
+      deliveryStart: PropTypes.string,
+      deliveryEnd: PropTypes.string,
+      whenCutoffTime: PropTypes.string,
+      whenCutoffDate: PropTypes.string,
+    }),
+    PropTypes.bool,
+  ]),
   basket: PropTypes.instanceOf(Immutable.Map),
   productsCategories: PropTypes.instanceOf(Immutable.Map),
   products: PropTypes.shape({

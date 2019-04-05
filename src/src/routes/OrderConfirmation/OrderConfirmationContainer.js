@@ -10,10 +10,10 @@ import { getHeaderDetails } from './helper'
 
 const mapStateToProps = (state) => {
   const locationQueryParam = locationQuery(state)
-  const showHeader = !!state.temp.get('showHeader') || !!(locationQueryParam && locationQueryParam['order_action'])
   const order = getBasketOrderDetails(state)
   const headerDetails = !!order && getHeaderDetails(order)
-
+  const showHeader = (!!state.temp.get('showHeader') || !!(locationQueryParam && locationQueryParam['order_action'])) && !!headerDetails
+  
   return ({
     showHeader,
     headerDetails,
