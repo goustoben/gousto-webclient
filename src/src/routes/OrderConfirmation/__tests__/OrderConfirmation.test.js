@@ -4,13 +4,12 @@ import OrderConfirmation from '../OrderConfirmation'
 
 describe('OrderConfirmation', () => {
   const testProps = {
-    order: { 
-      humanDeliveryDate: "Tuesday 26th March" ,
-      whenCutoff: "2019-03-20 11:59:59" ,
-      deliverySlot: {
-        deliveryStart: "08:00:00", 
-        deliveryEnd: "18:59:59"
-      }
+    headerDetails: { 
+      deliveryDate: 'Tuesday 26th March',
+      deliveryStart: '8 am',
+      deliveryEnd: '7 pm',
+      whenCutoffTime: '12 pm',
+      whenCutoffDate: 'Wednesday 20th March',
     }, 
     showHeader: false
   }

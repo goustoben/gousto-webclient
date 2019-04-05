@@ -1,15 +1,20 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { getProductLimitReached } from 'utils/basket'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { Product } from './components/Product/Product.logic'
-import { getHeaderDetails } from './helper'
 
 const propTypes = {
   showHeader: PropTypes.bool,
-  order: PropTypes.instanceOf(Immutable.Map),
+  headerDetails: PropTypes.shape({
+    deliveryDate: PropTypes.string,
+    deliveryStart: PropTypes.string,
+    deliveryEnd: PropTypes.string,
+    whenCutoffTime: PropTypes.string,
+    whenCutoffDate: PropTypes.string,
+  }),
   basket: PropTypes.instanceOf(Immutable.Map),
   productsCategories: PropTypes.instanceOf(Immutable.Map),
   products: PropTypes.shape({
@@ -21,8 +26,9 @@ const propTypes = {
     quantity: PropTypes.number,
   }),
   ageVerified: PropTypes.bool,
+  basketProductAdd: PropTypes.func,
+  basketProductRemove: PropTypes.func,
 }
-class OrderConfirmation extends Component {
   isLimitReached = (product) => {
     const { basket, productsCategories, products } = this.props
     const { id } = product
@@ -30,10 +36,11 @@ class OrderConfirmation extends Component {
 
     return limitReachedResult
   }
+class OrderConfirmation extends PureComponent {
 
   render() {
     const {
-      order,
+      headerDetails,
       showHeader,
       products,
       ageVerified,
@@ -42,7 +49,6 @@ class OrderConfirmation extends Component {
       basketProductAdd,
       basketProductRemove,
     } = this.props
-    const headerDetails = order && getHeaderDetails(order)
 
     return (
       <div>
