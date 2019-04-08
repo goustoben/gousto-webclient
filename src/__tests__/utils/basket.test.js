@@ -154,17 +154,21 @@ describe('basket utils', function() {
   })
 
   describe('getProductsQtyInCategory', function() {
-    it('should return number of products in the given category', function() {
-      const basket = Immutable.fromJS({
+    let basket
+    let products
+
+    beforeEach(() => {
+      basket = Immutable.fromJS({
         products: { 'product-2': 1, 'product-3': 2 },
-        gifts: {},
+        gifts: { 'product-3': 1 },
       })
 
-      const products = Immutable.fromJS({
+      products = Immutable.fromJS({
         'product-2': { categories: [{ id: 'cat-2' }, { id: 'cat-3' }] },
         'product-3': { categories: [{ id: 'cat-3' }, { id: 'cat-4' }] },
       })
-
+    })
+    it('should return number of products in the given category', function() {
       let result = getProductsQtyInCategory('cat-2', basket, products, false)
       expect(result).toEqual(1)
 
@@ -177,17 +181,6 @@ describe('basket utils', function() {
         'product-3': 3,
         'product-2': 1,
       }))
-
-      const basket = Immutable.fromJS({
-        products: { 'product-2': 1, 'product-3': 2 },
-        gifts: { 'product-3': 1 },
-      })
-
-      const products = Immutable.fromJS({
-        'product-2': { categories: [{ id: 'cat-2' }, { id: 'cat-3' }] },
-        'product-3': { categories: [{ id: 'cat-3' }, { id: 'cat-4' }] },
-      })
-
       let result = getProductsQtyInCategory('cat-2', basket, products, false)
       expect(result).toEqual(1)
 
@@ -196,16 +189,6 @@ describe('basket utils', function() {
     })
 
     it('should NOT include gift products if includeGiftProducts is set to false', function() {
-      const basket = Immutable.fromJS({
-        products: { 'product-2': 1, 'product-3': 2 },
-        gifts: { 'product-3': 1 },
-      })
-
-      const products = Immutable.fromJS({
-        'product-2': { categories: [{ id: 'cat-2' }, { id: 'cat-3' }] },
-        'product-3': { categories: [{ id: 'cat-3' }, { id: 'cat-4' }] },
-      })
-
       let result = getProductsQtyInCategory('cat-2', basket, products, false)
       expect(result).toEqual(1)
 
@@ -247,7 +230,7 @@ describe('basket utils', function() {
 
       const result = getProductLimitReached('product-3', basket, products, productsCategories)
 
-      expect(productsOverallLimitReachedSpy.mock.calls.length).toBe(1)
+      expect(productsOverallLimitReachedSpy).toHaveBeenCalledTimes(1)
       expect(productsOverallLimitReachedSpy.mock.calls[0][0]).toEqual(basket)
       expect(result).toEqual({ type: 'box', value: 10 })
     })
@@ -274,7 +257,7 @@ describe('basket utils', function() {
       
       const result = getProductLimitReached('product-3', basket, products, productsCategories)
 
-      expect(getFirstProductCategoryAtLimitSpy.mock.calls.length).toBe(1)
+      expect(getFirstProductCategoryAtLimitSpy).toHaveBeenCalledTimes(1)
       expect(getFirstProductCategoryAtLimitSpy.mock.calls[0]).toEqual(['product-3', basket, products, productsCategories])
       expect(result).toEqual({ type: 'category', value: 'category name' })
     })
