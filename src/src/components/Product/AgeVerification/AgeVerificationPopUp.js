@@ -64,7 +64,7 @@ class AgeVerificationPopUp extends PureComponent {
     return (
       <ModalPanel closePortal={onClose} className={css.ageVerificationModal} disableOverlay>
           <ModalTitle className={css.ageVerificationTitle}>
-            Over 18?
+            Are you over 18?
           </ModalTitle>
           <ModalContent className={css.ageVerificationContent}>
             {this.getContent()}
