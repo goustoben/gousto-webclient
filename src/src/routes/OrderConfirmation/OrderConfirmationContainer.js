@@ -26,9 +26,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  basketProductAdd,
-  basketProductRemove,
-  userVerifyAge: userActions.userVerifyAge
+  userVerifyAge: userActions.userVerifyAge,
 }
 
 const OrderConfirmationContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation))

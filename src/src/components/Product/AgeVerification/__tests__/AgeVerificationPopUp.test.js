@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { AgeVerificationPopUp } from '../AgeVerificationPopUp'
+import { underAgeModalText, modalText } from '../config'
 
 describe('AgeVerificationPopUp Component', () => {
   let wrapper
@@ -16,7 +17,7 @@ describe('AgeVerificationPopUp Component', () => {
   describe('given user has NOT confirmed age', () => {
 
     test('should render modal content with correct text', () => {
-      expect(wrapper.find('ModalContent').text()).toEqual('To add this item to your order, please confirm you are over 18.')
+      expect(wrapper.find('ModalContent').text()).toEqual(modalText)
     })
 
     test('should render modal footer with 2 buttons', () => {
@@ -32,7 +33,7 @@ describe('AgeVerificationPopUp Component', () => {
     })
 
     test('should render modal content with correct text', () => {
-      expect(wrapper.find('ModalContent').text()).toEqual('Sorry, 18 is the minimum legal age required for this item')
+      expect(wrapper.find('ModalContent').text()).toEqual(underAgeModalText)
     })
 
     test('should render modal footer with 1 button', () => {
