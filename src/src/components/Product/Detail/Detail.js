@@ -18,8 +18,8 @@ const propTypes = {
   isAvailable: PropTypes.bool.isRequired,
   limitReached: PropTypes.oneOfType([
     PropTypes.shape({
-      value: PropTypes.string,
       type: PropTypes.string,
+      value: PropTypes.number,
     }),
     PropTypes.bool,
   ]).isRequired,

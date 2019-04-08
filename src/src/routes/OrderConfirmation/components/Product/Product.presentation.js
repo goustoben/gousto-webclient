@@ -13,8 +13,8 @@ const propTypes = {
   isAgeVerificationRequired: PropTypes.bool,
   limitReached: PropTypes.oneOfType([
     PropTypes.shape({
-      value: PropTypes.string,
       type: PropTypes.string,
+      value: PropTypes.number,
     }),
     PropTypes.bool,
   ]),
