@@ -26,10 +26,7 @@
 
 .ageVerificationTitle{
 	text-align: left;
-	font-family: AvenirHeavy,Helvetica,sans-serif;
-	font-weight: 400;
-	-webkit-font-smoothing: antialiased;
-	text-transform: none;
+	font-family: avenirHeavyFontStack;
 }
 
 .ageVerificationContent{
