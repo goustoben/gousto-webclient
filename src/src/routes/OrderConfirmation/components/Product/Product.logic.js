@@ -28,6 +28,7 @@ const propTypes = {
   ageVerified: PropTypes.bool,
   basketProductAdd: PropTypes.func,
   basketProductRemove: PropTypes.func,
+  temp: PropTypes.func,
 }
 
 class Product extends PureComponent {
