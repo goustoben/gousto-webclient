@@ -12,10 +12,10 @@ describe('Product component', () => {
 
   describe('render', () => {
     beforeEach(() => {
-      
+
       wrapper = mount(<Product product={mockProduct} ageVerified />)
     })
-    
+
     test('should render image of product', () => {
       expect(wrapper.find('img').length).toBe(1)
     })
