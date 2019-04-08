@@ -83,6 +83,7 @@ class OrderConfirmation extends PureComponent {
               basket={basket}
               ageVerified={ageVerified}
               productsCategories={productsCategories}
+              toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
             />
           </section>
         </div>

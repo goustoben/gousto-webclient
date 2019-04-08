@@ -9,9 +9,10 @@ const propTypes = {
   }),
   ageVerified: PropTypes.bool,
   isLimitReached: PropTypes.func,
+  toggleAgeVerificationPopUp: PropTypes.func,
 }
 
-const ProductListPresentation = ({ products, ageVerified, isLimitReached }) => (
+const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggleAgeVerificationPopUp }) => (
   <div className={css.productList}>
     {
       Object.keys(products).map(productKey => {
@@ -24,6 +25,7 @@ const ProductListPresentation = ({ products, ageVerified, isLimitReached }) => (
             product={productProps}
             limitReached={limitReached}
             ageVerified={ageVerified}
+            toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
           />)
       })
     }

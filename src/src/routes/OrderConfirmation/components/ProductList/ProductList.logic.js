@@ -13,6 +13,7 @@ const propTypes = {
     id: PropTypes.string,
   }),
   ageVerified: PropTypes.bool,
+  toggleAgeVerificationPopUp: PropTypes.func
 }
 
 class ProductList extends PureComponent {
@@ -25,7 +26,7 @@ class ProductList extends PureComponent {
   }
 
   render () {
-    const { products, ageVerified } = this.props
+    const { products, ageVerified, toggleAgeVerificationPopUp } = this.props
 
     return(
       <div>
@@ -33,6 +34,7 @@ class ProductList extends PureComponent {
           products={products}
           ageVerified={ageVerified}
           isLimitReached={this.isLimitReached}
+          toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
         /> :
         <Loading />
         }
