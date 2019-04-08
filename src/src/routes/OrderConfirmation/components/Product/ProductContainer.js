@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getBasket, getProductCategories } from 'selectors/root'
+import { getTempProductId, getTempAddProduct } from 'selectors/temp'
 import { basketProductAdd, basketProductRemove } from 'actions/basket'
 import tempActions from 'actions/temp'
 import { Product } from "./Product.logic"
@@ -10,8 +11,8 @@ const mapStateToProps = (state, props) => {
   return ({
     basket: getBasket(state),
     productsCategories: getProductCategories(state),
-    productId: state.temp.get('productId'),
-    addProduct: state.temp.get('addProduct'),
+    productId: getTempProductId(state),
+    addProduct: getTempAddProduct(state),
     isSelectedProduct,
   })
 }
