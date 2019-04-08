@@ -1,7 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import { mount } from 'enzyme'
-import { Product } from '..'
+import { Product } from '../Product.logic'
 import { mockProduct } from '../../config'
 global.scrollTo = jest.fn()
 

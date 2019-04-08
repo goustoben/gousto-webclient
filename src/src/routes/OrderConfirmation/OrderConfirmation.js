@@ -48,12 +48,6 @@ class OrderConfirmation extends PureComponent {
     }
   }
 
-  isLimitReached = (product) => {
-    const { basket, productsCategories, products } = this.props
-    const { id } = product
-    const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
-  }
-
   toggleAgeVerificationPopUp = () => {
     this.setState((prevState) => ({
       showAgeVerification: !prevState.showAgeVerification
@@ -69,7 +63,7 @@ class OrderConfirmation extends PureComponent {
   }
 
   render() {
-    const { products, headerDetails, showHeader, ageVerified } = this.props
+    const { products, headerDetails, showHeader, ageVerified, productsCategories, basket } = this.props
     const { showAgeVerification, hasConfirmedAge } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
@@ -86,11 +80,9 @@ class OrderConfirmation extends PureComponent {
           <section className={css.marketPlaceContent}>
             <ProductList
               products={products}
-              ageVerified={ageVerified}
               basket={basket}
+              ageVerified={ageVerified}
               productsCategories={productsCategories}
-              basketProductAdd={basketProductAdd}
-              basketProductRemove={basketProductRemove}
             />
           </section>
         </div>

@@ -7,6 +7,7 @@ import { getBasketOrderDetails } from 'selectors/basket'
 import { basketProductAdd, basketProductRemove } from 'actions/basket'
 import userActions from 'actions/user'
 import OrderConfirmation from './OrderConfirmation'
+import { getHeaderDetails } from './helper'
 
 const mapStateToProps = (state) => {
   const locationQueryParam = locationQuery(state)
@@ -16,6 +17,7 @@ const mapStateToProps = (state) => {
 
   return ({
     showHeader,
+    headerDetails,
     basket: getBasket(state),
     productsCategories: getProductCategories(state),
     products: state.products.toJS(),
