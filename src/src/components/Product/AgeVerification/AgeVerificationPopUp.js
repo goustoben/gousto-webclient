@@ -55,7 +55,7 @@ class AgeVerificationPopUp extends PureComponent {
     const { isUnderAge } = this.props
     const { hasSelectedUnder18 } = this.state
 
-    return isUnderAge || hasSelectedUnder18 ? 'Sorry, 18 is the minimum legal age required for this item' : ' To add this item to your order, please confirm you are over 18.'
+    return isUnderAge || hasSelectedUnder18 ? 'Sorry, 18 is the minimum legal age required for this item' : 'To add this item to your order, please confirm you are over 18.'
   }
 
   render() {
