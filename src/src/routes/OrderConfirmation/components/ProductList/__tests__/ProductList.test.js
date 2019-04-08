@@ -23,7 +23,7 @@ describe('ProductList component', () => {
   }
 
   describe('render', () => {
-    test('should NOT render product lost wrapper if no products', () => {
+    test('should NOT render product list wrapper if no products', () => {
       wrapper = mount(<ProductList {...propsProductList} />)
       expect(wrapper.find('div.productList').length).toBe(0)
     })
