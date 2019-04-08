@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
@@ -30,7 +30,7 @@ const propTypes = {
   basketProductRemove: PropTypes.func,
 }
 
-class Product extends Component {
+class Product extends PureComponent {
   constructor() {
     super()
     this.state = {
