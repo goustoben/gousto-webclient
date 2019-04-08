@@ -60,7 +60,7 @@ describe('OrderConfirmation', () => {
     })
   })
 
-  fdescribe('Age verification', () => {
+  describe('Age verification', () => {
 
     describe('rendering popup', () => {
       test('should render the age verification pop up in an OPEN overlay when "showAgeVerification" is true', () => {
