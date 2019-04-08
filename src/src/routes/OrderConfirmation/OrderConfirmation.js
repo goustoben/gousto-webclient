@@ -40,6 +40,13 @@ const defaultProps = {
   headerDetails: {}
 }
 class OrderConfirmation extends PureComponent {
+  constructor() {
+    super()
+    this.state = {
+      showAgeVerification: false,
+      hasConfirmedAge: false,
+    }
+  }
 
   isLimitReached = (product) => {
     const { basket, productsCategories, products } = this.props
@@ -54,16 +61,17 @@ class OrderConfirmation extends PureComponent {
   }
 
   onAgeConfirmation = (isOver18) => {
+    const { userVerifyAge } = this.props
     this.setState({
       hasConfirmedAge: true,
-      isOver18: isOver18,
     })
+    userVerifyAge(isOver18, true)
   }
 
   render() {
-    const { products, headerDetails, showHeader } = this.props
-    const { showAgeVerification, isOver18, hasConfirmedAge } = this.state
-    const isUnderAge = hasConfirmedAge && !isOver18
+    const { products, headerDetails, showHeader, ageVerified } = this.props
+    const { showAgeVerification, hasConfirmedAge } = this.state
+    const isUnderAge = hasConfirmedAge && !ageVerified
 
     return (
       <div>

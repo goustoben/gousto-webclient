@@ -5,6 +5,7 @@ import { getBasket, getProductCategories } from 'selectors/root'
 import { getAgeVerified } from 'selectors/user'
 import { getBasketOrderDetails } from 'selectors/basket'
 import { basketProductAdd, basketProductRemove } from 'actions/basket'
+import userActions from 'actions/user'
 import OrderConfirmation from './OrderConfirmation'
 
 const mapStateToProps = (state) => {
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   basketProductAdd,
   basketProductRemove,
+  userVerifyAge: userActions.userVerifyAge
 }
 
 const OrderConfirmationContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation))
