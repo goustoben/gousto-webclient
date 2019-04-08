@@ -47,7 +47,7 @@ describe('Product component', () => {
 
   describe('add/remove product', () => {
     beforeEach(() => {
-      wrapper = mount(<Product product={mockProduct} ageVerified limitReached={false} basketProductAdd={jest.fn()} basketProductRemove={jest.fn()} />)
+      wrapper = mount(<Product product={mockProduct} ageVerified limitReached={false} basketProductAdd={jest.fn()} basketProductRemove={jest.fn()} temp={jest.fn()} />)
     })
     test('should change the qty of the product', async() => {
       wrapper.setProps({
@@ -66,11 +66,23 @@ describe('Product component', () => {
       })
       expect(wrapper.text()).toContain('Add')
     })
+
+    test('given product is 18+ and user not age verified, should call toggleAgeVerificationPopUp', () => {
+      const toggleAgeVerificationPopUpSpy = jest.fn()
+
+      wrapper.setProps({
+        ageVerified: false,
+        toggleAgeVerificationPopUp: toggleAgeVerificationPopUpSpy
+      })
+
+      wrapper.find('Buttons').prop('onAdd')()
+      expect(toggleAgeVerificationPopUpSpy).toHaveBeenCalled()
+    })
   })
 
   describe('toggle description popup', () => {
     beforeEach(() => {
-      wrapper = mount(<Product product={mockProduct} ageVerified limitReached={false} basketProductAdd={jest.fn()} basketProductRemove={jest.fn()} />)
+      wrapper = mount(<Product product={mockProduct} ageVerified limitReached={false} basketProductAdd={jest.fn()} basketProductRemove={jest.fn()} temp={jest.fn()}/>)
     })
 
     test('should show description popup when click on the image', () => {
@@ -83,6 +95,30 @@ describe('Product component', () => {
       expect(wrapper.state().showDetailsScreen).toBe(false)
       wrapper.find('button.productInfo').simulate('click')
       expect(wrapper.state().showDetailsScreen).toBe(true)
+    })
+
+    test('given product is 18+ and user not age verified, should call toggleAgeVerificationPopUp when click on Image', () => {
+      const toggleAgeVerificationPopUpSpy = jest.fn()
+
+      wrapper.setProps({
+        ageVerified: false,
+        toggleAgeVerificationPopUp: toggleAgeVerificationPopUpSpy
+      })
+
+      wrapper.find('button.productImage').simulate('click')
+      expect(toggleAgeVerificationPopUpSpy).toHaveBeenCalled()
+    })
+
+    test('given product is 18+ and user not age verified, should call toggleAgeVerificationPopUp when click on Title', () => {
+      const toggleAgeVerificationPopUpSpy = jest.fn()
+
+      wrapper.setProps({
+        ageVerified: false,
+        toggleAgeVerificationPopUp: toggleAgeVerificationPopUpSpy
+      })
+
+      wrapper.find('button.productInfo').simulate('click')
+      expect(toggleAgeVerificationPopUpSpy).toHaveBeenCalled()
     })
 
   })
