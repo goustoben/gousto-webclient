@@ -1,4 +1,4 @@
-@value ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
 @value SpacingMD from from 'sass-loader!styles/spacing.scss';
 @value avenirHeavyFontStack from 'styles/typography.css';
 
@@ -16,9 +16,12 @@
 }
 
 .ageVerificationModal{
-	width: 600px;
 	border-radius: 5px;
 	padding: 30px;
+
+	@media ScreenSMMin {
+		width: 600px;
+	}
 }
 
 .ageVerificationTitle{
