@@ -2,6 +2,18 @@
 ### This script will replace the values in env.json based on the available environment variable and then start pm2.
 ### If a variable is not defined, then it will be reverted to the default value.
 
+#PARAMETERS=`aws ssm get-parameters-by-path --path ${1} --with-decryption`
+#
+#for row in $(echo ${PARAMETERS} | jq -c '.Parameters' | jq -c '.[]'); do
+#    KEY=$(basename $(echo ${row} | jq -c '.Name'))
+#    VALUE=$(echo ${row} | jq -c '.Value')
+#
+#    KEY=`echo ${KEY} | tr -d '"'`
+#    VALUE=`echo ${VALUE} | tr -d '"'`
+#
+#    export ${KEY}=${VALUE}
+#done
+
 
 # OSX bash version doesn't support associative arrays, so we use a special pattern that will be split later
 # PATTERN= variable_name::default_value
