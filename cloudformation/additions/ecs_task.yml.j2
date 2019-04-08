@@ -30,20 +30,18 @@
     Properties:
       Cluster: {{ stacks.compute.output.defaultcluster }}
       DesiredCount: 1
-      HealthCheckGracePeriodSeconds: 300
+#      HealthCheckGracePeriodSeconds: 300 # un-comment when TECH-10793 complete
       LaunchType: FARGATE
       DeploymentConfiguration:
         MaximumPercent: 200
         MinimumHealthyPercent: 100
       NetworkConfiguration:
-        AwsVpcConfiguration:
+        AwsvpcConfiguration:
           AssignPublicIp: DISABLED
           SecurityGroups:
             - Ref: EcsServiceSecurityGroup
           Subnets:
             - {{ stacks.network.output.privateasubnet }}
             - {{ stacks.network.output.privatebsubnet }}
-      Role:
-        Ref: EcsServiceRole
       TaskDefinition:
         Ref: EcsTaskDefinition
