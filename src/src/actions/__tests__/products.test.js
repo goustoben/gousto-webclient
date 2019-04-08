@@ -64,8 +64,8 @@ describe('productsLoadProducts', () => {
     expect(dispatchSpyCalls[0]).toEqual({
       type: actionTypes.PRODUCTS_RECEIVE,
       products: [
-        {id:'1', isForSale: true},
-        {id:'2', isForSale: true}
+        {id:'1', isForSale: true, stock: 1000},
+        {id:'2', isForSale: true, stock: 1000}
       ],
       cutoffDate: cutoffDate,
     })
@@ -92,8 +92,8 @@ describe('productsLoadProducts', () => {
     expect(dispatchSpyCalls[0]).toEqual({
       type: actionTypes.PRODUCTS_RECEIVE,
       products: [
-        {id:'1', isForSale: true},
-        {id:'2', isForSale: true}
+        {id:'1', isForSale: true, stock: 1000},
+        {id:'2', isForSale: true, stock: 1000},
       ],
       cutoffDate: 'whenCutoff timestamp',
     })

@@ -9,9 +9,6 @@ export default (store) => {
     tracking: false,
     promoAgeVerified: false,
     variants: false,
-    tutorial: {
-      viewed: false,
-    },
   }
 
   if (!store.basket.get('orderId')) {
@@ -47,5 +44,4 @@ export const cookieExpiries = {
   features: 7,
   tracking: 30,
   basket_promoCode: 60,
-  tutorial_viewed: 30,
 }
