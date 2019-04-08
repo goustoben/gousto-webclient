@@ -42,7 +42,7 @@ class Product extends PureComponent {
     const { ageVerified, isSelectedProduct, addProduct, product, basketProductAdd } = this.props
     const ageVerifiedChanged = !Object.is(ageVerified, prevProps.ageVerified)
 
-    if (ageVerified && ageVerifiedChanged && isSelectedProduct) {
+    if (isSelectedProduct && ageVerified && ageVerifiedChanged) {
       addProduct ? basketProductAdd(product.id) : this.toggleModal()
     }
   }
