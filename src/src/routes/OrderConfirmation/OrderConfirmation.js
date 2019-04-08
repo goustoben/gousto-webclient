@@ -6,7 +6,7 @@ import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
 
 const propTypes = {
-  showHeader: PropTypes.bool,
+  showHeader: PropTypes.bool.isRequired,
   headerDetails: PropTypes.oneOfType([
     PropTypes.shape({
       deliveryDate: PropTypes.string,
@@ -17,8 +17,8 @@ const propTypes = {
     }),
     PropTypes.bool,
   ]),
-  basket: PropTypes.instanceOf(Immutable.Map),
-  productsCategories: PropTypes.instanceOf(Immutable.Map),
+  basket: PropTypes.instanceOf(Immutable.Map).isRequired,
+  productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
   products: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
@@ -26,10 +26,15 @@ const propTypes = {
     images: PropTypes.array,
     ageRestricted: PropTypes.bool,
     quantity: PropTypes.number,
-  }),
-  ageVerified: PropTypes.bool,
-  basketProductAdd: PropTypes.func,
-  basketProductRemove: PropTypes.func,
+  }).isRequired,
+  ageVerified: PropTypes.bool.isRequired,
+  basketProductAdd: PropTypes.func.isRequired,
+  basketProductRemove: PropTypes.func.isRequired,
+}
+
+const defaultProps = {
+  showHeader: false,
+  headerDetails: {}
 }
 class OrderConfirmation extends PureComponent {
 
@@ -69,5 +74,6 @@ class OrderConfirmation extends PureComponent {
 }
 
 OrderConfirmation.propTypes = propTypes
+OrderConfirmation.defaultProps = defaultProps
 
 export default OrderConfirmation
