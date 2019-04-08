@@ -1,8 +1,4 @@
-import chai, { expect } from 'chai'
-import sinon from 'sinon'
-import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
-
+import { expect } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import { basketSum, okRecipes, getProductsQtyInCategory } from 'utils/basket'
 
