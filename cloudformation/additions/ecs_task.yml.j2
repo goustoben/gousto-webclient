@@ -32,13 +32,17 @@
       DesiredCount: 1
       HealthCheckGracePeriodSeconds: 300
       LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 100
       NetworkConfiguration:
-        AssignPublicIp: DISABLED
-        SecurityGroups:
-          - Ref: EcsServiceSecurityGroup
-        Subnets:
-          - {{ stacks.network.output.privateasubnet }}
-          - {{ stacks.network.output.privatebsubnet }}
+        AwsVpcConfiguration:
+          AssignPublicIp: DISABLED
+          SecurityGroups:
+            - Ref: EcsServiceSecurityGroup
+          Subnets:
+            - {{ stacks.network.output.privateasubnet }}
+            - {{ stacks.network.output.privatebsubnet }}
       Role:
         Ref: EcsServiceRole
       TaskDefinition:
