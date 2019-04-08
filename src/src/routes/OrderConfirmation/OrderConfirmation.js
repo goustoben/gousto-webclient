@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { getProductLimitReached } from 'utils/basket'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import Overlay from 'Overlay'
 import css from './OrderConfirmation.css'
@@ -31,8 +30,6 @@ const propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   ageVerified: PropTypes.bool.isRequired,
-  basketProductAdd: PropTypes.func.isRequired,
-  basketProductRemove: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
