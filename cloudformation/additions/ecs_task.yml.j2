@@ -1,0 +1,45 @@
+
+  EcsTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: task-{{ ENVIRONMENT }}-{{ serviceName }}-definition
+      ExecutionRoleArn:
+        Ref:  EcsTaskExecutionRole
+      Memory: 512
+      Cpu: 256
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      ContainerDefinitions:
+        -
+          Name: nginx
+          Image:
+            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/nginx
+          MemoryReservation: 256
+          PortMappings:
+            - ContainerPort: 80
+        -
+          Name: webclient
+          Image:
+            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/webclient
+          MemoryReservation: 256
+
+  EcsService:
+    Type: AWS::ECS::Service
+    DependsOn: EcsServiceRole
+    Properties:
+      Cluster: {{ stacks.compute.output.defaultcluster }}
+      DesiredCount: 1
+      HealthCheckGracePeriodSeconds: 300
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AssignPublicIp: DISABLED
+        SecurityGroups:
+          - Ref: EcsServiceSecurityGroup
+        Subnets:
+          - {{ stacks.network.output.privateasubnet }}
+          - {{ stacks.network.output.privatebsubnet }}
+      Role:
+        Ref: EcsServiceRole
+      TaskDefinition:
+        Ref: EcsTaskDefinition
