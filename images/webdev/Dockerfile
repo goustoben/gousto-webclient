@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     sed \
     curl \
     sudo \
-    vi \
+    vim \
     && rm -rf /var/lib/apt/lists/*
 
 # CREATE THE UNPRIVILEGED USER TO RUN PROCESSES
