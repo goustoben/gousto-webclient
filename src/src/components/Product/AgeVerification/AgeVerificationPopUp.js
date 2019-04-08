@@ -4,6 +4,12 @@ import ModalPanel from 'Modal/ModalPanel'
 import { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
 import { Button } from 'goustouicomponents'
 import css from './AgeVerification.css'
+
+AgeVerificationPopUp.propTypes = {
+  isUnderAge: PropTypes.bool,
+  onClose: PropTypes.func.isRequired,
+  onAgeConfirmation: PropTypes.func.isRequired
+}
 class AgeVerificationPopUp extends PureComponent {
 
   constructor() {
@@ -43,10 +49,10 @@ class AgeVerificationPopUp extends PureComponent {
     return (
     <ModalFooter className={css.ageVerificationFooter}>
       <Button className={css.noAgeVerificationButton} fill={false} onClick={() => this.onConfirmation(false)} >
-        No, i&#8242;m under 18
+        No, i&#39;m under 18
       </Button>
       <Button className={css.yesAgeVerificationButton} fill color={'primary'} onClick={() => this.onConfirmation(true)} >
-        Yes, I&#8242;m over 18
+        Yes, I&#39;m over 18
       </Button>
     </ModalFooter>)
   }
@@ -74,12 +80,6 @@ class AgeVerificationPopUp extends PureComponent {
 
     )
   }
-}
-
-AgeVerificationPopUp.propTypes = {
-  isUnderAge: PropTypes.bool,
-  onClose: PropTypes.func,
-  onAgeConfirmation: PropTypes.func
 }
 
 export { AgeVerificationPopUp }
