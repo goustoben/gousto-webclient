@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
+import configProducts from 'config/products'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import ProductDetailContainer from '../ProductDetails'
 import { ProductPresentation } from './Product.presentation'
@@ -72,20 +73,22 @@ class Product extends PureComponent {
 
   getProductCardContent = () => {
     const { ageVerified, product, basket, limitReached } = this.props
-    const { id, title, listPrice, images, ageRestricted} = product
+    const { id, title, listPrice, images, ageRestricted, stock } = product
     const quantity = basket && basket.get('products').has(product.id) ? basket.getIn(['products', product.id]) : 0
 
     const imgSource = images && images['400']['src']
     const isAgeVerificationRequired = !ageVerified && ageRestricted
+    const lowStock = (stock <= configProducts.lowStockThreshold)
 
     return {
       id,
       title,
+      lowStock,
       listPrice,
-      imgSource: imgSource,
+      imgSource,
+      limitReached,
       isAgeVerificationRequired,
       qty: quantity,
-      limitReached,
       openDetailsScreen: this.toggleDetailsVisibility,
     }
   }

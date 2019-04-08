@@ -1,17 +1,24 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { getProductLimitReached } from 'utils/basket'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
-import { Product } from './components/Product/Product.logic'
-import { getHeaderDetails } from './helper'
+import { ProductList } from './components/ProductList'
 
 const propTypes = {
-  showHeader: PropTypes.bool,
-  order: PropTypes.instanceOf(Immutable.Map),
-  basket: PropTypes.instanceOf(Immutable.Map),
-  productsCategories: PropTypes.instanceOf(Immutable.Map),
+  showHeader: PropTypes.bool.isRequired,
+  headerDetails: PropTypes.oneOfType([
+    PropTypes.shape({
+      deliveryDate: PropTypes.string,
+      deliveryStart: PropTypes.string,
+      deliveryEnd: PropTypes.string,
+      whenCutoffTime: PropTypes.string,
+      whenCutoffDate: PropTypes.string,
+    }),
+    PropTypes.bool,
+  ]),
+  basket: PropTypes.instanceOf(Immutable.Map).isRequired,
+  productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
   products: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
@@ -19,21 +26,21 @@ const propTypes = {
     images: PropTypes.array,
     ageRestricted: PropTypes.bool,
     quantity: PropTypes.number,
-  }),
-  ageVerified: PropTypes.bool,
+  }).isRequired,
+  ageVerified: PropTypes.bool.isRequired,
+  basketProductAdd: PropTypes.func.isRequired,
+  basketProductRemove: PropTypes.func.isRequired,
 }
-class OrderConfirmation extends Component {
-  isLimitReached = (product) => {
-    const { basket, productsCategories, products } = this.props
-    const { id } = product
-    const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
 
-    return limitReachedResult
-  }
+const defaultProps = {
+  showHeader: false,
+  headerDetails: {}
+}
+class OrderConfirmation extends PureComponent {
 
   render() {
     const {
-      order,
+      headerDetails,
       showHeader,
       products,
       ageVerified,
@@ -42,7 +49,6 @@ class OrderConfirmation extends Component {
       basketProductAdd,
       basketProductRemove,
     } = this.props
-    const headerDetails = order && getHeaderDetails(order)
 
     return (
       <div>
@@ -52,24 +58,14 @@ class OrderConfirmation extends Component {
         <div className={css.marketPlacetWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
           <section className={css.marketPlaceContent}>
-            <div className={css.productList}>
-              {!!products && Object.keys(products).map(productKey => {
-                const productProps = products[productKey]
-                const limitReached = this.isLimitReached(productProps)
-
-                return (
-                  <Product
-                    key={productProps.id}
-                    basket={basket}
-                    product={productProps}
-                    limitReached={limitReached}
-                    productsCategories={productsCategories}
-                    ageVerified={ageVerified}
-                    basketProductAdd={basketProductAdd}
-                    basketProductRemove={basketProductRemove}
-                  />)
-              })}
-            </div>
+            <ProductList
+              products={products}
+              ageVerified={ageVerified}
+              basket={basket}
+              productsCategories={productsCategories}
+              basketProductAdd={basketProductAdd}
+              basketProductRemove={basketProductRemove}
+            />
           </section>
         </div>
       </div>
@@ -78,5 +74,6 @@ class OrderConfirmation extends Component {
 }
 
 OrderConfirmation.propTypes = propTypes
+OrderConfirmation.defaultProps = defaultProps
 
 export default OrderConfirmation
