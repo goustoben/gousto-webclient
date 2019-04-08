@@ -8,17 +8,17 @@ import { underAgeModalText, modalText } from './config'
 
 class AgeVerificationPopUp extends PureComponent {
 
+  static propTypes = {
+    isUnderAge: PropTypes.bool,
+    onClose: PropTypes.func.isRequired,
+    onAgeConfirmation: PropTypes.func.isRequired
+  }
+
   constructor() {
     super()
     this.state = {
       hasSelectedUnder18: false
     }
-  }
-
-  static propTypes = {
-    isUnderAge: PropTypes.bool,
-    onClose: PropTypes.func.isRequired,
-    onAgeConfirmation: PropTypes.func.isRequired
   }
 
   setHasSelectedUnder18 = () => {
