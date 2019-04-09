@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import Overlay from 'Overlay'
 import { Dropdown } from 'goustouicomponents'
+import CloseButton from 'Overlay/CloseButton'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
@@ -51,12 +52,19 @@ class OrderConfirmation extends PureComponent {
       showAgeVerification: false,
       hasConfirmedAge: false,
       filteredProducts: null,
+      isSummaryOpen: false,
     }
   }
 
   toggleAgeVerificationPopUp = () => {
     this.setState((prevState) => ({
       showAgeVerification: !prevState.showAgeVerification
+    }))
+  }
+
+  toggleOrderSummary = () => {
+    this.setState((prevState) => ({
+      isSummaryOpen: !prevState.isSummaryOpen
     }))
   }
 
@@ -135,10 +143,9 @@ class OrderConfirmation extends PureComponent {
       selectedCategory,
       showOrderConfirmationRecipt
     } = this.props
-    const { showAgeVerification, hasConfirmedAge } = this.state
+    const { showAgeVerification, hasConfirmedAge, isSummaryOpen, filteredProducts } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
-    const { filteredProducts } = this.state
     const categories = this.getCategories()
 
     return (
@@ -170,6 +177,15 @@ class OrderConfirmation extends PureComponent {
             </section>
             <section className={classnames(css.orderDetails, css.mobileHide)}>
               {showOrderConfirmationRecipt && <ReceiptContainer />}
+            </section>
+            <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
+            <button type="button" onClick={() => this.toggleOrderSummary()}>Open</button>
+              <Overlay open={isSummaryOpen} from="bottom">
+                <div className={css.orderDetailsMobileContent}>
+                  <CloseButton onClose={() => this.toggleOrderSummary()} />
+                  <ReceiptContainer orderSummaryCollapsed={false} />
+                </div>
+              </Overlay>
             </section>
           </div>
         </div>
