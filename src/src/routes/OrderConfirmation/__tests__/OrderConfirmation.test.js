@@ -61,6 +61,11 @@ describe('OrderConfirmation', () => {
   })
 
   describe('Age verification', () => {
+    const userVerifyAgeSpy = jest.fn()
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
 
     describe('rendering popup', () => {
       test('should render the age verification pop up in an OPEN overlay when "showAgeVerification" is true', () => {
@@ -81,7 +86,6 @@ describe('OrderConfirmation', () => {
     describe('on age confirmation', () => {
 
       test('should set "hasConfirmedAge" state to true', () => {
-        const userVerifyAgeSpy = jest.fn()
         const isUser18 = false
         const wrapper = shallow(<OrderConfirmation userVerifyAge={userVerifyAgeSpy} />)
 
@@ -91,7 +95,6 @@ describe('OrderConfirmation', () => {
       })
 
       test('should call "userVerifyAge" with correct parameter', () => {
-        const userVerifyAgeSpy = jest.fn()
         const isUser18 = true
         const wrapper = shallow(<OrderConfirmation userVerifyAge={userVerifyAgeSpy} />)
         wrapper.instance().onAgeConfirmation(isUser18)
