@@ -1,5 +1,6 @@
 @value comfortaaRegularFontStack from ‘styles/typography.css’;
 @value ScreenSMMin, ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
+@value White from 'styles/colors.css';
 
 .marketPlaceWrapper {
   max-width: 1170px;
@@ -18,24 +19,35 @@
 
 .marketPlaceContent {
   display: flex;
+  justify-content: space-between;
 }
 
 .marketPlaceProducts {
+  width: 100%;
   @media ScreenSMMin {
     width: 50%;
   }
   @media ScreenMDMin {
-    width: 65%;
+    width: 63%;
   }
 }
 
 .orderDetails {
+  padding-top: 25px;
+
   @media ScreenSMMin {
-    width: 50%;
+    width: 47%;
   }
   @media ScreenMDMin {
     width: 35%;
   }
+}
+
+.orderDetails > section {
+  border-top: 5px solid #e6e6e6;
+  background-color: White;
+  margin: 0;
+  padding: 30px;
 }
 
 .navbar {
@@ -50,6 +62,8 @@
   @media ScreenSMMin {
     display: none;
   }
+}
+
 .mobileHide {
 	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
 }
