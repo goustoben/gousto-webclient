@@ -46,5 +46,5 @@ yarn run upload -- --upload_dir=${CI_BUILD_NUMBER}
 
 	cd ..
 	# build service
-	python ./ci_scripts/deploy_service.py --service webclient
 	python ./ci_scripts/deploy_container.py --service webclient
+	python ./ci_scripts/deploy_service.py --service webclient
