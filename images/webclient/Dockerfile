@@ -10,7 +10,7 @@ RUN npm install -g yarn \
     && yarn global add pm2
 
 # CREATE THE UNPRIVILEGED USER TO RUN PROCESSES
-RUN useradd -r -u 1000 -g 1000 -d /home/docker docker && usermod -aG sudo docker
+RUN useradd -r -u 1001 -d /home/docker docker && usermod -aG sudo docker
 # LOG FOLDERS (NOTE THAT CHMOD 777 IS REALLY BAD, A BETTER SOLUTION HAS TO BE IMPLEMENTED)
 RUN mkdir /var/log/pm2 && chmod -R 777 /var/log/pm2
 # This will be the PM2 working directory
