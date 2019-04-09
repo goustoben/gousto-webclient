@@ -5,6 +5,8 @@
       Family: task-{{ ENVIRONMENT }}-{{ serviceName }}-definition
       ExecutionRoleArn:
         Ref:  EcsTaskExecutionRole
+      TaskRoleArn:
+        Ref: EcsTaskRole
       Memory: 512
       Cpu: 256
       NetworkMode: awsvpc
