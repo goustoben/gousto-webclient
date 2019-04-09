@@ -1,5 +1,5 @@
 @value comfortaaRegularFontStack from ‘styles/typography.css’;
-@value ScreenSMMin, ScreenXXSMin from 'styles/screenSizes.css';
+@value ScreenSMMin, ScreenXXSMin, ScreenXSMax from 'styles/screenSizes.css';
 
 .marketPlaceWrapper {
   max-width: 1170px;
@@ -8,15 +8,28 @@
 }
 
 .marketPlaceTitle {
-  text-align: center;
-  font-family: comfortaaRegularFontStack;
-  font-weight: 700;
-  font-size: 24px;
-  -webkit-font-smoothing: antialiased;
+ text-align: center;
+ font-family: comfortaaRegularFontStack;
+ font-weight: 700;
+ font-size: 24px;
+ -webkit-font-smoothing: antialiased;
+ margin-bottom: 30px;
 }
 
 .marketPlaceContent {
   @media ScreenSMMin {
     width: 66.6%;
+  }
+}
+
+.navbar {
+  @media ScreenXSMax {
+    display: none;
+  }
+}
+
+.dropdown {
+  @media ScreenSMMin {
+    display: none;
   }
 }
