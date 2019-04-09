@@ -17,4 +17,4 @@ for VALUE in "${PATHS[@]}" ; do
     fi
 done
 
-pm2-runtime start process-docker.json
+pm2-runtime start ${DEST}/process-docker.json

@@ -29,4 +29,4 @@ USER docker
 EXPOSE 8080
 WORKDIR /home/docker/app
 # START APPLICATION
-CMD ["ecs_start.sh"]
+CMD ["./ecs_start.sh"]

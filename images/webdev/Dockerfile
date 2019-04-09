@@ -49,9 +49,10 @@ RUN cd /home/docker/artifacts \
     && bower install --force \
     && yarn install --pure-lockfile \
     && ENV=local yarn run build:docker:dev \
-    && rm -rf /home/docker/artifacts/node_modules/.cache
+    && rm -rf /home/docker/artifacts/node_modules/.cache \
+    && cp /home/docker/artifacts/devbox_start.sh /home/docker/app/devbox_start.sh
 
 EXPOSE 8080
 WORKDIR /home/docker/app
 # START APPLICATION
-CMD ["devbox_start.sh"]
+CMD ["./devbox_start.sh"]
