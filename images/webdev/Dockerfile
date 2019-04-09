@@ -49,10 +49,17 @@ RUN cd /home/docker/artifacts \
     && bower install --force \
     && yarn install --pure-lockfile \
     && ENV=local yarn run build:docker:dev \
-    && rm -rf /home/docker/artifacts/node_modules/.cache \
-    && cp /home/docker/artifacts/devbox_start.sh /home/docker/app/devbox_start.sh
+    && rm -rf /home/docker/artifacts/node_modules/.cache
+
+# COPY BUILT APPLICATION TO RUN DIRECTORY FOR NON-DEVELOPERS
+RUN cp -r   /home/docker/artifacts/dist \
+            /home/docker/artifacts/node_modules \
+            /home/docker/artifacts/public \
+            /home/docker/artifacts/process-docker.json \
+            /home/docker/artifacts/manifest.json \
+            /home/docker/app/
 
 EXPOSE 8080
 WORKDIR /home/docker/app
 # START APPLICATION
-CMD ["./devbox_start.sh"]
+CMD ["pm2-runtime", "start", "process-docker.json"]

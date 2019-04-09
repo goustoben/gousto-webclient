@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+## THIS FILE IS NEEDED FOR DEVBOX INIT CONTAINER
+
 ORIGIN="/home/docker/artifacts"
 DEST="/home/docker/app"
 
@@ -13,8 +15,6 @@ PATHS=(
 
 for VALUE in "${PATHS[@]}" ; do
     if [[ ! -e "${DEST}${VALUE}" ]]; then
-        cp -R ${ORIGIN}${VALUE} ${DEST}${VALUE}
+        cp -r ${ORIGIN}${VALUE} ${DEST}${VALUE}
     fi
 done
-
-pm2-runtime start ${DEST}/process-docker.json
