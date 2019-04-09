@@ -17,6 +17,7 @@ const propTypes = {
 }
 
 class ProductList extends PureComponent {
+
   isLimitReached = (product) => {
     const { basket, productsCategories, products } = this.props
     const { id } = product
@@ -25,18 +26,34 @@ class ProductList extends PureComponent {
     return limitReachedResult
   }
 
-  render () {
-    const { products, ageVerified, toggleAgeVerificationPopUp } = this.props
+  getChosenCategoryProducts = (chosenCategory) => {
+    const { products, productsFilteredByCategory } = this.props
 
-    return(
+    const chosenCategoryProducts = Object.keys(products).reduce((categoryProducts, productKey) => {
+      const productProps = products[productKey]
+      const productCategory = productProps.categories[0].title
+      chosenCategory == productCategory ? categoryProducts.push(productProps) : null
+
+      return categoryProducts
+    }, [])
+
+    productsFilteredByCategory(chosenCategoryProducts)
+  }
+
+  render() {
+    const { products, ageVerified, toggleAgeVerificationPopUp, filteredProducts } = this.props
+    const productsToRender = filteredProducts ? filteredProducts : products
+
+    return (
       <div>
         {!!products ? <ProductListPresentation
-          products={products}
+          products={productsToRender}
           ageVerified={ageVerified}
           isLimitReached={this.isLimitReached}
           toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+          getChosenCategoryProducts={this.getChosenCategoryProducts}
         /> :
-        <Loading />
+          <Loading />
         }
       </div>
     )
