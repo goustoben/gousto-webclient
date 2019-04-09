@@ -91,6 +91,18 @@ const products = {
     }
     }
   },
+  productsFilteredByCategory: (state = Immutable.Map({}), action) => {
+    switch (action.type) {
+    case actionTypes.PRODUCTS_FILTERED_BY_CATEGORY: {
+
+      return state.set('productsFilteredByCategory', action.value)
+    }
+    
+    default: {
+      return state
+    }
+    }
+  }
 }
 
 export default products

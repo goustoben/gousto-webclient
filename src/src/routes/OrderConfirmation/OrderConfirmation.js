@@ -60,7 +60,18 @@ class OrderConfirmation extends PureComponent {
   }
 
   render() {
-    const { products, headerDetails, showHeader, ageVerified, productsCategories, basket } = this.props
+    const {
+      headerDetails,
+      showHeader,
+      products,
+      ageVerified,
+      basket,
+      productsCategories,
+      filteredProducts,
+      basketProductAdd,
+      basketProductRemove,
+      productsFilteredByCategory
+    } = this.props
     const { showAgeVerification, hasConfirmedAge } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
@@ -70,7 +81,7 @@ class OrderConfirmation extends PureComponent {
           {...headerDetails}
         />}
         <Overlay open={showAgeVerification} from="top">
-          <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation}/>
+          <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation} />
         </Overlay>
         <div className={css.marketPlaceWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
@@ -81,6 +92,10 @@ class OrderConfirmation extends PureComponent {
               ageVerified={ageVerified}
               productsCategories={productsCategories}
               toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+              filteredProducts={filteredProducts}
+              basketProductAdd={basketProductAdd}
+              basketProductRemove={basketProductRemove}
+              productsFilteredByCategory={productsFilteredByCategory}
             />
           </section>
         </div>
