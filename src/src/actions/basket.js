@@ -120,12 +120,12 @@ export const basketNumPeopleChange = peopleObj => (
   }
 )
 
-export const basketOrderLoad = orderId => (
+export const basketOrderLoad = (orderId, order = null) => (
   (dispatch, getState) => {
     if (getState().basket.get('orderId') !== orderId) {
       dispatch(basketActions.basketReset())
       dispatch(basketActions.basketIdChange(orderId))
-      dispatch(basketActions.basketOrderItemsLoad(orderId))
+      dispatch(basketActions.basketOrderItemsLoad(orderId, order))
       logger.info(`Basket loaded order: ${orderId}`)
     } else {
       logger.info(`Order already loaded into current basket: ${orderId}`)
