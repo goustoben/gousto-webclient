@@ -12,205 +12,243 @@ import productUtils from 'utils/products'
 import css from './OrderSummary.css'
 
 class OrderSummary extends React.PureComponent {
-	static propTypes = {
-	  prices: PropTypes.instanceOf(Immutable.Map),
-	  deliveryDate: PropTypes.string.isRequired,
-	  deliverySlot: PropTypes.instanceOf(Immutable.Map),
-	  giftItems: PropTypes.instanceOf(Immutable.Map),
-	  numPortions: PropTypes.number.isRequired,
-	  numRecipes: PropTypes.number.isRequired,
-	  productItems: PropTypes.instanceOf(Immutable.Map),
-	  products: PropTypes.object.isRequired,
-	  recipeItems: PropTypes.instanceOf(Immutable.Map),
-	  recipes: PropTypes.object.isRequired,
-	  removeProduct: PropTypes.func,
-	  shippingAddress: PropTypes.instanceOf(Immutable.Map),
-	  showProductDetail: PropTypes.func,
-	  saveError: PropTypes.bool,
-	  saveRequired: PropTypes.bool,
-	  saving: PropTypes.bool,
-	  onSave: PropTypes.func.isRequired,
-	  surcharges: PropTypes.instanceOf(Immutable.List),
-	  orderNumber: PropTypes.string,
-	}
+  static propTypes = {
+    prices: PropTypes.instanceOf(Immutable.Map),
+    deliveryDate: PropTypes.string.isRequired,
+    deliverySlot: PropTypes.instanceOf(Immutable.Map),
+    giftItems: PropTypes.instanceOf(Immutable.Map),
+    numPortions: PropTypes.number.isRequired,
+    numRecipes: PropTypes.number.isRequired,
+    productItems: PropTypes.instanceOf(Immutable.Map),
+    products: PropTypes.object.isRequired,
+    recipeItems: PropTypes.instanceOf(Immutable.Map),
+    recipes: PropTypes.object.isRequired,
+    removeProduct: PropTypes.func,
+    shippingAddress: PropTypes.instanceOf(Immutable.Map),
+    showProductDetail: PropTypes.func,
+    saveError: PropTypes.bool,
+    saveRequired: PropTypes.bool,
+    saving: PropTypes.bool,
+    onSave: PropTypes.func.isRequired,
+    surcharges: PropTypes.instanceOf(Immutable.List),
+    orderNumber: PropTypes.string,
+  }
 
-	static defaultProps = {
-	  giftItems: Immutable.Map(),
-	  productItems: Immutable.Map(),
-	  recipeItems: Immutable.Map(),
-	  prices: Immutable.Map({}),
-	  orderNumber: '',
-	}
+  static defaultProps = {
+    giftItems: Immutable.Map(),
+    productItems: Immutable.Map(),
+    recipeItems: Immutable.Map(),
+    prices: Immutable.Map({}),
+    orderNumber: '',
+  }
 
-	state = {
-	  orderSummaryOpen: false,
-	}
+  state = {
+    orderSummaryOpen: false,
+  }
 
-	asterisk = String.fromCharCode(42)
+  asterisk = String.fromCharCode(42)
 
-	toggleDetailView = () => {
-	  this.setState({
-	    orderSummaryOpen: !this.state.orderSummaryOpen,
-	  })
-	}
+  toggleDetailView = () => {
+    const { orderSummaryOpen } = this.state
+    this.setState({
+      orderSummaryOpen: !orderSummaryOpen,
+    })
+  }
 
-	getProducts = () =>
-	  this.props.productItems.map((productQty, productId) => {
-	    const product = this.props.products.get(productId, Immutable.Map())
+  getProducts = () => {
+    const { productItems, products, showProductDetail, removeProduct } = this.props
 
-	    return {
-	      orderItemId: productId,
-	      title: product.get('title'),
-	      disclaimerKey: product.get('isVatable') ? this.asterisk : '',
-	      quantity: parseFloat(productQty),
-	      images: product.get('images'),
-	      onImageClick: this.props.showProductDetail ? () => { this.props.showProductDetail(productId) } : undefined,
-	      onRemove: this.props.removeProduct ? () => { this.props.removeProduct(productId) } : undefined,
-	    }
-	  }).toArray()
+    return (
+      productItems.map((productQty, productId) => {
+        const product = products.get(productId, Immutable.Map())
+  
+        return {
+          orderItemId: productId,
+          title: product.get('title'),
+          disclaimerKey: product.get('isVatable') ? this.asterisk : '',
+          quantity: parseFloat(productQty),
+          images: product.get('images'),
+          onImageClick: showProductDetail ? () => { showProductDetail(productId) } : undefined,
+          onRemove: removeProduct ? () => { removeProduct(productId) } : undefined,
+        }
+      }).toArray()
+    )
+  }
 
-	getProductGifts = () =>
-	  this.props.giftItems.map((productQty, productId) => {
-	    const product = this.props.products.get(productId, Immutable.Map())
+  getProductGifts = () => {
+    const { giftItems, products } = this.props
 
-	    // Hide gifts
-	    if (!productUtils.isNotAGift(product)) {
-	      return false
-	    }
+    return giftItems.map((productQty, productId) => {
+      const product = products.get(productId, Immutable.Map())
+  
+      // Hide gifts
+      if (!productUtils.isNotAGift(product)) {
+        return false
+      }
+  
+      return {
+        orderItemId: productId,
+        title: product.get('title'),
+        quantity: parseFloat(productQty),
+        images: product.get('images'),
+        gift: true,
+      }
+    }).toArray().filter(item => item)
+  }
+  
+  getRecipes = () => {
+    const { recipeItems, recipes, numPortions } = this.props
+    const recipesDetails = []
 
-	    return {
-	      orderItemId: productId,
-	      title: product.get('title'),
-	      quantity: parseFloat(productQty),
-	      images: product.get('images'),
-	      gift: true,
-	    }
-	  }).toArray().filter(item => item)
+    recipeItems.forEach((recipeQty, recipeId) => {
+      const recipe = recipes.get(recipeId, Immutable.Map())
 
-	getRecipes = () => {
-	  const recipes = []
+      if (recipe.has('title') && recipe.has('media')) {
+        recipesDetails.push({
+          orderItemId: recipeId,
+          title: recipe.get('title'),
+          numPortions: parseFloat(recipeQty) * numPortions,
+          media: recipe.get('media'),
+          url: recipe.get('url'),
+        })
+      }
+    })
 
-	  this.props.recipeItems.forEach((recipeQty, recipeId) => {
-	    const recipe = this.props.recipes.get(recipeId, Immutable.Map())
+    return recipesDetails
+  }
 
-	    if (recipe.has('title') && recipe.has('media')) {
-	      recipes.push({
-	        orderItemId: recipeId,
-	        title: recipe.get('title'),
-	        numPortions: parseFloat(recipeQty) * this.props.numPortions,
-	        media: recipe.get('media'),
-	        url: recipe.get('url'),
-	      })
-	    }
-	  })
+  renderHeader = () => {
+    const { orderSummaryOpen } = this.state
+    const { deliveryDate, sectionTitle } = this.props
+    console.log('here', deliveryDate, moment(deliveryDate).format('dddd, Do MMM'))//eslint-disable-line
 
-	  return recipes
-	}
+    return (
+      <SectionHeader title={sectionTitle ? sectionTitle : "Box summary"} type="minorArticle" contentAlign="center">
+        <p
+          className={classnames(
+            css.mobileOnly,
+            css.subheader,
+            { [css.mobileHide]: orderSummaryOpen },
+          )}
+        >
+          Your box will arrive {moment(deliveryDate).format('dddd, Do MMM')}
+        </p>
+        <p
+          className={classnames(
+            css.textblock,
+            { [css.mobileHide]: !orderSummaryOpen }
+          )}
+        >
+          Here are the details about your box
+        </p>
+      </SectionHeader>
+    )
+  }
 
-	renderHeader = () =>
-		<SectionHeader title="Box summary" type="minorArticle" contentAlign="center">
-			<p
-			  className={classnames(
-			    css.mobileOnly,
-			    css.subheader,
-			    { [css.mobileHide]: this.state.orderSummaryOpen },
-			  )}
-			>
-				Your box will arrive {moment(this.props.deliveryDate).format('dddd, Do MMM')}
-			</p>
-			<p
-			  className={classnames(
-			    css.textblock,
-			    { [css.mobileHide]: !this.state.orderSummaryOpen }
-			  )}
-			>
-				Here are the details about your box
-			</p>
-		</SectionHeader>
+  renderFooter = () => {
+    const { orderSummaryOpen } = this.state
 
-	renderFooter = () =>
-		<footer className={classnames(css.mobileOnly, css.textblock)}>
-			{this.state.orderSummaryOpen ?
-				<a
-				  className={css.toggleLink}
-				  onClick={this.toggleDetailView}
-				>
-					Hide order details
-				</a> :
-				<a
-				  className={css.toggleLink}
-				  onClick={this.toggleDetailView}
-				>
-					View order details >
-				</a>
-			}
-		</footer>
+    return (
+      <footer className={classnames(css.mobileOnly, css.textblock)}>
+        {orderSummaryOpen ?
+          <a
+            className={css.toggleLink}
+            onClick={this.toggleDetailView}
+          >
+            Hide order details
+          </a> :
+          <a
+            className={css.toggleLink}
+            onClick={this.toggleDetailView}
+          >
+            View order details >
+          </a>
+        }
+      </footer>
+    )
+  }
 
-	render() {
-	  const { prices, deliveryDate, deliverySlot, numPortions, numRecipes, shippingAddress, surcharges, productItems, products, orderNumber } = this.props
-	  let vatableItemsInOrder = false
-	  let extrasPrice = 0.0
-	  let totalToPay = prices.get('total') - prices.get('productTotal')
+  render() {
+    const {
+      prices,
+      deliveryDate,
+      deliverySlot,
+      numPortions,
+      numRecipes,
+      shippingAddress,
+      surcharges,
+      productItems,
+      products,
+      orderNumber,
+      saving,
+      saveRequired,
+      onSave,
+      saveError
+    } = this.props
+    const { orderSummaryOpen } = this.state
+    let vatableItemsInOrder = false
+    let extrasPrice = 0.0
+    let totalToPay = prices.get('total') - prices.get('productTotal')
 
-	  productItems.forEach((productQty, productId) => {
-	    const product = products.get(productId, Immutable.Map())
+    productItems.forEach((productQty, productId) => {
+      const product = products.get(productId, Immutable.Map())
 
-	    if (product.get('isVatable')) {
-	      vatableItemsInOrder = true
-	    }
+      if (product.get('isVatable')) {
+        vatableItemsInOrder = true
+      }
 
-	    extrasPrice += productQty * parseFloat(product.get('listPrice'))
-	    totalToPay += productQty * parseFloat(product.get('listPrice'))
-	  })
+      extrasPrice += productQty * parseFloat(product.get('listPrice'))
+      totalToPay += productQty * parseFloat(product.get('listPrice'))
+    })
 
-	  return (
-			<section className={css.container}>
-				{this.renderHeader()}
+    return (
+      <section className={css.container}>
+        {this.renderHeader()}
 
-				<div
-				  className={classnames(
-				    css.details,
-				    { [css.slideUp]: !this.state.orderSummaryOpen },
-				  )}
-				>
-					{this.getRecipes().map(recipe => <RecipeItem key={recipe.orderItemId} {...recipe} available />)}
-					{this.getProducts().map(product => <ProductItem key={product.orderItemId} {...product} available />)}
-					{this.getProductGifts().map(product => <ProductItem key={product.orderItemId} {...product} available />)}
+        <div
+          className={classnames(
+            css.details,
+            { [css.slideUp]: !orderSummaryOpen },
+          )}
+        >
+          {this.getRecipes().map(recipe => <RecipeItem key={recipe.orderItemId} {...recipe} available />)}
+          {this.getProducts().map(product => <ProductItem key={product.orderItemId} {...product} available />)}
+          {this.getProductGifts().map(product => <ProductItem key={product.orderItemId} {...product} available />)}
 
-					<div className={css.receipt}>
-						<Receipt
-						  prices={prices}
-						  deliveryDate={deliveryDate}
-						  deliverySlot={deliverySlot}
-						  numPortions={numPortions}
-						  numRecipes={numRecipes}
-						  deliveryTotalPrice={prices.get('deliveryTotal')}
-						  shippingAddress={shippingAddress}
-						  vatableItems={vatableItemsInOrder}
-						  surcharges={surcharges}
-						  surchargeTotal={prices.get('surchargeTotal')}
-						  recipeTotalPrice={prices.get('recipeTotal')}
-						  totalToPay={String(totalToPay)}
-						  recipeDiscountAmount={prices.get('recipeDiscount')}
-						  recipeDiscountPercent={prices.get('percentageOff')}
-						  extrasTotalPrice={String(extrasPrice)}
-						  orderNumber={orderNumber}
-						>
-							{vatableItemsInOrder ? <p className={css.disclaimer}>{this.asterisk} These items include VAT at 20%</p> : null}
-						</Receipt>
-					</div>
-					<SaveButton
-					  saving={this.props.saving}
-					  saveRequired={this.props.saveRequired}
-					  onClick={this.props.onSave}
-					  error={this.props.saveError}
-					/>
-				</div>
+          <div className={css.receipt}>
+            <Receipt
+              prices={prices}
+              deliveryDate={deliveryDate}
+              deliverySlot={deliverySlot}
+              numPortions={numPortions}
+              numRecipes={numRecipes}
+              deliveryTotalPrice={prices.get('deliveryTotal')}
+              shippingAddress={shippingAddress}
+              vatableItems={vatableItemsInOrder}
+              surcharges={surcharges}
+              surchargeTotal={prices.get('surchargeTotal')}
+              recipeTotalPrice={prices.get('recipeTotal')}
+              totalToPay={String(totalToPay)}
+              recipeDiscountAmount={prices.get('recipeDiscount')}
+              recipeDiscountPercent={prices.get('percentageOff')}
+              extrasTotalPrice={String(extrasPrice)}
+              orderNumber={orderNumber}
+            >
+              {vatableItemsInOrder ? <p className={css.disclaimer}>{this.asterisk} These items include VAT at 20%</p> : null}
+            </Receipt>
+          </div>
+          <SaveButton
+            saving={saving}
+            saveRequired={saveRequired}
+            onClick={onSave}
+            error={saveError}
+          />
+        </div>
 
-				{this.renderFooter()}
-			</section>
-	  )
-	}
+        {this.renderFooter()}
+      </section>
+    )
+  }
 }
 
 export default OrderSummary
