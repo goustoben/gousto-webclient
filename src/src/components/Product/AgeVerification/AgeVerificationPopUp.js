@@ -77,7 +77,7 @@ class AgeVerificationPopUp extends PureComponent {
           <ModalContent className={css.ageVerificationContent}>
             {this.getContent()}
           </ModalContent>
-            {this.renderFooter()}
+          {this.renderFooter()}
       </ModalPanel>
 
     )
