@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Immmutable from 'immutable'
 import OrderConfirmation from '../OrderConfirmation'
 
 describe('OrderConfirmation', () => {
@@ -53,7 +54,7 @@ describe('OrderConfirmation', () => {
     })
 
     test('should render market place content section', () => {
-      expect(wrapper.find('section.marketPlaceContent').length).toEqual(1)
+      expect(wrapper.find('.marketPlaceContent').length).toEqual(1)
     })
 
     test('should render product list', () => {
