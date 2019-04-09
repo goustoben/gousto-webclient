@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Product } from '../Product'
+import { Navbar } from '../Navbar'
 import css from './ProductList.css'
 
 const propTypes = {
@@ -14,6 +15,7 @@ const propTypes = {
 
 const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggleAgeVerificationPopUp }) => (
   <div className={css.productList}>
+    <Navbar items={items} onClick={getChosenCategoryProducts}/>
     {
       Object.keys(products).map(productKey => {
         const productProps = products[productKey]
