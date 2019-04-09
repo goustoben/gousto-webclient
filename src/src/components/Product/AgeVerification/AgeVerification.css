@@ -18,10 +18,8 @@
 .ageVerificationModal{
 	border-radius: 5px;
 	padding: 30px;
-
-	@media ScreenSMMin {
-		width: 600px;
-	}
+	width: 100%;
+	max-width: 600px;
 }
 
 .ageVerificationTitle{
@@ -41,7 +39,6 @@
 
 .noAgeVerificationButton{
 	border-radius: 3px;
-
 }
 
 .yesAgeVerificationButton{
