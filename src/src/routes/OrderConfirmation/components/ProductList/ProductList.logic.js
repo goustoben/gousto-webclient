@@ -13,8 +13,7 @@ const propTypes = {
     id: PropTypes.string,
   }),
   ageVerified: PropTypes.bool,
-  basketProductAdd: PropTypes.func,
-  basketProductRemove: PropTypes.func,
+  toggleAgeVerificationPopUp: PropTypes.func
 }
 
 class ProductList extends PureComponent {
@@ -27,25 +26,22 @@ class ProductList extends PureComponent {
   }
 
   render () {
-    const { products, basket, productsCategories, ageVerified, basketProductAdd, basketProductRemove } = this.props
+    const { products, ageVerified, toggleAgeVerificationPopUp } = this.props
 
     return(
       <div>
         {!!products ? <ProductListPresentation
           products={products}
           ageVerified={ageVerified}
-          basket={basket}
-          productsCategories={productsCategories}
           isLimitReached={this.isLimitReached}
-          basketProductAdd={basketProductAdd}
-          basketProductRemove={basketProductRemove}
-        /> : 
+          toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+        /> :
         <Loading />
         }
       </div>
     )
   }
-  
+
 }
 
 ProductList.propTypes = propTypes
