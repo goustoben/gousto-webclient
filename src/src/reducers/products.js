@@ -95,7 +95,7 @@ const products = {
     switch (action.type) {
     case actionTypes.PRODUCTS_FILTERED_BY_CATEGORY: {
 
-      return state.set('productsFilteredByCategory', action.value)
+      return state.set('products', action.value)
     }
     
     default: {
