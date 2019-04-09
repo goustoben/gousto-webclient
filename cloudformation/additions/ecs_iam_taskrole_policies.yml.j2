@@ -1,0 +1,11 @@
+      Policies:
+        -
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              Effect: "Allow"
+              Action:
+                - GetObject
+                - GetObjectVersion
+              Resource:
+                - arn:aws:s3:::{{ stacks.defaults.output.configbucket }}/{{ ENVIRONMENT }}/config/service/{{ serviceName }}.yml
