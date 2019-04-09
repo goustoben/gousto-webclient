@@ -5,7 +5,7 @@
 .marketPlaceWrapper {
   max-width: 1170px;
   margin: 0 auto;
-  padding-top: 20px;
+  padding: 20px 20px 0;
 }
 
 .marketPlaceTitle {
