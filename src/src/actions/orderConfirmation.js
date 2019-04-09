@@ -1,8 +1,10 @@
 import Immutable from 'immutable'
 import ordersApi from 'apis/orders'
 import logger from 'utils/logger'
+import userUtils from 'utils/user'
 import productActions from './products'
-import { basketOrderItemsLoad } from './basket'
+import { basketOrderLoad } from './basket'
+import recipeActions from './recipes'
 import actionTypes from './actionTypes'
 
 export const orderDetails = (orderId) => (
@@ -12,13 +14,17 @@ export const orderDetails = (orderId) => (
       dispatch(productActions.productsLoadCategories())
       dispatch(productActions.productsLoadStock())
       const {data: order} = await ordersApi.fetchOrder(accessToken, orderId)
+      const immutableOrderDetails = Immutable.fromJS(order)
+      const orderRecipeIds = userUtils.getUserOrderRecipeIds(immutableOrderDetails)
+
+      dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
+      await dispatch(productActions.productsLoadProducts(order.whenCutOff))
+      dispatch(basketOrderLoad(orderId, immutableOrderDetails))
       dispatch({
         type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
         orderId,
-        orderDetails: order,
+        orderDetails: immutableOrderDetails,
       })
-      await dispatch(productActions.productsLoadProducts(order.whenCutOff))
-      dispatch(basketOrderItemsLoad(orderId, Immutable.fromJS(order)))
     }
     catch (err) {
       logger.error(err)
