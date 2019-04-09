@@ -1,5 +1,10 @@
 FROM node:10-jessie-slim
 
+# AWS CLI
+RUN apt-get update && apt-get install -y \
+    awscli \
+    && rm -rf /var/lib/apt/lists/*
+
 # APPLICATION RUNTIME DEPENDENCIES
 RUN npm install -g yarn \
     && yarn global add pm2
