@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # CREATE THE UNPRIVILEGED USER TO RUN PROCESSES
-RUN useradd -r -u 1000 -g 1000 -d /home/docker docker \
+RUN useradd -r -u 1001 -d /home/docker docker \
     && usermod -aG sudo docker \
     && echo "docker ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/user && \
     chmod 0440 /etc/sudoers.d/user
