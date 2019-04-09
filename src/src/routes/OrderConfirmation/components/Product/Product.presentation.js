@@ -67,4 +67,4 @@ const ProductPresentation = ({
 
 ProductPresentation.propTypes = propTypes
 
-export { ProductPresentation } 
+export { ProductPresentation }

@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import { AgeVerificationPopUp } from 'Product/AgeVerification'
+import Overlay from 'Overlay'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
@@ -28,8 +30,6 @@ const propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   ageVerified: PropTypes.bool.isRequired,
-  basketProductAdd: PropTypes.func.isRequired,
-  basketProductRemove: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -37,34 +37,50 @@ const defaultProps = {
   headerDetails: {}
 }
 class OrderConfirmation extends PureComponent {
+  constructor() {
+    super()
+    this.state = {
+      showAgeVerification: false,
+      hasConfirmedAge: false,
+    }
+  }
+
+  toggleAgeVerificationPopUp = () => {
+    this.setState((prevState) => ({
+      showAgeVerification: !prevState.showAgeVerification
+    }))
+  }
+
+  onAgeConfirmation = (isOver18) => {
+    const { userVerifyAge } = this.props
+    this.setState({
+      hasConfirmedAge: true,
+    })
+    userVerifyAge(isOver18, true)
+  }
 
   render() {
-    const {
-      headerDetails,
-      showHeader,
-      products,
-      ageVerified,
-      basket,
-      productsCategories,
-      basketProductAdd,
-      basketProductRemove,
-    } = this.props
+    const { products, headerDetails, showHeader, ageVerified, productsCategories, basket } = this.props
+    const { showAgeVerification, hasConfirmedAge } = this.state
+    const isUnderAge = hasConfirmedAge && !ageVerified
 
     return (
       <div>
         {showHeader && <OrderConfirmationHeader
           {...headerDetails}
         />}
-        <div className={css.marketPlacetWrapper}>
+        <Overlay open={showAgeVerification} from="top">
+          <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation}/>
+        </Overlay>
+        <div className={css.marketPlaceWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
           <section className={css.marketPlaceContent}>
             <ProductList
               products={products}
-              ageVerified={ageVerified}
               basket={basket}
+              ageVerified={ageVerified}
               productsCategories={productsCategories}
-              basketProductAdd={basketProductAdd}
-              basketProductRemove={basketProductRemove}
+              toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
             />
           </section>
         </div>

@@ -2,15 +2,19 @@ import React from 'react'
 import Immutable from 'immutable'
 import { mount } from 'enzyme'
 import { ProductList } from '..'
-import { mockProducts } from '../../config' 
+import { mockProducts } from '../../config'
 
 jest.mock('utils/basket', () => ({
   getProductLimitReached: jest.fn()
 }))
 
+jest.mock('../../Product', () => ({
+  Product: 'Product'
+}))
+
 describe('ProductList component', () => {
   let wrapper
-  const propsProductList = { 
+  const propsProductList = {
     basket: Immutable.fromJS({
       products: {
         '1234': 1
@@ -27,7 +31,7 @@ describe('ProductList component', () => {
       wrapper = mount(<ProductList {...propsProductList} />)
       expect(wrapper.find('div.productList').length).toBe(0)
     })
-  
+
     test('should render product list wrapper', () => {
       propsProductList.products = mockProducts,
       wrapper = mount(<ProductList {...propsProductList} />)
