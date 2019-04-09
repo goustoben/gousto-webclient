@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import classnames from 'classnames'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import Overlay from 'Overlay'
 import { Dropdown } from 'goustouicomponents'
@@ -8,9 +9,11 @@ import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
 import { Navbar } from './components/Navbar'
+import ReceiptContainer from './components/Receipt/ReceiptContainer'
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
+  showOrderConfirmationRecipt: PropTypes.bool.isRequired,
   headerDetails: PropTypes.oneOfType([
     PropTypes.shape({
       deliveryDate: PropTypes.string,
@@ -129,7 +132,8 @@ class OrderConfirmation extends PureComponent {
       ageVerified,
       basket,
       productsCategories,
-      selectedCategory
+      selectedCategory,
+      showOrderConfirmationRecipt
     } = this.props
     const { showAgeVerification, hasConfirmedAge } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
@@ -153,16 +157,21 @@ class OrderConfirmation extends PureComponent {
           <div className={css.dropdown}>
             <Dropdown id={'product-filter'} options={categories} groupedOptions={[]} optionSelected={selectedCategory} onChange={this.getFilteredProducts} />
           </div>
-          <section className={css.marketPlaceContent}>
-            <ProductList
-              products={filteredProducts || products}
-              ageVerified={ageVerified}
-              basket={basket}
-              productsCategories={productsCategories}
-              toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-              selectedCategory={selectedCategory}
-            />
-          </section>
+          <div className={css.marketPlaceContent}>
+            <section className={css.marketPlaceProducts}>
+              <ProductList
+                products={products}
+                basket={basket}
+                ageVerified={ageVerified}
+                productsCategories={productsCategories}
+                toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+                selectedCategory={selectedCategory}
+              />
+            </section>
+            <section className={classnames(css.orderDetails, css.mobileHide)}>
+              {showOrderConfirmationRecipt && <ReceiptContainer />}
+            </section>
+          </div>
         </div>
       </div>
     )

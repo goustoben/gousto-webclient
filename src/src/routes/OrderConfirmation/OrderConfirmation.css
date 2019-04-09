@@ -1,5 +1,5 @@
 @value comfortaaRegularFontStack from ‘styles/typography.css’;
-@value ScreenSMMin, ScreenXXSMin from 'styles/screenSizes.css';
+@value ScreenSMMin, ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
 
 .marketPlaceWrapper {
   max-width: 1170px;
@@ -17,8 +17,24 @@
 }
 
 .marketPlaceContent {
+  display: flex;
+}
+
+.marketPlaceProducts {
   @media ScreenSMMin {
-    width: 66.6%;
+    width: 50%;
+  }
+  @media ScreenMDMin {
+    width: 65%;
+  }
+}
+
+.orderDetails {
+  @media ScreenSMMin {
+    width: 50%;
+  }
+  @media ScreenMDMin {
+    width: 35%;
   }
 }
 
@@ -34,4 +50,10 @@
   @media ScreenSMMin {
     display: none;
   }
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobileShow {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
 }
