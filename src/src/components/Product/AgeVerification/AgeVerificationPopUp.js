@@ -4,7 +4,7 @@ import ModalPanel from 'Modal/ModalPanel'
 import { ModalTitle, ModalContent, ModalFooter } from 'ModalComponent'
 import { Button } from 'goustouicomponents'
 import css from './AgeVerification.css'
-import { underAgeModalText, modalText } from './config'
+import { modalTitle, underAgeModalText, modalText } from './config'
 
 class AgeVerificationPopUp extends PureComponent {
 
@@ -72,7 +72,7 @@ class AgeVerificationPopUp extends PureComponent {
     return (
       <ModalPanel closePortal={onClose} className={css.ageVerificationModal} disableOverlay>
           <ModalTitle className={css.ageVerificationTitle}>
-            Are you over 18?
+            {modalTitle}
           </ModalTitle>
           <ModalContent className={css.ageVerificationContent}>
             {this.getContent()}
