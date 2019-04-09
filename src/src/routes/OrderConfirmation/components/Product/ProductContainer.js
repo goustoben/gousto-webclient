@@ -6,7 +6,7 @@ import tempActions from 'actions/temp'
 import { Product } from "./Product.logic"
 
 const mapStateToProps = (state, props) => {
-  const isSelectedProduct = props.product && (props.product.id == state.temp.get('productId'))
+  const isSelectedProduct = props.product && (props.product.id === state.temp.get('productId'))
 
   return ({
     basket: getBasket(state),
