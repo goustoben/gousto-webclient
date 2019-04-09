@@ -32,6 +32,7 @@ class OrderSummary extends React.PureComponent {
     onSave: PropTypes.func.isRequired,
     surcharges: PropTypes.instanceOf(Immutable.List),
     orderNumber: PropTypes.string,
+    orderSummaryCollapsed: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -40,6 +41,7 @@ class OrderSummary extends React.PureComponent {
     recipeItems: Immutable.Map(),
     prices: Immutable.Map({}),
     orderNumber: '',
+    orderSummaryCollapsed: true,
   }
 
   state = {
@@ -120,7 +122,6 @@ class OrderSummary extends React.PureComponent {
   renderHeader = () => {
     const { orderSummaryOpen } = this.state
     const { deliveryDate, sectionTitle } = this.props
-    console.log('here', deliveryDate, moment(deliveryDate).format('dddd, Do MMM'))//eslint-disable-line
 
     return (
       <SectionHeader title={sectionTitle ? sectionTitle : "Box summary"} type="minorArticle" contentAlign="center">
@@ -183,7 +184,8 @@ class OrderSummary extends React.PureComponent {
       saving,
       saveRequired,
       onSave,
-      saveError
+      saveError,
+      orderSummaryCollapsed
     } = this.props
     const { orderSummaryOpen } = this.state
     let vatableItemsInOrder = false
@@ -208,7 +210,7 @@ class OrderSummary extends React.PureComponent {
         <div
           className={classnames(
             css.details,
-            { [css.slideUp]: !orderSummaryOpen },
+            { [css.slideUp]: (!orderSummaryOpen && orderSummaryCollapsed) },
           )}
         >
           {this.getRecipes().map(recipe => <RecipeItem key={recipe.orderItemId} {...recipe} available />)}
@@ -245,7 +247,7 @@ class OrderSummary extends React.PureComponent {
           />
         </div>
 
-        {this.renderFooter()}
+        {orderSummaryCollapsed && this.renderFooter()}
       </section>
     )
   }
