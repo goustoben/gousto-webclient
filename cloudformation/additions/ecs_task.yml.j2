@@ -25,6 +25,9 @@
           Image:
             Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/webclient
           MemoryReservation: 256
+          Environment:
+            - Name: ENVIRONMENT
+              Value: {{ ENVIRONMENT }}
 
   EcsService:
     Type: AWS::ECS::Service
