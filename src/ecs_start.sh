@@ -61,9 +61,9 @@ if [[ -z "${ENVIROMENT}" ]]; then
 fi
 
 if [[ "${ENVIROMENT}" == "production" ]]; then
-    S3_SRC="s3-gousto-platform-beta/${ENVIROMENT}/config/service/webclient.yml"
-else
     S3_SRC="s3-gousto-platform-prod/${ENVIROMENT}/config/service/webclient.yml"
+else
+    S3_SRC="s3-gousto-platform-beta/${ENVIROMENT}/config/service/webclient.yml"
 fi
 
 S3_DEST="./secrets.yml"
