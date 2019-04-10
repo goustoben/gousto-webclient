@@ -5,7 +5,7 @@ import logger from 'utils/logger'
 import actionTypes from './actionTypes'
 import statusActions from './status'
 
-const productDetailVisibilityChange = (productId) => (
+const productDetailVisibilityChange = (productId = false) => (
   (dispatch, getState) => {
     const prevLoc = getState().routing.locationBeforeTransitions
     const query = { ...prevLoc.query }
@@ -55,12 +55,15 @@ const productsLoadProducts = (cutoffDate) => (
       try {
         const { data: products } = await fetchProducts(getState().auth.get('accessToken'), cutoffDate)
         const { productsStock } = getState()
-        const productsInStock = []
-        products.forEach(product => {
-          if(productsStock.get(product.id) > 0 && product.isForSale) {
-            productsInStock.push(product)
+        const productsInStock = products.reduce((productsInStockAccumulator, product) => {
+          product.stock = productsStock.get(product.id)
+          if (product.stock > 0 && product.isForSale) {
+            productsInStockAccumulator.push(product)
           }
-        })
+
+          return productsInStockAccumulator
+        }, [])
+
         dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products: productsInStock, cutoffDate })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, err.message))

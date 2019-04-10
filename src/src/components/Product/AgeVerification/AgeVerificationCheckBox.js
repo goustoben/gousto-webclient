@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './AgeVerification.css'
 import config from 'config/products'
 import CheckBox from 'Form/CheckBox'
 import { Tooltip } from 'goustouicomponents'
+import css from './AgeVerification.css'
 
-const AgeVerification = ({ disabled, onCheckBoxChange, onTooltipVisibleChange, showError, tooltipVisible }) => (
+const AgeVerificationCheckBox = ({ disabled, onCheckBoxChange, onTooltipVisibleChange, showError, tooltipVisible }) => (
 	<div className={css.checkbox}>
 		<Tooltip
 		  style="checkbox"
@@ -25,7 +25,7 @@ const AgeVerification = ({ disabled, onCheckBoxChange, onTooltipVisibleChange, s
 	</div>
 )
 
-AgeVerification.propTypes = {
+AgeVerificationCheckBox.propTypes = {
   disabled: PropTypes.bool,
   onCheckBoxChange: PropTypes.func,
   onTooltipVisibleChange: PropTypes.func,
@@ -33,11 +33,11 @@ AgeVerification.propTypes = {
   tooltipVisible: PropTypes.bool,
 }
 
-AgeVerification.defaultProps = {
+AgeVerificationCheckBox.defaultProps = {
   disabled: false,
   onCheckBoxChange: () => {},
   onTooltipVisibleChange: () => {},
   tooltipVisible: false,
 }
 
-export default AgeVerification
+export { AgeVerificationCheckBox }

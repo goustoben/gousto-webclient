@@ -82,7 +82,7 @@ const processCookies = (cookies, store) => {
 
   let features = getCookieStoreValue(cookies, 'features')
   let variants = getCookieStoreValue(cookies, 'variants')
-  const tutorialsViewed = getCookieStoreValue(cookies, 'tutorial_viewed')
+  const tutorialsViewed = get(cookies, 'tutorial_viewed')
 
   if (cookiePolicy) {
     store.dispatch(cookieActions.cookiePolicyAcceptanceChange(cookiePolicy.isAccepted))
@@ -218,8 +218,7 @@ const processCookies = (cookies, store) => {
 
   if (tutorialsViewed) {
     try {
-      const tutorials = JSON.parse(tutorialsViewed)
-      Object.entries(tutorials).forEach(([name, count]) => {
+      Object.entries(tutorialsViewed).forEach(([name, count]) => {
         store.dispatch(setTutorialViewed(name, count))
       })
     } catch (e) {

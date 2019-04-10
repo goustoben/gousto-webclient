@@ -126,7 +126,7 @@
       "react/no-children-prop": 2,
       "jsx-a11y/label-has-associated-control": 0,
       "eol-last": 1
-    
+
   },
   "env" : {
     "jasmine": true
@@ -148,5 +148,15 @@
     "__CHECKOUT_PK__": false,
     "__TEST__": false,
     "__GIT_HASH__": false
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/*.test.js"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }

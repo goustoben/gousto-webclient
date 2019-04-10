@@ -1,14 +1,13 @@
 import Immutable from 'immutable'
 import basket from 'actions/basket'
-
 import actionTypes from 'actions/actionTypes'
 
 describe('basket actions', () => {
   const dispatch = jest.fn()
-  const { portionSizeSelectedTracking, basketCheckedOut } = basket
+  const { portionSizeSelectedTracking, basketCheckedOut, basketOrderItemsLoad } = basket
 
   afterEach(() => {
-    dispatch.mockClear()
+    jest.clearAllMocks()
   })
 
   describe('portionSizeSelectedTracking', () => {
@@ -278,6 +277,84 @@ describe('basket actions', () => {
           }
         }
       })
+    })
+  })
+
+  describe('basketOrderItemsLoad', () => {
+    let basketProductAddSpy
+    let basketRecipeAddSpy
+    let basketGiftAddSpy
+    let getStateSpy
+    let dispatchSpy
+    beforeEach(() => {
+      getStateSpy = () => ({
+        basket: Immutable.fromJS({ orderId: '456' }),
+        products: Immutable.fromJS({
+          p1: { id: 'p1' },
+          p2: { id: 'p2' },
+          p3: { id: 'p3' },
+        }),
+        user: Immutable.fromJS({
+          orders: [
+            {
+              id: '123',
+              box: {
+                numPortions: 2,
+              },
+              giftItems: [
+                { id: 'gp1', itemableId: 'p1', itemableType: 'Product', quantity: 1 },
+                { id: 'gp3', itemableId: 'p1', itemableType: 'Gift', quantity: 1 },
+              ],
+              productItems: [
+                { id: 'p2', itemableId: 'p2', quantity: 3 },
+                { id: 'p3', itemableId: 'p3', quantity: 2 },
+              ],
+              recipeItems: [
+                { id: 'r1', itemableId: 'r1', quantity: 2 },
+                { id: 'r2', itemableId: 'r2', quantity: 4 },
+              ],
+            },
+            { id: '456' },
+          ],
+        }),
+      })
+
+      basketProductAddSpy = jest.spyOn(basket, 'basketProductAdd')
+      basketRecipeAddSpy = jest.spyOn(basket, 'basketRecipeAdd')
+      basketGiftAddSpy = jest.spyOn(basket, 'basketGiftAdd')
+      dispatchSpy = jest.fn()
+    })
+
+    test('should call basketProductAdd for each product in the given order if order is not already loaded', () => {
+      basketOrderItemsLoad('123')(dispatchSpy, getStateSpy)
+      expect(basketProductAddSpy).toHaveBeenCalledTimes(5)
+      expect(basketProductAddSpy.mock.calls[0]).toEqual(['p2', null, '123'])
+      expect(basketProductAddSpy.mock.calls[1]).toEqual(['p2', null, '123'])
+      expect(basketProductAddSpy.mock.calls[2]).toEqual(['p2', null, '123'])
+      expect(basketProductAddSpy.mock.calls[3]).toEqual(['p3', null, '123'])
+      expect(basketProductAddSpy.mock.calls[4]).toEqual(['p3', null, '123'])
+    })
+
+    test('should call basketRecipeAdd for each recipe set (total recipes / number portions ) in the given order if order is not already loaded', () => {
+      basketOrderItemsLoad('123')(dispatchSpy, getStateSpy)
+      expect(basketRecipeAddSpy).toHaveBeenCalledTimes(3)
+      expect(basketRecipeAddSpy.mock.calls[0]).toEqual(['r1', null, '123'])
+      expect(basketRecipeAddSpy.mock.calls[1]).toEqual(['r2', null, '123'])
+      expect(basketRecipeAddSpy.mock.calls[2]).toEqual(['r2', null, '123'])
+    })
+
+    test('should call basketGiftAdd for each gift product in the given order if order is not already loaded', () => {
+      basketOrderItemsLoad('123')(dispatchSpy, getStateSpy)
+      expect(basketGiftAddSpy).toHaveBeenCalledTimes(2)
+      expect(basketGiftAddSpy.mock.calls[0]).toEqual(['p1', 'Product'])
+      expect(basketGiftAddSpy.mock.calls[1]).toEqual(['p1', 'Gift'])
+    })
+
+    test('should NOT call basketProductAdd, basketRecipeAdd, or basketGiftAdd if order is already loaded', () => {
+      basketOrderItemsLoad('456')(dispatchSpy, getStateSpy)
+      expect(basketProductAddSpy).not.toHaveBeenCalled()
+      expect(basketRecipeAddSpy).not.toHaveBeenCalled()
+      expect(basketGiftAddSpy).not.toHaveBeenCalled()
     })
   })
 })

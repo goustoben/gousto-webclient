@@ -134,15 +134,14 @@ export const basketOrderLoad = orderId => (
   }
 )
 
-export const basketOrderItemsLoad = (orderId, types = ['product', 'recipe', 'gift'], view = null) => (
+export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 'recipe', 'gift'], view = null) => (
   (dispatch, getState) => {
-    const userOrder = getUserOrderById(orderId, getState().user.get('orders'))
+    const userOrder = order || getUserOrderById(orderId, getState().user.get('orders'))
 
     types.forEach((type) => {
       userOrder.get(`${type}Items`, []).forEach((item) => {
         const itemableId = item.get('itemableId')
         const qty = parseInt(item.get('quantity', 0), 10)
-
         switch (type) {
         case 'product': {
           for (let i = 0; i < qty; i++) {
@@ -174,7 +173,7 @@ export const basketOrderItemsLoad = (orderId, types = ['product', 'recipe', 'gif
   }
 )
 
-export const basketProductAdd = (productId, view, force) => (
+export const basketProductAdd = (productId, view = null, force = false) => (
   (dispatch, getState) => {
     const product = getState().products.get(productId, false)
 

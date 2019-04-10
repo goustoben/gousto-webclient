@@ -1,5 +1,6 @@
-@value ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
 @value SpacingMD from from 'sass-loader!styles/spacing.scss';
+@value avenirHeavyFontStack from 'styles/typography.css';
 
 .checkbox {
 	@media ScreenXSMax {
@@ -12,4 +13,34 @@
 	composes: textCenter from 'styles/typography.css';
 	composes: fadeIn from 'styles/effects.css';
 	composes: error from 'styles/layout.css';
+}
+
+.ageVerificationModal{
+	border-radius: 5px;
+	padding: 30px;
+	width: 100%;
+	max-width: 600px;
+}
+
+.ageVerificationTitle{
+	text-align: left;
+	font-family: avenirHeavyFontStack;
+}
+
+.ageVerificationContent{
+	text-align: left;
+}
+
+.ageVerificationFooter{
+	text-transform: uppercase;
+	float: right;
+	margin: 0;
+}
+
+.noAgeVerificationButton{
+	border-radius: 3px;
+}
+
+.yesAgeVerificationButton{
+	margin-left: 5px;
 }

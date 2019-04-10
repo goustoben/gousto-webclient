@@ -8,3 +8,17 @@
 	margin: auto;
 	vertical-align: middle;
 }
+
+.addButton {
+	width: 100%;
+	min-width: 75px;
+	border-radius: 3px;
+}
+
+.segmentControler{
+	width: 25px;
+}
+
+.qtySegment {
+	width: 25px;
+}

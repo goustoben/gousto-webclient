@@ -79,9 +79,6 @@ const Footer = ({ simple, type, copyright }) => {
 				<li className={css.link}>
 					<Link to="http://instagram.com/goustocooking" data-selid="footer-instagram" clientRouted={false} secondary><span className={css.instagram} /></Link>
 				</li>
-				<li className={css.link}>
-					<Link to="https://plus.google.com/108410015391305217990" data-selid="footer-google-plus" clientRouted={false} secondary><span className={css.gplus} /></Link>
-				</li>
 			</ul>
 			<AppStoreLinks appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />
 		</div>
