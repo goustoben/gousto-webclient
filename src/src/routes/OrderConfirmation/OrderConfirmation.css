@@ -1,12 +1,11 @@
-@value comfortaaRegularFontStack from ‘styles/typography.css’;
+@value comfortaaRegularFontStack, avenirHeavyFontStack from ‘styles/typography.css’;
 @value ScreenSMMin, ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
-@value White from 'styles/colors.css';
+@value White, Blackberry from 'styles/colors.css';
 
 .marketPlaceWrapper {
   max-width: 1170px;
   margin: 0 auto;
   padding: 20px 20px 0;
-  position: relative;
 }
 
 .marketPlaceTitle {
@@ -74,9 +73,15 @@
 }
 
 .orderDetailsMobile {
-  position: absolute;
-  width: 100%;
+  position: fixed;
   margin: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .orderDetailsMobileContent { 
@@ -84,4 +89,15 @@
   position: absolute;
   height: 100%;
   width: 100%;
+}
+
+.orderDetailsOpenButton {
+  background-color: Blackberry;
+  color: White;
+  width: 100px;
+  margin: 0 auto;
+  border: none;
+  border-radius: 5px 5px 0 0;
+  text-transform: uppercase;
+  font-family: avenirHeavyFontStack;
 }

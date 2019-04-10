@@ -6,6 +6,7 @@ import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import Overlay from 'Overlay'
 import { Dropdown } from 'goustouicomponents'
 import CloseButton from 'Overlay/CloseButton'
+import SaveButton from 'OrderSummary/SaveButton'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
@@ -38,6 +39,10 @@ const propTypes = {
   ageVerified: PropTypes.bool.isRequired,
   selectedCategory: PropTypes.string.isRequired,
   filterProductCategory: PropTypes.func.isRequired,
+  saving: PropTypes.string, 
+  saveRequired: PropTypes.bool, 
+  onSave: PropTypes.func, 
+  saveError: PropTypes.bool,  
 }
 
 const defaultProps = {
@@ -141,7 +146,11 @@ class OrderConfirmation extends PureComponent {
       basket,
       productsCategories,
       selectedCategory,
-      showOrderConfirmationRecipt
+      showOrderConfirmationRecipt,
+      saving, 
+      saveRequired, 
+      onSave, 
+      saveError 
     } = this.props
     const { showAgeVerification, hasConfirmedAge, isSummaryOpen, filteredProducts } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
@@ -179,13 +188,20 @@ class OrderConfirmation extends PureComponent {
               {showOrderConfirmationRecipt && <ReceiptContainer />}
             </section>
             <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
-            <button type="button" onClick={() => this.toggleOrderSummary()}>Open</button>
+              <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Box</button>
               <Overlay open={isSummaryOpen} from="bottom">
                 <div className={css.orderDetailsMobileContent}>
                   <CloseButton onClose={() => this.toggleOrderSummary()} />
                   <ReceiptContainer orderSummaryCollapsed={false} />
                 </div>
               </Overlay>
+              <SaveButton 
+                onOrderConfirmationMobile
+                saving={saving}
+                saveRequired={saveRequired}
+                onClick={onSave}
+                error={saveError}
+              />
             </section>
           </div>
         </div>

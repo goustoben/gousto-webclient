@@ -1,4 +1,5 @@
 @value ScreenXSMax from 'styles/screenSizes.css';
+@value Blackberry from 'styles/colors.css';
 
 .container {
 	composes: paddingXXLLeftRight marginLGTop marginXXLBottom from 'sass-loader!styles/spacing.scss';
@@ -67,4 +68,12 @@
 
 .receipt {
 	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
+}
+
+.updateOrderButton {
+	padding: 13px;
+	background-color: Blackberry;
+}
+.updateOrderButton > .button {
+	padding: 0;
 }
