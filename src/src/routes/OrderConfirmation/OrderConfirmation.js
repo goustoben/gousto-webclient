@@ -188,9 +188,9 @@ class OrderConfirmation extends PureComponent {
               {showOrderConfirmationRecipt && <ReceiptContainer />}
             </section>
             <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
-              <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Box</button>
+              <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
               <Overlay open={isSummaryOpen} from="bottom">
-                <div className={css.orderDetailsMobileContent}>
+                <div className={css.orderDetailsMobileContent}> 
                   <CloseButton onClose={() => this.toggleOrderSummary()} />
                   <ReceiptContainer orderSummaryCollapsed={false} />
                 </div>

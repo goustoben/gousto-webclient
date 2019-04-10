@@ -1,4 +1,4 @@
-@value comfortaaRegularFontStack, avenirHeavyFontStack from ‘styles/typography.css’;
+@value comfortaaRegularFontStack, avenirHeavyFontStack from 'styles/typography.css';
 @value ScreenSMMin, ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
 @value White, Blackberry from 'styles/colors.css';
 
@@ -94,9 +94,9 @@
 .orderDetailsOpenButton {
   background-color: Blackberry;
   color: White;
-  width: 100px;
   margin: 0 auto;
   border: none;
+  padding: 11px;
   border-radius: 5px 5px 0 0;
   text-transform: uppercase;
   font-family: avenirHeavyFontStack;
