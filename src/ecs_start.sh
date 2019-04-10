@@ -1,19 +1,80 @@
 #!/usr/bin/env bash
+
+set -e
+
+### This script will pull the secrets from AWS SSM and register them as environment variables
+
+# Source: https://github.com/jasperes/bash-yaml/blob/master/script/yaml.sh
+parse_yaml() {
+    local yaml_file=$1
+    local prefix=$2
+    local s
+    local w
+    local fs
+
+    s='[[:space:]]*'
+    w='[a-zA-Z0-9_.-]*'
+    fs="$(echo @|tr @ '\034')"
+
+    (
+        sed -e '/- [^\“]'"[^\']"'.*: /s|\([ ]*\)- \([[:space:]]*\)|\1-\'$'\n''  \1\2|g' |
+
+        sed -ne '/^--/s|--||g; s|\"|\\\"|g; s/[[:space:]]*$//g;' \
+            -e "/#.*[\"\']/!s| #.*||g; /^#/s|#.*||g;" \
+            -e "s|^\($s\)\($w\)$s:$s\"\(.*\)\"$s\$|\1$fs\2$fs\3|p" \
+            -e "s|^\($s\)\($w\)${s}[:-]$s\(.*\)$s\$|\1$fs\2$fs\3|p" |
+
+        awk -F"$fs" '{
+            indent = length($1)/2;
+            if (length($2) == 0) { conj[indent]="+";} else {conj[indent]="";}
+            vname[indent] = $2;
+            for (i in vname) {if (i > indent) {delete vname[i]}}
+                if (length($3) > 0) {
+                    vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+                    printf("%s%s%s%s=(\"%s\")\n", "'"$prefix"'",vn, $2, conj[indent-1],$3);
+                }
+            }' |
+
+        sed -e 's/_=/+=/g' |
+
+        awk 'BEGIN {
+                FS="=";
+                OFS="="
+            }
+            /(-|\.).*=/ {
+                gsub("-|\\.", "_", $1)
+            }
+            { print }'
+    ) < "$yaml_file"
+}
+
+register_env_variables() {
+    local yaml_file="$1"
+    local prefix="$2"
+    eval "$(parse_yaml "$yaml_file" "$prefix")"
+}
+
+# Sanity check
+if [[ -z "${ENVIROMENT}" ]]; then
+    echo "ENVIRONMENT variable must be set"
+    exit 1
+fi
+
+if [[ "${ENVIROMENT}" == "production" ]]; then
+    S3_SRC="s3-gousto-platform-beta/${ENVIROMENT}/config/service/webclient.yml"
+else
+    S3_SRC="s3-gousto-platform-prod/${ENVIROMENT}/config/service/webclient.yml"
+fi
+
+S3_DEST="./secrets.yml"
+
+aws s3 cp ${S3_SRC} ${S3_DEST}
+
+register_env_variables ${S3_DEST} ""
+rm ${S3_DEST}
+
 ### This script will replace the values in env.json based on the available environment variable and then start pm2.
 ### If a variable is not defined, then it will be reverted to the default value.
-
-#PARAMETERS=`aws ssm get-parameters-by-path --path ${1} --with-decryption`
-#
-#for row in $(echo ${PARAMETERS} | jq -c '.Parameters' | jq -c '.[]'); do
-#    KEY=$(basename $(echo ${row} | jq -c '.Name'))
-#    VALUE=$(echo ${row} | jq -c '.Value')
-#
-#    KEY=`echo ${KEY} | tr -d '"'`
-#    VALUE=`echo ${VALUE} | tr -d '"'`
-#
-#    export ${KEY}=${VALUE}
-#done
-
 
 # OSX bash version doesn't support associative arrays, so we use a special pattern that will be split later
 # PATTERN= variable_name::default_value
