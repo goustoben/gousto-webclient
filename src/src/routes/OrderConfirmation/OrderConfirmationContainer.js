@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
     headerDetails,
     basket: getBasket(state),
     productsCategories: getProductCategories(state),
-    allProducts: state.products.toJS(),
+    products: state.products.toJS(),
     ageVerified: getAgeVerified(state),
     selectedCategory: state.filters.get('selectedCategory') || 'All Products'
   })

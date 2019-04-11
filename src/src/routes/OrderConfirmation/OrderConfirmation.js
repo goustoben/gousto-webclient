@@ -32,6 +32,10 @@ const propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   ageVerified: PropTypes.bool.isRequired,
+  selectedCategory: PropTypes.string.isRequired,
+  basketProductAdd: PropTypes.func.isRequired,
+  basketProductRemove: PropTypes.func.isRequired,
+  filterProductCategory: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -63,16 +67,16 @@ class OrderConfirmation extends PureComponent {
   }
 
   state = {
-    filteredProducts: []
+    filteredProducts: null
   }
 
   getCategories = () => {
-    const { allProducts } = this.props
+    const { products } = this.props
     const uniqueCategories = new Set()
     const categories = [{ id: 'All Products', label: 'All Products' }]
 
-    Object.keys(allProducts).map(productKey => (
-      allProducts[productKey].categories.map(category => !category.hidden && uniqueCategories.add(category.title))
+    Object.keys(products).map(productKey => (
+      products[productKey].categories.map(category => !category.hidden && uniqueCategories.add(category.title))
     ))
 
     Array.from(uniqueCategories).map(category => categories.push({ id: category, label: category }))
@@ -81,19 +85,23 @@ class OrderConfirmation extends PureComponent {
   }
 
   getFilteredProducts = (chosenCategory) => {
-    const { allProducts, filterProductCategory } = this.props
+    const { products, filterProductCategory } = this.props
 
     filterProductCategory(chosenCategory)
 
     let chosenCategoryProducts = []
 
     if (chosenCategory == 'All Products') {
-      chosenCategoryProducts = allProducts
+      chosenCategoryProducts = products
     } else {
-      Object.keys(allProducts).map(productKey => (
-        allProducts[productKey].categories.map(category => {
-          const productProps = allProducts[productKey]
-          chosenCategory == category.title && chosenCategoryProducts.push(productProps)
+      Object.keys(products).map(productKey => (
+        products[productKey].categories.map(category => {
+          const productProps = products[productKey]
+
+          if (chosenCategory == category.title) {
+            const product = { [productProps.id]: { ...productProps } }
+            chosenCategoryProducts = { ...chosenCategoryProducts, ...product }
+          }
         })
       ))
     }
@@ -107,7 +115,7 @@ class OrderConfirmation extends PureComponent {
     const {
       headerDetails,
       showHeader,
-      allProducts,
+      products,
       ageVerified,
       basket,
       productsCategories,
@@ -119,7 +127,6 @@ class OrderConfirmation extends PureComponent {
     const isUnderAge = hasConfirmedAge && !ageVerified
 
     const { filteredProducts } = this.state
-    const products = filteredProducts.length ? filteredProducts : allProducts
     const categories = this.getCategories()
 
     return (
@@ -136,13 +143,13 @@ class OrderConfirmation extends PureComponent {
             <Navbar items={categories} onClick={this.getFilteredProducts} active={selectedCategory} />
           </div>
           <div className={css.dropdown}>
-            <Dropdown options={categories} groupedOptions={[]} optionSelected={selectedCategory} onChange={this.getFilteredProducts} />
+            <Dropdown id={'product-filter'} options={categories} groupedOptions={[]} optionSelected={selectedCategory} onChange={this.getFilteredProducts} />
           </div>
           <section className={css.marketPlaceContent}>
             <ProductList
-              products={products}
-              basket={basket}
+              products={filteredProducts || products}
               ageVerified={ageVerified}
+              basket={basket}
               productsCategories={productsCategories}
               toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
               filteredProducts={filteredProducts}
