@@ -133,10 +133,10 @@ jobs:
           command: source ~/.circlerc && setup/setup-isomorphic.sh
       - run:
           name: Upload client to S3
-          command: source ~/.circlerc && source ~/.circlerc && scripts/deploy-docker.sh
+          command: source ~/.circlerc && source ~/.circlerc && scripts/build-docker.sh
       - run:
-          name: Create image
-          command: source ~/.circlerc && python ./ci_scripts/create_image.py
+          name: Create & deploy image
+          command: source ~/.circlerc && python ./ci_scripts/create_image.py && python ./ci_scripts/deploy_container.py --service webclient
           no_output_timeout: 20m
 
 workflows:
