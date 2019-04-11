@@ -141,12 +141,6 @@ const productsLoadStock = (forceRefresh = false) => (
   }
 )
 
-const productsFilteredByCategory = (filteredProducts) => (
-  (dispatch, getState) => {
-    dispatch({type: actionTypes.PRODUCTS_FILTERED_BY_CATEGORY, value: filteredProducts})
-  }
-)
-
 export default {
   productDetailVisibilityChange,
   productsLoadCategories,
@@ -154,5 +148,4 @@ export default {
   productsLoadRandomProducts,
   productsLoadProductsById,
   productsLoadStock,
-  productsFilteredByCategory
 }
