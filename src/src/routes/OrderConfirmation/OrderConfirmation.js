@@ -57,7 +57,7 @@ class OrderConfirmation extends PureComponent {
       showAgeVerification: false,
       hasConfirmedAge: false,
       filteredProducts: null,
-      isSummaryOpen: false,
+      isOrderSummaryOpen: false,
     }
   }
 
@@ -69,7 +69,7 @@ class OrderConfirmation extends PureComponent {
 
   toggleOrderSummary = () => {
     this.setState((prevState) => ({
-      isSummaryOpen: !prevState.isSummaryOpen
+      isOrderSummaryOpen: !prevState.isOrderSummaryOpen
     }))
   }
 
@@ -152,7 +152,7 @@ class OrderConfirmation extends PureComponent {
       onSave, 
       saveError 
     } = this.props
-    const { showAgeVerification, hasConfirmedAge, isSummaryOpen, filteredProducts } = this.state
+    const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
     const categories = this.getCategories()
@@ -176,7 +176,7 @@ class OrderConfirmation extends PureComponent {
           <div className={css.marketPlaceContent}>
             <section className={css.marketPlaceProducts}>
               <ProductList
-                products={products}
+                products={filteredProducts || products}
                 basket={basket}
                 ageVerified={ageVerified}
                 productsCategories={productsCategories}
@@ -189,7 +189,7 @@ class OrderConfirmation extends PureComponent {
             </section>
             <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
               <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
-              <Overlay open={isSummaryOpen} from="bottom">
+              <Overlay open={isOrderSummaryOpen} from="bottom">
                 <div className={css.orderDetailsMobileContent}>
                   <div className={css.orderDetailsCloseButton}>
                     <CloseButton onClose={() => this.toggleOrderSummary()} />
