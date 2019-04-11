@@ -20,6 +20,13 @@
           MemoryReservation: 256
           PortMappings:
             - ContainerPort: 80
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-create-group: true
+              awslogs-region: eu-west-1
+              awslogs-group: webclient-nginx-awslogs
+              awslogs-stream-prefix: webclient-nginx-service
         -
           Name: webclient
           Image:
