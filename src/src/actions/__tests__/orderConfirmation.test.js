@@ -1,8 +1,13 @@
 import Immutable from 'immutable'
 import { fetchOrder } from 'apis/orders'
 import { orderDetails } from '../orderConfirmation'
+import recipeActions from '../recipes'
 import productActions from '../products'
 import basketActions from '../basket'
+
+jest.mock('../recipes', () => ({
+  recipesLoadRecipesById: jest.fn()
+}))
 
 jest.mock('../products', () => ({
   productsLoadProducts: jest.fn(),
@@ -34,6 +39,16 @@ describe('orderDetails', () => {
 
     await orderDetails('1234')(dispatchSpy, getStateSpy)
     expect(fetchOrder).toHaveBeenCalled()
+  })
+
+  test('should fetch the recipes for the given recipe ids in the order', async () => {
+    fetchOrder.mockReturnValue(
+      Promise.resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00', recipeItems: [{itemableId: '1'}, {itemableId: '2'}] } })
+    )
+
+    const recipesLoadRecipesByIdSpy = jest.spyOn(recipeActions, 'recipesLoadRecipesById')
+    await orderDetails('1234')(dispatchSpy, getStateSpy)
+    expect(recipesLoadRecipesByIdSpy).toHaveBeenCalledWith([ '1','2'])
   })
 
   test('should fetch the products for the given cutoff date', async () => {
