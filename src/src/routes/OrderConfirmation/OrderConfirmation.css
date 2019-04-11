@@ -87,8 +87,8 @@
 .orderDetailsMobileContent { 
   background-color: White;
   position: absolute;
-  height: 100%;
   width: 100%;
+  padding-top: 10px;
 }
 
 .orderDetailsOpenButton {
@@ -100,4 +100,14 @@
   border-radius: 5px 5px 0 0;
   text-transform: uppercase;
   font-family: avenirHeavyFontStack;
+}
+
+.orderDetailsCloseButton {
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1010;
+  background-color: White;
+  padding-left: 10px;
+  padding-bottom: 10px;
 }
