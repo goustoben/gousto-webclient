@@ -59,8 +59,8 @@ class SaveButton extends React.PureComponent {
 					</Button>
         </div>
       }
-      {this.state.showSuccess ? <div className={css.success}>SAVED</div> : ''}
-      {this.state.showError ? <div className={css.error}>ERROR SAVING CHOICES</div> : ''}
+      {(this.state.showSuccess && !this.state.showButton)? <div className={css.success}>SAVED</div> : ''}
+      {(this.state.showError && !this.state.showButton) ? <div className={css.error}>ERROR SAVING CHOICES</div> : ''}
     </div>
   )
 }
