@@ -198,18 +198,18 @@ describe('OrderConfirmation', () => {
       jest.clearAllMocks()
     })
 
-    describe('rendering popup', () => {
+    describe('rendering popup for AgeVerification', () => {
       test('should render the age verification pop up in an OPEN overlay when "showAgeVerification" is true', () => {
         const wrapper = shallow(<OrderConfirmation />)
         wrapper.setState({ 'showAgeVerification': true })
 
-        expect(wrapper.find('Overlay').prop('open')).toEqual(true)
+        expect(wrapper.find('Overlay').at(0).prop('open')).toEqual(true)
         expect(wrapper.find('AgeVerificationPopUp').length).toEqual(1)
       })
       test('should render the age verification pop up in a CLOSED overlay when "showAgeVerification" is false', () => {
         const wrapper = shallow(<OrderConfirmation />)
 
-        expect(wrapper.find('Overlay').prop('open')).toEqual(false)
+        expect(wrapper.find('Overlay').at(0).prop('open')).toEqual(false)
         expect(wrapper.find('AgeVerificationPopUp').length).toEqual(1)
       })
     })
