@@ -26,10 +26,10 @@ function mapStateToProps(state) {
   }
 }
 
-const ReceiptContainer = connect(mapStateToProps, {
+const OrderSummaryContainer = connect(mapStateToProps, {
   onSave: basketActions.basketUpdateProducts,
   removeProduct: basketActions.basketProductRemove,
   showProductDetail: productActions.productDetailVisibilityChange,
 })(OrderSummary)
 
-export default ReceiptContainer
+export default OrderSummaryContainer

@@ -11,7 +11,7 @@ import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
 import { Navbar } from './components/Navbar'
-import ReceiptContainer from './components/Receipt/ReceiptContainer'
+import OrderSummaryContainer from './components/OrderSummary/OrderSummaryContainer'
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
@@ -185,7 +185,7 @@ class OrderConfirmation extends PureComponent {
               />
             </section>
             <section className={classnames(css.orderDetails, css.mobileHide)}>
-              {showOrderConfirmationRecipt && <ReceiptContainer onOrderConfirmationMobile />}
+              {showOrderConfirmationRecipt && <OrderSummaryContainer onOrderConfirmationMobile />}
             </section>
             <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
               <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
@@ -194,7 +194,7 @@ class OrderConfirmation extends PureComponent {
                   <div className={css.orderDetailsCloseButton}>
                     <CloseButton onClose={() => this.toggleOrderSummary()} />
                   </div> 
-                  <ReceiptContainer orderSummaryCollapsed={false} onOrderConfirmationMobile />
+                  <OrderSummaryContainer orderSummaryCollapsed={false} onOrderConfirmationMobile />
                 </div>
               </Overlay>
               <SaveButton 
