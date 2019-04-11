@@ -132,7 +132,7 @@ class OrderSummary extends React.PureComponent {
             { [css.mobileHide]: orderSummaryOpen },
           )}
         >
-          Your box will arrive {moment(deliveryDate).format('dddd, Do MMM')}
+          Your box will arrive {moment(deliveryDate).format('dddd, Do MMMM')}
         </p>
         <p
           className={classnames(
@@ -239,12 +239,14 @@ class OrderSummary extends React.PureComponent {
               {vatableItemsInOrder ? <p className={css.disclaimer}>{this.asterisk} These items include VAT at 20%</p> : null}
             </Receipt>
           </div>
-          <SaveButton
-            saving={saving}
-            saveRequired={saveRequired}
-            onClick={onSave}
-            error={saveError}
-          />
+          <div className={classnames({ [css.updateOrderButtonSummary]: this.props.onOrderConfirmationMobile })}>
+            <SaveButton
+              saving={saving}
+              saveRequired={saveRequired}
+              onClick={onSave}
+              error={saveError}
+            />
+          </div>
         </div>
 
         {orderSummaryCollapsed && this.renderFooter()}
