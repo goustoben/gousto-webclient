@@ -55,15 +55,15 @@ register_env_variables() {
 }
 
 # Sanity check
-if [[ -z "${ENVIROMENT}" ]]; then
+if [[ -z "${ENVIRONMENT}" ]]; then
     echo "ENVIRONMENT variable must be set"
     exit 1
 fi
 
-if [[ "${ENVIROMENT}" == "production" ]]; then
-    S3_SRC="s3-gousto-platform-prod/${ENVIROMENT}/config/service/webclient.yml"
+if [[ "${ENVIRONMENT}" == "production" ]]; then
+    S3_SRC="s3://s3-gousto-platform-prod/${ENVIRONMENT}/config/service/webclient.yml"
 else
-    S3_SRC="s3-gousto-platform-beta/${ENVIROMENT}/config/service/webclient.yml"
+    S3_SRC="s3://s3-gousto-platform-beta/${ENVIRONMENT}/config/service/webclient.yml"
 fi
 
 S3_DEST="./secrets.yml"
