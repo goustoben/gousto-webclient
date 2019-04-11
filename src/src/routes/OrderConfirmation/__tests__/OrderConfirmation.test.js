@@ -234,4 +234,15 @@ describe('OrderConfirmation', () => {
       })
     })
   })
+
+  describe('rendering popup for OrderSummary', () => {
+    test('should toggle order summary popup', () => {
+      const wrapper = shallow(<OrderConfirmation/>)
+      wrapper.setState({'isOrderSummaryOpen': true})
+
+      expect(wrapper.find('Overlay').at(1).prop('open')).toEqual(true)
+      expect(wrapper.find('Connect(OrderSummary)').length).toEqual(1)
+    })
+  })
+
 })
