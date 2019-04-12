@@ -25,7 +25,7 @@
             Options:
               awslogs-create-group: true
               awslogs-region: eu-west-1
-              awslogs-group: webclient-nginx-awslogs
+              awslogs-group: {{ ENVIRONMENT }}-ecs-webclient-nginx-awslogs
               awslogs-stream-prefix: webclient-nginx-service
         -
           Name: webclient
@@ -35,6 +35,13 @@
           Environment:
             - Name: ENVIRONMENT
               Value: {{ ENVIRONMENT }}
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-create-group: true
+              awslogs-region: eu-west-1
+              awslogs-group: {{ ENVIRONMENT }}-ecs-webclient-node-awslogs
+              awslogs-stream-prefix: webclient-node-service
 
   EcsService:
     Type: AWS::ECS::Service
