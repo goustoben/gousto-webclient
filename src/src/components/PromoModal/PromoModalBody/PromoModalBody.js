@@ -16,13 +16,13 @@ const PromoModalBody = ({ text, title, error }) => (
           )
         }
 
-      return (
-        <span>
-          <p>Something went wrong and we couldn't apply this promotion to your account.</p>
-          <p>Please try again later or contact customer support at 020 3011 1002 if the problem persists.</p>
-        </span>
-      )
-    }
+        return (
+          <span>
+            <p>Something went wrong and we couldn't apply this promotion to your account.</p>
+            <p>Please try again later or contact customer support at 020 3011 1002 if the problem persists.</p>
+          </span>
+        )
+      }
 
       return null
     })()}
