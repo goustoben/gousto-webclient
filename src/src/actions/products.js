@@ -51,9 +51,8 @@ const productsLoadProducts = (cutoffDate) => (
   async (dispatch, getState) => {
     const { basket, products, productsStock, auth } = getState()
     const currentProductsInBasket = basket.get('products')
-    const numberOfProductsinBasket = currentProductsInBasket.length
-    console.log('currentProductsInBasket', currentProductsInBasket) // eslint-disable-line
-    console.log('numberOfProductsinBasket', numberOfProductsinBasket) // eslint-disable-line
+    const numberOfProductsinBasket = currentProductsInBasket.size
+  
     if ((products.size <= numberOfProductsinBasket) ||
       (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))

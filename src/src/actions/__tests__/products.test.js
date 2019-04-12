@@ -29,6 +29,9 @@ describe('productsLoadProducts', () => {
       auth: Immutable.Map({ accessToken: 'access-token' }),
       products: Immutable.OrderedMap({}),
       productsStock: Immutable.OrderedMap({1:1000, 2:1000}),
+      basket: Immutable.fromJS({
+        products: {},
+      }),
     })
   })
 
@@ -72,17 +75,38 @@ describe('productsLoadProducts', () => {
     expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate)
   })
 
-  test('should not fetch products by default if there are products in product store & no cutoffDate is passed in', async () => {
+  test('should not fetch products by default if there are products in product store but more than in the basket & no cutoffDate is passed in', async () => {
     getStateSpy = () => ({
       auth: Immutable.fromJS({ accessToken: 'accessToken' }),
       products: Immutable.fromJS({
         1: { id: '1', title: 'Title 1' },
+      }),
+      basket: Immutable.fromJS({
+        products: {},
       }),
     })
 
     await productsLoadProducts()(dispatchSpy, getStateSpy)
 
     expect(fetchProducts).not.toHaveBeenCalled()
+  })
+
+  test('should fetch products by default if there are products in product store but the same number or less than in the basket', async () => {
+    getStateSpy = () => ({
+      auth: Immutable.fromJS({ accessToken: 'accessToken' }),
+      products: Immutable.fromJS({
+        1: { id: '1', title: 'Title 1' },
+      }),
+      basket: Immutable.fromJS({
+        products: { 
+          1: { id: '1' }
+        },
+      }),
+    })
+
+    await productsLoadProducts()(dispatchSpy, getStateSpy)
+
+    expect(fetchProducts).toHaveBeenCalled()
   })
 
   test('should fetch products for given cutoff date when cutoffDate is passed in', async () => {
