@@ -5,7 +5,7 @@ build:
     - image: local/webclient-application
       context: .
       docker:
-        dockerfile: images/skaffold/Dockerfile
+        dockerfile: images/webclient/Dockerfile
       sync:
         'src/dist/*': .
         'src/node_modules/*': .
