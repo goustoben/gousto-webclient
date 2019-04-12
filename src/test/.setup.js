@@ -8,7 +8,7 @@ global.navigator = window.navigator;
 global.location = window.location;
 
 global.navigator = {
-	userAgent: 'node.js'
+  userAgent: 'node.js'
 };
 
 documentRef = document;

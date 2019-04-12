@@ -12,13 +12,13 @@ const SeeMenuSection = ({ recipes, boxType }) => {
   }
   slicedRecipes = slicedRecipes.slice(0, 5)
   const recipeSection = slicedRecipes.map((recipe) =>
-		<OrderRecipe recipeTitle={recipe.get('title')} recipeImage={recipe.getIn(['media', 'images', 0, 'urls', 1, 'src'])} />
+    <OrderRecipe recipeTitle={recipe.get('title')} recipeImage={recipe.getIn(['media', 'images', 0, 'urls', 1, 'src'])} />
   )
 
   return (
-		<div className={css.horizontalScrollWrapper}>
-			{recipeSection}
-		</div>
+    <div className={css.horizontalScrollWrapper}>
+      {recipeSection}
+    </div>
   )
 }
 

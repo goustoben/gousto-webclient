@@ -3,11 +3,11 @@ import React from 'react'
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 import { shallow, mount } from 'enzyme'
 
 import Buttons from 'Recipe/Buttons/Buttons'
 import { Button, Segment } from 'goustouicomponents'
+chai.use(sinonChai)
 
 describe('<Buttons />', function() {
   let qty
@@ -235,18 +235,18 @@ describe('<Buttons />', function() {
 
     const clock = sinon.useFakeTimers()
     const wrapper = mount(
-			<Buttons
-			  onAdd={onAdd}
-			  onRemove={onRemove}
-			  numPortions={numPortions}
-			  limitReached={limitReached}
-			  qty={0}
-			  stock={null}
-			  recipeId={recipeId}
-			  view="detail"
-			  menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
-			  menuRecipeDetailVisibilityChange={menuRecipeDetailVisibilityChange}
-			/>
+      <Buttons
+        onAdd={onAdd}
+        onRemove={onRemove}
+        numPortions={numPortions}
+        limitReached={limitReached}
+        qty={0}
+        stock={null}
+        recipeId={recipeId}
+        view="detail"
+        menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
+        menuRecipeDetailVisibilityChange={menuRecipeDetailVisibilityChange}
+      />
     )
 
     wrapper.find(Segment).at(1).simulate('click')
@@ -261,18 +261,18 @@ describe('<Buttons />', function() {
     const menuRecipeDetailVisibilityChange = sinon.stub()
     const clock = sinon.useFakeTimers()
     const wrapper = mount(
-			<Buttons
-			  onAdd={onAdd}
-			  onRemove={onRemove}
-			  numPortions={numPortions}
-			  limitReached={limitReached}
-			  qty={0}
-			  stock={null}
-			  recipeId={recipeId}
-			  view="grid"
-			  menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
-			  menuRecipeDetailVisibilityChange={menuRecipeDetailVisibilityChange}
-			/>
+      <Buttons
+        onAdd={onAdd}
+        onRemove={onRemove}
+        numPortions={numPortions}
+        limitReached={limitReached}
+        qty={0}
+        stock={null}
+        recipeId={recipeId}
+        view="grid"
+        menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
+        menuRecipeDetailVisibilityChange={menuRecipeDetailVisibilityChange}
+      />
     )
 
     wrapper.find(Segment).at(1).simulate('click')

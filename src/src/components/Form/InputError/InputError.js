@@ -3,7 +3,7 @@ import React from 'react'
 import formsCss from 'styles/forms.css'
 
 const InputError = ({ children }) => (
-	<p className={formsCss.errorMsg}>{children}</p>
+  <p className={formsCss.errorMsg}>{children}</p>
 )
 
 InputError.propTypes = {

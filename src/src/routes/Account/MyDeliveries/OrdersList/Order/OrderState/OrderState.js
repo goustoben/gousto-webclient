@@ -11,10 +11,10 @@ const OrderState = ({ orderState }) => {
   const stateClass = `state${toCamelCase(state)}`
 
   return (
-		<div className={css.orderStateWrap}>
-			<span className={css[iconClass]} ></span>
-			<p className={css[stateClass]}>{state}</p>
-		</div>
+    <div className={css.orderStateWrap}>
+      <span className={css[iconClass]} ></span>
+      <p className={css[stateClass]}>{state}</p>
+    </div>
   )
 }
 

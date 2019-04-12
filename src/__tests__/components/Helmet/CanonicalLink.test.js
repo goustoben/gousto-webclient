@@ -12,7 +12,7 @@ describe('Helmet CanonicalLink', () => {
 
   test('should set canonical to provided href', () => {
     const link = shallow(
-			<CanonicalLink href="http://www.something.com" />,
+      <CanonicalLink href="http://www.something.com" />,
     ).prop('link')
     expect(link).toHaveLength(1)
     expect(link[0]).toEqual({

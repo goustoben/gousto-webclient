@@ -6,13 +6,13 @@ import CheckoutButton from '../../../Components/CheckoutButton'
 import BoxDetailsContainer from '../../../Components/BoxDetails'
 
 const BoxDetails = ({ onStepChange }) => (
-	<div>
-		<BoxDetailsContainer />
-		<CheckoutButton
-		  onClick={onStepChange}
-		  stepName="Checkout Securely"
-		/>
-	</div>
+  <div>
+    <BoxDetailsContainer />
+    <CheckoutButton
+      onClick={onStepChange}
+      stepName="Checkout Securely"
+    />
+  </div>
 )
 
 BoxDetails.propTypes = {

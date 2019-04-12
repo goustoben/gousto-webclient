@@ -4,10 +4,10 @@ import React from 'react'
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import { Button, Segment } from 'goustouicomponents'
 import BrowseCTAButton from 'BoxSummary/BrowseCTAButton/BrowseCTAButton'
+chai.use(sinonChai)
 
 describe('BrowseCTAButton', function() {
   let boxSummaryShow, boxDetailsVisibilityChange, menuBrowseCTAVisibilityChange
@@ -20,12 +20,12 @@ describe('BrowseCTAButton', function() {
 
   it('should return a div', function() {
     const wrapper = shallow(
-			<BrowseCTAButton
-			  boxSummaryShow={false}
-			  boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-			  menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
-			  view={view}
-			/>
+      <BrowseCTAButton
+        boxSummaryShow={false}
+        boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+        menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
+        view={view}
+      />
     )
 
     expect(wrapper.type()).to.equal(Button)
@@ -33,12 +33,12 @@ describe('BrowseCTAButton', function() {
 
   it('should call boxDetailsVisibilityChange & menuBrowseCTAVisibilityChange when box summary is not shown', function() {
     const wrapper = shallow(
-			<BrowseCTAButton
-			  boxSummaryShow={false}
-			  boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-			  menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
-			  view={view}
-			/>
+      <BrowseCTAButton
+        boxSummaryShow={false}
+        boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+        menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
+        view={view}
+      />
     )
     wrapper.find(Segment).simulate('click')
 
@@ -52,12 +52,12 @@ describe('BrowseCTAButton', function() {
 
   it('should call boxDetailsVisibilityChange with false when box summary is showing', function() {
     const wrapper = shallow(
-			<BrowseCTAButton
-			  boxSummaryShow
-			  boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-			  menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
-			  view={view}
-			/>
+      <BrowseCTAButton
+        boxSummaryShow
+        boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+        menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
+        view={view}
+      />
     )
     wrapper.find(Segment).simulate('click')
 

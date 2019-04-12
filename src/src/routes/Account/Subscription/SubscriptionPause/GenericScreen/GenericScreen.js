@@ -15,31 +15,31 @@ export function renderContent(contents = []) {
     switch (type) {
     case 'copy': {
       component = (content.copy &&
-					<ReactMarkdown
-					  source={DOMPurify.sanitize(content.copy)}
-					  className={css.copy}
-					/>
+          <ReactMarkdown
+            source={DOMPurify.sanitize(content.copy)}
+            className={css.copy}
+          />
       )
       break
     }
     case 'image': {
       component = (
-					<Image {...content.image} />
+          <Image {...content.image} />
       )
       break
     }
     case 'textarea': {
       component = (
-					<TextArea {...content} />
+          <TextArea {...content} />
       )
       break
     }
     case 'quote': {
       component = (
-					<div className={css.quoteBlock}>
-						<p className={css.quote}>{content.quote}</p>
-						<p className={css.quote}>-{content.quoteAuthor}</p>
-					</div>
+          <div className={css.quoteBlock}>
+            <p className={css.quote}>{content.quote}</p>
+            <p className={css.quote}>-{content.quoteAuthor}</p>
+          </div>
       )
       break
     }
@@ -48,41 +48,41 @@ export function renderContent(contents = []) {
     }
 
     return component ?
-			<div
-			  className={css.contentItem}
-			  key={key}
-			>
-				{component}
-			</div> :
+      <div
+        className={css.contentItem}
+        key={key}
+      >
+        {component}
+      </div> :
       null
   })
 }
 
 export function renderActions(actions = []) {
   return actions.map((props, key) => (
-		<CallToAction
-		  {...props}
-		  key={key}
-		/>
+    <CallToAction
+      {...props}
+      key={key}
+    />
   ))
 }
 
 const SubscriptionPauseGenericScreen = ({ actions = [], allowCancel, content = [] }) => (
-	<div className={css.container}>
-		<div className={css.content}>
-			{renderContent(content)}
-		</div>
+  <div className={css.container}>
+    <div className={css.content}>
+      {renderContent(content)}
+    </div>
 
-		<div className={actions.length === 1 ? css.bottomCentered : css.bottom}>
-			{renderActions(actions)}
-		</div>
+    <div className={actions.length === 1 ? css.bottomCentered : css.bottom}>
+      {renderActions(actions)}
+    </div>
 
-		{allowCancel &&
-			<div className={css.footer}>
-				<CallToAction type="CancelLink" />
-			</div>
-		}
-	</div>
+    {allowCancel &&
+      <div className={css.footer}>
+        <CallToAction type="CancelLink" />
+      </div>
+    }
+  </div>
 )
 
 SubscriptionPauseGenericScreen.propTypes = {

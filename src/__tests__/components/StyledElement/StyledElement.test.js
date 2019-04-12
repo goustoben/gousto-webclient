@@ -19,10 +19,10 @@ describe('StyledElement', () => {
 
     test('should render children', () => {
       wrapper = shallow(
-				<StyledElement type="div">
-					<p />
-					<p />
-				</StyledElement>,
+        <StyledElement type="div">
+          <p />
+          <p />
+        </StyledElement>,
       )
       expect(wrapper.find('p')).toHaveLength(2)
     })

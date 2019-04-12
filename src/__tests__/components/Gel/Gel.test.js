@@ -16,14 +16,14 @@ describe('<Gel />', () => {
 
   test("should render it's children", () => {
     const TestComponent = () => (
-			<div>
-				<p>A Test Component</p>
-			</div>
+      <div>
+        <p>A Test Component</p>
+      </div>
     )
     wrapper = shallow(
-			<Gel>
-				<TestComponent />
-			</Gel>,
+      <Gel>
+        <TestComponent />
+      </Gel>,
     )
 
     expect(wrapper.find(TestComponent).length).toBe(1)
@@ -45,9 +45,9 @@ describe('<Gel />', () => {
     test('should render children', () => {
       const tree = renderer
         .create(
-					<Gel>
-						<h1>A Gel's child</h1>
-					</Gel>,
+          <Gel>
+            <h1>A Gel's child</h1>
+          </Gel>,
         )
         .toJSON()
 

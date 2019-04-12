@@ -23,9 +23,9 @@ describe('ModalScreen', () => {
 
   test('should render children', () => {
     wrapper = shallow(
-			<ModalScreen>
-				<p>Child</p>
-			</ModalScreen>,
+      <ModalScreen>
+        <p>Child</p>
+      </ModalScreen>,
     )
     const firstChildWrapper = wrapper.children().first()
 

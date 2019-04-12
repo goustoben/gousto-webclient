@@ -5,7 +5,7 @@ import JobsContainer from './JobsContainer'
 import routeConfig from 'config/routes'
 
 export default (
-	<Route component={FullPage} footerType="large">
-		<Route path={`${routeConfig.client.jobs}`} component={JobsContainer} />
-	</Route>
+  <Route component={FullPage} footerType="large">
+    <Route path={`${routeConfig.client.jobs}`} component={JobsContainer} />
+  </Route>
 )

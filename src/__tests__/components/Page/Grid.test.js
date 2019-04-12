@@ -11,13 +11,13 @@ describe('Page Grid', () => {
   describe('Col rendering', () => {
     beforeEach(() => {
       wrapper = shallow(
-				<Col
-				  disabled
-				  data-tracking={1}
-				  aria-something="2"
-				  type="something"
-				  b
-				/>,
+        <Col
+          disabled
+          data-tracking={1}
+          aria-something="2"
+          type="something"
+          b
+        />,
       )
     })
 
@@ -36,13 +36,13 @@ describe('Page Grid', () => {
   describe('Row rendering', () => {
     beforeEach(() => {
       wrapper = shallow(
-				<Row
-				  disabled
-				  data-tracking={1}
-				  aria-something="2"
-				  type="something"
-				  b
-				/>,
+        <Row
+          disabled
+          data-tracking={1}
+          aria-something="2"
+          type="something"
+          b
+        />,
       )
     })
 

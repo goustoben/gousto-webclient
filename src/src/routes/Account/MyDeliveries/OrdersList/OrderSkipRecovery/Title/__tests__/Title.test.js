@@ -10,7 +10,7 @@ describe('Order Skip Recovery Model Title', () => {
   describe('Innitial Render', () => {
     test('should render snapshot', () => {
       const tree = renderer.create(
-				<Title />
+        <Title />
       ).toJSON()
 
       expect(tree).toMatchSnapshot()

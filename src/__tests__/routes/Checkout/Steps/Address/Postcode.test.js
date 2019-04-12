@@ -20,12 +20,12 @@ describe('Postcode', () => {
   describe.skip('sensitive data masking', function() {
     test('all <Field /> component(s) should have prop "mask"', () => {
       wrapper = shallow(
-				<Postcode
-				  addresses={Immutable.fromJS([
-				    { id: 1, labels: [] },
-				    { id: 2, labels: [] },
-				  ])}
-				/>,
+        <Postcode
+          addresses={Immutable.fromJS([
+            { id: 1, labels: [] },
+            { id: 2, labels: [] },
+          ])}
+        />,
       )
       expect(
         wrapper

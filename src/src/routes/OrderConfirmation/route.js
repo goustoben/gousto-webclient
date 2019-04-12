@@ -19,6 +19,6 @@ export default (store) => {
   }
 
   return (
-		<Route path={config.client.orderConfirmation} component={OrderConfirmation} onEnter={onEnterHandler} />
+    <Route path={config.client.orderConfirmation} component={OrderConfirmation} onEnter={onEnterHandler} />
   )
 }

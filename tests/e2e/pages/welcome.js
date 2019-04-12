@@ -1,20 +1,20 @@
 module.exports = {
-	sections: {
-		welcomeContainer: {
-			selector: '*[data-testing=welcomeContainer]',
+  sections: {
+    welcomeContainer: {
+      selector: '*[data-testing=welcomeContainer]',
 
-			elements: {
-				expectationsCarousel: {
-					selector: '*[data-testing=expectationsCarousel]',
-				}
-			},
+      elements: {
+        expectationsCarousel: {
+          selector: '*[data-testing=expectationsCarousel]',
+        }
+      },
 
-			commands: [{
-				checkIfWelcomePageVisible: function () {
-					this
-						.waitForElementVisible('@expectationsCarousel', 30000)
-				},
-			}],
-		},
-	}
+      commands: [{
+        checkIfWelcomePageVisible: function () {
+          this
+            .waitForElementVisible('@expectationsCarousel', 30000)
+        },
+      }],
+    },
+  }
 }

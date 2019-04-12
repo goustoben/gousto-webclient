@@ -4,7 +4,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import routes from 'routes'
 import AppContainer from 'containers/AppContainer'
-import { configureStore } from './store'
 import transit from 'transit-immutable-js'
 import zendesk from 'utils/zendesk'
 import Cookies from 'utils/GoustoCookies'
@@ -20,6 +19,7 @@ import docReady from 'utils/docReady'
 import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
+import { configureStore } from './store'
 
 docReady('docReady', window)
 
@@ -74,12 +74,12 @@ window.docReady(async () => {
 
   if (reactRootDOM && !(initialState.serverError && initialState.serverError === '500')) {
     ReactDOM.render(
-			<AppContainer
-			  history={history}
-			  routes={routes(store)}
-			  store={store}
-			/>,
-			reactRootDOM
+      <AppContainer
+        history={history}
+        routes={routes(store)}
+        store={store}
+      />,
+      reactRootDOM
     )
   } else {
     const e = new Error('reactRootDOM not found')

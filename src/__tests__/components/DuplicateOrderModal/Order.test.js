@@ -16,7 +16,7 @@ describe('DuplicateOrderModal/Order', () => {
     numPeople = 12
     numRecipes = 90
     wrapper = shallow(
-			<Order date={date} numPeople={numPeople} numRecipes={numRecipes} />,
+      <Order date={date} numPeople={numPeople} numRecipes={numRecipes} />,
     )
   })
 

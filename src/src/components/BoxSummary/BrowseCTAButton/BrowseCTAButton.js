@@ -20,18 +20,18 @@ const BrowseCTAButton = ({ menuBrowseCTAVisibilityChange, boxDetailsVisibilityCh
   )
 
   return (
-		<Button className={classes} data-testing="menuBrowseCTAButton">
-			<Segment
-			  onClick={() => {
-			    if (!disable) {
-			      handleSetDeliveryDateClick(menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow, view)
-			    }
-			  }}
-			  className={css[view]}
-			>
-				{view === 'mobile' ? 'Set Date' : 'Set Delivery Date'}
-			</Segment>
-		</Button>
+    <Button className={classes} data-testing="menuBrowseCTAButton">
+      <Segment
+        onClick={() => {
+          if (!disable) {
+            handleSetDeliveryDateClick(menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow, view)
+          }
+        }}
+        className={css[view]}
+      >
+        {view === 'mobile' ? 'Set Date' : 'Set Delivery Date'}
+      </Segment>
+    </Button>
   )
 }
 

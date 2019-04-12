@@ -4,10 +4,10 @@ import css from './ModalScreen.css'
 import ModalHeader from 'Modal/ModalHeader'
 
 const ModalScreen = ({ children, title }) => (
-	<div className={css.flex}>
-		{title && <ModalHeader>{title}</ModalHeader>}
-		{children}
-	</div>
+  <div className={css.flex}>
+    {title && <ModalHeader>{title}</ModalHeader>}
+    {children}
+  </div>
 )
 
 ModalScreen.defaultProps = {

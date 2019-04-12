@@ -8,14 +8,14 @@ const OrderRecipe = ({
   recipeImage,
   recipeTitle,
 }) => (
-	<div className={css.recipe}>
-		{recipeImage ?
-			<img className={css.image} src={recipeImage} alt={recipeTitle} />
-		  :
-			<div className={classNames(css.image, css.blankImage)}></div>
-		}
-		<div>{recipeTitle}</div>
-	</div>
+  <div className={css.recipe}>
+    {recipeImage ?
+      <img className={css.image} src={recipeImage} alt={recipeTitle} />
+      :
+      <div className={classNames(css.image, css.blankImage)}></div>
+    }
+    <div>{recipeTitle}</div>
+  </div>
 )
 
 OrderRecipe.propTypes = {

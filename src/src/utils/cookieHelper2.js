@@ -140,7 +140,7 @@ export function getNamesWithPrefix(reqCookies, prefix) {
   const cookies = cookieString(reqCookies)
   let cookieNames = []
   if (cookies) {
-		const match = RegExp('^\\s*' + getKey('') + prefix + '(.*?)=\\s*(.*?)\\s*$') //eslint-disable-line
+    const match = RegExp('^\\s*' + getKey('') + prefix + '(.*?)=\\s*(.*?)\\s*$') //eslint-disable-line
 
     let index
     const matches = []

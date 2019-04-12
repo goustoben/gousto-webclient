@@ -35,12 +35,12 @@ describe('Image', () => {
 
   test('should return a <img> when a single image url is provided', () => {
     const wrapper = shallow(
-			<Image
-			  media={media
-			    .take(1)
-			    .toArray()[0]
-			    .get('src')}
-			/>,
+      <Image
+        media={media
+          .take(1)
+          .toArray()[0]
+          .get('src')}
+      />,
     )
 
     expect(wrapper.type()).toBe('img')

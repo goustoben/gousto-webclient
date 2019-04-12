@@ -17,10 +17,10 @@ const InputWrapper = (Component, { childLabel, inputType, mask, ...rest } = {}) 
   }
 
   return (
-		<Component
-		  {...props}
-		  additionalProps={additionalProps}
-		/>
+    <Component
+      {...props}
+      additionalProps={additionalProps}
+    />
   )
 }
 

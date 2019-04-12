@@ -3,7 +3,7 @@ import React from 'react'
 import css from './OrderTime.css'
 
 const OrderTime = ({ start, end }) => (
-	<p className={css.time}>{start} - {end}</p>
+  <p className={css.time}>{start} - {end}</p>
 )
 
 OrderTime.propTypes = {

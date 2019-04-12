@@ -1,3 +1,3 @@
 module.exports = {
-	jsdom: 'empty',
+  jsdom: 'empty',
 }

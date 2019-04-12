@@ -29,10 +29,10 @@ describe('Header', () => {
         formattedValue: '10%',
       }
       const tree = renderer.create(
-				<Header
-				  offer={offer}
-				  featureFlag
-				/>
+        <Header
+          offer={offer}
+          featureFlag
+        />
       ).toJSON()
 
       expect(tree).toMatchSnapshot()

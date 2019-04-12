@@ -5,16 +5,16 @@ import Link from 'Link'
 import css from './NavBarItem.css'
 
 const NavBarItem = ({ isActive, children, className, pathName, clientRouted }) => (
-	<li className={classnames(css.tab, className, { [css.active]: isActive })}>
-		{isActive ?
-			<div className={classnames(className, { [css.bold]: isActive })}>{children}</div>
-		  :
-			// `noDecoration` used here as some of the links can have badge and the badge need to stay without being underlined
-			<Link href={pathName} clientRouted={clientRouted} noDecoration >
-				{children}
-			</Link>
-		}
-	</li>
+  <li className={classnames(css.tab, className, { [css.active]: isActive })}>
+    {isActive ?
+      <div className={classnames(className, { [css.bold]: isActive })}>{children}</div>
+      :
+      // `noDecoration` used here as some of the links can have badge and the badge need to stay without being underlined
+      <Link href={pathName} clientRouted={clientRouted} noDecoration >
+        {children}
+      </Link>
+    }
+  </li>
 )
 
 NavBarItem.propTypes = {

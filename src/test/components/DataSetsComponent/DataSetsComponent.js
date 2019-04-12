@@ -1,12 +1,12 @@
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import React from 'react'
 import { shallow } from 'enzyme'
 
 import DataSetsComponent, { addDataSets } from 'DataSetsComponent'
+chai.use(sinonChai)
 const Component = () => (<div />)
 
 describe('DataSetsComponent', function() {
@@ -59,19 +59,19 @@ describe('DataSetsComponent', function() {
 
     beforeEach(function() {
       wrapper = shallow(
-				<DataSetsComponent
-				  Component={Component}
-				  endSet={3}
-				  limit={10}
-				  startSet={1}
-				  totalSets={3}
-				  randomProp
-				/>,
-				{
-				  context: {
-				    store: {},
-				  },
-				}
+        <DataSetsComponent
+          Component={Component}
+          endSet={3}
+          limit={10}
+          startSet={1}
+          totalSets={3}
+          randomProp
+        />,
+        {
+          context: {
+            store: {},
+          },
+        }
       )
       fetchSetDataIfAvailable = sinon.stub(wrapper.instance(), 'fetchSetDataIfAvailable').returns(1)
       wrapper.instance().forceUpdate()
@@ -92,21 +92,21 @@ describe('DataSetsComponent', function() {
     beforeEach(function() {
       fetchSetData = sinon.spy()
       wrapper = shallow(
-				<DataSetsComponent
-				  Component={Component}
-				  endSet={3}
-				  fetchSetData={fetchSetData}
-				  limit={10}
-				  startSet={1}
-				  totalSets={3}
-				  params={{ query: 'x' }}
-				  randomProp
-				/>,
-				{
-				  context: {
-				    store: {},
-				  },
-				}
+        <DataSetsComponent
+          Component={Component}
+          endSet={3}
+          fetchSetData={fetchSetData}
+          limit={10}
+          startSet={1}
+          totalSets={3}
+          params={{ query: 'x' }}
+          randomProp
+        />,
+        {
+          context: {
+            store: {},
+          },
+        }
       )
     })
 
@@ -147,20 +147,20 @@ describe('DataSetsComponent', function() {
       loadNextSet = sandbox.spy()
       loadSets = sandbox.spy()
       wrapper = shallow(
-				<DataSetsComponent
-				  Component={Component}
-				  endSet={2}
-				  limit={10}
-				  loadSets={loadSets}
-				  loadNextSet={loadNextSet}
-				  randomProp
-				  totalSets={4}
-				/>,
-				{
-				  context: {
-				    store: 'fake store',
-				  },
-				}
+        <DataSetsComponent
+          Component={Component}
+          endSet={2}
+          limit={10}
+          loadSets={loadSets}
+          loadNextSet={loadNextSet}
+          randomProp
+          totalSets={4}
+        />,
+        {
+          context: {
+            store: 'fake store',
+          },
+        }
       )
       fetchSetDataIfAvailable = sandbox.stub(wrapper.instance(), 'fetchSetDataIfAvailable').returns()
       wrapper.instance().forceUpdate()
@@ -179,15 +179,15 @@ describe('DataSetsComponent', function() {
 
     it('should NOT call passed in loadSets if endSet + 1 is greater than totalSetNum', function() {
       wrapper = shallow(
-				<DataSetsComponent
-				  Component={Component}
-				  endSet={4}
-				  limit={10}
-				  loadSets={loadSets}
-				  loadNextSet={loadNextSet}
-				  randomProp
-				  totalSets={4}
-				/>
+        <DataSetsComponent
+          Component={Component}
+          endSet={4}
+          limit={10}
+          loadSets={loadSets}
+          loadNextSet={loadNextSet}
+          randomProp
+          totalSets={4}
+        />
       )
       wrapper.prop('loadNextSet')()
       expect(loadSets).to.have.not.been.called
@@ -201,15 +201,15 @@ describe('DataSetsComponent', function() {
 
     it('should NOT call fetchSetDataIfAvailable if expected next set is greater than totalSetNum', function() {
       wrapper = shallow(
-				<DataSetsComponent
-				  Component={Component}
-				  endSet={4}
-				  limit={10}
-				  loadSets={loadSets}
-				  loadNextSet={loadNextSet}
-				  randomProp
-				  totalSets={4}
-				/>
+        <DataSetsComponent
+          Component={Component}
+          endSet={4}
+          limit={10}
+          loadSets={loadSets}
+          loadNextSet={loadNextSet}
+          randomProp
+          totalSets={4}
+        />
       )
       wrapper.prop('loadNextSet')()
       expect(fetchSetDataIfAvailable).to.have.not.been.called

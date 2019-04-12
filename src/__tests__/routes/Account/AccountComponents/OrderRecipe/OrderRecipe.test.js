@@ -15,13 +15,13 @@ describe('OrderSideSwipe', () => {
   })
   describe('rendering', () => {
     const wrapper = shallow(
-			<OrderRecipe
-			  recipeImage="http://image-url"
-			  recipeTitle="A recipe title"
-			/>,
+      <OrderRecipe
+        recipeImage="http://image-url"
+        recipeTitle="A recipe title"
+      />,
     )
     const blankRecipeWrapper = shallow(
-			<OrderRecipe recipeImage="" recipeTitle="" />,
+      <OrderRecipe recipeImage="" recipeTitle="" />,
     )
 
     test('should render a <div>', () => {

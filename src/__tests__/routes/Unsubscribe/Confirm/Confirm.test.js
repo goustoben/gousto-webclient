@@ -8,17 +8,17 @@ import css from 'routes/Unsubscribe/Confirm/Confirm.css'
 describe('<Confirm />', () => {
   test('copy body1, body2 and the copy of the button are rendered', () => {
     const wrapper = shallow(
-			<Confirm
-			  isError={false}
-			  pending={false}
-			  unsubscribeClick={() => {}}
-			  copy={{
-			    body1: 'body-1',
-			    body2: 'body-2',
-			    button: 'button-text',
-			    defaultError: '',
-			  }}
-			/>
+      <Confirm
+        isError={false}
+        pending={false}
+        unsubscribeClick={() => {}}
+        copy={{
+          body1: 'body-1',
+          body2: 'body-2',
+          button: 'button-text',
+          defaultError: '',
+        }}
+      />
     )
 
     expect(wrapper.contains('body-1')).toBe(true)
@@ -28,17 +28,17 @@ describe('<Confirm />', () => {
 
   test('error message is displaying', () => {
     const wrapper = shallow(
-			<Confirm
-			  isError
-			  pending={false}
-			  unsubscribeClick={() => {}}
-			  copy={{
-			    body1: '',
-			    body2: '',
-			    button: '',
-			    defaultError: 'Error message',
-			  }}
-			/>
+      <Confirm
+        isError
+        pending={false}
+        unsubscribeClick={() => {}}
+        copy={{
+          body1: '',
+          body2: '',
+          button: '',
+          defaultError: 'Error message',
+        }}
+      />
     )
 
     expect(wrapper.find(`.${css.confirmContentError}`).text()).toBe('Error message')
@@ -46,17 +46,17 @@ describe('<Confirm />', () => {
 
   test('error element has to be not present', () => {
     const wrapper = shallow(
-			<Confirm
-			  isError={false}
-			  pending={false}
-			  unsubscribeClick={() => {}}
-			  copy={{
-			    body1: '',
-			    body2: '',
-			    button: '',
-			    defaultError: '',
-			  }}
-			/>
+      <Confirm
+        isError={false}
+        pending={false}
+        unsubscribeClick={() => {}}
+        copy={{
+          body1: '',
+          body2: '',
+          button: '',
+          defaultError: '',
+        }}
+      />
     )
 
     expect(wrapper.find(`.${css.confirmContentError}`).isEmpty()).toBe(true)
@@ -64,17 +64,17 @@ describe('<Confirm />', () => {
 
   test('button is not disabled if unsubscribe operation is not pending', () => {
     const wrapper = shallow(
-			<Confirm
-			  isError={false}
-			  pending={false}
-			  unsubscribeClick={() => {}}
-			  copy={{
-			    body1: '',
-			    body2: '',
-			    button: '',
-			    defaultError: '',
-			  }}
-			/>
+      <Confirm
+        isError={false}
+        pending={false}
+        unsubscribeClick={() => {}}
+        copy={{
+          body1: '',
+          body2: '',
+          button: '',
+          defaultError: '',
+        }}
+      />
     )
 
     expect(wrapper.find('Button').prop('disabled')).toBe(false)
@@ -82,17 +82,17 @@ describe('<Confirm />', () => {
 
   test('button is disabled while unsubscribe operation is pending', () => {
     const wrapper = shallow(
-			<Confirm
-			  isError={false}
-			  pending
-			  unsubscribeClick={() => {}}
-			  copy={{
-			    body1: '',
-			    body2: '',
-			    button: '',
-			    defaultError: '',
-			  }}
-			/>
+      <Confirm
+        isError={false}
+        pending
+        unsubscribeClick={() => {}}
+        copy={{
+          body1: '',
+          body2: '',
+          button: '',
+          defaultError: '',
+        }}
+      />
     )
 
     expect(wrapper.find('Button').prop('disabled')).toBe(true)
@@ -102,17 +102,17 @@ describe('<Confirm />', () => {
     test('cliking on the button calls to unsubscribeClick', () => {
       const unsubscribeClickSpy = jest.fn()
       const wrapper = shallow(
-				<Confirm
-				  isError={false}
-				  pending={false}
-				  unsubscribeClick={unsubscribeClickSpy}
-				  copy={{
-				    body1: '',
-				    body2: '',
-				    button: '',
-				    defaultError: '',
-				  }}
-				/>
+        <Confirm
+          isError={false}
+          pending={false}
+          unsubscribeClick={unsubscribeClickSpy}
+          copy={{
+            body1: '',
+            body2: '',
+            button: '',
+            defaultError: '',
+          }}
+        />
       )
       wrapper.find('Button').simulate('click')
 

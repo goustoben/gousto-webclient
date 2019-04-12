@@ -14,7 +14,7 @@ describe('Overlay CloseButton', function() {
   beforeEach(function() {
     onCloseSpy = sinon.stub()
     wrapper = shallow(
-			<CloseButton onClose={onCloseSpy} />
+      <CloseButton onClose={onCloseSpy} />
     )
   })
 

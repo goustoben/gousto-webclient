@@ -30,7 +30,7 @@ describe('PendingOrderReminder', () => {
         },
       }
       wrapper = shallow(
-				<PendingOrderReminder pendingOrders={Immutable.fromJS([mockOrder])} />,
+        <PendingOrderReminder pendingOrders={Immutable.fromJS([mockOrder])} />,
       )
       expect(wrapper.find(CallToAction).length).toEqual(2)
     })
@@ -46,7 +46,7 @@ describe('PendingOrderReminder', () => {
         2: { deliveryDate: '2017-01-24' },
       })
       wrapper = shallow(
-				<PendingOrderReminder committedOrders={committedOrders} />,
+        <PendingOrderReminder committedOrders={committedOrders} />,
       )
     })
 

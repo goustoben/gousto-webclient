@@ -18,16 +18,16 @@ const propTypes = {
 
 const FilterTagsNav = ({ onCTAClick, tags, menuFilterExperiment }) => (
   (menuFilterExperiment) ? (
-		<div className={css.filterTagContainer}>
-			<div className={css.filterListContainer}>
-				<div className={css.filtersCTA}>
-					<Button fill width="full" onClick={onCTAClick}>
-						Filter by
+    <div className={css.filterTagContainer}>
+      <div className={css.filterListContainer}>
+        <div className={css.filtersCTA}>
+          <Button fill width="full" onClick={onCTAClick}>
+            Filter by
      </Button>
-				</div>
-				<FilterTagsList tags={tags} />
-			</div>
-		</div>
+        </div>
+        <FilterTagsList tags={tags} />
+      </div>
+    </div>
   ) : null
 )
 

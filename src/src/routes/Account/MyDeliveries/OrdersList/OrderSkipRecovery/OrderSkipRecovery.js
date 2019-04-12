@@ -63,20 +63,20 @@ class OrderSkipRecovery extends React.PureComponent {
     const onClickSkipCancel = () => this.skipCancelOrder(orderId, deliveryDayId, orderType, cancelPendingOrder, cancelProjectedOrder)
 
     return (
-			<ModalComponent visible={visible}>
-				<Header offer={offer} />
-				<div className={css.container}>
-					<ModalTitle>
-						<Title title={title} orderType={orderType} />
-					</ModalTitle>
-					<ModalContent>
+      <ModalComponent visible={visible}>
+        <Header offer={offer} />
+        <div className={css.container}>
+          <ModalTitle>
+            <Title title={title} orderType={orderType} />
+          </ModalTitle>
+          <ModalContent>
             <Offer offer={offer} />
             {(offer && valueProposition) ? <hr className={css.rule} /> : null}
             <ValueProposition valueProposition={valueProposition} />
      </ModalContent>
-					<Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
-				</div>
-			</ModalComponent>
+          <Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
+        </div>
+      </ModalComponent>
     )
   }
 }

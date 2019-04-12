@@ -35,7 +35,7 @@ describe('<Nutrition />', () => {
       salt: 9.999,
     }
     wrapper = shallow(
-			<Nutrition perPortion={perPortion} per100Grams={per100Grams} />,
+      <Nutrition perPortion={perPortion} per100Grams={per100Grams} />,
     )
   })
 

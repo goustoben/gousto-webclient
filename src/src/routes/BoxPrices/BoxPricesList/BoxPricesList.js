@@ -17,18 +17,18 @@ const BoxPricesList = ({ boxPrices, type }) => {
   const groupByNumPerson = groupBy(boxTypes, 'num_persons')
 
   return (
-		<div className={css.boxPriceList}>
-			{Object.keys(groupByNumPerson)
-			  .filter(numPersons => numPersons !== '8')
-			  .map((numPersons) => (
-					<BoxPrice
-					  key={`box-type-${numPersons}`}
-					  numPersons={parseInt(numPersons, 10)}
-					  boxInfo={groupByNumPerson[numPersons]}
-					/>
-			  )
-			  )}
-		</div>
+    <div className={css.boxPriceList}>
+      {Object.keys(groupByNumPerson)
+        .filter(numPersons => numPersons !== '8')
+        .map((numPersons) => (
+          <BoxPrice
+            key={`box-type-${numPersons}`}
+            numPersons={parseInt(numPersons, 10)}
+            boxInfo={groupByNumPerson[numPersons]}
+          />
+        )
+        )}
+    </div>
   )
 }
 

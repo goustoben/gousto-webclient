@@ -7,19 +7,19 @@ import Contact from './Contact'
 const mapStateToProps = (state) => ({
   content: {
     title: state.content.get('get-help_contact_pageheader_header')
-		|| 'Contact us',
+    || 'Contact us',
     body: state.content.get('get-help_contact_pagecontent_copy')
-		|| 'Please get in touch so one of our customer care agents can help resolve your issue.',
+    || 'Please get in touch so one of our customer care agents can help resolve your issue.',
     button1Copy: state.content.get('get-help_orderissues_pagecontent_button1copy')
-		|| 'back',
+    || 'back',
     button2Copy: state.content.get('get-help_orderissues_pagecontent_button2copy')
-		|| 'done',
+    || 'done',
     chatItem: state.content.get('get-help_orderissues_pagecontent_chatitem')
-		|| 'Start live chat',
+    || 'Start live chat',
     emailItem: state.content.get('get-help_orderissues_pagecontent_emailitem')
-		|| 'Contact us by email',
+    || 'Contact us by email',
     phoneItem: state.content.get('get-help_orderissues_pagecontent_phoneitem')
-		|| 'Contact us by phone',
+    || 'Contact us by phone',
   }
 })
 

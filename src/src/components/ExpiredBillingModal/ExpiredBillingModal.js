@@ -7,40 +7,40 @@ import BillingForm from './BillingForm'
 
 class ExpiredBillingModal extends React.PureComponent {
 
-	static propTypes = {
-	  expiredBillingModalOpen: PropTypes.bool,
-	  closeExpiredBillingModal: PropTypes.func,
-	}
+  static propTypes = {
+    expiredBillingModalOpen: PropTypes.bool,
+    closeExpiredBillingModal: PropTypes.func,
+  }
 
-	static defaultProps = {
-	  expiredBillingModalOpen: false,
-	}
+  static defaultProps = {
+    expiredBillingModalOpen: false,
+  }
 
-	static contextTypes = {
-	  store: PropTypes.object.isRequired,
-	}
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+  }
 
-	onCloseExpiredBillingModal = () => {
-	  this.props.closeExpiredBillingModal(false)
-	}
+  onCloseExpiredBillingModal = () => {
+    this.props.closeExpiredBillingModal(false)
+  }
 
-	render() {
-	  return (
-			<Overlay open={Boolean(this.props.expiredBillingModalOpen)} contentClassName={css.mobileModalContent} from="top">
-				<ModalPanel closePortal={this.onCloseExpiredBillingModal} disableOverlay disableClickOutside>
-					<div className={css.body}>
-						<h2 className={css.modalTitle}>Your account is on hold</h2>
-						<div className={css.modalBodyText}>
-							Your card has expired. Update your payment info now to order more recipes
-						</div>
-						<div>
-							<BillingForm />
-						</div>
-					</div>
-				</ModalPanel>
-			</Overlay>
-	  )
-	}
+  render() {
+    return (
+      <Overlay open={Boolean(this.props.expiredBillingModalOpen)} contentClassName={css.mobileModalContent} from="top">
+        <ModalPanel closePortal={this.onCloseExpiredBillingModal} disableOverlay disableClickOutside>
+          <div className={css.body}>
+            <h2 className={css.modalTitle}>Your account is on hold</h2>
+            <div className={css.modalBodyText}>
+              Your card has expired. Update your payment info now to order more recipes
+            </div>
+            <div>
+              <BillingForm />
+            </div>
+          </div>
+        </ModalPanel>
+      </Overlay>
+    )
+  }
 }
 
 export default ExpiredBillingModal

@@ -8,11 +8,11 @@ import Link from 'Link'
 describe('<ItemLink />', () => {
   describe('rendering', () => {
     const wrapper = mount(
-			<ItemLink
-			  label="item-label"
-			  to="/test"
-			  clientRouted
-			/>
+      <ItemLink
+        label="item-label"
+        to="/test"
+        clientRouted
+      />
     )
     const link = wrapper.find(Link)
 
@@ -23,11 +23,11 @@ describe('<ItemLink />', () => {
 
     test('Link is passed the prop clientRouted false when that prop value is passed to ItemLink', () => {
       const linkNoClientRouted = mount(
-				<ItemLink
-				  label="item-label"
-				  to="/test"
-				  clientRouted={false}
-				/>
+        <ItemLink
+          label="item-label"
+          to="/test"
+          clientRouted={false}
+        />
       )
 
       expect(linkNoClientRouted.find(Link).prop('clientRouted')).toBe(false)
@@ -40,11 +40,11 @@ describe('<ItemLink />', () => {
     test('the trackClick function is passed to the Item', () => {
       const aFunction = () => {}
       const itemLinkWithTracking = mount(
-				<ItemLink
-				  label="item-label"
-				  to="/test"
-				  trackClick={aFunction}
-				/>
+        <ItemLink
+          label="item-label"
+          to="/test"
+          trackClick={aFunction}
+        />
       )
 
       expect(itemLinkWithTracking.find(Item).prop('trackClick')).toBe(aFunction)
@@ -52,21 +52,21 @@ describe('<ItemLink />', () => {
 
     test('the isHiddenOnMobile value is passed to the Item', () => {
       let itemLink = mount(
-				<ItemLink
-				  label="item-label"
-				  to="/test"
-				  isHiddenOnMobile
-				/>
+        <ItemLink
+          label="item-label"
+          to="/test"
+          isHiddenOnMobile
+        />
       )
 
       expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(true)
 
       itemLink = mount(
-				<ItemLink
-				  label="item-label"
-				  to="/test"
-				  isHiddenOnMobile={false}
-				/>
+        <ItemLink
+          label="item-label"
+          to="/test"
+          isHiddenOnMobile={false}
+        />
       )
 
       expect(itemLink.find(Item).prop('isHiddenOnMobile')).toBe(false)

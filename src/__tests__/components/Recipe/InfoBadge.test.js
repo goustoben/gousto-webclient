@@ -17,10 +17,10 @@ describe('InfoBadge', () => {
 
     test('should render children', () => {
       wrapper = shallow(
-				<InfoBadge>
-					<a href="/" />
-					<a href="/" />
-				</InfoBadge>,
+        <InfoBadge>
+          <a href="/" />
+          <a href="/" />
+        </InfoBadge>,
       )
       expect(wrapper.find('a')).toHaveLength(2)
     })

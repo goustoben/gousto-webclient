@@ -11,7 +11,7 @@ jest.mock('apis/content', () => ({
 describe('content actions', () => {
   const dispatch = jest.fn()
 
-  describe('contentLoadContentByPageSlug', () => {		
+  describe('contentLoadContentByPageSlug', () => {
     const getState = jest.fn().mockReturnValue({
       auth: Immutable.fromJS({ accessToken: 'accessToken' }),
       content: {},

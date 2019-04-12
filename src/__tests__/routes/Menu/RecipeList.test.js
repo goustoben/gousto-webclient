@@ -6,6 +6,8 @@ import { trackRecipeOrderDisplayed } from 'actions/tracking'
 
 import Recipe from 'containers/menu/Recipe'
 
+import RecipeList from 'routes/Menu/RecipeList/RecipeList'
+
 jest.mock(
   'containers/menu/Recipe',
   () => jest.fn()
@@ -35,8 +37,6 @@ jest.mock('actions/tracking', () => ({
   trackRecipeOrderDisplayed: jest.fn()
     .mockReturnValue('trackRecipeOrderDisplayed return value'),
 }))
-
-import RecipeList from 'routes/Menu/RecipeList/RecipeList'
 
 describe('RecipeList', () => {
   const context = {
@@ -69,15 +69,15 @@ describe('RecipeList', () => {
     const menuCurrentCollectionId = '10'
 
     wrapper = shallow(
-			<RecipeList
-			  cutoffDate="2016-06-26"
-			  numPortions={2}
-			  menuCurrentCollectionId={menuCurrentCollectionId}
-			  features={Immutable.Map({})}
-			  filteredRecipeIds={Immutable.List(['1', '2', '3'])}
-			  remainingRecipes={remainingRecipes}
-			/>,
-			{ context },
+      <RecipeList
+        cutoffDate="2016-06-26"
+        numPortions={2}
+        menuCurrentCollectionId={menuCurrentCollectionId}
+        features={Immutable.Map({})}
+        filteredRecipeIds={Immutable.List(['1', '2', '3'])}
+        remainingRecipes={remainingRecipes}
+      />,
+      { context },
     )
 
     expect(wrapper.find(Recipe).length).toEqual(3)
@@ -93,12 +93,12 @@ describe('RecipeList', () => {
     Recipe.mockReturnValue((props) => <div {...props} />)
 
     wrapper = shallow(
-			<RecipeList
-			  featuredRecipes={featuredRecipes}
-			  remainingRecipes={remainingRecipes}
-			  outOfStockRecipes={outOfStockRecipes}
-			/>,
-			{ context },
+      <RecipeList
+        featuredRecipes={featuredRecipes}
+        remainingRecipes={remainingRecipes}
+        outOfStockRecipes={outOfStockRecipes}
+      />,
+      { context },
     )
 
     expect(wrapper.find(Recipe)).toHaveLength(5)
@@ -135,18 +135,18 @@ describe('RecipeList', () => {
     const currentCollectionId = '77'
 
     wrapper = shallow(
-			<RecipeList
-			  cutoffDate="2016-06-26"
-			  numPortions={2}
-			  basketRecipes={Immutable.Map({})}
-			  recipesStore={recipesStore}
-			  features={Immutable.Map({})}
-			  currentCollectionId={currentCollectionId}
-			  filteredRecipeIds={recipes}
-			  remainingRecipes={remainingRecipes}
-			  featuredRecipes={featuredRecipes}
-			/>,
-			{ context },
+      <RecipeList
+        cutoffDate="2016-06-26"
+        numPortions={2}
+        basketRecipes={Immutable.Map({})}
+        recipesStore={recipesStore}
+        features={Immutable.Map({})}
+        currentCollectionId={currentCollectionId}
+        filteredRecipeIds={recipes}
+        remainingRecipes={remainingRecipes}
+        featuredRecipes={featuredRecipes}
+      />,
+      { context },
     )
     wrapper.instance().componentDidUpdate(wrapper.props())
 

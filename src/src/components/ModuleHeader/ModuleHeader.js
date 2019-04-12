@@ -7,9 +7,9 @@ const ModuleHeader = ({ children, size }) => {
   const headerElement = createElement(type, { className: `${css.header} ${css[size]}` }, children)
 
   return (
-		<div className={css.container}>
-			{headerElement}
-		</div>
+    <div className={css.container}>
+      {headerElement}
+    </div>
   )
 }
 

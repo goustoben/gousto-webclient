@@ -205,8 +205,8 @@ describe('filters actions', () => {
           defaultCollectionId: {
             shortTitle: 'All Recipes',
             slug: 'all-recipes',
-            default: true, id:
-              'defaultCollectionId',
+            default: true,
+            id: 'defaultCollectionId',
           },
         }),
         filters: Immutable.Map({

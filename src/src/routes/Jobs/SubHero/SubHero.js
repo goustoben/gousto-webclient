@@ -9,7 +9,7 @@ class SubHero extends React.PureComponent {
     const imageUrl = require(`./${this.props.imageName}.jpg`)
 
     return (
-			<div className={css.imageContainer} style={{ backgroundImage: `url(${imageUrl})` }} ></div>
+      <div className={css.imageContainer} style={{ backgroundImage: `url(${imageUrl})` }} ></div>
     )
   }
 }

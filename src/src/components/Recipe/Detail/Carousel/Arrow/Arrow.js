@@ -6,15 +6,15 @@ import Icon from 'Icon'
 import css from './Arrow.css'
 
 const Arrow = ({ direction, onClick }) => (
-	<button
-	  className={classnames(css.arrow, css[direction])}
-	  onClick={onClick}
-	>
-		<Icon
-		  name={`fa-chevron-${direction}`}
-		  aria-hidden="true"
-		/>
-	</button>
+  <button
+    className={classnames(css.arrow, css[direction])}
+    onClick={onClick}
+  >
+    <Icon
+      name={`fa-chevron-${direction}`}
+      aria-hidden="true"
+    />
+  </button>
 )
 
 Arrow.propTypes = {

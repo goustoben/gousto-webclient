@@ -242,7 +242,7 @@ describe('auth', () => {
       },
       ))
     // afterEach(() => {
-    // 	forgetUserToken.mockReset()
+    //   forgetUserToken.mockReset()
     // })
     describe('when given an invalid request context', () => {
       test('should return a 401 and a access token not present error', async () => {

@@ -14,9 +14,9 @@ describe('ModalHeader', () => {
 
   test('should render children', () => {
     wrapper = shallow(
-			<ModalHeader>
-				<p>Test ModalHeader...</p>
-			</ModalHeader>,
+      <ModalHeader>
+        <p>Test ModalHeader...</p>
+      </ModalHeader>,
     )
 
     expect(wrapper.find('p')).toHaveLength(1)

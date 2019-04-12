@@ -5,7 +5,6 @@ import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
 import { Provider } from 'react-redux'
-chai.use(sinonChai)
 import Immutable from 'immutable' // eslint-disable-line no-caps
 import BoxSummary from 'BoxSummary/BoxSummary'
 import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
@@ -14,6 +13,7 @@ import Description from 'BoxSummary/Description'
 import { Segment, Tooltip } from 'goustouicomponents'
 import BrowseCTAButton from 'BoxSummary/BrowseCTAButton'
 import BrowseCTA from 'BoxSummary/BrowseCTA'
+chai.use(sinonChai)
 
 let BoxSummaryDesktop
 let sandbox
@@ -191,17 +191,17 @@ describe('BoxSummaryDesktop', function() {
   describe('out of stock', function() {
     it('should NOT call boxDetailsVisibilityChange when hasUnavailableRecipes = false', function() {
       mount(
-				<Provider store={store}>
-					<BoxSummaryDesktop
-					  date="2016-06-26"
-					  numPortions={2}
-					  recipes={recipes}
-					  showDetails={false}
-					  hasUnavailableRecipes={false}
-					  orderSaveError="no-stock"
-					  boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-					/>
-				</Provider>
+        <Provider store={store}>
+          <BoxSummaryDesktop
+            date="2016-06-26"
+            numPortions={2}
+            recipes={recipes}
+            showDetails={false}
+            hasUnavailableRecipes={false}
+            orderSaveError="no-stock"
+            boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+          />
+        </Provider>
       )
 
       expect(boxDetailsVisibilityChange).to.have.not.been.called
@@ -209,17 +209,17 @@ describe('BoxSummaryDesktop', function() {
 
     it('should NOT call boxDetailsVisibilityChange when there is no stock error msg', function() {
       mount(
-				<Provider store={store}>
-					<BoxSummaryDesktop
-					  date="2016-06-26"
-					  numPortions={2}
-					  recipes={recipes}
-					  showDetails={false}
-					  hasUnavailableRecipes
-					  orderSaveError="some other error message"
-					  boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-					/>
-				</Provider>
+        <Provider store={store}>
+          <BoxSummaryDesktop
+            date="2016-06-26"
+            numPortions={2}
+            recipes={recipes}
+            showDetails={false}
+            hasUnavailableRecipes
+            orderSaveError="some other error message"
+            boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+          />
+        </Provider>
       )
 
       expect(boxDetailsVisibilityChange).to.have.not.been.called
@@ -227,17 +227,17 @@ describe('BoxSummaryDesktop', function() {
 
     xit('should call boxDetailsVisibilityChange when no-stock and have not ok recipes', function() {
       mount(
-				<Provider store={store}>
-					<BoxSummaryDesktop
-					  date="2016-06-26"
-					  numPortions={2}
-					  recipes={recipes}
-					  showDetails={false}
-					  hasUnavailableRecipes
-					  orderSaveError="no-stock"
-					  boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-					/>
-				</Provider>
+        <Provider store={store}>
+          <BoxSummaryDesktop
+            date="2016-06-26"
+            numPortions={2}
+            recipes={recipes}
+            showDetails={false}
+            hasUnavailableRecipes
+            orderSaveError="no-stock"
+            boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+          />
+        </Provider>
       )
 
       expect(boxDetailsVisibilityChange).to.be.calledOnce
@@ -260,17 +260,17 @@ describe('BoxSummaryDesktop', function() {
     it('should show an error tooltip if an ORDER_SAVE error and dissmiss it after 15s', () => {
       const timer = sandbox.useFakeTimers()
       const wrapper = mount(
-				<Provider store={store}>
-					<BoxSummaryDesktop
-					  date="2016-06-26"
-					  numPortions={2}
-					  recipes={recipes}
-					  showDetails={false}
-					  hasUnavailableRecipes
-					  orderSaveError="basket-expired"
-					  boxDetailsVisibilityChange={() => {}}
-					/>
-				</Provider>
+        <Provider store={store}>
+          <BoxSummaryDesktop
+            date="2016-06-26"
+            numPortions={2}
+            recipes={recipes}
+            showDetails={false}
+            hasUnavailableRecipes
+            orderSaveError="basket-expired"
+            boxDetailsVisibilityChange={() => {}}
+          />
+        </Provider>
       )
       expect(wrapper.find(Tooltip).prop('visible')).to.equal(true)
       timer.tick(15100)

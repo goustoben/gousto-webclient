@@ -8,22 +8,22 @@ import SectionContainer from '../SectionContainer'
 import BoxDetailsContainer from '../../../Components/BoxDetails'
 
 const BoxDetails = ({ onStepChange }) => (
-	<div>
-		<Summary showPromocode />
-		<SectionContainer>
-			<CheckoutButton
-			  onClick={onStepChange}
-			  stepName="Checkout Securely"
-			/>
-		</SectionContainer>
-		<SectionContainer>
-			<BoxDetailsContainer />
-		</SectionContainer>
-		<CheckoutButton
-		  onClick={onStepChange}
-		  stepName="Checkout Securely"
-		/>
-	</div>
+  <div>
+    <Summary showPromocode />
+    <SectionContainer>
+      <CheckoutButton
+        onClick={onStepChange}
+        stepName="Checkout Securely"
+      />
+    </SectionContainer>
+    <SectionContainer>
+      <BoxDetailsContainer />
+    </SectionContainer>
+    <CheckoutButton
+      onClick={onStepChange}
+      stepName="Checkout Securely"
+    />
+  </div>
 )
 
 BoxDetails.propTypes = {

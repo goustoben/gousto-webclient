@@ -7,16 +7,16 @@ import NewAddressModal from './NewAddressModal'
 import CancelledAllBoxesModal from './CancelledAllBoxesModal'
 
 const OrdersList = ({ orders, recipes, boxType }) => (
-	<div>
-		<NewAddressModal />
-		<CancelledAllBoxesModal />
-		{orders.size < 1 ? <NoOrders recipes={recipes} boxType={boxType} /> : null}
-		{orders.toList().map((order) => (
-			<div key={order.get('id')}>
-				<Order order={order} />
-			</div>
-		))}
-	</div>
+  <div>
+    <NewAddressModal />
+    <CancelledAllBoxesModal />
+    {orders.size < 1 ? <NoOrders recipes={recipes} boxType={boxType} /> : null}
+    {orders.toList().map((order) => (
+      <div key={order.get('id')}>
+        <Order order={order} />
+      </div>
+    ))}
+  </div>
 )
 
 OrdersList.propTypes = {

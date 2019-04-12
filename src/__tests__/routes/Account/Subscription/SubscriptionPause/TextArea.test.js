@@ -106,12 +106,12 @@ describe('TextArea', () => {
     beforeEach(() => {
       onSubmit = sinon.spy()
       wrapper = shallow(
-				<TextArea
-				  chosenReasonId="r1"
-				  minLength={5}
-				  minLengthValidationMessage="Min length not reached"
-				  onSubmit={onSubmit}
-				/>,
+        <TextArea
+          chosenReasonId="r1"
+          minLength={5}
+          minLengthValidationMessage="Min length not reached"
+          onSubmit={onSubmit}
+        />,
       )
     })
 

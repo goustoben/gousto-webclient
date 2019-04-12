@@ -10,7 +10,7 @@ describe('Order Skip Modal Value Proposition', () => {
   describe('Initial Render', () => {
     test('should render snapshot', () => {
       const tree = renderer.create(
-				<ValueProposition />
+        <ValueProposition />
       ).toJSON()
 
       expect(tree).toMatchSnapshot()

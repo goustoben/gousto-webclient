@@ -10,15 +10,15 @@ export const isAllergen = (allergens, subIngredient) => (
 )
 
 const SubIngredients = ({ subIngredients, allergens }) => (
-	<span>
-		{subIngredients.map((subIngredient, index) => {
-		  if (isAllergen(allergens, subIngredient)) {
-		    return <span key={subIngredient+index} className={css.bold}>{subIngredient}</span>
-		  }
+  <span>
+    {subIngredients.map((subIngredient, index) => {
+      if (isAllergen(allergens, subIngredient)) {
+        return <span key={subIngredient+index} className={css.bold}>{subIngredient}</span>
+      }
 
-		  return <span key={subIngredient+index}>{subIngredient}</span>
-		})}
-	</span>
+      return <span key={subIngredient+index}>{subIngredient}</span>
+    })}
+  </span>
 )
 
 SubIngredients.propTypes = {

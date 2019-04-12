@@ -10,20 +10,20 @@ const mapStateToProps = (state) => ({
   isUserUnsubscribed: state.user.get('unsubscribedFromEmail'),
   copy: {
     confirmHeader: state.content.get('unsubscribeHeaderUnsubscribeConfirmheader')
-			|| 'Is it really over? We\'ll miss you!',
+      || 'Is it really over? We\'ll miss you!',
     unsubscribedHeader: state.content.get('unsubscribeHeaderUnsubscribeUnsubscribedheader')
-			|| 'You have been successfully unsubscribed.',
+      || 'You have been successfully unsubscribed.',
     defaultError: state.content.get('unsubscribeBodyConfirmDefaulterror')
-			|| 'Sorry. An error occurred, please try again later.',
+      || 'Sorry. An error occurred, please try again later.',
     body1: state.content.get('unsubscribeBodyConfirmBody1')
-			|| `To confirm you no longer want to receive any delicious marketing 
-			from Gousto click the unsubscribe button below.`,
+      || `To confirm you no longer want to receive any delicious marketing
+      from Gousto click the unsubscribe button below.`,
     body2: state.content.get('unsubscribeBodyConfirmBody2')
-			|| '(We will still send you messages on orders)',
+      || '(We will still send you messages on orders)',
     link: state.content.get('unsubscribeBodyUnsubscribedLink')
-			|| 'Go to Gousto\'s website ',
+      || 'Go to Gousto\'s website ',
     button: state.content.get('unsubscribeBodyConfirmButton')
-			|| 'Unsubscribe',
+      || 'Unsubscribe',
   },
 })
 

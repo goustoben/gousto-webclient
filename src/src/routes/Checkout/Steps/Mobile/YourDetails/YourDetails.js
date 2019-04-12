@@ -33,32 +33,32 @@ const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, check
   }
 
   return (
-		<div>
-			<SectionContainer>
-				<AboutYouSection receiveRef={receiveRef} />
-			</SectionContainer>
-			<SectionContainer>
-				<DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} browser={browser} />
-			</SectionContainer>
-			{isAddressConfirmed && (
-				<SectionContainer>
-					<CheckoutButton
-					  onClick={handleSubmit}
-					  stepName={`next: ${nextStepName}`}
-					/>
-				</SectionContainer>
-			)}
-			<SectionContainer>
-				<Summary />
-				<Section margin={{ top: 'LG' }}>
-					<BoxDetails />
-				</Section>
-			</SectionContainer>
-			{isAddressConfirmed && <CheckoutButton
-			  onClick={handleSubmit}
-			  stepName={`next: ${nextStepName}`}
-			/>}
-		</div>
+    <div>
+      <SectionContainer>
+        <AboutYouSection receiveRef={receiveRef} />
+      </SectionContainer>
+      <SectionContainer>
+        <DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} browser={browser} />
+      </SectionContainer>
+      {isAddressConfirmed && (
+        <SectionContainer>
+          <CheckoutButton
+            onClick={handleSubmit}
+            stepName={`next: ${nextStepName}`}
+          />
+        </SectionContainer>
+      )}
+      <SectionContainer>
+        <Summary />
+        <Section margin={{ top: 'LG' }}>
+          <BoxDetails />
+        </Section>
+      </SectionContainer>
+      {isAddressConfirmed && <CheckoutButton
+        onClick={handleSubmit}
+        stepName={`next: ${nextStepName}`}
+      />}
+    </div>
   )
 }
 

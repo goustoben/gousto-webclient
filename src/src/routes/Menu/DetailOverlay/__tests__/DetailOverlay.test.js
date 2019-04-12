@@ -35,13 +35,13 @@ describe('DetailOverlay', () => {
       3: { id: '3', availability: [], boxType: 'gourmet', dietType: 'Meat' },
     })
     wrapper = shallow(
-			<DetailOverlay
-			  showOverlay
-			  menuRecipeDetailShow={'1'}
-			  recipesStore={recipesStore}
-			  numPortions={2}
-			  stock={stock}
-			/>
+      <DetailOverlay
+        showOverlay
+        menuRecipeDetailShow={'1'}
+        recipesStore={recipesStore}
+        numPortions={2}
+        stock={stock}
+      />
     )
 
     Detail.mockReturnValue(<div />)
@@ -59,13 +59,13 @@ describe('DetailOverlay', () => {
 
 describe('recipe detail overlay', () => {
   const wrapper = shallow(
-		<DetailOverlay
-		  showOverlay={false}
-		  menuRecipeDetailShow={'3231'}
-		  recipesStore={Immutable.Map({})}
-		  numPortions={2}
-		  stock={Immutable.Map({})}
-		/>
+    <DetailOverlay
+      showOverlay={false}
+      menuRecipeDetailShow={'3231'}
+      recipesStore={Immutable.Map({})}
+      numPortions={2}
+      stock={Immutable.Map({})}
+    />
   )
   test('should be closed if showOverlay flag is false', () => {
     expect(wrapper.find(Overlay).node.props.open).toBe(false)

@@ -23,7 +23,7 @@ describe('<RecommendedBadge />', () => {
       },
     })
     wrapper = shallow(
-			<RecommendedBadge isRecommendedRecipe features={features} />,
+      <RecommendedBadge isRecommendedRecipe features={features} />,
     )
     expect(wrapper.find(InfoBadge).length).toBe(1)
     expect(wrapper.find(InfoBadge).prop('recommended')).toBe(true)
@@ -42,7 +42,7 @@ describe('<RecommendedBadge />', () => {
       recommendedBadge: null,
     })
     wrapper = shallow(
-			<RecommendedBadge isRecommendedRecipe features={features} />,
+      <RecommendedBadge isRecommendedRecipe features={features} />,
     )
     expect(wrapper.find(InfoBadge).length).toBe(0)
   })

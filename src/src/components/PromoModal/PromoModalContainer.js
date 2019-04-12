@@ -1,8 +1,8 @@
-import PromoModal from './PromoModal'
 import { connect } from 'react-redux'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import Immutable from 'immutable' /* eslint-disable new-cap */
+import PromoModal from './PromoModal'
 
 const mapStateToProps = (state) => {
   const promoCode = state.promoCurrent
@@ -42,10 +42,10 @@ const mapStateToProps = (state) => {
   if (!text) {
     if (numProducts === 0) {
       text = `
-			<p>A voucher (<strong>${promoCode}</strong>) has been applied on your Gousto box!</p>
-			<p>Your discount will be automatically applied to your account.</p>
-			<p>Happy cooking!</p>
-			`
+      <p>A voucher (<strong>${promoCode}</strong>) has been applied on your Gousto box!</p>
+      <p>Your discount will be automatically applied to your account.</p>
+      <p>Happy cooking!</p>
+      `
     } else {
       text = `<p>A voucher (<strong>${promoCode}</strong>) has been applied on your Gousto box! Your discount will be automatically applied to your account. Happy cooking!</p>`
     }

@@ -34,168 +34,168 @@ const availableSteps = Object.keys(components)
 
 class Signup extends React.PureComponent {
 
-	static fetchData = async ({ store, params = {}, query = {} }) => {
-	  let steps = Immutable.List(config.defaultSteps)
-	  const querySteps = query.steps ? query.steps.split(',') : []
-	  const promoCode = query.promo_code
-	  const signupStepsFeature = store.getState().features.getIn(['signupSteps', 'value'])
-	  const featureSteps = signupStepsFeature ? signupStepsFeature.split(',') : []
-	  const signupSteps = store.getState().signup.getIn(['wizard', 'steps'])
+  static fetchData = async ({ store, params = {}, query = {} }) => {
+    let steps = Immutable.List(config.defaultSteps)
+    const querySteps = query.steps ? query.steps.split(',') : []
+    const promoCode = query.promo_code
+    const signupStepsFeature = store.getState().features.getIn(['signupSteps', 'value'])
+    const featureSteps = signupStepsFeature ? signupStepsFeature.split(',') : []
+    const signupSteps = store.getState().signup.getIn(['wizard', 'steps'])
 
-	  if (querySteps.length) {
-	    const requestedSteps = querySteps
-	    steps = Immutable.List(requestedSteps)
-	  } else if (featureSteps.length) {
-	    const requestedSteps = featureSteps
-	    steps = Immutable.List(requestedSteps)
-	  } else if (Immutable.Iterable.isIterable(signupSteps) && signupSteps.size) {
-	    steps = signupSteps
-	  }
+    if (querySteps.length) {
+      const requestedSteps = querySteps
+      steps = Immutable.List(requestedSteps)
+    } else if (featureSteps.length) {
+      const requestedSteps = featureSteps
+      steps = Immutable.List(requestedSteps)
+    } else if (Immutable.Iterable.isIterable(signupSteps) && signupSteps.size) {
+      steps = signupSteps
+    }
 
-	  steps = steps
-	    .filter(step => step && availableSteps.includes(step))
+    steps = steps
+      .filter(step => step && availableSteps.includes(step))
 
-	  const firstStep = stepByName(steps.first())
+    const firstStep = stepByName(steps.first())
 
-	  if (!store.getState().menuCutoffUntil) {
-	    await store.dispatch(actions.menuLoadDays())
-	  }
+    if (!store.getState().menuCutoffUntil) {
+      await store.dispatch(actions.menuLoadDays())
+    }
 
-	  store.dispatch(
-	    actions.signupStepsReceive(steps)
-	  )
+    store.dispatch(
+      actions.signupStepsReceive(steps)
+    )
 
-	  store.dispatch(
-	    actions.signupSetStep(firstStep)
-	  )
+    store.dispatch(
+      actions.signupSetStep(firstStep)
+    )
 
-	  // No Step specified and no query string specified
-	  if (!params.stepName && querySteps.length === 0) {
-	    return store.dispatch(actions.redirect(`${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(promoCode, '?')}`))
-	  }
+    // No Step specified and no query string specified
+    if (!params.stepName && querySteps.length === 0) {
+      return store.dispatch(actions.redirect(`${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(promoCode, '?')}`))
+    }
 
-	  // No Step specified but query steps overwrite
-	  if (!params.stepName && querySteps.length > 0) {
-	    const step = stepByName(querySteps.slice(0, 1).pop())
-	    const futureSteps = querySteps.join(',')
+    // No Step specified but query steps overwrite
+    if (!params.stepName && querySteps.length > 0) {
+      const step = stepByName(querySteps.slice(0, 1).pop())
+      const futureSteps = querySteps.join(',')
 
-	    return store.dispatch(actions.redirect(`${routes.client.signup}/${step.get('slug')}?steps=${futureSteps}${getPromocodeQueryParam(promoCode)}`))
-	  }
+      return store.dispatch(actions.redirect(`${routes.client.signup}/${step.get('slug')}?steps=${futureSteps}${getPromocodeQueryParam(promoCode)}`))
+    }
 
-	  // Step landed is not the first step
-	  if (params.stepName && firstStep.get('slug') !== params.stepName) {
-	    return store.dispatch(actions.redirect(`${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(promoCode, '?')}`))
-	  }
+    // Step landed is not the first step
+    if (params.stepName && firstStep.get('slug') !== params.stepName) {
+      return store.dispatch(actions.redirect(`${routes.client.signup}/${firstStep.get('slug')}${getPromocodeQueryParam(promoCode, '?')}`))
+    }
 
-	  return null
-	}
+    return null
+  }
 
-	static propTypes = {
-	  stepName: PropTypes.string,
-	  steps: PropTypes.instanceOf(Immutable.List),
-	  goToStep: PropTypes.func,
-	}
+  static propTypes = {
+    stepName: PropTypes.string,
+    steps: PropTypes.instanceOf(Immutable.List),
+    goToStep: PropTypes.func,
+  }
 
-	static contextTypes = {
-	  store: PropTypes.object.isRequired,
-	}
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+  }
 
-	componentDidMount() {
-	  const store = this.context.store
-	  const query = this.props.location ? this.props.location.query : {}
-	  const params = this.props.params || {}
-	  Signup.fetchData({ store, query, params })
-	}
+  componentDidMount() {
+    const store = this.context.store
+    const query = this.props.location ? this.props.location.query : {}
+    const params = this.props.params || {}
+    Signup.fetchData({ store, query, params })
+  }
 
-	componentWillReceiveProps(nextProps) {
-	  const step = stepByName(nextProps.currentStepName)
-	  if (nextProps.stepName !== step.get('slug')) {
-	    this.props.changeStep(stepBySlug(nextProps.stepName))
-	  }
-	}
+  componentWillReceiveProps(nextProps) {
+    const step = stepByName(nextProps.currentStepName)
+    if (nextProps.stepName !== step.get('slug')) {
+      this.props.changeStep(stepBySlug(nextProps.stepName))
+    }
+  }
 
-	renderStep = (stepName, nextStepName, currentStepNumber, isLastStep) => {
-	  const Component = components[stepName]
+  renderStep = (stepName, nextStepName, currentStepNumber, isLastStep) => {
+    const Component = components[stepName]
 
-	  return (
-			<Component
-			  next={() => this.props.goToStep(nextStepName)}
-			  nextStepName={nextStepName}
-			  currentStepName={this.props.stepName}
-			  stepNumber={currentStepNumber}
-			  isLastStep={isLastStep}
-			  active={this.props.stepName === stepName}
-			/>
-	  )
-	}
+    return (
+      <Component
+        next={() => this.props.goToStep(nextStepName)}
+        nextStepName={nextStepName}
+        currentStepName={this.props.stepName}
+        stepNumber={currentStepNumber}
+        isLastStep={isLastStep}
+        active={this.props.stepName === stepName}
+      />
+    )
+  }
 
-	renderSteps = (steps, currentStepNumber) => (
-	  steps.map((step, stepNumber) => (
-			<div
-			  className={css.step}
-			  key={step.get('slug')}
-			>
-				{this.renderStep(
-				  step.get('name'),
-				  steps.getIn([stepNumber + 1, 'name']),
-				  currentStepNumber,
-				  stepNumber === steps.size - 1
-				)}
-			</div>
-	  )).toArray()
-	)
+  renderSteps = (steps, currentStepNumber) => (
+    steps.map((step, stepNumber) => (
+      <div
+        className={css.step}
+        key={step.get('slug')}
+      >
+        {this.renderStep(
+          step.get('name'),
+          steps.getIn([stepNumber + 1, 'name']),
+          currentStepNumber,
+          stepNumber === steps.size - 1
+        )}
+      </div>
+    )).toArray()
+  )
 
-	getCurrentStepNumber(steps) {
-	  const stepNumber =
-			steps.findIndex(step => step.get('slug') === this.props.stepName)
+  getCurrentStepNumber(steps) {
+    const stepNumber =
+      steps.findIndex(step => step.get('slug') === this.props.stepName)
 
-	  if (stepNumber < 0) {
-	    return 0
-	  }
+    if (stepNumber < 0) {
+      return 0
+    }
 
-	  return stepNumber
-	}
+    return stepNumber
+  }
 
-	getSteps() {
-	  const steps = this.props.steps
-	    .filter(step => step && availableSteps.includes(step))
-	    .map(stepName => stepByName(stepName))
+  getSteps() {
+    const steps = this.props.steps
+      .filter(step => step && availableSteps.includes(step))
+      .map(stepName => stepByName(stepName))
 
-	  if (steps.size === 0) {
-	    return Immutable.fromJS(config.defaultSteps.map(stepByName))
-	  }
+    if (steps.size === 0) {
+      return Immutable.fromJS(config.defaultSteps.map(stepByName))
+    }
 
-	  return steps
-	}
+    return steps
+  }
 
-	render() {
-	  const steps = this.getSteps()
-	  const stepNumber = this.getCurrentStepNumber(steps)
-	
-	  return (
-			<div className={css.signupContainer}>
-				<Helmet
-				  style={[{
-				    cssText: `
-							#react-root {
-								height: 100%;
-							}
-						`,
-				  }]}
-				/>
-				<div className={css.stepsContainer}>
-					<div className={css.animationContainer}>
-						<div className={css.animation} style={{ marginLeft: `-${stepNumber}00%`, width: `${steps.size + 1}00%` }}>
-							{this.renderSteps(steps, stepNumber)}
-						</div>
-					</div>
-				</div>
-				<div className={css.dotsContainer}>
-					<Dots steps={steps.size} stepNo={stepNumber} />
-				</div>
-			</div>
-	  )
-	}
+  render() {
+    const steps = this.getSteps()
+    const stepNumber = this.getCurrentStepNumber(steps)
+
+    return (
+      <div className={css.signupContainer}>
+        <Helmet
+          style={[{
+            cssText: `
+              #react-root {
+                height: 100%;
+              }
+            `,
+          }]}
+        />
+        <div className={css.stepsContainer}>
+          <div className={css.animationContainer}>
+            <div className={css.animation} style={{ marginLeft: `-${stepNumber}00%`, width: `${steps.size + 1}00%` }}>
+              {this.renderSteps(steps, stepNumber)}
+            </div>
+          </div>
+        </div>
+        <div className={css.dotsContainer}>
+          <Dots steps={steps.size} stepNo={stepNumber} />
+        </div>
+      </div>
+    )
+  }
 }
 
 export default Signup

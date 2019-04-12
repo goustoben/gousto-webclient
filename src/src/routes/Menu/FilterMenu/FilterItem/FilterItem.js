@@ -5,10 +5,10 @@ import classnames from 'classnames'
 import css from './FilterItem.css'
 
 const FilterItem = ({ children, value, type, groupName, checked, onClick }) => (
-	<div className={classnames(css.filter, checked && css.checked)} onClick={onClick}>
-		<label className={css.label}>{children}</label>
-		<input className={type === 'radio' ? css.radio : css.checkbox} name={groupName} value={value} type={type} checked={checked} readOnly />
-	</div>
+  <div className={classnames(css.filter, checked && css.checked)} onClick={onClick}>
+    <label className={css.label}>{children}</label>
+    <input className={type === 'radio' ? css.radio : css.checkbox} name={groupName} value={value} type={type} checked={checked} readOnly />
+  </div>
 )
 
 FilterItem.propTypes = {

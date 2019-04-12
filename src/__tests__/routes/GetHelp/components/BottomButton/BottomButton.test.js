@@ -10,13 +10,13 @@ describe('<BottomButton />', () => {
 
   test('BottomButton is rendering correctly', () => {
     const wrapper = shallow(
-			<BottomButton
-			  color={color}
-			  url={url}
-			  clientRouted
-			>
-				<ChildComponent />
-			</BottomButton>
+      <BottomButton
+        color={color}
+        url={url}
+        clientRouted
+      >
+        <ChildComponent />
+      </BottomButton>
     )
 
     const button = wrapper.find('Button')
@@ -34,13 +34,13 @@ describe('<BottomButton />', () => {
 
   test('Link is passed clientRouted false when BottomButton has clientRouted false', () => {
     const wrapper = shallow(
-			<BottomButton
-			  color={color}
-			  url={url}
-			  clientRouted={false}
-			>
-				<ChildComponent />
-			</BottomButton>
+      <BottomButton
+        color={color}
+        url={url}
+        clientRouted={false}
+      >
+        <ChildComponent />
+      </BottomButton>
     )
 
     expect(wrapper.find('Button').find('GoustoLink').prop('clientRouted')).toBe(false)

@@ -23,30 +23,30 @@ import GetHelp from './GetHelp'
 import OrderConfirmation from './OrderConfirmation'
 
 export default (store) => (
-	<Route path="/" component={Page}>
-		{Home}
-		{Signup}
-		{Menu}
-		{BoxPrices}
-		{Join}
-		{Cookbook}
-		{Jobs}
-		{ResetPassword}
-		{Unsubscribe}
-		{GetHelp(store)}
-		
-		<Route component={MainLayout}>
-			{Auth.login}
-			{Auth.logout}
-			{Example}
-			{Welcome(store)}
-			{Account(store)}
-			{OrderConfirmation(store)}
-		</Route>
+  <Route path="/" component={Page}>
+    {Home}
+    {Signup}
+    {Menu}
+    {BoxPrices}
+    {Join}
+    {Cookbook}
+    {Jobs}
+    {ResetPassword}
+    {Unsubscribe}
+    {GetHelp(store)}
 
-		{Checkout(store)}
-		<Route component={MainLayout}>
-			<Route path="*" component={ErrorPage} />
-		</Route>
-	</Route>
+    <Route component={MainLayout}>
+      {Auth.login}
+      {Auth.logout}
+      {Example}
+      {Welcome(store)}
+      {Account(store)}
+      {OrderConfirmation(store)}
+    </Route>
+
+    {Checkout(store)}
+    <Route component={MainLayout}>
+      <Route path="*" component={ErrorPage} />
+    </Route>
+  </Route>
 )

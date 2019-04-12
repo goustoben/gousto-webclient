@@ -18,26 +18,26 @@ describe('OrderedRecipe', () => {
 
   test('should return a div', () => {
     const wrapper = shallow(
-			<OrderedRecipe
-			  title={title}
-			  recipeId={recipeId}
-			  stock={stock}
-			  media={media}
-			  basics={basics}
-			/>,
+      <OrderedRecipe
+        title={title}
+        recipeId={recipeId}
+        stock={stock}
+        media={media}
+        basics={basics}
+      />,
     )
     expect(wrapper.type()).toEqual('div')
   })
 
   test('should have one GoustoImage', () => {
     const wrapper = shallow(
-			<OrderedRecipe
-			  title={title}
-			  recipeId={recipeId}
-			  stock={stock}
-			  media={media}
-			  basics={basics}
-			/>,
+      <OrderedRecipe
+        title={title}
+        recipeId={recipeId}
+        stock={stock}
+        media={media}
+        basics={basics}
+      />,
     )
     expect(wrapper.find(GoustoImage).length).toEqual(1)
   })

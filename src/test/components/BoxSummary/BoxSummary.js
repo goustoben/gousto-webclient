@@ -5,7 +5,6 @@ import React from 'react'
 
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 import Immutable from 'immutable' // eslint-disable-line no-caps
 import BoxSummary from 'BoxSummary/BoxSummary'
 import Details from 'BoxSummary/Details'
@@ -13,6 +12,7 @@ import Postcode from 'BoxSummary/Postcode'
 import DeliverySlot from 'BoxSummary/DeliverySlot'
 
 import { boxSummaryViews } from 'utils/boxSummary'
+chai.use(sinonChai)
 
 describe('BoxSummary', function() {
   const recipes = Immutable.Map() // eslint-disable-line new-cap
@@ -44,16 +44,16 @@ describe('BoxSummary', function() {
   it('should load prices on componentDidMount', function() {
     const loadPrices = sinon.spy()
     const wrapper = mount(
-			<BoxSummary
-			  view="desktop"
-			  numPortions={2}
-			  recipes={recipes}
-			  showDetails={false}
-			  boxDetailsVisibilityChange={function() {}}
-			  postcode="W37UN"
-			  slotId="slotId"
-			  loadPrices={loadPrices}
-			/>
+      <BoxSummary
+        view="desktop"
+        numPortions={2}
+        recipes={recipes}
+        showDetails={false}
+        boxDetailsVisibilityChange={function() {}}
+        postcode="W37UN"
+        slotId="slotId"
+        loadPrices={loadPrices}
+      />
     )
 
     expect(loadPrices).to.be.calledOnce
@@ -62,16 +62,16 @@ describe('BoxSummary', function() {
   it('should load prices when one of the observable props changes', function() {
     const loadPrices = sinon.spy()
     const wrapper = mount(
-			<BoxSummary
-			  view="desktop"
-			  numPortions={2}
-			  recipes={recipes}
-			  showDetails={false}
-			  boxDetailsVisibilityChange={function() {}}
-			  postcode="W37UN"
-			  slotId="slotId"
-			  loadPrices={loadPrices}
-			/>
+      <BoxSummary
+        view="desktop"
+        numPortions={2}
+        recipes={recipes}
+        showDetails={false}
+        boxDetailsVisibilityChange={function() {}}
+        postcode="W37UN"
+        slotId="slotId"
+        loadPrices={loadPrices}
+      />
     )
 
     expect(loadPrices).to.be.calledOnce

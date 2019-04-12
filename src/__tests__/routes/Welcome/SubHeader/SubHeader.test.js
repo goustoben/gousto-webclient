@@ -29,10 +29,10 @@ describe('WelcomeHeader', () => {
 
     expect(
       wrapper.contains(
-				<p>
-					You’ve just made your first step towards a life with more free time,
-					better food and less hassle than ever before. Let the good times roll!
-				</p>,
+        <p>
+          You’ve just made your first step towards a life with more free time,
+          better food and less hassle than ever before. Let the good times roll!
+        </p>,
       ),
     ).toBe(true)
   })

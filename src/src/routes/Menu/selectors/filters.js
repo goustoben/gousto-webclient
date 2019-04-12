@@ -55,9 +55,9 @@ export const getRecipesByTotalTime = createSelector(
       ?
       recipesFiltered.filter(recipe => (
         ((numPortions === 2 && parseInt(recipe.get('cookingTime'), 10) <= parseInt(currentTotalTime, 10)))
-			||
-			(numPortions === 4 && parseInt(recipe.get('cookingTimeFamily'), 10) <= parseInt(currentTotalTime, 10))
-			&& recipe))
+      ||
+      (numPortions === 4 && parseInt(recipe.get('cookingTimeFamily'), 10) <= parseInt(currentTotalTime, 10))
+      && recipe))
       :
       recipesFiltered
   )

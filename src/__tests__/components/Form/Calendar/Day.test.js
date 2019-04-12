@@ -30,17 +30,17 @@ describe('Form/Calendar/Day', () => {
     className = 'hi'
 
     wrapper = shallow(
-			<Day
-			  date={date}
-			  weekNo={weekNo}
-			  dayNo={dayNo}
-			  selected={selected}
-			  disabled={disabled}
-			  onClick={onClick}
-			  icon={icon}
-			  orderId={orderId}
-			  className={className}
-			/>,
+      <Day
+        date={date}
+        weekNo={weekNo}
+        dayNo={dayNo}
+        selected={selected}
+        disabled={disabled}
+        onClick={onClick}
+        icon={icon}
+        orderId={orderId}
+        className={className}
+      />,
     )
   })
 
@@ -57,17 +57,17 @@ describe('Form/Calendar/Day', () => {
       date = ''
       dayNo = '02'
       wrapper = shallow(
-				<Day
-				  date={date}
-				  weekNo={weekNo}
-				  dayNo={dayNo}
-				  selected={selected}
-				  disabled={disabled}
-				  onClick={onClick}
-				  icon={icon}
-				  orderId={orderId}
-				  className={className}
-				/>,
+        <Day
+          date={date}
+          weekNo={weekNo}
+          dayNo={dayNo}
+          selected={selected}
+          disabled={disabled}
+          onClick={onClick}
+          icon={icon}
+          orderId={orderId}
+          className={className}
+        />,
       )
     })
 
@@ -82,17 +82,17 @@ describe('Form/Calendar/Day', () => {
       disabled = true
       dayNo = '02'
       wrapper = shallow(
-				<Day
-				  date={date}
-				  weekNo={weekNo}
-				  dayNo={dayNo}
-				  selected={selected}
-				  disabled={disabled}
-				  onClick={onClick}
-				  icon={icon}
-				  orderId={orderId}
-				  className={className}
-				/>,
+        <Day
+          date={date}
+          weekNo={weekNo}
+          dayNo={dayNo}
+          selected={selected}
+          disabled={disabled}
+          onClick={onClick}
+          icon={icon}
+          orderId={orderId}
+          className={className}
+        />,
       )
     })
 
@@ -109,17 +109,17 @@ describe('Form/Calendar/Day', () => {
       disabled = true
 
       wrapper = shallow(
-				<Day
-				  date={date}
-				  weekNo={weekNo}
-				  dayNo={dayNo}
-				  selected={selected}
-				  disabled={disabled}
-				  onClick={onClick}
-				  icon={icon}
-				  orderId={orderId}
-				  className={className}
-				/>,
+        <Day
+          date={date}
+          weekNo={weekNo}
+          dayNo={dayNo}
+          selected={selected}
+          disabled={disabled}
+          onClick={onClick}
+          icon={icon}
+          orderId={orderId}
+          className={className}
+        />,
       )
     })
 

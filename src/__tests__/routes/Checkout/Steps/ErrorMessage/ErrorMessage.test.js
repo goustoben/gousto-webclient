@@ -40,7 +40,7 @@ describe('ErrorMessage', () => {
 
     test('should contain child with default error message if no configured match is found', () => {
       const wrapper = shallow(
-				<ErrorMessage errorType="some-unknown-error-type" />,
+        <ErrorMessage errorType="some-unknown-error-type" />,
       )
       expect(wrapper.find(Alert).prop('children')).toEqual(
         'generic configured message',

@@ -25,11 +25,11 @@ describe('OrderStatus', () => {
       orderStateSample = 'scheduled'
 
       wrapper = shallow(
-				<OrderStatus
-				  orderState={orderStateSample}
-				  whenCutoff={whenCutoff}
-				  whenMenuOpen={whenMenuOpen}
-				/>,
+        <OrderStatus
+          orderState={orderStateSample}
+          whenCutoff={whenCutoff}
+          whenMenuOpen={whenMenuOpen}
+        />,
       )
       expect(wrapper.type()).toContain('div')
       expect(wrapper.text()).toContain('Menu open in 7 days')
@@ -39,11 +39,11 @@ describe('OrderStatus', () => {
       orderStateSample = 'menu open'
 
       wrapper = shallow(
-				<OrderStatus
-				  orderState={orderStateSample}
-				  whenCutoff={whenCutoff}
-				  whenMenuOpen={whenMenuOpen}
-				/>,
+        <OrderStatus
+          orderState={orderStateSample}
+          whenCutoff={whenCutoff}
+          whenMenuOpen={whenMenuOpen}
+        />,
       )
       expect(wrapper.type()).toContain('div')
       expect(wrapper.text()).toContain('6 days left to choose recipes')
@@ -53,11 +53,11 @@ describe('OrderStatus', () => {
       orderStateSample = 'recipes chosen'
 
       wrapper = shallow(
-				<OrderStatus
-				  orderState={orderStateSample}
-				  whenCutoff={whenCutoff}
-				  whenMenuOpen={whenMenuOpen}
-				/>,
+        <OrderStatus
+          orderState={orderStateSample}
+          whenCutoff={whenCutoff}
+          whenMenuOpen={whenMenuOpen}
+        />,
       )
       expect(wrapper.type()).toContain('div')
       expect(wrapper.text()).toContain('6 days left to edit this box')
@@ -67,11 +67,11 @@ describe('OrderStatus', () => {
       orderStateSample = 'confirmed'
 
       wrapper = shallow(
-				<OrderStatus
-				  orderState={orderStateSample}
-				  whenCutoff={whenCutoff}
-				  whenMenuOpen={whenMenuOpen}
-				/>,
+        <OrderStatus
+          orderState={orderStateSample}
+          whenCutoff={whenCutoff}
+          whenMenuOpen={whenMenuOpen}
+        />,
       )
       expect(wrapper.type()).toContain('div')
       expect(
@@ -86,11 +86,11 @@ describe('OrderStatus', () => {
       orderStateSample = 'dispatched'
 
       wrapper = shallow(
-				<OrderStatus
-				  orderState={orderStateSample}
-				  whenCutoff={whenCutoff}
-				  whenMenuOpen={whenMenuOpen}
-				/>,
+        <OrderStatus
+          orderState={orderStateSample}
+          whenCutoff={whenCutoff}
+          whenMenuOpen={whenMenuOpen}
+        />,
       )
       expect(wrapper.type()).toContain('div')
       expect(
@@ -105,11 +105,11 @@ describe('OrderStatus', () => {
       orderStateSample = 'cancelled'
 
       wrapper = shallow(
-				<OrderStatus
-				  orderState={orderStateSample}
-				  whenCutoff={whenCutoff}
-				  whenMenuOpen={whenMenuOpen}
-				/>,
+        <OrderStatus
+          orderState={orderStateSample}
+          whenCutoff={whenCutoff}
+          whenMenuOpen={whenMenuOpen}
+        />,
       )
       expect(wrapper.type()).toContain('div')
       expect(

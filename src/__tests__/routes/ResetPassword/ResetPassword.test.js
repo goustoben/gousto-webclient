@@ -45,7 +45,7 @@ describe('<ResetPassword />', () => {
 
     test('no input error when the password has valid length', () => {
       expect(pageContent.find(InputError)).toHaveLength(0)
-    })		
+    })  
   })
 
   describe('functions', () => {

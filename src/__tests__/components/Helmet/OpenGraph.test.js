@@ -13,10 +13,10 @@ describe('Helmet OpenGraph', () => {
 
   test('should set correct meta data', () => {
     const meta = shallow(
-			<OpenGraph
-			  href="https://www.something.com"
-			  imageUrl="http://www.something.com/image.png"
-			/>,
+      <OpenGraph
+        href="https://www.something.com"
+        imageUrl="http://www.something.com/image.png"
+      />,
     ).prop('meta')
 
     expect(meta).toEqual([

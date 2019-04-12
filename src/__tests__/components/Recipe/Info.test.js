@@ -17,10 +17,10 @@ describe('Info', () => {
 
     test('should render children', () => {
       wrapper = shallow(
-				<Info>
-					<p />
-					<p />
-				</Info>,
+        <Info>
+          <p />
+          <p />
+        </Info>,
       )
       expect(wrapper.find('p')).toHaveLength(2)
     })

@@ -18,17 +18,17 @@ describe('Welcome VariationImmediate Page', function() {
     let wrapper
     beforeEach(function() {
       wrapper = shallow(
-				<Welcome
-				  isAuthenticated
-				  orderId="2"
-				  products={Immutable.Map()}
-				  productsLoadProductsById={function() {}}
-				  productsLoadProducts={function() {}}
-				  recipes={Immutable.Map()}
-				  recipesLoadRecipesById={function() {}}
-				  user={Immutable.Map()}
-				  userLoadOrders={function() {}}
-				/>
+        <Welcome
+          isAuthenticated
+          orderId="2"
+          products={Immutable.Map()}
+          productsLoadProductsById={function() {}}
+          productsLoadProducts={function() {}}
+          recipes={Immutable.Map()}
+          recipesLoadRecipesById={function() {}}
+          user={Immutable.Map()}
+          userLoadOrders={function() {}}
+        />
       )
     })
 

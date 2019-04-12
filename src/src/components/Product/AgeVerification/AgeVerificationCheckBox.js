@@ -6,23 +6,23 @@ import { Tooltip } from 'goustouicomponents'
 import css from './AgeVerification.css'
 
 const AgeVerificationCheckBox = ({ disabled, onCheckBoxChange, onTooltipVisibleChange, showError, tooltipVisible }) => (
-	<div className={css.checkbox}>
-		<Tooltip
-		  style="checkbox"
-		  message="Please tick this box if you want to proceed"
-		  onVisibleChange={onTooltipVisibleChange}
-		  placement="topLeft"
-		  triggers="click"
-		  visible={tooltipVisible}
-		>
-			<CheckBox
-			  label={`This item is age restricted, please confirm you’re over ${config.restrictedAge}`}
-			  disabled={disabled}
-			  onChange={onCheckBoxChange}
-			/>
-		</Tooltip>
-		{showError ? <div className={css.error}>Error verifying age</div> : ''}
-	</div>
+  <div className={css.checkbox}>
+    <Tooltip
+      style="checkbox"
+      message="Please tick this box if you want to proceed"
+      onVisibleChange={onTooltipVisibleChange}
+      placement="topLeft"
+      triggers="click"
+      visible={tooltipVisible}
+    >
+      <CheckBox
+        label={`This item is age restricted, please confirm you’re over ${config.restrictedAge}`}
+        disabled={disabled}
+        onChange={onCheckBoxChange}
+      />
+    </Tooltip>
+    {showError ? <div className={css.error}>Error verifying age</div> : ''}
+  </div>
 )
 
 AgeVerificationCheckBox.propTypes = {

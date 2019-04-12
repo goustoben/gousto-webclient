@@ -9,10 +9,10 @@ describe("Box Prices", () => {
 
   it ("Will render a loading screen when fetching data", () => {
     const component = shallow(
-			<BoxPrices data={{
-			  loading: true,
-			}}
-			/>
+      <BoxPrices data={{
+        loading: true,
+      }}
+      />
     )
 
     expect(component.find(Loading).length).toEqual(1)
@@ -21,11 +21,11 @@ describe("Box Prices", () => {
 
   it ("Will render a BoxPriceList when data is returned", () => {
     const component = shallow(
-			<BoxPrices data={{
-			  loading: false,
-			  boxPrices: boxPricesMock,
-			}}
-			/>
+      <BoxPrices data={{
+        loading: false,
+        boxPrices: boxPricesMock,
+      }}
+      />
     )
 
     expect(component.find(Loading).length).toEqual(0)

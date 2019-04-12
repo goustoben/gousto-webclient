@@ -32,28 +32,28 @@ const ErrorPage = ({ status }) => {
   const page = errors[httpStatus]
 
   return (<div className={css.container}>
-		<div className={css.row}>
-			<div className={css.errorWrapSmall}>
-				<div className={css.row}>
-					<h1 className={css.textHeading}>{page.title}</h1>
-					<h2 className={css.description}>{page.subTitle}</h2>
-					<h3 className={css.descriptionSM}>Please try again or contact our customer care team.</h3>
-					<h2 className={css.contact}>
-						<a href={`tel:${config.company.telephone.link}`} className={classNames(css.contactLink, css.phoneNumber)}>
-							<span className={css.iconEarphone}></span>
-							{config.company.telephone.number}
-						</a>
-						<a href={`mailto:${config.company.email}`} className={css.contactLink}>
-							<Svg fileName="icon-email" className={css.email} />
-							{config.company.email}
-						</a>
-					</h2>
-				</div>
-				<div className={css.row}>
-					<Svg fileName={page.svg} className={css.goustoIsotype} />
-				</div>
-			</div>
-		</div>
+    <div className={css.row}>
+      <div className={css.errorWrapSmall}>
+        <div className={css.row}>
+          <h1 className={css.textHeading}>{page.title}</h1>
+          <h2 className={css.description}>{page.subTitle}</h2>
+          <h3 className={css.descriptionSM}>Please try again or contact our customer care team.</h3>
+          <h2 className={css.contact}>
+            <a href={`tel:${config.company.telephone.link}`} className={classNames(css.contactLink, css.phoneNumber)}>
+              <span className={css.iconEarphone}></span>
+              {config.company.telephone.number}
+            </a>
+            <a href={`mailto:${config.company.email}`} className={css.contactLink}>
+              <Svg fileName="icon-email" className={css.email} />
+              {config.company.email}
+            </a>
+          </h2>
+        </div>
+        <div className={css.row}>
+          <Svg fileName={page.svg} className={css.goustoIsotype} />
+        </div>
+      </div>
+    </div>
           </div>)
 }
 

@@ -6,7 +6,7 @@ import InfoBadge from '../InfoBadge'
 
 const RecommendedBadge = ({ isRecommendedRecipe, features }) => (
   (isRecommendedRecipe && features.getIn(['recommendedBadge', 'value']))
-    ?	(<InfoBadge recommended>Recommended for you</InfoBadge>)
+    ? (<InfoBadge recommended>Recommended for you</InfoBadge>)
     : null
 )
 

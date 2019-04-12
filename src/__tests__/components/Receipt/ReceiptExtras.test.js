@@ -12,18 +12,18 @@ describe('ReceiptExtras', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-			<ReceiptExtras
-			  items={Immutable.fromJS({
-			    1: {
-			      title: 'item title',
-			      listPrice: 1.0,
-			      quantity: 2,
-			      isVatable: true,
-			    },
-			    2: { title: 'item 2', listPrice: 2.99, quantity: 1 },
-			  })}
-			  vatableDisclaimerKey="§"
-			/>,
+      <ReceiptExtras
+        items={Immutable.fromJS({
+          1: {
+            title: 'item title',
+            listPrice: 1.0,
+            quantity: 2,
+            isVatable: true,
+          },
+          2: { title: 'item 2', listPrice: 2.99, quantity: 1 },
+        })}
+        vatableDisclaimerKey="§"
+      />,
     )
   })
 

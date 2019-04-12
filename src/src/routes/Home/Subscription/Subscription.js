@@ -4,9 +4,9 @@ import config from 'config/home'
 import Guide from 'Guide'
 
 const Subscription = ({ steps, header, description }) => (
-	<div>
-		<Guide steps={steps} header={header} description={description} graphicType="svg" />
-	</div>
+  <div>
+    <Guide steps={steps} header={header} description={description} graphicType="svg" />
+  </div>
 )
 
 Subscription.propTypes = {

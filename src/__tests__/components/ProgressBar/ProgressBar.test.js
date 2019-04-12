@@ -13,14 +13,14 @@ describe('ProgressBar', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-			<ProgressBar
-			  currentId="item-2"
-			  items={[
-			    { id: 'item-1', label: 'Item 1 Label' },
-			    { id: 'item-2', label: 'Item 2 Label' },
-			    { id: 'item-3', label: 'Item 3 Label' },
-			  ]}
-			/>,
+      <ProgressBar
+        currentId="item-2"
+        items={[
+          { id: 'item-1', label: 'Item 1 Label' },
+          { id: 'item-2', label: 'Item 2 Label' },
+          { id: 'item-3', label: 'Item 3 Label' },
+        ]}
+      />,
     )
   })
 

@@ -10,10 +10,10 @@ describe('OrderRescheduledNotification', () => {
 
     beforeEach(() => {
       wrapper = shallow(
-				<OrderRescheduledNotification
-				  oldDeliveryDay={oldDeliveryDaySample}
-				  reason={reasonSample}
-				/>,
+        <OrderRescheduledNotification
+          oldDeliveryDay={oldDeliveryDaySample}
+          reason={reasonSample}
+        />,
       )
     })
 

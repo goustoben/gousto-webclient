@@ -10,24 +10,24 @@ import css from './List.css'
 const productsRoute = config.routes.client.orderSummary
 
 const ProductList = ({ orderId, products, number, onProductClick }) => (
-	<article className={css.content}>
-		<SectionHeader title={'The Gousto Market'} type="minorArticle">
-			Here you can add lovely wines, craft beers, delicious desserts, staples, kitchen tools, and treats from artisan suppliers.
-		</SectionHeader>
-		<ImageSelection
-		  content={products.slice(0, number).toArray()}
-		  onImageClick={(itemId) => onProductClick(itemId)}
-		  onTitleClick={(itemId) => onProductClick(itemId)}
-		/>
-		<div className={css.button}>
-			<LinkButton
-			  to={productsRoute.replace(':orderId', orderId)}
-			  clientRouted={false}
-			>
-				GO TO THE GOUSTO MARKET
-			</LinkButton>
-		</div>
-	</article>
+  <article className={css.content}>
+    <SectionHeader title={'The Gousto Market'} type="minorArticle">
+      Here you can add lovely wines, craft beers, delicious desserts, staples, kitchen tools, and treats from artisan suppliers.
+    </SectionHeader>
+    <ImageSelection
+      content={products.slice(0, number).toArray()}
+      onImageClick={(itemId) => onProductClick(itemId)}
+      onTitleClick={(itemId) => onProductClick(itemId)}
+    />
+    <div className={css.button}>
+      <LinkButton
+        to={productsRoute.replace(':orderId', orderId)}
+        clientRouted={false}
+      >
+        GO TO THE GOUSTO MARKET
+      </LinkButton>
+    </div>
+  </article>
 )
 
 ProductList.propTypes = {

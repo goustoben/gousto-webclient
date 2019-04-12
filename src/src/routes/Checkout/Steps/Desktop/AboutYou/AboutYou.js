@@ -23,13 +23,13 @@ const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkout
   }
 
   return (
-		<div>
-			<AboutYouSection receiveRef={receiveRef} />
-			<CheckoutButton
-			  onClick={handleSubmit}
-			  stepName={`next: ${nextStepName}`}
-			/>
-		</div>
+    <div>
+      <AboutYouSection receiveRef={receiveRef} />
+      <CheckoutButton
+        onClick={handleSubmit}
+        stepName={`next: ${nextStepName}`}
+      />
+    </div>
   )
 }
 

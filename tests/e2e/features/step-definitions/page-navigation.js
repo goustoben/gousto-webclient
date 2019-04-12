@@ -3,11 +3,11 @@ const { defineSupportCode } = require('cucumber');
 
 defineSupportCode(({ Given, When, Then }) => {
 
-	Given(/^I am on the ([^"]*) page$/, function(name) {
-		this.page = client.page[name]();
-		return this.page
-			.navigate()
-			.waitForElementVisible('body', 1000);
-	});
+  Given(/^I am on the ([^"]*) page$/, function(name) {
+    this.page = client.page[name]();
+    return this.page
+      .navigate()
+      .waitForElementVisible('body', 1000);
+  });
 
 });

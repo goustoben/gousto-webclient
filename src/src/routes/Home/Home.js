@@ -113,10 +113,10 @@ class Home extends React.Component {
           link={link}
           style={[{
             cssText: `
-							#react-root {
-								height: 100%;
-							}
-						`,
+              #react-root {
+                height: 100%;
+              }
+            `,
           }]}
         />
         <PromoBanner />

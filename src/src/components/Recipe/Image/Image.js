@@ -7,29 +7,29 @@ import GoustoImage from 'Image'
 import css from './Image.css'
 
 const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize }) => (
-	<div
-	  className={classnames(
-	    { [css[view]]: ['list', 'featured'].indexOf(view) !== -1 },
-	    { [css.grid]: ['list', 'featured', 'fineDineInDetail'].indexOf(view) === -1 },
-	    { [css.gridSmall]: ['gridSmall'].indexOf(view) !== -1 },
-	    { [css.detail]: view === 'detail' },
-	    { [css.fineDineInDetail]: view === 'fineDineInDetail' },
-	    { [css.simple]: view === 'simple' },
-	    css.placeholder,
-	  )}
-	  onMouseEnter={mouseEnter}
-	  onMouseLeave={mouseLeave}
-	>
-		{(media.size > 0) ? (
-			<GoustoImage
-			  media={media}
-			  title={title}
-			  maxMediaSize={maxMediaSize}
-			  className={css.recipeImg}
-			  lazy
-			/>
-		) : ''}
-	</div>
+  <div
+    className={classnames(
+      { [css[view]]: ['list', 'featured'].indexOf(view) !== -1 },
+      { [css.grid]: ['list', 'featured', 'fineDineInDetail'].indexOf(view) === -1 },
+      { [css.gridSmall]: ['gridSmall'].indexOf(view) !== -1 },
+      { [css.detail]: view === 'detail' },
+      { [css.fineDineInDetail]: view === 'fineDineInDetail' },
+      { [css.simple]: view === 'simple' },
+      css.placeholder,
+    )}
+    onMouseEnter={mouseEnter}
+    onMouseLeave={mouseLeave}
+  >
+    {(media.size > 0) ? (
+      <GoustoImage
+        media={media}
+        title={title}
+        maxMediaSize={maxMediaSize}
+        className={css.recipeImg}
+        lazy
+      />
+    ) : ''}
+  </div>
 )
 
 Image.propTypes = {
