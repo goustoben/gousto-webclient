@@ -19,6 +19,7 @@ RUN mkdir -p /home/docker/app
 # COPY BUILT APPLICATION TO RUN DIRECTORY FOR NON-DEVELOPERS
 COPY src/dist/ /home/docker/app/dist/
 COPY src/node_modules/ /home/docker/app/node_modules/
+COPY src/config/ /home/docker/app/config/
 COPY src/process-docker.json /home/docker/app/process-docker.json
 COPY src/manifest.json /home/docker/app/manifest.json
 COPY src/ecs_start.sh /home/docker/app/ecs_start.sh
