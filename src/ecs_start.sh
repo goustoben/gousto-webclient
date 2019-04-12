@@ -68,7 +68,7 @@ fi
 
 S3_DEST="./secrets.yml"
 
-aws s3 cp ${S3_SRC} ${S3_DEST}
+aws s3 cp ${S3_SRC} ${S3_DEST} --region eu-west-1
 
 register_env_variables ${S3_DEST} ""
 rm ${S3_DEST}
