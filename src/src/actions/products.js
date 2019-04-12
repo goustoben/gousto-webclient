@@ -141,7 +141,7 @@ const productsLoadStock = (forceRefresh = false) => (
   }
 )
 
-export default {
+const productsActions = {
   productDetailVisibilityChange,
   productsLoadCategories,
   productsLoadProducts,
@@ -149,3 +149,5 @@ export default {
   productsLoadProductsById,
   productsLoadStock,
 }
+
+export default productsActions

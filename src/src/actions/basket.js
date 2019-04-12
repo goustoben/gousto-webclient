@@ -8,7 +8,7 @@ import config from 'config'
 import logger from 'utils/logger'
 import { updateOrderItems } from 'apis/orders'
 import statusActions from './status'
-import menuActions from './menu'
+import {menuLoadMenu, menuLoadStock } from './menu'
 import boxSummaryActions from './boxSummary'
 import actionTypes from './actionTypes'
 import tempActions from './temp'
@@ -469,8 +469,8 @@ export const basketChosenAddressChange = address => ({
 })
 
 export const basketRestorePreviousValues = () => (
-  (dispatch, getState) => {
-    const basket = getState().basket
+  (dispatch, getState) => {const { basket } = getState()
+
     const prevSlotId = basket.get('prevSlotId')
     const slotId = basket.get('slotId')
     const prevPostcode = basket.get('prevPostcode')
@@ -503,7 +503,7 @@ export const basketRestorePreviousValues = () => (
 
 export const basketRestorePreviousDate = () => (
   (dispatch, getState) => {
-    const basket = getState().basket
+    const { basket } = getState()
     const slotId = basket.get('prevSlotId')
     dispatch({
       type: actionTypes.BASKET_DATE_CHANGE,
@@ -513,8 +513,8 @@ export const basketRestorePreviousDate = () => (
       type: actionTypes.BASKET_SLOT_CHANGE,
       slotId,
     })
-    dispatch(menuActions.menuLoadMenu())
-    dispatch(menuActions.menuLoadStock())
+    dispatch(menuLoadMenu())
+    dispatch(menuLoadStock())
   }
 )
 
@@ -667,7 +667,7 @@ export const basketCheckedOut = (numRecipes, view) => (
 
 export const basketProceedToCheckout = () => (
   async (dispatch, getState) => {
-    const basket = getState().basket
+    const { basket } = getState()
     dispatch({
       type: actionTypes.BASKET_CHECKOUT_PROCEED,
       trackingData: {

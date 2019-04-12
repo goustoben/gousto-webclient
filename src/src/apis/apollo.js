@@ -25,7 +25,7 @@ function authLink(store) {
   })
 }
 
-export default (store) => {
+const apolloApi = (store) => {
   const inMemoryCache = new InMemoryCache()
 
   if (__CLIENT__ && !__TEST__) {
@@ -57,3 +57,5 @@ export default (store) => {
 
   return client
 }
+
+export default apolloApi

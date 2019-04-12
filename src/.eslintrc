@@ -147,7 +147,8 @@
     "__CLOUDFRONT_URL__": false,
     "__CHECKOUT_PK__": false,
     "__TEST__": false,
-    "__GIT_HASH__": false
+    "__GIT_HASH__": false,
+    "ga": false,
   },
   "overrides": [
     {

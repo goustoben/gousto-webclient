@@ -7,7 +7,7 @@ import logger from 'utils/logger'
 import { redirect } from 'utils/window'
 import { getOrderDetails } from 'utils/basket'
 import { getAvailableDeliveryDays } from 'utils/deliveries'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import config from 'config/routes'
 import GoustoException from 'utils/GoustoException'
 import { getOrderConfirmation } from 'selectors/features'
@@ -25,39 +25,6 @@ const getPendingOrdersDates = (orders) => (
   orders.filter(order => (['confirmed', 'dispatched'].indexOf(order.get('orderState')) > -1))
     .map(order => order.get('deliveryDay'))
 )
-
-export const orderCancel = (orderId, deliveryDayId, variation) => (
-  async (dispatch, getState) => {
-    dispatch(statusActions.error(actionTypes.ORDER_CANCEL, null))
-    dispatch(statusActions.pending(actionTypes.ORDER_CANCEL, true))
-    const accessToken = getState().auth.get('accessToken')
-    const valueProposition = getState().orderSkipRecovery.get('valueProposition')
-    const offer = getState().orderSkipRecovery.get('offer')
-
-    try {
-      await ordersApi.cancelOrder(accessToken, orderId)
-      dispatch({
-        type: actionTypes.ORDER_CANCEL,
-        orderId,
-        trackingData: {
-          actionType: 'Order Cancelled',
-          order_id: orderId,
-          delivery_day_id: deliveryDayId,
-          order_state: 'pending',
-          cms_variation: variation,
-          recovery_reasons: [
-            valueProposition,
-            offer,
-          ],
-        }
-      })
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.ORDER_CANCEL, { error: err.message, orderId }))
-      throw err
-    } finally {
-      dispatch(statusActions.pending(actionTypes.ORDER_CANCEL, false))
-    }
-  })
 
 const cancelledAllBoxesModalToggleVisibility = (visibility) => ({
   type: actionTypes.CANCELLED_ALL_BOXES_MODAL_VISIBILITY_CHANGE,
@@ -210,59 +177,7 @@ const orderCheckPossibleDuplicate = (orderId) => (
     }
   })
 
-export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
-  async (dispatch, getState) => {
-    const showAllCancelledModalIfNecessary = () => {
-      const orders = getState().user.get('newOrders')
-      if (checkAllScheduledCancelled(orders) && getState().subscription.getIn(['subscription', 'state']) === 'active') {
-        const pendingOrdersDates = getPendingOrdersDates(orders)
-        dispatch({
-          type: actionTypes.CANCELLED_ALL_BOXES_MODAL_VISIBILITY_CHANGE,
-          visibility: true,
-          pendingOrdersDates,
-        })
-      }
-    }
-
-    const scrollToCurrentCard = () => {
-      location.hash = '' // This is because setting the location.hash to the existing value won't do anything
-      location.hash = `#order-${orderId}`
-    }
-
-    dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, null))
-    dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_CANCEL, true))
-    const accessToken = getState().auth.get('accessToken')
-    const valueProposition = getState().orderSkipRecovery.get('valueProposition')
-    const offer = getState().orderSkipRecovery.get('offer')
-
-    try {
-      await userApi.skipDelivery(accessToken, deliveryDayId)
-      dispatch({
-        type: actionTypes.PROJECTED_ORDER_CANCEL,
-        orderId,
-        trackingData: {
-          actionType: 'Order Skipped',
-          delivery_day_id: deliveryDayId,
-          order_state: 'projected',
-          cms_variation: variation,
-          recovery_reasons: [
-            valueProposition,
-            offer,
-          ],
-        }
-      })
-      dispatch(userActions.userOpenCloseOrderCard(orderId, true))
-      scrollToCurrentCard()
-      showAllCancelledModalIfNecessary()
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, { error: err.message, orderId }))
-    } finally {
-      dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_CANCEL, false))
-    }
-  }
-)
-
-const	projectedOrderRestore = (orderId, userId, deliveryDayId) => (
+const projectedOrderRestore = (orderId, userId, deliveryDayId) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_RESTORE, null))
     dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_RESTORE, true))
@@ -346,6 +261,91 @@ const cancelOrderModalToggleVisibility = (visibility, orderId) => (
     })
     if (visibility === false) {
       dispatch(statusActions.error(actionTypes.ORDER_CANCEL, null))
+    }
+  }
+)
+
+export const orderCancel = (orderId, deliveryDayId, variation) => (
+  async (dispatch, getState) => {
+    dispatch(statusActions.error(actionTypes.ORDER_CANCEL, null))
+    dispatch(statusActions.pending(actionTypes.ORDER_CANCEL, true))
+    const accessToken = getState().auth.get('accessToken')
+    const valueProposition = getState().orderSkipRecovery.get('valueProposition')
+    const offer = getState().orderSkipRecovery.get('offer')
+
+    try {
+      await ordersApi.cancelOrder(accessToken, orderId)
+      dispatch({
+        type: actionTypes.ORDER_CANCEL,
+        orderId,
+        trackingData: {
+          actionType: 'Order Cancelled',
+          order_id: orderId,
+          delivery_day_id: deliveryDayId,
+          order_state: 'pending',
+          cms_variation: variation,
+          recovery_reasons: [
+            valueProposition,
+            offer,
+          ],
+        }
+      })
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.ORDER_CANCEL, { error: err.message, orderId }))
+      throw err
+    } finally {
+      dispatch(statusActions.pending(actionTypes.ORDER_CANCEL, false))
+    }
+  })
+
+export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
+  async (dispatch, getState) => {
+    const showAllCancelledModalIfNecessary = () => {
+      const orders = getState().user.get('newOrders')
+      if (checkAllScheduledCancelled(orders) && getState().subscription.getIn(['subscription', 'state']) === 'active') {
+        const pendingOrdersDates = getPendingOrdersDates(orders)
+        dispatch({
+          type: actionTypes.CANCELLED_ALL_BOXES_MODAL_VISIBILITY_CHANGE,
+          visibility: true,
+          pendingOrdersDates,
+        })
+      }
+    }
+
+    const scrollToCurrentCard = () => {
+      window.location.hash = '' // This is because setting the location.hash to the existing value won't do anything
+      window.location.hash = `#order-${orderId}`
+    }
+
+    dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, null))
+    dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_CANCEL, true))
+    const accessToken = getState().auth.get('accessToken')
+    const valueProposition = getState().orderSkipRecovery.get('valueProposition')
+    const offer = getState().orderSkipRecovery.get('offer')
+
+    try {
+      await userApi.skipDelivery(accessToken, deliveryDayId)
+      dispatch({
+        type: actionTypes.PROJECTED_ORDER_CANCEL,
+        orderId,
+        trackingData: {
+          actionType: 'Order Skipped',
+          delivery_day_id: deliveryDayId,
+          order_state: 'projected',
+          cms_variation: variation,
+          recovery_reasons: [
+            valueProposition,
+            offer,
+          ],
+        }
+      })
+      dispatch(userActions.userOpenCloseOrderCard(orderId, true))
+      scrollToCurrentCard()
+      showAllCancelledModalIfNecessary()
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, { error: err.message, orderId }))
+    } finally {
+      dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_CANCEL, false))
     }
   }
 )

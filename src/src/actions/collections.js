@@ -1,4 +1,3 @@
-/* eslint no-use-before-define: ["error", { "functions": false }] */
 import GoustoException from 'utils/GoustoException'
 import * as collectionsApi from 'apis/collections'
 import actionTypes from 'actions/actionTypes'

@@ -1,8 +1,6 @@
 import { push } from 'react-router-redux'
-
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
 import actionTypes from './actionTypes'
-
 import {
   trackRecipeFiltersOpened,
   trackRecipeFiltersClosed,
@@ -31,6 +29,41 @@ const filtersCollectionChange = (collectionName, collectionId) => ({
   },
 })
 
+const currentTotalTimeChange = (totalTime) => ({
+  type: actionTypes.FILTERS_TOTAL_TIME_CHANGE,
+  totalTime,
+})
+
+const filterMenuRevert = () => ({
+  type: actionTypes.FILTERS_RESET,
+})
+
+const filterMenuClose = () => (
+  (dispatch) => {
+    dispatch(filtersVisibilityChange(false))
+    dispatch(trackRecipeFiltersClosed())
+  }
+)
+
+const filterMenuApply = () => (
+  (dispatch, getState) => {
+    dispatch(filtersVisibilityChange(false))
+    dispatch(trackRecipeFiltersApplied(
+      getState().filters.get('currentCollectionId'),
+      Array.from(getState().filters.get('dietTypes', [])),
+      Array.from(getState().filters.get('dietaryAttributes', [])),
+      getState().filters.get('totalTime'),
+    ))
+  }
+)
+
+const filterCollectionChange = (collectionId) => (
+  (dispatch) => {
+    dispatch(collectionFilterChange(collectionId))
+    dispatch(trackRecipeCollectionSelected(collectionId))
+  }
+)
+
 export const collectionFilterIdRecieve = (collectionId) => ({
   type: actionTypes.FILTERS_COLLECTION_CHANGE,
   collectionId,
@@ -45,18 +78,9 @@ export const currentDietaryAttributesChange = (dietaryAttributes) => ({
   dietaryAttributes,
 })
 
-const currentTotalTimeChange = (totalTime) => ({
-  type: actionTypes.FILTERS_TOTAL_TIME_CHANGE,
-  totalTime,
-})
-
 export const filtersClearAll = (collectionId) => ({
   type: actionTypes.FILTERS_CLEAR_ALL,
   collectionId,
-})
-
-const filterMenuRevert = () => ({
-  type: actionTypes.FILTERS_RESET,
 })
 
 export function collectionFilterChange(collectionId) {
@@ -85,32 +109,6 @@ export const filterMenuOpen = () => (
   (dispatch) => {
     dispatch(filtersVisibilityChange(true))
     dispatch(trackRecipeFiltersOpened())
-  }
-)
-
-const filterMenuClose = () => (
-  (dispatch) => {
-    dispatch(filtersVisibilityChange(false))
-    dispatch(trackRecipeFiltersClosed())
-  }
-)
-
-const filterMenuApply = () => (
-  (dispatch, getState) => {
-    dispatch(filtersVisibilityChange(false))
-    dispatch(trackRecipeFiltersApplied(
-      getState().filters.get('currentCollectionId'),
-      Array.from(getState().filters.get('dietTypes', [])),
-      Array.from(getState().filters.get('dietaryAttributes', [])),
-      getState().filters.get('totalTime'),
-    ))
-  }
-)
-
-const filterCollectionChange = (collectionId) => (
-  (dispatch) => {
-    dispatch(collectionFilterChange(collectionId))
-    dispatch(trackRecipeCollectionSelected(collectionId))
   }
 )
 

@@ -5,12 +5,17 @@ import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import * as deliveryUtils from 'utils/deliveries'
 import { addDisabledSlotIds } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
-import { getUserOrderById } from 'utils/user'
 import status from './status'
-import menu from './menu'
-import basket from './basket'
+import { menuLoadMenu, menuLoadStock } from './menu'
+import {
+  basketDateChange,
+  basketSlotChange,
+  basketRecipeRemove,
+  portionSizeSelectedTracking,
+  basketAddressChange
+  ,basketPostcodeChange
+} from './basket'
 import actionTypes from './actionTypes'
-import tempActions from './temp'
 
 function basketDeliveryDaysReceive(days) {
   return {
@@ -22,11 +27,11 @@ function basketDeliveryDaysReceive(days) {
 const boxSummaryDeliverySlotChosen = ({ date, slotId }) => (
   async (dispatch) => {
     dispatch(status.pending(actionTypes.MENU_FETCH_DATA, true))
-    dispatch(basket.basketDateChange(date))
-    dispatch(basket.basketSlotChange(slotId))
+    dispatch(basketDateChange(date))
+    dispatch(basketSlotChange(slotId))
     await Promise.all([
-      dispatch(menu.menuLoadMenu()),
-      dispatch(menu.menuLoadStock()),
+      dispatch(menuLoadMenu()),
+      dispatch(menuLoadStock()),
     ])
     dispatch(status.pending(actionTypes.MENU_FETCH_DATA, false))
   }
@@ -52,7 +57,7 @@ const boxSummaryVisibilityChange = (show, view) => (
         .filter((amount, recipeId) => !okRecipeIds.has(recipeId))
         .forEach((amount, recipeId) => {
           for (let x = 0; x < amount; x++) {
-            dispatch(basket.basketRecipeRemove(recipeId))
+            dispatch(basketRecipeRemove(recipeId))
           }
         })
     }
@@ -116,7 +121,7 @@ const actions = {
       const basketPostcode = state.basket.get('postcode')
 
       if (basketPostcode && !state.error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE)) {
-        dispatch(basket.portionSizeSelectedTracking(numPortions))
+        dispatch(portionSizeSelectedTracking(numPortions))
         if (tempOrderId) {
           dispatch(push(`/menu/${tempOrderId}`))
           dispatch(boxSummaryVisibilityChange(false))
@@ -133,11 +138,11 @@ const actions = {
         const chosenAddress = state.basket.get('chosenAddress') || shippingDefault
 
         if (chosenAddress) {
-          dispatch(basket.basketAddressChange(chosenAddress))
-          dispatch(basket.basketPostcodeChange(chosenAddress.get('postcode')))
+          dispatch(basketAddressChange(chosenAddress))
+          dispatch(basketPostcodeChange(chosenAddress.get('postcode')))
         } else if (tempPostcode && tempPostcode.trim() !== '') {
           const postcode = state.temp.get('postcode')
-          dispatch(basket.basketPostcodeChange(postcode))
+          dispatch(basketPostcodeChange(postcode))
         }
       }
     }

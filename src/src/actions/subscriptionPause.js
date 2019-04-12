@@ -1,18 +1,17 @@
-/* eslint no-use-before-define: ["error", { "functions": false }] */
-import actionTypes from './actionTypes'
 import customersApi from 'apis/customers'
 import subscriptionApi from 'apis/subscription'
 import ordersApi from 'apis/orders'
 import config from 'config/subscription'
 import logger from 'utils/logger'
-import statusActions from './status'
 import redirectActions from 'actions/redirect'
 import userActions from 'actions/user'
 import * as subUtils from 'utils/subscription'
 import GoustoException from 'utils/GoustoException'
 import windowUtil from 'utils/window'
 import routesConfig from 'config/routes'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
+import statusActions from './status'
+import actionTypes from './actionTypes'
 
 const pauseModalTrackingPrefix = config.tracking.pauseModalPrefix
 
@@ -491,7 +490,7 @@ function subscriptionPauseReasonSubmit(freeText) {
       const firstBox = pendingOrderIds.find(o => parseInt(o.get('number'), 10) === 1)
       const committedOrderIds = orderState.filter(o => ['cutoff', 'delivery', 'packing', 'picking'].indexOf(o.get('phase')) >= 0)
 
-      if (firstBox && pendingOrderIds.size === 1 || !(pendingOrderIds.size || committedOrderIds.size)) {
+      if ((firstBox && pendingOrderIds.size === 1) || !(pendingOrderIds.size || committedOrderIds.size)) {
         dispatch(subPauseActions.subscriptionPauseProceed('pause', 'paused'))
       } else {
         dispatch(subPauseActions.subscriptionPauseLoadStaticScreen('pausedPendingBoxes'))

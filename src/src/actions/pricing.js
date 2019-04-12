@@ -1,6 +1,6 @@
-import actionTypes from './actionTypes'
 import pricingRequestApi from 'apis/pricing'
 import Immutable from 'immutable'
+import actionTypes from './actionTypes'
 
 const pricingPending = () => ({
   type: actionTypes.PRICING_PENDING,
@@ -33,7 +33,7 @@ const mapToItemId = (type, basketItems, perItemQuantity) => (
     const quantity = basketItems[itemId]
     Array(quantity).fill().forEach((_, key) => {
       const itemKey = genObjUniqueKey(items, key + index)
-      items[itemKey] = { // eslint-disable-line no-param-reassign
+      items[itemKey] = {
         id: itemId,
         type,
         quantity: perItemQuantity,
@@ -44,7 +44,6 @@ const mapToItemId = (type, basketItems, perItemQuantity) => (
   }, {})
 )
 
-/* eslint-disable no-param-reassign */
 const mergeAllItems = (items) => (
   items.reduce((allItems, basketItems) => {
     const itemInBasket = Object.keys(basketItems)
@@ -73,10 +72,10 @@ const getItems = (basket) => {
   }
 }
 
-export default {
+const pricingActions = {
   pricingRequest() {
     return async (dispatch, getState) => {
-      const basket = getState().basket
+      const { basket } = getState()
       const accessToken = getState().auth.get('accessToken')
       const promoCode = basket.get('promoCode', false)
       const deliveryDate = basket.get('date', false)
@@ -124,3 +123,5 @@ export default {
     }
   ),
 }
+
+export default pricingActions

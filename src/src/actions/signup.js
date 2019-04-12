@@ -1,10 +1,9 @@
-/* eslint no-use-before-define: ["error", { "functions": false }] */
 import { push } from 'react-router-redux'
 import routes, { client } from 'config/routes'
 import redirectAction from 'actions/redirect'
 import { stepByName } from 'utils/signup'
 import actionTypes from './actionTypes'
-import basketActions from './basket'
+import { basketPostcodeChange } from './basket'
 
 const signupActions = {
   signupStepsReceive,
@@ -49,8 +48,8 @@ export function signupNextStep(stepName) {
     const step = stepByName(stepName)
     if (step) {
       const signupState = getState().signup
-      const isCurrenltyTheLastStep = signupState.getIn(['wizard', 'isLastStep'])
-      if (isCurrenltyTheLastStep) {
+      const isCurrentlyTheLastStep = signupState.getIn(['wizard', 'isLastStep'])
+      if (isCurrentlyTheLastStep) {
         dispatch(signupTracking())
 
         return dispatch(redirectAction.redirect(routes.client.menu))
@@ -72,7 +71,7 @@ export function signupNextStep(stepName) {
 
 export function signupChangePostcode(postcode, nextStepName) {
   return async (dispatch, getState) => {
-    await dispatch(basketActions.basketPostcodeChange(postcode))
+    await dispatch(basketPostcodeChange(postcode))
     if (!getState().error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false)) {
       signupActions.signupNextStep(nextStepName)(dispatch, getState)
     }
@@ -94,7 +93,7 @@ export function signupCookForKidsChange(cookForKids) {
 
 export function signupTracking() {
   return (dispatch, getState) => {
-    const basket = getState().basket
+    const { basket } = getState()
     const postcode = basket.get('postcode')
     const numAdults = basket.get('numAdults')
     const numPortions = basket.get('numPortions')
