@@ -10,7 +10,7 @@ describe('OrderConfirmation', () => {
       deliveryEnd: '7 pm',
       whenCutoffTime: '12 pm',
       whenCutoffDate: 'Wednesday 20th March',
-    }, 
+    },
     showHeader: false,
     products: {}
   }
@@ -23,7 +23,7 @@ describe('OrderConfirmation', () => {
   })
 
   describe('Order Confirmation rendering header', () => {
-    const testPropsTrue = Object.assign({}, testProps, {showHeader: true})
+    const testPropsTrue = Object.assign({}, testProps, { showHeader: true })
     const wrapper = shallow(<OrderConfirmation {...testPropsTrue} />)
 
     test('should show Order Confirmation Header', () => {
@@ -58,6 +58,135 @@ describe('OrderConfirmation', () => {
 
     test('should render product list', () => {
       expect(wrapper.find('ProductList').length).toEqual(1)
+    })
+
+    test('should render the navbar', () => {
+      expect(wrapper.find('Navbar').length).toEqual(1)
+    })
+
+    test('should render the dropdown', () => {
+      expect(wrapper.find('Dropdown').length).toEqual(1)
+    })
+  })
+
+  describe('get categories', () => {
+
+    test('should return a unique list of categories', () => {
+      const products = {
+        1234: {
+          categories: [{ hidden: false, title: 'Category 1' }, { hidden: false, title: 'Category 2' }]
+        },
+        5678: {
+          categories: [{ hidden: false, title: 'Category 1' }, { hidden: false, title: 'Category 2' }]
+        }
+      }
+      const expectedResult = [{ id: 'All Products', label: 'All Products' }, { id: 'Category 1', label: 'Category 1' }, { id: 'Category 2', label: 'Category 2' }]
+      const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
+      expect(wrapper.instance().getCategories()).toEqual(expectedResult)
+    })
+
+    test('should return "All Products" if products is undefined', () => {
+      const expectedResult = [{ id: 'All Products', label: 'All Products' }]
+      const wrapper = shallow(<OrderConfirmation {...testProps} products={undefined} />)
+      expect(wrapper.instance().getCategories()).toEqual(expectedResult)
+    })
+
+    test('should return "All Products" if product categories is undefined', () => {
+      const products = {
+        1234: {},
+        5678: {}
+      }
+      const expectedResult = [{ id: 'All Products', label: 'All Products' }]
+      const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
+      expect(wrapper.instance().getCategories()).toEqual(expectedResult)
+    })
+
+    test('should not return hidden categories', () => {
+      const products = {
+        1234: {
+          categories: [{ hidden: true, title: 'Category 1' }, { hidden: false, title: 'Category 2' }]
+        }
+      }
+      const expectedResult = [{ id: 'All Products', label: 'All Products' }, { id: 'Category 2', label: 'Category 2' }]
+      const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
+      expect(wrapper.instance().getCategories()).toEqual(expectedResult)
+    })
+  })
+
+  describe('get filtered products', () => {
+    let products
+    let filterProductCategoryMock
+    let wrapper
+
+    beforeEach(() => {
+      products = {
+        1234: {
+          id: '1234', categories: [{ title: 'Category 1' }]
+        },
+        5678: {
+          id: '5678', categories: [{ title: 'Category 2' }]
+        }
+      }
+
+      filterProductCategoryMock = jest.fn()
+      wrapper = shallow(<OrderConfirmation products={products} filterProductCategory={filterProductCategoryMock} />)
+
+    })
+
+    test('should set correct filtered products to state', () => {
+      const expectedResult = {
+        1234: {
+          id: '1234', categories: [{ title: 'Category 1' }]
+        }
+      }
+
+      wrapper.instance().getFilteredProducts('Category 1')
+
+      expect(wrapper.state('filteredProducts')).toEqual(expectedResult)
+    })
+
+    test('should return full list of products if chosen category is All Products', () => {
+      const expectedResult = {
+        1234: {
+          id: '1234', categories: [{ title: 'Category 1' }]
+        },
+        5678: {
+          id: '5678', categories: [{ title: 'Category 2' }]
+        }
+      }
+
+      wrapper.instance().getFilteredProducts('All Products')
+
+      expect(wrapper.state('filteredProducts')).toEqual(expectedResult)
+    })
+
+    test('should call filterProductCategory with the right parameter', () => {
+      wrapper.instance().getFilteredProducts('All Products')
+
+      expect(filterProductCategoryMock).toHaveBeenCalledWith('All Products')
+    })
+
+    test('should not update state if products is undefined', () => {
+      wrapper = shallow(<OrderConfirmation filterProductCategory={filterProductCategoryMock} />)
+      wrapper.instance().getFilteredProducts('Category 1')
+
+      expect(wrapper.state('filteredProducts')).toEqual(null)
+    })
+
+    test('should not update state if product categories are undefined', () => {
+      products = {
+        1234: {
+          id: '1234'
+        },
+        5678: {
+          id: '5678'
+        }
+      }
+
+      wrapper = shallow(<OrderConfirmation filterProductCategory={filterProductCategoryMock} products={products} />)
+      wrapper.instance().getFilteredProducts('Category 1')
+
+      expect(wrapper.state('filteredProducts')).toEqual(null)
     })
   })
 

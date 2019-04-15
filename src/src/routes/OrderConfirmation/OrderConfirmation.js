@@ -75,12 +75,11 @@ class OrderConfirmation extends PureComponent {
     const uniqueCategories = new Set()
     const categories = [{ id: 'All Products', label: 'All Products' }]
 
-    if(!products) return
+    if (!products) return categories
 
     Object.keys(products).map(productKey => {
-      const productCategories = products[productKey].categories 
-
-      return productCategories && productCategories.map(category => !category.hidden && uniqueCategories.add(category.title))
+      const productCategories = products[productKey].categories
+      productCategories && productCategories.map(category => !category.hidden && uniqueCategories.add(category.title))
     })
 
     Array.from(uniqueCategories).map(category => categories.push({ id: category, label: category }))
@@ -93,13 +92,16 @@ class OrderConfirmation extends PureComponent {
 
     filterProductCategory(chosenCategory)
 
-    let chosenCategoryProducts = []
+    if (!products) return
+
+    let chosenCategoryProducts = null
 
     if (chosenCategory == 'All Products') {
       chosenCategoryProducts = products
     } else {
-      Object.keys(products).map(productKey => (
-        products[productKey].categories.map(category => {
+      Object.keys(products).map(productKey => {
+        const productCategories = products[productKey].categories
+        productCategories && productCategories.map(category => {
           const productProps = products[productKey]
 
           if (chosenCategory == category.title) {
@@ -107,7 +109,7 @@ class OrderConfirmation extends PureComponent {
             chosenCategoryProducts = { ...chosenCategoryProducts, ...product }
           }
         })
-      ))
+      })
     }
 
     this.setState({
