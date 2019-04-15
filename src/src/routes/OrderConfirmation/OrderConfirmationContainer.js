@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
     productsCategories: getProductCategories(state),
     products: state.products.toJS(),
     ageVerified: getAgeVerified(state),
-    selectedCategory: state.filters.get('selectedCategory') || 'All Products'
+    selectedCategory: state.filters.get('selectedCategory') || 'all-products'
   })
 }
 

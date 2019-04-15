@@ -33,8 +33,6 @@ const propTypes = {
   }).isRequired,
   ageVerified: PropTypes.bool.isRequired,
   selectedCategory: PropTypes.string.isRequired,
-  basketProductAdd: PropTypes.func.isRequired,
-  basketProductRemove: PropTypes.func.isRequired,
   filterProductCategory: PropTypes.func.isRequired,
 }
 
@@ -69,19 +67,28 @@ class OrderConfirmation extends PureComponent {
 
   getCategories = () => {
     const { products } = this.props
-    const uniqueCategories = new Set()
-    const categories = [{ id: 'All Products', label: 'All Products' }]
+    const uniqueCategories = []
+    const allProducts = [{ id: 'all-products', label: 'All Products' }]
 
-    if (!products) return categories
+    if (!products) return allProducts
 
-    Object.keys(products).map(productKey => {
-      const productCategories = products[productKey].categories
-      productCategories && productCategories.map(category => !category.hidden && uniqueCategories.add(category.title))
-    })
+    return Object.keys(products).reduce((categoryProducts, productId) => {
+      const productCategories = products[productId].categories
 
-    Array.from(uniqueCategories).map(category => categories.push({ id: category, label: category }))
+      productCategories && productCategories.map(category => {
+        const duplicateCategory = uniqueCategories.includes(category.id)
+        if (!category.hidden && !duplicateCategory) {
+          const newCategory = {
+            id: category.id,
+            label: category.title
+          }
+          categoryProducts.push(newCategory)
+          uniqueCategories.push(category.id)
+        }
+      })
 
-    return categories
+      return categoryProducts
+    }, allProducts)
   }
 
   getFilteredProducts = (chosenCategory) => {
@@ -93,7 +100,7 @@ class OrderConfirmation extends PureComponent {
 
     let chosenCategoryProducts = null
 
-    if (chosenCategory == 'All Products') {
+    if (chosenCategory == 'all-products') {
       chosenCategoryProducts = products
     } else {
       Object.keys(products).map(productKey => {
@@ -101,7 +108,7 @@ class OrderConfirmation extends PureComponent {
         productCategories && productCategories.map(category => {
           const productProps = products[productKey]
 
-          if (chosenCategory == category.title) {
+          if (chosenCategory == category.id) {
             const product = { [productProps.id]: { ...productProps } }
             chosenCategoryProducts = { ...chosenCategoryProducts, ...product }
           }

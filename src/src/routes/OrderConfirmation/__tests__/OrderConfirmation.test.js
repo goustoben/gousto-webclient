@@ -74,19 +74,19 @@ describe('OrderConfirmation', () => {
     test('should return a unique list of categories', () => {
       const products = {
         1234: {
-          categories: [{ hidden: false, title: 'Category 1' }, { hidden: false, title: 'Category 2' }]
+          categories: [{ hidden: false, id: 'category-1', title: 'Category 1' }, { hidden: false, id: 'category-2', title: 'Category 2' }]
         },
         5678: {
-          categories: [{ hidden: false, title: 'Category 1' }, { hidden: false, title: 'Category 2' }]
+          categories: [{ hidden: false, id: 'category-1', title: 'Category 1' }, { hidden: false, id: 'category-2', title: 'Category 2' }]
         }
       }
-      const expectedResult = [{ id: 'All Products', label: 'All Products' }, { id: 'Category 1', label: 'Category 1' }, { id: 'Category 2', label: 'Category 2' }]
+      const expectedResult = [{ id: 'all-products', label: 'All Products' }, { id: 'category-1', label: 'Category 1' }, { id: 'category-2', label: 'Category 2' }]
       const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
       expect(wrapper.instance().getCategories()).toEqual(expectedResult)
     })
 
     test('should return "All Products" if products is undefined', () => {
-      const expectedResult = [{ id: 'All Products', label: 'All Products' }]
+      const expectedResult = [{ id: 'all-products', label: 'All Products' }]
       const wrapper = shallow(<OrderConfirmation {...testProps} products={undefined} />)
       expect(wrapper.instance().getCategories()).toEqual(expectedResult)
     })
@@ -96,7 +96,7 @@ describe('OrderConfirmation', () => {
         1234: {},
         5678: {}
       }
-      const expectedResult = [{ id: 'All Products', label: 'All Products' }]
+      const expectedResult = [{ id: 'all-products', label: 'All Products' }]
       const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
       expect(wrapper.instance().getCategories()).toEqual(expectedResult)
     })
@@ -104,10 +104,10 @@ describe('OrderConfirmation', () => {
     test('should not return hidden categories', () => {
       const products = {
         1234: {
-          categories: [{ hidden: true, title: 'Category 1' }, { hidden: false, title: 'Category 2' }]
+          categories: [{ hidden: true, id: 'category-1', title: 'Category 1' }, { hidden: false, id: 'category-2', title: 'Category 2' }]
         }
       }
-      const expectedResult = [{ id: 'All Products', label: 'All Products' }, { id: 'Category 2', label: 'Category 2' }]
+      const expectedResult = [{ id: 'all-products', label: 'All Products' }, { id: 'category-2', label: 'Category 2' }]
       const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
       expect(wrapper.instance().getCategories()).toEqual(expectedResult)
     })
@@ -121,10 +121,10 @@ describe('OrderConfirmation', () => {
     beforeEach(() => {
       products = {
         1234: {
-          id: '1234', categories: [{ title: 'Category 1' }]
+          id: '1234', categories: [{ id: 'category-1', title: 'Category 1' }]
         },
         5678: {
-          id: '5678', categories: [{ title: 'Category 2' }]
+          id: '5678', categories: [{ id: 'category-2', title: 'Category 2' }]
         }
       }
 
@@ -136,11 +136,11 @@ describe('OrderConfirmation', () => {
     test('should set correct filtered products to state', () => {
       const expectedResult = {
         1234: {
-          id: '1234', categories: [{ title: 'Category 1' }]
+          id: '1234', categories: [{ id: 'category-1', title: 'Category 1' }]
         }
       }
 
-      wrapper.instance().getFilteredProducts('Category 1')
+      wrapper.instance().getFilteredProducts('category-1')
 
       expect(wrapper.state('filteredProducts')).toEqual(expectedResult)
     })
@@ -148,27 +148,27 @@ describe('OrderConfirmation', () => {
     test('should return full list of products if chosen category is All Products', () => {
       const expectedResult = {
         1234: {
-          id: '1234', categories: [{ title: 'Category 1' }]
+          id: '1234', categories: [{ id: 'category-1', title: 'Category 1' }]
         },
         5678: {
-          id: '5678', categories: [{ title: 'Category 2' }]
+          id: '5678', categories: [{ id: 'category-2', title: 'Category 2' }]
         }
       }
 
-      wrapper.instance().getFilteredProducts('All Products')
+      wrapper.instance().getFilteredProducts('all-products')
 
       expect(wrapper.state('filteredProducts')).toEqual(expectedResult)
     })
 
     test('should call filterProductCategory with the right parameter', () => {
-      wrapper.instance().getFilteredProducts('All Products')
+      wrapper.instance().getFilteredProducts('all-products')
 
-      expect(filterProductCategoryMock).toHaveBeenCalledWith('All Products')
+      expect(filterProductCategoryMock).toHaveBeenCalledWith('all-products')
     })
 
     test('should not update state if products is undefined', () => {
       wrapper = shallow(<OrderConfirmation filterProductCategory={filterProductCategoryMock} />)
-      wrapper.instance().getFilteredProducts('Category 1')
+      wrapper.instance().getFilteredProducts('category-1')
 
       expect(wrapper.state('filteredProducts')).toEqual(null)
     })
@@ -199,14 +199,14 @@ describe('OrderConfirmation', () => {
 
     describe('rendering popup', () => {
       test('should render the age verification pop up in an OPEN overlay when "showAgeVerification" is true', () => {
-        const wrapper = shallow(<OrderConfirmation/>)
-        wrapper.setState({'showAgeVerification': true})
+        const wrapper = shallow(<OrderConfirmation />)
+        wrapper.setState({ 'showAgeVerification': true })
 
         expect(wrapper.find('Overlay').prop('open')).toEqual(true)
         expect(wrapper.find('AgeVerificationPopUp').length).toEqual(1)
       })
       test('should render the age verification pop up in a CLOSED overlay when "showAgeVerification" is false', () => {
-        const wrapper = shallow(<OrderConfirmation/>)
+        const wrapper = shallow(<OrderConfirmation />)
 
         expect(wrapper.find('Overlay').prop('open')).toEqual(false)
         expect(wrapper.find('AgeVerificationPopUp').length).toEqual(1)
