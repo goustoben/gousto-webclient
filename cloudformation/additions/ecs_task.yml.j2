@@ -24,7 +24,8 @@
             LogDriver: awslogs
             Options:
               awslogs-create-group: true
-              awslogs-region: ${AWS::Region}
+              awslogs-region:
+                Fn::Sub: ${AWS::Region}
               awslogs-group: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-webserverlog
               awslogs-stream-prefix: {{ serviceName }}-{{ ENVIRONMENT }}-nginx-service
         -
@@ -39,7 +40,8 @@
             LogDriver: awslogs
             Options:
               awslogs-create-group: true
-              awslogs-region: ${AWS::Region}
+              awslogs-region:
+                Fn::Sub: ${AWS::Region}
               awslogs-group: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-applicationlog
               awslogs-stream-prefix:  {{ serviceName }}-{{ ENVIRONMENT }}-node-service
 
