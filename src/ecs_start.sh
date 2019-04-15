@@ -60,7 +60,7 @@ if [[ -z "${ENVIRONMENT}" ]]; then
     exit 1
 fi
 
-echo "Got past enviroment check"
+echo "Environment is currently: ${ENVIRONMENT}"
 
 if [[ "${ENVIRONMENT}" == "production" ]]; then
     S3_SRC="s3://s3-gousto-platform-prod/${ENVIRONMENT}/config/service/webclient.yml"
