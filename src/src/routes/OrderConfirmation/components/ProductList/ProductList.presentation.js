@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Product } from '../Product'
-
 import css from './ProductList.css'
 
 const propTypes = {
@@ -15,7 +14,6 @@ const propTypes = {
 
 const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggleAgeVerificationPopUp }) => (
   <div className={css.productList}>
-
     {
       Object.keys(products).map(productKey => {
         const productProps = products[productKey]

@@ -43,7 +43,6 @@ class ProductList extends PureComponent {
       </div>
     )
   }
-
 }
 
 ProductList.propTypes = propTypes
