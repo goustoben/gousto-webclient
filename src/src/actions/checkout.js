@@ -10,7 +10,12 @@ import { basketResetPersistent } from 'utils/basket'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { getFormSyncErrors } from 'redux-form'
 import actionTypes from './actionTypes'
-import { basketPreviewOrderChange, basketPromoCodeChange, basketPromoCodeAppliedChange, basketReset} from './basket'
+import {
+  basketPreviewOrderChange,
+  basketPromoCodeChange,
+  basketPromoCodeAppliedChange,
+  basketReset
+} from './basket'
 import loginActions from './login'
 import { userSubscribe } from './user'
 import statusActions from './status'
@@ -89,11 +94,10 @@ export function checkoutAddressLookup(postcode) {
 
 export function checkoutCreatePreviewOrder() {
   return async (dispatch, getState) => {
-    const {basket, boxSummaryDeliveryDays } = getState()
-    const deliveryDays = boxSummaryDeliveryDays
+    const { basket, boxSummaryDeliveryDays } = getState()
     const date = basket.get('date')
     const slotId = basket.get('slotId')
-    const slot = getSlot(deliveryDays, date, slotId)
+    const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
 
     dispatch(pending(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, true))
     dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, null))
@@ -102,7 +106,7 @@ export function checkoutCreatePreviewOrder() {
         throw new Error(`Can't find any slot with id: ${slotId}`)
       }
       const deliverySlotId = slot.get('coreSlotId', '')
-      const deliveryDayId = deliveryDays.getIn([date, 'coreDayId'])
+      const deliveryDayId = boxSummaryDeliveryDays.getIn([date, 'coreDayId'])
       const recipes = basket.get('recipes')
       const quantity = basket.get('numPortions')
 

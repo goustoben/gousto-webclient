@@ -8,7 +8,7 @@ function fetchOpenJobs() {
     dispatch(statusActions.error(actionTypes.JOBS_RECEIVE, false))
     try {
       const { data = {} } = await fetchJobs()
-      const jobs = { data }
+      const { jobs } = data
       dispatch({ type: actionTypes.JOBS_RECEIVE, jobs })
     } catch (err) {
       dispatch(err, actionTypes.JOBS_RECEIVE)

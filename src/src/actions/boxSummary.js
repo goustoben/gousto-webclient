@@ -12,8 +12,8 @@ import {
   basketSlotChange,
   basketRecipeRemove,
   portionSizeSelectedTracking,
-  basketAddressChange
-  ,basketPostcodeChange
+  basketAddressChange,
+  basketPostcodeChange
 } from './basket'
 import actionTypes from './actionTypes'
 
