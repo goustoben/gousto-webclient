@@ -75,9 +75,13 @@ class OrderConfirmation extends PureComponent {
     const uniqueCategories = new Set()
     const categories = [{ id: 'All Products', label: 'All Products' }]
 
-    Object.keys(products).map(productKey => (
-      products[productKey].categories.map(category => !category.hidden && uniqueCategories.add(category.title))
-    ))
+    if(!products) return
+
+    Object.keys(products).map(productKey => {
+      const productCategories = products[productKey].categories 
+
+      return productCategories && productCategories.map(category => !category.hidden && uniqueCategories.add(category.title))
+    })
 
     Array.from(uniqueCategories).map(category => categories.push({ id: category, label: category }))
 
