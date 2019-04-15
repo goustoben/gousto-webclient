@@ -49,6 +49,7 @@ class OrderConfirmation extends PureComponent {
     this.state = {
       showAgeVerification: false,
       hasConfirmedAge: false,
+      filteredProducts: null,
     }
   }
 
@@ -64,10 +65,6 @@ class OrderConfirmation extends PureComponent {
       hasConfirmedAge: true,
     })
     userVerifyAge(isOver18, true)
-  }
-
-  state = {
-    filteredProducts: null
   }
 
   getCategories = () => {
@@ -125,8 +122,6 @@ class OrderConfirmation extends PureComponent {
       ageVerified,
       basket,
       productsCategories,
-      basketProductAdd,
-      basketProductRemove,
       selectedCategory
     } = this.props
     const { showAgeVerification, hasConfirmedAge } = this.state
@@ -158,9 +153,6 @@ class OrderConfirmation extends PureComponent {
               basket={basket}
               productsCategories={productsCategories}
               toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-              filteredProducts={filteredProducts}
-              basketProductAdd={basketProductAdd}
-              basketProductRemove={basketProductRemove}
               selectedCategory={selectedCategory}
             />
           </section>

@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-
 import Loading from 'routes/Menu/Loading'
 import { getProductLimitReached } from 'utils/basket'
 import { ProductListPresentation } from './ProductList.presentation'
@@ -36,7 +35,6 @@ class ProductList extends PureComponent {
           ageVerified={ageVerified}
           isLimitReached={this.isLimitReached}
           toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-          getChosenCategoryProducts={this.getChosenCategoryProducts}
         /> :
           <Loading />
         }

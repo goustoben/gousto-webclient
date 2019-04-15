@@ -4,7 +4,6 @@ import { locationQuery } from 'selectors/routing'
 import { getBasket, getProductCategories } from 'selectors/root'
 import { getAgeVerified } from 'selectors/user'
 import { getBasketOrderDetails } from 'selectors/basket'
-import { basketProductAdd, basketProductRemove } from 'actions/basket'
 import userActions from 'actions/user'
 import { filterProductCategory } from 'actions/filters'
 import OrderConfirmation from './OrderConfirmation'
@@ -29,8 +28,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   userVerifyAge: userActions.userVerifyAge,
-  basketProductAdd,
-  basketProductRemove,
   filterProductCategory,
 }
 
