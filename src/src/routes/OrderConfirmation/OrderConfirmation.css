@@ -23,8 +23,9 @@
 }
 
 .navbar {
-  @media ScreenXSMax {
-    display: none;
+  display: none;
+  @media ScreenSMMin {
+    display: block;
   }
 }
 

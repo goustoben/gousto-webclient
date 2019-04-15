@@ -23,7 +23,7 @@ describe('OrderConfirmation', () => {
   })
 
   describe('Order Confirmation rendering header', () => {
-    const testPropsTrue = Object.assign({}, testProps, { showHeader: true })
+    const testPropsTrue = { ...testProps, showHeader: true }
     const wrapper = shallow(<OrderConfirmation {...testPropsTrue} />)
 
     test('should show Order Confirmation Header', () => {

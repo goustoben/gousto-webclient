@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { Navbar } from '..'
 
-describe('', () => {
+describe('Navbar', () => {
   let wrapper
   let items
   const onClickMock = jest.fn()
