@@ -24,9 +24,9 @@
             LogDriver: awslogs
             Options:
               awslogs-create-group: true
-              awslogs-region: eu-west-1
-              awslogs-group: {{ ENVIRONMENT }}-ecs-webclient-nginx-awslogs
-              awslogs-stream-prefix: webclient-nginx-service
+              awslogs-region: ${AWS::Region}
+              awslogs-group: ecs-{{ ENVIRONMENT }}-service-webclient-webserverlog
+              awslogs-stream-prefix: webclient-{{ ENVIRONMENT }}-nginx-service
         -
           Name: webclient
           Image:
@@ -39,9 +39,9 @@
             LogDriver: awslogs
             Options:
               awslogs-create-group: true
-              awslogs-region: eu-west-1
-              awslogs-group: {{ ENVIRONMENT }}-ecs-webclient-node-awslogs
-              awslogs-stream-prefix: webclient-node-service
+              awslogs-region: ${AWS::Region}
+              awslogs-group: ecs-{{ ENVIRONMENT }}-service-webclient-applicationlog
+              awslogs-stream-prefix:  webclient-{{ ENVIRONMENT }}-node-service
 
   EcsService:
     Type: AWS::ECS::Service
