@@ -1,12 +1,11 @@
 import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 
-import { isFeaturedRecipe, isRecipeInBasket, isRecipeInStock } from 'utils/menu'
-import { getFilteredRecipes } from './filters'
-import { getIsMenuRecommended } from './menu'
-import { getCutoffDate, getPreviousCutoffDate } from './cutoff'
-import { getStock, getRecieveMenuPending } from 'selectors/root'
 import { getNumPortions, getBasketRecipes } from 'selectors/basket'
+import { isRecipeInBasket, isRecipeInStock } from 'utils/menu'
+import { getStock } from 'selectors/root'
+
+import { getFilteredRecipes } from './filters'
 
 const getInStockRecipes = createSelector(
   [getFilteredRecipes, getStock, getBasketRecipes, getNumPortions],
@@ -14,7 +13,7 @@ const getInStockRecipes = createSelector(
     filteredRecipes
       .filter(recipe =>
         isRecipeInStock(recipe, stock, numPortions) ||
-				isRecipeInBasket(recipe, basketRecipes)
+        isRecipeInBasket(recipe, basketRecipes)
       )
   )
 )
@@ -27,18 +26,12 @@ export const getOutOfStockRecipes = createSelector(
 )
 
 export const getFeaturedRecipes = createSelector(
-  [getFilteredRecipes, getInStockRecipes, getIsMenuRecommended, getRecieveMenuPending, getCutoffDate, getPreviousCutoffDate],
-  (filteredRecipes, inStockRecipes, isMenuRecommended, recieveMenuPending, cutoffDate, previousCutoffDate) => {
-    if (isMenuRecommended && inStockRecipes.includes(filteredRecipes.first())) {
-      return Immutable.List([filteredRecipes.first()])
-    } else if (!isMenuRecommended) {
-      return filteredRecipes.filter(recipe => (
-        isFeaturedRecipe(recipe, recieveMenuPending, cutoffDate, previousCutoffDate) && inStockRecipes.includes(recipe)
-      ))
-    }
-
-    return Immutable.List([])
-  }
+  [getFilteredRecipes, getInStockRecipes],
+  (filteredRecipes, inStockRecipes) => (
+    (inStockRecipes.includes(filteredRecipes.first()))
+      ? Immutable.List([filteredRecipes.first()])
+      : Immutable.List([])
+  )
 )
 
 export const getRemainingRecipes = createSelector(
