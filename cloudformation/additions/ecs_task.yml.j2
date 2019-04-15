@@ -20,6 +20,14 @@
           MemoryReservation: 256
           PortMappings:
             - ContainerPort: 80
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-create-group: true
+              awslogs-region:
+                Fn::Sub: ${AWS::Region}
+              awslogs-group: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-webserverlog
+              awslogs-stream-prefix: {{ serviceName }}-{{ ENVIRONMENT }}-nginx-service
         -
           Name: webclient
           Image:
@@ -28,6 +36,14 @@
           Environment:
             - Name: ENVIRONMENT
               Value: {{ ENVIRONMENT }}
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-create-group: true
+              awslogs-region:
+                Fn::Sub: ${AWS::Region}
+              awslogs-group: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-applicationlog
+              awslogs-stream-prefix:  {{ serviceName }}-{{ ENVIRONMENT }}-node-service
 
   EcsService:
     Type: AWS::ECS::Service
