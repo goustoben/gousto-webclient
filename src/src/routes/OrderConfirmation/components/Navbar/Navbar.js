@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import css from './Navbar.css'
 
 const propTypes = {
-  items: PropTypes.arrayOf(PropTypes.string).isRequired,
+  items: PropTypes.arrayOf(PropTypes.shape({ id: PropTypes.string, label: PropTypes.string })).isRequired,
   active: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 }
