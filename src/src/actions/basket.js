@@ -469,8 +469,8 @@ export const basketChosenAddressChange = address => ({
 })
 
 export const basketRestorePreviousValues = () => (
-  (dispatch, getState) => {const { basket } = getState()
-
+  (dispatch, getState) => {
+    const { basket } = getState()
     const prevSlotId = basket.get('prevSlotId')
     const slotId = basket.get('slotId')
     const prevPostcode = basket.get('prevPostcode')
