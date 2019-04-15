@@ -60,17 +60,25 @@ if [[ -z "${ENVIRONMENT}" ]]; then
     exit 1
 fi
 
+echo "Got past enviroment check"
+
 if [[ "${ENVIRONMENT}" == "production" ]]; then
     S3_SRC="s3://s3-gousto-platform-prod/${ENVIRONMENT}/config/service/webclient.yml"
 else
     S3_SRC="s3://s3-gousto-platform-beta/${ENVIRONMENT}/config/service/webclient.yml"
 fi
 
+echo "Going to download: $S3_SRC"
+
 S3_DEST="./secrets.yml"
 
 aws s3 cp ${S3_SRC} ${S3_DEST} --region eu-west-1
 
+echo "Completed download"
+
 register_env_variables ${S3_DEST} ""
+
+echo "About to remove: ${S3_DEST}"
 rm ${S3_DEST}
 
 ### This script will replace the values in env.json based on the available environment variable and then start pm2.

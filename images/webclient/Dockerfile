@@ -1,9 +1,11 @@
 FROM node:10-jessie-slim
 
 # AWS CLI
-RUN apt-get update && apt-get install -y \
-    awscli \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y \
+#    awscli \
+#    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && apt-get install python2.7 python-pip -y && pip install awscli --upgrade
 
 # APPLICATION RUNTIME DEPENDENCIES
 RUN npm install -g yarn \
