@@ -251,11 +251,11 @@ describe('filters actions', () => {
   describe('filterProductCategory', () => {
     test('should dispatch a FILTERS_PRODUCT_CATEGORY action', () => {
       const dispatchSpy = jest.fn()
-      filterProductCategory('All Products')(dispatchSpy)
+      filterProductCategory('all-products')(dispatchSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.FILTERS_PRODUCT_CATEGORY,
-        value: 'All Products',
+        value: 'all-products',
       })
     })
   })

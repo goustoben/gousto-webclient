@@ -98,14 +98,14 @@ describe('filters reducer', () => {
       state = initialState
       const action = {
         type: actionTypes.FILTERS_PRODUCT_CATEGORY,
-        value: 'All Products',
+        value: 'all-products',
       }
       const expectedState = Immutable.Map({
         currentCollectionId: '',
         totalTime: '0',
         dietTypes: Immutable.Set([]),
         dietaryAttributes: Immutable.Set([]),
-        selectedCategory: 'All Products'
+        selectedCategory: 'all-products'
       })
       const result = reducer.filters(state, action)
       expect(Immutable.is(expectedState, result)).toBe(true)
