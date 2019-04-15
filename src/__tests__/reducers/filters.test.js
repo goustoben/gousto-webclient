@@ -91,7 +91,23 @@ describe('filters reducer', () => {
         dietaryAttributes: Immutable.Set([]),
       })
       const result = reducer.filters(state, action)
+      expect(Immutable.is(expectedState, result)).toBe(true)
+    })
 
+    test('should handle FILTERS_PRODUCT_CATEGORY action - set selectedCategory state value', () => {
+      state = initialState
+      const action = {
+        type: actionTypes.FILTERS_PRODUCT_CATEGORY,
+        value: 'All Products',
+      }
+      const expectedState = Immutable.Map({
+        currentCollectionId: '',
+        totalTime: '0',
+        dietTypes: Immutable.Set([]),
+        dietaryAttributes: Immutable.Set([]),
+        selectedCategory: 'All Products'
+      })
+      const result = reducer.filters(state, action)
       expect(Immutable.is(expectedState, result)).toBe(true)
     })
   })
