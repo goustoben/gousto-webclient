@@ -10,8 +10,9 @@ describe('OrderConfirmation', () => {
       deliveryEnd: '7 pm',
       whenCutoffTime: '12 pm',
       whenCutoffDate: 'Wednesday 20th March',
-    },
-    showHeader: false
+    }, 
+    showHeader: false,
+    products: {}
   }
 
   describe('Order Confirmation not rendering header', () => {
