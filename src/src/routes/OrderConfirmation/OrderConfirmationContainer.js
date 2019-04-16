@@ -26,9 +26,9 @@ const mapStateToProps = (state) => {
     products: state.products.toJS(),
     ageVerified: getAgeVerified(state),
     selectedCategory: state.filters.get('selectedCategory') || 'all-products',
-    saving: state.pending.get(actionTypes.BASKET_CHECKOUT), 
-    saveRequired: state.basket.get('unsaved'), 
-    saveError: state.error.get(actionTypes.BASKET_CHECKOUT), 
+    saving: state.pending.get(actionTypes.BASKET_CHECKOUT),
+    saveRequired: state.basket.get('unsaved'),
+    saveError: state.error.get(actionTypes.BASKET_CHECKOUT),
   })
 }
 

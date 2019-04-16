@@ -8,12 +8,12 @@ function mapStateToProps(state) {
 
   return {
     sectionTitle: 'Order Summary',
-    prices: state.basket.getIn(['orderDetails','prices']),
-    deliveryDate:  state.basket.getIn(['orderDetails','deliveryDate']),
-    deliverySlot:  state.basket.getIn(['orderDetails','deliverySlot']),
+    prices: state.basket.getIn(['orderDetails', 'prices']),
+    deliveryDate: state.basket.getIn(['orderDetails', 'deliveryDate']),
+    deliverySlot: state.basket.getIn(['orderDetails', 'deliverySlot']),
     giftItems: state.basket.get('gifts'),
     numPortions: parseFloat(state.basket.getIn(['orderDetails', 'box', 'numPortions'])),
-    numRecipes:  parseFloat(state.basket.getIn(['orderDetails','box', 'numRecipes'])),
+    numRecipes: parseFloat(state.basket.getIn(['orderDetails', 'box', 'numRecipes'])),
     productItems: state.basket.get('products'),
     products: state.products,
     recipeItems: state.basket.get('recipes'),
