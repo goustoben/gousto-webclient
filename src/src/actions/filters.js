@@ -170,6 +170,12 @@ export const filterMenuRevertFilters = () => (
   }
 )
 
+export const filterProductCategory = (category) => (
+  (dispatch) => {
+    dispatch({ type: 'FILTERS_PRODUCT_CATEGORY', value: category })
+  }
+)
+
 export default {
   filtersVisibilityChange,
   filterMenuOpen,

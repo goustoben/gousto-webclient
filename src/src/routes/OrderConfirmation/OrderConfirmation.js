@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import Overlay from 'Overlay'
+import { Dropdown } from 'goustouicomponents'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
+import { Navbar } from './components/Navbar'
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
@@ -30,18 +32,22 @@ const propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   ageVerified: PropTypes.bool.isRequired,
+  selectedCategory: PropTypes.string.isRequired,
+  filterProductCategory: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
   showHeader: false,
   headerDetails: {}
 }
+
 class OrderConfirmation extends PureComponent {
   constructor() {
     super()
     this.state = {
       showAgeVerification: false,
       hasConfirmedAge: false,
+      filteredProducts: null,
     }
   }
 
@@ -59,10 +65,77 @@ class OrderConfirmation extends PureComponent {
     userVerifyAge(isOver18, true)
   }
 
+  getCategories = () => {
+    const { products } = this.props
+    const uniqueCategories = []
+    const allProducts = [{ id: 'all-products', label: 'All Products' }]
+
+    if (!products) return allProducts
+
+    return Object.keys(products).reduce((categoryProducts, productId) => {
+      const productCategories = products[productId].categories
+
+      productCategories && productCategories.map(category => {
+        const duplicateCategory = uniqueCategories.includes(category.id)
+        if (!category.hidden && !duplicateCategory) {
+          const newCategory = {
+            id: category.id,
+            label: category.title
+          }
+          categoryProducts.push(newCategory)
+          uniqueCategories.push(category.id)
+        }
+      })
+
+      return categoryProducts
+    }, allProducts)
+  }
+
+  getFilteredProducts = (chosenCategory) => {
+    const { products, filterProductCategory } = this.props
+
+    filterProductCategory(chosenCategory)
+
+    if (!products) return
+
+    let chosenCategoryProducts = null
+
+    if (chosenCategory == 'all-products') {
+      chosenCategoryProducts = products
+    } else {
+      Object.keys(products).map(productKey => {
+        const productCategories = products[productKey].categories
+        productCategories && productCategories.map(category => {
+          const productProps = products[productKey]
+
+          if (chosenCategory == category.id) {
+            const product = { [productProps.id]: { ...productProps } }
+            chosenCategoryProducts = { ...chosenCategoryProducts, ...product }
+          }
+        })
+      })
+    }
+
+    this.setState({
+      filteredProducts: chosenCategoryProducts
+    })
+  }
+
   render() {
-    const { products, headerDetails, showHeader, ageVerified, productsCategories, basket } = this.props
+    const {
+      headerDetails,
+      showHeader,
+      products,
+      ageVerified,
+      basket,
+      productsCategories,
+      selectedCategory
+    } = this.props
     const { showAgeVerification, hasConfirmedAge } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
+
+    const { filteredProducts } = this.state
+    const categories = this.getCategories()
 
     return (
       <div>
@@ -70,17 +143,24 @@ class OrderConfirmation extends PureComponent {
           {...headerDetails}
         />}
         <Overlay open={showAgeVerification} from="top">
-          <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation}/>
+          <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation} />
         </Overlay>
         <div className={css.marketPlaceWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
+          <div className={css.navbar}>
+            <Navbar items={categories} onClick={this.getFilteredProducts} active={selectedCategory} />
+          </div>
+          <div className={css.dropdown}>
+            <Dropdown id={'product-filter'} options={categories} groupedOptions={[]} optionSelected={selectedCategory} onChange={this.getFilteredProducts} />
+          </div>
           <section className={css.marketPlaceContent}>
             <ProductList
-              products={products}
-              basket={basket}
+              products={filteredProducts || products}
               ageVerified={ageVerified}
+              basket={basket}
               productsCategories={productsCategories}
               toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+              selectedCategory={selectedCategory}
             />
           </section>
         </div>

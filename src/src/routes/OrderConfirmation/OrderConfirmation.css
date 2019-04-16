@@ -8,15 +8,30 @@
 }
 
 .marketPlaceTitle {
-  text-align: center;
-  font-family: comfortaaRegularFontStack;
-  font-weight: 700;
-  font-size: 24px;
-  -webkit-font-smoothing: antialiased;
+ text-align: center;
+ font-family: comfortaaRegularFontStack;
+ font-weight: 700;
+ font-size: 24px;
+ -webkit-font-smoothing: antialiased;
+ margin-bottom: 30px;
 }
 
 .marketPlaceContent {
   @media ScreenSMMin {
     width: 66.6%;
+  }
+}
+
+.navbar {
+  display: none;
+  
+  @media ScreenSMMin {
+    display: block;
+  }
+}
+
+.dropdown {
+  @media ScreenSMMin {
+    display: none;
   }
 }
