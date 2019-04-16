@@ -23,7 +23,7 @@ alb:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
             - field: path-pattern
-              fieldValue: "/boxprices"
+              value: "/boxprices"
 
     - type: private
       rules:
@@ -32,7 +32,7 @@ alb:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
             - field: path-pattern
-              fieldValue: "/my-referrals"
+              value: "/my-referrals"
 
 messages:
  publish:
