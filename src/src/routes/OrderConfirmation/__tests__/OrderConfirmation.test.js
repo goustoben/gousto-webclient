@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Immmutable from 'immutable'
 import OrderConfirmation from '../OrderConfirmation'
 
 describe('OrderConfirmation', () => {
@@ -53,7 +54,7 @@ describe('OrderConfirmation', () => {
     })
 
     test('should render market place content section', () => {
-      expect(wrapper.find('section.marketPlaceContent').length).toEqual(1)
+      expect(wrapper.find('.marketPlaceContent').length).toEqual(1)
     })
 
     test('should render product list', () => {
@@ -197,18 +198,18 @@ describe('OrderConfirmation', () => {
       jest.clearAllMocks()
     })
 
-    describe('rendering popup', () => {
+    describe('rendering popup for AgeVerification', () => {
       test('should render the age verification pop up in an OPEN overlay when "showAgeVerification" is true', () => {
         const wrapper = shallow(<OrderConfirmation />)
         wrapper.setState({ 'showAgeVerification': true })
 
-        expect(wrapper.find('Overlay').prop('open')).toEqual(true)
+        expect(wrapper.find('Overlay').at(0).prop('open')).toEqual(true)
         expect(wrapper.find('AgeVerificationPopUp').length).toEqual(1)
       })
       test('should render the age verification pop up in a CLOSED overlay when "showAgeVerification" is false', () => {
         const wrapper = shallow(<OrderConfirmation />)
 
-        expect(wrapper.find('Overlay').prop('open')).toEqual(false)
+        expect(wrapper.find('Overlay').at(0).prop('open')).toEqual(false)
         expect(wrapper.find('AgeVerificationPopUp').length).toEqual(1)
       })
     })
@@ -233,4 +234,15 @@ describe('OrderConfirmation', () => {
       })
     })
   })
+
+  describe('rendering popup for OrderSummary', () => {
+    test('should toggle order summary popup', () => {
+      const wrapper = shallow(<OrderConfirmation/>)
+      wrapper.setState({'isOrderSummaryOpen': true})
+
+      expect(wrapper.find('Overlay').at(1).prop('open')).toEqual(true)
+      expect(wrapper.find('Connect(OrderSummary)').length).toEqual(1)
+    })
+  })
+
 })

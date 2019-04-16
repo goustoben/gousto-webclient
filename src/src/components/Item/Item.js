@@ -9,10 +9,10 @@ import css from './Item.css'
 const Item = ({ available, disclaimerKey, type, media, title, quantity, onImageClick, onRemove, url, gift, showLine }) => (
 	<div>
 		<div className={available ? css.item : css.itemUnavailable}>
-			<div className={css.hideMobile}>
+			
 				<GoustoImage onClick={onImageClick} media={media} title={title} className={classnames(css.img, { [css.pointer]: !!onImageClick })} />
-			</div>
-			<div className={css.details}>
+
+				<div className={css.details}>
 				<p className={css.title}>{title}</p>
 				{(!gift || quantity > 1) &&
 					<p className={css.quantity}>

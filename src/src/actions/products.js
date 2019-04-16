@@ -49,13 +49,16 @@ const productsLoadCategories = (forceRefresh = false) => (
 
 const productsLoadProducts = (cutoffDate) => (
   async (dispatch, getState) => {
-    if (!getState().products.size ||
-      (cutoffDate && !getProductsByCutoff(cutoffDate, getState().products).size)) {
+    const { basket, products, productsStock, auth } = getState()
+    const currentProductsInBasket = basket.get('products')
+    const isProductsLargerThanBasket = products.size <= currentProductsInBasket.size
+  
+    if ((isProductsLargerThanBasket) ||
+      (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
-        const { data: products } = await fetchProducts(getState().auth.get('accessToken'), cutoffDate)
-        const { productsStock } = getState()
-        const productsInStock = products.reduce((productsInStockAccumulator, product) => {
+        const { data: productsFromApi } = await fetchProducts(auth.get('accessToken'), cutoffDate)
+        const productsInStock = productsFromApi.reduce((productsInStockAccumulator, product) => {
           product.stock = productsStock.get(product.id)
           if (product.stock > 0 && product.isForSale) {
             productsInStockAccumulator.push(product)

@@ -1,14 +1,15 @@
-import { getHeaderDetails } from "../helper"
+import Immutable from 'immutable'
+import { getHeaderDetails } from '../helper'
 
 describe('getHeaderDetails', () => {
-  const testProps = { 
+  const testProps = Immutable.fromJS({ 
     humanDeliveryDate: "Tuesday 26th March" ,
     whenCutoff: "2019-03-20 11:59:59" ,
     deliverySlot: {
       deliveryStart: "08:00:00", 
       deliveryEnd: "18:59:59"
     }
-  }
+  })
   const expectedValues = {
     deliveryDate: 'Tuesday 26th March',
     deliveryStart: '8 am',

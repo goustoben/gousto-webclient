@@ -1,16 +1,21 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import classnames from 'classnames'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import Overlay from 'Overlay'
 import { Dropdown } from 'goustouicomponents'
+import CloseButton from 'Overlay/CloseButton'
+import SaveButton from 'OrderSummary/SaveButton'
 import css from './OrderConfirmation.css'
 import { OrderConfirmationHeader } from './OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
 import { Navbar } from './components/Navbar'
+import OrderSummaryContainer from './components/OrderSummary/OrderSummaryContainer'
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
+  showOrderConfirmationReceipt: PropTypes.bool.isRequired,
   headerDetails: PropTypes.oneOfType([
     PropTypes.shape({
       deliveryDate: PropTypes.string,
@@ -34,6 +39,10 @@ const propTypes = {
   ageVerified: PropTypes.bool.isRequired,
   selectedCategory: PropTypes.string.isRequired,
   filterProductCategory: PropTypes.func.isRequired,
+  saving: PropTypes.bool, 
+  saveRequired: PropTypes.bool, 
+  onSave: PropTypes.func, 
+  saveError: PropTypes.bool,  
 }
 
 const defaultProps = {
@@ -48,12 +57,19 @@ class OrderConfirmation extends PureComponent {
       showAgeVerification: false,
       hasConfirmedAge: false,
       filteredProducts: null,
+      isOrderSummaryOpen: false,
     }
   }
 
   toggleAgeVerificationPopUp = () => {
     this.setState((prevState) => ({
       showAgeVerification: !prevState.showAgeVerification
+    }))
+  }
+
+  toggleOrderSummary = () => {
+    this.setState((prevState) => ({
+      isOrderSummaryOpen: !prevState.isOrderSummaryOpen
     }))
   }
 
@@ -129,12 +145,16 @@ class OrderConfirmation extends PureComponent {
       ageVerified,
       basket,
       productsCategories,
-      selectedCategory
+      selectedCategory,
+      showOrderConfirmationReceipt,
+      saving, 
+      saveRequired, 
+      onSave, 
+      saveError 
     } = this.props
-    const { showAgeVerification, hasConfirmedAge } = this.state
+    const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
-    const { filteredProducts } = this.state
     const categories = this.getCategories()
 
     return (
@@ -153,16 +173,39 @@ class OrderConfirmation extends PureComponent {
           <div className={css.dropdown}>
             <Dropdown id={'product-filter'} options={categories} groupedOptions={[]} optionSelected={selectedCategory} onChange={this.getFilteredProducts} />
           </div>
-          <section className={css.marketPlaceContent}>
-            <ProductList
-              products={filteredProducts || products}
-              ageVerified={ageVerified}
-              basket={basket}
-              productsCategories={productsCategories}
-              toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-              selectedCategory={selectedCategory}
-            />
-          </section>
+          <div className={css.marketPlaceContent}>
+            <section className={css.marketPlaceProducts}>
+              <ProductList
+                products={filteredProducts || products}
+                basket={basket}
+                ageVerified={ageVerified}
+                productsCategories={productsCategories}
+                toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+                selectedCategory={selectedCategory}
+              />
+            </section>
+            <section className={classnames(css.orderDetails, css.mobileHide)}>
+              {showOrderConfirmationReceipt && <OrderSummaryContainer onOrderConfirmationMobile />}
+            </section>
+            <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
+              <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
+              <Overlay open={isOrderSummaryOpen} from="bottom">
+                <div className={css.orderDetailsMobileContent}>
+                  <div className={css.orderDetailsCloseButton}>
+                    <CloseButton onClose={() => this.toggleOrderSummary()} />
+                  </div> 
+                  <OrderSummaryContainer orderSummaryCollapsed={false} onOrderConfirmationMobile />
+                </div>
+              </Overlay>
+              <SaveButton 
+                onOrderConfirmationMobile
+                saving={saving}
+                saveRequired={saveRequired}
+                onClick={onSave}
+                error={saveError}
+              />
+            </section>
+          </div>
         </div>
       </div>
     )
