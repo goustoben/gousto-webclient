@@ -7,11 +7,7 @@ build:
       docker:
         dockerfile: images/webclient/Dockerfile
       sync:
-        'src/dist/*': .
-        'src/node_modules/*': .
-        'src/config/*': .
-        'src/manifest.json': .
-        'src/process-docker.json': .
+        'src/**/*': .
     - image: local/webclient-webserver
       context: .
       docker:
