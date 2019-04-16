@@ -75,7 +75,7 @@ describe('productsLoadProducts', () => {
     expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate)
   })
 
-  test('should not fetch products by default if there are products in product store but more than in the basket & no cutoffDate is passed in', async () => {
+  test('should not fetch products by default if there are all products in product store & no cutoffDate is passed in', async () => {
     getStateSpy = () => ({
       auth: Immutable.fromJS({ accessToken: 'accessToken' }),
       products: Immutable.fromJS({
@@ -91,7 +91,7 @@ describe('productsLoadProducts', () => {
     expect(fetchProducts).not.toHaveBeenCalled()
   })
 
-  test('should fetch products by default if there are products in product store but the same number or less than in the basket', async () => {
+  test('should fetch products by default if the products in product store are the one from basket', async () => {
     getStateSpy = () => ({
       auth: Immutable.fromJS({ accessToken: 'accessToken' }),
       products: Immutable.fromJS({
