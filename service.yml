@@ -7,13 +7,32 @@ owner: squad-radishes
 rootVolumeSize: 16
 
 alb:
-  type: private
-  rules:
-    - priority: 94
-      conditions:
-        - field: host-header
-          value: "[environment]-webclient.[cloudformation_output_domain]"
+  ec2:
+    type: private
+    rules:
+      - priority: 94
+        conditions:
+          - field: host-header
+            value: "[environment]‌‌-webclient.[cloudformation_output_domain]"
 
+  ecs:
+    - type: private
+      rules:
+        - priority: 91
+          conditions:
+            - field: host-header
+              value: "[environment]‌‌-webclient.[cloudformation_output_domain]"
+            - field: path-pattern
+              fieldValue: "/boxprices"
+
+    - type: private
+      rules:
+        - priority: 92
+          conditions:
+            - field: host-header
+              value: "[environment]‌‌-webclient.[cloudformation_output_domain]"
+            - field: path-pattern
+              fieldValue: "/my-referrals"
 
 messages:
  publish:
