@@ -13,7 +13,7 @@ alb:
       - priority: 94
         conditions:
           - field: host-header
-            value: "[environment]‌‌-webclient.[cloudformation_output_domain]"
+            value: "[environment]-webclient.[cloudformation_output_domain]"
 
   ecs:
     - type: private
@@ -21,7 +21,7 @@ alb:
         - priority: 91
           conditions:
             - field: host-header
-              value: "[environment]‌‌-webclient.[cloudformation_output_domain]"
+              value: "[environment]-webclient.[cloudformation_output_domain]"
             - field: path-pattern
               fieldValue: "/boxprices"
 
@@ -30,7 +30,7 @@ alb:
         - priority: 92
           conditions:
             - field: host-header
-              value: "[environment]‌‌-webclient.[cloudformation_output_domain]"
+              value: "[environment]-webclient.[cloudformation_output_domain]"
             - field: path-pattern
               fieldValue: "/my-referrals"
 
