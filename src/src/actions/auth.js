@@ -165,7 +165,7 @@ const resetPassword = (password, passwordToken) => (
   }
 )
 
-export default {
+const authActions = {
   authAuthenticate: authenticate,
   authRefresh: refresh,
   authIdentify: identify,
@@ -176,3 +176,5 @@ export default {
   userAuthenticated,
   redirectLoggedInUser,
 }
+
+export default authActions

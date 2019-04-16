@@ -12,6 +12,7 @@ import {
   filterDietaryAttributesChange,
   filterMenuOpen,
   filterMenuRevertFilters,
+  filterProductCategory,
 } from 'actions/filters'
 
 describe('filters actions', () => {
@@ -205,7 +206,7 @@ describe('filters actions', () => {
             shortTitle: 'All Recipes',
             slug: 'all-recipes',
             default: true, id:
-						'defaultCollectionId',
+              'defaultCollectionId',
           },
         }),
         filters: Immutable.Map({
@@ -244,6 +245,18 @@ describe('filters actions', () => {
         dietTypes: Immutable.Set(['meat']),
         dietaryAttributes: Immutable.Set([]),
       }))
+    })
+  })
+
+  describe('filterProductCategory', () => {
+    test('should dispatch a FILTERS_PRODUCT_CATEGORY action', () => {
+      const dispatchSpy = jest.fn()
+      filterProductCategory('all-products')(dispatchSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.FILTERS_PRODUCT_CATEGORY,
+        value: 'all-products',
+      })
     })
   })
 })

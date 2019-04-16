@@ -50,6 +50,11 @@ const filters = {
     case actionTypes.FILTERS_RESET: {
       return previousState
     }
+    
+    case actionTypes.FILTERS_PRODUCT_CATEGORY: {
+      return state.set('selectedCategory', action.value)
+    }
+
     case actionTypes.USER_LOGGED_OUT:
       return initialState()
     default: {

@@ -12,7 +12,7 @@ import * as recipes from './recipes'
 import * as user from './user'
 import workable from './workable'
 
-export default {
+const apis = {
   ...addressLookup,
   ...auth,
   ...boxPrices,
@@ -27,3 +27,4 @@ export default {
   ...user,
   ...workable,
 }
+export default apis

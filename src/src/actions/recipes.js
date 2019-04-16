@@ -63,7 +63,9 @@ const recipesLoadStockByDate = (whenStart, whenCutoff) => (
   }
 )
 
-export default {
+const recipesActions = {
   recipesLoadRecipesById,
   recipesLoadStockByDate,
 }
+
+export default recipesActions

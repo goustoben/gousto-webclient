@@ -23,7 +23,6 @@
 	composes: paddingSMLeft paddingLGRight from 'sass-loader!styles/spacing.scss';
 
 	@media ScreenXXSMaxDEPRECATED {
-		padding-left: 0;
 		padding-right: SpacingXXXL;
 		width: 100%;
 	}
@@ -32,13 +31,6 @@
 .title {
 	composes: headerSM textBold from 'styles/typography.css';
 	composes: noMargin from 'sass-loader!styles/spacing.scss';
-
-	@media ScreenXXSMaxDEPRECATED {
-		display: block;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
 }
 
 .quantity {

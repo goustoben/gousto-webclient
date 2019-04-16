@@ -1,4 +1,3 @@
-/* eslint no-use-before-define: ["error", { "functions": false }] */
 import moment from 'moment'
 import Immutable from 'immutable'
 
@@ -14,7 +13,12 @@ import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import statusActions from './status'
-import basketActions from './basket'
+import {
+  basketAddressChange,
+  basketChosenAddressChange,
+  basketPostcodeChangePure,
+  basketPreviewOrderChange
+} from './basket'
 import actionTypes from './actionTypes'
 import { trackFirstPurchase } from './tracking'
 import { subscriptionLoadData } from './subscription'
@@ -162,118 +166,6 @@ function userOrderSkipNextProjected() {
   }
 }
 
-export function userSubscribe() {
-  return async (dispatch, getState) => {
-    dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
-    dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
-    const prices = getState().pricing.get('prices')
-    try {
-      const { form, basket, promoAgeVerified } = getState()
-      const state = getState()
-      const deliveryFormName = getDeliveryFormName(state)
-      const aboutYouFormName = getAboutYouFormName(state)
-
-      const aboutYou = Immutable.fromJS(form[aboutYouFormName].values).get('aboutyou')
-      const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
-      const payment = Immutable.fromJS(form.payment.values).get('payment')
-
-      const deliveryAddress = getAddress(delivery)
-      const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
-
-      const reqData = {
-        order_id: basket.get('previewOrderId'),
-        promocode: basket.get('promoCode', ''),
-        tariff_id: basket.get('tariffId', ''),
-        customer: {
-          phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
-          email: aboutYou.get('email'),
-          name_first: aboutYou.get('firstName'),
-          name_last: aboutYou.get('lastName'),
-          promo_code: basket.get('promoCode', ''),
-          password: aboutYou.get('password'),
-          age_verified: Number(promoAgeVerified || false),
-          salutation_id: aboutYou.get('title'),
-          marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
-          marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
-        },
-        payment_method: {
-          is_default: 1,
-          type: config.payment_types.card,
-          name: 'My Card',
-          card: getPaymentDetails(state)
-        },
-        addresses: {
-          shipping_address: Object.assign({
-            type: config.address_types.shipping,
-            delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction'),
-          }, deliveryAddress),
-          billing_address: Object.assign({
-            type: config.address_types.billing,
-          }, billingAddress),
-        },
-        subscription: {
-          interval_id: delivery.get('interval_id') || 1,
-          delivery_slot_id: basket.get('slotId'),
-          box_id: basket.get('boxId'),
-        },
-      }
-
-      const { data } = await customerSignup(null, reqData)
-
-      if (data.customer && data.addresses && data.subscription && data.orderId) {
-        const { customer, addresses, subscription, orderId } = data
-        let user = Immutable.fromJS({
-          ...customer,
-          ...addresses,
-          subscription,
-        })
-        user = user.set('goustoReference', user.get('goustoReference').toString())
-
-        const paymentProvider = data.paymentMethod.card ? data.paymentMethod.card.paymentProvider: ''
-        dispatch({
-          type: actionTypes.CHECKOUT_ORDER_PLACED,
-          trackingData: {
-            actionType: 'Order Placed',
-            order_id: orderId,
-            order_total: prices.get('total'),
-            promo_code: prices.get('promoCode'),
-            signup: true,
-            subscription_active: data.subscription.status ? data.subscription.status.slug : true,
-            payment_provider: paymentProvider,
-            interval_id: delivery.get('interval_id', '1'),
-          }
-        })
-
-        dispatch(trackFirstPurchase(orderId, prices))
-
-        dispatch(basketActions.basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
-        dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
-      } else {
-        throw new GoustoException(actionTypes.USER_SUBSCRIBE)
-      }
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, err.message))
-
-      const previewOrderId = getState().basket.get('previewOrderId')
-
-      dispatch({
-        type: actionTypes.CHECKOUT_ORDER_FAILED,
-        trackingData: {
-          actionType: 'Order Failed',
-          order_id: previewOrderId,
-          promo_code: prices.get('promoCode'),
-          signup: true,
-          error_reason: err.message,
-        }
-      })
-      logger.error({message: err.message, errors: [err]})
-      throw err
-    } finally {
-      dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, false))
-    }
-  }
-}
-
 function userRecipeRatings() {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
@@ -311,9 +203,9 @@ function userFetchShippingAddresses() {
       dispatch(fetchedShippingAddresses(shippingAddresses))
 
       const address = Immutable.fromJS(shippingAddresses).filter(addr => addr.get('shippingDefault')).first()
-      dispatch(basketActions.basketAddressChange(address))
-      dispatch(basketActions.basketChosenAddressChange(address))
-      dispatch(basketActions.basketPostcodeChangePure(address.get('postcode')))
+      dispatch(basketAddressChange(address))
+      dispatch(basketChosenAddressChange(address))
+      dispatch(basketPostcodeChangePure(address.get('postcode')))
 
       dispatch(fetchShippingAddressesPending(false))
     } catch (err) {
@@ -328,9 +220,9 @@ function userClearData() {
     dispatch({
       type: actionTypes.USER_CLEAR_DATA,
     })
-    dispatch(basketActions.basketAddressChange(null))
-    dispatch(basketActions.basketChosenAddressChange(null))
-    dispatch(basketActions.basketPostcodeChangePure(''))
+    dispatch(basketAddressChange(null))
+    dispatch(basketChosenAddressChange(null))
+    dispatch(basketPostcodeChangePure(''))
   }
 }
 
@@ -554,7 +446,7 @@ function userAddPaymentMethod(data) {
       }
       await userApi.addPaymentMethod(accessToken, paymentMethodData, userId)
       dispatch({ type: actionTypes.USER_POST_PAYMENT_METHOD, userId })
-      location.reload()
+      window.location.reload()
     } catch (err) {
       logger.error({message: `${actionTypes.USER_POST_PAYMENT_METHOD} - ${err.message}`, errors: [err]})
       dispatch(statusActions.error(actionTypes.USER_POST_PAYMENT_METHOD, err.code))
@@ -693,6 +585,118 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
       ))
     } finally {
       dispatch(statusActions.pending(actionTypes.UNSUBSCRIBED_USER, false))
+    }
+  }
+}
+
+export function userSubscribe() {
+  return async (dispatch, getState) => {
+    dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
+    dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, true))
+    const prices = getState().pricing.get('prices')
+    try {
+      const { form, basket, promoAgeVerified } = getState()
+      const state = getState()
+      const deliveryFormName = getDeliveryFormName(state)
+      const aboutYouFormName = getAboutYouFormName(state)
+
+      const aboutYou = Immutable.fromJS(form[aboutYouFormName].values).get('aboutyou')
+      const delivery = Immutable.fromJS(form[deliveryFormName].values).get('delivery')
+      const payment = Immutable.fromJS(form.payment.values).get('payment')
+
+      const deliveryAddress = getAddress(delivery)
+      const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
+
+      const reqData = {
+        order_id: basket.get('previewOrderId'),
+        promocode: basket.get('promoCode', ''),
+        tariff_id: basket.get('tariffId', ''),
+        customer: {
+          phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
+          email: aboutYou.get('email'),
+          name_first: aboutYou.get('firstName'),
+          name_last: aboutYou.get('lastName'),
+          promo_code: basket.get('promoCode', ''),
+          password: aboutYou.get('password'),
+          age_verified: Number(promoAgeVerified || false),
+          salutation_id: aboutYou.get('title'),
+          marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
+          marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
+        },
+        payment_method: {
+          is_default: 1,
+          type: config.payment_types.card,
+          name: 'My Card',
+          card: getPaymentDetails(state)
+        },
+        addresses: {
+          shipping_address: Object.assign({
+            type: config.address_types.shipping,
+            delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction'),
+          }, deliveryAddress),
+          billing_address: Object.assign({
+            type: config.address_types.billing,
+          }, billingAddress),
+        },
+        subscription: {
+          interval_id: delivery.get('interval_id') || 1,
+          delivery_slot_id: basket.get('slotId'),
+          box_id: basket.get('boxId'),
+        },
+      }
+
+      const { data } = await customerSignup(null, reqData)
+
+      if (data.customer && data.addresses && data.subscription && data.orderId) {
+        const { customer, addresses, subscription, orderId } = data
+        let user = Immutable.fromJS({
+          ...customer,
+          ...addresses,
+          subscription,
+        })
+        user = user.set('goustoReference', user.get('goustoReference').toString())
+
+        const paymentProvider = data.paymentMethod.card ? data.paymentMethod.card.paymentProvider: ''
+        dispatch({
+          type: actionTypes.CHECKOUT_ORDER_PLACED,
+          trackingData: {
+            actionType: 'Order Placed',
+            order_id: orderId,
+            order_total: prices.get('total'),
+            promo_code: prices.get('promoCode'),
+            signup: true,
+            subscription_active: data.subscription.status ? data.subscription.status.slug : true,
+            payment_provider: paymentProvider,
+            interval_id: delivery.get('interval_id', '1'),
+          }
+        })
+
+        dispatch(trackFirstPurchase(orderId, prices))
+
+        dispatch(basketPreviewOrderChange(orderId, getState().basket.get('boxId')))
+        dispatch({ type: actionTypes.USER_SUBSCRIBE, user })
+      } else {
+        throw new GoustoException(actionTypes.USER_SUBSCRIBE)
+      }
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, err.message))
+
+      const previewOrderId = getState().basket.get('previewOrderId')
+
+      dispatch({
+        type: actionTypes.CHECKOUT_ORDER_FAILED,
+        trackingData: {
+          actionType: 'Order Failed',
+          order_id: previewOrderId,
+          promo_code: prices.get('promoCode'),
+          signup: true,
+          error_reason: err.message,
+        }
+      })
+      logger.error({message: err.message, errors: [err]})
+      throw err
+    } finally {
+      dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, false))
     }
   }
 }

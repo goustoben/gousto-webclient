@@ -1,9 +1,11 @@
 import actionTypes from './actionTypes'
 
-export default {
+const tempActions = {
   temp: (key, value) => ({
     type: actionTypes.TEMP,
     key,
     value,
   }),
 }
+
+export default tempActions

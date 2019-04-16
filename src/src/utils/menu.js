@@ -12,23 +12,6 @@ export function isRecommendedRecipe(recipeId, allRecipesList, recipesStore) {
   return false
 }
 
-export const isFeaturedRecipe = (recipe, menuRecieveMenuPending, cutoffDate, prevCutoffDate) => {
-  let dateNow
-  if (!menuRecieveMenuPending) {
-    dateNow = new Date(cutoffDate)
-  } else {
-    dateNow = new Date(prevCutoffDate)
-  }
-  const isFeatured = recipe.get('availability').filter((entry) => {
-    const dateFrom = new Date(entry.get('from'))
-    const dateUntil = new Date(entry.get('until'))
-
-    return entry.get('featured') && (dateNow <= dateUntil) && (dateNow >= dateFrom)
-  }).size > 0
-
-  return isFeatured
-}
-
 export const isRecipeInStock = (recipe, stock, numPortions) => {
   const recipeStock = stock.getIn([recipe.get('id'), String(numPortions)])
 
