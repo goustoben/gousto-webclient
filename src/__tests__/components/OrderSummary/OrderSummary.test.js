@@ -222,7 +222,7 @@ describe('OrderSummary', () => {
   test('should check if css slide class is applied', () => {
     expect(wrapper.find('.slideUp').length).toEqual(1)
   })
-  test('should check if css slide class is NOT applied if orderSummaryCollapsed is false ', () => {
+  test('should NOT apply slideUp class if orderSummaryCollapsed is false', () => {
     wrapper.setProps({ orderSummaryCollapsed: false })
     expect(wrapper.find('.slideUp').length).toEqual(0)
   })
@@ -318,7 +318,7 @@ describe('OrderSummary footer', () => {
 
     expect(wrapper.find('footer a').text()).toBe('Hide order details')
   })
-  test('should not render footer whe orderSumaryCollapsed is false', () => {
+  test('should not render footer when orderSumaryCollapsed is false', () => {
     wrapper.setProps({ orderSummaryCollapsed: false })
     expect(wrapper.find('footer').length).toEqual(0)
   })
