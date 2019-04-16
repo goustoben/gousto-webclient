@@ -1,4 +1,4 @@
-export default {
+const actionTypes = {
   AFFILIATE_SOURCE_SET: 'AFFILIATE_SOURCE_SET',
 
   AUTH_PASSWORD_RESET: 'AUTH_PASSWORD_RESET',
@@ -310,3 +310,5 @@ export default {
   __REACT_ROUTER_LOCATION_CHANGE: '@@router/LOCATION_CHANGE', // React router,
   LOGGER_SET_UUID: 'LOGGER_SET_UUID'
 }
+
+export default actionTypes

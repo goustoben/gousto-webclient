@@ -1,7 +1,7 @@
-import actionTypes from './actionTypes'
 import { client, server, legacy } from 'config/globals'
 import { push, replace } from 'react-router-redux'
 import * as windowUtils from 'utils/window'
+import actionTypes from './actionTypes'
 
 function shouldUseReactRouter() {
   return client && !legacy()

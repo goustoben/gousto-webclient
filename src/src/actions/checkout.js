@@ -1,4 +1,3 @@
-/* eslint no-use-before-define: ["error", { "functions": false }] */
 import { createPreviewOrder } from 'apis/orders'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { fetchIntervals } from 'apis/customers'
@@ -11,9 +10,14 @@ import { basketResetPersistent } from 'utils/basket'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { getFormSyncErrors } from 'redux-form'
 import actionTypes from './actionTypes'
-import basketActions from './basket'
+import {
+  basketPreviewOrderChange,
+  basketPromoCodeChange,
+  basketPromoCodeAppliedChange,
+  basketReset
+} from './basket'
 import loginActions from './login'
-import userActions from './user'
+import { userSubscribe } from './user'
 import statusActions from './status'
 import pricingActions from './pricing'
 import tempActions from './temp'
@@ -36,6 +40,22 @@ const checkoutActions = {
   trackingOrderPlaceAttemptFailed,
   trackingOrderPlaceAttemptSucceeded,
   trackPromocodeChange
+}
+
+function resetDuplicateCheck() {
+  return (dispatch, getState) => {
+    dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, null))
+    if (getState().basket.get('promoCode')) {
+      const { pricing } = getState()
+
+      if (!isValidPromoCode(pricing.get('prices'))) {
+        dispatch(basketPromoCodeChange(''))
+        dispatch(basketPromoCodeAppliedChange(false))
+        dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
+        dispatch(pricingActions.pricingRequest())
+      }
+    }
+  }
 }
 
 export function checkoutClearErrors() {
@@ -74,13 +94,10 @@ export function checkoutAddressLookup(postcode) {
 
 export function checkoutCreatePreviewOrder() {
   return async (dispatch, getState) => {
-    const state = getState()
-    const basket = state.basket
-
-    const deliveryDays = state.boxSummaryDeliveryDays
+    const { basket, boxSummaryDeliveryDays } = getState()
     const date = basket.get('date')
     const slotId = basket.get('slotId')
-    const slot = getSlot(deliveryDays, date, slotId)
+    const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
 
     dispatch(pending(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, true))
     dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, null))
@@ -89,7 +106,7 @@ export function checkoutCreatePreviewOrder() {
         throw new Error(`Can't find any slot with id: ${slotId}`)
       }
       const deliverySlotId = slot.get('coreSlotId', '')
-      const deliveryDayId = deliveryDays.getIn([date, 'coreDayId'])
+      const deliveryDayId = boxSummaryDeliveryDays.getIn([date, 'coreDayId'])
       const recipes = basket.get('recipes')
       const quantity = basket.get('numPortions')
 
@@ -126,7 +143,7 @@ export function checkoutCreatePreviewOrder() {
 
       try {
         const { data: previewOrder = {} } = await createPreviewOrder(orderDetails)
-        dispatch(basketActions.basketPreviewOrderChange(String(previewOrder.order.id), previewOrder.order.boxId, previewOrder.surcharges))
+        dispatch(basketPreviewOrderChange(String(previewOrder.order.id), previewOrder.order.boxId, previewOrder.surcharges))
         dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, null))
       } catch (e) {
         const { message, code } = e
@@ -138,22 +155,6 @@ export function checkoutCreatePreviewOrder() {
       dispatch(error(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, e.message))
     } finally {
       dispatch(pending(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false))
-    }
-  }
-}
-
-function resetDuplicateCheck() {
-  return (dispatch, getState) => {
-    dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, null))
-    if (getState().basket.get('promoCode')) {
-      const { pricing } = getState()
-
-      if (!isValidPromoCode(pricing.get('prices'))) {
-        dispatch(basketActions.basketPromoCodeChange(''))
-        dispatch(basketActions.basketPromoCodeAppliedChange(false))
-        dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
-        dispatch(pricingActions.pricingRequest())
-      }
     }
   }
 }
@@ -199,15 +200,15 @@ export function checkoutSignup() {
     try {
       dispatch(checkoutActions.resetDuplicateCheck())
       dispatch(trackSignupPageChange('Submit'))
-      await dispatch(userActions.userSubscribe())
+      await dispatch(userSubscribe())
       await dispatch(checkoutActions.checkoutPostSignup())
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS }) // used for facebook tracking
     } catch (err) {
       logger.error({message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err]})
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
       if (err.code === '409-duplicate-details') {
-        dispatch(basketActions.basketPromoCodeChange(''))
-        dispatch(basketActions.basketPromoCodeAppliedChange(false))
+        dispatch(basketPromoCodeChange(''))
+        dispatch(basketPromoCodeAppliedChange(false))
         dispatch(error(actionTypes.CHECKOUT_ERROR_DUPLICATE, true))
         dispatch(pricingActions.pricingRequest())
       }
@@ -267,7 +268,7 @@ export function checkoutPostSignup() {
       throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)
     } finally {
       basketResetPersistent(Cookies)
-      dispatch(basketActions.basketReset())
+      dispatch(basketReset())
       dispatch(pending(actionTypes.CHECKOUT_SIGNUP_LOGIN, false))
     }
   }
