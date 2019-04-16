@@ -19,3 +19,5 @@ export const isRecipeInStock = (recipe, stock, numPortions) => {
 }
 
 export const isRecipeInBasket = (recipe, basketRecipes) => basketRecipes.has(recipe.get('id'))
+
+export const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require

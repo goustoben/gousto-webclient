@@ -50,7 +50,7 @@ module.exports = {
     { id: 'dairy-free', label: 'Dairy Free' },
     { id: 'gluten-free', label: 'Gluten Free' },
   ],
-  tenMinBanner: {
-    switchoverDate: '2019-03-31T00:00:00+00:00',
+  tasteOfItaly: {
+    switchoverDate: '2019-03-30T00:00:00+00:00',
   },
 }
