@@ -39,7 +39,7 @@ const propTypes = {
   ageVerified: PropTypes.bool.isRequired,
   selectedCategory: PropTypes.string.isRequired,
   filterProductCategory: PropTypes.func.isRequired,
-  saving: PropTypes.string, 
+  saving: PropTypes.bool, 
   saveRequired: PropTypes.bool, 
   onSave: PropTypes.func, 
   saveError: PropTypes.bool,  
