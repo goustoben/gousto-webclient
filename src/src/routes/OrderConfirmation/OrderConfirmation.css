@@ -9,12 +9,12 @@
 }
 
 .marketPlaceTitle {
- text-align: center;
- font-family: comfortaaRegularFontStack;
- font-weight: 700;
- font-size: 24px;
- -webkit-font-smoothing: antialiased;
- margin-bottom: 30px;
+  text-align: center;
+  font-family: comfortaaRegularFontStack;
+  font-weight: 700;
+  font-size: 24px;
+  -webkit-font-smoothing: antialiased;
+  margin-bottom: 30px;
 }
 
 .marketPlaceContent {
@@ -65,11 +65,11 @@
 }
 
 .mobileHide {
-	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
 }
 
 .mobileShow {
-	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+  composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
 }
 
 .orderDetailsMobile {
