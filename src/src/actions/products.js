@@ -51,9 +51,9 @@ const productsLoadProducts = (cutoffDate) => (
   async (dispatch, getState) => {
     const { basket, products, productsStock, auth } = getState()
     const currentProductsInBasket = basket.get('products')
-    const numberOfProductsinBasket = currentProductsInBasket.size
+    const isProductsLargerThanBasket = products.size <= currentProductsInBasket.size
   
-    if ((products.size <= numberOfProductsinBasket) ||
+    if ((isProductsLargerThanBasket) ||
       (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
