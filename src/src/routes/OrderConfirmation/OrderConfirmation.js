@@ -15,7 +15,7 @@ import OrderSummaryContainer from './components/OrderSummary/OrderSummaryContain
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
-  showOrderConfirmationRecipt: PropTypes.bool.isRequired,
+  showOrderConfirmationReceipt: PropTypes.bool.isRequired,
   headerDetails: PropTypes.oneOfType([
     PropTypes.shape({
       deliveryDate: PropTypes.string,
@@ -146,7 +146,7 @@ class OrderConfirmation extends PureComponent {
       basket,
       productsCategories,
       selectedCategory,
-      showOrderConfirmationRecipt,
+      showOrderConfirmationReceipt,
       saving, 
       saveRequired, 
       onSave, 
@@ -185,7 +185,7 @@ class OrderConfirmation extends PureComponent {
               />
             </section>
             <section className={classnames(css.orderDetails, css.mobileHide)}>
-              {showOrderConfirmationRecipt && <OrderSummaryContainer onOrderConfirmationMobile />}
+              {showOrderConfirmationReceipt && <OrderSummaryContainer onOrderConfirmationMobile />}
             </section>
             <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
               <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>

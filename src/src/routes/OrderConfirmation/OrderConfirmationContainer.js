@@ -20,7 +20,7 @@ const mapStateToProps = (state) => {
   return ({
     showHeader,
     headerDetails,
-    showOrderConfirmationRecipt: !!order,
+    showOrderConfirmationReceipt: !!order,
     basket: getBasket(state),
     productsCategories: getProductCategories(state),
     products: state.products.toJS(),
