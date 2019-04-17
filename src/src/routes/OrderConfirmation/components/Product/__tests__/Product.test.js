@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import { mount } from 'enzyme'
 import { Product } from '../Product.logic'
 import { mockProduct } from '../../config'
+import orderConfirmation from 'actions/orderConfirmation'
 global.scrollTo = jest.fn()
 
 jest.mock('../../ProductDetails', () => 'div')
@@ -77,6 +78,29 @@ describe('Product component', () => {
 
       wrapper.find('Buttons').prop('onAdd')()
       expect(toggleAgeVerificationPopUpSpy).toHaveBeenCalled()
+    })
+
+    test.only('should dispatch the order confirmation product tracking with the correct props', () => {
+      
+      wrapper.setProps({
+        basket: Immutable.fromJS({
+          products: {
+            "1234": 1,
+          }
+        }),
+        limitReached: false,
+        ageVerified: true,
+        product: {
+          ageRestricted: false, 
+          id: "1234"
+        }, 
+        basketProductAdd: jest.fn()
+      })
+
+      const { onAddProduct } = wrapper.instance()
+      const orderConfirmationProductTrackingSpy = jest.spyOn(orderConfirmation, 'orderConfirmationProductTracking')
+      onAddProduct()
+      expect(orderConfirmationProductTrackingSpy).toHaveBeenCalledWith('1234', true)
     })
   })
 
