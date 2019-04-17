@@ -1,1 +1,1 @@
-export { ReferAFriend } from './ReferAFriend'
+export { ReferAFriendContainer as ReferAFriend } from './ReferAFriendContainer'

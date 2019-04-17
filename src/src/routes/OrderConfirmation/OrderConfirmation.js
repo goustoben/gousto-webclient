@@ -163,7 +163,6 @@ class OrderConfirmation extends PureComponent {
       saving,
       saveRequired,
       saveError,
-      rafOffer
     } = this.props
     const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
@@ -199,7 +198,7 @@ class OrderConfirmation extends PureComponent {
             <section className={classnames(css.orderDetails, css.mobileHide)}>
               {showOrderConfirmationReceipt && <OrderSummaryContainer onOrderConfirmationMobile />}
             </section>
-            <ReferAFriend rafOffer={rafOffer} />
+            <ReferAFriend />
             <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
               <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
               <Overlay open={isOrderSummaryOpen} from="bottom">
