@@ -66,3 +66,8 @@
             - {{ stacks.network.output.privatebsubnet }}
       TaskDefinition:
         Ref: EcsTaskDefinition
+      LoadBalancers:
+              - ContainerName: nginx
+                ContainerPort: 80
+                TargetGroupArn:
+                  Ref:  ECSALBTargetGroup{{ exposure |title }}
