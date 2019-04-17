@@ -1,9 +1,10 @@
 import Immutable from 'immutable'
 import { fetchOrder } from 'apis/orders'
-import { orderDetails } from '../orderConfirmation'
+import { orderDetails, orderConfirmationProductTracking } from '../orderConfirmation'
 import recipeActions from '../recipes'
 import productActions from '../products'
 import basketActions from '../basket'
+import actionTypes from '../actionTypes'
 
 jest.mock('../recipes', () => ({
   recipesLoadRecipesById: jest.fn()
@@ -83,5 +84,39 @@ describe('orderDetails', () => {
     const productsLoadProductsSpy = jest.spyOn(productActions, 'productsLoadProducts')
     await orderDetails('1234')(dispatchSpy, getStateSpy)
     expect(productsLoadProductsSpy).not.toHaveBeenCalled()
+  })
+})
+
+describe('orderConfirmationProductTracking', () => {
+  const dispatch = jest.fn()
+
+  test('should return actionType as MarketProduct Added if boolean value is true', () => {
+    const productId = '1234'
+    const added = true
+
+    orderConfirmationProductTracking(productId, added)(dispatch)
+    
+    expect(dispatch).toHaveBeenCalledWith({
+      type: actionTypes.BASKET_PRODUCT_TRACKING,
+      trackingData: {
+        actionType: 'MarketProduct Added',
+        productId: '1234'
+      }
+    })
+  })
+
+  test('should return actionType as MarketProduct Removed if boolean value is true', () => {
+    const productId = '1234'
+    const added = false
+
+    orderConfirmationProductTracking(productId, added)(dispatch)
+    
+    expect(dispatch).toHaveBeenCalledWith({
+      type: actionTypes.BASKET_PRODUCT_TRACKING,
+      trackingData: {
+        actionType: 'MarketProduct Removed',
+        productId: '1234'
+      }
+    })
   })
 })
