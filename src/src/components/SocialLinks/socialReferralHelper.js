@@ -1,7 +1,7 @@
 import globals from 'config/globals'
 import actionTypes from 'actions/actionTypes'
 import fbSettings from 'config/template'
-import defaultOffer from './config'
+import defaultOffer from 'config/referral'
 
 export const getMessage = (offer) => {
   const firstBoxOffer = offer ? offer.get('firstBoxDiscountFormatted') : defaultOffer.get('firstBoxDiscountFormatted')
@@ -37,8 +37,8 @@ export const getMessengerReferralLink = (referralCode, userFirstName, trackingRe
 
   const messengerUTM = '&utm_source=messenger&utm_medium=sharebutton_raf_page&utm_campaign=raf_messenger_share'
   const referralLink = getReferralLink(referralCode, userFirstName, messengerUTM)
-  
-  if(device === 'desktop') {
+
+  if (device === 'desktop') {
     if (globals.client) {
       window.FB.ui({
         method: 'send',
