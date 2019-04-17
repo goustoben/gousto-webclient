@@ -51,32 +51,6 @@ jobs:
             - project
             - .circlerc
 
-  build-application:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Setup common
-          command: source ~/.circlerc && setup/setup-common.sh
-      - run:
-          name: Setup isomorphic
-          command: source ~/.circlerc && setup/setup-isomorphic.sh
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - .circlerc
-
-  code-analysis:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Code analysis
-          command: source ~/.circlerc && /bin/bash ./ci_scripts/code-analysis.sh
-
   test-isomorphic-mocha:
     docker: *gousto_build_image
     steps:
@@ -100,23 +74,35 @@ jobs:
             - project
             - .circlerc
 
-  test-e2e-selenium:
+  build-application:
     docker: *gousto_build_image
     steps:
       - attach_workspace:
           at: ~/
       - run:
-          name: Run e2e selenium tests
-          command: source ~/.circlerc && scripts/validate.sh
+          name: Setup common
+          command: source ~/.circlerc && setup/setup-common.sh
+      - run:
+          name: Setup isomorphic
+          command: source ~/.circlerc && setup/setup-isomorphic.sh
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .circlerc
 
-  deploy:
-    docker: *gousto_build_image
+  build-nginx-image:
+    docker: *gousto_build_image_docker
     steps:
+      - setup_remote_docker
       - attach_workspace:
           at: ~/
-      - run: source ~/.circlerc && scripts/deploy.sh
+      - run:
+          name: Create & deploy image
+          command: source ~/.circlerc && python ./ci_scripts/create_image.py --name nginx
+          no_output_timeout: 10m
 
-  build-image:
+  build-webclient-image:
     docker: *gousto_build_image_docker
     steps:
       - setup_remote_docker
@@ -136,7 +122,40 @@ jobs:
           command: source ~/.circlerc && scripts/build-docker.sh
       - run:
           name: Create & deploy image
-          command: source ~/.circlerc && python ./ci_scripts/create_image.py && python ./ci_scripts/deploy_containers.py --service webclient
+          command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
+          no_output_timeout: 20m
+
+  code-analysis:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Code analysis
+          command: source ~/.circlerc && /bin/bash ./ci_scripts/code-analysis.sh
+
+  test-e2e-selenium:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run e2e selenium tests
+          command: source ~/.circlerc && scripts/validate.sh
+
+  deploy-application:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: source ~/.circlerc && scripts/deploy.sh
+
+  deploy-containers:
+    docker: *gousto_build_image
+    steps:
+      - run:
+          name: Deploy containers to ECS
+          command: python ./ci_scripts/deploy_container.py --service webclient
           no_output_timeout: 20m
 
 workflows:
@@ -209,10 +228,29 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
+      - build-nginx-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - build-webclient-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
       - code-analysis:
           context: gousto-beta-aws-app-circleci
           requires:
             - test-isomorphic-jest
+            - test-isomorphic-mocha
           filters:
             branches:
               only:
@@ -228,7 +266,7 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
-      - deploy:
+      - deploy-application:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-application
@@ -238,19 +276,26 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
+      - deploy-containers:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-nginx-image
+            - build-webclient-image
+            - code-analysis
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
       - test-e2e-selenium:
           context: gousto-beta-aws-app-circleci
           requires:
-            - deploy
+            - deploy-application
+            - deploy-containers
           filters:
             branches:
               only:
                 - develop
-      - build-image:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-isomorphic-mocha
-            - test-isomorphic-jest
 
 
   production-environment:
@@ -277,6 +322,22 @@ workflows:
             branches:
               only:
                 - master
+      - build-nginx-image:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - master
+      - build-webclient-image:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - master
       - build-application:
           context: gousto-prod-aws-app-circleci
           requires:
@@ -286,10 +347,19 @@ workflows:
             branches:
               only:
                 - master
-      - deploy:
+      - deploy-application:
           context: gousto-prod-aws-app-circleci
           requires:
             - build-application
+          filters:
+            branches:
+              only:
+                - master
+      - deploy-containers:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - build-nginx-image
+            - build-webclient-image
           filters:
             branches:
               only:
