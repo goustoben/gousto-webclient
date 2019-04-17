@@ -28,6 +28,8 @@ const homeLoadCarousel = () => (
   }
 )
 
-export default {
+const homeActions = {
   homeLoadCarousel,
 }
+
+export default homeActions

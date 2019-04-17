@@ -1,7 +1,5 @@
 import React from 'react'
 
-import sinon from 'sinon'
-
 import { shallow } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import OrderSummary from 'OrderSummary'
@@ -68,6 +66,7 @@ describe('OrderSummary', () => {
 			  onSave={() => 1}
 			  saving
 			  saveError={false}
+			  orderSummaryCollapsed
 			/>,
     )
   })
@@ -220,6 +219,13 @@ describe('OrderSummary', () => {
     wrapper.setProps({ saving: false })
     expect(wrapper.find(SaveButton).prop('saving')).toEqual(false)
   })
+  test('should check if css slide class is applied', () => {
+    expect(wrapper.find('.slideUp').length).toEqual(1)
+  })
+  test('should NOT apply slideUp class if orderSummaryCollapsed is false', () => {
+    wrapper.setProps({ orderSummaryCollapsed: false })
+    expect(wrapper.find('.slideUp').length).toEqual(0)
+  })
 })
 
 describe('OrderSummary SectionHeader', () => {
@@ -278,6 +284,7 @@ describe('OrderSummary footer', () => {
 			  recipes={{}}
 			  deliveryTotalPrice={'2.50'}
 			  onSave={function() {}}
+			  orderSummaryCollapsed
 			/>,
     )
   })
@@ -310,5 +317,9 @@ describe('OrderSummary footer', () => {
     wrapper.setState({ orderSummaryOpen: true })
 
     expect(wrapper.find('footer a').text()).toBe('Hide order details')
+  })
+  test('should not render footer when orderSumaryCollapsed is false', () => {
+    wrapper.setProps({ orderSummaryCollapsed: false })
+    expect(wrapper.find('footer').length).toEqual(0)
   })
 })

@@ -1,6 +1,5 @@
-/* eslint no-use-before-define: ["error", { "functions": false }] */
-import actionTypes from './actionTypes'
 import logger from 'utils/logger'
+import actionTypes from './actionTypes'
 
 const statusActions = {
   pending,

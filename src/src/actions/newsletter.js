@@ -1,5 +1,5 @@
-import actionTypes from './actionTypes'
 import newsletterSignup from 'apis/newsletter'
+import actionTypes from './actionTypes'
 
 const newsletterSignupPending = () => ({
   type: actionTypes.NEWSLETTER_SIGNUP_PENDING,
@@ -14,7 +14,7 @@ const newsletterSignupError = (message) => ({
   message,
 })
 
-export default {
+const newsletterActions = {
   newsletterSignup: (email) => (
     async (dispatch, getState) => {
       const accessToken = getState().auth.get('accessToken')
@@ -33,3 +33,4 @@ export default {
     }
   ),
 }
+export default newsletterActions

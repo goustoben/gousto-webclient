@@ -16,6 +16,8 @@ function cookiePolicyAcceptanceChange(isAccepted) {
   }
 }
 
-export default {
+const cookieActions = {
   cookiePolicyAcceptanceChange,
 }
+
+export default cookieActions
