@@ -18,16 +18,16 @@
 	background-size: cover;
 }
 
-.everyday-favourites {
+.taste-of-italy {
 	composes: container;
-	background-image: url('media/images/menu/ef-banner-mobile.jpg');
+	background-image: url('media/images/menu/taste-of-italy-banner-mobile.jpg');
 
 	@media ScreenXXSMin {
-		background-image: url('media/images/menu/ef-banner-tablet.jpg')
+		background-image: url('media/images/menu/taste-of-italy-banner-tablet.jpg')
 	}
 
 	@media ScreenMDMin {
-		background-image: url('media/images/menu/ef-banner-desktop.jpg');
+		background-image: url('media/images/menu/taste-of-italy-banner-desktop.jpg');
 	}
 }
 
