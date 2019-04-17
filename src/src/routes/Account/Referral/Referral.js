@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import actionTypes from 'actions/actionTypes'
 import Loading from 'routes/Menu/Loading'
-import { UserRAFLink } from './UserRAFLink'
-import { SocialButton } from './SocialButton'
-import { ReferAFriendModal } from './ReferAFriendModal'
+import { getReferralLink } from 'components/SocialLinks/socialReferralHelper'
+import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
+import { UserRAFLink } from 'components/UserRAFLink'
 import { RAFTitle } from './RAFTitle'
 import css from './Referral.css'
-import Overlay from '../../../components/Overlay/Overlay'
+
 import RAFOffer from './RAFOffer'
 import defaultOffer from './config'
-import ShareYourLinkModal from './ShareYourLinkModal'
-import { getReferralLink, getFacebookReferralLink, getMessengerReferralLink } from './socialReferralHelper'
 import { HowItWorks } from './HowItWorks'
 import { DoubleCreditCountdown } from './DoubleCreditCountdown'
 
@@ -23,6 +20,7 @@ const proptypes = {
   trackingReferFriend: PropTypes.func,
   trackingReferFriendSocialSharing: PropTypes.func,
   isLoading: PropTypes.bool,
+  device: PropTypes.string,
 }
 
 const defaultProps = {
@@ -32,29 +30,6 @@ const defaultProps = {
 }
 
 class Referral extends Component {
-  state = { isEmailModalOpen: false, isShareYourLinkModalOpen: false }
-
-  openEmailModal = () => {
-    const { trackingReferFriendSocialSharing } = this.props
-    trackingReferFriendSocialSharing(actionTypes.REFER_FRIEND_LINK_SHARE, 'ReferFriendLink Share', 'Email')
-    this.setState({ isEmailModalOpen: true })
-  }
-
-  closeEmailModal = () => {
-    this.setState({ isEmailModalOpen: false })
-  }
-
-  openShareYourLinkModal = () => {
-    const { trackingReferFriend } = this.props
-    trackingReferFriend(actionTypes.REFER_FRIEND_SHARE_SHEET_OPENED, 'ReferFriendShareSheet Opened')
-    this.setState({ isShareYourLinkModalOpen: true })
-  }
-
-  closeShareYourLinkModal = () => {
-    const { trackingReferFriend } = this.props
-    trackingReferFriend(actionTypes.REFER_FRIEND_SHARE_SHEET_CLOSED, 'ReferFriendShareSheet Closed')
-    this.setState({ isShareYourLinkModalOpen: false })
-  }
 
   fetchReferralOffer = () => {
     const { userFetchReferralOffer } = this.props
@@ -72,10 +47,9 @@ class Referral extends Component {
       userFirstName,
       trackingReferFriend,
       trackingReferFriendSocialSharing,
-      isLoading, 
+      isLoading,
       device
     } = this.props
-    const { isEmailModalOpen, isShareYourLinkModalOpen } = this.state
     const offerTitle = rafOffer.get('title')
     const offerCredit = rafOffer.get('creditFormatted')
     const offerDetails = rafOffer.get('details')
@@ -99,37 +73,24 @@ class Referral extends Component {
               <div className={expiry ? css.iconReferDouble : css.iconRefer} />
               <RAFOffer offer={rafOffer} />
             </div>
-            {expiry && <DoubleCreditCountdown description={offerDescription} expiry={expiry} fetchOffer={this.fetchReferralOffer}/>}
+            {expiry && <DoubleCreditCountdown description={offerDescription} expiry={expiry} fetchOffer={this.fetchReferralOffer} />}
             <div className={expiry ? css.rafCounterPresent : css.rafRow}>
               <UserRAFLink classContainer={css.rafLink} classLinkContainer={css.linkContainer} referralCode={referralCode} trackingReferFriend={trackingReferFriend}>
                 <div id="referral-code-box">
                   <span className={`${css.displayedLink}`}>{displayLink}</span>
                 </div>
               </UserRAFLink>
-              <div className={`${css.socialButtons} ${css.mobileHide}`}>
-                <SocialButton text="Facebook" type="facebook" onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
-                <SocialButton text="Messenger" type="facebook-messenger" onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing, device)} />
-                <SocialButton text="Email" type="email" onClick={this.openEmailModal} />
-                <Overlay open={isEmailModalOpen} from="top">
-                  <ReferAFriendModal
-                    onClose={this.closeEmailModal}
-                    credit={offerCredit}
-                  />
-                </Overlay>
-              </div>
+              <SocialShareButtons
+                referralCode={referralCode}
+                userFirstName={userFirstName}
+                device={device}
+                offerCredit={offerCredit}
+                trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
+                trackingReferFriend={trackingReferFriend}
+              />
             </div>
           </div>
           <HowItWorks details={offerDetails} />
-
-          <div className={`${css.mobileCTAContainer} ${css.mobileShow}`}>
-            <div className={css.mobileCTA} onClick={this.openShareYourLinkModal}>
-              <span className={css.shareYourLinkText}>SHARE YOUR LINK</span>
-            </div>
-          </div>
-
-          <Overlay open={isShareYourLinkModalOpen} from="bottom">
-            <ShareYourLinkModal onClose={this.closeShareYourLinkModal} referralCode={referralCode} />
-          </Overlay>
         </div>
       )
   }

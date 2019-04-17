@@ -1,7 +1,5 @@
-@value Basa, BlueBase, Mackerel, White, RafBgDefault from 'styles/colors.css';
+@value Basa, White, RafBgDefault from 'styles/colors.css';
 @value ScreenSMMin, ScreenXXSMax, MinBreakPointSM, ScreenMLMax, ScreenMLMin from 'styles/screenSizes.css';
-@value SpacingXXS from 'sass-loader!styles/spacing.scss';
-/* 5px, 20px */
 
 .containerBackground {
 	background-color: RafBgDefault;
@@ -115,18 +113,6 @@
 	composes: marginXXLBottom from 'sass-loader!styles/spacing.scss';
 }
 
- .socialButtons {
-  height: 40px;
-	display: flex;
-	margin: 20px auto;
-
-	@media ScreenMLMin {
-		padding-left: 15px;
-		margin: 0 0 0 30px;
-		border-left: 1px solid Basa;
-	}
-}
-
 .mobileHide {
 	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
 }
@@ -135,34 +121,6 @@
 	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
 }
 
-.mobileCTAContainer {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: 0 auto;
-	border-top: 1px Mackerel solid;
-	background-color: White;
-	padding: 12px 0;
-	z-index: 1000;
-}
-
-.mobileCTA {
-	width: 80%;
-	padding: 14px 0;
-	margin: 0 auto;
-	border-radius: SpacingXXS;
-	background-color:BlueBase;
-	cursor: pointer;
-	text-align: center;
-}
-
-.shareYourLinkText {
-    color: White;
-    font-family: Avenir;
-    font-size: 16px;
-    font-weight: bold;
-}
 .rafLink {
 	display: flex;
 	flex-direction: column;
