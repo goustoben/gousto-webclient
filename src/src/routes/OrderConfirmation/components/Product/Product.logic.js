@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
 import configProducts from 'config/products'
+import { orderConfirmationProductTracking } from 'actions/orderConfirmation'
 import ProductDetailContainer from '../ProductDetails'
 import { ProductPresentation } from './Product.presentation'
 import css from './Product.css'
@@ -67,7 +68,7 @@ class Product extends PureComponent {
 
   isAgeVerificationRequired = () => {
     const { product, ageVerified } = this.props
-    const { ageRestricted} = product
+    const { ageRestricted } = product
 
     return !ageVerified && ageRestricted
   }
@@ -75,22 +76,32 @@ class Product extends PureComponent {
   onAddProduct = () => {
     const { product, basketProductAdd, limitReached, toggleAgeVerificationPopUp, temp } = this.props
     const isAgeVerificationRequired = this.isAgeVerificationRequired()
-
+    console.log('onaddproduct' ) // eslint-disable-line
     if(!limitReached){
+      console.log('limitereached') // eslint-disable-line
       if (isAgeVerificationRequired) {
+        console.log('isageverificationrequired') // eslint-disable-line
         toggleAgeVerificationPopUp()
         temp('productId', product.id)
         temp('addProduct', true)
       } else {
         basketProductAdd(product.id)
+        orderConfirmationProductTracking(product.id, true)
+        console.log('ELSE') // eslint-disable-line
       }
     }
+    console.log('ENDDDDDDDDD') // eslint-disable-line
+    console.log('ENDDDDDDDDD') // eslint-disable-line
+    console.log('ENDDDDDDDDD') // eslint-disable-line
+    console.log('ENDDDDDDDDD') // eslint-disable-line
+    console.log('ENDDDDDDDDDÛß') // eslint-disable-line
   }
 
   onRemoveProduct = () => {
     const { product, basketProductRemove } = this.props
     const { id } = product
     basketProductRemove(id)
+    orderConfirmationProductTracking(product.id, false)
   }
 
   getProductCardContent = () => {
