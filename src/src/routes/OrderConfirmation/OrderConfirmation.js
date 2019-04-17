@@ -8,10 +8,11 @@ import { Dropdown } from 'goustouicomponents'
 import CloseButton from 'Overlay/CloseButton'
 import SaveButton from 'OrderSummary/SaveButton'
 import css from './OrderConfirmation.css'
-import { OrderConfirmationHeader } from './OrderConfirmationHeader'
+import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
 import { ProductList } from './components/ProductList'
 import { Navbar } from './components/Navbar'
 import OrderSummaryContainer from './components/OrderSummary/OrderSummaryContainer'
+import { ReferAFriend } from './components/ReferAFriend'
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
@@ -39,10 +40,10 @@ const propTypes = {
   ageVerified: PropTypes.bool.isRequired,
   selectedCategory: PropTypes.string.isRequired,
   filterProductCategory: PropTypes.func.isRequired,
-  saving: PropTypes.bool, 
-  saveRequired: PropTypes.bool, 
-  onSave: PropTypes.func, 
-  saveError: PropTypes.bool, 
+  saving: PropTypes.bool,
+  saveRequired: PropTypes.bool,
+  onSave: PropTypes.func,
+  saveError: PropTypes.bool,
   isOrderConfirmation: PropTypes.bool,
 }
 
@@ -61,6 +62,11 @@ class OrderConfirmation extends PureComponent {
       filteredProducts: null,
       isOrderSummaryOpen: false,
     }
+  }
+
+  componentDidMount() {
+    const { userFetchReferralOffer } = this.props
+    userFetchReferralOffer()
   }
 
   toggleAgeVerificationPopUp = () => {
@@ -154,13 +160,13 @@ class OrderConfirmation extends PureComponent {
       productsCategories,
       selectedCategory,
       showOrderConfirmationReceipt,
-      saving, 
-      saveRequired, 
-      saveError 
+      saving,
+      saveRequired,
+      saveError,
+      rafOffer
     } = this.props
     const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
-
     const categories = this.getCategories()
 
     return (
@@ -193,17 +199,18 @@ class OrderConfirmation extends PureComponent {
             <section className={classnames(css.orderDetails, css.mobileHide)}>
               {showOrderConfirmationReceipt && <OrderSummaryContainer onOrderConfirmationMobile />}
             </section>
+            <ReferAFriend rafOffer={rafOffer} />
             <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
               <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
               <Overlay open={isOrderSummaryOpen} from="bottom">
                 <div className={css.orderDetailsMobileContent}>
                   <div className={css.orderDetailsCloseButton}>
                     <CloseButton onClose={() => this.toggleOrderSummary()} />
-                  </div> 
+                  </div>
                   <OrderSummaryContainer orderSummaryCollapsed={false} onOrderConfirmationMobile />
                 </div>
               </Overlay>
-              <SaveButton 
+              <SaveButton
                 onOrderConfirmationMobile
                 saving={saving}
                 saveRequired={saveRequired}
