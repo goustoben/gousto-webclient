@@ -51,6 +51,6 @@ module.exports = {
     { id: 'gluten-free', label: 'Gluten Free' },
   ],
   tasteOfItaly: {
-    switchoverDate: '2019-03-30T00:00:00+00:00',
+    switchoverDate: '2019-04-30T00:00:00+00:00',
   },
 }
