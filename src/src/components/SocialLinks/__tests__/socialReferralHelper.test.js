@@ -1,6 +1,5 @@
-import React from 'react'
-import {getMessage, getReferralLink, getWhatsappReferralLink, getTextMessageReferralLink} from 'routes/Account/Referral/socialReferralHelper'
 import Immutable from 'immutable'
+import { getMessage, getReferralLink, getWhatsappReferralLink, getTextMessageReferralLink } from '../socialReferralHelper'
 
 describe('Social Referral Helper', () => {
   const offer = Immutable.fromJS({
@@ -27,11 +26,11 @@ describe('Social Referral Helper', () => {
   describe('getReferralLink', () => {
 
     test('should return correct referral link', () => {
-      expect(getReferralLink(referralCode, firstName, UTM )).toEqual(`cook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=test`)
+      expect(getReferralLink(referralCode, firstName, UTM)).toEqual(`cook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=test`)
     })
 
     test('should return correct referral link when first name and UTM not provided', () => {
-      expect(getReferralLink(referralCode )).toEqual('cook.gousto.co.uk/raf/?promo_code=TEST')
+      expect(getReferralLink(referralCode)).toEqual('cook.gousto.co.uk/raf/?promo_code=TEST')
     })
   })
 
@@ -44,7 +43,7 @@ describe('Social Referral Helper', () => {
     test('should return correct referral link', () => {
       getWhatsappReferralLink(referralCode, firstName, offer, mockTrackingFunc)
 
-      const message ='I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\ncook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=whatsapp&utm_medium=sharebutton_raf_page&utm_campaign=raf_whatsapp_share'
+      const message = 'I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\ncook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=whatsapp&utm_medium=sharebutton_raf_page&utm_campaign=raf_whatsapp_share'
       expect(mockAssign).toHaveBeenCalledWith(`https://wa.me/?text=${encodeURIComponent(message)}`)
     })
   })
@@ -58,7 +57,7 @@ describe('Social Referral Helper', () => {
     test('should return correct referral link', () => {
       getTextMessageReferralLink(referralCode, firstName, offer, mockTrackingFunc)
 
-      const message ='I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\ncook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=text_message&utm_medium=sharebutton_raf_page&utm_campaign=raf_text_message_share'
+      const message = 'I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\ncook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=text_message&utm_medium=sharebutton_raf_page&utm_campaign=raf_text_message_share'
       expect(mockAssign).toHaveBeenCalledWith(`sms:?&body=${encodeURIComponent(message)}`)
     })
   })

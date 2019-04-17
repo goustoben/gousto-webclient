@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import ReferAFriend from 'components/ReferAFriend'
 import { ShareYourLinkModal } from '../ShareYourLinkModal'
-import ReferAFriend from '../../ReferAFriend'
 import { LinkRow } from '../LinkRow'
 
 describe('Share Your Link Modal', () => {
@@ -21,7 +21,7 @@ describe('Share Your Link Modal', () => {
 
     test('should render row containing email icon and text label', () => {
       const emailRow = wrapper.find('div.row').at(1)
-      const emailSvg = emailRow.find('Svg').find({fileName:'icon-email-colour'})
+      const emailSvg = emailRow.find('Svg').find({ fileName: 'icon-email-colour' })
 
       expect(emailSvg.length).toEqual(1)
       expect(emailRow.find('span').text()).toEqual('E-mail')
@@ -29,8 +29,8 @@ describe('Share Your Link Modal', () => {
 
     test('should render row containing link icon and text label', () => {
       const copyLinkRow = wrapper.find('UserRAFLink')
-      const linkSvg = copyLinkRow.find('Svg').find({fileName:'icon-link-colour'})
-      
+      const linkSvg = copyLinkRow.find('Svg').find({ fileName: 'icon-link-colour' })
+
       expect(linkSvg.length).toEqual(1)
       expect(copyLinkRow.find('span').text()).toEqual('Copy link')
     })
