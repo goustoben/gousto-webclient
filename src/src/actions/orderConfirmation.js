@@ -1,11 +1,32 @@
 import Immutable from 'immutable'
+import { push } from 'react-router-redux'
+
+import config from 'config/routes'
 import ordersApi from 'apis/orders'
 import logger from 'utils/logger'
 import userUtils from 'utils/user'
-import productActions from './products'
+import { redirect } from 'utils/window'
+import { getOrderConfirmation } from 'selectors/features'
 import { basketOrderLoad } from './basket'
+import productActions from './products'
 import recipeActions from './recipes'
+import tempActions from './temp'
 import actionTypes from './actionTypes'
+
+export const orderConfirmationRedirect = (orderId, orderAction) => (
+  (dispatch, getState) => {
+    if (getOrderConfirmation(getState())) {
+      dispatch(orderDetails(orderId))
+
+      const summaryUrl = config.client.orderConfirmation.replace(':orderId', orderId)
+      dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
+      dispatch(tempActions.temp('showHeader', true))
+    } else {
+      const summaryUrl = config.client.orderSummary.replace(':orderId', orderId)
+      redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
+    }
+  }
+)
 
 export const orderDetails = (orderId) => (
   async (dispatch, getState) => {
@@ -35,9 +56,9 @@ export const orderDetails = (orderId) => (
 export const orderConfirmationProductTracking = (productId, added) => (
   (dispatch) => {
     dispatch({
-      type: actionTypes.BASKET_PRODUCT_TRACKING, 
+      type: actionTypes.BASKET_PRODUCT_TRACKING,
       trackingData: {
-        actionType: added ? 'MarketProduct Added' : 'MarketProduct Removed', 
+        actionType: added ? 'MarketProduct Added' : 'MarketProduct Removed',
         product_id: productId,
       },
     })
@@ -57,9 +78,9 @@ export const orderConfirmationUpdateOrderTracking = () => (
     const orderNumber = basketOrderDetails.get('number')
 
     dispatch({
-      type: actionTypes.ORDER_CONFIRMATION_EDITED_TRACKING, 
+      type: actionTypes.ORDER_CONFIRMATION_EDITED_TRACKING,
       trackingData: {
-        actionType: 'Order Edited', 
+        actionType: 'Order Edited',
         order_id: orderId,
         order_total: orderTotal,
         promo_code: promoCode,
@@ -70,9 +91,3 @@ export const orderConfirmationUpdateOrderTracking = () => (
     })
   }
 )
-
-export default {
-  orderDetails, 
-  orderConfirmationProductTracking,
-  orderConfirmationUpdateOrderTracking
-}
