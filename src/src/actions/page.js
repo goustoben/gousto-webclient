@@ -1,6 +1,6 @@
 import actionTypes from './actionTypes'
 
-export default {
+const pageActions = {
   pageChange: newLocation => ({
     type: actionTypes.PAGE_CHANGED,
     newLocation,
@@ -10,3 +10,5 @@ export default {
     },
   }),
 }
+
+export default pageActions

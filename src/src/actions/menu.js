@@ -1,4 +1,3 @@
-/* eslint no-use-before-define: ["error", { "functions": false }] */
 import Immutable from 'immutable'
 import { fetchRecipes, fetchRecipeStock, fetchAvailableDates } from 'apis/recipes'
 import * as boxPricesApi from 'apis/boxPrices'
@@ -16,7 +15,17 @@ import statusActions from './status'
 import { collectionFilterChange } from './filters'
 import { redirect } from './redirect'
 import products from './products'
-import basket from './basket'
+import {
+  basketReset,
+  basketDateChange,
+  basketNumPortionChange,
+  basketRecipeAdd,
+  basketProductAdd,
+  basketIdChange,
+  basketOrderLoaded,
+  basketPostcodeChange,
+  basketSlotChange
+} from './basket'
 import tempActions from './temp'
 import actionTypes from './actionTypes'
 
@@ -242,7 +251,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
     if (reqData['filters[available_on]']) {
       const date = reqData['filters[available_on]']
       const accessToken = getState().auth.get('accessToken')
-      const features = getState().features
+      const { features } = getState()
 
       const startTime = new Date()
 
@@ -322,11 +331,11 @@ export function menuLoadOrderDetails(orderId) {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
-    dispatch(basket.basketReset())
+    dispatch(basketReset())
     dispatch(menuActions.menuCutoffUntilReceive(order.whenCutoff))
 
-    dispatch(basket.basketDateChange(order.deliveryDate))
-    dispatch(basket.basketNumPortionChange(order.box.numPortions, orderId))
+    dispatch(basketDateChange(order.deliveryDate))
+    dispatch(basketNumPortionChange(order.box.numPortions, orderId))
 
     order.recipeItems.forEach(recipe => {
       const qty = Math.round(parseInt(recipe.quantity, 10) / parseInt(order.box.numPortions, 10))
@@ -337,7 +346,7 @@ export function menuLoadOrderDetails(orderId) {
       }))
 
       for (let i = 1; i <= qty; i++) {
-        dispatch(basket.basketRecipeAdd(recipe.recipeId))
+        dispatch(basketRecipeAdd(recipe.recipeId))
       }
     })
 
@@ -349,13 +358,13 @@ export function menuLoadOrderDetails(orderId) {
       await dispatch(products.productsLoadCategories())
       productItems.forEach((product) => {
         for (let i = 0; i < parseInt(product.quantity, 10); i++) {
-          dispatch(basket.basketProductAdd(product.itemableId))
+          dispatch(basketProductAdd(product.itemableId))
         }
       })
     }
 
-    dispatch(basket.basketIdChange(order.id))
-    dispatch(basket.basketOrderLoaded(order.id))
+    dispatch(basketIdChange(order.id))
+    dispatch(basketOrderLoaded(order.id))
 
     const grossTotal = order && order.prices && order.prices.grossTotal
     const netTotal = order && order.prices && order.prices.total
@@ -363,10 +372,10 @@ export function menuLoadOrderDetails(orderId) {
     dispatch(tempActions.temp('originalGrossTotal', grossTotal))
     dispatch(tempActions.temp('originalNetTotal', netTotal))
 
-    await dispatch(basket.basketPostcodeChange(order.shippingAddress.postcode)).then(() => {
+    await dispatch(basketPostcodeChange(order.shippingAddress.postcode)).then(() => {
       const coreSlotId = order.deliverySlot.id
       const slotId = findSlot(getState().boxSummaryDeliveryDays, coreSlotId)
-      dispatch(basket.basketSlotChange(slotId))
+      dispatch(basketSlotChange(slotId))
     })
   }
 }

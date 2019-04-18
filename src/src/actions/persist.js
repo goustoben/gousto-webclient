@@ -1,6 +1,6 @@
 import actionTypes from './actionTypes'
 
-export default {
+const persistActions = {
   simpleHeader: (persist) => (
     (dispatch) => {
       dispatch({
@@ -10,3 +10,5 @@ export default {
     }
   ),
 }
+
+export default persistActions

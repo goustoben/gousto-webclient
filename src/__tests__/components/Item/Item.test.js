@@ -8,80 +8,80 @@ import Image from 'Image/Image'
 describe('Item', () => {
   test('should render title', () => {
     const wrapper = shallow(
-			<Item
-			  type="recipe"
-			  available
-			  media={Immutable.fromJS({
-			    images: [{ urls: ['', '', { src: 'image_path' }] }],
-			  })}
-			  title="Chicken Curry"
-			  quantity={2}
-			  onRemove={function() {}}
-			/>,
+      <Item
+        type="recipe"
+        available
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+        title="Chicken Curry"
+        quantity={2}
+        onRemove={function () { }}
+      />,
     )
     expect(wrapper.text().indexOf('Chicken Curry') > -1).toEqual(true)
   })
 
   test('should render portion info', () => {
     const wrapper = shallow(
-			<Item
-			  type="recipe"
-			  available
-			  media={Immutable.fromJS({
-			    images: [{ urls: ['', '', { src: 'image_path' }] }],
-			  })}
-			  title="Chicken Curry"
-			  quantity={2}
-			  onRemove={function() {}}
-			/>,
+      <Item
+        type="recipe"
+        available
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+        title="Chicken Curry"
+        quantity={2}
+        onRemove={function () { }}
+      />,
     )
     expect(wrapper.text().indexOf('2 servings') > -1).toEqual(true)
   })
 
   test('should show me a minus button if has onRemove function', () => {
     const wrapper = shallow(
-			<Item
-			  type="recipe"
-			  available
-			  media={Immutable.fromJS({
-			    images: [{ urls: ['', '', { src: 'image_path' }] }],
-			  })}
-			  title="Chicken Curry"
-			  quantity={2}
-			  onRemove={function() {}}
-			/>,
+      <Item
+        type="recipe"
+        available
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+        title="Chicken Curry"
+        quantity={2}
+        onRemove={function () { }}
+      />,
     )
     expect(wrapper.find('span').length).toEqual(1)
   })
 
   test('should not show me a minus button if doesnt have a onRemove function', () => {
     const wrapper = shallow(
-			<Item
-			  type="recipe"
-			  available
-			  media={Immutable.fromJS({
-			    images: [{ urls: ['', '', { src: 'image_path' }] }],
-			  })}
-			  title="Chicken Curry"
-			  quantity={2}
-			/>,
+      <Item
+        type="recipe"
+        available
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+        title="Chicken Curry"
+        quantity={2}
+      />,
     )
     expect(wrapper.find('span').length).toEqual(0)
   })
 
   test('should show me a link if a url is set', () => {
     const wrapper = shallow(
-			<Item
-			  type="recipe"
-			  available
-			  url="http://test.com"
-			  media={Immutable.fromJS({
-			    images: [{ urls: ['', '', { src: 'image_path' }] }],
-			  })}
-			  title="Chicken Curry"
-			  quantity={2}
-			  onRemove={function() {}}
-			/>,
+      <Item
+        type="recipe"
+        available
+        url="http://test.com"
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+        title="Chicken Curry"
+        quantity={2}
+        onRemove={function () { }}
+      />,
     )
     expect(
       wrapper
@@ -94,25 +94,25 @@ describe('Item', () => {
   test('should show me a minus button which when clicked calls the onRemove function prop ', () => {
     const onRemoveSpy = jest.fn()
     const wrapper = shallow(
-			<Item
-			  type="recipe"
-			  available
-			  media={Immutable.fromJS({
-			    images: [{ urls: ['', '', { src: 'image_path' }] }],
-			  })}
-			  title="Chicken Curry"
-			  quantity={2}
-			  onRemove={onRemoveSpy}
-			/>,
+      <Item
+        type="recipe"
+        available
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+        title="Chicken Curry"
+        quantity={2}
+        onRemove={onRemoveSpy}
+      />,
     )
     wrapper.find('span').simulate('click')
     expect(onRemoveSpy).toHaveBeenCalled()
   })
 
   test('should pass onImageClick to Image', () => {
-    const onImageClick = function() {}
+    const onImageClick = function () { }
     const wrapper = shallow(
-			<Item type="recipe" available media="" onImageClick={onImageClick} />,
+      <Item type="recipe" available media="" onImageClick={onImageClick} />,
     )
     expect(wrapper.find(Image).prop('onClick')).toEqual(onImageClick)
   })
@@ -120,54 +120,54 @@ describe('Item', () => {
   describe('gift', () => {
     test('should show me free gift if the gift prop is set', () => {
       const wrapper = shallow(
-				<Item
-				  type="recipe"
-				  available
-				  gift
-				  url="http://test.com"
-				  media={Immutable.fromJS({
-				    images: [{ urls: ['', '', { src: 'image_path' }] }],
-				  })}
-				  title="Chicken Curry"
-				  quantity={2}
-				  onRemove={function() {}}
-				/>,
+        <Item
+          type="recipe"
+          available
+          gift
+          url="http://test.com"
+          media={Immutable.fromJS({
+            images: [{ urls: ['', '', { src: 'image_path' }] }],
+          })}
+          title="Chicken Curry"
+          quantity={2}
+          onRemove={function () { }}
+        />,
       )
       expect(wrapper.text()).toContain('Free Gift')
     })
 
     test('should not show me quantity if its a free gift and quantity is 1', () => {
       const wrapper = shallow(
-				<Item
-				  type="recipe"
-				  available
-				  gift
-				  url="http://test.com"
-				  media={Immutable.fromJS({
-				    images: [{ urls: ['', '', { src: 'image_path' }] }],
-				  })}
-				  title="Chicken Curry"
-				  quantity={1}
-				  onRemove={function() {}}
-				/>,
+        <Item
+          type="recipe"
+          available
+          gift
+          url="http://test.com"
+          media={Immutable.fromJS({
+            images: [{ urls: ['', '', { src: 'image_path' }] }],
+          })}
+          title="Chicken Curry"
+          quantity={1}
+          onRemove={function () { }}
+        />,
       )
       expect(wrapper.text()).not.toContain('servings')
     })
 
     test('should show me quantity if its a free gift and quantity is greater then 1', () => {
       const wrapper = shallow(
-				<Item
-				  type="recipe"
-				  available
-				  gift
-				  url="http://test.com"
-				  media={Immutable.fromJS({
-				    images: [{ urls: ['', '', { src: 'image_path' }] }],
-				  })}
-				  title="Chicken Curry"
-				  quantity={2}
-				  onRemove={function() {}}
-				/>,
+        <Item
+          type="recipe"
+          available
+          gift
+          url="http://test.com"
+          media={Immutable.fromJS({
+            images: [{ urls: ['', '', { src: 'image_path' }] }],
+          })}
+          title="Chicken Curry"
+          quantity={2}
+          onRemove={function () { }}
+        />,
       )
       expect(wrapper.text()).toContain('servings')
     })
@@ -176,34 +176,34 @@ describe('Item', () => {
   describe('type', () => {
     test('should show me the word servings if its a recipe', () => {
       const wrapper = shallow(
-				<Item
-				  type="recipe"
-				  available
-				  url="http://test.com"
-				  media={Immutable.fromJS({
-				    images: [{ urls: ['', '', { src: 'image_path' }] }],
-				  })}
-				  title="Chicken Curry"
-				  quantity={2}
-				  onRemove={function() {}}
-				/>,
+        <Item
+          type="recipe"
+          available
+          url="http://test.com"
+          media={Immutable.fromJS({
+            images: [{ urls: ['', '', { src: 'image_path' }] }],
+          })}
+          title="Chicken Curry"
+          quantity={2}
+          onRemove={function () { }}
+        />,
       )
       expect(wrapper.text().indexOf('2 servings') > -1).toEqual(true)
     })
 
     test('should show me the word items if its a product', () => {
       const wrapper = shallow(
-				<Item
-				  type="product"
-				  available
-				  url="http://test.com"
-				  media={Immutable.fromJS({
-				    images: [{ urls: ['', '', { src: 'image_path' }] }],
-				  })}
-				  title="Chicken Curry"
-				  quantity={2}
-				  onRemove={function() {}}
-				/>,
+        <Item
+          type="product"
+          available
+          url="http://test.com"
+          media={Immutable.fromJS({
+            images: [{ urls: ['', '', { src: 'image_path' }] }],
+          })}
+          title="Chicken Curry"
+          quantity={2}
+          onRemove={function () { }}
+        />,
       )
       expect(wrapper.text().indexOf('2 items') > -1).toEqual(true)
     })
@@ -212,15 +212,15 @@ describe('Item', () => {
   describe('unavailable Item', () => {
     test('should not show me a minus button', () => {
       const wrapper = shallow(
-				<Item
-				  type="recipe"
-				  media={Immutable.fromJS({
-				    images: [{ urls: ['', '', { src: 'image_path' }] }],
-				  })}
-				  title="Chicken Curry"
-				  quantity={2}
-				  onRemove={function() {}}
-				/>,
+        <Item
+          type="recipe"
+          media={Immutable.fromJS({
+            images: [{ urls: ['', '', { src: 'image_path' }] }],
+          })}
+          title="Chicken Curry"
+          quantity={2}
+          onRemove={function () { }}
+        />,
       )
       expect(wrapper.find('span').length).toEqual(0)
     })
@@ -239,6 +239,25 @@ describe('Item', () => {
       wrapper = shallow(<Item showLine />)
 
       expect(wrapper.find('.horizontalLine')).toHaveLength(1)
+    })
+  })
+
+  describe('image', () => {
+    test('should render image', () => {
+      const wrapper = shallow(
+        <Item
+          type="recipe"
+          available
+          media={Immutable.fromJS({
+            images: [{ urls: ['', '', { src: 'image_path' }] }],
+          })}
+          title="Chicken Curry"
+          quantity={2}
+          onRemove={function () { }}
+        />,
+      )
+
+      expect(wrapper.find('Image').length).toEqual(1)
     })
   })
 })

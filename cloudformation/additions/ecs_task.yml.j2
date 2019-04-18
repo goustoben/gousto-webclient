@@ -16,7 +16,7 @@
         -
           Name: nginx
           Image:
-            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/nginx
+            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/nginx:{{ GITHUB_COMMIT }}
           MemoryReservation: 256
           PortMappings:
             - ContainerPort: 80
@@ -31,7 +31,7 @@
         -
           Name: webclient
           Image:
-            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/webclient
+            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/webclient:{{ GITHUB_COMMIT }}
           MemoryReservation: 256
           Environment:
             - Name: ENVIRONMENT
@@ -66,3 +66,8 @@
             - {{ stacks.network.output.privatebsubnet }}
       TaskDefinition:
         Ref: EcsTaskDefinition
+      LoadBalancers:
+              - ContainerName: nginx
+                ContainerPort: 80
+                TargetGroupArn:
+                  Ref:  ECSALBTargetGroup{{ exposure |title }}

@@ -2,6 +2,12 @@ import fetch from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
+const customersApi = {
+  fetchPauseReasons,
+  customerSignup,
+  fetchIntervals,
+}
+
 export function fetchPauseReasons(accessToken, userId = null) {
   const args = {
     includes: ['steps'],
@@ -27,8 +33,4 @@ export const fetchIntervals = () => (
   fetch(null, `${endpoint('customers', routes.version.customers)}${routes.customers.intervals}`, {}, 'GET')
 )
 
-export default {
-  fetchPauseReasons,
-  customerSignup,
-  fetchIntervals,
-}
+export default customersApi

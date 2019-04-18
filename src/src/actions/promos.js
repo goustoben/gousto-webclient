@@ -1,11 +1,11 @@
-import actionTypes from './actionTypes'
 import { fetchPromo, fetchPromocodeFromCampaignUrl } from 'apis/promos'
+import { legacyVerifyAge } from 'apis/legacy'
+import actionTypes from './actionTypes'
 import statusActions from './status'
 import userActions from './user'
-import basketActions from './basket'
+import { basketPromoCodeChange } from './basket'
 import productActions from './products'
-import menuActions from './menu'
-import { legacyVerifyAge } from 'apis/legacy'
+import { menuLoadBoxPrices } from './menu'
 
 const { pending, error } = statusActions
 
@@ -163,10 +163,10 @@ const promoApply = () => (
               await dispatch(userActions.userVerifyAge(ageVerified, true))
               await dispatch(userActions.userPromoApplyCode(code))
             } else {
-              dispatch(basketActions.basketPromoCodeChange(code))
+              dispatch(basketPromoCodeChange(code))
               await legacyVerifyAge()
             }
-            await dispatch(menuActions.menuLoadBoxPrices())
+            await dispatch(menuLoadBoxPrices())
           } catch (e) {
             dispatch(pending(actionTypes.PROMO_APPLY, false))
             dispatch(error(actionTypes.PROMO_APPLY, e.message))
@@ -177,15 +177,15 @@ const promoApply = () => (
         if (getState().auth.get('isAuthenticated')) {
           try {
             await dispatch(userActions.userPromoApplyCode(code))
-            await dispatch(menuActions.menuLoadBoxPrices())
+            await dispatch(menuLoadBoxPrices())
           } catch (e) {
             dispatch(error(actionTypes.PROMO_APPLY, e))
             dispatch(pending(actionTypes.PROMO_APPLY, false))
             throw e
           }
         } else {
-          dispatch(basketActions.basketPromoCodeChange(code))
-          await dispatch(menuActions.menuLoadBoxPrices())
+          dispatch(basketPromoCodeChange(code))
+          await dispatch(menuLoadBoxPrices())
         }
       }
 
@@ -201,7 +201,7 @@ const promoAgeVerify = ageVerified => ({
   ageVerified,
 })
 
-export default {
+const promoActions = {
   promoChange,
   promoApply,
   promoCloseModal,
@@ -210,3 +210,5 @@ export default {
   promoGetFromLandingPage,
   promoGet,
 }
+
+export default promoActions

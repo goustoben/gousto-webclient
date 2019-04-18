@@ -1,4 +1,3 @@
-/* eslint no-use-before-define: ["error", { "functions": false }] */
 import { notice } from 'utils/logger'
 import { fetchSubscription } from 'apis/subscription'
 import { basketNumPortionChange } from './basket'

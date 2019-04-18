@@ -1,7 +1,6 @@
-import React, { PureComponent } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-
 import Loading from 'routes/Menu/Loading'
 import { getProductLimitReached } from 'utils/basket'
 import { ProductListPresentation } from './ProductList.presentation'
@@ -16,32 +15,27 @@ const propTypes = {
   toggleAgeVerificationPopUp: PropTypes.func
 }
 
-class ProductList extends PureComponent {
-  isLimitReached = (product) => {
-    const { basket, productsCategories, products } = this.props
+const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified }) => {
+
+  const isLimitReached = (product) => {
     const { id } = product
     const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
 
     return limitReachedResult
   }
 
-  render () {
-    const { products, ageVerified, toggleAgeVerificationPopUp } = this.props
-
-    return(
-      <div>
-        {!!products ? <ProductListPresentation
-          products={products}
-          ageVerified={ageVerified}
-          isLimitReached={this.isLimitReached}
-          toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-        /> :
+  return (
+    <div>
+      {!!products ? <ProductListPresentation
+        products={products}
+        ageVerified={ageVerified}
+        isLimitReached={isLimitReached}
+        toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+      /> :
         <Loading />
-        }
-      </div>
-    )
-  }
-
+      }
+    </div>
+  )
 }
 
 ProductList.propTypes = propTypes

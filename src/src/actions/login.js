@@ -1,19 +1,19 @@
 import queryString from 'query-string'
-import Immutable from 'immutable' /* eslint-disable new-cap */
-import actionTypes from './actionTypes'
-import authActions from './auth'
-import { featureSet } from './features'
-import statusActions from './status'
-import orderActions from './order'
-import userActions from './user'
+import Immutable from 'immutable'
 import Cookies from 'utils/GoustoCookies'
 import config from 'config/routes'
 import { isOneOfPage } from 'utils/routes'
 import { isActive, isSuspended, needsReactivating, isAdmin, validateEmail } from 'utils/auth'
-import URL from 'url'
 import { push } from 'react-router-redux'
 import windowUtils from 'utils/window'
 import globals from 'config/globals'
+import URL from 'url' //eslint-disable-line import/no-nodejs-modules
+import userActions from './user'
+import orderActions from './order'
+import statusActions from './status'
+
+import authActions from './auth'
+import actionTypes from './actionTypes'
 
 const { pending, error } = statusActions
 const { redirect, documentLocation } = windowUtils
@@ -39,98 +39,16 @@ const authorise = roles => {
   return true
 }
 
-/* action creators */
 const loginVisibilityChange = visibility => ({
   type: actionTypes.LOGIN_VISIBILITY_CHANGE,
   visibility,
 })
 
-/* post-action hooks */
-export const loginRedirect = (location, userIsAdmin, features) => {
-  let destination
-  const { pathname, search } = location
-
-  if (userIsAdmin) {
-    destination = `${config.client.menu}?features[]=browse`
-  } else if (search) {
-    const { target } = queryString.parse(search)
-
-    if (target && typeof target === 'string') {
-      let url
-      try {
-        url = URL.parse(target)
-
-        destination = `${url.pathname}${url.search ? url.search : ''}`
-      } catch (err) {
-        // do nothing
-      }
-    }
-  }
-
-  if (!destination && !isOneOfPage(pathname, ['menu', 'check-out'])) {
-    const afterLoginPage = features ? features.getIn(['afterLogin', 'value']) : undefined
-
-    destination = config.client[afterLoginPage] || config.client.myGousto
-  }
-
-  if (destination && destination !== config.client.myDeliveries2) {
-    redirect(destination)
-  }
-
-  return destination
-}
-
 const logoutRedirect = () => (
-  (dispatch) => {
+  () => {
     redirect('/')
   }
 )
-
-export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
-  const location = documentLocation()
-  const onCheckout = location.pathname.includes('check-out')
-  let destination = false
-  if (!onCheckout) {
-    destination = loginRedirect(location, userIsAdmin, features)
-    if (destination && destination !== config.client.myDeliveries2) {
-      redirect(destination)
-    }
-
-    if (Cookies.get('from_join')) {
-      Cookies.expire('from_join')
-    }
-  }
-
-  const windowObj = windowUtils.getWindow()
-  if (globals.client && windowObj && typeof windowObj.__authRefresh__ === 'function' && windowObj.__store__) { // eslint-disable-line no-underscore-dangle
-    windowObj.__authRefresh__(windowObj.__store__) // eslint-disable-line no-underscore-dangle
-  }
-
-  return async (dispatch, getState) => {
-    if (onCheckout) {
-      if (orderId) {
-        dispatch(push(`${config.client.welcome}/${orderId}`))
-      } else {
-        dispatch(orderActions.orderAssignToUser(undefined, getState().basket.get('previewOrderId')))
-      }
-    } else {
-      if (!userIsAdmin && getState().basket) {
-        const promoCode = getState().basket.get('promoCode')
-        if (promoCode) {
-          await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
-        }
-      }
-
-      setTimeout(() => {
-        dispatch(loginVisibilityChange(false))
-
-        if (destination === config.client.myDeliveries2) {
-          dispatch(push(config.client.myDeliveries2))
-        }
-      }, 1000)
-    }
-  }
-}
 
 const postLogoutSteps = () => (
   (dispatch) => {
@@ -142,7 +60,6 @@ const postLogoutSteps = () => (
   }
 )
 
-/* actions */
 const login = (email, password, rememberMe, orderId = '') => (
   async (dispatch, getState) => {
     dispatch(pending(actionTypes.USER_LOGIN, true))
@@ -195,6 +112,85 @@ const cannotLogin = ({ email, password }) => (
   }
 )
 
+export const loginRedirect = (location, userIsAdmin, features) => {
+  let destination
+  const { pathname, search } = location
+
+  if (userIsAdmin) {
+    destination = `${config.client.menu}?features[]=browse`
+  } else if (search) {
+    const { target } = queryString.parse(search)
+
+    if (target && typeof target === 'string') {
+      let url
+      try {
+        url = URL.parse(target)
+
+        destination = `${url.pathname}${url.search ? url.search : ''}`
+      } catch (err) {
+        // do nothing
+      }
+    }
+  }
+
+  if (!destination && !isOneOfPage(pathname, ['menu', 'check-out'])) {
+    const afterLoginPage = features ? features.getIn(['afterLogin', 'value']) : undefined
+
+    destination = config.client[afterLoginPage] || config.client.myGousto
+  }
+
+  if (destination && destination !== config.client.myDeliveries2) {
+    redirect(destination)
+  }
+
+  return destination
+}
+
+export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
+  const location = documentLocation()
+  const onCheckout = location.pathname.includes('check-out')
+  let destination = false
+  if (!onCheckout) {
+    destination = loginRedirect(location, userIsAdmin, features)
+    if (destination && destination !== config.client.myDeliveries2) {
+      redirect(destination)
+    }
+
+    if (Cookies.get('from_join')) {
+      Cookies.expire('from_join')
+    }
+  }
+
+  const windowObj = windowUtils.getWindow()
+  if (globals.client && windowObj && typeof windowObj.__authRefresh__ === 'function' && windowObj.__store__) { // eslint-disable-line no-underscore-dangle
+    windowObj.__authRefresh__(windowObj.__store__) // eslint-disable-line no-underscore-dangle
+  }
+
+  return async (dispatch, getState) => {
+    if (onCheckout) {
+      if (orderId) {
+        dispatch(push(`${config.client.welcome}/${orderId}`))
+      } else {
+        dispatch(orderActions.orderAssignToUser(undefined, getState().basket.get('previewOrderId')))
+      }
+    } else {
+      if (!userIsAdmin && getState().basket) {
+        const promoCode = getState().basket.get('promoCode')
+        if (promoCode) {
+          await userActions.userPromoApplyCode(promoCode)(dispatch, getState)
+        }
+      }
+
+      setTimeout(() => {
+        dispatch(loginVisibilityChange(false))
+
+        if (destination === config.client.myDeliveries2) {
+          dispatch(push(config.client.myDeliveries2))
+        }
+      }, 1000)
+    }
+  }
+}
 export default {
   loginUser: login,
   logoutUser: logout,
