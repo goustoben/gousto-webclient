@@ -30,5 +30,4 @@ EXPOSE 8080
 WORKDIR /home/docker/app
 
 # START APPLICATION
-ENTRYPOINT ["./ecs_start.sh"]
-CMD ["pm2-runtime", "start", "process-docker.json"]
+CMD ["./ecs_start.sh", "pm2-runtime", "start", "process-docker.json"]
