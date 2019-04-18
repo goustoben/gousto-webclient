@@ -114,4 +114,4 @@ for INDEX in "${ENV_VAR_LIST[@]}" ; do
     eval "${SEDCMD} '${SEDPATTERN}' ./config/env.json"
 done
 
-pm2-runtime start process-docker.json
+exec "$@"
