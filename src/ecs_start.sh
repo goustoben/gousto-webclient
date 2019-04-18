@@ -87,9 +87,9 @@ rm ${S3_DEST}
 # OSX bash version doesn't support associative arrays, so we use a special pattern that will be split later
 # PATTERN= variable_name::default_value
 ENV_VAR_LIST=(
-    'apiToken::inbound_frontend_access_key_goes_here'
-    'authClientId::6'
-    'authClientSecret::frontend_service_secret'
+    'api_token::inbound_frontend_access_key_goes_here'
+    'auth_client_id::6'
+    'auth_client_secret::frontend_service_secret'
 )
 
 SEDCMD="sed -r -i -e"
@@ -102,14 +102,16 @@ REGEX="[[:print:]]*" ## [:print:] is a POSIX character class: https://en.wikiped
 # Make substitutions on env.json file
 for INDEX in "${ENV_VAR_LIST[@]}" ; do
     VAR="${INDEX%%::*}"
+    ## env.json contains camelCase version of secrets ##
+    CAMELCASE_VAR=$(echo ${VAR} | perl -pe 's/_(\w)/\U\1/g')
     DEFAULT_VALUE="${INDEX##*::}"
     if [[ -z "${!VAR}" ]]; then
-        SEDPATTERN='s/("'${VAR}'": ")('${REGEX}')(")/\1'${DEFAULT_VALUE}'\3/g'
+        SEDPATTERN='s/("'${CAMELCASE_VAR}'": ")('${REGEX}')(")/\1'${DEFAULT_VALUE}'\3/g'
     else
-        SEDPATTERN='s/("'${VAR}'": ")('${REGEX}')(")/\1'${!VAR}'\3/g'
+        SEDPATTERN='s/("'${CAMELCASE_VAR}'": ")('${REGEX}')(")/\1'${!VAR}'\3/g'
     fi
 
     eval "${SEDCMD} '${SEDPATTERN}' ./config/env.json"
 done
 
-pm2-runtime start process-docker.json
+exec "$@"

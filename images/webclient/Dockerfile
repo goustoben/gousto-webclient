@@ -31,5 +31,7 @@ COPY --chown=docker:docker src/ecs_start.sh /home/docker/app/ecs_start.sh
 USER docker
 EXPOSE 8080
 WORKDIR /home/docker/app
+
 # START APPLICATION
-CMD ["./ecs_start.sh"]
+ENTRYPOINT ["./ecs_start.sh"]
+CMD ["pm2-runtime", "start", "process-docker.json"]
