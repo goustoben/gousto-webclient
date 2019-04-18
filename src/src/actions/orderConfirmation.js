@@ -39,11 +39,12 @@ export const orderConfirmationProductTracking = (productId, added) => (
       trackingData: {
         actionType: added ? 'MarketProduct Added' : 'MarketProduct Removed', 
         productId: productId,
-      }
+      },
     })
   }
 )
 
 export default {
-  orderDetails
+  orderDetails, 
+  orderConfirmationProductTracking
 }
