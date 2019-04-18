@@ -74,6 +74,17 @@ jobs:
             - project
             - .circlerc
 
+  build-remote-repositories:
+    docker: *gousto_build_image_docker
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Create & deploy image
+          command: source ~/.circlerc && python ./ci_scripts/create_image.py --setup
+          no_output_timeout: 10m
+
   build-application:
     docker: *gousto_build_image
     steps:
@@ -228,7 +239,7 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
-      - build-nginx-image:
+      - build-remote-repositories:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
@@ -237,10 +248,19 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
+      - build-nginx-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-remote-repositories
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
       - build-webclient-image:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-dependencies
+            - build-remote-repositories
           filters:
             branches:
               only:
@@ -322,7 +342,7 @@ workflows:
             branches:
               only:
                 - master
-      - build-nginx-image:
+      - build-remote-repositories:
           context: gousto-prod-aws-app-circleci
           requires:
             - install-dependencies
@@ -330,10 +350,18 @@ workflows:
             branches:
               only:
                 - master
+      - build-nginx-image:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - build-remote-repositories
+          filters:
+            branches:
+              only:
+                - master
       - build-webclient-image:
           context: gousto-prod-aws-app-circleci
           requires:
-            - install-dependencies
+            - build-remote-repositories
           filters:
             branches:
               only:
