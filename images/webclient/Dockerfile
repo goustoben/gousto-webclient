@@ -28,5 +28,7 @@ RUN chown -R docker:docker /home/docker
 USER docker
 EXPOSE 8080
 WORKDIR /home/docker/app
+
 # START APPLICATION
-CMD ["./ecs_start.sh"]
+ENTRYPOINT ["./ecs_start.sh"]
+CMD ["pm2-runtime", "start", "process-docker.json"]
