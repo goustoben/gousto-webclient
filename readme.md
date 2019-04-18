@@ -17,11 +17,12 @@ Please install [EditorConfig](https://editorconfig.org/) for your text editor or
 
 Why is this important? Imagine two developer working on the same file, one person has tab indentation with size of 4, and the other has space indentation with size of 2. Even if they change nothing in the shared file, just by running commands such as `format document` git will pick it up as all lines changed. This makes tracking and tracing changes very difficult (not mentioning how eye strain it is when it comes to code review).
 
-##Webclient only provisioning
-### Pre-requisites
-Please ensure the development box is setup: https://github.com/Gousto/devbox-platform
-
 ## New Stack Development
+
+### Pre-requisites
+* Kubernetes development box is setup: https://github.com/Gousto/devbox-platform
+* Webclient application ready to be built (application dependencies installed)
+
 ### Terminal 1: Building
 
 You need to build the application and run the watcher before running it into the devbox
@@ -34,13 +35,29 @@ yarn run watch
 
 This will create the container images and deploy them into the devbox with a watcher for files syncronisation.
 ```shell
-cd ~/code/goustowebclient/src
+cd ~/code/goustowebclient
 skaffold dev
 ```
 
 The site (only the new stack pages) should now be available at http://webclient.gousto.local
 
-You can see the containers logs being redirected to this terminal (nginx and application)
+You can see the containers logs being redirected to this terminal (nginx and application), exit with `CTRL+C`
+
+### Run the webclient in the devbox for non-developers
+
+You need to build the application and run it into the devbox
+```shell
+cd ~/code/goustowebclient/src
+yarn run build:dev
+cd ..
+skaffold run
+```
+
+To remove the application
+```shell
+cd ~/code/goustowebclient
+skaffold delete
+```
 
 ## Deployment
 ### Proxy set
