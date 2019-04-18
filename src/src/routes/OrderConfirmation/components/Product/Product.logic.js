@@ -29,6 +29,7 @@ const propTypes = {
   basketProductAdd: PropTypes.func,
   basketProductRemove: PropTypes.func,
   temp: PropTypes.func,
+  orderConfirmationProductTracking: PropTypes.func
 }
 
 class Product extends PureComponent {
@@ -74,15 +75,16 @@ class Product extends PureComponent {
 
   onAddProduct = () => {
     const { product, basketProductAdd, limitReached, toggleAgeVerificationPopUp, temp, orderConfirmationProductTracking } = this.props
+    const { id } = product
     const isAgeVerificationRequired = this.isAgeVerificationRequired()
     if(!limitReached){
       if (isAgeVerificationRequired) {
         toggleAgeVerificationPopUp()
-        temp('productId', product.id)
+        temp('productId', id)
         temp('addProduct', true)
       } else {
-        basketProductAdd(product.id)
-        orderConfirmationProductTracking(product.id, true)
+        basketProductAdd(id)
+        orderConfirmationProductTracking(id, true)
       }
     }
   }
