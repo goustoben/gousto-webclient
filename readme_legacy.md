@@ -7,57 +7,54 @@ env-carrots: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/e
 env-haricots: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-haricots.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-haricots)
 env-radishes: [![CircleCI](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-radishes.svg?style=svg&circle-token=26e1e6a6cfe8924476e0eaeb6442f4dfd6e2f160)](https://circleci.com/gh/Gousto/gousto-webclient/tree/env-radishes)
 
-## Old documentation
-
-Please find the documentation related to old Vagrant devbox here: https://github.com/Gousto/gousto-webclient/blob/develop/readme_legacy.md
-
 ## Getting Started
+### Pre-requisites
+Please ensure the development box is setup: https://github.com/Gousto/Vagrant
+
 ### Code editor setup
 Please install [EditorConfig](https://editorconfig.org/) for your text editor or IDE, it basically support most if not all commonly used editors (Sublime Text, VS Code, Vim, Brackets, Atom, all JetBrains products and etc). The purpose of this plugin is to ensure that everyone pushes code with the same code indentation, spacing and some other less common known configs such as ensure all file to have a final new line. It is super simple to use, just install the plugin then you won't need to do anything else. The plugin will automatically apply indentation rules from the .editorconfig file in the root of the repo.
 
 Why is this important? Imagine two developer working on the same file, one person has tab indentation with size of 4, and the other has space indentation with size of 2. Even if they change nothing in the shared file, just by running commands such as `format document` git will pick it up as all lines changed. This makes tracking and tracing changes very difficult (not mentioning how eye strain it is when it comes to code review).
 
-## New Stack Development
-
+##Webclient only provisioning
 ### Pre-requisites
-* Kubernetes development box is setup: https://github.com/Gousto/devbox-platform
-* Webclient application ready to be built (application dependencies installed)
+Please ensure the development box is setup: https://github.com/Gousto/Vagrant
+Please ensure to have provisioned the Frontend: https://github.com/Gousto/Gousto2-FrontEnd
 
+### Connect to the devbox
+``` vagrant up && vagrant ssh ```
+
+### Provision the Webclient
+```cd /vagrant
+./provision-service.sh goustowebclient webclient
+```
+### Use of UI components library
+Install Bower :
+```yarn global add bower```
+#### Pull UI-components Library
+It is required if you haven't done a provisioning or if you want to update the library
+```shell
+cd ~/code/goustowebclient/src
+bower install
+```
+
+## New Stack Development
 ### Terminal 1: Building
 
-You need to build the application and run the watcher before running it into the devbox
+Although tasks can be run within the devbox, it's more performant to run tasks outside the devbox
 ```shell
 cd ~/code/goustowebclient/src
 yarn run watch
 ```
 
-### Terminal 2: Starting (after the first terminal has completed building the bundles)
-
-This will create the container images and deploy them into the devbox with a watcher for files syncronisation.
+### Terminal 2: Starting
 ```shell
-cd ~/code/goustowebclient
-skaffold dev
+cd ~/Vagrant && vagrant ssh
+cd /var/www/goustowebclient/src
+yarn run start
 ```
 
-The site (only the new stack pages) should now be available at http://webclient.gousto.local
-
-You can see the containers logs being redirected to this terminal (nginx and application), exit with `CTRL+C`
-
-### Run the webclient in the devbox for non-developers
-
-You need to build the application and run it into the devbox
-```shell
-cd ~/code/goustowebclient/src
-yarn run build:dev
-cd ..
-skaffold run
-```
-
-To remove the application
-```shell
-cd ~/code/goustowebclient
-skaffold delete
-```
+The site should now be available at http://frontend.gousto.local (We use the Frontend as proxy to the NginX server)
 
 ## Deployment
 ### Proxy set
@@ -71,7 +68,7 @@ In case it haven't been created a new route (see above) it would be possible to 
 In case a new route has been created:
 1) ensure to have properly set the proxy in the Frontend (see above)
 2) deploy the Frontend first
-3) deploy the webclient
+3) deploy the weclient
 
 ## Testing
 ### Installation
