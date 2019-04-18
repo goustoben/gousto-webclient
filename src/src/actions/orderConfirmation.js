@@ -38,7 +38,7 @@ export const orderConfirmationProductTracking = (productId, added) => (
       type: actionTypes.BASKET_PRODUCT_TRACKING, 
       trackingData: {
         actionType: added ? 'MarketProduct Added' : 'MarketProduct Removed', 
-        productId: productId,
+        product_id: productId,
       },
     })
   }
