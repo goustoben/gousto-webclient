@@ -105,7 +105,7 @@ describe('orderConfirmationProductTracking', () => {
     })
   })
 
-  test('should return actionType as MarketProduct Removed if boolean value is true', () => {
+  test('should return actionType as MarketProduct Removed if boolean value is false', () => {
     const productId = '1234'
     const added = false
 
