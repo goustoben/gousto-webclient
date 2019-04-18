@@ -1,0 +1,22 @@
+.offerContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.offerWrapper {
+  text-align: center;
+  width: 45%;
+}
+
+.offerTitle {
+  font-weight: bold;
+}
+
+.offer {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.offerDescription {
+  font-size: 14px;
+}

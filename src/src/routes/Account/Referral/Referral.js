@@ -85,6 +85,7 @@ class Referral extends Component {
                 userFirstName={userFirstName}
                 device={device}
                 offerCredit={offerCredit}
+                elementType='page'
                 trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
                 trackingReferFriend={trackingReferFriend}
               />

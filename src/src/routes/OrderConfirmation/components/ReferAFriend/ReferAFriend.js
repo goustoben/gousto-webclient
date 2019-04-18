@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
+import css from './ReferAFriend.css'
 import { Offer } from './Offer'
 
 const propTypes = {
@@ -25,8 +26,11 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
     <section>
       <h3>Share the Gousto experience</h3>
       <p>Refer a friend - and you both save.</p>
-      <Offer isYourOffer offer={yourOffer} />
-      <Offer isYourOffer={false} offer={theirBoxOffer} theirMonthOffer={theirMonthOffer} />
+      <div className={css.offerContainer}>
+        <Offer isYourOffer offer={yourOffer} />
+        <Offer isYourOffer={false} offer={theirBoxOffer} theirMonthOffer={theirMonthOffer} />
+      </div>
+      <p>Share your invite code:</p>
       <SocialShareButtons
         referralCode={referralCode}
         userFirstName={userFirstName}
@@ -34,6 +38,7 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
         offerCredit={yourOffer}
         trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
         trackingReferFriend={trackingReferFriend}
+        elementType='component'
       />
     </section>
   )

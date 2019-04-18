@@ -11,6 +11,15 @@
 	cursor: pointer;
 }
 
+.componentSvg {
+	position: absolute;
+}
+
+.componentText {
+	display: inline-block;
+  margin: 0 auto;
+}
+
 .button-email {
 	composes: button;
 	background: Bluecheese;
