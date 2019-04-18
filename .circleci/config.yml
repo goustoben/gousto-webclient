@@ -164,6 +164,8 @@ jobs:
   deploy-containers:
     docker: *gousto_build_image
     steps:
+      - attach_workspace:
+          at: ~/
       - run:
           name: Deploy containers to ECS
           command: source ~/.circlerc && python ./ci_scripts/deploy_containers.py --service webclient
