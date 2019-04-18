@@ -100,7 +100,7 @@ describe('orderConfirmationProductTracking', () => {
       type: actionTypes.BASKET_PRODUCT_TRACKING,
       trackingData: {
         actionType: 'MarketProduct Added',
-        productId: '1234'
+        product_id: '1234'
       }
     })
   })
@@ -115,7 +115,7 @@ describe('orderConfirmationProductTracking', () => {
       type: actionTypes.BASKET_PRODUCT_TRACKING,
       trackingData: {
         actionType: 'MarketProduct Removed',
-        productId: '1234'
+        product_id: '1234'
       }
     })
   })
