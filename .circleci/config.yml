@@ -166,7 +166,7 @@ jobs:
     steps:
       - run:
           name: Deploy containers to ECS
-          command: python ./ci_scripts/deploy_container.py --service webclient
+          command: python ./ci_scripts/deploy_containers.py --service webclient
           no_output_timeout: 20m
 
 workflows:
