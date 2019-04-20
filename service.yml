@@ -85,6 +85,7 @@ environments:
     maxInstanceSize: 2
     desiredInstanceSize: 1
     availability: businessHours
+    ecsdesiredInstanceSize: 2
 
     deployment:
       style: immutable
@@ -97,7 +98,7 @@ environments:
     maxInstanceSize: 1
     desiredInstanceSize: 1
     availability: businessHours
-
+    ecsdesiredInstanceSize: 1
     deployment:
       style: inline
 
@@ -107,6 +108,7 @@ environments:
     maxInstanceSize: 8
     desiredInstanceSize: 2
     availability: alwaysOn
+    ecsdesiredInstanceSize: 4
 
     deployment:
       style: immutable
