@@ -53,7 +53,7 @@
     DependsOn: EcsServiceRole
     Properties:
       Cluster: {{ stacks.compute.output.defaultcluster }}
-      DesiredCount: {{env.desiredInstanceSize}}
+      DesiredCount: {{env.ecsdesiredInstanceSize}}
       HealthCheckGracePeriodSeconds: {{healthCheck.gracePeriod}}
       LaunchType: FARGATE
       DeploymentConfiguration:
