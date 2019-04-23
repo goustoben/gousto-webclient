@@ -47,9 +47,9 @@ class SocialShareButtons extends PureComponent {
 
     return (
       <section className={socialShareButtonsClasses}>
-        <SocialButton text="Facebook" type="facebook" elementType={elementType} onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
-        <SocialButton text="Messenger" type="facebook-messenger" elementType={elementType} onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing, device)} />
         <SocialButton text="Email" type="email" elementType={elementType} onClick={this.openEmailModal} />
+        <SocialButton text="Messenger" type="facebook-messenger" elementType={elementType} onClick={() => getMessengerReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing, device)} />
+        <SocialButton text="Facebook" type="facebook" elementType={elementType} onClick={() => getFacebookReferralLink(referralCode, userFirstName, trackingReferFriendSocialSharing)} />
         <Overlay open={isEmailModalOpen} from="top">
           <ReferAFriendModal
             onClose={this.closeEmailModal}
