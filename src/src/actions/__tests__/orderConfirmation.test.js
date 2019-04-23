@@ -1,6 +1,10 @@
 import Immutable from 'immutable'
 import { fetchOrder } from 'apis/orders'
-import { orderDetails, orderConfirmationProductTracking } from '../orderConfirmation'
+import { 
+  orderDetails,
+  orderConfirmationProductTracking,
+  orderConfirmationUpdateOrderTracking
+} from '../orderConfirmation'
 import recipeActions from '../recipes'
 import productActions from '../products'
 import basketActions from '../basket'
@@ -116,6 +120,43 @@ describe('orderConfirmationProductTracking', () => {
       trackingData: {
         actionType: 'MarketProduct Removed',
         product_id: '1234'
+      }
+    })
+  })
+})
+
+describe('orderConfirmationUpdateOrderTracking', () => {
+  const dispatch = jest.fn()
+  const getState = () => ({
+    basket: Immutable.fromJS({
+      orderId: '123',
+      orderDetails: {
+        number: '1',
+        prices: {
+          total: '25.5',
+          promoCode: false,
+        }
+      }
+    }),
+    user: Immutable.fromJS({
+      subscription: {
+        state: 'active'
+      }
+    })
+  })
+
+  test('should dispatch orderConfirmationUpdateOrderTracking with the right details', () => {
+    orderConfirmationUpdateOrderTracking()(dispatch, getState)
+    expect(dispatch).toHaveBeenCalledWith({
+      type: actionTypes.ORDER_CONFIRMATION_EDITED_TRACKING,
+      trackingData: {
+        actionType: "Order Edited", 
+        order_id: "123",
+        order_total: "25.5",
+        promo_code: false,
+        signup: false,
+        subscription_active: true,
+        subscription_order: "1"
       }
     })
   })
