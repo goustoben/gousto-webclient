@@ -176,7 +176,7 @@ class OrderConfirmation extends PureComponent {
         <Overlay open={showAgeVerification} from="top">
           <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation} />
         </Overlay>
-        <div className={css.mobileShow}>
+        <div className={classnames(css.mobileShow, css.rafMobile)}>
           <ReferAFriend />
         </div>
         <div className={css.marketPlaceWrapper}>

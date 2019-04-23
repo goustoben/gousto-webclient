@@ -2,6 +2,10 @@
 @value ScreenSMMin, ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
 @value White, Blackberry from 'styles/colors.css';
 
+.rafMobile {
+  padding-top: 20px;
+}
+
 .marketPlaceWrapper {
   max-width: 1170px;
   margin: 0 auto;
