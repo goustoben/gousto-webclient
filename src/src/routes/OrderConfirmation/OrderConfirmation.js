@@ -176,6 +176,9 @@ class OrderConfirmation extends PureComponent {
         <Overlay open={showAgeVerification} from="top">
           <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation} />
         </Overlay>
+        <div className={css.mobileShow}>
+          <ReferAFriend />
+        </div>
         <div className={css.marketPlaceWrapper}>
           <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
           <div className={css.navbar}>
@@ -194,9 +197,6 @@ class OrderConfirmation extends PureComponent {
                 toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
                 selectedCategory={selectedCategory}
               />
-              <div className={css.mobileShow}>
-                <ReferAFriend />
-              </div>
             </section>
             {showOrderConfirmationReceipt && (
               <section className={classnames(css.orderDetails, css.mobileHide)}>
