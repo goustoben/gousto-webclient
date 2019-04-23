@@ -393,7 +393,6 @@ describe('basket actions', () => {
     })
 
     afterEach(() => {
-      jest.resetAllMocks()
       jest.clearAllMocks()
     })
 
