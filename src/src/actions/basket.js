@@ -703,7 +703,7 @@ export const basketProceedToCheckout = () => (
   }
 )
 
-export const basketUpdateProducts = () => (
+export const basketUpdateProducts = (isOrderConfirmation = false) => (
   async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
     const productData = getState().basket.get('products').map((productQty, productId) => ({
@@ -734,6 +734,11 @@ export const basketUpdateProducts = () => (
         orderId: order.id,
         orderDetails: Immutable.fromJS(order),
       })
+
+      if(isOrderConfirmation) {
+        dispatch(orderConfirmationUpdateOrderTracking())
+      }
+
       const originalGrossTotal = temp.get('originalGrossTotal')
       const originalNetTotal = temp.get('originalNetTotal')
       const orderTotal = order && order.prices && order.prices.total
