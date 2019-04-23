@@ -215,9 +215,9 @@ class Menu extends React.Component {
     const imageName = changeBannerGelFlag ? 'menu/10min-banner-gel-02.jpg' : 'menu/10min-banner-gel-01.jpg'
 
     return (now.isSameOrAfter(switchoverTime, 'day')) ? (
-      <Banner imageName={imageName} type={'ten-min'}/>
+      <Banner type={'taste-of-italy'}/>
     ) : (
-      <Banner imageName={'menu/ef-gel.png'} type={'everyday-favourites'} color='red' />
+      <Banner imageName={imageName} type={'ten-min'}/>
     )
   }
 
@@ -252,7 +252,7 @@ class Menu extends React.Component {
         />
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
-          {this.renderBanner(menu.tenMinBanner.switchoverDate)}
+          {this.renderBanner(menu.tasteOfItaly.switchoverDate)}
           <SubHeader
             viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
             onToggleGridView={this.toggleGridView}

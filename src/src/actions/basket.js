@@ -537,10 +537,69 @@ export const basketCheckedOut = (numRecipes, view) => (
     const editedNetTotal = originalNetTotal && orderTotal ? (orderTotal - originalNetTotal).toFixed(2) : ''
     const promoCode = prices && prices.get('promoCode')
 
-    if(isAuthenticated) {
-      if(orders.get(basketOrderId)) {
-        const orderItems = orders.get(basketOrderId).get('recipeItems')
-        if (orderItems.size) {
+    try {
+      dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
+
+      if(isAuthenticated) {
+        if(orders.get(basketOrderId)) {
+          const orderItems = orders.get(basketOrderId).get('recipeItems')
+          if (orderItems.size) {
+            dispatch({
+              type: actionTypes.TRACKING,
+              trackingData: {
+                actionType: 'Order Edited',
+                order_id: basketOrderId,
+                order_total: orderTotal,
+                promo_code: promoCode,
+                signp: false,
+                subscription_active: isActiveSubsc,
+              },
+              optimizelyData: {
+                eventName: 'order_edited_gross',
+                tags: {
+                  revenue: editedGrossTotal
+                }
+              }
+            })
+            dispatch({
+              type: actionTypes.TRACKING,
+              optimizelyData: {
+                eventName: 'order_edited_net',
+                tags: {
+                  revenue: editedNetTotal
+                }
+              }
+            })
+          } else {
+            dispatch({
+              type: actionTypes.TRACKING,
+              trackingData: {
+                actionType: 'Order Placed',
+                order_id: basketOrderId,
+                order_total: orderTotal,
+                promo_code: promoCode,
+                signp: false,
+                subscription_active: isActiveSubsc,
+              },
+              optimizelyData: {
+                eventName: 'order_placed_gross',
+                tags: {
+                  revenue: grossTotal
+                }
+              }
+            })
+            dispatch({
+              type: actionTypes.TRACKING,
+              optimizelyData: {
+                eventName: 'order_placed_net',
+                tags: {
+                  revenue: orderTotal
+                }
+              }
+            })
+          }
+  
+        } else if(editingBox) {
           dispatch({
             type: actionTypes.TRACKING,
             trackingData: {
@@ -595,73 +654,24 @@ export const basketCheckedOut = (numRecipes, view) => (
             }
           })
         }
-
-      } else if(editingBox) {
-        dispatch({
-          type: actionTypes.TRACKING,
-          trackingData: {
-            actionType: 'Order Edited',
-            order_id: basketOrderId,
-            order_total: orderTotal,
-            promo_code: promoCode,
-            signp: false,
-            subscription_active: isActiveSubsc,
-          },
-          optimizelyData: {
-            eventName: 'order_edited_gross',
-            tags: {
-              revenue: editedGrossTotal
-            }
-          }
-        })
-        dispatch({
-          type: actionTypes.TRACKING,
-          optimizelyData: {
-            eventName: 'order_edited_net',
-            tags: {
-              revenue: editedNetTotal
-            }
-          }
-        })
-      } else {
-        dispatch({
-          type: actionTypes.TRACKING,
-          trackingData: {
-            actionType: 'Order Placed',
-            order_id: basketOrderId,
-            order_total: orderTotal,
-            promo_code: promoCode,
-            signp: false,
-            subscription_active: isActiveSubsc,
-          },
-          optimizelyData: {
-            eventName: 'order_placed_gross',
-            tags: {
-              revenue: grossTotal
-            }
-          }
-        })
-        dispatch({
-          type: actionTypes.TRACKING,
-          optimizelyData: {
-            eventName: 'order_placed_net',
-            tags: {
-              revenue: orderTotal
-            }
-          }
-        })
       }
+  
+      dispatch({
+        type: actionTypes.BASKET_CHECKOUT,
+        trackingData: {
+          actionType: actionTypes.BASKET_CHECKED_OUT,
+          numRecipes,
+          view,
+        },
+      })
     }
-
-    dispatch({
-      type: actionTypes.BASKET_CHECKOUT,
-      trackingData: {
-        actionType: actionTypes.BASKET_CHECKED_OUT,
-        numRecipes,
-        view,
-      },
-    })
-    dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
+    catch(err) {
+      dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, true))
+      logger.error(err)
+    }
+    finally {
+      dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, false))
+    }
   }
 )
 
