@@ -88,9 +88,10 @@ class Referral extends Component {
                 offerCredit={offerCredit}
                 elementType='page'
                 trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
-
               />
-              <SocialShareSheetCTA referralCode={referralCode} trackingReferFriend={trackingReferFriend} isFixed />
+              <div className={css.mobileShow}>
+                <SocialShareSheetCTA referralCode={referralCode} trackingReferFriend={trackingReferFriend} isFixed />
+              </div>
             </div>
           </div>
           <HowItWorks details={offerDetails} />
