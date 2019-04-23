@@ -1,3 +1,12 @@
+@value White, Bluecheese from 'styles/colors.css';
+@value SpacingXXS, SpacingLG from 'sass-loader!styles/spacing.scss';
+
+.rafContainer {
+  background-color: white;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
 .offerContainer {
   display: flex;
   justify-content: space-between;
@@ -5,7 +14,11 @@
 
 .offerWrapper {
   text-align: center;
-  width: 45%;
+  width: 50%;
+
+  &:last-child {
+    border-left: dotted 2px black;
+  }
 }
 
 .offerTitle {
@@ -20,3 +33,16 @@
 .offerDescription {
   font-size: 14px;
 }
+
+.rafLink {
+	margin: 10px 0px;
+}
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.mobileShow {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+}
+

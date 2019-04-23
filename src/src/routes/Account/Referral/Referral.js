@@ -4,6 +4,7 @@ import Loading from 'routes/Menu/Loading'
 import { getReferralLink } from 'components/SocialLinks/socialReferralHelper'
 import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
 import { UserRAFLink } from 'components/UserRAFLink'
+import { SocialShareSheetCTA } from 'components/SocialLinks/SocialShareSheetCTA/SocialShareSheetCTA'
 import { RAFTitle } from './RAFTitle'
 import css from './Referral.css'
 
@@ -87,8 +88,9 @@ class Referral extends Component {
                 offerCredit={offerCredit}
                 elementType='page'
                 trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
-                trackingReferFriend={trackingReferFriend}
+
               />
+              <SocialShareSheetCTA referralCode={referralCode} trackingReferFriend={trackingReferFriend} isFixed />
             </div>
           </div>
           <HowItWorks details={offerDetails} />

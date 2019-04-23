@@ -35,6 +35,11 @@
 	background: colorFacebookMessenger;
 }
 
+.button-link-colour {
+	composes: button;
+	background: Bluecheese;
+}
+
 .icon {
 	width: SpacingLG;
 	height: SpacingLG;

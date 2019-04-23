@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
+import { SocialButton } from 'components/SocialLinks/SocialButton'
+import { UserRAFLink } from 'components/UserRAFLink'
+import { SocialShareSheetCTA } from 'components/SocialLinks/SocialShareSheetCTA'
 import css from './ReferAFriend.css'
 import { Offer } from './Offer'
 
@@ -23,23 +26,39 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
   const theirMonthOffer = rafOffer.get('firstMonthDiscountFormatted')
 
   return (
-    <section>
+    <section className={css.rafContainer}>
       <h3>Share the Gousto experience</h3>
       <p>Refer a friend - and you both save.</p>
       <div className={css.offerContainer}>
         <Offer isYourOffer offer={yourOffer} />
         <Offer isYourOffer={false} offer={theirBoxOffer} theirMonthOffer={theirMonthOffer} />
       </div>
-      <p>Share your invite code:</p>
-      <SocialShareButtons
-        referralCode={referralCode}
-        userFirstName={userFirstName}
-        device={device}
-        offerCredit={yourOffer}
-        trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
-        trackingReferFriend={trackingReferFriend}
-        elementType='component'
-      />
+      <div className={css.mobileHide}>
+        <UserRAFLink
+          classLinkContainer={css.rafLink}
+          referralCode={referralCode}
+          trackingReferFriend={trackingReferFriend}
+          isModal
+        >
+          <SocialButton text='Copy Invite Link' type='link-colour' elementType='component' />
+        </UserRAFLink>
+        <p>Share your invite code:</p>
+        <SocialShareButtons
+          referralCode={referralCode}
+          userFirstName={userFirstName}
+          device={device}
+          offerCredit={yourOffer}
+          trackingReferFriendSocialSharing={trackingReferFriendSocialSharing}
+          elementType='component'
+        />
+      </div>
+      <div className={css.mobileShow}>
+        <SocialShareSheetCTA
+          referralCode={referralCode}
+          trackingReferFriend={trackingReferFriend}
+        />
+      </div>
+
     </section>
   )
 }

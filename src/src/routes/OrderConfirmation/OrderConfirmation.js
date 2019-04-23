@@ -194,11 +194,16 @@ class OrderConfirmation extends PureComponent {
                 toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
                 selectedCategory={selectedCategory}
               />
+              <div className={css.mobileShow}>
+                <ReferAFriend />
+              </div>
             </section>
-            <section className={classnames(css.orderDetails, css.mobileHide)}>
-              {showOrderConfirmationReceipt && <OrderSummaryContainer onOrderConfirmationMobile />}
-            </section>
-            <ReferAFriend />
+            {showOrderConfirmationReceipt && (
+              <section className={classnames(css.orderDetails, css.mobileHide)}>
+                <OrderSummaryContainer onOrderConfirmationMobile />
+                <ReferAFriend />
+              </section>
+            )}
             <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
               <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
               <Overlay open={isOrderSummaryOpen} from="bottom">
@@ -208,6 +213,7 @@ class OrderConfirmation extends PureComponent {
                   </div>
                   <OrderSummaryContainer orderSummaryCollapsed={false} onOrderConfirmationMobile />
                 </div>
+
               </Overlay>
               <SaveButton
                 onOrderConfirmationMobile
