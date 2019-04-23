@@ -4,7 +4,7 @@ import ReferAFriend from 'components/ReferAFriend'
 import { SocialShareSheet } from '../SocialShareSheet'
 import { LinkRow } from '../LinkRow'
 
-describe('Share Your Link Modal', () => {
+describe('SocialShareSheet', () => {
   describe('rendering', () => {
     let wrapper
     const mockOnClose = jest.fn()
