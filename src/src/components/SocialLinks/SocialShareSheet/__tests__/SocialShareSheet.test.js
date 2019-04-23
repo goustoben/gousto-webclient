@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import ReferAFriend from 'components/ReferAFriend'
-import { ShareYourLinkModal } from '../ShareYourLinkModal'
+import { SocialShareSheet } from '../SocialShareSheet'
 import { LinkRow } from '../LinkRow'
 
 describe('Share Your Link Modal', () => {
@@ -11,7 +11,7 @@ describe('Share Your Link Modal', () => {
     const referralCode = ''
     const rafOffer = {}
     beforeEach(() => {
-      wrapper = shallow(<ShareYourLinkModal onClose={mockOnClose} referralCode={referralCode} rafOffer={rafOffer} />)
+      wrapper = shallow(<SocialShareSheet onClose={mockOnClose} referralCode={referralCode} rafOffer={rafOffer} />)
     })
 
     test('should render a Modal Panel with onClose prop', () => {
