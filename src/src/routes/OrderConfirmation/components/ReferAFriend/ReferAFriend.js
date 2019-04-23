@@ -27,8 +27,10 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
 
   return (
     <section className={css.rafContainer}>
-      <h3>Share the Gousto experience</h3>
-      <p>Refer a friend - and you both save.</p>
+      <div className={css.rafTitle}>
+        <h3>Share the Gousto experience</h3>
+        <p>Refer a friend - and you both save.</p>
+      </div>
       <div className={css.offerContainer}>
         <Offer isYourOffer offer={yourOffer} />
         <Offer isYourOffer={false} offer={theirBoxOffer} theirMonthOffer={theirMonthOffer} />
@@ -40,9 +42,9 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
           trackingReferFriend={trackingReferFriend}
           isModal
         >
-          <SocialButton text='Copy Invite Link' type='link-colour' elementType='component' />
+          <SocialButton text='Copy Invite Link' type='link' elementType='component' />
         </UserRAFLink>
-        <p>Share your invite code:</p>
+        <p className={css.socialButtonsText}>Share your invite code:</p>
         <SocialShareButtons
           referralCode={referralCode}
           userFirstName={userFirstName}

@@ -7,17 +7,27 @@
   margin-bottom: 15px;
 }
 
+.rafTitle {
+  margin-bottom: 20px;
+}
+
+.socialButtonsText {
+  margin-top: 20px;
+}
+
 .offerContainer {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .offerWrapper {
   text-align: center;
   width: 50%;
+  padding: 0px 5px;
 
   &:last-child {
-    border-left: dotted 2px black;
+    border-left: dotted 2px #D5D5D5;
   }
 }
 
