@@ -74,7 +74,7 @@ jobs:
             - project
             - .circlerc
 
-  build-remote-repositories:
+  setup-remote-image-repositories:
     docker: *gousto_build_image_docker
     steps:
       - setup_remote_docker
@@ -241,7 +241,7 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
-      - build-remote-repositories:
+      - setup-remote-image-repositories:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
@@ -253,7 +253,7 @@ workflows:
       - build-nginx-image:
           context: gousto-beta-aws-app-circleci
           requires:
-            - build-remote-repositories
+            - setup-remote-image-repositories
           filters:
             branches:
               only:
@@ -262,7 +262,7 @@ workflows:
       - build-webclient-image:
           context: gousto-beta-aws-app-circleci
           requires:
-            - build-remote-repositories
+            - setup-remote-image-repositories
           filters:
             branches:
               only:
@@ -344,7 +344,7 @@ workflows:
             branches:
               only:
                 - master
-      - build-remote-repositories:
+      - setup-remote-image-repositories:
           context: gousto-prod-aws-app-circleci
           requires:
             - install-dependencies
@@ -355,7 +355,7 @@ workflows:
       - build-nginx-image:
           context: gousto-prod-aws-app-circleci
           requires:
-            - build-remote-repositories
+            - setup-remote-image-repositories
           filters:
             branches:
               only:
@@ -363,7 +363,7 @@ workflows:
       - build-webclient-image:
           context: gousto-prod-aws-app-circleci
           requires:
-            - build-remote-repositories
+            - setup-remote-image-repositories
           filters:
             branches:
               only:
