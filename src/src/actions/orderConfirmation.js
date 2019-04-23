@@ -54,6 +54,7 @@ export const orderConfirmationUpdateOrderTracking = () => (
     const promoCode = prices.get('promoCode')
     const subscription = user.get('subscription')
     const subscriptionActive = subscription.get('state') === 'active'
+    const orderNumber = basketOrderDetails.get('number')
 
     dispatch({
       type: actionTypes.ORDER_CONFIRMATION_EDITED_TRACKING, 
@@ -64,6 +65,7 @@ export const orderConfirmationUpdateOrderTracking = () => (
         promo_code: promoCode,
         signup: false,
         subscription_active: subscriptionActive,
+        subscription_order: orderNumber,
       },
     })
   }
