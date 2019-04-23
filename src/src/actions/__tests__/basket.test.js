@@ -1,6 +1,17 @@
 import Immutable from 'immutable'
 import basket from 'actions/basket'
 import actionTypes from 'actions/actionTypes'
+import orderApi from 'apis/orders'
+import utilsLogger from 'utils/logger'
+
+jest.mock('apis/orders', () => ({
+  updateOrderItems: jest.fn()
+}))
+
+jest.mock('utils/logger', () => ({
+  error: jest.fn()
+}))
+
 
 describe('basket actions', () => {
   const dispatch = jest.fn()
@@ -11,7 +22,7 @@ describe('basket actions', () => {
   })
 
   describe('portionSizeSelectedTracking', () => {
-    it('should dispatch a PORTION_SIZE_SELECTED_TRACKING action with the correct tracking params', async () => {
+    test('should dispatch a PORTION_SIZE_SELECTED_TRACKING action with the correct tracking params', async () => {
       const num_portion = 2
       const order_id = 5
       const numPortionChangeTracking = {
@@ -355,6 +366,134 @@ describe('basket actions', () => {
       expect(basketProductAddSpy).not.toHaveBeenCalled()
       expect(basketRecipeAddSpy).not.toHaveBeenCalled()
       expect(basketGiftAddSpy).not.toHaveBeenCalled()
+    })
+  })
+  describe('basketUpdateProducts', function () {
+    let getStateSpy
+    let dispatchSpy
+    beforeEach(() => {
+      dispatchSpy = jest.fn()
+      getStateSpy = jest.fn().mockReturnValue({
+        basket: Immutable.fromJS({
+          orderId: '23',
+          products: {
+            'product-1': 2,
+            'product-2': 1,
+          },
+        }),
+        auth: Immutable.Map({ accessToken: '12234' }),
+        temp: Immutable.Map({
+          originalGrossTotal: ''
+        })
+      })
+    })
+
+    afterEach(() => {
+      jest.resetAllMocks()
+      jest.clearAllMocks()
+    })
+
+    describe('when update is sucessful', function () {
+      const order = {
+        id: '23',
+        products: [
+          { id: 1, itemableId: 'product-1', quantity: 2 },
+          { id: 2, itemableId: 'product-2', quantity: 1 },
+        ],
+      }
+      const updateOrderItemsSpy = jest.spyOn(orderApi, 'updateOrderItems')
+      orderApi.updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
+
+      test('should call updateOrderItems api with products', function () {
+        basket.basketUpdateProducts()(dispatchSpy, getStateSpy)
+        expect(updateOrderItemsSpy).toHaveBeenCalled()
+        expect(updateOrderItemsSpy).toHaveBeenCalledWith(
+          '12234',
+          '23',
+          {
+            item_choices: [
+              {
+                id: 'product-1',
+                quantity: 2,
+                type: 'Product',
+              },
+              {
+                id: 'product-2',
+                quantity: 1,
+                type: 'Product',
+              },
+            ],
+            restrict: 'Product',
+          },
+        )
+      })
+      test('should dispatch correct pending and action events for BASKET_CHECKOUT', (done) => {
+        orderApi.updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
+        basket.basketUpdateProducts()(dispatchSpy, getStateSpy)
+          .then(function () {
+            expect(dispatchSpy.mock.calls.length).toBe(8)
+            expect(dispatchSpy.mock.calls[0][0]).toEqual({
+              type: actionTypes.PENDING,
+              key: actionTypes.BASKET_CHECKOUT,
+              value: true,
+            })
+            expect(dispatchSpy.mock.calls[1][0]).toEqual({
+              type: actionTypes.BASKET_CHECKOUT,
+              trackingData: {
+                actionType: actionTypes.BASKET_CHECKED_OUT,
+                order,
+              },
+            })
+            expect(dispatchSpy.mock.calls[7][0]).toEqual({
+              type: actionTypes.PENDING,
+              key: actionTypes.BASKET_CHECKOUT,
+              value: false,
+            })
+          })
+          .then(done, done)
+      })
+
+    })
+
+    describe('when it fails to update order', function () {
+      let updateOrderItemsSpy
+      let loggerErrorSpy
+      beforeEach(function () {
+        dispatchSpy = jest.fn()
+        updateOrderItemsSpy = jest.spyOn(orderApi, 'updateOrderItems')
+        orderApi.updateOrderItems.mockReturnValue(Promise.reject(new Error({ e: 'Error' })))
+        loggerErrorSpy = jest.spyOn(utilsLogger, 'error')
+      })
+      test('should put the error into the error store for BASKET_CHECKOUT', function (done) {
+        basket.basketUpdateProducts()(dispatchSpy, getStateSpy)
+          .catch(function () {
+            expect(updateOrderItemsSpy).toHaveBeenCalledTimes(1)
+            expect(dispatchSpy.mock.calls[0][0]).toEqual({
+              type: actionTypes.PENDING,
+              key: actionTypes.BASKET_CHECKOUT,
+              value: true,
+            })
+            expect(dispatchSpy.mock.calls[1][0]).toEqual({
+              type: actionTypes.ERROR,
+              key: actionTypes.BASKET_CHECKOUT,
+              value: new Error({ e: 'Error' }).message,
+            })
+            expect(dispatchSpy.mock.calls[2][0]).toEqual({
+              type: actionTypes.PENDING,
+              key: actionTypes.BASKET_CHECKOUT,
+              value: false,
+            })
+          })
+          .then(done, done)
+      })
+      test('should log the error', function (done) {
+        basket.basketUpdateProducts()(dispatchSpy, getStateSpy)
+          .catch(function () {
+            expect(loggerErrorSpy).toHaveBeenCalledTimes(1)
+            expect(loggerErrorSpy).toHaveBeenCalledWith((new Error({ e: 'Error' })))
+          })
+          .then(done, done)
+      })
     })
   })
 })
