@@ -58,7 +58,7 @@ jobs:
           at: ~/
       - run:
           name: Run isomoprhic mocha tests
-          command: cd src && npm run test:mocha
+          command: cd src && yarn run test:mocha
 
   test-isomorphic-jest:
     docker: *gousto_build_image
