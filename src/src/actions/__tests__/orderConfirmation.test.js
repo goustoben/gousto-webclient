@@ -1,37 +1,41 @@
 import Immutable from 'immutable'
+import { push } from 'react-router-redux'
 
 import actionTypes from 'actions/actionTypes'
+import { redirect } from 'utils/window'
 import { fetchOrder } from 'apis/orders'
 
 import { basketOrderLoad } from 'actions/basket'
 import { recipesLoadRecipesById } from 'actions/recipes'
+import { getOrderConfirmation } from 'selectors/features'
 import {
   productsLoadProducts,
 } from 'actions/products'
 
 import {
   orderDetails,
+  orderConfirmationRedirect,
   orderConfirmationProductTracking,
   orderConfirmationUpdateOrderTracking,
 } from 'actions/orderConfirmation'
 
+jest.mock('apis/orders')
+jest.mock('actions/basket')
+jest.mock('selectors/features')
+jest.mock('utils/window')
 
-jest.mock('apis/orders', () => ({
-  fetchOrder: jest.fn()
+jest.mock('react-router-redux', () => ({
+  push: jest.fn(),
 }))
 
 jest.mock('actions/recipes', () => ({
-  recipesLoadRecipesById: jest.fn()
+  recipesLoadRecipesById: jest.fn(),
 }))
 
 jest.mock('actions/products', () => ({
   productsLoadProducts: jest.fn(),
   productsLoadStock: jest.fn(),
   productsLoadCategories: jest.fn()
-}))
-
-jest.mock('actions/basket', () => ({
-  basketOrderLoad: jest.fn()
 }))
 
 describe('orderConfirmation actions', () => {
@@ -48,6 +52,50 @@ describe('orderConfirmation actions', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
+  })
+
+  describe('orderConfirmationRedirect', () => {
+    describe('when the feature flag is not set', () => {
+      beforeEach(() => {
+        getOrderConfirmation.mockReturnValueOnce(false)
+      })
+
+      test('should not call orderDetails', () => {
+        orderConfirmationRedirect('5432', 'transactional')(dispatch, getState)
+
+        expect(dispatch).not.toHaveBeenCalled()
+      })
+
+      test('should redirect to the order summary page', () => {
+        orderConfirmationRedirect('5432', 'transactional')(dispatch, getState)
+
+        expect(push).not.toHaveBeenCalled()
+        expect(redirect).toHaveBeenCalledWith(
+          '/order/5432/summary?order_action=transactional'
+        )
+      })
+    })
+
+    describe('when the feature flag is set', () => {
+      beforeEach(() => {
+        getOrderConfirmation.mockReturnValueOnce(true)
+      })
+
+      test('should call orderDetails', () => {
+        orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalled()
+      })
+
+      test('should push the client to the order confirmation', () => {
+        orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+
+        expect(redirect).not.toHaveBeenCalled()
+        expect(push).toHaveBeenCalledWith(
+          '/order-confirmation/1234?order_action=transactional'
+        )
+      })
+    })
   })
 
   describe('orderDetails', () => {
