@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import basket from 'actions/basket'
 import actionTypes from 'actions/actionTypes'
+import orderConfirmationActions from 'actions/orderConfirmation'
 import orderApi from 'apis/orders'
 import utilsLogger from 'utils/logger'
 
@@ -12,6 +13,9 @@ jest.mock('utils/logger', () => ({
   error: jest.fn()
 }))
 
+jest.mock('actions/orderConfirmation', () => ({
+  orderConfirmationUpdateOrderTracking: jest.fn()
+}))
 
 describe('basket actions', () => {
   const dispatch = jest.fn()
@@ -453,6 +457,30 @@ describe('basket actions', () => {
           .then(done, done)
       })
 
+      test('should dispatch BASKET_ORDER_DETAILS_LOADED action with the orderDetails', (done) => {
+        orderApi.updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
+        basket.basketUpdateProducts()(dispatchSpy, getStateSpy)
+          .then(function () {
+            expect(dispatchSpy.mock.calls.length).toBe(8)
+            expect(dispatchSpy.mock.calls[2][0]).toEqual({
+              type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
+              orderId: order.id,
+              orderDetails: Immutable.fromJS(order),
+            })
+          })
+          .then(done, done)
+      })
+
+      test('should dispatch orderConfirmationUpdateOrderTrackingSpy if isOrderConfirmation true', (done) => {
+        orderApi.updateOrderItems.mockReturnValue(Promise.resolve({ data: order }))
+        const orderConfirmationUpdateOrderTrackingSpy = jest.spyOn(orderConfirmationActions, 'orderConfirmationUpdateOrderTracking')
+        basket.basketUpdateProducts(true)(dispatchSpy, getStateSpy)
+          .then(function () {
+            expect(dispatchSpy.mock.calls.length).toBe(9)
+            expect(orderConfirmationUpdateOrderTrackingSpy).toHaveBeenCalledTimes(1)
+          })
+          .then(done, done)
+      })
     })
 
     describe('when it fails to update order', function () {
