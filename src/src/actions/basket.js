@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux'
+import Immutable from 'immutable'
 
 import basketActions from 'actions/basket'
 import { limitReached } from 'utils/basket'
@@ -10,6 +11,7 @@ import { updateOrderItems } from 'apis/orders'
 import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import boxSummaryActions from './boxSummary'
+import { orderConfirmationUpdateOrderTracking } from './orderConfirmation'
 import actionTypes from './actionTypes'
 import tempActions from './temp'
 import {
@@ -727,6 +729,11 @@ export const basketUpdateProducts = () => (
         },
       })
 
+      await dispatch({
+        type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
+        orderId: order.id,
+        orderDetails: Immutable.fromJS(order),
+      })
       const originalGrossTotal = temp.get('originalGrossTotal')
       const originalNetTotal = temp.get('originalNetTotal')
       const orderTotal = order && order.prices && order.prices.total
