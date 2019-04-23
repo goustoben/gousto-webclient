@@ -1,163 +1,199 @@
 import Immutable from 'immutable'
+
+import actionTypes from 'actions/actionTypes'
 import { fetchOrder } from 'apis/orders'
-import { 
+
+import { basketOrderLoad } from 'actions/basket'
+import { recipesLoadRecipesById } from 'actions/recipes'
+import {
+  productsLoadProducts,
+} from 'actions/products'
+
+import {
   orderDetails,
   orderConfirmationProductTracking,
-  orderConfirmationUpdateOrderTracking
-} from '../orderConfirmation'
-import recipeActions from '../recipes'
-import productActions from '../products'
-import basketActions from '../basket'
-import actionTypes from '../actionTypes'
+  orderConfirmationUpdateOrderTracking,
+} from 'actions/orderConfirmation'
 
-jest.mock('../recipes', () => ({
-  recipesLoadRecipesById: jest.fn()
-}))
-
-jest.mock('../products', () => ({
-  productsLoadProducts: jest.fn(),
-  productsLoadStock: jest.fn(),
-  productsLoadCategories: jest.fn()
-}))
 
 jest.mock('apis/orders', () => ({
   fetchOrder: jest.fn()
 }))
 
-jest.mock('../basket', () => ({
+jest.mock('actions/recipes', () => ({
+  recipesLoadRecipesById: jest.fn()
+}))
+
+jest.mock('actions/products', () => ({
+  productsLoadProducts: jest.fn(),
+  productsLoadStock: jest.fn(),
+  productsLoadCategories: jest.fn()
+}))
+
+jest.mock('actions/basket', () => ({
   basketOrderLoad: jest.fn()
 }))
 
-describe('orderDetails', () => {
-  const dispatchSpy = jest.fn()
-  const getStateSpy = () => ({
-    auth: Immutable.Map({ accessToken: 'access-token' }),
+describe('orderConfirmation actions', () => {
+  const dispatch = jest.fn()
+  const getState = jest.fn()
+
+  beforeEach(() => {
+    getState.mockReturnValue({
+      auth: Immutable.Map({
+        accessToken: 'access-token',
+      }),
+    })
   })
 
   afterEach(() => {
     jest.clearAllMocks()
   })
-  test('should get the order details for the orderId given', async () => {
-    fetchOrder.mockReturnValue(
-      Promise.resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00' } })
-    )
 
-    await orderDetails('1234')(dispatchSpy, getStateSpy)
-    expect(fetchOrder).toHaveBeenCalled()
-  })
+  describe('orderDetails', () => {
+    test('should attempt to fetch the order details for the orderId given', async () => {
+      fetchOrder.mockReturnValue(
+        Promise.resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00' } })
+      )
 
-  test('should fetch the recipes for the given recipe ids in the order', async () => {
-    fetchOrder.mockReturnValue(
-      Promise.resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00', recipeItems: [{itemableId: '1'}, {itemableId: '2'}] } })
-    )
+      await orderDetails('1234')(dispatch, getState)
 
-    const recipesLoadRecipesByIdSpy = jest.spyOn(recipeActions, 'recipesLoadRecipesById')
-    await orderDetails('1234')(dispatchSpy, getStateSpy)
-    expect(recipesLoadRecipesByIdSpy).toHaveBeenCalledWith([ '1','2'])
-  })
-
-  test('should fetch the products for the given cutoff date', async () => {
-    fetchOrder.mockReturnValue(
-      Promise.resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00' } })
-    )
-
-    const productsLoadProductsSpy = jest.spyOn(productActions, 'productsLoadProducts')
-    await orderDetails('1234')(dispatchSpy, getStateSpy)
-    expect(productsLoadProductsSpy).toHaveBeenCalledWith('2019-04-12 19:00:00')
-  })
-
-  test('should fetch the basket order load for the given order', async () => {
-    fetchOrder.mockReturnValue(
-      Promise.resolve({ data: { id: '1234', whenCutOff: '2019-04-12 19:00:00' } })
-    )
-
-    const order = Immutable.Map ({
-      "id": "1234", 
-      "whenCutOff": "2019-04-12 19:00:00"
+      expect(fetchOrder).toHaveBeenCalled()
     })
-    
-    const basketOrderLoadSpy = jest.spyOn(basketActions, 'basketOrderLoad')
-    await orderDetails('1234')(dispatchSpy, getStateSpy)
-    expect(basketOrderLoadSpy).toHaveBeenCalledWith('1234', order)
-  })
 
-  test('should not fetch the products if order details are not retrieved', async () => {
-    fetchOrder.mockReturnValue(
-      Promise.reject(new Error('error'))
-    )
-    const productsLoadProductsSpy = jest.spyOn(productActions, 'productsLoadProducts')
-    await orderDetails('1234')(dispatchSpy, getStateSpy)
-    expect(productsLoadProductsSpy).not.toHaveBeenCalled()
-  })
-})
+    describe('when fetchOrder returns an order containing recipe ids', () => {
+      beforeEach(() => {
+        fetchOrder.mockReturnValue(
+          Promise.resolve({
+            data: {
+              id: '1234',
+              whenCutOff: '2019-04-12 19:00:00',
+              recipeItems: [
+                {itemableId: '1'},
+                {itemableId: '2'},
+              ],
+            },
+          })
+        )
+      })
 
-describe('orderConfirmationProductTracking', () => {
-  const dispatch = jest.fn()
+      test('should fetch the recipes for the given recipe ids in the order', async () => {
+        await orderDetails('1234')(dispatch, getState)
 
-  test('should return actionType as MarketProduct Added if boolean value is true', () => {
-    const productId = '1234'
-    const added = true
-
-    orderConfirmationProductTracking(productId, added)(dispatch)
-    
-    expect(dispatch).toHaveBeenCalledWith({
-      type: actionTypes.BASKET_PRODUCT_TRACKING,
-      trackingData: {
-        actionType: 'MarketProduct Added',
-        product_id: '1234'
-      }
+        expect(recipesLoadRecipesById).toHaveBeenCalledWith(['1','2'])
+      })
     })
-  })
 
-  test('should return actionType as MarketProduct Removed if boolean value is false', () => {
-    const productId = '1234'
-    const added = false
+    describe('when fetchOrder returns an order and a cutoff date', () => {
+      beforeEach(() => {
+        fetchOrder.mockReturnValue(
+          Promise.resolve({
+            data: {
+              id: '1234',
+              whenCutOff: '2019-04-12 19:00:00',
+            },
+          })
+        )
+      })
 
-    orderConfirmationProductTracking(productId, added)(dispatch)
-    
-    expect(dispatch).toHaveBeenCalledWith({
-      type: actionTypes.BASKET_PRODUCT_TRACKING,
-      trackingData: {
-        actionType: 'MarketProduct Removed',
-        product_id: '1234'
-      }
+      test('should fetch the products for the returned cutoff date', async () => {
+        await orderDetails('1234')(dispatch, getState)
+
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00')
+      })
+
+      test('should call basket order load for the returned order', async () => {
+        await orderDetails('1234')(dispatch, getState)
+
+        expect(basketOrderLoad).toHaveBeenCalledWith('1234', Immutable.Map({
+          "id": "1234",
+          "whenCutOff": "2019-04-12 19:00:00"
+        }))
+      })
+    })
+
+    describe('when the fetchOrder call fails', () => {
+      beforeEach(() => {
+        fetchOrder.mockReturnValue(
+          Promise.reject(new Error('error'))
+        )
+      })
+
+      test('should not fetch the products', async () => {
+        await orderDetails('1234')(dispatch, getState)
+
+        expect(productsLoadProducts).not.toHaveBeenCalled()
+      })
     })
   })
-})
 
-describe('orderConfirmationUpdateOrderTracking', () => {
-  const dispatch = jest.fn()
-  const getState = () => ({
-    basket: Immutable.fromJS({
-      orderId: '123',
-      orderDetails: {
-        number: '1',
-        prices: {
-          total: '25.5',
-          promoCode: false,
+  describe('orderConfirmationProductTracking', () => {
+    test('should return actionType as MarketProduct Added if boolean value is true', () => {
+      const productId = '1234'
+      const added = true
+
+      orderConfirmationProductTracking(productId, added)(dispatch)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_PRODUCT_TRACKING,
+        trackingData: {
+          actionType: 'MarketProduct Added',
+          product_id: '1234'
         }
-      }
-    }),
-    user: Immutable.fromJS({
-      subscription: {
-        state: 'active'
-      }
+      })
+    })
+
+    test('should return actionType as MarketProduct Removed if boolean value is false', () => {
+      const productId = '1234'
+      const added = false
+
+      orderConfirmationProductTracking(productId, added)(dispatch)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_PRODUCT_TRACKING,
+        trackingData: {
+          actionType: 'MarketProduct Removed',
+          product_id: '1234'
+        }
+      })
     })
   })
 
-  test('should dispatch orderConfirmationUpdateOrderTracking with the right details', () => {
-    orderConfirmationUpdateOrderTracking()(dispatch, getState)
-    expect(dispatch).toHaveBeenCalledWith({
-      type: actionTypes.ORDER_CONFIRMATION_EDITED_TRACKING,
-      trackingData: {
-        actionType: "Order Edited", 
-        order_id: "123",
-        order_total: "25.5",
-        promo_code: false,
-        signup: false,
-        subscription_active: true,
-        subscription_order: "1"
-      }
+  describe('orderConfirmationUpdateOrderTracking', () => {
+    beforeEach(() => {
+      getState.mockReturnValueOnce({
+        basket: Immutable.fromJS({
+          orderId: '123',
+          orderDetails: {
+            number: '1',
+            prices: {
+              total: '25.5',
+              promoCode: false,
+            }
+          }
+        }),
+        user: Immutable.fromJS({
+          subscription: {
+            state: 'active'
+          }
+        })
+      })
+    })
+
+    test('should dispatch orderConfirmationUpdateOrderTracking with the right details', () => {
+      orderConfirmationUpdateOrderTracking()(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.ORDER_CONFIRMATION_EDITED_TRACKING,
+        trackingData: {
+          actionType: "Order Edited",
+          order_id: "123",
+          order_total: "25.5",
+          promo_code: false,
+          signup: false,
+          subscription_active: true,
+          subscription_order: "1"
+        }
+      })
     })
   })
 })
