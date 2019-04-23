@@ -6,10 +6,10 @@ import actionTypes from 'actions/actionTypes'
 import { UserRAFLink } from 'components/UserRAFLink'
 import ReferAFriend from 'components/ReferAFriend'
 import { LinkRow } from './LinkRow'
-import css from './ShareYourLinkModal.css'
+import css from './SocialShareSheet.css'
 import { getFacebookReferralLink, getWhatsappReferralLink, getTextMessageReferralLink } from '../socialReferralHelper'
 
-class ShareYourLinkModal extends React.PureComponent {
+class SocialShareSheet extends React.PureComponent {
   state = { isEmailFormOpen: false }
   static propTypes = {
     onClose: PropTypes.func.isRequired,
@@ -80,4 +80,4 @@ class ShareYourLinkModal extends React.PureComponent {
   }
 
 }
-export { ShareYourLinkModal }
+export { SocialShareSheet }
