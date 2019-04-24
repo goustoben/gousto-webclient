@@ -54,7 +54,7 @@
     Properties:
       Cluster: {{ stacks.compute.output.defaultcluster }}
       DesiredCount: {{ env.ecsDesiredTaskCount }}
-      HealthCheckGracePeriodSeconds: {{ healthCheck.gracePeriod }}
+      HealthCheckGracePeriodSeconds: 150
       LaunchType: FARGATE
       DeploymentConfiguration:
         MaximumPercent: 200 #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-service-deploymentconfiguration.html
