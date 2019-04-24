@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { config } from './config.js'
 import css from './ReferAFriend.css'
 
 const propTypes = {
@@ -9,8 +10,9 @@ const propTypes = {
 }
 
 const Offer = ({ isYourOffer, offer, theirMonthOffer }) => {
-  const title = isYourOffer ? "You get" : "Your friend gets"
-  const description = isYourOffer ? "when your friend gets their first box" : `off their first box + ${theirMonthOffer} off their first month`
+  const offerConfig = config(theirMonthOffer)
+  const title = isYourOffer ? offerConfig.youGetTitle : offerConfig.yourFriendGetsTitle
+  const description = isYourOffer ? offerConfig.youGetDescription : offerConfig.yourFriendGetsDescription
 
   return (
     <section className={css.offerWrapper}>
