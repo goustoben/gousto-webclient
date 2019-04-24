@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import actions from 'actions/user'
 import actionTypes from 'actions/actionTypes'
+import { getReferralLink } from 'components/SocialLinks/socialReferralHelper'
 import css from './UserRAFLink.css'
-import { getReferralLink } from '../socialReferralHelper'
 
 class UserRAFLink extends React.PureComponent {
   state = { copiedMessageVisible: false }
@@ -43,10 +43,10 @@ class UserRAFLink extends React.PureComponent {
   }
 
   render() {
-    const { referralCode, classContainer, classLinkContainer,trackingReferFriend, children, isModal } = this.props
+    const { referralCode, classContainer, classLinkContainer, trackingReferFriend, children, isModal } = this.props
     const { copiedMessageVisible } = this.state
     const copyLink = getReferralLink(referralCode, '', '&utm_source=weblink')
-    
+
     return (
       <div className={classContainer}>
         <CopyToClipboard

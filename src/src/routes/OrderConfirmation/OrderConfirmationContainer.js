@@ -2,12 +2,13 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { locationQuery } from 'selectors/routing'
 import { getBasket, getProductCategories } from 'selectors/root'
-import { getAgeVerified } from 'selectors/user'
+import { getAgeVerified, getReferralOffer } from 'selectors/user'
 import { getBasketOrderDetails } from 'selectors/basket'
+import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 import basketActions from 'actions/basket'
-import userActions from 'actions/user'
 import { filterProductCategory } from 'actions/filters'
+import userActions, { userFetchReferralOffer } from 'actions/user'
 import OrderConfirmation from './OrderConfirmation'
 import { getHeaderDetails } from './helper'
 
@@ -30,6 +31,7 @@ const mapStateToProps = (state) => {
     saveRequired: state.basket.get('unsaved'),
     saveError: state.error.get(actionTypes.BASKET_CHECKOUT),
     isOrderConfirmation: true,
+    rafOffer: getReferralOffer(state) || Immutable.Map(),
   })
 }
 
@@ -37,6 +39,7 @@ const mapDispatchToProps = {
   filterProductCategory,
   userVerifyAge: userActions.userVerifyAge,
   onSave: basketActions.basketUpdateProducts,
+  userFetchReferralOffer,
 }
 
 const OrderConfirmationContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation))

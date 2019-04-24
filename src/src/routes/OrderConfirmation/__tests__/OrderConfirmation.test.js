@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Immmutable from 'immutable'
 import OrderConfirmation from '../OrderConfirmation'
 
 describe('OrderConfirmation', () => {
@@ -237,11 +236,30 @@ describe('OrderConfirmation', () => {
 
   describe('rendering popup for OrderSummary', () => {
     test('should toggle order summary popup', () => {
-      const wrapper = shallow(<OrderConfirmation/>)
-      wrapper.setState({'isOrderSummaryOpen': true})
+      const wrapper = shallow(<OrderConfirmation />)
+      wrapper.setState({ 'isOrderSummaryOpen': true })
 
       expect(wrapper.find('Overlay').at(1).prop('open')).toEqual(true)
       expect(wrapper.find('Connect(OrderSummary)').length).toEqual(1)
+    })
+  })
+
+  describe('Refer a Friend', () => {
+    let userFetchReferralOfferMock
+    let wrapper
+
+    beforeEach(() => {
+      userFetchReferralOfferMock = jest.fn()
+      wrapper = shallow(<OrderConfirmation showOrderConfirmationReceipt userFetchReferralOffer={userFetchReferralOfferMock} />)
+    })
+
+    test('should fetch referal offer details in componentDidMount', () => {
+      wrapper.instance().componentDidMount()
+      expect(userFetchReferralOfferMock).toHaveBeenCalled()
+    })
+
+    test('should render ReferAFriend component', () => {
+      expect(wrapper.find('Connect(ReferAFriend)').length).toEqual(2)
     })
   })
 
