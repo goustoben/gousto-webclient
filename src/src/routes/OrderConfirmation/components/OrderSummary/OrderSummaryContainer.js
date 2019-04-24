@@ -23,6 +23,7 @@ function mapStateToProps(state) {
     saveRequired: state.basket.get('unsaved'),
     saving: state.pending.get(actionTypes.BASKET_CHECKOUT),
     surcharges: state.basket.getIn(['orderDetails', 'surcharges']),
+    isOrderConfirmation: true,
   }
 }
 

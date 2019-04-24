@@ -42,12 +42,14 @@ const propTypes = {
   saving: PropTypes.bool, 
   saveRequired: PropTypes.bool, 
   onSave: PropTypes.func, 
-  saveError: PropTypes.bool,  
+  saveError: PropTypes.bool, 
+  isOrderConfirmation: PropTypes.bool,
 }
 
 const defaultProps = {
   showHeader: false,
-  headerDetails: {}
+  headerDetails: {},
+  isOrderConfirmation: true,
 }
 
 class OrderConfirmation extends PureComponent {
@@ -137,6 +139,11 @@ class OrderConfirmation extends PureComponent {
     })
   }
 
+  onOrderSave = () => {
+    const { isOrderConfirmation, onSave } = this.props
+    onSave(isOrderConfirmation)
+  }
+
   render() {
     const {
       headerDetails,
@@ -149,7 +156,6 @@ class OrderConfirmation extends PureComponent {
       showOrderConfirmationReceipt,
       saving, 
       saveRequired, 
-      onSave, 
       saveError 
     } = this.props
     const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts } = this.state
@@ -201,7 +207,7 @@ class OrderConfirmation extends PureComponent {
                 onOrderConfirmationMobile
                 saving={saving}
                 saveRequired={saveRequired}
-                onClick={onSave}
+                onClick={this.onOrderSave}
                 error={saveError}
               />
             </section>

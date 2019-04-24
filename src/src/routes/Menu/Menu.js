@@ -40,6 +40,7 @@ class Menu extends React.Component {
     boxDetailsVisibilityChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
     boxSummaryDeliveryDaysLoad: PropTypes.func,
+    boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map()),
     hasRecommendations: PropTypes.bool,
     forceLoad: PropTypes.bool,
     menuLoadDays: PropTypes.func,
@@ -65,6 +66,9 @@ class Menu extends React.Component {
     clearAllFilters: PropTypes.func,
     triggerMenuLoad: PropTypes.func,
     shouldJfyTutorialBeVisible: PropTypes.func,
+    basketNumPortionChange: PropTypes.func.isRequired,
+    portionSizeSelectedTracking: PropTypes.func,
+    numPortions: PropTypes.number,
   }
 
   static contextTypes = {
@@ -74,7 +78,9 @@ class Menu extends React.Component {
   static defaultProps = {
     forceLoad: false,
     isLoading: false,
+    numPortions: 2,
     shouldJfyTutorialBeVisible: () => {},
+    portionSizeSelectedTracking: () => {},
   }
 
   static fetchData(args, force) {
@@ -83,7 +89,6 @@ class Menu extends React.Component {
 
   state = {
     mobileGridView: false,
-    detailRecipe: null,
     isClient: false,
     isChrome: false,
   }
@@ -94,43 +99,58 @@ class Menu extends React.Component {
       isChrome: browserHelper.isChrome(),
     })
 
-    const { props } = this
+    const { params, 
+      storeOrderId,
+      basketOrderLoaded,
+      query,
+      triggerMenuLoad,
+      hasRecommendations,
+      basketNumPortionChange,
+      boxSummaryDeliveryDays,
+      disabled,
+      menuLoadDays,
+      boxSummaryDeliveryDaysLoad,
+      menuLoadingBoxPrices,
+      menuLoadBoxPrices,
+      shouldJfyTutorialBeVisible,
+      portionSizeSelectedTracking,
+      numPortions,
+    } = this.props
     const { store } = this.context
-
     // if server rendered
-    if (props.params.orderId && props.params.orderId === props.storeOrderId) {
-      props.basketOrderLoaded(props.params.orderId)
+    if (params.orderId && params.orderId === storeOrderId) {
+      basketOrderLoaded(params.orderId)
     }
 
-    const forceDataLoad = (props.storeOrderId && props.storeOrderId !== props.params.orderId)
+    const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId)
     // TODO: Add back logic to check what needs to be reloaded
-    const query = props.query || {}
-    const params = props.params || {}
-    if (props.hasRecommendations) {
-      props.triggerMenuLoad()
+
+    if (hasRecommendations) {
+      triggerMenuLoad()
     }
 
-    if (query.num_portions) {
-      props.basketNumPortionChange(query.num_portions)
+    if (query && query.num_portions) {
+      basketNumPortionChange(query.num_portions)
     }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)
 
-    if (props.boxSummaryDeliveryDays.size === 0 && !props.disabled) {
-      props.menuLoadDays().then(() => {
-        props.boxSummaryDeliveryDaysLoad()
+    if (boxSummaryDeliveryDays.size === 0 && !disabled) {
+      menuLoadDays().then(() => {
+        boxSummaryDeliveryDaysLoad()
       })
     }
 
-    if (!props.disabled && !props.menuLoadingBoxPrices) {
-      props.menuLoadBoxPrices()
+    if (!disabled && !menuLoadingBoxPrices) {
+      menuLoadBoxPrices()
     }
 
-    if (props.params.orderId) {
-      store.dispatch(props.portionSizeSelectedTracking(props.numPortions, props.params.orderId))
+    shouldJfyTutorialBeVisible()
+    
+    if (params.orderId) {
+      portionSizeSelectedTracking(numPortions, params.orderId)
     }
 
-    props.shouldJfyTutorialBeVisible()
   }
 
   componentWillReceiveProps(nextProps) {

@@ -33,6 +33,7 @@ class OrderSummary extends React.PureComponent {
     surcharges: PropTypes.instanceOf(Immutable.List),
     orderNumber: PropTypes.string,
     orderSummaryCollapsed: PropTypes.bool,
+    isOrderConfirmation: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -42,6 +43,7 @@ class OrderSummary extends React.PureComponent {
     prices: Immutable.Map({}),
     orderNumber: '',
     orderSummaryCollapsed: true,
+    isOrderConfirmation: false,
   }
 
   state = {
@@ -49,6 +51,10 @@ class OrderSummary extends React.PureComponent {
   }
 
   asterisk = String.fromCharCode(42)
+  onOrderSave = () => {
+    const { isOrderConfirmation, onSave } = this.props
+    onSave(isOrderConfirmation)
+  }
 
   toggleDetailView = () => {
     const { orderSummaryOpen } = this.state
@@ -183,9 +189,9 @@ class OrderSummary extends React.PureComponent {
       orderNumber,
       saving,
       saveRequired,
-      onSave,
       saveError,
-      orderSummaryCollapsed
+      orderSummaryCollapsed,
+      onOrderConfirmationMobile
     } = this.props
     const { orderSummaryOpen } = this.state
     let vatableItemsInOrder = false
@@ -239,11 +245,11 @@ class OrderSummary extends React.PureComponent {
               {vatableItemsInOrder ? <p className={css.disclaimer}>{this.asterisk} These items include VAT at 20%</p> : null}
             </Receipt>
           </div>
-          <div className={classnames({ [css.updateOrderButtonSummary]: this.props.onOrderConfirmationMobile })}>
+          <div className={classnames({ [css.updateOrderButtonSummary]: onOrderConfirmationMobile })}>
             <SaveButton
               saving={saving}
               saveRequired={saveRequired}
-              onClick={onSave}
+              onClick={this.onOrderSave}
               error={saveError}
             />
           </div>

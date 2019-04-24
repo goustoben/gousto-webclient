@@ -29,6 +29,7 @@ const mapStateToProps = (state) => {
     saving: state.pending.get(actionTypes.BASKET_CHECKOUT),
     saveRequired: state.basket.get('unsaved'),
     saveError: state.error.get(actionTypes.BASKET_CHECKOUT),
+    isOrderConfirmation: true,
   })
 }
 
