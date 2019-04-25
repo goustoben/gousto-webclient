@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webclient
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: webclient
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: webclient
+    spec:
+      containers:
+      - name: webclient-application
+        image: local/webclient-application
+        imagePullPolicy: Never
+        command: ["pm2-runtime", "start", "process-docker.json"]
+        ports:
+          - containerPort: 8080
+      - name: webclient-webserver
+        image: local/webclient-webserver
+        imagePullPolicy: Never
+        ports:
+          - containerPort: 80
+            name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webclient
+  labels:
+    run: webclient
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  type: ClusterIP
+  selector:
+    run: webclient
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: webclient
+spec:
+  rules:
+    - host: webclient.gousto.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: webclient
+              servicePort: http
+...

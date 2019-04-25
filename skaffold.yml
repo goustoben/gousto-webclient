@@ -1,0 +1,19 @@
+apiVersion: skaffold/v1beta8
+kind: Config
+build:
+  artifacts:
+    - image: local/webclient-application
+      context: .
+      sync:
+        src/**/*: .
+      docker:
+        dockerfile: images/webclient/Dockerfile
+    - image: local/webclient-webserver
+      context: .
+      docker:
+        dockerfile: images/nginx/Dockerfile
+  local: {}
+deploy:
+  kubectl:
+    manifests:
+      - kubernetes/dev/*.yaml

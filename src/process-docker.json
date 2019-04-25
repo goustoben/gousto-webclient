@@ -5,9 +5,6 @@
       "script": "dist/server.js",
       "exec_mode": "cluster",
       "watch": true,
-      "watch_options": {
-        "usePolling": true
-      },
       "merge_logs": true,
       "ignore_watch": [
         "node_modules",

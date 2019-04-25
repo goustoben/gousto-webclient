@@ -6,6 +6,12 @@ gousto_build_image: &gousto_build_image
         aws_access_key_id: $AWS_ERC_ACCESS_KEY
         aws_secret_access_key: $AWS_ERC_SECRET_KEY
 
+gousto_build_image_docker: &gousto_build_image_docker
+    - image: ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/potatoes/circleci-image/node10builder:latest
+      aws_auth:
+        aws_access_key_id: $AWS_ERC_ACCESS_KEY
+        aws_secret_access_key: $AWS_ERC_SECRET_KEY
+
 jobs:
   install-dependencies:
     docker: *gousto_build_image
@@ -45,6 +51,40 @@ jobs:
             - project
             - .circlerc
 
+  test-isomorphic-mocha:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run isomoprhic mocha tests
+          command: cd src && yarn run test:mocha
+
+  test-isomorphic-jest:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run isomoprhic jest tests
+          command: cd src && yarn run test:jest:ci
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .circlerc
+
+  setup-remote-image-repositories:
+    docker: *gousto_build_image_docker
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Create & deploy image
+          command: source ~/.circlerc && python ./ci_scripts/create_image.py --setup
+          no_output_timeout: 10m
+
   build-application:
     docker: *gousto_build_image
     steps:
@@ -62,6 +102,40 @@ jobs:
             - project
             - .circlerc
 
+  build-nginx-image:
+    docker: *gousto_build_image_docker
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Create & deploy image
+          command: source ~/.circlerc && python ./ci_scripts/create_image.py --name nginx
+          no_output_timeout: 10m
+
+  build-webclient-image:
+    docker: *gousto_build_image_docker
+    steps:
+      - setup_remote_docker
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install global yarn dependencies
+          command: yarn global add gulp && yarn global add concurrently@2.2.0
+      - run:
+          name: Setup common
+          command: source ~/.circlerc && setup/setup-common.sh
+      - run:
+          name: Setup isomorphic
+          command: source ~/.circlerc && setup/setup-isomorphic.sh
+      - run:
+          name: Upload client to S3
+          command: source ~/.circlerc && scripts/build-docker.sh
+      - run:
+          name: Create & deploy image
+          command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
+          no_output_timeout: 20m
+
   code-analysis:
     docker: *gousto_build_image
     steps:
@@ -70,29 +144,6 @@ jobs:
       - run:
           name: Code analysis
           command: source ~/.circlerc && /bin/bash ./ci_scripts/code-analysis.sh
-
-  test-isomorphic-mocha:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Run isomoprhic mocha tests
-          command: cd src && npm run test:mocha
-
-  test-isomorphic-jest:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Run isomoprhic jest tests
-          command: cd src && yarn run test:jest:ci
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
-            - .circlerc
 
   test-e2e-selenium:
     docker: *gousto_build_image
@@ -103,22 +154,21 @@ jobs:
           name: Run e2e selenium tests
           command: source ~/.circlerc && scripts/validate.sh
 
-  deploy:
+  deploy-application:
     docker: *gousto_build_image
     steps:
       - attach_workspace:
           at: ~/
       - run: source ~/.circlerc && scripts/deploy.sh
 
-  build-image:
+  deploy-containers:
     docker: *gousto_build_image
     steps:
-      - checkout
-      - setup_remote_docker
-      - run: /gousto/platform-setup.sh
-      - run: 
-          name: Create image
-          command: source ~/.circlerc && python ./ci_scripts/create_image.py
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Deploy containers to ECS
+          command: source ~/.circlerc && python ./ci_scripts/deploy_containers.py --service webclient
           no_output_timeout: 20m
 
 workflows:
@@ -191,10 +241,38 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
+      - setup-remote-image-repositories:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - build-nginx-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-remote-image-repositories
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - build-webclient-image:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-remote-image-repositories
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
       - code-analysis:
           context: gousto-beta-aws-app-circleci
           requires:
             - test-isomorphic-jest
+            - test-isomorphic-mocha
           filters:
             branches:
               only:
@@ -210,7 +288,7 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
-      - deploy:
+      - deploy-application:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-application
@@ -220,19 +298,26 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
+      - deploy-containers:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - build-nginx-image
+            - build-webclient-image
+            - code-analysis
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
       - test-e2e-selenium:
           context: gousto-beta-aws-app-circleci
           requires:
-            - deploy
+            - deploy-application
+            - deploy-containers
           filters:
             branches:
               only:
                 - develop
-      - build-image:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-isomorphic-mocha
-            - test-isomorphic-jest
 
 
   production-environment:
@@ -259,6 +344,30 @@ workflows:
             branches:
               only:
                 - master
+      - setup-remote-image-repositories:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - master
+      - build-nginx-image:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - setup-remote-image-repositories
+          filters:
+            branches:
+              only:
+                - master
+      - build-webclient-image:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - setup-remote-image-repositories
+          filters:
+            branches:
+              only:
+                - master
       - build-application:
           context: gousto-prod-aws-app-circleci
           requires:
@@ -268,10 +377,19 @@ workflows:
             branches:
               only:
                 - master
-      - deploy:
+      - deploy-application:
           context: gousto-prod-aws-app-circleci
           requires:
             - build-application
+          filters:
+            branches:
+              only:
+                - master
+      - deploy-containers:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - build-nginx-image
+            - build-webclient-image
           filters:
             branches:
               only:
