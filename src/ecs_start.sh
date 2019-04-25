@@ -4,6 +4,8 @@ set -e
 
 ### This script will pull the secrets from AWS SSM and register them as environment variables
 
+SEDSEPARATOR="#"  #### THIS MUST BE A SINGLE CHARACTER
+
 # Source: https://github.com/jasperes/bash-yaml/blob/master/script/yaml.sh
 parse_yaml() {
     local yaml_file=$1
@@ -35,7 +37,7 @@ parse_yaml() {
                 }
             }' |
 
-        sed -e 's/_=/+=/g' |
+        sed -e 's'${SEDSEPARATOR}'_='${SEDSEPARATOR}'+='${SEDSEPARATOR}'g' |
 
         awk 'BEGIN {
                 FS="=";
@@ -98,7 +100,6 @@ if [[ $(uname) == 'Darwin' ]]; then
 fi
 
 REGEX="[[:print:]]*" ## [:print:] is a POSIX character class: https://en.wikipedia.org/wiki/Regular_expression
-SEDSEPARATOR="#"  #### THIS MUST BE A SINGLE CHARACTER
 
 # Make substitutions on env.json file
 for INDEX in "${ENV_VAR_LIST[@]}" ; do
