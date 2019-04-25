@@ -1,26 +1,37 @@
-# Environment variables used to retrieve the image from the relevant ECR
-# docker build --no-cache -t webclient:1 --build-arg DEVBOX_ACCESS_TOKEN=[githubPersonalToken] AWS_ACCOUNT_NUMBER=[awsAccountNumber] ENVIRONMENT=[awsEnvironment] -f ./images/orderskiprecovery/Dockerfile .
-ARG AWS_ACCOUNT_NUMBER
-ARG ENVIRONMENT
+FROM node:10-jessie-slim
 
-# PULL DEPENDENCIES IN INTERMEDIATE IMAGES
-FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/platformbase-images/bower10builder as bowerbuilder
-FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/platformbase-images/yarn10builder as yarnbuilder
-FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/platformbase-images/node10runtime as runtime
+# AWS CLI to download secrets
+RUN apt-get update && apt-get install -y \
+    python2.7 \
+    python-pip \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install awscli --upgrade
 
-# COPY DEPENDENCIES FROM INTERMEDIATE IMAGES
-COPY --from=bowerbuilder /libraries/bower_components /home/docker/libraries/libs
-COPY --from=yarnbuilder /libraries/node_modules /home/docker/libraries/node_modules
-RUN sudo chown -R docker:docker /home/docker
+# APPLICATION RUNTIME DEPENDENCIES
+RUN npm install -g yarn \
+    && yarn global add pm2
 
-# BUILD APPLICATION
-RUN cp -r /home/docker/libraries/libs /home/docker/app 
-RUN cp -r /home/docker/libraries/node_modules /home/docker/app
-RUN yarn run build:server:prod
+# CREATE THE UNPRIVILEGED USER TO RUN PROCESSES
+RUN useradd -r -d /home/docker docker && usermod -aG sudo docker
+# LOG FOLDERS (NOTE THAT CHMOD 777 IS REALLY BAD, A BETTER SOLUTION HAS TO BE IMPLEMENTED)
+RUN mkdir /var/log/pm2 && chmod -R 777 /var/log/pm2
+# This will be the PM2 working directory
+RUN mkdir -p /home/docker/app
+RUN chown -R docker:docker /home/docker
 
-# SAVE BEFORE MOUNT OVERRIDE
-RUN cp -r /home/docker/app/dist /home/docker
-RUN sudo chown -R docker:docker /home/docker/dist
+# COPY BUILT APPLICATION TO RUN DIRECTORY FOR NON-DEVELOPERS
+COPY --chown=docker:docker src/dist/ /home/docker/app/dist/
+COPY --chown=docker:docker src/node_modules/ /home/docker/app/node_modules/
+COPY --chown=docker:docker src/config/ /home/docker/app/config/
+COPY --chown=docker:docker src/public/ /home/docker/app/public/
+COPY --chown=docker:docker src/process-docker.json /home/docker/app/process-docker.json
+COPY --chown=docker:docker src/manifest.json /home/docker/app/manifest.json
+COPY --chown=docker:docker src/ecs_start.sh /home/docker/app/ecs_start.sh
+
+USER docker
+EXPOSE 8080
+WORKDIR /home/docker/app
 
 # START APPLICATION
-ENTRYPOINT ["pm2-runtime", "start", "process-docker.json"]
+ENTRYPOINT ["./ecs_start.sh"]
+CMD ["pm2-runtime", "start", "process-docker.json"]

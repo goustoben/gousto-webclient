@@ -1,7 +1,5 @@
-ARG AWS_ACCOUNT_NUMBER
-ARG ENVIRONMENT
-FROM ${AWS_ACCOUNT_NUMBER}.dkr.ecr.eu-west-1.amazonaws.com/${ENVIRONMENT}/platformbase-images/nginx
+FROM nginx:stable
 
-COPY images/nginx/nginx-entrypoint.sh /tmp/nginx-entrypoint.sh
+WORKDIR /etc/nginx
 
-CMD ["sudo", "/tmp/nginx-entrypoint.sh"]
+COPY images/nginx/config/ /etc/nginx/

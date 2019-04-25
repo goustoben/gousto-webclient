@@ -1,0 +1,79 @@
+
+{% for env in environments %}
+  {% if env.name == ENVIRONMENT %}
+
+  EcsTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: task-{{ ENVIRONMENT }}-{{ serviceName }}-definition
+      ExecutionRoleArn:
+        Ref:  EcsTaskExecutionRole
+      TaskRoleArn:
+        Ref: EcsTaskRole
+      Memory: 2048 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-taskdefinition.html#cfn-ecs-taskdefinition-memory
+      Cpu: 1024 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ecs-taskdefinition.html#cfn-ecs-taskdefinition-cpu
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      ContainerDefinitions:
+        -
+          Name: nginx
+          Image:
+            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/nginx:{{ GITHUB_COMMIT }}
+          MemoryReservation: 256
+          PortMappings:
+            - ContainerPort: 80
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-create-group: true
+              awslogs-region:
+                Fn::Sub: ${AWS::Region}
+              awslogs-group: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-webserverlog
+              awslogs-stream-prefix: {{ serviceName }}-{{ ENVIRONMENT }}-nginx-service
+        -
+          Name: webclient
+          Image:
+            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/{{ ENVIRONMENT }}/gousto-webclient/webclient:{{ GITHUB_COMMIT }}
+          MemoryReservation: 256
+          Environment:
+            - Name: ENVIRONMENT
+              Value: {{ ENVIRONMENT }}
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-create-group: true
+              awslogs-region:
+                Fn::Sub: ${AWS::Region}
+              awslogs-group: ecs-{{ ENVIRONMENT }}-service-{{ serviceName }}-applicationlog
+              awslogs-stream-prefix:  {{ serviceName }}-{{ ENVIRONMENT }}-node-service
+
+  EcsService:
+    Type: AWS::ECS::Service
+    DependsOn: EcsServiceRole
+    Properties:
+      Cluster: {{ stacks.compute.output.defaultcluster }}
+      DesiredCount: {{ env.ecsDesiredTaskCount }}
+      HealthCheckGracePeriodSeconds: 150
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200 #https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ecs-service-deploymentconfiguration.html
+        MinimumHealthyPercent: 100
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: DISABLED
+          SecurityGroups:
+            - Ref: EcsServiceSecurityGroup
+          Subnets:
+            - {{ stacks.network.output.privateasubnet }}
+            - {{ stacks.network.output.privatebsubnet }}
+      TaskDefinition:
+        Ref: EcsTaskDefinition
+      LoadBalancers:
+              - ContainerName: nginx
+                ContainerPort: 80
+                TargetGroupArn:
+                  Ref:  ECSALBTargetGroup{{ exposure |title }}
+
+  {% endif %}
+{% endfor %}
