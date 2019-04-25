@@ -11,6 +11,15 @@
 	cursor: pointer;
 }
 
+.componentSvg {
+	position: absolute;
+}
+
+.componentText {
+	display: inline-block;
+	margin: 0 auto;
+}
+
 .button-email {
 	composes: button;
 	background: Bluecheese;
@@ -24,6 +33,11 @@
 .button-facebook-messenger {
 	composes: button;
 	background: colorFacebookMessenger;
+}
+
+.button-link {
+	composes: button;
+	background: Bluecheese;
 }
 
 .icon {

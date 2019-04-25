@@ -8,6 +8,7 @@ export default {
   media: require('./media'),
   menu: require('./menu'),
   recipes: require('./recipes').default,
+  referral: require('./referral'),
   routes: require('./routes'),
   signup: require('./signup'),
   template: require('./template'),

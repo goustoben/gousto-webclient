@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { getReferralOffer, getUserFirstName } from 'selectors/user'
 import { trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
 
-import { ShareYourLinkModal } from './ShareYourLinkModal'
+import { SocialShareSheet } from './SocialShareSheet'
 
 const mapStateToProps = (state) => ({
   userFirstName: getUserFirstName(state),
@@ -10,10 +10,10 @@ const mapStateToProps = (state) => ({
   device: state.request.get('browser')
 })
 
-const ShareYourLinkModalContainer = connect(mapStateToProps, {
+const SocialShareSheetContainer = connect(mapStateToProps, {
   trackingReferFriend,
   trackingReferFriendSocialSharing,
-})(ShareYourLinkModal)
+})(SocialShareSheet)
 
-export default ShareYourLinkModalContainer
+export default SocialShareSheetContainer
 

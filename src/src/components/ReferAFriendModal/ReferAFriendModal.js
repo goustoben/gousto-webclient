@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import ModalPanel from 'Modal/ModalPanel'
+import ReferAFriend from 'components/ReferAFriend'
 import css from './ReferAFriendModal.css'
-import ReferAFriend from '../ReferAFriend'
 
 class ReferAFriendModal extends PureComponent {
   static propTypes = {
@@ -20,10 +20,10 @@ class ReferAFriendModal extends PureComponent {
         containerClassName={css.modalContainer}
         disableOverlay
       >
-      <div className={css.modalContent}>
-        <h4 className={css.heading}>Refer a friend - Get {credit}</h4>
-        <ReferAFriend />
-      </div>
+        <div className={css.modalContent}>
+          <h4 className={css.heading}>Refer a friend - Get {credit}</h4>
+          <ReferAFriend />
+        </div>
       </ModalPanel>
     )
   }
