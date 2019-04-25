@@ -1,13 +1,20 @@
 import React from 'react'
-import Immutable from 'immutable'
 import { mount } from 'enzyme'
+import Immutable from 'immutable'
+
 import logger from 'utils/logger'
-import orderConfirmation from 'actions/orderConfirmation'
+import { mockProduct } from 'routes/OrderConfirmation/components/config'
+import { orderConfirmationProductTracking } from 'actions/orderConfirmation'
+
 import { Product } from '../Product.logic'
-import { mockProduct } from '../../config'
-global.scrollTo = jest.fn()
 
 jest.mock('../../ProductDetails', () => 'div')
+
+jest.mock('actions/orderConfirmation', () => ({
+  orderConfirmationProductTracking: jest.fn(),
+}))
+
+global.scrollTo = jest.fn()
 
 describe('Product component', () => {
   let wrapper
@@ -82,7 +89,6 @@ describe('Product component', () => {
     })
 
     test('should dispatch the order confirmation product tracking with the correct props', () => {
-      
       wrapper.setProps({
         basket: Immutable.fromJS({
           products: {
@@ -92,17 +98,16 @@ describe('Product component', () => {
         limitReached: false,
         ageVerified: true,
         product: {
-          ageRestricted: false, 
+          ageRestricted: false,
           id: "1234"
-        }, 
+        },
         basketProductAdd: jest.fn(),
         orderConfirmationProductTracking: jest.fn()
       })
 
-      const orderConfirmationProductTrackingSpy = jest.spyOn(orderConfirmation, 'orderConfirmationProductTracking')
       const { onAddProduct } = wrapper.instance()
       Promise.all(onAddProduct()).then(() => {
-        expect(orderConfirmationProductTrackingSpy).toHaveBeenCalledWith('1234', true)
+        expect(orderConfirmationProductTracking).toHaveBeenCalledWith('1234', true)
       })
         .catch(err => {
           logger.error(err)
