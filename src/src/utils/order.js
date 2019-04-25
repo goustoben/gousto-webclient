@@ -36,6 +36,21 @@ export const getAffiliateTrackingData = (order = Immutable.Map({}), commissionGr
   promoCode: order.getIn(['prices','promoCode'], ''),
 })
 
+export const getPreviewOrderErrorName = error => {
+  if (error && error.code) {
+    switch (error.code) {
+    case 'out-of-stock':
+      return 'no-stock'
+    case 'basket-expired':
+      return 'basket-expired'
+    default:
+      return 'undefined-error'
+    }
+  }
+
+  return 'undefined-error'
+}
+
 export default {
   formatTotalDiscounts,
   totalPrice,

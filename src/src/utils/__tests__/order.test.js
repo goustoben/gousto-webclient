@@ -1,6 +1,9 @@
 import Immutable from 'immutable'
 
-import { getAffiliateTrackingData } from 'utils/order'
+import {
+  getAffiliateTrackingData,
+  getPreviewOrderErrorName,
+} from 'utils/order'
 
 describe('order utils', () => {
   describe('getAffiliateTrackingData', () => {
@@ -36,6 +39,42 @@ describe('order utils', () => {
           total: '24.99',
           commissionGroup: 'FIRSTPURCHASE',
           promoCode: 'TV',
+        })
+      })
+    })
+  })
+
+  describe('getPreviewOrderErrorName', () => {
+    let errors
+
+    describe('when passed an unknown error type', () => {
+      beforeEach(() => {
+        errors = [
+          null,
+          { code: null },
+          { code: 'undefined' },
+          { code: 'order-exists' },
+        ]
+      })
+
+      test('should return undefined-error', () => {
+        errors.forEach(error => {
+          expect(getPreviewOrderErrorName(error)).toEqual('undefined-error')
+        })
+      })
+    })
+
+    describe('when passed a known error type', () => {
+      beforeEach(() => {
+        errors = [
+          { code: 'out-of-stock', result: 'no-stock' },
+          { code: 'basket-expired', result: 'basket-expired' }
+        ]
+      })
+
+      test('should return correct error code for known error types', () => {
+        errors.forEach(error => {
+          expect(getPreviewOrderErrorName(error)).toEqual(error.result)
         })
       })
     })
