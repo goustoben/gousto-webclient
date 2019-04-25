@@ -1,14 +1,18 @@
-import { createPreviewOrder } from 'apis/orders'
-import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchIntervals } from 'apis/customers'
-import logger from 'utils/logger'
 import Immutable from 'immutable'
+import { getFormSyncErrors } from 'redux-form'
+
+import logger from 'utils/logger'
+import gaID from 'config/head/gaTracking'
+import Cookies from 'utils/GoustoCookies'
 import { getSlot } from 'utils/deliveries'
 import { isValidPromoCode } from 'utils/order'
+import { createPreviewOrder } from 'apis/orders'
+import { fetchIntervals } from 'apis/customers'
+import GoustoException from 'utils/GoustoException'
 import { basketResetPersistent } from 'utils/basket'
-
+import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-import { getFormSyncErrors } from 'redux-form'
+
 import actionTypes from './actionTypes'
 import {
   basketPreviewOrderChange,
@@ -21,9 +25,6 @@ import { userSubscribe } from './user'
 import statusActions from './status'
 import pricingActions from './pricing'
 import tempActions from './temp'
-import GoustoException from '../utils/GoustoException'
-import Cookies from '../utils/GoustoCookies'
-import gaID from '../config/head/gaTracking'
 
 const { pending, error } = statusActions
 
