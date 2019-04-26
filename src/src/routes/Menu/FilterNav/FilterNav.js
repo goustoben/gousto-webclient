@@ -5,9 +5,9 @@ import classnames from 'classnames'
 import style from './FilterNav.css'
 
 const propTypes = {
-  onClick: PropTypes.func.require,
-  ctaText: PropTypes.string.require,
-  sticky: PropTypes.bool.require,
+  onClick: PropTypes.func,
+  ctaText: PropTypes.string,
+  sticky: PropTypes.bool,
   menuFilterExperiment: PropTypes.bool,
   isLoadingHeart: PropTypes.bool,
   ifRecommendationIsSelected: PropTypes.bool,
