@@ -2,6 +2,7 @@ import GoustoException from 'utils/GoustoException'
 import * as collectionsApi from 'apis/collections'
 import actionTypes from 'actions/actionTypes'
 import statusActions from 'actions/status'
+import { featureSet } from 'actions/features'
 
 const collectionActions = {
   collectionsLoadCollectionBySlug,
@@ -42,11 +43,17 @@ export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
       }
 
       try {
-        const { data: collections } = await collectionsApi.fetchCollections(accessToken, '', args)
+        const { data: collections, meta } = await collectionsApi.fetchCollections(accessToken, '', args)
         dispatch({
           type: actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS,
           collections,
         })
+        if (meta && meta.properties && meta.properties.collection) {
+          const { tutorial } = meta.properties.collection
+          const tutorialEnabled = (tutorial && tutorial === 'jfy') || false
+
+          dispatch(featureSet('jfyTutorial', tutorialEnabled))
+        }
       } catch (err) {
         throw new GoustoException(`Failed to load collections with args: ${JSON.stringify(args)}`, {
           error: 'fetch-collections-fail',
