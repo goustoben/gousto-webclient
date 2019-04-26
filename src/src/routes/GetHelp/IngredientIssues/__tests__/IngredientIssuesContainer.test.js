@@ -149,7 +149,6 @@ describe('<IngredientIssuesContainer />', () => {
     })
 
     test('selected ingredient issues are changed in the store when selected', () => {
-      // This is a trick to have the mount prepared when the test is runing
       const expectedSelectedIngredients = fromJS({
         '1917-bbb': {
           recipeId: '1917',

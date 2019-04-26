@@ -2,7 +2,6 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { browserHistory } from 'react-router'
 import { Ingredients } from 'routes/GetHelp/Ingredients/Ingredients.logic'
-import { resolve } from 'dns'
 
 describe('<Ingredients />', () => {
   const content = {
