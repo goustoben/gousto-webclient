@@ -34,6 +34,13 @@ alb:
             - field: path-pattern
               value: "/my-referrals"
 
+    - type: private
+      rules:
+        - priority: 93
+          conditions:
+            - field: host-header
+              value: "[environment]-webclient.[cloudformation_output_domain]"
+
 messages:
  publish:
  consume:
@@ -81,9 +88,9 @@ healthCheck:
 environments:
   - name: staging
     instanceType: t2.small
-    minInstanceSize: 1
-    maxInstanceSize: 2
-    desiredInstanceSize: 1
+    minInstanceSize: 0
+    maxInstanceSize: 0
+    desiredInstanceSize: 0
     availability: businessHours
     ecsDesiredTaskCount: 2
 
@@ -94,9 +101,9 @@ environments:
 
   - name: env-default
     instanceType: t2.small
-    minInstanceSize: 1
-    maxInstanceSize: 1
-    desiredInstanceSize: 1
+    minInstanceSize: 0
+    maxInstanceSize: 0
+    desiredInstanceSize: 0
     availability: businessHours
     ecsDesiredTaskCount: 1
     deployment:
