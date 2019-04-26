@@ -4,6 +4,8 @@ set -e
 
 ### This script will pull the secrets from AWS SSM and register them as environment variables
 
+SEDSEPARATOR="#"  #### THIS MUST BE A SINGLE CHARACTER
+
 # Source: https://github.com/jasperes/bash-yaml/blob/master/script/yaml.sh
 parse_yaml() {
     local yaml_file=$1
@@ -35,7 +37,7 @@ parse_yaml() {
                 }
             }' |
 
-        sed -e 's/_=/+=/g' |
+        sed -e 's'${SEDSEPARATOR}'_='${SEDSEPARATOR}'+='${SEDSEPARATOR}'g' |
 
         awk 'BEGIN {
                 FS="=";
@@ -106,9 +108,9 @@ for INDEX in "${ENV_VAR_LIST[@]}" ; do
     CAMELCASE_VAR=$(echo ${VAR} | perl -pe 's/_(\w)/\U\1/g')
     DEFAULT_VALUE="${INDEX##*::}"
     if [[ -z "${!VAR}" ]]; then
-        SEDPATTERN='s/("'${CAMELCASE_VAR}'": ")('${REGEX}')(")/\1'${DEFAULT_VALUE}'\3/g'
+        SEDPATTERN='s'${SEDSEPARATOR}'("'${CAMELCASE_VAR}'": ")('${REGEX}')(")'${SEDSEPARATOR}'\1'${DEFAULT_VALUE}'\3'${SEDSEPARATOR}'g'
     else
-        SEDPATTERN='s/("'${CAMELCASE_VAR}'": ")('${REGEX}')(")/\1'${!VAR}'\3/g'
+        SEDPATTERN='s'${SEDSEPARATOR}'("'${CAMELCASE_VAR}'": ")('${REGEX}')(")'${SEDSEPARATOR}'\1'${!VAR}'\3'${SEDSEPARATOR}'g'
     fi
 
     eval "${SEDCMD} '${SEDPATTERN}' ./config/env.json"
