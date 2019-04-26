@@ -5,21 +5,22 @@ import Immutable from 'immutable'/* eslint-disable no-caps, new-cap */
 import actual from 'actual'
 import { getScrollOffset } from 'utils/menu'
 import { getWindow } from 'utils/window'
+import CollectionItem from 'CollectionItem'
 import css from './CollectionsNav.css'
-import CollectionItem from '../CollectionItem'
 
 const MOBILE_BREAKPOINT = 543
 
 class CollectionsNav extends React.PureComponent {
   static propTypes = {
     menuCollections: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
-    collectionFilterChange: PropTypes.func.isRequired,
-    menuCurrentCollectionId: PropTypes.string,
-    featureSet: PropTypes.func.isRequired,
     masonryContainer: PropTypes.shape({
       offsetTop: PropTypes.number
     }),
     browser: PropTypes.string,
+    menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+    collectionFilterChange: PropTypes.func.isRequired,
+    menuCurrentCollectionId: PropTypes.string,
+    featureSet: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -275,6 +276,7 @@ class CollectionsNav extends React.PureComponent {
   render() {
     const {
       menuCollections,
+      menuCollectionRecipes,
       menuCurrentCollectionId,
     } = this.props
 
@@ -305,20 +307,21 @@ class CollectionsNav extends React.PureComponent {
                   const isCurrent = (menuCurrentCollectionId === collectionId)
 
                   return (
-                  <CollectionItem
-                    key={collectionId}
-                    dataId={collectionId}
-                    className={isCurrent ? css.currentItem : css.item}
-                    onClick={() => { this.changeCollection(collectionId) }}
-                    idenifier={`collectionnav-${collectionId}`}
-                    element={ref => { this.eles[collectionId] = ref }}
-                    collectionId={collectionId}
-                    slug={collection.get('slug')}
-                  >
-                    <span className={css.itemTitle}>
-                      {collection.get('shortTitle')}
-                    </span>
-                  </CollectionItem>
+                    <CollectionItem
+                      count={menuCollectionRecipes.get(collectionId, Immutable.List([])).size}
+                      key={collectionId}
+                      dataId={collectionId}
+                      className={isCurrent ? css.currentItem : css.item}
+                      onClick={() => { this.changeCollection(collectionId) }}
+                      idenifier={`collectionnav-${collectionId}`}
+                      element={ref => { this.eles[collectionId] = ref }}
+                      collectionId={collectionId}
+                      slug={collection.get('slug')}
+                    >
+                      <span className={css.itemTitle}>
+                        {collection.get('shortTitle')}
+                      </span>
+                    </CollectionItem>
                   )
                 })
                 .toArray()}

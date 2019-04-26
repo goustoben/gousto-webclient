@@ -3,7 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import { H2 } from 'components/Page/Header'
-import CollectionItem from 'routes/Menu/CollectionItem'
+import CollectionItem from 'CollectionItem'
 import FilterItem from 'routes/Menu/FilterMenu/FilterItem'
 import Svg from 'Svg'
 import css from '../../FilterTag/FilterTag.css'
@@ -24,6 +24,7 @@ const CollectionFilter = ({ collections, filterCollectionChange, currentCollecti
           onClick={() => { filterCollectionChange(collectionId) }}
         >
           <CollectionItem
+            count={null}
             showCount={false}
             dataId={collectionId}
             identifier={`collectionfilter-${collectionId}`}
