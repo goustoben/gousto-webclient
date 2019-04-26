@@ -36,22 +36,36 @@ describe('Step', () => {
   }
 
   describe('rendering', () => {
+    const { addEventListener, removeEventListener } = window
+    const next = jest.fn()
+
     beforeEach(() => {
-      wrapper = shallow(<Step />)
+      window.addEventListener = jest.fn()
+      window.removeEventListener = jest.fn()
+
+      isElementHidden.mockReturnValue(true)
+    })
+
+    afterEach(() => {
+      next.mockClear()
+      window.addEventListener = addEventListener
+      window.removeEventListener = removeEventListener
     })
 
     test('should render a Spotlight', () => {
+      wrapper = shallow(<Step next={next} />)
       expect(wrapper.find(Spotlight)).toHaveLength(1)
     })
 
     test('should render a Tooltip', () => {
+      wrapper = shallow(<Step next={next} />)
       expect(wrapper.find(Tooltip)).toHaveLength(1)
     })
 
     test('should pass children into Tooltip', () => {
       const children = <p>Tooltip Contents</p>
 
-      wrapper = shallow(<Step>{children}</Step>)
+      wrapper = shallow(<Step next={next}>{children}</Step>)
 
       expect(wrapper.find(Tooltip).children().first().equals(children)).toBe(true)
     })

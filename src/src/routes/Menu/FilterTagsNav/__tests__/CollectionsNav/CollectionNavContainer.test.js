@@ -38,8 +38,8 @@ describe('CollectionsNavContainer', () => {
               browser: 'desktop'
             })
           }),
+          subscribe: () => {},
         },
-        subscribe: () => {},
       },
     })
 
@@ -94,8 +94,8 @@ describe('CollectionsNavContainer', () => {
               browser: 'desktop'
             })
           }),
+          subscribe: () => {},
         },
-        subscribe: () => {},
       },
     })
 
@@ -146,8 +146,8 @@ describe('CollectionsNavContainer', () => {
               browser: 'desktop'
             })
           }),
+          subscribe: () => {},
         },
-        subscribe: () => {},
       },
     })
 
@@ -205,8 +205,8 @@ describe('CollectionsNavContainer', () => {
               browser: 'desktop'
             })
           }),
+          subscribe: () => {},
         },
-        subscribe: () => {},
       },
     })
 
@@ -257,8 +257,8 @@ describe('CollectionsNavContainer', () => {
               browser: 'desktop'
             })
           }),
+          subscribe: () => {},
         },
-        subscribe: () => {},
       },
     })
 

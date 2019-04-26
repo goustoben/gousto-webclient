@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
@@ -8,12 +6,11 @@ import OrderProducts from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDet
 import ProductImage from 'routes/Account/AccountComponents/ProductImage'
 
 describe('OrderProducts', () => {
-  let sandbox
   let wrapper
   const productsSample = Immutable.fromJS([
-    { id: '1', title: 'title 1', quantity: 4, unitPrice: 14.323 },
-    { id: '2', title: 'title 2', quantity: 5, unitPrice: 15.0 },
-    { id: '3', title: 'title 3', quantity: 6, unitPrice: 20 },
+    { id: '1', title: 'title 1', quantity: 4, unitPrice: 14.323, image: '' },
+    { id: '2', title: 'title 2', quantity: 5, unitPrice: 15.0, image: '' },
+    { id: '3', title: 'title 3', quantity: 6, unitPrice: 20, image: '' },
   ])
   const randomProductsSample = Immutable.fromJS([
     { id: 1 },
@@ -25,12 +22,6 @@ describe('OrderProducts', () => {
     { id: 7 },
   ])
 
-  beforeEach(() => {
-    sandbox = sinon.sandbox.create()
-  })
-  afterEach(() => {
-    sandbox.restore()
-  })
   describe('rendering', () => {
     beforeEach(() => {
       wrapper = shallow(
@@ -39,7 +30,16 @@ describe('OrderProducts', () => {
           products={productsSample}
           periodId={1}
           randomProducts={randomProductsSample}
+          store={{}}
         />,
+        {
+          context: {
+            store: {
+              subscribe: () => { },
+              dispatch: () => { },
+            }
+          }
+        }
       )
     })
 
@@ -70,7 +70,14 @@ describe('OrderProducts', () => {
     })
 
     test('should render as many <ProductImage> as random products are passed, when no products are passed', () => {
-      wrapper = shallow(<OrderProducts randomProducts={randomProductsSample} />)
+      wrapper = shallow(<OrderProducts randomProducts={randomProductsSample} />, {
+        context: {
+          store: {
+            subscribe: () => { },
+            dispatch: () => { },
+          }
+        }
+      })
       expect(wrapper.find(ProductImage)).toHaveLength(7)
     })
 

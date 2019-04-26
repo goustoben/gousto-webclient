@@ -59,13 +59,28 @@ describe('Menu', () => {
     DetailOverlay.mockReturnValue(<div />)
   })
 
+  const menuLoadDays = jest.fn().mockReturnValue(
+    new Promise(resolve => {
+      resolve()
+    })
+  )
   describe('rendering', () => {
     let wrapper
+    const boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
+      new Promise(resolve => {
+        resolve()
+      })
+    )
+
+    const menuLoadBoxPrices = jest.fn()
+    afterEach(() => {
+      menuLoadBoxPrices.mockClear()
+      boxSummaryDeliveryDaysLoad.mockClear()
+    })
     beforeEach(() => {
       wrapper = shallow(
         <Menu
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          params={{ orderId: '' }}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -73,7 +88,20 @@ describe('Menu', () => {
           isLoading={false}
           jfyTutorialFlag={false}
           changeBannerGelFlag={false}
+          basketNumPortionChange={jest.fn()}
+          boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          menuLoadDays={menuLoadDays}
+          menuMobileGridViewSet={jest.fn()}
+          basketRestorePreviousValues={jest.fn()}
+          basketOrderLoaded={jest.fn()}
+          boxDetailsVisibilityChange={jest.fn()}
+          disabled={false}
+          isAuthenticated={false}
         />,
+        { context: { store: {
+          dispatch: jest.fn()
+        } } }
       )
     })
 
@@ -95,7 +123,7 @@ describe('Menu', () => {
       })
 
       test('should not show a collections nav', () => {
-        expect(wrapper.find(CollectionsNav).length).toBe(0)
+        expect(wrapper.find('CollectionsNav').length).toBe(0)
       })
 
       test('should not show as loading', () => {
@@ -113,9 +141,14 @@ describe('Menu', () => {
             productsLoadStock={() => {}}
             menuLoadBoxPrices={() => {}}
             menuCollectionRecipes={Immutable.Map({})}
+            boxDetailsVisibilityChange={jest.fn()}
             features={Immutable.Map({})}
             filteredRecipesNumber={30}
             isLoading={false}
+            params={{ orderId: '' }}
+            boxSummaryDeliveryDays={Immutable.List([])}
+            menuLoadDays={menuLoadDays}
+            basketOrderLoaded={jest.fn()}
             jfyTutorialFlag
           />,
         )
@@ -135,10 +168,14 @@ describe('Menu', () => {
           productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           menuLoadBoxPrices={() => {}}
+          boxDetailsVisibilityChange={jest.fn()}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
+          menuLoadDays={menuLoadDays}
           clearAllFilters={() => {}}
-          basketOrderLoaded={() => {}}
+          basketOrderLoaded={jest.fn()}
+          params={{ orderId: '' }}
+          boxSummaryDeliveryDays={Immutable.List([])}
           isLoading
         />,
       )
@@ -154,12 +191,17 @@ describe('Menu', () => {
           numPortions={2}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
+          boxDetailsVisibilityChange={jest.fn()}
+          menuLoadDays={menuLoadDays}
           isLoading
           storeOrderId={'1234'}
           boxSummaryShow
           clearAllFilters={() => {}}
           basketOrderLoaded={() => {}}
           query={{ num_portions: '4' }}
+          params={{ orderId: '' }}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          basketNumPortionChange={jest.fn()}
         />,
       )
       expect(wrapper.find(Loading).prop('loading')).toBe(false)
@@ -176,45 +218,20 @@ describe('Menu', () => {
           features={Immutable.Map({})}
           isLoading
           menuBrowseCTAShow
+          basketNumPortionChange={jest.fn()}
+          boxDetailsVisibilityChange={jest.fn()}
+          menuLoadDays={menuLoadDays}
           clearAllFilters={() => {}}
           basketOrderLoaded={() => {}}
+          params={{ orderId: '' }}
+          boxSummaryDeliveryDays={Immutable.List([])}
         />,
       )
       expect(wrapper.find(Loading).prop('loading')).toBe(false)
     })
 
     describe('with the collections feature enabled', () => {
-      let stock
-      let recipesStore
-      let recipes
-
-      beforeEach(() => {
-        stock = Immutable.fromJS({
-          1: { 2: 2 },
-          2: { 2: 2 },
-          3: { 2: 2 },
-        })
-
-        recipesStore = Immutable.fromJS({
-          1: {
-            id: '1',
-            availability: [],
-            boxType: 'vegetarian',
-            dietType: 'Fish',
-          },
-          2: {
-            id: '2',
-            availability: [],
-            boxType: 'vegetarian',
-            dietType: 'Vegetarian',
-          },
-          3: {
-            id: '3',
-            availability: [],
-            boxType: 'gourmet',
-            dietType: 'Meat',
-          },
-        })
+      test('should show a collections nav', () => {
         wrapper = shallow(
           <Menu
             productsLoadProducts={() => {}}
@@ -223,6 +240,15 @@ describe('Menu', () => {
             menuCollectionRecipes={Immutable.Map({})}
             clearAllFilters={() => {}}
             basketOrderLoaded={() => {}}
+            menuLoadBoxPrices={menuLoadBoxPrices}
+            menuMobileGridViewSet={jest.fn()}
+            boxSummaryDeliveryDays={Immutable.List()}
+            clearAllFilters={() => { }}
+            basketOrderLoaded={() => { }}
+            menuLoadDays={menuLoadDays}
+            params={{ orderId: '123' }}
+            basketRestorePreviousValues={jest.fn()}
+            portionSizeSelectedTracking={jest.fn()}
             features={Immutable.fromJS({
               collections: {
                 value: true,
@@ -231,16 +257,19 @@ describe('Menu', () => {
                 value: false,
               }
             })}
+            boxDetailsVisibilityChange={jest.fn()}
+            disabled={false}
+            isAuthenticated={false}
           />,
+          { context: { store: {
+            dispatch: jest.fn()
+          } } }
         )
-      })
-
-      test('should show a collections nav', () => {
         expect(wrapper.find(CollectionsNav).length).toBe(1)
       })
 
       describe('and the collectionsNav feature disabled', () => {
-        beforeEach(() => {
+        test('should not show the collections nav bar', () => {
           wrapper = shallow(
             <Menu
               productsLoadProducts={() => {}}
@@ -248,18 +277,31 @@ describe('Menu', () => {
               menuLoadBoxPrices={() => {}}
               menuCollectionRecipes={Immutable.Map({})}
               clearAllFilters={() => {}}
+              menuLoadBoxPrices={menuLoadBoxPrices}
+              menuMobileGridViewSet={jest.fn()}
+              boxSummaryDeliveryDays={Immutable.List()}
+              clearAllFilters={() => { }}
+              basketOrderLoaded={() => { }}
+              menuLoadDays={menuLoadDays}
+              params={{ orderId: '123' }}
+              basketRestorePreviousValues={jest.fn()}
+              boxDetailsVisibilityChange={jest.fn()}
+              disabled={false}
+              isAuthenticated={false}
+              portionSizeSelectedTracking={jest.fn()}
               features={Immutable.fromJS({
                 collections: {
-                  value: true,
-                },
-                collectionsNav: {
                   value: false,
+                },
+                filterMenu: {
+                  value: true,
                 },
               })}
             />,
+            { context: { store: {
+              dispatch: jest.fn()
+            } } }
           )
-        })
-        test('should not show the collections nav bar', () => {
           expect(wrapper.find(CollectionsNav).length).toBe(0)
         })
       })
@@ -275,7 +317,14 @@ describe('Menu', () => {
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
+          basketNumPortionChange={jest.fn()}
           filteredRecipesNumber={30}
+          boxDetailsVisibilityChange={jest.fn()}
+          params={{ orderId: '' }}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          triggerMenuLoad={jest.fn()}
+          basketOrderLoaded={jest.fn()}
+          menuLoadDays={menuLoadDays}
           isLoading
           hasRecommendations
         />,
@@ -293,7 +342,13 @@ describe('Menu', () => {
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
+          basketNumPortionChange={jest.fn()}
+          boxDetailsVisibilityChange={jest.fn()}
+          boxSummaryDeliveryDays={Immutable.List([])}
           filteredRecipesNumber={30}
+          menuLoadDays={menuLoadDays}
+          basketOrderLoaded={jest.fn()}
+          params={{ orderId: '' }}
           isLoading
           hasRecommendations={false}
         />,
@@ -312,6 +367,10 @@ describe('Menu', () => {
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
           filteredRecipesNumber={30}
+          basketNumPortionChange={jest.fn()}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          params={{ orderId: '' }}
+          menuLoadDays={menuLoadDays}
           isLoading={false}
           hasRecommendations={false}
         />,
@@ -332,7 +391,13 @@ describe('Menu', () => {
           productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          menuLoadDays={menuLoadDays}
+          boxDetailsVisibilityChange={jest.fn()}
+          basketOrderLoaded={jest.fn()}
           clearAllFilters={() => {}}
+          params={{ orderId: '' }}
+          basketNumPortionChange={jest.fn()}
           features={Immutable.fromJS({
             collections: {
               value: true,
@@ -354,6 +419,12 @@ describe('Menu', () => {
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           clearAllFilters={() => {}}
+          basketNumPortionChange={jest.fn()}
+          boxDetailsVisibilityChange={jest.fn()}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          menuLoadDays={menuLoadDays}
+          basketOrderLoaded={jest.fn()}
+          params={{ orderId: '' }}
           features={Immutable.fromJS({
             collections: {
               value: true,
@@ -373,7 +444,6 @@ describe('Menu', () => {
   })
 
   describe('componentDidMount', () => {
-    let menuLoadDays
     let boxSummaryDeliveryDaysLoad
     let menuLoadBoxPrices
     let getStateSpy
@@ -398,11 +468,6 @@ describe('Menu', () => {
         },
       }
       menuLoadBoxPrices = jest.fn()
-      menuLoadDays = jest.fn().mockReturnValue(
-        new Promise(resolve => {
-          resolve()
-        })
-      )
       boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
         new Promise(resolve => {
           resolve()
@@ -419,6 +484,7 @@ describe('Menu', () => {
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
+          boxDetailsVisibilityChange={jest.fn()}
           features={Immutable.Map({})}
           menuLoadDays={menuLoadDays}
           boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
@@ -448,6 +514,7 @@ describe('Menu', () => {
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
+          boxDetailsVisibilityChange={jest.fn()}
           features={Immutable.Map({})}
           menuLoadDays={menuLoadDays}
           boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
@@ -477,6 +544,7 @@ describe('Menu', () => {
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
+          boxDetailsVisibilityChange={jest.fn()}
           features={Immutable.Map({})}
           menuLoadDays={menuLoadDays}
           boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
@@ -509,6 +577,7 @@ describe('Menu', () => {
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
+          boxDetailsVisibilityChange={jest.fn()}
           menuLoadDays={menuLoadDays}
           boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
           menuLoadBoxPrices={menuLoadBoxPrices}
@@ -543,6 +612,7 @@ describe('Menu', () => {
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
+          boxDetailsVisibilityChange={jest.fn()}
           features={Immutable.Map({})}
           menuLoadDays={menuLoadDays}
           boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
@@ -878,7 +948,6 @@ describe('Menu', () => {
 
   describe('componentDidUpdate', () => {
     let wrapper
-    let menuLoadDays
     let boxSummaryDeliveryDaysLoad
     let menuLoadBoxPrices
     let getStateSpy
@@ -894,11 +963,6 @@ describe('Menu', () => {
         })
       })
       menuLoadBoxPrices = jest.fn()
-      menuLoadDays = jest.fn().mockReturnValue(
-        new Promise(resolve => {
-          resolve()
-        })
-      )
       boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
         new Promise(resolve => {
           resolve()
@@ -911,6 +975,7 @@ describe('Menu', () => {
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
+          boxDetailsVisibilityChange={jest.fn()}
           features={Immutable.Map({})}
           menuLoadDays={menuLoadDays}
           boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
@@ -919,12 +984,12 @@ describe('Menu', () => {
           filteredRecipesNumber={30}
           clearAllFilters={() => {}}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
-          params={{}}
           orderCheckout={{
             orderId: 'order-id',
             url: 'summary-url',
           }}
           cutOffDate="2019-05-13 12:00:00"
+          params={{ orderId: '' }}
         />,
         {
           context: {
@@ -952,7 +1017,7 @@ describe('Menu', () => {
 
     describe('when we have finished loading', () => {
       beforeEach(() => {
-        wrapper.setProps('isLoading', false)
+        wrapper.setProps({ 'isLoading': false})
       })
 
       test('should call shouldJfyTutorialBeVisible prop', async () => {
@@ -1024,8 +1089,14 @@ describe('Menu', () => {
   })
 
   describe('componentWillReceiveProps', () => {
+    let boxSummaryDeliveryDaysLoad
     beforeEach(() => {
       fetchData.mockClear()
+      boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
+        new Promise(resolve => {
+          resolve()
+        })
+      )
     })
 
     test('should call Menu.fetchData once if menuVariation has changed', () => {
@@ -1038,11 +1109,16 @@ describe('Menu', () => {
           tariffId={1}
           manuVariation="menuA"
           clearAllFilters={() => {}}
-          params={{}}
+          basketOrderLoaded={jest.fn()}
+          boxDetailsVisibilityChange={jest.fn()}
+          menuLoadDays={menuLoadDays}
+          boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          params={{ orderId: '' }}
         />,
       )
       wrapper.instance().componentWillReceiveProps({ menuVariation: 'menuB' })
-      expect(fetchData).toHaveBeenCalledTimes(1)
+      expect(fetchData).toHaveBeenCalledTimes(2)
     })
 
     test('should call menuLoadBoxPrices once if not disabled & tariffId has changed', () => {
@@ -1055,11 +1131,16 @@ describe('Menu', () => {
           features={Immutable.Map({})}
           tariffId={1}
           clearAllFilters={() => {}}
-          params={{}}
+          basketOrderLoaded={jest.fn()}
+          boxDetailsVisibilityChange={jest.fn()}
+          menuLoadDays={menuLoadDays}
+          boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          params={{ orderId: '' }}
         />,
       )
       wrapper.instance().componentWillReceiveProps({ tariffId: 2 })
-      expect(menuLoadBoxPrices).toHaveBeenCalledTimes(1)
+      expect(menuLoadBoxPrices).toHaveBeenCalledTimes(2)
       expect(menuLoadBoxPrices).toHaveBeenCalledWith()
     })
 
@@ -1071,14 +1152,16 @@ describe('Menu', () => {
           productsLoadStock={() => {}}
           menuLoadBoxPrices={menuLoadBoxPrices}
           features={Immutable.Map({})}
-          tariffId={1}
           clearAllFilters={() => {}}
-          params={{}}
+          menuLoadDays={menuLoadDays}
+          basketOrderLoaded={jest.fn()}
+          boxDetailsVisibilityChange={jest.fn()}
+          boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          params={{ orderId: '' }}
+          disabled
         />,
       )
-      wrapper
-        .instance()
-        .componentWillReceiveProps({ tariffId: 2, disabled: true })
       expect(menuLoadBoxPrices).not.toHaveBeenCalled()
     })
   })
@@ -1113,9 +1196,11 @@ describe('Menu', () => {
           productsLoadStock={() => {}}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
+          boxDetailsVisibilityChange={jest.fn()}
           features={Immutable.Map({})}
           disabled
           filteredRecipesNumber={0}
+          basketOrderLoaded={jest.fn()}
           clearAllFilters={() => {}}
           params={{}}
         />,

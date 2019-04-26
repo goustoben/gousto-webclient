@@ -42,9 +42,9 @@ describe('Home', () => {
           h: Immutable.fromJS({ availability: [], title: 'title' }),
           i: Immutable.fromJS({ availability: [], title: 'title' }),
         }),
-        persist: { get: () => {} },
-        auth: { get: () => {} },
-        basket: { get: () => {} },
+        persist: { get: () => { } },
+        auth: { get: () => { } },
+        basket: { get: () => { } },
       }),
       subscribe: () => () => ({}),
       unsubscribe: () => ({}),
@@ -92,7 +92,7 @@ describe('Home', () => {
 
   describe('rendered Home sections', () => {
     test('should display default HomeSections component with emailForm when logged-out', () => {
-      wrapper = shallow(<Home isAuthenticated={false} />)
+      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} isAuthenticated={false} />, { context: { store } })
       expect(wrapper.find(HomeSections)).toHaveLength(1)
       expect(wrapper.find(HomeSections).prop('modules')).toEqual([
         'hero',
@@ -106,7 +106,7 @@ describe('Home', () => {
       ])
     })
     test('should display default HomeSections component without emailForm when logged-in', () => {
-      wrapper = shallow(<Home isAuthenticated />)
+      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} isAuthenticated />, { context: { store } })
       expect(wrapper.find(HomeSections)).toHaveLength(1)
       expect(wrapper.find(HomeSections).prop('modules')).toEqual([
         'hero',
@@ -126,7 +126,7 @@ describe('Home', () => {
     const expectedCtaText = home.CTA.main
 
     beforeEach(() => {
-      wrapper = shallow(<Home />)
+      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
       homeSectionsWrapper = wrapper.find(HomeSections)
     })
 
@@ -169,7 +169,7 @@ describe('Home', () => {
     const expectedCtaText = home.CTA.loggedIn.main
 
     beforeEach(() => {
-      wrapper = shallow(<Home isAuthenticated />)
+      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} isAuthenticated />, { context: { store } })
       homeSectionsWrapper = wrapper.find(HomeSections)
     })
 
@@ -209,7 +209,7 @@ describe('Home', () => {
   describe('helmet', () => {
     describe('when given a variant', () => {
       test('should put a canonical tag in the url', () => {
-        wrapper = shallow(<Home variant="alt" />)
+        wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} variant="alt" />, { context: { store } })
 
         expect(wrapper.find(Helmet).first().prop('link')).toEqual([{
           href: 'https://www.gousto.local/',
@@ -220,7 +220,7 @@ describe('Home', () => {
 
     describe('when not given a variant', () => {
       test('should not put a canonical tag in the url', () => {
-        wrapper = shallow(<Home />)
+        wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
 
         expect(wrapper.find(Helmet).first().prop('link')).toEqual([])
       })
