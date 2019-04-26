@@ -191,7 +191,7 @@ describe('Checkout', () => {
         }),
         checkout: Immutable.fromJS({
           intervals: [],
-        }),
+      }),
         menuBoxPrices: Immutable.Map({ 2: {} }),
         menuCutoffUntil: '2019-02-22T11:59:59+00:00',
         error: Immutable.Map({}),
