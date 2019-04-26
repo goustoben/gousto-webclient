@@ -23,8 +23,7 @@ alb:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
             - field: path-pattern
-              value: "/myamazingfirstpathstub"
-#              value: "/box-prices"
+              value: "/box-prices"
 
     - type: private
       rules:
@@ -33,8 +32,7 @@ alb:
             - field: host-header
               value: "[environment]-webclient.[cloudformation_output_domain]"
             - field: path-pattern
-              value: "/myamazingsecondpathstub"
-#              value: "/my-referrals"
+              value: "/my-referrals"
 
 messages:
  publish:
