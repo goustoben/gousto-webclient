@@ -2,7 +2,6 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
 
-import css from 'routes/Menu/CollectionsNav/CollectionsNav.css'
 import { getScrollOffset } from 'utils/menu'
 import CollectionsNav from 'routes/Menu/CollectionsNav/CollectionsNav'
 
@@ -89,9 +88,9 @@ describe('<CollectionsNav />', () => {
     items = wrapper.find('CollectionItem')
 
     expect(items.length).toEqual(3)
-    expect(items.at(0).find('span').at(0).text()).toEqual('Burgers!')
-    expect(items.at(1).find('span').at(0).text()).toEqual('Savour the Summer')
-    expect(items.at(2).find('span').at(0).text()).toEqual('Quick Meals')
+    expect(items.first().find('span').first().text()).toEqual('Burgers!')
+    expect(items.at(1).find('span').first().text()).toEqual('Savour the Summer')
+    expect(items.at(2).find('span').first().text()).toEqual('Quick Meals')
   })
 
   test('should call the collectionFilterChange function prop when a collection is clicked & sticky feature is enabled', () => {
