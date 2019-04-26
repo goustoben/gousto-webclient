@@ -1,6 +1,6 @@
 import React from 'react'
 import thunk from 'redux-thunk'
-import { mount} from 'enzyme'
+import { mount } from 'enzyme'
 import { Map, fromJS } from 'immutable'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
