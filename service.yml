@@ -89,7 +89,7 @@ environments:
   - name: staging
     instanceType: t2.small
     minInstanceSize: 0
-    maxInstanceSize: 0
+    maxInstanceSize: 1
     desiredInstanceSize: 0
     ecsDesiredTaskCount: 2
 
