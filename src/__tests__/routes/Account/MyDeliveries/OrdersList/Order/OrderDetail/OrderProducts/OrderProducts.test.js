@@ -35,8 +35,8 @@ describe('OrderProducts', () => {
         {
           context: {
             store: {
-              subscribe: () => { },
-              dispatch: () => { },
+              subscribe: jest.fn(),
+              dispatch: jest.fn(),
             }
           }
         }
@@ -73,8 +73,8 @@ describe('OrderProducts', () => {
       wrapper = shallow(<OrderProducts randomProducts={randomProductsSample} />, {
         context: {
           store: {
-            subscribe: () => { },
-            dispatch: () => { },
+            subscribe: jest.fn(),
+            dispatch: jest.fn(),
           }
         }
       })
