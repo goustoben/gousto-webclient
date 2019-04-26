@@ -91,7 +91,6 @@ environments:
     minInstanceSize: 0
     maxInstanceSize: 0
     desiredInstanceSize: 0
-    availability: businessHours
     ecsDesiredTaskCount: 2
 
     deployment:
@@ -104,7 +103,6 @@ environments:
     minInstanceSize: 0
     maxInstanceSize: 0
     desiredInstanceSize: 0
-    availability: businessHours
     ecsDesiredTaskCount: 1
     deployment:
       style: inline
