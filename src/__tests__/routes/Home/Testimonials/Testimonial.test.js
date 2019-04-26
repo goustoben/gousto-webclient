@@ -1,4 +1,3 @@
-import sinon from 'sinon'
 import Immutable from 'immutable'
 
 import Svg from 'Svg'
@@ -29,24 +28,9 @@ describe('Home/Testimonials/TestimonialCarousel/Testimonial', () => {
   })
 
   test('should render the author, title, and body', () => {
-    expect(
-      wrapper
-        .find('div')
-        .at(1)
-        .text(),
-    ).toBe('someone')
-    expect(
-      wrapper
-        .find('div')
-        .at(3)
-        .text(),
-    ).toBe('gousto is awesome!')
-    expect(
-      wrapper
-        .find('div')
-        .at(4)
-        .text(),
-    ).toBe('something super positive')
+    expect(wrapper.find('div').at(1).text()).toBe('someone')
+    expect(wrapper.find('div') .at(3).text()).toBe('gousto is awesome!')
+    expect(wrapper .find('div').at(4).text()).toBe('something super positive')
   })
 })
 
@@ -67,22 +51,12 @@ describe('Testimonial rendering props modifiers', () => {
     )
 
     expect(
-      wrapper
-        .find('div')
-        .at(3)
-        .children().node,
-    ).toBe('gousto is awesome!')
+      wrapper.find('div').at(3).getElement().props.children[1]).toBe('gousto is awesome!')
   })
 
   test('should render the link, when showLink is true', () => {
     wrapper = shallow(<Testimonial testimonial={testimonial} showLink />)
 
-    expect(
-      wrapper
-        .find('div')
-        .at(3)
-        .children()
-        .type(),
-    ).toBe('a')
+    expect(wrapper.find('div').at(3).children().type()).toBe('a')
   })
 })

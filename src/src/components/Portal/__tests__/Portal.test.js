@@ -42,10 +42,6 @@ describe('Portal', () => {
       )
     })
 
-    afterEach(() => {
-      wrapper.unmount()
-    })
-
     describe('componentDidMount', () => {
       test('should call renderWrapper', () => {
         expect(document.body.innerHTML).toEqual(portalHtml)
@@ -55,7 +51,6 @@ describe('Portal', () => {
     describe('componentWillUnmount', () => {
       test('should call close', () => {
         expect(wrapper.instance().node).toBeTruthy()
-
         wrapper.unmount()
 
         expect(document.body.innerHTML).not.toEqual(portalHtml)
@@ -96,10 +91,6 @@ describe('Portal', () => {
       wrapper = mount(
         <Portal />
       )
-    })
-
-    afterEach(() => {
-      wrapper.unmount()
     })
 
     describe('when node does not exist', () => {
