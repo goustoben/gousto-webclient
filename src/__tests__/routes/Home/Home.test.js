@@ -42,12 +42,12 @@ describe('Home', () => {
           h: Immutable.fromJS({ availability: [], title: 'title' }),
           i: Immutable.fromJS({ availability: [], title: 'title' }),
         }),
-        persist: { get: () => { } },
-        auth: { get: () => { } },
-        basket: { get: () => { } },
+        persist: { get: jest.fn() },
+        auth: { get: jest.fn() },
+        basket: { get: jest.fn() },
       }),
-      subscribe: () => () => ({}),
-      unsubscribe: () => ({}),
+      subscribe: jest.fn(),
+      unsubscribe: jest.fn(),
       dispatch,
     }
   })
