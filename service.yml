@@ -91,12 +91,11 @@ environments:
     minInstanceSize: 0
     maxInstanceSize: 0
     desiredInstanceSize: 0
-    availability: businessHours
     ecsDesiredTaskCount: 2
 
     deployment:
       style: immutable
-      minInstancesInService: 1
+      minInstancesInService: 0
       maxBatchSize: 1
 
   - name: env-default
@@ -104,7 +103,6 @@ environments:
     minInstanceSize: 0
     maxInstanceSize: 0
     desiredInstanceSize: 0
-    availability: businessHours
     ecsDesiredTaskCount: 1
     deployment:
       style: inline
