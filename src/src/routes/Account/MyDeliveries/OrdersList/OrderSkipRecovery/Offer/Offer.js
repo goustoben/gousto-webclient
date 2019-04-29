@@ -13,7 +13,7 @@ const propTypesOffer = {
         value: PropTypes.string,
       }))
     })
-  })
+  }).isRequired
 }
 
 const defaultProps = {

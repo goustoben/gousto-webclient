@@ -10,8 +10,8 @@ const HowItWorks = ({ steps, header, description, variant }) => (
 )
 
 HowItWorks.propTypes = {
-  header: PropTypes.object,
-  description: PropTypes.object,
+  header: PropTypes.string,
+  description: PropTypes.string,
   steps: PropTypes.func,
   variant: PropTypes.string,
 }

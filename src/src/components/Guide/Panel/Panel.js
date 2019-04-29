@@ -18,8 +18,8 @@ const Panel = ({ path, title, description, graphicType }) => (
 
 Panel.propTypes = {
   path: PropTypes.string,
-  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  description: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  title: PropTypes.string,
+  description: PropTypes.string,
   graphicType: PropTypes.oneOf(['img', 'svg']),
 }
 

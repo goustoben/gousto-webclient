@@ -107,6 +107,7 @@ class Login extends React.PureComponent {
 			<div>
 				<TextInput
 				  autoFocus={this.props.isOpen}
+				  ref="email"
 				  name="email"
 				  color="gray"
 				  textAlign="left"

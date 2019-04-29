@@ -40,7 +40,7 @@ class Menu extends React.Component {
     boxDetailsVisibilityChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool.isRequired,
     boxSummaryDeliveryDaysLoad: PropTypes.func,
-    boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
+    boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map()),
     hasRecommendations: PropTypes.bool,
     forceLoad: PropTypes.bool,
     menuLoadDays: PropTypes.func,
@@ -99,7 +99,7 @@ class Menu extends React.Component {
       isChrome: browserHelper.isChrome(),
     })
 
-    const { params,
+    const { params, 
       storeOrderId,
       basketOrderLoaded,
       query,
@@ -146,7 +146,7 @@ class Menu extends React.Component {
     }
 
     shouldJfyTutorialBeVisible()
-
+    
     if (params.orderId) {
       portionSizeSelectedTracking(numPortions, params.orderId)
     }
