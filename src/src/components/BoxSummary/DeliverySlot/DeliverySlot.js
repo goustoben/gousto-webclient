@@ -16,7 +16,7 @@ class DeliverySlot extends React.Component {
     prevDate: PropTypes.string,
     deliveryDays: PropTypes.instanceOf(Immutable.Map),
     postcode: PropTypes.string,
-    userOrders: PropTypes.instanceOf(Immutable.List),
+    userOrders: PropTypes.instanceOf(Immutable.Map),
     menuPending: PropTypes.bool,
     deliverySlotChosen: PropTypes.func.isRequired,
     clearPostcode: PropTypes.func.isRequired,
@@ -47,7 +47,7 @@ class DeliverySlot extends React.Component {
   static defaultProps = {
     availableDaysOnly: Immutable.fromJS([]),
     deliveryDays: Immutable.fromJS({}),
-    userOrders: Immutable.fromJS([]),
+    userOrders: Immutable.fromJS({}),
     disableNewDatePicker: false,
     disableOnDelivery: false,
     basketRecipeNo: 0,
@@ -95,7 +95,7 @@ class DeliverySlot extends React.Component {
       if (orderEmpty) {
         icon = 'empty-box'
         hasEmptyOrders = true
-      } 
+      }
 
       if (orderIds.length > 0) {
         hasOrders = true
@@ -187,7 +187,7 @@ class DeliverySlot extends React.Component {
     } else if (!displayOptions.contains('hideDeliveryCopy')) {
       deliveryCopy = 'You choose how often you would like to receive boxes after checkout.'
     }
-    
+
     let deliveryCopyEmpty
     if (hasEmptyOrders) {
       deliveryCopyEmpty = <div><Svg fileName="icon_Scheduled-delivery" className={css.upcomingOrder} /><span> Upcoming delivery – recipes not chosen</span></div>}
