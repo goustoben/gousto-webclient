@@ -88,7 +88,7 @@ GridRecipe.propTypes = {
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
   tasteScore: PropTypes.number,
-  range: PropTypes.instanceOf(Immutable.Map),
+  range: PropTypes.string,
   fiveADay: PropTypes.number
 }
 

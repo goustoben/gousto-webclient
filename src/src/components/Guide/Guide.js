@@ -24,8 +24,8 @@ const Guide = ({ steps, header, description, graphicType }) => (
 )
 
 Guide.propTypes = {
-  header: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  description: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  header: PropTypes.string,
+  description: PropTypes.string,
   steps: PropTypes.array,
   graphicType: PropTypes.string,
 }

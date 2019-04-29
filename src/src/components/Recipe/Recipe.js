@@ -17,7 +17,7 @@ const recipePropTypes = {
   stock: PropTypes.number,
   view: PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn']).isRequired,
   surcharge: PropTypes.number,
-  range: PropTypes.instanceOf(Immutable.Map),
+  range: PropTypes.string,
 }
 
 class Recipe extends React.PureComponent {

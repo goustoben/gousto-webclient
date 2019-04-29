@@ -15,7 +15,7 @@ export class TextInput extends React.Component {
 	  onKeyDown: PropTypes.func,
 	  onEnter: PropTypes.func,
 	  className: PropTypes.string,
-	  color: PropTypes.string,
+	  color: PropTypes.oneOf(['primary', 'secondary']),
 	  textAlign: PropTypes.oneOf(['left', 'center', 'right']),
 	  disabled: PropTypes.bool,
 	  placeholder: PropTypes.string,
