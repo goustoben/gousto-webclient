@@ -71,25 +71,7 @@ describe('collection actions', () => {
       })
     })
 
-    describe('when fetchCollections does not return meta', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(createCollectionState({
-          isAuthenticated: true,
-        }))
-      })
-
-      beforeEach(() => {
-        fetchCollections.mockReturnValue(Promise.resolve())
-      })
-
-      test('should not dispatch a featureSet action', async () => {
-        await collectionsLoadCollections()(dispatch, getState)
-
-        expect(featureSet).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('when fetchCollections returns meta', () => {
+    describe('when fetchCollections returns recommendations', () => {
       beforeEach(() => {
         getState.mockReturnValue(createCollectionState({
           isAuthenticated: true,
@@ -99,16 +81,16 @@ describe('collection actions', () => {
       describe('containing an enabled jfy tutorial', () => {
         beforeEach(() => {
           fetchCollections.mockReturnValue(Promise.resolve({
-            meta: {
+            data: [{
+              id: 'recommended collection',
+              slug: 'recommendations',
               properties: {
-                collection: {
-                  enabled: true,
-                  limit: 25,
-                  name: "Just For You",
-                  tutorial: "jfy"
-                }
+                enabled: true,
+                limit: 25,
+                name: "Just For You",
+                tutorial: "jfy"
               }
-            }
+            }]
           }))
         })
 
@@ -125,15 +107,15 @@ describe('collection actions', () => {
       describe('containing a disabled jfy tutorial', () => {
         beforeEach(() => {
           fetchCollections.mockReturnValue(Promise.resolve({
-            meta: {
+            data: [{
+              id: 'recommended collection',
+              slug: 'recommendations',
               properties: {
-                collection: {
-                  enabled: true,
-                  limit: 20,
-                  name: "Just For You"
-                }
+                enabled: true,
+                limit: 25,
+                name: "Just For You",
               }
-            }
+            }]
           }))
         })
 
@@ -145,6 +127,31 @@ describe('collection actions', () => {
             false,
           )
         })
+      })
+    })
+
+    describe('when fetchCollections is not returning recommendations', () => {
+      beforeEach(() => {
+        getState.mockReturnValue(createCollectionState({
+          isAuthenticated: true,
+        }))
+        fetchCollections.mockReturnValue(Promise.resolve({
+          data: [{
+            id: 'all recipe collection',
+            slug: 'all-recipes',
+            properties: {
+              enabled: true,
+              limit: 25,
+              name: "All recipes",
+            }
+          }]
+        }))
+      })
+
+      test('should not dispatch a featureSet action', async () => {
+        await collectionsLoadCollections()(dispatch, getState)
+
+        expect(featureSet).not.toHaveBeenCalled()
       })
     })
   })

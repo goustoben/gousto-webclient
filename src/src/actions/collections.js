@@ -43,13 +43,14 @@ export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
       }
 
       try {
-        const { data: collections, meta } = await collectionsApi.fetchCollections(accessToken, '', args)
+        const { data: collections } = await collectionsApi.fetchCollections(accessToken, '', args)
         dispatch({
           type: actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS,
           collections,
         })
-        if (meta && meta.properties && meta.properties.collection) {
-          const { tutorial } = meta.properties.collection
+        const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
+        if (recommendationCollection && recommendationCollection.properties) {
+          const { tutorial } = recommendationCollection.properties
           const tutorialEnabled = (tutorial && tutorial === 'jfy') || false
 
           dispatch(featureSet('jfyTutorial', tutorialEnabled))
