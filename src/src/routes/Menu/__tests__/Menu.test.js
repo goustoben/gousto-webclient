@@ -103,7 +103,7 @@ describe('Menu', () => {
 
       test('should render banner with an image name prop', () => {
         expect(wrapper.find(Banner).length).toBe(1)
-        expect(wrapper.find(Banner).prop('imageName')).toBeTruthy()
+        expect(wrapper.find(Banner).prop('type')).toBeTruthy()
       })
     })
 
