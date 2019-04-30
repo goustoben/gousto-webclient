@@ -11,10 +11,12 @@ import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'u
 import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
 import menuConfig from 'config/menu'
+import { featureSet } from 'actions/features'
 import statusActions from './status'
 import { collectionFilterChange } from './filters'
 import { redirect } from './redirect'
 import products from './products'
+
 import {
   basketReset,
   basketDateChange,
@@ -160,6 +162,13 @@ export function menuLoadCollections(date, noUrlChange) {
       ...experiments,
     }
     const { data: collections } = await fetchCollections(accessToken, '', args)
+    const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
+    if (recommendationCollection && recommendationCollection.properties) {
+      const { tutorial } = recommendationCollection.properties
+      const tutorialEnabled = (tutorial && tutorial === 'jfy') || false
+
+      dispatch(featureSet('jfyTutorial', tutorialEnabled))
+    }
     const filterExperiment = state.features.getIn(['filterMenu', 'value'])
     const collectionsFiltered = filterExperiment ?
       collections.filter(collection => (!['dairy-free', 'gluten-free', 'plant-based', 'vegetarian'].includes(collection.slug)))
