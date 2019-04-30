@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 
 import { fetchCollections } from 'apis/collections'
+import { featureSet } from 'actions/features'
 
 import {
   menuLoadCollections,
@@ -8,6 +9,9 @@ import {
 
 jest.mock('apis/collections', () => ({
   fetchCollections: jest.fn(),
+}))
+jest.mock('actions/features', () => ({
+  featureSet: jest.fn(),
 }))
 
 describe('menu actions', () => {
@@ -27,10 +31,27 @@ describe('menu actions', () => {
             accessToken: 'an-access-token',
             isAuthenticated: true 
           }),
+          features: Immutable.fromJS({}),
+          routing: {},
+          menuCollections: Immutable.fromJS({})
         })
+      })
+      afterEach(() => {
+        fetchCollections.mockReset()
       })
 
       test('should dispatch a fetchCollections request containing jfy experiment', () => {
+        fetchCollections.mockReturnValueOnce(Promise.resolve({
+          data: [{
+            id: 'all recipes collection',
+            slug: 'all-recipes',
+            properties: {
+              enabled: true,
+              limit: 25,
+              name: "All Recipes",
+            }
+          }],
+        }))
         menuLoadCollections()(dispatch, getState)
 
         expect(fetchCollections).toHaveBeenCalledWith(
@@ -43,6 +64,68 @@ describe('menu actions', () => {
           })
         )
       })
+
+      test('should dispatch a featureSet containing jfy tutorial value true if tutorial jfy', async () => {
+        fetchCollections.mockReturnValueOnce(Promise.resolve({
+          data: [{
+            id: 'recommended collection',
+            slug: 'recommendations',
+            properties: {
+              enabled: true,
+              limit: 25,
+              name: "Just For You",
+              tutorial: "jfy"
+            }
+          }],
+        }))
+        await menuLoadCollections()(dispatch, getState)
+
+        expect(featureSet).toHaveBeenCalledWith(
+          'jfyTutorial',
+          true,
+        )
+      })
+
+      test('should dispatch a featureSet containing jfy tutorial value false if tutorial null', async () => {
+        fetchCollections.mockReturnValueOnce(Promise.resolve({
+          data: [{
+            id: 'recommended collection',
+            slug: 'recommendations',
+            properties: {
+              enabled: true,
+              limit: 25,
+              name: "Just For You",
+              tutorial: null
+            }
+          }],
+        }))
+        await menuLoadCollections()(dispatch, getState)
+
+        expect(featureSet).toHaveBeenCalledWith(
+          'jfyTutorial',
+          false,
+        )
+      })
+
+      test('should dispatch a featureSet containing jfy tutorial value false if not recommendations', async () => {
+        fetchCollections.mockReturnValueOnce(Promise.resolve({
+          data: [{
+            id: 'all recipes collection',
+            slug: 'all-recipes',
+            properties: {
+              enabled: true,
+              limit: 25,
+              name: "All Recipes",
+            }
+          }],
+        }))
+        await menuLoadCollections()(dispatch, getState)
+
+        expect(featureSet).toHaveBeenCalledWith(
+          'jfyTutorial',
+          false,
+        )
+      })
     })
     
     describe('when not authenticated', () => {
@@ -52,10 +135,24 @@ describe('menu actions', () => {
             accessToken: 'an-access-token',
             isAuthenticated: false 
           }),
+          features: Immutable.fromJS({}),
+          routing: {},
+          menuCollections: Immutable.fromJS({})
         })
       })
 
       test('should dispatch a fetchCollections request without experiments preset', () => {
+        fetchCollections.mockReturnValueOnce(Promise.resolve({
+          data: [{
+            id: 'all recipes collection',
+            slug: 'all-recipes',
+            properties: {
+              enabled: true,
+              limit: 25,
+              name: "All Recipes",
+            }
+          }],
+        }))
         menuLoadCollections('a-date')(dispatch, getState)
 
         expect(fetchCollections).toHaveBeenCalledWith(
