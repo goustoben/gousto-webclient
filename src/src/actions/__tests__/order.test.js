@@ -2,39 +2,26 @@ import Immutable from 'immutable'
 
 import { getOrderDetails } from 'utils/basket'
 import { saveUserOrder, updateUserOrder } from 'apis/user'
-import { saveOrder, cancelOrder, updateOrderAddress } from 'apis/orders'
+import {
+  saveOrder,
+  cancelOrder,
+  updateOrderAddress,
+  fetchOrder,
+  updateOrderItems
+} from 'apis/orders'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
-import { pending, error } from 'actions/status'
-
+import actionStatus from 'actions/status'
+import actionTypes from 'actions/actionTypes'
 import orderActions from '../order'
 
-jest.mock('apis/orders', () => ({
-  saveOrder: jest.fn(),
-  cancelOrder: jest.fn(),
-  updateOrderAddress: jest.fn(),
-}))
+jest.mock('apis/orders')
+jest.mock('actions/orderConfirmation')
+jest.mock('utils/window')
+jest.mock('actions/status')
+jest.mock('apis/user')
+jest.mock('utils/basket')
 
-jest.mock('actions/orderConfirmation', () => ({
-  orderDetails: jest.fn(),
-  orderConfirmationRedirect: jest.fn(),
-}))
-
-jest.mock('utils/window', () => ({
-  redirect: jest.fn()
-}))
-jest.mock('actions/status', () => ({
-  pending: jest.fn(),
-  error: jest.fn()
-}))
-
-jest.mock('apis/user', () => ({
-  saveUserOrder: jest.fn(),
-  updateUserOrder: jest.fn()
-}))
-
-jest.mock('utils/basket', () => ({
-  getOrderDetails: jest.fn()
-}))
+const { pending, error } = actionStatus
 
 describe('order actions', () => {
   let orderId
@@ -53,6 +40,7 @@ describe('order actions', () => {
     numPortions = 3
     orderAction = 'transaction'
     dispatchSpy = jest.fn()
+    fetchOrder.mockClear()
   })
 
   afterEach(() => {
@@ -145,6 +133,114 @@ describe('order actions', () => {
         '5678',
         'something',
       )
+    })
+  })
+
+  describe('orderUpdateProducts', () => {
+    const getStateSpy = () => ({
+      auth: Immutable.fromJS({ accessToken: 'access-token' }),
+    })
+
+    test('api function is called with correct parameters', async () => {
+      const itemChoices = [
+        { id: "df0ddd72-beb3-11e5-8432-02fada0dd3b9", quantity: 1, type: "Product" },
+        { id: "d533155a-7c4f-11e7-b81e-02e92c52d95a", quantity: 2, type: "Product" }
+      ]
+      await orderActions.orderUpdateProducts(orderId, itemChoices)(dispatchSpy, getStateSpy)
+
+      expect(updateOrderItems).toHaveBeenCalledWith(
+        'access-token',
+        orderId,
+        { item_choices: itemChoices, restrict: "Product" }
+      )
+    })
+
+    test('when the api call succeeds it dispatches an action', async () => {
+      await orderActions.orderUpdateProducts(orderId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.ORDER_UPDATE_PRODUCTS
+      })
+    })
+
+    test('when the api call errors it dispatches the error in an action', async () => {
+      updateOrderItems.mockRejectedValue('error')
+      await orderActions.orderUpdateProducts(orderId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.ORDER_UPDATE_PRODUCTS,
+        error: 'error',
+      })
+    })
+  })
+
+  describe('orderHasAnyProducts', () => {
+    const getStateSpy = () => ({
+      auth: Immutable.fromJS({ accessToken: 'access-token' }),
+    })
+
+    test('api function is called with correct parameters', async () => {
+      await orderActions.orderHasAnyProducts(orderId)(dispatchSpy, getStateSpy)
+
+      expect(fetchOrder).toHaveBeenCalledWith(
+        'access-token',
+        orderId
+      )
+    })
+
+    test('when the order has a product, it dispatches true in an action', async () => {
+      const fetchOrderResult = {
+        data: {
+          productItems: [],
+        },
+      }
+      fetchOrder.mockResolvedValue(fetchOrderResult)
+      await orderActions.orderHasAnyProducts(orderId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
+        hasProducts: false
+      })
+    })
+
+    test('when the order has a product, it dispatches true in an action', async () => {
+      const fetchOrderResult = {
+        data: {
+          productItems: ['1', '2', '3'],
+        },
+      }
+      fetchOrder.mockResolvedValue(fetchOrderResult)
+      await orderActions.orderHasAnyProducts(orderId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
+        hasProducts: true
+      })
+    })
+
+    test('when the orderId is not empty, null or undefined, it dispatches an error in an action', async() => {
+      const errorAction = {
+        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
+        error: new Error('missing orderId')
+      }
+      await orderActions.orderHasAnyProducts('')(dispatchSpy, getStateSpy)
+      await orderActions.orderHasAnyProducts(null)(dispatchSpy, getStateSpy)
+      await orderActions.orderHasAnyProducts()(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenNthCalledWith(1, errorAction)
+      expect(dispatchSpy).toHaveBeenNthCalledWith(2, errorAction)
+      expect(dispatchSpy).toHaveBeenNthCalledWith(3, errorAction)
+      expect(fetchOrder).not.toHaveBeenCalled()
+    })
+
+    test('when the api call throws an error, it dispatches the error in an action', async () => {
+      fetchOrder.mockRejectedValue('error')
+      await orderActions.orderHasAnyProducts(orderId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
+        error: 'error',
+      })
     })
   })
 

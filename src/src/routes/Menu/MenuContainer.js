@@ -19,6 +19,12 @@ function mapStateToProps(state, ownProps) {
     return Array.from(recipes.keys())
   }
 
+  const getBasketProducts = products => {
+    return products.entrySeq().map(([id, quantity]) => (
+      { id, quantity }
+    ))
+  }
+
   let collectionName = (ownProps.location && ownProps.location.query) ? ownProps.location.query.collection : ''
   const preferredCollectionName = state.features.getIn(['preferredCollection', 'value'])
 
@@ -50,6 +56,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     basketRecipeIds: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))),
+    basketProducts: getBasketProducts(state.basket.get('products', Immutable.Map({}))),
     menuRecipeDetailShow: (ownProps.location && ownProps.location.query) ? ownProps.location.query.recipeDetailId : '',
     boxSummaryShow: state.boxSummaryShow.get('show'),
     menuCurrentCollectionId: collectionId,
@@ -91,6 +98,8 @@ const mapDispatchToProps = {
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
   basketNumPortionChange: actions.basketNumPortionChange,
   shouldJfyTutorialBeVisible,
+  orderHasAnyProducts: actions.orderHasAnyProducts,
+  orderUpdateProducts: actions.orderUpdateProducts,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)

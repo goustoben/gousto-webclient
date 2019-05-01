@@ -69,6 +69,12 @@ class Menu extends React.Component {
     basketNumPortionChange: PropTypes.func.isRequired,
     portionSizeSelectedTracking: PropTypes.func,
     numPortions: PropTypes.number,
+    orderHasAnyProducts: PropTypes.func.isRequired,
+    orderUpdateProducts: PropTypes.func.isRequired,
+    basketProducts: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string,
+      quantity: PropTypes.number,
+    })),
   }
 
   static contextTypes = {
@@ -80,6 +86,7 @@ class Menu extends React.Component {
     isLoading: false,
     numPortions: 2,
     shouldJfyTutorialBeVisible: () => {},
+    basketProducts: [],
     portionSizeSelectedTracking: () => {},
   }
 
@@ -99,7 +106,8 @@ class Menu extends React.Component {
       isChrome: browserHelper.isChrome(),
     })
 
-    const { params,
+    const {
+      params,
       storeOrderId,
       basketOrderLoaded,
       query,
@@ -115,6 +123,10 @@ class Menu extends React.Component {
       shouldJfyTutorialBeVisible,
       portionSizeSelectedTracking,
       numPortions,
+      orderId,
+      basketProducts,
+      orderUpdateProducts,
+      orderHasAnyProducts,
     } = this.props
     const { store } = this.context
     // if server rendered
@@ -151,6 +163,38 @@ class Menu extends React.Component {
       portionSizeSelectedTracking(numPortions, params.orderId)
     }
 
+    const handleOrderUpdateProductsRequest = (event) => {
+      const addExistingProducts = (itemChoices, products) => {
+        const newItemChoices = [...itemChoices]
+        products.forEach(product => {
+          newItemChoices.push({
+            id: product.id,
+            quantity: product.quantity,
+            type: "Product"
+          })
+        })
+
+        return newItemChoices
+      }
+
+      let { itemChoices } = event.detail
+      itemChoices = addExistingProducts(itemChoices, basketProducts)
+
+      orderUpdateProducts(orderId, itemChoices)
+    }
+    const handleOrderDoesContainProductsRequest = () => {
+      orderHasAnyProducts(orderId)
+    }
+
+    window.addEventListener(
+      'orderDoesContainProductsRequest',
+      handleOrderDoesContainProductsRequest
+    )
+
+    window.addEventListener(
+      'orderUpdateProductsRequest',
+      handleOrderUpdateProductsRequest
+    )
   }
 
   componentWillReceiveProps(nextProps) {
@@ -194,6 +238,9 @@ class Menu extends React.Component {
 
   componentWillUnmount() {
     this.props.loginVisibilityChange(false)
+
+    window.removeEventListener('orderDoesContainProductsRequest')
+    window.removeEventListener('orderUpdateProductsRequest')
   }
 
   masonryContainer = null

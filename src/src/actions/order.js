@@ -230,6 +230,52 @@ const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, addressId
   }
 )
 
+const orderUpdateProducts = (orderId, itemChoices) => (
+  async (dispatch, getState) => {
+    const accessToken = getState().auth.get('accessToken')
+    const reqData = { item_choices: itemChoices, restrict: "Product" }
+
+    try {
+      await ordersApi.updateOrderItems(accessToken, orderId, reqData)
+      dispatch({
+        type: actionTypes.ORDER_UPDATE_PRODUCTS,
+      })
+    } catch (error) {
+      dispatch({
+        type: actionTypes.ORDER_UPDATE_PRODUCTS,
+        error,
+      })
+    }
+  }
+)
+
+const orderHasAnyProducts = (orderId) => (
+  async (dispatch, getState) => {
+    const accessToken = getState().auth.get('accessToken')
+    const dispatchError = (error) => (
+      dispatch({
+        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
+        error,
+      })
+    )
+
+    try {
+      if (orderId === undefined || orderId === null || orderId === '') {
+        return dispatchError(new Error('missing orderId'))
+      }
+
+      const response = await ordersApi.fetchOrder(accessToken, orderId)
+      const hasProducts = response.data.productItems.length > 0
+      dispatch({
+        type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
+        hasProducts,
+      })
+    } catch (error) {
+      dispatchError(error)
+    }
+  }
+)
+
 const cancelOrderModalToggleVisibility = (visibility, orderId) => (
   (dispatch) => {
     dispatch({
@@ -336,10 +382,12 @@ export default {
   orderUpdateDayAndSlot,
   orderAssignToUser,
   orderCheckPossibleDuplicate,
+  orderHasAnyProducts,
   projectedOrderCancel,
   cancelledAllBoxesModalToggleVisibility,
   projectedOrderRestore,
   orderAddressChange,
   orderGetDeliveryDays,
+  orderUpdateProducts,
   cancelOrderModalToggleVisibility,
 }
