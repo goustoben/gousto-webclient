@@ -77,7 +77,6 @@ class EmailForm extends React.PureComponent {
 									<div className={css.row}>
 										<div className={css.input}>
 											<TextInput
-											  ref="email"
 											  name="email"
 											  color="gray"
 											  textAlign="left"

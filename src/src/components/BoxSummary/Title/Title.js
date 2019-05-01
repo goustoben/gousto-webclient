@@ -47,7 +47,7 @@ class Title extends React.PureComponent {
 				<div className={classNames(css[`title${view}`], css.price)}>
 					{
 					  pending ? view === 'mobile' && (
-							<div spinner className={classNames(spinnerClassNames)}>
+							<div className={classNames(spinnerClassNames)}>
 								<span className={classNames(css.spinner, this.props.spinnerClassName)}>
 									<Spinner />
 								</span>

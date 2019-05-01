@@ -1,4 +1,5 @@
 import React from 'react'
+import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import css from './RangeBadge.css'
 
@@ -42,7 +43,7 @@ const RangeBadge = ({ range }) => {
 }
 
 RangeBadge.propTypes = {
-  range: PropTypes.string,
+  range: PropTypes.instanceOf(Immutable.Map),
 }
 
 export default RangeBadge
