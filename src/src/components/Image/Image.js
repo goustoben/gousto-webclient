@@ -100,7 +100,7 @@ class Image extends React.PureComponent {
 	    )
 
 	    return (lazy) ? (
-				<LazyLoad once={once} offset={offset} placeholder={placeholder}>
+				<LazyLoad once={once} offset={offset} placeholder={placeholder} height={0}>
 					{imageComponent}
 				</LazyLoad>
 	    ) : imageComponent

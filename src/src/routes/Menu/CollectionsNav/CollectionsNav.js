@@ -16,7 +16,9 @@ class CollectionsNav extends React.PureComponent {
 	  collectionFilterChange: PropTypes.func.isRequired,
 	  menuCurrentCollectionId: PropTypes.string,
 	  featureSet: PropTypes.func.isRequired,
-	  masonryContainer: PropTypes.node,
+	  masonryContainer: PropTypes.shape({
+	    offsetTop: PropTypes.number
+	  }),
 	}
 
 	constructor(props) {
