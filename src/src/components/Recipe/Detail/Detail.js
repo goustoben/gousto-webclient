@@ -35,7 +35,7 @@ export const detailPropTypes = {
   scrolledPastPoint: PropTypes.bool,
   restrictedView: PropTypes.bool,
   surcharge: PropTypes.number,
-  range: PropTypes.string,
+  range: PropTypes.instanceOf(Immutable.Map),
 }
 
 class Detail extends React.Component {

@@ -5,8 +5,8 @@ import FilterTagsList from './FilterTagsList'
 import css from './FilterTagsNav.css'
 
 const propTypes = {
-  onCTAClick: PropTypes.func.require,
-  menuFilterExperiment: PropTypes.bool.require,
+  onCTAClick: PropTypes.func,
+  menuFilterExperiment: PropTypes.bool,
   tags: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string,
