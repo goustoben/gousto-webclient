@@ -1,4 +1,5 @@
 import Immutable from 'immutable' /* eslint-disable new-caps */
+
 import {
   trackFirstPurchase,
   setAffiliateSource,
@@ -12,8 +13,10 @@ import {
   trackRecipeTypeUnselected,
   trackRecipeDietaryAttributeSelected,
   trackRecipeDietaryAttributeUnselected,
-  trackRecipeTotalTimeSelected
+  trackRecipeTotalTimeSelected,
+  trackAffiliatePurchase,
 } from 'actions/tracking'
+import globals from 'config/globals'
 import actionTypes from 'actions/actionTypes'
 import { warning } from 'utils/logger'
 
@@ -458,6 +461,114 @@ describe('tracking actions', () => {
       expect(dispatchCall).toMatchObject({
         type: actionTypes.RECIPE_FILTERS_TOTAL_TIME_SELECTED_TRACKING,
         totalTime: '30'
+      })
+    })
+  })
+
+  describe('trackAffiliatePurchase', () => {
+    describe('if not on the client', () => {
+      const Sale = {
+        amount: '',
+        channel: '',
+        orderRef: 9010322,
+        parts:  `FIRSTPURCHASE:47.75`,
+        voucher: 'TV',
+        currency:'GBP',
+      }
+
+      beforeEach(() => {
+        globals.client = false
+        global.AWIN = {
+          Tracking: {
+            Sale,
+          }
+        }
+      })
+
+      test('should not modify AWIN', () => {
+        trackAffiliatePurchase({
+          orderId: 9010320,
+          total: '34.99',
+          commissionGroup: 'EXISTING',
+          promoCode: '',
+        })
+
+        expect(global.AWIN).toEqual({
+          Tracking: {
+            Sale,
+          }
+        })
+      })
+    })
+
+    describe('if on the client', () => {
+      beforeEach(() => {
+        globals.client = true
+      })
+
+      describe('when global.AWIN is undefined', () => {
+        beforeEach(() => {
+          global.AWIN = undefined
+        })
+
+        test('should create AWIN and register order as Tracking.Sale', () => {
+          trackAffiliatePurchase({
+            orderId: 9010320,
+            total: '34.99',
+            commissionGroup: 'EXISTING',
+            promoCode: '',
+          })
+
+          expect(global.AWIN).toEqual({
+            Tracking: {
+              Sale: {
+                amount: '34.99',
+                channel: '',
+                currency: 'GBP',
+                orderRef: 9010320,
+                parts: 'EXISTING:34.99',
+                voucher: ''
+              }
+            }
+          })
+        })
+      })
+
+      describe('when global.AWIN is defined', () => {
+        const AWIN = {
+          enhancedTracking: true,
+          sProtocol: 'https://',
+          InputIdentifiers: ['email'],
+          Tracking: {},
+        }
+
+        beforeEach(() => {
+          global.AWIN = AWIN
+        })
+
+        test('should register order as Tracking.Sale, preserving object', () => {
+          trackAffiliatePurchase({
+            orderId: 9010321,
+            total: '24.50',
+            commissionGroup: 'FIRSTPURCHASE',
+            promoCode: 'DTI-SB-P30M',
+          })
+
+          expect(global.AWIN).toBe(AWIN)
+          expect(global.AWIN).toEqual({
+            ...AWIN,
+            Tracking: {
+              Sale: {
+                amount: '24.50',
+                channel: '',
+                currency: 'GBP',
+                orderRef: 9010321,
+                parts: 'FIRSTPURCHASE:24.50',
+                voucher: 'DTI-SB-P30M'
+              }
+            }
+          })
+        })
       })
     })
   })
