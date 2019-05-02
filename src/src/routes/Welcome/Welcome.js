@@ -1,7 +1,6 @@
 import React from 'react'
 import Immutable from 'immutable'/* eslint-disable new-cap */
 import PropTypes from 'prop-types'
-import shallowCompare from 'react-addons-shallow-compare'
 import classnames from 'classnames'
 
 import actions from 'actions'
@@ -18,20 +17,11 @@ import ProductDetailOverlay from './ProductDetailOverlay'
 
 class Welcome extends React.PureComponent {
   static propTypes = {
-    contentLoadContentByPageSlug: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
     orderId: PropTypes.string.isRequired,
     productDetailId: PropTypes.string,
     productDetailVisibilityChange: PropTypes.func,
     products: PropTypes.instanceOf(Immutable.Map).isRequired,
-    productsLoadCategories: PropTypes.func.isRequired,
-    productsLoadProducts: PropTypes.func.isRequired,
-    productsLoadProductsById: PropTypes.func.isRequired,
-    productsLoadStock: PropTypes.func.isRequired,
-    recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
-    recipesLoadRecipesById: PropTypes.func.isRequired,
     user: PropTypes.instanceOf(Immutable.Map).isRequired,
-    userLoadOrder: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
@@ -39,7 +29,7 @@ class Welcome extends React.PureComponent {
   }
 
   static fetchData({ store, params, query }) {
-    const orderId = params.orderId
+    const { orderId } = params
     let userOrder
 
     return store.dispatch(actions.userLoadOrder(orderId))
@@ -47,10 +37,10 @@ class Welcome extends React.PureComponent {
         userOrder = userUtils.getUserOrderById(orderId, store.getState().user.get('orders'))
 
         if (userOrder.get('phase') !== 'open') {
-          return Promise.reject({
+          return Promise.reject(new Error({
             level: 'warning',
             message: `Can't view welcome page with non open order ${orderId}`,
-          })
+          }))
         }
 
         const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
@@ -91,20 +81,22 @@ class Welcome extends React.PureComponent {
   componentDidMount() {
     this.setState({ isClient: true }) // eslint-disable-line react/no-did-mount-set-state
 
-    const store = this.context.store
-    const query = this.props.query || {}
-    const params = this.props.params || {}
+    const { store } = this.context
+    const { query = {}, params = {} } = this.props
+
     Welcome.fetchData({ store, query, params })
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.props.isAuthenticated && shallowCompare(this, nextProps, nextState)
+  isProductDetailAvailable = () => {
+    const { productDetailId, products } = this.props
+
+    return !!productDetailId && products.has(productDetailId)
   }
 
-  isProductDetailAvailable = () =>
-    !!this.props.productDetailId && this.props.products.has(this.props.productDetailId)
-
   render() {
+    const { isClient } = this.state
+    const { user, orderId, productDetailId, productDetailVisibilityChange } = this.props
+
     return (
       <section className={css.container} data-testing="welcomeContainer">
         <Content
@@ -112,7 +104,7 @@ class Welcome extends React.PureComponent {
           propNames="message"
         >
           <SubHeader
-            nameFirst={this.props.user.get('nameFirst')}
+            nameFirst={user.get('nameFirst')}
             contentKeys="welcomeImmediateTitleText"
           />
         </Content>
@@ -125,7 +117,7 @@ class Welcome extends React.PureComponent {
               </div>
               <div className={css.welcomeColInner}>
                 <ProductSelection
-                  orderId={this.props.orderId}
+                  orderId={orderId}
                 />
               </div>
             </div>
@@ -138,9 +130,9 @@ class Welcome extends React.PureComponent {
         </div>
 
         <ProductDetailOverlay
-          onVisibilityChange={this.props.productDetailVisibilityChange}
-          open={this.state.isClient && this.isProductDetailAvailable()}
-          productId={this.props.productDetailId}
+          onVisibilityChange={productDetailVisibilityChange}
+          open={isClient && this.isProductDetailAvailable()}
+          productId={productDetailId}
         />
       </section>
     )
