@@ -7,6 +7,8 @@ import actions from 'actions'
 import logger from 'utils/logger'
 import userUtils from 'utils/user'
 import Content from 'containers/Content'
+import { trackAffiliatePurchase } from 'actions/tracking'
+import { getAffiliateTrackingData } from 'utils/order'
 
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
@@ -42,6 +44,10 @@ class Welcome extends React.PureComponent {
             message: `Can't view welcome page with non open order ${orderId}`,
           }))
         }
+
+        trackAffiliatePurchase(
+          getAffiliateTrackingData(userOrder, 'FIRSTPURCHASE')
+        )
 
         const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
 
