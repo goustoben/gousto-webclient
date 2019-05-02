@@ -7,6 +7,8 @@ import logger from 'utils/logger'
 import userUtils from 'utils/user'
 import { redirect } from 'utils/window'
 import { basketOrderLoad } from 'actions/basket'
+import { getAffiliateTrackingData } from 'utils/order'
+import { trackAffiliatePurchase } from 'actions/tracking'
 import { getOrderConfirmation } from 'selectors/features'
 import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
 import recipeActions from './recipes'
@@ -34,9 +36,13 @@ export const orderDetails = (orderId) => (
     try {
       dispatch(productsLoadCategories())
       dispatch(productsLoadStock())
-      const {data: order} = await ordersApi.fetchOrder(accessToken, orderId)
+      const { data: order } = await ordersApi.fetchOrder(accessToken, orderId)
       const immutableOrderDetails = Immutable.fromJS(order)
       const orderRecipeIds = userUtils.getUserOrderRecipeIds(immutableOrderDetails)
+
+      trackAffiliatePurchase(
+        getAffiliateTrackingData(immutableOrderDetails, 'EXISTING')
+      )
 
       dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
       await dispatch(productsLoadProducts(order.whenCutOff))
