@@ -17,6 +17,7 @@ import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
 import { JustForYouTutorial } from '../JustForYouTutorial'
 
+jest.mock('actions/order')
 jest.mock('routes/Menu/Banner')
 jest.mock('routes/Menu/SubHeader')
 jest.mock('routes/Menu/FilterMenu')
@@ -338,6 +339,7 @@ describe('Menu', () => {
     let boxSummaryDeliveryDaysLoad
     let menuLoadBoxPrices
     let getStateSpy
+    let basketNumPortionChangeSpy
     let wrapper
 
     beforeEach(() => {
@@ -365,6 +367,7 @@ describe('Menu', () => {
       SubHeader.mockReturnValue(<div />)
       Banner.mockReturnValue(<div />)
       DetailOverlay.mockReturnValue(<div />)
+      basketNumPortionChangeSpy = jest.fn()
     })
 
     test('should load Box Prices for non admin users', () => {
@@ -478,7 +481,6 @@ describe('Menu', () => {
 
     test('should call shouldJfyTutorialBeVisible', () => {
       const shouldJfyTutorialBeVisible = jest.fn()
-      const basketNumPortionChangeSpy = jest.fn()
 
       wrapper = mount(
         <Menu
@@ -507,6 +509,101 @@ describe('Menu', () => {
       )
 
       expect(shouldJfyTutorialBeVisible).toHaveBeenCalled()
+    })
+
+    describe('events', () => {
+      let map
+      let orderUpdateProducts
+
+      beforeEach(() => {
+        map = {}
+        const orderHasAnyProducts = jest.fn(() => {
+          return () => {}
+        })
+        orderUpdateProducts = jest.fn(() => {
+          return () => {}
+        })
+
+        window.addEventListener = jest.fn((event, callback) => {
+          map[event] = callback
+        })
+
+        window.removeEventListener = jest.fn((event) => {
+          map[event] = undefined
+        })
+
+        wrapper = mount(
+          <Menu
+            menuRecipeDetailShow={false}
+            boxSummaryDeliveryDays={Immutable.List([])}
+            menuCollectionRecipes={Immutable.Map({})}
+            features={Immutable.Map({})}
+            menuLoadDays={menuLoadDays}
+            boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+            menuLoadBoxPrices={menuLoadBoxPrices}
+            disabled
+            filteredRecipesNumber={30}
+            clearAllFilters={() => {}}
+            params={{}}
+            basketNumPortionChange={basketNumPortionChangeSpy}
+            query={{num_portions:'4'}}
+            orderId="123456"
+            orderHasAnyProducts={orderHasAnyProducts}
+            orderUpdateProducts={orderUpdateProducts}
+            basketProducts={[
+              { id: 'c', quantity: '3' },
+              { id: 'd', quantity: '4' },
+            ]}
+            loginVisibilityChange={() => {}}
+          />,
+          {
+            context: {
+              store: {
+                getState: getStateSpy,
+              },
+            },
+          },
+        )
+      })
+
+      test('action orderHasAnyProducts is called when event orderDoesContainProductsRequest is dispatched', () => {
+        map.orderDoesContainProductsRequest()
+
+        expect(wrapper.prop('orderHasAnyProducts')).toHaveBeenCalledWith('123456')
+      })
+
+      test('action orderUpdateProducts is called with the products passed in the event orderUpdateProductsRequest and the ones in the basket', () => {
+        const eventProducts = {
+          itemChoices: [
+            { id: 'a', quantity: '1', type: 'Product' },
+            { id: 'b', quantity: '2', type: 'Product' },
+          ]
+        }
+        const fakeEventObject = { detail: eventProducts }
+        map.orderUpdateProductsRequest(fakeEventObject)
+
+        expect(orderUpdateProducts).toHaveBeenCalledWith(
+          '123456',
+          [
+            { id: 'a', quantity: '1', type: 'Product' },
+            { id: 'b', quantity: '2', type: 'Product' },
+            { id: 'c', quantity: '3', type: 'Product' },
+            { id: 'd', quantity: '4', type: 'Product' },
+          ]
+        )
+      })
+
+      test('action orderHasAnyProducts is not called when event orderDoesContainProductsRequest is dispatched', () => {
+        wrapper.unmount()
+
+        expect(map.orderDoesContainProductsRequest).toBeUndefined()
+      })
+
+      test('action orderUpdateProducts is not called when event orderUpdateProductsRequest is dispatched', () => {
+        wrapper.unmount()
+
+        expect(map.orderUpdateProductsRequest).toBeUndefined()
+      })
     })
   })
 
