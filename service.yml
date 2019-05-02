@@ -92,8 +92,8 @@ environments:
     maxInstanceSize: 1
     desiredInstanceSize: 0
     ecsDesiredTaskCount: 2
-    ecsMemory: 2048
-    ecsCpu: 1024
+    ecsMemory: 1024
+    ecsCpu: 512
 
     deployment:
       style: immutable
