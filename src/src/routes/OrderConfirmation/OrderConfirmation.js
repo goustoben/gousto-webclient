@@ -7,6 +7,8 @@ import Overlay from 'Overlay'
 import { Dropdown } from 'goustouicomponents'
 import CloseButton from 'Overlay/CloseButton'
 import SaveButton from 'OrderSummary/SaveButton'
+import { getAffiliateTrackingData } from 'utils/order'
+import { trackAffiliatePurchase } from 'actions/tracking'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
 import OrderSummaryContainer from './components/OrderSummary/OrderSummaryContainer'
@@ -29,6 +31,7 @@ const propTypes = {
     PropTypes.bool,
   ]),
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
+  order: PropTypes.instanceOf(Immutable.Map).isRequired,
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
   products: PropTypes.shape({
     id: PropTypes.string,
@@ -66,8 +69,12 @@ class OrderConfirmation extends PureComponent {
   }
 
   componentDidMount() {
-    const { userFetchReferralOffer } = this.props
+    const { order, userFetchReferralOffer } = this.props
+
     userFetchReferralOffer()
+    trackAffiliatePurchase(
+      getAffiliateTrackingData(order, 'EXISTING')
+    )
   }
 
   toggleAgeVerificationPopUp = () => {

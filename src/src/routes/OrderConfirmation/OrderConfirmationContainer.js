@@ -19,6 +19,7 @@ const mapStateToProps = (state) => {
   const showHeader = (!!state.temp.get('showHeader') || !!(locationQueryParam && locationQueryParam['order_action'])) && !!headerDetails
 
   return ({
+    order,
     showHeader,
     headerDetails,
     showOrderConfirmationReceipt: !!order,
