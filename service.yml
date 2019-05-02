@@ -92,6 +92,8 @@ environments:
     maxInstanceSize: 1
     desiredInstanceSize: 0
     ecsDesiredTaskCount: 2
+    ecsMemory: 2048
+    ecsCpu: 1024
 
     deployment:
       style: immutable
@@ -104,18 +106,23 @@ environments:
     maxInstanceSize: 0
     desiredInstanceSize: 0
     ecsDesiredTaskCount: 1
+    ecsMemory: 512
+    ecsCpu: 256
+
     deployment:
       style: inline
 
   - name: production
     instanceType: t2.medium
-    minInstanceSize: 2
+    minInstanceSize: 0
     maxInstanceSize: 8
-    desiredInstanceSize: 2
+    desiredInstanceSize: 0
     availability: alwaysOn
     ecsDesiredTaskCount: 4
+    ecsMemory: 2048
+    ecsCpu: 1024
 
     deployment:
       style: immutable
-      minInstancesInService: 2
+      minInstancesInService: 0
       maxBatchSize: 1
