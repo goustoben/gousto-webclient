@@ -1,11 +1,12 @@
 import { push } from 'react-router-redux'
+
 import { fetchProduct, fetchRandomProducts, fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
 import { getProductsByCutoff } from 'utils/products'
 import logger from 'utils/logger'
 import actionTypes from './actionTypes'
 import statusActions from './status'
 
-const productDetailVisibilityChange = (productId = false) => (
+export const productDetailVisibilityChange = (productId = false) => (
   (dispatch, getState) => {
     const prevLoc = getState().routing.locationBeforeTransitions
     const query = { ...prevLoc.query }
@@ -30,7 +31,7 @@ const productDetailVisibilityChange = (productId = false) => (
   }
 )
 
-const productsLoadCategories = (forceRefresh = false) => (
+export const productsLoadCategories = (forceRefresh = false) => (
   async (dispatch, getState) => {
     if (forceRefresh || !getState().productsCategories.size) {
       dispatch(statusActions.pending(actionTypes.PRODUCT_CATEGORIES_RECEIVE, true))
@@ -47,12 +48,12 @@ const productsLoadCategories = (forceRefresh = false) => (
   }
 )
 
-const productsLoadProducts = (cutoffDate) => (
+export const productsLoadProducts = (cutoffDate) => (
   async (dispatch, getState) => {
     const { basket, products, productsStock, auth } = getState()
     const currentProductsInBasket = basket.get('products')
     const isProductsLargerThanBasket = products.size <= currentProductsInBasket.size
-  
+
     if ((isProductsLargerThanBasket) ||
       (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
@@ -78,7 +79,7 @@ const productsLoadProducts = (cutoffDate) => (
   }
 )
 
-const productsLoadRandomProducts = (limit, imageSizes) => (
+export const productsLoadRandomProducts = (limit, imageSizes) => (
   async (dispatch, getState) => {
     if (!getState().randomProducts.size) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RANDOM_RECEIVE, true))
@@ -96,7 +97,7 @@ const productsLoadRandomProducts = (limit, imageSizes) => (
   }
 )
 
-const productsLoadProductsById = (productIds = []) => (
+export const productsLoadProductsById = (productIds = []) => (
   async (dispatch, getState) => {
     const newProductIds = productIds.filter(productId => !getState().products.has(productId)).sort()
 
@@ -121,7 +122,7 @@ const productsLoadProductsById = (productIds = []) => (
   }
 )
 
-const productsLoadStock = (forceRefresh = false) => (
+export const productsLoadStock = (forceRefresh = false) => (
   async (dispatch, getState) => {
     if (forceRefresh || !getState().productsStock.size) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_STOCK_CHANGE, true))
@@ -144,7 +145,7 @@ const productsLoadStock = (forceRefresh = false) => (
   }
 )
 
-const productsActions = {
+export const productsActions = {
   productDetailVisibilityChange,
   productsLoadCategories,
   productsLoadProducts,

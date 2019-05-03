@@ -1,6 +1,6 @@
 import { isBillingAddressDifferent } from 'routes/Checkout/utils/state'
 
-import { hasPropUpdated, getBillingAddress, transformBillingAddress } from 'routes/Checkout/Components/CheckoutPayment/CheckoutFrame/utils'
+import { getBillingAddress, transformBillingAddress } from 'routes/Checkout/Components/CheckoutPayment/CheckoutFrame/utils'
 
 jest.mock('routes/Checkout/utils/state', () => ({
   isBillingAddressDifferent: jest.fn()
@@ -18,14 +18,14 @@ describe('CheckoutFrame utils', () => {
     town: 'LONDON',
     postcode: 'SW1A 0AA',
   }
-  
+
   const deliveryAddress = {
     houseNo: 'THE SHARD',
     street: '32 LONDON BRIDGE STREET',
     town: 'LONDON',
     postcode: 'SE1 9SG',
   }
-  
+
   const getFormValues = () => ({
     payment: paymentAddress,
     delivery: deliveryAddress,
@@ -70,28 +70,6 @@ describe('CheckoutFrame utils', () => {
         addressLine2: '32 LONDON BRIDGE STREET',
         city: 'LONDON',
         postcode: 'SE1 9SG',
-      })
-    })
-  })
-
-  describe('hasPropUpdated', () => {
-    describe('when prop is false', () => {
-      test('should return false', () => {
-        expect(hasPropUpdated(false, true)).toEqual(false)
-      })
-    })
-
-    describe('when prop is true', () => {
-      describe('and has updated from false', () => {
-        test('should return true', () => {
-          expect(hasPropUpdated(true, false)).toEqual(true)
-        })
-      })
-
-      describe('and has not updated', () => {
-        test('should return false', () => {
-          expect(hasPropUpdated(true, true)).toEqual(false)
-        })
       })
     })
   })

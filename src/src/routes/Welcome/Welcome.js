@@ -1,13 +1,14 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'/* eslint-disable new-cap */
-import shallowCompare from 'react-addons-shallow-compare'
-import actions from 'actions'
-import Content from 'containers/Content'
-import userUtils from 'utils/user'
-import logger from 'utils/logger'
-
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
+
+import actions from 'actions'
+import logger from 'utils/logger'
+import userUtils from 'utils/user'
+import Content from 'containers/Content'
+import { trackAffiliatePurchase } from 'actions/tracking'
+import { getAffiliateTrackingData } from 'utils/order'
 
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
@@ -17,134 +18,131 @@ import ExpectationsCarousel from './ExpectationsCarousel'
 import ProductDetailOverlay from './ProductDetailOverlay'
 
 class Welcome extends React.PureComponent {
-	static propTypes = {
-	  contentLoadContentByPageSlug: PropTypes.func.isRequired,
-	  isAuthenticated: PropTypes.bool.isRequired,
-	  orderId: PropTypes.string.isRequired,
-	  productDetailId: PropTypes.string,
-	  productDetailVisibilityChange: PropTypes.func,
-	  products: PropTypes.instanceOf(Immutable.Map).isRequired,
-	  productsLoadCategories: PropTypes.func.isRequired,
-	  productsLoadProducts: PropTypes.func.isRequired,
-	  productsLoadProductsById: PropTypes.func.isRequired,
-	  productsLoadStock: PropTypes.func.isRequired,
-	  recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
-	  recipesLoadRecipesById: PropTypes.func.isRequired,
-	  user: PropTypes.instanceOf(Immutable.Map).isRequired,
-	  userLoadOrder: PropTypes.func.isRequired,
-	}
+  static propTypes = {
+    orderId: PropTypes.string.isRequired,
+    productDetailId: PropTypes.string,
+    productDetailVisibilityChange: PropTypes.func,
+    products: PropTypes.instanceOf(Immutable.Map).isRequired,
+    user: PropTypes.instanceOf(Immutable.Map).isRequired,
+  }
 
-	static contextTypes = {
-	  store: PropTypes.object.isRequired,
-	}
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+  }
 
-	static fetchData({ store, params, query }) {
-	  const orderId = params.orderId
-	  let userOrder
+  static fetchData({ store, params, query }) {
+    const { orderId } = params
+    let userOrder
 
-	  return store.dispatch(actions.userLoadOrder(orderId))
-	    .then(() => {
-	      userOrder = userUtils.getUserOrderById(orderId, store.getState().user.get('orders'))
+    return store.dispatch(actions.userLoadOrder(orderId))
+      .then(() => {
+        userOrder = userUtils.getUserOrderById(orderId, store.getState().user.get('orders'))
 
-	      if (userOrder.get('phase') !== 'open') {
-	        return Promise.reject({
-	          level: 'warning',
-	          message: `Can't view welcome page with non open order ${orderId}`,
-	        })
-	      }
+        if (userOrder.get('phase') !== 'open') {
+          return Promise.reject(new Error({
+            level: 'warning',
+            message: `Can't view welcome page with non open order ${orderId}`,
+          }))
+        }
 
-	      const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
+        trackAffiliatePurchase(
+          getAffiliateTrackingData(userOrder, 'FIRSTPURCHASE')
+        )
 
-	      return Promise.all([
-	        store.dispatch(actions.contentLoadContentByPageSlug('welcome_immediate', query.var)),
-	        store.dispatch(actions.productsLoadProducts(userOrder.get('whenCutoff'))),
-	        store.dispatch(actions.productsLoadStock()),
-	        store.dispatch(actions.productsLoadCategories()),
-	        store.dispatch(actions.recipesLoadRecipesById(orderRecipeIds)),
-	      ])
-	    })
-	    .then(() => {
-	      const orderProductIds = [
-	        ...userUtils.getUserOrderProductIds(userOrder),
-	        ...userUtils.getUserOrderGiftProductIds(userOrder),
-	      ]
+        const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
 
-	      return store.dispatch(actions.productsLoadProductsById(orderProductIds))
-	    })
-	    .then(() => {
-	      store.dispatch(actions.basketOrderLoad(orderId))
-	    })
-	    .catch(err => {
-	      if (err && err.level && typeof logger[err.level] === 'function') {
-	        logger[err.level](err.message)
-	      } else {
-	        logger.error(err)
-	      }
-	      store.dispatch(actions.redirect('/'))
-	    })
-	}
+        return Promise.all([
+          store.dispatch(actions.contentLoadContentByPageSlug('welcome_immediate', query.var)),
+          store.dispatch(actions.productsLoadProducts(userOrder.get('whenCutoff'))),
+          store.dispatch(actions.productsLoadStock()),
+          store.dispatch(actions.productsLoadCategories()),
+          store.dispatch(actions.recipesLoadRecipesById(orderRecipeIds)),
+        ])
+      })
+      .then(() => {
+        const orderProductIds = [
+          ...userUtils.getUserOrderProductIds(userOrder),
+          ...userUtils.getUserOrderGiftProductIds(userOrder),
+        ]
 
-	state = {
-	  isClient: false,
-	}
+        return store.dispatch(actions.productsLoadProductsById(orderProductIds))
+      })
+      .then(() => {
+        store.dispatch(actions.basketOrderLoad(orderId))
+      })
+      .catch(err => {
+        if (err && err.level && typeof logger[err.level] === 'function') {
+          logger[err.level](err.message)
+        } else {
+          logger.error(err)
+        }
+        store.dispatch(actions.redirect('/'))
+      })
+  }
 
-	componentDidMount() {
-	  this.setState({ isClient: true }) // eslint-disable-line react/no-did-mount-set-state
+  state = {
+    isClient: false,
+  }
 
-	  const store = this.context.store
-	  const query = this.props.query || {}
-	  const params = this.props.params || {}
-	  Welcome.fetchData({ store, query, params })
-	}
+  componentDidMount() {
+    this.setState({ isClient: true }) // eslint-disable-line react/no-did-mount-set-state
 
-	shouldComponentUpdate(nextProps, nextState) {
-	  return this.props.isAuthenticated && shallowCompare(this, nextProps, nextState)
-	}
+    const { store } = this.context
+    const { query = {}, params = {} } = this.props
 
-	isProductDetailAvailable = () =>
-	  !!this.props.productDetailId && this.props.products.has(this.props.productDetailId)
+    Welcome.fetchData({ store, query, params })
+  }
 
-	render() {
-	  return (
-			<section className={css.container} data-testing="welcomeContainer">
-				<Content
-				  contentKeys="welcomeImmediateTitleMessage"
-				  propNames="message"
-				>
-					<SubHeader
-					  nameFirst={this.props.user.get('nameFirst')}
-					  contentKeys="welcomeImmediateTitleText"
-					/>
-				</Content>
+  isProductDetailAvailable = () => {
+    const { productDetailId, products } = this.props
 
-				<div className={css.contentContainer}>
-					<div className={css.row}>
-						<div className={css.colMedium}>
-							<div className={css.welcomeColInner}>
-								<ExpectationsCarousel />
-							</div>
-							<div className={css.welcomeColInner}>
-								<ProductSelection
-								  orderId={this.props.orderId}
-								/>
-							</div>
-						</div>
-						<div className={classnames(css.colSmall, css.colTopXS)}>
-							<div className={classnames(css.welcomeColInner, css.colTopXSInner)}>
-								<OrderSummary />
-							</div>
-						</div>
-					</div>
-				</div>
+    return !!productDetailId && products.has(productDetailId)
+  }
 
-				<ProductDetailOverlay
-				  onVisibilityChange={this.props.productDetailVisibilityChange}
-				  open={this.state.isClient && this.isProductDetailAvailable()}
-				  productId={this.props.productDetailId}
-				/>
-			</section>
-	  )
-	}
+  render() {
+    const { isClient } = this.state
+    const { user, orderId, productDetailId, productDetailVisibilityChange } = this.props
+
+    return (
+      <section className={css.container} data-testing="welcomeContainer">
+        <Content
+          contentKeys="welcomeImmediateTitleMessage"
+          propNames="message"
+        >
+          <SubHeader
+            nameFirst={user.get('nameFirst')}
+            contentKeys="welcomeImmediateTitleText"
+          />
+        </Content>
+
+        <div className={css.contentContainer}>
+          <div className={css.row}>
+            <div className={css.colMedium}>
+              <div className={css.welcomeColInner}>
+                <ExpectationsCarousel />
+              </div>
+              <div className={css.welcomeColInner}>
+                <ProductSelection
+                  orderId={orderId}
+                />
+              </div>
+            </div>
+            <div className={classnames(css.colSmall, css.colTopXS)}>
+              <div className={classnames(css.welcomeColInner, css.colTopXSInner)}>
+                <OrderSummary />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ProductDetailOverlay
+          onVisibilityChange={productDetailVisibilityChange}
+          open={isClient && this.isProductDetailAvailable()}
+          productId={productDetailId}
+        />
+      </section>
+    )
+  }
 }
 
 export default Welcome

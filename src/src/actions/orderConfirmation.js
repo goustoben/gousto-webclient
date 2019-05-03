@@ -6,9 +6,11 @@ import ordersApi from 'apis/orders'
 import logger from 'utils/logger'
 import userUtils from 'utils/user'
 import { redirect } from 'utils/window'
+import { basketOrderLoad } from 'actions/basket'
+import { getAffiliateTrackingData } from 'utils/order'
+import { trackAffiliatePurchase } from 'actions/tracking'
 import { getOrderConfirmation } from 'selectors/features'
-import { basketOrderLoad } from './basket'
-import productActions from './products'
+import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
 import recipeActions from './recipes'
 import tempActions from './temp'
 import actionTypes from './actionTypes'
@@ -32,14 +34,18 @@ export const orderDetails = (orderId) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     try {
-      dispatch(productActions.productsLoadCategories())
-      dispatch(productActions.productsLoadStock())
-      const {data: order} = await ordersApi.fetchOrder(accessToken, orderId)
+      dispatch(productsLoadCategories())
+      dispatch(productsLoadStock())
+      const { data: order } = await ordersApi.fetchOrder(accessToken, orderId)
       const immutableOrderDetails = Immutable.fromJS(order)
       const orderRecipeIds = userUtils.getUserOrderRecipeIds(immutableOrderDetails)
 
+      trackAffiliatePurchase(
+        getAffiliateTrackingData(immutableOrderDetails, 'EXISTING')
+      )
+
       dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
-      await dispatch(productActions.productsLoadProducts(order.whenCutOff))
+      await dispatch(productsLoadProducts(order.whenCutOff))
       dispatch(basketOrderLoad(orderId, immutableOrderDetails))
       dispatch({
         type: actionTypes.BASKET_ORDER_DETAILS_LOADED,

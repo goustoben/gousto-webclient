@@ -1,6 +1,8 @@
-import logger from 'utils/logger'
+/* global AWIN */
 import { getUserOrderById } from 'utils/user'
-import actionTypes from './actionTypes'
+import logger from 'utils/logger'
+import globals from 'config/globals'
+import actionTypes from 'actions/actionTypes'
 
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
@@ -56,6 +58,25 @@ export const setAffiliateSource = asource => (
     })
   }
 )
+
+export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoCode }) => {
+  if (globals.client) {
+    if (typeof window.AWIN === "undefined" || typeof window.AWIN.Tracking === "undefined") {
+      window.AWIN = {
+        Tracking: {},
+      }
+    }
+
+    window.AWIN.Tracking.Sale = {
+      amount: total,
+      channel: '',
+      orderRef: orderId,
+      parts:  `${commissionGroup}:${total}`,
+      voucher: promoCode,
+      currency:"GBP",
+    }
+  }
+}
 
 export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (
   (dispatch, getState) => {
