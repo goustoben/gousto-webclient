@@ -16,6 +16,7 @@ import SubHeader from './SubHeader'
 import css from './Welcome.css'
 import ExpectationsCarousel from './ExpectationsCarousel'
 import ProductDetailOverlay from './ProductDetailOverlay'
+import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
 
 class Welcome extends React.PureComponent {
   static propTypes = {
@@ -24,6 +25,7 @@ class Welcome extends React.PureComponent {
     productDetailVisibilityChange: PropTypes.func,
     products: PropTypes.instanceOf(Immutable.Map).isRequired,
     user: PropTypes.instanceOf(Immutable.Map).isRequired,
+    isRafFeatureEnabled: PropTypes.bool,
   }
 
   static contextTypes = {
@@ -88,9 +90,10 @@ class Welcome extends React.PureComponent {
     this.setState({ isClient: true }) // eslint-disable-line react/no-did-mount-set-state
 
     const { store } = this.context
-    const { query = {}, params = {} } = this.props
+    const { query = {}, params = {}, userFetchReferralOffer } = this.props
 
     Welcome.fetchData({ store, query, params })
+    userFetchReferralOffer()
   }
 
   isProductDetailAvailable = () => {
@@ -101,7 +104,7 @@ class Welcome extends React.PureComponent {
 
   render() {
     const { isClient } = this.state
-    const { user, orderId, productDetailId, productDetailVisibilityChange } = this.props
+    const { user, orderId, productDetailId, productDetailVisibilityChange, isRafFeatureEnabled } = this.props
 
     return (
       <section className={css.container} data-testing="welcomeContainer">
@@ -121,6 +124,13 @@ class Welcome extends React.PureComponent {
               <div className={css.welcomeColInner}>
                 <ExpectationsCarousel />
               </div>
+              {
+                isRafFeatureEnabled && (
+                <div className={classnames(css.welcomeColInner, css.mobileShow, css.rafMobile)}>
+                  <ReferAFriend />
+                </div>
+                )
+              }
               <div className={css.welcomeColInner}>
                 <ProductSelection
                   orderId={orderId}
@@ -131,6 +141,13 @@ class Welcome extends React.PureComponent {
               <div className={classnames(css.welcomeColInner, css.colTopXSInner)}>
                 <OrderSummary />
               </div>
+              {
+                isRafFeatureEnabled && (
+                  <div className={classnames(css.welcomeColInner, css.colTopXSInner, css.mobileHide,)}>
+                    <ReferAFriend />
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>
