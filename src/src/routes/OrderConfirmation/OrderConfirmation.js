@@ -1,18 +1,19 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { AgeVerificationPopUp } from 'Product/AgeVerification'
+import React, { PureComponent } from 'react'
+
 import Overlay from 'Overlay'
 import { Dropdown } from 'goustouicomponents'
 import CloseButton from 'Overlay/CloseButton'
 import SaveButton from 'OrderSummary/SaveButton'
-import css from './OrderConfirmation.css'
+import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
-import { ProductList } from './components/ProductList'
-import { Navbar } from './components/Navbar'
 import OrderSummaryContainer from './components/OrderSummary/OrderSummaryContainer'
+import { ProductList } from './components/ProductList'
 import { ReferAFriend } from './components/ReferAFriend'
+import { Navbar } from './components/Navbar'
+import css from './OrderConfirmation.css'
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
@@ -66,6 +67,7 @@ class OrderConfirmation extends PureComponent {
 
   componentDidMount() {
     const { userFetchReferralOffer } = this.props
+
     userFetchReferralOffer()
   }
 

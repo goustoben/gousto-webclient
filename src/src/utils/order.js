@@ -1,3 +1,5 @@
+import Immutable from 'immutable'
+
 import { formatPrice } from 'utils/format'
 
 const hyphen = String.fromCharCode(45)
@@ -26,6 +28,13 @@ export function totalPrice(boxPrice, extrasPrice, slotPrice) {
 export function isValidPromoCode(prices) {
   return prices.get('promoCodeValid', false)
 }
+
+export const getAffiliateTrackingData = (order = Immutable.Map({}), commissionGroup = '') => ({
+  orderId: order.get('id', ''),
+  total: order.getIn(['prices','total'], ''),
+  commissionGroup,
+  promoCode: order.getIn(['prices','promoCode'], ''),
+})
 
 export default {
   formatTotalDiscounts,

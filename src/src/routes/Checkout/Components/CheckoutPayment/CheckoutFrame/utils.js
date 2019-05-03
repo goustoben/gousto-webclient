@@ -15,10 +15,6 @@ export const transformBillingAddress = ({ houseNo, street, postcode, town }) => 
   city: town
 })
 
-export const hasPropUpdated = (prop, prevProp) => (
-  prop && prevProp !== prop
-)
-
 export const getErrorType = (errorCode) => {
   if (errorCode === '82031') {
     return actionTypes.CARD_TOKENISATION_FAILED
