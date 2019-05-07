@@ -56,7 +56,6 @@
 	composes: relative from 'styles/position.css';
 	composes: borderXS from 'styles/borders.css';
 	background: White;
-	min-height: 300px;
 
 	@media ScreenXSMax {
 		margin: calc(gridGutterWidth / 2) 0 0;
