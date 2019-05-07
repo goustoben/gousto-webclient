@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import classnames from 'classnames'
 import css from './FilterTagsList.css'
 import FilterTag from '../FilterTag/FilterTagContainer'
 
 const FilterTagList = ({ tags }) => (
-  <div className={classnames(css.filterTagList, { [css.divider]: tags.length > 0 })}>
-    {tags.map(({ text, type, value, slug }) => <FilterTag key={text} text={text} type={type} value={value} slug={slug} />)}
+  <div className={css.filterTagList}>
+    <span>Quick filter: </span>
+    {tags.map((tag) => <FilterTag key={tag.text} {...tag} />)}
   </div>
 )
 
@@ -16,7 +16,7 @@ FilterTagList.propTypes = {
       text: PropTypes.string,
       type: PropTypes.string,
       value: PropTypes.string,
-      slug: PropTypes.string,
+      selected: PropTypes.bool,
     }),
   ),
 }

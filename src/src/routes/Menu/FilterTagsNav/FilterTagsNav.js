@@ -1,11 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Button } from 'goustouicomponents'
 import FilterTagsList from './FilterTagsList'
 import css from './FilterTagsNav.css'
 
 const propTypes = {
-  onCTAClick: PropTypes.func,
   menuFilterExperiment: PropTypes.bool,
   tags: PropTypes.arrayOf(
     PropTypes.shape({
@@ -16,15 +14,10 @@ const propTypes = {
   ),
 }
 
-const FilterTagsNav = ({ onCTAClick, tags, menuFilterExperiment }) => (
+const FilterTagsNav = ({ tags, menuFilterExperiment }) => (
   (menuFilterExperiment) ? (
     <div className={css.filterTagContainer}>
       <div className={css.filterListContainer}>
-        <div className={css.filtersCTA}>
-          <Button fill width="full" onClick={onCTAClick}>
-            Filter by
-     </Button>
-        </div>
         <FilterTagsList tags={tags} />
       </div>
     </div>

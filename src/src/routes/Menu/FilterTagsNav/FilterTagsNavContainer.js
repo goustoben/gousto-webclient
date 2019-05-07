@@ -1,34 +1,24 @@
 import { connect } from 'react-redux'
 import filterActions from 'actions/filters'
-import FilterTagsNav from './FilterTagsNav'
 import config from 'config/recipes'
-import { getShortTitle } from 'selectors/filters'
 
-import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters'
+import FilterTagsNav from './FilterTagsNav'
 
 export default connect((state) => {
-  const { filters, menuCollections } = state
+  const { filters } = state
+  const dietaryAttributes = filters.get('dietaryAttributes', []).toArray()
   const tags = [
-    (menuCollections.getIn([filters.get('currentCollectionId'), 'shortTitle'], 'All Recipes') === 'All Recipes') ? null : {
-      text: getShortTitle(menuCollections, filters.get('currentCollectionId')),
-      type: 'collection',
-      value: getAllRecipesCollectionId(state),
-      slug: menuCollections.getIn([filters.get('currentCollectionId'), 'slug'], ''),
-    },
-    ...filters.get('dietTypes', []).toArray().map((dietType) => ({
-      text: config.dietTypes[dietType],
-      type: 'dietType',
-      value: dietType,
-    })),
-    ...filters.get('dietaryAttributes', []).toArray().map((dietaryAttribute) => ({
-      text: config.dietaryAttributes[dietaryAttribute],
+    {
+      text: config.dietaryAttributes['gluten-free'],
       type: 'dietaryAttribute',
-      value: dietaryAttribute,
-    })),
-    (filters.get('totalTime', '0') === '0') ? null : {
-      text: config.totalTime[filters.get('totalTime', '0')],
-      type: 'totalTime',
-      value: '0',
+      value: 'gluten-free',
+      selected: dietaryAttributes.includes('gluten-free'),
+    },
+    {
+      text: config.dietaryAttributes['dairy-free'],
+      type: 'dietaryAttribute',
+      value: 'dairy-free',
+      selected:  dietaryAttributes.includes('dairy-free'),
     }
   ].filter(item => item && item.text)
 

@@ -5,6 +5,7 @@
     composes: paddingMDTop paddingXLBottom from 'sass-loader!styles/spacing.scss';
     background: White;
     display: none;
+    padding-top: 55px;
 
     @media ScreenSMMin {
         display: flex;
