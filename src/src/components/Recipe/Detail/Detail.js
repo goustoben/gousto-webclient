@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'/* eslint-disable new-cap */
+import Helmet from 'react-helmet'
 
 import DefaultDetail from 'Recipe/Detail/DefaultDetail'
 import FineDineInDetail from 'Recipe/Detail/FineDineInDetail'
@@ -69,6 +70,13 @@ class Detail extends React.Component {
 	  }
 	}
 
+	getImageLink = () => {
+	  const { media } = this.props
+	  const array = media.map(image => image).toArray()
+
+	  return array.filter(imageProps => imageProps.get('width') == 700)
+	}
+
 	get detailComponent() {
 	  switch (this.props.view) {
 	  case 'fineDineInDetail':
@@ -79,11 +87,59 @@ class Detail extends React.Component {
 	}
 
 	render() {
-	  const { menuRecipeDetailVisibilityChange } = this.props
+	  const { menuRecipeDetailVisibilityChange, title, description, range, id, surcharge } = this.props
+	  const metaUrl = `https://www.gousto.co.uk/menu?recipeDetailId=${id}`
+	  const metaImage = this.getImageLink()[0].get('src')
+	  const metaBrand = range.get('name')
+	  const metaPrice = surcharge ? (2.98 + surcharge / 4).toFixed(2) : 2.98
 
 	  return (
 			<div onClick={() => { menuRecipeDetailVisibilityChange(false) }}>
 				<div className={css.container} onClick={(e) => { e.stopPropagation() }}>
+					<Helmet
+					  meta={[
+					    {
+					      name: 'og:title',
+					      content: title,
+					    },
+					    {
+					      name: 'og:description',
+					      content: description,
+					    },
+					    {
+					      name: 'og:url',
+					      content: metaUrl,
+					    },
+					    {
+					      name: 'og:image',
+					      content: metaImage,
+					    },
+					    {
+					      name: 'product:brand',
+					      content: metaBrand,
+					    },
+					    {
+					      name: 'product:availability',
+					      content: 'in stock',
+					    },
+					    {
+					      name: 'product:condition',
+					      content: 'new',
+					    },
+					    {
+					      name: 'product:price:amount',
+					      content: metaPrice,
+					    },
+					    {
+					      name: 'product:price:currency',
+					      content: 'GBP',
+					    },
+					    {
+					      name: 'product:retailer_item_id',
+					      content: id,
+					    },
+					  ]}
+					/>
 					{this.detailComponent}
 				</div>
 			</div>
