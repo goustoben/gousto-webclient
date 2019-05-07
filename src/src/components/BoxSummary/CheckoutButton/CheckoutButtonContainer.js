@@ -1,9 +1,11 @@
-import { connect } from 'react-redux'
-import CheckoutButton from './CheckoutButton'
-import { getSlot } from 'utils/deliveries'
-import actions from 'actions'
-import actionTypes from 'actions/actionTypes'
 import Immutable from 'immutable'
+import { connect } from 'react-redux'
+
+import actions from 'actions'
+import { getSlot } from 'utils/deliveries'
+import actionTypes from 'actions/actionTypes'
+
+import CheckoutButton from './CheckoutButton'
 
 function getCoreSlotId(deliveryDays, date, slotId) {
   const slot = getSlot(deliveryDays, date, slotId)
@@ -15,23 +17,19 @@ function getCoreSlotId(deliveryDays, date, slotId) {
   return coreSlotId
 }
 
-function mapStateToProps(state) {
-  const basket = state.basket
-
-  return {
-    recipes: basket.get('recipes'),
-    numPortions: basket.get('numPortions'),
-    promoCode: basket.get('promoCode'),
-    postcode: basket.get('postcode'),
-    orderId: basket.get('orderId'),
-    slotId: getCoreSlotId(state.boxSummaryDeliveryDays, basket.get('date'), basket.get('slotId')),
-    deliveryDayId: state.boxSummaryDeliveryDays.getIn([basket.get('date'), 'coreDayId']),
-    addressId: state.basket.getIn(['address', 'id'], ''),
-    userOrders: state.user.get('orders', Immutable.List([])), // eslint-disable-line new-cap
-    orderSaveError: state.error.get(actionTypes.ORDER_SAVE, null),
-    isAuthenticated: state.auth.get('isAuthenticated'),
-  }
-}
+const mapStateToProps = ({ auth, basket, boxSummaryDeliveryDays, error, user }) => ({
+  recipes: basket.get('recipes'),
+  numPortions: basket.get('numPortions'),
+  promoCode: basket.get('promoCode'),
+  postcode: basket.get('postcode'),
+  orderId: basket.get('orderId'),
+  slotId: getCoreSlotId(boxSummaryDeliveryDays, basket.get('date'), basket.get('slotId')),
+  deliveryDayId: boxSummaryDeliveryDays.getIn([basket.get('date'), 'coreDayId']),
+  addressId: basket.getIn(['address', 'id'], ''),
+  userOrders: user.get('orders', Immutable.List([])), // eslint-disable-line new-cap
+  orderSaveError: error.get(actionTypes.ORDER_SAVE, null),
+  isAuthenticated: auth.get('isAuthenticated'),
+})
 
 const CheckoutButtonContainer = connect(mapStateToProps, {
   basketCheckedOut: actions.basketCheckedOut,
