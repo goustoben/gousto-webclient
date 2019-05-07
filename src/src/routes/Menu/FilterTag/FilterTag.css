@@ -1,15 +1,27 @@
-@value Blackberry, Mackerel from 'styles/colors.css';
+@value Blackberry, Mackerel, Bluecheese, Blueberry, White from 'styles/colors.css';
 
 .filterTag {
-    padding: 8px;
     border: 1px solid Mackerel;
     border-radius: 10px;
     text-align: center;
     margin-right: 10px;
     cursor: pointer;
+    font-family: Avenir;
+    font-size: 13px;
+    font-weight: 900;
+    line-height: 1.23;
+    letter-spacing: normal;
+    color: Bluecheese;
     &:hover {
         background-color: Mackerel;
     }
+}
+
+.selectedFilterTag {
+    color: White;
+    border-radius: 12px;
+    border: solid 1px Blueberry;
+    background-color: Bluecheese;
 }
 
 .tagIcon {
