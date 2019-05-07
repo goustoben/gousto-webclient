@@ -119,10 +119,6 @@ class Detail extends React.Component {
 					      content: metaBrand,
 					    },
 					    {
-					      name: 'product:availability',
-					      content: 'in stock',
-					    },
-					    {
 					      name: 'product:condition',
 					      content: 'new',
 					    },
