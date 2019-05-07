@@ -325,19 +325,16 @@ class Menu extends React.Component {
             onToggleGridView={this.toggleGridView}
             orderId={this.props.orderId}
           />
-          <FilterTagsNav />
-          <FilterNav showLoading={this.props.isLoading} />
           <Loading loading={showLoading} hasRecommendations={hasRecommendations} />
           <div className={fadeCss} data-testing="menuRecipes">
-            {!showLoading && collectionsNavEnabled && !menuFilterExperiment &&
+            {!showLoading && collectionsNavEnabled &&
               <CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
-            <FilterMenu />
+            <FilterTagsNav />
             {this.props.filteredRecipesNumber ?
               <div
                 ref={ref => { this.masonryContainer = ref }}
                 className={classnames({
                   [css.masonryContainerWithCollectionsNav]: !menuFilterExperiment,
-                  [css.masonryContainerWithMenuFilterNav]: menuFilterExperiment,
                 })}
                 data-testing="menuRecipesList"
               >
