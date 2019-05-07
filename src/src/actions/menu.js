@@ -171,7 +171,7 @@ export function menuLoadCollections(date, noUrlChange) {
     }
     const filterExperiment = state.features.getIn(['filterMenu', 'value'])
     const collectionsFiltered = filterExperiment ?
-      collections.filter(collection => (!['dairy-free', 'gluten-free', 'plant-based', 'vegetarian'].includes(collection.slug)))
+      collections.filter(collection => (!['dairy-free', 'gluten-free'].includes(collection.slug)))
       :
       collections
     dispatch(menuActions.menuCollectionsReceive(collectionsFiltered))
