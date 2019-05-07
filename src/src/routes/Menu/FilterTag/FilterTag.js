@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Icon from 'Icon'
 import css from './FilterTag.css'
 
 const proptypes = {
@@ -11,23 +10,20 @@ const proptypes = {
   filterDietaryAttributesChange: PropTypes.func,
 }
 
-const FilterTag = (props) => {
-
-  return (
-    <div
-      className={props.selected ? css.selectedFilterTag : css.filterTag}
-      onClick={() => props.filterDietaryAttributesChange(props.value)}
-    >
-      {props.selected ? 
-        <span className={css.tagIcon}>
-          <Icon name="fa-times" className={css.tagImageIcon} />
-        </span>
-        : null
-      }
-      {props.text}
-    </div>
-  )
-} 
+const FilterTag = (props) => (
+  <div
+    className={props.selected ? css.selectedFilterTag : css.filterTag}
+    onClick={() => props.filterDietaryAttributesChange(props.value)}
+  >
+    {props.selected ? 
+      <span className={css.tagIcon}>
+        <span className={css.tagImageIcon} />
+      </span>
+      : null
+    }
+    {props.text}
+  </div>
+) 
 
 FilterTag.propTypes = proptypes
 
