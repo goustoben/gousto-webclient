@@ -75,3 +75,11 @@
 		margin-top: 0;
 	}
 }
+
+.mobileHide {
+	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+  }
+
+  .mobileShow {
+	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
+  }
