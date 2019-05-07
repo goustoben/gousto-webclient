@@ -4,6 +4,8 @@
 
 .rafMobile {
   padding-top: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
 }
 
 .marketPlaceWrapper {
@@ -56,7 +58,7 @@
 
 .navbar {
   display: none;
-  
+
   @media ScreenSMMin {
     display: block;
   }
@@ -89,7 +91,7 @@
   z-index: 1000;
 }
 
-.orderDetailsMobileContent { 
+.orderDetailsMobileContent {
   background-color: White;
   position: absolute;
   width: 100%;
