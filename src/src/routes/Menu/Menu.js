@@ -333,9 +333,7 @@ class Menu extends React.Component {
             {this.props.filteredRecipesNumber ?
               <div
                 ref={ref => { this.masonryContainer = ref }}
-                className={classnames({
-                  [css.masonryContainerWithCollectionsNav]: !menuFilterExperiment,
-                })}
+                className={css.masonryContainer}
                 data-testing="menuRecipesList"
               >
                 <RecipeList
