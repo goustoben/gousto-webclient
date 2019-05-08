@@ -72,9 +72,9 @@ class Detail extends React.Component {
 
 	getImageLink = () => {
 	  const { media } = this.props
-	  const array = media && media.map(image => image).toArray()
+	  const image = media && media.find(imageProps => imageProps.get('width') == 700)
 
-	  return array ? array.find(imageProps => imageProps.get('width') == 700).get('src') : ''
+	  return image ? image.get('src') : config.defaultImageLink
 	}
 
 	get detailComponent() {
