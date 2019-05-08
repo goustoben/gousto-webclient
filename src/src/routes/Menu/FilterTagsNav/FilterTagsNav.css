@@ -3,20 +3,16 @@
 
 .filterTagContainer {
     composes: paddingMDTop paddingXLBottom from 'sass-loader!styles/spacing.scss';
-    background: White;
-    display: none;
+    display: flex;
     padding-top: 55px;
-
-    @media ScreenSMMin {
-        display: flex;
-    }
+    padding-bottom: 0px;
 }
 
 .filterListContainer {
     composes: pageContainer from 'styles/layout.css';
     width: 100%;
     display: flex;
-    padding: 0 30px;
+    padding-right: 5px;
 }
 
 .filtersCTA {

@@ -1,6 +1,7 @@
 
 .filterTagList {
     width: 100%;
-    padding-left: 10px;
     display: flex;
+    font-size: 13px;
+    align-items: center;
 }
