@@ -72,7 +72,6 @@ class Detail extends React.Component {
 
 	getImageLink = () => {
 	  const { media } = this.props
-		console.log('media', media && media.toJS()) //eslint-disable-line
 	  const array = media && media.map(image => image).toArray()
 
 	  return array ? array.find(imageProps => imageProps.get('width') == 700).get('src') : ''
