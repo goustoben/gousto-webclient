@@ -5,7 +5,7 @@ build:
     - image: local/webclient-application
       context: .
       sync:
-        src/**/*: .
+        src/***/*: .
       docker:
         dockerfile: images/webclient/Dockerfile
     - image: local/webclient-webserver
