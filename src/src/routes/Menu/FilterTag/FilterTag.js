@@ -3,27 +3,33 @@ import React from 'react'
 import css from './FilterTag.css'
 
 const proptypes = {
-  type: PropTypes.string,
   text: PropTypes.string,
   value: PropTypes.string,
-  isLoading: PropTypes.bool,
+  selected: PropTypes.bool,
   filterDietaryAttributesChange: PropTypes.func,
 }
 
-const FilterTag = (props) => (
+const changeFilter = (filterDietaryAttributesChange, value) => {
+  filterDietaryAttributesChange(value)
+  if (window.pageYOffset > 250) {
+    window.scrollTo(0,240)
+  }
+}
+
+const FilterTag = ({selected, value, text, filterDietaryAttributesChange}) => (
   <div
-    className={props.selected ? css.selectedFilterTag : css.filterTag}
-    onClick={() => props.filterDietaryAttributesChange(props.value)}
+    className={selected ? css.selectedFilterTag : css.filterTag}
+    onClick={() => changeFilter(filterDietaryAttributesChange, value)}
   >
-    {props.selected ? 
+    {selected ? 
       <span className={css.tagIcon}>
         <span className={css.tagImageIcon} />
       </span>
       : null
     }
-    {props.text}
+    {text}
   </div>
-) 
+)
 
 FilterTag.propTypes = proptypes
 

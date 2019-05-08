@@ -53,14 +53,21 @@ class FilterTagsNav extends React.PureComponent {
       const scrollState = getScrollOffset(threshold, animationThreshold, scrolledPastPoint)
       scrollState && this.setState({
         scrolledPastPoint: scrollState.scrolledPastPoint,
-        scrollJumped: scrollState.scrollJumped
       })
     }
+  }
+  
+  getClassNameFilterNav = () => {
+    const { tags } = this.props
+    const { scrolledPastPoint } = this.state
+    const isAnySelected = tags.find(tag => tag.selected === true)
+
+    return (isAnySelected && scrolledPastPoint) ? css.filterTagContainerFixed : css.filterTagContainer
   }
 
   render() {
     const { tags, menuFilterExperiment } = this.props
-    const className = this.state.scrolledPastPoint ? css.filterTagContainerFixed : css.filterTagContainer
+    const className = this.getClassNameFilterNav()
 
     return (
       (menuFilterExperiment) ? (
