@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'/* eslint-disable new-cap */
 import Helmet from 'react-helmet'
-
 import DefaultDetail from 'Recipe/Detail/DefaultDetail'
 import FineDineInDetail from 'Recipe/Detail/FineDineInDetail'
+import { config } from './config'
 import css from './Detail.css'
 
 export const detailPropTypes = {
@@ -72,9 +72,10 @@ class Detail extends React.Component {
 
 	getImageLink = () => {
 	  const { media } = this.props
-	  const array = media.map(image => image).toArray()
+		console.log('media', media && media.toJS()) //eslint-disable-line
+	  const array = media && media.map(image => image).toArray()
 
-	  return array.filter(imageProps => imageProps.get('width') == 700)
+	  return array ? array.find(imageProps => imageProps.get('width') == 700).get('src') : ''
 	}
 
 	get detailComponent() {
@@ -88,10 +89,12 @@ class Detail extends React.Component {
 
 	render() {
 	  const { menuRecipeDetailVisibilityChange, title, description, range, id, surcharge } = this.props
+	  const defaultPrice = config.price
+
 	  const metaUrl = `https://www.gousto.co.uk/menu?recipeDetailId=${id}`
-	  const metaImage = this.getImageLink()[0].get('src')
+	  const metaImage = this.getImageLink()
 	  const metaBrand = range.get('name')
-	  const metaPrice = surcharge ? (2.98 + surcharge / 4).toFixed(2) : 2.98
+	  const metaPrice = surcharge ? (defaultPrice + surcharge / 4).toFixed(2) : defaultPrice
 
 	  return (
 			<div onClick={() => { menuRecipeDetailVisibilityChange(false) }}>
