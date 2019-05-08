@@ -5,6 +5,7 @@ import Helmet from 'react-helmet'
 import DefaultDetail from '../DefaultDetail'
 import FineDineInDetail from '../FineDineInDetail'
 import Detail from '../Detail'
+import { config } from '../config'
 
 describe('Detail', () => {
   let wrapper
@@ -66,10 +67,22 @@ describe('Detail', () => {
       expect(imageLink).toEqual('testurl')
     })
 
-    it('should return empty string if no media', () => {
+    it('should return default image link if media is undefined', () => {
       wrapper = shallow(<Detail range={range} />)
       const imageLink = wrapper.instance().getImageLink()
-      expect(imageLink).toEqual('')
+      expect(imageLink).toEqual(config.defaultImageLink)
+    })
+
+    it('should return default image link if media does not include 700px image', () => {
+      const media500px = Immutable.List([
+        Immutable.Map({
+          src: 'testurl',
+          width: 500
+        })
+      ])
+      wrapper = shallow(<Detail range={range} media={media500px} />)
+      const imageLink = wrapper.instance().getImageLink()
+      expect(imageLink).toEqual(config.defaultImageLink)
     })
   })
 
