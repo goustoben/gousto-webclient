@@ -7,20 +7,21 @@ import FineDineInDetail from '../FineDineInDetail'
 import Detail from '../Detail'
 
 describe('Detail', () => {
-  describe('rendering', () => {
-    let wrapper
-    const media = Immutable.List([
-      Immutable.Map({
-        src: 'testurl',
-        width: 700
-      })
-    ])
-    const range = Immutable.Map({
-      name: 'testBrand'
+  let wrapper
+  const media = Immutable.List([
+    Immutable.Map({
+      src: 'testurl',
+      width: 700
     })
+  ])
+  const range = Immutable.Map({
+    name: 'testBrand'
+  })
+
+  describe('rendering', () => {
 
     beforeEach(() => {
-      wrapper = shallow(<Detail media={media} range={range}/>)
+      wrapper = shallow(<Detail media={media} range={range} />)
     })
 
     it('should render a DefaultDetail by default', () => {
@@ -30,35 +31,46 @@ describe('Detail', () => {
     it('should have a Helmet component', () => {
       expect(wrapper.find(Helmet).length).toEqual(1)
     })
+  })
 
-    describe('views', () => {
-      const views = new Map(
-        Object.entries({
-          detail: DefaultDetail,
-          fineDineInDetail: FineDineInDetail,
-        }
-        ))
+  describe('views', () => {
+    const views = new Map(
+      Object.entries({
+        detail: DefaultDetail,
+        fineDineInDetail: FineDineInDetail,
+      }
+      ))
 
-      it('should render a different component based on view', () => {
-        for (const [view, component] of views.entries()) {
-          wrapper = shallow(<Detail view={view} range={range} />)
+    it('should render a different component based on view', () => {
+      for (const [view, component] of views.entries()) {
+        wrapper = shallow(<Detail view={view} range={range} />)
 
-          expect(wrapper.find(component).length).toEqual(1)
-        }
-      })
+        expect(wrapper.find(component).length).toEqual(1)
+      }
     })
+  })
 
-    it('should render an overlay which calls the menuRecipeDetailVisibilityChange function prop on click', () => {
-      const menuRecipeDetailVisibilityChangeSpy = jest.fn()
-      wrapper = shallow(<Detail menuRecipeDetailVisibilityChange={menuRecipeDetailVisibilityChangeSpy} range={range}/>)
-      wrapper.find('div').at(0).simulate('click')
+  it('should render an overlay which calls the menuRecipeDetailVisibilityChange function prop on click', () => {
+    const menuRecipeDetailVisibilityChangeSpy = jest.fn()
+    wrapper = shallow(<Detail menuRecipeDetailVisibilityChange={menuRecipeDetailVisibilityChangeSpy} range={range} />)
+    wrapper.find('div').at(0).simulate('click')
 
-      expect(menuRecipeDetailVisibilityChangeSpy).toHaveBeenCalledTimes(1)
-    })
+    expect(menuRecipeDetailVisibilityChangeSpy).toHaveBeenCalledTimes(1)
+  })
+
+  describe('getImageLink', () => {
 
     it('should get image link', () => {
+      wrapper = shallow(<Detail media={media} range={range} />)
       const imageLink = wrapper.instance().getImageLink()
       expect(imageLink).toEqual('testurl')
     })
+
+    it('should return empty string if no media', () => {
+      wrapper = shallow(<Detail range={range} />)
+      const imageLink = wrapper.instance().getImageLink()
+      expect(imageLink).toEqual('')
+    })
   })
+
 })
