@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
 import moment from 'moment'
@@ -15,14 +15,12 @@ import browserHelper from 'utils/browserHelper'
 import MenuNoResults from './MenuNoResults'
 
 import SubHeader from './SubHeader'
-import FilterNav from './FilterNav'
 import Loading from './Loading'
 import FilterTagsNav from './FilterTagsNav/FilterTagsNavContainer'
 import css from './Menu.css'
 
 import DetailOverlay from './DetailOverlay'
 import CollectionsNav from './CollectionsNav'
-import FilterMenu from './FilterMenu'
 
 import RecipeList from './RecipeList'
 import { Banner } from './Banner'
@@ -292,7 +290,6 @@ class Menu extends React.Component {
     const { hasRecommendations, forceLoad, jfyTutorialFlag } = this.props
     const { mobileGridView } = this.state
     const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
-    const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
     const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
     const showLoading = this.props.isLoading && !overlayShow || forceLoad
 
@@ -329,7 +326,7 @@ class Menu extends React.Component {
           <div className={fadeCss} data-testing="menuRecipes">
             {!showLoading && collectionsNavEnabled &&
               <CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
-            <FilterTagsNav />
+              {!showLoading && <FilterTagsNav />}
             {this.props.filteredRecipesNumber ?
               <div
                 ref={ref => { this.masonryContainer = ref }}
