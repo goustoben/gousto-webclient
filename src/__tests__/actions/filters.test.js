@@ -196,7 +196,7 @@ describe('filters actions', () => {
   })
 
   describe('clearAllFilters', () => {
-    test('should dispatch a FILTERS_CLEAR_ALL action when the clear all is presed', () => {
+    test('should dispatch a FILTERS_CLEAR_ALL action when the clear all is pressed', () => {
       getStateSpy.mockReturnValue({
         routing: {
           locationBeforeTransitions: { query: { collection: 'gluten-free' } },
@@ -220,7 +220,7 @@ describe('filters actions', () => {
 
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.FILTERS_CLEAR_ALL,
-        collectionId: 'defaultCollectionId',
+        collectionId: 'vfvd',
       })
     })
   })
