@@ -12,7 +12,7 @@ const proptypes = {
 const changeFilter = (filterDietaryAttributesChange, value) => {
   filterDietaryAttributesChange(value)
   if (window.pageYOffset > 250) {
-    window.scrollTo(0,240)
+    window.scrollTo(0,250)
   }
 }
 
