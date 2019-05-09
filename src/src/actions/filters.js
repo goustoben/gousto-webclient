@@ -137,8 +137,8 @@ export const filterCurrentTotalTimeChange = (totalTime) => (
 
 export const clearAllFilters = () => (
   (dispatch, getState) => {
-    const defaultCollection = getAllRecipesCollectionId(getState())
-    dispatch(filtersClearAll(defaultCollection))
+    const getSelectedCollection = getState().filters.get('currentCollectionId')
+    dispatch(filtersClearAll(getSelectedCollection))
     dispatch(trackRecipeFiltersCleared())
   }
 )
