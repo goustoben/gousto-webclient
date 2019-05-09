@@ -47,7 +47,7 @@ describe('filters selectors', () => {
         '20',
       )
 
-      expect(getFilterCTAText(state)).toBe('Boost & Balance, Meat, Vegetarian, Gluten-Free, Dairy-Free, 20 minutes or less')
+      expect(getFilterCTAText(state)).toBe('Boost & Balance, Meat, Vegetarian, Gluten free, Dairy free, 20 minutes or less')
     })
 
     test('should return a string containing the selected filters, in order', () => {
