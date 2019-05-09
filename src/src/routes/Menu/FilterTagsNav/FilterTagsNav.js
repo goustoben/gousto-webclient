@@ -46,7 +46,7 @@ class FilterTagsNav extends React.PureComponent {
   checkScroll = () => {
     if (this.hasScrolled) {
       this.hasScrolled = false
-      const threshold = 250
+      const threshold = 245
       const animationThreshold = 50
       const { scrolledPastPoint } = this.state
       

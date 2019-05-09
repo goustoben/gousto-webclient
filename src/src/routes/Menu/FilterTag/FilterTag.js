@@ -11,7 +11,7 @@ const proptypes = {
 
 const changeFilter = (filterDietaryAttributesChange, value) => {
   filterDietaryAttributesChange(value)
-  if (window.pageYOffset > 250) {
+  if (window.pageYOffset > 255) {
     window.scrollTo(0,250)
   }
 }
