@@ -62,7 +62,7 @@ class FilterTagsNav extends React.PureComponent {
     const { scrolledPastPoint } = this.state
     const isAnySelected = tags.find(tag => tag.selected === true)
 
-    return (isAnySelected && scrolledPastPoint) ? css.filterTagContainerFixed : css.filterTagContainer
+    return (isAnySelected && scrolledPastPoint) ? css.filterListContainerFixed : css.filterListContainer
   }
 
   render() {
@@ -71,8 +71,8 @@ class FilterTagsNav extends React.PureComponent {
 
     return (
       (menuFilterExperiment) ? (
-        <div className={className}>
-          <div className={css.filterListContainer}>
+        <div className={css.filterTagContainer}>
+          <div className={className}>
             <FilterTagsList tags={tags} />
           </div>
         </div>

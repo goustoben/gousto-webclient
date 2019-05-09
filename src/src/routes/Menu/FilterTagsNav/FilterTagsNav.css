@@ -5,27 +5,30 @@
     composes: paddingMDTop paddingXLBottom from 'sass-loader!styles/spacing.scss';
     display: flex;
     padding-top: 55px;
-    padding-bottom: 0px;
+    padding-bottom: 20px;
 }
 
-.filterTagContainerFixed {
-    composes: filterTagContainer;
-    @media ScreenXSMax {
-        width: 100%;
-        z-index: 499;
-        position: fixed;
-        top: 0;
-        background-color: White;
-        padding-bottom: 5px;
-        border-bottom: solid 1px #EAEBE9;
-    }
-}
 
 .filterListContainer {
     composes: pageContainer from 'styles/layout.css';
     width: 100%;
     display: flex;
     padding-right: 5px;
+    position: absolute;
+}
+
+.filterListContainerFixed {
+    composes: filterListContainer;
+    @media ScreenXSMax {
+        width: 100%;
+        z-index: 499;
+        position: fixed;
+        top: 0;
+        padding-top: 55px;
+        background-color: White;
+        padding-bottom: 5px;
+        border-bottom: solid 1px #EAEBE9;
+    }
 }
 
 .filtersCTA {
