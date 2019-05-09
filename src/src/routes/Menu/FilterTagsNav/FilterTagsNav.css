@@ -1,11 +1,14 @@
 @value White from 'styles/colors.css';
-@value ScreenSMMin, ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
 
 .filterTagContainer {
     composes: paddingMDTop paddingXLBottom from 'sass-loader!styles/spacing.scss';
     display: flex;
     padding-top: 55px;
-    padding-bottom: 20px;
+    padding-bottom: 0px;
+    @media ScreenXSMax {
+        padding-bottom: 20px;
+    }
 }
 
 
@@ -14,7 +17,9 @@
     width: 100%;
     display: flex;
     padding-right: 5px;
-    position: absolute;
+    @media ScreenXSMax {
+        position: absolute;
+    }
 }
 
 .filterListContainerFixed {
