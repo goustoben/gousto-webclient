@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { getSlot } from 'utils/deliveries'
 import actionTypes from 'actions/actionTypes'
+import { getOrderConfirmation } from 'selectors/features'
+import { checkoutTransactionalOrder } from 'actions/checkout'
 
 import CheckoutButton from './CheckoutButton'
 
@@ -17,7 +19,7 @@ function getCoreSlotId(deliveryDays, date, slotId) {
   return coreSlotId
 }
 
-const mapStateToProps = ({ auth, basket, boxSummaryDeliveryDays, error, user }) => ({
+const mapStateToProps = ({ auth, basket, boxSummaryDeliveryDays, error, features, user }) => ({
   recipes: basket.get('recipes'),
   numPortions: basket.get('numPortions'),
   promoCode: basket.get('promoCode'),
@@ -29,6 +31,7 @@ const mapStateToProps = ({ auth, basket, boxSummaryDeliveryDays, error, user }) 
   userOrders: user.get('orders', Immutable.List([])), // eslint-disable-line new-cap
   orderSaveError: error.get(actionTypes.ORDER_SAVE, null),
   isAuthenticated: auth.get('isAuthenticated'),
+  orderConfirmationFeature: getOrderConfirmation({ features }),
 })
 
 const CheckoutButtonContainer = connect(mapStateToProps, {
@@ -36,6 +39,7 @@ const CheckoutButtonContainer = connect(mapStateToProps, {
   boxSummaryVisibilityChange: actions.boxSummaryVisibilityChange,
   basketProceedToCheckout: actions.basketProceedToCheckout,
   orderUpdate: actions.orderUpdate,
+  checkoutTransactionalOrder,
 })(CheckoutButton)
 
 export default CheckoutButtonContainer

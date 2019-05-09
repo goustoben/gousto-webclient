@@ -32,6 +32,8 @@ class CheckoutButton extends React.Component {
     orderUpdate: PropTypes.func,
     isAuthenticated: PropTypes.bool.isRequired,
     boxSummaryVisibilityChange: PropTypes.func.isRequired,
+    checkoutTransactionalOrder: PropTypes.func,
+    orderConfirmationFeature: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -42,6 +44,8 @@ class CheckoutButton extends React.Component {
     view: '',
     onClick: () => {},
     boxSummaryVisibilityChange: () => {},
+    checkoutTransactionalOrder: () => {},
+    orderConfirmationFeature: false,
   }
 
   getOrderAction = () => {
@@ -52,6 +56,16 @@ class CheckoutButton extends React.Component {
     const orderAction = orderId ? `recipe-${recipeAction}` : 'transaction'
 
     return orderAction
+  }
+
+  handleTransaction = () => {
+    const { checkoutTransactionalOrder, orderConfirmationFeature } = this.props
+
+    if (orderConfirmationFeature) {
+      checkoutTransactionalOrder()
+    } else {
+      this.refs.formCheckout.submit()
+    }
   }
 
   handleClick = () => {
@@ -69,7 +83,7 @@ class CheckoutButton extends React.Component {
     } else if (!isAuthenticated) {
       basketProceedToCheckout()
     } else {
-      this.refs.formCheckout.submit()
+      this.handleTransaction()
     }
   }
 
