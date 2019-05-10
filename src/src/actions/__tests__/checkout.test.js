@@ -2,10 +2,11 @@ import Immutable from 'immutable'
 
 import actionTypes from 'actions/actionTypes'
 
-import { basketResetPersistent } from 'utils/basket'
 import { getSlot } from 'utils/deliveries'
 import { createPreviewOrder } from 'apis/orders'
+import { basketResetPersistent } from 'utils/basket'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
+import { pending, error } from 'actions/status'
 
 import {
   checkoutClearErrors,
@@ -42,6 +43,11 @@ jest.mock('actions/login')
 jest.mock('actions/menu')
 jest.mock('actions/user')
 jest.mock('actions/basket')
+
+jest.mock('actions/status', () => ({
+  error: jest.fn(),
+  pending: jest.fn(),
+}))
 
 const createState = (stateOverrides) => ({
   basket: Immutable.fromJS({
@@ -190,13 +196,13 @@ describe('checkout actions', () => {
   })
 
   afterEach(() => {
-    dispatch.mockClear()
-    getState.mockClear()
+    jest.clearAllMocks()
   })
 
   describe('checkoutClearErrors', () => {
     it('should dispatch CHECKOUT_ERRORS_CLEAR', async () => {
       const result = checkoutClearErrors()
+
       expect(result.type).toBe(actionTypes.CHECKOUT_ERRORS_CLEAR)
     })
   })
@@ -207,9 +213,11 @@ describe('checkout actions', () => {
         dispatch,
         getState,
       )
+
       expect(createPreviewOrder).toHaveBeenCalledTimes(1)
       expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
     })
+
     it('should call create preview order and log the error, coreDayId empty', async () => {
       getState.mockReturnValue(createState({
         boxSummaryDeliveryDays: Immutable.fromJS({
@@ -226,60 +234,61 @@ describe('checkout actions', () => {
           },
         }),
       }))
+
       await checkoutCreatePreviewOrder()(
         dispatch,
         getState,
       )
-      expect(dispatch).toHaveBeenCalledTimes(6)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
-        type: 'ERROR',
-        value: {
+
+      expect(error).toHaveBeenCalledWith(
+        actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
+        {
           message: 'Missing data, persistent basket might be expired',
           code: 'basket-expired',
         },
-      })
+      )
     })
+
     it('should call create preview order and log the error, boxSummaryDeliveryDays empty', async () => {
       getState.mockReturnValue(createState({
         boxSummaryDeliveryDays: null,
       }))
+
       await checkoutCreatePreviewOrder()(
         dispatch,
         getState,
       )
-      expect(dispatch).toHaveBeenCalledTimes(4)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
-        type: 'ERROR',
-        value: "Cannot read property 'getIn' of null",
-      })
+
+      expect(error).toHaveBeenCalledWith(
+        actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
+        "Cannot read property 'getIn' of null",
+      )
     })
   })
 
   describe('checkoutAddressLookup', () => {
     it('should call fetchAddressByPostcode and dispatch pending CHECKOUT_ADDRESSES_RECEIVE with addresses', async () => {
       const postcode = 'W6 0DH'
+
       await checkoutAddressLookup(postcode)(dispatch)
-      expect(dispatch).toHaveBeenCalledTimes(3)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: actionTypes.CHECKOUT_ADDRESSES_RECEIVE,
-        type: 'PENDING',
-        value: true,
-      })
+
+      expect(pending).toHaveBeenCalledWith(
+        actionTypes.CHECKOUT_ADDRESSES_RECEIVE,
+        true,
+      )
     })
   })
 
   describe('fireCheckoutError', () => {
     it('should dispatch an error with no value', async () => {
       getState.mockReturnValue(createState())
+
       await fireCheckoutError('CARD_TOKENISATION_FAILED')(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledTimes(1)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: 'CARD_TOKENISATION_FAILED',
-        type: actionTypes.ERROR,
-        value: true,
-      })
+
+      expect(error).toHaveBeenCalledWith(
+        'CARD_TOKENISATION_FAILED',
+        true,
+      )
     })
 
     it('should dispatch an error with an error value', async () => {
@@ -287,19 +296,20 @@ describe('checkout actions', () => {
       const errorText = 'card not accepted'
 
       await fireCheckoutError('CARD_TOKENISATION_FAILED', errorText)(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledTimes(1)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: 'CARD_TOKENISATION_FAILED',
-        type: actionTypes.ERROR,
-        value: errorText,
-      })
+
+      expect(error).toHaveBeenCalledWith(
+        'CARD_TOKENISATION_FAILED',
+        errorText,
+      )
     })
   })
 
   describe('checkoutSignup', () => {
     it('should redirect to invalid step', async () => {
       getState.mockReturnValue(createState())
+
       await checkoutSignup()(dispatch, getState)
+
       expect(dispatch).toHaveBeenCalledTimes(8)
     })
   })
@@ -331,6 +341,7 @@ describe('checkout actions', () => {
 
       it('should not call ga with order details', async () => {
         trackPurchase()(dispatch, getState)
+
         expect(ga).not.toHaveBeenCalled()
       })
     })
@@ -342,6 +353,7 @@ describe('checkout actions', () => {
 
       it('should call ga with order details', async () => {
         trackPurchase()(dispatch, getState)
+
         expect(ga).toHaveBeenCalled()
         expect(ga).toHaveBeenCalledWith('gousto.ec:setAction', 'purchase', {
           id: 'test-order-id',
@@ -364,12 +376,15 @@ describe('checkout actions', () => {
 
     it('should call post signup', async () => {
       await checkoutPostSignup()(dispatch, getState)
+
       expect(basketResetPersistent).toHaveBeenCalledTimes(1)
     })
 
     it('should dispatch a call to trackPurchase', async () => {
       global.ga = ga
+
       await checkoutPostSignup()(dispatch, getState)
+
       expect(dispatch).toHaveBeenCalledTimes(8)
     })
   })
@@ -377,7 +392,9 @@ describe('checkout actions', () => {
   describe('checkoutSignup on MOBILE', () => {
     it('should redirect to invalid step', async () => {
       getState.mockReturnValue(createState())
+
       await checkoutSignup()(dispatch, getState)
+
       expect(dispatch).toHaveBeenCalledTimes(8)
     })
   })
@@ -385,6 +402,7 @@ describe('checkout actions', () => {
   describe('trackPromocodeChange', () => {
     it('should dispatch trackPromocodeChange with actionType Promocode Applied', () => {
       trackPromocodeChange('promo', true)(dispatch)
+
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING_PROMOCODE_CHANGE',
         trackingData: {
@@ -396,6 +414,7 @@ describe('checkout actions', () => {
 
     it('should dispatch trackPromocodeChange with actionType Promocode Removed', () => {
       trackPromocodeChange('promo', false)(dispatch)
+
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING_PROMOCODE_CHANGE',
         trackingData: {
