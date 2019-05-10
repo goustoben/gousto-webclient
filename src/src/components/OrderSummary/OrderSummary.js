@@ -93,8 +93,8 @@ class OrderSummary extends React.PureComponent {
       if (!productUtils.isNotAGift(product)) {
         return false
       }
-      
-return {
+
+      return {
         orderItemId: productId,
         title: product.get('title'),
         quantity: parseFloat(productQty),
