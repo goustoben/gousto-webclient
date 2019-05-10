@@ -119,7 +119,7 @@ describe('<Ingredients />', () => {
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
-      ContinueButton = getHelpLayout.find('BottomBar').find('Button').at(1)
+      ContinueButton = wrapper.find('BottomBar').find('Button').at(1)
     })
 
     describe('ingredients', () => {
@@ -137,56 +137,53 @@ describe('<Ingredients />', () => {
         const secondRecipe = wrapper.find('Recipe').at(1)
         secondRecipe.find('Item').simulate('click')
         let ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
-        Promise.all(ingredientsCheckboxes.at(1).simulate('change')).then(() => {
-          expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
-        })
+        ingredientsCheckboxes.at(1).simulate('change')
+        ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
 
-        Promise.all(secondRecipe.find('Item').simulate('click'),secondRecipe.find('Item').simulate('click'))
-          .then(() => {
-            ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
-  
-            expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
-          })
-        
+        expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
+
+        secondRecipe.find('Item').simulate('click')
+        secondRecipe.find('Item').simulate('click')
+        ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
+
+        expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
       })
     })
 
     describe('Continue button', () => {
-      const selectIngredientAndGetCheckbox = (recipeAncestor) => {
-        const recipe = recipeAncestor.find('ItemExpandable').at(1)
-        
-        return Promise.all(recipeAncestor.find('ItemExpandable').at(1), recipe.find('Item').simulate('click')).then(() => {
-          const ingredientCheckbox = recipe.find('input[type="checkbox"]').at(1)
+      const selectIngredientAndGetCheckbox = (ingredientsWrapper) => {
+        const recipe = ingredientsWrapper.find('ItemExpandable').at(1)
+        recipe.find('Item').simulate('click')
+        let ingredientCheckbox = ingredientsWrapper.find('ItemExpandable').at(1)
+          .find('input[type="checkbox"]').at(1)
+        ingredientCheckbox.simulate('change')
+        ingredientCheckbox = ingredientsWrapper.find('ItemExpandable').at(1)
+          .find('input[type="checkbox"]').at(1)
 
-          return (ingredientCheckbox)
-        }).then((ingredientCheckbox) => {
-          ingredientCheckbox.simulate('change')
-          
-          return (ingredientCheckbox)
-        })
+        return ingredientCheckbox
       }
 
       test('the button is enabled only when one or more ingredients are selected', () => {
-        Promise.all(selectIngredientAndGetCheckbox(getHelpLayout)).then(() => {
-          const ingredientCheckbox = selectIngredientAndGetCheckbox(getHelpLayout)
-          expect(ContinueButton.prop('disabled')).toBe(false)
-  
-          ingredientCheckbox.simulate('change')
-  
-          expect(ContinueButton.prop('disabled')).toBe(true)
-        })
+        const ingredientCheckbox = selectIngredientAndGetCheckbox(wrapper)
+        ContinueButton = wrapper.find('BottomBar').find('Button').at(1)
+        expect(ContinueButton.prop('disabled')).toBe(false)
+
+        ingredientCheckbox.simulate('change')
+        ContinueButton = wrapper.find('BottomBar').find('Button').at(1)
+
+        expect(ContinueButton.prop('disabled')).toBe(true)
       })
 
       test('validateIngredients is called with the selected ingredients when clicking the button', () => {
-        selectIngredientAndGetCheckbox(getHelpLayout)
-        Promise.all(ContinueButton.prop('onClick')()).then(() => {
-          expect(validateSelectedIngredients).toHaveBeenCalledTimes(1)
-          expect(validateSelectedIngredients).toHaveBeenCalledWith({
-            accessToken: 'user-access-token',
-            costumerId: '777',
-            ingredientIds: ['2222'],
-            orderId: '888',
-          })
+        selectIngredientAndGetCheckbox(wrapper)
+        ContinueButton.prop('onClick')()
+
+        expect(validateSelectedIngredients).toHaveBeenCalledTimes(1)
+        expect(validateSelectedIngredients).toHaveBeenCalledWith({
+          accessToken: 'user-access-token',
+          costumerId: '777',
+          ingredientIds: ['2222'],
+          orderId: '888',
         })
       })
 
@@ -197,7 +194,7 @@ describe('<Ingredients />', () => {
             valid: true,
           }
         })
-        selectIngredientAndGetCheckbox(getHelpLayout)
+        selectIngredientAndGetCheckbox(wrapper)
         await ContinueButton.prop('onClick')()
 
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/ingredient-issues')
@@ -205,13 +202,13 @@ describe('<Ingredients />', () => {
 
       test('redirection to the Contact Us page happens when validateIngredients errors', async () => {
         validateSelectedIngredients.mockImplementation(() => { throw new Error('error')})
-        selectIngredientAndGetCheckbox(getHelpLayout)
+        selectIngredientAndGetCheckbox(wrapper)
         await ContinueButton.prop('onClick')()
 
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
       })
 
-      test('when validated it calls store ingredient ids action', () => {
+      test('when validated it calls store ingredient ids action', async () => {
         validateSelectedIngredients.mockResolvedValue({
           status: 'ok',
           data: {
@@ -219,10 +216,12 @@ describe('<Ingredients />', () => {
           }
         })
 
-        selectIngredientAndGetCheckbox(getHelpLayout)
-        Promise.all(ContinueButton.prop('onClick')()).then(() => {
-          expect(storeSelectedIngredients).toHaveBeenCalledWith([{ ingredientId: '2222', recipeId: '2' }])
-        })
+        selectIngredientAndGetCheckbox(wrapper)
+        await ContinueButton.prop('onClick')()
+
+        expect(storeSelectedIngredients).toHaveBeenCalledWith([
+          { ingredientId: '2222', recipeId: '2' }
+        ])
       })
     })
   })
