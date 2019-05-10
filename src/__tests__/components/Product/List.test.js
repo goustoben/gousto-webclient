@@ -44,11 +44,11 @@ describe('Product List images', () => {
       product8: { id: 'product7', categories: [] },
     })
     wrapper = shallow(
-			<ProductList orderId={'1'} products={products} number={2} />,
+      <ProductList orderId={'1'} products={products} number={2} />,
     )
     expect(wrapper.find(ImageSelection).prop('content').length).toEqual(2)
     wrapper = shallow(
-			<ProductList orderId={'1'} products={products} number={10} />,
+      <ProductList orderId={'1'} products={products} number={10} />,
     )
     expect(wrapper.find(ImageSelection).prop('content').length).toEqual(8)
   })

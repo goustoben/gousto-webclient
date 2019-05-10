@@ -4,9 +4,9 @@ import config from 'config/home'
 import Guide from 'Guide'
 
 const HowItWorks = ({ steps, header, description, variant }) => (
-	<div>
-		<Guide steps={steps(variant)} header={header} description={description} />
-	</div>
+  <div>
+    <Guide steps={steps(variant)} header={header} description={description} />
+  </div>
 )
 
 HowItWorks.propTypes = {

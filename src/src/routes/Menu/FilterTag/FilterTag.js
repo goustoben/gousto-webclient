@@ -50,16 +50,16 @@ const onFilterClick = ({
   }
 }
 const FilterTag = (props) => (
-	<div
-	  className={css.filterTag}
-	  onClick={() => onFilterClick(props)}
-	>
-		<span className={css.tagIcon}>
-			<Icon name="fa-times" className={css.tagImageIcon} />
-		</span>
-		{props.text}
-		{filterTagIcon(props)}
-	</div>
+  <div
+    className={css.filterTag}
+    onClick={() => onFilterClick(props)}
+  >
+    <span className={css.tagIcon}>
+      <Icon name="fa-times" className={css.tagImageIcon} />
+    </span>
+    {props.text}
+    {filterTagIcon(props)}
+  </div>
 )
 
 FilterTag.propTypes = proptypes

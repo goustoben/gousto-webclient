@@ -6,25 +6,25 @@ import { Cancel } from 'containers/SubscriptionPause/callsToAction'
 import css from './ReasonsScreen.css'
 
 const SubscriptionPauseReasonsScreen = ({ onReasonChoice, reasons, type }) => (
-	<div className={css.container}>
-		<div className={type !== 'reasonList' ? css.gridView : css.listView}>
-			{reasons && reasons.map((reason, index) => (
-				<div
-				  key={index}
-				  onClick={() => onReasonChoice(reason.get('id'))}
-				  className={type !== 'reasonList' ? css.gridItem : css.listItem}
-				>
-					{type === 'reasonGrid' ? <Svg fileName={`icon-reason-${reason.get('slug')}-hover`} className={css.svgHover} /> : null}
-					{type === 'reasonGrid' ? <Svg fileName={`icon-reason-${reason.get('slug')}`}className={css.svg} /> : null}
-					<span className={css.label}>{reason.get('label')}</span>
-				</div>
-			)).toArray()}
-		</div>
+  <div className={css.container}>
+    <div className={type !== 'reasonList' ? css.gridView : css.listView}>
+      {reasons && reasons.map((reason, index) => (
+        <div
+          key={index}
+          onClick={() => onReasonChoice(reason.get('id'))}
+          className={type !== 'reasonList' ? css.gridItem : css.listItem}
+        >
+          {type === 'reasonGrid' ? <Svg fileName={`icon-reason-${reason.get('slug')}-hover`} className={css.svgHover} /> : null}
+          {type === 'reasonGrid' ? <Svg fileName={`icon-reason-${reason.get('slug')}`}className={css.svg} /> : null}
+          <span className={css.label}>{reason.get('label')}</span>
+        </div>
+      )).toArray()}
+    </div>
 
-		<div className={css.button}>
-			<Cancel />
-		</div>
-	</div>
+    <div className={css.button}>
+      <Cancel />
+    </div>
+  </div>
 )
 
 SubscriptionPauseReasonsScreen.propTypes = {

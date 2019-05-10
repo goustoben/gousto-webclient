@@ -14,18 +14,18 @@ const OrderSideSwipe = ({
   const recipesRendered = []
   for (let i = 0; i < maxRecipes; i++) {
     recipesRendered.push(
-			<OrderRecipe
-			  recipeImage={recipes.get(i) ? recipes.get(i).get('image') : ''}
-			  recipeTitle={recipes.get(i) ? recipes.get(i).get('title') : ''}
-			  key={recipes.get(i) ? recipes.get(i).get('recipeId') * i : i}
-			/>
+      <OrderRecipe
+        recipeImage={recipes.get(i) ? recipes.get(i).get('image') : ''}
+        recipeTitle={recipes.get(i) ? recipes.get(i).get('title') : ''}
+        key={recipes.get(i) ? recipes.get(i).get('recipeId') * i : i}
+      />
     )
   }
 
   return (
-		<div className={css.horizontalScrollWrapper}>
-			{recipesRendered}
-		</div>
+    <div className={css.horizontalScrollWrapper}>
+      {recipesRendered}
+    </div>
   )
 }
 

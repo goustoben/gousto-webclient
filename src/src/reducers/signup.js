@@ -19,10 +19,10 @@ const signup = {
 
     case actionTypes.SIGNUP_STEP_SET: {
       const newState =
-					state
-					  .setIn(['wizard', 'currentStepName'], action.currentStepName)
-					  .setIn(['wizard', 'currentStepNumber'], action.currentStepNumber)
-					  .setIn(['wizard', 'isLastStep'], action.isLastStep)
+          state
+            .setIn(['wizard', 'currentStepName'], action.currentStepName)
+            .setIn(['wizard', 'currentStepNumber'], action.currentStepNumber)
+            .setIn(['wizard', 'isLastStep'], action.isLastStep)
 
       return newState
     }

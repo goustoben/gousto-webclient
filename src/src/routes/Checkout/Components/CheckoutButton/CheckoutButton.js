@@ -4,18 +4,18 @@ import { Button } from 'goustouicomponents'
 import css from './CheckoutButton.css'
 
 const CheckoutButton = ({ color, fill, onClick, stepName, submitting }) => (
-	<Button
-	  color={color}
-	  fill={fill}
-	  width="full"
-	  onClick={onClick}
-	  pending={submitting}
-	  className={css.marginTop}
-	  disabled={submitting}
-	  data-testing="checkoutCTA"
-	>
-		{stepName}
-	</Button>
+  <Button
+    color={color}
+    fill={fill}
+    width="full"
+    onClick={onClick}
+    pending={submitting}
+    className={css.marginTop}
+    disabled={submitting}
+    data-testing="checkoutCTA"
+  >
+    {stepName}
+  </Button>
 )
 
 CheckoutButton.propTypes = {

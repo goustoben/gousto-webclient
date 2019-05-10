@@ -4,5 +4,5 @@ import RateRecipesContainer from './RateRecipesContainer'
 import config from 'config/routes'
 
 export default (
-	<Route path={config.client.rateMyRecipes} component={RateRecipesContainer} />
+  <Route path={config.client.rateMyRecipes} component={RateRecipesContainer} />
 )

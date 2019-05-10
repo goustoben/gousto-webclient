@@ -34,12 +34,12 @@ describe('OrderProducts', () => {
   describe('rendering', () => {
     beforeEach(() => {
       wrapper = shallow(
-				<OrderProducts
-				  orderId={'777'}
-				  products={productsSample}
-				  periodId={1}
-				  randomProducts={randomProductsSample}
-				/>,
+        <OrderProducts
+          orderId={'777'}
+          products={productsSample}
+          periodId={1}
+          randomProducts={randomProductsSample}
+        />,
       )
     })
 

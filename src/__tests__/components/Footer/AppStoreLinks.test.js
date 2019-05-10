@@ -11,7 +11,7 @@ describe('<AppStoreLinks />', () => {
 
   test('should inject the specified app store IDs into the markup', () => {
     const wrapper = shallow(
-			<AppStoreLinks appStoreId="12345" playStoreId="67890" />,
+      <AppStoreLinks appStoreId="12345" playStoreId="67890" />,
     )
     expect(
       wrapper

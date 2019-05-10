@@ -5,9 +5,9 @@ import { Button } from 'goustouicomponents'
 import css from './FilterButton.css'
 
 const FilterButton = ({ onClick, count }) => (
-	<Button className={css.button} onClick={onClick} disabled={count === 0}>
-		{(count) ? `Show me ${count} Recipes` : 'No recipes found'}
-	</Button>
+  <Button className={css.button} onClick={onClick} disabled={count === 0}>
+    {(count) ? `Show me ${count} Recipes` : 'No recipes found'}
+  </Button>
 )
 
 FilterButton.propTypes = {

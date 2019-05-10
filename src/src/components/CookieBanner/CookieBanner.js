@@ -10,28 +10,28 @@ const CookieBanner = ({ copy, isCookiePolicyAccepted, cookiePolicyAcceptanceChan
   }
 
   return (
-		<div className={css.container} data-testing="cookiePolicyBanner">
-			<div>
-				<p className={css.description}>
-					{copy.description}
-					<Link to={config.findOutMoreLink} clientRouted={false}>
-						<span className={css.linkMessage}>
-							{copy.findMore}
-						</span>
-					</Link>
-				</p>
-				<a
-				  role="button"
-				  className={css.button}
-				  data-testing="cookiePolicyBannerBtn"
-				  onClick={() => {
-				    cookiePolicyAcceptanceChange(true)
-				  }}
-				>
-					{copy.button}
-				</a>
-			</div>
-		</div>
+    <div className={css.container} data-testing="cookiePolicyBanner">
+      <div>
+        <p className={css.description}>
+          {copy.description}
+          <Link to={config.findOutMoreLink} clientRouted={false}>
+            <span className={css.linkMessage}>
+              {copy.findMore}
+            </span>
+          </Link>
+        </p>
+        <a
+          role="button"
+          className={css.button}
+          data-testing="cookiePolicyBannerBtn"
+          onClick={() => {
+            cookiePolicyAcceptanceChange(true)
+          }}
+        >
+          {copy.button}
+        </a>
+      </div>
+    </div>
   )
 }
 

@@ -4,11 +4,11 @@ import classnames from 'classnames'
 import css from './Gel.css'
 
 const Gel = ({ className, size, children, color }) => (
-	<div className={classnames(css.gel, css[size], css[color], className)}>
-		<div className={css.gelContent}>
-			{children}
-		</div>
-	</div>
+  <div className={classnames(css.gel, css[size], css[color], className)}>
+    <div className={css.gelContent}>
+      {children}
+    </div>
+  </div>
 )
 
 Gel.propTypes = {

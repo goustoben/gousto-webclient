@@ -17,33 +17,33 @@ const OrderRecipes = ({
   orderState,
   whenCutoff,
 }) => (
-	<div>
-		<div className={`${css.header} ${css.hideInMobile}`}>
-			<Content contentKeys="mydeliveriesOrderOrderrecipesTitle" >
-				<span>Recipe box</span>
-			</Content>
-		</div>
-		<OrderSideSwipe recipes={recipes} orderState={orderState} />
-		{orderState === 'menu open' ?
-			<div className={css.textRow}>
-				<p className={css.subHeader}>
-					<Content contentKeys="mydeliveriesOrderOrderrecipesMessage" >
-						<span>You haven't chosen any recipes yet.</span>
-					</Content>
-				</p>
-				<p>If you do not choose by <strong>{whenCutoff}</strong>, Gousto will send you a selection of recipes based on your subscription settings.</p>
-			</div>
-		  : null}
-		{['menu open', 'recipes chosen'].indexOf(orderState) > -1 ?
-			<div className={css.buttonRow}>
-				<Link to={`${routes.client.menu}/${orderId}`} clientRouted={false}>
-					<Button color={orderState === 'recipes chosen' ? 'secondary' : 'primary'} noDecoration>
-						{orderState === 'recipes chosen' ? 'Edit recipes' : 'Choose recipes'}
-					</Button>
-				</Link>
-			</div>
-		  : null}
-	</div>
+  <div>
+    <div className={`${css.header} ${css.hideInMobile}`}>
+      <Content contentKeys="mydeliveriesOrderOrderrecipesTitle" >
+        <span>Recipe box</span>
+      </Content>
+    </div>
+    <OrderSideSwipe recipes={recipes} orderState={orderState} />
+    {orderState === 'menu open' ?
+      <div className={css.textRow}>
+        <p className={css.subHeader}>
+          <Content contentKeys="mydeliveriesOrderOrderrecipesMessage" >
+            <span>You haven't chosen any recipes yet.</span>
+          </Content>
+        </p>
+        <p>If you do not choose by <strong>{whenCutoff}</strong>, Gousto will send you a selection of recipes based on your subscription settings.</p>
+      </div>
+      : null}
+    {['menu open', 'recipes chosen'].indexOf(orderState) > -1 ?
+      <div className={css.buttonRow}>
+        <Link to={`${routes.client.menu}/${orderId}`} clientRouted={false}>
+          <Button color={orderState === 'recipes chosen' ? 'secondary' : 'primary'} noDecoration>
+            {orderState === 'recipes chosen' ? 'Edit recipes' : 'Choose recipes'}
+          </Button>
+        </Link>
+      </div>
+      : null}
+  </div>
 )
 
 OrderRecipes.propTypes = {

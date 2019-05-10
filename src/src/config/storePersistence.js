@@ -14,7 +14,7 @@ export default (store) => {
   if (!store.basket.get('orderId')) {
     persistentCookies = Object.assign(persistentCookies, {
       /* one layer deep only, add the resulting cookie names
-			to CookieGuard.php in underscore form */
+      to CookieGuard.php in underscore form */
       basket: {
         postcode: true,
         date: true,

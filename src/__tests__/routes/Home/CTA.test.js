@@ -14,9 +14,9 @@ describe('CTA', () => {
     onClickSpy = sinon.spy()
     width = 100
     wrapper = shallow(
-			<CTAHomepage onClick={onClickSpy} width={width}>
-				click here
-			</CTAHomepage>,
+      <CTAHomepage onClick={onClickSpy} width={width}>
+        click here
+      </CTAHomepage>,
     )
   })
 
@@ -41,9 +41,9 @@ describe('CTA', () => {
   describe('default props', () => {
     beforeEach(() => {
       wrapper = mount(
-				<CTAHomepage onClick={onClickSpy} width={width}>
-					click here
-				</CTAHomepage>,
+        <CTAHomepage onClick={onClickSpy} width={width}>
+          click here
+        </CTAHomepage>,
       )
     })
 

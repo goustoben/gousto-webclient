@@ -4,11 +4,11 @@ import classnames from 'classnames'
 import css from './Banner.css'
 
 const Banner = ({ title, version }) => (
-	<div className={classnames(css.banner, version ? css[`on${version}`] : '')}>
-		<div className={css.bannerInner}>
-			<h1 className={css.bannerTitle}>{title}</h1>
-		</div>
-	</div>
+  <div className={classnames(css.banner, version ? css[`on${version}`] : '')}>
+    <div className={css.bannerInner}>
+      <h1 className={css.bannerTitle}>{title}</h1>
+    </div>
+  </div>
 )
 
 Banner.propTypes = {

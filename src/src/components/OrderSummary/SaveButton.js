@@ -44,7 +44,7 @@ class SaveButton extends React.PureComponent {
       }
     }
   }
-  
+
   render = () => (
     <div className={classnames({ [css.updateOrderButton]: this.props.onOrderConfirmationMobile })}>
       {!!this.state.showButton &&
@@ -56,7 +56,7 @@ class SaveButton extends React.PureComponent {
             width="full"
           >
             Update Order
-					</Button>
+          </Button>
         </div>
       }
       {(this.state.showSuccess && !this.state.showButton)? <div className={css.success}>SAVED</div> : ''}

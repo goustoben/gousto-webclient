@@ -24,7 +24,7 @@ describe('Screen', () => {
     test('should pass onGoBack to <ModalPanel> if provided and enableBack is true and pending is false', () => {
       const onGoBack = sinon.spy()
       wrapper = shallow(
-				<Screen enableBack onGoBack={onGoBack} pending={false} />,
+        <Screen enableBack onGoBack={onGoBack} pending={false} />,
       )
       expect(wrapper.prop('onGoBack')).toBe(onGoBack)
     })
@@ -38,14 +38,14 @@ describe('Screen', () => {
     test('should NOT pass onGoBack to <ModalPanel> if enabledBack if false', () => {
       const onGoBack = sinon.spy()
       wrapper = shallow(
-				<Screen enableBack={false} onGoBack={onGoBack} pending={false} />,
+        <Screen enableBack={false} onGoBack={onGoBack} pending={false} />,
       )
       expect(wrapper.prop('onGoBack')).toBe(undefined)
     })
 
     test('should render a <ReasonsScreen> for type "reasonGrid" & spread screenData as props', () => {
       wrapper = shallow(
-				<Screen screenData="reasonGrid" screenData={{ a: 2, b: 3 }} />,
+        <Screen screenData="reasonGrid" screenData={{ a: 2, b: 3 }} />,
       )
       const reasonsScreen = wrapper.find(ReasonsScreen)
 
@@ -56,7 +56,7 @@ describe('Screen', () => {
 
     test('should render a <ReasonsScreen> for type "reasonList" & spread screenData as props', () => {
       wrapper = shallow(
-				<Screen type="reasonList" screenData={{ a: 4, b: 5 }} />,
+        <Screen type="reasonList" screenData={{ a: 4, b: 5 }} />,
       )
       const reasonsScreen = wrapper.find(ReasonsScreen)
 
@@ -67,7 +67,7 @@ describe('Screen', () => {
 
     test('should render a <GenericScreen> for any other type & spread screenData as props', () => {
       wrapper = shallow(
-				<Screen type="somethingElse" screenData={{ a: 6, b: 7 }} />,
+        <Screen type="somethingElse" screenData={{ a: 6, b: 7 }} />,
       )
       const genericScreen = wrapper.find(GenericScreen)
 
@@ -77,7 +77,7 @@ describe('Screen', () => {
     })
     test('should render a <PendingOrderReminder> for any "pausedPendingBoxes" type & spread screenData as props', () => {
       wrapper = shallow(
-				<Screen type="pausedPendingBoxes" screenData={{ a: 6, b: 7 }} />,
+        <Screen type="pausedPendingBoxes" screenData={{ a: 6, b: 7 }} />,
       )
       const genericScreen = wrapper.find(PendingOrderReminder)
 
@@ -89,7 +89,7 @@ describe('Screen', () => {
       const testTitle = 'testTitle'
       const testPreTitle = 'preTitle'
       wrapper = shallow(
-				<Screen screenData={{ title: testTitle, preTitle: testPreTitle }} />,
+        <Screen screenData={{ title: testTitle, preTitle: testPreTitle }} />,
       )
       const preTitleSpan = `.${css.preTitle.split(' ').join('.')}`
       expect(wrapper.find('h1').length).toEqual(1)

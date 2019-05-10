@@ -15,7 +15,7 @@ const getMonthsFromDates = dates => (
 )
 
 const Title = ({ dates }) => (
-	<span className={css.title}>{getMonthsFromDates(dates).join(' / ')}</span>
+  <span className={css.title}>{getMonthsFromDates(dates).join(' / ')}</span>
 )
 
 Title.propTypes = {

@@ -82,24 +82,24 @@ describe('Order', function() {
     it('should render a specific list of subcomponents when the order is scheduled', function() {
       wrapper = shallow(<Order orderState="scheduled" collapsed />)
       const renderedSubcomponents =
-				'<OrderCollage />' +
-				'<OrderDate />' +
-				'<OrderTime />' +
-				'<OrderState />' +
-				'<OrderStatus />' +
-				'<OrderPricing />' +
-				'<OrderCollapseExpand />'
+        '<OrderCollage />' +
+        '<OrderDate />' +
+        '<OrderTime />' +
+        '<OrderState />' +
+        '<OrderStatus />' +
+        '<OrderPricing />' +
+        '<OrderCollapseExpand />'
       expect(wrapper.text()).to.equal(renderedSubcomponents)
     })
 
     it('should render a specific list of subcomponents when the order is cancelled', function() {
       wrapper = shallow(<Order collapsed orderState="cancelled" />)
       const renderedSubcomponents =
-				'<OrderCollage />' +
-				'<OrderDate />' +
-				'<OrderTime />' +
-				'<OrderState />' +
-				'<OrderStatus />'
+        '<OrderCollage />' +
+        '<OrderDate />' +
+        '<OrderTime />' +
+        '<OrderState />' +
+        '<OrderStatus />'
       expect(wrapper.text()).to.equal(renderedSubcomponents)
     })
 

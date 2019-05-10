@@ -1,7 +1,6 @@
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
 import sinon from 'sinon'
-chai.use(sinonChai)
 
 import React from 'react'
 import { shallow } from 'enzyme'
@@ -9,6 +8,7 @@ import { Div } from 'Page/Elements'
 import MainLayout from 'layouts/MainLayout/MainLayout'
 import Header from 'Header'
 import Footer from 'Footer'
+chai.use(sinonChai)
 
 describe('MainLayout', function() {
   let email
@@ -73,13 +73,13 @@ describe('MainLayout', function() {
 
   it('should call menuLoadBoxPrices when user logs in', function() {
     const wrapper = shallow(
-			<MainLayout
-			  email={email}
-			  isAuthenticated=""
-			  menuLoadBoxPrices={menuLoadBoxPrices}
-			  userFetchShippingAddresses={userFetchShippingAddressesSpy}
-			  userLoadOrders={userLoadOrders}
-			/>)
+      <MainLayout
+        email={email}
+        isAuthenticated=""
+        menuLoadBoxPrices={menuLoadBoxPrices}
+        userFetchShippingAddresses={userFetchShippingAddressesSpy}
+        userLoadOrders={userLoadOrders}
+      />)
     wrapper.setProps({ isAuthenticated: 'loggedin-token' })
 
     expect(menuLoadBoxPrices).to.have.been.calledOnce

@@ -5,9 +5,9 @@ import css from '../Welcome.css'
 import SubHeader from '../SubHeader'
 
 const Welcome = ({ user }) => (
-	<section className={css.container}>
-		<SubHeader nameFirst={user.get('nameFirst')} />
-	</section>
+  <section className={css.container}>
+    <SubHeader nameFirst={user.get('nameFirst')} />
+  </section>
 )
 
 Welcome.propTypes = {

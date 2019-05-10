@@ -42,7 +42,7 @@ describe('OrderSideSwipe', () => {
   describe('rendering', () => {
     let wrapper = shallow(<OrderSideSwipe recipes={recipes} />)
     const wrapperWithMoreRecipes = shallow(
-			<OrderSideSwipe recipes={moreRecipes} />,
+      <OrderSideSwipe recipes={moreRecipes} />,
     )
 
     test('should render a <div>', () => {
@@ -110,7 +110,7 @@ describe('OrderSideSwipe', () => {
 
     test('should render no empty recipes if orderState= confimed of dispatched', () => {
       wrapper = shallow(
-				<OrderSideSwipe recipes={recipes} orderState="dispatched" />,
+        <OrderSideSwipe recipes={recipes} orderState="dispatched" />,
       )
       expect(
         wrapper

@@ -19,10 +19,10 @@ describe('KidsCookFor', function() {
     cookForKidsChange = sinon.spy()
     next = sinon.spy()
     wrapper = shallow(
-			<KidsCookFor
-			  cookForKidsChange={cookForKidsChange}
-			  next={next}
-			/>
+      <KidsCookFor
+        cookForKidsChange={cookForKidsChange}
+        next={next}
+      />
     )
   })
 

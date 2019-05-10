@@ -6,22 +6,22 @@ import config from 'config/routes'
 import css from './JobCard.css'
 
 const JobCard = (props) => (
-	<Link to={props.jobLink} clientRouted={false} target="_blank" noDecoration >
-		<div className={classnames(css.card, props.isOdd ? css.isOdd : css.isEven)}>
-			<div>
-				<div className={css.cardTitle}>
-					<h2 className={css.jobTitle}>{props.jobTitle}</h2>
-					<h2 className={css.jobDepartment}>{props.jobDepartment}</h2>
-				</div>
-				<div className={css.cardCTA}>
-					<div to={props.jobLink} className={css.jobCTA} clientRouted={false} target="_blank" >
-						Read more
-					</div>
-					<span className={css.chevronRight} aria-hidden="true"></span>
-				</div>
-			</div>
-		</div>
-	</Link>
+  <Link to={props.jobLink} clientRouted={false} target="_blank" noDecoration >
+    <div className={classnames(css.card, props.isOdd ? css.isOdd : css.isEven)}>
+      <div>
+        <div className={css.cardTitle}>
+          <h2 className={css.jobTitle}>{props.jobTitle}</h2>
+          <h2 className={css.jobDepartment}>{props.jobDepartment}</h2>
+        </div>
+        <div className={css.cardCTA}>
+          <div to={props.jobLink} className={css.jobCTA} clientRouted={false} target="_blank" >
+            Read more
+          </div>
+          <span className={css.chevronRight} aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+  </Link>
 )
 
 JobCard.propTypes = {

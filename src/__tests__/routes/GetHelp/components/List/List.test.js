@@ -6,10 +6,10 @@ import { List } from 'routes/GetHelp/components/List'
 describe('<List />', () => {
   const ChildComponent = () => (<div>Test child</div>)
   const wrapper = mount(
-		<List>
-			<ChildComponent isHiddenOnMobile={false} />
-			<ChildComponent isHiddenOnMobile />
-		</List>
+    <List>
+      <ChildComponent isHiddenOnMobile={false} />
+      <ChildComponent isHiddenOnMobile />
+    </List>
   )
 
   test('list component renders correctly', () => {

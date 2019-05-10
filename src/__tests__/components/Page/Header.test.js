@@ -19,9 +19,9 @@ describe('Header', () => {
 
     test('should return children', () => {
       wrapper = shallow(
-				<H1>
-					<p>I'm a paragraph</p>
-				</H1>,
+        <H1>
+          <p>I'm a paragraph</p>
+        </H1>,
       )
       expect(wrapper.find('p').length).toEqual(1)
     })
@@ -37,9 +37,9 @@ describe('Header', () => {
     })
     test('should return children', () => {
       wrapper = shallow(
-				<H2>
-					<p>I'm a paragraph</p>
-				</H2>,
+        <H2>
+          <p>I'm a paragraph</p>
+        </H2>,
       )
       expect(wrapper.find('p').length).toEqual(1)
     })
@@ -56,9 +56,9 @@ describe('Header', () => {
 
     test('should return children', () => {
       wrapper = shallow(
-				<H3>
-					<p>I'm a paragraph</p>
-				</H3>,
+        <H3>
+          <p>I'm a paragraph</p>
+        </H3>,
       )
       expect(wrapper.find('p').length).toEqual(1)
     })

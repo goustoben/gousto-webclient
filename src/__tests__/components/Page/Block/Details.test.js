@@ -17,10 +17,10 @@ describe('Page Block Details', () => {
 
     test('should render children', () => {
       wrapper = shallow(
-				<Details>
-					<p />
-					<p />
-				</Details>,
+        <Details>
+          <p />
+          <p />
+        </Details>,
       )
       expect(wrapper.find('p')).toHaveLength(2)
     })

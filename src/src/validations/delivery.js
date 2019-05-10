@@ -23,7 +23,7 @@ const deliveryExtraRules = (formValues, formSectionName = 'delivery') => {
   const values = formValues[formSectionName]
   if (
     typeof values.addressType === 'string' &&
-		values.addressType.toLowerCase() === 'other'
+    values.addressType.toLowerCase() === 'other'
   ) {
     validationRules.customAddressType = {
       rules: [
@@ -36,7 +36,7 @@ const deliveryExtraRules = (formValues, formSectionName = 'delivery') => {
 
   if (
     typeof values.deliveryInstruction === 'string' &&
-		['neighbour', 'other'].includes(values.deliveryInstruction.toLowerCase())
+    ['neighbour', 'other'].includes(values.deliveryInstruction.toLowerCase())
   ) {
     validationRules.deliveryInstructionsCustom = {
       rules: [

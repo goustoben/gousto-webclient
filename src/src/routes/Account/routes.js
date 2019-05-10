@@ -13,12 +13,12 @@ import config from 'config/routes'
 import { checkValidSession } from "../../utils/routes"
 
 export default (store) => (
-	<Route component={Account} onEnter={checkValidSession(store, config.client.login)}>
-		{MyGousto}
-		{MyDeliveries}
-		{Subscription}
-		{MyDetails}
-		{Referral}
-		{RateRecipes}
-	</Route>
+  <Route component={Account} onEnter={checkValidSession(store, config.client.login)}>
+    {MyGousto}
+    {MyDeliveries}
+    {Subscription}
+    {MyDetails}
+    {Referral}
+    {RateRecipes}
+  </Route>
 )

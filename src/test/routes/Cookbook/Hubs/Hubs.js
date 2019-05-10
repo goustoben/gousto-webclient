@@ -20,7 +20,7 @@ describe('Hubs', function () {
 
     beforeEach(() => {
       wrapper = shallow(
-				<Hubs />
+        <Hubs />
       )
     })
 

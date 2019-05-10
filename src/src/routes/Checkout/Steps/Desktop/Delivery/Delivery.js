@@ -17,13 +17,13 @@ const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFi
   const isAddressConfirmed = formValues && formValues[sectionName] && formValues[sectionName].confirmed
 
   return (
-		<div>
-			<DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} />
-			{isAddressConfirmed && <CheckoutButton
-			  onClick={submit}
-			  stepName={`next: ${nextStepName}`}
-			/>}
-		</div>
+    <div>
+      <DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} />
+      {isAddressConfirmed && <CheckoutButton
+        onClick={submit}
+        stepName={`next: ${nextStepName}`}
+      />}
+    </div>
   )
 }
 

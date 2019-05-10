@@ -96,7 +96,7 @@ describe('Form/Calendar', () => {
       ]
       selected = '2017-03-28'
       wrapper = shallow(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
     })
 
@@ -125,7 +125,7 @@ describe('Form/Calendar', () => {
 
     test('should render the correct days in the correct boxes', () => {
       wrapper = mount(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
       expect(
         wrapper
@@ -297,7 +297,7 @@ describe('Form/Calendar', () => {
       ]
       selected = '2017-03-23'
       wrapper = shallow(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
     })
 
@@ -331,7 +331,7 @@ describe('Form/Calendar', () => {
 
     test('should render the correct days in the correct boxes', () => {
       wrapper = mount(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
       expect(
         wrapper
@@ -536,7 +536,7 @@ describe('Form/Calendar', () => {
       ]
       selected = '2017-03-26'
       wrapper = shallow(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
     })
 
@@ -570,7 +570,7 @@ describe('Form/Calendar', () => {
 
     test('should render the correct days in the correct boxes', () => {
       wrapper = mount(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
       expect(
         wrapper
@@ -715,7 +715,7 @@ describe('Form/Calendar', () => {
       ]
       selected = '2016-12-31'
       wrapper = shallow(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
     })
 
@@ -726,7 +726,7 @@ describe('Form/Calendar', () => {
 
     test('should render the correct days in the correct boxes', () => {
       wrapper = mount(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
       expect(
         wrapper
@@ -853,7 +853,7 @@ describe('Form/Calendar', () => {
       ]
       selected = '2017-01-03'
       wrapper = shallow(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
     })
 
@@ -864,7 +864,7 @@ describe('Form/Calendar', () => {
 
     test('should render the correct days in the correct boxes', () => {
       wrapper = mount(
-				<Calendar dates={dates} selected={selected} onClick={onClick} />,
+        <Calendar dates={dates} selected={selected} onClick={onClick} />,
       )
       expect(
         wrapper

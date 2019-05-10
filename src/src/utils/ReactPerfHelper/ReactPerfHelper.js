@@ -39,12 +39,12 @@ class ReactPerfHelper extends React.PureComponent {
 
   render() {
     return (
-			<div className={css.fixed}>
-				<button className={this.state.show ? css.buttonMinus : css.buttonPlus} onClick={() => this.toggleMenu()}></button>
-				{this.state.show ? <button className={css.start} onClick={() => ReactPerfHelper.start()}>start</button> : null}
-				{this.state.show ? <button className={css.stop} onClick={() => ReactPerfHelper.stop()}>stop</button> : null}
-				{this.state.show ? <button className={css.print} onClick={() => ReactPerfHelper.printWasted()}>Print wasted</button> : null}
-			</div>
+      <div className={css.fixed}>
+        <button className={this.state.show ? css.buttonMinus : css.buttonPlus} onClick={() => this.toggleMenu()}></button>
+        {this.state.show ? <button className={css.start} onClick={() => ReactPerfHelper.start()}>start</button> : null}
+        {this.state.show ? <button className={css.stop} onClick={() => ReactPerfHelper.stop()}>stop</button> : null}
+        {this.state.show ? <button className={css.print} onClick={() => ReactPerfHelper.printWasted()}>Print wasted</button> : null}
+      </div>
     )
   }
 }

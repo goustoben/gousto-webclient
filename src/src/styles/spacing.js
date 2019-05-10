@@ -8,9 +8,9 @@ const otherValues = [
 ]
 
 export const availableSizes = [
-  'Zero', 'XXS', 	'XS',
-  'SM', 	'MD', 	'LG',
-  'XL', 	'XXL', 	'XXXL',
+  'Zero', 'XXS', 'XS',
+  'SM', 'MD', 'LG',
+  'XL', 'XXL', 'XXXL',
   ...otherValues,
 ]
 

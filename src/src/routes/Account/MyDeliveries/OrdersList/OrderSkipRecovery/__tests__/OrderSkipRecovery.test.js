@@ -33,27 +33,27 @@ describe('Order Skip Recovery Modal', () => {
 
     beforeAll(() => {
       wrapper = shallow(
-				<OrderSkipRecovery
-				  title="modal title"
-				  orderType="pending"
-				  keepOrder={keepOrder}
-				  cancelPendingOrder={cancelPendingOrder}
-				  cancelProjectedOrder={cancelProjectedOrder}
-				  featureFlag
-				  valueProposition={valueProposition}
-				  callToActions={callToActions}
-				/>
+        <OrderSkipRecovery
+          title="modal title"
+          orderType="pending"
+          keepOrder={keepOrder}
+          cancelPendingOrder={cancelPendingOrder}
+          cancelProjectedOrder={cancelProjectedOrder}
+          featureFlag
+          valueProposition={valueProposition}
+          callToActions={callToActions}
+        />
       )
     })
 
     test('should render snapshot', () => {
       const tree = renderer.create(
-				<OrderSkipRecovery
-				  featureFlag
-				  keepOrder={keepOrder}
-				  cancelPendingOrder={cancelPendingOrder}
-				  cancelProjectedOrder={cancelProjectedOrder}
-				/>
+        <OrderSkipRecovery
+          featureFlag
+          keepOrder={keepOrder}
+          cancelPendingOrder={cancelPendingOrder}
+          cancelProjectedOrder={cancelProjectedOrder}
+        />
       ).toJSON()
 
       expect(tree).toMatchSnapshot()
@@ -103,11 +103,11 @@ describe('Order Skip Recovery Modal', () => {
   describe('Alternative Render', () => {
     test('should only call cancel pending order when order type is pending', () => {
       wrapper = shallow(
-				<OrderSkipRecovery
-				  keepOrder={keepOrder}
-				  cancelPendingOrder={cancelPendingOrder}
-				  cancelProjectedOrder={cancelProjectedOrder}
-				/>
+        <OrderSkipRecovery
+          keepOrder={keepOrder}
+          cancelPendingOrder={cancelPendingOrder}
+          cancelProjectedOrder={cancelProjectedOrder}
+        />
       )
 
       wrapper.instance().skipCancelOrder('13123', '123123', 'pending', cancelPendingOrder, cancelProjectedOrder)
@@ -118,11 +118,11 @@ describe('Order Skip Recovery Modal', () => {
 
     test('should only call cancel projected order when order type is projected', () => {
       wrapper = shallow(
-				<OrderSkipRecovery
-				  keepOrder={keepOrder}
-				  cancelPendingOrder={cancelPendingOrder}
-				  cancelProjectedOrder={cancelProjectedOrder}
-				/>
+        <OrderSkipRecovery
+          keepOrder={keepOrder}
+          cancelPendingOrder={cancelPendingOrder}
+          cancelProjectedOrder={cancelProjectedOrder}
+        />
       )
 
       wrapper.instance().skipCancelOrder('13123', '123123', 'projected', cancelPendingOrder, cancelProjectedOrder)
@@ -134,14 +134,14 @@ describe('Order Skip Recovery Modal', () => {
     test('should call getSkipRecoveryContent with appropriate props', () => {
       const getSkipRecoveryContent = jest.fn()
       wrapper = shallow(
-				<OrderSkipRecovery
-				  orderId="14245"
-				  triggered={false}
-				  orderDate="2018-09-24T13:27:09.487Z"
-				  deliveryDayId="23001"
-				  orderType="pending"
-				  getSkipRecoveryContent={getSkipRecoveryContent}
-				/>
+        <OrderSkipRecovery
+          orderId="14245"
+          triggered={false}
+          orderDate="2018-09-24T13:27:09.487Z"
+          deliveryDayId="23001"
+          orderType="pending"
+          getSkipRecoveryContent={getSkipRecoveryContent}
+        />
       )
 
       const prevProps = wrapper.props()

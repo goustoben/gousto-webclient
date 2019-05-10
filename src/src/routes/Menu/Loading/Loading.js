@@ -19,11 +19,11 @@ const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-dis
 
 const Loading = ({ loading, hasRecommendations }) => (
   (loading) ? (
-		<div className={css.container}>
-				<div className={css.loading}>
-					<LoadingComponent />
-				</div>
-		</div>
+    <div className={css.container}>
+        <div className={css.loading}>
+          <LoadingComponent />
+        </div>
+    </div>
   ) : null
 
 )

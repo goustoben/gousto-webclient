@@ -12,9 +12,9 @@ describe('<Confirmation />', () => {
     confirmationBody: 'body test',
   }
   const wrapper = mount(
-		<Confirmation
-		  content={content}
-		/>
+    <Confirmation
+      content={content}
+    />
   )
   const getHelpLayout = wrapper.find('GetHelpLayout')
   const BottomBar = getHelpLayout.find('BottomBar')

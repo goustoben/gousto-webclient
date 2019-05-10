@@ -18,16 +18,16 @@ const Button = ({ children, onClick, isLastStep, ...buttonProps }) => {
   const buttonText = children || ctaText(isLastStep)
 
   return (
-		<GoustoButton
-		  {...buttonProps}
-		  onClick={() => {
-		    if (typeof onClick === 'function') {
-		      onClick(...arguments)
-		    }
-		  }}
-		>
-			{buttonText}
-		</GoustoButton>
+    <GoustoButton
+      {...buttonProps}
+      onClick={() => {
+        if (typeof onClick === 'function') {
+          onClick(...arguments)
+        }
+      }}
+    >
+      {buttonText}
+    </GoustoButton>
   )
 }
 

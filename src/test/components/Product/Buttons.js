@@ -4,11 +4,11 @@ import React from 'react'
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 import { shallow } from 'enzyme'
 import Buttons from 'Product/Buttons/Buttons'
 import AgeVerification from 'Product/AgeVerification'
 import { Button, Control, Segment } from 'goustouicomponents'
+chai.use(sinonChai)
 
 describe('Product Buttons', function() {
   let wrapper
@@ -139,11 +139,11 @@ describe('Product Buttons', function() {
       const onVerifyAgeSpy = sinon.stub()
 
       wrapper = shallow(
-				<Buttons
-				  productId="123"
-				  ageVerificationRequired
-				  onVerifyAge={onVerifyAgeSpy}
-				/>
+        <Buttons
+          productId="123"
+          ageVerificationRequired
+          onVerifyAge={onVerifyAgeSpy}
+        />
       )
 
       wrapper.instance().handleAgeVerify(true)
@@ -156,11 +156,11 @@ describe('Product Buttons', function() {
       const onVerifyAgeSpy = sinon.stub().throws('Error')
       const clock = sinon.useFakeTimers()
       wrapper = shallow(
-				<Buttons
-				  productId="123"
-				  ageVerificationRequired
-				  onVerifyAge={onVerifyAgeSpy}
-				/>
+        <Buttons
+          productId="123"
+          ageVerificationRequired
+          onVerifyAge={onVerifyAgeSpy}
+        />
       )
       const setStateSpy = sinon.spy(wrapper.instance(), 'setState')
       wrapper.instance().handleAgeVerify(true)

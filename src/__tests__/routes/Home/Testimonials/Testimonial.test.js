@@ -63,7 +63,7 @@ describe('Testimonial rendering props modifiers', () => {
 
   test('should not render the link, when showLink is false', () => {
     wrapper = shallow(
-			<Testimonial testimonial={testimonial} showLink={false} />,
+      <Testimonial testimonial={testimonial} showLink={false} />,
     )
 
     expect(

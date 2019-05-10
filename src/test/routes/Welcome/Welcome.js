@@ -4,32 +4,32 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import Welcome from 'routes/Welcome/Welcome'
 import SubHeader from 'routes/Welcome/SubHeader'
 import ExpectationsCarousel from 'routes/Welcome/ExpectationsCarousel'
 import ProductDetailOverlay from 'routes/Welcome/ProductDetailOverlay'
 import OrderSummary from 'containers/welcome/OrderSummary'
+chai.use(sinonChai)
 
 describe('Welcome Page', function() {
   describe('rendering', function() {
     let wrapper
     beforeEach(function() {
       wrapper = shallow(
-				<Welcome
-				  isAuthenticated
-				  orderId="2"
-				  products={Immutable.Map()}
-				  productsLoadCategories={function() {}}
-				  productsLoadProducts={function() {}}
-				  productsLoadProductsById={function() {}}
-				  productsLoadStock={function() {}}
-				  recipes={Immutable.Map()}
-				  recipesLoadRecipesById={function() {}}
-				  user={Immutable.Map()}
-				  userLoadOrder={function() {}}
-				/>
+        <Welcome
+          isAuthenticated
+          orderId="2"
+          products={Immutable.Map()}
+          productsLoadCategories={function() {}}
+          productsLoadProducts={function() {}}
+          productsLoadProductsById={function() {}}
+          productsLoadStock={function() {}}
+          recipes={Immutable.Map()}
+          recipesLoadRecipesById={function() {}}
+          user={Immutable.Map()}
+          userLoadOrder={function() {}}
+        />
       )
     })
 

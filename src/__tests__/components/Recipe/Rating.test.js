@@ -32,13 +32,13 @@ describe('<Rating />', () => {
   })
   test('should have one child when the count prop is greater than 0 but the view is simple', () => {
     const wrapper = shallow(
-			<Rating count={count} average={average} view="simple" />,
+      <Rating count={count} average={average} view="simple" />,
     )
     expect(wrapper.children().type()).toEqual('span')
   })
   test('should not show the number of reviews when the view is simple', () => {
     const wrapper = shallow(
-			<Rating count={count} average={average} view="simple" />,
+      <Rating count={count} average={average} view="simple" />,
     )
     expect(wrapper.html().indexOf('reviews')).toEqual(-1)
   })

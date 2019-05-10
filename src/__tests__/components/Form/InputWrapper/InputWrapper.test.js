@@ -8,9 +8,9 @@ import InputWrapper from 'Form/InputWrapper'
 describe('InputWrapper', () => {
   let wrapper
   const Component = () => (
-		<div>
-			<p>Child Node</p>
-		</div>
+    <div>
+      <p>Child Node</p>
+    </div>
   )
   const ComponentWrapper = InputWrapper(Component)
 
@@ -40,7 +40,7 @@ describe('InputWrapper', () => {
 
   test('should pass through any props not consumed', () => {
     wrapper = mount(
-			<ComponentWrapper attribute1 attribute2={'something'} mask />,
+      <ComponentWrapper attribute1 attribute2={'something'} mask />,
     )
     expect(wrapper.find(Component).prop('attribute1')).toEqual(true)
     expect(wrapper.find(Component).prop('attribute2')).toEqual('something')
@@ -64,7 +64,7 @@ describe('InputWrapper', () => {
 
     test('should set "label" to childLabel value', () => {
       wrapper = mount(
-				<ComponentWrapper inputType="CheckBox" childLabel="Checkbox Label" />,
+        <ComponentWrapper inputType="CheckBox" childLabel="Checkbox Label" />,
       )
       expect(wrapper.find(Component).prop('label')).toEqual('Checkbox Label')
     })

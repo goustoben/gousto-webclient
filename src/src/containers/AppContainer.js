@@ -12,21 +12,21 @@ import { documentLocation } from 'utils/window'
 import { ApolloProvider } from 'react-apollo'
 
 const AppContainer = ({ history, routes, store }) => (
-	<Provider store={store}>
-		<ApolloProvider client={apolloClient(store)}>
-			<Router
-			  history={history}
-			  render={__CLIENT__ ? applyRouterMiddleware(useScroll(shouldScroll)) : undefined}
-			  onUpdate={(() => {
-			    trackPageChange(store)
-			    hashLinkScroll()
-			    fetchContentOnChange(documentLocation().pathname, store)
-			  })}
-			>
-			{routes}
-			</Router>
-		</ApolloProvider>
-	</Provider>
+  <Provider store={store}>
+    <ApolloProvider client={apolloClient(store)}>
+      <Router
+        history={history}
+        render={__CLIENT__ ? applyRouterMiddleware(useScroll(shouldScroll)) : undefined}
+        onUpdate={(() => {
+          trackPageChange(store)
+          hashLinkScroll()
+          fetchContentOnChange(documentLocation().pathname, store)
+        })}
+      >
+      {routes}
+      </Router>
+    </ApolloProvider>
+  </Provider>
 )
 
 AppContainer.propTypes = {

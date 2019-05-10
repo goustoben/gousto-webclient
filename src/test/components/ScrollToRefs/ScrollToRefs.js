@@ -3,11 +3,11 @@ import React from 'react'
 import sinon from 'sinon'
 import chai, { expect } from 'chai'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 import { shallow } from 'enzyme'
 
 import ScrollToRefs, { scrollToRefsWrapper } from 'ScrollToRefs/ScrollToRefs'
 import * as domHelper from 'utils/DOMhelper'
+chai.use(sinonChai)
 
 const ExampleComponent = () => (<div />)
 
@@ -24,13 +24,13 @@ describe('ScrollToRefs', function() {
 
   beforeEach(function() {
     wrapper = shallow(
-			<ScrollToRefs
-			  Component={ExampleComponent}
-			  firstProp="prop 2"
-			  secondProp="prop 2"
-			>
-				Text
-			</ScrollToRefs>
+      <ScrollToRefs
+        Component={ExampleComponent}
+        firstProp="prop 2"
+        secondProp="prop 2"
+      >
+        Text
+      </ScrollToRefs>
     )
   })
 
@@ -56,7 +56,7 @@ describe('ScrollToRefs', function() {
   describe('componentWillReceiveProps', function() {
     it('should call scrollToFirstMatchingRef once with nextProps.refKeys when scrollToRef prop changes to true', function() {
       const instance = shallow(
-				<ScrollToRefs scrollToRef={false} />
+        <ScrollToRefs scrollToRef={false} />
       ).instance()
       const scrollToFirstMatchingRef = sinon.stub(instance, 'scrollToFirstMatchingRef')
       instance.componentWillReceiveProps({
@@ -69,7 +69,7 @@ describe('ScrollToRefs', function() {
 
     it('should NOT call scrollToFirstMatchingRef when scrollToRef prop was already true', function() {
       const instance = shallow(
-				<ScrollToRefs scrollToRef />
+        <ScrollToRefs scrollToRef />
       ).instance()
       const scrollToFirstMatchingRef = sinon.stub(instance, 'scrollToFirstMatchingRef')
       instance.componentWillReceiveProps({
@@ -81,7 +81,7 @@ describe('ScrollToRefs', function() {
 
     it('should NOT call scrollToFirstMatchingRef when scrollToRef prop is false', function() {
       const instance = shallow(
-				<ScrollToRefs scrollToRef={false} />
+        <ScrollToRefs scrollToRef={false} />
       ).instance()
       const scrollToFirstMatchingRef = sinon.stub(instance, 'scrollToFirstMatchingRef')
       instance.componentWillReceiveProps({
@@ -93,7 +93,7 @@ describe('ScrollToRefs', function() {
 
     it('should NOT call scrollToFirstMatchingRef when there are no refKeys', function() {
       const instance = shallow(
-				<ScrollToRefs scrollToRef={false} />
+        <ScrollToRefs scrollToRef={false} />
       ).instance()
       const scrollToFirstMatchingRef = sinon.stub(instance, 'scrollToFirstMatchingRef')
       instance.componentWillReceiveProps({
@@ -115,7 +115,7 @@ describe('ScrollToRefs', function() {
     beforeEach(function() {
       sandbox = sinon.sandbox.create()
       instance = shallow(
-				<ScrollToRefs />
+        <ScrollToRefs />
       ).instance()
       instance.refs = initialRefs
     })

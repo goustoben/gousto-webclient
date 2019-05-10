@@ -7,11 +7,11 @@ const OrderItemSummary = ({
   recipes,
   numberOfProducts,
 }) => (
-	<div className={css.orderItemSummary}>
-		{recipes.size ? `${recipes.size} recipes` : ''}
-		{recipes.size && numberOfProducts ? ', ' : ''}
-		{numberOfProducts ? `${numberOfProducts} extras` : ''}
-	</div>
+  <div className={css.orderItemSummary}>
+    {recipes.size ? `${recipes.size} recipes` : ''}
+    {recipes.size && numberOfProducts ? ', ' : ''}
+    {numberOfProducts ? `${numberOfProducts} extras` : ''}
+  </div>
 )
 
 OrderItemSummary.propTypes = {

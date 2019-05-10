@@ -15,15 +15,15 @@ const dateToDay = date => (
 const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, className }) => {
   if (date && !disabled) {
     return (
-			<div
-			  className={classnames(selected ? css.currentDay : css.day, className, css.square)}
-			  onClick={() => { if (!disabled) { onClick(date, orderId) } }}
-			>
-				<div className={css.content}>
-					{icon ? <span className={css[`icon-${icon}`]}></span> : null}
-					{dateToDay(date)}
-				</div>
-			</div>
+      <div
+        className={classnames(selected ? css.currentDay : css.day, className, css.square)}
+        onClick={() => { if (!disabled) { onClick(date, orderId) } }}
+      >
+        <div className={css.content}>
+          {icon ? <span className={css[`icon-${icon}`]}></span> : null}
+          {dateToDay(date)}
+        </div>
+      </div>
     )
   }
 

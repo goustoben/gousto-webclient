@@ -30,7 +30,7 @@ describe('ModalPanel', () => {
     const closePortalFromButton = sinon.spy()
 
     wrapper = shallow(
-			<ModalPanel closePortalFromButton={closePortalFromButton} />,
+      <ModalPanel closePortalFromButton={closePortalFromButton} />,
     )
     const closeButtonWrapper = wrapper.find('div > div > div').at(0)
 
@@ -52,9 +52,9 @@ describe('ModalPanel', () => {
 
   test('should render children', () => {
     const children = (
-			<div>
-				<span>Child node</span>
-			</div>
+      <div>
+        <span>Child node</span>
+      </div>
     )
 
     wrapper = shallow(<ModalPanel>{children}</ModalPanel>)

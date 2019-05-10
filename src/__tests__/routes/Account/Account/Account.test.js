@@ -25,7 +25,7 @@ describe('Account', () => {
     userRecipeRatings = sinon.stub().returns()
     location = { pathname: '/my-details' }
     wrapper = shallow(
-			<AccountComponent location={location}>{children}</AccountComponent>,
+      <AccountComponent location={location}>{children}</AccountComponent>,
     )
 
     store = {
@@ -47,21 +47,21 @@ describe('Account', () => {
   describe('rendering', () => {
     test('should render a <div>', () => {
       wrapper = shallow(
-				<AccountComponent location={location}>{children}</AccountComponent>,
+        <AccountComponent location={location}>{children}</AccountComponent>,
       )
       expect(wrapper.type()).toEqual('div')
     })
 
     test('should render 1 <NavBar> component(s)', () => {
       wrapper = shallow(
-				<AccountComponent location={location}>{children}</AccountComponent>,
+        <AccountComponent location={location}>{children}</AccountComponent>,
       )
       expect(wrapper.find(NavBar).length).toEqual(1)
     })
 
     test('should render 1 <Banner> component(s)', () => {
       wrapper = shallow(
-				<AccountComponent location={location}>{children}</AccountComponent>,
+        <AccountComponent location={location}>{children}</AccountComponent>,
       )
       expect(wrapper.find(Banner).length).toEqual(1)
     })
@@ -69,7 +69,7 @@ describe('Account', () => {
     test('should not render <Banner> component(s) for my Gousto', () => {
       location = { pathname: '/my-gousto' }
       wrapper = shallow(
-				<AccountComponent location={location}>{children}</AccountComponent>,
+        <AccountComponent location={location}>{children}</AccountComponent>,
       )
       expect(wrapper.find(Banner).length).toEqual(0)
     })
@@ -77,7 +77,7 @@ describe('Account', () => {
     test('should render <Banner> component(s) for the new mydeliveries page', () => {
       location = { pathname: '/mydeliveries' }
       wrapper = shallow(
-				<AccountComponent location={location}>{children}</AccountComponent>,
+        <AccountComponent location={location}>{children}</AccountComponent>,
       )
       expect(wrapper.find(Banner).length).toEqual(1)
     })

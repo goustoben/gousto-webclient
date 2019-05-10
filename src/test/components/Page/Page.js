@@ -4,10 +4,10 @@ import { shallow } from 'enzyme'
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import SectionHeader from 'SectionHeader'
 import { PageHeader, PageContent } from 'Page'
+chai.use(sinonChai)
 
 describe('Page', () => {
   let wrapper
@@ -15,11 +15,11 @@ describe('Page', () => {
   describe('PageHeader rendering', function() {
     beforeEach(function() {
       wrapper = shallow(
-				<PageHeader
-				  a={1}
-				  b="2"
-				  type="something"
-				/>
+        <PageHeader
+          a={1}
+          b="2"
+          type="something"
+        />
       )
     })
 
@@ -40,13 +40,13 @@ describe('Page', () => {
   describe('PageContent rendering', function() {
     beforeEach(function() {
       wrapper = shallow(
-				<PageContent
-				  disabled
-				  data-tracking={1}
-				  aria-something="2"
-				  b
-				  type="something"
-				/>
+        <PageContent
+          disabled
+          data-tracking={1}
+          aria-something="2"
+          b
+          type="something"
+        />
       )
     })
 

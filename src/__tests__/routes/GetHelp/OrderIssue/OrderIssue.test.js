@@ -20,7 +20,7 @@ describe('<OrderIssue />', () => {
   describe('rendering', () => {
     beforeEach(() => {
       wrapper = mount(
-				<OrderIssue content={content} />
+        <OrderIssue content={content} />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
     })

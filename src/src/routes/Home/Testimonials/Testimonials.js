@@ -10,18 +10,18 @@ import CTAHomepage from '../CTA'
 
 const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, ...props }) => (
 
-	<div className={css.testimonials}>
-		<ModuleHeader>Over 1 million meals delivered</ModuleHeader>
-		<h3 className={css.subHeader}>And the reviews are pouring in:</h3>
-		<TestimonialCarousel showLink={showLink} />
-		{enableStorystream &&
-			<section className={css.storystreamContainer}>
-				<Storystream {...props} />
-			</section>
-		}
+  <div className={css.testimonials}>
+    <ModuleHeader>Over 1 million meals delivered</ModuleHeader>
+    <h3 className={css.subHeader}>And the reviews are pouring in:</h3>
+    <TestimonialCarousel showLink={showLink} />
+    {enableStorystream &&
+      <section className={css.storystreamContainer}>
+        <Storystream {...props} />
+      </section>
+    }
 
-		<CTAHomepage width={240} onClick={() => { redirect(ctaUri) }}>{ctaText}</CTAHomepage>
-	</div>
+    <CTAHomepage width={240} onClick={() => { redirect(ctaUri) }}>{ctaText}</CTAHomepage>
+  </div>
 )
 
 Testimonials.propTypes = {

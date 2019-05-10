@@ -15,9 +15,9 @@ describe('ModalComponent', () => {
 
   test('should render children', () => {
     wrapper = shallow(
-			<ModalComponent>
-				<p>Child</p>
-			</ModalComponent>,
+      <ModalComponent>
+        <p>Child</p>
+      </ModalComponent>,
     )
     // first childredn is the div rendered by the ModalComponent
     const firstChildWrapper = wrapper.children().children()

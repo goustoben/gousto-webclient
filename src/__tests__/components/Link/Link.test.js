@@ -30,10 +30,10 @@ describe('Link', () => {
 
   test("should render an <a> element if there's a router in it's context but clientRouted=false", () => {
     const wrapper = shallow(
-			<Link to="/page" clientRouted={false}>
-				Page
-			</Link>,
-			{ context: { router } },
+      <Link to="/page" clientRouted={false}>
+        Page
+      </Link>,
+      { context: { router } },
     )
     expect(wrapper.type()).toEqual('a')
   })

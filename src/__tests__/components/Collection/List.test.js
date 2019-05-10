@@ -60,7 +60,7 @@ describe('Collection List', () => {
   describe('props', () => {
     test('should pass colSizes to nested Col', () => {
       const wrapper = shallow(
-				<List collections={collections} colSizes={{ xs: '12', md: '4' }} />,
+        <List collections={collections} colSizes={{ xs: '12', md: '4' }} />,
       )
       wrapper.children(Col).forEach(function(col) {
         expect(col.prop('col-xs-12')).toBe(true)
@@ -90,7 +90,7 @@ describe('Collection List', () => {
 
     test('should pass correct media to Item', () => {
       const wrapper = shallow(
-				<List collections={collections} colsize1 colsize2 />,
+        <List collections={collections} colsize1 colsize2 />,
       )
 
       expect(
@@ -124,7 +124,7 @@ describe('Collection List', () => {
 
     test('should pass correct title to Item', () => {
       const wrapper = shallow(
-				<List collections={collections} colsize1 colsize2 />,
+        <List collections={collections} colsize1 colsize2 />,
       )
 
       expect(

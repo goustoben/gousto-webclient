@@ -4,9 +4,9 @@ import Overlay from 'Overlay'
 import DuplicateOrderModal from './DuplicateOrderModalContainer'
 
 const DuplicateOrderModalWrapper = ({ visible }) => (
-	<Overlay open={visible} from="top">
-		<DuplicateOrderModal />
-	</Overlay>
+  <Overlay open={visible} from="top">
+    <DuplicateOrderModal />
+  </Overlay>
 )
 
 DuplicateOrderModalWrapper.propTypes = {

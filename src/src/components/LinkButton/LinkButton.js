@@ -5,20 +5,20 @@ import Link from 'Link'
 import css from './LinkButton.css'
 
 const LinkButton = ({ children, clientRouted, color, disabled, fill, to, width }) => (
-	<Button fill={fill}>
-		<Segment
-		  className={css.segment}
-		  color={color}
-		  disabled={disabled}
-		  fill={fill}
-		  width={width}
-		  onClick={() => {}}
-		>
-			<Link to={to} noDecoration clientRouted={clientRouted}>
-				{children}
-			</Link>
-		</Segment>
-	</Button>
+  <Button fill={fill}>
+    <Segment
+      className={css.segment}
+      color={color}
+      disabled={disabled}
+      fill={fill}
+      width={width}
+      onClick={() => {}}
+    >
+      <Link to={to} noDecoration clientRouted={clientRouted}>
+        {children}
+      </Link>
+    </Segment>
+  </Button>
 )
 
 LinkButton.propTypes = {

@@ -24,21 +24,21 @@ describe('ErrorPage', () => {
 
   test('should change its contents depending on the status prop', () => {
     const wrapper = shallow(
-			<ErrorPage status="500" store={mockStore({ serverError: '500' })} />,
+      <ErrorPage status="500" store={mockStore({ serverError: '500' })} />,
     )
     expect(
       wrapper.html().indexOf('That wasn&#x27;t meant to happen'),
     ).not.toEqual(-1)
 
     const wrapper2 = shallow(
-			<ErrorPage status="403" store={mockStore({ serverError: '403' })} />,
+      <ErrorPage status="403" store={mockStore({ serverError: '403' })} />,
     )
     expect(wrapper2.html().indexOf('Something&#x27;s Fishy')).not.toEqual(-1)
   })
 
   test("should default to 404 when custom content status doesn't exist for that error code", () => {
     const wrapper = shallow(
-			<ErrorPage status="418" store={mockStore({ serverError: '418' })} />,
+      <ErrorPage status="418" store={mockStore({ serverError: '418' })} />,
     )
     expect(
       wrapper

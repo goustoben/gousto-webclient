@@ -43,13 +43,13 @@ describe('Summary', () => {
 
   test('should render 1 <Link> component(s) if box details step and desktop', () => {
     wrapper = shallow(
-			<Summary
-			  routing={{
-			    locationBeforeTransitions: {
-			      pathname: 'check-out/boxdetails',
-			    },
-			  }}
-			/>,
+      <Summary
+        routing={{
+          locationBeforeTransitions: {
+            pathname: 'check-out/boxdetails',
+          },
+        }}
+      />,
     )
     expect(wrapper.find(Link).length).toBe(1)
   })
@@ -61,27 +61,27 @@ describe('Summary', () => {
 
   test('should NOT render <Link> component(s) if box details step and mobile', () => {
     wrapper = shallow(
-			<Summary
-			  routing={{
-			    locationBeforeTransitions: {
-			      pathname: 'check-out/boxdetails',
-			    },
-			  }}
-			  browser="mobile"
-			/>,
+      <Summary
+        routing={{
+          locationBeforeTransitions: {
+            pathname: 'check-out/boxdetails',
+          },
+        }}
+        browser="mobile"
+      />,
     )
     expect(wrapper.find(Link).length).toBe(0)
   })
 
   test('should NOT render <Link> component(s) if payment step', () => {
     wrapper = shallow(
-			<Summary
-			  routing={{
-			    locationBeforeTransitions: {
-			      pathname: 'check-out/payment',
-			    },
-			  }}
-			/>,
+      <Summary
+        routing={{
+          locationBeforeTransitions: {
+            pathname: 'check-out/payment',
+          },
+        }}
+      />,
     )
     expect(wrapper.find(Link).length).toBe(0)
   })

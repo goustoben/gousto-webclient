@@ -13,9 +13,9 @@ const Chef = ({ chef }) => {
     const imageUrls = image ? image.get('urls') : null
 
     return (
-			<div className={css.chef}>
-				{imageUrls && <img src={getMenuRecipeImage(imageUrls, 70)} alt={image.get('title')} />}
-			</div>
+      <div className={css.chef}>
+        {imageUrls && <img src={getMenuRecipeImage(imageUrls, 70)} alt={image.get('title')} />}
+      </div>
     )
   }
 

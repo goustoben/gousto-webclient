@@ -5,7 +5,7 @@ import configRoutes from 'config/routes'
 import FullPage from 'layouts/FullPage'
 
 export default (
-	<Route component={FullPage} footerType="large">
-		<Route path={configRoutes.client.unsubscribe} component={UnsubscribeContainer} />
-	</Route>
+  <Route component={FullPage} footerType="large">
+    <Route path={configRoutes.client.unsubscribe} component={UnsubscribeContainer} />
+  </Route>
 )

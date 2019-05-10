@@ -9,21 +9,21 @@ import Unsubscribe from 'routes/Unsubscribe/Unsubscribe'
 describe('<Unsubscribe />', () => {
   test('<Confirm /> is rendering correctly', () => {
     const wrapper = shallow(
-			<Unsubscribe
-			  error={''}
-			  pending={false}
-			  isUserUnsubscribed={false}
-			  copy={{
-			    confirmHeader: '',
-			    unsubscribedHeader: '',
-			    defaultError: '',
-			    body1: '',
-			    body2: '',
-			    link: '',
-			    button: '',
-			  }}
-			  userUnsubscribeAction={() => {}}
-			/>
+      <Unsubscribe
+        error={''}
+        pending={false}
+        isUserUnsubscribed={false}
+        copy={{
+          confirmHeader: '',
+          unsubscribedHeader: '',
+          defaultError: '',
+          body1: '',
+          body2: '',
+          link: '',
+          button: '',
+        }}
+        userUnsubscribeAction={() => {}}
+      />
     )
 
     expect(wrapper.find(Confirm).length).toBe(1)
@@ -32,21 +32,21 @@ describe('<Unsubscribe />', () => {
 
   test('<Unsubscribed /> is being redered instead of <Confirm />', () => {
     const wrapper = shallow(
-			<Unsubscribe
-			  error={''}
-			  pending={false}
-			  isUserUnsubscribed
-			  copy={{
-			    confirmHeader: '',
-			    unsubscribedHeader: '',
-			    defaultError: '',
-			    body1: '',
-			    body2: '',
-			    link: '',
-			    button: '',
-			  }}
-			  userUnsubscribeAction={() => {}}
-			/>
+      <Unsubscribe
+        error={''}
+        pending={false}
+        isUserUnsubscribed
+        copy={{
+          confirmHeader: '',
+          unsubscribedHeader: '',
+          defaultError: '',
+          body1: '',
+          body2: '',
+          link: '',
+          button: '',
+        }}
+        userUnsubscribeAction={() => {}}
+      />
     )
 
     expect(wrapper.find(Unsubscribed).length).toBe(1)

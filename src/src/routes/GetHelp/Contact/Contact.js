@@ -30,36 +30,36 @@ const Contact = ({
   },
   selectContactChannel
 }) => (
-	<GetHelpLayout title={title} body={body}>
-		<List>
-			<Item
-			  label={chatItem}
-			  trackClick={trackClick(selectContactChannel, 'chat')}
-			  isHiddenOnMobile
-			  onClick={openLiveChat}
-			/>
-			<ItemLink
-			  label={emailItem}
-			  trackClick={trackClick(selectContactChannel, 'email')}
-			  to={zendesk.link}
-			  clientRouted={false}
-			/>
-			<ItemExpandable
-			  label={phoneItem}
-			  trackClick={trackClick(selectContactChannel, 'phone')}
-			>
-				<PhoneContent />
-			</ItemExpandable>
-		</List>
-		<BottomBar>
-			<BottomButton color="secondary" url={client.getHelp.index} clientRouted>
-				{button1Copy}
-			</BottomButton>
-			<BottomButton color="primary" url={client.myGousto} clientRouted={false}>
-				{button2Copy}
-			</BottomButton>
-		</BottomBar>
-	</GetHelpLayout>
+  <GetHelpLayout title={title} body={body}>
+    <List>
+      <Item
+        label={chatItem}
+        trackClick={trackClick(selectContactChannel, 'chat')}
+        isHiddenOnMobile
+        onClick={openLiveChat}
+      />
+      <ItemLink
+        label={emailItem}
+        trackClick={trackClick(selectContactChannel, 'email')}
+        to={zendesk.link}
+        clientRouted={false}
+      />
+      <ItemExpandable
+        label={phoneItem}
+        trackClick={trackClick(selectContactChannel, 'phone')}
+      >
+        <PhoneContent />
+      </ItemExpandable>
+    </List>
+    <BottomBar>
+      <BottomButton color="secondary" url={client.getHelp.index} clientRouted>
+        {button1Copy}
+      </BottomButton>
+      <BottomButton color="primary" url={client.myGousto} clientRouted={false}>
+        {button2Copy}
+      </BottomButton>
+    </BottomBar>
+  </GetHelpLayout>
 )
 
 Contact.propTypes = {

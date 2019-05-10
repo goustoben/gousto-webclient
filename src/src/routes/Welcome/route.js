@@ -7,15 +7,15 @@ import WelcomeStorytelling from './VariationStorytelling'
 import { checkValidSession } from "../../utils/routes"
 
 export default (store) => (
-	<Route>
-		<Route path="welcome-to-gousto/" onEnter={checkValidSession(store, '/')}>
-			<Route path=":orderId" component={WelcomeContainer} />
-			<Route path="why-gousto/:orderId" component={WelcomeContainer} />
-			<Route path="what-happens-next/:orderId" component={WelcomeImmediate} />
-			<Route path="flexible-subscription/:orderId" component={WelcomeSubscription} />
-			<Route path="our-story/:orderId" component={WelcomeStorytelling} />
-			<Redirect from="welcome-to-gousto-2/*" to="welcome-to-gousto/*" />
-		</Route>
-		<Redirect from="welcome-to-gousto-2/*" to="welcome-to-gousto/*" />
-	</Route>
+  <Route>
+    <Route path="welcome-to-gousto/" onEnter={checkValidSession(store, '/')}>
+      <Route path=":orderId" component={WelcomeContainer} />
+      <Route path="why-gousto/:orderId" component={WelcomeContainer} />
+      <Route path="what-happens-next/:orderId" component={WelcomeImmediate} />
+      <Route path="flexible-subscription/:orderId" component={WelcomeSubscription} />
+      <Route path="our-story/:orderId" component={WelcomeStorytelling} />
+      <Redirect from="welcome-to-gousto-2/*" to="welcome-to-gousto/*" />
+    </Route>
+    <Redirect from="welcome-to-gousto-2/*" to="welcome-to-gousto/*" />
+  </Route>
 )

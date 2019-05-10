@@ -3,9 +3,9 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 
 const defaultFeatures = () => ({
   /*
-	* TODO: remove default features
-	* once something becomes default behavior, we should update the code rather than continue to drive it by feature flags
-	*/
+  * TODO: remove default features
+  * once something becomes default behavior, we should update the code rather than continue to drive it by feature flags
+  */
   collections: {
     experiment: false,
     value: true,

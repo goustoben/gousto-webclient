@@ -12,36 +12,36 @@ import css from './Item.css'
 
 const CollectionItem = ({ link, media, title }) => {
   const CollectionContent = (
-		<Block>
-			<Image
-			  alt={title}
-			  maxMediaSize={400}
-			  media={media}
-			/>
-			<Details style="singleLineTitle">
-				<div className={css.title}>
-					<H2 headlineFont>
-						{title}
-					</H2>
-				</div>
-				<Icon
-				  className={css.icon}
-				  name="fa-angle-right"
-				/>
-			</Details>
-		</Block>
+    <Block>
+      <Image
+        alt={title}
+        maxMediaSize={400}
+        media={media}
+      />
+      <Details style="singleLineTitle">
+        <div className={css.title}>
+          <H2 headlineFont>
+            {title}
+          </H2>
+        </div>
+        <Icon
+          className={css.icon}
+          name="fa-angle-right"
+        />
+      </Details>
+    </Block>
   )
 
   return link ?
-		<Link
-		  noDecoration
-		  to={link}
-		>
-			{CollectionContent}
-		</Link> :
-		<Div>
-			{CollectionContent}
-		</Div>
+    <Link
+      noDecoration
+      to={link}
+    >
+      {CollectionContent}
+    </Link> :
+    <Div>
+      {CollectionContent}
+    </Div>
 }
 
 CollectionItem.propTypes = {

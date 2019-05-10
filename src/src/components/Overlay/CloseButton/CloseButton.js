@@ -3,7 +3,7 @@ import React from 'react'
 import css from './CloseButton.css'
 
 const CloseButton = ({ onClose }) => (
-	<span className={css.closeIcon} onClick={onClose}></span>
+  <span className={css.closeIcon} onClick={onClose}></span>
 )
 
 CloseButton.propTypes = {

@@ -5,21 +5,21 @@ import Icon from 'Icon'
 import Link from 'Link'
 
 const LoadMoreButton = ({ children, onClick, ...restProps }) => (
-	<Div text-center {...restProps}>
-		<Link
-		  onClick={onClick}
-		>
-			<Span
-			  textLinkLG
-			  textBold
-			>
-				<Div style={{ lineHeight: 1 }}>
-					{children}
-				</Div>
-				<Icon name="fa-angle-down" />
-			</Span>
-		</Link>
-	</Div>
+  <Div text-center {...restProps}>
+    <Link
+      onClick={onClick}
+    >
+      <Span
+        textLinkLG
+        textBold
+      >
+        <Div style={{ lineHeight: 1 }}>
+          {children}
+        </Div>
+        <Icon name="fa-angle-down" />
+      </Span>
+    </Link>
+  </Div>
 )
 
 LoadMoreButton.defaultProps = {

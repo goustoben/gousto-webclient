@@ -7,8 +7,8 @@ import MainLayout from 'layouts/MainLayout'
 import routeConfig from 'config/routes'
 
 export default (
-	<Route path={routeConfig.client.cookbook} component={MainLayout} footerType="large">
-		<IndexRoute component={Hubs} />
-		<Route path=":collectionSlug" component={Hub} />
-	</Route>
+  <Route path={routeConfig.client.cookbook} component={MainLayout} footerType="large">
+    <IndexRoute component={Hubs} />
+    <Route path=":collectionSlug" component={Hub} />
+  </Route>
 )

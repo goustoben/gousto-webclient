@@ -17,57 +17,57 @@ describe('OrderSummary', () => {
     showProductDetail = function() {}
 
     wrapper = shallow(
-			<OrderSummary
-			  recipes={Immutable.fromJS({
-			    r1: {},
-			  })}
-			  products={Immutable.fromJS({
-			    p1: { isVatable: true, title: 'p1 title', listPrice: '2.00' },
-			    p2: {},
-			  })}
-			  recipeItems={Immutable.fromJS({
-			    r1: 2,
-			    r2: 2,
-			  })}
-			  productItems={Immutable.fromJS({
-			    p1: 3,
-			  })}
-			  giftItems={Immutable.fromJS({
-			    gp1: 1,
-			  })}
-			  numPortions={2}
-			  numRecipes={3}
-			  prices={Immutable.fromJS({
-			    pricePerPortion: '1.01',
-			    pricePerPortionDiscounted: '1.00',
-			    recipeTotalDiscounted: '6.00',
-			    recipeTotal: '24.99',
-			    deliveryTotal: '1.99',
-			    productTotal: '6.00',
-			    surchargeTotal: '4.99',
-			    total: '29.99',
-			    recipeDiscount: '14.99',
-			    percentageOff: '50',
-			  })}
-			  shippingAddress={Immutable.fromJS({
-			    line1: '1 Example Street',
-			    line2: 'Zone 2',
-			    line3: 'Neverland',
-			    town: 'London',
-			    postcode: 'F4 K3',
-			  })}
-			  deliveryDate="2016-05-06"
-			  deliverySlot={Immutable.fromJS({
-			    deliveryStart: '09:00:00',
-			    deliveryEnd: '16:59:59',
-			  })}
-			  removeProduct={removeProduct}
-			  showProductDetail={showProductDetail}
-			  onSave={() => 1}
-			  saving
-			  saveError={false}
-			  orderSummaryCollapsed
-			/>,
+      <OrderSummary
+        recipes={Immutable.fromJS({
+          r1: {},
+        })}
+        products={Immutable.fromJS({
+          p1: { isVatable: true, title: 'p1 title', listPrice: '2.00' },
+          p2: {},
+        })}
+        recipeItems={Immutable.fromJS({
+          r1: 2,
+          r2: 2,
+        })}
+        productItems={Immutable.fromJS({
+          p1: 3,
+        })}
+        giftItems={Immutable.fromJS({
+          gp1: 1,
+        })}
+        numPortions={2}
+        numRecipes={3}
+        prices={Immutable.fromJS({
+          pricePerPortion: '1.01',
+          pricePerPortionDiscounted: '1.00',
+          recipeTotalDiscounted: '6.00',
+          recipeTotal: '24.99',
+          deliveryTotal: '1.99',
+          productTotal: '6.00',
+          surchargeTotal: '4.99',
+          total: '29.99',
+          recipeDiscount: '14.99',
+          percentageOff: '50',
+        })}
+        shippingAddress={Immutable.fromJS({
+          line1: '1 Example Street',
+          line2: 'Zone 2',
+          line3: 'Neverland',
+          town: 'London',
+          postcode: 'F4 K3',
+        })}
+        deliveryDate="2016-05-06"
+        deliverySlot={Immutable.fromJS({
+          deliveryStart: '09:00:00',
+          deliveryEnd: '16:59:59',
+        })}
+        removeProduct={removeProduct}
+        showProductDetail={showProductDetail}
+        onSave={() => 1}
+        saving
+        saveError={false}
+        orderSummaryCollapsed
+      />,
     )
   })
 
@@ -234,15 +234,15 @@ describe('OrderSummary SectionHeader', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-			<OrderSummary
-			  deliveryDate="2016-05-06"
-			  numPortions={2}
-			  numRecipes={2}
-			  products={{}}
-			  recipes={{}}
-			  deliveryTotalPrice={'2.50'}
-			  onSave={function() {}}
-			/>,
+      <OrderSummary
+        deliveryDate="2016-05-06"
+        numPortions={2}
+        numRecipes={2}
+        products={{}}
+        recipes={{}}
+        deliveryTotalPrice={'2.50'}
+        onSave={function() {}}
+      />,
     )
 
     header = wrapper.find(SectionHeader)
@@ -276,16 +276,16 @@ describe('OrderSummary footer', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-			<OrderSummary
-			  deliveryDate="2016-05-06"
-			  numPortions={2}
-			  numRecipes={2}
-			  products={{}}
-			  recipes={{}}
-			  deliveryTotalPrice={'2.50'}
-			  onSave={function() {}}
-			  orderSummaryCollapsed
-			/>,
+      <OrderSummary
+        deliveryDate="2016-05-06"
+        numPortions={2}
+        numRecipes={2}
+        products={{}}
+        recipes={{}}
+        deliveryTotalPrice={'2.50'}
+        onSave={function() {}}
+        orderSummaryCollapsed
+      />,
     )
   })
 

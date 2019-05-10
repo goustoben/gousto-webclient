@@ -6,13 +6,13 @@ import Link from 'Link'
 import { Item } from 'goustouicomponents'
 
 const ItemLink = ({ label, trackClick, isHiddenOnMobile, to, clientRouted }) => (
-	<Link to={to} clientRouted={clientRouted}>
-		<Item
-		  label={label}
-		  trackClick={trackClick}
-		  isHiddenOnMobile={isHiddenOnMobile}
-		/>
-	</Link>
+  <Link to={to} clientRouted={clientRouted}>
+    <Item
+      label={label}
+      trackClick={trackClick}
+      isHiddenOnMobile={isHiddenOnMobile}
+    />
+  </Link>
 )
 
 ItemLink.propTypes = {
