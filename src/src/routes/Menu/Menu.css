@@ -71,6 +71,11 @@
 	}
 }
 
+.masonryContainerMenu {
+	composes: masonryContainer;
+	padding-top: 40px;
+}
+
 .legal {
 	composes: textXS textCenter from 'styles/typography.css';
 	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
