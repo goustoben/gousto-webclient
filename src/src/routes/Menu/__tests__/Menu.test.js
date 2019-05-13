@@ -43,11 +43,21 @@ jest.mock('routes/Menu/fetchData', () => (
 ))
 
 describe('Menu', () => {
+  let productsLoadStock
+  let productsLoadProducts
+
+  beforeEach(() => {
+    productsLoadStock = jest.fn()
+    productsLoadProducts = jest.fn()
+  })
+
   describe('rendering', () => {
     let wrapper
     beforeEach(() => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -91,6 +101,8 @@ describe('Menu', () => {
       test('should render JFY tutorial if feature flag is set to true', () => {
         wrapper = shallow(
           <Menu
+            productsLoadProducts={() => {}}
+            productsLoadStock={() => {}}
             menuLoadBoxPrices={() => {}}
             menuCollectionRecipes={Immutable.Map({})}
             features={Immutable.Map({})}
@@ -111,6 +123,8 @@ describe('Menu', () => {
     test('with the isLoading prop set to true it should show a Loading', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
@@ -126,6 +140,8 @@ describe('Menu', () => {
     test('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           numPortions={2}
           menuCollectionRecipes={Immutable.Map({})}
@@ -144,6 +160,8 @@ describe('Menu', () => {
     test('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           stock={Immutable.Map()}
           menuCollectionRecipes={Immutable.Map({})}
@@ -191,6 +209,8 @@ describe('Menu', () => {
         })
         wrapper = shallow(
           <Menu
+            productsLoadProducts={() => {}}
+            productsLoadStock={() => {}}
             menuLoadBoxPrices={() => {}}
             menuCollectionRecipes={Immutable.Map({})}
             clearAllFilters={() => {}}
@@ -215,6 +235,8 @@ describe('Menu', () => {
         beforeEach(() => {
           wrapper = shallow(
             <Menu
+              productsLoadProducts={() => {}}
+              productsLoadStock={() => {}}
               menuLoadBoxPrices={() => {}}
               menuCollectionRecipes={Immutable.Map({})}
               clearAllFilters={() => {}}
@@ -258,6 +280,8 @@ describe('Menu', () => {
     test('should render fadeOut', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -274,6 +298,8 @@ describe('Menu', () => {
     test('should render willFade', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -294,6 +320,8 @@ describe('Menu', () => {
     test('should show a collections nav', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           clearAllFilters={() => {}}
@@ -313,6 +341,8 @@ describe('Menu', () => {
     test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           clearAllFilters={() => {}}
@@ -340,6 +370,7 @@ describe('Menu', () => {
     let menuLoadBoxPrices
     let getStateSpy
     let basketNumPortionChangeSpy
+    let mountOptions
     let wrapper
 
     beforeEach(() => {
@@ -350,6 +381,14 @@ describe('Menu', () => {
           })
         })
       })
+      mountOptions = {
+        context: {
+          store: {
+            getState: getStateSpy,
+            subscribe: () => {},
+          },
+        },
+      }
       menuLoadBoxPrices = jest.fn()
       menuLoadDays = jest.fn().mockReturnValue(
         new Promise(resolve => {
@@ -370,9 +409,11 @@ describe('Menu', () => {
       basketNumPortionChangeSpy = jest.fn()
     })
 
-    test('should load Box Prices for non admin users', () => {
-      wrapper = mount(
+    test('should load Box Prices for non admin users', async () => {
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -397,9 +438,11 @@ describe('Menu', () => {
       expect(menuLoadBoxPrices).toHaveBeenCalledTimes(1)
     })
 
-    test('should not load Box Prices for admin users', () => {
-      wrapper = mount(
+    test('should not load Box Prices for admin users', async () => {
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -424,9 +467,11 @@ describe('Menu', () => {
       expect(menuLoadBoxPrices).not.toHaveBeenCalled()
     })
 
-    test('should call fetchData', () => {
-      wrapper = mount(
+    test('should call fetchData', async () => {
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -451,11 +496,13 @@ describe('Menu', () => {
       expect(fetchData).toHaveBeenCalled()
     })
 
-    test('should call basketNumPortionChange if num portions query parameter is given', () => {
+    test('should call basketNumPortionChange if num portions query parameter is given', async () => {
       const basketNumPortionChange = jest.fn()
 
-      wrapper = mount(
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -483,11 +530,13 @@ describe('Menu', () => {
       expect(basketNumPortionChange).toHaveBeenCalledWith(4)
     })
 
-    test('should call shouldJfyTutorialBeVisible', () => {
+    test('should call shouldJfyTutorialBeVisible', async () => {
       const shouldJfyTutorialBeVisible = jest.fn()
 
-      wrapper = mount(
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
@@ -516,11 +565,64 @@ describe('Menu', () => {
       expect(shouldJfyTutorialBeVisible).toHaveBeenCalled()
     })
 
+    describe('productsLoadStock and productsLoadProducts actions', () => {
+      let menuProps
+
+      beforeAll(() => {
+        menuProps = {
+          shouldJfyTutorialBeVisible: () => {},
+          menuRecipeDetailShow: false,
+          boxSummaryDeliveryDays: Immutable.List([]),
+          menuCollectionRecipes: Immutable.Map({}),
+          features: Immutable.Map({}),
+          menuLoadDays,
+          boxSummaryDeliveryDaysLoad,
+          menuLoadBoxPrices,
+          disabled: true,
+          filteredRecipesNumber: 30,
+          clearAllFilters: () => {},
+          params: {},
+          basketNumPortionChange: () => {},
+          query: { num_portions: '4' },
+        }
+      })
+
+      test('are called when cutOffDate is present', async () => {
+        wrapper = await mount(
+          <Menu
+            { ...menuProps }
+            cutOffDate="2019-05-14 12:00:00"
+            productsLoadStock={productsLoadStock}
+            productsLoadProducts={productsLoadProducts}
+          />,
+          mountOptions
+        )
+
+        expect(productsLoadStock).toHaveBeenCalled()
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-05-14 12:00:00')
+      })
+
+      test('are not called when cutOffDate is not present', async () => {
+        wrapper = await mount(
+          <Menu
+            { ...menuProps }
+            cutOffDate=""
+            productsLoadProducts={productsLoadProducts}
+            productsLoadStock={productsLoadStock}
+          />,
+          mountOptions
+        )
+
+        expect(productsLoadStock).not.toHaveBeenCalled()
+        expect(productsLoadProducts).not.toHaveBeenCalled()
+      })
+    })
+
     describe('events', () => {
       let map
       let orderUpdateProducts
 
-      beforeEach(() => {
+      beforeEach(async () => {
         map = {}
         const orderHasAnyProducts = jest.fn(() => {
           return () => {}
@@ -537,8 +639,10 @@ describe('Menu', () => {
           map[event] = undefined
         })
 
-        wrapper = mount(
+        wrapper = await mount(
           <Menu
+            productsLoadProducts={() => {}}
+            productsLoadStock={() => {}}
             menuRecipeDetailShow={false}
             boxSummaryDeliveryDays={Immutable.List([])}
             menuCollectionRecipes={Immutable.Map({})}
@@ -621,7 +725,7 @@ describe('Menu', () => {
     let getStateSpy
     const shouldJfyTutorialBeVisible = jest.fn()
 
-    beforeEach(() => {
+    beforeEach(async () => {
       getStateSpy = jest.fn().mockReturnValue({
         features: Immutable.Map({
           filterMenu: Immutable.Map({
@@ -640,8 +744,10 @@ describe('Menu', () => {
           resolve()
         })
       )
-      wrapper = mount(
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -654,6 +760,7 @@ describe('Menu', () => {
           clearAllFilters={() => {}}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
           params={{}}
+          cutOffDate="2019-05-13 12:00:00"
         />,
         {
           context: {
@@ -673,8 +780,8 @@ describe('Menu', () => {
       shouldJfyTutorialBeVisible.mockClear()
     })
 
-    test('should call forceCheck', () => {
-      wrapper.instance().componentDidUpdate(wrapper.props())
+    test('should call forceCheck', async () => {
+      await wrapper.instance().componentDidUpdate(wrapper.props())
 
       expect(forceCheck).toHaveBeenCalledTimes(1)
     })
@@ -684,8 +791,8 @@ describe('Menu', () => {
         wrapper.setProps('isLoading', false)
       })
 
-      test('should call shouldJfyTutorialBeVisible prop', () => {
-        wrapper.instance().componentDidUpdate({
+      test('should call shouldJfyTutorialBeVisible prop', async () => {
+        await wrapper.instance().componentDidUpdate({
           ...wrapper.props(),
           isLoading: true,
         })
@@ -695,12 +802,59 @@ describe('Menu', () => {
     })
 
     describe('for any non-loading updates', () => {
-      test('should not call shouldJfyTutorialBeVisible prop', () => {
-        wrapper.instance().componentDidUpdate({
+      test('should not call shouldJfyTutorialBeVisible prop', async () => {
+        await wrapper.instance().componentDidUpdate({
           ...wrapper.props(),
         })
 
         expect(shouldJfyTutorialBeVisible).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('productsLoadStock and productsLoadProducts actions', () => {
+      test('are called when cutOffDate is present and different from the previous update', async () => {
+        wrapper.setProps({
+          productsLoadStock,
+          productsLoadProducts,
+          cutOffDate: '2019-05-14 12:00:00',
+        })
+
+        await wrapper.instance().componentDidUpdate({
+          ...wrapper.props(),
+        })
+
+        expect(productsLoadStock).toHaveBeenCalled()
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-05-14 12:00:00')
+      })
+
+      test('are not called when cutOffDate is not changed in the update', async() => {
+        wrapper.setProps({
+          productsLoadStock,
+          productsLoadProducts,
+          cutOffDate: '2019-05-13 12:00:00',
+        })
+
+        await wrapper.instance().componentDidUpdate({
+          ...wrapper.props(),
+        })
+
+        expect(productsLoadStock).not.toHaveBeenCalled()
+        expect(productsLoadProducts).not.toHaveBeenCalled()
+      })
+
+      test('are not called when cutOffDate is not present', async () => {
+        wrapper.setProps({
+          productsLoadStock,
+          productsLoadProducts,
+          cutOffDate: '',
+        })
+
+        await wrapper.instance().componentDidUpdate({
+          ...wrapper.props(),
+        })
+
+        expect(productsLoadStock).not.toHaveBeenCalled()
+        expect(productsLoadProducts).not.toHaveBeenCalled()
       })
     })
   })
@@ -713,6 +867,8 @@ describe('Menu', () => {
     test('should call Menu.fetchData once if menuVariation has changed', () => {
       const wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           features={Immutable.Map({})}
           tariffId={1}
@@ -729,6 +885,8 @@ describe('Menu', () => {
       const menuLoadBoxPrices = jest.fn()
       const wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={menuLoadBoxPrices}
           features={Immutable.Map({})}
           tariffId={1}
@@ -745,6 +903,8 @@ describe('Menu', () => {
       const menuLoadBoxPrices = jest.fn()
       const wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={menuLoadBoxPrices}
           features={Immutable.Map({})}
           tariffId={1}
@@ -782,9 +942,11 @@ describe('Menu', () => {
       })
     })
 
-    test('should render MenuNoResults', () => {
-      wrapper = mount(
+    test('should render MenuNoResults', async () => {
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}

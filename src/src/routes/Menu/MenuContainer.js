@@ -1,5 +1,6 @@
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import { connect } from 'react-redux'
+import moment from 'moment'
 
 import actions from 'actions'
 import { slugify } from 'utils/url'
@@ -14,17 +15,29 @@ import { getCurrentCollectionIsRecommendation } from './selectors/menu'
 
 import Menu from './Menu'
 
+function getBasketRecipes(recipes) {
+  return Array.from(recipes.keys())
+}
+
+const getBasketProducts = products => {
+  return products.entrySeq().map(([id, quantity]) => (
+    { id, quantity }
+  ))
+}
+
+const getCutoffDate = (deliveryDate) => {
+  const CUTTOFF_DAY = 3
+
+  if (!deliveryDate) {
+    return ''
+  }
+
+  return moment(deliveryDate)
+    .subtract(CUTTOFF_DAY, 'days')
+    .format('DD-MM-YYYY h:mm:ss')
+}
+
 function mapStateToProps(state, ownProps) {
-  function getBasketRecipes(recipes) {
-    return Array.from(recipes.keys())
-  }
-
-  const getBasketProducts = products => {
-    return products.entrySeq().map(([id, quantity]) => (
-      { id, quantity }
-    ))
-  }
-
   let collectionName = (ownProps.location && ownProps.location.query) ? ownProps.location.query.collection : ''
   const preferredCollectionName = state.features.getIn(['preferredCollection', 'value'])
 
@@ -57,6 +70,7 @@ function mapStateToProps(state, ownProps) {
   return {
     basketRecipeIds: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))),
     basketProducts: getBasketProducts(state.basket.get('products', Immutable.Map({}))),
+    cutOffDate: getCutoffDate(state.basket.get('date')),
     menuRecipeDetailShow: (ownProps.location && ownProps.location.query) ? ownProps.location.query.recipeDetailId : '',
     boxSummaryShow: state.boxSummaryShow.get('show'),
     menuCurrentCollectionId: collectionId,
@@ -99,8 +113,12 @@ const mapDispatchToProps = {
   shouldJfyTutorialBeVisible,
   orderHasAnyProducts: actions.orderHasAnyProducts,
   orderUpdateProducts: actions.orderUpdateProducts,
+  productsLoadProducts: actions.productsLoadProducts,
+  productsLoadStock: actions.productsLoadStock,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
 
 export default MenuContainer
+
+export { getCutoffDate }

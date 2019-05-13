@@ -32,6 +32,7 @@ import { JustForYouTutorial } from './JustForYouTutorial'
 class Menu extends React.Component {
   static propTypes = {
     basketOrderLoaded: PropTypes.func.isRequired,
+    cutOffDate: PropTypes.string.isRequired,
     menuLoadBoxPrices: PropTypes.func.isRequired,
     menuRecipeDetailShow: PropTypes.string,
     detailVisibilityChange: PropTypes.func,
@@ -73,6 +74,8 @@ class Menu extends React.Component {
       id: PropTypes.string,
       quantity: PropTypes.number,
     })),
+    productsLoadProducts: PropTypes.func.isRequired,
+    productsLoadStock: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
@@ -98,13 +101,15 @@ class Menu extends React.Component {
     isChrome: false,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
       isClient: true,
       isChrome: browserHelper.isChrome(),
     })
 
     const {
+      basketProducts,
+      cutOffDate,
       params,
       storeOrderId,
       basketOrderLoaded,
@@ -122,9 +127,10 @@ class Menu extends React.Component {
       portionSizeSelectedTracking,
       numPortions,
       orderId,
-      basketProducts,
-      orderUpdateProducts,
       orderHasAnyProducts,
+      orderUpdateProducts,
+      productsLoadProducts,
+      productsLoadStock,
     } = this.props
     const { store } = this.context
     // if server rendered
@@ -193,6 +199,15 @@ class Menu extends React.Component {
       'orderUpdateProductsRequest',
       handleOrderUpdateProductsRequest
     )
+
+    if (cutOffDate) {
+      try {
+        await productsLoadStock()
+        await productsLoadProducts(cutOffDate)
+      } catch (err) {
+        throw err
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -225,10 +240,26 @@ class Menu extends React.Component {
     return shallowCompare(this, nextProps, nextState)
   }
 
-  componentDidUpdate(prevProps) {
-    const { shouldJfyTutorialBeVisible, isLoading } = this.props
+  async componentDidUpdate(prevProps) {
+    const {
+      shouldJfyTutorialBeVisible,
+      isLoading,
+      cutOffDate,
+      productsLoadStock,
+      productsLoadProducts,
+    } = this.props
 
     forceCheck()
+
+    if (cutOffDate && cutOffDate !== prevProps.cutOffDate) {
+      try {
+        await productsLoadStock()
+        await productsLoadProducts(cutOffDate)
+      } catch (err) {
+        throw err
+      }
+    }
+
     if (!isLoading && prevProps.isLoading !== isLoading) {
       shouldJfyTutorialBeVisible()
     }
@@ -279,7 +310,7 @@ class Menu extends React.Component {
 
     return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
       <Banner type={'summer-bbq'}/>
-    ) : 
+    ) :
       (<Banner type={'taste-of-italy'}/>)
   }
 
