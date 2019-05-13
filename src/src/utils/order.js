@@ -29,6 +29,10 @@ export function isValidPromoCode(prices) {
   return prices.get('promoCodeValid', false)
 }
 
+export const getConfirmationPromoCode = (order, basket) => (
+  order.getIn(['prices', 'promoCode'], '') || basket.get('promoCode', '')
+)
+
 export const getAffiliateTrackingData = (order = Immutable.Map({}), commissionGroup = '') => ({
   orderId: order.get('id', ''),
   total: order.getIn(['prices','total'], ''),

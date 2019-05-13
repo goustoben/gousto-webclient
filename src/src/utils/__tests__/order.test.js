@@ -2,10 +2,69 @@ import Immutable from 'immutable'
 
 import {
   getAffiliateTrackingData,
+  getConfirmationPromoCode,
   getPreviewOrderErrorName,
 } from 'utils/order'
 
 describe('order utils', () => {
+  describe('getConfirmationPromoCode', () => {
+    let order
+    let basket
+
+    describe('when order promocode is not set', () => {
+      beforeEach(() => {
+        order = Immutable.Map({})
+      })
+
+      describe('and basket promocode is not set', () => {
+        beforeEach(() => {
+          basket = Immutable.Map({})
+        })
+
+        test('should return an empty string', () => {
+          expect(getConfirmationPromoCode(order, basket)).toBe('')
+        })
+      })
+
+      describe('and basket promocode is set', () => {
+        beforeEach(() => {
+          basket = Immutable.Map({ promoCode: 'BASKET-PROMO' })
+        })
+
+        test('should return basket promocode', () => {
+          expect(getConfirmationPromoCode(order, basket)).toBe('BASKET-PROMO')
+        })
+      })
+    })
+
+    describe('when order promocode is set', () => {
+      beforeEach(() => {
+        order = Immutable.Map({
+          prices: Immutable.Map({ promoCode: 'ORDER-PROMO' }),
+        })
+      })
+      describe('and basket promocode is not set', () => {
+        beforeEach(() => {
+          basket = Immutable.Map({})
+        })
+
+        test('should return order promocode', () => {
+          expect(getConfirmationPromoCode(order, basket)).toBe('ORDER-PROMO')
+        })
+      })
+
+      describe('and basket promocode is set', () => {
+        beforeEach(() => {
+          basket = Immutable.Map({ promoCode: 'BASKET-PROMO' })
+        })
+
+        test('should return order promocode', () => {
+          expect(getConfirmationPromoCode(order, basket)).toBe('ORDER-PROMO')
+        })
+      })
+    })
+  })
+
   describe('getAffiliateTrackingData', () => {
     describe('when given nothing', () => {
       test('should fail gracefully', () => {
