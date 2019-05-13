@@ -292,6 +292,7 @@ class Menu extends React.Component {
     const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
     const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
     const showLoading = this.props.isLoading && !overlayShow || forceLoad
+    const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
 
     let fadeCss = null
     if (showLoading && hasRecommendations) {
@@ -330,7 +331,10 @@ class Menu extends React.Component {
             {this.props.filteredRecipesNumber ?
               <div
                 ref={ref => { this.masonryContainer = ref }}
-                className={css.masonryContainer}
+                className={classnames({
+                  [css.masonryContainerMenu]: !menuFilterExperiment,
+                  [css.masonryContainer]: menuFilterExperiment,
+                })}
                 data-testing="menuRecipesList"
               >
                 <RecipeList
