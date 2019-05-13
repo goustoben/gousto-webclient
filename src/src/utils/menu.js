@@ -21,3 +21,20 @@ export const isRecipeInStock = (recipe, stock, numPortions) => {
 export const isRecipeInBasket = (recipe, basketRecipes) => basketRecipes.has(recipe.get('id'))
 
 export const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require
+
+export const getScrollOffset = (threshold, animationThreshold, scrolledPastPoint) => {
+  if (window.pageYOffset < threshold && scrolledPastPoint) {
+    
+    return ({
+      scrolledPastPoint: false,
+      scrollJumped: false
+    })
+  }
+  if (window.pageYOffset >= threshold && !scrolledPastPoint) {
+    
+    return({
+      scrolledPastPoint: true,
+      scrollJumped: (window.pageYOffset - threshold) > animationThreshold,
+    })
+  }
+}

@@ -3,7 +3,7 @@ import React from 'react'
 import { top, left } from 'scroll'
 import Immutable from 'immutable'/* eslint-disable no-caps, new-cap */
 import actual from 'actual'
-
+import { getScrollOffset } from 'utils/menu'
 import { getWindow } from 'utils/window'
 import css from './CollectionsNav.css'
 import CollectionItem from '../CollectionItem'
@@ -92,16 +92,13 @@ class CollectionsNav extends React.PureComponent {
       this.hasScrolled = false
       const threshold = 250
       const animationThreshold = 50
-
-      if (window.pageYOffset < threshold && this.state.scrolledPastPoint) {
-        this.setState({ scrolledPastPoint: false, scrollJumped: false })
-      }
-      if (window.pageYOffset >= threshold && !this.state.scrolledPastPoint) {
-        this.setState({
-          scrolledPastPoint: true,
-          scrollJumped: (window.pageYOffset - threshold) > animationThreshold,
-        })
-      }
+      const { scrolledPastPoint } = this.state
+      
+      const scrollState = getScrollOffset(threshold, animationThreshold, scrolledPastPoint)
+      scrollState && this.setState({
+        scrolledPastPoint: scrollState.scrolledPastPoint,
+        scrollJumped: scrollState.scrollJumped
+      })
     }
   }
 

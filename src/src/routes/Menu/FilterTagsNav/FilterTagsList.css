@@ -1,11 +1,7 @@
 
 .filterTagList {
     width: 100%;
-    margin-left: 20px;
-    padding-left: 20px;
     display: flex;
-}
-
-.divider {
-    border-left: 2px solid #D6D8DA;
+    font-size: 13px;
+    align-items: center;
 }

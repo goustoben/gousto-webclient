@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import renderer from 'react-test-renderer'
-import { Button } from 'goustouicomponents'
 import FilterTagsNav from 'routes/Menu/FilterTagsNav/FilterTagsNav'
+import FilterTagsList from 'routes/Menu/FilterTagsNav/FilterTagsList'
 
 describe("FilterTag", () => {
 
@@ -17,18 +17,11 @@ describe("FilterTag", () => {
 
       expect(tree).toMatchSnapshot()
     })
-  })
 
-  describe("bahviour", () => {
+    test('should render a FilterTagList component', () => {
+      const wrapper = shallow(<FilterTagsNav menuFilterExperiment />)
 
-    test("Will handle click on the CTA", () => {
-      const clickHandler = jest.fn()
-      const component = <FilterTagsNav onCTAClick={clickHandler} menuFilterExperiment />
-      const wrapper = shallow(component)
-
-      wrapper.find(Button).first().simulate('click')
-
-      expect(clickHandler).toHaveBeenCalled()
+      expect(wrapper.find(FilterTagsList).length).toEqual(1)
     })
   })
 })

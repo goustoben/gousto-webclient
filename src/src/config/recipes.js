@@ -45,8 +45,8 @@ const config = {
     30: '30 minutes or less',
   },
   dietaryAttributes: {
-    'gluten-free': 'Gluten-Free',
-    'dairy-free': 'Dairy-Free',
+    'gluten-free': 'Gluten free',
+    'dairy-free': 'Dairy free',
   },
 }
 

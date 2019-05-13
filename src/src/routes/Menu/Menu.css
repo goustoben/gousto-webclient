@@ -71,19 +71,6 @@
 	}
 }
 
-.masonryContainerWithCollectionsNav {
-	composes: masonryContainer;
-	padding-top: 60px;
-	@media ScreenXSMax {
-		padding-top: 43px;
-	}
-}
-
-.masonryContainerWithMenuFilterNav {
-	composes: masonryContainer;
-	margin-top: -15px;
-}
-
 .legal {
 	composes: textXS textCenter from 'styles/typography.css';
 	composes: marginLGTop from 'sass-loader!styles/spacing.scss';

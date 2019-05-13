@@ -1,21 +1,39 @@
 @value White from 'styles/colors.css';
-@value ScreenSMMin from 'styles/screenSizes.css';
+@value ScreenXSMax from 'styles/screenSizes.css';
 
 .filterTagContainer {
     composes: paddingMDTop paddingXLBottom from 'sass-loader!styles/spacing.scss';
-    background: White;
-    display: none;
-
-    @media ScreenSMMin {
-        display: flex;
+    display: flex;
+    padding-top: 55px;
+    padding-bottom: 0px;
+    @media ScreenXSMax {
+        padding-bottom: 20px;
     }
 }
+
 
 .filterListContainer {
     composes: pageContainer from 'styles/layout.css';
     width: 100%;
     display: flex;
-    padding: 0 30px;
+    padding-right: 5px;
+    @media ScreenXSMax {
+        position: absolute;
+    }
+}
+
+.filterListContainerFixed {
+    composes: filterListContainer;
+    @media ScreenXSMax {
+        width: 100%;
+        z-index: 499;
+        position: fixed;
+        top: 0;
+        padding-top: 55px;
+        background-color: White;
+        padding-bottom: 5px;
+        border-bottom: solid 1px #EAEBE9;
+    }
 }
 
 .filtersCTA {

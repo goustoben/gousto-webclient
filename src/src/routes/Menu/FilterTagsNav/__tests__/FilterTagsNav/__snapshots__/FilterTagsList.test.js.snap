@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FilterTagsList rendering Will render FilterTagsList component 1`] = `
+<div
+  className="filterTagList"
+>
+  <span>
+    Quick filter: 
+  </span>
+  <div
+    className="filterTag"
+    onClick={[Function]}
+  >
+    Gluten Free
+  </div>
+  <div
+    className="filterTag"
+    onClick={[Function]}
+  >
+    Meat
+  </div>
+</div>
+`;
