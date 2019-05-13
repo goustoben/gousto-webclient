@@ -19,7 +19,7 @@ jest.mock('actions/orderConfirmation', () => ({
 
 describe('basket actions', () => {
   const dispatch = jest.fn()
-  const { portionSizeSelectedTracking, basketCheckedOut, basketOrderItemsLoad } = basket
+  const { portionSizeSelectedTracking, basketCheckedOut, basketOrderItemsLoad, basketProceedToCheckout} = basket
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -430,7 +430,8 @@ describe('basket actions', () => {
       expect(basketGiftAddSpy).not.toHaveBeenCalled()
     })
   })
-  describe('basketUpdateProducts', function () {
+
+  describe('basketUpdateProducts', () => {
     let getStateSpy
     let dispatchSpy
     beforeEach(() => {
@@ -578,6 +579,30 @@ describe('basket actions', () => {
             expect(loggerErrorSpy).toHaveBeenCalledWith((new Error({ e: 'Error' })))
           })
           .then(done, done)
+      })
+    })
+  })
+
+  describe('basketProceedToCheckout', () => {
+    const getState = () => ({
+      basket: Immutable.fromJS({
+        orderId: '179',
+      }),
+      filters: Immutable.fromJS({
+        dietaryAttributes: ['diary-free']
+      }),
+    })
+    test('should track the dietary attribute for proceed to checkout', async () => {
+      await basketProceedToCheckout()(dispatch, getState)
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: 'BASKET_CHECKOUT_PROCEED',
+        trackingData: {
+          actionType: 'BASKET_CHECKOUT_PROCEED',
+          basket:  Immutable.fromJS({
+            orderId: '179',
+          }),
+          dietary_attribute: ['diary-free'],
+        },
       })
     })
   })

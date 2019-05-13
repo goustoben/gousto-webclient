@@ -682,7 +682,7 @@ export const basketCheckedOut = (numRecipes, view) => (
 export const basketProceedToCheckout = () => (
   async (dispatch, getState) => {
     const { basket, filters } = getState()
-    const dietaryAttribute = filters.get('dietaryAttributes')
+    const dietaryAttribute = filters.get('dietaryAttributes').toJS()
     dispatch({
       type: actionTypes.BASKET_CHECKOUT_PROCEED,
       trackingData: {
