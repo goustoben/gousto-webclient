@@ -39,6 +39,9 @@ cd ~/code/goustowebclient
 skaffold dev
 ```
 
+**Note: by default skaffold uses polling to see if files have changed, this process can be very intensive and can drain
+your battery. You can play with the polling timeout using `skaffold dev -i <poll-interval-in-ms>` (default value is `1000`).**
+
 The site (only the new stack pages) should now be available at http://webclient.gousto.local
 
 You can see the containers logs being redirected to this terminal (nginx and application), exit with `CTRL+C`
