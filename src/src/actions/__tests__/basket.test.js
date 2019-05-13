@@ -347,7 +347,7 @@ describe('basket actions', () => {
           actionType: 'BASKET_CHECKED_OUT',
           numRecipes: 2,
           view: 'grid',
-          dietary_attribute: Immutable.fromJS(['gluten-free']),
+          dietary_attribute: ['gluten-free'],
         },
       })
     })
@@ -589,7 +589,7 @@ describe('basket actions', () => {
         orderId: '179',
       }),
       filters: Immutable.fromJS({
-        dietaryAttributes: ['diary-free']
+        dietaryAttributes: ['dairy-free']
       }),
     })
     test('should track the dietary attribute for proceed to checkout', async () => {
@@ -601,7 +601,7 @@ describe('basket actions', () => {
           basket:  Immutable.fromJS({
             orderId: '179',
           }),
-          dietary_attribute: ['diary-free'],
+          dietary_attribute: ['dairy-free'],
         },
       })
     })

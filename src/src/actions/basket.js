@@ -538,7 +538,7 @@ export const basketCheckedOut = (numRecipes, view) => (
     const editedGrossTotal = originalGrossTotal && grossTotal ? (grossTotal - originalGrossTotal).toFixed(2) : ''
     const editedNetTotal = originalNetTotal && orderTotal ? (orderTotal - originalNetTotal).toFixed(2) : ''
     const promoCode = prices && prices.get('promoCode')
-    const dietaryAttribute = filters.get('dietaryAttributes')
+    const dietaryAttribute = filters.get('dietaryAttributes').toJS()
 
     try {
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
