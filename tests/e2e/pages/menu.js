@@ -21,6 +21,15 @@ module.exports = {
       commands: [
         {
           goFromMenuToCheckout: function () { clickElement.call(this, this.api.globals.browser === 'mobile' ? '@mobileMenuToCheckout' : '@desktopMenuToCheckout') },
+          setOrderConfirmationFeatureFlag: function () {
+            this.api.execute(function () {
+              window.__loadFeatures__({
+                features: {
+                  'orderConfirmation': true
+                }
+              })
+            })
+          }
         }
       ]
     },
@@ -115,10 +124,40 @@ module.exports = {
         menuBrowseCTAButton: {
           selector: '*[data-testing="menuBrowseCTAButton"]',
         },
+        desktopBoxSummaryNextButton: {
+					selector: '*[data-testing="desktopBoxSummaryNextButton"]',
+				},
+				boxSummaryContinueButton: {
+					selector: '*[data-testing="boxSummaryContinueButton"]',
+        },
+        dateSlot: {
+          selector: '*[data-testing="dateSlot"]',
+        },
+        fullBoxIcon: {
+          selector: '*[data-testing="icon-full-box"]',
+        }
       },
 
       commands: [{
         clickBrowseCTA: function () { clickElement.call(this, '@menuBrowseCTAButton') },
+        clickNextButton: function () { clickElement.call(this, '@desktopBoxSummaryNextButton') },
+        clickContinueButton: function () { clickElement.call(this, '@boxSummaryContinueButton') } ,
+        clickDateOfExistingOrder: function () {
+          this.api.execute(function () {
+						const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
+						let dates = Array.from(getDateSlots())
+            let firstAvailableDate = dates.find(date => date.querySelector("*[data-testing='icon-full-box']"))
+            firstAvailableDate.click()
+					})
+        },
+        clickDateOfNewOrder: function () {
+          this.api.execute(function () {
+						const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
+						let dates = Array.from(getDateSlots())
+            let firstAvailableDate = dates.find(date => !date.querySelector("*[data-testing='icon-full-box']"))
+            firstAvailableDate.click()
+					})
+        },
       }],
     },
   },
