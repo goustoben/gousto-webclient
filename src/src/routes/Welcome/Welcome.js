@@ -38,6 +38,7 @@ class Welcome extends React.PureComponent {
 
     return store.dispatch(actions.userLoadOrder(orderId))
       .then(() => {
+        const { basket } = store.getState()
         userOrder = userUtils.getUserOrderById(orderId, store.getState().user.get('orders'))
 
         if (userOrder.get('phase') !== 'open') {
@@ -48,7 +49,11 @@ class Welcome extends React.PureComponent {
         }
 
         trackAffiliatePurchase(
-          getAffiliateTrackingData(userOrder, 'FIRSTPURCHASE')
+          getAffiliateTrackingData(
+            'FIRSTPURCHASE',
+            userOrder,
+            basket,
+          )
         )
 
         const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)

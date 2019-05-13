@@ -33,11 +33,15 @@ export const getConfirmationPromoCode = (order, basket) => (
   order.getIn(['prices', 'promoCode'], '') || basket.get('promoCode', '')
 )
 
-export const getAffiliateTrackingData = (order = Immutable.Map({}), commissionGroup = '') => ({
+export const getAffiliateTrackingData = (
+  commissionGroup = '',
+  order = Immutable.Map({}),
+  basket = Immutable.Map({}),
+) => ({
   orderId: order.get('id', ''),
   total: order.getIn(['prices','total'], ''),
   commissionGroup,
-  promoCode: order.getIn(['prices','promoCode'], ''),
+  promoCode: getConfirmationPromoCode(order, basket),
 })
 
 export const getPreviewOrderErrorName = error => {

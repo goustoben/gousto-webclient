@@ -80,6 +80,7 @@ describe('order utils', () => {
     describe('when given an order and commission group', () => {
       let order
       let commissionGroup
+      let basket
 
       beforeEach(() => {
         commissionGroup = 'FIRSTPURCHASE'
@@ -90,10 +91,11 @@ describe('order utils', () => {
             promoCode: 'TV',
           }),
         })
+        basket = Immutable.Map({})
       })
 
       test('should return affiliate purchase data', () => {
-        expect(getAffiliateTrackingData(order, commissionGroup)).toEqual({
+        expect(getAffiliateTrackingData(commissionGroup, order, basket)).toEqual({
           orderId: '9012312',
           total: '24.99',
           commissionGroup: 'FIRSTPURCHASE',
