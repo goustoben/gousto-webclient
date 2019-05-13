@@ -11,20 +11,20 @@ describe('DeliveryDetails', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-			<DeliveryDetails
-			  address={Immutable.fromJS({
-			    line1: '1 Example Street',
-			    line2: 'Zone 2',
-			    line3: 'Neverland',
-			    town: 'London',
-			    postcode: 'F4 K3',
-			  })}
-			  date="2016-05-06"
-			  slot={Immutable.fromJS({
-			    deliveryStart: '09:00:00',
-			    deliveryEnd: '16:59:59',
-			  })}
-			/>,
+      <DeliveryDetails
+        address={Immutable.fromJS({
+          line1: '1 Example Street',
+          line2: 'Zone 2',
+          line3: 'Neverland',
+          town: 'London',
+          postcode: 'F4 K3',
+        })}
+        date="2016-05-06"
+        slot={Immutable.fromJS({
+          deliveryStart: '09:00:00',
+          deliveryEnd: '16:59:59',
+        })}
+      />,
     )
   })
 

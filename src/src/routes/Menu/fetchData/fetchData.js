@@ -40,9 +40,9 @@ export default async function fetchData({ store, query, params }, force, backgro
   }
 
   /*
-	* TODO: remove forceCollections feature checks
-	* once something becomes default behavior, we should update the code rather than continue to drive it by feature flags
-	*/
+  * TODO: remove forceCollections feature checks
+  * once something becomes default behavior, we should update the code rather than continue to drive it by feature flags
+  */
   if (isAuthenticated && !store.getState().features.getIn(['forceCollections', 'value'])) {
     store.dispatch(actions.featureSet('forceCollections', true))
   }

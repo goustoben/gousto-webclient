@@ -29,11 +29,11 @@ describe('OrderPricingDetail', () => {
   describe('rendering', () => {
     beforeEach(() => {
       wrapper = shallow(
-				<OrderPricingDetail
-				  paymentDate={mockInfo.paymentDate}
-				  numberOfRecipes={mockInfo.numberOfRecipes}
-				  priceBreakdown={mockInfo.priceBreakdown}
-				/>,
+        <OrderPricingDetail
+          paymentDate={mockInfo.paymentDate}
+          numberOfRecipes={mockInfo.numberOfRecipes}
+          priceBreakdown={mockInfo.priceBreakdown}
+        />,
       )
     })
 
@@ -56,21 +56,21 @@ describe('OrderPricingDetail', () => {
     describe('discount', () => {
       test('should render the percentage discount and flat discount when both are passed', () => {
         wrapper = shallow(
-					<OrderPricingDetail
-					  priceBreakdown={Immutable.Map({
-					    percentageDiscountAmount: 30,
-					    flatDiscountAmount: 20,
-					  })}
-					/>,
+          <OrderPricingDetail
+            priceBreakdown={Immutable.Map({
+              percentageDiscountAmount: 30,
+              flatDiscountAmount: 20,
+            })}
+          />,
         )
         expect(wrapper.text()).toContain('30% Discount-£20.00')
       })
 
       test('should render only the flat discount when the flat discount is passed but the percentage discount is not passed', () => {
         wrapper = shallow(
-					<OrderPricingDetail
-					  priceBreakdown={Immutable.Map({ flatDiscountAmount: 25.55 })}
-					/>,
+          <OrderPricingDetail
+            priceBreakdown={Immutable.Map({ flatDiscountAmount: 25.55 })}
+          />,
         )
         expect(
           wrapper

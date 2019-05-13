@@ -2,13 +2,13 @@ import validator from 'validator'
 import ruleMessages from 'validations/ruleMessages'
 
 const mergeErrorMessages = (errors, fieldPath, value) => {
-  if (typeof fieldPath === 'string')		{
+  if (typeof fieldPath === 'string') {
     return mergeErrorMessages(errors, fieldPath.split('.'), value)
-  }	else if (fieldPath.length === 1 && value !== undefined)		{
+  } else if (fieldPath.length === 1 && value !== undefined) {
     errors[fieldPath[0]] = value // eslint-disable-line no-param-reassign
 
     return errors
-  }	else if (fieldPath.length === 0)		{
+  } else if (fieldPath.length === 0) {
     return errors
   }
 

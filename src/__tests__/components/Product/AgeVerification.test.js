@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 import { shallow } from 'enzyme'
 import { AgeVerificationCheckBox } from 'Product/AgeVerification'
 import CheckBox from 'Form/CheckBox'
@@ -56,7 +55,7 @@ describe('Product AgeVerification', () => {
   test('should pass onTooltipVisibleChange to Tooltip as onVisibleChange if provided', () => {
     const onTooltipVisibleChange = () => 'test'
     wrapper = shallow(
-			<AgeVerificationCheckBox onTooltipVisibleChange={onTooltipVisibleChange} />,
+      <AgeVerificationCheckBox onTooltipVisibleChange={onTooltipVisibleChange} />,
     )
 
     expect(wrapper.find(Tooltip).prop('onVisibleChange')).toBe(

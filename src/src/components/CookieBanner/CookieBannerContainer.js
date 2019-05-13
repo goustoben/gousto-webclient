@@ -1,13 +1,13 @@
-import CookieBanner from './CookieBanner'
 import { connect } from 'react-redux'
 import cookieActions from 'actions/cookies'
+import CookieBanner from './CookieBanner'
 
 const mapStateToProps = (state) => ({
   copy: {
     button: 'OK, I Agree',
     findMore: 'Find out more',
-    description: `We use cookies. By continuing to browse the site 
-		you are agreeing to our use of cookies. `,
+    description: `We use cookies. By continuing to browse the site
+    you are agreeing to our use of cookies. `,
   },
   isCookiePolicyAccepted: state.cookies.get('isPolicyAccepted'),
 })

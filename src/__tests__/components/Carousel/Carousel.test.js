@@ -18,7 +18,7 @@ describe('Carousel', () => {
 
   test('should pass on any props to Slider', () => {
     const wrapper = shallow(
-			<Carousel prop1={'props1value'} prop2={false} prop3 />,
+      <Carousel prop1={'props1value'} prop2={false} prop3 />,
     )
     const slider = wrapper.find(Slider)
     expect(slider.prop('prop1')).toEqual('props1value')

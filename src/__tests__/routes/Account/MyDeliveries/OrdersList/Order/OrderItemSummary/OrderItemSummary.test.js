@@ -28,7 +28,7 @@ describe('OrderItemSummary', () => {
     })
     test('should render recipes if present', () => {
       wrapper = shallow(
-				<OrderItemSummary recipes={Immutable.Map({ recipe: 1 })} />,
+        <OrderItemSummary recipes={Immutable.Map({ recipe: 1 })} />,
       )
       expect(wrapper.text()).toContain('recipes')
     })
@@ -42,10 +42,10 @@ describe('OrderItemSummary', () => {
     })
     test('should render a comma if recipes and products present', () => {
       wrapper = shallow(
-				<OrderItemSummary
-				  numberOfProducts={2}
-				  recipes={Immutable.Map({ recipe: 1 })}
-				/>,
+        <OrderItemSummary
+          numberOfProducts={2}
+          recipes={Immutable.Map({ recipe: 1 })}
+        />,
       )
       expect(wrapper.text()).toContain(',')
     })

@@ -11,7 +11,7 @@ import Vegetarian from 'routes/Menu/SubHeader/Vegetarian'
 describe('SubHeader', function () {
   it('should return a span', function () {
     const wrapper = shallow(
-			<Vegetarian />
+      <Vegetarian />
     )
 
     expect(wrapper.type()).to.equal('span')
@@ -20,7 +20,7 @@ describe('SubHeader', function () {
   it('should call onFilterVegetarianChange with opposite value when clicked', function () {
     const onFilterVegetarianChange = sinon.spy()
     const wrapper = shallow(
-			<Vegetarian onFilterVegetarianChange={onFilterVegetarianChange} filterVegetarian />
+      <Vegetarian onFilterVegetarianChange={onFilterVegetarianChange} filterVegetarian />
     )
     wrapper.simulate('click')
     expect(onFilterVegetarianChange.getCall(0).args).to.deep.equal([false])

@@ -20,12 +20,12 @@ const DeliveryDetails = (props) => {
     .filter(lineItem => !!lineItem)
 
   return (
-		<span
-		  className={css.content}
-		  data-hj-masked
-		>
-			{shippingDetails.map((shippingDetail, key) => <span key={key} className={css.shippingDetail}>{shippingDetail}</span>)}
-		</span>
+    <span
+      className={css.content}
+      data-hj-masked
+    >
+      {shippingDetails.map((shippingDetail, key) => <span key={key} className={css.shippingDetail}>{shippingDetail}</span>)}
+    </span>
   )
 }
 

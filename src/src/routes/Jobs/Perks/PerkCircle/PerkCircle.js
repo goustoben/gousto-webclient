@@ -7,15 +7,15 @@ class PerkCircle extends React.PureComponent {
   render() {
     const perks = config.Perks
     const perkItems = perks.map((perk) =>
-			<div key={perk.title} >
-				<Perk title={perk.title} copy={perk.copy} />
-			</div>
+      <div key={perk.title} >
+        <Perk title={perk.title} copy={perk.copy} />
+      </div>
     )
 
     return (
-			<div className={css.flexContainer}>
-				{perkItems}
-			</div>
+      <div className={css.flexContainer}>
+        {perkItems}
+      </div>
     )
   }
 }

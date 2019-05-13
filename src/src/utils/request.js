@@ -8,8 +8,8 @@ export function isFacebookUserAgent(agent) {
 
   return (
     lowerCaseAgent.includes('facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)') ||
-		lowerCaseAgent.includes('facebookexternalhit/1.1') ||
-		lowerCaseAgent.includes('facebot')
+    lowerCaseAgent.includes('facebookexternalhit/1.1') ||
+    lowerCaseAgent.includes('facebot')
   )
 }
 

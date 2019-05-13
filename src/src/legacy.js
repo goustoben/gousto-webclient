@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { configureStore } from './store'
 import transit from 'transit-immutable-js'
 import { Provider } from 'react-redux'
 import Footer from 'Footer'
@@ -16,6 +15,7 @@ import promosActions from 'actions/promos'
 import { clientAuthorise, refresh } from 'client/auth'
 import { browserHistory } from 'react-router'
 import browserType from 'client/browserType'
+import { configureStore } from './store'
 
 let loaded = false
 
@@ -48,10 +48,10 @@ async function init() {
   if (header) {
     const simpleHeader = document.location.pathname === '/checkout'
     ReactDOM.render(
-			<Provider store={store}>
-				<Header simple={simpleHeader} path={document.location.pathname} />
-			</Provider>,
-			header
+      <Provider store={store}>
+        <Header simple={simpleHeader} path={document.location.pathname} />
+      </Provider>,
+      header
     )
   }
 
@@ -60,10 +60,10 @@ async function init() {
   if (footer) {
     const simple = document.location.pathname === '/join' || persist
     ReactDOM.render(
-			<Provider store={store}>
-				<Footer simple={simple} />
-			</Provider>,
-			footer
+      <Provider store={store}>
+        <Footer simple={simple} />
+      </Provider>,
+      footer
     )
   }
 

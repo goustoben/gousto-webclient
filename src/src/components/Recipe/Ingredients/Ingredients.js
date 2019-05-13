@@ -6,19 +6,19 @@ import css from './Ingredients.css'
 import Ingredient from './Ingredient.js'
 
 const Ingredients = ({ ingredients, restrictedView, inset }) => (
-	<div>
-		<div className={inset && css.insetHeading}>
-			<span className={css.heading}>In your box</span>
-			{!restrictedView && <div className={css.leadingText}>Ingredients for 2 people <span className={css.highlightText}>(double for 4)</span></div>}
-		</div>
-		<div className={css.ingredientsContainer}>
-			{ingredients.map(ingredient => (
-				<div className={css.ingredient} key={ingredient.get('id')}>
-					<Ingredient ingredient={ingredient} />
-				</div>)
-			)}
-		</div>
-	</div>
+  <div>
+    <div className={inset && css.insetHeading}>
+      <span className={css.heading}>In your box</span>
+      {!restrictedView && <div className={css.leadingText}>Ingredients for 2 people <span className={css.highlightText}>(double for 4)</span></div>}
+    </div>
+    <div className={css.ingredientsContainer}>
+      {ingredients.map(ingredient => (
+        <div className={css.ingredient} key={ingredient.get('id')}>
+          <Ingredient ingredient={ingredient} />
+        </div>)
+      )}
+    </div>
+  </div>
 )
 
 Ingredients.propTypes = {

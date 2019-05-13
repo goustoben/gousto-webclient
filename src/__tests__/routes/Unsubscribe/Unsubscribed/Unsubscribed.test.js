@@ -7,7 +7,7 @@ import Unsubscribed from 'routes/Unsubscribe/Unsubscribed'
 describe('<Unsubscribed />', () => {
   test('<Link /> is present', () => {
     const wrapper = shallow(
-			<Unsubscribed copy={{ link: '' }} />
+      <Unsubscribed copy={{ link: '' }} />
     )
 
     expect(wrapper.find(Link).length).toBe(1)
@@ -15,7 +15,7 @@ describe('<Unsubscribed />', () => {
 
   test('link is pointing to the homepage', () => {
     const wrapper = shallow(
-			<Unsubscribed copy={{ link: '' }} />
+      <Unsubscribed copy={{ link: '' }} />
     )
 
     expect(wrapper.find(Link).props().to).toBe('/')

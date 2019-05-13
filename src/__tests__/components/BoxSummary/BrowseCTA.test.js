@@ -34,12 +34,12 @@ describe('BrowseCTA', () => {
 
   test('should return a div', () => {
     const wrapper = shallow(
-			<BrowseCTA
-			  menuBrowseCTAShow={menuBrowseCTAShow}
-			  boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-			  menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
-			  view={view}
-			/>,
+      <BrowseCTA
+        menuBrowseCTAShow={menuBrowseCTAShow}
+        boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+        menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
+        view={view}
+      />,
     )
     wrapper.simulate('click', eventSpy)
 

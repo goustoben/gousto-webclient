@@ -53,7 +53,7 @@ describe('getFeaturedImage when there IS a homepage image', () => {
             urls: [
               {
                 src:
-									'https://s3-gousto-haricots-media.s3.amazonaws.com/cms/mood-image/324-x50.jpg',
+                  'https://s3-gousto-haricots-media.s3.amazonaws.com/cms/mood-image/324-x50.jpg',
                 width: 50,
               },
             ],
@@ -63,7 +63,7 @@ describe('getFeaturedImage when there IS a homepage image', () => {
             urls: [
               {
                 src:
-									'https://s3-gousto-haricots-media.s3.amazonaws.com/cms/homepage-image/324-x50.jpg',
+                  'https://s3-gousto-haricots-media.s3.amazonaws.com/cms/homepage-image/324-x50.jpg',
                 width: 50,
               },
             ],
@@ -103,7 +103,7 @@ describe('getFeaturedImage when there IS NOT a homepage image', () => {
             urls: [
               {
                 src:
-									'https://s3-gousto-haricots-media.s3.amazonaws.com/cms/mood-image/324-x50.jpg',
+                  'https://s3-gousto-haricots-media.s3.amazonaws.com/cms/mood-image/324-x50.jpg',
                 width: 50,
               },
             ],
@@ -126,7 +126,7 @@ describe('getFeaturedImage when there IS NOT a homepage image', () => {
   })
 
   test('should return mood image if the home-page image doesn\'t exists end view is fineDineIn', () => {
-  
+
     expect(JSON.stringify(getFeaturedImage(recipe, 'fineDineIn'))).toContain(
       'mood-image',
     )

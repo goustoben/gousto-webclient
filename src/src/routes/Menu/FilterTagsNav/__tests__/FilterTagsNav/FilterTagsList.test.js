@@ -24,19 +24,19 @@ describe('FilterTagsList', () => {
         subscribe: () => {},
       }
       const component = <Provider store={store}>
-				<FilterTagsList
-				  tags={
-				    [{
-				      text: 'Gluten Free',
-				      type: 'dietaryAttribute',
-				      value: 'gluten-free'
-				    }, {
-				      text: 'Meat',
-				      type: 'dietType',
-				      value: 'meat'
-				    }]}
-				/>
-			</Provider>
+        <FilterTagsList
+          tags={
+            [{
+              text: 'Gluten Free',
+              type: 'dietaryAttribute',
+              value: 'gluten-free'
+            }, {
+              text: 'Meat',
+              type: 'dietType',
+              value: 'meat'
+            }]}
+        />
+                        </Provider>
 
       const tree = renderer.create(component).toJSON()
 

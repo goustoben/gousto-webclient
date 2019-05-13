@@ -24,7 +24,7 @@ describe('<Contact />', () => {
 
   beforeEach(() => {
     wrapper = mount(
-			<Contact content={content} />
+      <Contact content={content} />
     )
     getHelpLayout = wrapper.find('GetHelpLayout')
   })

@@ -16,7 +16,7 @@ describe('Item', () => {
         })}
         title="Chicken Curry"
         quantity={2}
-        onRemove={function () { }}
+        onRemove={function() {}}
       />,
     )
     expect(wrapper.text().indexOf('Chicken Curry') > -1).toEqual(true)
@@ -32,7 +32,7 @@ describe('Item', () => {
         })}
         title="Chicken Curry"
         quantity={2}
-        onRemove={function () { }}
+        onRemove={function() {}}
       />,
     )
     expect(wrapper.text().indexOf('2 servings') > -1).toEqual(true)
@@ -48,7 +48,7 @@ describe('Item', () => {
         })}
         title="Chicken Curry"
         quantity={2}
-        onRemove={function () { }}
+        onRemove={function() {}}
       />,
     )
     expect(wrapper.find('span').length).toEqual(1)
@@ -80,7 +80,7 @@ describe('Item', () => {
         })}
         title="Chicken Curry"
         quantity={2}
-        onRemove={function () { }}
+        onRemove={function() {}}
       />,
     )
     expect(
@@ -130,7 +130,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function () { }}
+          onRemove={function() {}}
         />,
       )
       expect(wrapper.text()).toContain('Free Gift')
@@ -148,7 +148,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={1}
-          onRemove={function () { }}
+          onRemove={function() {}}
         />,
       )
       expect(wrapper.text()).not.toContain('servings')
@@ -166,7 +166,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function () { }}
+          onRemove={function() {}}
         />,
       )
       expect(wrapper.text()).toContain('servings')
@@ -185,7 +185,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function () { }}
+          onRemove={function() {}}
         />,
       )
       expect(wrapper.text().indexOf('2 servings') > -1).toEqual(true)
@@ -202,7 +202,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function () { }}
+          onRemove={function() {}}
         />,
       )
       expect(wrapper.text().indexOf('2 items') > -1).toEqual(true)
@@ -219,7 +219,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function () { }}
+          onRemove={function() {}}
         />,
       )
       expect(wrapper.find('span').length).toEqual(0)

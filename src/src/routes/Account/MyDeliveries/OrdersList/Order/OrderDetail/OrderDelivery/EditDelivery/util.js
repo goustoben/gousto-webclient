@@ -48,7 +48,7 @@ const getTakenDatesIds = (orderDeliveryDays, orders, orderCoreDeliveryDayId) => 
   orders
     .filter(_order =>
       _order.get('coreDeliveryDayId') !== orderCoreDeliveryDayId &&
-			orderDeliveryDays.some(orderDay => orderDay.get('coreDayId') === _order.get('coreDeliveryDayId'))
+      orderDeliveryDays.some(orderDay => orderDay.get('coreDayId') === _order.get('coreDeliveryDayId'))
     )
     .valueSeq().forEach(_order => {
       takenDatesIds.push(_order.get('coreDeliveryDayId'))

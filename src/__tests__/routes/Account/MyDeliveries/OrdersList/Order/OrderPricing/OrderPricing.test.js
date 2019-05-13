@@ -24,7 +24,7 @@ describe('OrderPricing', () => {
     test('should render prices when state is confirmed', () => {
       const orderState = 'confirmed'
       wrapper = shallow(
-				<OrderPricing pricing={pricing} orderState={orderState} />,
+        <OrderPricing pricing={pricing} orderState={orderState} />,
       )
       expect(wrapper.type()).toEqual('div')
       expect(wrapper.text()).toContain(pricing.get('grossOrderPrice'))
@@ -34,7 +34,7 @@ describe('OrderPricing', () => {
     test('should render no prices when state is scheduled', () => {
       const orderState = 'scheduled'
       wrapper = shallow(
-				<OrderPricing pricing={pricing} orderState={orderState} />,
+        <OrderPricing pricing={pricing} orderState={orderState} />,
       )
       expect(wrapper.type()).toEqual('div')
       expect(wrapper.text()).toContain('')
@@ -47,7 +47,7 @@ describe('OrderPricing', () => {
         percentageDiscountAmount: null,
       })
       wrapper = shallow(
-				<OrderPricing pricing={pricingBreakdown} orderState={orderState} />,
+        <OrderPricing pricing={pricingBreakdown} orderState={orderState} />,
       )
       expect(wrapper.text()).toEqual('<DiscountBadge />')
     })
@@ -59,7 +59,7 @@ describe('OrderPricing', () => {
         percentageDiscountAmount: null,
       })
       wrapper = shallow(
-				<OrderPricing pricing={pricingBreakdown} orderState={orderState} />,
+        <OrderPricing pricing={pricingBreakdown} orderState={orderState} />,
       )
       expect(wrapper.text()).toEqual('')
     })
@@ -70,7 +70,7 @@ describe('OrderPricing', () => {
         percentageDiscountAmount: null,
       })
       wrapper = shallow(
-				<OrderPricing pricing={pricingBreakdown} orderState={orderState} />,
+        <OrderPricing pricing={pricingBreakdown} orderState={orderState} />,
       )
       expect(wrapper.text()).toEqual('')
     })

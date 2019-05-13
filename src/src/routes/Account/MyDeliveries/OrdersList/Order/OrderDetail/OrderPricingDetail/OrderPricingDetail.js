@@ -21,70 +21,70 @@ const OrderPricingDetail = ({
   let discountRender = null
   if (percentageDiscountAmount && flatDiscountAmount) {
     discountRender = (
-			<div className={`${css.row} ${css.green} ${css.separationBelow}`}>
-				<span>{percentageDiscountAmount}% Discount</span>
-				<span>-£{flatDiscountAmount.toFixed(2)}</span>
-			</div>
+      <div className={`${css.row} ${css.green} ${css.separationBelow}`}>
+        <span>{percentageDiscountAmount}% Discount</span>
+        <span>-£{flatDiscountAmount.toFixed(2)}</span>
+      </div>
     )
   }
   if (!percentageDiscountAmount && flatDiscountAmount) {
     discountRender = (
-			<div className={`${css.row} ${css.green} ${css.separationBelow}`}>
-				<span>
-					<Content contentKeys="mydeliveriesOrderOrderpricingDiscountcallout" >
-						<span>Discount</span>
-					</Content>
-				</span>
-				<span>-£{flatDiscountAmount.toFixed(2)}</span>
-			</div>
+      <div className={`${css.row} ${css.green} ${css.separationBelow}`}>
+        <span>
+          <Content contentKeys="mydeliveriesOrderOrderpricingDiscountcallout" >
+            <span>Discount</span>
+          </Content>
+        </span>
+        <span>-£{flatDiscountAmount.toFixed(2)}</span>
+      </div>
     )
   }
 
   return (
-		<div className={css.paymentInfo} data-testing="recipesPricingDetailSection">
-			<div className={`${css.row} ${css.bold}`}>
-				Payment on {paymentDate}
-			</div>
-			<div className={css.row}>
-				<span>{numberOfRecipes} recipes</span>
-				{typeof(grossRecipesPrice) === 'number' ?
-					<span>£{grossRecipesPrice.toFixed(2)}</span>
-				  : null}
-			</div>
-			{discountRender}
-			{grossExtrasPrice ?
-				<div className={`${css.row} ${css.separationBelow}`}>
-					<span>
-						<Content contentKeys="mydeliveriesOrderOrderpricingExtras" >
-							<span>Extras</span>
-						</Content>
-					</span>
-					<span>£{grossExtrasPrice.toFixed(2)}</span>
-				</div>
-			  : null}
-			<div className={`${css.row} ${css.separationBelow}`}>
-				<span>
-					<Content contentKeys="mydeliveriesOrderOrderpricingDelivery" >
-						<span>Delivery cost</span>
-					</Content>
-				</span>
-				{grossShippingPrice ?
-					<span>£{grossShippingPrice.toFixed(2)}</span>
-				  :
-					<span>
-						<Content contentKeys="mydeliveriesOrderOrderpricingDeliveryfree" >
-							<span>Free</span>
-						</Content>
-					</span>
-				}
-			</div>
-			<div className={`${css.row} ${css.bold}`}>
-				<span>Total</span>
-				{typeof(netOrderPrice) === 'number' ?
-					<span>£{netOrderPrice.toFixed(2)}</span>
-				  : null}
-			</div>
-		</div>
+    <div className={css.paymentInfo} data-testing="recipesPricingDetailSection">
+      <div className={`${css.row} ${css.bold}`}>
+        Payment on {paymentDate}
+      </div>
+      <div className={css.row}>
+        <span>{numberOfRecipes} recipes</span>
+        {typeof(grossRecipesPrice) === 'number' ?
+          <span>£{grossRecipesPrice.toFixed(2)}</span>
+          : null}
+      </div>
+      {discountRender}
+      {grossExtrasPrice ?
+        <div className={`${css.row} ${css.separationBelow}`}>
+          <span>
+            <Content contentKeys="mydeliveriesOrderOrderpricingExtras" >
+              <span>Extras</span>
+            </Content>
+          </span>
+          <span>£{grossExtrasPrice.toFixed(2)}</span>
+        </div>
+        : null}
+      <div className={`${css.row} ${css.separationBelow}`}>
+        <span>
+          <Content contentKeys="mydeliveriesOrderOrderpricingDelivery" >
+            <span>Delivery cost</span>
+          </Content>
+        </span>
+        {grossShippingPrice ?
+          <span>£{grossShippingPrice.toFixed(2)}</span>
+          :
+          <span>
+            <Content contentKeys="mydeliveriesOrderOrderpricingDeliveryfree" >
+              <span>Free</span>
+            </Content>
+          </span>
+        }
+      </div>
+      <div className={`${css.row} ${css.bold}`}>
+        <span>Total</span>
+        {typeof(netOrderPrice) === 'number' ?
+          <span>£{netOrderPrice.toFixed(2)}</span>
+          : null}
+      </div>
+    </div>
   )
 }
 

@@ -4,18 +4,5 @@ exports[`FilterTag rendering Will render FilterTag 1`] = `
 <div
   className="filterTag"
   onClick={[Function]}
->
-  <span
-    className="tagIcon"
-  >
-    <span
-      className="fa-basic-class fa-times tagImageIcon"
-      style={
-        Object {
-          "fontSize": "inherit",
-        }
-      }
-    />
-  </span>
-</div>
+/>
 `;

@@ -16,7 +16,7 @@ describe('ProductImage', () => {
   })
   describe('rendering', () => {
     wrapper = shallow(
-			<OrderRecipe src="http://image-url" alt="A recipe title" />,
+      <OrderRecipe src="http://image-url" alt="A recipe title" />,
     )
 
     test('should render a <div>', () => {

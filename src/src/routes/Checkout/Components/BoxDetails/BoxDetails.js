@@ -9,21 +9,21 @@ import css from './BoxDetails.css'
 import RecipeSummary from '../RecipeSummary'
 
 const BoxDetails = ({ maxRecipesNum, recipes }) => (
-	<div>
-		<div className={css.boxDetailsContainer} data-testing="checkoutBoxDetailsSection">
-			<h3 className={css.header}>In your box</h3>
-			<RecipeSummary showButton view="boxdetails" />
-			{(basketSum(recipes) < maxRecipesNum)
-			  ? <div className={css.text}>
-					You get the best value when your box is full with {maxRecipesNum} recipes.&nbsp;
-					<Link to={routes.client.menu} clientRouted>
-						Add another recipe&nbsp;
-						<span className={css.arrowRight} />
-					</Link>
+  <div>
+    <div className={css.boxDetailsContainer} data-testing="checkoutBoxDetailsSection">
+      <h3 className={css.header}>In your box</h3>
+      <RecipeSummary showButton view="boxdetails" />
+      {(basketSum(recipes) < maxRecipesNum)
+        ? <div className={css.text}>
+          You get the best value when your box is full with {maxRecipesNum} recipes.&nbsp;
+          <Link to={routes.client.menu} clientRouted>
+            Add another recipe&nbsp;
+            <span className={css.arrowRight} />
+          </Link>
        </div>
-			  : null}
-		</div>
-	</div>
+        : null}
+    </div>
+  </div>
 )
 
 BoxDetails.propTypes = {

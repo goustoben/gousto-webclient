@@ -23,9 +23,9 @@ describe('Page Block Title', () => {
 
     test('should render children', () => {
       wrapper = shallow(
-				<Title>
-					<p>Title String</p>
-				</Title>,
+        <Title>
+          <p>Title String</p>
+        </Title>,
       )
       expect(wrapper.find('p')).toHaveLength(1)
       expect(wrapper.find('p').text()).toBe('Title String')

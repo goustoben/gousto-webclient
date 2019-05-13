@@ -6,22 +6,22 @@ import { Button } from 'goustouicomponents'
 import css from './Confirm.css'
 
 const Confirm = ({ pending, unsubscribeClick, isError, copy }) => (
-	<div>
-		<p>
-			{copy.body1}<br />
-			{copy.body2}
-		</p>
-		<Button
-		  disabled={pending}
-		  className={css.submitButton}
-		  onClick={unsubscribeClick}
-		>
-			{copy.button}
-		</Button>
-		{isError && <p className={css.confirmContentError}>
-			{copy.defaultError}
+  <div>
+    <p>
+      {copy.body1}<br />
+      {copy.body2}
+    </p>
+    <Button
+      disabled={pending}
+      className={css.submitButton}
+      onClick={unsubscribeClick}
+    >
+      {copy.button}
+    </Button>
+    {isError && <p className={css.confirmContentError}>
+      {copy.defaultError}
               </p>}
-	</div>
+  </div>
 )
 
 Confirm.propTypes = {

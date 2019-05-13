@@ -3,7 +3,7 @@ import React from 'react'
 import css from './OrderCutoff.css'
 
 const OrderCutoff = ({ whenCutoff }) => (
-	<p className={css.cutoff}>{whenCutoff} left to edit this box</p>
+  <p className={css.cutoff}>{whenCutoff} left to edit this box</p>
 )
 
 OrderCutoff.propTypes = {

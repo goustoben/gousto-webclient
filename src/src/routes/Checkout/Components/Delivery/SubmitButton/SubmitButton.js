@@ -7,41 +7,41 @@ import CheckoutButton from '../../CheckoutButton'
 import ErrorMessage from '../../ErrorMessage'
 
 class SubmitButton extends React.PureComponent {
-	static propTypes = {
-	  checkoutInvalid: PropTypes.bool,
-	  checkoutMobileInvalid: PropTypes.bool,
-	  nextStepName: PropTypes.string,
-	  browser: PropTypes.string,
-	  onStepChange: PropTypes.func,
-	  manualSubmit: PropTypes.func,
-	}
+  static propTypes = {
+    checkoutInvalid: PropTypes.bool,
+    checkoutMobileInvalid: PropTypes.bool,
+    nextStepName: PropTypes.string,
+    browser: PropTypes.string,
+    onStepChange: PropTypes.func,
+    manualSubmit: PropTypes.func,
+  }
 
-	handleSubmit = () => {
+  handleSubmit = () => {
 
-	  this.props.manualSubmit('delivery')
-	  if (this.props.browser === 'mobile') {
-	    this.props.manualSubmit('yourdetails')
-	    if (this.props.checkoutMobileInvalid) return Promise.resolve()
-	  }
+    this.props.manualSubmit('delivery')
+    if (this.props.browser === 'mobile') {
+      this.props.manualSubmit('yourdetails')
+      if (this.props.checkoutMobileInvalid) return Promise.resolve()
+    }
 
-	  if (this.props.checkoutInvalid) return Promise.resolve()
+    if (this.props.checkoutInvalid) return Promise.resolve()
 
-	  return this.props.onStepChange()
-	}
+    return this.props.onStepChange()
+  }
 
-	render() {
-	  const confirmedAddress = isAddressConfirmed(this.props.formValues)
+  render() {
+    const confirmedAddress = isAddressConfirmed(this.props.formValues)
 
-	  return (
-			<div>
-				<ErrorMessage />
-				{confirmedAddress && <CheckoutButton
-				  stepName={this.props.nextStepName}
-				  onClick={this.handleSubmit}
-				/>}
-			</div>
-	  )
-	}
+    return (
+      <div>
+        <ErrorMessage />
+        {confirmedAddress && <CheckoutButton
+          stepName={this.props.nextStepName}
+          onClick={this.handleSubmit}
+        />}
+      </div>
+    )
+  }
 }
 
 export default SubmitButton

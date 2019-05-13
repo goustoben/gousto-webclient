@@ -23,12 +23,12 @@ const SubscriptionPauseImage = ({ photo, title, urls }) => {
   }
 
   return (
-		<div className={css.container}>
-			<Image
-			  media={urls ? Immutable.fromJS(urls) : getPhoto(photo)}
-			  title={title}
-			/>
-		</div>
+    <div className={css.container}>
+      <Image
+        media={urls ? Immutable.fromJS(urls) : getPhoto(photo)}
+        title={title}
+      />
+    </div>
   )
 }
 

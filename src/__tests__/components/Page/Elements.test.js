@@ -15,13 +15,13 @@ describe('Page Elements', () => {
 
       beforeEach(() => {
         wrapper = shallow(
-					<El
-					  disabled
-					  data-tracking={1}
-					  aria-something="2"
-					  type="something"
-					  b
-					/>,
+          <El
+            disabled
+            data-tracking={1}
+            aria-something="2"
+            type="something"
+            b
+          />,
         )
       })
 

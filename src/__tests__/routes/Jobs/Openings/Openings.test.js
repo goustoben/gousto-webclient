@@ -48,11 +48,11 @@ describe('Openings/Openings', () => {
   })
   test('should render one active jobSelector', () => {
     wrapper = shallow(
-			<Openings
-			  jobs={jobs}
-			  depts={departments}
-			  selectedDepartment={selectedDepartment}
-			/>,
+      <Openings
+        jobs={jobs}
+        depts={departments}
+        selectedDepartment={selectedDepartment}
+      />,
     )
     const className = `.${css.activeJobSelector.split(' ').join('.')}`
     expect(wrapper.find(className)).toHaveLength(1)

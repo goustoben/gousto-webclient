@@ -4,9 +4,9 @@ import classnames from 'classnames'
 import css from './BottomBar.css'
 
 const BottomBar = ({ children, className }) => (
-	<div className={classnames(css.bottomBar, className)}>
-		{children}
-	</div>
+  <div className={classnames(css.bottomBar, className)}>
+    {children}
+  </div>
 )
 
 BottomBar.propTypes = {

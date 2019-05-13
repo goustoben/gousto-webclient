@@ -15,14 +15,14 @@ const Ingredient = ({ ingredient }) => {
   }
 
   return (
-		<div className={css.ingredient}>
-			<div className={css.imageContainer}>
-				{src ? <Image media={src} title={ingredient.get('name')} className={css.image} /> : <Svg fileName="icon-vegs" className={css.placeholder} />}
-			</div>
-			<div className={css.label}>
-				<span>{ingredient.get('label')}{(ingredient.get('allergens', Immutable.List([])).size > 0) ? <span>&#8224;</span> : ''}</span>
-			</div>
-		</div>
+    <div className={css.ingredient}>
+      <div className={css.imageContainer}>
+        {src ? <Image media={src} title={ingredient.get('name')} className={css.image} /> : <Svg fileName="icon-vegs" className={css.placeholder} />}
+      </div>
+      <div className={css.label}>
+        <span>{ingredient.get('label')}{(ingredient.get('allergens', Immutable.List([])).size > 0) ? <span>&#8224;</span> : ''}</span>
+      </div>
+    </div>
   )
 }
 

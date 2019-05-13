@@ -15,9 +15,9 @@ describe('<Error />', () => {
 
     test('error component renders when an error is present', () => {
       const wrapper = mount(
-				<Error hasError content={content}>
-					<div className="test" />
-				</Error>
+        <Error hasError content={content}>
+          <div className="test" />
+        </Error>
       )
 
       expect(wrapper.contains(<div className="test" />)).toBe(false)
@@ -26,9 +26,9 @@ describe('<Error />', () => {
 
     test('dynamic content is being set', () => {
       const wrapper = mount(
-				<Error hasError content={content}>
-					<div className="test" />
-				</Error>
+        <Error hasError content={content}>
+          <div className="test" />
+        </Error>
       )
 
       const getHelpLayout = wrapper.find('GetHelpLayout')
@@ -49,9 +49,9 @@ describe('<Error />', () => {
 
     test('error component renders the children when no error', () => {
       const wrapper = mount(
-				<Error hasError={false} content={content}>
-					<div className="test" />
-				</Error>
+        <Error hasError={false} content={content}>
+          <div className="test" />
+        </Error>
       )
 
       expect(wrapper.contains(<div className="test" />)).toBe(true)

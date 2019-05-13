@@ -33,7 +33,7 @@ describe('Hub', () => {
         recipes: ['pasta'],
       })
       wrapper = shallow(
-				<Hub recipes={recipes} collection={collection} slug="most-popular" />,
+        <Hub recipes={recipes} collection={collection} slug="most-popular" />,
       )
     })
 

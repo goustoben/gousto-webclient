@@ -19,10 +19,10 @@ const defaultProps = {
 
 const ValueProposition = ({ valueProposition }) => (
   (valueProposition) ? (
-		<div className={css.container}>
-			<div className={css.title}>{valueProposition.title}</div>
-			<div className={css.message}>{valueProposition.message}</div>
-		</div>
+    <div className={css.container}>
+      <div className={css.title}>{valueProposition.title}</div>
+      <div className={css.message}>{valueProposition.message}</div>
+    </div>
   ) : null
 )
 

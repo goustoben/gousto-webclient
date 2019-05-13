@@ -11,29 +11,29 @@ const DietaryAttributesFilter = ({
   dietaryAttributeTypes,
   filterDietaryAttributesChange,
 }) => (
-	<div>
-		<H2 size="XL2" headlineFont={false}>
-			<Content contentKeys="filterRecipeDietaryAttributesTitle">
-				<span>Free From</span>
-			</Content>
-		</H2>
-		{(Object.entries(dietaryAttributeTypes)).map(([dietaryAttributeType, dietaryAttributeName]) => {
-		  const isChecked = dietaryAttributes.has(dietaryAttributeType)
+  <div>
+    <H2 size="XL2" headlineFont={false}>
+      <Content contentKeys="filterRecipeDietaryAttributesTitle">
+        <span>Free From</span>
+      </Content>
+    </H2>
+    {(Object.entries(dietaryAttributeTypes)).map(([dietaryAttributeType, dietaryAttributeName]) => {
+      const isChecked = dietaryAttributes.has(dietaryAttributeType)
 
-		  return (
-				<FilterItem
-				  type="checkbox"
-				  key={`dietaryAttribute-${dietaryAttributeType}`}
-				  groupName="dietaryAttributes"
-				  value={dietaryAttributeType}
-				  identifier={`dietaryAttribute-${dietaryAttributeType}`}
-				  checked={isChecked}
-				  onClick={() => filterDietaryAttributesChange(dietaryAttributeType)}
-				><span>{dietaryAttributeName}</span>
-				</FilterItem>
-		  )
-		})}
-	</div>
+      return (
+        <FilterItem
+          type="checkbox"
+          key={`dietaryAttribute-${dietaryAttributeType}`}
+          groupName="dietaryAttributes"
+          value={dietaryAttributeType}
+          identifier={`dietaryAttribute-${dietaryAttributeType}`}
+          checked={isChecked}
+          onClick={() => filterDietaryAttributesChange(dietaryAttributeType)}
+        ><span>{dietaryAttributeName}</span>
+        </FilterItem>
+      )
+    })}
+  </div>
 )
 
 DietaryAttributesFilter.propTypes = {

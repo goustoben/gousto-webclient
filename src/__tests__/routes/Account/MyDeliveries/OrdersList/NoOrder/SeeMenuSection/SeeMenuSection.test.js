@@ -62,13 +62,13 @@ describe('SeeMenuSection', () => {
     test('should render no more than 5 recipes', () => {
       wrapper = shallow(<SeeMenuSection recipes={recipes} boxType="gourmet" />)
       const expected =
-				'<OrderRecipe /><OrderRecipe /><OrderRecipe /><OrderRecipe /><OrderRecipe />'
+        '<OrderRecipe /><OrderRecipe /><OrderRecipe /><OrderRecipe /><OrderRecipe />'
       expect(wrapper.text()).toBe(expected)
     })
 
     test('should only render veggie recipes is user is veggie', () => {
       wrapper = shallow(
-				<SeeMenuSection recipes={recipes} boxType="vegetarian" />,
+        <SeeMenuSection recipes={recipes} boxType="vegetarian" />,
       )
       const expected = '<OrderRecipe />'
       expect(wrapper.text()).toBe(expected)

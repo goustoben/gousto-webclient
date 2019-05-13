@@ -69,7 +69,7 @@ class OrderSummary extends React.PureComponent {
     return (
       productItems.map((productQty, productId) => {
         const product = products.get(productId, Immutable.Map())
-  
+
         return {
           orderItemId: productId,
           title: product.get('title'),
@@ -88,12 +88,12 @@ class OrderSummary extends React.PureComponent {
 
     return giftItems.map((productQty, productId) => {
       const product = products.get(productId, Immutable.Map())
-  
+
       // Hide gifts
       if (!productUtils.isNotAGift(product)) {
         return false
       }
-  
+
       return {
         orderItemId: productId,
         title: product.get('title'),
@@ -103,7 +103,7 @@ class OrderSummary extends React.PureComponent {
       }
     }).toArray().filter(item => item)
   }
-  
+
   getRecipes = () => {
     const { recipeItems, recipes, numPortions } = this.props
     const recipesDetails = []

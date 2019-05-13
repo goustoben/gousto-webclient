@@ -13,41 +13,10 @@ describe('FilterTag', () => {
 
       expect(tree).toMatchSnapshot()
     })
-
-    test('should render heart icon if tag for JFY collection', () => {
-      const wrapper = shallow(<FilterTag value="collectionId" type="collection" slug="recommendations" />)
-      expect(wrapper.find('.filterTagHeart[fileName="icon-heart"]').length).toBe(1)
-    })
-
-    test('should render outline heart icon if tag for JFY collection', () => {
-      const wrapper = shallow(<FilterTag value="collectionId" type="collection" slug="recommendations" isLoading />)
-      expect(wrapper.find('.filterTagHeart[fileName="icon-heart-outline"]').length).toBe(1)
-    })
-
-    test('should NOT render heart icon if no slug for JFY collection', () => {
-      const wrapper = shallow(<FilterTag value="collectionId" type="collection" slug="all" />)
-      expect(wrapper.find('.filterTagHeart').length).toBe(0)
-    })
   })
 
   describe('onClick', () => {
     let wrapper
-
-    test('should trigger a collection filter change action with the value passed', () => {
-      const collectionFilterChange = jest.fn()
-      wrapper = shallow(<FilterTag value="collectionId" type="collection" collectionFilterChange={collectionFilterChange} />)
-
-      wrapper.find('div').first().simulate('click')
-      expect(collectionFilterChange).toHaveBeenCalledWith('collectionId')
-    })
-
-    test('should trigger a current diet type change action with the value passed', () => {
-      const filterCurrentDietTypesChange = jest.fn()
-      wrapper = shallow(<FilterTag value="diet-type" type="dietType" filterCurrentDietTypesChange={filterCurrentDietTypesChange} />)
-
-      wrapper.find('div').first().simulate('click')
-      expect(filterCurrentDietTypesChange).toHaveBeenCalledWith('diet-type')
-    })
 
     test('should trigger a dietary attributes change action with the value passed', () => {
       const filterDietaryAttributesChange = jest.fn()
@@ -57,12 +26,12 @@ describe('FilterTag', () => {
       expect(filterDietaryAttributesChange).toHaveBeenCalledWith('dietary-attribute')
     })
 
-    test('should trigger a total time change action with the value passed', () => {
-      const filterCurrentTotalTimeChange = jest.fn()
-      wrapper = shallow(<FilterTag value="0" type="totalTime" filterCurrentTotalTimeChange={filterCurrentTotalTimeChange} />)
+    test('should display the x icon on the tag', () => {
+      const filterDietaryAttributesChange = jest.fn()
+      wrapper = shallow(<FilterTag value="dietary-attribute" type="dietaryAttribute" selected filterDietaryAttributesChange={filterDietaryAttributesChange} />)
 
       wrapper.find('div').first().simulate('click')
-      expect(filterCurrentTotalTimeChange).toHaveBeenCalledWith('0')
+      expect(wrapper.find('.tagIcon')).toHaveLength(1)
     })
   })
 })

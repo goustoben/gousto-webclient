@@ -4,18 +4,18 @@ import Immutable from 'immutable'/* eslint-disable new-cap */
 import Item from 'Item'
 
 const ProductItem = (props) => (
-	<Item
-	  disclaimerKey={props.disclaimerKey}
-	  type="product"
-	  media={props.images.toList()}
-	  title={props.title}
-	  quantity={props.quantity}
-	  onImageClick={props.onImageClick}
-	  onRemove={props.onRemove}
-	  available={props.available}
-	  gift={props.gift}
-	  url={props.url}
-	/>
+  <Item
+    disclaimerKey={props.disclaimerKey}
+    type="product"
+    media={props.images.toList()}
+    title={props.title}
+    quantity={props.quantity}
+    onImageClick={props.onImageClick}
+    onRemove={props.onRemove}
+    available={props.available}
+    gift={props.gift}
+    url={props.url}
+  />
 )
 
 ProductItem.propTypes = {

@@ -38,10 +38,10 @@ describe('Subscription Pause CallToAction', function() {
 
     it('should return correct call to action if type match is found', function() {
       wrapper = shallow(
-				<CallToAction
-				  store={store}
-				  type="Cancel"
-				/>
+        <CallToAction
+          store={store}
+          type="Cancel"
+        />
       ).shallow()
       console.log(wrapper)
       expect(wrapper.type()).to.equal(Button)
@@ -49,13 +49,13 @@ describe('Subscription Pause CallToAction', function() {
 
     it('should pass through all parameters passed in as props aside from "type"', function() {
       wrapper = shallow(
-				<CallToAction
-				  type="Cancel"
-				  text="Sample Text"
-				  color="secondary"
-				  anything="any value"
-				  store={store}
-				/>
+        <CallToAction
+          type="Cancel"
+          text="Sample Text"
+          color="secondary"
+          anything="any value"
+          store={store}
+        />
       ).shallow()
 
       const renderedComponent = wrapper.find(Button)

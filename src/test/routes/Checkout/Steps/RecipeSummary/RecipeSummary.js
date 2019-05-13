@@ -57,7 +57,7 @@ describe('RecipeSummary', function() {
 
   it('should render a <div> with no props', function() {
     const wrapper = shallow(
-			<RecipeSummary />
+      <RecipeSummary />
     )
     expect(wrapper.type()).to.equal('div')
   })
@@ -100,7 +100,7 @@ describe('RecipeSummary', function() {
 
     it('should call fetchData', function() {
       wrapper = mount(
-				<RecipeSummaryComponent menuRecipeStock={menuRecipeStock} recipes={Immutable.Map({ 45: 1, 56: 1 })} basket={basket} />, { context })
+        <RecipeSummaryComponent menuRecipeStock={menuRecipeStock} recipes={Immutable.Map({ 45: 1, 56: 1 })} basket={basket} />, { context })
       expect(RecipeSummaryComponent.fetchData.calledOnce).to.be.true
     })
   })

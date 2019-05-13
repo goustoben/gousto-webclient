@@ -4,14 +4,14 @@ import SectionHeader from 'SectionHeader'
 import Content from 'containers/Content'
 
 const SubHeader = ({ nameFirst, message, contentKeys }) => (
-	<Content
-	  contentKeys={contentKeys}
-	  propNames="title"
-	>
-		<SectionHeader title={`Thanks ${nameFirst},`} contentSizeMax="LG" >
-			<p>{message}</p>
-		</SectionHeader>
-	</Content>
+  <Content
+    contentKeys={contentKeys}
+    propNames="title"
+  >
+    <SectionHeader title={`Thanks ${nameFirst},`} contentSizeMax="LG" >
+      <p>{message}</p>
+    </SectionHeader>
+  </Content>
 
 )
 

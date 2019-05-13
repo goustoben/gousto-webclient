@@ -1,9 +1,9 @@
 const clickElement = function (name) {
-	this
-		.waitForElementVisible(name)
-		.click(name)
+  this
+    .waitForElementVisible(name)
+    .click(name)
 
-	return this
+  return this
 }
 
 module.exports = clickElement

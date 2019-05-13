@@ -80,60 +80,60 @@ class Welcome extends React.PureComponent {
     return this.props.isAuthenticated && shallowCompare(this, nextProps, nextState)
   }
 
-	isProductDetailAvailable = () =>
-	  !!this.props.productDetailId && this.props.products.has(this.props.productDetailId)
+  isProductDetailAvailable = () =>
+    !!this.props.productDetailId && this.props.products.has(this.props.productDetailId)
 
-	render() {
-	  const userOrder = userUtils.getUserOrderById(this.props.orderId, this.props.user.get('orders'))
-	  const randomProducts = productUtils.getOneProductFromEachCategory(this.props.products, this.props.orderId)
+  render() {
+    const userOrder = userUtils.getUserOrderById(this.props.orderId, this.props.user.get('orders'))
+    const randomProducts = productUtils.getOneProductFromEachCategory(this.props.products, this.props.orderId)
 
-	  return (
-			<section className={css.container} data-testing="welcomeContainer">
-				<Content
-				  contentKeys="welcome_immediate.welcome_immediate_header.welcome_immediate_title.welcome_immediate_title_message"
-				  propnames="message"
-				>
-					<SubHeader
-					  nameFirst={this.props.user.get('nameFirst')}
-					  contentKeys="welcome_immediate.welcome_immediate_header.welcome_immediate_title.welcome_immediate_title_text"
-					/>
-				</Content>
+    return (
+      <section className={css.container} data-testing="welcomeContainer">
+        <Content
+          contentKeys="welcome_immediate.welcome_immediate_header.welcome_immediate_title.welcome_immediate_title_message"
+          propnames="message"
+        >
+          <SubHeader
+            nameFirst={this.props.user.get('nameFirst')}
+            contentKeys="welcome_immediate.welcome_immediate_header.welcome_immediate_title.welcome_immediate_title_text"
+          />
+        </Content>
 
-				<div className={css.contentContainer}>
-					<div className={css.row}>
-						<div className={css.colMedium}>
-							<div className={css.welcomeColInner}>
-								<ExpectationsCarousel />
-							</div>
-						</div>
-						<div className={css.colSmall}>
-							<div className={css.welcomeColInner}>
-								<OrderSummary
-								  order={userOrder}
-								/>
-							</div>
-						</div>
-					</div>
-					<div className={css.row}>
-						<div className={css.colMedium}>
-							<div className={css.welcomeColInner}>
-								<ProductList
-								  products={randomProducts}
-								  number={6}
-								  orderId={this.props.orderId}
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
+        <div className={css.contentContainer}>
+          <div className={css.row}>
+            <div className={css.colMedium}>
+              <div className={css.welcomeColInner}>
+                <ExpectationsCarousel />
+              </div>
+            </div>
+            <div className={css.colSmall}>
+              <div className={css.welcomeColInner}>
+                <OrderSummary
+                  order={userOrder}
+                />
+              </div>
+            </div>
+          </div>
+          <div className={css.row}>
+            <div className={css.colMedium}>
+              <div className={css.welcomeColInner}>
+                <ProductList
+                  products={randomProducts}
+                  number={6}
+                  orderId={this.props.orderId}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-				<ProductDetailOverlay
-				  productId={this.props.productDetailId}
-				  open={this.state.isClient && this.isProductDetailAvailable()}
-				/>
-			</section>
-	  )
-	}
+        <ProductDetailOverlay
+          productId={this.props.productDetailId}
+          open={this.state.isClient && this.isProductDetailAvailable()}
+        />
+      </section>
+    )
+  }
 }
 
 Welcome.propTypes = {

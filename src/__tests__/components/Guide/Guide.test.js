@@ -35,19 +35,19 @@ describe('Guide', () => {
           path: 'icon-choose',
           title: 'You choose',
           description:
-						'From over 20 recipes a week. You can pause or skip boxes whenever you like.',
+            'From over 20 recipes a week. You can pause or skip boxes whenever you like.',
         },
         {
           path: 'icon-pause',
           title: 'We deliver',
           description:
-						'Perfectly measured ingredients, any day of the week (to fit in with your life).',
+            'Perfectly measured ingredients, any day of the week (to fit in with your life).',
         },
         {
           path: 'icon-no-problem',
           title: 'You cook',
           description:
-						'Tasty, impressive meals you’re proud to share with the people you love.',
+            'Tasty, impressive meals you’re proud to share with the people you love.',
         },
       ]
 

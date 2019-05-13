@@ -93,7 +93,7 @@ const config = {
         loader: 'image-webpack-loader',
         // This will apply the loader before the other ones
         enforce: 'pre',
-			}, */
+      }, */
       {
         test: /\.(jpe?g|png|gif)$/,
         loader: 'url-loader',
@@ -102,10 +102,10 @@ const config = {
           limit: 10 * 1024
         }
       },
-      { 	test: /\.ico$/,
+      { test: /\.ico$/,
         loader: 'file-loader',
       },
-      {	test: /\.svg$/,
+      { test: /\.svg$/,
         loaders: [
           'svg-url-loader',
           'image-webpack-loader',

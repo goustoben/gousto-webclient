@@ -4,11 +4,11 @@ import Svg from 'Svg'
 import css from './NoResultsPage.css'
 
 const NoResultsPage = ({ imageName, title, description }) => (
-	<div className={css.page}>
-		<Svg fileName={imageName} className={css.image} />
-		<h2 className={css.title}>{title}</h2>
-		<div className={css.description}>{description}</div>
-	</div>
+  <div className={css.page}>
+    <Svg fileName={imageName} className={css.image} />
+    <h2 className={css.title}>{title}</h2>
+    <div className={css.description}>{description}</div>
+  </div>
 )
 
 NoResultsPage.propTypes = {

@@ -16,7 +16,7 @@ describe('AboutYou', () => {
   beforeEach(() => {
     checkoutStepValidation = sinon.spy()
     wrapper = shallow(
-			<AboutYou checkoutStepValidation={checkoutStepValidation} />,
+      <AboutYou checkoutStepValidation={checkoutStepValidation} />,
     )
   })
 
@@ -45,61 +45,61 @@ describe('AboutYou', () => {
   describe('props', () => {
     test('should be true for Login "isOpen" prop', () => {
       const wrapper = shallow(
-				<AboutYou loginOpen checkoutStepValidation={checkoutStepValidation} />,
+        <AboutYou loginOpen checkoutStepValidation={checkoutStepValidation} />,
       )
       expect(wrapper.find(Login).prop('isOpen')).toBe(true)
     })
     test('should be false for Login "isOpen" prop', () => {
       const wrapper = shallow(
-				<AboutYou
-				  loginOpen={false}
-				  checkoutStepValidation={checkoutStepValidation}
-				/>,
+        <AboutYou
+          loginOpen={false}
+          checkoutStepValidation={checkoutStepValidation}
+        />,
       )
       expect(wrapper.find(Login).prop('isOpen')).toBe(false)
     })
 
     test('should be true for Login "isAuthenticated" prop', () => {
       const wrapper = shallow(
-				<AboutYou
-				  isAuthenticated
-				  checkoutStepValidation={checkoutStepValidation}
-				/>,
+        <AboutYou
+          isAuthenticated
+          checkoutStepValidation={checkoutStepValidation}
+        />,
       )
       expect(wrapper.find(Login).prop('isAuthenticated')).toBe(true)
     })
     test('should be false for Login "isAuthenticated" prop', () => {
       const wrapper = shallow(
-				<AboutYou
-				  isAuthenticated={false}
-				  checkoutStepValidation={checkoutStepValidation}
-				/>,
+        <AboutYou
+          isAuthenticated={false}
+          checkoutStepValidation={checkoutStepValidation}
+        />,
       )
       expect(wrapper.find(Login).prop('isAuthenticated')).toBe(false)
     })
     test('should be true for Login "isOpen" and Overlay "open" props', () => {
       const wrapper = shallow(
-				<AboutYou loginOpen checkoutStepValidation={checkoutStepValidation} />,
+        <AboutYou loginOpen checkoutStepValidation={checkoutStepValidation} />,
       )
       expect(wrapper.find(Overlay).prop('open')).toBe(true)
       expect(wrapper.find(Login).prop('isOpen')).toBe(true)
     })
     test('should be false for Login "isOpen" and Overlay "open" props', () => {
       const wrapper = shallow(
-				<AboutYou
-				  loginOpen={false}
-				  checkoutStepValidation={checkoutStepValidation}
-				/>,
+        <AboutYou
+          loginOpen={false}
+          checkoutStepValidation={checkoutStepValidation}
+        />,
       )
       expect(wrapper.find(Overlay).prop('open')).toBe(false)
       expect(wrapper.find(Login).prop('isOpen')).toBe(false)
     })
     test('should be true for "mask" for first name, last name, email, password, and marketing checkboxes', () => {
       const wrapper = shallow(
-				<AboutYou
-				  loginOpen={false}
-				  checkoutStepValidation={checkoutStepValidation}
-				/>,
+        <AboutYou
+          loginOpen={false}
+          checkoutStepValidation={checkoutStepValidation}
+        />,
       )
       expect(
         wrapper

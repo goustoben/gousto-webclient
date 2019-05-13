@@ -24,21 +24,21 @@ export default (store) => {
   }
 
   return (
-		<Route component={WizardLayout}>
-			<Route
-			  path={configRoutes.client.getHelp.index}
-			  component={GetHelpContainer}
-			  onEnter={onEnterHandler}
-			>
-				<IndexRoute component={OrderIssueContainer} />
-				{Ingredients}
-				{IngredientIssues}
-				{IngredientReasons}
-				{Refund}
-				{Contact}
-				{Confirmation}
-				<Redirect to={configRoutes.client.login} />
-			</Route>
-		</Route>
+    <Route component={WizardLayout}>
+      <Route
+        path={configRoutes.client.getHelp.index}
+        component={GetHelpContainer}
+        onEnter={onEnterHandler}
+      >
+        <IndexRoute component={OrderIssueContainer} />
+        {Ingredients}
+        {IngredientIssues}
+        {IngredientReasons}
+        {Refund}
+        {Contact}
+        {Confirmation}
+        <Redirect to={configRoutes.client.login} />
+      </Route>
+    </Route>
   )
 }

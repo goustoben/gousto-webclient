@@ -6,7 +6,7 @@ import MainLayout from 'layouts/MainLayout'
 import BoxPrices from './BoxPricesContainer'
 
 export default (
-	<Route component={MainLayout}>
-		<Route path={config.client.boxPrices} component={BoxPrices} />
-	</Route>
+  <Route component={MainLayout}>
+    <Route path={config.client.boxPrices} component={BoxPrices} />
+  </Route>
 )

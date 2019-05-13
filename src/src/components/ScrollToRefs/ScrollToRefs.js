@@ -3,57 +3,57 @@ import React from 'react'
 import * as domHelper from 'utils/DOMhelper'
 
 export default class ScrollToRefs extends React.PureComponent {
-	static propTypes = {
-	  refKeys: PropTypes.array,
-	  scrollToRef: PropTypes.bool,
-	}
+  static propTypes = {
+    refKeys: PropTypes.array,
+    scrollToRef: PropTypes.bool,
+  }
 
-	static defaultProps = {
-	  refKeys: [],
-	  scrollToRef: false,
-	  Component: null,
-	}
+  static defaultProps = {
+    refKeys: [],
+    scrollToRef: false,
+    Component: null,
+  }
 
-	componentWillReceiveProps(nextProps) {
-	  if (!this.props.scrollToRef && nextProps.scrollToRef) {
-	    if (nextProps.refKeys.length) {
-	      this.scrollToFirstMatchingRef(nextProps.refKeys)
-	    }
-	  }
-	}
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.scrollToRef && nextProps.scrollToRef) {
+      if (nextProps.refKeys.length) {
+        this.scrollToFirstMatchingRef(nextProps.refKeys)
+      }
+    }
+  }
 
-	storeRef = el => {
-	  const refId = el && el.props.refId
+  storeRef = el => {
+    const refId = el && el.props.refId
 
-	  if (refId) {
-	    this.refs = {
-	      ...this.refs,
-	      [refId]: el,
-	    }
-	  }
-	}
+    if (refId) {
+      this.refs = {
+        ...this.refs,
+        [refId]: el,
+      }
+    }
+  }
 
-	scrollToFirstMatchingRef = refKeys => {
-	  domHelper.scrollToFirstMatchingNode(refKeys, this.refs)
-	}
+  scrollToFirstMatchingRef = refKeys => {
+    domHelper.scrollToFirstMatchingNode(refKeys, this.refs)
+  }
 
-	render() {
-	  const { Component, ...props } = this.props
-	  delete props.scrollToRef
+  render() {
+    const { Component, ...props } = this.props
+    delete props.scrollToRef
 
-	  return Component ? (
-			<Component
-			  {...props}
-			  receiveRef={this.storeRef}
-			  scrollToFirstMatchingRef={this.scrollToFirstMatchingRef}
-			/>
-	  ) : null
-	}
+    return Component ? (
+      <Component
+        {...props}
+        receiveRef={this.storeRef}
+        scrollToFirstMatchingRef={this.scrollToFirstMatchingRef}
+      />
+    ) : null
+  }
 }
 
 export const scrollToRefsWrapper = Component => props => (
-	<ScrollToRefs
-	  {...props}
-	  Component={Component}
-	/>
+  <ScrollToRefs
+    {...props}
+    Component={Component}
+  />
 )

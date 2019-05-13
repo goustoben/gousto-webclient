@@ -51,13 +51,13 @@ describe('<CollectionsNav />', () => {
     featureSet = jest.fn()
     menuCurrentCollectionId = '345-345-345'
     wrapper = shallow(
-			<CollectionsNav
-			  menuCollections={menuCollections}
-			  collectionFilterChange={collectionFilterChange}
-			  menuCurrentCollectionId={menuCurrentCollectionId}
-			  featureSet={featureSet}
-			  features={Immutable.fromJS({ menuStickyCollections: { value: true } })}
-			/>,
+      <CollectionsNav
+        menuCollections={menuCollections}
+        collectionFilterChange={collectionFilterChange}
+        menuCurrentCollectionId={menuCurrentCollectionId}
+        featureSet={featureSet}
+        features={Immutable.fromJS({ menuStickyCollections: { value: true } })}
+      />,
     )
   })
 
@@ -97,13 +97,13 @@ describe('<CollectionsNav />', () => {
     featureSet = jest.fn()
     menuCurrentCollectionId = '345-345-345'
     wrapper = shallow(
-			<CollectionsNav
-			  menuCollections={menuCollections}
-			  collectionFilterChange={collectionFilterChange}
-			  menuCurrentCollectionId={menuCurrentCollectionId}
-			  featureSet={featureSet}
-			  features={Immutable.fromJS({ menuStickyCollections: { value: false } })}
-			/>,
+      <CollectionsNav
+        menuCollections={menuCollections}
+        collectionFilterChange={collectionFilterChange}
+        menuCurrentCollectionId={menuCurrentCollectionId}
+        featureSet={featureSet}
+        features={Immutable.fromJS({ menuStickyCollections: { value: false } })}
+      />,
     )
 
     items = wrapper.find(CollectionItem)
@@ -121,11 +121,11 @@ describe('<CollectionsNav />', () => {
 
   test('should always show collections which should always be shown on the menu', () => {
     wrapper = shallow(
-			<CollectionsNav
-			  menuCollections={menuCollections}
-			  collectionFilterChange={collectionFilterChange}
-			  menuCurrentCollectionId={menuCurrentCollectionId}
-			/>,
+      <CollectionsNav
+        menuCollections={menuCollections}
+        collectionFilterChange={collectionFilterChange}
+        menuCurrentCollectionId={menuCurrentCollectionId}
+      />,
     )
     items = wrapper.find(CollectionItem)
     expect(items.length).toEqual(3)
@@ -155,15 +155,15 @@ describe('<CollectionsNav />', () => {
       featureSet = jest.fn()
 
       wrapper = shallow(
-				<CollectionsNav
-				  menuCollections={menuCollections}
-				  menuCurrentCollectionId={menuCurrentCollectionId}
-				  collectionFilterChange={collectionFilterChange}
-				  featureSet={featureSet}
-				  features={Immutable.fromJS({
-				    menuStickyCollections: { value: true },
-				  })}
-				/>,
+        <CollectionsNav
+          menuCollections={menuCollections}
+          menuCurrentCollectionId={menuCurrentCollectionId}
+          collectionFilterChange={collectionFilterChange}
+          featureSet={featureSet}
+          features={Immutable.fromJS({
+            menuStickyCollections: { value: true },
+          })}
+        />,
       )
     })
 
@@ -180,12 +180,12 @@ describe('<CollectionsNav />', () => {
       test('should not call collectionFilterChange if it is the last collection', () => {
         menuCurrentCollectionId = '345-345-345'
         wrapper = shallow(
-					<CollectionsNav
-					  menuCollections={menuCollections}
-					  menuCurrentCollectionId={menuCurrentCollectionId}
-					  collectionFilterChange={collectionFilterChange}
-					  featureSet={featureSet}
-					/>,
+          <CollectionsNav
+            menuCollections={menuCollections}
+            menuCurrentCollectionId={menuCurrentCollectionId}
+            collectionFilterChange={collectionFilterChange}
+            featureSet={featureSet}
+          />,
         )
 
         wrapper.instance().nextCollection()
@@ -196,12 +196,12 @@ describe('<CollectionsNav />', () => {
       test('should cope with an empty menuCollections list', () => {
         menuCollections = Immutable.fromJS({}).toOrderedMap()
         wrapper = shallow(
-					<CollectionsNav
-					  menuCollections={menuCollections}
-					  menuCurrentCollectionId={menuCurrentCollectionId}
-					  collectionFilterChange={collectionFilterChange}
-					  featureSet={featureSet}
-					/>,
+          <CollectionsNav
+            menuCollections={menuCollections}
+            menuCurrentCollectionId={menuCurrentCollectionId}
+            collectionFilterChange={collectionFilterChange}
+            featureSet={featureSet}
+          />,
         )
 
         wrapper.instance().nextCollection()
@@ -222,12 +222,12 @@ describe('<CollectionsNav />', () => {
       test('should not call collectionFilterChange if it is the first collection', () => {
         menuCurrentCollectionId = '123-123-123'
         wrapper = shallow(
-					<CollectionsNav
-					  menuCollections={menuCollections}
-					  menuCurrentCollectionId={menuCurrentCollectionId}
-					  collectionFilterChange={collectionFilterChange}
-					  featureSet={featureSet}
-					/>,
+          <CollectionsNav
+            menuCollections={menuCollections}
+            menuCurrentCollectionId={menuCurrentCollectionId}
+            collectionFilterChange={collectionFilterChange}
+            featureSet={featureSet}
+          />,
         )
         wrapper.instance().prevCollection()
 
@@ -237,12 +237,12 @@ describe('<CollectionsNav />', () => {
       test('should cope with an empty menuCollections list', () => {
         menuCollections = Immutable.fromJS({}).toOrderedMap()
         wrapper = shallow(
-					<CollectionsNav
-					  menuCollections={menuCollections}
-					  menuCurrentCollectionId={menuCurrentCollectionId}
-					  collectionFilterChange={collectionFilterChange}
-					  featureSet={featureSet}
-					/>,
+          <CollectionsNav
+            menuCollections={menuCollections}
+            menuCurrentCollectionId={menuCurrentCollectionId}
+            collectionFilterChange={collectionFilterChange}
+            featureSet={featureSet}
+          />,
         )
 
         wrapper.instance().prevCollection()
@@ -276,12 +276,12 @@ describe('<CollectionsNav />', () => {
     describe('click event', () => {
       test('should call collectionFilterChange', () => {
         wrapper = shallow(
-					<CollectionsNav
-					  menuCollections={menuCollections}
-					  menuCurrentCollectionId={menuCurrentCollectionId}
-					  collectionFilterChange={collectionFilterChange}
-					  featureSet={featureSet}
-					/>,
+          <CollectionsNav
+            menuCollections={menuCollections}
+            menuCurrentCollectionId={menuCurrentCollectionId}
+            collectionFilterChange={collectionFilterChange}
+            featureSet={featureSet}
+          />,
         )
         const collections = wrapper.find(CollectionItem).filterWhere(function(n) {
           return n.prop('dataId') === '123-123-123'

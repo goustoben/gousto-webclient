@@ -4,5 +4,5 @@ import SubscriptionContainer from './SubscriptionContainer'
 import config from 'config/routes'
 
 export default (
-	<Route path={config.client.mySubscription2} component={SubscriptionContainer} />
+  <Route path={config.client.mySubscription2} component={SubscriptionContainer} />
 )

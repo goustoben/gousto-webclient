@@ -15,9 +15,9 @@ describe('Label', () => {
 
   test('should show the label, sublabel and children props', () => {
     wrapper = shallow(
-			<Label label="my label" subLabel="my subLabel">
-				Input...
-			</Label>,
+      <Label label="my label" subLabel="my subLabel">
+        Input...
+      </Label>,
     )
 
     const text = wrapper.text()

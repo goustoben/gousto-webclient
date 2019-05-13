@@ -162,7 +162,7 @@ function getLandingOrder(userOrders, deliveryDays) {
         if (defaultDayOrderFilled) {
           let deliveryDay
           const hasFilledOrdersBeforeDefaultDay =
-						futureOrders.filter(futureOrder => moment(futureOrder.get('deliveryDate')).isAfter(moment(defaultDay.get('date')))).size > 0
+            futureOrders.filter(futureOrder => moment(futureOrder.get('deliveryDate')).isAfter(moment(defaultDay.get('date')))).size > 0
 
           if (hasFilledOrdersBeforeDefaultDay) {
             deliveryDay = possibleDeliveryDays
@@ -202,8 +202,8 @@ function getLandingOrder(userOrders, deliveryDays) {
   }
 
   if (defaultDay && defaultDayOrder && defaultDayOrder.get('recipeItems').size > 0
-		&& followingWeeksOrders.size > 0 && !followingWeeksOrderFilled
-		&& currentWeeksOrders.size > 0 && currentWeekOrderFilled) {
+    && followingWeeksOrders.size > 0 && !followingWeeksOrderFilled
+    && currentWeeksOrders.size > 0 && currentWeekOrderFilled) {
     order = followingWeeksOrders.first()
     correspondingDay = moment(order.get('deliveryDate'))
   }

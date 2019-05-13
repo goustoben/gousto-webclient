@@ -17,9 +17,9 @@ const Title = ({ title, orderType }) => {
   const titleCopy = title || `Are you sure you want to ${(orderType === 'pending') ? 'cancel' : 'skip'}?`
 
   return (
-		<div className={css.title}>
-			{titleCopy}
-		</div>
+    <div className={css.title}>
+      {titleCopy}
+    </div>
   )
 }
 

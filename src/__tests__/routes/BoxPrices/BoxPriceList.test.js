@@ -20,7 +20,7 @@ describe("BoxPriceList", () => {
 
   it ("Will render box price list", () => {
     const component = mount(
-			<BoxPricesList boxPrices={boxPricesMock} type="gourmet" />
+      <BoxPricesList boxPrices={boxPricesMock} type="gourmet" />
     )
 
     expect(component.find(BoxPrice).length).toEqual(2)
@@ -28,7 +28,7 @@ describe("BoxPriceList", () => {
 
   it ("Will render an error component in case of error", () => {
     const component = shallow(
-			<BoxPricesList boxPrices={{}} type="gourmet" error />
+      <BoxPricesList boxPrices={{}} type="gourmet" error />
     )
 
     expect(component.find(ErrorPage).length).toEqual(1)

@@ -30,13 +30,13 @@ describe('Content', () => {
   describe('for react component', () => {
     beforeEach(() => {
       wrapper = shallow(
-				<Content
-				  contentKeys="welcomeTitleMessage"
-				  propNames="title"
-				  state={state}
-				>
-					<SectionHeader title="Test title" />
-				</Content>,
+        <Content
+          contentKeys="welcomeTitleMessage"
+          propNames="title"
+          state={state}
+        >
+          <SectionHeader title="Test title" />
+        </Content>,
       )
     })
 
@@ -59,9 +59,9 @@ describe('Content', () => {
   describe('for html container', () => {
     beforeEach(() => {
       wrapper = shallow(
-				<Content contentKeys="welcomeMessageMessage" state={state}>
-					<p>Test message</p>
-				</Content>,
+        <Content contentKeys="welcomeMessageMessage" state={state}>
+          <p>Test message</p>
+        </Content>,
       )
     })
 

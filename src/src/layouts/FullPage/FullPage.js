@@ -7,12 +7,12 @@ import CookieBanner from 'CookieBanner'
 import css from './FullPage.css'
 
 const FullPage = ({ children, route }) => (
-	<div className={css.container}>
-		<CookieBanner />
-		<Header />
-		{children}
-		<Footer type={route.footerType || 'medium'} copyright />
-	</div>
+  <div className={css.container}>
+    <CookieBanner />
+    <Header />
+    {children}
+    <Footer type={route.footerType || 'medium'} copyright />
+  </div>
 )
 
 FullPage.propTypes = {

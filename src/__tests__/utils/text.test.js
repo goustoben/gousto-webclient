@@ -29,10 +29,10 @@ describe('text utils', () => {
 
     test('all the occurrences of a value are replaced', () => {
       const string = `Please {{verb}} them. You have {{howMany}} ({{howMany}}), yes,
-				{{howMany}} messages. Please {{verb}} them.`
+        {{howMany}} messages. Please {{verb}} them.`
       const values = { howMany: 3, verb: 'read' }
       const expectedResult = `Please read them. You have 3 (3), yes,
-				3 messages. Please read them.`
+        3 messages. Please read them.`
 
       expect(replaceWithValues(string, values)).toBe(expectedResult)
     })

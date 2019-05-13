@@ -71,17 +71,9 @@
 	}
 }
 
-.masonryContainerWithCollectionsNav {
+.masonryContainerMenu {
 	composes: masonryContainer;
-	padding-top: 60px;
-	@media ScreenXSMax {
-		padding-top: 43px;
-	}
-}
-
-.masonryContainerWithMenuFilterNav {
-	composes: masonryContainer;
-	margin-top: -15px;
+	padding-top: 40px;
 }
 
 .legal {

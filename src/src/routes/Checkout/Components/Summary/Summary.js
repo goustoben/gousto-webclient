@@ -12,74 +12,74 @@ import css from './Summary.css'
 
 class Summary extends React.PureComponent {
 
-	static propTypes = {
-	  prices: PropTypes.instanceOf(Immutable.Map),
-	  basketRecipes: PropTypes.object,
-	  deliveryDate: PropTypes.string,
-	  slotId: PropTypes.string,
-	  browser: PropTypes.string,
-	  showPromocode: PropTypes.bool,
-	  routing: PropTypes.object,
-	  isLoading: PropTypes.bool,
-	}
+  static propTypes = {
+    prices: PropTypes.instanceOf(Immutable.Map),
+    basketRecipes: PropTypes.object,
+    deliveryDate: PropTypes.string,
+    slotId: PropTypes.string,
+    browser: PropTypes.string,
+    showPromocode: PropTypes.bool,
+    routing: PropTypes.object,
+    isLoading: PropTypes.bool,
+  }
 
-	static defaultProps = {
-	  prices: Immutable.Map({}),
-	  basketRecipes: Immutable.Map({}),
-	  deliveryDate: '',
-	  slotId: '',
-	  showPromocode: false,
-	  loadingPreviewOrder: false,
-	}
+  static defaultProps = {
+    prices: Immutable.Map({}),
+    basketRecipes: Immutable.Map({}),
+    deliveryDate: '',
+    slotId: '',
+    showPromocode: false,
+    loadingPreviewOrder: false,
+  }
 
-	render() {
-	  const { prices, basketRecipes } = this.props
-	  const numRecipes = basketSum(basketRecipes)
+  render() {
+    const { prices, basketRecipes } = this.props
+    const numRecipes = basketSum(basketRecipes)
 
-	  const isMobile = this.props.browser === 'mobile'
-	  const isLoading = this.props.isLoading
-	  let currentStep
+    const isMobile = this.props.browser === 'mobile'
+    const isLoading = this.props.isLoading
+    let currentStep
 
-	  const routing = this.props.routing
-	  if (routing && routing.locationBeforeTransitions) {
-	    if (routing.locationBeforeTransitions.pathname) {
-	      const pathnameArray = routing.locationBeforeTransitions.pathname.split('/')
-	      currentStep = pathnameArray.pop()
-	    }
-	  }
+    const routing = this.props.routing
+    if (routing && routing.locationBeforeTransitions) {
+      if (routing.locationBeforeTransitions.pathname) {
+        const pathnameArray = routing.locationBeforeTransitions.pathname.split('/')
+        currentStep = pathnameArray.pop()
+      }
+    }
 
-	  return (
-			<div className={css.summaryContainer}>
-				<H3 headlineFont>Order total</H3>
-				{
-				  (isLoading)
-				    ? <div className={css.loaderContainer}><Loading /></div>
-				    : <div className={css.details}>
-						<Receipt
-						  numRecipes={numRecipes}
-						  prices={prices}
-						  deliveryTotalPrice={prices.get('deliveryTotal')}
-						  surcharges={getSurchargeItems(prices.get('items'))}
-						  surchargeTotal={prices.get('surchargeTotal')}
-						  recipeTotalPrice={prices.get('recipeTotal')}
-						  totalToPay={prices.get('total')}
-						  recipeDiscountAmount={prices.get('recipeDiscount')}
-						  recipeDiscountPercent={prices.get('percentageOff')}
-						  extrasTotalPrice={prices.get('productTotal')}
-						  showAddPromocode
-						/>
-						<div>
-							{(currentStep !== 'payment' && !isMobile) ?
-								<Link to={configRoute.client.menu} className={css.link}>
-									Edit order&nbsp;<span className={css.arrowRight} />
-								</Link> : null
-							}
-						</div>
+    return (
+      <div className={css.summaryContainer}>
+        <H3 headlineFont>Order total</H3>
+        {
+          (isLoading)
+            ? <div className={css.loaderContainer}><Loading /></div>
+            : <div className={css.details}>
+            <Receipt
+              numRecipes={numRecipes}
+              prices={prices}
+              deliveryTotalPrice={prices.get('deliveryTotal')}
+              surcharges={getSurchargeItems(prices.get('items'))}
+              surchargeTotal={prices.get('surchargeTotal')}
+              recipeTotalPrice={prices.get('recipeTotal')}
+              totalToPay={prices.get('total')}
+              recipeDiscountAmount={prices.get('recipeDiscount')}
+              recipeDiscountPercent={prices.get('percentageOff')}
+              extrasTotalPrice={prices.get('productTotal')}
+              showAddPromocode
+            />
+            <div>
+              {(currentStep !== 'payment' && !isMobile) ?
+                <Link to={configRoute.client.menu} className={css.link}>
+                  Edit order&nbsp;<span className={css.arrowRight} />
+                </Link> : null
+              }
+            </div>
           </div>
-				}
-			</div>
-	  )
-	}
+        }
+      </div>
+    )
+  }
 }
 
 export default Summary

@@ -57,7 +57,7 @@ describe('<NewsletterSignUp />', () => {
       signup = Immutable.Map({})
       onSignup = function() {}
       wrapper = shallow(
-				<NewsletterSignUp onSignup={onSignup} signup={signup} />,
+        <NewsletterSignUp onSignup={onSignup} signup={signup} />,
       )
     })
 
@@ -87,7 +87,7 @@ describe('<NewsletterSignUp />', () => {
       signup = Immutable.Map({ pending: true })
       onSignup = function() {}
       wrapper = shallow(
-				<NewsletterSignUp onSignup={onSignup} signup={signup} />,
+        <NewsletterSignUp onSignup={onSignup} signup={signup} />,
       )
     })
 
@@ -117,7 +117,7 @@ describe('<NewsletterSignUp />', () => {
       signup = Immutable.Map({ success: true })
       onSignup = function() {}
       wrapper = shallow(
-				<NewsletterSignUp onSignup={onSignup} signup={signup} />,
+        <NewsletterSignUp onSignup={onSignup} signup={signup} />,
       )
     })
 
@@ -147,7 +147,7 @@ describe('<NewsletterSignUp />', () => {
       signup = Immutable.Map({ error: 'An Error Message' })
       onSignup = function() {}
       wrapper = shallow(
-				<NewsletterSignUp onSignup={onSignup} signup={signup} />,
+        <NewsletterSignUp onSignup={onSignup} signup={signup} />,
       )
     })
 

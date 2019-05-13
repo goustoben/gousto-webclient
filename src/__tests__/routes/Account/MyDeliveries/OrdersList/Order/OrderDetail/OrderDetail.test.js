@@ -63,7 +63,7 @@ describe('OrderDetail', () => {
 
     test('should render a specific list of subcomponents when the order is confirmed', () => {
       wrapper = shallow(
-				<OrderDetail orderState="confirmed" period={periodMap} />,
+        <OrderDetail orderState="confirmed" period={periodMap} />,
       )
       expect(wrapper.find(OrderRecipes)).toHaveLength(1)
       expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
@@ -72,7 +72,7 @@ describe('OrderDetail', () => {
 
     test('should render a specific list of subcomponents when the order is recipes chosen', () => {
       wrapper = shallow(
-				<OrderDetail orderState="recipes chosen" period={periodMap} />,
+        <OrderDetail orderState="recipes chosen" period={periodMap} />,
       )
       expect(wrapper.find(OrderRecipes)).toHaveLength(1)
       expect(wrapper.find(OrderProducts)).toHaveLength(1)

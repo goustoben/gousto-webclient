@@ -27,26 +27,26 @@ const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore,
   )
 
   return (
-		<div className={classes}>
-			{(() => (
-			  recipes.slice(0, maxRecipesNum).reduce((reducedRecipes, recipeQty, recipeId) => (
-			    reducedRecipes.concat(Array(recipeQty).fill(recipeId))
-			  ), [])
-			    .map((recipeIds, index) => (
-						<RecipeHolder
-						  recipe={menuRecipesStore.get(recipeIds)}
-						  onClick={() => { detailVisibilityChange(menuRecipesStore.getIn([recipeIds, 'id'])) }}
-						  view={view}
-						  key={index}
-						/>
-			    ))
-			))()}
+    <div className={classes}>
+      {(() => (
+        recipes.slice(0, maxRecipesNum).reduce((reducedRecipes, recipeQty, recipeId) => (
+          reducedRecipes.concat(Array(recipeQty).fill(recipeId))
+        ), [])
+          .map((recipeIds, index) => (
+            <RecipeHolder
+              recipe={menuRecipesStore.get(recipeIds)}
+              onClick={() => { detailVisibilityChange(menuRecipesStore.getIn([recipeIds, 'id'])) }}
+              view={view}
+              key={index}
+            />
+          ))
+      ))()}
 
-			{emptyRecipes.fill(undefined).map((el, index) => (
-				<RecipeHolder view={view} key={index} />
-			))}
-			{isDesktop ? <span className={css.arrowRight} /> : ''}
-		</div>
+      {emptyRecipes.fill(undefined).map((el, index) => (
+        <RecipeHolder view={view} key={index} />
+      ))}
+      {isDesktop ? <span className={css.arrowRight} /> : ''}
+    </div>
   )
 }
 

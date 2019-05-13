@@ -30,12 +30,12 @@ describe('OrderRecipes', () => {
   })
   describe('rendering', () => {
     wrapper = shallow(
-			<OrderRecipes
-			  recipes={recipes}
-			  orderId={orderId}
-			  orderState="menu open"
-			  whenCutoff="8 March"
-			/>,
+      <OrderRecipes
+        recipes={recipes}
+        orderId={orderId}
+        orderState="menu open"
+        whenCutoff="8 March"
+      />,
     )
 
     test('should render a <div>', () => {
@@ -60,12 +60,12 @@ describe('OrderRecipes', () => {
 
     test('should contain the correct button text', () => {
       wrapper = shallow(
-				<OrderRecipes
-				  recipes={recipes}
-				  orderId={orderId}
-				  orderState="menu open"
-				  whenCutoff="8 March"
-				/>,
+        <OrderRecipes
+          recipes={recipes}
+          orderId={orderId}
+          orderState="menu open"
+          whenCutoff="8 March"
+        />,
       )
       expect(wrapper.text()).toContain('GoustoLink')
       expect(
@@ -75,12 +75,12 @@ describe('OrderRecipes', () => {
 
     test('should contain the correct button text', () => {
       wrapper = shallow(
-				<OrderRecipes
-				  recipes={recipes}
-				  orderId={orderId}
-				  orderState="recipes chosen"
-				  whenCutoff="8 March"
-				/>,
+        <OrderRecipes
+          recipes={recipes}
+          orderId={orderId}
+          orderState="recipes chosen"
+          whenCutoff="8 March"
+        />,
       )
       expect(wrapper.text()).toContain('GoustoLink')
       expect(

@@ -14,24 +14,24 @@ describe('Receipt', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-			<Receipt
-			  numPortions={2}
-			  numRecipes={3}
-			  deliveryTotalPrice={'1.99'}
-			  dashPricing={false}
-			  recipeTotalPrice={'29.99'}
-			  recipeDiscountAmount={'15.00'}
-			  recipeDiscountPercent={'50'}
-			  totalToPay={'14.99'}
-			  extrasTotalPrice={'2.00'}
-			  surcharges={Immutable.fromJS([1])}
-			  surchargeTotal={'4.99'}
-			  prices={Immutable.fromJS({
-			    extrasTotalPrice: '2.00',
-			  })}
-			>
-				<div>Child</div>
-			</Receipt>,
+      <Receipt
+        numPortions={2}
+        numRecipes={3}
+        deliveryTotalPrice={'1.99'}
+        dashPricing={false}
+        recipeTotalPrice={'29.99'}
+        recipeDiscountAmount={'15.00'}
+        recipeDiscountPercent={'50'}
+        totalToPay={'14.99'}
+        extrasTotalPrice={'2.00'}
+        surcharges={Immutable.fromJS([1])}
+        surchargeTotal={'4.99'}
+        prices={Immutable.fromJS({
+          extrasTotalPrice: '2.00',
+        })}
+      >
+        <div>Child</div>
+      </Receipt>,
     )
   })
 
@@ -72,13 +72,13 @@ describe('Receipt', () => {
   describe('add promocode', () => {
     beforeEach(() => {
       wrapper = shallow(
-				<Receipt
-				  dashPricing={false}
-				  recipeTotalPrice={'29.99'}
-				  totalToPay={'29.99'}
-				  prices={Immutable.fromJS({})}
-				  showAddPromocode
-				/>,
+        <Receipt
+          dashPricing={false}
+          recipeTotalPrice={'29.99'}
+          totalToPay={'29.99'}
+          prices={Immutable.fromJS({})}
+          showAddPromocode
+        />,
       )
     })
 
@@ -90,35 +90,35 @@ describe('Receipt', () => {
   describe('delivery and order number', () => {
     beforeEach(() => {
       wrapper = shallow(
-				<Receipt
-				  numPortions={2}
-				  numRecipes={3}
-				  deliveryTotalPrice={'1.99'}
-				  dashPricing={false}
-				  recipeTotalPrice={'29.99'}
-				  recipeDiscountAmount={'15.00'}
-				  recipeDiscountPercent={'50'}
-				  totalToPay={'14.99'}
-				  extrasTotalPrice={'2.00'}
-				  surcharges={Immutable.fromJS([1])}
-				  surchargeTotal={'4.99'}
-				  prices={Immutable.fromJS({
-				    extrasTotalPrice: '2.00',
-				  })}
-				  shippingAddress={Immutable.fromJS({
-				    line1: '1 Example Street',
-				    line2: 'Zone 2',
-				    line3: 'Neverland',
-				    town: 'London',
-				    postcode: 'F4 K3',
-				  })}
-				  deliveryDate="2016-05-06"
-				  deliverySlot={Immutable.fromJS({
-				    deliveryStart: '09:00:00',
-				    deliveryEnd: '16:59:59',
-				  })}
-				  orderNumber="6283494"
-				/>,
+        <Receipt
+          numPortions={2}
+          numRecipes={3}
+          deliveryTotalPrice={'1.99'}
+          dashPricing={false}
+          recipeTotalPrice={'29.99'}
+          recipeDiscountAmount={'15.00'}
+          recipeDiscountPercent={'50'}
+          totalToPay={'14.99'}
+          extrasTotalPrice={'2.00'}
+          surcharges={Immutable.fromJS([1])}
+          surchargeTotal={'4.99'}
+          prices={Immutable.fromJS({
+            extrasTotalPrice: '2.00',
+          })}
+          shippingAddress={Immutable.fromJS({
+            line1: '1 Example Street',
+            line2: 'Zone 2',
+            line3: 'Neverland',
+            town: 'London',
+            postcode: 'F4 K3',
+          })}
+          deliveryDate="2016-05-06"
+          deliverySlot={Immutable.fromJS({
+            deliveryStart: '09:00:00',
+            deliveryEnd: '16:59:59',
+          })}
+          orderNumber="6283494"
+        />,
       )
     })
 
@@ -161,15 +161,15 @@ describe('Receipt', () => {
   describe('surcharges', () => {
     test('should show surcharges when surcharge total greater than zero and surcharges array not empty', () => {
       wrapper = shallow(
-				<Receipt
-				  surchargeTotal={'0.45'}
-				  surcharges={Immutable.fromJS([1, 2, 3])}
-				/>,
+        <Receipt
+          surchargeTotal={'0.45'}
+          surcharges={Immutable.fromJS([1, 2, 3])}
+        />,
       )
       const results = wrapper.findWhere(
         element =>
           element.type() === ReceiptLine &&
-					element.prop('label').includes('Recipe surcharge'),
+          element.prop('label').includes('Recipe surcharge'),
       )
 
       expect(results.length).toBe(1)
@@ -189,21 +189,21 @@ describe('Receipt', () => {
         wrapper.findWhere(
           element =>
             element.type() === ReceiptLine &&
-						element.prop('label').includes('Recipe surcharge'),
+            element.prop('label').includes('Recipe surcharge'),
         ).length,
       ).toBe(0)
     })
 
     test('should NOT show surcharges when surcharge total is greater than zero and surcharges array is empty', () => {
       wrapper = shallow(
-				<Receipt surchargeTotal={'0.45'} surcharges={Immutable.fromJS([])} />,
+        <Receipt surchargeTotal={'0.45'} surcharges={Immutable.fromJS([])} />,
       )
 
       expect(
         wrapper.findWhere(
           element =>
             element.type() === ReceiptLine &&
-						element.prop('label').includes('Recipe surcharge'),
+            element.prop('label').includes('Recipe surcharge'),
         ).length,
       ).toBe(0)
     })
@@ -215,7 +215,7 @@ describe('Receipt', () => {
         wrapper.findWhere(
           element =>
             element.type() === ReceiptLine &&
-						element.prop('label').includes('Recipe surcharge'),
+            element.prop('label').includes('Recipe surcharge'),
         ).length,
       ).toBe(0)
     })
