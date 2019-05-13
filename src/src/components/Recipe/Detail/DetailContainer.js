@@ -5,7 +5,7 @@ import actions from 'actions'
 import { getCutoffs } from 'utils/deliveries'
 import moment from 'moment'
 
-import Detail from './Detail'
+import { Detail } from './Detail'
 
 function mapStateToProps(state, ownProps) {
   let [cutoffDate] = getCutoffs(state.basket, state.boxSummaryDeliveryDays) // eslint-disable-line prefer-const
