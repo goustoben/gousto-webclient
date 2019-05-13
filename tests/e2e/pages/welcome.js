@@ -12,7 +12,7 @@ module.exports = {
       commands: [{
         checkIfWelcomePageVisible: function () {
           this
-            .waitForElementVisible('@expectationsCarousel', 30000)
+            .waitForElementVisible('@expectationsCarousel', 60000)
         },
       }],
     },
