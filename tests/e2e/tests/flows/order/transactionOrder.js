@@ -52,6 +52,7 @@ module.exports = {
         done()
       })
       .perform(done => {
+        browser.pause(2000) //BUG: checkout button becomes clickable -> loading -> clickable again
         menu.section.menuContainer.goFromMenuToCheckout()
         done()
       })
