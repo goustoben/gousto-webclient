@@ -288,7 +288,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { hasRecommendations, forceLoad, jfyTutorialFlag } = this.props
+    const { hasRecommendations, forceLoad, jfyTutorialFlag, query } = this.props
     const { mobileGridView } = this.state
     const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
     const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
