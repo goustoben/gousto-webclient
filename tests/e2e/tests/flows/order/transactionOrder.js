@@ -4,7 +4,7 @@ module.exports = {
     const menu = browser.page.menu()
     const orderConfirmation = browser.page.orderConfirmation()
 
-     browser
+    browser
       .perform(done => {
         shared.section.body.createUser().then(user => {
           menu.navigate()
@@ -33,12 +33,10 @@ module.exports = {
       })
       .perform(done => {
         menu.section.bottomBar.clickNextButton()
-        browser.pause(2000)
         done()
       })
       .perform(done => {
         menu.section.bottomBar.clickDateOfNewOrder()
-        browser.pause(2000)
         done()
       })
       .perform(done => {

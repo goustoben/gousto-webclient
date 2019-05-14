@@ -141,9 +141,14 @@ module.exports = {
       commands: [{
         clickBrowseCTA: function () { clickElement.call(this, '@menuBrowseCTAButton') },
         clickNextButton: function () { clickElement.call(this, '@desktopBoxSummaryNextButton') },
-        clickContinueButton: function () { clickElement.call(this, '@boxSummaryContinueButton') } ,
+        clickContinueButton: function () {
+          this.waitForElementVisible('@boxSummaryContinueButton')
+          clickElement.call(this, '@boxSummaryContinueButton')
+        } ,
         clickDateOfExistingOrder: function () {
-          this.api.execute(function () {
+          this
+          .waitForElementVisible('@dateSlot')
+          .api.execute(function () {
 						const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
 						let dates = Array.from(getDateSlots())
             let firstAvailableDate = dates.find(date => date.querySelector("*[data-testing='icon-full-box']"))

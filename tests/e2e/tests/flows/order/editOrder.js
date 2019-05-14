@@ -33,12 +33,10 @@ module.exports = {
       })
       .perform(done => {
         menu.section.bottomBar.clickNextButton()
-        browser.pause(2000)
         done()
       })
       .perform(done => {
         menu.section.bottomBar.clickDateOfExistingOrder()
-        browser.pause(2000)
         done()
       })
       .perform(done => {
