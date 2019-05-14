@@ -61,3 +61,5 @@ const RecipeMeta = ({ recipe }) => (
 RecipeMeta.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map),
 }
+
+export { RecipeMeta }
