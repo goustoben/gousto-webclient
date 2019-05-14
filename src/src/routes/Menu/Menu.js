@@ -12,6 +12,7 @@ import menu from 'config/menu'
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import browserHelper from 'utils/browserHelper'
+import { RecipeMeta } from './RecipeMeta'
 import MenuNoResults from './MenuNoResults'
 
 import SubHeader from './SubHeader'
@@ -287,7 +288,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { hasRecommendations, forceLoad, jfyTutorialFlag } = this.props
+    const { hasRecommendations, forceLoad, jfyTutorialFlag, query } = this.props
     const { mobileGridView } = this.state
     const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
     const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
@@ -315,6 +316,7 @@ class Menu extends React.Component {
           meta={menu.helmet.meta}
           style={menu.helmet.style}
         />
+        <RecipeMeta query={query} />
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
           {this.renderBanner(menu.tasteOfItaly.switchoverDate)}
