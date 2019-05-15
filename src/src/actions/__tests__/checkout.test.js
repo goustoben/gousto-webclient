@@ -2,21 +2,31 @@ import Immutable from 'immutable'
 
 import actionTypes from 'actions/actionTypes'
 
-import { basketResetPersistent } from 'utils/basket'
+import { warning } from 'utils/logger'
 import { getSlot } from 'utils/deliveries'
+import { redirect } from 'actions/redirect'
+import { pending, error } from 'actions/status'
 import { createPreviewOrder } from 'apis/orders'
+import { orderAssignToUser } from 'actions/order'
+import { basketResetPersistent } from 'utils/basket'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 
 import {
-  checkoutClearErrors,
-  checkoutCreatePreviewOrder,
-  checkoutAddressLookup,
+  trackPurchase,
   checkoutSignup,
   fireCheckoutError,
   checkoutPostSignup,
-  trackPurchase,
+  checkoutClearErrors,
   trackPromocodeChange,
+  checkoutAddressLookup,
+  checkoutCreatePreviewOrder,
+  checkoutTransactionalOrder,
 } from 'actions/checkout'
+
+jest.mock('actions/login')
+jest.mock('actions/menu')
+jest.mock('actions/user')
+jest.mock('actions/basket')
 
 jest.mock('utils/basket', () => ({
   basketResetPersistent: jest.fn()
@@ -38,10 +48,18 @@ jest.mock('apis/addressLookup', () => ({
   fetchAddressByPostcode: jest.fn(),
 }))
 
-jest.mock('actions/login')
-jest.mock('actions/menu')
-jest.mock('actions/user')
-jest.mock('actions/basket')
+jest.mock('actions/status', () => ({
+  error: jest.fn(),
+  pending: jest.fn(),
+}))
+
+jest.mock('utils/logger', () => ({
+  warning: jest.fn(),
+}))
+
+jest.mock('actions/order', () => ({
+  orderAssignToUser: jest.fn(),
+}))
 
 const createState = (stateOverrides) => ({
   basket: Immutable.fromJS({
@@ -190,13 +208,13 @@ describe('checkout actions', () => {
   })
 
   afterEach(() => {
-    dispatch.mockClear()
-    getState.mockClear()
+    jest.clearAllMocks()
   })
 
   describe('checkoutClearErrors', () => {
     it('should dispatch CHECKOUT_ERRORS_CLEAR', async () => {
       const result = checkoutClearErrors()
+
       expect(result.type).toBe(actionTypes.CHECKOUT_ERRORS_CLEAR)
     })
   })
@@ -207,9 +225,11 @@ describe('checkout actions', () => {
         dispatch,
         getState,
       )
+
       expect(createPreviewOrder).toHaveBeenCalledTimes(1)
       expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
     })
+
     it('should call create preview order and log the error, coreDayId empty', async () => {
       getState.mockReturnValue(createState({
         boxSummaryDeliveryDays: Immutable.fromJS({
@@ -226,60 +246,61 @@ describe('checkout actions', () => {
           },
         }),
       }))
+
       await checkoutCreatePreviewOrder()(
         dispatch,
         getState,
       )
-      expect(dispatch).toHaveBeenCalledTimes(6)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
-        type: 'ERROR',
-        value: {
+
+      expect(error).toHaveBeenCalledWith(
+        actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
+        {
           message: 'Missing data, persistent basket might be expired',
           code: 'basket-expired',
         },
-      })
+      )
     })
+
     it('should call create preview order and log the error, boxSummaryDeliveryDays empty', async () => {
       getState.mockReturnValue(createState({
         boxSummaryDeliveryDays: null,
       }))
+
       await checkoutCreatePreviewOrder()(
         dispatch,
         getState,
       )
-      expect(dispatch).toHaveBeenCalledTimes(4)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
-        type: 'ERROR',
-        value: "Cannot read property 'getIn' of null",
-      })
+
+      expect(error).toHaveBeenCalledWith(
+        actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
+        "Cannot read property 'getIn' of null",
+      )
     })
   })
 
   describe('checkoutAddressLookup', () => {
     it('should call fetchAddressByPostcode and dispatch pending CHECKOUT_ADDRESSES_RECEIVE with addresses', async () => {
       const postcode = 'W6 0DH'
+
       await checkoutAddressLookup(postcode)(dispatch)
-      expect(dispatch).toHaveBeenCalledTimes(3)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: actionTypes.CHECKOUT_ADDRESSES_RECEIVE,
-        type: 'PENDING',
-        value: true,
-      })
+
+      expect(pending).toHaveBeenCalledWith(
+        actionTypes.CHECKOUT_ADDRESSES_RECEIVE,
+        true,
+      )
     })
   })
 
   describe('fireCheckoutError', () => {
     it('should dispatch an error with no value', async () => {
       getState.mockReturnValue(createState())
+
       await fireCheckoutError('CARD_TOKENISATION_FAILED')(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledTimes(1)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: 'CARD_TOKENISATION_FAILED',
-        type: actionTypes.ERROR,
-        value: true,
-      })
+
+      expect(error).toHaveBeenCalledWith(
+        'CARD_TOKENISATION_FAILED',
+        true,
+      )
     })
 
     it('should dispatch an error with an error value', async () => {
@@ -287,19 +308,20 @@ describe('checkout actions', () => {
       const errorText = 'card not accepted'
 
       await fireCheckoutError('CARD_TOKENISATION_FAILED', errorText)(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledTimes(1)
-      expect(dispatch).toHaveBeenCalledWith({
-        key: 'CARD_TOKENISATION_FAILED',
-        type: actionTypes.ERROR,
-        value: errorText,
-      })
+
+      expect(error).toHaveBeenCalledWith(
+        'CARD_TOKENISATION_FAILED',
+        errorText,
+      )
     })
   })
 
   describe('checkoutSignup', () => {
     it('should redirect to invalid step', async () => {
       getState.mockReturnValue(createState())
+
       await checkoutSignup()(dispatch, getState)
+
       expect(dispatch).toHaveBeenCalledTimes(8)
     })
   })
@@ -331,6 +353,7 @@ describe('checkout actions', () => {
 
       it('should not call ga with order details', async () => {
         trackPurchase()(dispatch, getState)
+
         expect(ga).not.toHaveBeenCalled()
       })
     })
@@ -342,6 +365,7 @@ describe('checkout actions', () => {
 
       it('should call ga with order details', async () => {
         trackPurchase()(dispatch, getState)
+
         expect(ga).toHaveBeenCalled()
         expect(ga).toHaveBeenCalledWith('gousto.ec:setAction', 'purchase', {
           id: 'test-order-id',
@@ -364,12 +388,15 @@ describe('checkout actions', () => {
 
     it('should call post signup', async () => {
       await checkoutPostSignup()(dispatch, getState)
+
       expect(basketResetPersistent).toHaveBeenCalledTimes(1)
     })
 
     it('should dispatch a call to trackPurchase', async () => {
       global.ga = ga
+
       await checkoutPostSignup()(dispatch, getState)
+
       expect(dispatch).toHaveBeenCalledTimes(8)
     })
   })
@@ -377,7 +404,9 @@ describe('checkout actions', () => {
   describe('checkoutSignup on MOBILE', () => {
     it('should redirect to invalid step', async () => {
       getState.mockReturnValue(createState())
+
       await checkoutSignup()(dispatch, getState)
+
       expect(dispatch).toHaveBeenCalledTimes(8)
     })
   })
@@ -385,6 +414,7 @@ describe('checkout actions', () => {
   describe('trackPromocodeChange', () => {
     it('should dispatch trackPromocodeChange with actionType Promocode Applied', () => {
       trackPromocodeChange('promo', true)(dispatch)
+
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING_PROMOCODE_CHANGE',
         trackingData: {
@@ -396,12 +426,148 @@ describe('checkout actions', () => {
 
     it('should dispatch trackPromocodeChange with actionType Promocode Removed', () => {
       trackPromocodeChange('promo', false)(dispatch)
+
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING_PROMOCODE_CHANGE',
         trackingData: {
           actionType: 'Promocode Removed' ,
           promocode: 'promo'
         }
+      })
+    })
+  })
+
+  describe('checkoutTransactionalOrder', () => {
+    const createTransactionalState = ({
+      auth = Immutable.Map({}),
+      basket = Immutable.Map({}),
+      error = Immutable.Map({}),
+      user = Immutable.Map({}),
+    } = {}) => ({
+      ...createState(),
+      auth,
+      basket,
+      error,
+      user,
+    })
+
+    beforeEach(() => {
+      getState.mockReturnValue(createTransactionalState())
+    })
+
+    test('should dispatch a preview order request', async () => {
+      await checkoutTransactionalOrder()(dispatch, getState)
+
+      const previewOrderAction = dispatch.mock.calls[0][0]
+      previewOrderAction(dispatch, getState)
+
+      expect(pending).toHaveBeenCalledWith(
+        actionTypes.BASKET_PREVIEW_ORDER_CHANGE,
+        true,
+      )
+    })
+
+    describe('when preview order fails', () => {
+      beforeEach(() => {
+        getState.mockReturnValue(createTransactionalState({
+          error: Immutable.Map({
+            [actionTypes.BASKET_PREVIEW_ORDER_CHANGE]: {
+              message: 'Test preview order error',
+              code: 'undefined-error',
+            },
+          }),
+        }))
+      })
+
+      test('should log a warning', async () => {
+        await checkoutTransactionalOrder()(dispatch, getState)
+
+        expect(warning).toHaveBeenCalledWith(expect.stringContaining('undefined-error'))
+      })
+
+      test('should redirect to the menu', async () => {
+        await checkoutTransactionalOrder()(dispatch, getState)
+
+        expect(redirect).toHaveBeenCalledWith(
+          '/menu?from=newcheckout&error=undefined-error',
+          true,
+        )
+      })
+    })
+
+    describe('when preview order succeeds', () => {
+      describe('and user is not authenticated', () => {
+        beforeEach(() => {
+          getState.mockReturnValue(createTransactionalState({
+            auth: Immutable.Map({
+              isAuthenticated: false,
+            }),
+            basket: Immutable.Map({
+              previewOrderId: '100004',
+            }),
+          }))
+        })
+
+        test('should not redirect', async () => {
+          await checkoutTransactionalOrder()(dispatch, getState)
+
+          expect(redirect).not.toHaveBeenCalled()
+        })
+
+        test('should not assign order to user', async () => {
+          await checkoutTransactionalOrder()(dispatch, getState)
+
+          expect(orderAssignToUser).not.toHaveBeenCalled()
+        })
+      })
+
+      describe('and user is authenticated', () => {
+        describe('and user is on hold', () => {
+          beforeEach(() => {
+            getState.mockReturnValue(createTransactionalState({
+              auth: Immutable.Map({
+                isAuthenticated: true,
+              }),
+              basket: Immutable.Map({
+                previewOrderId: '100004',
+              }),
+              user: Immutable.Map({
+                status: 'onhold',
+              }),
+            }))
+          })
+
+          test('should redirect to my gousto', async () => {
+            await checkoutTransactionalOrder()(dispatch, getState)
+
+            expect(redirect).toHaveBeenCalledWith('/my-gousto')
+          })
+        })
+
+        describe('and user is not on hold', () => {
+          beforeEach(() => {
+            getState.mockReturnValue(createTransactionalState({
+              auth: Immutable.Map({
+                isAuthenticated: true,
+              }),
+              basket: Immutable.Map({
+                previewOrderId: '100004',
+              }),
+              user: Immutable.Map({
+                status: 'active',
+              }),
+            }))
+          })
+
+          test('should assign order to user', async () => {
+            await checkoutTransactionalOrder('transactional')(dispatch, getState)
+
+            expect(orderAssignToUser).toHaveBeenCalledWith(
+              'transactional',
+              '100004'
+            )
+          })
+        })
       })
     })
   })
