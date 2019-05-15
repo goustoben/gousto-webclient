@@ -29,6 +29,44 @@ import { Banner } from './Banner'
 import fetchData from './fetchData'
 import { JustForYouTutorial } from './JustForYouTutorial'
 
+const orderUpdateProductsRequest = (orderId, basketProducts, orderUpdateProducts) => {
+  const handleOrderUpdateProductsRequest = (event) => {
+    const addExistingProducts = (itemChoices, products) => {
+      const newItemChoices = [...itemChoices]
+      products.forEach(product => {
+        newItemChoices.push({
+          id: product.id,
+          quantity: product.quantity,
+          type: "Product"
+        })
+      })
+
+      return newItemChoices
+    }
+
+    let { itemChoices } = event.detail
+    itemChoices = addExistingProducts(itemChoices, basketProducts)
+
+    orderUpdateProducts(orderId, itemChoices)
+  }
+
+  window.addEventListener(
+    'orderUpdateProductsRequest',
+    handleOrderUpdateProductsRequest
+  )
+}
+
+const orderDoesContainProductsRequest = (orderId, orderHasAnyProducts) => {
+  const handleOrderDoesContainProductsRequest = () => {
+    orderHasAnyProducts(orderId)
+  }
+
+  window.addEventListener(
+    'orderDoesContainProductsRequest',
+    handleOrderDoesContainProductsRequest
+  )
+}
+
 class Menu extends React.Component {
   static propTypes = {
     basketOrderLoaded: PropTypes.func.isRequired,
@@ -167,37 +205,15 @@ class Menu extends React.Component {
       portionSizeSelectedTracking(numPortions, params.orderId)
     }
 
-    const handleOrderUpdateProductsRequest = (event) => {
-      const addExistingProducts = (itemChoices, products) => {
-        const newItemChoices = [...itemChoices]
-        products.forEach(product => {
-          newItemChoices.push({
-            id: product.id,
-            quantity: product.quantity,
-            type: "Product"
-          })
-        })
-
-        return newItemChoices
-      }
-
-      let { itemChoices } = event.detail
-      itemChoices = addExistingProducts(itemChoices, basketProducts)
-
-      orderUpdateProducts(orderId, itemChoices)
-    }
-    const handleOrderDoesContainProductsRequest = () => {
-      orderHasAnyProducts(orderId)
-    }
-
-    window.addEventListener(
-      'orderDoesContainProductsRequest',
-      handleOrderDoesContainProductsRequest
+    orderUpdateProductsRequest(
+      orderId,
+      basketProducts,
+      orderUpdateProducts
     )
 
-    window.addEventListener(
-      'orderUpdateProductsRequest',
-      handleOrderUpdateProductsRequest
+    orderDoesContainProductsRequest(
+      orderId,
+      orderHasAnyProducts
     )
 
     if (cutOffDate) {
