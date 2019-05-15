@@ -468,7 +468,7 @@ describe('checkout actions', () => {
     })
 
     describe('when preview order fails', () => {
-      beforeEach(async () => {
+      beforeEach(() => {
         getState.mockReturnValue(createTransactionalState({
           error: Immutable.Map({
             [actionTypes.BASKET_PREVIEW_ORDER_CHANGE]: {
@@ -497,7 +497,7 @@ describe('checkout actions', () => {
 
     describe('when preview order succeeds', () => {
       describe('and user is not authenticated', () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           getState.mockReturnValue(createTransactionalState({
             auth: Immutable.Map({
               isAuthenticated: false,
@@ -523,7 +523,7 @@ describe('checkout actions', () => {
 
       describe('and user is authenticated', () => {
         describe('and user is on hold', () => {
-          beforeEach(async () => {
+          beforeEach(() => {
             getState.mockReturnValue(createTransactionalState({
               auth: Immutable.Map({
                 isAuthenticated: true,
@@ -545,7 +545,7 @@ describe('checkout actions', () => {
         })
 
         describe('and user is not on hold', () => {
-          beforeEach(async () => {
+          beforeEach(() => {
             getState.mockReturnValue(createTransactionalState({
               auth: Immutable.Map({
                 isAuthenticated: true,
