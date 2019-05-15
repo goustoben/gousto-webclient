@@ -35,7 +35,7 @@ const RecipeMeta = ({ recipe }) => (
         },
         {
           name: 'product:brand',
-          content: recipe.getIn(['range', 'name'], ''),
+          content: recipe.getIn(['taxonomy', 1, 'tags', 0, 'name'], ''),
         },
         {
           name: 'product:condition',
