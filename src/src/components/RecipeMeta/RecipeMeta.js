@@ -14,43 +14,43 @@ const RecipeMeta = ({ recipe }) => (
     <Helmet
       meta={[
         {
-          name: 'og:type',
+          property: 'og:type',
           content: 'product',
         },
         {
-          name: 'og:title',
+          property: 'og:title',
           content: recipe.get('title'),
         },
         {
-          name: 'og:description',
+          property: 'og:description',
           content: recipe.get('description'),
         },
         {
-          name: 'og:url',
+          property: 'og:url',
           content: getRecipeDetailURL(recipe),
         },
         {
-          name: 'og:image',
+          property: 'og:image',
           content: getMetaImageLink(recipe),
         },
         {
-          name: 'product:brand',
+          property: 'product:brand',
           content: recipe.getIn(['taxonomy', 1, 'tags', 0, 'name'], ''),
         },
         {
-          name: 'product:condition',
+          property: 'product:condition',
           content: 'new',
         },
         {
-          name: 'product:price:amount',
+          property: 'product:price:amount',
           content: getPortionPrice(recipe),
         },
         {
-          name: 'product:price:currency',
+          property: 'product:price:currency',
           content: 'GBP',
         },
         {
-          name: 'product:retailer_item_id',
+          property: 'product:retailer_item_id',
           content: recipe.get('id'),
         },
       ]}
