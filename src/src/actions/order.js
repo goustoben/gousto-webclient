@@ -14,21 +14,21 @@ import statusActions from './status'
 import { orderConfirmationRedirect } from './orderConfirmation'
 import actionTypes from './actionTypes'
 
-const checkAllScheduledCancelled = (orders) => (
+export const checkAllScheduledCancelled = (orders) => (
   !orders.some(order => (order.get('orderState') === 'scheduled'))
 )
 
-const getPendingOrdersDates = (orders) => (
+export const getPendingOrdersDates = (orders) => (
   orders.filter(order => (['confirmed', 'dispatched'].indexOf(order.get('orderState')) > -1))
     .map(order => order.get('deliveryDay'))
 )
 
-const cancelledAllBoxesModalToggleVisibility = (visibility) => ({
+export const cancelledAllBoxesModalToggleVisibility = (visibility) => ({
   type: actionTypes.CANCELLED_ALL_BOXES_MODAL_VISIBILITY_CHANGE,
   visibility,
 })
 
-const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction) => (
+export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
@@ -52,7 +52,7 @@ const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions, order
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
   })
 
-const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId) => (
+export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, null))
     dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, true))
@@ -79,7 +79,7 @@ const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId) => (
     }
   })
 
-const orderAssignToUser = (orderAction, existingOrderId) => (
+export const orderAssignToUser = (orderAction, existingOrderId) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
@@ -132,7 +132,7 @@ const orderAssignToUser = (orderAction, existingOrderId) => (
   }
 )
 
-const orderCheckPossibleDuplicate = (orderId) => (
+export const orderCheckPossibleDuplicate = (orderId) => (
   async (dispatch, getState) => {
     try {
       await dispatch(userActions.userLoadOrders(true, 'any', 5))
@@ -157,7 +157,7 @@ const orderCheckPossibleDuplicate = (orderId) => (
     }
   })
 
-const projectedOrderRestore = (orderId, userId, deliveryDayId) => (
+export const projectedOrderRestore = (orderId, userId, deliveryDayId) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_RESTORE, null))
     dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_RESTORE, true))
@@ -176,7 +176,7 @@ const projectedOrderRestore = (orderId, userId, deliveryDayId) => (
   }
 )
 
-const orderAddressChange = (orderId, addressId) => (
+export const orderAddressChange = (orderId, addressId) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, true))
@@ -199,7 +199,7 @@ const orderAddressChange = (orderId, addressId) => (
   }
 )
 
-const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, addressId, orderId) => (
+export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, addressId, orderId) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, true))
@@ -230,7 +230,7 @@ const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, addressId
   }
 )
 
-const orderUpdateProducts = (orderId, itemChoices) => (
+export const orderUpdateProducts = (orderId, itemChoices) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const reqData = { item_choices: itemChoices, restrict: "Product" }
@@ -249,7 +249,7 @@ const orderUpdateProducts = (orderId, itemChoices) => (
   }
 )
 
-const orderHasAnyProducts = (orderId) => (
+export const orderHasAnyProducts = (orderId) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const dispatchError = (error) => (
@@ -276,7 +276,7 @@ const orderHasAnyProducts = (orderId) => (
   }
 )
 
-const cancelOrderModalToggleVisibility = (visibility, orderId) => (
+export const cancelOrderModalToggleVisibility = (visibility, orderId) => (
   (dispatch) => {
     dispatch({
       type: actionTypes.ORDER_CANCELLED_MODAL_VISIBILITY_CHANGE,

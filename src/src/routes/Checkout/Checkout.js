@@ -9,6 +9,7 @@ import actionTypes from 'actions/actionTypes'
 import Overlay from 'Overlay'
 import { Div } from 'Page/Elements'
 import ProgressBar from 'ProgressBar'
+import { getPreviewOrderErrorName } from 'utils/order'
 
 import css from './Checkout.css'
 import { loadCheckoutScript } from './loadCheckoutScript'
@@ -99,19 +100,7 @@ class Checkout extends React.PureComponent {
     // If the preview order didn't create successfully, then we redirect the user
     // back to the menu saying that he's basket is expired.
     const previewOrderError = store.getState().error.get(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false)
-    let errorName = 'undefined-error'
-    if (previewOrderError) {
-      switch (previewOrderError.code) {
-      case 'out-of-stock':
-        errorName = 'no-stock'
-        break
-      case 'basket-expired':
-        errorName = 'basket-expired'
-        break
-      default:
-        break
-      }
-    }
+    const errorName = getPreviewOrderErrorName(previewOrderError)
 
     if (previewOrderError || !store.getState().basket.get('previewOrderId')) {
       logger.warning(`Preview order id failed to create, persistent basket might be expired, error: ${errorName}`)
@@ -134,15 +123,15 @@ class Checkout extends React.PureComponent {
 
   componentDidMount() {
     Overlay.forceCloseAll()
-    
+
     const { store } = this.context
     const { query = {}, params = {}, browser, trackSignupStep, queueItFeature } = this.props
-    
+
     /* global QueueIt */
     if (queueItFeature) {
       QueueIt.validateUser(true)
     }
-    
+
     Checkout.fetchData({ store, query, params, browser }).then(() => {
       trackSignupStep(1)
     }).then(() => {

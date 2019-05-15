@@ -1,14 +1,20 @@
-import { createPreviewOrder } from 'apis/orders'
-import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { fetchIntervals } from 'apis/customers'
-import logger from 'utils/logger'
 import Immutable from 'immutable'
-import { getSlot } from 'utils/deliveries'
-import { isValidPromoCode } from 'utils/order'
-import { basketResetPersistent } from 'utils/basket'
-
-import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { getFormSyncErrors } from 'redux-form'
+
+import logger from 'utils/logger'
+import routes from 'config/routes'
+import gaID from 'config/head/gaTracking'
+import Cookies from 'utils/GoustoCookies'
+import { getSlot } from 'utils/deliveries'
+import { redirect } from 'actions/redirect'
+import { createPreviewOrder } from 'apis/orders'
+import { fetchIntervals } from 'apis/customers'
+import GoustoException from 'utils/GoustoException'
+import { basketResetPersistent } from 'utils/basket'
+import { fetchAddressByPostcode } from 'apis/addressLookup'
+import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
+import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+
 import actionTypes from './actionTypes'
 import {
   basketPreviewOrderChange,
@@ -21,9 +27,7 @@ import { userSubscribe } from './user'
 import statusActions from './status'
 import pricingActions from './pricing'
 import tempActions from './temp'
-import GoustoException from '../utils/GoustoException'
-import Cookies from '../utils/GoustoCookies'
-import gaID from '../config/head/gaTracking'
+import { orderAssignToUser } from './order'
 
 const { pending, error } = statusActions
 
@@ -217,6 +221,34 @@ export function checkoutSignup() {
     }
   }
 }
+
+export const checkoutTransactionalOrder = (orderAction) => (
+  async (dispatch, getState) => {
+    await dispatch(checkoutCreatePreviewOrder())
+
+    const { auth, basket, error, user } = getState()
+
+    const previewOrderError = error.get(actionTypes.BASKET_PREVIEW_ORDER_CHANGE, false)
+    const previewOrderErrorName = getPreviewOrderErrorName(error)
+    const orderId = basket.get('previewOrderId')
+    const userStatus = user.get('status')
+    const isAuthenticated = auth.get('isAuthenticated')
+
+    if (previewOrderError || !orderId) {
+      logger.warning(`Preview order id failed to create, persistent basket might be expired, error: ${previewOrderErrorName}`)
+
+      return dispatch(redirect(`${routes.client.menu}?from=newcheckout&error=${previewOrderErrorName}`, true))
+    }
+
+    if (orderId && isAuthenticated) {
+      if (userStatus === 'onhold') {
+        return dispatch(redirect(`${routes.client.myGousto}`))
+      }
+
+      return dispatch(orderAssignToUser(orderAction, orderId))
+    }
+  }
+)
 
 export const trackPurchase = () => (
   (dispatch, getState) => {
