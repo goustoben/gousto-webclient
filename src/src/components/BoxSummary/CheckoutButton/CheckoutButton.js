@@ -51,7 +51,7 @@ class CheckoutButton extends React.Component {
   getOrderAction = () => {
     const { userOrders, orderId } = this.props
 
-    const userOrder = userOrders.filter(order => order.get('id') === orderId).first()
+    const userOrder = userOrders.find(order => order.get('id') === orderId)
     const recipeAction = (userOrder && userOrder.get('recipeItems').size > 0) ? 'update' : 'choice'
     const orderAction = orderId ? `recipe-${recipeAction}` : 'transaction'
 
