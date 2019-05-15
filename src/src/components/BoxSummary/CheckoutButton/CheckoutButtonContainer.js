@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import { connect } from 'react-redux'
-
 import actions from 'actions'
 import { getSlot } from 'utils/deliveries'
 import actionTypes from 'actions/actionTypes'

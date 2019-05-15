@@ -16,6 +16,7 @@ import MenuNoResults from 'routes/Menu/MenuNoResults'
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
 import { JustForYouTutorial } from '../JustForYouTutorial'
+import { flattenRecipes } from '../MenuContainer'
 
 jest.mock('actions/order')
 jest.mock('routes/Menu/Banner')
@@ -620,13 +621,24 @@ describe('Menu', () => {
 
     describe('events', () => {
       let map
+      let menuProps
+      let orderCheckout
       let orderUpdateProducts
+      let orderHasAnyProducts
 
       beforeEach(async () => {
+        window.location.assign = jest.fn()
         map = {}
-        const orderHasAnyProducts = jest.fn(() => {
+
+        orderCheckout = jest.fn().mockResolvedValueOnce({
+          orderId: 'order-id',
+          url: 'summary-url',
+        })
+
+        orderHasAnyProducts = jest.fn(() => {
           return () => {}
         })
+
         orderUpdateProducts = jest.fn(() => {
           return () => {}
         })
@@ -639,32 +651,42 @@ describe('Menu', () => {
           map[event] = undefined
         })
 
+        menuProps = {
+          productsLoadProducts: () => { },
+          productsLoadStock: () => { },
+          menuRecipeDetailShow: false,
+          boxSummaryDeliveryDays: Immutable.List([]),
+          menuCollectionRecipes: Immutable.Map({}),
+          features: Immutable.Map({}),
+          menuLoadDays,
+          boxSummaryDeliveryDaysLoad,
+          menuLoadBoxPrices,
+          disabled: true,
+          filteredRecipesNumber: 30,
+          clearAllFilters: () => { },
+          params: {},
+          basketNumPortionChange: basketNumPortionChangeSpy,
+          query: { num_portions: '4' },
+          orderId: '123456',
+          postcode: '123',
+          addressId: '123',
+          deliveryDayId: '123',
+          slotId: '123',
+          disallowRedirectToSummary: true,
+          userOrders: Immutable.Map([]),
+          recipes: flattenRecipes(Immutable.fromJS({ 222: 2, 333: 1})),
+          basketProducts: [
+            { id: 'c', quantity: '3' },
+            { id: 'd', quantity: '4' },
+          ],
+          loginVisibilityChange: () => { },
+          orderCheckoutAction: orderCheckout,
+          orderHasAnyProducts,
+          orderUpdateProducts,
+        }
+
         wrapper = await mount(
-          <Menu
-            productsLoadProducts={() => {}}
-            productsLoadStock={() => {}}
-            menuRecipeDetailShow={false}
-            boxSummaryDeliveryDays={Immutable.List([])}
-            menuCollectionRecipes={Immutable.Map({})}
-            features={Immutable.Map({})}
-            menuLoadDays={menuLoadDays}
-            boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
-            menuLoadBoxPrices={menuLoadBoxPrices}
-            disabled
-            filteredRecipesNumber={30}
-            clearAllFilters={() => {}}
-            params={{}}
-            basketNumPortionChange={basketNumPortionChangeSpy}
-            query={{num_portions:'4'}}
-            orderId="123456"
-            orderHasAnyProducts={orderHasAnyProducts}
-            orderUpdateProducts={orderUpdateProducts}
-            basketProducts={[
-              { id: 'c', quantity: '3' },
-              { id: 'd', quantity: '4' },
-            ]}
-            loginVisibilityChange={() => {}}
-          />,
+          <Menu {...menuProps} />,
           {
             context: {
               store: {
@@ -682,7 +704,9 @@ describe('Menu', () => {
         expect(wrapper.prop('orderHasAnyProducts')).toHaveBeenCalledWith('123456')
       })
 
-      test('action orderUpdateProducts is called with the products passed in the event orderUpdateProductsRequest and the ones in the basket', () => {
+      test(`action orderUpdateProducts is called with the products passed in
+      the event orderUpdateProductsRequest and the ones in the basket`,
+      () => {
         const eventProducts = {
           itemChoices: [
             { id: 'a', quantity: '1', type: 'Product' },
@@ -701,18 +725,151 @@ describe('Menu', () => {
             { id: 'd', quantity: '4', type: 'Product' },
           ]
         )
+
+        expect(orderUpdateProducts).toHaveBeenCalledTimes(1)
       })
 
-      test('action orderHasAnyProducts is not called when event orderDoesContainProductsRequest is dispatched', () => {
-        wrapper.unmount()
+      test('action orderCheckout is not called when orderId is present', () => {
+        const eventProducts = { itemChoices: [] }
+        const fakeEventObject = { detail: eventProducts }
 
-        expect(map.orderDoesContainProductsRequest).toBeUndefined()
+        map.orderUpdateProductsRequest(fakeEventObject)
+
+        expect(orderCheckout).toHaveBeenCalledTimes(0)
+      })
+
+      test('redirect is not called when orderId is present', () => {
+        const eventProducts = { itemChoices: [] }
+        const fakeEventObject = { detail: eventProducts }
+
+        map.orderUpdateProductsRequest(fakeEventObject)
+
+        expect(window.location.assign).toHaveBeenCalledTimes(0)
       })
 
       test('action orderUpdateProducts is not called when event orderUpdateProductsRequest is dispatched', () => {
         wrapper.unmount()
 
         expect(map.orderUpdateProductsRequest).toBeUndefined()
+      })
+
+      describe('call event orderUpdateProductsRequest without order ID', () => {
+        beforeEach(async () => {
+          wrapper = await mount(
+            <Menu {...menuProps} orderId="" />,
+            {
+              context: {
+                store: {
+                  getState: getStateSpy,
+                },
+              },
+            },
+          )
+
+          const eventProducts = {
+            itemChoices: [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+            ]
+          }
+          const fakeEventObject = { detail: eventProducts }
+          map.orderUpdateProductsRequest(fakeEventObject)
+        })
+
+        test('orderCheckout is called when order id is not present', () => {
+          expect(orderCheckout).toHaveBeenCalledWith({
+            addressId: '123',
+            postcode: '123',
+            numPortions: 2,
+            promoCode: '',
+            orderId: '',
+            deliveryDayId: '123',
+            slotId: '123',
+            orderAction: 'transaction',
+            disallowRedirectToSummary: true,
+            recipes: ['222', '222', '333']
+          })
+        })
+
+        test(`orderUpdateProducts is being called with orderId
+        that is coming from order checkout response`, () => {
+          expect(orderUpdateProducts).toHaveBeenCalledWith(
+            'order-id',
+            [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+              { id: 'c', quantity: '3', type: 'Product' },
+              { id: 'd', quantity: '4', type: 'Product' },
+            ]
+          )
+        })
+
+        test('redirect is being called when order checkout response is correct', async () => {
+          expect(window.location.assign).toHaveBeenCalledWith('summary-url')
+        })
+      })
+
+      test('action orderUpdateProducts is not called when event orderUpdateProductsRequest is dispatched', () => {
+        wrapper.unmount()
+
+        expect(map.orderUpdateProductsRequest).toBeUndefined()
+      })
+
+      describe('call event orderUpdateProductsRequest without order ID', () => {
+        beforeEach(async () => {
+          wrapper = await mount(
+            <Menu {...menuProps} orderId="" />,
+            {
+              context: {
+                store: {
+                  getState: getStateSpy,
+                  subscribe: () => {}
+                },
+              },
+            },
+          )
+
+          const eventProducts = {
+            itemChoices: [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+            ]
+          }
+          const fakeEventObject = { detail: eventProducts }
+          map.orderUpdateProductsRequest(fakeEventObject)
+        })
+
+        test('orderCheckout is called when order id is not present', () => {
+          expect(orderCheckout).toHaveBeenCalledWith({
+            addressId: '123',
+            postcode: '123',
+            numPortions: 2,
+            promoCode: '',
+            orderId: '',
+            deliveryDayId: '123',
+            slotId: '123',
+            orderAction: 'transaction',
+            disallowRedirectToSummary: true,
+            recipes: ['222', '222', '333']
+          })
+        })
+
+        test(`orderUpdateProducts is being called with orderId
+        that is coming from order checkout response`, () => {
+          expect(orderUpdateProducts).toHaveBeenCalledWith(
+            'order-id',
+            [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+              { id: 'c', quantity: '3', type: 'Product' },
+              { id: 'd', quantity: '4', type: 'Product' },
+            ]
+          )
+        })
+
+        test('redirect is being called when order checkout response is correct', async () => {
+          expect(window.location.assign).toHaveBeenCalledWith('summary-url')
+        })
       })
     })
   })
@@ -726,6 +883,7 @@ describe('Menu', () => {
     const shouldJfyTutorialBeVisible = jest.fn()
 
     beforeEach(async () => {
+      window.location.assign = jest.fn()
       getStateSpy = jest.fn().mockReturnValue({
         features: Immutable.Map({
           filterMenu: Immutable.Map({
@@ -760,6 +918,10 @@ describe('Menu', () => {
           clearAllFilters={() => {}}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
           params={{}}
+          orderCheckout={{
+            orderId: 'order-id',
+            url: 'summary-url',
+          }}
           cutOffDate="2019-05-13 12:00:00"
         />,
         {

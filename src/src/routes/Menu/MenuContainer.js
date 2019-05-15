@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 
 import actions from 'actions'
+import { getSlot } from 'utils/deliveries'
 import { slugify } from 'utils/url'
 import actionTypes from 'actions/actionTypes'
 import { triggerMenuLoad } from 'actions/menu'
@@ -15,6 +16,16 @@ import { getCurrentCollectionIsRecommendation } from './selectors/menu'
 
 import Menu from './Menu'
 
+function getCoreSlotId(deliveryDays, date, slotId) {
+  const slot = getSlot(deliveryDays, date, slotId)
+  let coreSlotId = ''
+  if (slot) {
+    coreSlotId = slot.get('coreSlotId', '')
+  }
+
+  return coreSlotId
+}
+
 function getBasketRecipes(recipes) {
   return Array.from(recipes.keys())
 }
@@ -23,6 +34,19 @@ const getBasketProducts = products => {
   return products.entrySeq().map(([id, quantity]) => (
     { id, quantity }
   ))
+}
+
+const flattenRecipes = (recipes) => {
+  const recipesToJs = recipes.toJS()
+  const flattenedRecipes = []
+
+  Object.keys(recipesToJs).forEach(key => {
+    for(let i = 0; i < recipesToJs[key]; i++) {
+      flattenedRecipes.push(key)
+    }
+  })
+
+  return flattenedRecipes
 }
 
 const getCutoffDate = (deliveryDate) => {
@@ -92,6 +116,19 @@ function mapStateToProps(state, ownProps) {
     forceLoad: state.menu.get('forceLoad', false),
     numPortions: state.basket.get('numPortions'),
     jfyTutorialFlag: getJfyTutorial(state),
+    recipes: flattenRecipes(state.basket.get('recipes')),
+    promoCode: state.basket.get('promoCode'),
+    postcode: state.basket.get('postcode'),
+    userOrders: state.user.get('orders', Immutable.List([])),
+    slotId: getCoreSlotId(
+      state.boxSummaryDeliveryDays,
+      state.basket.get('date'),
+      state.basket.get('slotId')
+    ),
+    deliveryDayId: state.boxSummaryDeliveryDays.getIn(
+      [state.basket.get('date'), 'coreDayId']
+    ),
+    addressId: state.basket.getIn(['address', 'id'], ''),
   }
 }
 
@@ -115,10 +152,14 @@ const mapDispatchToProps = {
   orderUpdateProducts: actions.orderUpdateProducts,
   productsLoadProducts: actions.productsLoadProducts,
   productsLoadStock: actions.productsLoadStock,
+  orderCheckoutAction: actions.orderCheckout,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
 
 export default MenuContainer
 
-export { getCutoffDate }
+export { 
+  flattenRecipes,
+  getCutoffDate 
+}

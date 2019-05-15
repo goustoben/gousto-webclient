@@ -7,7 +7,8 @@ import {
   cancelOrder,
   updateOrderAddress,
   fetchOrder,
-  updateOrderItems
+  updateOrderItems,
+  orderCheckout,
 } from 'apis/orders'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import actionStatus from 'actions/status'
@@ -31,6 +32,7 @@ describe('order actions', () => {
   let numPortions
   let orderAction
   let dispatchSpy
+  let getStateSpy
 
   beforeEach(() => {
     orderId = '12345'
@@ -41,6 +43,15 @@ describe('order actions', () => {
     orderAction = 'transaction'
     dispatchSpy = jest.fn()
     fetchOrder.mockClear()
+
+    getStateSpy = () => ({
+      auth: Immutable.Map({ accessToken: 'access-token' }),
+      features: Immutable.Map({
+        orderConfirmation: Immutable.Map({
+          value: false,
+        })
+      })
+    })
   })
 
   afterEach(() => {
@@ -48,22 +59,6 @@ describe('order actions', () => {
   })
 
   describe('orderUpdate', () => {
-    let getStateSpy
-    beforeEach(function () {
-      getStateSpy = () => ({
-        auth: Immutable.Map({ accessToken: 'access-token' }),
-        features: Immutable.Map({
-          orderConfirmation: Immutable.Map({
-            value: false,
-          })
-        })
-      })
-    })
-
-    afterEach(() => {
-      jest.resetAllMocks()
-    })
-
     test('should mark ORDER_SAVE as pending', async function () {
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve(resolve) })
@@ -136,11 +131,123 @@ describe('order actions', () => {
     })
   })
 
-  describe('orderUpdateProducts', () => {
-    const getStateSpy = () => ({
-      auth: Immutable.fromJS({ accessToken: 'access-token' }),
+  describe('orderCheckout', () => {
+    const orderCheckoutApiParams = {
+      addressId: 'address-id',
+      postcode: 'N1',
+      numPortions: 3,
+      promoCode: '',
+      orderId: '',
+      deliveryDayId: 'delivery-id',
+      slotId: 'slot-id',
+      orderAction: 'order-action',
+      disallowRedirectToSummary: true,
+      recipes: ['recipe-id-1', 'recipe-id-2'],
+    }
+
+    test('api is being called correctly', async () => {
+      await orderActions.orderCheckout(orderCheckoutApiParams)(dispatchSpy, getStateSpy)
+
+      expect(orderCheckout).toHaveBeenCalledWith("access-token", {
+        address_id: 'address-id',
+        deliverypostcode: 'N1',
+        num_portions: 3,
+        promocode: '',
+        order_id: '',
+        delivery_day_id: 'delivery-id',
+        delivery_slot_id: 'slot-id',
+        order_action: 'order-action',
+        disallow_redirect_to_summary: true,
+        recipes: ['recipe-id-1', 'recipe-id-2']
+      })
+
+      expect(pending.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
+      expect(pending.mock.calls[1][1]).toBe(false)
+
+      expect(error.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
+      expect(error.mock.calls[0][1]).toBe(null)
     })
 
+    test('status is set to pending and no error', async () => {
+      await orderActions.orderCheckout(orderCheckoutApiParams)(dispatchSpy, getStateSpy)
+      expect(pending).toHaveBeenCalled()
+      expect(pending.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
+      expect(pending.mock.calls[0][1]).toBe(true)
+
+      expect(error.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
+      expect(error.mock.calls[0][1]).toBe(null)
+    })
+
+    test('returns an order ID and url', async () => {
+      orderCheckout.mockResolvedValueOnce({
+        data: {
+          orderId: '123',
+          url: 'summary-url',
+        }
+      })
+
+      const result = await orderActions.orderCheckout(
+        orderCheckoutApiParams
+      )(dispatchSpy, getStateSpy)
+
+      expect(error.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
+      expect(error.mock.calls[0][1]).toBe(null)
+
+      expect(result).toEqual({
+        orderId: '123',
+        url: 'summary-url',
+      })
+    })
+
+    test('api throws an error', async () => {
+      orderCheckout.mockRejectedValueOnce({
+        status: 'error',
+        message: 'error api',
+      })
+
+      await orderActions.orderCheckout(orderCheckoutApiParams)(dispatchSpy, getStateSpy)
+
+      expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
+      expect(error.mock.calls[1][1]).toBe('error api')
+
+      expect(pending.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
+      expect(pending.mock.calls[1][1]).toBe(false)
+    })
+
+    test('throw an error when orderId is not present in the response', async () => {
+      orderCheckout.mockResolvedValueOnce({
+        data: {
+          orderId: '',
+          url: 'summary-url',
+        }
+      })
+
+      await orderActions.orderCheckout(
+        orderCheckoutApiParams
+      )(dispatchSpy, getStateSpy)
+
+      expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
+      expect(error.mock.calls[1][1]).toBe('Error when saving the order')
+    })
+
+    test('throw an error when url is not present in the response', async () => {
+      orderCheckout.mockResolvedValueOnce({
+        data: {
+          orderId: 'order-id',
+          url: '',
+        }
+      })
+
+      await orderActions.orderCheckout(
+        orderCheckoutApiParams
+      )(dispatchSpy, getStateSpy)
+
+      expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
+      expect(error.mock.calls[1][1]).toBe('Error when saving the order')
+    })
+  })
+
+  describe('orderUpdateProducts', () => {
     test('api function is called with correct parameters', async () => {
       const itemChoices = [
         { id: "df0ddd72-beb3-11e5-8432-02fada0dd3b9", quantity: 1, type: "Product" },

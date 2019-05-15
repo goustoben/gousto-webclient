@@ -8,6 +8,7 @@ import shallowCompare from 'react-addons-shallow-compare'
 import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
+import { redirect } from 'utils/window'
 
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
@@ -28,33 +29,6 @@ import { Banner } from './Banner'
 
 import fetchData from './fetchData'
 import { JustForYouTutorial } from './JustForYouTutorial'
-
-const orderUpdateProductsRequest = (orderId, basketProducts, orderUpdateProducts) => {
-  const handleOrderUpdateProductsRequest = (event) => {
-    const addExistingProducts = (itemChoices, products) => {
-      const newItemChoices = [...itemChoices]
-      products.forEach(product => {
-        newItemChoices.push({
-          id: product.id,
-          quantity: product.quantity,
-          type: "Product"
-        })
-      })
-
-      return newItemChoices
-    }
-
-    let { itemChoices } = event.detail
-    itemChoices = addExistingProducts(itemChoices, basketProducts)
-
-    orderUpdateProducts(orderId, itemChoices)
-  }
-
-  window.addEventListener(
-    'orderUpdateProductsRequest',
-    handleOrderUpdateProductsRequest
-  )
-}
 
 const orderDoesContainProductsRequest = (orderId, orderHasAnyProducts) => {
   const handleOrderDoesContainProductsRequest = () => {
@@ -114,6 +88,14 @@ class Menu extends React.Component {
     })),
     productsLoadProducts: PropTypes.func.isRequired,
     productsLoadStock: PropTypes.func.isRequired,
+    orderCheckoutAction: PropTypes.func.isRequired,
+    recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+    promoCode: PropTypes.string,
+    postcode: PropTypes.string,
+    slotId: PropTypes.string.isRequired,
+    deliveryDayId: PropTypes.string,
+    addressId: PropTypes.string,
+    userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
   }
 
   static contextTypes = {
@@ -127,6 +109,14 @@ class Menu extends React.Component {
     shouldJfyTutorialBeVisible: () => {},
     basketProducts: [],
     portionSizeSelectedTracking: () => {},
+    orderCheckout: {
+      orderId: '',
+      url: ''
+    },
+    addressId: '',
+    promoCode: '',
+    postcode: '',
+    deliveryDayId: '',
   }
 
   static fetchData(args, force) {
@@ -169,6 +159,7 @@ class Menu extends React.Component {
       orderUpdateProducts,
       productsLoadProducts,
       productsLoadStock,
+      orderCheckoutAction,
     } = this.props
     const { store } = this.context
     // if server rendered
@@ -205,10 +196,59 @@ class Menu extends React.Component {
       portionSizeSelectedTracking(numPortions, params.orderId)
     }
 
-    orderUpdateProductsRequest(
-      orderId,
-      basketProducts,
-      orderUpdateProducts
+    const handleOrderUpdateProductsRequest = async (event) => {
+      const addExistingProducts = (itemChoices, products) => {
+        const newItemChoices = [...itemChoices]
+        products.forEach(product => {
+          newItemChoices.push({
+            id: product.id,
+            quantity: product.quantity,
+            type: "Product"
+          })
+        })
+
+        return newItemChoices
+      }
+
+      let { itemChoices } = event.detail
+      itemChoices = addExistingProducts(itemChoices, basketProducts)
+
+      const {
+        addressId,
+        postcode,
+        promoCode,
+        deliveryDayId,
+        slotId,
+        recipes,
+      } = this.props
+
+      if (!orderId) {
+        const checkoutResponse = await orderCheckoutAction({
+          addressId,
+          postcode,
+          numPortions,
+          promoCode,
+          orderId: '',
+          deliveryDayId,
+          slotId,
+          orderAction: this.getOrderAction(),
+          disallowRedirectToSummary: true,
+          recipes
+        })
+
+        if (checkoutResponse.orderId && checkoutResponse.url) {
+          await orderUpdateProducts(checkoutResponse.orderId, itemChoices)
+
+          return redirect(checkoutResponse.url)
+        }
+      }
+
+      orderUpdateProducts(orderId, itemChoices)
+    }
+
+    window.addEventListener(
+      'orderUpdateProductsRequest',
+      handleOrderUpdateProductsRequest
     )
 
     orderDoesContainProductsRequest(
@@ -289,6 +329,24 @@ class Menu extends React.Component {
   }
 
   masonryContainer = null
+
+  getOrderAction = () => {
+    const { userOrders, orderId } = this.props
+
+    const userOrder = userOrders.filter(
+      (order) => {
+        return order.get('id') === orderId
+      }
+    ).first()
+    const recipeAction = (
+      userOrder && userOrder.get('recipeItems').size > 0
+    ) ? 'update' : 'choice'
+    const orderAction = (orderId)
+      ? `recipe-${recipeAction}`
+      : 'transaction'
+
+    return orderAction
+  }
 
   handleKeyup = (e) => {
     if (e.type === 'keyup' && e.keyCode && e.keyCode === 27) {
