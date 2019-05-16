@@ -42,7 +42,7 @@ const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, b
         </Button>
       </CheckoutButton>
       :
-      <Button width="full" pending={pricingPending}>
+      <Button width="full" pending={pricingPending} data-testing={`${view}BoxSummaryNextButton`}>
         <Segment
           className={classnames({
             [css.submitButton]: view === 'mobile',

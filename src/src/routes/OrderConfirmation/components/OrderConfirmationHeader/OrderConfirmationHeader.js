@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import css from './OrderConfirmationHeader.css'
 
 const OrderConfirmationHeader = ({deliveryDate, deliveryStart, deliveryEnd, whenCutoffTime, whenCutoffDate}) => (
-  <div className={css.orderConfirmationHeader}>
+  <div className={css.orderConfirmationHeader} data-testing="orderConfirmationHeader">
     <div className={css.orderConfirmationColumns}>
       <h1 className={css.orderConfirmationTitle}>Thank you! Your order has been created.</h1>
       <p className={css.orderConfirmationDetails}>Delivery date: {deliveryDate} between {deliveryStart} - {deliveryEnd}</p>

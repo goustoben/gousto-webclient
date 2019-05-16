@@ -18,9 +18,10 @@ const Day = ({ date, weekNo, dayNo, selected, disabled, onClick, icon, orderId, 
       <div
         className={classnames(selected ? css.currentDay : css.day, className, css.square)}
         onClick={() => { if (!disabled) { onClick(date, orderId) } }}
+        data-testing="dateSlot"
       >
         <div className={css.content}>
-          {icon ? <span className={css[`icon-${icon}`]}></span> : null}
+          {icon ? <span className={css[`icon-${icon}`]} data-testing={`icon-${icon}`}></span> : null}
           {dateToDay(date)}
         </div>
       </div>

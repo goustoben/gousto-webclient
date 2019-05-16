@@ -283,6 +283,7 @@ class DeliverySlot extends React.Component {
           onClick={() => this.props.boxSummaryNext(numPortions)}
           pending={this.props.menuPending || this.props.menuFetchDataPending}
           disabled={!this.props.tempOrderId && !chosen}
+          data-testing="boxSummaryContinueButton"
         >
           {buttonText}
         </Button>

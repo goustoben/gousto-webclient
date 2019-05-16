@@ -171,7 +171,7 @@ class OrderConfirmation extends PureComponent {
     const categories = this.getCategories()
 
     return (
-      <div>
+      <div data-testing="orderConfirmationContainer">
         {showHeader && <OrderConfirmationHeader
           {...headerDetails}
         />}
