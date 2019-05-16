@@ -17,6 +17,8 @@ const mapStateToProps = (state) => {
   const order = getBasketOrderDetails(state)
   const headerDetails = !!order && getHeaderDetails(order)
   const showHeader = (!!state.temp.get('showHeader') || !!(locationQueryParam && locationQueryParam['order_action'])) && !!headerDetails
+  const { PRODUCT_CATEGORIES_RECEIVE, PRODUCTS_STOCK_CHANGE, PRODUCTS_RECEIVE, USER_LOAD_REFERRAL_OFFER} = state.pending.toJS()
+  const isLoading = PRODUCT_CATEGORIES_RECEIVE || PRODUCTS_STOCK_CHANGE || PRODUCTS_RECEIVE || USER_LOAD_REFERRAL_OFFER !== false
 
   return ({
     showHeader,
@@ -32,6 +34,8 @@ const mapStateToProps = (state) => {
     saveError: state.error.get(actionTypes.BASKET_CHECKOUT),
     isOrderConfirmation: true,
     rafOffer: getReferralOffer(state) || Immutable.Map(),
+    isLoading
+
   })
 }
 
