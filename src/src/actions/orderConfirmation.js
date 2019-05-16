@@ -32,6 +32,7 @@ export const orderConfirmationRedirect = (orderId, orderAction) => (
 
 export const orderDetails = (orderId) => (
   async (dispatch, getState) => {
+    const { basket } = getState()
     const accessToken = getState().auth.get('accessToken')
     try {
       dispatch(productsLoadCategories())
@@ -41,7 +42,11 @@ export const orderDetails = (orderId) => (
       const orderRecipeIds = userUtils.getUserOrderRecipeIds(immutableOrderDetails)
 
       trackAffiliatePurchase(
-        getAffiliateTrackingData(immutableOrderDetails, 'EXISTING')
+        getAffiliateTrackingData(
+          'EXISTING',
+          immutableOrderDetails,
+          basket,
+        )
       )
 
       dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
