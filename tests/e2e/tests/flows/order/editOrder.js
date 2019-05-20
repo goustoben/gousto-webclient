@@ -32,15 +32,15 @@ module.exports = {
         done()
       })
       .perform(done => {
-        menu.section.bottomBar.clickNextButton()
+        menu.section.menuContainer.clickNextButton()
         done()
       })
       .perform(done => {
-        menu.section.bottomBar.clickDateOfExistingOrder()
+        menu.section.menuContainer.clickDateOfExistingOrder()
         done()
       })
       .perform(done => {
-        menu.section.bottomBar.clickContinueButton()
+        menu.section.menuContainer.clickContinueButton()
         done()
       })
       .perform(done => {
