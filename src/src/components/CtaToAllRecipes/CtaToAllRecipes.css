@@ -1,0 +1,12 @@
+.ctaWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed gray;
+  background-color: white;
+}
+
+.panIcon {
+  height: 140px;
+  width: 148px;
+}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Masonry from 'react-masonry-component'
 import Immutable from 'immutable'
 import classnames from 'classnames'
+import CtaToAllRecipes from 'CtaToAllRecipes'
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
 import { isRecommendedRecipe } from 'utils/menu'
@@ -94,7 +95,7 @@ class RecipeList extends React.Component {
     ))
   }
 
-  render() {
+  listOfRecipes = () => {
     const {
       mobileGridView,
       numPortions,
@@ -107,10 +108,59 @@ class RecipeList extends React.Component {
       remainingRecipes,
       outOfStockRecipes,
     } = this.props
-    const gridSizer = mobileGridView ? 'gridSizerMobile' : 'gridSizer'
+    const sortedRecipes = featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
     let index = 0
 
-    const sortedRecipes = featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
+    const newRecipeList = sortedRecipes.map((recipe) => {
+      const recipeId = recipe.get('id')
+      const isFeatured = featuredRecipes.includes(recipe)
+      const range = getRecipeRange(recipe)
+      const isFineDineIn = range.get('slug') === 'fine-dine-in'
+      const surcharge = getSurcharge(recipe.get('meals'), numPortions)
+      const view = this.getView(mobileGridView, isFeatured, isFineDineIn)
+
+      index += 1
+
+      return (
+        <Recipe
+          key={recipeId}
+          id={recipeId}
+          position={index}
+          title={formatRecipeTitle(recipe.get('title'), recipe.get('boxType', ''), recipe.get('dietType', ''))}
+          media={getFeaturedImage(recipe, view)}
+          url={recipe.get('url')}
+          useWithin={recipe.get('shelfLifeDays')}
+          cookingTime={numPortions === 2 ? recipe.get('cookingTime') : recipe.get('cookingTimeFamily')}
+          averageRating={recipe.getIn(['rating', 'average'])}
+          ratingCount={recipe.getIn(['rating', 'count'])}
+          chef={recipe.get('chef')}
+          description={recipe.get('description')}
+          availability={recipe.get('availability')}
+          equipment={recipe.get('equipment')}
+          surcharge={surcharge}
+          view={view}
+          cutoffDate={cutoffDate}
+          onClick={() => { showDetailRecipe(recipeId) }}
+          features={features}
+          isRecommendedRecipe={isRecommendedRecipe(recipeId, allRecipesList, recipesStore)}
+          range={range}
+          tasteScore={recipe.getIn(['recommendationData', 'score'])}
+          fiveADay={recipe.get('fiveADay')}
+          diet={recipe.get('dietType')}
+        />
+      )
+    })
+    const cta = <Recipe view={'ctaAllRecipe'} />
+    const recipeListWithCta = newRecipeList.concat(cta)
+
+    return recipeListWithCta.toArray()
+  }
+
+  render() {
+    const {
+      mobileGridView,
+    } = this.props
+    const gridSizer = mobileGridView ? 'gridSizerMobile' : 'gridSizer'
 
     return (
       <Masonry
@@ -132,45 +182,7 @@ class RecipeList extends React.Component {
       >
         <div className={classnames(css[gridSizer], gridSizer)} />
         <div className={classnames(css.gutterSizer, 'gutterSizer')} />
-        {sortedRecipes.map((recipe) => {
-          const recipeId = recipe.get('id')
-          const isFeatured = featuredRecipes.includes(recipe)
-          const range = getRecipeRange(recipe)
-          const isFineDineIn = range.get('slug') === 'fine-dine-in'
-          const surcharge = getSurcharge(recipe.get('meals'), numPortions)
-          const view = this.getView(mobileGridView, isFeatured, isFineDineIn)
-
-          index += 1
-
-          return (
-            <Recipe
-              key={recipeId}
-              id={recipeId}
-              position={index}
-              title={formatRecipeTitle(recipe.get('title'), recipe.get('boxType', ''), recipe.get('dietType', ''))}
-              media={getFeaturedImage(recipe, view)}
-              url={recipe.get('url')}
-              useWithin={recipe.get('shelfLifeDays')}
-              cookingTime={numPortions === 2 ? recipe.get('cookingTime') : recipe.get('cookingTimeFamily')}
-              averageRating={recipe.getIn(['rating', 'average'])}
-              ratingCount={recipe.getIn(['rating', 'count'])}
-              chef={recipe.get('chef')}
-              description={recipe.get('description')}
-              availability={recipe.get('availability')}
-              equipment={recipe.get('equipment')}
-              surcharge={surcharge}
-              view={view}
-              cutoffDate={cutoffDate}
-              onClick={() => { showDetailRecipe(recipeId) }}
-              features={features}
-              isRecommendedRecipe={isRecommendedRecipe(recipeId, allRecipesList, recipesStore)}
-              range={range}
-              tasteScore={recipe.getIn(['recommendationData', 'score'])}
-              fiveADay={recipe.get('fiveADay')}
-              diet={recipe.get('dietType')}
-            />
-          )
-        }).toArray()}
+        {this.listOfRecipes()}
       </Masonry>
     )
   }
