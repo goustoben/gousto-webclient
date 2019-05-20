@@ -1,5 +1,8 @@
-export const loadingState = state => {
-  const { PRODUCT_CATEGORIES_RECEIVE, PRODUCTS_STOCK_CHANGE, PRODUCTS_RECEIVE, USER_LOAD_REFERRAL_OFFER } = state.pending.toJS()
+export const isOrderConfirmationPageLoaded = state => {
+  const orderConfirmationActions = ['PRODUCT_CATEGORIES_RECEIVE', 'PRODUCTS_STOCK_CHANGE', 'PRODUCTS_RECEIVE', 'USER_LOAD_REFERRAL_OFFER']
 
-  return PRODUCT_CATEGORIES_RECEIVE || PRODUCTS_STOCK_CHANGE || PRODUCTS_RECEIVE || USER_LOAD_REFERRAL_OFFER !== false
+  return state.pending.some((value, key) => {
+
+    return value && orderConfirmationActions.includes(key)
+  })
 }
