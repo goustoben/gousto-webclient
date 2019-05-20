@@ -178,7 +178,7 @@ class BoxSummaryMobile extends React.Component {
   renderOverlay = () => (
     <Overlay open={this.props.showDetails} className={css.mobileOverlay} contentClassName={css.mobileModalContent} from="bottom">
       <div className={css.supercontainermobile}>
-        <div className={css.detailContainermobile}>
+        <div className={css.detailContainermobile} data-testing="boxSummaryMobile">
           <div className={css.closeBtn} onClick={this.closeMobile}></div>
           <BoxSummary
             displayOptions={this.props.displayOptions}
