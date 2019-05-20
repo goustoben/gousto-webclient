@@ -2,6 +2,10 @@
 @value ScreenSMMin, ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
 @value White, Blackberry from 'styles/colors.css';
 
+.loadingContainer {
+	text-align: center;
+}
+
 .rafMobile {
   padding-top: 20px;
   margin-bottom: 15px;
