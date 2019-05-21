@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Immutable from 'immutable'
 
-import CtaToAllRecipes from 'CtaToAllRecipes'
+import CTAToAllRecipes from 'CTAToAllRecipes'
 
 import GridRecipe from 'Recipe/GridRecipe'
 import SmallRecipe from 'Recipe/SmallRecipe'
@@ -50,7 +50,7 @@ class Recipe extends React.PureComponent {
     case 'fineDineIn':
       return <FineDineInRecipe {...this.props} {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     case 'ctaAllRecipe': 
-      return <CtaToAllRecipes />
+      return <CTAToAllRecipes />
     default:
       return <GridRecipe {...this.props} {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     }
