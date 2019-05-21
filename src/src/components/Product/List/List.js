@@ -11,7 +11,7 @@ const productsRoute = config.routes.client.orderSummary
 
 const ProductList = ({ orderId, products, number, onProductClick }) => (
   <article className={css.content}>
-    <SectionHeader title={'The Gousto Market'} type="minorArticle">
+    <SectionHeader title="Gousto Market" type="minorArticle">
       Here you can add lovely wines, craft beers, delicious desserts, staples, kitchen tools, and treats from artisan suppliers.
     </SectionHeader>
     <ImageSelection
@@ -24,7 +24,7 @@ const ProductList = ({ orderId, products, number, onProductClick }) => (
         to={productsRoute.replace(':orderId', orderId)}
         clientRouted={false}
       >
-        GO TO THE GOUSTO MARKET
+        BROWSE GOUSTO MARKET
       </LinkButton>
     </div>
   </article>

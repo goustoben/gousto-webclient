@@ -5,11 +5,11 @@ import { getReferralLink } from 'components/SocialLinks/socialReferralHelper'
 import { SocialShareButtons } from 'components/SocialLinks/SocialShareButtons'
 import { UserRAFLink } from 'components/UserRAFLink'
 import { SocialShareSheetCTA } from 'components/SocialLinks/SocialShareSheetCTA/SocialShareSheetCTA'
+import defaultOffer from 'config/referral'
+
 import { RAFTitle } from './RAFTitle'
 import css from './Referral.css'
-
 import RAFOffer from './RAFOffer'
-import defaultOffer from './config'
 import { HowItWorks } from './HowItWorks'
 import { DoubleCreditCountdown } from './DoubleCreditCountdown'
 

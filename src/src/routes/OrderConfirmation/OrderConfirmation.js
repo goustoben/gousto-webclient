@@ -190,7 +190,7 @@ class OrderConfirmation extends PureComponent {
           <ReferAFriend />
         </div>
         <div className={css.marketPlaceWrapper}>
-          <h3 className={css.marketPlaceTitle}>The Gousto Market</h3>
+          <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
           <div className={css.navbar}>
             <Navbar items={categories} onClick={this.getFilteredProducts} active={selectedCategory} />
           </div>
