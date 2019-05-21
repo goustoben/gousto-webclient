@@ -2,11 +2,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px dashed gray;
+  flex-direction: column;
+  border: 1px dashed #dbdbdb;
   background-color: white;
+  height: 414px;
+  border-radius: 10px;
 }
 
 .panIcon {
   height: 140px;
   width: 148px;
+}
+
+.ctaText {
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ctaWrapper button {
+  color: #FFFFFF;
+  background-color: #7290FF;
 }

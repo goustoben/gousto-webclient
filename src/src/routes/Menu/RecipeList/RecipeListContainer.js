@@ -4,6 +4,7 @@ import actionTypes from 'actions/actionTypes'
 import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
 import { getFeaturedRecipes, getRemainingRecipes, getOutOfStockRecipes } from 'routes/Menu/selectors/sorting'
+import { getCurrentCollectionIsRecommendation } from 'routes/Menu/selectors/menu'
 import RecipeList from './RecipeList'
 
 const mapStateToProps = (state) => ({
@@ -19,6 +20,7 @@ const mapStateToProps = (state) => ({
   remainingRecipes: getRemainingRecipes(state),
   outOfStockRecipes: getOutOfStockRecipes(state),
   recipesStore: state.recipes,
+  isCurrentCollectionRecommendation: getCurrentCollectionIsRecommendation(state),
 })
 
 const RecipeListContainer = connect(mapStateToProps, {})(RecipeList)

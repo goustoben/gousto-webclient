@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Masonry from 'react-masonry-component'
 import Immutable from 'immutable'
 import classnames from 'classnames'
-import CtaToAllRecipes from 'CtaToAllRecipes'
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
 import { isRecommendedRecipe } from 'utils/menu'
@@ -27,6 +26,7 @@ class RecipeList extends React.Component {
     numPortions: PropTypes.number.isRequired,
     recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
     showDetailRecipe: PropTypes.func,
+    isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string])
   }
 
   static defaultProps = {
@@ -107,6 +107,7 @@ class RecipeList extends React.Component {
       featuredRecipes,
       remainingRecipes,
       outOfStockRecipes,
+      isCurrentCollectionRecommendation
     } = this.props
     const sortedRecipes = featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
     let index = 0
@@ -151,9 +152,11 @@ class RecipeList extends React.Component {
       )
     })
     const cta = <Recipe view={'ctaAllRecipe'} />
-    const recipeListWithCta = newRecipeList.concat(cta)
+    if (!!isCurrentCollectionRecommendation) {
+      return newRecipeList.concat(cta).toArray()
+    }
 
-    return recipeListWithCta.toArray()
+    return newRecipeList.toArray()
   }
 
   render() {

@@ -6,6 +6,8 @@ const CtaToAllRecipes = () => {
   return (
     <div className={css.ctaWrapper}>
       <Svg fileName="cta-recommendation" className={css.panIcon} />
+      <div className={css.ctaText}>Want to see more?</div>
+      <button type="button">view all recipes</button>
     </div>
   )
 }
