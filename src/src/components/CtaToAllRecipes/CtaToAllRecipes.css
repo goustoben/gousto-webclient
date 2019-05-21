@@ -15,11 +15,18 @@
 }
 
 .ctaText {
-  font-size: 16px;
-  font-family: Arial, Helvetica, sans-serif;
+  composes: comfortaa from 'styles/typography.css';
+  padding-top: 38px;
+  padding-bottom: 26px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
-.ctaWrapper button {
+.ctaButton {
+  width: 70%;
+  height: 42px;
+  border-radius: 3px;
   color: #FFFFFF;
-  background-color: #7290FF;
+  background-color: #7290ff;
+  text-transform: uppercase;
 }
