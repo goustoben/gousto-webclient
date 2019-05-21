@@ -1,1 +1,1 @@
-export default from './CtaToAllRecipes'
+export default from './CTAToAllRecipes'

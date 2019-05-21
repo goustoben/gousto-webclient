@@ -1,15 +1,15 @@
 import React from 'react'
 import Svg from 'Svg'
-import css from './CtaToAllRecipes.css'
+import css from './CTAToAllRecipes.css'
 
-const CtaToAllRecipes = () => {
+const CTAToAllRecipes = () => {
   return (
-    <div className={css.ctaWrapper}>
+    <section className={css.ctaWrapper}>
       <Svg fileName="cta-recommendation" className={css.panIcon} />
-      <div className={css.ctaText}>Want to see more?</div>
-      <button type="button">view all recipes</button>
-    </div>
+      <p className={css.ctaText}>Want to see more?</p>
+      <button className={css.ctaButton} type="button">Go to all recipes</button>
+    </section>
   )
 }
 
-export default CtaToAllRecipes
+export default CTAToAllRecipes
