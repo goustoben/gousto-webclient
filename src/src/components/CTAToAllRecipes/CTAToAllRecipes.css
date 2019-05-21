@@ -1,10 +1,12 @@
+@value White, BlueBase from 'styles/colors.css';
+
 .ctaWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   border: 1px dashed #dbdbdb;
-  background-color: white;
+  background-color: White;
   height: 414px;
   border-radius: 10px;
 }
@@ -26,7 +28,7 @@
   width: 70%;
   height: 42px;
   border-radius: 3px;
-  color: #FFFFFF;
-  background-color: #7290ff;
+  color: White;
+  background-color: BlueBase;
   text-transform: uppercase;
 }
