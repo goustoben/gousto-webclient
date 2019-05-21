@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { replaceLinkToTermsAndCondition } from 'utils/sanitizeText'
-import { rafTermsLink } from '../config'
+import { rafTermsLink } from 'config/referral'
 import { HowItWorksPresentation } from './HowItWorks.presentation'
 
 const propTypes = {

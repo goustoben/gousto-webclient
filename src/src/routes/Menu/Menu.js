@@ -60,7 +60,6 @@ class Menu extends React.Component {
     tariffId: PropTypes.number,
     menuLoadingBoxPrices: PropTypes.bool,
     jfyTutorialFlag: PropTypes.bool,
-    changeBannerGelFlag: PropTypes.bool,
     filteredRecipesNumber: PropTypes.number,
     clearAllFilters: PropTypes.func,
     triggerMenuLoad: PropTypes.func,
@@ -277,14 +276,11 @@ class Menu extends React.Component {
   renderBanner = (switchoverDate) => {
     const now = moment()
     const switchoverTime = moment(switchoverDate)
-    const { changeBannerGelFlag } = this.props
-    const imageName = changeBannerGelFlag ? 'menu/10min-banner-gel-02.jpg' : 'menu/10min-banner-gel-01.jpg'
 
-    return (now.isSameOrAfter(switchoverTime, 'day')) ? (
-      <Banner type={'taste-of-italy'}/>
-    ) : (
-      <Banner imageName={imageName} type={'ten-min'}/>
-    )
+    return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
+      <Banner type={'summer-bbq'}/>
+    ) : 
+      (<Banner type={'taste-of-italy'}/>)
   }
 
   render() {
@@ -319,7 +315,7 @@ class Menu extends React.Component {
         <RecipeMeta query={query} />
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
-          {this.renderBanner(menu.tasteOfItaly.switchoverDate)}
+          {this.renderBanner(menu.summerBbq.switchoverDate)}
           <SubHeader
             viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
             onToggleGridView={this.toggleGridView}
