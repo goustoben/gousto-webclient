@@ -23,7 +23,7 @@
 	background-image: url('media/images/menu/taste-of-italy-banner-mobile.jpg');
 
 	@media ScreenXXSMin {
-		background-image: url('media/images/menu/taste-of-italy-banner-tablet.jpg')
+		background-image: url('media/images/menu/taste-of-italy-banner-tablet.jpg');
 	}
 
 	@media ScreenMDMin {
@@ -31,16 +31,16 @@
 	}
 }
 
-.ten-min {
+.summer-bbq {
 	composes: container;
-	background-image: url('media/images/menu/10min-banner-mobile.jpg');
+	background-image: url('media/images/menu/alfresco-mobile.jpg');
 
 	@media ScreenXXSMin {
-		background-image: url('media/images/menu/10min-banner-tablet.jpg')
+		background-image: url('media/images/menu/alfresco-tablet.jpg');
 	}
 
 	@media ScreenMDMin {
-		background-image: url('media/images/menu/10min-banner-desktop.jpg');
+		background-image: url('media/images/menu/alfresco-desktop.jpg');
 	}
 }
 
@@ -71,10 +71,6 @@
 	}
 }
 
-.everyday-favourites .gelText {
-	padding: 0px;
-}
-
 .gelPortrait {
 	composes: gel from 'Gel/Gel.css';
 	left: calc(GelSMLeft - (SMImageOffset * JWSMImageSize));
@@ -93,10 +89,6 @@
 	}
 }
 
-.everyday-favourites .gelPortrait {
-	z-index: 2;
-}
-
 .gelPortrait__image {
   border-radius: 100%;
 }
@@ -104,11 +96,4 @@
 .gelText__svg {
 	height: 100%;
 	width: 86%;
-}
-
-.everyday-favourites .gelText__svg {
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	right: 5px;
 }
