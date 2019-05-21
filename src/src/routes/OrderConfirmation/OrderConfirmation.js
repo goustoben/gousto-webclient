@@ -8,6 +8,7 @@ import { Dropdown } from 'goustouicomponents'
 import CloseButton from 'Overlay/CloseButton'
 import SaveButton from 'OrderSummary/SaveButton'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
+import Loading from 'Loading'
 import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
 import OrderSummaryContainer from './components/OrderSummary/OrderSummaryContainer'
 import { ProductList } from './components/ProductList'
@@ -165,13 +166,20 @@ class OrderConfirmation extends PureComponent {
       saving,
       saveRequired,
       saveError,
+      isLoading
     } = this.props
     const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
     const categories = this.getCategories()
 
-    return (
-      <div>
+    return isLoading ?
+      (
+      <div className={css.loadingContainer}>
+        <Loading />
+      </div>
+      ) :
+      (
+      <div data-testing="orderConfirmationContainer">
         {showHeader && <OrderConfirmationHeader
           {...headerDetails}
         />}
@@ -228,7 +236,7 @@ class OrderConfirmation extends PureComponent {
           </div>
         </div>
       </div>
-    )
+      )
   }
 }
 

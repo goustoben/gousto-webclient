@@ -2,10 +2,69 @@ import Immutable from 'immutable'
 
 import {
   getAffiliateTrackingData,
+  getConfirmationPromoCode,
   getPreviewOrderErrorName,
 } from 'utils/order'
 
 describe('order utils', () => {
+  describe('getConfirmationPromoCode', () => {
+    let order
+    let basket
+
+    describe('when order promocode is not set', () => {
+      beforeEach(() => {
+        order = Immutable.Map({})
+      })
+
+      describe('and basket promocode is not set', () => {
+        beforeEach(() => {
+          basket = Immutable.Map({})
+        })
+
+        test('should return an empty string', () => {
+          expect(getConfirmationPromoCode(order, basket)).toBe('')
+        })
+      })
+
+      describe('and basket promocode is set', () => {
+        beforeEach(() => {
+          basket = Immutable.Map({ promoCode: 'BASKET-PROMO' })
+        })
+
+        test('should return basket promocode', () => {
+          expect(getConfirmationPromoCode(order, basket)).toBe('BASKET-PROMO')
+        })
+      })
+    })
+
+    describe('when order promocode is set', () => {
+      beforeEach(() => {
+        order = Immutable.Map({
+          prices: Immutable.Map({ promoCode: 'ORDER-PROMO' }),
+        })
+      })
+      describe('and basket promocode is not set', () => {
+        beforeEach(() => {
+          basket = Immutable.Map({})
+        })
+
+        test('should return order promocode', () => {
+          expect(getConfirmationPromoCode(order, basket)).toBe('ORDER-PROMO')
+        })
+      })
+
+      describe('and basket promocode is set', () => {
+        beforeEach(() => {
+          basket = Immutable.Map({ promoCode: 'BASKET-PROMO' })
+        })
+
+        test('should return order promocode', () => {
+          expect(getConfirmationPromoCode(order, basket)).toBe('ORDER-PROMO')
+        })
+      })
+    })
+  })
+
   describe('getAffiliateTrackingData', () => {
     describe('when given nothing', () => {
       test('should fail gracefully', () => {
@@ -21,6 +80,7 @@ describe('order utils', () => {
     describe('when given an order and commission group', () => {
       let order
       let commissionGroup
+      let basket
 
       beforeEach(() => {
         commissionGroup = 'FIRSTPURCHASE'
@@ -31,10 +91,11 @@ describe('order utils', () => {
             promoCode: 'TV',
           }),
         })
+        basket = Immutable.Map({})
       })
 
       test('should return affiliate purchase data', () => {
-        expect(getAffiliateTrackingData(order, commissionGroup)).toEqual({
+        expect(getAffiliateTrackingData(commissionGroup, order, basket)).toEqual({
           orderId: '9012312',
           total: '24.99',
           commissionGroup: 'FIRSTPURCHASE',

@@ -15,12 +15,65 @@ module.exports = {
         },
         desktopMenuToCheckout: {
           selector: '*[data-testing=desktopBoxSummaryButton]'
+        },
+        mobileBoxSummaryNextButton: {
+					selector: '*[data-testing="mobileBoxSummaryNextButton"]',
+        },
+        desktopBoxSummaryNextButton: {
+					selector: '*[data-testing="desktopBoxSummaryNextButton"]',
+        },
+        boxSummaryContinueButton: {
+					selector: '*[data-testing="boxSummaryContinueButton"]',
+        },
+        dateSlot: {
+          selector: '*[data-testing="dateSlot"]',
+        },
+        fullBoxIcon: {
+          selector: '*[data-testing="icon-full-box"]',
         }
       },
 
       commands: [
         {
           goFromMenuToCheckout: function () { clickElement.call(this, this.api.globals.browser === 'mobile' ? '@mobileMenuToCheckout' : '@desktopMenuToCheckout') },
+          clickNextButton: function () {
+            clickElement.call(this, this.api.globals.browser === 'mobile' ? '@mobileBoxSummaryNextButton' : '@desktopBoxSummaryNextButton')
+          },
+          clickContinueButton: function () {
+            this
+            .waitForElementPresent('@boxSummaryContinueButton')
+            .api.execute(function () {
+              const continueButton = document.querySelector('[data-testing="boxSummaryContinueButton"]')
+              continueButton.click()
+            })
+          } ,
+          clickDateOfExistingOrder: function () {
+            this
+            .waitForElementPresent('@dateSlot')
+            .api.execute(function () {
+              const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
+              let dates = Array.from(getDateSlots())
+              let firstAvailableDate = dates.find(date => date.querySelector("*[data-testing='icon-full-box']"))
+              firstAvailableDate.click()
+            })
+          },
+          clickDateOfNewOrder: function () {
+            this.api.execute(function () {
+              const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
+              let dates = Array.from(getDateSlots())
+              let firstAvailableDate = dates.find(date => !date.querySelector("*[data-testing='icon-full-box']"))
+              firstAvailableDate.click()
+            })
+          },
+          setOrderConfirmationFeatureFlag: function () {
+            this.api.execute(function () {
+              window.__loadFeatures__({
+                features: {
+                  'orderConfirmation': true
+                }
+              })
+            })
+          },
         }
       ]
     },
@@ -80,7 +133,6 @@ module.exports = {
 
     boxSummaryDesktop: {
       selector: '*[data-testing="menuBottomBarDesktop"]',
-
       elements: {
         menuPostcodeInput: {
           selector: '*[data-testing="menuPostcodeInput"]'

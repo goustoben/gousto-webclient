@@ -12,8 +12,16 @@ describe('OrderConfirmation', () => {
       whenCutoffDate: 'Wednesday 20th March',
     },
     showHeader: false,
-    products: {}
+    products: {},
+    isLoading: false,
   }
+
+  describe('Order Confirmation loading spinner', () => {
+    test('should show loading spinner while page is loading', () => {
+      const wrapper = shallow(<OrderConfirmation {...testProps} isLoading />)
+      expect(wrapper.find('Loading').length).toEqual(1)
+    })
+  })
 
   describe('Order Confirmation not rendering header', () => {
     test('should not show Order Confirmation Header', () => {
