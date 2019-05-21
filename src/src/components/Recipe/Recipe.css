@@ -1,4 +1,4 @@
-@value ScreenXSMax, ScreenMLMin from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenMLMin, ScreenSMMin from 'styles/screenSizes.css';
 @value SpacingLG as GutterSize, SpacingXS from 'sass-loader!styles/spacing.scss';
 @value White from 'styles/colors.css';
 
@@ -65,4 +65,12 @@
 
 .fineDineIn {
 	composes: grid;
+}
+
+.ctaAllRecipe {
+	width: 100%;
+
+	@media ScreenSMMin {		
+		width: calc(33.333% - 15px);
+	}
 }
