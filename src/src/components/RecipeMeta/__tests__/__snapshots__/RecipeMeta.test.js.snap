@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RecipeMeta should render meta tags 1`] = `
+Array [
+  Object {
+    "content": "product",
+    "property": "og:type",
+  },
+  Object {
+    "content": "A Recipe Title",
+    "property": "og:title",
+  },
+  Object {
+    "content": "The best you've ever tasted.",
+    "property": "og:description",
+  },
+  Object {
+    "content": "https://www.gousto.co.uk/menu?recipeDetailId=12345",
+    "property": "og:url",
+  },
+  Object {
+    "content": "protocol://imageurl.com/image.jpg",
+    "property": "og:image",
+  },
+  Object {
+    "content": "Great Food",
+    "property": "product:brand",
+  },
+  Object {
+    "content": "new",
+    "property": "product:condition",
+  },
+  Object {
+    "content": 2.98,
+    "property": "product:price:amount",
+  },
+  Object {
+    "content": "GBP",
+    "property": "product:price:currency",
+  },
+  Object {
+    "content": "12345",
+    "property": "product:retailer_item_id",
+  },
+  Object {
+    "content": "available for order",
+    "property": "product:availability",
+  },
+]
+`;
