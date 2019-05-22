@@ -31,4 +31,5 @@
   color: White;
   background-color: BlueBase;
   text-transform: uppercase;
+  -webkit-appearance: button-bevel;
 }
