@@ -54,14 +54,14 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
-  changeBannerGel: {
-    experiment: false,
-    value: false,
-  },
   rafOnWelcomePage: {
     experiment: false,
     value: false,
-  }
+  },
+  ctaToAllRecipes: {
+    experiment: false,
+    value: false,
+  },
 })
 
 const featureToggles = {

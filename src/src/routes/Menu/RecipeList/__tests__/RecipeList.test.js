@@ -160,4 +160,66 @@ describe('RecipeList', () => {
       ['3', '1'],
     )
   })
+
+  describe('CTA to All Recipes', () => {
+    test('should be present when JFY collection selected and feature flag is true', () => {
+      const featuredRecipes = Immutable.fromJS([{ id: 3 }])
+      const remainingRecipes = Immutable.fromJS([{ id: 1 }, { id: 5 }])
+      const outOfStockRecipes = Immutable.fromJS([{ id: 2 }, { id: 4 }])
+
+      Recipe.mockReturnValue((props) => <div {...props} />)
+
+      wrapper = shallow(
+      <RecipeList
+        featuredRecipes={featuredRecipes}
+        remainingRecipes={remainingRecipes}
+        outOfStockRecipes={outOfStockRecipes}
+        isCurrentCollectionRecommendation={'JFYid'} 
+        ctaToAllRecipes
+      />
+      )
+
+      expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(1)
+    })
+
+    test('should NOT be present when JFY collection is not selected', () => {
+      const featuredRecipes = Immutable.fromJS([{ id: 3 }])
+      const remainingRecipes = Immutable.fromJS([{ id: 1 }, { id: 5 }])
+      const outOfStockRecipes = Immutable.fromJS([{ id: 2 }, { id: 4 }])
+
+      Recipe.mockReturnValue((props) => <div {...props} />)
+
+      wrapper = shallow(
+      <RecipeList
+        featuredRecipes={featuredRecipes}
+        remainingRecipes={remainingRecipes}
+        outOfStockRecipes={outOfStockRecipes}
+        isCurrentCollectionRecommendation={false}
+        ctaToAllRecipes
+      />
+      )
+
+      expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(0)
+    })
+
+    test('should NOT be present feature flag is false', () => {
+      const featuredRecipes = Immutable.fromJS([{ id: 3 }])
+      const remainingRecipes = Immutable.fromJS([{ id: 1 }, { id: 5 }])
+      const outOfStockRecipes = Immutable.fromJS([{ id: 2 }, { id: 4 }])
+
+      Recipe.mockReturnValue((props) => <div {...props} />)
+
+      wrapper = shallow(
+      <RecipeList
+        featuredRecipes={featuredRecipes}
+        remainingRecipes={remainingRecipes}
+        outOfStockRecipes={outOfStockRecipes}
+        isCurrentCollectionRecommendation={'JFYid'} 
+        ctaToAllRecipes={false}
+      />
+      )
+
+      expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(0)
+    })
+  })
 })

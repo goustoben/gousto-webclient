@@ -7,6 +7,7 @@ import SmallRecipe from 'Recipe/SmallRecipe'
 import SimpleRecipe from 'Recipe/SimpleRecipe'
 import FeaturedRecipe from 'Recipe/FeaturedRecipe'
 import FineDineInRecipe from 'Recipe/FineDineInRecipe'
+import CTAToAllRecipes from 'CTAToAllRecipes'
 
 import Recipe from 'Recipe'
 import css from 'Recipe/Recipe.css'
@@ -28,6 +29,7 @@ describe('Recipe', () => {
           gridSmall: SmallRecipe,
           simple: SimpleRecipe,
           fineDineIn: FineDineInRecipe,
+          ctaAllRecipe: CTAToAllRecipes 
         }),
       )
 

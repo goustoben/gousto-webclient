@@ -66,7 +66,7 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
-        changeBannerGel: {
+        ctaToAllRecipes: {
           experiment: false,
           value: false,
         },
@@ -131,7 +131,7 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
-        changeBannerGel: {
+        ctaToAllRecipes: {
           experiment: false,
           value: false,
         },
@@ -204,7 +204,7 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
-        changeBannerGel: {
+        ctaToAllRecipes: {
           experiment: false,
           value: false,
         },
