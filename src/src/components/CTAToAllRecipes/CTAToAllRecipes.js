@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Svg from 'Svg'
 import css from './CTAToAllRecipes.css'
 
@@ -10,6 +11,10 @@ const CTAToAllRecipes = ({ collectionFilterChange }) => {
       <button className={css.ctaButton} type="button" onClick={collectionFilterChange}>Go to all recipes</button>
     </section>
   )
+}
+
+CTAToAllRecipes.propTypes = {
+  collectionFilterChange: PropTypes.func.isRequired,
 }
 
 export default CTAToAllRecipes
