@@ -39,10 +39,8 @@ describe('The Openings component', () => {
 
     test('renders one deptContainer with a jobSelector per department', () => {
       wrapper = shallow(<Openings jobs={jobs} depts={departments} />)
-      const jsclassName = `.${css.jobSelector.split(' ').join('.')}`
-      const dcclassName = `.${css.deptContainer.split(' ').join('.')}`
-      expect(wrapper.find(jsclassName)).toHaveLength(departments.length - 1)
-      expect(wrapper.find(dcclassName)).toHaveLength(1)
+      expect(wrapper.find('.jobSelector')).toHaveLength(departments.length - 1)
+      expect(wrapper.find('.deptContainer')).toHaveLength(1)
     })
 
     test('renders one active jobSelector', () => {
@@ -53,8 +51,7 @@ describe('The Openings component', () => {
           selectedDepartment={selectedDepartment}
         />
       )
-      const className = `.${css.activeJobSelector.split(' ').join('.')}`
-      expect(wrapper.find(className)).toHaveLength(1)
+      expect(wrapper.find('.activeJobSelector')).toHaveLength(1)
     })
   })
 
