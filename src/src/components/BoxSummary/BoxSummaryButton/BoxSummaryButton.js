@@ -11,7 +11,7 @@ import { basketSum, okRecipes } from 'utils/basket'
 import { boxSummaryViews } from 'utils/boxSummary'
 import css from './BoxSummaryButton.css'
 
-const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, boxSummaryCurrentView, menuRecipes, stock, numPortions, boxSummaryNext, fullWidth, pricingPending }) => {
+const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, boxSummaryCurrentView, menuRecipes, stock, numPortions, boxSummaryNext, fullWidth, pricingPending, transactionPending, orderSave }) => {
   const isMobile = view === 'mobile'
   const classes = [
     { [css.buttoncontainer]: isMobile },
@@ -21,38 +21,38 @@ const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, b
 
   return (
     <div className={classnames(...classes)}>
-    {(boxSummaryCurrentView === boxSummaryViews.DETAILS) ?
-      <CheckoutButton view={`${view}NextButton`}>
-        <Button
-          data-testing={`${view}BoxSummaryButton`}
-          disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
-          pending={checkoutPending || pricingPending}
-          spinnerClassName={css.coSpinner}
-          spinnerContainerClassName={css.coSpinnerContainer}
-          width="full"
-        >
+      {(boxSummaryCurrentView === boxSummaryViews.DETAILS) ?
+        <CheckoutButton view={`${view}NextButton`}>
+          <Button
+            data-testing={`${view}BoxSummaryButton`}
+            disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
+            pending={checkoutPending || pricingPending || transactionPending || orderSave}
+            spinnerClassName={css.coSpinner}
+            spinnerContainerClassName={css.coSpinnerContainer}
+            width="full"
+          >
+            <Segment
+              className={classnames({
+                [css.submitButton]: view === 'mobile',
+                [css.coButtonSegment]: view !== 'mobile',
+              })}
+            >
+              Checkout
+            </Segment>
+          </Button>
+        </CheckoutButton>
+        :
+        <Button width="full" pending={pricingPending} data-testing={`${view}BoxSummaryNextButton`}>
           <Segment
             className={classnames({
               [css.submitButton]: view === 'mobile',
               [css.coButtonSegment]: view !== 'mobile',
             })}
+            onClick={showDetails ? boxSummaryNext : open}
           >
-            Checkout
+            Next
           </Segment>
-        </Button>
-      </CheckoutButton>
-      :
-      <Button width="full" pending={pricingPending} data-testing={`${view}BoxSummaryNextButton`}>
-        <Segment
-          className={classnames({
-            [css.submitButton]: view === 'mobile',
-            [css.coButtonSegment]: view !== 'mobile',
-          })}
-          onClick={showDetails ? boxSummaryNext : open}
-        >
-          Next
-        </Segment>
-      </Button>}
+        </Button>}
     </div>)
 }
 
