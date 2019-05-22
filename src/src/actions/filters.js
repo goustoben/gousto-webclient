@@ -96,7 +96,9 @@ export function collectionFilterChange(collectionId) {
       }
     }
 
-    dispatch(filtersCollectionChange(collectionName, collectionId))
+    if(!!collectionName) {
+      dispatch(filtersCollectionChange(collectionName, collectionId))
+    }
 
     if (collectionName !== prevLoc.query.collection) {
       const newLoc = { ...prevLoc, query }
