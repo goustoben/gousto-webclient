@@ -123,4 +123,10 @@
 
 .productDetailsDescription {
 	line-height: 22px;
+	white-space: pre-line;
+
+	@media ScreenSMMin {
+		max-height: 65vh;
+		overflow: auto;
+	}
 }
