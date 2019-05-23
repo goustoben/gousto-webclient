@@ -27,6 +27,7 @@
 .ctaButton {
   width: 70%;
   height: 42px;
+  border: none;
   border-radius: 3px;
   color: White;
   background-color: BlueBase;

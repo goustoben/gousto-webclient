@@ -69,16 +69,14 @@ describe('filters actions', () => {
         })
       })
 
-      test('should remove the new collection name from the querystring if not found', () => {
-        collectionFilterChange('newCollectionId')(dispatchSpy, getStateSpy)
+      test('should change the new collection name from the querystring if different', () => {
+        collectionFilterChange('notNewCollectionId')(dispatchSpy, getStateSpy)
 
-        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-          collectionName: '',
-        }))
+        expect(dispatchSpy).toHaveBeenCalledTimes(2)
       })
 
       test('should dispatch a FILTERS_COLLECTION_CHANGE action', () => {
-        const collectionId = 'newCollectionId'
+        const collectionId = 'notNewCollectionId'
 
         collectionFilterChange(collectionId)(dispatchSpy, getStateSpy)
 

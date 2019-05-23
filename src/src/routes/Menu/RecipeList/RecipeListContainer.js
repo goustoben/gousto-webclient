@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 
 import actionTypes from 'actions/actionTypes'
+import { collectionFilterChange } from 'actions/filters'
 import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters'
 import { getCTAToAllRecipes } from 'selectors/features'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
@@ -25,6 +26,8 @@ const mapStateToProps = (state) => ({
   ctaToAllRecipes: getCTAToAllRecipes(state)
 })
 
-const RecipeListContainer = connect(mapStateToProps, {})(RecipeList)
+const RecipeListContainer = connect(mapStateToProps, {
+  collectionFilterChange: () => collectionFilterChange('ca8f71be-63ac-11e6-a693-068306404bab')
+})(RecipeList)
 
 export default RecipeListContainer

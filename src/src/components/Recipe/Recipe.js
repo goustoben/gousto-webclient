@@ -20,6 +20,7 @@ const recipePropTypes = {
   view: PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn']).isRequired,
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
+  collectionFilterChange: PropTypes.func,
 }
 
 class Recipe extends React.PureComponent {
@@ -27,6 +28,7 @@ class Recipe extends React.PureComponent {
 
   static defaultProps = {
     view: 'grid',
+    collectionFilterChange: () => {},
   }
 
   constructor() {
@@ -37,7 +39,7 @@ class Recipe extends React.PureComponent {
   }
 
   get recipeComponent() {
-    const { view } = this.props
+    const { view, collectionFilterChange } = this.props
     const { detailHover } = this.state
 
     switch (view) {
@@ -50,7 +52,7 @@ class Recipe extends React.PureComponent {
     case 'fineDineIn':
       return <FineDineInRecipe {...this.props} {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     case 'ctaAllRecipe': 
-      return <CTAToAllRecipes />
+      return <CTAToAllRecipes collectionFilterChange={collectionFilterChange} />
     default:
       return <GridRecipe {...this.props} {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     }

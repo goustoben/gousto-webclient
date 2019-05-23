@@ -28,6 +28,7 @@ class RecipeList extends React.Component {
     showDetailRecipe: PropTypes.func,
     isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), 
     ctaToAllRecipes: PropTypes.bool,
+    collectionFilterChange: PropTypes.func,
   }
 
   static defaultProps = {
@@ -109,7 +110,8 @@ class RecipeList extends React.Component {
       remainingRecipes,
       outOfStockRecipes,
       isCurrentCollectionRecommendation, 
-      ctaToAllRecipes
+      ctaToAllRecipes, 
+      collectionFilterChange
     } = this.props
     const sortedRecipes = featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
     let index = 0
@@ -153,7 +155,7 @@ class RecipeList extends React.Component {
         />
       )
     })
-    const cta = <Recipe view={'ctaAllRecipe'} />
+    const cta = <Recipe view={'ctaAllRecipe'} collectionFilterChange={collectionFilterChange} />
     if (!!isCurrentCollectionRecommendation && ctaToAllRecipes) {
       return newRecipeList.concat(cta).toArray()
     }

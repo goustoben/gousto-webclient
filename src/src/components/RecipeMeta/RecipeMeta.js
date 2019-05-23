@@ -53,6 +53,10 @@ const RecipeMeta = ({ recipe }) => (
           property: 'product:retailer_item_id',
           content: recipe.get('id'),
         },
+        {
+          property: 'product:availability',
+          content: 'available for order',
+        },
       ]}
     />
   ) : null
