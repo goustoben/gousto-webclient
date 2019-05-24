@@ -761,6 +761,7 @@ describe('Menu', () => {
               context: {
                 store: {
                   getState: getStateSpy,
+                  subscribe: () => {}
                 },
               },
             },
