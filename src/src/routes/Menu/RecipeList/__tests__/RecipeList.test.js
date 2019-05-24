@@ -178,7 +178,8 @@ describe('RecipeList', () => {
         outOfStockRecipes={outOfStockRecipes}
         isCurrentCollectionRecommendation={'JFYid'} 
         ctaToAllRecipes
-      />
+      />,
+      { context },
       )
 
       expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(1)
@@ -198,7 +199,8 @@ describe('RecipeList', () => {
         outOfStockRecipes={outOfStockRecipes}
         isCurrentCollectionRecommendation={false}
         ctaToAllRecipes
-      />
+      />,
+      { context },
       )
 
       expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(0)
@@ -218,7 +220,8 @@ describe('RecipeList', () => {
         outOfStockRecipes={outOfStockRecipes}
         isCurrentCollectionRecommendation={'JFYid'} 
         ctaToAllRecipes={false}
-      />
+      />,
+      { context },
       )
 
       expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(0)
