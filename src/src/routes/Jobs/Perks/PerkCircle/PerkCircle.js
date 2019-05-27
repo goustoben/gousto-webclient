@@ -1,23 +1,22 @@
 import React from 'react'
-import css from './PerkCircle.css'
 import config from 'config/jobs'
+import css from './PerkCircle.css'
 import Perk from './Perk/Perk'
 
-class PerkCircle extends React.PureComponent {
-  render() {
-    const perks = config.Perks
-    const perkItems = perks.map((perk) =>
-      <div key={perk.title} >
-        <Perk title={perk.title} copy={perk.copy} />
-      </div>
-    )
+const PerkCircle = () => {
+  const { Perks } = config
 
-    return (
-      <div className={css.flexContainer}>
-        {perkItems}
-      </div>
-    )
-  }
+  return (
+    <div className={css.flexContainer}>
+      {
+        Perks.map(perk => (
+          <div key={perk.title}>
+            <Perk title={perk.title} copy={perk.copy} />
+          </div>
+        ))
+      }
+    </div>
+  )
 }
 
 export default PerkCircle
