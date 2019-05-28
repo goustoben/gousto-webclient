@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
@@ -36,6 +34,9 @@ describe('CollectionsNavContainer', () => {
               b: ['', '', ''],
               c: ['', '', ''],
             }),
+            request: Immutable.fromJS({
+              browser: 'desktop'
+            })
           }),
         },
         subscribe: () => {},
@@ -89,6 +90,9 @@ describe('CollectionsNavContainer', () => {
               b: ['', '', ''],
               c: ['', '', ''],
             }),
+            request: Immutable.fromJS({
+              browser: 'desktop'
+            })
           }),
         },
         subscribe: () => {},
@@ -138,6 +142,9 @@ describe('CollectionsNavContainer', () => {
               b: ['', '', ''],
               c: ['', '', ''],
             }),
+            request: Immutable.fromJS({
+              browser: 'desktop'
+            })
           }),
         },
         subscribe: () => {},
@@ -194,6 +201,9 @@ describe('CollectionsNavContainer', () => {
               b: ['', '', ''],
               c: ['', '', ''],
             }),
+            request: Immutable.fromJS({
+              browser: 'desktop'
+            })
           }),
         },
         subscribe: () => {},
@@ -243,6 +253,9 @@ describe('CollectionsNavContainer', () => {
               b: [],
               c: ['', '', ''],
             }),
+            request: Immutable.fromJS({
+              browser: 'desktop'
+            })
           }),
         },
         subscribe: () => {},
