@@ -455,7 +455,7 @@ describe('checkout actions', () => {
       getState.mockReturnValue(createTransactionalState())
     })
 
-    test.only('should dispatch a preview order request', async () => {
+    test('should dispatch a preview order request', async () => {
       await checkoutTransactionalOrder()(dispatch, getState)
 
       const previewOrderAction = dispatch.mock.calls[1][0]
