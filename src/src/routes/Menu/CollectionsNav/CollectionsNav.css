@@ -23,11 +23,9 @@
 
 .navBarContainerFixed {
 	composes: navBarContainer;
-	@media ScreenXSMax {
 		z-index: 500;
 		position: fixed;
 		top: 0;
-	}
 }
 
 .navBarContainerFixedTransition {
