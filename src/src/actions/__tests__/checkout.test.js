@@ -458,7 +458,7 @@ describe('checkout actions', () => {
     test('should dispatch a preview order request', async () => {
       await checkoutTransactionalOrder()(dispatch, getState)
 
-      const previewOrderAction = dispatch.mock.calls[1][0]
+      const previewOrderAction = dispatch.mock.calls[0][0]
       previewOrderAction(dispatch, getState)
 
       expect(pending).toHaveBeenCalledWith(
