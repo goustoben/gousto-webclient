@@ -11,7 +11,7 @@ import { basketSum, okRecipes } from 'utils/basket'
 import { boxSummaryViews } from 'utils/boxSummary'
 import css from './BoxSummaryButton.css'
 
-const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, boxSummaryCurrentView, menuRecipes, stock, numPortions, boxSummaryNext, fullWidth, pricingPending, transactionPending, orderSave }) => {
+const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, boxSummaryCurrentView, menuRecipes, stock, numPortions, boxSummaryNext, fullWidth, pricingPending, orderSavePending, basketPreviewOrderChangePending }) => {
   const isMobile = view === 'mobile'
   const classes = [
     { [css.buttoncontainer]: isMobile },
@@ -26,7 +26,7 @@ const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, b
           <Button
             data-testing={`${view}BoxSummaryButton`}
             disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
-            pending={checkoutPending || pricingPending || transactionPending || orderSave}
+            pending={checkoutPending || pricingPending || basketPreviewOrderChange || orderSave}
             spinnerClassName={css.coSpinner}
             spinnerContainerClassName={css.coSpinnerContainer}
             width="full"
@@ -69,6 +69,8 @@ BoxSummaryButton.propTypes = {
   boxSummaryNext: PropTypes.func.isRequired,
   fullWidth: PropTypes.bool,
   pricingPending: PropTypes.bool,
+  orderSavePending: PropTypes.bool,
+  basketPreviewOrderChangePending: PropTypes.bool,
 }
 
 BoxSummaryButton.defaultProps = {

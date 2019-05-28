@@ -224,7 +224,6 @@ export function checkoutSignup() {
 
 export const checkoutTransactionalOrder = (orderAction) => (
   async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.CHECKOUT_TRANSACTIONAL_ORDER, true))
     await dispatch(checkoutCreatePreviewOrder())
 
     const { auth, basket, error, user } = getState()
@@ -248,7 +247,6 @@ export const checkoutTransactionalOrder = (orderAction) => (
 
       return dispatch(orderAssignToUser(orderAction, orderId))
     }
-    dispatch(statusActions.pending(actionTypes.CHECKOUT_TRANSACTIONAL_ORDER, false))
   }
 )
 

@@ -3,9 +3,9 @@ import BoxSummaryButton from './BoxSummaryButton'
 
 function mapStateToProps(state) {
   return {
-    pricingPending: state.pricing.get('pending'),
-    transactionPending: state.pending.get('CHECKOUT_TRANSACTIONAL_ORDER'),
-    orderSave: state.pending.get('ORDER_SAVE'),
+    pricingPending: state.pricing.get('pending', false),
+    orderSavePending: state.pending.get('ORDER_SAVE', false),
+    basketPreviewOrderChangePending: state.pending.get('BASKET_PREVIEW_ORDER_CHANGE', false)
   }
 }
 
