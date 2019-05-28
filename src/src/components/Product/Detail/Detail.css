@@ -9,6 +9,7 @@
 	left: 0;
 	@media ScreenSMMin {
 		padding-top: 50px;
+		padding-bottom: 50px;
 	}
 }
 
