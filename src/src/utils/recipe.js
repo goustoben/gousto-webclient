@@ -50,6 +50,12 @@ export function getSurcharge(meals = Immutable.List([]), numPortions) {
   return meal.getIn(['surcharge', 'listPrice'], null)
 }
 
+export function getSurchargePerPortion(surcharge, numberOfPortions) {
+  const perPortion = surcharge / numberOfPortions
+
+  return roundUp(perPortion)
+}
+
 export function getCookingTime(time) {
   const hours = Math.floor(time / 60)
   const mins = time % 60
@@ -66,7 +72,7 @@ export function getCookingTime(time) {
 export function getFoodBrand(recipe) {
   const foodBrandTaxonomy = recipe && recipe.size && recipe.get('taxonomy')
   const foodBrand = foodBrandTaxonomy ? foodBrandTaxonomy.find(tag => tag.get('slug') === 'food-brands') : null
-  if(foodBrand && foodBrand.get('tags').size) {    
+  if(foodBrand && foodBrand.get('tags').size) {
     return foodBrand.get('tags').get(0)
   }
 
@@ -96,6 +102,10 @@ export function filterRecipesByNew(recipes) {
   const filteredRecipes = recipes.filter(recipe => isNew(recipe))
 
   return filteredRecipes || Immutable.List([])
+}
+
+export function roundUp(value, precision = 0.01) {
+  return Math.ceil(value / precision) * precision
 }
 
 export default {
