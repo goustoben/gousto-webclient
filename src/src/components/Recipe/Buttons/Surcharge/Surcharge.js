@@ -1,21 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-
 import css from './Surcharge.css'
 
-const Surcharge = ({ surcharge, quantity }) => (
-  (surcharge)
-    ? <div className={css.surcharge}>+&pound;{Number(surcharge * quantity).toFixed(2)}</div>
-    : null
+const Surcharge = ({ surcharge }) => (
+  surcharge > 0 && (
+    <div className={css.surcharge}>
+      +&pound;{surcharge.toFixed(2)} per serving
+    </div>
+  )
 )
 
 Surcharge.propTypes = {
-  surcharge: PropTypes.number,
-  quantity: PropTypes.number,
-}
-
-Surcharge.defaultProps = {
-  quantity: 1,
+  surcharge: PropTypes.number.isRequired,
 }
 
 export default Surcharge

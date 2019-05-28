@@ -55,7 +55,7 @@ class Buttons extends React.Component {
           size="large"
         >
           {`${totalQty}${textContent}`}
-          <Surcharge surcharge={surchargePerPortion} quantity={qty} />
+          <Surcharge surcharge={surchargePerPortion} />
         </Segment>,
         <Tooltip
           key={2}
