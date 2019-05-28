@@ -26,7 +26,7 @@ const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, b
           <Button
             data-testing={`${view}BoxSummaryButton`}
             disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
-            pending={checkoutPending || pricingPending || basketPreviewOrderChange || orderSave}
+            pending={checkoutPending || pricingPending || basketPreviewOrderChangePending || orderSavePending}
             spinnerClassName={css.coSpinner}
             spinnerContainerClassName={css.coSpinnerContainer}
             width="full"
