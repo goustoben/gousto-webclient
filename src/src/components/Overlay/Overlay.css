@@ -40,6 +40,10 @@
 	transition: transform 0.2s ease-in-out;
 }
 
+.overlayContent {
+	min-height: 100vh;
+}
+
 .contentFromright {
 	composes: content;
 	composes: slideInFromRight from 'styles/effects.css';

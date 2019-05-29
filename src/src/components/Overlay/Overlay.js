@@ -93,8 +93,7 @@ class Overlay extends React.Component {
       <div className={classNames(this.props.className, css.overlayContainer)}>
         <div className={css.greyFadeOut}>&nbsp;</div>
         <div
-          className={classNames(this.props.contentClassName, css[`contentSlideOutFrom${this.props.from}`])}
-          style={{ minHeight: `${this.getWindowHeight()}px` }}
+          className={classNames(this.props.contentClassName, css[`contentSlideOutFrom${this.props.from}`], css.overlayContent)}
         >
           {this.children}
         </div>
@@ -138,8 +137,7 @@ class Overlay extends React.Component {
         <div className={classNames(props.className, css.overlayContainer)}>
           <div className={css.grey}>&nbsp;</div>
           <div
-            className={classNames(props.contentClassName, css[`contentFrom${this.props.from}`])}
-            style={{ minHeight: `${this.getWindowHeight()}px` }}
+            className={classNames(props.contentClassName, css[`contentFrom${this.props.from}`], css.overlayContent)}
           >
             {props.children ? props.children : <span />}
           </div>
