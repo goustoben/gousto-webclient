@@ -50,6 +50,13 @@ describe('Menu', () => {
   beforeEach(() => {
     productsLoadStock = jest.fn()
     productsLoadProducts = jest.fn()
+
+    BoxSummaryMobile.mockReturnValue(<div />)
+    BoxSummaryDesktop.mockReturnValue(<div />)
+    RecipeList.mockReturnValue(<div />)
+    SubHeader.mockReturnValue(<div />)
+    Banner.mockReturnValue(<div />)
+    DetailOverlay.mockReturnValue(<div />)
   })
 
   describe('rendering', () => {
@@ -401,12 +408,6 @@ describe('Menu', () => {
           resolve()
         })
       )
-      BoxSummaryMobile.mockReturnValue(<div />)
-      BoxSummaryDesktop.mockReturnValue(<div />)
-      RecipeList.mockReturnValue(<div />)
-      SubHeader.mockReturnValue(<div />)
-      Banner.mockReturnValue(<div />)
-      DetailOverlay.mockReturnValue(<div />)
       basketNumPortionChangeSpy = jest.fn()
     })
 
