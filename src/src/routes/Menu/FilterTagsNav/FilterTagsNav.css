@@ -26,7 +26,7 @@
     composes: filterListContainer;
     @media ScreenXSMax {
         width: 100%;
-        z-index: 499;
+        z-index: 89;
         position: fixed;
         top: 0;
         padding-top: 55px;
