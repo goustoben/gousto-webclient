@@ -92,7 +92,7 @@ class CollectionsNav extends React.PureComponent {
     const { browser } = this.props
     if (this.hasScrolled) {
       this.hasScrolled = false
-      const threshold = (browser === 'mobile') ? 250 : 345
+      const threshold = (browser === 'mobile') ? 253 : 350
       const animationThreshold = 50
       const { scrolledPastPoint } = this.state
       const scrollState = getScrollOffset(threshold, animationThreshold, scrolledPastPoint)

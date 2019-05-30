@@ -6,6 +6,7 @@ import css from './FilterTagsNav.css'
 
 const propTypes = {
   menuFilterExperiment: PropTypes.bool,
+  browser: PropTypes.string,
   tags: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string,
@@ -44,9 +45,10 @@ class FilterTagsNav extends React.PureComponent {
   }
 
   checkScroll = () => {
+    const { browser } = this.props
     if (this.hasScrolled) {
       this.hasScrolled = false
-      const threshold = 245
+      const threshold = (browser === 'mobile') ? 253 : 350
       const animationThreshold = 50
       const { scrolledPastPoint } = this.state
       
