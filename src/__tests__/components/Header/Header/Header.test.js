@@ -300,33 +300,35 @@ describe('Header', () => {
     })
   })
 
-  test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to false', () => {
-    const isAuthenticated = false
-    const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature={false} />,)
-    const chooseRecipes = {
-      "name": "Choose Recipes",
-      "url": "/menu"
-    }
-    expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
-  })
+  describe('forceSignupWizard feature', () => {
+    test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to false', () => {
+      const isAuthenticated = false
+      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature={false} />,)
+      const chooseRecipes = {
+        "name": "Choose Recipes",
+        "url": "/menu"
+      }
+      expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+    })
 
-  test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to true and is authenticated', () => {
-    const wrapper = shallow(<Header isAuthenticated config={config} forceSignupWizardFeature />,)
-    const chooseRecipes = {
-      "name": "Choose Recipes",
-      "url": "/menu"
-    }
-    expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
-  })
+    test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to true and is authenticated', () => {
+      const wrapper = shallow(<Header isAuthenticated config={config} forceSignupWizardFeature />,)
+      const chooseRecipes = {
+        "name": "Choose Recipes",
+        "url": "/menu"
+      }
+      expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+    })
 
-  test('render menu with "choose recipes" going to SIGNUP WIZARD when forceSignupWizard feature is set to true and authenticated', () => {
-    const isAuthenticated = false
-    const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature />,)
-    const chooseRecipes = {
-      "name": "Choose Recipes",
-      "url": "signup/box-size"
-    }
-    expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+    test('render menu with "choose recipes" going to SIGNUP WIZARD when forceSignupWizard feature is set to true and authenticated', () => {
+      const isAuthenticated = false
+      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature />,)
+      const chooseRecipes = {
+        "name": "Choose Recipes",
+        "url": "/signup"
+      }
+      expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+    })
   })
 })
 
