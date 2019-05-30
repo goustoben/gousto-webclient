@@ -20,7 +20,7 @@ class Buttons extends React.Component {
     stock: PropTypes.number,
     menuBrowseCTAVisibilityChange: PropTypes.func,
     menuRecipeDetailVisibilityChange: PropTypes.func,
-    surcharge: PropTypes.number,
+    surchargePerPortion: PropTypes.number,
     score: PropTypes.number,
   }
 
@@ -33,12 +33,13 @@ class Buttons extends React.Component {
   }
 
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
-    const { numPortions, qty, surcharge, view } = this.props
+    const { numPortions, qty, surchargePerPortion, view } = this.props
+    const { tooltipVisible } = this.state
 
     if (qty > 0) {
       const totalQty = qty * numPortions
       const defaultContent = view !== 'gridSmall' ? ' Servings Added' : ''
-      const textContent = surcharge ? ' Added' : defaultContent
+      const textContent = surchargePerPortion ? ' Added' : defaultContent
 
       return [
         <Segment
@@ -54,7 +55,7 @@ class Buttons extends React.Component {
           size="large"
         >
           {`${totalQty}${textContent}`}
-          <Surcharge surcharge={surcharge} quantity={qty} />
+          <Surcharge surcharge={surchargePerPortion} quantity={qty} />
         </Segment>,
         <Tooltip
           key={2}
@@ -93,8 +94,8 @@ class Buttons extends React.Component {
           disabled={disabled}
           fill
         >
-          Add {this.props.view !== 'gridSmall' ? 'Recipe' : ''}
-          <Surcharge surcharge={surcharge} />
+          Add {view !== 'gridSmall' ? 'Recipe' : ''}
+          <Surcharge surcharge={surchargePerPortion} />
         </Segment>
       </Tooltip>
     )
