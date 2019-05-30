@@ -300,6 +300,11 @@ class Menu extends React.Component {
       fadeCss = css.willFade
     }
 
+    let overlayShowCSS = null
+    if (this.state.isChrome) {
+      overlayShowCSS = overlayShow ? css.blur : null
+    }
+
     return (
       <div data-testing="menuContainer">
         <Helmet
@@ -309,7 +314,7 @@ class Menu extends React.Component {
         />
         <RecipeMeta query={query} />
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
-        <div className={classnames(css.container, css.blur)}>
+        <div className={classnames(css.container, overlayShowCSS)}>
           {this.renderBanner(menu.summerBbq.switchoverDate)}
           <SubHeader
             viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
