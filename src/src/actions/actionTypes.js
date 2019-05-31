@@ -305,6 +305,7 @@ const actionTypes = {
   TEMP: 'TEMP',
 
   TRACKING: 'TRACKING',
+  TRACKING_CTA_TO_ALL_RECIPES_CLICKED: 'TRACKING_CTA_TO_ALL_RECIPES_CLICKED',
 
   VOID: 'VOID', // to be used when action type is required but there's no actual action to dispatch
 
