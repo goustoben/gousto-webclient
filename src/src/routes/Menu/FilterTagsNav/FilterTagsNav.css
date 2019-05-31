@@ -1,31 +1,57 @@
 @value White from 'styles/colors.css';
-@value ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
 
 .filterTagContainer {
     composes: paddingMDTop paddingXLBottom from 'sass-loader!styles/spacing.scss';
-    display: flex;
-    padding-top: 55px;
+    padding-top: 43px;
     padding-bottom: 0px;
+    @media ScreenXSMax {
+        padding-top: 55px;
+        padding-bottom: 20px;
+    }
 }
 
+.filterTagContainerFixedWithoutFilters {
+    padding-top: 43px;
+    @media ScreenXSMax {
+        padding-top: 50px;
+        padding-bottom: 20px;
+    }
+}
+
+.filterTagContainerFixedWithFilters {
+    padding-top: 88px;
+    @media ScreenXSMax {
+        padding-top: 75px;
+    }
+}
 
 .filterListContainer {
     composes: pageContainer from 'styles/layout.css';
     width: 100%;
-    display: flex;
-    padding-right: 5px;
+    @media ScreenXSMax {
+        position: absolute;
+        display: flex;
+        padding-right: 5px;
+    }
 }
 
 .filterListContainerFixed {
     composes: filterListContainer;
-    width: 100%;
-    z-index: 89;
-    position: fixed;
-    top: 0;
-    padding-top: 55px;
-    background-color: White;
-    padding-bottom: 5px;
-    border-bottom: solid 1px #EAEBE9;
+        width: 100%;    
+        position: fixed;
+        z-index: 89;
+        background-color: White;
+        border-bottom: solid 1px #EAEBE9;
+    @media ScreenSMMin {
+        max-width: initial;
+        top: 43px;
+    }
+    @media ScreenXSMax {
+        top: 0;
+        padding-top: 65px;
+        padding-bottom: 5px;
+    }
 }
 
 .filtersCTA {
