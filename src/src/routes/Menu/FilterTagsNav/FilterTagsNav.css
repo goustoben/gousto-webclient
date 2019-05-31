@@ -6,9 +6,6 @@
     display: flex;
     padding-top: 55px;
     padding-bottom: 0px;
-    @media ScreenXSMax {
-        padding-bottom: 20px;
-    }
 }
 
 
@@ -17,23 +14,18 @@
     width: 100%;
     display: flex;
     padding-right: 5px;
-    @media ScreenXSMax {
-        position: absolute;
-    }
 }
 
 .filterListContainerFixed {
     composes: filterListContainer;
-    @media ScreenXSMax {
-        width: 100%;
-        z-index: 89;
-        position: fixed;
-        top: 0;
-        padding-top: 55px;
-        background-color: White;
-        padding-bottom: 5px;
-        border-bottom: solid 1px #EAEBE9;
-    }
+    width: 100%;
+    z-index: 89;
+    position: fixed;
+    top: 0;
+    padding-top: 55px;
+    background-color: White;
+    padding-bottom: 5px;
+    border-bottom: solid 1px #EAEBE9;
 }
 
 .filtersCTA {
