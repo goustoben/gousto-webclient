@@ -55,7 +55,7 @@ class Buttons extends React.Component {
           size="large"
         >
           {`${totalQty}${textContent}`}
-          <Surcharge surcharge={surchargePerPortion} />
+          {surchargePerPortion && <Surcharge surcharge={surchargePerPortion} />}
         </Segment>,
         <Tooltip
           key={2}
@@ -95,7 +95,7 @@ class Buttons extends React.Component {
           fill
         >
           Add {view !== 'gridSmall' ? 'Recipe' : ''}
-          <Surcharge surcharge={surchargePerPortion} />
+          {surchargePerPortion && <Surcharge surcharge={surchargePerPortion} />}
         </Segment>
       </Tooltip>
     )
