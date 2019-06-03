@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Openings.css'
 import actions from 'actions/jobs'
 import Immutable from 'immutable'/* eslint-disable new-cap */
 import Link from 'Link'
 import Content from 'containers/Content'
+import css from './Openings.css'
 import JobCard from './JobCard/JobCard'
 
 class Openings extends React.PureComponent {
@@ -18,40 +18,63 @@ class Openings extends React.PureComponent {
   }
 
   componentDidMount() {
-    const store = this.context.store
+    const { store } = this.context
     Openings.fetchData({ store })
   }
 
-  render() {
-    const jobs = this.props.jobs
-    const depts = this.props.depts
+  renderJobItems = () => {
+    const { jobs } = this.props
     const jobPositions = jobs.keySeq().toArray()
-    const deptItems = depts.map((dept) =>
-      <div key={dept} className={this.props.selectedDepartment === dept ? css.activeJobSelector : css.jobSelector} onClick={() => { this.props.selectDepartment(dept) }}><p className={css.jobSelectorText}>{dept}</p></div>
-    )
-    const jobItems = jobs.valueSeq().map((job) =>
+
+    return jobs.valueSeq().map((job) => (
       <div key={job.get('id')}>
-        <JobCard jobTitle={job.get('title')} jobDepartment={job.get('department')} jobLink={job.get('url')} isOdd={!!((jobPositions.indexOf(job.get('id'))) % 2)} />
+        <JobCard
+          jobTitle={job.get('title')}
+          jobDepartment={job.get('department')}
+          jobLink={job.get('url')}
+          isOdd={!!((jobPositions.indexOf(job.get('id'))) % 2)}
+        />
       </div>
-    )
-    const departmentString = `in ${this.props.selectedDepartment}`
-    const noJobs = (
+    ))
+  }
+
+  renderNoJobs = () => {
+    const { selectedDepartment } = this.props
+    const departmentString = `in ${selectedDepartment}`
+
+    return (
       <div className={css.jobContainer}>
         <p className={css.noJobsText}>
-          {(`
+          {`
             There are no job openings
-            ${this.props.selectedDepartment.toLowerCase() === 'all' ? '' : departmentString}
+            ${selectedDepartment.toLowerCase() === 'all' ? '' : departmentString}
             right now, but we’re always on the lookout for amazing new people! If you think this could be the team for you, email us at
-          `)}
+          `}
           <Link to="mailto:jobs@gousto.co.uk" clientRouted={false}>
             jobs@gousto.co.uk
           </Link>
-          {(`
-           with your cover letter and CV.
-          `)}
+          {' with your cover letter and CV.'}
         </p>
       </div>
     )
+  }
+
+  renderDeptItems = () => {
+    const { depts, selectedDepartment, selectDepartment } = this.props
+
+    return depts.map((dept) => (
+      <div
+        key={dept}
+        className={selectedDepartment === dept ? css.activeJobSelector : css.jobSelector}
+        onClick={() => selectDepartment(dept)}
+      >
+        <p className={css.jobSelectorText}>{dept}</p>
+      </div>
+    ))
+  }
+
+  render() {
+    const { jobs } = this.props
 
     return (
       <div className={css.background}>
@@ -73,10 +96,10 @@ class Openings extends React.PureComponent {
             </h1>
           </div>
           <div className={css.deptContainer}>
-            {deptItems}
+            {this.renderDeptItems()}
           </div>
           <div className={css.jobContainer}>
-            {jobs.size !== 0 ? jobItems : noJobs}
+            {jobs.size ? this.renderJobItems() : this.renderNoJobs()}
           </div>
         </div>
       </div>
@@ -86,7 +109,7 @@ class Openings extends React.PureComponent {
 
 Openings.propTypes = {
   jobs: PropTypes.instanceOf(Immutable.Map),
-  depts: PropTypes.array,
+  depts: PropTypes.arrayOf(PropTypes.string),
   selectDepartment: PropTypes.func,
   selectedDepartment: PropTypes.string,
 }
@@ -97,4 +120,5 @@ Openings.defaultProps = {
   selectDepartment: () => {},
   selectedDepartment: 'All',
 }
+
 export default Openings
