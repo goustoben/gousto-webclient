@@ -9,6 +9,11 @@ const ordersApi = {
   cancelOrder,
   cancelExistingOrders,
   updateOrderAddress,
+  orderCheckout,
+}
+
+export function orderCheckout(accessToken, reqData) {
+  return fetch(accessToken, `${routes.client.checkout}`, reqData, 'POST')
 }
 
 export function fetchOrder(accessToken, orderId, reqData = {}) {

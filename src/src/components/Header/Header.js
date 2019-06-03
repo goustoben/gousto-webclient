@@ -110,7 +110,7 @@ class Header extends React.PureComponent {
   getChooseRecipesLink = () => {
     const { forceSignupWizardFeature, isAuthenticated } = this.props
 
-    return forceSignupWizardFeature && !isAuthenticated ? clientRoutes.signupWizard : clientRoutes.menu
+    return forceSignupWizardFeature && !isAuthenticated ? clientRoutes.signup : clientRoutes.menu
   }
 
   getMenuItems = (device, path) => {

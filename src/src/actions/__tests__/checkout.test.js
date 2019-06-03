@@ -418,7 +418,7 @@ describe('checkout actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING_PROMOCODE_CHANGE',
         trackingData: {
-          actionType: 'Promocode Applied' ,
+          actionType: 'Promocode Applied',
           promocode: 'promo'
         }
       })
@@ -430,7 +430,7 @@ describe('checkout actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING_PROMOCODE_CHANGE',
         trackingData: {
-          actionType: 'Promocode Removed' ,
+          actionType: 'Promocode Removed',
           promocode: 'promo'
         }
       })

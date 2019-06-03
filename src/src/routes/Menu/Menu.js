@@ -8,6 +8,7 @@ import shallowCompare from 'react-addons-shallow-compare'
 import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
+import { redirect } from 'utils/window'
 
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
@@ -29,9 +30,21 @@ import { Banner } from './Banner'
 import fetchData from './fetchData'
 import { JustForYouTutorial } from './JustForYouTutorial'
 
+const orderDoesContainProductsRequest = (orderId, orderHasAnyProducts) => {
+  const handleOrderDoesContainProductsRequest = () => {
+    orderHasAnyProducts(orderId)
+  }
+
+  window.addEventListener(
+    'orderDoesContainProductsRequest',
+    handleOrderDoesContainProductsRequest
+  )
+}
+
 class Menu extends React.Component {
   static propTypes = {
     basketOrderLoaded: PropTypes.func.isRequired,
+    cutOffDate: PropTypes.string.isRequired,
     menuLoadBoxPrices: PropTypes.func.isRequired,
     menuRecipeDetailShow: PropTypes.string,
     detailVisibilityChange: PropTypes.func,
@@ -73,6 +86,16 @@ class Menu extends React.Component {
       id: PropTypes.string,
       quantity: PropTypes.number,
     })),
+    productsLoadProducts: PropTypes.func.isRequired,
+    productsLoadStock: PropTypes.func.isRequired,
+    orderCheckoutAction: PropTypes.func.isRequired,
+    recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+    promoCode: PropTypes.string,
+    postcode: PropTypes.string,
+    slotId: PropTypes.string.isRequired,
+    deliveryDayId: PropTypes.string,
+    addressId: PropTypes.string,
+    userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
   }
 
   static contextTypes = {
@@ -86,6 +109,14 @@ class Menu extends React.Component {
     shouldJfyTutorialBeVisible: () => {},
     basketProducts: [],
     portionSizeSelectedTracking: () => {},
+    orderCheckout: {
+      orderId: '',
+      url: ''
+    },
+    addressId: '',
+    promoCode: '',
+    postcode: '',
+    deliveryDayId: '',
   }
 
   static fetchData(args, force) {
@@ -98,13 +129,15 @@ class Menu extends React.Component {
     isChrome: false,
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
       isClient: true,
       isChrome: browserHelper.isChrome(),
     })
 
     const {
+      basketProducts,
+      cutOffDate,
       params,
       storeOrderId,
       basketOrderLoaded,
@@ -122,9 +155,11 @@ class Menu extends React.Component {
       portionSizeSelectedTracking,
       numPortions,
       orderId,
-      basketProducts,
-      orderUpdateProducts,
       orderHasAnyProducts,
+      orderUpdateProducts,
+      productsLoadProducts,
+      productsLoadStock,
+      orderCheckoutAction,
     } = this.props
     const { store } = this.context
     // if server rendered
@@ -161,7 +196,7 @@ class Menu extends React.Component {
       portionSizeSelectedTracking(numPortions, params.orderId)
     }
 
-    const handleOrderUpdateProductsRequest = (event) => {
+    const handleOrderUpdateProductsRequest = async (event) => {
       const addExistingProducts = (itemChoices, products) => {
         const newItemChoices = [...itemChoices]
         products.forEach(product => {
@@ -178,21 +213,57 @@ class Menu extends React.Component {
       let { itemChoices } = event.detail
       itemChoices = addExistingProducts(itemChoices, basketProducts)
 
+      const {
+        addressId,
+        postcode,
+        promoCode,
+        deliveryDayId,
+        slotId,
+        recipes,
+      } = this.props
+
+      if (!orderId) {
+        const checkoutResponse = await orderCheckoutAction({
+          addressId,
+          postcode,
+          numPortions,
+          promoCode,
+          orderId: '',
+          deliveryDayId,
+          slotId,
+          orderAction: this.getOrderAction(),
+          disallowRedirectToSummary: true,
+          recipes
+        })
+
+        if (checkoutResponse.orderId && checkoutResponse.url) {
+          await orderUpdateProducts(checkoutResponse.orderId, itemChoices)
+
+          return redirect(checkoutResponse.url)
+        }
+      }
+
       orderUpdateProducts(orderId, itemChoices)
     }
-    const handleOrderDoesContainProductsRequest = () => {
-      orderHasAnyProducts(orderId)
-    }
-
-    window.addEventListener(
-      'orderDoesContainProductsRequest',
-      handleOrderDoesContainProductsRequest
-    )
 
     window.addEventListener(
       'orderUpdateProductsRequest',
       handleOrderUpdateProductsRequest
     )
+
+    orderDoesContainProductsRequest(
+      orderId,
+      orderHasAnyProducts
+    )
+
+    if (cutOffDate) {
+      try {
+        await productsLoadStock()
+        await productsLoadProducts(cutOffDate)
+      } catch (err) {
+        throw err
+      }
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -225,10 +296,26 @@ class Menu extends React.Component {
     return shallowCompare(this, nextProps, nextState)
   }
 
-  componentDidUpdate(prevProps) {
-    const { shouldJfyTutorialBeVisible, isLoading } = this.props
+  async componentDidUpdate(prevProps) {
+    const {
+      shouldJfyTutorialBeVisible,
+      isLoading,
+      cutOffDate,
+      productsLoadStock,
+      productsLoadProducts,
+    } = this.props
 
     forceCheck()
+
+    if (cutOffDate && cutOffDate !== prevProps.cutOffDate) {
+      try {
+        await productsLoadStock()
+        await productsLoadProducts(cutOffDate)
+      } catch (err) {
+        throw err
+      }
+    }
+
     if (!isLoading && prevProps.isLoading !== isLoading) {
       shouldJfyTutorialBeVisible()
     }
@@ -242,6 +329,24 @@ class Menu extends React.Component {
   }
 
   masonryContainer = null
+
+  getOrderAction = () => {
+    const { userOrders, orderId } = this.props
+
+    const userOrder = userOrders.filter(
+      (order) => {
+        return order.get('id') === orderId
+      }
+    ).first()
+    const recipeAction = (
+      userOrder && userOrder.get('recipeItems').size > 0
+    ) ? 'update' : 'choice'
+    const orderAction = (orderId)
+      ? `recipe-${recipeAction}`
+      : 'transaction'
+
+    return orderAction
+  }
 
   handleKeyup = (e) => {
     if (e.type === 'keyup' && e.keyCode && e.keyCode === 27) {
@@ -279,7 +384,7 @@ class Menu extends React.Component {
 
     return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
       <Banner type={'summer-bbq'}/>
-    ) : 
+    ) :
       (<Banner type={'taste-of-italy'}/>)
   }
 

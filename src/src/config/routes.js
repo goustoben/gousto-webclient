@@ -95,8 +95,6 @@ module.exports = {
     referFriend: '/my-referrals',
     signup: '/signup',
 
-    signupWizard: 'signup/box-size',
-
     resetPassword: '/newpasswordform',
 
     unsubscribe: '/unsubscribe',

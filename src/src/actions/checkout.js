@@ -87,7 +87,7 @@ export function checkoutAddressLookup(postcode) {
       addresses.county = lookupResults.data.traditionalCounty || ''
     } catch (err) {
       dispatch(error(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, err.message))
-      logger.error({message: 'Unable to look-up address'})
+      logger.error({ message: 'Unable to look-up address' })
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, false))
     }
@@ -208,7 +208,7 @@ export function checkoutSignup() {
       await dispatch(checkoutActions.checkoutPostSignup())
       dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS }) // used for facebook tracking
     } catch (err) {
-      logger.error({message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err]})
+      logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
       if (err.code === '409-duplicate-details') {
         dispatch(basketPromoCodeChange(''))
@@ -295,7 +295,7 @@ export function checkoutPostSignup() {
       dispatch(trackPurchase())
 
     } catch (err) {
-      logger.error({message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err]})
+      logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
       throw new GoustoException(actionTypes.CHECKOUT_SIGNUP_LOGIN)
     } finally {
@@ -313,7 +313,7 @@ export function trackSignupPageChange(step) {
 }
 
 export function trackingOrderPlaceAttempt() {
-  return(dispatch, getState) => {
+  return (dispatch, getState) => {
     const { basket, pricing } = getState()
     const prices = pricing.get('prices')
 
@@ -331,7 +331,7 @@ export function trackingOrderPlaceAttempt() {
 }
 
 export function trackingOrderPlaceAttemptFailed() {
-  return(dispatch, getState) => {
+  return (dispatch, getState) => {
     const errorMessages = getFormSyncErrors('payment')(getState()).payment
 
     dispatch({
@@ -345,7 +345,7 @@ export function trackingOrderPlaceAttemptFailed() {
 }
 
 export function trackingOrderPlaceAttemptSucceeded() {
-  return(dispatch, getState) => {
+  return (dispatch, getState) => {
     const { basket, pricing, form } = getState()
     const prices = pricing.get('prices')
     const deliveryFormName = getDeliveryFormName(getState())
@@ -366,7 +366,7 @@ export function trackingOrderPlaceAttemptSucceeded() {
   }
 }
 
-export function trackingCardTokenisationFailed(err){
+export function trackingCardTokenisationFailed(err) {
   return (dispatch) => {
     dispatch({
       type: actionTypes.CHECKOUT_CARD_TOKENIZATION_FAILED,
@@ -378,7 +378,7 @@ export function trackingCardTokenisationFailed(err){
   }
 }
 
-export function trackingCardTokenisationSuccessfully(){
+export function trackingCardTokenisationSuccessfully() {
   return (dispatch) => {
     dispatch({
       type: actionTypes.CHECKOUT_CARD_TOKENIZATION_SUCCEEDED,
@@ -409,7 +409,7 @@ export const trackSubscriptionIntervalChanged = () => (
   }
 )
 
-export function trackPromocodeChange (promocode, added) {
+export function trackPromocodeChange(promocode, added) {
   return (dispatch) => dispatch({
     type: 'TRACKING_PROMOCODE_CHANGE',
     trackingData: {
