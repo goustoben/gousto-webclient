@@ -251,6 +251,8 @@ class CollectionsNav extends React.PureComponent {
   }
 
   changeCollection = (collectionId) => {
+    const { browser } = this.props
+    const threshold = (browser === 'mobile') ? 253 : 350
     if (!collectionId) return
     this.props.collectionFilterChange(collectionId)
     if (this.props.features && this.props.features.getIn(['menuStickyCollections', 'value'], false)) {
@@ -264,6 +266,9 @@ class CollectionsNav extends React.PureComponent {
       if (actual('width', 'px') < 768) {
         top(document.body, position)
       }
+    }
+    if (collectionId !== 'ca8f71be-63ac-11e6-a693-068306404bab' && window.pageYOffset > (threshold + 1)) {
+      window.scrollTo(0, threshold)
     }
   }
 
