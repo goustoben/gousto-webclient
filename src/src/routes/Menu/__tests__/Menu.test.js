@@ -16,6 +16,7 @@ import MenuNoResults from 'routes/Menu/MenuNoResults'
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
 import { JustForYouTutorial } from '../JustForYouTutorial'
+import { flattenRecipes } from '../MenuContainer'
 
 jest.mock('actions/order')
 jest.mock('routes/Menu/Banner')
@@ -43,11 +44,28 @@ jest.mock('routes/Menu/fetchData', () => (
 ))
 
 describe('Menu', () => {
+  let productsLoadStock
+  let productsLoadProducts
+
+  beforeEach(() => {
+    productsLoadStock = jest.fn()
+    productsLoadProducts = jest.fn()
+
+    BoxSummaryMobile.mockReturnValue(<div />)
+    BoxSummaryDesktop.mockReturnValue(<div />)
+    RecipeList.mockReturnValue(<div />)
+    SubHeader.mockReturnValue(<div />)
+    Banner.mockReturnValue(<div />)
+    DetailOverlay.mockReturnValue(<div />)
+  })
+
   describe('rendering', () => {
     let wrapper
     beforeEach(() => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -91,6 +109,8 @@ describe('Menu', () => {
       test('should render JFY tutorial if feature flag is set to true', () => {
         wrapper = shallow(
           <Menu
+            productsLoadProducts={() => {}}
+            productsLoadStock={() => {}}
             menuLoadBoxPrices={() => {}}
             menuCollectionRecipes={Immutable.Map({})}
             features={Immutable.Map({})}
@@ -111,6 +131,8 @@ describe('Menu', () => {
     test('with the isLoading prop set to true it should show a Loading', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
@@ -126,6 +148,8 @@ describe('Menu', () => {
     test('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           numPortions={2}
           menuCollectionRecipes={Immutable.Map({})}
@@ -144,6 +168,8 @@ describe('Menu', () => {
     test('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           stock={Immutable.Map()}
           menuCollectionRecipes={Immutable.Map({})}
@@ -191,6 +217,8 @@ describe('Menu', () => {
         })
         wrapper = shallow(
           <Menu
+            productsLoadProducts={() => {}}
+            productsLoadStock={() => {}}
             menuLoadBoxPrices={() => {}}
             menuCollectionRecipes={Immutable.Map({})}
             clearAllFilters={() => {}}
@@ -215,6 +243,8 @@ describe('Menu', () => {
         beforeEach(() => {
           wrapper = shallow(
             <Menu
+              productsLoadProducts={() => {}}
+              productsLoadStock={() => {}}
               menuLoadBoxPrices={() => {}}
               menuCollectionRecipes={Immutable.Map({})}
               clearAllFilters={() => {}}
@@ -258,6 +288,8 @@ describe('Menu', () => {
     test('should render fadeOut', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -274,6 +306,8 @@ describe('Menu', () => {
     test('should render willFade', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -294,6 +328,8 @@ describe('Menu', () => {
     test('should show a collections nav', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           clearAllFilters={() => {}}
@@ -313,6 +349,8 @@ describe('Menu', () => {
     test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
       wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           clearAllFilters={() => {}}
@@ -340,6 +378,7 @@ describe('Menu', () => {
     let menuLoadBoxPrices
     let getStateSpy
     let basketNumPortionChangeSpy
+    let mountOptions
     let wrapper
 
     beforeEach(() => {
@@ -350,6 +389,14 @@ describe('Menu', () => {
           })
         })
       })
+      mountOptions = {
+        context: {
+          store: {
+            getState: getStateSpy,
+            subscribe: () => {},
+          },
+        },
+      }
       menuLoadBoxPrices = jest.fn()
       menuLoadDays = jest.fn().mockReturnValue(
         new Promise(resolve => {
@@ -361,18 +408,14 @@ describe('Menu', () => {
           resolve()
         })
       )
-      BoxSummaryMobile.mockReturnValue(<div />)
-      BoxSummaryDesktop.mockReturnValue(<div />)
-      RecipeList.mockReturnValue(<div />)
-      SubHeader.mockReturnValue(<div />)
-      Banner.mockReturnValue(<div />)
-      DetailOverlay.mockReturnValue(<div />)
       basketNumPortionChangeSpy = jest.fn()
     })
 
-    test('should load Box Prices for non admin users', () => {
-      wrapper = mount(
+    test('should load Box Prices for non admin users', async () => {
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -397,9 +440,11 @@ describe('Menu', () => {
       expect(menuLoadBoxPrices).toHaveBeenCalledTimes(1)
     })
 
-    test('should not load Box Prices for admin users', () => {
-      wrapper = mount(
+    test('should not load Box Prices for admin users', async () => {
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -424,9 +469,11 @@ describe('Menu', () => {
       expect(menuLoadBoxPrices).not.toHaveBeenCalled()
     })
 
-    test('should call fetchData', () => {
-      wrapper = mount(
+    test('should call fetchData', async () => {
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -451,11 +498,13 @@ describe('Menu', () => {
       expect(fetchData).toHaveBeenCalled()
     })
 
-    test('should call basketNumPortionChange if num portions query parameter is given', () => {
+    test('should call basketNumPortionChange if num portions query parameter is given', async () => {
       const basketNumPortionChange = jest.fn()
 
-      wrapper = mount(
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -483,11 +532,13 @@ describe('Menu', () => {
       expect(basketNumPortionChange).toHaveBeenCalledWith(4)
     })
 
-    test('should call shouldJfyTutorialBeVisible', () => {
+    test('should call shouldJfyTutorialBeVisible', async () => {
       const shouldJfyTutorialBeVisible = jest.fn()
 
-      wrapper = mount(
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
@@ -516,15 +567,79 @@ describe('Menu', () => {
       expect(shouldJfyTutorialBeVisible).toHaveBeenCalled()
     })
 
+    describe('productsLoadStock and productsLoadProducts actions', () => {
+      let menuProps
+
+      beforeAll(() => {
+        menuProps = {
+          shouldJfyTutorialBeVisible: () => {},
+          menuRecipeDetailShow: false,
+          boxSummaryDeliveryDays: Immutable.List([]),
+          menuCollectionRecipes: Immutable.Map({}),
+          features: Immutable.Map({}),
+          menuLoadDays,
+          boxSummaryDeliveryDaysLoad,
+          menuLoadBoxPrices,
+          disabled: true,
+          filteredRecipesNumber: 30,
+          clearAllFilters: () => {},
+          params: {},
+          basketNumPortionChange: () => {},
+          query: { num_portions: '4' },
+        }
+      })
+
+      test('are called when cutOffDate is present', async () => {
+        wrapper = await mount(
+          <Menu
+            { ...menuProps }
+            cutOffDate="2019-05-14 12:00:00"
+            productsLoadStock={productsLoadStock}
+            productsLoadProducts={productsLoadProducts}
+          />,
+          mountOptions
+        )
+
+        expect(productsLoadStock).toHaveBeenCalled()
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-05-14 12:00:00')
+      })
+
+      test('are not called when cutOffDate is not present', async () => {
+        wrapper = await mount(
+          <Menu
+            { ...menuProps }
+            cutOffDate=""
+            productsLoadProducts={productsLoadProducts}
+            productsLoadStock={productsLoadStock}
+          />,
+          mountOptions
+        )
+
+        expect(productsLoadStock).not.toHaveBeenCalled()
+        expect(productsLoadProducts).not.toHaveBeenCalled()
+      })
+    })
+
     describe('events', () => {
       let map
+      let menuProps
+      let orderCheckout
       let orderUpdateProducts
+      let orderHasAnyProducts
 
-      beforeEach(() => {
+      beforeEach(async () => {
+        window.location.assign = jest.fn()
         map = {}
-        const orderHasAnyProducts = jest.fn(() => {
+
+        orderCheckout = jest.fn().mockResolvedValueOnce({
+          orderId: 'order-id',
+          url: 'summary-url',
+        })
+
+        orderHasAnyProducts = jest.fn(() => {
           return () => {}
         })
+
         orderUpdateProducts = jest.fn(() => {
           return () => {}
         })
@@ -537,30 +652,42 @@ describe('Menu', () => {
           map[event] = undefined
         })
 
-        wrapper = mount(
-          <Menu
-            menuRecipeDetailShow={false}
-            boxSummaryDeliveryDays={Immutable.List([])}
-            menuCollectionRecipes={Immutable.Map({})}
-            features={Immutable.Map({})}
-            menuLoadDays={menuLoadDays}
-            boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
-            menuLoadBoxPrices={menuLoadBoxPrices}
-            disabled
-            filteredRecipesNumber={30}
-            clearAllFilters={() => {}}
-            params={{}}
-            basketNumPortionChange={basketNumPortionChangeSpy}
-            query={{num_portions:'4'}}
-            orderId="123456"
-            orderHasAnyProducts={orderHasAnyProducts}
-            orderUpdateProducts={orderUpdateProducts}
-            basketProducts={[
-              { id: 'c', quantity: '3' },
-              { id: 'd', quantity: '4' },
-            ]}
-            loginVisibilityChange={() => {}}
-          />,
+        menuProps = {
+          productsLoadProducts: () => { },
+          productsLoadStock: () => { },
+          menuRecipeDetailShow: false,
+          boxSummaryDeliveryDays: Immutable.List([]),
+          menuCollectionRecipes: Immutable.Map({}),
+          features: Immutable.Map({}),
+          menuLoadDays,
+          boxSummaryDeliveryDaysLoad,
+          menuLoadBoxPrices,
+          disabled: true,
+          filteredRecipesNumber: 30,
+          clearAllFilters: () => { },
+          params: {},
+          basketNumPortionChange: basketNumPortionChangeSpy,
+          query: { num_portions: '4' },
+          orderId: '123456',
+          postcode: '123',
+          addressId: '123',
+          deliveryDayId: '123',
+          slotId: '123',
+          disallowRedirectToSummary: true,
+          userOrders: Immutable.Map([]),
+          recipes: flattenRecipes(Immutable.fromJS({ 222: 2, 333: 1})),
+          basketProducts: [
+            { id: 'c', quantity: '3' },
+            { id: 'd', quantity: '4' },
+          ],
+          loginVisibilityChange: () => { },
+          orderCheckoutAction: orderCheckout,
+          orderHasAnyProducts,
+          orderUpdateProducts,
+        }
+
+        wrapper = await mount(
+          <Menu {...menuProps} />,
           {
             context: {
               store: {
@@ -578,7 +705,9 @@ describe('Menu', () => {
         expect(wrapper.prop('orderHasAnyProducts')).toHaveBeenCalledWith('123456')
       })
 
-      test('action orderUpdateProducts is called with the products passed in the event orderUpdateProductsRequest and the ones in the basket', () => {
+      test(`action orderUpdateProducts is called with the products passed in
+      the event orderUpdateProductsRequest and the ones in the basket`,
+      () => {
         const eventProducts = {
           itemChoices: [
             { id: 'a', quantity: '1', type: 'Product' },
@@ -597,18 +726,152 @@ describe('Menu', () => {
             { id: 'd', quantity: '4', type: 'Product' },
           ]
         )
+
+        expect(orderUpdateProducts).toHaveBeenCalledTimes(1)
       })
 
-      test('action orderHasAnyProducts is not called when event orderDoesContainProductsRequest is dispatched', () => {
-        wrapper.unmount()
+      test('action orderCheckout is not called when orderId is present', () => {
+        const eventProducts = { itemChoices: [] }
+        const fakeEventObject = { detail: eventProducts }
 
-        expect(map.orderDoesContainProductsRequest).toBeUndefined()
+        map.orderUpdateProductsRequest(fakeEventObject)
+
+        expect(orderCheckout).toHaveBeenCalledTimes(0)
+      })
+
+      test('redirect is not called when orderId is present', () => {
+        const eventProducts = { itemChoices: [] }
+        const fakeEventObject = { detail: eventProducts }
+
+        map.orderUpdateProductsRequest(fakeEventObject)
+
+        expect(window.location.assign).toHaveBeenCalledTimes(0)
       })
 
       test('action orderUpdateProducts is not called when event orderUpdateProductsRequest is dispatched', () => {
         wrapper.unmount()
 
         expect(map.orderUpdateProductsRequest).toBeUndefined()
+      })
+
+      describe('call event orderUpdateProductsRequest without order ID', () => {
+        beforeEach(async () => {
+          wrapper = await mount(
+            <Menu {...menuProps} orderId="" />,
+            {
+              context: {
+                store: {
+                  getState: getStateSpy,
+                  subscribe: () => {}
+                },
+              },
+            },
+          )
+
+          const eventProducts = {
+            itemChoices: [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+            ]
+          }
+          const fakeEventObject = { detail: eventProducts }
+          map.orderUpdateProductsRequest(fakeEventObject)
+        })
+
+        test('orderCheckout is called when order id is not present', () => {
+          expect(orderCheckout).toHaveBeenCalledWith({
+            addressId: '123',
+            postcode: '123',
+            numPortions: 2,
+            promoCode: '',
+            orderId: '',
+            deliveryDayId: '123',
+            slotId: '123',
+            orderAction: 'transaction',
+            disallowRedirectToSummary: true,
+            recipes: ['222', '222', '333']
+          })
+        })
+
+        test(`orderUpdateProducts is being called with orderId
+        that is coming from order checkout response`, () => {
+          expect(orderUpdateProducts).toHaveBeenCalledWith(
+            'order-id',
+            [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+              { id: 'c', quantity: '3', type: 'Product' },
+              { id: 'd', quantity: '4', type: 'Product' },
+            ]
+          )
+        })
+
+        test('redirect is being called when order checkout response is correct', async () => {
+          expect(window.location.assign).toHaveBeenCalledWith('summary-url')
+        })
+      })
+
+      test('action orderUpdateProducts is not called when event orderUpdateProductsRequest is dispatched', () => {
+        wrapper.unmount()
+
+        expect(map.orderUpdateProductsRequest).toBeUndefined()
+      })
+
+      describe('call event orderUpdateProductsRequest without order ID', () => {
+        beforeEach(async () => {
+          wrapper = await mount(
+            <Menu {...menuProps} orderId="" />,
+            {
+              context: {
+                store: {
+                  getState: getStateSpy,
+                  subscribe: () => {}
+                },
+              },
+            },
+          )
+
+          const eventProducts = {
+            itemChoices: [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+            ]
+          }
+          const fakeEventObject = { detail: eventProducts }
+          map.orderUpdateProductsRequest(fakeEventObject)
+        })
+
+        test('orderCheckout is called when order id is not present', () => {
+          expect(orderCheckout).toHaveBeenCalledWith({
+            addressId: '123',
+            postcode: '123',
+            numPortions: 2,
+            promoCode: '',
+            orderId: '',
+            deliveryDayId: '123',
+            slotId: '123',
+            orderAction: 'transaction',
+            disallowRedirectToSummary: true,
+            recipes: ['222', '222', '333']
+          })
+        })
+
+        test(`orderUpdateProducts is being called with orderId
+        that is coming from order checkout response`, () => {
+          expect(orderUpdateProducts).toHaveBeenCalledWith(
+            'order-id',
+            [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+              { id: 'c', quantity: '3', type: 'Product' },
+              { id: 'd', quantity: '4', type: 'Product' },
+            ]
+          )
+        })
+
+        test('redirect is being called when order checkout response is correct', async () => {
+          expect(window.location.assign).toHaveBeenCalledWith('summary-url')
+        })
       })
     })
   })
@@ -621,7 +884,8 @@ describe('Menu', () => {
     let getStateSpy
     const shouldJfyTutorialBeVisible = jest.fn()
 
-    beforeEach(() => {
+    beforeEach(async () => {
+      window.location.assign = jest.fn()
       getStateSpy = jest.fn().mockReturnValue({
         features: Immutable.Map({
           filterMenu: Immutable.Map({
@@ -640,8 +904,10 @@ describe('Menu', () => {
           resolve()
         })
       )
-      wrapper = mount(
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -654,6 +920,11 @@ describe('Menu', () => {
           clearAllFilters={() => {}}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
           params={{}}
+          orderCheckout={{
+            orderId: 'order-id',
+            url: 'summary-url',
+          }}
+          cutOffDate="2019-05-13 12:00:00"
         />,
         {
           context: {
@@ -673,8 +944,8 @@ describe('Menu', () => {
       shouldJfyTutorialBeVisible.mockClear()
     })
 
-    test('should call forceCheck', () => {
-      wrapper.instance().componentDidUpdate(wrapper.props())
+    test('should call forceCheck', async () => {
+      await wrapper.instance().componentDidUpdate(wrapper.props())
 
       expect(forceCheck).toHaveBeenCalledTimes(1)
     })
@@ -684,8 +955,8 @@ describe('Menu', () => {
         wrapper.setProps('isLoading', false)
       })
 
-      test('should call shouldJfyTutorialBeVisible prop', () => {
-        wrapper.instance().componentDidUpdate({
+      test('should call shouldJfyTutorialBeVisible prop', async () => {
+        await wrapper.instance().componentDidUpdate({
           ...wrapper.props(),
           isLoading: true,
         })
@@ -695,12 +966,59 @@ describe('Menu', () => {
     })
 
     describe('for any non-loading updates', () => {
-      test('should not call shouldJfyTutorialBeVisible prop', () => {
-        wrapper.instance().componentDidUpdate({
+      test('should not call shouldJfyTutorialBeVisible prop', async () => {
+        await wrapper.instance().componentDidUpdate({
           ...wrapper.props(),
         })
 
         expect(shouldJfyTutorialBeVisible).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('productsLoadStock and productsLoadProducts actions', () => {
+      test('are called when cutOffDate is present and different from the previous update', async () => {
+        wrapper.setProps({
+          productsLoadStock,
+          productsLoadProducts,
+          cutOffDate: '2019-05-14 12:00:00',
+        })
+
+        await wrapper.instance().componentDidUpdate({
+          ...wrapper.props(),
+        })
+
+        expect(productsLoadStock).toHaveBeenCalled()
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-05-14 12:00:00')
+      })
+
+      test('are not called when cutOffDate is not changed in the update', async() => {
+        wrapper.setProps({
+          productsLoadStock,
+          productsLoadProducts,
+          cutOffDate: '2019-05-13 12:00:00',
+        })
+
+        await wrapper.instance().componentDidUpdate({
+          ...wrapper.props(),
+        })
+
+        expect(productsLoadStock).not.toHaveBeenCalled()
+        expect(productsLoadProducts).not.toHaveBeenCalled()
+      })
+
+      test('are not called when cutOffDate is not present', async () => {
+        wrapper.setProps({
+          productsLoadStock,
+          productsLoadProducts,
+          cutOffDate: '',
+        })
+
+        await wrapper.instance().componentDidUpdate({
+          ...wrapper.props(),
+        })
+
+        expect(productsLoadStock).not.toHaveBeenCalled()
+        expect(productsLoadProducts).not.toHaveBeenCalled()
       })
     })
   })
@@ -713,6 +1031,8 @@ describe('Menu', () => {
     test('should call Menu.fetchData once if menuVariation has changed', () => {
       const wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
           features={Immutable.Map({})}
           tariffId={1}
@@ -729,6 +1049,8 @@ describe('Menu', () => {
       const menuLoadBoxPrices = jest.fn()
       const wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={menuLoadBoxPrices}
           features={Immutable.Map({})}
           tariffId={1}
@@ -745,6 +1067,8 @@ describe('Menu', () => {
       const menuLoadBoxPrices = jest.fn()
       const wrapper = shallow(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           menuLoadBoxPrices={menuLoadBoxPrices}
           features={Immutable.Map({})}
           tariffId={1}
@@ -782,9 +1106,11 @@ describe('Menu', () => {
       })
     })
 
-    test('should render MenuNoResults', () => {
-      wrapper = mount(
+    test('should render MenuNoResults', async () => {
+      wrapper = await mount(
         <Menu
+          productsLoadProducts={() => {}}
+          productsLoadStock={() => {}}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}

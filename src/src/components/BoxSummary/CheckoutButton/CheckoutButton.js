@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-
 import config from 'config'
 import { Button } from 'goustouicomponents'
 import css from './CheckoutButton.css'
