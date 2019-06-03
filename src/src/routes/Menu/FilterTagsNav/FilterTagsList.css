@@ -1,7 +1,15 @@
+@value ScreenSMMin from 'styles/screenSizes.css';
 
 .filterTagList {
     width: 100%;
     display: flex;
     font-size: 13px;
     align-items: center;
+
+    @media ScreenSMMin {
+        max-width: 1540px;
+        margin: 0 auto;
+        padding: 10px;
+        padding-left: 0px;
+    };
 }

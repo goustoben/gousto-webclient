@@ -100,7 +100,7 @@ export function collectionFilterChange(collectionId) {
       dispatch(filtersCollectionChange(collectionName, collectionId))
     }
 
-    if (collectionName !== prevLoc.query.collection) {
+    if (!!collectionName && collectionName !== prevLoc.query.collection) {
       const newLoc = { ...prevLoc, query }
       dispatch(push(newLoc))
     }

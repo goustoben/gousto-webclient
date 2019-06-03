@@ -407,7 +407,7 @@ class Menu extends React.Component {
 
     let overlayShowCSS = null
     if (this.state.isChrome) {
-      overlayShowCSS = overlayShow ? css.blur : css.willBlur
+      overlayShowCSS = overlayShow ? css.blur : null
     }
 
     return (

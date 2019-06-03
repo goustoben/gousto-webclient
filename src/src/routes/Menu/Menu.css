@@ -16,9 +16,6 @@
 	min-height: 500px;
 }
 
-.willBlur {
-	composes: willBlur from 'styles/effects.css';
-}
 .blur {
 	composes: blur from 'styles/effects.css';
 	@media ScreenXSMax {

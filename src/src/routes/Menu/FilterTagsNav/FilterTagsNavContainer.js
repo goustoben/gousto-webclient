@@ -25,6 +25,7 @@ export default connect((state) => {
   return {
     tags,
     menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
+    browser: state.request.get('browser'),
   }
 }, {
   onCTAClick: filterActions.filterMenuOpen,

@@ -20,6 +20,9 @@ describe('FilterTagsList', () => {
           pending: Immutable.Map({
             MENU_FETCH_DATA: false,
           }),
+          request: Immutable.fromJS({
+            browser: 'desktop'
+          })
         }),
         subscribe: () => {},
       }

@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import css from 'routes/Menu/CollectionsNav/CollectionsNav.css'
+import { getScrollOffset } from 'utils/menu'
 import CollectionsNav from 'routes/Menu/CollectionsNav/CollectionsNav'
 import CollectionItem from 'routes/Menu/CollectionItem' /* eslint-disable new-cap */
 
@@ -12,6 +13,10 @@ jest.mock('utils/window', () => ({
   }),
 }))
 
+jest.mock('utils/menu', () => ({
+  getScrollOffset: jest.fn()
+}))
+
 describe('<CollectionsNav />', () => {
   let wrapper
   let menuCollections
@@ -19,6 +24,7 @@ describe('<CollectionsNav />', () => {
   let featureSet
   let menuCurrentCollectionId
   let items
+  let browser
 
   beforeEach(() => {
     menuCollections = Immutable.OrderedMap({
@@ -49,6 +55,7 @@ describe('<CollectionsNav />', () => {
     })
     collectionFilterChange = jest.fn()
     featureSet = jest.fn()
+    browser = 'mobile'
     menuCurrentCollectionId = '345-345-345'
     wrapper = shallow(
       <CollectionsNav
@@ -57,8 +64,20 @@ describe('<CollectionsNav />', () => {
         menuCurrentCollectionId={menuCurrentCollectionId}
         featureSet={featureSet}
         features={Immutable.fromJS({ menuStickyCollections: { value: true } })}
+        browser={browser}
       />,
     )
+  })
+
+  test('should change threshold for scroll depending on browser type', () => {
+    const expectedThreshold = 253
+    const expetedAnimationThreshold = 50
+
+    wrapper.instance().onScroll()
+    wrapper.instance().checkScroll()
+
+    expect(getScrollOffset).toHaveBeenCalled()
+    expect(getScrollOffset).toHaveBeenCalledWith(expectedThreshold, expetedAnimationThreshold, false)
   })
 
   test('should render a div', () => {

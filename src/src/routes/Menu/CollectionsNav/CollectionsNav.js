@@ -19,6 +19,7 @@ class CollectionsNav extends React.PureComponent {
     masonryContainer: PropTypes.shape({
       offsetTop: PropTypes.number
     }),
+    browser: PropTypes.string,
   }
 
   constructor(props) {
@@ -88,12 +89,12 @@ class CollectionsNav extends React.PureComponent {
   }
 
   checkScroll = () => {
+    const { browser } = this.props
     if (this.hasScrolled) {
       this.hasScrolled = false
-      const threshold = 250
+      const threshold = (browser === 'mobile') ? 253 : 350
       const animationThreshold = 50
       const { scrolledPastPoint } = this.state
-      
       const scrollState = getScrollOffset(threshold, animationThreshold, scrolledPastPoint)
       scrollState && this.setState({
         scrolledPastPoint: scrollState.scrolledPastPoint,

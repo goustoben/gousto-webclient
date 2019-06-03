@@ -7,19 +7,21 @@ const proptypes = {
   value: PropTypes.string,
   selected: PropTypes.bool,
   filterDietaryAttributesChange: PropTypes.func,
+  browser: PropTypes.string,
 }
 
-const changeFilter = (filterDietaryAttributesChange, value) => {
+const changeFilter = (filterDietaryAttributesChange, value, browser) => {
+  const scrollDepth = (browser === 'mobile') ? 250 : 346
   filterDietaryAttributesChange(value)
   if (window.pageYOffset > 255) {
-    window.scrollTo(0,250)
+    window.scrollTo(0,scrollDepth)
   }
 }
 
-const FilterTag = ({selected, value, text, filterDietaryAttributesChange}) => (
+const FilterTag = ({selected, value, text, filterDietaryAttributesChange, browser}) => (
   <div
     className={selected ? css.selectedFilterTag : css.filterTag}
-    onClick={() => changeFilter(filterDietaryAttributesChange, value)}
+    onClick={() => changeFilter(filterDietaryAttributesChange, value, browser)}
   >
     {selected ? 
       <span className={css.tagIcon}>
