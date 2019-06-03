@@ -144,7 +144,7 @@ class Buttons extends React.PureComponent {
   }
 
   render() {
-    const { qty, isAvailable, inProgress } = this.props
+    const { qty, isAvailable, inProgress, pending } = this.props
     const { tooltipVisible } = this.state
     const tooltipMessage = !isAvailable ? this.getTooltipMessage() : ''
     let segments
@@ -215,7 +215,7 @@ class Buttons extends React.PureComponent {
           fill={false}
           width="full"
           className={css.btnWrapper}
-          pending={inProgress}
+          pending={inProgress || pending}
         >
           {segments}
         </Button>

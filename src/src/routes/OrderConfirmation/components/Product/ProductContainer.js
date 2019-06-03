@@ -14,6 +14,7 @@ const mapStateToProps = (state, props) => {
     productsCategories: getProductCategories(state),
     productId: getTempProductId(state),
     addProduct: getTempAddProduct(state),
+    pending: state.pending.get('USER_AGE_VERIFY'),
     isSelectedProduct,
   })
 }

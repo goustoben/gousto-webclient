@@ -77,7 +77,7 @@ class Product extends PureComponent {
     const { product, basketProductAdd, limitReached, toggleAgeVerificationPopUp, temp, orderConfirmationProductTracking } = this.props
     const { id } = product
     const isAgeVerificationRequired = this.isAgeVerificationRequired()
-    if(!limitReached){
+    if (!limitReached) {
       if (isAgeVerificationRequired) {
         toggleAgeVerificationPopUp()
         temp('productId', id)
@@ -97,7 +97,7 @@ class Product extends PureComponent {
   }
 
   getProductCardContent = () => {
-    const { ageVerified, product, basket, limitReached } = this.props
+    const { ageVerified, product, basket, limitReached, pending } = this.props
     const { id, title, listPrice, images, ageRestricted, stock } = product
     const quantity = basket && basket.get('products').has(product.id) ? basket.getIn(['products', product.id]) : 0
 
@@ -113,6 +113,7 @@ class Product extends PureComponent {
       imgSource,
       limitReached,
       isAgeVerificationRequired,
+      pending,
       qty: quantity,
       openDetailsScreen: this.toggleModal,
     }
@@ -133,7 +134,7 @@ class Product extends PureComponent {
     const productCardContent = this.getProductCardContent()
     const productDetails = this.getProductDetails()
 
-    return(
+    return (
       <section className={css.productWrapper}>
         <ProductPresentation
           onAdd={this.onAddProduct}
