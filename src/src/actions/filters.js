@@ -12,6 +12,7 @@ import {
   trackRecipeDietaryAttributeUnselected,
   trackRecipeTotalTimeSelected,
   trackRecipeFiltersApplied,
+  trackCTAToAllRecipesClicked,
 } from './tracking'
 
 const filtersVisibilityChange = (visible = true) => ({
@@ -106,6 +107,13 @@ export function collectionFilterChange(collectionId) {
     }
   }
 }
+
+export const changeCollectionToAllRecipes = () => (
+  (dispatch) => {
+    dispatch(collectionFilterChange('ca8f71be-63ac-11e6-a693-068306404bab'))
+    dispatch(trackCTAToAllRecipesClicked())
+  }
+) 
 
 export const filterMenuOpen = () => (
   (dispatch) => {

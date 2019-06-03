@@ -3,9 +3,11 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import actionTypes from 'actions/actionTypes'
+import { trackCTAToAllRecipesClicked } from 'actions/tracking'
 
 import {
   collectionFilterChange,
+  changeCollectionToAllRecipes,
   filterCurrentDietTypesChange,
   filterCurrentTotalTimeChange,
   clearAllFilters,
@@ -85,6 +87,14 @@ describe('filters actions', () => {
           collectionId,
         }))
       })
+    })
+  })
+
+  describe('changeCollectionToAllRecipes', () => {
+
+    test('should dispatch two actions', () => {
+      changeCollectionToAllRecipes()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy.mock.calls.length).toBe(2)
     })
   })
 
