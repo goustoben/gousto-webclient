@@ -26,6 +26,8 @@ const propTypes = {
   ]),
   productsCategories: PropTypes.instanceOf(Immutable.List),
   ageVerified: PropTypes.bool,
+  ageVerificationPendingId: PropTypes.string,
+  ageVerificationPending: PropTypes.bool,
   basketProductAdd: PropTypes.func,
   basketProductRemove: PropTypes.func,
   temp: PropTypes.func,
@@ -79,7 +81,7 @@ class Product extends PureComponent {
     const isAgeVerificationRequired = this.isAgeVerificationRequired()
     if (!limitReached) {
       if (isAgeVerificationRequired) {
-        toggleAgeVerificationPopUp()
+        toggleAgeVerificationPopUp(id)
         temp('productId', id)
         temp('addProduct', true)
       } else {
@@ -97,7 +99,7 @@ class Product extends PureComponent {
   }
 
   getProductCardContent = () => {
-    const { ageVerified, product, basket, limitReached, pending } = this.props
+    const { ageVerified, product, basket, limitReached, ageVerificationPendingId, ageVerificationPending } = this.props
     const { id, title, listPrice, images, ageRestricted, stock } = product
     const quantity = basket && basket.get('products').has(product.id) ? basket.getIn(['products', product.id]) : 0
 
@@ -113,7 +115,8 @@ class Product extends PureComponent {
       imgSource,
       limitReached,
       isAgeVerificationRequired,
-      pending,
+      ageVerificationPendingId,
+      ageVerificationPending,
       qty: quantity,
       openDetailsScreen: this.toggleModal,
     }

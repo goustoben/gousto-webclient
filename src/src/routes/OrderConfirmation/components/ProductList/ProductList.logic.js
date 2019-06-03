@@ -15,7 +15,7 @@ const propTypes = {
   toggleAgeVerificationPopUp: PropTypes.func
 }
 
-const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified }) => {
+const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified, ageVerificationPendingId }) => {
 
   const isLimitReached = (product) => {
     const { id } = product
@@ -31,6 +31,7 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
         ageVerified={ageVerified}
         isLimitReached={isLimitReached}
         toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+        ageVerificationPendingId={ageVerificationPendingId}
       /> :
         <Loading />
       }

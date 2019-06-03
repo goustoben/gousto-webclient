@@ -63,6 +63,7 @@ class OrderConfirmation extends PureComponent {
       hasConfirmedAge: false,
       filteredProducts: null,
       isOrderSummaryOpen: false,
+      addedProductId: null,
     }
   }
 
@@ -72,10 +73,15 @@ class OrderConfirmation extends PureComponent {
     userFetchReferralOffer()
   }
 
-  toggleAgeVerificationPopUp = () => {
-    this.setState((prevState) => ({
-      showAgeVerification: !prevState.showAgeVerification
-    }))
+  toggleAgeVerificationPopUp = (id) => {
+    this.setState((prevState) => {
+      const productId = id || prevState.addedProductId
+
+      return {
+        addedProductId: productId,
+        showAgeVerification: !prevState.showAgeVerification
+      }
+    })
   }
 
   toggleOrderSummary = () => {
@@ -166,9 +172,9 @@ class OrderConfirmation extends PureComponent {
       saving,
       saveRequired,
       saveError,
-      isLoading
+      isLoading,
     } = this.props
-    const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts } = this.state
+    const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts, addedProductId } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
     const categories = this.getCategories()
 
@@ -206,6 +212,7 @@ class OrderConfirmation extends PureComponent {
                   productsCategories={productsCategories}
                   toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
                   selectedCategory={selectedCategory}
+                  ageVerificationPendingId={addedProductId}
                 />
               </section>
               {showOrderConfirmationReceipt && (
