@@ -17,7 +17,6 @@ import orderActions from '../order'
 
 jest.mock('apis/orders')
 jest.mock('actions/orderConfirmation')
-jest.mock('utils/window')
 jest.mock('actions/status')
 jest.mock('apis/user')
 jest.mock('utils/basket')
@@ -145,6 +144,8 @@ describe('order actions', () => {
       recipes: ['recipe-id-1', 'recipe-id-2'],
     }
 
+    window.location.assign = jest.fn()
+
     test('api is being called correctly', async () => {
       await orderActions.orderCheckout(orderCheckoutApiParams)(dispatchSpy, getStateSpy)
 
@@ -244,6 +245,32 @@ describe('order actions', () => {
 
       expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
       expect(error.mock.calls[1][1]).toBe('Error when saving the order')
+    })
+
+    test('redirect is called when redirected parameter is set to true', async () => {
+      orderCheckout.mockRejectedValueOnce({
+        status: 'error',
+        message: 'error api',
+        url: 'redirect-url',
+        redirected: true,
+      })
+
+      await orderActions.orderCheckout(
+        orderCheckoutApiParams
+      )(dispatchSpy, getStateSpy)
+
+      expect(window.location.assign).toHaveBeenCalledWith('redirect-url')
+    })
+
+    test('redirect is not called when redirected parameter is not set', async () => {
+      orderCheckout.mockRejectedValueOnce({
+        status: 'error',
+        message: 'error api',
+      })
+
+      await orderActions.orderCheckout(orderCheckoutApiParams)(dispatchSpy, getStateSpy)
+
+      expect(window.location.assign).toHaveBeenCalledTimes(0)
     })
   })
 

@@ -236,7 +236,7 @@ class Menu extends React.Component {
           recipes
         })
 
-        if (checkoutResponse.orderId && checkoutResponse.url) {
+        if (checkoutResponse && checkoutResponse.orderId && checkoutResponse.url) {
           await orderUpdateProducts(checkoutResponse.orderId, itemChoices)
 
           return redirect(checkoutResponse.url)
