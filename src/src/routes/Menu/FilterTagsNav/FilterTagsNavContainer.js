@@ -2,12 +2,13 @@ import { connect } from 'react-redux'
 import filterActions from 'actions/filters'
 import config from 'config/recipes'
 import { getNumPortions } from 'selectors/basket'
+import { getNewRecipesFilter, getCurrentTotalTime, getDietaryAttributes} from 'selectors/filters'
 import FilterTagsNav from './FilterTagsNav'
 
 export default connect((state) => {
-  const { filters } = state
-  const dietaryAttributes = filters.get('dietaryAttributes', []).toArray()
-  const totalTime = filters.get('totalTime', '0')
+  const dietaryAttributes = getDietaryAttributes(state).toArray()
+  const totalTimeFilter = getCurrentTotalTime(state)
+  const newRecipesFilter = getNewRecipesFilter(state)
   const numPortions = getNumPortions(state)
   const dietryTags = [
     {
@@ -29,17 +30,18 @@ export default connect((state) => {
       text: config.totalTime['25'],
       type: 'totalTime',
       value: '25',
-      selected: totalTime === '25',
+      selected: totalTimeFilter === '25',
     } : {
       text: config.totalTime['30'],
       type: 'totalTime',
       value: '30',
-      selected: totalTime === '30',
+      selected: totalTimeFilter === '30',
     }
   const newRecipes = {
     text: config.newRecipes,
-    type: 'new',
+    type: 'newRecipes',
     value: '',
+    selected: newRecipesFilter,
   }
   const tags = [ ...newRecipes, ...cookingTimeTag].filter(item => item && item.text)
 

@@ -6,6 +6,7 @@ export const initialState = () => Immutable.Map({
   totalTime: '0',
   dietTypes: Immutable.Set([]),
   dietaryAttributes: Immutable.Set([]),
+  newRecipes: false,
 })
 
 let previousState = initialState()
@@ -31,6 +32,10 @@ const filters = {
 
     case actionTypes.FILTERS_TOTAL_TIME_CHANGE: {
       return state.set('totalTime', action.totalTime)
+    }
+
+    case actionTypes.FILTERS_NEW_RECIPES_CHANGE: {
+      return state.set('newRecipes', !state.get('newRecipes'))
     }
 
     case actionTypes.FILTERS_CLEAR_ALL: {
