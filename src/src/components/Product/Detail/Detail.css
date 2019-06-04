@@ -3,12 +3,13 @@
 
 .fullHeight {
 	composes: absolute from 'styles/position.css';
-	height: 100vh;
+	min-height: 100vh;
 	width: 100%;
 	top: 0;
 	left: 0;
 	@media ScreenSMMin {
 		padding-top: 50px;
+		padding-bottom: 50px;
 	}
 }
 
@@ -123,4 +124,10 @@
 
 .productDetailsDescription {
 	line-height: 22px;
+	white-space: pre-line;
+
+	@media ScreenSMMin {
+		max-height: 65vh;
+		overflow: auto;
+	}
 }

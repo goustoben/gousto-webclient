@@ -6,6 +6,7 @@ import css from './FilterTagsNav.css'
 
 const propTypes = {
   menuFilterExperiment: PropTypes.bool,
+  browser: PropTypes.string,
   tags: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string,
@@ -44,9 +45,10 @@ class FilterTagsNav extends React.PureComponent {
   }
 
   checkScroll = () => {
+    const { browser } = this.props
     if (this.hasScrolled) {
       this.hasScrolled = false
-      const threshold = 245
+      const threshold = (browser === 'mobile') ? 253 : 350
       const animationThreshold = 50
       const { scrolledPastPoint } = this.state
       
@@ -65,13 +67,30 @@ class FilterTagsNav extends React.PureComponent {
     return (isAnySelected && scrolledPastPoint) ? css.filterListContainerFixed : css.filterListContainer
   }
 
+  getClassNameFilterTag = () => {
+    const { tags } = this.props
+    const { scrolledPastPoint } = this.state
+    const isAnySelected = tags.find(tag => tag.selected === true)
+
+    if (!scrolledPastPoint) {
+      return css.filterTagContainer
+    }
+
+    if (isAnySelected) {
+      return css.filterTagContainerFixedWithFilters
+    }
+
+    return css.filterTagContainerFixedWithoutFilters
+  }
+
   render() {
     const { tags, menuFilterExperiment } = this.props
     const className = this.getClassNameFilterNav()
+    const classNamefilterTagContainer = this.getClassNameFilterTag()
 
     return (
       (menuFilterExperiment) ? (
-        <div className={css.filterTagContainer}>
+        <div className={classNamefilterTagContainer}>
           <div className={className}>
             <FilterTagsList tags={tags} />
           </div>

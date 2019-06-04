@@ -199,6 +199,17 @@ export const trackRecipeFiltersApplied = (collectionId, dietTypes, dietaryAttrib
   }
 )
 
+export const trackCTAToAllRecipesClicked = () => (
+  (dispatch) => {
+    dispatch ({
+      type: actionTypes.TRACKING_CTA_TO_ALL_RECIPES_CLICKED,
+      trackingData: {
+        actionType: 'All Recipe CTA Clicked',
+      }
+    })
+  }
+)
+
 export default {
   trackFirstPurchase,
   setAffiliateSource,

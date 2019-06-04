@@ -19,6 +19,7 @@ class CollectionsNav extends React.PureComponent {
     masonryContainer: PropTypes.shape({
       offsetTop: PropTypes.number
     }),
+    browser: PropTypes.string,
   }
 
   constructor(props) {
@@ -88,12 +89,12 @@ class CollectionsNav extends React.PureComponent {
   }
 
   checkScroll = () => {
+    const { browser } = this.props
     if (this.hasScrolled) {
       this.hasScrolled = false
-      const threshold = 250
+      const threshold = (browser === 'mobile') ? 253 : 350
       const animationThreshold = 50
       const { scrolledPastPoint } = this.state
-      
       const scrollState = getScrollOffset(threshold, animationThreshold, scrolledPastPoint)
       scrollState && this.setState({
         scrolledPastPoint: scrollState.scrolledPastPoint,
@@ -250,6 +251,8 @@ class CollectionsNav extends React.PureComponent {
   }
 
   changeCollection = (collectionId) => {
+    const { browser } = this.props
+    const threshold = (browser === 'mobile') ? 253 : 350
     if (!collectionId) return
     this.props.collectionFilterChange(collectionId)
     if (this.props.features && this.props.features.getIn(['menuStickyCollections', 'value'], false)) {
@@ -263,6 +266,9 @@ class CollectionsNav extends React.PureComponent {
       if (actual('width', 'px') < 768) {
         top(document.body, position)
       }
+    }
+    if (collectionId !== 'ca8f71be-63ac-11e6-a693-068306404bab' && window.pageYOffset > (threshold + 1)) {
+      window.scrollTo(0, threshold)
     }
   }
 
