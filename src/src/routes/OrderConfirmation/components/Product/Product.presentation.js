@@ -19,8 +19,8 @@ const propTypes = {
     PropTypes.bool,
   ]),
   qty: PropTypes.number,
-  ageVerificationPendingId: PropTypes.string,
   ageVerificationPending: PropTypes.bool,
+  inProgress: PropTypes.bool,
   onAdd: PropTypes.func,
   onRemove: PropTypes.func,
   openDetailsScreen: PropTypes.func,
@@ -38,8 +38,8 @@ const ProductPresentation = ({
   limitReached,
   isAgeVerificationRequired,
   openDetailsScreen,
-  ageVerificationPendingId,
-  ageVerificationPending
+  ageVerificationPending,
+  inProgress,
 }) => (
     <div className={css.productDetails}>
       <button type="button" className={classnames(css.resetButtonStyle, css.productImage)} onClick={() => openDetailsScreen()}>
@@ -56,8 +56,8 @@ const ProductPresentation = ({
         <div className={css.productButtonWrapper} role="button" aria-label="Add or Remove Product">
           <Buttons
             productId={id}
-            ageVerificationPendingId={ageVerificationPendingId}
             ageVerificationPending={ageVerificationPending}
+            inProgress={inProgress}
             isAgeVerificationRequired={isAgeVerificationRequired}
             onAdd={onAdd}
             onRemove={onRemove}
@@ -69,7 +69,7 @@ const ProductPresentation = ({
         </div>
       </div>
     </div>
-  )
+)
 
 ProductPresentation.propTypes = propTypes
 

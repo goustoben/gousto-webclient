@@ -26,7 +26,6 @@ const ProductListPresentation = ({ products, ageVerified, isLimitReached, toggle
             limitReached={limitReached}
             ageVerified={ageVerified}
             toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-            ageVerificationPendingId={ageVerificationPendingId}
           />)
       })
     }

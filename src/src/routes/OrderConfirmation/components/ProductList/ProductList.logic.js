@@ -20,7 +20,7 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
   const isLimitReached = (product) => {
     const { id } = product
     const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
-
+  
     return limitReachedResult
   }
 
@@ -31,7 +31,6 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
         ageVerified={ageVerified}
         isLimitReached={isLimitReached}
         toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-        ageVerificationPendingId={ageVerificationPendingId}
       /> :
         <Loading />
       }

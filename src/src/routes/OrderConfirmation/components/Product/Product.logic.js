@@ -81,7 +81,7 @@ class Product extends PureComponent {
     const isAgeVerificationRequired = this.isAgeVerificationRequired()
     if (!limitReached) {
       if (isAgeVerificationRequired) {
-        toggleAgeVerificationPopUp(id)
+        toggleAgeVerificationPopUp()
         temp('productId', id)
         temp('addProduct', true)
       } else {
@@ -99,13 +99,15 @@ class Product extends PureComponent {
   }
 
   getProductCardContent = () => {
-    const { ageVerified, product, basket, limitReached, ageVerificationPendingId, ageVerificationPending } = this.props
+    const { ageVerified, product, basket, limitReached, ageVerificationPending, productId } = this.props
     const { id, title, listPrice, images, ageRestricted, stock } = product
     const quantity = basket && basket.get('products').has(product.id) ? basket.getIn(['products', product.id]) : 0
 
     const imgSource = images && images['400']['src']
     const isAgeVerificationRequired = !ageVerified && ageRestricted
     const lowStock = (stock <= configProducts.lowStockThreshold)
+
+    const inProgress = ageVerificationPending && id === productId
 
     return {
       id,
@@ -115,10 +117,10 @@ class Product extends PureComponent {
       imgSource,
       limitReached,
       isAgeVerificationRequired,
-      ageVerificationPendingId,
       ageVerificationPending,
       qty: quantity,
       openDetailsScreen: this.toggleModal,
+      inProgress
     }
   }
   getProductDetails = () => {
