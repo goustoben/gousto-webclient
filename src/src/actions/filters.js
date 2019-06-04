@@ -139,9 +139,14 @@ export const filterCurrentDietTypesChange = (dietType) => (
 )
 
 export const filterCurrentTotalTimeChange = (totalTime) => (
-  (dispatch) => {
-    dispatch(currentTotalTimeChange(totalTime))
-    dispatch(trackRecipeTotalTimeSelected(totalTime))
+  (dispatch, getState) => {
+    const totalTimeSelected = getState().filters.get('totalTime')
+    if(totalTimeSelected === totalTime) {
+      dispatch(currentTotalTimeChange('0'))
+    } else {
+      dispatch(currentTotalTimeChange(totalTime))
+      dispatch(trackRecipeTotalTimeSelected(totalTime))
+    }
   }
 )
 
@@ -184,6 +189,18 @@ export const filterProductCategory = (category) => (
   }
 )
 
+export const filterApply = (type, value) => (
+  (dispatch) => {
+    switch (type) {
+    case 'totalTime':
+      dispatch(filterCurrentTotalTimeChange(value))
+      break  
+    default:
+      break
+    }
+  }
+)
+
 export default {
   filtersVisibilityChange,
   filterMenuOpen,
@@ -197,4 +214,5 @@ export default {
   filterDietaryAttributesChange,
   filterCurrentTotalTimeChange,
   filterMenuRevertFilters,
+  filterApply
 }

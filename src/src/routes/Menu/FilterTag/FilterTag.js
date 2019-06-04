@@ -5,23 +5,24 @@ import css from './FilterTag.css'
 const proptypes = {
   text: PropTypes.string,
   value: PropTypes.string,
+  type: PropTypes.string,
   selected: PropTypes.bool,
-  filterDietaryAttributesChange: PropTypes.func,
+  filterApply: PropTypes.func,
   browser: PropTypes.string,
 }
 
-const changeFilter = (filterDietaryAttributesChange, value, browser) => {
+const changeFilter = (filterApply, value, type, browser) => {
   const scrollDepth = (browser === 'mobile') ? 250 : 346
-  filterDietaryAttributesChange(value)
+  filterApply(type, value)
   if (window.pageYOffset > 255) {
     window.scrollTo(0,scrollDepth)
   }
 }
 
-const FilterTag = ({selected, value, text, filterDietaryAttributesChange, browser}) => (
+const FilterTag = ({selected, value, text, filterApply, type, browser}) => (
   <div
     className={selected ? css.selectedFilterTag : css.filterTag}
-    onClick={() => changeFilter(filterDietaryAttributesChange, value, browser)}
+    onClick={() => changeFilter(filterApply, value, type, browser)}
   >
     {selected ? 
       <span className={css.tagIcon}>
