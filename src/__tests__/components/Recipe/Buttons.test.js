@@ -51,6 +51,10 @@ describe('the Buttons component', () => {
         expect(childrenText).toBe('Add Recipe')
       })
 
+      test('does not have the class for surcharge recipes in grid view', () => {
+        expect(wrapper.find('Segment').hasClass('segment')).toBe(false)
+      })
+
       describe('and the recipe has a surcharge', () => {
         beforeEach(() => {
           wrapper.setProps({ surchargePerPortion: 2.99 })
@@ -64,6 +68,22 @@ describe('the Buttons component', () => {
           const segmentChildren = wrapper.find('Segment').prop('children')
           const childrenText = segmentChildren.slice(0, 2).join('')
           expect(childrenText).toBe('Add Recipe')
+        })
+
+        test('has the classes for surcharge recipes in grid view', () => {
+          expect(wrapper.find('Segment').hasClass('segment')).toBe(true)
+          expect(wrapper.find('Segment').find('div').hasClass('surchargeWrapped surcharge')).toBe(true)
+        })
+
+        describe('when viewing the recipe in detail', () => {
+          beforeEach(() => {
+            wrapper.setProps({ view: 'detail'})
+          })
+
+          test('does not have the classes for surcharge recipes in grid view', () => {
+            expect(wrapper.find('Segment').hasClass('segment')).toBe(false)
+            expect(wrapper.find('Segment').find('div').hasClass('surchargeWrapped surcharge')).toBe(false)
+          })
         })
       })
 
@@ -112,6 +132,10 @@ describe('the Buttons component', () => {
         expect(wrapper.find('Segment').at(1).prop('children')[0]).toBe(longMessage)
       })
 
+      test('should not have the classes for surcharge recipes in grid view', () => {
+        wrapper.find('Segment').forEach(segment => expect(segment.hasClass('segmentSelected')).toBe(false))
+      })
+
       describe('and viewing on a small grid view', () => {
         beforeEach(() => {
           wrapper.setProps({ view: 'gridSmall '})
@@ -134,6 +158,22 @@ describe('the Buttons component', () => {
 
         test('shows how many servings have been added', () => {
           expect(wrapper.find('Segment').at(1).prop('children')[0]).toBe(shortMessage)
+        })
+
+        test('has the classes for surcharge recipes in grid view', () => {
+          wrapper.find('Segment').forEach(segment => expect(segment.hasClass('segmentSelected')).toBe(true))
+          expect(wrapper.find('Segment').find('div').hasClass('surchargeHidden surcharge')).toBe(true)
+        })
+
+        describe('when viewing the recipe in detail', () => {
+          beforeEach(() => {
+            wrapper.setProps({ view: 'detail'})
+          })
+
+          test('does not have the classes for surcharge recipes in grid view', () => {
+            wrapper.find('Segment').forEach(segment => expect(segment.hasClass('segmentSelected')).toBe(false))
+            expect(wrapper.find('Segment').find('div').hasClass('surchargeHidden surcharge')).toBe(false)
+          })
         })
       })
 

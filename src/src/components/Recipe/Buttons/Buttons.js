@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { Button, Control, Segment, Tooltip } from 'goustouicomponents'
+import config from 'config/recipes'
 import Surcharge from './Surcharge'
 import css from './Buttons.css'
 
@@ -32,9 +34,26 @@ class Buttons extends React.Component {
     }
   }
 
+  getSurchargeGridClass = (className, ...otherClasses) => {
+    const { view, surchargePerPortion } = this.props
+    const viewsToExclude = config.recipeDetailViews
+
+    const shouldApplyClass = Boolean(
+      surchargePerPortion &&
+      !viewsToExclude.includes(view)
+    )
+    const otherClassNames = otherClasses.map(name => css[name])
+
+    return classnames(
+      { [css[className]]: shouldApplyClass },
+      ...otherClassNames
+    )
+  }
+
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
     const { numPortions, qty, surchargePerPortion, view } = this.props
     const { tooltipVisible } = this.state
+    const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected')
 
     if (qty > 0) {
       const totalQty = qty * numPortions
@@ -46,6 +65,7 @@ class Buttons extends React.Component {
           key={0}
           onClick={this.handleRemove}
           size="small"
+          className={segmentSelectedClass}
         >
           <Control placement="left" >-</Control>
         </Segment>,
@@ -53,9 +73,18 @@ class Buttons extends React.Component {
           fill={false}
           key={1}
           size="large"
+          className={segmentSelectedClass}
         >
           {`${totalQty}${textContent}`}
-          {surchargePerPortion && <Surcharge surcharge={surchargePerPortion} />}
+          {surchargePerPortion && (
+            <div
+              className={
+                this.getSurchargeGridClass('surchargeHidden', 'surcharge')
+              }
+            >
+              <Surcharge surcharge={surchargePerPortion} />
+            </div>
+          )}
         </Segment>,
         <Tooltip
           key={2}
@@ -72,6 +101,7 @@ class Buttons extends React.Component {
             disabledClick={this.disabledClick}
             size="small"
             disabled={disabled}
+            className={segmentSelectedClass}
           >
             <Control>+</Control>
           </Segment>
@@ -93,9 +123,18 @@ class Buttons extends React.Component {
           disabledClick={this.disabledClick}
           disabled={disabled}
           fill
+          className={this.getSurchargeGridClass('segment')}
         >
           Add {view !== 'gridSmall' ? 'Recipe' : ''}
-          {surchargePerPortion && <Surcharge surcharge={surchargePerPortion} />}
+          {surchargePerPortion && (
+            <div
+              className={
+                this.getSurchargeGridClass('surchargeWrapped', 'surcharge')
+              }
+            >
+              <Surcharge surcharge={surchargePerPortion} />
+            </div>
+          )}
         </Segment>
       </Tooltip>
     )
@@ -105,7 +144,7 @@ class Buttons extends React.Component {
     if (!this.props.disable) {
       if (this.props.stock !== null) {
         this.props.onAdd(this.props.recipeId, this.props.view, false, { position: this.props.position, score: this.props.score })
-      } else if (['detail', 'fineDineInDetail'].includes(this.props.view)) {
+      } else if (config.recipeDetailViews.includes(this.props.view)) {
         this.props.menuRecipeDetailVisibilityChange(false)
         setTimeout(() => { this.props.menuBrowseCTAVisibilityChange(true) }, 500)
       } else {

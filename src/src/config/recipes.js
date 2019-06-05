@@ -47,7 +47,8 @@ const config = {
     'gluten-free': 'Gluten free',
     'dairy-free': 'Dairy free',
   },
-  newRecipes: 'New recipes'
+  newRecipes: 'New recipes',
+  recipeDetailViews: ['detail', 'fineDineInDetail'],
 }
 
 export default config
