@@ -8,7 +8,7 @@ import Image from '../Image'
 import Rating from '../Rating'
 import StockBadge from '../StockBadge'
 
-const SimpleRecipe = ({onClick, media, title, view, maxMediaSize, averageRating, ratingCount, stock}) => (
+const SimpleRecipe = ({onClick, media, title, view, maxMediaSize, averageRating, ratingCount, stock, isNew}) => (
   <div>
     <div className={css.recipeDetails}>
       <div className={css.link} onClick={onClick}>
@@ -31,6 +31,7 @@ const SimpleRecipe = ({onClick, media, title, view, maxMediaSize, averageRating,
             average={averageRating}
             count={ratingCount}
             view={view}
+            isNew={isNew}
           />
           <StockBadge stock={stock} />
         </div>
