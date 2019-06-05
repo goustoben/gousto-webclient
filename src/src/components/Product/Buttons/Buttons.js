@@ -20,6 +20,7 @@ class Buttons extends React.PureComponent {
     productId: PropTypes.string.isRequired,
     qty: PropTypes.number,
     showPopUp: PropTypes.bool,
+    ageVerificationPending: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -32,6 +33,7 @@ class Buttons extends React.PureComponent {
     onVerifyAge: () => { },
     qty: 0,
     showPopUp: false,
+    ageVerificationPending: false,
   }
 
   state = {
@@ -144,7 +146,7 @@ class Buttons extends React.PureComponent {
   }
 
   render() {
-    const { qty, isAvailable, inProgress } = this.props
+    const { qty, isAvailable, inProgress, ageVerificationPending } = this.props
     const { tooltipVisible } = this.state
     const tooltipMessage = !isAvailable ? this.getTooltipMessage() : ''
     let segments
@@ -216,6 +218,7 @@ class Buttons extends React.PureComponent {
           width="full"
           className={css.btnWrapper}
           pending={inProgress}
+          disabled={!inProgress && ageVerificationPending}
         >
           {segments}
         </Button>

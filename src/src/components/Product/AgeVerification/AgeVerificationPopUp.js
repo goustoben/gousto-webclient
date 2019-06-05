@@ -17,7 +17,7 @@ class AgeVerificationPopUp extends PureComponent {
   constructor() {
     super()
     this.state = {
-      hasSelectedUnder18: false
+      hasSelectedUnder18: false,
     }
   }
 
@@ -35,28 +35,28 @@ class AgeVerificationPopUp extends PureComponent {
   }
 
   renderFooter = () => {
-    const { isUnderAge, onClose} = this.props
+    const { isUnderAge, onClose } = this.props
     const { hasSelectedUnder18 } = this.state
 
-    if(isUnderAge || hasSelectedUnder18) {
+    if (isUnderAge || hasSelectedUnder18) {
       return (
-      <ModalFooter className={css.ageVerificationFooter}>
-        <Button fill={false} onClick={() => onClose()}>
-          Close
-        </Button>
-      </ModalFooter>
+        <ModalFooter className={css.ageVerificationFooter}>
+          <Button fill={false} onClick={() => onClose()}>
+            Close
+          </Button>
+        </ModalFooter>
       )
     }
 
     return (
-    <ModalFooter className={css.ageVerificationFooter}>
-      <Button className={css.noAgeVerificationButton} fill={false} onClick={() => this.onConfirmation(false)} >
-        No, i&#39;m under 18
-      </Button>
-      <Button className={css.yesAgeVerificationButton} fill color={'primary'} onClick={() => this.onConfirmation(true)} >
-        Yes, I&#39;m over 18
-      </Button>
-    </ModalFooter>)
+      <ModalFooter className={css.ageVerificationFooter}>
+        <Button className={css.noAgeVerificationButton} fill={false} onClick={() => this.onConfirmation(false)} >
+          No, i&#39;m under 18
+        </Button>
+        <Button className={css.yesAgeVerificationButton} fill color={'primary'} onClick={() => this.onConfirmation(true)} >
+          Yes, I&#39;m over 18
+        </Button>
+      </ModalFooter>)
   }
 
   getContent = () => {
@@ -71,13 +71,13 @@ class AgeVerificationPopUp extends PureComponent {
 
     return (
       <ModalPanel closePortal={onClose} className={css.ageVerificationModal} disableOverlay>
-          <ModalTitle className={css.ageVerificationTitle}>
-            {modalTitle}
-          </ModalTitle>
-          <ModalContent className={css.ageVerificationContent}>
-            {this.getContent()}
-          </ModalContent>
-          {this.renderFooter()}
+        <ModalTitle className={css.ageVerificationTitle}>
+          {modalTitle}
+        </ModalTitle>
+        <ModalContent className={css.ageVerificationContent}>
+          {this.getContent()}
+        </ModalContent>
+        {this.renderFooter()}
       </ModalPanel>
 
     )

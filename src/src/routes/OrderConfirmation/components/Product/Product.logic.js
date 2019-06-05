@@ -26,6 +26,8 @@ const propTypes = {
   ]),
   productsCategories: PropTypes.instanceOf(Immutable.List),
   ageVerified: PropTypes.bool,
+  ageVerificationPendingId: PropTypes.string,
+  ageVerificationPending: PropTypes.bool,
   basketProductAdd: PropTypes.func,
   basketProductRemove: PropTypes.func,
   temp: PropTypes.func,
@@ -77,7 +79,7 @@ class Product extends PureComponent {
     const { product, basketProductAdd, limitReached, toggleAgeVerificationPopUp, temp, orderConfirmationProductTracking } = this.props
     const { id } = product
     const isAgeVerificationRequired = this.isAgeVerificationRequired()
-    if(!limitReached){
+    if (!limitReached) {
       if (isAgeVerificationRequired) {
         toggleAgeVerificationPopUp()
         temp('productId', id)
@@ -97,13 +99,15 @@ class Product extends PureComponent {
   }
 
   getProductCardContent = () => {
-    const { ageVerified, product, basket, limitReached } = this.props
+    const { ageVerified, product, basket, limitReached, ageVerificationPending, productId } = this.props
     const { id, title, listPrice, images, ageRestricted, stock } = product
     const quantity = basket && basket.get('products').has(product.id) ? basket.getIn(['products', product.id]) : 0
 
     const imgSource = images && images['400']['src']
     const isAgeVerificationRequired = !ageVerified && ageRestricted
     const lowStock = (stock <= configProducts.lowStockThreshold)
+
+    const inProgress = ageVerificationPending && id === productId
 
     return {
       id,
@@ -113,8 +117,10 @@ class Product extends PureComponent {
       imgSource,
       limitReached,
       isAgeVerificationRequired,
+      ageVerificationPending,
       qty: quantity,
       openDetailsScreen: this.toggleModal,
+      inProgress
     }
   }
   getProductDetails = () => {
@@ -133,7 +139,7 @@ class Product extends PureComponent {
     const productCardContent = this.getProductCardContent()
     const productDetails = this.getProductDetails()
 
-    return(
+    return (
       <section className={css.productWrapper}>
         <ProductPresentation
           onAdd={this.onAddProduct}
