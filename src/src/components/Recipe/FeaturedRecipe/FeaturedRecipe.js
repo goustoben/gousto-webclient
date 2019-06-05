@@ -17,7 +17,7 @@ import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 
-const FeaturedRecipe = ({onClick, media, title, view, highlight, unhighlight, tasteScore, chef, tag, detailHover, description, range, isRecommendedRecipe, features, cookingTime, useWithin, equipment, id, stock, inBasket, position, surcharge, fiveADay, diet}) => (
+const FeaturedRecipe = ({onClick, media, title, view, highlight, unhighlight, tasteScore, chef, tag, detailHover, description, range, isRecommendedRecipe, features, cookingTime, useWithin, equipment, id, stock, inBasket, position, fiveADay, diet}) => (
   <div>
     <div className={css.featuredRecipe}>
       <span onClick={onClick} className={css.link}>
@@ -52,7 +52,7 @@ const FeaturedRecipe = ({onClick, media, title, view, highlight, unhighlight, ta
             <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
             <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay}/>
           </div>
-          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
+          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
           <DisabledOverlay stock={stock} inBasket={inBasket} />
         </div>
       </div>
