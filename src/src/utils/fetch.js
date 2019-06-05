@@ -95,19 +95,24 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
 
   const startTime = new Date
   logger.notice({message: "[fetch start]", requestUrl: requestUrl, uuid: uuid})
-  let status
+  let responseStatus
+  let responseRedirected
+  let responseUrl
 
   return isomorphicFetch(requestUrl, requestDetails)
     .then(response => {
-      status = response.status
+      const { status, redirected, url:endpointOrRedirectedUrl } = response
+      responseStatus = status
+      responseRedirected = redirected
+      responseUrl = endpointOrRedirectedUrl
 
       return response
     })
     .then(response => response.text())
-    .then(response => [JSONParse(response), status]) // eslint-disable-line new-cap
+    .then(response => [JSONParse(response), responseStatus]) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
-      logger.notice({message: "[fetch end]", status: status, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl: requestUrl, uuid: uuid})
+      logger.notice({message: "[fetch end]", status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl: requestUrl, uuid: uuid})
 
       return { data: response, meta }
     })
@@ -115,13 +120,13 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       const message = (e instanceof Error || e.message) ? e.message : e
       let log = logger.error
 
-      if (url.indexOf('oauth/identify') > -1 || url.indexOf('oauth/refresh-token') > -1 || status === 422) {
+      if (url.indexOf('oauth/identify') > -1 || url.indexOf('oauth/refresh-token') > -1 || responseStatus === 422) {
         log = logger.warning
       }
 
       log({
         message: "[fetch end]",
-        status: status,
+        status: responseStatus,
         elapsedTime: `${(new Date() - startTime)}ms`,
         requestUrl: requestUrl,
         errors: [e],
@@ -131,11 +136,15 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       if (e && e.toLowerCase && e.toLowerCase().indexOf('unable to determine') > -1) {
         log(JSON.stringify(requestDetails.headers))
       }
-      const err = new Error(message)
-      err.status = status
-      err.code = e.code || 500
-      err.errors = e.errors || []
-      throw err
+
+      throw {
+        code: e.code || 500,
+        errors: e.errors || [],
+        message,
+        status: responseStatus,
+        redirected: responseRedirected,
+        url: responseUrl,
+      }
     })
 }
 
