@@ -87,7 +87,7 @@ export function getTaxonomyTags(recipe, categorySlug) {
 
 export function isNew(recipe) {
   const availability = recipe.get('availability')
-  const hasBeenOnAPreviousMenu = availability.find(date => (date.get('offset') < 0))
+  const hasBeenOnAPreviousMenu = availability && availability.find(date => (date.get('offset') < 0))
 
   return !hasBeenOnAPreviousMenu
 }
