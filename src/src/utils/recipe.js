@@ -16,6 +16,7 @@ export function getStockTag(stock) {
 }
 
 export function getNewTag(ratingCount) {
+
   return ratingCount < 1 ? 'New Recipe' : ''
 }
 
@@ -84,7 +85,7 @@ export function getTaxonomyTags(recipe, categorySlug) {
   return Immutable.List([])
 }
 
-function isNew (recipe) {
+export function isNew(recipe) {
   const availability = recipe.get('availability')
   const hasBeenOnAPreviousMenu = availability.find(date => (date.get('offset') < 0))
 
