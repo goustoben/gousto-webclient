@@ -89,7 +89,7 @@ class Menu extends React.Component {
     productsLoadProducts: PropTypes.func.isRequired,
     productsLoadStock: PropTypes.func.isRequired,
     orderCheckoutAction: PropTypes.func.isRequired,
-    recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
+    recipes: PropTypes.arrayOf(PropTypes.string).isRequired,
     promoCode: PropTypes.string,
     postcode: PropTypes.string,
     slotId: PropTypes.string.isRequired,
