@@ -40,8 +40,8 @@ const config = {
   },
   totalTime: {
     0: 'Any length',
-    25: 'Under 25',
-    30: 'Under 30',
+    25: 'Under 25 mins',
+    30: 'Under 30 mins',
   },
   dietaryAttributes: {
     'gluten-free': 'Gluten free',

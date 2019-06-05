@@ -84,6 +84,19 @@ export function getTaxonomyTags(recipe, categorySlug) {
   return Immutable.List([])
 }
 
+function isNew (recipe) {
+  const availability = recipe.get('availability')
+  const hasBeenOnAPreviousMenu = availability.find(date => (date.get('offset') < 0))
+
+  return !hasBeenOnAPreviousMenu
+}
+
+export function filterRecipesByNew(recipes) {
+  const filteredRecipes = recipes.filter(recipe => isNew(recipe))
+
+  return filteredRecipes || Immutable.List([])
+}
+
 export default {
   getLowStockTag,
 }
