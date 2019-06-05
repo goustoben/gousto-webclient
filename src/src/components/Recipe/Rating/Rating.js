@@ -10,6 +10,7 @@ class RecipeRating extends React.Component {
     count: PropTypes.number,
     average: PropTypes.number,
     view: PropTypes.string,
+    isNew: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -48,7 +49,8 @@ class RecipeRating extends React.Component {
       )
     }
 
-    const newTag = getNewTag(this.props.count, this.props.view)
+    const newTag = this.props.isNew ? 'New Recipe' : ''
+    console.log('isNew', this.props.isNew) // eslint-disable-line
 
     return (
       <span>
