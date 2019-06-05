@@ -8,6 +8,7 @@ import { fetchOrder } from 'apis/orders'
 import { basketOrderLoad } from 'actions/basket'
 import { recipesLoadRecipesById } from 'actions/recipes'
 import { getOrderConfirmation } from 'selectors/features'
+import { orderCheckPossibleDuplicate } from 'actions/order'
 import {
   productsLoadProducts,
 } from 'actions/products'
@@ -36,6 +37,10 @@ jest.mock('actions/products', () => ({
   productsLoadProducts: jest.fn(),
   productsLoadStock: jest.fn(),
   productsLoadCategories: jest.fn()
+}))
+
+jest.mock('actions/order', () => ({
+  orderCheckPossibleDuplicate: jest.fn(),
 }))
 
 describe('orderConfirmation actions', () => {
@@ -85,6 +90,12 @@ describe('orderConfirmation actions', () => {
         orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
 
         expect(dispatch).toHaveBeenCalled()
+      })
+
+      test('should call orderCheckPossibleDuplicate', () => {
+        orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+
+        expect(orderCheckPossibleDuplicate).toHaveBeenCalled()
       })
 
       test('should push the client to the order confirmation', () => {
