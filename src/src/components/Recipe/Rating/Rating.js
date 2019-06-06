@@ -50,7 +50,6 @@ class RecipeRating extends React.Component {
     }
 
     const newTag = this.props.isNew ? 'New Recipe' : ''
-    console.log('isNew', this.props.isNew) // eslint-disable-line
 
     return (
       <span>
