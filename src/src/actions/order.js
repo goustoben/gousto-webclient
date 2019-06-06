@@ -8,6 +8,7 @@ import GoustoException from 'utils/GoustoException'
 import logger from 'utils/logger'
 import { getOrderDetails } from 'utils/basket'
 import { getAvailableDeliveryDays } from 'utils/deliveries'
+import { redirect } from 'utils/window'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
@@ -122,6 +123,10 @@ export const orderCheckout = ({
       }
 
     } catch (err) {
+      if (err && err.redirected && err.url) {
+        return redirect(err.url)
+      }
+
       dispatch(statusActions.error(actionTypes.ORDER_CHECKOUT, err.message))
     } finally {
       dispatch(statusActions.pending(actionTypes.ORDER_CHECKOUT, false))

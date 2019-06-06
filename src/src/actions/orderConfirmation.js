@@ -11,6 +11,7 @@ import { getAffiliateTrackingData } from 'utils/order'
 import { trackAffiliatePurchase } from 'actions/tracking'
 import { getOrderConfirmation } from 'selectors/features'
 import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
+import { orderCheckPossibleDuplicate } from './order'
 import recipeActions from './recipes'
 import tempActions from './temp'
 import actionTypes from './actionTypes'
@@ -21,6 +22,7 @@ export const orderConfirmationRedirect = (orderId, orderAction) => (
       dispatch(orderDetails(orderId))
 
       const summaryUrl = config.client.orderConfirmation.replace(':orderId', orderId)
+      dispatch(orderCheckPossibleDuplicate(orderId))
       dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
       dispatch(tempActions.temp('showHeader', true))
     } else {

@@ -19,9 +19,11 @@ const propTypes = {
     PropTypes.bool,
   ]),
   qty: PropTypes.number,
+  ageVerificationPending: PropTypes.bool,
+  inProgress: PropTypes.bool,
   onAdd: PropTypes.func,
   onRemove: PropTypes.func,
-  openDetailsScreen:PropTypes.func,
+  openDetailsScreen: PropTypes.func,
 }
 
 const ProductPresentation = ({
@@ -36,33 +38,37 @@ const ProductPresentation = ({
   limitReached,
   isAgeVerificationRequired,
   openDetailsScreen,
+  ageVerificationPending,
+  inProgress,
 }) => (
-  <div className={css.productDetails}>
-    <button type="button" className={classnames(css.resetButtonStyle, css.productImage)} onClick={() => openDetailsScreen()}>
-      <img src={imgSource} alt={title}/>
-    </button>
-    {lowStock && <span className={css.productLowStock}>low stock</span>}
-    <div className={css.productContent}>
-      <div>
-        <button type="button" className={classnames(css.resetButtonStyle, css.productInfo)} onClick={() => openDetailsScreen()}>
-          <h3 className={css.productTitle}>{title}</h3>
-          <span className={css.productPrice}>£{listPrice}</span>
-        </button>
-      </div>
-      <div className={css.productButtonWrapper} role="button" aria-label="Add or Remove Product">
-        <Buttons
-          productId={id}
-          isAgeVerificationRequired={isAgeVerificationRequired}
-          onAdd={onAdd}
-          onRemove={onRemove}
-          qty={qty}
-          limitReached={limitReached}
-          isAvailable={!limitReached}
-          showPopUp
-        />
+    <div className={css.productDetails}>
+      <button type="button" className={classnames(css.resetButtonStyle, css.productImage)} onClick={() => openDetailsScreen()}>
+        <img src={imgSource} alt={title} />
+      </button>
+      {lowStock && <span className={css.productLowStock}>low stock</span>}
+      <div className={css.productContent}>
+        <div>
+          <button type="button" className={classnames(css.resetButtonStyle, css.productInfo)} onClick={() => openDetailsScreen()}>
+            <h3 className={css.productTitle}>{title}</h3>
+            <span className={css.productPrice}>£{listPrice}</span>
+          </button>
+        </div>
+        <div className={css.productButtonWrapper} role="button" aria-label="Add or Remove Product">
+          <Buttons
+            productId={id}
+            ageVerificationPending={ageVerificationPending}
+            inProgress={inProgress}
+            isAgeVerificationRequired={isAgeVerificationRequired}
+            onAdd={onAdd}
+            onRemove={onRemove}
+            qty={qty}
+            limitReached={limitReached}
+            isAvailable={!limitReached}
+            showPopUp
+          />
+        </div>
       </div>
     </div>
-  </div>
 )
 
 ProductPresentation.propTypes = propTypes

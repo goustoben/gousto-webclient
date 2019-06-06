@@ -166,7 +166,7 @@ class OrderConfirmation extends PureComponent {
       saving,
       saveRequired,
       saveError,
-      isLoading
+      isLoading,
     } = this.props
     const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
@@ -174,68 +174,68 @@ class OrderConfirmation extends PureComponent {
 
     return isLoading ?
       (
-      <div className={css.loadingContainer}>
-        <Loading />
-      </div>
+        <div className={css.loadingContainer}>
+          <Loading />
+        </div>
       ) :
       (
-      <div data-testing="orderConfirmationContainer">
-        {showHeader && <OrderConfirmationHeader
-          {...headerDetails}
-        />}
-        <Overlay open={showAgeVerification} from="top">
-          <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation} />
-        </Overlay>
-        <div className={classnames(css.mobileShow, css.rafMobile)}>
-          <ReferAFriend />
-        </div>
-        <div className={css.marketPlaceWrapper}>
-          <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
-          <div className={css.navbar}>
-            <Navbar items={categories} onClick={this.getFilteredProducts} active={selectedCategory} />
+        <div data-testing="orderConfirmationContainer">
+          {showHeader && <OrderConfirmationHeader
+            {...headerDetails}
+          />}
+          <Overlay open={showAgeVerification} from="top">
+            <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation} />
+          </Overlay>
+          <div className={classnames(css.mobileShow, css.rafMobile)}>
+            <ReferAFriend />
           </div>
-          <div className={css.dropdown}>
-            <Dropdown id={'product-filter'} options={categories} groupedOptions={[]} optionSelected={selectedCategory} onChange={this.getFilteredProducts} />
-          </div>
-          <div className={css.marketPlaceContent}>
-            <section className={css.marketPlaceProducts}>
-              <ProductList
-                products={filteredProducts || products}
-                basket={basket}
-                ageVerified={ageVerified}
-                productsCategories={productsCategories}
-                toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-                selectedCategory={selectedCategory}
-              />
-            </section>
-            {showOrderConfirmationReceipt && (
-              <section className={classnames(css.orderDetails, css.mobileHide)}>
-                <OrderSummaryContainer onOrderConfirmationMobile />
-                <ReferAFriend />
+          <div className={css.marketPlaceWrapper}>
+            <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
+            <div className={css.navbar}>
+              <Navbar items={categories} onClick={this.getFilteredProducts} active={selectedCategory} />
+            </div>
+            <div className={css.dropdown}>
+              <Dropdown id={'product-filter'} options={categories} groupedOptions={[]} optionSelected={selectedCategory} onChange={this.getFilteredProducts} />
+            </div>
+            <div className={css.marketPlaceContent}>
+              <section className={css.marketPlaceProducts}>
+                <ProductList
+                  products={filteredProducts || products}
+                  basket={basket}
+                  ageVerified={ageVerified}
+                  productsCategories={productsCategories}
+                  toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+                  selectedCategory={selectedCategory}
+                />
               </section>
-            )}
-            <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
-              <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
-              <Overlay open={isOrderSummaryOpen} from="bottom">
-                <div className={css.orderDetailsMobileContent}>
-                  <div className={css.orderDetailsCloseButton}>
-                    <CloseButton onClose={() => this.toggleOrderSummary()} />
+              {showOrderConfirmationReceipt && (
+                <section className={classnames(css.orderDetails, css.mobileHide)}>
+                  <OrderSummaryContainer onOrderConfirmationMobile />
+                  <ReferAFriend />
+                </section>
+              )}
+              <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
+                <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
+                <Overlay open={isOrderSummaryOpen} from="bottom">
+                  <div className={css.orderDetailsMobileContent}>
+                    <div className={css.orderDetailsCloseButton}>
+                      <CloseButton onClose={() => this.toggleOrderSummary()} />
+                    </div>
+                    <OrderSummaryContainer orderSummaryCollapsed={false} onOrderConfirmationMobile />
                   </div>
-                  <OrderSummaryContainer orderSummaryCollapsed={false} onOrderConfirmationMobile />
-                </div>
 
-              </Overlay>
-              <SaveButton
-                onOrderConfirmationMobile
-                saving={saving}
-                saveRequired={saveRequired}
-                onClick={this.onOrderSave}
-                error={saveError}
-              />
-            </section>
+                </Overlay>
+                <SaveButton
+                  onOrderConfirmationMobile
+                  saving={saving}
+                  saveRequired={saveRequired}
+                  onClick={this.onOrderSave}
+                  error={saveError}
+                />
+              </section>
+            </div>
           </div>
         </div>
-      </div>
       )
   }
 }
