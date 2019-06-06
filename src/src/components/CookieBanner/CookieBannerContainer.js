@@ -3,18 +3,20 @@ import cookieActions from 'actions/cookies'
 import { getIsPolicyAccepted } from 'selectors/cookies'
 import CookieBanner from './CookieBanner'
 
+const copy = {
+  button: 'OK, I Agree',
+  findMore: 'Find out more',
+  description: `We use cookies. By continuing to browse the site
+  you are agreeing to our use of cookies. `,
+}
+
 const mapStateToProps = (state) => ({
-  copy: {
-    button: 'OK, I Agree',
-    findMore: 'Find out more',
-    description: `We use cookies. By continuing to browse the site
-    you are agreeing to our use of cookies. `,
-  },
+  copy,
   isCookiePolicyAccepted: getIsPolicyAccepted(state),
 })
 
-const mapActionsToProps = {
+const mapDispatchToProps = {
   cookiePolicyAcceptanceChange: cookieActions.cookiePolicyAcceptanceChange,
 }
 
-export default connect(mapStateToProps, mapActionsToProps)(CookieBanner)
+export default connect(mapStateToProps, mapDispatchToProps)(CookieBanner)
