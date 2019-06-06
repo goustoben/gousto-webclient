@@ -3,7 +3,6 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import actionTypes from 'actions/actionTypes'
-import { trackCTAToAllRecipesClicked } from 'actions/tracking'
 
 import {
   collectionFilterChange,
