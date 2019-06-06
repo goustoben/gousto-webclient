@@ -7,6 +7,8 @@ import {
   getCookingTime,
   getRecipeRange,
   getTaxonomyTags,
+  isNew, 
+  filterRecipesByNew
 } from 'utils/recipe'
 
 jest.mock('config', () => ({
@@ -186,6 +188,71 @@ describe('recipes', () => {
 
       expect(getTaxonomyTags(recipe, 'test-category').size).toEqual(1)
       expect(getTaxonomyTags(recipe, 'alternate-category').size).toEqual(2)
+    })
+  })
+
+  describe('isNew', () => {
+    test('should only return true for recipes that have an offset of 0 or a positive number', () => {
+      const recipe1 = Immutable.fromJS({
+        availability: [
+          {
+            id: "123456789",
+            offset: -12,
+          }, 
+          {
+            id: "098765432",
+            offset: 0,
+          }, 
+        ], 
+      })
+      const recipe2 = Immutable.fromJS({
+        availability: [
+          {
+            id: "5454545454",
+            offset: 0,
+          }, 
+          {
+            id: "6767676767",
+            offset: 5,
+          }, 
+        ], 
+      })
+      
+      expect(isNew(recipe1)).toBe(false)
+      expect(isNew(recipe2)).toBe(true)
+    })
+  })
+
+  describe('filterRecipesByNew', () => {
+    test('should only return recipes if they have an offset of 0 or a positive number', () => {
+      const recipes = Immutable.fromJS({
+        recipe1: {
+          availability: [
+            {
+              id: "123456789",
+              offset: -12,
+            }, 
+            {
+              id: "098765432",
+              offset: 0,
+            }, 
+          ]
+        }, 
+        recipe2: {
+          availability: [
+            {
+              id: "5454545454",
+              offset: 0,
+            }, 
+            {
+              id: "6767676767",
+              offset: 5,
+            }, 
+          ]
+        }
+      })
+      
+      expect(filterRecipesByNew(recipes).size).toBe(1)
     })
   })
 })
