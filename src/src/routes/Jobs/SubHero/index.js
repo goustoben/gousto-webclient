@@ -1,1 +1,1 @@
-export default from './SubHeroContainer'
+export default from './SubHero'
