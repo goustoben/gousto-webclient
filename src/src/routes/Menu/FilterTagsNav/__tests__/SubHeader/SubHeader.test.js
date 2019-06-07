@@ -33,7 +33,7 @@ describe('SubHeader', () => {
     })
 
     test('should not render any Vegetarian showVegetarianFilter = false', () => {
-      const wrapper = shallow(<SubHeader showVegetarianFilter={false} />)
+      wrapper = shallow(<SubHeader showVegetarianFilter={false} />)
       expect(wrapper.find(Vegetarian)).toHaveLength(0)
     })
   })
