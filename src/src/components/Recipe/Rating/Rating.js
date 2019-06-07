@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { getNewTag } from 'utils/recipe'
 import css from './Rating.css'
 import InfoBadge from '../InfoBadge'
 
