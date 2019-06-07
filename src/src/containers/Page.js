@@ -6,7 +6,6 @@ import config from 'config'
 import actions from 'actions'
 import { getWindow } from 'utils/window'
 import { LoadingOverlay } from 'Loading'
-import ReactPerfHelper from 'utils/ReactPerfHelper/ReactPerfHelper'
 import css from './Page.css'
 
 const imageUrl = require('media/photos/gousto-share-box.jpg')
@@ -93,7 +92,6 @@ class Page extends React.PureComponent {
               },
             ]}
           />
-          {__DEV__ ? <ReactPerfHelper /> : null}
           {this.props.children}
         </div>
         {this.props.contentFetchPending && <div className={css.loadingContainer}><LoadingOverlay /></div>}

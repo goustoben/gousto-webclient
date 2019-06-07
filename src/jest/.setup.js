@@ -1,3 +1,7 @@
+// setup file
+const Enzyme = require('enzyme');
+const EnzymeAdapter = require('enzyme-adapter-react-15');
+
 window.matchMedia =
   window.matchMedia ||
   function() {
@@ -21,3 +25,4 @@ if (!Object.entries) {
     return resArray
   }
 }
+Enzyme.configure({ adapter: new EnzymeAdapter() });

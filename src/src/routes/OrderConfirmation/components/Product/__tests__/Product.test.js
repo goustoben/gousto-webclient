@@ -2,17 +2,11 @@ import React from 'react'
 import { mount } from 'enzyme'
 import Immutable from 'immutable'
 
-import logger from 'utils/logger'
 import { mockProduct } from 'routes/OrderConfirmation/components/config'
-import { orderConfirmationProductTracking } from 'actions/orderConfirmation'
 
 import { Product } from '../Product.logic'
 
 jest.mock('../../ProductDetails', () => 'div')
-
-jest.mock('actions/orderConfirmation', () => ({
-  orderConfirmationProductTracking: jest.fn(),
-}))
 
 global.scrollTo = jest.fn()
 
@@ -88,8 +82,9 @@ describe('Product component', () => {
       expect(toggleAgeVerificationPopUpSpy).toHaveBeenCalled()
     })
 
-    test('should dispatch the order confirmation product tracking with the correct props', () => {
-      wrapper.setProps({
+    test('should dispatch the order confirmation product tracking with the correct props', async () => {
+      const orderConfirmationProductTrackingMock = jest.fn()
+      await wrapper.setProps({
         basket: Immutable.fromJS({
           products: {
             "1234": 1,
@@ -102,16 +97,13 @@ describe('Product component', () => {
           id: "1234"
         },
         basketProductAdd: jest.fn(),
-        orderConfirmationProductTracking: jest.fn()
+        orderConfirmationProductTracking: orderConfirmationProductTrackingMock
       })
 
       const { onAddProduct } = wrapper.instance()
-      Promise.all(onAddProduct()).then(() => {
-        expect(orderConfirmationProductTracking).toHaveBeenCalledWith('1234', true)
-      })
-        .catch(err => {
-          logger.error(err)
-        })
+      await onAddProduct()
+
+      expect(orderConfirmationProductTrackingMock).toHaveBeenCalledWith('1234', true)
     })
   })
 

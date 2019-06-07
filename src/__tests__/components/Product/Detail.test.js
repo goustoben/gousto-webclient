@@ -46,7 +46,7 @@ describe('Product Detail', function () {
 
   test('should contain 2 child divs in container div', function () {
     const containerDiv = wrapper.childAt(0)
-    expect(containerDiv.children().length).toEqual(2)
+    expect(containerDiv.childAt(0).children().length).toEqual(2)
   })
 
   test('should contain 1 Image', function () {

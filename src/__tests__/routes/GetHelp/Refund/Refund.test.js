@@ -50,13 +50,16 @@ describe('<Refund />', () => {
         trackAcceptRefund={trackAcceptRefundSpy}
       />
     )
-
     getHelpLayout = wrapper.find('GetHelpLayout')
   })
 
   describe('rendering', () => {
-    test('layout is rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+    test('layout is rendering correctly', async() => {
+      await wrapper.setState({
+        isFetching: false,
+      })
+      const BottomBar = wrapper.find('BottomBar')
+      getHelpLayout = wrapper.find('GetHelpLayout')
 
       expect(getHelpLayout).toHaveLength(1)
       expect(getHelpLayout.prop('body')).toContain('We would like to offer you £7.77')
@@ -68,8 +71,11 @@ describe('<Refund />', () => {
       expect(getHelpLayout.prop('title')).toBe(content.title)
     })
 
-    test('bottom bar buttons are rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+    test('bottom bar buttons are rendering correctly', async() => {
+      await wrapper.setState({
+        isFetching: false,
+      })
+      const BottomBar = wrapper.find('BottomBar')
       const Button1 = BottomBar.find('BottomButton')
       const Button2 = BottomBar.find('Button').at(1)
       const { index, contact } = routes.getHelp
@@ -92,7 +98,7 @@ describe('<Refund />', () => {
           user={{ id: '0', accessToken: '123' }}
           order={{ id: '0' }}
           selectedIngredients={selectedIngredients}
-          trackAcceptRefund={() => {}}
+          trackAcceptRefund={jest.fn()}
         />
       )
 
@@ -137,14 +143,16 @@ describe('<Refund />', () => {
     describe('when user accepts the refund offer', () => {
       let Button
 
-      beforeEach(() => {
+      beforeEach(async() => {
+        await wrapper.setState({
+          isFetching: false,
+        })
         getHelpLayout = wrapper.find('GetHelpLayout')
         browserHistory.push = jest.fn()
-        const BottomBar = getHelpLayout.find('BottomBar')
-        Button = BottomBar.find('Button').at(1)
+        Button = wrapper.find('Button').at(1)
       })
 
-      test('redirection happens when clicking Accept Refund button', async () => {
+      test('redirection happens when clicking Accept Refund button', async() => {
         await Button.props().onClick()
 
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
@@ -178,7 +186,6 @@ describe('<Refund />', () => {
 
       test('tracking action is being called when Accept offer button is clicked', async () => {
         await Button.props().onClick()
-
         expect(trackAcceptRefundSpy).toHaveBeenCalledWith(7.77)
       })
 

@@ -78,7 +78,7 @@ describe('<IngredientsContainer />', () => {
       const recipe = wrapper.find('ItemExpandable').at(0)
       recipe.find('Item').simulate('click')
 
-      const ingredientCheckbox = recipe.find('input[type="checkbox"]').at(0)
+      const ingredientCheckbox = wrapper.find('input[type="checkbox"]').at(0)
       ingredientCheckbox.simulate('change')
 
       const ContinueButton = wrapper.find('Ingredients').find('BottomBar').find('Button').at(1)

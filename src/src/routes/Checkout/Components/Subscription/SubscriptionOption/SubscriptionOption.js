@@ -28,13 +28,15 @@ const SubscriptionOption = ({ name, id, title, description, checked, onClick }) 
   </label>
 )
 
-SubscriptionOption.defaultProps = {}
+SubscriptionOption.defaultProps = {
+  name: ''
+}
 
 SubscriptionOption.propTypes = {
   name: PropTypes.string,
   id: PropTypes.number,
   title: PropTypes.string,
-  description: PropTypes.string,
+  description: PropTypes.arrayOf(PropTypes.string),
   checked: PropTypes.bool,
   onClick: PropTypes.func,
 }

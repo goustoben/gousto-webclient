@@ -32,7 +32,7 @@ describe('<FilterButton />', () => {
     test('should display disabled button for 0 recipes found', () => {
       wrapper = shallow(<FilterButton count={0} />)
 
-      expect(wrapper.find(Button).at(0).node.props.disabled).toBe(true)
+      expect(wrapper.find(Button).at(0).getElement().props.disabled).toBe(true)
     })
   })
 })

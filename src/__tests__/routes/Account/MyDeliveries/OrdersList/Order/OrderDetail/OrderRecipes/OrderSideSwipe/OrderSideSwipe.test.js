@@ -128,14 +128,14 @@ describe('OrderSideSwipe', () => {
         wrapper
           .children(OrderRecipe)
           .at(2)
-          .prop('recipeTitle'),
-      ).toBeUndefined()
+          .exists()
+      ).toBe(false)
       expect(
         wrapper
           .children(OrderRecipe)
           .at(3)
-          .prop('recipeTitle'),
-      ).toBeUndefined()
+          .exists()
+      ).toBe(false)
     })
   })
 })

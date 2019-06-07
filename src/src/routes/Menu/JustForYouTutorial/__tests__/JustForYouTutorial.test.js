@@ -77,7 +77,8 @@ describe('Check browser to show JFY', () => {
         <JustForYouTutorialComponent />, {
           context: {
             store: {
-              getState
+              getState,
+              subscribe: jest.fn()
             },
           }
         }
@@ -101,7 +102,8 @@ describe('Check browser to show JFY', () => {
         <JustForYouTutorialComponent />, {
           context: {
             store: {
-              getState
+              getState,
+              subscribe: jest.fn()
             },
           }
         }
@@ -125,7 +127,8 @@ describe('Check browser to show JFY', () => {
         <JustForYouTutorialComponent />, {
           context: {
             store: {
-              getState
+              getState,
+              subscribe: jest.fn()
             },
           }
         }
@@ -149,7 +152,8 @@ describe('Check browser to show JFY', () => {
         <JustForYouTutorialComponent />, {
           context: {
             store: {
-              getState
+              getState,
+              subscribe: jest.fn()
             },
           }
         }

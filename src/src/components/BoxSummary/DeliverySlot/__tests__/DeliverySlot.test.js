@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import DeliverySlot from 'BoxSummary/DeliverySlot/DeliverySlot.js'
 import Immutable from 'immutable'
 
@@ -39,8 +39,11 @@ describe('DeliverySlot logic', () => {
         <DeliverySlot
           deliveryDays={deliveryDays}
           disabledSlots={disabledSlots}
+          deliverySlotChosen={jest.fn()}
           isAuthenticated={isAuthenticated}
           isSubscriptionActive={isSubscriptionActive}
+          tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       const result = wrapper.instance().getDeliveryDaysAndSlots()
       const dateToCheck = '2019-03-03'
@@ -53,8 +56,11 @@ describe('DeliverySlot logic', () => {
         <DeliverySlot
           deliveryDays={deliveryDays}
           disabledSlots={disabledSlots}
+          deliverySlotChosen={jest.fn()}
           isAuthenticated={isAuthenticated}
           isSubscriptionActive={'active'}
+          tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       const result = wrapper.instance().getDeliveryDaysAndSlots()
       const dateToCheck = '2019-03-03'
@@ -67,8 +73,11 @@ describe('DeliverySlot logic', () => {
         <DeliverySlot
           deliveryDays={deliveryDays}
           disabledSlots={disabledSlots}
+          deliverySlotChosen={jest.fn()}
           isAuthenticated={false}
           isSubscriptionActive={isSubscriptionActive}
+          tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       const result = wrapper.instance().getDeliveryDaysAndSlots()
       const dateToCheck = '2019-03-03'
@@ -81,8 +90,11 @@ describe('DeliverySlot logic', () => {
         <DeliverySlot
           deliveryDays={deliveryDays}
           disabledSlots={disabledSlots}
+          deliverySlotChosen={jest.fn()}
           isAuthenticated={isAuthenticated}
           isSubscriptionActive={isSubscriptionActive}
+          tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       const result = wrapper.instance().getDeliveryDaysAndSlots()
       const dateToCheck = '2019-03-03'
@@ -107,6 +119,9 @@ describe('DeliverySlot logic', () => {
           setTempSlotId={tempSlotIdSpy}
           setTempDate={tempDateSpy}
           setTempOrderId={tempOrderIdSpy}
+          deliverySlotChosen={jest.fn()}
+          tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       wrapper.instance().handleDateChange('2019-03-03')
       expect(tempSlotIdSpy).toHaveBeenCalledWith('123sddrdfst456')
@@ -126,6 +141,9 @@ describe('DeliverySlot logic', () => {
           setTempSlotId={tempSlotIdSpy}
           setTempDate={tempDateSpy}
           setTempOrderId={tempOrderIdSpy}
+          deliverySlotChosen={jest.fn()}
+          tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       wrapper.instance().handleDateChange('2019-03-03')
       expect(tempSlotIdSpy).toHaveBeenCalledWith('987sddrdfst456')
@@ -146,6 +164,9 @@ describe('DeliverySlot logic', () => {
           setTempSlotId={tempSlotIdSpy}
           setTempDate={tempDateSpy}
           setTempOrderId={tempOrderIdSpy}
+          deliverySlotChosen={jest.fn()}
+          tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       wrapper.instance().handleDateChange('2019-03-03')
       expect(tempSlotIdSpy).toHaveBeenCalledWith(undefined)
@@ -161,6 +182,7 @@ describe('DeliverySlot logic', () => {
           isAuthenticated={isAuthenticated}
           isSubscriptionActive={isSubscriptionActive}
           tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       expect(wrapper.find('.disabledSlotText').text()).toContain('Unavailable due to high demand')
     })
@@ -173,6 +195,7 @@ describe('DeliverySlot logic', () => {
           isAuthenticated={isAuthenticated}
           isSubscriptionActive={'active'}
           tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       expect(wrapper.find('.disabledSlotText').length).toEqual(0)
     })
@@ -185,6 +208,7 @@ describe('DeliverySlot logic', () => {
           isAuthenticated={false}
           isSubscriptionActive={isSubscriptionActive}
           tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       expect(wrapper.find('.disabledSlotText').length).toEqual(0)
     })
@@ -199,6 +223,7 @@ describe('DeliverySlot logic', () => {
           isAuthenticated={false}
           isSubscriptionActive={isSubscriptionActive}
           tempDate='2019-03-03'
+          clearPostcode={jest.fn()}
         />)
       expect(wrapper.find('.disabledSlotText').length).toEqual(0)
     })

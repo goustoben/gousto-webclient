@@ -119,7 +119,7 @@ describe('<Ingredients />', () => {
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
-      ContinueButton = getHelpLayout.find('BottomBar').find('Button').at(1)
+      ContinueButton = wrapper.find('BottomBar').find('Button').at(1)
     })
 
     describe('ingredients', () => {
@@ -138,6 +138,7 @@ describe('<Ingredients />', () => {
         secondRecipe.find('Item').simulate('click')
         let ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
         ingredientsCheckboxes.at(1).simulate('change')
+        ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
 
         expect(ingredientsCheckboxes.at(1).prop('checked')).toBeTruthy()
 
@@ -150,27 +151,31 @@ describe('<Ingredients />', () => {
     })
 
     describe('Continue button', () => {
-      const selectIngredientAndGetCheckbox = (recipeAncestor) => {
-        const recipe = recipeAncestor.find('ItemExpandable').at(1)
+      const selectIngredientAndGetCheckbox = (ingredientsWrapper) => {
+        const recipe = ingredientsWrapper.find('ItemExpandable').at(1)
         recipe.find('Item').simulate('click')
-        const ingredientCheckbox = recipe.find('input[type="checkbox"]').at(1)
+        let ingredientCheckbox = ingredientsWrapper.find('ItemExpandable').at(1)
+          .find('input[type="checkbox"]').at(1)
         ingredientCheckbox.simulate('change')
+        ingredientCheckbox = ingredientsWrapper.find('ItemExpandable').at(1)
+          .find('input[type="checkbox"]').at(1)
 
         return ingredientCheckbox
       }
 
       test('the button is enabled only when one or more ingredients are selected', () => {
-        const ingredientCheckbox = selectIngredientAndGetCheckbox(getHelpLayout)
-
+        const ingredientCheckbox = selectIngredientAndGetCheckbox(wrapper)
+        ContinueButton = wrapper.find('BottomBar').find('Button').at(1)
         expect(ContinueButton.prop('disabled')).toBe(false)
 
         ingredientCheckbox.simulate('change')
+        ContinueButton = wrapper.find('BottomBar').find('Button').at(1)
 
         expect(ContinueButton.prop('disabled')).toBe(true)
       })
 
       test('validateIngredients is called with the selected ingredients when clicking the button', () => {
-        selectIngredientAndGetCheckbox(getHelpLayout)
+        selectIngredientAndGetCheckbox(wrapper)
         ContinueButton.prop('onClick')()
 
         expect(validateSelectedIngredients).toHaveBeenCalledTimes(1)
@@ -189,7 +194,7 @@ describe('<Ingredients />', () => {
             valid: true,
           }
         })
-        selectIngredientAndGetCheckbox(getHelpLayout)
+        selectIngredientAndGetCheckbox(wrapper)
         await ContinueButton.prop('onClick')()
 
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/ingredient-issues')
@@ -197,7 +202,7 @@ describe('<Ingredients />', () => {
 
       test('redirection to the Contact Us page happens when validateIngredients errors', async () => {
         validateSelectedIngredients.mockImplementation(() => { throw new Error('error')})
-        selectIngredientAndGetCheckbox(getHelpLayout)
+        selectIngredientAndGetCheckbox(wrapper)
         await ContinueButton.prop('onClick')()
 
         expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
@@ -211,10 +216,12 @@ describe('<Ingredients />', () => {
           }
         })
 
-        selectIngredientAndGetCheckbox(getHelpLayout)
+        selectIngredientAndGetCheckbox(wrapper)
         await ContinueButton.prop('onClick')()
 
-        expect(storeSelectedIngredients).toHaveBeenCalledWith([{ ingredientId: '2222', recipeId: '2' }])
+        expect(storeSelectedIngredients).toHaveBeenCalledWith([
+          { ingredientId: '2222', recipeId: '2' }
+        ])
       })
     })
   })

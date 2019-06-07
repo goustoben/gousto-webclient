@@ -191,15 +191,10 @@ describe('OrderSummary', () => {
         .text(),
     ).toContain('These items include VAT at 20%')
     const products = Immutable.fromJS({
-      p1: { isVatable: false, title: 'p1 title', listPrice: '2.00' },
+      p1: { isVatable: false, title: 'p1 Title', listPrice: '2.00', images: {} },
     })
     wrapper.setProps({ products })
-    expect(
-      wrapper
-        .find('p')
-        .at(2)
-        .text(),
-    ).toBe('')
+    expect(wrapper.find(Receipt).render().find('p.disclaimer')).toHaveLength(0)
   })
 
   test('should pass the onSave to the SaveButton', () => {
@@ -224,7 +219,7 @@ describe('OrderSummary', () => {
   })
   test('should NOT apply slideUp class if orderSummaryCollapsed is false', () => {
     wrapper.setProps({ orderSummaryCollapsed: false })
-    expect(wrapper.find('.slideUp').length).toEqual(0)
+    expect(wrapper.find('.slideUp').exists()).toBe(false)
   })
 })
 
@@ -320,6 +315,6 @@ describe('OrderSummary footer', () => {
   })
   test('should not render footer when orderSumaryCollapsed is false', () => {
     wrapper.setProps({ orderSummaryCollapsed: false })
-    expect(wrapper.find('footer').length).toEqual(0)
+    expect(wrapper.find('footer').exists()).toBe(false)
   })
 })

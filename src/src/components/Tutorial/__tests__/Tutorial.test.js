@@ -26,11 +26,11 @@ describe('Tutorial', () => {
   describe('state', () => {
     test('should only hold visible children', () => {
       isElementHidden.mockReturnValueOnce(true)
-      wrapper = shallow(<Tutorial>{generateSteps(1)}</Tutorial>)
+      wrapper = shallow(<Tutorial trackStepViewed={jest.fn()}>{generateSteps(1)}</Tutorial>)
       expect(wrapper.state().children.length).toBe(0)
 
       isElementHidden.mockReturnValueOnce(false)
-      wrapper = shallow(<Tutorial>{generateSteps(1)}</Tutorial>)
+      wrapper = shallow(<Tutorial trackStepViewed={jest.fn()}>{generateSteps(1)}</Tutorial>)
       expect(wrapper.state().children.length).toBe(1)
     })
   })
@@ -42,7 +42,7 @@ describe('Tutorial', () => {
 
     test('should display first child step by default', () => {
       wrapper = shallow(
-        <Tutorial>{generateSteps(3)}</Tutorial>
+        <Tutorial trackStepViewed={jest.fn()}>{generateSteps(3)}</Tutorial>
       )
 
       expect(wrapper.children()).toHaveLength(1)
@@ -60,7 +60,7 @@ describe('Tutorial', () => {
       const children = generateSteps(3)
 
       wrapper = shallow(
-        <Tutorial>{children}</Tutorial>
+        <Tutorial trackStepViewed={jest.fn()}>{children}</Tutorial>
       )
 
       expect(wrapper.prop('last')).toBe(false)
@@ -89,10 +89,10 @@ describe('Tutorial', () => {
       expect(wrapper.find('Step').first().prop('last')).toBe(false)
 
       const { next } = wrapper.instance()
-      next()
-
-      expect(wrapper.find('Step').html()).toContain('Step #1')
-      expect(wrapper.find('Step').first().prop('last')).toBe(true)
+      next().then(() => {
+        expect(wrapper.find('Step').html()).toContain('Step #1')
+        expect(wrapper.find('Step').first().prop('last')).toBe(true)
+      })
     })
 
     test('should close if the current step is the last', () => {
@@ -107,13 +107,13 @@ describe('Tutorial', () => {
       )
 
       const { next } = wrapper.instance()
-      next()
-
-      expect(wrapper.find('Step').html()).toContain('Step #1')
-      expect(wrapper.find('Step').first().prop('last')).toBe(true)
-      next()
-
-      expect(wrapper.state().hide).toBe(true)
+      next().then(() => {
+        expect(wrapper.find('Step').html()).toContain('Step #1')
+        expect(wrapper.find('Step').first().prop('last')).toBe(true)
+      })
+      next().then(() => {
+        expect(wrapper.state().hide).toBe(true)
+      })
     })
   })
 
