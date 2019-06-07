@@ -44,7 +44,6 @@ describe('<Refund />', () => {
     wrapper = mount(
       <Refund
         content={content}
-        isFetching={false}
         user={{ id: '999', accessToken: '123' }}
         order={{ id: '888' }}
         selectedIngredients={selectedIngredients}
@@ -55,35 +54,34 @@ describe('<Refund />', () => {
   })
 
   describe('rendering', () => {
-    test('layout is rendering correctly', async () => {
-      
-      const BottomBar = Promise.all(getHelpLayout).then((getHelpLayoutProps) => {
-        getHelpLayoutProps.find('BottomBar')
-    
-        expect(getHelpLayoutProps).toHaveLength(1)
-        expect(BottomBar).toHaveLength(1)
-        expect(BottomBar.find('BottomButton')).toHaveLength(1)
-        expect(getHelpLayout.prop('body')).toContain('We would like to offer you £7.77')
+    test('layout is rendering correctly', async() => {
+      await wrapper.setState({
+        isFetching: false,
       })
-    
+      const BottomBar = wrapper.find('BottomBar')
+      getHelpLayout = wrapper.find('GetHelpLayout')
+
+      expect(getHelpLayout).toHaveLength(1)
+      expect(getHelpLayout.prop('body')).toContain('We would like to offer you £7.77')
+      expect(BottomBar).toHaveLength(1)
+      expect(BottomBar.find('BottomButton')).toHaveLength(1)
     })
 
     test('header is rendering correctly', () => {
-      Promise.all(getHelpLayout).then(() => {
-        expect(getHelpLayout.prop('title')).toBe(content.title)
-      })
+      expect(getHelpLayout.prop('title')).toBe(content.title)
     })
 
-    test('bottom bar buttons are rendering correctly', () => {
-      const BottomBar = getHelpLayout.find('BottomBar')
+    test('bottom bar buttons are rendering correctly', async() => {
+      await wrapper.setState({
+        isFetching: false,
+      })
+      const BottomBar = wrapper.find('BottomBar')
       const Button1 = BottomBar.find('BottomButton')
       const Button2 = BottomBar.find('Button').at(1)
       const { index, contact } = routes.getHelp
-      Promise.all(getHelpLayout, Button1, Button2).then(() => {
-        expect(Button1.prop('url')).toContain(`${index}/${contact}`)
-        expect(Button2.text()).toBe('button2 £7.77 copy')
-      })
 
+      expect(Button1.prop('url')).toContain(`${index}/${contact}`)
+      expect(Button2.text()).toBe('button2 £7.77 copy')
     })
   })
 
@@ -145,64 +143,58 @@ describe('<Refund />', () => {
     describe('when user accepts the refund offer', () => {
       let Button
 
-      beforeEach(() => {
+      beforeEach(async() => {
+        await wrapper.setState({
+          isFetching: false,
+        })
         getHelpLayout = wrapper.find('GetHelpLayout')
         browserHistory.push = jest.fn()
-        const BottomBar = getHelpLayout.find('BottomBar')
-        Button = BottomBar.find('Button').at(1)
+        Button = wrapper.find('Button').at(1)
       })
 
-      test('redirection happens when clicking Accept Refund button', async () => {
-        Promise.all(Button).then(() => {
-          Button.props().onClick()
+      test('redirection happens when clicking Accept Refund button', async() => {
+        await Button.props().onClick()
 
-          expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
-        })
+        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
       })
 
       test('setComplaint is called with correct parameters and descriptions are sanitised', async () => {
-        Promise.all(Button).then(() => {
-          Button.props().onClick()
+        await Button.props().onClick()
 
-          expect(setComplaint).toHaveBeenCalledWith(
-            '123',
-            {
-              customer_id: 999,
-              order_id: 888,
-              type: 'a-type',
-              value: 7.77,
-              issues: [
-                {
-                  ingredient_id: '1234',
-                  category_id: 999999,
-                  description: 'a description &lt;&gt; '
-                },
-                {
-                  ingredient_id: '1234',
-                  category_id: 999999,
-                  description: 'another &amp;description<img>'
-                },
-              ],
-            }
-          )
-        })
+        expect(setComplaint).toHaveBeenCalledWith(
+          '123',
+          {
+            customer_id: 999,
+            order_id: 888,
+            type: 'a-type',
+            value: 7.77,
+            issues: [
+              {
+                ingredient_id: '1234',
+                category_id: 999999,
+                description: 'a description &lt;&gt; '
+              },
+              {
+                ingredient_id: '1234',
+                category_id: 999999,
+                description: 'another &amp;description<img>'
+              },
+            ],
+          }
+        )
       })
 
       test('tracking action is being called when Accept offer button is clicked', async () => {
-        Promise.all(Button).then(() => {
-          Button.props().onClick()
-          expect(trackAcceptRefundSpy).toHaveBeenCalledWith(7.77)
-        })
+        await Button.props().onClick()
+        expect(trackAcceptRefundSpy).toHaveBeenCalledWith(7.77)
       })
 
       describe('when setComplaint errors', () => {
         test('redirect is not called', async () => {
           setComplaint.mockImplementationOnce(() => { throw new Error('error') })
-          Promise.all(Button).then(() => {
-            Button.props().onClick()
-  
-            expect(browserHistory.push).toHaveBeenCalledTimes(0)
-          })
+          await Button.props().onClick()
+
+          expect(browserHistory.push).toHaveBeenCalledTimes(0)
         })
       })
     })
