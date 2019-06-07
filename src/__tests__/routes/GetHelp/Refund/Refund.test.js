@@ -129,7 +129,7 @@ describe('<Refund />', () => {
           user={{ id: '0', accessToken: '123' }}
           order={{ id: '0' }}
           selectedIngredients={selectedIngredients}
-          trackAcceptRefund={jest.fn()}
+          trackAcceptRefund={() => {}}
         />
       )
       getHelpLayout = wrapper.find('GetHelpLayout')
