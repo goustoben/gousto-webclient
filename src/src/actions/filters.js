@@ -154,12 +154,6 @@ export const filterCurrentTotalTimeChange = (totalTime) => (
   }
 )
 
-export const filterCurrentNewRecipesChange = () => (
-  (dispatch) => {
-    dispatch(filterNewRecipesChange())
-  }
-)
-
 export const clearAllFilters = () => (
   (dispatch, getState) => {
     const getSelectedCollection = getState().filters.get('currentCollectionId') || getAllRecipesCollectionId(getState())
@@ -206,7 +200,7 @@ export const filterApply = (type, value) => (
       dispatch(filterCurrentTotalTimeChange(value))
       break  
     case 'newRecipes':
-      dispatch(filterCurrentNewRecipesChange())
+      dispatch(filterNewRecipesChange())
       break
     default:
       break
