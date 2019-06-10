@@ -29,7 +29,7 @@ describe('filters actions', () => {
     beforeAll(() => {
       getStateSpy.mockReturnValue({
         filters: Immutable.fromJS({
-          newRecipes: { value: true },
+          newRecipes: false,
         }),
       })
     })
@@ -42,7 +42,7 @@ describe('filters actions', () => {
     test('should be called with FILTERS_NEW_RECIPES_CHANGE when case is newRecipes and unselect tag', () => {
       getStateSpy.mockReturnValue({
         filters: Immutable.fromJS({
-          newRecipes: { value: true },
+          newRecipes: true,
         }),
       })
       filterApply('newRecipes')(dispatchSpy, getStateSpy)
@@ -57,7 +57,7 @@ describe('filters actions', () => {
     test('should be called with FILTERS_NEW_RECIPES_CHANGE when case is newRecipes and select tag', () => {
       getStateSpy.mockReturnValue({
         filters: Immutable.fromJS({
-          newRecipes: { value: false },
+          newRecipes: false,
         }),
       })
       filterApply('newRecipes')(dispatchSpy, getStateSpy)
