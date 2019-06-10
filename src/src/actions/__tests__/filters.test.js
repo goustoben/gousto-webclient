@@ -3,7 +3,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import actionTypes from 'actions/actionTypes'
 
-import filters, {
+import {
   collectionFilterChange,
   changeCollectionToAllRecipes,
   filterCurrentDietTypesChange,
@@ -26,18 +26,47 @@ describe('filters actions', () => {
   })
 
   describe('filterApply', () => {
+    beforeAll(() => {
+      getStateSpy.mockReturnValue({
+        filters: Immutable.fromJS({
+          newRecipes: { value: true },
+        }),
+      })
+    })
     test('should dispatch once when case is totalTime', () => {
       filterApply('totalTime', 0)(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalledTimes(1)
     })
 
-    test('should be called with FILTERS_NEW_RECIPES_CHANGE when case is newRecipes ', () => {
-      
-      filterApply('newRecipes', 0)(dispatchSpy, getStateSpy)
+    test('should be called with FILTERS_NEW_RECIPES_CHANGE when case is newRecipes and unselect tag', () => {
+      getStateSpy.mockReturnValue({
+        filters: Immutable.fromJS({
+          newRecipes: { value: true },
+        }),
+      })
+      filterApply('newRecipes')(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({
-        type: actionTypes.FILTERS_NEW_RECIPES_CHANGE
+        type: actionTypes.FILTERS_NEW_RECIPES_CHANGE,
+        trackingData: {
+          actionType: 'UNSELECT_FILTERS_NEW_RECIPES'
+        }
+      })
+    })
+    test('should be called with FILTERS_NEW_RECIPES_CHANGE when case is newRecipes and select tag', () => {
+      getStateSpy.mockReturnValue({
+        filters: Immutable.fromJS({
+          newRecipes: { value: false },
+        }),
+      })
+      filterApply('newRecipes')(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.FILTERS_NEW_RECIPES_CHANGE,
+        trackingData: {
+          actionType: 'SELECT_FILTERS_NEW_RECIPES'
+        }
       })
     })
   })
