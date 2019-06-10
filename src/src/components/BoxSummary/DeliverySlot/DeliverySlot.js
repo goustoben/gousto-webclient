@@ -14,7 +14,7 @@ class DeliverySlot extends React.Component {
   static propTypes = {
     address: PropTypes.object,
     prevDate: PropTypes.string,
-    deliveryDays: PropTypes.instanceOf(Immutable.Map),
+    deliveryDays: PropTypes.instanceOf(Immutable.List),
     postcode: PropTypes.string,
     userOrders: PropTypes.instanceOf(Immutable.Map),
     menuPending: PropTypes.bool,
@@ -27,7 +27,6 @@ class DeliverySlot extends React.Component {
     disableNewDatePicker: PropTypes.bool,
     disableOnDelivery: PropTypes.bool,
     availableDaysOnly: PropTypes.instanceOf(Immutable.List),
-    pushOrderEdit: PropTypes.func.isRequired,
     menuFetchDataPending: PropTypes.bool,
     boxSummaryVisibilityChange: PropTypes.func,
     basketRecipeNo: PropTypes.number,
@@ -54,6 +53,8 @@ class DeliverySlot extends React.Component {
     displayOptions: Immutable.List([]),
     disabledSlots: [],
     isAuthenticated: false,
+    basketRestorePreviousValues: () => {},
+    clearPostcode: () => {},
   }
 
   getDeliveryDaysAndSlots = (newDate) => {

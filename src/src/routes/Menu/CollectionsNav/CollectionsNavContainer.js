@@ -1,6 +1,6 @@
-import CollectionsNav from './CollectionsNav'
 import { connect } from 'react-redux'
 import actions from 'actions'
+import CollectionsNav from './CollectionsNav'
 
 function mapStateToProps(state) {
   return {
@@ -9,6 +9,7 @@ function mapStateToProps(state) {
       .filter(collection => (state.features.getIn(['unpubCollections', 'value']) && !state.features.getIn(['forceCollections', 'value'])) || collection.get('published')),
     features: state.features,
     browser: state.request.get('browser'),
+    menuCollectionRecipes: state.menuCollectionRecipes,
   }
 }
 

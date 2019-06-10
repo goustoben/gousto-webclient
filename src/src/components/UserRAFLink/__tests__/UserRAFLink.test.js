@@ -15,7 +15,7 @@ describe('rendering', () => {
     })
 
     test('should render the children', () => {
-      expect(wrapper.find('CopyToClipboard').children().get(0)).toEqual('children')
+      expect(wrapper.find('CopyToClipboard').props().children).toEqual('children')
     })
   })
 })

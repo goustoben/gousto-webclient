@@ -113,23 +113,22 @@ describe('<IngredientReasons />', () => {
       getHelpLayout = wrapper.find('GetHelpLayout')
     })
 
-    test('submit button is enabled when all descriptions are filled', () => {
-      const Button2 = getHelpLayout.find('Button').at(1)
-      const issueDetails = getHelpLayout.find('div.issueDetails')
+    test('submit button is enabled when all descriptions are filled', async () => {
+      const issueDetails = wrapper.find('div.issueDetails')
       const textarea1 = issueDetails.at(0).find('textarea')
       const textarea2 = issueDetails.at(1).find('textarea')
-
-      textarea1.simulate(
+      await textarea1.simulate(
         'change', { target: { value: 'This is my issue...' } }
       )
-      textarea2.simulate(
+      await textarea2.simulate(
         'change', { target: { value: 'Another description...' } }
       )
+      const Button2 = wrapper.find('Button')
 
       expect(textarea1.text()).toBe('This is my issue...')
       expect(textarea2.text()).toBe('Another description...')
-      expect(Button2.prop('disabled')).toBe(false)
-      expect(Button2.text()).toContain(content.button2Copy)
+      expect(Button2.at(1).prop('disabled')).toBe(false)
+      expect(Button2.at(1).text()).toContain(content.button2Copy)
     })
 
     test('submit button is disabled if some description becomes less than 1 character', () => {

@@ -103,9 +103,13 @@ class Menu extends React.Component {
   }
 
   static defaultProps = {
+    isAuthenticated: false,
+    disabled: false,
     forceLoad: false,
     isLoading: false,
     numPortions: 2,
+    menuMobileGridViewSet: () => {},
+    basketRestorePreviousValues: () => {},
     shouldJfyTutorialBeVisible: () => {},
     basketProducts: [],
     portionSizeSelectedTracking: () => {},

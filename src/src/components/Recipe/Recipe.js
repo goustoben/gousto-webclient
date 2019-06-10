@@ -21,6 +21,7 @@ const recipePropTypes = {
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
   collectionFilterChange: PropTypes.func,
+  id: PropTypes.string,
 }
 
 class Recipe extends React.PureComponent {

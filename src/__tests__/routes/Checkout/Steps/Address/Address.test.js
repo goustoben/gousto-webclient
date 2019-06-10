@@ -1,4 +1,3 @@
-import sinon from 'sinon'
 import Immutable from 'immutable'
 
 import React from 'react'
@@ -14,7 +13,7 @@ describe('Address', () => {
 
   beforeEach(() => {
     const selectedAddresses = Immutable.Map({})
-    wrapper = shallow(<Address selectedAddress={selectedAddresses} />)
+    wrapper = shallow(<Address selectedAddress={selectedAddresses} registerField={jest.fn()} />)
   })
 
   test('should return div', () => {
@@ -39,20 +38,4 @@ describe('Address', () => {
     })
   })
 
-  describe('Life cycle events', () => {
-    test('componentWillReceiveProps', ()=>{})
-    test('componentDidMount', ()=>{})
-  })
-
-  describe('Behaviour', () => {
-    test('handle address choise', ()=>{})
-
-    test('handle address change', ()=>{})
-
-    test('toggle address edit', ()=>{})
-
-    test('postcode lookup', ()=>{})
-
-    test('Set address details on inputs', ()=>{})
-  })
 })

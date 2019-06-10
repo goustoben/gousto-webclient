@@ -14,6 +14,7 @@ describe('OrderConfirmation', () => {
     showHeader: false,
     products: {},
     isLoading: false,
+    userFetchReferralOffer: jest.fn()
   }
 
   describe('Order Confirmation loading spinner', () => {
@@ -137,7 +138,7 @@ describe('OrderConfirmation', () => {
       }
 
       filterProductCategoryMock = jest.fn()
-      wrapper = shallow(<OrderConfirmation products={products} filterProductCategory={filterProductCategoryMock} />)
+      wrapper = shallow(<OrderConfirmation products={products} filterProductCategory={filterProductCategoryMock} userFetchReferralOffer={jest.fn()} />)
 
     })
 
@@ -175,7 +176,7 @@ describe('OrderConfirmation', () => {
     })
 
     test('should not update state if products is undefined', () => {
-      wrapper = shallow(<OrderConfirmation filterProductCategory={filterProductCategoryMock} />)
+      wrapper = shallow(<OrderConfirmation filterProductCategory={filterProductCategoryMock} userFetchReferralOffer={jest.fn()} />)
       wrapper.instance().getFilteredProducts('category-1')
 
       expect(wrapper.state('filteredProducts')).toEqual(null)
@@ -191,7 +192,7 @@ describe('OrderConfirmation', () => {
         }
       }
 
-      wrapper = shallow(<OrderConfirmation filterProductCategory={filterProductCategoryMock} products={products} />)
+      wrapper = shallow(<OrderConfirmation filterProductCategory={filterProductCategoryMock} products={products} userFetchReferralOffer={jest.fn()} />)
       wrapper.instance().getFilteredProducts('Category 1')
 
       expect(wrapper.state('filteredProducts')).toEqual(null)
@@ -207,14 +208,14 @@ describe('OrderConfirmation', () => {
 
     describe('rendering popup for AgeVerification', () => {
       test('should render the age verification pop up in an OPEN overlay when "showAgeVerification" is true', () => {
-        const wrapper = shallow(<OrderConfirmation />)
+        const wrapper = shallow(<OrderConfirmation userFetchReferralOffer={jest.fn()} />)
         wrapper.setState({ 'showAgeVerification': true })
 
         expect(wrapper.find('Overlay').at(0).prop('open')).toEqual(true)
         expect(wrapper.find('AgeVerificationPopUp').length).toEqual(1)
       })
       test('should render the age verification pop up in a CLOSED overlay when "showAgeVerification" is false', () => {
-        const wrapper = shallow(<OrderConfirmation />)
+        const wrapper = shallow(<OrderConfirmation userFetchReferralOffer={jest.fn()} />)
 
         expect(wrapper.find('Overlay').at(0).prop('open')).toEqual(false)
         expect(wrapper.find('AgeVerificationPopUp').length).toEqual(1)
@@ -225,7 +226,7 @@ describe('OrderConfirmation', () => {
 
       test('should set "hasConfirmedAge" state to true', () => {
         const isUser18 = false
-        const wrapper = shallow(<OrderConfirmation userVerifyAge={userVerifyAgeSpy} />)
+        const wrapper = shallow(<OrderConfirmation userVerifyAge={userVerifyAgeSpy} userFetchReferralOffer={jest.fn()} />)
 
         expect(wrapper.state('hasConfirmedAge')).toEqual(false)
         wrapper.instance().onAgeConfirmation(isUser18)
@@ -234,7 +235,7 @@ describe('OrderConfirmation', () => {
 
       test('should call "userVerifyAge" with correct parameter', () => {
         const isUser18 = true
-        const wrapper = shallow(<OrderConfirmation userVerifyAge={userVerifyAgeSpy} />)
+        const wrapper = shallow(<OrderConfirmation userVerifyAge={userVerifyAgeSpy} userFetchReferralOffer={jest.fn()} />)
         wrapper.instance().onAgeConfirmation(isUser18)
 
         expect(userVerifyAgeSpy).toHaveBeenCalledWith(isUser18, true)
@@ -244,7 +245,7 @@ describe('OrderConfirmation', () => {
 
   describe('rendering popup for OrderSummary', () => {
     test('should toggle order summary popup', () => {
-      const wrapper = shallow(<OrderConfirmation />)
+      const wrapper = shallow(<OrderConfirmation userFetchReferralOffer={jest.fn()} />)
       wrapper.setState({ 'isOrderSummaryOpen': true })
 
       expect(wrapper.find('Overlay').at(1).prop('open')).toEqual(true)

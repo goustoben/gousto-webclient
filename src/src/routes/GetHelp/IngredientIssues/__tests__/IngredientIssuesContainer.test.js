@@ -148,7 +148,13 @@ describe('<IngredientIssuesContainer />', () => {
         .toEqual(expectedSelectedIngredients)
     })
 
-    test('selected ingredient issues are changed in the store when selected', () => {
+    test('selected ingredient issues are changed in the store when selected', async() => {
+
+      wrapper = mount(
+        <IngredientIssuesContainer
+          store={store}
+        />
+      )
       const expectedSelectedIngredients = fromJS({
         '1917-bbb': {
           recipeId: '1917',
@@ -165,12 +171,12 @@ describe('<IngredientIssuesContainer />', () => {
           issueName: 'Fruit or Veg - Mouldy',
         },
       })
-      const secondDropdown = wrapper.find('Dropdown').at(1)
-      const secondOption = secondDropdown.find('option[value="104"]')
-      secondOption.simulate('change')
-
-      expect(store.getState().getHelp.get('selectedIngredients'))
-        .toEqual(expectedSelectedIngredients)
+      
+      const secondOption = wrapper.find('select')
+      await secondOption.at(0).simulate('change')
+      const option = wrapper.find('[value="104"]')
+      await option.at(1).simulate('change')
+      expect(store.getState().getHelp.get('selectedIngredients')).toEqual(expectedSelectedIngredients)
     })
   })
 })

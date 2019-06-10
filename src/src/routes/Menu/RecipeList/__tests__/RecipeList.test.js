@@ -72,6 +72,7 @@ describe('RecipeList', () => {
       <RecipeList
         cutoffDate="2016-06-26"
         numPortions={2}
+        recipesStore={Immutable.fromJS({})}
         menuCurrentCollectionId={menuCurrentCollectionId}
         features={Immutable.Map({})}
         filteredRecipeIds={Immutable.List(['1', '2', '3'])}
@@ -95,6 +96,7 @@ describe('RecipeList', () => {
     wrapper = shallow(
       <RecipeList
         featuredRecipes={featuredRecipes}
+        recipesStore={Immutable.fromJS({})}
         remainingRecipes={remainingRecipes}
         outOfStockRecipes={outOfStockRecipes}
       />,
@@ -150,11 +152,11 @@ describe('RecipeList', () => {
     )
     wrapper.instance().componentDidUpdate(wrapper.props())
 
-    expect(context.store.dispatch).toHaveBeenCalledTimes(1)
+    expect(context.store.dispatch).toHaveBeenCalledTimes(2)
     expect(context.store.dispatch).toHaveBeenCalledWith(
       'trackRecipeOrderDisplayed return value',
     )
-    expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(1)
+    expect(trackRecipeOrderDisplayed).toHaveBeenCalledTimes(2)
     expect(trackRecipeOrderDisplayed).toHaveBeenCalledWith(
       ['1', '2', '3'],
       ['3', '1'],
@@ -176,7 +178,8 @@ describe('RecipeList', () => {
         outOfStockRecipes={outOfStockRecipes}
         isCurrentCollectionRecommendation={'JFYid'} 
         ctaToAllRecipes
-      />
+      />,
+      { context },
       )
 
       expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(1)
@@ -196,7 +199,8 @@ describe('RecipeList', () => {
         outOfStockRecipes={outOfStockRecipes}
         isCurrentCollectionRecommendation={false}
         ctaToAllRecipes
-      />
+      />,
+      { context },
       )
 
       expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(0)
@@ -216,7 +220,8 @@ describe('RecipeList', () => {
         outOfStockRecipes={outOfStockRecipes}
         isCurrentCollectionRecommendation={'JFYid'} 
         ctaToAllRecipes={false}
-      />
+      />,
+      { context },
       )
 
       expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(0)

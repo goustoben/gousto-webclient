@@ -99,6 +99,9 @@ GridRecipe.defaultProps = {
   averageRating: 0,
   ratingCount: 0,
   fiveADay: 0,
+  cookingTime: 0,
+  features: Immutable.Map({}),
+  useWithin: '',
 }
 
 export default GridRecipe

@@ -32,6 +32,8 @@ describe('Openings Container', () => {
           selectedDepartment,
         }),
       }),
+      subscribe: jest.fn(),
+      dispatch: jest.fn()
     }
     sandbox = sinon.sandbox.create()
     jobsFilterStub = sandbox.stub(jobs, 'filter')

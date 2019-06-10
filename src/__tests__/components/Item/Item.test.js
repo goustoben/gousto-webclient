@@ -112,7 +112,15 @@ describe('Item', () => {
   test('should pass onImageClick to Image', () => {
     const onImageClick = function () { }
     const wrapper = shallow(
-      <Item type="recipe" available media="" onImageClick={onImageClick} />,
+      <Item
+        type="recipe"
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+        available 
+        title="test recipe"
+        onImageClick={onImageClick} 
+      />,
     )
     expect(wrapper.find(Image).prop('onClick')).toEqual(onImageClick)
   })
@@ -230,13 +238,24 @@ describe('Item', () => {
     let wrapper
 
     test('should not show by default', () => {
-      wrapper = shallow(<Item />)
+      wrapper = shallow(<Item
+        title="test recipe"
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+      />)
 
       expect(wrapper.find('.horizontalLine')).toHaveLength(0)
     })
 
     test('should show when showLine prop is true', () => {
-      wrapper = shallow(<Item showLine />)
+      wrapper = shallow(<Item
+        title='test recipe'
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+        showLine
+      />)
 
       expect(wrapper.find('.horizontalLine')).toHaveLength(1)
     })
