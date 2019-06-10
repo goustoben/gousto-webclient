@@ -40,14 +40,14 @@ const config = {
   },
   totalTime: {
     0: 'Any length',
-    10: '10 minutes',
-    20: '20 minutes or less',
-    30: '30 minutes or less',
+    25: 'Under 25 mins',
+    30: 'Under 30 mins',
   },
   dietaryAttributes: {
     'gluten-free': 'Gluten free',
     'dairy-free': 'Dairy free',
   },
+  newRecipes: 'New recipes'
 }
 
 export default config

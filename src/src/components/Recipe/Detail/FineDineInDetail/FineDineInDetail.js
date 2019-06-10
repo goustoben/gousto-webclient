@@ -15,7 +15,7 @@ import IngredientsList from '../IngredientsList/IngredientsList'
 import Allergens from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
 
-const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree }) => (
+const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew }) => (
   <div>
     <div className={css.container}>
       <div className={css.carousel}>
@@ -33,7 +33,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             </div>
           </div>
           <div className={css.rating}>
-            <Rating count={count} average={average} />
+            <Rating count={count} average={average} isNew={isNew} />
           </div>
           <hr className={css.rule} />
           <div className={classnames(css.tabletOnly, css.block)}>

@@ -11,6 +11,7 @@ import {
   trackRecipeDietaryAttributeSelected,
   trackRecipeDietaryAttributeUnselected,
   trackRecipeTotalTimeSelected,
+  trackRecipeTotalTimeUnselected,
   trackRecipeFiltersApplied,
   trackCTAToAllRecipesClicked,
 } from './tracking'
@@ -33,6 +34,13 @@ const filtersCollectionChange = (collectionName, collectionId) => ({
 const currentTotalTimeChange = (totalTime) => ({
   type: actionTypes.FILTERS_TOTAL_TIME_CHANGE,
   totalTime,
+})
+
+const filterNewRecipesChange = (newRecipesSelected) => ({
+  type: actionTypes.FILTERS_NEW_RECIPES_CHANGE,
+  trackingData: {
+    actionType: newRecipesSelected ? 'UNSELECT_FILTERS_NEW_RECIPES': 'SELECT_FILTERS_NEW_RECIPES',
+  }
 })
 
 const filterMenuRevert = () => ({
@@ -139,9 +147,15 @@ export const filterCurrentDietTypesChange = (dietType) => (
 )
 
 export const filterCurrentTotalTimeChange = (totalTime) => (
-  (dispatch) => {
-    dispatch(currentTotalTimeChange(totalTime))
-    dispatch(trackRecipeTotalTimeSelected(totalTime))
+  (dispatch, getState) => {
+    const totalTimeSelected = getState().filters.get('totalTime')
+    if(totalTimeSelected === totalTime) {
+      dispatch(currentTotalTimeChange('0'))
+      dispatch(trackRecipeTotalTimeUnselected(totalTime))
+    } else {
+      dispatch(currentTotalTimeChange(totalTime))
+      dispatch(trackRecipeTotalTimeSelected(totalTime))
+    }
   }
 )
 
@@ -184,6 +198,24 @@ export const filterProductCategory = (category) => (
   }
 )
 
+export const filterApply = (type, value) => (
+  (dispatch, getState) => {
+    const { filters } = getState()
+    const newRecipesSelected = filters.get('newRecipes')
+
+    switch (type) {
+    case 'totalTime':
+      dispatch(filterCurrentTotalTimeChange(value))
+      break  
+    case 'newRecipes':
+      dispatch(filterNewRecipesChange(newRecipesSelected))
+      break
+    default:
+      break
+    }
+  }
+)
+
 export default {
   filtersVisibilityChange,
   filterMenuOpen,
@@ -197,4 +229,5 @@ export default {
   filterDietaryAttributesChange,
   filterCurrentTotalTimeChange,
   filterMenuRevertFilters,
+  filterApply
 }

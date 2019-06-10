@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
+import { isNew } from 'utils/recipe'
 
 import actions from 'actions'
 import { getCutoffs } from 'utils/deliveries'
@@ -22,6 +23,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     cutoffDate,
+    isNew: isNew(Immutable.fromJS(ownProps)),
     inBasket: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))).includes(ownProps.recipeId),
   }
 }

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { getNewTag } from 'utils/recipe'
 import css from './Rating.css'
 import InfoBadge from '../InfoBadge'
 
@@ -10,6 +9,7 @@ class RecipeRating extends React.Component {
     count: PropTypes.number,
     average: PropTypes.number,
     view: PropTypes.string,
+    isNew: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -48,7 +48,7 @@ class RecipeRating extends React.Component {
       )
     }
 
-    const newTag = getNewTag(this.props.count, this.props.view)
+    const newTag = this.props.isNew ? 'New Recipe' : ''
 
     return (
       <span>

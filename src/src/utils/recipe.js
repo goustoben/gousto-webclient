@@ -16,6 +16,7 @@ export function getStockTag(stock) {
 }
 
 export function getNewTag(ratingCount) {
+
   return ratingCount < 1 ? 'New Recipe' : ''
 }
 
@@ -82,6 +83,19 @@ export function getTaxonomyTags(recipe, categorySlug) {
   }
 
   return Immutable.List([])
+}
+
+export function isNew(recipe) {
+  const availability = recipe.get('availability')
+  const hasBeenOnAPreviousMenu = availability && availability.find(date => (date.get('offset') < 0))
+
+  return !hasBeenOnAPreviousMenu
+}
+
+export function filterRecipesByNew(recipes) {
+  const filteredRecipes = recipes.filter(recipe => isNew(recipe))
+
+  return filteredRecipes || Immutable.List([])
 }
 
 export default {

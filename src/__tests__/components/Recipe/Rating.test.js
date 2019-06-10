@@ -27,7 +27,7 @@ describe('<Rating />', () => {
   })
   test('should render one <InfoBadge> when the count prop is 0', () => {
     count = 0
-    const wrapper = shallow(<Rating count={count} average={average} />)
+    const wrapper = shallow(<Rating count={count} average={average} isNew />)
     expect(wrapper.find('InfoBadge').length).toEqual(1)
   })
   test('should have one child when the count prop is greater than 0 but the view is simple', () => {
