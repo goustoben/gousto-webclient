@@ -195,7 +195,7 @@ export const orderCheckPossibleDuplicate = (orderId) => (
       // do nothing
     }
     const orders = getState().user.get('orders', Immutable.List([]))
-    const order = orders.filter(o => o.get('id') === orderId).first()
+    const order = orders.filter(o => o.get('id') == orderId).first()
     if (order) {
       const sixDaysBeforeOrder = moment(order.get('deliveryDate')).subtract(6, 'days')
       const sixDaysFromOrder = moment(order.get('deliveryDate')).add(6, 'days')
