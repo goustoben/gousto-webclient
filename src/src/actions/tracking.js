@@ -187,16 +187,14 @@ export const trackRecipeTotalTimeSelected = (totalTime) => (
   }
 )
 
-export const trackRecipeTotalTimeUnselected = () => {
+export const trackRecipeTotalTimeUnselected = (totalTime) => (
   (dispatch) => {
     dispatch({
       type: actionTypes.RECIPE_FILTERS_TOTAL_TIME_UNSELECTED_TRACKING,
-      trackingData: {
-        actionType: actionTypes.RECIPE_FILTERS_TOTAL_TIME_UNSELECTED_TRACKING,
-      }
+      totalTime,
     })
   }
-}
+)
 
 export const trackRecipeFiltersApplied = (collectionId, dietTypes, dietaryAttributes, totalTime) => (
   (dispatch) => {

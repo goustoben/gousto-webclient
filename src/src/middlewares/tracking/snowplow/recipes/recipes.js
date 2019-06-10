@@ -78,6 +78,13 @@ export const recipeTotalTimeSelected = (action) => ({
   },
 })
 
+export const recipeTotalTimeUnselected = (action) => ({
+  type: 'RecipeTimeFrame Unselected',
+  data: {
+    time_frame: action.totalTime,
+  },
+})
+
 export default {
   recipeListViewed,
   recipeFiltersOpened,
@@ -89,5 +96,6 @@ export default {
   recipeDietaryAttributeSelected,
   recipeDietaryAttributeUnselected,
   recipeTotalTimeSelected,
+  recipeTotalTimeUnselected,
   recipeFiltersApplied,
 }

@@ -36,10 +36,10 @@ const currentTotalTimeChange = (totalTime) => ({
   totalTime,
 })
 
-const filterNewRecipesChange = (newRecipesActivate) => ({
+const filterNewRecipesChange = (newRecipesSelected) => ({
   type: actionTypes.FILTERS_NEW_RECIPES_CHANGE,
   trackingData: {
-    actionType: newRecipesActivate ? 'SELECT_FILTERS_NEW_RECIPES': 'UNSELECT_FILTERS_NEW_RECIPES',
+    actionType: newRecipesSelected ? 'UNSELECT_FILTERS_NEW_RECIPES': 'SELECT_FILTERS_NEW_RECIPES',
   }
 })
 
@@ -151,7 +151,7 @@ export const filterCurrentTotalTimeChange = (totalTime) => (
     const totalTimeSelected = getState().filters.get('totalTime')
     if(totalTimeSelected === totalTime) {
       dispatch(currentTotalTimeChange('0'))
-      dispatch(trackRecipeTotalTimeUnselected())
+      dispatch(trackRecipeTotalTimeUnselected(totalTime))
     } else {
       dispatch(currentTotalTimeChange(totalTime))
       dispatch(trackRecipeTotalTimeSelected(totalTime))
@@ -201,14 +201,14 @@ export const filterProductCategory = (category) => (
 export const filterApply = (type, value) => (
   (dispatch, getState) => {
     const { filters } = getState()
-    const newRecipesActivate = !filters.getIn(['newRecipes', 'value'], false)
+    const newRecipesSelected = filters.get('newRecipes')
 
     switch (type) {
     case 'totalTime':
       dispatch(filterCurrentTotalTimeChange(value))
       break  
     case 'newRecipes':
-      dispatch(filterNewRecipesChange(newRecipesActivate))
+      dispatch(filterNewRecipesChange(newRecipesSelected))
       break
     default:
       break
