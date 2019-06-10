@@ -319,8 +319,8 @@ describe('filters', () => {
     const state = {
       filters: Immutable.Map({
         currentCollectionId: 'ca8f71be',
-        totalTime: '10',
-        dietTypes: Immutable.Set(['meat']),
+        totalTime: '25',
+        dietTypes: Immutable.Set([]),
         dietaryAttributes: Immutable.Set([]),
       }),
       basket: Immutable.fromJS({
@@ -373,7 +373,7 @@ describe('filters', () => {
         },
       }),
     }
-    test('get recipes with the cooking time 10 minutes', () => {
+    test('get recipes with the cooking time under 25 minutes', () => {
       expect(getFilteredRecipes(state)).toEqual(Immutable.List([
         Immutable.Map({
           id: '327',
@@ -381,6 +381,12 @@ describe('filters', () => {
           cookingTime: '10',
           cookingTimeFamily: '10',
         }),
+        Immutable.Map({
+          id: '1589',
+          dietType: 'Fish',
+          cookingTime: '20',
+          cookingTimeFamily: '25',
+        })
       ]))
     })
 
@@ -406,6 +412,107 @@ describe('filters', () => {
           dietType: 'Fish',
           cookingTime: '20',
           cookingTimeFamily: '25',
+        }),
+      ]))
+    })
+  })
+
+  describe('getNewRecipes', () => {
+    const state = {
+      filters: Immutable.Map({
+        currentCollectionId: 'ca8f71be',
+        totalTime: '0',
+        dietTypes: Immutable.Set(['meat']),
+        dietaryAttributes: Immutable.Set([]),
+        newRecipes: true,
+      }),
+      basket: Immutable.fromJS({
+        numPortions: 2,
+      }),
+      recipes: Immutable.fromJS({
+        327: {
+          id: '327',
+          dietType: 'Meat',
+          cookingTime: '10',
+          cookingTimeFamily: '10',
+          availability: [{
+            offset: 3,
+          },{
+            offset: -0,
+          }]
+        },
+        1589: {
+          id: '1589',
+          dietType: 'Fish',
+          cookingTime: '20',
+          cookingTimeFamily: '25',
+          availability: [{
+            offset: -3,
+          },{
+            offset: -0,
+          }]
+        },
+        393: {
+          id: '393',
+          dietType: 'Vegetarian',
+          cookingTime: '30',
+          cookingTimeFamily: '45',
+          availability: [{
+            offset: -3,
+          },{
+            offset: -0,
+          }]
+        },
+        929: {
+          id: '929',
+          dietType: 'Vegan',
+          cookingTime: '40',
+          cookingTimeFamily: '50',
+          availability: [{
+            offset: -3,
+          },{
+            offset: -0,
+          }]
+        },
+        1651: {
+          id: '1651',
+          dietType: 'Meat',
+          cookingTime: '50',
+          cookingTimeFamily: '65',
+          availability: [{
+            offset: -3,
+          },{
+            offset: -0,
+          }]
+        },
+      }),
+      menuCollectionRecipes: Immutable.fromJS({
+        ca8f71be: ['327', '1589', '393'],
+        '70c28cb0': ['929', '1651'],
+      }),
+      menuCollections: Immutable.fromJS({
+        ca8f71be: {
+          default: true,
+          id: 'ca8f71be',
+        },
+        '70c28cb0': {
+          defult: false,
+          id: '70c28cb0',
+        },
+      }),
+    }
+    test('should return only newRecipes', () => {
+      expect(getFilteredRecipes(state)).toEqual(Immutable.List([
+        Immutable.fromJS({
+          id: '327',
+          dietType: 'Meat',
+          cookingTime: '10',
+          cookingTimeFamily: '10',
+          availability: [{
+            offset: 3,
+          },{
+            offset: -0,
+          }]
         }),
       ]))
     })
