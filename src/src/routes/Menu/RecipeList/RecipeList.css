@@ -23,11 +23,13 @@
 	width: GutterSize;
 }
 .grid {
-	margin-right: calc(GutterSize * -1);
-	max-width: MinBreakPointXL;
-	margin-top: GutterSize;
-	@media ScreenXSMax {
-		margin-right: 0px;
+	margin-right: 0px;
+	margin-top: 17px;
+
+	@media ScreenSMMin {
+		margin-right: calc(GutterSize * -1);
+		max-width: MinBreakPointXL;
+		margin-top: SpacingSM;
 	}
 }
 .gridMobile {
