@@ -3,11 +3,11 @@
 
 .filterTagContainer {
     composes: paddingMDTop paddingXLBottom from 'sass-loader!styles/spacing.scss';
-    padding-top: 43px;
-    padding-bottom: 0px;
-    @media ScreenXSMax {
-        padding-top: 55px;
-        padding-bottom: 20px;
+    padding-top: 57px;
+    padding-bottom: 20px;
+    @media ScreenSMMin {
+        padding-top: 50px;
+        padding-bottom: 0px;
     }
 }
 
