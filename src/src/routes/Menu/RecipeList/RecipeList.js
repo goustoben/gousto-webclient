@@ -155,7 +155,7 @@ class RecipeList extends React.Component {
         />
       )
     })
-    const cta = <Recipe view={'ctaAllRecipe'} collectionFilterChange={collectionFilterChange} />
+    const cta = <Recipe key={'ctaAllRecipe'} view={'ctaAllRecipe'} collectionFilterChange={collectionFilterChange} />
     if (!!isCurrentCollectionRecommendation && ctaToAllRecipes) {
       return newRecipeList.concat(cta).toArray()
     }

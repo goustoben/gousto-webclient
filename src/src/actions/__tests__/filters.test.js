@@ -1,9 +1,7 @@
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-
 import actionTypes from 'actions/actionTypes'
-import { trackCTAToAllRecipesClicked } from 'actions/tracking'
 
 import {
   collectionFilterChange,
@@ -15,6 +13,7 @@ import {
   filterMenuOpen,
   filterMenuRevertFilters,
   filterProductCategory,
+  filterApply,
 } from 'actions/filters'
 
 describe('filters actions', () => {
@@ -24,6 +23,52 @@ describe('filters actions', () => {
   afterEach(() => {
     dispatchSpy.mockClear()
     getStateSpy.mockClear()
+  })
+
+  describe('filterApply', () => {
+    beforeAll(() => {
+      getStateSpy.mockReturnValue({
+        filters: Immutable.fromJS({
+          newRecipes: false,
+        }),
+      })
+    })
+    test('should dispatch once when case is totalTime', () => {
+      filterApply('totalTime', 0)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledTimes(1)
+    })
+
+    test('should be called with FILTERS_NEW_RECIPES_CHANGE when case is newRecipes and unselect tag', () => {
+      getStateSpy.mockReturnValue({
+        filters: Immutable.fromJS({
+          newRecipes: true,
+        }),
+      })
+      filterApply('newRecipes')(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.FILTERS_NEW_RECIPES_CHANGE,
+        trackingData: {
+          actionType: 'UNSELECT_FILTERS_NEW_RECIPES'
+        }
+      })
+    })
+    test('should be called with FILTERS_NEW_RECIPES_CHANGE when case is newRecipes and select tag', () => {
+      getStateSpy.mockReturnValue({
+        filters: Immutable.fromJS({
+          newRecipes: false,
+        }),
+      })
+      filterApply('newRecipes')(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.FILTERS_NEW_RECIPES_CHANGE,
+        trackingData: {
+          actionType: 'SELECT_FILTERS_NEW_RECIPES'
+        }
+      })
+    })
   })
 
   describe('collectionFilterChange', () => {
@@ -194,11 +239,33 @@ describe('filters actions', () => {
         }),
       })
 
-      filterCurrentTotalTimeChange('10')(dispatchSpy, getStateSpy)
+      filterCurrentTotalTimeChange('25')(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.FILTERS_TOTAL_TIME_CHANGE,
-        totalTime: '10',
+        totalTime: '25',
+      })
+    })
+    test('should dispatch a FILTERS_TOTAL_TIME_CHANGE action when the total time filter is the same', () => {
+      getStateSpy.mockReturnValue({
+        routing: {
+          locationBeforeTransitions: { query: { collection: 'gluten-free' } },
+        },
+        menuCollections: Immutable.fromJS({
+          newCollectionId: { slug: 'dairy-free' },
+        }),
+        filters: Immutable.Map({
+          currentCollectionId: '',
+          totalTime: '25',
+          dietTypes: Immutable.Set([]),
+        }),
+      })
+
+      filterCurrentTotalTimeChange('25')(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.FILTERS_TOTAL_TIME_CHANGE,
+        totalTime: '0',
       })
     })
   })
@@ -258,7 +325,6 @@ describe('filters actions', () => {
 
   describe('filterProductCategory', () => {
     test('should dispatch a FILTERS_PRODUCT_CATEGORY action', () => {
-      const dispatchSpy = jest.fn()
       filterProductCategory('all-products')(dispatchSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({

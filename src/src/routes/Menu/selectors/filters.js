@@ -2,9 +2,9 @@ import Immutable from 'immutable'
 import { createSelector } from 'reselect'
 
 import { getRecipes, getMenuRecipes, getMenuCollections } from 'selectors/root'
-import { getCurrentCollectionId, getCurrentDietTypes, getCurrentTotalTime, getDietaryAttributes } from 'selectors/filters'
+import { getCurrentCollectionId, getCurrentDietTypes, getCurrentTotalTime, getDietaryAttributes, getNewRecipesFilter } from 'selectors/filters'
 import { getNumPortions } from 'selectors/basket'
-import { getTaxonomyTags } from 'utils/recipe'
+import { getTaxonomyTags, filterRecipesByNew } from 'utils/recipe'
 
 export const getAllRecipesCollectionId = createSelector(
   [getMenuCollections],
@@ -63,8 +63,19 @@ export const getRecipesByTotalTime = createSelector(
   )
 )
 
+export const getNewRecipes = createSelector(
+  [getRecipesByTotalTime, getNewRecipesFilter],
+  (recipesFiltered, newRecipeFilter) => (
+    newRecipeFilter ? (
+      filterRecipesByNew(recipesFiltered)
+    )
+      :
+      recipesFiltered
+  )
+)
+
 export const getFilteredRecipes = createSelector(
-  [getRecipesByTotalTime],
+  [getNewRecipes],
   (filteredRecipes) => (
     filteredRecipes
   )

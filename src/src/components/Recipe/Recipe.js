@@ -17,7 +17,7 @@ const recipePropTypes = {
   media: PropTypes.instanceOf(Immutable.List),
   onClick: PropTypes.func,
   stock: PropTypes.number,
-  view: PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn']).isRequired,
+  view: PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn', 'ctaAllRecipe']).isRequired,
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
   collectionFilterChange: PropTypes.func,
@@ -28,6 +28,7 @@ class Recipe extends React.PureComponent {
   static propTypes = recipePropTypes
 
   static defaultProps = {
+    title: '',
     view: 'grid',
     collectionFilterChange: () => {},
   }

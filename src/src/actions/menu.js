@@ -169,7 +169,7 @@ export function menuLoadCollections(date, noUrlChange) {
 
       dispatch(featureSet('jfyTutorial', tutorialEnabled))
     }
-    const filterExperiment = state.features.getIn(['filterMenu', 'value'])
+    const filterExperiment = state.features.getIn(['dietaryQuickFilter', 'value'])
     const collectionsFiltered = filterExperiment ?
       collections.filter(collection => (!['dairy-free', 'gluten-free'].includes(collection.slug)))
       :
