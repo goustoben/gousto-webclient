@@ -301,6 +301,7 @@ workflows:
           requires:
             - test-isomorphic-jest
             - test-isomorphic-mocha
+            - eslint-only-errors
           filters:
             branches:
               only:
@@ -311,6 +312,7 @@ workflows:
           requires:
             - test-isomorphic-mocha
             - test-isomorphic-jest
+            - eslint-only-errors
           filters:
             branches:
               only:
