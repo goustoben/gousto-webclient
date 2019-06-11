@@ -168,7 +168,7 @@ describe('tutorial actions', () => {
 
     describe('when on the client', () => {
       beforeEach(() => {
-        global.__CLIENT__  = true
+        global.__CLIENT__ = true
       })
 
       test('should set a tutorial viewed cookie with tutorial viewed state', () => {

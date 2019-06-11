@@ -136,6 +136,15 @@ jobs:
           command: source ~/.circlerc && python ./ci_scripts/create_image.py --name webclient
           no_output_timeout: 20m
 
+  eslint-only-errors:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run eslint
+          command: cd src && yarn eslint --quiet
+
   code-analysis:
     docker: *gousto_build_image
     steps:
@@ -194,6 +203,16 @@ workflows:
                 - develop
                 - master
       - test-isomorphic-jest:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
+      - eslint-only-errors:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
@@ -263,6 +282,15 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - setup-remote-image-repositories
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - eslint-only-errors:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
           filters:
             branches:
               only:
