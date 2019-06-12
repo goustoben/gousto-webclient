@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
 import { isRecommendedRecipe } from 'utils/menu'
-import { formatRecipeTitle, getSurcharge, getRecipeRange } from 'utils/recipe'
+import { formatRecipeTitle, getSurcharge, getFoodBrand } from 'utils/recipe'
 import actions from 'actions/tracking'
 
 import css from './RecipeList.css'
@@ -119,7 +119,7 @@ class RecipeList extends React.Component {
     const newRecipeList = sortedRecipes.map((recipe) => {
       const recipeId = recipe.get('id')
       const isFeatured = featuredRecipes.includes(recipe)
-      const range = getRecipeRange(recipe)
+      const range = getFoodBrand(recipe)
       const isFineDineIn = range.get('slug') === 'fine-dine-in'
       const surcharge = getSurcharge(recipe.get('meals'), numPortions)
       const view = this.getView(mobileGridView, isFeatured, isFineDineIn)

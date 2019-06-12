@@ -87,6 +87,11 @@ export const currentDietaryAttributesChange = (dietaryAttributes) => ({
   dietaryAttributes,
 })
 
+export const currentFoodBrandChange = (foodBrand) => ({
+  type: actionTypes.FILTERS_FOOD_BRAND_CHANGE,
+  foodBrand,
+})
+
 export const filtersClearAll = (collectionId) => ({
   type: actionTypes.FILTERS_CLEAR_ALL,
   collectionId,

@@ -63,7 +63,7 @@ export function getCookingTime(time) {
   return `${time} mins`
 }
 
-export function getRecipeRange(recipe) {
+export function getFoodBrand(recipe) {
   const foodBrandTaxonomy = recipe && recipe.size && recipe.get('taxonomy')
   const foodBrand = foodBrandTaxonomy ? foodBrandTaxonomy.find(tag => tag.get('slug') === 'food-brands') : null
   if(foodBrand && foodBrand.get('tags').size) {    
