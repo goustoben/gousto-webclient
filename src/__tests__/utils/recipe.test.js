@@ -5,7 +5,7 @@ import {
   formatRecipeTitle,
   getSurcharge,
   getCookingTime,
-  getRecipeRange,
+  getFoodBrand,
   getTaxonomyTags,
   isNew, 
   filterRecipesByNew
@@ -111,7 +111,7 @@ describe('recipes', () => {
 
   describe('getRangeBadge', () => {
     test('should return null if no item is found', () => {
-      expect(getRecipeRange('test')).toBe(Immutable.Map())
+      expect(getFoodBrand('test')).toBe(Immutable.Map())
     })
 
     test('should return an object if range name matches', () => {
@@ -132,7 +132,7 @@ describe('recipes', () => {
           }
         ]
       })
-      expect(getRecipeRange(recipe)).toEqual(Immutable.fromJS({
+      expect(getFoodBrand(recipe)).toEqual(Immutable.fromJS({
         id: "9",
         name: "Fine Dine In",
         properties: { ribbon_color: "#333D47", border_color: "#282B2F", text_color: "#FFFFFF" },
