@@ -12,6 +12,7 @@ describe('filters reducer', () => {
     dietTypes: Immutable.Set([]),
     dietaryAttributes: Immutable.Set([]),
     newRecipes: false,
+    foodBrand: '',
   })
 
   test('it should return initial state', () => {
@@ -40,6 +41,7 @@ describe('filters reducer', () => {
         dietTypes: Immutable.Set([]),
         dietaryAttributes: Immutable.Set([]),
         newRecipes: false,
+        foodBrand: '',
       })
       const result = reducer.filters(state, action)
 
@@ -58,6 +60,7 @@ describe('filters reducer', () => {
         dietTypes: Immutable.Set(['meat']),
         dietaryAttributes: Immutable.Set([]),
         newRecipes: false,
+        foodBrand: '',
       })
       const result = reducer.filters(state, action)
 
@@ -76,6 +79,7 @@ describe('filters reducer', () => {
         dietTypes: Immutable.Set([]),
         dietaryAttributes: Immutable.Set(['gluten-free']),
         newRecipes: false,
+        foodBrand: '',
       })
       const result = reducer.filters(state, action)
 
@@ -94,6 +98,7 @@ describe('filters reducer', () => {
         dietTypes: Immutable.Set([]),
         dietaryAttributes: Immutable.Set([]),
         newRecipes: false,
+        foodBrand: '',
       })
       const result = reducer.filters(state, action)
       expect(Immutable.is(expectedState, result)).toBe(true)
@@ -112,6 +117,7 @@ describe('filters reducer', () => {
         dietaryAttributes: Immutable.Set([]),
         selectedCategory: 'all-products',
         newRecipes: false,
+        foodBrand: '',
       })
       const result = reducer.filters(state, action)
       expect(Immutable.is(expectedState, result)).toBe(true)
