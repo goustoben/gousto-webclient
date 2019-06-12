@@ -109,12 +109,12 @@ describe('recipes', () => {
     })
   })
 
-  describe('getRangeBadge', () => {
+  describe('getFoodBrand', () => {
     test('should return null if no item is found', () => {
       expect(getFoodBrand('test')).toBe(Immutable.Map())
     })
 
-    test('should return an object if range name matches', () => {
+    test('should return an object if food brand matches', () => {
       const recipe = Immutable.fromJS({
         taxonomy: [
           {
