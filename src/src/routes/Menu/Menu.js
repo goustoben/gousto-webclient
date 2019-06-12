@@ -14,17 +14,12 @@ import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import browserHelper from 'utils/browserHelper'
 import { RecipeMeta } from './RecipeMeta'
-import MenuNoResults from './MenuNoResults'
 
 import SubHeader from './SubHeader'
 import Loading from './Loading'
-import FilterTagsNav from './FilterTagsNav/FilterTagsNavContainer'
 import css from './Menu.css'
 
-import DetailOverlay from './DetailOverlay'
-import CollectionsNav from './CollectionsNav'
-
-import RecipeList from './RecipeList'
+import { MenuRecipes } from './MenuRecipes'
 import { Banner } from './Banner'
 
 import fetchData from './fetchData'
@@ -393,12 +388,16 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { hasRecommendations, forceLoad, jfyTutorialFlag, query } = this.props
-    const { mobileGridView } = this.state
-    const overlayShow = this.props.boxSummaryShow || this.props.menuBrowseCTAShow
-    const collectionsNavEnabled = this.props.features.getIn(['forceCollections', 'value']) || (this.props.features.getIn(['collections', 'value']) && (this.props.features.getIn(['collectionsNav', 'value']) !== false))
-    const showLoading = this.props.isLoading && !overlayShow || forceLoad
-    const menuFilterExperiment = this.props.features.getIn(['filterMenu', 'value'])
+    const { orderId, foodBrandSelected,
+      hasRecommendations,
+      forceLoad, jfyTutorialFlag,
+      query, features, boxSummaryShow,
+      menuBrowseCTAShow, isLoading,
+      filteredRecipesNumber, menuCurrentCollectionId,
+      menuRecipeDetailShow, clearAllFilters } = this.props
+    const { mobileGridView, isChrome, isClient } = this.state
+    const overlayShow = boxSummaryShow || menuBrowseCTAShow
+    const showLoading = isLoading && !overlayShow || forceLoad
 
     let fadeCss = null
     if (showLoading && hasRecommendations) {
@@ -410,7 +409,7 @@ class Menu extends React.Component {
     }
 
     let overlayShowCSS = null
-    if (this.state.isChrome) {
+    if (isChrome) {
       overlayShowCSS = overlayShow ? css.blur : null
     }
 
@@ -425,40 +424,26 @@ class Menu extends React.Component {
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
           {this.renderBanner(menu.summerBbq.switchoverDate)}
-          <SubHeader
+          {!foodBrandSelected && <SubHeader
             viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
             onToggleGridView={this.toggleGridView}
-            orderId={this.props.orderId}
-          />
+            orderId={orderId}
+          />}
           <Loading loading={showLoading} hasRecommendations={hasRecommendations} />
-          <div className={fadeCss} data-testing="menuRecipes">
-            {!showLoading && collectionsNavEnabled &&
-              <CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={this.props.menuCurrentCollectionId} />}
-              {!showLoading && <FilterTagsNav />}
-            {this.props.filteredRecipesNumber ?
-              <div
-                ref={ref => { this.masonryContainer = ref }}
-                className={classnames({
-                  [css.masonryContainerMenu]: !menuFilterExperiment,
-                  [css.masonryContainer]: menuFilterExperiment,
-                })}
-                data-testing="menuRecipesList"
-              >
-                <RecipeList
-                  mobileGridView={mobileGridView}
-                  showDetailRecipe={this.showDetailRecipe}
-                  menuCurrentCollectionId={this.props.menuCurrentCollectionId}
-                />
-                <p className={css.legal}>{menu.legal}</p>
-                <DetailOverlay
-                  showOverlay={this.state.isClient}
-                  menuRecipeDetailShow={this.props.menuRecipeDetailShow}
-                />
-              </div>
-              :
-              <MenuNoResults clearAllFilters={() => this.props.clearAllFilters()} />
-            }
-          </div>
+          {foodBrandSelected ? <div>Here is the Food Brand</div>
+            :
+            <MenuRecipes 
+              isClient={isClient}
+              fadeCss={fadeCss}
+              showLoading={showLoading}
+              features={features}
+              filteredRecipesNumber={filteredRecipesNumber}
+              mobileGridView={mobileGridView}
+              menuCurrentCollectionId={menuCurrentCollectionId}
+              menuRecipeDetailShow={menuRecipeDetailShow}
+              clearAllFilters={clearAllFilters}
+              showDetailRecipe={this.showDetailRecipe}
+            />}
           <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick}></div>
         </div>
         <BoxSummaryMobile />
