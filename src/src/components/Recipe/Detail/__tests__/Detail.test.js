@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import Helmet from 'react-helmet'
 import DefaultDetail from '../DefaultDetail'
 import FineDineInDetail from '../FineDineInDetail'
-import Detail from '../Detail'
+import { Detail } from '../Detail'
 
 describe('Detail', () => {
   let wrapper

@@ -309,10 +309,6 @@ describe('order actions', () => {
   })
 
   describe('orderHasAnyProducts', () => {
-    const getStateSpy = () => ({
-      auth: Immutable.fromJS({ accessToken: 'access-token' }),
-    })
-
     test('api function is called with correct parameters', async () => {
       await orderActions.orderHasAnyProducts(orderId)(dispatchSpy, getStateSpy)
 
@@ -379,20 +375,7 @@ describe('order actions', () => {
   })
 
   describe('orderAssignToUser', () => {
-    let getStateSpy
     beforeEach(() => {
-      getStateSpy = () => ({
-        auth: Immutable.Map({ accessToken: 'access-token' }),
-        features: Immutable.Map({
-          orderConfirmation: Immutable.Map({
-            value: false,
-          })
-        }),
-        basket:Immutable.Map({
-
-        })
-      })
-
       recipes = [1, 2, 3, 4, 5]
       saveOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve) => { resolve({ data: { id: '5678' } })})

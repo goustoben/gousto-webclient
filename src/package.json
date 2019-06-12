@@ -40,7 +40,8 @@
     "bundle-analyzer": "webpack-bundle-analyzer public/stats.json",
     "deploy": "yarn run deploy:sentry-upload && yarn run deploy:cleanup-assets",
     "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js/tasks/upload.js",
-    "deploy:cleanup-assets": "cd public && rm -f *.js.map && cd .."
+    "deploy:cleanup-assets": "cd public && rm -f *.js.map && cd ..",
+    "eslint": "node_modules/.bin/eslint ."
   },
   "dependencies": {
     "actual": "0.4.0",
