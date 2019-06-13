@@ -1,13 +1,14 @@
-@value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
+@value ScreenXXSMin, ScreenSMMin, ScreenMDMin, ScreenMLMin from 'styles/screenSizes.css';
 
 @value JWBlue #3B3FB2;
-@value JWSMImageSize 175px;
-@value JWLGImageSize 200px;
-@value SMImageOffset 0.7;
+@value JWSMImageSize 135px;
+@value LGImageSize 200px;
+@value MDImageSize 175px;
+@value SMImageOffset 0.6;
 @value LGImageOffset 0.9;
-@value GelSMLeft 65%;
-@value GelMDLeft 30%;
-@value GelLGLeft 45%;
+@value GelSMLeft 50%;
+@value GelMDLeft 90%;
+@value GelLGLeft 85%;
 
 .container {
 	composes: inlineBlock from 'styles/display.css';
@@ -35,11 +36,11 @@
 	composes: container;
 	background-image: url('media/images/menu/alfresco-mobile.jpg');
 
-	@media ScreenXXSMin {
+	@media ScreenSMMin {
 		background-image: url('media/images/menu/alfresco-tablet.jpg');
 	}
 
-	@media ScreenMDMin {
+	@media ScreenMLMin {
 		background-image: url('media/images/menu/alfresco-desktop.jpg');
 	}
 }
@@ -74,18 +75,20 @@
 .gelPortrait {
 	composes: gel from 'Gel/Gel.css';
 	left: calc(GelSMLeft - (SMImageOffset * JWSMImageSize));
-	top: 40%;
+	top: 50%;
 	height: JWSMImageSize;
 	width: JWSMImageSize;
 
-	@media ScreenXXSMin {
-		left: calc(GelMDLeft - (SMImageOffset * JWSMImageSize));
+	@media ScreenSMMin {
+		left: calc(GelMDLeft - (SMImageOffset * MDImageSize));
+		height: MDImageSize;
+		width: MDImageSize;
 	}
 
 	@media ScreenMDMin {
-		left: calc(GelLGLeft - (LGImageOffset * JWLGImageSize));
-		height: JWLGImageSize;
-		width: JWLGImageSize;
+		left: calc(GelLGLeft - (LGImageOffset * LGImageSize));
+		height: LGImageSize;
+		width: LGImageSize;
 	}
 }
 
