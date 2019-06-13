@@ -4,7 +4,7 @@ import React from 'react'
 import Immutable from 'immutable'/* eslint-disable new-cap */
 import { basketSum } from 'utils/basket'
 import recipesActions from 'actions/recipes'
-import { getRecipeRange } from 'utils/recipe'
+import { getFoodBrand } from 'utils/recipe'
 import OrderedRecipe from './OrderedRecipe'
 
 class RecipeSummary extends React.PureComponent {
@@ -54,7 +54,7 @@ class RecipeSummary extends React.PureComponent {
     return (
       <div data-testing="checkoutRecipeSummary">
         {recipes.map((serving, recipeId) => {
-          const range = getRecipeRange(menuRecipesStore.get(recipeId)) || Immutable.Map()
+          const range = getFoodBrand(menuRecipesStore.get(recipeId)) || Immutable.Map()
           const rangeSlug = range.size ? range.get('slug') : null
 
           return (<OrderedRecipe

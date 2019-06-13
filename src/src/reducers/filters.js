@@ -7,6 +7,7 @@ export const initialState = () => Immutable.Map({
   dietTypes: Immutable.Set([]),
   dietaryAttributes: Immutable.Set([]),
   newRecipes: false,
+  foodBrand: '',
 })
 
 let previousState = initialState()
@@ -36,6 +37,10 @@ const filters = {
 
     case actionTypes.FILTERS_NEW_RECIPES_CHANGE: {
       return state.set('newRecipes', !state.get('newRecipes'))
+    }
+
+    case actionTypes.FILTERS_FOOD_BRAND_CHANGE: {
+      return state.set('foodBrand', action.foodBrand)
     }
 
     case actionTypes.FILTERS_CLEAR_ALL: {
