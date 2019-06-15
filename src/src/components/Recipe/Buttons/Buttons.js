@@ -125,7 +125,7 @@ class Buttons extends React.Component {
           fill
           className={this.getSurchargeGridClass('segment')}
         >
-          Add {view !== 'gridSmall' ? 'Recipe' : ''}
+          {view !== 'gridSmall' ? 'Add Recipe' : 'Add'}
           {surchargePerPortion && (
             <div
               className={

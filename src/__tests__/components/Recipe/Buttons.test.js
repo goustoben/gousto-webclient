@@ -65,9 +65,7 @@ describe('the Buttons component', () => {
         })
 
         test('shows the add recipe text', () => {
-          const segmentChildren = wrapper.find('Segment').prop('children')
-          const childrenText = segmentChildren.slice(0, 2).join('')
-          expect(childrenText).toBe('Add Recipe')
+          expect(wrapper.find('Segment').contains('Add Recipe')).toBe(true)
         })
 
         test('has the classes for surcharge recipes in grid view', () => {
