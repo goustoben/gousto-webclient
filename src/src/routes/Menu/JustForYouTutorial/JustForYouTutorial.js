@@ -21,7 +21,7 @@ class JustForYouTutorial extends React.PureComponent {
   }
 
   render() {
-    const { showTutorial } = this.props
+    const { showTutorial, collectionName } = this.props
 
     return (
       (showTutorial) ? (
@@ -29,7 +29,7 @@ class JustForYouTutorial extends React.PureComponent {
           <Tutorial onClose={(step) => this.onCloseTutorial(step)} trackStepViewed={(step) => this.trackStepViewed(step)}>
             <Step selector="[data-slug='recommendations']">
               <p className={css.intro}>Introducing</p>
-              <p className={css.main}>Just For You</p>
+              <p className={css.main}>{collectionName}</p>
               <p className={css.text}>{"We now show you a personalised selection of recipes we think you\u0027ll really enjoy"}</p>
             </Step>
             <Step selector="[data-slug='all-recipes']">
@@ -46,12 +46,14 @@ JustForYouTutorial.propTypes = {
   showTutorial: PropTypes.bool,
   incrementTutorialViewed: PropTypes.func,
   tutorialTracking: PropTypes.func,
+  collectionName: PropTypes.string.isRequired,
 }
 
 JustForYouTutorial.defaultProps = {
   showTutorial: false,
   incrementTutorialViewed: () => { },
   tutorialTracking: () => { },
+  collectionName: 'Just For You'
 }
 
 export {
