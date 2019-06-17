@@ -18,6 +18,6 @@ export const getJfyTutorial = state => (state.features ? state.features.getIn(['
 
 export const getOrderConfirmation = state => (state.features ? state.features.getIn(['orderConfirmation', 'value']) : false)
 
-export const getRafOnWelcomePage = state => (state.features ? state.features.getIn(['rafOnWelcomePage', 'value']) : false)
+export const isRafAboveCarouselOnWelcomePage = state => (state.features ? state.features.getIn(['rafAboveCarouselOnWelcomePage', 'value']) : false)
 
 export const getCTAToAllRecipes = state => (state.features ? state.features.getIn(['ctaToAllRecipes', 'value']) : false)
