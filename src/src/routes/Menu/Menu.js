@@ -3,7 +3,6 @@ import React from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
-import moment from 'moment'
 import shallowCompare from 'react-addons-shallow-compare'
 import { forceCheck } from 'react-lazyload'
 
@@ -15,12 +14,9 @@ import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import browserHelper from 'utils/browserHelper'
 import { RecipeMeta } from './RecipeMeta'
 
-import SubHeader from './SubHeader'
-import Loading from './Loading'
 import css from './Menu.css'
 
 import { MenuRecipes } from './MenuRecipes'
-import { Banner } from './Banner'
 
 import fetchData from './fetchData'
 import { JustForYouTutorial } from './JustForYouTutorial'
@@ -377,16 +373,6 @@ class Menu extends React.Component {
     }
   }
 
-  renderBanner = (switchoverDate) => {
-    const now = moment()
-    const switchoverTime = moment(switchoverDate)
-
-    return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
-      <Banner type={'summer-bbq'} imageName={'summerGel-min.png'}/>
-    ) :
-      (<Banner type={'taste-of-italy'}/>)
-  }
-
   render() {
     const { orderId, foodBrandSelected,
       hasRecommendations,
@@ -423,13 +409,7 @@ class Menu extends React.Component {
         <RecipeMeta query={query} />
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
-          {this.renderBanner(menu.summerBbq.switchoverDate)}
-          {!foodBrandSelected && <SubHeader
-            viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
-            onToggleGridView={this.toggleGridView}
-            orderId={orderId}
-          />}
-          <Loading loading={showLoading} hasRecommendations={hasRecommendations} />
+          
           {foodBrandSelected ? <div>Here is the Food Brand</div>
             :
             <MenuRecipes 
@@ -443,6 +423,8 @@ class Menu extends React.Component {
               menuRecipeDetailShow={menuRecipeDetailShow}
               clearAllFilters={clearAllFilters}
               showDetailRecipe={this.showDetailRecipe}
+              hasRecommendations={hasRecommendations}
+              orderId={orderId}
             />}
           <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick}></div>
         </div>

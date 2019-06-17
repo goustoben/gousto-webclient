@@ -2,16 +2,10 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 
-import Loading from 'routes/Menu/Loading'
-import { Banner } from 'routes/Menu/Banner'
 import fetchData from 'routes/Menu/fetchData'
-import SubHeader from 'routes/Menu/SubHeader'
-import RecipeList from 'routes/Menu/RecipeList'
-import CollectionsNav from 'routes/Menu/CollectionsNav'
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import DetailOverlay from 'routes/Menu/DetailOverlay'
-import MenuNoResults from 'routes/Menu/MenuNoResults'
 
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
@@ -19,17 +13,10 @@ import { JustForYouTutorial } from '../JustForYouTutorial'
 import { flattenRecipes } from '../MenuContainer'
 
 jest.mock('actions/order')
-jest.mock('routes/Menu/Banner')
-jest.mock('routes/Menu/SubHeader')
-jest.mock('routes/Menu/FilterMenu')
-jest.mock('routes/Menu/FilterTagsNav/FilterTagsNavContainer')
-jest.mock('routes/Menu/FilterNav')
-jest.mock('routes/Menu/RecipeList')
 jest.mock('BoxSummary/BoxSummaryMobile')
 jest.mock('BoxSummary/BoxSummaryDesktop')
 jest.mock('routes/Menu/DetailOverlay')
 jest.mock('routes/Menu/JustForYouTutorial')
-jest.mock('routes/Menu/MenuNoResults')
 jest.mock('routes/Menu/MenuRecipes')
 
 jest.mock('react-lazyload', () => ({
@@ -54,9 +41,6 @@ describe('Menu', () => {
 
     BoxSummaryMobile.mockReturnValue(<div />)
     BoxSummaryDesktop.mockReturnValue(<div />)
-    RecipeList.mockReturnValue(<div />)
-    SubHeader.mockReturnValue(<div />)
-    Banner.mockReturnValue(<div />)
     DetailOverlay.mockReturnValue(<div />)
   })
 
@@ -116,24 +100,12 @@ describe('Menu', () => {
         expect(wrapper.type()).toBe('div')
       })
 
-      test('should render 1 SubHeader', () => {
-        expect(wrapper.find(SubHeader).length).toBe(1)
-      })
-
       test('should render 1 BoxSummaryMobile', () => {
         expect(wrapper.find(BoxSummaryMobile).length).toBe(1)
       })
 
       test('should render 1 BoxSummaryDesktop', () => {
         expect(wrapper.find(BoxSummaryDesktop).length).toBe(1)
-      })
-
-      test('should not show a collections nav', () => {
-        expect(wrapper.find('CollectionsNav').length).toBe(0)
-      })
-
-      test('should not show as loading', () => {
-        expect(wrapper.find(Loading).prop('loading')).toBe(false)
       })
 
       test('should not render JFY tutorial if feature flag is set to false', () => {
@@ -162,10 +134,6 @@ describe('Menu', () => {
         expect(wrapper.find(JustForYouTutorial).length).toBe(1)
       })
 
-      test('should render banner with an image name prop', () => {
-        expect(wrapper.find(Banner).length).toBe(1)
-        expect(wrapper.find(Banner).prop('type')).toBeTruthy()
-      })
     })
 
     test('with the isLoading prop set to true it should show a Loading', () => {
@@ -187,7 +155,7 @@ describe('Menu', () => {
           isLoading
         />,
       )
-      expect(wrapper.find(Loading).prop('loading')).toBe(true)
+      expect(wrapper.find('MenuRecipes').prop('showLoading')).toBe(true)
     })
 
     test('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
@@ -213,7 +181,7 @@ describe('Menu', () => {
           basketNumPortionChange={jest.fn()}
         />,
       )
-      expect(wrapper.find(Loading).prop('loading')).toBe(false)
+      expect(wrapper.find('MenuRecipes').prop('showLoading')).toBe(false)
     })
 
     test('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
@@ -237,93 +205,11 @@ describe('Menu', () => {
           boxSummaryDeliveryDays={Immutable.List([])}
         />,
       )
-      expect(wrapper.find(Loading).prop('loading')).toBe(false)
-    })
-
-    describe('with the collections feature enabled', () => {
-      test.skip('should show a collections nav', () => {
-        wrapper = shallow(
-          <Menu
-            foodBrandSelected={false}
-            productsLoadProducts={() => { }}
-            productsLoadStock={() => { }}
-            menuCollectionRecipes={Immutable.Map({})}
-            clearAllFilters={() => { }}
-            basketOrderLoaded={() => { }}
-            menuLoadBoxPrices={menuLoadBoxPrices}
-            menuMobileGridViewSet={jest.fn()}
-            boxSummaryDeliveryDays={Immutable.List()}
-            menuLoadDays={menuLoadDays}
-            params={{ orderId: '123' }}
-            basketRestorePreviousValues={jest.fn()}
-            portionSizeSelectedTracking={jest.fn()}
-            features={Immutable.fromJS({
-              collections: {
-                value: true,
-              },
-              filterMenu: {
-                value: false,
-              }
-            })}
-            boxDetailsVisibilityChange={jest.fn()}
-            disabled={false}
-            isAuthenticated={false}
-          />,
-          {
-            context: {
-              store: {
-                dispatch: jest.fn()
-              }
-            }
-          }
-        )
-        expect(wrapper.find(CollectionsNav).length).toBe(1)
-      })
-
-      describe.skip('and the collectionsNav feature disabled', () => {
-        test('should not show the collections nav bar', () => {
-          wrapper = shallow(
-            <Menu
-              foodBrandSelected={false}
-              productsLoadProducts={() => { }}
-              productsLoadStock={() => { }}
-              menuCollectionRecipes={Immutable.Map({})}
-              clearAllFilters={() => { }}
-              menuLoadBoxPrices={menuLoadBoxPrices}
-              menuMobileGridViewSet={jest.fn()}
-              boxSummaryDeliveryDays={Immutable.List()}
-              basketOrderLoaded={() => { }}
-              menuLoadDays={menuLoadDays}
-              params={{ orderId: '123' }}
-              basketRestorePreviousValues={jest.fn()}
-              boxDetailsVisibilityChange={jest.fn()}
-              disabled={false}
-              isAuthenticated={false}
-              portionSizeSelectedTracking={jest.fn()}
-              features={Immutable.fromJS({
-                collections: {
-                  value: false,
-                },
-                filterMenu: {
-                  value: true,
-                },
-              })}
-            />,
-            {
-              context: {
-                store: {
-                  dispatch: jest.fn()
-                }
-              }
-            }
-          )
-          expect(wrapper.find(CollectionsNav).length).toBe(0)
-        })
-      })
+      expect(wrapper.find('MenuRecipes').prop('showLoading')).toBe(false)
     })
   })
 
-  describe.skip('fadeCSS', () => {
+  describe('fadeCSS', () => {
     let wrapper
 
     test('should render fade--recommendations', () => {
@@ -345,9 +231,9 @@ describe('Menu', () => {
           hasRecommendations
         />,
       )
-      const elementWithFadeCSS = wrapper.find('.fade--recommendations')
+      const elementWithFadeCSS = wrapper.find('MenuRecipes')
 
-      expect(elementWithFadeCSS).toHaveLength(1)
+      expect(elementWithFadeCSS.prop('fadeCss')).toEqual('fade--recommendations')
     })
 
     test('should render fadeOut', () => {
@@ -370,9 +256,9 @@ describe('Menu', () => {
           hasRecommendations={false}
         />,
       )
-      const elementWithFadeCSS = wrapper.find('.fadeOut')
+      const elementWithFadeCSS = wrapper.find('MenuRecipes')
 
-      expect(elementWithFadeCSS).toHaveLength(1)
+      expect(elementWithFadeCSS.prop('fadeCss')).toEqual('fadeOut')
     })
 
     test('should render willFade', () => {
@@ -393,73 +279,9 @@ describe('Menu', () => {
           hasRecommendations={false}
         />,
       )
-      const elementWithFadeCSS = wrapper.find('.willFade')
+      const elementWithFadeCSS = wrapper.find('MenuRecipes')
 
-      expect(elementWithFadeCSS).toHaveLength(1)
-    })
-  })
-
-  describe.skip('with the force collections feature enabled', () => {
-    let wrapper
-
-    test('should show a collections nav', () => {
-      wrapper = shallow(
-        <Menu
-          foodBrandSelected={false}
-          productsLoadProducts={() => { }}
-          productsLoadStock={() => { }}
-          menuLoadBoxPrices={() => { }}
-          menuCollectionRecipes={Immutable.Map({})}
-          boxSummaryDeliveryDays={Immutable.List([])}
-          menuLoadDays={menuLoadDays}
-          boxDetailsVisibilityChange={jest.fn()}
-          basketOrderLoaded={jest.fn()}
-          clearAllFilters={() => { }}
-          params={{ orderId: '' }}
-          basketNumPortionChange={jest.fn()}
-          features={Immutable.fromJS({
-            collections: {
-              value: true,
-            },
-            forceCollections: {
-              value: true,
-            },
-          })}
-        />,
-      )
-
-      expect(wrapper.find(CollectionsNav).length).toBe(1)
-    })
-    test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
-      wrapper = shallow(
-        <Menu
-          foodBrandSelected={false}
-          productsLoadProducts={() => { }}
-          productsLoadStock={() => { }}
-          menuLoadBoxPrices={() => { }}
-          menuCollectionRecipes={Immutable.Map({})}
-          clearAllFilters={() => { }}
-          basketNumPortionChange={jest.fn()}
-          boxDetailsVisibilityChange={jest.fn()}
-          boxSummaryDeliveryDays={Immutable.List([])}
-          menuLoadDays={menuLoadDays}
-          basketOrderLoaded={jest.fn()}
-          params={{ orderId: '' }}
-          features={Immutable.fromJS({
-            collections: {
-              value: true,
-            },
-            forceCollections: {
-              value: true,
-            },
-            collectionsNav: {
-              value: false,
-            },
-          })}
-        />,
-      )
-
-      expect(wrapper.find(CollectionsNav).length).toBe(1)
+      expect(elementWithFadeCSS.prop('fadeCss')).toEqual('willFade')
     })
   })
 
@@ -496,8 +318,8 @@ describe('Menu', () => {
       basketNumPortionChangeSpy = jest.fn()
     })
 
-    test.skip('should load Box Prices for non admin users', async () => {
-      wrapper = await mount(
+    test('should load Box Prices for non admin users', () => {
+      wrapper = mount(
         <Menu
           foodBrandSelected={false}
           productsLoadProducts={() => { }}
@@ -976,7 +798,7 @@ describe('Menu', () => {
           )
         })
 
-        test('redirect is being called when order checkout response is correct', async () => {
+        test('redirect is being called when order checkout response is correct', () => {
           expect(window.location.assign).toHaveBeenCalledWith('summary-url')
         })
       })
@@ -1204,59 +1026,6 @@ describe('Menu', () => {
         />,
       )
       expect(menuLoadBoxPrices).not.toHaveBeenCalled()
-    })
-  })
-
-  describe.skip('when filtering removes all recipes from the list', () => {
-    let wrapper
-    let getStateSpy
-    beforeEach(() => {
-      getStateSpy = jest.fn().mockReturnValue({
-        basket: Immutable.Map({
-        }),
-        filters: Immutable.Map({
-          currentCollectionId: '',
-          totalTime: '0',
-          dietTypes: Immutable.Set(['meat']),
-          dietaryAttributes: Immutable.Set(['gluten-free']),
-        }),
-        features: Immutable.Map({
-          filterMenu: Immutable.Map({
-            value: false,
-          })
-        }),
-        content: Immutable.Map({}),
-        menu: Immutable.Map({}),
-      })
-    })
-
-    test('should render MenuNoResults', async () => {
-      wrapper = await mount(
-        <Menu
-          foodBrandSelected={false}
-          productsLoadProducts={() => { }}
-          productsLoadStock={() => { }}
-          boxSummaryDeliveryDays={Immutable.List([])}
-          menuCollectionRecipes={Immutable.Map({})}
-          boxDetailsVisibilityChange={jest.fn()}
-          features={Immutable.Map({})}
-          disabled
-          filteredRecipesNumber={0}
-          basketOrderLoaded={jest.fn()}
-          clearAllFilters={() => { }}
-          params={{}}
-        />,
-        {
-          context: {
-            store: {
-              getState: getStateSpy,
-              subscribe: () => { },
-              dispatch: () => { },
-            },
-          },
-        },
-      )
-      expect(wrapper.find(MenuNoResults)).toHaveLength(1)
     })
   })
 })
