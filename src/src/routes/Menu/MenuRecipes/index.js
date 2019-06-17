@@ -1,0 +1,1 @@
+export { MenuRecipes } from './MenuRecipes'
