@@ -22,7 +22,9 @@ const propTypes = {
   mobileGridView: PropTypes.bool,
   menuCurrentCollectionId: PropTypes.string,
   menuRecipeDetailShow: PropTypes.string,
+  orderId: PropTypes.string,
   isClient: PropTypes.bool,
+  hasRecommendations: PropTypes.bool,
   clearAllFilters: PropTypes.func,
   showDetailRecipe: PropTypes.func,
 }

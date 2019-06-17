@@ -87,6 +87,7 @@ class Menu extends React.Component {
     deliveryDayId: PropTypes.string,
     addressId: PropTypes.string,
     userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
+    foodBrandSelected: PropTypes.bool,
   }
 
   static contextTypes = {
@@ -112,6 +113,7 @@ class Menu extends React.Component {
     promoCode: '',
     postcode: '',
     deliveryDayId: '',
+    foodBrandSelected: false,
   }
 
   static fetchData(args, force) {
@@ -374,7 +376,9 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { orderId, foodBrandSelected,
+    const {
+      orderId,
+      foodBrandSelected,
       hasRecommendations,
       forceLoad, jfyTutorialFlag,
       query, features, boxSummaryShow,
