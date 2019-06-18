@@ -31,7 +31,7 @@ const showTutorial = (state) => {
 
 const mapStateToProps = (state) => ({
   showTutorial: showTutorial(state),
-  collectionName: getRecommendationShortName(state)
+  collectionName: getRecommendationShortName(state) || 'Chosen For You'
 })
 
 const mapDispatchToProps = {

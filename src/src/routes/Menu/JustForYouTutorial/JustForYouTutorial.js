@@ -53,7 +53,6 @@ JustForYouTutorial.defaultProps = {
   showTutorial: false,
   incrementTutorialViewed: () => { },
   tutorialTracking: () => { },
-  collectionName: 'Just For You'
 }
 
 export {
