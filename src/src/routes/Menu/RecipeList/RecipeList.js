@@ -6,7 +6,7 @@ import classnames from 'classnames'
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
 import { isRecommendedRecipe } from 'utils/menu'
-import { formatRecipeTitle, getSurcharge, getFoodBrand } from 'utils/recipe'
+import { formatRecipeTitle, getFoodBrand } from 'utils/recipe'
 import actions from 'actions/tracking'
 
 import css from './RecipeList.css'
@@ -26,7 +26,7 @@ class RecipeList extends React.Component {
     numPortions: PropTypes.number.isRequired,
     recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
     showDetailRecipe: PropTypes.func,
-    isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]), 
+    isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     ctaToAllRecipes: PropTypes.bool,
     collectionFilterChange: PropTypes.func,
   }
@@ -109,8 +109,8 @@ class RecipeList extends React.Component {
       featuredRecipes,
       remainingRecipes,
       outOfStockRecipes,
-      isCurrentCollectionRecommendation, 
-      ctaToAllRecipes, 
+      isCurrentCollectionRecommendation,
+      ctaToAllRecipes,
       collectionFilterChange
     } = this.props
     const sortedRecipes = featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
@@ -121,7 +121,6 @@ class RecipeList extends React.Component {
       const isFeatured = featuredRecipes.includes(recipe)
       const range = getFoodBrand(recipe)
       const isFineDineIn = range.get('slug') === 'fine-dine-in'
-      const surcharge = getSurcharge(recipe.get('meals'), numPortions)
       const view = this.getView(mobileGridView, isFeatured, isFineDineIn)
 
       index += 1
@@ -142,7 +141,6 @@ class RecipeList extends React.Component {
           description={recipe.get('description')}
           availability={recipe.get('availability')}
           equipment={recipe.get('equipment')}
-          surcharge={surcharge}
           view={view}
           cutoffDate={cutoffDate}
           onClick={() => { showDetailRecipe(recipeId) }}

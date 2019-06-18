@@ -1,14 +1,16 @@
 import Immutable from 'immutable'
 
 import {
-  getLowStockTag,
+  filterRecipesByNew,
   formatRecipeTitle,
-  getSurcharge,
+  isNew,
   getCookingTime,
   getFoodBrand,
+  getLowStockTag,
+  getSurcharge,
+  getSurchargePerPortion,
   getTaxonomyTags,
-  isNew, 
-  filterRecipesByNew
+  roundUp,
 } from 'utils/recipe'
 
 jest.mock('config', () => ({
@@ -198,26 +200,26 @@ describe('recipes', () => {
           {
             id: "123456789",
             offset: -12,
-          }, 
+          },
           {
             id: "098765432",
             offset: 0,
-          }, 
-        ], 
+          },
+        ],
       })
       const recipe2 = Immutable.fromJS({
         availability: [
           {
             id: "5454545454",
             offset: 0,
-          }, 
+          },
           {
             id: "6767676767",
             offset: 5,
-          }, 
-        ], 
+          },
+        ],
       })
-      
+
       expect(isNew(recipe1)).toBe(false)
       expect(isNew(recipe2)).toBe(true)
     })
@@ -231,28 +233,62 @@ describe('recipes', () => {
             {
               id: "123456789",
               offset: -12,
-            }, 
+            },
             {
               id: "098765432",
               offset: 0,
-            }, 
+            },
           ]
-        }, 
+        },
         recipe2: {
           availability: [
             {
               id: "5454545454",
               offset: 0,
-            }, 
+            },
             {
               id: "6767676767",
               offset: 5,
-            }, 
+            },
           ]
         }
       })
-      
+
       expect(filterRecipesByNew(recipes).size).toBe(1)
+    })
+  })
+
+  describe('the getSurchargePerPortion function', () => {
+    describe('when the number of portions is 2', () => {
+      test('should calculate the surcharge per portion', () => {
+        expect(getSurchargePerPortion(1.99, 2)).toBe(1.00)
+      })
+    })
+
+    describe('when the number of portions is 4', () => {
+      test('should calculate the surcharge per portion', () => {
+        expect(getSurchargePerPortion(4.99, 4)).toBe(1.25)
+      })
+    })
+  })
+
+  describe('the roundUp function', () => {
+    describe('when using the default precision', () => {
+      test('should not round up when the value is already at the default precision', () => {
+        expect(roundUp(1.99)).toBe(1.99)
+      })
+
+      test('should round up using the default precision', () => {
+        expect(roundUp(0.756)).toBe(0.76)
+        expect(roundUp(1.543)).toBe(1.55)
+      })
+    })
+
+    describe('when not using the default precision', () => {
+      test('should round up to the specified precision', () => {
+        expect(roundUp(0.756, 0.1)).toBe(0.8)
+        expect(roundUp(1.543, 0.1)).toBe(1.6)
+      })
     })
   })
 })

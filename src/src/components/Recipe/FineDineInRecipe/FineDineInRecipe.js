@@ -15,7 +15,7 @@ import { RecipeAttribute } from '../RecipeAttribute'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 
-const FineDineInRecipe = ({media, onClick, highlight, unhighlight, tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe, features, stock, inBasket, position, surcharge, id, range}) => {
+const FineDineInRecipe = ({media, onClick, highlight, unhighlight, tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe, features, stock, inBasket, position, id, range}) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
 
   return (
@@ -58,7 +58,7 @@ const FineDineInRecipe = ({media, onClick, highlight, unhighlight, tasteScore, t
               </div>
             </div>
 
-            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} score={tasteScore} />
+            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
             <DisabledOverlay stock={stock} inBasket={inBasket} />
           </div>
         </div>

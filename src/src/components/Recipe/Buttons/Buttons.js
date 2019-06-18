@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { Button, Control, Segment, Tooltip } from 'goustouicomponents'
+import config from 'config/recipes'
 import Surcharge from './Surcharge'
 import css from './Buttons.css'
 
@@ -20,7 +22,7 @@ class Buttons extends React.Component {
     stock: PropTypes.number,
     menuBrowseCTAVisibilityChange: PropTypes.func,
     menuRecipeDetailVisibilityChange: PropTypes.func,
-    surcharge: PropTypes.number,
+    surchargePerPortion: PropTypes.number,
     score: PropTypes.number,
   }
 
@@ -32,35 +34,63 @@ class Buttons extends React.Component {
     }
   }
 
+  getSurchargeGridClass = (className, ...otherClasses) => {
+    const { view, surchargePerPortion } = this.props
+    const viewsToExclude = config.recipeDetailViews
+
+    const shouldApplyClass = Boolean(
+      surchargePerPortion &&
+      !viewsToExclude.includes(view)
+    )
+    const otherClassNames = otherClasses.map(name => css[name])
+
+    return classnames(
+      { [css[className]]: shouldApplyClass },
+      ...otherClassNames
+    )
+  }
+
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
-    const { numPortions, qty, surcharge, view } = this.props
+    const { numPortions, qty, surchargePerPortion, view } = this.props
+    const { tooltipVisible } = this.state
+    const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected')
 
     if (qty > 0) {
       const totalQty = qty * numPortions
       const defaultContent = view !== 'gridSmall' ? ' Servings Added' : ''
-      const textContent = surcharge ? ' Added' : defaultContent
+      const textContent = surchargePerPortion ? ' Added' : defaultContent
 
       return [
         <Segment
           key={0}
           onClick={this.handleRemove}
           size="small"
+          className={segmentSelectedClass}
         >
-          <Control placement="left" >-</Control>
+          <Control placement="left">-</Control>
         </Segment>,
         <Segment
           fill={false}
           key={1}
           size="large"
+          className={segmentSelectedClass}
         >
           {`${totalQty}${textContent}`}
-          <Surcharge surcharge={surcharge} quantity={qty} />
+          {surchargePerPortion && (
+            <div
+              className={
+                this.getSurchargeGridClass('surchargeHidden', 'surcharge')
+              }
+            >
+              <Surcharge surcharge={surchargePerPortion} />
+            </div>
+          )}
         </Segment>,
         <Tooltip
           key={2}
           placement="topRight"
           message={tooltipMessage}
-          visible={this.state.tooltipVisible}
+          visible={tooltipVisible}
           onVisibleChange={this.tooltipToggle}
           style="button"
           className={tooltipWidth}
@@ -71,6 +101,7 @@ class Buttons extends React.Component {
             disabledClick={this.disabledClick}
             size="small"
             disabled={disabled}
+            className={segmentSelectedClass}
           >
             <Control>+</Control>
           </Segment>
@@ -81,7 +112,7 @@ class Buttons extends React.Component {
     return (
       <Tooltip
         message={tooltipMessage}
-        visible={this.state.tooltipVisible}
+        visible={tooltipVisible}
         onVisibleChange={this.tooltipToggle}
         className={tooltipWidth}
         style="button"
@@ -92,39 +123,62 @@ class Buttons extends React.Component {
           disabledClick={this.disabledClick}
           disabled={disabled}
           fill
+          className={this.getSurchargeGridClass('segment')}
         >
-          Add {this.props.view !== 'gridSmall' ? 'Recipe' : ''}
-          <Surcharge surcharge={surcharge} />
+          {view !== 'gridSmall' ? 'Add Recipe' : 'Add'}
+          {surchargePerPortion && (
+            <div
+              className={
+                this.getSurchargeGridClass('surchargeWrapped', 'surcharge')
+              }
+            >
+              <Surcharge surcharge={surchargePerPortion} />
+            </div>
+          )}
         </Segment>
       </Tooltip>
     )
   }
 
   handleAdd = () => {
-    if (!this.props.disable) {
-      if (this.props.stock !== null) {
-        this.props.onAdd(this.props.recipeId, this.props.view, false, { position: this.props.position, score: this.props.score })
-      } else if (['detail', 'fineDineInDetail'].includes(this.props.view)) {
-        this.props.menuRecipeDetailVisibilityChange(false)
-        setTimeout(() => { this.props.menuBrowseCTAVisibilityChange(true) }, 500)
+    const {
+      disable,
+      stock,
+      onAdd,
+      recipeId,
+      view,
+      position,
+      score,
+      menuRecipeDetailVisibilityChange,
+      menuBrowseCTAVisibilityChange,
+    } = this.props
+    if (!disable) {
+      if (stock !== null) {
+        onAdd(recipeId, view, false, { position: position, score: score })
+      } else if (config.recipeDetailViews.includes(view)) {
+        menuRecipeDetailVisibilityChange(false)
+        setTimeout(() => { menuBrowseCTAVisibilityChange(true) }, 500)
       } else {
-        this.props.menuBrowseCTAVisibilityChange(true)
+        menuBrowseCTAVisibilityChange(true)
       }
     }
   }
 
   handleRemove = () => {
-    this.props.onRemove(this.props.recipeId, this.props.view, this.props.position, this.props.score)
+    const { onRemove, recipeId, view, position, score } = this.props
+    onRemove(recipeId, view, position, score)
   }
 
   tooltipToggle = (visible) => {
-    if (this.props.outOfstock || this.props.limitReached) {
+    const { outOfstock, limitReached } = this.props
+    if (outOfstock || limitReached) {
       this.setState({ tooltipVisible: visible })
     }
   }
 
   tooltipHover = (event) => {
-    if (this.props.outOfstock || this.props.limitReached) {
+    const { outOfstock, limitReached } = this.props
+    if (outOfstock || limitReached) {
       if (event.type === 'mouseenter') {
         this.setState({ tooltipVisible: true })
       } else if (event.type === 'mouseleave') {
@@ -134,8 +188,10 @@ class Buttons extends React.Component {
   }
 
   disabledClick = () => {
-    if (this.props.outOfstock || this.props.limitReached) {
-      if (this.state.visible) {
+    const { outOfstock, limitReached } = this.props
+    const { visible } = this.state
+    if (outOfstock || limitReached) {
+      if (visible) {
         this.setState({ tooltipVisible: false })
       } else {
         this.setState({ tooltipVisible: true })
@@ -144,11 +200,12 @@ class Buttons extends React.Component {
   }
 
   render() {
-    const disabled = this.props.outOfstock || this.props.limitReached
+    const { outOfstock, limitReached, view } = this.props
+    const disabled = outOfstock || limitReached
     let tooltipMessage = ''
-    if (this.props.outOfstock) {
+    if (outOfstock) {
       tooltipMessage = 'You got the last one'
-    } else if (this.props.limitReached) {
+    } else if (limitReached) {
       tooltipMessage = 'You\'ve run out of space in your box!'
     }
 
@@ -161,7 +218,7 @@ class Buttons extends React.Component {
       >
         {this.getSegments(
           tooltipMessage,
-          (this.props.view === 'gridSmall') ? css.tooltipMobileGrid : css.tooltipWidth,
+          (view === 'gridSmall') ? css.tooltipMobileGrid : css.tooltipWidth,
           disabled
         )}
       </Button>

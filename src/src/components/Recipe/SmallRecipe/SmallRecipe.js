@@ -8,7 +8,7 @@ import Image from '../Image'
 import AddButton from '../AddButton'
 import DisabledOverlay from '../DisabledOverlay'
 
-const SmallRecipe = ({onClick, media, title, view, id, stock, inBasket, position, surcharge}) => (
+const SmallRecipe = ({onClick, media, title, view, id, stock, inBasket, position }) => (
   <div>
     <div className={css.recipeDetails}>
       <div className={css.link} onClick={onClick}>
@@ -25,7 +25,7 @@ const SmallRecipe = ({onClick, media, title, view, id, stock, inBasket, position
             view={view}
           />
         </span>
-        <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} surcharge={surcharge} />
+        <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} />
         <DisabledOverlay stock={stock} inBasket={inBasket} />
       </div>
     </div>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 
 import { getUserAgent } from 'selectors/root'
+import { getRecommendationShortName } from '../selectors/menu'
 import { JustForYouTutorial } from './JustForYouTutorial'
 
 const getBrowser = (userAgent) => {
@@ -29,7 +30,8 @@ const showTutorial = (state) => {
 }
 
 const mapStateToProps = (state) => ({
-  showTutorial: showTutorial(state)
+  showTutorial: showTutorial(state),
+  collectionName: getRecommendationShortName(state) || 'Chosen For You'
 })
 
 const mapDispatchToProps = {
