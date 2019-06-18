@@ -1,4 +1,4 @@
-@value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMax, ScreenMLMax from 'styles/screenSizes.css';
 
 .tooltipWidth {
 	@media ScreenSMMax {
@@ -19,4 +19,39 @@
 
 .btnCheckout {
 	composes: marginMDLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.segment {
+	@media ScreenSMMax {
+		max-height: 60px;
+		height: 57px;
+		line-height: 28px;
+		padding-top: 0;
+	}
+}
+
+.segmentSelected {
+	@media ScreenSMMax {
+		max-height: 60px;
+		height: 57px;
+		padding-top: 10px;
+	}
+}
+
+.surcharge {
+	composes: inlineBlock from 'styles/display.css';
+}
+
+.surchargeWrapped {
+	@media ScreenSMMax {
+		display: block;
+		max-width: 145px;
+		margin: 0 auto;
+	}
+}
+
+.surchargeHidden {
+	@media ScreenSMMax {
+		display: none;
+	}
 }
