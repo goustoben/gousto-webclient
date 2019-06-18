@@ -1,0 +1,1 @@
+export { FoodBrandPage } from './FoodBrandPage'
