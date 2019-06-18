@@ -14,6 +14,7 @@ describe('JustForYouTutorial Component', () => {
       <JustForYouTutorial
         showTutorial
         incrementTutorialViewed={incrementTutorialViewed}
+        collectionName={'Just For You'}
       />
     )
   })
@@ -68,6 +69,12 @@ describe('Check browser to show JFY', () => {
           justforyou: true,
         }
       }),
+      menuCollections: Immutable.fromJS({
+        'recommendationID': {
+          slug: 'recommendations',
+          shortTitle: 'Chosen For You'
+        }
+      }),
       request: Immutable.fromJS({
         userAgent: 'Edge'
       }
@@ -91,6 +98,12 @@ describe('Check browser to show JFY', () => {
       tutorial: Immutable.fromJS({
         visible: {
           justforyou: true,
+        }
+      }),
+      menuCollections: Immutable.fromJS({
+        'recommendationID': {
+          slug: 'recommendations',
+          shortTitle: 'Chosen For You'
         }
       }),
       request: Immutable.fromJS({
@@ -118,6 +131,12 @@ describe('Check browser to show JFY', () => {
           justforyou: false,
         }
       }),
+      menuCollections: Immutable.fromJS({
+        'recommendationID': {
+          slug: 'recommendations',
+          shortTitle: 'Chosen For You'
+        }
+      }),
       request: Immutable.fromJS({
         userAgent: 'Chrome'
       }
@@ -141,6 +160,12 @@ describe('Check browser to show JFY', () => {
       tutorial: Immutable.fromJS({
         visible: {
           justforyou: true,
+        }
+      }),
+      menuCollections: Immutable.fromJS({
+        'recommendationID': {
+          slug: 'recommendations',
+          shortTitle: 'Chosen For You'
         }
       }),
       request: Immutable.fromJS({

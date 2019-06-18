@@ -21,3 +21,13 @@ export const getCurrentCollectionIsRecommendation = createSelector(
     return currentCollectionSlug && collectionId
   }
 )
+
+export const getRecommendationShortName = createSelector(
+  [getMenuCollections],
+  (menuCollections) => {
+    const recommendationCollection = menuCollections.find(collection => collection.get('slug') === 'recommendations')
+    const shortName = recommendationCollection && recommendationCollection.get('shortTitle')
+
+    return shortName || ''
+  }
+)

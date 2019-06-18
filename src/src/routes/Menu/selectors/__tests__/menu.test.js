@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import { getIsMenuRecommended, getCurrentCollectionSlug } from 'routes/Menu/selectors/menu'
+import { getCurrentCollectionSlug, getRecommendationShortName } from 'routes/Menu/selectors/menu'
 
 describe('menu memoized selectors', () => {
   let state
@@ -20,5 +20,34 @@ describe('menu memoized selectors', () => {
       }
       expect(getCurrentCollectionSlug(state)).toBe('test')
     })
+  })
+})
+
+describe('getRecommendationShortName', () => {
+  let state
+  test('should return the shortName for recommendations collection', () => {
+    state = {
+      menuCollections: Immutable.fromJS({
+        '12dddv3v3': {
+          id: '12dddv3v3',
+          slug: 'recommendations',
+          shortTitle: 'Choosen For You'
+        }
+      })
+    }
+    expect(getRecommendationShortName(state)).toBe('Choosen For You')
+  })
+
+  test('should return empty string if recommendations does not exist', () => {
+    state = {
+      menuCollections: Immutable.fromJS({
+        '12bbbbbv3': {
+          id: '12bbbbbv3',
+          slug: 'test',
+          shortTitle: 'Test Collection'
+        }
+      })
+    }
+    expect(getRecommendationShortName(state)).toBe('')
   })
 })
