@@ -1,4 +1,28 @@
+@value comfortaaFontStack from 'styles/typography.css'
+
 .foodBrandContainer {
   background: white;
   height: 200px;
+}
+
+.foodBrandTitleContainer {
+  position: absolute;
+  width: 100%;
+  font-family: comfortaaFontStack;
+}
+
+.foodBrandTitleContainer > h1 {
+  display: inline-flex;
+  justify-content: center;
+  width: calc(100% - 282px);
+}
+
+.foodBrandTitleContainer > span { 
+  display: inline-flex;
+  margin: auto 0;
+}
+.foodBrandDescription {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
 }
