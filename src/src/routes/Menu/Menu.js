@@ -13,6 +13,7 @@ import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import browserHelper from 'utils/browserHelper'
 import { RecipeMeta } from './RecipeMeta'
+import { FoodBrandPage } from './FoodBrandPage'
 
 import css from './Menu.css'
 
@@ -414,7 +415,7 @@ class Menu extends React.Component {
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
           
-          {foodBrandSelected ? <div>Here is the Food Brand</div>
+          {foodBrandSelected ? <FoodBrandPage />
             :
             <MenuRecipes 
               isClient={isClient}
