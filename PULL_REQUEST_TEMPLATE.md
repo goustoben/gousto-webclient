@@ -2,7 +2,7 @@
 Motivation behind those changes are coming from the following [JIRA ticket](http://gousto.atlassian.net/browse/TECH-XXXX)
 <!--- If applicable describe your changes in this section -->
 This PR applies the following changes:
-- 
+-
 
 ## How Has This Been Tested?
 <!--- Please describe in detail how you tested your changes. -->
@@ -20,5 +20,6 @@ This PR applies the following changes:
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 - [ ] My change required a change to the documentation.
 - [ ] I have added tests to cover my changes.
+- [ ] I have completed cross browser testing.
 
 
