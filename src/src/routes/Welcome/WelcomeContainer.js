@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { productDetailVisibilityChange } from 'actions/products'
 import { userFetchReferralOffer } from 'actions/user'
-import { isRafAboveCarouselOnWelcomePage } from 'selectors/features'
+import { getRafPositionOnWelcomePage } from 'selectors/features'
 
 import Welcome from './Welcome'
 
@@ -15,7 +15,7 @@ function mapStateToProps(state, ownProps) {
     productDetailId: (location && location.query) ? location.query.productDetailId : '',
     products,
     user,
-    isRafAboveCarousel: isRafAboveCarouselOnWelcomePage(state),
+    isRafAboveCarousel: getRafPositionOnWelcomePage(state),
   })
 }
 
