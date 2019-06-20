@@ -21,7 +21,9 @@ Why is this important? Imagine two developer working on the same file, one perso
 
 ### Pre-requisites
 * Kubernetes development box is setup: https://github.com/Gousto/devbox-platform
-* Webclient application ready to be built (application dependencies installed)
+* Webclient application dependencies installed: 
+  * `yarn global add bower` followed by `bower install` for the ui-components library
+  * `yarn` for the remaining dependencies
 
 ### Terminal 1: Building
 
