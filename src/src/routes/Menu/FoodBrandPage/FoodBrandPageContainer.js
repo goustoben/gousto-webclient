@@ -3,15 +3,17 @@ import config from 'config/recipes'
 import { FoodBrandPage } from './FoodBrandPage'
 
 const mapDispatchToProps = (state) => {
-  const selectedFoodbrand = {
+  const selectedFoodBrand = {
     title: '10-Minute Meals',
     slug: '10-minute-meals',
-    borderColor: '#000'
+    borderColor: 'blue',
   }
 
   return {
-    title: selectedFoodbrand.title,
-    description: config.foodBrandDescription[selectedFoodbrand.slug]
+    title: selectedFoodBrand.title,
+    description: config.foodBrandDescription[selectedFoodBrand.slug],
+    borderColor: selectedFoodBrand.borderColor,
+    browser: 'mobile',
   }
 }
 const FoodBrandPageContainer = connect(mapDispatchToProps, {})(FoodBrandPage)
