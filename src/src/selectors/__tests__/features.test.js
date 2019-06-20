@@ -6,7 +6,8 @@ import {
   getGoToMyGousto,
   getGoToMyDeliveries,
   getJfyTutorial,
-  getOrderConfirmation
+  getOrderConfirmation,
+  getRafPositionOnWelcomePage
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -158,6 +159,24 @@ describe('when features are defined', () => {
       state = Immutable.fromJS({})
 
       expect(getOrderConfirmation(state)).toEqual(false)
+    })
+  })
+
+  describe('getRafPositionOnWelcomePage', () => {
+    it('should return value of getRafPositionOnWelcomePage', () => {
+      state.features = Immutable.fromJS({
+        rafAboveCarouselOnWelcomePage: {
+          value: true
+        }
+      })
+
+      expect(getRafPositionOnWelcomePage(state)).toEqual(true)
+    })
+
+    it('should return false if features does not exist', () => {
+      state = Immutable.fromJS({})
+
+      expect(getRafPositionOnWelcomePage(state)).toEqual(false)
     })
   })
 })

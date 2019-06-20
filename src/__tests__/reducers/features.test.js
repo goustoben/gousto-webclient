@@ -70,7 +70,7 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
-        rafOnWelcomePage: {
+        rafAboveCarouselOnWelcomePage: {
           experiment: false,
           value: false,
         },
@@ -135,7 +135,7 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
-        rafOnWelcomePage: {
+        rafAboveCarouselOnWelcomePage: {
           experiment: false,
           value: false,
         },
@@ -208,7 +208,7 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
-        rafOnWelcomePage: {
+        rafAboveCarouselOnWelcomePage: {
           experiment: false,
           value: false,
         },
