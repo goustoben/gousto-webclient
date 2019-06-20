@@ -1,28 +1,59 @@
-@value comfortaaFontStack from 'styles/typography.css'
+@value comfortaaFontStack from 'styles/typography.css';
 
 .foodBrandContainer {
-  background: white;
-  height: 200px;
+  background: White;
+  width: 100%;
+  position: absolute;
+  overflow-y: hidden;
+}
+
+.foodBrandContainerFixed {
+  composes: foodBrandContainer;
+  position: fixed;
+  top: 0;
 }
 
 .foodBrandTitleContainer {
-  position: absolute;
+  position: relative;
   width: 100%;
   font-family: comfortaaFontStack;
+  display: flex;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+
+.foodBrandTitleContainerFixed {
+  composes: foodBrandTitleContainer;
+  background: White;
+  position: fixed;
+  top: 0;
+  z-index: 1;
 }
 
 .foodBrandTitleContainer > h1 {
   display: inline-flex;
   justify-content: center;
-  width: calc(100% - 282px);
+  width: 100%;
+  font-size: 1em;
+  margin: 0;
 }
 
 .foodBrandTitleContainer > span { 
   display: inline-flex;
   margin: auto 0;
+  padding-left: 10px;
+  font-size: 0.7em;
+  font-weight: bold;
+  position: absolute;
 }
+
 .foodBrandDescription {
   display: flex;
   justify-content: center;
   padding-top: 50px;
+}
+
+.leftArrow {
+  composes: fa-basic-class fa-fw fa-chevron-left from 'styles/vendor/font-awesome-module.css';
 }
