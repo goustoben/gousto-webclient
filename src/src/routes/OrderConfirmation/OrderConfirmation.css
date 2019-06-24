@@ -1,4 +1,4 @@
-@value comfortaaRegularFontStack, avenirHeavyFontStack from 'styles/typography.css';
+@value avenirHeavyFontStack from 'styles/typography.css';
 @value ScreenSMMin, ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
 @value White, Blackberry from 'styles/colors.css';
 
@@ -20,7 +20,7 @@
 
 .marketPlaceTitle {
   text-align: center;
-  font-family: comfortaaRegularFontStack;
+  font-family: Comfortaa;
   font-weight: 700;
   font-size: 24px;
   -webkit-font-smoothing: antialiased;

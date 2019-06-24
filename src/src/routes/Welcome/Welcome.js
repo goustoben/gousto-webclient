@@ -25,7 +25,7 @@ class Welcome extends React.PureComponent {
     productDetailVisibilityChange: PropTypes.func,
     products: PropTypes.instanceOf(Immutable.Map).isRequired,
     user: PropTypes.instanceOf(Immutable.Map).isRequired,
-    isRafFeatureEnabled: PropTypes.bool,
+    isRafAboveCarousel: PropTypes.bool,
   }
 
   static contextTypes = {
@@ -109,7 +109,7 @@ class Welcome extends React.PureComponent {
 
   render() {
     const { isClient } = this.state
-    const { user, orderId, productDetailId, productDetailVisibilityChange, isRafFeatureEnabled } = this.props
+    const { user, orderId, productDetailId, productDetailVisibilityChange, isRafAboveCarousel } = this.props
 
     return (
       <section className={css.container} data-testing="welcomeContainer">
@@ -126,14 +126,21 @@ class Welcome extends React.PureComponent {
         <div className={css.contentContainer}>
           <div className={css.row}>
             <div className={css.colMedium}>
+              {
+                isRafAboveCarousel && (
+                  <div className={classnames(css.welcomeColInner, css.mobileShow, css.rafMobile)}>
+                    <ReferAFriend />
+                  </div>
+                )
+              }
               <div className={css.welcomeColInner}>
                 <ExpectationsCarousel />
               </div>
               {
-                isRafFeatureEnabled && (
-                <div className={classnames(css.welcomeColInner, css.mobileShow, css.rafMobile)}>
-                  <ReferAFriend />
-                </div>
+                !isRafAboveCarousel && (
+                  <div className={classnames(css.welcomeColInner, css.mobileShow, css.rafMobile)}>
+                    <ReferAFriend />
+                  </div>
                 )
               }
               <div className={css.welcomeColInner}>
@@ -146,13 +153,9 @@ class Welcome extends React.PureComponent {
               <div className={classnames(css.welcomeColInner, css.colTopXSInner)}>
                 <OrderSummary />
               </div>
-              {
-                isRafFeatureEnabled && (
-                  <div className={classnames(css.welcomeColInner, css.colTopXSInner, css.mobileHide,)}>
-                    <ReferAFriend />
-                  </div>
-                )
-              }
+              <div className={classnames(css.welcomeColInner, css.colTopXSInner, css.mobileHide)}>
+                <ReferAFriend />
+              </div>
             </div>
           </div>
         </div>

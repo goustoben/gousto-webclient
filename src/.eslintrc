@@ -4,7 +4,8 @@
       "airbnb",
       "eslint:recommended",
       "plugin:react/recommended",
-      "plugin:you-dont-need-lodash-underscore/compatible"
+      "plugin:you-dont-need-lodash-underscore/compatible",
+      "plugin:jsx-a11y/recommended"
     ],
     "rules": {
       "no-sparse-arrays": "error",
@@ -57,7 +58,6 @@
       "react/no-unused-prop-types": 1,
       "react/destructuring-assignment": 1,
       "react/forbid-prop-types": 1,
-      "jsx-a11y/no-static-element-interactions": 0,
       "new-cap": 1,
       "newline-before-return": "error",
       "arrow-parens": 0,
@@ -72,13 +72,11 @@
       "react/no-deprecated": 1,
       "react/jsx-wrap-multilines": 0,
       "react/jsx-one-expression-per-line": 0,
-      "jsx-a11y/click-events-have-key-events": 0,
       "react/jsx-closing-tag-location": 1,
       "comma-dangle": 0,
       "react/jsx-tag-spacing": 0,
-      "react/self-closing-comp": 0,
+    "react/self-closing-comp": 0,
       "lines-between-class-members": 0,
-      "jsx-a11y/label-has-for": 0,
       "react/sort-comp": 0,
       "react/jsx-curly-brace-presence": 0,
       "react/default-props-match-prop-types": 0,
@@ -98,7 +96,6 @@
       "prefer-const": 1,
       "class-methods-use-this": 1,
       "space-unary-ops": 0,
-      "jsx-a11y/anchor-is-valid": 0,
       "react/jsx-props-no-multi-spaces": 0,
       "react/no-redundant-should-component-update": 1,
       "import/no-named-as-default-member": 1,
@@ -116,16 +113,21 @@
       "no-restricted-globals": 1,
       "no-mixed-operators": 1,
       "react/jsx-curly-spacing": 0,
-      "jsx-a11y/interactive-supports-focus": 1,
       "react/no-access-state-in-setstate": 1,
-      "jsx-a11y/no-autofocus": 1,
-      "jsx-a11y/anchor-has-content": 1,
-      "jsx-a11y/no-noninteractive-element-interactions": 1,
       "no-bitwise": 1,
       "no-control-regex": 1,
       "react/no-children-prop": 2,
-      "jsx-a11y/label-has-associated-control": 0,
-      "eol-last": 1
+      "eol-last": 1,
+      "jsx-a11y/click-events-have-key-events": 1,
+      "jsx-a11y/no-static-element-interactions": 1,
+      "jsx-a11y/anchor-is-valid": 1,
+      "jsx-a11y/label-has-associated-control": 1,
+      "jsx-a11y/label-has-for": 1,
+      "jsx-a11y/anchor-has-content": 1,
+      "jsx-a11y/no-noninteractive-element-interactions": 1,
+      "jsx-a11y/interactive-supports-focus": 1,
+      "jsx-a11y/no-autofocus": 1
+
 
   },
   "env" : {
@@ -148,7 +150,7 @@
     "__CHECKOUT_PK__": false,
     "__TEST__": false,
     "__GIT_HASH__": false,
-    "ga": false,
+    "ga": false
   },
   "overrides": [
     {

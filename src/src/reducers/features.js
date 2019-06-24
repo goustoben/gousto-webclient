@@ -54,7 +54,7 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
-  rafOnWelcomePage: {
+  rafAboveCarouselOnWelcomePage: {
     experiment: false,
     value: false,
   },
