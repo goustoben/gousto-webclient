@@ -13,7 +13,7 @@ const mapDispatchToProps = (state) => {
     title: selectedFoodBrand.title,
     description: config.foodBrandDescription[selectedFoodBrand.slug],
     borderColor: selectedFoodBrand.borderColor,
-    browser: 'mobile',
+    browser: state.request.get('browser'),
   }
 }
 const FoodBrandPageContainer = connect(mapDispatchToProps, {})(FoodBrandPage)

@@ -1,20 +1,12 @@
 @value comfortaaFontStack from 'styles/typography.css';
+@value ScreenSMMax from 'styles/screenSizes.css';
 
 .foodBrandContainer {
   background: White;
-  width: 100%;
-  position: absolute;
-  overflow-y: hidden;
-}
-
-.foodBrandContainerFixed {
-  composes: foodBrandContainer;
-  position: fixed;
-  top: 0;
 }
 
 .foodBrandTitleContainer {
-  position: relative;
+  position: absolute;
   width: 100%;
   font-family: comfortaaFontStack;
   display: flex;
@@ -35,25 +27,38 @@
   display: inline-flex;
   justify-content: center;
   width: 100%;
-  font-size: 1em;
+  font-size: 32px;
   margin: 0;
 }
 
-.foodBrandTitleContainer > span { 
+.backButton { 
   display: inline-flex;
   margin: auto 0;
   padding-left: 10px;
-  font-size: 0.7em;
+  font-size: 18px;
   font-weight: bold;
   position: absolute;
+  cursor: pointer;
+}
+
+.hideOnMobile {
+  @media ScreenSMMax { 
+    display: none;
+  }
 }
 
 .foodBrandDescription {
   display: flex;
   justify-content: center;
-  padding-top: 50px;
+  padding-top: 55px;
+  font-size: 16px;
 }
 
 .leftArrow {
   composes: fa-basic-class fa-fw fa-chevron-left from 'styles/vendor/font-awesome-module.css';
+  padding-top: 4px;
+}
+
+.foodBrandRecipes {
+  height: 1200px;
 }

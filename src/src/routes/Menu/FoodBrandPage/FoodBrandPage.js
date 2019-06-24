@@ -11,13 +11,13 @@ const propTypes = {
   browser: PropTypes.string,
 }
 class FoodBrandPage extends PureComponent {
-  getFoodBrangeColor = (borderColor) => ({
-    borderBottom: `2px solid ${borderColor}`,
-  })
-
+  
   constructor(props) {
     super(props)
-    this.state = { scrolledPastPoint: false }
+    this.state = {
+      scrolledPastPoint: false,
+      scrolledPastPointBorder: false
+    }
   }
 
   componentDidMount() {
@@ -47,31 +47,36 @@ class FoodBrandPage extends PureComponent {
     const { browser } = this.props
     if (this.hasScrolled) {
       this.hasScrolled = false
-      const threshold = (browser === 'mobile') ? 53 : 89
-      const animationThreshold = 50
+      const threshold = (browser === 'mobile') ? 53 : 90
       const { scrolledPastPoint } = this.state
-      const scrollState = getScrollOffset(threshold, animationThreshold, scrolledPastPoint)
+      const scrollState = getScrollOffset(threshold, 0, scrolledPastPoint)
+
       scrollState && this.setState({
         scrolledPastPoint: scrollState.scrolledPastPoint,
+      })
+
+      this.setState({
+        scrolledPastPointBorder: (window.pageYOffset >= 102)
       })
     }
   }
   
   render() {
     const { title, description, borderColor } = this.props
+    const { scrolledPastPoint, scrolledPastPointBorder } = this.state
 
-    const classNameContainer = this.state.scrolledPastPoint ? css.foodBrandContainerFixed : css.foodBrandContainer
-    const classNameTitle = this.state.scrolledPastPoint ? css.foodBrandTitleContainerFixed : css.foodBrandTitleContainer
+    const classNameTitle = scrolledPastPoint ? css.foodBrandTitleContainerFixed : css.foodBrandTitleContainer
 
     return (
-      <section className={classNameContainer}>
-        <div style={this.getFoodBrangeColor(borderColor)}>
-          <div className={classNameTitle}>
-            <span><span className={css.leftArrow}/>Back</span>
+      <section className={css.foodBrandContainer}>
+        <div style={{borderBottom: `6px solid ${borderColor}`}}>
+          <div className={classNameTitle} style={scrolledPastPointBorder ? {borderBottom: `6px solid ${borderColor}`} : {}}>
+            <span className={css.backButton} role="button"><span className={css.leftArrow}/>Back <span className={css.hideOnMobile}>to All Recipes</span></span>
             <h1>{title}</h1>
           </div>
           <p className={css.foodBrandDescription}>{description}</p>
         </div>
+        <div className={css.foodBrandRecipes}>Recipes here</div>
       </section>
     )
   }
