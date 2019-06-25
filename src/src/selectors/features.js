@@ -20,4 +20,3 @@ export const getOrderConfirmation = state => (state.features ? state.features.ge
 
 export const getRafPositionOnWelcomePage = state => (state.features ? state.features.getIn(['rafAboveCarouselOnWelcomePage', 'value']) : false)
 
-export const getCTAToAllRecipes = state => (state.features ? state.features.getIn(['ctaToAllRecipes', 'value']) : false)
