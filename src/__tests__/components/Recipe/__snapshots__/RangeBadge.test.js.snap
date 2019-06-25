@@ -6,6 +6,9 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
 >
   <div
     className="ribbonText"
+    onClick={[Function]}
+    onKeyPress={[Function]}
+    role="button"
     style={
       Object {
         "backgroundColor": "#333D47",
@@ -14,6 +17,7 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
         "color": "#FFFFFF",
       }
     }
+    tabIndex={0}
   >
     TEN TO TABLE
   </div>

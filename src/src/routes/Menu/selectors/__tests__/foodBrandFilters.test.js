@@ -9,7 +9,9 @@ describe('foodBrandFilters', () => {
       dietTypes: Immutable.Set([]),
       dietaryAttributes: Immutable.Set([]),
       newRecipes: false, 
-      foodBrand: "global-kitchen"
+      foodBrand: {
+        slug: "global-kitchen"
+      }
     }),
     menuRecipes: Immutable.List(["1", "2", "3", "4", "5"]),
     recipes: Immutable.fromJS({
