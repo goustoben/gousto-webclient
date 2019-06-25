@@ -223,16 +223,23 @@ export const filterApply = (type, value) => (
 
 export const selectFoodBrand = (foodBrand) => (
   (dispatch, getState) => {
-    const prevLoc = getState().routing.locationBeforeTransitions
+    const { routing, features } = getState()
+    const prevLoc = routing.locationBeforeTransitions
+    const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     
-    dispatch(currentFoodBrandChange(foodBrand))
-    if(foodBrand === null) {
-      dispatch(goBack())
-    } else {
-      const query = { ...prevLoc.query }
-      query.foodBrand = foodBrand.slug
-      const newLoc = { ...prevLoc, query }
-      dispatch(push(newLoc))
+    if(foodBrandFeature) {
+      dispatch(currentFoodBrandChange(foodBrand))
+      if(foodBrand === null) {
+        dispatch(goBack())
+      } else {
+        const query = { ...prevLoc.query }
+        query.foodBrand = foodBrand.slug
+        if (query.collection) {
+          delete query.collection
+        }
+        const newLoc = { ...prevLoc, query }
+        dispatch(push(newLoc))
+      }
     }
   }
 )
