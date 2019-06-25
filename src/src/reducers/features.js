@@ -58,10 +58,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
-  ctaToAllRecipes: {
-    experiment: false,
-    value: false,
-  },
 })
 
 const featureToggles = {
