@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
-import Details from './Details'
 import actionTypes from 'actions/actionTypes'
+import Details from './Details'
 
 function mapStateToProps(state) {
   return {
