@@ -11,7 +11,7 @@ const RangeBadge = ({ range, selectFoodBrand }) => {
   const rangeSelect = rangeBadge ? {
     name: range.get('name'),
     slug: range.get('slug'),
-    borderColor: rangeBadge.get('borderColor')
+    borderColor: backgroundColor
   } : null
 
   const ribbonTextStyle = {
