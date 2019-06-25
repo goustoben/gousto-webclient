@@ -21,7 +21,7 @@ Why is this important? Imagine two developer working on the same file, one perso
 
 ### Pre-requisites
 * Kubernetes development box is setup: https://github.com/Gousto/devbox-platform
-* Webclient application dependencies installed: 
+* Webclient application dependencies installed:
   * `yarn global add bower` followed by `bower install` for the ui-components library
   * `yarn` for the remaining dependencies
 
@@ -47,6 +47,14 @@ your battery. You can play with the polling timeout using `skaffold dev -i <poll
 The site (only the new stack pages) should now be available at http://webclient.gousto.local
 
 You can see the containers logs being redirected to this terminal (nginx and application), exit with `CTRL+C`
+
+### Local files needed
+You will need to populate the `env.json` config file with the correct values for your environment.
+
+You will also need to populate the checkout.com public key in `src/src/routes/Checkout/Components/CheckoutPayment/config.js`
+
+Speak to members of your team to get these, or find them in circle ci.
+
 
 ### Run the webclient in the devbox for non-developers
 
