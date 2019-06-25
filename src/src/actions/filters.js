@@ -1,4 +1,4 @@
-import { push } from 'react-router-redux'
+import { push, goBack } from 'react-router-redux'
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
 import actionTypes from './actionTypes'
 import {
@@ -126,7 +126,7 @@ export const changeCollectionToAllRecipes = () => (
     dispatch(collectionFilterChange('ca8f71be-63ac-11e6-a693-068306404bab'))
     dispatch(trackCTAToAllRecipesClicked())
   }
-) 
+)
 
 export const filterMenuOpen = () => (
   (dispatch) => {
@@ -217,6 +217,22 @@ export const filterApply = (type, value) => (
       break
     default:
       break
+    }
+  }
+)
+
+export const selectFoodBrand = (foodBrand) => (
+  (dispatch, getState) => {
+    const prevLoc = getState().routing.locationBeforeTransitions
+    
+    dispatch(currentFoodBrandChange(foodBrand))
+    if(foodBrand === null) {
+      dispatch(goBack())
+    } else {
+      const query = { ...prevLoc.query }
+      query.foodBrand = foodBrand.slug
+      const newLoc = { ...prevLoc, query }
+      dispatch(push(newLoc))
     }
   }
 )

@@ -93,7 +93,7 @@ function mapStateToProps(state, ownProps) {
   const orderId = (ownProps.params && ownProps.params.orderId) ? ownProps.params.orderId : ''
 
   return {
-    foodBrandSelected: getFoodBrandFilter(state) !== '',
+    foodBrandSelected: getFoodBrandFilter(state) !== null,
     basketRecipeIds: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))),
     basketProducts: getBasketProducts(state.basket.get('products', Immutable.Map({}))),
     cutOffDate: getCutoffDate(state.basket.get('date')),

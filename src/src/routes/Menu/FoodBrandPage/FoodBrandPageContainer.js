@@ -1,21 +1,21 @@
 import { connect } from 'react-redux'
 import config from 'config/recipes'
+import { getFoodBrandFilter } from 'selectors/filters'
+import { selectFoodBrand } from 'actions/filters'
 import { FoodBrandPage } from './FoodBrandPage'
 
 const mapDispatchToProps = (state) => {
-  const selectedFoodBrand = {
-    title: '10-Minute Meals',
-    slug: '10-minute-meals',
-    borderColor: 'blue',
-  }
+  const selectedFoodBrand = getFoodBrandFilter(state)
 
   return {
-    title: selectedFoodBrand.title,
+    name: selectedFoodBrand.name,
     description: config.foodBrandDescription[selectedFoodBrand.slug],
     borderColor: selectedFoodBrand.borderColor,
     browser: state.request.get('browser'),
   }
 }
-const FoodBrandPageContainer = connect(mapDispatchToProps, {})(FoodBrandPage)
+const FoodBrandPageContainer = connect(mapDispatchToProps, {
+  removeFoodBrand: selectFoodBrand
+})(FoodBrandPage)
 
 export { FoodBrandPageContainer }

@@ -15,7 +15,10 @@ import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
 
-const DefaultDetail = ({ media, title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange, restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew }) => (
+const DefaultDetail = ({ media, title, view, count, average, perPortion,
+  per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
+  useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
+  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, selectFoodBrand }) => (
   <div>
     <div className={css.container}>
       <div className={css.header}>
@@ -36,7 +39,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion, per100G
           <Image media={media} title={title} view={view} />
           <div className={css.infoBox}>
             <div className={css.rangeBadgeDetails}>
-              <RangeBadge range={range} />
+              <RangeBadge range={range} selectFoodBrand={selectFoodBrand} />
             </div>
             <p className={css.infoBoxText}>{description}</p>
             <AttributeGrid

@@ -5,10 +5,11 @@ import { getScrollOffset } from 'utils/menu'
 import css from './FoodBrandPage.css'
 
 const propTypes = {
-  title: PropTypes.string,
+  name: PropTypes.string,
   description: PropTypes.string,
   borderColor: PropTypes.string,
   browser: PropTypes.string,
+  removeFoodBrand: PropTypes.func,
 }
 class FoodBrandPage extends PureComponent {
   
@@ -62,7 +63,7 @@ class FoodBrandPage extends PureComponent {
   }
   
   render() {
-    const { title, description, borderColor } = this.props
+    const { name, description, borderColor, removeFoodBrand } = this.props
     const { scrolledPastPoint, scrolledPastPointBorder } = this.state
 
     const classNameTitle = scrolledPastPoint ? css.foodBrandTitleContainerFixed : css.foodBrandTitleContainer
@@ -71,8 +72,10 @@ class FoodBrandPage extends PureComponent {
       <section className={css.foodBrandContainer}>
         <div style={{borderBottom: `6px solid ${borderColor}`}}>
           <div className={classNameTitle} style={scrolledPastPointBorder ? {borderBottom: `6px solid ${borderColor}`} : {}}>
-            <span className={css.backButton} role="button"><span className={css.leftArrow}/>Back <span className={css.hideOnMobile}>to All Recipes</span></span>
-            <h1>{title}</h1>
+            <span className={css.backButton} role="button" tabIndex={0} onClick={() => removeFoodBrand(null)} onKeyPress={() => removeFoodBrand(null)}>
+              <span className={css.leftArrow}/>Back <span className={css.hideOnMobile}>to All Recipes</span>
+            </span>
+            <h1>{name}</h1>
           </div>
           <p className={css.foodBrandDescription}>{description}</p>
         </div>

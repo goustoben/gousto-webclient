@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import { isNew } from 'utils/recipe'
+import { selectFoodBrand } from 'actions/filters'
 
 import actions from 'actions'
 import { getCutoffs } from 'utils/deliveries'
@@ -30,6 +31,7 @@ function mapStateToProps(state, ownProps) {
 
 const DetailContainer = connect(mapStateToProps, {
   menuRecipeDetailVisibilityChange: actions.menuRecipeDetailVisibilityChange,
+  selectFoodBrand
 })(Detail)
 
 export default DetailContainer

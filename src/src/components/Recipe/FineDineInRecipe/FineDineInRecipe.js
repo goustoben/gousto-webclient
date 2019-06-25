@@ -15,14 +15,14 @@ import { RecipeAttribute } from '../RecipeAttribute'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 
-const FineDineInRecipe = ({media, onClick, highlight, unhighlight, tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe, features, stock, inBasket, position, id, range}) => {
+const FineDineInRecipe = ({media, onClick, selectFoodBrand, highlight, unhighlight, tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe, features, stock, inBasket, position, id, range}) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
 
   return (
     <div className={css.overlay}>
       <div style={{ backgroundImage: `url(${image.get('src')})` }} className={css.recipeCover}>
         <div className={css.rangeBadgeWrapper}>
-          <RangeBadge range={range} />
+          <RangeBadge range={range} selectFoodBrand={selectFoodBrand} />
         </div>
         <div
           className={css.clickContainer}

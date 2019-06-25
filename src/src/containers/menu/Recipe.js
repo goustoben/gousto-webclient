@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import Recipe from 'Recipe'
 import { isNew } from 'utils/recipe'
+import { selectFoodBrand } from 'actions/filters'
 
 function mapStateToProps(state, ownProps) {
 
@@ -12,6 +13,8 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-const RecipeContainer = connect(mapStateToProps, {})(Recipe)
+const RecipeContainer = connect(mapStateToProps, {
+  selectFoodBrand
+})(Recipe)
 
 export default RecipeContainer
