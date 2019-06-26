@@ -27,7 +27,7 @@ CollectionItem.propTypes = {
   children: PropTypes.node,
   count: PropTypes.number,
   showCount: PropTypes.bool,
-  slug: PropTypes.sting,
+  slug: PropTypes.string,
 }
 
 CollectionItem.defaultProps = {
