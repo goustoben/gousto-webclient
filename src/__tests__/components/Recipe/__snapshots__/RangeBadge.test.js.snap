@@ -6,8 +6,8 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
 >
   <div
     className="ribbonText"
-    onClick={[Function]}
-    onKeyPress={[Function]}
+    onClick={null}
+    onKeyPress={null}
     role="button"
     style={
       Object {
@@ -15,9 +15,10 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
         "border": "1px solid #282B2F",
         "borderRight": "none",
         "color": "#FFFFFF",
+        "cursor": "default",
       }
     }
-    tabIndex={0}
+    tabIndex={-1}
   >
     TEN TO TABLE
   </div>

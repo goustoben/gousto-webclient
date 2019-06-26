@@ -74,10 +74,7 @@ class Menu extends React.Component {
     numPortions: PropTypes.number,
     orderHasAnyProducts: PropTypes.func.isRequired,
     orderUpdateProducts: PropTypes.func.isRequired,
-    basketProducts: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string,
-      quantity: PropTypes.number,
-    })),
+    basketProducts: PropTypes.instanceOf(Immutable.Map),
     productsLoadProducts: PropTypes.func.isRequired,
     productsLoadStock: PropTypes.func.isRequired,
     orderCheckoutAction: PropTypes.func.isRequired,

@@ -15,18 +15,23 @@ import { RecipeAttribute } from '../RecipeAttribute'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 
-const FineDineInRecipe = ({media, onClick, selectFoodBrand, highlight, unhighlight, tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe, features, stock, inBasket, position, id, range}) => {
+const FineDineInRecipe = ({media, onClick, selectFoodBrand, isFoodBrandClickable, highlight, unhighlight,
+  tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe,
+  features, stock, inBasket, position, id, range}) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
 
   return (
     <div className={css.overlay}>
       <div style={{ backgroundImage: `url(${image.get('src')})` }} className={css.recipeCover}>
         <div className={css.rangeBadgeWrapper}>
-          <RangeBadge range={range} selectFoodBrand={selectFoodBrand} />
+          <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
         </div>
         <div
+          role="button"
+          tabIndex={0}
           className={css.clickContainer}
           onClick={onClick}
+          onKeyPress={onClick}
           onMouseEnter={highlight}
           onMouseLeave={unhighlight}
         >
@@ -34,7 +39,13 @@ const FineDineInRecipe = ({media, onClick, selectFoodBrand, highlight, unhighlig
         <div className={css.recipeDetails}>
           <TasteScore className={css.score} score={tasteScore} />
           <div className={css.textContainer}>
-            <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(chef) })}>
+            <div 
+              role="link"
+              tabIndex={0}
+              onClick={onClick}
+              onKeyPress={onClick}
+              className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(chef) })}
+            >
               <Title
                 title={title}
                 view={view}
@@ -90,6 +101,8 @@ FineDineInRecipe.propTypes = {
   unhighlight: PropTypes.func,
   detailHover: PropTypes.bool,
   tasteScore: PropTypes.number,
+  isFoodBrandClickable: PropTypes.bool,
+  selectFoodBrand: PropTypes.func,
 }
 
 FineDineInRecipe.defaultProps = {
