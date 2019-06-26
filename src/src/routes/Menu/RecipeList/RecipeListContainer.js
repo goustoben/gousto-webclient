@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import actionTypes from 'actions/actionTypes'
 import { changeCollectionToAllRecipes } from 'actions/filters'
 import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters'
-import { getCTAToAllRecipes } from 'selectors/features'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
 import { getFeaturedRecipes, getRemainingRecipes, getOutOfStockRecipes } from 'routes/Menu/selectors/sorting'
 import { getCurrentCollectionIsRecommendation } from 'routes/Menu/selectors/menu'
@@ -23,7 +22,6 @@ const mapStateToProps = (state) => ({
   outOfStockRecipes: getOutOfStockRecipes(state),
   recipesStore: state.recipes,
   isCurrentCollectionRecommendation: getCurrentCollectionIsRecommendation(state),
-  ctaToAllRecipes: getCTAToAllRecipes(state)
 })
 
 const RecipeListContainer = connect(mapStateToProps, {

@@ -8,7 +8,7 @@ const CTAToAllRecipes = ({ collectionFilterChange }) => {
     <section className={css.ctaWrapper}>
       <Svg fileName="cta-recommendation" className={css.panIcon} />
       <p className={css.ctaText}>Want to see more?</p>
-      <button className={css.ctaButton} type="button" onClick={collectionFilterChange}>View all recipes</button>
+      <button className={css.ctaButton} type="button" onClick={collectionFilterChange} onKeyPress={collectionFilterChange}>View all recipes</button>
     </section>
   )
 }
