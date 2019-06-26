@@ -18,7 +18,7 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, selectFoodBrand }) => (
+  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable }) => (
   <div>
     <div className={css.container}>
       <div className={css.header}>
@@ -39,7 +39,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
           <Image media={media} title={title} view={view} />
           <div className={css.infoBox}>
             <div className={css.rangeBadgeDetails}>
-              <RangeBadge range={range} selectFoodBrand={selectFoodBrand} />
+              <RangeBadge range={range} isFoodBrandClickable={isFoodBrandClickable} />
             </div>
             <p className={css.infoBoxText}>{description}</p>
             <AttributeGrid
@@ -109,6 +109,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
 DefaultDetail.propTypes = {
   ...detailPropTypes,
   scrolledPastPoint: PropTypes.bool,
+  isFoodBrandClickable: PropTypes.bool,
 }
 
 DefaultDetail.defaultProps = {
