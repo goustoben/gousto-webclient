@@ -66,10 +66,6 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
-        ctaToAllRecipes: {
-          experiment: false,
-          value: false,
-        },
         rafAboveCarouselOnWelcomePage: {
           experiment: false,
           value: false,
@@ -128,10 +124,6 @@ describe('features reducers', () => {
           value: false,
         },
         jfyTutorial: {
-          experiment: false,
-          value: false,
-        },
-        ctaToAllRecipes: {
           experiment: false,
           value: false,
         },
@@ -201,10 +193,6 @@ describe('features reducers', () => {
           value: false,
         },
         jfyTutorial: {
-          experiment: false,
-          value: false,
-        },
-        ctaToAllRecipes: {
           experiment: false,
           value: false,
         },

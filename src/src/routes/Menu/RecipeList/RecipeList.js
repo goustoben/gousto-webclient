@@ -27,7 +27,6 @@ class RecipeList extends React.Component {
     recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
     showDetailRecipe: PropTypes.func,
     isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-    ctaToAllRecipes: PropTypes.bool,
     collectionFilterChange: PropTypes.func,
   }
 
@@ -110,7 +109,6 @@ class RecipeList extends React.Component {
       remainingRecipes,
       outOfStockRecipes,
       isCurrentCollectionRecommendation,
-      ctaToAllRecipes,
       collectionFilterChange
     } = this.props
     const sortedRecipes = featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
@@ -154,7 +152,7 @@ class RecipeList extends React.Component {
       )
     })
     const cta = <Recipe key={'ctaAllRecipe'} view={'ctaAllRecipe'} collectionFilterChange={collectionFilterChange} />
-    if (!!isCurrentCollectionRecommendation && ctaToAllRecipes) {
+    if (!!isCurrentCollectionRecommendation) {
       return newRecipeList.concat(cta).toArray()
     }
 

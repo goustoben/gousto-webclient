@@ -1,4 +1,4 @@
-@value White, BlueBase from 'styles/colors.css';
+@value White, BlueBase, BlueBaseDarker from 'styles/colors.css';
 
 .ctaWrapper {
   display: flex;
@@ -32,4 +32,10 @@
   color: White;
   background-color: BlueBase;
   text-transform: uppercase;
+  transition: background-color .3s;
+}
+
+.ctaButton:hover {
+  background-color: BlueBaseDarker;
+  cursor: pointer;
 }
