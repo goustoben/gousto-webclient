@@ -56,46 +56,46 @@ describe('Menu', () => {
         resolve()
       })
     )
-
     const menuLoadBoxPrices = jest.fn()
     afterEach(() => {
       menuLoadBoxPrices.mockClear()
       boxSummaryDeliveryDaysLoad.mockClear()
     })
-    beforeEach(() => {
-      wrapper = shallow(
-        <Menu
-          foodBrandSelected={null}
-          params={{ orderId: '' }}
-          menuLoadBoxPrices={() => { }}
-          menuCollectionRecipes={Immutable.Map({})}
-          features={Immutable.Map({})}
-          filteredRecipesNumber={30}
-          isLoading={false}
-          jfyTutorialFlag={false}
-          changeBannerGelFlag={false}
-          basketNumPortionChange={jest.fn()}
-          boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
-          boxSummaryDeliveryDays={Immutable.List([])}
-          menuLoadDays={menuLoadDays}
-          menuMobileGridViewSet={jest.fn()}
-          basketRestorePreviousValues={jest.fn()}
-          basketOrderLoaded={jest.fn()}
-          boxDetailsVisibilityChange={jest.fn()}
-          disabled={false}
-          isAuthenticated={false}
-        />,
-        {
-          context: {
-            store: {
-              dispatch: jest.fn()
-            }
-          }
-        }
-      )
-    })
 
     describe('initial render', () => {
+      beforeEach(() => {
+        wrapper = shallow(
+          <Menu
+            foodBrandSelected={null}
+            params={{ orderId: '' }}
+            menuLoadBoxPrices={() => { }}
+            menuCollectionRecipes={Immutable.Map({})}
+            features={Immutable.Map({})}
+            filteredRecipesNumber={30}
+            isLoading={false}
+            jfyTutorialFlag={false}
+            changeBannerGelFlag={false}
+            basketNumPortionChange={jest.fn()}
+            boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+            boxSummaryDeliveryDays={Immutable.List([])}
+            menuLoadDays={menuLoadDays}
+            menuMobileGridViewSet={jest.fn()}
+            basketRestorePreviousValues={jest.fn()}
+            basketOrderLoaded={jest.fn()}
+            boxDetailsVisibilityChange={jest.fn()}
+            disabled={false}
+            isAuthenticated={false}
+          />,
+          {
+            context: {
+              store: {
+                dispatch: jest.fn()
+              }
+            }
+          }
+        )
+      })
+
       test('should return a div', () => {
         expect(wrapper.type()).toBe('div')
       })
@@ -1028,4 +1028,55 @@ describe('Menu', () => {
       expect(menuLoadBoxPrices).not.toHaveBeenCalled()
     })
   })
+
+  describe('Food Brand Page ', () => {
+    const boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
+      new Promise(resolve => {
+        resolve()
+      })
+    )
+
+    const wrapper = shallow(
+      <Menu
+        foodBrandSelected={{
+          slug: 'takeaway-night',
+          name: 'Takeaway Night',
+          borderColor: 'blue',
+        }}
+        params={{ orderId: '' }}
+        menuLoadBoxPrices={() => { }}
+        menuCollectionRecipes={Immutable.Map({})}
+        features={Immutable.Map({})}
+        filteredRecipesNumber={30}
+        isLoading={false}
+        jfyTutorialFlag={false}
+        changeBannerGelFlag={false}
+        basketNumPortionChange={jest.fn()}
+        boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+        boxSummaryDeliveryDays={Immutable.List([])}
+        menuLoadDays={menuLoadDays}
+        menuMobileGridViewSet={jest.fn()}
+        basketRestorePreviousValues={jest.fn()}
+        basketOrderLoaded={jest.fn()}
+        boxDetailsVisibilityChange={jest.fn()}
+        disabled={false}
+        isAuthenticated={false}
+        query={{
+          foodBrand: 'takeaway-night'
+        }}
+      />,
+      {
+        context: {
+          store: {
+            dispatch: jest.fn()
+          }
+        }
+      }
+    )
+    test('should render if showSelectedPage is true ', () => {
+      expect(wrapper.find('Connect(FoodBrandPage)').length).toBe(1)
+      expect(wrapper.find('MenuRecipes').length).toBe(0)
+    })
+  })
 })
+
