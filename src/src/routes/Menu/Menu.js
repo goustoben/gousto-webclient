@@ -162,7 +162,6 @@ class Menu extends React.Component {
       productsLoadProducts,
       productsLoadStock,
       orderCheckoutAction,
-      foodBrandSelected,
     } = this.props
     const { store } = this.context
     // if server rendered
@@ -420,10 +419,10 @@ class Menu extends React.Component {
         <RecipeMeta query={query} />
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
-          
+
           {showSelectedPage ? <FoodBrandPage />
             :
-            <MenuRecipes 
+            <MenuRecipes
               isClient={isClient}
               fadeCss={fadeCss}
               showLoading={showLoading}

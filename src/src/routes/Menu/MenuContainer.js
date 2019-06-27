@@ -155,14 +155,13 @@ const mapDispatchToProps = {
   productsLoadProducts: actions.productsLoadProducts,
   productsLoadStock: actions.productsLoadStock,
   orderCheckoutAction: actions.orderCheckout,
-  getFoodBrandDetails: actions.getFoodBrandDetails
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
 
 export default MenuContainer
 
-export { 
+export {
   flattenRecipes,
-  getCutoffDate 
+  getCutoffDate
 }
