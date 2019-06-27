@@ -33,7 +33,7 @@ export const getFoodBrandDetails = state => {
   return ({
     name: foodBrand.get('name'),
     slug: foodBrand.get('slug'),
-    borderColor: foodBrand.get('properties').get('ribbonColor')
+    borderColor: foodBrand && foodBrand.get('properties') && foodBrand.get('properties').get('ribbonColor')
   })
 }
 
