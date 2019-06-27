@@ -11,8 +11,8 @@ import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 
 import { getJfyTutorial } from 'selectors/features'
-import { getFoodBrandFilter } from 'selectors/filters'
-import { getFilteredRecipeIds } from './selectors/filters.js'
+import { getFoodBrandFilter, getFoodBrandDetails } from 'selectors/filters'
+import { getFilteredRecipeIds } from './selectors/filters'
 import { getCurrentCollectionIsRecommendation } from './selectors/menu'
 
 import Menu from './Menu'
@@ -131,6 +131,7 @@ function mapStateToProps(state, ownProps) {
       [state.basket.get('date'), 'coreDayId']
     ),
     addressId: state.basket.getIn(['address', 'id'], ''),
+    foodBrandDetails: getFoodBrandDetails(state)
   }
 }
 
@@ -155,6 +156,7 @@ const mapDispatchToProps = {
   productsLoadProducts: actions.productsLoadProducts,
   productsLoadStock: actions.productsLoadStock,
   orderCheckoutAction: actions.orderCheckout,
+  reselectFoodBrand: actions.currentFoodBrandChange
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)

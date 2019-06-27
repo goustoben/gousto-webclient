@@ -92,7 +92,13 @@ class Menu extends React.Component {
         name: PropTypes.string,
         borderColor: PropTypes.string,
       })
-    ])
+    ]),
+    foodBrandDetails: PropTypes.shape({
+      slug: PropTypes.string,
+      name: PropTypes.string,
+      borderColor: PropTypes.string,
+    }),
+    reselectFoodBrand: PropTypes.func
   }
 
   static contextTypes = {
@@ -118,7 +124,8 @@ class Menu extends React.Component {
     promoCode: '',
     postcode: '',
     deliveryDayId: '',
-    foodBrandSelected: false,
+    foodBrandSelected: null,
+    query: {}
   }
 
   static fetchData(args, force) {
@@ -162,6 +169,9 @@ class Menu extends React.Component {
       productsLoadProducts,
       productsLoadStock,
       orderCheckoutAction,
+      foodBrandSelected,
+      foodBrandDetails,
+      reselectFoodBrand
     } = this.props
     const { store } = this.context
     // if server rendered
@@ -178,6 +188,10 @@ class Menu extends React.Component {
 
     if (query && query.num_portions) {
       basketNumPortionChange(query.num_portions)
+    }
+    
+    if(query && (query.foodBrand && foodBrandSelected === null || (foodBrandSelected && query.foodBrand!==foodBrandSelected.slug))) {
+      reselectFoodBrand(foodBrandDetails)
     }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)
@@ -389,7 +403,8 @@ class Menu extends React.Component {
       query, features, boxSummaryShow,
       menuBrowseCTAShow, isLoading,
       filteredRecipesNumber, menuCurrentCollectionId,
-      menuRecipeDetailShow, clearAllFilters } = this.props
+      menuRecipeDetailShow, clearAllFilters
+    } = this.props
     const { mobileGridView, isChrome, isClient } = this.state
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
     const showLoading = isLoading && !overlayShow || forceLoad
