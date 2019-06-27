@@ -85,7 +85,14 @@ class Menu extends React.Component {
     deliveryDayId: PropTypes.string,
     addressId: PropTypes.string,
     userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
-    foodBrandSelected: PropTypes.bool,
+    foodBrandSelected: PropTypes.oneOfType([
+      null,
+      PropTypes.shape({
+        slug: PropTypes.string,
+        name: PropTypes.string,
+        borderColor: PropTypes.string,
+      })
+    ])
   }
 
   static contextTypes = {
@@ -155,6 +162,7 @@ class Menu extends React.Component {
       productsLoadProducts,
       productsLoadStock,
       orderCheckoutAction,
+      foodBrandSelected,
     } = this.props
     const { store } = this.context
     // if server rendered
@@ -386,6 +394,7 @@ class Menu extends React.Component {
     const { mobileGridView, isChrome, isClient } = this.state
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
     const showLoading = isLoading && !overlayShow || forceLoad
+    const showSelectedPage = foodBrandSelected !== null && !!query.foodBrand
 
     let fadeCss = null
     if (showLoading && hasRecommendations) {
@@ -412,7 +421,7 @@ class Menu extends React.Component {
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
           
-          {foodBrandSelected ? <FoodBrandPage />
+          {showSelectedPage ? <FoodBrandPage />
             :
             <MenuRecipes 
               isClient={isClient}

@@ -93,7 +93,7 @@ function mapStateToProps(state, ownProps) {
   const orderId = (ownProps.params && ownProps.params.orderId) ? ownProps.params.orderId : ''
 
   return {
-    foodBrandSelected: getFoodBrandFilter(state) !== null,
+    foodBrandSelected: getFoodBrandFilter(state),
     basketRecipeIds: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))),
     basketProducts: getBasketProducts(state.basket.get('products', Immutable.Map({}))),
     cutOffDate: getCutoffDate(state.basket.get('date')),
@@ -155,6 +155,7 @@ const mapDispatchToProps = {
   productsLoadProducts: actions.productsLoadProducts,
   productsLoadStock: actions.productsLoadStock,
   orderCheckoutAction: actions.orderCheckout,
+  getFoodBrandDetails: actions.getFoodBrandDetails
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)

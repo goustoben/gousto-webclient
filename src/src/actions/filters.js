@@ -229,10 +229,11 @@ export const selectFoodBrand = (foodBrand) => (
     
     if(foodBrandFeature) {
       dispatch(currentFoodBrandChange(foodBrand))
+      const query = { ...prevLoc.query }
       if(foodBrand === null) {
+        delete query.foodBrand
         dispatch(goBack())
       } else {
-        const query = { ...prevLoc.query }
         query.foodBrand = foodBrand.slug
         if (query.collection) {
           delete query.collection
@@ -257,5 +258,6 @@ export default {
   filterDietaryAttributesChange,
   filterCurrentTotalTimeChange,
   filterMenuRevertFilters,
-  filterApply
+  filterApply,
+  currentFoodBrandChange
 }
