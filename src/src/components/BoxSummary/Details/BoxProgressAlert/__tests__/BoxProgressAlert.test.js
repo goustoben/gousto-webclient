@@ -24,6 +24,10 @@ describe('<BoxProgressAlert', () => {
       expect(wrapper.find('BoxProgressMessage')).toHaveLength(1)
     })
 
+    test('wraps an Alert within a data-testing container', () => {
+      expect(wrapper.find('Alert').parent().prop('data-testing')).toBe('boxProgressAlert')
+    })
+
     describe('and fewer than the maximum number of recipes are selected', () => {
       test('renders an info alert', () => {
         expect(wrapper.find('Alert').prop('type')).toBe('info')

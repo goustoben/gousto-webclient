@@ -8,7 +8,7 @@ const BoxProgressAlert = ({ numRecipes }) => {
   const hasMaxRecipes = numRecipes >= config.maxRecipesNum
 
   return (
-    <div>
+    <div data-testing="boxProgressAlert">
       <Alert type={hasMaxRecipes ? 'success' : 'info'}>
         <BoxProgressMessage numRecipes={numRecipes} />
       </Alert>
