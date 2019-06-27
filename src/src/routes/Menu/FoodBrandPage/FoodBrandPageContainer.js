@@ -4,7 +4,7 @@ import { getFoodBrandFilter } from 'selectors/filters'
 import { selectFoodBrand } from 'actions/filters'
 import { FoodBrandPage } from './FoodBrandPage'
 
-const mapDispatchToProps = (state) => {
+const mapStateToProps = (state) => {
   const selectedFoodBrand = getFoodBrandFilter(state)
 
   return {
@@ -14,7 +14,7 @@ const mapDispatchToProps = (state) => {
     browser: state.request.get('browser'),
   }
 }
-const FoodBrandPageContainer = connect(mapDispatchToProps, {
+const FoodBrandPageContainer = connect(mapStateToProps, {
   removeFoodBrand: selectFoodBrand
 })(FoodBrandPage)
 
