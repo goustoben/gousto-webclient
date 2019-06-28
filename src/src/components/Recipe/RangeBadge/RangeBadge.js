@@ -4,15 +4,25 @@ import PropTypes from 'prop-types'
 import css from './RangeBadge.css'
 
 const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
-  const rangeBadge = (range && range.size) ? range.get('properties'): ''
-  const textColor = rangeBadge ? rangeBadge.get('textColor'): ''
-  const backgroundColor = rangeBadge ? rangeBadge.get('ribbonColor'): ''
-  const borderColor = rangeBadge ? rangeBadge.get('borderColor'): ''
-  const rangeSelect = rangeBadge ? {
-    name: range.get('name'),
-    slug: range.get('slug'),
-    borderColor: backgroundColor
-  } : null
+  let textColor
+  let backgroundColor
+  let borderColor
+  let rangeSelect
+  let rangeBadge
+  let handleClick = null
+
+  if(range && range.size) {
+    rangeBadge = range.get('properties')
+
+    textColor = rangeBadge.get('textColor')
+    backgroundColor = rangeBadge.get('ribbonColor')
+    borderColor = rangeBadge.get('borderColor')
+    rangeSelect = {
+      name: range.get('name'),
+      slug: range.get('slug'),
+      borderColor: backgroundColor
+    }
+  }
 
   const ribbonTextStyle = {
     color: textColor,
@@ -34,6 +44,9 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
   const arrowBorderStyle = {
     borderLeft: `10px solid ${borderColor}`,
   }
+  if (isFoodBrandClickable) {
+    handleClick = () => selectFoodBrand(rangeSelect)
+  }
 
   return (rangeBadge) ? (
     <div className={css.rangeBadge}>
@@ -42,8 +55,8 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
         tabIndex={isFoodBrandClickable ? 0 : -1}
         className={css.ribbonText}
         style={ribbonTextStyle}
-        onClick={isFoodBrandClickable ? () => selectFoodBrand(rangeSelect): null}
-        onKeyPress={isFoodBrandClickable ? () => selectFoodBrand(rangeSelect) : null}
+        onClick={handleClick}
+        onKeyPress={handleClick}
       >{range.get('name').toUpperCase()}
       </div>
       <div className={css.ribbon} style={ribbonStyle}>
