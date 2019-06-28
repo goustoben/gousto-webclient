@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   }
 }
 const FoodBrandPageContainer = connect(mapStateToProps, {
-  removeFoodBrand: selectFoodBrand
+  removeFoodBrand: () => selectFoodBrand(null)
 })(FoodBrandPage)
 
 export { FoodBrandPageContainer }
