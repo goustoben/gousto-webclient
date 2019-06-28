@@ -12,7 +12,6 @@
   display: flex;
   align-items: center;
   padding-top: 15px;
-  padding-bottom: 10px;
 }
 
 .foodBrandTitleContainerFixed {
@@ -31,7 +30,7 @@
   margin: 0;
 }
 
-.backButton { 
+.backButton {
   display: inline-flex;
   margin: auto 0;
   padding-left: 10px;
@@ -43,7 +42,7 @@
 }
 
 .hideOnMobile {
-  @media ScreenSMMax { 
+  @media ScreenSMMax {
     display: none;
   }
 }
