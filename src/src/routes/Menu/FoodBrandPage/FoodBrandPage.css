@@ -39,6 +39,7 @@
   font-weight: bold;
   position: absolute;
   cursor: pointer;
+  white-space: pre;
 }
 
 .hideOnMobile {
