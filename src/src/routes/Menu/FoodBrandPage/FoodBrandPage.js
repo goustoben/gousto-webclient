@@ -52,13 +52,14 @@ class FoodBrandPage extends PureComponent {
       const threshold = (browser === 'mobile') ? 53 : 88
       const { scrolledPastPoint } = this.state
       const scrollState = getScrollOffset(threshold, 0, scrolledPastPoint)
+      const yOffset = (browser === 'mobile') ? 76 : 114
 
       scrollState && this.setState({
         scrolledPastPoint: scrollState.scrolledPastPoint,
       })
 
       this.setState({
-        scrolledPastPointBorder: (window.pageYOffset >= 114)
+        scrolledPastPointBorder: (window.pageYOffset >= yOffset)
       })
     }
   }
