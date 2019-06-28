@@ -190,7 +190,7 @@ class Menu extends React.Component {
       basketNumPortionChange(query.num_portions)
     }
     
-    if(query && (query.foodBrand && foodBrandSelected === null || (foodBrandSelected && query.foodBrand!==foodBrandSelected.slug))) {
+    if (query && (query.foodBrand && foodBrandSelected === null || (foodBrandSelected && query.foodBrand!==foodBrandSelected.slug))) {
       reselectFoodBrand(foodBrandDetails)
     }
 

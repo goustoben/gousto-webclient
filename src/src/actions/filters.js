@@ -110,7 +110,7 @@ export function collectionFilterChange(collectionId) {
       }
     }
 
-    if(!!collectionName) {
+    if (!!collectionName) {
       dispatch(filtersCollectionChange(collectionName, collectionId))
     }
 
@@ -154,7 +154,7 @@ export const filterCurrentDietTypesChange = (dietType) => (
 export const filterCurrentTotalTimeChange = (totalTime) => (
   (dispatch, getState) => {
     const totalTimeSelected = getState().filters.get('totalTime')
-    if(totalTimeSelected === totalTime) {
+    if (totalTimeSelected === totalTime) {
       dispatch(currentTotalTimeChange('0'))
       dispatch(trackRecipeTotalTimeUnselected(totalTime))
     } else {
@@ -227,10 +227,10 @@ export const selectFoodBrand = (foodBrand) => (
     const prevLoc = routing.locationBeforeTransitions
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     
-    if(foodBrandFeature) {
+    if (foodBrandFeature) {
       dispatch(currentFoodBrandChange(foodBrand))
       const query = { ...prevLoc.query }
-      if(foodBrand === null) {
+      if (foodBrand === null) {
         delete query.foodBrand
         dispatch(goBack())
       } else {

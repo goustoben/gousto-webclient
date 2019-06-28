@@ -11,7 +11,7 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
   let rangeBadge
   let handleClick = null
 
-  if(range && range.size) {
+  if (range && range.size) {
     rangeBadge = range.get('properties')
 
     textColor = rangeBadge.get('textColor')
