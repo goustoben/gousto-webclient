@@ -1074,8 +1074,8 @@ describe('Menu', () => {
       }
     )
     test('should render if showSelectedPage is true ', () => {
-      expect(wrapper.find('Connect(FoodBrandPage)').length).toBe(1)
-      expect(wrapper.find('MenuRecipes').length).toBe(0)
+      expect(wrapper.find('Connect(FoodBrandPage)')).toHaveLength(1)
+      expect(wrapper.find('MenuRecipes')).toHaveLength(0)
     })
   })
 })
