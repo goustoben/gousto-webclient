@@ -1,10 +1,16 @@
-export { Alert } from '../libs/goustouicomponents/src/main'
-export { Button } from '../libs/goustouicomponents/src/main'
-export { Control } from '../libs/goustouicomponents/src/main'
-export { Dropdown } from '../libs/goustouicomponents/src/main'
-export { Item } from '../libs/goustouicomponents/src/main'
-export { InputCheck } from '../libs/goustouicomponents/src/main'
-export { ItemExpandable } from '../libs/goustouicomponents/src/main'
-export { Segment } from '../libs/goustouicomponents/src/main'
-export { Spinner } from '../libs/goustouicomponents/src/main'
-export { Tooltip } from '../libs/goustouicomponents/src/main'
+export {
+  Alert,
+  Button,
+  Control,
+  Dropdown,
+  FloatCard,
+  Item,
+  InputCheck,
+  ItemExpandable,
+  Layout2Cells,
+  LayoutContentWrapper,
+  ProgressBar,
+  Segment,
+  Spinner,
+  Tooltip
+} from '../libs/goustouicomponents/src/main'
