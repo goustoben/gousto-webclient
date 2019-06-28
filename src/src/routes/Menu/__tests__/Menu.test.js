@@ -503,13 +503,13 @@ describe('Menu', () => {
           params: {},
           basketNumPortionChange: () => { },
           query: { num_portions: '4' },
+          foodBrandSelected: null
         }
       })
 
       test('are called when cutOffDate is present', async () => {
         wrapper = await mount(
           <Menu
-            foodBrandSelected={null}
             {...menuProps}
             cutOffDate="2019-05-14 12:00:00"
             productsLoadStock={productsLoadStock}
@@ -525,7 +525,6 @@ describe('Menu', () => {
       test('are not called when cutOffDate is not present', async () => {
         wrapper = await mount(
           <Menu
-            foodBrandSelected={null}
             {...menuProps}
             cutOffDate=""
             productsLoadProducts={productsLoadProducts}
@@ -600,6 +599,7 @@ describe('Menu', () => {
             { id: 'd', quantity: '4' },
           ],
           loginVisibilityChange: () => { },
+          foodBrandSelected: null,
           orderCheckoutAction: orderCheckout,
           orderHasAnyProducts,
           orderUpdateProducts,
@@ -607,7 +607,6 @@ describe('Menu', () => {
 
         wrapper = await mount(
           <Menu
-            foodBrandSelected={null}
             {...menuProps}
           />,
           {
@@ -680,7 +679,6 @@ describe('Menu', () => {
         beforeEach(async () => {
           wrapper = await mount(
             <Menu
-              foodBrandSelected={null}
               {...menuProps}
               orderId=""
             />,
@@ -747,7 +745,6 @@ describe('Menu', () => {
         beforeEach(async () => {
           wrapper = await mount(
             <Menu
-              foodBrandSelected={null}
               {...menuProps}
               orderId=""
             />,
