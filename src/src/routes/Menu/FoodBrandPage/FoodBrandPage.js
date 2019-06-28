@@ -12,7 +12,7 @@ const propTypes = {
   removeFoodBrand: PropTypes.func,
 }
 class FoodBrandPage extends PureComponent {
-  
+
   constructor(props) {
     super(props)
     this.state = {
@@ -23,6 +23,7 @@ class FoodBrandPage extends PureComponent {
 
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll)
+    window.scrollTo(0, 0)
 
     this.checkScroll()
 
@@ -48,7 +49,7 @@ class FoodBrandPage extends PureComponent {
     const { browser } = this.props
     if (this.hasScrolled) {
       this.hasScrolled = false
-      const threshold = (browser === 'mobile') ? 53 : 90
+      const threshold = (browser === 'mobile') ? 53 : 88
       const { scrolledPastPoint } = this.state
       const scrollState = getScrollOffset(threshold, 0, scrolledPastPoint)
 
@@ -57,11 +58,11 @@ class FoodBrandPage extends PureComponent {
       })
 
       this.setState({
-        scrolledPastPointBorder: (window.pageYOffset >= 102)
+        scrolledPastPointBorder: (window.pageYOffset >= 114)
       })
     }
   }
-  
+
   render() {
     const { name, description, borderColor, removeFoodBrand } = this.props
     const { scrolledPastPoint, scrolledPastPointBorder } = this.state
