@@ -37,6 +37,7 @@ class Details extends React.Component {
     orderSaveError: PropTypes.string,
     pricingPending: PropTypes.bool,
     prices: PropTypes.instanceOf(Immutable.Map),
+    unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
   }
 
   static defaultProps = {
@@ -132,9 +133,9 @@ class Details extends React.Component {
       accessToken,
       promoCode,
       boxSummaryVisibilityChange,
+      unavailableRecipeIds,
     } = this.props
     const okRecipeList = this.recipeList(okRecipeIds)
-    const unavailableRecipeIds = basketRecipes.filter((obj, recipeId) => !okRecipeIds.has(recipeId))
     const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
 
     const numRecipes = basketSum(okRecipeIds)

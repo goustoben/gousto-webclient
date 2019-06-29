@@ -1,7 +1,10 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
-import { getOkRecipeIds } from 'routes/Menu/selectors/basket'
+import {
+  getOkRecipeIds,
+  getUnavailableRecipeIds,
+} from 'routes/Menu/selectors/basket'
 import Details from './Details'
 
 const mapStateToProps = (state) => ({
@@ -16,6 +19,7 @@ const mapStateToProps = (state) => ({
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
   pricingPending: state.pricing.get('pending'),
   prices: state.pricing.get('prices'),
+  unavailableRecipeIds: getUnavailableRecipeIds(state),
 })
 
 const DetailsContainer = connect(mapStateToProps, {

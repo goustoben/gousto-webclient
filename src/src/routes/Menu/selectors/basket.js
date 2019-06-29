@@ -12,3 +12,11 @@ export const getOkRecipeIds = createSelector(
     return okRecipes(basketRecipes, menuRecipeIds, stock, numPortions)
   }
 )
+
+export const getUnavailableRecipeIds = createSelector(
+  getBasketRecipes,
+  getOkRecipeIds,
+  (basketRecipes, okRecipeIds) => {
+    return basketRecipes.filter((obj, recipeId) => !okRecipeIds.has(recipeId))
+  }
+)
