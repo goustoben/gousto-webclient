@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
 import Immutable from 'immutable'
-import { basketSum, okRecipes } from 'utils/basket'
+import { basketSum } from 'utils/basket'
 import { getSlot } from 'utils/deliveries'
 import { getSurchargeItems } from 'utils/pricing'
 
@@ -29,10 +29,9 @@ class Details extends React.Component {
     onRemove: PropTypes.func.isRequired,
     orderId: PropTypes.string,
     promoCode: PropTypes.string,
-    recipes: PropTypes.instanceOf(Immutable.List).isRequired,
+    okRecipeIds: PropTypes.instanceOf(Immutable.List).isRequired,
     recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
     slotId: PropTypes.string,
-    stock: PropTypes.instanceOf(Immutable.Map),
     view: PropTypes.string,
     menuFetchPending: PropTypes.bool,
     orderSaveError: PropTypes.string,
@@ -120,8 +119,7 @@ class Details extends React.Component {
       pricingPending,
       prices,
       basketRecipes,
-      recipes,
-      stock,
+      okRecipeIds,
       view,
       orderId,
       date,
@@ -135,7 +133,6 @@ class Details extends React.Component {
       promoCode,
       boxSummaryVisibilityChange,
     } = this.props
-    const okRecipeIds = okRecipes(basketRecipes, recipes, stock, numPortions)
     const okRecipeList = this.recipeList(okRecipeIds)
     const unavailableRecipeIds = basketRecipes.filter((obj, recipeId) => !okRecipeIds.has(recipeId))
     const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
