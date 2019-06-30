@@ -12,6 +12,7 @@ import RecipeItem from 'Recipe/RecipeItem'
 import Receipt from 'Receipt'
 import Portions from 'BoxSummary/Details/Portions'
 import css from './Details.css'
+import BoxProgressAlert from './BoxProgressAlert'
 
 class Details extends React.Component {
   static propTypes = {
@@ -61,23 +62,6 @@ class Details extends React.Component {
     }
 
     return text
-  }
-
-  boxStatusMessage = (okRecipeIds) => {
-    const { maxRecipesNum } = config.basket
-    const numRecipes = basketSum(okRecipeIds)
-    let statusText
-    if (numRecipes === 0) {
-      statusText = 'Your box is empty! You can add 2-4 recipes to your box.'
-    } else if (numRecipes === 1) {
-      statusText = 'Add more recipes to complete your box.'
-    } else if (numRecipes < maxRecipesNum) {
-      statusText = `Add ${maxRecipesNum - numRecipes} more recipe${(maxRecipesNum - numRecipes) > 1 ? 's' : ''} for the best price per serving.`
-    } else {
-      statusText = 'You\'re getting the best price per serving!'
-    }
-
-    return statusText
   }
 
   recipeList = (recipeIds) => {
@@ -137,9 +121,7 @@ class Details extends React.Component {
     } = this.props
     const okRecipeList = this.recipeList(okRecipeIds)
     const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
-
     const numRecipes = basketSum(okRecipeIds)
-
     const ctaText = this.getCtaText(numRecipes)
     const displayCta = !displayOptions.contains('hideChooseRecipesCta') && ctaText
 
@@ -224,11 +206,9 @@ class Details extends React.Component {
                   </span>
                    </div>)
             }
-            {
-              displayOptions.contains('hideStatusMessaging')
-                ? null
-                : <p className={css.supportingText}>{this.boxStatusMessage(okRecipeIds)}</p>
-            }
+
+            <BoxProgressAlert numRecipes={numRecipes} />
+
             {
               (pricingPending)
                 ? <div className={css.spinner}><Spinner color="black" /></div>
