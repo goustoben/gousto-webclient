@@ -1,8 +1,14 @@
 import React from 'react'
+import PropType from 'prop-types'
 import classnames from 'classnames'
 
 import css from './TasteScore.css'
 import Svg from 'Svg'
+
+const propTypes = {
+  score: PropType.number,
+  className: PropType.string,
+}
 
 const TasteScore = ({ score, className }) => (
   (score > 0) ? (
@@ -12,5 +18,7 @@ const TasteScore = ({ score, className }) => (
     </div>
   ) : null
 )
+
+TasteScore.propTypes = propTypes
 
 export default TasteScore

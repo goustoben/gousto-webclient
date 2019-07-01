@@ -27,6 +27,11 @@ const BoxProgressMessage = ({ numRecipes, className }) => {
 
 BoxProgressMessage.propTypes = {
   numRecipes: PropTypes.number.isRequired,
+  className: PropTypes.string,
+}
+
+BoxProgressMessage.defaultProps = {
+  className: '',
 }
 
 export default BoxProgressMessage

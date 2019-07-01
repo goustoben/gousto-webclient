@@ -15,6 +15,10 @@ class DeliveryDetails extends React.PureComponent {
     formValues: PropTypes.object,
     receiveRef: PropTypes.func,
     sectionName: PropTypes.string,
+    change: PropTypes.func.isRequired,
+    formName: PropTypes.string.isRequired,
+    untouch: PropTypes.func.isRequired,
+    onAddressEdit: PropTypes.func.isRequired,
   }
 
   static defaultProps = {

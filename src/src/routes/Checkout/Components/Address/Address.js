@@ -19,11 +19,9 @@ class Address extends React.PureComponent {
     formErrors: PropTypes.object,
     formValues: PropTypes.object,
     formFields: PropTypes.object,
-
     change: PropTypes.func,
     touch: PropTypes.func,
     untouch: PropTypes.func,
-
     addressesPending: PropTypes.bool,
     initialPostcode: PropTypes.string,
     isDelivery: PropTypes.bool,
@@ -32,6 +30,9 @@ class Address extends React.PureComponent {
     menuCutoffUntil: PropTypes.string,
     receiveRef: PropTypes.func,
     scrollToFirstMatchingRef: PropTypes.func,
+    registerField: PropTypes.func,
+    checkoutAddressLookup: PropTypes.func,
+    onAddressConfirm: PropTypes.func,
   }
   static defaultProps = {
     formName: 'address',

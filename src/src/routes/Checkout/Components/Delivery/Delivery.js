@@ -24,6 +24,8 @@ class Delivery extends React.PureComponent {
     asyncValidate: PropTypes.func,
     change: PropTypes.func,
     receiveRef: PropTypes.func,
+    triggerSubmit: PropTypes.func,
+    scrollToFirstMatchingRef: PropTypes.func,
   }
 
   static defaultProps = {

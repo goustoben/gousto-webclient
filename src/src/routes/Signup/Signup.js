@@ -94,6 +94,17 @@ class Signup extends React.PureComponent {
     stepName: PropTypes.string,
     steps: PropTypes.instanceOf(Immutable.List),
     goToStep: PropTypes.func,
+    location: PropTypes.shape({
+      query: PropTypes.shape({
+        steps: PropTypes.string,
+        promo_code: PropTypes.string,
+      })
+    }),
+    params: PropTypes.shape({
+      stepName: PropTypes.string,
+    }),
+    currentStepName: PropTypes.string,
+    changeStep: PropTypes.func.isRequired,
   }
 
   static contextTypes = {

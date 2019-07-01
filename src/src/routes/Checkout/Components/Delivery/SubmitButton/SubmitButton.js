@@ -14,6 +14,9 @@ class SubmitButton extends React.PureComponent {
     browser: PropTypes.string,
     onStepChange: PropTypes.func,
     manualSubmit: PropTypes.func,
+    formValues: PropTypes.objectOf(PropTypes.shape({
+      confirmed: PropTypes.bool,
+    })),
   }
 
   handleSubmit = () => {

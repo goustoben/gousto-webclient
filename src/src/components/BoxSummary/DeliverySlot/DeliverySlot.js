@@ -40,7 +40,8 @@ class DeliverySlot extends React.Component {
     displayOptions: PropTypes.instanceOf(Immutable.List),
     disabledSlots: PropTypes.arrayOf(PropTypes.string),
     isAuthenticated: PropTypes.bool,
-    isSubscriptionActive: PropTypes.string
+    isSubscriptionActive: PropTypes.string,
+    numPortions: PropTypes.number,
   }
 
   static defaultProps = {

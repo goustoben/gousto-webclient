@@ -6,6 +6,7 @@ import { ModalFooter } from 'ModalComponent'
 import css from './Footer.css'
 
 const propTypes = {
+  orderType: PropTypes.string,
   callToActions: PropTypes.shape({
     confirm: PropTypes.string,
     keep: PropTypes.string,

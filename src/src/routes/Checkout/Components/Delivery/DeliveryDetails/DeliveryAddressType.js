@@ -16,6 +16,7 @@ class DeliveryAddressType extends React.PureComponent {
     value: PropTypes.any,
     reset: PropTypes.func.isRequired,
     receiveRef: PropTypes.func,
+    sectionName: PropTypes.string,
   }
 
   static defaultProps = {
