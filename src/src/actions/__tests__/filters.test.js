@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import actionTypes from 'actions/actionTypes'
+import { push, goBack } from 'react-router-redux'
 
 import {
   collectionFilterChange,
@@ -14,7 +15,13 @@ import {
   filterMenuRevertFilters,
   filterProductCategory,
   filterApply,
+  selectFoodBrand
 } from 'actions/filters'
+
+jest.mock('react-router-redux', () => ({
+  push: jest.fn(),
+  goBack: jest.fn()
+}))
 
 describe('filters actions', () => {
   const dispatchSpy = jest.fn()
@@ -330,6 +337,50 @@ describe('filters actions', () => {
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.FILTERS_PRODUCT_CATEGORY,
         value: 'all-products',
+      })
+    })
+  })
+
+  describe('selectFoodBrand', () => {
+    beforeAll(() => {
+      getStateSpy.mockReturnValue({
+        features: Immutable.fromJS({
+          foodBrand: {
+            value: true
+          },
+        }),
+        routing: {
+          locationBeforeTransitions: {
+            query: {
+              foodBrand: 'food-brand-slug'
+            }
+          }
+        }
+      })
+    })
+    test('should call goBack if foodBrand is null', () => {
+      selectFoodBrand(null)(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({'foodBrand': null, 'type': "FILTERS_FOOD_BRAND_CHANGE"})
+      expect(dispatchSpy.mock.calls[1][0]).toBe(goBack())
+    })
+
+    test('should call goBack if foodBrand is not null', () => {
+      selectFoodBrand({
+        name: 'FoodBrand',
+        slug: 'food-brand',
+        borderColor: 'blue'
+      })(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        'foodBrand': {
+          name: 'FoodBrand',
+          slug: 'food-brand',
+          borderColor: 'blue'
+        }, 
+        'type': "FILTERS_FOOD_BRAND_CHANGE"})
+      expect(push).toHaveBeenCalledWith({
+        query: {
+          foodBrand: 'food-brand'
+        }
       })
     })
   })

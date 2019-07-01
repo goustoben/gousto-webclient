@@ -18,7 +18,7 @@ import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 
-const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
+const GridRecipe = ({onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
   features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew}) => (
   <div>
     <div className={css.recipeDetails}>
@@ -35,7 +35,7 @@ const GridRecipe = ({onClick, media, title, highlight, unhighlight, tasteScore, 
         <Chef chef={chef} />
       </div>
       <div className={css.rangeBadgeWrapper}>
-        <RangeBadge range={range} />
+        <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
       </div>
       <div className={css.textContainer}>
         <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(chef) })}>
@@ -90,7 +90,10 @@ GridRecipe.propTypes = {
   detailHover: PropTypes.bool,
   tasteScore: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
-  fiveADay: PropTypes.number
+  fiveADay: PropTypes.number,
+  isFoodBrandClickable: PropTypes.bool,
+  selectFoodBrand: PropTypes.func,
+
 }
 
 GridRecipe.defaultProps = {

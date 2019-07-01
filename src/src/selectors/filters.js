@@ -1,3 +1,4 @@
+import { getFoodBrand } from 'utils/recipe'
 import { textReducer } from 'utils/text'
 import config from 'config/recipes'
 
@@ -22,6 +23,19 @@ export const getFilterCTAText = ({ filters, menuCollections }) => ([
   filters.get('dietaryAttributes', []).reduce((text, dietaryAttribute) => textReducer(text, config.dietaryAttributes[dietaryAttribute]), ''),
   config.totalTime[filters.get('totalTime', 0)],
 ].reduce(textReducer))
+
+export const getFoodBrandDetails = state => {
+  const { routing, recipes } = state
+  const { query } = routing.locationBeforeTransitions
+  const recipeSelected = recipes.find(recipe => getFoodBrand(recipe).get('slug') === query.foodBrand)
+  const foodBrand = getFoodBrand(recipeSelected)
+
+  return ({
+    name: foodBrand.get('name'),
+    slug: foodBrand.get('slug'),
+    borderColor: foodBrand && foodBrand.get('properties') && foodBrand.get('properties').get('ribbonColor')
+  })
+}
 
 export default {
   getCurrentCollectionId,

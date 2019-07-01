@@ -15,6 +15,6 @@ const getCurrentMenuRecipes = createSelector(
 export const getRecipesFilteredByFoodBrand = createSelector(
   [getCurrentMenuRecipes, getFoodBrandFilter],
   (currentMenuRecipes, selectedFoodBrand) => (
-    currentMenuRecipes.filter(recipe => getFoodBrand(recipe).get('slug') === selectedFoodBrand)
+    currentMenuRecipes.filter(recipe => getFoodBrand(recipe).get('slug') === selectedFoodBrand.slug)
   )   
 )

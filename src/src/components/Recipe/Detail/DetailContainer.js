@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import { isNew } from 'utils/recipe'
+import { getFoodBrandFeature } from 'selectors/features'
 
 import actions from 'actions'
 import { getCutoffs } from 'utils/deliveries'
@@ -23,6 +24,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     cutoffDate,
+    isFoodBrandClickable: false,
     isNew: isNew(Immutable.fromJS(ownProps)),
     inBasket: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))).includes(ownProps.recipeId),
   }

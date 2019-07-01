@@ -76,6 +76,9 @@ const processCookies = (cookies, store) => {
   const promoCode = getCookieStoreValue(cookies, 'basket_promoCode')
   const collection = getCookieStoreValue(cookies, 'basket_collection')
   const currentCollectionId = getCookieStoreValue(cookies, 'filters_currentCollectionId')
+  const foodBrandSlug = getCookieStoreValue(cookies, 'filters_foodBrand_slug')
+  const foodBrandName = getCookieStoreValue(cookies, 'filters_foodBrand_name')
+  const foodBrandBorderColor = getCookieStoreValue(cookies, 'filters_foodBrand_borderColor')
   const promoAgeVerified = getCookieStoreValue(cookies, 'promoAgeVerified')
   const tracking = getCookieStoreValue(cookies, 'tracking')
   const cookiePolicy = get(cookies, 'cookie_policy')
@@ -141,6 +144,15 @@ const processCookies = (cookies, store) => {
 
   if (currentCollectionId) {
     store.dispatch(filterActions.collectionFilterIdRecieve(currentCollectionId))
+  }
+
+  if (foodBrandSlug && foodBrandName && foodBrandBorderColor) {
+    const foodBrand = {
+      slug: foodBrandSlug,
+      name: foodBrandName,
+      borderColor: foodBrandBorderColor
+    }
+    store.dispatch(filterActions.currentFoodBrandChange(foodBrand))
   }
 
   if (!orderId) {
