@@ -180,23 +180,23 @@ class Menu extends React.Component {
     }
     const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId)
     // TODO: Add back logic to check what needs to be reloaded
-    
+
     if (hasRecommendations) {
       triggerMenuLoad()
     }
-    
+
     if (query && query.num_portions) {
       basketNumPortionChange(query.num_portions)
     }
-    
+
     if (query.foodBrand) {
       const foodBrandNotSelected = foodBrandSelected === null
-      const foodBrandUrlDifferent = query.foodBrand!==foodBrandSelected.slug
+      const foodBrandUrlDifferent = !foodBrandNotSelected && query.foodBrand!==foodBrandSelected.slug
 
       if (foodBrandNotSelected || foodBrandUrlDifferent) {
         selectFoodBrandFromUrl(foodBrandDetails)
       }
-    }    
+    }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)
 

@@ -358,13 +358,12 @@ describe('filters actions', () => {
         }
       })
     })
-    test('should call goBack if foodBrand is null', () => {
+    test('should call FILTERS_FOOD_BRAND_CHANGE with null foodBrand if this is null', () => {
       selectFoodBrand(null)(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({'foodBrand': null, 'type': "FILTERS_FOOD_BRAND_CHANGE"})
-      expect(dispatchSpy.mock.calls[1][0]).toBe(goBack())
     })
 
-    test('should call goBack if foodBrand is not null', () => {
+    test('should call push with foodBrand slug if foodBrand is not null', () => {
       selectFoodBrand({
         name: 'FoodBrand',
         slug: 'food-brand',
