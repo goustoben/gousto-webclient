@@ -1,4 +1,4 @@
-import { push } from 'react-router-redux'
+import { push, goBack } from 'react-router-redux'
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
 import actionTypes from './actionTypes'
 import {
@@ -110,7 +110,7 @@ export function collectionFilterChange(collectionId) {
       }
     }
 
-    if(!!collectionName) {
+    if (!!collectionName) {
       dispatch(filtersCollectionChange(collectionName, collectionId))
     }
 
@@ -126,7 +126,7 @@ export const changeCollectionToAllRecipes = () => (
     dispatch(collectionFilterChange('ca8f71be-63ac-11e6-a693-068306404bab'))
     dispatch(trackCTAToAllRecipesClicked())
   }
-) 
+)
 
 export const filterMenuOpen = () => (
   (dispatch) => {
@@ -154,7 +154,7 @@ export const filterCurrentDietTypesChange = (dietType) => (
 export const filterCurrentTotalTimeChange = (totalTime) => (
   (dispatch, getState) => {
     const totalTimeSelected = getState().filters.get('totalTime')
-    if(totalTimeSelected === totalTime) {
+    if (totalTimeSelected === totalTime) {
       dispatch(currentTotalTimeChange('0'))
       dispatch(trackRecipeTotalTimeUnselected(totalTime))
     } else {
@@ -221,6 +221,30 @@ export const filterApply = (type, value) => (
   }
 )
 
+export const selectFoodBrand = (foodBrand) => (
+  (dispatch, getState) => {
+    const { routing, features } = getState()
+    const prevLoc = routing.locationBeforeTransitions
+    const foodBrandFeature = features.getIn(['foodBrand', 'value'])
+    
+    if (foodBrandFeature) {
+      dispatch(currentFoodBrandChange(foodBrand))
+      const query = { ...prevLoc.query }
+      if (foodBrand === null) {
+        delete query.foodBrand
+        dispatch(goBack())
+      } else {
+        query.foodBrand = foodBrand.slug
+        if (query.collection) {
+          delete query.collection
+        }
+        const newLoc = { ...prevLoc, query }
+        dispatch(push(newLoc))
+      }
+    }
+  }
+)
+
 export default {
   filtersVisibilityChange,
   filterMenuOpen,
@@ -234,5 +258,6 @@ export default {
   filterDietaryAttributesChange,
   filterCurrentTotalTimeChange,
   filterMenuRevertFilters,
-  filterApply
+  filterApply,
+  currentFoodBrandChange
 }

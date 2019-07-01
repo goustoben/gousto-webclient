@@ -58,6 +58,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
+  foodBrand: {
+    experiment: false,
+    value: false,
+  },
 })
 
 const featureToggles = {

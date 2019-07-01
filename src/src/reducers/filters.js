@@ -7,7 +7,7 @@ export const initialState = () => Immutable.Map({
   dietTypes: Immutable.Set([]),
   dietaryAttributes: Immutable.Set([]),
   newRecipes: false,
-  foodBrand: '',
+  foodBrand: null,
 })
 
 let previousState = initialState()

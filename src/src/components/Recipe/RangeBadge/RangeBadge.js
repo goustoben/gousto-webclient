@@ -3,17 +3,33 @@ import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import css from './RangeBadge.css'
 
-const RangeBadge = ({ range }) => {
-  const rangeBadge = (range && range.size) ? range.get('properties'): ''
-  const textColor = rangeBadge ? rangeBadge.get('textColor'): ''
-  const backgroundColor = rangeBadge ? rangeBadge.get('ribbonColor'): ''
-  const borderColor = rangeBadge ? rangeBadge.get('borderColor'): ''
+const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
+  let textColor
+  let backgroundColor
+  let borderColor
+  let rangeSelect
+  let rangeBadge
+  let handleClick = null
+
+  if (range && range.size) {
+    rangeBadge = range.get('properties')
+
+    textColor = rangeBadge.get('textColor')
+    backgroundColor = rangeBadge.get('ribbonColor')
+    borderColor = rangeBadge.get('borderColor')
+    rangeSelect = {
+      name: range.get('name'),
+      slug: range.get('slug'),
+      borderColor: backgroundColor
+    }
+  }
 
   const ribbonTextStyle = {
     color: textColor,
     backgroundColor: backgroundColor,
     border: `1px solid ${borderColor}`,
     borderRight: 'none',
+    cursor: isFoodBrandClickable ? 'pointer' : 'default'
   }
 
   const ribbonStyle = {
@@ -28,10 +44,21 @@ const RangeBadge = ({ range }) => {
   const arrowBorderStyle = {
     borderLeft: `10px solid ${borderColor}`,
   }
+  if (isFoodBrandClickable) {
+    handleClick = () => selectFoodBrand(rangeSelect)
+  }
 
   return (rangeBadge) ? (
     <div className={css.rangeBadge}>
-      <div className={css.ribbonText} style={ribbonTextStyle}>{range.get('name').toUpperCase()}</div>
+      <div
+        role="button"
+        tabIndex={isFoodBrandClickable ? 0 : -1}
+        className={css.ribbonText}
+        style={ribbonTextStyle}
+        onClick={handleClick}
+        onKeyPress={handleClick}
+      >{range.get('name').toUpperCase()}
+      </div>
       <div className={css.ribbon} style={ribbonStyle}>
         <div className={css.arrowTopBorder} style={arrowBorderStyle}></div>
         <div className={css.arrowTop} style={arrowStyle}></div>
@@ -44,6 +71,8 @@ const RangeBadge = ({ range }) => {
 
 RangeBadge.propTypes = {
   range: PropTypes.instanceOf(Immutable.Map),
+  selectFoodBrand: PropTypes.func,
+  isFoodBrandClickable: PropTypes.bool,
 }
 
 export default RangeBadge

@@ -32,6 +32,15 @@ const config = {
       },
     },
   },
+  foodBrandDescription: {
+    '10-minute-meals': 'Easy, speedy recipes for busy days',
+    'everyday-favourites': 'Family dinners, sorted (with 2 of your 5-a-day)',
+    'takeaway-night': 'Cook your favourite takeaways at home',
+    'modern-bistro': 'Restaurant-style dining made easy',
+    'health-boost': 'Delicious and nutritious for feel-good feasting',
+    'global-kitchen': 'Take your tastebuds on an adventure ',
+    'fine-dine-in': 'Decadent dishes sure to impress'
+  },
   dietTypes: {
     meat: 'Meat',
     fish: 'Fish',

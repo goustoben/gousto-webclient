@@ -52,11 +52,11 @@ class Recipe extends React.PureComponent {
     case 'simple':
       return <SimpleRecipe {...this.props} />
     case 'fineDineIn':
-      return <FineDineInRecipe {...this.props} {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
+      return <FineDineInRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     case 'ctaAllRecipe':
       return <CTAToAllRecipes collectionFilterChange={collectionFilterChange} />
     default:
-      return <GridRecipe {...this.props} {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
+      return <GridRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     }
   }
 

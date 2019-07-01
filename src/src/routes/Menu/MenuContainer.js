@@ -11,8 +11,8 @@ import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 
 import { getJfyTutorial } from 'selectors/features'
-import { getFoodBrandFilter } from 'selectors/filters'
-import { getFilteredRecipeIds } from './selectors/filters.js'
+import { getFoodBrandFilter, getFoodBrandDetails } from 'selectors/filters'
+import { getFilteredRecipeIds } from './selectors/filters'
 import { getCurrentCollectionIsRecommendation } from './selectors/menu'
 
 import Menu from './Menu'
@@ -91,13 +91,14 @@ function mapStateToProps(state, ownProps) {
   }
 
   const orderId = (ownProps.params && ownProps.params.orderId) ? ownProps.params.orderId : ''
+  const query = ownProps.location && ownProps.location.query
 
   return {
-    foodBrandSelected: getFoodBrandFilter(state) !== '',
+    foodBrandSelected: getFoodBrandFilter(state),
     basketRecipeIds: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))),
     basketProducts: getBasketProducts(state.basket.get('products', Immutable.Map({}))),
     cutOffDate: getCutoffDate(state.basket.get('date')),
-    menuRecipeDetailShow: (ownProps.location && ownProps.location.query) ? ownProps.location.query.recipeDetailId : '',
+    menuRecipeDetailShow: (query) ? ownProps.location.query.recipeDetailId : '',
     boxSummaryShow: state.boxSummaryShow.get('show'),
     menuCurrentCollectionId: collectionId,
     menuCollectionRecipes: state.menuCollectionRecipes,
@@ -105,7 +106,7 @@ function mapStateToProps(state, ownProps) {
     menuBrowseCTAShow: state.menuBrowseCTAShow,
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
     hasRecommendations: state.features.getIn(['justforyou_v2', 'value']),
-    query: ownProps.location && ownProps.location.query ? ownProps.location.query : {},
+    query: query ? ownProps.location.query : {},
     storeOrderId: state.basket.get('orderId'),
     orderId,
     isLoading: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
@@ -131,6 +132,7 @@ function mapStateToProps(state, ownProps) {
       [state.basket.get('date'), 'coreDayId']
     ),
     addressId: state.basket.getIn(['address', 'id'], ''),
+    foodBrandDetails: (query && query.foodBrand) ? getFoodBrandDetails(state) : null
   }
 }
 
@@ -155,13 +157,14 @@ const mapDispatchToProps = {
   productsLoadProducts: actions.productsLoadProducts,
   productsLoadStock: actions.productsLoadStock,
   orderCheckoutAction: actions.orderCheckout,
+  selectFoodBrandFromUrl: actions.currentFoodBrandChange
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
 
 export default MenuContainer
 
-export { 
+export {
   flattenRecipes,
-  getCutoffDate 
+  getCutoffDate
 }

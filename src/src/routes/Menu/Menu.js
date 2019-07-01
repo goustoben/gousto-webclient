@@ -13,6 +13,7 @@ import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import browserHelper from 'utils/browserHelper'
 import { RecipeMeta } from './RecipeMeta'
+import { FoodBrandPage } from './FoodBrandPage'
 
 import css from './Menu.css'
 
@@ -73,10 +74,7 @@ class Menu extends React.Component {
     numPortions: PropTypes.number,
     orderHasAnyProducts: PropTypes.func.isRequired,
     orderUpdateProducts: PropTypes.func.isRequired,
-    basketProducts: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.string,
-      quantity: PropTypes.number,
-    })),
+    basketProducts: PropTypes.instanceOf(Immutable.Map),
     productsLoadProducts: PropTypes.func.isRequired,
     productsLoadStock: PropTypes.func.isRequired,
     orderCheckoutAction: PropTypes.func.isRequired,
@@ -87,7 +85,20 @@ class Menu extends React.Component {
     deliveryDayId: PropTypes.string,
     addressId: PropTypes.string,
     userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
-    foodBrandSelected: PropTypes.bool,
+    foodBrandSelected: PropTypes.oneOfType([
+      null,
+      PropTypes.shape({
+        slug: PropTypes.string,
+        name: PropTypes.string,
+        borderColor: PropTypes.string,
+      })
+    ]),
+    foodBrandDetails: PropTypes.shape({
+      slug: PropTypes.string,
+      name: PropTypes.string,
+      borderColor: PropTypes.string,
+    }),
+    selectFoodBrandFromUrl: PropTypes.func
   }
 
   static contextTypes = {
@@ -113,7 +124,8 @@ class Menu extends React.Component {
     promoCode: '',
     postcode: '',
     deliveryDayId: '',
-    foodBrandSelected: false,
+    foodBrandSelected: null,
+    query: {}
   }
 
   static fetchData(args, force) {
@@ -157,23 +169,34 @@ class Menu extends React.Component {
       productsLoadProducts,
       productsLoadStock,
       orderCheckoutAction,
+      foodBrandSelected,
+      foodBrandDetails,
+      selectFoodBrandFromUrl
     } = this.props
     const { store } = this.context
     // if server rendered
     if (params.orderId && params.orderId === storeOrderId) {
       basketOrderLoaded(params.orderId)
     }
-
     const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId)
     // TODO: Add back logic to check what needs to be reloaded
-
+    
     if (hasRecommendations) {
       triggerMenuLoad()
     }
-
+    
     if (query && query.num_portions) {
       basketNumPortionChange(query.num_portions)
     }
+    
+    if (query.foodBrand) {
+      const foodBrandNotSelected = foodBrandSelected === null
+      const foodBrandUrlDifferent = query.foodBrand!==foodBrandSelected.slug
+
+      if (foodBrandNotSelected || foodBrandUrlDifferent) {
+        selectFoodBrandFromUrl(foodBrandDetails)
+      }
+    }    
 
     Menu.fetchData({ store, query, params }, forceDataLoad)
 
@@ -384,10 +407,12 @@ class Menu extends React.Component {
       query, features, boxSummaryShow,
       menuBrowseCTAShow, isLoading,
       filteredRecipesNumber, menuCurrentCollectionId,
-      menuRecipeDetailShow, clearAllFilters } = this.props
+      menuRecipeDetailShow, clearAllFilters
+    } = this.props
     const { mobileGridView, isChrome, isClient } = this.state
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
     const showLoading = isLoading && !overlayShow || forceLoad
+    const showSelectedPage = foodBrandSelected !== null && !!query.foodBrand
 
     let fadeCss = null
     if (showLoading && hasRecommendations) {
@@ -413,10 +438,10 @@ class Menu extends React.Component {
         <RecipeMeta query={query} />
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
-          
-          {foodBrandSelected ? <div>Here is the Food Brand</div>
+
+          {showSelectedPage ? <FoodBrandPage />
             :
-            <MenuRecipes 
+            <MenuRecipes
               isClient={isClient}
               fadeCss={fadeCss}
               showLoading={showLoading}
