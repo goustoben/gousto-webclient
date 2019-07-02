@@ -58,7 +58,3 @@
   composes: fa-basic-class fa-fw fa-chevron-left from 'styles/vendor/font-awesome-module.css';
   padding-top: 4px;
 }
-
-.foodBrandRecipes {
-  height: 1200px;
-}
