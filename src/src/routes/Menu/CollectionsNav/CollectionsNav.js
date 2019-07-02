@@ -21,6 +21,7 @@ class CollectionsNav extends React.PureComponent {
     collectionFilterChange: PropTypes.func.isRequired,
     menuCurrentCollectionId: PropTypes.string,
     featureSet: PropTypes.func.isRequired,
+    features: PropTypes.instanceOf(Immutable.Map).isRequired,
   }
 
   constructor(props) {

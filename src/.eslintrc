@@ -54,7 +54,7 @@
       "react/jsx-indent": 0,
       "no-tabs": 1,
       "no-mixed-spaces-and-tabs" : 1,
-      "react/prop-types": 1,
+      "react/prop-types": 2,
       "react/no-unused-prop-types": 1,
       "react/destructuring-assignment": 1,
       "react/forbid-prop-types": 1,

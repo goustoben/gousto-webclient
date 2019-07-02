@@ -28,6 +28,9 @@ class EditDelivery extends React.PureComponent {
     isPendingUpdateAddress: PropTypes.bool,
     isErrorUpdateDayAndSlot: PropTypes.string,
     isErrorUpdateAddress: PropTypes.string,
+    availableFrom: PropTypes.string,
+    availableTo: PropTypes.string,
+    formSelectedAddress: PropTypes.string,
   }
 
   static defaultProps = {

@@ -23,6 +23,7 @@ class BillingForm extends React.PureComponent {
   static propTypes = {
     isPosting: PropTypes.bool,
     fetchError: PropTypes.func,
+    submitCardDetails: PropTypes.func,
   }
 
   static defaultProps = {

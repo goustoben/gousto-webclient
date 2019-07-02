@@ -29,6 +29,16 @@ describe('<BoxProgressMessage />', () => {
         test('it renders the correct message', () => {
           expect(wrapper.text()).toBe(NO_RECIPES_TEXT)
         })
+
+        describe('and a className is passed', () => {
+          beforeEach(() => {
+            wrapper.setProps({ className: 'a-class-name' })
+          })
+
+          test('the className is used in the paragraph', () => {
+            expect(wrapper.find('p').hasClass('a-class-name')).toBe(true)
+          })
+        })
       })
 
       describe('and there is 1 recipe added', () => {
@@ -39,6 +49,16 @@ describe('<BoxProgressMessage />', () => {
         test('renders the correct message', () => {
           expect(wrapper.text()).toBe(MORE_RECIPES_TEXT)
         })
+
+        describe('and a className is passed', () => {
+          beforeEach(() => {
+            wrapper.setProps({ className: 'a-class-name' })
+          })
+
+          test('the className is used in the paragraph', () => {
+            expect(wrapper.find('p').hasClass('a-class-name')).toBe(true)
+          })
+        })
       })
 
       describe('and there are 2 recipes added', () => {
@@ -48,6 +68,16 @@ describe('<BoxProgressMessage />', () => {
 
         test('renders the correct message', () => {
           expect(wrapper.text()).toBe('Add 2 more recipes for the best price per serving')
+        })
+
+        describe('and a className is passed', () => {
+          beforeEach(() => {
+            wrapper.setProps({ className: 'a-class-name' })
+          })
+
+          test('the className is used in the paragraph', () => {
+            expect(wrapper.find('p').hasClass('a-class-name')).toBe(true)
+          })
         })
       })
 
@@ -60,6 +90,15 @@ describe('<BoxProgressMessage />', () => {
           expect(wrapper.text()).toBe(FULL_BOX_TEXT)
         })
 
+        describe('and a className is passed', () => {
+          beforeEach(() => {
+            wrapper.setProps({ className: 'a-class-name' })
+          })
+
+          test('the className is used in the paragraph', () => {
+            expect(wrapper.find('p').hasClass('a-class-name')).toBe(true)
+          })
+        })
       })
     })
 
@@ -72,6 +111,16 @@ describe('<BoxProgressMessage />', () => {
         test('renders the same message as when there are zero recipes', () => {
           expect(wrapper.text()).toBe(NO_RECIPES_TEXT)
         })
+
+        describe('and a className is passed', () => {
+          beforeEach(() => {
+            wrapper.setProps({ className: 'a-class-name' })
+          })
+
+          test('the className is used in the paragraph', () => {
+            expect(wrapper.find('p').hasClass('a-class-name')).toBe(true)
+          })
+        })
       })
 
       describe('and there are more than the maximum number of recipes added', () => {
@@ -81,6 +130,16 @@ describe('<BoxProgressMessage />', () => {
 
         test('renders the same message as when there are four recipes', () => {
           expect(wrapper.text()).toBe(FULL_BOX_TEXT)
+        })
+
+        describe('and a className is passed', () => {
+          beforeEach(() => {
+            wrapper.setProps({ className: 'a-class-name' })
+          })
+
+          test('the className is used in the paragraph', () => {
+            expect(wrapper.find('p').hasClass('a-class-name')).toBe(true)
+          })
         })
       })
     })

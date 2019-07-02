@@ -12,7 +12,7 @@ import Content from 'containers/Content'
 import CollectionList from './CollectionListContainer'
 
 class Hubs extends React.PureComponent {
-  static PropTypes = {
+  static propTypes = {
     collectionSets: PropTypes.instanceOf(Immutable.Map),
     endSet: PropTypes.number.isRequired,
     fetchSetData: PropTypes.func.isRequired,

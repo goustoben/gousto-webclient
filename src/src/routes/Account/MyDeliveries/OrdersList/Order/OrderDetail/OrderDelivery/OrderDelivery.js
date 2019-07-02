@@ -10,6 +10,9 @@ import css from './OrderDelivery.css'
 
 class OrderDelivery extends React.PureComponent {
   static propTypes = {
+    availableFrom: PropTypes.string,
+    availableTo: PropTypes.string,
+    shippingAddressId: PropTypes.string,
     date: PropTypes.string,
     timeStart: PropTypes.string,
     timeEnd: PropTypes.string,
@@ -18,6 +21,8 @@ class OrderDelivery extends React.PureComponent {
     orderState: PropTypes.string,
     orderId: PropTypes.string,
     fetchSuccess: PropTypes.bool,
+    recipesPeriodStockFetchError: PropTypes.object,
+    orderDeliveryDaysFetchError: PropTypes.object,
   }
 
   static defaultProps = {

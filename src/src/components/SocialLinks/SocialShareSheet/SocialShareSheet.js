@@ -31,7 +31,7 @@ class SocialShareSheet extends React.PureComponent {
   }
 
   render() {
-    const { onClose, referralCode, trackingReferFriendSocialSharing, trackingReferFriend, userFirstName, rafOffer, device } = this.props
+    const { onClose, referralCode, trackingReferFriendSocialSharing, trackingReferFriend, userFirstName, rafOffer } = this.props
     const { isEmailFormOpen } = this.state
 
     return (

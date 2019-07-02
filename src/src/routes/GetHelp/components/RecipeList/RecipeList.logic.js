@@ -17,7 +17,7 @@ const propTypes = {
     })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
-  selectedIngredients: PropTypes.instanceOf(Map),
+  selectedIngredients: PropTypes.instanceOf(Map).isRequired,
 }
 
 const Recipe = ({ recipe, selectedIngredients, onChange }) => {
@@ -43,6 +43,21 @@ const Recipe = ({ recipe, selectedIngredients, onChange }) => {
       {ingredientList}
     </ItemExpandable>
   )
+}
+
+Recipe.propTypes = {
+  recipe: PropTypes.shape({
+    id: PropTypes.string,
+    title: PropTypes.string,
+    ingredients: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string,
+        label: PropTypes.string,
+      })
+    )
+  }),
+  onChange: PropTypes.func.isRequired,
+  selectedIngredients: PropTypes.instanceOf(Map).isRequired,
 }
 
 const RecipeList = ({ recipes, selectedIngredients, onChange }) => {

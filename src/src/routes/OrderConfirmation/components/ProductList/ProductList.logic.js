@@ -15,12 +15,12 @@ const propTypes = {
   toggleAgeVerificationPopUp: PropTypes.func
 }
 
-const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified, ageVerificationPendingId }) => {
+const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified }) => {
 
   const isLimitReached = (product) => {
     const { id } = product
     const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)
-  
+
     return limitReachedResult
   }
 

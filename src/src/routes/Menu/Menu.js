@@ -8,19 +8,18 @@ import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
 import { redirect } from 'utils/window'
+import browserHelper from 'utils/browserHelper'
 
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
-import browserHelper from 'utils/browserHelper'
 import { RecipeMeta } from './RecipeMeta'
 import { FoodBrandPage } from './FoodBrandPage'
-
-import css from './Menu.css'
-
 import { MenuRecipes } from './MenuRecipes'
+import { RecipesInBasketProgress } from './RecipesInBasketProgress'
+import { JustForYouTutorial } from './JustForYouTutorial'
 
 import fetchData from './fetchData'
-import { JustForYouTutorial } from './JustForYouTutorial'
+import css from './Menu.css'
 
 const orderDoesContainProductsRequest = (orderId, orderHasAnyProducts) => {
   const handleOrderDoesContainProductsRequest = () => {
@@ -400,14 +399,21 @@ class Menu extends React.Component {
 
   render() {
     const {
-      orderId,
+      boxSummaryShow,
+      clearAllFilters,
+      features,
+      filteredRecipesNumber,
       foodBrandSelected,
+      forceLoad,
       hasRecommendations,
-      forceLoad, jfyTutorialFlag,
-      query, features, boxSummaryShow,
-      menuBrowseCTAShow, isLoading,
-      filteredRecipesNumber, menuCurrentCollectionId,
-      menuRecipeDetailShow, clearAllFilters
+      isLoading,
+      jfyTutorialFlag,
+      menuBrowseCTAShow,
+      menuCurrentCollectionId,
+      menuRecipeDetailShow,
+      orderId,
+      query,
+      recipes,
     } = this.props
     const { mobileGridView, isChrome, isClient } = this.state
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
@@ -459,6 +465,7 @@ class Menu extends React.Component {
         </div>
         <BoxSummaryMobile />
         <BoxSummaryDesktop />
+        <RecipesInBasketProgress selectedRecipesCount={recipes.length} />
       </div>
     )
   }

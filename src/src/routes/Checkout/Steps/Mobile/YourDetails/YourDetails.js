@@ -70,6 +70,7 @@ YourDetailsStep.propTypes = {
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
   checkoutValid: PropTypes.bool,
+  browser: PropTypes.string,
 }
 
 YourDetailsStep.defaultProps = {
