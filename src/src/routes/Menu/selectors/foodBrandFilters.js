@@ -11,10 +11,10 @@ const getCurrentMenuRecipes = createSelector(
       .filter(recipe => recipe !== null)
   )
 )
-    
+
 export const getRecipesFilteredByFoodBrand = createSelector(
   [getCurrentMenuRecipes, getFoodBrandFilter],
   (currentMenuRecipes, selectedFoodBrand) => (
-    currentMenuRecipes.filter(recipe => getFoodBrand(recipe).get('slug') === selectedFoodBrand.slug)
-  )   
+    selectedFoodBrand ? currentMenuRecipes.filter(recipe => getFoodBrand(recipe).get('slug') === selectedFoodBrand.slug) : null
+  )
 )
