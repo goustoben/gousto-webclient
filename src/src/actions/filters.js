@@ -211,7 +211,7 @@ export const filterApply = (type, value) => (
     switch (type) {
     case 'totalTime':
       dispatch(filterCurrentTotalTimeChange(value))
-      break  
+      break
     case 'newRecipes':
       dispatch(filterNewRecipesChange(newRecipesSelected))
       break
@@ -226,21 +226,19 @@ export const selectFoodBrand = (foodBrand) => (
     const { routing, features } = getState()
     const prevLoc = routing.locationBeforeTransitions
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
-    
     if (foodBrandFeature) {
       dispatch(currentFoodBrandChange(foodBrand))
       const query = { ...prevLoc.query }
       if (foodBrand === null) {
         delete query.foodBrand
-        dispatch(goBack())
       } else {
         query.foodBrand = foodBrand.slug
         if (query.collection) {
           delete query.collection
         }
-        const newLoc = { ...prevLoc, query }
-        dispatch(push(newLoc))
       }
+      const newLoc = { ...prevLoc, query }
+      dispatch(push(newLoc))
     }
   }
 )

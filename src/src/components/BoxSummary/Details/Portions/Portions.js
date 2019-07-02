@@ -33,6 +33,8 @@ const Portions = ({ numPortions, onNumPortionChange, trackNumPortionChange, orde
 Portions.propTypes = {
   numPortions: PropTypes.number.isRequired,
   onNumPortionChange: PropTypes.func.isRequired,
+  trackNumPortionChange: PropTypes.func.isRequired,
+  orderId: PropTypes.string.isRequired,
 }
 
 export default Portions
