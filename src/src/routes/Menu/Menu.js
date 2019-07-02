@@ -448,7 +448,12 @@ class Menu extends React.Component {
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
 
-          {showSelectedPage ? <FoodBrandPage />
+          {showSelectedPage ?
+          <FoodBrandPage
+            showDetailRecipe={this.showDetailRecipe}
+            mobileGridView={mobileGridView}
+            isClient={isClient}
+          />
             :
             <MenuRecipes
               isClient={isClient}

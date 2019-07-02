@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import Immutable from 'immutable'
 import { getScrollOffset } from 'utils/menu'
+import { RecipeGrid } from '../RecipeGrid'
 
 import css from './FoodBrandPage.css'
 
@@ -10,6 +12,12 @@ const propTypes = {
   borderColor: PropTypes.string,
   browser: PropTypes.string,
   removeFoodBrand: PropTypes.func,
+  mobileGridView: PropTypes.bool,
+  showDetailRecipe: PropTypes.func,
+  menuCurrentCollectionId: PropTypes.string,
+  menuRecipeDetailShow: PropTypes.string,
+  isClient: PropTypes.bool,
+  features: PropTypes.instanceOf(Immutable.Map),
 }
 class FoodBrandPage extends PureComponent {
 
@@ -65,7 +73,7 @@ class FoodBrandPage extends PureComponent {
   }
 
   render() {
-    const { name, description, borderColor, removeFoodBrand } = this.props
+    const { name, description, borderColor, removeFoodBrand, mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow, features } = this.props
     const { scrolledPastPoint, scrolledPastPointBorder } = this.state
 
     const classNameTitle = scrolledPastPoint ? css.foodBrandTitleContainerFixed : css.foodBrandTitleContainer
@@ -81,7 +89,16 @@ class FoodBrandPage extends PureComponent {
           </div>
           <p className={css.foodBrandDescription}>{description}</p>
         </div>
-        <div className={css.foodBrandRecipes}>Recipes here</div>
+        <div>
+          <RecipeGrid
+            mobileGridView={mobileGridView}
+            showDetailRecipe={showDetailRecipe}
+            menuCurrentCollectionId={menuCurrentCollectionId}
+            isClient={isClient}
+            menuRecipeDetailShow={menuRecipeDetailShow}
+            features={features}
+          />
+        </div>
       </section>
     )
   }
