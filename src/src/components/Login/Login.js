@@ -21,6 +21,7 @@ class Login extends React.PureComponent {
       PropTypes.string,
       PropTypes.bool,
     ]),
+    rememberMeDefault: PropTypes.bool,
   }
 
   static defaultProps = {

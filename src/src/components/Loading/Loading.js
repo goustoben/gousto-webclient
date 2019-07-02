@@ -1,4 +1,5 @@
 import React from 'react'
+import PropType from 'prop-types'
 import { Div } from 'Page/Elements'
 import Image from 'Image'
 
@@ -9,6 +10,10 @@ const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-dis
 const Loading = ({ className }) => (
   <Image media={getImage('Loading-Icon.gif')} title="animation" className={`${css.gif} ${className}`} />
 )
+
+Loading.propTypes = {
+  className: PropType.string,
+}
 
 export const LoadingOverlay = () => (
   <Div

@@ -16,6 +16,7 @@ AddButton.propTypes = {
   position: PropTypes.number,
   stock: PropTypes.number,
   view: PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn', 'fineDineInDetail', 'detail']).isRequired,
+  score: PropTypes.number,
 }
 
 export default AddButton

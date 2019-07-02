@@ -17,6 +17,7 @@ class BoxPrices extends React.PureComponent {
       ...propType(boxPriceQuery),
       loading: PropTypes.boolean,
       error: PropTypes.object,
+      boxPrices: PropTypes.object,
     }),
   }
 

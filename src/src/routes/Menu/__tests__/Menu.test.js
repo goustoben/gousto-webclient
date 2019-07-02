@@ -85,6 +85,7 @@ describe('Menu', () => {
             boxDetailsVisibilityChange={jest.fn()}
             disabled={false}
             isAuthenticated={false}
+            recipes={[25, 26, 27]}
           />,
           {
             context: {
@@ -128,12 +129,28 @@ describe('Menu', () => {
             boxSummaryDeliveryDays={Immutable.List([])}
             menuLoadDays={menuLoadDays}
             basketOrderLoaded={jest.fn()}
+            recipes={[]}
             jfyTutorialFlag
           />,
         )
         expect(wrapper.find(JustForYouTutorial).length).toBe(1)
       })
 
+      describe('the RecipesInBasketProgress component', () => {
+        let recipesInBasketProgress
+
+        beforeEach(() => {
+          recipesInBasketProgress = wrapper.find('RecipesInBasketProgress')
+        })
+
+        test('should be rendered', () => {
+          expect(recipesInBasketProgress).toHaveLength(1)
+        })
+
+        test('should have the correct number of selected recipes', () => {
+          expect(recipesInBasketProgress.prop('selectedRecipesCount')).toBe(3)
+        })
+      })
     })
 
     test('with the isLoading prop set to true it should show a Loading', () => {
@@ -152,6 +169,7 @@ describe('Menu', () => {
           basketOrderLoaded={jest.fn()}
           params={{ orderId: '' }}
           boxSummaryDeliveryDays={Immutable.List([])}
+          recipes={[]}
           isLoading
         />,
       )
@@ -178,6 +196,7 @@ describe('Menu', () => {
           query={{ num_portions: '4' }}
           params={{ orderId: '' }}
           boxSummaryDeliveryDays={Immutable.List([])}
+          recipes={[]}
           basketNumPortionChange={jest.fn()}
         />,
       )
@@ -203,6 +222,7 @@ describe('Menu', () => {
           basketOrderLoaded={() => { }}
           params={{ orderId: '' }}
           boxSummaryDeliveryDays={Immutable.List([])}
+          recipes={[]}
         />,
       )
       expect(wrapper.find('MenuRecipes').prop('showLoading')).toBe(false)
@@ -227,6 +247,7 @@ describe('Menu', () => {
           triggerMenuLoad={jest.fn()}
           basketOrderLoaded={jest.fn()}
           menuLoadDays={menuLoadDays}
+          recipes={[]}
           isLoading
           hasRecommendations
         />,
@@ -252,6 +273,7 @@ describe('Menu', () => {
           menuLoadDays={menuLoadDays}
           basketOrderLoaded={jest.fn()}
           params={{ orderId: '' }}
+          recipes={[]}
           isLoading
           hasRecommendations={false}
         />,
@@ -275,6 +297,7 @@ describe('Menu', () => {
           boxSummaryDeliveryDays={Immutable.List([])}
           params={{ orderId: '' }}
           menuLoadDays={menuLoadDays}
+          recipes={[]}
           isLoading={false}
           hasRecommendations={false}
         />,
@@ -336,6 +359,7 @@ describe('Menu', () => {
           filteredRecipesNumber={30}
           clearAllFilters={() => { }}
           params={{}}
+          recipes={[]}
         />,
         {
           context: {
@@ -367,6 +391,7 @@ describe('Menu', () => {
           filteredRecipesNumber={30}
           clearAllFilters={() => { }}
           params={{}}
+          recipes={[]}
         />,
         {
           context: {
@@ -398,6 +423,7 @@ describe('Menu', () => {
           filteredRecipesNumber={30}
           clearAllFilters={() => { }}
           params={{}}
+          recipes={[]}
         />,
         {
           context: {
@@ -433,6 +459,7 @@ describe('Menu', () => {
           params={{}}
           basketNumPortionChange={basketNumPortionChange}
           query={{ num_portions: 4 }}
+          recipes={[]}
         />,
         {
           context: {
@@ -470,6 +497,7 @@ describe('Menu', () => {
           params={{}}
           basketNumPortionChange={basketNumPortionChangeSpy}
           query={{ num_portions: '4' }}
+          recipes={[]}
         />,
         {
           context: {
@@ -503,7 +531,8 @@ describe('Menu', () => {
           params: {},
           basketNumPortionChange: () => { },
           query: { num_portions: '4' },
-          foodBrandSelected: null
+          foodBrandSelected: null,
+          recipes: [],
         }
       })
 
@@ -847,6 +876,7 @@ describe('Menu', () => {
           }}
           cutOffDate="2019-05-13 12:00:00"
           params={{ orderId: '' }}
+          recipes={[]}
         />,
         {
           context: {
@@ -973,6 +1003,7 @@ describe('Menu', () => {
           boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
           boxSummaryDeliveryDays={Immutable.List([])}
           params={{ orderId: '' }}
+          recipes={[]}
         />,
       )
       wrapper.instance().componentWillReceiveProps({ menuVariation: 'menuB' })
@@ -996,6 +1027,7 @@ describe('Menu', () => {
           boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
           boxSummaryDeliveryDays={Immutable.List([])}
           params={{ orderId: '' }}
+          recipes={[]}
         />,
       )
       wrapper.instance().componentWillReceiveProps({ tariffId: 2 })
@@ -1019,6 +1051,7 @@ describe('Menu', () => {
           boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
           boxSummaryDeliveryDays={Immutable.List([])}
           params={{ orderId: '' }}
+          recipes={[]}
           disabled
         />,
       )
@@ -1061,6 +1094,7 @@ describe('Menu', () => {
         query={{
           foodBrand: 'takeaway-night'
         }}
+        recipes={[]}
       />,
       {
         context: {

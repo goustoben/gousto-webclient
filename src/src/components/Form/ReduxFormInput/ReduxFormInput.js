@@ -18,6 +18,10 @@ class ReduxFormInput extends React.PureComponent {
     inputType: PropTypes.oneOf(['CheckBox', 'DropDown', 'Input']).isRequired,
     inputPrefix: PropTypes.node,
     inputSuffix: PropTypes.node,
+    label: PropTypes.string,
+    subLabel: PropTypes.string,
+    dataTesting: PropTypes.string,
+    'data-testing': PropTypes.string,
   }
 
   static defaultProps = {

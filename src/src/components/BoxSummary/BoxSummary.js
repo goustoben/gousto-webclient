@@ -19,6 +19,7 @@ class BoxSummary extends React.PureComponent {
     boxSummaryCurrentView: PropTypes.string,
     prices: PropTypes.instanceOf(Immutable.Map),
     pricesLoading: PropTypes.bool,
+    loadPrices: PropTypes.func,
   }
 
   static defaultProps = {

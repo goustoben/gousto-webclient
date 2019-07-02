@@ -16,6 +16,7 @@ class Account extends React.PureComponent {
       pathname: PropTypes.string,
     }).isRequired,
     rateRecipeCount: PropTypes.number,
+    cardExpiryDate: PropTypes.string,
   }
   static defaultProps = {
     renderChildren: false,

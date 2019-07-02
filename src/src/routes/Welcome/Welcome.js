@@ -26,6 +26,13 @@ class Welcome extends React.PureComponent {
     products: PropTypes.instanceOf(Immutable.Map).isRequired,
     user: PropTypes.instanceOf(Immutable.Map).isRequired,
     isRafAboveCarousel: PropTypes.bool,
+    userFetchReferralOffer: PropTypes.func.isRequired,
+    query: PropTypes.shape({
+      var: PropTypes.string,
+    }).isRequired,
+    params: PropTypes.shape({
+      orderId: PropTypes.string,
+    }).isRequired,
   }
 
   static contextTypes = {

@@ -49,6 +49,7 @@ class Order extends React.PureComponent {
     addresses: PropTypes.instanceOf(Immutable.Map),
     orderDeliveryDaysFetchError: PropTypes.string,
     recipesPeriodStockFetchError: PropTypes.string,
+    randomProducts: PropTypes.instanceOf(Immutable.List),
   }
 
   static defaultProps = {

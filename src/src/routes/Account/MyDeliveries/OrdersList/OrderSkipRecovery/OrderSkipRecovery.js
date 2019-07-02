@@ -28,7 +28,10 @@ const propTypes = {
   callToActions: PropTypes.shape({
     confirm: PropTypes.string,
     keep: PropTypes.string,
-  })
+  }),
+  triggered: PropTypes.bool,
+  orderDate: PropTypes.string,
+  getSkipRecoveryContent: PropTypes.func,
 }
 
 class OrderSkipRecovery extends React.PureComponent {
