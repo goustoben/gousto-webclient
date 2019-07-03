@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
-import { isNextDayDeliveryPaintedDoorFeatureEnabled } from 'selectors/features'
+import {
+  isWizardDeliveryFrequencyFeatureEnabled,
+  isNextDayDeliveryPaintedDoorFeatureEnabled,
+} from 'selectors/features'
 
 import DeliveryStep from './DeliveryStep'
 
@@ -23,6 +26,7 @@ function mapStateToProps(state) {
     tempDate,
     tempSlotId,
     menuFetchDataPending: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
+    deliveryFrequencyFeatureEnabled:  isWizardDeliveryFrequencyFeatureEnabled(state),
     nextDayDeliveryPaintedDoorFeature: isNextDayDeliveryPaintedDoorFeatureEnabled(state),
     isNDDPaintedDoorOpened,
   }
