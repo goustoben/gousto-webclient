@@ -4,7 +4,7 @@ import actionTypes from 'actions/actionTypes'
 import { changeCollectionToAllRecipes } from 'actions/filters'
 import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
-import { getFeaturedRecipes, getRemainingRecipes, getOutOfStockRecipes } from 'routes/Menu/selectors/sorting'
+import { getFeaturedRecipes, getRemainingRecipes, getOutOfStockRecipes, getSortedRecipes } from 'routes/Menu/selectors/sorting'
 import { getCurrentCollectionIsRecommendation } from 'routes/Menu/selectors/menu'
 
 import RecipeList from './RecipeList'
@@ -13,8 +13,7 @@ const mapStateToProps = (state) => {
   const featuredRecipes = getFeaturedRecipes(state)
   const remainingRecipes = getRemainingRecipes(state)
   const outOfStockRecipes = getOutOfStockRecipes(state)
-
-  const sortedRecipes=featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
+  const sortedRecipes = getSortedRecipes(state)
 
   return {
     allRecipesList: state.menuRecipes,
