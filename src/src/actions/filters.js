@@ -1,4 +1,4 @@
-import { push, goBack } from 'react-router-redux'
+import { push } from 'react-router-redux'
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
 import actionTypes from './actionTypes'
 import {
@@ -231,6 +231,7 @@ export const selectFoodBrand = (foodBrand) => (
       const query = { ...prevLoc.query }
       if (foodBrand === null) {
         delete query.foodBrand
+        dispatch(changeCollectionToAllRecipes())
       } else {
         query.foodBrand = foodBrand.slug
         if (query.collection) {
