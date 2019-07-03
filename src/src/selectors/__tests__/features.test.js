@@ -8,7 +8,7 @@ import {
   getJfyTutorial,
   getOrderConfirmation,
   getRafPositionOnWelcomePage,
-  isWizardDeliveryFrequencyFeatureEnabled
+  isDeliveryFrequencyFeatureEnabled
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -181,10 +181,10 @@ describe('when features are defined', () => {
     })
   })
 
-  describe('isWizardDeliveryFrequencyFeatureEnabled', () => {
+  describe('isDeliveryFrequencyFeatureEnabled', () => {
     describe('when feature is not set', () => {
       test('should return false', () => {
-        expect(isWizardDeliveryFrequencyFeatureEnabled(state)).toEqual(false)
+        expect(isDeliveryFrequencyFeatureEnabled(state)).toEqual(false)
       })
     })
 
@@ -198,7 +198,7 @@ describe('when features are defined', () => {
       })
 
       test('should return false', () => {
-        expect(isWizardDeliveryFrequencyFeatureEnabled(state)).toEqual(false)
+        expect(isDeliveryFrequencyFeatureEnabled(state)).toEqual(false)
       })
     })
 
@@ -212,7 +212,7 @@ describe('when features are defined', () => {
       })
 
       test('should return true', () => {
-        expect(isWizardDeliveryFrequencyFeatureEnabled(state)).toEqual(true)
+        expect(isDeliveryFrequencyFeatureEnabled(state)).toEqual(true)
       })
     })
   })
