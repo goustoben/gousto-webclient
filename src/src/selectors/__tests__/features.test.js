@@ -7,7 +7,8 @@ import {
   getGoToMyDeliveries,
   getJfyTutorial,
   getOrderConfirmation,
-  getRafPositionOnWelcomePage
+  getRafPositionOnWelcomePage,
+  isWizardDeliveryFrequencyFeatureEnabled
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -177,6 +178,42 @@ describe('when features are defined', () => {
       state = Immutable.fromJS({})
 
       expect(getRafPositionOnWelcomePage(state)).toEqual(false)
+    })
+  })
+
+  describe('isWizardDeliveryFrequencyFeatureEnabled', () => {
+    describe('when feature is not set', () => {
+      test('should return false', () => {
+        expect(isWizardDeliveryFrequencyFeatureEnabled(state)).toEqual(false)
+      })
+    })
+
+    describe('when feature is set to false', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          wizardDeliveryFrequency: {
+            value: false,
+          },
+        })
+      })
+
+      test('should return false', () => {
+        expect(isWizardDeliveryFrequencyFeatureEnabled(state)).toEqual(false)
+      })
+    })
+
+    describe('when feature is set to true', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          wizardDeliveryFrequency: {
+            value: true,
+          },
+        })
+      })
+
+      test('should return true', () => {
+        expect(isWizardDeliveryFrequencyFeatureEnabled(state)).toEqual(true)
+      })
     })
   })
 })

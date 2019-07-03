@@ -21,3 +21,5 @@ export const getOrderConfirmation = state => (state.features ? state.features.ge
 export const getRafPositionOnWelcomePage = state => (state.features ? state.features.getIn(['rafAboveCarouselOnWelcomePage', 'value']) : false)
 
 export const getFoodBrandFeature = state => (state.features ? state.features.getIn(['foodBrand', 'value']) : false)
+
+export const isWizardDeliveryFrequencyFeatureEnabled = ({ features }) => features.getIn(['wizardDeliveryFrequency', 'value'], false)
