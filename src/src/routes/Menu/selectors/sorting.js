@@ -47,9 +47,9 @@ export const getRemainingRecipes = createSelector(
 
 export const getSortedRecipes = createSelector(
   [getFeaturedRecipes, getOutOfStockRecipes, getRemainingRecipes],
-  (featuredRecipes, outOfStockRecipes, remainingRecipes) => {
-    return featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
-  }
+  (featuredRecipes, outOfStockRecipes, remainingRecipes) => (
+    featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
+  )
 )
 
 export default {
