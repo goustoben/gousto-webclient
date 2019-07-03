@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { top, left } from 'scroll'
-import Immutable from 'immutable'/* eslint-disable no-caps, new-cap */
+import Immutable from 'immutable'
 import actual from 'actual'
+
+import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getScrollOffset } from 'utils/menu'
 import { getWindow } from 'utils/window'
 import CollectionItem from 'CollectionItem'
@@ -269,7 +271,7 @@ class CollectionsNav extends React.PureComponent {
         top(document.body, position)
       }
     }
-    if (collectionId !== 'ca8f71be-63ac-11e6-a693-068306404bab' && window.pageYOffset > (threshold + 1)) {
+    if (collectionId !== ALL_RECIPES_COLLECTION_ID && window.pageYOffset > (threshold + 1)) {
       window.scrollTo(0, threshold)
     }
   }
