@@ -22,17 +22,6 @@ import { MenuRecipes } from './MenuRecipes'
 import fetchData from './fetchData'
 import { JustForYouTutorial } from './JustForYouTutorial'
 
-const orderDoesContainProductsRequest = (orderId, orderHasAnyProducts) => {
-  const handleOrderDoesContainProductsRequest = () => {
-    orderHasAnyProducts(orderId)
-  }
-
-  window.addEventListener(
-    'orderDoesContainProductsRequest',
-    handleOrderDoesContainProductsRequest
-  )
-}
-
 class Menu extends React.Component {
   static propTypes = {
     basketOrderLoaded: PropTypes.func.isRequired,
@@ -145,7 +134,6 @@ class Menu extends React.Component {
     })
 
     const {
-      basketProducts,
       cutOffDate,
       params,
       storeOrderId,
@@ -163,12 +151,8 @@ class Menu extends React.Component {
       shouldJfyTutorialBeVisible,
       portionSizeSelectedTracking,
       numPortions,
-      orderId,
-      orderHasAnyProducts,
-      orderUpdateProducts,
       productsLoadProducts,
       productsLoadStock,
-      orderCheckoutAction,
       foodBrandSelected,
       foodBrandDetails,
       selectFoodBrandFromUrl
@@ -216,64 +200,14 @@ class Menu extends React.Component {
       portionSizeSelectedTracking(numPortions, params.orderId)
     }
 
-    const handleOrderUpdateProductsRequest = async (event) => {
-      const addExistingProducts = (itemChoices, products) => {
-        const newItemChoices = [...itemChoices]
-        products.forEach(product => {
-          newItemChoices.push({
-            id: product.id,
-            quantity: product.quantity,
-            type: "Product"
-          })
-        })
-
-        return newItemChoices
-      }
-
-      let { itemChoices } = event.detail
-      itemChoices = addExistingProducts(itemChoices, basketProducts)
-
-      const {
-        addressId,
-        postcode,
-        promoCode,
-        deliveryDayId,
-        slotId,
-        recipes,
-      } = this.props
-
-      if (!orderId) {
-        const checkoutResponse = await orderCheckoutAction({
-          addressId,
-          postcode,
-          numPortions,
-          promoCode,
-          orderId: '',
-          deliveryDayId,
-          slotId,
-          orderAction: this.getOrderAction(),
-          disallowRedirectToSummary: true,
-          recipes
-        })
-
-        if (checkoutResponse && checkoutResponse.orderId && checkoutResponse.url) {
-          await orderUpdateProducts(checkoutResponse.orderId, itemChoices)
-
-          return redirect(checkoutResponse.url)
-        }
-      }
-
-      orderUpdateProducts(orderId, itemChoices)
-    }
-
     window.addEventListener(
       'orderUpdateProductsRequest',
-      handleOrderUpdateProductsRequest
+      this.handleOrderUpdateProductsRequest
     )
 
-    orderDoesContainProductsRequest(
-      orderId,
-      orderHasAnyProducts
+    window.addEventListener(
+      'orderDoesContainProductsRequest',
+      this.handleOrderDoesContainProductsRequest
     )
 
     if (cutOffDate) {
@@ -344,11 +278,80 @@ class Menu extends React.Component {
   componentWillUnmount() {
     this.props.loginVisibilityChange(false)
 
-    window.removeEventListener('orderDoesContainProductsRequest')
-    window.removeEventListener('orderUpdateProductsRequest')
+    window.removeEventListener(
+      'orderDoesContainProductsRequest',
+      this.handleOrderDoesContainProductsRequest
+    )
+    window.removeEventListener(
+      'orderUpdateProductsRequest',
+      this.handleOrderUpdateProductsRequest
+    )
   }
 
   masonryContainer = null
+
+  handleOrderDoesContainProductsRequest = () => {
+    const { orderId, orderHasAnyProducts } = this.props
+    orderHasAnyProducts(orderId)
+  }
+
+  handleOrderUpdateProductsRequest = async (event) => {
+    const addExistingProducts = (itemChoices, products) => {
+      const newItemChoices = [...itemChoices]
+      products.forEach(product => {
+        newItemChoices.push({
+          id: product.id,
+          quantity: product.quantity,
+          type: "Product"
+        })
+      })
+
+      return newItemChoices
+    }
+
+    const {
+      basketProducts,
+      orderCheckoutAction,
+      orderId,
+      numPortions,
+      orderUpdateProducts,
+    } = this.props
+
+    let { itemChoices } = event.detail
+    itemChoices = addExistingProducts(itemChoices, basketProducts)
+
+    const {
+      addressId,
+      postcode,
+      promoCode,
+      deliveryDayId,
+      slotId,
+      recipes,
+    } = this.props
+
+    if (!orderId) {
+      const checkoutResponse = await orderCheckoutAction({
+        addressId,
+        postcode,
+        numPortions,
+        promoCode,
+        orderId: '',
+        deliveryDayId,
+        slotId,
+        orderAction: this.getOrderAction(),
+        disallowRedirectToSummary: true,
+        recipes
+      })
+
+      if (checkoutResponse && checkoutResponse.orderId && checkoutResponse.url) {
+        await orderUpdateProducts(checkoutResponse.orderId, itemChoices)
+
+        return redirect(checkoutResponse.url)
+      }
+    }
+
+    orderUpdateProducts(orderId, itemChoices)
+  }
 
   getOrderAction = () => {
     const { userOrders, orderId } = this.props

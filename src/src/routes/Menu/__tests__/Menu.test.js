@@ -562,12 +562,14 @@ describe('Menu', () => {
           return () => { }
         })
 
-        window.addEventListener = jest.fn((event, callback) => {
-          map[event] = callback
+        window.addEventListener = jest.fn(function(event, listener) {
+          map[event] = listener
         })
 
-        window.removeEventListener = jest.fn((event) => {
-          map[event] = undefined
+        window.removeEventListener = jest.fn((event, listener) => {
+          if (map[event] === listener) {
+            map[event] = undefined
+          }
         })
 
         menuProps = {
