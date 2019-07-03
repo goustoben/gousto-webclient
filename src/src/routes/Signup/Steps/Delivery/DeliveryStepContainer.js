@@ -1,9 +1,11 @@
 import { connect } from 'react-redux'
-import DeliveryStep from './DeliveryStep'
+
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
 import { isNextDayDeliveryPaintedDoorFeatureEnabled } from 'selectors/features'
+
+import DeliveryStep from './DeliveryStep'
 
 function mapStateToProps(state) {
   const landing = getLandingDay(
