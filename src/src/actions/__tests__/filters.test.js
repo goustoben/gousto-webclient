@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import actionTypes from 'actions/actionTypes'
-import { push, goBack } from 'react-router-redux'
+import { push } from 'react-router-redux'
 
 import {
   collectionFilterChange,
@@ -20,7 +20,6 @@ import {
 
 jest.mock('react-router-redux', () => ({
   push: jest.fn(),
-  goBack: jest.fn()
 }))
 
 describe('filters actions', () => {
@@ -361,6 +360,7 @@ describe('filters actions', () => {
     test('should call FILTERS_FOOD_BRAND_CHANGE with null foodBrand if this is null', () => {
       selectFoodBrand(null)(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({'foodBrand': null, 'type': "FILTERS_FOOD_BRAND_CHANGE"})
+      expect(dispatchSpy).toHaveBeenCalledTimes(3)
     })
 
     test('should call push with foodBrand slug if foodBrand is not null', () => {
