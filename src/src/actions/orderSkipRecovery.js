@@ -14,7 +14,7 @@ export const modalVisibilityChange = ({
   (dispatch) => {
 
     dispatch({
-      type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+      type: actionTypes.ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: true,
       orderId,
       deliveryDayId,
@@ -44,7 +44,7 @@ export const keepOrder = ({ orderId, deliveryDayId, status }) => (
     const offer = getState().orderSkipRecovery.get('offer')
 
     dispatch({
-      type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+      type: actionTypes.ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: false,
       orderId,
       trackingData: {
@@ -70,7 +70,7 @@ export const cancelPendingOrder = (orderId, deliveryDayId, variation = 'default'
     } finally {
       dispatch(redirect('/my-deliveries'))
       dispatch({
-        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+        type: actionTypes.ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: false,
       })
     }
@@ -86,7 +86,7 @@ export const cancelProjectedOrder = (deliveryDayId, variation = 'default') => (
     } finally {
       dispatch(redirect('/my-deliveries'))
       dispatch({
-        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+        type: actionTypes.ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: false,
       })
     }

@@ -16,14 +16,14 @@ export const initialState = () => Immutable.Map({
   callToActions: null,
 })
 
-const orderSkipRecovery = {
-  orderSkipRecovery: (state, action) => {
+const onScreenRecovery = {
+  onScreenRecovery: (state, action) => {
     if (!state) {
       return initialState()
     }
 
     switch (action.type) {
-    case actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED: {
+    case actionTypes.ON_SCREEN_RECOVERY_TRIGGERED: {
       let newState = state.set('triggered', action.triggered).set('orderType', action.orderType)
       if (action.orderId) {
         newState = newState.set('orderId', action.orderId)
@@ -37,7 +37,7 @@ const orderSkipRecovery = {
 
       return newState
     }
-    case actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE: {
+    case actionTypes.ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE: {
       let newState = state
       if (action.modalVisibility) {
 
@@ -70,7 +70,7 @@ const orderSkipRecovery = {
 
       return newState
     }
-    case actionTypes.ORDER_SKIP_RECOVERY_BOX_NUMBER_CHANGE: {
+    case actionTypes.ON_SCREEN_RECOVERY_BOX_NUMBER_CHANGE: {
       return state.set('boxNumber', action.boxNumber)
     }
 
@@ -81,4 +81,4 @@ const orderSkipRecovery = {
   }
 }
 
-export default orderSkipRecovery
+export default onScreenRecovery

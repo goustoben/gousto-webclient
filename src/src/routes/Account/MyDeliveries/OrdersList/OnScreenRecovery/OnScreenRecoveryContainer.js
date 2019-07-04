@@ -5,17 +5,17 @@ import { getSkipRecoveryContent, keepOrder, cancelPendingOrder, cancelProjectedO
 import { OnScreenRecovery } from './OnScreenRecovery'
 
 const mapStateToProps = (state) => ({
-  triggered: state.orderSkipRecovery.get('triggered'),
-  visible: state.orderSkipRecovery.get('modalVisibility'),
-  orderId: state.orderSkipRecovery.get('orderId'),
-  orderDate: state.orderSkipRecovery.get('orderDate'),
-  deliveryDayId: state.orderSkipRecovery.get('deliveryDayId'),
-  orderType: state.orderSkipRecovery.get('orderType'),
+  triggered: state.onScreenRecovery.get('triggered'),
+  visible: state.onScreenRecovery.get('modalVisibility'),
+  orderId: state.onScreenRecovery.get('orderId'),
+  orderDate: state.onScreenRecovery.get('orderDate'),
+  deliveryDayId: state.onScreenRecovery.get('deliveryDayId'),
+  orderType: state.onScreenRecovery.get('orderType'),
   boxNumber: state.subscription.getIn(['subscription', 'currentBoxNumber']),
-  title: state.orderSkipRecovery.get('title'),
-  offer: state.orderSkipRecovery.get('offer'),
-  valueProposition: state.orderSkipRecovery.get('valueProposition'),
-  callToActions: state.orderSkipRecovery.get('callToActions'),
+  title: state.onScreenRecovery.get('title'),
+  offer: state.onScreenRecovery.get('offer'),
+  valueProposition: state.onScreenRecovery.get('valueProposition'),
+  callToActions: state.onScreenRecovery.get('callToActions'),
 })
 
 const mapDispatchToProps = {
