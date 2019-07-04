@@ -2,7 +2,7 @@ import logger from 'utils/logger'
 import actionTypes from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
-import { fetchOrderSkipContent } from '../apis/orderSkipRecovery'
+import { fetchOrderSkipContent } from '../apis/onScreenRecovery'
 
 export const modalVisibilityChange = ({
   orderId,

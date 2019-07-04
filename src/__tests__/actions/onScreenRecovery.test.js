@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 
 import { orderCancel, projectedOrderCancel } from 'actions/order'
-import { fetchOrderSkipContent } from 'apis/orderSkipRecovery'
+import { fetchOrderSkipContent } from 'apis/onScreenRecovery'
 import { redirect } from 'actions/redirect'
 import actionTypes from 'actions/actionTypes'
 import logger from 'utils/logger'
@@ -23,7 +23,7 @@ jest.mock('actions/redirect', () => ({
   redirect: jest.fn(),
 }))
 
-jest.mock('apis/orderSkipRecovery', () => ({
+jest.mock('apis/onScreenRecovery', () => ({
   fetchOrderSkipContent: jest.fn(),
 }))
 
