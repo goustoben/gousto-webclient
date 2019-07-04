@@ -90,7 +90,7 @@ describe('onScreenRecovery', () => {
       })(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-        type: actionTypes.ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE,
+        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
         modalVisibility: true,
         orderId,
         title: 'Are you sure you want to skip?',
@@ -121,7 +121,7 @@ describe('onScreenRecovery', () => {
     test('should set modal cancelOrder visibility to false', async () => {
       keepOrder({ orderId: '83632', deliveryDayId: '123', status: 'pending' })(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-        type: 'ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE',
+        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
         orderId: '83632',
         trackingData: expect.objectContaining({delivery_day_id: '123',})
@@ -155,7 +155,7 @@ describe('onScreenRecovery', () => {
       cancelPendingOrder('64521')(dispatchSpy)
       setTimeout(() => {
         expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-          type: 'ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE',
+          type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
           modalVisibility: false,
         }))
       }, 500)
@@ -186,7 +186,7 @@ describe('onScreenRecovery', () => {
       cancelProjectedOrder('1234')(dispatchSpy)
       setTimeout(() => {
         expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-          type: 'ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE',
+          type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
           modalVisibility: false,
         }))
       }, 500)
