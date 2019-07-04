@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { getSkipRecoveryContent, keepOrder, cancelPendingOrder, cancelProjectedOrder } from 'actions/orderSkipRecovery'
+import { getSkipRecoveryContent, keepOrder, cancelPendingOrder, cancelProjectedOrder } from 'actions/onScreenRecovery'
 
 import { OnScreenRecovery } from './OnScreenRecovery'
 

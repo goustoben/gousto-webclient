@@ -40,8 +40,8 @@ export const modalVisibilityChange = ({
 
 export const keepOrder = ({ orderId, deliveryDayId, status }) => (
   (dispatch, getState) => {
-    const valueProposition = getState().orderSkipRecovery.get('valueProposition')
-    const offer = getState().orderSkipRecovery.get('offer')
+    const valueProposition = getState().onScreenRecovery.get('valueProposition')
+    const offer = getState().onScreenRecovery.get('offer')
 
     dispatch({
       type: actionTypes.ON_SCREEN_RECOVERY_MODAL_VISIBILITY_CHANGE,

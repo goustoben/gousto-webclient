@@ -11,7 +11,7 @@ import login from './login'
 import menu from './menu'
 import newsletter from './newsletter'
 import order from './order'
-import * as orderSkipRecovery from './orderSkipRecovery'
+import * as onScreenRecovery from './onScreenRecovery'
 import page from './page'
 import persist from './persist'
 import products from './products'
@@ -46,7 +46,7 @@ const actions = {
   ...menu,
   ...newsletter,
   ...order,
-  ...orderSkipRecovery,
+  ...onScreenRecovery,
   ...page,
   ...persist,
   ...products,

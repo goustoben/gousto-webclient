@@ -12,7 +12,7 @@ import {
   cancelPendingOrder,
   cancelProjectedOrder,
   getSkipRecoveryContent,
-} from 'actions/orderSkipRecovery'
+} from 'actions/onScreenRecovery'
 
 jest.mock('actions/order', () => ({
   orderCancel: jest.fn(),
@@ -31,7 +31,7 @@ jest.mock('utils/logger', () => ({
   error: jest.fn()
 }))
 
-describe('orderSkipRecovery', () => {
+describe('onScreenRecovery', () => {
   const dispatchSpy = jest.fn()
   const getStateSpy = jest.fn()
 
@@ -104,7 +104,7 @@ describe('orderSkipRecovery', () => {
   describe('keepOrder', () => {
     beforeEach(() => {
       getStateSpy.mockReturnValue({
-        orderSkipRecovery: Immutable.Map({
+        onScreenRecovery: Immutable.Map({
           modalVisibility: true,
           orderId: '',
           valueProposition: null,
@@ -169,7 +169,7 @@ describe('orderSkipRecovery', () => {
 
   describe('cancelProjectedOrder', () => {
     getStateSpy.mockReturnValue({
-      orderSkipRecovery: Immutable.Map({
+      onScreenRecovery: Immutable.Map({
         modalVisibility: true,
         orderId: '',
         deliveryDayId: '',
