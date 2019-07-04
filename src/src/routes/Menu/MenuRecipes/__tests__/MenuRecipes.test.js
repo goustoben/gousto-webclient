@@ -7,6 +7,7 @@ import SubHeader from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
 import { Banner } from 'routes/Menu/Banner'
 import MenuNoResults from 'routes/Menu/MenuNoResults'
+import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 
 jest.mock('routes/Menu/SubHeader')
 
@@ -53,6 +54,9 @@ describe('initial render', () => {
   test('should render banner with an image name prop', () => {
     expect(wrapper.find(Banner).length).toBe(1)
     expect(wrapper.find(Banner).prop('type')).toBeTruthy()
+  })
+  test('should render these through the RecipGrid component', () => {
+    expect(wrapper.find(RecipeGrid)).toHaveLength(1)
   })
 })
 
