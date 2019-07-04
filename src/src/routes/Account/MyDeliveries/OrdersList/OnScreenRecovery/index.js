@@ -1,1 +1,1 @@
-export { OrderSkipRecoveryContainer as OrderSkipRecovery } from './OrderSkipRecoveryContainer'
+export { OnScreenRecoveryContainer as OnScreenRecovery } from './OnScreenRecoveryContainer'

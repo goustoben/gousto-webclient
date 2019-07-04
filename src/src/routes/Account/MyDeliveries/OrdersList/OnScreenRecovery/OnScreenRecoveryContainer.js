@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { getSkipRecoveryContent, keepOrder, cancelPendingOrder, cancelProjectedOrder } from 'actions/orderSkipRecovery'
 
-import { OrderSkipRecovery } from './OrderSkipRecovery'
+import { OnScreenRecovery } from './OnScreenRecovery'
 
 const mapStateToProps = (state) => ({
   triggered: state.orderSkipRecovery.get('triggered'),
@@ -26,4 +26,4 @@ const mapDispatchToProps = {
 
 }
 
-export const OrderSkipRecoveryContainer = connect(mapStateToProps, mapDispatchToProps)(OrderSkipRecovery)
+export const OnScreenRecoveryContainer = connect(mapStateToProps, mapDispatchToProps)(OnScreenRecovery)
