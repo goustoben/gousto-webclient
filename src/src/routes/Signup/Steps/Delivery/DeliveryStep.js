@@ -20,7 +20,13 @@ const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
   tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''
 )
 
-const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
+const formatDate = (deliveryFrequencyFeatureEnabled, date) => (
+  deliveryFrequencyFeatureEnabled ? (
+    `${date.format('dddd')}s (starting ${date.format('Do MMM')})`
+  ) : date.format('ddd D MMM')
+)
+
+const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate, deliveryFrequencyFeatureEnabled) => {
   const slots = {}
   const deliveryDays = boxSummaryDeliveryDays.map((dd) => {
     const date = dd.get('date')
@@ -34,7 +40,7 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
     let disabled = dd.get('alternateDeliveryDay') !== null
     disabled = (dd && dd.get('alternateDeliveryDay') !== null)
 
-    return { date, value: date, disabled, label: moment(date).format('ddd D MMM') }
+    return { date, value: date, disabled, label: formatDate(deliveryFrequencyFeatureEnabled, moment(date))}
   })
     .toArray()
     .sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
@@ -42,7 +48,7 @@ const getDeliveryDaysAndSlots = (boxSummaryDeliveryDays, tempDate) => {
   return { slots, deliveryDays }
 }
 
-const DeliveryStep = ({ 
+const DeliveryStep = ({
   boxSummaryDeliveryDays,
   tempDate,
   setTempDate,
@@ -50,6 +56,7 @@ const DeliveryStep = ({
   setTempSlotId,
   boxSummaryDeliverySlotChosen,
   menuFetchDataPending,
+  deliveryFrequencyFeatureEnabled,
   nextDayDeliveryPaintedDoorFeature,
   next,
   trackDeliveryDayDropDownOpened,
@@ -62,9 +69,13 @@ const DeliveryStep = ({
   closeNDDPaintedDoor,
   trackDeliveryPreferenceModalViewed,
   trackDeliveryPreferenceModalClosed,
-  trackDeliveryPreferenceSelected
+  trackDeliveryPreferenceSelected,
 }) => {
-  let { slots, deliveryDays } = getDeliveryDaysAndSlots(boxSummaryDeliveryDays, tempDate)
+  let { slots, deliveryDays } = getDeliveryDaysAndSlots(
+    boxSummaryDeliveryDays,
+    tempDate,
+    deliveryFrequencyFeatureEnabled,
+  )
 
   if (nextDayDeliveryPaintedDoorFeature) {
     const nextDayDeliveryDays = createNextDayDeliveryDays()
@@ -232,6 +243,7 @@ DeliveryStep.propTypes = {
   trackDeliveryDayEdited: PropTypes.func,
   trackDeliverySlotEdited: PropTypes.func,
   menuFetchDataPending: PropTypes.bool,
+  deliveryFrequencyFeatureEnabled: PropTypes.bool,
   nextDayDeliveryPaintedDoorFeature: PropTypes.bool,
   isNDDPaintedDoorOpened: PropTypes.bool,
   openNDDPaintedDoor: PropTypes.func,

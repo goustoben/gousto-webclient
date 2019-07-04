@@ -1,4 +1,5 @@
-import { push, goBack } from 'react-router-redux'
+import { push } from 'react-router-redux'
+import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
 import actionTypes from './actionTypes'
 import {
@@ -123,7 +124,7 @@ export function collectionFilterChange(collectionId) {
 
 export const changeCollectionToAllRecipes = () => (
   (dispatch) => {
-    dispatch(collectionFilterChange('ca8f71be-63ac-11e6-a693-068306404bab'))
+    dispatch(collectionFilterChange(ALL_RECIPES_COLLECTION_ID))
     dispatch(trackCTAToAllRecipesClicked())
   }
 )
@@ -231,6 +232,7 @@ export const selectFoodBrand = (foodBrand) => (
       const query = { ...prevLoc.query }
       if (foodBrand === null) {
         delete query.foodBrand
+        dispatch(changeCollectionToAllRecipes())
       } else {
         query.foodBrand = foodBrand.slug
         if (query.collection) {
