@@ -117,6 +117,24 @@ describe('PromoCode', function () {
       expect(trackPromocodeChange).toHaveBeenCalled()
     })
 
+    it('should set pending to false if promoCode is invalid', () => {
+      wrapper = shallow(
+        <PromoCode
+          promoCode='invalid'
+          promoCodeApplied
+          previewOrderId={previewOrderId}
+          basketPromoCodeChange={basketPromoCodeChange}
+          basketPromoCodeAppliedChange={basketPromoCodeAppliedChange}
+          loadPrices={loadPrices}
+          trackPromoCodeChange={trackPromocodeChange}
+        />
+      )
+
+      wrapper.find(Segment).first().simulate('click')
+
+      expect(wrapper.state('pending')).toEqual(false)
+    })
+
     describe('handleInput', function () {
       let value
       beforeEach(function () {
