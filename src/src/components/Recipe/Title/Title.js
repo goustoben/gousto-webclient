@@ -11,11 +11,12 @@ const Title = ({ headlineFont, title, view, mouseEnter, mouseLeave, linkUnderlin
     const recipeTitle = (view === 'featured' || view === 'simple')
       ? sanitizeText.removeDiacritics(title)
       : title
+    const hasEllipsis = view === 'simple'
 
     return (
       <h2
         className={classNames(
-          css.titleEllipsis,
+          { [css.titleEllipsis]: hasEllipsis },
           { [css.container]: view === 'gridSmall' },
           { [css.containerLG]: (view !== 'gridSmall' & view !== 'featured') },
           { [css.largeHeading]: view === 'featured' },
