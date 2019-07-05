@@ -12,5 +12,6 @@
 .chef :local img {
 	height: 100%;
 	border: chefImageBorderWidth solid white;
+	background-color: white;
 	border-radius: 50%;
 }
