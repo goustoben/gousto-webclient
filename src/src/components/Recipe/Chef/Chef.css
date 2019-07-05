@@ -1,3 +1,4 @@
+@value White from 'styles/colors.css';
 @value chefImageBorderWidth 2px;
 @value chefImageSize calc(70px + chefImageBorderWidth);
 
@@ -11,7 +12,7 @@
 
 .chef :local img {
 	height: 100%;
-	border: chefImageBorderWidth solid white;
-	background-color: white;
+	border: chefImageBorderWidth solid White;
+	background-color: White;
 	border-radius: 50%;
 }
