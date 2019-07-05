@@ -2,9 +2,11 @@
 @value sizeXXS, sizeXS from 'styles/typography.css';
 @value Blackberry, Pomegranate from 'styles/colors.css';
 
+@value padding: 1rem;
+
 .tab {
 	composes: textCenter from 'styles/typography.css';
-	composes: paddingSMTopBottom marginXXLRight from 'sass-loader!styles/spacing.scss';
+	composes: marginXXLRight from 'sass-loader!styles/spacing.scss';
 	color: Blackberry;
 	position: relative;
 	@media ScreenXSMax {
@@ -14,14 +16,20 @@
 	&:hover, &:focus, &:active {
 		cursor: pointer;
 		border-bottom: solid 2px Pomegranate;
-		padding-bottom: 8px;
 		color: Pomegranate;
 	}
 }
 
+.tab > a {
+	display: inline-block;
+	padding-top: padding;
+	padding-bottom: padding;
+}
+
 .active {
 	border-bottom: solid 2px Pomegranate;
-	padding-bottom: 8px;
+	padding-top: padding;
+	padding-bottom: padding;
 	color: Pomegranate;
 	&:hover, &:focus, &:active {
 		cursor: default;
