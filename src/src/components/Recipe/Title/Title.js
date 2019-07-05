@@ -15,6 +15,7 @@ const Title = ({ headlineFont, title, view, mouseEnter, mouseLeave, linkUnderlin
     return (
       <h2
         className={classNames(
+          css.titleEllipsis,
           { [css.container]: view === 'gridSmall' },
           { [css.containerLG]: (view !== 'gridSmall' & view !== 'featured') },
           { [css.largeHeading]: view === 'featured' },
