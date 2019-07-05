@@ -1,17 +1,17 @@
-@value Haricot, Radish, Carrot, White, DarkChilli, White from 'styles/colors.css';
+@value Haricot, Radish, Carrot, White, DarkChilli, White, HaricotMedium from 'styles/colors.css';
 
 .badge {
 	composes: paddingSMLeftRight marginXSRight marginXSBottom from 'sass-loader!styles/spacing.scss';
 	composes: inlineBlock from 'styles/display.css';
 	composes: textXS from 'styles/typography.css';
 	font-weight: bold;
-	border-radius: 1.4em;
+	border-radius: 4px;
 	border: 1px solid
 }
 
 .newRecipe {
 	color: Haricot;
-	border-color: Haricot;
+	border-color: HaricotMedium;
 }
 
 .stockInfo {
