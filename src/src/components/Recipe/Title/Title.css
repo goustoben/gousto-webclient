@@ -81,8 +81,11 @@
 }
 
 .icon {
+	margin-left: 0.25rem;
+	display: inline;
 	composes: fa-basic-class fa-angle-right from 'styles/vendor/font-awesome-module.css';
 }
+
 .largeIcon {
 	@media ScreenSMMin {
 		display: none;

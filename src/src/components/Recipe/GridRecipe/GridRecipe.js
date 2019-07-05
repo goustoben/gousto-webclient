@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import classnames from 'classnames'
 
 import RangeBadge from 'Recipe/RangeBadge'
-import { getChef } from 'utils/recipe'
 import { recipePropTypes } from 'Recipe'
 import css from './GridRecipe.css'
 import Chef from '../Chef'
@@ -37,8 +35,8 @@ const GridRecipe = ({onClick, selectFoodBrand, isFoodBrandClickable, media, titl
       <div className={css.rangeBadgeWrapper}>
         <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
       </div>
-      <div className={css.textContainer}>
-        <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChef]: getChef(chef) })}>
+      <div className={css.contentWrapper}>
+        <div onClick={onClick} className={css.titleWrapper}>
           <Title
             title={title}
             view={view}
