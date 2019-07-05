@@ -1,7 +1,6 @@
 @value sizeMD from 'styles/typography.css';
 @value Basa from 'styles/colors.css';
 @value attributesLineHeight 1.8;
-@value chefTtileWidth calc(100% - 85px);
 
 .recipeDetails {
 	composes: relative from 'styles/position.css';
@@ -11,21 +10,18 @@
 	cursor: pointer;
 }
 
-.textContainer {
+.contentWrapper {
 	composes: paddingMD from 'sass-loader!styles/spacing.scss';
 	padding-top: 5px;
 	margin-top: 15px;
 }
 
-.linkUnderlined {
+.titleWrapper {
+	padding-right: 1rem;
 	composes: link;
 	&:hover {
 		text-decoration: underline;
 	}
-}
-
-.linkIfChef {
-	max-width: chefTtileWidth;
 }
 
 .score {
