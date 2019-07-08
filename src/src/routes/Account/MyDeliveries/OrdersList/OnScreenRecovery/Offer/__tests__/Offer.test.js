@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import renderer from 'react-test-renderer'
 
-import Offer from '../Offer'
+import { Offer } from '../Offer'
 
 describe('Order Skip Recovery Model Offer', () => {
   let wrapper

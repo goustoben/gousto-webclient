@@ -1,1 +1,1 @@
-export default from './Offer'
+export { Offer } from './Offer'
