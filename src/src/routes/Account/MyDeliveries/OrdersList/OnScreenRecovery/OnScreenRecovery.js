@@ -5,20 +5,17 @@ import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
 
 import css from './OnScreenRecovery.css'
 
-import Title from './Title'
-import Offer from './Offer'
-import ValueProposition from './ValueProposition'
-import Header from './Header'
-import Footer from './Footer'
+import { Title } from './Title'
+import { Offer } from './Offer'
+import { ValueProposition } from './ValueProposition'
+import { Header } from './Header'
+import { Footer } from './Footer'
 
 const propTypes = {
   visible: PropTypes.bool,
   orderId: PropTypes.string,
   deliveryDayId: PropTypes.string,
   orderType: PropTypes.string,
-  keepOrder: PropTypes.func.isRequired,
-  cancelPendingOrder: PropTypes.func.isRequired,
-  cancelProjectedOrder: PropTypes.func.isRequired,
   title: PropTypes.string,
   offer: PropTypes.object,
   valueProposition: PropTypes.shape({
@@ -29,55 +26,43 @@ const propTypes = {
     confirm: PropTypes.string,
     keep: PropTypes.string,
   }),
-  triggered: PropTypes.bool,
   orderDate: PropTypes.string,
-  getSkipRecoveryContent: PropTypes.func,
+  getRecoveryContent: PropTypes.func,
+  onLoss: PropTypes.func.isRequired,
+  onLossCopy: PropTypes.string.isRequired,
+  onRecover: PropTypes.func.isRequired,
+  onRecoverCopy: PropTypes.string.isRequired,
 }
 
 class OnScreenRecovery extends React.PureComponent {
 
-  componentDidUpdate(prevProps) {
-    const { triggered, orderId, orderDate, deliveryDayId, orderType, getSkipRecoveryContent } = this.props
-    const actionTriggered = (orderType === 'pending') ? 'Cancel' : 'Skip'
+  componentDidUpdate() {
+    const { orderId, orderDate, deliveryDayId, orderType, getRecoveryContent } = this.props
 
-    if (triggered && (prevProps.triggered !== triggered)) {
-
-      getSkipRecoveryContent({
-        orderId,
-        orderDate,
-        deliveryDayId,
-        status: orderType,
-        actionTriggered,
-      })
-    }
-  }
-
-  skipCancelOrder(orderId, deliveryDayId, orderType, cancelPendingOrder, cancelProjectedOrder) {
-    if (orderType === 'pending') {
-      cancelPendingOrder(orderId, deliveryDayId)
-    } else {
-      cancelProjectedOrder(deliveryDayId)
-    }
+    getRecoveryContent({
+      orderId,
+      orderDate,
+      deliveryDayId,
+      status: orderType
+    })
   }
 
   render() {
-    const { visible, deliveryDayId, orderId, orderType, keepOrder, cancelPendingOrder, cancelProjectedOrder, title, offer, valueProposition, callToActions } = this.props
-    const onClickKeepOrder = () => keepOrder({ orderId, deliveryDayId, status: orderType })
-    const onClickSkipCancel = () => this.skipCancelOrder(orderId, deliveryDayId, orderType, cancelPendingOrder, cancelProjectedOrder)
+    const { visible, title, offer, valueProposition, onRecover, onRecoverCopy, onLoss, onLossCopy } = this.props
 
     return (
       <ModalComponent visible={visible}>
         <Header offer={offer} />
         <div className={css.container}>
           <ModalTitle>
-            <Title title={title} orderType={orderType} />
+            <Title title={title}/>
           </ModalTitle>
           <ModalContent>
             <Offer offer={offer} />
             {(offer && valueProposition) ? <hr className={css.rule} /> : null}
             <ValueProposition valueProposition={valueProposition} />
           </ModalContent>
-          <Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
+          <Footer onRecover={onRecover} onRecoverCopy={onRecoverCopy} onLoss={onLoss} onLossCopy={onLossCopy} />
         </div>
       </ModalComponent>
     )

@@ -6,34 +6,32 @@ import { ModalFooter } from 'ModalComponent'
 import css from './Footer.css'
 
 const propTypes = {
-  orderType: PropTypes.string,
-  callToActions: PropTypes.shape({
-    confirm: PropTypes.string,
-    keep: PropTypes.string,
-  }),
-  onClickKeepOrder: PropTypes.func,
-  onClickSkipCancel: PropTypes.func,
+  onLoss: PropTypes.func.isRequired,
+  onLossCopy: PropTypes.string.isRequired,
+  onRecover: PropTypes.func.isRequired,
+  onRecoverCopy: PropTypes.string.isRequired,
 }
 
-const Footer = ({ orderType, callToActions, onClickKeepOrder, onClickSkipCancel }) => {
-  let keepCopy
-  let confirmCopy
-
-  if (callToActions) {
-    keepCopy = callToActions.keep
-    confirmCopy = callToActions.confirm
-  } else {
-    keepCopy = 'Keep Box'
-    confirmCopy = `${orderType === 'pending' ? 'Cancel' : 'Skip'} anyway`
-  }
+const Footer = ({ onLoss, onLossCopy, onRecover, onRecoverCopy }) => {
 
   return (
     <ModalFooter>
-      <div className={css.skipAnyWay} onClick={() => onClickSkipCancel() }>
-        {confirmCopy}
+      <div
+        className={css.loss}
+        role="button"
+        tabIndex={0}
+        onClick={() => onLoss()}
+        onKeyDown={event => event.keyCode === 13 && onLoss()}
+      >
+        {onLossCopy}
       </div>
-      <button className={css.keepButton} onClick={() => onClickKeepOrder() }>
-        {keepCopy}
+      <button
+        className={css.recover}
+        type="button"
+        onClick={() => onRecover()}
+        onKeyDown={event => event.keyCode === 13 && onRecover()}
+      >
+        {onRecoverCopy}
       </button>
     </ModalFooter>
   )
@@ -41,4 +39,4 @@ const Footer = ({ orderType, callToActions, onClickKeepOrder, onClickSkipCancel 
 
 Footer.propTypes = propTypes
 
-export default Footer
+export { Footer }

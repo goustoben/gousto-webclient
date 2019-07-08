@@ -1,7 +1,7 @@
 @value Bluecheese from 'styles/colors.css';
 @value avenirHeavyFontStack from 'styles/typography.css';
 
-.keepButton {
+.recover {
     display: block;
     height: 50px;
     width: 250px;
@@ -17,7 +17,7 @@
     color: White;
 }
 
-.skipAnyWay {
+.loss {
     display: block;
     color: Bluecheese;
     font-family: Avenir;
