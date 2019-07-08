@@ -14,7 +14,7 @@ class DeliverySlot extends React.Component {
   static propTypes = {
     address: PropTypes.object,
     prevDate: PropTypes.string,
-    deliveryDays: PropTypes.instanceOf(Immutable.List),
+    deliveryDays: PropTypes.instanceOf(Immutable.Map),
     postcode: PropTypes.string,
     userOrders: PropTypes.instanceOf(Immutable.Map),
     menuPending: PropTypes.bool,

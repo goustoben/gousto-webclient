@@ -30,7 +30,7 @@ class Details extends React.Component {
     onRemove: PropTypes.func.isRequired,
     orderId: PropTypes.string,
     promoCode: PropTypes.string,
-    okRecipeIds: PropTypes.instanceOf(Immutable.List).isRequired,
+    okRecipeIds: PropTypes.instanceOf(Immutable.Map).isRequired,
     recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
     slotId: PropTypes.string,
     view: PropTypes.string,
