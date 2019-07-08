@@ -15,7 +15,7 @@ class BoxPrices extends React.PureComponent {
   static propTypes = {
     data: PropTypes.shape({
       ...propType(boxPriceQuery),
-      loading: PropTypes.boolean,
+      loading: PropTypes.bool,
       error: PropTypes.object,
       boxPrices: PropTypes.object,
     }),
