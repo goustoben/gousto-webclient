@@ -30,4 +30,4 @@ ValueProposition.propTypes = propTypes
 
 ValueProposition.defaultProps = defaultProps
 
-export default ValueProposition
+export { ValueProposition }
