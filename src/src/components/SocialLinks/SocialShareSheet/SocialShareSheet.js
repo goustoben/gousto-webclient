@@ -78,6 +78,5 @@ class SocialShareSheet extends React.PureComponent {
       </ModalPanel>
     )
   }
-
 }
 export { SocialShareSheet }

@@ -55,6 +55,7 @@ const ReferAFriend = ({ rafOffer, referralCode, userFirstName, device, trackingR
         <SocialShareSheetCTA
           referralCode={referralCode}
           trackingReferFriend={trackingReferFriend}
+          isFixed={false}
         />
       </div>
 

@@ -12,7 +12,7 @@ class SocialShareSheetCTA extends PureComponent {
 
   propTypes = {
     referralCode: PropTypes.string.isRequired,
-    isFixed: PropTypes.string.isRequired,
+    isFixed: PropTypes.bool.isRequired,
     trackingReferFriend: PropTypes.func.isRequired,
   }
   openShareSheet = () => {
