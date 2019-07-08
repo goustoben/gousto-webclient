@@ -4,16 +4,16 @@ import { getFoodBrandFilter } from 'selectors/filters'
 import { selectFoodBrand } from 'actions/filters'
 import { FoodBrandPage } from './FoodBrandPage'
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const selectedFoodBrand = getFoodBrandFilter(state)
-  const query = ownProps.location && ownProps.location.query
+  const query = state.routing.locationBeforeTransitions && state.routing.locationBeforeTransitions.query
 
   return {
     name: selectedFoodBrand.name,
     description: config.foodBrandDescription[selectedFoodBrand.slug],
     borderColor: selectedFoodBrand.borderColor,
     browser: state.request.get('browser'),
-    menuRecipeDetailShow: (query) ? ownProps.location.query.recipeDetailId : '',
+    menuRecipeDetailShow: (query) ? query.recipeDetailId : '',
     features: state.features,
   }
 }
