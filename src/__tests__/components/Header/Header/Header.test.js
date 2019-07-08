@@ -19,7 +19,7 @@ jest.mock('components/CancelOrderModal', () => 'CancelOrderModal')
 jest.mock('components/ExpiredBillingModal', () => 'ExpiredBillingModal')
 jest.mock('routes/Account/Account', () =>'Account')
 jest.mock('routes/Account/Subscription/SubscriptionPause', () =>'SubscriptionPause')
-jest.mock('routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery', () => 'OrderSkipRecovery')
+jest.mock('routes/Account/MyDeliveries/OrdersList/OnScreenRecovery', () => 'OnScreenRecovery')
 
 describe('Header', () => {
   const config= {

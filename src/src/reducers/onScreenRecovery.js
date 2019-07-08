@@ -16,8 +16,8 @@ export const initialState = () => Immutable.Map({
   callToActions: null,
 })
 
-const orderSkipRecovery = {
-  orderSkipRecovery: (state, action) => {
+const onScreenRecovery = {
+  onScreenRecovery: (state, action) => {
     if (!state) {
       return initialState()
     }
@@ -81,4 +81,4 @@ const orderSkipRecovery = {
   }
 }
 
-export default orderSkipRecovery
+export default onScreenRecovery

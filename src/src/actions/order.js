@@ -351,8 +351,8 @@ export const orderCancel = (orderId, deliveryDayId, variation) => (
     dispatch(statusActions.error(actionTypes.ORDER_CANCEL, null))
     dispatch(statusActions.pending(actionTypes.ORDER_CANCEL, true))
     const accessToken = getState().auth.get('accessToken')
-    const valueProposition = getState().orderSkipRecovery.get('valueProposition')
-    const offer = getState().orderSkipRecovery.get('offer')
+    const valueProposition = getState().onScreenRecovery.get('valueProposition')
+    const offer = getState().onScreenRecovery.get('offer')
 
     try {
       await ordersApi.cancelOrder(accessToken, orderId)
@@ -401,8 +401,8 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
     dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, null))
     dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_CANCEL, true))
     const accessToken = getState().auth.get('accessToken')
-    const valueProposition = getState().orderSkipRecovery.get('valueProposition')
-    const offer = getState().orderSkipRecovery.get('offer')
+    const valueProposition = getState().onScreenRecovery.get('valueProposition')
+    const offer = getState().onScreenRecovery.get('offer')
 
     try {
       await userApi.skipDelivery(accessToken, deliveryDayId)

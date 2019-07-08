@@ -15,7 +15,7 @@ import SubscriptionPause from 'routes/Account/Subscription/SubscriptionPause'
 import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
-import { OrderSkipRecovery } from 'routes/Account/MyDeliveries/OrdersList/OrderSkipRecovery'
+import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import MobileMenu from './MobileMenu'
 import css from './Header.css'
 
@@ -376,7 +376,7 @@ class Header extends React.PureComponent {
         <DuplicateOrderModal />
         <ExpiredBillingModal />
         <SubscriptionPause />
-        <OrderSkipRecovery />
+        <OnScreenRecovery />
         {path.indexOf('my-') !== -1 ? (<div><Account location={{ pathname: path }} /></div>) : null}
       </span>
     )

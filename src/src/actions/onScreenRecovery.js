@@ -2,7 +2,7 @@ import logger from 'utils/logger'
 import actionTypes from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
-import { fetchOrderSkipContent } from '../apis/orderSkipRecovery'
+import { fetchOrderSkipContent } from '../apis/onScreenRecovery'
 
 export const modalVisibilityChange = ({
   orderId,
@@ -40,8 +40,8 @@ export const modalVisibilityChange = ({
 
 export const keepOrder = ({ orderId, deliveryDayId, status }) => (
   (dispatch, getState) => {
-    const valueProposition = getState().orderSkipRecovery.get('valueProposition')
-    const offer = getState().orderSkipRecovery.get('offer')
+    const valueProposition = getState().onScreenRecovery.get('valueProposition')
+    const offer = getState().onScreenRecovery.get('offer')
 
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,

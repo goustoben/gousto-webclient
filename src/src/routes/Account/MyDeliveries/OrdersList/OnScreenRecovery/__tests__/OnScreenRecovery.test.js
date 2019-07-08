@@ -2,9 +2,9 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import renderer from 'react-test-renderer'
 
-import { OrderSkipRecovery } from '../OrderSkipRecovery'
+import { OnScreenRecovery } from '../OnScreenRecovery'
 
-jest.mock('components/Overlay', () => 'Overlay') // don't want to be testinng this
+jest.mock('components/Overlay', () => 'Overlay')
 
 jest.mock('../Title', () => 'Title')
 jest.mock('../Offer', () => 'Offer')
@@ -33,7 +33,7 @@ describe('Order Skip Recovery Modal', () => {
 
     beforeAll(() => {
       wrapper = shallow(
-        <OrderSkipRecovery
+        <OnScreenRecovery
           title="modal title"
           orderType="pending"
           keepOrder={keepOrder}
@@ -48,7 +48,7 @@ describe('Order Skip Recovery Modal', () => {
 
     test('should render snapshot', () => {
       const tree = renderer.create(
-        <OrderSkipRecovery
+        <OnScreenRecovery
           featureFlag
           keepOrder={keepOrder}
           cancelPendingOrder={cancelPendingOrder}
@@ -103,7 +103,7 @@ describe('Order Skip Recovery Modal', () => {
   describe('Alternative Render', () => {
     test('should only call cancel pending order when order type is pending', () => {
       wrapper = shallow(
-        <OrderSkipRecovery
+        <OnScreenRecovery
           keepOrder={keepOrder}
           cancelPendingOrder={cancelPendingOrder}
           cancelProjectedOrder={cancelProjectedOrder}
@@ -118,7 +118,7 @@ describe('Order Skip Recovery Modal', () => {
 
     test('should only call cancel projected order when order type is projected', () => {
       wrapper = shallow(
-        <OrderSkipRecovery
+        <OnScreenRecovery
           keepOrder={keepOrder}
           cancelPendingOrder={cancelPendingOrder}
           cancelProjectedOrder={cancelProjectedOrder}
@@ -134,7 +134,7 @@ describe('Order Skip Recovery Modal', () => {
     test('should call getSkipRecoveryContent with appropriate props', () => {
       const getSkipRecoveryContent = jest.fn()
       wrapper = shallow(
-        <OrderSkipRecovery
+        <OnScreenRecovery
           orderId="14245"
           triggered={false}
           orderDate="2018-09-24T13:27:09.487Z"
