@@ -26,6 +26,7 @@ const propTypes = {
     confirm: PropTypes.string,
     keep: PropTypes.string,
   }),
+  triggered: PropTypes.bool,
   orderDate: PropTypes.string,
   getRecoveryContent: PropTypes.func,
   onLoss: PropTypes.func.isRequired,
@@ -36,15 +37,17 @@ const propTypes = {
 
 class OnScreenRecovery extends React.PureComponent {
 
-  componentDidUpdate() {
-    const { orderId, orderDate, deliveryDayId, orderType, getRecoveryContent } = this.props
+  componentDidUpdate(prevProps) {
+    const { triggered, orderId, orderDate, deliveryDayId, orderType, getRecoveryContent } = this.props
 
-    getRecoveryContent({
-      orderId,
-      orderDate,
-      deliveryDayId,
-      status: orderType
-    })
+    if (triggered && (prevProps.triggered !== triggered)) {
+      getRecoveryContent({
+        orderId,
+        orderDate,
+        deliveryDayId,
+        status: orderType
+      })
+    }
   }
 
   render() {
