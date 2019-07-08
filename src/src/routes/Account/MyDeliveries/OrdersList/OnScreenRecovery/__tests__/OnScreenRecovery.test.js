@@ -4,7 +4,7 @@ import renderer from 'react-test-renderer'
 
 import { OnScreenRecovery } from '../OnScreenRecovery'
 
-jest.mock('components/Overlay', () => 'Overlay') // don't want to be testing this
+jest.mock('components/Overlay', () => 'Overlay')
 
 jest.mock('../Title', () => 'Title')
 jest.mock('../Offer', () => 'Offer')
