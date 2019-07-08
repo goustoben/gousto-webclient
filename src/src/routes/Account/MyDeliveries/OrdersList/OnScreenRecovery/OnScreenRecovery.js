@@ -3,7 +3,7 @@ import React from 'react'
 
 import ModalComponent, { ModalContent, ModalTitle } from 'ModalComponent'
 
-import css from './OrderSkipRecovery.css'
+import css from './OnScreenRecovery.css'
 
 import Title from './Title'
 import Offer from './Offer'
@@ -34,7 +34,7 @@ const propTypes = {
   getSkipRecoveryContent: PropTypes.func,
 }
 
-class OrderSkipRecovery extends React.PureComponent {
+class OnScreenRecovery extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const { triggered, orderId, orderDate, deliveryDayId, orderType, getSkipRecoveryContent } = this.props
@@ -76,7 +76,7 @@ class OrderSkipRecovery extends React.PureComponent {
             <Offer offer={offer} />
             {(offer && valueProposition) ? <hr className={css.rule} /> : null}
             <ValueProposition valueProposition={valueProposition} />
-     </ModalContent>
+          </ModalContent>
           <Footer orderType={orderType} callToActions={callToActions} onClickKeepOrder={onClickKeepOrder} onClickSkipCancel={onClickSkipCancel} />
         </div>
       </ModalComponent>
@@ -84,6 +84,6 @@ class OrderSkipRecovery extends React.PureComponent {
   }
 }
 
-OrderSkipRecovery.propTypes = propTypes
+OnScreenRecovery.propTypes = propTypes
 
-export { OrderSkipRecovery }
+export { OnScreenRecovery }

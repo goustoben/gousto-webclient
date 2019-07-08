@@ -2,9 +2,9 @@ import Immutable from 'immutable'
 
 import actionTypes from 'actions/actionTypes'
 
-import orderSkipRecovery from 'reducers/orderSkipRecovery'
+import onScreenRecovery from 'reducers/onScreenRecovery'
 
-describe('orderSkipRecovery reducer', () => {
+describe('onScreenRecovery reducer', () => {
   let state
   const initialState = Immutable.Map({
     triggered: false,
@@ -19,16 +19,16 @@ describe('orderSkipRecovery reducer', () => {
     valueProposition: null,
     callToActions: null,
   })
-  describe('test initialState orderSkipRecovery', () => {
+  describe('test initialState onScreenRecovery', () => {
     state = undefined
-    test('orderSkipRecovery initialState', () => {
-      expect(Immutable.is(initialState, orderSkipRecovery.orderSkipRecovery(state, null))).toBe(true)
+    test('onScreenRecovery initialState', () => {
+      expect(Immutable.is(initialState, onScreenRecovery.onScreenRecovery(state, null))).toBe(true)
     })
   })
 
-  describe('orderSkipRecovery dispatch ORDER_SKIP_RECOVERY_TRIGGERED', () => {
+  describe('onScreenRecovery dispatch ORDER_SKIP_RECOVERY_TRIGGERED', () => {
     state = undefined
-    test('orderSkipRecovery dispatch trigger with orderId', () => {
+    test('onScreenRecovery dispatch trigger with orderId', () => {
       const expected = Immutable.Map({
         triggered: true,
         modalVisibility: false,
@@ -49,11 +49,11 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'pending',
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
 
-    test('orderSkipRecovery dispatch trigger with deliveryDayId', () => {
+    test('onScreenRecovery dispatch trigger with deliveryDayId', () => {
       const expected = Immutable.Map({
         triggered: true,
         modalVisibility: false,
@@ -74,11 +74,11 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected',
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
 
-    test('orderSkipRecovery dispatch trigger with orderDate', () => {
+    test('onScreenRecovery dispatch trigger with orderDate', () => {
       const expected = Immutable.Map({
         triggered: true,
         modalVisibility: false,
@@ -100,14 +100,14 @@ describe('orderSkipRecovery reducer', () => {
         orderDate: '2018-09-18 00:00:00',
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
   })
 
-  describe('orderSkipRecovery dispatch ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE', () => {
+  describe('onScreenRecovery dispatch ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE', () => {
     state = undefined
-    test('orderSkipRecovery dispatch trigger with modalVisibility false', () => {
+    test('onScreenRecovery dispatch trigger with modalVisibility false', () => {
       const expected = Immutable.Map({
         triggered: false,
         modalVisibility: false,
@@ -126,11 +126,11 @@ describe('orderSkipRecovery reducer', () => {
         modalVisibility: false,
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
 
-    test('orderSkipRecovery dispatch trigger with modalVisibility true and orderId', () => {
+    test('onScreenRecovery dispatch trigger with modalVisibility true and orderId', () => {
       const expected = Immutable.Map({
         triggered: false,
         modalVisibility: true,
@@ -152,11 +152,11 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'pending'
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
 
-    test('orderSkipRecovery dispatch trigger with modalVisibility true and deliveryDayId', () => {
+    test('onScreenRecovery dispatch trigger with modalVisibility true and deliveryDayId', () => {
       const expected = Immutable.Map({
         triggered: false,
         modalVisibility: true,
@@ -178,11 +178,11 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected'
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
 
-    test('orderSkipRecovery dispatch trigger with modalVisibility true and value proposition', () => {
+    test('onScreenRecovery dispatch trigger with modalVisibility true and value proposition', () => {
       const expected = Immutable.Map({
         triggered: false,
         modalVisibility: true,
@@ -205,11 +205,11 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected'
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
 
-    test('orderSkipRecovery dispatch trigger with modalVisibility true and callToActions', () => {
+    test('onScreenRecovery dispatch trigger with modalVisibility true and callToActions', () => {
       const expected = Immutable.Map({
         triggered: false,
         modalVisibility: true,
@@ -232,7 +232,7 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected'
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
 
@@ -274,7 +274,7 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected',
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
 
@@ -306,13 +306,13 @@ describe('orderSkipRecovery reducer', () => {
         orderType: 'projected',
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
   })
 
-  describe('orderSkipRecovery dispatch ORDER_SKIP_RECOVERY_BOX_NUMBER_CHANGE', () => {
-    test('orderSkipRecovery dispatch trigger with orderDate', () => {
+  describe('onScreenRecovery dispatch ORDER_SKIP_RECOVERY_BOX_NUMBER_CHANGE', () => {
+    test('onScreenRecovery dispatch trigger with orderDate', () => {
       const expected = Immutable.Map({
         triggered: false,
         modalVisibility: false,
@@ -331,7 +331,7 @@ describe('orderSkipRecovery reducer', () => {
         boxNumber: '5',
       }
 
-      const result = orderSkipRecovery.orderSkipRecovery(initialState, actionToCall)
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
       expect(result).toEqual(expected)
     })
   })

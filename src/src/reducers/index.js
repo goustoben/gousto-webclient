@@ -32,7 +32,7 @@ import collections from './collections'
 import cookbook from './cookbook'
 import pricing from './pricing'
 import cookies from './cookies'
-import orderSkipRecovery from './orderSkipRecovery'
+import onScreenRecovery from './onScreenRecovery'
 import { getHelp } from './getHelp'
 import { logger } from './logger'
 
@@ -56,7 +56,7 @@ const reducers = {
   ...menu,
   ...newsletter,
   orders,
-  ...orderSkipRecovery,
+  ...onScreenRecovery,
   ...persist,
   ...products,
   ...promos,

@@ -126,6 +126,10 @@ class PromoCode extends React.PureComponent {
             pending: false,
           })
         })
+    } else {
+      this.setState({
+        pending: false
+      })
     }
     this.setState({
       errorMsg: '',
