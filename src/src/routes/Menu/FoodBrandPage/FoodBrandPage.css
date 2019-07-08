@@ -49,6 +49,16 @@
   @media ScreenSMMin {
     font-size: 18px;
   }
+  &:focus {
+    outline: 0;
+  }
+}
+
+.backButton:hover .underline,
+.backButton:focus .underline
+ {
+  text-decoration: underline;
+  outline: 0;
 }
 
 .hideOnMobile {

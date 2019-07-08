@@ -82,7 +82,7 @@ class FoodBrandPage extends PureComponent {
         <div style={{borderBottom: `6px solid ${borderColor}`}}>
           <div className={classNameTitle} style={scrolledPastPointBorder ? {borderBottom: `6px solid ${borderColor}`} : {}}>
             <span className={css.backButton} role="button" tabIndex={0} onClick={removeFoodBrand} onKeyPress={removeFoodBrand}>
-              <span className={css.leftArrow}/>Back <span className={css.hideOnMobile}>to All Recipes</span>
+              <span className={css.leftArrow}/><span className={css.underline}>Back <span className={css.hideOnMobile}>to All Recipes</span></span>
             </span>
             <h1>{name}</h1>
           </div>
