@@ -1,6 +1,7 @@
 import React from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import css from './RangeBadge.css'
 
 const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
@@ -53,11 +54,14 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
       <div
         role="button"
         tabIndex={isFoodBrandClickable ? 0 : -1}
-        className={css.ribbonText}
+        className={classnames(css.ribbonText, { [css.ribbonTextUnderlined]: isFoodBrandClickable })}
         style={ribbonTextStyle}
         onClick={handleClick}
         onKeyPress={handleClick}
-      >{range.get('name').toUpperCase()}
+      >
+        <span className={classnames(css.foodBrandName, {[css.foodBrandNameUnderlined]: isFoodBrandClickable})}>
+          {range.get('name')}
+        </span>
       </div>
       <div className={css.ribbon} style={ribbonStyle}>
         <div className={css.arrowTopBorder} style={arrowBorderStyle}></div>

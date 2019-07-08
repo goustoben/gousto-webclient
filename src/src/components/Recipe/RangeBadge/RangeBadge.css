@@ -7,6 +7,7 @@
   flex-direction: row;
 }
 
+
 .ribbon {
   width: 10px;
   position: relative;
@@ -40,6 +41,37 @@
   border-left: 9px solid Pomegranate;
 }
 
+.arrowTop::before,
+.arrowBottom::before {
+  content: '';
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  border-right: none;
+  border-left: 9px solid rgba(0,0,0,0.1);
+}
+
+.arrowTop::before {
+  top: 0;
+  border-top: none;
+  border-bottom: 14px solid transparent;
+}
+
+.arrowBottom::before {
+  bottom: 0;
+  border-top: 14px solid transparent;
+  border-bottom: none;
+}
+
+.ribbonText:hover + .ribbon .arrowTop::before,
+.ribbonText:hover + .ribbon .arrowBottom::before,
+.ribbonText:focus + .ribbon .arrowTop::before,
+.ribbonText:focus + .ribbon .arrowBottom::before {
+  display: block;
+}
+
 .arrowBottom {
 	composes: arrow;
   top: 12px;
@@ -71,4 +103,34 @@
   font-size: 12px;
   font-weight: 700;
   font-family: Avenir-Black, Avenir;
+  position: relative;
+  &::before {
+    content: '';
+    display: none;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+  &:hover::before,
+  &:focus::before {
+    display: block;
+  }
+}
+
+.ribbonTextUnderlined {
+  composes: ribbonText;
+  &:hover,  &:focus {
+    text-decoration: underline;
+    outline: 0;
+  }
+}
+
+.foodBrandName {
+  position: relative;
+  z-index: 2;
+  text-transform: uppercase;
 }
