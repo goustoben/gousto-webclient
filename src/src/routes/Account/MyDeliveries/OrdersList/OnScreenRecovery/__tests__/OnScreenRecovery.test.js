@@ -6,16 +6,10 @@ import { OnScreenRecovery } from '../OnScreenRecovery'
 
 jest.mock('components/Overlay', () => 'Overlay')
 
-jest.mock('../Title', () => 'Title')
-jest.mock('../Offer', () => 'Offer')
-jest.mock('../ValueProposition', () => 'ValueProposition')
-jest.mock('../Footer', () => 'Footer')
-
 describe('Order Skip Recovery Modal', () => {
   let wrapper
   const keepOrder = jest.fn()
   const cancelPendingOrder = jest.fn()
-  const cancelProjectedOrder = jest.fn()
 
   afterEach(() => {
     jest.resetAllMocks()
@@ -26,22 +20,18 @@ describe('Order Skip Recovery Modal', () => {
       title: 'value proposition title',
       message: 'value proposition message',
     }
-    const callToActions = {
-      keep: 'keep',
-      confirm: 'confirm',
-    }
 
     beforeAll(() => {
       wrapper = shallow(
         <OnScreenRecovery
           title="modal title"
           orderType="pending"
-          keepOrder={keepOrder}
-          cancelPendingOrder={cancelPendingOrder}
-          cancelProjectedOrder={cancelProjectedOrder}
+          onRecover={keepOrder}
+          onLoss={cancelPendingOrder}
           featureFlag
           valueProposition={valueProposition}
-          callToActions={callToActions}
+          onRecoverCopy="keep"
+          onLossCopy="confirm"
         />
       )
     })
@@ -49,10 +39,14 @@ describe('Order Skip Recovery Modal', () => {
     test('should render snapshot', () => {
       const tree = renderer.create(
         <OnScreenRecovery
+          title="modal title"
+          orderType="pending"
+          onRecover={keepOrder}
+          onLoss={cancelPendingOrder}
           featureFlag
-          keepOrder={keepOrder}
-          cancelPendingOrder={cancelPendingOrder}
-          cancelProjectedOrder={cancelProjectedOrder}
+          valueProposition={valueProposition}
+          onRecoverCopy="keep"
+          onLossCopy="confirm"
         />
       ).toJSON()
 
@@ -69,7 +63,6 @@ describe('Order Skip Recovery Modal', () => {
       const modalTitle = wrapper.find('Title')
 
       expect(modalTitle.props().title).toBe('modal title')
-      expect(modalTitle.props().orderType).toBe('pending')
     })
 
     test('should display modal value proposition', () => {
@@ -93,43 +86,14 @@ describe('Order Skip Recovery Modal', () => {
     test('should pass correct props to footer', () => {
       const footer = wrapper.find('Footer')
 
-      expect(footer.props().orderType).toBe('pending')
-      expect(footer.props().callToActions).toEqual(callToActions)
-      expect(typeof footer.props().onClickKeepOrder).toBe('function')
-      expect(typeof footer.props().onClickSkipCancel).toBe('function')
+      expect(footer.props().onRecoverCopy).toBe('keep')
+      expect(footer.props().onLossCopy).toEqual('confirm')
+      expect(typeof footer.props().onRecover).toBe('function')
+      expect(typeof footer.props().onLoss).toBe('function')
     })
   })
 
   describe('Alternative Render', () => {
-    test('should only call cancel pending order when order type is pending', () => {
-      wrapper = shallow(
-        <OnScreenRecovery
-          keepOrder={keepOrder}
-          cancelPendingOrder={cancelPendingOrder}
-          cancelProjectedOrder={cancelProjectedOrder}
-        />
-      )
-
-      wrapper.instance().skipCancelOrder('13123', '123123', 'pending', cancelPendingOrder, cancelProjectedOrder)
-
-      expect(cancelProjectedOrder).toHaveBeenCalledTimes(0)
-      expect(cancelPendingOrder).toHaveBeenCalledTimes(1)
-    })
-
-    test('should only call cancel projected order when order type is projected', () => {
-      wrapper = shallow(
-        <OnScreenRecovery
-          keepOrder={keepOrder}
-          cancelPendingOrder={cancelPendingOrder}
-          cancelProjectedOrder={cancelProjectedOrder}
-        />
-      )
-
-      wrapper.instance().skipCancelOrder('13123', '123123', 'projected', cancelPendingOrder, cancelProjectedOrder)
-
-      expect(cancelPendingOrder).toHaveBeenCalledTimes(0)
-      expect(cancelProjectedOrder).toHaveBeenCalledTimes(1)
-    })
 
     test('should call getSkipRecoveryContent with appropriate props', () => {
       const getSkipRecoveryContent = jest.fn()
@@ -140,7 +104,7 @@ describe('Order Skip Recovery Modal', () => {
           orderDate="2018-09-24T13:27:09.487Z"
           deliveryDayId="23001"
           orderType="pending"
-          getSkipRecoveryContent={getSkipRecoveryContent}
+          getRecoveryContent={getSkipRecoveryContent}
         />
       )
 
@@ -153,7 +117,6 @@ describe('Order Skip Recovery Modal', () => {
       wrapper.instance().componentDidUpdate(prevProps)
 
       expect(getSkipRecoveryContent).toHaveBeenCalledWith({
-        actionTriggered: 'Cancel',
         deliveryDayId: '23001',
         orderDate: '2018-09-24T13:27:09.487Z',
         orderId: '14245',
