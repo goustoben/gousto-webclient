@@ -38,9 +38,12 @@ export const modalVisibilityChange = ({
   }
 )
 
-export const keepOrder = ({ orderId, deliveryDayId, status }) => (
+export const keepOrder = () => (
   (dispatch, getState) => {
     const valueProposition = getState().onScreenRecovery.get('valueProposition')
+    const orderId = getState().onScreenRecovery.get('orderId')
+    const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
+    const orderType = getState().onScreenRecovery.get('orderType')
     const offer = getState().onScreenRecovery.get('offer')
 
     dispatch({
@@ -51,7 +54,7 @@ export const keepOrder = ({ orderId, deliveryDayId, status }) => (
         actionType: 'Order Kept',
         order_id: orderId,
         delivery_day_id: deliveryDayId,
-        order_state: status,
+        order_state: orderType,
         recovery_reasons: [
           valueProposition,
           offer,
@@ -61,8 +64,11 @@ export const keepOrder = ({ orderId, deliveryDayId, status }) => (
   }
 )
 
-export const cancelPendingOrder = (orderId, deliveryDayId, variation = 'default') => (
-  async (dispatch) => {
+export const cancelPendingOrder = (variation = 'default') => (
+  async (dispatch, getState) => {
+    const orderId = getState().onScreenRecovery.get('orderId')
+    const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
+
     try {
       await dispatch(orderCancel(orderId, deliveryDayId, variation))
     } catch (err) {
@@ -77,8 +83,10 @@ export const cancelPendingOrder = (orderId, deliveryDayId, variation = 'default'
   }
 )
 
-export const cancelProjectedOrder = (deliveryDayId, variation = 'default') => (
-  async (dispatch) => {
+export const cancelProjectedOrder = (variation = 'default') => (
+  async (dispatch, getState) => {
+    const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
+
     try {
       await dispatch(projectedOrderCancel(deliveryDayId, deliveryDayId, variation))
     } catch (err) {
@@ -93,12 +101,17 @@ export const cancelProjectedOrder = (deliveryDayId, variation = 'default') => (
   }
 )
 
-export const getSkipRecoveryContent = ({ orderId, orderDate, deliveryDayId, status, actionTriggered }) => (
+export const getSkipRecoveryContent = () => (
   async (dispatch, getState) => {
+    const orderDate = getState().onScreenRecovery.get('orderDate')
+    const orderId = getState().onScreenRecovery.get('orderId')
+    const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
+    const status = getState().onScreenRecovery.get('orderType')
+    const actionTriggered = (status === 'pending') ? 'Cancel' : 'Skip'
     const accessToken = getState().auth.get('accessToken')
     try {
       const { data } = await fetchOrderSkipContent(accessToken, orderId, orderDate)
-
+      console.log('data', data) //eslint-disable-line
       if (data.intervene) {
         dispatch(modalVisibilityChange({
           orderId,
