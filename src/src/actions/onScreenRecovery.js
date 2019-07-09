@@ -64,12 +64,16 @@ export const keepOrder = () => (
   }
 )
 
-export const cancelPendingOrder = (variation = 'default') => (
-  async (dispatch, getState) => {
+export const cancelPendingOrder = (variation = 'default') => {
+  console.log('cPO') //eslint-disable-line
+
+  return async (dispatch, getState) => {
+    console.log('cPO async') //eslint-disable-line
     const orderId = getState().onScreenRecovery.get('orderId')
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
 
     try {
+      console.log('cPO try') //eslint-disable-line
       await dispatch(orderCancel(orderId, deliveryDayId, variation))
     } catch (err) {
       logger.error(err)
@@ -81,7 +85,7 @@ export const cancelPendingOrder = (variation = 'default') => (
       })
     }
   }
-)
+}
 
 export const cancelProjectedOrder = (variation = 'default') => (
   async (dispatch, getState) => {
@@ -110,9 +114,10 @@ export const getSkipRecoveryContent = () => (
     const actionTriggered = (status === 'pending') ? 'Cancel' : 'Skip'
     const accessToken = getState().auth.get('accessToken')
     try {
+      console.log('in try') //eslint-disable-line
       const { data } = await fetchOrderSkipContent(accessToken, orderId, orderDate)
-      console.log('data', data) //eslint-disable-line
       if (data.intervene) {
+        console.log('in if') //eslint-disable-line
         dispatch(modalVisibilityChange({
           orderId,
           deliveryDayId,
@@ -122,9 +127,9 @@ export const getSkipRecoveryContent = () => (
         }))
       } else {
         if (status === 'pending') {
-          cancelPendingOrder(orderId, deliveryDayId)
+          await cancelPendingOrder(orderId, deliveryDayId)(dispatch, getState)
         } else {
-          cancelProjectedOrder(deliveryDayId)
+          await cancelProjectedOrder(deliveryDayId)(dispatch, getState)
         }
       }
     } catch (err) {
