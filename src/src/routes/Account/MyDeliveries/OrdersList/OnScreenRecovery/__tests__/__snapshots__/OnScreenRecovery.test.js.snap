@@ -45,7 +45,7 @@ exports[`Order Skip Recovery Modal Initial Render should render snapshot 1`] = `
         className="modalFooter"
       >
         <div
-          className="loss"
+          className="confirm"
           onClick={[Function]}
           onKeyDown={[Function]}
           role="button"
@@ -54,7 +54,7 @@ exports[`Order Skip Recovery Modal Initial Render should render snapshot 1`] = `
           confirm
         </div>
         <button
-          className="recover"
+          className="keep"
           onClick={[Function]}
           onKeyDown={[Function]}
           type="button"

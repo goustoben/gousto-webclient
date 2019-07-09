@@ -30,8 +30,8 @@ describe('Order Skip Recovery Modal', () => {
           onConfirm={cancelPendingOrder}
           featureFlag
           valueProposition={valueProposition}
-          onKeepCopy="keep"
-          onConfirmCopy="confirm"
+          keepCopy="keep"
+          confirmCopy="confirm"
         />
       )
     })
@@ -45,8 +45,8 @@ describe('Order Skip Recovery Modal', () => {
           onConfirm={cancelPendingOrder}
           featureFlag
           valueProposition={valueProposition}
-          onKeepCopy="keep"
-          onConfirmCopy="confirm"
+          keepCopy="keep"
+          confirmCopy="confirm"
         />
       ).toJSON()
 
@@ -86,8 +86,8 @@ describe('Order Skip Recovery Modal', () => {
     test('should pass correct props to footer', () => {
       const footer = wrapper.find('Footer')
 
-      expect(footer.props().onKeepCopy).toBe('keep')
-      expect(footer.props().onConfirmCopy).toEqual('confirm')
+      expect(footer.props().keepCopy).toBe('keep')
+      expect(footer.props().confirmCopy).toEqual('confirm')
       expect(typeof footer.props().onKeep).toBe('function')
       expect(typeof footer.props().onConfirm).toBe('function')
     })
@@ -95,8 +95,8 @@ describe('Order Skip Recovery Modal', () => {
 
   describe('Alternative Render', () => {
 
-    test('should call getSkipRecoveryContent with appropriate props', () => {
-      const getSkipRecoveryContent = jest.fn()
+    test('should call getRecoveryContent', () => {
+      const getRecoveryContent = jest.fn()
       wrapper = shallow(
         <OnScreenRecovery
           orderId="14245"
@@ -104,7 +104,7 @@ describe('Order Skip Recovery Modal', () => {
           orderDate="2018-09-24T13:27:09.487Z"
           deliveryDayId="23001"
           orderType="pending"
-          getRecoveryContent={getSkipRecoveryContent}
+          getRecoveryContent={getRecoveryContent}
         />
       )
 
@@ -116,12 +116,7 @@ describe('Order Skip Recovery Modal', () => {
 
       wrapper.instance().componentDidUpdate(prevProps)
 
-      expect(getSkipRecoveryContent).toHaveBeenCalledWith({
-        deliveryDayId: '23001',
-        orderDate: '2018-09-24T13:27:09.487Z',
-        orderId: '14245',
-        status: 'pending',
-      })
+      expect(getRecoveryContent).toHaveBeenCalled()
     })
   })
 })
