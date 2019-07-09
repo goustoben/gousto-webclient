@@ -29,29 +29,24 @@ const propTypes = {
   triggered: PropTypes.bool,
   orderDate: PropTypes.string,
   getRecoveryContent: PropTypes.func,
-  onLoss: PropTypes.func.isRequired,
-  onLossCopy: PropTypes.string.isRequired,
-  onRecover: PropTypes.func.isRequired,
-  onRecoverCopy: PropTypes.string.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  confirmCopy: PropTypes.string.isRequired,
+  onKeep: PropTypes.func.isRequired,
+  keepCopy: PropTypes.string.isRequired,
 }
 
 class OnScreenRecovery extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
-    const { triggered, orderId, orderDate, deliveryDayId, orderType, getRecoveryContent } = this.props
+    const { triggered, getRecoveryContent } = this.props
 
     if (triggered && (prevProps.triggered !== triggered)) {
-      getRecoveryContent({
-        orderId,
-        orderDate,
-        deliveryDayId,
-        status: orderType
-      })
+      getRecoveryContent()
     }
   }
 
   render() {
-    const { visible, title, offer, valueProposition, onRecover, onRecoverCopy, onLoss, onLossCopy } = this.props
+    const { visible, title, offer, valueProposition, onKeep, keepCopy, onConfirm, confirmCopy } = this.props
 
     return (
       <ModalComponent visible={visible}>
@@ -65,7 +60,7 @@ class OnScreenRecovery extends React.PureComponent {
             {(offer && valueProposition) ? <hr className={css.rule} /> : null}
             <ValueProposition valueProposition={valueProposition} />
           </ModalContent>
-          <Footer onRecover={onRecover} onRecoverCopy={onRecoverCopy} onLoss={onLoss} onLossCopy={onLossCopy} />
+          <Footer onKeep={onKeep} keepCopy={keepCopy} onConfirm={onConfirm} confirmCopy={confirmCopy} />
         </div>
       </ModalComponent>
     )

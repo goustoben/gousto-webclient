@@ -26,12 +26,12 @@ describe('Order Skip Recovery Modal', () => {
         <OnScreenRecovery
           title="modal title"
           orderType="pending"
-          onRecover={keepOrder}
-          onLoss={cancelPendingOrder}
+          onKeep={keepOrder}
+          onConfirm={cancelPendingOrder}
           featureFlag
           valueProposition={valueProposition}
-          onRecoverCopy="keep"
-          onLossCopy="confirm"
+          onKeepCopy="keep"
+          onConfirmCopy="confirm"
         />
       )
     })
@@ -41,12 +41,12 @@ describe('Order Skip Recovery Modal', () => {
         <OnScreenRecovery
           title="modal title"
           orderType="pending"
-          onRecover={keepOrder}
-          onLoss={cancelPendingOrder}
+          onKeep={keepOrder}
+          onConfirm={cancelPendingOrder}
           featureFlag
           valueProposition={valueProposition}
-          onRecoverCopy="keep"
-          onLossCopy="confirm"
+          onKeepCopy="keep"
+          onConfirmCopy="confirm"
         />
       ).toJSON()
 
@@ -86,10 +86,10 @@ describe('Order Skip Recovery Modal', () => {
     test('should pass correct props to footer', () => {
       const footer = wrapper.find('Footer')
 
-      expect(footer.props().onRecoverCopy).toBe('keep')
-      expect(footer.props().onLossCopy).toEqual('confirm')
-      expect(typeof footer.props().onRecover).toBe('function')
-      expect(typeof footer.props().onLoss).toBe('function')
+      expect(footer.props().onKeepCopy).toBe('keep')
+      expect(footer.props().onConfirmCopy).toEqual('confirm')
+      expect(typeof footer.props().onKeep).toBe('function')
+      expect(typeof footer.props().onConfirm).toBe('function')
     })
   })
 

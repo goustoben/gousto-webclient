@@ -6,13 +6,13 @@ import { ModalFooter } from 'ModalComponent'
 import css from './Footer.css'
 
 const propTypes = {
-  onLoss: PropTypes.func.isRequired,
-  onLossCopy: PropTypes.string.isRequired,
-  onRecover: PropTypes.func.isRequired,
-  onRecoverCopy: PropTypes.string.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  confirmCopy: PropTypes.string.isRequired,
+  onKeep: PropTypes.func.isRequired,
+  keepCopy: PropTypes.string.isRequired,
 }
 
-const Footer = ({ onLoss, onLossCopy, onRecover, onRecoverCopy }) => {
+const Footer = ({ onConfirm, confirmCopy, onKeep, keepCopy }) => {
 
   return (
     <ModalFooter>
@@ -20,18 +20,18 @@ const Footer = ({ onLoss, onLossCopy, onRecover, onRecoverCopy }) => {
         className={css.loss}
         role="button"
         tabIndex={0}
-        onClick={() => onLoss()}
-        onKeyDown={event => event.keyCode === 13 && onLoss()}
+        onClick={() => onConfirm()}
+        onKeyDown={event => event.keyCode === 13 && onConfirm()}
       >
-        {onLossCopy}
+        {confirmCopy}
       </div>
       <button
         className={css.recover}
         type="button"
-        onClick={() => onRecover()}
-        onKeyDown={event => event.keyCode === 13 && onRecover()}
+        onClick={() => onKeep()}
+        onKeyDown={event => event.keyCode === 13 && onKeep()}
       >
-        {onRecoverCopy}
+        {keepCopy}
       </button>
     </ModalFooter>
   )
