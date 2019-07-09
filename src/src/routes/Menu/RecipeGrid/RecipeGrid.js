@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 import menu from 'config/menu'
 import RecipeList from '../RecipeList'
 import DetailOverlay from '../DetailOverlay'
@@ -27,13 +26,12 @@ class RecipeGrid extends React.Component {
       menuFilterExperiment
     } = this.props
 
+    const classMasonaryConatiner = menuFilterExperiment ? css.masonryContainer : css.masonryContainerMenu
+
     return (
       <div
         ref={ref => { this.masonryContainer = ref }}
-        className={classnames({
-          [css.masonryContainerMenu]: !menuFilterExperiment,
-          [css.masonryContainer]: menuFilterExperiment,
-        })}
+        className={classMasonaryConatiner}
         data-testing="menuRecipesList"
       >
         <RecipeList
