@@ -5,14 +5,14 @@ exports[`On Screen Recovery Modal Footer Initial Render should render snapshot 1
   className="modalFooter"
 >
   <div
-    className="loss"
+    className="confirm"
     onClick={[Function]}
     onKeyDown={[Function]}
     role="button"
     tabIndex={0}
   />
   <button
-    className="recover"
+    className="keep"
     onClick={[Function]}
     onKeyDown={[Function]}
     type="button"

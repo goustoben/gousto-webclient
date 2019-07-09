@@ -13,7 +13,7 @@ describe('On Screen Recovery Modal Footer', () => {
 
     beforeAll(() => {
       wrapper = mount(
-        <Footer onKeepCopy='Keep Box' onKeep={mockKeepOrder} onConfirmCopy='Skip anyway' onConfirm={mockSkipOrder} />
+        <Footer keepCopy='Keep Box' onKeep={mockKeepOrder} confirmCopy='Skip anyway' onConfirm={mockSkipOrder} />
       )
     })
 
@@ -25,15 +25,15 @@ describe('On Screen Recovery Modal Footer', () => {
       expect(tree).toMatchSnapshot()
     })
 
-    test('should display restore button', () => {
-      const keepBtn = wrapper.find('button.recover')
+    test('should display keep button', () => {
+      const keepBtn = wrapper.find('button.keep')
 
       expect(keepBtn.length).toBe(1)
       expect(keepBtn.text()).toBe('Keep Box')
     })
 
-    test('should display loss button', () => {
-      const skipBtn = wrapper.find('div.loss')
+    test('should display confirm button', () => {
+      const skipBtn = wrapper.find('div.confirm')
 
       expect(skipBtn.length).toBe(1)
       expect(skipBtn.text()).toBe('Skip anyway')
@@ -50,7 +50,7 @@ describe('On Screen Recovery Modal Footer', () => {
     })
 
     test('should fire keep order click event', () => {
-      const keepBtn = wrapper.find('.recover')
+      const keepBtn = wrapper.find('.keep')
 
       keepBtn.simulate('click')
 
@@ -58,7 +58,7 @@ describe('On Screen Recovery Modal Footer', () => {
     })
 
     test('should fire skip order click event', () => {
-      const skipBtn = wrapper.find('div.loss')
+      const skipBtn = wrapper.find('div.confirm')
 
       skipBtn.simulate('click')
 

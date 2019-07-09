@@ -15,7 +15,7 @@ const propTypes = {
 const Footer = ({ onConfirm, confirmCopy, onKeep, keepCopy }) => (
   <ModalFooter>
     <div
-      className={css.loss}
+      className={css.confirm}
       role="button"
       tabIndex={0}
       onClick={() => onConfirm()}
@@ -24,7 +24,7 @@ const Footer = ({ onConfirm, confirmCopy, onKeep, keepCopy }) => (
       {confirmCopy}
     </div>
     <button
-      className={css.recover}
+      className={css.keep}
       type="button"
       onClick={() => onKeep()}
       onKeyDown={event => event.keyCode === 13 && onKeep()}
