@@ -5,8 +5,9 @@ import { selectFoodBrand } from 'actions/filters'
 import { FoodBrandPage } from './FoodBrandPage'
 
 const mapStateToProps = (state) => {
+  const { locationBeforeTransitions } = state.routing
   const selectedFoodBrand = getFoodBrandFilter(state)
-  const query = state.routing.locationBeforeTransitions && state.routing.locationBeforeTransitions.query
+  const query = locationBeforeTransitions && locationBeforeTransitions.query
 
   return {
     name: selectedFoodBrand.name,
