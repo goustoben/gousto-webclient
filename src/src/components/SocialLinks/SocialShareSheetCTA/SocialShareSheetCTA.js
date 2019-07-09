@@ -10,9 +10,9 @@ import css from './SocialShareSheetCTA.css'
 class SocialShareSheetCTA extends PureComponent {
   state = { isShareSheetOpen: false }
 
-  propTypes = {
+  static propTypes = {
     referralCode: PropTypes.string.isRequired,
-    isFixed: PropTypes.string.isRequired,
+    isFixed: PropTypes.bool.isRequired,
     trackingReferFriend: PropTypes.func.isRequired,
   }
   openShareSheet = () => {
