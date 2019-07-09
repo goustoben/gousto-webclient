@@ -17,7 +17,7 @@ describe('RecipeGrid', () => {
   )
 
   test('should not show a collections nav', () => {
-    expect(wrapper.find('CollectionsNav').length).toBe(0)
+    expect(wrapper.find('CollectionsNav')).toHaveLength(0)
   })
   test('should render a RecipeList component', () => {
     expect(wrapper.find(RecipeList)).toHaveLength(1)
