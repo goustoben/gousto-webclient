@@ -54,6 +54,7 @@ class MenuRecipes extends PureComponent {
     } = this.props
 
     const collectionsNavEnabled = features.getIn(['forceCollections', 'value']) || (features.getIn(['collections', 'value']) && (features.getIn(['collectionsNav', 'value']) !== false))
+    const menuFilterExperiment = features.getIn(['filterMenu', 'value'])
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
@@ -73,7 +74,7 @@ class MenuRecipes extends PureComponent {
             showDetailRecipe={showDetailRecipe}
             menuCurrentCollectionId={menuCurrentCollectionId}
             menuRecipeDetailShow={menuRecipeDetailShow}
-            features={features}
+            menuFilterExperiment={menuFilterExperiment}
             isClient={isClient}
           />
           :

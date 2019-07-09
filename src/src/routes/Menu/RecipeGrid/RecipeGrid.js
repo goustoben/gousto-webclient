@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import Immutable from 'immutable'
 import menu from 'config/menu'
 import RecipeList from '../RecipeList'
 import DetailOverlay from '../DetailOverlay'
@@ -15,7 +14,7 @@ class RecipeGrid extends React.Component {
     menuCurrentCollectionId: PropTypes.string,
     isClient: PropTypes.bool,
     menuRecipeDetailShow: PropTypes.string,
-    features: PropTypes.instanceOf(Immutable.Map)
+    menuFilterExperiment: PropTypes.bool
   }
 
   render() {
@@ -25,10 +24,8 @@ class RecipeGrid extends React.Component {
       menuCurrentCollectionId,
       isClient,
       menuRecipeDetailShow,
-      features
+      menuFilterExperiment
     } = this.props
-
-    const menuFilterExperiment = features.getIn(['filterMenu', 'value'])
 
     return (
       <div

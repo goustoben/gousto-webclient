@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import Immutable from 'immutable'
 import { getScrollOffset } from 'utils/menu'
 import { RecipeGrid } from '../RecipeGrid'
 
@@ -17,7 +16,7 @@ const propTypes = {
   menuCurrentCollectionId: PropTypes.string,
   menuRecipeDetailShow: PropTypes.string,
   isClient: PropTypes.bool,
-  features: PropTypes.instanceOf(Immutable.Map),
+  menuFilterExperiment: PropTypes.bool,
 }
 class FoodBrandPage extends PureComponent {
 
@@ -73,7 +72,7 @@ class FoodBrandPage extends PureComponent {
   }
 
   render() {
-    const { name, description, borderColor, removeFoodBrand, mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow, features } = this.props
+    const { name, description, borderColor, removeFoodBrand, mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow, menuFilterExperiment } = this.props
     const { scrolledPastPoint, scrolledPastPointBorder } = this.state
 
     const classNameTitle = scrolledPastPoint ? css.foodBrandTitleContainerFixed : css.foodBrandTitleContainer
@@ -96,7 +95,7 @@ class FoodBrandPage extends PureComponent {
             menuCurrentCollectionId={menuCurrentCollectionId}
             isClient={isClient}
             menuRecipeDetailShow={menuRecipeDetailShow}
-            features={features}
+            menuFilterExperiment={menuFilterExperiment}
           />
         </div>
       </section>
