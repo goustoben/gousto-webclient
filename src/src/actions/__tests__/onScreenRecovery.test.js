@@ -104,7 +104,7 @@ describe('onScreenRecovery', () => {
   })
 
   describe('keepOrder', () => {
-    test('should set modal cancelOrder visibility to false for pending order', async () => {
+    test('should set modal cancelOrder visibility to false for pending order', () => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
           modalVisibility: true,
@@ -124,7 +124,7 @@ describe('onScreenRecovery', () => {
       }))
     })
 
-    test('should set relevant tracking data', async () => {
+    test('should set relevant tracking data', () => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
           modalVisibility: true,
