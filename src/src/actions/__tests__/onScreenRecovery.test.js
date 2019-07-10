@@ -36,9 +36,7 @@ describe('onScreenRecovery', () => {
   const getStateSpy = jest.fn()
 
   afterEach(() => {
-    dispatchSpy.mockClear()
-    getStateSpy.mockClear()
-    redirect.mockClear()
+    jest.resetAllMocks()
   })
 
   describe('modalVisibilityChange', () => {
@@ -152,13 +150,15 @@ describe('onScreenRecovery', () => {
   })
 
   describe('cancelOrder', () => {
-    test('should call the order cancel action with the orderId', () => {
+    beforeEach(() => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
           orderId: '64521',
           deliveryDayId: '123',
         })
       })
+    })
+    test('should call the order cancel action with the orderId', () => {
       cancelPendingOrder('default')(dispatchSpy, getStateSpy)
       expect(orderCancel).toHaveBeenCalledWith('64521', '123', 'default')
     })
@@ -172,11 +172,6 @@ describe('onScreenRecovery', () => {
     })
 
     test('should redirect to my-deliveries', async () => {
-      getStateSpy.mockReturnValue({
-        onScreenRecovery: Immutable.Map({
-          orderId: '64521',
-        })
-      })
       await cancelPendingOrder()(dispatchSpy, getStateSpy)
       expect(redirect).toHaveBeenCalledWith('/my-deliveries')
     })
