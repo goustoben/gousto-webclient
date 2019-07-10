@@ -140,8 +140,8 @@ export const getSkipRecoveryContent = () => (
 )
 
 export const onKeep = () => (
-  async (dispatch) => {
-    dispatch(keepOrder())
+  async (dispatch, getState) => {
+    dispatch(keepOrder()(dispatch, getState))
   }
 )
 
@@ -149,15 +149,15 @@ export const onConfirm = () => (
   async (dispatch, getState) => {
     const orderType = getState().onScreenRecovery.get('orderType')
     if (orderType === 'pending') {
-      dispatch(cancelPendingOrder())
+      dispatch(cancelPendingOrder()(dispatch, getState))
     } else {
-      dispatch(cancelProjectedOrder())
+      dispatch(cancelProjectedOrder()(dispatch, getState))
     }
   }
 )
 
 export const getRecoveryContent = () => (
-  async (dispatch) => {
-    dispatch(getSkipRecoveryContent())
+  async (dispatch, getState) => {
+    dispatch(getSkipRecoveryContent()(dispatch, getState))
   }
 )

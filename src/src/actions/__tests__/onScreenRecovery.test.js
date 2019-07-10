@@ -12,6 +12,9 @@ import {
   cancelPendingOrder,
   cancelProjectedOrder,
   getSkipRecoveryContent,
+  onKeep,
+  onConfirm,
+  getRecoveryContent,
 } from 'actions/onScreenRecovery'
 
 jest.mock('actions/order', () => ({
@@ -299,6 +302,74 @@ describe('onScreenRecovery', () => {
         expect(dispatchSpy).toHaveBeenCalledTimes(1)
         expect(logger.error).toHaveBeenCalledWith(error)
       })
+    })
+  })
+
+  describe('onKeep', () => {
+    beforeEach(() => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+        }),
+      })
+    })
+
+    test('should toggle OSR modal visibility', async () => {
+      await onKeep()(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+        modalVisibility: false,
+      }))
+    })
+  })
+
+  describe('onConfirm', () => {
+    test('should call order cancel when order type is pending', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+          deliveryDayId: '567',
+          orderType: 'pending'
+        }),
+      })
+
+      await onConfirm()(dispatchSpy, getStateSpy)
+
+      expect(orderCancel).toHaveBeenCalledWith('1234', '567', 'default')
+    })
+
+    test('should call projected order cancel when order type is not pending', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+          deliveryDayId: '567',
+          orderType: 'projected'
+        }),
+      })
+      await onConfirm()(dispatchSpy, getStateSpy)
+
+      expect(projectedOrderCancel).toHaveBeenCalledWith('567', '567', 'default')
+    })
+  })
+
+  describe('getRecoveryContent', () => {
+    beforeEach(() => {
+      getStateSpy.mockReturnValue({
+        auth: Immutable.Map({
+          accessToken: 'token',
+        }),
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+          orderDate: 'date'
+        }),
+      })
+    })
+
+    test('should call fetchOrderSkipContent', async () => {
+      await getRecoveryContent()(dispatchSpy, getStateSpy)
+
+      expect(fetchOrderSkipContent).toHaveBeenCalledWith('token', '1234', 'date')
     })
   })
 })
