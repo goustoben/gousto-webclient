@@ -34,6 +34,9 @@ const onScreenRecovery = {
       if (action.orderDate) {
         newState = newState.set('orderDate', action.orderDate)
       }
+      if (action.modalType) {
+        newState = newState.set('modalType', action.modalType)
+      }
 
       return newState
     }
