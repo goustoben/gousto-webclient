@@ -11,6 +11,7 @@ export const initialState = () => Immutable.Map({
   orderType: '',
   orderDate: '',
   title: '',
+  modalType: '',
   offer: null,
   valueProposition: null,
   callToActions: null,

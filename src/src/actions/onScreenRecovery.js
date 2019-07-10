@@ -155,7 +155,7 @@ export const getPauseRecoveryContent = () => (
           modalType
         }))
       } else {
-        subPauseActions.subscriptionDeactivate()
+        dispatch(subPauseActions.subscriptionDeactivate())
       }
     } catch (err) {
       logger.error(err)
@@ -169,7 +169,7 @@ export const onKeep = () => (
   }
 )
 
-export const onConfirm = () => (
+export const cancelOrder = () => {
   async (dispatch, getState) => {
     const orderType = getState().onScreenRecovery.get('orderType')
     if (orderType === 'pending') {
@@ -178,10 +178,27 @@ export const onConfirm = () => (
       dispatch(cancelProjectedOrder()(dispatch, getState))
     }
   }
+}
+
+export const onConfirm = () => (
+  async (dispatch, getState) => {
+    const modalType = getState().onScreenRecovery.get('modalType')
+    if(modalType === 'order') {
+      dispatch(cancelOrder()(dispatch, getState))
+    } else if (modalType === 'subscription') {
+      dispatch(subPauseActions.subscriptionDeactivate())
+    }
+  }
 )
 
 export const getRecoveryContent = () => (
   async (dispatch, getState) => {
-    dispatch(getSkipRecoveryContent()(dispatch, getState))
+    const modalType = getState().onScreenRecovery.get('modalType')
+
+    if(modalType === 'order'){
+      dispatch(getSkipRecoveryContent()(dispatch, getState))
+    } else if (modalType === 'subscription') {
+      dispatch(getPauseRecoveryContent()(dispatch, getState))
+    }
   }
 )
