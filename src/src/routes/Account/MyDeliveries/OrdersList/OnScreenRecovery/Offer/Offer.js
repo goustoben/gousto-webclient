@@ -54,4 +54,4 @@ const Offer = ({ offer }) => {
 Offer.propTypes = propTypesOffer
 Offer.defaultProps = defaultProps
 
-export default Offer
+export { Offer }

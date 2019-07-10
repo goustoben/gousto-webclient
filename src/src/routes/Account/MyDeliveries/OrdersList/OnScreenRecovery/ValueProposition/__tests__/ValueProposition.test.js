@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import renderer from 'react-test-renderer'
 
-import ValueProposition from '../ValueProposition'
+import { ValueProposition } from '../ValueProposition'
 
 describe('Order Skip Modal Value Proposition', () => {
   let wrapper

@@ -12,6 +12,9 @@ import {
   cancelPendingOrder,
   cancelProjectedOrder,
   getSkipRecoveryContent,
+  onKeep,
+  onConfirm,
+  getRecoveryContent,
 } from 'actions/onScreenRecovery'
 
 jest.mock('actions/order', () => ({
@@ -36,8 +39,7 @@ describe('onScreenRecovery', () => {
   const getStateSpy = jest.fn()
 
   afterEach(() => {
-    dispatchSpy.mockClear()
-    getStateSpy.mockClear()
+    jest.resetAllMocks()
   })
 
   describe('modalVisibilityChange', () => {
@@ -102,24 +104,18 @@ describe('onScreenRecovery', () => {
   })
 
   describe('keepOrder', () => {
-    beforeEach(() => {
+    test('should set modal cancelOrder visibility to false for pending order', () => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
           modalVisibility: true,
-          orderId: '',
+          orderId: '83632',
           valueProposition: null,
           offer: null,
-        }),
-        features: Immutable.Map({
-          skipRecovery: Immutable.Map({
-            value: false,
-          })
+          deliveryDayId: '123',
+          orderType: 'pending'
         })
       })
-    })
-
-    test('should set modal cancelOrder visibility to false', async () => {
-      keepOrder({ orderId: '83632', deliveryDayId: '123', status: 'pending' })(dispatchSpy, getStateSpy)
+      keepOrder()(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
@@ -128,8 +124,19 @@ describe('onScreenRecovery', () => {
       }))
     })
 
-    test('should set modal cancelOrder visibility to false', async () => {
-      keepOrder({ orderId: '23214', deliveryDayId: '123', status: 'projected' })(dispatchSpy, getStateSpy)
+    test('should set relevant tracking data', () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          modalVisibility: true,
+          orderId: '23214',
+          valueProposition: null,
+          offer: null,
+          deliveryDayId: '123',
+          orderType: 'projected'
+        })
+      })
+
+      keepOrder()(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         trackingData: {
           actionType: 'Order Kept',
@@ -146,54 +153,57 @@ describe('onScreenRecovery', () => {
   })
 
   describe('cancelOrder', () => {
+    beforeEach(() => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '64521',
+          deliveryDayId: '123',
+        })
+      })
+    })
     test('should call the order cancel action with the orderId', () => {
-      cancelPendingOrder('64521', '123', 'default')(dispatchSpy)
+      cancelPendingOrder('default')(dispatchSpy, getStateSpy)
       expect(orderCancel).toHaveBeenCalledWith('64521', '123', 'default')
     })
 
-    test('should toggle the cancel order modal visibility', () => {
-      cancelPendingOrder('64521')(dispatchSpy)
-      setTimeout(() => {
-        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-          type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
-          modalVisibility: false,
-        }))
-      }, 500)
+    test('should toggle the cancel order modal visibility', async () => {
+      await cancelPendingOrder()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+        modalVisibility: false,
+      }))
     })
 
-    test('should redirect to my-deliveries', () => {
-      cancelPendingOrder('64521', 'default')(dispatchSpy)
+    test('should redirect to my-deliveries', async () => {
+      await cancelPendingOrder()(dispatchSpy, getStateSpy)
       expect(redirect).toHaveBeenCalledWith('/my-deliveries')
     })
   })
 
   describe('cancelProjectedOrder', () => {
-    getStateSpy.mockReturnValue({
-      onScreenRecovery: Immutable.Map({
-        modalVisibility: true,
-        orderId: '',
-        deliveryDayId: '',
-        orderType: '',
-      }),
+    beforeEach(()=>{
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          deliveryDayId: '1234',
+        }),
+      })
     })
 
     test('should call the skip cancel action with the deliveryDayId', () => {
-      cancelProjectedOrder('1234')(dispatchSpy)
+      cancelProjectedOrder()(dispatchSpy, getStateSpy)
       expect(projectedOrderCancel).toHaveBeenCalledWith('1234', '1234', 'default')
     })
 
-    test('should toggle the skip order modal visibility', () => {
-      cancelProjectedOrder('1234')(dispatchSpy)
-      setTimeout(() => {
-        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-          type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
-          modalVisibility: false,
-        }))
-      }, 500)
+    test('should toggle the skip order modal visibility', async () => {
+      await cancelProjectedOrder()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+        modalVisibility: false,
+      }))
     })
 
-    test('should redirect to my-deliveries', () => {
-      cancelProjectedOrder('1234')(dispatchSpy)
+    test('should redirect to my-deliveries', async () => {
+      await cancelProjectedOrder()(dispatchSpy, getStateSpy)
       expect(redirect).toHaveBeenCalledWith('/my-deliveries')
     })
   })
@@ -204,13 +214,14 @@ describe('onScreenRecovery', () => {
         auth: Immutable.Map({
           accessToken: 'token',
         }),
+        onScreenRecovery: Immutable.Map({
+          orderId: '31520',
+        }),
       })
     })
 
     test('should dispatch a fetchOrderSkipContent request', () => {
-      getSkipRecoveryContent({
-        orderId: '31520',
-      })(dispatchSpy, getStateSpy)
+      getSkipRecoveryContent()(dispatchSpy, getStateSpy)
 
       expect(fetchOrderSkipContent).toHaveBeenCalled()
     })
@@ -223,27 +234,34 @@ describe('onScreenRecovery', () => {
           },
         }))
 
-        await getSkipRecoveryContent({
-          orderId: '31520',
-        })(dispatchSpy, getStateSpy)
+        await getSkipRecoveryContent()(dispatchSpy, getStateSpy)
 
         expect(dispatchSpy).toHaveBeenCalled()
       })
     })
 
     describe('when the response is to *not* intervene', () => {
+      beforeEach(() => {
+        fetchOrderSkipContent.mockReturnValue(Promise.resolve({
+          data: {
+            intervene: false,
+          },
+        }))
+      })
+
       describe('and status is pending', () => {
         test('should cancel the pending order', async () => {
-          fetchOrderSkipContent.mockReturnValue(Promise.resolve({
-            data: {
-              intervene: false,
-            },
-          }))
+          getStateSpy.mockReturnValue({
+            auth: Immutable.Map({
+              accessToken: 'token',
+            }),
+            onScreenRecovery: Immutable.Map({
+              orderId: '12223',
+              orderType: 'pending',
+            }),
+          })
 
-          await getSkipRecoveryContent({
-            orderId: '12223',
-            status: 'pending',
-          })(dispatchSpy, getStateSpy)
+          await getSkipRecoveryContent()(dispatchSpy, getStateSpy)
 
           expect(orderCancel).toHaveBeenCalled()
         })
@@ -284,6 +302,74 @@ describe('onScreenRecovery', () => {
         expect(dispatchSpy).toHaveBeenCalledTimes(1)
         expect(logger.error).toHaveBeenCalledWith(error)
       })
+    })
+  })
+
+  describe('onKeep', () => {
+    beforeEach(() => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+        }),
+      })
+    })
+
+    test('should toggle OSR modal visibility', async () => {
+      await onKeep()(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+        modalVisibility: false,
+      }))
+    })
+  })
+
+  describe('onConfirm', () => {
+    test('should call order cancel when order type is pending', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+          deliveryDayId: '567',
+          orderType: 'pending'
+        }),
+      })
+
+      await onConfirm()(dispatchSpy, getStateSpy)
+
+      expect(orderCancel).toHaveBeenCalledWith('1234', '567', 'default')
+    })
+
+    test('should call projected order cancel when order type is not pending', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+          deliveryDayId: '567',
+          orderType: 'projected'
+        }),
+      })
+      await onConfirm()(dispatchSpy, getStateSpy)
+
+      expect(projectedOrderCancel).toHaveBeenCalledWith('567', '567', 'default')
+    })
+  })
+
+  describe('getRecoveryContent', () => {
+    beforeEach(() => {
+      getStateSpy.mockReturnValue({
+        auth: Immutable.Map({
+          accessToken: 'token',
+        }),
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+          orderDate: 'date'
+        }),
+      })
+    })
+
+    test('should call fetchOrderSkipContent', async () => {
+      await getRecoveryContent()(dispatchSpy, getStateSpy)
+
+      expect(fetchOrderSkipContent).toHaveBeenCalledWith('token', '1234', 'date')
     })
   })
 })

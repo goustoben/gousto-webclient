@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { getSkipRecoveryContent, keepOrder, cancelPendingOrder, cancelProjectedOrder } from 'actions/onScreenRecovery'
+import { getRecoveryContent, onKeep, onConfirm } from 'actions/onScreenRecovery'
 
 import { OnScreenRecovery } from './OnScreenRecovery'
 
@@ -15,14 +15,14 @@ const mapStateToProps = (state) => ({
   title: state.onScreenRecovery.get('title'),
   offer: state.onScreenRecovery.get('offer'),
   valueProposition: state.onScreenRecovery.get('valueProposition'),
-  callToActions: state.onScreenRecovery.get('callToActions'),
+  keepCopy: state.onScreenRecovery.getIn(['callToActions', 'keep']),
+  confirmCopy: state.onScreenRecovery.getIn(['callToActions', 'confirm']),
 })
 
 const mapDispatchToProps = {
-  getSkipRecoveryContent,
-  keepOrder,
-  cancelPendingOrder,
-  cancelProjectedOrder,
+  getRecoveryContent,
+  onKeep,
+  onConfirm
 
 }
 
