@@ -165,7 +165,7 @@ export const getPauseRecoveryContent = () => (
 
 export const onKeep = () => (
   async (dispatch, getState) => {
-    dispatch(keepOrder()(dispatch, getState))
+    keepOrder()(dispatch, getState)
   }
 )
 
@@ -173,9 +173,9 @@ export const cancelOrder = () => {
   async (dispatch, getState) => {
     const orderType = getState().onScreenRecovery.get('orderType')
     if (orderType === 'pending') {
-      dispatch(cancelPendingOrder()(dispatch, getState))
+      cancelPendingOrder()(dispatch, getState)
     } else {
-      dispatch(cancelProjectedOrder()(dispatch, getState))
+      cancelProjectedOrder()(dispatch, getState)
     }
   }
 }
@@ -184,9 +184,9 @@ export const onConfirm = () => (
   async (dispatch, getState) => {
     const modalType = getState().onScreenRecovery.get('modalType')
     if(modalType === 'order') {
-      dispatch(cancelOrder()(dispatch, getState))
+      cancelOrder()(dispatch, getState)
     } else if (modalType === 'subscription') {
-      dispatch(subPauseActions.subscriptionDeactivate())
+      subPauseActions.subscriptionDeactivate()(dispatch, getState)
     }
   }
 )
@@ -196,9 +196,9 @@ export const getRecoveryContent = () => (
     const modalType = getState().onScreenRecovery.get('modalType')
 
     if(modalType === 'order'){
-      dispatch(getSkipRecoveryContent()(dispatch, getState))
+      getSkipRecoveryContent()(dispatch, getState)
     } else if (modalType === 'subscription') {
-      dispatch(getPauseRecoveryContent()(dispatch, getState))
+      getPauseRecoveryContent()(dispatch, getState)
     }
   }
 )
