@@ -359,7 +359,13 @@ describe('filters actions', () => {
     })
     test('should call FILTERS_FOOD_BRAND_CHANGE with null foodBrand if this is null', () => {
       selectFoodBrand(null)(dispatchSpy, getStateSpy)
-      expect(dispatchSpy).toHaveBeenCalledWith({'foodBrand': null, 'type': "FILTERS_FOOD_BRAND_CHANGE"})
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        'foodBrand': null,
+        'type': 'FILTERS_FOOD_BRAND_CHANGE',
+        'trackingData': {
+          'actionType': 'FoodBrand unselected',
+          'food_brand': ''}
+      })
       expect(dispatchSpy).toHaveBeenCalledTimes(3)
     })
 
@@ -375,7 +381,12 @@ describe('filters actions', () => {
           slug: 'food-brand',
           borderColor: 'blue'
         }, 
-        'type': "FILTERS_FOOD_BRAND_CHANGE"})
+        'type': "FILTERS_FOOD_BRAND_CHANGE",
+        'trackingData': {
+          'actionType': 'FoodBrand selected',
+          'food_brand': 'food-brand'
+        }
+      })
       expect(push).toHaveBeenCalledWith({
         query: {
           foodBrand: 'food-brand'

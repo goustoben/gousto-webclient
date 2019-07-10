@@ -91,6 +91,10 @@ export const currentDietaryAttributesChange = (dietaryAttributes) => ({
 export const currentFoodBrandChange = (foodBrand) => ({
   type: actionTypes.FILTERS_FOOD_BRAND_CHANGE,
   foodBrand,
+  trackingData: {
+    actionType: foodBrand !== null ? 'FoodBrand selected' : 'FoodBrand unselected',
+    food_brand: foodBrand !== null ? foodBrand.slug : ''
+  }
 })
 
 export const filtersClearAll = (collectionId) => ({
