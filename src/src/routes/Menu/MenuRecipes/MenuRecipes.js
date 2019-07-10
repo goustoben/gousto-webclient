@@ -1,18 +1,15 @@
 import React, { PureComponent } from 'react'
 import { PropTypes } from 'prop-types'
 import Immutable from 'immutable'
-import classnames from 'classnames'
 import menu from 'config/menu'
 import moment from 'moment'
 import MenuNoResults from '../MenuNoResults'
 import FilterTagsNav from '../FilterTagsNav/FilterTagsNavContainer'
-import DetailOverlay from '../DetailOverlay'
 import CollectionsNav from '../CollectionsNav'
-import RecipeList from '../RecipeList'
+import { RecipeGrid } from '../RecipeGrid'
 import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import { Banner } from '../Banner'
-import css from '../Menu.css'
 
 const propTypes = {
   features: PropTypes.instanceOf(Immutable.Map),
@@ -55,6 +52,7 @@ class MenuRecipes extends PureComponent {
       hasRecommendations,
       orderId,
     } = this.props
+
     const collectionsNavEnabled = features.getIn(['forceCollections', 'value']) || (features.getIn(['collections', 'value']) && (features.getIn(['collectionsNav', 'value']) !== false))
     const menuFilterExperiment = features.getIn(['filterMenu', 'value'])
 
@@ -71,25 +69,14 @@ class MenuRecipes extends PureComponent {
           <CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={menuCurrentCollectionId} />}
         {!showLoading && <FilterTagsNav />}
         {filteredRecipesNumber ?
-          <div
-            ref={ref => { this.masonryContainer = ref }}
-            className={classnames({
-              [css.masonryContainerMenu]: !menuFilterExperiment,
-              [css.masonryContainer]: menuFilterExperiment,
-            })}
-            data-testing="menuRecipesList"
-          >
-            <RecipeList
-              mobileGridView={mobileGridView}
-              showDetailRecipe={showDetailRecipe}
-              menuCurrentCollectionId={menuCurrentCollectionId}
-            />
-            <p className={css.legal}>{menu.legal}</p>
-            <DetailOverlay
-              showOverlay={isClient}
-              menuRecipeDetailShow={menuRecipeDetailShow}
-            />
-          </div>
+          <RecipeGrid
+            mobileGridView={mobileGridView}
+            showDetailRecipe={showDetailRecipe}
+            menuCurrentCollectionId={menuCurrentCollectionId}
+            menuRecipeDetailShow={menuRecipeDetailShow}
+            menuFilterExperiment={menuFilterExperiment}
+            isClient={isClient}
+          />
           :
           <MenuNoResults clearAllFilters={() => clearAllFilters()} />
         }
