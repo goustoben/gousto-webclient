@@ -6,20 +6,20 @@ import { Footer } from '../Footer'
 
 describe('On Screen Recovery Modal Footer', () => {
   const mockKeepOrder = jest.fn()
-  const mockSkipOrder = jest.fn()
+  const mockConfirmOrder = jest.fn()
 
   describe('Initial Render', () => {
     let wrapper
 
     beforeAll(() => {
       wrapper = mount(
-        <Footer keepCopy='Keep Box' onKeep={mockKeepOrder} confirmCopy='Skip anyway' onConfirm={mockSkipOrder} />
+        <Footer keepCopy='Keep Box' onKeep={mockKeepOrder} confirmCopy='Skip anyway' onConfirm={mockConfirmOrder} />
       )
     })
 
     test('should render snapshot', () => {
       const tree = renderer.create(
-        <Footer onKeep={mockKeepOrder} onConfirm={mockSkipOrder} />
+        <Footer onKeep={mockKeepOrder} onConfirm={mockConfirmOrder} />
       ).toJSON()
 
       expect(tree).toMatchSnapshot()
@@ -33,10 +33,10 @@ describe('On Screen Recovery Modal Footer', () => {
     })
 
     test('should display confirm button', () => {
-      const skipBtn = wrapper.find('div.confirm')
+      const confirmBtn = wrapper.find('div.confirm')
 
-      expect(skipBtn.length).toBe(1)
-      expect(skipBtn.text()).toBe('Skip anyway')
+      expect(confirmBtn.length).toBe(1)
+      expect(confirmBtn.text()).toBe('Skip anyway')
     })
   })
 
@@ -45,7 +45,7 @@ describe('On Screen Recovery Modal Footer', () => {
 
     beforeAll(() => {
       wrapper = mount(
-        <Footer onKeep={mockKeepOrder} onConfirm={mockSkipOrder} />
+        <Footer onKeep={mockKeepOrder} onConfirm={mockConfirmOrder} />
       )
     })
 
@@ -57,12 +57,12 @@ describe('On Screen Recovery Modal Footer', () => {
       expect(mockKeepOrder).toHaveBeenCalledTimes(1)
     })
 
-    test('should fire skip order click event', () => {
-      const skipBtn = wrapper.find('div.confirm')
+    test('should fire confirm order click event', () => {
+      const confirmBtn = wrapper.find('div.confirm')
 
-      skipBtn.simulate('click')
+      confirmBtn.simulate('click')
 
-      expect(mockSkipOrder).toHaveBeenCalledTimes(1)
+      expect(mockConfirmOrder).toHaveBeenCalledTimes(1)
     })
   })
 })
