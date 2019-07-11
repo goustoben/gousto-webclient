@@ -16,6 +16,7 @@ import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
+import { onEnter } from 'utils/accessibility'
 import MobileMenu from './MobileMenu'
 import css from './Header.css'
 
@@ -253,6 +254,7 @@ class Header extends React.PureComponent {
       <span
         className={css.linkDesktop}
         onClick={this.logoutFunc}
+        onKeyDown={e => onEnter(e, this.logoutFunc)}
         data-testing="logoutButton"
       >
         Logout
@@ -263,6 +265,7 @@ class Header extends React.PureComponent {
       <span
         className={classNames(css.authButtonsContainer, css[buttonState])}
         onClick={e => { if (!isAuthenticated) { this.onOpen(e) } }}
+        onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onOpen()} })}
       >
         {button}
         {isAuthenticated && logoutLink}
