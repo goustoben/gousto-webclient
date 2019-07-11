@@ -65,10 +65,10 @@
   border-bottom: none;
 }
 
-.ribbonText:hover + .ribbon .arrowTop::before,
-.ribbonText:hover + .ribbon .arrowBottom::before,
-.ribbonText:focus + .ribbon .arrowTop::before,
-.ribbonText:focus + .ribbon .arrowBottom::before {
+.ribbonTextHighlight:hover + .ribbon .arrowTop::before,
+.ribbonTextHighlight:hover + .ribbon .arrowBottom::before,
+.ribbonTextHighlight:focus + .ribbon .arrowTop::before,
+.ribbonTextHighlight:focus + .ribbon .arrowBottom::before {
   display: block;
 }
 
@@ -104,7 +104,12 @@
   font-weight: 700;
   font-family: Avenir-Black, Avenir;
   position: relative;
-  &::before {
+  &:focus {
+    outline: 0;
+  }
+}
+
+.ribbonTextHighlight::before {
     content: '';
     display: none;
     height: 100%;
@@ -114,23 +119,32 @@
     left: 0;
     background: rgba(0, 0, 0, 0.1);
     z-index: 1;
-  }
-  &:hover::before,
-  &:focus::before {
-    display: block;
-  }
 }
 
-.ribbonTextUnderlined {
-  composes: ribbonText;
-  &:hover,  &:focus {
+.ribbonTextHighlight:hover::before,
+.ribbonTextHighlight:focus::before {
+  display: block;
+  outline: 0;
+}
+
+.ribbonText:hover .foodBrandNameUnderlined,
+.ribbonText:focus .foodBrandNameUnderlined
+ {
     text-decoration: underline;
     outline: 0;
-  }
 }
 
 .foodBrandName {
   position: relative;
   z-index: 2;
   text-transform: uppercase;
+}
+
+.rightChevron {
+  composes: fa-basic-class fa-fw fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+  font-size: 11px;
+  z-index: 2;
+  height: 100%;
+  padding-top: 3px;
+  padding-left: 6px;
 }

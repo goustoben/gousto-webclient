@@ -54,7 +54,7 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
       <div
         role="button"
         tabIndex={isFoodBrandClickable ? 0 : -1}
-        className={classnames(css.ribbonText, { [css.ribbonTextUnderlined]: isFoodBrandClickable })}
+        className={classnames(css.ribbonText, {[css.ribbonTextHighlight]: isFoodBrandClickable})}
         style={ribbonTextStyle}
         onClick={handleClick}
         onKeyPress={handleClick}
@@ -62,6 +62,7 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
         <span className={classnames(css.foodBrandName, {[css.foodBrandNameUnderlined]: isFoodBrandClickable})}>
           {range.get('name')}
         </span>
+        {isFoodBrandClickable ? <span className={css.rightChevron}></span> : null}
       </div>
       <div className={css.ribbon} style={ribbonStyle}>
         <div className={css.arrowTopBorder} style={arrowBorderStyle}></div>
