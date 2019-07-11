@@ -13,3 +13,7 @@ export function fetchOrderSkipContent(accessToken, orderId, orderDate) {
 
   return fetch(accessToken, `${endpoint('orderskiprecovery', 'v1')}/orderskiprecovery`, reqData, 'GET')
 }
+
+export function fetchSubscriptionPauseContent(accessToken) {
+  return fetch(accessToken, `${endpoint('subscriptionpauserecovery', 'v1')}/subscriptionpauserecovery`, null, 'GET')
+}

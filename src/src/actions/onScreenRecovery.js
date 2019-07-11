@@ -2,29 +2,34 @@ import logger from 'utils/logger'
 import actionTypes from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
-import { fetchOrderSkipContent } from '../apis/onScreenRecovery'
+import subPauseActions from './subscriptionPause'
+import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../apis/onScreenRecovery'
 
 export const modalVisibilityChange = ({
   orderId,
   deliveryDayId,
   status,
-  actionTriggered,
+  modalType,
   data = {},
+  modalVisibility = true,
 }) => (
   (dispatch) => {
 
+    const actionType = (status === 'pending') ? 'Order Cancel' : 'Order Skip'
+
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-      modalVisibility: true,
+      modalVisibility,
       orderId,
       deliveryDayId,
+      modalType,
       title: data.title,
       offer: data.offer,
       orderType: status,
       callToActions: data.callToActions,
       valueProposition: data.valueProposition,
       trackingData: {
-        actionType: `Order ${actionTriggered}`,
+        actionType: actionType,
         order_id: orderId,
         delivery_day_id: deliveryDayId,
         order_state: status,
@@ -64,6 +69,21 @@ export const keepOrder = () => (
   }
 )
 
+export const keepSubscription = () => (
+  (dispatch, getState) => {
+    const userId = getState().user.get('id')
+
+    dispatch({
+      type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+      modalVisibility: false,
+      trackingData: {
+        actionType: 'Subscription Kept',
+        customerId: userId,
+      },
+    })
+  }
+)
+
 export const cancelPendingOrder = (variation = 'default') => (
   async (dispatch, getState) => {
     const orderId = getState().onScreenRecovery.get('orderId')
@@ -75,10 +95,7 @@ export const cancelPendingOrder = (variation = 'default') => (
       logger.error(err)
     } finally {
       dispatch(redirect('/my-deliveries'))
-      dispatch({
-        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-        modalVisibility: false,
-      })
+      modalVisibilityChange({ modalVisibility: false })(dispatch)
     }
   }
 )
@@ -93,10 +110,7 @@ export const cancelProjectedOrder = (variation = 'default') => (
       logger.error(err)
     } finally {
       dispatch(redirect('/my-deliveries'))
-      dispatch({
-        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-        modalVisibility: false,
-      })
+      modalVisibilityChange({ modalVisibility: false })(dispatch)
     }
   }
 )
@@ -107,7 +121,7 @@ export const getSkipRecoveryContent = () => (
     const orderId = getState().onScreenRecovery.get('orderId')
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
     const status = getState().onScreenRecovery.get('orderType')
-    const actionTriggered = (status === 'pending') ? 'Cancel' : 'Skip'
+    const modalType = 'order'
     const accessToken = getState().auth.get('accessToken')
     try {
       const { data } = await fetchOrderSkipContent(accessToken, orderId, orderDate)
@@ -116,7 +130,7 @@ export const getSkipRecoveryContent = () => (
           orderId,
           deliveryDayId,
           status,
-          actionTriggered,
+          modalType,
           data,
         }))
       } else {
@@ -131,7 +145,7 @@ export const getSkipRecoveryContent = () => (
         orderId,
         deliveryDayId,
         status,
-        actionTriggered,
+        modalType,
       }))
 
       logger.error(err)
@@ -139,25 +153,82 @@ export const getSkipRecoveryContent = () => (
   }
 )
 
+export const getPauseRecoveryContent = () => (
+  async (dispatch, getState) => {
+    const accessToken = getState().auth.get('accessToken')
+    try {
+      const { data } = await fetchSubscriptionPauseContent(accessToken)
+      if (data.intervene) {
+        dispatch(modalVisibilityChange({
+          data,
+        }))
+      } else {
+        dispatch(subPauseActions.subscriptionDeactivate())
+      }
+    } catch (err) {
+      logger.error(err)
+    }
+  }
+)
+
+export const cancelOrder = () => (
+  async (dispatch, getState) => {
+    const orderType = getState().onScreenRecovery.get('orderType')
+    if (orderType === 'pending') {
+      cancelPendingOrder()(dispatch, getState)
+    } else {
+      cancelProjectedOrder()(dispatch, getState)
+    }
+  }
+)
+
+export const pauseSubscription = () => (
+  async (dispatch, getState) => {
+    await dispatch(subPauseActions.subscriptionDeactivate())
+
+    const userId = getState().user.get('id')
+    dispatch({
+      type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+      modalVisibility: false,
+      trackingData: {
+        actionType: 'Subscription Paused',
+        customerId: userId,
+      },
+    })
+    dispatch(redirect('/my-subscription'))
+  }
+)
+
 export const onKeep = () => (
   async (dispatch, getState) => {
-    dispatch(keepOrder()(dispatch, getState))
+    const modalType = getState().onScreenRecovery.get('modalType')
+    if(modalType === 'order') {
+      keepOrder()(dispatch, getState)
+    } else if (modalType === 'subscription') {
+      keepSubscription()(dispatch, getState)
+    }
   }
 )
 
 export const onConfirm = () => (
   async (dispatch, getState) => {
-    const orderType = getState().onScreenRecovery.get('orderType')
-    if (orderType === 'pending') {
-      dispatch(cancelPendingOrder()(dispatch, getState))
-    } else {
-      dispatch(cancelProjectedOrder()(dispatch, getState))
+    const modalType = getState().onScreenRecovery.get('modalType')
+    if(modalType === 'order') {
+      cancelOrder()(dispatch, getState)
+    } else if (modalType === 'subscription') {
+      pauseSubscription()(dispatch, getState)
     }
   }
 )
 
 export const getRecoveryContent = () => (
   async (dispatch, getState) => {
-    dispatch(getSkipRecoveryContent()(dispatch, getState))
+    const modalType = getState().onScreenRecovery.get('modalType')
+
+    if(modalType === 'order'){
+      getSkipRecoveryContent()(dispatch, getState)
+    } else if (modalType === 'subscription') {
+      getPauseRecoveryContent()(dispatch, getState)
+    }
   }
 )
