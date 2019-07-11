@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 
 import Immutable from 'immutable'
-import Header from 'components/Header/Header'
+import { Header } from 'components/Header/Header'
 import MobileMenu from 'Header/MobileMenu'
 import Link from 'Link'
 import CancelOrderModal from 'CancelOrderModal'

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { getForceSignupWizard } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
-import Header from './Header'
+import { Header } from './Header'
 
 const mapStateToProps = (state) => ({
   serverError: state.serverError === '500',
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => ({
   forceSignupWizardFeature: getForceSignupWizard(state),
 })
 
-export default connect(mapStateToProps, {
+export const HeaderContainer = connect(mapStateToProps, {
   logoutUser: actions.logoutUser,
   loginVisibilityChange: actions.loginVisibilityChange,
   closeBoxModalVisibilityChange: actions.cancelOrderModalToggleVisibility,
