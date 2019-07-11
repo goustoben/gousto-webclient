@@ -11,6 +11,7 @@ export const modalVisibilityChange = ({
   status,
   modalType,
   data = {},
+  modalVisibility = true,
 }) => (
   (dispatch) => {
 
@@ -18,7 +19,7 @@ export const modalVisibilityChange = ({
 
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-      modalVisibility: true,
+      modalVisibility,
       orderId,
       deliveryDayId,
       modalType,
@@ -79,10 +80,7 @@ export const cancelPendingOrder = (variation = 'default') => (
       logger.error(err)
     } finally {
       dispatch(redirect('/my-deliveries'))
-      dispatch({
-        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-        modalVisibility: false,
-      })
+      modalVisibilityChange({ modalVisibility: false })(dispatch)
     }
   }
 )
@@ -97,10 +95,7 @@ export const cancelProjectedOrder = (variation = 'default') => (
       logger.error(err)
     } finally {
       dispatch(redirect('/my-deliveries'))
-      dispatch({
-        type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
-        modalVisibility: false,
-      })
+      modalVisibilityChange({ modalVisibility: false })(dispatch)
     }
   }
 )
@@ -146,13 +141,11 @@ export const getSkipRecoveryContent = () => (
 export const getPauseRecoveryContent = () => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
-    const modalType = 'subscription'
     try {
       const { data } = await fetchSubscriptionPauseContent(accessToken)
       if (data.intervene) {
         dispatch(modalVisibilityChange({
           data,
-          modalType
         }))
       } else {
         dispatch(subPauseActions.subscriptionDeactivate())
@@ -169,7 +162,7 @@ export const onKeep = () => (
   }
 )
 
-export const cancelOrder = () => {
+export const cancelOrder = () => (
   async (dispatch, getState) => {
     const orderType = getState().onScreenRecovery.get('orderType')
     if (orderType === 'pending') {
@@ -178,7 +171,14 @@ export const cancelOrder = () => {
       cancelProjectedOrder()(dispatch, getState)
     }
   }
-}
+)
+
+export const pauseSubscription = () => (
+  async (dispatch, getState) => {
+    await subPauseActions.subscriptionDeactivate()(dispatch, getState)
+    modalVisibilityChange({modalVisibility: false})(dispatch)
+  }
+)
 
 export const onConfirm = () => (
   async (dispatch, getState) => {
@@ -186,7 +186,7 @@ export const onConfirm = () => (
     if(modalType === 'order') {
       cancelOrder()(dispatch, getState)
     } else if (modalType === 'subscription') {
-      subPauseActions.subscriptionDeactivate()(dispatch, getState)
+      pauseSubscription()(dispatch, getState)
     }
   }
 )

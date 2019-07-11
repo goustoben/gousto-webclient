@@ -1,8 +1,9 @@
 import Immutable from 'immutable'
 
+import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from 'apis/onScreenRecovery'
 import { orderCancel, projectedOrderCancel } from 'actions/order'
-import { fetchOrderSkipContent } from 'apis/onScreenRecovery'
 import { redirect } from 'actions/redirect'
+import subPauseActions from 'actions/subscriptionPause'
 import actionTypes from 'actions/actionTypes'
 import logger from 'utils/logger'
 
@@ -12,6 +13,8 @@ import {
   cancelPendingOrder,
   cancelProjectedOrder,
   getSkipRecoveryContent,
+  getPauseRecoveryContent,
+  cancelOrder,
   onKeep,
   onConfirm,
   getRecoveryContent,
@@ -26,8 +29,13 @@ jest.mock('actions/redirect', () => ({
   redirect: jest.fn(),
 }))
 
+jest.mock('actions/subscriptionPause', () => ({
+  subscriptionDeactivate: jest.fn(),
+}))
+
 jest.mock('apis/onScreenRecovery', () => ({
   fetchOrderSkipContent: jest.fn(),
+  fetchSubscriptionPauseContent: jest.fn(),
 }))
 
 jest.mock('utils/logger', () => ({
@@ -208,6 +216,9 @@ describe('onScreenRecovery', () => {
     })
   })
 
+  describe('pauseSubscription', () => {
+  })
+
   describe('getSkipRecoveryContent', () => {
     beforeEach(() => {
       getStateSpy.mockReturnValue({
@@ -305,6 +316,106 @@ describe('onScreenRecovery', () => {
     })
   })
 
+  describe('getPauseRecoveryContent', () => {
+    beforeEach(() => {
+      getStateSpy.mockReturnValue({
+        auth: Immutable.Map({
+          accessToken: 'token',
+        }),
+        onScreenRecovery: Immutable.Map({
+          orderId: '31520',
+        }),
+      })
+    })
+
+    test('should dispatch a fetchSubscriptionPauseContent request', () => {
+      getPauseRecoveryContent()(dispatchSpy, getStateSpy)
+
+      expect(fetchSubscriptionPauseContent).toHaveBeenCalled()
+    })
+
+    describe('when the response is to intervene', () => {
+      test('display the modal', async () => {
+        fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
+          data: {
+            intervene: true,
+          },
+        }))
+
+        await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
+
+        expect(dispatchSpy).toHaveBeenCalled()
+      })
+    })
+
+    describe('when the response is to *not* intervene', () => {
+
+      test('should pause the subscription', async () => {
+        fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
+          data: {
+            intervene: false,
+          },
+        }))
+
+        getStateSpy.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: 'token',
+          }),
+        })
+
+        await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
+
+        expect(subPauseActions.subscriptionDeactivate).toHaveBeenCalled()
+      })
+    })
+
+    describe('when the service returns with an Error', () => {
+      test('should log the error', async () => {
+        const error = new Error('error from the lambda')
+        fetchSubscriptionPauseContent.mockReturnValue(Promise.reject(
+          error,
+        ))
+
+        await getPauseRecoveryContent({
+          orderId: '33101',
+          deliveryDayId: '287420',
+          status: 'projected',
+        })(dispatchSpy, getStateSpy)
+
+        expect(logger.error).toHaveBeenCalledWith(error)
+      })
+    })
+  })
+
+  describe('cancelOrder', () => {
+    test('should call order cancel when order type is pending', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+          deliveryDayId: '567',
+          orderType: 'pending'
+        }),
+      })
+
+      await cancelOrder()(dispatchSpy, getStateSpy)
+
+      expect(orderCancel).toHaveBeenCalledWith('1234', '567', 'default')
+    })
+
+    test('should call projected order cancel when order type is not pending', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+          deliveryDayId: '567',
+          orderType: 'projected'
+        }),
+      })
+      await cancelOrder()(dispatchSpy, getStateSpy)
+
+      expect(projectedOrderCancel).toHaveBeenCalledWith('567', '567', 'default')
+    })
+  })
+
   describe('onKeep', () => {
     beforeEach(() => {
       getStateSpy.mockReturnValue({
@@ -325,51 +436,64 @@ describe('onScreenRecovery', () => {
   })
 
   describe('onConfirm', () => {
-    test('should call order cancel when order type is pending', async () => {
+    test('should call order cancel when modal type is "order"', async() => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
-          orderId: '1234',
-          deliveryDayId: '567',
-          orderType: 'pending'
+          modalType: 'order'
         }),
       })
 
       await onConfirm()(dispatchSpy, getStateSpy)
 
-      expect(orderCancel).toHaveBeenCalledWith('1234', '567', 'default')
+      expect(projectedOrderCancel).toHaveBeenCalled()
     })
 
-    test('should call projected order cancel when order type is not pending', async () => {
+    test('should call pause subscription when modal type is "subscription"', async() => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
-          orderId: '1234',
-          deliveryDayId: '567',
-          orderType: 'projected'
+          modalType: 'subscription'
         }),
       })
+
       await onConfirm()(dispatchSpy, getStateSpy)
 
-      expect(projectedOrderCancel).toHaveBeenCalledWith('567', '567', 'default')
+      expect(subPauseActions.subscriptionDeactivate).toHaveBeenCalled()
     })
   })
 
   describe('getRecoveryContent', () => {
-    beforeEach(() => {
+    test('should call fetchOrderSkipContent when modal type is "order"', async () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.Map({
           accessToken: 'token',
         }),
         onScreenRecovery: Immutable.Map({
           orderId: '1234',
-          orderDate: 'date'
+          orderDate: 'date',
+          modalType: 'order',
         }),
       })
-    })
 
-    test('should call fetchOrderSkipContent', async () => {
       await getRecoveryContent()(dispatchSpy, getStateSpy)
 
       expect(fetchOrderSkipContent).toHaveBeenCalledWith('token', '1234', 'date')
+    })
+
+    test('should call fetchOrderSkipContent when modal type is "subscription"', async () => {
+      getStateSpy.mockReturnValue({
+        auth: Immutable.Map({
+          accessToken: 'token',
+        }),
+        onScreenRecovery: Immutable.Map({
+          orderId: '1234',
+          orderDate: 'date',
+          modalType: 'subscription',
+        }),
+      })
+
+      await getRecoveryContent()(dispatchSpy, getStateSpy)
+
+      expect(fetchSubscriptionPauseContent).toHaveBeenCalledWith('token')
     })
   })
 })
