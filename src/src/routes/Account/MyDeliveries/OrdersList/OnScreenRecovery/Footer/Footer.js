@@ -6,39 +6,34 @@ import { ModalFooter } from 'ModalComponent'
 import css from './Footer.css'
 
 const propTypes = {
-  orderType: PropTypes.string,
-  callToActions: PropTypes.shape({
-    confirm: PropTypes.string,
-    keep: PropTypes.string,
-  }),
-  onClickKeepOrder: PropTypes.func,
-  onClickSkipCancel: PropTypes.func,
+  onConfirm: PropTypes.func.isRequired,
+  confirmCopy: PropTypes.string.isRequired,
+  onKeep: PropTypes.func.isRequired,
+  keepCopy: PropTypes.string.isRequired,
 }
 
-const Footer = ({ orderType, callToActions, onClickKeepOrder, onClickSkipCancel }) => {
-  let keepCopy
-  let confirmCopy
-
-  if (callToActions) {
-    keepCopy = callToActions.keep
-    confirmCopy = callToActions.confirm
-  } else {
-    keepCopy = 'Keep Box'
-    confirmCopy = `${orderType === 'pending' ? 'Cancel' : 'Skip'} anyway`
-  }
-
-  return (
-    <ModalFooter>
-      <div className={css.skipAnyWay} onClick={() => onClickSkipCancel() }>
-        {confirmCopy}
-      </div>
-      <button className={css.keepButton} onClick={() => onClickKeepOrder() }>
-        {keepCopy}
-      </button>
-    </ModalFooter>
-  )
-}
+const Footer = ({ onConfirm, confirmCopy, onKeep, keepCopy }) => (
+  <ModalFooter>
+    <div
+      className={css.confirm}
+      role="button"
+      tabIndex={0}
+      onClick={() => onConfirm()}
+      onKeyDown={event => event.keyCode === 13 && onConfirm()}
+    >
+      {confirmCopy}
+    </div>
+    <button
+      className={css.keep}
+      type="button"
+      onClick={() => onKeep()}
+      onKeyDown={event => event.keyCode === 13 && onKeep()}
+    >
+      {keepCopy}
+    </button>
+  </ModalFooter>
+)
 
 Footer.propTypes = propTypes
 
-export default Footer
+export { Footer }

@@ -65,6 +65,7 @@ describe('RecipeList', () => {
         isRecommended: false,
       },
     ])
+    const sortedRecipes = Immutable.fromJS([{ id: 1 }, { id: 2 }, { id: 3 }])
 
     const menuCurrentCollectionId = '10'
 
@@ -77,6 +78,7 @@ describe('RecipeList', () => {
         features={Immutable.Map({})}
         filteredRecipeIds={Immutable.List(['1', '2', '3'])}
         remainingRecipes={remainingRecipes}
+        sortedRecipes={sortedRecipes}
       />,
       { context },
     )
@@ -85,9 +87,7 @@ describe('RecipeList', () => {
   })
 
   test('should display a list of recipes in the order: featuredRecipes, remainingRecipes, outOfStockRecipes', () => {
-    const featuredRecipes = Immutable.fromJS([{ id: 3 }])
-    const remainingRecipes = Immutable.fromJS([{ id: 1 }, { id: 5 }])
-    const outOfStockRecipes = Immutable.fromJS([{ id: 2 }, { id: 4 }])
+    const sortedRecipes = Immutable.fromJS([{ id: 3 }, { id: 1 }, { id: 5 }, { id: 2 }, { id: 4 }])
 
     const correctOrder = [3, 1, 5, 2, 4]
 
@@ -95,10 +95,8 @@ describe('RecipeList', () => {
 
     wrapper = shallow(
       <RecipeList
-        featuredRecipes={featuredRecipes}
+        sortedRecipes={sortedRecipes}
         recipesStore={Immutable.fromJS({})}
-        remainingRecipes={remainingRecipes}
-        outOfStockRecipes={outOfStockRecipes}
       />,
       { context },
     )
@@ -133,6 +131,7 @@ describe('RecipeList', () => {
     const remainingRecipes = Immutable.fromJS([
       { id: '1', availability: [], title: 'recipe1' },
     ])
+    const sortedRecipes = Immutable.fromJS([{ id: 3 }, { id: 1 }, { id: 5 }, { id: 2 }, { id: 4 }])
     const recipes = Immutable.List(['1', '2', '3'])
     const currentCollectionId = '77'
 
@@ -147,6 +146,7 @@ describe('RecipeList', () => {
         filteredRecipeIds={recipes}
         remainingRecipes={remainingRecipes}
         featuredRecipes={featuredRecipes}
+        sortedRecipes={sortedRecipes}
       />,
       { context },
     )
@@ -169,6 +169,8 @@ describe('RecipeList', () => {
       const remainingRecipes = Immutable.fromJS([{ id: 1 }, { id: 5 }])
       const outOfStockRecipes = Immutable.fromJS([{ id: 2 }, { id: 4 }])
 
+      const sortedRecipes = Immutable.fromJS([{ id: 3 }, { id: 1 }, { id: 5 }, { id: 2 }, { id: 4 }])
+
       Recipe.mockReturnValue((props) => <div {...props} />)
 
       wrapper = shallow(
@@ -178,6 +180,7 @@ describe('RecipeList', () => {
         outOfStockRecipes={outOfStockRecipes}
         isCurrentCollectionRecommendation={false}
         ctaToAllRecipes
+        sortedRecipes={sortedRecipes}
       />,
       { context },
       )

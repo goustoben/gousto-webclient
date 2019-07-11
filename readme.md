@@ -48,7 +48,7 @@ The site (only the new stack pages) should now be available at http://webclient.
 
 You can see the containers logs being redirected to this terminal (nginx and application), exit with `CTRL+C`
 
-### Local files needed
+### [Local files needed](#local-files-needed)
 You will need to populate the `env.json` config file with the correct values for your environment.
 
 You will also need to populate the checkout.com public key in `src/src/routes/Checkout/Components/CheckoutPayment/config.js`
@@ -131,6 +131,7 @@ yarn run test:mocha
 
 ### Running End-To-End tests
 #### Local environment
+Ensure that you have local files set up as described in the [Local files needed](#local-files-needed) section, and that the [endpoint.js](https://github.com/Gousto/gousto-webclient/blob/develop/src/src/config/endpoint.js) file is pointing to the environment APIs that you wish to test against.
 ```shell
 cd ~/code/goustowebclient/src
 yarn run build:e2e:local

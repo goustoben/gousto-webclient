@@ -19,7 +19,7 @@
   background: White;
   position: fixed;
   top: 0;
-  z-index: 1;
+  z-index: 11;
 }
 
 .foodBrandTitleContainer > h1 {
@@ -57,8 +57,4 @@
 .leftArrow {
   composes: fa-basic-class fa-fw fa-chevron-left from 'styles/vendor/font-awesome-module.css';
   padding-top: 4px;
-}
-
-.foodBrandRecipes {
-  height: 1200px;
 }

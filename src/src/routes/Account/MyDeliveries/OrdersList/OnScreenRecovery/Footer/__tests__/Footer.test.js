@@ -2,100 +2,41 @@ import React from 'react'
 import { mount } from 'enzyme'
 import renderer from 'react-test-renderer'
 
-import Footer from '../Footer'
+import { Footer } from '../Footer'
 
-describe('Order Skip Recovery Modal Footer', () => {
+describe('On Screen Recovery Modal Footer', () => {
   const mockKeepOrder = jest.fn()
-  const mockSkipOrder = jest.fn()
+  const mockConfirmOrder = jest.fn()
 
   describe('Initial Render', () => {
     let wrapper
 
     beforeAll(() => {
       wrapper = mount(
-                <Footer onClickKeepOrder={mockKeepOrder} onClickSkipCancel={mockSkipOrder} />
+        <Footer keepCopy='Keep Box' onKeep={mockKeepOrder} confirmCopy='Skip anyway' onConfirm={mockConfirmOrder} />
       )
     })
 
     test('should render snapshot', () => {
       const tree = renderer.create(
-                <Footer onClickKeepOrder={mockKeepOrder} onClickSkipCancel={mockSkipOrder} />
+        <Footer onKeep={mockKeepOrder} onConfirm={mockConfirmOrder} />
       ).toJSON()
 
       expect(tree).toMatchSnapshot()
     })
 
     test('should display keep button', () => {
-      const keepBtn = wrapper.find('button.keepButton')
+      const keepBtn = wrapper.find('button.keep')
 
       expect(keepBtn.length).toBe(1)
       expect(keepBtn.text()).toBe('Keep Box')
     })
 
-    test('should display skip button', () => {
-      const skipBtn = wrapper.find('div.skipAnyWay')
+    test('should display confirm button', () => {
+      const confirmBtn = wrapper.find('div.confirm')
 
-      expect(skipBtn.length).toBe(1)
-      expect(skipBtn.text()).toBe('Skip anyway')
-    })
-  })
-
-  describe('Alternative Render', () => {
-    test('should render "Cancel" instead "Skip" as skip button copy', () => {
-      const wrapper = mount(
-                <Footer orderType="pendinng" onClickKeepOrder={mockKeepOrder} onClickSkipCancel={mockSkipOrder} />
-      )
-
-      const skipBtn = wrapper.find('div.skipAnyWay')
-
-      expect(skipBtn.text()).toBe('Skip anyway')
-    })
-
-    test('should render custom keep button copy', () => {
-      const callToActions = {
-        keep: 'foo',
-        confirm: 'bar',
-      }
-
-      const wrapper = mount(
-                <Footer callToActions={callToActions} onClickKeepOrder={mockKeepOrder} onClickSkipCancel={mockSkipOrder} />
-      )
-
-      const keepBtn = wrapper.find('button.keepButton')
-
-      expect(keepBtn.text()).toBe('foo')
-    })
-
-    test('should render custom skip button copy', () => {
-      const callToActions = {
-        keep: 'foo',
-        confirm: 'bar',
-      }
-
-      const wrapper = mount(
-                <Footer callToActions={callToActions} onClickKeepOrder={mockKeepOrder} onClickSkipCancel={mockSkipOrder} />
-      )
-
-      const skipBtn = wrapper.find('div.skipAnyWay')
-
-      expect(skipBtn.text()).toBe('bar')
-    })
-
-    test('should priorities callToActions over orderType', () => {
-      const callToActions = {
-        keep: 'foo',
-        confirm: 'bar',
-      }
-
-      const wrapper = mount(
-                <Footer orderType="pendinng" callToActions={callToActions} onClickKeepOrder={mockKeepOrder} onClickSkipCancel={mockSkipOrder} />
-      )
-
-      const keepBtn = wrapper.find('button.keepButton')
-      const skipBtn = wrapper.find('div.skipAnyWay')
-
-      expect(keepBtn.text()).toBe('foo')
-      expect(skipBtn.text()).toBe('bar')
+      expect(confirmBtn.length).toBe(1)
+      expect(confirmBtn.text()).toBe('Skip anyway')
     })
   })
 
@@ -104,24 +45,24 @@ describe('Order Skip Recovery Modal Footer', () => {
 
     beforeAll(() => {
       wrapper = mount(
-                <Footer onClickKeepOrder={mockKeepOrder} onClickSkipCancel={mockSkipOrder} />
+        <Footer onKeep={mockKeepOrder} onConfirm={mockConfirmOrder} />
       )
     })
 
     test('should fire keep order click event', () => {
-      const keepBtn = wrapper.find('.keepButton')
+      const keepBtn = wrapper.find('.keep')
 
       keepBtn.simulate('click')
 
       expect(mockKeepOrder).toHaveBeenCalledTimes(1)
     })
 
-    test('should fire skip order click event', () => {
-      const skipBtn = wrapper.find('div.skipAnyWay')
+    test('should fire confirm order click event', () => {
+      const confirmBtn = wrapper.find('div.confirm')
 
-      skipBtn.simulate('click')
+      confirmBtn.simulate('click')
 
-      expect(mockSkipOrder).toHaveBeenCalledTimes(1)
+      expect(mockConfirmOrder).toHaveBeenCalledTimes(1)
     })
   })
 })

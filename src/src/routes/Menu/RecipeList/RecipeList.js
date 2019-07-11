@@ -28,6 +28,7 @@ class RecipeList extends React.Component {
     showDetailRecipe: PropTypes.func,
     isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     collectionFilterChange: PropTypes.func,
+    sortedRecipes: PropTypes.instanceOf(Immutable.List),
   }
 
   static defaultProps = {
@@ -42,7 +43,7 @@ class RecipeList extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const needsUpdate = ['mobileGridView', 'filterMenuOpen', 'recipesStore', 'cutoffDate', 'numPortions', 'isLoading', 'featuredRecipes', 'outOfStockRecipes', 'remainingRecipes']
+    const needsUpdate = ['mobileGridView', 'filterMenuOpen', 'recipesStore', 'cutoffDate', 'numPortions', 'isLoading', 'featuredRecipes', 'outOfStockRecipes', 'remainingRecipes', 'sortedRecipes']
 
     let shouldUpdate = false
     needsUpdate.some((prop) => {
@@ -106,12 +107,10 @@ class RecipeList extends React.Component {
       recipesStore,
       showDetailRecipe,
       featuredRecipes,
-      remainingRecipes,
-      outOfStockRecipes,
       isCurrentCollectionRecommendation,
-      collectionFilterChange
+      collectionFilterChange,
+      sortedRecipes
     } = this.props
-    const sortedRecipes = featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
     let index = 0
 
     const newRecipeList = sortedRecipes.map((recipe) => {

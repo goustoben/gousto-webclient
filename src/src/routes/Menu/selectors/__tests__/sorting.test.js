@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { getOutOfStockRecipes, getFeaturedRecipes, getRemainingRecipes } from 'routes/Menu/selectors/sorting.js'
+import { getOutOfStockRecipes, getFeaturedRecipes, getRemainingRecipes, getSortedRecipes } from 'routes/Menu/selectors/sorting.js'
 
 describe('sorting', () => {
   describe('getOutOfStockRecipes', () => {
@@ -314,6 +314,25 @@ describe('sorting', () => {
         ],
       }])
       expect(getRemainingRecipes(state)).toEqual(expectedResult)
+    })
+  })
+
+  describe('getSortedRecipes', () => {
+    const featuredRecipes = Immutable.fromJS([{ id: 3 }])
+    const outofStockRecipes = Immutable.fromJS([{ id: 2 }, { id: 4 }])
+    const remainingRecipes = Immutable.fromJS([{ id: 1 }, { id: 5 }])
+
+    const emptyOutofStockRecipes = Immutable.fromJS([])
+
+    const expectedResult = Immutable.fromJS([{ id: 3 }, { id: 1 }, { id: 5 }, { id: 2 }, { id: 4 }])
+    const expectedEmptyResult = Immutable.fromJS([{ id: 3 }, { id: 1 }, { id: 5 }])
+
+    test('should return a concatenated list from featuredRecipes, outOfStockRecipes and remainingRecipes', () => {
+      expect(getSortedRecipes.resultFunc(featuredRecipes, outofStockRecipes, remainingRecipes)).toEqual(expectedResult)
+    })
+
+    test('should return a concatenated list even if one of the lists is empty', () => {
+      expect(getSortedRecipes.resultFunc(featuredRecipes, emptyOutofStockRecipes, remainingRecipes)).toEqual(expectedEmptyResult)
     })
   })
 })

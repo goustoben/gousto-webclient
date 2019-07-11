@@ -57,7 +57,7 @@ const onScreenRecovery = {
           newState = newState.set('valueProposition', action.valueProposition)
         }
         if (action.callToActions) {
-          newState = newState.set('callToActions', action.callToActions)
+          newState = newState.set('callToActions', Immutable.fromJS(action.callToActions))
         }
         if (action.orderType) {
           newState = newState.set('orderType', action.orderType)

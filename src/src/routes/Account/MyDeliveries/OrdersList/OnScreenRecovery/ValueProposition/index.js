@@ -1,1 +1,1 @@
-export default from './ValueProposition'
+export { ValueProposition } from './ValueProposition'

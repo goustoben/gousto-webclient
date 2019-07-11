@@ -1,20 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Order Skip Recovery Modal Footer Initial Render should render snapshot 1`] = `
+exports[`On Screen Recovery Modal Footer Initial Render should render snapshot 1`] = `
 <div
   className="modalFooter"
 >
   <div
-    className="skipAnyWay"
+    className="confirm"
     onClick={[Function]}
-  >
-    Skip anyway
-  </div>
+    onKeyDown={[Function]}
+    role="button"
+    tabIndex={0}
+  />
   <button
-    className="keepButton"
+    className="keep"
     onClick={[Function]}
-  >
-    Keep Box
-  </button>
+    onKeyDown={[Function]}
+    type="button"
+  />
 </div>
 `;

@@ -1,7 +1,9 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
+import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 import { FoodBrandPage } from '../FoodBrandPage'
+
 global.scrollTo = jest.fn()
 
 describe('Food Brand Page', () => {
@@ -35,6 +37,9 @@ describe('Food Brand Page', () => {
       wrapper.find('.backButton').simulate('click')
 
       expect(removeFoodBrandMock).toHaveBeenCalledTimes(1)
+    })
+    test('should render Recipes in the RecipGrid component', () => {
+      expect(wrapper.find(RecipeGrid)).toHaveLength(1)
     })
   })
 })
