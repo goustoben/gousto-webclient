@@ -149,23 +149,22 @@ class Header extends React.PureComponent {
       homeMenuItem.url = clientRoutes.join
     }
 
-    const items = [
-      (!isAuthenticated && availableItems.boxPrices),
+    const insertIf = (condition, item) => ( condition ? item : [])
+
+    const desktopItems = [
+      ...insertIf(!isAuthenticated, availableItems.boxPrices),
       availableItems.menu,
       availableItems.sustainability,
-      (isAuthenticated && availableItems.referFriend)
+      ...insertIf(isAuthenticated, availableItems.referFriend),
+      availableItems.faq,
     ]
 
-    const mobileItems = []
-
-    if (!isAuthenticated) {
-      mobileItems.push(availableItems.boxPrices)
-    }
-
-    mobileItems.push(
+    const mobileItems = [
+      ...insertIf(!isAuthenticated, availableItems.boxPrices),
       availableItems.menu,
-      availableItems.sustainability
-    )
+      availableItems.sustainability,
+      availableItems.faq,
+    ]
 
     const myGousto = [availableItems.myGousto]
     const rateMyRecipes = [availableItems.rateMyRecipes]
@@ -182,7 +181,7 @@ class Header extends React.PureComponent {
       mobileMenu = mobileMenu.concat(homeMenuItem, mobileItems)
     }
 
-    return (device === 'mobile') ? mobileMenu.concat(availableItems.faq) : items.concat(availableItems.faq)
+    return (device === 'mobile') ? mobileMenu : desktopItems
   }
 
   handleQuery = () => {
