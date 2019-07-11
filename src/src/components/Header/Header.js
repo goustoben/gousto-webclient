@@ -129,6 +129,7 @@ class Header extends React.PureComponent {
       deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false},
       subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false},
       details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false},
+      sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false },
     }
 
     let pathLocal = path
@@ -151,15 +152,22 @@ class Header extends React.PureComponent {
     }
 
     const items = [
-      (isAuthenticated ? availableItems.referFriend : availableItems.boxPrices),
-      availableItems.menu
+      (!isAuthenticated && availableItems.boxPrices),
+      availableItems.menu,
+      availableItems.sustainability,
+      (isAuthenticated && availableItems.referFriend)
     ]
 
     const mobileItems = []
+
     if (!isAuthenticated) {
       mobileItems.push(availableItems.boxPrices)
     }
-    mobileItems.push(availableItems.menu)
+
+    mobileItems.push(
+      availableItems.menu,
+      availableItems.sustainability
+    )
 
     const myGousto = [availableItems.myGousto]
     const rateMyRecipes = [availableItems.rateMyRecipes]
