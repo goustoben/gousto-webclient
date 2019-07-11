@@ -106,14 +106,14 @@ describe('Header', () => {
       expect(wrapper.find(MobileMenu).length).toBe(1)
     })
 
-    test('should render 5 <Link />', () => {
-      expect(wrapper.find(Link).length).toEqual(4)
+    test('should render 6 <Link />', () => {
+      expect(wrapper.find(Link).length).toEqual(5)
     })
 
-    test('should render 4 <Link /> if existing menu path is passed as prop', () => {
+    test('should render 5 <Link /> if existing menu path is passed as prop', () => {
       const wrapper = shallow(<Header path="box-prices" />, {context: {store}})
 
-      expect(wrapper.find(Link).length).toEqual(3)
+      expect(wrapper.find(Link).length).toEqual(4)
     })
 
     test('should alter homepage link when promocode is provided', () => {
@@ -148,7 +148,7 @@ describe('Header', () => {
     test('should render referFriend in the menu if authenticated', () => {
       const isAuthenticated = true
       const wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
-      expect(wrapper.find(Link).at(1).childAt(0)
+      expect(wrapper.find(Link).at(3).childAt(0)
         .text()).toEqual('Free Food')
     })
 
@@ -262,6 +262,11 @@ describe('Header', () => {
         },
         {
           "clientRouted": false,
+          "name": "Sustainability",
+          "url": "/blog/sustainability"
+        },
+        {
+          "clientRouted": false,
           "name": "Help",
           "url": "/help"
         }
@@ -289,6 +294,11 @@ describe('Header', () => {
         {
           "name": "Choose Recipes",
           "url": "/menu"
+        },
+        {
+          "clientRouted": false,
+          "name": "Sustainability",
+          "url": "/blog/sustainability"
         },
         {
           "clientRouted": false,

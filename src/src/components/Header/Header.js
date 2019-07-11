@@ -149,22 +149,20 @@ class Header extends React.PureComponent {
       homeMenuItem.url = clientRoutes.join
     }
 
-    const insertIf = (condition, item) => ( condition ? item : [])
-
     const desktopItems = [
-      ...insertIf(!isAuthenticated, availableItems.boxPrices),
+      !isAuthenticated && availableItems.boxPrices,
       availableItems.menu,
       availableItems.sustainability,
-      ...insertIf(isAuthenticated, availableItems.referFriend),
+      isAuthenticated && availableItems.referFriend,
       availableItems.faq,
-    ]
+    ].filter(item => item)
 
     const mobileItems = [
-      ...insertIf(!isAuthenticated, availableItems.boxPrices),
+      !isAuthenticated && availableItems.boxPrices,
       availableItems.menu,
       availableItems.sustainability,
       availableItems.faq,
-    ]
+    ].filter(item => item)
 
     const myGousto = [availableItems.myGousto]
     const rateMyRecipes = [availableItems.rateMyRecipes]
