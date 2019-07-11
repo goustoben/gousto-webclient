@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import Immutable from 'immutable'
 import config from 'config'
 import Svg from 'Svg'
 import Link from 'Link'
@@ -37,7 +36,6 @@ class Header extends React.PureComponent {
     promoCodeUrl: PropTypes.string,
     loginVisibilityChange: PropTypes.func,
     closeBoxModalVisibilityChange: PropTypes.func,
-    features: PropTypes.instanceOf(Immutable.Map),
     noContactBar: PropTypes.bool,
     title: PropTypes.string,
     small: PropTypes.bool,
@@ -52,7 +50,6 @@ class Header extends React.PureComponent {
     promoCodeUrl: '',
     title: '',
     small: false,
-    features: Immutable.Map({}),
   }
 
   constructor(props) {
