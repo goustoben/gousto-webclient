@@ -227,9 +227,9 @@ class Header extends React.PureComponent {
     if (logoutPending) {
       buttonState = 'loggingOut'
       button = (
-        <a className={css.btn}>
+        <button type="button" className={css.btn}>
           You&#8217;re logged out <span className={css.confirm} />
-        </a>
+        </button>
       )
     } else if (isAuthenticated) {
       buttonState = 'loggedIn'
@@ -245,13 +245,15 @@ class Header extends React.PureComponent {
     } else {
       buttonState = 'loggedOut'
       button = (
-        <a className={css.btn} data-testing="loginButton">
+        <button type="button" className={css.btn} data-testing="loginButton">
           Login
-        </a>
+        </button>
       )
     }
     const logoutLink = (
       <span
+        role="button"
+        tabIndex='0'
         className={css.linkDesktop}
         onClick={this.logoutFunc}
         onKeyDown={e => onEnter(e, this.logoutFunc)}
@@ -263,6 +265,8 @@ class Header extends React.PureComponent {
 
     return (
       <span
+        role='button'
+        tabIndex='0'
         className={classNames(css.authButtonsContainer, css[buttonState])}
         onClick={e => { if (!isAuthenticated) { this.onOpen(e) } }}
         onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onOpen()} })}
@@ -307,7 +311,8 @@ class Header extends React.PureComponent {
 
     return (
       <span id={serverError ? 'mobileMenu' : null} data-testing="header">
-        <a
+        <button
+          type="button"
           className={mobileMenuOpen ? css.overlayOpen : css.overlay}
           href={serverError ? '#' : null}
           onClick={this.hideMobileMenu}
@@ -370,7 +375,13 @@ class Header extends React.PureComponent {
                     {this.renderAuthLink()}
                   </span>
                   <span className={css.linkMobileContainer}>
-                    <a className={classNames([css.burgerIcon, 'needsclick'])} onClick={this.showMobileMenu} href={serverError ? '#mobileMenu' : null} data-testing="burgerMenu" />
+                    <button
+                      type='button'
+                      className={classNames([css.burgerIcon, 'needsclick'])}
+                      onClick={this.showMobileMenu}
+                      href={serverError ? '#mobileMenu' : null}
+                      data-testing="burgerMenu"
+                    />
                   </span>
                 </div>
               </div>
