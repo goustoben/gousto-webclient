@@ -69,6 +69,21 @@ export const keepOrder = () => (
   }
 )
 
+export const keepSubscription = () => (
+  (dispatch, getState) => {
+    const userId = getState().user.get('id')
+
+    dispatch({
+      type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+      modalVisibility: false,
+      trackingData: {
+        actionType: 'Subscription Kept',
+        customerId: userId,
+      },
+    })
+  }
+)
+
 export const cancelPendingOrder = (variation = 'default') => (
   async (dispatch, getState) => {
     const orderId = getState().onScreenRecovery.get('orderId')
@@ -156,12 +171,6 @@ export const getPauseRecoveryContent = () => (
   }
 )
 
-export const onKeep = () => (
-  async (dispatch, getState) => {
-    keepOrder()(dispatch, getState)
-  }
-)
-
 export const cancelOrder = () => (
   async (dispatch, getState) => {
     const orderType = getState().onScreenRecovery.get('orderType')
@@ -175,8 +184,29 @@ export const cancelOrder = () => (
 
 export const pauseSubscription = () => (
   async (dispatch, getState) => {
-    await subPauseActions.subscriptionDeactivate()(dispatch, getState)
-    modalVisibilityChange({modalVisibility: false})(dispatch)
+    await dispatch(subPauseActions.subscriptionDeactivate())
+
+    const userId = getState().user.get('id')
+    dispatch({
+      type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
+      modalVisibility: false,
+      trackingData: {
+        actionType: 'Subscription Paused',
+        customerId: userId,
+      },
+    })
+    dispatch(redirect('/my-subscription'))
+  }
+)
+
+export const onKeep = () => (
+  async (dispatch, getState) => {
+    const modalType = getState().onScreenRecovery.get('modalType')
+    if(modalType === 'order') {
+      keepOrder()(dispatch, getState)
+    } else if (modalType === 'subscription') {
+      keepSubscription()(dispatch, getState)
+    }
   }
 )
 

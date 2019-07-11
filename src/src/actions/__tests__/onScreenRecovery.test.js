@@ -15,6 +15,7 @@ import {
   getSkipRecoveryContent,
   getPauseRecoveryContent,
   cancelOrder,
+  pauseSubscription,
   onKeep,
   onConfirm,
   getRecoveryContent,
@@ -160,7 +161,7 @@ describe('onScreenRecovery', () => {
     })
   })
 
-  describe('cancelOrder', () => {
+  describe('cancelPendingOrder', () => {
     beforeEach(() => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
@@ -217,6 +218,30 @@ describe('onScreenRecovery', () => {
   })
 
   describe('pauseSubscription', () => {
+    beforeEach(() => {
+      getStateSpy.mockReturnValue({
+        user: Immutable.Map({
+          id: '123',
+        })
+      })
+    })
+    test('should call the subscriptionDeactivate action', async () => {
+      await pauseSubscription()(dispatchSpy, getStateSpy)
+      expect(subPauseActions.subscriptionDeactivate).toHaveBeenCalled()
+    })
+
+    test('should toggle the pause subscription modal visibility', async () => {
+      await pauseSubscription()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+        modalVisibility: false,
+      }))
+    })
+
+    test('should redirect to my-subscription', async () => {
+      await pauseSubscription()(dispatchSpy, getStateSpy)
+      expect(redirect).toHaveBeenCalledWith('/my-subscription')
+    })
   })
 
   describe('getSkipRecoveryContent', () => {
@@ -417,20 +442,40 @@ describe('onScreenRecovery', () => {
   })
 
   describe('onKeep', () => {
-    beforeEach(() => {
+    test('when modalType is order, should toggle OSR modal visibility with Order Kept tracking action', async () => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
-          orderId: '1234',
+          modalType: 'order',
         }),
       })
-    })
-
-    test('should toggle OSR modal visibility', async () => {
       await onKeep()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
+        trackingData: expect.objectContaining({
+          actionType: 'Order Kept',
+        })
+      }))
+    }
+    )
+    test('when modalType is subscription, should toggle OSR modal visibility with Subscription Kept tracking action', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          modalType: 'subscription',
+        }),
+        user: Immutable.Map({
+          id: '1234'
+        })
+      })
+      await onKeep()(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+        modalVisibility: false,
+        trackingData: expect.objectContaining({
+          actionType: 'Subscription Kept',
+        })
       }))
     })
   })
