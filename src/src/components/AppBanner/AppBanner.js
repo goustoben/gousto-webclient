@@ -1,7 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Button } from 'goustouicomponents'
 import Svg from 'Svg'
 import css from './AppBanner.css'
+
+const propTypes = {
+  rating: PropTypes.number.isRequired,
+  showAppBanner: PropTypes.bool.isRequired,
+  appBannerDismiss: PropTypes.func.isRequired,
+  OS: PropTypes.string.isRequired,
+}
 
 const showStar = (avg) => {
   let i
@@ -47,5 +55,7 @@ const AppBanner = ({ rating, showAppBanner, appBannerDismiss, OS }) => (
       </div>
     ) : null
 )
+
+AppBanner.propTypes = propTypes
 
 export { AppBanner }
