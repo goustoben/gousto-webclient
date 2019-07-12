@@ -323,6 +323,7 @@ class Header extends React.PureComponent {
               loginFunc={this.onOpen}
               logoutFunc={this.logoutFunc}
               promoCodeUrl={promoCodeUrl}
+              trackNavigationClick={trackNavigationClick}
             />
             <div className={css.container}>
               {(!noContactBar) ?
@@ -361,7 +362,7 @@ class Header extends React.PureComponent {
                           to={menuItem.url}
                           className={css.linkDesktop}
                           clientRouted={menuItem.clientRouted}
-                          tracking={trackNavigationClick(menuItem.tracking)}
+                          tracking={() => trackNavigationClick(menuItem.tracking)}
                         >
                           {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
                           {menuItem.name}
