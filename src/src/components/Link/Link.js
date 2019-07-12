@@ -13,10 +13,12 @@ const GoustoLink = (props, context) => {
     [css.secondary]: secondary,
   }
 
+  const trackingProp = tracking && { onClick: () => tracking() }
+
   if (context.router && clientRouted) {
-    link = <Link className={classnames(dynamicClasses, className)} onClick={() => {tracking && trackNavigationClick(tracking)}} {...rest} />
+    link = <Link className={classnames(dynamicClasses, className)} {...trackingProp} {...rest} />
   } else {
-    link = <a className={classnames(dynamicClasses, className)} href={rest.to} onClick={() => {tracking && trackNavigationClick(tracking)}} {...rest}></a>
+    link = <a className={classnames(dynamicClasses, className)} href={rest.to} {...trackingProp} {...rest}></a>
   }
 
   return link
@@ -37,4 +39,4 @@ GoustoLink.defaultProps = {
   clientRouted: true,
 }
 
-export { GoustoLink }
+export default GoustoLink

@@ -40,6 +40,7 @@ class Header extends React.PureComponent {
     title: PropTypes.string,
     small: PropTypes.bool,
     forceSignupWizardFeature: PropTypes.bool,
+    trackNavigationClick: PropTypes.func,
   }
 
   static defaultProps = {
@@ -280,7 +281,7 @@ class Header extends React.PureComponent {
     }) : ''
   )
   render() {
-    const { fromJoin, disabled, noContactBar, simple, isAuthenticated, serverError, title, small, promoCodeUrl, loginOpen, path } = this.props
+    const { fromJoin, disabled, noContactBar, simple, isAuthenticated, serverError, title, small, promoCodeUrl, loginOpen, path, trackNavigationClick } = this.props
     const { mobileMenuOpen, loginPending } = this.state
     const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
@@ -360,7 +361,7 @@ class Header extends React.PureComponent {
                           to={menuItem.url}
                           className={css.linkDesktop}
                           clientRouted={menuItem.clientRouted}
-                          tracking={menuItem.tracking}
+                          tracking={trackNavigationClick(menuItem.tracking)}
                         >
                           {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
                           {menuItem.name}
