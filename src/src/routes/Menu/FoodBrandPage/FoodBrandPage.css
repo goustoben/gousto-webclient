@@ -1,12 +1,16 @@
 @value comfortaaFontStack from 'styles/typography.css';
 @value ScreenSMMax, ScreenSMMin from 'styles/screenSizes.css';
+@value White from 'styles/colors.css';
 
 .foodBrandContainer {
   background: White;
 }
 
 .foodBrandTitleContainer {
-  position: absolute;
+  position: sticky;
+  top: 0;
+  background-color: White;
+  z-index: 11;
   width: 100%;
   font-family: comfortaaFontStack;
   display: flex;
@@ -15,14 +19,14 @@
   padding-bottom: 10px;
   @media ScreenSMMin {
     padding-bottom: 0px;
-    }
+  }
 }
 
-.foodBrandTitleContainerFixed {
-  composes: foodBrandTitleContainer;
-  background: White;
-  position: fixed;
-  top: 0;
+.border {
+  height: 6px;
+  width: 100%;
+  position: sticky;
+  top: 59px;
   z-index: 11;
 }
 
@@ -68,13 +72,8 @@
 }
 
 .foodBrandDescription {
-  display: flex;
-  justify-content: center;
+  text-align: center;
   font-size: 16px;
-  padding-top: 45px;
-  @media ScreenSMMin {
-    padding-top: 55px;
-  }
 }
 
 .leftArrow {
@@ -84,3 +83,4 @@
     padding-top: 4px;
   }
 }
+

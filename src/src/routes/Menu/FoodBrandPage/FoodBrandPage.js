@@ -20,74 +20,23 @@ const propTypes = {
 }
 class FoodBrandPage extends PureComponent {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      scrolledPastPoint: false,
-      scrolledPastPointBorder: false
-    }
-  }
-
   componentDidMount() {
-    window.addEventListener('scroll', this.onScroll)
     window.scrollTo(0, 0)
-
-    this.checkScroll()
-
-    this.intervals = setInterval(() => {
-      this.checkScroll()
-    }, 50)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll)
-
-    if (this.intervals) {
-      clearInterval(this.intervals)
-      this.intervals = null
-    }
-  }
-
-  onScroll = () => {
-    this.hasScrolled = true
-  }
-
-  checkScroll = () => {
-    const { browser } = this.props
-    if (this.hasScrolled) {
-      this.hasScrolled = false
-      const threshold = (browser === 'mobile') ? 53 : 88
-      const { scrolledPastPoint } = this.state
-      const scrollState = getScrollOffset(threshold, 0, scrolledPastPoint)
-      const yOffset = (browser === 'mobile') ? 76 : 114
-
-      scrollState && this.setState({
-        scrolledPastPoint: scrollState.scrolledPastPoint,
-      })
-
-      this.setState({
-        scrolledPastPointBorder: (window.pageYOffset >= yOffset)
-      })
-    }
   }
 
   render() {
     const { name, description, borderColor, removeFoodBrand, mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow, menuFilterExperiment } = this.props
-    const { scrolledPastPoint, scrolledPastPointBorder } = this.state
-
-    const classNameTitle = scrolledPastPoint ? css.foodBrandTitleContainerFixed : css.foodBrandTitleContainer
 
     return (
       <section className={css.foodBrandContainer}>
-        <div style={{borderBottom: `6px solid ${borderColor}`}}>
-          <div className={classNameTitle} style={scrolledPastPointBorder ? {borderBottom: `6px solid ${borderColor}`} : {}}>
-            <span className={css.backButton} role="button" tabIndex={0} onClick={removeFoodBrand} onKeyPress={removeFoodBrand}>
-              <span className={css.leftArrow}/><span className={css.underline}>Back <span className={css.hideOnMobile}>to All Recipes</span></span>
-            </span>
-            <h1>{name}</h1>
-          </div>
-          <p className={css.foodBrandDescription}>{description}</p>
+        <div id="foodBrandTitleContainer" className={css.foodBrandTitleContainer}>
+          <span className={css.backButton} role="button" tabIndex={0} onClick={removeFoodBrand} onKeyPress={removeFoodBrand}>
+            <span className={css.leftArrow}/><span className={css.underline}>Back <span className={css.hideOnMobile}>to All Recipes</span></span>
+          </span>
+          <h1>{name}</h1>
         </div>
+        <p className={css.foodBrandDescription}>{description}</p>
+        <div style={{background: borderColor}} className={css.border}/>
         <div>
           <RecipeGrid
             mobileGridView={mobileGridView}
