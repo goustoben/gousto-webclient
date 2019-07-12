@@ -91,6 +91,10 @@ export const currentDietaryAttributesChange = (dietaryAttributes) => ({
 export const currentFoodBrandChange = (foodBrand) => ({
   type: actionTypes.FILTERS_FOOD_BRAND_CHANGE,
   foodBrand,
+  trackingData: {
+    actionType: foodBrand !== null ? 'FoodBrand selected' : 'FoodBrand unselected',
+    food_brand: foodBrand !== null ? foodBrand.slug : ''
+  }
 })
 
 export const filtersClearAll = (collectionId) => ({
@@ -123,6 +127,12 @@ export function collectionFilterChange(collectionId) {
 }
 
 export const changeCollectionToAllRecipes = () => (
+  (dispatch) => {
+    dispatch(collectionFilterChange(ALL_RECIPES_COLLECTION_ID))
+  }
+)
+
+export const changeCollectionToAllRecipesViaCTA = () => (
   (dispatch) => {
     dispatch(collectionFilterChange(ALL_RECIPES_COLLECTION_ID))
     dispatch(trackCTAToAllRecipesClicked())
