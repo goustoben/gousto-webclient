@@ -1,2 +1,3 @@
-import Link from './Link'
-export default Link
+import { LinkContainer } from './LinkContainer'
+export default LinkContainer
+

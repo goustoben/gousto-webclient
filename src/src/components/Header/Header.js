@@ -118,16 +118,16 @@ class Header extends React.PureComponent {
 
     const availableItems = {
       home,
-      boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true },
-      menu: { name: 'Choose Recipes', url: this.getChooseRecipesLink() },
-      faq: { name: 'Help', url: clientRoutes.help, clientRouted: false },
-      myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false },
-      referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false },
-      rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false},
-      deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false},
-      subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false},
-      details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false},
-      sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false },
+      boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking:'BoxPricingNavigation Clicked'},
+      menu: { name: 'Choose Recipes', url: this.getChooseRecipesLink(), tracking:'RecipeNavigation Clicked'},
+      faq: { name: 'Help', url: clientRoutes.help, clientRouted: false, tracking:'FAQNavigation Clicked'},
+      myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false, tracking:'MyGoustoNavigation Clicked'},
+      referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false, tracking:'ReferAFriendNavigation Clicked'},
+      rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking:'RateMyRecipesNavigation Clicked'},
+      deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking:'DeliveriesNavigation Clicked'},
+      subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking:'SubscriptionNavigation Clicked'},
+      details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false, tracking:'DetailsNavigation Clicked'},
+      sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking:'SustainabilityNavigation Clicked'},
     }
 
     let pathLocal = path
@@ -360,6 +360,7 @@ class Header extends React.PureComponent {
                           to={menuItem.url}
                           className={css.linkDesktop}
                           clientRouted={menuItem.clientRouted}
+                          tracking={menuItem.tracking}
                         >
                           {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
                           {menuItem.name}

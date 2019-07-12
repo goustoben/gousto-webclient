@@ -6,7 +6,7 @@ import css from './Link.css'
 
 const GoustoLink = (props, context) => {
   let link
-  const { noDecoration, secondary, clientRouted, className, ...rest } = props
+  const { noDecoration, secondary, clientRouted, className, tracking, trackNavigationClick, ...rest } = props
   const dynamicClasses = {
     [css.base]: !className,
     [css.noDecor]: noDecoration,
@@ -14,9 +14,9 @@ const GoustoLink = (props, context) => {
   }
 
   if (context.router && clientRouted) {
-    link = <Link className={classnames(dynamicClasses, className)} {...rest} />
+    link = <Link className={classnames(dynamicClasses, className)} onClick={() => {tracking && trackNavigationClick(tracking)}} {...rest} />
   } else {
-    link = <a className={classnames(dynamicClasses, className)} href={rest.to} {...rest}></a>
+    link = <a className={classnames(dynamicClasses, className)} href={rest.to} onClick={() => {tracking && trackNavigationClick(tracking)}} {...rest}></a>
   }
 
   return link
@@ -37,4 +37,4 @@ GoustoLink.defaultProps = {
   clientRouted: true,
 }
 
-export default GoustoLink
+export { GoustoLink }
