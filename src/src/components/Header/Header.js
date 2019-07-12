@@ -152,8 +152,8 @@ class Header extends React.PureComponent {
     const desktopItems = [
       !isAuthenticated && availableItems.boxPrices,
       availableItems.menu,
-      availableItems.sustainability,
       isAuthenticated && availableItems.referFriend,
+      availableItems.sustainability,
       availableItems.faq,
     ].filter(item => item)
 

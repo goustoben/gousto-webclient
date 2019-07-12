@@ -148,7 +148,7 @@ describe('Header', () => {
     test('should render referFriend in the menu if authenticated', () => {
       const isAuthenticated = true
       const wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
-      expect(wrapper.find(Link).at(3).childAt(0)
+      expect(wrapper.find(Link).at(2).childAt(0)
         .text()).toEqual('Free Food')
     })
 
