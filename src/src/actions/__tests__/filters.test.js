@@ -7,6 +7,7 @@ import { push } from 'react-router-redux'
 import {
   collectionFilterChange,
   changeCollectionToAllRecipes,
+  changeCollectionToAllRecipesViaCTA,
   filterCurrentDietTypesChange,
   filterCurrentTotalTimeChange,
   clearAllFilters,
@@ -145,6 +146,14 @@ describe('filters actions', () => {
 
     test('should dispatch two actions', () => {
       changeCollectionToAllRecipes()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy.mock.calls.length).toBe(1)
+    })
+  })
+
+  describe('changeCollectionToAllRecipesViaCTA', () => {
+
+    test('should dispatch two actions', () => {
+      changeCollectionToAllRecipesViaCTA()(dispatchSpy, getStateSpy)
       expect(dispatchSpy.mock.calls.length).toBe(2)
     })
   })
@@ -380,7 +389,7 @@ describe('filters actions', () => {
           name: 'FoodBrand',
           slug: 'food-brand',
           borderColor: 'blue'
-        }, 
+        },
         'type': "FILTERS_FOOD_BRAND_CHANGE",
         'trackingData': {
           'actionType': 'FoodBrand selected',
