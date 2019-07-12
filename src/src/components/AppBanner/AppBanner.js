@@ -22,27 +22,31 @@ const showStar = (avg) => {
   return stars
 }
 
-const AppBanner = ({ appTitle, rating }) => (
-  <div className={css.appBannerWrapper}>
-    <button type='button' className={css.closeButton}>
-      <Svg fileName="icon-times" className={css.closeIcon} />
-    </button>
-    <div className={css.appDetails}>
-      <div className={css.appIcon}><Svg fileName="icon-gousto-iso" className={css.appIconLogo} /></div>
-      <div className={css.platformSpecificDetails}>
-        <strong>{appTitle}</strong>
-        <div className={css.rating}>
-          <span className={css.stars}>
-            {showStar(rating)}
-          </span>
-          <span>(30.9K)</span>
+const AppBanner = ({ rating, showAppBanner, appBannerDismiss, OS }) => (
+  showAppBanner ?
+    (
+      <div className={css.appBannerWrapper}>
+        <button type='button' className={css.closeButton} onClick={() => appBannerDismiss()}>
+          <Svg fileName="icon-times" className={css.closeIcon} />
+        </button>
+        <div className={css.appDetails}>
+          <div className={css.appIcon}><Svg fileName="icon-gousto-iso" className={css.appIconLogo} /></div>
+          <div className={css.platformSpecificDetails}>
+            <strong>{`Gousto for ${OS}`}</strong>
+            <div className={css.rating}>
+              <span className={css.stars}>
+                {showStar(rating)}
+              </span>
+              <span>(30.9K)</span>
+            </div>
+          </div>
         </div>
+        <a className={css.appLink}>
+          <Button noDecoration>Get the app</Button>
+        </a>
+
       </div>
-    </div>
-    <a className={css.appLink}>
-      <Button noDecoration>Get the app</Button>
-    </a>
-  </div>
+    ) : null
 )
 
 export { AppBanner }
