@@ -1,3 +1,4 @@
+import { appBanner } from './appBanner'
 import account from './account'
 import auth from './auth'
 import basket from './basket'
@@ -37,6 +38,7 @@ import { getHelp } from './getHelp'
 import { logger } from './logger'
 
 const reducers = {
+  ...appBanner,
   ...account,
   ...auth,
   ...basket,
