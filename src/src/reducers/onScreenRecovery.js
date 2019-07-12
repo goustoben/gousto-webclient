@@ -2,20 +2,6 @@ import Immutable from 'immutable'
 
 import actionTypes from 'actions/actionTypes'
 
-export const initialState = () => Immutable.Map({
-  triggered: false,
-  modalVisibility: false,
-  orderId: '',
-  deliveryDayId: '',
-  boxNumber: '',
-  orderType: '',
-  orderDate: '',
-  title: '',
-  offer: null,
-  valueProposition: null,
-  callToActions: null,
-})
-
 const onScreenRecovery = {
   onScreenRecovery: (state, action) => {
     if (!state) {
@@ -33,6 +19,9 @@ const onScreenRecovery = {
       }
       if (action.orderDate) {
         newState = newState.set('orderDate', action.orderDate)
+      }
+      if (action.modalType) {
+        newState = newState.set('modalType', action.modalType)
       }
 
       return newState
@@ -80,5 +69,20 @@ const onScreenRecovery = {
     }
   }
 }
+
+export const initialState = () => Immutable.Map({
+  triggered: false,
+  modalVisibility: false,
+  orderId: '',
+  deliveryDayId: '',
+  boxNumber: '',
+  orderType: '',
+  orderDate: '',
+  title: '',
+  modalType: '',
+  offer: null,
+  valueProposition: null,
+  callToActions: null,
+})
 
 export default onScreenRecovery

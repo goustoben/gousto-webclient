@@ -13,9 +13,6 @@ import { Footer } from './Footer'
 
 const propTypes = {
   visible: PropTypes.bool,
-  orderId: PropTypes.string,
-  deliveryDayId: PropTypes.string,
-  orderType: PropTypes.string,
   title: PropTypes.string,
   offer: PropTypes.object,
   valueProposition: PropTypes.shape({
@@ -27,7 +24,6 @@ const propTypes = {
     keep: PropTypes.string,
   }),
   triggered: PropTypes.bool,
-  orderDate: PropTypes.string,
   getRecoveryContent: PropTypes.func,
   onConfirm: PropTypes.func.isRequired,
   confirmCopy: PropTypes.string.isRequired,

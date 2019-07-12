@@ -283,9 +283,10 @@ function subscriptionDeactivate(reason) {
     dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_DEACTIVATE, true))
     dispatch(statusActions.error(actionTypes.SUBSCRIPTION_DEACTIVATE, false))
     const accessToken = getState().auth.get('accessToken')
+    const data = reason ? { state_reason: reason } : {}
 
     try {
-      await subscriptionApi.deactivateSubscription(accessToken, { state_reason: reason })
+      await subscriptionApi.deactivateSubscription(accessToken, data)
     } catch (err) {
       dispatch(statusActions.error(actionTypes.SUBSCRIPTION_DEACTIVATE, 'deactivate-fail'))
     } finally {
