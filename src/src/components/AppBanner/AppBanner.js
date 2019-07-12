@@ -41,10 +41,9 @@ const AppBanner = ({ rating, showAppBanner, appBannerDismiss, OS }) => (
             </div>
           </div>
         </div>
-        <a className={css.appLink}>
+        <a className={css.appLink} href="https://gousto.co.uk/apps">
           <Button noDecoration>Get the app</Button>
         </a>
-
       </div>
     ) : null
 )
