@@ -28,7 +28,7 @@ class FoodBrandPage extends PureComponent {
   }
 
   componentDidMount() {
-    this.setState({containerHeight: getElementHeight("#foodBrandTitleContainer")})
+    this.setState({containerHeight: getElementHeight(window.document, "#foodBrandTitleContainer")})
 
     window.scrollTo(0, 0)
   }

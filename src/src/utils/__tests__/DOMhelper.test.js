@@ -1,7 +1,6 @@
-import React from 'react'
-import { shallow } from 'enzyme'
 import ReactDOM from 'react-dom'
 import DOMHelper from 'utils/DOMhelper'
+
 jest.mock('react-dom',() => ({
   findDOMNode: jest.fn()
 }))
@@ -22,11 +21,9 @@ describe('DOMhelper', () => {
   })
 
   describe('getFirstMatchingNode', function() {
-    let sandbox
     let findDOMNodeSpy
 
     beforeEach(function() {
-      sandbox = jest.fn()
       findDOMNodeSpy = jest.spyOn(ReactDOM, 'findDOMNode')
     })
 
@@ -67,15 +64,13 @@ describe('DOMhelper', () => {
       expect(DOMHelper.getFirstMatchingNode(keys, refs)).toEqual(undefined)
     })
 
-    // there is another test in sinon that needs to be migrated but it was taking too long in the current ticket to move - 15 Jul 2019
+    // there is another test in sinon that needs to be migrated but it was taking too long in the current ticket to move - in this file src/test/utils/DOMhelper.js - 15 Jul 2019
   })
 
   describe('scrollToFirstMatchingNode', () => {
-    let sandbox
     let getFirstMatchingNodeSpy
 
     beforeEach(() => {
-      sandbox = jest.fn()
       getFirstMatchingNodeSpy = jest.spyOn(DOMHelper, 'getFirstMatchingNode')
     })
 
@@ -89,6 +84,19 @@ describe('DOMhelper', () => {
       expect(getFirstMatchingNodeSpy.mock.calls).toHaveLength(2)
       expect(getFirstMatchingNodeSpy.mock.calls[0]).toEqual([[], {}])
       expect(getFirstMatchingNodeSpy.mock.calls[1]).toEqual([['key1'], { key1: 'ref1' }])
+    })
+  })
+
+  describe('getElementHeight', () => {
+    test('should query the document correctly', () => {
+      const doc = {
+        querySelector: jest.fn().mockReturnValue({
+          offsetHeight: '50px'
+        })
+      }
+
+      expect(DOMHelper.getElementHeight(doc, "#testdiv")).toBe('50px')
+      expect(doc.querySelector).toBeCalledWith("#testdiv")
     })
   })
 })

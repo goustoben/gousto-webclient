@@ -7,6 +7,7 @@ const DOMHelper = {
   getBoundingClientRect,
   getFirstMatchingNode,
   scrollToFirstMatchingNode,
+  getElementHeight
 }
 
 export function getBoundingClientRect(ref) {
@@ -44,6 +45,12 @@ export function scrollToFirstMatchingNode(keys = [], refs = {}) {
   } else {
     logger.warning('scrollToFirstMatchingNode: no matches found in refs')
   }
+}
+
+export function getElementHeight(document, selector) {
+  const elementHeight = document && document.querySelector(selector) && document.querySelector(selector).offsetHeight
+
+  return elementHeight
 }
 
 export default DOMHelper
