@@ -1,5 +1,8 @@
 import { connect } from 'react-redux'
 import { appBannerActions } from 'actions/appBanner'
+import { getIsDismissed } from 'selectors/appBanner'
+import { getIsAuthenticated } from 'selectors/auth'
+import { getIsPolicyAccepted } from 'selectors/cookies'
 import { AppBanner } from './AppBanner'
 
 const getPlatformDetails = () => {
@@ -19,7 +22,7 @@ const getPlatformDetails = () => {
 const mapStateToProps = state => {
   const { name, averageRating, ratings } = getPlatformDetails()
 
-  const showAppBanner = state.cookies.get('isPolicyAccepted') && !state.appBanner.get('isDismissed') && name
+  const showAppBanner = getIsPolicyAccepted(state) && getIsAuthenticated(state) && !getIsDismissed(state) && name
 
   return {
     name,
