@@ -36,10 +36,10 @@ const AppBanner = ({ name, averageRating, ratings, showAppBanner, appBannerDismi
     (
       <div className={css.appBannerWrapper}>
         <button type='button' className={css.closeButton} onClick={() => appBannerDismiss()}>
-          <Svg fileName="icon-times" className={css.closeIcon} />
+          <Svg fileName="icon_dismiss-app-banner" className={css.closeIcon} />
         </button>
         <div className={css.appDetails}>
-          <div className={css.appIcon}><Svg fileName="icon-gousto-iso" className={css.appIconLogo} /></div>
+          <Svg fileName="app-banner-app-icon" className={css.appIconLogo} />
           <div className={css.platformSpecificDetails}>
             <strong>{`Gousto for ${name}`}</strong>
             <div className={css.rating}>
