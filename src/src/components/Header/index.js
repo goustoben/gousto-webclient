@@ -1,2 +1,1 @@
-import { HeaderContainer } from './HeaderContainer'
-export { HeaderContainer as Header }
+export { HeaderContainer as Header } from './HeaderContainer'
