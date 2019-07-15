@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { getScrollOffset } from 'utils/menu'
+import { getElementHeight } from 'utils/DOMhelper'
 import { RecipeGrid } from '../RecipeGrid'
 
 import css from './FoodBrandPage.css'
@@ -20,12 +20,22 @@ const propTypes = {
 }
 class FoodBrandPage extends PureComponent {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      containerHeight: 0
+    }
+  }
+
   componentDidMount() {
+    this.setState({containerHeight: getElementHeight("#foodBrandTitleContainer")})
+
     window.scrollTo(0, 0)
   }
 
   render() {
     const { name, description, borderColor, removeFoodBrand, mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow, menuFilterExperiment } = this.props
+    const { containerHeight } = this.state
 
     return (
       <section className={css.foodBrandContainer}>
@@ -36,7 +46,7 @@ class FoodBrandPage extends PureComponent {
           <h1>{name}</h1>
         </div>
         <p className={css.foodBrandDescription}>{description}</p>
-        <div style={{background: borderColor}} className={css.border}/>
+        <div style={{top: containerHeight, background: borderColor}} className={css.border}/>
         <div>
           <RecipeGrid
             mobileGridView={mobileGridView}
