@@ -9,9 +9,6 @@ const appBanner = {
   appBanner: (state = initialState, { type }) => {
     switch (type) {
     case actionTypes.APP_BANNER_DISMISSED: {
-      console.log('type', type) //eslint-disable-line
-      console.log('state', state) //eslint-disable-line
-
       return state.set('isDismissed', true)
     }
 
