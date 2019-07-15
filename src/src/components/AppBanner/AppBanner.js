@@ -5,10 +5,11 @@ import Svg from 'Svg'
 import css from './AppBanner.css'
 
 const propTypes = {
-  rating: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  averageRating: PropTypes.number.isRequired,
+  ratings: PropTypes.string.isRequired,
   showAppBanner: PropTypes.bool.isRequired,
   appBannerDismiss: PropTypes.func.isRequired,
-  OS: PropTypes.string.isRequired,
 }
 
 const showStar = (avg) => {
@@ -30,7 +31,7 @@ const showStar = (avg) => {
   return stars
 }
 
-const AppBanner = ({ rating, showAppBanner, appBannerDismiss, OS }) => (
+const AppBanner = ({ name, averageRating, ratings, showAppBanner, appBannerDismiss }) => (
   showAppBanner ?
     (
       <div className={css.appBannerWrapper}>
@@ -40,12 +41,12 @@ const AppBanner = ({ rating, showAppBanner, appBannerDismiss, OS }) => (
         <div className={css.appDetails}>
           <div className={css.appIcon}><Svg fileName="icon-gousto-iso" className={css.appIconLogo} /></div>
           <div className={css.platformSpecificDetails}>
-            <strong>{`Gousto for ${OS}`}</strong>
+            <strong>{`Gousto for ${name}`}</strong>
             <div className={css.rating}>
               <span className={css.stars}>
-                {showStar(rating)}
+                {showStar(averageRating)}
               </span>
-              <span>(30.9K)</span>
+              <span>{`(${ratings})`}</span>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { appBannerActions } from 'actions/appBanner'
 import { AppBanner } from './AppBanner'
 
-const getOS = () => {
+const getPlatformDetails = () => {
   let userAgent
   if (typeof window === 'undefined') {
     userAgent = ''
@@ -10,23 +10,21 @@ const getOS = () => {
     userAgent = window.navigator.userAgent
   }
 
-  let os
+  if (/android/i.test(userAgent)) return { name: 'Android', averageRating: 4.6, ratings: '1.8K' }
+  else if (/iPad|iPhone|iPod/.test(userAgent)) return { name: 'iOS', averageRating: 4.8, ratings: '33.4K' }
 
-  if (/android/i.test(userAgent)) os = 'Android'
-  else if (/iPad|iPhone|iPod/.test(userAgent)) os = 'iOS'
-
-  return os
+  return {}
 }
 
 const mapStateToProps = state => {
-  const OS = getOS()
+  const { name, averageRating, ratings } = getPlatformDetails()
 
-  const showAppBanner = state.cookies.get('isPolicyAccepted') && !state.appBanner.get('isDismissed') && OS
+  const showAppBanner = state.cookies.get('isPolicyAccepted') && !state.appBanner.get('isDismissed') && name
 
   return {
-    appTitle: 'Gousto for iOS',
-    rating: 4.6,
-    OS,
+    name,
+    averageRating,
+    ratings,
     showAppBanner,
   }
 
