@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Header } from 'Header'
 import Footer from 'Footer'
+import { AppBanner } from 'AppBanner'
 import CookieBanner from 'CookieBanner'
 
 import css from './FullPage.css'
@@ -9,6 +10,7 @@ import css from './FullPage.css'
 const FullPage = ({ children, route }) => (
   <div className={css.container}>
     <CookieBanner />
+    <AppBanner />
     <Header />
     {children}
     <Footer type={route.footerType || 'medium'} copyright />
