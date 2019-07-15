@@ -11,7 +11,7 @@ const apolloClient = require('apis/apollo').default
 const Provider = require('react-redux').Provider
 const promoActions = require('actions/promos').default
 const logger = require('utils/logger').default
-const Header = require('Header/Header').default
+const { Header } = require('Header/Header')
 const clearPersistentStore = require('middlewares/persist/persistStore').clearPersistentStore
 const processCookies = require('utils/processCookies').default
 const basketActions = require('actions/basket').default
@@ -92,7 +92,7 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
       if(__CLIENT__){
         logger.notice({message: `renderHTML/template`, elapsedTime: (new Date() - startTime)})
       }
-      
+
       return template
     })
 }
@@ -222,7 +222,7 @@ async function processRequest(ctx, next) {
           const is404 = renderProps.routes.find(r => (r.component && r.component.displayName && r.component.displayName === 'Connect(ErrorPage)')) !== undefined
           fetchAllData(renderProps, store).then(async () => {
             const redirect = store.getState().redirect
-            
+
             if (redirect) {
               const clearCookies = store.getState().clearCookies
               if (clearCookies) {
