@@ -51,6 +51,7 @@ class Header extends React.PureComponent {
     promoCodeUrl: '',
     title: '',
     small: false,
+    trackNavigationClick: () => {},
   }
 
   constructor(props) {

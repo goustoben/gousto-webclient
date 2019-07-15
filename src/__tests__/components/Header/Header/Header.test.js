@@ -94,7 +94,7 @@ describe('Header', () => {
           simpleHeader: false,
         })
       }
-      wrapper = shallow(<Header trackNavigationClick={jest.fn()} />, {context: {store}})
+      wrapper = shallow(<Header />, {context: {store}})
     })
 
     test('should return a <span>', () => {
@@ -111,66 +111,66 @@ describe('Header', () => {
     })
 
     test('should render 5 <Link /> if existing menu path is passed as prop', () => {
-      const wrapper = shallow(<Header path="box-prices" trackNavigationClick={jest.fn()}/>, {context: {store}})
+      const wrapper = shallow(<Header path="box-prices" />, {context: {store}})
 
       expect(wrapper.find(Link).length).toEqual(4)
     })
 
     test('should alter homepage link when promocode is provided', () => {
       const promoCode = 'test'
-      const wrapper = shallow(<Header promoCodeUrl={promoCode} trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header promoCodeUrl={promoCode} />)
 
       expect(wrapper.find(Link).at(0).props().to).toEqual(`/${promoCode}`)
     })
 
     test('should alter homepage link to /menu when path contains "check-out"', () => {
-      const wrapper = shallow(<Header path="check-out" trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header path="check-out" />)
 
       expect(wrapper.find(Link).at(0).prop('to')).toEqual('/menu')
     })
 
     test('should not render a <MobileMenu /> when displaying the simple header', () => {
       const simple = true
-      const wrapper = shallow(<Header simple={simple} trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header simple={simple} />)
       expect(wrapper.find(MobileMenu).length).toEqual(0)
     })
 
     test('should render the JS enabled MobileMenu toggle by default', () => {
-      const wrapper = shallow(<Header trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header />)
       expect(wrapper.find('span').at(0).prop('id')).toEqual(null)
     })
 
     test('should render the fallback MobileMenu toggle if the serverError prop is true', () => {
-      const wrapper = shallow(<Header serverError trackNavigationClick={jest.fn()} />)
+      const wrapper = shallow(<Header serverError />)
       expect(wrapper.find('span').at(0).prop('id')).toEqual('mobileMenu')
     })
 
     test('should render referFriend in the menu if authenticated', () => {
       const isAuthenticated = true
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
       expect(wrapper.find(Link).at(2).childAt(0)
         .text()).toEqual('Free Food')
     })
 
     test('should render boxPrices in the menu if not authenticated', () => {
       const isAuthenticated = false
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
       expect(wrapper.find(Link).at(1).childAt(0)
         .text()).toEqual('Box Prices')
     })
 
     test('should render a PromoModal component', () => {
-      const wrapper = shallow(<Header {...store} trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header {...store} />)
       expect(wrapper.find('PromoModal').length).toEqual(1)
     })
 
     test('should render a CancelOrderModal component', () => {
-      const wrapper = shallow(<Header trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header />)
       expect(wrapper.find(CancelOrderModal).length).toEqual(1)
     })
 
     test('should render a ExpiredBillingModal component', () => {
-      const wrapper = shallow(<Header trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header />)
       expect(wrapper.find(ExpiredBillingModal).length).toEqual(1)
     })
 
@@ -286,7 +286,7 @@ describe('Header', () => {
 
   describe('render MobileMenu with the right paths when not authenticated', () => {
     const isAuthenticated = false
-    const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} trackNavigationClick={jest.fn()}/>,)
+    const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} />,)
     test('should render menu items in correct order when logged out', () => {
       const expected = [
         {
@@ -326,7 +326,7 @@ describe('Header', () => {
   describe('forceSignupWizard feature', () => {
     test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to false', () => {
       const isAuthenticated = false
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature={false} trackNavigationClick={jest.fn()}/>,)
+      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature={false} />,)
       const chooseRecipes = {
         "name": "Choose Recipes",
         "url": "/menu",
@@ -336,7 +336,7 @@ describe('Header', () => {
     })
 
     test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to true and is authenticated', () => {
-      const wrapper = shallow(<Header isAuthenticated config={config} forceSignupWizardFeature trackNavigationClick={jest.fn()}/>,)
+      const wrapper = shallow(<Header isAuthenticated config={config} forceSignupWizardFeature />,)
       const chooseRecipes = {
         "name": "Choose Recipes",
         "url": "/menu",
@@ -347,7 +347,7 @@ describe('Header', () => {
 
     test('render menu with "choose recipes" going to SIGNUP WIZARD when forceSignupWizard feature is set to true and authenticated', () => {
       const isAuthenticated = false
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature trackNavigationClick={jest.fn()}/>,)
+      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature />,)
       const chooseRecipes = {
         "name": "Choose Recipes",
         "url": "/signup",
