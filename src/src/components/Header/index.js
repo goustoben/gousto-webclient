@@ -1,2 +1,1 @@
-import Header from './HeaderContainer'
-export default Header
+export { HeaderContainer as Header } from './HeaderContainer'

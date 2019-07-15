@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow, mount } from 'enzyme'
 
 import Immutable from 'immutable'
-import Header from 'components/Header/Header'
+import { Header } from 'components/Header/Header'
 import MobileMenu from 'Header/MobileMenu'
 import Link from 'Link'
 import CancelOrderModal from 'CancelOrderModal'
@@ -106,14 +106,14 @@ describe('Header', () => {
       expect(wrapper.find(MobileMenu).length).toBe(1)
     })
 
-    test('should render 5 <Link />', () => {
-      expect(wrapper.find(Link).length).toEqual(4)
+    test('should render 6 <Link />', () => {
+      expect(wrapper.find(Link).length).toEqual(5)
     })
 
-    test('should render 4 <Link /> if existing menu path is passed as prop', () => {
+    test('should render 5 <Link /> if existing menu path is passed as prop', () => {
       const wrapper = shallow(<Header path="box-prices" />, {context: {store}})
 
-      expect(wrapper.find(Link).length).toEqual(3)
+      expect(wrapper.find(Link).length).toEqual(4)
     })
 
     test('should alter homepage link when promocode is provided', () => {
@@ -148,7 +148,7 @@ describe('Header', () => {
     test('should render referFriend in the menu if authenticated', () => {
       const isAuthenticated = true
       const wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
-      expect(wrapper.find(Link).at(1).childAt(0)
+      expect(wrapper.find(Link).at(2).childAt(0)
         .text()).toEqual('Free Food')
     })
 
@@ -160,7 +160,7 @@ describe('Header', () => {
     })
 
     test('should render a PromoModal component', () => {
-      const wrapper = shallow(<Header {...store}/>)
+      const wrapper = shallow(<Header {...store} />)
       expect(wrapper.find('PromoModal').length).toEqual(1)
     })
 
@@ -175,18 +175,18 @@ describe('Header', () => {
     })
 
     test('should render a DuplicateOrderModal component', () => {
-      const wrapper = shallow(<Header />)
+      const wrapper = shallow(<Header trackNavigationClick={jest.fn()}/>)
       expect(wrapper.find(DuplicateOrderModal).length).toEqual(1)
     })
 
     test('should render a SubscriptionPause component', () => {
-      const wrapper = shallow(<Header />)
+      const wrapper = shallow(<Header trackNavigationClick={jest.fn()} />)
       expect(wrapper.find('SubscriptionPause').length).toEqual(1)
     })
 
     test('should not render the phone number if the noContactBar prop is set', () => {
 
-      const wrapper = shallow(<Header noContactBar />)
+      const wrapper = shallow(<Header noContactBar trackNavigationClick={jest.fn()} />)
       expect(wrapper.find('Free delivery').length).toEqual(0)
     })
   })
@@ -217,38 +217,44 @@ describe('Header', () => {
   })
 
   describe('render MobileMenu with the right paths when authenticated', () => {
-    const wrapper = shallow(<Header isAuthenticated config={config} />,)
+    const wrapper = shallow(<Header isAuthenticated config={config} trackNavigationClick={jest.fn()}/>,)
     test('should render menu items in correct order when logged in', () => {
       const expected = [
         {
           "clientRouted": false,
           "name": 'My Gousto',
-          "url": "/my-gousto"
+          "url": "/my-gousto",
+          "tracking" : "MyGoustoNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": 'Deliveries',
-          "url": "/my-deliveries"
+          "url": "/my-deliveries",
+          "tracking" : "DeliveriesNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": 'Subscription',
-          "url": "/my-subscription"
+          "url": "/my-subscription",
+          "tracking" : "SubscriptionNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": 'Details',
-          "url": "/my-details"
+          "url": "/my-details",
+          "tracking" : "DetailsNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Free Food",
-          "url": "/my-referrals"
+          "url": "/my-referrals",
+          "tracking" : "ReferAFriendNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Rate My Recipes",
-          "url": "/rate-my-recipes"
+          "url": "/rate-my-recipes",
+          "tracking" : "RateMyRecipesNavigation Clicked",
         },
         {
           "clientRouted": true,
@@ -258,12 +264,20 @@ describe('Header', () => {
         },
         {
           "name": "Choose Recipes",
-          "url": "/menu"
+          "url": "/menu",
+          "tracking" : "RecipeNavigation Clicked",
+        },
+        {
+          "clientRouted": false,
+          "name": "Sustainability",
+          "url": "/blog/sustainability",
+          "tracking" : "SustainabilityNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Help",
-          "url": "/help"
+          "url": "/help",
+          "tracking" : "FAQNavigation Clicked",
         }
       ]
       expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
@@ -279,21 +293,30 @@ describe('Header', () => {
           "clientRouted": true,
           "disabled": true,
           "name": "Home",
-          "url": "/"
+          "url": "/",
         },
         {
           "clientRouted": true,
           "name": "Box Prices",
-          "url": "/box-prices"
+          "url": "/box-prices",
+          "tracking" : "BoxPricingNavigation Clicked",
         },
         {
           "name": "Choose Recipes",
-          "url": "/menu"
+          "url": "/menu",
+          "tracking" : "RecipeNavigation Clicked",
+        },
+        {
+          "clientRouted": false,
+          "name": "Sustainability",
+          "url": "/blog/sustainability",
+          "tracking" : "SustainabilityNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Help",
-          "url": "/help"
+          "url": "/help",
+          "tracking" : "FAQNavigation Clicked",
         }
       ]
       expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
@@ -306,7 +329,8 @@ describe('Header', () => {
       const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature={false} />,)
       const chooseRecipes = {
         "name": "Choose Recipes",
-        "url": "/menu"
+        "url": "/menu",
+        "tracking" : "RecipeNavigation Clicked",
       }
       expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
     })
@@ -315,7 +339,8 @@ describe('Header', () => {
       const wrapper = shallow(<Header isAuthenticated config={config} forceSignupWizardFeature />,)
       const chooseRecipes = {
         "name": "Choose Recipes",
-        "url": "/menu"
+        "url": "/menu",
+        "tracking" : "RecipeNavigation Clicked",
       }
       expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
     })
@@ -325,7 +350,8 @@ describe('Header', () => {
       const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature />,)
       const chooseRecipes = {
         "name": "Choose Recipes",
-        "url": "/signup"
+        "url": "/signup",
+        "tracking" : "RecipeNavigation Clicked",
       }
       expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
     })

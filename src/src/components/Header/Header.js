@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import Immutable from 'immutable'
 import config from 'config'
 import Svg from 'Svg'
 import Link from 'Link'
@@ -16,6 +15,7 @@ import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
+import { onEnter } from 'utils/accessibility'
 import MobileMenu from './MobileMenu'
 import css from './Header.css'
 
@@ -36,11 +36,11 @@ class Header extends React.PureComponent {
     promoCodeUrl: PropTypes.string,
     loginVisibilityChange: PropTypes.func,
     closeBoxModalVisibilityChange: PropTypes.func,
-    features: PropTypes.instanceOf(Immutable.Map),
     noContactBar: PropTypes.bool,
     title: PropTypes.string,
     small: PropTypes.bool,
     forceSignupWizardFeature: PropTypes.bool,
+    trackNavigationClick: PropTypes.func,
   }
 
   static defaultProps = {
@@ -51,7 +51,7 @@ class Header extends React.PureComponent {
     promoCodeUrl: '',
     title: '',
     small: false,
-    features: Immutable.Map({}),
+    trackNavigationClick: () => {},
   }
 
   constructor(props) {
@@ -120,15 +120,16 @@ class Header extends React.PureComponent {
 
     const availableItems = {
       home,
-      boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true },
-      menu: { name: 'Choose Recipes', url: this.getChooseRecipesLink() },
-      faq: { name: 'Help', url: clientRoutes.help, clientRouted: false },
-      myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false },
-      referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false },
-      rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false},
-      deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false},
-      subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false},
-      details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false},
+      boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking:'BoxPricingNavigation Clicked'},
+      menu: { name: 'Choose Recipes', url: this.getChooseRecipesLink(), tracking:'RecipeNavigation Clicked'},
+      faq: { name: 'Help', url: clientRoutes.help, clientRouted: false, tracking:'FAQNavigation Clicked'},
+      myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false, tracking:'MyGoustoNavigation Clicked'},
+      referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false, tracking:'ReferAFriendNavigation Clicked'},
+      rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking:'RateMyRecipesNavigation Clicked'},
+      deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking:'DeliveriesNavigation Clicked'},
+      subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking:'SubscriptionNavigation Clicked'},
+      details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false, tracking:'DetailsNavigation Clicked'},
+      sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking:'SustainabilityNavigation Clicked'},
     }
 
     let pathLocal = path
@@ -150,16 +151,20 @@ class Header extends React.PureComponent {
       homeMenuItem.url = clientRoutes.join
     }
 
-    const items = [
-      (isAuthenticated ? availableItems.referFriend : availableItems.boxPrices),
-      availableItems.menu
-    ]
+    const desktopItems = [
+      !isAuthenticated && availableItems.boxPrices,
+      availableItems.menu,
+      isAuthenticated && availableItems.referFriend,
+      availableItems.sustainability,
+      availableItems.faq,
+    ].filter(item => item)
 
-    const mobileItems = []
-    if (!isAuthenticated) {
-      mobileItems.push(availableItems.boxPrices)
-    }
-    mobileItems.push(availableItems.menu)
+    const mobileItems = [
+      !isAuthenticated && availableItems.boxPrices,
+      availableItems.menu,
+      availableItems.sustainability,
+      availableItems.faq,
+    ].filter(item => item)
 
     const myGousto = [availableItems.myGousto]
     const rateMyRecipes = [availableItems.rateMyRecipes]
@@ -176,7 +181,7 @@ class Header extends React.PureComponent {
       mobileMenu = mobileMenu.concat(homeMenuItem, mobileItems)
     }
 
-    return (device === 'mobile') ? mobileMenu.concat(availableItems.faq) : items.concat(availableItems.faq)
+    return (device === 'mobile') ? mobileMenu : desktopItems
   }
 
   handleQuery = () => {
@@ -218,9 +223,9 @@ class Header extends React.PureComponent {
     if (logoutPending) {
       buttonState = 'loggingOut'
       button = (
-        <a className={css.btn}>
+        <button type="button" className={css.btn}>
           You&#8217;re logged out <span className={css.confirm} />
-        </a>
+        </button>
       )
     } else if (isAuthenticated) {
       buttonState = 'loggedIn'
@@ -236,15 +241,18 @@ class Header extends React.PureComponent {
     } else {
       buttonState = 'loggedOut'
       button = (
-        <a className={css.btn} data-testing="loginButton">
+        <button type="button" className={css.btn} data-testing="loginButton">
           Login
-        </a>
+        </button>
       )
     }
     const logoutLink = (
       <span
+        role="button"
+        tabIndex='0'
         className={css.linkDesktop}
         onClick={this.logoutFunc}
+        onKeyDown={e => onEnter(e, this.logoutFunc)}
         data-testing="logoutButton"
       >
         Logout
@@ -253,8 +261,11 @@ class Header extends React.PureComponent {
 
     return (
       <span
+        role='button'
+        tabIndex='0'
         className={classNames(css.authButtonsContainer, css[buttonState])}
         onClick={e => { if (!isAuthenticated) { this.onOpen(e) } }}
+        onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onOpen()} })}
       >
         {button}
         {isAuthenticated && logoutLink}
@@ -271,7 +282,7 @@ class Header extends React.PureComponent {
     }) : ''
   )
   render() {
-    const { fromJoin, disabled, noContactBar, simple, isAuthenticated, serverError, title, small, promoCodeUrl, loginOpen, path } = this.props
+    const { fromJoin, disabled, noContactBar, simple, isAuthenticated, serverError, title, small, promoCodeUrl, loginOpen, path, trackNavigationClick } = this.props
     const { mobileMenuOpen, loginPending } = this.state
     const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
@@ -296,7 +307,8 @@ class Header extends React.PureComponent {
 
     return (
       <span id={serverError ? 'mobileMenu' : null} data-testing="header">
-        <a
+        <button
+          type="button"
           className={mobileMenuOpen ? css.overlayOpen : css.overlay}
           href={serverError ? '#' : null}
           onClick={this.hideMobileMenu}
@@ -312,6 +324,7 @@ class Header extends React.PureComponent {
               loginFunc={this.onOpen}
               logoutFunc={this.logoutFunc}
               promoCodeUrl={promoCodeUrl}
+              trackNavigationClick={trackNavigationClick}
             />
             <div className={css.container}>
               {(!noContactBar) ?
@@ -350,6 +363,7 @@ class Header extends React.PureComponent {
                           to={menuItem.url}
                           className={css.linkDesktop}
                           clientRouted={menuItem.clientRouted}
+                          tracking={() => trackNavigationClick(menuItem.tracking)}
                         >
                           {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
                           {menuItem.name}
@@ -359,7 +373,13 @@ class Header extends React.PureComponent {
                     {this.renderAuthLink()}
                   </span>
                   <span className={css.linkMobileContainer}>
-                    <a className={classNames([css.burgerIcon, 'needsclick'])} onClick={this.showMobileMenu} href={serverError ? '#mobileMenu' : null} data-testing="burgerMenu" />
+                    <button
+                      type='button'
+                      className={classNames([css.burgerIcon, 'needsclick'])}
+                      onClick={this.showMobileMenu}
+                      href={serverError ? '#mobileMenu' : null}
+                      data-testing="burgerMenu"
+                    />
                   </span>
                 </div>
               </div>
@@ -382,4 +402,4 @@ class Header extends React.PureComponent {
     )
   }
 }
-export default Header
+export { Header }

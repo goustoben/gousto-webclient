@@ -13,13 +13,16 @@ class MobileMenu extends React.PureComponent {
     logoutFunc: PropTypes.func.isRequired,
     hideNav: PropTypes.bool.isRequired,
     promoCodeUrl: PropTypes.string,
+    trackNavigationClick: PropTypes.func,
   }
   static defaultProps = {
     isAuthenticated: false,
   }
 
-  renderMenuItems = () => (
-    this.props.menuItems.map(menuItem => {
+  renderMenuItems = () => {
+    const { menuItems, promoCodeUrl, trackNavigationClick} = this.props
+
+    return menuItems.map(menuItem => {
       const { isAuthenticated } = this.props
       const myGoustoMenuItem = menuItem.name === 'My Gousto'
       const homeMenuItem = menuItem.name === 'Home'
@@ -30,7 +33,7 @@ class MobileMenu extends React.PureComponent {
             className={css.menuItem}
             activeClassName={classNames(css.menuItem, css.disabled)}
             key={menuItem.name}
-            clientRouted={!Boolean(this.props.promoCodeUrl)}
+            clientRouted={!Boolean(promoCodeUrl)}
             onlyActiveOnIndex
           >
             <li className={isAuthenticated ? css.borderListElement : css.listElement}>
@@ -54,14 +57,14 @@ class MobileMenu extends React.PureComponent {
       }
 
       return (
-        <Link to={menuItem.url} className={css.menuItem} key={menuItem.name} clientRouted={menuItem.clientRouted}>
+        <Link to={menuItem.url} className={css.menuItem} key={menuItem.name} clientRouted={menuItem.clientRouted} tracking={() => trackNavigationClick(menuItem.tracking)}>
           <li className={myGoustoMenuItem ? css.listElement : css.childListElement}>
             {menuItem.name}
           </li>
         </Link>
       )
     })
-  )
+  }
 
   render() {
     const show = this.props.show
