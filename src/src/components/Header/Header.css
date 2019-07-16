@@ -233,6 +233,10 @@ span:target .overlay {
 .burgerIcon {
 	composes: fa-basic-class fa-bars from 'styles/vendor/font-awesome-module.css';
 	font-size: sizeXXL;
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
 
 	&, &:hover {
 		color: White;
