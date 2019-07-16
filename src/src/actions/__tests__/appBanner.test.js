@@ -23,13 +23,5 @@ describe('app banner actions', () => {
       expect(cookieHelper.set.mock.calls[0][1]).toEqual('app_banner_dismissed')
       expect(cookieHelper.set.mock.calls[0][2]).toEqual(true)
     })
-
-    test('cookie is set to the value passed to the action when not in client', () => {
-      __CLIENT__ = false
-      cookieHelper.set = jest.fn()
-      appBannerActions.appBannerDismiss(true)(dispatch)
-      expect(cookieHelper.set).not.toHaveBeenCalled()
-      __CLIENT__ = true
-    })
   })
 })
