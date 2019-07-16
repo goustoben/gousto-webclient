@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import actionTypes from 'actions/actionTypes'
-import { changeCollectionToAllRecipes } from 'actions/filters'
+import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
 import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
 import { getFeaturedRecipes, getRemainingRecipes, getOutOfStockRecipes, getSortedRecipes } from 'routes/Menu/selectors/sorting'
@@ -33,7 +33,7 @@ const mapStateToProps = (state) => {
   }
 }
 const RecipeListContainer = connect(mapStateToProps, {
-  collectionFilterChange: changeCollectionToAllRecipes
+  collectionFilterChange: changeCollectionToAllRecipesViaCTA
 })(RecipeList)
 
 export default RecipeListContainer

@@ -7,6 +7,7 @@ import { push } from 'react-router-redux'
 import {
   collectionFilterChange,
   changeCollectionToAllRecipes,
+  changeCollectionToAllRecipesViaCTA,
   filterCurrentDietTypesChange,
   filterCurrentTotalTimeChange,
   clearAllFilters,
@@ -145,6 +146,14 @@ describe('filters actions', () => {
 
     test('should dispatch two actions', () => {
       changeCollectionToAllRecipes()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy.mock.calls.length).toBe(1)
+    })
+  })
+
+  describe('changeCollectionToAllRecipesViaCTA', () => {
+
+    test('should dispatch two actions', () => {
+      changeCollectionToAllRecipesViaCTA()(dispatchSpy, getStateSpy)
       expect(dispatchSpy.mock.calls.length).toBe(2)
     })
   })
@@ -359,7 +368,13 @@ describe('filters actions', () => {
     })
     test('should call FILTERS_FOOD_BRAND_CHANGE with null foodBrand if this is null', () => {
       selectFoodBrand(null)(dispatchSpy, getStateSpy)
-      expect(dispatchSpy).toHaveBeenCalledWith({'foodBrand': null, 'type': "FILTERS_FOOD_BRAND_CHANGE"})
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        'foodBrand': null,
+        'type': 'FILTERS_FOOD_BRAND_CHANGE',
+        'trackingData': {
+          'actionType': 'FoodBrand unselected',
+          'food_brand': ''}
+      })
       expect(dispatchSpy).toHaveBeenCalledTimes(3)
     })
 
@@ -374,8 +389,13 @@ describe('filters actions', () => {
           name: 'FoodBrand',
           slug: 'food-brand',
           borderColor: 'blue'
-        }, 
-        'type': "FILTERS_FOOD_BRAND_CHANGE"})
+        },
+        'type': "FILTERS_FOOD_BRAND_CHANGE",
+        'trackingData': {
+          'actionType': 'FoodBrand selected',
+          'food_brand': 'food-brand'
+        }
+      })
       expect(push).toHaveBeenCalledWith({
         query: {
           foodBrand: 'food-brand'

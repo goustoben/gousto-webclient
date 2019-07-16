@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { ModalFooter } from 'ModalComponent'
+import { onEnter } from 'utils/accessibility'
 
 import css from './Footer.css'
 
@@ -19,7 +20,7 @@ const Footer = ({ onConfirm, confirmCopy, onKeep, keepCopy }) => (
       role="button"
       tabIndex={0}
       onClick={() => onConfirm()}
-      onKeyDown={event => event.keyCode === 13 && onConfirm()}
+      onKeyDown={event => onEnter(event, onConfirm())}
     >
       {confirmCopy}
     </div>
@@ -27,7 +28,7 @@ const Footer = ({ onConfirm, confirmCopy, onKeep, keepCopy }) => (
       className={css.keep}
       type="button"
       onClick={() => onKeep()}
-      onKeyDown={event => event.keyCode === 13 && onKeep()}
+      onKeyDown={event => onEnter(event, onKeep())}
     >
       {keepCopy}
     </button>

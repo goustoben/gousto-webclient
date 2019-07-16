@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Header from 'Header'
+import { Header } from 'Header'
 import Footer from 'Footer'
 import Immutable from 'immutable'/* eslint-disable new-cap */
 import classNames from 'classnames'

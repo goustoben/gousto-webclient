@@ -219,6 +219,17 @@ export const trackCTAToAllRecipesClicked = () => (
   }
 )
 
+export const trackNavigationClick = (actionType) => (
+  (dispatch) => {
+    dispatch ({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType
+      }
+    })
+  }
+)
+
 export default {
   trackFirstPurchase,
   setAffiliateSource,
