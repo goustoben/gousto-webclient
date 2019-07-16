@@ -54,13 +54,13 @@
   margin-right: 5px;
 }
 .starFull {
-	composes: fa-basic-class fa-star from 'styles/vendor/font-awesome-module.css';
+  composes: fa-basic-class fa-star from 'styles/vendor/font-awesome-module.css';
 }
 .starHalf {
-	composes: fa-basic-class fa-star-half-o from 'styles/vendor/font-awesome-module.css';
+  composes: fa-basic-class fa-star-half-o from 'styles/vendor/font-awesome-module.css';
 }
 .starEmpty {
-	composes: fa-basic-class fa-star-o from 'styles/vendor/font-awesome-module.css';
+  composes: fa-basic-class fa-star-o from 'styles/vendor/font-awesome-module.css';
 }
 
 .appLink {
