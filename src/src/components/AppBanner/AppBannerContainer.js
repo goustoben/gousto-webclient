@@ -3,6 +3,7 @@ import { appBannerActions } from 'actions/appBanner'
 import { getIsDismissed } from 'selectors/appBanner'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getIsPolicyAccepted } from 'selectors/cookies'
+import { getAppBanner } from 'selectors/features'
 import { AppBanner } from './AppBanner'
 
 const getPlatformDetails = () => {
@@ -22,7 +23,7 @@ const getPlatformDetails = () => {
 const mapStateToProps = state => {
   const { name, averageRating, ratings } = getPlatformDetails()
 
-  const showAppBanner = getIsPolicyAccepted(state) && getIsAuthenticated(state) && !getIsDismissed(state) && name
+  const showAppBanner = getAppBanner(state) && getIsPolicyAccepted(state) && getIsAuthenticated(state) && !getIsDismissed(state) && !!name
 
   return {
     name,
