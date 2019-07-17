@@ -4,5 +4,5 @@ import MyGoustoContainer from './MyGoustoContainer'
 import config from 'config/routes'
 
 export default (
-  <Route path={config.client.myGousto} component={MyGoustoContainer} />
+  <Route path={config.client.myGousto2} component={MyGoustoContainer} />
 )
