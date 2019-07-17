@@ -25,29 +25,29 @@ const showStar = (avg) => {
 }
 
 const AppBanner = ({ name, averageRating, ratings, showAppBanner, appBannerDismiss }) => (
-  showAppBanner &&
-  (
-    <div className={css.appBannerWrapper}>
-      <button type='button' className={css.closeButton} onClick={() => appBannerDismiss()}>
-        <Svg fileName="icon_dismiss-app-banner" className={css.closeIcon} />
-      </button>
-      <div className={css.appDetails}>
-        <Svg fileName="app-banner-app-icon" className={css.appIcon} />
-        <div className={css.platformSpecificDetails}>
-          <strong>{`Gousto for ${name}`}</strong>
-          <div className={css.rating}>
-            <span className={css.stars}>
-              {showStar(averageRating)}
-            </span>
-            <span>{`(${ratings})`}</span>
+  showAppBanner ?
+    (
+      <div className={css.appBannerWrapper}>
+        <button type='button' className={css.closeButton} onClick={() => appBannerDismiss()}>
+          <Svg fileName="icon_dismiss-app-banner" className={css.closeIcon} />
+        </button>
+        <div className={css.appDetails}>
+          <Svg fileName="app-banner-app-icon" className={css.appIcon} />
+          <div className={css.platformSpecificDetails}>
+            <strong>{`Gousto for ${name}`}</strong>
+            <div className={css.rating}>
+              <span className={css.stars}>
+                {showStar(averageRating)}
+              </span>
+              <span>{`(${ratings})`}</span>
+            </div>
           </div>
         </div>
+        <a className={css.appLink} href="https://gousto.co.uk/apps">
+          <Button noDecoration>Get app</Button>
+        </a>
       </div>
-      <a className={css.appLink} href="https://gousto.co.uk/apps">
-        <Button noDecoration>Get app</Button>
-      </a>
-    </div>
-  )
+    ) : null
 )
 
 AppBanner.propTypes = propTypes
