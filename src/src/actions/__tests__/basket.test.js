@@ -610,20 +610,13 @@ describe('basket actions', () => {
     })
   })
 
-  describe('basketRecipeAdd', function () {
-    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_ADD action types with correct recipe id and limit reached when there is stock', function () {
-
+  describe('basketRecipeAdd', () => {
+    beforeEach(() => {
       getStateSpy = jest.fn().mockReturnValue({
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1]]),
           numPortions: 2,
           limitReached: false,
-        }),
-        features: Immutable.Map({
-          collections: {
-            value: true,
-            experiment: false,
-          },
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
@@ -634,146 +627,15 @@ describe('basket actions', () => {
           newRecipes: false,
           dietaryAttributes: Immutable.List()
         }),
-        menuCollections: Immutable.fromJS({
-          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': {
-            tipsTitle: '',
-            featuredItem: '',
-            default: false,
-            scheduleEnd: '2017-06-28T11:59:59+01:00',
-            media: {
-              images: [],
-            },
-            isMenu: true,
-            filterSets: [
-              {
-                id: '136a3dd2-5b1a-11e7-af6e-001c421e38fa',
-                resource: 'recipes',
-                filters: [
-                  {
-                    id: '136abd0c-5b1a-11e7-b0ed-001c421e38fa',
-                    key: 'id',
-                    operator: '=',
-                    value: '16',
-                  },
-                ],
-              },
-              {
-                id: '136bb0d6-5b1a-11e7-ac4f-001c421e38fa',
-                resource: 'recipes',
-                filters: [
-                  {
-                    id: '136c2e9e-5b1a-11e7-862a-001c421e38fa',
-                    key: 'id',
-                    operator: '=',
-                    value: '9',
-                  },
-                ],
-              },
-              {
-                id: '136f0902-5b1a-11e7-81f8-001c421e38fa',
-                resource: 'recipes',
-                filters: [
-                  {
-                    id: '136f702c-5b1a-11e7-8af1-001c421e38fa',
-                    key: 'id',
-                    operator: '=',
-                    value: '56',
-                  },
-                ],
-              },
-              {
-                id: '13701d1a-5b1a-11e7-a502-001c421e38fa',
-                resource: 'recipes',
-                filters: [
-                  {
-                    id: '13707dc8-5b1a-11e7-86b8-001c421e38fa',
-                    key: 'id',
-                    operator: '=',
-                    value: '78',
-                  },
-                ],
-              },
-              {
-                id: '137124da-5b1a-11e7-9892-001c421e38fa',
-                resource: 'recipes',
-                filters: [
-                  {
-                    id: '1371820e-5b1a-11e7-9b88-001c421e38fa',
-                    key: 'id',
-                    operator: '=',
-                    value: '92',
-                  },
-                ],
-              },
-              {
-                id: '8f5b0cd2-5b1a-11e7-bb4d-001c421e38fa',
-                resource: 'recipes',
-                filters: [
-                  {
-                    id: '8f5bf62e-5b1a-11e7-923b-001c421e38fa',
-                    key: 'id',
-                    operator: '=',
-                    value: '164',
-                  },
-                ],
-              },
-              {
-                id: '8f5cb4ba-5b1a-11e7-8c4d-001c421e38fa',
-                resource: 'recipes',
-                filters: [
-                  {
-                    id: '8f5d15fe-5b1a-11e7-9dfa-001c421e38fa',
-                    key: 'id',
-                    operator: '=',
-                    value: '107',
-                  },
-                ],
-              },
-            ],
-            scheduleStart: '2017-06-21T12:00:00+01:00',
-            automatic: false,
-            slug: 'japanese',
-            colour: '',
-            published: true,
-            updatedAt: '2017-06-27T10:25:28+01:00',
-            order: 0,
-            menuPublished: true,
-            orderKey: 'rating_score',
-            orderDirection: 'desc',
-            tips: '',
-            id: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-            createdAt: '2017-06-27T10:22:01+01:00',
-            isCookbook: false,
-            limit: -1,
-            longTitle: '',
-            shortTitle: 'japanese',
-            description: 'i love rice',
-            cookbookPublished: false,
-          },
-        }),
-        menuCollectionRecipes: Immutable.fromJS({
-          '1365e0ac-5b1a-11e7-a8dc-001c421e38fa': [
-            '16',
-            '92',
-            '107',
-            '164',
-            '123'
-          ],
-        }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30 },
         }),
         menuRecipes: Immutable.fromJS({
           123: {},
-        }),
-        routing: {
-          locationBeforeTransitions: {
-            query: {
-              collection: 'japanese',
-            },
-          },
-        },
+        })
       })
+    })
+    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_ADD action types with correct recipe id and limit reached when there is stock', function () {
       basketRecipeAdd('123', undefined, undefined, { position: '57' })(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(4)
@@ -806,28 +668,6 @@ describe('basket actions', () => {
     })
 
     test('should map through the given view to the tracking data', function () {
-      getStateSpy = jest.fn().mockReturnValue({
-        basket: Immutable.Map({
-          recipes: Immutable.Map([['123', 1]]),
-          numPortions: 2,
-          limitReached: false,
-        }),
-        filters: Immutable.Map({
-          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          foodBrand: {
-            slug: 'test-food-brand'
-          },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes: Immutable.List()
-        }),
-        menuRecipeStock: Immutable.fromJS({
-          123: { 2: 30 },
-        }),
-        menuRecipes: Immutable.fromJS({
-          123: {},
-        }),
-      })
       basketRecipeAdd('123', 'boxsummary')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(4)
@@ -909,28 +749,6 @@ describe('basket actions', () => {
     })
 
     test('should dispatch 4 actions when portion limit is reached when there is stock', function () {
-      getStateSpy = jest.fn().mockReturnValue({
-        basket: Immutable.Map({
-          recipes: Immutable.Map([['123', 4]]),
-          numPortions: 2,
-          limitReached: true,
-        }),
-        filters: Immutable.Map({
-          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          foodBrand: {
-            slug: 'test-food-brand'
-          },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes:Immutable.List()
-        }),
-        menuRecipeStock: Immutable.fromJS({
-          123: { 2: 30 },
-        }),
-        menuRecipes: Immutable.fromJS({
-          123: {},
-        }),
-      })
       basketRecipeAdd('123')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(4)
@@ -1014,8 +832,8 @@ describe('basket actions', () => {
     })
   })
 
-  describe('basketRecipeRemove', function () {
-    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE action types with correct recipe id and limit reached', function () {
+  describe('basketRecipeRemove', () => {
+    beforeEach(() => {
       getStateSpy = jest.fn().mockReturnValue({
         basket: Immutable.Map({
           recipes: Immutable.Map([['111', 3]]),
@@ -1032,6 +850,8 @@ describe('basket actions', () => {
           dietaryAttributes: Immutable.List()
         }),
       })
+    })
+    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE action types with correct recipe id and limit reached', function () {
       basketRecipeRemove('123')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(3)
@@ -1073,22 +893,6 @@ describe('basket actions', () => {
     })
 
     test('should map through the given view argument through to trackingData', function () {
-      getStateSpy = jest.fn().mockReturnValue({
-        basket: Immutable.Map({
-          recipes: Immutable.Map([['111', 3]]),
-          numPortions: 2,
-          limitReached: true,
-        }),
-        filters: Immutable.Map({
-          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          foodBrand: {
-            slug: 'test-food-brand'
-          },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes: Immutable.List()
-        }),
-      })
       basketRecipeRemove('123', 'boxsummary')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(3)
@@ -1186,5 +990,4 @@ describe('basket actions', () => {
       })
     })
   })
-
 })
