@@ -70,6 +70,7 @@
 
   & > div > div:last-child {
     text-transform: none;
+    font-weight: 600;
   }
 
   &:focus, &:hover {
