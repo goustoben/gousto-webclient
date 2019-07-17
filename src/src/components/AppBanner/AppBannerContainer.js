@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { appBannerActions } from 'actions/appBanner'
+import { appBannerDismiss } from 'actions/appBanner'
 import { getIsDismissed } from 'selectors/appBanner'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getIsPolicyAccepted } from 'selectors/cookies'
@@ -35,7 +35,7 @@ const mapStateToProps = state => {
 }
 
 const AppBannerContainer = connect(mapStateToProps, {
-  appBannerDismiss: appBannerActions.appBannerDismiss
+  appBannerDismiss,
 })(AppBanner)
 
 export { AppBannerContainer }

@@ -15,10 +15,8 @@ const propTypes = {
 const showStar = (avg) => {
   const stars = Array(5)
   const avgRounded = Math.round(avg)
-  const avgFloored = Math.floor(avg)
   const noOfFullStars = Math.round(avg - 0.25)
   const noOfHalfStars = (avg - noOfFullStars > 0.25 && avg - noOfFullStars < 0.75 && noOfFullStars < 5) ? 1 : 0
-  const noOfEmptyStars = 5 - noOfFullStars - noOfHalfStars
 
   stars.fill(<span className={css.starFull} />, 0, noOfFullStars)
   stars.fill(<span className={css.starHalf} key={avgRounded} />, noOfFullStars, noOfFullStars + noOfHalfStars)
