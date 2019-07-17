@@ -1,0 +1,80 @@
+@value Apricot, DarkRadish, White from 'styles/colors.css';
+@value Screen3XSMin from 'styles/screenSizes.css';
+
+.appBannerWrapper {
+  display: flex;
+  background-color: DarkRadish;
+  color: White;
+  font-size: 12px;
+  @media Screen3XSMin {
+    font-size: initial;
+  }
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: White;
+  display: flex;
+  padding: 0 16px;
+}
+
+.closeIcon {
+  fill: White;
+  height: 16px;
+  width: 16px;
+}
+
+.appDetails {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  padding: 10px 0;
+}
+
+.appIcon {
+  flex: 0 0 auto;
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+}
+
+.platformSpecificDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.rating{
+  white-space: nowrap;
+}
+
+.stars {
+  color: Apricot;
+  margin-right: 5px;
+}
+.starFull {
+  composes: fa-basic-class fa-star from 'styles/vendor/font-awesome-module.css';
+}
+.starHalf {
+  composes: fa-basic-class fa-star-half-o from 'styles/vendor/font-awesome-module.css';
+}
+.starEmpty {
+  composes: fa-basic-class fa-star-o from 'styles/vendor/font-awesome-module.css';
+}
+
+.appLink {
+  align-items: center;
+  display: flex;
+  padding: 10px;
+
+  & > div > div:last-child {
+    text-transform: none;
+    font-weight: 600;
+  }
+
+  &:focus, &:hover {
+    text-decoration: none;
+  }
+}
+

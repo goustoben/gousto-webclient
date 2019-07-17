@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { cookiePrefix } from 'config/storePersistence'
+import { appBannerActions } from 'actions/appBanner'
 import basketActions from 'actions/basket'
 import signupActions from 'actions/signup'
 import featureActions from 'actions/features'
@@ -82,6 +83,7 @@ const processCookies = (cookies, store) => {
   const promoAgeVerified = getCookieStoreValue(cookies, 'promoAgeVerified')
   const tracking = getCookieStoreValue(cookies, 'tracking')
   const cookiePolicy = get(cookies, 'cookie_policy')
+  const appBannerDismissed = get(cookies, 'app_banner_dismissed')
 
   let features = getCookieStoreValue(cookies, 'features')
   let variants = getCookieStoreValue(cookies, 'variants')
@@ -89,6 +91,10 @@ const processCookies = (cookies, store) => {
 
   if (cookiePolicy) {
     store.dispatch(cookieActions.cookiePolicyAcceptanceChange(cookiePolicy.isAccepted))
+  }
+
+  if (appBannerDismissed) {
+    store.dispatch(appBannerActions.appBannerDismiss())
   }
 
   if (promoCode) {
@@ -118,7 +124,7 @@ const processCookies = (cookies, store) => {
     try {
       affiliateSource = JSON.parse(tracking).asource || affiliateSource
     } catch (err) {
-      logger.error({message: 'error parsing tracking asource cookie value', errors: [err]})
+      logger.error({ message: 'error parsing tracking asource cookie value', errors: [err] })
     }
   }
 
@@ -224,7 +230,7 @@ const processCookies = (cookies, store) => {
         store.dispatch(featureActions.featureSet(feature, value, experiment))
       })
     } catch (err) {
-      logger.error({message: 'error parsing features cookie value', errors: [err] })
+      logger.error({ message: 'error parsing features cookie value', errors: [err] })
     }
   }
 
@@ -246,7 +252,7 @@ const processCookies = (cookies, store) => {
       signupSteps = JSON.parse(signupSteps)
       store.dispatch(signupActions.signupStepsReceive(signupSteps))
     } catch (err) {
-      logger.error({message: 'error parsing signup steps cookie value', errors: [err] })
+      logger.error({ message: 'error parsing signup steps cookie value', errors: [err] })
     }
   }
 
@@ -255,7 +261,7 @@ const processCookies = (cookies, store) => {
       variants = JSON.parse(variants)
       store.dispatch(loadContentVariants(variants))
     } catch (err) {
-      logger.error({message: 'error parsing variants cookie value', errors: [err]})
+      logger.error({ message: 'error parsing variants cookie value', errors: [err] })
     }
   }
 }

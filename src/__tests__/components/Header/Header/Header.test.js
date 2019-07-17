@@ -13,16 +13,16 @@ jest.mock('Header/SimpleHeader', () => 'SimpleHeader')
 jest.mock('Modal/ModalPanel', () => 'ModalPanel')
 jest.mock('Overlay', () => 'Overlay')
 jest.mock('Login', () => 'Login')
-jest.mock('components/PromoModal',() => 'PromoModal')
+jest.mock('components/PromoModal', () => 'PromoModal')
 jest.mock('components/DuplicateOrderModal', () => 'DuplicateOrderModal')
 jest.mock('components/CancelOrderModal', () => 'CancelOrderModal')
 jest.mock('components/ExpiredBillingModal', () => 'ExpiredBillingModal')
-jest.mock('routes/Account/Account', () =>'Account')
-jest.mock('routes/Account/Subscription/SubscriptionPause', () =>'SubscriptionPause')
+jest.mock('routes/Account/Account', () => 'Account')
+jest.mock('routes/Account/Subscription/SubscriptionPause', () => 'SubscriptionPause')
 jest.mock('routes/Account/MyDeliveries/OrdersList/OnScreenRecovery', () => 'OnScreenRecovery')
 
 describe('Header', () => {
-  const config= {
+  const config = {
     routes: {
       client: {
         blog: '/MOCK-blog',
@@ -94,12 +94,12 @@ describe('Header', () => {
           simpleHeader: false,
         })
       }
-      wrapper = shallow(<Header />, {context: {store}})
+      wrapper = shallow(<Header />, { context: { store } })
     })
 
-    test('should return a <span>', () => {
+    test('should return a <div>', () => {
 
-      expect(wrapper.type()).toEqual('span')
+      expect(wrapper.type()).toEqual('div')
     })
 
     test('should render one <MobileMenu />', () => {
@@ -111,7 +111,7 @@ describe('Header', () => {
     })
 
     test('should render 5 <Link /> if existing menu path is passed as prop', () => {
-      const wrapper = shallow(<Header path="box-prices" />, {context: {store}})
+      const wrapper = shallow(<Header path="box-prices" />, { context: { store } })
 
       expect(wrapper.find(Link).length).toEqual(4)
     })
@@ -175,7 +175,7 @@ describe('Header', () => {
     })
 
     test('should render a DuplicateOrderModal component', () => {
-      const wrapper = shallow(<Header trackNavigationClick={jest.fn()}/>)
+      const wrapper = shallow(<Header trackNavigationClick={jest.fn()} />)
       expect(wrapper.find(DuplicateOrderModal).length).toEqual(1)
     })
 
@@ -204,7 +204,7 @@ describe('Header', () => {
         isAuthenticated: true,
         loginOpen: false,
         routing: {},
-        simple:false,
+        simple: false,
         path: '',
         fromJoin: false,
         promoCodeUrl: '',
@@ -217,44 +217,44 @@ describe('Header', () => {
   })
 
   describe('render MobileMenu with the right paths when authenticated', () => {
-    const wrapper = shallow(<Header isAuthenticated config={config} trackNavigationClick={jest.fn()}/>,)
+    const wrapper = shallow(<Header isAuthenticated config={config} trackNavigationClick={jest.fn()} />)
     test('should render menu items in correct order when logged in', () => {
       const expected = [
         {
           "clientRouted": false,
           "name": 'My Gousto',
           "url": "/my-gousto",
-          "tracking" : "MyGoustoNavigation Clicked",
+          "tracking": "MyGoustoNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": 'Deliveries',
           "url": "/my-deliveries",
-          "tracking" : "DeliveriesNavigation Clicked",
+          "tracking": "DeliveriesNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": 'Subscription',
           "url": "/my-subscription",
-          "tracking" : "SubscriptionNavigation Clicked",
+          "tracking": "SubscriptionNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": 'Details',
           "url": "/my-details",
-          "tracking" : "DetailsNavigation Clicked",
+          "tracking": "DetailsNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Free Food",
           "url": "/my-referrals",
-          "tracking" : "ReferAFriendNavigation Clicked",
+          "tracking": "ReferAFriendNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Rate My Recipes",
           "url": "/rate-my-recipes",
-          "tracking" : "RateMyRecipesNavigation Clicked",
+          "tracking": "RateMyRecipesNavigation Clicked",
         },
         {
           "clientRouted": true,
@@ -265,19 +265,19 @@ describe('Header', () => {
         {
           "name": "Choose Recipes",
           "url": "/menu",
-          "tracking" : "RecipeNavigation Clicked",
+          "tracking": "RecipeNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Sustainability",
           "url": "/blog/sustainability",
-          "tracking" : "SustainabilityNavigation Clicked",
+          "tracking": "SustainabilityNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Help",
           "url": "/help",
-          "tracking" : "FAQNavigation Clicked",
+          "tracking": "FAQNavigation Clicked",
         }
       ]
       expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
@@ -286,7 +286,7 @@ describe('Header', () => {
 
   describe('render MobileMenu with the right paths when not authenticated', () => {
     const isAuthenticated = false
-    const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} />,)
+    const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} />)
     test('should render menu items in correct order when logged out', () => {
       const expected = [
         {
@@ -299,24 +299,24 @@ describe('Header', () => {
           "clientRouted": true,
           "name": "Box Prices",
           "url": "/box-prices",
-          "tracking" : "BoxPricingNavigation Clicked",
+          "tracking": "BoxPricingNavigation Clicked",
         },
         {
           "name": "Choose Recipes",
           "url": "/menu",
-          "tracking" : "RecipeNavigation Clicked",
+          "tracking": "RecipeNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Sustainability",
           "url": "/blog/sustainability",
-          "tracking" : "SustainabilityNavigation Clicked",
+          "tracking": "SustainabilityNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Help",
           "url": "/help",
-          "tracking" : "FAQNavigation Clicked",
+          "tracking": "FAQNavigation Clicked",
         }
       ]
       expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
@@ -326,32 +326,32 @@ describe('Header', () => {
   describe('forceSignupWizard feature', () => {
     test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to false', () => {
       const isAuthenticated = false
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature={false} />,)
+      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature={false} />)
       const chooseRecipes = {
         "name": "Choose Recipes",
         "url": "/menu",
-        "tracking" : "RecipeNavigation Clicked",
+        "tracking": "RecipeNavigation Clicked",
       }
       expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
     })
 
     test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to true and is authenticated', () => {
-      const wrapper = shallow(<Header isAuthenticated config={config} forceSignupWizardFeature />,)
+      const wrapper = shallow(<Header isAuthenticated config={config} forceSignupWizardFeature />)
       const chooseRecipes = {
         "name": "Choose Recipes",
         "url": "/menu",
-        "tracking" : "RecipeNavigation Clicked",
+        "tracking": "RecipeNavigation Clicked",
       }
       expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
     })
 
     test('render menu with "choose recipes" going to SIGNUP WIZARD when forceSignupWizard feature is set to true and authenticated', () => {
       const isAuthenticated = false
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature />,)
+      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature />)
       const chooseRecipes = {
         "name": "Choose Recipes",
         "url": "/signup",
-        "tracking" : "RecipeNavigation Clicked",
+        "tracking": "RecipeNavigation Clicked",
       }
       expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
     })

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>close_app_banner</title>
+    <desc>Created with Sketch.</desc>
+    <g id="close_app_banner" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="square">
+        <g id="Group" transform="translate(2.000000, 2.000000)" stroke="#FFFFFF" stroke-width="2">
+            <path d="M0.294117647,0.294117647 L9.70588235,9.70588235" id="Line"></path>
+            <path d="M9.70588235,0.294117647 L0.294117647,9.70588235" id="Line-2"></path>
+        </g>
+    </g>
+</svg>
