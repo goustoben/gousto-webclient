@@ -1,5 +1,5 @@
 import actionTypes from 'actions/actionTypes'
-import { appBannerActions } from 'actions/appBanner'
+import { appBannerDismiss } from 'actions/appBanner'
 import * as cookieHelper from 'utils/cookieHelper2'
 
 describe('app banner actions', () => {
@@ -12,13 +12,13 @@ describe('app banner actions', () => {
     })
 
     test('APP_BANNER_DISMISSED action type is dispatched', () => {
-      appBannerActions.appBannerDismiss()(dispatch)
+      appBannerDismiss()(dispatch)
       expect(dispatch.mock.calls[0][0].type).toEqual(actionTypes.APP_BANNER_DISMISSED)
     })
 
     test('cookie is set to true when in the client', () => {
       cookieHelper.set = jest.fn()
-      appBannerActions.appBannerDismiss()(dispatch)
+      appBannerDismiss()(dispatch)
       expect(cookieHelper.set).toHaveBeenCalled()
       expect(cookieHelper.set.mock.calls[0][1]).toEqual('app_banner_dismissed')
       expect(cookieHelper.set.mock.calls[0][2]).toEqual(true)

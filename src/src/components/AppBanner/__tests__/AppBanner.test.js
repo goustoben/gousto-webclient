@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Svg from 'Svg'
 import { AppBanner } from '../AppBanner'
 
 describe('App Banner', () => {
