@@ -1,5 +1,5 @@
 @value ScreenLGMin, ScreenMDMin from 'styles/screenSizes.css';
-@value Coconut, White from 'styles/colors.css';
+@value Coconut, Mackerel, White from 'styles/colors.css';
 
 .wrapper {
   background-color: White;
@@ -29,7 +29,7 @@
   position: relative;
   margin: 0;
   &:before {
-    border-top: 1px solid #d6d8da;
+    border-top: 1px solid Mackerel;
     top: 50%;
     left: 0;
     position: absolute;
@@ -49,20 +49,20 @@ h2.title {
   font-family: ComfortaaRegular,Helvetica,sans-serif;
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
-  font-size: 32px;
+  font-size: 20px;
   margin-bottom: 10px;
-	@media (max-width: 767px) {
-    font-size: 20px;
+  @media ScreenSMMin {
+    font-size: 32px;
 	}
 }
 
 h3.title {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 500;
   padding-right: 20px;
   margin-bottom: 20px;
-	@media (max-width: 767px) {
-		font-size: 18px;
+  @media ScreenSMMin {
+    font-size: 24px;
 	}
 }
 
