@@ -1,5 +1,5 @@
 @value SpacingLG from 'sass-loader!styles/spacing.scss';
-@value White, Pepper30 from 'styles/colors.css';
+@value White, Pepper30, BlueBase from 'styles/colors.css';
 @value sizeXXS, sizeSM from 'styles/typography.css';
 
 .summaryContainer{
@@ -20,6 +20,12 @@
 
 .link {
 	font-size: sizeSM;
+	cursor: pointer;
+	color: BlueBase;
+
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 .arrowRight {
