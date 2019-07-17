@@ -790,7 +790,7 @@ describe('basket actions', () => {
           recipeId: '123',
           position: '57',
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          on_food_brand_page: 'test-food-brand',
+          source: 'test-food-brand',
           recipe_type: Immutable.List(),
           dietary_attribute: Immutable.List(),
           time_frame: "0",
@@ -842,7 +842,7 @@ describe('basket actions', () => {
           recipeId: '123',
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          on_food_brand_page: 'test-food-brand',
+          source: 'test-food-brand',
           recipe_type: Immutable.List(),
           dietary_attribute: Immutable.List(),
           time_frame: "0",
@@ -893,7 +893,7 @@ describe('basket actions', () => {
           recipeId: '123',
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          on_food_brand_page: 'test-food-brand',
+          source: 'test-food-brand',
           recipe_type: Immutable.List(),
           dietary_attribute: Immutable.List(),
           time_frame: "0",
@@ -1013,4 +1013,178 @@ describe('basket actions', () => {
       })
     })
   })
+
+  describe('basketRecipeRemove', function () {
+    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE action types with correct recipe id and limit reached', function () {
+      getStateSpy = jest.fn().mockReturnValue({
+        basket: Immutable.Map({
+          recipes: Immutable.Map([['111', 3]]),
+          numPortions: 2,
+          limitReached: true,
+        }),
+        filters: Immutable.Map({
+          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          foodBrand: {
+            slug: 'test-food-brand'
+          },
+          dietTypes: Immutable.List(),
+          newRecipes: false,
+          dietaryAttributes: Immutable.List()
+        }),
+      })
+      basketRecipeRemove('123')(dispatch, getStateSpy)
+
+      expect(getStateSpy.mock.calls).toHaveLength(3)
+      expect(dispatch.mock.calls).toHaveLength(3)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_RECIPE_REMOVE,
+        recipeId: '123',
+        trackingData: {
+          actionType: 'Recipe Removed',
+          recipeId: '123',
+          view: undefined,
+          position: undefined,
+          collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          recipe_type: Immutable.List(),
+          dietary_attribute: Immutable.List(),
+          time_frame: "0",
+          source: 'test-food-brand',
+          taste_score: undefined,
+          recipe_count: 0
+        },
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+        stock: { 123: { 2: 1 } },
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_LIMIT_REACHED,
+        limitReached: false,
+        trackingData: {
+          view: undefined,
+          source: actionTypes.RECIPE_REMOVED,
+          actionType: actionTypes.BASKET_LIMIT_REACHED,
+          limitReached: false,
+        },
+      })
+    })
+
+    test('should map through the given view argument through to trackingData', function () {
+      getStateSpy = jest.fn().mockReturnValue({
+        basket: Immutable.Map({
+          recipes: Immutable.Map([['111', 3]]),
+          numPortions: 2,
+          limitReached: true,
+        }),
+        filters: Immutable.Map({
+          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          foodBrand: {
+            slug: 'test-food-brand'
+          },
+          dietTypes: Immutable.List(),
+          newRecipes: false,
+          dietaryAttributes: Immutable.List()
+        }),
+      })
+      basketRecipeRemove('123', 'boxsummary')(dispatch, getStateSpy)
+
+      expect(getStateSpy.mock.calls).toHaveLength(3)
+      expect(dispatch.mock.calls).toHaveLength(3)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_RECIPE_REMOVE,
+        recipeId: '123',
+        trackingData: {
+          actionType: 'Recipe Removed',
+          recipeId: '123',
+          view: 'boxsummary',
+          position: undefined,
+          collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          recipe_type: Immutable.List(),
+          dietary_attribute: Immutable.List(),
+          time_frame: "0",
+          source: 'test-food-brand',
+          taste_score: undefined,
+          recipe_count: 0
+        },
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+        stock: { 123: { 2: 1 } },
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_LIMIT_REACHED,
+        limitReached: false,
+        trackingData: {
+          view: 'boxsummary',
+          source: actionTypes.RECIPE_REMOVED,
+          actionType: actionTypes.BASKET_LIMIT_REACHED,
+          limitReached: false,
+        },
+      })
+    })
+
+    test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE when portion and recipe limit is reached', function () {
+      getStateSpy = jest.fn().mockReturnValue({
+        basket: Immutable.Map({
+          recipes: Immutable.Map([['111', 1], ['222', 1], ['333', 1]]),
+          numPortions: 2,
+          limitReached: true,
+        }),
+        filters: Immutable.Map({
+          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          foodBrand: {
+            slug: 'test-food-brand'
+          },
+          dietTypes: Immutable.List(),
+          newRecipes: false,
+          dietaryAttributes: Immutable.List()
+        }),
+      })
+      basketRecipeRemove('123')(dispatch, getStateSpy)
+
+      expect(getStateSpy.mock.calls).toHaveLength(3)
+      expect(dispatch.mock.calls).toHaveLength(3)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_RECIPE_REMOVE,
+        recipeId: '123',
+        trackingData: {
+          actionType: 'Recipe Removed',
+          recipeId: '123',
+          view: undefined,
+          position: undefined,
+          collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          recipe_type: Immutable.List(),
+          dietary_attribute: Immutable.List(),
+          time_frame: "0",
+          source: 'test-food-brand',
+          taste_score: undefined,
+          recipe_count: 2
+        },
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+        stock: { 123: { 2: 1 } },
+      })
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.BASKET_LIMIT_REACHED,
+        limitReached: false,
+        trackingData: {
+          view: undefined,
+          source: actionTypes.RECIPE_REMOVED,
+          actionType: actionTypes.BASKET_LIMIT_REACHED,
+          limitReached: false,
+        },
+      })
+    })
+  })
+
 })
