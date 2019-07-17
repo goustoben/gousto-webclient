@@ -19,6 +19,8 @@ class Summary extends React.PureComponent {
     routing: PropTypes.object,
     isLoading: PropTypes.bool,
     showNoDiscountCTA: PropTypes.bool,
+    promoCode: PropTypes.string,
+    promoApplyCheckoutCode: PropTypes.func,
   }
 
   static defaultProps = {
@@ -28,6 +30,29 @@ class Summary extends React.PureComponent {
     slotId: '',
     showPromocode: false,
     loadingPreviewOrder: false,
+  }
+
+  renderLink() {
+    const { showNoDiscountCTA, promoCode , promoApplyCheckoutCode} = this.props
+
+    if (showNoDiscountCTA) {
+      return !promoCode && (
+      <div
+        className={css.link}
+        role="button"
+        tabIndex='0'
+        onClick={() => { promoApplyCheckoutCode() }}
+      >
+        Enter your discount code above, or click here to get 30% off all boxes in your first month&nbsp;<span className={css.arrowRight}/>
+      </div>
+      )
+    }
+
+    return (
+        <Link to={configRoute.client.menu} className={css.link}>
+          Edit order&nbsp;<span className={css.arrowRight} />
+        </Link>
+    )
   }
 
   render() {
@@ -68,10 +93,8 @@ class Summary extends React.PureComponent {
                 showAddPromocode
               />
               <div>
-                {(currentStep !== 'payment' && !isMobile) ?
-                  <Link to={configRoute.client.menu} className={css.link}>
-                    Edit order&nbsp;<span className={css.arrowRight} />
-                  </Link> : null
+                {(currentStep !== 'payment' && !isMobile) &&
+                  this.renderLink()
                 }
               </div>
             </div>
