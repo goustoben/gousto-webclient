@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { isShowNoDiscountCTAFeatureEnabled } from 'selectors/features'
 import Summary from './Summary'
 
 function mapStateToProps(state) {
@@ -10,6 +11,7 @@ function mapStateToProps(state) {
     slotId: state.basket.get('slotId'),
     browser: state.request.get('browser'),
     routing: state.routing,
+    showNoDiscountCTA: isShowNoDiscountCTAFeatureEnabled(state),
   }
 }
 

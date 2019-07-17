@@ -25,3 +25,5 @@ export const getFoodBrandFeature = state => (state.features ? state.features.get
 export const isDeliveryFrequencyFeatureEnabled = ({ features }) => features.getIn(['wizardDeliveryFrequency', 'value'], false)
 
 export const getAppBanner = ({ features }) => features.getIn(['appBanner', 'value'], false)
+
+export const isShowNoDiscountCTAFeatureEnabled = ({ features }) => features.getIn(['showNoDiscountCTA', 'value'], false)
