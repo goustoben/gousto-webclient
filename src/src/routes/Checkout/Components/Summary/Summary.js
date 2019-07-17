@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import configRoute from 'config/routes'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { H3 } from 'Page/Header'
 import Receipt from 'Receipt'
 import Link from 'Link'
