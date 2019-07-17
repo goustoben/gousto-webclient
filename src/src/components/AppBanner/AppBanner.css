@@ -5,7 +5,7 @@
   display: flex;
   background-color: DarkRadish;
   color: White;
-  font-size: 0.75rem;
+  font-size: 12px;
   @media Screen3XSMin {
     font-size: initial;
   }
