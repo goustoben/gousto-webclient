@@ -53,7 +53,7 @@ h2.title {
   margin-bottom: 10px;
   @media ScreenSMMin {
     font-size: 32px;
-	}
+  }
 }
 
 h3.title {
@@ -63,7 +63,7 @@ h3.title {
   margin-bottom: 20px;
   @media ScreenSMMin {
     font-size: 24px;
-	}
+  }
 }
 
 h2 > .titleText {
