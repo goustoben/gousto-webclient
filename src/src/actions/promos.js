@@ -211,7 +211,7 @@ const promoApplyCheckoutCode = () => (
       dispatch(pricingActions.pricingRequest())
       dispatch(basketPromoCodeAppliedChange(true))
       dispatch(trackPromocodeChange(promoCode, true))
-    } catch {
+    } catch (e) {
       throw new Error('Promo cannot be applied')
     }
   }
