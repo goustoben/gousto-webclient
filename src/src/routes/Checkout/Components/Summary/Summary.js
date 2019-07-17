@@ -7,6 +7,7 @@ import Receipt from 'Receipt'
 import Link from 'Link'
 import Loading from 'Loading'
 import { getSurchargeItems } from 'utils/pricing'
+import { onEnter } from 'utils/accessibility'
 import { basketSum } from 'utils/basket'
 import css from './Summary.css'
 
@@ -42,6 +43,7 @@ class Summary extends React.PureComponent {
         role="button"
         tabIndex='0'
         onClick={() => { promoApplyCheckoutCode() }}
+        onKeyDown={e => { onEnter(e,promoApplyCheckoutCode) }}
       >
         Enter your discount code above, or click here to get 30% off all boxes in your first month&nbsp;<span className={css.arrowRight}/>
       </div>
