@@ -54,25 +54,6 @@ describe('Summary', () => {
     expect(wrapper.find(Link).length).toBe(1)
   })
 
-  test('should NOT render <Link> component(s) if mobile', () => {
-    wrapper = shallow(<Summary browser="mobile" />)
-    expect(wrapper.find(Link).length).toBe(0)
-  })
-
-  test('should NOT render <Link> component(s) if box details step and mobile', () => {
-    wrapper = shallow(
-      <Summary
-        routing={{
-          locationBeforeTransitions: {
-            pathname: 'check-out/boxdetails',
-          },
-        }}
-        browser="mobile"
-      />,
-    )
-    expect(wrapper.find(Link).length).toBe(0)
-  })
-
   test('should NOT render <Link> component(s) if payment step', () => {
     wrapper = shallow(
       <Summary
