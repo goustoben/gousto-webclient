@@ -3,6 +3,7 @@ import React from 'react'
 import configRoute from 'config/routes'
 import Immutable from 'immutable'
 import { H3 } from 'Page/Header'
+import classnames from 'classnames'
 import Receipt from 'Receipt'
 import Link from 'Link'
 import Loading from 'Loading'
@@ -35,11 +36,12 @@ class Summary extends React.PureComponent {
 
   renderLink() {
     const { showNoDiscountCTA, promoCode , promoApplyCheckoutCode} = this.props
+    const classes = classnames(css.link, css.noDiscountCTA)
 
     if (showNoDiscountCTA) {
       return !promoCode && (
       <div
-        className={css.link}
+        className={classes}
         role="button"
         tabIndex='0'
         onClick={() => { promoApplyCheckoutCode() }}
