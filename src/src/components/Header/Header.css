@@ -123,15 +123,8 @@ span:target .overlay {
 }
 
 .logoDesktop {
-	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
 	height: 30px;
 	width: 131px;
-}
-
-.logoMobile {
-	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
-	height: mobileLogoSize;
-	width: mobileLogoSize;
 }
 
 .logoLink {

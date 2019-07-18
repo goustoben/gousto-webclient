@@ -345,8 +345,7 @@ class Header extends React.PureComponent {
                   <div className={css.mainContent}>
                     <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !Boolean(promoCodeUrl)} className={css.logoLink}>
                       <span>
-                        <Svg fileName="icon-logo" className={css.logoDesktop} />
-                        <Svg fileName="icon-logo-g" className={css.logoMobile} />
+                        <Svg fileName="gousto_logo" className={css.logoDesktop} />
                       </span>
                     </Link>
                     {(path === '/menu') ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
