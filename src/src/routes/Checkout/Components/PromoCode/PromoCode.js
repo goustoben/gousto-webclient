@@ -48,6 +48,13 @@ class PromoCode extends React.PureComponent {
     }
   }
 
+  componentDidUpdate() {
+    if (this.props.promoCode) {
+      this.props.basketPromoCodeAppliedChange(true)
+      this.promoCodeValidation()
+    }
+  }
+
   getInputClassName = () => {
     let className = css.input
     if (this.props.promoCode && this.state.errorMsg) {

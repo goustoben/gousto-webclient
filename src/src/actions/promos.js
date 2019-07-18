@@ -3,9 +3,14 @@ import { legacyVerifyAge } from 'apis/legacy'
 import actionTypes from './actionTypes'
 import statusActions from './status'
 import userActions from './user'
-import { basketPromoCodeChange } from './basket'
+import pricingActions from './pricing'
 import productActions from './products'
+import { trackPromocodeChange } from './checkout'
 import { menuLoadBoxPrices } from './menu'
+import {
+  basketPromoCodeChange,
+  basketPromoCodeAppliedChange,
+} from './basket'
 
 const { pending, error } = statusActions
 
@@ -196,6 +201,21 @@ const promoApply = () => (
   }
 )
 
+const promoApplyCheckoutCode = () => (
+  async (dispatch) => {
+    const promoCode = 'DTI-CHECKOUT30'
+
+    try {
+      dispatch(basketPromoCodeChange(promoCode))
+      dispatch(pricingActions.pricingRequest())
+      dispatch(basketPromoCodeAppliedChange(true))
+      dispatch(trackPromocodeChange(promoCode, true))
+    } catch (e) {
+      throw new Error('Promo cannot be applied')
+    }
+  }
+)
+
 const promoAgeVerify = ageVerified => ({
   type: actionTypes.PROMO_AGE_VERIFY,
   ageVerified,
@@ -209,6 +229,7 @@ const promoActions = {
   promoAgeVerify,
   promoGetFromLandingPage,
   promoGet,
+  promoApplyCheckoutCode
 }
 
 export default promoActions
