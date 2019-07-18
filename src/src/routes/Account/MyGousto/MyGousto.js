@@ -1,6 +1,5 @@
 import React from 'react'
 import { Section } from './Section'
-// import css from './MyGousto.css'
 
 const MyGousto = () => (
   <div>
