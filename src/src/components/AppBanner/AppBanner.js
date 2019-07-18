@@ -29,7 +29,7 @@ const AppBanner = ({ name, averageRating, ratings, showAppBanner, appBannerDismi
   showAppBanner ?
     (
       <div className={css.appBannerWrapper}>
-        <button type='button' className={css.closeButton} onClick={() => appBannerDismiss()}>
+        <button data-testing="appBannerDismiss" type='button' className={css.closeButton} onClick={() => appBannerDismiss()}>
           <Svg fileName="icon_dismiss-app-banner" className={css.closeIcon} />
         </button>
         <div className={css.appDetails}>
@@ -44,7 +44,7 @@ const AppBanner = ({ name, averageRating, ratings, showAppBanner, appBannerDismi
             </div>
           </div>
         </div>
-        <a className={css.appLink} href="https://gousto.co.uk/apps">
+        <a data-testing="appBannerCTA" className={css.appLink} href="https://gousto.co.uk/apps">
           <Button noDecoration>Get app</Button>
         </a>
       </div>
