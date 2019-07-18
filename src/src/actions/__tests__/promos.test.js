@@ -37,7 +37,7 @@ describe('promo actions', () => {
     })
 
     test('should track promoCode change', () => {
-      expect(trackPromocodeChange).toHaveBeenCalledWith('DTI-CHECKOUT30')
+      expect(trackPromocodeChange).toHaveBeenCalledWith('DTI-CHECKOUT30', true)
     })
   })
 })
