@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { cookiePrefix } from 'config/storePersistence'
-import { appBannerActions } from 'actions/appBanner'
+import { appBannerDismiss } from 'actions/appBanner'
 import basketActions from 'actions/basket'
 import signupActions from 'actions/signup'
 import featureActions from 'actions/features'
@@ -94,7 +94,7 @@ const processCookies = (cookies, store) => {
   }
 
   if (appBannerDismissed) {
-    store.dispatch(appBannerActions.appBannerDismiss())
+    store.dispatch(appBannerDismiss())
   }
 
   if (promoCode) {
