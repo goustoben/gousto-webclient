@@ -202,12 +202,11 @@ const promoApply = () => (
 )
 
 const promoApplyCheckoutCode = () => (
-  async (dispatch, getState ) => {
+  async (dispatch) => {
     const promoCode = 'DTI-CHECKOUT30'
 
     try {
-      await promoChange(promoCode)(dispatch, getState)
-      promoApply()(dispatch, getState)
+      dispatch(basketPromoCodeChange(promoCode))
       dispatch(pricingActions.pricingRequest())
       dispatch(basketPromoCodeAppliedChange(true))
       dispatch(trackPromocodeChange(promoCode, true))
