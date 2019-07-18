@@ -1,0 +1,76 @@
+@value ScreenLGMin, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.css';
+@value Coconut, Mackerel, White from 'styles/colors.css';
+
+.wrapper {
+  background-color: White;
+  padding: 0 16px;
+  width: 100%;
+}
+
+.alternateBackground {
+  background-color: Coconut;
+}
+
+.content {
+  background-color: inherit;
+  margin: 0 auto;
+  max-width: 750px;
+  padding: 40px 0;
+
+  @media ScreenLGMin {
+    max-width: 1170px;
+  }
+  @media ScreenMDMin {
+    max-width: 970px;
+  }
+}
+
+.title {
+  background-color: inherit;
+  position: relative;
+  margin: 0;
+  &:before {
+    border-top: 1px solid Mackerel;
+    top: 50%;
+    left: 0;
+    position: absolute;
+    content: "";
+    display: block;
+    width: 100%;
+    margin-top: 2px;
+  }
+}
+
+.titleText {
+  background-color: inherit;
+  position: relative;
+}
+
+h2.title {
+  font-family: ComfortaaRegular,Helvetica,sans-serif;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+  font-size: 20px;
+  margin-bottom: 10px;
+  @media ScreenSMMin {
+    font-size: 32px;
+  }
+}
+
+h3.title {
+  font-size: 18px;
+  font-weight: 500;
+  padding-right: 20px;
+  margin-bottom: 20px;
+  @media ScreenSMMin {
+    font-size: 24px;
+  }
+}
+
+h2 > .titleText {
+  padding-right: 30px;
+}
+
+h3 > .titleText {
+  padding-right: 20px;
+}
