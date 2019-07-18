@@ -97,7 +97,7 @@ class Summary extends React.PureComponent {
                 showAddPromocode
               />
               <div>
-                {(currentStep !== 'payment' && !isMobile) &&
+                {(currentStep !== 'payment') &&
                   this.renderLink()
                 }
               </div>
