@@ -26,6 +26,36 @@
 /* Fonts */
 
 @font-face {
+	font-family: 'AxiformaBook';
+	src: url('styles/fonts/Axiforma');
+	src: url('styles/fonts/AvenirLTW04-45Book.eot?#iefix') format('embedded-opentype'),
+		url('styles/fonts/AvenirLTW04-45Book.woff2') format('woff2'),
+		url('styles/fonts/AvenirLTW04-45Book.woff') format('woff'),
+		url('styles/fonts/AvenirLTW04-45Book.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'AvenirBook';
+	src: url('styles/fonts/AvenirLTW04-45Book.eot');
+	src: url('styles/fonts/AvenirLTW04-45Book.eot?#iefix') format('embedded-opentype'),
+		url('styles/fonts/AvenirLTW04-45Book.woff2') format('woff2'),
+		url('styles/fonts/AvenirLTW04-45Book.woff') format('woff'),
+		url('styles/fonts/AvenirLTW04-45Book.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'AvenirBook';
+	src: url('styles/fonts/AvenirLTW04-45Book.eot');
+	src: url('styles/fonts/AvenirLTW04-45Book.eot?#iefix') format('embedded-opentype'),
+		url('styles/fonts/AvenirLTW04-45Book.woff2') format('woff2'),
+		url('styles/fonts/AvenirLTW04-45Book.woff') format('woff'),
+		url('styles/fonts/AvenirLTW04-45Book.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
 	font-family: 'AvenirBook';
 	src: url('styles/fonts/AvenirLTW04-45Book.eot');
 	src: url('styles/fonts/AvenirLTW04-45Book.eot?#iefix') format('embedded-opentype'),
