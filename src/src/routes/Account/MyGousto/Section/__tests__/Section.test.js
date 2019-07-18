@@ -11,4 +11,9 @@ describe('Section', () => {
     const wrapper = shallow(<Section title='Hello world' />)
     expect(wrapper.find('h3').length).toEqual(1)
   })
+  it('should not render any title element if title prop is not passed', () => {
+    const wrapper = shallow(<Section />)
+    expect(wrapper.find('h2').length).toEqual(0)
+    expect(wrapper.find('h3').length).toEqual(0)
+  })
 })
