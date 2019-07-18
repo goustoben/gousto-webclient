@@ -74,7 +74,7 @@ describe('<RangeBadge />', () => {
         }
       })
       const wrapper = shallow(<RangeBadge range={range}/>)
-      expect(wrapper.find('.ribbonText').prop('children')).toEqual('EVERYDAY FAVOURITES')
+      expect(wrapper.find('.foodBrandName').prop('children')).toEqual('everyday favourites')
     })
     test('should render range badge with text 10-MINUTES MEAL', () => {
       const range = Immutable.fromJS({
@@ -88,7 +88,7 @@ describe('<RangeBadge />', () => {
         }
       })
       const wrapper = shallow(<RangeBadge range={range}/>)
-      expect(wrapper.find('.ribbonText').prop('children')).toEqual('10-MINUTE MEAL')
+      expect(wrapper.find('.foodBrandName').prop('children')).toEqual('10-MINUTE MEAL')
     })
   })
 })

@@ -1,44 +1,67 @@
 @value comfortaaFontStack from 'styles/typography.css';
-@value ScreenSMMax from 'styles/screenSizes.css';
+@value ScreenSMMax, ScreenSMMin from 'styles/screenSizes.css';
+@value White from 'styles/colors.css';
 
 .foodBrandContainer {
   background: White;
 }
 
 .foodBrandTitleContainer {
-  position: absolute;
+  position: sticky;
+  top: 0;
+  background-color: White;
+  z-index: 11;
   width: 100%;
   font-family: comfortaaFontStack;
   display: flex;
   align-items: center;
   padding-top: 15px;
+  padding-bottom: 10px;
+  @media ScreenSMMin {
+    padding-bottom: 0px;
+  }
 }
 
-.foodBrandTitleContainerFixed {
-  composes: foodBrandTitleContainer;
-  background: White;
-  position: fixed;
-  top: 0;
+.border {
+  height: 6px;
+  width: 100%;
+  position: sticky;
   z-index: 11;
 }
 
 .foodBrandTitleContainer > h1 {
+  font-size: 16px;
   display: inline-flex;
   justify-content: center;
   width: 100%;
-  font-size: 32px;
   margin: 0;
+  @media ScreenSMMin {
+    font-size: 32px;
+  }
 }
 
 .backButton {
+  font-size: 13px;
   display: inline-flex;
   margin: auto 0;
   padding-left: 10px;
-  font-size: 18px;
   font-weight: bold;
   position: absolute;
   cursor: pointer;
   white-space: pre;
+  @media ScreenSMMin {
+    font-size: 18px;
+  }
+  &:focus {
+    outline: 0;
+  }
+}
+
+.backButton:hover .underline,
+.backButton:focus .underline
+ {
+  text-decoration: underline;
+  outline: 0;
 }
 
 .hideOnMobile {
@@ -48,13 +71,15 @@
 }
 
 .foodBrandDescription {
-  display: flex;
-  justify-content: center;
-  padding-top: 55px;
+  text-align: center;
   font-size: 16px;
 }
 
 .leftArrow {
   composes: fa-basic-class fa-fw fa-chevron-left from 'styles/vendor/font-awesome-module.css';
-  padding-top: 4px;
+  padding-top: 2px;
+  @media ScreenSMMin {
+    padding-top: 4px;
+  }
 }
+
