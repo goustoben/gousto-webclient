@@ -1,8 +1,9 @@
-@value ScreenLGMin, ScreenMDMin from 'styles/screenSizes.css';
+@value ScreenLGMin, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.css';
 @value Coconut, Mackerel, White from 'styles/colors.css';
 
 .wrapper {
   background-color: White;
+  padding: 0 16px;
   width: 100%;
 }
 
