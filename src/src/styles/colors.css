@@ -41,16 +41,16 @@
 /* Rebrand */
 
 @value DarkPomegranate #C42833;
-@value Pomegranate #F6323E;
-@value Bluecheese #7290FF;
-@value Blueberry #4968D8;
-@value Duckegg #00D5E0;
-@value Kale #028289;
-@value Coconut #F7FBFA;
+@value Pomegranate #FF0032;
+@value Bluecheese #615CFF;
+@value Blueberry #3E3AC2;
+@value Duckegg #BBC2FF;
+@value Kale #7D86FE;
+@value Coconut #F4F7FA;
 @value Blackberry #333D47;
 @value DarkBlackberry #333D47;
-@value Oyster #999EA3;
-@value Mackerel #D6D8DA;
+@value Oyster #C0C5C9;
+@value Mackerel #D2D6D9;
 @value Basa #EAEBEC;
 @value Haricot #01A92B;
 @value HaricotMedium #99DDAA;
@@ -59,20 +59,21 @@
 @value Carrot #FB6126;
 @value CarrotLight #FDEFE9;
 @value DarkCarrot #BB481C;
-@value Radish #B6252E;
+@value Radish #C20026;
 @value RadishLight #FFF0F1;
-@value DarkRadish #9B222A;
+@value DarkRadish #9C001F;
 @value Bronze #E8C776;
 @value Cauliflower #F4EFE9;
 @value DarkCauliflower #C6BEB4;
 
 @value Black #333D47;
-@value BlueBase #7290FF;
-@value BlueBaseDarker #4968D8;
+@value BlueBase #615CFF;
+@value BlueBaseDarker #3E3AC2;
 @value Bluecheese50 rgba(114, 144, 255, 0.5);
 @value Bluecheese30 rgba(114, 144, 255, 0.3);
 @value Blueberry30 rgba(73, 104, 216, 0.3);
 @value JoeWicks #3A3AB5;
+@value NewGrey #596067;
 
 /* Variations */
 @value Radish05 #FBF4F4;

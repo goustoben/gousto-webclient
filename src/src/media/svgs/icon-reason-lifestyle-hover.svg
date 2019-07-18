@@ -13,15 +13,15 @@
         <g id="lifestyle-copy">
             <g id="Group-34" transform="translate(3.000000, 3.000000)">
                 <path d="" id="Path-9-Copy-4" stroke="#979797" stroke-width="0.93"></path>
-                <g id="Group-30-Copy-4" transform="translate(0.000000, 1.873892)" stroke="#7290ff">
+                <g id="Group-30-Copy-4" transform="translate(0.000000, 1.873892)" stroke="#615CFF">
                     <g id="Group-16" transform="translate(0.000000, 0.718033)">
                         <use id="Rectangle-9-Copy-2" mask="url(#mask-2)" stroke-width="9" fill="#FFFFFF" xlink:href="#path-1"></use>
                         <path d="M3.73818294,21.0853659 L97.2121394,21.0853659" id="Path-6-Copy-2" stroke-width="4.5" stroke-linecap="round"></path>
                     </g>
                 </g>
-                <path d="M22.25,-4.4408921e-15 L22.25,9.86627191" id="Path-8" stroke="#7290ff" stroke-width="4.5" stroke-linecap="round"></path>
-                <path d="M77.25,-4.4408921e-15 L77.25,9.86627191" id="Path-8-Copy-5" stroke="#7290ff" stroke-width="4.5" stroke-linecap="round"></path>
-                <g id="Group-14" transform="translate(14.500000, 33.000000)" stroke="#7290ff" stroke-width="4.5" stroke-linecap="round">
+                <path d="M22.25,-4.4408921e-15 L22.25,9.86627191" id="Path-8" stroke="#615CFF" stroke-width="4.5" stroke-linecap="round"></path>
+                <path d="M77.25,-4.4408921e-15 L77.25,9.86627191" id="Path-8-Copy-5" stroke="#615CFF" stroke-width="4.5" stroke-linecap="round"></path>
+                <g id="Group-14" transform="translate(14.500000, 33.000000)" stroke="#615CFF" stroke-width="4.5" stroke-linecap="round">
                     <path d="M18.25,0.730053191 L18.25,42.5623384" id="Path-10-Copy-6"></path>
                     <path d="M50.25,0.730053191 L50.25,42.5623384" id="Path-10-Copy-7"></path>
                     <path d="M0.0186915888,12.25 L70.0091835,12.25" id="Path-11-Copy-6"></path>
