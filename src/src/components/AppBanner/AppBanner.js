@@ -5,9 +5,9 @@ import Svg from 'Svg'
 import css from './AppBanner.css'
 
 const propTypes = {
-  name: PropTypes.string.isRequired,
-  averageRating: PropTypes.number.isRequired,
-  ratings: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  averageRating: PropTypes.number,
+  ratings: PropTypes.string,
   showAppBanner: PropTypes.bool.isRequired,
   appBannerDismiss: PropTypes.func.isRequired,
 }
