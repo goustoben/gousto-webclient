@@ -11,12 +11,12 @@
 @value sizeXXL2 48px;
 @value normalLineHeight 1.4;
 
-@value comfortaaFontStack Comfortaa,Helvetica,sans-serif;
-@value comfortaaRegularFontStack ComfortaaRegular,Helvetica,sans-serif;
+@value axiformaFontStack Axiforma,Helvetica,sans-serif;
+@value axiformaBookFontStack AxiformaBook,Helvetica,sans-serif;
 @value avenirBookFontStack AvenirBook,Helvetica,sans-serif;
 @value avenirHeavyFontStack AvenirHeavy,Helvetica,sans-serif;
 
-@value headingFontStackBold comfortaaFontStack;
+@value headingFontStackBold axiformaFontStack;
 @value headingFontWeightBold bold;
 @value bodyFontStackNormal avenirBookFontStack;
 @value bodyFontWeightNormal normal;
@@ -27,32 +27,20 @@
 
 @font-face {
 	font-family: 'AxiformaBook';
-	src: url('styles/fonts/Axiforma');
-	src: url('styles/fonts/AvenirLTW04-45Book.eot?#iefix') format('embedded-opentype'),
-		url('styles/fonts/AvenirLTW04-45Book.woff2') format('woff2'),
-		url('styles/fonts/AvenirLTW04-45Book.woff') format('woff'),
-		url('styles/fonts/AvenirLTW04-45Book.ttf') format('truetype');
+	src: url('styles/fonts/Axiforma-Book.otf');
 	font-weight: normal;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'AvenirBook';
-	src: url('styles/fonts/AvenirLTW04-45Book.eot');
-	src: url('styles/fonts/AvenirLTW04-45Book.eot?#iefix') format('embedded-opentype'),
-		url('styles/fonts/AvenirLTW04-45Book.woff2') format('woff2'),
-		url('styles/fonts/AvenirLTW04-45Book.woff') format('woff'),
-		url('styles/fonts/AvenirLTW04-45Book.ttf') format('truetype');
-	font-weight: normal;
+	font-family: 'Axiforma';
+	src: url('styles/fonts/Axiforma-Light.otf');
+	font-weight: 300;
 	font-style: normal;
 }
 @font-face {
-	font-family: 'AvenirBook';
-	src: url('styles/fonts/AvenirLTW04-45Book.eot');
-	src: url('styles/fonts/AvenirLTW04-45Book.eot?#iefix') format('embedded-opentype'),
-		url('styles/fonts/AvenirLTW04-45Book.woff2') format('woff2'),
-		url('styles/fonts/AvenirLTW04-45Book.woff') format('woff'),
-		url('styles/fonts/AvenirLTW04-45Book.ttf') format('truetype');
-	font-weight: normal;
+	font-family: 'Axiforma';
+	src: url('styles/fonts/Axiforma-Medium.otf');
+	font-weight: bold;
 	font-style: normal;
 }
 @font-face {
@@ -77,42 +65,9 @@
 	font-style: normal;
 }
 
-@font-face {
-	font-family: 'Comfortaa';
-	src: url('styles/fonts/Comfortaa-Bold.eot');
-	src: url('styles/fonts/Comfortaa-Bold.eot?#iefix') format('embedded-opentype'),
-		url('styles/fonts/Comfortaa-Bold.woff2') format('woff2'),
-		url('styles/fonts/Comfortaa-Bold.woff') format('woff'),
-		url('styles/fonts/Comfortaa-Bold.ttf') format('truetype');
-	font-weight: bold;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'Comfortaa';
-	src: url('styles/fonts/Comfortaa-Light.eot');
-	src: url('styles/fonts/Comfortaa-Light.eot?#iefix') format('embedded-opentype'),
-		url('styles/fonts/Comfortaa-Light.woff2') format('woff2'),
-		url('styles/fonts/Comfortaa-Light.woff') format('woff'),
-		url('styles/fonts/Comfortaa-Light.ttf') format('truetype');
-	font-weight: 300;
-	font-style: normal;
-}
-
-@font-face {
-	font-family: 'ComfortaaRegular';
-	src: url('styles/fonts/Comfortaa-Regular.eot');
-	src: url('styles/fonts/Comfortaa-Regular.eot?#iefix') format('embedded-opentype'),
-		url('styles/fonts/Comfortaa-Regular.woff2') format('woff2'),
-		url('styles/fonts/Comfortaa-Regular.woff') format('woff'),
-		url('styles/fonts/Comfortaa-Regular.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
-
 /* Font utility classes */
-.comfortaa {
-	font-family: comfortaaFontStack;
+.axiforma {
+	font-family: axiformaFontStack;
 }
 
 .avenirBook {

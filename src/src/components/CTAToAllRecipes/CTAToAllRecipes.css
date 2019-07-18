@@ -17,7 +17,7 @@
 }
 
 .ctaText {
-  composes: comfortaa from 'styles/typography.css';
+  composes: axiforma from 'styles/typography.css';
   padding-top: 38px;
   padding-bottom: 26px;
   font-size: 18px;

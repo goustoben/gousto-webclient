@@ -77,7 +77,7 @@
 }
 
 .tooltipText {
-	composes: comfortaa textXS from 'styles/typography.css';
+	composes: axiforma textXS from 'styles/typography.css';
 	font-weight: 300;
 }
 

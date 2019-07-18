@@ -1,6 +1,6 @@
 @value Oyster, White from 'styles/colors.css';
 @value ScreenMDMin from 'styles/screenSizes.css';
-@value comfortaaFontStack from 'styles/typography.css';
+@value axiformaFontStack from 'styles/typography.css';
 
 .container {
 	width: 100%;
@@ -64,7 +64,7 @@
     position: absolute;
     top: 20px;
     color: Oyster;
-		font-family: comfortaaFontStack;
+		font-family: axiformaFontStack;
     font-weight: 700;
     font-size: 54px;
     line-height: 0;

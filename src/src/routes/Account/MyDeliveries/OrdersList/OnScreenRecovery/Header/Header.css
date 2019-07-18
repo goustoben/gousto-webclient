@@ -1,5 +1,5 @@
 @value White from 'styles/colors.css';
-@value comfortaaFontStack from 'styles/typography.css';
+@value axiformaFontStack from 'styles/typography.css';
 
 .header {
 	background-color: #E7F7F8;
@@ -27,7 +27,7 @@
 	position: absolute;
 	left: 49.5%;
 	transform: translateX(-50%);
-	font-family: comfortaaFontStack;
+	font-family: axiformaFontStack;
 	bottom: 41px;
 	color: White;
 }
