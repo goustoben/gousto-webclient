@@ -18,7 +18,8 @@ import {
   getCurrentCollectionId,
   getCurrentDietTypes,
   getDietaryAttributes,
-  getCurrentTotalTime
+  getCurrentTotalTime,
+  getFoodBrandFilter
 } from '../selectors/filters'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
@@ -328,9 +329,10 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
         limitReached: reachedLimit,
       })
     } else {
-      const outOfStock = isOutOfStock(recipeId, numPortions, getState().menuRecipeStock)
       let state = getState()
+      const outOfStock = isOutOfStock(recipeId, numPortions, getState().menuRecipeStock)
       const { basket, menuRecipeStock, menuRecipes } = state
+      const selectedFoodBrand = getFoodBrandFilter(state)
       if (!limitReached(basket, menuRecipes, menuRecipeStock, undefined, maxRecipesNum) && !outOfStock) {
         if (recipeInfo) {
           Object.assign(recipeInfo, { collection: getCurrentCollectionId(state) })
@@ -349,6 +351,7 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
             recipe_type: getCurrentDietTypes(state),
             dietary_attribute: getDietaryAttributes(state),
             time_frame: getCurrentTotalTime(state),
+            source: !!selectedFoodBrand && selectedFoodBrand.slug,
             taste_score: recipeInfo && recipeInfo.score,
             recipe_count: basket.get('recipes').size+1,// The action is performed in the same time so the size is not updated yet
           },
@@ -386,6 +389,7 @@ export const basketRecipeRemove = (recipeId, view, position, score) => (
     let state = getState()
     const { basket } = state
     const collection = getCurrentCollectionId(state)
+    const selectedFoodBrand = getFoodBrandFilter(state)
     dispatch({
       type: actionTypes.BASKET_RECIPE_REMOVE,
       recipeId,
@@ -398,6 +402,7 @@ export const basketRecipeRemove = (recipeId, view, position, score) => (
         recipe_type: getCurrentDietTypes(state),
         dietary_attribute: getDietaryAttributes(state),
         time_frame: getCurrentTotalTime(state),
+        source: !!selectedFoodBrand && selectedFoodBrand.slug,
         taste_score: score,
         recipe_count: basket.get('recipes').size - 1,// The action is performed in the same time so the size is not updated yet
       },
@@ -601,7 +606,7 @@ export const basketCheckedOut = (numRecipes, view) => (
               }
             })
           }
-  
+
         } else if(editingBox) {
           dispatch({
             type: actionTypes.TRACKING,
@@ -658,7 +663,7 @@ export const basketCheckedOut = (numRecipes, view) => (
           })
         }
       }
-  
+
       dispatch({
         type: actionTypes.BASKET_CHECKOUT,
         trackingData: {

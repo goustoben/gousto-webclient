@@ -14,6 +14,7 @@ import SubscriptionPause from 'routes/Account/Subscription/SubscriptionPause'
 import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
+import { AppBanner } from 'AppBanner'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
 import MobileMenu from './MobileMenu'
@@ -306,99 +307,102 @@ class Header extends React.PureComponent {
     }
 
     return (
-      <span id={serverError ? 'mobileMenu' : null} data-testing="header">
-        <button
-          type="button"
-          className={mobileMenuOpen ? css.overlayOpen : css.overlay}
-          href={serverError ? '#' : null}
-          onClick={this.hideMobileMenu}
-        />
-        <header className={noContactBar ? css.headerNoContactBar : css.header}>
-          <div>
-            <MobileMenu
-              menuItems={mobileMenuItems}
-              show={mobileMenuOpen}
-              onHide={this.hideMobileMenu}
-              hideNav={hideNav}
-              isAuthenticated={isAuthenticated}
-              loginFunc={this.onOpen}
-              logoutFunc={this.logoutFunc}
-              promoCodeUrl={promoCodeUrl}
-              trackNavigationClick={trackNavigationClick}
-            />
-            <div className={css.container}>
-              {(!noContactBar) ?
-              <div className={css.contactBar}>
-                <p className={css.contactContent}>
-                  <span className={css.info}>Free delivery </span>
-                  <span className={css.info}>{config.company.telephone.number}</span>
-                </p>
-              </div> : null}
-              <div className={css.mainBar}>
-                <div className={css.mainContent}>
-                  <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !Boolean(promoCodeUrl)} className={css.logoLink}>
-                    <span>
-                      <Svg fileName="icon-logo" className={css.logoDesktop} />
-                      <Svg fileName="icon-logo-g" className={css.logoMobile} />
-                    </span>
-                  </Link>
-                  {(path === '/menu') ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
-                  <span className={css.linkDesktopContainer}>
-                    {(!hideNav) ? desktopMenuItems.map(menuItem => {
-                      if (menuItem.disabled) {
+      <div>
+        <AppBanner />
+        <span id={serverError ? 'mobileMenu' : null} data-testing="header">
+          <button
+            type="button"
+            className={mobileMenuOpen ? css.overlayOpen : css.overlay}
+            href={serverError ? '#' : null}
+            onClick={this.hideMobileMenu}
+          />
+          <header className={noContactBar ? css.headerNoContactBar : css.header}>
+            <div>
+              <MobileMenu
+                menuItems={mobileMenuItems}
+                show={mobileMenuOpen}
+                onHide={this.hideMobileMenu}
+                hideNav={hideNav}
+                isAuthenticated={isAuthenticated}
+                loginFunc={this.onOpen}
+                logoutFunc={this.logoutFunc}
+                promoCodeUrl={promoCodeUrl}
+                trackNavigationClick={trackNavigationClick}
+              />
+              <div className={css.container}>
+                {(!noContactBar) ?
+                <div className={css.contactBar}>
+                  <p className={css.contactContent}>
+                    <span className={css.info}>Free delivery </span>
+                    <span className={css.info}>{config.company.telephone.number}</span>
+                  </p>
+                </div> : null}
+                <div className={css.mainBar}>
+                  <div className={css.mainContent}>
+                    <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !Boolean(promoCodeUrl)} className={css.logoLink}>
+                      <span>
+                        <Svg fileName="icon-logo" className={css.logoDesktop} />
+                        <Svg fileName="icon-logo-g" className={css.logoMobile} />
+                      </span>
+                    </Link>
+                    {(path === '/menu') ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
+                    <span className={css.linkDesktopContainer}>
+                      {(!hideNav) ? desktopMenuItems.map(menuItem => {
+                        if (menuItem.disabled) {
+                          return (
+                            <span
+                              key={menuItem.name}
+                              className={classNames(css.linkDesktop, css.disabled)}
+                            >
+                              {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
+                              {menuItem.name}
+                            </span>
+                          )
+                        }
+
                         return (
-                          <span
+                          <Link
                             key={menuItem.name}
-                            className={classNames(css.linkDesktop, css.disabled)}
+                            to={menuItem.url}
+                            className={css.linkDesktop}
+                            clientRouted={menuItem.clientRouted}
+                            tracking={() => trackNavigationClick(menuItem.tracking)}
                           >
                             {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
                             {menuItem.name}
-                          </span>
+                          </Link>
                         )
-                      }
-
-                      return (
-                        <Link
-                          key={menuItem.name}
-                          to={menuItem.url}
-                          className={css.linkDesktop}
-                          clientRouted={menuItem.clientRouted}
-                          tracking={() => trackNavigationClick(menuItem.tracking)}
-                        >
-                          {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
-                          {menuItem.name}
-                        </Link>
-                      )
-                    }) : ''}
-                    {this.renderAuthLink()}
-                  </span>
-                  <span className={css.linkMobileContainer}>
-                    <button
-                      type='button'
-                      className={classNames([css.burgerIcon, 'needsclick'])}
-                      onClick={this.showMobileMenu}
-                      href={serverError ? '#mobileMenu' : null}
-                      data-testing="burgerMenu"
-                    />
-                  </span>
+                      }) : ''}
+                      {this.renderAuthLink()}
+                    </span>
+                    <span className={css.linkMobileContainer}>
+                      <button
+                        type='button'
+                        className={classNames([css.burgerIcon, 'needsclick'])}
+                        onClick={this.showMobileMenu}
+                        href={serverError ? '#mobileMenu' : null}
+                        data-testing="burgerMenu"
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </header>
-        <Overlay open={Boolean(loginOpen)} className={css.mobileOverlay} contentClassName={css.mobileModalContent} from="top">
-          <ModalPanel closePortal={this.onClose} className={css.modal} containerClassName={css.modalContainer} disableOverlay>
-            <Login isAuthenticated={isAuthenticated} isOpen={loginOpen} isPending={loginPending} />
-          </ModalPanel>
-        </Overlay>
-        <CancelOrderModal close={this.onCloseCancelBoxModal} />
-        <PromoModal />
-        <DuplicateOrderModal />
-        <ExpiredBillingModal />
-        <SubscriptionPause />
-        <OnScreenRecovery />
-        {path.indexOf('my-') !== -1 ? (<div><Account location={{ pathname: path }} /></div>) : null}
-      </span>
+          </header>
+          <Overlay open={Boolean(loginOpen)} className={css.mobileOverlay} contentClassName={css.mobileModalContent} from="top">
+            <ModalPanel closePortal={this.onClose} className={css.modal} containerClassName={css.modalContainer} disableOverlay>
+              <Login isAuthenticated={isAuthenticated} isOpen={loginOpen} isPending={loginPending} />
+            </ModalPanel>
+          </Overlay>
+          <CancelOrderModal close={this.onCloseCancelBoxModal} />
+          <PromoModal />
+          <DuplicateOrderModal />
+          <ExpiredBillingModal />
+          <SubscriptionPause />
+          <OnScreenRecovery />
+          {path.indexOf('my-') !== -1 ? (<div><Account location={{ pathname: path }} /></div>) : null}
+        </span>
+      </div>
     )
   }
 }

@@ -8,11 +8,11 @@ export const isNextDayDeliveryPaintedDoorFeatureEnabled = state => (state.featur
 
 export const getDisabledSlots = state => (state.features ? state.features.getIn(['disabledSlots', 'value']) : '')
 
-export const getForceSignupWizard = state => (state.features ? state.features.getIn(['forceSignupWizard', 'value']) : false )
+export const getForceSignupWizard = state => (state.features ? state.features.getIn(['forceSignupWizard', 'value']) : false)
 
-export const getGoToMyGousto = state => (state.features ? state.features.getIn(['goToMyGousto', 'value']) : false )
+export const getGoToMyGousto = state => (state.features ? state.features.getIn(['goToMyGousto', 'value']) : false)
 
-export const getGoToMyDeliveries = state => (state.features ? state.features.getIn(['goToMyDeliveries', 'value']) : false )
+export const getGoToMyDeliveries = state => (state.features ? state.features.getIn(['goToMyDeliveries', 'value']) : false)
 
 export const getJfyTutorial = state => (state.features ? state.features.getIn(['jfyTutorial', 'value']) : false)
 
@@ -23,3 +23,5 @@ export const getRafPositionOnWelcomePage = state => (state.features ? state.feat
 export const getFoodBrandFeature = state => (state.features ? state.features.getIn(['foodBrand', 'value']) : false)
 
 export const isDeliveryFrequencyFeatureEnabled = ({ features }) => features.getIn(['wizardDeliveryFrequency', 'value'], false)
+
+export const getAppBanner = ({ features }) => features.getIn(['appBanner', 'value'], false)

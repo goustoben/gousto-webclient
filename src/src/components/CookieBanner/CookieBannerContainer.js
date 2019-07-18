@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import cookieActions from 'actions/cookies'
+import { getIsPolicyAccepted } from 'selectors/cookies'
 import CookieBanner from './CookieBanner'
 
 const mapStateToProps = (state) => ({
@@ -9,7 +10,7 @@ const mapStateToProps = (state) => ({
     description: `We use cookies. By continuing to browse the site
     you are agreeing to our use of cookies. `,
   },
-  isCookiePolicyAccepted: state.cookies.get('isPolicyAccepted'),
+  isCookiePolicyAccepted: getIsPolicyAccepted(state),
 })
 
 const mapActionsToProps = {
