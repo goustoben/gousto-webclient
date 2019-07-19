@@ -6,6 +6,12 @@ import { FoodBrandPage } from '../FoodBrandPage'
 
 global.scrollTo = jest.fn()
 
+jest.mock('utils/DOMhelper', () => ({
+  getElementHeight: () => ({
+    elementHeight: '50px',
+  })
+}))
+
 describe('Food Brand Page', () => {
   let wrapper
   describe('Presentation', () => {
@@ -31,7 +37,7 @@ describe('Food Brand Page', () => {
       expect(wrapper.find('.backButton').length).toBe(1)
     })
     test('should render food brand page with colour border', () => {
-      expect(wrapper.find('[style]').at(0).prop('style')).toEqual({"borderBottom": "6px solid blue"})
+      expect(wrapper.find('.border').at(0).prop('style')).toEqual({"background": "blue", "top": {"elementHeight": "50px"}})
     })
     test('should call removeFoodBrand when click on back button', () => {
       wrapper.find('.backButton').simulate('click')

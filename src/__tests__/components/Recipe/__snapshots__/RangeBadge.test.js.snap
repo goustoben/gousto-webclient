@@ -20,7 +20,11 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
     }
     tabIndex={-1}
   >
-    TEN TO TABLE
+    <span
+      className="foodBrandName"
+    >
+      Ten to table
+    </span>
   </div>
   <div
     className="ribbon"
