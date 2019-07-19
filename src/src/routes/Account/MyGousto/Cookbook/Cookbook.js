@@ -10,7 +10,8 @@ const recipes = [1,2,3]
 class Cookbook extends React.PureComponent {
 
   static propTypes = {
-const Cookbook = () => (
+    loading: PropTypes.bool,
+    empty: PropTypes.bool,
     userLoadRecipes: PropTypes.func,
     orders: PropTypes.instanceOf(Immutable.Map())
   }
@@ -21,13 +22,18 @@ const Cookbook = () => (
   }
 
   render() {
+    const { loading, empty } = this.props
 
     return (
       <div>
+        <Section title='Your recent cookbook'>
+          {loading && <p className="desktop-hide cookbook-empty">Loading your your most recent recipes...</p>}
+          {empty && <p className="desktop-hide cookbook-empty">Please order more recipes to view your recipe cookbook</p>}
+
           { recipes.map(() => (
           <RecipeCard />
-    ))
-    }
+          ))}
+        </Section>
       </div>
     )
   }
