@@ -1,0 +1,45 @@
+@value ScreenLGMin, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.css';
+@value Maize, Chilli, Artichoke, Bronze from 'styles/colors.css';
+
+.notificationPanel {
+
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+
+  @media ScreenMDMin {
+    max-width: 970px;
+  }
+}
+
+.notificationLink {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+
+  &:hover {
+    color: black;
+  }
+}
+
+.notificationTitle {
+  font-weight: bold;
+}
+
+.warning {
+  background-color: Chilli;
+}
+
+.confirm {
+  background-color: Maize;
+}
+
+.notify {
+  background-color: Artichoke;
+}
+
+.raf {
+  background-color: Bronze;
+}
