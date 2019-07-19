@@ -12,6 +12,7 @@ import { getAddress } from 'utils/checkout'
 import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { getUserRecentRecipesIds } from 'selectors/user'
 import statusActions from './status'
 import {
   basketAddressChange,
@@ -752,5 +753,11 @@ export const trackingReferFriendSocialSharing = (actionType, trackingType, chann
   }
 
 }
+export const userLoadRecipes = () => (
+  (dispatch, getState) => {
+
+    const userRecipeIds = getUserRecentRecipesIds(getState(), 6)
+  }
+)
 
 export default userActions
