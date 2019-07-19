@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { userLoadOrder } from 'actions/user'
-
 import MyGousto from './MyGousto'
 
 function mapStateToProps() {
