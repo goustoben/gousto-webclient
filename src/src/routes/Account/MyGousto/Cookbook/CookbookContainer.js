@@ -3,7 +3,9 @@ import { userLoadRecipes } from 'actions/user'
 import { Cookbook } from './Cookbook'
 
 const mapStateToProps = (state) => ({
-  orders: state.user.get('orders')
+  orders: state.user.get('orders'),
+  recipes: state.recipes,
+  loading: state.pending.get('RECIPES_RECEIVE'),
 })
 
 export const CookbookContainer = connect(mapStateToProps, {

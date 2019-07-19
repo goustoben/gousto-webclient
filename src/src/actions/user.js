@@ -20,6 +20,7 @@ import {
   basketPostcodeChangePure,
   basketPreviewOrderChange
 } from './basket'
+import recipeActions from './recipes'
 import actionTypes from './actionTypes'
 import { trackFirstPurchase } from './tracking'
 import { subscriptionLoadData } from './subscription'
@@ -755,8 +756,8 @@ export const trackingReferFriendSocialSharing = (actionType, trackingType, chann
 }
 export const userLoadRecipes = () => (
   (dispatch, getState) => {
-
     const userRecipeIds = getUserRecentRecipesIds(getState(), 6)
+    dispatch(recipeActions.recipesLoadRecipesById(userRecipeIds))
   }
 )
 
