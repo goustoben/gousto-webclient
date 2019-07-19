@@ -1,9 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Immutable from 'immutable'
 
 import { RecipeCard } from'./RecipeCard'
-import { Section } from '../Section'
 
 class Cookbook extends React.PureComponent {
 
@@ -23,11 +21,13 @@ class Cookbook extends React.PureComponent {
   renderRecipes() {
     const { recipes } = this.props
 
-    recipes.map(recipe => {
+    return recipes.map(recipe => {
       const title = recipe.get('title')
-      const recipeUrl = recipe.get('url')
+      const url = recipe.get('url')
+      const images = recipe.get('media').get('images').first().get('urls')
+      const image = images.find(img => img.get('width') === 400).get('src')
 
-      return <RecipeCard key={title} title={title} link={recipeUrl}/>
+      return <RecipeCard key={title} title={title} link={url} image={image}/>
     })
   }
 
@@ -36,11 +36,9 @@ class Cookbook extends React.PureComponent {
 
     return (
       <div>
-        <Section title='Your recent cookbook'>
-          {loading && <p className="desktop-hide cookbook-empty">Loading your your most recent recipes...</p>}
-          {empty && <p className="desktop-hide cookbook-empty">Please order more recipes to view your recipe cookbook</p>}
-          {this.renderRecipes}
-        </Section>
+        {loading && <p className="desktop-hide cookbook-empty">Loading your your most recent recipes...</p>}
+        {empty && <p className="desktop-hide cookbook-empty">Please order more recipes to view your recipe cookbook</p>}
+        {this.renderRecipes()}
       </div>
     )
   }
