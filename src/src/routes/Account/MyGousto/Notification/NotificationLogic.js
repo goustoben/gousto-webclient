@@ -14,17 +14,15 @@ class NotificationLogic extends Component {
     const now = moment()
 
     this.checkCardExpiryDate(card, now)
-    // this.checkAmendedDeliveryDate(orders)
-    // this.checkOrderAwaitingSelection(orders, now)
-    // this.checkRafOffer(now)
+    this.checkAmendedDeliveryDate(orders)
+    this.checkOrderAwaitingSelection(orders, now)
+    this.checkRafOffer(now)
   }
 
   checkCardExpiryDate = (card, now) => {
-    console.log('card', card.toJS()) //eslint-disable-line
     let bannerToShow = ''
-    const expiryDate = card.get('expiryMonth')
-    const expiryDateFormatted = moment(expiryDate, 'M-YYYY').endOf('month')
-    console.log('expiryDateFormatted', expiryDateFormatted) //eslint-disable-line
+    const expiryDate = card.get('expiryDate')
+    const expiryDateFormatted = moment(expiryDate)
 
     if (now.isBefore(expiryDateFormatted) && expiryDateFormatted.diff(now, 'days') <= 30) {
       bannerToShow = 'toExpire'
