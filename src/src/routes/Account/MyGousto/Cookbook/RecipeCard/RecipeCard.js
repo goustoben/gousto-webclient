@@ -17,7 +17,7 @@ const propTypes = {
 const maxMediaSize = 400
 
 const RecipeCard = ({ link, images, title }) => (
-  <Col col-xs-6 col-md-2>
+  <Col col-xs-6 col-lg-2>
     <a href={link} className={css.cardContainer}>
       <div className={css.cardContent}>
         <Image media={images} title={title} maxMediaSize={maxMediaSize} />
