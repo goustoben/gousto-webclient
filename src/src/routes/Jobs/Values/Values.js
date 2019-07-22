@@ -1,8 +1,8 @@
 import React from 'react'
 import Svg from 'Svg'
-import css from './Values.css'
 import jobs2 from 'config/jobs'
 import Content from 'containers/Content'
+import css from './Values.css'
 
 const Values = () => (
   <div className={css.container}>

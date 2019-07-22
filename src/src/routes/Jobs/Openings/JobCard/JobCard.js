@@ -14,7 +14,7 @@ const JobCard = ({ jobLink, isOdd, jobTitle, jobDepartment }) => (
           <h2 className={css.jobDepartment}>{jobDepartment}</h2>
         </div>
         <div className={css.cardCTA}>
-          <div to={jobLink} className={css.jobCTA} clientRouted={false} target="_blank" >
+          <div to={jobLink} className={css.jobCTA} target="_blank" >
             Read more
           </div>
           <span className={css.chevronRight} aria-hidden="true"></span>
