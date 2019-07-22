@@ -206,11 +206,12 @@ export function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
     const menuId = features.getIn(['menu_id', 'value']) 
     const accessToken = state.auth.get('accessToken')
     const reqData = {
-      'filters[available_on]': date,
       includes: ['ingredients', 'allergens', 'taxonomy'],
     }
     if (!!menuId) {
       reqData['filters[menu_id]'] = menuId
+    } else {
+      reqData['filters[available_on]'] = date
     }
 
     if (idsOnly) {
