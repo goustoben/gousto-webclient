@@ -37,8 +37,7 @@ class NotificationLogic extends Component {
   }
 
   checkAmendedDeliveryDate = (orders) => {
-    const alternateDeliveryDays = orders.filter(order => order.state === 'pending' && order.original_delivery_day)
-
+    const alternateDeliveryDays = orders.filter(order => order.state === 'pending' && order.original_delivery_day).toArray()
     if (alternateDeliveryDays.length > 0) {
       this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'amendDeliverys'] }))
     }
