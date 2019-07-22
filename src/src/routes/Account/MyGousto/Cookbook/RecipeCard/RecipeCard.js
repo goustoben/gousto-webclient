@@ -20,7 +20,12 @@ const RecipeCard = ({ link, images, title }) => (
   <Col col-xs-6 col-lg-2>
     <a href={link} className={css.cardContainer}>
       <div className={css.cardContent}>
-        <Image media={images} title={title} maxMediaSize={maxMediaSize} />
+        <Image
+          media={images}
+          title={title}
+          maxMediaSize={maxMediaSize}
+          className={css.image}
+        />
         <p className={css.title}>
           {title}&nbsp;
           <span className={css.arrowRight} />
