@@ -9,15 +9,22 @@ class Cookbook extends React.PureComponent {
   static propTypes = {
     loading: PropTypes.bool,
     userLoadRecipes: PropTypes.func,
-    orders: PropTypes.instanceOf(Immutable.Map()),
-    recipes: PropTypes.instanceOf(Immutable.Map())
+    orders: PropTypes.instanceOf(Immutable.Map),
+    recipes: PropTypes.instanceOf(Immutable.List)
+  }
+
+  static defaultProps = {
+    loading: false,
+    userLoadRecipes: () => {},
+    orders: Immutable.Map(),
+    recipes: Immutable.List()
   }
 
   componentDidUpdate(prevProps) {
     const { userLoadRecipes, orders } = this.props
-    const isPrevOrderPropEqual = JSON.stringify(prevProps.orders) !== JSON.stringify(orders)
+    const isPrevOrderPropEqual = JSON.stringify(prevProps.orders) === JSON.stringify(orders)
 
-    if (orders && isPrevOrderPropEqual) userLoadRecipes()
+    if (orders && !isPrevOrderPropEqual) userLoadRecipes()
   }
 
   renderRecipes() {
@@ -37,7 +44,7 @@ class Cookbook extends React.PureComponent {
 
     return (
       <div>
-        {loading && <p className={css.mobileShow}>Loading your your most recent recipes...</p>}
+        {loading && <p className={css.mobileShow}>Loading your most recent recipes...</p>}
         {this.renderRecipes()}
       </div>
     )
