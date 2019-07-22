@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Alert } from 'goustouicomponents'
 import css from './Notification.css'
 
 const propTypes = {
@@ -12,13 +13,13 @@ const propTypes = {
 
 const Notification = ({ type, title, message, url, icon }) => (
   <div>
-    <div className={`${css.notificationPanel} ${css[type]}`}>
+    <Alert type={type}>
       <a href={url} className={css.notificationLink}>
         <span>{icon}</span>
         <span className={css.notificationTitle}>{title} </span>
         <span className={css.notificationMessage}>{message}</span>
       </a>
-    </div>
+    </Alert>
   </div>
 )
 

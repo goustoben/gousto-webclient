@@ -1,17 +1,5 @@
-@value ScreenLGMin, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.css';
-@value Maize, Chilli, Artichoke, Bronze from 'styles/colors.css';
-
-.notificationPanel {
-  max-width: 750px;
-  margin: 0 auto;
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 10px;
-
-  @media ScreenMDMin {
-    max-width: 970px;
-  }
-}
+@value ScreenSMMin from 'styles/screenSizes.css';
+@value avenirHeavyFontStack from 'styles/typography.css';
 
 .notificationLink {
   text-decoration: none;
@@ -25,20 +13,18 @@
 
 .notificationTitle {
   font-weight: bold;
+  font-size: 15px;
+  font-family: avenirHeavyFontStack;
 }
 
-.cardExpire {
-  background-color: #d63841;
+.notificationMessage {
+  display: block;
+
+  @media ScreenSMMin {
+    display: inline;
+  }
 }
 
-.amendDelivery {
-  background-color: #fff3d6;
-}
-
-.selectOrder {
-  background-color: #CBDAAD;
-}
-
-.referAFriend {
-  background-color: Bronze;
+.notificationLink span {
+  text-decoration: none;
 }
