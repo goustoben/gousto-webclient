@@ -1,28 +1,33 @@
-import React from "react"
-import PropTypes from "prop-types"
-import Image from "Recipe/Image"
-import css from "./RecipeCard.css"
+import React from 'react'
+import PropTypes from 'prop-types'
+import Immutable from 'immutable'
+import Image from 'Image'
+import { Col } from 'Page/Grid'
+import css from './RecipeCard.css'
 
 const propTypes = {
-  link: PropTypes.string,
-  image: PropTypes.string,
-  title: PropTypes.string
+  link: PropTypes.string.isRequired,
+  images: PropTypes.oneOfType([
+    PropTypes.instanceOf(Immutable.List),
+    PropTypes.string
+  ]).isRequired,
+  title: PropTypes.string.isRequired
 }
 
 const maxMediaSize = 400
 
-const RecipeCard = ({ link = "link", image = "image", title = "title" }) => (
-  <a href={link}>
-    <div className={css.cardContainer}>
-      <Image
-        media={image}
-        alt={title}
-        maxMediaSize={maxMediaSize}
-        // className={css.recipeImg}
-      />
-      <p>{title}</p>
-    </div>
-  </a>
+const RecipeCard = ({ link, images, title }) => (
+  <Col col-xs-6 col-md-2>
+    <a href={link} className={css.cardContainer}>
+      <div className={css.cardContent}>
+        <Image media={images} title={title} maxMediaSize={maxMediaSize} />
+        <p className={css.title}>
+          {title}&nbsp;
+          <span className={css.arrowRight} />
+        </p>
+      </div>
+    </a>
+  </Col>
 )
 
 RecipeCard.propTypes = propTypes
