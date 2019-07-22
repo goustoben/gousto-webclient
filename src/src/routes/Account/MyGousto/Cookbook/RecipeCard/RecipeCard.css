@@ -1,0 +1,43 @@
+@value Blackberry, TrueBlack from 'styles/colors.css';
+@value ScreenSMMin, ScreenMDMin, ScreenLGMin from 'styles/screenSizes.css';
+@value sizeXXS, sizeXS, sizeSM, sizeMD from 'styles/typography.css';
+
+.cardContainer {
+  background-image: url('media/images/recipe-placeholder.jpg');
+  background-size: cover;
+  color: Blackberry;
+
+  &:hover {
+    color: TrueBlack;
+  }
+}
+
+.arrowRight {
+  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+  font-size: sizeXXS;
+  @media ScreenSMMin {
+    font-size: sizeXS;
+  }
+  @media ScreenMDMin {
+    font-size: sizeXXS;
+  }
+  @media ScreenLGMin {
+    font-size: sizeXS;
+  }
+}
+
+.title {
+  min-height: 65px;
+  margin-bottom: 0;
+  font-size: sizeSM;
+  @media ScreenSMMin {
+    min-height: 43px;
+    font-size: sizeMD;
+  }
+  @media ScreenMDMin {
+    font-size: sizeSM;
+  }
+  @media ScreenLGMin {
+    font-size: sizeMD;
+  }
+}
