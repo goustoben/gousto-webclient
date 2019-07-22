@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Immutable from 'immutable'
 import { getRecipeTitle, getRecipeURL, getRecipeImages } from 'selectors/recipe'
 import css from './Cookbook.css'
 import { RecipeCard } from './RecipeCard'
@@ -8,8 +9,8 @@ class Cookbook extends React.PureComponent {
   static propTypes = {
     loading: PropTypes.bool,
     userLoadRecipes: PropTypes.func,
-    orders: PropTypes.object,
-    recipes: PropTypes.object
+    orders: PropTypes.instanceOf(Immutable.Map()),
+    recipes: PropTypes.instanceOf(Immutable.Map())
   }
 
   componentDidUpdate() {
