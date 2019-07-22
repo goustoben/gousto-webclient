@@ -33,12 +33,11 @@ class NotificationLogic extends Component {
 
   checkCardExpiryDate = (card, now) => {
     let bannerToShow = ''
-    const expiryDate = card.get('expiryDate')
-    const expiryDateFormatted = moment(expiryDate)
+    const expiryDate = moment(card.get('expiryDate'))
 
-    if (now.isBefore(expiryDateFormatted) && expiryDateFormatted.diff(now, 'days') <= 30) {
+    if (now.isBefore(expiryDate) && expiryDate.diff(now, 'days') <= 30) {
       bannerToShow = 'toExpire'
-    } else if (now.isSameOrAfter(expiryDateFormatted)) {
+    } else if (now.isSameOrAfter(expiryDate)) {
       bannerToShow = 'expired'
     }
 
@@ -51,7 +50,7 @@ class NotificationLogic extends Component {
   checkAmendedDeliveryDate = (orders) => {
     const alternateDeliveryDays = orders.filter(order => order.state === 'pending' && order.original_delivery_day).toArray()
     if (alternateDeliveryDays.length > 0) {
-      this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'amendDeliverys'] }))
+      this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'amendDelivery'] }))
     }
   }
 
@@ -62,7 +61,7 @@ class NotificationLogic extends Component {
       .toArray()
 
     if (notifications.length > 1 && now.isBefore(moment().hours(12))) {
-      this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'order'] }))
+      this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'selectOrder'] }))
     }
   }
 
@@ -97,7 +96,7 @@ class NotificationLogic extends Component {
       <div>
         {
           notificationBannerDetails.map((banner, index) => {
-            if (index < 2) return < Notification key={banner.type} message={banner.message} type={banner.type} title={banner.title} url={banner.url} />
+            return < Notification key={banner.type} message={banner.message} type={banner.type} title={banner.title} url={banner.url} />
           })
         }
       </div>

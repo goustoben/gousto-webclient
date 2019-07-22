@@ -1,16 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Immutable from 'immutable'
+import { NotificationLogic } from './Notification/NotificationLogic'
 import { Section } from './Section'
 import { Cookbook } from './Cookbook'
-import { NotificationLogic } from './Notification/NotificationLogic'
 
 class MyGousto extends React.PureComponent {
   static propTypes = {
-    userLoadOrder: PropTypes.func.isRequired
+    userLoadOrder: PropTypes.func.isRequired,
+    card: PropTypes.instanceOf(Immutable.Map),
+    orders: PropTypes.instanceOf(Immutable.Map),
   }
 
   static defaultProps = {
-    userLoadOrder: () => { }
+    userLoadOrder: () => { },
   }
 
   componentDidMount() {
