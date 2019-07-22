@@ -15,8 +15,8 @@ describe('SimpleHeader', () => {
     expect(wrapper.type()).toBe('span')
   })
 
-  test('should render 2 <Svg />', () => {
-    expect(wrapper.find(Svg)).toHaveLength(2)
+  test('should render an <Svg />', () => {
+    expect(wrapper.find(Svg)).toHaveLength(1)
   })
 
   test('should render 1 <header>', () => {
@@ -30,7 +30,7 @@ describe('SimpleHeader', () => {
         wrapper
           .find('a')
           .at(0)
-          .prop('href'),
+          .prop('href')
       ).toBe('#')
     })
 
