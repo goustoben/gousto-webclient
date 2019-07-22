@@ -24,7 +24,7 @@ class MyGousto extends React.PureComponent {
     return (
       <div>
         <Section>
-          <NotificationLogic card={card} userOrders={orders} />
+          <NotificationLogic card={card} orders={orders} />
         </Section>
         <Section title="Hello world" largeTitle>
           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the
