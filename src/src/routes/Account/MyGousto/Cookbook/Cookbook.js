@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { getRecipeTitle, getRecipeURL, getRecipeImages } from 'selectors/recipe'
-
+import css from './Cookbook.css'
 import { RecipeCard } from './RecipeCard'
 
 class Cookbook extends React.PureComponent {
@@ -34,7 +34,7 @@ class Cookbook extends React.PureComponent {
 
     return (
       <div>
-        {loading && <p className="mobile-show">Loading your your most recent recipes...</p>}
+        {loading && <p className={css.mobileShow}>Loading your your most recent recipes...</p>}
         {this.renderRecipes()}
       </div>
     )
