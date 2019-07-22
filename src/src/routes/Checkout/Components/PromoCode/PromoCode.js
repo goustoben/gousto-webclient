@@ -48,10 +48,11 @@ class PromoCode extends React.PureComponent {
     }
   }
 
-  componentDidUpdate() {
-    if (this.props.promoCode) {
-      this.props.basketPromoCodeAppliedChange(true)
-      this.promoCodeValidation()
+  componentDidUpdate(prevProps) {
+    const { promoCode, basketPromoCodeAppliedChange } = this.props
+    if (promoCode && prevProps.promoCode !== promoCode) {
+      basketPromoCodeAppliedChange(true)
+      this.handlePromoCodeVerification()
     }
   }
 
@@ -77,6 +78,7 @@ class PromoCode extends React.PureComponent {
   promoCodeAdded = () => (this.props.promoCode && this.props.promoCodeApplied)
 
   promoCodeValidation = () => {
+
     const promoCodeValid = this.props.prices.get('promoCodeValid', false)
     if (promoCodeValid) {
       this.setState({ errorMsg: '', successMsg: configCheckout.errorMessage.promoCode.valid })
