@@ -7,7 +7,6 @@ import { RecipeCard } from './RecipeCard'
 class Cookbook extends React.PureComponent {
   static propTypes = {
     loading: PropTypes.bool,
-    empty: PropTypes.bool,
     userLoadRecipes: PropTypes.func,
     orders: PropTypes.object,
     recipes: PropTypes.object
@@ -31,20 +30,11 @@ class Cookbook extends React.PureComponent {
   }
 
   render() {
-    const { loading, empty } = this.props
+    const { loading } = this.props
 
     return (
       <div>
-        {loading && (
-          <p className="desktop-hide cookbook-empty">
-            Loading your your most recent recipes...
-          </p>
-        )}
-        {empty && (
-          <p className="desktop-hide cookbook-empty">
-            Please order more recipes to view your recipe cookbook
-          </p>
-        )}
+        {loading && <p className="mobile-show">Loading your your most recent recipes...</p>}
         {this.renderRecipes()}
       </div>
     )
