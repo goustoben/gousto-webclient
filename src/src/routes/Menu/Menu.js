@@ -89,7 +89,7 @@ class Menu extends React.Component {
       name: PropTypes.string,
       borderColor: PropTypes.string,
     }),
-    selectFoodBrandFromUrl: PropTypes.func
+    selectFoodBrand: PropTypes.func
   }
 
   static contextTypes = {
@@ -157,8 +157,8 @@ class Menu extends React.Component {
       productsLoadStock,
       foodBrandSelected,
       foodBrandDetails,
-      selectFoodBrandFromUrl
-    } = this.props
+      selectFoodBrand
+    } = this.props 
     const { store } = this.context
     // if server rendered
     if (params.orderId && params.orderId === storeOrderId) {
@@ -175,13 +175,16 @@ class Menu extends React.Component {
       basketNumPortionChange(query.num_portions)
     }
 
-    if (query.foodBrand) {
-      const foodBrandNotSelected = foodBrandSelected === null
-      const foodBrandUrlDifferent = !foodBrandNotSelected && query.foodBrand!==foodBrandSelected.slug
+    const isFoodBrandSelected = foodBrandSelected !== null
 
-      if (foodBrandNotSelected || foodBrandUrlDifferent) {
-        selectFoodBrandFromUrl(foodBrandDetails)
+    if (query.foodBrand) {
+      const foodBrandUrlDifferent = isFoodBrandSelected && query.foodBrand!==foodBrandSelected.slug
+
+      if (!isFoodBrandSelected || foodBrandUrlDifferent) {
+        selectFoodBrand(foodBrandDetails)
       }
+    } else if (isFoodBrandSelected) {
+      selectFoodBrand(null)
     }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)

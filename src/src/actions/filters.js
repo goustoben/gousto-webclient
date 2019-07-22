@@ -269,5 +269,6 @@ export default {
   filterCurrentTotalTimeChange,
   filterMenuRevertFilters,
   filterApply,
-  currentFoodBrandChange
+  currentFoodBrandChange,
+  selectFoodBrand
 }

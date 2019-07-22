@@ -157,7 +157,7 @@ const mapDispatchToProps = {
   productsLoadProducts: actions.productsLoadProducts,
   productsLoadStock: actions.productsLoadStock,
   orderCheckoutAction: actions.orderCheckout,
-  selectFoodBrandFromUrl: actions.currentFoodBrandChange
+  selectFoodBrand: actions.selectFoodBrand
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)
