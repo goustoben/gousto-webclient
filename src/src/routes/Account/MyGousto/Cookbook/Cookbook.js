@@ -13,9 +13,11 @@ class Cookbook extends React.PureComponent {
     recipes: PropTypes.instanceOf(Immutable.Map())
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { userLoadRecipes, orders } = this.props
-    if (orders) userLoadRecipes()
+    const isPrevOrderPropEqual = JSON.stringify(prevProps.orders) !== JSON.stringify(orders)
+
+    if (orders && isPrevOrderPropEqual) userLoadRecipes()
   }
 
   renderRecipes() {
