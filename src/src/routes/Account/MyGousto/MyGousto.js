@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { NotificationLogic } from './Notification/NotificationLogic'
+import { Notification } from './Notification'
 import { Section } from './Section'
 import { Cookbook } from './Cookbook'
 
@@ -27,7 +27,7 @@ class MyGousto extends React.PureComponent {
     return (
       <div>
         <Section>
-          <NotificationLogic card={card} orders={orders} />
+          <Notification card={card} orders={orders} />
         </Section>
         <Section title="Hello world" largeTitle>
           Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the

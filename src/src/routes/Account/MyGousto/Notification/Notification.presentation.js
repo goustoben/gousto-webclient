@@ -11,7 +11,7 @@ const propTypes = {
   icon: PropTypes.string.isRequired,
 }
 
-const Notification = ({ type, title, message, url, icon }) => (
+const NotificationPresentation = ({ type, title, message, url, icon }) => (
   <div>
     <Alert type={type}>
       <a href={url} className={css.notificationLink}>
@@ -23,6 +23,6 @@ const Notification = ({ type, title, message, url, icon }) => (
   </div>
 )
 
-Notification.propTypes = propTypes
+NotificationPresentation.propTypes = propTypes
 
-export { Notification }
+export { NotificationPresentation }

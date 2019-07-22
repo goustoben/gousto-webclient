@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { Notification } from 'Notification'
 import moment from 'moment'
+import { NotificationPresentation } from './Notification.presentation'
 import { config } from './config'
 
 class NotificationLogic extends Component {
@@ -96,7 +96,7 @@ class NotificationLogic extends Component {
       <div>
         {
           notificationBannerDetails.map((banner, index) => {
-            return < Notification key={banner.type} message={banner.message} type={banner.type} title={banner.title} url={banner.url} />
+            return < NotificationPresentation key={banner.title} message={banner.message} type={banner.type} title={banner.title} url={banner.url} />
           })
         }
       </div>
