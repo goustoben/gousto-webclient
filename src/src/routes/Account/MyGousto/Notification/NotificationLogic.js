@@ -47,6 +47,7 @@ class NotificationLogic extends Component {
     const notifications = orders
       .filter(order => order.state === 'pending' && order.default === '1')
       .filter(order => moment(order.when_cutoff).isSame(now, 'day'))
+      .toArray()
 
     if (notifications.length > 1 && now.isBefore(moment().hours(12))) {
       this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'order'] }))
