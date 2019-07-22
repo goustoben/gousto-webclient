@@ -73,13 +73,20 @@ class NotificationLogic extends Component {
         url: config[banner].url,
       }
     ))
+      .sort((a, b) => {
+        if (b.type === 'warning') return 1
+        if (b.type === 'confirm' && a.type !== 'warning') return 1
+        if (b.type === 'notify' && a.type !== 'warning' && a.type !== 'confirm') return 1
+
+        return 0
+      })
 
     return (
       <div>
         {
-          notificationBannerDetails.map(banner => (
-            < Notification key={banner.type} message={banner.message} type={banner.type} title={banner.title} url={banner.url} />)
-          )
+          notificationBannerDetails.map((banner, index) => {
+            if (index < 2) return < Notification key={banner.type} message={banner.message} type={banner.type} title={banner.title} url={banner.url} />
+          })
         }
       </div>
     )
