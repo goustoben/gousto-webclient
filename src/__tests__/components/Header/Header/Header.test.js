@@ -8,6 +8,7 @@ import Link from 'Link'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import DuplicateOrderModal from 'DuplicateOrderModal'
+import CookieBanner from 'CookieBanner'
 
 jest.mock('Header/SimpleHeader', () => 'SimpleHeader')
 jest.mock('Modal/ModalPanel', () => 'ModalPanel')
@@ -100,6 +101,10 @@ describe('Header', () => {
     test('should return a <div>', () => {
 
       expect(wrapper.type()).toEqual('div')
+    })
+
+    test('should render one <CookieBanner />', () => {
+      expect(wrapper.find(CookieBanner).length).toBe(1)
     })
 
     test('should render one <MobileMenu />', () => {
