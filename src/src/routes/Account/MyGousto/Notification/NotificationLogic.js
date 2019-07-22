@@ -1,9 +1,21 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Immutable from 'immutable'
 import { Notification } from 'Notification'
 import moment from 'moment'
 import { config } from './config'
 
 class NotificationLogic extends Component {
+
+  static propTypes = {
+    card: PropTypes.instanceOf(Immutable.Map),
+    orders: PropTypes.instanceOf(Immutable.Map),
+  }
+
+  static defaultProps = {
+    card: Immutable.Map({}),
+    orders: Immutable.Map({}),
+  }
 
   state = {
     bannersToShow: [],
