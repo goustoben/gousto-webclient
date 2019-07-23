@@ -23,12 +23,12 @@ describe('the recipe selectors', () => {
     })
   })
   describe('getRecipeURL', () => {
-    test('returns the title from the recipe', () => {
+    test('returns the url from the recipe', () => {
       expect(getRecipeURL(recipe)).toBe('recipe url')
     })
   })
   describe('getRecipeImages', () => {
-    test('returns the title from the recipe', () => {
+    test('returns the images from the recipe', () => {
       expect(getRecipeImages(recipe)).toEqual(
         Immutable.fromJS([{ src: 'image src x50', width: 50 }])
       )
