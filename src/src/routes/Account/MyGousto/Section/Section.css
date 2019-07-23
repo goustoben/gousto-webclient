@@ -17,11 +17,11 @@
   max-width: 750px;
   padding: 40px 0;
 
-  @media ScreenLGMin {
-    max-width: 1170px;
-  }
   @media ScreenMDMin {
     max-width: 970px;
+  }
+  @media ScreenLGMin {
+    max-width: 1170px;
   }
 }
 
@@ -34,7 +34,7 @@
     top: 50%;
     left: 0;
     position: absolute;
-    content: "";
+    content: '';
     display: block;
     width: 100%;
     margin-top: 2px;
@@ -47,7 +47,7 @@
 }
 
 h2.title {
-  font-family: ComfortaaRegular,Helvetica,sans-serif;
+  font-family: ComfortaaRegular, Helvetica, sans-serif;
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
   font-size: 20px;
