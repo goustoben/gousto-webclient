@@ -1,10 +1,10 @@
-import PropTypes from "prop-types"
-import React from "react"
-import Immutable from "immutable"
-import config from "config/media"
-import classNames from "classnames"
-import LazyLoad from "react-lazyload"
-import css from "./Image.css"
+import PropTypes from 'prop-types'
+import React from 'react'
+import Immutable from 'immutable'
+import config from 'config/media'
+import classNames from 'classnames'
+import LazyLoad from 'react-lazyload'
+import css from './Image.css'
 
 class Image extends React.PureComponent {
   static propTypes = {
@@ -26,7 +26,7 @@ class Image extends React.PureComponent {
   static defaultProps = {
     contain: true,
     onClick: () => {},
-    title: "",
+    title: '',
     lazy: false,
     once: true,
     offset: 200
@@ -34,23 +34,23 @@ class Image extends React.PureComponent {
 
   getSrcSet = srcs =>
     srcs.reduce(
-      (str, src) => `${str} ${src.get("src")} ${src.get("width")}w,`,
-      ""
+      (str, src) => `${str} ${src.get('src')} ${src.get('width')}w,`,
+      ''
     )
 
   getSizes = srcs =>
     srcs.reduce(
       (str, src) =>
-        `${str} (max-width: ${config.imageScale[src.get("width")]}px) ${src.get(
-          "width"
+        `${str} (max-width: ${config.imageScale[src.get('width')]}px) ${src.get(
+          'width'
         )}px,`,
-      ""
+      ''
     )
 
   getDefaultImage = (srcs, maxImageSize) => {
     let image = Immutable.Map({})
     if (srcs.size > 0) {
-      const sortedSrcs = srcs.sort((a, b) => b.get("width") - a.get("width"))
+      const sortedSrcs = srcs.sort((a, b) => b.get('width') - a.get('width'))
       if (maxImageSize) {
         image = sortedSrcs.getIn([0])
       } else {
@@ -70,7 +70,7 @@ class Image extends React.PureComponent {
 
     let imageComponent = null
 
-    if (typeof media === "string") {
+    if (typeof media === 'string') {
       imageComponent = (
         <img
           alt={this.props.title}
@@ -86,12 +86,12 @@ class Image extends React.PureComponent {
 
       if (maxMediaSize) {
         const sortedSrcs = media.sort(
-          (a, b) => a.get("width", 0) - b.get("width"),
+          (a, b) => a.get('width', 0) - b.get('width'),
           0
         )
-        srcs = sortedSrcs.filter(iSrc => iSrc.get("width") <= maxMediaSize)
+        srcs = sortedSrcs.filter(iSrc => iSrc.get('width') <= maxMediaSize)
 
-        if (srcs.size < media.size && srcs.last().get("width") < maxMediaSize) {
+        if (srcs.size < media.size && srcs.last().get('width') < maxMediaSize) {
           srcs = srcs.push(sortedSrcs.get(srcs.size))
         }
       }
@@ -102,7 +102,7 @@ class Image extends React.PureComponent {
           alt={this.props.title}
           className={className}
           onClick={this.props.onClick}
-          src={image.get("src", "")}
+          src={image.get('src', '')}
           srcSet={this.getSrcSet(srcs)}
         />
       )
