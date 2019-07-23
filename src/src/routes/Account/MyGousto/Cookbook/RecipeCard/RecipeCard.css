@@ -3,8 +3,6 @@
 @value sizeXXS, sizeXS, sizeSM, sizeMD from 'styles/typography.css';
 
 .cardContainer {
-  background-image: url('media/images/recipe-placeholder.jpg');
-  background-size: cover;
   color: Blackberry;
 
   &:hover {
@@ -14,6 +12,7 @@
 
 .image {
   margin-bottom: 10px;
+  max-width: 100%;
 }
 
 .arrowRight {

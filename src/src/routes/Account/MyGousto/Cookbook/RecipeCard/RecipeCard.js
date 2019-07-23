@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import Image from 'Image'
 import { Col } from 'Page/Grid'
+import placeholderSrc from 'media/images/product-placeholder.png'
 import css from './RecipeCard.css'
 
 const propTypes = {
@@ -15,6 +16,9 @@ const propTypes = {
 }
 
 const maxMediaSize = 400
+const placeholderImage = (
+  <img className={css.image} src={placeholderSrc} alt="" />
+)
 
 const RecipeCard = ({ link, images, title }) => (
   <Col col-xs-6 col-lg-2>
@@ -25,6 +29,8 @@ const RecipeCard = ({ link, images, title }) => (
           title={title}
           maxMediaSize={maxMediaSize}
           className={css.image}
+          placeholder={placeholderImage}
+          lazy
         />
         <p className={css.title}>
           {title}&nbsp;
