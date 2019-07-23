@@ -14,12 +14,7 @@ import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { getUserRecentRecipesIds } from 'selectors/user'
 import statusActions from './status'
-import {
-  basketAddressChange,
-  basketChosenAddressChange,
-  basketPostcodeChangePure,
-  basketPreviewOrderChange
-} from './basket'
+import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
 import actionTypes from './actionTypes'
 import { trackFirstPurchase } from './tracking'
@@ -27,22 +22,22 @@ import { subscriptionLoadData } from './subscription'
 
 const fetchShippingAddressesPending = pending => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_PENDING,
-  pending,
+  pending
 })
 
 const fetchedShippingAddresses = shippingAddresses => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_RECEIVE,
-  shippingAddresses,
+  shippingAddresses
 })
 
 const fetchShippingAddressesError = message => ({
   type: actionTypes.USER_SHIPPING_ADDRESSES_ERROR,
-  message,
+  message
 })
 
 const userLoadReferralDetails = referralDetails => ({
   type: actionTypes.USER_LOAD_REFERRAL_DETAILS,
-  referralDetails,
+  referralDetails
 })
 
 const userActions = {
@@ -73,7 +68,7 @@ const userActions = {
   userAddNewAddress,
   userPendingAddressFormData,
   userUnsubscribe,
-  userFetchReferralOffer,
+  userFetchReferralOffer
 }
 
 function userOrderCancelNext(afterBoxNum = 1) {
@@ -85,7 +80,9 @@ function userOrderCancelNext(afterBoxNum = 1) {
 
     try {
       await dispatch(userActions.userLoadOrders())
-      const cancellableOrder = getState().user.get('orders').filter(order => cancellablePhases.includes(order.get('phase')) && order.get('number') > afterBoxNum)
+      const cancellableOrder = getState()
+        .user.get('orders')
+        .filter(order => cancellablePhases.includes(order.get('phase')) && order.get('number') > afterBoxNum)
 
       if (cancellableOrder.size) {
         const orderToCancelId = cancellableOrder
@@ -98,7 +95,7 @@ function userOrderCancelNext(afterBoxNum = 1) {
           await ordersApi.cancelOrder(accessToken, orderToCancelId)
           dispatch({
             type: actionTypes.USER_UNLOAD_ORDERS,
-            orderIds: [orderToCancelId],
+            orderIds: [orderToCancelId]
           })
         } catch (err) {
           throw new GoustoException(`${errorPrefix} attempt to cancel delivery ${orderToCancelId} failed`)
@@ -106,7 +103,7 @@ function userOrderCancelNext(afterBoxNum = 1) {
       } else {
         throw new GoustoException(`${errorPrefix} no orders found to cancel`, {
           error: 'no-orders-found',
-          level: 'warning',
+          level: 'warning'
         })
       }
     } catch (err) {
@@ -136,10 +133,10 @@ function userOrderSkipNextProjected() {
         projectedOrders = getState().user.get('projectedDeliveries')
       }
 
-      if ((!projectedOrders.size)) {
+      if (!projectedOrders.size) {
         throw new GoustoException(`${errorPrefix} no orders found to skip`, {
           error: 'no-orders-found',
-          level: 'warning',
+          level: 'warning'
         })
       }
 
@@ -150,7 +147,7 @@ function userOrderSkipNextProjected() {
         await userApi.skipDelivery(accessToken, orderToSkipId)
         dispatch({
           type: actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES,
-          deliveryDayIds: [orderToSkipId],
+          deliveryDayIds: [orderToSkipId]
         })
       } catch (err) {
         throw new GoustoException(`${errorPrefix} attempt to skip delivery ${orderToSkipId} failed`)
@@ -176,7 +173,7 @@ function userRecipeRatings() {
 
     dispatch({
       type: actionTypes.USER_RATE_COUNT,
-      rateCount,
+      rateCount
     })
   }
 }
@@ -189,7 +186,7 @@ function userLoadData() {
 
     dispatch({
       type: actionTypes.USER_LOAD_DATA,
-      user,
+      user
     })
 
     dispatch(subscriptionLoadData())
@@ -204,7 +201,9 @@ function userFetchShippingAddresses() {
       const { data: shippingAddresses } = await userApi.fetchShippingAddresses(accessToken)
       dispatch(fetchedShippingAddresses(shippingAddresses))
 
-      const address = Immutable.fromJS(shippingAddresses).filter(addr => addr.get('shippingDefault')).first()
+      const address = Immutable.fromJS(shippingAddresses)
+        .filter(addr => addr.get('shippingDefault'))
+        .first()
       dispatch(basketAddressChange(address))
       dispatch(basketChosenAddressChange(address))
       dispatch(basketPostcodeChangePure(address.get('postcode')))
@@ -218,9 +217,9 @@ function userFetchShippingAddresses() {
 }
 
 function userClearData() {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
-      type: actionTypes.USER_CLEAR_DATA,
+      type: actionTypes.USER_CLEAR_DATA
     })
     dispatch(basketAddressChange(null))
     dispatch(basketChosenAddressChange(null))
@@ -234,10 +233,15 @@ function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10
     try {
       if (forceRefresh || !getState().user.get('orders').size) {
         const accessToken = getState().auth.get('accessToken')
-        const { data: orders } = await userApi.fetchUserOrders(accessToken, { limit: number, sort_order: 'desc', state: orderType, includes: ['shipping_address'] })
+        const { data: orders } = await userApi.fetchUserOrders(accessToken, {
+          limit: number,
+          sort_order: 'desc',
+          state: orderType,
+          includes: ['shipping_address']
+        })
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,
-          orders,
+          orders
         })
       }
     } catch (err) {
@@ -260,7 +264,7 @@ function userFetchOrders(forceRefresh = false) {
         const { data: orders } = await userApi.fetchUserOrdersNew(accessToken, { userId })
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS_NEW,
-          orders,
+          orders
         })
       }
     } catch (err) {
@@ -284,7 +288,7 @@ function userLoadProjectedDeliveries(forceRefresh = false) {
 
         dispatch({
           type: actionTypes.USER_LOAD_PROJECTED_DELIVERIES,
-          projectedDeliveries,
+          projectedDeliveries
         })
       }
     } catch (err) {
@@ -298,10 +302,10 @@ function userLoadProjectedDeliveries(forceRefresh = false) {
 }
 
 function userReactivate(user) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: actionTypes.USER_REACTIVATE,
-      user,
+      user
     })
   }
 }
@@ -333,7 +337,7 @@ function userVerifyAge(verified, hardSave) {
 
       dispatch({
         type: actionTypes.USER_AGE_VERIFY,
-        verified,
+        verified
       })
     } catch (err) {
       dispatch(statusActions.error(actionTypes.USER_AGE_VERIFY, err.message))
@@ -360,7 +364,7 @@ function userProspect() {
         promocode: basket.get('promoCode'),
         allow_marketing_email: aboutyou.get('allowEmail'),
         preview_order_id: basket.get('previewOrderId'),
-        step,
+        step
       }
       dispatch(statusActions.pending(actionTypes.USER_PROSPECT, true))
       dispatch(statusActions.error(actionTypes.USER_PROSPECT, false))
@@ -377,30 +381,30 @@ function userProspect() {
 }
 
 function userOpenCloseOrderCard(orderId, isCollapsed) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: actionTypes.USER_ORDER_CARD_OPEN_CLOSE,
       orderId,
-      isCollapsed,
+      isCollapsed
     })
   }
 }
 
 function userOpenCloseEditSection(orderId, editDeliveryMode) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: actionTypes.USER_ORDER_EDIT_OPEN_CLOSE,
       orderId,
-      editDeliveryMode,
+      editDeliveryMode
     })
   }
 }
 
 function userToggleExpiredBillingModal(visibility) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE,
-      visibility,
+      visibility
     })
   }
 }
@@ -420,13 +424,13 @@ function userAddPaymentMethod(data) {
         card_cvv2: data.card_cvv2,
         card_holder: data.card_holder,
         card_expires: data.card_expires,
-        force_no_finisher: true,
+        force_no_finisher: true
       }
       await userApi.addPaymentMethod(accessToken, paymentMethodData, userId)
       dispatch({ type: actionTypes.USER_POST_PAYMENT_METHOD, userId })
       window.location.reload()
     } catch (err) {
-      logger.error({message: `${actionTypes.USER_POST_PAYMENT_METHOD} - ${err.message}`, errors: [err]})
+      logger.error({ message: `${actionTypes.USER_POST_PAYMENT_METHOD} - ${err.message}`, errors: [err] })
       dispatch(statusActions.error(actionTypes.USER_POST_PAYMENT_METHOD, err.code))
     } finally {
       dispatch({ type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, visibility: false })
@@ -442,7 +446,7 @@ function checkCardExpiry() {
     if (getState().features.getIn(['newBillingModal', 'value'])) {
       dispatch({
         type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE,
-        visibility: expired,
+        visibility: expired
       })
     }
   }
@@ -459,7 +463,7 @@ function userLoadAddresses() {
       const { data = {} } = await userApi.fetchUserAddresses(accessToken, userId)
       dispatch({
         type: actionTypes.USER_LOAD_ADDRESSES,
-        data,
+        data
       })
     } catch (err) {
       dispatch(statusActions.errorLoad(actionTypes.USER_LOAD_ADDRESSES, err))
@@ -470,11 +474,11 @@ function userLoadAddresses() {
 }
 
 function userToggleNewAddressModal(visibility, orderId) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: actionTypes.DELIVERY_ADDRESS_MODAL_VISIBILITY_CHANGE,
       visibility,
-      orderId,
+      orderId
     })
     if (visibility === false) {
       dispatch(statusActions.error(actionTypes.MODAL_ADDRESSES_RECEIVE, false))
@@ -486,7 +490,7 @@ function userToggleNewAddressModal(visibility, orderId) {
 
 function modalAddressLookup(postcode) {
   // FIXME: this functionality has been broken by https://gousto.atlassian.net/browse/TECH-7254
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(statusActions.pending(actionTypes.MODAL_ADDRESSES_RECEIVE, true))
     dispatch(statusActions.error(actionTypes.MODAL_ADDRESSES_RECEIVE, false))
 
@@ -494,7 +498,7 @@ function modalAddressLookup(postcode) {
       const { data = {} } = await addressApi.fetchAddressByPostcode(postcode)
       dispatch({
         type: actionTypes.MODAL_ADDRESSES_RECEIVE,
-        data,
+        data
       })
     } catch (err) {
       dispatch(statusActions.errorLoad(actionTypes.MODAL_ADDRESSES_RECEIVE, err))
@@ -518,7 +522,7 @@ function userAddNewAddress(reqData, orderId) {
       dispatch({
         type: actionTypes.USER_POST_NEW_ADDRESS,
         data,
-        orderId,
+        orderId
       })
     } catch (err) {
       statusActions.errorLoad(actionTypes.USER_POST_NEW_ADDRESS, err)(dispatch)
@@ -534,33 +538,28 @@ function userAddNewAddress(reqData, orderId) {
 }
 
 function userPendingAddressFormData(shippingAddressesId, orderId) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({
       type: actionTypes.SELECTED_ADDRESS_IN_NEW_ADDRESS_MODAL,
       orderId,
-      shippingAddressesId,
+      shippingAddressesId
     })
   }
 }
 
 function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken }) {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(statusActions.pending(actionTypes.UNSUBSCRIBED_USER, true))
     dispatch(statusActions.error(actionTypes.UNSUBSCRIBED_USER, ''))
 
     try {
-      await userApi.deleteMarketingSubscription(
-        authUserId, marketingType, marketingUnsubscribeToken
-      )
+      await userApi.deleteMarketingSubscription(authUserId, marketingType, marketingUnsubscribeToken)
 
       dispatch({
-        type: actionTypes.UNSUBSCRIBED_USER,
+        type: actionTypes.UNSUBSCRIBED_USER
       })
     } catch (err) {
-      dispatch(statusActions.error(
-        actionTypes.UNSUBSCRIBED_USER,
-        err
-      ))
+      dispatch(statusActions.error(actionTypes.UNSUBSCRIBED_USER, err))
     } finally {
       dispatch(statusActions.pending(actionTypes.UNSUBSCRIBED_USER, false))
     }
@@ -572,13 +571,18 @@ export function userLoadOrder(orderId, forceRefresh = false) {
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, true))
     dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, null))
     try {
-      if (forceRefresh || getState().user.get('orders').find(order => order.get('id') === orderId) === undefined) {
+      if (
+        forceRefresh ||
+        getState()
+          .user.get('orders')
+          .find(order => order.get('id') === orderId) === undefined
+      ) {
         const accessToken = getState().auth.get('accessToken')
         const { data: order } = await ordersApi.fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
 
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,
-          orders: [order],
+          orders: [order]
         })
       }
     } catch (err) {
@@ -623,7 +627,7 @@ export function userSubscribe() {
           age_verified: Number(promoAgeVerified || false),
           salutation_id: aboutYou.get('title'),
           marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
-          marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
+          marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false)
         },
         payment_method: {
           is_default: 1,
@@ -632,19 +636,25 @@ export function userSubscribe() {
           card: getPaymentDetails(state)
         },
         addresses: {
-          shipping_address: Object.assign({
-            type: config.address_types.shipping,
-            delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction'),
-          }, deliveryAddress),
-          billing_address: Object.assign({
-            type: config.address_types.billing,
-          }, billingAddress),
+          shipping_address: Object.assign(
+            {
+              type: config.address_types.shipping,
+              delivery_instructions: delivery.get('deliveryInstructionsCustom') || delivery.get('deliveryInstruction')
+            },
+            deliveryAddress
+          ),
+          billing_address: Object.assign(
+            {
+              type: config.address_types.billing
+            },
+            billingAddress
+          )
         },
         subscription: {
           interval_id: delivery.get('interval_id') || 1,
           delivery_slot_id: basket.get('slotId'),
-          box_id: basket.get('boxId'),
-        },
+          box_id: basket.get('boxId')
+        }
       }
 
       const { data } = await customerSignup(null, reqData)
@@ -654,11 +664,11 @@ export function userSubscribe() {
         let user = Immutable.fromJS({
           ...customer,
           ...addresses,
-          subscription,
+          subscription
         })
         user = user.set('goustoReference', user.get('goustoReference').toString())
 
-        const paymentProvider = data.paymentMethod.card ? data.paymentMethod.card.paymentProvider: ''
+        const paymentProvider = data.paymentMethod.card ? data.paymentMethod.card.paymentProvider : ''
         dispatch({
           type: actionTypes.CHECKOUT_ORDER_PLACED,
           trackingData: {
@@ -669,7 +679,7 @@ export function userSubscribe() {
             signup: true,
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
             payment_provider: paymentProvider,
-            interval_id: delivery.get('interval_id', '1'),
+            interval_id: delivery.get('interval_id', '1')
           }
         })
 
@@ -692,10 +702,10 @@ export function userSubscribe() {
           order_id: previewOrderId,
           promo_code: prices.get('promoCode'),
           signup: true,
-          error_reason: err.message,
+          error_reason: err.message
         }
       })
-      logger.error({message: err.message, errors: [err]})
+      logger.error({ message: err.message, errors: [err] })
       throw err
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_SUBSCRIBE, false))
@@ -703,46 +713,42 @@ export function userSubscribe() {
   }
 }
 
-export const userReferAFriend = (email) => (
-  (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
+export const userReferAFriend = email => (dispatch, getState) => {
+  const accessToken = getState().auth.get('accessToken')
 
-    if (accessToken) {
-      userApi.referAFriend(accessToken, email)
-    }
+  if (accessToken) {
+    userApi.referAFriend(accessToken, email)
   }
-)
+}
 
-export function userFetchReferralOffer () {
-
+export function userFetchReferralOffer() {
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.USER_LOAD_REFERRAL_OFFER, true))
     const accessToken = getState().auth.get('accessToken')
     if (accessToken) {
       const { data: referralOffer } = await userApi.fetchReferralOffer(accessToken)
-      dispatch({type: actionTypes.USER_LOAD_REFERRAL_OFFER, referralOffer})
+      dispatch({ type: actionTypes.USER_LOAD_REFERRAL_OFFER, referralOffer })
       dispatch(statusActions.pending(actionTypes.USER_LOAD_REFERRAL_OFFER, false))
     }
   }
 }
 
 export const trackingReferFriend = (actionType, trackingType) => {
-  return(dispatch) => {
-    if(actionType && trackingType) {
+  return dispatch => {
+    if (actionType && trackingType) {
       dispatch({
         type: actionType,
         trackingData: {
-          actionType: trackingType,
+          actionType: trackingType
         }
       })
     }
   }
-
 }
 
 export const trackingReferFriendSocialSharing = (actionType, trackingType, channel) => {
-  return(dispatch) => {
-    if(actionType && trackingType) {
+  return dispatch => {
+    if (actionType && trackingType) {
       dispatch({
         type: actionType,
         trackingData: {
@@ -752,13 +758,10 @@ export const trackingReferFriendSocialSharing = (actionType, trackingType, chann
       })
     }
   }
-
 }
-export const userLoadRecipes = () => (
-  (dispatch, getState) => {
-    const userRecipeIds = getUserRecentRecipesIds(getState(), 6)
-    dispatch(recipeActions.recipesLoadRecipesById(userRecipeIds))
-  }
-)
+export const userLoadRecipes = () => (dispatch, getState) => {
+  const userRecipeIds = getUserRecentRecipesIds(getState(), 6)
+  dispatch(recipeActions.recipesLoadRecipesById(userRecipeIds))
+}
 
 export default userActions
