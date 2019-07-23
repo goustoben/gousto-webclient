@@ -1,1 +1,2 @@
-export default from './routes'
+import { accountRoutes } from './routes'
+export default accountRoutes
