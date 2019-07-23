@@ -9,7 +9,7 @@ import { getFoodBrandFilter } from 'selectors/filters'
 function mapStateToProps(state, ownProps) {
 
   return {
-    isFoodBrandClickable: getFoodBrandFeature(state) && getFoodBrandFilter(state) === null,
+    isFoodBrandClickable: getFoodBrandFeature(state) && !getFoodBrandFilter(state),
     isNew: isNew(Immutable.fromJS(ownProps)),
     stock: state.menuRecipeStock.getIn([ownProps.id, String(state.basket.get('numPortions'))], 0),
     inBasket: state.basket.hasIn(['recipes', ownProps.id]),
