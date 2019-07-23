@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Header } from 'Header'
-import CookieBanner from 'CookieBanner'
 import css from './WizardLayout.css'
 
 class WizardLayout extends React.PureComponent {
@@ -13,7 +12,6 @@ class WizardLayout extends React.PureComponent {
     return (
       <div className={css.pageContainer}>
         <div className={css.headerContainer}>
-          <CookieBanner />
           <Header simple noContactBar small />
         </div>
         {this.props.children}
