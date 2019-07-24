@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import config from 'config/recipes'
 import { getFoodBrandFilter } from 'selectors/filters'
 import { selectFoodBrand } from 'actions/filters'
-import { FoodBrandPage } from './FoodBrandPage'
+import { FilteredRecipePage } from 'components/FilteredRecipePage'
 
 const mapStateToProps = (state) => {
   const { locationBeforeTransitions } = state.routing
@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
   }
 }
 const FoodBrandPageContainer = connect(mapStateToProps, {
-  removeFoodBrand: () => selectFoodBrand(null)
-})(FoodBrandPage)
+  removeRecipeFilter: () => selectFoodBrand(null)
+})(FilteredRecipePage)
 
 export { FoodBrandPageContainer }

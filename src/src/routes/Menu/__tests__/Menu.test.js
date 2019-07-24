@@ -1061,7 +1061,7 @@ describe('Menu', () => {
     })
   })
 
-  describe('Food Brand Page ', () => {
+  describe('Filtered Recipe Page ', () => {
     const boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
       new Promise(resolve => {
         resolve()
@@ -1107,7 +1107,7 @@ describe('Menu', () => {
       }
     )
     test('should render if showSelectedPage is true ', () => {
-      expect(wrapper.find('Connect(FoodBrandPage)')).toHaveLength(1)
+      expect(wrapper.find('Connect(FilteredRecipePage)')).toHaveLength(1)
       expect(wrapper.find('MenuRecipes')).toHaveLength(0)
     })
   })
