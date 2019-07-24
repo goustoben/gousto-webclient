@@ -21,6 +21,7 @@ Why is this important? Imagine two developer working on the same file, one perso
 
 ### Pre-requisites
 * Kubernetes development box is setup: https://github.com/Gousto/devbox-platform
+* Check which version of node you have installed with `node -v` - make sure it is a version of 10 (most people in team are currently using 10.14) - to change node version `nvm install v10.14.1`
 * Webclient application dependencies installed:
   * `yarn global add bower` followed by `bower install` for the ui-components library. Use `bower install --force` when updating the version of ui-components.
   * `yarn` for the remaining dependencies
