@@ -4,7 +4,7 @@ export const getReferralCode = state => state.user.get('referral-code')
 export const getLoadingStateForOffer = state => state.pending.get('USER_LOAD_REFERRAL_OFFER', true)
 export const getUserFromJoin = state => (!state.auth.get('isAuthenticated') ? state.persist.get('simpleHeader', false) : false)
 export const getAgeVerified = state => state.user.get('ageVerified')
-export const getUserRecentRecipesIds = ({ user }, number) => {
+export const getUserRecentRecipesIds = ({ user }, number = 6) => {
   const recipeIds = new Set()
   const userOrders = user.get('orders')
   const sortedOrders = userOrders && userOrders.sort((a, b) => parseInt(b.get('id')) - parseInt(a.get('id')))
