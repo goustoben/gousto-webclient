@@ -8,8 +8,8 @@ const CTA = ({ children, link }) => (
     <Link to={link}>
       <div className={css.buttonInner}>
         <div className={css.buttonText}>
-          <p className={css.copy} >{children}</p>
-          <span className={css.chevron} aria-hidden="true" ></span>
+          <p className={css.copy}>{children}</p>
+          <span className={css.chevron} aria-hidden="true" />
         </div>
       </div>
     </Link>
@@ -17,7 +17,7 @@ const CTA = ({ children, link }) => (
 )
 
 CTA.propTypes = {
-  children: PropTypes.string,
+  children: PropTypes.node,
   link: PropTypes.string,
 }
 

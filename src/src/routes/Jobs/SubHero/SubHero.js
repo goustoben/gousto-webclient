@@ -1,17 +1,17 @@
 /* eslint-disable global-require */
 import PropTypes from 'prop-types'
-
 import React from 'react'
 import css from './SubHero.css'
 
-class SubHero extends React.PureComponent {
-  render() {
-    const imageUrl = require(`./${this.props.imageName}.jpg`)
+const SubHero = ({ imageName }) => {
+  const imageUrl = require(`./${imageName}.jpg`)
 
-    return (
-      <div className={css.imageContainer} style={{ backgroundImage: `url(${imageUrl})` }} ></div>
-    )
-  }
+  return (
+    <div
+      className={css.imageContainer}
+      style={{ backgroundImage: `url(${imageUrl})` }}
+    />
+  )
 }
 
 SubHero.propTypes = {

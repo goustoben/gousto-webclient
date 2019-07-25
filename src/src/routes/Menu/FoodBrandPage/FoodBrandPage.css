@@ -10,15 +10,15 @@
   position: sticky;
   top: 0;
   background-color: White;
-  z-index: 11;
+  z-index: 12;
   width: 100%;
   font-family: comfortaaFontStack;
   display: flex;
   align-items: center;
-  padding-top: 15px;
+  padding-top: 10px;
   padding-bottom: 10px;
   @media ScreenSMMin {
-    padding-bottom: 0px;
+    padding-bottom: 6px;
   }
 }
 
@@ -26,7 +26,7 @@
   height: 6px;
   width: 100%;
   position: sticky;
-  z-index: 11;
+  z-index: 12;
 }
 
 .foodBrandTitleContainer > h1 {
