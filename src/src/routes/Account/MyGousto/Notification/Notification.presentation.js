@@ -8,14 +8,12 @@ const propTypes = {
   title: PropTypes.string.isRequired,
   message: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  icon: PropTypes.string.isRequired,
 }
 
-const NotificationPresentation = ({ type, title, message, url, icon }) => (
+const NotificationPresentation = ({ type, title, message, url }) => (
   <div>
     <Alert type={type}>
       <a href={url} className={css.notificationLink}>
-        <span>{icon}</span>
         <span className={css.notificationTitle}>{title} </span>
         <span className={css.notificationMessage}>{message}</span>
       </a>
