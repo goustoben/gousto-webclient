@@ -2,11 +2,11 @@
 @value ScreenSMMax, ScreenSMMin from 'styles/screenSizes.css';
 @value White from 'styles/colors.css';
 
-.foodBrandContainer {
+.filteredRecipePageContainer {
   background: White;
 }
 
-.foodBrandTitleContainer {
+.filteredRecipePageTitleContainer {
   position: sticky;
   top: 0;
   background-color: White;
@@ -29,7 +29,7 @@
   z-index: 12;
 }
 
-.foodBrandTitleContainer > h1 {
+.filteredRecipePageTitleContainer > h1 {
   font-size: 16px;
   display: inline-flex;
   justify-content: center;
@@ -70,7 +70,7 @@
   }
 }
 
-.foodBrandDescription {
+.filteredRecipePageDescription {
   text-align: center;
   font-size: 16px;
 }
