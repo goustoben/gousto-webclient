@@ -6,10 +6,18 @@ import { AwinPixel } from 'AwinPixel'
 describe('AwinPixel', () => {
   let wrapper
 
-  test('should render an image pixel', () => {
+  test('should render nothing by default', () => {
     wrapper = shallow(<AwinPixel />)
 
-    expect(wrapper.type()).toEqual('img')
+    expect(wrapper.type()).toEqual(null)
+  })
+
+  describe('when show is true', () => {
+    test('should render an image pixel', () => {
+      wrapper = shallow(<AwinPixel show />)
+
+      expect(wrapper.type()).toEqual('img')
+    })
   })
 
   describe('with props', () => {
@@ -25,6 +33,7 @@ describe('AwinPixel', () => {
     test('should render an image pixel with the correct target', () => {
       wrapper = shallow(
         <AwinPixel
+          show
           total={total}
           orderId={orderId}
           promoCode={promoCode}
