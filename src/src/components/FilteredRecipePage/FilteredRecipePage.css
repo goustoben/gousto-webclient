@@ -83,3 +83,6 @@
   }
 }
 
+.filteredRecipePageRecipes > [data-testing="menuRecipesList"] {
+  padding-top: 0px;
+}

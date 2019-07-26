@@ -46,7 +46,7 @@ class FilteredRecipePage extends PureComponent {
         </div>
         <p className={css.filteredRecipePageDescription}>{description}</p>
         <div style={{top: containerHeight, background: borderColor}} className={css.border}/>
-        <div>
+        <div className={css.filteredRecipePageRecipes}>
           <RecipeGrid
             mobileGridView={mobileGridView}
             showDetailRecipe={showDetailRecipe}
