@@ -10,7 +10,7 @@ const getNoResultsPageProps = () => {
     <span>Oh Crumbs! No recipes found</span>
                  </Content>)
   const description = (<Content contentKeys="recipesNoResultDescription">
-    <span>Due to the filters you applied, we do not have any recipes that fit your dietary preferences. Clear filters to see all results.</span>
+    <span>Due to the filters you applied, we do not have any recipes that fit your preferences. Clear filters to see all results.</span>
                        </Content>)
 
   return {
