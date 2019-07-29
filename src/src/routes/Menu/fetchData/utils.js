@@ -2,7 +2,8 @@ import { getCollectionFreezeValue } from 'selectors/features'
 import { hasJustForYouCollection } from 'selectors/collections'
 import { recommendationsSlug } from 'config/collections'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
-import actions from 'actions'
+import { basketDateChange, basketSlotChange } from 'actions/basket'
+import { redirect } from 'actions/redirect'
 import { collectionFilterIdRecieve } from 'actions/filters'
 
 export const getPreselectedCollectionName = (state, collectionNameFromQueryParam) => {
@@ -34,21 +35,21 @@ export const setSlotFromIds = (state, slot_id, day_id, dispatch) => {
     )
     if(day) {
       const date = day.get('date')
-      dispatch(actions.basketDateChange(date))
-      dispatch(actions.basketSlotChange(slot_id))
+      dispatch(basketDateChange(date))
+      dispatch(basketSlotChange(slot_id))
     } else {
-      dispatch(actions.redirect('/menu', true))
+      dispatch(redirect('/menu', true))
     }
   } else if (day_id) {
     const day = deliveryDays.find(deliveryDay => deliveryDay.get('id') === day_id)
     if(day) {
       const date = day.get('date')
-      dispatch(actions.basketDateChange(date))
+      dispatch(basketDateChange(date))
       if(!slot_id) {
-        dispatch(actions.basketSlotChange(''))
+        dispatch(basketSlotChange(''))
       }
     } else {
-      dispatch(actions.redirect('/menu', true))
+      dispatch(redirect('/menu', true))
     }
   }
 }
