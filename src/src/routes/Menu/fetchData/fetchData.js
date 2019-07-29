@@ -140,6 +140,9 @@ export default async function fetchData({ store, query, params }, force, backgro
           .then(()=> {
             setSlotFromIds(store.getState(), query.slot_id, query.day_id, store.dispatch, query.slot_id)
           })
+          .catch(err => {
+            logger.error({message: `Debug fetchData: ${err.message}`, errors: [err]})
+          })
       } else if (!store.getState().basket.get('date')) {
         if (!browseMode) {
           fetchPromise = fetchPromise.then(chooseFirstDate)
