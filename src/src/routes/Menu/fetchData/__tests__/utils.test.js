@@ -2,8 +2,18 @@ import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
 import actionTypes from 'actions/actionTypes'
+import { basketDateChange, basketSlotChange } from 'actions/basket'
+import { redirect } from 'actions/redirect'
 import { recommendationsSlug } from 'config/collections'
-import { getPreselectedCollectionName, selectCollection } from '../utils'
+import { getPreselectedCollectionName, selectCollection, setSlotFromIds } from '../utils'
+
+jest.mock('actions/basket', () => ({
+  basketDateChange: jest.fn(),
+  basketSlotChange: jest.fn()
+}))
+jest.mock('actions/redirect', () => ({
+  redirect: jest.fn()
+}))
 
 describe('getPreselectedCollectionName', () => {
   const state = {
@@ -137,6 +147,76 @@ describe('selectCollection', () => {
         type: actionTypes.FILTERS_COLLECTION_CHANGE,
         collectionId: 'defaultCollectionId',
       })
+    })
+  })
+})
+
+describe('setSlotFromIds', () => {
+  const dispatchSpy = jest.fn()
+  const state = {
+    boxSummaryDeliveryDays: {}
+  }
+  beforeEach(() => {
+    state.boxSummaryDeliveryDays = Immutable.fromJS({
+      '2019-08-02': {
+        id: '6c1caad9-d666-4dc5-83e6-ff0769dff502',
+        date: '2019-08-02',
+        slots: [
+          {
+            id: 'db015db8-12d1-11e6-b30b-06ddb628bdc5'
+          },
+          {
+            id: 'ba716ad8-d8cf-4264-9835-ebabc6011ed4'
+          },
+          {
+            id: '8ee02d93-aad4-4a6e-ac49-9c66dd667082'
+          }
+        ]
+      },
+      '2019-08-03': {
+        id: '54966866-d89a-4ba3-835d-76c3334568ff',
+        date: '2019-08-03',
+        slots: [
+          {
+            id: 'db047c82-12d1-11e6-bc7b-06ddb628bdc5'
+          },
+          {
+            id: '30ef5793-1fd2-4859-a11e-fe7eb8412305'
+          }
+        ]
+      },
+    })
+    jest.clearAllMocks()
+  })
+  describe('when a valid slot_id is provided', () => {
+    it('should set the given slot ID and the corresponding date',() => {
+      const slotId = '30ef5793-1fd2-4859-a11e-fe7eb8412305'
+
+      setSlotFromIds(state, slotId, null, dispatchSpy)
+
+      expect(basketDateChange).toHaveBeenCalledWith("2019-08-03")
+      expect(basketSlotChange).toHaveBeenCalledWith(slotId)
+    })
+  })
+  describe('when a valid day_id is provided', () => {
+    it('should set the given date and reset the slot id',() => {
+      const dayId = '54966866-d89a-4ba3-835d-76c3334568ff'
+
+      setSlotFromIds(state, null, dayId, dispatchSpy)
+
+      expect(basketDateChange).toHaveBeenCalledWith("2019-08-03")
+      expect(basketSlotChange).toHaveBeenCalledWith('')
+    })
+  })
+  describe('when an invalid parameter is provided', () => {
+    it('should set redirect to menu',() => {
+      const slotId = 'invalid-id'
+
+      setSlotFromIds(state, slotId, null, dispatchSpy)
+
+      expect(basketDateChange).not.toHaveBeenCalled()
+      expect(basketSlotChange).not.toHaveBeenCalled()
+      expect(redirect).toHaveBeenCalledWith('/menu', true)
     })
   })
 })
