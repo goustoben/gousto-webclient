@@ -157,124 +157,27 @@ describe('setSlotFromIds', () => {
       '2019-08-02': {
         id: '6c1caad9-d666-4dc5-83e6-ff0769dff502',
         date: '2019-08-02',
-        isDefault: false,
-        coreDayId: '1811',
-        unavailableReason: '',
-        alternateDeliveryDay: null,
         slots: [
           {
-            whenCutoff: '2019-07-30T11:59:59+01:00',
-            cutoffDay: 2,
-            deliveryEndTime: '19:00:00',
-            deliveryPrice: '0.00',
-            isDefault: true,
-            coreSlotId: '4',
-            cutoffTime: '11:59:59',
-            deliveryStartTime: '08:00:00',
-            id: 'db015db8-12d1-11e6-b30b-06ddb628bdc5',
-            defaultDay: 5
+            id: 'db015db8-12d1-11e6-b30b-06ddb628bdc5'
           },
           {
-            whenCutoff: '2019-07-30T11:59:59+01:00',
-            cutoffDay: 2,
-            deliveryEndTime: '12:00:00',
-            deliveryPrice: '2.99',
-            isDefault: false,
-            coreSlotId: '24',
-            cutoffTime: '11:59:59',
-            deliveryStartTime: '08:00:00',
-            id: 'ba716ad8-d8cf-4264-9835-ebabc6011ed4',
-            defaultDay: 5
+            id: 'ba716ad8-d8cf-4264-9835-ebabc6011ed4'
           },
           {
-            whenCutoff: '2019-07-30T11:59:59+01:00',
-            cutoffDay: 2,
-            deliveryEndTime: '22:00:00',
-            deliveryPrice: '2.99',
-            isDefault: false,
-            coreSlotId: '25',
-            cutoffTime: '11:59:59',
-            deliveryStartTime: '18:00:00',
-            id: '8ee02d93-aad4-4a6e-ac49-9c66dd667082',
-            defaultDay: 5
-          }
-        ],
-        daySlots: [
-          {
-            id: '3557',
-            dayId: '6c1caad9-d666-4dc5-83e6-ff0769dff502',
-            slotId: '8ee02d93-aad4-4a6e-ac49-9c66dd667082',
-            whenCutoff: '2019-07-30T11:59:59+01:00',
-            unavailableReason: '',
-            alternateDay: null
-          },
-          {
-            id: '3870',
-            dayId: '6c1caad9-d666-4dc5-83e6-ff0769dff502',
-            slotId: 'ba716ad8-d8cf-4264-9835-ebabc6011ed4',
-            whenCutoff: '2019-07-30T11:59:59+01:00',
-            unavailableReason: '',
-            alternateDay: null
-          },
-          {
-            id: '4079',
-            dayId: '6c1caad9-d666-4dc5-83e6-ff0769dff502',
-            slotId: 'db015db8-12d1-11e6-b30b-06ddb628bdc5',
-            whenCutoff: '2019-07-30T11:59:59+01:00',
-            unavailableReason: '',
-            alternateDay: null
+            id: '8ee02d93-aad4-4a6e-ac49-9c66dd667082'
           }
         ]
       },
       '2019-08-03': {
         id: '54966866-d89a-4ba3-835d-76c3334568ff',
         date: '2019-08-03',
-        isDefault: false,
-        coreDayId: '1819',
-        unavailableReason: '',
-        alternateDeliveryDay: null,
         slots: [
           {
-            whenCutoff: '2019-07-31T11:59:59+01:00',
-            cutoffDay: 3,
-            deliveryEndTime: '19:00:00',
-            deliveryPrice: '0.00',
-            isDefault: true,
-            coreSlotId: '6',
-            cutoffTime: '11:59:59',
-            deliveryStartTime: '08:00:00',
-            id: 'db047c82-12d1-11e6-bc7b-06ddb628bdc5',
-            defaultDay: 6
+            id: 'db047c82-12d1-11e6-bc7b-06ddb628bdc5'
           },
           {
-            whenCutoff: '2019-07-31T11:59:59+01:00',
-            cutoffDay: 3,
-            deliveryEndTime: '12:00:00',
-            deliveryPrice: '2.99',
-            isDefault: false,
-            coreSlotId: '29',
-            cutoffTime: '11:59:59',
-            deliveryStartTime: '08:00:00',
-            id: '30ef5793-1fd2-4859-a11e-fe7eb8412305',
-            defaultDay: 6
-          }
-        ],
-        daySlots: [
-          {
-            id: '4132',
-            dayId: '54966866-d89a-4ba3-835d-76c3334568ff',
-            slotId: 'db047c82-12d1-11e6-bc7b-06ddb628bdc5',
-            whenCutoff: '2019-07-31T11:59:59+01:00',
-            unavailableReason: '',
-            alternateDay: null
-          },
-          {
-            id: '4230',
-            dayId: '54966866-d89a-4ba3-835d-76c3334568ff',
-            slotId: '30ef5793-1fd2-4859-a11e-fe7eb8412305',
-            whenCutoff: '2019-07-31T11:59:59+01:00',
-            unavailableReason: '',
-            alternateDay: null
+            id: '30ef5793-1fd2-4859-a11e-fe7eb8412305'
           }
         ]
       },
