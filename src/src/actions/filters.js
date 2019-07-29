@@ -128,7 +128,7 @@ export function collectionFilterChange(collectionId) {
 
 export const changeCollectionToAllRecipes = () => (
   (dispatch) => {
-    dispatch(collectionFilterChange(ALL_RECIPES_COLLECTION_ID))
+    dispatch(filtersCollectionChange(null, ALL_RECIPES_COLLECTION_ID))
   }
 )
 
@@ -242,11 +242,11 @@ export const selectFoodBrand = (foodBrand) => (
       const query = { ...prevLoc.query }
       if (foodBrand === null) {
         delete query.foodBrand
-        dispatch(changeCollectionToAllRecipes())
       } else {
         query.foodBrand = foodBrand.slug
         if (query.collection) {
           delete query.collection
+          dispatch(changeCollectionToAllRecipes())
         }
       }
       const newLoc = { ...prevLoc, query }
