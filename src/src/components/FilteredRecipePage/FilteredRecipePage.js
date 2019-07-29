@@ -32,6 +32,12 @@ class FilteredRecipePage extends PureComponent {
     window.scrollTo(0, 0)
   }
 
+  componentWillUnmount() {
+    const { removeRecipeFilter } = this.props
+
+    removeRecipeFilter()
+  }
+
   render() {
     const { name, description, borderColor, removeRecipeFilter, mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow, menuFilterExperiment } = this.props
     const { containerHeight } = this.state
