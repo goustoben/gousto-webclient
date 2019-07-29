@@ -9,7 +9,7 @@ import { isCollectionsFeatureEnabled } from 'selectors/features'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 
 import moment from 'moment'
-import { selectCollection, getPreselectedCollectionName, setSlotFromQuery } from './utils'
+import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
 export default async function fetchData({ store, query, params }, force, background) {
   const isAuthenticated = store.getState().auth.get('isAuthenticated')
