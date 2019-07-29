@@ -32,15 +32,23 @@ export const setSlotFromIds = (state, slot_id, day_id, dispatch) => {
     const day = deliveryDays.find(deliveryDay =>
       deliveryDay.get('slots').some(slot => slot.get('id')=== slot_id)
     )
-    const date = day.get('date')
-    dispatch(actions.basketDateChange(date))
-    dispatch(actions.basketSlotChange(slot_id))
+    if(day) {
+      const date = day.get('date')
+      dispatch(actions.basketDateChange(date))
+      dispatch(actions.basketSlotChange(slot_id))
+    } else {
+      dispatch(actions.redirect('/menu', true))
+    }
   } else if (day_id) {
     const day = deliveryDays.find(deliveryDay => deliveryDay.get('id') === day_id)
-    const date = day.get('date')
-    dispatch(actions.basketDateChange(date))
-    if(!slot_id) {
-      dispatch(actions.basketSlotChange(''))
+    if(day) {
+      const date = day.get('date')
+      dispatch(actions.basketDateChange(date))
+      if(!slot_id) {
+        dispatch(actions.basketSlotChange(''))
+      }
+    } else {
+      dispatch(actions.redirect('/menu', true))
     }
   }
 }

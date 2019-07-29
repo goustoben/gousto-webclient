@@ -3,12 +3,16 @@ import configureMockStore from 'redux-mock-store'
 
 import actionTypes from 'actions/actionTypes'
 import { basketDateChange, basketSlotChange } from 'actions/basket'
+import { redirect } from 'actions/redirect'
 import { recommendationsSlug } from 'config/collections'
 import { getPreselectedCollectionName, selectCollection, setSlotFromIds } from '../utils'
 
 jest.mock('actions/basket', () => ({
   basketDateChange: jest.fn(),
   basketSlotChange: jest.fn()
+}))
+jest.mock('actions/redirect', () => ({
+  redirect: jest.fn()
 }))
 
 describe('getPreselectedCollectionName', () => {
@@ -184,7 +188,7 @@ describe('setSlotFromIds', () => {
     })
     jest.clearAllMocks()
   })
-  describe('when slot_id is provided', () => {
+  describe('when a valid slot_id is provided', () => {
     it('should set the given slot ID and the corresponding date',() => {
       const slotId = '30ef5793-1fd2-4859-a11e-fe7eb8412305'
 
@@ -194,7 +198,7 @@ describe('setSlotFromIds', () => {
       expect(basketSlotChange).toHaveBeenCalledWith(slotId)
     })
   })
-  describe('when day_id is provided', () => {
+  describe('when a valid day_id is provided', () => {
     it('should set the given date and reset the slot id',() => {
       const dayId = '54966866-d89a-4ba3-835d-76c3334568ff'
 
@@ -202,6 +206,17 @@ describe('setSlotFromIds', () => {
 
       expect(basketDateChange).toHaveBeenCalledWith("2019-08-03")
       expect(basketSlotChange).toHaveBeenCalledWith('')
+    })
+  })
+  describe('when an invalid parameter is provided', () => {
+    it('should set redirect to menu',() => {
+      const slotId = 'invalid-id'
+
+      setSlotFromIds(state, slotId, null, dispatchSpy)
+
+      expect(basketDateChange).not.toHaveBeenCalled()
+      expect(basketSlotChange).not.toHaveBeenCalled()
+      expect(redirect).toHaveBeenCalledWith('/menu', true)
     })
   })
 })
