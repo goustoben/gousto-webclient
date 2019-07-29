@@ -9,7 +9,7 @@ import { isCollectionsFeatureEnabled } from 'selectors/features'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 
 import moment from 'moment'
-import { selectCollection, getPreselectedCollectionName } from './utils'
+import { selectCollection, getPreselectedCollectionName, setSlotFromQuery } from './utils'
 
 export default async function fetchData({ store, query, params }, force, background) {
   const isAuthenticated = store.getState().auth.get('isAuthenticated')
@@ -126,15 +126,20 @@ export default async function fetchData({ store, query, params }, force, backgro
         browseMode = false
       }
 
-      if (query.date || query.slot_id || store.getState().basket.get('date') || store.getState().basket.get('slotId')) {
+      if (
+        query.day_id ||
+        query.slot_id ||
+        store.getState().basket.get('date') ||
+        store.getState().basket.get('slotId')
+      ) {
         browseMode = false
 
-        fetchPromise = store.dispatch(actions.menuLoadDays())
+        fetchPromise = store
+          .dispatch(actions.menuLoadDays())
           .then(() => store.dispatch(actions.boxSummaryDeliveryDaysLoad()))
-      }
-
-      if (query.date) {
-        store.dispatch(actions.basketDateChange(query.date))
+          .then(()=> {
+            setSlotFromIds(store.getState(), query.slot_id, query.day_id, store.dispatch, query.slot_id)
+          })
       } else if (!store.getState().basket.get('date')) {
         if (!browseMode) {
           fetchPromise = fetchPromise.then(chooseFirstDate)
@@ -143,10 +148,6 @@ export default async function fetchData({ store, query, params }, force, backgro
 
       if (query.num_portions) {
         store.dispatch(actions.basketNumPortionChange(query.num_portions))
-      }
-
-      if (query.slot_id && !store.getState().basket.get('slotId')) {
-        store.dispatch(actions.basketSlotChange(query.slot_id))
       }
 
       let cutoffDateTime = browseMode ? cutoffDateTimeNow() : undefined
