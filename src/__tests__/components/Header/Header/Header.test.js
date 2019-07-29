@@ -1,5 +1,5 @@
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 
 import Immutable from 'immutable'
 import { Header } from 'components/Header/Header'
@@ -9,6 +9,7 @@ import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import DuplicateOrderModal from 'DuplicateOrderModal'
 import CookieBanner from 'CookieBanner'
+import contactConfig from 'config/company'
 
 jest.mock('Header/SimpleHeader', () => 'SimpleHeader')
 jest.mock('Modal/ModalPanel', () => 'ModalPanel')
@@ -194,30 +195,12 @@ describe('Header', () => {
       const wrapper = shallow(<Header noContactBar trackNavigationClick={jest.fn()} />)
       expect(wrapper.find('Free delivery').length).toEqual(0)
     })
-  })
 
-  //TODO: fix this
-  describe.skip('using mount', () => {
-    test('should include the phone number', () => {
-      const props = {
-        config,
-        logoutUser: jest.fn(),
-        loginVisibilityChange: jest.fn(),
-        closeBoxModalVisibilityChange: jest.fn(),
-        noContactBar: true,
-        serverError: false,
-        isAuthenticated: true,
-        loginOpen: false,
-        routing: {},
-        simple: false,
-        path: '',
-        fromJoin: false,
-        promoCodeUrl: '',
-        features: Immutable.fromJS({})
-      }
-
-      const wrapper2 = mount(<Header {...props} />)
-      expect(wrapper2.debug()).toContain('MOCK-123456677889')
+    test('should render the contact phone number', () => {
+      const wrapper = shallow(<Header />)
+      expect(wrapper.find('.contactContent').html()).toContain(
+        contactConfig.telephone.number
+      )
     })
   })
 
