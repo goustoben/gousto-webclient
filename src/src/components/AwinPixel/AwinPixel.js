@@ -14,7 +14,7 @@ const AwinPixel = ({ show, orderId, total, commissionGroup, promoCode }) => (
         `&cr=GBP` +
         `&ref=${orderId}` +
         `&amount=${total}` +
-        `&vc=${promoCode}` +
+        (promoCode ? `&vc=${promoCode}` : '') +
         `&merchant=${MERCHANT_ID}` +
         `&parts=${commissionGroup}:${total}`
       }

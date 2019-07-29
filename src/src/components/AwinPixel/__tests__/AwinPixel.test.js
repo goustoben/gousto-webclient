@@ -45,8 +45,33 @@ describe('AwinPixel', () => {
 
       expect(searchParams.get('ref')).toEqual(orderId)
       expect(searchParams.get('amount')).toEqual(total)
-      expect(searchParams.get('vc')).toEqual(promoCode)
+      expect(searchParams.get('vc')).toEqual(null)
       expect(searchParams.get('parts')).toEqual(`${commissionGroup}:${total}`)
+    })
+
+    describe('including promoCode', () => {
+      beforeEach(() => {
+        promoCode = 'TEST-9999'
+      })
+
+      test('should render an image pixel with the correct target including a vc query parameter', () => {
+        wrapper = shallow(
+          <AwinPixel
+            show
+            total={total}
+            orderId={orderId}
+            promoCode={promoCode}
+            commissionGroup={commissionGroup}
+          />
+        )
+
+        const { searchParams } = new URL(wrapper.prop('src'))
+
+        expect(searchParams.get('ref')).toEqual(orderId)
+        expect(searchParams.get('amount')).toEqual(total)
+        expect(searchParams.get('vc')).toEqual('TEST-9999')
+        expect(searchParams.get('parts')).toEqual(`${commissionGroup}:${total}`)
+      })
     })
   })
 })
