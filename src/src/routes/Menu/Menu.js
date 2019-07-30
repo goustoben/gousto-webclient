@@ -183,10 +183,10 @@ class Menu extends React.Component {
       const foodBrandUrlDifferent = isFoodBrandSelected && query.foodBrand!==foodBrandSelected.slug
 
       if (!isFoodBrandSelected || foodBrandUrlDifferent) {
-        filterRecipeGrouping(foodBrandDetails)
+        filterRecipeGrouping(foodBrandDetails, 'foodBrand')
       }
     } else if (isFoodBrandSelected) {
-      filterRecipeGrouping(null)
+      filterRecipeGrouping(null, 'foodBrand')
     }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)

@@ -890,7 +890,7 @@ describe('Menu', () => {
             },
           },
         )
-        expect(filterRecipeGrouping).toHaveBeenCalledWith(null)
+        expect(filterRecipeGrouping).toHaveBeenCalledWith(null, 'foodBrand')
       })
     })
 
@@ -924,7 +924,7 @@ describe('Menu', () => {
           slug: 'takeaway-night',
           name: 'Takeaway Night',
           borderColor: 'blue',
-        })
+        }, 'foodBrand')
       })
 
       test('should call filterRecipeGrouping with foodBrand details if url foodbrand different than selected one', async() => {
@@ -960,7 +960,7 @@ describe('Menu', () => {
           slug: '10-minute-meals',
           name: '10-MINUTE MEALS',
           borderColor: 'orange',
-        })
+        }, 'foodBrand')
       })
 
       test('should NOT call filterRecipeGrouping with foodBrand details if foodBrand selected', async() => {

@@ -19,7 +19,7 @@ const mapStateToProps = (state) => {
   }
 }
 const FoodBrandPageContainer = connect(mapStateToProps, {
-  removeRecipeFilter: () => filterRecipeGrouping(null)
+  removeRecipeFilter: () => filterRecipeGrouping(null, 'foodBrand')
 })(FilteredRecipePage)
 
 export { FoodBrandPageContainer }

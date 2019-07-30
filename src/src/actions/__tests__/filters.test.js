@@ -378,7 +378,7 @@ describe('filters actions', () => {
       })
     })
     test('should call FILTERS_FOOD_BRAND_CHANGE with null foodBrand if this is null', () => {
-      filterRecipeGrouping(null)(dispatchSpy, getStateSpy)
+      filterRecipeGrouping(null, 'foodBrand')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'foodBrand': null,
         'type': 'FILTERS_FOOD_BRAND_CHANGE',
@@ -394,7 +394,7 @@ describe('filters actions', () => {
         name: 'FoodBrand',
         slug: 'food-brand',
         borderColor: 'blue'
-      })(dispatchSpy, getStateSpy)
+      }, 'foodBrand')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'foodBrand': {
           name: 'FoodBrand',
