@@ -89,7 +89,7 @@ class Menu extends React.Component {
       name: PropTypes.string,
       borderColor: PropTypes.string,
     }),
-    selectFoodBrand: PropTypes.func
+    filterRecipeGrouping: PropTypes.func
   }
 
   static contextTypes = {
@@ -157,7 +157,7 @@ class Menu extends React.Component {
       productsLoadStock,
       foodBrandSelected,
       foodBrandDetails,
-      selectFoodBrand,
+      filterRecipeGrouping,
     } = this.props
 
     const { store } = this.context
@@ -183,10 +183,10 @@ class Menu extends React.Component {
       const foodBrandUrlDifferent = isFoodBrandSelected && query.foodBrand!==foodBrandSelected.slug
 
       if (!isFoodBrandSelected || foodBrandUrlDifferent) {
-        selectFoodBrand(foodBrandDetails)
+        filterRecipeGrouping(foodBrandDetails)
       }
     } else if (isFoodBrandSelected) {
-      selectFoodBrand(null)
+      filterRecipeGrouping(null)
     }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)

@@ -17,7 +17,7 @@ import {
   filterMenuRevertFilters,
   filterProductCategory,
   filterApply,
-  selectFoodBrand
+  filterRecipeGrouping
 } from 'actions/filters'
 
 jest.mock('react-router-redux', () => ({
@@ -360,7 +360,7 @@ describe('filters actions', () => {
     })
   })
 
-  describe('selectFoodBrand', () => {
+  describe('filterRecipeGrouping', () => {
     beforeAll(() => {
       getStateSpy.mockReturnValue({
         features: Immutable.fromJS({
@@ -378,7 +378,7 @@ describe('filters actions', () => {
       })
     })
     test('should call FILTERS_FOOD_BRAND_CHANGE with null foodBrand if this is null', () => {
-      selectFoodBrand(null)(dispatchSpy, getStateSpy)
+      filterRecipeGrouping(null)(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'foodBrand': null,
         'type': 'FILTERS_FOOD_BRAND_CHANGE',
@@ -390,7 +390,7 @@ describe('filters actions', () => {
     })
 
     test('should call push with foodBrand slug if foodBrand is not null', () => {
-      selectFoodBrand({
+      filterRecipeGrouping({
         name: 'FoodBrand',
         slug: 'food-brand',
         borderColor: 'blue'

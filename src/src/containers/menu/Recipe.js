@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import Recipe from 'Recipe'
 import { isNew } from 'utils/recipe'
-import { selectFoodBrand } from 'actions/filters'
+import { filterRecipeGrouping } from 'actions/filters'
 import { getFoodBrandFeature } from 'selectors/features'
 import { getFoodBrandFilter } from 'selectors/filters'
 
@@ -17,7 +17,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 const RecipeContainer = connect(mapStateToProps, {
-  selectFoodBrand
+  selectFoodBrand: filterRecipeGrouping
 })(Recipe)
 
 export default RecipeContainer

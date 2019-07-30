@@ -157,7 +157,7 @@ const mapDispatchToProps = {
   productsLoadProducts: actions.productsLoadProducts,
   productsLoadStock: actions.productsLoadStock,
   orderCheckoutAction: actions.orderCheckout,
-  selectFoodBrand: actions.selectFoodBrand,
+  filterRecipeGrouping: actions.filterRecipeGrouping,
   selectCurrentCollection: actions.changeCollectionById
 }
 

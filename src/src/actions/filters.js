@@ -232,19 +232,19 @@ export const filterApply = (type, value) => (
   }
 )
 
-export const selectFoodBrand = (foodBrand) => (
+export const filterRecipeGrouping = (recipeGrouping) => (
   (dispatch, getState) => {
     const { routing, features } = getState()
     const prevLoc = routing.locationBeforeTransitions
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     if (foodBrandFeature) {
-      dispatch(currentFoodBrandChange(foodBrand))
+      dispatch(currentFoodBrandChange(recipeGrouping))
       dispatch(changeCollectionById())
       const query = { ...prevLoc.query }
-      if (foodBrand === null) {
+      if (recipeGrouping === null) {
         delete query.foodBrand
       } else {
-        query.foodBrand = foodBrand.slug
+        query.foodBrand = recipeGrouping.slug
         if (query.collection) {
           delete query.collection
         }
@@ -270,6 +270,6 @@ export default {
   filterMenuRevertFilters,
   filterApply,
   currentFoodBrandChange,
-  selectFoodBrand,
+  filterRecipeGrouping,
   changeCollectionById
 }

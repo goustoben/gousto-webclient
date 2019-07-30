@@ -867,12 +867,12 @@ describe('Menu', () => {
     }
 
     describe('when no foodBrand query param in URL', () => {
-      test('should call selectFoodBrand with null if foodBrand is selected', async () => {
-        const selectFoodBrand = jest.fn()
+      test('should call filterRecipeGrouping with null if foodBrand is selected', async () => {
+        const filterRecipeGrouping = jest.fn()
         await mount(
           <Menu
             {...menuProps}
-            selectFoodBrand={ selectFoodBrand }
+            filterRecipeGrouping={ filterRecipeGrouping }
             foodBrandSelected={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
@@ -890,18 +890,18 @@ describe('Menu', () => {
             },
           },
         )
-        expect(selectFoodBrand).toHaveBeenCalledWith(null)
+        expect(filterRecipeGrouping).toHaveBeenCalledWith(null)
       })
     })
 
     describe('when foodBrand query param in URL', () => {
-      test('should call selectFoodBrand with foodBrand details if foodBrand not selected', async() => {
-        const selectFoodBrand = jest.fn()
+      test('should call filterRecipeGrouping with foodBrand details if foodBrand not selected', async() => {
+        const filterRecipeGrouping = jest.fn()
 
         await mount(
           <Menu
             {...menuProps}
-            selectFoodBrand={ selectFoodBrand }
+            filterRecipeGrouping={ filterRecipeGrouping }
             foodBrandSelected={null}
             query={{foodBrand: 'takeaway-night'}}
             foodBrandDetails={{
@@ -920,20 +920,20 @@ describe('Menu', () => {
           },
         )
 
-        expect(selectFoodBrand).toHaveBeenCalledWith({
+        expect(filterRecipeGrouping).toHaveBeenCalledWith({
           slug: 'takeaway-night',
           name: 'Takeaway Night',
           borderColor: 'blue',
         })
       })
 
-      test('should call selectFoodBrand with foodBrand details if url foodbrand different than selected one', async() => {
-        const selectFoodBrand = jest.fn()
+      test('should call filterRecipeGrouping with foodBrand details if url foodbrand different than selected one', async() => {
+        const filterRecipeGrouping = jest.fn()
 
         await mount(
           <Menu
             {...menuProps}
-            selectFoodBrand={ selectFoodBrand }
+            filterRecipeGrouping={ filterRecipeGrouping }
             foodBrandSelected={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
@@ -956,20 +956,20 @@ describe('Menu', () => {
           },
         )
 
-        expect(selectFoodBrand).toHaveBeenCalledWith({
+        expect(filterRecipeGrouping).toHaveBeenCalledWith({
           slug: '10-minute-meals',
           name: '10-MINUTE MEALS',
           borderColor: 'orange',
         })
       })
 
-      test('should NOT call selectFoodBrand with foodBrand details if foodBrand selected', async() => {
-        const selectFoodBrand = jest.fn()
+      test('should NOT call filterRecipeGrouping with foodBrand details if foodBrand selected', async() => {
+        const filterRecipeGrouping = jest.fn()
 
         await mount(
           <Menu
             {...menuProps}
-            selectFoodBrand={ selectFoodBrand }
+            filterRecipeGrouping={ filterRecipeGrouping }
             foodBrandSelected={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
@@ -992,7 +992,7 @@ describe('Menu', () => {
           },
         )
 
-        expect(selectFoodBrand).not.toHaveBeenCalled()
+        expect(filterRecipeGrouping).not.toHaveBeenCalled()
       })
     })
   })
