@@ -157,9 +157,14 @@ class Menu extends React.Component {
       productsLoadStock,
       foodBrandSelected,
       foodBrandDetails,
-      selectFoodBrand
+      selectFoodBrand,
+      selectCurrentCollection,
+      menuCurrentCollectionId
     } = this.props 
+
     const { store } = this.context
+
+    selectCurrentCollection(menuCurrentCollectionId)
     // if server rendered
     if (params.orderId && params.orderId === storeOrderId) {
       basketOrderLoaded(params.orderId)

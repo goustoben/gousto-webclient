@@ -126,9 +126,9 @@ export function collectionFilterChange(collectionId) {
   }
 }
 
-export const changeCollectionToAllRecipes = () => (
+export const changeCollectionById = (id = ALL_RECIPES_COLLECTION_ID) => (
   (dispatch) => {
-    dispatch(filtersCollectionChange(null, ALL_RECIPES_COLLECTION_ID))
+    dispatch(filtersCollectionChange(null, id))
   }
 )
 
@@ -239,7 +239,7 @@ export const selectFoodBrand = (foodBrand) => (
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     if (foodBrandFeature) {
       dispatch(currentFoodBrandChange(foodBrand))
-      dispatch(changeCollectionToAllRecipes())
+      dispatch(changeCollectionById())
       const query = { ...prevLoc.query }
       if (foodBrand === null) {
         delete query.foodBrand
@@ -270,5 +270,6 @@ export default {
   filterMenuRevertFilters,
   filterApply,
   currentFoodBrandChange,
-  selectFoodBrand
+  selectFoodBrand,
+  changeCollectionById
 }
