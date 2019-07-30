@@ -158,13 +158,10 @@ class Menu extends React.Component {
       foodBrandSelected,
       foodBrandDetails,
       selectFoodBrand,
-      selectCurrentCollection,
-      menuCurrentCollectionId
-    } = this.props 
+    } = this.props
 
     const { store } = this.context
 
-    selectCurrentCollection(menuCurrentCollectionId)
     // if server rendered
     if (params.orderId && params.orderId === storeOrderId) {
       basketOrderLoaded(params.orderId)
@@ -267,9 +264,15 @@ class Menu extends React.Component {
       cutOffDate,
       productsLoadStock,
       productsLoadProducts,
+      selectCurrentCollection,
+      menuCurrentCollectionId
     } = this.props
 
     forceCheck()
+
+    if (prevProps.menuCurrentCollectionId !== menuCurrentCollectionId) {
+      selectCurrentCollection(menuCurrentCollectionId)
+    }
 
     if (cutOffDate && cutOffDate !== prevProps.cutOffDate) {
       try {
