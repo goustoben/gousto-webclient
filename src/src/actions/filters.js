@@ -239,6 +239,7 @@ export const selectFoodBrand = (foodBrand) => (
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     if (foodBrandFeature) {
       dispatch(currentFoodBrandChange(foodBrand))
+      dispatch(changeCollectionToAllRecipes())
       const query = { ...prevLoc.query }
       if (foodBrand === null) {
         delete query.foodBrand
@@ -246,7 +247,6 @@ export const selectFoodBrand = (foodBrand) => (
         query.foodBrand = foodBrand.slug
         if (query.collection) {
           delete query.collection
-          dispatch(changeCollectionToAllRecipes())
         }
       }
       const newLoc = { ...prevLoc, query }
