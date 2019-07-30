@@ -17,7 +17,7 @@ describe('Postcode', () => {
     })
   })
 
-  describe.skip('sensitive data masking', function() {
+  describe('sensitive data masking', function() {
     test('all <Field /> component(s) should have prop "mask"', () => {
       wrapper = shallow(
         <Postcode
