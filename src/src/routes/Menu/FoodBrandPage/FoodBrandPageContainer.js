@@ -1,12 +1,12 @@
 import { connect } from 'react-redux'
 import config from 'config/recipes'
-import { getFoodBrandFilter } from 'selectors/filters'
+import { getRecipeGroupFilter } from 'selectors/filters'
 import { filterRecipeGrouping } from 'actions/filters'
 import { FilteredRecipePage } from 'components/FilteredRecipePage'
 
 const mapStateToProps = (state) => {
   const { locationBeforeTransitions } = state.routing
-  const selectedFoodBrand = getFoodBrandFilter(state)
+  const selectedFoodBrand = getRecipeGroupFilter(state)
   const query = locationBeforeTransitions && locationBeforeTransitions.query
 
   return {

@@ -19,7 +19,7 @@ import {
   getCurrentDietTypes,
   getDietaryAttributes,
   getCurrentTotalTime,
-  getFoodBrandFilter
+  getRecipeGroupFilter
 } from '../selectors/filters'
 
 function isOutOfStock(recipeId, numPortions, recipesStock) {
@@ -332,7 +332,7 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
       let state = getState()
       const outOfStock = isOutOfStock(recipeId, numPortions, getState().menuRecipeStock)
       const { basket, menuRecipeStock, menuRecipes } = state
-      const selectedFoodBrand = getFoodBrandFilter(state)
+      const selectedFoodBrand = getRecipeGroupFilter(state)
       if (!limitReached(basket, menuRecipes, menuRecipeStock, undefined, maxRecipesNum) && !outOfStock) {
         if (recipeInfo) {
           Object.assign(recipeInfo, { collection: getCurrentCollectionId(state) })
@@ -389,7 +389,7 @@ export const basketRecipeRemove = (recipeId, view, position, score) => (
     let state = getState()
     const { basket } = state
     const collection = getCurrentCollectionId(state)
-    const selectedFoodBrand = getFoodBrandFilter(state)
+    const selectedFoodBrand = getRecipeGroupFilter(state)
     dispatch({
       type: actionTypes.BASKET_RECIPE_REMOVE,
       recipeId,
