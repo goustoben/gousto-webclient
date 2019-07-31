@@ -2,8 +2,12 @@ import Immutable from 'immutable'
 import {
   getNumPortions,
   getBasketRecipes,
-  getSignupChosenCollection,
+  getBasketOrderTotal,
+  getBasketOrderPrices,
   getBasketOrderDetails,
+  getBasketOrderDetailId,
+  getBasketOrderPromoCode,
+  getSignupChosenCollection,
 } from '../basket'
 
 describe('the basket selectors', () => {
@@ -68,6 +72,76 @@ describe('the basket selectors', () => {
 
       test('returns the order details from basket state', () => {
         expect(getBasketOrderDetails(updatedState)).toEqual(orderDetails)
+      })
+    })
+  })
+
+  describe('basket order detail selectors', () => {
+    const createOrderDetailState = (orderDetails = Immutable.Map({})) => ({
+      basket: Immutable.Map({
+        orderDetails,
+      })
+    })
+
+    describe('getBasketOrderDetailId', () => {
+      const id = '31373'
+
+      beforeEach(() => {
+        state = createOrderDetailState(Immutable.Map({
+          id,
+        }))
+      })
+
+      test('should return the order detail id', () => {
+        expect(getBasketOrderDetailId(state)).toEqual(id)
+      })
+    })
+
+    describe('getBasketOrderPrices', () => {
+      const prices = Immutable.Map({
+        total: '10.00',
+      })
+
+      beforeEach(() => {
+        state = createOrderDetailState(Immutable.Map({
+          prices,
+        }))
+      })
+
+      test('should return the order detail prices', () => {
+        expect(getBasketOrderPrices(state)).toEqual(prices)
+      })
+    })
+
+    describe('getBasketOrderTotal', () => {
+      const total = '45.00'
+
+      beforeEach(() => {
+        state = createOrderDetailState(Immutable.Map({
+          prices: Immutable.Map({
+            total,
+          }),
+        }))
+      })
+
+      test('should return the order detail prices', () => {
+        expect(getBasketOrderTotal(state)).toEqual(total)
+      })
+    })
+
+    describe('getBasketOrderPromoCode', () => {
+      const promoCode = 'DIT-BS-1010'
+
+      beforeEach(() => {
+        state = createOrderDetailState(Immutable.Map({
+          prices: Immutable.Map({
+            promoCode,
+          }),
+        }))
+      })
+
+      test('should return the order detail prices', () => {
+        expect(getBasketOrderPromoCode(state)).toEqual(promoCode)
       })
     })
   })
