@@ -1062,9 +1062,7 @@ describe('Menu', () => {
     })
 
     afterEach(() => {
-      forceCheck.mockClear()
-      shouldJfyTutorialBeVisible.mockClear()
-      selectCurrentCollection.mockClear()
+      jest.clearAllMocks()
     })
 
     test('should call forceCheck', async () => {
