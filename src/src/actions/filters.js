@@ -126,9 +126,9 @@ export function collectionFilterChange(collectionId) {
   }
 }
 
-export const changeCollectionToAllRecipes = () => (
+export const changeCollectionById = (id = ALL_RECIPES_COLLECTION_ID) => (
   (dispatch) => {
-    dispatch(collectionFilterChange(ALL_RECIPES_COLLECTION_ID))
+    dispatch(filtersCollectionChange(null, id))
   }
 )
 
@@ -239,10 +239,10 @@ export const selectFoodBrand = (foodBrand) => (
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     if (foodBrandFeature) {
       dispatch(currentFoodBrandChange(foodBrand))
+      dispatch(changeCollectionById())
       const query = { ...prevLoc.query }
       if (foodBrand === null) {
         delete query.foodBrand
-        dispatch(changeCollectionToAllRecipes())
       } else {
         query.foodBrand = foodBrand.slug
         if (query.collection) {
@@ -270,5 +270,6 @@ export default {
   filterMenuRevertFilters,
   filterApply,
   currentFoodBrandChange,
-  selectFoodBrand
+  selectFoodBrand,
+  changeCollectionById
 }
