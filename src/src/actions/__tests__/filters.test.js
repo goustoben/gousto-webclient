@@ -3,10 +3,11 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import actionTypes from 'actions/actionTypes'
 import { push } from 'react-router-redux'
+import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 
 import {
   collectionFilterChange,
-  changeCollectionToAllRecipes,
+  changeCollectionById,
   changeCollectionToAllRecipesViaCTA,
   filterCurrentDietTypesChange,
   filterCurrentTotalTimeChange,
@@ -142,11 +143,21 @@ describe('filters actions', () => {
     })
   })
 
-  describe('changeCollectionToAllRecipes', () => {
+  describe('changeCollectionById', () => {
 
-    test('should dispatch two actions', () => {
-      changeCollectionToAllRecipes()(dispatchSpy, getStateSpy)
+    test('should dispatch one action', () => {
+      changeCollectionById()(dispatchSpy, getStateSpy)
       expect(dispatchSpy.mock.calls.length).toBe(1)
+    })
+
+    test('should be called with ALL_RECIPES_COLLECTION_ID if no params passed in', () => {
+      changeCollectionById()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({collectionId: ALL_RECIPES_COLLECTION_ID}))
+    })
+
+    test('should be called with collectonId if passed in as params', () => {
+      changeCollectionById('1234')(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({collectionId: '1234'}))
     })
   })
 

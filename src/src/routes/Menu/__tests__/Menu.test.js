@@ -835,7 +835,7 @@ describe('Menu', () => {
   })
 
   describe('check query param in componentDidMount', () => {
-    const menuProps = { 
+    const menuProps = {
       productsLoadProducts:() => {},
       productsLoadStock: () => {},
       loginVisibilityChange: () => {},
@@ -893,11 +893,11 @@ describe('Menu', () => {
         expect(selectFoodBrand).toHaveBeenCalledWith(null)
       })
     })
-  
+
     describe('when foodBrand query param in URL', () => {
       test('should call selectFoodBrand with foodBrand details if foodBrand not selected', async() => {
         const selectFoodBrand = jest.fn()
-  
+
         await mount(
           <Menu
             {...menuProps}
@@ -919,7 +919,7 @@ describe('Menu', () => {
             },
           },
         )
-  
+
         expect(selectFoodBrand).toHaveBeenCalledWith({
           slug: 'takeaway-night',
           name: 'Takeaway Night',
@@ -929,7 +929,7 @@ describe('Menu', () => {
 
       test('should call selectFoodBrand with foodBrand details if url foodbrand different than selected one', async() => {
         const selectFoodBrand = jest.fn()
-  
+
         await mount(
           <Menu
             {...menuProps}
@@ -955,7 +955,7 @@ describe('Menu', () => {
             },
           },
         )
-  
+
         expect(selectFoodBrand).toHaveBeenCalledWith({
           slug: '10-minute-meals',
           name: '10-MINUTE MEALS',
@@ -1002,6 +1002,7 @@ describe('Menu', () => {
     let boxSummaryDeliveryDaysLoad
     let menuLoadBoxPrices
     let getStateSpy
+    const selectCurrentCollection = jest.fn()
     const shouldJfyTutorialBeVisible = jest.fn()
 
     beforeEach(() => {
@@ -1036,6 +1037,8 @@ describe('Menu', () => {
           filteredRecipesNumber={30}
           clearAllFilters={() => {}}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
+          selectCurrentCollection={selectCurrentCollection}
+          menuCurrentCollectionId={'123abc'}
           orderCheckout={{
             orderId: 'order-id',
             url: 'summary-url',
@@ -1055,17 +1058,29 @@ describe('Menu', () => {
       )
       forceCheck.mockClear()
       shouldJfyTutorialBeVisible.mockClear()
+      selectCurrentCollection.mockClear()
     })
 
     afterEach(() => {
-      forceCheck.mockClear()
-      shouldJfyTutorialBeVisible.mockClear()
+      jest.clearAllMocks()
     })
 
     test('should call forceCheck', async () => {
       await wrapper.instance().componentDidUpdate(wrapper.props())
 
       expect(forceCheck).toHaveBeenCalledTimes(1)
+    })
+
+    describe('selectCurrentCollection', () => {
+      test('should not call selectCurrentCollection if menuCollectionId doesnt change', () => {
+        wrapper.setProps({menuCurrentCollectionId: '123abc'})
+        expect(selectCurrentCollection).not.toHaveBeenCalled()
+      })
+
+      test('should only call selectCurrentCollection if menuCollectionId changes', () => {
+        wrapper.setProps({menuCurrentCollectionId: '567xyz'})
+        expect(selectCurrentCollection).toHaveBeenCalled()
+      })
     })
 
     describe('when we have finished loading', () => {
