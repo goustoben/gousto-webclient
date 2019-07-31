@@ -9,7 +9,6 @@ import { redirect } from 'utils/window'
 import { basketOrderLoad } from 'actions/basket'
 import { getAffiliateTrackingData } from 'utils/order'
 import { trackAffiliatePurchase } from 'actions/tracking'
-import { getOrderConfirmation } from 'selectors/features'
 import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
 import { orderCheckPossibleDuplicate } from './order'
 import recipeActions from './recipes'
@@ -18,17 +17,12 @@ import actionTypes from './actionTypes'
 
 export const orderConfirmationRedirect = (orderId, orderAction) => (
   (dispatch, getState) => {
-    if (getOrderConfirmation(getState())) {
-      dispatch(orderDetails(orderId))
+    dispatch(orderDetails(orderId))
 
-      const summaryUrl = config.client.orderConfirmation.replace(':orderId', orderId)
-      dispatch(orderCheckPossibleDuplicate(orderId))
-      dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
-      dispatch(tempActions.temp('showHeader', true))
-    } else {
-      const summaryUrl = config.client.orderSummary.replace(':orderId', orderId)
-      redirect((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl)
-    }
+    const summaryUrl = config.client.orderConfirmation.replace(':orderId', orderId)
+    dispatch(orderCheckPossibleDuplicate(orderId))
+    dispatch(push((orderAction) ? `${summaryUrl}?order_action=${orderAction}` : summaryUrl))
+    dispatch(tempActions.temp('showHeader', true))
   }
 )
 

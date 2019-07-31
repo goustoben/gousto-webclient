@@ -60,52 +60,25 @@ describe('orderConfirmation actions', () => {
   })
 
   describe('orderConfirmationRedirect', () => {
-    describe('when the feature flag is not set', () => {
-      beforeEach(() => {
-        getOrderConfirmation.mockReturnValueOnce(false)
-      })
+    test('should call orderDetails', () => {
+      orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
 
-      test('should not call orderDetails', () => {
-        orderConfirmationRedirect('5432', 'transactional')(dispatch, getState)
-
-        expect(dispatch).not.toHaveBeenCalled()
-      })
-
-      test('should redirect to the order summary page', () => {
-        orderConfirmationRedirect('5432', 'transactional')(dispatch, getState)
-
-        expect(push).not.toHaveBeenCalled()
-        expect(redirect).toHaveBeenCalledWith(
-          '/order/5432/summary?order_action=transactional'
-        )
-      })
+      expect(dispatch).toHaveBeenCalled()
     })
 
-    describe('when the feature flag is set', () => {
-      beforeEach(() => {
-        getOrderConfirmation.mockReturnValueOnce(true)
-      })
+    test('should call orderCheckPossibleDuplicate', () => {
+      orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
 
-      test('should call orderDetails', () => {
-        orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
+      expect(orderCheckPossibleDuplicate).toHaveBeenCalled()
+    })
 
-        expect(dispatch).toHaveBeenCalled()
-      })
+    test('should push the client to the order confirmation', () => {
+      orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
 
-      test('should call orderCheckPossibleDuplicate', () => {
-        orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
-
-        expect(orderCheckPossibleDuplicate).toHaveBeenCalled()
-      })
-
-      test('should push the client to the order confirmation', () => {
-        orderConfirmationRedirect('1234', 'transactional')(dispatch, getState)
-
-        expect(redirect).not.toHaveBeenCalled()
-        expect(push).toHaveBeenCalledWith(
-          '/order-confirmation/1234?order_action=transactional'
-        )
-      })
+      expect(redirect).not.toHaveBeenCalled()
+      expect(push).toHaveBeenCalledWith(
+        '/order-confirmation/1234?order_action=transactional'
+      )
     })
   })
 
