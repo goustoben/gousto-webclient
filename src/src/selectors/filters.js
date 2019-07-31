@@ -7,7 +7,7 @@ export const getCurrentDietTypes = state => state.filters.get('dietTypes')
 export const getCurrentTotalTime = state => state.filters.get('totalTime', '0')
 export const getDietaryAttributes = state => state.filters.get('dietaryAttributes')
 export const getNewRecipesFilter = state => state.filters.get('newRecipes', false)
-export const getRecipeGroupFilter = state => state.filters.get('foodBrand')
+export const getRecipeGroupFilter = state => state.filters.get('recipeGroup')
 
 export const getShortTitle = (menuCollections, currentCollectionId) => {
 

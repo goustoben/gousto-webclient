@@ -11,7 +11,7 @@ describe('filters', () => {
           totalTime: '0',
           dietTypes: Immutable.Set([]),
           dietaryAttributes: Immutable.Set([]),
-          foodBrand: null,
+          recipeGroup: null,
         }),
         basket: Immutable.fromJS({
           numPortions: 2,
@@ -80,7 +80,7 @@ describe('filters', () => {
           totalTime: '0',
           dietTypes: Immutable.Set([]),
           dietaryAttributes: Immutable.Set([]),
-          foodBrand: {
+          recipeGroup: {
             name: "Takeaway Night",
             slug: "takeaway-night",
             borderColor: "#17B7BF",

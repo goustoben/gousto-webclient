@@ -620,7 +620,7 @@ describe('basket actions', () => {
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          foodBrand: {
+          recipeGroup: {
             slug: 'test-food-brand'
           },
           dietTypes: Immutable.List(),
@@ -706,7 +706,7 @@ describe('basket actions', () => {
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          foodBrand: {
+          recipeGroup: {
             slug: 'test-food-brand'
           },
           dietTypes: Immutable.List(),
@@ -764,7 +764,7 @@ describe('basket actions', () => {
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          foodBrand: {
+          recipeGroup: {
             slug: 'test-food-brand'
           },
           dietTypes: Immutable.List(),
@@ -793,7 +793,7 @@ describe('basket actions', () => {
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          foodBrand: {
+          recipeGroup: {
             slug: 'test-food-brand'
           },
           dietTypes: Immutable.List(),
@@ -842,7 +842,7 @@ describe('basket actions', () => {
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          foodBrand: {
+          recipeGroup: {
             slug: 'test-food-brand'
           },
           dietTypes: Immutable.List(),
@@ -942,7 +942,7 @@ describe('basket actions', () => {
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          foodBrand: {
+          recipeGroup: {
             slug: 'test-food-brand'
           },
           dietTypes: Immutable.List(),
