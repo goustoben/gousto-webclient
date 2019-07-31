@@ -66,6 +66,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
+  subscriptionPauseOsr: {
+    experiment: false,
+    value: false,
+  },
 })
 
 const featureToggles = {

@@ -78,6 +78,10 @@ describe('features reducers', () => {
           experiment: false,
           value: false,
         },
+        subscriptionPauseOsr: {
+          experiment: false,
+          value: false,
+        },
       })
       const result = features.features(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
@@ -144,6 +148,10 @@ describe('features reducers', () => {
           value: false,
         },
         appBanner: {
+          experiment: false,
+          value: false,
+        },
+        subscriptionPauseOsr: {
           experiment: false,
           value: false,
         },
@@ -221,6 +229,10 @@ describe('features reducers', () => {
           value: false,
         },
         appBanner: {
+          experiment: false,
+          value: false,
+        },
+        subscriptionPauseOsr: {
           experiment: false,
           value: false,
         },
