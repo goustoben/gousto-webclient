@@ -48,6 +48,8 @@
 	composes: relative from 'styles/position.css';
 	width: 100%;
 	overflow-x: auto;
+	overflow-y: -moz-hidden-unscrollable;
+	scrollbar-width: none;
 	-webkit-overflow-scrolling: touch;
 	max-width: maxWidth;
 	margin: auto;
