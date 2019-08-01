@@ -75,7 +75,7 @@ export const loadRecipes = () => async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const cutoffDate = getCutoffDateTime(getState())
 
-    const args = { 'filters[available_on]': cutoffDate }
+    const args = cutoffDate ? { 'filters[available_on]': cutoffDate } : null
 
     const { data: recipes } = await fetchRecipes(accessToken, '', args)
 
