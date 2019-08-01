@@ -16,6 +16,7 @@ import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import CookieBanner from 'CookieBanner'
 import { AppBanner } from 'AppBanner'
+import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
 import MobileMenu from './MobileMenu'
@@ -311,6 +312,7 @@ class Header extends React.PureComponent {
       <div>
         <CookieBanner />
         <AppBanner />
+        <AbandonBasketModal />
         <span id={serverError ? 'mobileMenu' : null} data-testing="header">
           <button
             type="button"
