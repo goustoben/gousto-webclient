@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { getSlot } from 'utils/deliveries'
 import actionTypes from 'actions/actionTypes'
-import { getOrderConfirmation } from 'selectors/features'
 import { checkoutTransactionalOrder } from 'actions/checkout'
 
 import CheckoutButton from './CheckoutButton'
@@ -30,7 +29,6 @@ const mapStateToProps = ({ auth, basket, boxSummaryDeliveryDays, error, features
   userOrders: user.get('orders', Immutable.List([])), // eslint-disable-line new-cap
   orderSaveError: error.get(actionTypes.ORDER_SAVE, null),
   isAuthenticated: auth.get('isAuthenticated'),
-  orderConfirmationFeature: getOrderConfirmation({ features }),
 })
 
 const CheckoutButtonContainer = connect(mapStateToProps, {

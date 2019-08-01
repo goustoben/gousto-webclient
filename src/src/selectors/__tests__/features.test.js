@@ -6,7 +6,6 @@ import {
   getGoToMyGousto,
   getGoToMyDeliveries,
   getJfyTutorial,
-  getOrderConfirmation,
   getRafPositionOnWelcomePage,
   isDeliveryFrequencyFeatureEnabled
 } from 'selectors/features'
@@ -142,24 +141,6 @@ describe('when features are defined', () => {
       state = Immutable.fromJS({})
 
       expect(getJfyTutorial(state)).toEqual(false)
-    })
-  })
-
-  describe('getOrderConfirmation', () => {
-    it('should return value of getOrderConfirmation', () => {
-      state.features = Immutable.fromJS({
-        orderConfirmation: {
-          value: true
-        }
-      })
-
-      expect(getOrderConfirmation(state)).toEqual(true)
-    })
-
-    it('should return false if features does not exist', () => {
-      state = Immutable.fromJS({})
-
-      expect(getOrderConfirmation(state)).toEqual(false)
     })
   })
 
