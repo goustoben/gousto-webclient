@@ -7,7 +7,6 @@ import { fetchOrder } from 'apis/orders'
 
 import { basketOrderLoad } from 'actions/basket'
 import { recipesLoadRecipesById } from 'actions/recipes'
-import { getOrderConfirmation } from 'selectors/features'
 import { orderCheckPossibleDuplicate } from 'actions/order'
 import {
   productsLoadProducts,
