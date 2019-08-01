@@ -100,6 +100,10 @@ export const currentFoodBrandChange = (foodBrand) => ({
 export const currentThematicChange = (thematic) => ({
   type: actionTypes.FILTERS_THEMATIC_CHANGE,
   thematic,
+  trackingData: {
+    actionType: thematic !== null ? 'Thematic selected' : 'Thematic unselected',
+    food_brand: thematic !== null ? thematic.slug : ''
+  }
 })
 
 export const filtersClearAll = (collectionId) => ({
@@ -242,23 +246,25 @@ export const filterRecipeGrouping = (recipeGrouping, location) => (
     const { routing, features } = getState()
     const prevLoc = routing.locationBeforeTransitions
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
-    const tasteOfJapanFeature = features.getIn(['thematic', 'value'])
-    if (foodBrandFeature || tasteOfJapanFeature) {
+    const thematicFeature = features.getIn(['thematic', 'value'])
+    if (foodBrandFeature || thematicFeature) {
+      const query = { ...prevLoc.query }
       if (location === 'foodBrand') {
         dispatch(currentFoodBrandChange(recipeGrouping))
+        if (recipeGrouping === null) {
+          delete query.foodBrand
+        } else {
+          query.foodBrand = recipeGrouping.slug
+          if (query.collection) {
+            delete query.collection
+          }
+        }
       } else if (location === 'thematic') {
         dispatch(currentThematicChange(recipeGrouping))
       }
+
       dispatch(changeCollectionById())
-      const query = { ...prevLoc.query }
-      if (recipeGrouping === null) {
-        delete query.foodBrand //update this soooon
-      } else {
-        query.foodBrand = recipeGrouping.slug
-        if (query.collection) {
-          delete query.collection
-        }
-      }
+    
       const newLoc = { ...prevLoc, query }
       dispatch(push(newLoc))
     }
