@@ -1,3 +1,4 @@
+export const getBasketOrderId = state => state.basket.get('orderId')
 export const getBasketRecipes = state => state.basket.get('recipes')
 export const getNumPortions = state => state.basket.get('numPortions')
 export const getPromoCode = state => state.basket.get('promoCode', false)

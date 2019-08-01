@@ -8,6 +8,7 @@ import {
   getBasketOrderDetailId,
   getBasketOrderPromoCode,
   getSignupChosenCollection,
+  getBasketOrderId,
 } from '../basket'
 
 describe('the basket selectors', () => {
@@ -73,6 +74,22 @@ describe('the basket selectors', () => {
       test('returns the order details from basket state', () => {
         expect(getBasketOrderDetails(updatedState)).toEqual(orderDetails)
       })
+    })
+  })
+
+  describe('getBasketOrderId', () => {
+    const orderId = '311737157'
+
+    beforeEach(() => {
+      state = {
+        basket: Immutable.Map({
+          orderId,
+        })
+      }
+    })
+
+    test('should return the basket order id', () => {
+      expect(getBasketOrderId(state)).toEqual(orderId)
     })
   })
 
