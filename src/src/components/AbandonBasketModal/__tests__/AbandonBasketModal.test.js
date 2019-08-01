@@ -8,7 +8,7 @@ import { menuLoadDays } from 'actions/menu'
 import boxSummaryActions from 'actions/boxSummary'
 import { loadRecipes } from 'actions/recipes'
 import userActions from 'actions/user'
-import { AbandonBasketModal } from './AbandonBasketModal'
+import { AbandonBasketModal } from '../AbandonBasketModal'
 
 jest.mock('actions/menu', () => ({
   menuLoadDays: jest.fn()
