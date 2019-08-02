@@ -404,7 +404,7 @@ describe('onScreenRecovery', () => {
           expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
             type: 'TRACKING',
             trackingData: expect.objectContaining({
-              actionType: 'Subscription Paused',
+              actionType: 'Subscription Pause',
               orderCount: 0,
               hasPendingPromo: null,
             })
@@ -442,7 +442,7 @@ describe('onScreenRecovery', () => {
           expect(dispatchSpy).not.toHaveBeenCalledWith(expect.objectContaining({
             type: 'TRACKING',
             trackingData: expect.objectContaining({
-              actionType: 'Subscription Paused',
+              actionType: 'Subscription Pause',
               orderCount: 0,
               hasPendingPromo: null,
             })
@@ -537,7 +537,7 @@ describe('onScreenRecovery', () => {
       }))
     }
     )
-    test('when modalType is subscription, should toggle OSR modal visibility with Subscription Kept tracking action', async () => {
+    test('when modalType is subscription, should toggle OSR modal visibility with Subscription KeptActive tracking action', async () => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
           modalType: 'subscription',
@@ -552,7 +552,7 @@ describe('onScreenRecovery', () => {
         type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
         trackingData: expect.objectContaining({
-          actionType: 'Subscription Kept',
+          actionType: 'Subscription KeptActive',
         })
       }))
     })

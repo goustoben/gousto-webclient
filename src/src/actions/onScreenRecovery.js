@@ -77,7 +77,7 @@ export const keepSubscription = () => (
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: false,
       trackingData: {
-        actionType: 'Subscription Kept',
+        actionType: 'Subscription KeptActive',
         customerId: userId,
       },
     })
@@ -174,7 +174,7 @@ export const getPauseRecoveryContent = () => (
           dispatch({
             type: actionTypes.TRACKING,
             trackingData: {
-              actionType: 'Subscription Paused',
+              actionType: 'Subscription Pause',
               orderCount,
               hasPendingPromo,
             },
