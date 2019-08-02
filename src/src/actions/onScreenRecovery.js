@@ -197,6 +197,23 @@ export const pauseSubscription = () => (
         customerId: userId,
       },
     })
+
+    const subscriptionPauseOsrFeatureValue = getState().features.getIn(['subscriptionPauseOsr', 'value'])
+    if (subscriptionPauseOsrFeatureValue) {
+      const orders = getState().user.get('orders')
+      const orderCount = orders.filter((o) => o.get('state') === 'phase' ).size
+      const offer = getState().onScreenRecovery.get('offer')
+      const hasPendingPromo = offer === null ? null : offer.details.formatted_value
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'Subscription Paused',
+          orderCount,
+          hasPendingPromo,
+        },
+      })
+    }
+
     dispatch(redirect('/my-subscription'))
   }
 )

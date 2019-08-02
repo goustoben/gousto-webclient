@@ -222,7 +222,10 @@ describe('onScreenRecovery', () => {
       getStateSpy.mockReturnValue({
         user: Immutable.Map({
           id: '123',
-        })
+        }),
+        features: Immutable.Map({
+          subscriptionPauseOsr: false
+        }),
       })
     })
     test('should call the subscriptionDeactivate action', async () => {
@@ -241,6 +244,66 @@ describe('onScreenRecovery', () => {
     test('should redirect to my-subscription', async () => {
       await pauseSubscription()(dispatchSpy, getStateSpy)
       expect(redirect).toHaveBeenCalledWith('/my-subscription')
+    })
+
+    describe('when subscriptionPauseOsr feature flag is true', async () => {
+      test('should trigger tracking of subscription pause event', async () => {
+        getStateSpy.mockReturnValue({
+          onScreenRecovery: Immutable.Map({
+            modalType: 'subscription',
+            offer: null
+          }),
+          user: Immutable.Map({
+            id: '12345',
+            orders: Immutable.List([]),
+          }),
+          features: Immutable.Map({
+            subscriptionPauseOsr: Immutable.fromJS({
+              experiment: false,
+              value: true,
+            }),
+          }),
+        })
+        await pauseSubscription()(dispatchSpy, getStateSpy)
+        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'TRACKING',
+          trackingData: expect.objectContaining({
+            actionType: 'Subscription Paused',
+            orderCount: 0,
+            hasPendingPromo: null,
+          })
+        }))
+      })
+    })
+
+    describe('when subscriptionPauseOsr feature flag is true', async () => {
+      test('should trigger tracking of subscription pause event', async () => {
+        getStateSpy.mockReturnValue({
+          onScreenRecovery: Immutable.Map({
+            modalType: 'subscription',
+            offer: null
+          }),
+          user: Immutable.Map({
+            id: '12345',
+            orders: Immutable.List([]),
+          }),
+          features: Immutable.Map({
+            subscriptionPauseOsr: Immutable.fromJS({
+              experiment: false,
+              value: false,
+            }),
+          }),
+        })
+        await pauseSubscription()(dispatchSpy, getStateSpy)
+        expect(dispatchSpy).not.toHaveBeenCalledWith(expect.objectContaining({
+          type: 'TRACKING',
+          trackingData: expect.objectContaining({
+            actionType: 'Subscription Paused',
+            orderCount: 0,
+            hasPendingPromo: null,
+          })
+        }))
+      })
     })
   })
 
