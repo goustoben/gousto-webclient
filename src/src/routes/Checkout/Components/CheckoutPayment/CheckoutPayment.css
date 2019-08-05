@@ -1,4 +1,4 @@
-@value Blueberry20 from 'styles/colors.css';
+@value BluecheeseLight from 'styles/colors.css';
 @value SpacingLG from 'sass-loader!styles/spacing.scss';
 
 .container {
@@ -6,7 +6,7 @@
 	position: relative;
 	min-height: 450px;
 	padding: SpacingLG;
-	background-color: Blueberry20;
+	background-color: BluecheeseLight;
 }
 
 
