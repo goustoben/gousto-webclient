@@ -12,11 +12,11 @@ const AwinPixel = ({ show, orderId, total, commissionGroup, promoCode }) => (
         `?tt=ns` +
         `&tv=2` +
         `&cr=GBP` +
-        `&ref=${orderId}` +
-        `&amount=${total}` +
-        (promoCode ? `&vc=${promoCode}` : '') +
         `&merchant=${MERCHANT_ID}` +
-        `&parts=${commissionGroup}:${total}`
+        (total ? `&amount=${total}` : '') +
+        (orderId ? `&ref=${orderId}` : '') +
+        (promoCode ? `&vc=${promoCode}` : '') +
+        (commissionGroup && total ? `&parts=${commissionGroup}:${total}` : '')
       }
     />
   ) : null
@@ -28,6 +28,14 @@ AwinPixel.propTypes = {
   orderId: PropTypes.string,
   promoCode: PropTypes.string,
   commissionGroup: PropTypes.string,
+}
+
+AwinPixel.defaultProps = {
+  show: false,
+  total: '',
+  orderId: '',
+  promoCode: '',
+  commissionGroup: '',
 }
 
 export {

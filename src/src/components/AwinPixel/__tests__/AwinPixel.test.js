@@ -20,6 +20,23 @@ describe('AwinPixel', () => {
     })
   })
 
+  describe('without props', () => {
+    test('should render an image pixel with the correct target', () => {
+      wrapper = shallow(<AwinPixel show />)
+
+      const { searchParams } = new URL(wrapper.prop('src'))
+
+      expect(searchParams.get('tt')).toEqual('ns')
+      expect(searchParams.get('tv')).toEqual('2')
+      expect(searchParams.get('cr')).toEqual('GBP')
+      expect(searchParams.get('merchant')).not.toEqual(null)
+      expect(searchParams.get('ref')).toEqual(null)
+      expect(searchParams.get('amount')).toEqual(null)
+      expect(searchParams.get('vc')).toEqual(null)
+      expect(searchParams.get('parts')).toEqual(null)
+    })
+  })
+
   describe('with props', () => {
     let orderId, total, commissionGroup, promoCode
 
