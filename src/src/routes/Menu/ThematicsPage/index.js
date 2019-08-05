@@ -1,0 +1,1 @@
+export { ThematicsPage } from './ThematicsPageContainer'
