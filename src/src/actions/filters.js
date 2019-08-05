@@ -241,32 +241,53 @@ export const filterApply = (type, value) => (
   }
 )
 
+const selectFoodBrand = (dispatch, getState, recipeGrouping) => {
+  const { routing } = getState()
+  const previousLocation = routing.locationBeforeTransitions
+  const query = { ...previousLocation.query }
+
+  dispatch(currentFoodBrandChange(recipeGrouping))
+  if (recipeGrouping === null) {
+    delete query.foodBrand
+  } else {
+    query.foodBrand = recipeGrouping.slug
+    if (query.collection) {
+      delete query.collection
+    }
+  }
+
+  const newLocation = { ...previousLocation, query }
+  dispatch(push(newLocation))
+}
+
+const selectThematic = (dispatch, getState, recipeGrouping) => {
+  const { routing } = getState()
+  const previousLocation = routing.locationBeforeTransitions
+  const query = { ...previousLocation.query }
+
+  dispatch(currentThematicChange(recipeGrouping))
+  // TODO add url change for thematics
+  const newLocation = { ...previousLocation, query }
+  dispatch(push(newLocation))
+}
+
 export const filterRecipeGrouping = (recipeGrouping, location) => (
   (dispatch, getState) => {
     const { routing, features } = getState()
-    const prevLoc = routing.locationBeforeTransitions
+    const previousLocation = routing.locationBeforeTransitions
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     const thematicFeature = features.getIn(['thematic', 'value'])
-    if (foodBrandFeature || thematicFeature) {
-      const query = { ...prevLoc.query }
-      if (location === 'foodBrand') {
-        dispatch(currentFoodBrandChange(recipeGrouping))
-        if (recipeGrouping === null) {
-          delete query.foodBrand
-        } else {
-          query.foodBrand = recipeGrouping.slug
-          if (query.collection) {
-            delete query.collection
-          }
-        }
-      } else if (location === 'thematic') {
-        dispatch(currentThematicChange(recipeGrouping))
-      }
+    if(recipeGrouping !== null) {
+      recipeGrouping.location = location 
+    }
 
+    if (foodBrandFeature || thematicFeature) {
+      if (location === 'foodBrand') {
+        selectFoodBrand(dispatch, getState, recipeGrouping)
+      } else if (location === 'thematic') {
+        selectThematic(dispatch, getState, recipeGrouping)
+      }
       dispatch(changeCollectionById())
-    
-      const newLoc = { ...prevLoc, query }
-      dispatch(push(newLoc))
     }
   }
 )

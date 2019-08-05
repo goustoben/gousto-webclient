@@ -393,13 +393,15 @@ describe('filters actions', () => {
       filterRecipeGrouping({
         name: 'FoodBrand',
         slug: 'food-brand',
-        borderColor: 'blue'
+        borderColor: 'blue',
+        location: 'foodBrand'
       }, 'foodBrand')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'foodBrand': {
           name: 'FoodBrand',
           slug: 'food-brand',
-          borderColor: 'blue'
+          borderColor: 'blue',
+          location: 'foodBrand'
         },
         'type': "FILTERS_FOOD_BRAND_CHANGE",
         'trackingData': {
