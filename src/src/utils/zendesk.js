@@ -49,6 +49,22 @@ export const zeChatButtonSetUp = (pathName) => {
   }
 
   if (shouldDisplayChat) {
-    zeInstance('webWidget', 'open')
+    zeInstance(() => {
+      zeInstance('webWidget', 'open')
+
+      window.$zopim(() => {
+        /*
+        * When users click on the minimize button within the chat,
+        * it hides the chat button completely from the page . This would force the button to be shown.
+        */
+        window.$zopim.livechat.window.onHide(() => {
+          zeInstance('webWidget', 'open')
+        })
+      })
+    })
+  } else {
+    zeInstance(() => {
+      zeInstance('webWidget', 'hide')
+    })
   }
 }
