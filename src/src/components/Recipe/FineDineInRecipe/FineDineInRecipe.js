@@ -39,7 +39,7 @@ const FineDineInRecipe = ({media, onClick, selectFoodBrand, isFoodBrandClickable
         <div className={css.recipeDetails}>
           <TasteScore className={css.score} score={tasteScore} />
           <div className={css.textContainer}>
-            <div 
+            <div
               role="link"
               tabIndex={0}
               onClick={onClick}

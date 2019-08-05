@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 
 import { getRecipes, getMenuRecipeIds } from 'selectors/root'
-import { getFoodBrandFilter } from 'selectors/filters'
+import { getRecipeGroupFilter } from 'selectors/filters'
 import { getFoodBrand } from 'utils/recipe'
 
 const getCurrentMenuRecipes = createSelector(
@@ -13,8 +13,8 @@ const getCurrentMenuRecipes = createSelector(
 )
 
 export const getRecipesFilteredByFoodBrand = createSelector(
-  [getCurrentMenuRecipes, getFoodBrandFilter],
-  (currentMenuRecipes, selectedFoodBrand) => (
-    selectedFoodBrand ? currentMenuRecipes.filter(recipe => getFoodBrand(recipe).get('slug') === selectedFoodBrand.slug) : null
+  [getCurrentMenuRecipes, getRecipeGroupFilter],
+  (currentMenuRecipes, selectedRecipeGroup) => (
+    selectedRecipeGroup ? currentMenuRecipes.filter(recipe => getFoodBrand(recipe).get('slug') === selectedRecipeGroup.slug) : null
   )
 )

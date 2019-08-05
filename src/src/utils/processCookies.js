@@ -77,9 +77,10 @@ const processCookies = (cookies, store) => {
   const promoCode = getCookieStoreValue(cookies, 'basket_promoCode')
   const collection = getCookieStoreValue(cookies, 'basket_collection')
   const currentCollectionId = getCookieStoreValue(cookies, 'filters_currentCollectionId')
-  const foodBrandSlug = getCookieStoreValue(cookies, 'filters_foodBrand_slug')
-  const foodBrandName = getCookieStoreValue(cookies, 'filters_foodBrand_name')
-  const foodBrandBorderColor = getCookieStoreValue(cookies, 'filters_foodBrand_borderColor')
+  const recipeGroupSlug = getCookieStoreValue(cookies, 'filters_recipeGroup_slug')
+  const recipeGroupName = getCookieStoreValue(cookies, 'filters_recipeGroup_name')
+  const recipeGroupBorderColor = getCookieStoreValue(cookies, 'filters_recipeGroup_borderColor')
+  const recipeGroupBorderLocation = getCookieStoreValue(cookies, 'filters_recipeGroup_location')
   const promoAgeVerified = getCookieStoreValue(cookies, 'promoAgeVerified')
   const tracking = getCookieStoreValue(cookies, 'tracking')
   const cookiePolicy = get(cookies, 'cookie_policy')
@@ -152,13 +153,17 @@ const processCookies = (cookies, store) => {
     store.dispatch(filterActions.collectionFilterIdRecieve(currentCollectionId))
   }
 
-  if (foodBrandSlug && foodBrandName && foodBrandBorderColor) {
-    const foodBrand = {
-      slug: foodBrandSlug,
-      name: foodBrandName,
-      borderColor: foodBrandBorderColor
+  if (recipeGroupSlug && recipeGroupName && recipeGroupBorderColor) {
+    const recipeGroup = {
+      slug: recipeGroupSlug,
+      name: recipeGroupName,
+      borderColor: recipeGroupBorderColor,
+      location: recipeGroupBorderLocation
     }
-    store.dispatch(filterActions.currentFoodBrandChange(foodBrand))
+
+    if(recipeGroupBorderLocation === 'foodBrand') {
+      store.dispatch(filterActions.currentFoodBrandChange(recipeGroup))
+    }
   }
 
   if (!orderId) {

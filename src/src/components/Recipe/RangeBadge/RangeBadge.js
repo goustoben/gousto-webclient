@@ -46,7 +46,7 @@ const RangeBadge = ({ range, selectFoodBrand, isFoodBrandClickable }) => {
     borderLeft: `10px solid ${borderColor}`,
   }
   if (isFoodBrandClickable) {
-    handleClick = () => selectFoodBrand(rangeSelect)
+    handleClick = () => selectFoodBrand(rangeSelect, 'foodBrand')
   }
 
   return (rangeBadge) ? (

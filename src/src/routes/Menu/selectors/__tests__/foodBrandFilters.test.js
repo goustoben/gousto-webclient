@@ -8,8 +8,8 @@ describe('foodBrandFilters', () => {
       totalTime: '0',
       dietTypes: Immutable.Set([]),
       dietaryAttributes: Immutable.Set([]),
-      newRecipes: false, 
-      foodBrand: {
+      newRecipes: false,
+      recipeGroup: {
         slug: "global-kitchen"
       }
     }),
@@ -24,14 +24,14 @@ describe('foodBrandFilters', () => {
           offset: 3,
         },{
           offset: -0,
-        }], 
+        }],
         taxonomy: Immutable.List([
           Immutable.Map({
             id: 2,
             name: 'Food Brands',
             slug: 'food-brands',
             tags: Immutable.List([
-              Immutable.Map({ 
+              Immutable.Map({
                 id: 6,
                 name: 'Modern Bistro',
                 slug: 'modern-bistro' }),
@@ -55,7 +55,7 @@ describe('foodBrandFilters', () => {
             name: 'Food Brands',
             slug: 'food-brands',
             tags: Immutable.List([
-              Immutable.Map({ 
+              Immutable.Map({
                 id: 6,
                 name: 'Modern Bistro',
                 slug: 'modern-bistro' }),
@@ -79,7 +79,7 @@ describe('foodBrandFilters', () => {
             name: 'Food Brands',
             slug: 'food-brands',
             tags: Immutable.List([
-              Immutable.Map({ 
+              Immutable.Map({
                 id: 6,
                 name: 'Modern Bistro',
                 slug: 'modern-bistro' }),
@@ -103,7 +103,7 @@ describe('foodBrandFilters', () => {
             name: 'Food Brands',
             slug: 'food-brands',
             tags: Immutable.List([
-              Immutable.Map({ 
+              Immutable.Map({
                 id: 8,
                 name: 'Global Kitchen',
                 slug: 'global-kitchen'}),
@@ -127,7 +127,7 @@ describe('foodBrandFilters', () => {
             name: 'Food Brands',
             slug: 'food-brands',
             tags: Immutable.List([
-              Immutable.Map({ 
+              Immutable.Map({
                 id: 8,
                 name: 'Global Kitchen',
                 slug: 'global-kitchen' }),
@@ -156,7 +156,7 @@ describe('foodBrandFilters', () => {
             name: 'Food Brands',
             slug: 'food-brands',
             tags: Immutable.List([
-              Immutable.Map({ 
+              Immutable.Map({
                 id: 8,
                 name: 'Global Kitchen',
                 slug: 'global-kitchen'}),
@@ -180,7 +180,7 @@ describe('foodBrandFilters', () => {
             name: 'Food Brands',
             slug: 'food-brands',
             tags: Immutable.List([
-              Immutable.Map({ 
+              Immutable.Map({
                 id: 8,
                 name: 'Global Kitchen',
                 slug: 'global-kitchen' }),

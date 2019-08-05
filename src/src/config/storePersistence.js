@@ -30,7 +30,7 @@ export default (store) => {
       },
       filters: {
         currentCollectionId: true,
-        foodBrand: true
+        recipeGroup: true
       },
     })
   }
