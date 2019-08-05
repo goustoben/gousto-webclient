@@ -18,16 +18,15 @@
 	user-select: none;
 }
 
-:global body[data-gousto-overlay-open] .zopim {
+:global body[data-gousto-overlay-open] .zEWidget-launcher {
 	-webkit-filter: blur(3px);
 	z-index: 10 !important;
 }
 
-/* Disable rounded chat button */
-:global .zEWidget-launcher {
-	display: none !important;
-}
-
 :global .disabled[role="button"] {
 	cursor: default;
+}
+
+.zopim {
+	display: none;
 }
