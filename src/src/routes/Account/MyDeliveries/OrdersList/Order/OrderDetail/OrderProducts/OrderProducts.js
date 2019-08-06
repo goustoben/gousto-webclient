@@ -101,7 +101,7 @@ class OrderProducts extends React.PureComponent {
           </div>
         }
         <div className={css.buttonRow}>
-          <Link to={routes.client.orderSummary.replace(':orderId', this.props.orderId)} clientRouted={false}>
+          <Link to={routes.client.orderConfirmation.replace(':orderId', this.props.orderId)} clientRouted={false}>
             <Button color={productsSize > 0 ? 'secondary' : 'primary'} noDecoration>
               {productsSize > 0 ? 'Edit extras' : 'Add extras'}
             </Button>
