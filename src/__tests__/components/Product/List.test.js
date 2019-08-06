@@ -63,7 +63,7 @@ describe('Product List button', () => {
 
   test('should link to products page for that orderId', () => {
     wrapper = shallow(<ProductList orderId={'12'} />)
-    expect(wrapper.find(LinkButton).prop('to')).toEqual('/order/12/summary')
+    expect(wrapper.find(LinkButton).prop('to')).toEqual('/order-confirmation/12')
     expect(wrapper.find(LinkButton).prop('clientRouted')).toBe(false)
   })
 })

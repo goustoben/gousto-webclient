@@ -7,7 +7,7 @@ import SectionHeader from 'SectionHeader'
 import config from 'config'
 import css from './List.css'
 
-const productsRoute = config.routes.client.orderSummary
+const productsRoute = config.routes.client.orderConfirmation
 
 const ProductList = ({ orderId, products, number, onProductClick }) => (
   <article className={css.content}>
