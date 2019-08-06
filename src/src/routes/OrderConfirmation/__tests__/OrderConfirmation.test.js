@@ -89,12 +89,34 @@ describe('OrderConfirmation', () => {
           categories: [{ hidden: false, id: 'category-1', title: 'Category 1' }, { hidden: false, id: 'category-2', title: 'Category 2' }]
         }
       }
-      const expectedResult = [{ id: 'all-products', label: 'All Products' }, { id: 'category-1', label: 'Category 1' }, { id: 'category-2', label: 'Category 2' }]
+      const expectedResult = [{ id: 'all-products', label: 'All Products', count: 2 }, { id: 'category-1', label: 'Category 1' }, { id: 'category-2', label: 'Category 2' }]
       const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
       expect(wrapper.instance().getCategories()).toEqual(expectedResult)
     })
 
+    test('should return the count of products for all categories', () => {
+      const products = {
+        1234: {
+          categories: [{ hidden: false, id: 'category-1', title: 'Category 1' }, { hidden: false, id: 'category-2', title: 'Category 2' }]
+        },
+        5678: {
+          categories: [{ hidden: false, id: 'category-1', title: 'Category 1' }, { hidden: false, id: 'category-2', title: 'Category 2' }]
+        }
+      }
+      const expectedResult = [{ id: 'all-products', label: 'All Products', count: 2 }, { id: 'category-1', label: 'Category 1' }, { id: 'category-2', label: 'Category 2' }]
+      const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
+
+      expect(wrapper.instance().getCategories()).toEqual(expectedResult)
+    })
+
     test('should return "All Products" if products is undefined', () => {
+      const expectedResult = [{ id: 'all-products', label: 'All Products' }]
+      const wrapper = shallow(<OrderConfirmation {...testProps} products={undefined} />)
+      expect(wrapper.instance().getCategories()).toEqual(expectedResult)
+    })
+
+
+    test('should not return the count of products for all categories if products is undefined', () => {
       const expectedResult = [{ id: 'all-products', label: 'All Products' }]
       const wrapper = shallow(<OrderConfirmation {...testProps} products={undefined} />)
       expect(wrapper.instance().getCategories()).toEqual(expectedResult)
@@ -105,7 +127,7 @@ describe('OrderConfirmation', () => {
         1234: {},
         5678: {}
       }
-      const expectedResult = [{ id: 'all-products', label: 'All Products' }]
+      const expectedResult = [{ id: 'all-products', label: 'All Products', count: 2 }]
       const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
       expect(wrapper.instance().getCategories()).toEqual(expectedResult)
     })
@@ -116,7 +138,7 @@ describe('OrderConfirmation', () => {
           categories: [{ hidden: true, id: 'category-1', title: 'Category 1' }, { hidden: false, id: 'category-2', title: 'Category 2' }]
         }
       }
-      const expectedResult = [{ id: 'all-products', label: 'All Products' }, { id: 'category-2', label: 'Category 2' }]
+      const expectedResult = [{ id: 'all-products', label: 'All Products', count: 1 }, { id: 'category-2', label: 'Category 2' }]
       const wrapper = shallow(<OrderConfirmation {...testProps} products={products} />)
       expect(wrapper.instance().getCategories()).toEqual(expectedResult)
     })
@@ -165,7 +187,6 @@ describe('OrderConfirmation', () => {
       }
 
       wrapper.instance().getFilteredProducts('all-products')
-
       expect(wrapper.state('filteredProducts')).toEqual(expectedResult)
     })
 

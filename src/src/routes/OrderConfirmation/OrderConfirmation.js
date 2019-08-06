@@ -101,6 +101,8 @@ class OrderConfirmation extends PureComponent {
 
     if (!products) return allProducts
 
+    allProducts[0].count = Object.keys(products).length
+
     return Object.keys(products).reduce((categoryProducts, productId) => {
       const productCategories = products[productId].categories
 
