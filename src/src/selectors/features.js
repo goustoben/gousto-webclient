@@ -25,3 +25,5 @@ export const isDeliveryFrequencyFeatureEnabled = ({ features }) => features.getI
 export const getAppBanner = ({ features }) => features.getIn(['appBanner', 'value'], false)
 
 export const isShowNoDiscountCTAFeatureEnabled = ({ features }) => features && features.getIn(['showNoDiscountCTA', 'value'], false)
+
+export const isSubscriptionPauseOsrFeatureEnabled = ({ features }) => features && features.getIn(['subscriptionPauseOsr', 'value'], false)

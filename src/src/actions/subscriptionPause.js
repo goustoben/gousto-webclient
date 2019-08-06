@@ -10,6 +10,8 @@ import GoustoException from 'utils/GoustoException'
 import windowUtil from 'utils/window'
 import routesConfig from 'config/routes'
 import Immutable from 'immutable'
+import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
+import { isSubscriptionPauseOsrFeatureEnabled } from 'selectors/features'
 import statusActions from './status'
 import actionTypes from './actionTypes'
 
@@ -679,6 +681,11 @@ function subscriptionPauseLoadInitReasons() {
 
 function subscriptionPauseStart() {
   return async (dispatch, getState) => {
+    const subscriptionPauseOsrFeatureValue = isSubscriptionPauseOsrFeatureEnabled(getState())
+    if (subscriptionPauseOsrFeatureValue) {
+      return getPauseRecoveryContent()(dispatch, getState)
+    }
+    
     await dispatch(userActions.userLoadData())
     dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_PAUSE_START, true))
     dispatch(subPauseActions.subscriptionPauseReset())

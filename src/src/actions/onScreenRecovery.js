@@ -156,11 +156,13 @@ export const getSkipRecoveryContent = () => (
 export const getPauseRecoveryContent = () => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
+    const modalType = 'subscription'
     try {
       const { data } = await fetchSubscriptionPauseContent(accessToken)
       if (data.intervene) {
         dispatch(modalVisibilityChange({
           data,
+          modalType
         }))
       } else {
         dispatch(subPauseActions.subscriptionDeactivate())

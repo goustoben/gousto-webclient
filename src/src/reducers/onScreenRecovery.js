@@ -36,6 +36,9 @@ const onScreenRecovery = {
         if (action.deliveryDayId) {
           newState = newState.set('deliveryDayId', action.deliveryDayId)
         }
+        if (action.modalType) {
+          newState = newState.set('modalType', action.modalType)
+        }
         if (action.title) {
           newState = newState.set('title', action.title)
         }
