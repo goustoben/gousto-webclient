@@ -165,21 +165,18 @@ export const getPauseRecoveryContent = () => (
           modalType
         }))
 
-        const subscriptionPauseOsrFeatureValue = getState().features.getIn(['subscriptionPauseOsr', 'value'])
-        if (subscriptionPauseOsrFeatureValue) {
-          const orders = getState().user.get('orders')
-          const orderCount = orders.filter((o) => o.get('state') === 'phase' ).size
-          const offer = getState().onScreenRecovery.get('offer')
-          const hasPendingPromo = offer === null ? null : offer.formattedValue
-          dispatch({
-            type: actionTypes.TRACKING,
-            trackingData: {
-              actionType: 'Subscription Pause',
-              orderCount,
-              hasPendingPromo,
-            },
-          })
-        }
+        const orders = getState().user.get('orders')
+        const orderCount = orders.filter((o) => o.get('state') === 'phase' ).size
+        const offer = getState().onScreenRecovery.get('offer')
+        const hasPendingPromo = offer === null ? null : offer.formattedValue
+        dispatch({
+          type: actionTypes.TRACKING,
+          trackingData: {
+            actionType: 'Subscription Pause',
+            orderCount,
+            hasPendingPromo,
+          },
+        })
       } else {
         dispatch(subPauseActions.subscriptionDeactivate())
       }

@@ -374,80 +374,40 @@ describe('onScreenRecovery', () => {
 
         expect(dispatchSpy).toHaveBeenCalled()
       })
-      describe('when subscriptionPauseOsr feature flag is true', async () => {
-        test('should trigger tracking of subscription pause event', async () => {
-          fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
-            data: {
-              intervene: true,
-            },
-          }))
-          getStateSpy.mockReturnValue({
-            auth: Immutable.Map({
-              accessToken: 'token',
+      test('should trigger tracking of subscription pause event', async () => {
+        fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
+          data: {
+            intervene: true,
+          },
+        }))
+        getStateSpy.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: 'token',
+          }),
+          onScreenRecovery: Immutable.Map({
+            modalType: 'subscription',
+            offer: null
+          }),
+          user: Immutable.Map({
+            id: '12345',
+            orders: Immutable.List([]),
+          }),
+          features: Immutable.Map({
+            subscriptionPauseOsr: Immutable.fromJS({
+              experiment: false,
+              value: true,
             }),
-            onScreenRecovery: Immutable.Map({
-              modalType: 'subscription',
-              offer: null
-            }),
-            user: Immutable.Map({
-              id: '12345',
-              orders: Immutable.List([]),
-            }),
-            features: Immutable.Map({
-              subscriptionPauseOsr: Immutable.fromJS({
-                experiment: false,
-                value: true,
-              }),
-            }),
-          })
-          await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
-          expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-            type: 'TRACKING',
-            trackingData: expect.objectContaining({
-              actionType: 'Subscription Pause',
-              orderCount: 0,
-              hasPendingPromo: null,
-            })
-          }))
+          }),
         })
-      })
-  
-      describe('when subscriptionPauseOsr feature flag is false', async () => {
-        test('should not trigger tracking of subscription pause event', async () => {
-          fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
-            data: {
-              intervene: true,
-            },
-          }))
-          getStateSpy.mockReturnValue({
-            auth: Immutable.Map({
-              accessToken: 'token',
-            }),
-            onScreenRecovery: Immutable.Map({
-              modalType: 'subscription',
-              offer: null
-            }),
-            user: Immutable.Map({
-              id: '12345',
-              orders: Immutable.List([]),
-            }),
-            features: Immutable.Map({
-              subscriptionPauseOsr: Immutable.fromJS({
-                experiment: false,
-                value: false,
-              }),
-            }),
+        await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
+        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'TRACKING',
+          trackingData: expect.objectContaining({
+            actionType: 'Subscription Pause',
+            orderCount: 0,
+            hasPendingPromo: null,
           })
-          await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
-          expect(dispatchSpy).not.toHaveBeenCalledWith(expect.objectContaining({
-            type: 'TRACKING',
-            trackingData: expect.objectContaining({
-              actionType: 'Subscription Pause',
-              orderCount: 0,
-              hasPendingPromo: null,
-            })
-          }))
-        })
+        }))
       })
     })
 
