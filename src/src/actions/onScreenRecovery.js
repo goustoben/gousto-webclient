@@ -170,7 +170,7 @@ export const getPauseRecoveryContent = () => (
           const orders = getState().user.get('orders')
           const orderCount = orders.filter((o) => o.get('state') === 'phase' ).size
           const offer = getState().onScreenRecovery.get('offer')
-          const hasPendingPromo = offer === null ? null : offer.details.formatted_value
+          const hasPendingPromo = offer === null ? null : offer.formattedValue
           dispatch({
             type: actionTypes.TRACKING,
             trackingData: {
