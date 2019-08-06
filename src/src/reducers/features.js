@@ -65,11 +65,7 @@ const defaultFeatures = () => ({
   appBanner: {
     experiment: false,
     value: false,
-  },
-  subscriptionPauseOsr: {
-    experiment: false,
-    value: false,
-  },
+  }
 })
 
 const featureToggles = {
