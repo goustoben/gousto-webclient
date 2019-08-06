@@ -154,6 +154,8 @@ exports[`BoxPriceList Will snap BoxPriceList 1`] = `
           onKeyUp={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          role="button"
+          tabIndex={0}
         >
           <span
             className="spinner"
@@ -375,6 +377,8 @@ exports[`BoxPriceList Will snap BoxPriceList 1`] = `
           onKeyUp={[Function]}
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
+          role="button"
+          tabIndex={0}
         >
           <span
             className="spinner"
