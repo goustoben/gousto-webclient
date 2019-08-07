@@ -46,7 +46,7 @@ export const orderDetails = (orderId) => (
       )
 
       dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
-      await dispatch(productsLoadProducts(order.whenCutOff))
+      await dispatch(productsLoadProducts(order.whenCutOff, order.periodId))
       dispatch(basketOrderLoad(orderId, immutableOrderDetails))
       dispatch({
         type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
