@@ -11,3 +11,18 @@ export const getRecipePosition = (state, recipeId) => {
 
   return (indexOfRecipe+1) || null
 }
+
+export const getMenuCollectionIdBySlug = (menuCollections, slug) => {
+  const menuCollectionWithSlug = menuCollections.find(collection => collection.get('slug') === slug)
+  const menuCollectionId = menuCollectionWithSlug && menuCollectionWithSlug.get('id')
+
+  return menuCollectionId
+}
+
+export const getMenuCollectionRecipeIds = (menuCollections, allMenuCollectionRecipes, slug) => {
+  const menuCollectionId = slug && getMenuCollectionIdBySlug(menuCollections, slug)
+  const selectedCollectionRecipesIdArray = menuCollectionId && allMenuCollectionRecipes.get(menuCollectionId)
+
+  return selectedCollectionRecipesIdArray
+}
+
