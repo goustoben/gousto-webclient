@@ -139,7 +139,7 @@ export default async function fetchData({ store, query, params }, force, backgro
           .dispatch(actions.menuLoadDays())
           .then(() => store.dispatch(actions.boxSummaryDeliveryDaysLoad()))
           .then(()=> {
-            setSlotFromIds(store.getState(), query.slot_id, query.day_id, store.dispatch, query.slot_id)
+            setSlotFromIds(store.getState(), query.slot_id, query.day_id, store.dispatch)
           })
           .catch(err => {
             logger.error({message: `Debug fetchData: ${err.message}`, errors: [err]})

@@ -29,27 +29,21 @@ export const selectCollection = (state, collectionName, dispatch) => {
 
 export const setSlotFromIds = (state, slot_id, day_id, dispatch) => {
   const deliveryDays = state.boxSummaryDeliveryDays
-  if (slot_id) {
-    const day = deliveryDays.find(deliveryDay =>
-      deliveryDay.get('slots').some(slot => slot.get('id')=== slot_id)
-    )
+  if (day_id) {
+    const day = deliveryDays.find(deliveryDay => deliveryDay.get('coreDayId') === day_id)
     if(day) {
       const date = day.get('date')
       dispatch(basketDateChange(date))
-      dispatch(basketSlotChange(slot_id))
-    } else {
-      dispatch(redirect('/menu', true))
-    }
-  } else if (day_id) {
-    const day = deliveryDays.find(deliveryDay => deliveryDay.get('id') === day_id)
-    if(day) {
-      const date = day.get('date')
-      dispatch(basketDateChange(date))
-      if(!slot_id) {
-        dispatch(basketSlotChange(''))
+      let slotIdToSet = ''
+      if(slot_id) {
+        const matchingSlot = day.get('slots').find(slot => slot.get('coreSlotId')=== slot_id)
+        slotIdToSet = matchingSlot ? matchingSlot.get('id') : ''
       }
+      dispatch(basketSlotChange(slotIdToSet))
     } else {
       dispatch(redirect('/menu', true))
     }
+  } else {
+    dispatch(redirect('/menu', true))
   }
 }
