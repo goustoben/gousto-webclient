@@ -1,6 +1,7 @@
 import { push } from 'react-router-redux'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
-import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
+import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters'
+import { getCollectionDetailsBySlug } from 'selectors/collections'
 import actionTypes from './actionTypes'
 import {
   trackRecipeFiltersOpened,
@@ -264,25 +265,39 @@ const selectThematic = (dispatch, getState, recipeGrouping) => {
   const { routing } = getState()
   const previousLocation = routing.locationBeforeTransitions
   const query = { ...previousLocation.query }
+  let thematic = recipeGrouping 
+  if(recipeGrouping === null) {
+    delete query.thematic
+  } else {
+    if (query.collection) {
+      delete query.collection
+    }
+    const thematicCollection = getCollectionDetailsBySlug(getState(), recipeGrouping)
+    thematic = {
+      name: thematicCollection.get('shortTitle'),
+      slug: recipeGrouping,
+      borderColor: '',
+      location: 'thematic'
+    }
+    query.thematic = recipeGrouping
+  }
 
-  dispatch(currentThematicChange(recipeGrouping))
-  // TODO add url change for thematics
+  dispatch(currentThematicChange(thematic))
   const newLocation = { ...previousLocation, query }
   dispatch(push(newLocation))
 }
 
 export const filterRecipeGrouping = (recipeGrouping, location) => (
   (dispatch, getState) => {
-    const { routing, features } = getState()
-    const previousLocation = routing.locationBeforeTransitions
+    const { features } = getState()
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     const thematicFeature = features.getIn(['thematic', 'value'])
-    if(recipeGrouping !== null) {
-      recipeGrouping.location = location 
-    }
-
+    
     if (foodBrandFeature || thematicFeature) {
       if (location === 'foodBrand') {
+        if(recipeGrouping !== null) {
+          recipeGrouping.location = location 
+        }
         selectFoodBrand(dispatch, getState, recipeGrouping)
       } else if (location === 'thematic') {
         selectThematic(dispatch, getState, recipeGrouping)

@@ -14,6 +14,7 @@ import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
 import { RecipeMeta } from './RecipeMeta'
 import { FoodBrandPage } from './FoodBrandPage'
+import { ThematicsPage } from './ThematicsPage'
 import { MenuRecipes } from './MenuRecipes'
 import { RecipesInBasketProgress } from './RecipesInBasketProgress'
 import { JustForYouTutorial } from './JustForYouTutorial'
@@ -89,7 +90,7 @@ class Menu extends React.Component {
       name: PropTypes.string,
       borderColor: PropTypes.string,
     }),
-    filterRecipeGrouping: PropTypes.func
+    filterRecipeGrouping: PropTypes.func,
   }
 
   static contextTypes = {
@@ -154,10 +155,7 @@ class Menu extends React.Component {
       portionSizeSelectedTracking,
       numPortions,
       productsLoadProducts,
-      productsLoadStock,
-      foodBrandSelected,
-      foodBrandDetails,
-      filterRecipeGrouping,
+      productsLoadStock
     } = this.props
 
     const { store } = this.context
@@ -177,17 +175,7 @@ class Menu extends React.Component {
       basketNumPortionChange(query.num_portions)
     }
 
-    const isFoodBrandSelected = foodBrandSelected !== null
-
-    if (query.foodBrand) {
-      const foodBrandUrlDifferent = isFoodBrandSelected && query.foodBrand!==foodBrandSelected.slug
-
-      if (!isFoodBrandSelected || foodBrandUrlDifferent) {
-        filterRecipeGrouping(foodBrandDetails, 'foodBrand')
-      }
-    } else if (isFoodBrandSelected) {
-      filterRecipeGrouping(null, 'foodBrand')
-    }
+    this.checkQueryParam()
 
     Menu.fetchData({ store, query, params }, forceDataLoad)
 
@@ -414,6 +402,32 @@ class Menu extends React.Component {
     }
   }
 
+  checkQueryParam = () => {
+    const {
+      query,
+      foodBrandSelected,
+      foodBrandDetails,
+      filterRecipeGrouping
+    } = this.props
+    const isFoodBrandSelected = foodBrandSelected !== null
+
+    if (query.foodBrand) {
+      const foodBrandUrlDifferent = isFoodBrandSelected && query.foodBrand !== foodBrandSelected.slug
+
+      if (!isFoodBrandSelected || foodBrandUrlDifferent) {
+        filterRecipeGrouping(foodBrandDetails, 'foodBrand')
+      }
+    } else if (isFoodBrandSelected && foodBrandSelected.location === 'foodBrand') {
+      filterRecipeGrouping(null, 'foodBrand')
+    }
+
+    if(query.thematic && !isFoodBrandSelected) {
+      filterRecipeGrouping(query.thematic, 'thematic')
+    } else if (isFoodBrandSelected && foodBrandSelected.location === 'thematic') {
+      filterRecipeGrouping(null, 'thematic')
+    }
+  }
+
   render() {
     const {
       boxSummaryShow,
@@ -431,11 +445,12 @@ class Menu extends React.Component {
       orderId,
       query,
       recipes,
+      filterRecipeGrouping,
     } = this.props
     const { mobileGridView, isChrome, isClient } = this.state
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
     const showLoading = isLoading && !overlayShow || forceLoad
-    const showSelectedPage = foodBrandSelected !== null && !!query.foodBrand
+    const showSelectedPage = foodBrandSelected !== null && (!!query.foodBrand || !!query.thematic)
 
     let fadeCss = null
     if (showLoading && hasRecommendations) {
@@ -462,12 +477,17 @@ class Menu extends React.Component {
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
 
-          {showSelectedPage ?
+          {(showSelectedPage && foodBrandSelected.location === 'foodBrand') ?
           <FoodBrandPage
             showDetailRecipe={this.showDetailRecipe}
             mobileGridView={mobileGridView}
             isClient={isClient}
-          />
+          /> : ((showSelectedPage && foodBrandSelected.location === 'thematic')?
+            <ThematicsPage 
+              showDetailRecipe={this.showDetailRecipe}
+              mobileGridView={mobileGridView}
+              isClient={isClient}
+            />
             :
             <MenuRecipes
               isClient={isClient}
@@ -482,7 +502,9 @@ class Menu extends React.Component {
               showDetailRecipe={this.showDetailRecipe}
               hasRecommendations={hasRecommendations}
               orderId={orderId}
-            />}
+              setThematic={filterRecipeGrouping}
+            />
+          )}
           <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick}></div>
         </div>
         <BoxSummaryMobile />

@@ -877,9 +877,9 @@ describe('Menu', () => {
               slug: 'takeaway-night',
               name: 'Takeaway Night',
               borderColor: 'blue',
+              location: 'foodBrand'
             }}
             query={{}}
-            foodBrandDetails={{}}
           />,
           {
             context: {
@@ -938,12 +938,14 @@ describe('Menu', () => {
               slug: 'takeaway-night',
               name: 'Takeaway Night',
               borderColor: 'blue',
+              location: 'foodBrand'
             }}
             query={{foodBrand: '10-minute-meals'}}
             foodBrandDetails={{
               slug: '10-minute-meals',
               name: '10-MINUTE MEALS',
               borderColor: 'orange',
+              location: 'foodBrand'
             }}
           />,
           {
@@ -960,6 +962,7 @@ describe('Menu', () => {
           slug: '10-minute-meals',
           name: '10-MINUTE MEALS',
           borderColor: 'orange',
+          location: 'foodBrand'
         }, 'foodBrand')
       })
 
@@ -974,12 +977,14 @@ describe('Menu', () => {
               slug: 'takeaway-night',
               name: 'Takeaway Night',
               borderColor: 'blue',
+              location: 'foodBrand'
             }}
             query={{foodBrand: 'takeaway-night'}}
             foodBrandDetails={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
               borderColor: 'blue',
+              location: 'foodBrand'
             }}
           />,
           {
@@ -1253,6 +1258,7 @@ describe('Menu', () => {
             slug: 'takeaway-night',
             name: 'Takeaway Night',
             borderColor: 'blue',
+            location: 'foodBrand'
           }}
           params={{ orderId: '' }}
           menuLoadBoxPrices={() => {}}

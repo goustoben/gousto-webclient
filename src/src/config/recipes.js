@@ -58,7 +58,7 @@ const config = {
   },
   newRecipes: 'New recipes',
   recipeDetailViews: ['detail', 'fineDineInDetail'],
-  thematicsBoarderColor: '#F6323E'
+  thematicsBoarderColor: '#FF0032'
 }
 
 export default config

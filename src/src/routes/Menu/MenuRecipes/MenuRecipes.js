@@ -24,17 +24,27 @@ const propTypes = {
   hasRecommendations: PropTypes.bool,
   clearAllFilters: PropTypes.func,
   showDetailRecipe: PropTypes.func,
+  setThematic: PropTypes.func
 }
 
 class MenuRecipes extends PureComponent {
   renderBanner = (switchoverDate) => {
+    const { setThematic, features } = this.props
     const now = moment()
     const switchoverTime = moment(switchoverDate)
+    const thematicFeatureFlag = features.getIn(['thematic', 'value'])
+    if(thematicFeatureFlag) {
+      return (
+        <Banner type={'summer-bbq'} imageName={'summerGel-min.png'} collectionSlug={'gousto-x-wagamama'} setThematic={setThematic} />
+      )
+    } else {
 
-    return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
-      <Banner type={'summer-bbq'} imageName={'summerGel-min.png'}/>
-    ) :
-      (<Banner type={'taste-of-italy'}/>)
+      return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
+        <Banner type={'summer-bbq'} imageName={'summerGel-min.png'}/>
+      ) :
+        (<Banner type={'taste-of-italy'}/>)
+    }
+
   }
 
   render() {
