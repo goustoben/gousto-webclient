@@ -159,48 +159,56 @@ describe('setSlotFromIds', () => {
   beforeEach(() => {
     state.boxSummaryDeliveryDays = Immutable.fromJS({
       '2019-08-02': {
-        id: '6c1caad9-d666-4dc5-83e6-ff0769dff502',
+        coreDayId: '1800',
         date: '2019-08-02',
         slots: [
           {
-            id: 'db015db8-12d1-11e6-b30b-06ddb628bdc5'
+            id: 'db015db8-12d1-11e6-b30b-06ddb628bdc5',
+            coseSlotId: '1'
           },
           {
-            id: 'ba716ad8-d8cf-4264-9835-ebabc6011ed4'
+            id: 'ba716ad8-d8cf-4264-9835-ebabc6011ed4',
+            coseSlotId: '2'
           },
           {
-            id: '8ee02d93-aad4-4a6e-ac49-9c66dd667082'
+            id: '8ee02d93-aad4-4a6e-ac49-9c66dd667082',
+            coseSlotId: '3'
           }
         ]
       },
       '2019-08-03': {
-        id: '54966866-d89a-4ba3-835d-76c3334568ff',
+        coreDayId: '1801',
         date: '2019-08-03',
         slots: [
           {
-            id: 'db047c82-12d1-11e6-bc7b-06ddb628bdc5'
+            id: 'db047c82-12d1-11e6-bc7b-06ddb628bdc5',
+            coreSlotId: '4'
           },
           {
-            id: '30ef5793-1fd2-4859-a11e-fe7eb8412305'
+            id: '30ef5793-1fd2-4859-a11e-fe7eb8412305',
+            coreSlotId: '5'
           }
         ]
       },
     })
     jest.clearAllMocks()
   })
-  describe('when a valid slot_id is provided', () => {
-    it('should set the given slot ID and the corresponding date',() => {
+  describe('when a valid day_id and slot_id are provided', () => {
+    it('should set the matching slot ID and the corresponding date',() => {
       const slotId = '30ef5793-1fd2-4859-a11e-fe7eb8412305'
+      const date = '2019-08-03'
+      const coreSlotId = '5'
+      const coreDayId = '1801'
 
-      setSlotFromIds(state, slotId, null, dispatchSpy)
+      setSlotFromIds(state, coreSlotId, coreDayId, dispatchSpy)
 
-      expect(basketDateChange).toHaveBeenCalledWith("2019-08-03")
+      expect(basketDateChange).toHaveBeenCalledWith(date)
       expect(basketSlotChange).toHaveBeenCalledWith(slotId)
     })
   })
   describe('when a valid day_id is provided', () => {
     it('should set the given date and reset the slot id',() => {
-      const dayId = '54966866-d89a-4ba3-835d-76c3334568ff'
+      const dayId = '1801'
 
       setSlotFromIds(state, null, dayId, dispatchSpy)
 
