@@ -1,3 +1,5 @@
+@value ScreenSMMin from 'styles/screenSizes.css';
+
 .loadingContainer {
 	text-align: center;
 }
@@ -12,10 +14,13 @@
   padding-top: 20px;
 }
 
+.pageContent {
+  max-width: 73rem;
+  margin: 0 auto;
+}
+
 .rafMobile {
-  padding-top: 20px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+  padding: 1rem 0;
 }
 
 .mobileShow {

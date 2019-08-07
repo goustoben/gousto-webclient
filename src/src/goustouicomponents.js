@@ -9,6 +9,7 @@ export {
   ItemExpandable,
   Layout2Cells,
   LayoutContentWrapper,
+  LayoutPageWrapper,
   ProgressBar,
   Segment,
   Spinner,

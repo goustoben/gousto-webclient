@@ -5,7 +5,10 @@
 .marketPlaceWrapper {
   max-width: 1170px;
   margin: 0 auto;
-  padding: 0 1.25rem;
+
+  @media ScreenSMMin {
+    padding-top: 1.5rem;
+  }
 }
 
 .marketPlaceContent {
