@@ -18,8 +18,8 @@ export function fetchProductCategories(accessToken) {
   return fetch(accessToken, `${endpoint('products', version)}${routes.products.categories}`, { includes: config.categoryFetchIncludes }, 'GET')
 }
 
-export function fetchProducts(accessToken, cutoffDate) {
-  const data = { ...reqData }
+export function fetchProducts(accessToken, cutoffDate, productsData) {
+  const data = { ...reqData, ...productsData }
 
   if (cutoffDate) {
     data.date = cutoffDate

@@ -100,8 +100,8 @@ describe('orderConfirmation actions', () => {
               id: '1234',
               whenCutOff: '2019-04-12 19:00:00',
               recipeItems: [
-                {itemableId: '1'},
-                {itemableId: '2'},
+                { itemableId: '1' },
+                { itemableId: '2' },
               ],
             },
           })
@@ -111,7 +111,7 @@ describe('orderConfirmation actions', () => {
       test('should fetch the recipes for the given recipe ids in the order', async () => {
         await orderDetails('1234')(dispatch, getState)
 
-        expect(recipesLoadRecipesById).toHaveBeenCalledWith(['1','2'])
+        expect(recipesLoadRecipesById).toHaveBeenCalledWith(['1', '2'])
       })
     })
 
@@ -122,6 +122,7 @@ describe('orderConfirmation actions', () => {
             data: {
               id: '1234',
               whenCutOff: '2019-04-12 19:00:00',
+              periodId: '5678'
             },
           })
         )
@@ -130,7 +131,7 @@ describe('orderConfirmation actions', () => {
       test('should fetch the products for the returned cutoff date', async () => {
         await orderDetails('1234')(dispatch, getState)
 
-        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00')
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00', '5678')
       })
 
       test('should call basket order load for the returned order', async () => {
@@ -138,7 +139,8 @@ describe('orderConfirmation actions', () => {
 
         expect(basketOrderLoad).toHaveBeenCalledWith('1234', Immutable.Map({
           "id": "1234",
-          "whenCutOff": "2019-04-12 19:00:00"
+          "whenCutOff": "2019-04-12 19:00:00",
+          "periodId": "5678",
         }))
       })
     })
