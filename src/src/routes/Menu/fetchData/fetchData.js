@@ -49,9 +49,10 @@ export default async function fetchData({ store, query, params }, force, backgro
 
   let fetchDataPromise
   const menuRecipes = store && store.getState().menuRecipes
+  const menuCollectionRecipes = store && store.getState().menuCollectionRecipes
   const threshold = (__DEV__) ? 4 : 8
   const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
-  const shouldFetch = force || !menuRecipes || (menuRecipes && menuRecipes.size <= threshold) || stale || requiresMenuRecipesClear()
+  const shouldFetch = force || !menuRecipes || (menuRecipes && menuRecipes.size <= threshold) || stale || requiresMenuRecipesClear() || !menuCollectionRecipes.size
   const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
 
   if (!isPending && shouldFetch) {
