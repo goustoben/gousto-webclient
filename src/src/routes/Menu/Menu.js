@@ -166,7 +166,7 @@ class Menu extends React.Component {
     if (params.orderId && params.orderId === storeOrderId) {
       basketOrderLoaded(params.orderId)
     }
-    const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId)
+    const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId) || query.reload
     // TODO: Add back logic to check what needs to be reloaded
 
     if (hasRecommendations) {

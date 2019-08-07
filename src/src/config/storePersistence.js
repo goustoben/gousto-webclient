@@ -44,5 +44,9 @@ export const cookieExpiries = {
   default: 2 / 24,
   features: 7,
   tracking: 30,
+  basket_date: 7,
+  basket_numPortions: 7,
+  basket_postcode: 7,
+  basket_recipes: 7,
   basket_promoCode: 60,
 }

@@ -1,0 +1,24 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.modalContentWrapper {
+  padding: 30px;
+  text-align: center;
+
+    @media ScreenXSMax {
+    padding: 20px;
+    padding-top: 25px;
+  }
+}
+
+.modalContentSubTitle {
+  padding-bottom: 25px;
+}
+
+.modalContentRecipes {
+  padding-bottom: 20px;
+  text-align: left;
+}
+
+.button {
+  margin: 10px 0px;
+}

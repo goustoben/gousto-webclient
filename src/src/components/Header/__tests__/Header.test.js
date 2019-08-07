@@ -2,7 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import Immutable from 'immutable'
-import { Header } from 'components/Header/Header'
+import { Header } from 'Header/Header'
+import { AbandonBasketModal } from 'AbandonBasketModal'
 import MobileMenu from 'Header/MobileMenu'
 import Link from 'Link'
 import CancelOrderModal from 'CancelOrderModal'
@@ -15,10 +16,10 @@ jest.mock('Header/SimpleHeader', () => 'SimpleHeader')
 jest.mock('Modal/ModalPanel', () => 'ModalPanel')
 jest.mock('Overlay', () => 'Overlay')
 jest.mock('Login', () => 'Login')
-jest.mock('components/PromoModal', () => 'PromoModal')
-jest.mock('components/DuplicateOrderModal', () => 'DuplicateOrderModal')
-jest.mock('components/CancelOrderModal', () => 'CancelOrderModal')
-jest.mock('components/ExpiredBillingModal', () => 'ExpiredBillingModal')
+jest.mock('PromoModal', () => 'PromoModal')
+jest.mock('DuplicateOrderModal', () => 'DuplicateOrderModal')
+jest.mock('CancelOrderModal', () => 'CancelOrderModal')
+jest.mock('ExpiredBillingModal', () => 'ExpiredBillingModal')
 jest.mock('routes/Account/Account', () => 'Account')
 jest.mock('routes/Account/Subscription/SubscriptionPause', () => 'SubscriptionPause')
 jest.mock('routes/Account/MyDeliveries/OrdersList/OnScreenRecovery', () => 'OnScreenRecovery')
@@ -108,6 +109,10 @@ describe('Header', () => {
       expect(wrapper.find(CookieBanner).length).toBe(1)
     })
 
+    test('should render one <AbandonBasketModal />', () => {
+      expect(wrapper.find(AbandonBasketModal).length).toBe(1)
+    })
+
     test('should render one <MobileMenu />', () => {
       expect(wrapper.find(MobileMenu).length).toBe(1)
     })
@@ -117,87 +122,87 @@ describe('Header', () => {
     })
 
     test('should render 5 <Link /> if existing menu path is passed as prop', () => {
-      const wrapper = shallow(<Header path="box-prices" />, { context: { store } })
+      wrapper = shallow(<Header path="box-prices" />, { context: { store } })
 
       expect(wrapper.find(Link).length).toEqual(4)
     })
 
     test('should alter homepage link when promocode is provided', () => {
       const promoCode = 'test'
-      const wrapper = shallow(<Header promoCodeUrl={promoCode} />)
+      wrapper = shallow(<Header promoCodeUrl={promoCode} />)
 
       expect(wrapper.find(Link).at(0).props().to).toEqual(`/${promoCode}`)
     })
 
     test('should alter homepage link to /menu when path contains "check-out"', () => {
-      const wrapper = shallow(<Header path="check-out" />)
+      wrapper = shallow(<Header path="check-out" />)
 
       expect(wrapper.find(Link).at(0).prop('to')).toEqual('/menu')
     })
 
     test('should not render a <MobileMenu /> when displaying the simple header', () => {
       const simple = true
-      const wrapper = shallow(<Header simple={simple} />)
+      wrapper = shallow(<Header simple={simple} />)
       expect(wrapper.find(MobileMenu).length).toEqual(0)
     })
 
     test('should render the JS enabled MobileMenu toggle by default', () => {
-      const wrapper = shallow(<Header />)
+      wrapper = shallow(<Header />)
       expect(wrapper.find('span').at(0).prop('id')).toEqual(null)
     })
 
     test('should render the fallback MobileMenu toggle if the serverError prop is true', () => {
-      const wrapper = shallow(<Header serverError />)
+      wrapper = shallow(<Header serverError />)
       expect(wrapper.find('span').at(0).prop('id')).toEqual('mobileMenu')
     })
 
     test('should render referFriend in the menu if authenticated', () => {
       const isAuthenticated = true
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
+      wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
       expect(wrapper.find(Link).at(2).childAt(0)
         .text()).toEqual('Free Food')
     })
 
     test('should render boxPrices in the menu if not authenticated', () => {
       const isAuthenticated = false
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
+      wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
       expect(wrapper.find(Link).at(1).childAt(0)
         .text()).toEqual('Box Prices')
     })
 
     test('should render a PromoModal component', () => {
-      const wrapper = shallow(<Header {...store} />)
+      wrapper = shallow(<Header {...store} />)
       expect(wrapper.find('PromoModal').length).toEqual(1)
     })
 
     test('should render a CancelOrderModal component', () => {
-      const wrapper = shallow(<Header />)
+      wrapper = shallow(<Header />)
       expect(wrapper.find(CancelOrderModal).length).toEqual(1)
     })
 
     test('should render a ExpiredBillingModal component', () => {
-      const wrapper = shallow(<Header />)
+      wrapper = shallow(<Header />)
       expect(wrapper.find(ExpiredBillingModal).length).toEqual(1)
     })
 
     test('should render a DuplicateOrderModal component', () => {
-      const wrapper = shallow(<Header trackNavigationClick={jest.fn()} />)
+      wrapper = shallow(<Header trackNavigationClick={jest.fn()} />)
       expect(wrapper.find(DuplicateOrderModal).length).toEqual(1)
     })
 
     test('should render a SubscriptionPause component', () => {
-      const wrapper = shallow(<Header trackNavigationClick={jest.fn()} />)
+      wrapper = shallow(<Header trackNavigationClick={jest.fn()} />)
       expect(wrapper.find('SubscriptionPause').length).toEqual(1)
     })
 
     test('should not render the phone number if the noContactBar prop is set', () => {
 
-      const wrapper = shallow(<Header noContactBar trackNavigationClick={jest.fn()} />)
+      wrapper = shallow(<Header noContactBar trackNavigationClick={jest.fn()} />)
       expect(wrapper.find('Free delivery').length).toEqual(0)
     })
 
     test('should render the contact phone number', () => {
-      const wrapper = shallow(<Header />)
+      wrapper = shallow(<Header />)
       expect(wrapper.find('.contactContent').html()).toContain(
         contactConfig.telephone.number
       )

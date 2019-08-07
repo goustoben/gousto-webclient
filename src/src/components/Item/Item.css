@@ -28,6 +28,13 @@
 	}
 }
 
+.detailsExtraPadding {
+  @media ScreenXXSMaxDEPRECATED {
+    padding-right: SpacingXXXL;
+    width: 100%;
+  }
+}
+
 .title {
 	composes: headerSM textBold from 'styles/typography.css';
 	composes: noMargin from 'sass-loader!styles/spacing.scss';

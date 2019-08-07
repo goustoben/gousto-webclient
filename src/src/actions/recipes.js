@@ -1,5 +1,6 @@
 import logger from 'utils/logger'
 import { fetchRecipes, fetchRecipesStockByDate } from 'apis/recipes'
+import { getCutoffDateTime } from 'utils/deliveries'
 import statusActions from './status'
 import actionTypes from './actionTypes'
 
@@ -66,6 +67,25 @@ const recipesLoadStockByDate = (whenStart, whenCutoff) => (
 const recipesActions = {
   recipesLoadRecipesById,
   recipesLoadStockByDate,
+}
+
+export const loadRecipes = () => async (dispatch, getState) => {
+  dispatch(statusActions.pending(actionTypes.RECIPES_RECEIVE, true))
+  try {
+    const accessToken = getState().auth.get('accessToken')
+    const cutoffDate = getCutoffDateTime(getState())
+
+    const args = cutoffDate ? { 'filters[available_on]': cutoffDate } : null
+
+    const { data: recipes } = await fetchRecipes(accessToken, '', args)
+
+    dispatch({ type: actionTypes.RECIPES_RECEIVE, recipes })
+  } catch (err) {
+    dispatch(statusActions.error(actionTypes.RECIPES_RECEIVE, err.message))
+    logger.error(err)
+  } finally {
+    dispatch(statusActions.pending(actionTypes.RECIPES_RECEIVE, false))
+  }
 }
 
 export default recipesActions
