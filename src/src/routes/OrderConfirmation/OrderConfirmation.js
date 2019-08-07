@@ -40,7 +40,7 @@ const propTypes = {
     images: PropTypes.array,
     ageRestricted: PropTypes.bool,
     quantity: PropTypes.number,
-  }).isRequired,
+  }),
   ageVerified: PropTypes.bool.isRequired,
   selectedCategory: PropTypes.string.isRequired,
   filterProductCategory: PropTypes.func.isRequired,
