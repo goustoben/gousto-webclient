@@ -222,7 +222,10 @@ describe('onScreenRecovery', () => {
       getStateSpy.mockReturnValue({
         user: Immutable.Map({
           id: '123',
-        })
+        }),
+        features: Immutable.Map({
+          subscriptionPauseOsr: false
+        }),
       })
     })
     test('should call the subscriptionDeactivate action', async () => {
@@ -371,6 +374,41 @@ describe('onScreenRecovery', () => {
 
         expect(dispatchSpy).toHaveBeenCalled()
       })
+      test('should trigger tracking of subscription pause event', async () => {
+        fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
+          data: {
+            intervene: true,
+          },
+        }))
+        getStateSpy.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: 'token',
+          }),
+          onScreenRecovery: Immutable.Map({
+            modalType: 'subscription',
+            offer: null
+          }),
+          user: Immutable.Map({
+            id: '12345',
+            orders: Immutable.List([]),
+          }),
+          features: Immutable.Map({
+            subscriptionPauseOsr: Immutable.fromJS({
+              experiment: false,
+              value: true,
+            }),
+          }),
+        })
+        await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
+        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'TRACKING',
+          trackingData: expect.objectContaining({
+            actionType: 'Subscription Pause',
+            orderCount: 0,
+            hasPendingPromo: null,
+          })
+        }))
+      })
     })
 
     describe('when the response is to *not* intervene', () => {
@@ -459,7 +497,7 @@ describe('onScreenRecovery', () => {
       }))
     }
     )
-    test('when modalType is subscription, should toggle OSR modal visibility with Subscription Kept tracking action', async () => {
+    test('when modalType is subscription, should toggle OSR modal visibility with Subscription KeptActive tracking action', async () => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
           modalType: 'subscription',
@@ -474,7 +512,7 @@ describe('onScreenRecovery', () => {
         type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
         trackingData: expect.objectContaining({
-          actionType: 'Subscription Kept',
+          actionType: 'Subscription KeptActive',
         })
       }))
     })

@@ -77,7 +77,7 @@ export const keepSubscription = () => (
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: false,
       trackingData: {
-        actionType: 'Subscription Kept',
+        actionType: 'Subscription KeptActive',
         customerId: userId,
       },
     })
@@ -164,6 +164,19 @@ export const getPauseRecoveryContent = () => (
           data,
           modalType
         }))
+
+        const orders = getState().user.get('orders')
+        const orderCount = orders.filter((o) => o.get('state') === 'phase' ).size
+        const offer = getState().onScreenRecovery.get('offer')
+        const hasPendingPromo = offer === null ? null : offer.formattedValue
+        dispatch({
+          type: actionTypes.TRACKING,
+          trackingData: {
+            actionType: 'Subscription Pause',
+            orderCount,
+            hasPendingPromo,
+          },
+        })
       } else {
         dispatch(subPauseActions.subscriptionDeactivate())
       }
@@ -197,6 +210,7 @@ export const pauseSubscription = () => (
         customerId: userId,
       },
     })
+
     dispatch(redirect('/my-subscription'))
   }
 )
