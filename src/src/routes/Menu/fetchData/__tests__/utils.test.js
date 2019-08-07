@@ -164,7 +164,7 @@ describe('setSlotFromIds', () => {
         slots: [
           {
             id: 'db015db8-12d1-11e6-b30b-06ddb628bdc5',
-            coseSlotId: '1'
+            coreSlotId: '1'
           },
           {
             id: 'ba716ad8-d8cf-4264-9835-ebabc6011ed4',
