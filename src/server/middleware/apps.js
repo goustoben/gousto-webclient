@@ -6,7 +6,7 @@ const converseUtmSource = (querystring) => querystring ? querystring.replace('ut
 const addQueryString = (url, querystring) => querystring ? `${url}?${querystring}` : url
 
 const appsRedirect = async (ctx, next) => {
-  if (ctx.request.url.startsWith('/apps') || ctx.request.url.startsWith('/apps?')) {
+  if ((ctx.request.url === '/apps') || ctx.request.url.startsWith('/apps?')) {
     const userAgent = ctx.request.header['user-agent']
 
     if (/android/i.test(userAgent)) {
