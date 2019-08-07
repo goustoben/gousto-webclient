@@ -168,11 +168,11 @@ describe('setSlotFromIds', () => {
           },
           {
             id: 'ba716ad8-d8cf-4264-9835-ebabc6011ed4',
-            coseSlotId: '2'
+            coreSlotId: '2'
           },
           {
             id: '8ee02d93-aad4-4a6e-ac49-9c66dd667082',
-            coseSlotId: '3'
+            coreSlotId: '3'
           }
         ]
       },
