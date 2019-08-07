@@ -91,5 +91,12 @@ describe('appsRedirect', () => {
 
       expect(ctx.redirect).toHaveBeenCalledWith('/')
     })
+
+    test('should redirect anyone else to the homepage with queryString', () => {
+      ctx = getContext('/apps?test=true', 'N/A', { querystring: 'test=true'})
+      appsRedirect(ctx, next)
+
+      expect(ctx.redirect).toHaveBeenCalledWith('/?test=true')
+    })
   })
 })

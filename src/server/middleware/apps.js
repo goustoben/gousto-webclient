@@ -14,7 +14,7 @@ const appsRedirect = async (ctx, next) => {
     } else if (/iPad|iPhone|iPod/.test(userAgent)) {
       ctx.redirect(addQueryString(appStoreLink, ctx.request.querystring))
     } else {
-      ctx.redirect('/')
+      ctx.redirect(addQueryString('/', ctx.request.querystring))
     }
   } else {
     await next()
