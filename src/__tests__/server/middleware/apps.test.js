@@ -2,7 +2,7 @@ import { appsRedirect } from '../../../server/middleware/apps'
 
 jest.mock('config/apps', () => ({
   appStoreLink: 'APP_STORE_LINK',
-  playStoreLink: 'PLAY_STORE_LINK',
+  playStoreLink: 'PLAY_STORE_LINK?abc=123',
 }))
 
 const getContext = (url, userAgent, {querystring} = {}) => ({
@@ -50,7 +50,7 @@ describe('appsRedirect', () => {
       )
       appsRedirect(ctx, next)
 
-      expect(ctx.redirect).toHaveBeenCalledWith('PLAY_STORE_LINK')
+      expect(ctx.redirect).toHaveBeenCalledWith('PLAY_STORE_LINK?abc=123')
     })
 
     test('should redirect an Android user to the play store with query string', () => {
@@ -61,7 +61,7 @@ describe('appsRedirect', () => {
       )
       appsRedirect(ctx, next)
 
-      expect(ctx.redirect).toHaveBeenCalledWith('PLAY_STORE_LINK?ABC=xyz')
+      expect(ctx.redirect).toHaveBeenCalledWith('PLAY_STORE_LINK?abc=123&ABC=xyz')
     })
 
     test('should redirect an iOS user to the app store', () => {
