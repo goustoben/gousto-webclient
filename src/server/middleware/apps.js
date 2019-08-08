@@ -3,7 +3,12 @@ const { appStoreLink, playStoreLink } = require('config/apps')
 
 const convertQueryKeys = (querystring) => querystring ? querystring.replace('utm_source', 'referrer') : querystring
 
-const withQuery = (url, querystring) => querystring ? `${url}?${querystring}` : url
+const isContainingQuery = (url) => url.indexOf('?') !== -1
+
+const withQuery = (url, querystring) => querystring
+  ? isContainingQuery(url)
+    ? `${url}&${querystring}` : `${url}?${querystring}`
+  : url
 
 const appsRedirect = async (ctx, next) => {
   if ((ctx.request.url === '/apps') || ctx.request.url.startsWith('/apps?')) {
