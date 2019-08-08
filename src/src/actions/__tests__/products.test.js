@@ -140,7 +140,7 @@ describe('productsLoadProducts', () => {
       cutoffDate: 'whenCutoff timestamp',
     })
 
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { periodId: '1234', sort: 'position' })
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { period_id: '1234', sort: 'position' })
   })
 
 })

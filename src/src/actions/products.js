@@ -54,7 +54,13 @@ export const productsLoadProducts = (cutoffDate, periodId) => (
     const currentProductsInBasket = basket.get('products')
     const isProductsLargerThanBasket = products.size <= currentProductsInBasket.size
     const sort = 'position'
-    const reqData = periodId ? { periodId, sort } : { sort }
+    const reqData = {
+      sort,
+    }
+
+    if (periodId) {
+      reqData.period_id = periodId
+    }
 
     if ((isProductsLargerThanBasket) ||
       (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
