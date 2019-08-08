@@ -1,4 +1,4 @@
-@value Blackberry, Bluecheese, Blueberry, Carrot, DarkHaricot, DarkHaricot05, Mackerel, Oyster, Radish, Radish05, White from 'styles/colors.css';
+@value Blackberry, Bluecheese, BluecheeseLighter,  Blueberry, Carrot, DarkHaricot, DarkHaricot05, Mackerel, Oyster, Radish, Radish05, White from 'styles/colors.css';
 
 @value inputPlaceholderColor Oyster;
 @value inputDisabledColor Oyster;
@@ -17,7 +17,7 @@
 @value inputSecondaryBorderColorFocus Blueberry;
 
 @value dropdownSecondarySelectedColor White;
-@value dropdownSecondarySelectedBgColor Blueberry;
+@value dropdownSecondarySelectedBgColor BluecheeseLighter;
 
 @value checkRadioSize 18px;
 @value checkRadioBgColorUnchecked White;

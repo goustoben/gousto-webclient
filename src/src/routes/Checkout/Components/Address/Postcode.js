@@ -53,6 +53,7 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
           onChange={onSelectedAddressChange}
           inputType="DropDown"
           label="Select your address"
+          color="secondary"
           mask
           withRef
           ref={receiveRef}
