@@ -84,12 +84,19 @@ export const getFilteredFoodBrandRecipes = createSelector(
   )
 )
 
-export const getFilteredRecipes = createSelector(
+export const getFilteredCollectionsBySlugRecipes = createSelector(
   [getFilteredFoodBrandRecipes, getRecipesFilteredByCollectionSlug],
-  (filteredFoodBrandRecipes, filteredThematicRecipes) => {
+  (filteredFoodBrandRecipes, filteredCollectionRecipes) => {
 
-    return filteredThematicRecipes || filteredFoodBrandRecipes
+    return filteredCollectionRecipes || filteredFoodBrandRecipes
   }
+)
+
+export const getFilteredRecipes = createSelector(
+  [getFilteredCollectionsBySlugRecipes],
+  (filteredRecipes) => (
+    filteredRecipes
+  )
 )
 
 export const getFilteredRecipeIds = createSelector(
