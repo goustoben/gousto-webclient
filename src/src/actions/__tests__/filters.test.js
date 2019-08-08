@@ -3,10 +3,11 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import actionTypes from 'actions/actionTypes'
 import { push } from 'react-router-redux'
+import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 
 import {
   collectionFilterChange,
-  changeCollectionToAllRecipes,
+  changeCollectionById,
   changeCollectionToAllRecipesViaCTA,
   filterCurrentDietTypesChange,
   filterCurrentTotalTimeChange,
@@ -16,7 +17,7 @@ import {
   filterMenuRevertFilters,
   filterProductCategory,
   filterApply,
-  selectFoodBrand
+  filterRecipeGrouping
 } from 'actions/filters'
 
 jest.mock('react-router-redux', () => ({
@@ -142,11 +143,21 @@ describe('filters actions', () => {
     })
   })
 
-  describe('changeCollectionToAllRecipes', () => {
+  describe('changeCollectionById', () => {
 
-    test('should dispatch two actions', () => {
-      changeCollectionToAllRecipes()(dispatchSpy, getStateSpy)
+    test('should dispatch one action', () => {
+      changeCollectionById()(dispatchSpy, getStateSpy)
       expect(dispatchSpy.mock.calls.length).toBe(1)
+    })
+
+    test('should be called with ALL_RECIPES_COLLECTION_ID if no params passed in', () => {
+      changeCollectionById()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({collectionId: ALL_RECIPES_COLLECTION_ID}))
+    })
+
+    test('should be called with collectonId if passed in as params', () => {
+      changeCollectionById('1234')(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({collectionId: '1234'}))
     })
   })
 
@@ -349,7 +360,7 @@ describe('filters actions', () => {
     })
   })
 
-  describe('selectFoodBrand', () => {
+  describe('filterRecipeGrouping', () => {
     beforeAll(() => {
       getStateSpy.mockReturnValue({
         features: Immutable.fromJS({
@@ -367,7 +378,7 @@ describe('filters actions', () => {
       })
     })
     test('should call FILTERS_FOOD_BRAND_CHANGE with null foodBrand if this is null', () => {
-      selectFoodBrand(null)(dispatchSpy, getStateSpy)
+      filterRecipeGrouping(null, 'foodBrand')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'foodBrand': null,
         'type': 'FILTERS_FOOD_BRAND_CHANGE',
@@ -379,16 +390,18 @@ describe('filters actions', () => {
     })
 
     test('should call push with foodBrand slug if foodBrand is not null', () => {
-      selectFoodBrand({
+      filterRecipeGrouping({
         name: 'FoodBrand',
         slug: 'food-brand',
-        borderColor: 'blue'
-      })(dispatchSpy, getStateSpy)
+        borderColor: 'blue',
+        location: 'foodBrand'
+      }, 'foodBrand')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'foodBrand': {
           name: 'FoodBrand',
           slug: 'food-brand',
-          borderColor: 'blue'
+          borderColor: 'blue',
+          location: 'foodBrand'
         },
         'type': "FILTERS_FOOD_BRAND_CHANGE",
         'trackingData': {

@@ -77,7 +77,7 @@ describe('features reducers', () => {
         appBanner: {
           experiment: false,
           value: false,
-        },
+        }
       })
       const result = features.features(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
@@ -146,7 +146,7 @@ describe('features reducers', () => {
         appBanner: {
           experiment: false,
           value: false,
-        },
+        }
       })
       const result = features.features(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)
@@ -223,7 +223,7 @@ describe('features reducers', () => {
         appBanner: {
           experiment: false,
           value: false,
-        },
+        }
       })
       const result = features.features(state, action)
       expect(Immutable.is(expected, result)).toEqual(true)

@@ -15,5 +15,6 @@ export function fetchOrderSkipContent(accessToken, orderId, orderDate) {
 }
 
 export function fetchSubscriptionPauseContent(accessToken) {
-  return fetch(accessToken, `${endpoint('subscriptionpauserecovery', 'v1')}/subscriptionpauserecovery`, null, 'GET')
+  // TODO replace the 1 with subscription id when a) we have access to it, and b) the back end uses it
+  return fetch(accessToken, `${endpoint('subpauseosr', 'v1')}/subscriptionpauserecovery/1`, null, 'GET')
 }

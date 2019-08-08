@@ -93,14 +93,12 @@ describe('Referral', () => {
           })
 
           test('should render HowItWorks component with default details prop', () => {
-            const value = {
-              details: defaultOffer.get('details')
-            }
-            expect(wrapper.find('HowItWorks').props('details')).toEqual(value)
+            const defaultDetails = defaultOffer.get('details')
+            expect(wrapper.find('HowItWorks').prop('details')).toEqual(defaultDetails)
           })
 
           test('default details exist', () => {
-            expect(wrapper.find('HowItWorks').props('details').details).toBeTruthy()
+            expect(wrapper.find('HowItWorks').prop('details')).toBeTruthy()
           })
         })
       })

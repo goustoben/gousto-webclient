@@ -9,7 +9,7 @@ import { isCollectionsFeatureEnabled } from 'selectors/features'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 
 import moment from 'moment'
-import { selectCollection, getPreselectedCollectionName } from './utils'
+import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
 export default async function fetchData({ store, query, params }, force, background) {
   const isAuthenticated = store.getState().auth.get('isAuthenticated')
@@ -49,9 +49,10 @@ export default async function fetchData({ store, query, params }, force, backgro
 
   let fetchDataPromise
   const menuRecipes = store && store.getState().menuRecipes
+  const menuCollectionRecipes = store && store.getState().menuCollectionRecipes
   const threshold = (__DEV__) ? 4 : 8
   const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
-  const shouldFetch = force || !menuRecipes || (menuRecipes && menuRecipes.size <= threshold) || stale || requiresMenuRecipesClear()
+  const shouldFetch = force || !menuRecipes || (menuRecipes && menuRecipes.size <= threshold) || stale || requiresMenuRecipesClear() || !menuCollectionRecipes.size
   const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
 
   if (!isPending && shouldFetch) {
@@ -126,15 +127,23 @@ export default async function fetchData({ store, query, params }, force, backgro
         browseMode = false
       }
 
-      if (query.date || query.slot_id || store.getState().basket.get('date') || store.getState().basket.get('slotId')) {
+      if (
+        query.day_id ||
+        query.slot_id ||
+        store.getState().basket.get('date') ||
+        store.getState().basket.get('slotId')
+      ) {
         browseMode = false
 
-        fetchPromise = store.dispatch(actions.menuLoadDays())
+        fetchPromise = store
+          .dispatch(actions.menuLoadDays())
           .then(() => store.dispatch(actions.boxSummaryDeliveryDaysLoad()))
-      }
-
-      if (query.date) {
-        store.dispatch(actions.basketDateChange(query.date))
+          .then(()=> {
+            setSlotFromIds(store.getState(), query.slot_id, query.day_id, store.dispatch)
+          })
+          .catch(err => {
+            logger.error({message: `Debug fetchData: ${err.message}`, errors: [err]})
+          })
       } else if (!store.getState().basket.get('date')) {
         if (!browseMode) {
           fetchPromise = fetchPromise.then(chooseFirstDate)
@@ -143,10 +152,6 @@ export default async function fetchData({ store, query, params }, force, backgro
 
       if (query.num_portions) {
         store.dispatch(actions.basketNumPortionChange(query.num_portions))
-      }
-
-      if (query.slot_id && !store.getState().basket.get('slotId')) {
-        store.dispatch(actions.basketSlotChange(query.slot_id))
       }
 
       let cutoffDateTime = browseMode ? cutoffDateTimeNow() : undefined

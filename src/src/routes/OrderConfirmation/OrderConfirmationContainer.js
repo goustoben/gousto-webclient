@@ -3,7 +3,7 @@ import { withRouter } from 'react-router'
 import { locationQuery } from 'selectors/routing'
 import { getBasket, getProductCategories } from 'selectors/root'
 import { getAgeVerified, getReferralOffer } from 'selectors/user'
-import { isOrderConfirmationPageLoaded } from 'selectors/orderConfirmation'
+import { isOrderConfirmationPageLoading } from 'selectors/orderConfirmation'
 import { getBasketOrderDetails } from 'selectors/basket'
 import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
   const order = getBasketOrderDetails(state)
   const headerDetails = !!order && getHeaderDetails(order)
   const showHeader = (!!state.temp.get('showHeader') || !!(locationQueryParam && locationQueryParam['order_action'])) && !!headerDetails
-  const isLoading = !order || isOrderConfirmationPageLoaded(state)
+  const isLoading = !order || isOrderConfirmationPageLoading(state)
 
   return ({
     showHeader,

@@ -1,3 +1,4 @@
+import { abandonBasket } from './abandonBasket'
 import { appBanner } from './appBanner'
 import account from './account'
 import auth from './auth'
@@ -38,6 +39,7 @@ import { getHelp } from './getHelp'
 import { logger } from './logger'
 
 const reducers = {
+  ...abandonBasket,
   ...appBanner,
   ...account,
   ...auth,

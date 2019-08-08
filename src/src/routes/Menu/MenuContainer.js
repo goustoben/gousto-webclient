@@ -11,7 +11,7 @@ import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 
 import { getJfyTutorial } from 'selectors/features'
-import { getFoodBrandFilter, getFoodBrandDetails } from 'selectors/filters'
+import { getRecipeGroupFilter, getFoodBrandDetails } from 'selectors/filters'
 import { getFilteredRecipeIds } from './selectors/filters'
 import { getCurrentCollectionIsRecommendation } from './selectors/menu'
 
@@ -94,7 +94,7 @@ function mapStateToProps(state, ownProps) {
   const query = ownProps.location && ownProps.location.query
 
   return {
-    foodBrandSelected: getFoodBrandFilter(state),
+    foodBrandSelected: getRecipeGroupFilter(state),
     basketRecipeIds: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))),
     basketProducts: getBasketProducts(state.basket.get('products', Immutable.Map({}))),
     cutOffDate: getCutoffDate(state.basket.get('date')),
@@ -157,7 +157,8 @@ const mapDispatchToProps = {
   productsLoadProducts: actions.productsLoadProducts,
   productsLoadStock: actions.productsLoadStock,
   orderCheckoutAction: actions.orderCheckout,
-  selectFoodBrandFromUrl: actions.currentFoodBrandChange
+  filterRecipeGrouping: actions.filterRecipeGrouping,
+  selectCurrentCollection: actions.changeCollectionById
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)

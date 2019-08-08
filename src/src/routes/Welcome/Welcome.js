@@ -12,11 +12,12 @@ import { getAffiliateTrackingData } from 'utils/order'
 
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
-import SubHeader from './SubHeader'
-import css from './Welcome.css'
+import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
 import ExpectationsCarousel from './ExpectationsCarousel'
 import ProductDetailOverlay from './ProductDetailOverlay'
-import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
+import { AwinPixel } from './AwinPixel'
+import SubHeader from './SubHeader'
+import css from './Welcome.css'
 
 class Welcome extends React.PureComponent {
   static propTypes = {
@@ -166,12 +167,12 @@ class Welcome extends React.PureComponent {
             </div>
           </div>
         </div>
-
         <ProductDetailOverlay
           onVisibilityChange={productDetailVisibilityChange}
           open={isClient && this.isProductDetailAvailable()}
           productId={productDetailId}
         />
+        <AwinPixel />
       </section>
     )
   }

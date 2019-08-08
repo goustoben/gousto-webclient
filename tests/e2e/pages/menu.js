@@ -65,15 +65,6 @@ module.exports = {
               firstAvailableDate.click()
             })
           },
-          setOrderConfirmationFeatureFlag: function () {
-            this.api.execute(function () {
-              window.__loadFeatures__({
-                features: {
-                  'orderConfirmation': true
-                }
-              })
-            })
-          },
         }
       ]
     },

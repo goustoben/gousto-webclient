@@ -48,17 +48,19 @@ export const productsLoadCategories = (forceRefresh = false) => (
   }
 )
 
-export const productsLoadProducts = (cutoffDate) => (
+export const productsLoadProducts = (cutoffDate, periodId) => (
   async (dispatch, getState) => {
     const { basket, products, productsStock, auth } = getState()
     const currentProductsInBasket = basket.get('products')
     const isProductsLargerThanBasket = products.size <= currentProductsInBasket.size
+    const sort = 'position'
+    const reqData = periodId ? { periodId, sort } : { sort }
 
     if ((isProductsLargerThanBasket) ||
       (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
-        const { data: productsFromApi } = await fetchProducts(auth.get('accessToken'), cutoffDate)
+        const { data: productsFromApi } = await fetchProducts(auth.get('accessToken'), cutoffDate, reqData)
         const productsInStock = productsFromApi.reduce((productsInStockAccumulator, product) => {
           product.stock = productsStock.get(product.id)
           if (product.stock > 0 && product.isForSale) {

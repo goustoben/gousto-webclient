@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import Immutable from 'immutable'
 
 import { Field } from 'redux-form'
 import ReduxFormInput from 'Form/ReduxFormInput'
@@ -65,7 +66,7 @@ Postcode.propTypes = {
   postcodePending: PropTypes.bool,
   onPostcodeLookup: PropTypes.func,
   postcodeTemp: PropTypes.string,
-  addresses: PropTypes.array,
+  addresses: PropTypes.instanceOf(Immutable.List),
   onSelectedAddressChange: PropTypes.func,
   showDropdown: PropTypes.bool,
   receiveRef: PropTypes.func,
@@ -75,7 +76,7 @@ Postcode.defaultProps = {
   postcodePending: false,
   onPostcodeLookup: () => {},
   postcodeTemp: '',
-  addresses: [],
+  addresses: Immutable.List(),
   onSelectedAddressChange: () => {},
   showDropdown: false,
   receiveRef: () => {},
