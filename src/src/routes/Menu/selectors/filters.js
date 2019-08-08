@@ -84,7 +84,7 @@ export const getFilteredFoodBrandRecipes = createSelector(
   )
 )
 
-export const getFilteredCollectionsBySlugRecipes = createSelector(
+export const getFilteredRecipesByCollectionsBySlug = createSelector(
   [getFilteredFoodBrandRecipes, getRecipesFilteredByCollectionSlug],
   (filteredFoodBrandRecipes, filteredCollectionRecipes) => {
 
@@ -93,7 +93,7 @@ export const getFilteredCollectionsBySlugRecipes = createSelector(
 )
 
 export const getFilteredRecipes = createSelector(
-  [getFilteredCollectionsBySlugRecipes],
+  [getFilteredRecipesByCollectionsBySlug],
   (filteredRecipes) => (
     filteredRecipes
   )
