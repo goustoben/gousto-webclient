@@ -24,6 +24,7 @@ class CollectionsNav extends React.PureComponent {
     menuCurrentCollectionId: PropTypes.string,
     featureSet: PropTypes.func.isRequired,
     features: PropTypes.instanceOf(Immutable.Map).isRequired,
+    isPolicyAccepted: PropTypes.bool,
   }
 
   constructor(props) {
@@ -43,8 +44,7 @@ class CollectionsNav extends React.PureComponent {
     if (this.eles.parent) {
       this.eles.parent.addEventListener('scroll', this.onNavScroll)
     }
-    const offsetTopNavBar = getElementOffsetTop(document, '#collectionNavBar')
-    this.setState({ navBarOffsetTop: offsetTopNavBar})
+    this.checkCollectionOffsetTop()
 
     this.checkScroll()
     this.checkSize(true)
@@ -57,7 +57,10 @@ class CollectionsNav extends React.PureComponent {
     }, 50)
   }
 
-  componentWillUpdate({ menuCurrentCollectionId, menuCollections }) {
+  componentWillUpdate({ menuCurrentCollectionId, menuCollections, isPolicyAccepted }) {
+    if(isPolicyAccepted !== this.props.isPolicyAccepted) {
+      this.checkCollectionOffsetTop()
+    }
     if (menuCurrentCollectionId !== this.props.menuCurrentCollectionId) {
       this.centerCollection(menuCurrentCollectionId, true)
     }
@@ -102,15 +105,12 @@ class CollectionsNav extends React.PureComponent {
       this.hasScrolled = false
       const animationThreshold = 50
       const { navBarOffsetTop, scrolledPastPoint } = this.state
-      const offsetTopNavBar = getElementOffsetTop(document, '#collectionNavBar')
-      if(offsetTopNavBar !== navBarOffsetTop) {
-        this.setState({ navBarOffsetTop: offsetTopNavBar})
-      }
-
       const scrollState = getScrollOffset(navBarOffsetTop, animationThreshold, scrolledPastPoint)
+
       scrollState && this.setState({
+        ...this.state,
         scrolledPastPoint: scrollState.scrolledPastPoint,
-        scrollJumped: scrollState.scrollJumped
+        scrollJumped: scrollState.scrollJumped,
       })
     }
   }
@@ -281,6 +281,11 @@ class CollectionsNav extends React.PureComponent {
     if (collectionId !== ALL_RECIPES_COLLECTION_ID && window.pageYOffset > (navBarOffsetTop + 1)) {
       window.scrollTo(0, navBarOffsetTop)
     }
+  }
+
+  checkCollectionOffsetTop = () => {
+    const offsetTopNavBar = getElementOffsetTop(document, '#collectionNavBar')
+    this.setState({ ...this.state, navBarOffsetTop: offsetTopNavBar})
   }
 
   render() {

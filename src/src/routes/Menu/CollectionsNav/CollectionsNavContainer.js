@@ -9,6 +9,7 @@ function mapStateToProps(state) {
       .filter(collection => (state.features.getIn(['unpubCollections', 'value']) && !state.features.getIn(['forceCollections', 'value'])) || collection.get('published')),
     features: state.features,
     menuCollectionRecipes: state.menuCollectionRecipes,
+    isPolicyAccepted: state.cookies && state.cookies.get('isPolicyAccepted'),
   }
 }
 
