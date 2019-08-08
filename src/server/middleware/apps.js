@@ -5,10 +5,13 @@ const convertQueryKeys = (querystring) => querystring ? querystring.replace('utm
 
 const isContainingQuery = (url) => url.indexOf('?') !== -1
 
-const withQuery = (url, querystring) => querystring
-  ? isContainingQuery(url)
-    ? `${url}&${querystring}` : `${url}?${querystring}`
-  : url
+const withQuery = (url, querystring) => {
+  if (!querystring) {
+    return url
+  }
+
+  return isContainingQuery(url) ? `${url}&${querystring}` : `${url}?${querystring}`
+}
 
 const appsRedirect = async (ctx, next) => {
   if ((ctx.request.url === '/apps') || ctx.request.url.startsWith('/apps?')) {
