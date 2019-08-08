@@ -40,7 +40,7 @@ const propTypes = {
     images: PropTypes.array,
     ageRestricted: PropTypes.bool,
     quantity: PropTypes.number,
-  }).isRequired,
+  }),
   ageVerified: PropTypes.bool.isRequired,
   selectedCategory: PropTypes.string.isRequired,
   filterProductCategory: PropTypes.func.isRequired,
@@ -100,6 +100,8 @@ class OrderConfirmation extends PureComponent {
     const allProducts = [{ id: 'all-products', label: 'All Products' }]
 
     if (!products) return allProducts
+
+    allProducts[0].count = Object.keys(products).length
 
     return Object.keys(products).reduce((categoryProducts, productId) => {
       const productCategories = products[productId].categories

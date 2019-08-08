@@ -13,7 +13,9 @@ const Navbar = ({ items, onClick, active }) => (
   <ul className={css.navbarContainer}>
     {items.map(item => (
       <li className={css.navbarItems} key={item.id} >
-        <button className={active == item.id ? classnames(css.navbarButton, css.active) : css.navbarButton} type="button" onClick={() => onClick(item.id)}>{item.label}</button>
+        <button className={active == item.id ? classnames(css.navbarButton, css.active) : css.navbarButton} type="button" onClick={() => onClick(item.id)}>
+          {item.count ? `${item.label} (${item.count})` : item.label}
+        </button>
       </li>
     ))}
   </ul>
