@@ -1,0 +1,44 @@
+@value Pomegranate from 'styles/colors.css';
+
+.container {
+  display: flex;
+  padding: 20px;
+}
+
+.phoneImage {
+  width: 200px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.bullet {
+  position: absolute;
+  left: -2em;
+  text-align: center;
+  width: 2em;
+}
+
+.list {
+  list-style-type: none;
+  margin-left: 2.5em;
+  padding-left: 0;
+}
+
+.list>li {
+  position: relative;
+  margin-bottom: 1em;
+}
+
+.tick {
+  composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
+  color: Pomegranate;
+}
+
+.appLink {
+  
+}

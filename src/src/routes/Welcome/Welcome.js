@@ -18,6 +18,7 @@ import ProductDetailOverlay from './ProductDetailOverlay'
 import { AwinPixel } from './AwinPixel'
 import SubHeader from './SubHeader'
 import css from './Welcome.css'
+import { AppPromo } from './AppPromo'
 
 class Welcome extends React.PureComponent {
   static propTypes = {
@@ -142,7 +143,8 @@ class Welcome extends React.PureComponent {
                 )
               }
               <div className={css.welcomeColInner}>
-                <ExpectationsCarousel />
+                {/* <ExpectationsCarousel /> */}
+                <AppPromo />
               </div>
               {
                 !isRafAboveCarousel && (
