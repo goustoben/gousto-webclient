@@ -7,7 +7,7 @@ import { getRecipes, getMenuRecipes, getMenuCollections } from 'selectors/root'
 import { getCurrentCollectionId, getCurrentDietTypes, getCurrentTotalTime, getDietaryAttributes, getNewRecipesFilter } from 'selectors/filters'
 import { getNumPortions } from 'selectors/basket'
 import { getTaxonomyTags, filterRecipesByNew } from 'utils/recipe'
-import { getRecipesFilteredByFoodBrand } from './foodBrandFilters'
+import { getRecipesFilteredByFoodBrand, getRecipesFilteredByCollectionSlug } from './recipeGroupFilters'
 
 export const getAllRecipesCollectionId = createSelector(
   [getMenuCollections],
@@ -77,10 +77,25 @@ export const getNewRecipes = createSelector(
   )
 )
 
-export const getFilteredRecipes = createSelector(
+export const getFilteredFoodBrandRecipes = createSelector(
   [getNewRecipes, getRecipesFilteredByFoodBrand],
   (filteredRecipes, foodBrandRecipes) => (
     foodBrandRecipes || filteredRecipes
+  )
+)
+
+export const getFilteredRecipesByCollectionsBySlug = createSelector(
+  [getFilteredFoodBrandRecipes, getRecipesFilteredByCollectionSlug],
+  (filteredFoodBrandRecipes, filteredCollectionRecipes) => {
+
+    return filteredCollectionRecipes || filteredFoodBrandRecipes
+  }
+)
+
+export const getFilteredRecipes = createSelector(
+  [getFilteredRecipesByCollectionsBySlug],
+  (filteredRecipes) => (
+    filteredRecipes
   )
 )
 
