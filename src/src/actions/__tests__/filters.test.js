@@ -25,7 +25,7 @@ jest.mock('react-router-redux', () => ({
 }))
 
 jest.mock('config/recipes', () => ({
-  thematicsBoarderColor: 'red'
+  thematicBorderColor: 'red'
 }))
 
 describe('filters actions', () => {
