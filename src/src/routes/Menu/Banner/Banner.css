@@ -19,16 +19,16 @@
 	background-size: cover;
 }
 
-.taste-of-italy {
+.ten-min {
 	composes: container;
-	background-image: url('media/images/menu/taste-of-italy-banner-mobile.jpg');
+	background-image: url('media/images/menu/10min-banner-mobile.jpg');
 
 	@media ScreenXXSMin {
-		background-image: url('media/images/menu/taste-of-italy-banner-tablet.jpg');
+		background-image: url('media/images/menu/10min-banner-tablet.jpg');
 	}
 
 	@media ScreenMDMin {
-		background-image: url('media/images/menu/taste-of-italy-banner-desktop.jpg');
+		background-image: url('media/images/menu/10min-banner-desktop.jpg');
 	}
 }
 
@@ -99,4 +99,8 @@
 .gelText__svg {
 	height: 100%;
 	width: 86%;
+}
+
+.link {
+	width: 100%;
 }

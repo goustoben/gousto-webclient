@@ -1,6 +1,8 @@
 import { push } from 'react-router-redux'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
-import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters.js'
+import config from 'config/recipes'
+import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters'
+import { getCollectionDetailsBySlug } from 'selectors/collections'
 import actionTypes from './actionTypes'
 import {
   trackRecipeFiltersOpened,
@@ -102,7 +104,7 @@ export const currentThematicChange = (thematic) => ({
   thematic,
   trackingData: {
     actionType: thematic !== null ? 'Thematic selected' : 'Thematic unselected',
-    food_brand: thematic !== null ? thematic.slug : ''
+    thematic: thematic !== null ? thematic.slug : ''
   }
 })
 
@@ -260,33 +262,55 @@ const selectFoodBrand = (dispatch, getState, recipeGrouping) => {
   dispatch(push(newLocation))
 }
 
-const selectThematic = (dispatch, getState, recipeGrouping) => {
+const selectThematic = (dispatch, getState, thematicSlug) => {
   const { routing } = getState()
   const previousLocation = routing.locationBeforeTransitions
   const query = { ...previousLocation.query }
+  let thematic = thematicSlug 
+  if(thematicSlug === null) {
+    delete query.thematic
+  } else {
+    if (query.collection) {
+      delete query.collection
+    }
+    const thematicCollection = getCollectionDetailsBySlug(getState(), thematicSlug)
 
-  dispatch(currentThematicChange(recipeGrouping))
-  // TODO add url change for thematics
+    if(thematicCollection) {
+      thematic = {
+        name: thematicCollection.get('shortTitle'),
+        slug: thematicSlug,
+        borderColor: config.thematicBorderColor,
+        location: 'thematic'
+      }
+      query.thematic = thematicSlug
+    } else {
+      thematic = null 
+    }
+  }
+
+  dispatch(currentThematicChange(thematic))
   const newLocation = { ...previousLocation, query }
   dispatch(push(newLocation))
 }
 
 export const filterRecipeGrouping = (recipeGrouping, location) => (
   (dispatch, getState) => {
-    const { routing, features } = getState()
-    const previousLocation = routing.locationBeforeTransitions
+    const { features } = getState()
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     const thematicFeature = features.getIn(['thematic', 'value'])
-    if(recipeGrouping !== null) {
-      recipeGrouping.location = location 
+    
+    if (foodBrandFeature && location === 'foodBrand') {
+      if(recipeGrouping !== null) {
+        recipeGrouping.location = location 
+      }
+      selectFoodBrand(dispatch, getState, recipeGrouping)
     }
 
-    if (foodBrandFeature || thematicFeature) {
-      if (location === 'foodBrand') {
-        selectFoodBrand(dispatch, getState, recipeGrouping)
-      } else if (location === 'thematic') {
-        selectThematic(dispatch, getState, recipeGrouping)
-      }
+    if (thematicFeature && location === 'thematic') {
+      selectThematic(dispatch, getState, recipeGrouping)
+    }
+
+    if(foodBrandFeature || thematicFeature) {
       dispatch(changeCollectionById())
     }
   }

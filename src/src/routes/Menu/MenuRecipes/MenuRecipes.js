@@ -24,17 +24,26 @@ const propTypes = {
   hasRecommendations: PropTypes.bool,
   clearAllFilters: PropTypes.func,
   showDetailRecipe: PropTypes.func,
+  setThematic: PropTypes.func
 }
 
 class MenuRecipes extends PureComponent {
   renderBanner = (switchoverDate) => {
+    const { setThematic, features } = this.props
     const now = moment()
     const switchoverTime = moment(switchoverDate)
+    const thematicFeatureFlag = features.getIn(['thematic', 'value'])
+    if(thematicFeatureFlag) {
+      return (
+        <Banner imageName={'menu/10min-banner-gel-02.jpg'} type={'ten-min'} collectionSlug={'10-minute-meals'} setThematic={setThematic} />
+      )
+    } else {
 
-    return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
-      <Banner type={'summer-bbq'} imageName={'summerGel-min.png'}/>
-    ) :
-      (<Banner type={'taste-of-italy'}/>)
+      return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
+        <Banner imageName={'menu/10min-banner-gel-02.jpg'} type={'ten-min'}/>
+      ) :
+        ( <Banner type={'summer-bbq'} imageName={'summerGel-min.png'}/>)
+    }
   }
 
   render() {
@@ -58,7 +67,7 @@ class MenuRecipes extends PureComponent {
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
-        {this.renderBanner(menu.summerBbq.switchoverDate)}
+        {this.renderBanner(menu.tenMin.switchoverDate)}
         <SubHeader
           viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
           onToggleGridView={this.toggleGridView}

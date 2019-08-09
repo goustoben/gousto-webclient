@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import config from 'config/recipes'
 import { getRecipeGroupFilter } from 'selectors/filters'
+import { getCollectionDetailsBySlug } from 'selectors/collections'
 import { filterRecipeGrouping } from 'actions/filters'
 import { FilteredRecipePage } from 'components/FilteredRecipePage'
 
@@ -8,17 +8,18 @@ const mapStateToProps = (state) => {
   const { locationBeforeTransitions } = state.routing
   const selectedFoodBrand = getRecipeGroupFilter(state)
   const query = locationBeforeTransitions && locationBeforeTransitions.query
+  const collection = getCollectionDetailsBySlug(state, selectedFoodBrand.slug)
 
   return {
     name: selectedFoodBrand.name,
-    description: config.foodBrandDescription[selectedFoodBrand.slug],
+    description: collection && collection.get('description'),
     borderColor: selectedFoodBrand.borderColor,
     menuRecipeDetailShow: (query) ? query.recipeDetailId : '',
     menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
   }
 }
-const FoodBrandPageContainer = connect(mapStateToProps, {
-  removeRecipeFilter: () => filterRecipeGrouping(null, 'foodBrand')
+const ThematicsPage = connect(mapStateToProps, {
+  removeRecipeFilter: () => filterRecipeGrouping(null, 'thematic')
 })(FilteredRecipePage)
 
-export { FoodBrandPageContainer }
+export { ThematicsPage }

@@ -26,3 +26,12 @@ export const getMenuCollectionRecipeIds = (menuCollections, allMenuCollectionRec
   return selectedCollectionRecipesIdArray
 }
 
+export const getCollectionDetailsBySlug = (state, slug) => {
+  const { menuCollections } = state
+  const selectedCollection = menuCollections.find(collection => collection.get('slug') === slug)
+  if(selectedCollection) {
+    return selectedCollection
+  }
+
+  return null
+}

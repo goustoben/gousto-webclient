@@ -3,7 +3,8 @@ import Immutable from 'immutable'
 import {
   hasJustForYouCollection,
   getMenuCollectionIdBySlug,
-  getMenuCollectionRecipeIds
+  getMenuCollectionRecipeIds,
+  getCollectionDetailsBySlug
 } from 'selectors/collections'
 
 describe('collection selectors', () => {
@@ -87,6 +88,30 @@ describe('collection selectors', () => {
       test('should return id 456 of collection with slug taste-of-japan', () => {
         expect(getMenuCollectionRecipeIds(state.menuCollections, state.menuCollectionsRecipes,'taste-of-japan').toArray()).toEqual(["55", "66", "77"])
       })
+    })
+  })
+
+  describe('getCollectionDetailsBySlug', () => {
+    beforeEach(() => {
+      state = {
+        menuCollections: Immutable.fromJS({
+          ca8f71be: {
+            slug: 'chicken',
+            id: 'a123'
+          },
+          bc5fc11o: {
+            slug: 'taste-of-japan',
+            id: 'b456'
+          },
+        }),
+      }
+    })
+
+    test('should return the collection details', () => {
+      expect(getCollectionDetailsBySlug(state, 'taste-of-japan')).toEqual(Immutable.Map({
+        slug: 'taste-of-japan',
+        id: 'b456'
+      }))
     })
   })
 })

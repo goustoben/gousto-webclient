@@ -94,7 +94,7 @@ function mapStateToProps(state, ownProps) {
   const query = ownProps.location && ownProps.location.query
 
   return {
-    foodBrandSelected: getRecipeGroupFilter(state),
+    recipeGroupingSelected: getRecipeGroupFilter(state),
     basketRecipeIds: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))),
     basketProducts: getBasketProducts(state.basket.get('products', Immutable.Map({}))),
     cutOffDate: getCutoffDate(state.basket.get('date')),
