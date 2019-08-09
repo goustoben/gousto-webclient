@@ -7,7 +7,8 @@ const DOMHelper = {
   getBoundingClientRect,
   getFirstMatchingNode,
   scrollToFirstMatchingNode,
-  getElementHeight
+  getElementHeight,
+  getElementOffsetTop
 }
 
 export function getBoundingClientRect(ref) {
@@ -51,6 +52,12 @@ export function getElementHeight(document, selector) {
   const elementHeight = document && document.querySelector(selector) && document.querySelector(selector).offsetHeight
 
   return elementHeight
+}
+
+export function getElementOffsetTop(document, selector) {
+  const elementOffsetTop = document && document.querySelector(selector) && document.querySelector(selector).offsetTop
+
+  return elementOffsetTop
 }
 
 export default DOMHelper

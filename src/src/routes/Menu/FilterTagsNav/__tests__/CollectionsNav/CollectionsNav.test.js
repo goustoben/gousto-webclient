@@ -69,17 +69,6 @@ describe('<CollectionsNav />', () => {
     )
   })
 
-  test('should change threshold for scroll depending on browser type', () => {
-    const expectedThreshold = 253
-    const expetedAnimationThreshold = 50
-
-    wrapper.instance().onScroll()
-    wrapper.instance().checkScroll()
-
-    expect(getScrollOffset).toHaveBeenCalled()
-    expect(getScrollOffset).toHaveBeenCalledWith(expectedThreshold, expetedAnimationThreshold, false)
-  })
-
   test('should render a div', () => {
     expect(wrapper.children().type()).toEqual('div')
   })

@@ -36,6 +36,9 @@ describe('CollectionsNavContainer', () => {
             }),
             request: Immutable.fromJS({
               browser: 'desktop'
+            }),
+            cookies: Immutable.Map({
+              isPolicyAccepted: true
             })
           }),
           subscribe: () => {},
@@ -92,6 +95,9 @@ describe('CollectionsNavContainer', () => {
             }),
             request: Immutable.fromJS({
               browser: 'desktop'
+            }),
+            cookies: Immutable.Map({
+              isPolicyAccepted: true
             })
           }),
           subscribe: () => {},
@@ -144,6 +150,9 @@ describe('CollectionsNavContainer', () => {
             }),
             request: Immutable.fromJS({
               browser: 'desktop'
+            }),
+            cookies: Immutable.Map({
+              isPolicyAccepted: true
             })
           }),
           subscribe: () => {},
@@ -203,6 +212,9 @@ describe('CollectionsNavContainer', () => {
             }),
             request: Immutable.fromJS({
               browser: 'desktop'
+            }),
+            cookies: Immutable.Map({
+              isPolicyAccepted: true
             })
           }),
           subscribe: () => {},
@@ -255,6 +267,9 @@ describe('CollectionsNavContainer', () => {
             }),
             request: Immutable.fromJS({
               browser: 'desktop'
+            }),
+            cookies: Immutable.Map({
+              isPolicyAccepted: true
             })
           }),
           subscribe: () => {},

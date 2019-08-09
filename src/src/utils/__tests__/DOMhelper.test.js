@@ -99,4 +99,17 @@ describe('DOMhelper', () => {
       expect(doc.querySelector).toBeCalledWith("#testdiv")
     })
   })
+
+  describe('getElementOffsetTop', () => {
+    test('should query the document correctly', () => {
+      const doc = {
+        querySelector: jest.fn().mockReturnValue({
+          offsetTop: '50'
+        })
+      }
+
+      expect(DOMHelper.getElementOffsetTop(doc, "#testdiv")).toBe('50')
+      expect(doc.querySelector).toBeCalledWith("#testdiv")
+    })
+  })
 })

@@ -7,6 +7,7 @@ import actual from 'actual'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import { getScrollOffset } from 'utils/menu'
 import { getWindow } from 'utils/window'
+import { getElementOffsetTop } from 'utils/DOMhelper'
 import CollectionItem from 'CollectionItem'
 import css from './CollectionsNav.css'
 
@@ -18,17 +19,20 @@ class CollectionsNav extends React.PureComponent {
     masonryContainer: PropTypes.shape({
       offsetTop: PropTypes.number
     }),
-    browser: PropTypes.string,
     menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
     collectionFilterChange: PropTypes.func.isRequired,
     menuCurrentCollectionId: PropTypes.string,
     featureSet: PropTypes.func.isRequired,
     features: PropTypes.instanceOf(Immutable.Map).isRequired,
+    isPolicyAccepted: PropTypes.bool,
   }
 
   constructor(props) {
     super(props)
-    this.state = { scrolledPastPoint: false }
+    this.state = { 
+      navBarOffsetTop: 0,
+      scrolledPastPoint: false
+    }
     this.eles = {}
   }
 
@@ -40,6 +44,7 @@ class CollectionsNav extends React.PureComponent {
     if (this.eles.parent) {
       this.eles.parent.addEventListener('scroll', this.onNavScroll)
     }
+    this.checkCollectionOffsetTop()
 
     this.checkScroll()
     this.checkSize(true)
@@ -52,7 +57,10 @@ class CollectionsNav extends React.PureComponent {
     }, 50)
   }
 
-  componentWillUpdate({ menuCurrentCollectionId, menuCollections }) {
+  componentWillUpdate({ menuCurrentCollectionId, menuCollections, isPolicyAccepted }) {
+    if(isPolicyAccepted !== this.props.isPolicyAccepted) {
+      this.checkCollectionOffsetTop()
+    }
     if (menuCurrentCollectionId !== this.props.menuCurrentCollectionId) {
       this.centerCollection(menuCurrentCollectionId, true)
     }
@@ -93,16 +101,16 @@ class CollectionsNav extends React.PureComponent {
   }
 
   checkScroll = () => {
-    const { browser } = this.props
     if (this.hasScrolled) {
       this.hasScrolled = false
-      const threshold = (browser === 'mobile') ? 253 : 350
       const animationThreshold = 50
-      const { scrolledPastPoint } = this.state
-      const scrollState = getScrollOffset(threshold, animationThreshold, scrolledPastPoint)
+      const { navBarOffsetTop, scrolledPastPoint } = this.state
+      const scrollState = getScrollOffset(navBarOffsetTop, animationThreshold, scrolledPastPoint)
+
       scrollState && this.setState({
+        ...this.state,
         scrolledPastPoint: scrollState.scrolledPastPoint,
-        scrollJumped: scrollState.scrollJumped
+        scrollJumped: scrollState.scrollJumped,
       })
     }
   }
@@ -255,8 +263,7 @@ class CollectionsNav extends React.PureComponent {
   }
 
   changeCollection = (collectionId) => {
-    const { browser } = this.props
-    const threshold = (browser === 'mobile') ? 253 : 350
+    const { navBarOffsetTop } = this.state
     if (!collectionId) return
     this.props.collectionFilterChange(collectionId)
     if (this.props.features && this.props.features.getIn(['menuStickyCollections', 'value'], false)) {
@@ -271,9 +278,14 @@ class CollectionsNav extends React.PureComponent {
         top(document.body, position)
       }
     }
-    if (collectionId !== ALL_RECIPES_COLLECTION_ID && window.pageYOffset > (threshold + 1)) {
-      window.scrollTo(0, threshold)
+    if (collectionId !== ALL_RECIPES_COLLECTION_ID && window.pageYOffset > (navBarOffsetTop + 1)) {
+      window.scrollTo(0, navBarOffsetTop)
     }
+  }
+
+  checkCollectionOffsetTop = () => {
+    const offsetTopNavBar = getElementOffsetTop(document, '#collectionNavBar')
+    this.setState({ ...this.state, navBarOffsetTop: offsetTopNavBar})
   }
 
   render() {
@@ -300,7 +312,7 @@ class CollectionsNav extends React.PureComponent {
 
     return (
       <div>
-        <div className={className}>
+        <div className={className} id="collectionNavBar">
           {this.state.showArrows && !isAtStart ? <div className={leftArrowClassName} onClick={this.prevCollection} /> : null}
           <div className={css.nav} ref={ref => { this.eles.parent = ref }}>
             <div className={css.navBar}>
