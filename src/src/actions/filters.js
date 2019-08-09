@@ -1,5 +1,6 @@
 import { push } from 'react-router-redux'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
+import config from 'config/recipes'
 import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters'
 import { getCollectionDetailsBySlug } from 'selectors/collections'
 import actionTypes from './actionTypes'
@@ -273,13 +274,17 @@ const selectThematic = (dispatch, getState, recipeGrouping) => {
       delete query.collection
     }
     const thematicCollection = getCollectionDetailsBySlug(getState(), recipeGrouping)
-    thematic = {
-      name: thematicCollection.get('shortTitle'),
-      slug: recipeGrouping,
-      borderColor: '',
-      location: 'thematic'
+    if(thematicCollection) {
+      thematic = {
+        name: thematicCollection.get('shortTitle'),
+        slug: recipeGrouping,
+        borderColor: config.thematicsBoarderColor,
+        location: 'thematic'
+      }
+      query.thematic = recipeGrouping
+    } else {
+      thematic = null 
     }
-    query.thematic = recipeGrouping
   }
 
   dispatch(currentThematicChange(thematic))
@@ -293,15 +298,18 @@ export const filterRecipeGrouping = (recipeGrouping, location) => (
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     const thematicFeature = features.getIn(['thematic', 'value'])
     
-    if (foodBrandFeature || thematicFeature) {
-      if (location === 'foodBrand') {
-        if(recipeGrouping !== null) {
-          recipeGrouping.location = location 
-        }
-        selectFoodBrand(dispatch, getState, recipeGrouping)
-      } else if (location === 'thematic') {
-        selectThematic(dispatch, getState, recipeGrouping)
+    if (foodBrandFeature && location === 'foodBrand') {
+      if(recipeGrouping !== null) {
+        recipeGrouping.location = location 
       }
+      selectFoodBrand(dispatch, getState, recipeGrouping)
+    }
+
+    if (thematicFeature && location === 'thematic') {
+      selectThematic(dispatch, getState, recipeGrouping)
+    }
+
+    if(foodBrandFeature || thematicFeature) {
       dispatch(changeCollectionById())
     }
   }

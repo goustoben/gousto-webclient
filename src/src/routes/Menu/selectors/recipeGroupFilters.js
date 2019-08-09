@@ -30,5 +30,3 @@ export const getRecipesFilteredByCollectionSlug = createSelector(
     return recipesFilteredByThematic
   }
 )
-
-//rename file to be recipeGroup or something like this

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import config from 'config/recipes'
 import { getRecipeGroupFilter } from 'selectors/filters'
 import { getCollectionDetailsBySlug } from 'selectors/collections'
 import { filterRecipeGrouping } from 'actions/filters'
@@ -14,7 +13,7 @@ const mapStateToProps = (state) => {
   return {
     name: selectedFoodBrand.name,
     description: collection && collection.get('description'),
-    borderColor: config.thematicsBoarderColor,
+    borderColor: selectedFoodBrand.borderColor,
     browser: state.request.get('browser'),
     menuRecipeDetailShow: (query) ? query.recipeDetailId : '',
     menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
