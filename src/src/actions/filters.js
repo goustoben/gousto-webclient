@@ -104,7 +104,7 @@ export const currentThematicChange = (thematic) => ({
   thematic,
   trackingData: {
     actionType: thematic !== null ? 'Thematic selected' : 'Thematic unselected',
-    food_brand: thematic !== null ? thematic.slug : ''
+    thematic: thematic !== null ? thematic.slug : ''
   }
 })
 
@@ -274,6 +274,7 @@ const selectThematic = (dispatch, getState, recipeGrouping) => {
       delete query.collection
     }
     const thematicCollection = getCollectionDetailsBySlug(getState(), recipeGrouping)
+
     if(thematicCollection) {
       thematic = {
         name: thematicCollection.get('shortTitle'),

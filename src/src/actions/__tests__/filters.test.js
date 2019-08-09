@@ -24,6 +24,10 @@ jest.mock('react-router-redux', () => ({
   push: jest.fn(),
 }))
 
+jest.mock('config/recipes', () => ({
+  thematicsBoarderColor: 'red'
+}))
+
 describe('filters actions', () => {
   const dispatchSpy = jest.fn()
   const getStateSpy = jest.fn()
@@ -360,7 +364,7 @@ describe('filters actions', () => {
     })
   })
 
-  describe('filterRecipeGrouping', () => {
+  describe('filterRecipeGrouping for foodBrand', () => {
     beforeAll(() => {
       getStateSpy.mockReturnValue({
         features: Immutable.fromJS({
@@ -412,6 +416,64 @@ describe('filters actions', () => {
       expect(push).toHaveBeenCalledWith({
         query: {
           foodBrand: 'food-brand'
+        }
+      })
+    })
+  })
+
+  describe('filterRecipeGrouping for thematic', () => {
+    beforeAll(() => {
+      getStateSpy.mockReturnValue({
+        features: Immutable.fromJS({
+          thematic: {
+            value: true
+          },
+        }),
+        menuCollections: Immutable.Map({
+          'dd111ddd': Immutable.Map({
+            slug: 'gousto-x-wagamama',
+            shortTitle: 'Gousto x wagamama'
+          })
+        }),
+        routing: {
+          locationBeforeTransitions: {
+            query: {
+              thematic: 'gousto-x-wagamama'
+            }
+          }
+        }
+      })
+    })
+    test('should call FILTERS_THEMATIC_CHANGE with null thematic if this is null', () => {
+      filterRecipeGrouping(null, 'thematic')(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        'thematic': null,
+        'type': 'FILTERS_THEMATIC_CHANGE',
+        'trackingData': {
+          'actionType': 'Thematic unselected',
+          'thematic': ''}
+      })
+      expect(dispatchSpy).toHaveBeenCalledTimes(3)
+    })
+
+    test('should call push with thematic slug if thematic is not null', () => {
+      filterRecipeGrouping('gousto-x-wagamama', 'thematic')(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        'thematic': {
+          name: 'Gousto x wagamama',
+          slug: 'gousto-x-wagamama',
+          borderColor: 'red',
+          location: 'thematic'
+        },
+        'type': "FILTERS_THEMATIC_CHANGE",
+        'trackingData': {
+          'actionType': 'Thematic selected',
+          'thematic': 'gousto-x-wagamama'
+        }
+      })
+      expect(push).toHaveBeenCalledWith({
+        query: {
+          thematic: 'gousto-x-wagamama'
         }
       })
     })
