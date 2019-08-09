@@ -13,7 +13,6 @@ const mapStateToProps = (state) => {
     name: selectedFoodBrand.name,
     description: config.foodBrandDescription[selectedFoodBrand.slug],
     borderColor: selectedFoodBrand.borderColor,
-    browser: state.request.get('browser'),
     menuRecipeDetailShow: (query) ? query.recipeDetailId : '',
     menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
   }

@@ -262,27 +262,27 @@ const selectFoodBrand = (dispatch, getState, recipeGrouping) => {
   dispatch(push(newLocation))
 }
 
-const selectThematic = (dispatch, getState, recipeGrouping) => {
+const selectThematic = (dispatch, getState, thematicSlug) => {
   const { routing } = getState()
   const previousLocation = routing.locationBeforeTransitions
   const query = { ...previousLocation.query }
-  let thematic = recipeGrouping 
-  if(recipeGrouping === null) {
+  let thematic = thematicSlug 
+  if(thematicSlug === null) {
     delete query.thematic
   } else {
     if (query.collection) {
       delete query.collection
     }
-    const thematicCollection = getCollectionDetailsBySlug(getState(), recipeGrouping)
+    const thematicCollection = getCollectionDetailsBySlug(getState(), thematicSlug)
 
     if(thematicCollection) {
       thematic = {
         name: thematicCollection.get('shortTitle'),
-        slug: recipeGrouping,
-        borderColor: config.thematicsBoarderColor,
+        slug: thematicSlug,
+        borderColor: config.thematicBorderColor,
         location: 'thematic'
       }
-      query.thematic = recipeGrouping
+      query.thematic = thematicSlug
     } else {
       thematic = null 
     }
