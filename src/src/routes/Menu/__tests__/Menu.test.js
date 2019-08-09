@@ -67,7 +67,7 @@ describe('Menu', () => {
       beforeEach(() => {
         wrapper = shallow(
           <Menu
-            foodBrandSelected={null}
+            recipeGroupingSelected={null}
             params={{ orderId: '' }}
             menuLoadBoxPrices={() => {}}
             menuCollectionRecipes={Immutable.Map({})}
@@ -117,7 +117,7 @@ describe('Menu', () => {
       test('should render JFY tutorial if feature flag is set to true', () => {
         wrapper = shallow(
           <Menu
-            foodBrandSelected={null}
+            recipeGroupingSelected={null}
             productsLoadProducts={() => {}}
             productsLoadStock={() => {}}
             menuLoadBoxPrices={() => {}}
@@ -157,7 +157,7 @@ describe('Menu', () => {
     test('with the isLoading prop set to true it should show a Loading', () => {
       wrapper = shallow(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
@@ -180,7 +180,7 @@ describe('Menu', () => {
     test('with the isLoading prop set to true and boxSummaryShow true it should not show a Loading', () => {
       wrapper = shallow(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
@@ -207,7 +207,7 @@ describe('Menu', () => {
     test('with the isLoading prop set to true and menuBrowseCTAShow true it should not show a Loading', () => {
       wrapper = shallow(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
@@ -236,7 +236,7 @@ describe('Menu', () => {
     test('should render fade--recommendations', () => {
       wrapper = shallow(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           menuLoadBoxPrices={() => {}}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -261,7 +261,7 @@ describe('Menu', () => {
     test('should render fadeOut', () => {
       wrapper = shallow(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
@@ -287,7 +287,7 @@ describe('Menu', () => {
     test('should render willFade', () => {
       wrapper = shallow(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
@@ -345,7 +345,7 @@ describe('Menu', () => {
     test('should load Box Prices for non admin users', () => {
       wrapper = mount(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
@@ -377,7 +377,7 @@ describe('Menu', () => {
     test('should not load Box Prices for admin users', async () => {
       wrapper = await mount(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
@@ -409,7 +409,7 @@ describe('Menu', () => {
     test('should call fetchData', async () => {
       wrapper = await mount(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
@@ -443,7 +443,7 @@ describe('Menu', () => {
 
       wrapper = await mount(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
@@ -480,7 +480,7 @@ describe('Menu', () => {
 
       wrapper = await mount(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
@@ -532,7 +532,7 @@ describe('Menu', () => {
           params: {},
           basketNumPortionChange: () => {},
           query: { num_portions: '4' },
-          foodBrandSelected: null,
+          recipeGroupingSelected: null,
           recipes: [],
         }
       })
@@ -631,7 +631,7 @@ describe('Menu', () => {
             { id: 'd', quantity: '4' },
           ],
           loginVisibilityChange: () => {},
-          foodBrandSelected: null,
+          recipeGroupingSelected: null,
           orderCheckoutAction: orderCheckout,
           orderHasAnyProducts,
           orderUpdateProducts,
@@ -873,7 +873,7 @@ describe('Menu', () => {
           <Menu
             {...menuProps}
             filterRecipeGrouping={ filterRecipeGrouping }
-            foodBrandSelected={{
+            recipeGroupingSelected={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
               borderColor: 'blue',
@@ -902,7 +902,7 @@ describe('Menu', () => {
           <Menu
             {...menuProps}
             filterRecipeGrouping={ filterRecipeGrouping }
-            foodBrandSelected={null}
+            recipeGroupingSelected={null}
             query={{foodBrand: 'takeaway-night'}}
             foodBrandDetails={{
               slug: 'takeaway-night',
@@ -934,7 +934,7 @@ describe('Menu', () => {
           <Menu
             {...menuProps}
             filterRecipeGrouping={ filterRecipeGrouping }
-            foodBrandSelected={{
+            recipeGroupingSelected={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
               borderColor: 'blue',
@@ -973,7 +973,7 @@ describe('Menu', () => {
           <Menu
             {...menuProps}
             filterRecipeGrouping={ filterRecipeGrouping }
-            foodBrandSelected={{
+            recipeGroupingSelected={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
               borderColor: 'blue',
@@ -1027,7 +1027,7 @@ describe('Menu', () => {
       )
       wrapper = mount(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuRecipeDetailShow={false}
@@ -1175,7 +1175,7 @@ describe('Menu', () => {
     test('should call Menu.fetchData once if menuVariation has changed', () => {
       const wrapper = shallow(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuLoadBoxPrices={() => {}}
@@ -1200,7 +1200,7 @@ describe('Menu', () => {
       const menuLoadBoxPrices = jest.fn()
       const wrapper = shallow(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuLoadBoxPrices={menuLoadBoxPrices}
@@ -1225,7 +1225,7 @@ describe('Menu', () => {
       const menuLoadBoxPrices = jest.fn()
       const wrapper = shallow(
         <Menu
-          foodBrandSelected={null}
+          recipeGroupingSelected={null}
           productsLoadProducts={() => {}}
           productsLoadStock={() => {}}
           menuLoadBoxPrices={menuLoadBoxPrices}
@@ -1245,7 +1245,7 @@ describe('Menu', () => {
     })
   })
 
-  describe('Filtered Recipe Page ', () => {
+  describe.only('Filtered Recipe Page ', () => {
     const boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
       new Promise(resolve => {
         resolve()
@@ -1254,7 +1254,7 @@ describe('Menu', () => {
     test('should render if foodBrand selected or query param foodBrand has a value ', () => {
       const wrapper = shallow(
         <Menu
-          foodBrandSelected={{
+          recipeGroupingSelected={{
             slug: 'takeaway-night',
             name: 'Takeaway Night',
             borderColor: 'blue',
@@ -1280,6 +1280,50 @@ describe('Menu', () => {
           isAuthenticated={false}
           query={{
             foodBrand: 'takeaway-night'
+          }}
+          recipes={[]}
+        />,
+        {
+          context: {
+            store: {
+              dispatch: jest.fn()
+            }
+          }
+        }
+      )
+      expect(wrapper.find('Connect(FilteredRecipePage)')).toHaveLength(1)
+      expect(wrapper.find('MenuRecipes')).toHaveLength(0)
+    })
+
+    test('should render if thematic selected or query param thematic has a value ', () => {
+      const wrapper = shallow(
+        <Menu
+          recipeGroupingSelected={{
+            name: 'Gousto x wagamama',
+            slug: 'gousto-x-wagamama',
+            borderColor: 'red',
+            location: 'thematic'
+          }}
+          params={{ orderId: '' }}
+          menuLoadBoxPrices={() => {}}
+          menuCollectionRecipes={Immutable.Map({})}
+          features={Immutable.Map({})}
+          filteredRecipesNumber={30}
+          isLoading={false}
+          jfyTutorialFlag={false}
+          changeBannerGelFlag={false}
+          basketNumPortionChange={jest.fn()}
+          boxSummaryDeliveryDaysLoad={boxSummaryDeliveryDaysLoad}
+          boxSummaryDeliveryDays={Immutable.List([])}
+          menuLoadDays={menuLoadDays}
+          menuMobileGridViewSet={jest.fn()}
+          basketRestorePreviousValues={jest.fn()}
+          basketOrderLoaded={jest.fn()}
+          boxDetailsVisibilityChange={jest.fn()}
+          disabled={false}
+          isAuthenticated={false}
+          query={{
+            thematic: 'gousto-x-wagamama'
           }}
           recipes={[]}
         />,

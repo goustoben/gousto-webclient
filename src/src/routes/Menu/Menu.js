@@ -77,7 +77,7 @@ class Menu extends React.Component {
     deliveryDayId: PropTypes.string,
     addressId: PropTypes.string,
     userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
-    foodBrandSelected: PropTypes.oneOfType([
+    recipeGroupingSelected: PropTypes.oneOfType([
       null,
       PropTypes.shape({
         slug: PropTypes.string,
@@ -116,7 +116,7 @@ class Menu extends React.Component {
     promoCode: '',
     postcode: '',
     deliveryDayId: '',
-    foodBrandSelected: null,
+    recipeGroupingSelected: null,
     query: {}
   }
 
@@ -405,25 +405,25 @@ class Menu extends React.Component {
   checkQueryParam = () => {
     const {
       query,
-      foodBrandSelected,
+      recipeGroupingSelected,
       foodBrandDetails,
       filterRecipeGrouping
     } = this.props
-    const isFoodBrandSelected = foodBrandSelected !== null
+    const isFoodBrandSelected = recipeGroupingSelected !== null
 
     if (query.foodBrand) {
-      const foodBrandUrlDifferent = isFoodBrandSelected && query.foodBrand !== foodBrandSelected.slug
+      const foodBrandUrlDifferent = isFoodBrandSelected && query.foodBrand !== recipeGroupingSelected.slug
 
       if (!isFoodBrandSelected || foodBrandUrlDifferent) {
         filterRecipeGrouping(foodBrandDetails, 'foodBrand')
       }
-    } else if (isFoodBrandSelected && foodBrandSelected.location === 'foodBrand') {
+    } else if (isFoodBrandSelected && recipeGroupingSelected.location === 'foodBrand') {
       filterRecipeGrouping(null, 'foodBrand')
     }
 
     if(query.thematic && !isFoodBrandSelected) {
       filterRecipeGrouping(query.thematic, 'thematic')
-    } else if (isFoodBrandSelected && foodBrandSelected.location === 'thematic') {
+    } else if (isFoodBrandSelected && recipeGroupingSelected.location === 'thematic') {
       filterRecipeGrouping(null, 'thematic')
     }
   }
@@ -434,7 +434,7 @@ class Menu extends React.Component {
       clearAllFilters,
       features,
       filteredRecipesNumber,
-      foodBrandSelected,
+      recipeGroupingSelected,
       forceLoad,
       hasRecommendations,
       isLoading,
@@ -450,7 +450,7 @@ class Menu extends React.Component {
     const { mobileGridView, isChrome, isClient } = this.state
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
     const showLoading = isLoading && !overlayShow || forceLoad
-    const showSelectedPage = foodBrandSelected !== null && (!!query.foodBrand || !!query.thematic)
+    const showSelectedPage = recipeGroupingSelected !== null && (!!query.foodBrand || !!query.thematic)
 
     let fadeCss = null
     if (showLoading && hasRecommendations) {
@@ -477,12 +477,12 @@ class Menu extends React.Component {
         {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
         <div className={classnames(css.container, overlayShowCSS)}>
 
-          {(showSelectedPage && foodBrandSelected.location === 'foodBrand') ?
+          {(showSelectedPage && recipeGroupingSelected.location === 'foodBrand') ?
           <FoodBrandPage
             showDetailRecipe={this.showDetailRecipe}
             mobileGridView={mobileGridView}
             isClient={isClient}
-          /> : ((showSelectedPage && foodBrandSelected.location === 'thematic')?
+          /> : ((showSelectedPage && recipeGroupingSelected.location === 'thematic')?
             <ThematicsPage 
               showDetailRecipe={this.showDetailRecipe}
               mobileGridView={mobileGridView}
