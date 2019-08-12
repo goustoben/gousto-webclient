@@ -1,21 +1,5 @@
-@value avenirHeavyFontStack from 'styles/typography.css';
-@value ScreenSMMin, ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
-@value White, Blackberry from 'styles/colors.css';
-
 .loadingContainer {
 	text-align: center;
-}
-
-.rafMobile {
-  padding-top: 20px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
-}
-
-.marketPlaceWrapper {
-  max-width: 1170px;
-  margin: 0 auto;
-  padding: 20px 20px 0;
 }
 
 .marketPlaceTitle {
@@ -25,101 +9,15 @@
   font-size: 24px;
   -webkit-font-smoothing: antialiased;
   margin-bottom: 30px;
+  padding-top: 20px;
 }
 
-.marketPlaceContent {
-  display: flex;
-  justify-content: space-between;
-}
-
-.marketPlaceProducts {
-  width: 100%;
-  @media ScreenSMMin {
-    width: 50%;
-  }
-  @media ScreenMDMin {
-    width: 63%;
-  }
-}
-
-.orderDetails {
-  padding-top: 25px;
-
-  @media ScreenSMMin {
-    width: 47%;
-  }
-  @media ScreenMDMin {
-    width: 35%;
-  }
-}
-
-.orderDetails > section {
-  border-top: 5px solid #e6e6e6;
-  background-color: White;
-  margin: 0;
-  padding: 30px;
-}
-
-.navbar {
-  display: none;
-
-  @media ScreenSMMin {
-    display: block;
-  }
-}
-
-.dropdown {
-  @media ScreenSMMin {
-    display: none;
-  }
-}
-
-.mobileHide {
-  composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+.rafMobile {
+  padding-top: 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
 }
 
 .mobileShow {
   composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
-}
-
-.orderDetailsMobile {
-  position: fixed;
-  margin: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 1000;
-}
-
-.orderDetailsMobileContent {
-  background-color: White;
-  position: absolute;
-  width: 100%;
-  min-height: 100%;
-  padding-top: 10px;
-}
-
-.orderDetailsOpenButton {
-  background-color: Blackberry;
-  color: White;
-  margin: 0 auto;
-  border: none;
-  padding: 11px;
-  border-radius: 5px 5px 0 0;
-  text-transform: uppercase;
-  font-family: avenirHeavyFontStack;
-}
-
-.orderDetailsCloseButton {
-  position: fixed;
-  right: 0;
-  top: 0;
-  z-index: 1010;
-  background-color: White;
-  padding-left: 10px;
-  padding-bottom: 10px;
 }

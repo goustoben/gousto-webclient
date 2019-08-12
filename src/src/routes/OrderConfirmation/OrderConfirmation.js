@@ -1,26 +1,18 @@
-import Immutable from 'immutable'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import React, { PureComponent } from 'react'
 
 import Overlay from 'Overlay'
 import Loading from 'Loading'
-import CloseButton from 'Overlay/CloseButton'
-import { Dropdown } from 'goustouicomponents'
-import SaveButton from 'OrderSummary/SaveButton'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
-import OrderSummaryContainer from './components/OrderSummary/OrderSummaryContainer'
 import { ReferAFriend } from './components/ReferAFriend'
-import { ProductList } from './components/ProductList'
 import { AwinPixel } from './components/AwinPixel'
-import { Navbar } from './components/Navbar'
-
+import { Market } from './components/Market'
 import css from './OrderConfirmation.css'
 
 const propTypes = {
   showHeader: PropTypes.bool.isRequired,
-  showOrderConfirmationReceipt: PropTypes.bool.isRequired,
   headerDetails: PropTypes.oneOfType([
     PropTypes.shape({
       deliveryDate: PropTypes.string,
@@ -31,30 +23,12 @@ const propTypes = {
     }),
     PropTypes.bool,
   ]),
-  basket: PropTypes.instanceOf(Immutable.Map).isRequired,
-  productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
-  products: PropTypes.shape({
-    id: PropTypes.string,
-    title: PropTypes.string,
-    listPrice: PropTypes.string,
-    images: PropTypes.array,
-    ageRestricted: PropTypes.bool,
-    quantity: PropTypes.number,
-  }),
   ageVerified: PropTypes.bool.isRequired,
-  selectedCategory: PropTypes.string.isRequired,
-  filterProductCategory: PropTypes.func.isRequired,
-  saving: PropTypes.bool,
-  saveRequired: PropTypes.bool,
-  onSave: PropTypes.func,
-  saveError: PropTypes.bool,
-  isOrderConfirmation: PropTypes.bool,
 }
 
 const defaultProps = {
   showHeader: false,
   headerDetails: {},
-  isOrderConfirmation: true,
 }
 
 class OrderConfirmation extends PureComponent {
@@ -63,8 +37,6 @@ class OrderConfirmation extends PureComponent {
     this.state = {
       showAgeVerification: false,
       hasConfirmedAge: false,
-      filteredProducts: null,
-      isOrderSummaryOpen: false,
     }
   }
 
@@ -80,12 +52,6 @@ class OrderConfirmation extends PureComponent {
     }))
   }
 
-  toggleOrderSummary = () => {
-    this.setState((prevState) => ({
-      isOrderSummaryOpen: !prevState.isOrderSummaryOpen
-    }))
-  }
-
   onAgeConfirmation = (isOver18) => {
     const { userVerifyAge } = this.props
     this.setState({
@@ -94,87 +60,15 @@ class OrderConfirmation extends PureComponent {
     userVerifyAge(isOver18, true)
   }
 
-  getCategories = () => {
-    const { products } = this.props
-    const uniqueCategories = []
-    const allProducts = [{ id: 'all-products', label: 'All Products' }]
-
-    if (!products) return allProducts
-
-    allProducts[0].count = Object.keys(products).length
-
-    return Object.keys(products).reduce((categoryProducts, productId) => {
-      const productCategories = products[productId].categories
-
-      productCategories && productCategories.map(category => {
-        const duplicateCategory = uniqueCategories.includes(category.id)
-        if (!category.hidden && !duplicateCategory) {
-          const newCategory = {
-            id: category.id,
-            label: category.title
-          }
-          categoryProducts.push(newCategory)
-          uniqueCategories.push(category.id)
-        }
-      })
-
-      return categoryProducts
-    }, allProducts)
-  }
-
-  getFilteredProducts = (chosenCategory) => {
-    const { products, filterProductCategory } = this.props
-
-    filterProductCategory(chosenCategory)
-
-    if (!products) return
-
-    let chosenCategoryProducts = null
-
-    if (chosenCategory == 'all-products') {
-      chosenCategoryProducts = products
-    } else {
-      Object.keys(products).map(productKey => {
-        const productCategories = products[productKey].categories
-        productCategories && productCategories.map(category => {
-          const productProps = products[productKey]
-
-          if (chosenCategory == category.id) {
-            const product = { [productProps.id]: { ...productProps } }
-            chosenCategoryProducts = { ...chosenCategoryProducts, ...product }
-          }
-        })
-      })
-    }
-
-    this.setState({
-      filteredProducts: chosenCategoryProducts
-    })
-  }
-
-  onOrderSave = () => {
-    const { isOrderConfirmation, onSave } = this.props
-    onSave(isOrderConfirmation)
-  }
-
   render() {
     const {
       headerDetails,
       showHeader,
-      products,
       ageVerified,
-      basket,
-      productsCategories,
-      selectedCategory,
-      showOrderConfirmationReceipt,
-      saving,
-      saveRequired,
-      saveError,
       isLoading,
     } = this.props
-    const { showAgeVerification, hasConfirmedAge, isOrderSummaryOpen, filteredProducts } = this.state
+    const { showAgeVerification, hasConfirmedAge } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
-    const categories = this.getCategories()
 
     return isLoading ?
       (
@@ -188,57 +82,20 @@ class OrderConfirmation extends PureComponent {
             {...headerDetails}
           />}
           <Overlay open={showAgeVerification} from="top">
-            <AgeVerificationPopUp onClose={this.toggleAgeVerificationPopUp} isUnderAge={isUnderAge} onAgeConfirmation={this.onAgeConfirmation} />
+            <AgeVerificationPopUp
+              onClose={this.toggleAgeVerificationPopUp}
+              isUnderAge={isUnderAge}
+              onAgeConfirmation={this.onAgeConfirmation}
+            />
           </Overlay>
           <div className={classnames(css.mobileShow, css.rafMobile)}>
             <ReferAFriend />
           </div>
-          <div className={css.marketPlaceWrapper}>
-            <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
-            <div className={css.navbar}>
-              <Navbar items={categories} onClick={this.getFilteredProducts} active={selectedCategory} />
-            </div>
-            <div className={css.dropdown}>
-              <Dropdown id={'product-filter'} options={categories} groupedOptions={[]} optionSelected={selectedCategory} onChange={this.getFilteredProducts} />
-            </div>
-            <div className={css.marketPlaceContent}>
-              <section className={css.marketPlaceProducts}>
-                <ProductList
-                  products={filteredProducts || products}
-                  basket={basket}
-                  ageVerified={ageVerified}
-                  productsCategories={productsCategories}
-                  toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-                  selectedCategory={selectedCategory}
-                />
-              </section>
-              {showOrderConfirmationReceipt && (
-                <section className={classnames(css.orderDetails, css.mobileHide)}>
-                  <OrderSummaryContainer onOrderConfirmationMobile />
-                  <ReferAFriend />
-                </section>
-              )}
-              <section className={classnames(css.orderDetailsMobile, css.mobileShow)}>
-                <button className={css.orderDetailsOpenButton} type="button" onClick={() => this.toggleOrderSummary()}>Open Order Summary</button>
-                <Overlay open={isOrderSummaryOpen} from="bottom">
-                  <div className={css.orderDetailsMobileContent}>
-                    <div className={css.orderDetailsCloseButton}>
-                      <CloseButton onClose={() => this.toggleOrderSummary()} />
-                    </div>
-                    <OrderSummaryContainer orderSummaryCollapsed={false} onOrderConfirmationMobile />
-                  </div>
-
-                </Overlay>
-                <SaveButton
-                  onOrderConfirmationMobile
-                  saving={saving}
-                  saveRequired={saveRequired}
-                  onClick={this.onOrderSave}
-                  error={saveError}
-                />
-              </section>
-            </div>
-          </div>
+          <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
+          <Market
+            ageVerified={ageVerified}
+            toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+          />
           <AwinPixel />
         </div>
       )
@@ -248,4 +105,4 @@ class OrderConfirmation extends PureComponent {
 OrderConfirmation.propTypes = propTypes
 OrderConfirmation.defaultProps = defaultProps
 
-export default OrderConfirmation
+export { OrderConfirmation }
