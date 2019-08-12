@@ -67,6 +67,7 @@ export const productsLoadProducts = (cutoffDate, periodId, reload = false) => (
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
         const { data: productsFromApi } = await fetchProducts(auth.get('accessToken'), cutoffDate, reqData)
+        console.log('productsFromApi', productsFromApi);// eslint-disable-line
         const productsInStock = productsFromApi.reduce((productsInStockAccumulator, product) => {
           product.stock = productsStock.get(product.id)
           if (product.stock > 0 && product.isForSale) {
