@@ -331,6 +331,7 @@ export default {
   filterMenuRevertFilters,
   filterApply,
   currentFoodBrandChange,
+  currentThematicChange,
   filterRecipeGrouping,
   changeCollectionById
 }
