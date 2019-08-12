@@ -12,5 +12,7 @@ export {
   ProgressBar,
   Segment,
   Spinner,
-  Tooltip
+  Tooltip,
+  VerticalStages,
+  VerticalStagesItem,
 } from '../libs/goustouicomponents/src/main'

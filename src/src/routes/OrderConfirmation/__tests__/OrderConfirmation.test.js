@@ -69,6 +69,18 @@ describe('OrderConfirmation', () => {
     test('does not show the Order Confirmation Header', () => {
       expect(wrapper.find('OrderConfirmationHeader').exists()).toBe(false)
     })
+
+    test('renders the RAF component', () => {
+      expect(wrapper.find('Connect(ReferAFriend)').exists()).toBe(true)
+    })
+
+    test('renders the market place title', () => {
+      expect(wrapper.find('.marketPlaceTitle').exists()).toBe(true)
+    })
+
+    test('renders the Market component', () => {
+      expect(wrapper.find('Connect(Market)').exists()).toBe(true)
+    })
   })
 
   describe('when showHeader is set to true', () => {
@@ -76,14 +88,22 @@ describe('OrderConfirmation', () => {
       wrapper.setProps({ ...DEFAULT_PROPS, showHeader: true })
     })
 
-    test('shows the Order Confirmation Header', () => {
-      expect(wrapper.find('OrderConfirmationHeader').exists()).toBe(true)
-    })
-
     test('sends the right props to Order Confirmation Header', () => {
       Object.keys(DEFAULT_HEADER_DETAILS).forEach(key => {
         expect(wrapper.find('OrderConfirmationHeader').prop(key)).toBe(DEFAULT_HEADER_DETAILS[key])
       })
+    })
+
+    test('renders two VerticalStagesItem components', () => {
+      expect(wrapper.find('VerticalStagesItem')).toHaveLength(2)
+    })
+
+    test('renders the OrderConfirmationHeader in the first VerticalStageItem', () => {
+      expect(wrapper.find('VerticalStagesItem').first().find('OrderConfirmationHeader').exists()).toBe(true)
+    })
+
+    test('renders the Market component in the second VerticalStageItem', () => {
+      expect(wrapper.find('VerticalStagesItem').at(1).find('Connect(Market)').exists()).toBe(true)
     })
   })
 

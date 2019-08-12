@@ -9,6 +9,8 @@ import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
 import { ReferAFriend } from './components/ReferAFriend'
 import { AwinPixel } from './components/AwinPixel'
 import { Market } from './components/Market'
+import { VerticalStages, VerticalStagesItem } from 'goustouicomponents'
+
 import css from './OrderConfirmation.css'
 
 const propTypes = {
@@ -78,9 +80,6 @@ class OrderConfirmation extends PureComponent {
       ) :
       (
         <div data-testing="orderConfirmationContainer">
-          {showHeader && <OrderConfirmationHeader
-            {...headerDetails}
-          />}
           <Overlay open={showAgeVerification} from="top">
             <AgeVerificationPopUp
               onClose={this.toggleAgeVerificationPopUp}
@@ -88,14 +87,43 @@ class OrderConfirmation extends PureComponent {
               onAgeConfirmation={this.onAgeConfirmation}
             />
           </Overlay>
-          <div className={classnames(css.mobileShow, css.rafMobile)}>
-            <ReferAFriend />
-          </div>
-          <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
-          <Market
-            ageVerified={ageVerified}
-            toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-          />
+          {showHeader ? (
+            <VerticalStages>
+              <VerticalStagesItem
+                title="Order created"
+                isCompleted
+                backgroundColor="lightGrey"
+              >
+                <div>
+                  <OrderConfirmationHeader {...headerDetails} />
+                  <div className={classnames(css.mobileShow, css.rafMobile)}>
+                    <ReferAFriend />
+                  </div>
+                </div>
+              </VerticalStagesItem>
+
+              <VerticalStagesItem
+                title='Add desserts, drinks, snacks & more from the Gousto Market'
+                isCompleted={false}
+              >
+                <Market
+                  ageVerified={ageVerified}
+                  toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+                />
+              </VerticalStagesItem>
+            </VerticalStages>
+          ) : (
+            <div>
+              <div className={classnames(css.mobileShow, css.rafMobile)}>
+                <ReferAFriend />
+              </div>
+              <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
+              <Market
+                ageVerified={ageVerified}
+                toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+              />
+            </div>
+          )}
           <AwinPixel />
         </div>
       )
