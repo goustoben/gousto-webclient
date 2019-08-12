@@ -1,70 +1,52 @@
-const enabledPages = [
-  '/my-gousto',
-  '/my-deliveries',
-  '/my-details',
-  '/my-subscription',
-  '/my-referrals',
-  '/rate-my-recipes',
-  '/help',
-  '/cookbook',
-]
-const notFoundErrorMessage = 'Could not find `zE` function'
-let zeInstance = null
+const zendesk = (pathName) => {
+  const enabledPages = [
+    '/my-gousto',
+    '/my-deliveries',
+    '/my-details',
+    '/my-subscription',
+    '/my-referrals',
+    '/rate-my-recipes',
+    '/help',
+    '/cookbook',
+  ]
 
-export const zeStart = () => {
-  const RETRY_WAIT = 1000
-  const MAX_ATTEMPTS_NUMBER = 3
-
-  let interval = null
-  let currentAttemptNumber = 0
-
-  return new Promise((resolve, reject) => {
-    const findZendeskInstance = () => {
-      if (window.zE) {
-        zeInstance = window.zE
-
-        resolve()
-      }
-
-      if (currentAttemptNumber > MAX_ATTEMPTS_NUMBER) {
-        clearInterval(interval)
-
-        reject(
-          new Error(notFoundErrorMessage)
-        )
-      }
-
-      currentAttemptNumber++
-    }
-
-    interval = setInterval(findZendeskInstance, RETRY_WAIT)
-  })
-}
-
-export const zeChatButtonSetUp = (pathName) => {
   const shouldDisplayChat = enabledPages.indexOf(pathName) > -1
 
-  if (!zeInstance) {
-    throw new Error(notFoundErrorMessage)
-  }
+  return {
+    getZopim: (callback) => {
+      let zendeskCallAttempts = 0
+      let interval = null
 
-  if (shouldDisplayChat) {
-    zeInstance(() => {
-      zeInstance('webWidget', 'open')
+      const findZopimInstance = () => {
+        if (window.$zopim) {
+          callback()
+        }
 
-      window.$zopim(() => {
-        /*
-        * When users click on the minimize button within the chat,
-        * it hides the chat button completely from the page . This would force the button to be shown.
-        */
-        window.$zopim.livechat.window.onHide(() => {
-          zeInstance('webWidget', 'open')
+        if (zendeskCallAttempts > 3 || window.$zopim) {
+          clearInterval(interval)
+        }
+
+        zendeskCallAttempts++
+      }
+
+      interval = setInterval(findZopimInstance, 1000)
+    },
+    chatButton: () => {
+      // https://support.zendesk.com/hc/en-us/articles/203661356
+      if (shouldDisplayChat) {
+        window.$zopim(() => {
+          window.$zopim.livechat.button.show()
+
+          window.$zopim.livechat.window.onHide(() => {
+            window.$zopim.livechat.button.show()
+          })
         })
-      })
-    })
-  } else {
-    zeInstance(() => {
-      zeInstance('webWidget', 'hide')
-    })
+      } else {
+        window.$zopim(() => (window.$zopim.livechat.hideAll()))
+      }
+    },
   }
 }
+
+export default zendesk
+
