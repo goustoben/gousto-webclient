@@ -99,12 +99,13 @@ export const currentFoodBrandChange = (foodBrand) => ({
   }
 })
 
-export const currentThematicChange = (thematic) => ({
+export const currentThematicChange = (thematic, onAction) => ({
   type: actionTypes.FILTERS_THEMATIC_CHANGE,
   thematic,
   trackingData: {
     actionType: thematic !== null ? 'Thematic selected' : 'Thematic unselected',
-    thematic: thematic !== null ? thematic.slug : ''
+    thematic: thematic !== null ? thematic.slug : '',
+    onAction
   }
 })
 
@@ -262,11 +263,11 @@ const selectFoodBrand = (dispatch, getState, recipeGrouping) => {
   dispatch(push(newLocation))
 }
 
-const selectThematic = (dispatch, getState, thematicSlug) => {
+const selectThematic = (dispatch, getState, thematicSlug, onAction) => {
   const { routing } = getState()
   const previousLocation = routing.locationBeforeTransitions
   const query = { ...previousLocation.query }
-  let thematic = thematicSlug 
+  let thematic = thematicSlug
   if(thematicSlug === null) {
     delete query.thematic
   } else {
@@ -284,30 +285,30 @@ const selectThematic = (dispatch, getState, thematicSlug) => {
       }
       query.thematic = thematicSlug
     } else {
-      thematic = null 
+      thematic = null
     }
   }
 
-  dispatch(currentThematicChange(thematic))
+  dispatch(currentThematicChange(thematic, onAction))
   const newLocation = { ...previousLocation, query }
   dispatch(push(newLocation))
 }
 
-export const filterRecipeGrouping = (recipeGrouping, location) => (
+export const filterRecipeGrouping = (recipeGrouping, location, onAction = null) => (
   (dispatch, getState) => {
     const { features } = getState()
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     const thematicFeature = features.getIn(['thematic', 'value'])
-    
+
     if (foodBrandFeature && location === 'foodBrand') {
       if(recipeGrouping !== null) {
-        recipeGrouping.location = location 
+        recipeGrouping.location = location
       }
       selectFoodBrand(dispatch, getState, recipeGrouping)
     }
 
     if (thematicFeature && location === 'thematic') {
-      selectThematic(dispatch, getState, recipeGrouping)
+      selectThematic(dispatch, getState, recipeGrouping, onAction)
     }
 
     if(foodBrandFeature || thematicFeature) {

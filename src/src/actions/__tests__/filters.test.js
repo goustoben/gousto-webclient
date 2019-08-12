@@ -444,6 +444,7 @@ describe('filters actions', () => {
         }
       })
     })
+
     test('should call FILTERS_THEMATIC_CHANGE with null thematic if this is null', () => {
       filterRecipeGrouping(null, 'thematic')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
@@ -451,12 +452,13 @@ describe('filters actions', () => {
         'type': 'FILTERS_THEMATIC_CHANGE',
         'trackingData': {
           'actionType': 'Thematic unselected',
-          'thematic': ''}
+          'thematic': '',
+          'onAction': null}
       })
       expect(dispatchSpy).toHaveBeenCalledTimes(3)
     })
 
-    test('should call push with thematic slug if thematic is not null', () => {
+    test('should call push with thematic slug if thematic is not null and action is not passed down', () => {
       filterRecipeGrouping('gousto-x-wagamama', 'thematic')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'thematic': {
@@ -468,7 +470,31 @@ describe('filters actions', () => {
         'type': "FILTERS_THEMATIC_CHANGE",
         'trackingData': {
           'actionType': 'Thematic selected',
-          'thematic': 'gousto-x-wagamama'
+          'thematic': 'gousto-x-wagamama',
+          'onAction': null
+        }
+      })
+      expect(push).toHaveBeenCalledWith({
+        query: {
+          thematic: 'gousto-x-wagamama'
+        }
+      })
+    })
+
+    test('should track how arrived on thematics page by banner click if action is passed down as banner', () => {
+      filterRecipeGrouping('gousto-x-wagamama', 'thematic', 'banner click')(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        'thematic': {
+          name: 'Gousto x wagamama',
+          slug: 'gousto-x-wagamama',
+          borderColor: 'red',
+          location: 'thematic'
+        },
+        'type': "FILTERS_THEMATIC_CHANGE",
+        'trackingData': {
+          'actionType': 'Thematic selected',
+          'thematic': 'gousto-x-wagamama',
+          'onAction': 'banner click',
         }
       })
       expect(push).toHaveBeenCalledWith({
