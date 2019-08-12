@@ -446,19 +446,19 @@ describe('filters actions', () => {
     })
 
     test('should call FILTERS_THEMATIC_CHANGE with null thematic if this is null', () => {
-      filterRecipeGrouping(null, 'thematic', null)(dispatchSpy, getStateSpy)
+      filterRecipeGrouping(null, 'thematic')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'thematic': null,
         'type': 'FILTERS_THEMATIC_CHANGE',
         'trackingData': {
           'actionType': 'Thematic unselected',
           'thematic': '',
-          'onClick': null}
+          'onAction': null}
       })
       expect(dispatchSpy).toHaveBeenCalledTimes(3)
     })
 
-    test('should call push with thematic slug if thematic is not null and onClick is not passed down', () => {
+    test('should call push with thematic slug if thematic is not null and action is not passed down', () => {
       filterRecipeGrouping('gousto-x-wagamama', 'thematic')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'thematic': {
@@ -471,7 +471,7 @@ describe('filters actions', () => {
         'trackingData': {
           'actionType': 'Thematic selected',
           'thematic': 'gousto-x-wagamama',
-          'onClick': null
+          'onAction': null
         }
       })
       expect(push).toHaveBeenCalledWith({
@@ -481,8 +481,8 @@ describe('filters actions', () => {
       })
     })
 
-    test('should track how arrived on thematics page by banner click if onClick is passed down as banner', () => {
-      filterRecipeGrouping('gousto-x-wagamama', 'thematic', 'banner')(dispatchSpy, getStateSpy)
+    test('should track how arrived on thematics page by banner click if action is passed down as banner', () => {
+      filterRecipeGrouping('gousto-x-wagamama', 'thematic', 'banner click')(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         'thematic': {
           name: 'Gousto x wagamama',
@@ -494,7 +494,7 @@ describe('filters actions', () => {
         'trackingData': {
           'actionType': 'Thematic selected',
           'thematic': 'gousto-x-wagamama',
-          'onClick': 'banner',
+          'onAction': 'banner click',
         }
       })
       expect(push).toHaveBeenCalledWith({

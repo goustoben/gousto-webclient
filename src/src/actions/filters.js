@@ -1,4 +1,3 @@
-/* eslint-disable import/exports-last */
 import { push } from 'react-router-redux'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import config from 'config/recipes'
@@ -100,13 +99,13 @@ export const currentFoodBrandChange = (foodBrand) => ({
   }
 })
 
-export const currentThematicChange = (thematic, onClick) => ({
+export const currentThematicChange = (thematic, onAction) => ({
   type: actionTypes.FILTERS_THEMATIC_CHANGE,
   thematic,
   trackingData: {
     actionType: thematic !== null ? 'Thematic selected' : 'Thematic unselected',
     thematic: thematic !== null ? thematic.slug : '',
-    onClick
+    onAction
   }
 })
 
@@ -264,7 +263,7 @@ const selectFoodBrand = (dispatch, getState, recipeGrouping) => {
   dispatch(push(newLocation))
 }
 
-const selectThematic = (dispatch, getState, thematicSlug, onClick) => {
+const selectThematic = (dispatch, getState, thematicSlug, onAction) => {
   const { routing } = getState()
   const previousLocation = routing.locationBeforeTransitions
   const query = { ...previousLocation.query }
@@ -290,12 +289,12 @@ const selectThematic = (dispatch, getState, thematicSlug, onClick) => {
     }
   }
 
-  dispatch(currentThematicChange(thematic, onClick))
+  dispatch(currentThematicChange(thematic, onAction))
   const newLocation = { ...previousLocation, query }
   dispatch(push(newLocation))
 }
 
-export const filterRecipeGrouping = (recipeGrouping, location, onClick = null) => (
+export const filterRecipeGrouping = (recipeGrouping, location, onAction = null) => (
   (dispatch, getState) => {
     const { features } = getState()
     const foodBrandFeature = features.getIn(['foodBrand', 'value'])
@@ -309,7 +308,7 @@ export const filterRecipeGrouping = (recipeGrouping, location, onClick = null) =
     }
 
     if (thematicFeature && location === 'thematic') {
-      selectThematic(dispatch, getState, recipeGrouping, onClick)
+      selectThematic(dispatch, getState, recipeGrouping, onAction)
     }
 
     if(foodBrandFeature || thematicFeature) {
