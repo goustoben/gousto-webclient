@@ -41,9 +41,7 @@ export const setSlotFromIds = (state, slot_id, day_id, dispatch) => {
       }
       dispatch(basketSlotChange(slotIdToSet))
     } else {
-      dispatch(redirect('/menu', true))
+      dispatch(redirect('/menu'))
     }
-  } else {
-    dispatch(redirect('/menu', true))
   }
 }

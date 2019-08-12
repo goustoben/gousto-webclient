@@ -224,7 +224,7 @@ describe('setSlotFromIds', () => {
 
       expect(basketDateChange).not.toHaveBeenCalled()
       expect(basketSlotChange).not.toHaveBeenCalled()
-      expect(redirect).toHaveBeenCalledWith('/menu', true)
+      expect(redirect).not.toHaveBeenCalled()
     })
   })
 })
