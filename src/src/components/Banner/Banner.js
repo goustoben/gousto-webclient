@@ -2,19 +2,23 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import { Button } from 'goustouicomponents'
+import { onEnter } from 'utils/accessibility'
 import css from './Banner.css'
 
-const Banner = ({ hide, onClick, text, linkText }) => (
+const Banner = ({ hide, onClick, text, linkText, fixed, hideText }) => (
   <div
     role="button"
     onClick={() => { onClick() }}
+    onKeyDown={(e) => { onEnter(e, onClick) }}
+    tabIndex={0}
     className={classnames(
       css.container,
       css.link,
       { [css.hide]: hide },
+      { [css.fixed]: fixed }
     )}
   >
-    <p className={css.text}>{text}&nbsp;</p>
+    <p className={classnames(css.text, { [css.hideText]: hideText })}>{text}&nbsp;</p>
     <Button color="tertiary">{linkText}</Button>
   </div>
 )
@@ -24,8 +28,13 @@ Banner.propTypes = {
   onClick: PropTypes.func,
   text: PropTypes.string,
   linkText: PropTypes.string,
+  fixed: PropTypes.bool,
+  hideText: PropTypes.bool,
 }
 
-Banner.defaultProps = {}
+Banner.defaultProps = {
+  fixed: false,
+  hideText: false,
+}
 
 export default Banner

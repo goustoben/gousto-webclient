@@ -7,6 +7,7 @@ const PromoBannerContainer = connect((state) => ({
   promoCurrent: state.promoCurrent,
   basketPromoCode: state.basket.get('promoCode'),
   isAuthenticated: state.auth.get('isAuthenticated'),
+  browser: state.request.get('browser'),
 }), {
   redirect,
   promoChange: promoActions.promoChange,

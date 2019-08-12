@@ -15,6 +15,9 @@
   composes: marginXXS from 'sass-loader!styles/spacing.scss';
   composes: textXL bodyFont textBold from 'styles/typography.css';
   color: White;
+  max-height: 500px;
+  margin: auto;
+  transition: all 0.2s ease-out;
 }
 
 .link {
@@ -23,4 +26,18 @@
 
 .linkUnderlined {
   text-decoration: underline;
+}
+
+.fixed {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.hideText {
+  max-height: 0;
+  margin-top: 0;
+  display: block;
+  overflow: hidden;
 }
