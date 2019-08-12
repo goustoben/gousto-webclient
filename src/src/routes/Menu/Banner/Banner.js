@@ -20,11 +20,11 @@ const Banner = ({imageName, type, color, fileName, collectionSlug, setThematic})
   <div className={css[type]}>
     <div className={css.content}>
       {(imageName && collectionSlug) ? (
-        <div role="button" tabIndex={0} className={css.gelPortrait} onClick={() => setThematic(collectionSlug, 'thematic')} onKeyPress={() => setThematic(collectionSlug, 'thematic')}>
+        <div role="button" tabIndex={0} className={css.gelPortrait} onClick={() => setThematic(collectionSlug, 'thematic', 'banner click')} onKeyPress={() => setThematic(collectionSlug, 'thematic')}>
           <Image className={css.gelPortrait__image} media={getImage(imageName)} />
         </div>
       ) : (
-        imageName && ( 
+        imageName && (
           <div className={css.gelPortrait}>
             <Image className={css.gelPortrait__image} media={getImage(imageName)} />
           </div>
