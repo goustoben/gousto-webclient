@@ -153,7 +153,7 @@ const processCookies = (cookies, store) => {
     store.dispatch(filterActions.collectionFilterIdRecieve(currentCollectionId))
   }
 
-  if (recipeGroupSlug && recipeGroupName && recipeGroupBorderColor) {
+  if (recipeGroupSlug && recipeGroupName && recipeGroupBorderColor && recipeGroupBorderLocation) {
     const recipeGroup = {
       slug: recipeGroupSlug,
       name: recipeGroupName,
@@ -163,6 +163,9 @@ const processCookies = (cookies, store) => {
 
     if(recipeGroupBorderLocation === 'foodBrand') {
       store.dispatch(filterActions.currentFoodBrandChange(recipeGroup))
+    }
+    if(recipeGroupBorderLocation === 'thematic') {
+      store.dispatch(filterActions.currentThematicChange(recipeGroup))
     }
   }
 
