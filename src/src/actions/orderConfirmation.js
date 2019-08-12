@@ -5,7 +5,6 @@ import config from 'config/routes'
 import ordersApi from 'apis/orders'
 import logger from 'utils/logger'
 import userUtils from 'utils/user'
-import { redirect } from 'utils/window'
 import { basketOrderLoad } from 'actions/basket'
 import { getAffiliateTrackingData } from 'utils/order'
 import { trackAffiliatePurchase } from 'actions/tracking'
@@ -16,9 +15,7 @@ import tempActions from './temp'
 import actionTypes from './actionTypes'
 
 export const orderConfirmationRedirect = (orderId, orderAction) => (
-  (dispatch, getState) => {
-    dispatch(orderDetails(orderId))
-
+  (dispatch) => {
     const confirmationUrl = config.client.orderConfirmation.replace(':orderId', orderId)
     dispatch(orderCheckPossibleDuplicate(orderId))
     dispatch(push((orderAction) ? `${confirmationUrl}?order_action=${orderAction}` : confirmationUrl))
@@ -46,7 +43,8 @@ export const orderDetails = (orderId) => (
       )
 
       dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
-      await dispatch(productsLoadProducts(order.whenCutOff, order.periodId))
+      console.log('i am the correct action') //eslint-disable-line
+      await dispatch(productsLoadProducts(order.whenCutOff, order.periodId, true))
       dispatch(basketOrderLoad(orderId, immutableOrderDetails))
       dispatch({
         type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
