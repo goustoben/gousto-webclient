@@ -75,7 +75,7 @@ class Market extends PureComponent {
 
     filterProductCategory(chosenCategory)
 
-    if (!products) return
+    if (!Object.keys(products).length) return
 
     let chosenCategoryProducts = null
 

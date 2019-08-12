@@ -158,12 +158,12 @@ describe('<Market />', () => {
       })
     })
 
-    describe('when products prop is undefined', () => {
+    describe('when products prop is empty', () => {
       let filterProductCategoryMock
 
       beforeEach(() => {
         filterProductCategoryMock = jest.fn()
-        wrapper.setProps({ products: undefined, filterProductCategory: filterProductCategoryMock })
+        wrapper.setProps({ products: {}, filterProductCategory: filterProductCategoryMock })
         wrapper.instance().getFilteredProducts('category-1')
       })
 
