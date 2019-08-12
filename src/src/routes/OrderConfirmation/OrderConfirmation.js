@@ -1,11 +1,13 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import classnames from 'classnames'
 
 import Overlay from 'Overlay'
 import Loading from 'Loading'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import {
+  ItemExpandable,
   LayoutPageWrapper,
   VerticalStages,
   VerticalStagesItem,
@@ -18,7 +20,8 @@ import { Market } from './components/Market'
 import css from './OrderConfirmation.css'
 
 const propTypes = {
-  showHeader: PropTypes.bool.isRequired,
+  ageVerified: PropTypes.bool.isRequired,
+  hasCollapsedRafFeature: PropTypes.bool,
   headerDetails: PropTypes.oneOfType([
     PropTypes.shape({
       deliveryDate: PropTypes.string,
@@ -29,12 +32,19 @@ const propTypes = {
     }),
     PropTypes.bool,
   ]),
-  ageVerified: PropTypes.bool.isRequired,
+  rafOffer: ImmutablePropTypes.mapContains({
+    creditFormatted: PropTypes.string.isRequired,
+    firstBoxDiscountFormatted: PropTypes.string.isRequired,
+    firstMonthDiscountFormatted: PropTypes.string.isRequired,
+  }).isRequired,
+  showHeader: PropTypes.bool.isRequired,
+  userFetchReferralOffer: PropTypes.func
 }
 
 const defaultProps = {
-  showHeader: false,
+  hasCollapsedRafFeature: false,
   headerDetails: {},
+  showHeader: false,
 }
 
 class OrderConfirmation extends PureComponent {
@@ -68,10 +78,12 @@ class OrderConfirmation extends PureComponent {
 
   render() {
     const {
-      headerDetails,
-      showHeader,
       ageVerified,
+      hasCollapsedRafFeature,
+      headerDetails,
       isLoading,
+      rafOffer,
+      showHeader,
     } = this.props
     const { showAgeVerification, hasConfirmedAge } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
@@ -106,7 +118,15 @@ class OrderConfirmation extends PureComponent {
                   <div>
                     <OrderConfirmationHeader {...headerDetails} />
                     <div className={classnames(css.mobileShow, css.rafMobile)}>
-                      <ReferAFriend />
+                      {hasCollapsedRafFeature ?
+                        <ItemExpandable
+                          label={`Invite your friends, get ${rafOffer.get('creditFormatted')}`}
+                        >
+                          <ReferAFriend />
+                        </ItemExpandable>
+                        :
+                        <ReferAFriend />
+                      }
                     </div>
                   </div>
                 </VerticalStagesItem>

@@ -6,6 +6,7 @@ import { isOrderConfirmationPageLoading } from 'selectors/orderConfirmation'
 import { getBasketOrderDetails } from 'selectors/basket'
 import Immutable from 'immutable'
 import userActions, { userFetchReferralOffer } from 'actions/user'
+import { isCollapsedRafFeatureEnabled } from 'selectors/features'
 import { OrderConfirmation } from './OrderConfirmation'
 import { getHeaderDetails } from './helper'
 
@@ -17,11 +18,12 @@ const mapStateToProps = (state) => {
   const isLoading = !order || isOrderConfirmationPageLoading(state)
 
   return ({
-    showHeader,
-    headerDetails,
     ageVerified: getAgeVerified(state),
-    rafOffer: getReferralOffer(state) || Immutable.Map(),
+    hasCollapsedRafFeature: isCollapsedRafFeatureEnabled(state),
+    headerDetails,
     isLoading,
+    rafOffer: getReferralOffer(state) || Immutable.Map(),
+    showHeader,
   })
 }
 

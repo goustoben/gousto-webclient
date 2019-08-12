@@ -13,18 +13,25 @@ describe('OrderConfirmation', () => {
     whenCutoffDate: 'Wednesday 20th March',
   }
 
+  const rafOffer = Immutable.Map({
+    creditFormatted: '£15',
+    firstBoxDiscountFormatted: '60%',
+    firstMonthDiscountFormatted: '30%',
+  })
+
   const DEFAULT_PROPS = {
     headerDetails: DEFAULT_HEADER_DETAILS,
     showHeader: false,
     products: {},
     isLoading: false,
-    userFetchReferralOffer: jest.fn(),
     filterProductCategory: () => { },
     showOrderConfirmationReceipt: false,
     ageVerified: false,
     selectedCategory: 'all-products',
     basket: Immutable.fromJS({}),
     productsCategories: Immutable.fromJS({}),
+    rafOffer,
+    userFetchReferralOffer: jest.fn(),
   }
 
   let wrapper
@@ -53,7 +60,7 @@ describe('OrderConfirmation', () => {
 
   describe('when page is loading', () => {
     beforeEach(() => {
-      wrapper.setProps({ ...DEFAULT_PROPS, isLoading: true })
+      wrapper.setProps({ isLoading: true })
     })
 
     test('shows the loading spinner', () => {
@@ -63,7 +70,7 @@ describe('OrderConfirmation', () => {
 
   describe('when showHeader is set to false', () => {
     beforeEach(() => {
-      wrapper.setProps({ ...DEFAULT_PROPS, showHeader: false })
+      wrapper.setProps({ showHeader: false })
     })
 
     test('does not show the Order Confirmation Header', () => {
@@ -85,7 +92,7 @@ describe('OrderConfirmation', () => {
 
   describe('when showHeader is set to true', () => {
     beforeEach(() => {
-      wrapper.setProps({ ...DEFAULT_PROPS, showHeader: true })
+      wrapper.setProps({ showHeader: true })
     })
 
     test('sends the right props to Order Confirmation Header', () => {
@@ -104,6 +111,31 @@ describe('OrderConfirmation', () => {
 
     test('renders the Market component in the second VerticalStageItem', () => {
       expect(wrapper.find('VerticalStagesItem').at(1).find('Connect(Market)').exists()).toBe(true)
+    })
+
+    test('renders the ReferAFriend in the first VerticalStageItem', () => {
+      expect(wrapper.find('VerticalStagesItem').first().find('Connect(ReferAFriend)')).toHaveLength(1)
+    })
+
+    describe('and the feature collapsedRaf is enabled', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hasCollapsedRafFeature: true })
+      })
+
+      test('renders the ItemExpandable in the first VerticalStageItem', () => {
+        expect(wrapper.find('VerticalStagesItem').first().find('ItemExpandable').exists()).toBe(true)
+      })
+
+      test('ItemExpandable contains the right credit amount', () => {
+        expect(wrapper.find('VerticalStagesItem').first()
+          .find('ItemExpandable').prop('label'))
+          .toContain(rafOffer.get('creditFormatted'))
+      })
+
+      test('render the ReferAFriend inside ItemExpandable', () => {
+        expect(wrapper.find('VerticalStagesItem').first()
+          .find('ItemExpandable').find('Connect(ReferAFriend)').exists()).toBe(true)
+      })
     })
   })
 
