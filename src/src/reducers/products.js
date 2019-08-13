@@ -5,7 +5,6 @@ const products = {
   products: (state = Immutable.Map({}), action) => {
     switch (action.type) {
     case actionTypes.PRODUCTS_RECEIVE: {
-
       return action.products.reduce((reducerState, product) => {
         let newProduct = reducerState.get(product.id, Immutable.Map()).mergeDeep(Immutable.fromJS(product))
 
@@ -24,7 +23,7 @@ const products = {
         newProduct = newProduct.set('media', media).set('cutoffDates', newCutoffDates)
 
         return reducerState.set(product.id, newProduct)
-      }, state)
+      }, action.reload ? Immutable.OrderedMap({}) : state)
     }
 
     default: {

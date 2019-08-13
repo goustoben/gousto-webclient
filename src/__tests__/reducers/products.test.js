@@ -149,6 +149,50 @@ describe('products reducer', () => {
 
       expect(Immutable.is(result, expectedState)).toEqual(true)
     })
+    describe('when it is reload', () => {
+      test('should reload products with both the same data and the same order with products-input', () => {
+        const initialState = Immutable.fromJS({
+          1: {
+            id: '1',
+            title: 'product 1',
+            cutoffDates: ['existing cutoff date'],
+          },
+        })
+
+        const products = [
+          {
+            id: '2',
+            title: 'product 2',
+          },
+          {
+            id: '1',
+            title: 'product 1',
+          },
+        ]
+
+        const result = productsReducer.products(initialState, {
+          type: actionTypes.PRODUCTS_RECEIVE,
+          products,
+          cutoffDate: 'new cutoff date',
+          reload: true
+        })
+        const expectedState = Immutable.OrderedMap()
+          .set(
+            '2',
+            Immutable.fromJS(products[0])
+              .set('media', Immutable.List())
+              .set('cutoffDates', Immutable.fromJS(['new cutoff date'])),
+          )
+          .set(
+            '1',
+            Immutable.fromJS(products[1])
+              .set('media', Immutable.List())
+              .set('cutoffDates', Immutable.fromJS(['new cutoff date'])),
+          )
+
+        expect(Immutable.is(result, expectedState)).toEqual(true)
+      })
+    })
   })
 
   describe('PRODUCTS_RANDOM_RECEIVE', () => {

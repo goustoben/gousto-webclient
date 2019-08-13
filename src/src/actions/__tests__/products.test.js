@@ -73,6 +73,7 @@ describe('productsLoadProducts', () => {
         { id: '2', isForSale: true, stock: 1000 }
       ],
       cutoffDate: cutoffDate,
+      reload: false,
     })
     expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' })
   })
@@ -122,6 +123,7 @@ describe('productsLoadProducts', () => {
         { id: '2', isForSale: true, stock: 1000 },
       ],
       cutoffDate: 'whenCutoff timestamp',
+      reload: false,
     })
 
     expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { sort: 'position' })
@@ -138,9 +140,29 @@ describe('productsLoadProducts', () => {
         { id: '2', isForSale: true, stock: 1000 },
       ],
       cutoffDate: 'whenCutoff timestamp',
+      reload: false,
     })
 
     expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { period_id: '1234', sort: 'position' })
   })
 
+  describe('when reload is true', async () => {
+    test('should still fetch products if there are all products in product store & no cutoffDate is passed in ', async () => {
+      getStateSpy = () => ({
+        auth: Immutable.fromJS({ accessToken: 'accessToken' }),
+        products: Immutable.fromJS({
+          1: { id: '1', title: 'Title 1' },
+          2: { id: '2', title: 'Title 2' },
+        }),
+        basket: Immutable.fromJS({
+          products: {
+          },
+        }),
+      })
+
+      await productsLoadProducts(undefined, undefined, {reload: true})(dispatchSpy, getStateSpy)
+
+      expect(fetchProducts).toHaveBeenCalled()
+    })
+  })
 })
