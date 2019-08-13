@@ -509,7 +509,6 @@ class Menu extends React.Component {
               toggleGridView={this.toggleGridView}
             />
           )}
-            />}
           <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick}></div>
         </div>
         <BoxSummaryMobile />
