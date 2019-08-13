@@ -5,9 +5,6 @@ const products = {
   products: (state = Immutable.Map({}), action) => {
     switch (action.type) {
     case actionTypes.PRODUCTS_RECEIVE: {
-      console.log('action.reload', action.reload) // eslint-disable-line
-      console.log('action.products', action.products) // eslint-disable-line
-      
       return action.products.reduce((reducerState, product) => {
         let newProduct = reducerState.get(product.id, Immutable.Map()).mergeDeep(Immutable.fromJS(product))
 

@@ -73,6 +73,7 @@ describe('productsLoadProducts', () => {
         { id: '2', isForSale: true, stock: 1000 }
       ],
       cutoffDate: cutoffDate,
+      reload: false,
     })
     expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' })
   })
@@ -122,6 +123,7 @@ describe('productsLoadProducts', () => {
         { id: '2', isForSale: true, stock: 1000 },
       ],
       cutoffDate: 'whenCutoff timestamp',
+      reload: false,
     })
 
     expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { sort: 'position' })
@@ -138,6 +140,7 @@ describe('productsLoadProducts', () => {
         { id: '2', isForSale: true, stock: 1000 },
       ],
       cutoffDate: 'whenCutoff timestamp',
+      reload: false,
     })
 
     expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { period_id: '1234', sort: 'position' })

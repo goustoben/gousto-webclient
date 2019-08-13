@@ -43,8 +43,7 @@ export const orderDetails = (orderId) => (
       )
 
       dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
-      console.log('i am the correct action') //eslint-disable-line
-      await dispatch(productsLoadProducts(order.whenCutOff, order.periodId, true))
+      await dispatch(productsLoadProducts(order.whenCutOff, order.periodId, {reload: true}))
       dispatch(basketOrderLoad(orderId, immutableOrderDetails))
       dispatch({
         type: actionTypes.BASKET_ORDER_DETAILS_LOADED,
