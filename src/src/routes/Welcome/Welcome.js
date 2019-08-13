@@ -13,7 +13,7 @@ import { getAffiliateTrackingData } from 'utils/order'
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
 import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
-import ExpectationsCarousel from './ExpectationsCarousel'
+// import ExpectationsCarousel from './ExpectationsCarousel'
 import ProductDetailOverlay from './ProductDetailOverlay'
 import { AwinPixel } from './AwinPixel'
 import SubHeader from './SubHeader'
@@ -35,6 +35,7 @@ class Welcome extends React.PureComponent {
     params: PropTypes.shape({
       orderId: PropTypes.string,
     }).isRequired,
+    device: PropTypes.string,
   }
 
   static contextTypes = {
@@ -118,7 +119,7 @@ class Welcome extends React.PureComponent {
 
   render() {
     const { isClient } = this.state
-    const { user, orderId, productDetailId, productDetailVisibilityChange, isRafAboveCarousel } = this.props
+    const { user, orderId, productDetailId, productDetailVisibilityChange, isRafAboveCarousel, device } = this.props
 
     return (
       <section className={css.container} data-testing="welcomeContainer">
@@ -144,7 +145,7 @@ class Welcome extends React.PureComponent {
               }
               <div className={css.welcomeColInner}>
                 {/* <ExpectationsCarousel /> */}
-                <AppPromo />
+                <AppPromo device={device} />
               </div>
               {
                 !isRafAboveCarousel && (

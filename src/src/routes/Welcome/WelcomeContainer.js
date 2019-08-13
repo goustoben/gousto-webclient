@@ -7,7 +7,7 @@ import { getRafPositionOnWelcomePage } from 'selectors/features'
 import Welcome from './Welcome'
 
 function mapStateToProps(state, ownProps) {
-  const { products, user } = state
+  const { products, user, request } = state
   const { params, location } = ownProps
 
   return ({
@@ -16,6 +16,7 @@ function mapStateToProps(state, ownProps) {
     products,
     user,
     isRafAboveCarousel: getRafPositionOnWelcomePage(state),
+    device: request.get('browser')
   })
 }
 

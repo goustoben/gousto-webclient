@@ -1,8 +1,20 @@
 import React from 'react'
+import classnames from 'classnames'
+import PropTypes from 'prop-types'
 import { Button } from 'goustouicomponents'
+import AppStoreLinks from 'Footer/AppStoreLinks'
+import config from 'config'
 import css from './AppPromo.css'
 
-const AppPromo = () => {
+const propTypes = {
+  device: PropTypes.string,
+}
+
+const defaultProps = {
+  device: 'desktop'
+}
+
+const AppPromo = ({ device }) => {
   return (
     <div className={css.container}>
       <div className={css.phoneImageContainer}><img className={css.phoneImage} src={require('media/images/app_promo_phone.png')} alt="" /></div>
@@ -12,12 +24,18 @@ const AppPromo = () => {
           <li><span className={css.bullet}><i className={css.tick} /></span>Follow the status of your orders on the go</li>
           <li><span className={css.bullet}><i className={css.tick} /></span>Find all your recipes in your own cookbook</li>
         </ul>
-        <a data-testing="appBannerCTA" className={css.appLink} href="https://gousto.co.uk/apps">
+        <a data-testing="appBannerCTA" className={classnames(css.mobileAppLink, { [css.hideElement]: device === 'desktop' })} href="https://gousto.co.uk/apps">
           <Button noDecoration>Get the app now</Button>
         </a>
+        <div className={classnames(css.desktopAppLink, { [css.hideElement]: device === 'mobile' })}>
+          <AppStoreLinks appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />
+        </div>
       </div>
-    </div>
+    </div >
   )
 }
+
+AppPromo.propTypes = propTypes
+AppPromo.defaultProps = defaultProps
 
 export { AppPromo }
