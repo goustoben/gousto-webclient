@@ -1,12 +1,27 @@
 @value Pomegranate from 'styles/colors.css';
+@value ScreenXXSMin, ScreenSMMin from 'styles/screenSizes.css';
 
 .container {
   display: flex;
   padding: 20px;
 }
 
+.phoneImageContainer {
+  text-align: center;
+  height: 350px;
+  overflow: hidden;
+
+  @media ScreenSMMin {
+    width: 300px;
+  }
+}
+
 .phoneImage {
   width: 200px;
+  
+  @media ScreenXXSMin {
+    width: 250px;
+  }
 }
 
 .content {
@@ -27,6 +42,11 @@
   list-style-type: none;
   margin-left: 2.5em;
   padding-left: 0;
+
+  @media ScreenSMMin {
+    margin-left: 1em;
+  }
+
 }
 
 .list>li {
