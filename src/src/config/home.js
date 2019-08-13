@@ -81,6 +81,7 @@ module.exports = {
     code: 'DTI-SB-63',
     banner: {
       text: 'Summer sale! Click here to get 60% off your first box and 30% off all other boxes in your first month',
+      shortText: 'Summer sale! 60% off your 1st box & 30% off all month',
       linkText: 'Claim discount',
     },
   },
