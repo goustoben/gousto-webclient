@@ -421,8 +421,10 @@ class Menu extends React.Component {
       filterRecipeGrouping(null, 'foodBrand')
     }
 
-    if(query.thematic && !isFoodBrandSelected) {
-      filterRecipeGrouping(query.thematic, 'thematic')
+    if(query.thematic) {
+      if(!isFoodBrandSelected){
+        filterRecipeGrouping(query.thematic, 'thematic')
+      }
     } else if (isFoodBrandSelected && recipeGroupingSelected.location === 'thematic') {
       filterRecipeGrouping(null, 'thematic')
     }
