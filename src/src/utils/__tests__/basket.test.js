@@ -11,7 +11,7 @@ jest.mock('utils/basketProductLimits', () => ({
 
 describe('basket utils', function () {
   describe('basketSum', function () {
-    it('sum up the number of recipes', function () {
+    test('sum up the number of recipes', function () {
       const basket = Immutable.fromJS({ '1': 1, '22': 1, '23': 2 })
 
       expect(basketSum(basket)).toEqual(4)
@@ -19,7 +19,7 @@ describe('basket utils', function () {
   })
 
   describe('okRecipes', function () {
-    it('should only return recipes that are in stock', function () {
+    test('should only return recipes that are in stock', function () {
       const recipes = Immutable.Map({ 456: 3, 567: 3, 678: 3 })
       const menuRecipes = Immutable.List(['456'])
       const menuRecipeStock = Immutable.fromJS({
@@ -33,7 +33,7 @@ describe('basket utils', function () {
       expect(Immutable.is(result, Immutable.Map({ 456: 3 }))).toBe(true)
     })
 
-    it('should only return recipes that are in the current menu', function () {
+    test('should only return recipes that are in the current menu', function () {
       const recipes = Immutable.Map({ 456: 3, 567: 3, 678: 3 })
       const menuRecipes = Immutable.List(['678'])
       const menuRecipeStock = Immutable.fromJS({
@@ -47,7 +47,7 @@ describe('basket utils', function () {
       expect(Immutable.is(result, Immutable.Map({ 678: 3 }))).toBe(true)
     })
 
-    it('should only return recipes that are in stock and in the current menu', function () {
+    test('should only return recipes that are in stock and in the current menu', function () {
       const recipes = Immutable.Map({ 456: 3, 567: 3, 678: 3 })
       const menuRecipes = Immutable.List(['456'])
       const menuRecipeStock = Immutable.fromJS({
@@ -61,7 +61,7 @@ describe('basket utils', function () {
       expect(Immutable.is(result, Immutable.Map({ 456: 3 }))).toBe(true)
     })
 
-    it('should handle no stock', function () {
+    test('should handle no stock', function () {
       const recipes = Immutable.Map({ 456: 3, 567: 3, 678: 3 })
       const menuRecipes = Immutable.List(['456'])
       const menuRecipeStock = Immutable.fromJS({
@@ -73,7 +73,7 @@ describe('basket utils', function () {
       expect(Immutable.is(result, Immutable.Map({}))).toBe(true)
     })
 
-    it('should account for recipes that I have taken the last stock for', function () {
+    test('should account for recipes that I have taken the last stock for', function () {
       const recipes = Immutable.Map({ 456: 3, 567: 3, 678: 3 })
       const menuRecipes = Immutable.List(['456'])
       const menuRecipeStock = Immutable.fromJS({
@@ -107,11 +107,11 @@ describe('basket utils', function () {
       return limitReached(basket, menuRecipes, menuRecipeStock, false, maxRecipesNum)
     }
 
-    it('should return true if the number of recipes in the basket is greater than config.basket.maxRecipesNum', function () {
+    test('should return true if the number of recipes in the basket is greater than config.basket.maxRecipesNum', function () {
       expect(defaultLimitReached()).toBe(true)
     })
 
-    it('should return false if the number of recipes in the basket is less than config.basket.maxRecipesNum', function () {
+    test('should return false if the number of recipes in the basket is less than config.basket.maxRecipesNum', function () {
       const recipes = Immutable.Map({ 456: 3 })
       const numPortions = 2
 
@@ -129,11 +129,11 @@ describe('basket utils', function () {
       expect(result).toBe(false)
     })
 
-    it('should disregard stock and the menu if the naive argument is true', function () {
+    test('should disregard stock and the menu if the naive argument is true', function () {
       expect(defaultLimitReached(12)).toBe(false)
     })
 
-    it('should use new maximum recipe count if maxRecipesNum defined', function () {
+    test('should use new maximum recipe count if maxRecipesNum defined', function () {
       const recipes = Immutable.Map({ 456: 3, 567: 3, 678: 3 })
       const numPortions = 2
 
@@ -168,7 +168,7 @@ describe('basket utils', function () {
         'product-3': { categories: [{ id: 'cat-3' }, { id: 'cat-4' }] },
       })
     })
-    it('should return number of products in the given category', function () {
+    test('should return number of products in the given category', function () {
       let result = getProductsQtyInCategory('cat-2', basket, products, false)
       expect(result).toEqual(1)
 
@@ -176,7 +176,7 @@ describe('basket utils', function () {
       expect(result).toEqual(3)
     })
 
-    it('should include gift products by default', function () {
+    test('should include gift products by default', function () {
       basketProductLimits.getAllBasketProducts.mockReturnValueOnce(Immutable.fromJS({
         'product-3': 3,
         'product-2': 1,
@@ -188,7 +188,7 @@ describe('basket utils', function () {
       expect(result).toEqual(4)
     })
 
-    it('should NOT include gift products if includeGiftProducts is set to false', function () {
+    test('should NOT include gift products if includeGiftProducts is set to false', function () {
       let result = getProductsQtyInCategory('cat-2', basket, products, false)
       expect(result).toEqual(1)
 
@@ -224,7 +224,7 @@ describe('basket utils', function () {
         }
       })
     })
-    it('should return object containing type "box" & value of max products allowed when total products limit reached', function () {
+    test('should return object containing type "box" & value of max products allowed when total products limit reached', function () {
       basketProductLimits.productsOverallLimitReached.mockReturnValueOnce(true)
       const productsOverallLimitReachedSpy = jest.spyOn(basketProductLimits, 'productsOverallLimitReached')
 
@@ -235,7 +235,7 @@ describe('basket utils', function () {
       expect(result).toEqual({ type: 'box', value: 10 })
     })
 
-    it('should return object containing type "item" & value equal to max of the specific item allowed when total products limit reached', function () {
+    test('should return object containing type "item" & value equal to max of the specific item allowed when total products limit reached', function () {
       basketProductLimits.productsOverallLimitReached.mockReturnValueOnce(false)
       basketProductLimits.getProductItemLimitReached.mockReturnValueOnce(3)
       const getProductItemLimitReachedSpy = jest.spyOn(basketProductLimits, 'getProductItemLimitReached')
@@ -249,7 +249,7 @@ describe('basket utils', function () {
       expect(result).toEqual({ type: 'item', value: 3 })
     })
 
-    it('should return object containing type "category" & value equal to title of the first category which has reached its limit', function () {
+    test('should return object containing type "category" & value equal to title of the first category which has reached its limit', function () {
       basketProductLimits.productsOverallLimitReached.mockReturnValueOnce(false)
       basketProductLimits.getProductItemLimitReached.mockReturnValueOnce(false)
       basketProductLimits.getFirstProductCategoryAtLimit.mockReturnValueOnce('category name')
@@ -264,15 +264,15 @@ describe('basket utils', function () {
   })
 
   describe('shortlistLimitReached', () => {
-    let shortList
-    let shortListRecipes
+    let shortlist
+    let shortlistRecipes
     let menuRecipes
     let menuRecipeStock
     const numPortions = 2
     beforeEach(() => {
-      shortListRecipes = Immutable.Map({ 456: 1, 567: 2, 678: 1 })
-      shortList = Immutable.fromJS({
-        shortListRecipes,
+      shortlistRecipes = Immutable.Map({ 456: 1, 567: 2, 678: 1 })
+      shortlist = Immutable.fromJS({
+        shortlistRecipes,
       })
       menuRecipes = Immutable.List(['456', '567', '678'])
       menuRecipeStock = Immutable.fromJS({
@@ -282,17 +282,17 @@ describe('basket utils', function () {
       })
     })
 
-    test('should return shortlistLimitReached false', () => {
-      const limit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
+    test('should return shortlistLimitReached false if we have less than 5 recipes', () => {
+      const limit = shortlistLimitReached(shortlist, menuRecipes, menuRecipeStock, numPortions)
       expect(limit).toEqual(false)
     })
 
-    test('should return shortlistLimitReached true', () => {
-      shortListRecipes = Immutable.Map({ 456: 2, 567: 2, 678: 2 })
-      shortList = Immutable.fromJS({
-        shortListRecipes,
+    test('should return shortlistLimitReached true if we have five or more recipes', () => {
+      shortlistRecipes = Immutable.Map({ 456: 2, 567: 2, 678: 2 })
+      shortlist = Immutable.fromJS({
+        shortlistRecipes,
       })
-      const limit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
+      const limit = shortlistLimitReached(shortlist, menuRecipes, menuRecipeStock, numPortions)
       expect(limit).toEqual(true)
     })
   })
