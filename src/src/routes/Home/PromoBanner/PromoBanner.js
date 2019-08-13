@@ -84,10 +84,8 @@ class PromoBanner extends React.Component {
 
     const hide = isAuthenticated || hasBasketPromo || hasQueryStringPromo || hasCurrentPromo || !promoBannerCode
     const fixed = scroll > top
-
-    console.log('browser', browser) //eslint-disable-line
     const isMobile = browser === 'mobile'
-    console.log('isMobile', isMobile) //eslint-disable-line
+    const fixedText = isMobile ? home.promo.banner.shortText : home.promo.banner.text
 
     return (
       <Banner
@@ -96,7 +94,7 @@ class PromoBanner extends React.Component {
         onClick={() => this.applyPromoCode(promoBannerCode)}
         hide={hide}
         fixed={fixed}
-        hideText={isMobile}
+        fixedText={fixedText}
       />
     )
   }

@@ -17,7 +17,6 @@
   color: White;
   max-height: 500px;
   margin: auto;
-  transition: all 0.2s ease-out;
 }
 
 .link {
@@ -33,11 +32,4 @@
   top: 0;
   z-index: 1000;
   width: 100%;
-}
-
-.hideText {
-  max-height: 0;
-  margin-top: 0;
-  display: block;
-  overflow: hidden;
 }

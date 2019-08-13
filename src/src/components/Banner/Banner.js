@@ -5,7 +5,7 @@ import { Button } from 'goustouicomponents'
 import { onEnter } from 'utils/accessibility'
 import css from './Banner.css'
 
-const Banner = ({ hide, onClick, text, linkText, fixed, hideText }) => (
+const Banner = ({ hide, onClick, text, linkText, fixed, fixedText }) => (
   <div
     role="button"
     onClick={() => { onClick() }}
@@ -18,7 +18,7 @@ const Banner = ({ hide, onClick, text, linkText, fixed, hideText }) => (
       { [css.fixed]: fixed }
     )}
   >
-    <p className={classnames(css.text, { [css.hideText]: hideText })}>{text}&nbsp;</p>
+    <p className={css.text}>{fixed ? fixedText : text}&nbsp;</p>
     <Button color="tertiary">{linkText}</Button>
   </div>
 )
@@ -29,12 +29,12 @@ Banner.propTypes = {
   text: PropTypes.string,
   linkText: PropTypes.string,
   fixed: PropTypes.bool,
-  hideText: PropTypes.bool,
+  fixedText: PropTypes.string,
 }
 
 Banner.defaultProps = {
   fixed: false,
-  hideText: false,
+  fixedText: '',
 }
 
 export default Banner

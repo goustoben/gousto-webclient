@@ -45,6 +45,7 @@ describe('Home', () => {
         persist: { get: jest.fn() },
         auth: { get: jest.fn() },
         basket: { get: jest.fn() },
+        request: { get: jest.fn() },
       }),
       subscribe: jest.fn(),
       unsubscribe: jest.fn(),
@@ -70,7 +71,7 @@ describe('Home', () => {
   describe('componentDidMount', () => {
     test('should call menu fetch data after 2.5 seconds', () => {
       jest.useFakeTimers()
-      wrapper = mount(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
+      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
       expect(menuFetchData).not.toHaveBeenCalled()
       jest.advanceTimersByTime(4000)
       expect(menuFetchData).toHaveBeenCalled()
@@ -81,7 +82,7 @@ describe('Home', () => {
   describe('componentWillUnmount', () => {
     test('should not call menu fetch data if unmounted within 2.5 seconds', () => {
       jest.useFakeTimers()
-      wrapper = mount(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
+      wrapper = shallow(<Home redirectLoggedInUser={jest.fn()} />, { context: { store } })
       expect(menuFetchData).not.toHaveBeenCalled()
       wrapper.unmount()
       jest.advanceTimersByTime(3500)
