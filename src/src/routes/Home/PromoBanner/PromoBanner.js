@@ -25,6 +25,7 @@ class PromoBanner extends React.Component {
 
   state = {
     scroll: 0,
+    top: 0
   }
 
   componentWillMount() {
