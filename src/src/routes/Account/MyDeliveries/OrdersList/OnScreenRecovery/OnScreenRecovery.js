@@ -26,9 +26,23 @@ const propTypes = {
   triggered: PropTypes.bool,
   getRecoveryContent: PropTypes.func,
   onConfirm: PropTypes.func.isRequired,
-  confirmCopy: PropTypes.string.isRequired,
+  confirmCopy: PropTypes.string,
   onKeep: PropTypes.func.isRequired,
-  keepCopy: PropTypes.string.isRequired,
+  keepCopy: PropTypes.string,
+}
+
+const defaultProps = {
+  valueProposition: {
+    message:'',
+    title: '',
+  },
+  callToActions:{
+    confirm: '',
+    keep: '',
+  },
+  triggered: false,
+  confirmCopy: '',
+  keepCopy: ''
 }
 
 class OnScreenRecovery extends React.PureComponent {
@@ -64,5 +78,7 @@ class OnScreenRecovery extends React.PureComponent {
 }
 
 OnScreenRecovery.propTypes = propTypes
+
+OnScreenRecovery.defaultProps = defaultProps
 
 export { OnScreenRecovery }
