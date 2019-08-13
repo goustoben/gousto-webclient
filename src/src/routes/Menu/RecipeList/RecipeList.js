@@ -78,7 +78,10 @@ class RecipeList extends React.Component {
 
   getView = (mobileGridView, isFeatured = false, isFineDineIn = false) => {
     let view = 'grid'
-    if (mobileGridView) {
+
+    if (typeof (window) !== 'undefined' && window.innerWidth < 1025) {
+      view = 'grid'
+    } else if (mobileGridView) {
       view = 'gridSmall'
     } else if (isFeatured) {
       view = 'featured'
