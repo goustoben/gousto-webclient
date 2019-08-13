@@ -15,8 +15,6 @@
   composes: marginXXS from 'sass-loader!styles/spacing.scss';
   composes: textXL bodyFont textBold from 'styles/typography.css';
   color: White;
-  max-height: 500px;
-  margin: auto;
 }
 
 .link {
@@ -30,6 +28,6 @@
 .fixed {
   position: fixed;
   top: 0;
-  z-index: 1000;
+  z-index: 100;
   width: 100%;
 }
