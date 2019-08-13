@@ -24,7 +24,8 @@ const propTypes = {
   hasRecommendations: PropTypes.bool,
   clearAllFilters: PropTypes.func,
   showDetailRecipe: PropTypes.func,
-  setThematic: PropTypes.func
+  setThematic: PropTypes.func,
+  toggleGridView: PropTypes.func,
 }
 
 class MenuRecipes extends PureComponent {
@@ -60,6 +61,7 @@ class MenuRecipes extends PureComponent {
       showDetailRecipe,
       hasRecommendations,
       orderId,
+      toggleGridView,
     } = this.props
 
     const collectionsNavEnabled = features.getIn(['forceCollections', 'value']) || (features.getIn(['collections', 'value']) && (features.getIn(['collectionsNav', 'value']) !== false))
@@ -70,7 +72,7 @@ class MenuRecipes extends PureComponent {
         {this.renderBanner(menu.tenMin.switchoverDate)}
         <SubHeader
           viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
-          onToggleGridView={this.toggleGridView}
+          onToggleGridView={toggleGridView}
           orderId={orderId}
         />
         <Loading loading={showLoading} hasRecommendations={hasRecommendations} />

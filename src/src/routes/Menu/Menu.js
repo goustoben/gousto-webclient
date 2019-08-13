@@ -91,6 +91,7 @@ class Menu extends React.Component {
       borderColor: PropTypes.string,
     }),
     filterRecipeGrouping: PropTypes.func,
+    toggleGridView: PropTypes.func,
   }
 
   static contextTypes = {
@@ -505,8 +506,10 @@ class Menu extends React.Component {
               hasRecommendations={hasRecommendations}
               orderId={orderId}
               setThematic={filterRecipeGrouping}
+              toggleGridView={this.toggleGridView}
             />
           )}
+            />}
           <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick}></div>
         </div>
         <BoxSummaryMobile />
