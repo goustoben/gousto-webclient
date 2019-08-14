@@ -9,9 +9,11 @@ class PromoBanner extends React.Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     basketPromoCode: PropTypes.string,
+    promoChange: PropTypes.func,
+    promoToggleModalVisibility: PropTypes.func,
     promoCode: PropTypes.string,
     promoCurrent: PropTypes.string,
-    browser: PropTypes.string,
+    redirect: PropTypes.func,
   }
 
   static canApplyPromo(isAuthenticated, criteria) {
@@ -23,37 +25,12 @@ class PromoBanner extends React.Component {
     }
   }
 
-  state = {
-    scroll: 0,
-    top: 0
-  }
-
   componentWillMount() {
     if (typeof window !== 'undefined') {
       this.setState({
         query: queryString.parse(window.location.search),
       })
     }
-  }
-
-  componentDidMount() {
-    const header = document.querySelector('header')
-    this.setState({top: header.offsetHeight})
-
-    window.addEventListener('scroll', this.onScroll)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll)
-
-    if (this.intervals) {
-      clearInterval(this.intervals)
-      this.intervals = null
-    }
-  }
-
-  onScroll = () => {
-    this.setState({scroll: window.scrollY})
   }
 
   async applyPromoCode(promoCode) {
@@ -76,17 +53,14 @@ class PromoBanner extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, basketPromoCode, promoCurrent, promoCode, browser } = this.props
-    const { query, scroll, top } = this.state
+    const { isAuthenticated, basketPromoCode, promoCurrent, promoCode } = this.props
+    const { query } = this.state || {}
     const promoBannerCode = promoCode || home.promo.code.toUpperCase()
     const hasBasketPromo = basketPromoCode && basketPromoCode.length > 0
     const hasQueryStringPromo = query && query.promo_code && query.promo_code.length > 0
     const hasCurrentPromo = promoCurrent && promoCurrent.length > 0
 
     const hide = isAuthenticated || hasBasketPromo || hasQueryStringPromo || hasCurrentPromo || !promoBannerCode
-    const fixed = scroll > top
-    const isMobile = browser === 'mobile'
-    const fixedText = isMobile ? home.promo.banner.shortText : home.promo.banner.text
 
     return (
       <Banner
@@ -94,8 +68,6 @@ class PromoBanner extends React.Component {
         linkText={home.promo.banner.linkText}
         onClick={() => this.applyPromoCode(promoBannerCode)}
         hide={hide}
-        fixed={fixed}
-        fixedText={fixedText}
       />
     )
   }
