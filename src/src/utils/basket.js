@@ -66,8 +66,8 @@ export function limitReached(basket, menuRecipes, menuRecipeStock, naive, maxRec
   return recipeCount >= (maxRecipesNum || config.basket.maxRecipesNum)
 }
 
-export function shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions) {
-  const okRecipeIds = okRecipes(shortList.get('shortListRecipes'), menuRecipes, menuRecipeStock, numPortions)
+export function shortlistLimitReached(shortlist, menuRecipes, menuRecipeStock, numPortions) {
+  const okRecipeIds = okRecipes(shortlist.get('shortlistRecipes'), menuRecipes, menuRecipeStock, numPortions)
   const recipeCount = basketSum(okRecipeIds)
 
   return recipeCount >= (config.shortlist.maxShortlistRecipesNum)

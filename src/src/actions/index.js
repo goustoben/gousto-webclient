@@ -29,6 +29,7 @@ import user from './user'
 import collections from './collections'
 import cookbook from './cookbook'
 import deliveries from './deliveries'
+import * as shortlist from './shortlist'
 
 const actions = {
   ...auth,
@@ -61,7 +62,8 @@ const actions = {
   ...temp,
   ...tracking,
   ...user,
-  ...deliveries
+  ...deliveries,
+  ...shortlist
 }
 
 export default actions
