@@ -23,6 +23,7 @@ module.exports = {
         done()
       })
       .execute(`scrollTo(0, document.querySelector('[data-testing="homepageHeroCTA"]').getLocation().y)`)
+      .pause(3000)
       .perform(function (done) {
         home.section.hero.goToSignUp()
         done()
