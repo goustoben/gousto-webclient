@@ -4,9 +4,7 @@ exports[`Banner Initial Render should render with given text 1`] = `
 <div
   className="container link"
   onClick={[Function]}
-  onKeyDown={[Function]}
   role="button"
-  tabIndex={0}
 >
   <p
     className="text"
