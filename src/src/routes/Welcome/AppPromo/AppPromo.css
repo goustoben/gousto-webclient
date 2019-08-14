@@ -2,27 +2,45 @@
 @value ScreenXXSMin, ScreenSMMin from 'styles/screenSizes.css';
 
 .container {
-  display: flex;
+  text-align: center;
   padding: 20px;
+}
+
+.contentContainer {
+  display: flex;
 }
 
 .phoneImageContainer {
   text-align: center;
-  height: 350px;
   overflow: hidden;
   padding-right: 20px;
+  min-height: 280px;
 
-  @media ScreenSMMin {
+  @media (min-width: 387px) {
+    min-height: none;
+  }
+
+  @media ScreenXXSMin {
+    height: 350px;
+  }
+  
+  @media ScreenSMMin {    
     width: 300px;
   }
+
 }
 
 .phoneImage {
-  width: 180px;
+  width: 150px;
+  
+  @media (min-width: 387px) {
+    width: 180px;
+  }
   
   @media ScreenXXSMin {
     width: 250px;
   }
+  
 }
 
 .content {
@@ -30,33 +48,30 @@
   flex-direction: column;
   align-items: center;
   flex: 1;
+  text-align: initial;
 }
 
 .bullet {
   position: absolute;
-  left: -2em;
+  left: -32px;
   text-align: center;
-  width: 2em;
+  width: 32px;
 }
 
 .list {
   list-style-type: none;
-  margin-left: 1.5em;
+  margin-left: 24px;
   padding-left: 0;
 }
 
 .list>li {
   position: relative;
-  margin-bottom: 1em;
+  margin-bottom: 15px;
 }
 
 .tick {
   composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
   color: Pomegranate;
-}
-
-.mobileAppLink {
-  
 }
 
 .desktopAppLink {
@@ -65,4 +80,16 @@
 
 .hideElement {
   display: none
+}
+
+.hideLargeScreen {
+  @media (min-width: 387px) {
+    display: none;
+  }
+}
+
+.hideSmallScreen {
+  @media (max-width: 386px) {
+    display: none;
+  }
 }
