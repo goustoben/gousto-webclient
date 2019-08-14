@@ -390,19 +390,19 @@ describe('onScreenRecovery', () => {
           }),
           user: Immutable.Map({
             id: '12345',
-            orders: Immutable.fromJS({
-              1: {
+            orders: Immutable.Map({
+              1: Immutable.Map({
                 number: 10,
                 state: 'committed',
-              },
-              2: {
+              }),
+              2: Immutable.Map({
                 number: 11,
                 state: 'committed',
-              },
-              5: {
+              }),
+              5: Immutable.Map({
                 number: 12,
                 state: 'pending',
-              },
+              }),
             })
           }),
           features: Immutable.Map({

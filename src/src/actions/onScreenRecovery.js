@@ -167,11 +167,11 @@ export const getPauseRecoveryContent = () => (
 
         const orders = getState().user.get('orders')
         const orderCount = Math.max(
-          ...(orders.filter(
+          ...(orders.toArray().filter(
             (o) => o.get('state') === 'committed'
           ).map(
-            (o) => o.get('number')
-          )).values(),
+            (o) => Number(o.get('number'))
+          )),
           0
         )
         const offer = getState().onScreenRecovery.get('offer')
