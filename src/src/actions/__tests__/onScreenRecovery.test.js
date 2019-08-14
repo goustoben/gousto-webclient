@@ -390,16 +390,20 @@ describe('onScreenRecovery', () => {
           }),
           user: Immutable.Map({
             id: '12345',
-            orders: Immutable.List([
-              Immutable.Map({
+            orders: Immutable.fromJS({
+              1: {
                 number: 10,
                 state: 'committed',
-              }),
-              Immutable.Map({
+              },
+              2: {
                 number: 11,
+                state: 'committed',
+              },
+              5: {
+                number: 12,
                 state: 'pending',
-              }),
-            ]),
+              },
+            })
           }),
           features: Immutable.Map({
             subscriptionPauseOsr: Immutable.fromJS({
@@ -413,7 +417,7 @@ describe('onScreenRecovery', () => {
           type: 'TRACKING',
           trackingData: expect.objectContaining({
             actionType: 'Subscription Pause',
-            orderCount: 10,
+            orderCount: 11,
             hasPendingPromo: null,
           })
         }))

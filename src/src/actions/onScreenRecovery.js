@@ -171,7 +171,7 @@ export const getPauseRecoveryContent = () => (
             (o) => o.get('state') === 'committed'
           ).map(
             (o) => o.get('number')
-          )),
+          )).values(),
           0
         )
         const offer = getState().onScreenRecovery.get('offer')
