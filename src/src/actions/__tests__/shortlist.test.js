@@ -32,13 +32,13 @@ describe('shortlist actions', () => {
       test('should dispatch limitReached to be false and action type SHORTLIST_LIMIT_REACHED', () => {
         shortlistLimitReached.mockReturnValue(false)
         shortlistRecipeAdd('123', true)(dispatch, getState)
-        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ limitReached: false, type: actionTypes.SHORTLIST_LIMIT_REACHED }))
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ shortlistLimitReached: false, type: actionTypes.SHORTLIST_LIMIT_REACHED }))
       })
 
       test('should dispatch limitReached to be true and action type SHORTLIST_LIMIT_REACHED', () => {
         shortlistLimitReached.mockReturnValue(true)
         shortlistRecipeAdd('123', true)(dispatch, getState)
-        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ limitReached: true, type: actionTypes.SHORTLIST_LIMIT_REACHED }))
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ shortlistLimitReached: true, type: actionTypes.SHORTLIST_LIMIT_REACHED }))
       })
     })
 
@@ -61,7 +61,7 @@ describe('shortlist actions', () => {
           test('should dispatch limitReached and SHORTLIST_LIMIT_REACHED', () => {
             shortlistLimitReached.mockReturnValueOnce(false).mockReturnValueOnce(true)
             shortlistRecipeAdd('123', false)(dispatch, getState)
-            expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ limitReached: true, type: actionTypes.SHORTLIST_LIMIT_REACHED }))
+            expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({ shortlistLimitReached: true, type: actionTypes.SHORTLIST_LIMIT_REACHED }))
           })
         })
       })

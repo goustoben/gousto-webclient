@@ -15,7 +15,7 @@ export const shortlistRecipeAdd = (recipeId, force) => (
       const reachedLimit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
       dispatch({
         type: actionTypes.SHORTLIST_LIMIT_REACHED,
-        limitReached: reachedLimit,
+        shortlistLimitReached: reachedLimit,
       })
     } else {
       let reachedLimit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
@@ -30,7 +30,7 @@ export const shortlistRecipeAdd = (recipeId, force) => (
         if (reachedLimit) {
           dispatch({
             type: actionTypes.SHORTLIST_LIMIT_REACHED,
-            limitReached: reachedLimit,
+            shortlistLimitReached: reachedLimit,
           })
         }
       }

@@ -304,6 +304,10 @@ const basket = {
       return newState
     }
 
+    case actionTypes.SHORTLIST_LIMIT_REACHED: {
+      return state.setIn(['shortlist', 'shortlistLimitReached'], action.shortlistLimitReached)
+    }
+
     default: {
       return state
     }

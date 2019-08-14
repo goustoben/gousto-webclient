@@ -606,4 +606,23 @@ describe('basket reducer', function() {
       expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 3 })})}))).toEqual(true)
     })
   })
+
+  describe('SHORTLIST_LIMIT_REACHED actionType', () => {
+    test('should set state shortlistLimitReached to the value from the action', () => {
+      const action = {
+        type: actionTypes.SHORTLIST_LIMIT_REACHED,
+        shortlistLimitReached: true,
+      }
+
+      initialState = Immutable.Map({
+        shortlist: Immutable.Map({
+          shortlistLimitReached: false
+        })
+      })
+
+      const result = basket(initialState, action)
+
+      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistLimitReached: true })}))).toEqual(true)
+    })
+  })
 })
