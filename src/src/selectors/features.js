@@ -29,3 +29,5 @@ export const isShowNoDiscountCTAFeatureEnabled = ({ features }) => features && f
 export const isSubscriptionPauseOsrFeatureEnabled = ({ features }) => features && features.getIn(['subscriptionPauseOsr', 'value'], false)
 
 export const getAbandonBasket = ({ features }) => features && features.getIn(['abandonBasket', 'value'], false)
+
+export const getWelcomePageAppPromo = ({ features }) => features && features.getIn(['welcomePageAppPromo', 'value'], false)

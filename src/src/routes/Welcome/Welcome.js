@@ -13,7 +13,7 @@ import { getAffiliateTrackingData } from 'utils/order'
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
 import { ReferAFriend } from '../OrderConfirmation/components/ReferAFriend'
-// import ExpectationsCarousel from './ExpectationsCarousel'
+import ExpectationsCarousel from './ExpectationsCarousel'
 import ProductDetailOverlay from './ProductDetailOverlay'
 import { AwinPixel } from './AwinPixel'
 import SubHeader from './SubHeader'
@@ -28,6 +28,7 @@ class Welcome extends React.PureComponent {
     products: PropTypes.instanceOf(Immutable.Map).isRequired,
     user: PropTypes.instanceOf(Immutable.Map).isRequired,
     isRafAboveCarousel: PropTypes.bool,
+    welcomePageAppPromo: PropTypes.bool,
     userFetchReferralOffer: PropTypes.func.isRequired,
     query: PropTypes.shape({
       var: PropTypes.string,
@@ -119,7 +120,7 @@ class Welcome extends React.PureComponent {
 
   render() {
     const { isClient } = this.state
-    const { user, orderId, productDetailId, productDetailVisibilityChange, isRafAboveCarousel, device } = this.props
+    const { user, orderId, productDetailId, productDetailVisibilityChange, isRafAboveCarousel, device, welcomePageAppPromo } = this.props
 
     return (
       <section className={css.container} data-testing="welcomeContainer">
@@ -144,8 +145,7 @@ class Welcome extends React.PureComponent {
                 )
               }
               <div className={css.welcomeColInner}>
-                {/* <ExpectationsCarousel /> */}
-                <AppPromo device={device} />
+                {welcomePageAppPromo ? <AppPromo device={device} /> : <ExpectationsCarousel />}
               </div>
               {
                 !isRafAboveCarousel && (
