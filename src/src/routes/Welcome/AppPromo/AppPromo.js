@@ -17,7 +17,7 @@ const defaultProps = {
 const appStoreCTAs = (device, screenSize) => (
   <div className={classnames({ [css.hideLargeScreen]: screenSize === 'smallScreen' }, { [css.hideSmallScreen]: screenSize === 'largeScreen' })}>
     <a data-testing="appBannerCTA" className={classnames(css.mobileAppLink, { [css.hideElement]: device === 'desktop' })} href="https://gousto.co.uk/apps">
-      <Button noDecoration>Get the app now</Button>
+      <Button className={css.getAppCTA} noDecoration>Get the app now</Button>
     </a>
     <div className={classnames(css.desktopAppLink, { [css.hideElement]: device === 'mobile' })}>
       <AppStoreLinks appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />

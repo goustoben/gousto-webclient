@@ -80,6 +80,11 @@
   color: Pomegranate;
 }
 
+.getAppCTA > div:last-child {
+  text-transform: none;
+  font-weight: 600;
+}
+
 .desktopAppLink {
   text-align: center;
 }
