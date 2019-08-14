@@ -41,7 +41,12 @@ describe('basket reducer', function() {
       previewOrderId: '',
       stepsOrder: [],
       tariffId: null,
-      surcharges: Immutable.List()
+      surcharges: Immutable.List(),
+      shortlist: {
+        shortlistRecipes: {},
+        shortlistRecipesPosition: [],
+        shortlistLimitReached: false,
+      }
     })
   })
 
@@ -297,7 +302,7 @@ describe('basket reducer', function() {
   })
 
   describe('BASKET_RECIPE_ADD action type', function() {
-    test('should put recipe in recipes list if incrementing and was not there before', function() {
+    test('should put recipe in recipes list if incrementing and WAS NOT there before', function() {
       const action = {
         type: actionTypes.BASKET_RECIPE_ADD,
         recipeId: '123',
@@ -312,7 +317,7 @@ describe('basket reducer', function() {
       expect(Immutable.is(result, Immutable.Map({ recipes: Immutable.Map({ 123: 1 }) }))).toEqual(true)
     })
 
-    test('should put recipe in recipes list if incrementing and was not there before', function() {
+    test('should put recipe in recipes list if incrementing and WAS there before', function() {
       const action = {
         type: actionTypes.BASKET_RECIPE_ADD,
         recipeId: '123',
@@ -563,6 +568,42 @@ describe('basket reducer', function() {
       const expected = Immutable.Map({ collection: '1234567' })
 
       expect(Immutable.is(result, expected)).toEqual(true)
+    })
+  })
+
+  describe('SHORTLIST_RECIPE_ADD action type', () => {
+    test('should add recipeId to shortlistRecipes and increment to one if not there before', () => {
+      const action = {
+        type: actionTypes.SHORTLIST_RECIPE_ADD,
+        recipeId: '123'
+      }
+
+      initialState = Immutable.Map({
+        shortlist: Immutable.Map({
+          shortlistRecipes: Immutable.Map({})
+        })
+      })
+
+      const result = basket(initialState, action)
+
+      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 1 })})}))).toEqual(true)
+    })
+
+    test('should add recipeId to shortlistRecipes and increment plus one if was there before', () => {
+      const action = {
+        type: actionTypes.SHORTLIST_RECIPE_ADD,
+        recipeId: '123'
+      }
+
+      initialState = Immutable.Map({
+        shortlist: Immutable.Map({
+          shortlistRecipes: Immutable.Map({ 123: 2 })
+        })
+      })
+
+      const result = basket(initialState, action)
+
+      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 3 })})}))).toEqual(true)
     })
   })
 })

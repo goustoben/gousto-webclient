@@ -52,6 +52,11 @@ const initialState = () => Immutable.fromJS({
   stepsOrder: [],
   tariffId: null,
   surcharges: Immutable.List(),
+  shortlist: {
+    shortlistRecipes: {},
+    shortlistRecipesPosition: [],
+    shortlistLimitReached: false,
+  }
 })
 
 const basket = {
@@ -95,7 +100,7 @@ const basket = {
     case actionTypes.BASKET_ID_CHANGE: {
       return state.set('orderId', action.orderId)
     }
-    
+
     case actionTypes.BASKET_ORDER_LOADED: {
       return state.set('editBox', action.editBox)
     }
@@ -288,6 +293,15 @@ const basket = {
 
     case actionTypes.BASKET_SIGNUP_COLLECTION_RECEIVE: {
       return state.set('collection', action.collection)
+    }
+
+    case actionTypes.SHORTLIST_RECIPE_ADD: {
+      const { recipeId } = action
+      const currentQty = state.getIn(['shortlist', 'shortlistRecipes', recipeId], 0)
+
+      const newState = state.setIn(['shortlist', 'shortlistRecipes', recipeId], currentQty + 1)
+
+      return newState
     }
 
     default: {
