@@ -390,7 +390,53 @@ describe('onScreenRecovery', () => {
           }),
           user: Immutable.Map({
             id: '12345',
-            orders: Immutable.List([]),
+            orders: Immutable.List([
+              Immutable.Map({
+                number: 10,
+                state: 'committed',
+              }),
+              Immutable.Map({
+                number: 11,
+                state: 'pending',
+              }),
+            ]),
+          }),
+          features: Immutable.Map({
+            subscriptionPauseOsr: Immutable.fromJS({
+              experiment: false,
+              value: true,
+            }),
+          }),
+        })
+        await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
+        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'TRACKING',
+          trackingData: expect.objectContaining({
+            actionType: 'Subscription Pause',
+            orderCount: 10,
+            hasPendingPromo: null,
+          })
+        }))
+      })
+
+      test('should trigger tracking of subscription pause event with zero order count when a user has no order', async () => {
+        fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
+          data: {
+            intervene: true,
+          },
+        }))
+        getStateSpy.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: 'token',
+          }),
+          onScreenRecovery: Immutable.Map({
+            modalType: 'subscription',
+            offer: null
+          }),
+          user: Immutable.Map({
+            id: '12345',
+            orders: Immutable.List([
+            ]),
           }),
           features: Immutable.Map({
             subscriptionPauseOsr: Immutable.fromJS({
