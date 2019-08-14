@@ -50,14 +50,10 @@ const fetchOrderIssuesMockResponse = {
 }
 
 const fetchOrderIssues = jest.fn()
-fetchOrderIssues.mockImplementation(() => Promise.resolve(
-  fetchOrderIssuesMockResponse
-))
+fetchOrderIssues.mockResolvedValue(fetchOrderIssuesMockResponse)
 
 const fetchRefundAmount = jest.fn()
-fetchRefundAmount.mockImplementation(() => Promise.resolve(
-  { data: { value: 7.77, type: 'a-type' } }
-))
+fetchRefundAmount.mockResolvedValue({ data: { value: 7.77, type: 'a-type' } })
 
 const setComplaint = jest.fn()
 setComplaint.mockResolvedValue({})

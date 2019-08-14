@@ -155,8 +155,8 @@ class Refund extends PureComponent {
       >
         {(isFetching)
           ? <div className={css.center}>
-            <Loading className={css.loading} />
-          </div>
+              <Loading className={css.loading} />
+            </div>
           : <div>
             <p>{confirmationContent}</p>
             <BottomBar>
