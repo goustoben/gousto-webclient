@@ -13,26 +13,31 @@
 .phoneImageContainer {
   text-align: center;
   overflow: hidden;
-  padding-right: 20px;
   min-height: 280px;
-
+  padding-right: 20px;
+  
   @media (min-width: 387px) {
     min-height: none;
   }
-
+  
   @media ScreenXXSMin {
-    height: 350px;
+    height: 285px;
   }
   
   @media ScreenSMMin {    
     width: 300px;
+    padding-right: 0px
   }
 
 }
 
 .phoneImage {
-  width: 150px;
+  width: 125px;
   
+  @media (min-width: 340px) {
+    width: 150px;
+  }
+
   @media (min-width: 387px) {
     width: 180px;
   }
@@ -49,6 +54,7 @@
   align-items: center;
   flex: 1;
   text-align: initial;
+  justify-content: center;
 }
 
 .bullet {
