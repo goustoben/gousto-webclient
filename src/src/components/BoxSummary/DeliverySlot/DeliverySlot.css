@@ -1,6 +1,10 @@
-@value Blackberry, Radish, BlueCheese from 'styles/colors.css';
+@value Blackberry, Radish, BlueCheese, Haricot from 'styles/colors.css';
 @value SpacingSM, SpacingXS, SpacingXXS from 'sass-loader!styles/spacing.scss';
 @value sizeXS, sizeMD from 'styles/typography.css';
+
+.green {
+	color: Haricot;
+}
 
 .title {
 	composes: headerMD headlineFont textCenter from 'styles/typography.css';
@@ -128,4 +132,14 @@
 
 .disabledSlotText {
 	display: inline-block;
+}
+
+.tick {
+	composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
+}
+
+.highlightText {
+	composes: green;
+	composes: paragraphXS textCenter from 'styles/typography.css';
+	margin-right: 5px;
 }

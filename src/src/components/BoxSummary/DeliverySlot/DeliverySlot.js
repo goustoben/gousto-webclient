@@ -280,6 +280,11 @@ class DeliverySlot extends React.Component {
             {doesDateHaveDisabledSlots ? <div><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /><p className={css.disabledSlotText}> Unavailable due to high demand</p></div> : null}
           </span>
         </div>
+        <div className={css.row}>
+          <span className={css.highlightText}>
+            <p><span className={css.tick} />Free delivery available, 7 days a week</p>
+          </span>
+        </div>
         <Button
           width="full"
           onClick={() => this.props.boxSummaryNext(numPortions)}
