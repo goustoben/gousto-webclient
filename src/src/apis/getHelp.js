@@ -14,10 +14,26 @@ const fetchRefundAmount = (accessToken, body) => {
   }, null, false, false)
 }
 
+const fetchRefundAmountV2 = (accessToken, body) => {
+  const url = `${endpoint('ssr', routes.version.ssrV2)}/value`
+
+  return fetch(accessToken, url, body, 'POST', 'default', {
+    'Content-Type': 'application/json'
+  }, null, false, false)
+}
+
 const setComplaint = (accessToken, body) => {
   const url = (__ENV__ === 'local')
     ? `${SSR_URL_LOCAL}/ssr/refund`
     : `${endpoint('ssr', routes.version.ssr)}/ssr/refund`
+
+  return fetch(accessToken, url, body, 'POST', 'default', {
+    'Content-Type': 'application/json'
+  }, null, false, false)
+}
+
+const setComplaintV2 = (accessToken, body) => {
+  const url = `${endpoint('ssr', routes.version.ssrV2)}/refund`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
     'Content-Type': 'application/json'
@@ -54,7 +70,9 @@ const fetchOrderIssues = (accessToken) => {
 
 export {
   fetchRefundAmount,
+  fetchRefundAmountV2,
   setComplaint,
+  setComplaintV2,
   validateIngredients,
   validateOrder,
   fetchOrderIssues,

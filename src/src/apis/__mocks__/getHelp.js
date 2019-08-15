@@ -55,8 +55,14 @@ fetchOrderIssues.mockResolvedValue(fetchOrderIssuesMockResponse)
 const fetchRefundAmount = jest.fn()
 fetchRefundAmount.mockResolvedValue({ data: { value: 7.77, type: 'a-type' } })
 
+const fetchRefundAmountV2 = jest.fn()
+fetchRefundAmountV2.mockResolvedValue({ data: { value: 7.77, type: 'a-type' } })
+
 const setComplaint = jest.fn()
 setComplaint.mockResolvedValue({})
+
+const setComplaintV2 = jest.fn()
+setComplaintV2.mockResolvedValue({})
 
 const validateOrder = jest.fn()
 validateOrder.mockResolvedValue({
@@ -72,7 +78,9 @@ export {
   fetchOrderIssues,
   fetchOrderIssuesMockResponse,
   fetchRefundAmount,
+  fetchRefundAmountV2,
   setComplaint,
+  setComplaintV2,
   validateOrder,
   validateIngredients,
 }
