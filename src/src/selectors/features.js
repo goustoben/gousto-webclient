@@ -18,8 +18,6 @@ export const getJfyTutorial = state => (state.features ? state.features.getIn(['
 
 export const getRafPositionOnWelcomePage = state => (state.features ? state.features.getIn(['rafAboveCarouselOnWelcomePage', 'value']) : false)
 
-export const getFoodBrandFeature = state => (state.features ? state.features.getIn(['foodBrand', 'value']) : false)
-
 export const isDeliveryFrequencyFeatureEnabled = ({ features }) => features.getIn(['wizardDeliveryFrequency', 'value'], false)
 
 export const getAppBanner = ({ features }) => features.getIn(['appBanner', 'value'], false)
