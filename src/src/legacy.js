@@ -92,12 +92,6 @@ async function init() {
   if (store.getState().promoCurrent && !store.getState().promoModalVisible) {
     store.dispatch(promosActions.promoToggleModalVisibility(true))
   }
-
-  const isOrderSummaryPage = window.location.pathname.match(/\/order\/([0-9]+)\/summary/)
-  if (isOrderSummaryPage && isOrderSummaryPage.length > 0) {
-    const orderId = isOrderSummaryPage[1]
-    store.dispatch(actions.orderCheckPossibleDuplicate(orderId))
-  }
 }
 
 function initIfReady() {

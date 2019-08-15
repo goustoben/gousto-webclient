@@ -1,7 +1,7 @@
 import React from 'react'
+import Content from 'containers/Content'
 import css from './Perks.css'
 import PerkCircle from './PerkCircle'
-import Content from 'containers/Content'
 
 const Perks = () => (
   <div className={css.container}>

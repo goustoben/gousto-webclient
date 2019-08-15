@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import GoustoImage from 'Image'
 import { capitalizeFirstLetter } from 'utils/text'
 import css from './Item.css'
@@ -11,7 +11,7 @@ const Item = ({ available, disclaimerKey, type, media, title, quantity, onImageC
     <div className={available ? css.item : css.itemUnavailable}>
         <GoustoImage onClick={onImageClick} media={media} title={title} className={classnames(css.img, { [css.pointer]: !!onImageClick })} />
 
-        <div className={css.details}>
+        <div className={classnames(css.details, { [css.detailsExtraPadding]: !!onRemove })}>
           <p className={css.title}>{title}</p>
           {(!gift || quantity > 1) &&
             <p className={css.quantity}>

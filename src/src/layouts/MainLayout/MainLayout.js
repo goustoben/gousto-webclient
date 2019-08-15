@@ -5,7 +5,6 @@ import Footer from 'Footer'
 import Immutable from 'immutable'/* eslint-disable new-cap */
 import classNames from 'classnames'
 import { Div } from 'Page/Elements'
-import CookieBanner from 'CookieBanner'
 import css from './MainLayout.css'
 
 class MainLayout extends React.Component {
@@ -83,7 +82,6 @@ class MainLayout extends React.Component {
 
     return (
       <Div className={footerBaseClass} backgroundColor="Coconut">
-        <CookieBanner />
         <Header />
         {children}
         <Div className={classNames({ [css.pullUp]: route.withRecipeBar })} >

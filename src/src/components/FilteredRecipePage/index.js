@@ -1,0 +1,1 @@
+export { FilteredRecipePage } from './FilteredRecipePage'

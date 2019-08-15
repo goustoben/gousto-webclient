@@ -89,7 +89,7 @@ class Menu extends React.Component {
       name: PropTypes.string,
       borderColor: PropTypes.string,
     }),
-    selectFoodBrandFromUrl: PropTypes.func
+    filterRecipeGrouping: PropTypes.func
   }
 
   static contextTypes = {
@@ -157,14 +157,16 @@ class Menu extends React.Component {
       productsLoadStock,
       foodBrandSelected,
       foodBrandDetails,
-      selectFoodBrandFromUrl
+      filterRecipeGrouping,
     } = this.props
+
     const { store } = this.context
+
     // if server rendered
     if (params.orderId && params.orderId === storeOrderId) {
       basketOrderLoaded(params.orderId)
     }
-    const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId)
+    const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId) || query.reload
     // TODO: Add back logic to check what needs to be reloaded
 
     if (hasRecommendations) {
@@ -175,13 +177,16 @@ class Menu extends React.Component {
       basketNumPortionChange(query.num_portions)
     }
 
-    if (query.foodBrand) {
-      const foodBrandNotSelected = foodBrandSelected === null
-      const foodBrandUrlDifferent = !foodBrandNotSelected && query.foodBrand!==foodBrandSelected.slug
+    const isFoodBrandSelected = foodBrandSelected !== null
 
-      if (foodBrandNotSelected || foodBrandUrlDifferent) {
-        selectFoodBrandFromUrl(foodBrandDetails)
+    if (query.foodBrand) {
+      const foodBrandUrlDifferent = isFoodBrandSelected && query.foodBrand!==foodBrandSelected.slug
+
+      if (!isFoodBrandSelected || foodBrandUrlDifferent) {
+        filterRecipeGrouping(foodBrandDetails, 'foodBrand')
       }
+    } else if (isFoodBrandSelected) {
+      filterRecipeGrouping(null, 'foodBrand')
     }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)
@@ -259,9 +264,15 @@ class Menu extends React.Component {
       cutOffDate,
       productsLoadStock,
       productsLoadProducts,
+      selectCurrentCollection,
+      menuCurrentCollectionId
     } = this.props
 
     forceCheck()
+
+    if (prevProps.menuCurrentCollectionId !== menuCurrentCollectionId) {
+      selectCurrentCollection(menuCurrentCollectionId)
+    }
 
     if (cutOffDate && cutOffDate !== prevProps.cutOffDate) {
       try {

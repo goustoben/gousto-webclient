@@ -6,7 +6,7 @@ import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
 import { getFeaturedRecipes, getRemainingRecipes, getOutOfStockRecipes, getSortedRecipes } from 'routes/Menu/selectors/sorting'
 import { getCurrentCollectionIsRecommendation } from 'routes/Menu/selectors/menu'
-import { getFoodBrandFilter } from 'selectors/filters'
+import { getRecipeGroupFilter } from 'selectors/filters'
 
 import RecipeList from './RecipeList'
 
@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
     remainingRecipes,
     outOfStockRecipes,
     recipesStore: state.recipes,
-    isCurrentCollectionRecommendation: getCurrentCollectionIsRecommendation(state) && !getFoodBrandFilter(state),
+    isCurrentCollectionRecommendation: getCurrentCollectionIsRecommendation(state) && !getRecipeGroupFilter(state),
     sortedRecipes
   }
 }

@@ -14,7 +14,9 @@ import SubscriptionPause from 'routes/Account/Subscription/SubscriptionPause'
 import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
+import CookieBanner from 'CookieBanner'
 import { AppBanner } from 'AppBanner'
+import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
 import MobileMenu from './MobileMenu'
@@ -52,7 +54,7 @@ class Header extends React.PureComponent {
     promoCodeUrl: '',
     title: '',
     small: false,
-    trackNavigationClick: () => {},
+    trackNavigationClick: () => { },
   }
 
   constructor(props) {
@@ -121,16 +123,16 @@ class Header extends React.PureComponent {
 
     const availableItems = {
       home,
-      boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking:'BoxPricingNavigation Clicked'},
-      menu: { name: 'Choose Recipes', url: this.getChooseRecipesLink(), tracking:'RecipeNavigation Clicked'},
-      faq: { name: 'Help', url: clientRoutes.help, clientRouted: false, tracking:'FAQNavigation Clicked'},
-      myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false, tracking:'MyGoustoNavigation Clicked'},
-      referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false, tracking:'ReferAFriendNavigation Clicked'},
-      rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking:'RateMyRecipesNavigation Clicked'},
-      deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking:'DeliveriesNavigation Clicked'},
-      subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking:'SubscriptionNavigation Clicked'},
-      details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false, tracking:'DetailsNavigation Clicked'},
-      sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking:'SustainabilityNavigation Clicked'},
+      boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking: 'BoxPricingNavigation Clicked' },
+      menu: { name: 'Choose Recipes', url: this.getChooseRecipesLink(), tracking: 'RecipeNavigation Clicked' },
+      faq: { name: 'Help', url: clientRoutes.help, clientRouted: false, tracking: 'FAQNavigation Clicked' },
+      myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false, tracking: 'MyGoustoNavigation Clicked' },
+      referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false, tracking: 'ReferAFriendNavigation Clicked' },
+      rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking: 'RateMyRecipesNavigation Clicked' },
+      deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking: 'DeliveriesNavigation Clicked' },
+      subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking: 'SubscriptionNavigation Clicked' },
+      details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false, tracking: 'DetailsNavigation Clicked' },
+      sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking: 'SustainabilityNavigation Clicked' },
     }
 
     let pathLocal = path
@@ -266,7 +268,7 @@ class Header extends React.PureComponent {
         tabIndex='0'
         className={classNames(css.authButtonsContainer, css[buttonState])}
         onClick={e => { if (!isAuthenticated) { this.onOpen(e) } }}
-        onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onOpen()} })}
+        onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onOpen() } })}
       >
         {button}
         {isAuthenticated && logoutLink}
@@ -308,7 +310,9 @@ class Header extends React.PureComponent {
 
     return (
       <div>
+        <CookieBanner />
         <AppBanner />
+        <AbandonBasketModal />
         <span id={serverError ? 'mobileMenu' : null} data-testing="header">
           <button
             type="button"
@@ -331,12 +335,12 @@ class Header extends React.PureComponent {
               />
               <div className={css.container}>
                 {(!noContactBar) ?
-                <div className={css.contactBar}>
-                  <p className={css.contactContent}>
-                    <span className={css.info}>Free delivery </span>
-                    <span className={css.info}>{config.company.telephone.number}</span>
-                  </p>
-                </div> : null}
+                  <div className={css.contactBar}>
+                    <p className={css.contactContent}>
+                      <span className={css.info}>Free delivery </span>
+                      <span className={css.info}>{config.company.telephone.number}</span>
+                    </p>
+                  </div> : null}
                 <div className={css.mainBar}>
                   <div className={css.mainContent}>
                     <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !Boolean(promoCodeUrl)} className={css.logoLink}>

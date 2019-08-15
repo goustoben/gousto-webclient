@@ -78,6 +78,14 @@ describe('PromoCode', function () {
       )
     })
 
+    it('on update, should call loadPrices and revalidate the promocode', async () => {
+      jest.clearAllMocks()
+      wrapper.setProps({ promoCode: 'Promocode' })
+
+      expect(basketPromoCodeAppliedChange).toHaveBeenCalledTimes(1)
+      await expect(loadPrices).toHaveBeenCalledTimes(1)
+    })
+
     it('should remove exisiting promocode', async function () {
       wrapper.setState({ successMsg: 'Promocode applied' })
       wrapper.find(Segment).first().simulate('click')

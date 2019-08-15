@@ -4,7 +4,7 @@ import { fetchProducts } from 'apis/products'
 import productActions from '../products'
 import statusActions from '../status'
 
-const { productsLoadProducts} = productActions
+const { productsLoadProducts } = productActions
 
 jest.mock('apis/products', () => ({
   fetchProducts: jest.fn()
@@ -18,17 +18,19 @@ describe('productsLoadProducts', () => {
 
   beforeEach(() => {
     fetchProducts.mockReturnValue(Promise.resolve(
-      { data: [
-        {id:'1', isForSale: true},
-        {id:'2', isForSale: true}
-      ]}
+      {
+        data: [
+          { id: '1', isForSale: true },
+          { id: '2', isForSale: true }
+        ]
+      }
     ))
 
     dispatchSpy = jest.fn()
     getStateSpy = () => ({
       auth: Immutable.Map({ accessToken: 'access-token' }),
       products: Immutable.OrderedMap({}),
-      productsStock: Immutable.OrderedMap({1:1000, 2:1000}),
+      productsStock: Immutable.OrderedMap({ 1: 1000, 2: 1000 }),
       basket: Immutable.fromJS({
         products: {},
       }),
@@ -52,7 +54,7 @@ describe('productsLoadProducts', () => {
   })
 
   test('should dispatch status "error" true for PRODUCTS_RECEIVE action if an error occurs while fetching products', async () => {
-    fetchProducts.mockReturnValue(Promise.reject( new Error('error!') ))
+    fetchProducts.mockReturnValue(Promise.reject(new Error('error!')))
 
     await productsLoadProducts()(dispatchSpy, getStateSpy)
 
@@ -67,12 +69,12 @@ describe('productsLoadProducts', () => {
     expect(dispatchSpyCalls[0]).toEqual({
       type: actionTypes.PRODUCTS_RECEIVE,
       products: [
-        {id:'1', isForSale: true, stock: 1000},
-        {id:'2', isForSale: true, stock: 1000}
+        { id: '1', isForSale: true, stock: 1000 },
+        { id: '2', isForSale: true, stock: 1000 }
       ],
       cutoffDate: cutoffDate,
     })
-    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate)
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', cutoffDate, { sort: 'position' })
   })
 
   test('should not fetch products by default if there are all products in product store & no cutoffDate is passed in', async () => {
@@ -98,7 +100,7 @@ describe('productsLoadProducts', () => {
         1: { id: '1', title: 'Title 1' },
       }),
       basket: Immutable.fromJS({
-        products: { 
+        products: {
           1: { id: '1' }
         },
       }),
@@ -116,12 +118,29 @@ describe('productsLoadProducts', () => {
     expect(dispatchSpyCalls[0]).toEqual({
       type: actionTypes.PRODUCTS_RECEIVE,
       products: [
-        {id:'1', isForSale: true, stock: 1000},
-        {id:'2', isForSale: true, stock: 1000},
+        { id: '1', isForSale: true, stock: 1000 },
+        { id: '2', isForSale: true, stock: 1000 },
       ],
       cutoffDate: 'whenCutoff timestamp',
     })
 
-    expect(fetchProducts).toHaveBeenCalledWith('access-token','whenCutoff timestamp')
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { sort: 'position' })
   })
+
+  test('should fetch products for given period when periodId is passed in', async () => {
+    await productsLoadProducts('whenCutoff timestamp', '1234')(dispatchSpy, getStateSpy)
+
+    const dispatchSpyCalls = dispatchSpy.mock.calls[1]
+    expect(dispatchSpyCalls[0]).toEqual({
+      type: actionTypes.PRODUCTS_RECEIVE,
+      products: [
+        { id: '1', isForSale: true, stock: 1000 },
+        { id: '2', isForSale: true, stock: 1000 },
+      ],
+      cutoffDate: 'whenCutoff timestamp',
+    })
+
+    expect(fetchProducts).toHaveBeenCalledWith('access-token', 'whenCutoff timestamp', { periodId: '1234', sort: 'position' })
+  })
+
 })

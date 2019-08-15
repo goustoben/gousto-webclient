@@ -23,10 +23,6 @@ module.exports = {
         menu.navigate()
         done()
       })
-      .perform((done) => {
-        menu.section.menuContainer.setOrderConfirmationFeatureFlag()
-        done()
-      })
       .perform(done => {
         menu.section.recipes.checkIfRecipesVisible()
         done()

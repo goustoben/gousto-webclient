@@ -16,8 +16,6 @@ export const getGoToMyDeliveries = state => (state.features ? state.features.get
 
 export const getJfyTutorial = state => (state.features ? state.features.getIn(['jfyTutorial', 'value']) : false)
 
-export const getOrderConfirmation = state => (state.features ? state.features.getIn(['orderConfirmation', 'value']) : false)
-
 export const getRafPositionOnWelcomePage = state => (state.features ? state.features.getIn(['rafAboveCarouselOnWelcomePage', 'value']) : false)
 
 export const getFoodBrandFeature = state => (state.features ? state.features.getIn(['foodBrand', 'value']) : false)
@@ -27,3 +25,7 @@ export const isDeliveryFrequencyFeatureEnabled = ({ features }) => features.getI
 export const getAppBanner = ({ features }) => features.getIn(['appBanner', 'value'], false)
 
 export const isShowNoDiscountCTAFeatureEnabled = ({ features }) => features && features.getIn(['showNoDiscountCTA', 'value'], false)
+
+export const isSubscriptionPauseOsrFeatureEnabled = ({ features }) => features && features.getIn(['subscriptionPauseOsr', 'value'], false)
+
+export const getAbandonBasket = ({ features }) => features && features.getIn(['abandonBasket', 'value'], false)

@@ -50,6 +50,7 @@
   .shadow {
     composes: col-xs-12 pull-left from 'sass-loader!styles/bootstrap.scss';
     padding: 0;
+    z-index: 0;
     background-color: White;
   }
 

@@ -4,16 +4,18 @@ import classnames from 'classnames'
 import React, { PureComponent } from 'react'
 
 import Overlay from 'Overlay'
-import { Dropdown } from 'goustouicomponents'
+import Loading from 'Loading'
 import CloseButton from 'Overlay/CloseButton'
+import { Dropdown } from 'goustouicomponents'
 import SaveButton from 'OrderSummary/SaveButton'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
-import Loading from 'Loading'
 import { OrderConfirmationHeader } from './components/OrderConfirmationHeader'
 import OrderSummaryContainer from './components/OrderSummary/OrderSummaryContainer'
-import { ProductList } from './components/ProductList'
 import { ReferAFriend } from './components/ReferAFriend'
+import { ProductList } from './components/ProductList'
+import { AwinPixel } from './components/AwinPixel'
 import { Navbar } from './components/Navbar'
+
 import css from './OrderConfirmation.css'
 
 const propTypes = {
@@ -235,6 +237,7 @@ class OrderConfirmation extends PureComponent {
               </section>
             </div>
           </div>
+          <AwinPixel />
         </div>
       )
   }
