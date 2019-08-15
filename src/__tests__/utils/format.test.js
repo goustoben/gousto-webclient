@@ -49,7 +49,7 @@ describe('getFirstPartPostcode', () => {
         expect(formatDeliveryTotal({ deliveryTotal: '2.99' }, '2.99')).toEqual('£2.99')
       })
       test('should return Free if deliveryTotalPrice = 0', () => {
-        expect(formatDeliveryTotal({ deliveryTotal: '0.00' }, '0.00')).toEqual('Free')
+        expect(formatDeliveryTotal({ deliveryTotal: '0.00' }, '0.00')).toEqual('FREE')
       })
     })
     test('should return no price indicator if deliveryTotalPrice is not set', () => {

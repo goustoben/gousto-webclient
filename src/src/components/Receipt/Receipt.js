@@ -60,6 +60,7 @@ class Receipt extends React.Component {
     const { prices, recipeTotalPrice, totalToPay, extrasTotalPrice, numRecipes, shippingAddress, surcharges, surchargeTotal, recipeDiscountAmount, recipeDiscountPercent, deliveryTotalPrice, showAddPromocode, showTitleSection, orderNumber } = this.props
     const showRecipeDiscount = parseFloat(recipeDiscountAmount) > 0 ? true : null
     const showExtrasTotalPrice = parseFloat(extrasTotalPrice) > 0 ? true : null
+    const showFreeDelivery = parseFloat(deliveryTotalPrice) === 0 ? true : null
     const showSurchargeTotalPrice = surcharges.size && surchargeTotal
 
     return (
@@ -84,7 +85,7 @@ class Receipt extends React.Component {
             ? <ReceiptLine label="Extras" showLineAbove style="normal">{formatPrice(extrasTotalPrice)}</ReceiptLine>
             : null
         }
-        <ReceiptLine label="Delivery cost" showLineAbove style="normal">{formatDeliveryTotal(prices, deliveryTotalPrice, this.dash)}</ReceiptLine>
+        <ReceiptLine label="Delivery" showLineAbove style={showFreeDelivery ? "primary" :"normal"}>{formatDeliveryTotal(prices, deliveryTotalPrice, this.dash)}</ReceiptLine>
         <ReceiptLine label="Total" style="bold" showLineAbove>{formatDashOrPrice(totalToPay, numRecipes, prices, this.dash)}</ReceiptLine>
         {
           showAddPromocode && <PromoCode />

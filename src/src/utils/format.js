@@ -30,7 +30,7 @@ export const formatDashOrPrice = (price, numRecipes, prices, dash = null) => {
 
 export const formatDeliveryTotal = (prices, deliveryTotalPrice, dash = null) => {
   if (deliveryTotalPrice) {
-    return parseFloat(deliveryTotalPrice) > 0 ? formatPrice(deliveryTotalPrice) : 'Free'
+    return parseFloat(deliveryTotalPrice) > 0 ? formatPrice(deliveryTotalPrice) : 'FREE'
   }
 
   return <span>{pound}{dash}</span>
