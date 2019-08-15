@@ -156,12 +156,12 @@ describe('filters actions', () => {
 
     test('should be called with ALL_RECIPES_COLLECTION_ID if no params passed in', () => {
       changeCollectionById()(dispatchSpy, getStateSpy)
-      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({collectionId: ALL_RECIPES_COLLECTION_ID}))
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({ collectionId: ALL_RECIPES_COLLECTION_ID }))
     })
 
     test('should be called with collectonId if passed in as params', () => {
       changeCollectionById('1234')(dispatchSpy, getStateSpy)
-      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({collectionId: '1234'}))
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({ collectionId: '1234' }))
     })
   })
 
@@ -368,8 +368,8 @@ describe('filters actions', () => {
     beforeAll(() => {
       getStateSpy.mockReturnValue({
         features: Immutable.fromJS({
-          foodBrand: {
-            value: true
+          thematic: {
+            value: false
           },
         }),
         routing: {
@@ -388,7 +388,8 @@ describe('filters actions', () => {
         'type': 'FILTERS_FOOD_BRAND_CHANGE',
         'trackingData': {
           'actionType': 'FoodBrand unselected',
-          'food_brand': ''}
+          'food_brand': ''
+        }
       })
       expect(dispatchSpy).toHaveBeenCalledTimes(3)
     })
@@ -453,7 +454,8 @@ describe('filters actions', () => {
         'trackingData': {
           'actionType': 'Thematic unselected',
           'thematic': '',
-          'onAction': null}
+          'onAction': null
+        }
       })
       expect(dispatchSpy).toHaveBeenCalledTimes(3)
     })
