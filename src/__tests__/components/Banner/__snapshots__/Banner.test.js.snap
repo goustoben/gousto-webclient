@@ -21,6 +21,8 @@ exports[`Banner Initial Render should render with given text 1`] = `
       onKeyUp={[Function]}
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
+      role="button"
+      tabIndex={0}
     >
       <span
         className="spinner"

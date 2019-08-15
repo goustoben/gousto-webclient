@@ -7,18 +7,19 @@ import css from './OrderSummary.css'
 class SaveButton extends React.PureComponent {
 
   static propTypes = {
+    error: PropTypes.bool,
     onClick: PropTypes.func,
-    error: PropTypes.string,
+    onOrderConfirmationMobile: PropTypes.bool,
     saving: PropTypes.bool,
     saveRequired: PropTypes.bool.isRequired,
-    onOrderConfirmationMobile: PropTypes.bool,
   }
 
   static defaultProps = {
+    error: false,
     onClick: () => { },
+    onOrderConfirmationMobile: false,
     saving: false,
     saveRequired: false,
-    onOrderConfirmationMobile: false,
   }
 
   state = {

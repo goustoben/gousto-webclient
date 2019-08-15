@@ -1,15 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import css from './OrderConfirmationHeader.css'
 
 const OrderConfirmationHeader = ({deliveryDate, deliveryStart, deliveryEnd, whenCutoffTime, whenCutoffDate}) => (
-  <div className={css.orderConfirmationHeader} data-testing="orderConfirmationHeader">
-    <div className={css.orderConfirmationColumns}>
-      <h1 className={css.orderConfirmationTitle}>Thank you! Your order has been created.</h1>
-      <p className={css.orderConfirmationDetails}>Delivery date: {deliveryDate} between {deliveryStart} - {deliveryEnd}</p>
-      <p className={css.orderConfirmationDetails}>Your recipe choices have been saved and we will start picking your box soon.</p>
-      <p className={css.orderConfirmationDetails}>You can edit your choices until {whenCutoffTime} on {whenCutoffDate}</p>
-    </div>
+  <div data-testing="orderConfirmationHeader">
+    <p className={css.paragraph}>Delivery date: {deliveryDate} between {deliveryStart} - {deliveryEnd}</p>
+    <p className={classnames(css.paragraph, css.bold)}>You can edit your choices until {whenCutoffTime} on {whenCutoffDate}</p>
   </div>
 )
 

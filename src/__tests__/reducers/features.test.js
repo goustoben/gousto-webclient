@@ -5,6 +5,72 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 
 describe('features reducers', () => {
   describe('features', () => {
+    const defaultFeatures = Immutable.fromJS({
+      collections: {
+        experiment: false,
+        value: true,
+      },
+      landingOrder: {
+        experiment: false,
+        value: true,
+      },
+      recommendedBadge: {
+        experiment: false,
+        value: false,
+      },
+      featureRecommendedRecipe: {
+        experiment: false,
+        value: true,
+      },
+      filterMenu: {
+        experiment: false,
+        value: false,
+      },
+      queueIt: {
+        experiment: false,
+        value: false,
+      },
+      nextDayDeliveryPaintedDoor: {
+        experiment: true,
+        value: false
+      },
+      disabledSlots: {
+        experiment: false,
+        value: '',
+      },
+      forceSignupWizard: {
+        experiment: false,
+        value: false,
+      },
+      goToMyGousto: {
+        experiment: false,
+        value: false,
+      },
+      goToMyDeliveries: {
+        experiment: false,
+        value: false,
+      },
+      jfyTutorial: {
+        experiment: false,
+        value: false,
+      },
+      rafAboveCarouselOnWelcomePage: {
+        experiment: false,
+        value: false,
+      },
+      foodBrand: {
+        experiment: false,
+        value: false,
+      },
+      appBanner: {
+        experiment: false,
+        value: false,
+      },
+      collapsedRaf: {
+        experiment: false,
+        value: false,
+      },
+    })
     let clock
     let features
     beforeEach(() => {
@@ -17,139 +83,15 @@ describe('features reducers', () => {
     test('should handle initial state', () => {
       const state = undefined
       const action = {}
-      const expected = Immutable.fromJS({
-        collections: {
-          experiment: false,
-          value: true,
-        },
-        landingOrder: {
-          experiment: false,
-          value: true,
-        },
-        recommendedBadge: {
-          experiment: false,
-          value: false,
-        },
-        featureRecommendedRecipe: {
-          experiment: false,
-          value: true,
-        },
-        filterMenu: {
-          experiment: false,
-          value: false,
-        },
-        queueIt: {
-          experiment: false,
-          value: false,
-        },
-        nextDayDeliveryPaintedDoor: {
-          experiment: true,
-          value: false
-        },
-        disabledSlots: {
-          experiment: false,
-          value: '',
-        },
-        forceSignupWizard: {
-          experiment: false,
-          value: false,
-        },
-        goToMyGousto: {
-          experiment: false,
-          value: false,
-        },
-        goToMyDeliveries: {
-          experiment: false,
-          value: false,
-        },
-        jfyTutorial: {
-          experiment: false,
-          value: false,
-        },
-        rafAboveCarouselOnWelcomePage: {
-          experiment: false,
-          value: false,
-        },
-        foodBrand: {
-          experiment: false,
-          value: false,
-        },
-        appBanner: {
-          experiment: false,
-          value: false,
-        }
-      })
       const result = features.features(state, action)
-      expect(Immutable.is(expected, result)).toEqual(true)
+      expect(Immutable.is(defaultFeatures, result)).toEqual(true)
     })
 
     test('should handle unknown actions', () => {
       const state = undefined
       const action = { type: 'unknown' }
-      const expected = Immutable.fromJS({
-        collections: {
-          experiment: false,
-          value: true,
-        },
-        landingOrder: {
-          experiment: false,
-          value: true,
-        },
-        recommendedBadge: {
-          experiment: false,
-          value: false,
-        },
-        featureRecommendedRecipe: {
-          experiment: false,
-          value: true,
-        },
-        filterMenu: {
-          experiment: false,
-          value: false,
-        },
-        queueIt: {
-          experiment: false,
-          value: false,
-        },
-        disabledSlots: {
-          experiment: false,
-          value: '',
-        },
-        nextDayDeliveryPaintedDoor: {
-          experiment: true,
-          value: false
-        },
-        forceSignupWizard: {
-          experiment: false,
-          value: false,
-        },
-        goToMyGousto: {
-          experiment: false,
-          value: false,
-        },
-        goToMyDeliveries: {
-          experiment: false,
-          value: false,
-        },
-        jfyTutorial: {
-          experiment: false,
-          value: false,
-        },
-        rafAboveCarouselOnWelcomePage: {
-          experiment: false,
-          value: false,
-        },
-        foodBrand: {
-          experiment: false,
-          value: false,
-        },
-        appBanner: {
-          experiment: false,
-          value: false,
-        }
-      })
       const result = features.features(state, action)
-      expect(Immutable.is(expected, result)).toEqual(true)
+      expect(Immutable.is(defaultFeatures, result)).toEqual(true)
     })
 
     test('should handle FEATURE_SET action types with values', () => {
@@ -159,73 +101,11 @@ describe('features reducers', () => {
         feature: 'something',
         value: 'another thing',
       }
-      const expected = Immutable.fromJS({
-        collections: {
-          experiment: false,
-          value: true,
-        },
-        something: {
-          experiment: false,
-          value: 'another thing',
-        },
-        landingOrder: {
-          experiment: false,
-          value: true,
-        },
-        recommendedBadge: {
-          experiment: false,
-          value: false,
-        },
-        featureRecommendedRecipe: {
-          experiment: false,
-          value: true,
-        },
-        filterMenu: {
-          experiment: false,
-          value: false,
-        },
-        queueIt: {
-          experiment: false,
-          value: false,
-        },
-        disabledSlots: {
-          experiment: false,
-          value: '',
-        },
-        nextDayDeliveryPaintedDoor: {
-          experiment: true,
-          value: false
-        },
-        forceSignupWizard: {
-          experiment: false,
-          value: false,
-        },
-        goToMyGousto: {
-          experiment: false,
-          value: false,
-        },
-        goToMyDeliveries: {
-          experiment: false,
-          value: false,
-        },
-        jfyTutorial: {
-          experiment: false,
-          value: false,
-        },
-        rafAboveCarouselOnWelcomePage: {
-          experiment: false,
-          value: false,
-        },
-        foodBrand: {
-          experiment: false,
-          value: false,
-        },
-        appBanner: {
-          experiment: false,
-          value: false,
-        }
-      })
       const result = features.features(state, action)
+      const expected = defaultFeatures.set('something', Immutable.Map({
+        experiment: false,
+        value: "another thing",
+      }))
       expect(Immutable.is(expected, result)).toEqual(true)
     })
 

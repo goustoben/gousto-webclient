@@ -65,7 +65,11 @@ const defaultFeatures = () => ({
   appBanner: {
     experiment: false,
     value: false,
-  }
+  },
+  collapsedRaf: {
+    experiment: false,
+    value: false,
+  },
 })
 
 const featureToggles = {
