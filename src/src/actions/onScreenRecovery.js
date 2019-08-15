@@ -166,7 +166,14 @@ export const getPauseRecoveryContent = () => (
         }))
 
         const orders = getState().user.get('orders')
-        const orderCount = orders.filter((o) => o.get('state') === 'phase' ).size
+        const orderCount = Math.max(
+          ...(orders.toArray().filter(
+            (o) => o.get('state') === 'committed'
+          ).map(
+            (o) => Number(o.get('number'))
+          )),
+          0
+        )
         const offer = getState().onScreenRecovery.get('offer')
         const hasPendingPromo = offer === null ? null : offer.formattedValue
         dispatch({
