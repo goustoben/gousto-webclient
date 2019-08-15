@@ -6,6 +6,7 @@ import Immutable from 'immutable'/* eslint-disable new-cap */
 import Calendar from 'Form/Calendar'
 import DropdownInput from 'Form/Dropdown'
 import Svg from 'Svg'
+import freeDelivery from '../../../config/freeDelivery'
 import SlotPicker from './SlotPicker'
 import css from './DeliverySlot.css'
 
@@ -282,7 +283,7 @@ class DeliverySlot extends React.Component {
         </div>
         <div className={css.row}>
           <span className={css.highlightText}>
-            <p><span className={css.tick} />Free delivery available, 7 days a week</p>
+            <p><span className={css.tick} />{freeDelivery.reminder}</p>
           </span>
         </div>
         <Button

@@ -6,6 +6,7 @@ import Button from '../../Button'
 import Image from '../../Image'
 import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
+import freeDelivery from '../../../../config/freeDelivery'
 
 class PostcodeStep extends React.PureComponent {
 
@@ -84,7 +85,7 @@ class PostcodeStep extends React.PureComponent {
                     textMsg = 'Please enter a valid postcode'
                   }
                 } else {
-                  textMsg = 'Free delivery available, 7 days a week.'
+                  textMsg = freeDelivery.reminder
                 }
 
                 return textMsg
