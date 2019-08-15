@@ -3,8 +3,11 @@ import Immutable from 'immutable'
 import { fetchCollections } from 'apis/collections'
 import { featureSet } from 'actions/features'
 
+import actionTypes from 'actions/actionTypes'
+
 import {
   menuLoadCollections,
+  menuRecipeDetailVisibilityChange
 } from 'actions/menu'
 
 jest.mock('apis/collections', () => ({
@@ -127,13 +130,13 @@ describe('menu actions', () => {
         )
       })
     })
-    
+
     describe('when not authenticated', () => {
       beforeEach(() => {
         getState.mockReturnValue({
           auth: Immutable.Map({
             accessToken: 'an-access-token',
-            isAuthenticated: false 
+            isAuthenticated: false
           }),
           features: Immutable.fromJS({}),
           routing: {},
@@ -167,5 +170,44 @@ describe('menu actions', () => {
       })
     })
   })
-})
 
+  describe('menuRecipeDetailVisibilityChange', () => {
+    beforeEach(() => {
+      getState.mockReturnValue({
+        auth: Immutable.Map({
+          accessToken: 'an-access-token',
+          isAuthenticated: false
+        }),
+        features: Immutable.fromJS({}),
+        routing: {
+          locationBeforeTransitions: {
+            query: {}
+          }
+        },
+        menuCollections: Immutable.fromJS({})
+      })
+    })
+
+    test('should dispatch TRACKING_VIEW_DETAILS action if second param is true', () => {
+      menuRecipeDetailVisibilityChange('123', true)(dispatch, getState)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING_VIEW_DETAILS,
+        trackingData: {
+          actionType: 'View Details clicked',
+        }
+      })
+    })
+
+    test('should not dispatch TRACKING_VIEW_DETAILS action if second param is false', () => {
+      menuRecipeDetailVisibilityChange('123', false)(dispatch, getState)
+
+      expect(dispatch).not.toHaveBeenCalledWith({
+        type: actionTypes.TRACKING_VIEW_DETAILS,
+        trackingData: {
+          actionType: 'View Details clicked',
+        }
+      })
+    })
+  })
+})

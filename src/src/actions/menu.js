@@ -445,7 +445,7 @@ export function menuLoadStock(clearStock = true) {
   }
 }
 
-export function menuRecipeDetailVisibilityChange(recipeId) {
+export function menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClicked) {
   return (dispatch, getState) => {
     dispatch({
       type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
@@ -456,6 +456,16 @@ export function menuRecipeDetailVisibilityChange(recipeId) {
         show: !!recipeId,
       },
     })
+
+    if(isViewMoreDetailsClicked) {
+      dispatch({
+        type: actionTypes.TRACKING_VIEW_DETAILS,
+        trackingData: {
+          actionType: 'View Details clicked',
+        }
+      })
+    }
+
     const prevLoc = getState().routing.locationBeforeTransitions
     const query = { ...prevLoc.query }
     delete query.recipeDetailId

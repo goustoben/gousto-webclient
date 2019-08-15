@@ -388,9 +388,9 @@ class Menu extends React.Component {
     }
   }
 
-  showDetailRecipe = (recipeId) => {
+  showDetailRecipe = (recipeId, isViewMoreDetailsClicked) => {
     if (!this.props.boxSummaryShow) {
-      this.props.detailVisibilityChange(recipeId)
+      this.props.detailVisibilityChange(recipeId, isViewMoreDetailsClicked)
     }
   }
 
