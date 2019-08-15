@@ -1,39 +1,40 @@
 @value sizeMD from 'styles/typography.css';
 @value Basa from 'styles/colors.css';
 @value attributesLineHeight 1.8;
+@value ScreenSMMin from 'styles/screenSizes.css';
 
 .recipeDetails {
-	composes: relative from 'styles/position.css';
+  composes: relative from 'styles/position.css';
 }
 
 .link {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .contentWrapper {
-	composes: paddingMD from 'sass-loader!styles/spacing.scss';
-	padding-top: 5px;
-	margin-top: 15px;
+  composes: paddingMD from 'sass-loader!styles/spacing.scss';
+  padding-top: 5px;
+  margin-top: 15px;
 }
 
 .titleWrapper {
-	padding-right: 1rem;
-	composes: link;
-	&:hover {
-		text-decoration: underline;
-	}
+  padding-right: 1rem;
+  composes: link;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .score {
-	position: absolute;
-	left: 10px;
-	margin-top: -40px;
+  position: absolute;
+  left: 10px;
+  margin-top: -40px;
 }
 
 .rangeBadgeWrapper{
-	margin-top: -15px;
-	margin-left: -1px;
-	position: absolute;
+  margin-top: -15px;
+  margin-left: -1px;
+  position: absolute;
 }
 
 .viewDetails {
@@ -41,4 +42,8 @@
   float: right;
   margin-top: -40px;
   margin-right: 10px;
+
+  @media ScreenSMMin {
+    margin-top: -50px;
+  }
 }
