@@ -23,8 +23,7 @@ class Cookbook extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     const { userLoadRecipes, orders } = this.props
-    const isPrevOrderPropEqual =
-      JSON.stringify(prevProps.orders) === JSON.stringify(orders)
+    const isPrevOrderPropEqual = Immutable.is(prevProps.orders, orders)
 
     if (orders && !isPrevOrderPropEqual) userLoadRecipes()
   }
