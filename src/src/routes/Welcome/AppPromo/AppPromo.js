@@ -29,7 +29,7 @@ const AppPromo = ({ device }) => {
   return (
     <div className={css.container}>
       <div className={css.contentContainer}>
-        <div className={css.phoneImageContainer}><img className={css.phoneImage} src={require('media/images/app_promo_phone.png')} alt="" /></div>
+        <div className={css.phoneImageContainer}><img className={css.phoneImage} src={require('media/images/app-promo-phone.jpg')} alt="" /></div>
         <div className={css.content}>
           <ul className={css.list}>
             <li><span className={css.bullet}><i className={css.tick} /></span>Get notified when the new menu is out</li>
