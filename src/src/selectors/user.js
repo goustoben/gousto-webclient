@@ -9,9 +9,9 @@ export const getUserRecentRecipesIds = ({ user }, number = 6) => {
   const userOrders = user.get('orders')
   const sortedOrders = userOrders && userOrders.sort((a, b) => parseInt(b.get('id')) - parseInt(a.get('id')))
 
-  sortedOrders.map(order => {
+  sortedOrders.forEach(order => {
     if (recipeIds.size < number) {
-      order.get('recipeItems').map(recipe => {
+      order.get('recipeItems').forEach(recipe => {
         if (recipeIds.size < number) {
           recipe.get('itemableType') === 'Recipe' && recipeIds.add(recipe.get('recipeId'))
         }
