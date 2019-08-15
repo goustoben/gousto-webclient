@@ -44,7 +44,7 @@ describe('basket reducer', function() {
       surcharges: Immutable.List(),
       shortlist: {
         shortlistRecipes: {},
-        shortlistRecipesPosition: [],
+        shortlistRecipesPositions: [],
         shortlistLimitReached: false,
       }
     })
@@ -604,6 +604,26 @@ describe('basket reducer', function() {
       const result = basket(initialState, action)
 
       expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 3 })})}))).toEqual(true)
+    })
+
+    test('should add recipe position and collection selected when added to shortlistRecipesPositions', () => {
+      const action = {
+        type: actionTypes.SHORTLIST_RECIPE_ADD,
+        recipeId: '123',
+        position: '18',
+        collection: 'testCollectionId'
+      }
+
+      initialState = Immutable.Map({
+        shortlist: Immutable.Map({
+          shortlistRecipes: Immutable.Map({}),
+          shortlistRecipesPositions: Immutable.List([])
+        })
+      })
+
+      const result = basket(initialState, action)
+
+      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 1 }), shortlistRecipesPositions: Immutable.fromJS([{'123': {position: '18', collection: 'testCollectionId'}}])})}))).toEqual(true)
     })
   })
 

@@ -54,7 +54,7 @@ const initialState = () => Immutable.fromJS({
   surcharges: Immutable.List(),
   shortlist: {
     shortlistRecipes: {},
-    shortlistRecipesPosition: [],
+    shortlistRecipesPositions: [],
     shortlistLimitReached: false,
   }
 })
@@ -296,10 +296,16 @@ const basket = {
     }
 
     case actionTypes.SHORTLIST_RECIPE_ADD: {
-      const { recipeId } = action
+      const { recipeId, position, collection } = action
       const currentQty = state.getIn(['shortlist', 'shortlistRecipes', recipeId], 0)
 
-      const newState = state.setIn(['shortlist', 'shortlistRecipes', recipeId], currentQty + 1)
+      let newState = state.setIn(['shortlist', 'shortlistRecipes', recipeId], currentQty + 1)
+      if (recipeId && position) {
+        const newShortlistRecipe = Immutable.Map({}).set(recipeId, Immutable.Map({position, collection}))
+        const newShortlistRecipesPositions = newState.getIn(['shortlist', 'shortlistRecipesPositions']).push(newShortlistRecipe)
+
+        newState = newState.setIn(['shortlist', 'shortlistRecipesPositions'], newShortlistRecipesPositions)
+      }
 
       return newState
     }
