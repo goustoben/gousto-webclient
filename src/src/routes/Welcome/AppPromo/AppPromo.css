@@ -17,7 +17,7 @@
   padding-right: 20px;
   
   @media (min-width: 387px) {
-    min-height: none;
+    min-height: auto;
   }
   
   @media ScreenXXSMin {
@@ -93,13 +93,13 @@
   display: none
 }
 
-.hideLargeScreen {
+.hideOnLargerScreen {
   @media (min-width: 387px) {
     display: none;
   }
 }
 
-.hideSmallScreen {
+.hideOnSmallScreen {
   @media (max-width: 386px) {
     display: none;
   }

@@ -14,8 +14,8 @@ const defaultProps = {
   device: 'desktop'
 }
 
-const appStoreCTAs = (device, screenSize) => (
-  <div className={classnames({ [css.hideLargeScreen]: screenSize === 'smallScreen' }, { [css.hideSmallScreen]: screenSize === 'largeScreen' })}>
+const appStoreCTAs = (device, hideOnSmallScreen) => (
+  <div className={classnames({ [css.hideOnLargerScreen]: !hideOnSmallScreen }, { [css.hideOnSmallScreen]: hideOnSmallScreen })}>
     <a data-testing="appBannerCTA" className={classnames(css.mobileAppLink, { [css.hideElement]: device === 'desktop' })} href="https://gousto.co.uk/apps">
       <Button className={css.getAppCTA} noDecoration>Get the app now</Button>
     </a>
@@ -36,10 +36,10 @@ const AppPromo = ({ device }) => {
             <li><span className={css.bullet}><i className={css.tick} /></span>Follow the status of your orders on the go</li>
             <li><span className={css.bullet}><i className={css.tick} /></span>Find all your recipes in your own cookbook</li>
           </ul>
-          {appStoreCTAs(device, 'largeScreen')}
+          {appStoreCTAs(device, true)}
         </div>
       </div >
-      {appStoreCTAs(device, 'smallScreen')}
+      {appStoreCTAs(device, false)}
     </div>
   )
 }
