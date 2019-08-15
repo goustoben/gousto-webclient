@@ -22,6 +22,8 @@ module.exports = {
         cookiePolicy.section.cookiePolicyBanner.checkIfCookieBannerNotPresent()
         done()
       })
+      .execute(`document.querySelector('[data-testing="homepageHeroCTA"]').scrollIntoView(false)`)
+      .pause(3000)
       .perform(function (done) {
         home.section.hero.goToSignUp()
         done()

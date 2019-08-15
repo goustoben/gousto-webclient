@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
 import { isNew } from 'utils/recipe'
-import { getFoodBrandFeature } from 'selectors/features'
 
 import actions from 'actions'
 import { getCutoffs } from 'utils/deliveries'

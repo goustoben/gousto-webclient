@@ -42,7 +42,7 @@ const currentTotalTimeChange = (totalTime) => ({
 const filterNewRecipesChange = (newRecipesSelected) => ({
   type: actionTypes.FILTERS_NEW_RECIPES_CHANGE,
   trackingData: {
-    actionType: newRecipesSelected ? 'UNSELECT_FILTERS_NEW_RECIPES': 'SELECT_FILTERS_NEW_RECIPES',
+    actionType: newRecipesSelected ? 'UNSELECT_FILTERS_NEW_RECIPES' : 'SELECT_FILTERS_NEW_RECIPES',
   }
 })
 
@@ -268,7 +268,7 @@ const selectThematic = (dispatch, getState, thematicSlug, onAction) => {
   const previousLocation = routing.locationBeforeTransitions
   const query = { ...previousLocation.query }
   let thematic = thematicSlug
-  if(thematicSlug === null) {
+  if (thematicSlug === null) {
     delete query.thematic
   } else {
     if (query.collection) {
@@ -276,7 +276,7 @@ const selectThematic = (dispatch, getState, thematicSlug, onAction) => {
     }
     const thematicCollection = getCollectionDetailsBySlug(getState(), thematicSlug)
 
-    if(thematicCollection) {
+    if (thematicCollection) {
       thematic = {
         name: thematicCollection.get('shortTitle'),
         slug: thematicSlug,
@@ -297,21 +297,19 @@ const selectThematic = (dispatch, getState, thematicSlug, onAction) => {
 export const filterRecipeGrouping = (recipeGrouping, location, onAction = null) => (
   (dispatch, getState) => {
     const { features } = getState()
-    const foodBrandFeature = features.getIn(['foodBrand', 'value'])
     const thematicFeature = features.getIn(['thematic', 'value'])
 
-    if (foodBrandFeature && location === 'foodBrand') {
-      if(recipeGrouping !== null) {
+    if (location === 'foodBrand') {
+      if (recipeGrouping !== null) {
         recipeGrouping.location = location
       }
       selectFoodBrand(dispatch, getState, recipeGrouping)
+      dispatch(changeCollectionById())
+
     }
 
     if (thematicFeature && location === 'thematic') {
       selectThematic(dispatch, getState, recipeGrouping, onAction)
-    }
-
-    if(foodBrandFeature || thematicFeature) {
       dispatch(changeCollectionById())
     }
   }

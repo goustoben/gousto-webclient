@@ -18,8 +18,6 @@ export const getJfyTutorial = state => (state.features ? state.features.getIn(['
 
 export const getRafPositionOnWelcomePage = state => (state.features ? state.features.getIn(['rafAboveCarouselOnWelcomePage', 'value']) : false)
 
-export const getFoodBrandFeature = state => (state.features ? state.features.getIn(['foodBrand', 'value']) : false)
-
 export const isDeliveryFrequencyFeatureEnabled = ({ features }) => features.getIn(['wizardDeliveryFrequency', 'value'], false)
 
 export const getAppBanner = ({ features }) => features.getIn(['appBanner', 'value'], false)
@@ -31,3 +29,5 @@ export const isSubscriptionPauseOsrFeatureEnabled = ({ features }) => features &
 export const getAbandonBasket = ({ features }) => features && features.getIn(['abandonBasket', 'value'], false)
 
 export const getWelcomePageAppPromo = ({ features }) => features && features.getIn(['welcomePageAppPromo', 'value'], false)
+
+export const isCollapsedRafFeatureEnabled = ({ features }) => features && features.getIn(['collapsedRaf', 'value'], false)

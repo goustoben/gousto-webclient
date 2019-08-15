@@ -3,8 +3,10 @@
 @value ScreenSMMin from 'styles/screenSizes.css';
 
 .rafContainer {
-  background-color: white;
-  padding: 15px;
+  @media ScreenSMMin {
+    background-color: White;
+    padding: 1rem;
+  }
 }
 
 .rafTitle {

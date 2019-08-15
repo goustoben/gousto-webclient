@@ -1,29 +1,10 @@
 @value comfortaaRegularFontStack, avenirBookFontStack from 'styles/typography.css';
 
-.orderConfirmationHeader {
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
-	padding-bottom: 20px;
-  padding-top: 20px;
-  background: white;
-  font-family: avenirBookFontStack;
-}
-
-.orderConfirmationColumns {
-  composes: col-md-12 from 'sass-loader!styles/bootstrap.scss';
-  max-width: 1170px;
-  margin: 0 auto;
-}
-
-.orderConfirmationTitle {
-  font-family: comfortaaRegularFontStack;
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 39px;
+.paragraph {
+  padding-bottom: 1rem;
   margin: 0;
 }
 
-.orderConfirmationDetails {
-  font-size: 16px;
-  padding-top: 15px;
-  margin: 0;
+.bold {
+  composes: textBold from 'styles/typography.css';
 }

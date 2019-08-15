@@ -48,7 +48,7 @@ export const productsLoadCategories = (forceRefresh = false) => (
   }
 )
 
-export const productsLoadProducts = (cutoffDate, periodId) => (
+export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}) => (
   async (dispatch, getState) => {
     const { basket, products, productsStock, auth } = getState()
     const currentProductsInBasket = basket.get('products')
@@ -62,7 +62,7 @@ export const productsLoadProducts = (cutoffDate, periodId) => (
       reqData.period_id = periodId
     }
 
-    if ((isProductsLargerThanBasket) ||
+    if ((isProductsLargerThanBasket || reload) ||
       (cutoffDate && !getProductsByCutoff(cutoffDate, products).size)) {
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
@@ -76,7 +76,7 @@ export const productsLoadProducts = (cutoffDate, periodId) => (
           return productsInStockAccumulator
         }, [])
 
-        dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products: productsInStock, cutoffDate })
+        dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products: productsInStock, cutoffDate, reload })
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, err.message))
         logger.error(err)

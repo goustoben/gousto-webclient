@@ -131,7 +131,7 @@ describe('orderConfirmation actions', () => {
       test('should fetch the products for the returned cutoff date', async () => {
         await orderDetails('1234')(dispatch, getState)
 
-        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00', '5678')
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-04-12 19:00:00', '5678', {reload: true})
       })
 
       test('should call basket order load for the returned order', async () => {
