@@ -35,3 +35,10 @@
 	margin-left: -1px;
 	position: absolute;
 }
+
+.viewDetails {
+  position: relative;
+  float: right;
+  margin-top: -40px;
+  margin-right: 10px;
+}

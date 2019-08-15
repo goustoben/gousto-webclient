@@ -13,14 +13,15 @@ import Image from '../Image'
 import AddButton from '../AddButton'
 import ChefQuote from '../ChefQuote'
 import TasteScore from '../TasteScore'
+import { Pill } from 'goustouicomponents'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 
-const FeaturedRecipe = ({onClick, selectFoodBrand, isFoodBrandClickable, media, title,
+const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
   view, highlight, unhighlight, tasteScore, chef, tag, detailHover,
   description, range, isRecommendedRecipe, features, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet}) => (
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet }) => (
   <div>
     <div className={css.featuredRecipe}>
       <span onClick={onClick} className={css.link}>
@@ -52,8 +53,11 @@ const FeaturedRecipe = ({onClick, selectFoodBrand, isFoodBrandClickable, media, 
           </div>
           <div>
             <ChefQuote chef={chef} quote={description} />
+            <div className={css.viewDetails}>
+              <Pill onClick={() => {onClick(true)}} icon>View details</Pill>
+            </div>
             <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
-            <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay}/>
+            <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
           </div>
           <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
           <DisabledOverlay stock={stock} inBasket={inBasket} />

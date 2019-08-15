@@ -12,6 +12,7 @@ import Rating from '../Rating'
 import AddButton from '../AddButton'
 import StockBadge from '../StockBadge'
 import TasteScore from '../TasteScore'
+import { Pill } from 'goustouicomponents'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
@@ -28,6 +29,9 @@ const GridRecipe = ({onClick, selectFoodBrand, isFoodBrandClickable, media, titl
           mouseLeave={unhighlight}
         />
       </span>
+      <div className={css.viewDetails}>
+        <Pill onClick={() => {onClick(true)}} icon>View details</Pill>
+      </div>
       <TasteScore className={css.score} score={tasteScore} />
       <div>
         <Chef chef={chef} />
@@ -91,7 +95,6 @@ GridRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
-
 }
 
 GridRecipe.defaultProps = {

@@ -16,6 +16,8 @@ import RecommendedBadge from 'Recipe/RecommendedBadge'
 import GridRecipe from 'Recipe/GridRecipe'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
 
+import { Pill } from 'goustouicomponents'
+
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
     let recipe = {
@@ -150,6 +152,13 @@ describe('<GridRecipe />', () => {
       view = 'grid'
       const wrapper = shallow(<GridRecipe {...recipe} view={view} range={recipe.range} />)
       expect(wrapper.find('RangeBadge').prop('range')).toEqual('ten_to_table')
+    })
+
+    test('should contain one Pill component and icon prop is true', () => {
+      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
+
+      expect(wrapper.find(Pill).length).toBe(1)
+      expect(wrapper.find(Pill).prop('icon')).toBe(true)
     })
   })
 })
