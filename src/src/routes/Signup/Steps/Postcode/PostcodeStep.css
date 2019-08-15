@@ -1,5 +1,5 @@
 @value ScreenXSMax, ScreenSMMin from 'styles/screenSizes.css';
-@value Radish from 'styles/colors.css';
+@value Radish, Haricot from 'styles/colors.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
 
 .xsMaxHidden {
@@ -50,4 +50,9 @@
 .errorText {
 	composes: bodyText from 'routes/Signup/Signup.css';
 	color: Radish;
+}
+
+.bodyText {
+	composes: bodyText from 'routes/Signup/Signup.css';
+	color: Haricot;
 }

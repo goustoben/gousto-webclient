@@ -73,7 +73,7 @@ class PostcodeStep extends React.PureComponent {
                 </div>
               </form>
             </div>
-            <p className={deliveryDaysError ? postcodeCss.errorText : css.bodyText}>{
+            <p className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>{
               (() => {
                 let textMsg
 
@@ -84,13 +84,13 @@ class PostcodeStep extends React.PureComponent {
                     textMsg = 'Please enter a valid postcode'
                   }
                 } else {
-                  textMsg = 'Free delivery, 7 days a week.'
+                  textMsg = 'Free delivery available, 7 days a week.'
                 }
 
                 return textMsg
               })()
             }
-      </p>
+            </p>
           </div>
         </div>
         <div className={css.footer}>
