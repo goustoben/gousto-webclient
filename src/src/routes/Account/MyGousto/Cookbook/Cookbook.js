@@ -9,23 +9,23 @@ import { RecipeCard } from './RecipeCard'
 class Cookbook extends React.PureComponent {
   static propTypes = {
     loading: PropTypes.bool,
-    userLoadRecipes: PropTypes.func,
+    userLoadCookbookRecipes: PropTypes.func,
     orders: PropTypes.instanceOf(Immutable.Map),
     recipes: PropTypes.instanceOf(Immutable.List)
   }
 
   static defaultProps = {
     loading: false,
-    userLoadRecipes: () => {},
+    userLoadCookbookRecipes: () => {},
     orders: Immutable.Map(),
     recipes: Immutable.List()
   }
 
   componentDidUpdate(prevProps) {
-    const { userLoadRecipes, orders } = this.props
+    const { userLoadCookbookRecipes, orders } = this.props
     const isPrevOrderPropEqual = Immutable.is(prevProps.orders, orders)
 
-    if (orders && !isPrevOrderPropEqual) userLoadRecipes()
+    if (orders && !isPrevOrderPropEqual) userLoadCookbookRecipes()
   }
 
   renderRecipes() {

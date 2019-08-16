@@ -759,9 +759,9 @@ export const trackingReferFriendSocialSharing = (actionType, trackingType, chann
     }
   }
 }
-export const userLoadRecipes = () => (dispatch, getState) => {
+export const userLoadCookbookRecipes = () => (dispatch, getState) => {
   const userRecipeIds = getUserRecentRecipesIds(getState(), 6)
-  dispatch(recipeActions.recipesLoadRecipesById(userRecipeIds))
+  dispatch(recipeActions.recipesLoadRecipesById(userRecipeIds, true))
 }
 
 export default userActions

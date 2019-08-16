@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { referAFriend } from 'apis/user'
 import { customerSignup } from 'apis/customers'
 
-import { userReferAFriend, userSubscribe, userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing, userLoadRecipes } from 'actions/user'
+import { userReferAFriend, userSubscribe, userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing, userLoadCookbookRecipes } from 'actions/user'
 import recipeActions from 'actions/recipes'
 import actionTypes from 'actions/actionTypes'
 
@@ -257,7 +257,7 @@ describe('user actions', () => {
     })
   })
 
-  describe('userLoadRecipes', () => {
+  describe('userLoadCookbookRecipes', () => {
     const dispatchSpy = jest.fn()
     const getStateSpy = jest.fn()
 
@@ -289,9 +289,9 @@ describe('user actions', () => {
     })
 
     test('should call recipesLoadRecipesById with 6 recipe ids', async () => {
-      await userLoadRecipes()(dispatchSpy, getStateSpy)
+      await userLoadCookbookRecipes()(dispatchSpy, getStateSpy)
 
-      expect(recipeActions.recipesLoadRecipesById).toHaveBeenCalledWith(['1', '2', '3', '4', '5', '6'])
+      expect(recipeActions.recipesLoadRecipesById).toHaveBeenCalledWith(['1', '2', '3', '4', '5', '6'], true)
     })
   })
 })
