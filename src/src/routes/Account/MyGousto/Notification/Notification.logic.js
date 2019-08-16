@@ -35,6 +35,8 @@ class NotificationLogic extends Component {
     let bannerToShow = ''
     const expiryDate = moment(card.get('expiryDate'))
 
+    if (!card.size) return
+
     if (now.isBefore(expiryDate) && expiryDate.diff(now, 'days') <= 30) {
       bannerToShow = 'toExpire'
     } else if (now.isSameOrAfter(expiryDate)) {
@@ -66,11 +68,20 @@ class NotificationLogic extends Component {
   }
 
   checkRafOffer = (now) => {
-    const rafExpiry = moment(now).isBetween('2019-05-13', '2020-05-19')
+    const { startDate, endDate } = config.referAFriend
+    const rafExpiry = moment(now).isBetween(startDate, endDate)
 
     if (rafExpiry) {
       this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'referAFriend'] }))
     }
+  }
+
+  sortBanners = (a, b) => {
+    if (b.type === 'danger') return 1
+    if (b.type === 'warning' && a.type !== 'danger') return 1
+    if (b.type === 'notify' && a.type !== 'danger' && a.type !== 'warning') return 1
+
+    return 0
   }
 
   render() {
@@ -84,19 +95,13 @@ class NotificationLogic extends Component {
         url: config[banner].url,
       }
     ))
-      .sort((a, b) => {
-        if (b.type === 'warning') return 1
-        if (b.type === 'confirm' && a.type !== 'warning') return 1
-        if (b.type === 'notify' && a.type !== 'warning' && a.type !== 'confirm') return 1
-
-        return 0
-      })
+      .sort((a, b) => this.sortBanners(a, b))
 
     return (
       <div>
         {
           notificationBannerDetails.map((banner, index) => {
-            return < NotificationPresentation key={banner.title} message={banner.message} type={banner.type} title={banner.title} url={banner.url} />
+            return index < 2 ? < NotificationPresentation key={banner.title} message={banner.message} type={banner.type} title={banner.title} url={banner.url} /> : null
           })
         }
       </div>
