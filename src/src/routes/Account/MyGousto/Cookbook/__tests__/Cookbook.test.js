@@ -34,10 +34,10 @@ describe('MyGousto', () => {
       }
     }
   ])
-  const userLoadRecipesSpy = jest.fn()
+  const userLoadCookbookRecipesSpy = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(<Cookbook orders={orders} recipes={recipes} userLoadRecipes={userLoadRecipesSpy} />)
+    wrapper = shallow(<Cookbook orders={orders} recipes={recipes} userLoadCookbookRecipes={userLoadCookbookRecipesSpy} />)
   })
 
   afterEach(() => {
@@ -79,14 +79,14 @@ describe('MyGousto', () => {
   })
 
   describe('componentDidUpdate', () => {
-    test('should call userLoadRecipes only on order prop update', () => {
-      wrapper = shallow(<Cookbook userLoadRecipes={userLoadRecipesSpy} />)
+    test('should call userLoadCookbookRecipes only on order prop update', () => {
+      wrapper = shallow(<Cookbook userLoadCookbookRecipes={userLoadCookbookRecipesSpy} />)
 
       wrapper.setProps({ orders })
       wrapper.setProps({ orders })
       wrapper.setProps({ recipes })
 
-      expect(userLoadRecipesSpy).toHaveBeenCalledTimes(1)
+      expect(userLoadCookbookRecipesSpy).toHaveBeenCalledTimes(1)
     })
   })
 })
