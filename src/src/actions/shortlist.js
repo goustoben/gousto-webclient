@@ -6,6 +6,7 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
   (dispatch, getState) => {
     const { basket, menuRecipes, menuRecipeStock } = getState()
     let shortList = basket.get('shortlist')
+    let reachedLimit
     const numPortions = basket.get('numPortions')
 
     if (force) {
@@ -15,13 +16,13 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
         ...recipeInfo
       })
 
-      const reachedLimit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
+      reachedLimit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
       dispatch({
         type: actionTypes.SHORTLIST_LIMIT_REACHED,
         shortlistLimitReached: reachedLimit,
       })
     } else {
-      let reachedLimit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
+      reachedLimit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
 
       if (!reachedLimit) {
         if (recipeInfo) {
