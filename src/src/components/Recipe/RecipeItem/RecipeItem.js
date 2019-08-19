@@ -13,6 +13,7 @@ const RecipeItem = (props) => (
     available={props.available}
     url={props.url}
     showLine={props.showLine}
+    onImageClick={props.onImageClick}
   />
 )
 
@@ -27,10 +28,12 @@ RecipeItem.propTypes = {
   available: PropTypes.bool,
   url: PropTypes.string,
   showLine: PropTypes.bool,
+  onImageClick: PropTypes.func
 }
 
 RecipeItem.defaultProps = {
   showLine: false,
+  onImageClick: () => { }
 }
 
 export default RecipeItem

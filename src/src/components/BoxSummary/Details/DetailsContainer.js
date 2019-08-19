@@ -30,6 +30,7 @@ const DetailsContainer = connect(mapStateToProps, {
   clearSlot: actions.basketSlotClear,
   basketRestorePreviousDate: actions.basketRestorePreviousDate,
   boxSummaryVisibilityChange: actions.boxSummaryVisibilityChange,
+  showRecipeDetailsOnClick: actions.menuRecipeDetailVisibilityChange
 })(Details)
 
 export default DetailsContainer

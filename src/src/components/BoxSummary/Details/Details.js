@@ -39,6 +39,8 @@ class Details extends React.Component {
     pricingPending: PropTypes.bool,
     prices: PropTypes.instanceOf(Immutable.Map),
     unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
+    showDetailsOnClick: PropTypes.bool,
+    showRecipeDetailsOnClick: PropTypes.func
   }
 
   static defaultProps = {
@@ -47,6 +49,8 @@ class Details extends React.Component {
     displayOptions: Immutable.List([]),
     prices: Immutable.Map({}),
     pricingPending: false,
+    showDetailsOnClick: false,
+    showRecipeDetailsOnClick: () => { }
   }
 
   getCtaText = (numRecipes) => {
@@ -118,6 +122,8 @@ class Details extends React.Component {
       promoCode,
       boxSummaryVisibilityChange,
       unavailableRecipeIds,
+      showDetailsOnClick,
+      showRecipeDetailsOnClick
     } = this.props
     const okRecipeList = this.recipeList(okRecipeIds)
     const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
@@ -163,12 +169,12 @@ class Details extends React.Component {
               displayOptions.contains('hidePortions')
                 ? null
                 : (<div className={css.row}>
-                    <Portions
-                      numPortions={numPortions}
-                      onNumPortionChange={basketNumPortionChange}
-                      trackNumPortionChange={portionSizeSelectedTracking}
-                      orderId={orderId}
-                    />
+                  <Portions
+                    numPortions={numPortions}
+                    onNumPortionChange={basketNumPortionChange}
+                    trackNumPortionChange={portionSizeSelectedTracking}
+                    orderId={orderId}
+                  />
                    </div>
                 )
             }
@@ -188,6 +194,7 @@ class Details extends React.Component {
                       onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
                       available
                       showLine
+                      onImageClick={showDetailsOnClick ? () => showRecipeDetailsOnClick(recipe.get('id')) : null}
                     />
                   )).toArray()}
                   <span className={!menuFetchPending ? css.notAvailable : ''}>
@@ -201,6 +208,7 @@ class Details extends React.Component {
                         onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
                         available={menuFetchPending}
                         showLine
+                        onImageClick={showDetailsOnClick ? () => showRecipeDetailsOnClick(recipe.get('id')) : null}
                       />
                     )).toArray()}
                   </span>
