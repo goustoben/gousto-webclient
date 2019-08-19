@@ -20,6 +20,7 @@ import { Pill } from 'goustouicomponents'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
+    let wrapper
     let recipe = {
       id: '1',
       title: 'test',
@@ -42,74 +43,58 @@ describe('<GridRecipe />', () => {
     }
     let view = 'grid'
 
+    beforeEach(() => {
+      wrapper = shallow(<GridRecipe {...recipe} view={view} />)
+    })
+
     test('should return a <div>', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
       expect(wrapper.type()).toBe('div')
     })
 
     test('should contain one Image component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(Image).length).toEqual(1)
     })
 
     test('should contain one Rating component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(Rating).length).toEqual(1)
     })
 
     test('should contain one Title component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(Title).length).toEqual(1)
     })
 
     test('should contain one TasteScore component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} tasteScore={99} view={view} />)
+      wrapper.setProps({ tasteScore: 99 })
 
       expect(wrapper.find(TasteScore)).toHaveLength(1)
       expect(wrapper.find(TasteScore).prop('score')).toEqual(99)
     })
 
     test('should contain one AttributeGrid component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(AttributeGrid).length).toEqual(1)
     })
 
     test('should contain one RecommendedBadge component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(RecommendedBadge).length).toEqual(1)
     })
 
     test('should contain one AddButton component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(AddButton).length).toEqual(1)
     })
 
     test('should contain one StockBadge component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(StockBadge).length).toEqual(1)
     })
 
     test('should contain one DisabledOverlay component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(DisabledOverlay).length).toEqual(1)
     })
 
     test('should not contain a ChefQuote component', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(ChefQuote).length).toEqual(0)
     })
 
     test('should not have a background image', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
       expect(
         wrapper
           .find('div')
@@ -121,8 +106,6 @@ describe('<GridRecipe />', () => {
     })
 
     test('the title component should not be large', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(Title).prop('large')).toBe(undefined)
     })
 
@@ -150,13 +133,12 @@ describe('<GridRecipe />', () => {
 
       }
       view = 'grid'
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} range={recipe.range} />)
+      
+      wrapper.setProps({ range: recipe.range })
       expect(wrapper.find('RangeBadge').prop('range')).toEqual('ten_to_table')
     })
 
     test('should contain one Pill component and icon prop is true', () => {
-      const wrapper = shallow(<GridRecipe {...recipe} view={view} />)
-
       expect(wrapper.find(Pill).length).toBe(1)
       expect(wrapper.find(Pill).prop('icon')).toBe(true)
     })
