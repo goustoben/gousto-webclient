@@ -52,7 +52,14 @@
 	color: Radish;
 }
 
+.tick {
+	composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
+	margin-right: 5px;
+}
+
 .bodyText {
 	composes: bodyText from 'routes/Signup/Signup.css';
 	color: Haricot;
+	font-family: Avenir;
+	font-weight: 500;
 }

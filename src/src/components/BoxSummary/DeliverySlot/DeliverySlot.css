@@ -142,4 +142,6 @@
 .highlightText {
 	composes: green;
 	composes: paragraphXS textCenter from 'styles/typography.css';
+	font-weight: 500;
+	font-family: Avenir;
 }

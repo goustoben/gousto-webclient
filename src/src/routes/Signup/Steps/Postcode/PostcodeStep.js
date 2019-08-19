@@ -74,23 +74,25 @@ class PostcodeStep extends React.PureComponent {
                 </div>
               </form>
             </div>
-            <p className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>{
-              (() => {
-                let textMsg
+            <p className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>
+              {!deliveryDaysError && <span className={postcodeCss.tick} />}
+              {
+                (() => {
+                  let textMsg
 
-                if (deliveryDaysError) {
-                  if (deliveryDaysError === 'do-not-deliver') {
-                    textMsg = 'Sorry, it looks like we don\'t currently deliver to your area.'
+                  if (deliveryDaysError) {
+                    if (deliveryDaysError === 'do-not-deliver') {
+                      textMsg = 'Sorry, it looks like we don\'t currently deliver to your area.'
+                    } else {
+                      textMsg = 'Please enter a valid postcode'
+                    }
                   } else {
-                    textMsg = 'Please enter a valid postcode'
+                    textMsg = reminder
                   }
-                } else {
-                  textMsg = reminder
-                }
 
-                return textMsg
-              })()
-            }
+                  return textMsg
+                })()
+              }
             </p>
           </div>
         </div>
