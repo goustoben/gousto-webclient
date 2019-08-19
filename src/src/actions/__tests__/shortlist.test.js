@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { shortlistRecipeAdd } from 'actions/shortlist'
+import { shortlistRecipeAdd, shortlistRecipeRemove } from 'actions/shortlist'
 import actionTypes from 'actions/actionTypes'
 import { shortlistLimitReached } from 'utils/basket'
 
@@ -71,6 +71,19 @@ describe('shortlist actions', () => {
           })
         })
       })
+    })
+  })
+
+  describe.only('shortlistRecipeRemove', () => {
+    test('should dispatch recipeId and action type SHORTLIST_RECIPE_REMOVE', () => {
+      shortlistRecipeRemove('123')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({recipeId: '123', type: actionTypes.SHORTLIST_RECIPE_REMOVE})
+    })
+
+    test('should recalculate shortlistLimitReached when called and if returns false then dispatches SHORTLIST_LIMIT_REACHED with shortlistLimitReached as false', () => {
+      shortlistLimitReached.mockReturnValue(false)
+      shortlistRecipeRemove('123')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({type: actionTypes.SHORTLIST_LIMIT_REACHED, shortlistLimitReached: false})
     })
   })
 })
