@@ -72,7 +72,7 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
         </div>
       </div>
     </div>
-  )
+)
 
 FeaturedRecipe.propTypes = {
   ...recipePropTypes,

@@ -459,7 +459,7 @@ export function menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClic
 
     if(isViewMoreDetailsClicked) {
       dispatch({
-        type: actionTypes.TRACKING_VIEW_DETAILS,
+        type: actionTypes.TRACKING_VIEW_RECIPE_DETAILS,
         trackingData: {
           actionType: 'View Details clicked',
         }

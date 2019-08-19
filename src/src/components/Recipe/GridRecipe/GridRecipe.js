@@ -73,7 +73,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
         </div>
       </div>
     </div>
-  )
+)
 
 GridRecipe.propTypes = {
   ...recipePropTypes,

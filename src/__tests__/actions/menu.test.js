@@ -188,22 +188,22 @@ describe('menu actions', () => {
       })
     })
 
-    test('should dispatch TRACKING_VIEW_DETAILS action if second param is true', () => {
+    test('should dispatch TRACKING_VIEW_RECIPE_DETAILS action if second param is true', () => {
       menuRecipeDetailVisibilityChange('123', true)(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.TRACKING_VIEW_DETAILS,
+        type: actionTypes.TRACKING_VIEW_RECIPE_DETAILS,
         trackingData: {
           actionType: 'View Details clicked',
         }
       })
     })
 
-    test('should not dispatch TRACKING_VIEW_DETAILS action if second param is false', () => {
+    test('should not dispatch TRACKING_VIEW_RECIPE_DETAILS action if second param is false', () => {
       menuRecipeDetailVisibilityChange('123', false)(dispatch, getState)
 
       expect(dispatch).not.toHaveBeenCalledWith({
-        type: actionTypes.TRACKING_VIEW_DETAILS,
+        type: actionTypes.TRACKING_VIEW_RECIPE_DETAILS,
         trackingData: {
           actionType: 'View Details clicked',
         }

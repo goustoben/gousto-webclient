@@ -320,7 +320,7 @@ const actionTypes = {
   TRACKING: 'TRACKING',
   TRACKING_CTA_TO_ALL_RECIPES_CLICKED: 'TRACKING_CTA_TO_ALL_RECIPES_CLICKED',
 
-  TRACKING_VIEW_DETAILS: 'TRACKING_VIEW_DETAILS',
+  TRACKING_VIEW_RECIPE_DETAILS: 'TRACKING_VIEW_RECIPE_DETAILS',
 
   VOID: 'VOID', // to be used when action type is required but there's no actual action to dispatch
 
