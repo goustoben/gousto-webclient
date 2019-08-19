@@ -10,6 +10,7 @@ export {
   Layout2Cells,
   LayoutContentWrapper,
   LayoutPageWrapper,
+  Pill,
   ProgressBar,
   Segment,
   Spinner,

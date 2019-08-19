@@ -11,6 +11,8 @@ import { AttributeGrid } from 'Recipe/AttributeGrid'
 
 import FeaturedRecipe from 'Recipe/FeaturedRecipe'
 
+import { Pill } from 'goustouicomponents'
+
 describe('<FeaturedRecipe />', () => {
   let wrapper
   const recipe = Immutable.fromJS({
@@ -66,5 +68,10 @@ describe('<FeaturedRecipe />', () => {
 
   test('should have a featured title', () => {
     expect(wrapper.find(Title).prop('view')).toBe('featured')
+  })
+
+  test('should contain one Pill component and icon prop is true', () => {
+    expect(wrapper.find(Pill).length).toBe(1)
+    expect(wrapper.find(Pill).prop('icon')).toBe(true)
   })
 })
