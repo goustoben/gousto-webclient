@@ -7,17 +7,24 @@ import { basketSum } from 'utils/basket'
 import logger from 'utils/logger'
 import css from './RecipeList.css'
 
-const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore, detailVisibilityChange }) => {
+const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore, detailVisibilityChange, boxDetailsVisibilityChange, browser, boxSummaryVisible }) => {
   let emptyRecipes
   let recipesNumber
   const isDesktop = view === 'desktop'
+  const onClick = (recipeIds = null) => {
+    if (browser === 'mobile') {
+      !boxSummaryVisible && boxDetailsVisibilityChange(true, 'mobile')
+    } else {
+      detailVisibilityChange(menuRecipesStore.getIn([recipeIds, 'id']))
+    }
+  }
 
   try {
     recipesNumber = basketSum(recipes)
     emptyRecipes = Array(maxRecipesNum - recipesNumber)
   } catch (error) {
     emptyRecipes = []
-    logger.error({message:`Invalid number of recipes: ${recipesNumber}. ${error.message}`, errors: [error]})
+    logger.error({ message: `Invalid number of recipes: ${recipesNumber}. ${error.message}`, errors: [error] })
   }
 
   const classes = classnames(
@@ -35,7 +42,7 @@ const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore,
           .map((recipeIds, index) => (
             <RecipeHolder
               recipe={menuRecipesStore.get(recipeIds)}
-              onClick={() => { detailVisibilityChange(menuRecipesStore.getIn([recipeIds, 'id'])) }}
+              onClick={() => onClick(recipeIds)}
               view={view}
               key={index}
             />
@@ -57,6 +64,9 @@ RecipeList.propTypes = {
   menuRecipesStore: PropTypes.instanceOf(Immutable.Map),
   invisible: PropTypes.bool,
   detailVisibilityChange: PropTypes.func,
+  boxDetailsVisibilityChange: PropTypes.func,
+  boxSummaryVisible: PropTypes.bool,
+  browser: PropTypes.string
 }
 
 RecipeList.defaultProps = {
@@ -64,6 +74,8 @@ RecipeList.defaultProps = {
   recipes: Immutable.Map({}),
   menuRecipesStore: Immutable.Map({}),
   invisible: false,
+  boxSummaryVisible: false,
+  browser: 'desktop'
 }
 
 export default RecipeList
