@@ -10,6 +10,7 @@ export default {
   recipes: require('./recipes').default,
   referral: require('./referral'),
   routes: require('./routes'),
+  shortlist: require('./shortlist'),
   signup: require('./signup'),
   template: require('./template'),
 }
