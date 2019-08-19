@@ -88,7 +88,6 @@ class Menu extends React.Component {
       borderColor: PropTypes.string,
     }),
     filterRecipeGrouping: PropTypes.func,
-    toggleGridView: PropTypes.func,
   }
 
   static contextTypes = {
