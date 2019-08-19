@@ -136,10 +136,10 @@
 
 .tick {
 	composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
+	margin-right: 5px;
 }
 
 .highlightText {
 	composes: green;
 	composes: paragraphXS textCenter from 'styles/typography.css';
-	margin-right: 5px;
 }
