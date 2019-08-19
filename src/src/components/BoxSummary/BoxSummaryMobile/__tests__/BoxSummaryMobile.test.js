@@ -52,7 +52,9 @@ describe('BoxSummaryMobile', () => {
         pricing: Immutable.Map({}),
         pending: Immutable.Map({}),
         boxSummaryDeliveryDays: Immutable.Map({}),
-        error: Immutable.Map({})
+        error: Immutable.Map({}),
+        request: Immutable.Map({}),
+        boxSummaryShow: Immutable.Map({}),
       }),
       subscribe: () => { },
       dispatch: () => { }
