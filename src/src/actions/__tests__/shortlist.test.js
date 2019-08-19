@@ -74,7 +74,7 @@ describe('shortlist actions', () => {
     })
   })
 
-  describe.only('shortlistRecipeRemove', () => {
+  describe('shortlistRecipeRemove', () => {
     test('should dispatch recipeId and action type SHORTLIST_RECIPE_REMOVE', () => {
       shortlistRecipeRemove('123')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({recipeId: '123', type: actionTypes.SHORTLIST_RECIPE_REMOVE})

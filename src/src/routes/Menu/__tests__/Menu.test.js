@@ -1245,7 +1245,7 @@ describe('Menu', () => {
     })
   })
 
-  describe.only('Filtered Recipe Page ', () => {
+  describe('Filtered Recipe Page ', () => {
     const boxSummaryDeliveryDaysLoad = jest.fn().mockReturnValue(
       new Promise(resolve => {
         resolve()
