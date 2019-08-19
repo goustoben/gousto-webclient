@@ -77,7 +77,7 @@ describe('RecipeList', () => {
         recipes={Immutable.Map({ 101: {} })}
         detailVisibilityChange={() => { }}
         boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-        browser={'mobile'}
+        browser='mobile'
         boxSummaryVisible={false}
       />,
     )
@@ -92,7 +92,7 @@ describe('RecipeList', () => {
         recipes={Immutable.Map({ 101: {} })}
         detailVisibilityChange={() => { }}
         boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-        browser={'mobile'}
+        browser='mobile'
         boxSummaryVisible
       />,
     )
