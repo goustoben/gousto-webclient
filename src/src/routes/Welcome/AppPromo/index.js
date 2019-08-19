@@ -1,0 +1,1 @@
+export { AppPromo } from './AppPromo'
