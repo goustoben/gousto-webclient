@@ -1,1 +1,0 @@
-export { AppPromo } from './AppPromo'
