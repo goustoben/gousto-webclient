@@ -2,11 +2,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import actual from 'actual'
 import TextInput from 'Form/Input'
+import {reminder} from 'config/freeDelivery'
 import Button from '../../Button'
 import Image from '../../Image'
 import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
-import freeDelivery from '../../../../config/freeDelivery'
 
 class PostcodeStep extends React.PureComponent {
 
@@ -85,7 +85,7 @@ class PostcodeStep extends React.PureComponent {
                     textMsg = 'Please enter a valid postcode'
                   }
                 } else {
-                  textMsg = freeDelivery.reminder
+                  textMsg = reminder
                 }
 
                 return textMsg
