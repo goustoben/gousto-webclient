@@ -65,7 +65,7 @@ export const getWhatsappReferralLink = (referralCode, userFirstName, rafOffer, t
   const message = getMessage(rafOffer)
   const encodedMessage = encodeURIComponent(`${message}${referralLink}`)
 
-  return window.location.assign(`https://wa.me/?text=${encodedMessage}`)
+  return window.location.assign(`https://api.whatsapp.com/send?text=${encodedMessage}`)
 }
 
 export const getTextMessageReferralLink = (referralCode, userFirstName, rafOffer, trackingReferFriendSocialSharing) => {
