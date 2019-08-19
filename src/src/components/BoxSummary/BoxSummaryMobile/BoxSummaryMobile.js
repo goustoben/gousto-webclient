@@ -40,7 +40,7 @@ class BoxSummaryMobile extends React.Component {
   }
 
   static defaultProps = {
-    deliveryDays: Immutable.fromJS([]),
+    deliveryDays: Immutable.fromJS({}),
     displayOptions: Immutable.fromJS([]),
     maxRecipesNum: config.maxRecipesNum,
     basketCheckedOut: false,
@@ -190,6 +190,7 @@ class BoxSummaryMobile extends React.Component {
             menuRecipes={this.props.menuRecipes}
             stock={this.props.stock}
             numPortions={this.props.numPortions}
+            shouldShowDetailsOnClick
           />
         </div>
       </div>
