@@ -2,12 +2,12 @@ import { connect } from 'react-redux'
 
 import { productDetailVisibilityChange } from 'actions/products'
 import { userFetchReferralOffer } from 'actions/user'
-import { getRafPositionOnWelcomePage, getWelcomePageAppPromo } from 'selectors/features'
+import { getRafPositionOnWelcomePage } from 'selectors/features'
 
 import Welcome from './Welcome'
 
 function mapStateToProps(state, ownProps) {
-  const { products, user, request } = state
+  const { products, user } = state
   const { params, location } = ownProps
 
   return ({
@@ -16,8 +16,6 @@ function mapStateToProps(state, ownProps) {
     products,
     user,
     isRafAboveCarousel: getRafPositionOnWelcomePage(state),
-    welcomePageAppPromo: getWelcomePageAppPromo(state),
-    device: request.get('browser')
   })
 }
 
