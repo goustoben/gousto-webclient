@@ -9,7 +9,6 @@ import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
 import RecipeList from 'BoxSummary/RecipeList'
 import Description from 'BoxSummary/Description'
 import Overlay from 'Overlay'
-import css from 'BoxSummary/BoxSummaryMobile/BoxSummaryMobile.css'
 import BrowseCTAButton from 'BoxSummary/BrowseCTAButton'
 import BrowseCTA from 'BoxSummary/BrowseCTA'
 
@@ -24,13 +23,20 @@ jest.mock('utils/overlayOpen', () => false)
 describe('BoxSummaryMobile', () => {
   let store
   let boxDetailsVisibilityChange
+  let wrapper
+  const recipes = Immutable.Map({})
   const requiredProps = {
     stock: Immutable.Map(),
     boxSummaryNext: () => { },
     menuRecipes: Immutable.List(),
     menuRecipesStore: Immutable.Map(),
     basketRestorePreviousValues: () => { },
-    disabled: false
+    boxDetailsVisibilityChange: () => { },
+    disabled: false,
+    showDetails: false,
+    recipes: recipes,
+    date: "2016-06-26",
+    numPortions: 2
   }
   beforeEach(() => {
     boxDetailsVisibilityChange = jest.fn()
@@ -51,50 +57,44 @@ describe('BoxSummaryMobile', () => {
       subscribe: () => { },
       dispatch: () => { }
     }
+    wrapper = shallow(<BoxSummaryMobile {...requiredProps} />)
   })
   afterEach(function (done) {
     jest.clearAllMocks()
     done()
   })
 
-  const recipes = Immutable.Map({}) // eslint-disable-line new-cap
-
   test('should render no BoxSummary components', () => {
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} showDetails={false} boxDetailsVisibilityChange={() => { }} {...requiredProps} />)
     expect(wrapper.find(BoxSummary).length).toEqual(0)
   })
 
   test('should render 1 BoxSummaryButton components', () => {
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} showDetails={false} boxDetailsVisibilityChange={() => { }} {...requiredProps} />)
     expect(wrapper.find(BoxSummaryButton).length).toEqual(1)
   })
 
   test('should render 1 <Description /> component', () => {
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} showDetails={false} boxDetailsVisibilityChange={() => { }} {...requiredProps} />)
     expect(wrapper.find(Description).length).toEqual(0)
   })
 
   test('should render 1 RecipeList components', () => {
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} showDetails={false} boxDetailsVisibilityChange={() => { }} {...requiredProps} />)
     expect(wrapper.find(RecipeList).length).toEqual(1)
   })
 
   test('should return a div if view is mobile', () => {
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} showDetails={false} boxDetailsVisibilityChange={() => { }} {...requiredProps} />)
     expect(wrapper.type()).toEqual('div')
   })
 
   test('should render an Overlay if on mobile', () => {
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" postcode="w3" numPortions={2} recipes={recipes} showDetails={false} boxDetailsVisibilityChange={() => { }} {...requiredProps} />)
+    wrapper = shallow(<BoxSummaryMobile {...requiredProps} postcode="w3" />)
     expect(wrapper.find(Overlay).length).toEqual(1)
   })
 
   test('should call the boxDetailsVisibilityChange function prop if clicked on mobile', () => {
     const clickSpy = jest.fn()
     const basketRestorePreviousValuesSpy = jest.fn()
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} showDetails={false} boxDetailsVisibilityChange={clickSpy} basketRestorePreviousValues={basketRestorePreviousValuesSpy} {...requiredProps} />)
+    wrapper = shallow(<BoxSummaryMobile {...requiredProps} boxDetailsVisibilityChange={clickSpy} basketRestorePreviousValues={basketRestorePreviousValuesSpy} />)
 
-    const ButtonWrapper = wrapper.find(`.${css.barmobile.split(' ').join('.')}`)
+    const ButtonWrapper = wrapper.find('.barmobile')
       .children()
       .first()
 
@@ -105,7 +105,7 @@ describe('BoxSummaryMobile', () => {
   test('should have an overlay on mobile which is closed by default', () => {
     const clickSpy = jest.fn()
     const basketRestorePreviousValuesSpy = jest.fn()
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} showDetails={false} basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} {...requiredProps} />)
+    wrapper = shallow(<BoxSummaryMobile {...requiredProps} basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} />)
 
     expect(wrapper.find(Overlay).prop('open')).toEqual(false)
   })
@@ -114,9 +114,9 @@ describe('BoxSummaryMobile', () => {
     const clickSpy = jest.fn()
     const basketRestorePreviousValuesSpy = jest.fn()
 
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} showDetails={false} basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} {...requiredProps} />)
+    wrapper = shallow(<BoxSummaryMobile basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} {...requiredProps} />)
 
-    const ButtonWrapper = wrapper.find(`.${css.barmobile.split(' ').join('.')}`)
+    const ButtonWrapper = wrapper.find('.barmobile')
       .children()
       .first()
 
@@ -129,10 +129,10 @@ describe('BoxSummaryMobile', () => {
   test('should map the basketCheckedOut prop through to the BoxSummaryButtons checkoutPending prop', () => {
     const clickSpy = jest.fn()
     const basketRestorePreviousValuesSpy = jest.fn()
-    let wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} showDetails={false} basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} basketCheckedOut {...requiredProps} />)
+    wrapper = shallow(<BoxSummaryMobile {...requiredProps} basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} basketCheckedOut />)
     expect(wrapper.find(BoxSummaryButton).prop('checkoutPending')).toEqual(true)
 
-    wrapper = shallow(<BoxSummaryMobile date="2016-06-26" numPortions={2} recipes={recipes} basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} showDetails={false} {...requiredProps} />)
+    wrapper = shallow(<BoxSummaryMobile {...requiredProps} basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} />)
     expect(wrapper.find(BoxSummaryButton).prop('checkoutPending')).toEqual(false)
   })
 
@@ -140,7 +140,7 @@ describe('BoxSummaryMobile', () => {
     const basketRestorePreviousValuesSpy = jest.fn()
     const clickSpy = jest.fn()
 
-    const wrapper = shallow(<BoxSummaryMobile date="2016-06-26" {...requiredProps} numPortions={2} recipes={recipes} showDetails basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} basketCheckedOut />)
+    wrapper = shallow(<BoxSummaryMobile {...requiredProps} showDetails basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} basketCheckedOut />)
     wrapper.find('div').at(6).simulate('click')
     expect(basketRestorePreviousValuesSpy.mock.calls).toHaveLength(1)
     expect(clickSpy.mock.calls).toHaveLength(1)
@@ -148,7 +148,7 @@ describe('BoxSummaryMobile', () => {
   })
 
   test('should render BrowseCTAButton and BrowseCTA if no date is selected and the overlay is closed', () => {
-    const wrapper = shallow(<BoxSummaryMobile date="" numPortions={2} recipes={recipes} basketRestorePreviousValues={() => { }} boxSummaryUpdateDeliveryDay={() => { }} boxDetailsVisibilityChange={() => { }} showDetails={false} {...requiredProps} />)
+    wrapper = shallow(<BoxSummaryMobile {...requiredProps} date="" />)
     expect(wrapper.find(BrowseCTAButton).length).toEqual(1)
     expect(wrapper.find(BrowseCTA).length).toEqual(1)
   })
@@ -158,14 +158,10 @@ describe('BoxSummaryMobile', () => {
       mount(
         <Provider store={store}>
           <BoxSummaryMobile
-            date="2016-06-26"
-            numPortions={2}
-            recipes={recipes}
-            showDetails={false}
+            {...requiredProps}
             hasUnavailableRecipes={false}
             orderSaveError="no-stock"
             boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-            {...requiredProps}
           />
         </Provider>
       )
@@ -177,14 +173,10 @@ describe('BoxSummaryMobile', () => {
       mount(
         <Provider store={store}>
           <BoxSummaryMobile
-            date="2016-06-26"
-            numPortions={2}
-            recipes={recipes}
-            showDetails={false}
+            {...requiredProps}
             hasUnavailableRecipes
             orderSaveError="some other error message"
             boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-            {...requiredProps}
           />
         </Provider>
       )
@@ -196,14 +188,10 @@ describe('BoxSummaryMobile', () => {
       mount(
         <Provider store={store}>
           <BoxSummaryMobile
-            date="2016-06-26"
-            numPortions={2}
-            recipes={recipes}
-            showDetails={false}
+            {...requiredProps}
             hasUnavailableRecipes
             orderSaveError="no-stock"
             boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-            {...requiredProps}
           />
         </Provider>
       )

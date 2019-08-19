@@ -20,13 +20,13 @@ class BoxSummary extends React.PureComponent {
     prices: PropTypes.instanceOf(Immutable.Map),
     pricesLoading: PropTypes.bool,
     loadPrices: PropTypes.func,
-    showDetailsOnClick: PropTypes.bool
+    shouldShowDetailsOnClick: PropTypes.bool
   }
 
   static defaultProps = {
     prices: Immutable.Map({}),
     pricesLoading: false,
-    showDetailsOnClick: false
+    shouldShowDetailsOnClick: false
   }
 
   componentDidMount() {
@@ -48,7 +48,7 @@ class BoxSummary extends React.PureComponent {
   }
 
   render() {
-    const { view = 'desktop', date, orderId, displayOptions, numPortions, recipes, boxSummaryCurrentView, showDetailsOnClick } = this.props
+    const { view = 'desktop', date, orderId, displayOptions, numPortions, recipes, boxSummaryCurrentView, shouldShowDetailsOnClick } = this.props
 
     let boxSummaryView
 
@@ -67,7 +67,7 @@ class BoxSummary extends React.PureComponent {
         orderId={orderId}
         numPortions={numPortions}
         basketRecipes={recipes}
-        showDetailsOnClick={showDetailsOnClick}
+        shouldShowDetailsOnClick={shouldShowDetailsOnClick}
       />)
       break
     default:

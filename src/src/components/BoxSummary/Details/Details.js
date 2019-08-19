@@ -39,7 +39,7 @@ class Details extends React.Component {
     pricingPending: PropTypes.bool,
     prices: PropTypes.instanceOf(Immutable.Map),
     unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
-    showDetailsOnClick: PropTypes.bool,
+    shouldShowDetailsOnClick: PropTypes.bool,
     showRecipeDetailsOnClick: PropTypes.func
   }
 
@@ -49,7 +49,7 @@ class Details extends React.Component {
     displayOptions: Immutable.List([]),
     prices: Immutable.Map({}),
     pricingPending: false,
-    showDetailsOnClick: false,
+    shouldShowDetailsOnClick: false,
     showRecipeDetailsOnClick: () => { }
   }
 
@@ -101,6 +101,12 @@ class Details extends React.Component {
     )
   }
 
+  handleRecipeImageClick = (recipeId) => {
+    const { shouldShowDetailsOnClick, showRecipeDetailsOnClick } = this.props
+
+    return shouldShowDetailsOnClick ? showRecipeDetailsOnClick(recipeId) : null
+  }
+
   render() {
     const {
       displayOptions,
@@ -121,9 +127,7 @@ class Details extends React.Component {
       accessToken,
       promoCode,
       boxSummaryVisibilityChange,
-      unavailableRecipeIds,
-      showDetailsOnClick,
-      showRecipeDetailsOnClick
+      unavailableRecipeIds
     } = this.props
     const okRecipeList = this.recipeList(okRecipeIds)
     const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
@@ -194,7 +198,7 @@ class Details extends React.Component {
                       onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
                       available
                       showLine
-                      onImageClick={showDetailsOnClick ? () => showRecipeDetailsOnClick(recipe.get('id')) : null}
+                      onImageClick={() => this.handleRecipeImageClick(recipe.get('id'))}
                     />
                   )).toArray()}
                   <span className={!menuFetchPending ? css.notAvailable : ''}>
@@ -208,7 +212,7 @@ class Details extends React.Component {
                         onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
                         available={menuFetchPending}
                         showLine
-                        onImageClick={showDetailsOnClick ? () => showRecipeDetailsOnClick(recipe.get('id')) : null}
+                        onImageClick={() => this.handleRecipeImageClick(recipe.get('id'))}
                       />
                     )).toArray()}
                   </span>

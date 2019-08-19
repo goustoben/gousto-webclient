@@ -190,7 +190,7 @@ class BoxSummaryMobile extends React.Component {
             menuRecipes={this.props.menuRecipes}
             stock={this.props.stock}
             numPortions={this.props.numPortions}
-            showDetailsOnClick
+            shouldShowDetailsOnClick
           />
         </div>
       </div>
