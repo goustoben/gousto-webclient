@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 import RangeBadge from 'Recipe/RangeBadge'
 import { recipePropTypes } from 'Recipe'
+import { Pill } from 'goustouicomponents'
 import css from './GridRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
@@ -12,13 +13,12 @@ import Rating from '../Rating'
 import AddButton from '../AddButton'
 import StockBadge from '../StockBadge'
 import TasteScore from '../TasteScore'
-import { Pill } from 'goustouicomponents'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew }) => (
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton }) => (
     <div>
       <div className={css.recipeDetails}>
         <span onClick={onClick} className={css.link}>
@@ -29,16 +29,18 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
             mouseLeave={unhighlight}
           />
         </span>
-        <div className={css.viewDetails}>
-          <Pill
-            mouseEnter={highlight}
-            mouseLeave={unhighlight}
-            onClick={() => { onClick(true) }}
-            icon
-          >
-            View details
-          </Pill>
-        </div>
+        {showRecipeDetailsButton &&
+          <div className={css.viewDetails}>
+            <Pill
+              mouseEnter={highlight}
+              mouseLeave={unhighlight}
+              onClick={() => { onClick(true) }}
+              icon
+            >
+              View details
+            </Pill>
+          </div>
+        }
         <TasteScore className={css.score} score={tasteScore} />
         <div>
           <Chef chef={chef} />
@@ -102,6 +104,7 @@ GridRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
+  showRecipeDetailsButton: PropTypes.bool
 }
 
 GridRecipe.defaultProps = {

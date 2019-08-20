@@ -66,6 +66,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
+  showRecipeDetailsButton: {
+    experiment: false,
+    value: false,
+  }
 })
 
 const featureToggles = {

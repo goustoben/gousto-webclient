@@ -71,6 +71,7 @@ describe('<FeaturedRecipe />', () => {
   })
 
   test('should contain one Pill component and icon prop is true', () => {
+    wrapper.setProps({ showRecipeDetailsButton: true })
     expect(wrapper.find(Pill).length).toBe(1)
     expect(wrapper.find(Pill).prop('icon')).toBe(true)
   })
