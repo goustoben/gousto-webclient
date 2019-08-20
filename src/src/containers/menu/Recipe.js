@@ -12,6 +12,7 @@ function mapStateToProps(state, ownProps) {
     isNew: isNew(Immutable.fromJS(ownProps)),
     stock: state.menuRecipeStock.getIn([ownProps.id, String(state.basket.get('numPortions'))], 0),
     inBasket: state.basket.hasIn(['recipes', ownProps.id]),
+    showRecipeDetailsButton: state.features.getIn(['showRecipeDetailsButton', 'value'])
   }
 }
 

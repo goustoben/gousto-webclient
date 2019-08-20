@@ -66,6 +66,10 @@ describe('features reducers', () => {
         experiment: false,
         value: false,
       },
+      showRecipeDetailsButton: {
+        experiment: false,
+        value: false,
+      }
     })
     let clock
     let features

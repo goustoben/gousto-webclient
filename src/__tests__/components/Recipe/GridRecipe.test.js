@@ -133,12 +133,13 @@ describe('<GridRecipe />', () => {
 
       }
       view = 'grid'
-      
+
       wrapper.setProps({ range: recipe.range })
       expect(wrapper.find('RangeBadge').prop('range')).toEqual('ten_to_table')
     })
 
     test('should contain one Pill component and icon prop is true', () => {
+      wrapper.setProps({ showRecipeDetailsButton: true })
       expect(wrapper.find(Pill).length).toBe(1)
       expect(wrapper.find(Pill).prop('icon')).toBe(true)
     })

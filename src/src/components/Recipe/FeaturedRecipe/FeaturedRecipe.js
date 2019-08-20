@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import { recipePropTypes } from 'Recipe'
 import RangeBadge from 'Recipe/RangeBadge'
 import { getChef } from 'utils/recipe'
+import { Pill } from 'goustouicomponents'
 import css from './FeaturedRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
@@ -13,7 +14,6 @@ import Image from '../Image'
 import AddButton from '../AddButton'
 import ChefQuote from '../ChefQuote'
 import TasteScore from '../TasteScore'
-import { Pill } from 'goustouicomponents'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
@@ -21,7 +21,7 @@ import { AttributeGrid } from '../AttributeGrid'
 const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
   view, highlight, unhighlight, tasteScore, chef, tag, detailHover,
   description, range, isRecommendedRecipe, features, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet }) => (
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet, showRecipeDetailsButton }) => (
     <div>
       <div className={css.featuredRecipe}>
         <span onClick={onClick} className={css.link}>
@@ -53,16 +53,18 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
             </div>
             <div>
               <ChefQuote chef={chef} quote={description} />
-              <div className={css.viewDetails}>
-                <Pill
-                  mouseEnter={highlight}
-                  mouseLeave={unhighlight}
-                  onClick={() => { onClick(true) }}
-                  icon
-                >
-                  View details
-                </Pill>
-              </div>
+              {showRecipeDetailsButton &&
+                <div className={css.viewDetails}>
+                  <Pill
+                    mouseEnter={highlight}
+                    mouseLeave={unhighlight}
+                    onClick={() => { onClick(true) }}
+                    icon
+                  >
+                    View details
+                  </Pill>
+                </div>
+              }
               <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
               <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
             </div>
@@ -100,6 +102,7 @@ FeaturedRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
+  showRecipeDetailsButton: PropTypes.bool
 }
 
 FeaturedRecipe.defaultProps = {
