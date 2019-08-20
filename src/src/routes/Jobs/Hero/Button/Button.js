@@ -17,7 +17,7 @@ const CTA = ({ children, link }) => (
 )
 
 CTA.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   link: PropTypes.string,
 }
 

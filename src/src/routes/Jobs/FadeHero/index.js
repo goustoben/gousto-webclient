@@ -1,1 +1,1 @@
-export default from './FadeHeroContainer'
+export default from './FadeHero'

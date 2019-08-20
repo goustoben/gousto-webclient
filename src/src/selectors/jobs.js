@@ -12,6 +12,6 @@ export const getJobsToDisplay = createSelector(
       return allJobs
     }
 
-    return allJobs.filter(job => config.Openings[selectedDepartment].includes(job.get('department')))
+    return allJobs.filter(job => config.openings[selectedDepartment].includes(job.get('department')))
   }
 )
