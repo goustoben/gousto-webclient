@@ -74,6 +74,11 @@ validateIngredients.mockResolvedValue({
   data: { valid: true }
 })
 
+const validateIngredientsV2 = jest.fn()
+validateIngredientsV2.mockResolvedValue({
+  data: { valid: true }
+})
+
 export {
   fetchOrderIssues,
   fetchOrderIssuesMockResponse,
@@ -83,4 +88,5 @@ export {
   setComplaintV2,
   validateOrder,
   validateIngredients,
+  validateIngredientsV2,
 }

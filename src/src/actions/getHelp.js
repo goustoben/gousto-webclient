@@ -1,5 +1,6 @@
 import {
   validateIngredients,
+  validateIngredientsV2,
   validateOrder,
   fetchOrderIssues as fetchOrderIssuesApi,
 } from 'apis/getHelp'
@@ -51,20 +52,32 @@ const storeIngredientIssueDescriptions = (issueReasons) => dispatcher({
   issueReasons,
 })
 
-const validateSelectedIngredients = ({ accessToken, orderId, costumerId, ingredientIds }) => {
+const validateSelectedIngredients = ({
+  accessToken,
+  orderId,
+  costumerId,
+  ingredientIds,
+  featureSSRValidationV2,
+}) => {
   return async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
     dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, ''))
 
+    const validateIngredientsParams = [
+      accessToken,
+      {
+        customer_id: Number(costumerId),
+        order_id: Number(orderId),
+        ingredient_ids: ingredientIds
+      }
+    ]
+
     try {
-      await validateIngredients(
-        accessToken,
-        {
-          customer_id: Number(costumerId),
-          order_id: Number(orderId),
-          ingredient_ids: ingredientIds
-        }
-      )
+      if (featureSSRValidationV2 && featureSSRValidationV2.value) {
+        await validateIngredientsV2(...validateIngredientsParams)
+      } else {
+        await validateIngredients(...validateIngredientsParams)
+      }
     }
     catch (error) {
       dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, error.message))

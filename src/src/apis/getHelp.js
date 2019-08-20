@@ -50,6 +50,14 @@ const validateIngredients = (accessToken, body) => {
   }, null, false, false)
 }
 
+const validateIngredientsV2 = (accessToken, body) => {
+  const url = `${endpoint('ssr', routes.version.ssrV2)}/validate-ingredients`
+
+  return fetch(accessToken, url, body, 'POST', 'default', {
+    'Content-Type': 'application/json'
+  }, null, false, false)
+}
+
 const validateOrder = (accessToken, body) => {
   const url = (__ENV__ === 'local')
     ? `${SSR_URL_LOCAL}/ssr/validate`
@@ -74,6 +82,7 @@ export {
   setComplaint,
   setComplaintV2,
   validateIngredients,
+  validateIngredientsV2,
   validateOrder,
   fetchOrderIssues,
 }
