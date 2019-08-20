@@ -627,6 +627,79 @@ describe('basket reducer', function() {
     })
   })
 
+  describe('SHORTLIST_RECIPE_REMOVE action type', () => {
+    test('should decrement count for product id in products list by 1 if recipeId is greater than 1', () => {
+      const action = {
+        type: actionTypes.SHORTLIST_RECIPE_REMOVE,
+        recipeId: '123'
+      }
+
+      initialState = Immutable.Map({
+        shortlist: Immutable.Map({
+          shortlistRecipes: Immutable.Map({
+            123: 2
+          })
+        })
+      })
+
+      const result = basket(initialState, action)
+
+      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 1 })})}))).toEqual(true)
+    })
+
+    test('should remove recipeId from shortlist if decrements from 1 to 0', () => {
+      const action = {
+        type: actionTypes.SHORTLIST_RECIPE_REMOVE,
+        recipeId: '123'
+      }
+
+      initialState = Immutable.Map({
+        shortlist: Immutable.Map({
+          shortlistRecipes: Immutable.Map({
+            123: 1
+          })
+        })
+      })
+
+      const result = basket(initialState, action)
+
+      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({})})}))).toEqual(true)
+    })
+
+    test('should remove most recent instances of that recipe from shortlistRecipesPositions when action triggered', () => {
+      const action = {
+        type: actionTypes.SHORTLIST_RECIPE_REMOVE,
+        recipeId: '123'
+      }
+
+      initialState = Immutable.Map({
+        shortlist: Immutable.Map({
+          shortlistRecipes: Immutable.Map({
+            123: 2
+          }),
+          shortlistRecipesPositions: Immutable.List([
+            Immutable.Map({
+              123: Immutable.Map({
+                position: '18',
+                collection: 'testCollectionId'
+              })
+            }),
+            Immutable.Map({
+              123: Immutable.Map({
+                position: '18',
+                collection: 'secondAddedCollection'
+              })
+            })
+          ])
+        })
+      })
+
+      const result = basket(initialState, action)
+
+      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 1 }), shortlistRecipesPositions: Immutable.fromJS([{'123': {position: '18', collection: 'testCollectionId'}}])})}))).toEqual(true)
+    })
+  })
+
   describe('SHORTLIST_LIMIT_REACHED actionType', () => {
     test('should set state shortlistLimitReached to the value from the action', () => {
       const action = {

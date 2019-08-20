@@ -48,3 +48,24 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
     }
   }
 )
+
+export const shortlistRecipeRemove = (recipeId) => (
+  (dispatch, getState) => {
+    const { basket, menuRecipes, menuRecipeStock } = getState()
+    let shortList = basket.get('shortlist')
+    const numPortions = basket.get('numPortions')
+    dispatch({
+      type: actionTypes.SHORTLIST_RECIPE_REMOVE,
+      recipeId
+    })
+
+    shortList = getState().basket.get('shortlist')
+    const reachedLimit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
+    if (!reachedLimit) {
+      dispatch({
+        type: actionTypes.SHORTLIST_LIMIT_REACHED,
+        shortlistLimitReached: reachedLimit
+      })
+    }
+  }
+)

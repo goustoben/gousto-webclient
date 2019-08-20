@@ -310,6 +310,32 @@ const basket = {
       return newState
     }
 
+    case actionTypes.SHORTLIST_RECIPE_REMOVE: {
+      const { recipeId } = action
+      const currentQty = state.getIn(['shortlist', 'shortlistRecipes', recipeId], 0)
+      let newState
+
+      if (currentQty === 1) {
+        newState = state.deleteIn(['shortlist', 'shortlistRecipes', recipeId])
+      } else if (currentQty > 1) {
+        newState = state.setIn(['shortlist', 'shortlistRecipes', recipeId], currentQty - 1)
+      }
+
+      const shortlistRecipesPositions = newState.getIn(['shortlist', 'shortlistRecipesPositions'])
+      let theLastRecipeIndex
+
+      if (Immutable.List.isList(shortlistRecipesPositions)) {
+        theLastRecipeIndex = shortlistRecipesPositions.findLastIndex(value => value.has(recipeId))
+
+        if (theLastRecipeIndex !== -1) {
+          const newShortlistRecipesPositions = shortlistRecipesPositions.delete(theLastRecipeIndex)
+          newState = newState.setIn(['shortlist', 'shortlistRecipesPositions'], newShortlistRecipesPositions)
+        }
+      }
+
+      return newState
+    }
+
     case actionTypes.SHORTLIST_LIMIT_REACHED: {
       return state.setIn(['shortlist', 'shortlistLimitReached'], action.shortlistLimitReached)
     }
