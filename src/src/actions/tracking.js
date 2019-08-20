@@ -61,7 +61,7 @@ export const setAffiliateSource = asource => (
 
 export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoCode }) => {
   if (globals.client) {
-    if (typeof window.AWIN === "undefined" || typeof window.AWIN.Tracking === "undefined") {
+    if (typeof window.AWIN === 'undefined' || typeof window.AWIN.Tracking === 'undefined') {
       window.AWIN = {
         Tracking: {},
       }
@@ -74,6 +74,10 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
       parts:  `${commissionGroup}:${total}`,
       voucher: promoCode,
       currency:"GBP",
+    }
+
+    if (typeof window.AWIN.Tracking.run === 'function') {
+      window.AWIN.Tracking.run()
     }
   }
 }
