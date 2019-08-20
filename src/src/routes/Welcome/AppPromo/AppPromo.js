@@ -37,16 +37,12 @@ const AppPromo = ({ device }) => {
             <li><span className={css.bullet}><i className={css.tick} /></span>Follow the status of your orders on the go</li>
             <li><span className={css.bullet}><i className={css.tick} /></span>Find all your recipes in your own cookbook</li>
           </ul>
-          <div className={css.hideOnSmallScreen}>
+          <div>
             {mobileAppStoreCTAs(device)}
             {desktopAppStoreCTAs(device)}
           </div>
         </div>
       </div >
-      <div className={css.hideOnLargerScreen}>
-        {mobileAppStoreCTAs(device)}
-        {desktopAppStoreCTAs(device)}
-      </div>
     </div>
   )
 }

@@ -62,6 +62,16 @@
 	}
 }
 
+.welcomeColInnerVerticalStages {
+	composes: welcomeColInner;
+	background: transparent;
+	border: none;
+}
+
+.welcomeStageContent {
+	padding-bottom: 0;
+}
+
 .colTopXS {
 	@media ScreenSMMax {
 		order: 0;
@@ -77,8 +87,12 @@
 
 .mobileHide {
 	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
-  }
+}
 
-  .mobileShow {
+.mobileShow {
 	composes: hidden-md-up from 'sass-loader!styles/bootstrap.scss';
-  }
+}
+
+.orderSummaryWrapper {
+	composes: paddingXXLLeftRight from 'sass-loader!styles/spacing.scss';
+}
