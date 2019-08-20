@@ -104,7 +104,7 @@ module.exports = {
       },
     ],
   },
-  Perks: [{
+  perks: [{
     title: 'thumbsUp',
     copy: 'Company pension',
   },
@@ -152,7 +152,7 @@ module.exports = {
     title: 'glass',
     copy: 'Free beer, wine and\nsoft drinks on Friday!',
   }],
-  Openings: {
+  openings: {
     All: [],
     Brand: ['Brand'],
     Food: ['Food', 'Buying'],

@@ -9,7 +9,7 @@ import Openings from './Openings'
 
 const mapStateToProps = state => ({
   jobs: getJobsToDisplay(state),
-  depts: Object.keys(config.Openings),
+  depts: Object.keys(config.openings),
   selectedDepartment: getSelectedJobsDepartment(state),
 })
 
