@@ -5,6 +5,7 @@ export default {
   auth: require('./auth'),
   basket: require('./basket'),
   company: require('./company'),
+  freeDelivery: require('./freeDelivery'),
   media: require('./media'),
   menu: require('./menu'),
   recipes: require('./recipes').default,

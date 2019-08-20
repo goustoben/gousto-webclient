@@ -6,6 +6,7 @@ import Immutable from 'immutable'/* eslint-disable new-cap */
 import Calendar from 'Form/Calendar'
 import DropdownInput from 'Form/Dropdown'
 import Svg from 'Svg'
+import { reminder } from 'config/freeDelivery'
 import SlotPicker from './SlotPicker'
 import css from './DeliverySlot.css'
 
@@ -279,6 +280,9 @@ class DeliverySlot extends React.Component {
             {warningMessage ? null : <p>{deliveryCopyEmpty}</p>}
             {doesDateHaveDisabledSlots ? <div><Svg fileName="icon_Delivery-unavailable" className={css.iconDisabled} /><p className={css.disabledSlotText}> Unavailable due to high demand</p></div> : null}
           </span>
+        </div>
+        <div className={css.row}>
+          <p className={css.highlightText}><span className={css.tick} />{reminder}</p>
         </div>
         <Button
           width="full"
