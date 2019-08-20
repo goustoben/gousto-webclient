@@ -17,20 +17,20 @@ module.exports = {
           selector: '*[data-testing=desktopBoxSummaryButton]'
         },
         mobileBoxSummaryNextButton: {
-					selector: '*[data-testing="mobileBoxSummaryNextButton"]',
+          selector: '*[data-testing="mobileBoxSummaryNextButton"]',
         },
         desktopBoxSummaryNextButton: {
-					selector: '*[data-testing="desktopBoxSummaryNextButton"]',
+          selector: '*[data-testing="desktopBoxSummaryNextButton"]',
         },
         boxSummaryContinueButton: {
-					selector: '*[data-testing="boxSummaryContinueButton"]',
+          selector: '*[data-testing="boxSummaryContinueButton"]',
         },
         dateSlot: {
           selector: '*[data-testing="dateSlot"]',
         },
         fullBoxIcon: {
           selector: '*[data-testing="icon-full-box"]',
-        }
+        },
       },
 
       commands: [
@@ -41,21 +41,21 @@ module.exports = {
           },
           clickContinueButton: function () {
             this
-            .waitForElementPresent('@boxSummaryContinueButton')
-            .api.execute(function () {
-              const continueButton = document.querySelector('[data-testing="boxSummaryContinueButton"]')
-              continueButton.click()
-            })
-          } ,
+              .waitForElementPresent('@boxSummaryContinueButton')
+              .api.execute(function () {
+                const continueButton = document.querySelector('[data-testing="boxSummaryContinueButton"]')
+                continueButton.click()
+              })
+          },
           clickDateOfExistingOrder: function () {
             this
-            .waitForElementPresent('@dateSlot')
-            .api.execute(function () {
-              const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
-              let dates = Array.from(getDateSlots())
-              let firstAvailableDate = dates.find(date => date.querySelector("*[data-testing='icon-full-box']"))
-              firstAvailableDate.click()
-            })
+              .waitForElementPresent('@dateSlot')
+              .api.execute(function () {
+                const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
+                let dates = Array.from(getDateSlots())
+                let firstAvailableDate = dates.find(date => date.querySelector("*[data-testing='icon-full-box']"))
+                firstAvailableDate.click()
+              })
           },
           clickDateOfNewOrder: function () {
             this.api.execute(function () {
@@ -85,6 +85,9 @@ module.exports = {
         recipe2Add: {
           selector: '*[data-testing="menuRecipeAdd"]',
         },
+        iconOpenBoxSummary: {
+          selector: '*[data-testing="boxSummaryIcon"]'
+        }
       },
 
       commands: [{
@@ -101,15 +104,29 @@ module.exports = {
             .waitForElementVisible('@recipe1Add')
             // .click('@featured', function(click) { console.log(click) })
             .click('@recipe1Add')
-            // .click('@recipe1Add', function(click) { console.log(click.status) })
-            // .click('@recipe2Add', function(click) { console.log(click.status) })
-            // .click('@recipe2Add')
-            // .click('@menuBrowseCTAButton')
+          // .click('@recipe1Add', function(click) { console.log(click.status) })
+          // .click('@recipe2Add', function(click) { console.log(click.status) })
+          // .click('@recipe2Add')
+          // .click('@menuBrowseCTAButton')
 
           return this
         },
+        addTwoRecipe: function () {
+          this.api.execute(function () {
+            const getBoxSummary = () => document.querySelectorAll("*[data-testing='boxSummaryIcon']")
+            let boxSummaryButton = getBoxSummary()
+
+            boxSummaryButton[0].click()
+            boxSummaryButton[0].click()
+            const getButtons = () => document.querySelectorAll("*[data-testing='menuRecipeAdd']")
+            let addRecipeButtons = getButtons()
+
+            addRecipeButtons[0].click()
+            addRecipeButtons[1].click()
+          })
+        },
         addRecipes: function () {
-          this.api.execute(function() {
+          this.api.execute(function () {
             const getButtons = () => document.querySelectorAll("*[data-testing='menuRecipeAdd']")
             let addRecipeButtons = getButtons()
 
@@ -172,7 +189,7 @@ module.exports = {
       this.section.bottomBar.clickBrowseCTA()
       this.section.boxSummaryDesktop
         .setPostcode(postcode)
-        // .submit()
+      // .submit()
     },
   }],
 }
