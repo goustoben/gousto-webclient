@@ -19,7 +19,6 @@
   text-align: center;
   overflow: hidden;
   max-height: 410px;
-  min-width: 145px;
   max-width: 300px;
   
   @media ScreenXXSMin {
