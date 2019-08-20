@@ -15,7 +15,7 @@ const defaultProps = {
 }
 
 const mobileAppStoreCTAs = device => (
-  <a data-testing="appBannerCTA" className={classnames(css.mobileAppLink, { [css.hideElement]: device === 'desktop' })} href="https://gousto.co.uk/apps">
+  <a data-testing="appPromoCTA" className={classnames(css.mobileAppLink, { [css.hideElement]: device === 'desktop' })} href="https://gousto.co.uk/apps">
     <Button className={css.getAppCTA} noDecoration>Get the app now</Button>
   </a>
 )
