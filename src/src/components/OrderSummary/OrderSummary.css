@@ -2,7 +2,7 @@
 @value Blackberry from 'styles/colors.css';
 
 .container {
-	composes: paddingXXLLeftRight marginLGTop marginXXLBottom from 'sass-loader!styles/spacing.scss';
+	composes: marginLGTop marginXXLBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .disclaimer {
@@ -16,22 +16,23 @@
 
 .textblock {
 	composes: marginSMTop marginZeroBottom from 'sass-loader!styles/spacing.scss';
-	composes: textCenter from 'styles/typography.css';
 	font-size: 0.95rem;
 }
 
-.subheader {
+.footer {
 	composes: textblock;
-	font-weight: bold;
+	composes: textCenter from 'styles/typography.css';
 }
 
 .error {
 	composes: textblock;
+	composes: textCenter from 'styles/typography.css';
 	composes: error from 'styles/layout.css';
 }
 
 .success {
 	composes: textblock;
+	composes: textCenter from 'styles/typography.css';
 	composes: success from 'styles/layout.css';
 	margin: 0;
 }
