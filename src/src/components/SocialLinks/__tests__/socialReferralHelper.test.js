@@ -44,7 +44,7 @@ describe('Social Referral Helper', () => {
       getWhatsappReferralLink(referralCode, firstName, offer, mockTrackingFunc)
 
       const message = 'I love Gousto and I think you will too! Use my link to get an exclusive 70% off your first box, PLUS 40% off for a whole month. \r\ncook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=whatsapp&utm_medium=sharebutton_raf_page&utm_campaign=raf_whatsapp_share'
-      expect(mockAssign).toHaveBeenCalledWith(`https://wa.me/?text=${encodeURIComponent(message)}`)
+      expect(mockAssign).toHaveBeenCalledWith(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`)
     })
   })
 
