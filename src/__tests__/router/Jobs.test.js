@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import Jobs from 'routes/Jobs/Jobs'
 const { match, createMemoryHistory } = require('react-router')
 const routes = require('../../src/routes').default(reduxStoreMock(true))
 
@@ -24,7 +25,7 @@ describe('router', () => {
         if (error) {
           throw error
         }
-        expect(renderProps.components[2].displayName).toEqual('Connect(Jobs)')
+        expect(renderProps.components[2]).toEqual(Jobs)
       },
     )
   })
