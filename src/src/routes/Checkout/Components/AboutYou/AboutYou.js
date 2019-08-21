@@ -25,13 +25,13 @@ class AboutYou extends React.PureComponent {
   }
 
   static defaultProps = {
-    clearErrors: () => {},
-    loginVisibilityChange: () => {},
+    clearErrors: () => { },
+    loginVisibilityChange: () => { },
     loginOpen: false,
     loginPending: false,
     isAuthenticated: false,
     sectionName: '',
-    receiveRef: () => {},
+    receiveRef: () => { },
   }
 
   componentDidMount() {
@@ -66,7 +66,7 @@ class AboutYou extends React.PureComponent {
             <span className={css.boldInfo}>All fields are required</span>
             <div className={css.infoSection}>
               <p className={css.textSMNoMargin}>
-                Existing customers, please&nbsp;<span className={css.link} onClick={(e) => { if (!this.props.isAuthenticated) { this.handleLoginOpen(e) } }}>Login here&nbsp;<span className={css.arrowRight} /></span>
+                Already a customer?&nbsp;<span className={css.link} onClick={(e) => { if (!this.props.isAuthenticated) { this.handleLoginOpen(e) } }}>Log in here&nbsp;<span className={css.arrowRight} /></span>
               </p>
             </div>
           </div>
@@ -120,7 +120,7 @@ class AboutYou extends React.PureComponent {
                 inputType="Input"
                 type="email"
                 label="Email address"
-                subLabel="You will use this to login to Gousto"
+                subLabel="You'll use this to log in to your account"
                 mask
                 withRef
                 ref={this.props.receiveRef}
