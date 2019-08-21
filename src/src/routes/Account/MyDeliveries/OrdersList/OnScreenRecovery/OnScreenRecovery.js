@@ -59,7 +59,7 @@ class OnScreenRecovery extends React.PureComponent {
     const { visible, title, offer, valueProposition, onKeep, keepCopy, onConfirm, confirmCopy } = this.props
 
     return (
-      <ModalComponent visible={visible}>
+      <ModalComponent styleName={css.modalComponent} visible={visible}>
         <Header offer={offer} />
         <div className={css.container}>
           <ModalTitle>
