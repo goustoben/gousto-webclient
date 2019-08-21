@@ -4,10 +4,10 @@ import moment from 'moment'
 import config from 'config'
 import classNames from 'classnames'
 
+import { AppStoreLinks } from 'components/AppStoreLinks'
 import Svg from 'components/Svg'
 import Link from 'Link'
 import css from './Footer.css'
-import AppStoreLinks from './AppStoreLinks/index'
 
 const Footer = ({ simple, type, copyright }) => {
   const clientRoutes = config.routes.client

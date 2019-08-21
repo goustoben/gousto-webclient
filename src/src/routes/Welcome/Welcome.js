@@ -37,7 +37,8 @@ class Welcome extends React.PureComponent {
     params: PropTypes.shape({
       orderId: PropTypes.string
     }).isRequired,
-    device: PropTypes.string
+    device: PropTypes.string,
+    trackWelcomeAppPromoClick: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
@@ -134,7 +135,8 @@ class Welcome extends React.PureComponent {
       productDetailVisibilityChange,
       isRafAboveCarousel,
       device,
-      welcomePageAppPromo
+      welcomePageAppPromo,
+      trackWelcomeAppPromoClick
     } = this.props
 
     if (welcomePageAppPromo) {
@@ -166,7 +168,10 @@ class Welcome extends React.PureComponent {
                       </VerticalStagesItem>
                     </Content>
                     <VerticalStagesItem title="Download the Gousto app" backgroundColor="white" extraClass={css.welcomeStageContent}>
-                      <AppPromo device={device} />
+                      <AppPromo
+                        device={device}
+                        trackWelcomeAppPromoClick={trackWelcomeAppPromoClick}
+                      />
                     </VerticalStagesItem>
                   </VerticalStages>
                 </div>

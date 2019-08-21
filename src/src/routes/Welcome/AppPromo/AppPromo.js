@@ -2,31 +2,40 @@ import React from 'react'
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { Button } from 'goustouicomponents'
-import AppStoreLinks from 'Footer/AppStoreLinks'
+import { AppStoreLinks } from 'components/AppStoreLinks'
 import config from 'config'
 import css from './AppPromo.css'
 
 const propTypes = {
   device: PropTypes.string,
+  trackWelcomeAppPromoClick: PropTypes.func
 }
 
 const defaultProps = {
-  device: 'desktop'
+  device: 'desktop',
+  trackWelcomeAppPromoClick: () => {}
 }
 
-const mobileAppStoreCTAs = device => (
-  <a data-testing="appPromoCTA" className={classnames(css.mobileAppLink, { [css.hideElement]: device === 'desktop' })} href="https://gousto.co.uk/apps">
-    <Button className={css.getAppCTA} noDecoration>Get the app now</Button>
+const onAppLinkClick = (e, trackWelcomeAppPromoClick) => {
+  const { href } = e.currentTarget
+  e.preventDefault()
+  trackWelcomeAppPromoClick()
+  window.location.assign(href)
+}
+
+const mobileAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
+  <a onClick={(e) => onAppLinkClick(e, trackWelcomeAppPromoClick)} data-testing="appPromoCTA" className={classnames(css.mobileAppLink, { [css.hideElement]: device === 'desktop' })} href="https://gousto.co.uk/apps">
+    <Button className={css.getAppCTA} noDecoration >Get the app now</Button>
   </a>
 )
 
-const desktopAppStoreCTAs = device => (
+const desktopAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
   <div className={classnames(css.desktopAppLink, { [css.hideElement]: device === 'mobile' })}>
-    <AppStoreLinks appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />
+    <AppStoreLinks onClick={(e) => onAppLinkClick(e, trackWelcomeAppPromoClick)} appStoreId={config.apps.appStoreId} playStoreId={config.apps.playStoreId} />
   </div>
 )
 
-const AppPromo = ({ device }) => {
+const AppPromo = ({ device, trackWelcomeAppPromoClick }) => {
   return (
     <div className={css.container}>
       <div className={css.contentContainer}>
@@ -38,8 +47,8 @@ const AppPromo = ({ device }) => {
             <li><span className={css.bullet}><i className={css.tick} /></span>Find all your recipes in your own cookbook</li>
           </ul>
           <div>
-            {mobileAppStoreCTAs(device)}
-            {desktopAppStoreCTAs(device)}
+            {mobileAppStoreCTAs(device, trackWelcomeAppPromoClick)}
+            {desktopAppStoreCTAs(device, trackWelcomeAppPromoClick)}
           </div>
         </div>
       </div >
