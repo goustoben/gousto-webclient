@@ -4,7 +4,7 @@ module.exports = {
     const menu = browser.page.menu()
     const orderConfirmation = browser.page.orderConfirmation()
 
-     browser
+    browser
       .perform(done => {
         shared.section.body.createUser().then(user => {
           menu.navigate()
@@ -40,7 +40,11 @@ module.exports = {
         done()
       })
       .perform(done => {
-        browser.pause(10000)
+        menu.section.menuContainer.goFromMenuToCheckout()
+        done()
+      })
+      .perform(done => {
+        menu.section.recipes.addTwoRecipe()
         done()
       })
       .perform(done => {
