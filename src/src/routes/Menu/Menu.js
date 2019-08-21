@@ -77,21 +77,17 @@ class Menu extends React.Component {
     deliveryDayId: PropTypes.string,
     addressId: PropTypes.string,
     userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
-    recipeGroupingSelected: PropTypes.oneOfType([
-      null,
-      PropTypes.shape({
-        slug: PropTypes.string,
-        name: PropTypes.string,
-        borderColor: PropTypes.string,
-      })
-    ]),
+    recipeGroupingSelected: PropTypes.shape({
+      slug: PropTypes.string,
+      name: PropTypes.string,
+      borderColor: PropTypes.string,
+    }),
     foodBrandDetails: PropTypes.shape({
       slug: PropTypes.string,
       name: PropTypes.string,
       borderColor: PropTypes.string,
     }),
     filterRecipeGrouping: PropTypes.func,
-    toggleGridView: PropTypes.func,
   }
 
   static contextTypes = {
@@ -486,7 +482,7 @@ class Menu extends React.Component {
             mobileGridView={mobileGridView}
             isClient={isClient}
           /> : ((showSelectedPage && recipeGroupingSelected.location === 'thematic')?
-            <ThematicsPage 
+            <ThematicsPage
               showDetailRecipe={this.showDetailRecipe}
               mobileGridView={mobileGridView}
               isClient={isClient}
