@@ -33,16 +33,16 @@ module.exports = {
     graphicType: 'svg',
     steps: [{
       path: 'icon-choose',
-      title: 'You choose',
-      description: 'Up to 40 exciting recipes each week.',
+      title: 'Click Click',
+      description: 'Discover 40+ tasty recipes each week including new cuisines, family favourites, and ten minute meals.',
     }, {
       path: 'icon-delivery',
-      title: 'We deliver',
-      description: '7 days a week.  Pause or skip anytime.',
+      title: 'Ding-dong',
+      description: 'Stand by for perfectly measured ingredients delivered to your door, any day you like.',
     }, {
       path: 'icon-cook',
-      title: 'You cook',
-      description: 'Tasty home cooked meals, without all the fuss.',
+      title: 'Ta-da!',
+      description: 'Cook up impressive meals from just £2.98 per serving, with all of the flavour and none of the fuss.',
     }],
   },
   //ContentKeys have been changed to Keys+"Default" to bypass CMS until CMS is working properly
