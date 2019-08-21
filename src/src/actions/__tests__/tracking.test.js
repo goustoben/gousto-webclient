@@ -569,6 +569,19 @@ describe('tracking actions', () => {
             }
           })
         })
+
+        test('should call AWIN.Tracking.run', () => {
+          global.AWIN.Tracking.run = jest.fn()
+
+          trackAffiliatePurchase({
+            orderId: 9010321,
+            total: '24.50',
+            commissionGroup: 'FIRSTPURCHASE',
+            promoCode: 'DTI-SB-P30M',
+          })
+
+          expect(global.AWIN.Tracking.run).toHaveBeenCalled()
+        })
       })
     })
   })
