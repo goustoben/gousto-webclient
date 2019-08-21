@@ -13,8 +13,8 @@ describe('OrderSummary', () => {
   let showProductDetail
 
   beforeEach(() => {
-    removeProduct = function() {}
-    showProductDetail = function() {}
+    removeProduct = function () { }
+    showProductDetail = function () { }
 
     wrapper = shallow(
       <OrderSummary
@@ -236,7 +236,7 @@ describe('OrderSummary SectionHeader', () => {
         products={{}}
         recipes={{}}
         deliveryTotalPrice={'2.50'}
-        onSave={function() {}}
+        onSave={function () { }}
       />,
     )
 
@@ -256,13 +256,13 @@ describe('OrderSummary SectionHeader', () => {
     ).toBe('Your box will arrive Friday, 6th May')
   })
 
-  test('should contain "Here are the details about your box" in second p', () => {
+  test('should contain "Here\'s what\'s inside your box" in second p', () => {
     expect(
       header
         .find('p')
         .last()
         .text(),
-    ).toBe('Here are the details about your box')
+    ).toBe('Here\'s what\'s inside your box')
   })
 })
 
@@ -278,7 +278,7 @@ describe('OrderSummary footer', () => {
         products={{}}
         recipes={{}}
         deliveryTotalPrice={'2.50'}
-        onSave={function() {}}
+        onSave={function () { }}
         orderSummaryCollapsed
       />,
     )
