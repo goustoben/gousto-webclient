@@ -419,6 +419,7 @@ describe('onScreenRecovery', () => {
             actionType: 'Subscription Pause',
             orderCount: 11,
             hasPendingPromo: null,
+            hasPendingPromoWithSubCondition: null,
           })
         }))
       })
@@ -456,6 +457,58 @@ describe('onScreenRecovery', () => {
             actionType: 'Subscription Pause',
             orderCount: 0,
             hasPendingPromo: null,
+            hasPendingPromoWithSubCondition: null,
+          })
+        }))
+      })
+
+      test('should trigger tracking of subscription pause event with promotion details when a user has a promotion which requires active requirement', async () => {
+        fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
+          data: {
+            intervene: true,
+          },
+        }))
+        getStateSpy.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: 'token',
+          }),
+          onScreenRecovery: Immutable.Map({
+            modalType: 'subscription',
+            offer: {
+              message: 'You have 1% off on your next order. If you pause you’ll miss out on your discount',
+              formattedValue: '1%',
+              rawMessage: {
+                text: 'You have {:value:} off on your next order. If you pause you’ll miss out on your discount',
+                values: [
+                  {
+                    value: '1%',
+                    key: 'value'
+                  }
+                ]
+              },
+              requireActiveSubscription: true
+            },
+          }),
+          user: Immutable.Map({
+            id: '12345',
+            orders: Immutable.List([
+            ]),
+          }),
+          features: Immutable.Map({
+            subscriptionPauseOsr: Immutable.fromJS({
+              experiment: false,
+              value: true,
+            }),
+          }),
+        })
+        await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
+        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'TRACKING',
+          trackingData: expect.objectContaining({
+            actionType: 'Subscription Pause',
+            orderCount: 0,
+            hasPendingPromo: '1%',
+            hasPendingPromoWithSubCondition: true,
           })
         }))
       })
