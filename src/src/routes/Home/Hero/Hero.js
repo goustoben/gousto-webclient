@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import ContentMask from 'ContentMask'
 import home from 'config/home'
 import config from 'config/routes'
 import Content from 'containers/Content'
@@ -30,7 +29,6 @@ const Hero = ({ redirect, ctaUri, ctaText, dataTesting, variant }) => (
         </CTAHomepage>
       </div>
     </div>
-    {(variant === 'default') ? <ContentMask fillColor="Coconut" /> : null}
     <div className={css.spacer} />
   </div>
 )
