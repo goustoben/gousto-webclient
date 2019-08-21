@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import AppStoreLinks from 'Footer/AppStoreLinks'
+import AppStoreLinks from 'AppStoreLinks'
 
 describe('<AppStoreLinks />', () => {
   test('should return a <div>', () => {

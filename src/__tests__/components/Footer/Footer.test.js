@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import AppStoreLinks from 'Footer/AppStoreLinks'
+import AppStoreLinks from 'AppStoreLinks'
 import css from 'components/Footer/Footer.css'
 
 import Footer from 'Footer/Footer'
