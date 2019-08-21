@@ -52,6 +52,11 @@ const initialState = () => Immutable.fromJS({
   stepsOrder: [],
   tariffId: null,
   surcharges: Immutable.List(),
+  shortlist: {
+    shortlistRecipes: {},
+    shortlistRecipesPositions: [],
+    shortlistLimitReached: false,
+  }
 })
 
 const basket = {
@@ -95,7 +100,7 @@ const basket = {
     case actionTypes.BASKET_ID_CHANGE: {
       return state.set('orderId', action.orderId)
     }
-    
+
     case actionTypes.BASKET_ORDER_LOADED: {
       return state.set('editBox', action.editBox)
     }
@@ -288,6 +293,51 @@ const basket = {
 
     case actionTypes.BASKET_SIGNUP_COLLECTION_RECEIVE: {
       return state.set('collection', action.collection)
+    }
+
+    case actionTypes.SHORTLIST_RECIPE_ADD: {
+      const { recipeId, position, collection } = action
+      const currentQty = state.getIn(['shortlist', 'shortlistRecipes', recipeId], 0)
+
+      let newState = state.setIn(['shortlist', 'shortlistRecipes', recipeId], currentQty + 1)
+      if (recipeId && position) {
+        const newShortlistRecipe = Immutable.Map({}).set(recipeId, Immutable.Map({position, collection}))
+        const newShortlistRecipesPositions = newState.getIn(['shortlist', 'shortlistRecipesPositions']).push(newShortlistRecipe)
+
+        newState = newState.setIn(['shortlist', 'shortlistRecipesPositions'], newShortlistRecipesPositions)
+      }
+
+      return newState
+    }
+
+    case actionTypes.SHORTLIST_RECIPE_REMOVE: {
+      const { recipeId } = action
+      const currentQty = state.getIn(['shortlist', 'shortlistRecipes', recipeId], 0)
+      let newState
+
+      if (currentQty === 1) {
+        newState = state.deleteIn(['shortlist', 'shortlistRecipes', recipeId])
+      } else if (currentQty > 1) {
+        newState = state.setIn(['shortlist', 'shortlistRecipes', recipeId], currentQty - 1)
+      }
+
+      const shortlistRecipesPositions = newState.getIn(['shortlist', 'shortlistRecipesPositions'])
+      let theLastRecipeIndex
+
+      if (Immutable.List.isList(shortlistRecipesPositions)) {
+        theLastRecipeIndex = shortlistRecipesPositions.findLastIndex(value => value.has(recipeId))
+
+        if (theLastRecipeIndex !== -1) {
+          const newShortlistRecipesPositions = shortlistRecipesPositions.delete(theLastRecipeIndex)
+          newState = newState.setIn(['shortlist', 'shortlistRecipesPositions'], newShortlistRecipesPositions)
+        }
+      }
+
+      return newState
+    }
+
+    case actionTypes.SHORTLIST_LIMIT_REACHED: {
+      return state.setIn(['shortlist', 'shortlistLimitReached'], action.shortlistLimitReached)
     }
 
     default: {

@@ -1,1 +1,1 @@
-export default from './ValuesContainer'
+export default from './Values'

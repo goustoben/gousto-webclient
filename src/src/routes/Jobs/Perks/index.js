@@ -1,1 +1,1 @@
-export default from './PerksContainer'
+export default from './Perks'

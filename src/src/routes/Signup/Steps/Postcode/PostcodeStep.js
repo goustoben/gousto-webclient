@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import actual from 'actual'
 import TextInput from 'Form/Input'
+import {reminder} from 'config/freeDelivery'
 import Button from '../../Button'
 import Image from '../../Image'
 import postcodeCss from './PostcodeStep.css'
@@ -73,24 +74,26 @@ class PostcodeStep extends React.PureComponent {
                 </div>
               </form>
             </div>
-            <p className={deliveryDaysError ? postcodeCss.errorText : css.bodyText}>{
-              (() => {
-                let textMsg
+            <p className={deliveryDaysError ? postcodeCss.errorText : postcodeCss.bodyText}>
+              {!deliveryDaysError && <span className={postcodeCss.tick} />}
+              {
+                (() => {
+                  let textMsg
 
-                if (deliveryDaysError) {
-                  if (deliveryDaysError === 'do-not-deliver') {
-                    textMsg = 'Sorry, it looks like we don\'t currently deliver to your area.'
+                  if (deliveryDaysError) {
+                    if (deliveryDaysError === 'do-not-deliver') {
+                      textMsg = 'Sorry, it looks like we don\'t currently deliver to your area.'
+                    } else {
+                      textMsg = 'Please enter a valid postcode'
+                    }
                   } else {
-                    textMsg = 'Please enter a valid postcode'
+                    textMsg = reminder
                   }
-                } else {
-                  textMsg = 'Free delivery, 7 days a week.'
-                }
 
-                return textMsg
-              })()
-            }
-      </p>
+                  return textMsg
+                })()
+              }
+            </p>
           </div>
         </div>
         <div className={css.footer}>

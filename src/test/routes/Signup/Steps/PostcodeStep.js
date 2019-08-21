@@ -6,10 +6,10 @@ import TextInput from 'Form/Input'
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import { shallow } from 'enzyme'
 import PostcodeStep from 'routes/Signup/Steps/Postcode/PostcodeStep'
+chai.use(sinonChai)
 
 describe('Signup/Steps/Postcode', function() {
   let wrapper
@@ -58,8 +58,8 @@ describe('Signup/Steps/Postcode', function() {
     expect(wrapper.find(TextInput).prop('value')).to.equal('W3 0DF')
   })
 
-  it('should say "Free delivery, 7 days a week."', function() {
-    expect(wrapper.find('p').text()).to.equal('Free delivery, 7 days a week.')
+  it('should say "Free delivery available, 7 days a week"', function() {
+    expect(wrapper.find('p').text()).to.equal('Free delivery available, 7 days a week')
   })
 
   it('should call changePostcode with tempPostcode and the nextStepName if either of the buttons are clicked 1/2', function(done) {

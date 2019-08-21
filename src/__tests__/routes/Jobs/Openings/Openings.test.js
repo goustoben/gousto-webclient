@@ -13,7 +13,7 @@ describe('The Openings component', () => {
 
   describe('the layout', () => {
     beforeEach(() => {
-      departments = Object.keys(config.Openings)
+      departments = Object.keys(config.openings)
       selectedDepartment = 'All'
 
       jobs = Immutable.fromJS({
@@ -57,7 +57,7 @@ describe('The Openings component', () => {
 
   describe('the layout when there are no jobs to display', () => {
     beforeEach(() => {
-      departments = Object.keys(config.Openings)
+      departments = Object.keys(config.openings)
       selectedDepartment = 'Customer Care'
       jobs = Immutable.Map()
 
@@ -81,7 +81,7 @@ describe('The Openings component', () => {
 
   describe('the component functionality', () => {
     beforeEach(() => {
-      departments = Object.keys(config.Openings)
+      departments = Object.keys(config.openings)
       selectedDepartment = 'All'
       jobs = Immutable.fromJS({
         1: { title: 'a job' },

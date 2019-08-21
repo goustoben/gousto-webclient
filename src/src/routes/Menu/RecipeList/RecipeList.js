@@ -143,7 +143,7 @@ class RecipeList extends React.Component {
           equipment={recipe.get('equipment')}
           view={view}
           cutoffDate={cutoffDate}
-          onClick={() => { showDetailRecipe(recipeId) }}
+          onClick={(isViewMoreDetailsClicked = false) => { showDetailRecipe(recipeId, isViewMoreDetailsClicked) }}
           features={features}
           isRecommendedRecipe={isRecommendedRecipe(recipeId, allRecipesList, recipesStore)}
           range={range}

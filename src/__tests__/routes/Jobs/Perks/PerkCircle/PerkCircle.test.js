@@ -14,7 +14,7 @@ describe('the PerkCircle component', () => {
   })
 
   test('it should display all the perks', () => {
-    const numberOfPerks = config.Perks.length
+    const numberOfPerks = config.perks.length
     expect(wrapper.find('Perk')).toHaveLength(numberOfPerks)
   })
 })

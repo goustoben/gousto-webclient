@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import { recipePropTypes } from 'Recipe'
 import RangeBadge from 'Recipe/RangeBadge'
 import { getChef } from 'utils/recipe'
+import { Pill } from 'goustouicomponents'
 import css from './FeaturedRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
@@ -17,50 +18,62 @@ import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
 
-const FeaturedRecipe = ({onClick, selectFoodBrand, isFoodBrandClickable, media, title,
+const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
   view, highlight, unhighlight, tasteScore, chef, tag, detailHover,
   description, range, isRecommendedRecipe, features, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet}) => (
-  <div>
-    <div className={css.featuredRecipe}>
-      <span onClick={onClick} className={css.link}>
-        <Image
-          media={media}
-          alt={title}
-          view={view}
-          mouseEnter={highlight}
-          mouseLeave={unhighlight}
-        />
-      </span>
-      <TasteScore className={css.score} score={tasteScore} />
-      <div className={css.chefLogo}>
-        <Chef chef={chef} />
-      </div>
-      <div className={tag ? css.featuredDetailsWithTag : css.featuredDetails}>
-        <div className={css.textContainer}>
-          <div className={css.rangeBadgeFeatured}>
-            <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet, showRecipeDetailsButton }) => (
+    <div>
+      <div className={css.featuredRecipe}>
+        <span onClick={onClick} className={css.link}>
+          <Image
+            media={media}
+            alt={title}
+            view={view}
+            mouseEnter={highlight}
+            mouseLeave={unhighlight}
+          />
+        </span>
+        <TasteScore className={css.score} score={tasteScore} />
+        <div className={css.chefLogo}>
+          <Chef chef={chef} />
+        </div>
+        <div className={tag ? css.featuredDetailsWithTag : css.featuredDetails}>
+          <div className={css.textContainer}>
+            <div className={css.rangeBadgeFeatured}>
+              <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
+            </div>
+            <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChefFeatured]: getChef(chef) })}>
+              <Title
+                title={title}
+                view={view}
+                mouseEnter={highlight}
+                mouseLeave={unhighlight}
+                detailHover={detailHover}
+              />
+            </div>
+            <div>
+              <ChefQuote chef={chef} quote={description} />
+              {showRecipeDetailsButton &&
+                <div className={css.viewDetails}>
+                  <Pill
+                    mouseEnter={highlight}
+                    mouseLeave={unhighlight}
+                    onClick={() => { onClick(true) }}
+                    icon
+                  >
+                    View details
+                  </Pill>
+                </div>
+              }
+              <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
+              <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
+            </div>
+            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
+            <DisabledOverlay stock={stock} inBasket={inBasket} />
           </div>
-          <div onClick={onClick} className={classnames(css.linkUnderlined, { [css.linkIfChefFeatured]: getChef(chef) })}>
-            <Title
-              title={title}
-              view={view}
-              mouseEnter={highlight}
-              mouseLeave={unhighlight}
-              detailHover={detailHover}
-            />
-          </div>
-          <div>
-            <ChefQuote chef={chef} quote={description} />
-            <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
-            <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay}/>
-          </div>
-          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
-          <DisabledOverlay stock={stock} inBasket={inBasket} />
         </div>
       </div>
     </div>
-  </div>
 )
 
 FeaturedRecipe.propTypes = {
@@ -89,6 +102,7 @@ FeaturedRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
+  showRecipeDetailsButton: PropTypes.bool
 }
 
 FeaturedRecipe.defaultProps = {

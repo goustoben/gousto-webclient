@@ -171,7 +171,7 @@ class BoxSummaryDesktop extends React.Component {
                 />
               }
             </div>
-            <span className={css.iconDesktop}>
+            <span className={css.iconDesktop} data-testing={'boxSummaryIcon'}>
               <span className={this.props.showDetails ? css.arrowDown : css.arrowUp} ></span>
             </span>
           </Segment>

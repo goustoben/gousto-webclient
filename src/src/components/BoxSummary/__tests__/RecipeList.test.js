@@ -58,7 +58,7 @@ describe('RecipeList', () => {
     ).not.toBeInstanceOf(Immutable.Map)
   })
 
-  test('should call detailsVisibilityChange once clicked', () => {
+  test('should call detailsVisibilityChange once clicked if browser not mobile', () => {
     const detailsVisibilityChangeSpy = jest.fn()
     const wrapper = shallow(
       <RecipeList
@@ -68,5 +68,35 @@ describe('RecipeList', () => {
     )
     wrapper.find(RecipeHolder).first().simulate('click')
     expect(detailsVisibilityChangeSpy).toHaveBeenCalled()
+  })
+
+  test('should call boxDetailsVisibilityChange once clicked if browser mobile and box details not show', () => {
+    const boxDetailsVisibilityChange = jest.fn()
+    const wrapper = shallow(
+      <RecipeList
+        recipes={Immutable.Map({ 101: {} })}
+        detailVisibilityChange={() => { }}
+        boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+        browser='mobile'
+        boxSummaryVisible={false}
+      />,
+    )
+    wrapper.find(RecipeHolder).first().simulate('click')
+    expect(boxDetailsVisibilityChange).toHaveBeenCalled()
+  })
+
+  test('should NOT call boxDetailsVisibilityChange once clicked if browser mobile and box details open', () => {
+    const boxDetailsVisibilityChange = jest.fn()
+    const wrapper = shallow(
+      <RecipeList
+        recipes={Immutable.Map({ 101: {} })}
+        detailVisibilityChange={() => { }}
+        boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+        browser='mobile'
+        boxSummaryVisible
+      />,
+    )
+    wrapper.find(RecipeHolder).first().simulate('click')
+    expect(boxDetailsVisibilityChange).not.toHaveBeenCalled()
   })
 })

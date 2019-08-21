@@ -25,6 +25,7 @@ function mapStateToProps(state, ownProps) {
 const WelcomeContainer = connect(mapStateToProps, {
   productDetailVisibilityChange,
   userFetchReferralOffer,
+  getWelcomePageAppPromo,
   trackWelcomeAppPromoClick,
 })(Welcome)
 
