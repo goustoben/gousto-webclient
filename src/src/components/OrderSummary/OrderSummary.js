@@ -130,11 +130,11 @@ class OrderSummary extends React.PureComponent {
     const { deliveryDate, sectionTitle } = this.props
 
     return (
-      <SectionHeader title={sectionTitle ? sectionTitle : "Box summary"} type="minorArticle" contentAlign="center">
+      <SectionHeader title={sectionTitle ? sectionTitle : "Box summary"} type="minorArticle">
         <p
           className={classnames(
             css.mobileOnly,
-            css.subheader,
+            css.textblock,
             { [css.mobileHide]: orderSummaryOpen },
           )}
         >
@@ -156,7 +156,7 @@ class OrderSummary extends React.PureComponent {
     const { orderSummaryOpen } = this.state
 
     return (
-      <footer className={classnames(css.mobileOnly, css.textblock)}>
+      <footer className={classnames(css.mobileOnly, css.footer)}>
         {orderSummaryOpen ?
           <a
             className={css.toggleLink}
@@ -217,6 +217,7 @@ class OrderSummary extends React.PureComponent {
           className={classnames(
             css.details,
             { [css.slideUp]: (!orderSummaryOpen && orderSummaryCollapsed) },
+            { [css.mobileHide]: !orderSummaryOpen && orderSummaryCollapsed }
           )}
         >
           {this.getRecipes().map(recipe => <RecipeItem key={recipe.orderItemId} {...recipe} available />)}

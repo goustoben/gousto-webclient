@@ -29,6 +29,7 @@ module.exports = {
     validate: '/validate',
   },
   client: {
+    appsRedirect: '/apps',
     blog: '/blog',
     boxPrices: '/box-prices',
     checkout: '/checkout',

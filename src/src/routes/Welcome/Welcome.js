@@ -1,7 +1,8 @@
 import React from 'react'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable' /* eslint-disable new-cap */
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import { VerticalStages, VerticalStagesItem } from 'goustouicomponents'
 
 import actions from 'actions'
 import logger from 'utils/logger'
@@ -18,6 +19,7 @@ import ProductDetailOverlay from './ProductDetailOverlay'
 import { AwinPixel } from './AwinPixel'
 import SubHeader from './SubHeader'
 import css from './Welcome.css'
+import { AppPromo } from './AppPromo'
 
 class Welcome extends React.PureComponent {
   static propTypes = {
@@ -27,57 +29,66 @@ class Welcome extends React.PureComponent {
     products: PropTypes.instanceOf(Immutable.Map).isRequired,
     user: PropTypes.instanceOf(Immutable.Map).isRequired,
     isRafAboveCarousel: PropTypes.bool,
+    welcomePageAppPromo: PropTypes.bool,
     userFetchReferralOffer: PropTypes.func.isRequired,
     query: PropTypes.shape({
-      var: PropTypes.string,
+      var: PropTypes.string
     }).isRequired,
     params: PropTypes.shape({
-      orderId: PropTypes.string,
+      orderId: PropTypes.string
     }).isRequired,
+    device: PropTypes.string,
+    trackWelcomeAppPromoClick: PropTypes.func.isRequired,
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
   }
 
   static fetchData({ store, params, query }) {
     const { orderId } = params
     let userOrder
 
-    return store.dispatch(actions.userLoadOrder(orderId))
+    return store
+      .dispatch(actions.userLoadOrder(orderId))
       .then(() => {
         const { basket } = store.getState()
-        userOrder = userUtils.getUserOrderById(orderId, store.getState().user.get('orders'))
+        userOrder = userUtils.getUserOrderById(
+          orderId,
+          store.getState().user.get('orders')
+        )
 
         if (userOrder.get('phase') !== 'open') {
-          return Promise.reject(new Error({
-            level: 'warning',
-            message: `Can't view welcome page with non open order ${orderId}`,
-          }))
+          return Promise.reject(
+            new Error({
+              level: 'warning',
+              message: `Can't view welcome page with non open order ${orderId}`
+            })
+          )
         }
 
         trackAffiliatePurchase(
-          getAffiliateTrackingData(
-            'FIRSTPURCHASE',
-            userOrder,
-            basket,
-          )
+          getAffiliateTrackingData('FIRSTPURCHASE', userOrder, basket)
         )
 
         const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
 
         return Promise.all([
-          store.dispatch(actions.contentLoadContentByPageSlug('welcome_immediate', query.var)),
-          store.dispatch(actions.productsLoadProducts(userOrder.get('whenCutoff'))),
+          store.dispatch(
+            actions.contentLoadContentByPageSlug('welcome_immediate', query.var)
+          ),
+          store.dispatch(
+            actions.productsLoadProducts(userOrder.get('whenCutoff'))
+          ),
           store.dispatch(actions.productsLoadStock()),
           store.dispatch(actions.productsLoadCategories()),
-          store.dispatch(actions.recipesLoadRecipesById(orderRecipeIds)),
+          store.dispatch(actions.recipesLoadRecipesById(orderRecipeIds))
         ])
       })
       .then(() => {
         const orderProductIds = [
           ...userUtils.getUserOrderProductIds(userOrder),
-          ...userUtils.getUserOrderGiftProductIds(userOrder),
+          ...userUtils.getUserOrderGiftProductIds(userOrder)
         ]
 
         return store.dispatch(actions.productsLoadProductsById(orderProductIds))
@@ -96,7 +107,7 @@ class Welcome extends React.PureComponent {
   }
 
   state = {
-    isClient: false,
+    isClient: false
   }
 
   componentDidMount() {
@@ -117,64 +128,156 @@ class Welcome extends React.PureComponent {
 
   render() {
     const { isClient } = this.state
-    const { user, orderId, productDetailId, productDetailVisibilityChange, isRafAboveCarousel } = this.props
+    const {
+      user,
+      orderId,
+      productDetailId,
+      productDetailVisibilityChange,
+      isRafAboveCarousel,
+      device,
+      welcomePageAppPromo,
+      trackWelcomeAppPromoClick
+    } = this.props
 
-    return (
-      <section className={css.container} data-testing="welcomeContainer">
-        <Content
-          contentKeys="welcomeImmediateTitleMessage"
-          propNames="message"
-        >
-          <SubHeader
-            nameFirst={user.get('nameFirst')}
-            contentKeys="welcomeImmediateTitleText"
-          />
-        </Content>
+    if (welcomePageAppPromo) {
+      const defaultMessage =
+        'You’ve just made your first step towards a life with more free time, better food and less hassle than ever before. Let the good times roll!'
 
-        <div className={css.contentContainer}>
-          <div className={css.row}>
-            <div className={css.colMedium}>
-              {
-                isRafAboveCarousel && (
-                  <div className={classnames(css.welcomeColInner, css.mobileShow, css.rafMobile)}>
-                    <ReferAFriend />
-                  </div>
-                )
-              }
-              <div className={css.welcomeColInner}>
-                <ExpectationsCarousel />
+      return (
+        <section className={css.container} data-testing="welcomeContainer">
+          <div className={css.contentContainer}>
+            <div className={css.row}>
+              <div className={css.colMedium}>
+                <div className={css.welcomeColInnerVerticalStages}>
+                  <VerticalStages>
+                    <Content
+                      contentKeys="welcomeImmediateTitleText"
+                      propNames="title"
+                      backgroundColor="white"
+                      isCompleted
+                    >
+                      <VerticalStagesItem
+                        title={`Thanks ${user.get('nameFirst')}`}
+                      >
+                        <Content contentKeys="welcomeImmediateTitleMessage">
+                          <p>{defaultMessage}</p>
+                        </Content>
+                        <div className={css.mobileShow}>
+                          <OrderSummary />
+                        </div>
+                      </VerticalStagesItem>
+                    </Content>
+                    <VerticalStagesItem title="Download the Gousto app" backgroundColor="white" extraClass={css.welcomeStageContent}>
+                      <AppPromo
+                        device={device}
+                        trackWelcomeAppPromoClick={trackWelcomeAppPromoClick}
+                      />
+                    </VerticalStagesItem>
+                  </VerticalStages>
+                </div>
+                <div
+                  className={classnames(
+                    css.welcomeColInner,
+                    css.mobileShow,
+                    css.rafMobile
+                  )}
+                >
+                  <ReferAFriend />
+                </div>
+                <div className={css.welcomeColInner}>
+                  <ProductSelection orderId={orderId} />
+                </div>
               </div>
-              {
-                !isRafAboveCarousel && (
-                  <div className={classnames(css.welcomeColInner, css.mobileShow, css.rafMobile)}>
-                    <ReferAFriend />
-                  </div>
-                )
-              }
-              <div className={css.welcomeColInner}>
-                <ProductSelection
-                  orderId={orderId}
-                />
-              </div>
-            </div>
-            <div className={classnames(css.colSmall, css.colTopXS)}>
-              <div className={classnames(css.welcomeColInner, css.colTopXSInner)}>
-                <OrderSummary />
-              </div>
-              <div className={classnames(css.welcomeColInner, css.colTopXSInner, css.mobileHide)}>
-                <ReferAFriend />
+              <div className={classnames(css.colSmall, css.mobileHide)}>
+                <div className={classnames(css.welcomeColInner, css.orderSummaryWrapper)}>
+                  <OrderSummary />
+                </div>
+                <div className={classnames(css.welcomeColInner)}>
+                  <ReferAFriend />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <ProductDetailOverlay
-          onVisibilityChange={productDetailVisibilityChange}
-          open={isClient && this.isProductDetailAvailable()}
-          productId={productDetailId}
-        />
-        <AwinPixel />
-      </section>
-    )
+          <ProductDetailOverlay
+            onVisibilityChange={productDetailVisibilityChange}
+            open={isClient && this.isProductDetailAvailable()}
+            productId={productDetailId}
+          />
+          <AwinPixel />
+        </section>
+      )
+    } else {
+      return (
+        <section className={css.container} data-testing="welcomeContainer">
+          <Content
+            contentKeys="welcomeImmediateTitleMessage"
+            propNames="message"
+          >
+            <SubHeader
+              nameFirst={user.get('nameFirst')}
+              contentKeys="welcomeImmediateTitleText"
+            />
+          </Content>
+
+          <div className={css.contentContainer}>
+            <div className={css.row}>
+              <div className={css.colMedium}>
+                {isRafAboveCarousel && (
+                  <div
+                    className={classnames(
+                      css.welcomeColInner,
+                      css.mobileShow,
+                      css.rafMobile
+                    )}
+                  >
+                    <ReferAFriend />
+                  </div>
+                )}
+                <div className={css.welcomeColInner}>
+                  <ExpectationsCarousel />
+                </div>
+                {!isRafAboveCarousel && (
+                  <div
+                    className={classnames(
+                      css.welcomeColInner,
+                      css.mobileShow,
+                      css.rafMobile
+                    )}
+                  >
+                    <ReferAFriend />
+                  </div>
+                )}
+                <div className={css.welcomeColInner}>
+                  <ProductSelection orderId={orderId} />
+                </div>
+              </div>
+              <div className={classnames(css.colSmall, css.colTopXS)}>
+                <div
+                  className={classnames(css.welcomeColInner, css.colTopXSInner, css.orderSummaryWrapper)}
+                >
+                  <OrderSummary />
+                </div>
+                <div
+                  className={classnames(
+                    css.welcomeColInner,
+                    css.colTopXSInner,
+                    css.mobileHide
+                  )}
+                >
+                  <ReferAFriend />
+                </div>
+              </div>
+            </div>
+          </div>
+          <ProductDetailOverlay
+            onVisibilityChange={productDetailVisibilityChange}
+            open={isClient && this.isProductDetailAvailable()}
+            productId={productDetailId}
+          />
+          <AwinPixel />
+        </section>
+      )
+    }
   }
 }
 

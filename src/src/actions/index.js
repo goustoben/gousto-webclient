@@ -29,6 +29,7 @@ import user from './user'
 import collections from './collections'
 import cookbook from './cookbook'
 import deliveries from './deliveries'
+import * as welcome from './welcome'
 import * as shortlist from './shortlist'
 
 const actions = {
@@ -63,6 +64,7 @@ const actions = {
   ...tracking,
   ...user,
   ...deliveries,
+  ...welcome,
   ...shortlist
 }
 
