@@ -11,7 +11,7 @@ import actions from 'actions/tracking'
 
 import css from './RecipeList.css'
 
-class RecipeList extends React.Component {
+class RecipeList extends React.PureComponent {
   static propTypes = {
     allRecipesList: PropTypes.instanceOf(Immutable.List),
     cutoffDate: PropTypes.string,
@@ -29,6 +29,7 @@ class RecipeList extends React.Component {
     isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     collectionFilterChange: PropTypes.func,
     sortedRecipes: PropTypes.instanceOf(Immutable.List),
+    showStep1: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -36,31 +37,11 @@ class RecipeList extends React.Component {
     featuredRecipes: Immutable.List([]),
     remainingRecipes: Immutable.List([]),
     outOfStockRecipes: Immutable.List([]),
+    showStep1: false,
   }
 
   static contextTypes = {
     store: PropTypes.object.isRequired,
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const needsUpdate = ['mobileGridView', 'filterMenuOpen', 'recipesStore', 'cutoffDate', 'numPortions', 'isLoading', 'featuredRecipes', 'outOfStockRecipes', 'remainingRecipes', 'sortedRecipes']
-
-    let shouldUpdate = false
-    needsUpdate.some((prop) => {
-      if (this.props[prop] !== nextProps[prop]) {
-        shouldUpdate = true
-
-        return shouldUpdate
-      }
-
-      return false
-    })
-
-    if (nextProps.isLoading) {
-      shouldUpdate = false
-    }
-
-    return shouldUpdate
   }
 
   componentDidMount() {
@@ -112,7 +93,7 @@ class RecipeList extends React.Component {
       featuredRecipes,
       isCurrentCollectionRecommendation,
       collectionFilterChange,
-      sortedRecipes
+      sortedRecipes,
     } = this.props
     let index = 0
 

@@ -6,7 +6,7 @@ import { Arrow } from './Arrow'
 
 import css from './Tooltip.css'
 
-const Tooltip = ({ arrow, children, style, onClose }) => (
+const Tooltip = ({ arrow, children, style, arrowStyle, onClose }) => (
   <div className={css.container} style={style}>
     <Arrow positionY="top" position={arrow} />
     {(onClose) ? (
@@ -17,7 +17,7 @@ const Tooltip = ({ arrow, children, style, onClose }) => (
     <div className={css.tooltip__content}>
       {children}
     </div>
-    <Arrow positionY="bottom" position={arrow} />
+    <Arrow positionY="bottom" position={arrow} style={arrowStyle} />
   </div>
 )
 
@@ -30,6 +30,7 @@ Tooltip.propTypes = {
   children: PropTypes.node,
   onClose: PropTypes.func,
   style: PropTypes.objectOf(PropTypes.string),
+  arrowStyle: PropTypes.objectOf(PropTypes.string)
 }
 
 export {

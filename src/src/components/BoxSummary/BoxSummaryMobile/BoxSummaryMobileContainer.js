@@ -5,6 +5,10 @@ import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import BoxSummaryMobile from './BoxSummaryMobile'
 
+const shouldShortlistTutorialShow = (state) => (
+  state.tutorial.getIn(['viewed', 'shortlistStep1']) && !state.tutorial.getIn(['viewed', 'shortlistStep2'])
+)
+
 const mapStateToProps = (state) => ({
   date: state.basket.get('date'),
   numPortions: state.basket.get('numPortions'),
@@ -22,6 +26,8 @@ const mapStateToProps = (state) => ({
   basketCheckedOut: state.pending.get(actionTypes.BASKET_CHECKOUT),
   hasUnavailableRecipes: Boolean(getUnavailableRecipeIds(state).size),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
+  shortlistTutorialStep2Show: shouldShortlistTutorialShow(state)
+
 })
 
 const BoxSummaryMobileContainer = connect(mapStateToProps, {

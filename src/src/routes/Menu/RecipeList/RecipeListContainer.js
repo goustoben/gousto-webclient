@@ -23,7 +23,6 @@ const mapStateToProps = (state) => {
     features: state.features,
     filteredRecipeIds: getFilteredRecipeIds(state),
     filterMenuOpen: state.menu.get('filtersMenuVisible'),
-    menuRecieveMenuPending: state.menuRecieveMenuPending,
     numPortions: state.basket.get('numPortions'),
     featuredRecipes,
     remainingRecipes,

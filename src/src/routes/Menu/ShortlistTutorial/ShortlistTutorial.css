@@ -1,0 +1,30 @@
+@value Pomegranate, Blackberry from 'styles/colors.css';
+@value bodyFontStackBold, bodyFontStackNormal from 'styles/typography.css';
+
+.tooltip {
+  color: Blackberry;
+  font-family: bodyFontStackNormal;
+}
+
+
+.tooltipBody {
+  text-align: left;
+  width: 256px;
+  margin: 0;
+}
+
+.title {
+  padding-bottom: 7px;
+  color: Pomegranate;
+  font-family: bodyFontStackBold;
+  margin: 0;
+}
+
+.text {
+  font-size: 15px;
+}
+
+.heartIcon {
+  width: 15px;
+  height: 13px;
+}

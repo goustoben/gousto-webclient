@@ -11,6 +11,7 @@ import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
 import RecipeList from 'BoxSummary/RecipeList'
 import { getBoundingClientRect } from 'utils/DOMhelper'
 import boxSummaryButtonCss from 'BoxSummary/BoxSummaryButton/BoxSummaryButton.css'
+import { ShortlistTutorial } from 'routes/Menu/ShortlistTutorial'
 import css from './BoxSummaryMobile.css'
 import BrowseCTA from '../BrowseCTA'
 import BrowseCTAButton from '../BrowseCTAButton'
@@ -37,6 +38,7 @@ class BoxSummaryMobile extends React.Component {
     boxSummaryNext: PropTypes.func.isRequired,
     displayOptions: PropTypes.instanceOf(Immutable.List),
     maxRecipesNum: PropTypes.number,
+    shortlistTutorialStep2Show: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -158,13 +160,13 @@ class BoxSummaryMobile extends React.Component {
   )
 
   renderBanner = () => {
-    const { date, disabled, displayOptions, maxRecipesNum, menuRecipesStore, recipes, showDetails } = this.props
+    const { date, disabled, displayOptions, maxRecipesNum, menuRecipesStore, recipes, showDetails, shortlistTutorialStep2Show } = this.props
     const iconClass = showDetails ? css.arrowDown : css.arrowUp
 
     return (
       <div className={css.barmobile} ref={(element) => { this.ref = element }}>
         <div onClick={this.handleMobileClick}>
-          <p className={css.iconMobile}><span className={iconClass} /></p>
+          <p className={css.iconMobile} data-slug="box-summary-mobile"><span className={iconClass} />{shortlistTutorialStep2Show && <ShortlistTutorial />}</p>
           <Title view="mobile" date={date} finalisedSlot={this.props.slotId !== ''} />
         </div>
         <div className={css.summaryMobile}>

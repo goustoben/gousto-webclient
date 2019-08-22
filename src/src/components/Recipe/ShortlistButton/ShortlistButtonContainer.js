@@ -6,13 +6,16 @@ import { ShortlistButton } from './ShortlistButton'
 
 function mapStateToProps(state, ownProps) {
   const { id } = ownProps
+  const { tutorial } = state
   const shortlistIds = getShortlistRecipeIds(state)
-  const shorlistKeys = shortlistIds.keySeq().toArray()
-  const recipeInShortlist = shortlistIds && shorlistKeys.find(recipeId => recipeId === id)
+  const shortlistKeys = shortlistIds.keySeq().toArray()
+  const recipeInShortlist = shortlistIds && shortlistKeys.find(recipeId => recipeId === id)
+  const shortlistTutorialStep1Viewed = tutorial.getIn(['viewed', 'shortlistStep1'])
 
   return {
     shortlistLimitReached: getShortlistLimitReached(state),
-    recipeInShortlist: Boolean(recipeInShortlist)
+    recipeInShortlist: Boolean(recipeInShortlist),
+    showStep1: !shortlistTutorialStep1Viewed,
   }
 }
 
