@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import queryString from 'query-string'
+
 import Banner from 'Banner'
 import home from 'config/home'
 import logger from 'utils/logger'
 
-class PromoBanner extends React.Component {
+export class PromoBanner extends React.Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
     basketPromoCode: PropTypes.string,
@@ -72,5 +73,3 @@ class PromoBanner extends React.Component {
     )
   }
 }
-
-export default PromoBanner

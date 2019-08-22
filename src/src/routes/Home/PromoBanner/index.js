@@ -1,1 +1,1 @@
-export default from './PromoBannerContainer'
+export { PromoBannerContainer as PromoBanner } from './PromoBannerContainer'

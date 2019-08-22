@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
+
 import actions from 'actions'
 import menuFetchData from 'routes/Menu/fetchData'
 import home from 'config/home'
 import routes from 'config/routes'
 import { generateHref } from 'Helmet/GoustoHelmet'
-import PromoBanner from './PromoBanner'
+import { PromoBanner } from './PromoBanner'
 import HomeSections from './HomeSections'
 
 class Home extends React.Component {
