@@ -462,7 +462,7 @@ describe('onScreenRecovery', () => {
         }))
       })
 
-      test('should trigger tracking of subscription pause event with promotion details when a user has a promotion which requires active requirement', async () => {
+      test('should trigger tracking of subscription pause event with promotion details when a user has a promotion which requires active subscription', async () => {
         fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
           data: {
             intervene: true,
