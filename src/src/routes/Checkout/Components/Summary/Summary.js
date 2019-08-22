@@ -84,9 +84,9 @@ class Summary extends React.PureComponent {
         }
         <H3 headlineFont>Order total</H3>
         {
-          (isLoading) ?
+          (isLoading || 1===1) ?
             <div className={css.loaderContainer}>
-              <Loading />
+              <Loading className={css.loadingImage}/>
             </div>
             :
             <div className={css.details}>
