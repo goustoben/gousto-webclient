@@ -6,7 +6,7 @@ exports[`Order Skip Recovery Modal Initial Render should render snapshot 1`] = `
   open={false}
 >
   <div
-    className="modalComponent"
+    className="modalComponent modalComponent"
   >
     <div
       className="spacer"
