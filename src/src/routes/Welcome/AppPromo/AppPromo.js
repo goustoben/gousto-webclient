@@ -24,7 +24,7 @@ const onAppLinkClick = (e, trackWelcomeAppPromoClick) => {
 }
 
 const mobileAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
-  <a onClick={(e) => onAppLinkClick(e, trackWelcomeAppPromoClick)} data-testing="appPromoCTA" className={classnames(css.mobileAppLink, { [css.hideElement]: device === 'desktop' })} href="https://gousto.co.uk/apps">
+  <a onClick={(e) => onAppLinkClick(e, trackWelcomeAppPromoClick)} data-testing="appPromoCTA" className={classnames(css.mobileAppLink, { [css.hideElement]: device === 'desktop' })} href={config.routes.client.appsRedirect}>
     <Button className={css.getAppCTA} noDecoration >Get the app now</Button>
   </a>
 )

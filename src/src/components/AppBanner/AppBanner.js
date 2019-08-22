@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'goustouicomponents'
 import Svg from 'Svg'
+import { client } from 'config/routes'
 import css from './AppBanner.css'
 
 const propTypes = {
@@ -44,7 +45,7 @@ const AppBanner = ({ name, averageRating, ratings, showAppBanner, appBannerDismi
             </div>
           </div>
         </div>
-        <a data-testing="appBannerCTA" className={css.appLink} href="https://gousto.co.uk/apps">
+        <a data-testing="appBannerCTA" className={css.appLink} href={client.appsRedirect}>
           <Button noDecoration>Get app</Button>
         </a>
       </div>
