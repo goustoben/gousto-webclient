@@ -6,47 +6,45 @@ import {
 import actionTypes from './actionTypes'
 import statusActions from './status'
 
-const dispatcher = (action) => (dispatch) => dispatch(action)
-
 /* action creators */
-const selectOrderIssue = (issue) => dispatcher({
+const selectOrderIssue = (issue) => ({
   type: actionTypes.GET_HELP_ORDER_ISSUE_SELECT,
   issue,
 })
 
-const trackIngredientIssues = (ingredientAndRecipeIdsWithIssueName) => dispatcher({
+const trackIngredientIssues = (ingredientAndRecipeIdsWithIssueName) => ({
   type: actionTypes.GET_HELP_INGREDIENT_ISSUES_SELECT,
   ingredientAndRecipeIdsWithIssueName
 })
 
-const trackAcceptRefund = (amount) => dispatcher({
+const trackAcceptRefund = (amount) => ({
   type: actionTypes.GET_HELP_ACCEPT_REFUND,
   amount
 })
 
-const selectContactChannel = (channel) => dispatcher({
+const selectContactChannel = (channel) => ({
   type: actionTypes.GET_HELP_CONTACT_CHANNEL_SELECT,
   channel,
 })
 
-const storeGetHelpOrderId = (id) => dispatcher({
+const storeGetHelpOrderId = (id) => ({
   type: actionTypes.GET_HELP_STORE_ORDER_ID,
   id,
 })
 
-const storeSelectedIngredients = (selectedIngredientAndRecipeIds) => dispatcher({
+const storeSelectedIngredients = (selectedIngredientAndRecipeIds) => ({
   type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENTS,
   selectedIngredientAndRecipeIds,
 })
 
-const storeSelectedIngredientIssue = (ingredientAndRecipeId, issueId, issueName) => dispatcher({
+const storeSelectedIngredientIssue = (ingredientAndRecipeId, issueId, issueName) => ({
   type: actionTypes.GET_HELP_STORE_SELECTED_INGREDIENT_ISSUE,
   ingredientAndRecipeId,
   issueId,
   issueName,
 })
 
-const storeIngredientIssueDescriptions = (issueReasons) => dispatcher({
+const storeIngredientIssueDescriptions = (issueReasons) => ({
   type: actionTypes.GET_HELP_STORE_INGREDIENT_ISSUE_REASONS,
   issueReasons,
 })
