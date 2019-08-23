@@ -1,45 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import queryString from 'query-string'
 
 import Banner from 'Banner'
-import home from 'config/home'
 import logger from 'utils/logger'
 
 export class PromoBanner extends React.Component {
   static propTypes = {
-    isAuthenticated: PropTypes.bool,
-    basketPromoCode: PropTypes.string,
-    promoChange: PropTypes.func,
-    promoToggleModalVisibility: PropTypes.func,
+    hide: PropTypes.bool,
+    text: PropTypes.string,
+    linkText: PropTypes.string,
     promoCode: PropTypes.string,
-    promoCurrent: PropTypes.string,
-    redirect: PropTypes.func,
-  }
-
-  static canApplyPromo(isAuthenticated, criteria) {
-    switch (criteria) {
-    case 'loggedIn': return isAuthenticated === true
-    case 'loggedOut': return isAuthenticated === false
-    case 'any': return true
-    default: return false
-    }
-  }
-
-  componentWillMount() {
-    if (typeof window !== 'undefined') {
-      this.setState({
-        query: queryString.parse(window.location.search),
-      })
-    }
   }
 
   async applyPromoCode(promoCode) {
-    const { isAuthenticated, promoChange, promoToggleModalVisibility, redirect } = this.props || {}
-    const { query } = this.state
+    const { promoChange, promoToggleModalVisibility, redirect, canApplyPromo } = this.props || {}
 
     let error
-    if (!(query.promo_code && query.promo_code.length > 0) && promoCode && PromoBanner.canApplyPromo(isAuthenticated, home.promo.applyIf)) {
+    if (canApplyPromo) {
       try {
         await promoChange(promoCode)
       } catch (err) {
@@ -54,21 +31,14 @@ export class PromoBanner extends React.Component {
   }
 
   render() {
-    const { isAuthenticated, basketPromoCode, promoCurrent, promoCode } = this.props
-    const { query } = this.state || {}
-    const promoBannerCode = promoCode || home.promo.code.toUpperCase()
-    const hasBasketPromo = basketPromoCode && basketPromoCode.length > 0
-    const hasQueryStringPromo = query && query.promo_code && query.promo_code.length > 0
-    const hasCurrentPromo = promoCurrent && promoCurrent.length > 0
-
-    const hide = isAuthenticated || hasBasketPromo || hasQueryStringPromo || hasCurrentPromo || !promoBannerCode
+    const { promoCode, hide, text, linkText } = this.props
 
     return (
       <Banner
-        text={home.promo.banner.text}
-        linkText={home.promo.banner.linkText}
-        onClick={() => this.applyPromoCode(promoBannerCode)}
         hide={hide}
+        text={text}
+        linkText={linkText}
+        onClick={() => this.applyPromoCode(promoCode)}
       />
     )
   }
