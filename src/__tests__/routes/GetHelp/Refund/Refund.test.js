@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { browserHistory } from 'react-router'
 import { client as routes } from 'config/routes'
-import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
+import { fetchRefundAmount, fetchRefundAmountV2, setComplaint, setComplaintV2 } from 'apis/getHelp'
 
 import Refund from 'routes/GetHelp/Refund/Refund'
 
@@ -36,24 +36,25 @@ describe('<Refund />', () => {
         'CONTENT="0;url=data:text/html;base64,PHNjcmlwdD5hbGVydCgndGVzdDMnKTwvc2NyaXB0Pg">'
     },
   }
-  const trackAcceptRefundSpy = jest.fn()
-  let wrapper
-  let getHelpLayout
-
-  beforeEach(() => {
-    wrapper = mount(
-      <Refund
-        content={content}
-        user={{ id: '999', accessToken: '123' }}
-        order={{ id: '888' }}
-        selectedIngredients={selectedIngredients}
-        trackAcceptRefund={trackAcceptRefundSpy}
-      />
-    )
-    getHelpLayout = wrapper.find('GetHelpLayout')
-  })
 
   describe('rendering', () => {
+    let getHelpLayout
+    let wrapper
+    const trackAcceptRefundSpy = jest.fn()
+
+    beforeEach(() => {
+      wrapper = mount(
+        <Refund
+          content={content}
+          user={{ id: '999', accessToken: '123' }}
+          order={{ id: '888' }}
+          selectedIngredients={selectedIngredients}
+          trackAcceptRefund={trackAcceptRefundSpy}
+        />
+      )
+      getHelpLayout = wrapper.find('GetHelpLayout')
+    })
+
     test('layout is rendering correctly', async() => {
       await wrapper.setState({
         isFetching: false,
@@ -86,115 +87,185 @@ describe('<Refund />', () => {
   })
 
   describe('behaviour', () => {
-    test('loading shows while fetching data', async () => {
-      let resolver
-      const fetchPromise = new Promise((resolve) => {
-        resolver = resolve
-      })
-      fetchRefundAmount.mockImplementationOnce(() => fetchPromise)
-      wrapper = mount(
-        <Refund
-          content={content}
-          user={{ id: '0', accessToken: '123' }}
-          order={{ id: '0' }}
-          selectedIngredients={selectedIngredients}
-          trackAcceptRefund={jest.fn()}
-        />
-      )
-
-      expect(wrapper.find('Loading')).toHaveLength(1)
-
-      fetchPromise.then(async () => {
-        await resolver({
-          data: { refundValue: 8.77 }
-        })
-
-        expect(wrapper.find('Loading')).toHaveLength(0)
-      })
-    })
-
-    test('refund data is fetched', () => {
-      expect(fetchRefundAmount).toHaveBeenCalledWith('123', {
+    const FETCH_REFUND_AMOUNT_PARAMS = [
+      '123',
+      {
         customer_id: 999,
         ingredient_ids: ['1234', '1234'],
         order_id: 888
-      })
-    })
+      }
+    ]
 
-    test('error message is shown when fetching data errors and accept button hides', () => {
-      fetchRefundAmount.mockImplementationOnce(() => { throw new Error('error') })
+    let wrapper
+    const trackAcceptRefundSpy = jest.fn()
+
+    beforeEach(() => {
       wrapper = mount(
         <Refund
           content={content}
-          user={{ id: '0', accessToken: '123' }}
-          order={{ id: '0' }}
+          user={{ id: '999', accessToken: '123' }}
+          order={{ id: '888' }}
           selectedIngredients={selectedIngredients}
-          trackAcceptRefund={() => {}}
+          trackAcceptRefund={trackAcceptRefundSpy}
         />
       )
-      getHelpLayout = wrapper.find('GetHelpLayout')
-      const wrapperText = wrapper.text()
-
-      expect(getHelpLayout.prop('body')).toBe('')
-      expect(wrapperText).toContain('Error body')
-      expect(wrapperText).not.toContain('button2')
     })
 
-    describe('when user accepts the refund offer', () => {
-      let Button
-
-      beforeEach(async() => {
-        await wrapper.setState({
-          isFetching: false,
-        })
-        getHelpLayout = wrapper.find('GetHelpLayout')
-        browserHistory.push = jest.fn()
-        Button = wrapper.find('Button').at(1)
-      })
-
-      test('redirection happens when clicking Accept Refund button', async() => {
-        await Button.props().onClick()
-
-        expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
-      })
-
-      test('setComplaint is called with correct parameters and descriptions are sanitised', async () => {
-        await Button.props().onClick()
-
-        expect(setComplaint).toHaveBeenCalledWith(
-          '123',
-          {
-            customer_id: 999,
-            order_id: 888,
-            type: 'a-type',
-            value: 7.77,
-            issues: [
-              {
-                ingredient_id: '1234',
-                category_id: 999999,
-                description: 'a description &lt;&gt; '
-              },
-              {
-                ingredient_id: '1234',
-                category_id: 999999,
-                description: 'another &amp;description<img>'
-              },
-            ],
-          }
+    describe('when it is fetching data', () => {
+      test('fetch to have been called correctly', () => {
+        expect(fetchRefundAmount).toHaveBeenCalledWith(
+          ...FETCH_REFUND_AMOUNT_PARAMS
         )
       })
 
-      test('tracking action is being called when Accept offer button is clicked', async () => {
-        await Button.props().onClick()
-        expect(trackAcceptRefundSpy).toHaveBeenCalledWith(7.77)
+      describe('and when it is still waiting for a response', () => {
+        beforeEach(() => {
+          fetchRefundAmount.mockImplementationOnce(() => new Promise(() => {}))
+
+          wrapper = mount(
+            <Refund
+              content={content}
+              user={{ id: '0', accessToken: '123' }}
+              order={{ id: '0' }}
+              selectedIngredients={selectedIngredients}
+              trackAcceptRefund={jest.fn()}
+            />
+          )
+        })
+
+        test('loading is being rendered', () => {
+          expect(wrapper.find('Loading')).toHaveLength(1)
+        })
+
+        test('no error are displayed', () => {
+          const wrapperText = wrapper.text()
+
+          expect(wrapperText).not.toContain('Error body')
+        })
+      })
+    })
+
+    describe('when request is finished', () => {
+      const SET_COMPLAINS_PARAMS = [
+        '123',
+        {
+          customer_id: 0,
+          order_id: 0,
+          type: 'a-type',
+          value: 7.77,
+          issues: [
+            {
+              ingredient_id: '1234',
+              category_id: 999999,
+              description: 'a description &lt;&gt; '
+            },
+            {
+              ingredient_id: '1234',
+              category_id: 999999,
+              description: 'another &amp;description<img>'
+            },
+          ],
+        }
+      ]
+
+      beforeEach(() => {
+        browserHistory.push = jest.fn()
+
+        wrapper = mount(
+          <Refund
+            content={content}
+            user={{ id: '0', accessToken: '123' }}
+            order={{ id: '0' }}
+            selectedIngredients={selectedIngredients}
+            trackAcceptRefund={trackAcceptRefundSpy}
+          />
+        )
       })
 
-      describe('when setComplaint errors', () => {
-        test('redirect is not called', async () => {
-          setComplaint.mockImplementationOnce(() => { throw new Error('error') })
-          await Button.props().onClick()
+      describe('and user is able to get a refund', () => {
+        let Button
 
-          expect(browserHistory.push).toHaveBeenCalledTimes(0)
+        beforeEach(() => {
+          wrapper.update()
+
+          Button = wrapper.find('Button').at(1)
+        })
+
+        test('loading is not being rendered', async () => {
+          expect(wrapper.find('Loading')).toHaveLength(0)
+        })
+
+        test('no error are displayed ', () => {
+          const wrapperText = wrapper.text()
+
+          expect(wrapperText).not.toContain('Error body')
+        })
+
+        describe('and when user accepts the refund offer', () => {
+          test('redirect when refund is accepted', async() => {
+            await Button.props().onClick()
+            expect(browserHistory.push).toHaveBeenCalledWith('/get-help/confirmation')
+          })
+
+          test('setComplaint is called with correct parameters and descriptions are sanitised', async () => {
+            setComplaint.mockResolvedValueOnce({})
+
+            await Button.props().onClick()
+
+            expect(setComplaint).toHaveBeenCalledWith(
+              ...SET_COMPLAINS_PARAMS
+            )
+          })
+
+          test('tracking action is being called when Accept offer button is clicked', async () => {
+            await Button.props().onClick()
+
+            expect(trackAcceptRefundSpy).toHaveBeenCalledWith(7.77)
+          })
+
+          describe('and when setComplaint errors', () => {
+            test('redirect is not called', async () => {
+              setComplaint.mockRejectedValueOnce(new Error('error'))
+
+              await Button.props().onClick()
+
+              expect(browserHistory.push).toHaveBeenCalledTimes(0)
+            })
+          })
+        })
+      })
+    })
+
+    describe('endpoints version v2', () => {
+      beforeEach(() => {
+        wrapper = mount(
+          <Refund
+            content={content}
+            user={{ id: '999', accessToken: '123' }}
+            order={{ id: '888' }}
+            selectedIngredients={selectedIngredients}
+            trackAcceptRefund={trackAcceptRefundSpy}
+            featureSSRValidationV2={{
+              experiment: true,
+              value: true,
+            }}
+          />
+        )
+      })
+
+      describe('feature flag is present', () => {
+        test('/v2/value is being called correctly', () => {
+          expect(fetchRefundAmountV2).toHaveBeenCalledWith(
+            ...FETCH_REFUND_AMOUNT_PARAMS
+          )
+        })
+
+        test('/v2/refund is being called correctly', () => {
+          wrapper.update()
+
+          wrapper.find('Button').at(1).props().onClick()
+
+          expect(setComplaintV2).toHaveBeenCalledTimes(1)
         })
       })
     })

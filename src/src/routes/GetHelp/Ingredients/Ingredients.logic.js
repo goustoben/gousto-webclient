@@ -8,6 +8,10 @@ import { RecipeList } from '../components/RecipeList'
 import css from './Ingredients.css'
 
 const propTypes = {
+  featureSSRValidationV2: PropTypes.shape({
+    value: PropTypes.bool,
+    experiment: PropTypes.bool,
+  }),
   order: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
@@ -37,6 +41,13 @@ const propTypes = {
   validateSelectedIngredients: PropTypes.func.isRequired,
 }
 
+const defaultProps = {
+  featureSSRValidationV2: {
+    value: false,
+    experiment: false,
+  }
+}
+
 class Ingredients extends PureComponent {
   state = {
     selectedIngredients: new Map()
@@ -59,7 +70,13 @@ class Ingredients extends PureComponent {
   }
 
   continueClickHandler = async () => {
-    const { order, user, storeSelectedIngredients, validateSelectedIngredients } = this.props
+    const {
+      featureSSRValidationV2,
+      order,
+      user,
+      storeSelectedIngredients,
+      validateSelectedIngredients
+    } = this.props
     const { selectedIngredients } = this.state
     const ingredientIds = []
     const recipeAndIngredientIds = []
@@ -76,6 +93,7 @@ class Ingredients extends PureComponent {
         costumerId: user.id,
         orderId: order.id,
         ingredientIds,
+        featureSSRValidationV2
       })
 
       storeSelectedIngredients(recipeAndIngredientIds)
@@ -112,6 +130,7 @@ class Ingredients extends PureComponent {
 }
 
 Ingredients.propTypes = propTypes
+Ingredients.defaultProps = defaultProps
 
 export {
   Ingredients

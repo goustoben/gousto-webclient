@@ -69,7 +69,11 @@ const defaultFeatures = () => ({
   showRecipeDetailsButton: {
     experiment: false,
     value: false,
-  }
+  },
+  ssrValidationV2: {
+    experiment: false,
+    value: false,
+  },
 })
 
 const featureToggles = {
@@ -86,4 +90,5 @@ const featureToggles = {
   },
 }
 
+export { defaultFeatures }
 export default featureToggles

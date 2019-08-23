@@ -8,7 +8,7 @@ import Loading from 'Loading'
 import { Button } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
 import { replaceWithValues } from 'utils/text'
-import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
+import { fetchRefundAmount, fetchRefundAmountV2, setComplaint, setComplaintV2 } from 'apis/getHelp'
 import { BottomButton } from '../components/BottomButton'
 
 import css from './Refund.css'
@@ -23,6 +23,10 @@ class Refund extends PureComponent {
       button1: PropTypes.string.isRequired,
       button2: PropTypes.string.isRequired,
     }).isRequired,
+    featureSSRValidationV2: PropTypes.shape({
+      value: PropTypes.bool,
+      experiment: PropTypes.bool,
+    }),
     user: PropTypes.shape({
       id: PropTypes.string.isRequired,
       accessToken: PropTypes.string.isRequired,
@@ -39,6 +43,13 @@ class Refund extends PureComponent {
     trackAcceptRefund: PropTypes.func.isRequired,
   }
 
+  static defaultProps = {
+    featureSSRValidationV2: {
+      value: false,
+      experiment: false,
+    }
+  }
+
   state = {
     refund: { value: 0, type: 'credit' },
     isFetching: true,
@@ -50,35 +61,52 @@ class Refund extends PureComponent {
   }
 
   getRefund = async () => {
-    const { user, order, selectedIngredients } = this.props
-
-    try {
-      const response = await fetchRefundAmount(user.accessToken, {
+    const { featureSSRValidationV2, user, order, selectedIngredients } = this.props
+    const fetchRefundAmountParams = [
+      user.accessToken,
+      {
         customer_id: Number(user.id),
         order_id: Number(order.id),
         ingredient_ids: Object.keys(selectedIngredients).map(
           key => selectedIngredients[key].ingredientId
         ),
-      })
+      }
+    ]
+
+    try {
+      let response
+
+      if (featureSSRValidationV2 && featureSSRValidationV2.value) {
+        response = await fetchRefundAmountV2(...fetchRefundAmountParams)
+      } else {
+        response = await fetchRefundAmount(...fetchRefundAmountParams)
+      }
+
       const { value, type } = response.data
 
-      this.setState({
-        ...this.state,
+      this.setState(prevState => ({
+        ...prevState,
         isFetching: false,
         refund: {
+          ...prevState.refund,
           type,
-          value
+          value,
         }
-      })
+      }))
     } catch (err) {
       this.requestFailure()
     }
   }
 
   onAcceptOffer = async () => {
-    const { user, order, selectedIngredients, trackAcceptRefund } = this.props
     const { refund } = this.state
-
+    const {
+      featureSSRValidationV2,
+      user,
+      order,
+      selectedIngredients,
+      trackAcceptRefund
+    } = this.props
     const issues = Object.keys(selectedIngredients).map(key => (
       {
         category_id: Number(selectedIngredients[key].issueId),
@@ -86,15 +114,25 @@ class Refund extends PureComponent {
         description: DOMPurify.sanitize(selectedIngredients[key].issueDescription),
       }
     ))
-
-    try {
-      const response = await setComplaint(user.accessToken, {
+    const setComplaintParams = [
+      user.accessToken,
+      {
         customer_id: Number(user.id),
         order_id: Number(order.id),
         type: refund.type,
         value: refund.value,
         issues
-      })
+      }
+    ]
+
+    try {
+      let response
+
+      if (featureSSRValidationV2 && featureSSRValidationV2.value) {
+        response = await setComplaintV2(...setComplaintParams)
+      } else {
+        response = await setComplaint(...setComplaintParams)
+      }
 
       trackAcceptRefund(refund.value)
       browserHistory.push(`${routes.getHelp.index}/${routes.getHelp.confirmation}`)
@@ -155,8 +193,8 @@ class Refund extends PureComponent {
       >
         {(isFetching)
           ? <div className={css.center}>
-            <Loading className={css.loading} />
-          </div>
+              <Loading className={css.loading} />
+            </div>
           : <div>
             <p>{confirmationContent}</p>
             <BottomBar>

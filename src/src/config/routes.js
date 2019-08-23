@@ -11,6 +11,7 @@ module.exports = {
     orders: 'v1',
     recipes: 'v2',
     ssr: 'v1',
+    ssrV2: 'v2',
   },
   address: {
     postcodeLookup: '/address/postcode-lookup',
