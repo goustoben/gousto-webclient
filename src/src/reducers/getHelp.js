@@ -74,7 +74,7 @@ const getHelp = (state, action) => {
 
     return state.set('selectedIngredients', issueReasons)
   }
-  case actionTypes.RECIPES_RECEIVE: {
+  case actionTypes.GET_HELP_RECIPES_RECEIVE: {
     const recipes = fromJS(reduceRecipes(action.recipes))
 
     return state.set('recipes', recipes)

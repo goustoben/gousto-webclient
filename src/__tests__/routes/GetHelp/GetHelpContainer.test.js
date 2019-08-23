@@ -5,7 +5,6 @@ import { Map, fromJS } from 'immutable'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 
 import status from 'reducers/status'
-import recipesReducer from 'reducers/recipes'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import contentReducer from 'reducers/content'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
@@ -25,7 +24,6 @@ describe('<GetHelpContainer />', () => {
       const initialState = {
         auth: authDefaultState(),
         getHelp: getHelpInitialState,
-        recipes: Map({}),
         user: userDefaultState,
         error: Map({}),
         pending: Map({}),
@@ -39,7 +37,6 @@ describe('<GetHelpContainer />', () => {
           { ...authReducer },
           { ...userReducer },
           { ...status },
-          { recipes: recipesReducer.recipes },
         )),
         initialState,
         compose(applyMiddleware(thunk))
@@ -50,7 +47,7 @@ describe('<GetHelpContainer />', () => {
       })
 
       fetchRecipes.mockResolvedValue({
-        data: [{ id: '123', ingredients: [{ id: '321' }] }]
+        data: [{ id: 'recipeIdX', ingredients: [{ id: '321', label: 'my-ingredient-label' }], title: 'a-title' }]
       })
 
       mount(
@@ -75,11 +72,9 @@ describe('<GetHelpContainer />', () => {
     })
 
     test('fetched recipes ends up in the store', () => {
-      const expectedResult = fromJS([{ id: '321' }])
-
       expect(
-        store.getState().recipes.getIn(['123', 'ingredients'])
-      ).toEqual(expectedResult)
+        store.getState().getHelp.get('recipes').toJS()
+      ).toEqual([{ id: 'recipeIdX', ingredients: [{ id: '321', label: 'my-ingredient-label' }], title: 'a-title' }])
     })
   })
 })
