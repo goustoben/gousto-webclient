@@ -48,6 +48,7 @@ module.exports = {
         done()
       })
       .perform(done => {
+        browser.pause(3000)
         menu.section.menuContainer.goFromMenuToCheckout()
         done()
       })
