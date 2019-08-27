@@ -66,7 +66,7 @@ describe('<GetHelp />', () => {
           <GetHelp
             didRequestError={false}
             orderId={"7"}
-            order={{}}
+            order={{ id: '', recipeItems: [] }}
             recipes={{}}
             user={{ id: '123', accessToken: 'test' }}
             loadRecipesById={loadRecipesByIdSpy}
@@ -100,7 +100,7 @@ describe('<GetHelp />', () => {
           didRequestError={false}
           isRequestPending={false}
           orderId={""}
-          order={{}}
+          order={{ id: '', recipeItems: [] }}
           recipes={{}}
           user={{ id: '123', accessToken: 'test' }}
           loadRecipesById={loadRecipesByIdSpy}
