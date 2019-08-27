@@ -5,6 +5,7 @@ import { orderCancel, projectedOrderCancel } from 'actions/order'
 import { redirect } from 'actions/redirect'
 import subPauseActions from 'actions/subscriptionPause'
 import actionTypes from 'actions/actionTypes'
+import userActions from 'actions/user'
 import logger from 'utils/logger'
 
 import {
@@ -32,6 +33,10 @@ jest.mock('actions/redirect', () => ({
 
 jest.mock('actions/subscriptionPause', () => ({
   subscriptionDeactivate: jest.fn(),
+}))
+
+jest.mock('actions/user', () => ({
+  userPromoApplyCode: jest.fn()
 }))
 
 jest.mock('apis/onScreenRecovery', () => ({
@@ -600,24 +605,85 @@ describe('onScreenRecovery', () => {
       }))
     }
     )
-    test('when modalType is subscription, should toggle OSR modal visibility with Subscription KeptActive tracking action', async () => {
-      getStateSpy.mockReturnValue({
-        onScreenRecovery: Immutable.Map({
-          modalType: 'subscription',
-        }),
-        user: Immutable.Map({
-          id: '1234'
+    describe('when modalType is subscription', async () => {
+      test('should toggle OSR modal visibility with Subscription KeptActive tracking action', async () => {
+        getStateSpy.mockReturnValue({
+          onScreenRecovery: Immutable.Map({
+            modalType: 'subscription',
+          }),
+          user: Immutable.Map({
+            id: '1234'
+          }),
+        })
+        await onKeep()(dispatchSpy, getStateSpy)
+
+        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+          modalVisibility: false,
+          trackingData: expect.objectContaining({
+            actionType: 'Subscription KeptActive',
+          })
+        }))
+      })
+
+      describe('when offer has a promo code', async () => {
+        test('should toggle OSR modal visibility with Subscription KeptActive tracking action when it applies the promo code successfully ', async () => {
+          getStateSpy.mockReturnValue({
+            onScreenRecovery: Immutable.Map({
+              modalType: 'subscription',
+              offer: {
+                promoCode: 'OSR-PROMO-CODE'
+              },
+            }),
+            user: Immutable.Map({
+              id: '1234'
+            }),
+          })
+          await onKeep()(dispatchSpy, getStateSpy)
+          expect(userActions.userPromoApplyCode).toHaveBeenCalledTimes(1)
+          expect(userActions.userPromoApplyCode).toHaveBeenCalledWith('OSR-PROMO-CODE')    
+          expect(dispatchSpy).toHaveBeenLastCalledWith(expect.objectContaining({
+            type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+            modalVisibility: false,
+            trackingData: expect.objectContaining({
+              actionType: 'Subscription KeptActive',
+            })
+          }))
+        })
+
+        test('should keep OSR modal open with Failed-in-applying-osr-code tracking action when it fails in applying the promo code', async () => {
+          getStateSpy.mockReturnValue({
+            onScreenRecovery: Immutable.Map({
+              modalType: 'subscription',
+              offer: {
+                promoCode: 'OSR-PROMO-CODE'
+              },
+            }),
+            user: Immutable.Map({
+              id: '1234'
+            }),
+            error: Immutable.Map({
+              PROMO_APPLY: 'Error applying promotion from code'
+            })
+          })
+          await onKeep()(dispatchSpy, getStateSpy)
+    
+          expect(dispatchSpy).not.toHaveBeenCalledWith(expect.objectContaining({
+            type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+            modalVisibility: false,
+            trackingData: expect.objectContaining({
+              actionType: 'Subscription KeptActive',
+            })
+          }))
+          expect(dispatchSpy).toHaveBeenLastCalledWith(expect.objectContaining({
+            type: 'TRACKING',
+            trackingData: expect.objectContaining({
+              actionType: 'Failed in applying OSR promo code',
+              promoCode: 'OSR-PROMO-CODE',
+            })
+          }))
         })
       })
-      await onKeep()(dispatchSpy, getStateSpy)
-
-      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
-        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
-        modalVisibility: false,
-        trackingData: expect.objectContaining({
-          actionType: 'Subscription KeptActive',
-        })
-      }))
     })
   })
 

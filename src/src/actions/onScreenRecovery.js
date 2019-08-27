@@ -3,6 +3,7 @@ import actionTypes from './actionTypes'
 import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
 import subPauseActions from './subscriptionPause'
+import userActions from './user'
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../apis/onScreenRecovery'
 
 export const modalVisibilityChange = ({
@@ -70,9 +71,31 @@ export const keepOrder = () => (
 )
 
 export const keepSubscription = () => (
-  (dispatch, getState) => {
+  async (dispatch, getState) => {
     const userId = getState().user.get('id')
+    const offer = getState().onScreenRecovery.get('offer')
+    const promoCode = offer ? offer.promoCode : null
+    if (promoCode) {
+      await dispatch(userActions.userPromoApplyCode(promoCode))
+      const errorInApplyPromo = getState().error && getState().error.get(actionTypes.PROMO_APPLY)
 
+      if (errorInApplyPromo) {
+        dispatch({
+          type: actionTypes.TRACKING,
+          trackingData: {
+            actionType: 'Failed in applying OSR promo code',
+            promoCode,
+          },
+        })
+        
+        /*
+          Early return to prevent modal close 
+          Because a user failed to apply OSR promo code.
+          // TODO show error message or notification
+        */
+        return
+      }
+    }
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: false,
