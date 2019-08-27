@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Immutable from 'immutable'
 
-import { Dropdown } from 'goustouicomponents'
+import { Alert, Dropdown } from 'goustouicomponents'
+import config from 'config/products'
 import Overlay from 'Overlay'
 import CloseButton from 'Overlay/CloseButton'
 import SaveButton from 'OrderSummary/SaveButton'
@@ -47,6 +48,7 @@ const propTypes = {
     })
   ).isRequired,
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
+  productsLoadError: PropTypes.string,
   saveError: PropTypes.bool,
   saveRequired: PropTypes.bool,
   saving: PropTypes.bool,
@@ -75,6 +77,7 @@ const MarketPresentation = ({
   onOrderSave,
   products,
   productsCategories,
+  productsLoadError,
   saveError,
   saveRequired,
   saving,
@@ -84,32 +87,47 @@ const MarketPresentation = ({
   toggleOrderSummary,
 }) => (
   <div className={css.marketPlaceWrapper}>
-    <div className={css.navbar}>
-      <Navbar
-        items={categories}
-        onClick={getFilteredProducts}
-        active={selectedCategory}
-      />
-    </div>
-    <div className={css.dropdown}>
-      <Dropdown
-        id='product-filter'
-        options={categories}
-        groupedOptions={[]}
-        optionSelected={selectedCategory}
-        onChange={getFilteredProducts}
-      />
-    </div>
+    {!productsLoadError && (
+      <div>
+        <div className={css.navbar}>
+          <Navbar
+            items={categories}
+            onClick={getFilteredProducts}
+            active={selectedCategory}
+          />
+        </div>
+        <div className={css.dropdown}>
+          <Dropdown
+            id='product-filter'
+            options={categories}
+            groupedOptions={[]}
+            optionSelected={selectedCategory}
+            onChange={getFilteredProducts}
+          />
+        </div>
+      </div>
+    )}
     <div className={css.marketPlaceContent}>
-      <section className={css.marketPlaceProducts}>
-        <ProductList
-          products={filteredProducts || products}
-          basket={basket}
-          ageVerified={ageVerified}
-          productsCategories={productsCategories}
-          toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-          selectedCategory={selectedCategory}
-        />
+      <section
+        className={classnames(
+          css.marketPlaceProducts,
+          { [css.productsLoadError]: productsLoadError }
+        )}
+      >
+        {productsLoadError ?
+          <Alert type="warning">{config.productsLoadErrorMessage}</Alert>
+          :
+          (
+            <ProductList
+              products={filteredProducts || products}
+              basket={basket}
+              ageVerified={ageVerified}
+              productsCategories={productsCategories}
+              toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+              selectedCategory={selectedCategory}
+            />
+          )
+        }
       </section>
       {showOrderConfirmationReceipt && (
         <section className={classnames(css.orderDetails, css.mobileHide)}>

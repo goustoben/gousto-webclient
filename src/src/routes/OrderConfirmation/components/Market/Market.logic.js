@@ -19,6 +19,7 @@ const propTypes = {
     quantity: PropTypes.number,
   }).isRequired,
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
+  productsLoadError: PropTypes.string,
   saveError: PropTypes.bool,
   saveRequired: PropTypes.bool,
   saving: PropTypes.bool,
@@ -117,6 +118,7 @@ class Market extends PureComponent {
       basket,
       products,
       productsCategories,
+      productsLoadError,
       saveError,
       saveRequired,
       saving,
@@ -138,6 +140,7 @@ class Market extends PureComponent {
         onOrderSave={this.onOrderSave}
         products={products}
         productsCategories={productsCategories}
+        productsLoadError={productsLoadError}
         saveError={saveError}
         saveRequired={saveRequired}
         saving={saving}

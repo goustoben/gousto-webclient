@@ -50,7 +50,7 @@ export const productsLoadCategories = (forceRefresh = false) => (
 
 export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}) => (
   async (dispatch, getState) => {
-    const { basket, products, productsStock, auth } = getState()
+    const { basket, products, productsStock, auth, error } = getState()
     const currentProductsInBasket = basket.get('products')
     const isProductsLargerThanBasket = products.size <= currentProductsInBasket.size
     const sort = 'position'
@@ -77,6 +77,9 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
         }, [])
 
         dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products: productsInStock, cutoffDate, reload })
+        if (error[actionTypes.PRODUCTS_RECEIVE]) {
+          dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, null))
+        }
       } catch (err) {
         dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, err.message))
         logger.error(err)
