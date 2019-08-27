@@ -32,6 +32,6 @@ export const getWelcomePageAppPromo = ({ features }) => features && features.get
 
 export const isCollapsedRafFeatureEnabled = ({ features }) => features && features.getIn(['collapsedRaf', 'value'], false)
 
-export const getPromoBannerText = ({ features }) => features && features.getIn(['promoBannerText', 'value'], false)
+export const getPromoBannerText = ({ features }) => features && features.getIn(['promoBannerText', 'value'], '')
 
-export const getPromoBannerCode = ({ features }) => features && features.getIn(['promoBannerCode', 'value'], false)
+export const getPromoBannerCode = ({ features }) => features && features.getIn(['promoBannerCode', 'value'], '')

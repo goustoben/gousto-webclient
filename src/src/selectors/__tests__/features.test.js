@@ -7,7 +7,9 @@ import {
   getGoToMyDeliveries,
   getJfyTutorial,
   getRafPositionOnWelcomePage,
-  isDeliveryFrequencyFeatureEnabled
+  isDeliveryFrequencyFeatureEnabled,
+  getPromoBannerText,
+  getPromoBannerCode,
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -194,6 +196,54 @@ describe('when features are defined', () => {
 
       test('should return true', () => {
         expect(isDeliveryFrequencyFeatureEnabled(state)).toEqual(true)
+      })
+    })
+  })
+
+  describe('getPromoBannerText', () => {
+    describe('when feature is not set', () => {
+      test('should return an empty string', () => {
+        expect(getPromoBannerText(state)).toEqual('')
+      })
+    })
+
+    describe('when feature is set', () => {
+      const value = 'Click here to get 30% off all boxes in your first month!'
+
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          promoBannerText: {
+            value,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(getPromoBannerText(state)).toEqual(value)
+      })
+    })
+  })
+
+  describe('getPromoBannerCode', () => {
+    describe('when feature is not set', () => {
+      test('should return an empty string', () => {
+        expect(getPromoBannerCode(state)).toEqual('')
+      })
+    })
+
+    describe('when feature is set', () => {
+      const value = 'DTI-MG-7070'
+
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          promoBannerCode: {
+            value,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(getPromoBannerCode(state)).toEqual(value)
       })
     })
   })
