@@ -590,35 +590,6 @@ function userUnsubscribe({ authUserId, marketingType, marketingUnsubscribeToken 
   }
 }
 
-export function userLoadOrder(orderId, forceRefresh = false) {
-  return async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, true))
-    dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, null))
-    try {
-      if (
-        forceRefresh ||
-        getState()
-          .user.get('orders')
-          .find(order => order.get('id') === orderId) === undefined
-      ) {
-        const accessToken = getState().auth.get('accessToken')
-        const { data: order } = await ordersApi.fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
-
-        dispatch({
-          type: actionTypes.USER_LOAD_ORDERS,
-          orders: [order]
-        })
-      }
-    } catch (err) {
-      dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, err.message))
-      logger.error(err)
-      throw err
-    } finally {
-      dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
-    }
-  }
-}
-
 export function userSubscribe() {
   return async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.USER_SUBSCRIBE, null))
