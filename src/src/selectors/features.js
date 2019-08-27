@@ -31,3 +31,7 @@ export const getAbandonBasket = ({ features }) => features && features.getIn(['a
 export const getWelcomePageAppPromo = ({ features }) => features && features.getIn(['welcomePageAppPromo', 'value'], false)
 
 export const isCollapsedRafFeatureEnabled = ({ features }) => features && features.getIn(['collapsedRaf', 'value'], false)
+
+export const getPromoBannerText = ({ features }) => features && features.getIn(['promoBannerText', 'value'], false)
+
+export const getPromoBannerCode = ({ features }) => features && features.getIn(['promoBannerCode', 'value'], false)

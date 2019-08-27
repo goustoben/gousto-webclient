@@ -2,6 +2,12 @@ import { connect } from 'react-redux'
 
 import promoActions from 'actions/promos'
 import { redirect } from 'actions/redirect'
+import { getPromoCode } from 'selectors/basket'
+import {
+  getPromoBannerText,
+  getPromoBannerCode,
+} from 'selectors/features'
+
 import home from 'config/home'
 
 import { PromoBanner } from './PromoBanner'
@@ -21,9 +27,11 @@ const promoApplicable = (isAuthenticated, criteria) => {
 
 const mapStateToProps = (state, ownProps) => {
   const currentPromo = state.promoCurrent || ''
-  const basketPromo = state.basket.get('promoCode', '') || ''
+  const basketPromo = getPromoCode(state) || ''
   const isAuthenticated = state.auth.get('isAuthenticated')
-  const promoCode = ownProps.promoCode || home.promo.code.toUpperCase()
+  const { linkText } = home.promo.banner
+  const text = getPromoBannerText(state) || home.promo.banner.text
+  const promoCode = getPromoBannerCode(state) || ownProps.promoCode || home.promo.code.toUpperCase()
   const queryStringPromo = (ownProps.location && ownProps.location.query && ownProps.location.query.promo_code) ? ownProps.location.query.promo_code : ''
 
   const hasBasketPromo = basketPromo.length > 0
@@ -35,11 +43,11 @@ const mapStateToProps = (state, ownProps) => {
   const canApplyPromo = !(hasQueryStringPromo) && promoCode && promoApplicable(isAuthenticated, home.promo.applyIf)
 
   return {
-    canApplyPromo,
-    promoCode,
+    text,
     hide,
-    text: home.promo.banner.text,
-    linkText: home.promo.banner.linkText,
+    linkText,
+    promoCode,
+    canApplyPromo,
   }
 }
 
