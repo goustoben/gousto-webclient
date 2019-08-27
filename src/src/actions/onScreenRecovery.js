@@ -77,7 +77,6 @@ export const keepSubscription = () => (
     const promoCode = offer ? offer.promoCode : null
     if (promoCode) {
       await dispatch(userActions.userPromoApplyCode(promoCode))
-      errorInApplyPromo
       const errorInApplyPromo = getState().error && getState().error.get(actionTypes.PROMO_APPLY)
 
       if (errorInApplyPromo) {

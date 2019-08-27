@@ -642,7 +642,6 @@ describe('onScreenRecovery', () => {
           await onKeep()(dispatchSpy, getStateSpy)
           expect(userActions.userPromoApplyCode).toHaveBeenCalledTimes(1)
           expect(userActions.userPromoApplyCode).toHaveBeenCalledWith('OSR-PROMO-CODE')    
-          expect(dispatchSpy).toHaveBeenCalledWith(undefined)
           expect(dispatchSpy).toHaveBeenLastCalledWith(expect.objectContaining({
             type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
             modalVisibility: false,
