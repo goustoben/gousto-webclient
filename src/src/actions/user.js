@@ -251,7 +251,7 @@ function userLoadOrder(orderId, forceRefresh = false) {
   }
 }
 
-export const userLoadOrders = (forceRefresh = false, orderType = 'pending', number = 10) => {
+function userLoadOrders(forceRefresh = false, orderType = 'pending', number = 10) {
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, true))
     try {
