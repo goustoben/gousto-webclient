@@ -11,5 +11,9 @@ describe('MyDetails', () => {
     beforeEach(() => {
       wrapper = shallow(<MyDetails />)
     })
+
+    test('should render a <div> with no props', () => {
+      expect(wrapper.type()).toEqual('div')
+    })
   })
 })
