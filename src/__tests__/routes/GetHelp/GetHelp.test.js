@@ -12,7 +12,7 @@ describe('<GetHelp />', () => {
     const validateLatestOrderSpy = jest.fn().mockResolvedValue(
       { data: { valid: true } }
     )
-    const recipesLoadRecipesByIdSpy = jest.fn().mockResolvedValue({})
+    const loadRecipesByIdSpy = jest.fn().mockResolvedValue({})
 
     beforeAll(() => {
       wrapper = mount(
@@ -23,7 +23,7 @@ describe('<GetHelp />', () => {
           order={{ id: '7', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
-          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
           validateLatestOrder={validateLatestOrderSpy}
@@ -47,7 +47,7 @@ describe('<GetHelp />', () => {
           order={{ id: '1', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
-          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
           validateLatestOrder={validateLatestOrderSpy}
@@ -66,10 +66,10 @@ describe('<GetHelp />', () => {
           <GetHelp
             didRequestError={false}
             orderId={"7"}
-            order={{}}
+            order={{ id: '', recipeItems: [] }}
             recipes={{}}
             user={{ id: '123', accessToken: 'test' }}
-            recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+            loadRecipesById={loadRecipesByIdSpy}
             storeGetHelpOrderId={storeGetHelpOrderIdSpy}
             userLoadOrder={userLoadOrderSpy}
             validateLatestOrder={validateLatestOrderSpy}
@@ -89,7 +89,7 @@ describe('<GetHelp />', () => {
         expect(wrapper.find('Loading')).toHaveLength(1)
       })
     })
-    
+
     test('when path is Contact Us page, data is not fetched', () => {
       storeGetHelpOrderIdSpy.mockReset()
       userLoadOrderSpy.mockReset()
@@ -100,10 +100,10 @@ describe('<GetHelp />', () => {
           didRequestError={false}
           isRequestPending={false}
           orderId={""}
-          order={{}}
+          order={{ id: '', recipeItems: [] }}
           recipes={{}}
           user={{ id: '123', accessToken: 'test' }}
-          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
           validateLatestOrder={validateLatestOrderSpy}
@@ -122,7 +122,7 @@ describe('<GetHelp />', () => {
   describe('behaviour', () => {
     const storeGetHelpOrderIdSpy = jest.fn()
     const userLoadOrderSpy = jest.fn().mockResolvedValue({})
-    const recipesLoadRecipesByIdSpy = jest.fn().mockResolvedValue({})
+    const loadRecipesByIdSpy = jest.fn().mockResolvedValue({})
     const validateLatestOrderSpy = jest.fn().mockResolvedValue(
       { data: { valid: true } }
     )
@@ -136,7 +136,7 @@ describe('<GetHelp />', () => {
           order={{ id: '1', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
-          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
           validateLatestOrder={validateLatestOrderSpy}
@@ -167,7 +167,7 @@ describe('<GetHelp />', () => {
           order={{ id: '1', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
-          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
           validateLatestOrder={validateLatestOrderSpy}
@@ -194,7 +194,7 @@ describe('<GetHelp />', () => {
           order={{ id: '1', recipeItems: ['123456']}}
           user={{ id: '123', accessToken: 'test' }}
           recipes={{}}
-          recipesLoadRecipesById={recipesLoadRecipesByIdSpy}
+          loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
           userLoadOrder={userLoadOrderSpy}
           validateLatestOrder={validateLatestOrderSpy}
@@ -219,7 +219,7 @@ describe('<GetHelp />', () => {
     })
 
     test('calls recipe API by order ID', () => {
-      expect(recipesLoadRecipesByIdSpy).toHaveBeenCalledWith(['123456'])
+      expect(loadRecipesByIdSpy).toHaveBeenCalledWith(['123456'])
     })
   })
 })

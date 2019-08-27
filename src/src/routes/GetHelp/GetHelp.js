@@ -26,7 +26,7 @@ const propTypes = {
     accessToken: PropTypes.string.isRequired,
   }),
   orderId: PropTypes.string.isRequired,
-  recipesLoadRecipesById: PropTypes.func.isRequired,
+  loadRecipesById: PropTypes.func.isRequired,
   didRequestError: PropTypes.bool.isRequired,
   isRequestPending: PropTypes.bool.isRequired,
   storeGetHelpOrderId: PropTypes.func.isRequired,
@@ -70,9 +70,9 @@ class GetHelp extends PureComponent {
   }
 
   orderLoadComplete = () => {
-    const { order, recipesLoadRecipesById } = this.props
+    const { order, loadRecipesById } = this.props
 
-    recipesLoadRecipesById(order.recipeItems)
+    loadRecipesById(order.recipeItems)
   }
 
   render() {
