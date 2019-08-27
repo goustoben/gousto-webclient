@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import moment from 'moment'
 import { Notification } from '..'
 import { config } from '../config'
+import { checkCardExpiryDate, checkAmendedDeliveryDate, checkOrderAwaitingSelection, checkRafOffer } from '../notificationHelper'
 
 config.referAFriend.startDate = '2019-01-01'
 config.referAFriend.endDate = '2019-01-01'
@@ -12,67 +13,56 @@ describe('Notification component', () => {
   let wrapper
   let card
   let orders
+  let now
 
   describe('checkCardExpiryDate', () => {
 
     beforeEach(() => {
-      orders = Immutable.Map({})
+      now = moment('2019-08-15')
     })
 
-    it('should show "Expired" banner if card expiry date is in current month or earlier', () => {
-      const currentMonth = moment().format('YYYY-MM')
+    it('should return "Expired" if card expiry date is in current month or earlier', () => {
       card = Immutable.Map({
         lastFourDigits: "1234",
-        expiryDate: currentMonth,
+        expiryDate: '2019-08',
       })
 
-      wrapper = shallow(<Notification card={card} orders={orders} />)
-      expect(wrapper.state('bannersToShow')).toEqual(['expired'])
+      const result = checkCardExpiryDate(card, now)
+      expect(result).toEqual('expired')
     })
 
-    it('should show "Expiring" banner if card expiry date is within one month of now', () => {
-      const nextMonth = moment().add(1, 'M').format('YYYY-MM')
-
+    it('should return "Expiring" if card expiry date is within one month of now', () => {
       card = Immutable.Map({
         lastFourDigits: "1234",
-        expiryDate: nextMonth,
+        expiryDate: '2019-09',
       })
 
-      wrapper = shallow(<Notification card={card} orders={orders} />)
-
-      expect(wrapper.state('bannersToShow')).toEqual(['toExpire'])
+      const result = checkCardExpiryDate(card, now)
+      expect(result).toEqual('toExpire')
     })
 
-    it('should not show any banners if no cards are expired or expiring', () => {
-      const nextMonth = moment().add(2, 'M').format('YYYY-MM')
-
+    it('should return undefined if no cards are expired or expiring', () => {
       card = Immutable.Map({
         lastFourDigits: "1234",
-        expiryDate: nextMonth,
+        expiryDate: '2019-11',
       })
 
-      wrapper = shallow(<Notification card={card} orders={orders} />)
-
-      expect(wrapper.state('bannersToShow')).toEqual([])
+      const result = checkCardExpiryDate(card, now)
+      expect(result).toEqual(undefined)
     })
 
-    it('should not show any banners if there are no card details', () => {
+    it('should return undefined if there are no card details', () => {
 
       card = Immutable.Map({})
 
-      wrapper = shallow(<Notification card={card} orders={orders} />)
-
-      expect(wrapper.state('bannersToShow')).toEqual([])
+      const result = checkCardExpiryDate(card, now)
+      expect(result).toEqual(undefined)
     })
   })
 
   describe('checkAmendedDeliveryDate', () => {
 
-    beforeEach(() => {
-      card = Immutable.Map({})
-    })
-
-    it('should show "Amend Delivery" banner if delivery date has been amended', () => {
+    it('should return "Amend Delivery" if delivery date has been amended', () => {
       orders = Immutable.Map({
         1234: {
           state: 'pending',
@@ -80,9 +70,29 @@ describe('Notification component', () => {
         }
       })
 
-      wrapper = shallow(<Notification card={card} orders={orders} />)
+      const result = checkAmendedDeliveryDate(orders)
+      expect(result).toEqual('amendDelivery')
 
-      expect(wrapper.state('bannersToShow')).toEqual(['amendDelivery'])
+    })
+
+    it('should return undefined if no delivery dates have been amended', () => {
+      orders = Immutable.Map({
+        1234: {
+          state: 'pending',
+          original_delivery_day: false,
+        }
+      })
+
+      const result = checkAmendedDeliveryDate(orders)
+      expect(result).toEqual(undefined)
+
+    })
+
+    it('should return undefined if no orders', () => {
+      orders = Immutable.Map({})
+
+      const result = checkAmendedDeliveryDate(orders)
+      expect(result).toEqual(undefined)
 
     })
   })
@@ -90,33 +100,48 @@ describe('Notification component', () => {
   describe('checkOrderAwaitingSelection', () => {
 
     beforeEach(() => {
-      card = Immutable.Map({})
+      now = moment('2019-08-15')
     })
 
-    it('should show "Select order" banner if delivery date has been amended', () => {
+    it('should return "Select order" if upcoming order has not been selected', () => {
       orders = Immutable.Map({
         1234: {
           state: 'pending',
           default: '1',
-        },
-        5678: {
-          state: 'pending',
-          default: '1',
-        },
+          when_cutoff: moment('2019-08-15')
+        }
       })
 
-      wrapper = shallow(<Notification card={card} orders={orders} />)
+      const result = checkOrderAwaitingSelection(orders, now)
+      expect(result).toEqual('selectOrder')
 
-      expect(wrapper.state('bannersToShow')).toEqual(['selectOrder'])
+    })
 
+    it('should return undefined if no upcoming orders are unselected', () => {
+      orders = Immutable.Map({
+        1234: {
+          state: 'pending',
+          default: '1',
+          when_cutoff: moment('2019-08-23')
+        }
+      })
+
+      const result = checkOrderAwaitingSelection(orders, now)
+      expect(result).toEqual(undefined)
+    })
+
+    it('should return undefined if there are no orders', () => {
+      orders = Immutable.Map({})
+
+      const result = checkOrderAwaitingSelection(orders, now)
+      expect(result).toEqual(undefined)
     })
   })
 
   describe('checkRafOffer', () => {
 
     beforeEach(() => {
-      card = Immutable.Map({})
-      orders = Immutable.Map({})
+      now = moment('2019-08-15')
 
       config.referAFriend.startDate = '2019-01-01'
       config.referAFriend.endDate = '3019-01-01'
@@ -127,15 +152,17 @@ describe('Notification component', () => {
       config.referAFriend.endDate = '2019-01-01'
     })
 
-    it('should show "Refer a friend" banner if delivery date has been amended', () => {
+    it('should show "Refer a friend" banner if current date is between start and end date', () => {
 
-      config.referAFriend.startDate = '2019-01-01'
-      config.referAFriend.endDate = '3019-01-01'
+      const result = checkRafOffer(now)
+      expect(result).toEqual('referAFriend')
+    })
 
-      wrapper = shallow(<Notification card={card} orders={orders} />)
+    it('should return undefined if if current date is not between start and end date', () => {
+      config.referAFriend.endDate = '2019-01-01'
 
-      expect(wrapper.state('bannersToShow')).toEqual(['referAFriend'])
-
+      const result = checkRafOffer(now)
+      expect(result).toEqual(undefined)
     })
   })
 

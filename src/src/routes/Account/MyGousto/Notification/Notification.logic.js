@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import moment from 'moment'
 import { NotificationPresentation } from './Notification.presentation'
 import { config } from './config'
+import { checkCardExpiryDate, checkAmendedDeliveryDate, checkOrderAwaitingSelection, checkRafOffer } from './notificationHelper'
 
 class NotificationLogic extends Component {
 
@@ -25,55 +26,16 @@ class NotificationLogic extends Component {
     const { card, orders } = this.props
     const now = moment()
 
-    this.checkCardExpiryDate(card, now)
-    this.checkAmendedDeliveryDate(orders)
-    this.checkOrderAwaitingSelection(orders, now)
-    this.checkRafOffer(now)
-  }
+    const banners = [
+      checkCardExpiryDate(card, now),
+      checkAmendedDeliveryDate(orders),
+      checkOrderAwaitingSelection(orders, now),
+      checkRafOffer(now)
+    ].filter(banner => banner)
 
-  checkCardExpiryDate = (card, now) => {
-    let bannerToShow = ''
-    const expiryDate = moment(card.get('expiryDate'))
-
-    if (!card.size) return
-
-    if (now.isBefore(expiryDate) && expiryDate.diff(now, 'days') <= 30) {
-      bannerToShow = 'toExpire'
-    } else if (now.isSameOrAfter(expiryDate)) {
-      bannerToShow = 'expired'
-    }
-
-    if (bannerToShow) {
-      this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, bannerToShow] }))
-    }
-
-  }
-
-  checkAmendedDeliveryDate = (orders) => {
-    const alternateDeliveryDays = orders.filter(order => order.state === 'pending' && order.original_delivery_day).toArray()
-    if (alternateDeliveryDays.length > 0) {
-      this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'amendDelivery'] }))
-    }
-  }
-
-  checkOrderAwaitingSelection = (orders, now) => {
-    const notifications = orders
-      .filter(order => order.state === 'pending' && order.default === '1')
-      .filter(order => moment(order.when_cutoff).isSame(now, 'day'))
-      .toArray()
-
-    if (notifications.length > 1 && now.isBefore(moment().hours(12))) {
-      this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'selectOrder'] }))
-    }
-  }
-
-  checkRafOffer = (now) => {
-    const { startDate, endDate } = config.referAFriend
-    const rafExpiry = moment(now).isBetween(startDate, endDate)
-
-    if (rafExpiry) {
-      this.setState(prevState => ({ bannersToShow: [...prevState.bannersToShow, 'referAFriend'] }))
-    }
+    this.setState({
+      bannersToShow: banners
+    })
   }
 
   sortBanners = (a, b) => {
@@ -101,7 +63,9 @@ class NotificationLogic extends Component {
       <div>
         {
           notificationBannerDetails.map((banner, index) => {
-            return index < 2 ? < NotificationPresentation key={banner.title} message={banner.message} type={banner.type} title={banner.title} url={banner.url} /> : null
+            return index < 2 ?
+              < NotificationPresentation key={banner.title} message={banner.message} type={banner.type} title={banner.title} url={banner.url} />
+              : null
           })
         }
       </div>
