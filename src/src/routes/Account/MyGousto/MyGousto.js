@@ -7,7 +7,7 @@ import { Cookbook } from './Cookbook'
 
 class MyGousto extends React.PureComponent {
   static propTypes = {
-    userLoadOrder: PropTypes.func.isRequired,
+    userLoadOrders: PropTypes.func.isRequired,
     card: PropTypes.instanceOf(Immutable.Map),
     orders: PropTypes.instanceOf(Immutable.Map),
   }
@@ -17,8 +17,8 @@ class MyGousto extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { userLoadOrder } = this.props
-    userLoadOrder()
+    const { userLoadOrders } = this.props
+    userLoadOrders()
   }
 
   render() {

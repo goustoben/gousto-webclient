@@ -227,7 +227,7 @@ function userClearData() {
   }
 }
 
-export const userLoadOrder = (orderId, forceRefresh = false) => {
+function userLoadOrder(orderId, forceRefresh = false) {
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, true))
     dispatch(statusActions.error(actionTypes.USER_LOAD_ORDERS, null))
