@@ -13,7 +13,7 @@ class MyGousto extends React.PureComponent {
   }
 
   static defaultProps = {
-    userLoadOrder: () => { },
+    userLoadOrders: () => { },
   }
 
   componentDidMount() {
