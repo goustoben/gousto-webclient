@@ -1,0 +1,30 @@
+@value ScreenSMMin from 'styles/screenSizes.css';
+@value avenirHeavyFontStack from 'styles/typography.css';
+
+.notificationLink {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+
+  &:hover {
+    color: black;
+  }
+}
+
+.notificationTitle {
+  font-weight: bold;
+  font-size: 15px;
+  font-family: avenirHeavyFontStack;
+}
+
+.notificationMessage {
+  display: block;
+
+  @media ScreenSMMin {
+    display: inline;
+  }
+}
+
+.notificationLink span {
+  text-decoration: none;
+}
