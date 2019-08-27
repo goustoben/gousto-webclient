@@ -3,23 +3,29 @@ import Immutable from 'immutable'
 import { referAFriend } from 'apis/user'
 import { customerSignup } from 'apis/customers'
 
-import { userReferAFriend, userSubscribe, userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing } from 'actions/user'
+import { userReferAFriend, userSubscribe, userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing, userLoadCookbookRecipes } from 'actions/user'
+import recipeActions from 'actions/recipes'
 import actionTypes from 'actions/actionTypes'
 
 jest.mock('apis/user', () => ({
   referAFriend: jest.fn(),
-  fetchReferralOffer: () => Promise.resolve({
-    data: {
-      creditFormatted: '£15',
-      firstBoxDiscountFormatted: '50%',
-      firstMonthDiscountFormatted: '30%',
-      expiry: ''
-    }
-  })
+  fetchReferralOffer: () =>
+    Promise.resolve({
+      data: {
+        creditFormatted: '£15',
+        firstBoxDiscountFormatted: '50%',
+        firstMonthDiscountFormatted: '30%',
+        expiry: ''
+      }
+    })
 }))
 
 jest.mock('apis/customers', () => ({
-  customerSignup: jest.fn(),
+  customerSignup: jest.fn()
+}))
+
+jest.mock('actions/recipes', () => ({
+  recipesLoadRecipesById: jest.fn()
 }))
 
 describe('user actions', () => {
@@ -73,22 +79,22 @@ describe('user actions', () => {
         pricing: Immutable.fromJS({
           prices: {
             total: '24.55',
-            promoCode: false,
+            promoCode: false
           }
         }),
         tracking: Immutable.fromJS({
-          asource: null,
+          asource: null
         }),
         request: Immutable.fromJS({
-          browser: 'desktop',
+          browser: 'desktop'
         }),
         form: {
           aboutyou: {
             values: {
               aboutyou: {
-                email: 'test_email@test.com',
-              },
-            },
+                email: 'test_email@test.com'
+              }
+            }
           },
           delivery: {
             values: {
@@ -99,7 +105,7 @@ describe('user actions', () => {
                 line3: '',
                 town: '',
                 county: '',
-                postcode: '',
+                postcode: ''
               }
             }
           },
@@ -112,7 +118,7 @@ describe('user actions', () => {
                 line3: '',
                 town: '',
                 county: '',
-                postcode: '',
+                postcode: ''
               }
             }
           }
@@ -120,23 +126,25 @@ describe('user actions', () => {
       }
       getState.mockReturnValue(state)
 
-      customerSignup.mockReturnValue(new Promise(resolve => {
-        resolve({
-          data: {
-            customer: {
-              goustoReference: '123'
-            },
-            addresses: {},
-            subscription: {},
-            orderId: '12345',
-            paymentMethod: {
-              card: {
-                paymentProvider: 'checkout'
+      customerSignup.mockReturnValue(
+        new Promise(resolve => {
+          resolve({
+            data: {
+              customer: {
+                goustoReference: '123'
+              },
+              addresses: {},
+              subscription: {},
+              orderId: '12345',
+              paymentMethod: {
+                card: {
+                  paymentProvider: 'checkout'
+                }
               }
             }
-          }
+          })
         })
-      }))
+      )
     })
     describe('checkoutPaymentFeature is enabled', () => {
       beforeEach(() => {
@@ -144,7 +152,7 @@ describe('user actions', () => {
           ...state,
           features: Immutable.fromJS({
             checkoutPayment: {
-              value: true,
+              value: true
             }
           })
         }
@@ -176,7 +184,7 @@ describe('user actions', () => {
       await userFetchReferralOffer()(dispatchSpy, getStateSpy)
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.USER_LOAD_REFERRAL_OFFER,
-        referralOffer: response,
+        referralOffer: response
       })
     })
   })
@@ -184,7 +192,7 @@ describe('user actions', () => {
   describe('trackingReferFriend', () => {
     let dispatchSpy = jest.fn()
     const actionType = actionTypes.REFER_FRIEND_SHARE_SHEET_OPENED
-    const trackingType = "ReferFriendShareSheet Opened"
+    const trackingType = 'ReferFriendShareSheet Opened'
 
     beforeEach(() => {
       dispatchSpy = jest.fn()
@@ -217,7 +225,7 @@ describe('user actions', () => {
   describe('trackingReferFriendSocialSharing', () => {
     let dispatchSpy = jest.fn()
     const actionType = actionTypes.REFER_FRIEND_LINK_SHARE
-    const trackingType = "ReferFriendLink Share"
+    const trackingType = 'ReferFriendLink Share'
     const channel = 'Email'
 
     beforeEach(() => {
@@ -246,6 +254,44 @@ describe('user actions', () => {
       await trackingReferFriendSocialSharing(actionType, '', channel)(dispatchSpy)
 
       expect(dispatchSpy).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('userLoadCookbookRecipes', () => {
+    const dispatchSpy = jest.fn()
+    const getStateSpy = jest.fn()
+
+    getStateSpy.mockReturnValue({
+      user: Immutable.fromJS({
+        orders: {
+          1234: {
+            recipeItems: [
+              { itemableType: 'Recipe', recipeId: '1' },
+              { itemableType: 'Recipe', recipeId: '2' },
+              { itemableType: 'Recipe', recipeId: '3' },
+              { itemableType: 'Recipe', recipeId: '4' }
+            ]
+          },
+          5678: {
+            recipeItems: [
+              { itemableType: 'Recipe', recipeId: '5' },
+              { itemableType: 'Recipe', recipeId: '5' },
+              { itemableType: 'Recipe', recipeId: '6' },
+              { itemableType: 'Recipe', recipeId: '6' }
+            ]
+          }
+        }
+      })
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+
+    test('should call recipesLoadRecipesById with 6 recipe ids', async () => {
+      await userLoadCookbookRecipes()(dispatchSpy, getStateSpy)
+
+      expect(recipeActions.recipesLoadRecipesById).toHaveBeenCalledWith(['1', '2', '3', '4', '5', '6'], true)
     })
   })
 })

@@ -4,13 +4,14 @@ import { getCutoffDateTime } from 'utils/deliveries'
 import statusActions from './status'
 import actionTypes from './actionTypes'
 
-const recipesLoadRecipesById = (recipeIds = []) => (
+const recipesLoadRecipesById = (recipeIds = [], isCookbook) => (
   async (dispatch, getState) => {
+    const actionType = isCookbook ? actionTypes.COOKBOOK_RECIPES_RECEIVE : actionTypes.RECIPES_RECEIVE
     const newRecipeIds = recipeIds.filter(recipeId => !getState().recipes.has(recipeId)).sort()
     const recipeCount = newRecipeIds.length
 
     if (recipeCount) {
-      dispatch(statusActions.pending(actionTypes.RECIPES_RECEIVE, true))
+      dispatch(statusActions.pending(actionType, true))
       try {
         const params = {
           includes: ['ingredients', 'allergens', 'taxonomy'],
@@ -19,12 +20,12 @@ const recipesLoadRecipesById = (recipeIds = []) => (
         const accessToken = getState().auth.get('accessToken')
         const { data: recipes } = await fetchRecipes(accessToken, '', params)
 
-        dispatch({ type: actionTypes.RECIPES_RECEIVE, recipes })
+        dispatch({ type: actionType, recipes })
       } catch (err) {
-        dispatch(statusActions.error(actionTypes.RECIPES_RECEIVE, err.message))
+        dispatch(statusActions.error(actionType, err.message))
         logger.error(err)
       } finally {
-        dispatch(statusActions.pending(actionTypes.RECIPES_RECEIVE, false))
+        dispatch(statusActions.pending(actionType, false))
       }
     }
   }
