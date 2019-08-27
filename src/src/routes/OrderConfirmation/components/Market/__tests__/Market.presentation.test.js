@@ -29,6 +29,10 @@ describe('<MarketPresentation />', () => {
       expect(wrapper.exists('Alert')).toBe(false)
     })
 
+    test('does not apply the modifier class to style the alert', () => {
+      expect(wrapper.exists('.productsLoadError')).toBe(false)
+    })
+
     test('renders the market place content section', () => {
       expect(wrapper.find('.marketPlaceContent').exists()).toBe(true)
     })
@@ -93,6 +97,10 @@ describe('<MarketPresentation />', () => {
 
     test('does not render the products nav bar', () => {
       expect(wrapper.exists('.dropdown')).toBe(false)
+    })
+
+    test('applies a modifier class for styling', () => {
+      expect(wrapper.find('.productsLoadError')).toHaveLength(1)
     })
   })
 })

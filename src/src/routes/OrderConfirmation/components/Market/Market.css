@@ -16,6 +16,10 @@
   justify-content: space-between;
 }
 
+.productsLoadError {
+  padding-top: 25px;
+}
+
 .marketPlaceProducts {
   width: 100%;
   @media ScreenSMMin {

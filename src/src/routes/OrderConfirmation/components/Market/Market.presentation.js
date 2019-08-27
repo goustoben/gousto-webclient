@@ -108,11 +108,16 @@ const MarketPresentation = ({
       </div>
     )}
     <div className={css.marketPlaceContent}>
-      {productsLoadError ?
-        <Alert type="warning">{config.productsLoadErrorMessage}</Alert>
-        :
-        (
-          <section className={css.marketPlaceProducts}>
+      <section
+        className={classnames(
+          css.marketPlaceProducts,
+          { [css.productsLoadError]: productsLoadError }
+        )}
+      >
+        {productsLoadError ?
+          <Alert type="warning">{config.productsLoadErrorMessage}</Alert>
+          :
+          (
             <ProductList
               products={filteredProducts || products}
               basket={basket}
@@ -121,9 +126,9 @@ const MarketPresentation = ({
               toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
               selectedCategory={selectedCategory}
             />
-          </section>
-        )
-      }
+          )
+        }
+      </section>
       {showOrderConfirmationReceipt && (
         <section className={classnames(css.orderDetails, css.mobileHide)}>
           <div className={css.orderDetailsSection}>
