@@ -44,8 +44,6 @@ jest.mock('apis/onScreenRecovery', () => ({
   fetchSubscriptionPauseContent: jest.fn(),
 }))
 
-jest.mock('apis/user')
-
 jest.mock('utils/logger', () => ({
   error: jest.fn()
 }))
@@ -628,7 +626,7 @@ describe('onScreenRecovery', () => {
         }))
       })
 
-      describe.only('when offer has a promo code', async () => {
+      describe('when offer has a promo code', async () => {
         test('should toggle OSR modal visibility with Subscription KeptActive tracking action when it applies the promo code successfully ', async () => {
           getStateSpy.mockReturnValue({
             onScreenRecovery: Immutable.Map({
