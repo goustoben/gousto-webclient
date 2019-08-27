@@ -178,7 +178,7 @@ function userRecipeRatings() {
   }
 }
 
-function userLoadData() {
+export const userLoadData = () => {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const { data = {} } = await userApi.fetchUser(accessToken)
