@@ -1,3 +1,11 @@
+@value ScreenXXSMin from 'styles/screenSizes.css';
+
+.headerContainer {
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
 .header {
 	composes: headerMD headlineFont from 'styles/typography.css';
 	composes: inlineBlock from 'styles/display.css';
@@ -13,8 +21,7 @@
 }
 
 .boldInfo{
-	composes: textSM;
-	composes: textBold from 'styles/typography.css';
-	float:right;
+	composes: textSM from 'styles/typography.css';
+	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';
 }
 
