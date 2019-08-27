@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { userLoadOrders, userLoadData } from 'actions/user'
+import { userLoadOrders } from 'actions/user'
 import MyGousto from './MyGousto'
 
 function mapStateToProps(state) {
@@ -11,7 +11,6 @@ function mapStateToProps(state) {
 
 const MyGoustoContainer = connect(mapStateToProps, {
   userLoadOrders,
-  userLoadData,
 })(MyGousto)
 
 export default MyGoustoContainer
