@@ -13,30 +13,30 @@ const PrivacyStatement = () => (
     />
 
     <section className={css.mainSection}>
-      <Heading type='h1' size='xLarge' center>Privacy Statement</Heading>
+      <Heading type='h1' size='xLarge' center alternateFont>Privacy Statement</Heading>
       <p>Effective Date: 09/08/2018 (Version 2.2)</p>
       <ol className={css.orderedList}>
         <li className={classnames(css.itemList, css.paddingElement)}>
-          <Heading type='h2'>Who are we?</Heading>
+          <Heading type='h2' alternateFont>Who are we?</Heading>
           <ol className={css.orderedList}>
             <li className={css.itemList}>We are SCA Investments Limited trading as "Gousto". We own and operate this website/app. Please contact us if you have any questions or feedback about this Privacy Statement : <a href="https://www.gousto.co.uk/help" target="_blank">click here</a>.</li>
           </ol>
         </li>
         <li className={classnames(css.itemList, css.paddingElement)}>
-          <Heading type='h2'>What’s the point of this Privacy Statement?</Heading>
+          <Heading type='h2' alternateFont>What’s the point of this Privacy Statement?</Heading>
           <ol className={css.orderedList}>
             <li className={css.itemList}>This Privacy Statement tells you how we deal with your "personal data" (i.e. technical term for information about any identified or identifiable living person). Please read on to find out what kinds of personal data we collect, how we use and protect it, who we share it with, how long we keep it for and how you can access and rectify it.</li>
             <li className={css.itemList}>Please do not use our website or apps unless you are completely happy with this Privacy Statement.</li>
           </ol>
         </li>
         <li className={classnames(css.itemList, css.paddingElement)}>
-          <Heading type='h2'>Might the Privacy Statement change?</Heading>
+          <Heading type='h2' alternateFont>Might the Privacy Statement change?</Heading>
           <ol className={css.orderedList}>
             <li className={css.itemList}>It may well do. Whenever we have updated our Privacy Statement, we willl alert you via email. Please take that opportunity to re-read it. We will assume you agree to the revised Privacy Statement if you use the website or apps after the effective date shown at the top of the Privacy Statement.</li>
           </ol>
         </li>
         <li className={classnames(css.itemList, css.paddingElement)}>
-          <Heading type='h2'>What personal or other data do we collect?</Heading>
+          <Heading type='h2' alternateFont>What personal or other data do we collect?</Heading>
           <ol className={css.orderedList}>
             <li className={css.itemList}>We collect and store the information which you give us via forms on our website or apps - such as your name, address, email address, phone number (“<strong>contact data</strong>”) - or when communicating with us by email, or in some other way.</li>
             <li className={css.itemList}>We also collect and store your IP address (“<strong>customer behaviour data</strong>”) to improve your shopping experience by suggesting suitable products for you, based on previous purchases, or recipes looked at.</li>
@@ -46,7 +46,7 @@ const PrivacyStatement = () => (
           </ol>
         </li>
         <li className={classnames(css.itemList, css.paddingElement)}>
-          <Heading type='h2'>How do we use your personal data?</Heading>
+          <Heading type='h2' alternateFont>How do we use your personal data?</Heading>
           <ol className={css.orderedList}>
             <li className={css.itemList}>We use “<strong>contact data</strong>” to provide our services : e.g. send service messages, communicate to you about your account/orders and to fulfil orders.</li>
             <li className={css.itemList}>If you have given permission, we may use your “<strong>contact data</strong>” to send you marketing emails, mails, calls or SMS with details of our, or third party goods or services which may be of interest to you, including information about special offers or promotions. </li>
@@ -58,14 +58,14 @@ const PrivacyStatement = () => (
           </ol>
         </li>
         <li className={classnames(css.itemList, css.paddingElement)}>
-          <Heading type='h2'>How do we protect personal data?</Heading>
+          <Heading type='h2' alternateFont>How do we protect personal data?</Heading>
           <ol className={css.orderedList}>
             <li className={css.itemList}>Security is a high priority for us. We take appropriate precautions to protect personal data. We will make every effort to look after your data and treat it with the respect it deserves.</li>
             <li className={css.itemList}>Your data will be transferred, stored and/or processed outside the EEA as our suppliers sometimes operate from outside of the EEA. We will only transfer your data outside of the EEA in compliance with data protection laws and provided appropriate or suitable safeguards are in place to protect your data, these being either Standard Contractual Clauses, Binding Corporate Rules (including the Mastercard Binding Corporate Rules) or, in the case of transfers to the US, a Privacy Shield certification.  Please contact us if you would like details of the appropriate safeguards.</li>
           </ol>
         </li>
         <li className={classnames(css.itemList, css.paddingElement)}>
-          <Heading type='h2'>To whom do we disclose personal data?</Heading>
+          <Heading type='h2' alternateFont>To whom do we disclose personal data?</Heading>
           <ol className={css.orderedList}>
             <li className={css.itemList}>We may allow access to your personal data by third parties who supply us with a service. Examples include e-commerce platform providers, couriers (to enable delivery of goods), website hosts, content delivery networks and businesses which assist us in undertaking communications, monitoring, testing or improving our website</li>
             <li className={css.itemList}>We may share your payment information (including your email address) with SagePay, checkout.com and First Data (our payment gateway and providers) in order to process the payments of your orders and any potential refund.</li>
@@ -77,7 +77,7 @@ const PrivacyStatement = () => (
           </ol>
         </li>
         <li className={css.itemList}>
-          <Heading type='h2'>How to access and control your information?</Heading>
+          <Heading type='h2' alternateFont>How to access and control your information?</Heading>
           <ol className={css.orderedList}>
             <li className={css.itemList}>You have the right to request a copy of your information, to rectify your information, to opt out from marketing communications and to request the deletion of your information. Below, we describe the processes for making these requests.</li>
             <li className={css.itemList}><strong>Update/rectify your information:</strong> You can easily correct/change the following personal information on “My Details” page by logging in to your account on our website or apps:
@@ -104,11 +104,11 @@ const PrivacyStatement = () => (
     </section>
 
     <section className={css.mainSection}>
-      <Heading type='h1' size='xLarge' center>Cookies Policy</Heading>
+      <Heading type='h1' size='xLarge' center alternateFont>Cookies Policy</Heading>
       <p>Effective Date: 26/05/2015 (Version 1.0)</p>
       <ol className={css.orderedList}>
         <li className={css.itemList}>
-          <Heading type='h2'>What about cookies?</Heading>
+          <Heading type='h2' alternateFont>What about cookies?</Heading>
           <ol className={css.orderedList}>
             <li className={css.itemList}>We and/or third parties use cookies and other tracking technologies on our website. A cookie is an identifier (a small file of letters and numbers) that is sent to your computer. Our website’s functionality will be limited if you configure your browser to reject cookies.</li>
             <li className={css.itemList}>Cookies are widely used to make websites work, or work more efficiently, as well as to provide information to the website owner or others. Session cookies are temporary cookies that remain in the cookie file of your browser only until your browser is closed. They allow websites to link your actions during a browser session. Persistent cookies stay in the cookie file of your browser for longer (though how long will depend on the lifetime of the specific cookie). For further information on cookies, including how to use your browser to block them and how to delete cookies already stored on your device, visit: <a href="http://www.allaboutcookies.org" target="_blank">www.allaboutcookies.org</a>.</li>
