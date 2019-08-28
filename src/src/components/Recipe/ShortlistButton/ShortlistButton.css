@@ -1,0 +1,19 @@
+.blueHeartButton {
+  margin-top: 10px;
+  margin-right: 10px;
+  height: 39px;
+  width: 39px;
+  border: 1px solid #615CFF;
+  border-radius: 3px;
+  text-align: center;
+  position: relative;
+}
+
+.heartIcon {
+  height: 22px;
+  width: 22px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
