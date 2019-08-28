@@ -21,4 +21,8 @@ describe('PricePerServingMessage', () => {
     wrapper = shallow(<PricePerServingMessage fullPrice={fullPrice} discountedPrice={discountedPrice} />)
     expect(wrapper.find('.oldPrice').length).toEqual(1)
   })
+  test('when discountedPrice is not supplied, should not render the message', () => {
+    wrapper = shallow(<PricePerServingMessage />)
+    expect(wrapper.find('.pricePerServingMessage').length).toEqual(0)
+  })
 })
