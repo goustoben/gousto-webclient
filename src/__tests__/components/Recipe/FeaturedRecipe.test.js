@@ -12,6 +12,7 @@ import { AttributeGrid } from 'Recipe/AttributeGrid'
 import FeaturedRecipe from 'Recipe/FeaturedRecipe'
 
 import { Pill } from 'goustouicomponents'
+import { ShortlistButton } from 'Recipe/ShortlistButton'
 
 describe('<FeaturedRecipe />', () => {
   let wrapper
@@ -74,5 +75,10 @@ describe('<FeaturedRecipe />', () => {
     wrapper.setProps({ showRecipeDetailsButton: true })
     expect(wrapper.find(Pill).length).toBe(1)
     expect(wrapper.find(Pill).prop('icon')).toBe(true)
+  })
+
+  test('should contain one ShortlistButton if feature flag is showShortlistButton is true', () => {
+    wrapper.setProps({ showShortlistButton: true })
+    expect(wrapper.find(ShortlistButton).length).toBe(1)
   })
 })

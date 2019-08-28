@@ -17,11 +17,12 @@ import TasteScore from '../TasteScore'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
+import { ShortlistButton } from '../ShortlistButton'
 
 const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
   view, highlight, unhighlight, tasteScore, chef, tag, detailHover,
   description, range, isRecommendedRecipe, features, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet, showRecipeDetailsButton }) => (
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet, showRecipeDetailsButton, showShortlistButton }) => (
     <div>
       <div className={css.featuredRecipe}>
         <span onClick={onClick} className={css.link}>
@@ -68,7 +69,16 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
               <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
               <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
             </div>
-            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
+            <div className={css.buttonContainer}>
+              {showShortlistButton &&
+                <div>
+                  <ShortlistButton />
+                </div>
+              }
+              <div className={css.addButton}>
+                <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
+              </div>
+            </div>
             <DisabledOverlay stock={stock} inBasket={inBasket} />
           </div>
         </div>
@@ -102,7 +112,8 @@ FeaturedRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
-  showRecipeDetailsButton: PropTypes.bool
+  showRecipeDetailsButton: PropTypes.bool,
+  showShortlistButton: PropTypes.bool
 }
 
 FeaturedRecipe.defaultProps = {

@@ -108,3 +108,12 @@
 .viewDetails {
   margin-bottom: 15px;
 }
+
+.buttonContainer {
+	display: flex;
+	align-items: center;
+}
+
+.addButton {
+	flex-grow: 1;
+}
