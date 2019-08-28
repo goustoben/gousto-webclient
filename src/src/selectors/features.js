@@ -35,3 +35,5 @@ export const isCollapsedRafFeatureEnabled = ({ features }) => features && featur
 export const getPromoBannerText = ({ features }) => features && features.getIn(['promoBannerText', 'value'], '')
 
 export const getPromoBannerCode = ({ features }) => features && features.getIn(['promoBannerCode', 'value'], '')
+
+export const getShortlist = ({ features }) => features && features.getIn(['shortlist', 'value'], false)
