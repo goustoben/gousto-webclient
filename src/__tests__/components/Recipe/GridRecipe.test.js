@@ -17,6 +17,7 @@ import GridRecipe from 'Recipe/GridRecipe'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
 
 import { Pill } from 'goustouicomponents'
+import { ShortlistButton } from 'Recipe/ShortlistButton'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
@@ -142,6 +143,11 @@ describe('<GridRecipe />', () => {
       wrapper.setProps({ showRecipeDetailsButton: true })
       expect(wrapper.find(Pill).length).toBe(1)
       expect(wrapper.find(Pill).prop('icon')).toBe(true)
+    })
+
+    test('should contain one ShortlistButton if feature flag is showShortlistButton is true and onMobile is true', () => {
+      wrapper.setProps({ showShortlistButton: true, isOnMobile: true})
+      expect(wrapper.find(ShortlistButton).length).toBe(1)
     })
   })
 })

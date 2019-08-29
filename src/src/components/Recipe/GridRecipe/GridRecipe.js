@@ -16,9 +16,10 @@ import TasteScore from '../TasteScore'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
+import { ShortlistButton } from '../ShortlistButton'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton }) => (
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton, showShortlistButton, isOnMobile }) => (
     <div>
       <div className={css.recipeDetails}>
         <span onClick={onClick} className={css.link}>
@@ -70,7 +71,14 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
             </div>
           </div>
           <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
-          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
+          <div className={css.buttonContainer}>
+            {showShortlistButton && isOnMobile &&
+              <ShortlistButton id={id} stock={stock} position={position}/>
+            }
+            <div className={css.addButton}>
+              <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
+            </div>
+          </div>
           <DisabledOverlay stock={stock} inBasket={inBasket} />
         </div>
       </div>
@@ -104,7 +112,9 @@ GridRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
-  showRecipeDetailsButton: PropTypes.bool
+  showRecipeDetailsButton: PropTypes.bool,
+  showShortlistButton: PropTypes.bool,
+  isOnMobile: PropTypes.bool,
 }
 
 GridRecipe.defaultProps = {

@@ -59,7 +59,7 @@ class ShortlistButton extends React.PureComponent {
     const classNames = recipeInShortlist ? css.redHeartButton : (shortlistLimitReached ? css.greyHeartButton : css.blueHeartButton)
 
     return (
-      <button id='shortlistButton' type="button" disabled={shortlistLimitReached} onClick={this.onShortlistClick} onKeyPress={this.onShortlistClick} className={classNames} tabIndex={0}>
+      <button id='shortlistButton' type="button" disabled={shortlistLimitReached &&!recipeInShortlist} onClick={this.onShortlistClick} onKeyPress={this.onShortlistClick} className={classNames} tabIndex={0}>
         <Svg fileName={heartIcon} className={css.heartIcon}/>
       </button>
     )

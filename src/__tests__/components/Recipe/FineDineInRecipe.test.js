@@ -10,6 +10,7 @@ import StockBadge from 'Recipe/StockBadge'
 import TasteScore from 'Recipe/TasteScore'
 
 import FineDineInRecipe from 'Recipe/FineDineInRecipe'
+import { ShortlistButton } from 'Recipe/ShortlistButton'
 
 describe('<FineDineInRecipe />', () => {
   describe('rendering', () => {
@@ -78,6 +79,12 @@ describe('<FineDineInRecipe />', () => {
 
       expect(wrapper.find(TasteScore)).toHaveLength(1)
       expect(wrapper.find(TasteScore).prop('score')).toEqual(95)
+    })
+
+    test('should contain one ShortlistButton if feature flag is showShortlistButton is true and onMobile is true', () => {
+      const wrapper = shallow(<FineDineInRecipe />)
+      wrapper.setProps({ showShortlistButton: true, isOnMobile: true})
+      expect(wrapper.find(ShortlistButton).length).toBe(1)
     })
   })
 })
