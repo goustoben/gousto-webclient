@@ -2,6 +2,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import configRoute from 'config/routes'
 import Immutable from 'immutable'
+import { Alert } from 'goustouicomponents'
+import { PricePerServingMessage } from 'PricePerServingMessage'
 import { H3 } from 'Page/Header'
 import classnames from 'classnames'
 import Receipt from 'Receipt'
@@ -75,6 +77,11 @@ class Summary extends React.PureComponent {
 
     return (
       <div className={css.summaryContainer}>
+        {!isLoading &&
+          <Alert type='info'>
+            <PricePerServingMessage />
+          </Alert>
+        }
         <H3 headlineFont>Order total</H3>
         {
           (isLoading) ?
