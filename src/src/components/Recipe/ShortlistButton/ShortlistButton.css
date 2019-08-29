@@ -10,6 +10,11 @@
   background: white;
 }
 
+.defaultDetailView {
+  margin-right: 0px;
+  margin-left: 15px
+}
+
 .redHeartButton {
   composes: blueHeartButton;
   border: 1px solid #FF0032;

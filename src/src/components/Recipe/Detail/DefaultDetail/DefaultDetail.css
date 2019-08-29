@@ -216,6 +216,8 @@
     width: 100%;
     background-color: White;
     border-top: 1px solid Basa;
+    display: flex;
+    align-items: center;
 
     @media ScreenXXSMin {
       display: none;
@@ -224,6 +226,7 @@
 
   .stickyButton {
     margin: 12px 15px;
+    flex-grow: 1;
   }
 
   .rangeBadgeDetails {

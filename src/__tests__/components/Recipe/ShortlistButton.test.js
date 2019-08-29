@@ -45,6 +45,13 @@ describe('<ShortlistButton />', () => {
       expect(wrapper.find("[fileName='icon_shortlist_heart_selected']").length).toBe(1)
       expect(wrapper.find('.redHeartButton').length).toBe(1)
     })
+
+    test('should include defaultDetailView css if display is detailOverview', () => {
+      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} />)
+      wrapper.setProps({display: 'detailOverlay'})
+
+      expect(wrapper.find('.defaultDetailView').length).toBe(1)
+    })
   })
 
   describe('onShortlistClick', () => {
