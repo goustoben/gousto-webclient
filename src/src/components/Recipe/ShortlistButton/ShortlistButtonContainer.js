@@ -1,15 +1,18 @@
 import { connect } from 'react-redux'
-import { getShortlist } from 'selectors/features'
-import { getShortlistLimitReached } from 'selectors/basket'
+import { getShortlistLimitReached, getShortlistRecipeIds } from 'selectors/basket'
 import { shortlistRecipeAdd, shortlistRecipeRemove } from 'actions/shortlist'
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { ShortlistButton } from './ShortlistButton'
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const { id } = ownProps
+  const shortlistIds = getShortlistRecipeIds(state)
+  const shorlistKeys = shortlistIds.keySeq().toArray()
+  const recipeInShortlist = shortlistIds && shorlistKeys.find(recipeId => recipeId === id)
 
   return {
-    showShortlistButton: getShortlist(state),
-    shortlistLimitReached: getShortlistLimitReached(state)
+    shortlistLimitReached: getShortlistLimitReached(state),
+    recipeInShortlist: Boolean(recipeInShortlist)
   }
 }
 

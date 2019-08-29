@@ -40,7 +40,7 @@ describe('<ShortlistButton />', () => {
 
     test('should show red heart (seleted) if recipeInShorlist is true', () => {
       wrapper = shallow(<ShortlistButton {...shortlistButtonProps} />)
-      wrapper.setState({recipeInShortlist: true})
+      wrapper.setProps({recipeInShortlist: true})
 
       expect(wrapper.find("[fileName='icon_shortlist_heart_selected']").length).toBe(1)
       expect(wrapper.find('.redHeartButton').length).toBe(1)
@@ -58,17 +58,14 @@ describe('<ShortlistButton />', () => {
     wrapper = mount(<ShortlistButton {...shortlistButtonProps }/>)
 
     test('should add recipe to shortlist if recipeInShortlist is false, shortlistLimitReached isnt reached and recipe is in stock - and change recipeInShortlist state', () => {
-      wrapper.setState({recipeInShortlist: false})
+      wrapper.setProps({recipeInShortlist: false})
       wrapper.find('#shortlistButton').simulate('click')
 
       expect(addToShortlistSpy).toHaveBeenCalledTimes(1)
-      expect(wrapper.state().recipeInShortlist).toBe(true)
     })
 
     test('should call menuBrowseCTAVisibilityChange if stock is null', () => {
-      wrapper.setProps({stock: null})
-      wrapper.setState({recipeInShortlist: false})
-
+      wrapper.setProps({stock: null, recipeInShortlist: false})
       wrapper.find('#shortlistButton').simulate('click')
 
       expect(menuBrowseCTAVisibilityChangeSpy).toHaveBeenCalledTimes(1)
@@ -77,8 +74,7 @@ describe('<ShortlistButton />', () => {
     })
 
     test('should NOT add recipe to shortlist if recipeInShortlist is false and shortlistLimitReached is reached', () => {
-      wrapper.setProps({stock: 1000, shortlistLimitReached: true})
-      wrapper.setState({recipeInShortlist: false})
+      wrapper.setProps({stock: 1000, shortlistLimitReached: true, recipeInShortlist: false})
 
       wrapper.find('#shortlistButton').simulate('click')
 
@@ -87,13 +83,12 @@ describe('<ShortlistButton />', () => {
     })
 
     test('should remove recipe from shortlist if recipeInShortlist is true - and change recipeInShortlist state', () => {
-      wrapper.setState({recipeInShortlist: true})
+      wrapper.setProps({recipeInShortlist: true})
 
       wrapper.find('#shortlistButton').simulate('click')
 
       expect(removeFromShortlistSpy).toHaveBeenCalledTimes(1)
       expect(addToShortlistSpy).toHaveBeenCalledTimes(0)
-      expect(wrapper.state().recipeInShortlist).toBe(false)
     })
   })
 })

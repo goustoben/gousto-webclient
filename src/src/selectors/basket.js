@@ -11,3 +11,4 @@ export const getBasketOrderPromoCode = state => state.basket.getIn(['orderDetail
 export const getBasketDate = ({ basket }) => basket.get('date')
 
 export const getShortlistLimitReached = ({basket}) => basket.getIn(['shortlist', 'shortlistLimitReached'], null )
+export const getShortlistRecipeIds = ({basket}) => basket.getIn(['shortlist', 'shortlistRecipes'], null )

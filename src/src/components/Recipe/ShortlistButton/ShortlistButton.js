@@ -8,6 +8,7 @@ class ShortlistButton extends React.PureComponent {
 
   static propTypes = {
     shortlistLimitReached: PropTypes.bool,
+    recipeInShortlist: PropTypes.bool,
     addToShortlist: PropTypes.func,
     removeFromShortlist: PropTypes.func,
     menuBrowseCTAVisibilityChange: PropTypes.func,
@@ -17,23 +18,12 @@ class ShortlistButton extends React.PureComponent {
     display: PropTypes.string
   }
 
-  constructor() {
-    super()
-    this.state = {
-      recipeInShortlist: false
-    }
-  }
-
   onShortlistClick = () => {
-    const { removeFromShortlist, id, shortlistLimitReached } = this.props
-    const { recipeInShortlist } = this.state
+    const { removeFromShortlist, recipeInShortlist, id, shortlistLimitReached } = this.props
     const remove = () => removeFromShortlist(id)
 
     if(recipeInShortlist) {
       remove()
-      this.setState({
-        recipeInShortlist: false,
-      })
     } else if (!shortlistLimitReached && !recipeInShortlist) {
       this.handleAdd()
     }
@@ -46,17 +36,13 @@ class ShortlistButton extends React.PureComponent {
     const add = () => addToShortlist(id, false, positionObject)
     if (stock !== null) {
       add()
-      this.setState({
-        recipeInShortlist: true,
-      })
     } else {
       menuBrowseCTAVisibilityChange(true)
     }
   }
 
   render() {
-    const { shortlistLimitReached, display } = this.props
-    const { recipeInShortlist } = this.state
+    const { shortlistLimitReached, recipeInShortlist, display } = this.props
     const heartIcon = recipeInShortlist ? "icon_shortlist_heart_selected" : "icon_shortlist_heart_deselected"
     const classes = classnames(
       (recipeInShortlist ? css.redHeartButton : (shortlistLimitReached ? css.greyHeartButton : css.blueHeartButton)),
