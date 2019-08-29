@@ -25,6 +25,7 @@ class Buttons extends React.Component {
     surchargePerPortion: PropTypes.number,
     score: PropTypes.number,
     changeTextForShortlistExperiment: PropTypes.bool,
+    isOnMobile: PropTypes.bool,
   }
 
   constructor() {
@@ -52,7 +53,7 @@ class Buttons extends React.Component {
   }
 
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
-    const { numPortions, qty, surchargePerPortion, view, changeTextForShortlistExperiment } = this.props
+    const { numPortions, qty, surchargePerPortion, view, changeTextForShortlistExperiment, isOnMobile } = this.props
     const { tooltipVisible } = this.state
     const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected')
 
@@ -126,7 +127,7 @@ class Buttons extends React.Component {
           fill
           className={this.getSurchargeGridClass('segment')}
         >
-          {view !== 'gridSmall' ? (changeTextForShortlistExperiment ? 'Add to box' : 'Add Recipe') : 'Add'}
+          {view !== 'gridSmall' ? (changeTextForShortlistExperiment && isOnMobile ? 'Add to box' : 'Add Recipe') : 'Add'}
           {surchargePerPortion && (
             <div
               className={

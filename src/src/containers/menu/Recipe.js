@@ -14,7 +14,8 @@ function mapStateToProps(state, ownProps) {
     stock: state.menuRecipeStock.getIn([ownProps.id, String(state.basket.get('numPortions'))], 0),
     inBasket: state.basket.hasIn(['recipes', ownProps.id]),
     showRecipeDetailsButton: state.features.getIn(['showRecipeDetailsButton', 'value']),
-    showShortlistButton: getShortlist(state)
+    showShortlistButton: getShortlist(state),
+    isOnMobile: state.request.get('browser') === 'mobile'
   }
 }
 

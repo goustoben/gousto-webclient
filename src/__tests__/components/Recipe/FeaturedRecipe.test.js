@@ -77,8 +77,8 @@ describe('<FeaturedRecipe />', () => {
     expect(wrapper.find(Pill).prop('icon')).toBe(true)
   })
 
-  test('should contain one ShortlistButton if feature flag is showShortlistButton is true', () => {
-    wrapper.setProps({ showShortlistButton: true })
+  test('should contain one ShortlistButton if feature flag is showShortlistButton is true and onMobile is true', () => {
+    wrapper.setProps({ showShortlistButton: true, isOnMobile: true})
     expect(wrapper.find(ShortlistButton).length).toBe(1)
   })
 })
