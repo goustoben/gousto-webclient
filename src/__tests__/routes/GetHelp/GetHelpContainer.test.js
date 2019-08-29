@@ -43,7 +43,7 @@ describe('<GetHelpContainer />', () => {
       )
 
       fetchOrder.mockResolvedValue({
-        data: { id: '788', recipeItems: [{ id: '1' }, { id: '2' }] }
+        data: { id: '788', recipeItems: [{ id: '1', recipeId: '3' }, { id: '2', recipeId: '4' }] }
       })
 
       fetchRecipes.mockResolvedValue({
@@ -64,10 +64,10 @@ describe('<GetHelpContainer />', () => {
     })
 
     test('fetched order ends up in the store', () => {
-      const expectedResult = fromJS([{ id: '1' }, { id: '2' }])
+      const expectedResult = fromJS(['3', '4'])
 
       expect(
-        store.getState().user.getIn(['orders', '788', 'recipeItems'])
+        store.getState().getHelp.getIn(['order', 'recipeItems'])
       ).toEqual(expectedResult)
     })
 

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import {
+  loadOrderById,
   loadRecipesById,
   storeGetHelpOrderId,
   validateLatestOrder
 } from 'actions/getHelp'
 import { client as routes } from 'config/routes'
-import userActions from 'actions/user'
 import actionTypes from 'actions/actionTypes'
 import GetHelp from './GetHelp'
 
@@ -22,14 +22,14 @@ const validState = (state) => (typeof state !== 'undefined')
 
 const getError = ({ error }) => {
   const errorRequest = error.get(actionTypes.RECIPES_RECEIVE)
-    || error.get(actionTypes.USER_LOAD_ORDERS)
+    || error.get(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID)
 
   return validState(errorRequest) ? errorRequest : null
 }
 
 const getPending = ({ pending }) => {
   const pendingRequest = pending.get(actionTypes.RECIPES_RECEIVE)
-    || pending.get(actionTypes.USER_LOAD_ORDERS)
+    || pending.get(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID)
 
   return validState(pendingRequest) ? pendingRequest : true
 }
@@ -79,7 +79,7 @@ const mapStateToProps = (state, ownProps) => {
 const GetHelpContainer = connect(mapStateToProps, {
   storeGetHelpOrderId,
   validateLatestOrder,
-  userLoadOrder: userActions.userLoadOrder,
+  loadOrderById,
   loadRecipesById,
 })(GetHelp)
 
