@@ -1,1 +1,1 @@
-export { ShortlistButton } from './ShortlistButton'
+export { ShortlistButtonContainer as ShortlistButton } from './ShortlistButtonContainer'

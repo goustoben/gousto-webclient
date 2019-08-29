@@ -9,6 +9,18 @@
   position: relative;
 }
 
+.redHeartButton {
+  composes: blueHeartButton;
+  border: 1px solid #FF0032;
+  background: #FFF0F1;
+}
+
+.greyHeartButton {
+  composes: blueHeartButton;
+  border: 1px solid grey;
+  background: black;
+}
+
 .heartIcon {
   height: 22px;
   width: 22px;

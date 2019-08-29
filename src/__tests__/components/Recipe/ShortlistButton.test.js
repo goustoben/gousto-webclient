@@ -1,13 +1,89 @@
 import React from 'react'
-import { shallow } from 'enzyme'
-import { ShortlistButton } from 'Recipe/ShortlistButton'
+import { shallow, mount } from 'enzyme'
+import { ShortlistButton } from 'Recipe/ShortlistButton/ShortlistButton'
 
 describe('<ShortlistButton />', () => {
+  let wrapper
+  const addToShortlistSpy = jest.fn()
+  const removeFromShortlistSpy = jest.fn()
+  const shortlistButtonProps = {
+    shortlistLimitReached: false,
+    addToShortlist: addToShortlistSpy,
+    removeFromShortlist: removeFromShortlistSpy,
+    stock: 1000,
+    id: '1234',
+    position: 1
+  }
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe('Render', () => {
     test('should show SVG when renders', () => {
-      const wrapper = shallow(<ShortlistButton />)
+      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} />)
 
       expect(wrapper.find('Svg').length).toBe(1)
+    })
+  })
+
+  describe('Design', () => {
+    test('should show blue heart (deseleted) if recipeInShorlist is false', () => {
+      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} />)
+      wrapper.setState({recipeInShortlist: false})
+
+      expect(wrapper.find("[fileName='icon_shortlist_heart_deselected']").length).toBe(1)
+      expect(wrapper.find('.blueHeartButton').length).toBe(1)
+    })
+
+    test('should show red heart (seleted) if recipeInShorlist is true', () => {
+      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} />)
+      wrapper.setState({recipeInShortlist: true})
+
+      expect(wrapper.find("[fileName='icon_shortlist_heart_selected']").length).toBe(1)
+      expect(wrapper.find('.redHeartButton').length).toBe(1)
+    })
+  })
+
+  describe('onShortlistClick', () => {
+    wrapper = mount(<ShortlistButton {...shortlistButtonProps }/>)
+
+    test('should add recipe to shortlist if recipeInShortlist is false, shortlistLimitReached isnt reached and recipe is in stock - and change recipeInShortlist state', () => {
+      wrapper.setState({recipeInShortlist: false})
+      wrapper.find('#shortlistButton').simulate('click')
+
+      expect(addToShortlistSpy).toHaveBeenCalledTimes(1)
+      expect(wrapper.state().recipeInShortlist).toBe(true)
+    })
+
+    test('should NOT add recipe to shortlist if recipeInShortlist is false, shortlistLimitReached isnt reached and recipe is out of stock', () => {
+      wrapper.setProps({stock: null})
+      wrapper.setState({recipeInShortlist: false})
+
+      wrapper.find('#shortlistButton').simulate('click')
+
+      expect(addToShortlistSpy).toHaveBeenCalledTimes(0)
+      expect(removeFromShortlistSpy).toHaveBeenCalledTimes(0)
+    })
+
+    test('should NOT add recipe to shortlist if recipeInShortlist is false and shortlistLimitReached is reached', () => {
+      wrapper.setProps({stock: 1000, shortlistLimitReached: true})
+      wrapper.setState({recipeInShortlist: false})
+
+      wrapper.find('#shortlistButton').simulate('click')
+
+      expect(addToShortlistSpy).toHaveBeenCalledTimes(0)
+      expect(removeFromShortlistSpy).toHaveBeenCalledTimes(0)
+    })
+
+    test('should remove recipe from shortlist if recipeInShortlist is true - and change recipeInShortlist state', () => {
+      wrapper.setState({recipeInShortlist: true})
+
+      wrapper.find('#shortlistButton').simulate('click')
+
+      expect(removeFromShortlistSpy).toHaveBeenCalledTimes(1)
+      expect(addToShortlistSpy).toHaveBeenCalledTimes(0)
+      expect(wrapper.state().recipeInShortlist).toBe(false)
     })
   })
 })
