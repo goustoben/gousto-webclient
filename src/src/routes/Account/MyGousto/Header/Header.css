@@ -1,0 +1,13 @@
+@value ScreenSMMin, ScreenMDMin, ScreenLGMin from 'styles/screenSizes.css';
+@value sizeXXS, sizeXS from 'styles/typography.css';
+
+
+.headerText {
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.arrowRight {
+  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+  font-size: sizeXS;
+}

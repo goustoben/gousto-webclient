@@ -6,6 +6,7 @@ function mapStateToProps(state) {
   return {
     card: state.user.get('card'),
     orders: state.user.get('orders'),
+    nameFirst: state.user.get('nameFirst')
   }
 }
 

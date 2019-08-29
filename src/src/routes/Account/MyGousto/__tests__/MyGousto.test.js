@@ -3,6 +3,7 @@ import { shallow } from 'enzyme'
 
 import { Cookbook } from '../Cookbook'
 import { Notification } from '../Notification'
+import { Header } from '../Header'
 import MyGousto from '../MyGousto'
 
 describe('MyGousto', () => {
@@ -24,6 +25,10 @@ describe('MyGousto', () => {
 
     test('should render the notification component', () => {
       expect(wrapper.find(Notification).length).toEqual(1)
+    })
+
+    test('should render the header component', () => {
+      expect(wrapper.find(Header).length).toEqual(1)
     })
   })
 
