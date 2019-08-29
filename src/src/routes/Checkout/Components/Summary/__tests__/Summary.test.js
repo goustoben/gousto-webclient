@@ -1,6 +1,8 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 import Immutable from 'immutable'
+import { Alert } from 'goustouicomponents'
+import { PricePerServingMessage } from 'PricePerServingMessage'
 import Loading from 'Loading'
 import Receipt from 'Receipt'
 import Link from 'Link'
@@ -33,6 +35,11 @@ describe('Summary Component', () => {
 
   test('should render a receipt', () => {
     expect(wrapper.find(Receipt).length).toEqual(1)
+  })
+
+  test('should render the PricePerServing Alert', () => {
+    expect(wrapper.find(Alert).length).toEqual(1)
+    expect(wrapper.find(PricePerServingMessage).length).toEqual(1)
   })
 
   describe('links', () => {
