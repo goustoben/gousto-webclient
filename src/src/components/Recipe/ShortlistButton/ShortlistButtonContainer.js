@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { getShortlist } from 'selectors/features'
 import { getShortlistLimitReached } from 'selectors/basket'
 import { shortlistRecipeAdd, shortlistRecipeRemove } from 'actions/shortlist'
+import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { ShortlistButton } from './ShortlistButton'
 
 function mapStateToProps(state) {
@@ -14,7 +15,8 @@ function mapStateToProps(state) {
 
 const ShortlistButtonContainer = connect(mapStateToProps, {
   addToShortlist: shortlistRecipeAdd,
-  removeFromShortlist: shortlistRecipeRemove
+  removeFromShortlist: shortlistRecipeRemove,
+  menuBrowseCTAVisibilityChange,
 })(ShortlistButton)
 
 export { ShortlistButtonContainer }

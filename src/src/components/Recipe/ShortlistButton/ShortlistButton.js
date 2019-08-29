@@ -9,6 +9,7 @@ class ShortlistButton extends React.PureComponent {
     shortlistLimitReached: PropTypes.bool,
     addToShortlist: PropTypes.func,
     removeFromShortlist: PropTypes.func,
+    menuBrowseCTAVisibilityChange: PropTypes.func,
     stock: PropTypes.number,
     id: PropTypes.string,
     position: PropTypes.number
@@ -37,7 +38,7 @@ class ShortlistButton extends React.PureComponent {
   }
 
   handleAdd = () => {
-    const { addToShortlist, id, position, stock } = this.props
+    const { addToShortlist, menuBrowseCTAVisibilityChange, id, position, stock } = this.props
     const positionObject = { position }
 
     const add = () => addToShortlist(id, false, positionObject)
@@ -46,18 +47,21 @@ class ShortlistButton extends React.PureComponent {
       this.setState({
         recipeInShortlist: true,
       })
+    } else {
+      menuBrowseCTAVisibilityChange(true)
     }
   }
 
   render() {
+    const { shortlistLimitReached } = this.props
     const { recipeInShortlist } = this.state
     const heartIcon = recipeInShortlist ? "icon_shortlist_heart_selected" : "icon_shortlist_heart_deselected"
-    const classNames = recipeInShortlist ? css.redHeartButton : css.blueHeartButton
+    const classNames = recipeInShortlist ? css.redHeartButton : (shortlistLimitReached ? css.greyHeartButton : css.blueHeartButton)
 
     return (
-      <div id='shortlistButton' role="button" onClick={this.onShortlistClick} onKeyPress={this.onShortlistClick} className={classNames} tabIndex={0}>
+      <button id='shortlistButton' type="button" disabled={shortlistLimitReached} onClick={this.onShortlistClick} onKeyPress={this.onShortlistClick} className={classNames} tabIndex={0}>
         <Svg fileName={heartIcon} className={css.heartIcon}/>
-      </div>
+      </button>
     )
   }
 }

@@ -6,10 +6,12 @@ describe('<ShortlistButton />', () => {
   let wrapper
   const addToShortlistSpy = jest.fn()
   const removeFromShortlistSpy = jest.fn()
+  const menuBrowseCTAVisibilityChangeSpy = jest.fn()
   const shortlistButtonProps = {
     shortlistLimitReached: false,
     addToShortlist: addToShortlistSpy,
     removeFromShortlist: removeFromShortlistSpy,
+    menuBrowseCTAVisibilityChange: menuBrowseCTAVisibilityChangeSpy,
     stock: 1000,
     id: '1234',
     position: 1
@@ -56,12 +58,13 @@ describe('<ShortlistButton />', () => {
       expect(wrapper.state().recipeInShortlist).toBe(true)
     })
 
-    test('should NOT add recipe to shortlist if recipeInShortlist is false, shortlistLimitReached isnt reached and recipe is out of stock', () => {
+    test('should call menuBrowseCTAVisibilityChange if stock is null', () => {
       wrapper.setProps({stock: null})
       wrapper.setState({recipeInShortlist: false})
 
       wrapper.find('#shortlistButton').simulate('click')
 
+      expect(menuBrowseCTAVisibilityChangeSpy).toHaveBeenCalledTimes(1)
       expect(addToShortlistSpy).toHaveBeenCalledTimes(0)
       expect(removeFromShortlistSpy).toHaveBeenCalledTimes(0)
     })
