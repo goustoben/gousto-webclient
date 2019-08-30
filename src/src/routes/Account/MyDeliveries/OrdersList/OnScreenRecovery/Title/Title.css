@@ -1,8 +1,8 @@
-@value comfortaaFontStack from 'styles/typography.css';
+@value axiformaFontStack from 'styles/typography.css';
 @value Black from 'styles/colors.css';
 
 .title {
-	font-family: comfortaaFontStack;
+	font-family: axiformaFontStack;
 	font-size: 20px;
 	color: Black;
 	line-height: 30px;

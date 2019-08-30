@@ -1,12 +1,19 @@
 @value ScreenSMMin from 'styles/screenSizes.css';
 
 .loadingContainer {
-	text-align: center;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.loadingImage {
+	width: 50px;
+	height: 50px;
 }
 
 .marketPlaceTitle {
   text-align: center;
-  font-family: Comfortaa;
+  font-family: Axiforma;
   font-weight: 700;
   font-size: 24px;
   -webkit-font-smoothing: antialiased;

@@ -8,7 +8,7 @@ import CTAHomepage from '../CTA'
 
 const Carousel = ({ redirect, numRecipes, ctaUri, ctaText }) => (
   <div>
-    <ModuleHeader>Now, what looks good?</ModuleHeader>
+    <ModuleHeader>Mmmmmm</ModuleHeader>
     {numRecipes > 0 ? <RecipeCarousel /> : null}
     <CTAHomepage width={240} onClick={() => { redirect(ctaUri) }}>{ctaText}</CTAHomepage>
   </div>

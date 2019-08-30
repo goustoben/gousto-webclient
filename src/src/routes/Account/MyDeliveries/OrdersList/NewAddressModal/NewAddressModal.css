@@ -12,5 +12,5 @@
 
 .modalTitle {
 	font-size: sizeXL;
-	composes: comfortaa from 'styles/typography.css';
+	composes: axiforma from 'styles/typography.css';
 }

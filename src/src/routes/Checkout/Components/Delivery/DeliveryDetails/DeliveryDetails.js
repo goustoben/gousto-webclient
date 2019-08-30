@@ -24,7 +24,7 @@ class DeliveryDetails extends React.PureComponent {
   static defaultProps = {
     deliveryAddress: {},
     formValues: {},
-    receiveRef: () => {},
+    receiveRef: () => { },
   }
 
   reset = (field, value = '') => {
@@ -53,6 +53,12 @@ class DeliveryDetails extends React.PureComponent {
           receiveRef={this.props.receiveRef}
           sectionName={this.props.sectionName}
         />
+        <div className={css.iconDeliverySection}>
+          <Svg fileName="icon-delivery" className={css.iconDelivery} />
+          <div className={css.iconDeliveryDescription}>
+            <p className={css.textSM}>Not going to be home? No problem. Just tell us a safe place to leave your box. Your food will keep cold for 24hrs.</p>
+          </div>
+        </div>
         <DeliveryInstruction
           value={formValues.deliveryInstruction}
           reset={this.reset}
@@ -63,12 +69,6 @@ class DeliveryDetails extends React.PureComponent {
           receiveRef={this.props.receiveRef}
           sectionName={this.props.sectionName}
         />
-        <div className={css.iconDeliverySection}>
-          <Svg fileName="icon-delivery" className={css.iconDelivery} />
-          <div className={css.iconDeliveryDescription}>
-            <p className={css.textSM}>Not going to be home? No problem. Just tell us a safe place to leave your box. Your food will keep cold for 24hrs.</p>
-          </div>
-        </div>
       </div>
     )
   }

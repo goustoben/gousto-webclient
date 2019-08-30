@@ -6,17 +6,20 @@
 @value PrimaryHoverColor White;
 @value PrimaryHoverBgColor Blueberry;
 @value PrimaryHoverBorderColor Blueberry;
+@value PrimaryDisabledColor Mackerel;
 
 @value SecondaryColor Blackberry;
 @value SecondaryBgColor White;
 @value SecondaryHoverColor Bluecheese;
 @value SecondaryHoverActiveColor Blueberry;
+@value SecondaryDisabledColor Mackerel;
 
 @value TertiaryColor Oyster;
 @value TertiaryBgColor White;
 @value TertiaryBorderColor Mackerel;
 @value TertiaryHoverColor Bluecheese;
 @value TertiaryHoverActiveColor Blueberry;
+@value TertiaryDisabledColor Mackerel;
 
 @value QuaternaryColor Bluecheese;
 @value QuaternaryBgColor White;

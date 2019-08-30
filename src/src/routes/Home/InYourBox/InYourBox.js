@@ -9,8 +9,8 @@ import CTAHomepage from '../CTA'
 const InYourBox = ({ redirect, inverse, ctaText, ctaUri }) => (
   <div className={css.container}>
     <div className={inverse ? css.inverseContent : css.content}>
-      <ModuleHeader>So, what will I get?</ModuleHeader>
-      <p className={css.bodyText}>Your recipe box has everything you need to cook up to four delicious meals every week</p>
+      <ModuleHeader>It starts with a box</ModuleHeader>
+      <p className={css.bodyText}>A Gousto recipe box is packed with everything you need to reinvent dinnertimes.</p>
       <ul className={css.list}>
         <li className={css.listItem}><span className={css.tick} />Precise ingredients (no food waste)</li>
         <li className={css.listItem}><span className={css.tick} />Quality produce from trusted suppliers</li>

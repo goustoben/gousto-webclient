@@ -86,7 +86,7 @@ class Summary extends React.PureComponent {
         {
           (isLoading) ?
             <div className={css.loaderContainer}>
-              <Loading />
+              <Loading className={css.loadingImage}/>
             </div>
             :
             <div className={css.details}>

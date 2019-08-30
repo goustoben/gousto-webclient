@@ -30,7 +30,6 @@ describe('Hero', () => {
 
       expect(wrapper.find('div').at(0).prop('className')).toBe('container--default')
       expect(wrapper.find('div').at(1).prop('className')).toBe('textContainer--default')
-      expect(wrapper.contains(<ContentMask fillColor="Coconut" />)).toBe(true)
     })
 
     test('should display rebrand variant when variant prop is rebrand', () => {

@@ -1,5 +1,5 @@
 @value Haricot, White from 'styles/colors.css';
-@value comfortaaFontStack from 'styles/typography.css';
+@value axiformaFontStack from 'styles/typography.css';
 
 .offerWrapper {
   display: flex;
@@ -26,7 +26,7 @@
   flex-direction: column;
   max-width: 60px;
   font-size: 22px;
-  font-family: comfortaaFontStack;
+  font-family: axiformaFontStack;
   font-weight: bold;
   color: White;
 }

@@ -146,7 +146,7 @@ class OrderSummary extends React.PureComponent {
             { [css.mobileHide]: !orderSummaryOpen }
           )}
         >
-          Here are the details about your box
+          Here&#39;s what&#39;s inside your box
         </p>
       </SectionHeader>
     )

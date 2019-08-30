@@ -2,19 +2,23 @@
 
 exports[`PaymentHeader will match snapshot 1`] = `
 <div>
-  <h3
-    className="header"
+  <div
+    className="headerContainer"
   >
-    Payment details
-  </h3>
-  <span
-    className="padlockIcon"
-  />
-  <span
-    className="boldInfo"
-  >
-    All fields are required
-  </span>
+    <h3
+      className="header"
+    >
+      Payment details 
+      <span
+        className="padlockIcon"
+      />
+    </h3>
+    <span
+      className="boldInfo"
+    >
+      All fields are required
+    </span>
+  </div>
   <p
     className="textSM"
   >

@@ -1,4 +1,4 @@
-@value White, Bronze, Black from 'styles/colors.css';
+@value White, Bronze, Black, Blackberry, Pomegranate, Duckegg from 'styles/colors.css';
 @value ScreenMDMin from 'styles/screenSizes.css';
 
 .gel {
@@ -18,22 +18,22 @@
 }
 
 .red {
-	background: #F6323E;
+	background: Pomegranate;
 	color: white;
 }
 
 .blue {
-	background: #00D5E0;
+	background: Duckegg;
 	color: black;
 }
 
 .black {
-	background-color: #333D47;
+	background-color: Blackberry;
 	color: white;
 }
 
 .gold {
-	background-color: #E8C776;
+	background-color: Bronze;
 	color: black;
 }
 

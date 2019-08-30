@@ -91,7 +91,7 @@ class OrderConfirmation extends PureComponent {
     return isLoading ?
       (
         <div className={css.loadingContainer}>
-          <Loading />
+          <Loading className={css.loadingImage}/>
         </div>
       ) :
       (

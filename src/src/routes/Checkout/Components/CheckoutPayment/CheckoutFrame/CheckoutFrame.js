@@ -184,34 +184,34 @@ const checkoutStyle = {
   },
   '.embedded .card-form .input-group': {
     borderRadius: '5px',
-    border: '1px solid #d6d8da',
+    border: '1px solid #D2D6D9',
     margin: '10px 0'
   },
   '.embedded .card-form .input-group.focus:not(.error)': {
-    border: '1px solid #999EA3'
+    border: '1px solid #C0C5C9'
   },
   '.embedded .card-form .input-group .icon': {
     display: 'none'
   },
   '.embedded .card-form .input-group.error': {
-    border: '1px solid #B6252E',
+    border: '1px solid #C20026',
     background: '#FBF4F4'
   },
   '.embedded .card-form .input-group.error .hint.error-message': {
     color: '#fff'
   },
   '.embedded .card-form .input-group.error .hint-icon:hover': {
-    color: '#B6252E'
+    color: '#C20026'
   },
   '.embedded .card-form .input-group.focus': {
     backgroundColor: '#fff'
   },
   '.embedded .card-form .input-group.focus input': {
     color: '#333D49',
-    borderColor: '#999ea3'
+    borderColor: '#C0C5C9'
   },
   '.embedded .card-form .input-group.error input': {
-    color: '#B6252E'
+    color: '#C20026'
   },
   '.embedded .card-form .input-group input::-webkit-input-placeholder': {
     fontStyle: 'normal'

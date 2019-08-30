@@ -12,9 +12,9 @@
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="technology-copy">
             <g id="Group-18" transform="translate(2.000000, 3.000000)">
-                <use id="Rectangle" stroke="#7290ff" mask="url(#mask-2)" stroke-width="8.019" fill="#FFFFFF" xlink:href="#path-1"></use>
-                <ellipse id="Oval-9" fill="#7290ff" cx="31" cy="87.5" rx="4.5" ry="4.5"></ellipse>
-                <polyline id="Path-12" stroke="#7290ff" stroke-width="4.0095" stroke-linecap="round" stroke-linejoin="round" transform="translate(31.000000, 42.500000) scale(-1, -1) translate(-31.000000, -42.500000) " points="12 66.991706 12 12 50 12 50 73 23.6725123 73"></polyline>
+                <use id="Rectangle" stroke="#615CFF" mask="url(#mask-2)" stroke-width="8.019" fill="#FFFFFF" xlink:href="#path-1"></use>
+                <ellipse id="Oval-9" fill="#615CFF" cx="31" cy="87.5" rx="4.5" ry="4.5"></ellipse>
+                <polyline id="Path-12" stroke="#615CFF" stroke-width="4.0095" stroke-linecap="round" stroke-linejoin="round" transform="translate(31.000000, 42.500000) scale(-1, -1) translate(-31.000000, -42.500000) " points="12 66.991706 12 12 50 12 50 73 23.6725123 73"></polyline>
             </g>
         </g>
     </g>

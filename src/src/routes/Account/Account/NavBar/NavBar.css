@@ -41,7 +41,7 @@
 .badge {
 	composes: textBold noDecor textXS from 'styles/typography.css';
 	composes: relative from 'styles/position.css';
-	background-color: Duckegg;
+	background-color: Pomegranate;
 	top: -6px;
 	padding: 3px 6px;
 	border-radius: 100px;
