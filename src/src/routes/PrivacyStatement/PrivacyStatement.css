@@ -1,0 +1,31 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
+
+.mainSection {
+  padding-top: 1rem;
+  overflow-wrap: break-word;
+}
+
+.paddingElement {
+  padding-bottom: 0.5rem;
+}
+
+.orderedList {
+  counter-reset: a;
+
+  @media ScreenXSMax {
+    padding-left: 0.75rem;
+  }
+}
+
+.itemList {
+  display: block;
+  position: relative;
+}
+
+.itemList::before {
+  content: counters(a, ".") ".";
+  counter-increment: a;
+  position: absolute;
+  margin-right: 100%;
+  right: 0.5rem;
+} 

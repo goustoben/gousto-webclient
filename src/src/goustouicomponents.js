@@ -4,6 +4,7 @@ export {
   Control,
   Dropdown,
   FloatCard,
+  Heading,
   Item,
   InputCheck,
   ItemExpandable,
