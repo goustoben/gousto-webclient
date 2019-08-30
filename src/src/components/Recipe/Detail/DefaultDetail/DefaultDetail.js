@@ -19,7 +19,7 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton, isOnMobile }) => (
+  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton}) => (
   <div>
     <div className={css.container}>
       <div className={css.header}>
@@ -98,7 +98,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
           ) : null}
         </div>
         <div className={css.stickyContainer}>
-          {showShortlistButton && isOnMobile &&
+          {showShortlistButton &&
             <ShortlistButton id={id} stock={stock} position={position} display={'detailOverlay'}/>
           }
           <div className={css.stickyButton}>

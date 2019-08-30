@@ -83,7 +83,7 @@ describe('<FineDineInRecipe />', () => {
 
     test('should contain one ShortlistButton if feature flag is showShortlistButton is true and onMobile is true', () => {
       const wrapper = shallow(<FineDineInRecipe />)
-      wrapper.setProps({ showShortlistButton: true, isOnMobile: true})
+      wrapper.setProps({ showShortlistButton: true })
       expect(wrapper.find(ShortlistButton).length).toBe(1)
     })
   })

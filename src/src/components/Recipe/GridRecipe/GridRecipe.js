@@ -19,7 +19,7 @@ import { AttributeGrid } from '../AttributeGrid'
 import { ShortlistButton } from '../ShortlistButton'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton, showShortlistButton, isOnMobile }) => (
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton, showShortlistButton }) => (
     <div>
       <div className={css.recipeDetails}>
         <span onClick={onClick} className={css.link}>
@@ -72,7 +72,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
           </div>
           <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
           <div className={css.buttonContainer}>
-            {showShortlistButton && isOnMobile &&
+            {showShortlistButton &&
               <ShortlistButton id={id} stock={stock} position={position}/>
             }
             <div className={css.addButton}>
@@ -114,7 +114,6 @@ GridRecipe.propTypes = {
   selectFoodBrand: PropTypes.func,
   showRecipeDetailsButton: PropTypes.bool,
   showShortlistButton: PropTypes.bool,
-  isOnMobile: PropTypes.bool,
 }
 
 GridRecipe.defaultProps = {

@@ -22,7 +22,7 @@ import { ShortlistButton } from '../ShortlistButton'
 const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
   view, highlight, unhighlight, tasteScore, chef, tag, detailHover,
   description, range, isRecommendedRecipe, features, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet, showRecipeDetailsButton, showShortlistButton, isOnMobile }) => (
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet, showRecipeDetailsButton, showShortlistButton }) => (
     <div>
       <div className={css.featuredRecipe}>
         <span onClick={onClick} className={css.link}>
@@ -70,7 +70,7 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
               <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
             </div>
             <div className={css.buttonContainer}>
-              {showShortlistButton && isOnMobile &&
+              {showShortlistButton &&
                 <ShortlistButton id={id} stock={stock} position={position}/>
               }
               <div className={css.addButton}>
@@ -112,7 +112,6 @@ FeaturedRecipe.propTypes = {
   selectFoodBrand: PropTypes.func,
   showRecipeDetailsButton: PropTypes.bool,
   showShortlistButton: PropTypes.bool,
-  isOnMobile: PropTypes.bool,
 }
 
 FeaturedRecipe.defaultProps = {

@@ -18,13 +18,24 @@ class ShortlistButton extends React.PureComponent {
     display: PropTypes.string
   }
 
+  static defaultProps = {
+    shortlistLimitReached: false,
+    recipeInShortlist: false,
+    addToShortlist: () => { },
+    removeFromShortlist: () => { },
+    menuBrowseCTAVisibilityChange: () => { },
+    stock: 0,
+    id: '',
+    position: 0,
+    display: ''
+  }
+
   onShortlistClick = () => {
     const { removeFromShortlist, recipeInShortlist, id, shortlistLimitReached } = this.props
-    const remove = () => removeFromShortlist(id)
 
     if(recipeInShortlist) {
-      remove()
-    } else if (!shortlistLimitReached && !recipeInShortlist) {
+      removeFromShortlist(id)
+    } else if (!shortlistLimitReached) {
       this.handleAdd()
     }
   }
@@ -33,9 +44,8 @@ class ShortlistButton extends React.PureComponent {
     const { addToShortlist, menuBrowseCTAVisibilityChange, id, position, stock } = this.props
     const positionObject = { position }
 
-    const add = () => addToShortlist(id, false, positionObject)
     if (stock !== null) {
-      add()
+      addToShortlist(id, false, positionObject)
     } else {
       menuBrowseCTAVisibilityChange(true)
     }
@@ -50,7 +60,7 @@ class ShortlistButton extends React.PureComponent {
     )
 
     return (
-      <button id='shortlistButton' type="button" disabled={shortlistLimitReached &&!recipeInShortlist} onClick={this.onShortlistClick} onKeyPress={this.onShortlistClick} className={classes} tabIndex={0}>
+      <button type="button" disabled={shortlistLimitReached &&!recipeInShortlist} onClick={this.onShortlistClick} onKeyPress={this.onShortlistClick} className={classes} tabIndex={0}>
         <Svg fileName={heartIcon} className={css.heartIcon}/>
       </button>
     )

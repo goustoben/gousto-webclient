@@ -17,8 +17,7 @@ const mapStateToProps = (state, props) => {
     limitReached: state.basket.get('limitReached'),
     disable: state.auth.get('isAdmin'),
     score: props.score,
-    changeTextForShortlistExperiment: getShortlist(state),
-    isOnMobile: state.request.get('browser') === 'mobile'
+    changeTextForShortlistExperiment: getShortlist(state) && state.request.get('browser') === 'mobile',
   }
 }
 

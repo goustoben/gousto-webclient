@@ -1,35 +1,38 @@
+@value Bluecheese, White, Pomegranate from 'styles/colors.css';
+
 .blueHeartButton {
-  margin-top: 10px;
-  margin-right: 10px;
-  height: 39px;
-  width: 39px;
-  border: 1px solid #615CFF;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  border: 1px solid Bluecheese;
   border-radius: 3px;
   text-align: center;
   position: relative;
-  background: white;
+  background: White;
 }
 
 .defaultDetailView {
-  margin-right: 0px;
-  margin-left: 15px
+  margin-right: 0;
+  margin-left: 1rem;
+  margin-bottom: 0.4rem;
 }
 
 .redHeartButton {
   composes: blueHeartButton;
-  border: 1px solid #FF0032;
+  border: 1px solid Pomegranate;
   background: #FFF0F1;
 }
 
 .greyHeartButton {
   composes: blueHeartButton;
   border: 1px solid grey;
-  background: black;
+  background: grey;
 }
 
 .heartIcon {
-  height: 22px;
-  width: 22px;
+  height: 1.5rem;
+  width: 1.5rem;
   position: absolute;
   top: 50%;
   left: 50%;

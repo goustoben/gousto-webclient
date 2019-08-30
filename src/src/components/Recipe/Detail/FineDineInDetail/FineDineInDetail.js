@@ -16,7 +16,7 @@ import IngredientsList from '../IngredientsList/IngredientsList'
 import Allergens from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
 
-const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew, showShortlistButton, isOnMobile }) => (
+const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew, showShortlistButton }) => (
   <div>
     <div className={css.container}>
       <div className={css.carousel}>
@@ -88,7 +88,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
         </div>
       </div>
       <div className={css.stickyContainer}>
-        {showShortlistButton && isOnMobile &&
+        {showShortlistButton &&
           <ShortlistButton id={id} stock={stock} position={position} display={'detailOverlay'}/>
         }
         <div className={css.stickyButton}>

@@ -18,7 +18,7 @@ import { ShortlistButton } from '../ShortlistButton'
 
 const FineDineInRecipe = ({media, onClick, selectFoodBrand, isFoodBrandClickable, highlight, unhighlight,
   tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe,
-  features, stock, inBasket, position, id, range, showShortlistButton, isOnMobile}) => {
+  features, stock, inBasket, position, id, range, showShortlistButton}) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
 
   return (
@@ -70,7 +70,7 @@ const FineDineInRecipe = ({media, onClick, selectFoodBrand, isFoodBrandClickable
               </div>
             </div>
             <div className={css.buttonContainer}>
-              {showShortlistButton && isOnMobile &&
+              {showShortlistButton &&
                 <div>
                   <ShortlistButton id={id} stock={stock} position={position}/>
                 </div>
@@ -113,7 +113,6 @@ FineDineInRecipe.propTypes = {
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
   showShortlistButton: PropTypes.bool,
-  isOnMobile: PropTypes.bool,
 }
 
 FineDineInRecipe.defaultProps = {
