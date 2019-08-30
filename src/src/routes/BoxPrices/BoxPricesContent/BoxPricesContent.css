@@ -3,84 +3,88 @@
 @value axiformaFontStack from 'styles/typography.css';
 
 .container {
-	width: 100%;
-	background-color: White;
+  width: 100%;
+  background-color: White;
 }
 
-.row, .column {
-	max-width: 1140px;
-	margin-right: auto;
-	margin-left: auto;
-	display: flex;
-	flex-direction: column;
+.row,
+.column {
+  max-width: 1140px;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .row {
-	justify-content: space-evenly;
+  justify-content: space-evenly;
 
-	@media ScreenMDMin {
-		flex-direction: row;
-	}
+  @media ScreenMDMin {
+    flex-direction: row;
+  }
 }
 
 .column {
-	align-items: center;
+  align-items: center;
 }
 
 .centered {
-	align-items: center;
+  align-items: center;
 }
 
 .content {
-	max-width: 500px;
-	margin: 40px auto 0;
-	padding: 15px 30px;
-	text-align: center;
+  max-width: 500px;
+  margin: 40px auto 0;
+  padding: 15px 30px;
+  text-align: center;
 
-	@media ScreenMDMin {
-		width: 40%;
-		padding: 15px 0;
-	}
+  @media ScreenMDMin {
+    width: 40%;
+    padding: 15px 0;
+  }
 }
 
 .icon {
-	fill: transparent;
-	width: 100px;
-	height: 100px;
+  fill: transparent;
+  width: 100px;
+  height: 100px;
 }
 
-.title {}
+.title {
+}
 
-.quotes {}
+.quotes {
+}
 
 .quote {
-	position: relative;
-	max-width: 500px;
-	margin: 30px 40px;
-	text-align: center;
-	quotes: "“" "”" "“" "”";
+  position: relative;
+  max-width: 500px;
+  margin: 30px 40px;
+  text-align: center;
+  quotes: '“' '”' '“' '”';
 
-	&:before, &:after {
+  &:before,
+  &:after {
     position: absolute;
     top: 20px;
     color: Oyster;
-		font-family: axiformaFontStack;
+    font-family: axiformaFontStack;
     font-weight: 700;
     font-size: 54px;
     line-height: 0;
-	}
+  }
 
-	&:before {
+  &:before {
     left: -30px;
-		content: open-quote;
-	}
+    content: open-quote;
+  }
 
-	&:after {
+  &:after {
     right: -30px;
-		content: close-quote;
-	}
+    content: close-quote;
+  }
 }
 
 .source {
-	font-weight: bold;
+  font-weight: bold;
 }
