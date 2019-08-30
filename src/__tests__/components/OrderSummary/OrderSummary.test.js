@@ -13,8 +13,8 @@ describe('OrderSummary', () => {
   let showProductDetail
 
   beforeEach(() => {
-    removeProduct = function () { }
-    showProductDetail = function () { }
+    removeProduct = () => { }
+    showProductDetail = () => { }
 
     wrapper = shallow(
       <OrderSummary
@@ -236,7 +236,7 @@ describe('OrderSummary SectionHeader', () => {
         products={{}}
         recipes={{}}
         deliveryTotalPrice={'2.50'}
-        onSave={function () { }}
+        onSave={() => { }}
       />,
     )
 
@@ -278,7 +278,7 @@ describe('OrderSummary footer', () => {
         products={{}}
         recipes={{}}
         deliveryTotalPrice={'2.50'}
-        onSave={function () { }}
+        onSave={() => { }}
         orderSummaryCollapsed
       />,
     )
