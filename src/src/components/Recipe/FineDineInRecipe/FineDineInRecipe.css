@@ -97,3 +97,12 @@
 	margin-top: -20px;
 	position: absolute;
 }
+
+.buttonContainer {
+	display: flex;
+	align-items: flex-end;
+}
+
+.addButton {
+	flex-grow: 1;
+}

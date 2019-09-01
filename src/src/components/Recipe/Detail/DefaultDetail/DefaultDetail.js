@@ -11,6 +11,7 @@ import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import { detailPropTypes } from 'Recipe/Detail/Detail'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
+import { ShortlistButton } from 'Recipe/ShortlistButton'
 import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
@@ -18,7 +19,7 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable }) => (
+  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton}) => (
   <div>
     <div className={css.container}>
       <div className={css.header}>
@@ -62,7 +63,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             ) : null}
             {youWillNeed && youWillNeed.size ? (
               <p className={css.additionalInfo}>
-              What you'll need: {youWillNeed.map((item, idx) => <span key={idx}>{item}{(youWillNeed.size - 1) !== idx ? ', ' : null}</span>)}
+              What you&#8217;ll need: {youWillNeed.map((item, idx) => <span key={idx}>{item}{(youWillNeed.size - 1) !== idx ? ', ' : null}</span>)}
               </p>
             ) : null }
             <span className={css.mobileHide}>
@@ -97,6 +98,9 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
           ) : null}
         </div>
         <div className={css.stickyContainer}>
+          {showShortlistButton &&
+            <ShortlistButton id={id} stock={stock} position={position} display={'detailOverlay'}/>
+          }
           <div className={css.stickyButton}>
             <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
           </div>

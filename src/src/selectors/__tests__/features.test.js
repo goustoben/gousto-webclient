@@ -10,6 +10,7 @@ import {
   isDeliveryFrequencyFeatureEnabled,
   getPromoBannerText,
   getPromoBannerCode,
+  getShortlist
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -244,6 +245,25 @@ describe('when features are defined', () => {
 
       test('should return value', () => {
         expect(getPromoBannerCode(state)).toEqual(value)
+      })
+    })
+  })
+
+  describe('getShortlist', () => {
+    describe('when feature is not set', () => {
+      test('should return false', () => {
+        expect(getShortlist(state)).toEqual(false)
+      })
+    })
+    describe('when feature is set', () => {
+      test('should return true', () => {
+        state.features = Immutable.fromJS({
+          shortlist: {
+            value: true
+          }
+        })
+
+        expect(getShortlist(state)).toEqual(true)
       })
     })
   })

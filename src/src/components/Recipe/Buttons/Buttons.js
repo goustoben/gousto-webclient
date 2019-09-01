@@ -24,6 +24,11 @@ class Buttons extends React.Component {
     menuRecipeDetailVisibilityChange: PropTypes.func,
     surchargePerPortion: PropTypes.number,
     score: PropTypes.number,
+    changeTextForShortlistExperiment: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    changeTextForShortlistExperiment: false,
   }
 
   constructor() {
@@ -51,9 +56,10 @@ class Buttons extends React.Component {
   }
 
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
-    const { numPortions, qty, surchargePerPortion, view } = this.props
+    const { numPortions, qty, surchargePerPortion, view, changeTextForShortlistExperiment } = this.props
     const { tooltipVisible } = this.state
     const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected')
+    const addButtonText = (changeTextForShortlistExperiment ? 'Add to box' : 'Add Recipe')
 
     if (qty > 0) {
       const totalQty = qty * numPortions
@@ -125,7 +131,7 @@ class Buttons extends React.Component {
           fill
           className={this.getSurchargeGridClass('segment')}
         >
-          {view !== 'gridSmall' ? 'Add Recipe' : 'Add'}
+          {view !== 'gridSmall' ? addButtonText : 'Add'}
           {surchargePerPortion && (
             <div
               className={

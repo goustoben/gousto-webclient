@@ -74,6 +74,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
+  shortlist: {
+    experiment: false,
+    value: false,
+  }
 })
 
 const featureToggles = {

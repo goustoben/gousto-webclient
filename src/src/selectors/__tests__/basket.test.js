@@ -9,6 +9,7 @@ import {
   getBasketOrderPromoCode,
   getSignupChosenCollection,
   getBasketOrderId,
+  getShortlistLimitReached
 } from '../basket'
 
 describe('the basket selectors', () => {
@@ -25,6 +26,10 @@ describe('the basket selectors', () => {
         collection: '',
       }),
     }
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   describe('getNumPortions', () => {
@@ -159,6 +164,60 @@ describe('the basket selectors', () => {
 
       test('should return the order detail prices', () => {
         expect(getBasketOrderPromoCode(state)).toEqual(promoCode)
+      })
+    })
+  })
+
+})
+
+describe('the shortlist selectors', () => {
+  describe('getShortlistLimitReached', () => {
+    describe('when there are no shortlist details in the state', () => {
+      const state = {
+        basket: Immutable.fromJS({
+          shortlist: Immutable.fromJS({
+            shortlistRecipes: Immutable.fromJS({
+              300: 1,
+              400: 1
+            }),
+            shortlistRecipesPositions: Immutable.fromJS([{
+              300: {
+                position: 1,
+                collection: 'collection1'
+              },
+              400: {
+                position: 2,
+                collection: 'collection2'
+              }
+            }]),
+            shortlistLimitReached: false
+          })
+        }),
+      }
+      test('returns null as default', () => {
+        expect(getShortlistLimitReached(state)).toBe(false)
+      })
+    })
+
+    describe('when shortlistLimitReached is false', () => {
+      const state = {
+        basket: Immutable.fromJS({
+          shortlist: Immutable.fromJS({
+            shortlistRecipes: Immutable.fromJS({
+              300: 1,
+            }),
+            shortlistRecipesPositions: Immutable.fromJS([{
+              300: {
+                position: 1,
+                collection: 'collection1'
+              },
+            }]),
+            shortlistLimitReached: true
+          })
+        }),
+      }
+      test('returns false', () => {
+        expect(getShortlistLimitReached(state)).toEqual(true)
       })
     })
   })
