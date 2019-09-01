@@ -3,11 +3,12 @@ import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 import { ShortlistTutorial } from './ShortlistTutorial'
 
 const mapStateToProps = (state) => {
-  const { request, tutorial } = state
+  const { request, tutorial, basket } = state
   const isJustForYouShown = tutorial.getIn(['visible', 'justforyou']) && !tutorial.getIn(['viewed', 'justforyou'])
   const shortlistTutorialStep1Viewed = tutorial.getIn(['viewed', 'shortlistStep1'])
   const shortlistTutorialStep2Viewed = tutorial.getIn(['viewed', 'shortlistStep2'])
-  const shouldShowTutorial = !shortlistTutorialStep1Viewed || !shortlistTutorialStep2Viewed
+  const recipesInShortlist = basket.getIn(['shortlist', 'shortlistRecipes'])
+  const shouldShowTutorial = !shortlistTutorialStep1Viewed || (!shortlistTutorialStep2Viewed && !!recipesInShortlist.size)
   const shouldShow = request.get('browser') === 'mobile' && !isJustForYouShown && shouldShowTutorial
   const step = !tutorial.getIn(['viewed', 'shortlistStep1']) ? 1 : 2
 

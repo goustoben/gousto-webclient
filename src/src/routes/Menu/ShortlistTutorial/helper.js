@@ -35,7 +35,6 @@ export const getTooltipLocation = (elementRect, arrowDirection) => {
 export const getTooltipProperties = (selector) => {
   const elementRect = checkIfSelectorExists(selector)
   const location = elementRect && getTooltipLocation(elementRect, 'bottom')
-  console.log(location) //eslint-disable-line
 
   return elementRect ? {
     style: {
@@ -46,7 +45,7 @@ export const getTooltipProperties = (selector) => {
     },
     arrow: 'bottom',
     arrowStyle: {
-      right: `${location.right}`,
+      right: location.right,
       left: location.left === 0 ? `${location.left + elementRect.width / 2}px` : location.left,
     }
   } : null

@@ -29,8 +29,14 @@ Tooltip.propTypes = {
   arrow: PropTypes.string,
   children: PropTypes.node,
   onClose: PropTypes.func,
-  style: PropTypes.objectOf(PropTypes.string),
-  arrowStyle: PropTypes.objectOf(PropTypes.string)
+  style: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])),
+  arrowStyle: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]))
 }
 
 export {

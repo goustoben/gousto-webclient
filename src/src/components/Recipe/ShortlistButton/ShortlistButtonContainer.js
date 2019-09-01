@@ -5,7 +5,7 @@ import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { ShortlistButton } from './ShortlistButton'
 
 function mapStateToProps(state, ownProps) {
-  const { id } = ownProps
+  const { id, showShortListFirstStep } = ownProps
   const { tutorial } = state
   const shortlistIds = getShortlistRecipeIds(state)
   const shortlistKeys = shortlistIds.keySeq().toArray()
@@ -15,7 +15,7 @@ function mapStateToProps(state, ownProps) {
   return {
     shortlistLimitReached: getShortlistLimitReached(state),
     recipeInShortlist: Boolean(recipeInShortlist),
-    showStep1: !shortlistTutorialStep1Viewed,
+    showShortListTutorial: !shortlistTutorialStep1Viewed && showShortListFirstStep,
   }
 }
 

@@ -29,7 +29,6 @@ class RecipeList extends React.PureComponent {
     isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     collectionFilterChange: PropTypes.func,
     sortedRecipes: PropTypes.instanceOf(Immutable.List),
-    showStep1: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -37,7 +36,6 @@ class RecipeList extends React.PureComponent {
     featuredRecipes: Immutable.List([]),
     remainingRecipes: Immutable.List([]),
     outOfStockRecipes: Immutable.List([]),
-    showStep1: false,
   }
 
   static contextTypes = {
@@ -103,6 +101,7 @@ class RecipeList extends React.PureComponent {
       const range = getFoodBrand(recipe)
       const isFineDineIn = range.get('slug') === 'fine-dine-in'
       const view = this.getView(mobileGridView, isFeatured, isFineDineIn)
+      const showShortListFirstStep = index === 0
 
       index += 1
 
@@ -131,6 +130,7 @@ class RecipeList extends React.PureComponent {
           tasteScore={recipe.getIn(['recommendationData', 'score'])}
           fiveADay={recipe.get('fiveADay')}
           diet={recipe.get('dietType')}
+          showShortListFirstStep={showShortListFirstStep}
         />
       )
     })

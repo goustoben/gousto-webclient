@@ -16,7 +16,7 @@ import css from './BoxSummaryMobile.css'
 import BrowseCTA from '../BrowseCTA'
 import BrowseCTAButton from '../BrowseCTAButton'
 
-class BoxSummaryMobile extends React.Component {
+class BoxSummaryMobile extends React.PureComponent {
   static propTypes = {
     date: PropTypes.string,
     deliveryDays: PropTypes.instanceOf(Immutable.Map),
@@ -166,7 +166,9 @@ class BoxSummaryMobile extends React.Component {
     return (
       <div className={css.barmobile} ref={(element) => { this.ref = element }}>
         <div onClick={this.handleMobileClick}>
-          <p className={css.iconMobile} data-slug="box-summary-mobile"><span className={iconClass} />{shortlistTutorialStep2Show && <ShortlistTutorial />}</p>
+          <div className={css.iconMobile}>
+            <span className={iconClass} data-slug="box-summary-mobile" />{shortlistTutorialStep2Show && <ShortlistTutorial />}
+          </div>
           <Title view="mobile" date={date} finalisedSlot={this.props.slotId !== ''} />
         </div>
         <div className={css.summaryMobile}>

@@ -26,7 +26,10 @@ Arrow.defaultProps = {
 Arrow.propTypes = {
   positionY: PropTypes.string,
   position: PropTypes.string,
-  style: PropTypes.objectOf(PropTypes.string)
+  style: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]))
 }
 
 export {

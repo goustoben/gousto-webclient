@@ -19,7 +19,7 @@ import { AttributeGrid } from '../AttributeGrid'
 import { ShortlistButton } from '../ShortlistButton'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton, showShortlistButton }) => (
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton, showShortlistButton, showShortListFirstStep }) => (
     <div>
       <div className={css.recipeDetails}>
         <span onClick={onClick} className={css.link}>
@@ -73,7 +73,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
           <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
           <div className={css.buttonContainer}>
             {showShortlistButton &&
-              <ShortlistButton id={id} stock={stock} position={position}/>
+              <ShortlistButton id={id} stock={stock} position={position} showShortListFirstStep={showShortListFirstStep} />
             }
             <div className={css.addButton}>
               <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
@@ -114,6 +114,7 @@ GridRecipe.propTypes = {
   selectFoodBrand: PropTypes.func,
   showRecipeDetailsButton: PropTypes.bool,
   showShortlistButton: PropTypes.bool,
+  showShortListFirstStep: PropTypes.bool,
 }
 
 GridRecipe.defaultProps = {
@@ -126,6 +127,7 @@ GridRecipe.defaultProps = {
   cookingTime: 0,
   features: Immutable.Map({}),
   useWithin: '',
+  showShortListFirstStep: false
 }
 
 export default GridRecipe

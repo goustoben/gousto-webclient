@@ -33,6 +33,12 @@ class ShortlistTutorial extends PureComponent {
     window.addEventListener('resize', this.checkElementPresent)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (JSON.stringify(prevState) !== JSON.stringify(this.state)) {
+      this.checkElementPresent()
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('scroll', this.checkElementPresent)
     window.removeEventListener('resize', this.checkElementPresents)
@@ -54,11 +60,6 @@ class ShortlistTutorial extends PureComponent {
           stepSelectorVisible: newSelectorVisible,
         }
       })
-    }
-
-    if (stepSelectorVisible) {
-      window.removeEventListener('scroll', this.checkElementPresent)
-      window.removeEventListener('resize', this.checkElementPresents)
     }
   }
 
