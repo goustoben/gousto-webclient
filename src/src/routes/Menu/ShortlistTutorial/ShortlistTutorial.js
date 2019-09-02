@@ -60,6 +60,8 @@ class ShortlistTutorial extends PureComponent {
           stepSelectorVisible: newSelectorVisible,
         }
       })
+      window.removeEventListener('scroll', this.checkElementPresent)
+      window.removeEventListener('resize', this.checkElementPresents)
     }
   }
 

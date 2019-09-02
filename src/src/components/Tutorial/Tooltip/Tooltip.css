@@ -3,6 +3,7 @@
 
 .container {
   padding: ArrowHeight 0;
+  z-index: 10;
 }
 
 .tooltip__content {
