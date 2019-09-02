@@ -8,7 +8,7 @@ describe('<GetHelp />', () => {
   describe('rendering', () => {
     let wrapper
     const storeGetHelpOrderIdSpy = jest.fn()
-    const userLoadOrderSpy = jest.fn().mockResolvedValue({})
+    const loadOrderByIdSpy = jest.fn().mockResolvedValue({})
     const validateLatestOrderSpy = jest.fn().mockResolvedValue(
       { data: { valid: true } }
     )
@@ -25,7 +25,7 @@ describe('<GetHelp />', () => {
           recipes={{}}
           loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          userLoadOrder={userLoadOrderSpy}
+          loadOrderById={loadOrderByIdSpy}
           validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
@@ -49,7 +49,7 @@ describe('<GetHelp />', () => {
           recipes={{}}
           loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          userLoadOrder={userLoadOrderSpy}
+          loadOrderById={loadOrderByIdSpy}
           validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
@@ -71,7 +71,7 @@ describe('<GetHelp />', () => {
             user={{ id: '123', accessToken: 'test' }}
             loadRecipesById={loadRecipesByIdSpy}
             storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-            userLoadOrder={userLoadOrderSpy}
+            loadOrderById={loadOrderByIdSpy}
             validateLatestOrder={validateLatestOrderSpy}
             isRequestPending
           >
@@ -92,7 +92,7 @@ describe('<GetHelp />', () => {
 
     test('when path is Contact Us page, data is not fetched', () => {
       storeGetHelpOrderIdSpy.mockReset()
-      userLoadOrderSpy.mockReset()
+      loadOrderByIdSpy.mockReset()
       validateLatestOrderSpy.mockReset()
 
       wrapper = mount(
@@ -105,7 +105,7 @@ describe('<GetHelp />', () => {
           user={{ id: '123', accessToken: 'test' }}
           loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          userLoadOrder={userLoadOrderSpy}
+          loadOrderById={loadOrderByIdSpy}
           validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
@@ -113,7 +113,7 @@ describe('<GetHelp />', () => {
       )
 
       expect(storeGetHelpOrderIdSpy).not.toHaveBeenCalled()
-      expect(userLoadOrderSpy).not.toHaveBeenCalled()
+      expect(loadOrderByIdSpy).not.toHaveBeenCalled()
 
       expect(wrapper.contains(<div className="test" />)).toBe(true)
     })
@@ -121,7 +121,7 @@ describe('<GetHelp />', () => {
 
   describe('behaviour', () => {
     const storeGetHelpOrderIdSpy = jest.fn()
-    const userLoadOrderSpy = jest.fn().mockResolvedValue({})
+    const loadOrderByIdSpy = jest.fn().mockResolvedValue({})
     const loadRecipesByIdSpy = jest.fn().mockResolvedValue({})
     const validateLatestOrderSpy = jest.fn().mockResolvedValue(
       { data: { valid: true } }
@@ -138,7 +138,7 @@ describe('<GetHelp />', () => {
           recipes={{}}
           loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          userLoadOrder={userLoadOrderSpy}
+          loadOrderById={loadOrderByIdSpy}
           validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
@@ -169,7 +169,7 @@ describe('<GetHelp />', () => {
           recipes={{}}
           loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          userLoadOrder={userLoadOrderSpy}
+          loadOrderById={loadOrderByIdSpy}
           validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
@@ -196,7 +196,7 @@ describe('<GetHelp />', () => {
           recipes={{}}
           loadRecipesById={loadRecipesByIdSpy}
           storeGetHelpOrderId={storeGetHelpOrderIdSpy}
-          userLoadOrder={userLoadOrderSpy}
+          loadOrderById={loadOrderByIdSpy}
           validateLatestOrder={validateLatestOrderSpy}
         >
           <div className="test" />
@@ -211,7 +211,9 @@ describe('<GetHelp />', () => {
     })
 
     test('calls customers order endpoint', () => {
-      expect(userLoadOrderSpy).toHaveBeenCalledWith('7')
+      expect(loadOrderByIdSpy).toHaveBeenCalledWith(
+        {"accessToken": "test", "orderId": "7"}
+      )
     })
 
     test('store order ID', () => {

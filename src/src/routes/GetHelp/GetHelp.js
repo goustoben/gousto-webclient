@@ -30,14 +30,14 @@ const propTypes = {
   didRequestError: PropTypes.bool.isRequired,
   isRequestPending: PropTypes.bool.isRequired,
   storeGetHelpOrderId: PropTypes.func.isRequired,
-  userLoadOrder: PropTypes.func.isRequired,
+  loadOrderById: PropTypes.func.isRequired,
   validateLatestOrder: PropTypes.func.isRequired,
 }
 
 class GetHelp extends PureComponent {
 
   componentDidMount = async () => {
-    const { storeGetHelpOrderId, orderId, user, userLoadOrder, validateLatestOrder } = this.props
+    const { storeGetHelpOrderId, orderId, user, loadOrderById, validateLatestOrder } = this.props
 
     if (orderId.length < 1) {
       return null
@@ -66,7 +66,10 @@ class GetHelp extends PureComponent {
 
     storeGetHelpOrderId(orderId)
 
-    return userLoadOrder(orderId).then(this.orderLoadComplete)
+    return loadOrderById({
+      accessToken: user.accessToken,
+      orderId,
+    }).then(this.orderLoadComplete)
   }
 
   orderLoadComplete = () => {

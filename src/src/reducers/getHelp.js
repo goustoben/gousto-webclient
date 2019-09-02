@@ -79,8 +79,8 @@ const getHelp = (state, action) => {
 
     return state.set('recipes', recipes)
   }
-  case actionTypes.USER_LOAD_ORDERS: {
-    const order = action.orders[0]
+  case actionTypes.GET_HELP_LOAD_ORDERS_BY_ID: {
+    const { order } = action
 
     if (order) {
       const recipeItems = order.recipeItems.map((item) => (item.recipeId))

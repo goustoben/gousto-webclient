@@ -6,6 +6,7 @@ import {
 } from 'apis/getHelp'
 import logger from 'utils/logger'
 import { fetchRecipes } from 'apis/recipes'
+import { fetchOrder } from 'apis/orders'
 import actionTypes from './actionTypes'
 import statusActions from './status'
 
@@ -161,7 +162,34 @@ const loadRecipesById = (recipeIds = []) => (
   }
 )
 
+const loadOrderById = ({ accessToken, orderId }) => {
+  return async (dispatch) => {
+    dispatch(statusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, true))
+    dispatch(statusActions.error(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, null))
+
+    try {
+      const { data: order } = await fetchOrder(
+        accessToken,
+        orderId
+      )
+
+      dispatch({
+        type: actionTypes.GET_HELP_LOAD_ORDERS_BY_ID,
+        order,
+      })
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, err.message))
+      logger.error(err)
+      throw err
+    } finally {
+      dispatch(statusActions.pending(actionTypes.GET_HELP_LOAD_ORDERS_BY_ID, false))
+    }
+  }
+}
+
 export {
+  loadOrderById,
+  loadRecipesById,
   selectOrderIssue,
   selectContactChannel,
   storeGetHelpOrderId,
@@ -173,5 +201,4 @@ export {
   fetchIngredientIssues,
   trackAcceptRefund,
   trackIngredientIssues,
-  loadRecipesById,
 }
