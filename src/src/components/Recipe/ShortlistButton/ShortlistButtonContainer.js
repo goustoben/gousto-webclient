@@ -3,15 +3,16 @@ import { getShortlistLimitReached, getShortlistRecipeIds } from 'selectors/baske
 import { shortlistRecipeAdd, shortlistRecipeRemove } from 'actions/shortlist'
 import { menuBrowseCTAVisibilityChange } from 'actions/menu'
 import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
+import { getShortlistTutorialFirstStep } from 'selectors/tutorial'
+
 import { ShortlistButton } from './ShortlistButton'
 
 function mapStateToProps(state, ownProps) {
   const { id, showShortListFirstStep } = ownProps
-  const { tutorial } = state
   const shortlistIds = getShortlistRecipeIds(state)
   const shortlistKeys = shortlistIds.keySeq().toArray()
   const recipeInShortlist = shortlistIds && shortlistKeys.find(recipeId => recipeId === id)
-  const shortlistTutorialStep1Viewed = !!tutorial.getIn(['viewed', 'shortlistStep1'])
+  const shortlistTutorialStep1Viewed = !!getShortlistTutorialFirstStep(state)
 
   return {
     shortlistLimitReached: getShortlistLimitReached(state),

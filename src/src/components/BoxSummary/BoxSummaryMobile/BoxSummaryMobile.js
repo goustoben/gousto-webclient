@@ -38,7 +38,7 @@ class BoxSummaryMobile extends React.PureComponent {
     boxSummaryNext: PropTypes.func.isRequired,
     displayOptions: PropTypes.instanceOf(Immutable.List),
     maxRecipesNum: PropTypes.number,
-    shortlistTutorialStep2Show: PropTypes.bool,
+    shouldShowTutorialStep2: PropTypes.bool,
     incrementTutorialViewed: PropTypes.func,
     tutorialTracking: PropTypes.func,
   }
@@ -121,10 +121,10 @@ class BoxSummaryMobile extends React.PureComponent {
   }
 
   handleMobileClick = (e) => {
-    const { shortlistTutorialStep2Show } = this.props
+    const { shouldShowTutorialStep2 } = this.props
     if (e.target && e.target.className.indexOf(boxSummaryButtonCss.submitButton) === -1) {
       this.openMobile()
-      if (shortlistTutorialStep2Show) {
+      if (shouldShowTutorialStep2) {
         this.closeTutorialStep2()
       }
     }
@@ -175,14 +175,14 @@ class BoxSummaryMobile extends React.PureComponent {
   )
 
   renderBanner = () => {
-    const { date, disabled, displayOptions, maxRecipesNum, menuRecipesStore, recipes, showDetails, shortlistTutorialStep2Show } = this.props
+    const { date, disabled, displayOptions, maxRecipesNum, menuRecipesStore, recipes, showDetails, shouldShowTutorialStep2 } = this.props
     const iconClass = showDetails ? css.arrowDown : css.arrowUp
 
     return (
       <div className={css.barmobile} ref={(element) => { this.ref = element }}>
         <div onClick={this.handleMobileClick}>
           <div className={css.iconMobile}>
-            <span className={iconClass} data-slug="box-summary-mobile" />{shortlistTutorialStep2Show && <ShortlistTutorial />}
+            <span className={iconClass} data-slug="box-summary-mobile" />{shouldShowTutorialStep2 && <ShortlistTutorial />}
           </div>
           <Title view="mobile" date={date} finalisedSlot={this.props.slotId !== ''} />
         </div>

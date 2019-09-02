@@ -205,16 +205,16 @@ describe('BoxSummaryMobile', () => {
   })
 
   describe('shortlistTutorial', () => {
-    test('should render ShortlistTutorial if shortlistTutorialStep2Show true', () => {
-      wrapper.setProps({ shortlistTutorialStep2Show: true })
+    test('should render ShortlistTutorial if shouldShowTutorialStep2 true', () => {
+      wrapper.setProps({ shouldShowTutorialStep2: true })
       expect(wrapper.find(ShortlistTutorial)).toHaveLength(1)
     })
 
-    test('should close ShortlistTutorial if shortlistTutorialStep2Show true and click on open box summary', () => {
+    test('should close ShortlistTutorial if shouldShowTutorialStep2 true and click on open box summary', () => {
       const incrementTutorialViewedSpy = jest.fn()
       const tutorialTrackingSpy = jest.fn()
       wrapper.setProps({
-        shortlistTutorialStep2Show: true,
+        shouldShowTutorialStep2: true,
         incrementTutorialViewed: incrementTutorialViewedSpy,
         tutorialTracking: tutorialTrackingSpy
       })

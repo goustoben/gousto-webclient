@@ -4,10 +4,11 @@ import actions from 'actions'
 import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
+import { getShortlistTutorialFirstStep, getShortlistTutorialSecondStep } from 'selectors/tutorial'
 import BoxSummaryMobile from './BoxSummaryMobile'
 
 const shouldShortlistTutorialShow = (state) => (
-  state.tutorial.getIn(['viewed', 'shortlistStep1']) && !state.tutorial.getIn(['viewed', 'shortlistStep2'])
+  getShortlistTutorialFirstStep(state) && !getShortlistTutorialSecondStep(state)
 )
 
 const mapStateToProps = (state) => ({
@@ -27,7 +28,7 @@ const mapStateToProps = (state) => ({
   basketCheckedOut: state.pending.get(actionTypes.BASKET_CHECKOUT),
   hasUnavailableRecipes: Boolean(getUnavailableRecipeIds(state).size),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
-  shortlistTutorialStep2Show: shouldShortlistTutorialShow(state)
+  shouldShowTutorialStep2: shouldShortlistTutorialShow(state)
 
 })
 
