@@ -21,6 +21,7 @@ import BoxPrices from './BoxPrices'
 import Unsubscribe from './Unsubscribe'
 import GetHelp from './GetHelp'
 import OrderConfirmation from './OrderConfirmation'
+import PrivacyStatement from './PrivacyStatement'
 
 export default (store) => (
   <Route path="/" component={Page}>
@@ -33,6 +34,7 @@ export default (store) => (
     {Jobs}
     {ResetPassword}
     {Unsubscribe}
+    {PrivacyStatement}
     {GetHelp(store)}
 
     <Route component={MainLayout}>
