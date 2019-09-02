@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import actionTypes from 'actions/actionTypes'
 import actions from 'actions'
+import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import BoxSummaryMobile from './BoxSummaryMobile'
@@ -34,6 +35,8 @@ const BoxSummaryMobileContainer = connect(mapStateToProps, {
   boxDetailsVisibilityChange: actions.boxSummaryVisibilityChange,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
   boxSummaryNext: actions.boxSummaryNext,
+  incrementTutorialViewed,
+  tutorialTracking,
 })(BoxSummaryMobile)
 
 export default BoxSummaryMobileContainer

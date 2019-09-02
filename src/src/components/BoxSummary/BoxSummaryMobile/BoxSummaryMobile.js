@@ -39,6 +39,8 @@ class BoxSummaryMobile extends React.PureComponent {
     displayOptions: PropTypes.instanceOf(Immutable.List),
     maxRecipesNum: PropTypes.number,
     shortlistTutorialStep2Show: PropTypes.bool,
+    incrementTutorialViewed: PropTypes.func,
+    tutorialTracking: PropTypes.func,
   }
 
   static defaultProps = {
@@ -46,6 +48,8 @@ class BoxSummaryMobile extends React.PureComponent {
     displayOptions: Immutable.fromJS([]),
     maxRecipesNum: config.maxRecipesNum,
     basketCheckedOut: false,
+    incrementTutorialViewed: () => { },
+    tutorialTracking: () => { },
   }
 
   state = {
@@ -109,9 +113,20 @@ class BoxSummaryMobile extends React.PureComponent {
     this.props.boxDetailsVisibilityChange(false, 'mobile')
   }
 
+  closeTutorialStep2 = () => {
+    const { incrementTutorialViewed, tutorialTracking } = this.props
+    const tutorialName = 'shortlistStep2'
+    incrementTutorialViewed(tutorialName)
+    tutorialTracking(tutorialName, 1, true)
+  }
+
   handleMobileClick = (e) => {
+    const { shortlistTutorialStep2Show } = this.props
     if (e.target && e.target.className.indexOf(boxSummaryButtonCss.submitButton) === -1) {
       this.openMobile()
+      if (shortlistTutorialStep2Show) {
+        this.closeTutorialStep2()
+      }
     }
   }
 

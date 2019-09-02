@@ -209,5 +209,19 @@ describe('BoxSummaryMobile', () => {
       wrapper.setProps({ shortlistTutorialStep2Show: true })
       expect(wrapper.find(ShortlistTutorial)).toHaveLength(1)
     })
+
+    test('should close ShortlistTutorial if shortlistTutorialStep2Show true and click on open box summary', () => {
+      const incrementTutorialViewedSpy = jest.fn()
+      const tutorialTrackingSpy = jest.fn()
+      wrapper.setProps({
+        shortlistTutorialStep2Show: true,
+        incrementTutorialViewed: incrementTutorialViewedSpy,
+        tutorialTracking: tutorialTrackingSpy
+      })
+
+      wrapper.find('.barmobile').children().first().simulate('click', { preventDefault: () => { }, target: { className: '' } })
+      expect(incrementTutorialViewedSpy).toHaveBeenCalled()
+      expect(tutorialTrackingSpy).toHaveBeenCalled()
+    })
   })
 })

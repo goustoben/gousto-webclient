@@ -17,7 +17,10 @@ class ShortlistButton extends React.PureComponent {
     id: PropTypes.string,
     position: PropTypes.number,
     display: PropTypes.string,
-    showShortListTutorial: PropTypes.bool
+    showShortListTutorial: PropTypes.bool,
+    shortlistTutorialStep1Viewed: PropTypes.bool,
+    incrementTutorialViewed: PropTypes.func,
+    tutorialTracking: PropTypes.func
   }
 
   static defaultProps = {
@@ -30,7 +33,15 @@ class ShortlistButton extends React.PureComponent {
     id: '',
     position: 0,
     display: '',
-    showShortListTutorial: false
+    showShortListTutorial: false,
+    shortlistTutorialStep1Viewed: false
+  }
+
+  closeTutorialStep1 = () => {
+    const { incrementTutorialViewed, tutorialTracking } = this.props
+    const tutorialName = 'shortlistStep1'
+    incrementTutorialViewed(tutorialName)
+    tutorialTracking(tutorialName, 0, true)
   }
 
   onShortlistClick = () => {
@@ -44,10 +55,13 @@ class ShortlistButton extends React.PureComponent {
   }
 
   handleAdd = () => {
-    const { addToShortlist, menuBrowseCTAVisibilityChange, id, position, stock } = this.props
+    const { addToShortlist, menuBrowseCTAVisibilityChange, id, position, stock, shortlistTutorialStep1Viewed } = this.props
     const positionObject = { position }
 
     if (stock !== null) {
+      if (!shortlistTutorialStep1Viewed) {
+        this.closeTutorialStep1()
+      }
       addToShortlist(id, false, positionObject)
     } else {
       menuBrowseCTAVisibilityChange(true)
