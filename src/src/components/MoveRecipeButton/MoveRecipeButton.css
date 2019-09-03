@@ -28,10 +28,16 @@
   color: Bluecheese;
 }
 
+.disableButton {
+	opacity: 0.5;
+}
+
 .arrowDown {
 	composes: fa-basic-class  fa-arrow-down from 'styles/vendor/font-awesome-module.css';
+	padding-right: 5px;
 }
 
 .arrowUp {
 	composes: fa-basic-class  fa-arrow-up from 'styles/vendor/font-awesome-module.css';
+	padding-right: 5px;
 }

@@ -9,7 +9,8 @@ import {
   getBasketOrderPromoCode,
   getSignupChosenCollection,
   getBasketOrderId,
-  getShortlistLimitReached
+  getShortlistLimitReached,
+  getBasketLimitReached
 } from '../basket'
 
 describe('the basket selectors', () => {
@@ -168,6 +169,25 @@ describe('the basket selectors', () => {
     })
   })
 
+  describe('getBasketLimitReached', () => {
+    test('should return the basket limitReached true', () => {
+      state = {
+        basket: Immutable.Map({
+          limitReached: true,
+        })
+      }
+      expect(getBasketLimitReached(state)).toEqual(true)
+    })
+
+    test('should return the basket limitReached false', () => {
+      state = {
+        basket: Immutable.Map({
+          limitReached: false,
+        })
+      }
+      expect(getBasketLimitReached(state)).toEqual(false)
+    })
+  })
 })
 
 describe('the shortlist selectors', () => {
