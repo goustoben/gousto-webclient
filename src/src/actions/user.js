@@ -732,6 +732,15 @@ export function userFetchReferralOffer() {
   }
 }
 
+export const userGetReferralDetails = () => {
+  return async (dispatch, getState) => {
+    const accessToken = getState().auth.get('accessToken')
+    const { data } = await userApi.referralDetails(accessToken)
+
+    dispatch(userLoadReferralDetails(data))
+  }
+}
+
 export const trackingReferFriend = (actionType, trackingType) => {
   return dispatch => {
     if (actionType && trackingType) {
