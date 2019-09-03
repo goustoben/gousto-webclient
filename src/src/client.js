@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom'
 import routes from 'routes'
 import AppContainer from 'containers/AppContainer'
 import transit from 'transit-immutable-js'
-import zendesk from 'utils/zendesk'
 import Cookies from 'utils/GoustoCookies'
 import Raven from 'raven-js'
 import processCookies from 'utils/processCookies'
@@ -20,6 +19,7 @@ import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
 import { configureStore } from './store'
+import { zeStart, zeChatButtonSetUp } from 'utils/zendesk'
 
 docReady('docReady', window)
 
@@ -54,10 +54,9 @@ processCookies(Cookies, store)
 
 const history = syncHistoryWithStore(browserHistory, store)
 
-window.docReady(async () => {
+window.docReady(() => {
   clientAuthorise(store)
 
-  const setZendesk = zendesk(window.location.pathname)
   const query = queryString.parse(window.location.search)
   processFeaturesQuery(query, store)
   processQuery(query, store)
@@ -66,8 +65,12 @@ window.docReady(async () => {
 
   browserType(store)
 
-  setZendesk.getZopim(() => {
-    setZendesk.chatButton()
+  zeStart().then(() => {
+    try {
+      zeChatButtonSetUp(window.location.pathname)
+    } catch(err) {
+      throw err
+    }
   })
 
   const reactRootDOM = document.getElementById('react-root')

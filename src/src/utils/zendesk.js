@@ -1,52 +1,64 @@
-const zendesk = (pathName) => {
-  const enabledPages = [
-    '/my-gousto',
-    '/my-deliveries',
-    '/my-details',
-    '/my-subscription',
-    '/my-referrals',
-    '/rate-my-recipes',
-    '/help',
-    '/cookbook',
-  ]
+const enabledPages = [
+  '/my-gousto',
+  '/my-deliveries',
+  '/my-details',
+  '/my-subscription',
+  '/my-referrals',
+  '/rate-my-recipes',
+  '/help',
+  '/cookbook',
+]
+const notFoundErrorMessage = 'Could not find `zE` function'
+let zeInstance = null
 
-  const shouldDisplayChat = enabledPages.indexOf(pathName) > -1
-
-  return {
-    getZopim: (callback) => {
-      let zendeskCallAttempts = 0
-      let interval = null
-
-      const findZopimInstance = () => {
-        if (window.$zopim) {
-          callback()
-        }
-
-        if (zendeskCallAttempts > 3 || window.$zopim) {
-          clearInterval(interval)
-        }
-
-        zendeskCallAttempts++
-      }
-
-      interval = setInterval(findZopimInstance, 1000)
-    },
-    chatButton: () => {
-      // https://support.zendesk.com/hc/en-us/articles/203661356
-      if (shouldDisplayChat) {
-        window.$zopim(() => {
-          window.$zopim.livechat.button.show()
-
-          window.$zopim.livechat.window.onHide(() => {
-            window.$zopim.livechat.button.show()
-          })
-        })
-      } else {
-        window.$zopim(() => (window.$zopim.livechat.hideAll()))
-      }
-    },
+window.zESettings = {
+  webWidget: {
+    color: {
+      launcherText: '#FFFFFF'
+    }
   }
 }
 
-export default zendesk
+export const zeStart = () => {
+  const RETRY_WAIT = 1000
+  const MAX_ATTEMPTS_NUMBER = 3
 
+  let interval = null
+  let currentAttemptNumber = 0
+
+  return new Promise((resolve, reject) => {
+    const findZendeskInstance = () => {
+      if (window.zE) {
+        zeInstance = window.zE
+
+        resolve()
+      }
+
+      if (currentAttemptNumber > MAX_ATTEMPTS_NUMBER) {
+        clearInterval(interval)
+
+        reject(
+          new Error(notFoundErrorMessage)
+        )
+      }
+
+      currentAttemptNumber++
+    }
+
+    interval = setInterval(findZendeskInstance, RETRY_WAIT)
+  })
+}
+
+export const zeChatButtonSetUp = (pathName) => {
+  const shouldDisplayChat = enabledPages.indexOf(pathName) > -1
+
+  if (!zeInstance) {
+    throw new Error(notFoundErrorMessage)
+  }
+
+  if (shouldDisplayChat) {
+    zeInstance('webWidget', 'show')
+  } else {
+    zeInstance('webWidget', 'hide')
+  }
+}
