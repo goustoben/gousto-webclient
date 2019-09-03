@@ -22,6 +22,16 @@ describe('MoveRecipeButton', () => {
     expect(wrapper.text()).toContain('Add to box')
   })
 
+  test('should render text for shortlist full if fromBox is true and limit reached in shortlist', () => {
+    wrapper.setProps({ fromBox: true, isShortlistLimitReached: true })
+    expect(wrapper.text()).toContain('Shortlist full')
+  })
+
+  test('should render text for box full if fromBox is false and limit reached in basket', () => {
+    wrapper.setProps({ fromBox: false, isBasketLimitReached: true })
+    expect(wrapper.text()).toContain('Box full')
+  })
+
   test('should call moveToBox when click if fromBox false', () => {
     const moveToBoxSpy = jest.fn()
     const moveToShortlistSpy = jest.fn()

@@ -5,6 +5,7 @@ import css from './MoveRecipeButton.css'
 const MoveRecipeButton = ({ fromBox, recipeId, isBasketLimitReached, isShortlistLimitReached, moveToBox, moveToShortlist }) => {
   const arrowStyle = fromBox ? css.arrowDown : css.arrowUp
   const buttonText = fromBox ? 'Move to shortlist' : 'Add to box'
+  const disableText = fromBox ? 'Shortlist full' : 'Box full'
   const disableButton = fromBox ? isShortlistLimitReached : isBasketLimitReached
   const style = fromBox ? css.moveFromButton : css.addToButton
   const buttonStyle = disableButton ? `${style} ${css.disableButton}` : style
@@ -14,7 +15,7 @@ const MoveRecipeButton = ({ fromBox, recipeId, isBasketLimitReached, isShortlist
     <div className={css.moveButtonWrapper}>
       <button type="button" disabled={disableButton} className={buttonStyle} onClick={() => callToAction(recipeId)}>
         <i className={arrowStyle}></i>
-        {buttonText}
+        {disableButton ? disableText : buttonText}
       </button>
     </div>
   )
