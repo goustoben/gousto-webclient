@@ -1,9 +1,15 @@
 import { connect } from 'react-redux'
 import actionTypes from 'actions/actionTypes'
 import actions from 'actions'
+import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
+import { getShortlistTutorialFirstStep, getShortlistTutorialSecondStep } from 'selectors/tutorial'
 import BoxSummaryMobile from './BoxSummaryMobile'
+
+const shouldShortlistTutorialShow = (state) => (
+  getShortlistTutorialFirstStep(state) && !getShortlistTutorialSecondStep(state)
+)
 
 const mapStateToProps = (state) => ({
   date: state.basket.get('date'),
@@ -22,12 +28,16 @@ const mapStateToProps = (state) => ({
   basketCheckedOut: state.pending.get(actionTypes.BASKET_CHECKOUT),
   hasUnavailableRecipes: Boolean(getUnavailableRecipeIds(state).size),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
+  shouldShowTutorialStep2: shouldShortlistTutorialShow(state)
+
 })
 
 const BoxSummaryMobileContainer = connect(mapStateToProps, {
   boxDetailsVisibilityChange: actions.boxSummaryVisibilityChange,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
   boxSummaryNext: actions.boxSummaryNext,
+  incrementTutorialViewed,
+  tutorialTracking,
 })(BoxSummaryMobile)
 
 export default BoxSummaryMobileContainer

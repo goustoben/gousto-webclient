@@ -11,6 +11,7 @@ import Description from 'BoxSummary/Description'
 import Overlay from 'Overlay'
 import BrowseCTAButton from 'BoxSummary/BrowseCTAButton'
 import BrowseCTA from 'BoxSummary/BrowseCTA'
+import { ShortlistTutorial } from 'routes/Menu/ShortlistTutorial'
 
 jest.mock('utils/DOMhelper', () => ({
   getBoundingClientRect: () => ({
@@ -143,7 +144,7 @@ describe('BoxSummaryMobile', () => {
     const clickSpy = jest.fn()
 
     wrapper = shallow(<BoxSummaryMobile {...requiredProps} showDetails basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} basketCheckedOut />)
-    wrapper.find('div').at(6).simulate('click')
+    wrapper.find('.closeBtn').simulate('click')
     expect(basketRestorePreviousValuesSpy.mock.calls).toHaveLength(1)
     expect(clickSpy.mock.calls).toHaveLength(1)
     expect(clickSpy.mock.calls[0][0]).toEqual(false)
@@ -200,6 +201,27 @@ describe('BoxSummaryMobile', () => {
 
       expect(boxDetailsVisibilityChange.mock.calls).toHaveLength(1)
       expect(boxDetailsVisibilityChange.mock.calls[0]).toEqual([true, 'mobile'])
+    })
+  })
+
+  describe('shortlistTutorial', () => {
+    test('should render ShortlistTutorial if shouldShowTutorialStep2 true', () => {
+      wrapper.setProps({ shouldShowTutorialStep2: true })
+      expect(wrapper.find(ShortlistTutorial)).toHaveLength(1)
+    })
+
+    test('should close ShortlistTutorial if shouldShowTutorialStep2 true and click on open box summary', () => {
+      const incrementTutorialViewedSpy = jest.fn()
+      const tutorialTrackingSpy = jest.fn()
+      wrapper.setProps({
+        shouldShowTutorialStep2: true,
+        incrementTutorialViewed: incrementTutorialViewedSpy,
+        tutorialTracking: tutorialTrackingSpy
+      })
+
+      wrapper.find('.barmobile').children().first().simulate('click', { preventDefault: () => { }, target: { className: '' } })
+      expect(incrementTutorialViewedSpy).toHaveBeenCalled()
+      expect(tutorialTrackingSpy).toHaveBeenCalled()
     })
   })
 })

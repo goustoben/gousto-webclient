@@ -45,10 +45,13 @@ describe('BoxSummaryMobileContainer', () => {
               actionTypes: {
                 ORDER_SAVE: actionTypes.ORDER_SAVE
               }
+            }),
+            tutorial: Immutable.fromJS({
+              viewed: {}
             })
           }),
-          subscribe: () => {},
-          dispatch: () => {},
+          subscribe: () => { },
+          dispatch: () => { },
         },
       },
     })

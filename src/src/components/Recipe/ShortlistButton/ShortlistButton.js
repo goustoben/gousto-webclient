@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Svg from 'Svg'
 import classnames from 'classnames'
+import { ShortlistTutorial } from 'routes/Menu/ShortlistTutorial'
 import css from './ShortlistButton.css'
 
 class ShortlistButton extends React.PureComponent {
@@ -15,7 +16,11 @@ class ShortlistButton extends React.PureComponent {
     stock: PropTypes.number,
     id: PropTypes.string,
     position: PropTypes.number,
-    display: PropTypes.string
+    display: PropTypes.string,
+    showShortListTutorial: PropTypes.bool,
+    shortlistTutorialStep1Viewed: PropTypes.bool,
+    incrementTutorialViewed: PropTypes.func,
+    tutorialTracking: PropTypes.func
   }
 
   static defaultProps = {
@@ -27,13 +32,22 @@ class ShortlistButton extends React.PureComponent {
     stock: 0,
     id: '',
     position: 0,
-    display: ''
+    display: '',
+    showShortListTutorial: false,
+    shortlistTutorialStep1Viewed: false
+  }
+
+  closeTutorialStep1 = () => {
+    const { incrementTutorialViewed, tutorialTracking } = this.props
+    const tutorialName = 'shortlistStep1'
+    incrementTutorialViewed(tutorialName)
+    tutorialTracking(tutorialName, 0, true)
   }
 
   onShortlistClick = () => {
     const { removeFromShortlist, recipeInShortlist, id, shortlistLimitReached } = this.props
 
-    if(recipeInShortlist) {
+    if (recipeInShortlist) {
       removeFromShortlist(id)
     } else if (!shortlistLimitReached) {
       this.handleAdd()
@@ -41,10 +55,13 @@ class ShortlistButton extends React.PureComponent {
   }
 
   handleAdd = () => {
-    const { addToShortlist, menuBrowseCTAVisibilityChange, id, position, stock } = this.props
+    const { addToShortlist, menuBrowseCTAVisibilityChange, id, position, stock, shortlistTutorialStep1Viewed } = this.props
     const positionObject = { position }
 
     if (stock !== null) {
+      if (!shortlistTutorialStep1Viewed) {
+        this.closeTutorialStep1()
+      }
       addToShortlist(id, false, positionObject)
     } else {
       menuBrowseCTAVisibilityChange(true)
@@ -52,7 +69,7 @@ class ShortlistButton extends React.PureComponent {
   }
 
   render() {
-    const { shortlistLimitReached, recipeInShortlist, display } = this.props
+    const { shortlistLimitReached, recipeInShortlist, display, showShortListTutorial } = this.props
     const heartIcon = recipeInShortlist ? "icon_shortlist_heart_selected" : "icon_shortlist_heart_deselected"
     const classes = classnames(
       (recipeInShortlist ? css.redHeartButton : (shortlistLimitReached ? css.greyHeartButton : css.blueHeartButton)),
@@ -60,8 +77,9 @@ class ShortlistButton extends React.PureComponent {
     )
 
     return (
-      <button type="button" disabled={shortlistLimitReached &&!recipeInShortlist} onClick={this.onShortlistClick} onKeyPress={this.onShortlistClick} className={classes} tabIndex={0}>
-        <Svg fileName={heartIcon} className={css.heartIcon}/>
+      <button type="button" disabled={shortlistLimitReached && !recipeInShortlist} data-slug="heart" onClick={this.onShortlistClick} onKeyPress={this.onShortlistClick} className={classes} tabIndex={0}>
+        <Svg fileName={heartIcon} className={css.heartIcon} />
+        {showShortListTutorial && <ShortlistTutorial />}
       </button>
     )
   }

@@ -11,7 +11,7 @@ import actions from 'actions/tracking'
 
 import css from './RecipeList.css'
 
-class RecipeList extends React.Component {
+class RecipeList extends React.PureComponent {
   static propTypes = {
     allRecipesList: PropTypes.instanceOf(Immutable.List),
     cutoffDate: PropTypes.string,
@@ -40,27 +40,6 @@ class RecipeList extends React.Component {
 
   static contextTypes = {
     store: PropTypes.object.isRequired,
-  }
-
-  shouldComponentUpdate(nextProps) {
-    const needsUpdate = ['mobileGridView', 'filterMenuOpen', 'recipesStore', 'cutoffDate', 'numPortions', 'isLoading', 'featuredRecipes', 'outOfStockRecipes', 'remainingRecipes', 'sortedRecipes']
-
-    let shouldUpdate = false
-    needsUpdate.some((prop) => {
-      if (this.props[prop] !== nextProps[prop]) {
-        shouldUpdate = true
-
-        return shouldUpdate
-      }
-
-      return false
-    })
-
-    if (nextProps.isLoading) {
-      shouldUpdate = false
-    }
-
-    return shouldUpdate
   }
 
   componentDidMount() {
@@ -112,7 +91,7 @@ class RecipeList extends React.Component {
       featuredRecipes,
       isCurrentCollectionRecommendation,
       collectionFilterChange,
-      sortedRecipes
+      sortedRecipes,
     } = this.props
     let index = 0
 
@@ -122,6 +101,7 @@ class RecipeList extends React.Component {
       const range = getFoodBrand(recipe)
       const isFineDineIn = range.get('slug') === 'fine-dine-in'
       const view = this.getView(mobileGridView, isFeatured, isFineDineIn)
+      const showShortlistFirstStep = index === 0
 
       index += 1
 
@@ -150,6 +130,7 @@ class RecipeList extends React.Component {
           tasteScore={recipe.getIn(['recommendationData', 'score'])}
           fiveADay={recipe.get('fiveADay')}
           diet={recipe.get('dietType')}
+          showShortlistFirstStep={showShortlistFirstStep}
         />
       )
     })

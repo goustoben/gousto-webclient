@@ -11,11 +11,12 @@ import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
 import RecipeList from 'BoxSummary/RecipeList'
 import { getBoundingClientRect } from 'utils/DOMhelper'
 import boxSummaryButtonCss from 'BoxSummary/BoxSummaryButton/BoxSummaryButton.css'
+import { ShortlistTutorial } from 'routes/Menu/ShortlistTutorial'
 import css from './BoxSummaryMobile.css'
 import BrowseCTA from '../BrowseCTA'
 import BrowseCTAButton from '../BrowseCTAButton'
 
-class BoxSummaryMobile extends React.Component {
+class BoxSummaryMobile extends React.PureComponent {
   static propTypes = {
     date: PropTypes.string,
     deliveryDays: PropTypes.instanceOf(Immutable.Map),
@@ -37,6 +38,9 @@ class BoxSummaryMobile extends React.Component {
     boxSummaryNext: PropTypes.func.isRequired,
     displayOptions: PropTypes.instanceOf(Immutable.List),
     maxRecipesNum: PropTypes.number,
+    shouldShowTutorialStep2: PropTypes.bool,
+    incrementTutorialViewed: PropTypes.func,
+    tutorialTracking: PropTypes.func,
   }
 
   static defaultProps = {
@@ -44,6 +48,8 @@ class BoxSummaryMobile extends React.Component {
     displayOptions: Immutable.fromJS([]),
     maxRecipesNum: config.maxRecipesNum,
     basketCheckedOut: false,
+    incrementTutorialViewed: () => { },
+    tutorialTracking: () => { },
   }
 
   state = {
@@ -107,9 +113,20 @@ class BoxSummaryMobile extends React.Component {
     this.props.boxDetailsVisibilityChange(false, 'mobile')
   }
 
+  closeTutorialStep2 = () => {
+    const { incrementTutorialViewed, tutorialTracking } = this.props
+    const tutorialName = 'shortlistStep2'
+    incrementTutorialViewed(tutorialName)
+    tutorialTracking(tutorialName, 1, true)
+  }
+
   handleMobileClick = (e) => {
+    const { shouldShowTutorialStep2 } = this.props
     if (e.target && e.target.className.indexOf(boxSummaryButtonCss.submitButton) === -1) {
       this.openMobile()
+      if (shouldShowTutorialStep2) {
+        this.closeTutorialStep2()
+      }
     }
   }
 
@@ -158,13 +175,15 @@ class BoxSummaryMobile extends React.Component {
   )
 
   renderBanner = () => {
-    const { date, disabled, displayOptions, maxRecipesNum, menuRecipesStore, recipes, showDetails } = this.props
+    const { date, disabled, displayOptions, maxRecipesNum, menuRecipesStore, recipes, showDetails, shouldShowTutorialStep2 } = this.props
     const iconClass = showDetails ? css.arrowDown : css.arrowUp
 
     return (
       <div className={css.barmobile} ref={(element) => { this.ref = element }}>
         <div onClick={this.handleMobileClick}>
-          <p className={css.iconMobile}><span className={iconClass} /></p>
+          <div className={css.iconMobile}>
+            <span className={iconClass} data-slug="box-summary-mobile" />{shouldShowTutorialStep2 && <ShortlistTutorial />}
+          </div>
           <Title view="mobile" date={date} finalisedSlot={this.props.slotId !== ''} />
         </div>
         <div className={css.summaryMobile}>
