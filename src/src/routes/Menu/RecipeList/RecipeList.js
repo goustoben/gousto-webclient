@@ -101,7 +101,7 @@ class RecipeList extends React.PureComponent {
       const range = getFoodBrand(recipe)
       const isFineDineIn = range.get('slug') === 'fine-dine-in'
       const view = this.getView(mobileGridView, isFeatured, isFineDineIn)
-      const showShortListFirstStep = index === 0
+      const showShortlistFirstStep = index === 0
 
       index += 1
 
@@ -130,7 +130,7 @@ class RecipeList extends React.PureComponent {
           tasteScore={recipe.getIn(['recommendationData', 'score'])}
           fiveADay={recipe.get('fiveADay')}
           diet={recipe.get('dietType')}
-          showShortListFirstStep={showShortListFirstStep}
+          showShortlistFirstStep={showShortlistFirstStep}
         />
       )
     })

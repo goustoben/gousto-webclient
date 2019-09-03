@@ -23,7 +23,7 @@
 
 .navBarContainerFixed {
 	composes: navBarContainer;
-	z-index: 501;
+	z-index: 90;
 	position: fixed;
 	top: 0;
 }

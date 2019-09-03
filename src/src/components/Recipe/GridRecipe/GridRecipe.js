@@ -19,7 +19,7 @@ import { AttributeGrid } from '../AttributeGrid'
 import { ShortlistButton } from '../ShortlistButton'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton, showShortlistButton, showShortListFirstStep }) => (
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton, showShortlistButton, showShortlistFirstStep }) => (
     <div>
       <div className={css.recipeDetails}>
         <span onClick={onClick} className={css.link}>
@@ -73,7 +73,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
           <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
           <div className={css.buttonContainer}>
             {showShortlistButton &&
-              <ShortlistButton id={id} stock={stock} position={position} showShortListFirstStep={showShortListFirstStep} />
+              <ShortlistButton id={id} stock={stock} position={position} showShortlistFirstStep={showShortlistFirstStep} />
             }
             <div className={css.addButton}>
               <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
@@ -83,7 +83,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
         </div>
       </div>
     </div>
-)
+  )
 
 GridRecipe.propTypes = {
   ...recipePropTypes,
@@ -114,7 +114,7 @@ GridRecipe.propTypes = {
   selectFoodBrand: PropTypes.func,
   showRecipeDetailsButton: PropTypes.bool,
   showShortlistButton: PropTypes.bool,
-  showShortListFirstStep: PropTypes.bool,
+  showShortlistFirstStep: PropTypes.bool,
 }
 
 GridRecipe.defaultProps = {
@@ -127,7 +127,7 @@ GridRecipe.defaultProps = {
   cookingTime: 0,
   features: Immutable.Map({}),
   useWithin: '',
-  showShortListFirstStep: false
+  showShortlistFirstStep: false
 }
 
 export default GridRecipe
