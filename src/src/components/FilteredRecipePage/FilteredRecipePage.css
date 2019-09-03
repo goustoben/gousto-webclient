@@ -1,4 +1,4 @@
-@value comfortaaFontStack from 'styles/typography.css';
+@value axiformaFontStack from 'styles/typography.css';
 @value ScreenSMMax, ScreenSMMin from 'styles/screenSizes.css';
 @value White from 'styles/colors.css';
 
@@ -12,7 +12,7 @@
   background-color: White;
   z-index: 12;
   width: 100%;
-  font-family: comfortaaFontStack;
+  font-family: axiformaFontStack;
   display: flex;
   align-items: center;
   padding-top: 10px;
