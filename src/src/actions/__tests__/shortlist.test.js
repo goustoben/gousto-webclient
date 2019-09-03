@@ -55,34 +55,36 @@ describe('shortlist actions', () => {
         expect(dispatch).toHaveBeenCalledWith({ shortlistLimitReached: true, type: actionTypes.SHORTLIST_LIMIT_REACHED })
       })
 
-      test('should dispatch remove recipe from basket if is there', () => {
-        const basket = {
-          basket: Immutable.fromJS({
-            numPortions: 2,
-            recipes: {
-              '123': 1
-            },
-            shortlist: {}
-          }),
-        }
-        const getNewState = jest.fn()
-          .mockReturnValueOnce({
-            ...mainState,
-            ...basket
-          })
-          .mockReturnValueOnce({
-            ...mainState,
-            ...basket
-          })
-          .mockReturnValue({
-            ...mainState,
-          })
-        shortlistLimitReached.mockReturnValue(false)
-        shortlistRecipeAdd('123', false, recipeInfo)(dispatch, getNewState)
-        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
-          type: actionTypes.BASKET_RECIPE_REMOVE,
-          recipeId: '123',
-        }))
+      describe('when recipe in basket', () => {
+        test('should dispatch remove recipe from basket', () => {
+          const basket = {
+            basket: Immutable.fromJS({
+              numPortions: 2,
+              recipes: {
+                '123': 1
+              },
+              shortlist: {}
+            }),
+          }
+          const getNewState = jest.fn()
+            .mockReturnValueOnce({
+              ...mainState,
+              ...basket
+            })
+            .mockReturnValueOnce({
+              ...mainState,
+              ...basket
+            })
+            .mockReturnValue({
+              ...mainState,
+            })
+          shortlistLimitReached.mockReturnValue(false)
+          shortlistRecipeAdd('123', false, recipeInfo)(dispatch, getNewState)
+          expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: actionTypes.BASKET_RECIPE_REMOVE,
+            recipeId: '123',
+          }))
+        })
       })
     })
 

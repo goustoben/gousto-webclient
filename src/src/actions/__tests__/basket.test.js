@@ -835,39 +835,41 @@ describe('basket actions', () => {
       })
     })
 
-    test('should remove recipe from shortlist if is there', () => {
-      getStateSpy = jest.fn().mockReturnValue({
-        basket: Immutable.Map({
-          recipes: Immutable.Map([['123', 1]]),
-          numPortions: 2,
-          limitReached: false,
-          shortlist: Immutable.fromJS({
-            shortlistRecipes: {
-              '123': 1
-            }
+    describe('when recipe in shortlist', () => {
+      test('should remove recipe from shortlist', () => {
+        getStateSpy = jest.fn().mockReturnValue({
+          basket: Immutable.Map({
+            recipes: Immutable.Map([['123', 1]]),
+            numPortions: 2,
+            limitReached: false,
+            shortlist: Immutable.fromJS({
+              shortlistRecipes: {
+                '123': 1
+              }
+            })
+          }),
+          filters: Immutable.Map({
+            currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            recipeGroup: {
+              slug: 'test-food-brand'
+            },
+            dietTypes: Immutable.List(),
+            newRecipes: false,
+            dietaryAttributes: Immutable.List()
+          }),
+          menuRecipeStock: Immutable.fromJS({
+            123: { 2: 30 },
+          }),
+          menuRecipes: Immutable.fromJS({
+            123: {},
           })
-        }),
-        filters: Immutable.Map({
-          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          recipeGroup: {
-            slug: 'test-food-brand'
-          },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes: Immutable.List()
-        }),
-        menuRecipeStock: Immutable.fromJS({
-          123: { 2: 30 },
-        }),
-        menuRecipes: Immutable.fromJS({
-          123: {},
         })
-      })
 
-      basketRecipeAdd('123', null, false)(dispatch, getStateSpy)
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.SHORTLIST_RECIPE_REMOVE,
-        recipeId: '123',
+        basketRecipeAdd('123', null, false)(dispatch, getStateSpy)
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.SHORTLIST_RECIPE_REMOVE,
+          recipeId: '123',
+        })
       })
     })
   })
