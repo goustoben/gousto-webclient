@@ -1,5 +1,6 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import classnames from 'classnames'
 import css from './MoveRecipeButton.css'
 
 const MoveRecipeButton = ({ fromBox, recipeId, isBasketLimitReached, isShortlistLimitReached, moveToBox, moveToShortlist }) => {
@@ -8,16 +9,15 @@ const MoveRecipeButton = ({ fromBox, recipeId, isBasketLimitReached, isShortlist
   const disableText = fromBox ? 'Shortlist full' : 'Box full'
   const disableButton = fromBox ? isShortlistLimitReached : isBasketLimitReached
   const style = fromBox ? css.moveFromButton : css.addToButton
-  const buttonStyle = disableButton ? `${style} ${css.disableButton}` : style
   const callToAction = fromBox ? moveToShortlist : moveToBox
 
   return (
     <div className={css.moveButtonWrapper}>
-      <button type="button" disabled={disableButton} className={buttonStyle} onClick={() => callToAction(recipeId)}>
-        <i className={arrowStyle}></i>
+      <button type="button" disabled={disableButton} className={classnames(style, { [css.disableButton]: disableButton })} onClick={() => callToAction(recipeId)}>
+        <span className={arrowStyle}></span>
         {disableButton ? disableText : buttonText}
       </button>
-    </div>
+    </div >
   )
 }
 

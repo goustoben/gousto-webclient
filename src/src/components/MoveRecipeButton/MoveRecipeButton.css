@@ -2,14 +2,14 @@
 @value avenirHeavyFontStack from 'styles/typography.css';
 
 .moveButtonWrapper {
-  padding-left: 66px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid Pepper30;
+	padding-left: 4.125rem;
+	padding-bottom: 8px;
+	border-bottom: 1px solid Pepper30;
 	composes: marginXSTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .moveButton {
-  border: 1px solid Duckegg;
+	border: 1px solid Duckegg;
 	background-color: White;
 	border-radius: 25px;
 	font-family: avenirHeavyFontStack;
@@ -19,13 +19,13 @@
 }
 
 .moveFromButton {
-  composes: moveButton;
-  color: Radish;
+	composes: moveButton;
+	color: Radish;
 }
 
 .addToButton {
-  composes: moveButton;
-  color: Bluecheese;
+	composes: moveButton;
+	color: Bluecheese;
 }
 
 .disableButton {
