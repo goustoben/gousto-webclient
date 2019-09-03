@@ -73,6 +73,19 @@ const login = (email, password, rememberMe, orderId = '') => (
       await dispatch(authActions.authIdentify())
 
       const userRoles = getState().auth.get('roles', Immutable.List([]))
+
+      const signupDate = getState().user.getIn(['subscription', 'created_at'], '')
+
+      dispatch({
+        optimizelyData: {
+          type: 'user',
+          eventName: 'user_subscription_start',
+          attributes: {
+            signupDate,
+          }
+        }
+      })
+
       if (userRoles.size > 0 && authorise(userRoles)) {
         dispatch(authActions.userRememberMe(rememberMe))
 
@@ -150,6 +163,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
   const location = documentLocation()
   const onCheckout = location.pathname.includes('check-out')
   let destination = false
+
   if (!onCheckout) {
     destination = loginRedirect(location, userIsAdmin, features)
     if (destination && destination !== config.client.myDeliveries2) {
