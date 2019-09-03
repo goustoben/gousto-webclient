@@ -27,3 +27,11 @@
   composes: moveButton;
   color: Bluecheese;
 }
+
+.arrowDown {
+	composes: fa-basic-class  fa-arrow-down from 'styles/vendor/font-awesome-module.css';
+}
+
+.arrowUp {
+	composes: fa-basic-class  fa-arrow-up from 'styles/vendor/font-awesome-module.css';
+}
