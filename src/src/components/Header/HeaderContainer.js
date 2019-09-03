@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
-import { getForceSignupWizard } from 'selectors/features'
+import { getForceSignupWizard, getAbandonBasket } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { Header } from './Header'
 
@@ -15,6 +15,7 @@ const mapStateToProps = (state) => ({
   features: state.features,
   fromJoin: getUserFromJoin(state),
   forceSignupWizardFeature: getForceSignupWizard(state),
+  shouldShowAbandonBasketModal: getAbandonBasket(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {
