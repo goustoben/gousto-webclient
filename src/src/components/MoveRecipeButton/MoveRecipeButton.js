@@ -2,21 +2,27 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import css from './MoveRecipeButton.css'
 
-const MoveRecipeButton = ({ fromBox, recipeId }) => {
+const MoveRecipeButton = ({ fromBox, recipeId, moveToBox, moveToShortlist }) => {
   const arrowStyle = fromBox ? css.arrowDown : css.arrowUp
   const buttonText = fromBox ? 'Move to shortlist' : 'Add to box'
   const style = fromBox ? css.moveFromButton : css.addToButton
+  const callToAction = fromBox ? moveToShortlist : moveToBox
 
   return (
     <div className={css.moveButtonWrapper}>
-      <button type="button" className={style}><i className={arrowStyle}></i> {buttonText}</button>
+      <button type="button" className={style} onClick={() => callToAction(recipeId)}>
+        <i className={arrowStyle}></i>
+        {buttonText}
+      </button>
     </div>
   )
 }
 
 MoveRecipeButton.propTypes = {
   fromBox: PropTypes.bool,
-  recipeId: PropTypes.string
+  recipeId: PropTypes.string,
+  moveToBox: PropTypes.func,
+  moveToShortlist: PropTypes.func
 }
 
 MoveRecipeButton.defaultProps = {

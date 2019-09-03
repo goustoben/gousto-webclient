@@ -21,4 +21,19 @@ describe('MoveRecipeButton', () => {
     wrapper.setProps({ fromBox: false })
     expect(wrapper.text()).toContain('Add to box')
   })
+
+  test('should call moveToBox when click if fromBox false', () => {
+    const moveToBoxSpy = jest.fn()
+    const moveToShortlistSpy = jest.fn()
+    wrapper.setProps({ fromBox: false, recipeId: '123', moveToBox: moveToBoxSpy, moveToShortlist: moveToShortlistSpy })
+    wrapper.find('button').simulate('click')
+    expect(moveToBoxSpy).toHaveBeenCalled()
+  })
+  test('should call moveToShortlistSpy when click if fromBox true', () => {
+    const moveToBoxSpy = jest.fn()
+    const moveToShortlistSpy = jest.fn()
+    wrapper.setProps({ fromBox: true, recipeId: '123', moveToBox: moveToBoxSpy, moveToShortlist: moveToShortlistSpy })
+    wrapper.find('button').simulate('click')
+    expect(moveToShortlistSpy).toHaveBeenCalled()
+  })
 })

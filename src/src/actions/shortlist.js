@@ -1,4 +1,5 @@
 import { shortlistLimitReached } from 'utils/basket'
+import { basketRecipeRemove } from 'actions/basket'
 import actionTypes from './actionTypes'
 import { getCurrentCollectionId } from '../selectors/filters'
 
@@ -34,6 +35,13 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
           recipeId,
           ...recipeInfo
         })
+        if (getState().basket.hasIn(['recipes', recipeId])) {
+          const numberOfRecipesInBasket = getState().basket.getIn(['recipes', recipeId])
+          for (let idx = 0; idx < numberOfRecipesInBasket; idx++) {
+
+            basketRecipeRemove(recipeId, '', force)(dispatch, getState)
+          }
+        }
 
         shortList = getState().basket.get('shortlist')
         reachedLimit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
