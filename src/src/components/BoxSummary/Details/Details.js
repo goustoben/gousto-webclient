@@ -5,10 +5,12 @@ import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import { getSlot } from 'utils/deliveries'
 import { getSurchargeItems } from 'utils/pricing'
+import { isAvailableRecipeList } from 'utils/recipe'
 
 import config from 'config'
 import { Button, Segment, Spinner } from 'goustouicomponents'
 import RecipeItem from 'Recipe/RecipeItem'
+import ShortlistItem from 'Recipe/ShortlistItem'
 import Receipt from 'Receipt'
 import Portions from 'BoxSummary/Details/Portions'
 import { MoveRecipeButton } from 'MoveRecipeButton'
@@ -69,12 +71,6 @@ class Details extends React.Component {
     return text
   }
 
-  recipeList = (recipeIds) => {
-    const { recipesStore } = this.props
-
-    return recipeIds.map((obj, id) => recipesStore.get(id)).filter(recipe => Boolean(recipe))
-  }
-
   slotTimes = () => {
     const { date, deliveryDays, slotId } = this.props
     const chosenSlot = getSlot(deliveryDays, date, slotId)
@@ -125,9 +121,10 @@ class Details extends React.Component {
       unavailableRecipeIds,
       shortlistFeatureEnabled,
       showRecipeDetailsOnClick
+      recipesStore,
     } = this.props
-    const okRecipeList = this.recipeList(okRecipeIds)
-    const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
+    const okRecipeList = isAvailableRecipeList(okRecipeIds, recipesStore)
+    const unavailableRecipeList = isAvailableRecipeList(unavailableRecipeIds, recipesStore)
     const numRecipes = basketSum(okRecipeIds)
     const ctaText = this.getCtaText(numRecipes)
     const displayCta = !displayOptions.contains('hideChooseRecipesCta') && ctaText
@@ -185,40 +182,47 @@ class Details extends React.Component {
             {
               displayOptions.contains('hideRecipeList')
                 ? null
-                : (
-                  <div className={css.recipeItems}>
+                : (<div>
+                    <div className={css.recipeItems}>
                     {okRecipeList.map(recipe => (
                       <span key={recipe.get('id')}>
-                        <RecipeItem
-                          key={recipe.get('id')}
-                          media={recipe.get('media')}
-                          title={recipe.get('title')}
-                          numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                          onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                          available
-                          showLine={!shortlistFeatureEnabled}
-                          onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                        />
-                        {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
+                      <RecipeItem
+                        key={recipe.get('id')}
+                        media={recipe.get('media')}
+                        title={recipe.get('title')}
+                        numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                        onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                        available
+                        showLine={!shortlistFeatureEnabled}
+                        onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                      />
+                      {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
                       </span>
                     )).toArray()}
-                    <span className={!menuFetchPending ? css.notAvailable : ''}>
-                      {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
-                      {unavailableRecipeList.map(recipe => (
-                        <RecipeItem
-                          key={recipe.get('id')}
-                          media={recipe.get('media')}
-                          title={recipe.get('title')}
-                          numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                          onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                          available={menuFetchPending}
-                          showLine
-                          onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                        />
-                      )).toArray()}
-                    </span>
-                  </div>
-                )
+                  <span className={!menuFetchPending ? css.notAvailable : ''}>
+                    {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
+                    {unavailableRecipeList.map(recipe => (
+                      <RecipeItem
+                        key={recipe.get('id')}
+                        media={recipe.get('media')}
+                        title={recipe.get('title')}
+                        numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                        onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                        available={menuFetchPending}
+                        showLine
+                        onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                      />
+                    )).toArray()}
+                  </span>
+                    </div>
+                    {shortlistFeatureEnabled &&
+                      <ShortlistItem
+                        numPortions={numPortions}
+                        available
+                        onImageClick={showRecipeDetailsOnClick}
+                      />
+                    }
+                   </div>)
             }
 
             <BoxProgressAlert numRecipes={numRecipes} />
