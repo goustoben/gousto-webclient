@@ -11,6 +11,7 @@ import {
   getSurchargePerPortion,
   getTaxonomyTags,
   roundUp,
+  isAvailableRecipeList
 } from 'utils/recipe'
 
 jest.mock('config', () => ({
@@ -289,6 +290,24 @@ describe('recipes', () => {
         expect(roundUp(0.756, 0.1)).toBe(0.8)
         expect(roundUp(1.543, 0.1)).toBe(1.6)
       })
+    })
+  })
+
+  describe('isAvailableRecipeList', () => {
+    test('should return recipes if available in store', () => {
+      const recipeIds = Immutable.Map({'1138': 1})
+      const recipesStore = Immutable.Map({'1138': Immutable.Map({"id": "1138"}), '1': Immutable.Map({"id": "1"})})
+      const result = isAvailableRecipeList(recipeIds, recipesStore)
+
+      expect(result).toEqual(Immutable.Map({'1138': Immutable.Map({"id": "1138"})}))
+    })
+
+    test('should return empty map if not available in store', () => {
+      const recipeIds = Immutable.Map({'123': 1})
+      const recipesStore = Immutable.Map({'1138': Immutable.Map({"id": "1138"}), '1': Immutable.Map({"id": "1"})})
+      const result = isAvailableRecipeList(recipeIds, recipesStore)
+
+      expect(result).toEqual(Immutable.Map({}))
     })
   })
 })
