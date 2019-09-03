@@ -42,7 +42,7 @@ class MyGousto extends React.PureComponent {
         <Section title="Your recent cookbook" alternateColour>
           <Cookbook />
         </Section>
-        <Section>
+        <Section title="Your Gousto wins" alternateColour>
           <ReferAFriend referralDetails={referralDetails} />
         </Section>
       </div>

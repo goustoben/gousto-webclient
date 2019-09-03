@@ -1,0 +1,85 @@
+@value import White, Coconut, Pomegranate from 'styles/colors.css';
+@value ScreenMDMin, ScreenSMMax, ScreenLGMin from 'styles/screenSizes.css';
+
+.rafWrapper {
+  display: flex;
+  background-color: White;
+  justify-content: center;
+
+  @media ScreenSMMax {
+    flex-wrap: wrap;
+  }
+}
+
+.rafImage {
+  max-width: 30%;
+  height: auto;
+  padding-right: 1rem;
+  
+  @media ScreenSMMax {
+    display: none;
+  }
+}
+
+.rafStampsWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  width: 50%;
+  align-items: center;
+  
+  @media ScreenSMMax {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+}
+
+.rafStampDetails {
+  text-align: center;
+  max-width: 13.75rem;
+  margin: 1.5rem 1rem;
+}
+
+.rafStamp {
+  width: 6.25rem;
+  height: 6.25rem;
+  margin: 0 auto;
+  margin-bottom: -3.125rem;
+  position: relative;
+}
+
+.iconStamp {
+  width: 100%;
+  height: 100%;
+}
+
+.rafDetailsValue {
+  font-size: 2.5rem;
+  position: absolute;
+  color: white;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.rafDetailsLabel {
+  padding: 3.75rem 1.25rem 0.75rem;
+  background-color: Coconut;
+  border-radius: 0.5rem;
+}
+
+.shareExperience {
+  padding: 0 2rem 0 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  @media ScreenMDMin {
+    width: 25%;
+  }
+}
+
+.shareHeading {
+  font-size: 1.5rem;
+}
