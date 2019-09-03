@@ -2,6 +2,7 @@ import { push } from 'react-router-redux'
 import Immutable from 'immutable'
 
 import basketActions from 'actions/basket'
+import { shortlistRecipeRemove } from 'actions/shortlist'
 import { limitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
 import { getUserOrderById } from 'utils/user'
@@ -53,7 +54,7 @@ export const basketGiftAdd = (giftId, type = '') => (
           giftId,
         })
       } else {
-        logger.error({message: `Cannot add gift to basket since ${giftId} not found in products store`})
+        logger.error({ message: `Cannot add gift to basket since ${giftId} not found in products store` })
       }
     } else {
       logger.info(`${type} gifts cannot be added to basket`)
@@ -169,7 +170,7 @@ export const basketOrderItemsLoad = (orderId, order = null, types = ['product', 
           break
         }
         default:
-          logger.error({message: `Cannot add ${type} items to basket`})
+          logger.error({ message: `Cannot add ${type} items to basket` })
         }
       })
     })
@@ -201,10 +202,10 @@ export const basketProductAdd = (productId, view = null, force = false) => (
           })
         }
       } else {
-        logger.error({message: `Cannot add product ${productId} to basket`})
+        logger.error({ message: `Cannot add product ${productId} to basket` })
       }
     } else {
-      logger.error({message: `Cannot add product to basket since ${productId} not found in product store`})
+      logger.error({ message: `Cannot add product to basket since ${productId} not found in product store` })
     }
   }
 )
@@ -230,7 +231,7 @@ export const basketProductRemove = (productId, view) => (
         stock: { [productId]: 1 },
       })
     } else {
-      logger.error({message: `Cannot remove product from basket since ${productId} not found in product store`})
+      logger.error({ message: `Cannot remove product from basket since ${productId} not found in product store` })
     }
   }
 )
@@ -353,7 +354,7 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
             time_frame: getCurrentTotalTime(state),
             source: !!selectedFoodBrand && selectedFoodBrand.slug,
             taste_score: recipeInfo && recipeInfo.score,
-            recipe_count: basket.get('recipes').size+1,// The action is performed in the same time so the size is not updated yet
+            recipe_count: basket.get('recipes').size + 1,// The action is performed in the same time so the size is not updated yet
           },
         })
 
@@ -366,6 +367,11 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
           },
         })
         state = getState()
+        const shortlistRecipes = state.basket.getIn(['shortlist', 'shortlistRecipes'])
+        if (shortlistRecipes && shortlistRecipes.has(recipeId)) {
+          shortlistRecipeRemove(recipeId)(dispatch, getState)
+        }
+
         const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock, undefined, maxRecipesNum)
         if (reachedLimit) {
           dispatch({
@@ -548,8 +554,8 @@ export const basketCheckedOut = (numRecipes, view) => (
     try {
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
 
-      if(isAuthenticated) {
-        if(orders.get(basketOrderId)) {
+      if (isAuthenticated) {
+        if (orders.get(basketOrderId)) {
           const orderItems = orders.get(basketOrderId).get('recipeItems')
           if (orderItems.size) {
             dispatch({
@@ -607,7 +613,7 @@ export const basketCheckedOut = (numRecipes, view) => (
             })
           }
 
-        } else if(editingBox) {
+        } else if (editingBox) {
           dispatch({
             type: actionTypes.TRACKING,
             trackingData: {
@@ -674,7 +680,7 @@ export const basketCheckedOut = (numRecipes, view) => (
         },
       })
     }
-    catch(err) {
+    catch (err) {
       dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, true))
       logger.error(err)
     }
@@ -744,7 +750,7 @@ export const basketUpdateProducts = (isOrderConfirmation = false) => (
         orderDetails: Immutable.fromJS(order),
       })
 
-      if(isOrderConfirmation) {
+      if (isOrderConfirmation) {
         dispatch(orderConfirmationUpdateOrderTracking())
       }
 

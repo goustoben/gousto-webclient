@@ -16,7 +16,8 @@ jest.mock('utils/logger', () => ({
 jest.mock('utils/basket', () => ({
   okRecipes: recipes => recipes,
   limitReached: () => false,
-  basketSumMock: () => false
+  basketSumMock: () => false,
+  shortlistLimitReached: () => false
 }))
 
 jest.mock('actions/orderConfirmation', () => ({
@@ -88,7 +89,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch Order Edited tracking action for subscription box', async() => {
+    test('should dispatch Order Edited tracking action for subscription box', async () => {
       await basketCheckedOut(2, 'grid')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
@@ -119,7 +120,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch Order Edited tracking action for transactional box', async() => {
+    test('should dispatch Order Edited tracking action for transactional box', async () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
@@ -185,7 +186,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch Order Place tracking action for transactional box', async() => {
+    test('should dispatch Order Place tracking action for transactional box', async () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
@@ -250,7 +251,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch Order Place tracking action for subscription box', async() => {
+    test('should dispatch Order Place tracking action for subscription box', async () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
@@ -313,7 +314,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch  BASKET_CHECKOUT tracking with dietaryAttributes', async() => {
+    test('should dispatch  BASKET_CHECKOUT tracking with dietaryAttributes', async () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
@@ -601,7 +602,7 @@ describe('basket actions', () => {
         type: 'BASKET_CHECKOUT_PROCEED',
         trackingData: {
           actionType: 'BASKET_CHECKOUT_PROCEED',
-          basket:  Immutable.fromJS({
+          basket: Immutable.fromJS({
             orderId: '179',
           }),
           dietary_attribute: ['dairy-free'],
@@ -617,6 +618,9 @@ describe('basket actions', () => {
           recipes: Immutable.Map([['123', 1]]),
           numPortions: 2,
           limitReached: false,
+          shortlist: Immutable.fromJS({
+            shortlistRecipes: {}
+          })
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
@@ -711,7 +715,7 @@ describe('basket actions', () => {
           },
           dietTypes: Immutable.List(),
           newRecipes: false,
-          dietaryAttributes:Immutable.List()
+          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 0, 4: 30 },
@@ -769,7 +773,7 @@ describe('basket actions', () => {
           },
           dietTypes: Immutable.List(),
           newRecipes: false,
-          dietaryAttributes:Immutable.List()
+          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30 },
@@ -798,7 +802,7 @@ describe('basket actions', () => {
           },
           dietTypes: Immutable.List(),
           newRecipes: false,
-          dietaryAttributes:Immutable.List()
+          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 0, 4: 30 },
@@ -828,6 +832,42 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: false,
+      })
+    })
+
+    test('should remove recipe from shortlist if is there', () => {
+      getStateSpy = jest.fn().mockReturnValue({
+        basket: Immutable.Map({
+          recipes: Immutable.Map([['123', 1]]),
+          numPortions: 2,
+          limitReached: false,
+          shortlist: Immutable.fromJS({
+            shortlistRecipes: {
+              '123': 1
+            }
+          })
+        }),
+        filters: Immutable.Map({
+          currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+          recipeGroup: {
+            slug: 'test-food-brand'
+          },
+          dietTypes: Immutable.List(),
+          newRecipes: false,
+          dietaryAttributes: Immutable.List()
+        }),
+        menuRecipeStock: Immutable.fromJS({
+          123: { 2: 30 },
+        }),
+        menuRecipes: Immutable.fromJS({
+          123: {},
+        })
+      })
+
+      basketRecipeAdd('123', null, false)(dispatch, getStateSpy)
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.SHORTLIST_RECIPE_REMOVE,
+        recipeId: '123',
       })
     })
   })

@@ -1,3 +1,3 @@
 module.exports = {
-  maxShortlistRecipesNum: 5
+  maxShortlistRecipesNum: 50
 }
