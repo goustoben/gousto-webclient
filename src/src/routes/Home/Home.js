@@ -122,7 +122,8 @@ class Home extends React.Component {
           }]}
         />
         <PromoBanner />
-        <div id="here">{ this.props.nddFeature }</div>
+        { this.props.nddFeature && <div id="ndd">TRUE</div> }
+        { !this.props.nddFeature && <div id="ndd">FALSE</div> }
         <HomeSections
           modules={modules}
           testimonials={{
