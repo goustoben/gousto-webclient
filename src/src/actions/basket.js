@@ -318,13 +318,13 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
     const numPortions = getState().basket.get('numPortions')
 
     if (force) {
-      const state = getState()
       dispatch({
         type: actionTypes.BASKET_RECIPE_ADD,
         recipeId,
         ...recipeInfo,
       })
-      const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock, true)
+      const { basket, menuRecipes, menuRecipeStock } = getState()
+      const reachedLimit = limitReached(basket, menuRecipes, menuRecipeStock, true)
       dispatch({
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: reachedLimit,
