@@ -77,7 +77,6 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     const { isAuthenticated, enableStorystream, variant } = this.props
     const modules = this.getModules()
     let ctaUri
@@ -122,6 +121,7 @@ class Home extends React.Component {
           }]}
         />
         <PromoBanner />
+        <div>{ this.props.nddFeature }</div>
         <HomeSections
           modules={modules}
           testimonials={{
