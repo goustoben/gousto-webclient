@@ -288,7 +288,7 @@ describe('basket utils', function () {
     })
 
     test('should return shortlistLimitReached true if we have five or more recipes', () => {
-      shortlistRecipes = Immutable.Map({ 456: 2, 567: 2, 678: 2 })
+      shortlistRecipes = Immutable.Map({ 456: 20, 567: 5, 678: 25 })
       shortlist = Immutable.fromJS({
         shortlistRecipes,
       })

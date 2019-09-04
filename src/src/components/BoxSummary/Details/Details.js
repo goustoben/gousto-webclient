@@ -11,6 +11,7 @@ import { Button, Segment, Spinner } from 'goustouicomponents'
 import RecipeItem from 'Recipe/RecipeItem'
 import Receipt from 'Receipt'
 import Portions from 'BoxSummary/Details/Portions'
+import { MoveRecipeButton } from 'MoveRecipeButton'
 import css from './Details.css'
 import BoxProgressAlert from './BoxProgressAlert'
 
@@ -40,7 +41,8 @@ class Details extends React.Component {
     prices: PropTypes.instanceOf(Immutable.Map),
     unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
     shouldShowDetailsOnClick: PropTypes.bool,
-    showRecipeDetailsOnClick: PropTypes.func
+    showRecipeDetailsOnClick: PropTypes.func,
+    shortlistFeatureEnabled: PropTypes.bool
   }
 
   static defaultProps = {
@@ -50,7 +52,8 @@ class Details extends React.Component {
     prices: Immutable.Map({}),
     pricingPending: false,
     shouldShowDetailsOnClick: false,
-    showRecipeDetailsOnClick: () => { }
+    showRecipeDetailsOnClick: () => { },
+    shortlistFeatureEnabled: false
   }
 
   getCtaText = (numRecipes) => {
@@ -127,7 +130,8 @@ class Details extends React.Component {
       accessToken,
       promoCode,
       boxSummaryVisibilityChange,
-      unavailableRecipeIds
+      unavailableRecipeIds,
+      shortlistFeatureEnabled
     } = this.props
     const okRecipeList = this.recipeList(okRecipeIds)
     const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
@@ -188,35 +192,40 @@ class Details extends React.Component {
             {
               displayOptions.contains('hideRecipeList')
                 ? null
-                : (<div className={css.recipeItems}>
-                  {okRecipeList.map(recipe => (
-                    <RecipeItem
-                      key={recipe.get('id')}
-                      media={recipe.get('media')}
-                      title={recipe.get('title')}
-                      numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                      onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                      available
-                      showLine
-                      onImageClick={() => this.handleRecipeImageClick(recipe.get('id'))}
-                    />
-                  )).toArray()}
-                  <span className={!menuFetchPending ? css.notAvailable : ''}>
-                    {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
-                    {unavailableRecipeList.map(recipe => (
-                      <RecipeItem
-                        key={recipe.get('id')}
-                        media={recipe.get('media')}
-                        title={recipe.get('title')}
-                        numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                        onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                        available={menuFetchPending}
-                        showLine
-                        onImageClick={() => this.handleRecipeImageClick(recipe.get('id'))}
-                      />
+                : (
+                  <div className={css.recipeItems}>
+                    {okRecipeList.map(recipe => (
+                      <span key={recipe.get('id')}>
+                        <RecipeItem
+                          key={recipe.get('id')}
+                          media={recipe.get('media')}
+                          title={recipe.get('title')}
+                          numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                          onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                          available
+                          showLine={!shortlistFeatureEnabled}
+                          onImageClick={() => this.handleRecipeImageClick(recipe.get('id'))}
+                        />
+                        {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
+                      </span>
                     )).toArray()}
-                  </span>
-                   </div>)
+                    <span className={!menuFetchPending ? css.notAvailable : ''}>
+                      {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
+                      {unavailableRecipeList.map(recipe => (
+                        <RecipeItem
+                          key={recipe.get('id')}
+                          media={recipe.get('media')}
+                          title={recipe.get('title')}
+                          numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                          onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                          available={menuFetchPending}
+                          showLine
+                          onImageClick={() => this.handleRecipeImageClick(recipe.get('id'))}
+                        />
+                      )).toArray()}
+                    </span>
+                  </div>
+                )
             }
 
             <BoxProgressAlert numRecipes={numRecipes} />

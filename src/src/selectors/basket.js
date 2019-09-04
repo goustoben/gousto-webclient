@@ -9,6 +9,7 @@ export const getBasketOrderPrices = state => state.basket.getIn(['orderDetails',
 export const getBasketOrderTotal = state => state.basket.getIn(['orderDetails', 'prices', 'total'])
 export const getBasketOrderPromoCode = state => state.basket.getIn(['orderDetails', 'prices', 'promoCode'])
 export const getBasketDate = ({ basket }) => basket.get('date')
+export const getBasketLimitReached = ({ basket }) => basket.get('limitReached', false)
 
-export const getShortlistLimitReached = ({basket}) => basket.getIn(['shortlist', 'shortlistLimitReached'], null )
-export const getShortlistRecipeIds = ({basket}) => basket.getIn(['shortlist', 'shortlistRecipes'], null )
+export const getShortlistLimitReached = ({ basket }) => basket.getIn(['shortlist', 'shortlistLimitReached'], false)
+export const getShortlistRecipeIds = ({ basket }) => basket.getIn(['shortlist', 'shortlistRecipes'], null)

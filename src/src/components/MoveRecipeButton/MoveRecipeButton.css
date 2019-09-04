@@ -1,0 +1,44 @@
+@value Pepper30, Duckegg, White, Radish, Bluecheese, Mackerel, Oyster from 'styles/colors.css';
+@value avenirHeavyFontStack from 'styles/typography.css';
+
+.moveButtonWrapper {
+	padding-left: 4.125rem;
+	padding-bottom: 8px;
+	border-bottom: 1px solid Pepper30;
+	composes: marginXSTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.moveButton {
+	border: 1px solid Duckegg;
+	background-color: White;
+	border-radius: 25px;
+	font-family: avenirHeavyFontStack;
+	font-size: 13px;
+	line-height: 15px;
+	padding: 8px 15px;
+}
+
+.moveFromButton {
+	composes: moveButton;
+	color: Radish;
+}
+
+.addToButton {
+	composes: moveButton;
+	color: Bluecheese;
+}
+
+.disableButton {
+	color: Oyster;
+	border-color: Mackerel;
+}
+
+.arrowDown {
+	composes: fa-basic-class  fa-arrow-down from 'styles/vendor/font-awesome-module.css';
+	padding-right: 5px;
+}
+
+.arrowUp {
+	composes: fa-basic-class  fa-arrow-up from 'styles/vendor/font-awesome-module.css';
+	padding-right: 5px;
+}

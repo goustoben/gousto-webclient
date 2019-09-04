@@ -1,4 +1,4 @@
-@value Bluecheese, White, Pomegranate from 'styles/colors.css';
+@value Bluecheese, White, Pomegranate, Mackerel from 'styles/colors.css';
 
 .blueHeartButton {
   margin-top: 1rem;
@@ -26,13 +26,13 @@
 
 .greyHeartButton {
   composes: blueHeartButton;
-  border: 1px solid grey;
-  background: grey;
+  border: 1px solid Bluecheese;
+  background: Mackerel;
 }
 
 .heartIcon {
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1rem;
+  width: 1.125rem;
   position: absolute;
   top: 50%;
   left: 50%;
