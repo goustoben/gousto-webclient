@@ -21,7 +21,7 @@ class Home extends React.Component {
     moduleOrder: PropTypes.string,
     isAuthenticated: PropTypes.bool,
     variant: PropTypes.string,
-    redirectLoggedInUser: PropTypes.func
+    redirectLoggedInUser: PropTypes.func,
   }
 
   static defaultProps = {
@@ -121,8 +121,6 @@ class Home extends React.Component {
           }]}
         />
         <PromoBanner />
-        { this.props.nddFeature && <div id="ndd">TRUE</div> }
-        { !this.props.nddFeature && <div id="ndd">FALSE</div> }
         <HomeSections
           modules={modules}
           testimonials={{
