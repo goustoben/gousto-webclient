@@ -1,4 +1,5 @@
 import moment from 'moment'
+
 import { config } from './config'
 
 export const checkCardExpiryDate = (card, now) => {
@@ -42,3 +43,20 @@ export const checkRafOffer = (now) => {
     return 'referAFriend'
   }
 }
+
+export const priority = (type = '') => {
+  switch(type) {
+  case 'danger':
+    return 3
+  case 'warning':
+    return 2
+  case 'notify':
+    return 1
+  default:
+    return 0
+  }
+}
+
+export const sortNotifications = (a, b) => (
+  priority(b.type) - priority(a.type)
+)

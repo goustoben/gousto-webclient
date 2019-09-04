@@ -1,10 +1,17 @@
 import React from 'react'
+import moment from 'moment'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import moment from 'moment'
-import { Notification } from '..'
+
 import { config } from '../config'
-import { checkCardExpiryDate, checkAmendedDeliveryDate, checkOrderAwaitingSelection, checkRafOffer } from '../notificationHelper'
+import {
+  checkCardExpiryDate,
+  checkAmendedDeliveryDate,
+  checkOrderAwaitingSelection,
+  checkRafOffer,
+} from '../helpers'
+
+import { Notification } from '../index'
 
 config.referAFriend.startDate = '2019-01-01'
 config.referAFriend.endDate = '2019-01-01'
@@ -152,7 +159,7 @@ describe('Notification component', () => {
       config.referAFriend.endDate = '2019-01-01'
     })
 
-    it('should show "Refer a friend" banner if current date is between start and end date', () => {
+    it('should show "Refer a friend" notification if current date is between start and end date', () => {
 
       const result = checkRafOffer(now)
       expect(result).toEqual('referAFriend')
@@ -166,7 +173,7 @@ describe('Notification component', () => {
     })
   })
 
-  describe('sortBanners', () => {
+  describe('notifications', () => {
 
     beforeEach(() => {
       const currentMonth = moment().format('YYYY-MM')
@@ -182,12 +189,11 @@ describe('Notification component', () => {
       })
     })
 
-    it('should order the banners by type in the following order danger > warning > notify', () => {
+    it('should order the notifications by type in the following order danger > warning > notify', () => {
 
       wrapper = shallow(<Notification card={card} orders={orders} />)
 
-      expect(wrapper.state('bannersToShow')).toEqual(['expired', 'amendDelivery'])
-
+      expect(wrapper.state('notifications')).toMatchSnapshot()
     })
   })
 })
