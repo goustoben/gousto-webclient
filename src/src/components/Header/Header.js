@@ -43,6 +43,7 @@ class Header extends React.PureComponent {
     title: PropTypes.string,
     small: PropTypes.bool,
     forceSignupWizardFeature: PropTypes.bool,
+    shouldShowAbandonBasketModal: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
   }
 
@@ -55,6 +56,7 @@ class Header extends React.PureComponent {
     title: '',
     small: false,
     trackNavigationClick: () => { },
+    shouldShowAbandonBasketModal: false,
   }
 
   constructor(props) {
@@ -285,7 +287,21 @@ class Header extends React.PureComponent {
     }) : ''
   )
   render() {
-    const { fromJoin, disabled, noContactBar, simple, isAuthenticated, serverError, title, small, promoCodeUrl, loginOpen, path, trackNavigationClick } = this.props
+    const {
+      fromJoin,
+      disabled,
+      noContactBar,
+      simple,
+      isAuthenticated,
+      serverError,
+      title,
+      small,
+      promoCodeUrl,
+      loginOpen,
+      path,
+      trackNavigationClick,
+      shouldShowAbandonBasketModal
+    } = this.props
     const { mobileMenuOpen, loginPending } = this.state
     const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
@@ -312,7 +328,7 @@ class Header extends React.PureComponent {
       <div>
         <CookieBanner />
         <AppBanner />
-        <AbandonBasketModal />
+        {shouldShowAbandonBasketModal ? < AbandonBasketModal /> : null}
         <span id={serverError ? 'mobileMenu' : null} data-testing="header">
           <button
             type="button"

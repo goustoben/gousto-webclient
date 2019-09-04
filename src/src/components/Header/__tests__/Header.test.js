@@ -109,8 +109,14 @@ describe('Header', () => {
       expect(wrapper.find(CookieBanner).length).toBe(1)
     })
 
-    test('should render one <AbandonBasketModal />', () => {
+    test('should render one <AbandonBasketModal /> if feature flag is set to true', () => {
+      wrapper = shallow(<Header shouldShowAbandonBasketModal />)
       expect(wrapper.find(AbandonBasketModal).length).toBe(1)
+    })
+
+    test('should not render <AbandonBasketModal /> if feature flag is set to false', () => {
+      wrapper = shallow(<Header shouldShowAbandonBasketModal={false} />)
+      expect(wrapper.find(AbandonBasketModal).length).toBe(0)
     })
 
     test('should render one <MobileMenu />', () => {
