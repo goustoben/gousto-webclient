@@ -84,12 +84,12 @@ export const keepSubscription = () => (
           type: actionTypes.TRACKING,
           trackingData: {
             actionType: 'Failed in applying OSR promo code',
-            promoCode,
+            osrDiscount: promoCode,
           },
         })
-        
+
         /*
-          Early return to prevent modal close 
+          Early return to prevent modal close
           Because a user failed to apply OSR promo code.
           // TODO show error message or notification
         */
@@ -102,6 +102,7 @@ export const keepSubscription = () => (
       trackingData: {
         actionType: 'Subscription KeptActive',
         customerId: userId,
+        osrDiscount: promoCode,
       },
     })
   }
@@ -198,6 +199,7 @@ export const getPauseRecoveryContent = () => (
           0
         )
         const offer = getState().onScreenRecovery.get('offer')
+        const promoCode = offer ? offer.promoCode : null
         const hasPendingPromo = offer === null ? null : offer.formattedValue
         const hasPendingPromoWithSubCondition = offer === null ? null : offer.requireActiveSubscription
         dispatch({
@@ -207,6 +209,7 @@ export const getPauseRecoveryContent = () => (
             orderCount,
             hasPendingPromo,
             hasPendingPromoWithSubCondition,
+            osrDiscount: promoCode,
           },
         })
       } else {
@@ -234,12 +237,15 @@ export const pauseSubscription = () => (
     await dispatch(subPauseActions.subscriptionDeactivate())
 
     const userId = getState().user.get('id')
+    const offer = getState().onScreenRecovery.get('offer')
+    const promoCode = offer ? offer.promoCode : null
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE,
       modalVisibility: false,
       trackingData: {
         actionType: 'Subscription Paused',
         customerId: userId,
+        osrDiscount: promoCode,
       },
     })
 
