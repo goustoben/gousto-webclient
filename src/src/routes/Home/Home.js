@@ -22,6 +22,7 @@ class Home extends React.Component {
     isAuthenticated: PropTypes.bool,
     variant: PropTypes.string,
     redirectLoggedInUser: PropTypes.func,
+    nddFeature: PropTypes.bool
   }
 
   static defaultProps = {
