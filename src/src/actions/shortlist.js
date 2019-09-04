@@ -77,3 +77,11 @@ export const shortlistRecipeRemove = (recipeId) => (
     }
   }
 )
+
+export const shortlistRecipesClear = () => ({
+  type: actionTypes.SHORTLIST_RECIPES_CLEAR,
+})
+
+export const shortlistRecipesPositionClear = () => ({
+  type: actionTypes.SHORTLIST_RECIPES_POSITIONS_CLEAR,
+})

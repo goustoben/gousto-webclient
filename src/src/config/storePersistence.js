@@ -27,6 +27,11 @@ export default (store) => {
         stepsOrder: false,
         collection: true,
         promoCode: true,
+        shortlist: {
+          shortlistRecipes: false,
+          shortlistRecipesPositions: false,
+          shortlistLimitReached: false
+        }
       },
       filters: {
         currentCollectionId: true,
@@ -49,4 +54,6 @@ export const cookieExpiries = {
   basket_postcode: 7,
   basket_recipes: 7,
   basket_promoCode: 60,
+  basket_shortlist_shortlistRecipes: 7,
+  basket_shortlist_shortlistRecipesPositions: 7,
 }
