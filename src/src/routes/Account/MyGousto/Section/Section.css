@@ -25,6 +25,10 @@
   }
 }
 
+.content:empty {
+  display: none;
+}
+
 .title {
   background-color: inherit;
   position: relative;
