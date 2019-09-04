@@ -1,3 +1,5 @@
+import logger from 'utils/logger'
+
 const enabledPages = [
   '/my-gousto',
   '/my-deliveries',
@@ -28,21 +30,21 @@ export const zeStart = () => {
 
   return new Promise((resolve, reject) => {
     const findZendeskInstance = () => {
-      if (window.zE) {
+      if (!window.zE) {
+        if (currentAttemptNumber > MAX_ATTEMPTS_NUMBER) {
+          clearInterval(interval)
+
+          reject(notFoundErrorMessage)
+        }
+
+        currentAttemptNumber++
+      } else {
+        clearInterval(interval)
+
         zeInstance = window.zE
 
         resolve()
       }
-
-      if (currentAttemptNumber > MAX_ATTEMPTS_NUMBER) {
-        clearInterval(interval)
-
-        reject(
-          new Error(notFoundErrorMessage)
-        )
-      }
-
-      currentAttemptNumber++
     }
 
     interval = setInterval(findZendeskInstance, RETRY_WAIT)
@@ -53,7 +55,7 @@ export const zeChatButtonSetUp = (pathName) => {
   const shouldDisplayChat = enabledPages.indexOf(pathName) > -1
 
   if (!zeInstance) {
-    throw new Error(notFoundErrorMessage)
+    return logger.notice({ message: notFoundErrorMessage })
   }
 
   if (shouldDisplayChat) {

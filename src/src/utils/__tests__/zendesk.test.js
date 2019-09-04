@@ -31,7 +31,7 @@ describe('zendesk utils', () => {
 
       test('errors when attempts time out', () => {
         const promise = zeStart().catch((err) => {
-          expect(err.message).toContain(
+          expect(err).toContain(
             'Could not find `zE` function'
           )
         })
