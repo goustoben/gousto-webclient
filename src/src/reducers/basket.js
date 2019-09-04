@@ -112,7 +112,7 @@ const basket = {
       let portionSize = parseInt(action.numPortions, 10)
 
       if (basketConfig.portions.allowed.indexOf(portionSize) === -1) {
-        logger.error({message: `Invalid serving size: ${action.numPortions}`})
+        logger.error({ message: `Invalid serving size: ${action.numPortions}` })
         portionSize = basketConfig.portions.default
       }
 
@@ -301,7 +301,7 @@ const basket = {
 
       let newState = state.setIn(['shortlist', 'shortlistRecipes', recipeId], currentQty + 1)
       if (recipeId && position) {
-        const newShortlistRecipe = Immutable.Map({}).set(recipeId, Immutable.Map({position, collection}))
+        const newShortlistRecipe = Immutable.Map({}).set(recipeId, Immutable.Map({ position, collection }))
         const newShortlistRecipesPositions = newState.getIn(['shortlist', 'shortlistRecipesPositions']).push(newShortlistRecipe)
 
         newState = newState.setIn(['shortlist', 'shortlistRecipesPositions'], newShortlistRecipesPositions)
@@ -338,6 +338,14 @@ const basket = {
 
     case actionTypes.SHORTLIST_LIMIT_REACHED: {
       return state.setIn(['shortlist', 'shortlistLimitReached'], action.shortlistLimitReached)
+    }
+
+    case actionTypes.SHORTLIST_RECIPES_CLEAR: {
+      return state.setIn(['shortlist', 'shortlistRecipes'], Immutable.fromJS({}))
+    }
+
+    case actionTypes.SHORTLIST_RECIPES_POSITIONS_CLEAR: {
+      return state.setIn(['shortlist', 'shortlistRecipesPositions'], Immutable.List([]))
     }
 
     default: {
