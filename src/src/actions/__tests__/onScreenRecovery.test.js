@@ -228,8 +228,17 @@ describe('onScreenRecovery', () => {
         user: Immutable.Map({
           id: '123',
         }),
+        onScreenRecovery: Immutable.Map({
+          modalType: 'subscription',
+          offer: {
+            promoCode: 'OSR-PROMO-CODE',
+          },
+        }),
         features: Immutable.Map({
-          subscriptionPauseOsr: false
+          subscriptionPauseOsr: {
+            experiment: false,
+            value: true
+          }
         }),
       })
     })
@@ -243,6 +252,17 @@ describe('onScreenRecovery', () => {
       expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
         type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
+      }))
+    })
+
+    test('should include the tracking data for osr promo code and eligibility in the dispatched action', async () => {
+      await pauseSubscription()(dispatchSpy, getStateSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+        type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
+        trackingData: expect.objectContaining({
+          actionType: 'Subscription Paused',
+          osrDiscount: 'OSR-PROMO-CODE',
+        })
       }))
     })
 
@@ -517,6 +537,44 @@ describe('onScreenRecovery', () => {
           })
         }))
       })
+
+      test('should trigger tracking of subscription pause event with osrDiscount provided when a user is eligible for osr discount', async () => {
+        fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
+          data: {
+            intervene: true,
+          },
+        }))
+        getStateSpy.mockReturnValue({
+          auth: Immutable.Map({
+            accessToken: 'token',
+          }),
+          onScreenRecovery: Immutable.Map({
+            modalType: 'subscription',
+            offer: {
+              promoCode: 'OSR-PROMO-CODE',
+            },
+          }),
+          user: Immutable.Map({
+            id: '12345',
+            orders: Immutable.List([
+            ]),
+          }),
+          features: Immutable.Map({
+            subscriptionPauseOsr: Immutable.fromJS({
+              experiment: false,
+              value: true,
+            }),
+          }),
+        })
+        await getPauseRecoveryContent()(dispatchSpy, getStateSpy)
+        expect(dispatchSpy).toHaveBeenCalledWith(expect.objectContaining({
+          type: 'TRACKING',
+          trackingData: expect.objectContaining({
+            actionType: 'Subscription Pause',
+            osrDiscount: 'OSR-PROMO-CODE',
+          })
+        }))
+      })
     })
 
     describe('when the response is to *not* intervene', () => {
@@ -632,7 +690,7 @@ describe('onScreenRecovery', () => {
             onScreenRecovery: Immutable.Map({
               modalType: 'subscription',
               offer: {
-                promoCode: 'OSR-PROMO-CODE'
+                promoCode: 'OSR-PROMO-CODE',
               },
             }),
             user: Immutable.Map({
@@ -641,12 +699,13 @@ describe('onScreenRecovery', () => {
           })
           await onKeep()(dispatchSpy, getStateSpy)
           expect(userActions.userPromoApplyCode).toHaveBeenCalledTimes(1)
-          expect(userActions.userPromoApplyCode).toHaveBeenCalledWith('OSR-PROMO-CODE')    
+          expect(userActions.userPromoApplyCode).toHaveBeenCalledWith('OSR-PROMO-CODE')
           expect(dispatchSpy).toHaveBeenLastCalledWith(expect.objectContaining({
             type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
             modalVisibility: false,
             trackingData: expect.objectContaining({
               actionType: 'Subscription KeptActive',
+              osrDiscount: 'OSR-PROMO-CODE',
             })
           }))
         })
@@ -667,7 +726,7 @@ describe('onScreenRecovery', () => {
             })
           })
           await onKeep()(dispatchSpy, getStateSpy)
-    
+
           expect(dispatchSpy).not.toHaveBeenCalledWith(expect.objectContaining({
             type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
             modalVisibility: false,
@@ -679,7 +738,7 @@ describe('onScreenRecovery', () => {
             type: 'TRACKING',
             trackingData: expect.objectContaining({
               actionType: 'Failed in applying OSR promo code',
-              promoCode: 'OSR-PROMO-CODE',
+              osrDiscount: 'OSR-PROMO-CODE',
             })
           }))
         })
