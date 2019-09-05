@@ -8,7 +8,7 @@ import { getSurchargeItems } from 'utils/pricing'
 import { isAvailableRecipeList } from 'utils/recipe'
 
 import config from 'config'
-import { Button, Segment, Spinner } from 'goustouicomponents'
+import { Button, Heading, Segment, Spinner } from 'goustouicomponents'
 import RecipeItem from 'Recipe/RecipeItem'
 import ShortlistItem from 'Recipe/ShortlistItem'
 import Receipt from 'Receipt'
@@ -192,9 +192,7 @@ class Details extends React.Component {
       <div className={css[`supercontainer${view}`]}>
         <div className={css[`container${view}`]}>
           <div className={css.content}>
-            <div className={css.row}>
-              <p className={css.title}>Box Summary</p>
-            </div>
+            <Heading center size="large" type="h2">Box Summary</Heading>
             {(() => {
               if (orderId) {
                 return (
