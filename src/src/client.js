@@ -18,8 +18,9 @@ import docReady from 'utils/docReady'
 import queryString from 'query-string'
 import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
-import { configureStore } from './store'
+import logger from 'utils/logger'
 import { zeStart, zeChatButtonSetUp } from 'utils/zendesk'
+import { configureStore } from './store'
 
 docReady('docReady', window)
 
@@ -48,6 +49,7 @@ try {
 }
 
 initialState = transit.fromJSON(initialState)
+
 const store = configureStore(browserHistory, initialState, Cookies)
 
 processCookies(Cookies, store)
@@ -65,13 +67,13 @@ window.docReady(() => {
 
   browserType(store)
 
-  zeStart().then(() => {
-    try {
+  zeStart()
+    .then(() => {
       zeChatButtonSetUp(window.location.pathname)
-    } catch(err) {
-      throw err
-    }
-  })
+    })
+    .catch((err) => {
+      logger.notice({ message: err })
+    })
 
   const reactRootDOM = document.getElementById('react-root')
 
