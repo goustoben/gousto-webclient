@@ -54,7 +54,7 @@ class Receipt extends React.Component {
     orderNumber: '',
   }
 
-  dash = <span className={css.dash}>-</span>
+  dash = <span className={css.dash}>&mdash;</span>
 
   render() {
     const { prices, recipeTotalPrice, totalToPay, extrasTotalPrice, numRecipes, shippingAddress, surcharges, surchargeTotal, recipeDiscountAmount, recipeDiscountPercent, deliveryTotalPrice, showAddPromocode, showTitleSection, orderNumber } = this.props
