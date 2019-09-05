@@ -8,6 +8,20 @@ import css from './Item.css'
 
 const isFunction = (func) => (typeof func === 'function')
 
+const quantityMessage = (gift, quantity, disclaimerKey, type) => {
+  if (!gift || quantity > 1) {
+    const typeLabel = type === 'product' ? 'item' : 'serving'
+    const amountLabel = quantity !== 1 ? 's' : ''
+
+    return (
+      <p className={css.quantity}>
+        {quantity} {typeLabel}{amountLabel}
+        {disclaimerKey !== undefined ? ` ${disclaimerKey}` : ''}
+      </p>
+    )
+  }
+}
+
 const Item = ({ available, disclaimerKey, type, media, title, quantity, onImageClick, onRemove, url, gift, showLine }) => (
   <div>
     <div className={available ? css.item : css.itemUnavailable}>
@@ -18,11 +32,7 @@ const Item = ({ available, disclaimerKey, type, media, title, quantity, onImageC
           {title}
           {isFunction(onImageClick) && <span className={css.arrowRight} />}
         </button>
-        {(!gift || quantity > 1) &&
-          <p className={css.quantity}>
-            {quantity} {type === 'product' ? 'item' : 'serving'}{quantity !== 1 ? 's' : ''}{disclaimerKey !== undefined ? ` ${disclaimerKey}` : ''}
-          </p>
-        }
+        {quantityMessage(gift, quantity, disclaimerKey, type)}
         {gift && <p className={css.freeGift}>Free Gift!</p>}
         {url &&
           <p className={css.url}>
