@@ -3,6 +3,7 @@ import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
 import globals from 'config/globals'
 import actionTypes from 'actions/actionTypes'
+import moment from 'moment'
 
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
@@ -239,6 +240,7 @@ export const trackNavigationClick = (actionType) => (
 export const trackUserAttributes = () => (
   (dispatch, getState) => {
     const signupDate = getState().user.getIn(['subscription', 'createdAt'], '')
+    const isSignupInLast30Days = moment().isSameOrBefore(moment(signupDate).add(30, 'days'))
 
     if (signupDate) {
       dispatch({
@@ -247,7 +249,7 @@ export const trackUserAttributes = () => (
           type: 'user',
           eventName: 'user_subscription_start',
           attributes: {
-            signupDate,
+            isSignupInLast30Days,
           }
         }
       })
