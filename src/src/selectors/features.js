@@ -6,7 +6,7 @@ export const getCollectionFreezeValue = state => (state.features ? state.feature
 
 export const isNextDayDeliveryPaintedDoorFeatureEnabled = state => (state.features ? state.features.getIn(['nextDayDeliveryPaintedDoor', 'value']) : false)
 
-export const isNDDFeatureEnabled = state => (state.features ? state.features.getIn(['ndd', 'value']) : false)
+export const isNDDFeatureEnabled = ({ features }) => features && features.getIn(['ndd', 'value'], false)
 
 export const getDisabledSlots = state => (state.features ? state.features.getIn(['disabledSlots', 'value']) : '')
 

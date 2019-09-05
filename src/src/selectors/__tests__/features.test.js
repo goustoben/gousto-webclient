@@ -10,7 +10,8 @@ import {
   isDeliveryFrequencyFeatureEnabled,
   getPromoBannerText,
   getPromoBannerCode,
-  getShortlist
+  getShortlist,
+  isNDDFeatureEnabled
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -264,6 +265,25 @@ describe('when features are defined', () => {
         })
 
         expect(getShortlist(state)).toEqual(true)
+      })
+    })
+  })
+
+  describe('isNDDFeatureEnabled', () => {
+    describe('when feature is not set', () => {
+      test('should return false', () => {
+        expect(isNDDFeatureEnabled(state)).toEqual(false)
+      })
+    })
+    describe('when feature is set', () => {
+      test('should return true', () => {
+        state.features = Immutable.fromJS({
+          ndd: {
+            value: true
+          }
+        })
+
+        expect(isNDDFeatureEnabled(state)).toEqual(true)
       })
     })
   })
