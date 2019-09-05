@@ -22,7 +22,7 @@ export const trackFirstPurchase = (orderId, prices) => (
 
     dispatch({
       type: actionTypes.TRACKING,
-      trackingData:{
+      trackingData: {
         actionType: actionTypes.TRACKING,
         asource: getState().tracking.get('asource'),
         goustoReference,
@@ -73,9 +73,9 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
       amount: total,
       channel: '',
       orderRef: orderId,
-      parts:  `${commissionGroup}:${total}`,
+      parts: `${commissionGroup}:${total}`,
       voucher: promoCode,
-      currency:"GBP",
+      currency: "GBP",
     }
 
     if (typeof window.AWIN.Tracking.run === 'function') {
@@ -216,7 +216,7 @@ export const trackRecipeFiltersApplied = (collectionId, dietTypes, dietaryAttrib
 
 export const trackCTAToAllRecipesClicked = () => (
   (dispatch) => {
-    dispatch ({
+    dispatch({
       type: actionTypes.TRACKING_CTA_TO_ALL_RECIPES_CLICKED,
       trackingData: {
         actionType: 'All Recipe CTA Clicked',
@@ -227,12 +227,31 @@ export const trackCTAToAllRecipesClicked = () => (
 
 export const trackNavigationClick = (actionType) => (
   (dispatch) => {
-    dispatch ({
+    dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
         actionType
       }
     })
+  }
+)
+
+export const trackUserAttributes = () => (
+  (dispatch, getState) => {
+    const signupDate = getState().user.getIn(['subscription', 'createdAt'], '')
+
+    if (signupDate) {
+      dispatch({
+        type: actionTypes.TRACKING,
+        optimizelyData: {
+          type: 'user',
+          eventName: 'user_subscription_start',
+          attributes: {
+            signupDate,
+          }
+        }
+      })
+    }
   }
 )
 

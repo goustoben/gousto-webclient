@@ -17,7 +17,7 @@ import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
 import actionTypes from './actionTypes'
-import { trackFirstPurchase } from './tracking'
+import { trackFirstPurchase, trackUserAttributes } from './tracking'
 import { subscriptionLoadData } from './subscription'
 
 const fetchShippingAddressesPending = pending => ({
@@ -188,6 +188,10 @@ function userLoadData() {
       type: actionTypes.USER_LOAD_DATA,
       user
     })
+
+    if (__CLIENT__) {
+      dispatch(trackUserAttributes())
+    }
 
     dispatch(subscriptionLoadData())
   }
