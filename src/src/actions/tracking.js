@@ -3,6 +3,7 @@ import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
 import globals from 'config/globals'
 import actionTypes from 'actions/actionTypes'
+import moment from 'moment'
 
 export const trackFirstPurchase = (orderId, prices) => (
   (dispatch, getState) => {
@@ -22,7 +23,7 @@ export const trackFirstPurchase = (orderId, prices) => (
 
     dispatch({
       type: actionTypes.TRACKING,
-      trackingData:{
+      trackingData: {
         actionType: actionTypes.TRACKING,
         asource: getState().tracking.get('asource'),
         goustoReference,
@@ -32,6 +33,7 @@ export const trackFirstPurchase = (orderId, prices) => (
         voucher: order.getIn(['prices', 'promoCode'], ''),
       },
       optimizelyData: {
+        type: 'event',
         eventName: 'order_placed_gross',
         tags: {
           revenue: grossTotal
@@ -41,6 +43,7 @@ export const trackFirstPurchase = (orderId, prices) => (
     dispatch({
       type: actionTypes.TRACKING,
       optimizelyData: {
+        type: 'event',
         eventName: 'order_placed_net',
         tags: {
           revenue: orderTotal
@@ -71,9 +74,9 @@ export const trackAffiliatePurchase = ({ orderId, total, commissionGroup, promoC
       amount: total,
       channel: '',
       orderRef: orderId,
-      parts:  `${commissionGroup}:${total}`,
+      parts: `${commissionGroup}:${total}`,
       voucher: promoCode,
-      currency:"GBP",
+      currency: "GBP",
     }
 
     if (typeof window.AWIN.Tracking.run === 'function') {
@@ -214,7 +217,7 @@ export const trackRecipeFiltersApplied = (collectionId, dietTypes, dietaryAttrib
 
 export const trackCTAToAllRecipesClicked = () => (
   (dispatch) => {
-    dispatch ({
+    dispatch({
       type: actionTypes.TRACKING_CTA_TO_ALL_RECIPES_CLICKED,
       trackingData: {
         actionType: 'All Recipe CTA Clicked',
@@ -225,12 +228,32 @@ export const trackCTAToAllRecipesClicked = () => (
 
 export const trackNavigationClick = (actionType) => (
   (dispatch) => {
-    dispatch ({
+    dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
         actionType
       }
     })
+  }
+)
+
+export const trackUserAttributes = () => (
+  (dispatch, getState) => {
+    const signupDate = getState().user.getIn(['subscription', 'createdAt'], '')
+    const isSignupInLast30Days = moment().isSameOrBefore(moment(signupDate).add(30, 'days'))
+
+    if (signupDate) {
+      dispatch({
+        type: actionTypes.TRACKING,
+        optimizelyData: {
+          type: 'user',
+          eventName: 'user_subscription_start',
+          attributes: {
+            isSignupInLast30Days,
+          }
+        }
+      })
+    }
   }
 )
 

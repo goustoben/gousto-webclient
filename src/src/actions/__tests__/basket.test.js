@@ -102,6 +102,7 @@ describe('basket actions', () => {
           subscription_active: true,
         },
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_gross',
           tags: {
             revenue: '-0.99'
@@ -112,6 +113,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_net',
           tags: {
             revenue: '-0.99'
@@ -168,6 +170,7 @@ describe('basket actions', () => {
           subscription_active: false,
         },
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_gross',
           tags: {
             revenue: '-0.99'
@@ -178,6 +181,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_net',
           tags: {
             revenue: '-0.99'
@@ -233,6 +237,7 @@ describe('basket actions', () => {
           subscription_active: true,
         },
         optimizelyData: {
+          type: 'event',
           eventName: 'order_placed_gross',
           tags: {
             revenue: '24.00'
@@ -243,6 +248,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         optimizelyData: {
+          type: 'event',
           eventName: 'order_placed_net',
           tags: {
             revenue: '24.00'
@@ -296,6 +302,7 @@ describe('basket actions', () => {
           subscription_active: true,
         },
         optimizelyData: {
+          type: 'event',
           eventName: 'order_placed_gross',
           tags: {
             revenue: '22.00'
@@ -306,6 +313,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         optimizelyData: {
+          type: 'event',
           eventName: 'order_placed_net',
           tags: {
             revenue: '22.00'

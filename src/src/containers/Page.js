@@ -4,6 +4,7 @@ import classnames from 'classnames'
 import Helmet from 'react-helmet'
 import config from 'config'
 import actions from 'actions'
+import { trackUserAttributes } from 'actions/tracking'
 import { getWindow } from 'utils/window'
 import { LoadingOverlay } from 'Loading'
 import css from './Page.css'
@@ -44,6 +45,7 @@ class Page extends React.PureComponent {
     if (location && location.hash && location.hash.includes('login') && !this.props.isAuthenticated) {
       this.props.loginVisibilityChange(true)
     }
+    this.context.store.dispatch(trackUserAttributes())
   }
 
   componentWillReceiveProps(nextProps) {

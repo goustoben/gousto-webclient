@@ -569,6 +569,7 @@ export const basketCheckedOut = (numRecipes, view) => (
                 subscription_active: isActiveSubsc,
               },
               optimizelyData: {
+                type: 'event',
                 eventName: 'order_edited_gross',
                 tags: {
                   revenue: editedGrossTotal
@@ -578,6 +579,7 @@ export const basketCheckedOut = (numRecipes, view) => (
             dispatch({
               type: actionTypes.TRACKING,
               optimizelyData: {
+                type: 'event',
                 eventName: 'order_edited_net',
                 tags: {
                   revenue: editedNetTotal
@@ -596,6 +598,7 @@ export const basketCheckedOut = (numRecipes, view) => (
                 subscription_active: isActiveSubsc,
               },
               optimizelyData: {
+                type: 'event',
                 eventName: 'order_placed_gross',
                 tags: {
                   revenue: grossTotal
@@ -605,6 +608,7 @@ export const basketCheckedOut = (numRecipes, view) => (
             dispatch({
               type: actionTypes.TRACKING,
               optimizelyData: {
+                type: 'event',
                 eventName: 'order_placed_net',
                 tags: {
                   revenue: orderTotal
@@ -625,6 +629,7 @@ export const basketCheckedOut = (numRecipes, view) => (
               subscription_active: isActiveSubsc,
             },
             optimizelyData: {
+              type: 'event',
               eventName: 'order_edited_gross',
               tags: {
                 revenue: editedGrossTotal
@@ -634,6 +639,7 @@ export const basketCheckedOut = (numRecipes, view) => (
           dispatch({
             type: actionTypes.TRACKING,
             optimizelyData: {
+              type: 'event',
               eventName: 'order_edited_net',
               tags: {
                 revenue: editedNetTotal
@@ -652,6 +658,7 @@ export const basketCheckedOut = (numRecipes, view) => (
               subscription_active: isActiveSubsc,
             },
             optimizelyData: {
+              type: 'event',
               eventName: 'order_placed_gross',
               tags: {
                 revenue: grossTotal
@@ -661,6 +668,7 @@ export const basketCheckedOut = (numRecipes, view) => (
           dispatch({
             type: actionTypes.TRACKING,
             optimizelyData: {
+              type: 'event',
               eventName: 'order_placed_net',
               tags: {
                 revenue: orderTotal
@@ -764,6 +772,7 @@ export const basketUpdateProducts = (isOrderConfirmation = false) => (
       dispatch({
         type: actionTypes.TRACKING,
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_gross',
           tags: {
             revenue: editedGrossTotal
@@ -773,6 +782,7 @@ export const basketUpdateProducts = (isOrderConfirmation = false) => (
       dispatch({
         type: actionTypes.TRACKING,
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_net',
           tags: {
             revenue: editedNetTotal
