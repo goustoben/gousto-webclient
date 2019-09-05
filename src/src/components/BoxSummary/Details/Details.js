@@ -98,33 +98,92 @@ class Details extends React.Component {
     )
   }
 
+  renderPortions = ({ basketNumPortionChange, numPortions, orderId, portionSizeSelectedTracking }) => (
+    <div className={css.row}>
+      <Portions
+        numPortions={numPortions}
+        onNumPortionChange={basketNumPortionChange}
+        trackNumPortionChange={portionSizeSelectedTracking}
+        orderId={orderId}
+      />
+    </div>
+  )
+
+  renderRecipeList = ({
+    basketRecipes,
+    menuFetchPending,
+    numPortions,
+    okRecipeIds,
+    onRemove,
+    orderSaveError,
+    recipesStore,
+    shortlistFeatureEnabled,
+    showRecipeDetailsOnClick,
+    unavailableRecipeIds,
+  }) => {
+    const okRecipeList = isAvailableRecipeList(okRecipeIds, recipesStore)
+    const unavailableRecipeList = isAvailableRecipeList(unavailableRecipeIds, recipesStore)
+
+    return (
+      <div>
+        <div className={css.recipeItems}>
+          {okRecipeList.map(recipe => (
+            <span key={recipe.get('id')}>
+              <RecipeItem
+                key={recipe.get('id')}
+                media={recipe.get('media')}
+                title={recipe.get('title')}
+                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                available
+                showLine={!shortlistFeatureEnabled}
+                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+              />
+              {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
+            </span>
+          )).toArray()}
+          <span className={!menuFetchPending ? css.notAvailable : ''}>
+            {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
+            {unavailableRecipeList.map(recipe => (
+              <RecipeItem
+                key={recipe.get('id')}
+                media={recipe.get('media')}
+                title={recipe.get('title')}
+                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                available={menuFetchPending}
+                showLine
+                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+              />
+            )).toArray()}
+          </span>
+        </div>
+        {shortlistFeatureEnabled &&
+          <ShortlistItem
+            numPortions={numPortions}
+            available
+            onImageClick={showRecipeDetailsOnClick}
+          />
+        }
+      </div>
+    )
+  }
+
   render() {
     const {
       displayOptions,
       numPortions,
       pricingPending,
       prices,
-      basketRecipes,
       okRecipeIds,
       view,
       orderId,
       date,
       clearSlot,
-      basketNumPortionChange,
-      portionSizeSelectedTracking,
-      onRemove,
-      menuFetchPending,
-      orderSaveError,
       accessToken,
       promoCode,
       boxSummaryVisibilityChange,
-      unavailableRecipeIds,
-      shortlistFeatureEnabled,
-      showRecipeDetailsOnClick
-      recipesStore,
     } = this.props
-    const okRecipeList = isAvailableRecipeList(okRecipeIds, recipesStore)
-    const unavailableRecipeList = isAvailableRecipeList(unavailableRecipeIds, recipesStore)
     const numRecipes = basketSum(okRecipeIds)
     const ctaText = this.getCtaText(numRecipes)
     const displayCta = !displayOptions.contains('hideChooseRecipesCta') && ctaText
@@ -164,65 +223,15 @@ class Details extends React.Component {
               )
             })()}
             {
-              displayOptions.contains('hidePortions')
-                ? null
-                : (<div className={css.row}>
-                  <Portions
-                    numPortions={numPortions}
-                    onNumPortionChange={basketNumPortionChange}
-                    trackNumPortionChange={portionSizeSelectedTracking}
-                    orderId={orderId}
-                  />
-                </div>
-                )
+              !displayOptions.contains('hidePortions') &&
+                this.renderPortions(this.props)
             }
             <div className={css.row}>
               <p className={css.titleSection}>Recipe Box</p>
             </div>
             {
-              displayOptions.contains('hideRecipeList')
-                ? null
-                : (<div>
-                    <div className={css.recipeItems}>
-                    {okRecipeList.map(recipe => (
-                      <span key={recipe.get('id')}>
-                      <RecipeItem
-                        key={recipe.get('id')}
-                        media={recipe.get('media')}
-                        title={recipe.get('title')}
-                        numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                        onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                        available
-                        showLine={!shortlistFeatureEnabled}
-                        onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                      />
-                      {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
-                      </span>
-                    )).toArray()}
-                  <span className={!menuFetchPending ? css.notAvailable : ''}>
-                    {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
-                    {unavailableRecipeList.map(recipe => (
-                      <RecipeItem
-                        key={recipe.get('id')}
-                        media={recipe.get('media')}
-                        title={recipe.get('title')}
-                        numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                        onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                        available={menuFetchPending}
-                        showLine
-                        onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                      />
-                    )).toArray()}
-                  </span>
-                    </div>
-                    {shortlistFeatureEnabled &&
-                      <ShortlistItem
-                        numPortions={numPortions}
-                        available
-                        onImageClick={showRecipeDetailsOnClick}
-                      />
-                    }
-                   </div>)
+              !displayOptions.contains('hideRecipeList') &&
+              this.renderRecipeList(this.props)
             }
 
             <BoxProgressAlert numRecipes={numRecipes} />
