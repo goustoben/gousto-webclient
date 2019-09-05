@@ -283,7 +283,7 @@ describe('when features are defined', () => {
           }
         })
 
-        expect(getShortlist(state)).toEqual(true)
+        expect(isNDDFeatureEnabled(state)).toEqual(true)
       })
     })
   })
