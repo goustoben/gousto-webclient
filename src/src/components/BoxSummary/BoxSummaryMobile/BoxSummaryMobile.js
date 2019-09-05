@@ -209,7 +209,6 @@ class BoxSummaryMobile extends React.PureComponent {
             menuRecipes={this.props.menuRecipes}
             stock={this.props.stock}
             numPortions={this.props.numPortions}
-            shouldShowDetailsOnClick
           />
         </div>
       </div>

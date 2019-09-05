@@ -16,7 +16,7 @@ describe('Item', () => {
         })}
         title="Chicken Curry"
         quantity={2}
-        onRemove={function() {}}
+        onRemove={() => { }}
       />,
     )
     expect(wrapper.text().indexOf('Chicken Curry') > -1).toEqual(true)
@@ -32,7 +32,7 @@ describe('Item', () => {
         })}
         title="Chicken Curry"
         quantity={2}
-        onRemove={function() {}}
+        onRemove={() => { }}
       />,
     )
     expect(wrapper.text().indexOf('2 servings') > -1).toEqual(true)
@@ -48,7 +48,7 @@ describe('Item', () => {
         })}
         title="Chicken Curry"
         quantity={2}
-        onRemove={function() {}}
+        onRemove={() => { }}
       />,
     )
     expect(wrapper.find('span').length).toEqual(1)
@@ -80,7 +80,7 @@ describe('Item', () => {
         })}
         title="Chicken Curry"
         quantity={2}
-        onRemove={function() {}}
+        onRemove={() => { }}
       />,
     )
     expect(
@@ -110,19 +110,37 @@ describe('Item', () => {
   })
 
   test('should pass onImageClick to Image', () => {
-    const onImageClick = function () { }
+    const onImageClick = jest.fn()
     const wrapper = shallow(
       <Item
         type="recipe"
         media={Immutable.fromJS({
           images: [{ urls: ['', '', { src: 'image_path' }] }],
         })}
-        available 
+        available
         title="test recipe"
-        onImageClick={onImageClick} 
+        onImageClick={onImageClick}
       />,
     )
     expect(wrapper.find(Image).prop('onClick')).toEqual(onImageClick)
+    expect(wrapper.find('.arrowRight')).toHaveLength(1)
+  })
+
+  test('should make title clickable', () => {
+    const onImageClick = jest.fn()
+    const wrapper = shallow(
+      <Item
+        type="recipe"
+        media={Immutable.fromJS({
+          images: [{ urls: ['', '', { src: 'image_path' }] }],
+        })}
+        available
+        title="test recipe"
+        onImageClick={onImageClick}
+      />,
+    )
+    expect(wrapper.find('.title').prop('onClick')).toEqual(onImageClick)
+    expect(wrapper.find('.arrowRight')).toHaveLength(1)
   })
 
   describe('gift', () => {
@@ -138,7 +156,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function() {}}
+          onRemove={() => { }}
         />,
       )
       expect(wrapper.text()).toContain('Free Gift')
@@ -156,7 +174,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={1}
-          onRemove={function() {}}
+          onRemove={() => { }}
         />,
       )
       expect(wrapper.text()).not.toContain('servings')
@@ -174,7 +192,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function() {}}
+          onRemove={() => { }}
         />,
       )
       expect(wrapper.text()).toContain('servings')
@@ -193,7 +211,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function() {}}
+          onRemove={() => { }}
         />,
       )
       expect(wrapper.text().indexOf('2 servings') > -1).toEqual(true)
@@ -210,7 +228,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function() {}}
+          onRemove={() => { }}
         />,
       )
       expect(wrapper.text().indexOf('2 items') > -1).toEqual(true)
@@ -227,7 +245,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function() {}}
+          onRemove={() => { }}
         />,
       )
       expect(wrapper.find('span').length).toEqual(0)
@@ -272,7 +290,7 @@ describe('Item', () => {
           })}
           title="Chicken Curry"
           quantity={2}
-          onRemove={function () { }}
+          onRemove={() => { }}
         />,
       )
 
