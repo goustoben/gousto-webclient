@@ -33,7 +33,7 @@ RecipeItem.propTypes = {
 
 RecipeItem.defaultProps = {
   showLine: false,
-  onImageClick: () => { }
+  onImageClick: false
 }
 
 export default RecipeItem

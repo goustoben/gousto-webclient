@@ -40,7 +40,6 @@ class Details extends React.Component {
     pricingPending: PropTypes.bool,
     prices: PropTypes.instanceOf(Immutable.Map),
     unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
-    shouldShowDetailsOnClick: PropTypes.bool,
     showRecipeDetailsOnClick: PropTypes.func,
     shortlistFeatureEnabled: PropTypes.bool
   }
@@ -51,7 +50,6 @@ class Details extends React.Component {
     displayOptions: Immutable.List([]),
     prices: Immutable.Map({}),
     pricingPending: false,
-    shouldShowDetailsOnClick: false,
     showRecipeDetailsOnClick: () => { },
     shortlistFeatureEnabled: false
   }
@@ -104,12 +102,6 @@ class Details extends React.Component {
     )
   }
 
-  handleRecipeImageClick = (recipeId) => {
-    const { shouldShowDetailsOnClick, showRecipeDetailsOnClick } = this.props
-
-    return shouldShowDetailsOnClick ? showRecipeDetailsOnClick(recipeId) : null
-  }
-
   render() {
     const {
       displayOptions,
@@ -131,7 +123,8 @@ class Details extends React.Component {
       promoCode,
       boxSummaryVisibilityChange,
       unavailableRecipeIds,
-      shortlistFeatureEnabled
+      shortlistFeatureEnabled,
+      showRecipeDetailsOnClick
     } = this.props
     const okRecipeList = this.recipeList(okRecipeIds)
     const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
@@ -183,7 +176,7 @@ class Details extends React.Component {
                     trackNumPortionChange={portionSizeSelectedTracking}
                     orderId={orderId}
                   />
-                   </div>
+                </div>
                 )
             }
             <div className={css.row}>
@@ -204,7 +197,7 @@ class Details extends React.Component {
                           onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
                           available
                           showLine={!shortlistFeatureEnabled}
-                          onImageClick={() => this.handleRecipeImageClick(recipe.get('id'))}
+                          onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
                         />
                         {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
                       </span>
@@ -220,7 +213,7 @@ class Details extends React.Component {
                           onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
                           available={menuFetchPending}
                           showLine
-                          onImageClick={() => this.handleRecipeImageClick(recipe.get('id'))}
+                          onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
                         />
                       )).toArray()}
                     </span>

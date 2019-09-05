@@ -36,6 +36,7 @@
 }
 
 .title {
+	text-align: left;
 	composes: headerSM textBold from 'styles/typography.css';
 	composes: noMargin from 'sass-loader!styles/spacing.scss';
 }
@@ -105,4 +106,13 @@
 .horizontalLine {
 	border-bottom: 1px solid Pepper30;
 	composes: marginXSTopBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.arrowRight {
+	composes: fa-basic-class fa-angle-right from 'styles/vendor/font-awesome-module.css';
+	padding-left: 0.3rem;
+}
+
+.clickableTitle:hover {
+	text-decoration: underline;
 }
