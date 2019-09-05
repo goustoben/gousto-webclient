@@ -15,10 +15,12 @@ import {
   trackRecipeDietaryAttributeUnselected,
   trackRecipeTotalTimeSelected,
   trackAffiliatePurchase,
+  trackUserAttributes
 } from 'actions/tracking'
 import globals from 'config/globals'
 import actionTypes from 'actions/actionTypes'
 import { warning } from 'utils/logger'
+import moment from 'moment'
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
@@ -471,9 +473,9 @@ describe('tracking actions', () => {
         amount: '',
         channel: '',
         orderRef: 9010322,
-        parts:  `FIRSTPURCHASE:47.75`,
+        parts: `FIRSTPURCHASE:47.75`,
         voucher: 'TV',
-        currency:'GBP',
+        currency: 'GBP',
       }
 
       beforeEach(() => {
@@ -582,6 +584,39 @@ describe('tracking actions', () => {
 
           expect(global.AWIN.Tracking.run).toHaveBeenCalled()
         })
+      })
+    })
+  })
+
+  describe('trackUserAttributes', () => {
+    let isSignupInLast30Days
+    const state = {
+      user: Immutable.fromJS({
+        subscription:
+          Immutable.fromJS({
+            createdAt: '2019-08-21 12:53:33'
+          })
+      })
+    }
+
+    beforeEach(() => {
+      dispatch = jest.fn()
+      getState = jest.fn().mockReturnValue(state)
+      isSignupInLast30Days = moment().isSameOrBefore(moment('2019-08-21 12:53:33').add(30, 'days'))
+    })
+
+    test('should dispatch a TRACKING action if signupDate exists', () => {
+      trackUserAttributes()(dispatch, getState)
+      const dispatchCall = dispatch.mock.calls[0][0]
+      expect(dispatchCall).toMatchObject({
+        type: actionTypes.TRACKING,
+        optimizelyData: {
+          type: 'user',
+          eventName: 'user_subscription_start',
+          attributes: {
+            isSignupInLast30Days,
+          }
+        }
       })
     })
   })

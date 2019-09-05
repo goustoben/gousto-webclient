@@ -88,7 +88,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch Order Edited tracking action for subscription box', async() => {
+    test('should dispatch Order Edited tracking action for subscription box', async () => {
       await basketCheckedOut(2, 'grid')(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
@@ -101,6 +101,7 @@ describe('basket actions', () => {
           subscription_active: true,
         },
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_gross',
           tags: {
             revenue: '-0.99'
@@ -111,6 +112,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_net',
           tags: {
             revenue: '-0.99'
@@ -119,7 +121,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch Order Edited tracking action for transactional box', async() => {
+    test('should dispatch Order Edited tracking action for transactional box', async () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
@@ -167,6 +169,7 @@ describe('basket actions', () => {
           subscription_active: false,
         },
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_gross',
           tags: {
             revenue: '-0.99'
@@ -177,6 +180,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         optimizelyData: {
+          type: 'event',
           eventName: 'order_edited_net',
           tags: {
             revenue: '-0.99'
@@ -185,7 +189,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch Order Place tracking action for transactional box', async() => {
+    test('should dispatch Order Place tracking action for transactional box', async () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
@@ -232,6 +236,7 @@ describe('basket actions', () => {
           subscription_active: true,
         },
         optimizelyData: {
+          type: 'event',
           eventName: 'order_placed_gross',
           tags: {
             revenue: '24.00'
@@ -242,6 +247,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         optimizelyData: {
+          type: 'event',
           eventName: 'order_placed_net',
           tags: {
             revenue: '24.00'
@@ -250,7 +256,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch Order Place tracking action for subscription box', async() => {
+    test('should dispatch Order Place tracking action for subscription box', async () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
@@ -295,6 +301,7 @@ describe('basket actions', () => {
           subscription_active: true,
         },
         optimizelyData: {
+          type: 'event',
           eventName: 'order_placed_gross',
           tags: {
             revenue: '22.00'
@@ -305,6 +312,7 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: 'TRACKING',
         optimizelyData: {
+          type: 'event',
           eventName: 'order_placed_net',
           tags: {
             revenue: '22.00'
@@ -313,7 +321,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch  BASKET_CHECKOUT tracking with dietaryAttributes', async() => {
+    test('should dispatch  BASKET_CHECKOUT tracking with dietaryAttributes', async () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
@@ -601,7 +609,7 @@ describe('basket actions', () => {
         type: 'BASKET_CHECKOUT_PROCEED',
         trackingData: {
           actionType: 'BASKET_CHECKOUT_PROCEED',
-          basket:  Immutable.fromJS({
+          basket: Immutable.fromJS({
             orderId: '179',
           }),
           dietary_attribute: ['dairy-free'],
@@ -711,7 +719,7 @@ describe('basket actions', () => {
           },
           dietTypes: Immutable.List(),
           newRecipes: false,
-          dietaryAttributes:Immutable.List()
+          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 0, 4: 30 },
@@ -769,7 +777,7 @@ describe('basket actions', () => {
           },
           dietTypes: Immutable.List(),
           newRecipes: false,
-          dietaryAttributes:Immutable.List()
+          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30 },
@@ -798,7 +806,7 @@ describe('basket actions', () => {
           },
           dietTypes: Immutable.List(),
           newRecipes: false,
-          dietaryAttributes:Immutable.List()
+          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 0, 4: 30 },

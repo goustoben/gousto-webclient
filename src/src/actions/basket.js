@@ -545,8 +545,6 @@ export const basketCheckedOut = (numRecipes, view) => (
     const promoCode = prices && prices.get('promoCode')
     const dietaryAttribute = filters.get('dietaryAttributes').toJS()
 
-    console.log('window', window) //eslint-disable-line
-
     try {
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
 

@@ -4,9 +4,13 @@ describe('optimizely middleware', () => {
   const action = {
     type: 'Order Placed',
     optimizelyData: {
+      type: 'event',
       eventName: 'order_placed_gross',
       tags: {
         revenue: '10.00'
+      },
+      attributes: {
+        isSignUpInLast30days: false
       }
     }
   }
@@ -28,6 +32,9 @@ describe('optimizely middleware', () => {
       eventName: 'order_placed_gross',
       tags: {
         revenue: 1000
+      },
+      attributes: {
+        isSignUpInLast30days: false
       }
     }
 
