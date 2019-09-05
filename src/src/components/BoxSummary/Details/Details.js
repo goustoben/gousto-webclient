@@ -168,6 +168,50 @@ class Details extends React.Component {
     )
   }
 
+  renderDateHeader = () => {
+    const {
+      orderId,
+      date,
+      clearSlot
+    } = this.props
+
+    if (orderId) {
+      return (
+        <div className={css.row}>
+          <p className={css.deliverySlotText}>
+            Edit recipes for your upcoming box. To change date or cancel box, visit &apos;My Deliveries&apos;
+          </p>
+          <p className={css.dateText}>{`${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`}</p>
+        </div>
+      )
+    }
+    const text = `${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`
+
+    return (
+      <div className={css.rowSMMargin}>
+        <Button fill={false} width="full">
+          <Segment onClick={clearSlot} fill={false}>
+            <span className={text.length > 21 ? css.limitedLengthPadding : css.limitedLength}>{text}</span>
+            <span className={css.clear}>
+              <span className={css.clearIcon}></span>
+              edit
+            </span>
+          </Segment>
+        </Button>
+      </div>
+    )
+  }
+
+  renderPromoCodeMessage = () => {
+    const { accessToken, displayOptions, promoCode } = this.props
+
+    if (accessToken || displayOptions.contains('hidePromoCodeText')) {
+      return null
+    }
+
+    return !promoCode && <p className={css.supportingText}>You can enter promo codes later.</p>
+  }
+
   render() {
     const {
       displayOptions,
@@ -222,16 +266,16 @@ class Details extends React.Component {
               })()}
               {
                 !displayOptions.contains('hidePortions') &&
-                  this.renderPortions(this.props)
+                this.renderPortions(this.props)
               }
             </LayoutContentWrapper>
             <LayoutContentWrapper>
-                <p className={css.titleSection}>Recipe Box</p>
+              <p className={css.titleSection}>Recipe Box</p>
             </LayoutContentWrapper>
-              {
-                !displayOptions.contains('hideRecipeList') &&
-                this.renderRecipeList(this.props)
-              }
+            {
+              !displayOptions.contains('hideRecipeList') &&
+              this.renderRecipeList(this.props)
+            }
             <LayoutContentWrapper>
               <BoxProgressAlert numRecipes={numRecipes} />
               {
@@ -265,12 +309,12 @@ class Details extends React.Component {
 
               {
                 displayCta &&
-                  <Button
-                    onClick={() => { boxSummaryVisibilityChange(false) }}
-                    width="full"
-                  >
-                    {ctaText}
-                  </Button>
+                <Button
+                  onClick={() => { boxSummaryVisibilityChange(false) }}
+                  width="full"
+                >
+                  {ctaText}
+                </Button>
               }
             </LayoutContentWrapper>
           </div>
