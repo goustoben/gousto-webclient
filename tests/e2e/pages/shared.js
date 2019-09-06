@@ -106,7 +106,6 @@ module.exports = {
             }).then(function (menu) {
               const stock = menu[0].data
               const recipes = menu[1].data
-              const selectedRecipes = []
 
               const availableRecipeIds = Object.keys(stock)
                 .filter(function (recipeId) {
@@ -116,6 +115,7 @@ module.exports = {
 
                   return !committed || parseInt(numberAvail, 10) > 4
                 })
+                .filter(recipeId => Object.keys(recipes).includes(recipeId))
 
               const recipeChoices = availableRecipeIds.slice(0, numRecipes).map(function (recipeId) {
                 return ({
