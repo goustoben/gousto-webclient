@@ -1,6 +1,6 @@
 @value ScreenXXSMaxDEPRECATED from 'styles/screenSizes.css';
 @value SpacingXXS, SpacingSM, SpacingXXXL from 'sass-loader!styles/spacing.scss';
-@value Blackberry, Pepper30, White from 'styles/colors.css';
+@value Blackberry, Pepper30 from 'styles/colors.css';
 
 @value holderHeight: 60px;
 @value desktopWidth: 60px;
@@ -42,7 +42,8 @@
 .title {
 	text-align: left;
 	border: none;
-	background-color: White;
+	background-color: transparent;
+	padding: 0;
 	composes: headerSM textBold from 'styles/typography.css';
 	composes: noMargin from 'sass-loader!styles/spacing.scss';
 }
