@@ -29,6 +29,9 @@ function mapStateToProps(state, ownProps) {
         case '409-missing-preview-order':
           errorType = 'out-of-stock'
           break
+        case 'validation.phone.customer.phone_number':
+          errorType = 'user-phone-number-invalid'
+          break
         default:
           errorType = 'generic'
           break
