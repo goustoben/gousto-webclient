@@ -148,7 +148,9 @@ module.exports = {
     'card-tokenisation-failed': 'Sorry, we don’t accept that type of card. Please try another one.',
     'network-failure': 'Please check your network connection and try again.',
     'valid-card-details-not-provided': 'Your Card Number, Expiry Date and Security Number are required',
+    'user-phone-number-invalid': 'Oh dear, it looks like there was a problem with the phone number you gave us. Please go back a step and try again.',
   },
+  errorsRequireGoBack: ['user-phone-number-invalid'],
   terms: 'By placing your order you agree to our',
   supportedCardTypes: ['VISA', 'MC', 'DELTA', 'MCDEBIT', 'UKE', 'MAESTRO'],
   cardTypeOptions: [

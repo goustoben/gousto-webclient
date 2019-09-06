@@ -1,57 +1,68 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 import ErrorMessage from 'routes/Checkout/Components/ErrorMessage/ErrorMessage'
-import { Alert } from 'goustouicomponents'
 import config from 'config/checkout'
 
 describe('ErrorMessage', () => {
-  describe('rendering', () => {
-    let errorMessageStub
+  const ERROR_MESSAGES = config.errorMessage
+  const KNOWN_ERROR = Object.keys(ERROR_MESSAGES)[0]
+  const ERROR_WITH_GO_BACK = config.errorsRequireGoBack[0]
+  let wrapper
 
-    beforeEach(() => {
-      errorMessageStub = sinon.stub(config, 'errorMessage').get(function() {
-        return {
-          generic: 'generic configured message',
-          specificMessage: 'specific configured message',
-        }
+  beforeEach(() => {
+    wrapper = shallow(<ErrorMessage />)
+  })
+
+  describe('when there is no error', () => {
+    test('returns null', () => {
+      expect(wrapper.type()).toEqual(null)
+    })
+  })
+
+  describe('when there is an error', () => {
+    describe('when the error type is known', () => {
+      beforeEach(() => {
+        wrapper.setProps({ errorType: KNOWN_ERROR })
+      })
+
+      test('displays the corresponding error message', () => {
+        expect(wrapper.find('Alert').html()).toContain(ERROR_MESSAGES[KNOWN_ERROR])
       })
     })
 
-    afterEach(() => {
-      errorMessageStub.restore()
+    describe('when the error type is not known', () => {
+      beforeEach(() => {
+        wrapper.setProps({ errorType: 'some-unknown-error-type' })
+      })
+
+      test('displays the generic error message', () => {
+        expect(wrapper.find('Alert').html()).toContain(ERROR_MESSAGES.generic)
+      })
     })
 
-    test('should return null by default', () => {
-      const wrapper = shallow(<ErrorMessage />)
-      expect(wrapper.type()).toEqual(null)
-    })
+    describe('when the error requires a link to the previous page', () => {
+      let goBackMock
 
-    test('should return div if error provided', () => {
-      const wrapper = shallow(<ErrorMessage errorType="some-error-type" />)
-      expect(wrapper.type()).toEqual('div')
-    })
+      beforeEach(() => {
+        goBackMock = jest.fn()
+        wrapper.setProps({
+          errorType: ERROR_WITH_GO_BACK,
+          goBack: goBackMock,
+        })
+      })
 
-    test('should contain 1 Alert if error provided', () => {
-      const wrapper = shallow(<ErrorMessage errorType="some-error-type" />)
-      expect(wrapper.find(Alert).length).toEqual(1)
-    })
+      test('displays the corresponding error message', () => {
+        expect(wrapper.find('Alert').html()).toContain(ERROR_MESSAGES[ERROR_WITH_GO_BACK])
+      })
 
-    test('should contain child with default error message if no configured match is found', () => {
-      const wrapper = shallow(
-        <ErrorMessage errorType="some-unknown-error-type" />,
-      )
-      expect(wrapper.find(Alert).prop('children')).toEqual(
-        'generic configured message',
-      )
-    })
+      test('displays a go back button', () => {
+        expect(wrapper.find('Alert').find('button').text()).toBe('Back to Delivery')
+      })
 
-    test('should display error message for matching type if available', () => {
-      const wrapper = shallow(<ErrorMessage errorType="specificMessage" />)
-      expect(wrapper.find(Alert).prop('children')).toEqual(
-        'specific configured message',
-      )
+      test('calls the goBack function when clicked', () => {
+        wrapper.find('.goBackButton').props().onClick()
+        expect(goBackMock).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })
