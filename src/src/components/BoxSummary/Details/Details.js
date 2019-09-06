@@ -8,7 +8,7 @@ import { getSurchargeItems } from 'utils/pricing'
 import { isAvailableRecipeList } from 'utils/recipe'
 
 import config from 'config'
-import { Button, Heading, Segment, Spinner } from 'goustouicomponents'
+import { Button, Heading, LayoutContentWrapper, Segment, Spinner } from 'goustouicomponents'
 import RecipeItem from 'Recipe/RecipeItem'
 import ShortlistItem from 'Recipe/ShortlistItem'
 import Receipt from 'Receipt'
@@ -126,38 +126,40 @@ class Details extends React.Component {
 
     return (
       <div>
-        <div className={css.recipeItems}>
-          {okRecipeList.map(recipe => (
-            <span key={recipe.get('id')}>
-              <RecipeItem
-                key={recipe.get('id')}
-                media={recipe.get('media')}
-                title={recipe.get('title')}
-                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                available
-                showLine={!shortlistFeatureEnabled}
-                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-              />
-              {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
-            </span>
-          )).toArray()}
-          <span className={!menuFetchPending ? css.notAvailable : ''}>
-            {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
-            {unavailableRecipeList.map(recipe => (
-              <RecipeItem
-                key={recipe.get('id')}
-                media={recipe.get('media')}
-                title={recipe.get('title')}
-                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                available={menuFetchPending}
-                showLine
-                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-              />
+        <LayoutContentWrapper>
+          <div className={css.recipeItems}>
+            {okRecipeList.map(recipe => (
+              <span key={recipe.get('id')}>
+                <RecipeItem
+                  key={recipe.get('id')}
+                  media={recipe.get('media')}
+                  title={recipe.get('title')}
+                  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                  available
+                  showShortlistButton={!shortlistFeatureEnabled}
+                  onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                />
+                {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
+              </span>
             )).toArray()}
-          </span>
-        </div>
+            <span className={!menuFetchPending ? css.notAvailable : ''}>
+              {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
+              {unavailableRecipeList.map(recipe => (
+                <RecipeItem
+                  key={recipe.get('id')}
+                  media={recipe.get('media')}
+                  title={recipe.get('title')}
+                  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                  available={menuFetchPending}
+                  showShortlistButton
+                  onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                />
+              )).toArray()}
+            </span>
+          </div>
+        </LayoutContentWrapper>
         {shortlistFeatureEnabled &&
           <ShortlistItem
             numPortions={numPortions}
@@ -192,85 +194,88 @@ class Details extends React.Component {
       <div className={css[`supercontainer${view}`]}>
         <div className={css[`container${view}`]}>
           <div className={css.content}>
-            <Heading center size="large" type="h2">Box Summary</Heading>
-            {(() => {
-              if (orderId) {
+            <LayoutContentWrapper>
+              <Heading center size="large" type="h2">Box Summary</Heading>
+              {(() => {
+                if (orderId) {
+                  return (
+                    <div className={css.row}>
+                      <p className={css.deliverySlotText}>
+                        Edit recipes for your upcoming box. To change date or cancel box, visit &apos;My Deliveries&apos;
+                      </p>
+                      <p className={css.dateText}>{`${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`}</p>
+                    </div>
+                  )
+                }
+                const text = `${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`
+
                 return (
-                  <div className={css.row}>
-                    <p className={css.deliverySlotText}>
-                      Edit recipes for your upcoming box. To change date or cancel box, visit &apos;My Deliveries&apos;
-                    </p>
-                    <p className={css.dateText}>{`${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`}</p>
+                  <div className={css.rowSMMargin}>
+                    <Button fill={false} width="full">
+                      <Segment onClick={clearSlot} fill={false}>
+                        <span className={text.length > 21 ? css.limitedLengthPadding : css.limitedLength}>{text}</span>
+                        <span className={css.clear}>
+                          <span className={css.clearIcon}></span>
+                          edit
+                        </span>
+                      </Segment>
+                    </Button>
                   </div>
                 )
+              })()}
+              {
+                !displayOptions.contains('hidePortions') &&
+                  this.renderPortions(this.props)
               }
-              const text = `${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`
+            </LayoutContentWrapper>
+            <LayoutContentWrapper>
+                <p className={css.titleSection}>Recipe Box</p>
+            </LayoutContentWrapper>
+              {
+                !displayOptions.contains('hideRecipeList') &&
+                this.renderRecipeList(this.props)
+              }
+            <LayoutContentWrapper>
+              <BoxProgressAlert numRecipes={numRecipes} />
+              {
+                (pricingPending)
+                  ? <div className={css.spinner}><Spinner color="black" /></div>
+                  : <Receipt
+                    dashPricing={numRecipes < config.basket.minRecipesNum}
+                    numRecipes={numRecipes}
+                    numPortions={numPortions}
+                    prices={prices}
+                    deliveryTotalPrice={prices.get('deliveryTotal')}
+                    surcharges={getSurchargeItems(prices.get('items'))}
+                    surchargeTotal={prices.get('surchargeTotal')}
+                    recipeTotalPrice={prices.get('recipeTotal')}
+                    totalToPay={prices.get('total')}
+                    recipeDiscountAmount={prices.get('recipeDiscount')}
+                    recipeDiscountPercent={prices.get('percentageOff')}
+                    extrasTotalPrice={prices.get('productTotal')}
+                    showTitleSection
+                  />
+              }
 
-              return (
-                <div className={css.rowSMMargin}>
-                  <Button fill={false} width="full">
-                    <Segment onClick={clearSlot} fill={false}>
-                      <span className={text.length > 21 ? css.limitedLengthPadding : css.limitedLength}>{text}</span>
-                      <span className={css.clear}>
-                        <span className={css.clearIcon}></span>
-                        edit
-                      </span>
-                    </Segment>
+              {(() => {
+                if (accessToken || displayOptions.contains('hidePromoCodeText')) {
+                  return null
+                }
+
+                return !promoCode &&
+                  <p className={css.supportingText}>You can enter promo codes later.</p>
+              })()}
+
+              {
+                displayCta &&
+                  <Button
+                    onClick={() => { boxSummaryVisibilityChange(false) }}
+                    width="full"
+                  >
+                    {ctaText}
                   </Button>
-                </div>
-              )
-            })()}
-            {
-              !displayOptions.contains('hidePortions') &&
-                this.renderPortions(this.props)
-            }
-            <div className={css.row}>
-              <p className={css.titleSection}>Recipe Box</p>
-            </div>
-            {
-              !displayOptions.contains('hideRecipeList') &&
-              this.renderRecipeList(this.props)
-            }
-
-            <BoxProgressAlert numRecipes={numRecipes} />
-
-            {
-              (pricingPending)
-                ? <div className={css.spinner}><Spinner color="black" /></div>
-                : <Receipt
-                  dashPricing={numRecipes < config.basket.minRecipesNum}
-                  numRecipes={numRecipes}
-                  numPortions={numPortions}
-                  prices={prices}
-                  deliveryTotalPrice={prices.get('deliveryTotal')}
-                  surcharges={getSurchargeItems(prices.get('items'))}
-                  surchargeTotal={prices.get('surchargeTotal')}
-                  recipeTotalPrice={prices.get('recipeTotal')}
-                  totalToPay={prices.get('total')}
-                  recipeDiscountAmount={prices.get('recipeDiscount')}
-                  recipeDiscountPercent={prices.get('percentageOff')}
-                  extrasTotalPrice={prices.get('productTotal')}
-                  showTitleSection
-                />
-            }
-            {(() => {
-              if (accessToken || displayOptions.contains('hidePromoCodeText')) {
-                return null
               }
-
-              return !promoCode
-                ? <p className={css.supportingText}>You can enter promo codes later.</p>
-                : null
-            })()}
-
-            {displayCta ? (
-              <Button
-                onClick={() => { boxSummaryVisibilityChange(false) }}
-                width="full"
-              >
-                {ctaText}
-              </Button>
-            ) : null}
+            </LayoutContentWrapper>
           </div>
         </div>
       </div>

@@ -76,6 +76,7 @@
 	height: 100%;
 	margin: auto;
 	overflow-x: auto;
+	padding: 0;
 }
 
 .supercontainermobile {

@@ -22,7 +22,7 @@ const quantityMessage = (gift, quantity, disclaimerKey, type) => {
   }
 }
 
-const Item = ({ available, disclaimerKey, type, media, title, quantity, onImageClick, onRemove, url, gift, showLine }) => (
+const Item = ({ available, disclaimerKey, type, media, title, quantity, onImageClick, onRemove, url, gift, showShortlistButton }) => (
   <div>
     <div className={available ? css.item : css.itemUnavailable}>
       <GoustoImage onClick={onImageClick} media={media} title={title} className={classnames(css.img, { [css.pointer]: isFunction(onImageClick) })} />
@@ -44,7 +44,7 @@ const Item = ({ available, disclaimerKey, type, media, title, quantity, onImageC
       </div>
       {(available && onRemove) ? <span className={css.minusIcon} onClick={onRemove} /> : null}
     </div>
-    {showLine ? <div className={css.horizontalLine} /> : null}
+    <div className={css.horizontalLine} />
   </div>
 )
 
@@ -68,11 +68,11 @@ Item.propTypes = {
   available: PropTypes.bool,
   gift: PropTypes.bool,
   url: PropTypes.string,
-  showLine: PropTypes.bool,
+  showShortlistButton: PropTypes.bool,
 }
 
 Item.defaultProps = {
-  showLine: false,
+  showShortlistButton: false,
 }
 
 export default Item

@@ -266,13 +266,13 @@ describe('Item', () => {
       expect(wrapper.find('.horizontalLine')).toHaveLength(0)
     })
 
-    test('should show when showLine prop is true', () => {
+    test('should show when showShortlistButton prop is true', () => {
       wrapper = shallow(<Item
         title='test recipe'
         media={Immutable.fromJS({
           images: [{ urls: ['', '', { src: 'image_path' }] }],
         })}
-        showLine
+        showShortlistButton
       />)
 
       expect(wrapper.find('.horizontalLine')).toHaveLength(1)
