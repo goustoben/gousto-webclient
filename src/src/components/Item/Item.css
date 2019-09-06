@@ -1,6 +1,6 @@
 @value ScreenXXSMaxDEPRECATED from 'styles/screenSizes.css';
 @value SpacingXXS, SpacingSM, SpacingXXXL from 'sass-loader!styles/spacing.scss';
-@value Pepper30, White from 'styles/colors.css';
+@value Blackberry, Pepper30, White from 'styles/colors.css';
 
 @value holderHeight: 60px;
 @value desktopWidth: 60px;
@@ -8,8 +8,12 @@
 
 .item {
 	composes: flex spaceBetween flexStart from 'styles/flex.css';
-	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';
 	composes: relative from 'styles/position.css';
+	padding: 0.5rem 0;
+}
+
+.item:not(:last-child) {
+	border-bottom: 1px solid Pepper30;
 }
 
 .itemUnavailable {
@@ -85,6 +89,7 @@
 		position: absolute;
 		margin-left: 0;
 		right: 0;
+		top: 1.5rem;
 		width: auto;
 		font-size: 1.8em;
 	}
@@ -103,11 +108,6 @@
 	width: desktopWidth;
 	border-radius:100%;
 	object-fit: cover;
-}
-
-.horizontalLine {
-	border-bottom: 1px solid Pepper30;
-	composes: marginXSTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .arrowRight {

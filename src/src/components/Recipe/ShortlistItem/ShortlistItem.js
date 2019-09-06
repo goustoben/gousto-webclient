@@ -65,26 +65,23 @@ class ShortlistItem extends React.Component {
           <p className={css.educationText}>
             Shortlisted recipes will appear here. Compare multiple recipes, and move them to and from your box to make your final selection.
           </p>
-          <div className={css.horizontalLine}/>
         </div>
         }
         {!!shortlist.size && shortlist.map(recipe => (
-          <span key={recipe.get('id')}>
-            <Item
-              key={recipe.get('id')}
-              available={available}
-              fromBox={false}
-              media={recipe.get('media').getIn(['images', 0, 'urls'], Immutable.List([]))}
-              onImageClick={() => onImageClick(recipe.get('id'))}
-              onRemove={() => onShortlistRemove(recipe.get('id'))}
-              quantity={numPortions}
-              recipeId={recipe.get('id')}
-              showShortlistButton
-              title={recipe.get('title')}
-              type="recipe"
-              url={url}
-            />
-          </span>
+          <Item
+            key={recipe.get('id')}
+            available={available}
+            fromBox={false}
+            media={recipe.get('media').getIn(['images', 0, 'urls'], Immutable.List([]))}
+            onImageClick={() => onImageClick(recipe.get('id'))}
+            onRemove={() => onShortlistRemove(recipe.get('id'))}
+            quantity={numPortions}
+            recipeId={recipe.get('id')}
+            showShortlistButton
+            title={recipe.get('title')}
+            type="recipe"
+            url={url}
+          />
         ))}
       </LayoutContentWrapper>
     </div>)

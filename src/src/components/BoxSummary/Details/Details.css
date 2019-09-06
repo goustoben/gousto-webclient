@@ -2,7 +2,6 @@
 @value SpacingSM, SpacingXS from 'sass-loader!styles/spacing.scss';
 @value ScreenSMMin, HeightMDMax from 'styles/screenSizes.css';
 @value sizeXS, sizeXL, avenirHeavyFontStack from 'styles/typography.css';
-@value SpacingLG from 'styles/spacing.css';
 
 .title {
 	composes: headerMD headlineFont textCenter from 'styles/typography.css';
@@ -11,8 +10,7 @@
 .titleSection {
 	font-family: avenirHeavyFontStack;
 	font-size: sizeXL;
-	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';		
-	margin-top: SpacingLG;		
+	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';
 }
 
 .boldText {

@@ -1,6 +1,6 @@
 @value Blackberry, DarkRadish, Radish, White from 'styles/colors.css';
 @value ScreenSMMin, ScreenXSMax, ScreenMLMax from 'styles/screenSizes.css';
-@value SpacingXXS, SpacingMD from 'sass-loader!styles/spacing.scss';
+@value SpacingXXS, SpacingSM from 'sass-loader!styles/spacing.scss';
 @value sizeLG from 'styles/typography.css';
 
 @value barDesktopHeight 75px;
@@ -76,7 +76,6 @@
 
 .detailContainer {
 	composes: borderXS from 'styles/borders.css';
-	composes: paddingMD from 'sass-loader!styles/spacing.scss';
 	background-color: White;
 }
 
@@ -138,7 +137,10 @@
 	composes: absolute from 'styles/position.css';
 
 	right: SpacingXXS;
-	top: SpacingMD;
+	top: SpacingSM;
+
+	padding: 0.5rem;
+	width: auto;
 
 	font-size: sizeLG;
 	cursor: pointer;

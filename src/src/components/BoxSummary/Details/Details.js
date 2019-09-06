@@ -128,36 +128,33 @@ class Details extends React.Component {
         <LayoutContentWrapper>
           <div className={css.recipeItems}>
             {okRecipeList.map(recipe => (
-              <span key={recipe.get('id')}>
-                <RecipeItem
-                  key={recipe.get('id')}
-                  available
-                  fromBox
-                  media={recipe.get('media')}
-                  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                  onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                  showShortlistButton={shortlistFeatureEnabled}
-                  recipeId={recipe.get('id')}
-                  title={recipe.get('title')}
-                />
-              </span>
+              <RecipeItem
+                key={recipe.get('id')}
+                available
+                fromBox
+                media={recipe.get('media')}
+                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                showShortlistButton={shortlistFeatureEnabled}
+                recipeId={recipe.get('id')}
+                title={recipe.get('title')}
+              />
             )).toArray()}
-            <span className={!menuFetchPending ? css.notAvailable : ''}>
-              {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
-              {unavailableRecipeList.map(recipe => (
-                <RecipeItem
-                  key={recipe.get('id')}
-                  available={menuFetchPending}
-                  media={recipe.get('media')}
-                  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                  onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                  showShortlistButton
-                  title={recipe.get('title')}
-                />
-              )).toArray()}
-            </span>
+
+            {(unavailableRecipeList.size > 0 && !menuFetchPending) && this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError)}
+
+            {unavailableRecipeList.map(recipe => (
+              <RecipeItem
+                key={recipe.get('id')}
+                available={menuFetchPending}
+                media={recipe.get('media')}
+                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                title={recipe.get('title')}
+              />
+            )).toArray()}
           </div>
         </LayoutContentWrapper>
         {shortlistFeatureEnabled &&
