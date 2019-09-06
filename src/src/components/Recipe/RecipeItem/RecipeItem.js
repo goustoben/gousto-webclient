@@ -14,6 +14,8 @@ const RecipeItem = (props) => (
     url={props.url}
     showShortlistButton={props.showShortlistButton}
     onImageClick={props.onImageClick}
+    recipeId={props.recipeId}
+    fromBox={props.fromBox}
   />
 )
 
@@ -28,7 +30,9 @@ RecipeItem.propTypes = {
   available: PropTypes.bool,
   url: PropTypes.string,
   showShortlistButton: PropTypes.bool,
-  onImageClick: PropTypes.func
+  onImageClick: PropTypes.func,
+  recipeId: PropTypes.string,
+  fromBox: PropTypes.bool
 }
 
 RecipeItem.defaultProps = {

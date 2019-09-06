@@ -13,7 +13,6 @@ import RecipeItem from 'Recipe/RecipeItem'
 import ShortlistItem from 'Recipe/ShortlistItem'
 import Receipt from 'Receipt'
 import Portions from 'BoxSummary/Details/Portions'
-import { MoveRecipeButton } from 'MoveRecipeButton'
 import css from './Details.css'
 import BoxProgressAlert from './BoxProgressAlert'
 
@@ -132,15 +131,16 @@ class Details extends React.Component {
               <span key={recipe.get('id')}>
                 <RecipeItem
                   key={recipe.get('id')}
-                  media={recipe.get('media')}
-                  title={recipe.get('title')}
-                  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
                   available
-                  showShortlistButton={!shortlistFeatureEnabled}
+                  fromBox
+                  media={recipe.get('media')}
+                  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
                   onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                  showShortlistButton={shortlistFeatureEnabled}
+                  recipeId={recipe.get('id')}
+                  title={recipe.get('title')}
                 />
-                {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
               </span>
             )).toArray()}
             <span className={!menuFetchPending ? css.notAvailable : ''}>
@@ -148,13 +148,13 @@ class Details extends React.Component {
               {unavailableRecipeList.map(recipe => (
                 <RecipeItem
                   key={recipe.get('id')}
-                  media={recipe.get('media')}
-                  title={recipe.get('title')}
-                  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
                   available={menuFetchPending}
-                  showShortlistButton
+                  media={recipe.get('media')}
+                  numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
                   onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                  onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                  showShortlistButton
+                  title={recipe.get('title')}
                 />
               )).toArray()}
             </span>
@@ -162,8 +162,8 @@ class Details extends React.Component {
         </LayoutContentWrapper>
         {shortlistFeatureEnabled &&
           <ShortlistItem
-            numPortions={numPortions}
             available
+            numPortions={numPortions}
             onImageClick={showRecipeDetailsOnClick}
           />
         }

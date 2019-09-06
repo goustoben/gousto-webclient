@@ -4,7 +4,6 @@ import Immutable from 'immutable'/* eslint-disable new-cap */
 import Item from 'Item'
 import { isAvailableRecipeList } from 'utils/recipe'
 import Svg from 'Svg'
-import { MoveRecipeButton } from 'MoveRecipeButton'
 import classnames from 'classnames'
 import { LayoutContentWrapper } from 'goustouicomponents'
 import detailsCss from '../../BoxSummary/Details/Details.css'
@@ -73,17 +72,18 @@ class ShortlistItem extends React.Component {
           <span key={recipe.get('id')}>
             <Item
               key={recipe.get('id')}
-              type="recipe"
-              media={recipe.get('media').getIn(['images', 0, 'urls'], Immutable.List([]))}
-              title={recipe.get('title')}
-              quantity={numPortions}
-              onRemove={() => onShortlistRemove(recipe.get('id'))}
               available={available}
-              url={url}
-              showShortlistButton={false}
+              fromBox={false}
+              media={recipe.get('media').getIn(['images', 0, 'urls'], Immutable.List([]))}
               onImageClick={() => onImageClick(recipe.get('id'))}
+              onRemove={() => onShortlistRemove(recipe.get('id'))}
+              quantity={numPortions}
+              recipeId={recipe.get('id')}
+              showShortlistButton
+              title={recipe.get('title')}
+              type="recipe"
+              url={url}
             />
-            <MoveRecipeButton recipeId={recipe.get('id')} fromBox={false} />
           </span>
         ))}
       </LayoutContentWrapper>
