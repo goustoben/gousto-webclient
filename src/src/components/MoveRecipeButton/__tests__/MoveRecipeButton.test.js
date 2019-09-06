@@ -8,8 +8,8 @@ describe('MoveRecipeButton', () => {
     wrapper = shallow(<MoveRecipeButton recipeId={"1"} />)
   })
 
-  test('should render div', () => {
-    expect(wrapper.type()).toEqual('div')
+  test('should render a button', () => {
+    expect(wrapper.type()).toEqual('button')
   })
 
   describe('when fromBox is true', () => {
