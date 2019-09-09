@@ -7,7 +7,7 @@
 
 .noShortlist {
   composes: shortlist;
-  padding-bottom: 10px
+  padding-bottom: 10px;
 }
 
 .heartIcon {

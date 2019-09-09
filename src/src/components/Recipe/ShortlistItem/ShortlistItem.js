@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import Item from 'Item'
 import { isAvailableRecipeList } from 'utils/recipe'
 import Svg from 'Svg'
@@ -11,18 +11,24 @@ import css from './ShortlistItem.css'
 
 class ShortlistItem extends React.Component {
   static propTypes = {
-    numPortions: PropTypes.number,
     available: PropTypes.bool,
-    url: PropTypes.string,
     onImageClick: PropTypes.func,
-    shortlistIds: PropTypes.instanceOf(Immutable.Map),
     onShortlistRemove: PropTypes.func,
-    recipesStore: PropTypes.instanceOf(Immutable.Map)
+    numPortions: PropTypes.number,
+    recipesStore: PropTypes.instanceOf(Immutable.Map),
+    shortlistIds: PropTypes.instanceOf(Immutable.Map),
+    url: PropTypes.string,
   }
 
   static defaultProps = {
-    showShortlistButton: false,
-    onImageClick: () => { }
+    available: false,
+    onImageClick: () => { },
+    onShortlistRemove: () => { },
+    numPortions: 2,
+    recipesStore: Immutable.Map(),
+    shortlistIds: Immutable.Map(),
+    url: "",
+    showShortlistButton: true,
   }
 
   constructor() {
@@ -46,6 +52,7 @@ class ShortlistItem extends React.Component {
     const shortlist = isAvailableRecipeList(shortlistIds, recipesStore)
     const icon = !educationVisible ? css.infoIcon : css.crossIcon
     const whatIsThisText = !educationVisible ? 'What is this?' : 'Close'
+    const showShortlistItems = !!shortlist.size
 
     return (
     <div className={shortlist ? css.shortlist : css.noShortlist}>
@@ -67,7 +74,7 @@ class ShortlistItem extends React.Component {
           </p>
         </div>
         }
-        {!!shortlist.size && shortlist.map(recipe => (
+        {showShortlistItems && shortlist.map(recipe => (
           <Item
             key={recipe.get('id')}
             available={available}

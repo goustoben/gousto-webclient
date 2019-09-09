@@ -294,20 +294,30 @@ describe('recipes', () => {
   })
 
   describe('isAvailableRecipeList', () => {
-    test('should return recipes if available in store', () => {
-      const recipeIds = Immutable.Map({'1138': 1})
-      const recipesStore = Immutable.Map({'1138': Immutable.Map({"id": "1138"}), '1': Immutable.Map({"id": "1"})})
-      const result = isAvailableRecipeList(recipeIds, recipesStore)
+    describe('when recipes are avilable in the store', () => {
+      let result
+      beforeEach(() => {
+        const recipeIds = Immutable.Map({'1138': 1})
+        const recipesStore = Immutable.Map({'1138': Immutable.Map({"id": "1138"}), '1': Immutable.Map({"id": "1"})})
+        result = isAvailableRecipeList(recipeIds, recipesStore)
+      })
 
-      expect(result).toEqual(Immutable.Map({'1138': Immutable.Map({"id": "1138"})}))
+      test('should return recipes', () => {
+        expect(result).toEqual(Immutable.Map({'1138': Immutable.Map({"id": "1138"})}))
+      })
     })
 
-    test('should return empty map if not available in store', () => {
-      const recipeIds = Immutable.Map({'123': 1})
-      const recipesStore = Immutable.Map({'1138': Immutable.Map({"id": "1138"}), '1': Immutable.Map({"id": "1"})})
-      const result = isAvailableRecipeList(recipeIds, recipesStore)
+    describe('when receipes are not available in store', () => {
+      let result
+      beforeEach(() => {
+        const recipeIds = Immutable.Map({'123': 1})
+        const recipesStore = Immutable.Map({'1138': Immutable.Map({"id": "1138"}), '1': Immutable.Map({"id": "1"})})
+        result = isAvailableRecipeList(recipeIds, recipesStore)
+      })
 
-      expect(result).toEqual(Immutable.Map({}))
+      test('should return empty map', () => {
+        expect(result).toEqual(Immutable.Map({}))
+      })
     })
   })
 })

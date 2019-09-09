@@ -28,17 +28,21 @@ describe('ShortlistItem', () => {
       expect(wrapper.find('.educationHeader')).toHaveLength(1)
     })
 
-    test('should return shortlist text if educationVisible is true', () => {
-      wrapper = shallow(<ShortlistItem shortlistIds={shortlistIds} recipesStore={recipesStore}/>)
-      wrapper.setState({ educationVisible: true })
-      expect(wrapper.find('.educationHeader')).toHaveLength(1)
+    describe('when educationVisible is true', () => {
+      test('should return shortlist text', () => {
+        wrapper = shallow(<ShortlistItem shortlistIds={shortlistIds} recipesStore={recipesStore}/>)
+        wrapper.setState({ educationVisible: true })
+        expect(wrapper.find('.educationHeader')).toHaveLength(1)
+      })
     })
 
-    test('should not show shortlist text if educationVisible is false', () => {
-      isAvailableRecipeList.mockReturnValue(Immutable.Map({'123': Immutable.Map({"id": "123", 'media': Immutable.Map({})})}))
-      wrapper = shallow(<ShortlistItem shortlistIds={shortlistIds} recipesStore={recipesStore}/>)
-      wrapper.setState({ educationVisible: false })
-      expect(wrapper.find('.educationHeader')).toHaveLength(0)
+    describe('when educationVisible is false', () => {
+      test('should not show shortlist text', () => {
+        isAvailableRecipeList.mockReturnValue(Immutable.Map({'123': Immutable.Map({"id": "123", 'media': Immutable.Map({})})}))
+        wrapper = shallow(<ShortlistItem shortlistIds={shortlistIds} recipesStore={recipesStore}/>)
+        wrapper.setState({ educationVisible: false })
+        expect(wrapper.find('.educationHeader')).toHaveLength(0)
+      })
     })
 
     test('should show MoveRecipeButton if item in shortlist', () => {
