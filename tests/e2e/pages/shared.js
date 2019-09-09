@@ -55,7 +55,7 @@ module.exports = {
         },
       },
       commands: [{
-        fetchMenuLandingDays: function(cutoffDatetime = '') {
+        fetchMenuLandingDays: function (cutoffDatetime = '') {
           const cutoffDatetimeFrom = cutoffDatetime ? cutoffDatetime : webclient.cutoffDateTimeNow()
 
           return webclient.apis.fetchAvailableDates()
@@ -89,7 +89,7 @@ module.exports = {
             })
         },
 
-        createOrder: function(numPortions = 2, numRecipes = 2, promoCode = '') {
+        createOrder: function (numPortions = 2, numRecipes = 2, promoCode = '') {
           const order = {
             promo_code: promoCode,
           }
@@ -106,7 +106,6 @@ module.exports = {
             }).then(function (menu) {
               const stock = menu[0].data
               const recipes = menu[1].data
-              const selectedRecipes = []
 
               const availableRecipeIds = Object.keys(stock)
                 .filter(function (recipeId) {
@@ -116,6 +115,7 @@ module.exports = {
 
                   return !committed || parseInt(numberAvail, 10) > 4
                 })
+                .filter(recipeId => recipes.map(recipe => recipe.id).includes(recipeId))
 
               const recipeChoices = availableRecipeIds.slice(0, numRecipes).map(function (recipeId) {
                 return ({
@@ -133,18 +133,18 @@ module.exports = {
               throw error
             })
         },
-        getCardToken: function(billingAddress) {
+        getCardToken: function (billingAddress) {
           const card = {
-            number:"4242424242424242",
-            expiryMonth:"09",
-            expiryYear:"23",
-            cvv:"100",
-            name:"Test Test",
-            billingDetails:{},
-            requestSource:"JS"
+            number: "4242424242424242",
+            expiryMonth: "09",
+            expiryYear: "23",
+            cvv: "100",
+            name: "Test Test",
+            billingDetails: {},
+            requestSource: "JS"
           }
 
-          return fetch('https://sandbox.checkout.com/api2/v2/tokens/card',{
+          return fetch('https://sandbox.checkout.com/api2/v2/tokens/card', {
             method: 'POST',
             headers: {
               'Authorization': 'pk_test_252a059e-8c44-40fe-9f4c-7acff20dd83a',
@@ -159,13 +159,13 @@ module.exports = {
               "billingDetails": billingAddress
             })
           })
-          .then(response => response.json())
-          .then(response => {
-            return Promise.resolve(response)
-          })
+            .then(response => response.json())
+            .then(response => {
+              return Promise.resolve(response)
+            })
         },
 
-        createUser: function(userName, password) {
+        createUser: function (userName, password) {
           const ukPostcode = new RandExp("^(GIR ?0AA|[A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]([0-9ABEHMNPRV-Y])?)|[0-9][A-HJKPS-UW]) ?[0-9][ABD-HJLNP-UW-Z]{2})$").gen()
           const ukPhone = faker.phone.phoneNumberFormat(1)
           const pwd = password ? password : faker.internet.password()
@@ -187,7 +187,7 @@ module.exports = {
               name: 'My Card',
               card: {
                 payment_provider: 'checkout',
-                 active: 1,
+                active: 1,
                 card_token: ''
               },
             },
@@ -219,7 +219,7 @@ module.exports = {
             },
           }
 
-          return Promise.all([ this.createOrder(), this.fetchMenuLandingDays(), this.getCardToken(userData.addresses.billing_address) ])
+          return Promise.all([this.createOrder(), this.fetchMenuLandingDays(), this.getCardToken(userData.addresses.billing_address)])
             .then(function (values) {
               const data = values[0].data
               const slot = values[1].slot
@@ -258,7 +258,7 @@ module.exports = {
 
           return this
         },
-        logout: function() {
+        logout: function () {
           if (this.api.globals.browser === 'mobile') {
             const shared = this.api.page.shared()
             shared.section.header
@@ -266,7 +266,7 @@ module.exports = {
               .burgerMenuNavigateLogout()
           } else {
             this.waitForElementVisible('@logoutButton')
-            .click('@logoutButton')
+              .click('@logoutButton')
           }
         },
         checkLoginErrMsg: function (msg) {
@@ -283,28 +283,28 @@ module.exports = {
         },
 
         //PROMO
-        checkAgeRestricted: function() {
+        checkAgeRestricted: function () {
           this
             .waitForElementVisible('@promoModalCheckbox')
 
           return this
         },
 
-        submitPromo: function() {
+        submitPromo: function () {
           this
             .waitForElementVisible('@promoModalButton')
             .click('@promoModalButton')
 
           return this
         },
-        isRememberMeCheckboxVisible: function() {
+        isRememberMeCheckboxVisible: function () {
           if (this.api.globals.browser === 'mobile') {
             const shared = this.api.page.shared()
             shared.section.header
               .openBurgerMenu()
               .burgerMenuNavigateLogin()
           } else {
-            this.waitForElementVisible('@loginButton',15000)
+            this.waitForElementVisible('@loginButton', 15000)
               .click('@loginButton')
           }
           this.expect.element('@loginCheckbox').to.be.selected
@@ -373,7 +373,7 @@ module.exports = {
               .waitForElementVisible('@burgerMenuLogin', 15000)
           } else {
             return this.waitForElementPresent('@loginButton', 15000)
-            .assert.elementPresent('@loginButton')
+              .assert.elementPresent('@loginButton')
           }
         }
       }],
