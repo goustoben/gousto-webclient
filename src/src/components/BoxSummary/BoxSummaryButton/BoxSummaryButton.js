@@ -1,63 +1,59 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import classnames from 'classnames'
+import { RecipesCountButton } from 'RecipesCountButton'
 
-import { Button, Segment } from 'goustouicomponents'
-import CheckoutButton from 'BoxSummary/CheckoutButton'
-
-import config from 'config/basket'
-import { basketSum, okRecipes } from 'utils/basket'
-import { isMobile } from 'utils/view'
 import { boxSummaryViews } from 'utils/boxSummary'
+import { isMobile } from 'utils/view'
+import { BoxSummaryCheckoutButton } from './BoxSummaryCheckoutButton'
+import { BoxSummaryNextButton } from './BoxSummaryNextButton'
 import css from './BoxSummaryButton.css'
 
-const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, boxSummaryCurrentView, menuRecipes, stock, numPortions, boxSummaryNext, fullWidth, pricingPending, orderSavePending, basketPreviewOrderChangePending }) => {
+const BoxSummaryButton = ({ view,
+  recipes,
+  showDetails,
+  open, checkoutPending, boxSummaryCurrentView, menuRecipes,
+  stock, numPortions, boxSummaryNext, fullWidth, pricingPending,
+  orderSavePending, basketPreviewOrderChangePending, showRecipeCountButton }) => {
   const isMobileView = isMobile(view)
   const classes = [
     { [css.buttoncontainer]: isMobileView },
     { [css.buttoncontainerFull]: fullWidth && isMobileView },
     { [css.coButton]: !isMobileView },
   ]
+  const checkoutButtonProps = {
+    view,
+    recipes,
+    checkoutPending,
+    numPortions,
+    menuRecipes,
+    stock,
+    pricingPending,
+    orderSavePending,
+    basketPreviewOrderChangePending,
+  }
+
+  const nextButtonProps = {
+    pricingPending, view, showDetails, boxSummaryNext, open
+  }
+
+  const checkoutButton = showRecipeCountButton ?
+    (<RecipesCountButton />) :
+    (<BoxSummaryCheckoutButton {...checkoutButtonProps} />)
 
   return (
     <div className={classnames(...classes)}>
-      {(boxSummaryCurrentView === boxSummaryViews.DETAILS) ?
-        <CheckoutButton view={`${view}NextButton`}>
-          <Button
-            data-testing={`${view}BoxSummaryButton`}
-            disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
-            pending={checkoutPending || pricingPending || basketPreviewOrderChangePending || orderSavePending}
-            spinnerClassName={css.coSpinner}
-            spinnerContainerClassName={css.coSpinnerContainer}
-            width="full"
-          >
-            <Segment
-              className={classnames({
-                [css.submitButton]: isMobileView,
-                [css.coButtonSegment]: !isMobileView,
-              })}
-            >
-              Checkout
-            </Segment>
-          </Button>
-        </CheckoutButton>
-        :
-        <Button width="full" pending={pricingPending} data-testing={`${view}BoxSummaryNextButton`}>
-          <Segment
-            className={classnames({
-              [css.submitButton]: isMobileView,
-              [css.coButtonSegment]: !isMobileView,
-            })}
-            onClick={showDetails ? boxSummaryNext : open}
-          >
-            Next
-          </Segment>
-        </Button>}
+      {
+        (boxSummaryCurrentView === boxSummaryViews.DETAILS) ?
+          checkoutButton
+          :
+          <BoxSummaryNextButton {...nextButtonProps} />}
     </div>)
 }
 
 BoxSummaryButton.propTypes = {
+  showRecipeCountButton: PropTypes.bool,
   view: PropTypes.string,
   recipes: PropTypes.instanceOf(Immutable.Map),
   showDetails: PropTypes.bool.isRequired,
@@ -81,6 +77,7 @@ BoxSummaryButton.defaultProps = {
   showDetails: false,
   boxSummaryCurrentView: '',
   fullWidth: false,
+  showRecipeCountButton: false,
 }
 
 export default BoxSummaryButton
