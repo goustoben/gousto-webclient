@@ -4,8 +4,8 @@
 .titleSection {
 	font-family: avenirHeavyFontStack;
 	font-size: sizeXL;
-	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';		
-	margin-top: SpacingLG;		
+	composes: marginXSBottom from 'sass-loader!styles/spacing.scss';
+	margin-top: SpacingLG;
 }
 
 .row {
@@ -15,8 +15,6 @@
 .dash {
 	composes: inlineBlock from 'styles/display.css';
 	composes: marginSMRight from 'sass-loader!styles/spacing.scss';
-	transform: scale(3,1);
-	transform-origin: left;
 }
 
 .undiscountedBoxPrice {

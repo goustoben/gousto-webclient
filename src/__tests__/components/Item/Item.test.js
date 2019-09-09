@@ -252,33 +252,6 @@ describe('Item', () => {
     })
   })
 
-  describe('horizontal rule', () => {
-    let wrapper
-
-    test('should not show by default', () => {
-      wrapper = shallow(<Item
-        title="test recipe"
-        media={Immutable.fromJS({
-          images: [{ urls: ['', '', { src: 'image_path' }] }],
-        })}
-      />)
-
-      expect(wrapper.find('.horizontalLine')).toHaveLength(0)
-    })
-
-    test('should show when showLine prop is true', () => {
-      wrapper = shallow(<Item
-        title='test recipe'
-        media={Immutable.fromJS({
-          images: [{ urls: ['', '', { src: 'image_path' }] }],
-        })}
-        showLine
-      />)
-
-      expect(wrapper.find('.horizontalLine')).toHaveLength(1)
-    })
-  })
-
   describe('image', () => {
     test('should render image', () => {
       const wrapper = shallow(

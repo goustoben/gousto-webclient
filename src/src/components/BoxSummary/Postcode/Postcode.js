@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Form from 'Form'
 import TextInput from 'Form/Input'
-import { Button } from 'goustouicomponents'
+import { Button, Heading, LayoutContentWrapper } from 'goustouicomponents'
 import DropdownInput from 'Form/Dropdown'
 import css from './Postcode.css'
 
@@ -118,29 +118,30 @@ class Postcode extends React.Component {
     }
 
     return (
-      <Form onSubmit={this.handleClick}>
-        <div className={css.row}>
-          <p className={css.title}>Delivery Options</p>
-        </div>
-        <div className={css.row}>
-          <p className={css.leadingText}>We deliver for free up to 7 days a week depending on where you live</p>
-        </div>
-        {this.props.addresses ? this.savedAddresses() : this.noSavedAddresses()}
-        <Button
-          data-testing="menuSubmitPostcode"
-          disabled={disabled}
-          onClick={this.handleClick}
-          pending={this.props.postcodePending}
-          width="full"
-        >
-          {this.props.prevPostcode ? 'Show Delivery Slots' : 'Continue'}
-        </Button>
-        {this.props.prevPostcode ? (
-          <div className={css.cancelRow}>
-            <a onClick={this.props.basketRestorePreviousValues} className={css.cancelLink}>Cancel</a>
+      <LayoutContentWrapper>
+        <Form onSubmit={this.handleClick}>
+          <Heading center size="large" type="h2">Delivery Options</Heading>
+          <div className={css.row}>
+            <p className={css.leadingText}>We deliver for free up to 7 days a week depending on where you live</p>
           </div>
-        ) : null}
-      </Form>)
+          {this.props.addresses ? this.savedAddresses() : this.noSavedAddresses()}
+          <Button
+            data-testing="menuSubmitPostcode"
+            disabled={disabled}
+            onClick={this.handleClick}
+            pending={this.props.postcodePending}
+            width="full"
+          >
+            {this.props.prevPostcode ? 'Show Delivery Slots' : 'Continue'}
+          </Button>
+          {this.props.prevPostcode ? (
+            <div className={css.cancelRow}>
+              <a onClick={this.props.basketRestorePreviousValues} className={css.cancelLink}>Cancel</a>
+            </div>
+          ) : null}
+        </Form>
+      </LayoutContentWrapper>
+    )
   }
 }
 

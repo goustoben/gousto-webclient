@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { Button, Segment } from 'goustouicomponents'
+import { Button, Heading, LayoutContentWrapper, Segment } from 'goustouicomponents'
 import moment from 'moment'
 import Immutable from 'immutable'/* eslint-disable new-cap */
 import Calendar from 'Form/Calendar'
@@ -212,10 +212,8 @@ class DeliverySlot extends React.Component {
     }
 
     return (
-      <div>
-        <div className={css.row}>
-          <p className={css.title}>Delivery Options</p>
-        </div>
+      <LayoutContentWrapper>
+        <Heading center size="large" type="h2">Delivery Options</Heading>
         {!displayOptions.contains('hideDeliveryCopy') && <div className={css.row}>
           <p className={css.leadingText}>Our menus change weekly. Please select a date so we can show you the latest recipes</p>
                                                          </div>}
@@ -298,7 +296,7 @@ class DeliverySlot extends React.Component {
             <a onClick={this.props.basketRestorePreviousValues} className={css.cancelLink}>Cancel</a>
           </div>
         ) : null}
-      </div>
+      </LayoutContentWrapper>
     )
   }
 }

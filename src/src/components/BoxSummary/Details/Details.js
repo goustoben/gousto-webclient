@@ -5,13 +5,14 @@ import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import { getSlot } from 'utils/deliveries'
 import { getSurchargeItems } from 'utils/pricing'
+import { isAvailableRecipeList } from 'utils/recipe'
 
 import config from 'config'
-import { Button, Segment, Spinner } from 'goustouicomponents'
+import { Button, Heading, LayoutContentWrapper, Segment, Spinner } from 'goustouicomponents'
 import RecipeItem from 'Recipe/RecipeItem'
+import ShortlistItem from 'Recipe/ShortlistItem'
 import Receipt from 'Receipt'
 import Portions from 'BoxSummary/Details/Portions'
-import { MoveRecipeButton } from 'MoveRecipeButton'
 import css from './Details.css'
 import BoxProgressAlert from './BoxProgressAlert'
 
@@ -69,12 +70,6 @@ class Details extends React.Component {
     return text
   }
 
-  recipeList = (recipeIds) => {
-    const { recipesStore } = this.props
-
-    return recipeIds.map((obj, id) => recipesStore.get(id)).filter(recipe => Boolean(recipe))
-  }
-
   slotTimes = () => {
     const { date, deliveryDays, slotId } = this.props
     const chosenSlot = getSlot(deliveryDays, date, slotId)
@@ -102,32 +97,92 @@ class Details extends React.Component {
     )
   }
 
+  renderPortions = ({ basketNumPortionChange, numPortions, orderId, portionSizeSelectedTracking }) => (
+    <div className={css.row}>
+      <Portions
+        numPortions={numPortions}
+        onNumPortionChange={basketNumPortionChange}
+        trackNumPortionChange={portionSizeSelectedTracking}
+        orderId={orderId}
+      />
+    </div>
+  )
+
+  renderRecipeList = ({
+    basketRecipes,
+    menuFetchPending,
+    numPortions,
+    okRecipeIds,
+    onRemove,
+    orderSaveError,
+    recipesStore,
+    shortlistFeatureEnabled,
+    showRecipeDetailsOnClick,
+    unavailableRecipeIds,
+  }) => {
+    const okRecipeList = isAvailableRecipeList(okRecipeIds, recipesStore)
+    const unavailableRecipeList = isAvailableRecipeList(unavailableRecipeIds, recipesStore)
+
+    return (
+      <div>
+        <LayoutContentWrapper>
+          <div className={css.recipeItems}>
+            {okRecipeList.map(recipe => (
+              <RecipeItem
+                key={recipe.get('id')}
+                available
+                fromBox
+                media={recipe.get('media')}
+                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                showShortlistButton={shortlistFeatureEnabled}
+                recipeId={recipe.get('id')}
+                title={recipe.get('title')}
+              />
+            )).toArray()}
+
+            {(unavailableRecipeList.size > 0 && !menuFetchPending) && this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError)}
+
+            {unavailableRecipeList.map(recipe => (
+              <RecipeItem
+                key={recipe.get('id')}
+                available={menuFetchPending}
+                media={recipe.get('media')}
+                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
+                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
+                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+                title={recipe.get('title')}
+              />
+            )).toArray()}
+          </div>
+        </LayoutContentWrapper>
+        {shortlistFeatureEnabled &&
+          <ShortlistItem
+            available
+            numPortions={numPortions}
+            onImageClick={showRecipeDetailsOnClick}
+          />
+        }
+      </div>
+    )
+  }
+
   render() {
     const {
       displayOptions,
       numPortions,
       pricingPending,
       prices,
-      basketRecipes,
       okRecipeIds,
       view,
       orderId,
       date,
       clearSlot,
-      basketNumPortionChange,
-      portionSizeSelectedTracking,
-      onRemove,
-      menuFetchPending,
-      orderSaveError,
       accessToken,
       promoCode,
       boxSummaryVisibilityChange,
-      unavailableRecipeIds,
-      shortlistFeatureEnabled,
-      showRecipeDetailsOnClick
     } = this.props
-    const okRecipeList = this.recipeList(okRecipeIds)
-    const unavailableRecipeList = this.recipeList(unavailableRecipeIds)
     const numRecipes = basketSum(okRecipeIds)
     const ctaText = this.getCtaText(numRecipes)
     const displayCta = !displayOptions.contains('hideChooseRecipesCta') && ctaText
@@ -136,130 +191,88 @@ class Details extends React.Component {
       <div className={css[`supercontainer${view}`]}>
         <div className={css[`container${view}`]}>
           <div className={css.content}>
-            <div className={css.row}>
-              <p className={css.title}>Box Summary</p>
-            </div>
-            {(() => {
-              if (orderId) {
+            <LayoutContentWrapper>
+              <Heading center size="large" type="h2">Box Summary</Heading>
+              {(() => {
+                if (orderId) {
+                  return (
+                    <div className={css.row}>
+                      <p className={css.deliverySlotText}>
+                        Edit recipes for your upcoming box. To change date or cancel box, visit &apos;My Deliveries&apos;
+                      </p>
+                      <p className={css.dateText}>{`${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`}</p>
+                    </div>
+                  )
+                }
+                const text = `${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`
+
                 return (
-                  <div className={css.row}>
-                    <p className={css.deliverySlotText}>
-                      Edit recipes for your upcoming box. To change date or cancel box, visit &apos;My Deliveries&apos;
-                    </p>
-                    <p className={css.dateText}>{`${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`}</p>
+                  <div className={css.rowSMMargin}>
+                    <Button fill={false} width="full">
+                      <Segment onClick={clearSlot} fill={false}>
+                        <span className={text.length > 21 ? css.limitedLengthPadding : css.limitedLength}>{text}</span>
+                        <span className={css.clear}>
+                          <span className={css.clearIcon}></span>
+                          edit
+                        </span>
+                      </Segment>
+                    </Button>
                   </div>
                 )
+              })()}
+              {
+                !displayOptions.contains('hidePortions') &&
+                  this.renderPortions(this.props)
               }
-              const text = `${moment(date).format('ddd Do MMM')}, ${this.slotTimes()}`
-
-              return (
-                <div className={css.rowSMMargin}>
-                  <Button fill={false} width="full">
-                    <Segment onClick={clearSlot} fill={false}>
-                      <span className={text.length > 21 ? css.limitedLengthPadding : css.limitedLength}>{text}</span>
-                      <span className={css.clear}>
-                        <span className={css.clearIcon}></span>
-                        edit
-                      </span>
-                    </Segment>
-                  </Button>
-                </div>
-              )
-            })()}
-            {
-              displayOptions.contains('hidePortions')
-                ? null
-                : (<div className={css.row}>
-                  <Portions
+            </LayoutContentWrapper>
+            <LayoutContentWrapper>
+                <p className={css.titleSection}>Recipe Box</p>
+            </LayoutContentWrapper>
+              {
+                !displayOptions.contains('hideRecipeList') &&
+                this.renderRecipeList(this.props)
+              }
+            <LayoutContentWrapper>
+              <BoxProgressAlert numRecipes={numRecipes} />
+              {
+                (pricingPending)
+                  ? <div className={css.spinner}><Spinner color="black" /></div>
+                  : <Receipt
+                    dashPricing={numRecipes < config.basket.minRecipesNum}
+                    numRecipes={numRecipes}
                     numPortions={numPortions}
-                    onNumPortionChange={basketNumPortionChange}
-                    trackNumPortionChange={portionSizeSelectedTracking}
-                    orderId={orderId}
+                    prices={prices}
+                    deliveryTotalPrice={prices.get('deliveryTotal')}
+                    surcharges={getSurchargeItems(prices.get('items'))}
+                    surchargeTotal={prices.get('surchargeTotal')}
+                    recipeTotalPrice={prices.get('recipeTotal')}
+                    totalToPay={prices.get('total')}
+                    recipeDiscountAmount={prices.get('recipeDiscount')}
+                    recipeDiscountPercent={prices.get('percentageOff')}
+                    extrasTotalPrice={prices.get('productTotal')}
+                    showTitleSection
                   />
-                </div>
-                )
-            }
-            <div className={css.row}>
-              <p className={css.titleSection}>Recipe Box</p>
-            </div>
-            {
-              displayOptions.contains('hideRecipeList')
-                ? null
-                : (
-                  <div className={css.recipeItems}>
-                    {okRecipeList.map(recipe => (
-                      <span key={recipe.get('id')}>
-                        <RecipeItem
-                          key={recipe.get('id')}
-                          media={recipe.get('media')}
-                          title={recipe.get('title')}
-                          numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                          onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                          available
-                          showLine={!shortlistFeatureEnabled}
-                          onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                        />
-                        {shortlistFeatureEnabled && <MoveRecipeButton recipeId={recipe.get('id')} fromBox />}
-                      </span>
-                    )).toArray()}
-                    <span className={!menuFetchPending ? css.notAvailable : ''}>
-                      {(unavailableRecipeList.size > 0 && !menuFetchPending) ? this.unavailableMessage(unavailableRecipeList.size > 1, orderSaveError) : null}
-                      {unavailableRecipeList.map(recipe => (
-                        <RecipeItem
-                          key={recipe.get('id')}
-                          media={recipe.get('media')}
-                          title={recipe.get('title')}
-                          numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                          onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                          available={menuFetchPending}
-                          showLine
-                          onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                        />
-                      )).toArray()}
-                    </span>
-                  </div>
-                )
-            }
-
-            <BoxProgressAlert numRecipes={numRecipes} />
-
-            {
-              (pricingPending)
-                ? <div className={css.spinner}><Spinner color="black" /></div>
-                : <Receipt
-                  dashPricing={numRecipes < config.basket.minRecipesNum}
-                  numRecipes={numRecipes}
-                  numPortions={numPortions}
-                  prices={prices}
-                  deliveryTotalPrice={prices.get('deliveryTotal')}
-                  surcharges={getSurchargeItems(prices.get('items'))}
-                  surchargeTotal={prices.get('surchargeTotal')}
-                  recipeTotalPrice={prices.get('recipeTotal')}
-                  totalToPay={prices.get('total')}
-                  recipeDiscountAmount={prices.get('recipeDiscount')}
-                  recipeDiscountPercent={prices.get('percentageOff')}
-                  extrasTotalPrice={prices.get('productTotal')}
-                  showTitleSection
-                />
-            }
-            {(() => {
-              if (accessToken || displayOptions.contains('hidePromoCodeText')) {
-                return null
               }
 
-              return !promoCode
-                ? <p className={css.supportingText}>You can enter promo codes later.</p>
-                : null
-            })()}
+              {(() => {
+                if (accessToken || displayOptions.contains('hidePromoCodeText')) {
+                  return null
+                }
 
-            {displayCta ? (
-              <Button
-                onClick={() => { boxSummaryVisibilityChange(false) }}
-                width="full"
-              >
-                {ctaText}
-              </Button>
-            ) : null}
+                return !promoCode &&
+                  <p className={css.supportingText}>You can enter promo codes later.</p>
+              })()}
+
+              {
+                displayCta &&
+                  <Button
+                    onClick={() => { boxSummaryVisibilityChange(false) }}
+                    width="full"
+                  >
+                    {ctaText}
+                  </Button>
+              }
+            </LayoutContentWrapper>
           </div>
         </div>
       </div>

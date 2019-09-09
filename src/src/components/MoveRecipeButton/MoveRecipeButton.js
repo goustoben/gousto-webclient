@@ -12,12 +12,10 @@ const MoveRecipeButton = ({ fromBox, recipeId, isBasketLimitReached, isShortlist
   const callToAction = fromBox ? moveToShortlist : moveToBox
 
   return (
-    <div className={css.moveButtonWrapper}>
-      <button type="button" disabled={disableButton} className={classnames(style, { [css.disableButton]: disableButton })} onClick={() => callToAction(recipeId)}>
-        <span className={arrowStyle}></span>
-        {disableButton ? disableText : buttonText}
-      </button>
-    </div >
+    <button type="button" disabled={disableButton} className={classnames(style, { [css.disableButton]: disableButton })} onClick={() => callToAction(recipeId)}>
+      <span className={arrowStyle}></span>
+      {disableButton ? disableText : buttonText}
+    </button>
   )
 }
 
