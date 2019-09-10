@@ -155,7 +155,9 @@ module.exports = {
   },
   recipes: {
     availableDates: '/dates/available',
+    recipes: '/recipes',
     recommendations: '/recommendations',
+    steps: '/steps',
   },
   workable: {
     link: 'https://gousto.workable.com/',

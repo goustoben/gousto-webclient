@@ -27,3 +27,7 @@ export function fetchAvailableDates(accessToken) {
 export const fetchRecommendations = (accessToken) => (
   fetch(accessToken, `${endpoint('recipes', routes.version.recipes)}${routes.recipes.recommendations}`, {}, 'GET')
 )
+
+export const fetchRecipeStepsById = (recipeId) => (
+  fetch(null, `${endpoint('recipes', version)}${routes.recipes.recipes}/${recipeId}${routes.recipes.steps}`, {}, 'GET')
+)
