@@ -3,20 +3,21 @@ import React from 'react'
 import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import { getSurchargeItems } from 'utils/pricing'
-import { isAvailableRecipeList } from 'utils/recipe'
 
 import config from 'config'
 import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
-import RecipeItem from 'Recipe/RecipeItem'
-import ShortlistItem from 'Recipe/ShortlistItem'
 import Receipt from 'Receipt'
 import Portions from 'BoxSummary/Details/Portions'
 import css from './Details.css'
 import BoxProgressAlert from './BoxProgressAlert'
-import { UnavailableMessage } from './UnavailableMessage'
+import { RecipeList } from './RecipeList'
 import { DateHeader } from './DateHeader'
-
-const HIDE_PROMO_CODE_TEXT = 'hideChooseRecipesCta'
+import {
+  HIDE_CHOOSE_RECIPES_CTA,
+  HIDE_RECIPE_LIST,
+  HIDE_PORTIONS,
+  HIDE_PROMO_CODE_TEXT
+} from './displayOptionsProps'
 
 class Details extends React.Component {
   static propTypes = {
@@ -83,78 +84,10 @@ class Details extends React.Component {
     </div>
   )
 
-  renderRecipeList = ({
-    basketRecipes,
-    menuFetchPending,
-    numPortions,
-    okRecipeIds,
-    onRemove,
-    orderSaveError,
-    recipesStore,
-    shortlistFeatureEnabled,
-    showRecipeDetailsOnClick,
-    unavailableRecipeIds,
-    basketRestorePreviousDate,
-    clearSlot
-  }) => {
-    const okRecipeList = isAvailableRecipeList(okRecipeIds, recipesStore)
-    const unavailableRecipeList = isAvailableRecipeList(unavailableRecipeIds, recipesStore)
-
-    return (
-      <div>
-        <LayoutContentWrapper>
-          <div className={css.recipeItems}>
-            {okRecipeList.map(recipe => (
-              <RecipeItem
-                key={recipe.get('id')}
-                available
-                fromBox
-                media={recipe.get('media')}
-                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                showShortlistButton={shortlistFeatureEnabled}
-                recipeId={recipe.get('id')}
-                title={recipe.get('title')}
-              />
-            )).toArray()}
-
-            <UnavailableMessage
-              basketRestorePreviousDate={basketRestorePreviousDate}
-              clearSlot={clearSlot}
-              unavailableRecipeList={unavailableRecipeList}
-              menuFetchPending={menuFetchPending}
-              orderSaveError={orderSaveError}
-            />
-
-            {unavailableRecipeList.map(recipe => (
-              <RecipeItem
-                key={recipe.get('id')}
-                available={menuFetchPending}
-                media={recipe.get('media')}
-                numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
-                onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-                onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
-                title={recipe.get('title')}
-              />
-            )).toArray()}
-          </div>
-        </LayoutContentWrapper>
-        {shortlistFeatureEnabled &&
-          <ShortlistItem
-            available
-            numPortions={numPortions}
-            onImageClick={showRecipeDetailsOnClick}
-          />
-        }
-      </div>
-    )
-  }
-
   renderPromoCodeMessage = () => {
     const { accessToken, displayOptions, promoCode } = this.props
 
-    if (accessToken || displayOptions.contains('HIDE_PROMO_CODE_TEXT') || promoCode) {
+    if (accessToken || displayOptions.contains(HIDE_PROMO_CODE_TEXT) || promoCode) {
       return null
     }
 
@@ -178,7 +111,7 @@ class Details extends React.Component {
     } = this.props
     const numRecipes = basketSum(okRecipeIds)
     const ctaText = this.getCtaText(numRecipes)
-    const displayCta = !displayOptions.contains(HIDE_PROMO_CODE_TEXT) && ctaText
+    const displayCta = !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText
 
     return (
       <div className={css[`supercontainer${view}`]}>
@@ -194,7 +127,7 @@ class Details extends React.Component {
                 slotId={slotId}
               />
               {
-                !displayOptions.contains('hidePortions') &&
+                !displayOptions.contains(HIDE_PORTIONS) &&
                 this.renderPortions(this.props)
               }
             </LayoutContentWrapper>
@@ -202,8 +135,8 @@ class Details extends React.Component {
               <p className={css.titleSection}>Recipe Box</p>
             </LayoutContentWrapper>
             {
-              !displayOptions.contains('hideRecipeList') &&
-              this.renderRecipeList(this.props)
+              !displayOptions.contains(HIDE_RECIPE_LIST) &&
+              <RecipeList {...this.props} />
             }
             <LayoutContentWrapper>
               <BoxProgressAlert numRecipes={numRecipes} />
@@ -230,6 +163,7 @@ class Details extends React.Component {
               {
                 displayCta &&
                 <Button
+                  className={css.ctaButton}
                   onClick={() => { boxSummaryVisibilityChange(false) }}
                   width="full"
                 >

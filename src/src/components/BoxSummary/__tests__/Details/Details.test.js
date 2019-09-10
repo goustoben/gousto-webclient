@@ -1,7 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import { MoveRecipeButton } from 'MoveRecipeButton'
 import Details from '../../Details/Details'
 
 describe('Details', () => {
@@ -71,27 +70,46 @@ describe('Details', () => {
       wrapper = shallow(<Details {...props} />)
     })
     test('should render mobile view', () => {
-      expect(wrapper.find('.supercontainermobile')).toHaveLength(1)
+      expect(wrapper.find('.supercontainermobile').exists()).toBe(true)
     })
 
     test('should render desktop view', () => {
       wrapper.setProps({ view: 'desktop' })
-      expect(wrapper.find('.supercontainerdesktop')).toHaveLength(1)
+      expect(wrapper.find('.supercontainerdesktop').exists()).toBe(true)
     })
 
     test('should render BoxProgressAlert', () => {
-      expect(wrapper.find('BoxProgressAlert')).toHaveLength(1)
+      expect(wrapper.find('BoxProgressAlert').exists()).toBe(true)
+    })
+
+    test('should render DateHeader', () => {
+      expect(wrapper.find('DateHeader').exists()).toBe(true)
     })
 
     describe('when displayOptions empty', () => {
       test('should render recipeItems', () => {
-        expect(wrapper.find('.recipeItems')).toHaveLength(1)
+        expect(wrapper.find('RecipeList').exists()).toBe(true)
+      })
+
+      test('should render Portions', () => {
+        expect(wrapper.find('Portions').exists()).toBe(true)
+      })
+
+      test('should render CTA', () => {
+        expect(wrapper.find('.ctaButton').exists()).toBe(true)
+      })
+
+      describe('when access token not present', () => {
+        test('should render promo text', () => {
+          wrapper.setProps({ accessToken: null })
+          expect(wrapper.find('.supportingText').exists()).toBe(true)
+        })
       })
     })
 
     describe('when pricingPending false', () => {
       test('should render Receipt', () => {
-        expect(wrapper.find('Receipt')).toHaveLength(1)
+        expect(wrapper.find('Receipt').exists()).toBe(true)
       })
     })
   })

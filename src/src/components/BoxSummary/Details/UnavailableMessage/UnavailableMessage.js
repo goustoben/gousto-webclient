@@ -20,7 +20,7 @@ const UnavailableMessage = ({ unavailableRecipeList, menuFetchPending, orderSave
 }
 
 UnavailableMessage.propTypes = {
-  unavailableRecipeList: PropTypes.instanceOf(Immutable.List()),
+  unavailableRecipeList: PropTypes.instanceOf(Immutable.Map),
   menuFetchPending: PropTypes.bool,
   orderSaveError: PropTypes.string,
   clearSlot: PropTypes.func,
