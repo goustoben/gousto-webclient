@@ -44,6 +44,10 @@ module.exports = {
         done()
       })
       .perform(done => {
+        menu.section.recipes.addTwoRecipe()
+        done()
+      })
+      .perform(done => {
         browser.pause(3000)
         menu.section.menuContainer.goFromMenuToCheckout()
         done()
