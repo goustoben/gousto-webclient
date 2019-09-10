@@ -167,7 +167,7 @@ module.exports = {
 
         createUser: function(userName, password) {
           const ukPostcode = new RandExp("^(GIR ?0AA|[A-PR-UWYZ]([0-9]{1,2}|([A-HK-Y][0-9]([0-9ABEHMNPRV-Y])?)|[0-9][A-HJKPS-UW]) ?[0-9][ABD-HJLNP-UW-Z]{2})$").gen()
-          const ukPhone = faker.phone.phoneNumberFormat(1)
+          const ukPhone = '020 3011 1002'
           const pwd = password ? password : faker.internet.password()
 
           const userData = {
