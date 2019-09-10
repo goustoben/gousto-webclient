@@ -83,39 +83,9 @@ describe('Details', () => {
       expect(wrapper.find('BoxProgressAlert')).toHaveLength(1)
     })
 
-    describe('when orderId not present', () => {
-      test('should render changeDate button', () => {
-        expect(wrapper.find('.rowSMMargin')).toHaveLength(1)
-        expect(wrapper.find('.deliverySlotText')).toHaveLength(0)
-      })
-    })
-
-    describe('when orderId present', () => {
-      test('should render deliverySlotText', () => {
-        wrapper.setProps({ orderId: '1234' })
-        expect(wrapper.find('.deliverySlotText')).toHaveLength(1)
-        expect(wrapper.find('.rowSMMargin')).toHaveLength(0)
-      })
-    })
-
     describe('when displayOptions empty', () => {
       test('should render recipeItems', () => {
         expect(wrapper.find('.recipeItems')).toHaveLength(1)
-      })
-
-      test('should render CTA with text', () => {
-        expect(wrapper.find('.ctaButton')).toHaveLength(1)
-      })
-
-      describe('and shortlistFeatureEnabled true', () => {
-        beforeEach(() => {
-          wrapper = shallow(<Details {...props} />)
-          wrapper.setProps({ shortlistFeatureEnabled: true })
-        })
-
-        test('should render MoveRecipeButton', () => {
-          expect(wrapper.find(MoveRecipeButton)).toHaveLength(okRecipeIds.size)
-        })
       })
     })
 
