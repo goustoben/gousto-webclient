@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import Page from './Page'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
+import Page from './Page'
 
 export default connect((state) => ({
   isAuthenticated: state.auth.get('isAuthenticated'),

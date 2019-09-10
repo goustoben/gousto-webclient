@@ -214,7 +214,7 @@ class Hub extends React.PureComponent {
                 />
                 <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
               </span>
-       </div>}
+             </div>}
           </Info>
         </Link>
       </div>

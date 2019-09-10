@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router'
-import MenuContainer from './MenuContainer'
 import MainLayout from 'layouts/MainLayout'
+import MenuContainer from './MenuContainer'
 
 export default (
   <Route component={MainLayout} withRecipeBar>

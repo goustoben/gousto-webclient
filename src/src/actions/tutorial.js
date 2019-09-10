@@ -1,8 +1,8 @@
-import actionTypes from './actionTypes'
 
 import { set } from 'utils/cookieHelper2'
 import Cookies from 'utils/GoustoCookies'
 import { tutorialViewedExpireTime } from 'config/cookies'
+import actionTypes from './actionTypes'
 
 export const shouldJfyTutorialBeVisible = () => (
   (dispatch, getState) => {

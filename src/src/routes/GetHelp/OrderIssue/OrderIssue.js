@@ -2,12 +2,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import BottomBar from 'BottomBar'
+import { client as routes } from 'config/routes'
+import GetHelpLayout from 'layouts/GetHelpLayout'
 import { ItemLink } from '../components/ItemLink'
 import { List } from '../components/List'
 import { BottomButton } from '../components/BottomButton'
-
-import { client as routes } from 'config/routes'
-import GetHelpLayout from 'layouts/GetHelpLayout'
 
 const trackClick = (selectOrderIssue, issue) => () => selectOrderIssue(issue)
 

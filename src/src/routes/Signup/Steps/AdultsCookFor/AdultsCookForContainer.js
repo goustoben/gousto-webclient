@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import PeopleCookFor from '../PeopleCookFor'
 import actions from 'actions'
+import PeopleCookFor from '../PeopleCookFor'
 
 function mapStateToProps() {
   return {

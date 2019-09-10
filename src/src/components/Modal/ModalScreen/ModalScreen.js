@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './ModalScreen.css'
 import ModalHeader from 'Modal/ModalHeader'
+import css from './ModalScreen.css'
 
 const ModalScreen = ({ children, title }) => (
   <div className={css.flex}>

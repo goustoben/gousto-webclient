@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import Join from './Join'
 import action from 'actions/persist'
+import Join from './Join'
 
 const JoinContainer = connect(state => ({
   enableStorystream: state.features.getIn(['enableStorystream', 'value'], true),

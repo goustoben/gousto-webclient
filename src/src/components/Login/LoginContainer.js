@@ -1,7 +1,7 @@
-import Login from './Login'
 import { connect } from 'react-redux'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
+import Login from './Login'
 
 const mapStateToProps = (state) => {
   let err = state.error.get(actionTypes.USER_LOGIN)

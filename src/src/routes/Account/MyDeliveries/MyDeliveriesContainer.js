@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import MyDeliveries from './MyDeliveries'
 import actionTypes from 'actions/actionTypes'
+import MyDeliveries from './MyDeliveries'
 
 const mapStateToProps = (state) => ({
   isFetchingOrders: state.pending.get(actionTypes.USER_LOAD_ORDERS_NEW, true),

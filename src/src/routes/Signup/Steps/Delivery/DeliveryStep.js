@@ -9,12 +9,12 @@ import ModalPanel from 'Modal/ModalPanel'
 import Overlay from 'Overlay'
 import { createNextDayDeliveryDays, generateNextDayDeliverySlots, getDateOffset } from 'utils/deliverySlot'
 import { Button as GoustoButton } from 'goustouicomponents'
+import Svg from 'Svg'
 import Button from '../../Button'
 
 import signupCss from '../../Signup.css'
 import css from './DeliveryStep.css'
 import Image from '../../Image'
-import Svg from 'Svg'
 
 const formatTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
   tempDate ? `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} ` : ''

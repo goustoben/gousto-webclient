@@ -9,10 +9,10 @@ import Content from 'containers/Content'
 import logger from 'utils/logger'
 
 import OrderSummary from 'containers/welcome/OrderSummary'
+import ProductList from 'Product/List'
 import css from '../Welcome.css'
 
 import SubHeader from '../SubHeader'
-import ProductList from 'Product/List'
 import ExpectationsCarousel from '../ExpectationsCarousel'
 import ProductDetailOverlay from '../ProductDetailOverlay'
 

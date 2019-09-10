@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import MainLayout from './MainLayout'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
+import MainLayout from './MainLayout'
 
 export default connect((state) => ({
   isAuthenticated: state.auth.get('isAuthenticated'),

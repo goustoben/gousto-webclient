@@ -1,6 +1,6 @@
-jest.mock('../../../src/utils/fetch')
 import lookupService from '../../../server/service/addressLookup'
 import config from '../../../server/config/apis'
+jest.mock('../../../src/utils/fetch')
 
 describe('server/service/addressLookup', () => {
   let fetchMock

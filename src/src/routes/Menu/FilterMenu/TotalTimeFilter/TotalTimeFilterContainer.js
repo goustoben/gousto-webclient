@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 
 import actions from 'actions'
-import TotalTimeFilter from './TotalTimeFilter'
 import config from 'config'
+import TotalTimeFilter from './TotalTimeFilter'
 
 const mapStateToProps = (state) => ({
   totalTimeSelected: state.filters.get('totalTime'),

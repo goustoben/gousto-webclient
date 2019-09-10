@@ -20,7 +20,7 @@ const Confirm = ({ pending, unsubscribeClick, isError, copy }) => (
     </Button>
     {isError && <p className={css.confirmContentError}>
       {copy.defaultError}
-              </p>}
+                </p>}
   </div>
 )
 

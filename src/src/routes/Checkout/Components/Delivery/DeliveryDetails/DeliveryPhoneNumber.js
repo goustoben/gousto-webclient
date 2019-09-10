@@ -91,7 +91,7 @@ class DeliveryPhoneNumber extends React.PureComponent {
   render() {
     const inputPrefix = (<div className={css.phonePrefix}><span className={css.prefix} />
       <span className={this.state.addZero ? css.withZero : css.withoutZero} />
-                        </div>)
+                         </div>)
 
     return (
       <div className={css.deliveryFieldWrapper}>

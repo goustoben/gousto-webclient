@@ -35,7 +35,7 @@ const PeopleCookFor = ({ header, text, numPeopleChange, next }) => {
                   {el}
                 </Segment>
               </Button>
-                                  </div>))}
+                                        </div>))}
           </div>
           <div className={css.link}>
             <span

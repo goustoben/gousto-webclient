@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import CheckoutButton from './CheckoutButton'
 import * as stateUtils from 'routes/Checkout/utils/state'
+import CheckoutButton from './CheckoutButton'
 
 function mapStateToProps(state) {
   return {

@@ -1,10 +1,9 @@
 import React from 'react'
 import { IndexRoute, Route } from 'react-router'
-import Hubs from './Hubs'
-import Hub from './Hub'
-
 import MainLayout from 'layouts/MainLayout'
 import routeConfig from 'config/routes'
+import Hubs from './Hubs'
+import Hub from './Hub'
 
 export default (
   <Route path={routeConfig.client.cookbook} component={MainLayout} footerType="large">

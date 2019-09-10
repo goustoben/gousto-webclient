@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable'
-import Order from './Order'
 import actionTypes from 'actions/actionTypes'
+import Order from './Order'
 
 function mapStateToProps(state, ownProps) {
   const order = ownProps.order

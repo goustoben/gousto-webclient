@@ -1,9 +1,9 @@
 import React from 'react'
-import css from './PrivacyStatement.css'
 import classnames from 'classnames'
 import { Heading, LayoutPageWrapper } from 'goustouicomponents'
 import Helmet from 'react-helmet'
 import policy from 'config/policy'
+import css from './PrivacyStatement.css'
 
 const PrivacyStatement = () => (
   <LayoutPageWrapper>
@@ -90,7 +90,7 @@ const PrivacyStatement = () => (
                 <li className={css.itemList}>payment details</li>
               </ol>
               Alternatively you can contact us : <a href="https://gousto.zendesk.com/hc/en-gb/requests/new" target="_blank">click here</a>.
-                </li>
+            </li>
             <li className={css.itemList}><strong>Opt out of marketing communications:</strong> You can easily change your change your marketing permissions on "My Details" page, under "My communication preferences" section by logging in to your account on our website or apps.</li>
             <li className={css.itemList}><strong>Access your information:</strong> You have the right to request personal data that we hold about you, subject to us reserving the right to withhold such data to the extent permitted by law. Contact our Customer Care team for this request : <a href="https://gousto.zendesk.com/hc/en-gb/requests/new" target="_blank">click here</a></li>
             <li className={css.itemList}><strong>Delete your information:</strong> You have the right to request to delete all the personal data that we hold about you. Contact our Customer Care team for this request : <a href="https://gousto.zendesk.com/hc/en-gb/requests/new" target="_blank">click here</a></li>

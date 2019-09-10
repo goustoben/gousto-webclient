@@ -152,7 +152,7 @@ class NewAddressForm extends React.PureComponent {
                 </Content>
                 : <Content contentKeys="mydeliveriesOrderNewaddressformCcerror" >
                   <span>{config.errorMessages.CCerror}</span>
-           </Content>
+                  </Content>
               }
             </Alert>
           </div>

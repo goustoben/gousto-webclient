@@ -2,15 +2,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 import { Item, ItemExpandable } from 'goustouicomponents'
+import BottomBar from 'BottomBar'
+import { client, zendesk } from 'config/routes'
+import GetHelpLayout from 'layouts/GetHelpLayout'
 import { List } from '../components/List'
 import { ItemLink } from '../components/ItemLink'
 import PhoneContent from './PhoneContent'
-import BottomBar from 'BottomBar'
 import { BottomButton } from '../components/BottomButton'
-
-import { client, zendesk } from 'config/routes'
-
-import GetHelpLayout from 'layouts/GetHelpLayout'
 
 const openLiveChat = () => {
   window.$zopim.livechat.window.show()

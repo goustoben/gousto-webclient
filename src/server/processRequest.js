@@ -4,7 +4,6 @@ const { renderToString } = require('react-dom/server')
 const { match, RouterContext, createMemoryHistory } = require('react-router')
 const { syncHistoryWithStore } = require('react-router-redux')
 const mainRoutes = require('routes').default
-const htmlTemplate = require('./template')
 const configureStore = require('store').configureStore
 const { ApolloProvider, getDataFromTree } = require('react-apollo')
 const apolloClient = require('apis/apollo').default
@@ -16,14 +15,15 @@ const clearPersistentStore = require('middlewares/persist/persistStore').clearPe
 const processCookies = require('utils/processCookies').default
 const basketActions = require('actions/basket').default
 const processFeaturesQuery = require('utils/processFeaturesQuery').default
-const processHeaders = require('./processHeaders')
 const newAssetPath = require('utils/media').newAssetPath
 const authorise = require('utils/clientAuthorise').authorise
 const Helmet = require('react-helmet')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
-const encodeState = require('./encodeState')
 const fetchContentOnChange = require('routes/fetchContentOnChange').default
 const {loggerSetUuid} = require('actions/logger')
+const encodeState = require('./encodeState')
+const processHeaders = require('./processHeaders')
+const htmlTemplate = require('./template')
 
 const fetchAllData = (renderProps, store) => {
   const { location, params } = renderProps
@@ -62,7 +62,7 @@ const configureHistoryAndStore = (url, initialState) => {
 }
 
 const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
-  let startTime = new Date
+  let startTime = new Date()
   const apollo = apolloClient(store)
   const components = (
     <Provider store={store}>
@@ -72,7 +72,7 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
     </Provider>
   )
 
-  startTime = new Date
+  startTime = new Date()
   renderToString(
     <GoustoHelmet
       noGTM={noGTM}
@@ -86,7 +86,7 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
       if(__CLIENT__){
         logger.notice({message: `renderHTML/reactHTML`, elapsedTime: (new Date() - startTime)})
       }
-      startTime = new Date
+      startTime = new Date()
       const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
       const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, noGTM, helmetHead)
       if(__CLIENT__){
@@ -128,7 +128,7 @@ async function processRequest(ctx, next) {
 
   await authorise(store, ctx.cookies)
 
-  let authenticated = store.getState().auth.get('isAuthenticated')
+  const authenticated = store.getState().auth.get('isAuthenticated')
 
   let headers = ctx.request.headers || {}
 

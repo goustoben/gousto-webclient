@@ -1,6 +1,6 @@
 import { isBillingAddressDifferent } from 'routes/Checkout/utils/state'
-import { sectionName as billingAddressSection, deliveryAddressSectionName as deliveryAddressSection } from '../config'
 import actionTypes from 'actions/actionTypes'
+import { sectionName as billingAddressSection, deliveryAddressSectionName as deliveryAddressSection } from '../config'
 
 export const getBillingAddress = (formValues) => {
   const sectionName = isBillingAddressDifferent(formValues, billingAddressSection) ? billingAddressSection : deliveryAddressSection

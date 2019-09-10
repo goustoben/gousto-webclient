@@ -1,5 +1,5 @@
-import regExp from './regularExpressions'
 import configAuth from 'config/auth'
+import regExp from './regularExpressions'
 
 export default {
   title: {

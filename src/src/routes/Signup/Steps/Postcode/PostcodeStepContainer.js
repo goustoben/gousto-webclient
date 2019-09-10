@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import PostcodeStep from './PostcodeStep'
 import actionTypes from 'actions/actionTypes'
 import actions from 'actions'
+import PostcodeStep from './PostcodeStep'
 
 function mapStateToProps(state) {
   return {

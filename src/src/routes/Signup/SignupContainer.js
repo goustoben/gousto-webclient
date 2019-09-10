@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import Signup from './Signup'
 import actions from 'actions'
+import Signup from './Signup'
 
 const mapStateToProps = (state, ownProps) => ({
   stepName: ownProps.params.stepName,

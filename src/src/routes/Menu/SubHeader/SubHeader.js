@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import InfoToggle from './InfoToggle'
 import moment from 'moment'
 import config from 'config/menu'
 import { H3 } from 'Page/Header'
+import InfoToggle from './InfoToggle'
 import Vegetarian from './Vegetarian'
 import css from './SubHeader.css'
 
@@ -66,7 +66,7 @@ class SubHeader extends React.PureComponent {
             {Object.keys(info.line2).map((line, i) => <li key={i}>{info.line2[line]}</li>)}
           </ul>
         </div>
-                        </InfoToggle> : null
+                         </InfoToggle> : null
     )
   }
 

@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import GetHelpLayout from 'layouts/GetHelpLayout'
 import BottomBar from 'BottomBar'
-import { BottomButton } from '../BottomButton'
 import { client as routes } from 'config/routes'
+import { BottomButton } from '../BottomButton'
 
 const propTypes = {
   content: PropTypes.shape({

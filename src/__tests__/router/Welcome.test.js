@@ -1,11 +1,11 @@
-const { match, createMemoryHistory } = require('react-router')
-const mainRoutes = require('../../src/routes').default
-
 import Immutable from 'immutable'
 import WelcomeContainer from 'routes/Welcome/WelcomeContainer'
 import WelcomeImmediate from 'routes/Welcome/VariationImmediate'
 import WelcomeSubscription from 'routes/Welcome/VariationSubscription'
 import WelcomeStorytelling from 'routes/Welcome/VariationStorytelling'
+
+const { match, createMemoryHistory } = require('react-router')
+const mainRoutes = require('../../src/routes').default
 
 function reduxStoreMock(isAuthenticated) {
   return {

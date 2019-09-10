@@ -18,8 +18,8 @@ describe('OrderStatus', () => {
   describe('rendering', () => {
     let wrapper
     let orderStateSample
-    let whenCutoff = 'in 6 days'
-    let whenMenuOpen = 'in 7 days'
+    const whenCutoff = 'in 6 days'
+    const whenMenuOpen = 'in 7 days'
 
     test('should render a <p> with the correct copy for orderState=scheduled', () => {
       orderStateSample = 'scheduled'

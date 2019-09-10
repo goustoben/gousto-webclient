@@ -1,8 +1,8 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import actionTypes from 'actions/actionTypes'
-import BoxSummaryMobileContainer from '../BoxSummaryMobileContainer'
 import Immutable from 'immutable'
+import BoxSummaryMobileContainer from '../BoxSummaryMobileContainer'
 
 describe('BoxSummaryMobileContainer', () => {
   let wrapper

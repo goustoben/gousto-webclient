@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import Subscription from './Subscription'
 import actions from 'actions/subscriptionPause'
+import Subscription from './Subscription'
 
 const mapStateToProps = (state) => ({
   pendingOrders: state.user.get('orders'),

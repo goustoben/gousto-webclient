@@ -3,6 +3,7 @@ import { Route, Redirect, IndexRoute } from 'react-router'
 
 import configRoutes from 'config/routes'
 import WizardLayout from 'layouts/WizardLayout'
+import { checkValidSession } from 'utils/routes'
 import GetHelpContainer from './GetHelpContainer'
 import OrderIssueContainer from './OrderIssue/OrderIssueContainer'
 
@@ -12,8 +13,6 @@ import Confirmation from './Confirmation'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
-
-import { checkValidSession } from 'utils/routes'
 
 export default (store) => {
   const onEnterHandler = (routes, replace, next) => {

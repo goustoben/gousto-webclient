@@ -14,6 +14,6 @@ const Storystream = () => (<div>
   <div className={css.storystreamContainer}>
     <div id="StoryStreamWidgetApp" className="stry-widget" />
   </div>
-</div>)
+                           </div>)
 
 export default Storystream

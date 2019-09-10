@@ -21,7 +21,7 @@ describe('PendingOrderReminder', () => {
     })
 
     test('should render two <CallToAction> when there is at least 1 pending order', () => {
-      let mockOrder = {
+      const mockOrder = {
         deliveryDate: new Date(),
         id: 1,
         box: {

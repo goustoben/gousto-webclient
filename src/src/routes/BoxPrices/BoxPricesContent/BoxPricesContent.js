@@ -2,8 +2,8 @@ import React from 'react'
 import classnames from 'classnames'
 
 import Svg from 'Svg'
-import css from './BoxPricesContent.css'
 import config from 'config/boxprices'
+import css from './BoxPricesContent.css'
 
 const BoxPricesContent = () => (
   <div>

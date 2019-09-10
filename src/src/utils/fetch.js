@@ -93,7 +93,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
     requestDetails.timeout = timeout
   }
 
-  const startTime = new Date
+  const startTime = new Date()
   logger.notice({message: "[fetch start]", requestUrl: requestUrl, uuid: uuid})
   let responseStatus
   let responseRedirected

@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router'
 import SignupLayout from 'layouts/SignupLayout'
-import SignupContainer from './SignupContainer'
 import { client } from 'config/routes'
+import SignupContainer from './SignupContainer'
 
 export default (
   <Route component={SignupLayout}>

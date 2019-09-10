@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route } from 'react-router'
-import UnsubscribeContainer from './UnsubscribeContainer'
 import configRoutes from 'config/routes'
 import FullPage from 'layouts/FullPage'
+import UnsubscribeContainer from './UnsubscribeContainer'
 
 export default (
   <Route component={FullPage} footerType="large">

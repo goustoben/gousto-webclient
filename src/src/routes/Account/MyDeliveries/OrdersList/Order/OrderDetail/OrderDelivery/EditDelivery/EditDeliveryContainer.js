@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import EditDelivery from './EditDelivery'
 import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
+import EditDelivery from './EditDelivery'
 
 function mapStateToProps(state, ownProps) {
   const orderId = ownProps.orderId

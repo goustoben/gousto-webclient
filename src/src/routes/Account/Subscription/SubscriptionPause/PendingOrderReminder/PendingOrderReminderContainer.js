@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable' /* eslint-disable new-cap */
-import PendingOrderReminder from './PendingOrderReminder'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
+import PendingOrderReminder from './PendingOrderReminder'
 
 function mapStateToProps(state) {
   return {
