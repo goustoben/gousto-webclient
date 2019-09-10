@@ -20,3 +20,13 @@ export const trackAbandonBasketEligibility = () => (dispatch, getState) => {
     }
   })
 }
+
+export const trackAbandonBasketContinueToMenu = () => (dispatch) => {
+  console.log('gets here') //eslint-disable-line
+  dispatch({
+    type: actionTypes.TRACKING,
+    trackingData: {
+      actionType: 'AbandonedBasket ContinueToMenu',
+    }
+  })
+}
