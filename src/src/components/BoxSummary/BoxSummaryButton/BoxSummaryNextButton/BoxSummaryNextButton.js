@@ -2,16 +2,18 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import { Button, Segment } from 'goustouicomponents'
 import classnames from 'classnames'
+import { isMobile } from 'utils/view'
 import css from '../BoxSummaryButton.css'
 
 const BoxSummaryNextButton = ({ pricingPending, view, showDetails, boxSummaryNext, open }) => {
+  const isMobileView = isMobile(view)
 
   return (
     <Button width="full" pending={pricingPending} data-testing={`${view}BoxSummaryNextButton`}>
       <Segment
         className={classnames({
-          [css.submitButton]: view === 'mobile',
-          [css.coButtonSegment]: view !== 'mobile',
+          [css.submitButton]: isMobileView,
+          [css.coButtonSegment]: !isMobileView,
         })}
         onClick={showDetails ? boxSummaryNext : open}
       >

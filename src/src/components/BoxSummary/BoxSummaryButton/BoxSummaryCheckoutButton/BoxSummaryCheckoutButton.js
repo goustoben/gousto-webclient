@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import CheckoutButton from 'BoxSummary/CheckoutButton'
 import { Button, Segment } from 'goustouicomponents'
 import { basketSum, okRecipes } from 'utils/basket'
+import { isMobile } from 'utils/view'
 import config from 'config/basket'
 import classnames from 'classnames'
 import css from '../BoxSummaryButton.css'
@@ -11,6 +12,7 @@ import css from '../BoxSummaryButton.css'
 const BoxSummaryCheckoutButton = (props) => {
 
   const { view, recipes, menuRecipes, stock, numPortions, checkoutPending, pricingPending, basketPreviewOrderChangePending, orderSavePending } = props
+  const isMobileView = isMobile(view)
 
   return (
     <CheckoutButton view={`${view}NextButton`}>
@@ -24,8 +26,8 @@ const BoxSummaryCheckoutButton = (props) => {
       >
         <Segment
           className={classnames({
-            [css.submitButton]: view === 'mobile',
-            [css.coButtonSegment]: view !== 'mobile',
+            [css.submitButton]: isMobileView,
+            [css.coButtonSegment]: !isMobileView,
           })}
         >
           Checkout

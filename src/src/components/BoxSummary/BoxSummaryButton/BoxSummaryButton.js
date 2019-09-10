@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { RecipesCountButton } from 'RecipesCountButton'
 
 import { boxSummaryViews } from 'utils/boxSummary'
-import { isMobile } from 'utils/view'
+import { isMobile, DESKTOP_VIEW } from 'utils/view'
 import { BoxSummaryCheckoutButton } from './BoxSummaryCheckoutButton'
 import { BoxSummaryNextButton } from './BoxSummaryNextButton'
 import css from './BoxSummaryButton.css'
@@ -71,7 +71,7 @@ BoxSummaryButton.propTypes = {
 }
 
 BoxSummaryButton.defaultProps = {
-  view: 'desktop',
+  view: DESKTOP_VIEW,
   checkoutPending: false,
   recipes: Immutable.Map({}),
   showDetails: false,
