@@ -113,7 +113,7 @@ module.exports = {
             setPhoneNumber: function () {
               this
                 .waitForElementVisible('@phoneNumberInput')
-                .setValue('@phoneNumberInput', faker.phone.phoneNumberFormat(1))
+                .setValue('@phoneNumberInput', '2030111002')
             },
           }],
         },
