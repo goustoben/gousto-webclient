@@ -20,7 +20,8 @@ class ShortlistButton extends React.PureComponent {
     showShortListTutorial: PropTypes.bool,
     shortlistTutorialStep1Viewed: PropTypes.bool,
     incrementTutorialViewed: PropTypes.func,
-    tutorialTracking: PropTypes.func
+    tutorialTracking: PropTypes.func,
+    view: PropTypes.string,
   }
 
   static defaultProps = {
@@ -34,7 +35,8 @@ class ShortlistButton extends React.PureComponent {
     position: 0,
     display: '',
     showShortListTutorial: false,
-    shortlistTutorialStep1Viewed: false
+    shortlistTutorialStep1Viewed: false,
+    view: 'grid'
   }
 
   closeTutorialStep1 = () => {
@@ -45,24 +47,24 @@ class ShortlistButton extends React.PureComponent {
   }
 
   onShortlistClick = () => {
-    const { removeFromShortlist, recipeInShortlist, id, shortlistLimitReached } = this.props
+    const { removeFromShortlist, recipeInShortlist, id, shortlistLimitReached, view } = this.props
 
     if (recipeInShortlist) {
-      removeFromShortlist(id)
+      removeFromShortlist(id, { view })
     } else if (!shortlistLimitReached) {
       this.handleAdd()
     }
   }
 
   handleAdd = () => {
-    const { addToShortlist, menuBrowseCTAVisibilityChange, id, position, stock, shortlistTutorialStep1Viewed } = this.props
-    const positionObject = { position }
+    const { addToShortlist, menuBrowseCTAVisibilityChange, id, position, stock, shortlistTutorialStep1Viewed, view } = this.props
+    const recipeInfo = { position, view }
 
     if (stock !== null) {
       if (!shortlistTutorialStep1Viewed) {
         this.closeTutorialStep1()
       }
-      addToShortlist(id, false, positionObject)
+      addToShortlist(id, false, recipeInfo)
     } else {
       menuBrowseCTAVisibilityChange(true)
     }

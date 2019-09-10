@@ -73,7 +73,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
           <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
           <div className={css.buttonContainer}>
             {showShortlistButton &&
-              <ShortlistButton id={id} stock={stock} position={position} showShortlistFirstStep={showShortlistFirstStep} />
+              <ShortlistButton id={id} stock={stock} view={view} position={position} showShortlistFirstStep={showShortlistFirstStep} />
             }
             <div className={css.addButton}>
               <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />

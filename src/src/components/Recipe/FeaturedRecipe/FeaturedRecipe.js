@@ -71,7 +71,7 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
             </div>
             <div className={css.buttonContainer}>
               {showShortlistButton &&
-                <ShortlistButton id={id} stock={stock} position={position}/>
+                <ShortlistButton view={view} id={id} stock={stock} position={position} />
               }
               <div className={css.addButton}>
                 <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />

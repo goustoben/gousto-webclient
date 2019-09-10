@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   moveToBox: (recipeId) => basketRecipeAdd(recipeId, 'boxSummary', false),
-  moveToShortlist: (recipeId) => shortlistRecipeAdd(recipeId, false, 'boxSummary')
+  moveToShortlist: (recipeId) => shortlistRecipeAdd(recipeId, false, { view: 'boxSummary' })
 }
 
 const MoveRecipeButtonContainer = connect(mapStateToProps, mapDispatchToProps)(MoveRecipeButton)

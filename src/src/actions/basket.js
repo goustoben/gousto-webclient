@@ -17,9 +17,6 @@ import actionTypes from './actionTypes'
 import tempActions from './temp'
 import {
   getCurrentCollectionId,
-  getCurrentDietTypes,
-  getDietaryAttributes,
-  getCurrentTotalTime,
   getRecipeGroupFilter
 } from '../selectors/filters'
 
@@ -349,11 +346,7 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
             view,
             position: recipeInfo && recipeInfo.position,
             collection: getCurrentCollectionId(state),
-            recipe_type: getCurrentDietTypes(state),
-            dietary_attribute: getDietaryAttributes(state),
-            time_frame: getCurrentTotalTime(state),
             source: !!selectedFoodBrand && selectedFoodBrand.slug,
-            taste_score: recipeInfo && recipeInfo.score,
             recipe_count: basket.get('recipes').size + 1,// The action is performed in the same time so the size is not updated yet
           },
         })
@@ -369,7 +362,7 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
         state = getState()
         const shortlistRecipes = state.basket.getIn(['shortlist', 'shortlistRecipes'])
         if (shortlistRecipes && shortlistRecipes.has(recipeId)) {
-          shortlistRecipeRemove(recipeId)(dispatch, getState)
+          shortlistRecipeRemove(recipeId, false, { view })(dispatch, getState)
         }
 
         const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock, undefined, maxRecipesNum)
@@ -390,7 +383,7 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
   }
 )
 
-export const basketRecipeRemove = (recipeId, view, position, score) => (
+export const basketRecipeRemove = (recipeId, view, position) => (
   (dispatch, getState) => {
     let state = getState()
     const { basket } = state
@@ -405,11 +398,7 @@ export const basketRecipeRemove = (recipeId, view, position, score) => (
         view,
         position,
         collection,
-        recipe_type: getCurrentDietTypes(state),
-        dietary_attribute: getDietaryAttributes(state),
-        time_frame: getCurrentTotalTime(state),
         source: !!selectedFoodBrand && selectedFoodBrand.slug,
-        taste_score: score,
         recipe_count: basket.get('recipes').size - 1,// The action is performed in the same time so the size is not updated yet
       },
     })
