@@ -62,6 +62,8 @@
 	color: DarkRadish;
 }
 .undoLink {
+	background-color: none;
+	border: none;
 	color: Bluecheese;
 	cursor: pointer;
 }
