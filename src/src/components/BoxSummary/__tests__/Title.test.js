@@ -3,6 +3,7 @@ import React from 'react'
 
 import Title from 'BoxSummary/Title/Title'
 import { Spinner } from 'goustouicomponents'
+import { MOBILE_VIEW } from 'utils/view'
 import Price from 'BoxSummary/Price'
 
 describe('Title', () => {
@@ -32,7 +33,7 @@ describe('Title', () => {
     })
 
     test('should display a <Spinner /> if pending is true and view is mobile', () => {
-      [pending, view] = [true, 'mobile']
+      [pending, view] = [true, MOBILE_VIEW]
       wrapper = shallow(<Title pending={pending} view={view} />)
 
       expect(wrapper.find(Spinner).length).toEqual(1)

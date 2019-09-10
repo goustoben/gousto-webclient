@@ -8,15 +8,16 @@ import CheckoutButton from 'BoxSummary/CheckoutButton'
 
 import config from 'config/basket'
 import { basketSum, okRecipes } from 'utils/basket'
+import { isMobile } from 'utils/view'
 import { boxSummaryViews } from 'utils/boxSummary'
 import css from './BoxSummaryButton.css'
 
 const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, boxSummaryCurrentView, menuRecipes, stock, numPortions, boxSummaryNext, fullWidth, pricingPending, orderSavePending, basketPreviewOrderChangePending }) => {
-  const isMobile = view === 'mobile'
+  const isMobileView = isMobile(view)
   const classes = [
-    { [css.buttoncontainer]: isMobile },
-    { [css.buttoncontainerFull]: fullWidth && isMobile },
-    { [css.coButton]: !isMobile },
+    { [css.buttoncontainer]: isMobileView },
+    { [css.buttoncontainerFull]: fullWidth && isMobileView },
+    { [css.coButton]: !isMobileView },
   ]
 
   return (
@@ -33,8 +34,8 @@ const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, b
           >
             <Segment
               className={classnames({
-                [css.submitButton]: view === 'mobile',
-                [css.coButtonSegment]: view !== 'mobile',
+                [css.submitButton]: isMobileView,
+                [css.coButtonSegment]: !isMobileView,
               })}
             >
               Checkout
@@ -45,8 +46,8 @@ const BoxSummaryButton = ({ view, recipes, showDetails, open, checkoutPending, b
         <Button width="full" pending={pricingPending} data-testing={`${view}BoxSummaryNextButton`}>
           <Segment
             className={classnames({
-              [css.submitButton]: view === 'mobile',
-              [css.coButtonSegment]: view !== 'mobile',
+              [css.submitButton]: isMobileView,
+              [css.coButtonSegment]: !isMobileView,
             })}
             onClick={showDetails ? boxSummaryNext : open}
           >

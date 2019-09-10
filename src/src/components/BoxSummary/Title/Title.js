@@ -5,7 +5,9 @@ import moment from 'moment'/* eslint-disable new-cap */
 
 import { Spinner } from 'goustouicomponents'
 import Price from 'BoxSummary/Price'
+import { isMobile } from 'utils/view'
 import css from './Title.css'
+
 class Title extends React.PureComponent {
   static propTypes = {
     date: PropTypes.string,
@@ -46,7 +48,7 @@ class Title extends React.PureComponent {
         </p>
         <div className={classNames(css[`title${view}`], css.price)}>
           {
-            pending ? view === 'mobile' && (
+            pending ? isMobile(view) && (
               <div className={classNames(spinnerClassNames)}>
                 <span className={classNames(css.spinner, this.props.spinnerClassName)}>
                   <Spinner />

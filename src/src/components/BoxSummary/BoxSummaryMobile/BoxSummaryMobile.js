@@ -10,6 +10,7 @@ import BoxSummary from 'BoxSummary'
 import BoxSummaryButton from 'BoxSummary/BoxSummaryButton'
 import RecipeList from 'BoxSummary/RecipeList'
 import { getBoundingClientRect } from 'utils/DOMhelper'
+import { MOBILE_VIEW } from 'utils/view'
 import boxSummaryButtonCss from 'BoxSummary/BoxSummaryButton/BoxSummaryButton.css'
 import { ShortlistTutorial } from 'routes/Menu/ShortlistTutorial'
 import css from './BoxSummaryMobile.css'
@@ -58,7 +59,7 @@ class BoxSummaryMobile extends React.PureComponent {
 
   componentDidMount() {
     if (getBoundingClientRect(this.ref).width > 0 && this.props.hasUnavailableRecipes && this.props.orderSaveError === 'no-stock') {
-      this.props.boxDetailsVisibilityChange(true, 'mobile')
+      this.props.boxDetailsVisibilityChange(true, MOBILE_VIEW)
     }
     if (this.tooltipError()) {
       this.hideTooltipDelay = setTimeout(() => {
@@ -105,12 +106,12 @@ class BoxSummaryMobile extends React.PureComponent {
   }
 
   openMobile = () => {
-    this.props.boxDetailsVisibilityChange(true, 'mobile')
+    this.props.boxDetailsVisibilityChange(true, MOBILE_VIEW)
   }
 
   closeMobile = () => {
     this.props.basketRestorePreviousValues()
-    this.props.boxDetailsVisibilityChange(false, 'mobile')
+    this.props.boxDetailsVisibilityChange(false, MOBILE_VIEW)
   }
 
   closeTutorialStep2 = () => {
@@ -150,16 +151,16 @@ class BoxSummaryMobile extends React.PureComponent {
   renderBrowseCTA = () => (
     [
       this.renderErrorTooltip(
-        <BrowseCTAButton view="mobile" fullWidth={this.props.displayOptions.includes('hideRecipeList')} key={0} />, 3
+        <BrowseCTAButton view={MOBILE_VIEW} fullWidth={this.props.displayOptions.includes('hideRecipeList')} key={0} />, 3
       ),
-      <BrowseCTA view="mobile" key={1} />,
+      <BrowseCTA view={MOBILE_VIEW} key={1} />,
     ]
   )
 
   renderButton = () => (
     this.renderErrorTooltip(
       <BoxSummaryButton
-        view="mobile"
+        view={MOBILE_VIEW}
         fullWidth={this.props.displayOptions.includes('hideRecipeList')}
         recipes={this.props.recipes}
         showDetails={this.props.showDetails}
@@ -184,10 +185,10 @@ class BoxSummaryMobile extends React.PureComponent {
           <div className={css.iconMobile}>
             <span className={iconClass} data-slug="box-summary-mobile" />{shouldShowTutorialStep2 && <ShortlistTutorial />}
           </div>
-          <Title view="mobile" date={date} finalisedSlot={this.props.slotId !== ''} />
+          <Title view={MOBILE_VIEW} date={date} finalisedSlot={this.props.slotId !== ''} />
         </div>
         <div className={css.summaryMobile}>
-          {!displayOptions.includes('hideRecipeList') && <RecipeList view="mobile" recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />}
+          {!displayOptions.includes('hideRecipeList') && <RecipeList view={MOBILE_VIEW} recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />}
           {((date === '' || disabled) && !showDetails) ? this.renderBrowseCTA() : this.renderButton()}
         </div>
       </div>
@@ -204,8 +205,8 @@ class BoxSummaryMobile extends React.PureComponent {
             recipes={this.props.recipes}
             date={this.props.date}
             showDetails={this.props.showDetails}
-            boxDetailsVisibilityChange={visible => this.props.boxDetailsVisibilityChange(visible, 'mobile')}
-            view="mobile"
+            boxDetailsVisibilityChange={visible => this.props.boxDetailsVisibilityChange(visible, MOBILE_VIEW)}
+            view={MOBILE_VIEW}
             menuRecipes={this.props.menuRecipes}
             stock={this.props.stock}
             numPortions={this.props.numPortions}
