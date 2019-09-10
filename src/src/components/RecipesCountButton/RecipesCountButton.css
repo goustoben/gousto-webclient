@@ -1,5 +1,6 @@
 @value White, RadishLight, RadishLightPulse, BluecheeseLighter, Duckegg, Oyster from 'styles/colors.css';
 @value avenirBookFontStack, sizeXS from 'styles/typography.css';
+@value Screen3XSMax from 'styles/screenSizes.css';
 
 @keyframes background-shortlist-change {
   from { background-color: RadishLightPulse; }
@@ -21,6 +22,9 @@
 .line {
   display: flex;
   padding: 0.25rem 0.5rem;
+  @media Screen3XSMax {
+    padding: 0.25rem 0.15rem;
+  }  
 }
 
 .boxRecipes {
