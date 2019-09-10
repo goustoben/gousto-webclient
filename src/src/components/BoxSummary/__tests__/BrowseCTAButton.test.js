@@ -13,7 +13,7 @@ describe('BrowseCTAButton', () => {
     menuBrowseCTAVisibilityChange = jest.fn()
   })
 
-  test('should return a div', () => {
+  test('should return a Button', () => {
     const wrapper = shallow(
       <BrowseCTAButton
         boxSummaryShow={false}
@@ -26,38 +26,42 @@ describe('BrowseCTAButton', () => {
     expect(wrapper.type()).toEqual(Button)
   })
 
-  test('should call boxDetailsVisibilityChange & menuBrowseCTAVisibilityChange when box summary is not shown', () => {
-    const wrapper = shallow(
-      <BrowseCTAButton
-        boxSummaryShow={false}
-        boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-        menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
-        view={view}
-      />
-    )
-    wrapper.find(Segment).simulate('click')
+  describe('when box summary is not shown', () => {
+    test('should call boxDetailsVisibilityChange & menuBrowseCTAVisibilityChange', () => {
+      const wrapper = shallow(
+        <BrowseCTAButton
+          boxSummaryShow={false}
+          boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+          menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
+          view={view}
+        />
+      )
+      wrapper.find(Segment).simulate('click')
 
-    expect(menuBrowseCTAVisibilityChange).toHaveBeenCalledTimes(1)
-    expect(menuBrowseCTAVisibilityChange).toHaveBeenCalledWith(false)
+      expect(menuBrowseCTAVisibilityChange).toHaveBeenCalledTimes(1)
+      expect(menuBrowseCTAVisibilityChange).toHaveBeenCalledWith(false)
 
-    expect(boxDetailsVisibilityChange).toHaveBeenCalledTimes(1)
-    expect(boxDetailsVisibilityChange).toHaveBeenCalledWith(true, view)
+      expect(boxDetailsVisibilityChange).toHaveBeenCalledTimes(1)
+      expect(boxDetailsVisibilityChange).toHaveBeenCalledWith(true, view)
+    })
   })
 
-  test('should call boxDetailsVisibilityChange with false when box summary is showing', () => {
-    const wrapper = shallow(
-      <BrowseCTAButton
-        boxSummaryShow
-        boxDetailsVisibilityChange={boxDetailsVisibilityChange}
-        menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
-        view={view}
-      />
-    )
-    wrapper.find(Segment).simulate('click')
+  describe('when box summary is shown', () => {
+    test('should call boxDetailsVisibilityChange with false', () => {
+      const wrapper = shallow(
+        <BrowseCTAButton
+          boxSummaryShow
+          boxDetailsVisibilityChange={boxDetailsVisibilityChange}
+          menuBrowseCTAVisibilityChange={menuBrowseCTAVisibilityChange}
+          view={view}
+        />
+      )
+      wrapper.find(Segment).simulate('click')
 
-    expect(menuBrowseCTAVisibilityChange).not.toHaveBeenCalled()
+      expect(menuBrowseCTAVisibilityChange).not.toHaveBeenCalled()
 
-    expect(boxDetailsVisibilityChange).toHaveBeenCalledTimes(1)
-    expect(boxDetailsVisibilityChange).toHaveBeenCalledWith(false, '')
+      expect(boxDetailsVisibilityChange).toHaveBeenCalledTimes(1)
+      expect(boxDetailsVisibilityChange).toHaveBeenCalledWith(false, '')
+    })
   })
 })

@@ -1,5 +1,6 @@
 import { shallow, mount } from 'enzyme'
 import React from 'react'
+import Immutable from 'immutable'
 
 import Postcode from 'BoxSummary/Postcode/Postcode'
 import TextInput from 'Form/Input'
@@ -7,7 +8,6 @@ import Form from 'Form'
 import DropdownInput from 'Form/Dropdown'
 import css from 'BoxSummary/Postcode/Postcode.css'
 import { LayoutContentWrapper, Button, Segment } from 'goustouicomponents'
-import Immutable from 'immutable'
 
 describe('Postcode', () => {
   let wrapper
@@ -22,7 +22,7 @@ describe('Postcode', () => {
   test('should return a LayoutContentWrapper', () => {
     expect(wrapper.type()).toEqual(LayoutContentWrapper)
   })
-  
+
   test('should render a Form', () => {
     expect(wrapper.childAt(0).type()).toEqual(Form)
   })
@@ -49,12 +49,16 @@ describe('Postcode', () => {
     test('should not show the button to be pending', () => {
       expect(wrapper.find(Button).prop('pending')).toEqual(false)
     })
-    test('should call the boxSummaryNext function prop when the button is clicked', () => {
-      const boxSummaryNextSpy = jest.fn()
-      wrapper = shallow(<Postcode tempPostcode="w30df" boxSummaryNext={boxSummaryNextSpy} setTempPostcode={setTempPostcodeSpy} />)
-      wrapper.find(Button).simulate('click')
-      expect(boxSummaryNextSpy).toHaveBeenCalled()
+
+    describe('when the button is clicked', () => {
+      test('should call the boxSummaryNext function prop', () => {
+        const boxSummaryNextSpy = jest.fn()
+        wrapper = shallow(<Postcode tempPostcode="w30df" boxSummaryNext={boxSummaryNextSpy} setTempPostcode={setTempPostcodeSpy} />)
+        wrapper.find(Button).simulate('click')
+        expect(boxSummaryNextSpy).toHaveBeenCalled()
+      })
     })
+
     test('should show "continue" text on the button', () => {
       wrapper = mount(<Postcode setTempPostcode={setTempPostcodeSpy} />)
       expect(wrapper.find(Segment).at(1).text()).toEqual('Continue')
@@ -62,11 +66,14 @@ describe('Postcode', () => {
     test('should show the button as disabled', () => {
       expect(wrapper.find(Button).at(0).prop('disabled')).toEqual(true)
     })
-    test('should call the boxSummaryNextSpy function prop when the Form is submitted', () => {
-      const boxSummaryNextSpy = jest.fn()
-      wrapper = shallow(<Postcode boxSummaryNext={boxSummaryNextSpy} tempPostcode="w30df" setTempPostcode={setTempPostcodeSpy} />)
-      wrapper.find(Form).simulate('submit')
-      expect(boxSummaryNextSpy).toHaveBeenCalled()
+
+    describe('when the Form is submitted', () => {
+      test('should call the boxSummaryNextSpy function prop when the Form is submitted', () => {
+        const boxSummaryNextSpy = jest.fn()
+        wrapper = shallow(<Postcode boxSummaryNext={boxSummaryNextSpy} tempPostcode="w30df" setTempPostcode={setTempPostcodeSpy} />)
+        wrapper.find(Form).simulate('submit')
+        expect(boxSummaryNextSpy).toHaveBeenCalled()
+      })
     })
 
     test('should not show the cancel link', () => {
@@ -213,16 +220,20 @@ describe('Postcode', () => {
       expect(boxSummaryNextSpy).toHaveBeenCalledTimes(1)
     })
 
-    test('should enable the continue button when the user has chosen an option', () => {
-      const address = addresses.get(1)
-      wrapper = shallow(<Postcode addresses={addresses} chosenAddress={address} basketChosenAddressChange={basketChosenAddressChangeSpy} setTempPostcode={setTempPostcodeSpy} />)
-      wrapper.find(DropdownInput).simulate('change', address.get('id'))
-      expect(wrapper.find(Button).at(0).prop('disabled')).toEqual(false)
+    describe('when the user has chosen an option', () => {
+      test('should enable the continue button', () => {
+        const address = addresses.get(1)
+        wrapper = shallow(<Postcode addresses={addresses} chosenAddress={address} basketChosenAddressChange={basketChosenAddressChangeSpy} setTempPostcode={setTempPostcodeSpy} />)
+        wrapper.find(DropdownInput).simulate('change', address.get('id'))
+        expect(wrapper.find(Button).at(0).prop('disabled')).toEqual(false)
+      })
     })
 
-    test('should disable the next button if the chosenAddress prop is not set', () => {
-      wrapper = shallow(<Postcode addresses={addresses} basketChosenAddressChange={basketChosenAddressChangeSpy} setTempPostcode={setTempPostcodeSpy} />)
-      expect(wrapper.find(Button).at(0).prop('disabled')).toEqual(true)
+    describe('if the chosenAddress prop is not set', () => {
+      test('should disable the next button', () => {
+        wrapper = shallow(<Postcode addresses={addresses} basketChosenAddressChange={basketChosenAddressChangeSpy} setTempPostcode={setTempPostcodeSpy} />)
+        expect(wrapper.find(Button).at(0).prop('disabled')).toEqual(true)
+      })
     })
   })
 })
