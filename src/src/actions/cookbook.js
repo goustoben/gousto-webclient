@@ -1,5 +1,6 @@
 import GoustoException from 'utils/GoustoException'
 import * as collectionsApi from 'apis/collections'
+import { fetchRecipeStepsById } from 'apis/recipes'
 import actionTypes from 'actions/actionTypes'
 import statusActions from 'actions/status'
 
@@ -8,6 +9,7 @@ const cookbookActions = {
   cookbookLoadRecipeSets,
   cookbookLoadCollections,
   cookbookLoadCollectionRecipes,
+  cookbookLoadRecipeStepsById,
   cookbookResetCollectionRecipes,
 }
 
@@ -105,6 +107,25 @@ function cookbookLoadCollectionRecipes(collectionId, { limit, setNum = 1 } = {})
       dispatch(statusActions.errorLoad(actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES, err))
     } finally {
       dispatch(statusActions.pending(actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES, false))
+    }
+  }
+}
+
+function cookbookLoadRecipeStepsById(recipeId) {
+  return async dispatch => {
+    dispatch(statusActions.pending(actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID, true))
+    dispatch(statusActions.error(actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID, null))
+    try {
+      const { data: recipeStepsById } = await fetchRecipeStepsById(recipeId)
+      dispatch({
+        type: actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID,
+        recipeId,
+        recipeStepsById,
+      })
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID, err))
+    } finally {
+      dispatch(statusActions.pending(actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID, false))
     }
   }
 }
