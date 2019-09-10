@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import { Button, Segment } from 'goustouicomponents'
+import { isMobile } from 'utils/view'
 import css from './BrowseCTAButton.css'
 
 const handleSetDeliveryDateClick = (menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow, view) => {
@@ -14,9 +15,10 @@ const handleSetDeliveryDateClick = (menuBrowseCTAVisibilityChange, boxDetailsVis
 }
 
 const BrowseCTAButton = ({ menuBrowseCTAVisibilityChange, boxDetailsVisibilityChange, boxSummaryShow, view, disable, fullWidth }) => {
+  const isMobileView = isMobile(view)
   const classes = classnames(
     css[`setDeliveryDateButton-${view}`],
-    { [css.fullWidth]: view === 'mobile' && fullWidth },
+    { [css.fullWidth]: isMobileView && fullWidth },
   )
 
   return (
@@ -29,7 +31,7 @@ const BrowseCTAButton = ({ menuBrowseCTAVisibilityChange, boxDetailsVisibilityCh
         }}
         className={css[view]}
       >
-        {view === 'mobile' ? 'Set Date' : 'Set Delivery Date'}
+        {isMobileView ? 'Set Date' : 'Set Delivery Date'}
       </Segment>
     </Button>
   )

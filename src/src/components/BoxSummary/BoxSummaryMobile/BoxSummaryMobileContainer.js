@@ -3,6 +3,7 @@ import actionTypes from 'actions/actionTypes'
 import actions from 'actions'
 import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
+import { isMobile } from 'utils/view'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { getShortlistTutorialFirstStep, getShortlistTutorialSecondStep } from 'selectors/tutorial'
 import BoxSummaryMobile from './BoxSummaryMobile'
@@ -15,7 +16,7 @@ const mapStateToProps = (state) => ({
   date: state.basket.get('date'),
   numPortions: state.basket.get('numPortions'),
   recipes: state.basket.get('recipes'),
-  showDetails: state.boxSummaryShow.get('show') && state.boxSummaryShow.get('view') === 'mobile',
+  showDetails: state.boxSummaryShow.get('show') && isMobile(state.boxSummaryShow.get('view')),
   slotId: state.basket.get('slotId'),
   userOrders: state.user.get('orders'),
   deliveryDays: state.boxSummaryDeliveryDays,

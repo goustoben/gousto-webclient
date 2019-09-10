@@ -3,6 +3,7 @@ import React from 'react'
 import Form from 'Form'
 import TextInput from 'Form/Input'
 import { Button, Heading, LayoutContentWrapper } from 'goustouicomponents'
+import { isMobile } from 'utils/view'
 import DropdownInput from 'Form/Dropdown'
 import css from './Postcode.css'
 
@@ -99,7 +100,7 @@ class Postcode extends React.Component {
           className={css.textInput}
           value={this.props.tempPostcode}
           textAlign="center"
-          autoFocus={this.props.isVisible && this.props.view !== 'mobile'}
+          autoFocus={this.props.isVisible && !isMobile(this.props.view)}
           data-testing="menuPostcodeInput"
         />
       </div>
