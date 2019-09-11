@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './NewsletterSignUp.css'
 import { Button, Segment } from 'goustouicomponents'
+import css from './NewsletterSignUp.css'
 
 class NewsletterSignUp extends React.Component {
 

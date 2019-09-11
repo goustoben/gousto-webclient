@@ -1,12 +1,12 @@
 import React from 'react'
 import { mount } from 'enzyme'
 
-import { DoubleCreditCountdown } from '../DoubleCreditCountdown.logic'
 import {
   getTimeDifference,
   isTimeInPast,
   isTimeZero
 } from 'routes/Account/Referral/timeHelper'
+import { DoubleCreditCountdown } from '../DoubleCreditCountdown.logic'
 
 import { DoubleCreditCountdownPresentation } from '../DoubleCreditCountdown.presentation'
 

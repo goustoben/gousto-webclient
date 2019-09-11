@@ -9,7 +9,7 @@ import config from 'config'
 describe('<DietTypesFilter />', () => {
   let wrapper
   const dietTypesFilters = config.recipes.dietTypes
-  let dietTypes = Immutable.Set([])
+  const dietTypes = Immutable.Set([])
   test('should display a FilterItem for each diet type passed', () => {
     wrapper = shallow(<DietTypesFilter dietTypes={dietTypes} dietTypesFilters={dietTypesFilters} />)
 

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import NewAddressModal from './NewAddressModal'
 import userActions from 'actions/user'
+import NewAddressModal from './NewAddressModal'
 
 const mapStateToProps = (state) => ({
   isModalOpen: state.user.getIn(['deliveryAddressModal', 'visibility']),

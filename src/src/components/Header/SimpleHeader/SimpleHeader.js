@@ -19,7 +19,7 @@ const SimpleHeader = ({ serverError, className, homeUrl, noContactBar, title, sm
               <span className={css.info}>Free delivery </span>
               <span className={css.info}>{config.company.telephone.number}</span>
             </p>
-                      </div> : null}
+                           </div> : null}
           <div className={css.mainBar}>
             <div className={css.mainContent}>
               <Link to={homeUrl} className={css.logoLink} clientRouted>

@@ -1,6 +1,6 @@
-import AgeVerify from './AgeVerify'
 import { connect } from 'react-redux'
 import actions from 'actions'
+import AgeVerify from './AgeVerify'
 
 const mapStateToProps = state => ({
   verified: state.promoAgeVerified,

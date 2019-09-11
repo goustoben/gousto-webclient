@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import BrowseCTA from './BrowseCTA'
 import actions from 'actions'
+import BrowseCTA from './BrowseCTA'
 
 function mapStateToProps(state) {
   return {

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
-import BoxSummary from './BoxSummary'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import actionTypes from 'actions/actionTypes'
 import pricing from 'actions/pricing'
+import BoxSummary from './BoxSummary'
 
 function mapStateToProps(state) {
   return {

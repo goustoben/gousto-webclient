@@ -41,7 +41,7 @@ class DeliveryAddressType extends React.PureComponent {
       <CheckoutTooltip version="Mobile" placement="top">
         {configCheckout.tooltip.addressType}
       </CheckoutTooltip>
-                        </div>)
+                         </div>)
 
     const showOtherInput = this.shouldShowOtherInput(this.props.value)
 

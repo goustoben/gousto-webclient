@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import BoxSizeStep from './BoxSizeStep'
 import actions from 'actions'
+import BoxSizeStep from './BoxSizeStep'
 
 const BoxSizeStepContainer = connect(() => ({}), {
   numPortionChange: actions.basketNumPortionChange,

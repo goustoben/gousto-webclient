@@ -1,7 +1,7 @@
-import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue } from './utils'
 import { identifyUser, getUserToken, refreshUserToken, forgetUserToken, validateUserPassword } from 'apis/auth'
 import env from 'utils/env'
 import routes from 'config/routes'
+import { routeMatches, addSessionCookies, removeSessionCookies, getCookieValue } from './utils'
 
 /**
  * Login Route

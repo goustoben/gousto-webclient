@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import css from './Header.css'
 import Title from 'Overlay/Title'
 import CloseButton from 'Overlay/CloseButton'
+import css from './Header.css'
 
 const Header = ({ onClose, title, children }) => (
   <div className={css.container}>

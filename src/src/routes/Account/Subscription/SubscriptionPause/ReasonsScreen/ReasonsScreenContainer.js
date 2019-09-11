@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import ReasonsScreen from './ReasonsScreen'
 import actions from 'actions/subscriptionPause'
+import ReasonsScreen from './ReasonsScreen'
 
 const mapStateToProps = (state) => ({
   reasons: state.subscriptionPause.get('activeReasons'),

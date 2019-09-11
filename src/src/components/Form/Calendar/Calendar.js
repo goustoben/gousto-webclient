@@ -126,7 +126,7 @@ const Calendar = ({ dates, selected, onClick }) => {
 
               return <Day {...day} className={css.day} />
             })}
-       </div>),
+           </div>),
         )}
       </div>
     </div>)

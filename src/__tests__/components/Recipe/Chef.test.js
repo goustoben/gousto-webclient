@@ -7,7 +7,7 @@ import Chef from 'Recipe/Chef'
 
 describe('<Chef />', () => {
   let wrapper
-  let chef = Immutable.fromJS({
+  const chef = Immutable.fromJS({
     name: 'Shu Han Lee ',
     celebrity: true,
     media: {

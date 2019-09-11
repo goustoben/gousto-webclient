@@ -2,9 +2,9 @@ import React from 'react'
 import Carousel from 'Carousel'
 import Image from 'Image'
 import SectionHeader from 'SectionHeader'
+import Content from 'containers/Content'
 import css from './ExpectationsCarousel.css'
 import Circle from './Circle'
-import Content from 'containers/Content'
 
 class ExpectationsCarousel extends React.PureComponent {
 

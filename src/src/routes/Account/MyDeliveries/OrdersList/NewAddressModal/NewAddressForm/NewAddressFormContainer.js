@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import NewAddressForm from './NewAddressForm'
 import actionTypes from 'actions/actionTypes'
+import NewAddressForm from './NewAddressForm'
 
 const mapStateToProps = (state) => ({
   addresses: state.craftyClicksAddresses.get('craftyClicksAddresses'),

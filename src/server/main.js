@@ -7,8 +7,6 @@ const bodyParser = require('koa-body')
 const { renderToString } = require('react-dom/server')
 const Footer = require('Footer').default
 const logger = require('utils/logger').default
-const { processRequest, configureHistoryAndStore } = require('./processRequest')
-const { appsRedirect } = require('./middleware/apps')
 const app = new Koa()
 const apolloClient = require('apis/apollo').default
 const Provider = require('react-redux').Provider
@@ -18,22 +16,24 @@ const globals = require('config/globals')
 const MainLayout = require('layouts/MainLayout').default
 const ErrorPage = require('components/ErrorPage').default
 const Page = require('containers/Page').default
-const htmlTemplate = require('./template')
 const Helmet = require('react-helmet')
 const GoustoHelmet = require('Helmet/GoustoHelmet').default
-const routes = require('./routes').default
 
 const { clearPersistentStore } = require('middlewares/persist/persistStore')
 
 const withStatic = process.env.withStatic === 'true'
 
-const addressLookupRoute = require('./routes/addressLookup').default
 const uuidv1 = require('uuid/v1')
 const {loggerSetUuid} = require('actions/logger')
+const addressLookupRoute = require('./routes/addressLookup').default
+const routes = require('./routes').default
+const htmlTemplate = require('./template')
+const { appsRedirect } = require('./middleware/apps')
+const { processRequest, configureHistoryAndStore } = require('./processRequest')
 
 /* eslint-disable no-param-reassign */
 app.use(async (ctx, next) => {
-  const startTime = new Date
+  const startTime = new Date()
   const path = ctx.request.path
   const writeLog = (path.indexOf('/ping') === -1) && (path.indexOf('/nsassets') === -1 )
 
@@ -75,7 +75,7 @@ app.use(async (ctx, next) => {
     clearPersistentStore(ctx.cookies)
 
     const { store } = configureHistoryAndStore(ctx.request.url, { serverError: `${ctx.status}` })
-    let noGTM = ctx.request && ctx.request.query && ctx.request.query.no_gtm
+    const noGTM = ctx.request && ctx.request.query && ctx.request.query.no_gtm
     renderToString(
       <GoustoHelmet
         noGTM={noGTM}

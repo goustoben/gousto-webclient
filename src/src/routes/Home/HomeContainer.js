@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import Home from './Home'
 import { knownVariants, defaultVariant } from 'config/home'
 import actions from 'actions/auth'
+import Home from './Home'
 
 export const getKnownVariant = variant => (
   (knownVariants.includes(variant)) ? variant : defaultVariant

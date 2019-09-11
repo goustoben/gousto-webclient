@@ -1,5 +1,5 @@
-jest.mock('server/service/addressLookup')
 import lookupRoute from 'server/routes/addressLookup'
+jest.mock('server/service/addressLookup')
 
 describe('addressLookup', () => {
   let next

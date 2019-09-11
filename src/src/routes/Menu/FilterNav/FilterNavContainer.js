@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 import { compose, pure } from 'recompose'
 
-import FilterNav from './FilterNav'
 import withScroll from 'hoc/withScroll'
 import filterActions from 'actions/filters'
 import { getFilterCTAText } from 'selectors/filters'
+import FilterNav from './FilterNav'
 import { getCurrentCollectionSlug } from '../selectors/menu'
 
 const handleScroll = withScroll({

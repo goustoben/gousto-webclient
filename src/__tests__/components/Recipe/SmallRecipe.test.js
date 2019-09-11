@@ -12,7 +12,7 @@ import SmallRecipe from 'Recipe/SmallRecipe'
 
 describe('<SmallRecipe />', () => {
   let wrapper
-  let recipe = Immutable.fromJS({
+  const recipe = Immutable.fromJS({
     id: 1,
     title: 'test',
     rating: {

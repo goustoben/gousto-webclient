@@ -2,8 +2,8 @@ import React from 'react'
 import PropType from 'prop-types'
 import classnames from 'classnames'
 
-import css from './TasteScore.css'
 import Svg from 'Svg'
+import css from './TasteScore.css'
 
 const propTypes = {
   score: PropType.number,

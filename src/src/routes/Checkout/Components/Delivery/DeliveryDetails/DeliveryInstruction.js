@@ -42,7 +42,7 @@ class DeliveryInstruction extends React.PureComponent {
       <CheckoutTooltip version="Mobile" placement="topRight">
         {configCheckout.tooltip.leaveBox}
       </CheckoutTooltip>
-                        </div>)
+                         </div>)
 
     const showOtherInput = this.shouldShowOtherInput(this.props.value)
 

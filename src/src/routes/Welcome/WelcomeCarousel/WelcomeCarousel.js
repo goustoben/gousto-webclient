@@ -2,8 +2,8 @@ import React from 'react'
 import Carousel from 'Carousel'
 import Image from 'Image'
 import SectionHeader from 'SectionHeader'
-import css from './WelcomeCarousel.css'
 import Content from 'containers/Content'
+import css from './WelcomeCarousel.css'
 
 const WelcomeCarousel = () => {
   const getImage = (fileName) => require(`media/images/${fileName}`) // eslint-disable-line global-require

@@ -96,7 +96,7 @@ class Hubs extends React.PureComponent {
               It's a virtual world tour of cuisines, from the adventurous to the
               familiar. You'll find quick meals, family favourites and lighter
               dishes too.
-       </span>
+              </span>
             </Content>
           </p>
         </PageHeader>

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actionTypes from 'actions/actionTypes'
-import OrderCancelButton from './OrderCancelButton'
 import actions from 'actions/order'
+import OrderCancelButton from './OrderCancelButton'
 
 function mapStateToProps(state, ownProps) {
   const error = state.error.get(actionTypes.PROJECTED_ORDER_CANCEL, null)

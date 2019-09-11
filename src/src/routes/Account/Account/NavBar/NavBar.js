@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import config from 'config/routes'
+import { client, legacy } from 'config/globals'
 import css from './NavBar.css'
 import NavBarItem from './NavBarItem/NavBarItem'
-import { client, legacy } from 'config/globals'
 
 const NavBar = (props) => {
   const referFriendPlaceholderText = 'Free Food'

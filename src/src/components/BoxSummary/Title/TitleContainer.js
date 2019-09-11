@@ -1,5 +1,5 @@
-import Title from './Title'
 import { connect } from 'react-redux'
+import Title from './Title'
 
 const mapStateToProps = state => ({
   pending: state.pricing.get('pending'),

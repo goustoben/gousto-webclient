@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Immutable from 'immutable' /* eslint-disable new-cap */
-import DuplicateOrderModal from './DuplicateOrderModal'
 import actions from 'actions'
+import DuplicateOrderModal from './DuplicateOrderModal'
 
 function mapStateToProps(state) {
   return {

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import Screen from './Screen'
 import actions from 'actions/subscriptionPause'
 import getPauseScreen from 'utils/getPauseScreen'
+import Screen from './Screen'
 
 const mapStateToProps = state => {
   const screenData = state.subscriptionPause.get('staticScreenId') || state.subscriptionPause.get('activeReasons').size > 0 ? getPauseScreen(state.subscriptionPause).toJS() : undefined

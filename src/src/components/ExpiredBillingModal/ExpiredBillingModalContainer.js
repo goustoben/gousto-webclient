@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import ExpiredBillingModal from './ExpiredBillingModal'
 import actions from 'actions'
+import ExpiredBillingModal from './ExpiredBillingModal'
 
 const mapStateToProps = (state) => ({
   expiredBillingModalOpen: state.expiredBillingModalVisibility,

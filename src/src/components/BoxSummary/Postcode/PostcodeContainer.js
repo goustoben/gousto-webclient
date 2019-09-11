@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
-import Postcode from './Postcode'
 import actionTypes from 'actions/actionTypes'
+import Postcode from './Postcode'
 
 function mapStateToProps(state) {
   let shippingDefault

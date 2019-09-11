@@ -1,6 +1,6 @@
 import config from 'config'
-import PrivacyStatement from '../../src/routes/PrivacyStatement/PrivacyStatement'
 import MainLayout from 'layouts/MainLayout'
+import PrivacyStatement from '../../src/routes/PrivacyStatement/PrivacyStatement'
 const { match, createMemoryHistory } = require('react-router')
 const routes = require('../../src/routes').default({})
 

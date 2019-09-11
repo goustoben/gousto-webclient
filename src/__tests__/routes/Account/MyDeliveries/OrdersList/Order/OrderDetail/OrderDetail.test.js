@@ -13,7 +13,7 @@ import OrderPricingDetail from 'routes/Account/MyDeliveries/OrdersList/Order/Ord
 describe('OrderDetail', () => {
   let sandbox
   let wrapper
-  let periodMap = Immutable.fromJS({
+  const periodMap = Immutable.fromJS({
     id: 54,
   })
 

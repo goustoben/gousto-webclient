@@ -8,7 +8,7 @@ import config from 'config'
 describe('<TotalTimeFilter />', () => {
   let wrapper
   const totalTimeFilters = config.recipes.totalTime
-  let totalTimeSelected = '0'
+  const totalTimeSelected = '0'
   test('should display a FilterItem for each diet type passed', () => {
     wrapper = shallow(<TotalTimeFilter totalTimeFilters={totalTimeFilters} totalTimeSelected={totalTimeSelected} />)
 

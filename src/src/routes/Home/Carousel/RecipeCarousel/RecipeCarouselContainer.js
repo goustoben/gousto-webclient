@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
-import RecipeCarousel from './RecipeCarousel'
 import { cutoffDateTimeNow } from 'utils/deliveries'
+import RecipeCarousel from './RecipeCarousel'
 
 const RecipeCarouselContainer = connect(state => ({
   homeCarouselRecipes: state.homeCarouselRecipes,

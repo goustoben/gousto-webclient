@@ -20,7 +20,7 @@ const BoxDetails = ({ maxRecipesNum, recipes }) => (
             Add another recipe&nbsp;
             <span className={css.arrowRight} />
           </Link>
-       </div>
+          </div>
         : null}
     </div>
   </div>

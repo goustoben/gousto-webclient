@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-import FilterButton from './FilterButton'
 import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters.js'
+import FilterButton from './FilterButton'
 
 const mapStateToProps = (state) => ({
   count: getFilteredRecipeIds(state).size,
