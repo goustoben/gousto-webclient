@@ -17,6 +17,7 @@ const mapStateToProps = (state) => ({
   valueProposition: state.onScreenRecovery.get('valueProposition'),
   keepCopy: state.onScreenRecovery.getIn(['callToActions', 'keep']),
   confirmCopy: state.onScreenRecovery.getIn(['callToActions', 'confirm']),
+  type: state.onScreenRecovery.get('modalType'),
 })
 
 const mapDispatchToProps = {

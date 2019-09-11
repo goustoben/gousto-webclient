@@ -29,6 +29,7 @@ const propTypes = {
   confirmCopy: PropTypes.string,
   onKeep: PropTypes.func.isRequired,
   keepCopy: PropTypes.string,
+  type: PropTypes.oneOf(['subscription', 'order']),
 }
 
 const defaultProps = {
@@ -56,17 +57,17 @@ class OnScreenRecovery extends React.PureComponent {
   }
 
   render() {
-    const { visible, title, offer, valueProposition, onKeep, keepCopy, onConfirm, confirmCopy } = this.props
+    const { visible, title, offer, valueProposition, onKeep, keepCopy, onConfirm, confirmCopy, type } = this.props
 
     return (
       <ModalComponent styleName={css.modalComponent} visible={visible}>
-        <Header offer={offer} />
+        <Header offer={offer} type={type} />
         <div className={css.container}>
           <ModalTitle>
             <Title title={title}/>
           </ModalTitle>
           <ModalContent>
-            <Offer offer={offer} />
+            <Offer offer={offer} type={type} />
             {(offer && valueProposition) ? <hr className={css.rule} /> : null}
             <ValueProposition valueProposition={valueProposition} />
           </ModalContent>

@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import React from 'react'
 
 import css from './Offer.css'
@@ -13,7 +14,8 @@ const propTypesOffer = {
         value: PropTypes.string,
       }))
     })
-  })
+  }),
+  type: PropTypes.oneOf(['subscription', 'order'])
 }
 
 const defaultProps = {
@@ -30,7 +32,7 @@ const transformMessage = (text, values) => {
   return formattedText
 }
 
-const Offer = ({ offer }) => {
+const Offer = ({ offer, type }) => {
   if (!(offer && offer.message)) return null
 
   let formattedMessage = offer.message
@@ -40,13 +42,16 @@ const Offer = ({ offer }) => {
 
   return (
     <div className={css.offerWrapper}>
-      <div className={css.discountOSR}>
+      <div className={classnames(css.discountOSR, css[`discountOSR--${type}`])}>
         <div className={css.discountOSR__container}>
           {offer.formattedValue}
           <small className={css.discountOSR__sub}>OFF</small>
         </div>
       </div>
-      <div className={css.messageDiscountOSR} dangerouslySetInnerHTML={{ __html: formattedMessage }} />
+      <div
+        className={classnames(css.messageDiscountOSR, css[`messageDiscountOSR--${type}`])}
+        dangerouslySetInnerHTML={{ __html: formattedMessage }} // eslint-disable-line react/no-danger
+      />
     </div>
   )
 }

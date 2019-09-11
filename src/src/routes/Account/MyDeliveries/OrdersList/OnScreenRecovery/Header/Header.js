@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import React from 'react'
 
 import ContentMask from 'ContentMask'
@@ -17,18 +18,31 @@ const propTypes = {
       }),
     }),
   }),
+  type: PropTypes.oneOf(['subscription', 'order'])
 }
 
 const defaultProps = {
-  offer: null
+  offer: null,
+  type: '',
 }
 
-const Header = ({ offer }) => (
+const getFileName = (type) => {
+  switch (type) {
+  case 'order':
+    return 'icon-box'
+  case 'subscription':
+    return 'icon-box-pause-subscription'
+  default:
+    return 'icon-box'
+  }
+}
+
+const Header = ({ offer, type }) => (
   offer ? (
   <div>
-    <div className={css.header}>
+    <div className={classnames(css.header, css[`header--${type}`])}>
       <div className={css.mask}>
-        <Svg className={css.box} fileName="icon-box" />
+        <Svg className={classnames(css.box, css[`box--${type}`])} fileName={getFileName(type)} />
         <div className={css.boxText}>
           <span className={css.boxText__title}>{offer.formattedValue}</span>
           <span className={css.boxText__sub}>OFF</span>
