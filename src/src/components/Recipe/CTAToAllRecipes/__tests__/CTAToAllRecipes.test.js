@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Svg from 'Svg'
-import CTAToAllRecipes from '../CTAToAllRecipes'
+import { CTAToAllRecipes } from '../CTAToAllRecipes'
 
 describe('CTA to all Recipes presentation', () => {
   let wrapper

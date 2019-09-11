@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Masonry from 'react-masonry-component'
 import Immutable from 'immutable'
 import classnames from 'classnames'
+import moment from 'moment'
 import Recipe from 'containers/menu/Recipe'
 import { getFeaturedImage } from 'utils/image'
 import { isRecommendedRecipe } from 'utils/menu'
@@ -15,13 +16,10 @@ class RecipeList extends React.PureComponent {
   static propTypes = {
     allRecipesList: PropTypes.instanceOf(Immutable.List),
     cutoffDate: PropTypes.string,
-    isLoading: PropTypes.bool,
     features: PropTypes.instanceOf(Immutable.Map),
     filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
-    filterMenuOpen: PropTypes.bool,
     featuredRecipes: PropTypes.instanceOf(Immutable.List),
     remainingRecipes: PropTypes.instanceOf(Immutable.List),
-    outOfStockRecipes: PropTypes.instanceOf(Immutable.List),
     mobileGridView: PropTypes.bool,
     numPortions: PropTypes.number.isRequired,
     recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
@@ -29,13 +27,14 @@ class RecipeList extends React.PureComponent {
     isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     collectionFilterChange: PropTypes.func,
     sortedRecipes: PropTypes.instanceOf(Immutable.List),
+    thematicName: PropTypes.string,
+    deliveryDate: PropTypes.string
   }
 
   static defaultProps = {
     filteredRecipeIds: Immutable.List([]),
     featuredRecipes: Immutable.List([]),
     remainingRecipes: Immutable.List([]),
-    outOfStockRecipes: Immutable.List([]),
   }
 
   static contextTypes = {
@@ -73,7 +72,9 @@ class RecipeList extends React.PureComponent {
 
   trackRecipeOrderDisplayed() {
     const { filteredRecipeIds, featuredRecipes, remainingRecipes } = this.props
-    this.context.store.dispatch(actions.trackRecipeOrderDisplayed(
+    const { store } = this.context
+
+    store.dispatch(actions.trackRecipeOrderDisplayed(
       filteredRecipeIds.toJS(),
       (featuredRecipes.concat(remainingRecipes)).map(recipe => recipe.get('id')).toJS()
     ))
@@ -92,6 +93,8 @@ class RecipeList extends React.PureComponent {
       isCurrentCollectionRecommendation,
       collectionFilterChange,
       sortedRecipes,
+      thematicName,
+      deliveryDate
     } = this.props
     let index = 0
 
@@ -134,6 +137,14 @@ class RecipeList extends React.PureComponent {
         />
       )
     })
+
+    if (thematicName) {
+      // if no date is available, add 3 to the current date for the earliest possible delivery date
+      const selectedDate = deliveryDate || moment().add(3, 'days').toISOString()
+
+      return newRecipeList.concat(<Recipe key={'ctaThematic'} view={'ctaThematic'} thematicName={thematicName} selectedDate={selectedDate} />).toArray()
+    }
+
     const cta = <Recipe key={'ctaAllRecipe'} view={'ctaAllRecipe'} collectionFilterChange={collectionFilterChange} />
     if (!!isCurrentCollectionRecommendation) {
       return newRecipeList.concat(cta).toArray()
@@ -174,4 +185,4 @@ class RecipeList extends React.PureComponent {
   }
 }
 
-export default RecipeList
+export { RecipeList }

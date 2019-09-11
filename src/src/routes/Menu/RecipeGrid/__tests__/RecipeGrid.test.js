@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
-import RecipeList from 'routes/Menu/RecipeList'
+import { RecipeList } from 'routes/Menu/RecipeList'
 import DetailOverlay from 'routes/Menu/DetailOverlay'
 
 describe('RecipeGrid', () => {

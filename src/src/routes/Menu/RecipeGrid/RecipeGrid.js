@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import menu from 'config/menu'
-import RecipeList from '../RecipeList'
+import { RecipeList } from '../RecipeList'
 import DetailOverlay from '../DetailOverlay'
 
 import css from '../Menu.css'

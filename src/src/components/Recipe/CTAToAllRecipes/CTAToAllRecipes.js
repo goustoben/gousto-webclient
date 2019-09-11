@@ -17,4 +17,4 @@ CTAToAllRecipes.propTypes = {
   collectionFilterChange: PropTypes.func.isRequired,
 }
 
-export default CTAToAllRecipes
+export { CTAToAllRecipes }

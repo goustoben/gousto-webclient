@@ -1,0 +1,1 @@
+export { CTAThematic } from "./CTAThematic"

@@ -67,7 +67,7 @@
 	composes: grid;
 }
 
-.ctaAllRecipe {
+.ctaAllRecipe, .ctaThematic {
 	width: 100%;
 
 	@media ScreenSMMin {		

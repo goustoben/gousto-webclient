@@ -6,7 +6,7 @@ import { trackRecipeOrderDisplayed } from 'actions/tracking'
 
 import Recipe from 'containers/menu/Recipe'
 
-import RecipeList from 'routes/Menu/RecipeList/RecipeList'
+import { RecipeList } from '../RecipeList'
 
 jest.mock(
   'containers/menu/Recipe',
