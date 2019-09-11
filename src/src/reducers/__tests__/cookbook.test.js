@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import actionTypes from 'actions/actionTypes'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import cookbookReducer, { initialState } from 'reducers/cookbook'
@@ -330,6 +328,58 @@ describe('cookbook reducer', () => {
           initialState.get('recipesTotalSets'),
         ),
       ).toEqual(true)
+    })
+  })
+
+  describe('COOKBOOK_FETCH_RECIPE_STEPS_BY_ID', () => {
+    const resultState = Immutable.fromJS({
+      recipesInstructions: {
+        '123': [
+          {
+            'step_number': 1,
+            'instruction': 'Instruction',
+            'media': {}
+          }
+        ]
+      }
+    })
+
+    describe('when no data sent', () => {
+      test('should return initial state', () => {
+        const result = cookbookReducer.cookbook(initialState, {
+          type: actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID,
+        })
+
+        expect(
+          Immutable.is(
+            result.get('recipesInstructions'),
+            initialState.get('recipesInstructions'),
+          ),
+        ).toEqual(true)
+      })
+    })
+
+    describe('when sending data', () => {
+      test('should set recipesInstructions with recipe steps', () => {
+        const result = cookbookReducer.cookbook(initialState, {
+          type: actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID,
+          recipeId: '123',
+          recipeStepsById: [
+            {
+              'step_number': 1,
+              'instruction': 'Instruction',
+              'media': {}
+            }
+          ]
+        })
+
+        expect(
+          Immutable.is(
+            result.get('recipesInstructions'),
+            resultState.get('recipesInstructions'),
+          ),
+        ).toEqual(true)
+      })
     })
   })
 })
