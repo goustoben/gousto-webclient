@@ -164,10 +164,12 @@ export function menuLoadCollections(date, noUrlChange) {
     const { data: collections } = await fetchCollections(accessToken, '', args)
     const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
     if (recommendationCollection && recommendationCollection.properties) {
-      const { tutorial } = recommendationCollection.properties
+      const { tutorial, shortlist } = recommendationCollection.properties
       const tutorialEnabled = (tutorial && tutorial === 'jfy') || false
+      const shortlistEnabled = shortlist || false
 
       dispatch(featureSet('jfyTutorial', tutorialEnabled))
+      dispatch(featureSet('shortlist', shortlistEnabled))
     }
     const filterExperiment = state.features.getIn(['dietaryQuickFilter', 'value'])
     const collectionsFiltered = filterExperiment ?
@@ -203,7 +205,7 @@ export function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
   return async (dispatch, getState) => {
     const state = getState()
     const { features } = state
-    const menuId = features.getIn(['menu_id', 'value']) 
+    const menuId = features.getIn(['menu_id', 'value'])
     const accessToken = state.auth.get('accessToken')
     const reqData = {
       includes: ['ingredients', 'allergens', 'taxonomy'],
@@ -457,7 +459,7 @@ export function menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClic
       },
     })
 
-    if(isViewMoreDetailsClicked) {
+    if (isViewMoreDetailsClicked) {
       dispatch({
         type: actionTypes.TRACKING_VIEW_RECIPE_DETAILS,
         trackingData: {
