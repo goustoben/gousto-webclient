@@ -8,8 +8,6 @@ import actions from 'actions'
 import logger from 'utils/logger'
 import userUtils from 'utils/user'
 import Content from 'containers/Content'
-import { trackAffiliatePurchase } from 'actions/tracking'
-import { getAffiliateTrackingData } from 'utils/order'
 
 import OrderSummary from 'containers/welcome/OrderSummary'
 import ProductSelection from 'containers/welcome/ProductSelection'
@@ -52,7 +50,6 @@ class Welcome extends React.PureComponent {
     return store
       .dispatch(actions.userLoadOrder(orderId))
       .then(() => {
-        const { basket } = store.getState()
         userOrder = userUtils.getUserOrderById(
           orderId,
           store.getState().user.get('orders')
@@ -66,10 +63,6 @@ class Welcome extends React.PureComponent {
             })
           )
         }
-
-        trackAffiliatePurchase(
-          getAffiliateTrackingData('FIRSTPURCHASE', userOrder, basket)
-        )
 
         const orderRecipeIds = userUtils.getUserOrderRecipeIds(userOrder)
 
