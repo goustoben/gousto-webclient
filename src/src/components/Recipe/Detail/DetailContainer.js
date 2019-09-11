@@ -27,7 +27,7 @@ function mapStateToProps(state, ownProps) {
     isFoodBrandClickable: false,
     isNew: isNew(Immutable.fromJS(ownProps)),
     inBasket: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))).includes(ownProps.recipeId),
-    showShortlistButton: getShortlist(state) && state.request.get('browser') === 'mobile',
+    showShortlistButton: getShortlist(state) && state.request.get('browser') === 'mobile' && !state.basket.hasIn(['recipes', ownProps.id]),
   }
 }
 
