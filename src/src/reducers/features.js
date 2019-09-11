@@ -66,10 +66,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
-  showRecipeDetailsButton: {
-    experiment: false,
-    value: false,
-  },
   ssrValidationV2: {
     experiment: false,
     value: false,

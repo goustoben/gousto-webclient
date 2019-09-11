@@ -22,7 +22,7 @@ import { ShortlistButton } from '../ShortlistButton'
 const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
   view, highlight, unhighlight, tasteScore, chef, tag, detailHover,
   description, range, isRecommendedRecipe, features, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet, showRecipeDetailsButton, showShortlistButton }) => (
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet, showShortlistButton }) => (
     <div>
       <div className={css.featuredRecipe}>
         <span onClick={onClick} className={css.link}>
@@ -54,18 +54,16 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
             </div>
             <div>
               <ChefQuote chef={chef} quote={description} />
-              {showRecipeDetailsButton &&
-                <div className={css.viewDetails}>
-                  <Pill
-                    mouseEnter={highlight}
-                    mouseLeave={unhighlight}
-                    onClick={() => { onClick(true) }}
-                    icon
-                  >
-                    View details
-                  </Pill>
-                </div>
-              }
+              <div className={css.viewDetails}>
+                <Pill
+                  mouseEnter={highlight}
+                  mouseLeave={unhighlight}
+                  onClick={() => { onClick(true) }}
+                  icon
+                >
+                  View details
+                </Pill>
+              </div>
               <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
               <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
             </div>
@@ -110,7 +108,6 @@ FeaturedRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
-  showRecipeDetailsButton: PropTypes.bool,
   showShortlistButton: PropTypes.bool,
 }
 
