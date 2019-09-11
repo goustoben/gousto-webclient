@@ -46,7 +46,7 @@ class ShortlistItem extends React.Component {
   }
 
   render() {
-    const { shortlistIds, recipesStore, numPortions, onShortlistRemove, available, url, onImageClick} = this.props
+    const { shortlistIds, recipesStore, numPortions, onShortlistRemove, available, url, onImageClick } = this.props
     const { educationVisible } = this.state
 
     const shortlist = isAvailableRecipeList(shortlistIds, recipesStore)
@@ -55,43 +55,43 @@ class ShortlistItem extends React.Component {
     const showShortlistItems = !!shortlist.size
 
     return (
-    <div className={shortlist ? css.shortlist : css.noShortlist}>
-      <LayoutContentWrapper>
-        <div className={detailsCss.row}>
-          <span className={css.flex}>
-            <p className={classnames(detailsCss.titleSection, css.align)}><Svg fileName={'icon_shortlist_heart_education'} className={css.heartIcon} />Shortlist</p>
-            <div role='button' onClick={this.toggle} onKeyPress={this.toggle} tabIndex={0} className={shortlist.size ? css.showWhatIsThis : css.hide}>
-              <span className={icon}></span>
-              {whatIsThisText}
+      <div className={shortlist ? css.shortlist : css.noShortlist}>
+        <LayoutContentWrapper>
+          <div className={detailsCss.row}>
+            <span className={css.flex}>
+              <p className={classnames(detailsCss.titleSection, css.align)}><Svg fileName={'icon_shortlist_heart_education'} className={css.heartIcon} />Shortlist</p>
+              <div role='button' onClick={this.toggle} onKeyPress={this.toggle} tabIndex={0} className={shortlist.size ? css.showWhatIsThis : css.hide}>
+                <span className={icon}></span>
+                {whatIsThisText}
+              </div>
+            </span>
+          </div>
+          {(!shortlist.size || educationVisible) &&
+            <div>
+              <p className={css.educationHeader}>You can now shortlist recipes!</p>
+              <p className={css.educationText}>
+                Shortlisted recipes will appear here. Compare multiple recipes, and move them to and from your box to make your final selection.
+              </p>
             </div>
-          </span>
-        </div>
-        {(!shortlist.size || educationVisible) &&
-        <div>
-          <p className={css.educationHeader}>You can now shortlist recipes!</p>
-          <p className={css.educationText}>
-            Shortlisted recipes will appear here. Compare multiple recipes, and move them to and from your box to make your final selection.
-          </p>
-        </div>
-        }
-        {showShortlistItems && shortlist.map(recipe => (
-          <Item
-            key={recipe.get('id')}
-            available={available}
-            fromBox={false}
-            media={recipe.get('media').getIn(['images', 0, 'urls'], Immutable.List([]))}
-            onImageClick={() => onImageClick(recipe.get('id'))}
-            onRemove={() => onShortlistRemove(recipe.get('id'))}
-            quantity={numPortions}
-            recipeId={recipe.get('id')}
-            showShortlistButton
-            title={recipe.get('title')}
-            type="recipe"
-            url={url}
-          />
-        ))}
-      </LayoutContentWrapper>
-    </div>)
+          }
+          {showShortlistItems && shortlist.map(recipe => (
+            <Item
+              key={recipe.get('id')}
+              available={available}
+              fromBox={false}
+              media={recipe.get('media').getIn(['images', 0, 'urls'], Immutable.List([]))}
+              onImageClick={() => onImageClick(recipe.get('id'))}
+              onRemove={() => onShortlistRemove(recipe.get('id'), { view: 'boxSummaryMinus' })}
+              quantity={numPortions}
+              recipeId={recipe.get('id')}
+              showShortlistButton
+              title={recipe.get('title')}
+              type="recipe"
+              url={url}
+            />
+          ))}
+        </LayoutContentWrapper>
+      </div>)
   }
 }
 

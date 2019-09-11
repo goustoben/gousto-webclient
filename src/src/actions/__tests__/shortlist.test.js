@@ -16,7 +16,9 @@ describe('shortlist actions', () => {
       recipes: {
         '123': 1
       },
-      shortlist: {}
+      shortlist: {
+        shortlistRecipes: {}
+      }
     }),
     menuRecipes: {},
     menuRecipeStock: {},
@@ -34,13 +36,18 @@ describe('shortlist actions', () => {
   })
 
   describe('shortlistRecipeAdd', () => {
-    const recipeInfo = { position: '20' }
+    const recipeInfo = { position: '20', view: 'grid' }
 
     describe('if force is true', () => {
 
       test('should dispatch recipeId and action type SHORTLIST_RECIPE_ADD', () => {
         shortlistRecipeAdd('123', true, recipeInfo)(dispatch, getState)
-        expect(dispatch).toHaveBeenCalledWith({ recipeId: "123", position: '20', type: actionTypes.SHORTLIST_RECIPE_ADD })
+        expect(dispatch).toHaveBeenCalledWith({
+          recipeId: "123",
+          position: '20',
+          view: 'grid',
+          type: actionTypes.SHORTLIST_RECIPE_ADD,
+        })
       })
 
       test('should dispatch limitReached to be false and action type SHORTLIST_LIMIT_REACHED', () => {
@@ -100,7 +107,25 @@ describe('shortlist actions', () => {
         test('should dispatch recipeId and action type SHORTLIST_RECIPE_ADD', () => {
           shortlistLimitReached.mockReturnValue(false)
           shortlistRecipeAdd('123', false, recipeInfo)(dispatch, getState)
-          expect(dispatch).toHaveBeenCalledWith({ recipeId: "123", position: '20', collection: 'ca8f71be-63ac-11e6-a693-068306404bab', type: actionTypes.SHORTLIST_RECIPE_ADD })
+          expect(dispatch).toHaveBeenCalledWith({
+            recipeId: "123",
+            position: '20',
+            view: 'grid',
+            collection: 'ca8f71be-63ac-11e6-a693-068306404bab',
+            type: actionTypes.SHORTLIST_RECIPE_ADD,
+            trackingData: {
+              actionType: 'Shortlist Recipe Added',
+              recipeId: "123",
+              view: 'grid',
+              position: '20',
+              collection: 'ca8f71be-63ac-11e6-a693-068306404bab',
+              source: false,
+              shortlistRecipes: Immutable.Map(),
+              basketRecipes: Immutable.Map({
+                '123': 1
+              })
+            }
+          })
         })
 
         describe('if limitReached is true after adding recipe to shortlist ', () => {
@@ -115,14 +140,31 @@ describe('shortlist actions', () => {
   })
 
   describe('shortlistRecipeRemove', () => {
+    const recipeInfo = { position: '20', view: 'grid' }
+
     test('should dispatch recipeId and action type SHORTLIST_RECIPE_REMOVE', () => {
-      shortlistRecipeRemove('123')(dispatch, getState)
-      expect(dispatch).toHaveBeenCalledWith({ recipeId: '123', type: actionTypes.SHORTLIST_RECIPE_REMOVE })
+      shortlistRecipeRemove('123', recipeInfo)(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({
+        recipeId: '123',
+        type: actionTypes.SHORTLIST_RECIPE_REMOVE,
+        trackingData: {
+          actionType: 'Shortlist Recipe Remove',
+          recipeId: '123',
+          view: 'grid',
+          collection: 'ca8f71be-63ac-11e6-a693-068306404bab',
+          source: false,
+          shortlistRecipes: Immutable.Map(),
+          basketRecipes: Immutable.Map({
+            '123': 1
+          }),
+          shortlistPosition: 0
+        }
+      })
     })
 
     test('should recalculate shortlistLimitReached when called and if returns false then dispatches SHORTLIST_LIMIT_REACHED with shortlistLimitReached as false', () => {
       shortlistLimitReached.mockReturnValue(false)
-      shortlistRecipeRemove('123')(dispatch, getState)
+      shortlistRecipeRemove('123', recipeInfo)(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith({ type: actionTypes.SHORTLIST_LIMIT_REACHED, shortlistLimitReached: false })
     })
   })

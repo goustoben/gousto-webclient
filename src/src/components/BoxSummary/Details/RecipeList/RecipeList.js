@@ -37,7 +37,7 @@ const RecipeList = ({
               media={recipe.get('media')}
               numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
               onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-              onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+              onRemove={() => onRemove(recipe.get('id'), 'boxSummaryMinus')}
               showShortlistButton={shortlistFeatureEnabled}
               recipeId={recipe.get('id')}
               title={recipe.get('title')}
@@ -59,7 +59,7 @@ const RecipeList = ({
               media={recipe.get('media')}
               numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
               onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
-              onRemove={() => onRemove(recipe.get('id'), 'boxsummary')}
+              onRemove={() => onRemove(recipe.get('id'), 'boxSummaryMinus')}
               title={recipe.get('title')}
             />
           )).toArray()}

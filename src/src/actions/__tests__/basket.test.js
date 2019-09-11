@@ -635,9 +635,6 @@ describe('basket actions', () => {
           recipeGroup: {
             slug: 'test-food-brand'
           },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30 },
@@ -665,10 +662,6 @@ describe('basket actions', () => {
           position: '57',
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           source: 'test-food-brand',
-          recipe_type: Immutable.List(),
-          dietary_attribute: Immutable.List(),
-          time_frame: "0",
-          taste_score: undefined,
           recipe_count: 2
         },
       })
@@ -695,10 +688,6 @@ describe('basket actions', () => {
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           source: 'test-food-brand',
-          recipe_type: Immutable.List(),
-          dietary_attribute: Immutable.List(),
-          time_frame: "0",
-          taste_score: undefined,
           recipe_count: 2
         },
       })
@@ -721,9 +710,6 @@ describe('basket actions', () => {
           recipeGroup: {
             slug: 'test-food-brand'
           },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 0, 4: 30 },
@@ -746,10 +732,6 @@ describe('basket actions', () => {
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
           source: 'test-food-brand',
-          recipe_type: Immutable.List(),
-          dietary_attribute: Immutable.List(),
-          time_frame: "0",
-          taste_score: undefined,
           recipe_count: 2
         },
       })
@@ -779,9 +761,6 @@ describe('basket actions', () => {
           recipeGroup: {
             slug: 'test-food-brand'
           },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 30 },
@@ -808,9 +787,6 @@ describe('basket actions', () => {
           recipeGroup: {
             slug: 'test-food-brand'
           },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes: Immutable.List()
         }),
         menuRecipeStock: Immutable.fromJS({
           123: { 2: 0, 4: 30 },
@@ -861,9 +837,6 @@ describe('basket actions', () => {
             recipeGroup: {
               slug: 'test-food-brand'
             },
-            dietTypes: Immutable.List(),
-            newRecipes: false,
-            dietaryAttributes: Immutable.List()
           }),
           menuRecipeStock: Immutable.fromJS({
             123: { 2: 30 },
@@ -877,6 +850,18 @@ describe('basket actions', () => {
         expect(dispatch).toHaveBeenCalledWith({
           type: actionTypes.SHORTLIST_RECIPE_REMOVE,
           recipeId: '123',
+          trackingData: {
+            actionType: 'Shortlist Recipe Remove',
+            recipeId: '123',
+            view: undefined,
+            collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
+            source: 'test-food-brand',
+            shortlistRecipes: Immutable.Map({
+              '123': 1
+            }),
+            basketRecipes: Immutable.Map([['123', 1]]),
+            shortlistPosition: 1
+          }
         })
       })
     })
@@ -895,9 +880,6 @@ describe('basket actions', () => {
           recipeGroup: {
             slug: 'test-food-brand'
           },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes: Immutable.List()
         }),
       })
     })
@@ -916,11 +898,7 @@ describe('basket actions', () => {
           view: undefined,
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          recipe_type: Immutable.List(),
-          dietary_attribute: Immutable.List(),
-          time_frame: "0",
           source: 'test-food-brand',
-          taste_score: undefined,
           recipe_count: 0
         },
       })
@@ -957,11 +935,7 @@ describe('basket actions', () => {
           view: 'boxsummary',
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          recipe_type: Immutable.List(),
-          dietary_attribute: Immutable.List(),
-          time_frame: "0",
           source: 'test-food-brand',
-          taste_score: undefined,
           recipe_count: 0
         },
       })
@@ -995,9 +969,6 @@ describe('basket actions', () => {
           recipeGroup: {
             slug: 'test-food-brand'
           },
-          dietTypes: Immutable.List(),
-          newRecipes: false,
-          dietaryAttributes: Immutable.List()
         }),
       })
       basketRecipeRemove('123')(dispatch, getStateSpy)
@@ -1014,11 +985,7 @@ describe('basket actions', () => {
           view: undefined,
           position: undefined,
           collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-          recipe_type: Immutable.List(),
-          dietary_attribute: Immutable.List(),
-          time_frame: "0",
           source: 'test-food-brand',
-          taste_score: undefined,
           recipe_count: 2
         },
       })

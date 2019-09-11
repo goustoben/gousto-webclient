@@ -1,7 +1,7 @@
 import { shortlistLimitReached } from 'utils/basket'
 import { basketRecipeRemove } from 'actions/basket'
 import actionTypes from './actionTypes'
-import { getCurrentCollectionId } from '../selectors/filters'
+import { getCurrentCollectionId, getRecipeGroupFilter } from '../selectors/filters'
 
 export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
   (dispatch, getState) => {
@@ -9,6 +9,7 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
     let shortList = basket.get('shortlist')
     let reachedLimit
     const numPortions = basket.get('numPortions')
+    const basketRecipes = basket.get('recipes')
 
     if (force) {
       dispatch({
@@ -24,6 +25,8 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
       })
     } else {
       reachedLimit = shortlistLimitReached(shortList, menuRecipes, menuRecipeStock, numPortions)
+      const { view, position } = recipeInfo
+      const recipeGroupFilter = getRecipeGroupFilter(getState())
 
       if (!reachedLimit) {
         if (recipeInfo) {
@@ -33,13 +36,23 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
         dispatch({
           type: actionTypes.SHORTLIST_RECIPE_ADD,
           recipeId,
-          ...recipeInfo
+          ...recipeInfo,
+          trackingData: {
+            actionType: 'Shortlist Recipe Added',
+            recipeId,
+            view,
+            position,
+            collection: getCurrentCollectionId(getState()),
+            source: !!recipeGroupFilter && recipeGroupFilter.slug,
+            shortlistRecipes: shortList.get('shortlistRecipes'),
+            basketRecipes
+          }
         })
         if (getState().basket.hasIn(['recipes', recipeId])) {
           const numberOfRecipesInBasket = getState().basket.getIn(['recipes', recipeId])
           for (let idx = 0; idx < numberOfRecipesInBasket; idx++) {
 
-            basketRecipeRemove(recipeId, '', force)(dispatch, getState)
+            basketRecipeRemove(recipeId, view, force)(dispatch, getState)
           }
         }
 
@@ -57,14 +70,30 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
   }
 )
 
-export const shortlistRecipeRemove = (recipeId) => (
+export const shortlistRecipeRemove = (recipeId, recipeInfo) => (
   (dispatch, getState) => {
     const { basket, menuRecipes, menuRecipeStock } = getState()
     let shortList = basket.get('shortlist')
     const numPortions = basket.get('numPortions')
+    const { view } = recipeInfo
+    const shortlistRecipesKeys = shortList.get('shortlistRecipes').keySeq().toArray()
+    const shortlistPosition = shortlistRecipesKeys.indexOf(recipeId) + 1
+
+    const recipeGroupFilter = getRecipeGroupFilter(getState())
+
     dispatch({
       type: actionTypes.SHORTLIST_RECIPE_REMOVE,
-      recipeId
+      recipeId,
+      trackingData: {
+        actionType: 'Shortlist Recipe Remove',
+        recipeId,
+        view,
+        collection: getCurrentCollectionId(getState()),
+        source: !!recipeGroupFilter && recipeGroupFilter.slug,
+        shortlistRecipes: shortList.get('shortlistRecipes'),
+        basketRecipes: basket.get('recipes'),
+        shortlistPosition
+      }
     })
 
     shortList = getState().basket.get('shortlist')

@@ -16,9 +16,9 @@ import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { ShortlistButton } from '../ShortlistButton'
 
-const FineDineInRecipe = ({media, onClick, selectFoodBrand, isFoodBrandClickable, highlight, unhighlight,
+const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickable, highlight, unhighlight,
   tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe,
-  features, stock, inBasket, position, id, range, showShortlistButton}) => {
+  features, stock, inBasket, position, id, range, showShortlistButton }) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
 
   return (
@@ -72,7 +72,7 @@ const FineDineInRecipe = ({media, onClick, selectFoodBrand, isFoodBrandClickable
             <div className={css.buttonContainer}>
               {showShortlistButton &&
                 <div>
-                  <ShortlistButton id={id} stock={stock} position={position}/>
+                  <ShortlistButton id={id} view={view} stock={stock} position={position} />
                 </div>
               }
               <div className={css.addButton}>
