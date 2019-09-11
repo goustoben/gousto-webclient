@@ -24,8 +24,9 @@ describe('Order Skip Recovery Model Offer', () => {
     })
 
     test('should render snapshot', () => {
+      const type = 'subscription'
       const tree = renderer.create(
-        <Offer offer={offer} />
+        <Offer offer={offer} type={type} />
       ).toJSON()
 
       expect(tree).toMatchSnapshot()

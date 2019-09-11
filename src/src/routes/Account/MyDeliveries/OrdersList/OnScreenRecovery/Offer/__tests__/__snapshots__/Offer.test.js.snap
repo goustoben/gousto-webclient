@@ -5,7 +5,7 @@ exports[`Order Skip Recovery Model Offer Innitial Render should render snapshot 
   className="offerWrapper"
 >
   <div
-    className="discountOSR"
+    className="discountOSR discountOSR--subscription"
   >
     <div
       className="discountOSR__container"
@@ -19,7 +19,7 @@ exports[`Order Skip Recovery Model Offer Innitial Render should render snapshot 
     </div>
   </div>
   <div
-    className="messageDiscountOSR"
+    className="messageDiscountOSR messageDiscountOSR--subscription"
     dangerouslySetInnerHTML={
       Object {
         "__html": "You only have <strong>£13</strong> on all your orders until the <strong>19th of October</strong>",
