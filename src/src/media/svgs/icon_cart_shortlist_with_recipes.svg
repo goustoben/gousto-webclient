@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 56.2 (81672) - https://sketch.com -->
+    <title>icon_cart_shortlist_full</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon_cart_shortlist_full" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-12">
+            <path d="M9,13.5 C8.91071429,13.5 8.82142857,13.4648438 8.75446429,13.3945312 L5.27232143,9.8671875 C5.22767857,9.82617188 4,8.6484375 4,7.2421875 C4,5.52539062 4.99888393,4.5 6.66741071,4.5 C7.64397321,4.5 8.55915179,5.30859375 9,5.765625 C9.44084821,5.30859375 10.3560268,4.5 11.3325893,4.5 C13.0011161,4.5 14,5.52539062 14,7.2421875 C14,8.6484375 12.7723214,9.82617188 12.7220982,9.87890625 L9.24553571,13.3945312 C9.17857143,13.4648438 9.08928571,13.5 9,13.5 Z" id="-copy-2" fill="#FF0032" fill-rule="nonzero"></path>
+            <rect id="Rectangle-Copy" stroke="#C0C5C9" x="0.5" y="0.5" width="17" height="17" rx="2"></rect>
+        </g>
+    </g>
+</svg>

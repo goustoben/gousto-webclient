@@ -17,7 +17,7 @@ function getCoreSlotId(deliveryDays, date, slotId) {
   return coreSlotId
 }
 
-const mapStateToProps = ({ auth, basket, boxSummaryDeliveryDays, error, features, user }) => ({
+const mapStateToProps = ({ auth, basket, boxSummaryDeliveryDays, error, user }) => ({
   recipes: basket.get('recipes'),
   numPortions: basket.get('numPortions'),
   promoCode: basket.get('promoCode'),
