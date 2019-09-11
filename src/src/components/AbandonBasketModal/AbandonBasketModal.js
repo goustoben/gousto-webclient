@@ -24,6 +24,7 @@ class AbandonBasketModal extends PureComponent {
     isFeatureFlagEnabled: PropTypes.bool,
     isFirstViewOfSession: PropTypes.bool,
     trackAbandonBasketEligibility: PropTypes.func,
+    trackAbandonBasketContinueToMenu: PropTypes.func,
     redirect: PropTypes.func.isRequired,
     getAbandonBasketSessionState: PropTypes.func.isRequired,
     basketRecipesClear: PropTypes.func.isRequired
@@ -39,7 +40,8 @@ class AbandonBasketModal extends PureComponent {
     isFirstViewOfSession: false,
     isUserOrdersPending: true,
     isFeatureFlagEnabled: false,
-    trackAbandonBasketEligibility: () => {}
+    trackAbandonBasketEligibility: () => { },
+    trackAbandonBasketContinueToMenu: () => { }
   }
 
   static contextTypes = {
@@ -123,7 +125,7 @@ class AbandonBasketModal extends PureComponent {
   }
 
   render() {
-    const { orderDate, basketRecipesClear, numPortions, redirect } = this.props
+    const { orderDate, basketRecipesClear, numPortions, redirect, trackAbandonBasketContinueToMenu } = this.props
     const { showModal } = this.state
     const recipeDetails = this.getBasketRecipeDetails()
     const isRecipeDetailAvailable = !!recipeDetails.length
@@ -151,6 +153,7 @@ class AbandonBasketModal extends PureComponent {
             className={css.button}
             onClick={() => {
               redirect('/menu?reload=true')
+              trackAbandonBasketContinueToMenu()
               this.closeModal()
             }}
           >

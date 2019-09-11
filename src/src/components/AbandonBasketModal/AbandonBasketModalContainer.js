@@ -1,5 +1,10 @@
 import { connect } from 'react-redux'
-import { abandonBasketModalViewed, getAbandonBasketSessionState, trackAbandonBasketEligibility } from 'actions/abandonBasket'
+import {
+  abandonBasketModalViewed,
+  getAbandonBasketSessionState,
+  trackAbandonBasketEligibility,
+  trackAbandonBasketContinueToMenu
+} from 'actions/abandonBasket'
 import { basketRecipesClear } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import { getAbandonBasket } from 'selectors/features'
@@ -27,6 +32,7 @@ export const AbandonBasketModalContainer = connect(
     getAbandonBasketSessionState,
     redirect,
     basketRecipesClear,
-    trackAbandonBasketEligibility
+    trackAbandonBasketEligibility,
+    trackAbandonBasketContinueToMenu
   }
 )(AbandonBasketModal)

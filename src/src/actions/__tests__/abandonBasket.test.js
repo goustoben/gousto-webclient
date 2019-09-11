@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { getAbandonBasketSessionState, trackAbandonBasketEligibility } from '../abandonBasket'
+import { getAbandonBasketSessionState, trackAbandonBasketEligibility, trackAbandonBasketContinueToMenu } from '../abandonBasket'
 
 const dispatchSpy = jest.fn()
 const getStateSpy = jest.fn()
@@ -47,6 +47,19 @@ describe('abandon basket actions', () => {
       trackAbandonBasketEligibility()(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({ type: 'TRACKING', trackingData: { actionType: 'AbandonedBasket Available', featureFlagEnabled: true } })
+    })
+  })
+
+  describe('trackAbandonBasketContinueToMenu', () => {
+    test('it should dispatch an action TRACKING with tracking data of type "AbandonedBasket ContinueToMenu"', () => {
+      getStateSpy.mockReturnValue({
+        features: Immutable.fromJS({
+          abandonBasket: { value: true }
+        })
+      })
+      trackAbandonBasketContinueToMenu()(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({ type: 'TRACKING', trackingData: expect.objectContaining({ actionType: 'AbandonedBasket ContinueToMenu' }) })
     })
   })
 })

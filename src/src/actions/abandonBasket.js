@@ -20,3 +20,12 @@ export const trackAbandonBasketEligibility = () => (dispatch, getState) => {
     }
   })
 }
+
+export const trackAbandonBasketContinueToMenu = () => (dispatch) => {
+  dispatch({
+    type: actionTypes.TRACKING,
+    trackingData: {
+      actionType: 'AbandonedBasket ContinueToMenu',
+    }
+  })
+}
