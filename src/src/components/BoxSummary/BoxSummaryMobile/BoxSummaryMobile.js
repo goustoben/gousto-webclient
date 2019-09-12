@@ -180,8 +180,8 @@ class BoxSummaryMobile extends React.PureComponent {
     const iconClass = showDetails ? css.arrowDown : css.arrowUp
 
     return (
-      <div className={css.barmobile} ref={(element) => { this.ref = element }}>
-        <div onClick={this.handleMobileClick}>
+      <div className={css.barmobile} ref={(element) => { this.ref = element }} role='button' tabIndex={0} onClick={this.handleMobileClick} onKeyPress={this.handleMobileClick}>
+        <div>
           <div className={css.iconMobile}>
             <span className={iconClass} data-slug="box-summary-mobile" />{shouldShowTutorialStep2 && <ShortlistTutorial />}
           </div>

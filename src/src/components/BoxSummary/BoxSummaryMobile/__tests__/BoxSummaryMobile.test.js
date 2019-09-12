@@ -98,8 +98,6 @@ describe('BoxSummaryMobile', () => {
     wrapper = shallow(<BoxSummaryMobile {...requiredProps} boxDetailsVisibilityChange={clickSpy} basketRestorePreviousValues={basketRestorePreviousValuesSpy} />)
 
     const ButtonWrapper = wrapper.find('.barmobile')
-      .children()
-      .first()
 
     ButtonWrapper.simulate('click', { preventDefault: () => { }, target: { className: '' } })
     expect(clickSpy).toHaveBeenCalled()
@@ -120,8 +118,6 @@ describe('BoxSummaryMobile', () => {
     wrapper = shallow(<BoxSummaryMobile basketRestorePreviousValues={basketRestorePreviousValuesSpy} boxDetailsVisibilityChange={clickSpy} {...requiredProps} />)
 
     const ButtonWrapper = wrapper.find('.barmobile')
-      .children()
-      .first()
 
     ButtonWrapper.simulate('click', { preventDefault: () => { }, target: { className: '' } })
     ButtonWrapper.simulate('click', { preventDefault: () => { }, target: { className: '' } })
@@ -219,7 +215,7 @@ describe('BoxSummaryMobile', () => {
         tutorialTracking: tutorialTrackingSpy
       })
 
-      wrapper.find('.barmobile').children().first().simulate('click', { preventDefault: () => { }, target: { className: '' } })
+      wrapper.find('.barmobile').simulate('click', { preventDefault: () => { }, target: { className: '' } })
       expect(incrementTutorialViewedSpy).toHaveBeenCalled()
       expect(tutorialTrackingSpy).toHaveBeenCalled()
     })
