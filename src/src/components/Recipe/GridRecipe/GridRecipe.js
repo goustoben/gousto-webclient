@@ -19,7 +19,7 @@ import { AttributeGrid } from '../AttributeGrid'
 import { ShortlistButton } from '../ShortlistButton'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showRecipeDetailsButton, showShortlistButton, showShortlistFirstStep }) => (
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showShortlistButton, showShortlistFirstStep }) => (
     <div>
       <div className={css.recipeDetails}>
         <span onClick={onClick} className={css.link}>
@@ -30,18 +30,16 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
             mouseLeave={unhighlight}
           />
         </span>
-        {showRecipeDetailsButton &&
-          <div className={css.viewDetails}>
-            <Pill
-              mouseEnter={highlight}
-              mouseLeave={unhighlight}
-              onClick={() => { onClick(true) }}
-              icon
-            >
-              View details
-            </Pill>
-          </div>
-        }
+        <div className={css.viewDetails}>
+          <Pill
+            mouseEnter={highlight}
+            mouseLeave={unhighlight}
+            onClick={() => { onClick(true) }}
+            icon
+          >
+            View details
+          </Pill>
+        </div>
         <TasteScore className={css.score} score={tasteScore} />
         <div>
           <Chef chef={chef} />
@@ -112,7 +110,6 @@ GridRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
-  showRecipeDetailsButton: PropTypes.bool,
   showShortlistButton: PropTypes.bool,
   showShortlistFirstStep: PropTypes.bool,
 }
