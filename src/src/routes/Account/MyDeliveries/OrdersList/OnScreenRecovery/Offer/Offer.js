@@ -37,22 +37,22 @@ const transformMessage = (text, values) => {
 const getDiscountOSRClass = (type) => {
   switch (type) {
   case ORDER_TYPE:
-    return 'discountOSROffer'
+    return 'discountOSROrder'
   case SUBSCRIPTION_TYPE:
     return 'discountOSRSubscription'
   default:
-    return 'discountOSROffer'
+    return 'discountOSROrder'
   }
 }
 
 const getMessageDiscountOSRClass = (type) => {
   switch (type) {
   case ORDER_TYPE:
-    return 'messageDiscountOSROffer'
+    return 'messageDiscountOSROrder'
   case SUBSCRIPTION_TYPE:
     return 'messageDiscountOSRSubscription'
   default:
-    return 'messageDiscountOSROffer'
+    return 'messageDiscountOSROrder'
   }
 }
 
