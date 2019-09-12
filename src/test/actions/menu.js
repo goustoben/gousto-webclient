@@ -15,26 +15,6 @@ describe('menu actions', function() {
   afterEach(function(done) {
     done()
   })
-  describe('menuLoadDays', function() {
-    it('should fetch days and dispatch action with MENU_CUTOFF_UNTIL_RECEIVE type', async function() {
-      const dispatch = sinon.spy()
-      const getStateSpy = sinon.stub().returns({
-        auth: Immutable.fromJS({ accessToken: 'blah', refreshToken: 'blabla' }),
-      })
-      const fetchAvailableDates = sinon.stub().returns(new Promise(resolve => { resolve({ data: [{ until: '2016-06-26' }] }) }))
-      const actions = require('inject-loader?apis/recipes!actions/menu')({
-        'apis/recipes': { fetchAvailableDates },
-      }).default
-
-      await actions.menuLoadDays()(dispatch, getStateSpy)
-
-      expect(fetchAvailableDates).to.have.been.calledOnce
-      expect(dispatch).to.have.been.calledOnce
-      expect(dispatch.args[0][0]).to.deep.equal({ type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE, cutoffUntil: '2016-06-26' })
-
-    })
-  })
-
   describe('menuReceiveBoxPrices', function() {
     it('should return MENU_BOX_PRICES_RECEIVE type with prices & tariffId', function() {
       expect(menuActions.menuReceiveBoxPrices('test-prices', 'test-tariffId')).to.deep.equal({
@@ -917,16 +897,6 @@ describe('menu actions', function() {
       expect(result).to.deep.equal({
         type: actionTypes.MENU_BROWSE_CTA_VISIBILITY_CHANGE,
         show: true,
-      })
-    })
-  })
-
-  describe('menuCutoffUntilRecieve', function() {
-    it('should return a MENU_CUTOFF_UNTIL_RECIEVE action with the first argument mapped through to the cutoffUntil property', function(){
-      const result = menuActions.menuCutoffUntilReceive('cutoff-date')
-      expect(result).to.deep.equal({
-        type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
-        cutoffUntil: 'cutoff-date',
       })
     })
   })

@@ -203,7 +203,7 @@ export function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
   return async (dispatch, getState) => {
     const state = getState()
     const { features } = state
-    const menuId = features.getIn(['menu_id', 'value']) 
+    const menuId = features.getIn(['menu_id', 'value'])
     const accessToken = state.auth.get('accessToken')
     const reqData = {
       includes: ['ingredients', 'allergens', 'taxonomy'],
