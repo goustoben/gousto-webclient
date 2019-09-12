@@ -1,4 +1,4 @@
-@value White from 'styles/colors.css';
+@value CarrotLight, HaricotLight, White from 'styles/colors.css';
 @value axiformaFontStack from 'styles/typography.css';
 
 .header {
@@ -7,12 +7,12 @@
 	border-radius: 12px 12px 0 0;
 }
 
-.header--offer {
-	background-color: #E7F7F8;
+.headerOffer {
+	background-color: HaricotLight;
 }
 
-.header--subscription {
-	background-color: #FFEDD9;
+.headerSubscription {
+	background-color: CarrotLight;
 }
 
 .mask {

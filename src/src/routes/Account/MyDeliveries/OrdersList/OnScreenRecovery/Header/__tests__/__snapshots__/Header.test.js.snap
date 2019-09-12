@@ -3,13 +3,13 @@
 exports[`Header with an offer and feature flag should match snapshot 1`] = `
 <div>
   <div
-    className="header header--subscription"
+    className="header headerSubscription"
   >
     <div
       className="mask"
     >
       <div
-        className="svg icon-box-pause-subscription box box--subscription"
+        className="svg icon-box-pause-subscription box"
         style={
           Object {
             "backgroundImage": "url(icon-box-pause-subscription.svg)",

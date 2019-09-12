@@ -7,6 +7,8 @@ import Svg from 'Svg'
 
 import css from './Header.css'
 
+import { ORDER_TYPE, SUBSCRIPTION_TYPE } from '../config'
+
 const propTypes = {
   offer: PropTypes.shape({
     formatted_value: PropTypes.string,
@@ -18,7 +20,7 @@ const propTypes = {
       }),
     }),
   }),
-  type: PropTypes.oneOf(['subscription', 'order'])
+  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE])
 }
 
 const defaultProps = {
@@ -28,21 +30,32 @@ const defaultProps = {
 
 const getFileName = (type) => {
   switch (type) {
-  case 'order':
+  case ORDER_TYPE:
     return 'icon-box'
-  case 'subscription':
+  case SUBSCRIPTION_TYPE:
     return 'icon-box-pause-subscription'
   default:
     return 'icon-box'
   }
 }
 
+const getHeaderClass = (type) => {
+  switch (type) {
+  case ORDER_TYPE:
+    return 'headerOffer'
+  case SUBSCRIPTION_TYPE:
+    return 'headerSubscription'
+  default:
+    return 'headerOffer'
+  }
+}
+
 const Header = ({ offer, type }) => (
   offer ? (
   <div>
-    <div className={classnames(css.header, css[`header--${type}`])}>
+    <div className={classnames(css.header, css[getHeaderClass(type)])}>
       <div className={css.mask}>
-        <Svg className={classnames(css.box, css[`box--${type}`])} fileName={getFileName(type)} />
+        <Svg className={css.box} fileName={getFileName(type)} />
         <div className={css.boxText}>
           <span className={css.boxText__title}>{offer.formattedValue}</span>
           <span className={css.boxText__sub}>OFF</span>

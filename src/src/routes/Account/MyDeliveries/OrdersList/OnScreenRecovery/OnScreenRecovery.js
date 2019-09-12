@@ -10,6 +10,7 @@ import { Offer } from './Offer'
 import { ValueProposition } from './ValueProposition'
 import { Header } from './Header'
 import { Footer } from './Footer'
+import { ORDER_TYPE, SUBSCRIPTION_TYPE } from './config'
 
 const propTypes = {
   visible: PropTypes.bool,
@@ -29,7 +30,7 @@ const propTypes = {
   confirmCopy: PropTypes.string,
   onKeep: PropTypes.func.isRequired,
   keepCopy: PropTypes.string,
-  type: PropTypes.oneOf(['subscription', 'order']),
+  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE]),
 }
 
 const defaultProps = {

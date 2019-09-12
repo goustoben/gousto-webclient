@@ -4,6 +4,8 @@ import React from 'react'
 
 import css from './Offer.css'
 
+import { ORDER_TYPE, SUBSCRIPTION_TYPE } from '../config'
+
 const propTypesOffer = {
   offer: PropTypes.shape({
     formattedValue: PropTypes.string,
@@ -15,7 +17,7 @@ const propTypesOffer = {
       }))
     })
   }),
-  type: PropTypes.oneOf(['subscription', 'order'])
+  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE])
 }
 
 const defaultProps = {
@@ -32,6 +34,28 @@ const transformMessage = (text, values) => {
   return formattedText
 }
 
+const getDiscountOSRClass = (type) => {
+  switch (type) {
+  case ORDER_TYPE:
+    return 'discountOSROffer'
+  case SUBSCRIPTION_TYPE:
+    return 'discountOSRSubscription'
+  default:
+    return 'discountOSROffer'
+  }
+}
+
+const getMessageDiscountOSRClass = (type) => {
+  switch (type) {
+  case ORDER_TYPE:
+    return 'messageDiscountOSROffer'
+  case SUBSCRIPTION_TYPE:
+    return 'messageDiscountOSRSubscription'
+  default:
+    return 'messageDiscountOSROffer'
+  }
+}
+
 const Offer = ({ offer, type }) => {
   if (!(offer && offer.message)) return null
 
@@ -42,14 +66,14 @@ const Offer = ({ offer, type }) => {
 
   return (
     <div className={css.offerWrapper}>
-      <div className={classnames(css.discountOSR, css[`discountOSR--${type}`])}>
+      <div className={classnames(css.discountOSR, css[getDiscountOSRClass(type)])}>
         <div className={css.discountOSR__container}>
           {offer.formattedValue}
           <small className={css.discountOSR__sub}>OFF</small>
         </div>
       </div>
       <div
-        className={classnames(css.messageDiscountOSR, css[`messageDiscountOSR--${type}`])}
+        className={classnames(css.messageDiscountOSR, css[getMessageDiscountOSRClass(type)])}
         dangerouslySetInnerHTML={{ __html: formattedMessage }} // eslint-disable-line react/no-danger
       />
     </div>
