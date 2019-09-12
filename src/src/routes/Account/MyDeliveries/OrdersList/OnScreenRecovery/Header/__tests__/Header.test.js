@@ -28,9 +28,11 @@ describe('Header', () => {
       const offer = {
         formattedValue: '10%',
       }
+      const type = 'subscription'
       const tree = renderer.create(
         <Header
           offer={offer}
+          type={type}
           featureFlag
         />
       ).toJSON()

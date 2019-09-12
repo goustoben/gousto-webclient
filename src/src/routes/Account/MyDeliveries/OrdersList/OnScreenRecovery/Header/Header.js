@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import React from 'react'
 
 import ContentMask from 'ContentMask'
 import Svg from 'Svg'
 
 import css from './Header.css'
+
+import { ORDER_TYPE, SUBSCRIPTION_TYPE } from '../config'
 
 const propTypes = {
   offer: PropTypes.shape({
@@ -17,18 +20,42 @@ const propTypes = {
       }),
     }),
   }),
+  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE])
 }
 
 const defaultProps = {
-  offer: null
+  offer: null,
+  type: '',
 }
 
-const Header = ({ offer }) => (
+const getFileName = (type) => {
+  switch (type) {
+  case ORDER_TYPE:
+    return 'icon-box'
+  case SUBSCRIPTION_TYPE:
+    return 'icon-box-pause-subscription'
+  default:
+    return 'icon-box'
+  }
+}
+
+const getHeaderClass = (type) => {
+  switch (type) {
+  case ORDER_TYPE:
+    return 'headerOffer'
+  case SUBSCRIPTION_TYPE:
+    return 'headerSubscription'
+  default:
+    return 'headerOffer'
+  }
+}
+
+const Header = ({ offer, type }) => (
   offer ? (
   <div>
-    <div className={css.header}>
+    <div className={classnames(css.header, css[getHeaderClass(type)])}>
       <div className={css.mask}>
-        <Svg className={css.box} fileName="icon-box" />
+        <Svg className={css.box} fileName={getFileName(type)} />
         <div className={css.boxText}>
           <span className={css.boxText__title}>{offer.formattedValue}</span>
           <span className={css.boxText__sub}>OFF</span>

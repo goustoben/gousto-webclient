@@ -1,4 +1,4 @@
-@value Haricot, White from 'styles/colors.css';
+@value Haricot, Carrot, White from 'styles/colors.css';
 @value axiformaFontStack from 'styles/typography.css';
 
 .offerWrapper {
@@ -14,11 +14,19 @@
   flex-shrink: 0;
   height: 78.44px;
   width: 78.77px;
-  border: 1.44px solid #01A92B;
-  background-color: Haricot;
   border-radius: 50%;
   box-sizing: border-box;
   line-height: 21px;
+}
+
+.discountOSROrder {
+  border: 1.44px solid Haricot;
+  background-color: Haricot;
+}
+
+.discountOSRSubscription {
+  border: 1.44px solid Carrot;
+  background-color: Carrot;
 }
 
 .discountOSR__container {
@@ -37,10 +45,17 @@
 }
 
 .messageDiscountOSR {
-  color: Haricot;
   font-family: Avenir;
   font-size: 16px;
   line-height: 21px;
   text-align: left;
   margin-left: 20px;
+}
+
+.messageDiscountOSROrder {
+  color: Haricot;
+}
+
+.messageDiscountOSRSubscription {
+  color: Carrot;
 }
