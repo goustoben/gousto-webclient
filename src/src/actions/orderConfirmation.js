@@ -17,7 +17,6 @@ export const orderConfirmationRedirect = (orderId, orderAction) => (
     const confirmationUrl = config.client.orderConfirmation.replace(':orderId', orderId)
     dispatch(orderCheckPossibleDuplicate(orderId))
     dispatch(push((orderAction) ? `${confirmationUrl}?order_action=${orderAction}` : confirmationUrl))
-    dispatch(tempActions.temp('showHeader', true))
   }
 )
 
