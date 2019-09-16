@@ -11,7 +11,8 @@ import {
   getPromoBannerText,
   getPromoBannerCode,
   getShortlist,
-  isNDDFeatureEnabled
+  isNDDFeatureEnabled,
+  getPricingTariffId,
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -287,4 +288,24 @@ describe('when features are defined', () => {
       })
     })
   })
+
+  describe('getPricingTariffId', () => {
+    describe('when feature is not set', () => {
+      test('should return false', () => {
+        expect(getPricingTariffId(state)).toEqual(false)
+      })
+    })
+    describe('when feature is set', () => {
+      test('should return true', () => {
+        state.features = Immutable.fromJS({
+          pricingTariffId: {
+            value: true
+          }
+        })
+
+        expect(getPricingTariffId(state)).toEqual(true)
+      })
+    })
+  })
 })
+
