@@ -11,7 +11,10 @@ import Description from 'BoxSummary/Description'
 import Overlay from 'Overlay'
 import BrowseCTAButton from 'BoxSummary/BrowseCTAButton'
 import BrowseCTA from 'BoxSummary/BrowseCTA'
-import { ShortlistTutorial } from 'routes/Menu/ShortlistTutorial'
+
+jest.mock('BoxSummary/BoxSummaryMobile/OpenBoxButton', () => ({
+  OpenBoxButton: () => (<div />)
+}))
 
 jest.mock('utils/DOMhelper', () => ({
   getBoundingClientRect: () => ({
@@ -37,7 +40,7 @@ describe('BoxSummaryMobile', () => {
     showDetails: false,
     recipes: recipes,
     date: "2016-06-26",
-    numPortions: 2
+    numPortions: 2,
   }
   beforeEach(() => {
     boxDetailsVisibilityChange = jest.fn()
@@ -48,6 +51,9 @@ describe('BoxSummaryMobile', () => {
         basket: Immutable.Map({
           recipes: Immutable.Map({
             123: 1
+          }),
+          shortlist: Immutable.Map({
+            shortlistRecipes: Immutable.Map()
           })
         }),
         pricing: Immutable.Map({}),
@@ -56,6 +62,11 @@ describe('BoxSummaryMobile', () => {
         error: Immutable.Map({}),
         request: Immutable.Map({}),
         boxSummaryShow: Immutable.Map({}),
+        tutorial: Immutable.Map({
+          viewed: Immutable.Map({
+            shortlistStep1: true,
+          })
+        })
       }),
       subscribe: () => { },
       dispatch: () => { }
@@ -200,13 +211,8 @@ describe('BoxSummaryMobile', () => {
     })
   })
 
-  describe('shortlistTutorial', () => {
-    test('should render ShortlistTutorial if shouldShowTutorialStep2 true', () => {
-      wrapper.setProps({ shouldShowTutorialStep2: true })
-      expect(wrapper.find(ShortlistTutorial)).toHaveLength(1)
-    })
-
-    test('should close ShortlistTutorial if shouldShowTutorialStep2 true and click on open box summary', () => {
+  describe('when shouldShowTutorialStep2 true', () => {
+    test('should close ShortlistTutorial when click on open box summary', () => {
       const incrementTutorialViewedSpy = jest.fn()
       const tutorialTrackingSpy = jest.fn()
       wrapper.setProps({
