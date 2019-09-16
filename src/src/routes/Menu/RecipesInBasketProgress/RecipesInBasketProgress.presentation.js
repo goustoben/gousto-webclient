@@ -30,33 +30,33 @@ const RecipesInBasketProgressPresentation = (
   )
 
   return (
-    <FloatCard closeIcon="small-screens-only" offsetVertical="6rem">
-        <div className={cardClasses}>
-          <LayoutContentWrapper>
-            { isBasketFull ?
+    <FloatCard closeIcon="small-screens-only" offsetVertical="8rem">
+      <div className={cardClasses}>
+        <LayoutContentWrapper>
+          {isBasketFull ?
+            <Layout2Cells>
+              <span className={css.iconProgressCompleted} />
+              <BoxProgressMessage
+                className={css.message}
+                numRecipes={selectedRecipesCount}
+              />
+            </Layout2Cells>
+            :
+            <div className={css.cardContentWrapperPartial}>
               <Layout2Cells>
-                <span className={css.iconProgressCompleted} />
+                <p className={css.percentageNumber}>{percentage}%</p>
                 <BoxProgressMessage
                   className={css.message}
                   numRecipes={selectedRecipesCount}
                 />
               </Layout2Cells>
-              :
-              <div className={css.cardContentWrapperPartial}>
-                <Layout2Cells>
-                  <p className={css.percentageNumber}>{percentage}%</p>
-                  <BoxProgressMessage
-                    className={css.message}
-                    numRecipes={selectedRecipesCount}
-                  />
-                </Layout2Cells>
-                <div className={css.progressBarWrapper}>
-                  <ProgressBar percentage={percentage} theme="transition-1" />
-                </div>
+              <div className={css.progressBarWrapper}>
+                <ProgressBar percentage={percentage} theme="transition-1" />
               </div>
-            }
-          </LayoutContentWrapper>
-        </div>
+            </div>
+          }
+        </LayoutContentWrapper>
+      </div>
     </FloatCard>
   )
 }

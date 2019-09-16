@@ -12,7 +12,7 @@ import RecipeList from 'BoxSummary/RecipeList'
 import { getBoundingClientRect } from 'utils/DOMhelper'
 import { MOBILE_VIEW } from 'utils/view'
 import boxSummaryButtonCss from 'BoxSummary/BoxSummaryButton/BoxSummaryButton.css'
-import { ShortlistTutorial } from 'routes/Menu/ShortlistTutorial'
+import { OpenBoxButton } from './OpenBoxButton'
 import css from './BoxSummaryMobile.css'
 import BrowseCTA from '../BrowseCTA'
 import BrowseCTAButton from '../BrowseCTAButton'
@@ -176,16 +176,13 @@ class BoxSummaryMobile extends React.PureComponent {
   )
 
   renderBanner = () => {
-    const { date, disabled, displayOptions, maxRecipesNum, menuRecipesStore, recipes, showDetails, shouldShowTutorialStep2 } = this.props
-    const iconClass = showDetails ? css.arrowDown : css.arrowUp
+    const { date, disabled, displayOptions, maxRecipesNum, menuRecipesStore, recipes, showDetails, slotId } = this.props
 
     return (
       <div className={css.barmobile} ref={(element) => { this.ref = element }} role='button' tabIndex={0} onClick={this.handleMobileClick} onKeyPress={this.handleMobileClick}>
         <div>
-          <div className={css.iconMobile}>
-            <span className={iconClass} data-slug="box-summary-mobile" />{shouldShowTutorialStep2 && <ShortlistTutorial />}
-          </div>
-          <Title view={MOBILE_VIEW} date={date} finalisedSlot={this.props.slotId !== ''} />
+          <OpenBoxButton />
+          <Title view={MOBILE_VIEW} date={date} finalisedSlot={slotId !== ''} />
         </div>
         <div className={css.summaryMobile}>
           {!displayOptions.includes('hideRecipeList') && <RecipeList view={MOBILE_VIEW} recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />}

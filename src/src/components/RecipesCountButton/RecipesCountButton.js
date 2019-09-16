@@ -9,12 +9,12 @@ class RecipesCountButton extends PureComponent {
     shortlistRecipesChange: false,
   }
 
-  componentDidUpdate(nextProps) {
+  componentDidUpdate(prevProps) {
     const { basketRecipes, shortlistRecipes } = this.props
-    if (basketRecipes !== nextProps.basketRecipes) {
+    if (basketRecipes !== prevProps.basketRecipes) {
       this.updateState(true, false)
     }
-    if (shortlistRecipes !== nextProps.shortlistRecipes) {
+    if (shortlistRecipes > prevProps.shortlistRecipes) {
       this.updateState(false, true)
     }
   }
