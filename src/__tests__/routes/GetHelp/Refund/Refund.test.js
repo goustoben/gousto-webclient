@@ -11,7 +11,7 @@ jest.mock('apis/getHelp')
 describe('<Refund />', () => {
   const content = {
     title: 'test title',
-    infoBody: 'We would like to offer you £{{refundAmount}}',
+    infoBody: 'we\'d like to give you £{{refundAmount}} credit',
     confirmationBody: 'Confirmation body',
     errorBody: 'Error body',
     button1: 'button1 copy',
@@ -60,10 +60,11 @@ describe('<Refund />', () => {
         isFetching: false,
       })
       const BottomBar = wrapper.find('BottomBar')
+      const confirmationBody = wrapper.find('.confirmationBody')
       getHelpLayout = wrapper.find('GetHelpLayout')
 
       expect(getHelpLayout).toHaveLength(1)
-      expect(getHelpLayout.prop('body')).toContain('We would like to offer you £7.77')
+      expect(confirmationBody.text()).toContain('we\'d like to give you £7.77 credit')
       expect(BottomBar).toHaveLength(1)
       expect(BottomBar.find('BottomButton')).toHaveLength(1)
     })

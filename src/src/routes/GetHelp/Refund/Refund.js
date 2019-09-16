@@ -145,7 +145,6 @@ class Refund extends PureComponent {
 
   requestFailure = () => {
     this.setState({
-      ...this.state,
       isFetching: false,
       didFetchError: true
     })
@@ -188,7 +187,6 @@ class Refund extends PureComponent {
     return (
       <GetHelpLayout
         title={content.title}
-        body={getHelpLayoutbody}
         fullWidthContent
       >
         {(isFetching)
@@ -196,7 +194,8 @@ class Refund extends PureComponent {
               <Loading className={css.loading} />
             </div>
           : <div>
-            <p>{confirmationContent}</p>
+            <p className={css.confirmationBody}>{getHelpLayoutbody}</p>
+            <p className={css.confirmationQuestion}>{confirmationContent}</p>
             <BottomBar>
               <BottomButton
                 color="secondary"
