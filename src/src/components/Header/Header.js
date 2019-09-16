@@ -137,7 +137,12 @@ class Header extends React.PureComponent {
       home,
       boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking: 'BoxPricingNavigation Clicked' },
       menu: { name: 'Choose Recipes', url: this.getChooseRecipesLink(), tracking: 'RecipeNavigation Clicked' },
-      faq: { name: 'Help', url: clientRoutes.help, clientRouted: false, tracking: 'FAQNavigation Clicked' },
+      faq: {
+        name: 'Help',
+        url: config.routes.zendesk.faqs,
+        clientRouted: false,
+        tracking: 'FAQNavigation Clicked'
+      },
       myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false, tracking: 'MyGoustoNavigation Clicked' },
       referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false, tracking: 'ReferAFriendNavigation Clicked' },
       rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking: 'RateMyRecipesNavigation Clicked' },
@@ -287,15 +292,46 @@ class Header extends React.PureComponent {
       </span>
     )
   }
-  renderMenuItems = (menu, show) => (
-    (show) ? menu.map(menuItem => {
+
+  renderMenuItems = (menu, hideNav) => {
+    const { trackNavigationClick } = this.props
+
+    if (hideNav) {
+      return null
+    }
+
+    return menu.map(menuItem => {
       if (menuItem.disabled) {
-        return <span key={menuItem.name} className={css.linkDesktopDisabled}>{menuItem.name}</span>
+        return (
+          <span
+            key={menuItem.name}
+            className={classNames(css.linkDesktop, css.disabled)}
+          >
+            {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
+            {menuItem.name}
+          </span>
+        )
       }
 
-      return <Link key={menuItem.name} to={menuItem.url} className={css.linkDesktop}>{menuItem.name}</Link>
-    }) : ''
-  )
+      const openNewTab = menuItem.name === 'Help'
+
+      return (
+        <Link
+          key={menuItem.name}
+          to={menuItem.url}
+          className={css.linkDesktop}
+          clientRouted={menuItem.clientRouted}
+          tracking={() => trackNavigationClick(menuItem.tracking)}
+          target={openNewTab ? '_blank' : null}
+          rel={openNewTab ? 'noopener noreferrer' : null}
+        >
+          {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
+          {menuItem.name}
+        </Link>
+      )
+    })
+  }
+
   render() {
     const {
       fromJoin,
@@ -365,7 +401,7 @@ class Header extends React.PureComponent {
                 trackNavigationClick={trackNavigationClick}
               />
               <div className={css.container}>
-                {(!noContactBar) ?
+                {!noContactBar ?
                   <div className={css.contactBar}>
                     <p className={css.contactContent}>
                       <span className={css.info}>Free delivery </span>
@@ -381,32 +417,7 @@ class Header extends React.PureComponent {
                     </Link>
                     {(path === '/menu') ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
                     <span className={css.linkDesktopContainer}>
-                      {(!hideNav) ? desktopMenuItems.map(menuItem => {
-                        if (menuItem.disabled) {
-                          return (
-                            <span
-                              key={menuItem.name}
-                              className={classNames(css.linkDesktop, css.disabled)}
-                            >
-                              {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
-                              {menuItem.name}
-                            </span>
-                          )
-                        }
-
-                        return (
-                          <Link
-                            key={menuItem.name}
-                            to={menuItem.url}
-                            className={css.linkDesktop}
-                            clientRouted={menuItem.clientRouted}
-                            tracking={() => trackNavigationClick(menuItem.tracking)}
-                          >
-                            {menuItem.fullWidthPrefix && <span className={css.fullWidthPrefix}>{menuItem.fullWidthPrefix}</span>}
-                            {menuItem.name}
-                          </Link>
-                        )
-                      }) : ''}
+                      {this.renderMenuItems(desktopMenuItems, hideNav)}
                       {this.renderAuthLink()}
                     </span>
                     <span className={css.linkMobileContainer}>

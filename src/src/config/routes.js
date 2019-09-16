@@ -165,5 +165,6 @@ module.exports = {
   },
   zendesk: {
     link: 'https://gousto.zendesk.com/hc/en-gb/requests/new',
+    faqs: 'https://gousto.zendesk.com/hc/en-gb',
   },
 }

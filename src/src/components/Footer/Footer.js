@@ -42,7 +42,17 @@ const Footer = ({ simple, type, copyright }) => {
         <Link to={clientRoutes.menu} data-selid="footer-this-weeks-recipes" title="This Week's Recipes" clientRouted={false} secondary>This Week's Recipes</Link>
       </li>
       <li className={css.menuItem}>
-        <Link to={clientRoutes.help} data-selid="footer-learn-more" title="Help" clientRouted={false} secondary>Help</Link>
+        <Link
+          to={config.routes.zendesk.faqs}
+          data-selid="footer-learn-more"
+          title="Help"
+          clientRouted={false}
+          secondary
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Help
+        </Link>
       </li>
       {renderTermsLink()}
       <li className={css.menuItem}>
