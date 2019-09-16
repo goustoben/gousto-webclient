@@ -1,13 +1,10 @@
 import { connect } from 'react-redux'
 import { getBasketRecipes, getShortlistRecipeIds } from 'selectors/basket'
+import { basketSum } from 'utils/basket'
 import { RecipesCountButton } from './RecipesCountButton'
 
-const getRecipeNumberInBasket = (recipes) => (
-  recipes.reduce((acc, current) => acc + current, 0)
-)
-
 const mapStateToProps = (state) => ({
-  basketRecipes: getRecipeNumberInBasket(getBasketRecipes(state)),
+  basketRecipes: basketSum(getBasketRecipes(state)),
   shortlistRecipes: getShortlistRecipeIds(state).size
 })
 

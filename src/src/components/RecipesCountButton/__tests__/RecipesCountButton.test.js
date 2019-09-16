@@ -47,6 +47,19 @@ describe('RecipesCountButton', () => {
     })
   })
 
+  describe('when remove recipe from shortlist', () => {
+    test('should not apply animation', () => {
+      wrapper.setProps({ shortlistRecipes: 3 })
+      wrapper.find('.shortlistRecipes').simulate('animationEnd')
+      wrapper.setProps({ shortlistRecipes: 2 })
+
+      expect(wrapper.state()).toEqual({
+        boxRecipesChange: false,
+        shortlistRecipesChange: false,
+      })
+    })
+  })
+
   test('should render box icon when number of recipes in box is 0 ', () => {
     wrapper.setProps({ basketRecipes: 0 })
 
