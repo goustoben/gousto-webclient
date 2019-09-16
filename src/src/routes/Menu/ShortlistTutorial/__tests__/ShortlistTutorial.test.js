@@ -34,7 +34,7 @@ describe('Shortlist Tutorial', () => {
     })
 
     test('should render title text for step 1', () => {
-      expect(wrapper.find('.title').text()).toContain('You can now shortlist recipes!')
+      expect(wrapper.find('.title').text()).toEqual('Try shortlisting a recipe! <Svg />')
     })
 
     test('should render the heart svg if step 1', () => {
@@ -43,7 +43,7 @@ describe('Shortlist Tutorial', () => {
 
     test('should render title text for step 2', () => {
       wrapper.setProps({ step: 2, stepSelector: "[data-slug='box-summary-mobile']" })
-      expect(wrapper.find('.title').text()).toContain('You just added a recipe to your shortlist. Nicely done!')
+      expect(wrapper.find('.title').text()).toContain('Now open your box to compare recipes and make your choices')
     })
   })
 

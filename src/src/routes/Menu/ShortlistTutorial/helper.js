@@ -1,5 +1,6 @@
 const DEFAULT_COORDINATES = { x: 0, y: 0 }
-const TOOLTIP_WIDTH = 300
+const TOOLTIP_WIDTH = 300 
+const TOOLTIP_BACKGROUND_COLOR = '#FFEEC0'
 
 const checkIfSelectorExists = (selector) => {
   return selector && document.querySelector(selector) ? document.querySelector(selector).getBoundingClientRect() : null
@@ -43,10 +44,15 @@ export const getTooltipProperties = (selector) => {
       left: location.left,
       bottom: '30px'
     },
+    contentStyle: {
+      background: TOOLTIP_BACKGROUND_COLOR,
+      padding: '0.75rem 0 0.75rem 1rem'
+    },
     arrow: 'bottom',
     arrowStyle: {
       right: location.right,
       left: location.left === 0 ? `${location.left + elementRect.width / 2}px` : location.left,
+      color: TOOLTIP_BACKGROUND_COLOR
     }
   } : null
 }

@@ -20,7 +20,7 @@
 .arrow {
   height: 28px;
   position: absolute;
-  z-index: 10;
+  z-index: 2;
 	width: 0;
 	height: 0;
 }
@@ -90,7 +90,7 @@
 }
 
 .ribbonText {
-  z-index: 10;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   height: 100%;

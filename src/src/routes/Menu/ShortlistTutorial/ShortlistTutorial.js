@@ -18,6 +18,7 @@ class ShortlistTutorial extends PureComponent {
   state = {
     style: {},
     arrowStyle: {},
+    contentStyle: {},
     stepSelector: '',
     stepSelectorVisible: false
   }
@@ -48,7 +49,7 @@ class ShortlistTutorial extends PureComponent {
     const { stepSelector, stepSelectorVisible } = this.state
     const newSelectorVisible = checkIfElementIsVisible(stepSelector)
     const shouldUpdate = (!stepSelectorVisible && newSelectorVisible)
-    const { style, arrow, arrowStyle } = !!stepSelector && getTooltipProperties(stepSelector)
+    const { style, arrow, arrowStyle, contentStyle } = !!stepSelector && getTooltipProperties(stepSelector)
 
     if (shouldUpdate) {
       this.setState((prevState) => {
@@ -57,6 +58,7 @@ class ShortlistTutorial extends PureComponent {
           arrow,
           style,
           arrowStyle,
+          contentStyle,
           stepSelectorVisible: newSelectorVisible,
         }
       })
@@ -74,27 +76,25 @@ class ShortlistTutorial extends PureComponent {
   }
 
   render() {
-    const { stepSelectorVisible, style, arrow, arrowStyle } = this.state
+    const { stepSelectorVisible, style, arrow, arrowStyle, contentStyle } = this.state
     const { show, step } = this.props
 
     const shouldShowTutorial = show && (stepSelectorVisible)
 
     return (shouldShowTutorial) ? (
       <div className={css.tooltip}>
-        <Tooltip arrow={arrow} onClose={(e) => this.onCloseTutorial(e)} style={style} arrowStyle={arrowStyle}>
+        <Tooltip arrow={arrow} onClose={(e) => this.onCloseTutorial(e)} style={style} arrowStyle={arrowStyle} contentStyle={contentStyle}>
           {
             step === 1 ?
               (
                 <div className={css.tooltipBody}>
-                  <p className={css.title}>You can now shortlist recipes! <Svg fileName={'icon_shortlist_heart_selected'} className={css.heartIcon} /></p>
-                  <p className={css.text}>Open your box summary to compare recipes and move them in or out of your box.</p>
+                  <p className={css.title}>Try shortlisting a recipe! <Svg fileName={'icon_shortlist_heart_selected'} className={css.heartIcon} /></p>
                 </div>
               ) :
               (step === 2 &&
 
                 <div className={css.tooltipBody}>
-                  <p className={css.title}>You just added a recipe to your shortlist. Nicely done!</p>
-                  <p className={css.text}>Open the box summary to compare recipes and make your final selection.</p>
+                  <p className={css.title}>Now open your box to compare recipes and make your choices</p>
                 </div>
               )
           }

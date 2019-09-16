@@ -6,7 +6,7 @@ import { Arrow } from './Arrow'
 
 import css from './Tooltip.css'
 
-const Tooltip = ({ arrow, children, style, arrowStyle, onClose }) => (
+const Tooltip = ({ arrow, children, style, arrowStyle, contentStyle, onClose }) => (
   <div className={css.container} style={style}>
     <Arrow positionY="top" position={arrow} />
     {(onClose) ? (
@@ -14,7 +14,7 @@ const Tooltip = ({ arrow, children, style, arrowStyle, onClose }) => (
         <Icon name="fa-times" />
       </div>
     ) : null}
-    <div className={css.tooltip__content}>
+    <div className={css.tooltip__content} style={contentStyle}>
       {children}
     </div>
     <Arrow positionY="bottom" position={arrow} style={arrowStyle} />
@@ -34,6 +34,10 @@ Tooltip.propTypes = {
     PropTypes.number
   ])),
   arrowStyle: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])),
+  contentStyle: PropTypes.objectOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
   ]))
