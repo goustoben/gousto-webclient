@@ -5,12 +5,13 @@ import Confirmation from './Confirmation'
 const mapStateToProps = (state) => ({
   content: {
     title: state.content.get('get-help_confirmation_pageheader_header')
-    || 'Thank you',
+    || 'Thanks for your feedback',
     confirmationBody: state.content.get('get-help_confirmation_pagecontent_confirmationbody')
-    || `Your credit is available now, you can view your balance by visiting 'My Details' using
-    the link below. The credit will automatically be applied towards your next order.`,
+    || `We really appreciate you letting us know about this issue.
+    We’ve added the credit to your account (you can view it using the link below),
+    and it will be automatically taken off your next order.`,
     button1: state.content.get('get-help_confirmation_pagecontent_button1')
-    || 'View my details',
+    || 'View my credit',
     button2: state.content.get('get-help_confirmation_pagecontent_button2')
     || 'Done',
   }
