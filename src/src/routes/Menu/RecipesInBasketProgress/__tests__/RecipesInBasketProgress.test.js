@@ -44,7 +44,7 @@ describe('RecipesInBasketProgress Component', () => {
       })
 
       test('the FloatCard has the right offset', () => {
-        expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('6rem')
+        expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('8rem')
       })
 
       test('it renders a LayoutContentWrapper inside the FloatCard', () => {
@@ -62,7 +62,7 @@ describe('RecipesInBasketProgress Component', () => {
           .find('LayoutContentWrapper')
       })
 
-      describe ('inside a Layout2Cells', () => {
+      describe('inside a Layout2Cells', () => {
         let layout2Cells
 
         beforeEach(() => {
@@ -108,7 +108,7 @@ describe('RecipesInBasketProgress Component', () => {
       })
 
       test('the FloatCard has the right offset', () => {
-        expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('6rem')
+        expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('8rem')
       })
 
       test('it renders a LayoutContentWrapper inside the FloatCard', () => {
@@ -126,7 +126,7 @@ describe('RecipesInBasketProgress Component', () => {
           .find('LayoutContentWrapper')
       })
 
-      describe ('inside a Layout2Cells', () => {
+      describe('inside a Layout2Cells', () => {
         let layout2Cells
 
         beforeEach(() => {
@@ -172,7 +172,7 @@ describe('RecipesInBasketProgress Component', () => {
       })
 
       test('the FloatCard has the right offset', () => {
-        expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('6rem')
+        expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('8rem')
       })
 
       test('it renders a LayoutContentWrapper inside the FloatCard', () => {
@@ -190,7 +190,7 @@ describe('RecipesInBasketProgress Component', () => {
           .find('LayoutContentWrapper')
       })
 
-      describe ('inside a Layout2Cells', () => {
+      describe('inside a Layout2Cells', () => {
         let layout2Cells
 
         beforeEach(() => {
@@ -236,7 +236,7 @@ describe('RecipesInBasketProgress Component', () => {
       })
 
       test('the FloatCard has the right offset', () => {
-        expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('6rem')
+        expect(wrapper.find('FloatCard').prop('offsetVertical')).toBe('8rem')
       })
 
       test('it has the class .greenBorder', () => {
@@ -258,7 +258,7 @@ describe('RecipesInBasketProgress Component', () => {
           .find('LayoutContentWrapper')
       })
 
-      describe ('inside a Layout2Cells', () => {
+      describe('inside a Layout2Cells', () => {
         let layout2Cells
 
         beforeEach(() => {
