@@ -57,6 +57,8 @@ class BillingForm extends React.PureComponent {
   }
 
   handleInputChange(label, value) {
+    const { formCardExpiryMonth, formCardExpiryYear } = this.state
+
     let onlyDigits
     if (label === 'card_number' || label === 'card_cvv2') {
       onlyDigits = value.replace(/[^\d]/g, '')
@@ -72,10 +74,10 @@ class BillingForm extends React.PureComponent {
       }
     }
     if (label === 'formCardExpiryYear') {
-      const expiry = this.state.formCardExpiryMonth.concat(value)
+      const expiry = formCardExpiryMonth.concat(value)
       this.setState({ card_expires: expiry })
     } else if (label === 'formCardExpiryMonth') {
-      const expiry = value.concat(this.state.formCardExpiryYear)
+      const expiry = value.concat(formCardExpiryYear)
       this.setState({ card_expires: expiry })
     }
 
@@ -105,8 +107,31 @@ class BillingForm extends React.PureComponent {
     }
   }
 
+  isValid() {
+    return BillingForm.validateFormSubmit(this.state)
+  }
+
   render() {
-    const formInput = this.state
+    const { isPosting, submitCardDetails } = this.props
+    const {
+      card_holder,
+      cardNameError,
+
+      card_number,
+      cardNumberError,
+
+      card_type,
+      cardTypeError,
+
+      card_cvv2,
+      securityCodeError,
+
+      formCardExpiryMonth,
+      expiryMonthError,
+
+      formCardExpiryYear,
+      expiryYearError
+    } = this.state
 
     return (
       <div>
@@ -125,11 +150,11 @@ class BillingForm extends React.PureComponent {
                 <Input
                   name="formCardName"
                   type="text"
-                  value={formInput.card_holder}
+                  value={card_holder}
                   onChange={(e) => this.handleInputChange('card_holder', e)}
-                  onBlur={() => this.validateOnBlur('cardNameError', this.state.card_holder)}
+                  onBlur={() => this.validateOnBlur('cardNameError', card_holder)}
                 />
-                {this.state.cardNameError ? <p className={css.errorMessage}>Name is required</p> : null}
+                {cardNameError ? <p className={css.errorMessage}>Name is required</p> : null}
               </div>
             </div>
             <div className={css.formRow}>
@@ -137,23 +162,34 @@ class BillingForm extends React.PureComponent {
                 <p className={css.inputTitle}>Card number</p>
                 <Input
                   name="formCardNumber"
-                  value={formInput.card_number}
+                  value={card_number}
                   onChange={(e) => this.handleInputChange('card_number', e)}
-                  onBlur={() => this.validateOnBlur('cardNumberError', this.state.card_number)}
+                  onBlur={() => this.validateOnBlur('cardNumberError', card_number)}
                 />
-                {this.state.cardNumberError ? <p className={css.errorMessage}>Card number should be at least 10 digits</p> : null}
+                {cardNumberError ? <p className={css.errorMessage}>Card number should be at least 10 digits</p> : null}
               </div>
               <div className={css.formItemCardType}>
                 <p className={css.inputTitle}>Card type</p>
-                <Dropdown name="formCardType" options={this.paymentOptions()} value={formInput.card_type} onChange={(e) => this.handleInputChange('card_type', e)} onBlur={() => this.validateOnBlur('cardTypeError', this.state.card_type)} />
-                {this.state.cardTypeError ? <p className={css.errorMessage}>Card type is required</p> : null}
+                <Dropdown 
+                  name="formCardType" 
+                  options={this.paymentOptions()} 
+                  value={card_type} 
+                  onChange={(e) => this.handleInputChange('card_type', e)} 
+                  onBlur={() => this.validateOnBlur('cardTypeError', card_type)}
+                />
+                {cardTypeError ? <p className={css.errorMessage}>Card type is required</p> : null}
               </div>
             </div>
             <div className={css.formRow}>
               <div className={css.formItemSecurityCode}>
                 <p className={css.inputTitle}>Security code</p>
                 <div className={css.row}>
-                  <Input name="formSecurityCode" value={formInput.card_cvv2} onChange={(e) => this.handleInputChange('card_cvv2', e)} onBlur={() => this.validateOnBlur('securityCodeError', this.state.card_cvv2)} />
+                  <Input 
+                    name="formSecurityCode" 
+                    value={card_cvv2} 
+                    onChange={(e) => this.handleInputChange('card_cvv2', e)} 
+                    onBlur={() => this.validateOnBlur('securityCodeError', card_cvv2)}
+                  />
                   <div className={css.securityCodeTooltip}>
                     <CheckoutTooltip version="Desktop">
                       <Svg fileName="icon-card-reverse" className={css.iconCardReverse} />
@@ -164,7 +200,7 @@ class BillingForm extends React.PureComponent {
                     </CheckoutTooltip>
                   </div>
                 </div>
-                {this.state.securityCodeError ? <p className={[css.errorMessage, css.nowrap].join(' ')}>Security code is required</p> : null}
+                {securityCodeError ? <p className={[css.errorMessage, css.nowrap].join(' ')}>Security code is required</p> : null}
               </div>
             </div>
             <div className={css.formRow}>
@@ -172,15 +208,29 @@ class BillingForm extends React.PureComponent {
                 <p className={css.inputTitle}>Card expiry</p>
                 <div className={css.row}>
                   <div className={css.formCardMonth}>
-                    <Dropdown name="cardExpiryMonth" options={MONTHS} value={formInput.formCardExpiryMonth} className={css.formCardMonth} onChange={(e) => this.handleInputChange('formCardExpiryMonth', e)} onBlur={() => this.validateOnBlur('expiryMonthError', this.state.formCardExpiryMonth)} />
-                    {this.state.expiryMonthError ? <p className={[css.errorMessage, css.formCardMonth].join(' ')}>Expiry month is required</p> : null}
+                    <Dropdown 
+                      name="cardExpiryMonth" 
+                      options={MONTHS} 
+                      value={formCardExpiryMonth} 
+                      className={css.formCardMonth} 
+                      onChange={(e) => this.handleInputChange('formCardExpiryMonth', e)} 
+                      onBlur={() => this.validateOnBlur('expiryMonthError', formCardExpiryMonth)}
+                    />
+                    {expiryMonthError ? <p className={[css.errorMessage, css.formCardMonth].join(' ')}>Expiry month is required</p> : null}
                   </div>
                   <div>
                     <div className={css.separator}>{divisor}</div>
                   </div>
                   <div className={css.formCardYear}>
-                    <Dropdown name="cardExpiryYear" options={YEARS} value={formInput.formCardExpiryYear} className={css.formCardYear} onChange={(e) => this.handleInputChange('formCardExpiryYear', e)} onBlur={() => this.validateOnBlur('expiryYearError', this.state.formCardExpiryYear)} />
-                    {this.state.expiryYearError ? <p className={[css.errorMessage, css.formCardYear].join(' ')}>Expiry year is required</p> : null}
+                    <Dropdown
+                      name="cardExpiryYear"
+                      options={YEARS}
+                      value={formCardExpiryYear}
+                      className={css.formCardYear}
+                      onChange={(e) => this.handleInputChange('formCardExpiryYear', e)}
+                      onBlur={() => this.validateOnBlur('expiryYearError', formCardExpiryYear)}
+                    />
+                    {expiryYearError ? <p className={[css.errorMessage, css.formCardYear].join(' ')}>Expiry year is required</p> : null}
                   </div>
                 </div>
               </div>
@@ -196,9 +246,9 @@ class BillingForm extends React.PureComponent {
           <Button
             color={'primary'}
             noDecoration
-            onClick={() => this.props.submitCardDetails(formInput)}
-            disabled={!BillingForm.validateFormSubmit(formInput)}
-            pending={this.props.isPosting}
+            onClick={() => submitCardDetails(this.state)}
+            disabled={!BillingForm.validateFormSubmit(this.state)}
+            pending={isPosting}
           >
             Update card details
           </Button>

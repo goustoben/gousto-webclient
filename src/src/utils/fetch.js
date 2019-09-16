@@ -4,7 +4,7 @@ import logger from 'utils/logger'
 import isomorphicFetch from 'isomorphic-fetch'
 import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
-import goustoStore from 'store'
+import { getStore } from 'store'
 
 export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'default', headers = {}, timeout = null, includeCookies = false, includeExperiments = true) {
   const requestData = {
@@ -12,7 +12,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
   }
 
   if (includeExperiments) {
-    requestData.experiments = (goustoStore.store.getState().features || Immutable.Map({}))
+    requestData.experiments = (getStore().getState().features || Immutable.Map({}))
       .filter(feature => feature.get('experiment'))
       .reduce((reducedFeatures, feature, featureName) => (
         reducedFeatures.set(featureName, feature.get('value'))
@@ -52,7 +52,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       }
     }
   }
-  const { uuid } = goustoStore.store.getState().logger || {}
+  const { uuid } = getStore().getState().logger || {}
   if (accessToken) {
     if (accessToken.indexOf('//') > -1) {
       logger.error({message: `accessToken in fetch.js does not look valid (${accessToken})`, uuid: uuid })
