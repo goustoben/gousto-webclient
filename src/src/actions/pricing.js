@@ -77,11 +77,16 @@ const pricingActions = {
     return async (dispatch, getState) => {
       const { basket } = getState()
       const accessToken = getState().auth.get('accessToken')
+      const isAuthenticated = getState().auth.get('isAuthenticated')
       const promoCode = basket.get('promoCode', false)
       const deliveryDate = basket.get('date', false)
       const deliverySlotId = basket.get('slotId', false)
       const basketItems = getItems(basket)
       const items = basketItems.all
+      const tariffId = getPricingTariffId(getState())
+      const shouldSendTariffId = !!tariffId && !isAuthenticated
+      const pricingRequestParams = [accessToken, items, deliveryDate, deliverySlotId, promoCode]
+      shouldSendTariffId && pricingRequestParams.push(tariffId)
 
       if (!deliverySlotId) {
         return undefined
@@ -95,7 +100,7 @@ const pricingActions = {
 
       try {
         dispatch(pricingPending())
-        const basketPrices = await pricingRequestApi(accessToken, items, deliveryDate, deliverySlotId, promoCode)
+        const basketPrices = await pricingRequestApi(...pricingRequestParams)
         dispatch(pricingSuccess(basketPrices.data))
       } catch (err) {
         let error = err
