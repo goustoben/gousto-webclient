@@ -133,7 +133,10 @@ class Details extends React.Component {
             </LayoutContentWrapper>
             <LayoutContentWrapper>
               <p className={css.titleSection}>Recipe Box</p>
-              <p>Add up to 4 recipes to create your Gousto box. The more you add, the lower the price per portion.</p>
+              {
+                numRecipes === 0
+                && <p>Add up to 4 recipes to create your Gousto box. The more you add, the lower the price per portion.</p>
+              }
             </LayoutContentWrapper>
             {
               !displayOptions.contains(HIDE_RECIPE_LIST) &&
