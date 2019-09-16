@@ -1,0 +1,5 @@
+@value Bluecheese from 'styles/colors.css';
+
+.highlightText {
+  color: Bluecheese;
+}
