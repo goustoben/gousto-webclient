@@ -83,7 +83,7 @@ const pricingActions = {
       const deliverySlotId = basket.get('slotId', false)
       const basketItems = getItems(basket)
       const items = basketItems.all
-      const tariffId = getPricingTariffId(getState())
+      const tariffId = basket.get('tariffId', false)
       const shouldSendTariffId = !!tariffId && !isAuthenticated
       const pricingRequestParams = [accessToken, items, deliveryDate, deliverySlotId, promoCode]
       shouldSendTariffId && pricingRequestParams.push(tariffId)

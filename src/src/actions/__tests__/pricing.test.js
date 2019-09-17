@@ -131,8 +131,7 @@ describe('pricing actions', () => {
     it('will be called with tariffId if id is provided and user is not authenticated', async function () {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken', isAuthenticated: false }),
-        basket: Immutable.fromJS({ recipes: { 123: 1, 145: 1 }, promoCode: '1234', date: '12-12-2029', slotId: 12, numPortions: 2 }),
-        features: Immutable.fromJS({ pricingTariffId: { value: '12345678' } }),
+        basket: Immutable.fromJS({ recipes: { 123: 1, 145: 1 }, promoCode: '1234', date: '12-12-2029', slotId: 12, numPortions: 2, tariffId: '12345678' }),
       })
 
       pricing.mockReturnValue(Promise.resolve({ data: pricingData }))

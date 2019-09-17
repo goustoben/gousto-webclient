@@ -39,5 +39,3 @@ export const getPromoBannerText = ({ features }) => features && features.getIn([
 export const getPromoBannerCode = ({ features }) => features && features.getIn(['promoBannerCode', 'value'], '')
 
 export const getShortlist = ({ features }) => features && features.getIn(['shortlist', 'value'], false)
-
-export const getPricingTariffId = ({ features }) => features && features.getIn(['pricingTariffId', 'value'], false)
