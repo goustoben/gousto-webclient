@@ -88,29 +88,29 @@ describe('menu actions', () => {
           true,
         )
       })
-      describe('when recommendation collection props include shortlist true', () => {
-        test('should dispatch a featureSet containing shortlist value true', async () => {
-          fetchCollections.mockReturnValueOnce(Promise.resolve({
-            data: [{
-              id: 'recommended collection',
-              slug: 'recommendations',
-              properties: {
-                enabled: true,
-                limit: 25,
-                name: "Just For You",
-                tutorial: "jfy",
-                shortlist: true
-              }
-            }],
-          }))
-          await menuLoadCollections()(dispatch, getState)
+      // describe('when recommendation collection props include shortlist true', () => {
+      //   test('should dispatch a featureSet containing shortlist value true', async () => {
+      //     fetchCollections.mockReturnValueOnce(Promise.resolve({
+      //       data: [{
+      //         id: 'recommended collection',
+      //         slug: 'recommendations',
+      //         properties: {
+      //           enabled: true,
+      //           limit: 25,
+      //           name: "Just For You",
+      //           tutorial: "jfy",
+      //           shortlist: true
+      //         }
+      //       }],
+      //     }))
+      //     await menuLoadCollections()(dispatch, getState)
 
-          expect(featureSet).toHaveBeenCalledWith(
-            'shortlist',
-            true,
-          )
-        })
-      })
+      //     expect(featureSet).toHaveBeenCalledWith(
+      //       'shortlist',
+      //       true,
+      //     )
+      //   })
+      // })
 
       test('should dispatch a featureSet containing jfy tutorial value false if tutorial null', async () => {
         fetchCollections.mockReturnValueOnce(Promise.resolve({
