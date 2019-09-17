@@ -1,5 +1,7 @@
 import Immutable from 'immutable'
-import { fetchRecipes, fetchRecipeStock, fetchAvailableDates } from 'apis/recipes'
+import { fetchRecipes } from 'apis/recipes'
+import { getAvailableDates, getRecipeStock } from 'apis/data'
+
 import * as boxPricesApi from 'apis/boxPrices'
 import { fetchOrder } from 'apis/orders'
 import { getCutoffDateTime } from 'utils/deliveries'
@@ -131,7 +133,7 @@ export function menuCutoffUntilReceive(cutoffUntil) {
 export function menuLoadDays() {
   return async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
-    const { data: dates = [] } = await fetchAvailableDates(accessToken)
+    const dates = await getAvailableDates(accessToken, false)
     const availableDays = dates.pop()
 
     dispatch(menuActions.menuCutoffUntilReceive(availableDays.until))
@@ -406,53 +408,51 @@ export function menuClearStock() {
 
 export function menuLoadStock(clearStock = true) {
   return async (dispatch, getState) => {
-    let dispatchMethod = menuReplaceRecipeStock
-    if (!clearStock) {
-      dispatchMethod = menuChangeRecipeStock
-    }
-
     const state = getState()
     const date = state.basket.get('date')
     const coreDayId = state.boxSummaryDeliveryDays.getIn([date, 'coreDayId'], '')
 
-    if (coreDayId) {
-      const accessToken = getState().auth.get('accessToken')
-      const { data: recipeStock } = await fetchRecipeStock(accessToken, coreDayId)
-      const adjustedStock = Object.values(recipeStock).reduce((accumulatedStock, stockEntry) => {
-        const stock = { ...accumulatedStock }
-        const committed = stockEntry.committed === '1'
-        stock[stockEntry.recipeId] = {
-          2: committed ? parseInt(stockEntry.number, 10) : 1000,
-          4: committed ? parseInt(stockEntry.familyNumber, 10) : 1000,
-          committed,
-        }
+    if (!coreDayId) {
+      return
+    }
 
-        return stock
-      }, {})
+    const accessToken = getState().auth.get('accessToken')
+    const recipeStock = await getRecipeStock(accessToken, coreDayId, false)
 
-      dispatch(dispatchMethod(adjustedStock))
+    const adjustedStock = {}
+    Object.values(recipeStock).forEach(stockEntry => {
+      const committed = stockEntry.committed === '1'
+      adjustedStock[stockEntry.recipeId] = {
+        2: committed ? parseInt(stockEntry.number, 10) : 1000,
+        4: committed ? parseInt(stockEntry.familyNumber, 10) : 1000,
+        committed,
+      }
+    })
 
-      if (clearStock) {
-        const numPortions = getState().basket.get('numPortions')
-        getState().basket.get('recipes', Immutable.Map({})).forEach((amount, recipeId) => {
-          for (let x = 0; x < amount; x++) {
-            dispatch({
-              type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-              stock: { [recipeId]: { [numPortions]: -1 } },
-            })
-          }
-        })
+    const recipeStockChangeAction = clearStock ? menuReplaceRecipeStock : menuChangeRecipeStock
+    dispatch(recipeStockChangeAction(adjustedStock))
 
-        getState().basket.getIn(['shortlist', 'shortlistRecipes'], Immutable.Map({})).forEach((amount, recipeId) => {
-          for (let x = 0; x < amount; x++) {
-            dispatch({
-              type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-              stock: { [recipeId]: { [numPortions]: -1 } },
-            })
-          }
+    if (!clearStock) {
+      return
+    }
+
+    const numPortions = getState().basket.get('numPortions')
+
+    const recipes = getState().basket.get('recipes', Immutable.Map({}))
+    recipes.forEach((amount, recipeId) => {
+      for (let x = 0; x < amount; x++) {
+        dispatch(menuChangeRecipeStock({ [recipeId]: { [numPortions]: -1 } }))
+      }
+    })
+
+    getState().basket.getIn(['shortlist', 'shortlistRecipes'], Immutable.Map({})).forEach((amount, recipeId) => {
+      for (let x = 0; x < amount; x++) {
+        dispatch({
+          type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+          stock: { [recipeId]: { [numPortions]: -1 } },
         })
       }
-    }
+    })
   }
 }
 
