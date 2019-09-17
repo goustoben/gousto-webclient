@@ -169,8 +169,7 @@ export function menuLoadCollections(date, noUrlChange) {
       const shortlistEnabled = shortlist || false
 
       dispatch(featureSet('jfyTutorial', tutorialEnabled))
-      // dispatch(featureSet('shortlist', shortlistEnabled))
-      // disable until we fix one issue with changing menu
+      dispatch(featureSet('shortlist', shortlistEnabled))
     }
     const filterExperiment = state.features.getIn(['dietaryQuickFilter', 'value'])
     const collectionsFiltered = filterExperiment ?
@@ -436,6 +435,15 @@ export function menuLoadStock(clearStock = true) {
       if (clearStock) {
         const numPortions = getState().basket.get('numPortions')
         getState().basket.get('recipes', Immutable.Map({})).forEach((amount, recipeId) => {
+          for (let x = 0; x < amount; x++) {
+            dispatch({
+              type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
+              stock: { [recipeId]: { [numPortions]: -1 } },
+            })
+          }
+        })
+
+        getState().basket.getIn(['shortlist', 'shortlistRecipes'], Immutable.Map({})).forEach((amount, recipeId) => {
           for (let x = 0; x < amount; x++) {
             dispatch({
               type: actionTypes.MENU_RECIPE_STOCK_CHANGE,

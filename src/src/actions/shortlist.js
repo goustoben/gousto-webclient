@@ -75,7 +75,7 @@ export const shortlistRecipeRemove = (recipeId, recipeInfo) => (
     const { basket, menuRecipes, menuRecipeStock } = getState()
     let shortList = basket.get('shortlist')
     const numPortions = basket.get('numPortions')
-    const { view } = recipeInfo
+    const view = recipeInfo ? recipeInfo.view : undefined
     const shortlistRecipesKeys = shortList.get('shortlistRecipes').keySeq().toArray()
     const shortlistPosition = shortlistRecipesKeys.indexOf(recipeId) + 1
 

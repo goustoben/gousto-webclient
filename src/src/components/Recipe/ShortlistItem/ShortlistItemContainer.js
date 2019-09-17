@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
-import { getShortlistRecipeIds } from 'selectors/basket'
+import { getOkShortlistRecipeIds } from 'routes/Menu/selectors/basket'
 import ShortlistItem from './ShortlistItem'
 
 const mapStateToProps = (state) => ({
-  shortlistIds: getShortlistRecipeIds(state),
+  shortlistIds: getOkShortlistRecipeIds(state),
   recipesStore: state.recipes,
 })
 

@@ -55,7 +55,7 @@ export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
           const shortlistEnabled = shortlist || false
 
           dispatch(featureSet('jfyTutorial', tutorialEnabled))
-          // dispatch(featureSet('shortlist', shortlistEnabled))
+          dispatch(featureSet('shortlist', shortlistEnabled))
         }
       } catch (err) {
         throw new GoustoException(`Failed to load collections with args: ${JSON.stringify(args)}`, {
