@@ -13,6 +13,7 @@ import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { getUserRecentRecipesIds } from 'selectors/user'
+import { getPricingTariffId } from 'selectors/features'
 import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
@@ -611,11 +612,12 @@ export function userSubscribe() {
 
       const deliveryAddress = getAddress(delivery)
       const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
+      const newTariffId = getPricingTariffId(getState())
 
       const reqData = {
         order_id: basket.get('previewOrderId'),
         promocode: basket.get('promoCode', ''),
-        tariff_id: basket.get('tariffId', ''),
+        tariff_id: newTariffId ? newTariffId : basket.get('tariffId', ''),
         customer: {
           phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
           email: aboutYou.get('email'),
