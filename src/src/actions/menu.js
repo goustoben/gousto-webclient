@@ -169,7 +169,8 @@ export function menuLoadCollections(date, noUrlChange) {
       const shortlistEnabled = shortlist || false
 
       dispatch(featureSet('jfyTutorial', tutorialEnabled))
-      dispatch(featureSet('shortlist', shortlistEnabled))
+      // dispatch(featureSet('shortlist', shortlistEnabled))
+      // disable until we fix one issue with changing menu
     }
     const filterExperiment = state.features.getIn(['dietaryQuickFilter', 'value'])
     const collectionsFiltered = filterExperiment ?
