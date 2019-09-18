@@ -25,8 +25,5 @@ describe('RecipeGrid', () => {
   test('should render a DetailOverlay component', () => {
     expect(wrapper.find(DetailOverlay)).toHaveLength(1)
   })
-  test('should render a div with class name MasonaryContainer if filterMenu is true', () => {
-    expect(wrapper.find(".masonryContainer")).toHaveLength(1)
-  })
 })
 

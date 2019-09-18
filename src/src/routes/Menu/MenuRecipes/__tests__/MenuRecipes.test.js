@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
-import { MenuRecipes } from 'routes/Menu/MenuRecipes'
+import Immutable from 'immutable'
+import { MenuRecipes } from 'routes/Menu/MenuRecipes/MenuRecipes'
 import CollectionsNav from 'routes/Menu/CollectionsNav'
 import SubHeader from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
@@ -29,14 +29,7 @@ describe('initial render', () => {
         menuRecipeDetailShow={''}
         isClient
         showDetailRecipe={jest.fn()}
-        features={Immutable.fromJS({
-          collections: {
-            value: true,
-          },
-          forceCollections: {
-            value: true,
-          },
-        })}
+        selectCurrentCollection={jest.fn()}
       />,
     )
 
@@ -76,53 +69,10 @@ describe('with the collections feature enabled', () => {
         menuRecipeDetailShow={''}
         isClient
         showDetailRecipe={jest.fn()}
-        features={Immutable.fromJS({
-          collections: {
-            value: true,
-          },
-          forceCollections: {
-            value: true,
-          },
-        })}
+        selectCurrentCollection={jest.fn()}
       />,
     )
     expect(wrapper.find(CollectionsNav).length).toBe(1)
-  })
-
-  describe('and the collectionsNav feature disabled', () => {
-    test('should not show the collections nav bar', () => {
-      wrapper = shallow(
-        <MenuRecipes
-          clearAllFilters={() => { }}
-          orderId={''}
-          basketNumPortionChange={jest.fn()}
-          fadeCss={'fadeOut'}
-          showLoading={false}
-          filteredRecipesNumber={30}
-          mobileGridView
-          menuCurrentCollectionId={''}
-          menuRecipeDetailShow={''}
-          isClient
-          showDetailRecipe={jest.fn()}
-          features={Immutable.fromJS({
-            collections: {
-              value: false,
-            },
-            filterMenu: {
-              value: true,
-            },
-          })}
-        />,
-        {
-          context: {
-            store: {
-              dispatch: jest.fn()
-            }
-          }
-        }
-      )
-      expect(wrapper.find(CollectionsNav).length).toBe(0)
-    })
   })
 })
 
@@ -143,14 +93,7 @@ describe('with the force collections feature enabled', () => {
         menuRecipeDetailShow={''}
         isClient
         showDetailRecipe={jest.fn()}
-        features={Immutable.fromJS({
-          collections: {
-            value: true,
-          },
-          forceCollections: {
-            value: true,
-          },
-        })}
+        selectCurrentCollection={jest.fn()}
       />,
     )
 
@@ -170,17 +113,7 @@ describe('with the force collections feature enabled', () => {
         menuRecipeDetailShow={''}
         isClient
         showDetailRecipe={jest.fn()}
-        features={Immutable.fromJS({
-          collections: {
-            value: true,
-          },
-          forceCollections: {
-            value: true,
-          },
-          collectionsNav: {
-            value: false,
-          },
-        })}
+        selectCurrentCollection={jest.fn()}
       />,
     )
 
@@ -235,5 +168,41 @@ describe('when filtering removes all recipes from the list', () => {
     )
 
     expect(wrapper.find(MenuNoResults)).toHaveLength(1)
+  })
+})
+
+describe('selectCurrentCollection', () => {
+  let wrapper
+  let selectCurrentCollection
+  beforeEach(() => {
+    selectCurrentCollection = jest.fn()
+    wrapper = shallow(
+      <MenuRecipes
+        clearAllFilters={() => { }}
+        orderId={''}
+        basketNumPortionChange={jest.fn()}
+        fadeCss={'fadeOut'}
+        showLoading={false}
+        filteredRecipesNumber={30}
+        mobileGridView
+        menuCurrentCollectionId={'123abc'}
+        menuRecipeDetailShow={''}
+        isClient
+        showDetailRecipe={jest.fn()}
+        selectCurrentCollection={selectCurrentCollection}
+      />,
+    )
+  })
+  afterEach(() => {
+    selectCurrentCollection.mockClear()
+  })
+  test('should not call selectCurrentCollection if menuCollectionId doesnt change', () => {
+    wrapper.setProps({ menuCurrentCollectionId: '123abc' })
+    expect(selectCurrentCollection).not.toHaveBeenCalled()
+  })
+
+  test('should only call selectCurrentCollection if menuCollectionId changes', () => {
+    wrapper.setProps({ menuCurrentCollectionId: '567xyz' })
+    expect(selectCurrentCollection).toHaveBeenCalled()
   })
 })

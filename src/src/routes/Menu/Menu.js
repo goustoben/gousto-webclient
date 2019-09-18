@@ -3,7 +3,6 @@ import React from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
-import shallowCompare from 'react-addons-shallow-compare'
 import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
@@ -22,72 +21,67 @@ import { JustForYouTutorial } from './JustForYouTutorial'
 import fetchData from './fetchData'
 import css from './Menu.css'
 
-class Menu extends React.Component {
+class Menu extends React.PureComponent {
   static propTypes = {
-    basketOrderLoaded: PropTypes.func.isRequired,
-    cutOffDate: PropTypes.string.isRequired,
-    menuLoadBoxPrices: PropTypes.func.isRequired,
-    menuRecipeDetailShow: PropTypes.string,
-    detailVisibilityChange: PropTypes.func,
-    boxSummaryShow: PropTypes.bool,
-    boxDetailsVisibilityChange: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired,
-    boxSummaryDeliveryDaysLoad: PropTypes.func,
-    boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
-    hasRecommendations: PropTypes.bool,
-    forceLoad: PropTypes.bool,
-    menuLoadDays: PropTypes.func,
-    menuBrowseCTAShow: PropTypes.bool,
-    menuBrowseCTAVisibilityChange: PropTypes.func,
-    loginVisibilityChange: PropTypes.func,
-    menuMobileGridViewSet: PropTypes.func.isRequired,
-    basketRestorePreviousValues: PropTypes.func.isRequired,
-    features: PropTypes.instanceOf(Immutable.Map),
-    menuCurrentCollectionId: PropTypes.string,
-    menuVariation: PropTypes.string,
-    params: PropTypes.object,
-    query: PropTypes.object,
-    orderId: PropTypes.string,
-    storeOrderId: PropTypes.string,
-    isLoading: PropTypes.bool,
-    isAuthenticated: PropTypes.bool.isRequired,
-    tariffId: PropTypes.number,
-    menuLoadingBoxPrices: PropTypes.bool,
-    jfyTutorialFlag: PropTypes.bool,
-    filteredRecipesNumber: PropTypes.number,
-    clearAllFilters: PropTypes.func,
-    triggerMenuLoad: PropTypes.func,
-    shouldJfyTutorialBeVisible: PropTypes.func,
     basketNumPortionChange: PropTypes.func.isRequired,
-    portionSizeSelectedTracking: PropTypes.func,
-    numPortions: PropTypes.number,
+    basketOrderLoaded: PropTypes.func.isRequired,
+    basketRestorePreviousValues: PropTypes.func.isRequired,
+    boxDetailsVisibilityChange: PropTypes.func.isRequired,
+    cutOffDate: PropTypes.string.isRequired,
+    disabled: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    menuLoadBoxPrices: PropTypes.func.isRequired,
+    menuMobileGridViewSet: PropTypes.func.isRequired,
+    orderCheckoutAction: PropTypes.func.isRequired,
     orderHasAnyProducts: PropTypes.func.isRequired,
     orderUpdateProducts: PropTypes.func.isRequired,
+    productsLoadProducts: PropTypes.func.isRequired,
+    productsLoadStock: PropTypes.func.isRequired,
+    recipes: PropTypes.arrayOf(PropTypes.string).isRequired,
+    slotId: PropTypes.string.isRequired,
+    userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
+    addressId: PropTypes.string,
     basketProducts: PropTypes.oneOfType([
       PropTypes.instanceOf(Immutable.Map),
       PropTypes.instanceOf(Immutable.Iterable),
     ]),
-    productsLoadProducts: PropTypes.func.isRequired,
-    productsLoadStock: PropTypes.func.isRequired,
-    orderCheckoutAction: PropTypes.func.isRequired,
-    recipes: PropTypes.arrayOf(PropTypes.string).isRequired,
-    promoCode: PropTypes.string,
-    postcode: PropTypes.string,
-    slotId: PropTypes.string.isRequired,
+    boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
+    boxSummaryDeliveryDaysLoad: PropTypes.func,
+    boxSummaryShow: PropTypes.bool,
     deliveryDayId: PropTypes.string,
-    addressId: PropTypes.string,
-    userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
-    recipeGroupingSelected: PropTypes.shape({
-      slug: PropTypes.string,
-      name: PropTypes.string,
-      borderColor: PropTypes.string,
-    }),
+    detailVisibilityChange: PropTypes.func,
+    filterRecipeGrouping: PropTypes.func,
     foodBrandDetails: PropTypes.shape({
       slug: PropTypes.string,
       name: PropTypes.string,
       borderColor: PropTypes.string,
     }),
-    filterRecipeGrouping: PropTypes.func,
+    forceLoad: PropTypes.bool,
+    hasRecommendations: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    jfyTutorialFlag: PropTypes.bool,
+    loginVisibilityChange: PropTypes.func,
+    menuBrowseCTAShow: PropTypes.bool,
+    menuBrowseCTAVisibilityChange: PropTypes.func,
+    menuLoadDays: PropTypes.func,
+    menuLoadingBoxPrices: PropTypes.bool,
+    menuVariation: PropTypes.string,
+    numPortions: PropTypes.number,
+    orderId: PropTypes.string,
+    params: PropTypes.object,
+    portionSizeSelectedTracking: PropTypes.func,
+    postcode: PropTypes.string,
+    promoCode: PropTypes.string,
+    query: PropTypes.object,
+    recipeGroupingSelected: PropTypes.shape({
+      slug: PropTypes.string,
+      name: PropTypes.string,
+      borderColor: PropTypes.string,
+    }),
+    shouldJfyTutorialBeVisible: PropTypes.func,
+    storeOrderId: PropTypes.string,
+    tariffId: PropTypes.number,
+    triggerMenuLoad: PropTypes.func,
   }
 
   static contextTypes = {
@@ -100,11 +94,11 @@ class Menu extends React.Component {
     forceLoad: false,
     isLoading: false,
     numPortions: 2,
-    menuMobileGridViewSet: () => {},
-    basketRestorePreviousValues: () => {},
-    shouldJfyTutorialBeVisible: () => {},
-    basketProducts: [],
-    portionSizeSelectedTracking: () => {},
+    menuMobileGridViewSet: () => { },
+    basketRestorePreviousValues: () => { },
+    shouldJfyTutorialBeVisible: () => { },
+    basketProducts: Immutable.Map(),
+    portionSizeSelectedTracking: () => { },
     orderCheckout: {
       orderId: '',
       url: ''
@@ -114,7 +108,10 @@ class Menu extends React.Component {
     postcode: '',
     deliveryDayId: '',
     recipeGroupingSelected: null,
-    query: {}
+    query: {
+      orderId: ''
+    },
+    storeOrderId: ''
   }
 
   static fetchData(args, force) {
@@ -161,6 +158,7 @@ class Menu extends React.Component {
     if (params.orderId && params.orderId === storeOrderId) {
       basketOrderLoaded(params.orderId)
     }
+
     const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId) || query.reload
     // TODO: Add back logic to check what needs to be reloaded
 
@@ -213,13 +211,7 @@ class Menu extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isAuthenticated, orderId, menuRecipeDetailShow, menuLoadBoxPrices, menuVariation, tariffId } = this.props
-
-    if (nextProps.menuRecipeDetailShow && !menuRecipeDetailShow) {
-      window.document.addEventListener('keyup', this.handleKeyup, false)
-    } else if (!nextProps.menuRecipeDetailShow) {
-      window.document.removeEventListener('keyup', this.handleKeyup, false)
-    }
+    const { isAuthenticated, orderId, menuLoadBoxPrices, menuVariation, tariffId } = this.props
 
     // /menu-> /menu/:orderId
     const editingOrder = (nextProps.orderId || orderId) && nextProps.orderId !== orderId
@@ -238,10 +230,6 @@ class Menu extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return shallowCompare(this, nextProps, nextState)
-  }
-
   async componentDidUpdate(prevProps) {
     const {
       shouldJfyTutorialBeVisible,
@@ -249,15 +237,9 @@ class Menu extends React.Component {
       cutOffDate,
       productsLoadStock,
       productsLoadProducts,
-      selectCurrentCollection,
-      menuCurrentCollectionId
     } = this.props
 
     forceCheck()
-
-    if (prevProps.menuCurrentCollectionId !== menuCurrentCollectionId) {
-      selectCurrentCollection(menuCurrentCollectionId)
-    }
 
     if (cutOffDate && cutOffDate !== prevProps.cutOffDate) {
       try {
@@ -274,7 +256,8 @@ class Menu extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.loginVisibilityChange(false)
+    const { loginVisibilityChange } = this.props
+    loginVisibilityChange(false)
 
     window.removeEventListener(
       'orderDoesContainProductsRequest',
@@ -369,12 +352,6 @@ class Menu extends React.Component {
     return orderAction
   }
 
-  handleKeyup = (e) => {
-    if (e.type === 'keyup' && e.keyCode && e.keyCode === 27) {
-      this.props.detailVisibilityChange(false)
-    }
-  }
-
   toggleGridView = () => {
     this.props.menuMobileGridViewSet(this.state.mobileGridView, !this.state.mobileGridView)
     if (this.state.mobileGridView) {
@@ -418,8 +395,8 @@ class Menu extends React.Component {
       filterRecipeGrouping(null, 'foodBrand')
     }
 
-    if(query.thematic) {
-      if(!isFoodBrandSelected){
+    if (query.thematic) {
+      if (!isFoodBrandSelected) {
         filterRecipeGrouping(query.thematic, 'thematic')
       }
     } else if (isFoodBrandSelected && recipeGroupingSelected.location === 'thematic') {
@@ -430,21 +407,15 @@ class Menu extends React.Component {
   render() {
     const {
       boxSummaryShow,
-      clearAllFilters,
-      features,
-      filteredRecipesNumber,
       recipeGroupingSelected,
       forceLoad,
       hasRecommendations,
       isLoading,
       jfyTutorialFlag,
       menuBrowseCTAShow,
-      menuCurrentCollectionId,
-      menuRecipeDetailShow,
       orderId,
       query,
       recipes,
-      filterRecipeGrouping,
     } = this.props
     const { mobileGridView, isChrome, isClient } = this.state
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
@@ -477,34 +448,29 @@ class Menu extends React.Component {
         <div className={classnames(css.container, overlayShowCSS)}>
 
           {(showSelectedPage && recipeGroupingSelected.location === 'foodBrand') ?
-          <FoodBrandPage
-            showDetailRecipe={this.showDetailRecipe}
-            mobileGridView={mobileGridView}
-            isClient={isClient}
-          /> : ((showSelectedPage && recipeGroupingSelected.location === 'thematic')?
-            <ThematicsPage
+            <FoodBrandPage
               showDetailRecipe={this.showDetailRecipe}
               mobileGridView={mobileGridView}
               isClient={isClient}
-            />
-            :
-            <MenuRecipes
-              isClient={isClient}
-              fadeCss={fadeCss}
-              showLoading={showLoading}
-              features={features}
-              filteredRecipesNumber={filteredRecipesNumber}
-              mobileGridView={mobileGridView}
-              menuCurrentCollectionId={menuCurrentCollectionId}
-              menuRecipeDetailShow={menuRecipeDetailShow}
-              clearAllFilters={clearAllFilters}
-              showDetailRecipe={this.showDetailRecipe}
-              hasRecommendations={hasRecommendations}
-              orderId={orderId}
-              setThematic={filterRecipeGrouping}
-              toggleGridView={this.toggleGridView}
-            />
-          )}
+            /> : ((showSelectedPage && recipeGroupingSelected.location === 'thematic') ?
+              <ThematicsPage
+                showDetailRecipe={this.showDetailRecipe}
+                mobileGridView={mobileGridView}
+                isClient={isClient}
+              />
+              :
+              <MenuRecipes
+                isClient={isClient}
+                fadeCss={fadeCss}
+                showLoading={showLoading}
+                mobileGridView={mobileGridView}
+                showDetailRecipe={this.showDetailRecipe}
+                hasRecommendations={hasRecommendations}
+                orderId={orderId}
+                toggleGridView={this.toggleGridView}
+                query={query}
+              />
+            )}
           <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick}></div>
         </div>
         <BoxSummaryMobile />

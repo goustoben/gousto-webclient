@@ -17,7 +17,9 @@ jest.mock('BoxSummary/BoxSummaryMobile')
 jest.mock('BoxSummary/BoxSummaryDesktop')
 jest.mock('routes/Menu/DetailOverlay')
 jest.mock('routes/Menu/JustForYouTutorial')
-jest.mock('routes/Menu/MenuRecipes')
+jest.mock('routes/Menu/MenuRecipes', () => ({
+  MenuRecipes: (props) => <div />
+}))
 jest.mock('routes/Menu/FoodBrandPage')
 
 jest.mock('react-lazyload', () => ({
@@ -69,7 +71,7 @@ describe('Menu', () => {
           <Menu
             recipeGroupingSelected={null}
             params={{ orderId: '' }}
-            menuLoadBoxPrices={() => {}}
+            menuLoadBoxPrices={() => { }}
             menuCollectionRecipes={Immutable.Map({})}
             features={Immutable.Map({})}
             filteredRecipesNumber={30}
@@ -118,9 +120,9 @@ describe('Menu', () => {
         wrapper = shallow(
           <Menu
             recipeGroupingSelected={null}
-            productsLoadProducts={() => {}}
-            productsLoadStock={() => {}}
-            menuLoadBoxPrices={() => {}}
+            productsLoadProducts={() => { }}
+            productsLoadStock={() => { }}
+            menuLoadBoxPrices={() => { }}
             menuCollectionRecipes={Immutable.Map({})}
             boxDetailsVisibilityChange={jest.fn()}
             features={Immutable.Map({})}
@@ -158,15 +160,15 @@ describe('Menu', () => {
       wrapper = shallow(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
           menuRecipeDetailShow={false}
-          menuLoadBoxPrices={() => {}}
+          menuLoadBoxPrices={() => { }}
           boxDetailsVisibilityChange={jest.fn()}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
           menuLoadDays={menuLoadDays}
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           basketOrderLoaded={jest.fn()}
           params={{ orderId: '' }}
           boxSummaryDeliveryDays={Immutable.List([])}
@@ -181,9 +183,9 @@ describe('Menu', () => {
       wrapper = shallow(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
-          menuLoadBoxPrices={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
+          menuLoadBoxPrices={() => { }}
           numPortions={2}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -192,8 +194,8 @@ describe('Menu', () => {
           isLoading
           storeOrderId={'1234'}
           boxSummaryShow
-          clearAllFilters={() => {}}
-          basketOrderLoaded={() => {}}
+          clearAllFilters={() => { }}
+          basketOrderLoaded={() => { }}
           query={{ num_portions: '4' }}
           params={{ orderId: '' }}
           boxSummaryDeliveryDays={Immutable.List([])}
@@ -208,9 +210,9 @@ describe('Menu', () => {
       wrapper = shallow(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
-          menuLoadBoxPrices={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
+          menuLoadBoxPrices={() => { }}
           stock={Immutable.Map()}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
@@ -219,8 +221,8 @@ describe('Menu', () => {
           basketNumPortionChange={jest.fn()}
           boxDetailsVisibilityChange={jest.fn()}
           menuLoadDays={menuLoadDays}
-          clearAllFilters={() => {}}
-          basketOrderLoaded={() => {}}
+          clearAllFilters={() => { }}
+          basketOrderLoaded={() => { }}
           params={{ orderId: '' }}
           boxSummaryDeliveryDays={Immutable.List([])}
           recipes={[]}
@@ -237,7 +239,7 @@ describe('Menu', () => {
       wrapper = shallow(
         <Menu
           recipeGroupingSelected={null}
-          menuLoadBoxPrices={() => {}}
+          menuLoadBoxPrices={() => { }}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
           basketNumPortionChange={jest.fn()}
@@ -262,9 +264,9 @@ describe('Menu', () => {
       wrapper = shallow(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
-          menuLoadBoxPrices={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
+          menuLoadBoxPrices={() => { }}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
           basketNumPortionChange={jest.fn()}
@@ -288,9 +290,9 @@ describe('Menu', () => {
       wrapper = shallow(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
-          menuLoadBoxPrices={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
+          menuLoadBoxPrices={() => { }}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
           filteredRecipesNumber={30}
@@ -329,7 +331,7 @@ describe('Menu', () => {
         context: {
           store: {
             getState: getStateSpy,
-            subscribe: () => {},
+            subscribe: () => { },
           },
         },
       }
@@ -346,8 +348,8 @@ describe('Menu', () => {
       wrapper = mount(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -358,7 +360,7 @@ describe('Menu', () => {
           menuLoadBoxPrices={menuLoadBoxPrices}
           disabled={false}
           filteredRecipesNumber={30}
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           params={{}}
           recipes={[]}
         />,
@@ -366,7 +368,7 @@ describe('Menu', () => {
           context: {
             store: {
               getState: getStateSpy,
-              subscribe: () => {},
+              subscribe: () => { },
             },
           },
         },
@@ -378,8 +380,8 @@ describe('Menu', () => {
       wrapper = await mount(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -390,7 +392,7 @@ describe('Menu', () => {
           menuLoadBoxPrices={menuLoadBoxPrices}
           disabled
           filteredRecipesNumber={30}
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           params={{}}
           recipes={[]}
         />,
@@ -398,7 +400,7 @@ describe('Menu', () => {
           context: {
             store: {
               getState: getStateSpy,
-              subscribe: () => {},
+              subscribe: () => { },
             },
           },
         },
@@ -410,8 +412,8 @@ describe('Menu', () => {
       wrapper = await mount(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -422,7 +424,7 @@ describe('Menu', () => {
           menuLoadBoxPrices={menuLoadBoxPrices}
           disabled
           filteredRecipesNumber={30}
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           params={{}}
           recipes={[]}
         />,
@@ -430,7 +432,7 @@ describe('Menu', () => {
           context: {
             store: {
               getState: getStateSpy,
-              subscribe: () => {}
+              subscribe: () => { }
             },
           },
         },
@@ -444,8 +446,8 @@ describe('Menu', () => {
       wrapper = await mount(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -456,7 +458,7 @@ describe('Menu', () => {
           menuLoadBoxPrices={menuLoadBoxPrices}
           disabled
           filteredRecipesNumber={30}
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           params={{}}
           basketNumPortionChange={basketNumPortionChange}
           query={{ num_portions: 4 }}
@@ -466,7 +468,7 @@ describe('Menu', () => {
           context: {
             store: {
               getState: getStateSpy,
-              subscribe: () => {}
+              subscribe: () => { }
             },
           },
         },
@@ -481,8 +483,8 @@ describe('Menu', () => {
       wrapper = await mount(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
@@ -494,7 +496,7 @@ describe('Menu', () => {
           menuLoadBoxPrices={menuLoadBoxPrices}
           disabled
           filteredRecipesNumber={30}
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           params={{}}
           basketNumPortionChange={basketNumPortionChangeSpy}
           query={{ num_portions: '4' }}
@@ -504,7 +506,7 @@ describe('Menu', () => {
           context: {
             store: {
               getState: getStateSpy,
-              subscribe: () => {}
+              subscribe: () => { }
             },
           },
         },
@@ -518,7 +520,7 @@ describe('Menu', () => {
 
       beforeAll(() => {
         menuProps = {
-          shouldJfyTutorialBeVisible: () => {},
+          shouldJfyTutorialBeVisible: () => { },
           menuRecipeDetailShow: false,
           boxSummaryDeliveryDays: Immutable.List([]),
           menuCollectionRecipes: Immutable.Map({}),
@@ -528,9 +530,9 @@ describe('Menu', () => {
           menuLoadBoxPrices,
           disabled: true,
           filteredRecipesNumber: 30,
-          clearAllFilters: () => {},
+          clearAllFilters: () => { },
           params: {},
-          basketNumPortionChange: () => {},
+          basketNumPortionChange: () => { },
           query: { num_portions: '4' },
           recipeGroupingSelected: null,
           recipes: [],
@@ -585,14 +587,14 @@ describe('Menu', () => {
         })
 
         orderHasAnyProducts = jest.fn(() => {
-          return () => {}
+          return () => { }
         })
 
         orderUpdateProducts = jest.fn(() => {
-          return () => {}
+          return () => { }
         })
 
-        window.addEventListener = jest.fn(function(event, listener) {
+        window.addEventListener = jest.fn(function (event, listener) {
           map[event] = listener
         })
 
@@ -603,8 +605,8 @@ describe('Menu', () => {
         })
 
         menuProps = {
-          productsLoadProducts: () => {},
-          productsLoadStock: () => {},
+          productsLoadProducts: () => { },
+          productsLoadStock: () => { },
           menuRecipeDetailShow: false,
           boxSummaryDeliveryDays: Immutable.List([]),
           menuCollectionRecipes: Immutable.Map({}),
@@ -614,7 +616,7 @@ describe('Menu', () => {
           menuLoadBoxPrices,
           disabled: true,
           filteredRecipesNumber: 30,
-          clearAllFilters: () => {},
+          clearAllFilters: () => { },
           params: {},
           basketNumPortionChange: basketNumPortionChangeSpy,
           query: { num_portions: '4' },
@@ -630,7 +632,7 @@ describe('Menu', () => {
             { id: 'c', quantity: '3' },
             { id: 'd', quantity: '4' },
           ],
-          loginVisibilityChange: () => {},
+          loginVisibilityChange: () => { },
           recipeGroupingSelected: null,
           orderCheckoutAction: orderCheckout,
           orderHasAnyProducts,
@@ -645,7 +647,7 @@ describe('Menu', () => {
             context: {
               store: {
                 getState: getStateSpy,
-                subscribe: () => {}
+                subscribe: () => { }
               },
             },
           },
@@ -660,28 +662,28 @@ describe('Menu', () => {
 
       test(`action orderUpdateProducts is called with the products passed in
       the event orderUpdateProductsRequest and the ones in the basket`,
-      () => {
-        const eventProducts = {
-          itemChoices: [
-            { id: 'a', quantity: '1', type: 'Product' },
-            { id: 'b', quantity: '2', type: 'Product' },
-          ]
-        }
-        const fakeEventObject = { detail: eventProducts }
-        map.orderUpdateProductsRequest(fakeEventObject)
+        () => {
+          const eventProducts = {
+            itemChoices: [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+            ]
+          }
+          const fakeEventObject = { detail: eventProducts }
+          map.orderUpdateProductsRequest(fakeEventObject)
 
-        expect(orderUpdateProducts).toHaveBeenCalledWith(
-          '123456',
-          [
-            { id: 'a', quantity: '1', type: 'Product' },
-            { id: 'b', quantity: '2', type: 'Product' },
-            { id: 'c', quantity: '3', type: 'Product' },
-            { id: 'd', quantity: '4', type: 'Product' },
-          ]
-        )
+          expect(orderUpdateProducts).toHaveBeenCalledWith(
+            '123456',
+            [
+              { id: 'a', quantity: '1', type: 'Product' },
+              { id: 'b', quantity: '2', type: 'Product' },
+              { id: 'c', quantity: '3', type: 'Product' },
+              { id: 'd', quantity: '4', type: 'Product' },
+            ]
+          )
 
-        expect(orderUpdateProducts).toHaveBeenCalledTimes(1)
-      })
+          expect(orderUpdateProducts).toHaveBeenCalledTimes(1)
+        })
 
       test('action orderCheckout is not called when orderId is present', () => {
         const eventProducts = { itemChoices: [] }
@@ -718,7 +720,7 @@ describe('Menu', () => {
               context: {
                 store: {
                   getState: getStateSpy,
-                  subscribe: () => {}
+                  subscribe: () => { }
                 },
               },
             },
@@ -784,7 +786,7 @@ describe('Menu', () => {
               context: {
                 store: {
                   getState: getStateSpy,
-                  subscribe: () => {}
+                  subscribe: () => { }
                 },
               },
             },
@@ -836,32 +838,32 @@ describe('Menu', () => {
 
   describe('check query param in componentDidMount', () => {
     const menuProps = {
-      productsLoadProducts:() => {},
-      productsLoadStock: () => {},
-      loginVisibilityChange: () => {},
+      productsLoadProducts: () => { },
+      productsLoadStock: () => { },
+      loginVisibilityChange: () => { },
       menuRecipeDetailShow: false,
       boxSummaryDeliveryDays: Immutable.Map({}),
       menuCollectionRecipes: Immutable.Map({}),
       boxDetailsVisibilityChange: jest.fn(),
       features: Immutable.Map({}),
       menuLoadDays: menuLoadDays,
-      boxSummaryDeliveryDaysLoad: () => {},
-      menuLoadBoxPrices: () => {},
+      boxSummaryDeliveryDaysLoad: () => { },
+      menuLoadBoxPrices: () => { },
       disabled: true,
       filteredRecipesNumber: 30,
-      clearAllFilters: () => {},
+      clearAllFilters: () => { },
       params: {},
-      basketNumPortionChange: () => {},
+      basketNumPortionChange: () => { },
       recipes: [],
       cutOffDate: null,
-      basketOrderLoaded: () => {},
-      menuBrowseCTAVisibilityChange: () => {},
-      menuMobileGridViewSet: () => {},
-      basketRestorePreviousValues: () => {},
+      basketOrderLoaded: () => { },
+      menuBrowseCTAVisibilityChange: () => { },
+      menuMobileGridViewSet: () => { },
+      basketRestorePreviousValues: () => { },
       isAuthenticated: true,
-      orderHasAnyProducts: () => {},
-      orderUpdateProducts: () => {},
-      orderCheckoutAction: () => {},
+      orderHasAnyProducts: () => { },
+      orderUpdateProducts: () => { },
+      orderCheckoutAction: () => { },
       slotId: '123',
       userOrders: Immutable.Map({})
     }
@@ -872,7 +874,7 @@ describe('Menu', () => {
         await mount(
           <Menu
             {...menuProps}
-            filterRecipeGrouping={ filterRecipeGrouping }
+            filterRecipeGrouping={filterRecipeGrouping}
             recipeGroupingSelected={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
@@ -885,7 +887,7 @@ describe('Menu', () => {
             context: {
               store: {
                 getState: () => ({}),
-                subscribe: () => {},
+                subscribe: () => { },
               },
             },
           },
@@ -895,15 +897,15 @@ describe('Menu', () => {
     })
 
     describe('when foodBrand query param in URL', () => {
-      test('should call filterRecipeGrouping with foodBrand details if foodBrand not selected', async() => {
+      test('should call filterRecipeGrouping with foodBrand details if foodBrand not selected', async () => {
         const filterRecipeGrouping = jest.fn()
 
         await mount(
           <Menu
             {...menuProps}
-            filterRecipeGrouping={ filterRecipeGrouping }
+            filterRecipeGrouping={filterRecipeGrouping}
             recipeGroupingSelected={null}
-            query={{foodBrand: 'takeaway-night'}}
+            query={{ foodBrand: 'takeaway-night' }}
             foodBrandDetails={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
@@ -914,7 +916,7 @@ describe('Menu', () => {
             context: {
               store: {
                 getState: () => ({}),
-                subscribe: () => {},
+                subscribe: () => { },
               },
             },
           },
@@ -927,20 +929,20 @@ describe('Menu', () => {
         }, 'foodBrand')
       })
 
-      test('should call filterRecipeGrouping with foodBrand details if url foodbrand different than selected one', async() => {
+      test('should call filterRecipeGrouping with foodBrand details if url foodbrand different than selected one', async () => {
         const filterRecipeGrouping = jest.fn()
 
         await mount(
           <Menu
             {...menuProps}
-            filterRecipeGrouping={ filterRecipeGrouping }
+            filterRecipeGrouping={filterRecipeGrouping}
             recipeGroupingSelected={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
               borderColor: 'blue',
               location: 'foodBrand'
             }}
-            query={{foodBrand: '10-minute-meals'}}
+            query={{ foodBrand: '10-minute-meals' }}
             foodBrandDetails={{
               slug: '10-minute-meals',
               name: '10-MINUTE MEALS',
@@ -952,7 +954,7 @@ describe('Menu', () => {
             context: {
               store: {
                 getState: () => ({}),
-                subscribe: () => {},
+                subscribe: () => { },
               },
             },
           },
@@ -966,20 +968,20 @@ describe('Menu', () => {
         }, 'foodBrand')
       })
 
-      test('should NOT call filterRecipeGrouping with foodBrand details if foodBrand selected', async() => {
+      test('should NOT call filterRecipeGrouping with foodBrand details if foodBrand selected', async () => {
         const filterRecipeGrouping = jest.fn()
 
         await mount(
           <Menu
             {...menuProps}
-            filterRecipeGrouping={ filterRecipeGrouping }
+            filterRecipeGrouping={filterRecipeGrouping}
             recipeGroupingSelected={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
               borderColor: 'blue',
               location: 'foodBrand'
             }}
-            query={{foodBrand: 'takeaway-night'}}
+            query={{ foodBrand: 'takeaway-night' }}
             foodBrandDetails={{
               slug: 'takeaway-night',
               name: 'Takeaway Night',
@@ -991,7 +993,7 @@ describe('Menu', () => {
             context: {
               store: {
                 getState: () => ({}),
-                subscribe: () => {},
+                subscribe: () => { },
               },
             },
           },
@@ -1007,7 +1009,6 @@ describe('Menu', () => {
     let boxSummaryDeliveryDaysLoad
     let menuLoadBoxPrices
     let getStateSpy
-    const selectCurrentCollection = jest.fn()
     const shouldJfyTutorialBeVisible = jest.fn()
 
     beforeEach(() => {
@@ -1028,8 +1029,8 @@ describe('Menu', () => {
       wrapper = mount(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
           menuRecipeDetailShow={false}
           boxSummaryDeliveryDays={Immutable.List([])}
           menuCollectionRecipes={Immutable.Map({})}
@@ -1040,9 +1041,8 @@ describe('Menu', () => {
           menuLoadBoxPrices={menuLoadBoxPrices}
           disabled={false}
           filteredRecipesNumber={30}
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           shouldJfyTutorialBeVisible={shouldJfyTutorialBeVisible}
-          selectCurrentCollection={selectCurrentCollection}
           menuCurrentCollectionId={'123abc'}
           orderCheckout={{
             orderId: 'order-id',
@@ -1056,14 +1056,13 @@ describe('Menu', () => {
           context: {
             store: {
               getState: getStateSpy,
-              subscribe: () => {}
+              subscribe: () => { }
             },
           },
         },
       )
       forceCheck.mockClear()
       shouldJfyTutorialBeVisible.mockClear()
-      selectCurrentCollection.mockClear()
     })
 
     afterEach(() => {
@@ -1074,18 +1073,6 @@ describe('Menu', () => {
       await wrapper.instance().componentDidUpdate(wrapper.props())
 
       expect(forceCheck).toHaveBeenCalledTimes(1)
-    })
-
-    describe('selectCurrentCollection', () => {
-      test('should not call selectCurrentCollection if menuCollectionId doesnt change', () => {
-        wrapper.setProps({menuCurrentCollectionId: '123abc'})
-        expect(selectCurrentCollection).not.toHaveBeenCalled()
-      })
-
-      test('should only call selectCurrentCollection if menuCollectionId changes', () => {
-        wrapper.setProps({menuCurrentCollectionId: '567xyz'})
-        expect(selectCurrentCollection).toHaveBeenCalled()
-      })
     })
 
     describe('when we have finished loading', () => {
@@ -1176,13 +1163,13 @@ describe('Menu', () => {
       const wrapper = shallow(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
-          menuLoadBoxPrices={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
+          menuLoadBoxPrices={() => { }}
           features={Immutable.Map({})}
           tariffId={1}
           manuVariation="menuA"
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           basketOrderLoaded={jest.fn()}
           boxDetailsVisibilityChange={jest.fn()}
           menuLoadDays={menuLoadDays}
@@ -1201,12 +1188,12 @@ describe('Menu', () => {
       const wrapper = shallow(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
           menuLoadBoxPrices={menuLoadBoxPrices}
           features={Immutable.Map({})}
           tariffId={1}
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           basketOrderLoaded={jest.fn()}
           boxDetailsVisibilityChange={jest.fn()}
           menuLoadDays={menuLoadDays}
@@ -1226,11 +1213,11 @@ describe('Menu', () => {
       const wrapper = shallow(
         <Menu
           recipeGroupingSelected={null}
-          productsLoadProducts={() => {}}
-          productsLoadStock={() => {}}
+          productsLoadProducts={() => { }}
+          productsLoadStock={() => { }}
           menuLoadBoxPrices={menuLoadBoxPrices}
           features={Immutable.Map({})}
-          clearAllFilters={() => {}}
+          clearAllFilters={() => { }}
           menuLoadDays={menuLoadDays}
           basketOrderLoaded={jest.fn()}
           boxDetailsVisibilityChange={jest.fn()}
@@ -1261,7 +1248,7 @@ describe('Menu', () => {
             location: 'foodBrand'
           }}
           params={{ orderId: '' }}
-          menuLoadBoxPrices={() => {}}
+          menuLoadBoxPrices={() => { }}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
           filteredRecipesNumber={30}
@@ -1305,7 +1292,7 @@ describe('Menu', () => {
             location: 'thematic'
           }}
           params={{ orderId: '' }}
-          menuLoadBoxPrices={() => {}}
+          menuLoadBoxPrices={() => { }}
           menuCollectionRecipes={Immutable.Map({})}
           features={Immutable.Map({})}
           filteredRecipesNumber={30}

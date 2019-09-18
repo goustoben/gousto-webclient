@@ -13,7 +13,6 @@ class RecipeGrid extends React.Component {
     menuCurrentCollectionId: PropTypes.string,
     isClient: PropTypes.bool,
     menuRecipeDetailShow: PropTypes.string,
-    menuFilterExperiment: PropTypes.bool
   }
 
   render() {
@@ -23,15 +22,12 @@ class RecipeGrid extends React.Component {
       menuCurrentCollectionId,
       isClient,
       menuRecipeDetailShow,
-      menuFilterExperiment
     } = this.props
-
-    const classMasonaryConatiner = menuFilterExperiment ? css.masonryContainer : css.masonryContainerMenu
 
     return (
       <div
         ref={ref => { this.masonryContainer = ref }}
-        className={classMasonaryConatiner}
+        className={css.masonryContainerMenu}
         data-testing="menuRecipesList"
       >
         <RecipeList

@@ -20,7 +20,7 @@ export function getDefaultCollectionId(state) {
 }
 
 export function getCollectionIdWithName(state, name) {
-  if (!state || !state.menuCollections) {
+  if (!state || !state.menuCollections || !name) {
     return null
   }
 
