@@ -14,32 +14,26 @@ describe('recipe stock', () => {
         { recipeId: 1234 },
         { recipeId: 5678 }
       ]
-      const date = '2019-09-17T16:00:00'
-      const accessCode = 'ABC'
 
       beforeEach(() => {
         mockFetchRecipeStock.mockReset()
-        mockFetchRecipeStock.mockImplementation((givenAccessCode, targetDate, useMenuService) => {
-          if (givenAccessCode !== accessCode) {
-            throw Error('invalid access code')
-          }
+        mockFetchRecipeStock.mockResolvedValue({ data: recipeStock })
+      })
 
-          if (targetDate !== date) {
-            throw Error('invalid date')
-          }
+      test('should call fetchRecipes with access code', async () => {
+        await getRecipeStock('abc', '2019-01-01T00:00:00', false)
 
-          if (useMenuService) {
-            throw Error('useMenuService should be false')
-          }
+        expect(mockFetchRecipeStock.mock.calls[0][0]).toEqual('abc')
+      })
 
-          return ({
-            data: recipeStock
-          })
-        })
+      test('should call fetchRecipes with date', async () => {
+        await getRecipeStock('abc', '2019-01-01T00:00:00', false)
+
+        expect(mockFetchRecipeStock.mock.calls[0][1]).toEqual('2019-01-01T00:00:00')
       })
 
       test('should return the result of fetchRecipeStock.data', async () => {
-        const response = await getRecipeStock(accessCode, date, false)
+        const response = await getRecipeStock('abc', '2019-01-01T00:00:00', false)
 
         expect(response).toEqual(recipeStock)
       })
