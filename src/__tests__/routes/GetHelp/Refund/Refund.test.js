@@ -2,7 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { browserHistory } from 'react-router'
 import { client as routes } from 'config/routes'
-import { fetchRefundAmount, fetchRefundAmountV2, setComplaint, setComplaintV2 } from 'apis/getHelp'
+import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 
 import Refund from 'routes/GetHelp/Refund/Refund'
 
@@ -233,40 +233,6 @@ describe('<Refund />', () => {
               expect(browserHistory.push).toHaveBeenCalledTimes(0)
             })
           })
-        })
-      })
-    })
-
-    describe('endpoints version v2', () => {
-      beforeEach(() => {
-        wrapper = mount(
-          <Refund
-            content={content}
-            user={{ id: '999', accessToken: '123' }}
-            order={{ id: '888' }}
-            selectedIngredients={selectedIngredients}
-            trackAcceptRefund={trackAcceptRefundSpy}
-            featureSSRValidationV2={{
-              experiment: true,
-              value: true,
-            }}
-          />
-        )
-      })
-
-      describe('feature flag is present', () => {
-        test('/v2/value is being called correctly', () => {
-          expect(fetchRefundAmountV2).toHaveBeenCalledWith(
-            ...FETCH_REFUND_AMOUNT_PARAMS
-          )
-        })
-
-        test('/v2/refund is being called correctly', () => {
-          wrapper.update()
-
-          wrapper.find('Button').at(1).props().onClick()
-
-          expect(setComplaintV2).toHaveBeenCalledTimes(1)
         })
       })
     })

@@ -5,16 +5,6 @@ import routes from 'config/routes'
 const SSR_URL_LOCAL = 'https://staging-api.gousto.info/ssr/v1'
 
 const fetchRefundAmount = (accessToken, body) => {
-  const url = (__ENV__ === 'local')
-    ? `${SSR_URL_LOCAL}/ssr/value`
-    : `${endpoint('ssr', routes.version.ssr)}/ssr/value`
-
-  return fetch(accessToken, url, body, 'POST', 'default', {
-    'Content-Type': 'application/json'
-  }, null, false, false)
-}
-
-const fetchRefundAmountV2 = (accessToken, body) => {
   const url = `${endpoint('ssr', routes.version.ssrV2)}/value`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
@@ -23,16 +13,6 @@ const fetchRefundAmountV2 = (accessToken, body) => {
 }
 
 const setComplaint = (accessToken, body) => {
-  const url = (__ENV__ === 'local')
-    ? `${SSR_URL_LOCAL}/ssr/refund`
-    : `${endpoint('ssr', routes.version.ssr)}/ssr/refund`
-
-  return fetch(accessToken, url, body, 'POST', 'default', {
-    'Content-Type': 'application/json'
-  }, null, false, false)
-}
-
-const setComplaintV2 = (accessToken, body) => {
   const url = `${endpoint('ssr', routes.version.ssrV2)}/refund`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
@@ -41,16 +21,6 @@ const setComplaintV2 = (accessToken, body) => {
 }
 
 const validateIngredients = (accessToken, body) => {
-  const url = (__ENV__ === 'local')
-    ? `${SSR_URL_LOCAL}/ssr/validate-ingredients`
-    : `${endpoint('ssr', routes.version.ssr)}/ssr/validate-ingredients`
-
-  return fetch(accessToken, url, body, 'POST', 'default', {
-    'Content-Type': 'application/json'
-  }, null, false, false)
-}
-
-const validateIngredientsV2 = (accessToken, body) => {
   const url = `${endpoint('ssr', routes.version.ssrV2)}/validate-ingredients`
 
   return fetch(accessToken, url, body, 'POST', 'default', {
@@ -78,11 +48,8 @@ const fetchOrderIssues = (accessToken) => {
 
 export {
   fetchRefundAmount,
-  fetchRefundAmountV2,
   setComplaint,
-  setComplaintV2,
   validateIngredients,
-  validateIngredientsV2,
   validateOrder,
   fetchOrderIssues,
 }

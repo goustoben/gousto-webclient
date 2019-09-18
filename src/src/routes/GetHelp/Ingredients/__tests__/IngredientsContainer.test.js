@@ -5,13 +5,12 @@ import { Map, fromJS } from 'immutable'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
-import featureToggleReducer from 'reducers/features'
 import status from 'reducers/status'
 import contentReducer from 'reducers/content'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 import { IngredientsContainer } from 'routes/GetHelp/Ingredients/IngredientsContainer'
 
-import { validateIngredientsV2 } from 'apis/getHelp'
+import { validateIngredients } from 'apis/getHelp'
 
 jest.mock('apis/getHelp')
 
@@ -22,12 +21,6 @@ describe('<IngredientsContainer />', () => {
   let initialState = {
     auth: authDefaultState(),
     error: Map({}),
-    features: fromJS({
-      ssrValidationV2: {
-        experiment: false,
-        value: false,
-      }
-    }),
     pending: Map({}),
     user: userDefaultState,
     getHelp: getHelpInitialState.merge(fromJS({
@@ -64,7 +57,6 @@ describe('<IngredientsContainer />', () => {
         combineReducers(Object.assign(
           {},
           { ...authReducer },
-          { ...featureToggleReducer },
           { ...userReducer },
           { ...status },
           { ...contentReducer },
@@ -103,20 +95,12 @@ describe('<IngredientsContainer />', () => {
     beforeAll(() => {
       initialState = {
         ...initialState,
-        features: fromJS({
-          ...initialState.features,
-          ssrValidationV2: {
-            experiment: true,
-            value: true,
-          }
-        })
       }
 
       store = createStore(
         combineReducers(Object.assign(
           {},
           { ...authReducer },
-          { ...featureToggleReducer },
           { ...userReducer },
           { ...status },
           { ...contentReducer },
@@ -146,7 +130,7 @@ describe('<IngredientsContainer />', () => {
       const ContinueButton = wrapper.find('Ingredients').find('BottomBar').find('Button').at(1)
       await ContinueButton.prop('onClick')()
 
-      expect(validateIngredientsV2).toHaveBeenCalledWith(
+      expect(validateIngredients).toHaveBeenCalledWith(
         '',
         { customer_id: 0, order_id: 6765330, ingredient_ids: [ 'aaa' ] }
       )

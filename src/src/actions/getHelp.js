@@ -1,6 +1,5 @@
 import {
   validateIngredients,
-  validateIngredientsV2,
   validateOrder,
   fetchOrderIssues as fetchOrderIssuesApi,
 } from 'apis/getHelp'
@@ -58,7 +57,6 @@ const validateSelectedIngredients = ({
   orderId,
   costumerId,
   ingredientIds,
-  featureSSRValidationV2,
 }) => {
   return async (dispatch) => {
     dispatch(statusActions.pending(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, true))
@@ -74,11 +72,7 @@ const validateSelectedIngredients = ({
     ]
 
     try {
-      if (featureSSRValidationV2 && featureSSRValidationV2.value) {
-        await validateIngredientsV2(...validateIngredientsParams)
-      } else {
-        await validateIngredients(...validateIngredientsParams)
-      }
+      await validateIngredients(...validateIngredientsParams)
     }
     catch (error) {
       dispatch(statusActions.error(actionTypes.GET_HELP_VALIDATE_INGREDIENTS, error.message))
