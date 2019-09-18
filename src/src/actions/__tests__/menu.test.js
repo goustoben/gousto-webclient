@@ -1,11 +1,11 @@
 import Immutable from 'immutable'
-import actionTypes from '../actionTypes'
 import { fetchRecipes } from 'apis/recipes'
-// import { limitReached } from 'utils/basket'
+import actionTypes from '../actionTypes'
 
 const mockGetAvailableDates = jest.fn()
 const mockGetRecipeStock = jest.fn()
 const mockLimitReached = jest.fn()
+const mockGetCutoffDateTime = jest.fn()
 
 jest.mock('apis/data', () => ({
   getAvailableDates: mockGetAvailableDates,
@@ -14,6 +14,10 @@ jest.mock('apis/data', () => ({
 
 jest.mock('utils/basket', () => ({
   limitReached: mockLimitReached
+}))
+
+jest.mock('utils/deliveries', () => ({
+  getCutoffDateTime: mockGetCutoffDateTime
 }))
 
 jest.mock('apis/recipes', () => ({
@@ -101,6 +105,11 @@ describe('menu actions', () => {
 
       expect(fetchRecipes).toHaveBeenCalledTimes(1)
       expect(fetchRecipes).toHaveBeenCalledWith(...expectedFetchRecipesArgs)
+    })
+
+    test('should use date from state when cutoffDateTime is null', async () => {
+      await menuActions.menuLoadMenu(null)(dispatch, getState)
+      expect(mockGetCutoffDateTime).toHaveBeenCalled()
     })
   })
 
