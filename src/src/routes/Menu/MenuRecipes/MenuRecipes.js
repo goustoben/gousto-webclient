@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import { PropTypes } from 'prop-types'
+import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import menu from 'config/menu'
 import moment from 'moment'

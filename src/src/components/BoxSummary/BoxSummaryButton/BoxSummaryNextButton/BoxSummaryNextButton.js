@@ -1,5 +1,5 @@
 import React from 'react'
-import { PropTypes } from 'prop-types'
+import PropTypes from 'prop-types'
 import { Button, Segment } from 'goustouicomponents'
 import classnames from 'classnames'
 import { isMobile } from 'utils/view'

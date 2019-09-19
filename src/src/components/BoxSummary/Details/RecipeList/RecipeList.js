@@ -1,4 +1,4 @@
-import { PropTypes } from 'prop-types'
+import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import { LayoutContentWrapper } from 'goustouicomponents'

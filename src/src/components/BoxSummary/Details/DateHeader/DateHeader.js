@@ -1,5 +1,5 @@
 import React from 'react'
-import { PropTypes } from 'prop-types'
+import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import moment from 'moment'
 import { getSlot } from 'utils/deliveries'
