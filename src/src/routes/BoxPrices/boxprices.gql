@@ -1,5 +1,5 @@
-query GetBoxPrices {
-	boxPrices {
+query GetBoxPrices($tariff_id: Int) {
+	boxPrices(tariff_id: $tariff_id) {
 		gourmet {
 			num_persons
 			num_portions
