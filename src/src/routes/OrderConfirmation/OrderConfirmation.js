@@ -23,6 +23,7 @@ import css from './OrderConfirmation.css'
 const propTypes = {
   ageVerified: PropTypes.bool.isRequired,
   hasCollapsedRafFeature: PropTypes.bool,
+  hasProductList2Columns: PropTypes.bool,
   headerDetails: PropTypes.oneOfType([
     PropTypes.shape({
       deliveryDate: PropTypes.string,
@@ -39,23 +40,24 @@ const propTypes = {
     firstMonthDiscountFormatted: PropTypes.string.isRequired,
   }).isRequired,
   showHeader: PropTypes.bool.isRequired,
+  showShortlistFeedback: PropTypes.bool,
   userFetchReferralOffer: PropTypes.func,
-  showShortlistFeedback: PropTypes.bool
 }
 
 const defaultProps = {
   hasCollapsedRafFeature: false,
+  hasProductList2Columns: false,
   headerDetails: {},
   showHeader: false,
-  showShortlistFeedback: false
+  showShortlistFeedback: false,
 }
 
 class OrderConfirmation extends PureComponent {
   constructor() {
     super()
     this.state = {
-      showAgeVerification: false,
       hasConfirmedAge: false,
+      showAgeVerification: false,
       showFeedback: false
     }
   }
@@ -97,12 +99,13 @@ class OrderConfirmation extends PureComponent {
     const {
       ageVerified,
       hasCollapsedRafFeature,
+      hasProductList2Columns,
       headerDetails,
       isLoading,
       rafOffer,
       showHeader,
     } = this.props
-    const { showAgeVerification, hasConfirmedAge, showFeedback } = this.state
+    const { hasConfirmedAge, showAgeVerification, showFeedback } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
     return isLoading ?
@@ -126,7 +129,7 @@ class OrderConfirmation extends PureComponent {
             </Overlay>
 
             {showHeader ? (
-              <VerticalStages>
+              <VerticalStages hasFullWidth={hasProductList2Columns}>
                 <VerticalStagesItem
                   title="Order created"
                   isCompleted

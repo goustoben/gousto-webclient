@@ -66,6 +66,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
+  productList2Columns: {
+    experiment: false,
+    value: false,
+  },
   shortlist: {
     experiment: false,
     value: false,
