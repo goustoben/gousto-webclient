@@ -296,19 +296,15 @@ const selectThematic = (dispatch, getState, thematicSlug, onAction) => {
 
 export const filterRecipeGrouping = (recipeGrouping, location, onAction = null) => (
   (dispatch, getState) => {
-    const { features } = getState()
-    const thematicFeature = features.getIn(['thematic', 'value'])
-
     if (location === 'foodBrand') {
       if (recipeGrouping !== null) {
         recipeGrouping.location = location
       }
       selectFoodBrand(dispatch, getState, recipeGrouping)
       dispatch(changeCollectionById())
-
     }
 
-    if (thematicFeature && location === 'thematic') {
+    if (location === 'thematic') {
       selectThematic(dispatch, getState, recipeGrouping, onAction)
       dispatch(changeCollectionById())
     }

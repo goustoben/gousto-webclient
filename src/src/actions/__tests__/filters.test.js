@@ -425,11 +425,6 @@ describe('filters actions', () => {
   describe('filterRecipeGrouping for thematic', () => {
     beforeAll(() => {
       getStateSpy.mockReturnValue({
-        features: Immutable.fromJS({
-          thematic: {
-            value: true
-          },
-        }),
         menuCollections: Immutable.Map({
           'dd111ddd': Immutable.Map({
             slug: 'gousto-x-wagamama',
