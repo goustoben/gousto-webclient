@@ -1,6 +1,8 @@
 @value avenirHeavyFontStack from 'styles/typography.css';
 @value DarkGrey, Mackerel, White, Radish from 'styles/colors.css';
-@value ScreenXXSMin, ScreenSMMin, ScreenMDMin from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenMDMin from 'styles/screenSizes.css';
+
+@value FullWidthBreakpoint ScreenXSMax;
 
 .resetButtonStyle {
   display: block;
@@ -20,6 +22,34 @@
 
   @media ScreenMDMin {
     width: calc(50% - 10px);
+  }
+}
+
+.productWrapper--fullWidth {
+  @media FullWidthBreakpoint {
+    width: calc(50% - 10px);
+  }
+}
+
+.productWrapper--fullWidth .productTitle,
+.productWrapper--fullWidth .productPrice {
+  @media FullWidthBreakpoint {
+    font-size: 0.75rem;
+  }
+}
+
+.productWrapper--fullWidth .productPrice {
+  margin-bottom: 0.5rem;
+}
+
+.productWrapper--fullWidth .productContent {
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.productWrapper--fullWidth .productDetails {
+  @media FullWidthBreakpoint {
+    justify-content: stretch;
   }
 }
 
@@ -82,6 +112,10 @@
 
 .productButtonWrapper {
   align-self: flex-end;
+
+  @media FullWidthBreakpoint {
+    width: 100%;
+  }
 }
 
 .productLowStock {
