@@ -1,6 +1,5 @@
-import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Helmet from 'react-helmet'
 import { forceCheck } from 'react-lazyload'
@@ -17,120 +16,19 @@ import { ThematicsPage } from './ThematicsPage'
 import { MenuRecipes } from './MenuRecipes'
 import { RecipesInBasketProgress } from './RecipesInBasketProgress'
 import { JustForYouTutorial } from './JustForYouTutorial'
+import { menuPropTypes, defaultMenuPropTypes } from './menuPropTypes'
 
 import fetchData from './fetchData'
 import css from './Menu.css'
 
 class Menu extends React.PureComponent {
-  static propTypes = {
-    basketNumPortionChange: PropTypes.func.isRequired,
-    basketOrderLoaded: PropTypes.func.isRequired,
-    basketRestorePreviousValues: PropTypes.func.isRequired,
-    boxDetailsVisibilityChange: PropTypes.func.isRequired,
-    cutOffDate: PropTypes.string.isRequired,
-    disabled: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    menuLoadBoxPrices: PropTypes.func.isRequired,
-    menuMobileGridViewSet: PropTypes.func.isRequired,
-    orderCheckoutAction: PropTypes.func.isRequired,
-    orderHasAnyProducts: PropTypes.func.isRequired,
-    orderUpdateProducts: PropTypes.func.isRequired,
-    productsLoadProducts: PropTypes.func.isRequired,
-    productsLoadStock: PropTypes.func.isRequired,
-    recipes: PropTypes.arrayOf(PropTypes.string).isRequired,
-    slotId: PropTypes.string.isRequired,
-    userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
-    addressId: PropTypes.string,
-    basketProducts: PropTypes.oneOfType([
-      PropTypes.instanceOf(Immutable.Map),
-      PropTypes.instanceOf(Immutable.Iterable),
-    ]),
-    boxSummaryDeliveryDays: PropTypes.instanceOf(Immutable.Map),
-    boxSummaryDeliveryDaysLoad: PropTypes.func,
-    boxSummaryShow: PropTypes.bool,
-    deliveryDayId: PropTypes.string,
-    detailVisibilityChange: PropTypes.func,
-    filterRecipeGrouping: PropTypes.func,
-    foodBrandDetails: PropTypes.shape({
-      slug: PropTypes.string,
-      name: PropTypes.string,
-      borderColor: PropTypes.string,
-    }),
-    forceLoad: PropTypes.bool,
-    hasRecommendations: PropTypes.bool,
-    isLoading: PropTypes.bool,
-    jfyTutorialFlag: PropTypes.bool,
-    loginVisibilityChange: PropTypes.func,
-    menuBrowseCTAShow: PropTypes.bool,
-    menuBrowseCTAVisibilityChange: PropTypes.func,
-    menuLoadDays: PropTypes.func,
-    menuLoadingBoxPrices: PropTypes.bool,
-    menuVariation: PropTypes.string,
-    numPortions: PropTypes.number,
-    orderId: PropTypes.string,
-    params: PropTypes.object,
-    portionSizeSelectedTracking: PropTypes.func,
-    postcode: PropTypes.string,
-    promoCode: PropTypes.string,
-    query: PropTypes.object,
-    recipeGroupingSelected: PropTypes.shape({
-      slug: PropTypes.string,
-      name: PropTypes.string,
-      borderColor: PropTypes.string,
-    }),
-    shouldJfyTutorialBeVisible: PropTypes.func,
-    storeOrderId: PropTypes.string,
-    tariffId: PropTypes.number,
-    triggerMenuLoad: PropTypes.func,
-  }
+  static propTypes = menuPropTypes
 
   static contextTypes = {
     store: PropTypes.object.isRequired,
   }
 
-  static defaultProps = {
-    isAuthenticated: false,
-    disabled: false,
-    forceLoad: false,
-    isLoading: false,
-    menuLoadingBoxPrices: false,
-    numPortions: 2,
-    orderCheckout: {
-      orderId: '',
-      url: ''
-    },
-    menuBrowseCTAVisibilityChange: () => { },
-    menuMobileGridViewSet: () => { },
-    basketRestorePreviousValues: () => { },
-    shouldJfyTutorialBeVisible: () => { },
-    portionSizeSelectedTracking: () => { },
-    boxSummaryDeliveryDaysLoad: () => { },
-    detailVisibilityChange: () => { },
-    loginVisibilityChange: () => { },
-    filterRecipeGrouping: () => { },
-    triggerMenuLoad: () => { },
-    menuLoadDays: () => { },
-    basketProducts: Immutable.Map(),
-    boxSummaryDeliveryDays: Immutable.Map(),
-    addressId: '',
-    promoCode: '',
-    postcode: '',
-    deliveryDayId: '',
-    recipeGroupingSelected: null,
-    query: {
-      orderId: ''
-    },
-    storeOrderId: '',
-    tariffId: null,
-    params: {},
-    boxSummaryShow: false,
-    foodBrandDetails: null,
-    hasRecommendations: false,
-    jfyTutorialFlag: false,
-    menuBrowseCTAShow: false,
-    menuVariation: '',
-    orderId: '',
-  }
+  static defaultProps = defaultMenuPropTypes
 
   static fetchData(args, force) {
     return fetchData(args, force)
@@ -371,8 +269,10 @@ class Menu extends React.PureComponent {
   }
 
   toggleGridView = () => {
-    this.props.menuMobileGridViewSet(this.state.mobileGridView, !this.state.mobileGridView)
-    if (this.state.mobileGridView) {
+    const { menuMobileGridViewSet } = this.props
+    const { mobileGridView } = this.state
+    menuMobileGridViewSet(mobileGridView, !mobileGridView)
+    if (mobileGridView) {
       this.setState({ mobileGridView: false })
     } else {
       this.setState({ mobileGridView: true })
@@ -380,17 +280,19 @@ class Menu extends React.PureComponent {
   }
 
   showDetailRecipe = (recipeId, isViewMoreDetailsClicked) => {
-    if (!this.props.boxSummaryShow) {
-      this.props.detailVisibilityChange(recipeId, isViewMoreDetailsClicked)
+    const { boxSummaryShow, detailVisibilityChange } = this.props
+    if (!boxSummaryShow) {
+      detailVisibilityChange(recipeId, isViewMoreDetailsClicked)
     }
   }
 
   handleOverlayClick = () => {
-    if (this.props.boxSummaryShow) {
-      this.props.boxDetailsVisibilityChange(false, '')
-      this.props.basketRestorePreviousValues()
-    } else if (this.props.menuBrowseCTAShow) {
-      this.props.menuBrowseCTAVisibilityChange(false)
+    const { boxSummaryShow, boxDetailsVisibilityChange, basketRestorePreviousValues, menuBrowseCTAShow, menuBrowseCTAVisibilityChange } = this.props
+    if (boxSummaryShow) {
+      boxDetailsVisibilityChange(false, '')
+      basketRestorePreviousValues()
+    } else if (menuBrowseCTAShow) {
+      menuBrowseCTAVisibilityChange(false)
     }
   }
 
@@ -489,7 +391,7 @@ class Menu extends React.PureComponent {
                 query={query}
               />
             )}
-          <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick}></div>
+          <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick} />
         </div>
         <BoxSummaryMobile />
         <BoxSummaryDesktop />
