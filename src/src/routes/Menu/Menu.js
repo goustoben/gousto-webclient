@@ -93,16 +93,25 @@ class Menu extends React.PureComponent {
     disabled: false,
     forceLoad: false,
     isLoading: false,
+    menuLoadingBoxPrices: false,
     numPortions: 2,
-    menuMobileGridViewSet: () => { },
-    basketRestorePreviousValues: () => { },
-    shouldJfyTutorialBeVisible: () => { },
-    basketProducts: Immutable.Map(),
-    portionSizeSelectedTracking: () => { },
     orderCheckout: {
       orderId: '',
       url: ''
     },
+    menuBrowseCTAVisibilityChange: () => { },
+    menuMobileGridViewSet: () => { },
+    basketRestorePreviousValues: () => { },
+    shouldJfyTutorialBeVisible: () => { },
+    portionSizeSelectedTracking: () => { },
+    boxSummaryDeliveryDaysLoad: () => { },
+    detailVisibilityChange: () => { },
+    loginVisibilityChange: () => { },
+    filterRecipeGrouping: () => { },
+    triggerMenuLoad: () => { },
+    menuLoadDays: () => { },
+    basketProducts: Immutable.Map(),
+    boxSummaryDeliveryDays: Immutable.Map(),
     addressId: '',
     promoCode: '',
     postcode: '',
@@ -111,7 +120,16 @@ class Menu extends React.PureComponent {
     query: {
       orderId: ''
     },
-    storeOrderId: ''
+    storeOrderId: '',
+    tariffId: null,
+    params: {},
+    boxSummaryShow: false,
+    foodBrandDetails: null,
+    hasRecommendations: false,
+    jfyTutorialFlag: false,
+    menuBrowseCTAShow: false,
+    menuVariation: '',
+    orderId: '',
   }
 
   static fetchData(args, force) {
