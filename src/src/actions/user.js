@@ -615,8 +615,8 @@ export function userSubscribe() {
       const reqData = {
         order_id: basket.get('previewOrderId'),
         promocode: basket.get('promoCode', ''),
-        tariff_id: basket.get('tariffId', ''),
         customer: {
+          tariff_id: basket.get('tariffId', ''),
           phone_number: delivery.get('phone') ? `0${delivery.get('phone')}` : '',
           email: aboutYou.get('email'),
           name_first: aboutYou.get('firstName'),
