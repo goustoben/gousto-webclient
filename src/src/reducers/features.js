@@ -66,10 +66,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
-  ssrValidationV2: {
-    experiment: false,
-    value: false,
-  },
   shortlist: {
     experiment: false,
     value: false,

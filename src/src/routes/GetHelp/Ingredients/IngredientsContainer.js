@@ -4,7 +4,6 @@ import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => {
   return {
-    featureSSRValidationV2: state.features.get('ssrValidationV2').toJS(),
     order: state.getHelp.get('order').toJS(),
     recipes: state.getHelp.get('recipes').toJS(),
     user: {

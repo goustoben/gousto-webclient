@@ -186,10 +186,6 @@ describe('<Ingredients />', () => {
           costumerId: '777',
           ingredientIds: ['2222'],
           orderId: '888',
-          featureSSRValidationV2: {
-            experiment: false,
-            value: false,
-          }
         })
       })
 
@@ -228,33 +224,6 @@ describe('<Ingredients />', () => {
         expect(storeSelectedIngredients).toHaveBeenCalledWith([
           { ingredientId: '2222', recipeId: '2' }
         ])
-      })
-
-      describe('endpoints version v2', () => {
-        beforeEach(() => {
-          wrapper.setProps({ featureSSRValidationV2: {
-            experiment: true,
-            value: true,
-          } })
-        })
-
-        describe('feature flag is present', () => {
-          test('action is getting the experiment params correctly', () => {
-            selectIngredientAndGetCheckbox(wrapper)
-            ContinueButton.prop('onClick')()
-
-            expect(validateSelectedIngredients).toHaveBeenCalledWith({
-              accessToken: 'user-access-token',
-              costumerId: '777',
-              ingredientIds: ['2222'],
-              orderId: '888',
-              featureSSRValidationV2: {
-                experiment: true,
-                value: true,
-              }
-            })
-          })
-        })
       })
     })
   })

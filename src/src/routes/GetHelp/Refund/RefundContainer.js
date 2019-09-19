@@ -5,7 +5,7 @@ import { selectOrderIssue, trackAcceptRefund } from 'actions/getHelp'
 import Refund from './Refund'
 
 const mapStateToProps = (state) => {
-  const { auth, user, getHelp, features } = state
+  const { auth, user, getHelp } = state
   const order = getHelp.get('order').toJS()
   const selectedIngredients = getHelp.get('selectedIngredients').toJS()
 
@@ -15,7 +15,6 @@ const mapStateToProps = (state) => {
       accessToken: auth.get('accessToken'),
     },
     order,
-    featureSSRValidationV2: features.get('ssrValidationV2').toJS(),
     selectedIngredients,
     content: {
       title: state.content.get('get-help_refund_pageheader_header')

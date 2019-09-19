@@ -8,7 +8,7 @@ import Loading from 'Loading'
 import { Button } from 'goustouicomponents'
 import { client as routes } from 'config/routes'
 import { replaceWithValues } from 'utils/text'
-import { fetchRefundAmount, fetchRefundAmountV2, setComplaint, setComplaintV2 } from 'apis/getHelp'
+import { fetchRefundAmount, setComplaint } from 'apis/getHelp'
 import { BottomButton } from '../components/BottomButton'
 
 import css from './Refund.css'
@@ -23,10 +23,6 @@ class Refund extends PureComponent {
       button1: PropTypes.string.isRequired,
       button2: PropTypes.string.isRequired,
     }).isRequired,
-    featureSSRValidationV2: PropTypes.shape({
-      value: PropTypes.bool,
-      experiment: PropTypes.bool,
-    }),
     user: PropTypes.shape({
       id: PropTypes.string.isRequired,
       accessToken: PropTypes.string.isRequired,
@@ -43,13 +39,6 @@ class Refund extends PureComponent {
     trackAcceptRefund: PropTypes.func.isRequired,
   }
 
-  static defaultProps = {
-    featureSSRValidationV2: {
-      value: false,
-      experiment: false,
-    }
-  }
-
   state = {
     refund: { value: 0, type: 'credit' },
     isFetching: true,
@@ -61,7 +50,7 @@ class Refund extends PureComponent {
   }
 
   getRefund = async () => {
-    const { featureSSRValidationV2, user, order, selectedIngredients } = this.props
+    const { user, order, selectedIngredients } = this.props
     const fetchRefundAmountParams = [
       user.accessToken,
       {
@@ -74,13 +63,7 @@ class Refund extends PureComponent {
     ]
 
     try {
-      let response
-
-      if (featureSSRValidationV2 && featureSSRValidationV2.value) {
-        response = await fetchRefundAmountV2(...fetchRefundAmountParams)
-      } else {
-        response = await fetchRefundAmount(...fetchRefundAmountParams)
-      }
+      const response = await fetchRefundAmount(...fetchRefundAmountParams)
 
       const { value, type } = response.data
 
@@ -101,7 +84,6 @@ class Refund extends PureComponent {
   onAcceptOffer = async () => {
     const { refund } = this.state
     const {
-      featureSSRValidationV2,
       user,
       order,
       selectedIngredients,
@@ -126,13 +108,7 @@ class Refund extends PureComponent {
     ]
 
     try {
-      let response
-
-      if (featureSSRValidationV2 && featureSSRValidationV2.value) {
-        response = await setComplaintV2(...setComplaintParams)
-      } else {
-        response = await setComplaint(...setComplaintParams)
-      }
+      const response = await setComplaint(...setComplaintParams)
 
       trackAcceptRefund(refund.value)
       browserHistory.push(`${routes.getHelp.index}/${routes.getHelp.confirmation}`)
