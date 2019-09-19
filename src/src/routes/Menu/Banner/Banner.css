@@ -32,16 +32,29 @@
 	}
 }
 
-.summer-bbq {
+.wagamama1 {
 	composes: container;
-	background-image: url('media/images/menu/alfresco-mobile.jpg');
+	background-image: url('media/images/menu/wagamama_banner_mobile_no_click.jpg');
 
 	@media ScreenSMMin {
-		background-image: url('media/images/menu/alfresco-tablet.jpg');
+		background-image: url('media/images/menu/wagamama_banner_tablet_no_click.jpg');
 	}
 
 	@media ScreenMLMin {
-		background-image: url('media/images/menu/alfresco-desktop.jpg');
+		background-image: url('media/images/menu/wagamama_banner_desktop_no_click.jpg');
+	}
+}
+
+.wagamama2 {
+	composes: container;
+	background-image: url('media/images/menu/wagamama_banner_mobile_button.jpg');
+
+	@media ScreenSMMin {
+		background-image: url('media/images/menu/wagamama_banner_tablet_button.jpg');
+	}
+
+	@media ScreenMLMin {
+		background-image: url('media/images/menu/wagamama_banner_desktop_button.jpg');
 	}
 }
 
@@ -55,21 +68,6 @@
 	max-width: 1600px;
 	margin: 0 auto;
 	height: 100%;
-}
-
-.gelText {
-	left: GelSMLeft;
-	top: 50%;
-	padding: 14px;
-
-	@media ScreenXXSMin {
-		left: GelMDLeft;
-	}
-
-	@media ScreenMDMin {
-		left: GelLGLeft;
-		padding: 18px;
-	}
 }
 
 .gelPortrait {
@@ -94,11 +92,6 @@
 
 .gelPortrait__image {
   border-radius: 100%;
-}
-
-.gelText__svg {
-	height: 100%;
-	width: 86%;
 }
 
 .link {

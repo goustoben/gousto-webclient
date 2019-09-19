@@ -58,22 +58,18 @@ class MenuRecipes extends PureComponent {
     }
   }
 
-  renderBanner = (switchoverDate) => {
+  renderBanner = (switchoverDate1, switchoverDate2) => {
     const { setThematic } = this.props
     const now = moment()
-    const switchoverTime = moment(switchoverDate)
-    const thematicFeatureFlag = false
-    if (thematicFeatureFlag) {
-      return (
-        <Banner imageName={'menu/10min-banner-gel-02.jpg'} type={'ten-min'} collectionSlug={'10-minute-meals'} setThematic={setThematic} />
-      )
-    } else {
+    const switchoverTime1 = moment(switchoverDate1)
+    const switchoverTime2 = moment(switchoverDate2)
 
-      return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
+    return (now.isSameOrAfter(switchoverTime2, 'hour')) ? (
+      <Banner type={'wagamama2'} collectionSlug={'gousto-x-wagamama'} setThematic={setThematic} />
+    ) : (now.isSameOrAfter(switchoverTime1, 'hour')) ? (
+      <Banner type={'wagamama1'} />
+    ) :
         <Banner imageName={'menu/10min-banner-gel-02.jpg'} type={'ten-min'} />
-      ) :
-        (<Banner type={'summer-bbq'} imageName={'summerGel-min.png'} />)
-    }
   }
 
   render() {
@@ -94,7 +90,7 @@ class MenuRecipes extends PureComponent {
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
-        {this.renderBanner(menu.tenMin.switchoverDate)}
+        {this.renderBanner(menu.wagamama.switchoverDateWeek1, menu.wagamama.switchoverDateWeek2)}
         <SubHeader
           viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
           onToggleGridView={toggleGridView}
