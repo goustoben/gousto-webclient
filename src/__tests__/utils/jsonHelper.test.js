@@ -23,7 +23,7 @@ describe('JSON Helper', () => {
       },
     }
     const response = processJSON([serverResponse, 500])
-    expect(response).rejects.toBe(rejectionObj)
+    expect(response).rejects.toEqual(rejectionObj)
   })
 
   test('handle errors response as an array', () => {
@@ -43,7 +43,7 @@ describe('JSON Helper', () => {
       message: '401 - Auth Exception!',
     }
     const response = processJSON([serverResponse, 500])
-    expect(response).rejects.toBe(rejectionObj)
+    expect(response).rejects.toEqual(rejectionObj)
   })
 
   test('handle payment-required error response', () => {
@@ -57,6 +57,6 @@ describe('JSON Helper', () => {
       message: serverResponse.error,
     }
     const response = processJSON([serverResponse, 500])
-    expect(response).rejects.toBe(rejectionObj)
+    expect(response).rejects.toEqual(rejectionObj)
   })
 })

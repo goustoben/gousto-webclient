@@ -10,12 +10,16 @@ exports[`On Screen Recovery Modal Footer Initial Render should render snapshot 1
     onKeyDown={[Function]}
     role="button"
     tabIndex={0}
-  />
+  >
+    Skip anyway
+  </div>
   <button
     className="keep"
     onClick={[Function]}
     onKeyDown={[Function]}
     type="button"
-  />
+  >
+    Keep Box
+  </button>
 </div>
 `;

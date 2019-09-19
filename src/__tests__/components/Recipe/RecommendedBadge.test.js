@@ -12,7 +12,8 @@ describe('<RecommendedBadge />', () => {
   let features
 
   it('should not render a badge by default', function() {
-    wrapper = shallow(<RecommendedBadge />)
+    features = Immutable.fromJS({})
+    wrapper = shallow(<RecommendedBadge features={features} />)
     expect(wrapper.find(InfoBadge).length).toBe(0)
   })
 

@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'
 import Content from 'containers/Content'
 import css from './RAFTitle.css'
 
-const propTypes = {
-  title: PropTypes.string,
-}
-
 const RAFTitle = ({title}) => (
   <div className={css.rafTitle}>
     <Content contentKeys="rafPageTitle">
@@ -15,6 +11,8 @@ const RAFTitle = ({title}) => (
   </div>
 )
 
-RAFTitle.propTypes = propTypes
+RAFTitle.propTypes = {
+  title: PropTypes.string,
+}
 
 export { RAFTitle }

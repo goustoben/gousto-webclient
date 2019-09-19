@@ -21,7 +21,7 @@ describe('Detail', () => {
   describe('rendering', () => {
 
     beforeEach(() => {
-      wrapper = shallow(<Detail media={media} range={range} />)
+      wrapper = shallow(<Detail media={media} range={range} useWithin="5 days" cookingTime={123} />)
     })
 
     it('should render a DefaultDetail by default', () => {
@@ -39,7 +39,7 @@ describe('Detail', () => {
 
     it('should render a different component based on view', () => {
       for (const [view, component] of views.entries()) {
-        wrapper = shallow(<Detail view={view} range={range} />)
+        wrapper = shallow(<Detail view={view} range={range} useWithin="5 days" cookingTime={123} />)
 
         expect(wrapper.find(component).length).toEqual(1)
       }

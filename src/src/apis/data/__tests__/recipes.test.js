@@ -44,7 +44,7 @@ describe('recipes', () => {
         expect(mockFetchRecipes.mock.calls[0][2]['filters[available_on]']).toEqual('2019-01-01T00:00:00')
       })
 
-      test('should return the result of fetchRecipes.recipes', async () => {
+      test('should return the result of fetchRecipes.data', async () => {
         const response = await getRecipes('abc', '2019-01-01T00:00:00', false)
 
         expect(response).toEqual(recipes)

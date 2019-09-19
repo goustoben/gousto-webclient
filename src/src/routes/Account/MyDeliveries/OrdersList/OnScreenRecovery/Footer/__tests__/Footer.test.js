@@ -19,7 +19,7 @@ describe('On Screen Recovery Modal Footer', () => {
 
     test('should render snapshot', () => {
       const tree = renderer.create(
-        <Footer onKeep={mockKeepOrder} onConfirm={mockConfirmOrder} />
+        <Footer keepCopy='Keep Box' onKeep={mockKeepOrder} confirmCopy='Skip anyway' onConfirm={mockConfirmOrder} />
       ).toJSON()
 
       expect(tree).toMatchSnapshot()
@@ -45,7 +45,7 @@ describe('On Screen Recovery Modal Footer', () => {
 
     beforeAll(() => {
       wrapper = mount(
-        <Footer onKeep={mockKeepOrder} onConfirm={mockConfirmOrder} />
+        <Footer keepCopy='Keep Box' onKeep={mockKeepOrder} confirmCopy='Skip anyway' onConfirm={mockConfirmOrder} />
       )
     })
 
