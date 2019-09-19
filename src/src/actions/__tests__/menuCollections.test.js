@@ -2,9 +2,17 @@ import Immutable from 'immutable'
 
 import { fetchCollections } from 'apis/collections'
 import { featureSet } from 'actions/features'
-
+import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { menuLoadCollections } from 'actions/menuCollections'
+import { collectionFilterChange } from 'actions/filters'
 
+jest.mock('utils/collections', () => ({
+  getCollectionIdWithName: jest.fn(),
+  getDefaultCollectionId: jest.fn().mockReturnValue('defaultCollectionId'),
+}))
+jest.mock('actions/filters', () => ({
+  collectionFilterChange: jest.fn().mockReturnValue(()=> {}),
+}))
 jest.mock('apis/collections', () => ({
   fetchCollections: jest.fn(),
 }))
@@ -23,6 +31,8 @@ describe('menu actions', () => {
 
   describe('menuLoadCollections', () => {
     describe('when authenticated', () => {
+      // TODO: use only a single state setup script
+      // and update per test
       beforeEach(() => {
         getState.mockReturnValue({
           auth: Immutable.Map({
@@ -185,6 +195,90 @@ describe('menu actions', () => {
             },
           }
         )
+      })
+    })
+
+    describe('when previous location is set', () => {
+      let state
+      let getState2
+
+      beforeEach(() => {
+        state = {
+          auth: Immutable.Map({
+            accessToken: 'an-access-token',
+            isAuthenticated: true
+          }),
+          features: Immutable.fromJS({}),
+          routing: {
+            locationBeforeTransitions: {
+              query: {
+                collection: "everyday-favourites"
+              }
+            }
+          },
+          menuCollections: Immutable.fromJS({
+            'key1': {
+              slug: 'recommendations',
+              id: 'fakeRecommendationsId',
+            }
+          })
+        }
+
+        getState2 = () => state
+      })
+
+      afterEach(() => {
+        fetchCollections.mockReset()
+      })
+
+      test('should get collection using previous location', async () => {
+        fetchCollections.mockReturnValueOnce(Promise.resolve({
+          data: [{
+            id: 'all recipes collection',
+            slug: 'all-recipes',
+            properties: {
+              enabled: true,
+              limit: 25,
+              name: "All Recipes",
+            }
+          }],
+        }))
+
+        await menuLoadCollections('a-date')(dispatch, getState2)
+        expect(getCollectionIdWithName).toHaveBeenCalled()
+        expect(getDefaultCollectionId).toHaveBeenCalled()
+        expect(collectionFilterChange).toHaveBeenCalledWith('fakeRecommendationsId')
+
+      })
+
+      test('should use the default collection id if no preferredCollectionId is provided', async () => {
+
+        state = {
+          ...state,
+          menuCollections: Immutable.fromJS({
+            'key1': {
+              slug: 'fakeslug',
+              id: 'fakeId',
+            }
+          })
+        }
+
+        fetchCollections.mockReturnValueOnce(Promise.resolve({
+          data: [{
+            id: 'all recipes collection',
+            slug: 'all-recipes',
+            properties: {
+              enabled: true,
+              limit: 25,
+              name: "All Recipes",
+            }
+          }],
+        }))
+
+        await menuLoadCollections('a-date')(dispatch, getState2)
+        expect(getDefaultCollectionId).toHaveBeenCalled()
+        expect(collectionFilterChange).toHaveBeenCalledWith('defaultCollectionId')
+
       })
     })
   })

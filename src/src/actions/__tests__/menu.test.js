@@ -7,6 +7,9 @@ const mockGetRecipeStock = jest.fn()
 const mockLimitReached = jest.fn()
 const mockGetCutoffDateTime = jest.fn()
 
+const mockDispatchMenuLoadCollections = jest.fn()
+const mockDispatchmenuLoadCollectionsRecipes = jest.fn()
+
 jest.mock('apis/data', () => ({
   getAvailableDates: mockGetAvailableDates,
   getRecipeStock: mockGetRecipeStock
@@ -20,6 +23,15 @@ jest.mock('utils/deliveries', () => ({
   getCutoffDateTime: mockGetCutoffDateTime
 }))
 
+jest.mock('actions/menuCollections', () => ({
+  menuLoadCollections: () => {
+    return mockDispatchMenuLoadCollections
+  },
+  menuLoadCollectionsRecipes: () => {
+    return mockDispatchmenuLoadCollectionsRecipes
+  }
+}))
+
 jest.mock('apis/recipes', () => ({
   fetchRecipes: jest.fn().mockImplementation(() => {
     const getData = async () => ({ data: [{ id: '1234' }] })
@@ -29,8 +41,6 @@ jest.mock('apis/recipes', () => ({
 }))
 
 describe('menu actions', () => {
-  // this require here is so that the mock above is picked up correctly
-
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'
   const menuActions = require('../menu')
   const dispatch = jest.fn()
@@ -51,21 +61,20 @@ describe('menu actions', () => {
         coreDayId: '001'
       }
     }),
-    features: Immutable.fromJS({}),
+    features: Immutable.fromJS({
+      collections: {
+        value: false,
+      }
+    }),
   }
   const getState = () => state
 
   beforeEach(() => {
-    dispatch.mockReset()
-    fetchRecipes.mockClear()
-    mockGetAvailableDates.mockReset()
-
     mockGetAvailableDates.mockResolvedValue([
       { until: '2019-09-17T00:00:00+01:00' },
       { until: '2019-10-22T00:00:00+01:00' }
     ])
 
-    mockGetRecipeStock.mockReset()
     mockGetRecipeStock.mockResolvedValue({
       '001': {
         recipeId: '001',
@@ -74,6 +83,10 @@ describe('menu actions', () => {
         familyNumber: '100'
       }
     })
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   describe('menuLoadMenu', () => {
@@ -110,6 +123,24 @@ describe('menu actions', () => {
     test('should use date from state when cutoffDateTime is null', async () => {
       await menuActions.menuLoadMenu(null)(dispatch, getState)
       expect(mockGetCutoffDateTime).toHaveBeenCalled()
+    })
+
+    test('should load collections when collections.value is true', async () => {
+      const stateWithFalseCollectionValue = {
+        ...state,
+        features: Immutable.fromJS({
+          collections: {
+            value: true,
+          }
+        }),
+      }
+
+      const getStateForTest = () => stateWithFalseCollectionValue
+
+      await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
+
+      expect(mockDispatchMenuLoadCollections).toHaveBeenCalled()
+      expect(mockDispatchmenuLoadCollectionsRecipes).toHaveBeenCalled()
     })
   })
 

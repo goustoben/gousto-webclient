@@ -6,16 +6,13 @@ import * as boxPricesApi from 'apis/boxPrices'
 import { fetchOrder } from 'apis/orders'
 import { getCutoffDateTime } from 'utils/deliveries'
 import { limitReached } from 'utils/basket'
-import { fetchCollections, fetchCollectionRecipes } from 'apis/collections'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
-import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
+import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
 import menuConfig from 'config/menu'
-import { featureSet } from 'actions/features'
 import statusActions from './status'
-import { collectionFilterChange } from './filters'
 import { redirect } from './redirect'
 import products from './products'
 
@@ -43,7 +40,6 @@ const menuActions = {
   menuLoadDays,
   menuRecipeDetailVisibilityChange,
   menuFilterVegetarianChange,
-  menuLoadCollections,
   menuCollectionsReceive,
   menuAddEmptyStock,
   menuBrowseCTAVisibilityChange,
@@ -51,7 +47,6 @@ const menuActions = {
   menuReceiveCollectionRecipes,
   menuReceiveMenu,
   menuRecieveMenuPending,
-  menuLoadCollectionRecipes,
   menuLoadCollectionsRecipes,
   menuReceiveBoxPrices
 }
@@ -144,114 +139,6 @@ export function menuCollectionsReceive(collections) {
   return {
     type: actionTypes.MENU_COLLECTIONS_RECEIVE,
     collections,
-  }
-}
-
-export function menuLoadCollections(date, noUrlChange) {
-  return async (dispatch, getState) => {
-    const state = getState()
-    const accessToken = state.auth.get('accessToken')
-    const isAuthenticated = state.auth.get('isAuthenticated')
-    const experiments = (isAuthenticated) ? {
-      experiments: {
-        'justforyou_v2': true,
-      },
-    } : {}
-    const args = {
-      filters: {
-        available_on: date,
-      },
-      ...experiments,
-    }
-    const { data: collections } = await fetchCollections(accessToken, '', args)
-    const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
-    if (recommendationCollection && recommendationCollection.properties) {
-      const { tutorial, shortlist } = recommendationCollection.properties
-      const tutorialEnabled = (tutorial && tutorial === 'jfy') || false
-      const shortlistEnabled = shortlist || false
-
-      dispatch(featureSet('jfyTutorial', tutorialEnabled))
-      dispatch(featureSet('shortlist', shortlistEnabled))
-    }
-    const filterExperiment = state.features.getIn(['dietaryQuickFilter', 'value'])
-    const collectionsFiltered = filterExperiment ?
-      collections.filter(collection => (!['dairy-free', 'gluten-free'].includes(collection.slug)))
-      :
-      collections
-    dispatch(menuActions.menuCollectionsReceive(collectionsFiltered))
-    if (!noUrlChange) {
-      let changeCollection = true
-      const prevLoc = getState().routing.locationBeforeTransitions
-      if (prevLoc && prevLoc.query && prevLoc.query.collection) {
-        if (getCollectionIdWithName(getState(), prevLoc.query.collection)) {
-          changeCollection = false
-        }
-      }
-      const preferredCollection = Immutable.Iterable.isIterable(getState().features) ? getState().features.getIn(['preferredCollection', 'value']) : ''
-      const preferredCollectionId = getCollectionIdWithName(getState(), preferredCollection)
-
-      if (changeCollection && getState().menuCollections.size > 0) {
-        const recommendations = getState().menuCollections.find(collection => collection.get('slug') === 'recommendations')
-        let landingCollectionId = preferredCollectionId || getDefaultCollectionId(getState())
-
-        if (recommendations) {
-          landingCollectionId = recommendations.get('id')
-        }
-        collectionFilterChange(landingCollectionId)(dispatch, getState)
-      }
-    }
-  }
-}
-
-export function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
-  return async (dispatch, getState) => {
-    const state = getState()
-    const { features } = state
-    const menuId = features.getIn(['menu_id', 'value'])
-    const accessToken = state.auth.get('accessToken')
-    const reqData = {
-      includes: ['ingredients', 'allergens', 'taxonomy'],
-    }
-    if (!!menuId) {
-      reqData['filters[menu_id]'] = menuId
-    } else {
-      reqData['filters[available_on]'] = date
-    }
-
-    if (idsOnly) {
-      reqData['fields[]'] = 'id'
-    }
-    const { data: items } = await fetchCollectionRecipes(accessToken, collectionId, reqData)
-    if (items.recipes) {
-      dispatch(menuActions.menuReceiveCollectionRecipes(collectionId, items.recipes))
-    }
-    if (!idsOnly) {
-      dispatch(menuActions.menuReceiveMenu(items.recipes))
-    }
-  }
-}
-
-export function menuLoadCollectionsRecipes(date) {
-  return (dispatch, getState) => {
-    const allRecipesCollections = getState().menuCollections.filter(isAllRecipes)
-    const ids = Array.from(getState().menuCollections.keys())
-
-    let allRecipesCollectionId
-    if (allRecipesCollections.size > 0) {
-      allRecipesCollectionId = allRecipesCollections.first().get('id')
-    }
-
-    return Promise.all(
-      ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
-    )
-      .then(() => {
-        const state = getState()
-        const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock)
-        dispatch({
-          type: actionTypes.BASKET_LIMIT_REACHED,
-          limitReached: reachedLimit,
-        })
-      })
   }
 }
 
