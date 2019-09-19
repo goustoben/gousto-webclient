@@ -12,7 +12,6 @@ import Loading from '../Loading'
 import { Banner } from '../Banner'
 
 const propTypes = {
-  features: PropTypes.instanceOf(Immutable.Map),
   fadeCss: PropTypes.string,
   showLoading: PropTypes.bool,
   filteredRecipesNumber: PropTypes.number,
@@ -26,30 +25,59 @@ const propTypes = {
   showDetailRecipe: PropTypes.func,
   setThematic: PropTypes.func,
   toggleGridView: PropTypes.func,
+  selectCurrentCollection: PropTypes.func,
+  detailVisibilityChange: PropTypes.func
 }
 
 class MenuRecipes extends PureComponent {
+
+  componentWillReceiveProps(nextProps) {
+    const { menuRecipeDetailShow } = this.props
+    if (nextProps.menuRecipeDetailShow && !menuRecipeDetailShow) {
+      window.document.addEventListener('keyup', this.handleKeyup, false)
+    } else if (!nextProps.menuRecipeDetailShow) {
+      window.document.removeEventListener('keyup', this.handleKeyup, false)
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { menuCurrentCollectionId, selectCurrentCollection } = this.props
+    if (prevProps.menuCurrentCollectionId !== menuCurrentCollectionId) {
+      selectCurrentCollection(menuCurrentCollectionId)
+    }
+  }
+
+  componentWillUnmount() {
+    window.document.removeEventListener('keyup', this.handleKeyup, false)
+  }
+
+  handleKeyup = (e) => {
+    const { detailVisibilityChange } = this.props
+    if (e.type === 'keyup' && e.keyCode && e.keyCode === 27) {
+      detailVisibilityChange(false)
+    }
+  }
+
   renderBanner = (switchoverDate) => {
-    const { setThematic, features } = this.props
+    const { setThematic } = this.props
     const now = moment()
     const switchoverTime = moment(switchoverDate)
-    const thematicFeatureFlag = features.getIn(['thematic', 'value'])
-    if(thematicFeatureFlag) {
+    const thematicFeatureFlag = false
+    if (thematicFeatureFlag) {
       return (
         <Banner imageName={'menu/10min-banner-gel-02.jpg'} type={'ten-min'} collectionSlug={'10-minute-meals'} setThematic={setThematic} />
       )
     } else {
 
       return (now.isSameOrAfter(switchoverTime, 'hour')) ? (
-        <Banner imageName={'menu/10min-banner-gel-02.jpg'} type={'ten-min'}/>
+        <Banner imageName={'menu/10min-banner-gel-02.jpg'} type={'ten-min'} />
       ) :
-        ( <Banner type={'summer-bbq'} imageName={'summerGel-min.png'}/>)
+        (<Banner type={'summer-bbq'} imageName={'summerGel-min.png'} />)
     }
   }
 
   render() {
     const {
-      features,
       fadeCss,
       showLoading,
       filteredRecipesNumber,
@@ -64,9 +92,6 @@ class MenuRecipes extends PureComponent {
       toggleGridView,
     } = this.props
 
-    const collectionsNavEnabled = features.getIn(['forceCollections', 'value']) || (features.getIn(['collections', 'value']) && (features.getIn(['collectionsNav', 'value']) !== false))
-    const menuFilterExperiment = features.getIn(['filterMenu', 'value'])
-
     return (
       <div className={fadeCss} data-testing="menuRecipes">
         {this.renderBanner(menu.tenMin.switchoverDate)}
@@ -76,7 +101,7 @@ class MenuRecipes extends PureComponent {
           orderId={orderId}
         />
         <Loading loading={showLoading} hasRecommendations={hasRecommendations} />
-        {!showLoading && collectionsNavEnabled &&
+        {!showLoading &&
           <CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={menuCurrentCollectionId} />}
         {!showLoading && <FilterTagsNav />}
         {filteredRecipesNumber ?
@@ -85,7 +110,6 @@ class MenuRecipes extends PureComponent {
             showDetailRecipe={showDetailRecipe}
             menuCurrentCollectionId={menuCurrentCollectionId}
             menuRecipeDetailShow={menuRecipeDetailShow}
-            menuFilterExperiment={menuFilterExperiment}
             isClient={isClient}
           />
           :

@@ -1,1 +1,1 @@
-export { MenuRecipes } from './MenuRecipes'
+export { MenuRecipesContainer as MenuRecipes } from './MenuRecipesContainer'
