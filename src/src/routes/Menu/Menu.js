@@ -299,8 +299,8 @@ class Menu extends React.PureComponent {
       const newItemChoices = [...itemChoices]
       products.forEach(product => {
         newItemChoices.push({
-          id: product.id,
-          quantity: product.quantity,
+          id: product.id || product.get('id'),
+          quantity: product.quantity || product.get('quantity'),
           type: "Product"
         })
       })
