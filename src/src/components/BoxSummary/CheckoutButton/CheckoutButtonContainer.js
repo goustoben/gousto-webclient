@@ -4,7 +4,6 @@ import actions from 'actions'
 import { getSlot } from 'utils/deliveries'
 import actionTypes from 'actions/actionTypes'
 import { checkoutTransactionalOrder } from 'actions/checkout'
-
 import CheckoutButton from './CheckoutButton'
 
 function getCoreSlotId(deliveryDays, date, slotId) {

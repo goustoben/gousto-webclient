@@ -11,7 +11,7 @@ import {
   getPromoBannerText,
   getPromoBannerCode,
   getShortlist,
-  isNDDFeatureEnabled
+  isNDDFeatureEnabled,
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -288,3 +288,4 @@ describe('when features are defined', () => {
     })
   })
 })
+
