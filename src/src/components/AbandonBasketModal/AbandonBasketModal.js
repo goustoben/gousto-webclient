@@ -21,8 +21,6 @@ class AbandonBasketModal extends PureComponent {
     recipes: PropTypes.instanceOf(Immutable.Map),
     orderDate: PropTypes.string,
     numPortions: PropTypes.number,
-    isFeatureFlagEnabled: PropTypes.bool,
-    isFirstViewOfSession: PropTypes.bool,
     trackAbandonBasketEligibility: PropTypes.func,
     trackAbandonBasketContinueToMenu: PropTypes.func,
     redirect: PropTypes.func.isRequired,
@@ -37,9 +35,7 @@ class AbandonBasketModal extends PureComponent {
     recipes: Immutable.Map(),
     orderDate: '',
     numPortions: 0,
-    isFirstViewOfSession: false,
     isUserOrdersPending: true,
-    isFeatureFlagEnabled: false,
     trackAbandonBasketEligibility: () => { },
     trackAbandonBasketContinueToMenu: () => { }
   }
@@ -94,17 +90,17 @@ class AbandonBasketModal extends PureComponent {
   }
 
   showModal = () => {
-    const { isFirstViewOfSession, basketRecipes, orders, deliveryDays, orderDate, isFeatureFlagEnabled, trackAbandonBasketEligibility } = this.props
+    const { basketRecipes, orders, deliveryDays, orderDate, trackAbandonBasketEligibility } = this.props
 
     const recipesInBasket = basketRecipes.size > 0
     const confirmedOrderOnDay = this.getConfirmedOrdersOnDay()
     const hasNoOrderOnDay = !!orders.size && confirmedOrderOnDay.size === 0
     const isValidDeliveryDay = deliveryDays.has(orderDate)
-    const eligibleForAbandonBasket = isFirstViewOfSession && recipesInBasket && hasNoOrderOnDay && isValidDeliveryDay
+    const eligibleForAbandonBasket = recipesInBasket && hasNoOrderOnDay && isValidDeliveryDay
 
     if (eligibleForAbandonBasket) trackAbandonBasketEligibility()
 
-    return isFeatureFlagEnabled && eligibleForAbandonBasket
+    return eligibleForAbandonBasket
   }
 
   closeModal = () => {
