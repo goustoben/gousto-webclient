@@ -1,10 +1,11 @@
 import Immutable from 'immutable'
-import { fetchCollections, fetchCollectionRecipes } from 'apis/collections'
+import { fetchCollections } from 'apis/collections'
 import { featureSet } from 'actions/features'
 import { limitReached } from 'utils/basket'
 import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
-import { menuCollectionsReceive, menuReceiveCollectionRecipes, menuReceiveMenu } from 'actions/menu'
+import { menuCollectionsReceive } from 'actions/menu'
 import { collectionFilterChange } from 'actions/filters'
+import { menuLoadCollectionRecipes } from 'actions/menuLoadCollectionRecipes'
 import actionTypes from './actionTypes'
 
 export const menuLoadCollections = (date, noUrlChange) => {
@@ -66,7 +67,7 @@ export const menuLoadCollections = (date, noUrlChange) => {
   }
 }
 
-export const menuLoadCollectionsRecipes= (date) => {
+export const menuLoadCollectionsRecipes = (date) => {
   return (dispatch, getState) => {
     const allRecipesCollections = getState().menuCollections.filter(isAllRecipes)
     const ids = Array.from(getState().menuCollections.keys())
@@ -87,33 +88,5 @@ export const menuLoadCollectionsRecipes= (date) => {
           limitReached: reachedLimit,
         })
       })
-  }
-}
-
-export function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
-  return async (dispatch, getState) => {
-    const state = getState()
-    const { features } = state
-    const menuId = features.getIn(['menu_id', 'value'])
-    const accessToken = state.auth.get('accessToken')
-    const reqData = {
-      includes: ['ingredients', 'allergens', 'taxonomy'],
-    }
-    if (!!menuId) {
-      reqData['filters[menu_id]'] = menuId
-    } else {
-      reqData['filters[available_on]'] = date
-    }
-
-    if (idsOnly) {
-      reqData['fields[]'] = 'id'
-    }
-    const { data: items } = await fetchCollectionRecipes(accessToken, collectionId, reqData)
-    if (items.recipes) {
-      dispatch(menuReceiveCollectionRecipes(collectionId, items.recipes))
-    }
-    if (!idsOnly) {
-      dispatch(menuReceiveMenu(items.recipes))
-    }
   }
 }
