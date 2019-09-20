@@ -79,7 +79,7 @@ class AbandonBasketModal extends PureComponent {
     await AbandonBasketModal.fetchData({ store })
     getAbandonBasketSessionState()
     this.setState({ showModal: this.showModal() })
-    window.sessionStorage.setItem('isFirstLoadOfSession', false)
+    window.sessionStorage.setItem('isNotFirstLoadOfSession', true)
   }
 
   getConfirmedOrdersOnDay = () => {

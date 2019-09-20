@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
   features: state.features,
   fromJoin: getUserFromJoin(state),
   forceSignupWizardFeature: getForceSignupWizard(state),
-  shouldShowAbandonBasketModal: getAbandonBasket(state),
+  abandonBasketFeature: getAbandonBasket(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {
