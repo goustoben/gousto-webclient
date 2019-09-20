@@ -2,14 +2,18 @@ import Immutable from 'immutable'
 
 import { fetchCollections } from 'apis/collections'
 import { featureSet } from 'actions/features'
-import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
-import { menuLoadCollections } from 'actions/menuCollections'
+import { limitReached } from 'utils/basket'
+import { getCollectionIdWithName, getDefaultCollectionId, isAllRecipes } from 'utils/collections'
+import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
+import { menuLoadCollectionRecipes } from 'actions/menuLoadCollectionRecipes'
 import { collectionFilterChange } from 'actions/filters'
 
 jest.mock('utils/collections', () => ({
   getCollectionIdWithName: jest.fn(),
   getDefaultCollectionId: jest.fn().mockReturnValue('defaultCollectionId'),
+  isAllRecipes: jest.fn().mockReturnValue(true)
 }))
+
 jest.mock('actions/filters', () => ({
   collectionFilterChange: jest.fn().mockReturnValue(()=> {}),
 }))
@@ -18,6 +22,16 @@ jest.mock('apis/collections', () => ({
 }))
 jest.mock('actions/features', () => ({
   featureSet: jest.fn(),
+}))
+jest.mock('actions/menuLoadCollectionRecipes', () => ({
+  menuLoadCollectionRecipes: jest.fn().mockImplementation(() => {
+    return () => {
+      return Promise.resolve()
+    }
+  })
+}))
+jest.mock('utils/basket', () => ({
+  limitReached: jest.fn(),
 }))
 
 describe('menu actions', () => {
@@ -280,6 +294,38 @@ describe('menu actions', () => {
         expect(collectionFilterChange).toHaveBeenCalledWith('defaultCollectionId')
 
       })
+    })
+  })
+
+  describe('menuLoadCollectionsRecipes', () => {
+    let getState2
+
+    beforeEach(() => {
+      getState2 = () => ({
+        auth: Immutable.Map({
+          accessToken: 'an-access-token',
+          isAuthenticated: true
+        }),
+        features: Immutable.fromJS({}),
+        routing: {},
+        menuCollections: Immutable.OrderedMap({
+          123: Immutable.Map({ id: '123', shortTitle: 'allrecipes' })
+        }),
+        basket: Immutable.fromJS({
+          date: '2016-06-23',
+          slotId: '123-123-uuid',
+        }),
+        recipes: Immutable.fromJS({}),
+      })
+    })
+
+    test('calls menuLoadCollectionRecipes for each menuCollection in state', async () => {
+      const functToRun = menuLoadCollectionsRecipes('a-date')
+      await functToRun(dispatch, getState2)
+
+      expect(isAllRecipes).toHaveBeenCalled()
+      expect(menuLoadCollectionRecipes).toHaveBeenCalled()
+      expect(limitReached).toHaveBeenCalled()
     })
   })
 })
