@@ -8,22 +8,22 @@ describe('abandon basket reducer', () => {
   })
 
   describe('SET_FIRST_LOAD_OF_SESSION', () => {
-    test('isFirstLoadOfSession set to true in the state', () => {
+    test('isNotFirstLoadOfSession set to true in the state', () => {
       const result = abandonBasket.abandonBasket(initialState, {
         type: actionTypes.SET_FIRST_LOAD_OF_SESSION,
         value: true
       })
 
-      expect(result.get('isFirstLoadOfSession')).toEqual(true)
+      expect(result.get('isNotFirstLoadOfSession')).toEqual(true)
     })
 
-    test('isFirstLoadOfSession set to false in the state', () => {
+    test('isNotFirstLoadOfSession set to false in the state', () => {
       const result = abandonBasket.abandonBasket(initialState, {
         type: actionTypes.SET_FIRST_LOAD_OF_SESSION,
         value: false
       })
 
-      expect(result.get('isFirstLoadOfSession')).toEqual(false)
+      expect(result.get('isNotFirstLoadOfSession')).toEqual(false)
     })
   })
 })

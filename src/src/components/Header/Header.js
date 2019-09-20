@@ -56,6 +56,7 @@ class Header extends React.PureComponent {
     title: '',
     small: false,
     trackNavigationClick: () => { },
+    abandonBasketFeature: false,
   }
 
   constructor(props) {
@@ -311,7 +312,7 @@ class Header extends React.PureComponent {
     const desktopMenuItems = this.getMenuItems('desktop', path)
     let hasUserStartedNewSession
     if (__CLIENT__) {
-      hasUserStartedNewSession = window.sessionStorage.getItem('isNotFirstLoadOfSession') !== true
+      hasUserStartedNewSession = !!window.sessionStorage.getItem('isNotFirstLoadOfSession') !== true
     }
     const shouldShowAbandonBasketModal = abandonBasketFeature && hasUserStartedNewSession
 

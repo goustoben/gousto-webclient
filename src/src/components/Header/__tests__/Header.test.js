@@ -24,14 +24,6 @@ jest.mock('routes/Account/Account', () => 'Account')
 jest.mock('routes/Account/Subscription/SubscriptionPause', () => 'SubscriptionPause')
 jest.mock('routes/Account/MyDeliveries/OrdersList/OnScreenRecovery', () => 'OnScreenRecovery')
 
-// const sessionStorageMock = {
-//   getItem: jest.fn(),
-//   setItem: jest.fn(),
-//   clear: jest.fn()
-// }
-
-// window.sessionStorage = sessionStorageMock
-
 describe('Header', () => {
   const config = {
     routes: {
@@ -118,9 +110,9 @@ describe('Header', () => {
       expect(wrapper.find(CookieBanner).length).toBe(1)
     })
 
-    test('should render one <AbandonBasketModal /> if feature flag is set to true and abandon basket session storage value is null', () => {
-      if (window.sessionStorage.getItem('isFirstLoadOfSession')) {
-        window.sessionStorage.removeItem('isFirstLoadOfSession', null)
+    test('should render one <AbandonBasketModal /> if feature flag is set to true and isNotFirstLoadOfSession is not set to true', () => {
+      if (window.sessionStorage.getItem('isNotFirstLoadOfSession')) {
+        window.sessionStorage.removeItem('isNotFirstLoadOfSession')
       }
       wrapper = shallow(<Header abandonBasketFeature />)
       expect(wrapper.find(AbandonBasketModal).length).toBe(1)
@@ -300,11 +292,10 @@ describe('Header', () => {
 
   describe('render MobileMenu with the right paths when not authenticated', () => {
     let wrapper
-    let isAuthenticated
+    const isAuthenticated = false
 
     beforeEach(() => {
       wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} />)
-      isAuthenticated = false
     })
 
     test('should render menu items in correct order when logged out', () => {
