@@ -11,12 +11,13 @@ jest.mock('utils/fetch', () =>
 )
 
 jest.mock('config/endpoint', () =>
-  jest.fn().mockReturnValue('gousto-endpoint')
+  jest.fn().mockImplementation((service, version = '') => `endpoint-${service}${version}`)
 )
 
 jest.mock('config/routes', () => ({
   version: {
     recipes: 'v2',
+    orders: 'v2'
   },
   recipes: {
     availableDates: '/dates/available',
@@ -40,7 +41,7 @@ describe('recipes', () => {
       const reqData = { a: 1, b: 2 }
       await fetchRecipes('token', 'path', reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'gousto-endpoint/recipes/path', reqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-recipesv2/recipes/path', reqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -53,7 +54,7 @@ describe('recipes', () => {
     test('should fetch the correct url', async () => {
       await fetchAvailableDates('token')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'gousto-endpoint/dates/available', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-recipesv2/dates/available', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -66,7 +67,7 @@ describe('recipes', () => {
     test('should fetch the correct url', async () => {
       await fetchRecipeStock('token', 'day-id')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'gousto-endpoint/delivery_day/day-id/stock', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-core/delivery_day/day-id/stock', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -79,7 +80,7 @@ describe('recipes', () => {
     test('should fetch the correct url', async () => {
       await fetchRecipesStockByPeriod('period-id')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'gousto-endpoint/recipe-stock', { period_id: 'period-id' }, 'GET')
+      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-core/recipe-stock', { period_id: 'period-id' }, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -93,7 +94,7 @@ describe('recipes', () => {
       const reqData = { a: 1, b: 2 }
       await fetchRecipesStockByDate(reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(null, 'gousto-endpoint/recipe-stock', reqData, 'GET')
+      expect(fetch).toHaveBeenCalledWith(null, 'endpoint-ordersv2/recipe-stock', reqData, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -106,7 +107,7 @@ describe('recipes', () => {
     test('should fetch the correct url', async () => {
       await fetchRecommendations('token')
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'gousto-endpoint/recommendations', {}, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-recipesv2/recommendations', {}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
