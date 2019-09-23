@@ -4,8 +4,13 @@ import actionTypes from 'actions/actionTypes'
 import loginActions from 'actions/login'
 import { isActive, isAdmin } from 'utils/auth'
 import { documentLocation, redirect } from 'utils/window'
+import pricingActions from '../pricing'
 import statusActions from '../status'
 import authActions from '../auth'
+
+jest.mock('../pricing', () => ({
+  pricingRequest: jest.fn()
+}))
 
 jest.mock('../status', () => ({
   pending: jest.fn(),
@@ -61,6 +66,7 @@ describe('login actions', () => {
       })
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true)
       expect(authActions.authIdentify).toHaveBeenCalled()
+      expect(pricingActions.pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -78,6 +84,7 @@ describe('login actions', () => {
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true)
       expect(authActions.authIdentify).toHaveBeenCalled()
+      expect(pricingActions.pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -96,6 +103,7 @@ describe('login actions', () => {
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true)
       expect(authActions.authIdentify).toHaveBeenCalled()
+      expect(pricingActions.pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
@@ -112,6 +120,8 @@ describe('login actions', () => {
       expect(statusActions.pending).toHaveBeenCalledTimes(2)
       expect(statusActions.error).toHaveBeenCalledTimes(1)
       expect(authActions.authAuthenticate).toHaveBeenCalledWith('email', 'password', true)
+      expect(authActions.authIdentify).toHaveBeenCalled()
+      expect(pricingActions.pricingRequest).toHaveBeenCalled()
       expect(isActive).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(isAdmin).toHaveBeenCalledWith(Immutable.fromJS(['user']))
       expect(authActions.userRememberMe).toHaveBeenCalledWith(true)
