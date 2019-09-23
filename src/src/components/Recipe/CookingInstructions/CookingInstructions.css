@@ -1,4 +1,14 @@
 @value Bluecheese from 'styles/colors.css';
+@value SpacingLG from 'styles/spacing.css';
+
+.insetHeading {
+  composes: paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+  padding-bottom: SpacingLG;
+}
+
+.heading {
+  composes: headerLG headlineFont from 'styles/typography.css';
+}
 
 .highlightText {
   color: Bluecheese;

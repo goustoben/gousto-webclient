@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import cookbookActions from 'actions/cookbook'
-import { CookingInstructions } from './CookingInstructions'
 import { getRecipeSteps } from 'selectors/cookingInstructions'
+import { CookingInstructions } from './CookingInstructions'
 
 function mapStateToProps(state, ownProps) {
   return {
