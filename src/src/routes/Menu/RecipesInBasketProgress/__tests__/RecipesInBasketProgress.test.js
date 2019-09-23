@@ -6,16 +6,20 @@ import { RecipesInBasketProgress } from '..'
 
 describe('RecipesInBasketProgress Component', () => {
   let wrapper
+  let PROPS = {
+    isAuthenticated: false,
+    selectedRecipesCount: 0,
+  }
 
   beforeEach(() => {
     wrapper = mount(
-      <RecipesInBasketProgress selectedRecipesCount={0} />
+      <RecipesInBasketProgress {...PROPS} />
     )
   })
 
   test('renders without crashing', () => {
     const div = document.createElement('div')
-    ReactDOM.render(<RecipesInBasketProgress selectedRecipesCount={0} />, div)
+    ReactDOM.render(<RecipesInBasketProgress {...PROPS} />, div)
   })
 
   describe('when no recipes are selected', () => {

@@ -13,13 +13,14 @@ import BoxProgressMessage from 'routes/Menu/BoxProgressMessage'
 import css from './RecipesInBasketProgress.css'
 
 const propTypes = {
-  selectedRecipesCount: PropTypes.number.isRequired,
-  percentage: PropTypes.number.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   isBasketFull: PropTypes.bool.isRequired,
+  percentage: PropTypes.number.isRequired,
+  selectedRecipesCount: PropTypes.number.isRequired,
 }
 
 const RecipesInBasketProgressPresentation = (
-  { selectedRecipesCount, percentage, isBasketFull }
+  { isAuthenticated, isBasketFull, percentage, selectedRecipesCount }
 ) => {
   const cardClasses = classnames(
     css.cardContentWrapper,

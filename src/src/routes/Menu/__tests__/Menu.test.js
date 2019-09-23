@@ -158,6 +158,10 @@ describe('Menu', () => {
         test('should have the correct number of selected recipes', () => {
           expect(recipesInBasketProgress.prop('selectedRecipesCount')).toBe(3)
         })
+
+        test('has the isAuthenticated prop passed to it', () => {
+          expect(recipesInBasketProgress.prop('isAuthenticated')).toBe(requiredProps.isAuthenticated)
+        })
       })
     })
 
