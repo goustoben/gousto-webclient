@@ -22,6 +22,7 @@ import Unsubscribe from './Unsubscribe'
 import GetHelp from './GetHelp'
 import OrderConfirmation from './OrderConfirmation'
 import PrivacyStatement from './PrivacyStatement'
+import ChoosePlan from './ChoosePlan'
 
 export default (store) => (
   <Route path="/" component={Page}>
@@ -44,6 +45,7 @@ export default (store) => (
       {Welcome(store)}
       {Account(store)}
       {OrderConfirmation(store)}
+      {ChoosePlan}
     </Route>
 
     {Checkout(store)}

@@ -35,6 +35,7 @@ module.exports = {
     boxPrices: '/box-prices',
     checkout: '/checkout',
     'check-out': '/check-out',
+    choosePlan: '/choose-subscription-plan',
     cookbook: '/cookbook',
 
     myGousto2: '/mygousto',
