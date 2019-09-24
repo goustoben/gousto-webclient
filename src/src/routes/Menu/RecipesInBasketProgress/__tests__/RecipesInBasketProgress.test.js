@@ -289,4 +289,46 @@ describe('RecipesInBasketProgress Component', () => {
       })
     })
   })
+
+  describe('when more than one recipe is selected', () => {
+    beforeEach(() => {
+      wrapper.setProps({ selectedRecipesCount: 1 })
+    })
+
+    test('does not render the ExtraInfo component', () => {
+      expect(wrapper.find('ExtraInfo').exists()).toBe(false)
+    })
+
+    describe('and isAuthenticated is set to false', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isAuthenticated: false })
+      })
+
+      test('does not render the ExtraInfo component', () => {
+        expect(wrapper.find('ExtraInfo').exists()).toBe(false)
+      })
+
+      test('renders the RecipesProgressBar inside FloatCard', () => {
+        expect(wrapper.find('FloatCard').find('RecipesProgressBar').exists()).toBe(true)
+      })
+    })
+
+    describe('and isAuthenticated is set to true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ isAuthenticated: true })
+      })
+
+      test('renders the ExtraInfo component inside the FloatCard', () => {
+        expect(wrapper.find('FloatCard').find('ExtraInfo').exists()).toBe(true)
+      })
+
+      test('renders the RecipesProgressBar component inside ExtraInfoMain', () => {
+        expect(wrapper.find('ExtraInfoMain').find('RecipesProgressBar').exists()).toBe(true)
+      })
+
+      test('does not render the RecipesProgressBar outside ExtraInfo', () => {
+        expect(wrapper.find('RecipesProgressBar').length).toBe(1)
+      })
+    })
+  })
 })

@@ -5,6 +5,13 @@
 
 .cardContentWrapper {
 	min-height: CardHeight;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.cardContentWrapper > * {
+	width: 100%;
 }
 
 .cardContentWrapperFull {
@@ -50,4 +57,13 @@
 	margin-right: 1rem;
 	vertical-align: middle;
 	composes: fa-basic-class fa-check-circle-o from 'styles/vendor/font-awesome-module.css';
+}
+
+.wrapExtraInfo {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.extraInfo {
+  font-size: 0.75rem;
 }
