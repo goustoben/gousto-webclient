@@ -76,8 +76,10 @@ const defaultFeatures = () => ({
   },
 })
 
+const initialState = () => Immutable.fromJS(defaultFeatures())
+
 const featureToggles = {
-  features: (state = Immutable.fromJS(defaultFeatures()), action) => {
+  features: (state = initialState(), action) => {
     switch (action.type) {
     case actionTypes.FEATURE_SET:
       return state.set(action.feature, Immutable.fromJS({
@@ -90,5 +92,5 @@ const featureToggles = {
   },
 }
 
-export { defaultFeatures }
+export { defaultFeatures, initialState }
 export default featureToggles

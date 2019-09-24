@@ -2,8 +2,10 @@ import actionTypes from 'actions/actionTypes'
 import Immutable from 'immutable'
 /* eslint-disable new-cap */
 
+const initialState = () => Immutable.Map({ browser: 'desktop' })
+
 const request = {
-  request: (state = Immutable.Map({ browser: 'desktop' }), { type, userAgent, browserType }) => {
+  request: (state = initialState(), { type, userAgent, browserType }) => {
     switch (type) {
     case actionTypes.BROWSER_SET_USER_AGENT:
       return state.set('userAgent', userAgent)
@@ -16,4 +18,5 @@ const request = {
   },
 }
 
+export { initialState }
 export default request
