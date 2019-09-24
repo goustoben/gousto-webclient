@@ -10,7 +10,7 @@ describe('abandon basket actions', () => {
 
   describe('getAbandonBasketSessionState', () => {
     test('it should dispatch an action SET_FIRST_LOAD_OF_SESSION with true', () => {
-      window.sessionStorage.setItem('isFirstLoadOfSession', true)
+      window.sessionStorage.setItem('isNotFirstLoadOfSession', true)
 
       getAbandonBasketSessionState()(dispatchSpy)
 
@@ -18,7 +18,7 @@ describe('abandon basket actions', () => {
     })
 
     test('it should dispatch an action SET_FIRST_LOAD_OF_SESSION with false', () => {
-      window.sessionStorage.setItem('isFirstLoadOfSession', false)
+      window.sessionStorage.setItem('isNotFirstLoadOfSession', false)
 
       getAbandonBasketSessionState()(dispatchSpy)
 

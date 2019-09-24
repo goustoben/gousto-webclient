@@ -1,1 +1,1 @@
-export const getAbandonBasketShow = ({ abandonBasket }) => abandonBasket.get('isFirstLoadOfSession')
+export const getAbandonBasketShow = ({ abandonBasket }) => abandonBasket.get('isNotFirstLoadOfSession')

@@ -43,7 +43,7 @@ class Header extends React.PureComponent {
     title: PropTypes.string,
     small: PropTypes.bool,
     forceSignupWizardFeature: PropTypes.bool,
-    shouldShowAbandonBasketModal: PropTypes.bool,
+    abandonBasketFeature: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
   }
 
@@ -56,7 +56,7 @@ class Header extends React.PureComponent {
     title: '',
     small: false,
     trackNavigationClick: () => { },
-    shouldShowAbandonBasketModal: false,
+    abandonBasketFeature: false,
   }
 
   constructor(props) {
@@ -300,7 +300,7 @@ class Header extends React.PureComponent {
       loginOpen,
       path,
       trackNavigationClick,
-      shouldShowAbandonBasketModal
+      abandonBasketFeature,
     } = this.props
     const { mobileMenuOpen, loginPending } = this.state
     const { fromWizard } = this.handleQuery()
@@ -310,6 +310,11 @@ class Header extends React.PureComponent {
     const mobileMenuItems = this.getMenuItems('mobile', path)
     const homeElementMobile = mobileMenuItems.find(item => (item.name === 'Home'))
     const desktopMenuItems = this.getMenuItems('desktop', path)
+    let hasUserStartedNewSession
+    if (__CLIENT__) {
+      hasUserStartedNewSession = !!window.sessionStorage.getItem('isNotFirstLoadOfSession') !== true
+    }
+    const shouldShowAbandonBasketModal = abandonBasketFeature && hasUserStartedNewSession
 
     if (simple && !isAuthenticated) {
       return (

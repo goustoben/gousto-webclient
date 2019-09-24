@@ -97,20 +97,24 @@ describe('Header', () => {
           simpleHeader: false,
         })
       }
-      wrapper = shallow(<Header />, { context: { store } })
     })
 
     test('should return a <div>', () => {
 
+      wrapper = shallow(<Header />, { context: { store } })
       expect(wrapper.type()).toEqual('div')
     })
 
     test('should render one <CookieBanner />', () => {
+      wrapper = shallow(<Header />, { context: { store } })
       expect(wrapper.find(CookieBanner).length).toBe(1)
     })
 
-    test('should render one <AbandonBasketModal /> if feature flag is set to true', () => {
-      wrapper = shallow(<Header shouldShowAbandonBasketModal />)
+    test('should render one <AbandonBasketModal /> if feature flag is set to true and isNotFirstLoadOfSession is not set to true', () => {
+      if (window.sessionStorage.getItem('isNotFirstLoadOfSession')) {
+        window.sessionStorage.removeItem('isNotFirstLoadOfSession')
+      }
+      wrapper = shallow(<Header abandonBasketFeature />)
       expect(wrapper.find(AbandonBasketModal).length).toBe(1)
     })
 
@@ -216,7 +220,10 @@ describe('Header', () => {
   })
 
   describe('render MobileMenu with the right paths when authenticated', () => {
-    const wrapper = shallow(<Header isAuthenticated config={config} trackNavigationClick={jest.fn()} />)
+    let wrapper
+    beforeEach(() => {
+      wrapper = shallow(<Header isAuthenticated config={config} trackNavigationClick={jest.fn()} />)
+    })
     test('should render menu items in correct order when logged in', () => {
       const expected = [
         {
@@ -284,8 +291,13 @@ describe('Header', () => {
   })
 
   describe('render MobileMenu with the right paths when not authenticated', () => {
+    let wrapper
     const isAuthenticated = false
-    const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} />)
+
+    beforeEach(() => {
+      wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} />)
+    })
+
     test('should render menu items in correct order when logged out', () => {
       const expected = [
         {

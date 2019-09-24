@@ -92,7 +92,7 @@ describe('Abandon Basket Modal', () => {
 
   describe('render', () => {
     beforeEach(async () => {
-      wrapper = shallow(<AbandonBasketModal redirect={jest.fn()} getAbandonBasketSessionState={jest.fn()} basketRecipesClear={jest.fn()} basketRecipes={basketRecipes} recipes={recipes}/>)
+      wrapper = shallow(<AbandonBasketModal redirect={jest.fn()} getAbandonBasketSessionState={jest.fn()} basketRecipesClear={jest.fn()} basketRecipes={basketRecipes} recipes={recipes} />)
     })
 
     test('should render a modal if showModal state is true and basket recipes exist in recipes object', () => {
@@ -139,8 +139,6 @@ describe('Abandon Basket Modal', () => {
           redirect={jest.fn()}
           getAbandonBasketSessionState={jest.fn()}
           basketRecipesClear={jest.fn()}
-          isFeatureFlagEnabled
-          isFirstViewOfSession
           basketRecipes={basketRecipes}
           orders={orders}
           orderDate="01/01/2019"
@@ -154,8 +152,8 @@ describe('Abandon Basket Modal', () => {
     test('should set show modal state', () => {
       expect(wrapper.state().showModal).toEqual(true)
     })
-    test('should set firstViewedSession to FALSE', () => {
-      expect(window.sessionStorage.getItem('isFirstLoadOfSession')).toBe('false')
+    test('should set isNotFirstViewedSession to TRUE', () => {
+      expect(window.sessionStorage.getItem('isNotFirstLoadOfSession')).toBe('true')
     })
   })
 
@@ -235,8 +233,6 @@ describe('Abandon Basket Modal', () => {
           redirect={jest.fn()}
           getAbandonBasketSessionState={jest.fn()}
           basketRecipesClear={jest.fn()}
-          isFeatureFlagEnabled
-          isFirstViewOfSession
           basketRecipes={basketRecipes}
           orders={orders}
           orderDate="01/01/2019"
@@ -246,7 +242,7 @@ describe('Abandon Basket Modal', () => {
       )
     })
     describe('should return TRUE', () => {
-      test('if feature flag is set, first view of session, recipes in basket, no existing order on day & day is valid', () => {
+      test('recipes in basket, no existing order on day & day is valid', () => {
         const result = wrapper.instance().showModal()
 
         expect(result).toEqual(true)
@@ -287,14 +283,6 @@ describe('Abandon Basket Modal', () => {
         })
       })
 
-      test('if the feature flag is not set', () => {
-        wrapper.setProps({ isFeatureFlagEnabled: false })
-
-        const result = wrapper.instance().showModal()
-
-        expect(result).toEqual(false)
-      })
-
       test('if there is a confirmed order on the abandoned order date', () => {
         wrapper.setProps({ orderDate: '05/05/05' })
 
@@ -305,14 +293,6 @@ describe('Abandon Basket Modal', () => {
 
       test('if the delivery day is not if not in boxSummaryDeliveryDays', () => {
         wrapper.setProps({ orderDate: 'invalid date' })
-
-        const result = wrapper.instance().showModal()
-
-        expect(result).toEqual(false)
-      })
-
-      test('if its not first view of session', () => {
-        wrapper.setProps({ isFirstViewOfSession: false })
 
         const result = wrapper.instance().showModal()
 
@@ -333,8 +313,6 @@ describe('Abandon Basket Modal', () => {
           redirect={jest.fn()}
           getAbandonBasketSessionState={jest.fn()}
           basketRecipesClear={jest.fn()}
-          isFeatureFlagEnabled
-          isFirstViewOfSession
           basketRecipes={basketRecipes}
           orders={orders}
           orderDate="01/01/2019"
