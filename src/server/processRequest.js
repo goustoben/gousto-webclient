@@ -87,7 +87,7 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
         logger.notice({message: `renderHTML/reactHTML`, elapsedTime: (new Date() - startTime)})
       }
       startTime = new Date()
-      const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
+      const helmetHead = __SERVER__ ? Helmet.rewind : Helmet.peek
       const template = htmlTemplate(reactHTML, store.getState(), apollo.cache.extract(), userAgent, noGTM, helmetHead)
       if(__CLIENT__){
         logger.notice({message: `renderHTML/template`, elapsedTime: (new Date() - startTime)})
@@ -236,7 +236,7 @@ async function processRequest(ctx, next) {
               if (store.getState().basket && store.getState().basket.get('promoCode', '').toLowerCase() === 'fruit') {
                 noGTM = true
               }
-              const helmetHead = __SERVER__ ? Helmet.rewind() : Helmet.peek()
+              const helmetHead = __SERVER__ ? Helmet.rewind : Helmet.peek
               await fetchContentOnChange(ctx.request.path, store)
               renderHTML(store, renderProps, ctx.request.url, ctx.req.headers['user-agent'], noGTM, helmetHead)
                 .then(html => {
