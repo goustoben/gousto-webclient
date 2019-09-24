@@ -367,5 +367,43 @@ describe('Header', () => {
       expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
     })
   })
+
+  describe('loading user orders', () => {
+    const loadUserOrdersMock = jest.fn()
+
+    afterEach(() => {
+      loadUserOrdersMock.mockReset()
+    })
+
+    describe('when shouldLoadOrders is true', () => {
+      beforeEach(() => {
+        shallow(
+          <Header
+            loadUserOrders={loadUserOrdersMock}
+            shouldLoadOrders
+          />
+        )
+      })
+
+      test('calls the userLoadOrders function', () => {
+        expect(loadUserOrdersMock).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('when shouldLoadOrders is false', () => {
+      beforeEach(() => {
+        shallow(
+          <Header
+            loadUserOrders={loadUserOrdersMock}
+            shouldLoadOrders={false}
+          />
+        )
+      })
+
+      test('does not call the userLoadOrders function', () => {
+        expect(loadUserOrdersMock).not.toHaveBeenCalled()
+      })
+    })
+  })
 })
 
