@@ -10,6 +10,7 @@ import globals from 'config/globals'
 import URL from 'url' //eslint-disable-line import/no-nodejs-modules
 import userActions from './user'
 import orderActions from './order'
+import pricingActions from './pricing'
 import statusActions from './status'
 
 import authActions from './auth'
@@ -167,6 +168,7 @@ export const postLoginSteps = (userIsAdmin, orderId = '', features) => {
   }
 
   return async (dispatch, getState) => {
+    dispatch(pricingActions.pricingRequest())
     if (onCheckout) {
       if (orderId) {
         dispatch(push(`${config.client.welcome}/${orderId}`))
