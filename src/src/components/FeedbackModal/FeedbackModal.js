@@ -29,8 +29,14 @@ class FeedbackModal extends PureComponent {
     shortlistFeedbackDismissTracking()
   }
 
+  sendFeedback = () => {
+    const { shortlistFeedbackSubmit, closeModal } = this.props
+    const { feedback } = this.state
+    shortlistFeedbackSubmit(feedback)
+    closeModal()
+  }
+
   render() {
-    const { shortlistFeedbackSubmit } = this.props
     const { feedback } = this.state
 
     return (
@@ -46,7 +52,7 @@ class FeedbackModal extends PureComponent {
           <p className={css.modalText}>{modalContent.text}</p>
           <textarea className={css.modalTextarea} placeholder={modalContent.placeholder} value={feedback} onChange={this.changeFeedback} />
         </section>
-        <button type="button" className={classnames(css.submitButton, { [css.submitButtonDisabled]: feedback.length < 1 })} disabled={feedback.length < 1} onClick={() => shortlistFeedbackSubmit(feedback)}>
+        <button type="button" className={classnames(css.submitButton, { [css.submitButtonDisabled]: feedback.length < 1 })} disabled={feedback.length < 1} onClick={() => this.sendFeedback()}>
           {('send feedback').toUpperCase()}
         </button>
         <button type="button" className={css.dismissButton} onClick={() => this.dismissModal()}>{('no thanks').toUpperCase()}</button>
