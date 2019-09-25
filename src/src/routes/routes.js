@@ -29,6 +29,7 @@ export default (store) => (
     {Home}
     {Signup}
     {Menu}
+    {ChoosePlan(store)}
     {BoxPrices}
     {Join}
     {Cookbook}
@@ -45,7 +46,6 @@ export default (store) => (
       {Welcome(store)}
       {Account(store)}
       {OrderConfirmation(store)}
-      {ChoosePlan}
     </Route>
 
     {Checkout(store)}
