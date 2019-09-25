@@ -97,11 +97,12 @@ describe('Header', () => {
           simpleHeader: false,
         })
       }
+      wrapper = shallow(
+        <Header loadUserOrders={() => {}} />, { context: { store } }
+      )
     })
 
     test('should return a <div>', () => {
-
-      wrapper = shallow(<Header />, { context: { store } })
       expect(wrapper.type()).toEqual('div')
     })
 
@@ -114,12 +115,12 @@ describe('Header', () => {
       if (window.sessionStorage.getItem('isNotFirstLoadOfSession')) {
         window.sessionStorage.removeItem('isNotFirstLoadOfSession')
       }
-      wrapper = shallow(<Header abandonBasketFeature />)
+      wrapper.setProps({ abandonBasketFeature: true })
       expect(wrapper.find(AbandonBasketModal).length).toBe(1)
     })
 
     test('should not render <AbandonBasketModal /> if feature flag is set to false', () => {
-      wrapper = shallow(<Header shouldShowAbandonBasketModal={false} />)
+      wrapper.setProps({ abandonBasketFeature: false })
       expect(wrapper.find(AbandonBasketModal).length).toBe(0)
     })
 
@@ -132,50 +133,43 @@ describe('Header', () => {
     })
 
     test('should render 5 <Link /> if existing menu path is passed as prop', () => {
-      wrapper = shallow(<Header path="box-prices" />, { context: { store } })
-
+      wrapper.setProps({ path: 'box-prices' })
       expect(wrapper.find(Link).length).toEqual(4)
     })
 
     test('should alter homepage link when promocode is provided', () => {
       const promoCode = 'test'
-      wrapper = shallow(<Header promoCodeUrl={promoCode} />)
-
+      wrapper.setProps({ promoCodeUrl: promoCode })
       expect(wrapper.find(Link).at(0).props().to).toEqual(`/${promoCode}`)
     })
 
     test('should alter homepage link to /menu when path contains "check-out"', () => {
-      wrapper = shallow(<Header path="check-out" />)
-
+      wrapper.setProps({ path: 'check-out' })
       expect(wrapper.find(Link).at(0).prop('to')).toEqual('/menu')
     })
 
     test('should not render a <MobileMenu /> when displaying the simple header', () => {
-      const simple = true
-      wrapper = shallow(<Header simple={simple} />)
+      wrapper.setProps({ simple: true })
       expect(wrapper.find(MobileMenu).length).toEqual(0)
     })
 
     test('should render the JS enabled MobileMenu toggle by default', () => {
-      wrapper = shallow(<Header />)
       expect(wrapper.find('span').at(0).prop('id')).toEqual(null)
     })
 
     test('should render the fallback MobileMenu toggle if the serverError prop is true', () => {
-      wrapper = shallow(<Header serverError />)
+      wrapper.setProps({ serverError: true })
       expect(wrapper.find('span').at(0).prop('id')).toEqual('mobileMenu')
     })
 
     test('should render referFriend in the menu if authenticated', () => {
-      const isAuthenticated = true
-      wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
+      wrapper.setProps({ isAuthenticated: true })
       expect(wrapper.find(Link).at(2).childAt(0)
         .text()).toEqual('Free Food')
     })
 
     test('should render boxPrices in the menu if not authenticated', () => {
-      const isAuthenticated = false
-      wrapper = shallow(<Header isAuthenticated={isAuthenticated} />)
+      wrapper.setProps({ isAuthenticated: false })
       expect(wrapper.find(Link).at(1).childAt(0)
         .text()).toEqual('Box Prices')
     })
@@ -186,33 +180,32 @@ describe('Header', () => {
     })
 
     test('should render a CancelOrderModal component', () => {
-      wrapper = shallow(<Header />)
       expect(wrapper.find(CancelOrderModal).length).toEqual(1)
     })
 
     test('should render a ExpiredBillingModal component', () => {
-      wrapper = shallow(<Header />)
       expect(wrapper.find(ExpiredBillingModal).length).toEqual(1)
     })
 
     test('should render a DuplicateOrderModal component', () => {
-      wrapper = shallow(<Header trackNavigationClick={jest.fn()} />)
+      wrapper.setProps({ trackNavigationClick: jest.fn() })
       expect(wrapper.find(DuplicateOrderModal).length).toEqual(1)
     })
 
     test('should render a SubscriptionPause component', () => {
-      wrapper = shallow(<Header trackNavigationClick={jest.fn()} />)
+      wrapper.setProps({ trackNavigationClick: jest.fn() })
       expect(wrapper.find('SubscriptionPause').length).toEqual(1)
     })
 
     test('should not render the phone number if the noContactBar prop is set', () => {
-
-      wrapper = shallow(<Header noContactBar trackNavigationClick={jest.fn()} />)
+      wrapper.setProps({
+        noContactBar: true,
+        trackNavigationClick: jest.fn()
+      })
       expect(wrapper.find('Free delivery').length).toEqual(0)
     })
 
     test('should render the contact phone number', () => {
-      wrapper = shallow(<Header />)
       expect(wrapper.find('.contactContent').html()).toContain(
         contactConfig.telephone.number
       )
@@ -220,10 +213,14 @@ describe('Header', () => {
   })
 
   describe('render MobileMenu with the right paths when authenticated', () => {
-    let wrapper
-    beforeEach(() => {
-      wrapper = shallow(<Header isAuthenticated config={config} trackNavigationClick={jest.fn()} />)
-    })
+    const wrapper = shallow(
+      <Header
+        isAuthenticated
+        config={config}
+        trackNavigationClick={jest.fn()}
+        loadUserOrders={() => {}}
+      />
+    )
     test('should render menu items in correct order when logged in', () => {
       const expected = [
         {
@@ -295,7 +292,13 @@ describe('Header', () => {
     const isAuthenticated = false
 
     beforeEach(() => {
-      wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} />)
+      wrapper = shallow(
+        <Header
+          isAuthenticated={isAuthenticated}
+          config={config}
+          loadUserOrders={() => {}}
+        />
+      )
     })
 
     test('should render menu items in correct order when logged out', () => {
@@ -337,7 +340,14 @@ describe('Header', () => {
   describe('forceSignupWizard feature', () => {
     test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to false', () => {
       const isAuthenticated = false
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature={false} />)
+      const wrapper = shallow(
+        <Header
+          isAuthenticated={isAuthenticated}
+          config={config}
+          forceSignupWizardFeature={false}
+          loadUserOrders={() => {}}
+        />
+      )
       const chooseRecipes = {
         "name": "Choose Recipes",
         "url": "/menu",
@@ -347,7 +357,14 @@ describe('Header', () => {
     })
 
     test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to true and is authenticated', () => {
-      const wrapper = shallow(<Header isAuthenticated config={config} forceSignupWizardFeature />)
+      const wrapper = shallow(
+        <Header
+          isAuthenticated
+          config={config}
+          forceSignupWizardFeature
+          loadUserOrders={() => {}}
+        />
+      )
       const chooseRecipes = {
         "name": "Choose Recipes",
         "url": "/menu",
@@ -358,13 +375,58 @@ describe('Header', () => {
 
     test('render menu with "choose recipes" going to SIGNUP WIZARD when forceSignupWizard feature is set to true and authenticated', () => {
       const isAuthenticated = false
-      const wrapper = shallow(<Header isAuthenticated={isAuthenticated} config={config} forceSignupWizardFeature />)
+      const wrapper = shallow(
+        <Header
+          isAuthenticated={isAuthenticated}
+          config={config}
+          forceSignupWizardFeature
+          loadUserOrders={() => {}}
+        />
+      )
       const chooseRecipes = {
         "name": "Choose Recipes",
         "url": "/signup",
         "tracking": "RecipeNavigation Clicked",
       }
       expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+    })
+  })
+
+  describe('loading user orders', () => {
+    const loadUserOrdersMock = jest.fn()
+
+    afterEach(() => {
+      loadUserOrdersMock.mockReset()
+    })
+
+    describe('when shouldLoadOrders is true', () => {
+      beforeEach(() => {
+        shallow(
+          <Header
+            loadUserOrders={loadUserOrdersMock}
+            shouldLoadOrders
+          />
+        )
+      })
+
+      test('calls the userLoadOrders function', () => {
+        expect(loadUserOrdersMock).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('when shouldLoadOrders is false', () => {
+      beforeEach(() => {
+        shallow(
+          <Header
+            loadUserOrders={loadUserOrdersMock}
+            shouldLoadOrders={false}
+          />
+        )
+      })
+
+      test('does not call the userLoadOrders function', () => {
+        expect(loadUserOrdersMock).not.toHaveBeenCalled()
+      })
     })
   })
 })

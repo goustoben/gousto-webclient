@@ -45,6 +45,8 @@ class Header extends React.PureComponent {
     forceSignupWizardFeature: PropTypes.bool,
     abandonBasketFeature: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
+    shouldLoadOrders: PropTypes.bool,
+    loadUserOrders: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -57,6 +59,7 @@ class Header extends React.PureComponent {
     small: false,
     trackNavigationClick: () => { },
     abandonBasketFeature: false,
+    shouldLoadOrders: false,
   }
 
   constructor(props) {
@@ -66,6 +69,13 @@ class Header extends React.PureComponent {
       mobileMenuOpen: false,
       loginPending: false,
       logoutPending: false,
+    }
+  }
+
+  componentDidMount() {
+    const { loadUserOrders, shouldLoadOrders } = this.props
+    if (shouldLoadOrders) {
+      loadUserOrders()
     }
   }
 

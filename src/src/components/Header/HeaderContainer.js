@@ -3,6 +3,7 @@ import actions from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
 import { getForceSignupWizard, getAbandonBasket } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
+import { locationAtMyGousto } from 'selectors/routing'
 import { Header } from './Header'
 
 const mapStateToProps = (state) => ({
@@ -16,6 +17,7 @@ const mapStateToProps = (state) => ({
   fromJoin: getUserFromJoin(state),
   forceSignupWizardFeature: getForceSignupWizard(state),
   abandonBasketFeature: getAbandonBasket(state),
+  shouldLoadOrders: locationAtMyGousto(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {
@@ -23,4 +25,5 @@ export const HeaderContainer = connect(mapStateToProps, {
   loginVisibilityChange: actions.loginVisibilityChange,
   closeBoxModalVisibilityChange: actions.cancelOrderModalToggleVisibility,
   trackNavigationClick,
+  loadUserOrders: actions.userLoadOrders,
 })(Header)
