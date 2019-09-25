@@ -10,6 +10,7 @@
 .imageTitle {
 	composes: textCenter textSM from 'styles/typography.css';
 	composes: marginXSTop marginZeroBottom from 'sass-loader!styles/spacing.scss';
+	cursor: pointer;
 
 	@media ScreenXSMax {
 		white-space: normal;
@@ -22,6 +23,7 @@
 	width: 100%;
 	height: 0;
 	padding-bottom: 67%;	/* sets aspect ratio */
+	cursor: pointer;
 }
 
 .scroll {
