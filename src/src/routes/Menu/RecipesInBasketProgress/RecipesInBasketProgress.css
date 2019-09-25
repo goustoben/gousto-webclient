@@ -1,53 +1,8 @@
-@value Haricot from 'styles/colors.css';
-
-@value CardPadding: 0.5rem;
-@value CardHeight: 3.75rem;
-
-.cardContentWrapper {
-	min-height: CardHeight;
+.wrapExtraInfo {
+  overflow: hidden;
+  border-radius: inherit;
 }
 
-.cardContentWrapperFull {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-
-.cardContentWrapperPartial {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	min-height: calc(CardHeight - 2 * CardPadding)
-}
-
-.greenBorder {
-	border-left: 0.25rem solid Haricot;
-	border-top-left-radius: inherit;
-	border-bottom-left-radius: inherit;
-}
-
-.percentageNumber {
-	font-size: 1rem;
-	font-weight: bold;
-	margin-bottom: 0;
-	vertical-align: middle;
-}
-
-.message {
-	display: inline-block;
-	font-size: 0.75rem;
-	margin-bottom: 0;
-	vertical-align: middle;
-}
-
-.progressBarWrapper {
-	margin-top: 0.25rem;
-}
-
-.iconProgressCompleted {
-	font-size: 1.5rem;
-	color: Haricot;
-	margin-right: 1rem;
-	vertical-align: middle;
-	composes: fa-basic-class fa-check-circle-o from 'styles/vendor/font-awesome-module.css';
+.extraInfo {
+  font-size: 0.75rem;
 }

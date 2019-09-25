@@ -327,14 +327,15 @@ class Menu extends React.PureComponent {
   render() {
     const {
       boxSummaryShow,
-      recipeGroupingSelected,
       forceLoad,
       hasRecommendations,
+      isAuthenticated,
       isLoading,
       jfyTutorialFlag,
       menuBrowseCTAShow,
       orderId,
       query,
+      recipeGroupingSelected,
       recipes,
     } = this.props
     const { mobileGridView, isChrome, isClient } = this.state
@@ -395,7 +396,10 @@ class Menu extends React.PureComponent {
         </div>
         <BoxSummaryMobile />
         <BoxSummaryDesktop />
-        <RecipesInBasketProgress selectedRecipesCount={recipes.length} />
+        <RecipesInBasketProgress
+          isAuthenticated={isAuthenticated}
+          selectedRecipesCount={recipes.length}
+        />
       </div>
     )
   }

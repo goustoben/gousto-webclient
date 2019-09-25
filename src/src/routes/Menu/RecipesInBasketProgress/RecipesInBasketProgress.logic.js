@@ -1,30 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { maxRecipesNum } from 'config/basket'
 
 import { RecipesInBasketProgressPresentation } from './RecipesInBasketProgress.presentation'
 
 const propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
   selectedRecipesCount: PropTypes.number.isRequired
 }
 
-const recipeCountToPercentage = (selectedRecipesCount) => (
-  Math.round((selectedRecipesCount / maxRecipesNum) * 100)
-)
-
-const RecipesInBasketProgress = ({ selectedRecipesCount }) => {
-  const percentage = recipeCountToPercentage(selectedRecipesCount)
-  const isBasketFull = selectedRecipesCount >= maxRecipesNum
-
+const RecipesInBasketProgress = ({ isAuthenticated, selectedRecipesCount }) => {
   if (selectedRecipesCount <= 0) {
     return null
   }
 
   return (
     <RecipesInBasketProgressPresentation
+      isAuthenticated={isAuthenticated}
       selectedRecipesCount={selectedRecipesCount}
-      percentage={percentage}
-      isBasketFull={isBasketFull}
     />
   )
 }
