@@ -173,7 +173,7 @@ class OrderConfirmation extends PureComponent {
 
             <AwinPixel />
             <Overlay open={showFeedback}>
-              <FeedbackModal onSubmit={() => { }} dismissModal={() => this.toggleShortlistFeedback()} />
+              <FeedbackModal closeModal={() => this.toggleShortlistFeedback()} />
             </Overlay>
           </div>
         </LayoutPageWrapper>

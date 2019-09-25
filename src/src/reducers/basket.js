@@ -56,6 +56,8 @@ const initialState = () => Immutable.fromJS({
     shortlistRecipes: {},
     shortlistRecipesPositions: [],
     shortlistLimitReached: false,
+    shortlistFeedbackViewed: false,
+    shortlistUsed: false
   }
 })
 
@@ -288,7 +290,11 @@ const basket = {
     }
 
     case actionTypes.BASKET_RESET: {
-      return initialState()
+      const shortlist = state.get('shortlist')
+      let newState = initialState()
+      newState = newState.set('shortlist', shortlist)
+
+      return newState
     }
 
     case actionTypes.BASKET_SIGNUP_COLLECTION_RECEIVE: {
@@ -300,6 +306,7 @@ const basket = {
       const currentQty = state.getIn(['shortlist', 'shortlistRecipes', recipeId], 0)
 
       let newState = state.setIn(['shortlist', 'shortlistRecipes', recipeId], currentQty + 1)
+      newState = newState.setIn(['shortlist', 'shortlistUsed'], true)
       if (recipeId && position) {
         const newShortlistRecipe = Immutable.Map({}).set(recipeId, Immutable.Map({ position, collection }))
         const newShortlistRecipesPositions = newState.getIn(['shortlist', 'shortlistRecipesPositions']).push(newShortlistRecipe)
@@ -346,6 +353,10 @@ const basket = {
 
     case actionTypes.SHORTLIST_RECIPES_POSITIONS_CLEAR: {
       return state.setIn(['shortlist', 'shortlistRecipesPositions'], Immutable.List([]))
+    }
+
+    case actionTypes.SHORTLIST_FEEDBACK_VIEWED: {
+      return state.setIn(['shortlist', 'shortlistFeedbackViewed'], true)
     }
 
     default: {

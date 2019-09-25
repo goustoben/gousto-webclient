@@ -13,3 +13,5 @@ export const getBasketLimitReached = ({ basket }) => basket.get('limitReached', 
 
 export const getShortlistLimitReached = ({ basket }) => basket.getIn(['shortlist', 'shortlistLimitReached'], false)
 export const getShortlistRecipeIds = ({ basket }) => basket.getIn(['shortlist', 'shortlistRecipes'], null)
+export const getShortlistFeedbackViewed = ({ basket }) => basket.getIn(['shortlist', 'shortlistFeedbackViewed'], false)
+export const getShortlistUsed = ({ basket }) => basket.getIn(['shortlist', 'shortlistUsed'], false)

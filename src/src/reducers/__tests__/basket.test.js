@@ -9,7 +9,7 @@ jest.mock('utils/logger', () => ({
 }))
 
 describe('basket reducer', function () {
-  const basket = basketReducer.basket
+  const { basket } = basketReducer
   let initialState
 
   beforeEach(function () {
@@ -46,6 +46,8 @@ describe('basket reducer', function () {
         shortlistRecipes: {},
         shortlistRecipesPositions: [],
         shortlistLimitReached: false,
+        shortlistFeedbackViewed: false,
+        shortlistUsed: false
       }
     })
   })
@@ -508,8 +510,9 @@ describe('basket reducer', function () {
   describe('BASKET_RESET action type', function () {
     test('should return the basket to its initial state', function () {
       const address = Immutable.Map({ address: { id: '123-123-123-uuid', postcode: 'w30df', name: 'home' } })
-      const state = Immutable.Map({ prevAddress: null, address })
+      const state = Immutable.Map({ prevAddress: null, address, shortlist: initialState.get('shortlist') })
       const result = basket(state, { type: 'BASKET_RESET' })
+
       expect(Immutable.is(result, initialState)).toEqual(true)
     })
   })
@@ -580,13 +583,14 @@ describe('basket reducer', function () {
 
       initialState = Immutable.Map({
         shortlist: Immutable.Map({
-          shortlistRecipes: Immutable.Map({})
+          shortlistRecipes: Immutable.Map({}),
+          shortlistUsed: false
         })
       })
 
       const result = basket(initialState, action)
 
-      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 1 }) }) }))).toEqual(true)
+      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 1 }), shortlistUsed: true }) }))).toEqual(true)
     })
 
     test('should add recipeId to shortlistRecipes and increment plus one if was there before', () => {
@@ -597,13 +601,32 @@ describe('basket reducer', function () {
 
       initialState = Immutable.Map({
         shortlist: Immutable.Map({
-          shortlistRecipes: Immutable.Map({ 123: 2 })
+          shortlistRecipes: Immutable.Map({ 123: 2 }),
+          shortlistUsed: true
         })
       })
 
       const result = basket(initialState, action)
 
-      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 3 }) }) }))).toEqual(true)
+      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 3 }), shortlistUsed: true }) }))).toEqual(true)
+    })
+
+    test('should add recipeId to shortlistRecipes and update shortlistUsed to true', () => {
+      const action = {
+        type: actionTypes.SHORTLIST_RECIPE_ADD,
+        recipeId: '123'
+      }
+
+      const result = basket(initialState, action)
+      const expectedResult = initialState.set('shortlist', Immutable.Map({
+        shortlistRecipes: Immutable.Map({ 123: 1 }),
+        shortlistRecipesPositions: Immutable.List(),
+        shortlistLimitReached: false,
+        shortlistFeedbackViewed: false,
+        shortlistUsed: true,
+      }))
+
+      expect(Immutable.is(result, expectedResult)).toEqual(true)
     })
 
     test('should add recipe position and collection selected when added to shortlistRecipesPositions', () => {
@@ -617,13 +640,21 @@ describe('basket reducer', function () {
       initialState = Immutable.Map({
         shortlist: Immutable.Map({
           shortlistRecipes: Immutable.Map({}),
-          shortlistRecipesPositions: Immutable.List([])
+          shortlistRecipesPositions: Immutable.List([]),
+          shortlistUsed: false
         })
       })
 
       const result = basket(initialState, action)
+      const expectedResult = Immutable.Map({
+        shortlist: Immutable.Map({
+          shortlistRecipes: Immutable.Map({ 123: 1 }),
+          shortlistRecipesPositions: Immutable.fromJS([{ '123': { position: '18', collection: 'testCollectionId' } }]),
+          shortlistUsed: true
+        })
+      })
 
-      expect(Immutable.is(result, Immutable.Map({ shortlist: Immutable.Map({ shortlistRecipes: Immutable.Map({ 123: 1 }), shortlistRecipesPositions: Immutable.fromJS([{ '123': { position: '18', collection: 'testCollectionId' } }]) }) }))).toEqual(true)
+      expect(Immutable.is(result, expectedResult)).toEqual(true)
     })
   })
 

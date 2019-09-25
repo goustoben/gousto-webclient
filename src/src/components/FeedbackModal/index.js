@@ -1,1 +1,1 @@
-export { FeedbackModal } from './FeedbackModal'
+export { FeedbackModalContainer as FeedbackModal } from './FeedbackModalContainer'

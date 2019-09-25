@@ -11,6 +11,11 @@ class FeedbackModal extends PureComponent {
     feedback: ''
   }
 
+  componentDidMount() {
+    const { shortlistFeedbackViewed } = this.props
+    shortlistFeedbackViewed()
+  }
+
   changeFeedback = (e) => {
     const { value } = e.target
     this.setState({
@@ -18,15 +23,21 @@ class FeedbackModal extends PureComponent {
     })
   }
 
+  dismissModal = () => {
+    const { closeModal, shortlistFeedbackDismissTracking } = this.props
+    closeModal()
+    shortlistFeedbackDismissTracking()
+  }
+
   render() {
-    const { onSubmit, dismissModal } = this.props
+    const { shortlistFeedbackSubmit } = this.props
     const { feedback } = this.state
 
     return (
       <div className={css.modalWrapper}>
         <section>
           <div className={css.closeIcon}>
-            <CloseButton onClose={dismissModal} />
+            <CloseButton onClose={this.dismissModal} />
           </div>
           <h1 className={css.modalTitle}>
             {modalContent.title}
@@ -35,18 +46,20 @@ class FeedbackModal extends PureComponent {
           <p className={css.modalText}>{modalContent.text}</p>
           <textarea className={css.modalTextarea} placeholder={modalContent.placeholder} value={feedback} onChange={this.changeFeedback} />
         </section>
-        <button type="button" className={classnames(css.submitButton, { [css.submitButtonDisabled]: feedback.length < 1 })} disabled={feedback.length < 1} onClick={() => onSubmit()}>
-          SEND FEEDBACK
+        <button type="button" className={classnames(css.submitButton, { [css.submitButtonDisabled]: feedback.length < 1 })} disabled={feedback.length < 1} onClick={() => shortlistFeedbackSubmit(feedback)}>
+          {('send feedback').toUpperCase()}
         </button>
-        <button type="button" className={css.dismissButton} onClick={() => dismissModal()}>NO THANKS</button>
+        <button type="button" className={css.dismissButton} onClick={() => this.dismissModal()}>{('no thanks').toUpperCase()}</button>
       </div >
     )
   }
 }
 
 FeedbackModal.propTypes = {
-  onSubmit: PropTypes.func,
-  dismissModal: PropTypes.func
+  shortlistFeedbackSubmit: PropTypes.func,
+  shortlistFeedbackDismissTracking: PropTypes.func,
+  closeModal: PropTypes.func,
+  shortlistFeedbackViewed: PropTypes.func
 }
 
 export { FeedbackModal }
