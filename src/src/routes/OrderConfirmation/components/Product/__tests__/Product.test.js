@@ -70,6 +70,12 @@ describe('Product component', () => {
           wrapper.find('.productContent').childAt(1).find('Buttons').exists()
         ).toBe(true)
       })
+
+      test('Button is set to fullWidth', () => {
+        expect(
+          wrapper.find('.productButtonWrapper').find('Button').hasClass('btnWrapper--fullWidth')
+        ).toEqual(true)
+      })
     })
 
     describe('and the hasProductList2Columns feature is not enabled', () => {
@@ -85,6 +91,12 @@ describe('Product component', () => {
         expect(
           wrapper.find('.productContent').childAt(1).find('.productPrice').exists()
         ).toBe(false)
+      })
+
+      test('Button is not set to fullWidth', () => {
+        expect(
+          wrapper.find('.productButtonWrapper').find('Button').hasClass('btnWrapper--fullWidth')
+        ).toEqual(false)
       })
     })
   })

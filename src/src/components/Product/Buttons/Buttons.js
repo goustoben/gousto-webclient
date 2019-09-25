@@ -1,14 +1,17 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import classnames from 'classnames'
 import { Button, Control, Segment, Tooltip } from 'goustouicomponents'
 import { AgeVerificationCheckBox } from 'Product/AgeVerification'
 import css from './Buttons.css'
 
 class Buttons extends React.PureComponent {
   static propTypes = {
+    ageVerificationPending: PropTypes.bool,
+    fullWidth: PropTypes.bool,
     isAgeVerificationRequired: PropTypes.bool,
-    inProgress: PropTypes.bool,
     isAvailable: PropTypes.bool,
+    inProgress: PropTypes.bool,
     limitReached: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.bool,
@@ -20,20 +23,20 @@ class Buttons extends React.PureComponent {
     productId: PropTypes.string.isRequired,
     qty: PropTypes.number,
     showPopUp: PropTypes.bool,
-    ageVerificationPending: PropTypes.bool,
   }
 
   static defaultProps = {
+    ageVerificationPending: false,
+    fullWidth: false,
     isAgeVerificationRequired: false,
-    inProgress: false,
     isAvailable: true,
+    inProgress: false,
     limitReached: false,
     onAdd: () => { },
     onRemove: () => { },
     onVerifyAge: () => { },
     qty: 0,
     showPopUp: false,
-    ageVerificationPending: false,
   }
 
   state = {
@@ -146,9 +149,17 @@ class Buttons extends React.PureComponent {
   }
 
   render() {
-    const { qty, isAvailable, inProgress, ageVerificationPending } = this.props
+    const { qty, isAvailable, inProgress, ageVerificationPending, fullWidth } = this.props
     const { tooltipVisible } = this.state
     const tooltipMessage = !isAvailable ? this.getTooltipMessage() : ''
+    const cssSegmentController = classnames({ [css['segmentControler']]: !fullWidth })
+    const cssQtySegment = classnames({ [css['qtySegment']]: !fullWidth })
+    const cssAddButton = classnames({ [css['addButton']]: !fullWidth })
+    const cssBtnWrapper = classnames(
+      css.btnWrapper, {
+        [css['btnWrapper--fullWidth']]: fullWidth,
+      }
+    )
     let segments
 
     if (qty > 0) {
@@ -156,14 +167,14 @@ class Buttons extends React.PureComponent {
         <Segment
           key={0}
           onClick={this.handleRemove}
-          className={css.segmentControler}
+          className={cssSegmentController}
         >
           <Control placement="left" >-</Control>
         </Segment>,
         <Segment
           fill={false}
           key={1}
-          className={css.qtySegment}
+          className={cssQtySegment}
         >
           {qty}
         </Segment>,
@@ -180,7 +191,7 @@ class Buttons extends React.PureComponent {
             hover={this.tooltipHover}
             disabledClick={this.disabledClick}
             disabled={!isAvailable}
-            className={css.segmentControler}
+            className={cssSegmentController}
           >
             <Control placement="right">+</Control>
           </Segment>
@@ -202,7 +213,7 @@ class Buttons extends React.PureComponent {
             disabled={!isAvailable}
             fill={false}
             width={'auto'}
-            className={css.addButton}
+            className={cssAddButton}
           >
             Add
           </Segment>
@@ -216,7 +227,7 @@ class Buttons extends React.PureComponent {
         <Button
           fill={false}
           width="full"
-          className={css.btnWrapper}
+          className={cssBtnWrapper}
           pending={inProgress}
           disabled={!inProgress && ageVerificationPending}
         >
