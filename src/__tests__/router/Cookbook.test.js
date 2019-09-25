@@ -3,7 +3,15 @@ import Hubs from 'routes/Cookbook/Hubs'
 import Hub from 'routes/Cookbook/Hub'
 import MainLayout from 'layouts/MainLayout'
 const { match, createMemoryHistory } = require('react-router')
-const routes = require('../../src/routes').default({})
+const routes = require('../../src/routes').default(reduxStoreMock())
+
+function reduxStoreMock() {
+  return {
+    getState() {
+      return {}
+    },
+  }
+}
 
 describe('router', () => {
   test('should display the cookbook hub page when /cookbook is called', () => {
