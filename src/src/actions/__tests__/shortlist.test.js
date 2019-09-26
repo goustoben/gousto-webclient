@@ -200,8 +200,8 @@ describe('shortlist actions', () => {
 
   describe('shortlistFeedbackViewed', () => {
     test('should dispatch SHORTLIST_FEEDBACK_VIEWED and trackingData', () => {
-      dispatch(shortlistFeedbackViewed())
-      expect(dispatch).toHaveBeenCalledWith({
+      const result = shortlistFeedbackViewed()
+      expect(result).toEqual({
         type: actionTypes.SHORTLIST_FEEDBACK_VIEWED,
         value: true,
         trackingData: {
@@ -213,8 +213,8 @@ describe('shortlist actions', () => {
 
   describe('shortlistFeedbackDismissTracking', () => {
     test('should dispatch SHORTLIST_FEEDBACK_DISMISSED and trackingData', () => {
-      dispatch(shortlistFeedbackDismissTracking())
-      expect(dispatch).toHaveBeenCalledWith({
+      const result = shortlistFeedbackDismissTracking()
+      expect(result).toEqual({
         type: actionTypes.SHORTLIST_FEEDBACK_DISMISSED,
         trackingData: {
           actionType: 'Shortlist Feedback Dismissed'
@@ -225,8 +225,8 @@ describe('shortlist actions', () => {
 
   describe('shortlistFeedbackSubmit', () => {
     test('should dispatch SHORTLIST_FEEDBACK_SUBMITTED and trackingData with feedback text', () => {
-      dispatch(shortlistFeedbackSubmit('test-feedback'))
-      expect(dispatch).toHaveBeenCalledWith({
+      const result = shortlistFeedbackSubmit('test-feedback')
+      expect(result).toEqual({
         type: actionTypes.SHORTLIST_FEEDBACK_SUBMITTED,
         trackingData: {
           actionType: 'Shortlist Feedback Submitted',

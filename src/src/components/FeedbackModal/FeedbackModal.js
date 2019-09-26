@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { isNodeInRoot } from 'utils/DOMhelper'
 import Svg from 'Svg'
 import CloseButton from 'Overlay/CloseButton'
-import classnames from 'classnames'
 import { modalContent } from './modalContent'
 import css from './FeedbackModal.css'
 
@@ -69,7 +68,7 @@ class FeedbackModal extends PureComponent {
           <p className={css.modalText}>{modalContent.text}</p>
           <textarea className={css.modalTextarea} placeholder={modalContent.placeholder} value={feedback} onChange={this.changeFeedback} />
         </section>
-        <button type="button" className={classnames(css.submitButton, { [css.submitButtonDisabled]: feedback.length < 1 })} disabled={feedback.length < 1} onClick={() => this.sendFeedback()}>
+        <button type="button" className={css.submitButton} disabled={feedback.length < 1} onClick={() => this.sendFeedback()}>
           {('send feedback').toUpperCase()}
         </button>
         <button type="button" className={css.dismissButton} onClick={() => this.dismissModal()}>{('no thanks').toUpperCase()}</button>

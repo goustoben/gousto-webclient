@@ -53,7 +53,7 @@
   border-radius: 0.25rem;
 }
 
-.submitButtonDisabled {
+.submitButton:disabled {
   opacity: 0.25;
 }
 
