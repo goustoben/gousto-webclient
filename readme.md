@@ -28,6 +28,8 @@ Why is this important? Imagine two developer working on the same file, one perso
 
 ### Terminal 1: Building
 
+Make sure to have the devbox-platform running with all dependencies installed before starting this step. 
+
 You need to build the application and run the watcher before running it into the devbox
 ```shell
 cd ~/code/goustowebclient/src
@@ -50,7 +52,7 @@ The site (only the new stack pages) should now be available at http://webclient.
 You can see the containers logs being redirected to this terminal (nginx and application), exit with `CTRL+C`
 
 ### [Local files needed](#local-files-needed)
-You will need to populate the `env.json` config file with the correct values for your environment.
+You will need to copy the `env.json.example` to `env.json` in `/src/config` with the correct values for your environment.
 
 You will also need to populate the checkout.com public key in `src/src/routes/Checkout/Components/CheckoutPayment/config.js`
 
