@@ -355,4 +355,5 @@ const basket = {
   },
 }
 
+export { initialState }
 export default basket
