@@ -1,3 +1,5 @@
+import moment from 'moment'
+import now from 'performance-now'
 import actions from 'actions'
 import logger from 'utils/logger'
 
@@ -9,8 +11,8 @@ import { hasJustForYouCollection } from 'selectors/collections'
 import { isCollectionsFeatureEnabled } from 'selectors/features'
 import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
+import { menuLoadComplete } from 'actions/menu'
 
-import moment from 'moment'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
 const requiresMenuRecipesClear = (store, orderId) => {
@@ -246,6 +248,8 @@ const shouldFetchData = (store, params, force) => {
 
 // eslint-disable-next-line import/no-default-export
 export default async function fetchData({ store, query, params }, force, background) {
+  const startTime = now()
+
   await applyForceCollectionsFeature(store)
 
   const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
@@ -274,6 +278,9 @@ export default async function fetchData({ store, query, params }, force, backgro
 
     await store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
 
+    const timeTaken = now() - startTime
+
+    store.dispatch(menuLoadComplete(timeTaken))
   } catch (e) {
     store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
     throw e
