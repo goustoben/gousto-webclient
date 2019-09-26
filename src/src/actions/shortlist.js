@@ -115,8 +115,9 @@ export const shortlistRecipesPositionClear = () => ({
   type: actionTypes.SHORTLIST_RECIPES_POSITIONS_CLEAR,
 })
 
-export const shortlistFeedbackViewed = () => ({
+export const shortlistFeedbackViewed = (value = true) => ({
   type: actionTypes.SHORTLIST_FEEDBACK_VIEWED,
+  value,
   trackingData: {
     actionType: 'Shortlist Feedback Viewed'
   }

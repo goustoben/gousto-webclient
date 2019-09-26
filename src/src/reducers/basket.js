@@ -356,7 +356,9 @@ const basket = {
     }
 
     case actionTypes.SHORTLIST_FEEDBACK_VIEWED: {
-      return state.setIn(['shortlist', 'shortlistFeedbackViewed'], true)
+      const { value } = action
+
+      return state.setIn(['shortlist', 'shortlistFeedbackViewed'], value)
     }
 
     default: {

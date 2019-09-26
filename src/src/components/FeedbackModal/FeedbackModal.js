@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { isNodeInRoot } from 'utils/DOMhelper'
 import Svg from 'Svg'
 import CloseButton from 'Overlay/CloseButton'
 import classnames from 'classnames'
@@ -14,6 +15,18 @@ class FeedbackModal extends PureComponent {
   componentDidMount() {
     const { shortlistFeedbackViewed } = this.props
     shortlistFeedbackViewed()
+    document.addEventListener('mousedown', this.handleMouseClickOutside)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleMouseClickOutside)
+  }
+
+  handleMouseClickOutside = (e) => {
+    e.stopPropagation()
+    if (!isNodeInRoot(e.target, this.shortlistFeedbackRef)) {
+      this.dismissModal()
+    }
   }
 
   changeFeedback = (e) => {
@@ -25,8 +38,8 @@ class FeedbackModal extends PureComponent {
 
   dismissModal = () => {
     const { closeModal, shortlistFeedbackDismissTracking } = this.props
-    closeModal()
     shortlistFeedbackDismissTracking()
+    closeModal()
   }
 
   sendFeedback = () => {
@@ -36,11 +49,15 @@ class FeedbackModal extends PureComponent {
     closeModal()
   }
 
+  setWrapperRef(node) {
+    this.wrapperRef = node
+  }
+
   render() {
     const { feedback } = this.state
 
     return (
-      <div className={css.modalWrapper}>
+      <div className={css.modalWrapper} ref={node => this.shortlistFeedbackRef = node}>
         <section>
           <div className={css.closeIcon}>
             <CloseButton onClose={this.dismissModal} />

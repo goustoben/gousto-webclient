@@ -11,7 +11,7 @@ import cookieActions from 'actions/cookies'
 import trackingActions from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
-import { shortlistRecipeAdd, shortlistRecipesClear, shortlistRecipesPositionClear } from 'actions/shortlist'
+import { shortlistRecipeAdd, shortlistRecipesClear, shortlistRecipesPositionClear, shortlistFeedbackViewed } from 'actions/shortlist'
 import logger from 'utils/logger'
 import persist from 'actions/persist'
 import { get } from './cookieHelper2'
@@ -88,6 +88,7 @@ const processCookies = (cookies, store) => {
   const appBannerDismissed = get(cookies, 'app_banner_dismissed')
   let shortlistRecipes = getCookieStoreValue(cookies, 'basket_shortlist_shortlistRecipes')
   let shortlistRecipesPosition = getCookieStoreValue(cookies, 'basket_shortlist_shortlistRecipesPositions')
+  const shortlistFeedbackViewedValue = getCookieStoreValue(cookies, 'basket_shortlist_shortlistFeedbackViewed')
 
   let features = getCookieStoreValue(cookies, 'features')
   let variants = getCookieStoreValue(cookies, 'variants')
@@ -246,7 +247,6 @@ const processCookies = (cookies, store) => {
         store.dispatch(shortlistRecipeAdd(recipeId, true, recipeInfo))
       })
     }
-
   }
 
   if (features) {
@@ -301,6 +301,10 @@ const processCookies = (cookies, store) => {
     } catch (err) {
       logger.error({ message: 'error parsing variants cookie value', errors: [err] })
     }
+  }
+
+  if (shortlistFeedbackViewedValue) {
+    store.dispatch(shortlistFeedbackViewed(JSON.parse(shortlistFeedbackViewedValue)))
   }
 }
 

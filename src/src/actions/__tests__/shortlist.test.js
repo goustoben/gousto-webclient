@@ -203,8 +203,9 @@ describe('shortlist actions', () => {
       dispatch(shortlistFeedbackViewed())
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.SHORTLIST_FEEDBACK_VIEWED,
+        value: true,
         trackingData: {
-          actionType: 'Shortlist Feedback Viewed'
+          actionType: 'Shortlist Feedback Viewed',
         }
       })
     })

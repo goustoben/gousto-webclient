@@ -9,6 +9,15 @@ export default (store) => {
     tracking: false,
     promoAgeVerified: false,
     variants: false,
+    basket: {
+      shortlist: {
+        shortlistRecipes: false,
+        shortlistRecipesPositions: false,
+        shortlistLimitReached: false,
+        shortlistFeedbackViewed: false,
+        shortlistUsed: false
+      }
+    }
   }
 
   if (!store.basket.get('orderId')) {
@@ -30,7 +39,9 @@ export default (store) => {
         shortlist: {
           shortlistRecipes: false,
           shortlistRecipesPositions: false,
-          shortlistLimitReached: false
+          shortlistLimitReached: false,
+          shortlistFeedbackViewed: false,
+          shortlistUsed: false
         }
       },
       filters: {
@@ -56,4 +67,5 @@ export const cookieExpiries = {
   basket_promoCode: 60,
   basket_shortlist_shortlistRecipes: 7,
   basket_shortlist_shortlistRecipesPositions: 7,
+  basket_shortlist_shortlistFeedbackViewed: 30,
 }
