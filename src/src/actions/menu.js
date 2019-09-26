@@ -53,7 +53,7 @@ const menuActions = {
   menuRecieveMenuPending,
   menuLoadCollectionRecipes,
   menuLoadCollectionsRecipes,
-  menuReceiveBoxPrices,
+  menuReceiveBoxPrices
 }
 
 export function menuReceiveMenu(recipes) {
@@ -548,5 +548,10 @@ export const triggerMenuLoad = () => (
     }
   }
 )
+
+export const menuLoadComplete = (timeToLoadMs) => ({
+  type: actionTypes.MENU_LOAD_COMPLETE,
+  timeToLoadMs
+})
 
 export default menuActions
