@@ -4,6 +4,7 @@ import logger from 'utils/logger'
 import actionTypes from 'actions/actionTypes'
 
 import { isFacebookUserAgent } from 'utils/request'
+import { getBasketDate } from 'selectors/basket'
 import { hasJustForYouCollection } from 'selectors/collections'
 import { isCollectionsFeatureEnabled } from 'selectors/features'
 import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
@@ -11,7 +12,6 @@ import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 
 import moment from 'moment'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
-import { getBasketDate } from '../../../selectors/basket'
 
 const requiresMenuRecipesClear = (store, orderId) => {
   return (
