@@ -2,7 +2,15 @@ import config from 'config'
 import MainLayout from 'layouts/MainLayout'
 import PrivacyStatement from '../../src/routes/PrivacyStatement/PrivacyStatement'
 const { match, createMemoryHistory } = require('react-router')
-const routes = require('../../src/routes').default({})
+const routes = require('../../src/routes').default(reduxStoreMock())
+
+function reduxStoreMock() {
+  return {
+    getState() {
+      return {}
+    },
+  }
+}
 
 describe('router', () => {
   test('should display the policy statement page when /privacy-statement is called', () => {

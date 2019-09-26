@@ -22,12 +22,14 @@ import Unsubscribe from './Unsubscribe'
 import GetHelp from './GetHelp'
 import OrderConfirmation from './OrderConfirmation'
 import PrivacyStatement from './PrivacyStatement'
+import ChoosePlan from './ChoosePlan'
 
 export default (store) => (
   <Route path="/" component={Page}>
     {Home}
     {Signup}
     {Menu}
+    {ChoosePlan(store)}
     {BoxPrices}
     {Join}
     {Cookbook}
