@@ -137,3 +137,11 @@ export const shortlistFeedbackSubmit = (feedback) => ({
     feedback
   }
 })
+
+export const shortlistFeedbackTestConsent = () => ({
+  type: actionTypes.SHORTLIST_FEEDBACK_FUTURE_TEST_CONSENT,
+  trackingData: {
+    actionType: 'Shortlist Feedback Future Tests Consent',
+    consent: true
+  }
+})

@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import { isNodeInRoot } from 'utils/DOMhelper'
 import Svg from 'Svg'
 import CloseButton from 'Overlay/CloseButton'
-import { modalContent } from './modalContent'
+import { modalContent, confirmationContent } from './modalContent'
 import css from './FeedbackModal.css'
 
 class FeedbackModal extends PureComponent {
   state = {
-    feedback: ''
+    feedback: '',
+    feedbackSent: false
   }
 
   componentDidMount() {
@@ -42,18 +43,33 @@ class FeedbackModal extends PureComponent {
   }
 
   sendFeedback = () => {
-    const { shortlistFeedbackSubmit, closeModal } = this.props
-    const { feedback } = this.state
-    shortlistFeedbackSubmit(feedback)
-    closeModal()
+    const { shortlistFeedbackSubmit, shortlistFeedbackTestConsent, closeModal } = this.props
+    const { feedback, feedbackSent } = this.state
+
+    if (feedbackSent) {
+      shortlistFeedbackTestConsent()
+      closeModal()
+    } else {
+      shortlistFeedbackSubmit(feedback)
+      this.setState((prevState) => ({
+        ...prevState,
+        feedbackSent: true
+      }))
+    }
   }
 
   setWrapperRef(node) {
     this.wrapperRef = node
   }
 
+  getSubmitText = () => {
+    const { feedbackSent } = this.state
+
+    return feedbackSent ? ('yes, that is fine').toUpperCase() : ('send feedback').toUpperCase()
+  }
+
   render() {
-    const { feedback } = this.state
+    const { feedback, feedbackSent } = this.state
 
     return (
       <div className={css.modalWrapper} ref={node => this.shortlistFeedbackRef = node}>
@@ -62,14 +78,14 @@ class FeedbackModal extends PureComponent {
             <CloseButton onClose={this.dismissModal} />
           </div>
           <h1 className={css.modalTitle}>
-            {modalContent.title}
+            {feedbackSent ? confirmationContent.title : modalContent.title}
             <Svg fileName={'icon_shortlist_heart_selected'} className={css.heartIcon} />
           </h1>
-          <p className={css.modalText}>{modalContent.text}</p>
-          <textarea className={css.modalTextarea} placeholder={modalContent.placeholder} value={feedback} onChange={this.changeFeedback} />
+          <p className={css.modalText}>{feedbackSent ? confirmationContent.text : modalContent.text}</p>
+          {!feedbackSent && <textarea className={css.modalTextarea} placeholder={modalContent.placeholder} value={feedback} onChange={this.changeFeedback} />}
         </section>
-        <button type="button" className={css.submitButton} disabled={feedback.length < 1} onClick={() => this.sendFeedback()}>
-          {('send feedback').toUpperCase()}
+        <button type="button" className={css.submitButton} disabled={feedback.length < 1 && !feedbackSent} onClick={() => this.sendFeedback()}>
+          {this.getSubmitText()}
         </button>
         <button type="button" className={css.dismissButton} onClick={() => this.dismissModal()}>{('no thanks').toUpperCase()}</button>
       </div >
@@ -81,7 +97,8 @@ FeedbackModal.propTypes = {
   shortlistFeedbackSubmit: PropTypes.func,
   shortlistFeedbackDismissTracking: PropTypes.func,
   closeModal: PropTypes.func,
-  shortlistFeedbackViewed: PropTypes.func
+  shortlistFeedbackViewed: PropTypes.func,
+  shortlistFeedbackTestConsent: PropTypes.func
 }
 
 export { FeedbackModal }

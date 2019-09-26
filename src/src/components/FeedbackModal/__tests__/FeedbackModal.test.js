@@ -1,6 +1,7 @@
 import React from 'react'
 import { mount } from 'enzyme'
 import { FeedbackModal } from '../FeedbackModal'
+import { confirmationContent } from '../modalContent'
 
 describe('FeedbackModal', () => {
   let wrapper
@@ -9,6 +10,7 @@ describe('FeedbackModal', () => {
     shortlistFeedbackDismissTracking: jest.fn(),
     closeModal: jest.fn(),
     shortlistFeedbackViewed: jest.fn(),
+    shortlistFeedbackTestConsent: jest.fn()
   }
   beforeEach(() => {
     wrapper = mount(<FeedbackModal {...props} />)
@@ -29,6 +31,26 @@ describe('FeedbackModal', () => {
     test('should submit the feedback from state', () => {
       wrapper.find('.submitButton').simulate('click')
       expect(props.shortlistFeedbackSubmit).toHaveBeenCalledWith('feedback')
+    })
+  })
+
+  describe('when feedback submitted', () => {
+    beforeEach(() => {
+      wrapper.setState({ feedbackSent: true })
+    })
+
+    test('should render consent title', () => {
+      expect(wrapper.find('.modalTitle').text()).toEqual(confirmationContent.title)
+    })
+
+    test('should render consent text', () => {
+      expect(wrapper.find('.modalText').text()).toEqual(confirmationContent.text)
+    })
+
+    test('should call shortlistFeedbackTestConsent on submit', () => {
+      wrapper.find('.submitButton').simulate('click')
+
+      expect(props.shortlistFeedbackTestConsent).toHaveBeenCalled()
     })
   })
 
