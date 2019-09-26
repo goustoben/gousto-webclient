@@ -17,7 +17,6 @@ const ProductList = ({ orderId, products, number, onProductClick }) => (
     <ImageSelection
       content={products.slice(0, number).toArray()}
       onImageClick={(itemId) => onProductClick(itemId)}
-      onTitleClick={(itemId) => onProductClick(itemId)}
     />
     <div className={css.button}>
       <LinkButton

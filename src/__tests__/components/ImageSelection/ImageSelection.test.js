@@ -5,38 +5,66 @@ import ImageSelection from 'ImageSelection'
 import Image from 'Image'
 
 describe('ImageSelection', () => {
-  const wrapper = shallow(<ImageSelection />)
-
-  test('should return div', () => {
-    expect(wrapper.type()).toEqual('div')
-  })
-})
-
-describe('ImageSelection images', () => {
-  const content = Immutable.fromJS([
-    {
+  const TITLE_1 = 'Title 1'
+  const content = [
+    Immutable.fromJS({
       images: {
         200: { src: '1', width: 200 },
         400: { src: '2', width: 400 },
       },
-      title: 'Title 1',
-    },
-    {
+      title: TITLE_1,
+      id: 'id-1',
+    }),
+    Immutable.fromJS({
       images: {
         200: { src: '3', width: 200 },
         400: { src: '4', width: 400 },
       },
       title: 'Title 2',
-    },
-  ])
+      id: 'id-2',
+    }),
+  ]
 
-  const wrapper = shallow(<ImageSelection content={content} />)
+  const onImageClickMock = jest.fn()
+  let wrapper
 
-  test('should display an Image for each content image prop', () => {
-    expect(wrapper.find(Image).length).toEqual(2)
+  beforeEach(() => {
+    wrapper = shallow(
+      <ImageSelection content={content} onImageClick={onImageClickMock} />
+    )
   })
 
-  test('should display a p with item title', () => {
-    expect(wrapper.find('p').length).toEqual(2)
+  test('displays an Image for each content image', () => {
+    expect(wrapper.find(Image)).toHaveLength(content.length)
+  })
+
+  test('displays image titles', () => {
+    expect(wrapper.find('p').at(0).text()).toBe(TITLE_1)
+  })
+
+  describe('interating with the list of content', () => {
+    afterEach(() => {
+      onImageClickMock.mockClear()
+    })
+
+    describe('clicking an image', () => {
+      beforeEach(() => {
+        wrapper.find('button').at(0).simulate('click')
+      })
+
+      test('calls the onClick prop', () => {
+        expect(onImageClickMock).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('clicking an image title', () => {
+      beforeEach(() => {
+        wrapper.find('p').at(0).simulate('click')
+      })
+
+      test('calls the onClick prop', () => {
+        expect(onImageClickMock).toHaveBeenCalledTimes(1)
+      })
+    })
   })
 })
