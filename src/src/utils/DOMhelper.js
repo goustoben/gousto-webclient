@@ -60,4 +60,16 @@ export function getElementOffsetTop(document, selector) {
   return elementOffsetTop
 }
 
+export const isNodeInRoot = (node, root) => {
+  let parent = node
+  while (parent) {
+    if (parent === root) {
+      return true
+    }
+    parent = parent.parentNode
+  }
+
+  return false
+}
+
 export default DOMHelper

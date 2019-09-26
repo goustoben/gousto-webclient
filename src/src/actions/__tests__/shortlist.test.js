@@ -1,5 +1,13 @@
 import Immutable from 'immutable'
-import { shortlistRecipeAdd, shortlistRecipeRemove, shortlistRecipesClear, shortlistRecipesPositionClear } from 'actions/shortlist'
+import {
+  shortlistRecipeAdd,
+  shortlistRecipeRemove,
+  shortlistRecipesClear,
+  shortlistRecipesPositionClear,
+  shortlistFeedbackViewed,
+  shortlistFeedbackDismissTracking,
+  shortlistFeedbackSubmit
+} from 'actions/shortlist'
 import actionTypes from 'actions/actionTypes'
 import { shortlistLimitReached } from 'utils/basket'
 
@@ -17,7 +25,10 @@ describe('shortlist actions', () => {
         '123': 1
       },
       shortlist: {
-        shortlistRecipes: {}
+        shortlistRecipes: {},
+        shortlistLimitReached: false,
+        shortlistFeedbackViewed: false,
+        shortlistUsed: false,
       }
     }),
     menuRecipes: {},
@@ -183,6 +194,44 @@ describe('shortlist actions', () => {
       dispatch(shortlistRecipesPositionClear())
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.SHORTLIST_RECIPES_POSITIONS_CLEAR,
+      })
+    })
+  })
+
+  describe('shortlistFeedbackViewed', () => {
+    test('should dispatch SHORTLIST_FEEDBACK_VIEWED and trackingData', () => {
+      const result = shortlistFeedbackViewed()
+      expect(result).toEqual({
+        type: actionTypes.SHORTLIST_FEEDBACK_VIEWED,
+        value: true,
+        trackingData: {
+          actionType: 'Shortlist Feedback Viewed',
+        }
+      })
+    })
+  })
+
+  describe('shortlistFeedbackDismissTracking', () => {
+    test('should dispatch SHORTLIST_FEEDBACK_DISMISSED and trackingData', () => {
+      const result = shortlistFeedbackDismissTracking()
+      expect(result).toEqual({
+        type: actionTypes.SHORTLIST_FEEDBACK_DISMISSED,
+        trackingData: {
+          actionType: 'Shortlist Feedback Dismissed'
+        }
+      })
+    })
+  })
+
+  describe('shortlistFeedbackSubmit', () => {
+    test('should dispatch SHORTLIST_FEEDBACK_SUBMITTED and trackingData with feedback text', () => {
+      const result = shortlistFeedbackSubmit('test-feedback')
+      expect(result).toEqual({
+        type: actionTypes.SHORTLIST_FEEDBACK_SUBMITTED,
+        trackingData: {
+          actionType: 'Shortlist Feedback Submitted',
+          feedback: 'test-feedback'
+        }
       })
     })
   })

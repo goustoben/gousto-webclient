@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import classnames from 'classnames'
 
+import { FeedbackModal } from 'FeedbackModal'
 import Overlay from 'Overlay'
 import Loading from 'Loading'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
@@ -38,13 +39,15 @@ const propTypes = {
     firstMonthDiscountFormatted: PropTypes.string.isRequired,
   }).isRequired,
   showHeader: PropTypes.bool.isRequired,
-  userFetchReferralOffer: PropTypes.func
+  userFetchReferralOffer: PropTypes.func,
+  showShortlistFeedback: PropTypes.bool
 }
 
 const defaultProps = {
   hasCollapsedRafFeature: false,
   headerDetails: {},
   showHeader: false,
+  showShortlistFeedback: false
 }
 
 class OrderConfirmation extends PureComponent {
@@ -53,6 +56,7 @@ class OrderConfirmation extends PureComponent {
     this.state = {
       showAgeVerification: false,
       hasConfirmedAge: false,
+      showFeedback: false
     }
   }
 
@@ -62,9 +66,22 @@ class OrderConfirmation extends PureComponent {
     userFetchReferralOffer()
   }
 
+  componentDidUpdate(prevProps) {
+    const { isLoading, showShortlistFeedback } = this.props
+    if (showShortlistFeedback && !isLoading && prevProps.isLoading) {
+      this.toggleShortlistFeedback()
+    }
+  }
+
   toggleAgeVerificationPopUp = () => {
     this.setState((prevState) => ({
       showAgeVerification: !prevState.showAgeVerification
+    }))
+  }
+
+  toggleShortlistFeedback = () => {
+    this.setState((prevState) => ({
+      showFeedback: !prevState.showFeedback
     }))
   }
 
@@ -85,13 +102,13 @@ class OrderConfirmation extends PureComponent {
       rafOffer,
       showHeader,
     } = this.props
-    const { showAgeVerification, hasConfirmedAge } = this.state
+    const { showAgeVerification, hasConfirmedAge, showFeedback } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
     return isLoading ?
       (
         <div className={css.loadingContainer}>
-          <Loading className={css.loadingImage}/>
+          <Loading className={css.loadingImage} />
         </div>
       ) :
       (
@@ -142,19 +159,22 @@ class OrderConfirmation extends PureComponent {
                 </VerticalStagesItem>
               </VerticalStages>
             ) : (
-              <div>
-                <div className={classnames(css.mobileShow, css.rafMobile)}>
-                  <ReferAFriend />
+                <div>
+                  <div className={classnames(css.mobileShow, css.rafMobile)}>
+                    <ReferAFriend />
+                  </div>
+                  <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
+                  <Market
+                    ageVerified={ageVerified}
+                    toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
+                  />
                 </div>
-                <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
-                <Market
-                  ageVerified={ageVerified}
-                  toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
-                />
-              </div>
             )}
 
             <AwinPixel />
+            <Overlay open={showFeedback}>
+              <FeedbackModal closeModal={() => this.toggleShortlistFeedback()} />
+            </Overlay>
           </div>
         </LayoutPageWrapper>
       )

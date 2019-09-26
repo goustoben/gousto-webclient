@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import Immutable from 'immutable'
+import userActions, { userFetchReferralOffer } from 'actions/user'
 import { locationQuery } from 'selectors/routing'
 import { getAgeVerified, getReferralOffer } from 'selectors/user'
 import { isOrderConfirmationPageLoading } from 'selectors/orderConfirmation'
-import { getBasketOrderDetails } from 'selectors/basket'
-import Immutable from 'immutable'
-import userActions, { userFetchReferralOffer } from 'actions/user'
+import { getBasketOrderDetails, getShortlistUsed, getShortlistFeedbackViewed } from 'selectors/basket'
 import { isCollapsedRafFeatureEnabled } from 'selectors/features'
 import { OrderConfirmation } from './OrderConfirmation'
 import { getHeaderDetails } from './helper'
@@ -24,6 +24,7 @@ const mapStateToProps = (state) => {
     isLoading,
     rafOffer: getReferralOffer(state) || Immutable.Map(),
     showHeader,
+    showShortlistFeedback: (getShortlistUsed(state) && !getShortlistFeedbackViewed(state)),
   })
 }
 

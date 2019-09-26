@@ -114,3 +114,26 @@ export const shortlistRecipesClear = () => ({
 export const shortlistRecipesPositionClear = () => ({
   type: actionTypes.SHORTLIST_RECIPES_POSITIONS_CLEAR,
 })
+
+export const shortlistFeedbackViewed = (value = true) => ({
+  type: actionTypes.SHORTLIST_FEEDBACK_VIEWED,
+  value,
+  trackingData: {
+    actionType: 'Shortlist Feedback Viewed'
+  }
+})
+
+export const shortlistFeedbackDismissTracking = () => ({
+  type: actionTypes.SHORTLIST_FEEDBACK_DISMISSED,
+  trackingData: {
+    actionType: 'Shortlist Feedback Dismissed'
+  }
+})
+
+export const shortlistFeedbackSubmit = (feedback) => ({
+  type: actionTypes.SHORTLIST_FEEDBACK_SUBMITTED,
+  trackingData: {
+    actionType: 'Shortlist Feedback Submitted',
+    feedback
+  }
+})
