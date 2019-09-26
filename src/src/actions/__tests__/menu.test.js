@@ -191,10 +191,22 @@ describe('menu actions', () => {
   describe('menuCutoffUntilRecieve', () => {
     test('should return a MENU_CUTOFF_UNTIL_RECIEVE action with the first argument mapped through to the cutoffUntil property', () => {
       const result = menuActions.menuCutoffUntilReceive('2020-06-26')
-      expect(result).toEqual(expect.objectContaining({
+
+      expect(result).toEqual({
         type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
         cutoffUntil: '2020-06-26',
-      }))
+      })
+    })
+  })
+
+  describe('menuLoadComplete', () => {
+    test('should return a MENU_LOAD_COMPLETE action with correct time to load', () => {
+      const result = menuActions.menuLoadComplete(12345)
+
+      expect(result).toEqual({
+        type: actionTypes.MENU_LOAD_COMPLETE,
+        timeToLoadMs: 12345
+      })
     })
   })
 })
