@@ -6,7 +6,8 @@ import {
   shortlistRecipesPositionClear,
   shortlistFeedbackViewed,
   shortlistFeedbackDismissTracking,
-  shortlistFeedbackSubmit
+  shortlistFeedbackSubmit,
+  shortlistFeedbackTestConsent
 } from 'actions/shortlist'
 import actionTypes from 'actions/actionTypes'
 import { shortlistLimitReached } from 'utils/basket'
@@ -231,6 +232,19 @@ describe('shortlist actions', () => {
         trackingData: {
           actionType: 'Shortlist Feedback Submitted',
           feedback: 'test-feedback'
+        }
+      })
+    })
+  })
+
+  describe('shortlistFeedbackTestConsent', () => {
+    test('should dispatch SHORTLIST_FEEDBACK_FUTURE_TEST_CONSENT and trackingData with consent true', () => {
+      const result = shortlistFeedbackTestConsent()
+      expect(result).toEqual({
+        type: actionTypes.SHORTLIST_FEEDBACK_FUTURE_TEST_CONSENT,
+        trackingData: {
+          actionType: 'Shortlist Feedback Future Tests Consent',
+          consent: true
         }
       })
     })
