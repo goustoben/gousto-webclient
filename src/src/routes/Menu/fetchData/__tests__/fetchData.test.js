@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import moment from 'moment'
+import now from 'performance-now'
 
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
@@ -18,6 +19,7 @@ import { setSlotFromIds, getPreselectedCollectionName, selectCollection } from '
 jest.mock('../utils')
 jest.mock('utils/deliveries')
 jest.mock('utils/logger')
+jest.mock('performance-now')
 
 describe('menu fetchData', () => {
   let state = {
@@ -100,7 +102,7 @@ describe('menu fetchData', () => {
       }
 
       beforeEach(() => {
-        const recipes = [ '001', '002', '003', '004', '005', '006', '007', '008', '009' ]
+        const recipes = ['001', '002', '003', '004', '005', '006', '007', '008', '009']
         state.menuRecipes = Immutable.List(recipes)
         state.menuCollectionRecipes = state.menuCollectionRecipes.set('123', recipes)
         state.menuRecipesUpdatedAt = moment()
@@ -108,7 +110,7 @@ describe('menu fetchData', () => {
 
       test('should not dispatch', async () => {
         await fetchData({ store, query, params: paramsWithoutOrderId }, force, false)
-  
+
         expect(store.dispatch).not.toHaveBeenCalled()
       })
     })
@@ -569,6 +571,25 @@ describe('menu fetchData', () => {
 
           expect(selectCollection).toHaveBeenCalledWith(state, 'some-collection-name', store.dispatch)
         })
+      })
+
+      test('should dispatch menuLoadComplete action', async () => {
+        const firstTime = 1
+        const secondTime = 2.3
+
+        // Math.round(2.3 - 1)
+        const expectedValue = 1 
+
+        now.mockReturnValueOnce(firstTime)
+          .mockReturnValueOnce(secondTime)
+          .mockReturnValue(999999)
+
+        await fetchData({ store, query, params }, false, false)
+
+        expect(store.dispatch.mock.calls[5]).toEqual([{
+          type: actionTypes.MENU_LOAD_COMPLETE,
+          timeToLoadMs: expectedValue
+        }])
       })
     })
   })
