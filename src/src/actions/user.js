@@ -734,10 +734,15 @@ export function userFetchReferralOffer() {
 
 export const userGetReferralDetails = () => {
   return async (dispatch, getState) => {
-    const accessToken = getState().auth.get('accessToken')
-    const { data } = await userApi.referralDetails(accessToken)
+    try {
+      const accessToken = getState().auth.get('accessToken')
+      const { data } = await userApi.referralDetails(accessToken)
 
-    dispatch(userLoadReferralDetails(data))
+      dispatch(userLoadReferralDetails(data))
+    } catch (err) {
+
+      logger.error({ message: `Failed to fetch referral details`, errors: [err] })
+    }
   }
 }
 

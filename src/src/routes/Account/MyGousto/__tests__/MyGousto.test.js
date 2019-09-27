@@ -4,14 +4,16 @@ import { shallow } from 'enzyme'
 import { Cookbook } from '../Cookbook'
 import { Notification } from '../Notification'
 import { Header } from '../Header'
+import { ReferAFriend } from '../ReferAFriend'
 import MyGousto from '../MyGousto'
 
 describe('MyGousto', () => {
   let wrapper
   const userLoadOrdersSpy = jest.fn()
+  const userGetReferralDetails = jest.fn()
 
   beforeEach(() => {
-    wrapper = shallow(<MyGousto userLoadOrders={userLoadOrdersSpy} />)
+    wrapper = shallow(<MyGousto userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} />)
   })
 
   afterEach(() => {
@@ -29,6 +31,10 @@ describe('MyGousto', () => {
 
     test('should render the header component', () => {
       expect(wrapper.find(Header).length).toEqual(1)
+    })
+
+    test('should render the refer a friend component', () => {
+      expect(wrapper.find(ReferAFriend).length).toEqual(1)
     })
   })
 
