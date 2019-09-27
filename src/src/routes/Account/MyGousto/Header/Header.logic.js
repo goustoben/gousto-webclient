@@ -16,59 +16,40 @@ class Header extends PureComponent {
   }
 
   formatDeliveryDate = (order, now) => {
-    if (!order) {
-      return null
-    } else if (order) {
-      const start = moment(
-        order.get('deliveryDate').substring(0, 10) +
-          ' ' +
-          order.getIn(['deliverySlot', 'deliveryStart'])
-      )
-      const end = moment(
-        order.get('deliveryDate').substring(0, 10) +
-          ' ' +
-          order.getIn(['deliverySlot', 'deliveryEnd'])
-      )
-      const roundedEnd =
-        end.minute() || end.second() || end.millisecond()
-          ? end.add(1, 'h').startOf('hour')
-          : end
+    if (!order) return null
 
-      const date = moment(order.get('deliveryDate'))
-      let message = ''
-      if (now.format('YYMMDD') === date.format('YYMMDD')) {
-        message =
-          'Your recipe box will be delivered today, ' +
-          date.format('Do MMMM') +
-          '. You can view more details in '
-      } else {
-        message =
-          'Your next Gousto box will arrive on ' +
-          date.format('dddd, Do MMMM') +
-          ' between ' +
-          start.format('ha') +
-          '-' +
-          roundedEnd.format('ha') +
-          '. See all the details or edit this box from '
-      }
+    const deliveryDay = order.get('deliveryDate').substring(0, 10)
 
-      return message
+    const start = moment(`${deliveryDay} ${order.getIn(['deliverySlot', 'deliveryStart'])}`)
+    const end = moment(`${deliveryDay} ${order.getIn(['deliverySlot', 'deliveryEnd'])}`)
+
+    const roundedEnd =
+      end.minute() || end.second() || end.millisecond()
+        ? end.add(1, 'h').startOf('hour')
+        : end
+
+    const date = moment(order.get('deliveryDate'))
+
+    let message = ''
+    if (now.format('YYMMDD') === date.format('YYMMDD')) {
+      message = `Your recipe box will be delivered today, ${date.format('Do MMMM')}.  You can view more details in `
     } else {
-      return null
+      message = `'Your next Gousto box will arrive on ${date.format('dddd, Do MMMM')} between ${start.format('ha')}-${roundedEnd.format('ha')}. See all the details or edit this box from `
     }
+
+    return message
   }
 
   formatPreviousBoxDate = order => {
-    if (!order) {
-      return null
-    } else {
-      const yesterday = moment().subtract(1, 'day')
-      const deliveryDate = moment(order.get('deliveryDate'))
+    if (!order) return null
 
-      return yesterday.isSame(deliveryDate, 'day')
-        ? 'yesterday'
-        : `on ${deliveryDate.format('dddd Do MMMM')}`
-    }
+    const yesterday = moment().subtract(1, 'day')
+    const deliveryDate = moment(order.get('deliveryDate'))
+
+    return yesterday.isSame(deliveryDate, 'day')
+      ? 'yesterday'
+      : `on ${deliveryDate.format('dddd Do MMMM')}`
+
   }
 
   findOrder = (orders, now, orderToFind) => {
