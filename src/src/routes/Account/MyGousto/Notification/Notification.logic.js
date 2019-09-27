@@ -1,13 +1,20 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import Immutable from 'immutable'
 import moment from 'moment'
-import { NotificationPresentation } from './Notification.presentation'
+import Immutable from 'immutable'
+import PropTypes from 'prop-types'
+
 import { config } from './config'
-import { checkCardExpiryDate, checkAmendedDeliveryDate, checkOrderAwaitingSelection, checkRafOffer } from './notificationHelper'
+import {
+  checkRafOffer,
+  sortNotifications,
+  checkCardExpiryDate,
+  checkAmendedDeliveryDate,
+  checkOrderAwaitingSelection,
+} from './helpers'
+
+import { NotificationPresentation } from './Notification.presentation'
 
 class NotificationLogic extends Component {
-
   static propTypes = {
     card: PropTypes.instanceOf(Immutable.Map),
     orders: PropTypes.instanceOf(Immutable.Map),
@@ -19,58 +26,48 @@ class NotificationLogic extends Component {
   }
 
   state = {
-    bannersToShow: [],
+    notifications: [],
   }
 
   componentDidMount() {
     const { card, orders } = this.props
     const now = moment()
 
-    const banners = [
+    const notifications = [
       checkCardExpiryDate(card, now),
       checkAmendedDeliveryDate(orders),
       checkOrderAwaitingSelection(orders, now),
-      checkRafOffer(now)
-    ].filter(banner => banner)
+      checkRafOffer(now),
+    ].filter(notification => notification).map(notification => ({
+      message: config[notification].message,
+      type: config[notification].type,
+      title: config[notification].title,
+      url: config[notification].url,
+    })).sort((a, b) => sortNotifications(a.type, b.type))
 
     this.setState({
-      bannersToShow: banners
+      notifications,
     })
   }
 
-  sortBanners = (a, b) => {
-    if (b.type === 'danger') return 1
-    if (b.type === 'warning' && a.type !== 'danger') return 1
-    if (b.type === 'notify' && a.type !== 'danger' && a.type !== 'warning') return 1
-
-    return 0
-  }
-
   render() {
-    const { bannersToShow } = this.state
+    const { notifications } = this.state
 
-    const notificationBannerDetails = bannersToShow.map(banner => (
-      {
-        message: config[banner].message,
-        type: config[banner].type,
-        title: config[banner].title,
-        url: config[banner].url,
-      }
-    ))
-      .sort((a, b) => this.sortBanners(a, b))
-
-    return (
+    return (notifications.length) ? (
       <div>
-        {
-          notificationBannerDetails.map((banner, index) => {
-            return index < 2 ?
-              < NotificationPresentation key={banner.title} message={banner.message} type={banner.type} title={banner.title} url={banner.url} />
-              : null
-          })
-        }
+        {notifications.map((notification, index) => (
+          (index < 2) ? (
+            <NotificationPresentation
+              key={notification.title}
+              message={notification.message}
+              type={notification.type}
+              title={notification.title}
+              url={notification.url}
+            />
+          ) : null
+        ))}
       </div>
-    )
-
+    ) : null
   }
 }
 

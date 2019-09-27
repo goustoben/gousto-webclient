@@ -1,6 +1,6 @@
 @value ScreenXSMax, ScreenXXSMax from 'styles/screenSizes.css';
 @value sizeXXS, sizeXS from 'styles/typography.css';
-@value Blackberry, Pomegranate from 'styles/colors.css';
+@value Blackberry, Pomegranate, White from 'styles/colors.css';
 
 @value padding: 1rem;
 
@@ -9,6 +9,8 @@
 	composes: marginXXLRight from 'sass-loader!styles/spacing.scss';
 	color: Blackberry;
 	position: relative;
+	border-bottom: solid 2px White;
+
 	@media ScreenXSMax {
 		margin-right: 0px;
 	}

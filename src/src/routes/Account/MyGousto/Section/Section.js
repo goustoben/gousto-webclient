@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Children } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import css from './Section.css'
@@ -21,12 +21,14 @@ const getTitleElement = (title, largeTitle) => {
 }
 
 const Section = ({ title, largeTitle, alternateColour, children }) => (
-  <div className={classnames(css.wrapper, { [css.alternateBackground]: alternateColour })}>
-    <div className={css.content}>
-      {getTitleElement(title, largeTitle)}
-      {children}
+  (Children.count(children)) ? (
+    <div className={classnames(css.wrapper, { [css.alternateBackground]: alternateColour })}>
+      <div className={css.content}>
+        {getTitleElement(title, largeTitle)}
+        {children}
+      </div>
     </div>
-  </div>
+  ) : null
 )
 
 Section.propTypes = propTypes
