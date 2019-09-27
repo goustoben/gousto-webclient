@@ -575,7 +575,10 @@ describe('menu fetchData', () => {
 
       test('should dispatch menuLoadComplete action', async () => {
         const firstTime = 1
-        const secondTime = 2
+        const secondTime = 2.3
+
+        // Math.round(2.3 - 1)
+        const expectedValue = 1 
 
         now.mockReturnValueOnce(firstTime)
           .mockReturnValueOnce(secondTime)
@@ -585,7 +588,7 @@ describe('menu fetchData', () => {
 
         expect(store.dispatch.mock.calls[5]).toEqual([{
           type: actionTypes.MENU_LOAD_COMPLETE,
-          timeToLoadMs: (secondTime - firstTime)
+          timeToLoadMs: expectedValue
         }])
       })
     })
