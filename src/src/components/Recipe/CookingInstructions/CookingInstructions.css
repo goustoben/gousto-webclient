@@ -1,5 +1,68 @@
-@value Bluecheese from 'styles/colors.css';
+@value Bluecheese, Black, White from 'styles/colors.css';
+@value bodyFontStackBold, sizeXS, sizeXL from 'styles/typography.css';
+@value ScreenMDMax, ScreenLGMin from 'styles/screenSizes.css';
+@value SpacingSM, SpacingMD, SpacingLG, SpacingXL from 'styles/spacing.css';
+
+.container {
+  @media ScreenMDMax { 
+    display: flex;
+    overflow: scroll;
+  }
+}
+
+.insetHeading {
+  padding-bottom: SpacingLG;
+}
+
+.heading {
+  composes: headerLG headlineFont from 'styles/typography.css';
+}
 
 .highlightText {
   color: Bluecheese;
+}
+
+.section {
+  position: relative;
+  width: 90%;
+  
+  @media ScreenMDMax {
+    flex: none;
+    padding-right: SpacingLG;
+  }
+
+  @media ScreenLGMin {
+    display: flex;
+    padding-bottom: SpacingXL;
+  }
+}
+
+.recipeImage {
+  @media ScreenLGMin {
+    -ms-flex: 0 0 40%;
+    flex: 0 0 40%;
+  }
+}
+
+.recipeInstruction {
+  @media ScreenLGMin {
+    -ms-flex: 0 0 70%;
+    flex: 0 0 70%;
+    padding-left: SpacingMD;
+  }
+}
+
+.stepNumber {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: White;
+  background-color: Black;
+  font-family: bodyFontStackBold;
+  font-size: sizeXL;
+  padding: 0.25rem 0.75rem;
+}
+
+.stepImage {
+  padding-bottom: SpacingSM;
 }

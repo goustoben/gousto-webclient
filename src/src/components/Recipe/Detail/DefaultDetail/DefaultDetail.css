@@ -2,275 +2,278 @@
 @value White, Basa from 'styles/colors.css';
 @value SpacingLG, SpacingMD, SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
 
-  .headerContentContainer {
-    @media ScreenXXSMax {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: 60px;
-    }
-  }
-
-  .container {
-    padding: 0 0 70px 0;
-  }
-
-  .textContainer {
-    composes: row from 'sass-loader!styles/bootstrap.scss';
-    width: 100%;
-    margin: 0;
-  }
-
-  .attributes {
-    line-height: attributesLineHeight;
-    font-size: sizeMD;
-    border-top: 1px solid Basa;
-    border-bottom: 1px solid Basa;
-    padding: 10px 0;
-    margin-top: 5px;
-
-    @media ScreenMDMin {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-  }
-
-  .closeIcon {
-    padding-top: 0;
-    margin-top: -3px;
-    composes: closeIcon from 'styles/icons.css';
-  }
-
-  .badges {
-    composes: marginMDLeftRight paddingMDBottom from 'sass-loader!styles/spacing.scss';
-    padding-top: 3px;
-  }
-
-  .shadow {
-    composes: col-xs-12 pull-left from 'sass-loader!styles/bootstrap.scss';
-    padding: 0;
-    z-index: 0;
-    background-color: White;
-  }
-
-  .header {
-    composes: shadow;
-    z-index: 1;
-
-    @media ScreenXXSMax {
-    padding-top: 60px;
-    }
-  }
-
-  .stickyHeader {
-    background-color: White;
-    padding-bottom: 5px;
-    @media ScreenXXSMax {
-      position: fixed;
-      top: 0;
-
-      width: 100%;
-      min-height: 60px;
-      padding: 5px 5px 0 5px;
-      padding-left: 0;
-    }
-  }
-
-  .fixedButtonContainer {
-    display: none;
-    @media ScreenXXSMax {
-      display: block;
-      padding: 5px;
-      padding-bottom: 10px;
-      padding-left: 10px;
-    }
-  }
-
-  .imageContainer {
-    width: 100%;
-    position: relative;
-  }
-
-  .infoBox {
-    composes: col-xs-12 col-md-12 col-xl-4 float-left from 'sass-loader!styles/bootstrap.scss';
-    composes: paddingMDLeftRight paddingLGTopBottom from 'sass-loader!styles/spacing.scss';
-    position: absolute;
-    background-color: White;
-    right: 35px;
-    top: SpacingMD;
-
-
-    @media ScreenLGMin {
-      right: SpacingLG;
-      top: SpacingLG;
-      padding: SpacingSM;
-      line-height: 1.8;
-      z-index: 5;
-    }
-
-    @media ScreenMDMax {
-      position: relative;
-      background: White;
-      right: 0;
-      top: 15px;
-      margin: 0 20px SpacingMD;
-    }
-
-    @media ScreenXSMax {
-      width: 100%;
-      margin: 0 0 SpacingMD;
-    }
-  }
-
-  .rating {
-    composes: paddingXSBottom from 'sass-loader!styles/spacing.scss';
-  }
-
-  .titleFlex {
-    composes: flex spaceBetween row from 'styles/flex.css';
-  }
-
-  .infoBoxText {
-    composes: paragraphSM from 'styles/typography.css';
-    line-height: 1.4;
-
-    @media ScreenMDMax {
-      margin-bottom: SpacingXXS;
-      margin-top: SpacingMD;
-    }
-  }
-
-  .additionalInfo {
-    composes: infoBoxText;
-    composes: marginMDTop from 'sass-loader!styles/spacing.scss';
-  }
-  .overlay {
-    composes: fixed from 'styles/position.css';
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    background: rgba(0,0,0,0.5);
-  }
-
-  .mobileOnly {
-    display: none;
-    @media ScreenXSMax {
-      display: block;
-    }
-  }
-  .mobileHide {
-    display: none;
-    @media ScreenXXSMin {
-     display: block;
-    }
-  }
-
-  .fixedOnly {
-    display: none;
-
-    @media (max-width: 575px) {
-      display: inherit;
-    }
-  }
-
-  .fixedHide {
-    composes: mobileOnly;
-
-    @media (max-width: 575px) {
-      display: none;
-    }
-  }
-
-  .fixedOnlyButton {
-    composes: fixedOnly;
-    padding: 10px;
-    padding-top: 0;
-  }
-
-  .row {
-    composes: row from 'sass-loader!styles/bootstrap.scss';
-    width: 100%;
-    margin: 0;
-  }
-
-
-  .section {
-    composes: paddingLGTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
-  }
-
-  .splitSection {
-    composes: col-lg-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
-  }
-
-  .sectionPanel {
-    composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
-    background-color: White;
-  }
-
-  .stickyContainer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: White;
-    border-top: 1px solid Basa;
+.headerContentContainer {
+  @media ScreenXXSMax {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 60px;
+  }
+}
+
+.container {
+  padding: 0 0 70px 0;
+}
+
+.textContainer {
+  composes: row from 'sass-loader!styles/bootstrap.scss';
+  width: 100%;
+  margin: 0;
+}
+
+.attributes {
+  line-height: attributesLineHeight;
+  font-size: sizeMD;
+  border-top: 1px solid Basa;
+  border-bottom: 1px solid Basa;
+  padding: 10px 0;
+  margin-top: 5px;
+
+  @media ScreenMDMin {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+.closeIcon {
+  padding-top: 0;
+  margin-top: -3px;
+  composes: closeIcon from 'styles/icons.css';
+}
+
+.badges {
+  composes: marginMDLeftRight paddingMDBottom from 'sass-loader!styles/spacing.scss';
+  padding-top: 3px;
+}
+
+.shadow {
+  composes: col-xs-12 pull-left from 'sass-loader!styles/bootstrap.scss';
+  padding: 0;
+  z-index: 0;
+  background-color: White;
+}
+
+.header {
+  composes: shadow;
+  z-index: 1;
+
+  @media ScreenXXSMax {
+    padding-top: 60px;
+  }
+}
+
+.stickyHeader {
+  background-color: White;
+  padding-bottom: 5px;
+
+  @media ScreenXXSMax {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    min-height: 60px;
+    padding: 5px 5px 0 5px;
+    padding-left: 0;
+  }
+}
+
+.fixedButtonContainer {
+  display: none;
+
+  @media ScreenXXSMax {
+    display: block;
+    padding: 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+  }
+}
+
+.imageContainer {
+  width: 100%;
+  position: relative;
+}
+
+.infoBox {
+  composes: col-xs-12 col-md-12 col-xl-4 float-left from 'sass-loader!styles/bootstrap.scss';
+  composes: paddingMDLeftRight paddingLGTopBottom from 'sass-loader!styles/spacing.scss';
+  position: absolute;
+  background-color: White;
+  right: 35px;
+  top: SpacingMD;
+
+  @media ScreenLGMin {
+    right: SpacingLG;
+    top: SpacingLG;
+    padding: SpacingSM;
+    line-height: 1.8;
+    z-index: 5;
+  }
+
+  @media ScreenMDMax {
+    position: relative;
+    background: White;
+    right: 0;
+    top: 15px;
+    margin: 0 20px SpacingMD;
+  }
+
+  @media ScreenXSMax {
+    width: 100%;
+    margin: 0 0 SpacingMD;
+  }
+}
+
+.rating {
+  composes: paddingXSBottom from 'sass-loader!styles/spacing.scss';
+}
+
+.titleFlex {
+  composes: flex spaceBetween row from 'styles/flex.css';
+}
+
+.infoBoxText {
+  composes: paragraphSM from 'styles/typography.css';
+  line-height: 1.4;
+
+  @media ScreenMDMax {
+    margin-bottom: SpacingXXS;
+    margin-top: SpacingMD;
+  }
+}
+
+.additionalInfo {
+  composes: infoBoxText;
+  composes: marginMDTop from 'sass-loader!styles/spacing.scss';
+}
+
+.overlay {
+  composes: fixed from 'styles/position.css';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  background: rgba(0,0,0,0.5);
+}
+
+.mobileOnly {
+  display: none;
+
+  @media ScreenXSMax {
+    display: block;
+  }
+}
+
+.mobileHide {
+  display: none;
+
+  @media ScreenXXSMin {
+    display: block;
+  }
+}
+
+.fixedOnly {
+  display: none;
+
+  @media (max-width: 575px) {
+    display: inherit;
+  }
+}
+
+.fixedHide {
+  composes: mobileOnly;
+
+  @media (max-width: 575px) {
+    display: none;
+  }
+}
+
+.fixedOnlyButton {
+  composes: fixedOnly;
+  padding: 10px;
+  padding-top: 0;
+}
+
+.row {
+  composes: row from 'sass-loader!styles/bootstrap.scss';
+  width: 100%;
+  margin: 0;
+}
+
+.section {
+  composes: paddingLGTopBottom paddingLGLeftRight from 'sass-loader!styles/spacing.scss';
+}
+
+.splitSection {
+  composes: col-lg-6 col-xs-12 from 'sass-loader!styles/bootstrap.scss';
+}
+
+.sectionPanel {
+  composes: paddingMDTopBottom paddingMDLeftRight from 'sass-loader!styles/spacing.scss';
+  background-color: White;
+}
+
+.stickyContainer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: White;
+  border-top: 1px solid Basa;
+  display: flex;
+  align-items: center;
+
+  @media ScreenXXSMin {
+    display: none;
+  }
+}
+
+.stickyButton {
+  margin: 12px 15px;
+  flex-grow: 1;
+}
+
+.rangeBadgeDetails {
+  margin-top: -44px;
+  margin-left: -15px;
+  position: absolute;
+
+  @media ScreenSMMin {
+    position: relative;
+    margin-left: -35px;
+    margin-top: -50px;
+    margin-bottom: 32px;
+  }
+
+  @media ScreenLGMin {
+    position: relative;
+    margin-left: -25px;
+    margin-top: 0px;
+    margin-bottom: 13px;
+  }
+}
+
+.rangeBadgeDetails > div > div:nth-child(2)  {
+  @media ScreenLGMin {
+    width: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    border-top: 1px solid White;
+  }
+}
+
+.rangeBadgeDetails > div > div:first-child {
+  @media ScreenSMMin {
+    z-index: 10;
+    display: inline-flex;
     align-items: center;
-
-    @media ScreenXXSMin {
-      display: none;
-    }
+    height: 100%;
+    justify-content: center;
+    border: 1px solid White;
+    border-right: none;
+    color: White;
+    padding: 6px 11px 5px 15px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: Avenir-Black, Avenir;
   }
-
-  .stickyButton {
-    margin: 12px 15px;
-    flex-grow: 1;
-  }
-
-  .rangeBadgeDetails {
-    margin-top: -44px;
-    margin-left: -15px;
-    position: absolute;
-
-    @media ScreenSMMin {
-      position: relative;
-      margin-left: -35px;
-      margin-top: -50px;
-      margin-bottom: 32px;
-    }
-
-    @media ScreenLGMin {
-      position: relative;
-      margin-left: -25px;
-      margin-top: 0px;
-      margin-bottom: 13px;
-    }
-  }
-
-  .rangeBadgeDetails > div > div:nth-child(2)  {
-    @media ScreenLGMin {
-      width: 10px;
-      display: inline-flex;
-      flex-direction: column;
-      border-top: 1px solid White;
-    }
-  }
-
-  .rangeBadgeDetails > div > div:first-child {
-    @media ScreenSMMin {
-      z-index: 10;
-      display: inline-flex;
-      align-items: center;
-      height: 100%;
-      justify-content: center;
-      border: 1px solid White;
-      border-right: none;
-      color: White;
-      padding: 6px 11px 5px 15px;
-      font-size: 12px;
-      font-weight: 700;
-      font-family: Avenir-Black, Avenir;
-    }
-  }
+}

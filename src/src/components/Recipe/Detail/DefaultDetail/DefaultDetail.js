@@ -75,7 +75,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
         <div className={css.row}>
           {ingredients.size > 0 ? (
             <div className={css.section}>
-              <div className={classnames(css.sectionPanel, css.insetSectionPanel)}>
+              <div className={css.sectionPanel}>
                 <Ingredients ingredients={ingredients} restrictedView={restrictedView} />
               </div>
             </div>
