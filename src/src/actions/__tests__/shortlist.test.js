@@ -239,7 +239,7 @@ describe('shortlist actions', () => {
 
   describe('shortlistFeedbackTestConsent', () => {
     test('should dispatch SHORTLIST_FEEDBACK_FUTURE_TEST_CONSENT and trackingData with consent true', () => {
-      const result = shortlistFeedbackTestConsent('test-feedback')
+      const result = shortlistFeedbackTestConsent()
       expect(result).toEqual({
         type: actionTypes.SHORTLIST_FEEDBACK_FUTURE_TEST_CONSENT,
         trackingData: {
