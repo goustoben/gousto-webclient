@@ -115,7 +115,7 @@ describe('menu fetchData', () => {
       })
     })
 
-    fdescribe('should fetch', () => {
+    describe('should fetch', () => {
       test('should dispatch pending action', async () => {
         await fetchData({ store, query, params }, false, false)
 
