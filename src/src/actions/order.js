@@ -266,6 +266,12 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
       direction: 'asc',
       postcode,
     }
+
+    const isNddExperiment = getState().features.getIn(['ndd', 'value'])
+    if (isNddExperiment) {
+      reqData.ndd = 'true'
+    }
+
     try {
       const { data: days } = await fetchDeliveryDays(null, reqData)
       const availableDays = getAvailableDeliveryDays(days)

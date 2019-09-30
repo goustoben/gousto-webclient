@@ -23,9 +23,7 @@ jest.mock('actions/orderConfirmation')
 jest.mock('actions/status')
 jest.mock('apis/user')
 jest.mock('utils/basket')
-
 jest.mock('apis/deliveries')
-
 jest.mock('utils/deliveries')
 
 const { pending, error } = actionStatus
@@ -519,7 +517,13 @@ describe('order actions', () => {
       cutoffDatetimeUntil = '02-02-2017 14:23:34'
       getStateSpy = jest.fn().mockReturnValue({
         user: Immutable.fromJS({
-          addresses: { 789: { postcode: 'AA11 2BB' } },
+          addresses: {789: {postcode: 'AA11 2BB'}},
+        }),
+        features: Immutable.fromJS({
+          ndd: {
+            value: true,
+            experiment: false,
+          }
         }),
       })
     })
@@ -594,6 +598,24 @@ describe('order actions', () => {
         orderId: '123',
         availableDays: [{ id: '5' }, { id: '6' }],
       })
+    })
+
+    it('fetch delivery days method should include ndd in its request if the feature is on', async function() {
+      await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
+
+      expect(fetchDeliveryDays.mock.calls.length).to.equal(1)
+
+      const expectedReqData = {
+        'filters[cutoff_datetime_from]': '01-01-2017 10:00:01',
+        'filters[cutoff_datetime_until]': '02-02-2017 14:23:34',
+        sort: 'date',
+        direction: 'asc',
+        postcode: 'AA11 2BB',
+        ndd: 'true'
+      }
+
+      expect(fetchDeliveryDays.mock.calls[0][0]).to.be.null
+      expect(fetchDeliveryDays.mock.calls[0][1]).to.deep.equal(expectedReqData)
     })
   })
 })
