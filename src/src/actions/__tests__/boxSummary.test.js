@@ -50,6 +50,8 @@ describe('boxSummary actions', () => {
       expect(fetchDeliveryDays.fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
     })
 
-    // NDD test here?
+    it('should fetch next day delivery days with requested cut off dates when feature flag is enabled', () => {
+
+    })
   })
 })
