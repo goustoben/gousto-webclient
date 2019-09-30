@@ -50,9 +50,5 @@
 
 .buttonContainer {
 	display: flex;
-  align-items: flex-end;
-}
-
-.addButton {
-	flex-grow: 1;
+	align-items: stretch;
 }

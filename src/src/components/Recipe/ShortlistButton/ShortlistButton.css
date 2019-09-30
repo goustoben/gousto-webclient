@@ -1,15 +1,31 @@
-@value Bluecheese, White, Pomegranate, Mackerel from 'styles/colors.css';
+@value Bluecheese, BluecheeseLighter, White, Pomegranate, Mackerel, Cauliflower, DarkCauliflower from 'styles/colors.css';
+@value headingFontWeightBold from 'styles/typography.css';
 
-.blueHeartButton {
-  margin-top: 1rem;
+.shortlistButton {
+  composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+
+  flex: 1;
+  
   margin-right: 0.5rem;
-  height: 2.5rem;
-  width: 2.5rem;
+  padding: 0;
   border: 1px solid Bluecheese;
   border-radius: 3px;
   text-align: center;
   position: relative;
   background: White;
+}
+
+.shortlistButton:disabled {
+  background: Mackerel;
+  border-color: Bluecheese;
+}
+
+.shortlistButton:disabled .shortlistText {
+  color: Bluecheese;
+}
+
+.shortlistButton.shortlisted {
+  background: BluecheeseLighter;
 }
 
 .defaultDetailView {
@@ -18,23 +34,18 @@
   margin-bottom: 0.4rem;
 }
 
-.redHeartButton {
-  composes: blueHeartButton;
-  border: 1px solid Pomegranate;
-  background: #FFF0F1;
-}
-
-.greyHeartButton {
-  composes: blueHeartButton;
-  border: 1px solid Bluecheese;
-  background: Mackerel;
-}
-
 .heartIcon {
   height: 1rem;
   width: 1.125rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 0.125rem;
+  margin-right: 0.5rem;
+}
+
+.shortlistText {
+  text-transform: uppercase;
+  color: Bluecheese;
+  font-weight: headingFontWeightBold;
+  vertical-align: middle;
 }
