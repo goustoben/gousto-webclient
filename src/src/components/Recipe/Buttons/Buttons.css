@@ -15,6 +15,9 @@
 
 .btnWrapper {
 	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+
+	flex: 1;
+	font-weight: 700;
 }
 
 .btnCheckout {

@@ -73,9 +73,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
             {showShortlistButton &&
               <ShortlistButton id={id} stock={stock} view={view} position={position} showShortlistFirstStep={showShortlistFirstStep} />
             }
-            <div className={css.addButton}>
-              <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
-            </div>
+            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
           </div>
           <DisabledOverlay stock={stock} inBasket={inBasket} />
         </div>

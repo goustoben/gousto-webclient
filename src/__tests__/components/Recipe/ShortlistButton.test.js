@@ -37,7 +37,7 @@ describe('<ShortlistButton />', () => {
       wrapper.setState({ recipeInShortlist: false })
 
       expect(wrapper.find("[fileName='icon_shortlist_heart_deselected']").length).toBe(1)
-      expect(wrapper.find('.blueHeartButton').length).toBe(1)
+      expect(wrapper.find('.shortlistButton').length).toBe(1)
     })
 
     test('should show red heart (seleted) if recipeInShorlist is true', () => {
@@ -45,7 +45,7 @@ describe('<ShortlistButton />', () => {
       wrapper.setProps({ recipeInShortlist: true })
 
       expect(wrapper.find("[fileName='icon_shortlist_heart_selected']").length).toBe(1)
-      expect(wrapper.find('.redHeartButton').length).toBe(1)
+      expect(wrapper.find('.shortlistButton').length).toBe(1)
     })
 
     test('should include defaultDetailView css if display is detailOverview', () => {
