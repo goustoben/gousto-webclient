@@ -18,5 +18,4 @@
 
 .tick {
   composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
-  color: Pomegranate;
 }

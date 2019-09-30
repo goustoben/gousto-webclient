@@ -42,26 +42,7 @@
   margin-bottom: 30px;
 }
 
-.bullet {
-  position: absolute;
-  left: -32px;
-  text-align: center;
-  width: 32px;
-}
-
-.list {
-  list-style-type: none;
-  margin-left: 24px;
-  padding-left: 0;
-}
-
-.list>li {
-  position: relative;
-  margin-bottom: 15px;
-}
-
-.tick {
-  composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
+.listColour i {
   color: Pomegranate;
 }
 
