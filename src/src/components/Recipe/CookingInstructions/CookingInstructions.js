@@ -16,25 +16,25 @@ class CookingInstructions extends PureComponent {
     }
   }
 
-  cookingSteps = (recipeStepsById, view) => {
+  cookingSteps = (recipeStepsById) => {
     return (
-      <div className={css.container}>
-        {recipeStepsById.map(recipeStep => (
-          this.cookingStep(recipeStep, view)
-        ))}
+      <div className={css.wrapper}>
+        <div className={css.container}>
+          {recipeStepsById.map(recipeStep => (
+            this.cookingStep(recipeStep)
+          ))}
+        </div>
       </div>
     )
   }
 
-  cookingStep = ( recipeStep, view ) => {
+  cookingStep = ( recipeStep ) => {
     const images = recipeStep.get('media').get('images')
     const instruction = recipeStep.get('instruction')
     const instructionSanitize = DOMPurify.sanitize(instruction).replace(/&nbsp;/g, ' ')
     const stepNumber = recipeStep.get('stepNumber')
     let title 
     let urls
-
-    const section = view === "detail" ? css.sectionDetail : css.sectionFineDineIn
 
     if (images.size > 0) {
       urls = images.first().get('urls')
@@ -45,7 +45,7 @@ class CookingInstructions extends PureComponent {
     const showNumber = !!images.size
 
     return (
-      <div key={stepNumber} className={section}>
+      <div key={stepNumber} className={css.section}>
         <div className={css.recipeImage}>
           {showImage && <div className={css.stepImage}><Image media={urls} title={title} view="detail" /></div>}
           {showNumber && <span className={css.stepNumber}>{stepNumber}</span>}
@@ -58,7 +58,7 @@ class CookingInstructions extends PureComponent {
   }
 
   render() {
-    const { recipeStepsById, view } = this.props
+    const { recipeStepsById } = this.props
 
     if (recipeStepsById.size) {
       return (
@@ -67,7 +67,7 @@ class CookingInstructions extends PureComponent {
             <span className={css.heading}>Cooking Instructions</span>
             <div>Instructions for 2 people <span className={css.highlightText}>(double for 4)</span></div>
           </div>
-          { this.cookingSteps(recipeStepsById, view) }
+          { this.cookingSteps(recipeStepsById) }
         </div>
       )
     }
@@ -88,7 +88,6 @@ CookingInstructions.propTypes = {
   cookbookLoadRecipeStepsById: PropTypes.func,
   recipeId: PropTypes.string.isRequired,
   recipeStepsById: PropTypes.instanceOf(Immutable.List),
-  view: PropTypes.string,
 }
 
 CookingInstructions.defaultProps = {

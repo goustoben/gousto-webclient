@@ -6,7 +6,7 @@ import actions from 'actions'
 import { getCutoffs } from 'utils/deliveries'
 import moment from 'moment'
 
-import { getShortlist } from 'selectors/features'
+import { getShortlist, getCookingInstruction } from 'selectors/features'
 import { Detail } from './Detail'
 
 function mapStateToProps(state, ownProps) {
@@ -28,6 +28,7 @@ function mapStateToProps(state, ownProps) {
     isNew: isNew(Immutable.fromJS(ownProps)),
     inBasket: getBasketRecipes(state.basket.get('recipes', Immutable.List([]))).includes(ownProps.recipeId),
     showShortlistButton: getShortlist(state) && state.request.get('browser') === 'mobile' && !state.basket.hasIn(['recipes', ownProps.id]),
+    showCookingInstruction: getCookingInstruction(state),
   }
 }
 
