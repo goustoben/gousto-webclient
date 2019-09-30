@@ -1,4 +1,5 @@
 @value ScreenXSMax, ScreenSMMax, ScreenMLMax from 'styles/screenSizes.css';
+@value headingFontWeightBold from 'styles/typography.css';
 
 .tooltipWidth {
 	@media ScreenSMMax {
@@ -17,7 +18,7 @@
 	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
 
 	flex: 1;
-	font-weight: 700;
+	font-weight: headingFontWeightBold;
 }
 
 .btnCheckout {

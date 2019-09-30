@@ -1,4 +1,5 @@
 @value Bluecheese, BluecheeseLighter, White, Pomegranate, Mackerel, Cauliflower, DarkCauliflower from 'styles/colors.css';
+@value headingFontWeightBold from 'styles/typography.css';
 
 .shortlistButton {
   composes: marginSMTop from 'sass-loader!styles/spacing.scss';
@@ -45,6 +46,6 @@
 .shortlistText {
   text-transform: uppercase;
   color: Bluecheese;
-  font-weight: 700;
+  font-weight: headingFontWeightBold;
   vertical-align: middle;
 }
