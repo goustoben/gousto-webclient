@@ -7,6 +7,7 @@ import Title from 'Recipe/Title'
 import Rating from 'Recipe/Rating'
 import AddButton from 'Recipe/AddButton'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
+import { CookingInstructions } from 'Recipe/CookingInstructions'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
 import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
@@ -84,6 +85,10 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
                 <Allergens allergens={allergens} inset={false} />
               </div>
             ) : null}
+          </div>
+          <hr className={css.rule} />
+          <div className={css.cookingInstructions}>
+            <CookingInstructions recipeId={id} view={view} />
           </div>
         </div>
       </div>

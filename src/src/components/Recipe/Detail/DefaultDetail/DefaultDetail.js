@@ -11,6 +11,7 @@ import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import { detailPropTypes } from 'Recipe/Detail/Detail'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
+import { CookingInstructions } from 'Recipe/CookingInstructions'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
 import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
@@ -86,6 +87,9 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
                 <div className={css.sectionPanel}>
                   <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} restrictedView={restrictedView} />
                 </div>
+                <div className={classnames(css.cookingInstructionsDesktop, css.sectionPanel)}>
+                  <CookingInstructions recipeId={id} view={view} />
+                </div>
               </div>
             ) : null}
             {(allergens.size > 0 || ingredients.size > 0) ? (
@@ -93,6 +97,9 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
                 <div className={css.sectionPanel}>
                   <IngredientsList ingredients={ingredients} allergens={allergens} />
                   <Allergens allergens={allergens} />
+                </div>
+                <div className={classnames(css.cookingInstructionsMobile, css.sectionPanel)}>
+                  <CookingInstructions recipeId={id} view={view} />
                 </div>
               </div>
             ) : null}

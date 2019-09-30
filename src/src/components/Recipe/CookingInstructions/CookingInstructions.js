@@ -33,7 +33,9 @@ class CookingInstructions extends PureComponent {
     const stepNumber = recipeStep.get('stepNumber')
     let title 
     let urls
-    
+
+    const section = view === "detail" ? css.sectionDetail : css.sectionFineDineIn
+
     if (images.size > 0) {
       urls = images.first().get('urls')
       title = images.first().get('title')
@@ -43,9 +45,9 @@ class CookingInstructions extends PureComponent {
     const showNumber = !!images.size
 
     return (
-      <div key={stepNumber} className={css.section}>
+      <div key={stepNumber} className={section}>
         <div className={css.recipeImage}>
-          {showImage && <div className={css.stepImage}><Image media={urls} title={title} view={view} /></div>}
+          {showImage && <div className={css.stepImage}><Image media={urls} title={title} view="detail" /></div>}
           {showNumber && <span className={css.stepNumber}>{stepNumber}</span>}
         </div>
         <div className={css.recipeInstruction}>

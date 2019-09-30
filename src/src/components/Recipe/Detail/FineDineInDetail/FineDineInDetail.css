@@ -1,5 +1,6 @@
 @value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
 @value Basa, White from 'styles/colors.css';
+@value SpacingXXL from 'sass-loader!styles/spacing.scss';
 
 .rating {
 	composes: marginMDRight from 'sass-loader!styles/spacing.scss';
@@ -140,4 +141,10 @@
 	composes: closeIcon from 'styles/icons.css';
 	padding: 0;
 	margin: 1px auto auto auto;
+}
+
+.cookingInstructions {
+  @media ScreenMDMin {
+    padding-bottom: SpacingXXL;
+  }
 }
