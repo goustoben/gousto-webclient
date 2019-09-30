@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import { ChoosePlanBenefit } from '../ChoosePlanBenefit'
 
 import css from './PlanOption.css'
 
@@ -11,7 +12,8 @@ const propTypes = {
   totalPrice: PropTypes.string,
   totalPriceDiscounted: PropTypes.string,
   pricePerPortion: PropTypes.string,
-  priceBoxTypeMessage: PropTypes.string
+  priceBoxTypeMessage: PropTypes.string,
+  benefits: PropTypes.arrayOf(PropTypes.string)
 }
 
 const PlanOption = ({
@@ -21,7 +23,8 @@ const PlanOption = ({
   totalPrice,
   totalPriceDiscounted,
   pricePerPortion,
-  priceBoxTypeMessage
+  priceBoxTypeMessage,
+  benefits
 }) => {
   return (
     <label
@@ -47,10 +50,7 @@ const PlanOption = ({
         />
         <h3 className={css.title}>{title}</h3>
       </div>
-      <p>All the bullet points and other details down here</p>
-      <p>All the bullet points and other details down here</p>
-      <p>All the bullet points and other details down here</p>
-      <p>All the bullet points and other details down here</p>
+      <ChoosePlanBenefit benefits={benefits} />
       <div className={css.totalPriceContainer}>
         {!totalPriceDiscounted ? (
           <span className={css.totalPrice}>£{totalPrice}</span>

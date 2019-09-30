@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'goustouicomponents'
+import { List } from 'List/List.js'
 import css from './ChoosePlanBenefit.css'
 
 const propTypes = {
@@ -9,13 +9,7 @@ const propTypes = {
 
 const ChoosePlanBenefit = ({ benefits }) => (
   <div>
-    <ul className={css.list}>
-      {benefits.map((benefit) => (
-        <li key={benefit}>
-            <span className={css.bullet}><i className={css.tick} /></span> <p>{benefit}</p>
-        </li>
-      ))}
-    </ul>
+    <List className={css.green} listItems={benefits} />
   </div>
 )
 

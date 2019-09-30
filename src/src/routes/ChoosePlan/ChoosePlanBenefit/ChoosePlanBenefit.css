@@ -1,26 +1,5 @@
 @value Haricot from 'styles/colors.css';
 
-/* .green {
+.green {
 	color: Haricot;
-}
-
-.tick {
-    composes: green;
-	composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
-} */
-
-.list {
-	list-style-type: none;
-	margin-left: 24px;
-	padding-left: 0;
-}
-
-.list>li {
-	position: relative;
-	margin-bottom: 15px;
-}
-
-.tick {
-	composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
-	color: Pomegranate;
 }
