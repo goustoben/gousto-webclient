@@ -1,6 +1,10 @@
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
-@value White from 'styles/colors.css';
+@value White, Haricot from 'styles/colors.css';
 @value ScreenXSMax from 'styles/screenSizes.css';
+
+.green {
+	color: Haricot;
+}
 
 .choosePlanPage {
   display: flex;

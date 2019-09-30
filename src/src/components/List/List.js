@@ -4,7 +4,7 @@ import css from './List.css'
 
 const propTypes = {
   listItems: PropTypes.arrayOf(PropTypes.string),
-  className: PropTypes.string,
+  className: PropTypes.string
 }
 
 const List = ({ listItems, className }) => (

@@ -48,7 +48,7 @@ const AppPromo = ({ device, trackWelcomeAppPromoClick }) => {
       <div className={css.contentContainer}>
         <div className={css.phoneImageContainer}><img className={css.phoneImage} src={require('media/images/app-promo-phone.jpg')} alt="" /></div>
         <div className={css.content}>
-          <List listItems={benefits} className={css.listColour} />
+          <List listItems={benefits} className={css.list} />
           <div>
             {mobileAppStoreCTAs(device, trackWelcomeAppPromoClick)}
             {desktopAppStoreCTAs(device, trackWelcomeAppPromoClick)}
