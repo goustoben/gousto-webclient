@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { basketSum } from 'utils/basket'
-import { getBasketRecipes, getShortlistRecipeIds } from 'selectors/basket'
+import { getBasketRecipes, getShortlistRecipeIds, getShortlistUsed } from 'selectors/basket'
 import { getCurrentBoxSummaryView, boxSummaryViews } from 'utils/boxSummary'
 import { getShortlistTutorialFirstStep, getShortlistTutorialSecondStep } from 'selectors/tutorial'
 import { getShortlist } from 'selectors/features'
@@ -20,7 +20,8 @@ const mapStateToProp = (state) => {
     shortlistRecipeNumber: basketSum(getShortlistRecipeIds(state)),
     showTextOnButton: isDetailsView && getShortlist(state),
     showDetails: state.boxSummaryShow.get('show') && isMobile(state.boxSummaryShow.get('view')),
-    shouldShowTutorialStep2: shouldShortlistTutorialShow(state)
+    shouldShowTutorialStep2: shouldShortlistTutorialShow(state),
+    shortlistUsed: getShortlistUsed(state)
   })
 
 }
