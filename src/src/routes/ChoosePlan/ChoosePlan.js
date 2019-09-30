@@ -21,23 +21,28 @@ const flexOption = {
 }
 
 const propTypes = {
-  choosePlanContinue: PropTypes.func,
+  choosePlanContinue: PropTypes.func
 }
 
 const ChoosePlan = ({ choosePlanContinue }) => (
   <div className={css.choosePlanPage}>
     <Helmet
-      style={[{
-        cssText: `
+      style={[
+        {
+          cssText: `
           #react-root {
             height: 100%;
           }
-        `,
-      }]}
+        `
+        }
+      ]}
     />
     <div className={css.choosePlanWrapper}>
       <h1 className={css.title}>Your Gousto plan</h1>
-      <p className={css.subtitle}>Get a box delivered every week at a discounted price, or try a one-off box.</p>
+      <p className={css.subtitle}>
+        Get a box delivered every week at a discounted price, or try a one-off
+        box.
+      </p>
       <PlanOption
         title={subOption.title}
         totalPrice={subOption.totalPrice}
@@ -58,9 +63,9 @@ const ChoosePlan = ({ choosePlanContinue }) => (
           () => console.log('Hi, you clicked Option 2') /*eslint-disable-line*/
         }
       />
-      <div className={css.continueCTA}>
-        <Button onClick={choosePlanContinue} width='full'>Continue</Button>
-      </div>
+      <Button onClick={choosePlanContinue} width="full">
+        Continue
+      </Button>
     </div>
   </div>
 )

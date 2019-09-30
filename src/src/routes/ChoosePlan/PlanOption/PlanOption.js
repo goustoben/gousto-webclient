@@ -51,16 +51,21 @@ const PlanOption = ({
       <p>All the bullet points and other details down here</p>
       <p>All the bullet points and other details down here</p>
       <p>All the bullet points and other details down here</p>
-      {!totalPriceDiscounted ? (
-        <span className={css.totalPrice}>£{totalPrice}</span>
-      ) : (
-        <span className={css.totalPriceDiscounted}>
-          <s className={css.totalPrice}>£{totalPrice}</s>£{totalPriceDiscounted}
-        </span>
-      )}
-      <span className={css.exclExtras}>excl. extras</span>
+      <div className={css.totalPriceContainer}>
+        {!totalPriceDiscounted ? (
+          <span className={css.totalPrice}>£{totalPrice}</span>
+        ) : (
+          <span className={css.totalPriceDiscounted}>
+            <s className={css.totalPrice}>£{totalPrice}</s>£
+            {totalPriceDiscounted}
+          </span>
+        )}
+        <span className={css.exclExtras}>excl. extras</span>
+      </div>
       <p className={css.priceMessage}>{priceBoxTypeMessage}</p>
-      <p className={css.priceMessage}>{`(£${pricePerPortion} per meal per person)`}</p>
+      <p className={css.priceMessage}>
+        {`(£${pricePerPortion} per meal per person)`}
+      </p>
     </label>
   )
 }

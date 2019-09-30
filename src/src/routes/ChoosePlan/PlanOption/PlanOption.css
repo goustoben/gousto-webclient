@@ -43,7 +43,12 @@
   margin: 0;
 }
 
+.totalPriceContainer {
+  margin-bottom: 0.5rem;
+}
+
 .totalPrice {
+  display: inline-block;
   color: Black;
   font-size: sizeXXL;
   font-weight: normal;
@@ -51,6 +56,7 @@
 }
 
 .totalPriceDiscounted {
+  display: inline-block;
   color: Haricot;
   font-size: sizeXXL;
   font-weight: bold;
@@ -58,6 +64,7 @@
 }
 
 .exclExtras {
+  display: inline-block;
   color: LightestAccessible;
 }
 
