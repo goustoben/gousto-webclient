@@ -1,7 +1,7 @@
 @value Bluecheese, BluecheeseLighter, White, Pomegranate, Mackerel, Cauliflower, DarkCauliflower from 'styles/colors.css';
 
 .shortlistButton {
-	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+  composes: marginSMTop from 'sass-loader!styles/spacing.scss';
 
   flex: 1;
   
