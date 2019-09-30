@@ -228,53 +228,6 @@ describe('boxSummary actions', function () {
     })
   })
 
-  describe('boxSummaryDeliveryDaysLoad', () => {
-
-    const from = '2017-12-05'
-    const to = '2017-12-30'
-    const getStateArgs = {
-      auth: Immutable.fromJS({ accessToken: 'AT' }),
-      basket: Immutable.fromJS({}),
-    }
-
-    beforeEach(function() {
-      this.fetchDeliveryDaysSpy = sinon.stub()
-      this.dispatchSpy = sinon.stub()
-      this.boxSummaryInject = require('inject-loader?apis/deliveries!actions/boxSummary')({
-        'apis/deliveries': {
-          fetchDeliveryDays: this.fetchDeliveryDaysSpy
-        },
-      }).default
-    })
-
-    it('should fetch delivery days with menu cutoff date', function() {
-      const menuCutoffUntil = '2017-12-30T00:00:00.000Z'
-      const expectedRequestData = {
-        'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
-        'filters[cutoff_datetime_until]': menuCutoffUntil,
-      }
-      const getStateSpy = sinon.stub().returns({
-        ...getStateArgs,
-        menuCutoffUntil,
-      })
-      this.boxSummaryInject.boxSummaryDeliveryDaysLoad(from)(this.dispatchSpy, getStateSpy)
-
-      expect(this.fetchDeliveryDaysSpy).to.have.been.calledWith('AT', sinon.match(expectedRequestData))
-    })
-
-    it('should fetch delivery days with requested cut off dates', function() {
-      const expectedRequestData = {
-        'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
-        'filters[cutoff_datetime_until]': '2017-12-30T23:59:59.999Z',
-      }
-      const getStateSpy = sinon.stub().returns(getStateArgs)
-      this.boxSummaryInject.boxSummaryDeliveryDaysLoad(from, to)(this.dispatchSpy, getStateSpy)
-
-      expect(this.fetchDeliveryDaysSpy).to.have.been.calledWith('AT', sinon.match(expectedRequestData))
-    })
-
-  })
-
   describe('boxSummaryNext', function () {
     let boxSummaryNext
     let getStateSpy
