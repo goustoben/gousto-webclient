@@ -11,6 +11,7 @@ describe('OpenBoxButton', () => {
     showDetails: false,
     shouldShowTutorialStep2: false,
     showTextOnButton: false,
+    shortlistUsed: true,
     recipeNumber: 0,
     shortlistRecipeNumber: 0,
   }
@@ -44,9 +45,18 @@ describe('OpenBoxButton', () => {
       })
 
       describe('and 4 recipes in basket', () => {
-        test('should render text Review Recipes on the button', () => {
+        test('should render text CHECKOUT on the button', () => {
           wrapper.setProps({ recipeNumber: 4 })
           expect(wrapper.find('.openButtonText').text()).toEqual('CHECKOUT')
+        })
+      })
+
+      describe('and 4 recipes in basket', () => {
+        describe('and shortlist used false', () => {
+          test('should render text Review Recipes on the button', () => {
+            wrapper.setProps({ recipeNumber: 4, shortlistUsed: false })
+            expect(wrapper.find('.openButtonText').text()).toEqual('REVIEW RECIPES')
+          })
         })
       })
     })

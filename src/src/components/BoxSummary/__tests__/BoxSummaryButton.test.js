@@ -3,6 +3,7 @@ import React from 'react'
 import Immutable from 'immutable'
 
 import { Button, Segment } from 'goustouicomponents'
+import { RecipesCountButton } from 'RecipesCountButton'
 import BoxSummaryButton from 'BoxSummary/BoxSummaryButton/BoxSummaryButton'
 import CheckoutButton from 'BoxSummary/CheckoutButton'
 import { boxSummaryViews } from 'utils/boxSummary'
@@ -105,6 +106,13 @@ describe('BoxSummaryButton', () => {
 
     test('should disable the checkout button if the checkoutPending prop is true', () => {
       expect(wrapper.find(Button).prop('disabled')).toEqual(true)
+    })
+
+    describe('when showRecipeCountButton is true', () => {
+      test('should display the recipe count button', () => {
+        wrapper.setProps({ showRecipeCountButton: true })
+        expect(wrapper.find(RecipesCountButton)).toHaveLength(1)
+      })
     })
 
   })
