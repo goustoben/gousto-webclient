@@ -86,6 +86,12 @@ const actions = {
       if (postcode) {
         reqData.postcode = postcode
       }
+
+      const isNddExperiment = getState().features.getIn(['ndd', 'value'])
+      if (isNddExperiment) {
+        reqData.ndd = 'true'
+      }
+
       const accessToken = getState().auth.get('accessToken')
       try {
         const { data: days } = await fetchDeliveryDays(accessToken, reqData)

@@ -51,7 +51,28 @@ describe('boxSummary actions', () => {
     })
 
     it('should fetch next day delivery days with requested cut off dates when feature flag is enabled', () => {
+      const expectedRequestData = {
+        'direction': 'asc',
+        'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
+        'filters[cutoff_datetime_until]': '2017-12-30T23:59:59.999Z',
+        'sort': 'date',
+        'ndd': 'true',
+      }
 
+      const getStateSpy = jest.fn().mockReturnValue({
+        ...getStateArgs,
+        features: Immutable.fromJS({
+          ndd: {
+            value: true,
+            experiment: false,
+          }
+        }
+        ),
+      })
+
+      boxSummary.boxSummaryDeliveryDaysLoad(from, to)(dispatchSpy, getStateSpy)
+
+      expect(fetchDeliveryDays.fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
     })
   })
 })
