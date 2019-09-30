@@ -26,33 +26,22 @@ describe('<ShortlistButton />', () => {
   })
 
   describe('Render', () => {
-    test('should show SVG when renders', () => {
-      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} />)
+    test('should render correctly if recipeInShortlist is false', () => {
+      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} recipeInShortlist={false} />)
 
-      expect(wrapper.find('Svg').length).toBe(1)
-    })
-
-    test('should show blue heart (deseleted) if recipeInShorlist is false', () => {
-      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} />)
-      wrapper.setState({ recipeInShortlist: false })
-
-      expect(wrapper.find("[fileName='icon_shortlist_heart_deselected']").length).toBe(1)
-      expect(wrapper.find('.shortlistButton').length).toBe(1)
+      expect(wrapper).toMatchSnapshot()
     })
 
     test('should show red heart (seleted) if recipeInShorlist is true', () => {
-      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} />)
-      wrapper.setProps({ recipeInShortlist: true })
+      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} recipeInShortlist />)
 
-      expect(wrapper.find("[fileName='icon_shortlist_heart_selected']").length).toBe(1)
-      expect(wrapper.find('.shortlistButton').length).toBe(1)
+      expect(wrapper).toMatchSnapshot()
     })
 
     test('should include defaultDetailView css if display is detailOverview', () => {
-      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} />)
-      wrapper.setProps({ display: 'detailOverlay' })
+      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} display='detailOverlay' />)
 
-      expect(wrapper.find('.defaultDetailView').length).toBe(1)
+      expect(wrapper).toMatchSnapshot()
     })
   })
 
