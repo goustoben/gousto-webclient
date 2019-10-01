@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getBasket, getProductCategories } from 'selectors/root'
+import { getCategoriesForNavBar, getProducts } from 'selectors/products'
 import { getAgeVerified } from 'selectors/user'
 import { getBasketOrderDetails } from 'selectors/basket'
 import actionTypes from 'actions/actionTypes'
@@ -14,7 +15,7 @@ const mapStateToProps = (state) => {
     showOrderConfirmationReceipt: !!order,
     basket: getBasket(state),
     productsCategories: getProductCategories(state),
-    products: state.products.toJS(),
+    products: getProducts(state).toJS(),
     productsLoadError: state.error.get('PRODUCTS_RECEIVE', null),
     ageVerified: getAgeVerified(state),
     selectedCategory: state.filters.get('selectedCategory') || 'all-products',
@@ -22,6 +23,7 @@ const mapStateToProps = (state) => {
     saveRequired: state.basket.get('unsaved'),
     saveError: state.error.get(actionTypes.BASKET_CHECKOUT),
     isOrderConfirmation: true,
+    categoriesForNavBar: getCategoriesForNavBar(state),
   }
 }
 

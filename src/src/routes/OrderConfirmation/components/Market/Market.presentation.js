@@ -18,12 +18,11 @@ import css from './Market.css'
 const propTypes = {
   ageVerified: PropTypes.bool,
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
-  categoriesForNavBar: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      label: PropTypes.string,
-    })
-  ).isRequired,
+  categoriesForNavBar: PropTypes.objectOf(PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
+    count: PropTypes.number,
+  })).isRequired,
   filteredProducts: PropTypes.objectOf(
     PropTypes.shape({
       id: PropTypes.string,

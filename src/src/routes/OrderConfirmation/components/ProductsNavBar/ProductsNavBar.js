@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { CollectionsNavigation, CollectionsNavigationItem } from 'goustouicomponents'
 
 const propTypes = {
-  categories: PropTypes.arrayOf(PropTypes.shape({
+  categories: PropTypes.objectOf(PropTypes.shape({
     id: PropTypes.string,
     label: PropTypes.string,
+    count: PropTypes.number,
   })).isRequired,
   onSelectCategory: PropTypes.func.isRequired,
 }
@@ -13,15 +14,19 @@ const propTypes = {
 const ProductsNavBar = ({ categories, onSelectCategory }) => (
   <CollectionsNavigation>
     {
-      categories.map(({ id, label }) => (
-        <CollectionsNavigationItem
-          key={id}
-          isActive={!!(id === 'all-products')}
-          onClick={() => onSelectCategory(id)}
-        >
-          {label}
-        </CollectionsNavigationItem>
-      ))
+      Object.keys(categories).map(categoryId => {
+        const { id, label, count } = categories[categoryId]
+
+        return (
+          <CollectionsNavigationItem
+            key={id}
+            isActive={!!(id === 'all-products')}
+            onClick={() => onSelectCategory(id)}
+          >
+            {`${label} (${count})`}
+          </CollectionsNavigationItem>
+        )
+      })
     }
   </CollectionsNavigation>
 )

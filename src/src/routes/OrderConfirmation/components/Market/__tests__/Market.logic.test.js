@@ -6,6 +6,7 @@ import { Market } from '../Market.logic'
 describe('<Market />', () => {
   const DEFAULT_PROPS = {
     basket: Map(),
+    categoriesForNavBar: {},
     filterProductCategory: jest.fn(),
     onSave: jest.fn(),
     products: {},
@@ -20,16 +21,6 @@ describe('<Market />', () => {
     { hidden: false, id: 'category-1', title: 'Category 1' },
     { hidden: false, id: 'category-2', title: 'Category 2' },
   ]
-
-  const CATEGORY_ALL_PRODUCTS = {
-    id: 'all-products',
-    label: 'All Products',
-  }
-
-  const PRODUCTS = {
-    1234: { id: '1234' },
-    5678: { id: '5678' },
-  }
 
   const PRODUCTS_WITH_CATEGORIES = {
     1234: { id: '1234', categories: CATEGORIES },
@@ -47,7 +38,7 @@ describe('<Market />', () => {
       {
         ageVerified: false,
         basket: DEFAULT_PROPS.basket,
-        categories: wrapper.instance().getCategories(),
+        categoriesForNavBar: DEFAULT_PROPS.categoriesForNavBar,
         filteredProducts: null,
         getFilteredProducts: wrapper.instance().getFilteredProducts,
         isOrderSummaryOpen: false,
@@ -64,59 +55,6 @@ describe('<Market />', () => {
         toggleOrderSummary: wrapper.instance().toggleOrderSummary,
       }
     )
-  })
-
-  describe('getCategories', () => {
-    const CATEGORIES_HIDDEN = [
-      { hidden: true, id: 'category-3', title: 'Category 3' },
-    ]
-
-    const PRODUCTS_WITH_HIDDEN_CATEGORIES = {
-      8123: { categories: [...CATEGORIES_HIDDEN, ...CATEGORIES] },
-      9123: { categories: [...CATEGORIES_HIDDEN, ...CATEGORIES] },
-    }
-
-    const CATEGORY_ALL_PRODUCTS_WITH_COUNT = { ...CATEGORY_ALL_PRODUCTS, count: 2 }
-
-    const EXPECTED_CATEGORIES = CATEGORIES.map(category => {
-      return {
-        id: category.id,
-        label: category.title,
-      }
-    })
-    const EXPECTED_RESULT = [CATEGORY_ALL_PRODUCTS_WITH_COUNT, ...EXPECTED_CATEGORIES]
-
-    beforeEach(() => {
-      wrapper.setProps({ ...DEFAULT_PROPS, products: PRODUCTS_WITH_CATEGORIES })
-    })
-
-    test('returns a unique list of categories', () => {
-      expect(wrapper.instance().getCategories()).toEqual(EXPECTED_RESULT)
-    })
-
-    test('returns the count of products for all categories', () => {
-      expect(wrapper.instance().getCategories()[0].count).toEqual(CATEGORY_ALL_PRODUCTS_WITH_COUNT.count)
-    })
-
-    describe('and there are no product categories', () => {
-      beforeEach(() => {
-        wrapper.setProps({ productsCategories: Map(), products: PRODUCTS })
-      })
-
-      test('returns "All Products"', () => {
-        expect(wrapper.instance().getCategories()).toEqual([CATEGORY_ALL_PRODUCTS_WITH_COUNT])
-      })
-    })
-
-    describe('and products contain hidden categories', () => {
-      beforeEach(() => {
-        wrapper.setProps({ products: PRODUCTS_WITH_HIDDEN_CATEGORIES })
-      })
-
-      test('does not return hidden categories', () => {
-        expect(wrapper.instance().getCategories()).toEqual(EXPECTED_RESULT)
-      })
-    })
   })
 
   describe('getFilteredProducts', () => {
