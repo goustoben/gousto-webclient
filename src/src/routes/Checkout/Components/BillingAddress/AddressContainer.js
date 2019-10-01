@@ -16,6 +16,7 @@ function mapStateToProps(state, ownProps) {
     sectionName: ownProps.sectionName,
     addressEdited: state.checkout.get('billingAddressEdited'),
     touchPostcode: false,
+    isNDDExperiment: state.features.getIn('ndd', 'value')
   }
 }
 

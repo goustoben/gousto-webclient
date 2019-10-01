@@ -33,6 +33,7 @@ class Address extends React.PureComponent {
     registerField: PropTypes.func,
     checkoutAddressLookup: PropTypes.func,
     onAddressConfirm: PropTypes.func,
+    isNDDExperiment: PropTypes.bool
   }
   static defaultProps = {
     formName: 'address',
@@ -40,6 +41,7 @@ class Address extends React.PureComponent {
     formErrors: {},
     formValues: {},
     formFields: {},
+    isNDDExperiment: false,
 
     change: () => {},
     touch: () => {},
@@ -58,7 +60,6 @@ class Address extends React.PureComponent {
     if (initialPostcode) {
       change(formName, `${sectionName}.postcodeTemp`, initialPostcode)
       touch(formName, `${sectionName}.postcodeTemp`)
-
       this.getAddresses(initialPostcode)
     }
   }
@@ -119,7 +120,7 @@ class Address extends React.PureComponent {
   }
 
   checkCanDeliver = async postcode => {
-    const { deliveryDate, menuCutoffUntil } = this.props
+    const { deliveryDate, menuCutoffUntil, isNDDExperiment} = this.props
     let deliverable = false
 
     if (deliveryDate) {
@@ -131,8 +132,14 @@ class Address extends React.PureComponent {
           'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
           'filters[cutoff_datetime_until]': menuCutoffUntil || menuCutoffUntilFallback,
         }
+
+        if (isNDDExperiment) {
+          reqData.ndd = 'true'
+        }
+
         const { data: days } = await fetchDeliveryDays(null, reqData)
         const availableDeliveryDays = deliveryUtils.getAvailableDeliveryDays(days)
+
         if (availableDeliveryDays && availableDeliveryDays[deliveryDate] && !availableDeliveryDays[deliveryDate].alternateDeliveryDay) {
           deliverable = true
         }
