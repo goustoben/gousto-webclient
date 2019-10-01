@@ -24,8 +24,46 @@ export function getProductsByCutoff(cutoffDate, products) {
   return products.filter(product => product.get('cutoffDates', Immutable.List()).contains(cutoffDate)).toList()
 }
 
+export function getCategoriesFromProducts(products) {
+  const categories = {
+    'all-products': {
+      id: 'all-products',
+      label: 'All Products',
+      count: 0,
+    }
+  }
+
+  const numberOfProducts = products.size
+
+  if (!numberOfProducts) {
+    return categories
+  }
+
+  categories['all-products'].count = numberOfProducts
+
+  return products.reduce((categoriesAcc, product) => {
+    const productCategories = product.get('categories')
+    productCategories.forEach(category => {
+      if (!category.get('hidden')) {
+        const categoryId = category.get('id')
+
+        categoriesAcc[categoryId] ?
+          categoriesAcc[categoryId].count++ :
+          categoriesAcc[categoryId] = {
+            id: categoryId,
+            label: category.get('title'),
+            count: 1,
+          }
+      }
+    })
+
+    return categoriesAcc
+  }, categories)
+}
+
 export default {
-  getProductsByCutoff,
+  getCategoriesFromProducts,
   getOneProductFromEachCategory,
+  getProductsByCutoff,
   isNotAGift,
 }
