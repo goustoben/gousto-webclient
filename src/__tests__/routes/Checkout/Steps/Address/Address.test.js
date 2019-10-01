@@ -4,11 +4,11 @@ import React from 'react'
 import {shallow} from 'enzyme'
 
 import Address from 'routes/Checkout/Components/Address/Address'
-import {Button} from 'goustouicomponents'
+import { Button } from 'goustouicomponents'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 import AddressInputs from 'routes/Checkout/Components/Address/AddressInputs'
-import {fetchDeliveryDays} from "apis/deliveries"
-import {getAvailableDeliveryDays} from "utils/deliveries"
+import { fetchDeliveryDays } from "apis/deliveries"
+import { getAvailableDeliveryDays } from "utils/deliveries"
 
 jest.mock('apis/deliveries')
 jest.mock('utils/deliveries')
@@ -50,18 +50,18 @@ describe('Address', () => {
     })
   })
 
-  describe('with NDD prop', function () {
+  describe('with NDD prop', () => {
 
-    beforeEach(function () {
+    beforeEach(() => {
       const selectedAddresses = Immutable.Map({})
       wrapper = shallow(< Address
         selectedAddress={selectedAddresses}
         registerField={jest.fn()}
         checkoutAddressLookup={jest.fn()}
-        isNDDExperiment={true}
+        isNDDExperiment
         initialPostcode={'NW1 8RJ'}
         deliveryDate={'2019-09-01'}
-        isDelivery={true}
+        isDelivery
       />)
     })
 

@@ -120,7 +120,7 @@ class Address extends React.PureComponent {
   }
 
   checkCanDeliver = async postcode => {
-    const { deliveryDate, menuCutoffUntil, isNDDExperiment} = this.props
+    const { deliveryDate, menuCutoffUntil, isNDDExperiment } = this.props
     let deliverable = false
 
     if (deliveryDate) {

@@ -14,8 +14,8 @@ import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import actionStatus from 'actions/status'
 import actionTypes from 'actions/actionTypes'
 import orderActions from '../order'
-import {fetchDeliveryDays} from "../../apis/deliveries";
-import {getAvailableDeliveryDays} from "../../utils/deliveries";
+import { fetchDeliveryDays } from "../../apis/deliveries"
+import { getAvailableDeliveryDays } from "../../utils/deliveries"
 
 jest.mock('apis/orders')
 jest.mock('actions/orderConfirmation')
@@ -62,7 +62,7 @@ describe('order actions', () => {
   })
 
   describe('orderUpdate', () => {
-    test('should mark ORDER_SAVE as pending', async function () {
+    test('should mark ORDER_SAVE as pending', async () => {
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve(resolve) })
       ))
@@ -76,7 +76,7 @@ describe('order actions', () => {
       expect(pending.mock.calls.length).toBe(2)
     })
 
-    test('should mark ORDER_SAVE as errored if it errors', async function () {
+    test('should mark ORDER_SAVE as errored if it errors', async () => {
       const err = new Error('oops')
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve, reject) => { reject(err) })
@@ -99,7 +99,7 @@ describe('order actions', () => {
       expect(dispatchSpy.mock.calls.length).toEqual(5)
     })
 
-    test('should map the arguments through to saveOrder correctly', async function () {
+    test('should map the arguments through to saveOrder correctly', async () => {
       await orderActions.orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatchSpy, getStateSpy)
 
       expect(saveOrder).toHaveBeenCalledTimes(1)
@@ -120,7 +120,7 @@ describe('order actions', () => {
       expect(saveOrder.mock.calls[0][2]).toEqual(order)
     })
 
-    test('should redirect the user to the order summary page if it succeeds', async function () {
+    test('should redirect the user to the order summary page if it succeeds', async () => {
       orderAction = 'something'
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
@@ -401,7 +401,7 @@ describe('order actions', () => {
       jest.resetAllMocks()
     })
 
-    test('should mark ORDER_SAVE as pending', async function(){
+    test('should mark ORDER_SAVE as pending', async () => {
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve) => { resolve({ data: { id: '5678' } })})
       ))
@@ -415,7 +415,7 @@ describe('order actions', () => {
       expect(dispatchSpy.mock.calls.length).toBe(4)
     })
 
-    test('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async function() {
+    test('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async () => {
       const err = new Error('oops')
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { reject(err)})
@@ -437,7 +437,7 @@ describe('order actions', () => {
       expect(error.mock.calls[1][1]).toBe('save-order-fail')
     })
 
-    test('should mark ORDER_SAVE as errored with "update-order-fail" if it fails on updating order', async function() {
+    test('should mark ORDER_SAVE as errored with "update-order-fail" if it fails on updating order', async () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
       const orderUpdateErr = new Error('user already has an order for chosen delivery day')
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
@@ -452,7 +452,7 @@ describe('order actions', () => {
       expect(error).toHaveBeenCalledWith("ORDER_SAVE", 'update-order-fail')
     })
 
-    test('should call updateUserOrder with orderDetails & existingOrderId if saving order fails due to an order already existing on given day & existingOrderId is provided', async function() {
+    test('should call updateUserOrder with orderDetails & existingOrderId if saving order fails due to an order already existing on given day & existingOrderId is provided', async () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { reject(orderSaveErr)})
@@ -474,7 +474,7 @@ describe('order actions', () => {
       })
     })
 
-    test('should redirect the user to the order summary page if it succeeds on saving new order', async function() {
+    test('should redirect the user to the order summary page if it succeeds on saving new order', async () => {
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve) => { resolve({ data: { id: '4321' } })})
       ))
@@ -487,7 +487,7 @@ describe('order actions', () => {
       )
     })
 
-    test('should redirect the user to the order summary page if it succeeds on updating existing order', async function() {
+    test('should redirect the user to the order summary page if it succeeds on updating existing order', async () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { reject(orderSaveErr)})
@@ -505,12 +505,11 @@ describe('order actions', () => {
       )
     })
   })
-  describe('orderGetDeliveryDays', function() {
-    let orderId
+  describe('orderGetDeliveryDays', () => {
     let cutoffDatetimeFrom
     let cutoffDatetimeUntil
 
-    beforeEach(function() {
+    beforeEach(() => {
       orderId = '123'
       cutoffDatetimeFrom = '01-01-2017 10:00:01'
       cutoffDatetimeUntil = '02-02-2017 14:23:34'
@@ -527,7 +526,7 @@ describe('order actions', () => {
       })
     })
 
-    it('should mark ORDER_DELIVERY_DAYS_RECEIVE as pending', async function() {
+    it('should mark ORDER_DELIVERY_DAYS_RECEIVE as pending', async () => {
       await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
       expect(actionStatus.pending.mock.calls.length).toEqual(2)
@@ -538,7 +537,7 @@ describe('order actions', () => {
       expect(dispatchSpy.mock.calls.length).toEqual(4)
     })
 
-    it('should mark ORDER_DELIVERY_DAYS_RECEIVE as errored if it errors', async function() {
+    it('should mark ORDER_DELIVERY_DAYS_RECEIVE as errored if it errors', async () => {
       const err = new Error('oops')
       fetchDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => {
@@ -562,7 +561,7 @@ describe('order actions', () => {
       expect(dispatchSpy.mock.calls.length).toEqual(4)
     })
 
-    it('should map the arguments through to fetchDeliveryDays and dispatch the action with the correct arguments', async function() {
+    it('should map the arguments through to fetchDeliveryDays and dispatch the action with the correct arguments', async () => {
       getStateSpy = jest.fn().mockReturnValue({
         user: Immutable.fromJS({
           addresses: {789: {postcode: 'AA11 2BB'}},
@@ -605,7 +604,7 @@ describe('order actions', () => {
       })
     })
 
-    it('fetch delivery days method should include ndd in its request if the feature is on', async function() {
+    it('fetch delivery days method should include ndd in its request if the feature is on', async () => {
       await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
       expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
