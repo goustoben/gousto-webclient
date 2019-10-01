@@ -267,7 +267,7 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
       postcode,
     }
 
-    const isNddExperiment = getState().features.getIn(['ndd', 'value'])
+    const isNddExperiment = getState().features ? getState().features.getIn(['ndd', 'value']) : false
     if (isNddExperiment) {
       reqData.ndd = 'true'
     }

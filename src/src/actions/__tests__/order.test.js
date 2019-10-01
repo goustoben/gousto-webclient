@@ -564,6 +564,12 @@ describe('order actions', () => {
     })
 
     it('should map the arguments through to fetchDeliveryDays and dispatch the action with the correct arguments', async function() {
+      getStateSpy = jest.fn().mockReturnValue({
+        user: Immutable.fromJS({
+          addresses: {789: {postcode: 'AA11 2BB'}},
+        }),
+      })
+
       const fetchedDays = { data: [{ id: '4' }, { id: '5' }, { id: '6' }] }
 
       fetchDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
@@ -571,6 +577,7 @@ describe('order actions', () => {
           resolve(fetchedDays)
         })
       ))
+
       getAvailableDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
         [{ id: '5' }, { id: '6' }]
       ))
@@ -590,7 +597,6 @@ describe('order actions', () => {
       expect(fetchDeliveryDays.mock.calls[0][0]).to.be.null
 
       expect(fetchDeliveryDays.mock.calls[0][1]).to.deep.equal(expectedReqData)
-      // console.log(getAvailableDeliveryDays.mock.calls)
       expect(getAvailableDeliveryDays.mock.calls[0][0]).to.deep.equal([{ id: '4' }, { id: '5' }, { id: '6' }])
       expect(dispatchSpy.mock.calls.length).to.equal(4)
       expect(dispatchSpy.mock.calls[2][0]).to.deep.equal({
