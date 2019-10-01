@@ -8,8 +8,8 @@ import Address from 'routes/Checkout/Components/Address/Address'
 import { Button } from 'goustouicomponents'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 import AddressInputs from 'routes/Checkout/Components/Address/AddressInputs'
-import { fetchDeliveryDays } from "apis/deliveries"
-import { getAvailableDeliveryDays } from "utils/deliveries"
+import { fetchDeliveryDays } from 'apis/deliveries'
+import { getAvailableDeliveryDays } from 'utils/deliveries'
 
 jest.mock('apis/deliveries')
 jest.mock('utils/deliveries')

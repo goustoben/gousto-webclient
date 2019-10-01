@@ -14,8 +14,8 @@ import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import actionStatus from 'actions/status'
 import actionTypes from 'actions/actionTypes'
 import orderActions from '../order'
-import { fetchDeliveryDays } from "../../apis/deliveries"
-import { getAvailableDeliveryDays } from "../../utils/deliveries"
+import { fetchDeliveryDays } from '../../apis/deliveries'
+import { getAvailableDeliveryDays } from '../../utils/deliveries'
 
 jest.mock('apis/orders')
 jest.mock('actions/orderConfirmation')
@@ -506,13 +506,11 @@ describe('order actions', () => {
     })
   })
   describe('orderGetDeliveryDays', () => {
-    let cutoffDatetimeFrom
-    let cutoffDatetimeUntil
+    const cutoffDatetimeFrom = '01-01-2017 10:00:01'
+    const cutoffDatetimeUntil = '02-02-2017 14:23:34'
 
     beforeEach(() => {
       orderId = '123'
-      cutoffDatetimeFrom = '01-01-2017 10:00:01'
-      cutoffDatetimeUntil = '02-02-2017 14:23:34'
       getStateSpy = jest.fn().mockReturnValue({
         user: Immutable.fromJS({
           addresses: {789: {postcode: 'AA11 2BB'}},
@@ -539,11 +537,10 @@ describe('order actions', () => {
 
     it('should mark ORDER_DELIVERY_DAYS_RECEIVE as errored if it errors', async () => {
       const err = new Error('oops')
-      fetchDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => {
-          reject(err)
-        })
-      ))
+
+      fetchDeliveryDays.mockReturnValue(
+        new Promise((resolve, reject) => { reject(err) })
+      )
 
       await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
@@ -570,15 +567,13 @@ describe('order actions', () => {
 
       const fetchedDays = { data: [{ id: '4' }, { id: '5' }, { id: '6' }] }
 
-      fetchDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => {
-          resolve(fetchedDays)
-        })
-      ))
+      fetchDeliveryDays.mockReturnValue(
+        new Promise((resolve, reject) => { resolve(fetchedDays) })
+      )
 
-      getAvailableDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
+      getAvailableDeliveryDays.mockReturnValue(
         [{ id: '5' }, { id: '6' }]
-      ))
+      )
 
       await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
@@ -605,7 +600,7 @@ describe('order actions', () => {
       })
     })
 
-    it('fetch delivery days method should include ndd in its request if the feature is on', async () => {
+    it('should fetch delivery days method should include ndd in its request if the feature is on', async () => {
       await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
       expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
