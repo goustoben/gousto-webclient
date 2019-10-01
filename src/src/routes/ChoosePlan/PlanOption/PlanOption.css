@@ -1,8 +1,9 @@
-@value Black, Bluecheese, Coconut, Haricot, HaricotLight, LightestAccessible, White from 'styles/colors.css';
+@value Black, Bluecheese, Coconut, DarkHaricot, HaricotLight, LightestAccessible, White, Mackerel from 'styles/colors.css';
 @value sizeXXL from 'styles/typography.css';
 
 .container {
-  composes: borderMD from 'styles/borders.css';
+  border: Mackerel solid 1px;
+  border-radius: 6px;
   display: block;
   padding: 1rem;
   cursor: pointer;
@@ -50,16 +51,16 @@
 .totalPrice {
   display: inline-block;
   color: Black;
-  font-size: sizeXXL;
+  font-size: 1.5rem;
   font-weight: normal;
   margin-right: 0.5rem;
 }
 
 .totalPriceDiscounted {
   display: inline-block;
-  color: Haricot;
-  font-size: sizeXXL;
+  color: DarkHaricot;
   font-weight: bold;
+  font-size: 1.5rem;
   margin-right: 0.5rem;
 }
 
@@ -70,4 +71,10 @@
 
 .priceMessage {
   margin-bottom: 0;
+}
+
+.benefitList {
+  color: DarkHaricot;
+  font-weight: bold;
+  font-size: 0.875rem;
 }

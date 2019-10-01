@@ -10,14 +10,25 @@ const subOption = {
   totalPrice: '47.75',
   totalPriceDiscounted: '23.88',
   pricePerPortion: '2.98',
-  priceBoxTypeMessage: 'For first box'
+  priceBoxTypeMessage: 'For first box',
+  benefits: [
+    'Choose 4 recipes for 2 each week',
+    'Cancel or pause online at any time',
+    '50% off first box + 30% off all boxes in the first month',
+    'Surprise gifts!'
+  ]
 }
 
 const flexOption = {
   title: 'One-off box',
   totalPrice: '47.75',
   pricePerPortion: '5.97',
-  priceBoxTypeMessage: 'For one box'
+  priceBoxTypeMessage: 'For one box',
+  benefits: [
+    'Choose  a single box of 4 recipes for 2 people',
+    'One off price, no weekly plan'
+  ]
+
 }
 
 const propTypes = {
@@ -49,6 +60,7 @@ const ChoosePlan = ({ choosePlanContinue }) => (
         totalPriceDiscounted={subOption.totalPriceDiscounted}
         pricePerPortion={subOption.pricePerPortion}
         priceBoxTypeMessage={subOption.priceBoxTypeMessage}
+        benefits={subOption.benefits}
         handleSelect={
           () => console.log('Option 1 clicked!') /*eslint-disable-line*/
         }
@@ -59,6 +71,7 @@ const ChoosePlan = ({ choosePlanContinue }) => (
         totalPrice={flexOption.totalPrice}
         pricePerPortion={flexOption.pricePerPortion}
         priceBoxTypeMessage={flexOption.priceBoxTypeMessage}
+        benefits={flexOption.benefits}
         handleSelect={
           () => console.log('Hi, you clicked Option 2') /*eslint-disable-line*/
         }

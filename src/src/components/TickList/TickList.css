@@ -1,0 +1,21 @@
+.bullet {
+  position: absolute;
+  left: -2rem;
+  text-align: center;
+  width: 2rem;
+}
+
+.list {
+  list-style-type: none;
+  margin-left: 1.5rem;
+  padding-left: 0;
+}
+
+.list>li {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.tick {
+  composes: fa-basic-class fa-fw fa-check from 'styles/vendor/font-awesome-module.css';
+}
