@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
 import { getFormSyncErrors, getFormAsyncErrors, change, untouch, touch, registerField } from 'redux-form'
-
+import { isNDDFeatureEnabled } from 'selectors/features'
 import { checkoutAddressDetailLookup, checkoutAddressLookup } from 'actions/checkout'
-
 import Address from '../Address'
 
 function mapStateToProps(state, ownProps) {
@@ -16,7 +15,7 @@ function mapStateToProps(state, ownProps) {
     sectionName: ownProps.sectionName,
     addressEdited: state.checkout.get('billingAddressEdited'),
     touchPostcode: false,
-    isNDDExperiment: state.features.getIn('ndd', 'value')
+    isNDDExperiment: isNDDFeatureEnabled(state) ? 'true' : 'false',
   }
 }
 

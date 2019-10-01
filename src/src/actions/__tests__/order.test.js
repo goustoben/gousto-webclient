@@ -590,6 +590,7 @@ describe('order actions', () => {
         sort: 'date',
         direction: 'asc',
         postcode: 'AA11 2BB',
+        ndd: 'false'
       }
 
       expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull()

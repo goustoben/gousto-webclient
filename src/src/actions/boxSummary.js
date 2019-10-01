@@ -5,15 +5,16 @@ import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import * as deliveryUtils from 'utils/deliveries'
 import { addDisabledSlotIds } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
+import { isNDDFeatureEnabled } from 'selectors/features'
 import status from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import {
-  basketDateChange,
-  basketSlotChange,
-  basketRecipeRemove,
-  portionSizeSelectedTracking,
   basketAddressChange,
-  basketPostcodeChange
+  basketDateChange,
+  basketPostcodeChange,
+  basketRecipeRemove,
+  basketSlotChange,
+  portionSizeSelectedTracking
 } from './basket'
 import actionTypes from './actionTypes'
 
@@ -24,7 +25,7 @@ function basketDeliveryDaysReceive(days) {
   }
 }
 
-const boxSummaryDeliverySlotChosen = ({ date, slotId }) => (
+const boxSummaryDeliverySlotChosen = ({date, slotId}) => (
   async (dispatch) => {
     dispatch(status.pending(actionTypes.MENU_FETCH_DATA, true))
     dispatch(basketDateChange(date))
@@ -82,19 +83,15 @@ const actions = {
         'filters[cutoff_datetime_until]': cutoffUntil,
         sort: 'date',
         direction: 'asc',
+        ndd: isNDDFeatureEnabled(getState()) ? 'true' : 'false',
       }
       if (postcode) {
         reqData.postcode = postcode
       }
 
-      const isNddExperiment = getState().features ? getState().features.getIn(['ndd', 'value']): false
-      if (isNddExperiment) {
-        reqData.ndd = 'true'
-      }
-
       const accessToken = getState().auth.get('accessToken')
       try {
-        const { data: days } = await fetchDeliveryDays(accessToken, reqData)
+        const {data: days} = await fetchDeliveryDays(accessToken, reqData)
         const availableDeliveryDays = deliveryUtils.getAvailableDeliveryDays(days, cutoffDatetimeFrom)
 
         dispatch(basketDeliveryDaysReceive(availableDeliveryDays))
@@ -132,7 +129,7 @@ const actions = {
           dispatch(push(`/menu/${tempOrderId}`))
           dispatch(boxSummaryVisibilityChange(false))
         } else {
-          dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
+          dispatch(boxSummaryDeliverySlotChosen({date: tempDate, slotId: tempSlotId}))
         }
       } else {
         const tempPostcode = state.temp.get('postcode', '')

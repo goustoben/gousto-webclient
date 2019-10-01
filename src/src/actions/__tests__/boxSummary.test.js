@@ -24,7 +24,8 @@ describe('boxSummary actions', () => {
         'direction': 'asc',
         'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
         'filters[cutoff_datetime_until]': menuCutoffUntil,
-        'sort': 'date'
+        'sort': 'date',
+        'ndd': 'false',
       }
 
       const getStateSpy = jest.fn().mockReturnValue({
@@ -42,7 +43,8 @@ describe('boxSummary actions', () => {
         'direction': 'asc',
         'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
         'filters[cutoff_datetime_until]': '2017-12-30T23:59:59.999Z',
-        'sort': 'date'
+        'sort': 'date',
+        'ndd': 'false',
       }
       const getStateSpy = jest.fn().mockReturnValue(getStateArgs)
       boxSummary.boxSummaryDeliveryDaysLoad(from, to)(dispatchSpy, getStateSpy)

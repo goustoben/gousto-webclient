@@ -9,6 +9,7 @@ import logger from 'utils/logger'
 import { getOrderDetails } from 'utils/basket'
 import { getAvailableDeliveryDays } from 'utils/deliveries'
 import { redirect } from 'utils/window'
+import { isNDDFeatureEnabled } from 'selectors/features'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
@@ -265,11 +266,8 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
       sort: 'date',
       direction: 'asc',
       postcode,
-    }
+      ndd: isNDDFeatureEnabled(getState()) ? 'true' : 'false',
 
-    const isNddExperiment = getState().features ? getState().features.getIn(['ndd', 'value']) : false
-    if (isNddExperiment) {
-      reqData.ndd = 'true'
     }
 
     try {

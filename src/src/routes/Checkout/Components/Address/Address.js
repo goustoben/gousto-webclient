@@ -131,10 +131,7 @@ class Address extends React.PureComponent {
           postcode,
           'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
           'filters[cutoff_datetime_until]': menuCutoffUntil || menuCutoffUntilFallback,
-        }
-
-        if (isNDDExperiment) {
-          reqData.ndd = 'true'
+          ndd : isNDDExperiment.toString()
         }
 
         const { data: days } = await fetchDeliveryDays(null, reqData)
