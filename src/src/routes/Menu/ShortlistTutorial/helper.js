@@ -43,7 +43,7 @@ export const getTooltipProperties = (selector) => {
       right: location.right,
       left: location.left,
       bottom: '30px',
-      width: '280px',
+      minWidth: '260px',
     },
     contentStyle: {
       background: TOOLTIP_BACKGROUND_COLOR,
