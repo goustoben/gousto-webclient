@@ -1,7 +1,8 @@
 import Immutable from 'immutable'
 
 import React from 'react'
-import {shallow} from 'enzyme'
+import { shallow } from 'enzyme'
+import moment from 'moment'
 
 import Address from 'routes/Checkout/Components/Address/Address'
 import { Button } from 'goustouicomponents'
@@ -96,8 +97,8 @@ describe('Address', () => {
       ))
 
       const expectedReqData = {
-        'filters[cutoff_datetime_from]': '2019-09-30T23:00:00.000Z',
-        'filters[cutoff_datetime_until]': '2019-10-31T00:00:00.000Z',
+        'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
+        'filters[cutoff_datetime_until]': moment().startOf('day').add(30, 'days').toISOString(),
         postcode: 'NW1 8RJ',
         ndd: 'true'
       }
