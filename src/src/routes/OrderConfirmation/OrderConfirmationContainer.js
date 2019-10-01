@@ -6,7 +6,7 @@ import { locationQuery } from 'selectors/routing'
 import { getAgeVerified, getReferralOffer } from 'selectors/user'
 import { isOrderConfirmationPageLoading } from 'selectors/orderConfirmation'
 import { getBasketOrderDetails, getShortlistUsed, getShortlistFeedbackViewed } from 'selectors/basket'
-import { isCollapsedRafFeatureEnabled } from 'selectors/features'
+import { isCollapsedRafFeatureEnabled, getProductList2Columns } from 'selectors/features'
 import { OrderConfirmation } from './OrderConfirmation'
 import { getHeaderDetails } from './helper'
 
@@ -20,6 +20,7 @@ const mapStateToProps = (state) => {
   return ({
     ageVerified: getAgeVerified(state),
     hasCollapsedRafFeature: isCollapsedRafFeatureEnabled(state),
+    hasProductList2Columns: getProductList2Columns(state),
     headerDetails,
     isLoading,
     rafOffer: getReferralOffer(state) || Immutable.Map(),
@@ -29,8 +30,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  userVerifyAge: userActions.userVerifyAge,
   userFetchReferralOffer,
+  userVerifyAge: userActions.userVerifyAge,
 }
 
 const OrderConfirmationContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(OrderConfirmation))

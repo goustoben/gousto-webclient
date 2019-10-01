@@ -15,7 +15,6 @@ describe('Product component', () => {
 
   describe('render', () => {
     beforeEach(() => {
-
       wrapper = mount(<Product product={mockProduct} ageVerified />)
     })
 
@@ -45,6 +44,60 @@ describe('Product component', () => {
       mockProduct.stock = 12
       wrapper = mount(<Product product={mockProduct} ageVerified />)
       expect(wrapper.find('.productLowStock').length).toBe(0)
+    })
+
+    describe('and the hasProductList2Columns feature is enabled', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hasProductList2Columns: true })
+      })
+
+      test('the fullWidth class is added to productWrapper', () => {
+        expect(wrapper.find('.productWrapper').hasClass('productWrapper--fullWidth')).toEqual(true)
+      })
+
+      test('product price is not rendered with the product header', () => {
+        expect(
+          wrapper.find('.productInfo').find('.productPrice').exists()
+        ).toBe(false)
+      })
+
+      test('product price is rendered in the same level as Add Product button', () => {
+        expect(
+          wrapper.find('.productContent').childAt(1).find('.productPrice').exists()
+        ).toBe(true)
+
+        expect(
+          wrapper.find('.productContent').childAt(1).find('Buttons').exists()
+        ).toBe(true)
+      })
+
+      test('Button is set to fullWidth', () => {
+        expect(
+          wrapper.find('.productButtonWrapper').find('Button').hasClass('btnWrapper--fullWidth')
+        ).toEqual(true)
+      })
+    })
+
+    describe('and the hasProductList2Columns feature is not enabled', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hasProductList2Columns: false })
+      })
+
+      test('the fullWidth class is not added to productWrapper', () => {
+        expect(wrapper.find('.productWrapper').hasClass('productWrapper--fullWidth')).toEqual(false)
+      })
+
+      test('product price is not rendered at the same level as Add Product button', () => {
+        expect(
+          wrapper.find('.productContent').childAt(1).find('.productPrice').exists()
+        ).toBe(false)
+      })
+
+      test('Button is not set to fullWidth', () => {
+        expect(
+          wrapper.find('.productButtonWrapper').find('Button').hasClass('btnWrapper--fullWidth')
+        ).toEqual(false)
+      })
     })
   })
 

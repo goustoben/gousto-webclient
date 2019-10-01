@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import Overlay from 'Overlay'
 import configProducts from 'config/products'
 import ProductDetailContainer from '../ProductDetails'
@@ -31,7 +32,12 @@ const propTypes = {
   basketProductAdd: PropTypes.func,
   basketProductRemove: PropTypes.func,
   temp: PropTypes.func,
-  orderConfirmationProductTracking: PropTypes.func
+  orderConfirmationProductTracking: PropTypes.func,
+  hasProductList2Columns: PropTypes.bool,
+}
+
+const defaultProps = {
+  hasProductList2Columns: false,
 }
 
 class Product extends PureComponent {
@@ -135,16 +141,23 @@ class Product extends PureComponent {
 
   render() {
     const { showDetailsScreen } = this.state
-    const { toggleAgeVerificationPopUp } = this.props
+    const { hasProductList2Columns, toggleAgeVerificationPopUp } = this.props
     const productCardContent = this.getProductCardContent()
     const productDetails = this.getProductDetails()
+    const cssProductWrapper = classnames(
+      css.productWrapper,
+      {
+        [css['productWrapper--fullWidth']]: hasProductList2Columns,
+      }
+    )
 
     return (
-      <section className={css.productWrapper}>
+      <section className={cssProductWrapper}>
         <ProductPresentation
           onAdd={this.onAddProduct}
           onRemove={this.onRemoveProduct}
           toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+          hasProductList2Columns={hasProductList2Columns}
           {...productCardContent}
         />
         <Overlay open={showDetailsScreen} onClose={this.toggleDetailsVisibility} >
@@ -159,6 +172,7 @@ class Product extends PureComponent {
   }
 }
 
-PropTypes.propTypes = propTypes
+Product.propTypes = propTypes
+Product.defaultProps = defaultProps
 
 export { Product }
