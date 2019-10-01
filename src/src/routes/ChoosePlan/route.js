@@ -17,7 +17,7 @@ const route = store => {
     )
   }
 
-  // return <Redirect from="/choose-subscription-plan" to="/" />
+  return <Redirect from="/choose-subscription-plan" to="/" />
 }
 
 export default route
