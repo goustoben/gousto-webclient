@@ -1,5 +1,5 @@
 const DEFAULT_COORDINATES = { x: 0, y: 0 }
-const TOOLTIP_WIDTH = 300 
+const TOOLTIP_WIDTH = 300
 const TOOLTIP_BACKGROUND_COLOR = '#FFEEC0'
 
 const checkIfSelectorExists = (selector) => {
@@ -42,7 +42,8 @@ export const getTooltipProperties = (selector) => {
       position: 'absolute',
       right: location.right,
       left: location.left,
-      bottom: '30px'
+      bottom: '30px',
+      minWidth: '260px',
     },
     contentStyle: {
       background: TOOLTIP_BACKGROUND_COLOR,
