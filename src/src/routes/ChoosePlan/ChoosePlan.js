@@ -12,9 +12,9 @@ const subOption = {
   pricePerPortion: '2.98',
   priceBoxTypeMessage: 'For first box',
   benefits: [
-    'Choose [X] recipes for [X] each week" (based on # of recipes picked on the menu and box size)',
+    'Choose 4 recipes for 2 each week',
     'Cancel or pause online at any time',
-    '[50%] off first box + [30%] off all boxes in the first month',
+    '50% off first box + 30% off all boxes in the first month',
     'Surprise gifts!'
   ]
 }
