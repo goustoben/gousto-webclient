@@ -21,3 +21,4 @@ src/vendor
 .vscode
 jsconfig.json
 .idea
+src/config/env.json
