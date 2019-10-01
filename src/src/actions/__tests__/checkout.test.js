@@ -278,6 +278,40 @@ describe('checkout actions', () => {
     })
   })
 
+  describe('when prevDaySlotLeadTimeId is present in state.basket', () => {
+    const targetUuid = 'some-uuid'
+
+    beforeEach(() => {
+      getState.mockReturnValue(createState({
+        basket: Immutable.fromJS({
+          address: '3 Moris House, London',
+          date: '2016-11-21',
+          numPortions: 4,
+          recipes: {
+            'recipe-id-1': 1,
+            'recipe-id-2': 2,
+          },
+          stepsOrder: ['boxdetails', 'aboutyou', 'delivery', 'payment'],
+          slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
+          postcode: 'W6 0DH',
+          prevPostcode: 'OX18 1EN',
+          prevDaySlotLeadTimeId: targetUuid,
+        }),
+      }))
+    })
+
+    it('should call create preview order with day_slot_lead_time_id', async () => {
+      await checkoutCreatePreviewOrder()(
+        dispatch,
+        getState,
+      )
+
+      expect(createPreviewOrder).toHaveBeenCalledTimes(1)
+      previewOrder.day_slot_lead_time_id = targetUuid
+      expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
+    })
+  })
+  
   describe('checkoutAddressLookup', () => {
     it('should call fetchAddressByPostcode and dispatch pending CHECKOUT_ADDRESSES_RECEIVE with addresses', async () => {
       const postcode = 'W6 0DH'

@@ -138,9 +138,14 @@ export function checkoutCreatePreviewOrder() {
         recipe_choices: recipeChoices,
       }
 
+      if (basket.get('prevDaySlotLeadTimeId')) {
+        orderDetails.day_slot_lead_time_id = basket.get('prevDaySlotLeadTimeId')
+      }
+
       if (basket.get('orderId')) {
         orderDetails.order_id = basket.get('orderId')
       }
+
       if (basket.get('promoCode')) {
         orderDetails.promo_code = basket.get('promoCode')
       }
