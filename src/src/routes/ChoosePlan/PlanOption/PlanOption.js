@@ -50,7 +50,7 @@ const PlanOption = ({
         />
         <h3 className={css.title}>{title}</h3>
       </div>
-      <TickList listItems={benefits} className={css.benefitList} />
+      <TickList listItems={benefits} listItemClassName={css.benefitList} />
       <div className={css.totalPriceContainer}>
         {!totalPriceDiscounted ? (
           <span className={css.totalPrice}>£{totalPrice}</span>

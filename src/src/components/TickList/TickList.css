@@ -1,19 +1,19 @@
 .bullet {
   position: absolute;
-  left: -32px;
+  left: -2rem;
   text-align: center;
-  width: 32px;
+  width: 2rem;
 }
 
 .list {
   list-style-type: none;
-  margin-left: 24px;
+  margin-left: 1.5rem;
   padding-left: 0;
 }
 
 .list>li {
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
 .tick {

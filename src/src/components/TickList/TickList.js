@@ -4,13 +4,13 @@ import css from './TickList.css'
 
 const propTypes = {
   listItems: PropTypes.arrayOf(PropTypes.string),
-  className: PropTypes.string
+  listItemClassName: PropTypes.string
 }
 
-const TickList = ({ listItems, className }) => (
+const TickList = ({ listItems, listItemClassName }) => (
   <ul className={css.list}>
     {listItems.map(listItem => (
-      <li key={listItem} className={className}>
+      <li key={listItem} className={listItemClassName}>
         <span className={css.bullet}><i className={css.tick} /></span>
         {listItem}
       </li>
