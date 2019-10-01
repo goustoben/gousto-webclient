@@ -14,10 +14,9 @@ describe('AppPromo', () => {
     expect(wrapper.find('img').length).toEqual(1)
   })
 
-  it('should render a list with 3 list elements', () => {
+  it('should render a ticklist', () => {
 
-    expect(wrapper.find('ul').length).toEqual(1)
-    expect(wrapper.find('li').length).toEqual(3)
+    expect(wrapper.find('TickList').length).toEqual(1)
   })
 
   it('should render a button and show if device is mobile', () => {

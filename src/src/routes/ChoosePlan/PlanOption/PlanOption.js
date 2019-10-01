@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
-import { List } from 'List'
+import { TickList } from 'TickList'
 
 import css from './PlanOption.css'
 
@@ -50,7 +50,7 @@ const PlanOption = ({
         />
         <h3 className={css.title}>{title}</h3>
       </div>
-      <List listItems={benefits} className={css.benefitList} />
+      <TickList listItems={benefits} listItemClassName={css.benefitList} />
       <div className={css.totalPriceContainer}>
         {!totalPriceDiscounted ? (
           <span className={css.totalPrice}>£{totalPrice}</span>
