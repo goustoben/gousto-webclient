@@ -1,9 +1,13 @@
+@value ScreenXSMax from 'styles/screenSizes.css';
 @value size 125px;
 
 .ingredient {
 	composes: textCenter from 'styles/typography.css';
-	width: 135px;
-	height: 160px;
+	width: 8rem;
+	height: 10.5rem;
+	@media ScreenXSMax {
+		width: 7rem;
+	}
 }
 
 .imageContainer {
