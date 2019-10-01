@@ -14,7 +14,6 @@ import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import actionStatus from 'actions/status'
 import actionTypes from 'actions/actionTypes'
 import orderActions from '../order'
-import {expect} from "chai";
 import {fetchDeliveryDays} from "../../apis/deliveries";
 import {getAvailableDeliveryDays} from "../../utils/deliveries";
 
@@ -531,12 +530,12 @@ describe('order actions', () => {
     it('should mark ORDER_DELIVERY_DAYS_RECEIVE as pending', async function() {
       await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
-      expect(actionStatus.pending.mock.calls.length).to.be.equal(2)
-      expect(actionStatus.pending.mock.calls[0][0]).to.equal('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.pending.mock.calls[0][1]).to.be.true
-      expect(actionStatus.pending.mock.calls[1][0]).to.equal('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.pending.mock.calls[1][1]).to.be.false
-      expect(dispatchSpy.mock.calls.length).to.equal(4)
+      expect(actionStatus.pending.mock.calls.length).toEqual(2)
+      expect(actionStatus.pending.mock.calls[0][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
+      expect(actionStatus.pending.mock.calls[0][1]).toBe(true)
+      expect(actionStatus.pending.mock.calls[1][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
+      expect(actionStatus.pending.mock.calls[1][1]).toBe(false)
+      expect(dispatchSpy.mock.calls.length).toEqual(4)
     })
 
     it('should mark ORDER_DELIVERY_DAYS_RECEIVE as errored if it errors', async function() {
@@ -549,18 +548,18 @@ describe('order actions', () => {
 
       await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
-      expect(actionStatus.pending.mock.calls.length).to.be.equal(2)
-      expect(actionStatus.pending.mock.calls[0][0]).to.equal('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.pending.mock.calls[0][1]).to.be.true
-      expect(actionStatus.pending.mock.calls[1][0]).to.equal('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.pending.mock.calls[1][1]).to.be.false
+      expect(actionStatus.pending.mock.calls.length).toEqual(2)
+      expect(actionStatus.pending.mock.calls[0][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
+      expect(actionStatus.pending.mock.calls[0][1]).toEqual(true)
+      expect(actionStatus.pending.mock.calls[1][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
+      expect(actionStatus.pending.mock.calls[1][1]).toEqual(false)
 
-      expect(actionStatus.error.mock.calls.length).to.be.equal(2)
-      expect(actionStatus.error.mock.calls[0][0]).to.equal('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.error.mock.calls[0][1]).to.be.null
-      expect(actionStatus.error.mock.calls[1][0]).to.equal('ORDER_DELIVERY_DAYS_RECEIVE')
-      expect(actionStatus.error.mock.calls[1][1]).to.deep.equal(err.message)
-      expect(dispatchSpy.mock.calls.length).to.equal(4)
+      expect(actionStatus.error.mock.calls.length).toEqual(2)
+      expect(actionStatus.error.mock.calls[0][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
+      expect(actionStatus.error.mock.calls[0][1]).toBeNull()
+      expect(actionStatus.error.mock.calls[1][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
+      expect(actionStatus.error.mock.calls[1][1]).toEqual(err.message)
+      expect(dispatchSpy.mock.calls.length).toEqual(4)
     })
 
     it('should map the arguments through to fetchDeliveryDays and dispatch the action with the correct arguments', async function() {
@@ -584,7 +583,7 @@ describe('order actions', () => {
 
       await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
-      expect(fetchDeliveryDays.mock.calls.length).to.equal(1)
+      expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
 
       const expectedReqData = {
         'filters[cutoff_datetime_from]': '01-01-2017 10:00:01',
@@ -594,12 +593,12 @@ describe('order actions', () => {
         postcode: 'AA11 2BB',
       }
 
-      expect(fetchDeliveryDays.mock.calls[0][0]).to.be.null
+      expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull()
 
-      expect(fetchDeliveryDays.mock.calls[0][1]).to.deep.equal(expectedReqData)
-      expect(getAvailableDeliveryDays.mock.calls[0][0]).to.deep.equal([{ id: '4' }, { id: '5' }, { id: '6' }])
-      expect(dispatchSpy.mock.calls.length).to.equal(4)
-      expect(dispatchSpy.mock.calls[2][0]).to.deep.equal({
+      expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
+      expect(getAvailableDeliveryDays.mock.calls[0][0]).toEqual([{ id: '4' }, { id: '5' }, { id: '6' }])
+      expect(dispatchSpy.mock.calls.length).toEqual(4)
+      expect(dispatchSpy.mock.calls[2][0]).toEqual({
         type: actionTypes.ORDER_DELIVERY_DAYS_RECEIVE,
         orderId: '123',
         availableDays: [{ id: '5' }, { id: '6' }],
@@ -609,7 +608,7 @@ describe('order actions', () => {
     it('fetch delivery days method should include ndd in its request if the feature is on', async function() {
       await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
-      expect(fetchDeliveryDays.mock.calls.length).to.equal(1)
+      expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
 
       const expectedReqData = {
         'filters[cutoff_datetime_from]': '01-01-2017 10:00:01',
@@ -620,8 +619,8 @@ describe('order actions', () => {
         ndd: 'true'
       }
 
-      expect(fetchDeliveryDays.mock.calls[0][0]).to.be.null
-      expect(fetchDeliveryDays.mock.calls[0][1]).to.deep.equal(expectedReqData)
+      expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull
+      expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
     })
   })
 })
