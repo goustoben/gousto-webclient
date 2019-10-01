@@ -1,15 +1,15 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { List } from '../List'
+import { TickList } from '../TickList'
 
-describe('List', () => {
+describe('TickList', () => {
   const listItems = [
     'Choose [X] recipes for [X] each week',
     'Cancel or pause online at any time',
     '[50%] off first box + [30%] off all boxes in the first month',
     'Surprise gifts!',
   ]
-  const wrapper = shallow(<List listItems={listItems} />)
+  const wrapper = shallow(<TickList listItems={listItems} />)
 
   it('should render a ul element', () => {
     expect(wrapper.find('ul').length).toEqual(1)

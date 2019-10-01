@@ -3,7 +3,7 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { Button } from 'goustouicomponents'
 import { AppStoreLinks } from 'components/AppStoreLinks'
-import { List } from 'List/List'
+import { TickList } from 'TickList'
 import config from 'config'
 import css from './AppPromo.css'
 
@@ -48,7 +48,7 @@ const AppPromo = ({ device, trackWelcomeAppPromoClick }) => {
       <div className={css.contentContainer}>
         <div className={css.phoneImageContainer}><img className={css.phoneImage} src={require('media/images/app-promo-phone.jpg')} alt="" /></div>
         <div className={css.content}>
-          <List listItems={benefits} className={css.list} />
+          <TickList listItems={benefits} className={css.list} />
           <div>
             {mobileAppStoreCTAs(device, trackWelcomeAppPromoClick)}
             {desktopAppStoreCTAs(device, trackWelcomeAppPromoClick)}
