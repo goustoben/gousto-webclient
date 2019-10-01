@@ -16,7 +16,6 @@ class ShortlistButton extends React.PureComponent {
     stock: PropTypes.number,
     id: PropTypes.string,
     position: PropTypes.number,
-    display: PropTypes.string,
     showShortListTutorial: PropTypes.bool,
     shortlistTutorialStep1Viewed: PropTypes.bool,
     incrementTutorialViewed: PropTypes.func,
@@ -34,7 +33,6 @@ class ShortlistButton extends React.PureComponent {
     stock: 0,
     id: '',
     position: 0,
-    display: '',
     showShortListTutorial: false,
     shortlistTutorialStep1Viewed: false,
     view: 'grid',
@@ -73,12 +71,11 @@ class ShortlistButton extends React.PureComponent {
   }
 
   render() {
-    const { shortlistLimitReached, recipeInShortlist, display, showShortListTutorial, notInStock } = this.props
+    const { shortlistLimitReached, recipeInShortlist, showShortListTutorial, notInStock } = this.props
     const heartIcon = recipeInShortlist ? 'icon_shortlist_heart_selected' : 'icon_shortlist_heart_deselected'
     const classes = classnames(
       css.shortlistButton,
-      (recipeInShortlist ? css.shortlisted : null),
-      (display === 'detailOverlay' ? css.defaultDetailView : null)
+      (recipeInShortlist ? css.shortlisted : null)
     )
 
     const text = recipeInShortlist ? 'Shortlisted' : 'Shortlist'

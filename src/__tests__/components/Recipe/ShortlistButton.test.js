@@ -37,12 +37,6 @@ describe('<ShortlistButton />', () => {
 
       expect(wrapper).toMatchSnapshot()
     })
-
-    test('should include defaultDetailView css if display is detailOverview', () => {
-      wrapper = shallow(<ShortlistButton {...shortlistButtonProps} display='detailOverlay' />)
-
-      expect(wrapper).toMatchSnapshot()
-    })
   })
 
   describe('onShortlistClick', () => {

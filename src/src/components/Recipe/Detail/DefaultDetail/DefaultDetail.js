@@ -99,11 +99,9 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
           </div>
           <div className={css.stickyContainer}>
             {showShortlistButton &&
-              <ShortlistButton id={id} stock={stock} view={view} position={position} display={'detailOverlay'} />
+              <ShortlistButton id={id} stock={stock} view={view} position={position} />
             }
-            <div className={css.stickyButton}>
-              <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
-            </div>
+            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
           </div>
         </div>
       </div>

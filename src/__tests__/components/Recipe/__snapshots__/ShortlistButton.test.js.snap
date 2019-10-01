@@ -1,170 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ShortlistButton /> Render should include defaultDetailView css if display is detailOverview 1`] = `
-ShallowWrapper {
-  Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <ShortlistButton
-    addToShortlist={[MockFunction]}
-    display="detailOverlay"
-    id="1234"
-    incrementTutorialViewed={[MockFunction]}
-    menuBrowseCTAVisibilityChange={[MockFunction]}
-    notInStock={false}
-    position={1}
-    recipeInShortlist={false}
-    removeFromShortlist={[MockFunction]}
-    shortlistLimitReached={false}
-    shortlistTutorialStep1Viewed={false}
-    showShortListTutorial={false}
-    stock={1000}
-    tutorialTracking={[MockFunction]}
-    view="grid"
-  />,
-  Symbol(enzyme.__renderer__): Object {
-    "batchedUpdates": [Function],
-    "getNode": [Function],
-    "render": [Function],
-    "simulateEvent": [Function],
-    "unmount": [Function],
-  },
-  Symbol(enzyme.__node__): Object {
-    "instance": null,
-    "key": undefined,
-    "nodeType": "host",
-    "props": Object {
-      "children": Array [
-        <Svg
-          className="heartIcon"
-          fileName="icon_shortlist_heart_deselected"
-        />,
-        <span
-          className="shortlistText"
-        >
-          Shortlist
-        </span>,
-        false,
-      ],
-      "className": "shortlistButton defaultDetailView",
-      "data-slug": "heart",
-      "disabled": false,
-      "onClick": [Function],
-      "onKeyPress": [Function],
-      "tabIndex": 0,
-      "type": "button",
-    },
-    "ref": null,
-    "rendered": Array [
-      Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "class",
-        "props": Object {
-          "className": "heartIcon",
-          "fileName": "icon_shortlist_heart_deselected",
-        },
-        "ref": null,
-        "rendered": null,
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "host",
-        "props": Object {
-          "children": "Shortlist",
-          "className": "shortlistText",
-        },
-        "ref": null,
-        "rendered": "Shortlist",
-        "type": "span",
-      },
-      false,
-    ],
-    "type": "button",
-  },
-  Symbol(enzyme.__nodes__): Array [
-    Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "host",
-      "props": Object {
-        "children": Array [
-          <Svg
-            className="heartIcon"
-            fileName="icon_shortlist_heart_deselected"
-          />,
-          <span
-            className="shortlistText"
-          >
-            Shortlist
-          </span>,
-          false,
-        ],
-        "className": "shortlistButton defaultDetailView",
-        "data-slug": "heart",
-        "disabled": false,
-        "onClick": [Function],
-        "onKeyPress": [Function],
-        "tabIndex": 0,
-        "type": "button",
-      },
-      "ref": null,
-      "rendered": Array [
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "class",
-          "props": Object {
-            "className": "heartIcon",
-            "fileName": "icon_shortlist_heart_deselected",
-          },
-          "ref": null,
-          "rendered": null,
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "host",
-          "props": Object {
-            "children": "Shortlist",
-            "className": "shortlistText",
-          },
-          "ref": null,
-          "rendered": "Shortlist",
-          "type": "span",
-        },
-        false,
-      ],
-      "type": "button",
-    },
-  ],
-  Symbol(enzyme.__options__): Object {
-    "adapter": ReactFifteenAdapter {
-      "options": Object {
-        "legacyContextMode": "parent",
-        "lifecycles": Object {
-          "componentDidUpdate": Object {
-            "prevContext": true,
-          },
-          "getChildContext": Object {
-            "calledByRenderer": true,
-          },
-        },
-        "supportPrevContextArgumentOfComponentDidUpdate": true,
-      },
-    },
-  },
-  Symbol(enzyme.__childContext__): null,
-}
-`;
-
 exports[`<ShortlistButton /> Render should render correctly if recipeInShortlist is false 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <ShortlistButton
     addToShortlist={[MockFunction]}
-    display=""
     id="1234"
     incrementTutorialViewed={[MockFunction]}
     menuBrowseCTAVisibilityChange={[MockFunction]}
@@ -323,7 +163,6 @@ ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <ShortlistButton
     addToShortlist={[MockFunction]}
-    display=""
     id="1234"
     incrementTutorialViewed={[MockFunction]}
     menuBrowseCTAVisibilityChange={[MockFunction]}
