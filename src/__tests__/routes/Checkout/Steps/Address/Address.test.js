@@ -86,11 +86,9 @@ describe('Address', () => {
     test('should fetch next day delivery days)', () => {
       const fetchedDays = {data: [{id: '4'}, {id: '5'}, {id: '6'}]}
 
-      fetchDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => {
-          resolve(fetchedDays)
-        })
-      ))
+      fetchDeliveryDays.mockReturnValue(
+        new Promise((resolve, reject) => { resolve(fetchedDays) })
+      )
 
       getAvailableDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
         [{id: '5'}, {id: '6'}]

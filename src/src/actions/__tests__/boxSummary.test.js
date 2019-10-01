@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import boxSummary from 'actions/boxSummary'
 import fetchDeliveryDays from 'apis/deliveries'
 
@@ -18,7 +18,7 @@ describe('boxSummary actions', () => {
 
     const dispatchSpy = jest.fn()
 
-    it('should fetch delivery days with menu cutoff date', function() {
+    it('should fetch delivery days with menu cutoff date', () => {
       const menuCutoffUntil = '2017-12-30T00:00:00.000Z'
       const expectedRequestData = {
         'direction': 'asc',
@@ -38,7 +38,7 @@ describe('boxSummary actions', () => {
       expect(fetchDeliveryDays.fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
     })
 
-    it('should fetch delivery days with requested cut off dates', function() {
+    it('should fetch delivery days with requested cut off dates', () => {
       const expectedRequestData = {
         'direction': 'asc',
         'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
