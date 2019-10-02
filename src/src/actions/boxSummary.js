@@ -3,7 +3,11 @@ import moment from 'moment'
 import { okRecipes } from 'utils/basket'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
-import * as deliveryUtils from 'utils/deliveries'
+import {
+  getAvailableDeliveryDays,
+  transformDaySlotLeadTimesToMockSlots,
+  getLandingDay
+} from 'utils/deliveries'
 import { addDisabledSlotIds } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
 import { isNDDFeatureEnabled } from 'selectors/features'
 import status from './status'
@@ -91,8 +95,9 @@ const actions = {
 
       const accessToken = getState().auth.get('accessToken')
       try {
-        const { data: days } = await fetchDeliveryDays(accessToken, reqData)
-        const availableDeliveryDays = deliveryUtils.getAvailableDeliveryDays(days, cutoffDatetimeFrom)
+        let { data: days } = await fetchDeliveryDays(accessToken, reqData)
+        days = transformDaySlotLeadTimesToMockSlots(days)
+        const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom)
 
         dispatch(basketDeliveryDaysReceive(availableDeliveryDays))
       } catch (err) {
@@ -110,7 +115,7 @@ const actions = {
       const state = getState()
       const canLandOnOrder = state.features.getIn(['landingOrder', 'value'], false)
       const deliveryDays = addDisabledSlotIds(state.boxSummaryDeliveryDays)
-      const landing = deliveryUtils.getLandingDay(
+      const landing = getLandingDay(
         state,
         true,
         !canLandOnOrder,

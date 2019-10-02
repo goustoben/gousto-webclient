@@ -1,13 +1,18 @@
 import Immutable from 'immutable'
 import boxSummary from 'actions/boxSummary'
-import fetchDeliveryDays from 'apis/deliveries'
+import { fetchDeliveryDays } from 'apis/deliveries'
+import { transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 
 jest.mock('apis/deliveries', () => ({
-  fetchDeliveryDays: jest.fn()
+  fetchDeliveryDays: jest.fn().mockReturnValue({
+    data: [{id: 1}]
+  })
 }))
 
-describe('boxSummary actions', () => {
-  describe('boxSummaryDeliveryDaysLoad', () => {
+jest.mock('utils/deliveries')
+
+describe('boxSummary actions', async () => {
+  describe('boxSummaryDeliveryDaysLoad', async () => {
 
     const from = '2017-12-05'
     const to = '2017-12-30'
@@ -35,7 +40,7 @@ describe('boxSummary actions', () => {
 
       boxSummary.boxSummaryDeliveryDaysLoad(from)(dispatchSpy, getStateSpy)
 
-      expect(fetchDeliveryDays.fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
+      expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
     })
 
     it('should fetch delivery days with requested cut off dates', () => {
@@ -49,10 +54,10 @@ describe('boxSummary actions', () => {
       const getStateSpy = jest.fn().mockReturnValue(getStateArgs)
       boxSummary.boxSummaryDeliveryDaysLoad(from, to)(dispatchSpy, getStateSpy)
 
-      expect(fetchDeliveryDays.fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
+      expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
     })
 
-    it('should fetch next day delivery days with requested cut off dates when feature flag is enabled', () => {
+    it('should fetch next day delivery days with requested cut off dates when feature flag is enabled', async () => {
       const expectedRequestData = {
         'direction': 'asc',
         'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
@@ -72,9 +77,10 @@ describe('boxSummary actions', () => {
         ),
       })
 
-      boxSummary.boxSummaryDeliveryDaysLoad(from, to)(dispatchSpy, getStateSpy)
+      await boxSummary.boxSummaryDeliveryDaysLoad(from, to)(dispatchSpy, getStateSpy)
 
-      expect(fetchDeliveryDays.fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
+      expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
+      expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
     })
   })
 })
