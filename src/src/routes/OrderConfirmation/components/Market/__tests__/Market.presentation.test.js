@@ -6,7 +6,7 @@ import { MarketPresentation } from '../Market.presentation'
 describe('<MarketPresentation />', () => {
   const DEFAULT_PROPS = {
     basket: Map(),
-    categories: [],
+    categoriesForNavBar: [],
     getFilteredProducts: jest.fn(),
     onOrderSave: jest.fn(),
     products: {},
@@ -41,12 +41,8 @@ describe('<MarketPresentation />', () => {
       expect(wrapper.find('ProductList').exists()).toBe(true)
     })
 
-    test('renders the navbar', () => {
-      expect(wrapper.find('Navbar').exists()).toBe(true)
-    })
-
-    test('renders the dropdown', () => {
-      expect(wrapper.find('Dropdown').exists()).toBe(true)
+    test('renders the ProductsNavBar', () => {
+      expect(wrapper.find('ProductsNavBar').exists()).toBe(true)
     })
 
     describe('when showOrderConfirmationReceipt is true', () => {

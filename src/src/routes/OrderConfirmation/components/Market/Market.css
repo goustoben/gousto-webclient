@@ -48,18 +48,6 @@
   padding: 2rem;
 }
 
-.navbar {
-  @media ScreenXSMax {
-    display: none;
-  }
-}
-
-.dropdown {
-  @media ScreenSMMin {
-    display: none;
-  }
-}
-
 .mobileHide {
   composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
 }

@@ -127,13 +127,13 @@ class Market extends PureComponent {
       toggleAgeVerificationPopUp,
     } = this.props
     const { filteredProducts, isOrderSummaryOpen } = this.state
-    const categories = this.getCategories()
+    const categoriesForNavBar = this.getCategories()
 
     return (
       <MarketPresentation
         ageVerified={ageVerified}
         basket={basket}
-        categories={categories}
+        categoriesForNavBar={categoriesForNavBar}
         filteredProducts={filteredProducts}
         getFilteredProducts={this.getFilteredProducts}
         isOrderSummaryOpen={isOrderSummaryOpen}
