@@ -10,7 +10,13 @@ import css from './ChoosePlan.css'
 class ChoosePlan extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      subscriptionPlan: null
+    }
+  }
+
+  setSubscription(option) {
+    this.setState({ subscriptionPlan: option })
   }
 
   static propTypes = {
@@ -44,6 +50,7 @@ class ChoosePlan extends PureComponent {
 
   render() {
     const { choosePlanContinue, isLoading, subscriptionPrices, transactionalPrices, extrasIncluded } = this.props
+    const { subscriptionPlan } = this.state
 
     const subscriptionOption = { ...subscription, ...subscriptionPrices}
     const transactionalOption = { ...transactional, ...transactionalPrices}
@@ -54,10 +61,10 @@ class ChoosePlan extends PureComponent {
           style={[
             {
               cssText: `
-          #react-root {
-            height: 100%;
-          }
-        `
+                #react-root {
+                  height: 100%;
+                }
+              `
             }
           ]}
         />
@@ -73,6 +80,7 @@ class ChoosePlan extends PureComponent {
             ) : (
             <div>
               <PlanOption
+                selected={subscriptionPlan === 'subscription'}
                 title={subscriptionOption.title}
                 totalPrice={subscriptionOption.totalPrice}
                 totalPriceDiscounted={subscriptionOption.totalPriceDiscounted}
@@ -80,10 +88,10 @@ class ChoosePlan extends PureComponent {
                 priceBoxTypeMessage={subscriptionOption.priceBoxTypeMessage}
                 benefits={subscriptionOption.benefits}
                 showExclExtras={extrasIncluded}
-                handleSelect={() => {}}
+                handleSelect={this.setSubscription('subscription')}
               />
               <PlanOption
-                selected
+                selected={subscriptionPlan === 'transactional'}
                 title={transactionalOption.title}
                 totalPrice={transactionalOption.totalPrice}
                 totalPriceDiscounted={transactionalOption.totalPriceDiscounted}
@@ -91,7 +99,7 @@ class ChoosePlan extends PureComponent {
                 priceBoxTypeMessage={transactionalOption.priceBoxTypeMessage}
                 benefits={transactionalOption.benefits}
                 showExclExtras={extrasIncluded}
-                handleSelect={() => {}}
+                handleSelect={this.setSubscription('transactional')}
               />
               {extrasIncluded && (
                 <Alert type="info">
