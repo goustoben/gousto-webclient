@@ -8,23 +8,35 @@ import Address from 'routes/Checkout/Components/Address/Address'
 import {Button} from 'goustouicomponents'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 import AddressInputs from 'routes/Checkout/Components/Address/AddressInputs'
-import {fetchDeliveryDays} from 'apis/deliveries'
-import {getAvailableDeliveryDays} from 'utils/deliveries'
+import { fetchDeliveryDays } from 'apis/deliveries'
+import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 
-jest.mock('apis/deliveries')
+jest.mock('apis/deliveries', () => ({
+  fetchDeliveryDays: jest.fn().mockReturnValue({
+    data: [{id: '4'}, {id: '5'}, {id: '6'}]
+  })
+}))
+
 jest.mock('utils/deliveries')
 
 describe('Address', () => {
   let wrapper
 
-  test('should return div', () => {
+  beforeEach(() => {
     const selectedAddresses = Immutable.Map({})
     wrapper = shallow(< Address
       selectedAddress={selectedAddresses}
       registerField={jest.fn()}
       isNDDExperiment={false}
     />)
+  })
+
+  test('should return div', () => {
     expect(wrapper.type()).toBe('div')
+  })
+
+  test('should not transform delivery days', () => {
+    expect(transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
   })
 
   describe('rendering', () => {
@@ -83,18 +95,11 @@ describe('Address', () => {
         expect(wrapper.find(Button)).toHaveLength(1)
       })
     })
+
     test('should fetch next day delivery days)', () => {
-      const fetchedDays = {data: [{id: '4'}, {id: '5'}, {id: '6'}]}
-
-      fetchDeliveryDays.mockReturnValue(
-        new Promise((resolve, reject) => {
-          resolve(fetchedDays)
-        })
-      )
-
-      getAvailableDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
+      getAvailableDeliveryDays.mockReturnValue(
         [{id: '5'}, {id: '6'}]
-      ))
+      )
 
       const expectedReqData = {
         'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
@@ -105,6 +110,7 @@ describe('Address', () => {
 
       expect(fetchDeliveryDays).toHaveBeenCalledTimes(4)
       expect(fetchDeliveryDays.mock.calls[2][1]).toEqual(expectedReqData)
+      expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
     })
   })
 })

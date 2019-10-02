@@ -134,7 +134,12 @@ class Address extends React.PureComponent {
           ndd : isNDDExperiment.toString()
         }
 
-        const { data: days } = await fetchDeliveryDays(null, reqData)
+        let { data: days } = await fetchDeliveryDays(null, reqData)
+
+        if (isNDDExperiment) {
+          days = deliveryUtils.transformDaySlotLeadTimesToMockSlots(days)
+        }
+
         const availableDeliveryDays = deliveryUtils.getAvailableDeliveryDays(days)
 
         if (availableDeliveryDays && availableDeliveryDays[deliveryDate] && !availableDeliveryDays[deliveryDate].alternateDeliveryDay) {
