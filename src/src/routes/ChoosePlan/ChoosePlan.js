@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
 import { Button, Alert } from 'goustouicomponents'
@@ -32,64 +32,76 @@ const flexOption = {
 
 const propTypes = {
   choosePlanContinue: PropTypes.func,
-  extrasIncluded: PropTypes.bool,
+  extrasIncluded: PropTypes.bool
 }
 
-const ChoosePlan = ({ choosePlanContinue, extrasIncluded }) => (
-  <div className={css.choosePlanPage}>
-    <Helmet
-      style={[
-        {
-          cssText: `
+class ChoosePlan extends PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = {}
+  }
+
+  render() {
+    const { choosePlanContinue, extrasIncluded } = this.props
+
+    return (
+      <div className={css.choosePlanPage}>
+        <Helmet
+          style={[
+            {
+              cssText: `
           #react-root {
             height: 100%;
           }
         `
-        }
-      ]}
-    />
-    <div className={css.choosePlanWrapper}>
-      <h1 className={css.title}>Your Gousto plan</h1>
-      <p className={css.subtitle}>
-        Get a box delivered every week at a discounted price, or try a one-off
-        box.
-      </p>
-      <PlanOption
-        title={subOption.title}
-        totalPrice={subOption.totalPrice}
-        totalPriceDiscounted={subOption.totalPriceDiscounted}
-        pricePerPortion={subOption.pricePerPortion}
-        priceBoxTypeMessage={subOption.priceBoxTypeMessage}
-        benefits={subOption.benefits}
-        showExclExtras={extrasIncluded}
-        handleSelect={
-          () => console.log('Option 1 clicked!') /*eslint-disable-line*/
-        }
-      />
-      <PlanOption
-        selected
-        title={flexOption.title}
-        totalPrice={flexOption.totalPrice}
-        pricePerPortion={flexOption.pricePerPortion}
-        priceBoxTypeMessage={flexOption.priceBoxTypeMessage}
-        benefits={flexOption.benefits}
-        showExclExtras={extrasIncluded}
-        handleSelect={
-          () => console.log('Hi, you clicked Option 2') /*eslint-disable-line*/
-        }
-      />
-      {
-        extrasIncluded &&
-        <Alert type="info">
-          The prices shown above don&#39;t include optional extras, such as premium delivery or premium recipe surcharges.
-        </Alert>
-      }
-      <Button onClick={choosePlanContinue} width="full">
-        Continue
-      </Button>
-    </div>
-  </div>
-)
+            }
+          ]}
+        />
+        <div className={css.choosePlanWrapper}>
+          <h1 className={css.title}>Your Gousto plan</h1>
+          <p className={css.subtitle}>
+            Get a box delivered every week at a discounted price, or try a
+            one-off box.
+          </p>
+          <PlanOption
+            title={subOption.title}
+            totalPrice={subOption.totalPrice}
+            totalPriceDiscounted={subOption.totalPriceDiscounted}
+            pricePerPortion={subOption.pricePerPortion}
+            priceBoxTypeMessage={subOption.priceBoxTypeMessage}
+            benefits={subOption.benefits}
+            showExclExtras={extrasIncluded}
+            handleSelect={
+              () => console.log('Option 1 clicked!') /*eslint-disable-line*/
+            }
+          />
+          <PlanOption
+            selected
+            title={flexOption.title}
+            totalPrice={flexOption.totalPrice}
+            pricePerPortion={flexOption.pricePerPortion}
+            priceBoxTypeMessage={flexOption.priceBoxTypeMessage}
+            benefits={flexOption.benefits}
+            showExclExtras={extrasIncluded}
+            handleSelect={
+              () =>
+                console.log('Hi, you clicked Option 2') /*eslint-disable-line*/
+            }
+          />
+          {extrasIncluded && (
+            <Alert type="info">
+              The prices shown above don&#39;t include optional extras, such as
+              premium delivery or premium recipe surcharges.
+            </Alert>
+          )}
+          <Button onClick={choosePlanContinue} width="full">
+            Continue
+          </Button>
+        </div>
+      </div>
+    )
+  }
+}
 
 ChoosePlan.propTypes = propTypes
 
