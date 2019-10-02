@@ -43,10 +43,9 @@ class ChoosePlan extends PureComponent {
           ]}
         />
         <div className={css.choosePlanWrapper}>
-          <h1 className={css.title}>Your Gousto plan</h1>
+          <h1 className={css.title}>Your Gousto subscription</h1>
             <p className={css.subtitle}>
-              Get a box delivered every week at a discounted price, or try a
-              one-off box.
+              Get a weekly box delivered at a discount or try a one-off box without a subscription
             </p>
             { isLoading ? (
             <div className={css.loadingContainer}>
