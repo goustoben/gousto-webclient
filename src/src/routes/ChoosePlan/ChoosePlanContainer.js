@@ -1,21 +1,23 @@
 import { connect } from 'react-redux'
 import { choosePlanContinue } from 'actions/choosePlan'
 import pricingActions from 'actions/pricing'
-import { getRecipeTotal, getLoading } from 'selectors/pricing'
+import { getLoading, areExtrasIncluded, getSubscriptionOptionsPrices } from 'selectors/pricing'
 import { ChoosePlan } from './ChoosePlan'
+import { subscription, transactional } from './config'
 
 const mapStateToProps = state => {
+  const isLoading = getLoading(state)
+  const [subscriptionPrices, transactionalPrices] = getSubscriptionOptionsPrices(state)
 
-const mapStateToProps = () => {
-  const surchargeTotal = '5.99'
-  const deliveryTotal = '2.99'
-  const grossTotal = '40.73'
-  const recipeTotal = '31.75'
-  const recipeTotal = getRecipeTotal(state)
+  const subscriptionOption = { ...subscription, ...subscriptionPrices}
+  const transactionalOption = { ...transactional, ...transactionalPrices}
+  const extrasIncluded = areExtrasIncluded(state)
 
   return {
-    isLoading: getLoading(state) || !recipeTotal,
-    extrasIncluded: surchargeTotal || deliveryTotal || grossTotal !== recipeTotal,
+    isLoading,
+    subscriptionOption,
+    transactionalOption,
+    extrasIncluded
   }
 }
 

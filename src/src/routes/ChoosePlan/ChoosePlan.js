@@ -6,31 +6,6 @@ import Loading from 'Loading'
 import { PlanOption } from './PlanOption'
 import css from './ChoosePlan.css'
 
-const subOption = {
-  title: 'A box a week',
-  totalPrice: '47.75',
-  totalPriceDiscounted: '23.88',
-  pricePerPortion: '2.98',
-  priceBoxTypeMessage: 'For first box',
-  benefits: [
-    'Choose 4 recipes for 2 each week',
-    'Cancel or pause online at any time',
-    '50% off first box + 30% off all boxes in the first month',
-    'Surprise gifts!'
-  ]
-}
-
-const flexOption = {
-  title: 'One-off box',
-  totalPrice: '47.75',
-  pricePerPortion: '5.97',
-  priceBoxTypeMessage: 'For one box',
-  benefits: [
-    'Choose  a single box of 4 recipes for 2 people',
-    'One off price, no weekly plan'
-  ]
-}
-
 class ChoosePlan extends PureComponent {
   constructor(props) {
     super(props)
@@ -42,6 +17,8 @@ class ChoosePlan extends PureComponent {
     extrasIncluded: PropTypes.bool,
     pricingRequest: PropTypes.func,
     isLoading: PropTypes.bool,
+    subscriptionOption: PropTypes.object,
+    transactionalOption: PropTypes.object
   }
 
   componentDidMount() {
@@ -50,7 +27,7 @@ class ChoosePlan extends PureComponent {
   }
 
   render() {
-    const { choosePlanContinue, extrasIncluded, isLoading } = this.props
+    const { choosePlanContinue, isLoading, subscriptionOption, transactionalOption, extrasIncluded } = this.props
 
     return (
       <div className={css.choosePlanPage}>
@@ -78,12 +55,12 @@ class ChoosePlan extends PureComponent {
             ) : (
             <div>
               <PlanOption
-                title={subOption.title}
-                totalPrice={subOption.totalPrice}
-                totalPriceDiscounted={subOption.totalPriceDiscounted}
-                pricePerPortion={subOption.pricePerPortion}
-                priceBoxTypeMessage={subOption.priceBoxTypeMessage}
-                benefits={subOption.benefits}
+                title={subscriptionOption.title}
+                totalPrice={subscriptionOption.totalPrice}
+                totalPriceDiscounted={subscriptionOption.totalPriceDiscounted}
+                pricePerPortion={subscriptionOption.pricePerPortion}
+                priceBoxTypeMessage={subscriptionOption.priceBoxTypeMessage}
+                benefits={subscriptionOption.benefits}
                 showExclExtras={extrasIncluded}
                 handleSelect={
                   () => console.log('Option 1 clicked!') /*eslint-disable-line*/
@@ -91,11 +68,11 @@ class ChoosePlan extends PureComponent {
               />
               <PlanOption
                 selected
-                title={flexOption.title}
-                totalPrice={flexOption.totalPrice}
-                pricePerPortion={flexOption.pricePerPortion}
-                priceBoxTypeMessage={flexOption.priceBoxTypeMessage}
-                benefits={flexOption.benefits}
+                title={transactionalOption.title}
+                totalPrice={transactionalOption.totalPrice}
+                pricePerPortion={transactionalOption.pricePerPortion}
+                priceBoxTypeMessage={transactionalOption.priceBoxTypeMessage}
+                benefits={transactionalOption.benefits}
                 showExclExtras={extrasIncluded}
                 handleSelect={
                   () =>
