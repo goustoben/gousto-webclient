@@ -12,7 +12,7 @@
 
 .containerSelected {
   background-color: HaricotLight;
-  border: none;
+  border-color: HaricotLight;
 }
 
 .radioContainer {
