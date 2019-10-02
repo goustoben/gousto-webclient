@@ -103,7 +103,6 @@ const actions = {
 
         if (isNDDExperiment) {
           days = transformDaySlotLeadTimesToMockSlots(days)
-
         }
 
         const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom)

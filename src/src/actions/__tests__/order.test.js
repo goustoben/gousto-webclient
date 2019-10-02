@@ -22,9 +22,7 @@ jest.mock('actions/orderConfirmation')
 jest.mock('actions/status')
 jest.mock('apis/user')
 jest.mock('utils/basket')
-
 jest.mock('utils/deliveries')
-
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
     data: [{id: 1}]
