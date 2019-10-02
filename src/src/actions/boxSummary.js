@@ -82,13 +82,17 @@ const actions = {
       const cutoffUntil = cutoffDatetimeUntil
         ? moment.utc(cutoffDatetimeUntil).endOf('day').toISOString()
         : getState().menuCutoffUntil
+
+      const isNDDExperiment = isNDDFeatureEnabled(getState())
+
       const reqData = {
         'filters[cutoff_datetime_from]': moment.utc(cutoffDatetimeFrom).startOf('day').toISOString(),
         'filters[cutoff_datetime_until]': cutoffUntil,
         sort: 'date',
         direction: 'asc',
-        ndd: isNDDFeatureEnabled(getState()) ? 'true' : 'false',
+        ndd: isNDDExperiment ? 'true' : 'false',
       }
+
       if (postcode) {
         reqData.postcode = postcode
       }
@@ -96,7 +100,12 @@ const actions = {
       const accessToken = getState().auth.get('accessToken')
       try {
         let { data: days } = await fetchDeliveryDays(accessToken, reqData)
-        days = transformDaySlotLeadTimesToMockSlots(days)
+
+        if (isNDDExperiment) {
+          days = transformDaySlotLeadTimesToMockSlots(days)
+
+        }
+
         const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom)
 
         dispatch(basketDeliveryDaysReceive(availableDeliveryDays))

@@ -1,15 +1,15 @@
 import Immutable from 'immutable'
 
 import React from 'react'
-import { shallow } from 'enzyme'
+import {shallow} from 'enzyme'
 import moment from 'moment'
 
 import Address from 'routes/Checkout/Components/Address/Address'
-import { Button } from 'goustouicomponents'
+import {Button} from 'goustouicomponents'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 import AddressInputs from 'routes/Checkout/Components/Address/AddressInputs'
-import { fetchDeliveryDays } from 'apis/deliveries'
-import { getAvailableDeliveryDays } from 'utils/deliveries'
+import {fetchDeliveryDays} from 'apis/deliveries'
+import {getAvailableDeliveryDays} from 'utils/deliveries'
 
 jest.mock('apis/deliveries')
 jest.mock('utils/deliveries')
@@ -87,7 +87,9 @@ describe('Address', () => {
       const fetchedDays = {data: [{id: '4'}, {id: '5'}, {id: '6'}]}
 
       fetchDeliveryDays.mockReturnValue(
-        new Promise((resolve, reject) => { resolve(fetchedDays) })
+        new Promise((resolve, reject) => {
+          resolve(fetchedDays)
+        })
       )
 
       getAvailableDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
