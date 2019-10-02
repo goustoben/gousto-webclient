@@ -406,3 +406,30 @@ export function getAvailableDeliveryDays(deliveryDays, cutoffDatetimeFrom) {
 
   return availableDeliveryDays.reduce((daysMap, day) => ({ ...daysMap, [day.date]: day }), {})
 }
+
+export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
+  return daysWithDSLTs.map(dayWithDSLTs => {
+    const {id, date, isDefault, coreDayId, unavailableReason, alternateDeliveryDay} = dayWithDSLTs
+
+    return {
+      id,
+      date,
+      isDefault,
+      coreDayId,
+      unavailableReason,
+      alternateDeliveryDay,
+      slots: dayWithDSLTs.daySlotLeadTimes.map(dslt => ({
+        whenCutoff: dslt.shouldCutoffAt,
+        // cutoffDay - not used?
+        deliveryEndTime: dslt.endTime,
+        deliveryPrice: dslt.deliveryPrice,
+        isDefault: dslt.isSlotDefault,
+        coreSlotId: dslt.coreSlotId,
+        // cutoffTime - not used?
+        deliveryStartTime: dslt.startTime,
+        id: dslt.slotId
+        // defaultDay - not used?
+      }))
+    }
+  })
+}
