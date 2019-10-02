@@ -5,15 +5,16 @@ import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import * as deliveryUtils from 'utils/deliveries'
 import { addDisabledSlotIds } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
+import { isNDDFeatureEnabled } from 'selectors/features'
 import status from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import {
-  basketDateChange,
-  basketSlotChange,
-  basketRecipeRemove,
-  portionSizeSelectedTracking,
   basketAddressChange,
-  basketPostcodeChange
+  basketDateChange,
+  basketPostcodeChange,
+  basketRecipeRemove,
+  basketSlotChange,
+  portionSizeSelectedTracking
 } from './basket'
 import actionTypes from './actionTypes'
 
@@ -82,10 +83,12 @@ const actions = {
         'filters[cutoff_datetime_until]': cutoffUntil,
         sort: 'date',
         direction: 'asc',
+        ndd: isNDDFeatureEnabled(getState()) ? 'true' : 'false',
       }
       if (postcode) {
         reqData.postcode = postcode
       }
+
       const accessToken = getState().auth.get('accessToken')
       try {
         const { data: days } = await fetchDeliveryDays(accessToken, reqData)
