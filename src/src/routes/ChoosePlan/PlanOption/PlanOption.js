@@ -13,6 +13,7 @@ const propTypes = {
   totalPriceDiscounted: PropTypes.string,
   pricePerPortion: PropTypes.string,
   priceBoxTypeMessage: PropTypes.string,
+  showExclExtras: PropTypes.bool,
   benefits: PropTypes.arrayOf(PropTypes.string)
 }
 
@@ -24,7 +25,8 @@ const PlanOption = ({
   totalPriceDiscounted,
   pricePerPortion,
   priceBoxTypeMessage,
-  benefits
+  showExclExtras,
+  benefits,
 }) => {
   return (
     <label
@@ -55,12 +57,12 @@ const PlanOption = ({
         {!totalPriceDiscounted ? (
           <span className={css.totalPrice}>£{totalPrice}</span>
         ) : (
-          <span className={css.totalPriceDiscounted}>
-            <s className={css.totalPrice}>£{totalPrice}</s>£
+            <span className={css.totalPriceDiscounted}>
+              <s className={css.totalPrice}>£{totalPrice}</s>£
             {totalPriceDiscounted}
-          </span>
+            </span>
         )}
-        <span className={css.exclExtras}>excl. extras</span>
+        {showExclExtras && <span className={css.exclExtras}>excl. extras</span>}
       </div>
       <p className={css.priceMessage}>{priceBoxTypeMessage}</p>
       <p className={css.priceMessage}>

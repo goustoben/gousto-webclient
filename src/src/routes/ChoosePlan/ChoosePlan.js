@@ -1,7 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
-import { Button } from 'goustouicomponents'
+import { Button, Alert } from 'goustouicomponents'
 import { PlanOption } from './PlanOption'
 import css from './ChoosePlan.css'
 
@@ -28,14 +28,14 @@ const flexOption = {
     'Choose  a single box of 4 recipes for 2 people',
     'One off price, no weekly plan'
   ]
-
 }
 
 const propTypes = {
-  choosePlanContinue: PropTypes.func
+  choosePlanContinue: PropTypes.func,
+  extrasIncluded: PropTypes.bool,
 }
 
-const ChoosePlan = ({ choosePlanContinue }) => (
+const ChoosePlan = ({ choosePlanContinue, extrasIncluded }) => (
   <div className={css.choosePlanPage}>
     <Helmet
       style={[
@@ -61,6 +61,7 @@ const ChoosePlan = ({ choosePlanContinue }) => (
         pricePerPortion={subOption.pricePerPortion}
         priceBoxTypeMessage={subOption.priceBoxTypeMessage}
         benefits={subOption.benefits}
+        showExclExtras={extrasIncluded}
         handleSelect={
           () => console.log('Option 1 clicked!') /*eslint-disable-line*/
         }
@@ -72,10 +73,17 @@ const ChoosePlan = ({ choosePlanContinue }) => (
         pricePerPortion={flexOption.pricePerPortion}
         priceBoxTypeMessage={flexOption.priceBoxTypeMessage}
         benefits={flexOption.benefits}
+        showExclExtras={extrasIncluded}
         handleSelect={
           () => console.log('Hi, you clicked Option 2') /*eslint-disable-line*/
         }
       />
+      {
+        extrasIncluded &&
+        <Alert type="info">
+          The prices shown above don&#39;t include optional extras, such as premium delivery or premium recipe surcharges.
+        </Alert>
+      }
       <Button onClick={choosePlanContinue} width="full">
         Continue
       </Button>
