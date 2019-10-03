@@ -1,23 +1,39 @@
+const getProtocol = (service, isServerSide, environment) => {
+  if (service === 'webclient') {
+    if (isServerSide) {
+      return 'http'
+    }
+
+    return 'https'
+  } else {
+    if (environment === 'local') {
+      return 'http'
+    } else {
+      if (isServerSide) {
+        return 'http'
+      } else {
+        return 'https'
+      }
+    }
+  }
+}
+
 function endpoint(service, version = '') {
-  let protocol
+  const protocol = getProtocol(service, __SERVER__, __ENV__)
   let domain
 
   if (service === 'webclient') {
-    protocol = __CLIENT_PROTOCOL__
     domain = `${__ENV__}-${service}.${__DOMAIN__}`
     if (__SERVER__) {
-      protocol = 'http'
     } else if (__ENV__ === 'production') {
       domain = `www.${__DOMAIN__}`
     }
   } else {
     if (__ENV__ !== 'local') {
       if (__SERVER__) {
-        protocol = 'http'
         domain = `${__ENV__}-${service}`
         domain += `.${__DOMAIN__}`
       } else {
-        protocol = __CLIENT_PROTOCOL__
         domain = `${__ENV__}-api.${__DOMAIN__}`
         if (service !== 'core') {
           domain += `/${service}`
@@ -27,8 +43,6 @@ function endpoint(service, version = '') {
         }
       }
     } else {
-      protocol = 'http'
-
       if (service === 'core') {
         if (__CLIENT__) {
           domain = `api.${__DOMAIN__}`
