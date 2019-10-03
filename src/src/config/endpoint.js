@@ -44,33 +44,33 @@ const getPort = (service, environment, isClientSide) => {
   return ':80'
 }
 
-function endpoint(service, version = '') {
-  const protocol = getProtocol(service, __SERVER__, __ENV__)
-  const path = getPath(service, __SERVER__, __ENV__, version)
-  const port = getPort(service, __ENV__, __CLIENT__)
-  let domain
-
+const getSubdomain = (service, isServerSide, environment) => {
   if (service === 'webclient') {
-    domain = `${__ENV__}-${service}.${__DOMAIN__}`
-    if (!__SERVER__ && __ENV__ === 'production') {
-      domain = `www.${__DOMAIN__}`
+    if (!isServerSide && environment === 'production') {
+      return 'www'
     }
-  } else {
-    if (__ENV__ !== 'local') {
-      if (__SERVER__) {
-        domain = `${__ENV__}-${service}`
-        domain += `.${__DOMAIN__}`
-      } else {
-        domain = `${__ENV__}-api.${__DOMAIN__}`
-      }
-    } else {
-      domain = `api.${__DOMAIN__}`
-    }
+
+    return `${environment}-${service}`
   }
 
-  const url = `${protocol}://${domain}${port}${path}`
+  if (environment === 'local') {
+    return 'api'
+  }
 
-  return url
+  if (isServerSide) {
+    return `${environment}-${service}`
+  }
+
+  return `${environment}-api`
+}
+
+function endpoint(service, version = '') {
+  const protocol = getProtocol(service, __SERVER__, __ENV__)
+  const subdomain = getSubdomain(service, __SERVER__, __ENV__)
+  const path = getPath(service, __SERVER__, __ENV__, version)
+  const port = getPort(service, __ENV__, __CLIENT__)
+
+  return `${protocol}://${subdomain}.${__DOMAIN__}${port}${path}`
 }
 
 export default endpoint
