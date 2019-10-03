@@ -17,8 +17,31 @@ class ChoosePlan extends PureComponent {
     extrasIncluded: PropTypes.bool,
     pricingRequest: PropTypes.func,
     isLoading: PropTypes.bool,
-    subscriptionOption: PropTypes.object,
-    transactionalOption: PropTypes.object
+    subscriptionOption: PropTypes.shape({
+      title: PropTypes.string,
+      totalPrice: PropTypes.string,
+      totalPriceDiscounted: PropTypes.string,
+      pricePerPortion: PropTypes.string,
+      pricePerPortionDiscounted: PropTypes.string,
+      priceBoxTypeMessage: PropTypes.string,
+      benefits: PropTypes.array,
+
+    }),
+    transactionalOption: PropTypes.shape({
+      title: PropTypes.string,
+      totalPrice: PropTypes.string,
+      totalPriceDiscounted: PropTypes.string,
+      pricePerPortion: PropTypes.string,
+      pricePerPortionDiscounted: PropTypes.string,
+      priceBoxTypeMessage: PropTypes.string,
+      benefits: PropTypes.array,
+    })
+  }
+
+  static defaultProps = {
+    choosePlanContinue: () => {},
+    subscriptionOption: {},
+    transactionalOption: {}
   }
 
   componentDidMount() {
@@ -69,6 +92,7 @@ class ChoosePlan extends PureComponent {
                 selected
                 title={transactionalOption.title}
                 totalPrice={transactionalOption.totalPrice}
+                totalPriceDiscounted={transactionalOption.totalPriceDiscounted}
                 pricePerPortion={transactionalOption.pricePerPortion}
                 priceBoxTypeMessage={transactionalOption.priceBoxTypeMessage}
                 benefits={transactionalOption.benefits}
