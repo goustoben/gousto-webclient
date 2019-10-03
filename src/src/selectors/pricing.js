@@ -27,23 +27,15 @@ export const areExtrasIncluded = state => {
   return isSurcharge || isDeliveryCost || isOtherCost
 }
 
-export const getSubscriptionOptionsPrices = state => {
+export const getSubscriptionOptionPrices = state => {
 
   const recipeTotal = getRecipeTotal(state)
   const recipeTotalDiscounted = getRecipeTotalDiscounted(state)
-  const pricePerPortion = getPricePerPortion(state)
   const pricePerPortionDiscounted = getPricePerPortionDiscounted(state)
 
-  const subscriptionOption = {
+  return {
     totalPrice:recipeTotal,
     totalPriceDiscounted: recipeTotalDiscounted,
     pricePerPortion: pricePerPortionDiscounted
   }
-
-  const transactionalOption = {
-    totalPrice:recipeTotal,
-    pricePerPortion
-  }
-
-  return [subscriptionOption, transactionalOption]
 }

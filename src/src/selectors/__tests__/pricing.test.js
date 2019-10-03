@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { areExtrasIncluded, getSubscriptionOptionsPrices } from '../pricing'
+import { areExtrasIncluded, getSubscriptionOptionPrices } from '../pricing'
 describe('Pricing selectors', () => {
 
   describe('areExtrasIncluded', () => {
@@ -76,23 +76,13 @@ describe('Pricing selectors', () => {
     }
 
     test('should return the transformed pricing fields for the subscription option', () => {
-
       const subscriptionOption = {
         totalPrice: '25.00',
         totalPriceDiscounted: '15.00',
         pricePerPortion: '1.00'
       }
 
-      expect(getSubscriptionOptionsPrices(mockState)[0]).toEqual(subscriptionOption)
-    })
-
-    test('should return the transformed pricing fields for the transactional option', () => {
-      const transactionalOption = {
-        totalPrice: '25.00',
-        pricePerPortion: '1.50'
-      }
-
-      expect(getSubscriptionOptionsPrices(mockState)[1]).toEqual(transactionalOption)
+      expect(getSubscriptionOptionPrices(mockState)).toEqual(subscriptionOption)
     })
 
     test('should return an empty object if state is empty', () => {
@@ -102,7 +92,7 @@ describe('Pricing selectors', () => {
         })
       }
 
-      expect(getSubscriptionOptionsPrices(emptyState)[1]).toEqual({})
+      expect(getSubscriptionOptionPrices(emptyState)).toEqual({})
     })
   })
 })
