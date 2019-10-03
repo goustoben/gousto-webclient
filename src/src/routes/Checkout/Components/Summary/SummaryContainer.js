@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { isShowNoDiscountCTAFeatureEnabled } from 'selectors/features'
+import { isShowNoDiscountCTAFeatureEnabled, isChoosePlanEnabled } from 'selectors/features'
 import { getPromoCode } from 'selectors/basket'
 import promoActions from 'actions/promos'
 import Summary from './Summary'
@@ -14,6 +14,7 @@ function mapStateToProps(state) {
     browser: state.request.get('browser'),
     routing: state.routing,
     showNoDiscountCTA: isShowNoDiscountCTAFeatureEnabled(state),
+    showAddPromocode: !isChoosePlanEnabled(state),
     promoCode: getPromoCode(state),
   }
 }
