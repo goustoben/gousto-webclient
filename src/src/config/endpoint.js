@@ -1,21 +1,13 @@
 const getProtocol = (service, isServerSide, environment) => {
-  if (service === 'webclient') {
-    if (isServerSide) {
-      return 'http'
-    }
-
-    return 'https'
-  } else {
-    if (environment === 'local') {
-      return 'http'
-    } else {
-      if (isServerSide) {
-        return 'http'
-      } else {
-        return 'https'
-      }
-    }
+  if (isServerSide) {
+    return 'http'
   }
+
+  if (service === 'webclient' || environment !== 'local') {
+    return 'https'
+  }
+
+  return 'http'
 }
 
 function endpoint(service, version = '') {
