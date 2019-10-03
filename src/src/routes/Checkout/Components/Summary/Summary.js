@@ -23,6 +23,7 @@ class Summary extends React.PureComponent {
     routing: PropTypes.object,
     isLoading: PropTypes.bool,
     showNoDiscountCTA: PropTypes.bool,
+    showAddPromocode: PropTypes.bool,
     promoCode: PropTypes.string,
     promoApplyCheckoutCode: PropTypes.func,
   }
@@ -34,6 +35,7 @@ class Summary extends React.PureComponent {
     slotId: '',
     showPromocode: false,
     loadingPreviewOrder: false,
+    showAddPromocode: true,
   }
 
   renderLink() {
@@ -62,7 +64,7 @@ class Summary extends React.PureComponent {
   }
 
   render() {
-    const { prices, basketRecipes, browser, isLoading, routing } = this.props
+    const { prices, basketRecipes, browser, isLoading, routing, showAddPromocode } = this.props
     const numRecipes = basketSum(basketRecipes)
 
     const isMobile = browser === 'mobile'
@@ -101,7 +103,7 @@ class Summary extends React.PureComponent {
                 recipeDiscountAmount={prices.get('recipeDiscount')}
                 recipeDiscountPercent={prices.get('percentageOff')}
                 extrasTotalPrice={prices.get('productTotal')}
-                showAddPromocode
+                showAddPromocode={showAddPromocode}
               />
               <div>
                 {(currentStep !== 'payment') &&
