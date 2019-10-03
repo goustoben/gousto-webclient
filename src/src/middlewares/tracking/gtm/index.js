@@ -1,0 +1,1 @@
+export { gtmMiddleware } from './gtm'
