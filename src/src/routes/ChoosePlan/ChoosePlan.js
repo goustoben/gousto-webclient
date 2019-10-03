@@ -24,7 +24,7 @@ class ChoosePlan extends PureComponent {
       pricePerPortion: PropTypes.string,
       pricePerPortionDiscounted: PropTypes.string,
       priceBoxTypeMessage: PropTypes.string,
-      benefits: PropTypes.array,
+      benefits: PropTypes.arrayOf(PropTypes.string),
 
     }),
     transactionalOption: PropTypes.shape({
@@ -34,7 +34,7 @@ class ChoosePlan extends PureComponent {
       pricePerPortion: PropTypes.string,
       pricePerPortionDiscounted: PropTypes.string,
       priceBoxTypeMessage: PropTypes.string,
-      benefits: PropTypes.array,
+      benefits: PropTypes.arrayOf(PropTypes.string),
     })
   }
 
