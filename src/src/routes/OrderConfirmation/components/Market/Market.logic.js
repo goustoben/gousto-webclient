@@ -7,6 +7,11 @@ import { MarketPresentation } from './Market.presentation'
 const propTypes = {
   ageVerified: PropTypes.bool,
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
+  categoriesForNavBar: PropTypes.objectOf(PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
+    count: PropTypes.number,
+  })).isRequired,
   filterProductCategory: PropTypes.func.isRequired,
   isOrderConfirmation: PropTypes.bool,
   onSave: PropTypes.func.isRequired,
@@ -41,34 +46,6 @@ class Market extends PureComponent {
   state = {
     filteredProducts: null,
     isOrderSummaryOpen: false,
-  }
-
-  getCategories = () => {
-    const { products } = this.props
-    const uniqueCategories = []
-    const allProducts = [{ id: 'all-products', label: 'All Products' }]
-
-    if (!products) return allProducts
-
-    allProducts[0].count = Object.keys(products).length
-
-    return Object.keys(products).reduce((categoryProducts, productId) => {
-      const productCategories = products[productId].categories
-
-      productCategories && productCategories.map(category => {
-        const duplicateCategory = uniqueCategories.includes(category.id)
-        if (!category.hidden && !duplicateCategory) {
-          const newCategory = {
-            id: category.id,
-            label: category.title
-          }
-          categoryProducts.push(newCategory)
-          uniqueCategories.push(category.id)
-        }
-      })
-
-      return categoryProducts
-    }, allProducts)
   }
 
   getFilteredProducts = (chosenCategory) => {
@@ -116,6 +93,7 @@ class Market extends PureComponent {
     const {
       ageVerified,
       basket,
+      categoriesForNavBar,
       products,
       productsCategories,
       productsLoadError,
@@ -127,13 +105,12 @@ class Market extends PureComponent {
       toggleAgeVerificationPopUp,
     } = this.props
     const { filteredProducts, isOrderSummaryOpen } = this.state
-    const categories = this.getCategories()
 
     return (
       <MarketPresentation
         ageVerified={ageVerified}
         basket={basket}
-        categories={categories}
+        categoriesForNavBar={categoriesForNavBar}
         filteredProducts={filteredProducts}
         getFilteredProducts={this.getFilteredProducts}
         isOrderSummaryOpen={isOrderSummaryOpen}

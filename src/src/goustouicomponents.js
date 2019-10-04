@@ -2,6 +2,8 @@ export {
   Alert,
   Button,
   Control,
+  CollectionsNavigation,
+  CollectionsNavigationItem,
   Dropdown,
   ExtraInfo,
   ExtraInfoMain,

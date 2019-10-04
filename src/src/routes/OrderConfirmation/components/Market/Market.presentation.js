@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Immutable from 'immutable'
 
-import { Alert, Dropdown } from 'goustouicomponents'
+import { Alert } from 'goustouicomponents'
 import config from 'config/products'
 import Overlay from 'Overlay'
 import CloseButton from 'Overlay/CloseButton'
 import SaveButton from 'OrderSummary/SaveButton'
-import { Navbar } from '../Navbar'
+import { ProductsNavBar } from '../ProductsNavBar'
 import OrderSummaryContainer from '../OrderSummary/OrderSummaryContainer'
 import { ProductList } from '../ProductList'
 import { ReferAFriend } from '../ReferAFriend'
@@ -18,12 +18,11 @@ import css from './Market.css'
 const propTypes = {
   ageVerified: PropTypes.bool,
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
-  categories: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      label: PropTypes.string,
-    })
-  ).isRequired,
+  categoriesForNavBar: PropTypes.objectOf(PropTypes.shape({
+    id: PropTypes.string,
+    label: PropTypes.string,
+    count: PropTypes.number,
+  })).isRequired,
   filteredProducts: PropTypes.objectOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -70,7 +69,7 @@ const defaultProps = {
 const MarketPresentation = ({
   ageVerified,
   basket,
-  categories,
+  categoriesForNavBar,
   filteredProducts,
   getFilteredProducts,
   isOrderSummaryOpen,
@@ -88,24 +87,10 @@ const MarketPresentation = ({
 }) => (
   <div className={css.marketPlaceWrapper}>
     {!productsLoadError && (
-      <div>
-        <div className={css.navbar}>
-          <Navbar
-            items={categories}
-            onClick={getFilteredProducts}
-            active={selectedCategory}
-          />
-        </div>
-        <div className={css.dropdown}>
-          <Dropdown
-            id='product-filter'
-            options={categories}
-            groupedOptions={[]}
-            optionSelected={selectedCategory}
-            onChange={getFilteredProducts}
-          />
-        </div>
-      </div>
+      <ProductsNavBar
+        categories={categoriesForNavBar}
+        onSelectCategory={getFilteredProducts}
+      />
     )}
     <div className={css.marketPlaceContent}>
       <section
