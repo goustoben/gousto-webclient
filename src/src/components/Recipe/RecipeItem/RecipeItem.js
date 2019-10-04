@@ -30,7 +30,10 @@ RecipeItem.propTypes = {
   available: PropTypes.bool,
   url: PropTypes.string,
   showShortlistButton: PropTypes.bool,
-  onImageClick: PropTypes.func,
+  onImageClick: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.oneOf([false]),
+  ]),
   recipeId: PropTypes.string,
   fromBox: PropTypes.bool
 }
