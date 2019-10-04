@@ -25,7 +25,6 @@ const propTypes = {
       type: PropTypes.string,
     })
   ]),
-  productsCategories: PropTypes.instanceOf(Immutable.List),
   ageVerified: PropTypes.bool,
   ageVerificationPendingId: PropTypes.string,
   ageVerificationPending: PropTypes.bool,
