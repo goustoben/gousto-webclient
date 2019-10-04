@@ -1,4 +1,4 @@
-export const getSurchargeTotal = ({ pricing }) => pricing.getIn(['prices','surchargeTotal'])
+import { createSelector } from 'reselect'
 
 export const getDeliveryTotal = ({ pricing }) => pricing.getIn(['prices','deliveryTotal'])
 
@@ -14,28 +14,22 @@ export const getPricePerPortionDiscounted = ({ pricing }) => pricing.getIn(['pri
 
 export const getLoading = ({ pricing }) => pricing.get('pending') || !getRecipeTotal({ pricing })
 
-export const areExtrasIncluded = state => {
-  const surchargeTotal = getSurchargeTotal(state)
-  const deliveryTotal = getDeliveryTotal(state)
-  const grossTotal = getGrossTotal(state)
-  const recipeTotal = getRecipeTotal(state)
+export const areExtrasIncluded = createSelector(
+  [getSurchargeTotal, getDeliveryTotal, getGrossTotal, getRecipeTotal],
+  (surchargeTotal, deliveryTotal, grossTotal, recipeTotal) => {
+    const isSurcharge = surchargeTotal && surchargeTotal !== '0.00'
+    const isDeliveryCost = deliveryTotal && deliveryTotal !== '0.00'
+    const isOtherCost = grossTotal != recipeTotal
 
-  const isSurcharge = surchargeTotal && surchargeTotal !== '0.00'
-  const isDeliveryCost = deliveryTotal && deliveryTotal !== '0.00'
-  const isOtherCost = grossTotal != recipeTotal
+    return isSurcharge || isDeliveryCost || isOtherCost
+  }
+)
 
-  return isSurcharge || isDeliveryCost || isOtherCost
-}
-
-export const getSubscriptionOptionPrices = state => {
-
-  const recipeTotal = getRecipeTotal(state)
-  const recipeTotalDiscounted = getRecipeTotalDiscounted(state)
-  const pricePerPortionDiscounted = getPricePerPortionDiscounted(state)
-
-  return {
-    totalPrice:recipeTotal,
+export const getSubscriptionOptionPrices = createSelector(
+  [getRecipeTotal, getRecipeTotalDiscounted, getPricePerPortionDiscounted],
+  (recipeTotal, recipeTotalDiscounted, pricePerPortionDiscounted) => ({
+    totalPrice: recipeTotal,
     totalPriceDiscounted: recipeTotalDiscounted,
     pricePerPortion: pricePerPortionDiscounted
-  }
-}
+  })
+)
