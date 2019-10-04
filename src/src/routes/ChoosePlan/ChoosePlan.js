@@ -7,20 +7,23 @@ import { PlanOption } from './PlanOption'
 import { subscription, transactional } from './config'
 import css from './ChoosePlan.css'
 
+const transactionalPromoCode = 'TEST-TRANS'
+
 class ChoosePlan extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      subscriptionPlan: null
+      subscriptionOption: null
     }
-  }
-
-  setSubscription(option) {
-    this.setState({ subscriptionPlan: option })
   }
 
   static propTypes = {
     choosePlanContinue: PropTypes.func,
+    clearTempPromoCode: PropTypes.func,
+    stashTempPromoCode: PropTypes.func,
+    trackSubscriptionOptionSelected: PropTypes.func,
+    promoCode: PropTypes.string,
+    tempPromoCode: PropTypes.string,
     extrasIncluded: PropTypes.bool,
     pricingRequest: PropTypes.func,
     isLoading: PropTypes.bool,
@@ -48,12 +51,35 @@ class ChoosePlan extends PureComponent {
     pricingRequest()
   }
 
-  render() {
-    const { choosePlanContinue, isLoading, subscriptionPrices, transactionalPrices, extrasIncluded } = this.props
-    const { subscriptionPlan } = this.state
+  setSubscription(option) {
+    const { trackSubscriptionOptionSelected } = this.props
+    this.setState({ subscriptionOption: option })
+    trackSubscriptionOptionSelected(option)
+  }
 
-    const subscriptionOption = { ...subscription, ...subscriptionPrices}
-    const transactionalOption = { ...transactional, ...transactionalPrices}
+  handleContinue() {
+    const { promoCode, tempPromoCode, choosePlanContinue, clearTempPromoCode, stashTempPromoCode } = this.props
+    const { subscriptionOption } = this.state
+    const subscriptionPromoCode = tempPromoCode || promoCode
+    let chosenPromoCode
+
+    if(subscriptionOption === 'transactional') {
+      chosenPromoCode = transactionalPromoCode
+      stashTempPromoCode(subscriptionPromoCode)
+    } else {
+      chosenPromoCode = subscriptionPromoCode
+      clearTempPromoCode()
+    }
+
+    choosePlanContinue(subscriptionOption, chosenPromoCode)
+  }
+
+  render() {
+    const { isLoading, subscriptionPrices, transactionalPrices, extrasIncluded } = this.props
+    const { subscriptionOption } = this.state
+
+    const subscriptionDetails = { ...subscription, ...subscriptionPrices}
+    const transactionalDetails = { ...transactional, ...transactionalPrices}
 
     return (
       <div className={css.choosePlanPage}>
@@ -80,26 +106,26 @@ class ChoosePlan extends PureComponent {
             ) : (
             <div>
               <PlanOption
-                selected={subscriptionPlan === 'subscription'}
-                title={subscriptionOption.title}
-                totalPrice={subscriptionOption.totalPrice}
-                totalPriceDiscounted={subscriptionOption.totalPriceDiscounted}
-                pricePerPortion={subscriptionOption.pricePerPortion}
-                priceBoxTypeMessage={subscriptionOption.priceBoxTypeMessage}
-                benefits={subscriptionOption.benefits}
+                selected={subscriptionOption === 'subscription'}
+                title={subscriptionDetails.title}
+                totalPrice={subscriptionDetails.totalPrice}
+                totalPriceDiscounted={subscriptionDetails.totalPriceDiscounted}
+                pricePerPortion={subscriptionDetails.pricePerPortion}
+                priceBoxTypeMessage={subscriptionDetails.priceBoxTypeMessage}
+                benefits={subscriptionDetails.benefits}
                 showExclExtras={extrasIncluded}
-                handleSelect={this.setSubscription('subscription')}
+                handleSelect={() => this.setSubscription('subscription')}
               />
               <PlanOption
-                selected={subscriptionPlan === 'transactional'}
-                title={transactionalOption.title}
-                totalPrice={transactionalOption.totalPrice}
-                totalPriceDiscounted={transactionalOption.totalPriceDiscounted}
-                pricePerPortion={transactionalOption.pricePerPortion}
-                priceBoxTypeMessage={transactionalOption.priceBoxTypeMessage}
-                benefits={transactionalOption.benefits}
+                selected={subscriptionOption === 'transactional'}
+                title={transactionalDetails.title}
+                totalPrice={transactionalDetails.totalPrice}
+                totalPriceDiscounted={transactionalDetails.totalPriceDiscounted}
+                pricePerPortion={transactionalDetails.pricePerPortion}
+                priceBoxTypeMessage={transactionalDetails.priceBoxTypeMessage}
+                benefits={transactionalDetails.benefits}
                 showExclExtras={extrasIncluded}
-                handleSelect={this.setSubscription('transactional')}
+                handleSelect={() => this.setSubscription('transactional')}
               />
               {extrasIncluded && (
                 <Alert type="info">
@@ -109,7 +135,11 @@ class ChoosePlan extends PureComponent {
               )}
             </div>
             )}
-          <Button onClick={choosePlanContinue} disabled={isLoading} width="full">
+          <Button
+            onClick={() => this.handleContinue()}
+            disabled={!subscriptionOption || isLoading}
+            width="full"
+          >
             Continue
           </Button>
         </div>
