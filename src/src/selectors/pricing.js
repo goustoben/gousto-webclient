@@ -1,16 +1,18 @@
 import { createSelector } from 'reselect'
 
-export const getDeliveryTotal = ({ pricing }) => pricing.getIn(['prices','deliveryTotal'])
+export const getSurchargeTotal = ({ pricing }) => pricing.getIn(['prices', 'surchargeTotal'])
 
-export const getGrossTotal = ({ pricing }) => pricing.getIn(['prices','grossTotal'])
+export const getDeliveryTotal = ({ pricing }) => pricing.getIn(['prices', 'deliveryTotal'])
 
-export const getRecipeTotal = ({ pricing }) => pricing.getIn(['prices','recipeTotal'])
+export const getGrossTotal = ({ pricing }) => pricing.getIn(['prices', 'grossTotal'])
 
-export const getRecipeTotalDiscounted = ({ pricing }) => pricing.getIn(['prices','recipeTotalDiscounted'])
+export const getRecipeTotal = ({ pricing }) => pricing.getIn(['prices', 'recipeTotal'])
 
-export const getPricePerPortion = ({ pricing }) => pricing.getIn(['prices','pricePerPortion'])
+export const getRecipeTotalDiscounted = ({ pricing }) => pricing.getIn(['prices', 'recipeTotalDiscounted'])
 
-export const getPricePerPortionDiscounted = ({ pricing }) => pricing.getIn(['prices','pricePerPortionDiscounted'])
+export const getPricePerPortion = ({ pricing }) => pricing.getIn(['prices', 'pricePerPortion'])
+
+export const getPricePerPortionDiscounted = ({ pricing }) => pricing.getIn(['prices', 'pricePerPortionDiscounted'])
 
 export const getLoading = ({ pricing }) => pricing.get('pending') || !getRecipeTotal({ pricing })
 
