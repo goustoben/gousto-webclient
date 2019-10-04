@@ -20,7 +20,11 @@ class MobileMenu extends React.PureComponent {
   }
 
   renderMenuItems = () => {
-    const { menuItems, promoCodeUrl, trackNavigationClick} = this.props
+    const {
+      menuItems,
+      promoCodeUrl,
+      trackNavigationClick
+    } = this.props
 
     return menuItems.map(menuItem => {
       const { isAuthenticated } = this.props
@@ -56,8 +60,18 @@ class MobileMenu extends React.PureComponent {
         )
       }
 
+      const openNewTab = menuItem.name === 'Help'
+
       return (
-        <Link to={menuItem.url} className={css.menuItem} key={menuItem.name} clientRouted={menuItem.clientRouted} tracking={() => trackNavigationClick(menuItem.tracking)}>
+        <Link
+          to={menuItem.url}
+          className={css.menuItem}
+          key={menuItem.name}
+          clientRouted={menuItem.clientRouted}
+          tracking={() => trackNavigationClick(menuItem.tracking)}
+          target={openNewTab ? '_blank' : null}
+          rel={openNewTab ? 'noopener noreferrer' : null}
+        >
           <li className={myGoustoMenuItem ? css.listElement : css.childListElement}>
             {menuItem.name}
           </li>

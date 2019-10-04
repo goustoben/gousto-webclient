@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import css from 'components/Footer/Footer.css'
-
+import routesConfig from 'config/routes'
 import Footer from 'Footer/Footer'
 
 describe('<Footer />', () => {
@@ -102,5 +102,24 @@ describe('<Footer />', () => {
     const wrapper = shallow(<Footer copyright />)
     // render Terms
     expect(wrapper.find('#copyright').length).toEqual(1)
+  })
+
+  describe('clicking the links', () => {
+    let wrapper
+    let helpLink
+
+    beforeEach(() => {
+      wrapper = shallow(<Footer />)
+      helpLink = wrapper.findWhere(n => n.prop('title') === 'Help')
+    })
+
+    test('opens the Help link into a new tab', () => {
+      expect(helpLink.prop('target')).toBe('_blank')
+    })
+
+    test('does not open other links in a new tab', () => {
+      const linksWithNewTab = wrapper.findWhere(n => n.prop('target') === '_blank')
+      expect(linksWithNewTab).toHaveLength(1)
+    })
   })
 })

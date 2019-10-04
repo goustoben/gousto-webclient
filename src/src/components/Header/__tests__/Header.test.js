@@ -11,6 +11,7 @@ import ExpiredBillingModal from 'ExpiredBillingModal'
 import DuplicateOrderModal from 'DuplicateOrderModal'
 import CookieBanner from 'CookieBanner'
 import contactConfig from 'config/company'
+import routesConfig from 'config/routes'
 
 jest.mock('Header/SimpleHeader', () => 'SimpleHeader')
 jest.mock('Modal/ModalPanel', () => 'ModalPanel')
@@ -279,7 +280,7 @@ describe('Header', () => {
         {
           "clientRouted": false,
           "name": "Help",
-          "url": "/help",
+          "url": routesConfig.zendesk.faqs,
           "tracking": "FAQNavigation Clicked",
         }
       ]
@@ -329,7 +330,7 @@ describe('Header', () => {
         {
           "clientRouted": false,
           "name": "Help",
-          "url": "/help",
+          "url": routesConfig.zendesk.faqs,
           "tracking": "FAQNavigation Clicked",
         }
       ]
@@ -427,6 +428,25 @@ describe('Header', () => {
       test('does not call the userLoadOrders function', () => {
         expect(loadUserOrdersMock).not.toHaveBeenCalled()
       })
+    })
+  })
+
+  describe('clicking the menu items', () => {
+    let helpLink
+    let wrapper
+
+    beforeEach(() => {
+      wrapper = shallow(<Header />)
+      helpLink = wrapper.findWhere(n => n.prop('to') === routesConfig.zendesk.faqs)
+    })
+
+    test('opens the Help link into a new tab', () => {
+      expect(helpLink.prop('target')).toBe('_blank')
+    })
+
+    test('does not open other links in a new tab', () => {
+      const linksWithNewTab = wrapper.findWhere(n => n.prop('target') === '_blank')
+      expect(linksWithNewTab).toHaveLength(1)
     })
   })
 })
