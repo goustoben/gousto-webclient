@@ -2,36 +2,23 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { ChoosePlan } from '../ChoosePlan'
 
-const mockSubOption = {
-  title: 'A box a week',
+const mockSubPrices = {
   totalPrice: '47.75',
   totalPriceDiscounted: '23.88',
   pricePerPortion: '2.98',
-  priceBoxTypeMessage: 'For first box',
-  benefits: [
-    'Choose 4 recipes for 2 each week',
-    'Cancel or pause online at any time',
-    '50% off first box + 30% off all boxes in the first month',
-    'Surprise gifts!'
-  ]
 }
 
-const mockTransOption = {
+const mockTransPrices = {
   title: 'One-off box',
   totalPrice: '47.75',
   pricePerPortion: '5.97',
-  priceBoxTypeMessage: 'For one box',
-  benefits: [
-    'Choose  a single box of 4 recipes for 2 people',
-    'One off price, no weekly plan'
-  ]
 }
 
 let wrapper
 
 describe('ChoosePlan', () => {
   beforeEach(() => {
-    wrapper = shallow(<ChoosePlan subscriptionOption={mockSubOption} transactionalOption={mockTransOption} pricingRequest={jest.fn()}/>)
+    wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} pricingRequest={jest.fn()}/>)
   })
   test('should render a title', () => {
     expect(wrapper.find('.title').length).toEqual(1)
@@ -59,13 +46,13 @@ describe('ChoosePlan', () => {
 
   describe('Surcharge message', () => {
     test('should render a message about surcharges if there are any premium recipes or delivery slots chosen ', () => {
-      wrapper = shallow(<ChoosePlan subscriptionOption={mockSubOption} transactionalOption={mockTransOption} pricingRequest={jest.fn()} extrasIncluded />)
+      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} pricingRequest={jest.fn()} extrasIncluded />)
 
       expect(wrapper.find('Alert').length).toEqual(1)
     })
 
     test('should NOT render a message about surcharges if there are no premium recipes or delivery slots chosen ', () => {
-      wrapper = shallow(<ChoosePlan subscriptionOption={mockSubOption} transactionalOption={mockTransOption} pricingRequest={jest.fn()} extrasIncluded={false} />)
+      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} pricingRequest={jest.fn()} extrasIncluded={false} />)
 
       expect(wrapper.find('Alert').length).toEqual(0)
     })

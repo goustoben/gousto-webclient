@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Button, Alert } from 'goustouicomponents'
 import Loading from 'Loading'
 import { PlanOption } from './PlanOption'
+import { subscription, transactional } from './config'
 import css from './ChoosePlan.css'
 
 class ChoosePlan extends PureComponent {
@@ -17,31 +18,23 @@ class ChoosePlan extends PureComponent {
     extrasIncluded: PropTypes.bool,
     pricingRequest: PropTypes.func,
     isLoading: PropTypes.bool,
-    subscriptionOption: PropTypes.shape({
-      title: PropTypes.string,
+    subscriptionPrices: PropTypes.shape({
       totalPrice: PropTypes.string,
       totalPriceDiscounted: PropTypes.string,
       pricePerPortion: PropTypes.string,
-      pricePerPortionDiscounted: PropTypes.string,
-      priceBoxTypeMessage: PropTypes.string,
-      benefits: PropTypes.arrayOf(PropTypes.string),
-
     }),
-    transactionalOption: PropTypes.shape({
-      title: PropTypes.string,
+    transactionalPrices: PropTypes.shape({
       totalPrice: PropTypes.string,
       totalPriceDiscounted: PropTypes.string,
       pricePerPortion: PropTypes.string,
-      pricePerPortionDiscounted: PropTypes.string,
-      priceBoxTypeMessage: PropTypes.string,
-      benefits: PropTypes.arrayOf(PropTypes.string),
     })
   }
 
   static defaultProps = {
     choosePlanContinue: () => {},
-    subscriptionOption: {},
-    transactionalOption: {}
+    pricingRequest: () => {},
+    subscriptionPrices: {},
+    transactionalPrices: {}
   }
 
   componentDidMount() {
@@ -50,7 +43,10 @@ class ChoosePlan extends PureComponent {
   }
 
   render() {
-    const { choosePlanContinue, isLoading, subscriptionOption, transactionalOption, extrasIncluded } = this.props
+    const { choosePlanContinue, isLoading, subscriptionPrices, transactionalPrices, extrasIncluded } = this.props
+
+    const subscriptionOption = { ...subscription, ...subscriptionPrices}
+    const transactionalOption = { ...transactional, ...transactionalPrices}
 
     return (
       <div className={css.choosePlanPage}>
@@ -84,9 +80,7 @@ class ChoosePlan extends PureComponent {
                 priceBoxTypeMessage={subscriptionOption.priceBoxTypeMessage}
                 benefits={subscriptionOption.benefits}
                 showExclExtras={extrasIncluded}
-                handleSelect={
-                  () => console.log('Option 1 clicked!') /*eslint-disable-line*/
-                }
+                handleSelect={() => {}}
               />
               <PlanOption
                 selected
@@ -97,10 +91,7 @@ class ChoosePlan extends PureComponent {
                 priceBoxTypeMessage={transactionalOption.priceBoxTypeMessage}
                 benefits={transactionalOption.benefits}
                 showExclExtras={extrasIncluded}
-                handleSelect={
-                  () =>
-                    console.log('Hi, you clicked Option 2') /*eslint-disable-line*/
-                }
+                handleSelect={() => {}}
               />
               {extrasIncluded && (
                 <Alert type="info">
