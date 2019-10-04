@@ -2,38 +2,10 @@ import React, { PureComponent } from 'react'
 import Helmet from 'react-helmet'
 import PropTypes from 'prop-types'
 import { Button, Alert } from 'goustouicomponents'
+import Loading from 'Loading'
 import { PlanOption } from './PlanOption'
+import { subscription, transactional } from './config'
 import css from './ChoosePlan.css'
-
-const subOption = {
-  title: 'A box a week',
-  totalPrice: '47.75',
-  totalPriceDiscounted: '23.88',
-  pricePerPortion: '2.98',
-  priceBoxTypeMessage: 'For first box',
-  benefits: [
-    'Choose 4 recipes for 2 each week',
-    'Cancel or pause online at any time',
-    '50% off first box + 30% off all boxes in the first month',
-    'Surprise gifts!'
-  ]
-}
-
-const flexOption = {
-  title: 'One-off box',
-  totalPrice: '47.75',
-  pricePerPortion: '5.97',
-  priceBoxTypeMessage: 'For one box',
-  benefits: [
-    'Choose  a single box of 4 recipes for 2 people',
-    'One off price, no weekly plan'
-  ]
-}
-
-const propTypes = {
-  choosePlanContinue: PropTypes.func,
-  extrasIncluded: PropTypes.bool
-}
 
 class ChoosePlan extends PureComponent {
   constructor(props) {
@@ -41,8 +13,40 @@ class ChoosePlan extends PureComponent {
     this.state = {}
   }
 
+  static propTypes = {
+    choosePlanContinue: PropTypes.func,
+    extrasIncluded: PropTypes.bool,
+    pricingRequest: PropTypes.func,
+    isLoading: PropTypes.bool,
+    subscriptionPrices: PropTypes.shape({
+      totalPrice: PropTypes.string,
+      totalPriceDiscounted: PropTypes.string,
+      pricePerPortion: PropTypes.string,
+    }),
+    transactionalPrices: PropTypes.shape({
+      totalPrice: PropTypes.string,
+      totalPriceDiscounted: PropTypes.string,
+      pricePerPortion: PropTypes.string,
+    })
+  }
+
+  static defaultProps = {
+    choosePlanContinue: () => {},
+    pricingRequest: () => {},
+    subscriptionPrices: {},
+    transactionalPrices: {}
+  }
+
+  componentDidMount() {
+    const { pricingRequest } = this.props
+    pricingRequest()
+  }
+
   render() {
-    const { choosePlanContinue, extrasIncluded } = this.props
+    const { choosePlanContinue, isLoading, subscriptionPrices, transactionalPrices, extrasIncluded } = this.props
+
+    const subscriptionOption = { ...subscription, ...subscriptionPrices}
+    const transactionalOption = { ...transactional, ...transactionalPrices}
 
     return (
       <div className={css.choosePlanPage}>
@@ -58,51 +62,54 @@ class ChoosePlan extends PureComponent {
           ]}
         />
         <div className={css.choosePlanWrapper}>
-          <h1 className={css.title}>Your Gousto plan</h1>
-          <p className={css.subtitle}>
-            Get a box delivered every week at a discounted price, or try a
-            one-off box.
-          </p>
-          <PlanOption
-            title={subOption.title}
-            totalPrice={subOption.totalPrice}
-            totalPriceDiscounted={subOption.totalPriceDiscounted}
-            pricePerPortion={subOption.pricePerPortion}
-            priceBoxTypeMessage={subOption.priceBoxTypeMessage}
-            benefits={subOption.benefits}
-            showExclExtras={extrasIncluded}
-            handleSelect={
-              () => console.log('Option 1 clicked!') /*eslint-disable-line*/
-            }
-          />
-          <PlanOption
-            selected
-            title={flexOption.title}
-            totalPrice={flexOption.totalPrice}
-            pricePerPortion={flexOption.pricePerPortion}
-            priceBoxTypeMessage={flexOption.priceBoxTypeMessage}
-            benefits={flexOption.benefits}
-            showExclExtras={extrasIncluded}
-            handleSelect={
-              () =>
-                console.log('Hi, you clicked Option 2') /*eslint-disable-line*/
-            }
-          />
-          {extrasIncluded && (
-            <Alert type="info">
-              The prices shown above don&#39;t include optional extras, such as
-              premium delivery or premium recipe surcharges.
-            </Alert>
-          )}
-          <Button onClick={choosePlanContinue} width="full">
+          <h1 className={css.title}>Your Gousto subscription</h1>
+            <p className={css.subtitle}>
+              Get a weekly box delivered at a discount or try a one-off box without a subscription
+            </p>
+            { isLoading ? (
+            <div className={css.loadingContainer}>
+              <Loading loading />
+            </div>
+            ) : (
+            <div>
+              <PlanOption
+                title={subscriptionOption.title}
+                totalPrice={subscriptionOption.totalPrice}
+                totalPriceDiscounted={subscriptionOption.totalPriceDiscounted}
+                pricePerPortion={subscriptionOption.pricePerPortion}
+                priceBoxTypeMessage={subscriptionOption.priceBoxTypeMessage}
+                benefits={subscriptionOption.benefits}
+                showExclExtras={extrasIncluded}
+                handleSelect={() => {}}
+              />
+              <PlanOption
+                selected
+                title={transactionalOption.title}
+                totalPrice={transactionalOption.totalPrice}
+                totalPriceDiscounted={transactionalOption.totalPriceDiscounted}
+                pricePerPortion={transactionalOption.pricePerPortion}
+                priceBoxTypeMessage={transactionalOption.priceBoxTypeMessage}
+                benefits={transactionalOption.benefits}
+                showExclExtras={extrasIncluded}
+                handleSelect={() => {}}
+              />
+              {extrasIncluded && (
+                <Alert type="info">
+                  The prices shown above don&#39;t include optional extras, such as
+                  premium delivery or premium recipe surcharges.
+                </Alert>
+              )}
+            </div>
+            )}
+          <Button onClick={choosePlanContinue} disabled={isLoading} width="full">
             Continue
           </Button>
         </div>
+
       </div>
+
     )
+
   }
 }
-
-ChoosePlan.propTypes = propTypes
-
 export { ChoosePlan }

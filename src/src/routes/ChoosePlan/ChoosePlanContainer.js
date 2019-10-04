@@ -1,20 +1,31 @@
 import { connect } from 'react-redux'
 import { choosePlanContinue } from 'actions/choosePlan'
+import pricingActions from 'actions/pricing'
+import { getLoading, areExtrasIncluded, getSubscriptionOptionPrices, getRecipeTotal } from 'selectors/pricing'
+import { getNumPortions, getBasketTotalRecipes } from 'selectors/basket'
 import { ChoosePlan } from './ChoosePlan'
+import { calculateTransactionalOptionPrices} from './helper.js'
 
-const mapStateToProps = () => {
-  const surchargeTotal = '5.99'
-  const deliveryTotal = '2.99'
-  const grossTotal = '40.73'
-  const recipeTotal = '31.75'
+const mapStateToProps = state => {
+  const numPortions = getNumPortions(state)
+  const numRecipes = getBasketTotalRecipes(state)
+  const recipeTotal = getRecipeTotal(state)
+  const transactionalPrices = calculateTransactionalOptionPrices(recipeTotal, numPortions, numRecipes)
+  const subscriptionPrices = getSubscriptionOptionPrices(state)
+  const extrasIncluded = areExtrasIncluded(state)
+  const isLoading = getLoading(state)
 
   return {
-    extrasIncluded: surchargeTotal || deliveryTotal || grossTotal !== recipeTotal,
+    isLoading,
+    subscriptionPrices,
+    transactionalPrices,
+    extrasIncluded
   }
 }
 
 const ChoosePlanContainer = connect(mapStateToProps, {
-  choosePlanContinue
+  choosePlanContinue,
+  pricingRequest: pricingActions.pricingRequest
 })(ChoosePlan)
 
 export { ChoosePlanContainer }
