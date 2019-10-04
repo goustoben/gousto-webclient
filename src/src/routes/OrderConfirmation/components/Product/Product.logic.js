@@ -9,12 +9,12 @@ import { ProductPresentation } from './Product.presentation'
 import css from './Product.css'
 
 const propTypes = {
-  basket: PropTypes.instanceOf(Immutable.Map()),
+  basket: PropTypes.instanceOf(Immutable.Map),
   product: PropTypes.shape({
     id: PropTypes.string,
     title: PropTypes.string,
     listPrice: PropTypes.string,
-    images: PropTypes.array,
+    images: PropTypes.object,
     ageRestricted: PropTypes.bool,
     quantity: PropTypes.number,
   }).isRequired,
