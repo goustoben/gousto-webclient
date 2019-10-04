@@ -17,7 +17,7 @@ const propTypesOffer = {
       }))
     })
   }),
-  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE])
+  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE, ''])
 }
 
 const defaultProps = {
