@@ -12,6 +12,7 @@ import { getAddress } from 'utils/checkout'
 import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { isChoosePlanEnabled } from 'selectors/features'
 import { getUserRecentRecipesIds } from 'selectors/user'
 import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -650,7 +651,7 @@ export function userSubscribe() {
           )
         },
         subscription: {
-          interval_id: delivery.get('interval_id') || 1,
+          interval_id: (isChoosePlanEnabled(state) && basket.get('subscriptionOption') === 'transactional') ? 0 : (delivery.get('interval_id') || 1),
           delivery_slot_id: basket.get('slotId'),
           box_id: basket.get('boxId')
         }
