@@ -3,12 +3,29 @@ import Immutable from 'immutable'
 import { referAFriend } from 'apis/user'
 import { customerSignup } from 'apis/customers'
 
-import { userReferAFriend, userSubscribe, userFetchReferralOffer, trackingReferFriend, trackingReferFriendSocialSharing, userLoadCookbookRecipes } from 'actions/user'
+import {
+  userReferAFriend,
+  userSubscribe,
+  userFetchReferralOffer,
+  trackingReferFriend,
+  trackingReferFriendSocialSharing,
+  userLoadCookbookRecipes,
+  userGetReferralDetails,
+} from 'actions/user'
 import recipeActions from 'actions/recipes'
 import actionTypes from 'actions/actionTypes'
+import logger from 'utils/logger'
 
 jest.mock('apis/user', () => ({
   referAFriend: jest.fn(),
+  referralDetails: jest.fn().mockImplementation(accessToken => {
+    if (accessToken !== 'user-access-token') {
+
+      return null
+    }
+
+    return Promise.resolve({ data: {} })
+  }),
   fetchReferralOffer: () =>
     Promise.resolve({
       data: {
@@ -26,6 +43,10 @@ jest.mock('apis/customers', () => ({
 
 jest.mock('actions/recipes', () => ({
   recipesLoadRecipesById: jest.fn()
+}))
+
+jest.mock('utils/logger', () => ({
+  error: jest.fn()
 }))
 
 describe('user actions', () => {
@@ -292,6 +313,39 @@ describe('user actions', () => {
       await userLoadCookbookRecipes()(dispatchSpy, getStateSpy)
 
       expect(recipeActions.recipesLoadRecipesById).toHaveBeenCalledWith(['1', '2', '3', '4', '5', '6'], true)
+    })
+  })
+
+  describe('userGetReferralDetails', () => {
+    const dispatchSpy = jest.fn()
+    const getStateSpy = jest.fn()
+    const referralDetails = {}
+
+    getStateSpy.mockReturnValue({
+      auth: Immutable.fromJS({
+        accessToken: 'user-access-token'
+      })
+    })
+
+    it('should dispatch an action with the correct parameters', async () => {
+      await userGetReferralDetails()(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_LOAD_REFERRAL_DETAILS,
+        referralDetails
+      })
+    })
+
+    it('should return an error if api is not called with the correct access token', async () => {
+      getStateSpy.mockReturnValue({
+        auth: Immutable.fromJS({
+          accessToken: '123456'
+        })
+      })
+
+      await userGetReferralDetails()(dispatchSpy, getStateSpy)
+
+      expect(logger.error).toHaveBeenCalled()
     })
   })
 })

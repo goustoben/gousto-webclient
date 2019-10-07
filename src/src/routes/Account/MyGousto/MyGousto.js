@@ -5,13 +5,16 @@ import { Notification } from './Notification'
 import { Section } from './Section'
 import { Cookbook } from './Cookbook'
 import { Header } from './Header'
+import { ReferAFriend } from './ReferAFriend'
 
 class MyGousto extends React.PureComponent {
   static propTypes = {
     userLoadOrders: PropTypes.func.isRequired,
+    userGetReferralDetails: PropTypes.func.isRequired,
     card: PropTypes.instanceOf(Immutable.Map),
     orders: PropTypes.instanceOf(Immutable.Map),
     nameFirst: PropTypes.string,
+    referralDetails: PropTypes.instanceOf(Immutable.Map),
   }
 
   static defaultProps = {
@@ -19,12 +22,13 @@ class MyGousto extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { userLoadOrders } = this.props
+    const { userLoadOrders, userGetReferralDetails } = this.props
     userLoadOrders()
+    userGetReferralDetails()
   }
 
   render() {
-    const { card, orders, nameFirst } = this.props
+    const { card, orders, nameFirst, referralDetails } = this.props
     const headerTitle = `Hello ${nameFirst},`
 
     return (
@@ -37,6 +41,9 @@ class MyGousto extends React.PureComponent {
         </Section>
         <Section title="Your recent cookbook" alternateColour>
           <Cookbook />
+        </Section>
+        <Section title="Your Gousto wins" alternateColour>
+          <ReferAFriend referralDetails={referralDetails} />
         </Section>
       </div>
     )
