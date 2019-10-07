@@ -7,7 +7,9 @@ import {
   getLandingDay,
   cutoffDateTimeNow,
   getAvailableDeliveryDays,
+  transformDaySlotLeadTimesToMockSlots
 } from 'utils/deliveries'
+import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import { getDisabledSlots } from 'selectors/features'
 
@@ -1878,6 +1880,99 @@ describe('utils/deliveries', () => {
           slots: [{ whenCutoff: '2016-07-08' }],
         },
       })
+    })
+  })
+
+  describe('transformDaySlotLeadTimesToMockSlots', () => {
+
+    // Arrange a minimal response from the delivery service days endpoint
+    const daysFromDeliveryService = [
+      {
+        id: "98b901bc-0157-11e6-bbb4-080027089d5f",
+        date: "2014-01-15",
+        isDefault: false,
+        coreDayId: "3",
+        unavailableReason: "",
+        alternateDeliveryDay: null,
+        daySlotLeadTimes: [
+          {
+            id: "7bdd00f7-af72-41af-8444-a35f1467be49",
+            dayId: "98b901bc-0157-11e6-bbb4-080027089d5f",
+            slotId: "dafe3372-12d1-11e6-bee5-06ddb628bdc5",
+            leadTime: 24,
+            coreSlotId: "4",
+            isSlotDefault: true,
+            date: "2014-01-15",
+            active: true,
+            startTime: "18:00:00",
+            endTime: "22:00:00",
+            deliveryPrice: "2.99",
+            shouldCutoffAt: "2014-01-14T11:59:59+00:00"
+          },
+          {
+            id: "386932e5-71bd-4610-b9a4-baae4bc91be9",
+            dayId: "98b901bc-0157-11e6-bbb4-080027089d5f",
+            slotId: "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
+            leadTime: 24,
+            coreSlotId: "3",
+            isSlotDefault: false,
+            date: "2014-01-15",
+            active: true,
+            startTime: "08:00:00",
+            endTime: "19:00:00",
+            deliveryPrice: "0.00",
+            shouldCutoffAt: "2014-01-14T11:59:59+00:00"
+          }
+        ]
+      }
+    ]
+
+    test('should transform a dslt response to a mock slot', () => {
+
+      const transformedMockSlot = transformDaySlotLeadTimesToMockSlots(daysFromDeliveryService)
+
+      const expectedMockSlot = [
+        {
+          id: "98b901bc-0157-11e6-bbb4-080027089d5f",
+          date: "2014-01-15",
+          isDefault: false,
+          coreDayId: "3",
+          unavailableReason: "",
+          alternateDeliveryDay: null,
+          slots: [
+            {
+              whenCutoff: "2014-01-14T11:59:59+00:00",
+              deliveryEndTime: "22:00:00",
+              deliveryPrice: "2.99",
+              isDefault: true,
+              coreSlotId: "4",
+              deliveryStartTime: "18:00:00",
+              id: "dafe3372-12d1-11e6-bee5-06ddb628bdc5",
+            },
+            {
+              whenCutoff: "2014-01-14T11:59:59+00:00",
+              deliveryEndTime: "19:00:00",
+              deliveryPrice: "0.00",
+              isDefault: false,
+              coreSlotId: "3",
+              deliveryStartTime: "08:00:00",
+              id: "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
+            }
+          ]
+        },
+      ]
+
+      expect(transformedMockSlot).toContainEqual(expectedMockSlot[0])
+      expect(transformedMockSlot).toHaveLength(1)
+      expect(transformedMockSlot[0].slots).toHaveLength(2)
+    })
+
+    test('should throw a GoustoException when no days with DSLTs passed', () => {
+      expect(() => transformDaySlotLeadTimesToMockSlots()).toThrow(GoustoException)
+    })
+
+    test('should throw a GoustoException when no days with DSLTs passed', () => {
+      expect(() => transformDaySlotLeadTimesToMockSlots(new Error('Is broke'))).toThrow(GoustoException)
     })
   })
 })

@@ -406,3 +406,35 @@ export function getAvailableDeliveryDays(deliveryDays, cutoffDatetimeFrom) {
 
   return availableDeliveryDays.reduce((daysMap, day) => ({ ...daysMap, [day.date]: day }), {})
 }
+
+export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
+  if (!daysWithDSLTs || daysWithDSLTs instanceof Error) {
+    throw new GoustoException(daysWithDSLTs)
+  }
+
+  return daysWithDSLTs.map(dayWithDSLTs => {
+    const {id, date, isDefault, coreDayId, unavailableReason, alternateDeliveryDay} = dayWithDSLTs
+
+    return {
+      id,
+      date,
+      isDefault,
+      coreDayId,
+      unavailableReason,
+      alternateDeliveryDay,
+      slots: dayWithDSLTs.daySlotLeadTimes.map(dslt => ({
+        whenCutoff: dslt.shouldCutoffAt,
+        deliveryEndTime: dslt.endTime,
+        deliveryPrice: dslt.deliveryPrice,
+        isDefault: dslt.isSlotDefault,
+        coreSlotId: dslt.coreSlotId,
+        deliveryStartTime: dslt.startTime,
+        id: dslt.slotId
+        // fields not available in current DSLT and not used in webclient:
+        // - cutoffTime
+        // - cutoffDay
+        // - defaultDay
+      }))
+    }
+  })
+}

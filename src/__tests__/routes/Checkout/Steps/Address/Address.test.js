@@ -9,22 +9,41 @@ import { Button } from 'goustouicomponents'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 import AddressInputs from 'routes/Checkout/Components/Address/AddressInputs'
 import { fetchDeliveryDays } from 'apis/deliveries'
-import { getAvailableDeliveryDays } from 'utils/deliveries'
+import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 
-jest.mock('apis/deliveries')
-jest.mock('utils/deliveries')
+jest.mock('apis/deliveries', () => ({
+  fetchDeliveryDays: jest.fn().mockReturnValue({
+    data: [{id: '4'}, {id: '5'}, {id: '6'}]
+  })
+}))
+
+jest.mock('utils/deliveries', () => ({
+  transformDaySlotLeadTimesToMockSlots: jest.fn().mockReturnValue([
+    { id: '4', daySlotLeadTimes: [] },
+    { id: '5', daySlotLeadTimes: [] },
+    { id: '6', daySlotLeadTimes: [] }
+  ]),
+  getAvailableDeliveryDays: jest.fn()
+}))
 
 describe('Address', () => {
   let wrapper
 
-  test('should return div', () => {
+  beforeEach(() => {
     const selectedAddresses = Immutable.Map({})
     wrapper = shallow(< Address
       selectedAddress={selectedAddresses}
       registerField={jest.fn()}
       isNDDExperiment={false}
     />)
+  })
+
+  test('should return div', () => {
     expect(wrapper.type()).toBe('div')
+  })
+
+  test('should not transform delivery days', () => {
+    expect(transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
   })
 
   describe('rendering', () => {
@@ -53,9 +72,9 @@ describe('Address', () => {
 
   describe('with NDD prop', () => {
 
-    beforeEach(() => {
+    beforeEach(async () => {
       const selectedAddresses = Immutable.Map({})
-      wrapper = shallow(< Address
+      wrapper = await shallow(< Address
         selectedAddress={selectedAddresses}
         registerField={jest.fn()}
         checkoutAddressLookup={jest.fn()}
@@ -68,6 +87,7 @@ describe('Address', () => {
 
     describe('rendering', () => {
       beforeEach(() => {
+        fetchDeliveryDays.mockClear()
         wrapper.setState({addressSaved: false})
       })
 
@@ -83,16 +103,9 @@ describe('Address', () => {
         expect(wrapper.find(Button)).toHaveLength(1)
       })
     })
+
     test('should fetch next day delivery days)', () => {
-      const fetchedDays = {data: [{id: '4'}, {id: '5'}, {id: '6'}]}
-
-      fetchDeliveryDays.mockReturnValue(
-        new Promise((resolve, reject) => { resolve(fetchedDays) })
-      )
-
-      getAvailableDeliveryDays.mockImplementation(jest.fn().mockReturnValue(
-        [{id: '5'}, {id: '6'}]
-      ))
+      getAvailableDeliveryDays.mockReturnValue([{id: '5'}, {id: '6'}])
 
       const expectedReqData = {
         'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
@@ -101,8 +114,14 @@ describe('Address', () => {
         ndd: 'true'
       }
 
-      expect(fetchDeliveryDays).toHaveBeenCalledTimes(4)
-      expect(fetchDeliveryDays.mock.calls[2][1]).toEqual(expectedReqData)
+      expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
+      expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
+      expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+      expect(getAvailableDeliveryDays).toHaveBeenCalledWith([
+        { id: '4', daySlotLeadTimes: [] },
+        { id: '5', daySlotLeadTimes: [] },
+        { id: '6', daySlotLeadTimes: [] }
+      ])
     })
   })
 })

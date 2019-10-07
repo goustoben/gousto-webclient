@@ -7,7 +7,7 @@ import { fetchDeliveryDays } from 'apis/deliveries'
 import GoustoException from 'utils/GoustoException'
 import logger from 'utils/logger'
 import { getOrderDetails } from 'utils/basket'
-import { getAvailableDeliveryDays } from 'utils/deliveries'
+import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
 import { redirect } from 'utils/window'
 import { isNDDFeatureEnabled } from 'selectors/features'
 import userActions from './user'
@@ -259,19 +259,25 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, true))
+
     const postcode = getState().user.getIn(['addresses', addressId, 'postcode'])
+    const isNDDExperiment = isNDDFeatureEnabled(getState())
     const reqData = {
       'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
       'filters[cutoff_datetime_until]': cutoffDatetimeUntil,
       sort: 'date',
       direction: 'asc',
       postcode,
-      ndd: isNDDFeatureEnabled(getState()) ? 'true' : 'false',
-
+      ndd: isNDDExperiment ? 'true' : 'false',
     }
 
     try {
-      const { data: days } = await fetchDeliveryDays(null, reqData)
+      let { data: days } = await fetchDeliveryDays(null, reqData)
+
+      if (isNDDExperiment) {
+        days = transformDaySlotLeadTimesToMockSlots(days)
+      }
+
       const availableDays = getAvailableDeliveryDays(days)
       dispatch({
         type: actionTypes.ORDER_DELIVERY_DAYS_RECEIVE,

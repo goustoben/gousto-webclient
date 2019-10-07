@@ -15,15 +15,19 @@ import actionStatus from 'actions/status'
 import actionTypes from 'actions/actionTypes'
 import orderActions from '../order'
 import { fetchDeliveryDays } from '../../apis/deliveries'
-import { getAvailableDeliveryDays } from '../../utils/deliveries'
+import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from '../../utils/deliveries'
 
 jest.mock('apis/orders')
 jest.mock('actions/orderConfirmation')
 jest.mock('actions/status')
 jest.mock('apis/user')
 jest.mock('utils/basket')
-jest.mock('apis/deliveries')
 jest.mock('utils/deliveries')
+jest.mock('apis/deliveries', () => ({
+  fetchDeliveryDays: jest.fn().mockReturnValue({
+    data: [{id: 1}]
+  })
+}))
 
 const { pending, error } = actionStatus
 
@@ -598,6 +602,7 @@ describe('order actions', () => {
         orderId: '123',
         availableDays: [{ id: '5' }, { id: '6' }],
       })
+      expect(transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
     })
 
     it('should fetch delivery days method should include ndd in its request if the feature is on', async () => {
@@ -616,6 +621,7 @@ describe('order actions', () => {
 
       expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull
       expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
+      expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
     })
   })
 })
