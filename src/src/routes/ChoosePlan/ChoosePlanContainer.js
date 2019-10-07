@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { choosePlanContinue } from 'actions/choosePlan'
-import pricingActions from 'actions/pricing'
 import { getLoading, areExtrasIncluded, getSubscriptionOptionPrices, getRecipeTotal } from 'selectors/pricing'
 import { getNumPortions, getBasketTotalRecipes } from 'selectors/basket'
 import { ChoosePlan } from './ChoosePlan'
@@ -24,8 +23,7 @@ const mapStateToProps = state => {
 }
 
 const ChoosePlanContainer = connect(mapStateToProps, {
-  choosePlanContinue,
-  pricingRequest: pricingActions.pricingRequest
+  choosePlanContinue
 })(ChoosePlan)
 
 export { ChoosePlanContainer }

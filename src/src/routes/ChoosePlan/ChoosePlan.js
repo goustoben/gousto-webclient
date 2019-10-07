@@ -16,7 +16,6 @@ class ChoosePlan extends PureComponent {
   static propTypes = {
     choosePlanContinue: PropTypes.func,
     extrasIncluded: PropTypes.bool,
-    pricingRequest: PropTypes.func,
     isLoading: PropTypes.bool,
     subscriptionPrices: PropTypes.shape({
       totalPrice: PropTypes.string,
@@ -32,14 +31,8 @@ class ChoosePlan extends PureComponent {
 
   static defaultProps = {
     choosePlanContinue: () => {},
-    pricingRequest: () => {},
     subscriptionPrices: {},
     transactionalPrices: {}
-  }
-
-  componentDidMount() {
-    const { pricingRequest } = this.props
-    pricingRequest()
   }
 
   render() {
