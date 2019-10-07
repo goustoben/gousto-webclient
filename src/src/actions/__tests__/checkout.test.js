@@ -294,7 +294,7 @@ describe('checkout actions', () => {
               {
                 coreSlotId: '4',
                 id: '3e952522-a778-11e6-8197-080027596944',
-                daySlotLeadTimeId: 'hello'// targetUuid
+                daySlotLeadTimeId: 'some-uuid' // targetUuid
               },
             ],
           },
