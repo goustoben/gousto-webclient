@@ -368,6 +368,12 @@ const basket = {
       return state.set('subscriptionOption', subscriptionOption)
     }
 
+    case actionTypes.BASKET_SET_SUBSCRIPTION_OPTION: {
+      const { subscriptionOption } = action
+
+      return state.set('subscriptionOption', subscriptionOption)
+    }
+
     default: {
       return state
     }

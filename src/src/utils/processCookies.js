@@ -76,6 +76,7 @@ const processCookies = (cookies, store) => {
   let recipesPositions = getCookieStoreValue(cookies, 'basket_recipesPositions')
   const stepsOrder = getCookieStoreValue(cookies, 'basket_stepsOrder')
   const promoCode = getCookieStoreValue(cookies, 'basket_promoCode')
+  const subscriptionOption = getCookieStoreValue(cookies, 'basket_subscriptionOption')
   const collection = getCookieStoreValue(cookies, 'basket_collection')
   const currentCollectionId = getCookieStoreValue(cookies, 'filters_currentCollectionId')
   const recipeGroupSlug = getCookieStoreValue(cookies, 'filters_recipeGroup_slug')
@@ -139,6 +140,10 @@ const processCookies = (cookies, store) => {
 
   if (promoCodeUrl) {
     store.dispatch(basketActions.basketPromoCodeUrlChange(promoCodeUrl))
+  }
+
+  if (subscriptionOption) {
+    store.dispatch(basketActions.basketSetSubscriptionOption(subscriptionOption))
   }
 
   if (previewOrderId && boxId) {
