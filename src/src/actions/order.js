@@ -259,10 +259,9 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, true))
+
     const postcode = getState().user.getIn(['addresses', addressId, 'postcode'])
-
     const isNDDExperiment = isNDDFeatureEnabled(getState())
-
     const reqData = {
       'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
       'filters[cutoff_datetime_until]': cutoffDatetimeUntil,
@@ -270,16 +269,13 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
       direction: 'asc',
       postcode,
       ndd: isNDDExperiment ? 'true' : 'false',
-
     }
 
     try {
-
       let { data: days } = await fetchDeliveryDays(null, reqData)
 
       if (isNDDExperiment) {
         days = transformDaySlotLeadTimesToMockSlots(days)
-
       }
 
       const availableDays = getAvailableDeliveryDays(days)

@@ -17,7 +17,14 @@ jest.mock('apis/deliveries', () => ({
   })
 }))
 
-jest.mock('utils/deliveries')
+jest.mock('utils/deliveries', () => ({
+  transformDaySlotLeadTimesToMockSlots: jest.fn().mockReturnValue([
+    { id: '4', daySlotLeadTimes: [] },
+    { id: '5', daySlotLeadTimes: [] },
+    { id: '6', daySlotLeadTimes: [] }
+  ]),
+  getAvailableDeliveryDays: jest.fn()
+}))
 
 describe('Address', () => {
   let wrapper
@@ -65,9 +72,9 @@ describe('Address', () => {
 
   describe('with NDD prop', () => {
 
-    beforeEach(() => {
+    beforeEach(async () => {
       const selectedAddresses = Immutable.Map({})
-      wrapper = shallow(< Address
+      wrapper = await shallow(< Address
         selectedAddress={selectedAddresses}
         registerField={jest.fn()}
         checkoutAddressLookup={jest.fn()}
@@ -80,6 +87,7 @@ describe('Address', () => {
 
     describe('rendering', () => {
       beforeEach(() => {
+        fetchDeliveryDays.mockClear()
         wrapper.setState({addressSaved: false})
       })
 
@@ -97,9 +105,7 @@ describe('Address', () => {
     })
 
     test('should fetch next day delivery days)', () => {
-      getAvailableDeliveryDays.mockReturnValue(
-        [{id: '5'}, {id: '6'}]
-      )
+      getAvailableDeliveryDays.mockReturnValue([{id: '5'}, {id: '6'}])
 
       const expectedReqData = {
         'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
@@ -108,9 +114,14 @@ describe('Address', () => {
         ndd: 'true'
       }
 
-      expect(fetchDeliveryDays).toHaveBeenCalledTimes(4)
-      expect(fetchDeliveryDays.mock.calls[2][1]).toEqual(expectedReqData)
+      expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
+      expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
       expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+      expect(getAvailableDeliveryDays).toHaveBeenCalledWith([
+        { id: '4', daySlotLeadTimes: [] },
+        { id: '5', daySlotLeadTimes: [] },
+        { id: '6', daySlotLeadTimes: [] }
+      ])
     })
   })
 })
