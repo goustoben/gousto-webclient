@@ -4,6 +4,8 @@ import actionTypes from 'actions/actionTypes'
 import orderConfirmationActions from 'actions/orderConfirmation'
 import orderApi from 'apis/orders'
 import utilsLogger from 'utils/logger'
+import { push } from 'react-router-redux'
+import config from 'config'
 
 jest.mock('apis/orders', () => ({
   updateOrderItems: jest.fn()
@@ -596,14 +598,19 @@ describe('basket actions', () => {
   })
 
   describe('basketProceedToCheckout', () => {
-    const getState = () => ({
-      basket: Immutable.fromJS({
-        orderId: '179',
-      }),
-      filters: Immutable.fromJS({
-        dietaryAttributes: ['dairy-free']
-      }),
+    let getState
+
+    beforeEach(() => {
+      getState = () => ({
+        basket: Immutable.fromJS({
+          orderId: '179',
+        }),
+        filters: Immutable.fromJS({
+          dietaryAttributes: ['dairy-free']
+        }),
+      })
     })
+
     test('should track the dietary attribute for proceed to checkout', async () => {
       await basketProceedToCheckout()(dispatch, getState)
       expect(dispatch.mock.calls[0][0]).toEqual({
@@ -616,6 +623,30 @@ describe('basket actions', () => {
           dietary_attribute: ['dairy-free'],
         },
       })
+    })
+
+    test('should proceed to choose plan if choosePlan feature is enabled', async () => {
+      getState = () => ({
+        basket: Immutable.fromJS({
+          orderId: '179',
+        }),
+        filters: Immutable.fromJS({
+          dietaryAttributes: ['dairy-free']
+        }),
+        features: Immutable.fromJS({
+          choosePlanRoute: {
+            value: true
+          }
+        })
+      })
+
+      await basketProceedToCheckout()(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith(push(config.routes.client.choosePlan))
+    })
+
+    test("should proceed to checkout if choosePlan feature isn't enabled", async () => {
+      await basketProceedToCheckout()(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith(push(config.routes.client['check-out']))
     })
   })
 
