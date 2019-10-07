@@ -9,6 +9,7 @@ import { getUserOrderById } from 'utils/user'
 import config from 'config'
 import logger from 'utils/logger'
 import { updateOrderItems } from 'apis/orders'
+import { isChoosePlanEnabled } from 'selectors/features'
 import statusActions from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import boxSummaryActions from './boxSummary'
@@ -704,7 +705,12 @@ export const basketProceedToCheckout = () => (
     dispatch(statusActions.error(actionTypes.BASKET_CHECKOUT, false))
 
     try {
-      dispatch(push(config.routes.client['check-out']))
+      const isChoosePlanFeatureEnabled = isChoosePlanEnabled(getState())
+      if (isChoosePlanFeatureEnabled) {
+        dispatch(push(config.routes.client.choosePlan))
+      } else {
+        dispatch(push(config.routes.client['check-out']))
+      }
     } catch (err) {
       logger.error(err)
       dispatch(push(config.routes.client.menu))
