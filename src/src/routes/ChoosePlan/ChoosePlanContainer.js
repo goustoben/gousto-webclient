@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { choosePlanContinue } from 'actions/choosePlan'
-import { getLoading, areExtrasIncluded, getSubscriptionOptionPrices, getRecipeTotal } from 'selectors/pricing'
+import { areExtrasIncluded, getSubscriptionOptionPrices, getRecipeTotal } from 'selectors/pricing'
 import { getNumPortions, getBasketTotalRecipes } from 'selectors/basket'
 import { ChoosePlan } from './ChoosePlan'
 import { calculateTransactionalOptionPrices} from './helper.js'
@@ -12,10 +12,8 @@ const mapStateToProps = state => {
   const transactionalPrices = calculateTransactionalOptionPrices(recipeTotal, numPortions, numRecipes)
   const subscriptionPrices = getSubscriptionOptionPrices(state)
   const extrasIncluded = areExtrasIncluded(state)
-  const isLoading = getLoading(state)
 
   return {
-    isLoading,
     subscriptionPrices,
     transactionalPrices,
     extrasIncluded
