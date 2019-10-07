@@ -17,6 +17,13 @@ describe('PlanOption', () => {
     expect(wrapper.find('.totalPrice').text()).toEqual('£20.00')
   })
 
+  test('when totalPriceDiscounted is equal to totalPrice, should render the full price', () => {
+    const wrapper = shallow(<PlanOption totalPrice='20.00' totalPriceDiscounted='20.00' />)
+
+    expect(wrapper.find('.totalPriceDiscounted').exists()).toEqual(false)
+    expect(wrapper.find('.totalPrice').text()).toEqual('£20.00')
+  })
+
   test('should show excl extras message if any extras have been chosen', () => {
     const wrapper = shallow(<PlanOption totalPrice='20.00' showExclExtras />)
 
