@@ -9,6 +9,7 @@ import {
   getAvailableDeliveryDays,
   transformDaySlotLeadTimesToMockSlots
 } from 'utils/deliveries'
+import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import { getDisabledSlots } from 'selectors/features'
 
@@ -1926,7 +1927,7 @@ describe('utils/deliveries', () => {
       }
     ]
 
-    test('should transform a from a dslt response to a mock slot', () => {
+    test('should transform a dslt response to a mock slot', () => {
 
       const transformedMockSlot = transformDaySlotLeadTimesToMockSlots(daysFromDeliveryService)
 
@@ -1964,6 +1965,14 @@ describe('utils/deliveries', () => {
       expect(transformedMockSlot).toContainEqual(expectedMockSlot[0])
       expect(transformedMockSlot).toHaveLength(1)
       expect(transformedMockSlot[0].slots).toHaveLength(2)
+    })
+
+    test('should throw a GoustoException when no days with DSLTs passed', () => {
+      expect(() => transformDaySlotLeadTimesToMockSlots()).toThrow(GoustoException)
+    })
+
+    test('should throw a GoustoException when no days with DSLTs passed', () => {
+      expect(() => transformDaySlotLeadTimesToMockSlots(new Error('Is broke'))).toThrow(GoustoException)
     })
   })
 })

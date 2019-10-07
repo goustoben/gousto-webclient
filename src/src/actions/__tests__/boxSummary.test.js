@@ -11,8 +11,8 @@ jest.mock('apis/deliveries', () => ({
 
 jest.mock('utils/deliveries')
 
-describe('boxSummary actions', async () => {
-  describe('boxSummaryDeliveryDaysLoad', async () => {
+describe('boxSummary actions', () => {
+  describe('boxSummaryDeliveryDaysLoad', () => {
 
     const from = '2017-12-05'
     const to = '2017-12-30'
