@@ -613,6 +613,12 @@ export function userSubscribe() {
       const deliveryAddress = getAddress(delivery)
       const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
 
+      const intervalId =
+        isChoosePlanEnabled(state) &&
+        basket.get('subscriptionOption') === 'transactional'
+          ? 0
+          : delivery.get('interval_id') || 1
+
       const reqData = {
         order_id: basket.get('previewOrderId'),
         promocode: basket.get('promoCode', ''),
@@ -651,7 +657,7 @@ export function userSubscribe() {
           )
         },
         subscription: {
-          interval_id: (isChoosePlanEnabled(state) && basket.get('subscriptionOption') === 'transactional') ? 0 : (delivery.get('interval_id') || 1),
+          interval_id: intervalId,
           delivery_slot_id: basket.get('slotId'),
           box_id: basket.get('boxId')
         }
@@ -679,7 +685,7 @@ export function userSubscribe() {
             signup: true,
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
             payment_provider: paymentProvider,
-            interval_id: delivery.get('interval_id', '1')
+            interval_id: intervalId
           }
         })
 
