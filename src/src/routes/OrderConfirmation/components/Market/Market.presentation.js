@@ -28,7 +28,7 @@ const propTypes = {
       id: PropTypes.string,
       title: PropTypes.string,
       listPrice: PropTypes.string,
-      images: PropTypes.array,
+      images: PropTypes.object,
       ageRestricted: PropTypes.bool,
       quantity: PropTypes.number,
     })
@@ -41,7 +41,7 @@ const propTypes = {
       id: PropTypes.string,
       title: PropTypes.string,
       listPrice: PropTypes.string,
-      images: PropTypes.array,
+      images: PropTypes.object,
       ageRestricted: PropTypes.bool,
       quantity: PropTypes.number,
     })

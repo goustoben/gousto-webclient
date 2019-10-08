@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getBasket, getProductCategories } from 'selectors/root'
+import { getBasket } from 'selectors/root'
 import { getTempProductId, getTempAddProduct } from 'selectors/temp'
 import { basketProductAdd, basketProductRemove } from 'actions/basket'
 import { orderConfirmationProductTracking } from 'actions/orderConfirmation'
@@ -13,7 +13,6 @@ const mapStateToProps = (state, props) => {
   return ({
     hasProductList2Columns: getProductList2Columns(state),
     basket: getBasket(state),
-    productsCategories: getProductCategories(state),
     productId: getTempProductId(state),
     addProduct: getTempAddProduct(state),
     ageVerificationPending: state.pending.get('USER_AGE_VERIFY'),

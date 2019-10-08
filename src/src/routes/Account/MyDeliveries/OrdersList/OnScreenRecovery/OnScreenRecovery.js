@@ -15,7 +15,16 @@ import { ORDER_TYPE, SUBSCRIPTION_TYPE } from './config'
 const propTypes = {
   visible: PropTypes.bool,
   title: PropTypes.string,
-  offer: PropTypes.object,
+  offer: PropTypes.shape({
+    formatted_value: PropTypes.string,
+    raw_message: PropTypes.shape({
+      text: PropTypes.string,
+      values: PropTypes.shape({
+        date: PropTypes.string,
+        value: PropTypes.string,
+      }),
+    }),
+  }),
   valueProposition: PropTypes.shape({
     message: PropTypes.string,
     title: PropTypes.string,
@@ -30,7 +39,7 @@ const propTypes = {
   confirmCopy: PropTypes.string,
   onKeep: PropTypes.func.isRequired,
   keepCopy: PropTypes.string,
-  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE]),
+  type: PropTypes.oneOf([SUBSCRIPTION_TYPE, ORDER_TYPE, '']),
 }
 
 const defaultProps = {
