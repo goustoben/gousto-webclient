@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
 import classnames from 'classnames'
-
+import Immutable from 'immutable'
 import { FeedbackModal } from 'FeedbackModal'
 import Overlay from 'Overlay'
 import Loading from 'Loading'
@@ -34,11 +33,7 @@ const propTypes = {
     }),
     PropTypes.bool,
   ]),
-  rafOffer: ImmutablePropTypes.mapContains({
-    creditFormatted: PropTypes.string.isRequired,
-    firstBoxDiscountFormatted: PropTypes.string.isRequired,
-    firstMonthDiscountFormatted: PropTypes.string.isRequired,
-  }).isRequired,
+  rafOffer: PropTypes.instanceOf(Immutable.Map).isRequired,
   showHeader: PropTypes.bool.isRequired,
   showShortlistFeedback: PropTypes.bool,
   userFetchReferralOffer: PropTypes.func,

@@ -14,7 +14,10 @@ class Image extends React.PureComponent {
       PropTypes.instanceOf(Immutable.List),
       PropTypes.string
     ]).isRequired,
-    onClick: PropTypes.func,
+    onClick: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.oneOf([false]),
+    ]),
     title: PropTypes.string,
     maxMediaSize: PropTypes.number,
     lazy: PropTypes.bool,

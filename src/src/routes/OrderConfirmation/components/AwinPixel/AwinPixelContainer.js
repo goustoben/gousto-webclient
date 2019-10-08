@@ -10,7 +10,7 @@ import {
 import { AwinPixel } from 'AwinPixel'
 
 const mapStateToProps = (state) => ({
-  show: getBasketOrderDetailId(state) && getBasketOrderTotal(state) && getBasketOrderPrices(state),
+  show: Boolean(getBasketOrderDetailId(state) && getBasketOrderTotal(state) && getBasketOrderPrices(state)),
   commissionGroup: 'EXISTING',
   orderId: getBasketOrderDetailId(state),
   total: getBasketOrderTotal(state),

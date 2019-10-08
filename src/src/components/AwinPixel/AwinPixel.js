@@ -26,7 +26,7 @@ AwinPixel.propTypes = {
   show: PropTypes.bool,
   total: PropTypes.string,
   orderId: PropTypes.string,
-  promoCode: PropTypes.string,
+  promoCode: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   commissionGroup: PropTypes.string,
 }
 
@@ -34,7 +34,7 @@ AwinPixel.defaultProps = {
   show: false,
   total: '',
   orderId: '',
-  promoCode: '',
+  promoCode: false,
   commissionGroup: '',
 }
 

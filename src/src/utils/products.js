@@ -61,9 +61,32 @@ export function getCategoriesFromProducts(products) {
   }, categories)
 }
 
+/**
+ * Sort products in ascending order by price, with free products at the end.
+ * @param {Array} products as returned from the API (not ImmutableJS)
+ * @return {Array}
+ */
+export function sortProductsByPrice(products) {
+  const sortedProducts = products.sort((a, b) => a.listPrice - b.listPrice)
+
+  const freeProducts = []
+  const productsWithPrice = []
+
+  sortedProducts.forEach(product => {
+    if (product.listPrice <= '0.00') {
+      freeProducts.push(product)
+    } else {
+      productsWithPrice.push(product)
+    }
+  })
+
+  return [...productsWithPrice, ...freeProducts]
+}
+
 export default {
   getCategoriesFromProducts,
   getOneProductFromEachCategory,
   getProductsByCutoff,
   isNotAGift,
+  sortProductsByPrice,
 }

@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { choosePlanContinue, stashTempPromoCode, clearTempPromoCode, trackSubscriptionOptionSelected } from 'actions/choosePlan'
-import pricingActions from 'actions/pricing'
-import { getLoading, areExtrasIncluded, getSubscriptionOptionPrices, getRecipeTotal } from 'selectors/pricing'
+import { areExtrasIncluded, getSubscriptionOptionPrices, getRecipeTotal } from 'selectors/pricing'
 import { getNumPortions, getBasketTotalRecipes, getPromoCode } from 'selectors/basket'
 import { getTempPromoCode } from 'selectors/temp'
 import { ChoosePlan } from './ChoosePlan'
@@ -14,12 +13,10 @@ const mapStateToProps = state => {
   const transactionalPrices = calculateTransactionalOptionPrices(recipeTotal, numPortions, numRecipes)
   const subscriptionPrices = getSubscriptionOptionPrices(state)
   const extrasIncluded = areExtrasIncluded(state)
-  const isLoading = getLoading(state)
   const promoCode = getPromoCode(state)
   const tempPromoCode = getTempPromoCode(state)
 
   return {
-    isLoading,
     subscriptionPrices,
     transactionalPrices,
     extrasIncluded,
@@ -32,8 +29,7 @@ const ChoosePlanContainer = connect(mapStateToProps, {
   choosePlanContinue,
   stashTempPromoCode,
   clearTempPromoCode,
-  trackSubscriptionOptionSelected,
-  pricingRequest: pricingActions.pricingRequest
+  trackSubscriptionOptionSelected
 })(ChoosePlan)
 
 export { ChoosePlanContainer }
