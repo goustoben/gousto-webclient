@@ -34,6 +34,7 @@ describe('productsLoadProducts', () => {
       basket: Immutable.fromJS({
         products: {},
       }),
+      features: Immutable.fromJS({}),
     })
   })
 
@@ -163,6 +164,86 @@ describe('productsLoadProducts', () => {
       await productsLoadProducts(undefined, undefined, {reload: true})(dispatchSpy, getStateSpy)
 
       expect(fetchProducts).toHaveBeenCalled()
+    })
+  })
+
+  describe('the sortMarketProducts feature flag', () => {
+    beforeEach(() => {
+      fetchProducts.mockResolvedValue({
+        data: [
+          { id: '1', listPrice: '2.00', isForSale: true },
+          { id: '2', listPrice: '1.00', isForSale: true },
+          { id: '3', listPrice: '5.00', isForSale: true },
+        ]
+      })
+    })
+
+    describe('and the feature flag is false', () => {
+      let getStateSpyWithFlagFalse
+
+      beforeEach(() => {
+        const storeWithFlagFalse = {
+          ...getStateSpy(),
+          productsStock: Immutable.OrderedMap({ 1: 1000, 2: 1000, 3: 1000 }),
+          features: Immutable.fromJS({
+            sortMarketProducts: {
+              value: false,
+            },
+          })
+        }
+
+        getStateSpyWithFlagFalse = () => storeWithFlagFalse
+      })
+
+      test('dispatches with un-sorted items', async () => {
+        await productsLoadProducts('whenCutoff timestamp', null, { reload: false })(dispatchSpy, getStateSpyWithFlagFalse)
+
+        const dispatchSpyCalls = dispatchSpy.mock.calls[1]
+        expect(dispatchSpyCalls[0]).toEqual({
+          type: actionTypes.PRODUCTS_RECEIVE,
+          products: [
+            { id: '1', listPrice: '2.00', isForSale: true, stock: 1000 },
+            { id: '2', listPrice: '1.00', isForSale: true, stock: 1000 },
+            { id: '3', listPrice: '5.00', isForSale: true, stock: 1000 },
+          ],
+          cutoffDate: 'whenCutoff timestamp',
+          reload: false,
+        })
+      })
+    })
+
+    describe('and the feature flag is true', () => {
+      let getStateSpyWithFlagTrue
+
+      beforeEach(() => {
+        const storeWithFlagTrue = {
+          ...getStateSpy(),
+          productsStock: Immutable.OrderedMap({ 1: 1000, 2: 1000, 3: 1000 }),
+          features: Immutable.fromJS({
+            sortMarketProducts: {
+              value: true,
+            },
+          }),
+        }
+
+        getStateSpyWithFlagTrue = () => storeWithFlagTrue
+      })
+
+      test('dispatches with sorted items', async () => {
+        await productsLoadProducts('whenCutoff timestamp', null, { reload: false })(dispatchSpy, getStateSpyWithFlagTrue)
+
+        const dispatchSpyCalls = dispatchSpy.mock.calls[1]
+        expect(dispatchSpyCalls[0]).toEqual({
+          type: actionTypes.PRODUCTS_RECEIVE,
+          products: [
+            { id: '2', listPrice: '1.00', isForSale: true, stock: 1000 },
+            { id: '1', listPrice: '2.00', isForSale: true, stock: 1000 },
+            { id: '3', listPrice: '5.00', isForSale: true, stock: 1000 },
+          ],
+          cutoffDate: 'whenCutoff timestamp',
+          reload: false,
+        })
+      })
     })
   })
 })

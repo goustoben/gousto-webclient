@@ -1,7 +1,7 @@
 import { push } from 'react-router-redux'
 
 import { fetchProduct, fetchRandomProducts, fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
-import { getProductsByCutoff } from 'utils/products'
+import { getProductsByCutoff, sortProductsByPrice } from 'utils/products'
 import logger from 'utils/logger'
 import actionTypes from './actionTypes'
 import statusActions from './status'
@@ -50,7 +50,14 @@ export const productsLoadCategories = (forceRefresh = false) => (
 
 export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}) => (
   async (dispatch, getState) => {
-    const { basket, products, productsStock, auth, error } = getState()
+    const {
+      basket,
+      products,
+      productsStock,
+      auth,
+      error,
+      features,
+    } = getState()
     const currentProductsInBasket = basket.get('products')
     const isProductsLargerThanBasket = products.size <= currentProductsInBasket.size
     const sort = 'position'
@@ -76,7 +83,15 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
           return productsInStockAccumulator
         }, [])
 
-        dispatch({ type: actionTypes.PRODUCTS_RECEIVE, products: productsInStock, cutoffDate, reload })
+        const shouldSortProducts = features.getIn(['sortMarketProducts', 'value'], false)
+        const productsToStore = shouldSortProducts ? sortProductsByPrice(productsInStock) : productsInStock
+
+        dispatch({
+          type: actionTypes.PRODUCTS_RECEIVE,
+          products: productsToStore,
+          cutoffDate,
+          reload
+        })
         if (error[actionTypes.PRODUCTS_RECEIVE]) {
           dispatch(statusActions.error(actionTypes.PRODUCTS_RECEIVE, null))
         }
