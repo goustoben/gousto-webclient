@@ -16,7 +16,6 @@ class ChoosePlan extends PureComponent {
   static propTypes = {
     choosePlanContinue: PropTypes.func,
     extrasIncluded: PropTypes.bool,
-    pricingRequest: PropTypes.func,
     isLoading: PropTypes.bool,
     subscriptionPrices: PropTypes.shape({
       totalPrice: PropTypes.string,
@@ -32,18 +31,12 @@ class ChoosePlan extends PureComponent {
 
   static defaultProps = {
     choosePlanContinue: () => {},
-    pricingRequest: () => {},
     subscriptionPrices: {},
     transactionalPrices: {}
   }
 
-  componentDidMount() {
-    const { pricingRequest } = this.props
-    pricingRequest()
-  }
-
   render() {
-    const { choosePlanContinue, isLoading, subscriptionPrices, transactionalPrices, extrasIncluded } = this.props
+    const { choosePlanContinue, subscriptionPrices, transactionalPrices, extrasIncluded } = this.props
 
     const subscriptionOption = { ...subscription, ...subscriptionPrices}
     const transactionalOption = { ...transactional, ...transactionalPrices}
@@ -66,42 +59,34 @@ class ChoosePlan extends PureComponent {
             <p className={css.subtitle}>
               Get a weekly box delivered at a discount or try a one-off box without a subscription
             </p>
-            { isLoading ? (
-            <div className={css.loadingContainer}>
-              <Loading loading />
-            </div>
-            ) : (
-            <div>
-              <PlanOption
-                title={subscriptionOption.title}
-                totalPrice={subscriptionOption.totalPrice}
-                totalPriceDiscounted={subscriptionOption.totalPriceDiscounted}
-                pricePerPortion={subscriptionOption.pricePerPortion}
-                priceBoxTypeMessage={subscriptionOption.priceBoxTypeMessage}
-                benefits={subscriptionOption.benefits}
-                showExclExtras={extrasIncluded}
-                handleSelect={() => {}}
-              />
-              <PlanOption
-                selected
-                title={transactionalOption.title}
-                totalPrice={transactionalOption.totalPrice}
-                totalPriceDiscounted={transactionalOption.totalPriceDiscounted}
-                pricePerPortion={transactionalOption.pricePerPortion}
-                priceBoxTypeMessage={transactionalOption.priceBoxTypeMessage}
-                benefits={transactionalOption.benefits}
-                showExclExtras={extrasIncluded}
-                handleSelect={() => {}}
-              />
-              {extrasIncluded && (
-                <Alert type="info">
-                  The prices shown above don&#39;t include optional extras, such as
-                  premium delivery or premium recipe surcharges.
-                </Alert>
-              )}
-            </div>
+            <PlanOption
+              title={subscriptionOption.title}
+              totalPrice={subscriptionOption.totalPrice}
+              totalPriceDiscounted={subscriptionOption.totalPriceDiscounted}
+              pricePerPortion={subscriptionOption.pricePerPortion}
+              priceBoxTypeMessage={subscriptionOption.priceBoxTypeMessage}
+              benefits={subscriptionOption.benefits}
+              showExclExtras={extrasIncluded}
+              handleSelect={() => {}}
+            />
+            <PlanOption
+              selected
+              title={transactionalOption.title}
+              totalPrice={transactionalOption.totalPrice}
+              totalPriceDiscounted={transactionalOption.totalPriceDiscounted}
+              pricePerPortion={transactionalOption.pricePerPortion}
+              priceBoxTypeMessage={transactionalOption.priceBoxTypeMessage}
+              benefits={transactionalOption.benefits}
+              showExclExtras={extrasIncluded}
+              handleSelect={() => {}}
+            />
+            {extrasIncluded && (
+              <Alert type="info">
+                The prices shown above don&#39;t include optional extras, such as
+                premium delivery or premium recipe surcharges.
+              </Alert>
             )}
-          <Button onClick={choosePlanContinue} disabled={isLoading} width="full">
+          <Button onClick={choosePlanContinue} width="full">
             Continue
           </Button>
         </div>
