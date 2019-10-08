@@ -1,7 +1,7 @@
 @value ScreenXSMax, ScreenSMMin, MinBreakPointXL, ScreenMDMin from 'styles/screenSizes.css';
 @value SpacingXXL, SpacingLG, SpacingMD as GutterSize, SpacingSM, SpacingXS from 'sass-loader!styles/spacing.scss';
 @value sizeMD, sizeSM, sizeXL from 'styles/typography.css';
-@value Coconut, Mushroom50, Oyster, White from 'styles/colors.css';
+@value Coconut, Mushroom50, White, NewGrey from 'styles/colors.css';
 @value headerHeight from 'components/Header/Header.css';
 
 @value ColumnWidth 33.333%;
@@ -75,8 +75,8 @@
 
 .legal {
 	composes: textXS textCenter from 'styles/typography.css';
-	composes: marginLGTop from 'sass-loader!styles/spacing.scss';
-	color: Oyster;
+	composes: marginLG from 'sass-loader!styles/spacing.scss';
+	color: NewGrey;
 }
 
 .willFade {
