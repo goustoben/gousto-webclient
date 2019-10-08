@@ -113,6 +113,7 @@ export function checkoutCreatePreviewOrder() {
       const deliveryDayId = boxSummaryDeliveryDays.getIn([date, 'coreDayId'])
       const recipes = basket.get('recipes')
       const quantity = basket.get('numPortions')
+      const daySlotLeadTimeId = slot.get('daySlotLeadTimeId', '')
 
       const recipeChoices = (
         recipes.reduce((recipesArray, qty, id) => {
@@ -136,10 +137,7 @@ export function checkoutCreatePreviewOrder() {
         delivery_day_id: deliveryDayId,
         delivery_slot_id: deliverySlotId,
         recipe_choices: recipeChoices,
-      }
-
-      if (basket.get('prevDaySlotLeadTimeId')) {
-        orderDetails.day_slot_lead_time_id = basket.get('prevDaySlotLeadTimeId')
+        day_slot_lead_time_id: daySlotLeadTimeId
       }
 
       if (basket.get('orderId')) {

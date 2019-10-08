@@ -1948,6 +1948,7 @@ describe('utils/deliveries', () => {
               coreSlotId: "4",
               deliveryStartTime: "18:00:00",
               id: "dafe3372-12d1-11e6-bee5-06ddb628bdc5",
+              daySlotLeadTimeId: "7bdd00f7-af72-41af-8444-a35f1467be49"
             },
             {
               whenCutoff: "2014-01-14T11:59:59+00:00",
@@ -1957,6 +1958,7 @@ describe('utils/deliveries', () => {
               coreSlotId: "3",
               deliveryStartTime: "08:00:00",
               id: "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
+              daySlotLeadTimeId: "386932e5-71bd-4610-b9a4-baae4bc91be9",
             }
           ]
         },

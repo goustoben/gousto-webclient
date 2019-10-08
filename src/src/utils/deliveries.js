@@ -429,7 +429,8 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
         isDefault: dslt.isSlotDefault,
         coreSlotId: dslt.coreSlotId,
         deliveryStartTime: dslt.startTime,
-        id: dslt.slotId
+        id: dslt.slotId,
+        daySlotLeadTimeId: dslt.id
         // fields not available in current DSLT and not used in webclient:
         // - cutoffTime
         // - cutoffDay

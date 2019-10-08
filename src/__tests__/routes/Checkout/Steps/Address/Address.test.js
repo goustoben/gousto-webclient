@@ -72,9 +72,9 @@ describe('Address', () => {
 
   describe('with NDD prop', () => {
 
-    beforeEach(async () => {
+    beforeEach(() => {
       const selectedAddresses = Immutable.Map({})
-      wrapper = await shallow(< Address
+      wrapper = shallow(< Address
         selectedAddress={selectedAddresses}
         registerField={jest.fn()}
         checkoutAddressLookup={jest.fn()}
