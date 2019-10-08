@@ -51,6 +51,7 @@ const initialState = () => Immutable.fromJS({
   previewOrderId: '',
   stepsOrder: [],
   tariffId: null,
+  subscriptionOption: 'subscription',
   surcharges: Immutable.List(),
   shortlist: {
     shortlistRecipes: {},
@@ -359,6 +360,18 @@ const basket = {
       const { value } = action
 
       return state.setIn(['shortlist', 'shortlistFeedbackViewed'], value)
+    }
+
+    case actionTypes.CHOOSE_PLAN_CONTINUE: {
+      const { subscriptionOption } = action
+
+      return state.set('subscriptionOption', subscriptionOption)
+    }
+
+    case actionTypes.BASKET_SET_SUBSCRIPTION_OPTION: {
+      const { subscriptionOption } = action
+
+      return state.set('subscriptionOption', subscriptionOption)
     }
 
     default: {

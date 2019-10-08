@@ -12,6 +12,7 @@ import { getAddress } from 'utils/checkout'
 import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { isChoosePlanEnabled } from 'selectors/features'
 import { getUserRecentRecipesIds } from 'selectors/user'
 import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -612,6 +613,12 @@ export function userSubscribe() {
       const deliveryAddress = getAddress(delivery)
       const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
 
+      const intervalId =
+        isChoosePlanEnabled(state) &&
+        basket.get('subscriptionOption') === 'transactional'
+          ? 0
+          : delivery.get('interval_id') || 1
+
       const reqData = {
         order_id: basket.get('previewOrderId'),
         promocode: basket.get('promoCode', ''),
@@ -650,7 +657,7 @@ export function userSubscribe() {
           )
         },
         subscription: {
-          interval_id: delivery.get('interval_id') || 1,
+          interval_id: intervalId,
           delivery_slot_id: basket.get('slotId'),
           box_id: basket.get('boxId')
         }
@@ -678,7 +685,7 @@ export function userSubscribe() {
             signup: true,
             subscription_active: data.subscription.status ? data.subscription.status.slug : true,
             payment_provider: paymentProvider,
-            interval_id: delivery.get('interval_id', '1')
+            interval_id: intervalId
           }
         })
 

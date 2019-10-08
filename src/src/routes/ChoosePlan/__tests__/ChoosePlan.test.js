@@ -18,6 +18,7 @@ let wrapper
 
 describe('ChoosePlan', () => {
   beforeEach(() => {
+    jest.clearAllMocks()
     wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices}/>)
   })
   test('should render a title', () => {
@@ -30,6 +31,43 @@ describe('ChoosePlan', () => {
 
   test('should render a button', () => {
     expect(wrapper.find('Button').length).toEqual(1)
+  })
+
+  test('should render two PlanOption components', () => {
+    expect(wrapper.find('PlanOption').length).toEqual(2)
+  })
+
+  describe('Continue button', () => {
+    const promoCode = 'PROMO'
+    const tempPromoCode = 'TEMP-PROMO'
+    const choosePlanContinue = jest.fn()
+    const clearTempPromoCode = jest.fn()
+    const stashTempPromoCode = jest.fn()
+    beforeEach(() => {
+      wrapper.setProps({promoCode, tempPromoCode, choosePlanContinue, clearTempPromoCode, stashTempPromoCode})
+    })
+    describe('when chosen subscriptionOption is transactional', () => {
+      beforeEach(() => {
+        wrapper.setState({subscriptionOption: 'transactional'})
+      })
+      test('clicking Continue should call stashTempPromoCode and choosePlanContinue', () => {
+        wrapper.find('Button').simulate('click')
+        expect(clearTempPromoCode).not.toHaveBeenCalled()
+        expect(stashTempPromoCode).toHaveBeenCalled()
+        expect(choosePlanContinue).toHaveBeenCalled()
+      })
+    })
+    describe('when chosen subscriptionOption is subscription', () => {
+      beforeEach(() => {
+        wrapper.setState({subscriptionOption: 'subscription'})
+      })
+      test('clicking Continue should call clearTempPromoCode and choosePlanContinue', () => {
+        wrapper.find('Button').simulate('click')
+        expect(stashTempPromoCode).not.toHaveBeenCalled()
+        expect(clearTempPromoCode).toHaveBeenCalled()
+        expect(choosePlanContinue).toHaveBeenCalled()
+      })
+    })
   })
 
   describe('Surcharge message', () => {

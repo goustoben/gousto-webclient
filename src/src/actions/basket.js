@@ -806,6 +806,11 @@ export const basketSignupCollectionReceive = collection => ({
   collection,
 })
 
+export const basketSetSubscriptionOption = subscriptionOption => ({
+  type: actionTypes.BASKET_SET_SUBSCRIPTION_OPTION,
+  subscriptionOption,
+})
+
 export const actions = {
   basketOrderLoaded,
   basketDateChange,
@@ -842,6 +847,7 @@ export const actions = {
   basketUpdateProducts,
   basketReset,
   basketSignupCollectionReceive,
+  basketSetSubscriptionOption,
 }
 
 export default actions

@@ -36,6 +36,7 @@ export default (store) => {
         stepsOrder: false,
         collection: true,
         promoCode: true,
+        subscriptionOption: true,
         shortlist: {
           shortlistRecipes: false,
           shortlistRecipesPositions: false,

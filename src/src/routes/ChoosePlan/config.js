@@ -18,3 +18,5 @@ export const transactional = {
   ]},
   percentageOff: 30
 }
+
+export const transactionalPromoCode = 'TEST-TRANS'

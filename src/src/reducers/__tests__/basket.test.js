@@ -41,6 +41,7 @@ describe('basket reducer', function () {
       previewOrderId: '',
       stepsOrder: [],
       tariffId: null,
+      subscriptionOption: 'subscription',
       surcharges: Immutable.List(),
       shortlist: {
         shortlistRecipes: {},
