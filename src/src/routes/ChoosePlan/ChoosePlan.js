@@ -4,10 +4,8 @@ import PropTypes from 'prop-types'
 import { Button, Alert } from 'goustouicomponents'
 import Loading from 'Loading'
 import { PlanOption } from './PlanOption'
-import { subscription, transactional } from './config'
+import { subscription, transactional, transactionalPromoCode } from './config'
 import css from './ChoosePlan.css'
-
-const transactionalPromoCode = 'TEST-TRANS'
 
 class ChoosePlan extends PureComponent {
   constructor(props) {
