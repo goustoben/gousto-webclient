@@ -611,8 +611,8 @@ describe('basket actions', () => {
       })
     })
 
-    test('should track the dietary attribute for proceed to checkout', async () => {
-      await basketProceedToCheckout()(dispatch, getState)
+    test('should track the dietary attribute for proceed to checkout', () => {
+      basketProceedToCheckout()(dispatch, getState)
       expect(dispatch.mock.calls[0][0]).toEqual({
         type: 'BASKET_CHECKOUT_PROCEED',
         trackingData: {
@@ -625,7 +625,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should proceed to choose plan if choosePlan feature is enabled', async () => {
+    test('should proceed to choose plan if choosePlan feature is enabled', () => {
       getState = () => ({
         basket: Immutable.fromJS({
           orderId: '179',
@@ -640,12 +640,12 @@ describe('basket actions', () => {
         })
       })
 
-      await basketProceedToCheckout()(dispatch, getState)
+      basketProceedToCheckout()(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith(push(config.routes.client.choosePlan))
     })
 
-    test("should proceed to checkout if choosePlan feature isn't enabled", async () => {
-      await basketProceedToCheckout()(dispatch, getState)
+    test("should proceed to checkout if choosePlan feature isn't enabled", () => {
+      basketProceedToCheckout()(dispatch, getState)
       expect(dispatch).toHaveBeenCalledWith(push(config.routes.client['check-out']))
     })
   })
