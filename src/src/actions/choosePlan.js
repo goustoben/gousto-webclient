@@ -3,7 +3,7 @@ import { redirect } from 'actions/redirect'
 import routes from 'config/routes'
 import { basketPromoCodeChange } from './basket'
 
-export const trackSubscriptionOptionSelected = (subscriptionOption) => (dispatch) => {
+export const trackSubscriptionOptionSelected = subscriptionOption => dispatch => {
   dispatch({
     type: actionTypes.TRACKING,
     trackingData: {
@@ -13,21 +13,24 @@ export const trackSubscriptionOptionSelected = (subscriptionOption) => (dispatch
   })
 }
 
-export const clearTempPromoCode = () => (dispatch) => {
+export const clearTempPromoCode = () => dispatch => {
   dispatch({
     type: actionTypes.TEMP,
     promoCode: ''
   })
 }
 
-export const stashTempPromoCode = (promoCode) => (dispatch) => {
+export const stashTempPromoCode = promoCode => dispatch => {
   dispatch({
     type: actionTypes.TEMP,
     promoCode: promoCode
   })
 }
 
-export const choosePlanContinue = (subscriptionOption, chosenPromoCode) => (dispatch) => {
+export const choosePlanContinue = (
+  subscriptionOption,
+  chosenPromoCode
+) => dispatch => {
   dispatch(basketPromoCodeChange(chosenPromoCode))
   dispatch({
     type: actionTypes.CHOOSE_PLAN_CONTINUE,
