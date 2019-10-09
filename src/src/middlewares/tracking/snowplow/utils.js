@@ -3,8 +3,8 @@ import windowUtils from 'utils/window'
 export function sendTrackingData({ seCategory, type, action, data = {}, version = 1, pathname }) {
   const windowObj = windowUtils.getWindow()
 
-  if (windowObj && Array.isArray(windowObj.dataScienceDataLayer)) {
-    windowObj.dataScienceDataLayer.push({
+  if (windowObj && Array.isArray(windowObj.dataLayer)) {
+    windowObj.dataLayer.push({
       action,
       event: 'userAction',
       category: seCategory,

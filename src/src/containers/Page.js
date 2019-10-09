@@ -59,7 +59,7 @@ class Page extends React.PureComponent {
   }
 
   updateDataScienceLayer = (email, goustoReference) => {
-    const datalayer = getWindow().dataScienceDataLayer
+    const datalayer = getWindow().dataLayer
     if (datalayer && Array.isArray(datalayer)) {
       datalayer.push({ email, goustoReference })
     }
