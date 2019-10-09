@@ -18,11 +18,13 @@ class NotificationLogic extends Component {
   static propTypes = {
     card: PropTypes.instanceOf(Immutable.Map),
     orders: PropTypes.instanceOf(Immutable.Map),
+    trackNotificationLinkClick: PropTypes.func,
   }
 
   static defaultProps = {
     card: Immutable.Map({}),
     orders: Immutable.Map({}),
+    trackNotificationLinkClick: () => {},
   }
 
   getNotifications() {
@@ -39,12 +41,14 @@ class NotificationLogic extends Component {
       type: config[notification].type,
       title: config[notification].title,
       url: config[notification].url,
+      linkTrackingType: config[notification].linkTrackingType,
     })).sort((a, b) => sortNotifications(a.type, b.type))
 
   }
 
   render() {
     const notifications = this.getNotifications()
+    const { trackNotificationLinkClick } = this.props
 
     return (notifications.length) ? (
       <div>
@@ -56,6 +60,7 @@ class NotificationLogic extends Component {
               type={notification.type}
               title={notification.title}
               url={notification.url}
+              onLinkClick={notification.linkTrackingType ? () => trackNotificationLinkClick(notification.linkTrackingType) : undefined}
             />
           ) : null
         ))}
