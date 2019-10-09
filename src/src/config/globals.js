@@ -1,4 +1,4 @@
-module.exports = {
+const globals = {
   client: __CLIENT__,
   server: __SERVER__,
   legacy: () => __CLIENT__ && window.__LEGACY__, // eslint-disable-line no-underscore-dangle
@@ -10,3 +10,5 @@ module.exports = {
   protocol: __CLIENT_PROTOCOL__,
   service: 'webclient'
 }
+
+export default globals
