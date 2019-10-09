@@ -1,6 +1,6 @@
 
 export default (action, state = {}) => {
-  if (__CLIENT__ && window.dataScienceDataLayer) {
+  if (__CLIENT__ && window.dataLayer) {
     const actionType = action.actionType
     const actionValue = {}
     Object.keys(action)
@@ -9,6 +9,6 @@ export default (action, state = {}) => {
         actionValue[key] = action[key]
       })
     const event = Object.assign({}, state, { event: 'userAction' }, { actionType }, { actionValue: JSON.stringify(actionValue) })
-    window.dataScienceDataLayer.push(event)
+    window.dataLayer.push(event)
   }
 }
