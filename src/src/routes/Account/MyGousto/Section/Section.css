@@ -15,7 +15,7 @@
   background-color: inherit;
   margin: 0 auto;
   max-width: 750px;
-  padding: 40px 0;
+  padding: 20px 0 40px;
 
   @media ScreenMDMin {
     max-width: 970px;
