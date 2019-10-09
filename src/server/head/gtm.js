@@ -1,11 +1,12 @@
 import blackListConfig from 'config/gtmBlacklist'
 
 export const gtm = (state, userAgent) => {
-  const authId = state.auth.get('id')
-
   if (!userAgent.match(blackListConfig.user_agents)) {
+    const authId = state.auth.get('id')
+    const dataLayer = (authId) ? `[${JSON.stringify({ goustoReference: authId })}]` : '[]'
+
     return `
-      <script>dataLayer = [${authId ? JSON.stringify({ goustoReference: authId }) : ''}];</script>
+      <script>dataLayer = ${dataLayer};</script>
       <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MKZ8XN"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
