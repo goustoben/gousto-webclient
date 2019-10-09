@@ -50,11 +50,11 @@ describe('MyGousto', () => {
       expect(wrapper.find('p').text()).toContain('Loading your most recent recipes')
     })
 
-    test('should render three recipe cards', () => {
-      expect(wrapper.find(RecipeCard).length).toEqual(3)
+    test('should render 6 recipe cards', () => {
+      expect(wrapper.find(RecipeCard).length).toEqual(6)
     })
 
-    test('should render recipe cards with correct props', () => {
+    test('should render 3 recipe cards with props', () => {
       expect(
         wrapper
           .find(RecipeCard)
@@ -75,6 +75,29 @@ describe('MyGousto', () => {
           .first()
           .prop('images')
       ).toEqual(Immutable.List(['url1', 'url2']))
+    })
+
+    test('should render 3 empty recipe cards', () => {
+      expect(
+        wrapper
+          .find(RecipeCard)
+          .last()
+          .prop('title')
+      ).toEqual(null)
+
+      expect(
+        wrapper
+          .find(RecipeCard)
+          .last()
+          .prop('link')
+      ).toEqual(null)
+
+      expect(
+        wrapper
+          .find(RecipeCard)
+          .last()
+          .prop('images')
+      ).toEqual('product-placeholder.png')
     })
   })
 

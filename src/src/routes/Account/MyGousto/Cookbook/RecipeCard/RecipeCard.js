@@ -7,12 +7,17 @@ import placeholderSrc from 'media/images/product-placeholder.png'
 import css from './RecipeCard.css'
 
 const propTypes = {
-  link: PropTypes.string.isRequired,
+  link: PropTypes.string,
   images: PropTypes.oneOfType([
     PropTypes.instanceOf(Immutable.List),
     PropTypes.string
   ]).isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string,
+}
+
+const defaultProps = {
+  link: null,
+  title: null,
 }
 
 const maxMediaSize = 400
@@ -43,5 +48,6 @@ const RecipeCard = ({ link, images, title }) => (
 )
 
 RecipeCard.propTypes = propTypes
+RecipeCard.defaultProps = defaultProps
 
 export { RecipeCard }
