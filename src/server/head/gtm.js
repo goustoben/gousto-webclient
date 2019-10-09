@@ -1,43 +1,22 @@
-const blackListConfig = require('config/gtmBlacklist')
+import blackListConfig from 'config/gtmBlacklist'
 
-function getDataLayer(userAgent) {
-  let gtmScript = ''
+export const gtm = (state, userAgent) => {
+  const authId = state.auth.get('id')
 
   if (!userAgent.match(blackListConfig.user_agents)) {
-    gtmScript = `
+    return `
+      <script>dataLayer = [${authId ? JSON.stringify({ goustoReference: authId }) : ''}];</script>
       <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MKZ8XN"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-MKZ8XN');</script>`
+      })(window,document,'script','dataLayer','GTM-MKZ8XN');</script>
+    `
   }
 
   return (
-    `<script>dataLayer = window.dataLayer || [];</script>${gtmScript}`
+    `<script>dataLayer = window.dataLayer || [];</script>`
   )
 }
-
-function getDataScienceLayer(state) {
-  const authId = state.auth.get('id')
-
-  return (
-    `<script>dataScienceDataLayer = [${authId ? JSON.stringify({ goustoReference: authId }) : ''}];</script>
-    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M59C2X"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataScienceDataLayer','GTM-M59C2X');</script>`
-  )
-}
-
-function gtm(initialState, userAgent) {
-  return (
-    `${getDataLayer(userAgent)}${getDataScienceLayer(initialState)}`
-  )
-}
-
-export default gtm
