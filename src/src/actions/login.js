@@ -127,21 +127,7 @@ export const loginRedirect = (location, userIsAdmin, features) => {
       try {
         url = URL.parse(target)
 
-        const hostInfoList = url.host.split('.')
-        const hostInfo = hostInfoList.slice(
-          hostInfoList.indexOf('gousto'),
-        )
-        const globalsHostInfo = globals.domain.slice(
-          globals.domain.indexOf('gousto'),
-        )
-        const isGoustoTarget = (
-          hostInfo.join('.') === globalsHostInfo
-        )
-
-        if (isGoustoTarget) {
-          destination = `${url.pathname}${url.search ? url.search : ''}`
-        }
-
+        destination = `${url.pathname}${url.search ? url.search : ''}`
       } catch (err) {
         // do nothing
       }
