@@ -70,10 +70,10 @@ describe('Notification component', () => {
   describe('checkAmendedDeliveryDate', () => {
 
     it('should return "Amend Delivery" if delivery date has been amended', () => {
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
           state: 'pending',
-          original_delivery_day: true,
+          originalDeliveryDay: true,
         }
       })
 
@@ -83,10 +83,10 @@ describe('Notification component', () => {
     })
 
     it('should return undefined if no delivery dates have been amended', () => {
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
           state: 'pending',
-          original_delivery_day: false,
+          originalDeliveryDay: false,
         }
       })
 
@@ -111,11 +111,11 @@ describe('Notification component', () => {
     })
 
     it('should return "Select order" if upcoming order has not been selected', () => {
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
           state: 'pending',
           default: '1',
-          when_cutoff: moment('2019-08-15')
+          whenCutoff: moment('2019-08-15 11:59:59')
         }
       })
 
@@ -125,11 +125,11 @@ describe('Notification component', () => {
     })
 
     it('should return undefined if no upcoming orders are unselected', () => {
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
           state: 'pending',
           default: '1',
-          when_cutoff: moment('2019-08-23')
+          whenCutoff: moment('2019-08-23 11:59:59')
         }
       })
 
@@ -181,10 +181,10 @@ describe('Notification component', () => {
         lastFourDigits: "1234",
         expiryDate: currentMonth,
       })
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
           state: 'pending',
-          original_delivery_day: true,
+          originalDeliveryDay: true,
         }
       })
     })
@@ -193,7 +193,7 @@ describe('Notification component', () => {
 
       wrapper = shallow(<Notification card={card} orders={orders} />)
 
-      expect(wrapper.state('notifications')).toMatchSnapshot()
+      expect(wrapper.instance().getNotifications()).toMatchSnapshot()
     })
   })
 })

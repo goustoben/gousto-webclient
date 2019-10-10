@@ -18,16 +18,17 @@ export const checkCardExpiryDate = (card, now) => {
 }
 
 export const checkAmendedDeliveryDate = (orders) => {
-  const alternateDeliveryDays = orders.filter(order => order.state === 'pending' && order.original_delivery_day).toArray()
+  const alternateDeliveryDays = orders.filter(order => order.get('state') === 'pending' && order.get('originalDeliveryDay')).toArray()
   if (alternateDeliveryDays.length > 0) {
     return 'amendDelivery'
   }
 }
 
 export const checkOrderAwaitingSelection = (orders, now) => {
+
   const notifications = orders
-    .filter(order => order.state === 'pending' && order.default === '1')
-    .filter(order => moment(order.when_cutoff).isSame(now, 'day'))
+    .filter(order => order.get('state') === 'pending' && order.get('default') === '1')
+    .filter(order => moment(order.get('whenCutoff')).isSame(now, 'day'))
     .toArray()
 
   if (notifications.length >= 1) {
