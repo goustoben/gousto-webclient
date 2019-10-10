@@ -12,7 +12,7 @@ import { getAddress } from 'utils/checkout'
 import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-import { isChoosePlanEnabled } from 'selectors/features'
+import { isChoosePlanEnabled, isNDDFeatureEnabled } from 'selectors/features'
 import { getUserRecentRecipesIds } from 'selectors/user'
 import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -619,6 +619,9 @@ export function userSubscribe() {
           ? 0
           : delivery.get('interval_id') || 1
 
+      // eslint-disable-next-line no-console
+      console.log(isNDDFeatureEnabled(getState))
+
       const reqData = {
         order_id: basket.get('previewOrderId'),
         promocode: basket.get('promoCode', ''),
@@ -633,7 +636,8 @@ export function userSubscribe() {
           age_verified: Number(promoAgeVerified || false),
           salutation_id: aboutYou.get('title'),
           marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
-          marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false)
+          marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
+          delivery_tariff_id: isNDDFeatureEnabled(getState) ? '823b18ef-5ca0-4a15-8f0f-4a363b319e29' : '9037a447-e11a-4960-ae69-d89a029569af'
         },
         payment_method: {
           is_default: 1,
@@ -662,7 +666,6 @@ export function userSubscribe() {
           box_id: basket.get('boxId')
         }
       }
-
       const { data } = await customerSignup(null, reqData)
 
       if (data.customer && data.addresses && data.subscription && data.orderId) {

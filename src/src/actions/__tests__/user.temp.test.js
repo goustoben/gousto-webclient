@@ -173,7 +173,10 @@ describe('user actions', () => {
           ...state,
           features: Immutable.fromJS({
             checkoutPayment: {
-              value: true
+              value: true,
+            },
+            ndd: {
+              value: false,
             }
           })
         }
@@ -182,6 +185,65 @@ describe('user actions', () => {
       it('should call customerSignup', async () => {
         await userSubscribe()(dispatch, getState)
         expect(customerSignup).toHaveBeenCalled()
+      })
+
+      it('should call customerSignup with the correct delivery_tariff_id when not in NDD experiment', async () => {
+        await userSubscribe()(dispatch, getState)
+
+        expect(customerSignup).toHaveBeenCalledWith(
+          null,
+          expect.objectContaining({
+            customer: {
+              age_verified: 0,
+              delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+              email: 'test_email@test.com',
+              marketing_do_allow_email: 0,
+              marketing_do_allow_thirdparty: 0,
+              name_first: undefined,
+              promo_code: '',
+              name_last: undefined,
+              password: undefined,
+              phone_number: '',
+              salutation_id: undefined,
+              tariff_id: '',
+            },
+          }),
+        )
+      })
+
+      it('should call customerSignup with the correct delivery_tariff_id when in NDD experiment', async () => {
+        state = {
+          ...state,
+          features: Immutable.fromJS({
+            ndd: {
+              value: true,
+            }
+          })
+        }
+
+        getState.mockReturnValue(state)
+
+        await userSubscribe()(dispatch, getState)
+
+        expect(customerSignup).toHaveBeenCalledWith(
+          null,
+          expect.objectContaining({
+            customer: {
+              age_verified: 0,
+              delivery_tariff_id: '823b18ef-5ca0-4a15-8f0f-4a363b319e29',
+              email: 'test_email@test.com',
+              marketing_do_allow_email: 0,
+              marketing_do_allow_thirdparty: 0,
+              name_first: undefined,
+              promo_code: '',
+              name_last: undefined,
+              password: undefined,
+              phone_number: '',
+              salutation_id: undefined,
+              tariff_id: '',
+            },
+          }),
+        )
       })
     })
   })
