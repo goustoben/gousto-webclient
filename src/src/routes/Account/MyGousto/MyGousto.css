@@ -1,0 +1,26 @@
+@value ScreenLGMin, ScreenMDMin from 'styles/screenSizes.css';
+@value White from 'styles/colors.css';
+
+.wrapper {
+  background-color: White;
+  width: 100%;
+}
+
+.notificationContent {
+  padding-top: 1rem;
+  background-color: White;
+  margin: 0 auto;
+  max-width: 750px;
+  overflow: auto;
+
+  @media ScreenMDMin {
+    max-width: 970px;
+  }
+  @media ScreenLGMin {
+    max-width: 1170px;
+  }
+}
+
+.notificationContent:empty {
+  padding-top: 0;
+}
