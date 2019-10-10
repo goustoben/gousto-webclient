@@ -75,12 +75,11 @@ describe('MyGousto - Header', () => {
     beforeEach(() => {
       wrapper = mount(<Header />)
     })
-    test('should show the no upcoming orders message', () => {
-      expect(wrapper.find('.headerText').first().text()).toContain('Looks like you don’t have any recipe boxes ordered')
+
+    test('should not render any messages', () => {
+      expect(wrapper.find('.headerText').length).toEqual(0)
     })
-    test('should not show the previous order message', () => {
-      expect(wrapper.text()).not.toContain('Your most recent box was delivered')
-    })
+
   })
 
   describe('when a user has upcoming orders', () => {

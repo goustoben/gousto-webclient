@@ -30,14 +30,11 @@ class Header extends PureComponent {
 
     const date = moment(order.get('deliveryDate'))
 
-    let message = ''
     if (now.format('YYMMDD') === date.format('YYMMDD')) {
-      message = `Your recipe box will be delivered today, ${date.format('Do MMMM')}.  You can view more details in `
-    } else {
-      message = `'Your next Gousto box will arrive on ${date.format('dddd, Do MMMM')} between ${start.format('ha')}-${roundedEnd.format('ha')}. See all the details or edit this box from `
+      return `Your recipe box will be delivered today, ${date.format('Do MMMM')}.  You can view more details in `
     }
 
-    return message
+    return `Your next Gousto box will arrive on ${date.format('dddd, Do MMMM')} between ${start.format('ha')}-${roundedEnd.format('ha')}. See all the details or edit this box from `
   }
 
   formatPreviousBoxDate = order => {
@@ -88,15 +85,18 @@ class Header extends PureComponent {
     const getHelpQueryParam =
       previousOrder &&
       now.diff(moment(previousOrder.get('deliveryDate')), 'days', true) <
-        ELIGIBILITY_DAYS &&
+      ELIGIBILITY_DAYS &&
       `?orderId=${previousOrder.get('id')}`
+    const loading = nextOrder || previousOrder
 
     return (
-      <HeaderPresentation
-        nextOrderMessage={nextOrderMessage}
-        previousOrderMessage={previousOrderMessage}
-        getHelpQueryParam={getHelpQueryParam}
-      />
+      loading ?
+        <HeaderPresentation
+          nextOrderMessage={nextOrderMessage}
+          previousOrderMessage={previousOrderMessage}
+          getHelpQueryParam={getHelpQueryParam}
+        />
+        : null
     )
   }
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { Row } from 'Page/Grid'
 import { getRecipeTitle, getRecipeURL, getRecipeImages } from 'selectors/recipe'
+import placeholderSrc from 'media/images/product-placeholder.png'
 import css from './Cookbook.css'
 import { RecipeCard } from './RecipeCard'
 
@@ -16,7 +17,7 @@ class Cookbook extends React.PureComponent {
 
   static defaultProps = {
     loading: false,
-    userLoadCookbookRecipes: () => {},
+    userLoadCookbookRecipes: () => { },
     orders: Immutable.Map(),
     recipes: Immutable.List()
   }
@@ -30,14 +31,26 @@ class Cookbook extends React.PureComponent {
 
   renderRecipes() {
     const { recipes } = this.props
+    let recipeCards = []
 
-    return recipes.map(recipe => {
+    recipeCards = recipes.map(recipe => {
       const title = getRecipeTitle(recipe)
       const url = getRecipeURL(recipe)
       const images = getRecipeImages(recipe)
 
       return <RecipeCard key={title} title={title} link={url} images={images} />
-    })
+    }).toArray()
+
+    if (recipeCards.length < 6) {
+      const emptyCards = 6 - recipeCards.length
+
+      for (let i = 0; i < emptyCards; i++) {
+        recipeCards.push(<RecipeCard images={placeholderSrc} />)
+      }
+    }
+
+    return recipeCards
+
   }
 
   render() {
