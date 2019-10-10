@@ -28,6 +28,7 @@ export const menuLoadCollections = (date, noUrlChange) => {
     const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
     if (recommendationCollection && recommendationCollection.properties) {
       const { tutorial, shortlist } = recommendationCollection.properties
+      // TODO [TR-432]: Feedback from James on branch #1151 - check new Jira ticket
       const tutorialEnabled = (tutorial && tutorial === 'jfy') || false
       const shortlistEnabled = shortlist || false
 
@@ -35,7 +36,7 @@ export const menuLoadCollections = (date, noUrlChange) => {
       dispatch(featureSet('shortlist', shortlistEnabled))
     }
 
-    // TODO: Don't think we need this filterExperiment code anymore as we don't have this feature flag
+    // TODO: [TR-432]: Don't think we need this filterExperiment code anymore as we don't have this feature flag
     const filterExperiment = state.features.getIn(['dietaryQuickFilter', 'value'])
     const collectionsFiltered = filterExperiment ?
       collections.filter(collection => (!['dairy-free', 'gluten-free'].includes(collection.slug)))

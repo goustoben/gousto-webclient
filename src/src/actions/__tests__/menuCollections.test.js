@@ -63,7 +63,7 @@ describe('menu actions', () => {
       })
 
       test('should dispatch a fetchCollections request containing jfy experiment', () => {
-        fetchCollections.mockReturnValueOnce(Promise.resolve({
+        fetchCollections.mockResolvedValue(Promise.resolve({
           data: [{
             id: 'all recipes collection',
             slug: 'all-recipes',
@@ -298,10 +298,10 @@ describe('menu actions', () => {
   })
 
   describe('menuLoadCollectionsRecipes', () => {
-    let getState2
+    let getStateWithBasketItems
 
     beforeEach(() => {
-      getState2 = () => ({
+      getStateWithBasketItems = () => ({
         auth: Immutable.Map({
           accessToken: 'an-access-token',
           isAuthenticated: true
@@ -320,8 +320,7 @@ describe('menu actions', () => {
     })
 
     test('calls menuLoadCollectionRecipes for each menuCollection in state', async () => {
-      const functToRun = menuLoadCollectionsRecipes('a-date')
-      await functToRun(dispatch, getState2)
+      await menuLoadCollectionsRecipes('a-date')(dispatch, getStateWithBasketItems)
 
       expect(isAllRecipes).toHaveBeenCalled()
       expect(menuLoadCollectionRecipes).toHaveBeenCalled()

@@ -126,7 +126,7 @@ describe('menu actions', () => {
     })
 
     test('should load collections when collections.value is true', async () => {
-      const stateWithFalseCollectionValue = {
+      const stateWithTrueCollectionValue = {
         ...state,
         features: Immutable.fromJS({
           collections: {
@@ -135,7 +135,7 @@ describe('menu actions', () => {
         }),
       }
 
-      const getStateForTest = () => stateWithFalseCollectionValue
+      const getStateForTest = () => stateWithTrueCollectionValue
 
       await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
 

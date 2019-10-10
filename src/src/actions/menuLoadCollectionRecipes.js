@@ -1,7 +1,7 @@
 import { fetchCollectionRecipes } from 'apis/collections'
 import { menuReceiveCollectionRecipes, menuReceiveMenu } from 'actions/menu'
 
-// TODO: change menuLoadCollectionRecipes name as it clashes with menuLoadCollectionsRecipes
+// TODO [TR-432]: change menuLoadCollectionRecipes name as it clashes with menuLoadCollectionsRecipes
 export function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
   return async (dispatch, getState) => {
     const state = getState()
