@@ -7,7 +7,7 @@
 }
 
 .notificationContent {
-  padding-top: 16px;
+  padding-top: 1rem;
   background-color: White;
   margin: 0 auto;
   max-width: 750px;
@@ -22,5 +22,5 @@
 }
 
 .notificationContent:empty {
-  padding-top: 0px;
+  padding-top: 0;
 }
