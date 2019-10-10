@@ -12,7 +12,7 @@ const notificationConfig = ({
     url: 'my-details',
   },
   amendDelivery: {
-    message: 'Due to the Bank Holiday, we’ve moved your delivery to the next available delivery day.',
+    message: 'We’ve moved your delivery to the next available delivery day.',
     type: 'info',
     title: 'Delivery changes',
     url: 'my-deliveries',

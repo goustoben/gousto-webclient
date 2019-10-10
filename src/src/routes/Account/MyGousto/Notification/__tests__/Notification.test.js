@@ -193,7 +193,7 @@ describe('Notification component', () => {
 
       wrapper = shallow(<Notification card={card} orders={orders} />)
 
-      expect(wrapper.state('notifications')).toMatchSnapshot()
+      expect(wrapper.instance().getNotifications()).toMatchSnapshot()
     })
   })
 })

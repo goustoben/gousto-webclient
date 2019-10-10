@@ -25,15 +25,11 @@ class NotificationLogic extends Component {
     orders: Immutable.Map({}),
   }
 
-  state = {
-    notifications: [],
-  }
-
-  componentDidMount() {
+  getNotifications() {
     const { card, orders } = this.props
     const now = moment()
 
-    const notifications = [
+    return [
       checkCardExpiryDate(card, now),
       checkAmendedDeliveryDate(orders),
       checkOrderAwaitingSelection(orders, now),
@@ -45,13 +41,10 @@ class NotificationLogic extends Component {
       url: config[notification].url,
     })).sort((a, b) => sortNotifications(a.type, b.type))
 
-    this.setState({
-      notifications,
-    })
   }
 
   render() {
-    const { notifications } = this.state
+    const notifications = this.getNotifications()
 
     return (notifications.length) ? (
       <div>
