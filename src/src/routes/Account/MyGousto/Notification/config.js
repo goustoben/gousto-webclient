@@ -24,10 +24,12 @@ const notificationConfig = ({
     url: 'menu',
   },
   referAFriend: {
-    message: 'for every friend you refer this week. Invite friends now.',
+    message: 'For every friend you refer this month. Invite friends now.',
     type: 'info',
-    title: 'Get £30 credit',
+    title: 'Get £20 credit',
     url: 'my-referrals',
+    startDate:'2019-10-15',
+    endDate:'2019-10-31',
   },
 })
 
