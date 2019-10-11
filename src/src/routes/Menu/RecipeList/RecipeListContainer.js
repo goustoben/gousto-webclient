@@ -9,12 +9,30 @@ import { getRecipeGroupFilter } from 'selectors/filters'
 
 import { RecipeList } from './RecipeList'
 
-const mapStateToProps = (state) => {
+const getSortedRecipesForCollection = (state, collectionId) => {
+  const sortedRecipes = getSortedRecipes(state)
+
+  if (!collectionId) {
+    return sortedRecipes
+  }
+
+  const recipesInCollection = state.menuCollectionRecipes.get(collectionId)
+  const recipeIsInCollection = (recipe) => {
+    const id = recipe.get('id')
+
+    return recipesInCollection.includes(id)
+  }
+
+  return sortedRecipes.filter(recipeIsInCollection)
+}
+
+const mapStateToProps = (state, { menuCurrentCollectionId: collectionId }) => {
   const { routing } = state
   const { query } = routing && routing.locationBeforeTransitions
+
   const featuredRecipes = getFeaturedRecipes(state)
   const remainingRecipes = getRemainingRecipes(state)
-  const sortedRecipes = getSortedRecipes(state)
+  const sortedRecipes = getSortedRecipesForCollection(state, collectionId)
 
   return {
     allRecipesList: state.menuRecipes,
