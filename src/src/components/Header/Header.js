@@ -28,8 +28,8 @@ class Header extends React.PureComponent {
 
   static propTypes = {
     logoutUser: PropTypes.func,
-    serverError: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
+    serverError: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
     loginOpen: PropTypes.bool,
     routing: PropTypes.object,
     simple: PropTypes.bool,
