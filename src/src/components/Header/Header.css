@@ -3,18 +3,10 @@
 @value sizeXXL from 'styles/typography.css';
 @value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
-@value desktopHeaderHeight 64px;
-@value mobileHeaderHeight 53px;
 @value mobileLogoSize 25px;
 
 .header {
 	position: relative;
-	height: desktopHeaderHeight;
-	margin-bottom: -1px;
-
-	@media ScreenXSMax {
-		height: mobileHeaderHeight;
-	}
 }
 
 .smallContainer {
@@ -66,10 +58,7 @@ span:target .overlay {
 
 .mainBar {
 	background: Pomegranate;
-	position: absolute;
 	width: 100%;
-	z-index: 9;
-	min-height: mobileHeaderHeight;
 }
 
 .mainContent {
