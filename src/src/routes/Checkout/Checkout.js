@@ -192,12 +192,19 @@ class Checkout extends React.PureComponent {
     }
   }
 
+  trackClick = (position) => {
+    const { trackCheckoutButtonPressed } = this.props
+
+    trackCheckoutButtonPressed(position)
+  }
+
   renderSteps = (stepMapping, steps, currentStep) => {
     const { browser, submitOrder } = this.props
     const { checkoutScriptReady } = this.state
     const step = stepMapping[currentStep]
     const isCheckoutPaymentStep = (currentStep === 'payment')
     const props = {
+      trackClick: this.trackClick,
       onStepChange: this.onStepChange(steps, currentStep),
       isLastStep: this.isLastStep(steps, currentStep),
       nextStepName: this.getNextStepName(stepMapping, steps, currentStep),

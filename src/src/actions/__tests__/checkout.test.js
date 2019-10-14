@@ -21,6 +21,7 @@ import {
   checkoutAddressLookup,
   checkoutCreatePreviewOrder,
   checkoutTransactionalOrder,
+  trackCheckoutButtonPressed,
 } from 'actions/checkout'
 
 jest.mock('actions/login')
@@ -441,6 +442,24 @@ describe('checkout actions', () => {
       await checkoutPostSignup()(dispatch, getState)
 
       expect(dispatch).toHaveBeenCalledTimes(8)
+    })
+  })
+
+  describe('trackCheckoutButtonPressed', () => {
+    test('should dispatch a CHECKOUT_TRACKING_BUTTON_PRESS action with tracking data (snowplow and gtm)', () => {
+      const trackingData = {
+        actionType: 'NextCTA Clicked',
+        category: 'Checkout',
+        position: 'First'
+      }
+
+      trackCheckoutButtonPressed('First')(dispatch)
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: 'CHECKOUT_TRACKING_BUTTON_PRESS',
+        trackingData,
+        gtmEvent: trackingData
+      })
     })
   })
 

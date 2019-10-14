@@ -315,6 +315,22 @@ export function trackSignupPageChange(step) {
   }
 }
 
+export const trackCheckoutButtonPressed = (position) => (
+  (dispatch) => {
+    const tracking = {
+      actionType: 'NextCTA Clicked',
+      category: 'Checkout',
+      position
+    }
+
+    dispatch({
+      type: actionTypes.CHECKOUT_TRACKING_BUTTON_PRESS,
+      trackingData: tracking,
+      gtmEvent: tracking
+    })
+  }
+)
+
 export function trackingOrderPlaceAttempt() {
   return (dispatch, getState) => {
     const { basket, pricing } = getState()
