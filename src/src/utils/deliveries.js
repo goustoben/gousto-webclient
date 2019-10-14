@@ -20,6 +20,16 @@ export function getSlot(deliveryDays, date, slotId) {
   return false
 }
 
+export const getSlotTimes = ({ date, deliveryDays, slotId }) => {
+  const chosenSlot = getSlot(deliveryDays, date, slotId)
+  let slotText = ''
+  if (chosenSlot) {
+    slotText = `${moment(`${date} ${chosenSlot.get('deliveryStartTime')}`).format('ha')} - ${moment(`${date} ${chosenSlot.get('deliveryEndTime')}`).format('ha')} `
+  }
+
+  return slotText
+}
+
 function getPrevBasketDate(basket) {
   return basket.get('prevDate') || basket.get('date')
 }
@@ -413,7 +423,7 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
   }
 
   return daysWithDSLTs.map(dayWithDSLTs => {
-    const {id, date, isDefault, coreDayId, unavailableReason, alternateDeliveryDay} = dayWithDSLTs
+    const { id, date, isDefault, coreDayId, unavailableReason, alternateDeliveryDay } = dayWithDSLTs
 
     return {
       id,
