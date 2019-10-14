@@ -21,7 +21,6 @@ import css from './OrderConfirmation.css'
 
 const propTypes = {
   ageVerified: PropTypes.bool.isRequired,
-  hasCollapsedRafFeature: PropTypes.bool,
   hasProductList2Columns: PropTypes.bool,
   headerDetails: PropTypes.oneOfType([
     PropTypes.shape({
@@ -40,7 +39,6 @@ const propTypes = {
 }
 
 const defaultProps = {
-  hasCollapsedRafFeature: false,
   hasProductList2Columns: false,
   headerDetails: {},
   showHeader: false,
@@ -93,7 +91,6 @@ class OrderConfirmation extends PureComponent {
   render() {
     const {
       ageVerified,
-      hasCollapsedRafFeature,
       hasProductList2Columns,
       headerDetails,
       isLoading,
@@ -133,15 +130,7 @@ class OrderConfirmation extends PureComponent {
                   <div>
                     <OrderConfirmationHeader {...headerDetails} />
                     <div className={classnames(css.mobileShow, css.rafMobile)}>
-                      {hasCollapsedRafFeature ?
-                        <ItemExpandable
-                          label={`Invite your friends, get ${rafOffer.get('creditFormatted')}`}
-                        >
-                          <ReferAFriend />
-                        </ItemExpandable>
-                        :
-                        <ReferAFriend />
-                      }
+                      <ReferAFriend />
                     </div>
                   </div>
                 </VerticalStagesItem>

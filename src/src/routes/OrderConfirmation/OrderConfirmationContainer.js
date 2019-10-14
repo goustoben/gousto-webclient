@@ -6,7 +6,7 @@ import { locationQuery } from 'selectors/routing'
 import { getAgeVerified, getReferralOffer } from 'selectors/user'
 import { isOrderConfirmationPageLoading } from 'selectors/orderConfirmation'
 import { getBasketOrderDetails, getShortlistUsed, getShortlistFeedbackViewed } from 'selectors/basket'
-import { isCollapsedRafFeatureEnabled, getProductList2Columns } from 'selectors/features'
+import { getProductList2Columns } from 'selectors/features'
 import { OrderConfirmation } from './OrderConfirmation'
 import { getHeaderDetails } from './helper'
 
@@ -19,7 +19,6 @@ const mapStateToProps = (state) => {
 
   return ({
     ageVerified: getAgeVerified(state),
-    hasCollapsedRafFeature: isCollapsedRafFeatureEnabled(state),
     hasProductList2Columns: getProductList2Columns(state),
     headerDetails,
     isLoading,

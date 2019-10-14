@@ -117,27 +117,6 @@ describe('OrderConfirmation', () => {
       expect(wrapper.find('VerticalStagesItem').first().find('Connect(ReferAFriend)')).toHaveLength(1)
     })
 
-    describe('and the feature collapsedRaf is enabled', () => {
-      beforeEach(() => {
-        wrapper.setProps({ hasCollapsedRafFeature: true })
-      })
-
-      test('renders the ItemExpandable in the first VerticalStageItem', () => {
-        expect(wrapper.find('VerticalStagesItem').first().find('ItemExpandable').exists()).toBe(true)
-      })
-
-      test('ItemExpandable contains the right credit amount', () => {
-        expect(wrapper.find('VerticalStagesItem').first()
-          .find('ItemExpandable').prop('label'))
-          .toContain(rafOffer.get('creditFormatted'))
-      })
-
-      test('render the ReferAFriend inside ItemExpandable', () => {
-        expect(wrapper.find('VerticalStagesItem').first()
-          .find('ItemExpandable').find('Connect(ReferAFriend)').exists()).toBe(true)
-      })
-    })
-
     describe('and the feature hasProductList2Columns is enabled', () => {
       beforeEach(() => {
         wrapper.setProps({ hasProductList2Columns: true })
