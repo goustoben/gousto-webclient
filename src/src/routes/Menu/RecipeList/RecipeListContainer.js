@@ -3,36 +3,20 @@ import { connect } from 'react-redux'
 import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
 import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
-import { getFeaturedRecipes, getRemainingRecipes, getSortedRecipes } from 'routes/Menu/selectors/sorting'
+import { getFeaturedRecipes, getRemainingRecipes } from 'routes/Menu/selectors/sorting'
 import { getCurrentCollectionIsRecommendation } from 'routes/Menu/selectors/menu'
 import { getRecipeGroupFilter } from 'selectors/filters'
 
 import { RecipeList } from './RecipeList'
+import { getSortedRecipesForRecipeList } from './selectors'
 
-const getSortedRecipesForCollection = (state, collectionId) => {
-  const sortedRecipes = getSortedRecipes(state)
-
-  if (!collectionId) {
-    return sortedRecipes
-  }
-
-  const recipesInCollection = state.menuCollectionRecipes.get(collectionId)
-  const recipeIsInCollection = (recipe) => {
-    const id = recipe.get('id')
-
-    return recipesInCollection.includes(id)
-  }
-
-  return sortedRecipes.filter(recipeIsInCollection)
-}
-
-const mapStateToProps = (state, { menuCurrentCollectionId: collectionId }) => {
+const mapStateToProps = (state, props) => {
   const { routing } = state
   const { query } = routing && routing.locationBeforeTransitions
 
   const featuredRecipes = getFeaturedRecipes(state)
   const remainingRecipes = getRemainingRecipes(state)
-  const sortedRecipes = getSortedRecipesForCollection(state, collectionId)
+  const sortedRecipes = getSortedRecipesForRecipeList(state, props)
 
   return {
     allRecipesList: state.menuRecipes,
