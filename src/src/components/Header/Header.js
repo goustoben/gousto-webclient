@@ -39,7 +39,6 @@ class Header extends React.PureComponent {
     promoCodeUrl: PropTypes.string,
     loginVisibilityChange: PropTypes.func,
     closeBoxModalVisibilityChange: PropTypes.func,
-    noContactBar: PropTypes.bool,
     title: PropTypes.string,
     small: PropTypes.bool,
     forceSignupWizardFeature: PropTypes.bool,
@@ -336,7 +335,6 @@ class Header extends React.PureComponent {
     const {
       fromJoin,
       disabled,
-      noContactBar,
       simple,
       isAuthenticated,
       serverError,
@@ -348,11 +346,11 @@ class Header extends React.PureComponent {
       trackNavigationClick,
       abandonBasketFeature,
     } = this.props
+
     const { mobileMenuOpen, loginPending } = this.state
     const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
     const hideNav = fromWizard || joinPage || disabled || false
-    const newNoContactBar = joinPage || noContactBar
     const mobileMenuItems = this.getMenuItems('mobile', path)
     const homeElementMobile = mobileMenuItems.find(item => (item.name === 'Home'))
     const desktopMenuItems = this.getMenuItems('desktop', path)
@@ -368,7 +366,6 @@ class Header extends React.PureComponent {
           serverError={serverError}
           className={mobileMenuOpen ? css.overlayOpen : css.overlay}
           homeUrl={mobileMenuItems[0].url}
-          noContactBar={newNoContactBar}
           title={title}
           small={small}
         />
@@ -387,7 +384,7 @@ class Header extends React.PureComponent {
             href={serverError ? '#' : null}
             onClick={this.hideMobileMenu}
           />
-          <header className={noContactBar ? css.headerNoContactBar : css.header}>
+          <header className={css.header}>
             <div>
               <MobileMenu
                 menuItems={mobileMenuItems}
@@ -401,13 +398,6 @@ class Header extends React.PureComponent {
                 trackNavigationClick={trackNavigationClick}
               />
               <div className={css.container}>
-                {!noContactBar ?
-                  <div className={css.contactBar}>
-                    <p className={css.contactContent}>
-                      <span className={css.info}>Free delivery </span>
-                      <span className={css.info}>{config.company.telephone.number}</span>
-                    </p>
-                  </div> : null}
                 <div className={css.mainBar}>
                   <div className={css.mainContent}>
                     <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !Boolean(promoCodeUrl)} className={css.logoLink}>

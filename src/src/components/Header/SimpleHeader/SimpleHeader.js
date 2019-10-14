@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import config from 'config'
 import Svg from 'Svg'
 import Link from 'Link'
 import classNames from 'classnames'
@@ -8,18 +7,12 @@ import PromoModal from 'PromoModal'
 import { H1 } from 'Page/Header'
 import css from '../Header.css'
 
-const SimpleHeader = ({ serverError, className, homeUrl, noContactBar, title, small }) => (
+const SimpleHeader = ({ serverError, className, homeUrl, title, small }) => (
   <span id={serverError ? 'mobileMenu' : null}>
     <a className={className} href={serverError ? '#' : null} />
-    <header className={`${noContactBar ? css.headerNoContactBar : css.header} ${classNames({ [css.smallContainer]: small })}`}>
+    <header className={classNames(css.header, { [css.smallContainer]: small })}>
       <div>
         <div className={css.container}>
-          {!noContactBar ? <div className={css.contactBar}>
-            <p className={css.contactContent}>
-              <span className={css.info}>Free delivery </span>
-              <span className={css.info}>{config.company.telephone.number}</span>
-            </p>
-                           </div> : null}
           <div className={css.mainBar}>
             <div className={css.mainContent}>
               <Link to={homeUrl} className={css.logoLink} clientRouted>
@@ -41,7 +34,6 @@ SimpleHeader.propTypes = {
   serverError: PropTypes.bool.isRequired,
   className: PropTypes.string.isRequired,
   homeUrl: PropTypes.string.isRequired,
-  noContactBar: PropTypes.bool,
   title: PropTypes.string,
   small: PropTypes.bool,
 }

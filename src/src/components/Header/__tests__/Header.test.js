@@ -10,7 +10,6 @@ import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import DuplicateOrderModal from 'DuplicateOrderModal'
 import CookieBanner from 'CookieBanner'
-import contactConfig from 'config/company'
 import routesConfig from 'config/routes'
 
 jest.mock('Header/SimpleHeader', () => 'SimpleHeader')
@@ -67,12 +66,6 @@ describe('Header', () => {
 
         referFriend: '/MOCK-my-referrals',
         rateMyRecipes: '/MOCK-rate-my-recipes',
-      },
-    },
-
-    company: {
-      telephone: {
-        number: 'MOCK-123456677889',
       },
     },
   }
@@ -196,20 +189,6 @@ describe('Header', () => {
     test('should render a SubscriptionPause component', () => {
       wrapper.setProps({ trackNavigationClick: jest.fn() })
       expect(wrapper.find('SubscriptionPause').length).toEqual(1)
-    })
-
-    test('should not render the phone number if the noContactBar prop is set', () => {
-      wrapper.setProps({
-        noContactBar: true,
-        trackNavigationClick: jest.fn()
-      })
-      expect(wrapper.find('Free delivery').length).toEqual(0)
-    })
-
-    test('should render the contact phone number', () => {
-      expect(wrapper.find('.contactContent').html()).toContain(
-        contactConfig.telephone.number
-      )
     })
   })
 

@@ -39,11 +39,6 @@ describe('SimpleHeader', () => {
       expect(wrapper.find(Link).prop('to')).toBe('index')
     })
 
-    test('should not render the phone number if the noContactBar prop is set', () => {
-      wrapper = shallow(<SimpleHeader noContactBar />)
-      expect(wrapper.find({ children: 'Free delivery ' })).toHaveLength(0)
-    })
-
     test('should render title if title prop is set', () => {
       const wrapper = shallow(<SimpleHeader title="Aenean enim libero" />)
       expect(wrapper.find({ children: 'Aenean enim libero' })).toHaveLength(1)
