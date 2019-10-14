@@ -24,7 +24,7 @@ const notificationConfig = ({
     url: 'menu',
   },
   referAFriend: {
-    message: 'For every friend you refer this month. Invite friends now.',
+    message: 'for every friend you refer this month. Invite friends now.',
     type: 'info',
     title: 'Get £20 credit',
     url: 'my-referrals',
