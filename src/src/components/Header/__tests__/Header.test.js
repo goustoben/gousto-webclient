@@ -12,18 +12,6 @@ import DuplicateOrderModal from 'DuplicateOrderModal'
 import CookieBanner from 'CookieBanner'
 import routesConfig from 'config/routes'
 
-jest.mock('Header/SimpleHeader', () => 'SimpleHeader')
-jest.mock('Modal/ModalPanel', () => 'ModalPanel')
-jest.mock('Overlay', () => 'Overlay')
-jest.mock('Login', () => 'Login')
-jest.mock('PromoModal', () => 'PromoModal')
-jest.mock('DuplicateOrderModal', () => 'DuplicateOrderModal')
-jest.mock('CancelOrderModal', () => 'CancelOrderModal')
-jest.mock('ExpiredBillingModal', () => 'ExpiredBillingModal')
-jest.mock('routes/Account/Account', () => 'Account')
-jest.mock('routes/Account/Subscription/SubscriptionPause', () => 'SubscriptionPause')
-jest.mock('routes/Account/MyDeliveries/OrdersList/OnScreenRecovery', () => 'OnScreenRecovery')
-
 describe('Header', () => {
   const config = {
     routes: {
@@ -170,7 +158,7 @@ describe('Header', () => {
 
     test('should render a PromoModal component', () => {
       wrapper = shallow(<Header {...store} />)
-      expect(wrapper.find('PromoModal').length).toEqual(1)
+      expect(wrapper.find('Connect(PromoModalWrapper)').length).toEqual(1)
     })
 
     test('should render a CancelOrderModal component', () => {
@@ -188,7 +176,7 @@ describe('Header', () => {
 
     test('should render a SubscriptionPause component', () => {
       wrapper.setProps({ trackNavigationClick: jest.fn() })
-      expect(wrapper.find('SubscriptionPause').length).toEqual(1)
+      expect(wrapper.find('Connect(SubscriptionPause)').length).toEqual(1)
     })
   })
 
