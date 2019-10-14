@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
 
 import { config } from '../config'
@@ -11,7 +11,7 @@ import {
   checkRafOffer,
 } from '../helpers'
 
-import { Notification } from '../index'
+import { NotificationLogic as Notification } from '../Notification.logic'
 
 config.referAFriend.startDate = '2019-01-01'
 config.referAFriend.endDate = '2019-01-01'
@@ -177,13 +177,15 @@ describe('Notification component', () => {
 
     beforeEach(() => {
       const currentMonth = moment().format('YYYY-MM')
+      config.referAFriend.startDate = '2019-01-01'
+      config.referAFriend.endDate = '3019-01-01'
       card = Immutable.Map({
         lastFourDigits: "1234",
         expiryDate: currentMonth,
       })
       orders = Immutable.fromJS({
         1234: {
-          state: 'pending',
+          state: 'committed',
           originalDeliveryDay: true,
         }
       })
@@ -195,5 +197,16 @@ describe('Notification component', () => {
 
       expect(wrapper.instance().getNotifications()).toMatchSnapshot()
     })
+
+    it('should call tracking action on click if notification has linkTrackingType', () => {
+      const mockTrackNotificationLinkClick = jest.fn()
+      window.location.assign = jest.fn()
+      wrapper = mount(<Notification card={card} orders={orders} trackNotificationLinkClick={mockTrackNotificationLinkClick}/>)
+
+      wrapper.find(`[href="my-referrals"]`).simulate('click')
+      expect(mockTrackNotificationLinkClick).toHaveBeenCalledWith(config.referAFriend.linkTrackingType)
+      expect(window.location.assign).toHaveBeenCalledWith(config.referAFriend.url)
+    })
+
   })
 })

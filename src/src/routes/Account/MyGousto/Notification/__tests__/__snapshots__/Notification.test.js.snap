@@ -3,16 +3,18 @@
 exports[`Notification component notifications should order the notifications by type in the following order danger > warning > notify 1`] = `
 Array [
   Object {
+    "linkTrackingType": undefined,
     "message": "Your card is expired. Please update now.",
     "title": "Payment Method",
     "type": "danger",
     "url": "my-details",
   },
   Object {
-    "message": "We’ve moved your delivery to the next available delivery day.",
-    "title": "Delivery changes",
+    "linkTrackingType": "refer_friend",
+    "message": "for every friend you refer this week. Invite friends now.",
+    "title": "Get £30 credit",
     "type": "info",
-    "url": "my-deliveries",
+    "url": "my-referrals",
   },
 ]
 `;
