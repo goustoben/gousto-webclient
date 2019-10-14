@@ -15,14 +15,16 @@ import actionStatus from 'actions/status'
 import actionTypes from 'actions/actionTypes'
 import orderActions from '../order'
 import { fetchDeliveryDays } from '../../apis/deliveries'
-import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from '../../utils/deliveries'
+import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot } from '../../utils/deliveries'
 
 jest.mock('apis/orders')
 jest.mock('actions/orderConfirmation')
 jest.mock('actions/status')
 jest.mock('apis/user')
 jest.mock('utils/basket')
+
 jest.mock('utils/deliveries')
+
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
     data: [{id: 1}]
@@ -57,8 +59,19 @@ describe('order actions', () => {
         orderConfirmation: Immutable.Map({
           value: false,
         })
-      })
+      }),
+      basket: Immutable.Map({
+        date: '2019-10-11',
+        slotId: '4'
+      }),
     })
+
+    getSlot.mockReturnValue(Immutable.fromJS({
+      coreSlotId: '4',
+      id: 'deliveries-uuid',
+      daySlotLeadTimeId: 'day-slot-lead-time-uuid'
+    }))
+
   })
 
   afterEach(() => {
@@ -118,6 +131,7 @@ describe('order actions', () => {
         order_action: 'transaction',
         delivery_slot_id: 8,
         delivery_day_id: 3,
+        day_slot_lead_time_id: 'day-slot-lead-time-uuid'
       }
       expect(saveOrder.mock.calls[0][0]).toEqual('access-token')
       expect(saveOrder.mock.calls[0][1]).toEqual('12345')
