@@ -12,6 +12,7 @@ import {
   getPromoBannerCode,
   getShortlist,
   isNDDFeatureEnabled,
+  getCookingInstruction,
 } from 'selectors/features'
 
 describe('when features are undefined', () => {
@@ -287,5 +288,23 @@ describe('when features are defined', () => {
       })
     })
   })
-})
 
+  describe('getCookingInstruction', () => {
+    describe('when feature is not set', () => {
+      test('should return false', () => {
+        expect(getCookingInstruction(state)).toEqual(false)
+      })
+    })
+    describe('when feature is set', () => {
+      test('should return true', () => {
+        state.features = Immutable.fromJS({
+          showCookingInstruction: {
+            value: true
+          }
+        })
+
+        expect(getCookingInstruction(state)).toEqual(true)
+      })
+    })
+  })
+})

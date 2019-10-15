@@ -3,13 +3,6 @@
 @value ScreenMDMax, ScreenLGMin from 'styles/screenSizes.css';
 @value SpacingSM, SpacingMD, SpacingLG, SpacingXL from 'styles/spacing.css';
 
-.container {
-  @media ScreenMDMax { 
-    display: flex;
-    overflow: scroll;
-  }
-}
-
 .insetHeading {
   padding-bottom: SpacingLG;
 }
@@ -22,12 +15,36 @@
   color: Bluecheese;
 }
 
+.wrapper {
+  @media ScreenMDMax { 
+    overflow: scroll;
+  }
+}
+
+.container {
+  @media ScreenMDMax { 
+    display: flex;
+  }
+}
+
+.recipeImage {
+  @media ScreenLGMin {
+    flex: 0 0 40%;
+  }
+}
+
+.recipeInstruction {
+  @media ScreenLGMin {
+    flex: 0 0 60%;
+    padding-left: SpacingMD;
+  }
+}
+
 .section {
   position: relative;
-  width: 90%;
   
   @media ScreenMDMax {
-    flex: none;
+    min-width: 15rem;
     padding-right: SpacingLG;
   }
 
@@ -37,19 +54,8 @@
   }
 }
 
-.recipeImage {
-  @media ScreenLGMin {
-    -ms-flex: 0 0 40%;
-    flex: 0 0 40%;
-  }
-}
-
-.recipeInstruction {
-  @media ScreenLGMin {
-    -ms-flex: 0 0 70%;
-    flex: 0 0 70%;
-    padding-left: SpacingMD;
-  }
+.stepImage {
+  padding-bottom: SpacingSM;
 }
 
 .stepNumber {
@@ -63,6 +69,6 @@
   padding: 0.25rem 0.75rem;
 }
 
-.stepImage {
-  padding-bottom: SpacingSM;
+.stepInstruction :global(.text-danger) {
+  color: Bluecheese;
 }

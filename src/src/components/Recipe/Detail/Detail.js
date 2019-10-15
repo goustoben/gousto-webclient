@@ -36,6 +36,7 @@ export const detailPropTypes = {
   restrictedView: PropTypes.bool,
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
+  showCookingInstruction: PropTypes.bool.isRequired,
 }
 
 export class Detail extends React.Component {

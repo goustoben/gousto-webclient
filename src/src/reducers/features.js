@@ -78,6 +78,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
+  showCookingInstruction: {
+    experiment: false,
+    value: false,
+  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())
