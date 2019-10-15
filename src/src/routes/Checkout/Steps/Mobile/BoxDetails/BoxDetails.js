@@ -12,7 +12,10 @@ const BoxDetails = ({ onStepChange, trackClick }) => (
     <Summary showPromocode />
     <SectionContainer>
       <CheckoutButton
-        onClick={() => {onStepChange(), trackClick('first')}}
+        onClick={() => {
+          onStepChange()
+          trackClick('first')
+        }}
         stepName="Checkout Securely"
       />
     </SectionContainer>
@@ -20,7 +23,10 @@ const BoxDetails = ({ onStepChange, trackClick }) => (
       <BoxDetailsContainer />
     </SectionContainer>
     <CheckoutButton
-      onClick={() => {onStepChange(), trackClick('second')}}
+      onClick={() => {
+        onStepChange()
+        trackClick('second')
+      }}
       stepName="Checkout Securely"
     />
   </div>
