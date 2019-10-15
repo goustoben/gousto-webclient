@@ -449,7 +449,7 @@ describe('checkout actions', () => {
     test('should dispatch a CHECKOUT_TRACKING_BUTTON_PRESS action with tracking data (snowplow and gtm)', () => {
       const trackingData = {
         actionType: 'NextCTA Clicked',
-        category: 'Checkout',
+        seCategory: 'Checkout',
         position: 'First'
       }
 

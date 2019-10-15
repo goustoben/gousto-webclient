@@ -319,7 +319,7 @@ export const trackCheckoutButtonPressed = (position) => (
   (dispatch) => {
     const tracking = {
       actionType: 'NextCTA Clicked',
-      category: 'Checkout',
+      seCategory: 'Checkout',
       position
     }
 
