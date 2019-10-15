@@ -6,6 +6,7 @@ import classnames from 'classnames'
 import { recipePropTypes } from 'Recipe'
 import { getChef } from 'utils/recipe'
 import RangeBadge from 'Recipe/RangeBadge'
+import { Pill } from 'goustouicomponents'
 import css from './FineDineInRecipe.css'
 import Title from '../Title'
 import AddButton from '../AddButton'
@@ -24,6 +25,16 @@ const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickabl
   return (
     <div className={css.overlay}>
       <div style={{ backgroundImage: `url(${image.get('src')})` }} className={css.recipeCover}>
+        <div className={css.viewDetails}>
+          <Pill
+            mouseEnter={highlight}
+            mouseLeave={unhighlight}
+            onClick={() => { onClick(true) }}
+            icon
+          >
+            View details
+          </Pill>
+        </div>
         <div className={css.rangeBadgeWrapper}>
           <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
         </div>
