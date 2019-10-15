@@ -446,17 +446,15 @@ describe('checkout actions', () => {
   })
 
   describe('trackCheckoutButtonPressed', () => {
-    test('should dispatch a CHECKOUT_TRACKING_BUTTON_PRESS action with tracking data (snowplow and gtm)', () => {
+    test('should dispatch a TRACKING action with tracking data (snowplow and gtm)', () => {
       const trackingData = {
         actionType: 'NextCTA Clicked',
         seCategory: 'Checkout',
         position: 'First'
       }
 
-      trackCheckoutButtonPressed('First')(dispatch)
-
-      expect(dispatch).toHaveBeenCalledWith({
-        type: 'CHECKOUT_TRACKING_BUTTON_PRESS',
+      expect(trackCheckoutButtonPressed('First')).toEqual({
+        type: 'TRACKING',
         trackingData,
         gtmEvent: trackingData
       })
