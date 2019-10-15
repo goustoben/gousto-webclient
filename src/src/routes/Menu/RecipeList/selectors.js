@@ -2,10 +2,7 @@ import { createSelector } from 'reselect'
 import { getMenuRecipes } from 'selectors/root'
 import { getSortedRecipes } from 'routes/Menu/selectors/sorting'
 
-// this is here rather than in the /selectors/ folder because it has an implicit
-// dependency on the props for RecipeList component
-
-const getCollectionId = (state, props) => props.menuCurrentCollectionId
+const getCollectionId = (state, recipeListProps) => recipeListProps.menuCurrentCollectionId
 
 export const getSortedRecipesForRecipeList = createSelector(
   [ getCollectionId, getMenuRecipes, getSortedRecipes ],
