@@ -13,6 +13,8 @@ export function getOrderDetails(basket, deliveryDays) {
   const slot = getSlot(deliveryDays, date, slotId)
 
   const deliverySlotId = slot.get('coreSlotId', '')
+  const daySlotLeadTimeId = slot.get('daySlotLeadTimeId', '')
+
   const deliveryDayId = deliveryDays.getIn([date, 'coreDayId'])
 
   const recipes = basket.get('recipes')
@@ -36,6 +38,7 @@ export function getOrderDetails(basket, deliveryDays) {
     delivery_day_id: deliveryDayId,
     delivery_slot_id: deliverySlotId,
     recipe_choices: recipeChoices,
+    day_slot_lead_time_id : daySlotLeadTimeId
   }
 }
 

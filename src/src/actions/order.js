@@ -7,7 +7,7 @@ import { fetchDeliveryDays } from 'apis/deliveries'
 import GoustoException from 'utils/GoustoException'
 import logger from 'utils/logger'
 import { getOrderDetails } from 'utils/basket'
-import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
+import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot } from 'utils/deliveries'
 import { redirect } from 'utils/window'
 import { isNDDFeatureEnabled } from 'selectors/features'
 import userActions from './user'
@@ -34,12 +34,20 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_SAVE, null))
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, true))
+
+    const { basket, boxSummaryDeliveryDays } = getState()
+    const date = basket.get('date')
+    const slotId = basket.get('slotId')
+    const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
+
     const order = {
       recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
       order_action: orderAction,
       delivery_slot_id: coreSlotId,
       delivery_day_id: coreDayId,
+      day_slot_lead_time_id: slot.get('daySlotLeadTimeId', '')
     }
+
     const accessToken = getState().auth.get('accessToken')
     try {
       const { data: savedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
@@ -58,10 +66,16 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId) =>
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, null))
     dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, true))
+
+    const { basket, boxSummaryDeliveryDays } = getState()
+    const date = basket.get('date')
+    const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
+
     try {
       const order = {
         delivery_day_id: coreDayId,
         delivery_slot_id: coreSlotId,
+        day_slot_lead_time_id: slot.get('daySlotLeadTimeId', '')
       }
       const accessToken = getState().auth.get('accessToken')
       const { data: updatedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
