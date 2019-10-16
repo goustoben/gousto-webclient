@@ -11,10 +11,15 @@ import {
 } from 'actions/shortlist'
 import actionTypes from 'actions/actionTypes'
 import { shortlistLimitReached } from 'utils/basket'
+import { preselectFreeDeliverySlot } from 'actions/deliveries'
 
 jest.mock('utils/basket', () => ({
   shortlistLimitReached: jest.fn(),
   limitReached: jest.fn().mockReturnValue(false)
+}))
+
+jest.mock('actions/deliveries', () => ({
+  preselectFreeDeliverySlot: jest.fn()
 }))
 
 describe('shortlist actions', () => {
@@ -138,6 +143,12 @@ describe('shortlist actions', () => {
               })
             }
           })
+        })
+
+        test('should call preselectFreeDeliverySlot ', () => {
+          shortlistLimitReached.mockReturnValue(false)
+          shortlistRecipeAdd('123', false, recipeInfo)(dispatch, getState)
+          expect(preselectFreeDeliverySlot).toHaveBeenCalled()
         })
 
         describe('if limitReached is true after adding recipe to shortlist ', () => {
