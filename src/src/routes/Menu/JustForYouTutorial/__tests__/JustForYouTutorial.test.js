@@ -60,7 +60,7 @@ describe('JustForYouTutorial Component', () => {
 })
 
 describe('Check browser to show JFY', () => {
-  let getState 
+  let getState
   let wrapper
   it('should not render JFY if browser Edge', () => {
     getState = () => ({
@@ -79,7 +79,7 @@ describe('Check browser to show JFY', () => {
         userAgent: 'Edge'
       }
       )})
-  
+
     wrapper = shallow(
         <JustForYouTutorialComponent />, {
           context: {
@@ -90,7 +90,7 @@ describe('Check browser to show JFY', () => {
           }
         }
     )
-    expect(wrapper.instance().stateProps.showTutorial).toBe(false)
+    expect(wrapper.instance().selector.props.showTutorial).toBe(false)
   })
 
   it('should not render JFY if browser IE', () => {
@@ -110,7 +110,7 @@ describe('Check browser to show JFY', () => {
         userAgent: 'Trident'
       }
       )})
-  
+
     wrapper = shallow(
         <JustForYouTutorialComponent />, {
           context: {
@@ -121,7 +121,8 @@ describe('Check browser to show JFY', () => {
           }
         }
     )
-    expect(wrapper.instance().stateProps.showTutorial).toBe(false)
+
+    expect(wrapper.instance().selector.props.showTutorial).toBe(false)
   })
 
   it('should not render JFY if browser Chrome but justforyou not present', () => {
@@ -141,7 +142,7 @@ describe('Check browser to show JFY', () => {
         userAgent: 'Chrome'
       }
       )})
-  
+
     wrapper = shallow(
         <JustForYouTutorialComponent />, {
           context: {
@@ -152,7 +153,7 @@ describe('Check browser to show JFY', () => {
           }
         }
     )
-    expect(wrapper.instance().stateProps.showTutorial).toBe(false)
+    expect(wrapper.instance().selector.props.showTutorial).toBe(false)
   })
 
   it('should render JFY if browser Chrome', () => {
@@ -172,7 +173,7 @@ describe('Check browser to show JFY', () => {
         userAgent: 'Chrome'
       }
       )})
-  
+
     wrapper = shallow(
         <JustForYouTutorialComponent />, {
           context: {
@@ -183,6 +184,6 @@ describe('Check browser to show JFY', () => {
           }
         }
     )
-    expect(wrapper.instance().stateProps.showTutorial).toBe(true)
+    expect(wrapper.instance().selector.props.showTutorial).toBe(true)
   })
 })
