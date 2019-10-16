@@ -25,8 +25,7 @@ describe('SignupLayout', () => {
     expect(wrapper.find(Footer).length).toBe(0)
   })
 
-  test('should return a simple noContactBar <Header>', () => {
+  test('should return a simple <Header>', () => {
     expect(wrapper.find(Header).prop('simple')).toBe(true)
-    expect(wrapper.find(Header).prop('noContactBar')).toBe(true)
   })
 })

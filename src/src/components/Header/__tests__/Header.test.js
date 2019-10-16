@@ -3,278 +3,228 @@ import { shallow } from 'enzyme'
 
 import Immutable from 'immutable'
 import { Header } from 'Header/Header'
-import { AbandonBasketModal } from 'AbandonBasketModal'
-import MobileMenu from 'Header/MobileMenu'
-import Link from 'Link'
-import CancelOrderModal from 'CancelOrderModal'
-import ExpiredBillingModal from 'ExpiredBillingModal'
-import DuplicateOrderModal from 'DuplicateOrderModal'
-import CookieBanner from 'CookieBanner'
-import contactConfig from 'config/company'
 import routesConfig from 'config/routes'
 
-jest.mock('Header/SimpleHeader', () => 'SimpleHeader')
-jest.mock('Modal/ModalPanel', () => 'ModalPanel')
-jest.mock('Overlay', () => 'Overlay')
-jest.mock('Login', () => 'Login')
-jest.mock('PromoModal', () => 'PromoModal')
-jest.mock('DuplicateOrderModal', () => 'DuplicateOrderModal')
-jest.mock('CancelOrderModal', () => 'CancelOrderModal')
-jest.mock('ExpiredBillingModal', () => 'ExpiredBillingModal')
-jest.mock('routes/Account/Account', () => 'Account')
-jest.mock('routes/Account/Subscription/SubscriptionPause', () => 'SubscriptionPause')
-jest.mock('routes/Account/MyDeliveries/OrdersList/OnScreenRecovery', () => 'OnScreenRecovery')
-
 describe('Header', () => {
-  const config = {
-    routes: {
-      client: {
-        blog: '/MOCK-blog',
-        boxPrices: '/MOCK-box-prices',
-
-        checkout: '/MOCK-checkout',
-        contact: '/MOCK-contact',
-        cookbook: '/MOCK-cookbook',
-
-        help: '/MOCK-help',
-
-        home: '/MOCK-',
-        home2: '/MOCK-home',
-
-        jobs: '/MOCK-jobs',
-        join: '/MOCK-join',
-
-        login: '/MOCK-login',
-        logout: '/MOCK-logout',
-        menu: '/MOCK-menu',
-
-        myGousto: '/MOCK-my-gousto',
-
-        nwr: '/MOCK-next-weeks-recipes',
-
-        ourSuppliers: '/MOCK-our-suppliers',
-
-        privacyPolicy: '/MOCK-privacy-statement',
-
-        resetForm: '/MOCK-resetform',
-
-        welcome: '/MOCK-welcome-to-gousto-2',
-        termsAndConditions: '/MOCK-terms-and-conditions',
-        termsOfUse: '/MOCK-terms-of-use',
-        twr: '/MOCK-this-weeks-recipes',
-
-        weCare: '/MOCK-we-care',
-
-        referFriend: '/MOCK-my-referrals',
-        rateMyRecipes: '/MOCK-rate-my-recipes',
-      },
-    },
-
-    company: {
-      telephone: {
-        number: 'MOCK-123456677889',
-      },
-    },
+  const PROPS = {
+    loadUserOrders: jest.fn(),
   }
 
-  describe('render components inside Header', () => {
+  const store = {
+    serverError: false,
+    auth: Immutable.Map({
+      isAuthenticated: true,
+      isAdmin: false,
+    }),
+    routing: {},
+    basket: Immutable.fromJS({
+      promoCodeUrl: '',
+    }),
+    loginVisibility: '',
+    features: Immutable.fromJS({}),
+    persist: Immutable.fromJS({
+      simpleHeader: false,
+    })
+  }
 
-    let wrapper
-    let store
+  let wrapper
+
+  beforeEach(() => {
+    wrapper = shallow(<Header {...PROPS} />, { context: { store }})
+  })
+
+  afterEach(() => {
+    PROPS.loadUserOrders.mockReset()
+  })
+
+  test('renders the <CookieBanner />', () => {
+    expect(wrapper.find('Connect(CookieBanner)').exists()).toBe(true)
+  })
+
+  test('should render one <MobileMenu />', () => {
+    expect(wrapper.find('MobileMenu').exists()).toBe(true)
+  })
+
+  test('renders 5 <GoustoLink />s', () => {
+    expect(wrapper.find('GoustoLink').length).toEqual(5)
+  })
+
+  test('renders the JS enabled MobileMenu toggle by default', () => {
+    expect(wrapper.find('[data-testing="header"]').prop('id')).toEqual(null)
+  })
+
+  test('renders a PromoModal component', () => {
+    expect(wrapper.find('Connect(PromoModalWrapper)').exists()).toBe(true)
+  })
+
+  test('renders a CancelOrderModal component', () => {
+    expect(wrapper.find('Connect(CancelOrderModal)').exists()).toBe(true)
+  })
+
+  test('renders a ExpiredBillingModal component', () => {
+    expect(wrapper.find('Connect(ExpiredBillingModal)').exists()).toBe(true)
+  })
+
+  test('renders a DuplicateOrderModal component', () => {
+    expect(wrapper.find('Connect(DuplicateOrderModalWrapper)').exists()).toBe(true)
+  })
+
+  test('renders a SubscriptionPause component', () => {
+    expect(wrapper.find('Connect(SubscriptionPause)').exists()).toBe(true)
+  })
+
+  test('opens the Help link into a new tab', () => {
+    const helpLink = wrapper.findWhere(n => n.prop('to') === routesConfig.zendesk.faqs)
+
+    expect(helpLink.prop('target')).toBe('_blank')
+  })
+
+  test('does not open other links in a new tab', () => {
+    const linksWithNewTab = wrapper.findWhere(n => n.prop('target') === '_blank')
+
+    expect(linksWithNewTab).toHaveLength(1)
+  })
+
+  describe('when abandonBasketFeature flag is set to true', () => {
     beforeEach(() => {
-      store = {
-        serverError: false,
-        auth: Immutable.Map({
-          isAuthenticated: true,
-          isAdmin: false,
-        }),
-        routing: {},
-        basket: Immutable.fromJS({
-          promoCodeUrl: '',
-        }),
-        loginVisibility: '',
-        features: Immutable.fromJS({}),
-        persist: Immutable.fromJS({
-          simpleHeader: false,
-        })
-      }
-      wrapper = shallow(
-        <Header loadUserOrders={() => {}} />, { context: { store } }
-      )
-    })
-
-    test('should return a <div>', () => {
-      expect(wrapper.type()).toEqual('div')
-    })
-
-    test('should render one <CookieBanner />', () => {
-      wrapper = shallow(<Header />, { context: { store } })
-      expect(wrapper.find(CookieBanner).length).toBe(1)
-    })
-
-    test('should render one <AbandonBasketModal /> if feature flag is set to true and isNotFirstLoadOfSession is not set to true', () => {
-      if (window.sessionStorage.getItem('isNotFirstLoadOfSession')) {
-        window.sessionStorage.removeItem('isNotFirstLoadOfSession')
-      }
       wrapper.setProps({ abandonBasketFeature: true })
-      expect(wrapper.find(AbandonBasketModal).length).toBe(1)
     })
 
-    test('should not render <AbandonBasketModal /> if feature flag is set to false', () => {
-      wrapper.setProps({ abandonBasketFeature: false })
-      expect(wrapper.find(AbandonBasketModal).length).toBe(0)
-    })
-
-    test('should render one <MobileMenu />', () => {
-      expect(wrapper.find(MobileMenu).length).toBe(1)
-    })
-
-    test('should render 6 <Link />', () => {
-      expect(wrapper.find(Link).length).toEqual(5)
-    })
-
-    test('should render 5 <Link /> if existing menu path is passed as prop', () => {
-      wrapper.setProps({ path: 'box-prices' })
-      expect(wrapper.find(Link).length).toEqual(4)
-    })
-
-    test('should alter homepage link when promocode is provided', () => {
-      const promoCode = 'test'
-      wrapper.setProps({ promoCodeUrl: promoCode })
-      expect(wrapper.find(Link).at(0).props().to).toEqual(`/${promoCode}`)
-    })
-
-    test('should alter homepage link to /menu when path contains "check-out"', () => {
-      wrapper.setProps({ path: 'check-out' })
-      expect(wrapper.find(Link).at(0).prop('to')).toEqual('/menu')
-    })
-
-    test('should not render a <MobileMenu /> when displaying the simple header', () => {
-      wrapper.setProps({ simple: true })
-      expect(wrapper.find(MobileMenu).length).toEqual(0)
-    })
-
-    test('should render the JS enabled MobileMenu toggle by default', () => {
-      expect(wrapper.find('span').at(0).prop('id')).toEqual(null)
-    })
-
-    test('should render the fallback MobileMenu toggle if the serverError prop is true', () => {
-      wrapper.setProps({ serverError: true })
-      expect(wrapper.find('span').at(0).prop('id')).toEqual('mobileMenu')
-    })
-
-    test('should render referFriend in the menu if authenticated', () => {
-      wrapper.setProps({ isAuthenticated: true })
-      expect(wrapper.find(Link).at(2).childAt(0)
-        .text()).toEqual('Free Food')
-    })
-
-    test('should render boxPrices in the menu if not authenticated', () => {
-      wrapper.setProps({ isAuthenticated: false })
-      expect(wrapper.find(Link).at(1).childAt(0)
-        .text()).toEqual('Box Prices')
-    })
-
-    test('should render a PromoModal component', () => {
-      wrapper = shallow(<Header {...store} />)
-      expect(wrapper.find('PromoModal').length).toEqual(1)
-    })
-
-    test('should render a CancelOrderModal component', () => {
-      expect(wrapper.find(CancelOrderModal).length).toEqual(1)
-    })
-
-    test('should render a ExpiredBillingModal component', () => {
-      expect(wrapper.find(ExpiredBillingModal).length).toEqual(1)
-    })
-
-    test('should render a DuplicateOrderModal component', () => {
-      wrapper.setProps({ trackNavigationClick: jest.fn() })
-      expect(wrapper.find(DuplicateOrderModal).length).toEqual(1)
-    })
-
-    test('should render a SubscriptionPause component', () => {
-      wrapper.setProps({ trackNavigationClick: jest.fn() })
-      expect(wrapper.find('SubscriptionPause').length).toEqual(1)
-    })
-
-    test('should not render the phone number if the noContactBar prop is set', () => {
-      wrapper.setProps({
-        noContactBar: true,
-        trackNavigationClick: jest.fn()
+    describe('and isNotFirstLoadOfSession is not set to true', () => {
+      beforeEach(() => {
+        window.sessionStorage.removeItem('isNotFirstLoadOfSession')
       })
-      expect(wrapper.find('Free delivery').length).toEqual(0)
-    })
 
-    test('should render the contact phone number', () => {
-      expect(wrapper.find('.contactContent').html()).toContain(
-        contactConfig.telephone.number
-      )
+      test('renders the <AbandonBasketModal />', () => {
+        expect(wrapper.find('Connect(AbandonBasketModal)').exists()).toBe(true)
+      })
     })
   })
 
-  describe('render MobileMenu with the right paths when authenticated', () => {
-    const wrapper = shallow(
-      <Header
-        isAuthenticated
-        config={config}
-        trackNavigationClick={jest.fn()}
-        loadUserOrders={() => {}}
-      />
-    )
-    test('should render menu items in correct order when logged in', () => {
+  describe('when abandonBasketFeature flag is set to false', () => {
+    beforeEach(() => {
+      wrapper.setProps({ abandonBasketFeature: false })
+    })
+
+    test('does not render the <AbandonBasketModal />', () => {
+      expect(wrapper.find('Connect(AbandonBasketModal)').exists()).toBe(false)
+    })
+  })
+
+  describe('when existing menu path is passed as prop', () => {
+    beforeEach(() => {
+      wrapper.setProps({ path: 'box-prices' })
+    })
+
+    test('renders 4 <GoustoLink />s', () => {
+      expect(wrapper.find('GoustoLink').length).toEqual(4)
+    })
+  })
+
+  describe('when promocode is provided', () => {
+    const PROMO_CODE = 'test'
+
+    beforeEach(() => {
+      wrapper.setProps({ promoCodeUrl: PROMO_CODE })
+    })
+
+    test('updates the homepage link', () => {
+      expect(wrapper.find('GoustoLink').first().props().to).toEqual(`/${PROMO_CODE}`)
+    })
+  })
+
+  describe('when path contains "check-out"', () => {
+    beforeEach(() => {
+      wrapper.setProps({ path: 'check-out' })
+    })
+
+    test('updates the homepage link to /menu', () => {
+      expect(wrapper.find('GoustoLink').first().prop('to')).toEqual('/menu')
+    })
+  })
+
+  describe('when displaying the simple header', () => {
+    beforeEach(() => {
+      wrapper.setProps({ simple: true })
+    })
+
+    test('does not render a <MobileMenu />', () => {
+      expect(wrapper.find('MobileMenu').exists()).toBe(false)
+    })
+  })
+
+  describe('when serverError prop is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({ serverError: true })
+    })
+
+    test('renders the fallback MobileMenu toggle', () => {
+      expect(wrapper.find('[data-testing="header"]').prop('id')).toBe('mobileMenu')
+    })
+  })
+
+  describe('when isAuthenticated prop is true', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isAuthenticated: true })
+    })
+
+    test('renders referFriend', () => {
+      expect(wrapper.find('GoustoLink').at(2).childAt(0).text()).toEqual('Free Food')
+    })
+
+    test('renders menu items in correct order', () => {
       const expected = [
         {
           "clientRouted": false,
           "name": 'My Gousto',
-          "url": "/my-gousto",
+          "url": routesConfig.client.myGousto,
           "tracking": "MyGoustoNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": 'Deliveries',
-          "url": "/my-deliveries",
+          "url": routesConfig.client.myDeliveries,
           "tracking": "DeliveriesNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": 'Subscription',
-          "url": "/my-subscription",
+          "url": routesConfig.client.mySubscription,
           "tracking": "SubscriptionNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": 'Details',
-          "url": "/my-details",
+          "url": routesConfig.client.myDetails,
           "tracking": "DetailsNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Free Food",
-          "url": "/my-referrals",
+          "url": routesConfig.client.myReferral,
           "tracking": "ReferAFriendNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Rate My Recipes",
-          "url": "/rate-my-recipes",
+          "url": routesConfig.client.rateMyRecipes,
           "tracking": "RateMyRecipesNavigation Clicked",
         },
         {
           "clientRouted": true,
           "disabled": true,
           "name": "Home",
-          "url": "/"
+          "url": routesConfig.client.home,
         },
         {
           "name": "Choose Recipes",
-          "url": "/menu",
+          "url": routesConfig.client.menu,
           "tracking": "RecipeNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Sustainability",
-          "url": "/blog/sustainability",
+          "url": routesConfig.client.weCare,
           "tracking": "SustainabilityNavigation Clicked",
         },
         {
@@ -284,22 +234,33 @@ describe('Header', () => {
           "tracking": "FAQNavigation Clicked",
         }
       ]
+
       expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
+    })
+
+    describe('and forceSignupWizard prop is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ forceSignupWizardFeature: true })
+      })
+
+      test('renders menu with "choose recipes" going to MENU', () => {
+        const chooseRecipes = {
+          "name": "Choose Recipes",
+          "url": "/menu",
+          "tracking": "RecipeNavigation Clicked",
+        }
+        expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+      })
     })
   })
 
-  describe('render MobileMenu with the right paths when not authenticated', () => {
-    let wrapper
-    const isAuthenticated = false
-
+  describe('when isAuthenticated prop is false', () => {
     beforeEach(() => {
-      wrapper = shallow(
-        <Header
-          isAuthenticated={isAuthenticated}
-          config={config}
-          loadUserOrders={() => {}}
-        />
-      )
+      wrapper.setProps({ isAuthenticated: false })
+    })
+
+    test('renders boxPrices', () => {
+      expect(wrapper.find('GoustoLink').at(1).childAt(0).text()).toEqual('Box Prices')
     })
 
     test('should render menu items in correct order when logged out', () => {
@@ -308,23 +269,23 @@ describe('Header', () => {
           "clientRouted": true,
           "disabled": true,
           "name": "Home",
-          "url": "/",
+          "url": routesConfig.client.home,
         },
         {
           "clientRouted": true,
           "name": "Box Prices",
-          "url": "/box-prices",
+          "url": routesConfig.client.boxPrices,
           "tracking": "BoxPricingNavigation Clicked",
         },
         {
           "name": "Choose Recipes",
-          "url": "/menu",
+          "url": routesConfig.client.menu,
           "tracking": "RecipeNavigation Clicked",
         },
         {
           "clientRouted": false,
           "name": "Sustainability",
-          "url": "/blog/sustainability",
+          "url": routesConfig.client.weCare,
           "tracking": "SustainabilityNavigation Clicked",
         },
         {
@@ -336,117 +297,56 @@ describe('Header', () => {
       ]
       expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
     })
-  })
 
-  describe('forceSignupWizard feature', () => {
-    test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to false', () => {
-      const isAuthenticated = false
-      const wrapper = shallow(
-        <Header
-          isAuthenticated={isAuthenticated}
-          config={config}
-          forceSignupWizardFeature={false}
-          loadUserOrders={() => {}}
-        />
-      )
-      const chooseRecipes = {
-        "name": "Choose Recipes",
-        "url": "/menu",
-        "tracking": "RecipeNavigation Clicked",
-      }
-      expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
-    })
-
-    test('render menu with "choose recipes" going to MENU when forceSignupWizard feature is set to true and is authenticated', () => {
-      const wrapper = shallow(
-        <Header
-          isAuthenticated
-          config={config}
-          forceSignupWizardFeature
-          loadUserOrders={() => {}}
-        />
-      )
-      const chooseRecipes = {
-        "name": "Choose Recipes",
-        "url": "/menu",
-        "tracking": "RecipeNavigation Clicked",
-      }
-      expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
-    })
-
-    test('render menu with "choose recipes" going to SIGNUP WIZARD when forceSignupWizard feature is set to true and authenticated', () => {
-      const isAuthenticated = false
-      const wrapper = shallow(
-        <Header
-          isAuthenticated={isAuthenticated}
-          config={config}
-          forceSignupWizardFeature
-          loadUserOrders={() => {}}
-        />
-      )
-      const chooseRecipes = {
-        "name": "Choose Recipes",
-        "url": "/signup",
-        "tracking": "RecipeNavigation Clicked",
-      }
-      expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
-    })
-  })
-
-  describe('loading user orders', () => {
-    const loadUserOrdersMock = jest.fn()
-
-    afterEach(() => {
-      loadUserOrdersMock.mockReset()
-    })
-
-    describe('when shouldLoadOrders is true', () => {
+    describe('and forceSignupWizard prop is true', () => {
       beforeEach(() => {
-        shallow(
-          <Header
-            loadUserOrders={loadUserOrdersMock}
-            shouldLoadOrders
-          />
-        )
+        wrapper.setProps({ forceSignupWizardFeature: true })
       })
 
-      test('calls the userLoadOrders function', () => {
-        expect(loadUserOrdersMock).toHaveBeenCalledTimes(1)
-      })
-    })
-
-    describe('when shouldLoadOrders is false', () => {
-      beforeEach(() => {
-        shallow(
-          <Header
-            loadUserOrders={loadUserOrdersMock}
-            shouldLoadOrders={false}
-          />
-        )
-      })
-
-      test('does not call the userLoadOrders function', () => {
-        expect(loadUserOrdersMock).not.toHaveBeenCalled()
+      test('render menu with "choose recipes" going to SIGNUP WIZARD', () => {
+        const chooseRecipes = {
+          "name": "Choose Recipes",
+          "url": routesConfig.client.signup,
+          "tracking": "RecipeNavigation Clicked",
+        }
+        expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
       })
     })
   })
 
-  describe('clicking the menu items', () => {
-    let helpLink
-    let wrapper
-
+  describe('when forceSignupWizard prop is false', () => {
     beforeEach(() => {
-      wrapper = shallow(<Header />)
-      helpLink = wrapper.findWhere(n => n.prop('to') === routesConfig.zendesk.faqs)
+      wrapper.setProps({ forceSignupWizard: false })
     })
 
-    test('opens the Help link into a new tab', () => {
-      expect(helpLink.prop('target')).toBe('_blank')
+    test('renders menu with "choose recipes" going to MENU ', () => {
+      const chooseRecipes = {
+        "name": "Choose Recipes",
+        "url": routesConfig.client.menu,
+        "tracking": "RecipeNavigation Clicked",
+      }
+
+      expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+    })
+  })
+
+  describe('when shouldLoadOrders is true', () => {
+    beforeEach(() => {
+      wrapper = shallow(<Header {...PROPS} shouldLoadOrders />, { context: { store } })
     })
 
-    test('does not open other links in a new tab', () => {
-      const linksWithNewTab = wrapper.findWhere(n => n.prop('target') === '_blank')
-      expect(linksWithNewTab).toHaveLength(1)
+    test('calls the userLoadOrders function', () => {
+      expect(PROPS.loadUserOrders).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe('when shouldLoadOrders is false', () => {
+    beforeEach(() => {
+      wrapper.setProps({ shouldLoadOrders: false })
+    })
+
+    test('does not call the userLoadOrders function', () => {
+      expect(PROPS.loadUserOrders).not.toHaveBeenCalled()
     })
   })
 })
