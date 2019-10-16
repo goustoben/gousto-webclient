@@ -16,12 +16,11 @@ export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
     : false
 )
 
-export const isNDDFeatureEnabled = ({ features, user }) => {
-  const userHasNDD = (user && user.get('deliveryTariffId', '')) == delivery_tariff_types.FREE_NDD
-  const isNDDEnabled = (features && features.getIn(['ndd', 'value'], false))
-
-  return (userHasNDD || isNDDEnabled)
-}
+export const isNDDFeatureEnabled = ({ features, user }) => (
+  user
+    ? user.get('deliveryTariffId', '') == delivery_tariff_types.FREE_NDD
+    : features && features.getIn(['ndd', 'value'], false)
+)
 
 export const getDisabledSlots = ({ features }) => (
   features

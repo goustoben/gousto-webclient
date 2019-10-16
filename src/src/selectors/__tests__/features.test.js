@@ -327,10 +327,10 @@ describe('when features are defined', () => {
             deliveryTariffId: delivery_tariff_types.NON_NDD
           })
         }
-        expect(isNDDFeatureEnabled(state)).toEqual(true)
+        expect(isNDDFeatureEnabled(state)).toEqual(false)
       })
     })
-    describe('when feature is set and users deliveryTariffId is not set ndd', () => {
+    describe('when feature is set and users deliveryTariffId is not set', () => {
       test('should return true', () => {
         state = {
           features: Immutable.fromJS({
