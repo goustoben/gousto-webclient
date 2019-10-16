@@ -9,7 +9,7 @@ import * as prospectApi from 'apis/prospect'
 import * as addressApi from 'apis/addressLookup'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
-import { delivery_tariff_types } from 'utils/deliveries'
+import { DeliveryTariffTypes } from 'utils/deliveries'
 import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
@@ -635,7 +635,7 @@ export function userSubscribe() {
           salutation_id: aboutYou.get('title'),
           marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
           marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
-          delivery_tariff_id: isNDDFeatureEnabled(state) ? delivery_tariff_types.FREE_NDD : delivery_tariff_types.NON_NDD
+          delivery_tariff_id: isNDDFeatureEnabled(state) ? DeliveryTariffTypes.FREE_NDD : DeliveryTariffTypes.NON_NDD
         },
         payment_method: {
           is_default: 1,

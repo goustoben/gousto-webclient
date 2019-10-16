@@ -15,7 +15,7 @@ import {
   getCookingInstruction,
 } from 'selectors/features'
 
-import { delivery_tariff_types } from 'utils/deliveries'
+import { DeliveryTariffTypes } from 'utils/deliveries'
 
 describe('when features are undefined', () => {
   const state = {}
@@ -278,7 +278,7 @@ describe('when features are defined', () => {
         state = {
           features: Immutable.Map({}),
           user: Immutable.fromJS({
-            deliveryTariffId: delivery_tariff_types.FREE_NDD
+            deliveryTariffId: DeliveryTariffTypes.FREE_NDD
           })
         }
         expect(isNDDFeatureEnabled(state)).toEqual(true)
@@ -289,7 +289,7 @@ describe('when features are defined', () => {
         state = {
           features: Immutable.Map({}),
           user: Immutable.fromJS({
-            deliveryTariffId: delivery_tariff_types.NON_NDD
+            deliveryTariffId: DeliveryTariffTypes.NON_NDD
           })
         }
         expect(isNDDFeatureEnabled(state)).toEqual(false)
@@ -309,7 +309,7 @@ describe('when features are defined', () => {
             }
           }),
           user: Immutable.fromJS({
-            deliveryTariffId: delivery_tariff_types.FREE_NDD
+            deliveryTariffId: DeliveryTariffTypes.FREE_NDD
           })
         }
         expect(isNDDFeatureEnabled(state)).toEqual(true)
@@ -324,7 +324,7 @@ describe('when features are defined', () => {
             }
           }),
           user: Immutable.fromJS({
-            deliveryTariffId: delivery_tariff_types.NON_NDD
+            deliveryTariffId: DeliveryTariffTypes.NON_NDD
           })
         }
         expect(isNDDFeatureEnabled(state)).toEqual(false)

@@ -4,7 +4,7 @@ import GoustoException from 'utils/GoustoException'
 import { getDisabledSlots } from 'selectors/features'
 import { formatAndValidateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
 
-export const delivery_tariff_types = {
+export const DeliveryTariffTypes = {
   FREE_NDD: '823b18ef-5ca0-4a15-8f0f-4a363b319e29',
   NON_NDD: '9037a447-e11a-4960-ae69-d89a029569af'
 }

@@ -1,4 +1,4 @@
-import { delivery_tariff_types } from 'utils/deliveries'
+import { DeliveryTariffTypes } from 'utils/deliveries'
 
 export const isCollectionsFeatureEnabled = ({ features }) => (
   features
@@ -18,7 +18,7 @@ export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
 
 export const isNDDFeatureEnabled = ({ features, user }) => (
   user
-    ? user.get('deliveryTariffId', '') == delivery_tariff_types.FREE_NDD
+    ? user.get('deliveryTariffId', '') === DeliveryTariffTypes.FREE_NDD
     : features && features.getIn(['ndd', 'value'], false)
 )
 

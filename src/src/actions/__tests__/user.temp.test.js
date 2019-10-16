@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { referAFriend } from 'apis/user'
 import { customerSignup } from 'apis/customers'
 
-import { delivery_tariff_types } from 'utils/deliveries'
+import { DeliveryTariffTypes } from 'utils/deliveries'
 
 import {
   userReferAFriend,
@@ -204,7 +204,7 @@ describe('user actions', () => {
 
           customerObject = {
             age_verified: 0,
-            delivery_tariff_id: value ? delivery_tariff_types.FREE_NDD : delivery_tariff_types.NON_NDD,
+            delivery_tariff_id: value ? DeliveryTariffTypes.FREE_NDD : DeliveryTariffTypes.NON_NDD,
             email: 'test_email@test.com',
             marketing_do_allow_email: 0,
             marketing_do_allow_thirdparty: 0,
