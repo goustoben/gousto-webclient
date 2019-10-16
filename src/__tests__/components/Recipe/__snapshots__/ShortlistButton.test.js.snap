@@ -23,7 +23,6 @@ ShallowWrapper {
     "batchedUpdates": [Function],
     "getNode": [Function],
     "render": [Function],
-    "simulateError": [Function],
     "simulateEvent": [Function],
     "unmount": [Function],
   },
@@ -140,22 +139,22 @@ ShallowWrapper {
     },
   ],
   Symbol(enzyme.__options__): Object {
-    "adapter": ReactSixteenAdapter {
+    "adapter": ReactFifteenAdapter {
       "options": Object {
-        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
         "lifecycles": Object {
           "componentDidUpdate": Object {
-            "onSetState": true,
+            "prevContext": true,
           },
-          "getDerivedStateFromProps": true,
-          "getSnapshotBeforeUpdate": true,
-          "setState": Object {
-            "skipsComponentDidUpdateOnNullish": true,
+          "getChildContext": Object {
+            "calledByRenderer": true,
           },
         },
+        "supportPrevContextArgumentOfComponentDidUpdate": true,
       },
     },
   },
+  Symbol(enzyme.__childContext__): null,
 }
 `;
 
@@ -182,7 +181,6 @@ ShallowWrapper {
     "batchedUpdates": [Function],
     "getNode": [Function],
     "render": [Function],
-    "simulateError": [Function],
     "simulateEvent": [Function],
     "unmount": [Function],
   },
@@ -299,21 +297,21 @@ ShallowWrapper {
     },
   ],
   Symbol(enzyme.__options__): Object {
-    "adapter": ReactSixteenAdapter {
+    "adapter": ReactFifteenAdapter {
       "options": Object {
-        "enableComponentDidUpdateOnSetState": true,
+        "legacyContextMode": "parent",
         "lifecycles": Object {
           "componentDidUpdate": Object {
-            "onSetState": true,
+            "prevContext": true,
           },
-          "getDerivedStateFromProps": true,
-          "getSnapshotBeforeUpdate": true,
-          "setState": Object {
-            "skipsComponentDidUpdateOnNullish": true,
+          "getChildContext": Object {
+            "calledByRenderer": true,
           },
         },
+        "supportPrevContextArgumentOfComponentDidUpdate": true,
       },
     },
   },
+  Symbol(enzyme.__childContext__): null,
 }
 `;
