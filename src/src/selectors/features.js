@@ -1,3 +1,5 @@
+import { DeliveryTariffTypes } from 'utils/deliveries'
+
 export const isCollectionsFeatureEnabled = ({ features }) => (
   features
     ? (features.getIn(['collections', 'value']) || features.getIn(['forceCollections', 'value']))
@@ -14,8 +16,10 @@ export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
     : false
 )
 
-export const isNDDFeatureEnabled = ({ features }) => (
-  features && features.getIn(['ndd', 'value'], false)
+export const isNDDFeatureEnabled = ({ features, user }) => (
+  user
+    ? user.get('deliveryTariffId', '') === DeliveryTariffTypes.FREE_NDD
+    : features && features.getIn(['ndd', 'value'], false)
 )
 
 export const getDisabledSlots = ({ features }) => (
