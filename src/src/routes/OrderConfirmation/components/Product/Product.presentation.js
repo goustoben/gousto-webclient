@@ -53,7 +53,7 @@ const ProductPresentation = ({
       </button>
       {lowStock && <span className={css.productLowStock}>low stock</span>}
       <div className={css.productContent}>
-        <div>
+        <div className={css.productContentFirstColumn}>
           <button
             type="button"
             className={classnames(css.resetButtonStyle, css.productInfo)}
