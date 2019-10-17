@@ -4,7 +4,7 @@ const encodeState = require('./encodeState')
 
 const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userAgent = '', noGTM = false, helmetHead) => (
   `<!doctype html>
-   <html ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
+   <html lang="en-GB" ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
     <head>
       <!-- ********************************************************************
         Well hello there. Like HTML, do ya? How about PHP? AWS? Git? Laravel?
