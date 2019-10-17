@@ -7,7 +7,8 @@ import {
   getLandingDay,
   cutoffDateTimeNow,
   getAvailableDeliveryDays,
-  transformDaySlotLeadTimesToMockSlots
+  transformDaySlotLeadTimesToMockSlots,
+  getSlotTimes
 } from 'utils/deliveries'
 import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
@@ -49,6 +50,60 @@ describe('utils/deliveries', () => {
         'slot2',
       )
       expect(Immutable.is(result, Immutable.fromJS({ id: 'slot2' }))).toBe(true)
+    })
+  })
+
+  describe('getSlotTimes', () => {
+    test('should return text for slot time', () => {
+      const [deliveryDays, date, slotId] = [
+        Immutable.fromJS({
+          '2016-06-26': {
+            slots: [{
+              id: 'slot1',
+              deliveryStartTime: '08:00:00',
+              deliveryEndTime: '12:00:00'
+
+            }, {
+              id: 'slot2',
+              deliveryStartTime: '08:00:00',
+              deliveryEndTime: '19:00:00'
+            }, {
+              id: 'slot3'
+            }],
+          },
+        }),
+        '2016-06-26',
+        'slot2',
+      ]
+      const result = getSlotTimes({ date, deliveryDays, slotId })
+      expect(result).toEqual('8am - 7pm ')
+    })
+
+    describe('when slot time not sent', () => {
+      test('should return text for first slot time', () => {
+        const [deliveryDays, date, slotId] = [
+          Immutable.fromJS({
+            '2016-06-26': {
+              slots: [{
+                id: 'slot1',
+                deliveryStartTime: '08:00:00',
+                deliveryEndTime: '12:00:00'
+
+              }, {
+                id: 'slot2',
+                deliveryStartTime: '08:00:00',
+                deliveryEndTime: '19:00:00'
+              }, {
+                id: 'slot3'
+              }],
+            },
+          }),
+          '2016-06-26',
+          '',
+        ]
+        const result = getSlotTimes({ date, deliveryDays, slotId })
+        expect(result).toEqual('8am - 12pm ')
+      })
     })
   })
 

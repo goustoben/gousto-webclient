@@ -1,3 +1,5 @@
+import { basketSlotChange } from 'actions/basket'
+import { getSlot } from 'utils/deliveries'
 import actionTypes from './actionTypes'
 
 export const trackDeliveryDayDropDownOpened = (date, day_offset, delivery_slot_id) => dispatch => {
@@ -98,6 +100,23 @@ export const trackDeliveryPreferenceModalClosed = (date, day_offset, delivery_sl
   })
 }
 
+export const preselectFreeDeliverySlot = (dispatch, getState) => {
+  const slotId = getState().basket.get('slotId')
+
+  if (!!slotId) {
+    return
+  }
+
+  const date = getState().basket.get('date')
+  const deliveryDays = getState().boxSummaryDeliveryDays
+  const slotTimeId = getSlot(deliveryDays, date, slotId)
+
+  if (!slotTimeId) {
+    return
+  }
+  dispatch(basketSlotChange(slotTimeId.get('id')))
+}
+
 export default {
   trackDeliveryDayDropDownOpened,
   trackDeliveryDayDropDownClosed,
@@ -107,4 +126,5 @@ export default {
   trackDeliveryPreferenceModalViewed,
   trackDeliveryPreferenceSelected,
   trackDeliveryPreferenceModalClosed,
+  preselectFreeDeliverySlot
 }

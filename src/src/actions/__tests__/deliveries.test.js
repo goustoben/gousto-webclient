@@ -1,6 +1,16 @@
+import Immutable from 'immutable'
 import deliveries from 'actions/deliveries'
-
 import actionTypes from 'actions/actionTypes'
+import { basketSlotChange } from 'actions/basket'
+import { getSlot } from 'utils/deliveries'
+
+jest.mock('utils/deliveries', () => ({
+  getSlot: jest.fn()
+}))
+
+jest.mock('actions/basket', () => ({
+  basketSlotChange: jest.fn()
+}))
 
 describe('delivery actions', () => {
 
@@ -154,6 +164,23 @@ describe('delivery actions', () => {
           delivery_slot_id,
           delivery_preference,
         }
+      })
+    })
+  })
+
+  describe('preselectFreeDeliverySlot', () => {
+    const getState = () => ({
+      basket: Immutable.fromJS({
+        date: '2019-10-16',
+        slotId: '',
+      }),
+      boxSummaryDeliveryDays: Immutable.Map({})
+    })
+    describe('when slotId empty and slotTime has value', () => {
+      test('should dispatch basketSlotChange', () => {
+        getSlot.mockReturnValueOnce(Immutable.Map({ id: 'slotId' }))
+        deliveries.preselectFreeDeliverySlot(dispatch, getState)
+        expect(basketSlotChange).toHaveBeenCalledWith('slotId')
       })
     })
   })
