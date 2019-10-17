@@ -148,7 +148,7 @@ describe('shortlist actions', () => {
         test('should call preselectFreeDeliverySlot ', () => {
           shortlistLimitReached.mockReturnValue(false)
           shortlistRecipeAdd('123', false, recipeInfo)(dispatch, getState)
-          expect(preselectFreeDeliverySlot).toHaveBeenCalled()
+          expect(preselectFreeDeliverySlot).toHaveBeenCalledWith(dispatch, getState)
         })
 
         describe('if limitReached is true after adding recipe to shortlist ', () => {

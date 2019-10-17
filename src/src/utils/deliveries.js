@@ -22,12 +22,12 @@ export function getSlot(deliveryDays, date, slotId) {
 
 export const getSlotTimes = ({ date, deliveryDays, slotId }) => {
   const chosenSlot = getSlot(deliveryDays, date, slotId)
-  let slotText = ''
-  if (chosenSlot) {
-    slotText = `${moment(`${date} ${chosenSlot.get('deliveryStartTime')}`).format('ha')} - ${moment(`${date} ${chosenSlot.get('deliveryEndTime')}`).format('ha')} `
+
+  if (!chosenSlot) {
+    return ''
   }
 
-  return slotText
+  return `${moment(`${date} ${chosenSlot.get('deliveryStartTime')}`).format('ha')} - ${moment(`${date} ${chosenSlot.get('deliveryEndTime')}`).format('ha')} `
 }
 
 function getPrevBasketDate(basket) {

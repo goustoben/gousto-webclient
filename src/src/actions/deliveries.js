@@ -101,13 +101,20 @@ export const trackDeliveryPreferenceModalClosed = (date, day_offset, delivery_sl
 }
 
 export const preselectFreeDeliverySlot = (dispatch, getState) => {
+  const slotId = getState().basket.get('slotId')
+
+  if (!!slotId) {
+    return
+  }
+
   const date = getState().basket.get('date')
   const deliveryDays = getState().boxSummaryDeliveryDays
-  const slotId = getState().basket.get('slotId')
   const slotTimeId = getSlot(deliveryDays, date, slotId)
-  if (!slotId && slotTimeId) {
-    dispatch(basketSlotChange(slotTimeId.get('id')))
+
+  if (!slotTimeId) {
+    return
   }
+  dispatch(basketSlotChange(slotTimeId.get('id')))
 }
 
 export default {
