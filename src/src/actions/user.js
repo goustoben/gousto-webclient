@@ -614,11 +614,7 @@ export function userSubscribe() {
       const deliveryAddress = getAddress(delivery)
       const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
 
-      const intervalId =
-        isChoosePlanEnabled(state) &&
-        basket.get('subscriptionOption') === 'transactional'
-          ? 0
-          : delivery.get('interval_id') || 1
+      const intervalId = delivery.get('interval_id', 1)
 
       const reqData = {
         order_id: basket.get('previewOrderId'),
@@ -663,6 +659,13 @@ export function userSubscribe() {
           delivery_slot_id: basket.get('slotId'),
           box_id: basket.get('boxId')
         }
+      }
+
+      if (
+        isChoosePlanEnabled(state) &&
+        basket.get('subscriptionOption') === config.subscriptionOptions.transactional
+      ) {
+        reqData.subscription.paused = true
       }
 
       const { data } = await customerSignup(null, reqData)

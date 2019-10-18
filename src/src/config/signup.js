@@ -17,4 +17,8 @@ module.exports = {
     billing: 'billing',
     shipping: 'shipping',
   },
+  subscriptionOptions: {
+    subscription: 'subscription',
+    transactional: 'transactional'
+  }
 }
