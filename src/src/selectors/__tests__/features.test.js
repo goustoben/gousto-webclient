@@ -300,6 +300,15 @@ describe('when features are defined', () => {
         expect(isNDDFeatureEnabled(state)).toEqual(false)
       })
     })
+    describe('when feature is not set AND users is set but, users.deliveryTariffId is not set', () => {
+      test('should return false', () => {
+        state = {
+          features: Immutable.Map({}),
+          user: Immutable.fromJS({})
+        }
+        expect(isNDDFeatureEnabled(state)).toEqual(false)
+      })
+    })
     describe('when feature is set and users deliveryTariffId is free ndd', () => {
       test('should return true', () => {
         state = {
@@ -338,6 +347,19 @@ describe('when features are defined', () => {
               value: true
             }
           })
+        }
+        expect(isNDDFeatureEnabled(state)).toEqual(true)
+      })
+    })
+    describe('when feature is set and user is set but user.deliveryTariffId is not set', () => {
+      test('should return true', () => {
+        state = {
+          features: Immutable.fromJS({
+            ndd: {
+              value: true
+            }
+          }),
+          user: Immutable.fromJS({})
         }
         expect(isNDDFeatureEnabled(state)).toEqual(true)
       })
