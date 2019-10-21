@@ -30,7 +30,7 @@ describe('Header', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<Header {...PROPS} />, { context: { store }})
+    wrapper = shallow(<Header {...PROPS} />, { context: { store } })
   })
 
   afterEach(() => {
@@ -41,8 +41,8 @@ describe('Header', () => {
     expect(wrapper.find('Connect(CookieBanner)').exists()).toBe(true)
   })
 
-  test('should render one <MobileMenu />', () => {
-    expect(wrapper.find('MobileMenu').exists()).toBe(true)
+  test('should render one <MobileWrapper />', () => {
+    expect(wrapper.find('MobileWrapper').exists()).toBe(true)
   })
 
   test('renders 5 <GoustoLink />s', () => {
@@ -235,7 +235,7 @@ describe('Header', () => {
         }
       ]
 
-      expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
+      expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toEqual(expected)
     })
 
     describe('and forceSignupWizard prop is true', () => {
@@ -249,7 +249,7 @@ describe('Header', () => {
           "url": "/menu",
           "tracking": "RecipeNavigation Clicked",
         }
-        expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+        expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toContainEqual(chooseRecipes)
       })
     })
   })
@@ -295,7 +295,7 @@ describe('Header', () => {
           "tracking": "FAQNavigation Clicked",
         }
       ]
-      expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
+      expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toEqual(expected)
     })
 
     describe('and forceSignupWizard prop is true', () => {
@@ -309,7 +309,7 @@ describe('Header', () => {
           "url": routesConfig.client.signup,
           "tracking": "RecipeNavigation Clicked",
         }
-        expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+        expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toContainEqual(chooseRecipes)
       })
     })
   })
@@ -326,7 +326,7 @@ describe('Header', () => {
         "tracking": "RecipeNavigation Clicked",
       }
 
-      expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+      expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toContainEqual(chooseRecipes)
     })
   })
 

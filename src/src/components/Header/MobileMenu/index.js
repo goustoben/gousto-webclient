@@ -1,2 +1,1 @@
-import MobileMenu from './MobileMenu'
-export default MobileMenu
+export { MobileWrapper } from './MobileWrapper' 

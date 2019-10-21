@@ -19,7 +19,8 @@ import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
-import MobileMenu from './MobileMenu'
+import { MobileWrapper } from './MobileMenu'
+import { availableMenuItems } from './menuItemsHelper'
 import css from './Header.css'
 
 const clientRoutes = config.routes.client
@@ -129,39 +130,19 @@ class Header extends React.PureComponent {
 
   getMenuItems = (device, path) => {
     const { isAuthenticated, promoCodeUrl, fromJoin } = this.props
-
-    const home = { name: 'Home', url: clientRoutes.home, clientRouted: true }
-
-    const availableItems = {
-      home,
-      boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking: 'BoxPricingNavigation Clicked' },
-      menu: { name: 'Choose Recipes', url: this.getChooseRecipesLink(), tracking: 'RecipeNavigation Clicked' },
-      faq: {
-        name: 'Help',
-        url: config.routes.zendesk.faqs,
-        clientRouted: false,
-        tracking: 'FAQNavigation Clicked'
-      },
-      myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false, tracking: 'MyGoustoNavigation Clicked' },
-      referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false, tracking: 'ReferAFriendNavigation Clicked' },
-      rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking: 'RateMyRecipesNavigation Clicked' },
-      deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking: 'DeliveriesNavigation Clicked' },
-      subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking: 'SubscriptionNavigation Clicked' },
-      details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false, tracking: 'DetailsNavigation Clicked' },
-      sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking: 'SustainabilityNavigation Clicked' },
-    }
+    const menuItems = JSON.parse(JSON.stringify(availableMenuItems))
 
     let pathLocal = path
     if (path.indexOf('/') === -1) {
       pathLocal = `/${pathLocal}`
     }
-    Object.keys(availableItems).forEach(menuItem => {
-      if (pathLocal.indexOf(availableItems[menuItem].url) > -1) {
-        availableItems[menuItem].disabled = true
+    Object.keys(menuItems).forEach(menuItem => {
+      if (pathLocal.indexOf(menuItems[menuItem].url) > -1) {
+        menuItems[menuItem].disabled = true
       }
     })
 
-    const homeMenuItem = availableItems.home
+    const homeMenuItem = Object.assign({}, menuItems.home)
     if (promoCodeUrl) {
       homeMenuItem.url = `/${promoCodeUrl}`
     } else if (path.includes('check-out')) {
@@ -171,26 +152,26 @@ class Header extends React.PureComponent {
     }
 
     const desktopItems = [
-      !isAuthenticated && availableItems.boxPrices,
-      availableItems.menu,
-      isAuthenticated && availableItems.referFriend,
-      availableItems.sustainability,
-      availableItems.faq,
+      !isAuthenticated && menuItems.boxPrices,
+      menuItems.menu,
+      isAuthenticated && menuItems.referFriend,
+      menuItems.sustainability,
+      menuItems.faq,
     ].filter(item => item)
 
     const mobileItems = [
-      !isAuthenticated && availableItems.boxPrices,
-      availableItems.menu,
-      availableItems.sustainability,
-      availableItems.faq,
+      !isAuthenticated && menuItems.boxPrices,
+      menuItems.menu,
+      menuItems.sustainability,
+      menuItems.faq,
     ].filter(item => item)
 
-    const myGousto = [availableItems.myGousto]
-    const rateMyRecipes = [availableItems.rateMyRecipes]
-    const deliveries = [availableItems.deliveries]
-    const subscription = [availableItems.subscription]
-    const details = [availableItems.details]
-    const referFriend = [availableItems.referFriend]
+    const myGousto = [menuItems.myGousto]
+    const rateMyRecipes = [menuItems.rateMyRecipes]
+    const deliveries = [menuItems.deliveries]
+    const subscription = [menuItems.subscription]
+    const details = [menuItems.details]
+    const referFriend = [menuItems.referFriend]
 
     let mobileMenu = []
 
@@ -386,17 +367,6 @@ class Header extends React.PureComponent {
           />
           <header className={css.header}>
             <div>
-              <MobileMenu
-                menuItems={mobileMenuItems}
-                show={mobileMenuOpen}
-                onHide={this.hideMobileMenu}
-                hideNav={hideNav}
-                isAuthenticated={isAuthenticated}
-                loginFunc={this.onOpen}
-                logoutFunc={this.logoutFunc}
-                promoCodeUrl={promoCodeUrl}
-                trackNavigationClick={trackNavigationClick}
-              />
               <div className={css.container}>
                 <div className={css.mainBar}>
                   <div className={css.mainContent}>
@@ -410,15 +380,19 @@ class Header extends React.PureComponent {
                       {this.renderMenuItems(desktopMenuItems, hideNav)}
                       {this.renderAuthLink()}
                     </span>
-                    <span className={css.linkMobileContainer}>
-                      <button
-                        type='button'
-                        className={classNames([css.burgerIcon, 'needsclick'])}
-                        onClick={this.showMobileMenu}
-                        href={serverError ? '#mobileMenu' : null}
-                        data-testing="burgerMenu"
-                      />
-                    </span>
+                    <MobileWrapper
+                      hideMobileMenu={this.hideMobileMenu}
+                      onOpen={this.onOpen}
+                      logoutFunc={this.logoutFunc}
+                      showMobileMenu={this.showMobileMenu}
+                      mobileMenuItems={mobileMenuItems}
+                      mobileMenuOpen={mobileMenuOpen}
+                      hideNav={hideNav}
+                      isAuthenticated={isAuthenticated}
+                      promoCodeUrl={promoCodeUrl}
+                      trackNavigationClick={trackNavigationClick}
+                      serverError={serverError}
+                    />
                   </div>
                 </div>
               </div>
