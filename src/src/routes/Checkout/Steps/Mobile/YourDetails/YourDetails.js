@@ -22,12 +22,13 @@ const AboutYouSection = AboutYouContainer(aboutYouSectionName)
 const deliverySectionName = 'delivery'
 const DeliverySection = DeliveryContainer(deliverySectionName)
 
-const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser }) => {
+const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser, trackClick }) => {
 
   const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
   const handleSubmit = () => {
     if (checkoutValid) {
       userProspect()
+      trackClick('NextCTA Clicked', { succeeded: true, missing_field: null })
     }
     submit()
   }
@@ -69,14 +70,15 @@ YourDetailsStep.propTypes = {
   formValues: PropTypes.object,
   receiveRef: PropTypes.func,
   scrollToFirstMatchingRef: PropTypes.func,
+  trackClick: PropTypes.func,
   checkoutValid: PropTypes.bool,
   browser: PropTypes.string,
 }
 
 YourDetailsStep.defaultProps = {
-  userProspect: () => {},
-  receiveRef: () => {},
-  scrollToFirstMatchingRef: () => {},
+  userProspect: () => { },
+  receiveRef: () => { },
+  scrollToFirstMatchingRef: () => { },
   checkoutValid: false,
 }
 
