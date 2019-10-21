@@ -192,10 +192,10 @@ class Checkout extends React.PureComponent {
     }
   }
 
-  trackClick = (position) => {
+  trackClick = (type, property) => {
     const { trackCheckoutButtonPressed } = this.props
 
-    trackCheckoutButtonPressed(position)
+    trackCheckoutButtonPressed(type, property)
   }
 
   renderSteps = (stepMapping, steps, currentStep) => {

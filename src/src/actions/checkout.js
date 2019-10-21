@@ -315,11 +315,11 @@ export function trackSignupPageChange(step) {
   }
 }
 
-export const trackCheckoutButtonPressed = position => {
+export const trackCheckoutButtonPressed = (type, property) => {
   const tracking = {
-    actionType: 'NextCTA Clicked',
+    actionType: type,
     seCategory: 'Checkout',
-    position
+    ...property
   }
 
   return {
