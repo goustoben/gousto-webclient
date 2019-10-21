@@ -1,14 +1,15 @@
 module.exports = {
   version: {
-    customers: 'v1',
-    customersV2: 'v2',
-    complaints: 'v1',
-    products: 'v2.0',
     auth: 'v1.0.0',
     collections: 'v1',
+    complaints: 'v1',
     content: 'v1',
+    customers: 'v1',
+    customersV2: 'v2',
     deliveries: 'v1.0',
+    menu: 'v1',
     orders: 'v1',
+    products: 'v2.0',
     recipes: 'v2',
     ssr: 'v1',
     ssrV2: 'v2',
@@ -146,13 +147,15 @@ module.exports = {
   jobs: {
     openings: '/jobs#openings',
   },
+  menu: {
+    menus: '/menus',
+  },
+  orders: {
+    recipesStock: '/stock/recipes',
+  },
   products: {
     getProducts: '/products',
     categories: '/categories',
-  },
-
-  orders: {
-    recipesStock: '/stock/recipes',
   },
   recipes: {
     availableDates: '/dates/available',
