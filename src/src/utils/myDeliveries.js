@@ -3,7 +3,13 @@ import moment from 'moment'
 
 export const transformPendingOrders = (orders) => {
 
-  return orders.reduce((ordersAccumulator, order) => {
+  const futureOrders = orders.filter(order => {
+    const { phase } = order.toJS()
+
+    return phase !== 'delivered'
+  })
+
+  return futureOrders.reduce((ordersAccumulator, order) => {
     const {
       id,
       state,
