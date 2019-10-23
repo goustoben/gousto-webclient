@@ -38,10 +38,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: '',
   },
-  forceSignupWizard: {
-    experiment: false,
-    value: false,
-  },
   goToMyGousto: {
     experiment: false,
     value: false,

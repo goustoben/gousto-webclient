@@ -1,5 +1,6 @@
 @value Chia, Cacao, Tomato, Mushroom50, White, Blackberry, Basa from 'styles/colors.css';
 @value SpacingXL from 'sass-loader!styles/spacing.scss';
+@value bodyFontStackBold, sizeXS from 'styles/typography.css';
 @value MainColor Blackberry;
 
 .container {
@@ -91,4 +92,23 @@ span:target .hidden {
 	width: 100px;
 	height: 115px;
 	margin: 0 20px;
+}
+
+.mobileMenuTestWrapper { 
+	display: flex;
+	font-family: bodyFontStackBold;
+	font-size: sizeXS;
+}
+
+.accountIcon {
+	width: 1rem;
+}
+
+.newMenuItem {
+	color: White;
+	padding: 0;
+	padding-right: 0.25rem;
+	margin: 0;
+	border: none;
+	background: none;
 }

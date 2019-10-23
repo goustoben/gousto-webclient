@@ -2,7 +2,7 @@ import config from 'config'
 
 const clientRoutes = config.routes.client
 
-export const availableMenuItems = {
+export const defaultMenuItems = {
   home: { name: 'Home', url: clientRoutes.home, clientRouted: true },
   boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking: 'BoxPricingNavigation Clicked' },
   menu: { name: 'Choose Recipes', url: clientRoutes.menu, tracking: 'RecipeNavigation Clicked' },

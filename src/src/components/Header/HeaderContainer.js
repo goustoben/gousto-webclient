@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
-import { getForceSignupWizard, getAbandonBasket } from 'selectors/features'
+import { getAbandonBasket, getRenderNewMenuDesignFeatureFlag } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { locationAtMyGousto } from 'selectors/routing'
 import { Header } from './Header'
@@ -15,9 +15,9 @@ const mapStateToProps = (state) => ({
   disabled: state.auth.get('isAdmin'),
   features: state.features,
   fromJoin: getUserFromJoin(state),
-  forceSignupWizardFeature: getForceSignupWizard(state),
   abandonBasketFeature: getAbandonBasket(state),
   shouldLoadOrders: locationAtMyGousto(state),
+  shouldRenderNewMenuDesign: getRenderNewMenuDesignFeatureFlag(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

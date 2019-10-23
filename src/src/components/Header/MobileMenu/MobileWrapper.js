@@ -1,19 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import Link from 'Link'
+import Svg from 'Svg'
 import MobileMenu from './MobileMenu'
+import { defaultMenuItems } from '../menuItemsHelper'
 import css from '../Header.css'
+import cssMobile from './MobileMenu.css'
 
 const proptypes = {
   isAuthenticated: PropTypes.bool.isRequired,
   hideNav: PropTypes.bool.isRequired,
   mobileMenuOpen: PropTypes.bool.isRequired,
-  mobileMenuItems: PropTypes.arrayOf({
+  mobileMenuItems: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     url: PropTypes.string,
     clientRouted: PropTypes.bool,
     tracking: PropTypes.string
-  }).isRequired,
+  })).isRequired,
   hideMobileMenu: PropTypes.func.isRequired,
   onOpen: PropTypes.func.isRequired,
   logoutFunc: PropTypes.func.isRequired,
@@ -21,6 +25,7 @@ const proptypes = {
   promoCodeUrl: PropTypes.string.isRequired,
   trackNavigationClick: PropTypes.func.isRequired,
   serverError: PropTypes.bool.isRequired,
+  shouldRenderNewMenuDesign: PropTypes.bool.isRequired,
 }
 
 class MobileWrapper extends React.PureComponent {
@@ -63,11 +68,50 @@ class MobileWrapper extends React.PureComponent {
       </span>
     )
   }
+  customerLogin = (e) => {
+    const { onOpen, trackNavigationClick } = this.props
+    trackNavigationClick('New Login Clicked')
+    onOpen(e)
+  }
+
+  renderNewMenuDesign = () => {
+    const { isAuthenticated, trackNavigationClick } = this.props
+
+    return (
+      <span className={cssMobile.mobileMenuTestWrapper}>
+        <Svg fileName="icon_menubar_account_link" className={cssMobile.accountIcon} />
+        {isAuthenticated ?
+          <Link
+            to={defaultMenuItems.myGousto.url}
+            className={cssMobile.newMenuItem}
+            clientRouted={defaultMenuItems.myGousto.clientRouted}
+            tracking={() => trackNavigationClick('New ' + defaultMenuItems.myGousto.tracking)}
+          >
+            Account
+          </Link> :
+          <button type="button" className={cssMobile.newMenuItem} onClick={this.customerLogin}>Log in</button>
+        }
+        <Svg fileName="icon_menubar_help_link" className={cssMobile.accountIcon} />
+        <Link
+          to={defaultMenuItems.faq.url}
+          className={cssMobile.newMenuItem}
+          clientRouted={defaultMenuItems.faq.clientRouted}
+          tracking={() => trackNavigationClick('New ' + defaultMenuItems.faq.tracking)}
+          target="_blank"
+          rel='noopener noreferrer'
+        >
+          {defaultMenuItems.faq.name}
+        </Link>
+      </span>
+    )
+  }
 
   render() {
+    const { shouldRenderNewMenuDesign } = this.props
+
     return (
       <span className={css.linkMobileContainer}>
-        {this.renderBurgerMenu()}
+        {shouldRenderNewMenuDesign ? this.renderNewMenuDesign() : this.renderBurgerMenu()}
       </span>
     )
   }

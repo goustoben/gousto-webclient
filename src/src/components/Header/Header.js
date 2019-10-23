@@ -20,7 +20,7 @@ import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
 import { MobileWrapper } from './MobileMenu'
-import { availableMenuItems } from './menuItemsHelper'
+import { defaultMenuItems } from './menuItemsHelper'
 import css from './Header.css'
 
 const clientRoutes = config.routes.client
@@ -42,11 +42,11 @@ class Header extends React.PureComponent {
     closeBoxModalVisibilityChange: PropTypes.func,
     title: PropTypes.string,
     small: PropTypes.bool,
-    forceSignupWizardFeature: PropTypes.bool,
     abandonBasketFeature: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
     shouldLoadOrders: PropTypes.bool,
     loadUserOrders: PropTypes.func.isRequired,
+    shouldRenderNewMenuDesign: PropTypes.bool
   }
 
   static defaultProps = {
@@ -60,6 +60,7 @@ class Header extends React.PureComponent {
     trackNavigationClick: () => { },
     abandonBasketFeature: false,
     shouldLoadOrders: false,
+    shouldRenderNewMenuDesign: false
   }
 
   constructor(props) {
@@ -122,15 +123,9 @@ class Header extends React.PureComponent {
     loginVisibilityChange(true)
   }
 
-  getChooseRecipesLink = () => {
-    const { forceSignupWizardFeature, isAuthenticated } = this.props
-
-    return forceSignupWizardFeature && !isAuthenticated ? clientRoutes.signup : clientRoutes.menu
-  }
-
   getMenuItems = (device, path) => {
     const { isAuthenticated, promoCodeUrl, fromJoin } = this.props
-    const menuItems = JSON.parse(JSON.stringify(availableMenuItems))
+    const menuItems = JSON.parse(JSON.stringify(defaultMenuItems))
 
     let pathLocal = path
     if (path.indexOf('/') === -1) {
@@ -326,8 +321,10 @@ class Header extends React.PureComponent {
       path,
       trackNavigationClick,
       abandonBasketFeature,
+      shouldRenderNewMenuDesign,
+      routing
     } = this.props
-
+    const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen, loginPending } = this.state
     const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
@@ -390,8 +387,12 @@ class Header extends React.PureComponent {
                       hideNav={hideNav}
                       isAuthenticated={isAuthenticated}
                       promoCodeUrl={promoCodeUrl}
-                      trackNavigationClick={trackNavigationClick}
+                      trackNavigationClick={(param) => {
+                        trackNavigationClick(param)
+                        this.hideMobileMenu()
+                      }}
                       serverError={serverError}
+                      shouldRenderNewMenuDesign={shouldRenderNewMenuDesign && (pathName === '/menu')}
                     />
                   </div>
                 </div>
