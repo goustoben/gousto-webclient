@@ -323,7 +323,7 @@ function userFetchOrders(forceRefresh = false) {
 function userLoadProjectedDeliveries(forceRefresh = false) {
   return async (dispatch, getState) => {
     dispatch(statusActions.pending(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, true))
-    dispatch(statusActions.error(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, false))
+    dispatch(statusActions.error(actionTypes.USER_LOAD_PROJECTED_DELIVERIES, null))
 
     try {
       if (forceRefresh || !getState().user.get('projectedDeliveries').size) {
