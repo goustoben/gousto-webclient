@@ -83,18 +83,18 @@ class MobileWrapper extends React.PureComponent {
         {isAuthenticated ?
           <Link
             to={defaultMenuItems.myGousto.url}
-            className={cssMobile.newMenuItem}
+            className={cssMobile.accountMenuItem}
             clientRouted={defaultMenuItems.myGousto.clientRouted}
             tracking={() => trackNavigationClick('New ' + defaultMenuItems.myGousto.tracking)}
           >
             Account
           </Link> :
-          <button type="button" className={cssMobile.newMenuItem} onClick={this.customerLogin}>Log in</button>
+          <button type="button" className={cssMobile.accountMenuItem} onClick={this.customerLogin}>Log in</button>
         }
         <Svg fileName="icon_menubar_help_link" className={cssMobile.accountIcon} />
         <Link
           to={defaultMenuItems.faq.url}
-          className={cssMobile.newMenuItem}
+          className={cssMobile.helpMenuItem}
           clientRouted={defaultMenuItems.faq.clientRouted}
           tracking={() => trackNavigationClick('New ' + defaultMenuItems.faq.tracking)}
           target="_blank"
