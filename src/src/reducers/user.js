@@ -244,6 +244,11 @@ const user = {
       return state.set('unsubscribedFromEmail', true)
     }
 
+    case actionTypes.MYDELIVERIES_ORDERS: {
+
+      return state.set('newOrders', action.orders)
+    }
+
     default:
       return state
     }

@@ -15,6 +15,7 @@ import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { isChoosePlanEnabled, isNDDFeatureEnabled } from 'selectors/features'
 import { getUserRecentRecipesIds } from 'selectors/user'
+import { transformPendingOrders } from 'utils/myDeliveries'
 import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
@@ -55,6 +56,7 @@ const userActions = {
   userLoadOrder,
   userLoadOrders,
   userFetchOrders,
+  userLoadNewOrders,
   userLoadProjectedDeliveries,
   userReactivate,
   userPromoApplyCode,
@@ -70,7 +72,7 @@ const userActions = {
   userAddNewAddress,
   userPendingAddressFormData,
   userUnsubscribe,
-  userFetchReferralOffer
+  userFetchReferralOffer,
 }
 
 function userOrderCancelNext(afterBoxNum = 1) {
@@ -254,6 +256,18 @@ function userLoadOrder(orderId, forceRefresh = false) {
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDERS, false))
     }
+  }
+}
+
+function userLoadNewOrders() {
+  return async (dispatch, getState) => {
+    await Promise.all([dispatch(userLoadOrders()), dispatch(userLoadProjectedDeliveries())])
+
+    const pendingOrders = transformPendingOrders(getState().user.get('orders'))
+    const projectedOrders = getState().user.get('projectedDeliveries')
+
+    dispatch({ type: actionTypes.MYDELIVERIES_ORDERS, orders: pendingOrders })
+
   }
 }
 

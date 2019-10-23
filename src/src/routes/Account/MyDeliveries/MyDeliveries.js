@@ -29,7 +29,7 @@ class MyDeliveries extends React.PureComponent {
   }
 
   static fetchOrdersAndAddresses = ({ store }) => {
-    store.dispatch(actions.userFetchOrders())
+    store.dispatch(actions.userLoadNewOrders())
     store.dispatch(actions.userLoadAddresses())
   }
 
@@ -78,6 +78,7 @@ class MyDeliveries extends React.PureComponent {
   }
 
   render() {
+
     return (
       <div className={accountCss.accountContainer} data-testing="myDeliveries">
         <div className={css.button}>
