@@ -3,7 +3,7 @@ import { normaliseData } from './normaliseData'
 const collectionsTransformer = (response) => {
   const normalisedData = normaliseData(response)
   const formattedData = response.data[0].relationships.collections.data.map((collection) => {
-    const normalisedAttributes = normalisedData[collection.id].attributes
+    const normalisedAttributes = normalisedData.collections[collection.id].attributes
 
     return {
       colour: normalisedAttributes.colour,
@@ -12,8 +12,7 @@ const collectionsTransformer = (response) => {
       id: collection.id,
       isCookbook: normalisedAttributes.is_cookbook,
       order: normalisedAttributes.order,
-      // TODO: [TR-600] - remove references to published in downstream components
-      published: true, // we only return published menus and collection from the menu service, set to true here to prevent breaking downstream components
+      published: true,
       shortTitle: normalisedAttributes.short_title,
       slug: normalisedAttributes.slug,
     }
