@@ -115,3 +115,45 @@ export const transformPendingOrders = (orders) => {
     )
   }, new Immutable.Map())
 }
+
+export const transformProjectedDeliveries = (projectedDeliveries) => {
+
+  return projectedDeliveries.reduce((deliveryAccumulator, delivery) => {
+    const {
+      id,
+      date,
+      whenCutoff,
+      humanWhenMenuLive,
+      whenMenuLive,
+      deliverySlot,
+      active,
+      unavailableReason,
+      alternateDeliveryDay,
+    } = delivery.toJS()
+
+    let deliveryDayRescheduledReason = null
+
+    if(unavailableReason === 'holiday') {
+      deliveryDayRescheduledReason = "We've had to change your regular delivery day due to the bank holiday."
+    } else if(unavailableReason) {
+      deliveryDayRescheduledReason = `Recipes available from ${humanWhenMenuLive}`
+    }
+
+    return deliveryAccumulator.set(
+      id,
+      Immutable.fromJS({
+        id,
+        orderState: 'scheduled',
+        deliveryDay: date,
+        whenCutoff,
+        whenMenuOpen: whenMenuLive,
+        deliverySlotStart: deliverySlot.deliveryStart,
+        deliverySlotEnd: deliverySlot.deliveryEnd,
+        deliveryDayRescheduledReason,
+        alternateDeliveryDay,
+        isProjected: true,
+        restorable: active === 1
+      })
+    )
+  }, new Immutable.Map())
+}

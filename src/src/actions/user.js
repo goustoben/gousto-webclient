@@ -15,7 +15,7 @@ import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
 import { isChoosePlanEnabled, isNDDFeatureEnabled } from 'selectors/features'
 import { getUserRecentRecipesIds } from 'selectors/user'
-import { transformPendingOrders } from 'utils/myDeliveries'
+import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
@@ -264,9 +264,10 @@ function userLoadNewOrders() {
     await Promise.all([dispatch(userLoadOrders()), dispatch(userLoadProjectedDeliveries())])
 
     const pendingOrders = transformPendingOrders(getState().user.get('orders'))
-    const projectedOrders = getState().user.get('projectedDeliveries')
+    const projectedDeliveries = transformProjectedDeliveries(getState().user.get('projectedDeliveries'))
+    const ordersCombined = pendingOrders.merge(projectedDeliveries)
 
-    dispatch({ type: actionTypes.MYDELIVERIES_ORDERS, orders: pendingOrders })
+    dispatch({ type: actionTypes.MYDELIVERIES_ORDERS, orders: ordersCombined })
 
   }
 }
