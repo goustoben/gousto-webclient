@@ -446,19 +446,35 @@ describe('checkout actions', () => {
   })
 
   describe('trackCheckoutButtonPressed', () => {
-    test('should dispatch a TRACKING action with tracking data (snowplow and gtm)', () => {
-      const trackingData = {
-        actionType: 'NextCTA Clicked',
-        seCategory: 'Checkout',
-        position: 'First'
-      }
+    describe('should dispatch a TRACKING action with tracking data (snowplow and gtm)', () => {
+      test('with property if provided', () => {
+        const trackingData = {
+          actionType: 'DeliveryAddress Confirmed',
+          seCategory: 'Checkout',
+          position: 'first',
+        }
 
-      expect(trackCheckoutButtonPressed('First')).toEqual({
-        type: 'TRACKING',
-        trackingData,
-        gtmEvent: trackingData
+        expect(trackCheckoutButtonPressed('DeliveryAddress Confirmed', { position: 'first' })).toEqual({
+          type: 'TRACKING',
+          trackingData,
+          gtmEvent: trackingData
+        })
+      })
+
+      test('with no property if not provided', () => {
+        const trackingData = {
+          actionType: 'NextCTA Clicked',
+          seCategory: 'Checkout',
+        }
+
+        expect(trackCheckoutButtonPressed('NextCTA Clicked')).toEqual({
+          type: 'TRACKING',
+          trackingData,
+          gtmEvent: trackingData
+        })
       })
     })
+
   })
 
   describe('checkoutSignup on MOBILE', () => {

@@ -14,7 +14,7 @@ const BoxDetails = ({ onStepChange, trackClick }) => (
       <CheckoutButton
         onClick={() => {
           onStepChange()
-          trackClick('first')
+          trackClick('NextCTA Clicked', { position: 'first' })
         }}
         stepName="Checkout Securely"
       />
@@ -25,7 +25,7 @@ const BoxDetails = ({ onStepChange, trackClick }) => (
     <CheckoutButton
       onClick={() => {
         onStepChange()
-        trackClick('second')
+        trackClick('NextCTA Clicked', { position: 'second' })
       }}
       stepName="Checkout Securely"
     />
@@ -38,7 +38,7 @@ BoxDetails.propTypes = {
 }
 
 BoxDetails.defaultProps = {
-  trackClick: () => {}
+  trackClick: () => { }
 }
 
 export default BoxDetails

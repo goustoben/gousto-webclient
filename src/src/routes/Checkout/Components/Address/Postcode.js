@@ -9,7 +9,7 @@ import { Button } from 'goustouicomponents'
 import addressCss from './Address.css'
 import postcodeCss from './Postcode.css'
 
-const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, onSelectedAddressChange, showDropdown, receiveRef }) => (
+const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, onSelectedAddressChange, showDropdown, receiveRef, trackClick, isMobile }) => (
   <div>
     <div>
       <div className={addressCss.flex}>
@@ -50,7 +50,10 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
               label: [...address.labels].reverse().join(', '),
             }))
           }
-          onChange={onSelectedAddressChange}
+          onChange={(event, addressId) => {
+            isMobile && trackClick('DeliveryAddress Selected')
+            onSelectedAddressChange(event, addressId)
+          }}
           inputType="DropDown"
           label="Select your address"
           color="secondary"
@@ -71,16 +74,18 @@ Postcode.propTypes = {
   onSelectedAddressChange: PropTypes.func,
   showDropdown: PropTypes.bool,
   receiveRef: PropTypes.func,
+  isMobile: PropTypes.bool,
+  trackClick: PropTypes.func,
 }
 
 Postcode.defaultProps = {
   postcodePending: false,
-  onPostcodeLookup: () => {},
+  onPostcodeLookup: () => { },
   postcodeTemp: '',
   addresses: Immutable.List(),
-  onSelectedAddressChange: () => {},
+  onSelectedAddressChange: () => { },
   showDropdown: false,
-  receiveRef: () => {},
+  receiveRef: () => { },
 }
 
 export default Postcode

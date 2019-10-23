@@ -19,9 +19,11 @@ class AboutYou extends React.PureComponent {
     loginOpen: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
     loginPending: PropTypes.bool,
+    isMobile: PropTypes.bool,
     sectionName: PropTypes.string,
     clearErrors: PropTypes.func,
     receiveRef: PropTypes.func,
+    trackCheckoutButtonPressed: PropTypes.func,
   }
 
   static defaultProps = {
@@ -52,7 +54,7 @@ class AboutYou extends React.PureComponent {
   }
 
   render() {
-    const { sectionName } = this.props
+    const { sectionName, trackCheckoutButtonPressed, isMobile } = this.props
     const titles = config.titles.map(title => ({
       value: title,
       label: capitalizeFirstLetter(title),
@@ -66,7 +68,16 @@ class AboutYou extends React.PureComponent {
             <span className={css.boldInfo}>All fields are required</span>
             <div className={css.infoSection}>
               <p className={css.textSMNoMargin}>
-                Already a customer?&nbsp;<span className={css.link} onClick={(e) => { if (!this.props.isAuthenticated) { this.handleLoginOpen(e) } }}>Log in here&nbsp;<span className={css.arrowRight} /></span>
+                Already a customer?&nbsp;
+                <span
+                  className={css.link}
+                  onClick={(e) => {
+                    if (!this.props.isAuthenticated) this.handleLoginOpen(e)
+                    if (isMobile) trackCheckoutButtonPressed('LogInCTA Clicked')
+                  }}
+                >
+                  Log in here&nbsp;<span className={css.arrowRight} />
+                </span>
               </p>
             </div>
           </div>
