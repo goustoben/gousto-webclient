@@ -38,9 +38,11 @@ describe('MenuWrapper', () => {
 
   describe('when shouldRenderNewMenuDesign true', () => {
     beforeEach(() => {
-      props.shouldRenderNewMenuDesign = true
-
-      wrapper = shallow(<MobileWrapper {...props} />)
+      const newProps = {
+        ...props,
+        shouldRenderNewMenuDesign: true
+      }
+      wrapper = shallow(<MobileWrapper {...newProps} />)
     })
 
     describe('when isAuthenticated is false', () => {
@@ -56,11 +58,15 @@ describe('MenuWrapper', () => {
         const trackNavigationClickSpy = jest.fn()
         const loginFunc = jest.fn()
         beforeEach(() => {
-          wrapper.setProps({
+          const newProps = {
+            ...props,
+            shouldRenderNewMenuDesign: true,
             trackNavigationClick: trackNavigationClickSpy,
             onOpen: loginFunc
-          })
+          }
+          wrapper = shallow(<MobileWrapper {...newProps} />)
         })
+
         test('should call tracking function', () => {
           wrapper.find('.accountMenuItem').simulate('click')
           expect(trackNavigationClickSpy).toHaveBeenCalledWith('New Login Clicked')
@@ -84,7 +90,12 @@ describe('MenuWrapper', () => {
 
     describe('when isAuthenticated is true', () => {
       beforeEach(() => {
-        wrapper.setProps({ isAuthenticated: true })
+        const newProps = {
+          ...props,
+          isAuthenticated: true,
+          shouldRenderNewMenuDesign: true,
+        }
+        wrapper = shallow(<MobileWrapper {...newProps} />)
       })
       test('should render Log in link', () => {
         expect(wrapper.find('.accountMenuItem').children().text()).toEqual('Account')
