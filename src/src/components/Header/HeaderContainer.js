@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { trackNavigationClick } from 'actions/tracking'
-import { getAbandonBasket, getRenderNewMenuDesignFeatureFlag } from 'selectors/features'
+import { getAbandonBasket, getNewMenuDesignFeatureEnabled } from 'selectors/features'
 import { getUserFromJoin } from 'selectors/user'
 import { locationAtMyGousto } from 'selectors/routing'
 import { Header } from './Header'
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => ({
   fromJoin: getUserFromJoin(state),
   abandonBasketFeature: getAbandonBasket(state),
   shouldLoadOrders: locationAtMyGousto(state),
-  shouldRenderNewMenuDesign: getRenderNewMenuDesignFeatureFlag(state),
+  shouldRenderNewMenuDesign: getNewMenuDesignFeatureEnabled(state),
 })
 
 export const HeaderContainer = connect(mapStateToProps, {

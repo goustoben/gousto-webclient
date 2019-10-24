@@ -100,6 +100,6 @@ export const getCookingInstruction = ({ features }) => (
   features && features.getIn(['showCookingInstruction', 'value'], false)
 )
 
-export const getRenderNewMenuDesignFeatureFlag = ({ features }) => (
+export const getNewMenuDesignFeatureEnabled = ({ features }) => (
   features && features.getIn(['renderNewMenuDesign', 'value'], false)
 )
