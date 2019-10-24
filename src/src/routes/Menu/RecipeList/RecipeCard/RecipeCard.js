@@ -24,7 +24,7 @@ const getRecipeView = (mobileGridView, isFeatured = false, isFineDineIn = false)
 }
 
 const RecipeCard = ({
-  recipe, index, mobileGridView, showDetailRecipe,
+  recipe, index, mobileGridView, showDetailRecipe, isFeatured,
   
   numPortions, cutoffDate, features, allRecipesList, recipesStore
 }) => {
@@ -32,7 +32,6 @@ const RecipeCard = ({
   const range = getFoodBrand(recipe)
   const isFineDineIn = range.get('slug') === 'fine-dine-in'
 
-  const isFeatured = index === 0
   const showShortlistFirstStep = index === 0
 
   const view = getRecipeView(mobileGridView, isFeatured, isFineDineIn)
@@ -68,7 +67,8 @@ const RecipeCard = ({
 
 RecipeCard.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map).isRequired,
-  index: PropTypes.number,
+  index: PropTypes.number.isRequired,
+  isFeatured: PropTypes.bool,
   mobileGridView: PropTypes.bool,
   numPortions: PropTypes.number.isRequired,
   cutoffDate: PropTypes.string,
