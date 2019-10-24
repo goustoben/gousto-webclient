@@ -19,6 +19,7 @@ import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
+import { deepCloneObject } from 'utils/deepClone'
 import { MobileWrapper } from './MobileMenu'
 import { defaultMenuItems } from './menuItemsHelper'
 import css from './Header.css'
@@ -125,7 +126,7 @@ class Header extends React.PureComponent {
 
   getMenuItems = (device, path) => {
     const { isAuthenticated, promoCodeUrl, fromJoin } = this.props
-    const menuItems = JSON.parse(JSON.stringify(defaultMenuItems))
+    const menuItems = deepCloneObject(defaultMenuItems)
 
     let pathLocal = path
     if (path.indexOf('/') === -1) {
@@ -137,7 +138,7 @@ class Header extends React.PureComponent {
       }
     })
 
-    const homeMenuItem = Object.assign({}, menuItems.home)
+    const homeMenuItem = { ...menuItems.home }
     if (promoCodeUrl) {
       homeMenuItem.url = `/${promoCodeUrl}`
     } else if (path.includes('check-out')) {
