@@ -14,9 +14,9 @@ export const transactional = {
   priceBoxTypeMessage: 'For one box',
   get benefits() { return [
     'Single payment, no subscription',
-    `${this.percentageOff}% off first box + 20% off all boxes in the first month`
+    `${this.percentageOff}% off first box`
   ]},
   percentageOff: 30
 }
 
-export const transactionalPromoCode = 'TEST-TRANS'
+export const transactionalPromoCode = 'FLEX1'
