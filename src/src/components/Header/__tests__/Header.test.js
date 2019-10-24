@@ -30,7 +30,7 @@ describe('Header', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<Header {...PROPS} />, { context: { store }})
+    wrapper = shallow(<Header {...PROPS} />, { context: { store } })
   })
 
   afterEach(() => {
@@ -41,8 +41,8 @@ describe('Header', () => {
     expect(wrapper.find('Connect(CookieBanner)').exists()).toBe(true)
   })
 
-  test('should render one <MobileMenu />', () => {
-    expect(wrapper.find('MobileMenu').exists()).toBe(true)
+  test('should render one <MobileWrapper />', () => {
+    expect(wrapper.find('MobileWrapper').exists()).toBe(true)
   })
 
   test('renders 5 <GoustoLink />s', () => {
@@ -235,22 +235,7 @@ describe('Header', () => {
         }
       ]
 
-      expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
-    })
-
-    describe('and forceSignupWizard prop is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ forceSignupWizardFeature: true })
-      })
-
-      test('renders menu with "choose recipes" going to MENU', () => {
-        const chooseRecipes = {
-          "name": "Choose Recipes",
-          "url": "/menu",
-          "tracking": "RecipeNavigation Clicked",
-        }
-        expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
-      })
+      expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toEqual(expected)
     })
   })
 
@@ -295,38 +280,7 @@ describe('Header', () => {
           "tracking": "FAQNavigation Clicked",
         }
       ]
-      expect(wrapper.find('MobileMenu').prop('menuItems')).toEqual(expected)
-    })
-
-    describe('and forceSignupWizard prop is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ forceSignupWizardFeature: true })
-      })
-
-      test('render menu with "choose recipes" going to SIGNUP WIZARD', () => {
-        const chooseRecipes = {
-          "name": "Choose Recipes",
-          "url": routesConfig.client.signup,
-          "tracking": "RecipeNavigation Clicked",
-        }
-        expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
-      })
-    })
-  })
-
-  describe('when forceSignupWizard prop is false', () => {
-    beforeEach(() => {
-      wrapper.setProps({ forceSignupWizard: false })
-    })
-
-    test('renders menu with "choose recipes" going to MENU ', () => {
-      const chooseRecipes = {
-        "name": "Choose Recipes",
-        "url": routesConfig.client.menu,
-        "tracking": "RecipeNavigation Clicked",
-      }
-
-      expect(wrapper.find('MobileMenu').prop('menuItems')).toContainEqual(chooseRecipes)
+      expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toEqual(expected)
     })
   })
 

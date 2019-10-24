@@ -30,12 +30,6 @@ export const getDisabledSlots = ({ features }) => (
     : ''
 )
 
-export const getForceSignupWizard = ({ features }) => (
-  features
-    ? features.getIn(['forceSignupWizard', 'value'])
-    : false
-)
-
 export const getGoToMyGousto = ({ features }) => (
   features
     ? features.getIn(['goToMyGousto', 'value'])
@@ -104,4 +98,8 @@ export const getProductList2Columns = ({ features }) => (
 
 export const getCookingInstruction = ({ features }) => (
   features && features.getIn(['showCookingInstruction', 'value'], false)
+)
+
+export const getNewMenuDesignFeatureEnabled = ({ features }) => (
+  features && features.getIn(['renderNewMenuDesign', 'value'], false)
 )
