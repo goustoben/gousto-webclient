@@ -16,9 +16,6 @@ const MOBILE_BREAKPOINT = 543
 class CollectionsNav extends React.PureComponent {
   static propTypes = {
     menuCollections: PropTypes.instanceOf(Immutable.OrderedMap).isRequired,
-    masonryContainer: PropTypes.shape({
-      offsetTop: PropTypes.number
-    }),
     menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
     collectionFilterChange: PropTypes.func.isRequired,
     menuCurrentCollectionId: PropTypes.string,
@@ -270,9 +267,6 @@ class CollectionsNav extends React.PureComponent {
       this.props.featureSet('preferredCollection', this.props.menuCollections.getIn([collectionId, 'slug'], ''))
     }
     let position = 0
-    if (this.props.masonryContainer && Number.isInteger(this.props.masonryContainer.offsetTop)) {
-      position = this.props.masonryContainer.offsetTop
-    }
     if (document && document.body) {
       if (actual('width', 'px') < 768) {
         top(document.body, position)
@@ -351,6 +345,5 @@ class CollectionsNav extends React.PureComponent {
 
 CollectionsNav.defaultProps = {
   menuCollections: Immutable.OrderedMap({}),
-  masonryContainer: null,
 }
 export default CollectionsNav

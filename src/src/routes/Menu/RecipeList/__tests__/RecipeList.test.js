@@ -1,37 +1,14 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 import { trackRecipeOrderDisplayed } from 'actions/tracking'
 
 import Recipe from 'containers/menu/Recipe'
 
 import { RecipeList } from '../RecipeList'
-
-jest.mock(
-  'containers/menu/Recipe',
-  () => jest.fn()
-    .mockReturnValue(<div className="recipe">Recipe</div>)
-)
-
-jest.mock('config', () => ({
-  basket: {
-    maxRecipesNum: 4,
-    minRecipesNum: 2,
-
-    portions: {
-      default: 2,
-      allowed: [2, 4],
-    },
-
-    minRecipes: 2,
-
-    offsetDays: 3,
-  },
-  menu: {
-    stockThreshold: 0,
-  },
-}))
+import { MobileRecipeList } from '../MobileRecipeList'
+import { DesktopRecipeList } from '../DesktopRecipeList'
 
 jest.mock('actions/tracking', () => ({
   trackRecipeOrderDisplayed: jest.fn()
@@ -45,108 +22,72 @@ describe('RecipeList', () => {
     },
   }
 
-  let wrapper
-
   beforeEach(() => {
     context.store.dispatch.mockClear()
     trackRecipeOrderDisplayed.mockClear()
   })
 
-  test('should display a list of recipes', () => {
-    const remainingRecipes = Immutable.fromJS([
-      { id: '1', availability: [], title: 'recipe1', isRecommended: false },
-      { id: '2', availability: [], title: 'recipe2', isRecommended: false },
-      {
-        id: '3',
-        availability: [],
-        title: 'recipe3',
-        boxType: 'vegetarian',
-        dietType: 'Vegetarian',
-        isRecommended: false,
-      },
-    ])
-    const sortedRecipes = Immutable.fromJS([{ id: 1 }, { id: 2 }, { id: 3 }])
+  describe('when in mobile mode', () => {
+    test('should render a MobileRecipeList', () => {
+      const recipes = Immutable.fromJS([
+        { id: '1', availability: [], title: 'recipe1', isRecommended: false },
+        { id: '2', availability: [], title: 'recipe2', isRecommended: false },
+        {
+          id: '3',
+          availability: [],
+          title: 'recipe3',
+          boxType: 'vegetarian',
+          dietType: 'Vegetarian',
+          isRecommended: false,
+        },
+      ])
 
-    const menuCurrentCollectionId = '10'
+      const wrapper = shallow(
+        <RecipeList recipes={recipes} isMobile />,
+        { context }
+      )
 
-    wrapper = shallow(
-      <RecipeList
-        cutoffDate="2016-06-26"
-        numPortions={2}
-        recipesStore={Immutable.fromJS({})}
-        menuCurrentCollectionId={menuCurrentCollectionId}
-        features={Immutable.Map({})}
-        filteredRecipeIds={Immutable.List(['1', '2', '3'])}
-        remainingRecipes={remainingRecipes}
-        sortedRecipes={sortedRecipes}
-      />,
-      { context },
-    )
-
-    expect(wrapper.find(Recipe).length).toEqual(3)
+      expect(wrapper.find(MobileRecipeList)).toHaveLength(1)
+      expect(wrapper.find(DesktopRecipeList)).toHaveLength(0)
+    })
   })
 
-  test('should display a list of recipes in the order: featuredRecipes, remainingRecipes, outOfStockRecipes', () => {
-    const sortedRecipes = Immutable.fromJS([{ id: 3 }, { id: 1 }, { id: 5 }, { id: 2 }, { id: 4 }])
+  describe('when not in mobile mode', () => {
+    test('should render a DesktopRecipeList', () => {
+      const recipes = Immutable.fromJS([
+        { id: '1', availability: [], title: 'recipe1', isRecommended: false },
+        { id: '2', availability: [], title: 'recipe2', isRecommended: false },
+        {
+          id: '3',
+          availability: [],
+          title: 'recipe3',
+          boxType: 'vegetarian',
+          dietType: 'Vegetarian',
+          isRecommended: false,
+        },
+      ])
 
-    const correctOrder = [3, 1, 5, 2, 4]
+      const wrapper = shallow(
+        <RecipeList recipes={recipes} />,
+        { context }
+      )
 
-    Recipe.mockReturnValue((props) => <div {...props} />)
-
-    wrapper = shallow(
-      <RecipeList
-        sortedRecipes={sortedRecipes}
-        recipesStore={Immutable.fromJS({})}
-      />,
-      { context },
-    )
-
-    expect(wrapper.find(Recipe)).toHaveLength(5)
-    wrapper.find(Recipe).forEach((recipe, index) => {
-      expect(recipe.prop('id')).toEqual(correctOrder[index])
+      expect(wrapper.find(DesktopRecipeList)).toHaveLength(1)
+      expect(wrapper.find(MobileRecipeList)).toHaveLength(0)
     })
   })
 
   test('should dispatch trackRecipeOrderDisplayed with original and final sorting order', () => {
-    const recipesStore = Immutable.fromJS({
-      1: { id: '1', availability: [], title: 'recipe1' },
-      2: { id: '2', availability: [], title: 'recipe2' },
-      3: {
-        id: '3',
-        availability: [
-          { featured: true, from: '2016-06-25', until: '2016-06-27' },
-        ],
-        title: 'recipe3',
-      },
-    })
-    const featuredRecipes = Immutable.fromJS([
-      {
-        id: '3',
-        availability: [
-          { featured: true, from: '2016-06-25', until: '2016-06-27' },
-        ],
-        title: 'recipe3',
-      },
+    const filteredRecipeIds = Immutable.List(['1', '2', '3'])
+    const recipes = Immutable.fromJS([
+      { id: '3' },
+      { id: '1' }
     ])
-    const remainingRecipes = Immutable.fromJS([
-      { id: '1', availability: [], title: 'recipe1' },
-    ])
-    const sortedRecipes = Immutable.fromJS([{ id: 3 }, { id: 1 }, { id: 5 }, { id: 2 }, { id: 4 }])
-    const recipes = Immutable.List(['1', '2', '3'])
-    const currentCollectionId = '77'
 
-    wrapper = shallow(
+    const wrapper = shallow(
       <RecipeList
-        cutoffDate="2016-06-26"
-        numPortions={2}
-        basketRecipes={Immutable.Map({})}
-        recipesStore={recipesStore}
-        features={Immutable.Map({})}
-        currentCollectionId={currentCollectionId}
-        filteredRecipeIds={recipes}
-        remainingRecipes={remainingRecipes}
-        featuredRecipes={featuredRecipes}
-        sortedRecipes={sortedRecipes}
+        filteredRecipeIds={filteredRecipeIds}
+        recipes={recipes}
       />,
       { context },
     )
@@ -161,31 +102,5 @@ describe('RecipeList', () => {
       ['1', '2', '3'],
       ['3', '1'],
     )
-  })
-
-  describe('CTA to All Recipes', () => {
-    test('should NOT be present when JFY collection is not selected', () => {
-      const featuredRecipes = Immutable.fromJS([{ id: 3 }])
-      const remainingRecipes = Immutable.fromJS([{ id: 1 }, { id: 5 }])
-      const outOfStockRecipes = Immutable.fromJS([{ id: 2 }, { id: 4 }])
-
-      const sortedRecipes = Immutable.fromJS([{ id: 3 }, { id: 1 }, { id: 5 }, { id: 2 }, { id: 4 }])
-
-      Recipe.mockReturnValue((props) => <div {...props} />)
-
-      wrapper = shallow(
-      <RecipeList
-        featuredRecipes={featuredRecipes}
-        remainingRecipes={remainingRecipes}
-        outOfStockRecipes={outOfStockRecipes}
-        isCurrentCollectionRecommendation={false}
-        ctaToAllRecipes
-        sortedRecipes={sortedRecipes}
-      />,
-      { context },
-      )
-
-      expect(wrapper.find('[view="ctaAllRecipe"]')).toHaveLength(0)
-    })
   })
 })

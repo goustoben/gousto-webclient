@@ -18,43 +18,25 @@ const getInStockRecipes = createSelector(
   )
 )
 
-export const getOutOfStockRecipes = createSelector(
-  [getFilteredRecipes, getInStockRecipes],
-  (filteredRecipes, inStockRecipes) => (
-    filteredRecipes.filter(recipe => !inStockRecipes.includes(recipe))
-  )
-)
+const sortRecipesByStock = (recipes, inStockRecipes) => {
+  const { inStock, outOfStock } = recipes.reduce((acc, cur) => {
+    if (inStockRecipes.includes(cur)) {
+      return {
+        outOfStock: acc.outOfStock,
+        inStock: acc.inStock.push(cur)
+      }
+    }
 
-export const getFeaturedRecipes = createSelector(
-  [getFilteredRecipes, getInStockRecipes],
-  (filteredRecipes, inStockRecipes) => (
-    (inStockRecipes.includes(filteredRecipes.first()))
-      ? Immutable.List([filteredRecipes.first()])
-      : Immutable.List([])
-  )
-)
+    return {
+      outOfStock: acc.outOfStock.push(cur),
+      inStock: acc.inStock
+    }
+  }, { outOfStock: Immutable.List(), inStock: Immutable.List() })
 
-export const getRemainingRecipes = createSelector(
-  [getFilteredRecipes, getOutOfStockRecipes, getFeaturedRecipes],
-  (filteredRecipes, outOfStockRecipes, featuredRecipes) => (
-    filteredRecipes.filter(
-      recipe => (
-        !(outOfStockRecipes.includes(recipe) || featuredRecipes.includes(recipe))
-      )
-    )
-  )
-)
-
-export const getSortedRecipes = createSelector(
-  [getFeaturedRecipes, getOutOfStockRecipes, getRemainingRecipes],
-  (featuredRecipes, outOfStockRecipes, remainingRecipes) => (
-    featuredRecipes.concat(remainingRecipes).concat(outOfStockRecipes)
-  )
-)
-
-export default {
-  getFeaturedRecipes,
-  getRemainingRecipes,
-  getOutOfStockRecipes,
-  getSortedRecipes
+  return inStock.concat(outOfStock)
 }
+
+export const getRecipes = createSelector(
+  [getFilteredRecipes, getInStockRecipes],
+  (filteredRecipes, inStockRecipes) => sortRecipesByStock(filteredRecipes, inStockRecipes)
+)

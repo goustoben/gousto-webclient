@@ -26,8 +26,7 @@ class RecipeGrid extends React.Component {
 
     return (
       <div
-        ref={ref => { this.masonryContainer = ref }}
-        className={css.masonryContainerMenu}
+        className={css.menuContainer}
         data-testing="menuRecipesList"
       >
         <RecipeList

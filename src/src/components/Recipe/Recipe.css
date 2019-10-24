@@ -2,35 +2,28 @@
 @value SpacingLG as GutterSize, SpacingXS from 'sass-loader!styles/spacing.scss';
 @value White from 'styles/colors.css';
 
-@value ColumnWidth 33.333%;
-@value FeaturedWidth 66.666%;
+@value ColumnWidth 32%;
+@value FeaturedWidth 66%;
 @value MobColumnWidth 100%;
 @value MobGridWidth 50%;
 
 .grid {
-	composes: marginMDRight marginMDBottom from 'sass-loader!styles/spacing.scss';
+	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
 	composes: borderXS from 'styles/borders.css';
 	composes: flex, verticalCenter from 'styles/flex.css';
 	background: White;
 	border-radius: 0;
-	height: auto;
+	height: fit-content;
 	vertical-align: top;
 	composes: inlineBlock from 'styles/display.css';
 	position: relative;
-	width: calc(ColumnWidth - 15px);
+	width: 100%;
 	@media ScreenXSMax {
-		width: MobColumnWidth;
+		flex-basis: MobColumnWidth;
 		border-left-width: 0;
 		border-right-width: 0;
 	}
 }
-
-.grid:nth-child(3) {
-	@media ScreenXSMax {
-		border-top: none;
-	}
-}
-
 
 .gridHover {
 	&:hover {
@@ -56,10 +49,10 @@
 .featured {
 	composes: grid;
 	@media ScreenMLMin {
-		width: calc(FeaturedWidth - GutterSize);
+		flex-basis: FeaturedWidth;
 	}
 	@media ScreenXSMax {
-		width: MobColumnWidth;
+		flex-basis: MobColumnWidth;
 	}
 }
 
@@ -68,9 +61,9 @@
 }
 
 .ctaAllRecipe, .ctaThematic {
-	width: 100%;
+	flex-basis: 100%;
 
 	@media ScreenSMMin {		
-		width: calc(33.333% - 15px);
+		flex-basis: ColumnWidth;
 	}
 }
