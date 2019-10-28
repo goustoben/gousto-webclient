@@ -95,7 +95,8 @@ const actions = {
           days = transformDaySlotLeadTimesToMockSlots(days)
         }
 
-        const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom)
+        const userOrdersDaySlotLeadTimeIds = user.get('orders').map(order => order.get('daySlotLeadTimeId')).toArray()
+        const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom, userOrdersDaySlotLeadTimeIds)
 
         dispatch(basketDeliveryDaysReceive(availableDeliveryDays))
       } catch (err) {
