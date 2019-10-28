@@ -97,7 +97,7 @@ class MenuRecipes extends PureComponent {
         />
         <Loading loading={showLoading} hasRecommendations={hasRecommendations} />
         {!showLoading &&
-          <CollectionsNav masonryContainer={this.masonryContainer} menuCurrentCollectionId={menuCurrentCollectionId} />}
+          <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}
         {!showLoading && <FilterTagsNav />}
         {filteredRecipesNumber ?
           <RecipeGrid

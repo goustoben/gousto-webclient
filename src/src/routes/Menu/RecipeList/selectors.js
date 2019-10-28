@@ -1,14 +1,14 @@
 import { createSelector } from 'reselect'
 import { getMenuRecipes } from 'selectors/root'
-import { getSortedRecipes } from 'routes/Menu/selectors/sorting'
+import { getRecipes } from 'routes/Menu/selectors/sorting'
 
 const getCollectionId = (state, recipeListProps) => recipeListProps.menuCurrentCollectionId
 
 export const getSortedRecipesForRecipeList = createSelector(
-  [ getCollectionId, getMenuRecipes, getSortedRecipes ],
-  (collectionId, menuRecipes, sortedRecipes) => {
+  [ getCollectionId, getMenuRecipes, getRecipes ],
+  (collectionId, menuRecipes, recipes) => {
     if (!collectionId) {
-      return sortedRecipes
+      return recipes
     }
   
     const recipesInCollection = menuRecipes.get(collectionId)
@@ -18,6 +18,6 @@ export const getSortedRecipesForRecipeList = createSelector(
       return recipesInCollection.includes(id)
     }
   
-    return sortedRecipes.filter(recipeIsInCollection)
+    return recipes.filter(recipeIsInCollection)
   }
 )

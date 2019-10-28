@@ -60,17 +60,14 @@
 	}
 }
 
-.masonryContainer {
+.menuContainer {
 	composes: pageContainer from 'styles/layout.css';
+	padding-top: 3rem;
+
 	@media ScreenXSMax {
 		padding-left: 0;
 		padding-right: 0;
 	}
-}
-
-.masonryContainerMenu {
-	composes: masonryContainer;
-	padding-top: 40px;
 }
 
 .legal {

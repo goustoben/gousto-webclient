@@ -20,63 +20,61 @@ import { ShortlistButton } from '../ShortlistButton'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
   features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showShortlistButton, showShortlistFirstStep }) => (
-    <div>
-      <div className={css.recipeDetails}>
-        <span onClick={onClick} className={css.link}>
-          <Image
-            media={media}
-            alt={title}
-            mouseEnter={highlight}
-            mouseLeave={unhighlight}
-          />
-        </span>
-        <div className={css.viewDetails}>
-          <Pill
-            mouseEnter={highlight}
-            mouseLeave={unhighlight}
-            onClick={() => { onClick(true) }}
-            icon
-          >
-            View details
+    <div className={css.recipeDetails}>
+      <span onClick={onClick} className={css.link}>
+        <Image
+          media={media}
+          alt={title}
+          mouseEnter={highlight}
+          mouseLeave={unhighlight}
+        />
+      </span>
+      <div className={css.viewDetails}>
+        <Pill
+          mouseEnter={highlight}
+          mouseLeave={unhighlight}
+          onClick={() => { onClick(true) }}
+          icon
+        >
+          View details
           </Pill>
+      </div>
+      <TasteScore className={css.score} score={tasteScore} />
+      <div>
+        <Chef chef={chef} />
+      </div>
+      <div className={css.rangeBadgeWrapper}>
+        <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
+      </div>
+      <div className={css.contentWrapper}>
+        <div onClick={onClick} className={css.titleWrapper}>
+          <Title
+            title={title}
+            view={view}
+            mouseEnter={highlight}
+            mouseLeave={unhighlight}
+            detailHover={detailHover}
+          />
         </div>
-        <TasteScore className={css.score} score={tasteScore} />
         <div>
-          <Chef chef={chef} />
-        </div>
-        <div className={css.rangeBadgeWrapper}>
-          <RangeBadge range={range} selectFoodBrand={selectFoodBrand} isFoodBrandClickable={isFoodBrandClickable} />
-        </div>
-        <div className={css.contentWrapper}>
-          <div onClick={onClick} className={css.titleWrapper}>
-            <Title
-              title={title}
-              view={view}
-              mouseEnter={highlight}
-              mouseLeave={unhighlight}
-              detailHover={detailHover}
+          <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
+          <StockBadge stock={stock} />
+          <div>
+            <Rating
+              average={averageRating}
+              count={ratingCount}
+              isNew={isNew}
             />
           </div>
-          <div>
-            <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
-            <StockBadge stock={stock} />
-            <div>
-              <Rating
-                average={averageRating}
-                count={ratingCount}
-                isNew={isNew}
-              />
-            </div>
-          </div>
-          <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
-          <div className={css.buttonContainer}>
-            {showShortlistButton &&
-              <ShortlistButton id={id} stock={stock} view={view} position={position} showShortlistFirstStep={showShortlistFirstStep} />
-            }
-            <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
-          </div>
-          <DisabledOverlay stock={stock} inBasket={inBasket} />
         </div>
+        <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
+        <div className={css.buttonContainer}>
+          {showShortlistButton &&
+            <ShortlistButton id={id} stock={stock} view={view} position={position} showShortlistFirstStep={showShortlistFirstStep} />
+          }
+          <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
+        </div>
+        <DisabledOverlay stock={stock} inBasket={inBasket} />
       </div>
     </div>
 )

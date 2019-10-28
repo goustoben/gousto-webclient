@@ -185,8 +185,6 @@ class Menu extends React.PureComponent {
     )
   }
 
-  masonryContainer = null
-
   handleOrderDoesContainProductsRequest = () => {
     const { orderId, orderHasAnyProducts } = this.props
     orderHasAnyProducts(orderId)

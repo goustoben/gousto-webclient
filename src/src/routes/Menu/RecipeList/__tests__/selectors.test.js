@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { getSortedRecipes } from 'routes/Menu/selectors/sorting'
+import { getRecipes } from 'routes/Menu/selectors/sorting'
 import { getSortedRecipesForRecipeList } from '../selectors'
 
 jest.mock('routes/Menu/selectors/sorting')
@@ -21,7 +21,7 @@ describe('RecipeList selectors', () => {
     Immutable.fromJS({ id: recipe1Id }),
     Immutable.fromJS({ id: recipe2Id })
   ]
-  getSortedRecipes.mockReturnValue(recipes)
+  getRecipes.mockReturnValue(recipes)
 
   describe('getSortedRecipesForRecipeList', () => {
     describe('no collection id provided', () => {

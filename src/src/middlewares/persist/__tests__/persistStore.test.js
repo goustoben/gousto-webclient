@@ -22,7 +22,7 @@ jest.mock('config/storePersistence', () => ({
 }))
 jest.mock('utils/cookieHelper2')
 
-fdescribe('persistStore', () => {
+describe('persistStore', () => {
   beforeEach(() => {
     jest.resetAllMocks()
     getNamesWithPrefix.mockReset()

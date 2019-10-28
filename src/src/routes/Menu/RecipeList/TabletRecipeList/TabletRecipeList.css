@@ -1,0 +1,12 @@
+.tabletRecipeList {
+  display: flex;
+}
+
+.recipeColumn {
+  flex-basis: 33%;
+}
+
+.recipeColumn:nth-child(1),
+.recipeColumn:nth-child(2) {
+  margin-right: 1rem;
+}

@@ -1,0 +1,24 @@
+.desktopRecipeList {
+  display: flex;
+}
+
+.mainColumnLeft {
+  flex-basis: 66%;
+  margin-right: 1rem;
+}
+
+.mainColumnRight {
+  flex-basis: 33%;
+}
+
+.containerBelowFeatured {
+  display: flex;
+}
+
+.columnBelowFeatured {
+  flex-basis: 50%;
+}
+
+.columnBelowFeatured:first-child {
+  margin-right: 1rem;
+}

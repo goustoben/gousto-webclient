@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
 import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
-import { getFeaturedRecipes, getRemainingRecipes } from 'routes/Menu/selectors/sorting'
 import { getCurrentCollectionIsRecommendation } from 'routes/Menu/selectors/menu'
 import { getRecipeGroupFilter } from 'selectors/filters'
 
@@ -13,10 +12,7 @@ import { getSortedRecipesForRecipeList } from './selectors'
 const mapStateToProps = (state, props) => {
   const { routing } = state
   const { query } = routing && routing.locationBeforeTransitions
-
-  const featuredRecipes = getFeaturedRecipes(state)
-  const remainingRecipes = getRemainingRecipes(state)
-  const sortedRecipes = getSortedRecipesForRecipeList(state, props)
+  const recipes = getSortedRecipesForRecipeList(state, props)
 
   return {
     allRecipesList: state.menuRecipes,
@@ -24,13 +20,12 @@ const mapStateToProps = (state, props) => {
     features: state.features,
     filteredRecipeIds: getFilteredRecipeIds(state),
     numPortions: state.basket.get('numPortions'),
-    featuredRecipes,
-    remainingRecipes,
     recipesStore: state.recipes,
     isCurrentCollectionRecommendation: getCurrentCollectionIsRecommendation(state) && !getRecipeGroupFilter(state),
-    sortedRecipes,
     thematicName: query && query.thematic,
-    deliveryDate: state.basket.get('date')
+    deliveryDate: state.basket.get('date'),
+    recipes,
+    browserType: state.request.get('browser')
   }
 }
 const RecipeListContainer = connect(mapStateToProps, {

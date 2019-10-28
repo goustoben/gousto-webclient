@@ -76,8 +76,16 @@ class Recipe extends React.PureComponent {
     const { view } = this.props
     const { detailHover } = this.state
 
+    const className = classnames(
+      'grid',
+      css[view],
+      {
+        [css.gridHover]: detailHover
+      }
+    )
+
     return (
-      <div className={classnames('grid', css[view], { [css.gridHover]: detailHover })}>
+      <div className={className}>
         {this.recipeComponent}
       </div>
     )

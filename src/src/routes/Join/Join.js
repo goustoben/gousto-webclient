@@ -64,7 +64,10 @@ class Join extends Home {
   }
 
   render() {
+    const { browser } = this.props
     const modules = this.getAvailableModules()
+
+    const isDesktopOrTablet = browser === 'desktop' || browser === 'tablet'
 
     return (
       <span>
@@ -100,7 +103,7 @@ class Join extends Home {
             ctaUri: routes.client.signup,
             ctaText: home.CTA.join,
           }}
-          alternativeDesktopHero={this.props.heroLeftAlignedBox570 && this.props.browser === 'desktop'}
+          alternativeDesktopHero={this.props.heroLeftAlignedBox570 && isDesktopOrTablet}
           recipes={{
             ctaUri: routes.client.signup,
             ctaText: home.CTA.join,
