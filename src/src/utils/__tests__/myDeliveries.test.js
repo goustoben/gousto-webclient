@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import moment from 'moment'
-import { filterOrders, getOrderState, getDeliveryDayRescheduledReason, transformPendingOrders } from '../myDeliveries'
+import { filterOrders, getOrderState, getDeliveryDayRescheduledReason, transformPendingOrders, transformProjectedDeliveries } from '../myDeliveries'
 
 describe('myDeliveries utils', () => {
   const mockOrders = Immutable.fromJS({
@@ -250,5 +250,170 @@ describe('myDeliveries utils', () => {
       expect(Immutable.is(transformedOrders, result)).toEqual(true)
     })
   })
-})
 
+  describe('transformProjectedDeliveries', () => {
+    const dummyProjectedDeliveries = Immutable.fromJS({
+      '1917': {
+        deliveryDate: '2019-11-09 00:00:00',
+        deliveryWeekId: '304',
+        whenMenuLive: '2019-10-29 12:00:00',
+        active: '1',
+        dayOfWeek: 'Saturday',
+        whenCutoff: '2019-11-06 11:59:59',
+        deliverySlotId: '6',
+        alternateDeliveryDay: null,
+        date: '2019-11-09 00:00:00',
+        state: 'scheduled',
+        deliverySlot: {
+          default: true,
+          deliveryEnd: '19:00:00',
+          humanDeliveryDayTime: 'Saturday 08:00 - 19:00',
+          number: '2',
+          deliveryStart: '08:00:00',
+          cutoffDay: 'Wednesday',
+          deprecated: false,
+          premium: false,
+          cutoffTime: '11:59:59',
+          id: '6',
+          defaultDay: 'Saturday'
+        },
+        humanWhenMenuLive: 'Tuesday 29th October',
+        numPortions: '4',
+        unavailableReason: '',
+        isCutoff: false,
+        id: '1917',
+        humanDate: 'Saturday 9th November',
+        numRecipes: '4'
+      },
+      '1924': {
+        deliveryDate: '2019-11-16 00:00:00',
+        deliveryWeekId: '305',
+        whenMenuLive: '2019-11-05 12:00:00',
+        active: '1',
+        dayOfWeek: 'Saturday',
+        whenCutoff: '2019-11-13 11:59:59',
+        deliverySlotId: '6',
+        alternateDeliveryDay: null,
+        date: '2019-11-16 00:00:00',
+        state: 'scheduled',
+        deliverySlot: {
+          default: true,
+          deliveryEnd: '19:00:00',
+          humanDeliveryDayTime: 'Saturday 08:00 - 19:00',
+          number: '2',
+          deliveryStart: '08:00:00',
+          cutoffDay: 'Wednesday',
+          deprecated: false,
+          premium: false,
+          cutoffTime: '11:59:59',
+          id: '6',
+          defaultDay: 'Saturday'
+        },
+        humanWhenMenuLive: 'Tuesday 5th November',
+        numPortions: '4',
+        unavailableReason: '',
+        isCutoff: false,
+        id: '1924',
+        humanDate: 'Saturday 16th November',
+        numRecipes: '4'
+      }
+    })
+    test('should transform projected deliveries as expected', () => {
+      expect(transformProjectedDeliveries(dummyProjectedDeliveries)).toEqual(
+        Immutable.Map({
+          1917: Immutable.fromJS({
+            id: '1917',
+            orderState: 'scheduled',
+            deliveryDay: dummyProjectedDeliveries.getIn(['1917', 'date']),
+            whenCutoff: dummyProjectedDeliveries.getIn(['1917', 'whenCutoff']),
+            whenMenuOpen: dummyProjectedDeliveries.getIn([
+              '1917',
+              'whenMenuLive'
+            ]),
+            deliverySlotStart: dummyProjectedDeliveries.getIn([
+              '1917',
+              'deliverySlot',
+              'deliveryStart'
+            ]),
+            deliverySlotEnd: dummyProjectedDeliveries.getIn([
+              '1917',
+              'deliverySlot',
+              'deliveryEnd'
+            ]),
+            deliveryDayRescheduledReason: dummyProjectedDeliveries.getIn(
+              ['1917', 'deliveryDayRescheduledReason'],
+              null
+            ),
+            alternateDeliveryDay: dummyProjectedDeliveries.getIn([
+              '1917',
+              'alternateDeliveryDay'
+            ]),
+            isProjected: true,
+            restorable: false
+          }),
+          1924: Immutable.fromJS({
+            id: '1924',
+            orderState: 'scheduled',
+            deliveryDay: dummyProjectedDeliveries.getIn(['1924', 'date']),
+            whenCutoff: dummyProjectedDeliveries.getIn(['1924', 'whenCutoff']),
+            whenMenuOpen: dummyProjectedDeliveries.getIn([
+              '1924',
+              'whenMenuLive'
+            ]),
+            deliverySlotStart: dummyProjectedDeliveries.getIn([
+              '1924',
+              'deliverySlot',
+              'deliveryStart'
+            ]),
+            deliverySlotEnd: dummyProjectedDeliveries.getIn([
+              '1924',
+              'deliverySlot',
+              'deliveryEnd'
+            ]),
+            deliveryDayRescheduledReason: dummyProjectedDeliveries.getIn(
+              ['1924', 'deliveryDayRescheduledReason'],
+              null
+            ),
+            alternateDeliveryDay: dummyProjectedDeliveries.getIn([
+              '1924',
+              'alternateDeliveryDay'
+            ]),
+            isProjected: true,
+            restorable: false
+          })
+        })
+      )
+    })
+    describe('when unavailableReason is "holiday"', () => {
+      const dummyProjectedDeliveriesHoliday = dummyProjectedDeliveries.setIn(
+        ['1917', 'unavailableReason'],
+        'holiday'
+      )
+      test('should set deliveryDayRescheduledReason to the expected string', () => {
+        expect(
+          transformProjectedDeliveries(dummyProjectedDeliveriesHoliday).getIn([
+            '1917',
+            'deliveryDayRescheduledReason'
+          ])
+        ).toEqual(
+          "We've had to change your regular delivery day due to the bank holiday."
+        )
+      })
+    })
+    describe('when unavailableReason exist but is NOT "holiday"', () => {
+      const dummyProjectedDeliveriesUnavailable = dummyProjectedDeliveries.setIn(
+        ['1917', 'unavailableReason'],
+        'other reason'
+      )
+      test('should set deliveryDayRescheduledReason to the "Recipes available from…" message', () => {
+        expect(
+          transformProjectedDeliveries(
+            dummyProjectedDeliveriesUnavailable
+          ).getIn(['1917', 'deliveryDayRescheduledReason'])
+        ).toEqual(
+          `Recipes available from ${dummyProjectedDeliveries.getIn(['1917', 'humanWhenMenuLive'])}`
+        )
+      })
+    })
+  })
+})
