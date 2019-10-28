@@ -33,4 +33,11 @@ describe('AppPromo', () => {
     expect(wrapper.find('.desktopAppLink.hideElement').length).toEqual(0)
   })
 
+  it('should render app store links and show them if device is tablet', () => {
+    wrapper = shallow(<AppPromo device='tablet' />)
+
+    expect(wrapper.find('AppStoreLinks').length).toEqual(1)
+    expect(wrapper.find('.desktopAppLink.hideElement').length).toEqual(0)
+  })
+
 })

@@ -38,7 +38,7 @@ export const getMessengerReferralLink = (referralCode, userFirstName, trackingRe
   const messengerUTM = '&utm_source=messenger&utm_medium=sharebutton_raf_page&utm_campaign=raf_messenger_share'
   const referralLink = getReferralLink(referralCode, userFirstName, messengerUTM)
 
-  if (device === 'desktop') {
+  if (device === 'desktop' || device === 'tablet') {
     if (globals.client) {
       window.FB.ui({
         method: 'send',

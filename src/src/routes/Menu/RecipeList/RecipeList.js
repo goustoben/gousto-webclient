@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import classnames from 'classnames'
 import actions from 'actions/tracking'
 
-import css from './RecipeList.css'
 import { DesktopRecipeList } from './DesktopRecipeList'
 import { MobileRecipeList } from './MobileRecipeList'
+import { TabletRecipeList } from './TabletRecipeList/TabletRecipeList'
 
 class RecipeList extends React.PureComponent {
   static propTypes = {
@@ -19,12 +18,11 @@ class RecipeList extends React.PureComponent {
     deliveryDate: PropTypes.string,
 
     recipes: PropTypes.instanceOf(Immutable.List).isRequired,
-    isMobile: PropTypes.bool
+    browserType: PropTypes.string.isRequired
   }
 
   static defaultProps = {
-    filteredRecipeIds: Immutable.List([]),
-    recipes: Immutable.List([])
+    filteredRecipeIds: Immutable.List([])
   }
 
   static contextTypes = {
@@ -50,20 +48,34 @@ class RecipeList extends React.PureComponent {
   }
 
   render() {
-    const { 
+    const {
       recipes,
+      browserType,
       mobileGridView,
       showDetailRecipe,
       thematicName,
       isCurrentCollectionRecommendation,
       deliveryDate,
-      collectionFilterChange,
-      isMobile
+      collectionFilterChange
     } = this.props
 
-    if (isMobile) {
+    if (browserType === 'mobile') {
       return (
         <MobileRecipeList
+          recipes={recipes}
+          mobileGridView={mobileGridView}
+          showDetailRecipe={showDetailRecipe}
+          thematicName={thematicName}
+          isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
+          deliveryDate={deliveryDate}
+          collectionFilterChange={collectionFilterChange}
+        />
+      )
+    }
+
+    if (browserType === 'tablet') {
+      return (
+        <TabletRecipeList
           recipes={recipes}
           mobileGridView={mobileGridView}
           showDetailRecipe={showDetailRecipe}

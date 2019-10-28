@@ -8,10 +8,17 @@ const propTypes = {
   isCurrentCollectionRecommendation: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.string
-  ]).isRequired,
-  thematicName: PropTypes.string.isRequired,
-  deliveryDate: PropTypes.string.isRequired,
-  collectionFilterChange: PropTypes.func.isRequired
+  ]),
+  thematicName: PropTypes.string,
+  deliveryDate: PropTypes.string,
+  collectionFilterChange: PropTypes.func
+}
+
+const defaultProps = {
+  isCurrentCollectionRecommendation: false,
+  thematicName: null,
+  deliveryDate: null,
+  collectionFilterChange: () => {}
 }
 
 const CTACard = ({ isCurrentCollectionRecommendation, thematicName, deliveryDate, collectionFilterChange }) => {
@@ -41,5 +48,6 @@ const CTACard = ({ isCurrentCollectionRecommendation, thematicName, deliveryDate
 }
 
 CTACard.propTypes = propTypes
+CTACard.defaultProps = defaultProps
 
 export { CTACard }

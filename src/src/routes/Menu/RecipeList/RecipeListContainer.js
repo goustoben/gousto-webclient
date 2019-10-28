@@ -24,7 +24,8 @@ const mapStateToProps = (state, props) => {
     isCurrentCollectionRecommendation: getCurrentCollectionIsRecommendation(state) && !getRecipeGroupFilter(state),
     thematicName: query && query.thematic,
     deliveryDate: state.basket.get('date'),
-    recipes
+    recipes,
+    browserType: state.request.get('browser')
   }
 }
 const RecipeListContainer = connect(mapStateToProps, {
