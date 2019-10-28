@@ -1,6 +1,14 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
+const getProjectedDeliveryDayRescheduledReason = (unavailableReason, humanWhenMenuLive) => {
+  if(unavailableReason === 'holiday') {
+    return "We've had to change your regular delivery day due to the bank holiday."
+  } else if(unavailableReason) {
+    return `Recipes available from ${humanWhenMenuLive}`
+  }
+}
+
 export const filterOrders = (orders) => (
   orders.filter(order => {
     const { phase } = order.toJS()
@@ -131,19 +139,15 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
       alternateDeliveryDay,
     } = delivery.toJS()
 
-    let deliveryDayRescheduledReason = null
-
-    if(unavailableReason === 'holiday') {
-      deliveryDayRescheduledReason = "We've had to change your regular delivery day due to the bank holiday."
-    } else if(unavailableReason) {
-      deliveryDayRescheduledReason = `Recipes available from ${humanWhenMenuLive}`
-    }
+    const orderState = parseInt(active) === 1 ? 'scheduled' : 'cancelled'
+    const deliveryDayRescheduledReason = getProjectedDeliveryDayRescheduledReason(unavailableReason, humanWhenMenuLive)
+    const restorable = parseInt(active) === 0
 
     return deliveryAccumulator.set(
       id,
       Immutable.fromJS({
         id,
-        orderState: parseInt(active) === 1 ? 'scheduled' : 'cancelled',
+        orderState,
         deliveryDay: date,
         whenCutoff,
         whenMenuOpen: whenMenuLive,
@@ -152,7 +156,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
         deliveryDayRescheduledReason,
         alternateDeliveryDay,
         isProjected: true,
-        restorable: parseInt(active) === 0
+        restorable
       })
     )
   }, new Immutable.Map())

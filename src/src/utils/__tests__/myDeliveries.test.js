@@ -342,7 +342,7 @@ describe('myDeliveries utils', () => {
             ]),
             deliveryDayRescheduledReason: dummyProjectedDeliveries.getIn(
               ['1917', 'deliveryDayRescheduledReason'],
-              null
+              undefined
             ),
             alternateDeliveryDay: dummyProjectedDeliveries.getIn([
               '1917',
@@ -372,7 +372,7 @@ describe('myDeliveries utils', () => {
             ]),
             deliveryDayRescheduledReason: dummyProjectedDeliveries.getIn(
               ['1924', 'deliveryDayRescheduledReason'],
-              null
+              undefined
             ),
             alternateDeliveryDay: dummyProjectedDeliveries.getIn([
               '1924',
