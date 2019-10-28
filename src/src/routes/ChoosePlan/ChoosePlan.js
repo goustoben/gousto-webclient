@@ -22,7 +22,6 @@ class ChoosePlan extends PureComponent {
     promoCode: PropTypes.string,
     tempPromoCode: PropTypes.string,
     extrasIncluded: PropTypes.bool,
-    isLoading: PropTypes.bool,
     subscriptionPrices: PropTypes.shape({
       totalPrice: PropTypes.string,
       totalPriceDiscounted: PropTypes.string,
@@ -33,7 +32,7 @@ class ChoosePlan extends PureComponent {
       totalPriceDiscounted: PropTypes.string,
       pricePerPortion: PropTypes.string
     }),
-    arePricesLoaded: PropTypes.bool,
+    pricesLoaded: PropTypes.bool,
     redirect: PropTypes.func,
   }
 
@@ -45,9 +44,9 @@ class ChoosePlan extends PureComponent {
   }
 
   componentDidMount() {
-    const { arePricesLoaded, redirect } = this.props
+    const { pricesLoaded, redirect } = this.props
 
-    if (!arePricesLoaded){
+    if (!pricesLoaded){
       redirect('/')
     }
   }
@@ -86,14 +85,14 @@ class ChoosePlan extends PureComponent {
       subscriptionPrices,
       transactionalPrices,
       extrasIncluded,
-      arePricesLoaded
+      pricesLoaded
     } = this.props
     const { subscriptionOption } = this.state
 
     const subscriptionDetails = { ...subscription, ...subscriptionPrices }
     const transactionalDetails = { ...transactional, ...transactionalPrices }
 
-    return arePricesLoaded ? (
+    return pricesLoaded ? (
       <div className={css.choosePlanPage}>
         <Helmet
           style={[

@@ -16,7 +16,7 @@ const mapStateToProps = state => {
   const extrasIncluded = areExtrasIncluded(state)
   const promoCode = getPromoCode(state)
   const tempPromoCode = getTempPromoCode(state)
-  const loaded = arePricesLoaded(state)
+  const pricesLoaded = arePricesLoaded(state)
 
   return {
     subscriptionPrices,
@@ -24,7 +24,7 @@ const mapStateToProps = state => {
     extrasIncluded,
     promoCode,
     tempPromoCode,
-    arePricesLoaded: loaded
+    pricesLoaded
   }
 }
 

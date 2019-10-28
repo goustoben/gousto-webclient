@@ -19,7 +19,7 @@ let wrapper
 describe('ChoosePlan', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} arePricesLoaded/>)
+    wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} pricesLoaded/>)
   })
   test('should render a title', () => {
     expect(wrapper.find('.title').length).toEqual(1)
@@ -40,7 +40,7 @@ describe('ChoosePlan', () => {
   describe('componentDidMount', () => {
     test("should redirect to the homepage if prices aren't loaded", () => {
       const redirectSpy = jest.fn()
-      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} redirect={redirectSpy} arePricesLoaded={false}/>)
+      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} redirect={redirectSpy} pricesLoaded={false}/>)
       expect(redirectSpy).toHaveBeenCalledWith('/')
     })
   })
@@ -80,13 +80,13 @@ describe('ChoosePlan', () => {
 
   describe('Surcharge message', () => {
     test('should render a message about surcharges if there are any premium recipes or delivery slots chosen ', () => {
-      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} arePricesLoaded extrasIncluded/>)
+      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} pricesLoaded extrasIncluded/>)
 
       expect(wrapper.find('Alert').length).toEqual(1)
     })
 
     test('should NOT render a message about surcharges if there are no premium recipes or delivery slots chosen ', () => {
-      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} arePricesLoaded extrasIncluded={false} />)
+      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} pricesLoaded extrasIncluded={false} />)
 
       expect(wrapper.find('Alert').length).toEqual(0)
     })
