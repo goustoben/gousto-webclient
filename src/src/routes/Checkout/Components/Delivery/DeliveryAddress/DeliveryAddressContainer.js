@@ -2,6 +2,8 @@ import { connect } from 'react-redux'
 import { Map } from 'immutable'
 import { getFormSyncErrors, getFormAsyncErrors, getFormMeta, change, untouch, touch, registerField } from 'redux-form'
 
+import { trackCheckoutButtonPressed } from 'actions/checkout'
+import { isNDDFeatureEnabled } from 'selectors/features'
 import actions from 'actions'
 import Address from '../../Address'
 
@@ -15,7 +17,6 @@ function getCutoffDate(state) {
 }
 
 function mapStateToProps(state, ownProps) {
-
   return {
     addressesPending: state.pending.get('CHECKOUT_ADDRESSES_RECEIVE', false),
     formValues: ownProps.formValues,
@@ -26,6 +27,8 @@ function mapStateToProps(state, ownProps) {
     deliveryDate: state.basket.get('date'),
     menuCutoffUntil: state.menuCutoffUntil,
     cutOffDate: getCutoffDate(state),
+    isNDDExperiment: isNDDFeatureEnabled(state),
+    isMobile: state.request.get('browser') === 'mobile'
   }
 }
 
@@ -37,6 +40,7 @@ const DeliveryAddressContainer = connect(mapStateToProps, {
   untouch,
   touch,
   registerField,
+  trackCheckoutButtonPressed
 })(Address)
 
 export default DeliveryAddressContainer

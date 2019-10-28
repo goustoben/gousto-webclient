@@ -3,16 +3,16 @@ import { connect } from 'react-redux'
 import { changeCollectionToAllRecipesViaCTA } from 'actions/filters'
 import { getFilteredRecipeIds } from 'routes/Menu/selectors/filters'
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
-import { getRecipes } from 'routes/Menu/selectors/sorting'
 import { getCurrentCollectionIsRecommendation } from 'routes/Menu/selectors/menu'
 import { getRecipeGroupFilter } from 'selectors/filters'
 
 import { RecipeList } from './RecipeList'
+import { getSortedRecipesForRecipeList } from './selectors'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
   const { routing } = state
   const { query } = routing && routing.locationBeforeTransitions
-  const recipes = getRecipes(state)
+  const recipes = getSortedRecipesForRecipeList(state, props)
 
   return {
     allRecipesList: state.menuRecipes,

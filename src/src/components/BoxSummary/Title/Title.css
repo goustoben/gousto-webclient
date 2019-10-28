@@ -1,4 +1,5 @@
-@value ScreenSMMin, ScreenMLMax from 'styles/screenSizes.css';
+@value ScreenSMMin, ScreenMLMax, Screen3XSMax from 'styles/screenSizes.css';
+@value sizeXS from 'styles/typography.css';
 
 .desktopText {
 	composes: noMargin from 'sass-loader!styles/spacing.scss';
@@ -33,6 +34,9 @@
 .showDate {
 	visibility: visible;
 	min-width: 85px;
+	@media Screen3XSMax {
+		font-size: sizeXS;
+	}
 }
 
 .hideDate {

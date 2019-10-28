@@ -1,5 +1,6 @@
 import { shortlistLimitReached } from 'utils/basket'
-import { basketRecipeRemove } from 'actions/basket'
+import { basketRecipeRemove, } from 'actions/basket'
+import { preselectFreeDeliverySlot } from 'actions/deliveries'
 import actionTypes from './actionTypes'
 import { getCurrentCollectionId, getRecipeGroupFilter } from '../selectors/filters'
 
@@ -48,6 +49,8 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
             basketRecipes
           }
         })
+        preselectFreeDeliverySlot(dispatch, getState)
+
         if (getState().basket.hasIn(['recipes', recipeId])) {
           const numberOfRecipesInBasket = getState().basket.getIn(['recipes', recipeId])
           for (let idx = 0; idx < numberOfRecipesInBasket; idx++) {

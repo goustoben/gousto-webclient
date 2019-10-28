@@ -12,7 +12,7 @@ class SignupLayout extends React.PureComponent {
     return (
       <div className={css.pageContainer}>
         <div className={css.headerContainer}>
-          <Header simple noContactBar small />
+          <Header simple small />
         </div>
         {this.props.children}
       </div>

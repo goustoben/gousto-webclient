@@ -14,15 +14,17 @@ import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import actionStatus from 'actions/status'
 import actionTypes from 'actions/actionTypes'
 import orderActions from '../order'
-import { fetchDeliveryDays } from '../../apis/deliveries'
-import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots } from '../../utils/deliveries'
+import { fetchDeliveryDays } from 'apis/deliveries'
+import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, DeliveryTariffTypes } from 'utils/deliveries'
 
 jest.mock('apis/orders')
 jest.mock('actions/orderConfirmation')
 jest.mock('actions/status')
 jest.mock('apis/user')
 jest.mock('utils/basket')
+
 jest.mock('utils/deliveries')
+
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
     data: [{id: 1}]
@@ -57,8 +59,18 @@ describe('order actions', () => {
         orderConfirmation: Immutable.Map({
           value: false,
         })
-      })
+      }),
+      basket: Immutable.Map({
+        date: '2019-10-11',
+        slotId: '4'
+      }),
     })
+
+    getSlot.mockReturnValue(Immutable.fromJS({
+      coreSlotId: '4',
+      id: 'deliveries-uuid',
+      daySlotLeadTimeId: 'day-slot-lead-time-uuid'
+    }))
   })
 
   afterEach(() => {
@@ -118,6 +130,7 @@ describe('order actions', () => {
         order_action: 'transaction',
         delivery_slot_id: 8,
         delivery_day_id: 3,
+        day_slot_lead_time_id: 'day-slot-lead-time-uuid'
       }
       expect(saveOrder.mock.calls[0][0]).toEqual('access-token')
       expect(saveOrder.mock.calls[0][1]).toEqual('12345')
@@ -518,6 +531,7 @@ describe('order actions', () => {
       getStateSpy = jest.fn().mockReturnValue({
         user: Immutable.fromJS({
           addresses: {789: {postcode: 'AA11 2BB'}},
+          deliveryTariffId: DeliveryTariffTypes.FREE_NDD
         }),
         features: Immutable.fromJS({
           ndd: {
@@ -605,23 +619,25 @@ describe('order actions', () => {
       expect(transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
     })
 
-    it('should fetch delivery days method should include ndd in its request if the feature is on', async () => {
-      await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
+    describe('if the feature is on for the user', () => {
+      it('should fetch delivery days method should include ndd in its request', async () => {
+        await orderActions.orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
 
-      expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
+        expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
 
-      const expectedReqData = {
-        'filters[cutoff_datetime_from]': '01-01-2017 10:00:01',
-        'filters[cutoff_datetime_until]': '02-02-2017 14:23:34',
-        sort: 'date',
-        direction: 'asc',
-        postcode: 'AA11 2BB',
-        ndd: 'true'
-      }
+        const expectedReqData = {
+          'filters[cutoff_datetime_from]': '01-01-2017 10:00:01',
+          'filters[cutoff_datetime_until]': '02-02-2017 14:23:34',
+          sort: 'date',
+          direction: 'asc',
+          postcode: 'AA11 2BB',
+          ndd: 'true'
+        }
 
-      expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull
-      expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
-      expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+        expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull
+        expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
+        expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+      })
     })
   })
 })

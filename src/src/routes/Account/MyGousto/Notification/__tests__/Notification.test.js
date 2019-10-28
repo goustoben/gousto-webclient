@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
 
 import { config } from '../config'
@@ -11,7 +11,7 @@ import {
   checkRafOffer,
 } from '../helpers'
 
-import { Notification } from '../index'
+import { NotificationLogic as Notification } from '../Notification.logic'
 
 config.referAFriend.startDate = '2019-01-01'
 config.referAFriend.endDate = '2019-01-01'
@@ -70,10 +70,10 @@ describe('Notification component', () => {
   describe('checkAmendedDeliveryDate', () => {
 
     it('should return "Amend Delivery" if delivery date has been amended', () => {
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
           state: 'pending',
-          original_delivery_day: true,
+          originalDeliveryDay: true,
         }
       })
 
@@ -83,10 +83,10 @@ describe('Notification component', () => {
     })
 
     it('should return undefined if no delivery dates have been amended', () => {
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
           state: 'pending',
-          original_delivery_day: false,
+          originalDeliveryDay: false,
         }
       })
 
@@ -111,11 +111,11 @@ describe('Notification component', () => {
     })
 
     it('should return "Select order" if upcoming order has not been selected', () => {
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
           state: 'pending',
           default: '1',
-          when_cutoff: moment('2019-08-15')
+          whenCutoff: moment('2019-08-15 11:59:59')
         }
       })
 
@@ -125,11 +125,11 @@ describe('Notification component', () => {
     })
 
     it('should return undefined if no upcoming orders are unselected', () => {
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
           state: 'pending',
           default: '1',
-          when_cutoff: moment('2019-08-23')
+          whenCutoff: moment('2019-08-23 11:59:59')
         }
       })
 
@@ -177,14 +177,16 @@ describe('Notification component', () => {
 
     beforeEach(() => {
       const currentMonth = moment().format('YYYY-MM')
+      config.referAFriend.startDate = '2019-01-01'
+      config.referAFriend.endDate = '3019-01-01'
       card = Immutable.Map({
         lastFourDigits: "1234",
         expiryDate: currentMonth,
       })
-      orders = Immutable.Map({
+      orders = Immutable.fromJS({
         1234: {
-          state: 'pending',
-          original_delivery_day: true,
+          state: 'committed',
+          originalDeliveryDay: true,
         }
       })
     })
@@ -193,7 +195,18 @@ describe('Notification component', () => {
 
       wrapper = shallow(<Notification card={card} orders={orders} />)
 
-      expect(wrapper.state('notifications')).toMatchSnapshot()
+      expect(wrapper.instance().getNotifications()).toMatchSnapshot()
     })
+
+    it('should call tracking action on click if notification has linkTrackingType', () => {
+      const mockTrackNotificationLinkClick = jest.fn()
+      window.location.assign = jest.fn()
+      wrapper = mount(<Notification card={card} orders={orders} trackNotificationLinkClick={mockTrackNotificationLinkClick}/>)
+
+      wrapper.find(`[href="my-referrals"]`).simulate('click')
+      expect(mockTrackNotificationLinkClick).toHaveBeenCalledWith(config.referAFriend.linkTrackingType)
+      expect(window.location.assign).toHaveBeenCalledWith(config.referAFriend.url)
+    })
+
   })
 })

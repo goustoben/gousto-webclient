@@ -38,10 +38,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: '',
   },
-  forceSignupWizard: {
-    experiment: false,
-    value: false,
-  },
   goToMyGousto: {
     experiment: false,
     value: false,
@@ -62,10 +58,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
-  collapsedRaf: {
-    experiment: false,
-    value: false,
-  },
   productList2Columns: {
     experiment: false,
     value: false,
@@ -79,6 +71,10 @@ const defaultFeatures = () => ({
     value: false,
   },
   sortMarketProducts: {
+    experiment: false,
+    value: false,
+  },
+  showCookingInstruction: {
     experiment: false,
     value: false,
   },

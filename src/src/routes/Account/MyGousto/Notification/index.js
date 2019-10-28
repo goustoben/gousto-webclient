@@ -1,1 +1,1 @@
-export { NotificationLogic as Notification } from './Notification.logic'
+export { NotificationContainer as Notification } from './NotificationContainer'

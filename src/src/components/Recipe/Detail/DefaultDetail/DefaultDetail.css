@@ -1,6 +1,6 @@
-@value ScreenXXSMax, ScreenXSMax, ScreenSMMin, ScreenXXSMin, ScreenMDMin, ScreenMDMax, ScreenLGMin from 'styles/screenSizes.css';
+@value ScreenXXSMax, ScreenXSMax, ScreenSMMax, ScreenSMMin, ScreenXXSMin, ScreenMDMin, ScreenMDMax, ScreenLGMin from 'styles/screenSizes.css';
 @value White, Basa from 'styles/colors.css';
-@value SpacingLG, SpacingMD, SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
+@value SpacingXXL, SpacingLG, SpacingMD, SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
 
 .headerContentContainer {
   @media ScreenXXSMax {
@@ -169,6 +169,24 @@
 
   @media ScreenXXSMin {
     display: block;
+  }
+}
+
+.cookingInstructionsDesktop {
+  display: none;
+
+  @media ScreenMDMin {
+    display: block;
+    margin-top: SpacingXXL;
+  }
+}
+
+.cookingInstructionsMobile {
+  display: none;
+
+  @media ScreenSMMax {
+    display: block;
+    margin-top: SpacingXXL;
   }
 }
 

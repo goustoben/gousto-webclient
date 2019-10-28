@@ -11,6 +11,7 @@ import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import { detailPropTypes } from 'Recipe/Detail/Detail'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
+import { CookingInstructions } from 'Recipe/CookingInstructions'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
 import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
@@ -19,7 +20,7 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton }) => (
+  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton, showCookingInstruction }) => (
     <div>
       <div className={css.container}>
         <div className={css.header}>
@@ -56,16 +57,16 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
                 glutenFree={glutenFree}
                 dairyFree={dairyFree}
               />
-              {equipment && equipment.size ? (
+              {equipment && !!equipment.size && (
                 <p className={css.additionalInfo}>
                   Equipment required: {equipment.toJS().join(', ')}
                 </p>
-              ) : null}
-              {youWillNeed && youWillNeed.size ? (
+              )}
+              {youWillNeed && !!youWillNeed.size && (
                 <p className={css.additionalInfo}>
-                  What you&#8217;ll need: {youWillNeed.map((item, idx) => <span key={idx}>{item}{(youWillNeed.size - 1) !== idx ? ', ' : null}</span>)}
+                  What you&#8217;ll need: {youWillNeed.map((item, idx) => <span key={idx}>{item}{(youWillNeed.size - 1) !== idx && ', '}</span>)}
                 </p>
-              ) : null}
+              )}
               <span className={css.mobileHide}>
                 <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
               </span>
@@ -73,29 +74,39 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
           </div>
         </div>
         <div className={css.row}>
-          {ingredients.size > 0 ? (
+          {!!ingredients.size > 0 && (
             <div className={css.section}>
               <div className={css.sectionPanel}>
                 <Ingredients ingredients={ingredients} restrictedView={restrictedView} />
               </div>
             </div>
-          ) : null}
+          )}
           <div className={css.row}>
-            {perPortion.size > 0 ? (
+            {!!perPortion.size > 0 && (
               <div className={classnames(css.section, css.splitSection)}>
                 <div className={css.sectionPanel}>
                   <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} restrictedView={restrictedView} />
                 </div>
+                {showCookingInstruction &&
+                  <div className={classnames(css.cookingInstructionsDesktop, css.sectionPanel)}>
+                    <CookingInstructions recipeId={id} />
+                  </div>
+                }
               </div>
-            ) : null}
-            {(allergens.size > 0 || ingredients.size > 0) ? (
+            )}
+            {(!!allergens.size > 0 || !!ingredients.size > 0) && (
               <div className={classnames(css.section, css.splitSection)}>
                 <div className={css.sectionPanel}>
                   <IngredientsList ingredients={ingredients} allergens={allergens} />
                   <Allergens allergens={allergens} />
                 </div>
+                {showCookingInstruction &&
+                  <div className={classnames(css.cookingInstructionsMobile, css.sectionPanel)}>
+                    <CookingInstructions recipeId={id} />
+                  </div>
+                }
               </div>
-            ) : null}
+            )}
           </div>
           <div className={css.stickyContainer}>
             {showShortlistButton &&
@@ -112,6 +123,7 @@ DefaultDetail.propTypes = {
   ...detailPropTypes,
   scrolledPastPoint: PropTypes.bool,
   isFoodBrandClickable: PropTypes.bool,
+  showCookingInstruction: PropTypes.bool.isRequired,
 }
 
 DefaultDetail.defaultProps = {

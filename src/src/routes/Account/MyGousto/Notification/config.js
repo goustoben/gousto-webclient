@@ -12,7 +12,7 @@ const notificationConfig = ({
     url: 'my-details',
   },
   amendDelivery: {
-    message: 'Due to the Bank Holiday, we’ve moved your delivery to the next available delivery day.',
+    message: 'We’ve moved your delivery to the next available delivery day.',
     type: 'info',
     title: 'Delivery changes',
     url: 'my-deliveries',
@@ -24,10 +24,13 @@ const notificationConfig = ({
     url: 'menu',
   },
   referAFriend: {
-    message: 'for every friend you refer this week. Invite friends now.',
+    message: 'for every friend you refer this month. Invite friends now.',
     type: 'info',
-    title: 'Get £30 credit',
+    title: 'Get £20 credit',
     url: 'my-referrals',
+    linkTrackingType: 'refer_friend',
+    startDate:'2019-10-15',
+    endDate:'2019-10-31',
   },
 })
 

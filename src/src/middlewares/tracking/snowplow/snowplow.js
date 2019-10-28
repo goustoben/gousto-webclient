@@ -1,14 +1,14 @@
 
 export default (action, state = {}) => {
-  if (__CLIENT__ && window.dataScienceDataLayer) {
-    const actionType = action.actionType
+  if (__CLIENT__ && window.dataLayer) {
+    const { actionType, seCategory:category } = action
     const actionValue = {}
     Object.keys(action)
-      .filter(key => key !== 'actionType')
+      .filter(key => key !== 'actionType' && key !== 'seCategory')
       .forEach(key => {
         actionValue[key] = action[key]
       })
-    const event = Object.assign({}, state, { event: 'userAction' }, { actionType }, { actionValue: JSON.stringify(actionValue) })
-    window.dataScienceDataLayer.push(event)
+    const event = Object.assign({}, state, { event: 'userAction' }, { actionType , category }, { actionValue: JSON.stringify(actionValue) })
+    window.dataLayer.push(event)
   }
 }

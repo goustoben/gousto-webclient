@@ -9,10 +9,11 @@ import * as prospectApi from 'apis/prospect'
 import * as addressApi from 'apis/addressLookup'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
+import { DeliveryTariffTypes } from 'utils/deliveries'
 import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-import { isChoosePlanEnabled } from 'selectors/features'
+import { isChoosePlanEnabled, isNDDFeatureEnabled } from 'selectors/features'
 import { getUserRecentRecipesIds } from 'selectors/user'
 import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
@@ -613,11 +614,7 @@ export function userSubscribe() {
       const deliveryAddress = getAddress(delivery)
       const billingAddress = payment.get('isBillingAddressDifferent') ? getAddress(payment) : deliveryAddress
 
-      const intervalId =
-        isChoosePlanEnabled(state) &&
-        basket.get('subscriptionOption') === 'transactional'
-          ? 0
-          : delivery.get('interval_id') || 1
+      const intervalId = delivery.get('interval_id', 1)
 
       const reqData = {
         order_id: basket.get('previewOrderId'),
@@ -633,7 +630,8 @@ export function userSubscribe() {
           age_verified: Number(promoAgeVerified || false),
           salutation_id: aboutYou.get('title'),
           marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
-          marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false)
+          marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
+          delivery_tariff_id: isNDDFeatureEnabled(state) ? DeliveryTariffTypes.FREE_NDD : DeliveryTariffTypes.NON_NDD
         },
         payment_method: {
           is_default: 1,
@@ -661,6 +659,13 @@ export function userSubscribe() {
           delivery_slot_id: basket.get('slotId'),
           box_id: basket.get('boxId')
         }
+      }
+
+      if (
+        isChoosePlanEnabled(state) &&
+        basket.get('subscriptionOption') === config.subscriptionOptions.transactional
+      ) {
+        reqData.subscription.paused = true
       }
 
       const { data } = await customerSignup(null, reqData)

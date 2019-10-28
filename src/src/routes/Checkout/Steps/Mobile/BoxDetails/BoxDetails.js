@@ -7,12 +7,15 @@ import SectionContainer from '../SectionContainer'
 
 import BoxDetailsContainer from '../../../Components/BoxDetails'
 
-const BoxDetails = ({ onStepChange }) => (
+const BoxDetails = ({ onStepChange, trackClick }) => (
   <div>
     <Summary showPromocode />
     <SectionContainer>
       <CheckoutButton
-        onClick={onStepChange}
+        onClick={() => {
+          onStepChange()
+          trackClick('NextCTA Clicked', { position: 'first' })
+        }}
         stepName="Checkout Securely"
       />
     </SectionContainer>
@@ -20,7 +23,10 @@ const BoxDetails = ({ onStepChange }) => (
       <BoxDetailsContainer />
     </SectionContainer>
     <CheckoutButton
-      onClick={onStepChange}
+      onClick={() => {
+        onStepChange()
+        trackClick('NextCTA Clicked', { position: 'second' })
+      }}
       stepName="Checkout Securely"
     />
   </div>
@@ -28,6 +34,11 @@ const BoxDetails = ({ onStepChange }) => (
 
 BoxDetails.propTypes = {
   onStepChange: PropTypes.func.isRequired,
+  trackClick: PropTypes.func
+}
+
+BoxDetails.defaultProps = {
+  trackClick: () => { }
 }
 
 export default BoxDetails

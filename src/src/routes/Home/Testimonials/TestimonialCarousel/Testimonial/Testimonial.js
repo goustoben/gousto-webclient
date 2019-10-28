@@ -13,7 +13,7 @@ const Testimonial = ({ testimonial, showLink }) => (
     </div>
     <div className={css.title}>
       {showLink &&
-        <a href={testimonial.get('url')} className={css.link} target="_blank">
+        <a href={testimonial.get('url')} className={css.link} target="_blank" rel="noopener noreferrer">
           {testimonial.get('title')}
         </a>
       }

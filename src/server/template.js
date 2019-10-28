@@ -4,12 +4,14 @@ const encodeState = require('./encodeState')
 
 const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userAgent = '', noGTM = false, helmetHead) => (
   `<!doctype html>
-   <html ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
+   <html lang="en-GB" ${(helmetHead && helmetHead.htmlAttributes) ? helmetHead.htmlAttributes.toString() : ''}>
     <head>
       <!-- ********************************************************************
-        Well hello there. Like HTML, do ya? How about PHP? AWS? Git? Laravel?
-        We're always looking for talented developers. Email us!
-        workintech [at] gousto.co.uk
+        Well hello there! You're a curious person, aren't you?
+        Are you also curious about React? Or maybe Python, NodeJS, PHP?
+        Or are you more the AWS type?
+        We're always looking for talented engineers. Email us!
+        jobs [at] gousto.co.uk
       ******************************************************************** -->
       <meta charset="utf-8" />
       <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>

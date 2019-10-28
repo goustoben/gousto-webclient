@@ -1,6 +1,6 @@
 @value sizeMD from 'styles/typography.css';
 @value White, Black, Blackberry from 'styles/colors.css';
-@value ScreenMDMin, ScreenXXSMin from 'styles/screenSizes.css';
+@value ScreenMDMin, ScreenXXSMin, ScreenMLMin from 'styles/screenSizes.css';
 
 @value attributesLineHeight 1.8;
 @value chefTtileWidth calc(100% - 85px);
@@ -105,4 +105,13 @@
 
 .addButton {
 	flex-grow: 1;
+}
+
+.viewDetails {
+  @media ScreenMLMin {
+    position: absolute;
+    right: 0.75rem;
+    margin-top: -3rem;
+    z-index: 4;
+  }
 }

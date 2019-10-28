@@ -4,6 +4,11 @@ import GoustoException from 'utils/GoustoException'
 import { getDisabledSlots } from 'selectors/features'
 import { formatAndValidateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
 
+export const DeliveryTariffTypes = {
+  FREE_NDD: '823b18ef-5ca0-4a15-8f0f-4a363b319e29',
+  NON_NDD: '9037a447-e11a-4960-ae69-d89a029569af'
+}
+
 export function getSlot(deliveryDays, date, slotId) {
   if (deliveryDays && typeof deliveryDays.getIn === 'function') {
     const deliverySlots = deliveryDays.getIn([date, 'slots'])
@@ -18,6 +23,16 @@ export function getSlot(deliveryDays, date, slotId) {
   }
 
   return false
+}
+
+export const getSlotTimes = ({ date, deliveryDays, slotId }) => {
+  const chosenSlot = getSlot(deliveryDays, date, slotId)
+
+  if (!chosenSlot) {
+    return ''
+  }
+
+  return `${moment(`${date} ${chosenSlot.get('deliveryStartTime')}`).format('ha')} - ${moment(`${date} ${chosenSlot.get('deliveryEndTime')}`).format('ha')} `
 }
 
 function getPrevBasketDate(basket) {
@@ -413,7 +428,7 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
   }
 
   return daysWithDSLTs.map(dayWithDSLTs => {
-    const {id, date, isDefault, coreDayId, unavailableReason, alternateDeliveryDay} = dayWithDSLTs
+    const { id, date, isDefault, coreDayId, unavailableReason, alternateDeliveryDay } = dayWithDSLTs
 
     return {
       id,
@@ -429,7 +444,8 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
         isDefault: dslt.isSlotDefault,
         coreSlotId: dslt.coreSlotId,
         deliveryStartTime: dslt.startTime,
-        id: dslt.slotId
+        id: dslt.slotId,
+        daySlotLeadTimeId: dslt.id
         // fields not available in current DSLT and not used in webclient:
         // - cutoffTime
         // - cutoffDay

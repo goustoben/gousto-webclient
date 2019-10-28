@@ -33,7 +33,9 @@ class Address extends React.PureComponent {
     registerField: PropTypes.func,
     checkoutAddressLookup: PropTypes.func,
     onAddressConfirm: PropTypes.func,
-    isNDDExperiment: PropTypes.bool
+    trackCheckoutButtonPressed: PropTypes.func,
+    isNDDExperiment: PropTypes.bool,
+    isMobile: PropTypes.bool,
   }
   static defaultProps = {
     formName: 'address',
@@ -43,15 +45,15 @@ class Address extends React.PureComponent {
     formFields: {},
     isNDDExperiment: false,
 
-    change: () => {},
-    touch: () => {},
-    untouch: () => {},
+    change: () => { },
+    touch: () => { },
+    untouch: () => { },
 
     addressesPending: false,
     initialPostcode: '',
     isDelivery: true,
-    receiveRef: () => {},
-    scrollToFirstMatchingRef: () => {},
+    receiveRef: () => { },
+    scrollToFirstMatchingRef: () => { },
   }
 
   componentWillMount() {
@@ -90,7 +92,7 @@ class Address extends React.PureComponent {
         deliveryPoint.line2,
       ]
 
-      return addressParts.filter(part => !! part).join(', ')
+      return addressParts.filter(part => !!part).join(', ')
     }
 
     function generateDropdownOptions(addressData) {
@@ -131,7 +133,7 @@ class Address extends React.PureComponent {
           postcode,
           'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
           'filters[cutoff_datetime_until]': menuCutoffUntil || menuCutoffUntilFallback,
-          ndd : isNDDExperiment.toString()
+          ndd: isNDDExperiment.toString()
         }
 
         let { data: days } = await fetchDeliveryDays(null, reqData)
@@ -238,7 +240,7 @@ class Address extends React.PureComponent {
   }
 
   handleAddressConfirm = () => {
-    const { formName, sectionName, formErrors, change, touch, onAddressConfirm } = this.props
+    const { formName, sectionName, formErrors, change, touch, onAddressConfirm, trackCheckoutButtonPressed, isMobile } = this.props
 
     this.forceReValidation()
 
@@ -260,11 +262,13 @@ class Address extends React.PureComponent {
       if (onAddressConfirm) {
         onAddressConfirm(postcode)
       }
+      isMobile && trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: true, missing_field: null })
     } else {
       const sectionErrors = {
         [sectionName]: errors,
       }
       this.props.scrollToFirstMatchingRef([dottify(sectionErrors)])
+      isMobile && trackCheckoutButtonPressed('DeliveryAddress Confirmed', { succeeded: false, missing_field: Object.keys(errors) })
     }
   }
 
@@ -282,7 +286,7 @@ class Address extends React.PureComponent {
   )
 
   render() {
-    const { isDelivery, deliveryDate, cutOffDate } = this.props
+    const { isDelivery, deliveryDate, cutOffDate, isMobile, trackCheckoutButtonPressed } = this.props
     const addresses = this.getFormValue('addresses') || []
     const postcodeTemp = this.getFormValue('postcodeTemp')
     const addressId = this.getFormValue('addressId')
@@ -308,6 +312,8 @@ class Address extends React.PureComponent {
           onSelectedAddressChange={this.handleSelectedAddressChange}
           showDropdown={showDropdown}
           receiveRef={this.props.receiveRef}
+          trackClick={trackCheckoutButtonPressed}
+          isMobile={isMobile}
         />
 
         {showDropdown && addresses.length > 1 && !isAddressSelected && <p><span data-testing="addressNotFound" onClick={this.handleCantFind} className={css.linkBase}>Can’t find your address?</span></p>}

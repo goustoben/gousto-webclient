@@ -54,6 +54,10 @@ describe('Cookbook actions', () => {
         type: actionTypes.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID,
         recipeId,
         recipeStepsById,
+        trackingData: {
+          actionType: 'Cooking Instructions clicked',
+          recipeId,
+        },
       })
     })
   })

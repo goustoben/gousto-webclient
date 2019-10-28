@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MobileMenu from 'Header/MobileMenu'
+import MobileMenu from 'Header/MobileMenu/MobileMenu'
 import Link from 'Link'
 
 describe('MobileMenu', () => {
@@ -30,10 +30,10 @@ describe('MobileMenu', () => {
     describe('when is authenticated', () => {
       test('should render all menu items provided as links', () => {
         expect(wrapper.find(Link).length).toEqual(4)
-        expect(wrapper.find(Link).find({to:'/home'}).length).toEqual(1)
-        expect(wrapper.find(Link).find({to:'/menu'}).length).toEqual(1)
-        expect(wrapper.find(Link).find({to:'/help'}).length).toEqual(1)
-        expect(wrapper.find(Link).find({to:'/rate-my-recipes'}).length).toEqual(1)
+        expect(wrapper.find(Link).find({ to: '/home' }).length).toEqual(1)
+        expect(wrapper.find(Link).find({ to: '/menu' }).length).toEqual(1)
+        expect(wrapper.find(Link).find({ to: '/help' }).length).toEqual(1)
+        expect(wrapper.find(Link).find({ to: '/rate-my-recipes' }).length).toEqual(1)
       })
     })
   })

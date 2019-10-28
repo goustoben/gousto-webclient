@@ -21,6 +21,7 @@ import {
   checkoutAddressLookup,
   checkoutCreatePreviewOrder,
   checkoutTransactionalOrder,
+  trackCheckoutButtonPressed,
 } from 'actions/checkout'
 
 jest.mock('actions/login')
@@ -33,7 +34,7 @@ jest.mock('utils/basket', () => ({
 }))
 
 jest.mock('utils/deliveries', () => ({
-  getSlot: jest.fn(),
+  getSlot: jest.fn()
 }))
 
 jest.mock('actions/redirect', () => ({
@@ -179,6 +180,7 @@ describe('checkout actions', () => {
         { id: 'recipe-id-2', quantity: 4, type: 'Recipe' },
         { id: 'recipe-id-2', quantity: 4, type: 'Recipe' },
       ],
+      day_slot_lead_time_id: ''
     }
     addressCollection = [{ 1: 'a' }, { 2: 'b' }]
     fetchAddressByPostcode.mockReturnValue(
@@ -203,6 +205,7 @@ describe('checkout actions', () => {
       Immutable.Map({
         coreSlotId: '4',
         id: '3e977c1e-a778-11e6-aa8b-080027596944',
+        daySlotLeadTimeId: ''
       }),
     )
   })
@@ -278,29 +281,36 @@ describe('checkout actions', () => {
     })
   })
 
-  describe('when prevDaySlotLeadTimeId is present in state.basket', () => {
+  describe('when daySlotLeadTimeId is present in box summary slots', () => {
     const targetUuid = 'some-uuid'
 
     beforeEach(() => {
       getState.mockReturnValue(createState({
-        basket: Immutable.fromJS({
-          address: '3 Moris House, London',
-          date: '2016-11-21',
-          numPortions: 4,
-          recipes: {
-            'recipe-id-1': 1,
-            'recipe-id-2': 2,
+        boxSummaryDeliveryDays: Immutable.fromJS({
+          '2016-11-21': {
+            id: '3e9a2572-a778-11e6-bb0f-080027596944',
+            date: '2016-11-21',
+            coreDayId: '253',
+            slots: [
+              {
+                coreSlotId: '4',
+                id: '3e952522-a778-11e6-8197-080027596944',
+                daySlotLeadTimeId: 'some-uuid' // targetUuid
+              },
+            ],
           },
-          stepsOrder: ['boxdetails', 'aboutyou', 'delivery', 'payment'],
-          slotId: '33e977c1e-a778-11e6-aa8b-080027596944',
-          postcode: 'W6 0DH',
-          prevPostcode: 'OX18 1EN',
-          prevDaySlotLeadTimeId: targetUuid,
         }),
       }))
     })
 
     it('should call create preview order with day_slot_lead_time_id', async () => {
+
+      getSlot.mockReturnValue(Immutable.fromJS({
+        coreSlotId: '4',
+        id: '3e952522-a778-11e6-8197-080027596944',
+        daySlotLeadTimeId: targetUuid
+      }))
+
       await checkoutCreatePreviewOrder()(
         dispatch,
         getState,
@@ -311,7 +321,7 @@ describe('checkout actions', () => {
       expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
     })
   })
-  
+
   describe('checkoutAddressLookup', () => {
     it('should call fetchAddressByPostcode and dispatch pending CHECKOUT_ADDRESSES_RECEIVE with addresses', async () => {
       const postcode = 'W6 0DH'
@@ -433,6 +443,38 @@ describe('checkout actions', () => {
 
       expect(dispatch).toHaveBeenCalledTimes(8)
     })
+  })
+
+  describe('trackCheckoutButtonPressed', () => {
+    describe('should dispatch a TRACKING action with tracking data (snowplow and gtm)', () => {
+      test('with property if provided', () => {
+        const trackingData = {
+          actionType: 'DeliveryAddress Confirmed',
+          seCategory: 'Checkout',
+          position: 'first',
+        }
+
+        expect(trackCheckoutButtonPressed('DeliveryAddress Confirmed', { position: 'first' })).toEqual({
+          type: 'TRACKING',
+          trackingData,
+          gtmEvent: trackingData
+        })
+      })
+
+      test('with no property if not provided', () => {
+        const trackingData = {
+          actionType: 'NextCTA Clicked',
+          seCategory: 'Checkout',
+        }
+
+        expect(trackCheckoutButtonPressed('NextCTA Clicked')).toEqual({
+          type: 'TRACKING',
+          trackingData,
+          gtmEvent: trackingData
+        })
+      })
+    })
+
   })
 
   describe('checkoutSignup on MOBILE', () => {

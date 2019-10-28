@@ -38,7 +38,7 @@ class Page extends React.PureComponent {
 
   componentDidMount() {
     if (!this.props.disabled && this.props.isAuthenticated && this.props.email) {
-      this.updateDataScienceLayer(this.props.email, this.props.goustoReference)
+      this.updateDataLayer(this.props.email, this.props.goustoReference)
     }
     const location = getWindow().location
 
@@ -53,15 +53,15 @@ class Page extends React.PureComponent {
       if (!nextProps.email) {
         Page.fetchData({ store: this.context.store })
       } else {
-        this.updateDataScienceLayer(nextProps.email, nextProps.goustoReference)
+        this.updateDataLayer(nextProps.email, nextProps.goustoReference)
       }
     }
   }
 
-  updateDataScienceLayer = (email, goustoReference) => {
-    const datalayer = getWindow().dataScienceDataLayer
-    if (datalayer && Array.isArray(datalayer)) {
-      datalayer.push({ email, goustoReference })
+  updateDataLayer = (email, goustoReference) => {
+    const { dataLayer } = getWindow()
+    if (dataLayer && Array.isArray(dataLayer)) {
+      dataLayer.push({ email, goustoReference })
     }
   }
 

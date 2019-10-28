@@ -1,6 +1,7 @@
 import Immutable from 'immutable' /* eslint-disable new-cap */
-import { basketSum, okRecipes, getProductsQtyInCategory, limitReached, getProductLimitReached, shortlistLimitReached } from 'utils/basket'
+import { basketSum, okRecipes, getProductsQtyInCategory, limitReached, getProductLimitReached, shortlistLimitReached, getOrderDetails } from 'utils/basket'
 import * as basketProductLimits from 'utils/basketProductLimits'
+import { getSlot } from 'utils/deliveries'
 
 jest.mock('utils/basketProductLimits', () => ({
   getAllBasketProducts: jest.fn(),
@@ -9,12 +10,51 @@ jest.mock('utils/basketProductLimits', () => ({
   productsOverallLimitReached: jest.fn(),
 }))
 
+jest.mock('utils/deliveries', () => ({
+  getSlot: jest.fn()
+}))
+
 describe('basket utils', function () {
   describe('basketSum', function () {
     test('sum up the number of recipes', function () {
       const basket = Immutable.fromJS({ '1': 1, '22': 1, '23': 2 })
 
       expect(basketSum(basket)).toEqual(4)
+    })
+  })
+
+  describe('getOrderDetails', () => {
+    test('returns a object containing the delivery_day, slot_id day_slot_lead_time_id and chosen recipes', () => {
+      const basket = Immutable.fromJS({
+        date: '2019-10-10',
+        slotId: '4',
+        recipes: { 160: 1, 161: 1 },
+        numPortions: 2
+      })
+
+      const deliveryDays = Immutable.fromJS({
+        '2019-10-10': { coreDayId: '5' }
+      })
+
+      getSlot.mockReturnValue(Immutable.fromJS({
+        coreSlotId: '4',
+        id: 'deliveries-uuid',
+        daySlotLeadTimeId: 'day-slot-lead-time-uuid'
+      }))
+
+      const actualResult = getOrderDetails(basket, deliveryDays)
+
+      const expectedResult = {
+        delivery_day_id: '5',
+        delivery_slot_id: '4',
+        recipe_choices: [
+          { id: '160', quantity: 2, type: 'Recipe'},
+          { id: '161', quantity: 2, type: 'Recipe'}
+        ],
+        day_slot_lead_time_id: 'day-slot-lead-time-uuid'
+      }
+
+      expect(actualResult).toEqual(expectedResult)
     })
   })
 

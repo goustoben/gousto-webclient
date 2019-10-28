@@ -3,6 +3,8 @@ import Immutable from 'immutable'
 import { referAFriend } from 'apis/user'
 import { customerSignup } from 'apis/customers'
 
+import { DeliveryTariffTypes } from 'utils/deliveries'
+
 import {
   userReferAFriend,
   userSubscribe,
@@ -167,21 +169,80 @@ describe('user actions', () => {
         })
       )
     })
+
     describe('checkoutPaymentFeature is enabled', () => {
       beforeEach(() => {
         state = {
           ...state,
           features: Immutable.fromJS({
             checkoutPayment: {
-              value: true
-            }
+              value: true,
+            },
           })
         }
         getState.mockReturnValue(state)
       })
+
       it('should call customerSignup', async () => {
         await userSubscribe()(dispatch, getState)
         expect(customerSignup).toHaveBeenCalled()
+      })
+
+      describe('Signing up in/out of NDD experiment', () => {
+        let customerObject = {}
+        const setNddExperiment = (value) => {
+          state = {
+            ...state,
+            features: Immutable.fromJS({
+              ndd: {
+                value: value,
+              }
+            })
+          }
+
+          getState.mockReturnValue(state)
+
+          customerObject = {
+            age_verified: 0,
+            delivery_tariff_id: value ? DeliveryTariffTypes.FREE_NDD : DeliveryTariffTypes.NON_NDD,
+            email: 'test_email@test.com',
+            marketing_do_allow_email: 0,
+            marketing_do_allow_thirdparty: 0,
+            name_first: undefined,
+            promo_code: '',
+            name_last: undefined,
+            password: undefined,
+            phone_number: '',
+            salutation_id: undefined,
+            tariff_id: '',
+          }
+        }
+
+        it('should call customerSignup with the correct delivery_tariff_id when NDD experiment is not defined', async () => {
+          setNddExperiment(false)
+
+          await userSubscribe()(dispatch, getState)
+
+          expect(customerSignup).toHaveBeenCalledWith(
+            null,
+            expect.objectContaining({
+              customer: customerObject,
+            }),
+          )
+        })
+
+        it('should call customerSignup with the correct delivery_tariff_id when in NDD experiment', async () => {
+          setNddExperiment(true)
+
+          await userSubscribe()(dispatch, getState)
+
+          expect(customerSignup).toHaveBeenCalledWith(
+            null,
+            expect.objectContaining({
+              customer: customerObject,
+            }),
+          )
+        })
       })
     })
   })

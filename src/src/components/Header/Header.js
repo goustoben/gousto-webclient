@@ -19,7 +19,9 @@ import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
-import MobileMenu from './MobileMenu'
+import { deepCloneObject } from 'utils/deepClone'
+import { MobileWrapper } from './MobileMenu'
+import { defaultMenuItems } from './menuItemsHelper'
 import css from './Header.css'
 
 const clientRoutes = config.routes.client
@@ -28,8 +30,8 @@ class Header extends React.PureComponent {
 
   static propTypes = {
     logoutUser: PropTypes.func,
-    serverError: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
+    serverError: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
     loginOpen: PropTypes.bool,
     routing: PropTypes.object,
     simple: PropTypes.bool,
@@ -39,14 +41,13 @@ class Header extends React.PureComponent {
     promoCodeUrl: PropTypes.string,
     loginVisibilityChange: PropTypes.func,
     closeBoxModalVisibilityChange: PropTypes.func,
-    noContactBar: PropTypes.bool,
     title: PropTypes.string,
     small: PropTypes.bool,
-    forceSignupWizardFeature: PropTypes.bool,
     abandonBasketFeature: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
     shouldLoadOrders: PropTypes.bool,
     loadUserOrders: PropTypes.func.isRequired,
+    shouldRenderNewMenuDesign: PropTypes.bool
   }
 
   static defaultProps = {
@@ -60,6 +61,7 @@ class Header extends React.PureComponent {
     trackNavigationClick: () => { },
     abandonBasketFeature: false,
     shouldLoadOrders: false,
+    shouldRenderNewMenuDesign: false
   }
 
   constructor(props) {
@@ -122,47 +124,21 @@ class Header extends React.PureComponent {
     loginVisibilityChange(true)
   }
 
-  getChooseRecipesLink = () => {
-    const { forceSignupWizardFeature, isAuthenticated } = this.props
-
-    return forceSignupWizardFeature && !isAuthenticated ? clientRoutes.signup : clientRoutes.menu
-  }
-
   getMenuItems = (device, path) => {
     const { isAuthenticated, promoCodeUrl, fromJoin } = this.props
-
-    const home = { name: 'Home', url: clientRoutes.home, clientRouted: true }
-
-    const availableItems = {
-      home,
-      boxPrices: { name: 'Box Prices', url: clientRoutes.boxPrices, clientRouted: true, tracking: 'BoxPricingNavigation Clicked' },
-      menu: { name: 'Choose Recipes', url: this.getChooseRecipesLink(), tracking: 'RecipeNavigation Clicked' },
-      faq: {
-        name: 'Help',
-        url: config.routes.zendesk.faqs,
-        clientRouted: false,
-        tracking: 'FAQNavigation Clicked'
-      },
-      myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false, tracking: 'MyGoustoNavigation Clicked' },
-      referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false, tracking: 'ReferAFriendNavigation Clicked' },
-      rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking: 'RateMyRecipesNavigation Clicked' },
-      deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking: 'DeliveriesNavigation Clicked' },
-      subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking: 'SubscriptionNavigation Clicked' },
-      details: { name: 'Details', url: clientRoutes.myDetails, clientRouted: false, tracking: 'DetailsNavigation Clicked' },
-      sustainability: { name: 'Sustainability', url: clientRoutes.weCare, clientRouted: false, tracking: 'SustainabilityNavigation Clicked' },
-    }
+    const menuItems = deepCloneObject(defaultMenuItems)
 
     let pathLocal = path
     if (path.indexOf('/') === -1) {
       pathLocal = `/${pathLocal}`
     }
-    Object.keys(availableItems).forEach(menuItem => {
-      if (pathLocal.indexOf(availableItems[menuItem].url) > -1) {
-        availableItems[menuItem].disabled = true
+    Object.keys(menuItems).forEach(menuItem => {
+      if (pathLocal.indexOf(menuItems[menuItem].url) > -1) {
+        menuItems[menuItem].disabled = true
       }
     })
 
-    const homeMenuItem = availableItems.home
+    const homeMenuItem = { ...menuItems.home }
     if (promoCodeUrl) {
       homeMenuItem.url = `/${promoCodeUrl}`
     } else if (path.includes('check-out')) {
@@ -172,26 +148,26 @@ class Header extends React.PureComponent {
     }
 
     const desktopItems = [
-      !isAuthenticated && availableItems.boxPrices,
-      availableItems.menu,
-      isAuthenticated && availableItems.referFriend,
-      availableItems.sustainability,
-      availableItems.faq,
+      !isAuthenticated && menuItems.boxPrices,
+      menuItems.menu,
+      isAuthenticated && menuItems.referFriend,
+      menuItems.sustainability,
+      menuItems.faq,
     ].filter(item => item)
 
     const mobileItems = [
-      !isAuthenticated && availableItems.boxPrices,
-      availableItems.menu,
-      availableItems.sustainability,
-      availableItems.faq,
+      !isAuthenticated && menuItems.boxPrices,
+      menuItems.menu,
+      menuItems.sustainability,
+      menuItems.faq,
     ].filter(item => item)
 
-    const myGousto = [availableItems.myGousto]
-    const rateMyRecipes = [availableItems.rateMyRecipes]
-    const deliveries = [availableItems.deliveries]
-    const subscription = [availableItems.subscription]
-    const details = [availableItems.details]
-    const referFriend = [availableItems.referFriend]
+    const myGousto = [menuItems.myGousto]
+    const rateMyRecipes = [menuItems.rateMyRecipes]
+    const deliveries = [menuItems.deliveries]
+    const subscription = [menuItems.subscription]
+    const details = [menuItems.details]
+    const referFriend = [menuItems.referFriend]
 
     let mobileMenu = []
 
@@ -336,7 +312,6 @@ class Header extends React.PureComponent {
     const {
       fromJoin,
       disabled,
-      noContactBar,
       simple,
       isAuthenticated,
       serverError,
@@ -347,12 +322,14 @@ class Header extends React.PureComponent {
       path,
       trackNavigationClick,
       abandonBasketFeature,
+      shouldRenderNewMenuDesign,
+      routing
     } = this.props
+    const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen, loginPending } = this.state
     const { fromWizard } = this.handleQuery()
     const joinPage = path.indexOf('join') > -1 || fromJoin
     const hideNav = fromWizard || joinPage || disabled || false
-    const newNoContactBar = joinPage || noContactBar
     const mobileMenuItems = this.getMenuItems('mobile', path)
     const homeElementMobile = mobileMenuItems.find(item => (item.name === 'Home'))
     const desktopMenuItems = this.getMenuItems('desktop', path)
@@ -368,7 +345,6 @@ class Header extends React.PureComponent {
           serverError={serverError}
           className={mobileMenuOpen ? css.overlayOpen : css.overlay}
           homeUrl={mobileMenuItems[0].url}
-          noContactBar={newNoContactBar}
           title={title}
           small={small}
         />
@@ -387,27 +363,9 @@ class Header extends React.PureComponent {
             href={serverError ? '#' : null}
             onClick={this.hideMobileMenu}
           />
-          <header className={noContactBar ? css.headerNoContactBar : css.header}>
+          <header className={css.header}>
             <div>
-              <MobileMenu
-                menuItems={mobileMenuItems}
-                show={mobileMenuOpen}
-                onHide={this.hideMobileMenu}
-                hideNav={hideNav}
-                isAuthenticated={isAuthenticated}
-                loginFunc={this.onOpen}
-                logoutFunc={this.logoutFunc}
-                promoCodeUrl={promoCodeUrl}
-                trackNavigationClick={trackNavigationClick}
-              />
               <div className={css.container}>
-                {!noContactBar ?
-                  <div className={css.contactBar}>
-                    <p className={css.contactContent}>
-                      <span className={css.info}>Free delivery </span>
-                      <span className={css.info}>{config.company.telephone.number}</span>
-                    </p>
-                  </div> : null}
                 <div className={css.mainBar}>
                   <div className={css.mainContent}>
                     <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !Boolean(promoCodeUrl)} className={css.logoLink}>
@@ -420,15 +378,23 @@ class Header extends React.PureComponent {
                       {this.renderMenuItems(desktopMenuItems, hideNav)}
                       {this.renderAuthLink()}
                     </span>
-                    <span className={css.linkMobileContainer}>
-                      <button
-                        type='button'
-                        className={classNames([css.burgerIcon, 'needsclick'])}
-                        onClick={this.showMobileMenu}
-                        href={serverError ? '#mobileMenu' : null}
-                        data-testing="burgerMenu"
-                      />
-                    </span>
+                    <MobileWrapper
+                      hideMobileMenu={this.hideMobileMenu}
+                      onOpen={this.onOpen}
+                      logoutFunc={this.logoutFunc}
+                      showMobileMenu={this.showMobileMenu}
+                      mobileMenuItems={mobileMenuItems}
+                      mobileMenuOpen={mobileMenuOpen}
+                      hideNav={hideNav}
+                      isAuthenticated={isAuthenticated}
+                      promoCodeUrl={promoCodeUrl}
+                      trackNavigationClick={(param) => {
+                        trackNavigationClick(param)
+                        this.hideMobileMenu()
+                      }}
+                      serverError={serverError}
+                      shouldRenderNewMenuDesign={shouldRenderNewMenuDesign && (pathName === '/menu')}
+                    />
                   </div>
                 </div>
               </div>

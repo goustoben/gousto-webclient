@@ -6,6 +6,7 @@ import { Section } from './Section'
 import { Cookbook } from './Cookbook'
 import { Header } from './Header'
 import { ReferAFriend } from './ReferAFriend'
+import css from './MyGousto.css'
 
 class MyGousto extends React.PureComponent {
   static propTypes = {
@@ -33,9 +34,11 @@ class MyGousto extends React.PureComponent {
 
     return (
       <div>
-        <Section>
-          <Notification card={card} orders={orders} />
-        </Section>
+        <div className={css.wrapper}>
+          <div className={css.notificationContent}>
+            <Notification card={card} orders={orders} />
+          </div>
+        </div>
         <Section title={headerTitle} largeTitle>
           <Header orders={orders} />
         </Section>

@@ -7,6 +7,7 @@ import Title from 'Recipe/Title'
 import Rating from 'Recipe/Rating'
 import AddButton from 'Recipe/AddButton'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
+import { CookingInstructions } from 'Recipe/CookingInstructions'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
 import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
@@ -16,7 +17,9 @@ import IngredientsList from '../IngredientsList/IngredientsList'
 import Allergens from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
 
-const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew, showShortlistButton }) => (
+const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, 
+  id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, 
+  position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew, showShortlistButton, showCookingInstruction }) => (
   <div>
     <div className={css.container}>
       <div className={css.carousel}>
@@ -55,22 +58,22 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             dairyFree={dairyFree}
           />
           <hr className={css.rule} />
-          {ingredients.size > 0 ? <Ingredients ingredients={ingredients} restrictedView={restrictedView} border={false} inset={false} /> : null}
+          {!!ingredients.size > 0 && <Ingredients ingredients={ingredients} restrictedView={restrictedView} border={false} inset={false} />}
           <hr className={css.rule} />
           <div className={css.twoColumnContainer}>
             <div className={css.oneColumnContainer}>
-              {youWillNeed && youWillNeed.size ? (
+              {youWillNeed && !!youWillNeed.size && (
                 <div className={css.text}>
                   <p className={css.heading}>What you&#8217;ll need:</p>
-                  <p>{youWillNeed.map((item, idx) => <span key={idx}>{item}{(youWillNeed.size - 1) !== idx ? ', ' : null}</span>)}</p>
+                  <p>{youWillNeed.map((item, idx) => <span key={idx}>{item}{(youWillNeed.size - 1) !== idx && ', '}</span>)}</p>
                 </div>
-              ) : null}
-              {equipment && equipment.size ? (
+              )}
+              {equipment && !!equipment.size && (
                 <div className={css.text}>
                   <p className={css.heading}>Equipment required:</p>
                   <p>{equipment.toJS().join(', ')}</p>
                 </div>
-              ) : null}
+              )}
             </div>
             <div className={css.oneColumnContainer}>
               {perPortion.size > 0 ? <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} restrictedView={restrictedView} inset={false} /> : null}
@@ -78,13 +81,21 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
           </div>
           <hr className={css.rule} />
           <div className={css.text}>
-            {(allergens.size > 0 || ingredients.size > 0) ? (
+            {(!!allergens.size > 0 || !!ingredients.size > 0) && (
               <div>
                 <IngredientsList ingredients={ingredients} allergens={allergens} inset={false} />
                 <Allergens allergens={allergens} inset={false} />
               </div>
-            ) : null}
+            )}
           </div>
+          {showCookingInstruction &&
+            <div>
+              <hr className={css.rule} />
+              <div className={css.cookingInstructions}>
+                <CookingInstructions recipeId={id} />
+              </div>
+            </div>
+          }
         </div>
       </div>
       <div className={css.stickyContainer}>
@@ -101,6 +112,7 @@ FineDineInDetail.propTypes = {
   ...detailPropTypes,
   scrolledPastPoint: PropTypes.bool,
   images: PropTypes.instanceOf(Immutable.List),
+  showCookingInstruction: PropTypes.bool.isRequired,
 }
 
 FineDineInDetail.defaultProps = {
