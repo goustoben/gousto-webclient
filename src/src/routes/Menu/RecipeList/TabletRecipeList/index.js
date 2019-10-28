@@ -1,0 +1,1 @@
+export { TabletRecipeList } from './TabletRecipeList'
