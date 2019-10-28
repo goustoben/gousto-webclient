@@ -5,19 +5,23 @@ import SignupLayout from 'layouts/SignupLayout'
 import { isChoosePlanEnabled } from 'selectors/features'
 import { ChoosePlanContainer } from './ChoosePlanContainer'
 
-const route = store => {
-  if (isChoosePlanEnabled(store.getState())) {
-    return (
-      <Route component={SignupLayout}>
-        <Route
-          path={routeConfig.client.choosePlan}
-          component={ChoosePlanContainer}
-        />
-      </Route>
-    )
+const onEnterHandler = (replace, next, store) => {
+  if(!isChoosePlanEnabled(store.getState())) {
+    const redirectTo = '/'
+    replace(redirectTo)
   }
 
-  return <Redirect from="/choose-subscription-plan" to="/" />
+  next()
 }
+
+const route = store => (
+  <Route component={SignupLayout}>
+    <Route
+      path={routeConfig.client.choosePlan}
+      component={ChoosePlanContainer}
+      onEnter={(routes, replace, next) => onEnterHandler(replace, next, store)}
+    />
+  </Route>
+)
 
 export default route
