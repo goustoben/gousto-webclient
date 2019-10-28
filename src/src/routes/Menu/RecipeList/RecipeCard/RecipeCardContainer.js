@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
 
 import { getCutoffDate } from 'routes/Menu/selectors/cutoff'
+import { getNumPortions } from 'selectors/basket'
 
 import { RecipeCard } from './RecipeCard'
 
 const mapStateToProps = (state) => {
   return {
-    numPortions: state.basket.get('numPortions'),
+    numPortions: getNumPortions(state),
     cutoffDate: getCutoffDate(state),
     features: state.features,
     allRecipesList: state.menuRecipes,

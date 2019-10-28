@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 
-import { RecipeCard } from '../RecipeCard'
+import { RecipeCardContainer } from '../RecipeCard'
 import { CTACard } from '../CTACard'
 
 import css from './MobileRecipeList.css'
@@ -13,7 +13,7 @@ const MobileRecipeList = ({
   // eslint-disable-next-line react/prop-types
   const createRecipeCard = (value, index) => {
     return (
-      <RecipeCard
+      <RecipeCardContainer
         key={`${index}-${value.get('id')}`}
         recipe={value}
         index={index}
@@ -38,13 +38,20 @@ const MobileRecipeList = ({
 }
 
 MobileRecipeList.propTypes = {
-  mobileGridView: PropTypes.bool,
-  showDetailRecipe: PropTypes.func,
+  mobileGridView: PropTypes.bool.isRequired,
+  showDetailRecipe: PropTypes.func.isRequired,
   recipes: PropTypes.instanceOf(Immutable.List).isRequired,
   isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
   collectionFilterChange: PropTypes.func,
   thematicName: PropTypes.string,
   deliveryDate: PropTypes.string
+}
+
+MobileRecipeList.defaultProps = {
+  thematicName: null,
+  deliveryDate: null,
+  collectionFilterChange: () => {},
+  isCurrentCollectionRecommendation: false
 }
 
 export { MobileRecipeList }

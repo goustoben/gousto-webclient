@@ -5,20 +5,22 @@ import moment from 'moment'
 import Recipe from 'containers/menu/Recipe'
 
 const propTypes = {
-  isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  thematicName: PropTypes.string,
-  deliveryDate: PropTypes.string,
-  collectionFilterChange: PropTypes.func
+  isCurrentCollectionRecommendation: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string
+  ]).isRequired,
+  thematicName: PropTypes.string.isRequired,
+  deliveryDate: PropTypes.string.isRequired,
+  collectionFilterChange: PropTypes.func.isRequired
 }
 
 const CTACard = ({ isCurrentCollectionRecommendation, thematicName, deliveryDate, collectionFilterChange }) => {
   if (thematicName) {
-    // if no date is available, add 3 to the current date for the earliest possible delivery date
+    // earliest possible delivery date is 3 days in future, so set to that if none provided
     const selectedDate = deliveryDate || moment().add(3, 'days').toISOString()
 
     return (
       <Recipe
-        key={'ctaThematic'}
         view={'ctaThematic'}
         thematicName={thematicName}
         selectedDate={selectedDate}
@@ -29,7 +31,6 @@ const CTACard = ({ isCurrentCollectionRecommendation, thematicName, deliveryDate
   if (isCurrentCollectionRecommendation) {
     return (
       <Recipe
-        key={'ctaAllRecipe'} 
         view={'ctaAllRecipe'} 
         collectionFilterChange={collectionFilterChange}
       />

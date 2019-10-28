@@ -4,10 +4,11 @@ import Immutable from 'immutable'
 
 import { DesktopRecipeList } from '../DesktopRecipeList'
 import { CTACard } from '../CTACard'
+import { RecipeCardContainer } from '../RecipeCard'
 
 describe('DesktopRecipeList', () => {
   describe('when given 4 recipes', () => {
-    test('should render correctly', () => {
+    test('should render 4 recipes', () => {
       const wrapper = shallow(
         <DesktopRecipeList
           recipes={Immutable.fromJS([{}, {}, {}, {}])}
@@ -20,7 +21,7 @@ describe('DesktopRecipeList', () => {
         />
       )
 
-      expect(wrapper).toMatchSnapshot()
+      expect(wrapper.find(RecipeCardContainer)).toHaveLength(4)
     })
   })
 

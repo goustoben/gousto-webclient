@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 import { MobileRecipeList } from '../MobileRecipeList'
 import { CTACard } from '../CTACard'
+import { RecipeCardContainer } from '../RecipeCard'
 
 describe('MobileRecipeList', () => {
   describe('when given 4 recipes', () => {
@@ -20,7 +21,7 @@ describe('MobileRecipeList', () => {
         />
       )
 
-      expect(wrapper).toMatchSnapshot()
+      expect(wrapper.find(RecipeCardContainer)).toHaveLength(4)
     })
   })
 
