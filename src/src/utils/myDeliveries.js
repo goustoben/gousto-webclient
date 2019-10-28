@@ -143,7 +143,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
       id,
       Immutable.fromJS({
         id,
-        orderState: 'scheduled',
+        orderState: parseInt(active) === 1 ? 'scheduled' : 'cancelled',
         deliveryDay: date,
         whenCutoff,
         whenMenuOpen: whenMenuLive,
@@ -152,7 +152,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
         deliveryDayRescheduledReason,
         alternateDeliveryDay,
         isProjected: true,
-        restorable: active === 1
+        restorable: parseInt(active) === 0
       })
     )
   }, new Immutable.Map())
