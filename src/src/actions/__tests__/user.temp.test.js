@@ -5,7 +5,7 @@ import { customerSignup } from 'apis/customers'
 
 import { DeliveryTariffTypes } from 'utils/deliveries'
 
-import {
+import userActions, {
   userReferAFriend,
   userSubscribe,
   userFetchReferralOffer,
@@ -17,6 +17,8 @@ import {
 import recipeActions from 'actions/recipes'
 import actionTypes from 'actions/actionTypes'
 import logger from 'utils/logger'
+
+import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 
 jest.mock('apis/user', () => ({
   referAFriend: jest.fn(),
@@ -51,8 +53,59 @@ jest.mock('utils/logger', () => ({
   error: jest.fn()
 }))
 
+jest.mock('utils/myDeliveries', () => ({
+  transformPendingOrders: jest.fn(),
+  transformProjectedDeliveries: jest.fn(),
+}))
+
 describe('user actions', () => {
   const [dispatch, getState] = [jest.fn(), jest.fn()]
+
+  describe('userLoadNewOrders', () => {
+    const dispatchSpy = jest.fn()
+    const getStateSpy = jest.fn().mockReturnValue({
+      user: Immutable.fromJS({
+        orders: {},
+        projectedDeliveries: {}
+      })
+    })
+
+    const pendingOrders = Immutable.Map()
+
+    userActions.userLoadOrders = jest.fn()
+    userActions.userLoadProjectedDeliveries = jest.fn()
+    transformPendingOrders.mockReturnValue(Immutable.Map())
+    transformProjectedDeliveries.mockReturnValue(Immutable.Map())
+
+    it('should dispatch userLoadOrders and userLoadProjectedDeliveries actions', async () => {
+      await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy.mock.calls.length).toEqual(3)
+      expect(userActions.userLoadOrders).toHaveBeenCalled()
+      expect(userActions.userLoadProjectedDeliveries).toHaveBeenCalled()
+    })
+
+    it('should call transformPendingOrders function with the correct params', async () => {
+      await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
+
+      expect(transformPendingOrders).toHaveBeenCalledWith(getStateSpy().user.get('orders'))
+    })
+
+    it('should call transformProjectedDeliveries function with the correct params', async () => {
+      await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
+
+      expect(transformProjectedDeliveries).toHaveBeenCalledWith(getStateSpy().user.get('projectedDeliveries'))
+    })
+
+    it('should dispatch an action with the correct parameters', async () => {
+      await userActions.userLoadNewOrders()(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy.mock.calls[2][0]).toEqual({
+        type: actionTypes.MYDELIVERIES_ORDERS,
+        orders: pendingOrders,
+      })
+    })
+  })
 
   describe('userReferAFriend action', () => {
     const email = 'test@test.com'

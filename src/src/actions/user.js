@@ -261,7 +261,7 @@ function userLoadOrder(orderId, forceRefresh = false) {
 
 function userLoadNewOrders() {
   return async (dispatch, getState) => {
-    await Promise.all([dispatch(userLoadOrders()), dispatch(userLoadProjectedDeliveries())])
+    await Promise.all([dispatch(userActions.userLoadOrders()), dispatch(userActions.userLoadProjectedDeliveries())])
 
     const pendingOrders = transformPendingOrders(getState().user.get('orders'))
     const projectedDeliveries = transformProjectedDeliveries(getState().user.get('projectedDeliveries'))
