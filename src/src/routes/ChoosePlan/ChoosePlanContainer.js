@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { choosePlanContinue, stashTempPromoCode, clearTempPromoCode, trackSubscriptionOptionSelected } from 'actions/choosePlan'
-import { areExtrasIncluded, getSubscriptionOptionPrices, getRecipeTotal } from 'selectors/pricing'
+import redirectActions from 'actions/redirect'
+import { areExtrasIncluded, getSubscriptionOptionPrices, getRecipeTotal, arePricesLoaded } from 'selectors/pricing'
 import { getNumPortions, getBasketTotalRecipes, getPromoCode } from 'selectors/basket'
 import { getTempPromoCode } from 'selectors/temp'
 import { ChoosePlan } from './ChoosePlan'
@@ -15,13 +16,15 @@ const mapStateToProps = state => {
   const extrasIncluded = areExtrasIncluded(state)
   const promoCode = getPromoCode(state)
   const tempPromoCode = getTempPromoCode(state)
+  const loaded = arePricesLoaded(state)
 
   return {
     subscriptionPrices,
     transactionalPrices,
     extrasIncluded,
     promoCode,
-    tempPromoCode
+    tempPromoCode,
+    arePricesLoaded: loaded
   }
 }
 
@@ -29,7 +32,8 @@ const ChoosePlanContainer = connect(mapStateToProps, {
   choosePlanContinue,
   stashTempPromoCode,
   clearTempPromoCode,
-  trackSubscriptionOptionSelected
+  trackSubscriptionOptionSelected,
+  redirect: redirectActions.redirect,
 })(ChoosePlan)
 
 export { ChoosePlanContainer }
