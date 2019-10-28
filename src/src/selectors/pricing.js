@@ -14,8 +14,6 @@ export const getPricePerPortion = ({ pricing }) => pricing.getIn(['prices', 'pri
 
 export const getPricePerPortionDiscounted = ({ pricing }) => pricing.getIn(['prices', 'pricePerPortionDiscounted'])
 
-export const getLoading = ({ pricing }) => pricing.get('pending') || !getRecipeTotal({ pricing })
-
 export const areExtrasIncluded = createSelector(
   [getSurchargeTotal, getDeliveryTotal, getGrossTotal, getRecipeTotal],
   (surchargeTotal, deliveryTotal, grossTotal, recipeTotal) => {
@@ -35,3 +33,5 @@ export const getSubscriptionOptionPrices = createSelector(
     pricePerPortion: pricePerPortionDiscounted
   })
 )
+
+export const arePricesLoaded = ({pricing}) => pricing.get('prices').size > 0

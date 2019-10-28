@@ -22,7 +22,6 @@ class ChoosePlan extends PureComponent {
     promoCode: PropTypes.string,
     tempPromoCode: PropTypes.string,
     extrasIncluded: PropTypes.bool,
-    isLoading: PropTypes.bool,
     subscriptionPrices: PropTypes.shape({
       totalPrice: PropTypes.string,
       totalPriceDiscounted: PropTypes.string,
@@ -32,13 +31,24 @@ class ChoosePlan extends PureComponent {
       totalPrice: PropTypes.string,
       totalPriceDiscounted: PropTypes.string,
       pricePerPortion: PropTypes.string
-    })
+    }),
+    pricesLoaded: PropTypes.bool,
+    redirect: PropTypes.func,
   }
 
   static defaultProps = {
     choosePlanContinue: () => {},
+    redirect: () => {},
     subscriptionPrices: {},
-    transactionalPrices: {}
+    transactionalPrices: {},
+  }
+
+  componentDidMount() {
+    const { pricesLoaded, redirect } = this.props
+
+    if (!pricesLoaded){
+      redirect('/')
+    }
   }
 
   setSubscription(option) {
@@ -74,14 +84,15 @@ class ChoosePlan extends PureComponent {
     const {
       subscriptionPrices,
       transactionalPrices,
-      extrasIncluded
+      extrasIncluded,
+      pricesLoaded
     } = this.props
     const { subscriptionOption } = this.state
 
     const subscriptionDetails = { ...subscription, ...subscriptionPrices }
     const transactionalDetails = { ...transactional, ...transactionalPrices }
 
-    return (
+    return pricesLoaded ? (
       <div className={css.choosePlanPage}>
         <Helmet
           style={[
@@ -137,7 +148,7 @@ class ChoosePlan extends PureComponent {
           </Button>
         </div>
       </div>
-    )
+    ) : null
   }
 }
 export { ChoosePlan }

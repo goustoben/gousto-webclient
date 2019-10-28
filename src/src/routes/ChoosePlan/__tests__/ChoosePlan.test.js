@@ -19,7 +19,7 @@ let wrapper
 describe('ChoosePlan', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices}/>)
+    wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} pricesLoaded/>)
   })
   test('should render a title', () => {
     expect(wrapper.find('.title').length).toEqual(1)
@@ -35,6 +35,14 @@ describe('ChoosePlan', () => {
 
   test('should render two PlanOption components', () => {
     expect(wrapper.find('PlanOption').length).toEqual(2)
+  })
+
+  describe('componentDidMount', () => {
+    test("should redirect to the homepage if prices aren't loaded", () => {
+      const redirectSpy = jest.fn()
+      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} redirect={redirectSpy} pricesLoaded={false}/>)
+      expect(redirectSpy).toHaveBeenCalledWith('/')
+    })
   })
 
   describe('Continue button', () => {
@@ -72,13 +80,13 @@ describe('ChoosePlan', () => {
 
   describe('Surcharge message', () => {
     test('should render a message about surcharges if there are any premium recipes or delivery slots chosen ', () => {
-      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} extrasIncluded />)
+      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} pricesLoaded extrasIncluded/>)
 
       expect(wrapper.find('Alert').length).toEqual(1)
     })
 
     test('should NOT render a message about surcharges if there are no premium recipes or delivery slots chosen ', () => {
-      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} extrasIncluded={false} />)
+      wrapper = shallow(<ChoosePlan subscriptionPrices={mockSubPrices} transactionalPrices={mockTransPrices} pricesLoaded extrasIncluded={false} />)
 
       expect(wrapper.find('Alert').length).toEqual(0)
     })
