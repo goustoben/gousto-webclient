@@ -665,7 +665,7 @@ export function userSubscribe() {
         isChoosePlanEnabled(state) &&
         basket.get('subscriptionOption') === config.subscriptionOptions.transactional
       ) {
-        reqData.subscription.paused = true
+        reqData.subscription.paused = 1
       }
 
       const { data } = await customerSignup(null, reqData)
