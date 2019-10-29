@@ -32,6 +32,10 @@ const RecipeCard = ({
   
   numPortions, cutoffDate, features, allRecipesList, recipesStore
 }) => {
+  if (!recipe) {
+    return null
+  }
+  
   const recipeId = recipe.get('id')
   const range = getFoodBrand(recipe)
   const isFineDineIn = range.get('slug') === 'fine-dine-in'

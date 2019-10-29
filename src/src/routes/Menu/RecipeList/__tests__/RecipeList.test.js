@@ -4,8 +4,6 @@ import Immutable from 'immutable'
 
 import { trackRecipeOrderDisplayed } from 'actions/tracking'
 
-import Recipe from 'containers/menu/Recipe'
-
 import { RecipeList } from '../RecipeList'
 import { MobileRecipeList } from '../MobileRecipeList'
 import { DesktopRecipeList } from '../DesktopRecipeList'
