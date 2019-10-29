@@ -139,7 +139,7 @@ describe('myDeliveries utils', () => {
     test('should return menu open if state is pending and there are NO chosen recipe items', () => {
       const state = 'pending'
       const deliveryDate = moment()
-      const recipeItems = []
+      const recipeItems = Immutable.List([])
 
       const result = getOrderState(state, deliveryDate, recipeItems)
 
@@ -149,9 +149,9 @@ describe('myDeliveries utils', () => {
     test('should return recipes chosen if state is pending and there are chosen recipe items', () => {
       const state = 'pending'
       const deliveryDate = moment()
-      const recipeItems = [{
+      const recipeItems = Immutable.List([{
         id: 1
-      }]
+      }])
 
       const result = getOrderState(state, deliveryDate, recipeItems)
 
@@ -169,9 +169,9 @@ describe('myDeliveries utils', () => {
 
   describe('getDeliveryDayRescheduledReason', () => {
     test('should return rescheduled reason message if delivery day has been moved', () => {
-      const originalDeliveryDay = {
+      const originalDeliveryDay = Immutable.Map({
         unavailableReason: 'holiday'
-      }
+      })
 
       const result = getDeliveryDayRescheduledReason(originalDeliveryDay)
 
@@ -179,9 +179,9 @@ describe('myDeliveries utils', () => {
     })
 
     test('should return choose recipes message if delivery day has NOT been moved', () => {
-      const originalDeliveryDay = {
+      const originalDeliveryDay = Immutable.Map({
         unavailableReason: 'other reason'
-      }
+      })
 
       const result = getDeliveryDayRescheduledReason(originalDeliveryDay)
 
@@ -197,8 +197,8 @@ describe('myDeliveries utils', () => {
 
   describe('transformPendingOrders', () => {
     test('should return the correct mapping for orders', () => {
-      const result = Immutable.fromJS({
-        11922804: {
+      const result = Immutable.Map({
+        11922804: Immutable.Map({
           id: '11922804',
           orderState: 'recipes chosen',
           whenMenuOpen: '2019-10-15 12:00:00',
@@ -206,16 +206,16 @@ describe('myDeliveries utils', () => {
           shippingAddressId: '34820671',
           coreDeliveryDayId: '1903',
           deliveryDay: '2019-10-26 00:00:00',
-          deliveryDayRescheduled: {
+          deliveryDayRescheduled: Immutable.Map({
             date: '2019-10-15 12:00:00',
             unavailableReason: 'holiday'
-          },
+          }),
           deliveryDayRescheduledReason: "We've had to change your regular delivery day due to the bank holiday.",
           deliverySlotId: '6',
           deliverySlotStart: '08:00:00',
           deliverySlotEnd: '19:00:00',
           cancellable: true,
-          priceBreakdown: {
+          priceBreakdown: Immutable.Map({
             grossRecipesPrice: parseFloat('47.75'),
             grossExtrasPrice: parseFloat('44.86'),
             grossShippingPrice: parseFloat('4.99'),
@@ -223,28 +223,34 @@ describe('myDeliveries utils', () => {
             flatDiscountAmount: parseFloat('0.000'),
             percentageDiscountAmount: parseFloat(null),
             netOrderPrice: parseFloat('97.60')
-          },
-          recipes: [{
-            id: '46584179',
-            title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
-          },
-          {
-            id: '46584182',
-            title: 'Pasta Alla Genovese',
-          }],
-          products: {
+          }),
+          recipes: Immutable.List(
+            [
+              Immutable.Map({
+                id: '46584179',
+                title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
+              }),
+              Immutable.Map({
+                id: '46584182',
+                title: 'Pasta Alla Genovese',
+              })
+            ]
+          ),
+          products: Immutable.Map({
             total: 1,
-            elements: [{
-              id: '46584183',
-              unitPrice: '29.97' / '3',
-              quantity: '3',
-              title: 'Joseph Joseph - Garlic Rocker (Green)',
-            }]
-          },
+            elements: Immutable.List([
+              Immutable.Map({
+                id: '46584183',
+                unitPrice: '29.97' / '3',
+                quantity: '3',
+                title: 'Joseph Joseph - Garlic Rocker (Green)',
+              })
+            ])
+          }),
           portionsCount: '4',
           availableFrom: '2019-10-22T12:00:00+01:00',
           availableTo: '2019-10-29T11:59:59+00:00'
-        }
+        })
       })
 
       expect(Immutable.is(transformedOrders, result)).toEqual(true)
