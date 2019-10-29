@@ -127,17 +127,15 @@ export const transformPendingOrders = (orders) => {
 export const transformProjectedDeliveries = (projectedDeliveries) => {
 
   return projectedDeliveries.reduce((deliveryAccumulator, delivery) => {
-    const {
-      id,
-      date,
-      whenCutoff,
-      humanWhenMenuLive,
-      whenMenuLive,
-      deliverySlot,
-      active,
-      unavailableReason,
-      alternateDeliveryDay,
-    } = delivery.toJS()
+    const id = delivery.get('id')
+    const date = delivery.get('date')
+    const whenCutoff = delivery.get('whenCutoff')
+    const humanWhenMenuLive = delivery.get('humanWhenMenuLive')
+    const whenMenuLive = delivery.get('whenMenuLive')
+    const deliverySlot = delivery.get('deliverySlot')
+    const active = delivery.get('active')
+    const unavailableReason = delivery.get('unavailableReason')
+    const alternateDeliveryDay = delivery.get('alternateDeliveryDay')
 
     const orderState = parseInt(active) === 1 ? 'scheduled' : 'cancelled'
     const deliveryDayRescheduledReason = getProjectedDeliveryDayRescheduledReason(unavailableReason, humanWhenMenuLive)
@@ -145,14 +143,14 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
 
     return deliveryAccumulator.set(
       id,
-      Immutable.fromJS({
+      Immutable.Map({
         id,
         orderState,
         deliveryDay: date,
         whenCutoff,
         whenMenuOpen: whenMenuLive,
-        deliverySlotStart: deliverySlot.deliveryStart,
-        deliverySlotEnd: deliverySlot.deliveryEnd,
+        deliverySlotStart: deliverySlot.get('deliveryStart'),
+        deliverySlotEnd: deliverySlot.get('deliveryEnd'),
         deliveryDayRescheduledReason,
         alternateDeliveryDay,
         isProjected: true,
