@@ -1,6 +1,7 @@
 import actionTypes from 'actions/actionTypes'
 import { redirect } from 'actions/redirect'
 import routes from 'config/routes'
+import tempActions from './temp'
 import { basketPromoCodeChange } from './basket'
 
 export const trackSubscriptionOptionSelected = subscriptionOption => dispatch => {
@@ -14,17 +15,11 @@ export const trackSubscriptionOptionSelected = subscriptionOption => dispatch =>
 }
 
 export const clearTempPromoCode = () => dispatch => {
-  dispatch({
-    type: actionTypes.TEMP,
-    promoCode: ''
-  })
+  dispatch(tempActions.temp('promoCode', ''))
 }
 
 export const stashTempPromoCode = promoCode => dispatch => {
-  dispatch({
-    type: actionTypes.TEMP,
-    promoCode: promoCode
-  })
+  dispatch(tempActions.temp('promoCode', promoCode))
 }
 
 export const choosePlanContinue = (
