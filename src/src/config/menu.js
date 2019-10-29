@@ -50,8 +50,8 @@ module.exports = {
     { id: 'dairy-free', label: 'Dairy Free' },
     { id: 'gluten-free', label: 'Gluten Free' },
   ],
-  wagamama: {
-    switchoverDateWeek1: '2019-09-24T12:00:00+01:00',
-    switchoverDateWeek2: '2019-10-01T12:00:00+01:00',
+  christmas: {
+    switchoverDateWeek1: '2019-11-12T12:00:00+01:00',
+    switchoverDateWeek2: '2019-11-19T12:00:00+01:00',
   }
 }
