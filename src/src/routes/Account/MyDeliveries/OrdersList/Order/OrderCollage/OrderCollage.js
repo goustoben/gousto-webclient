@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import Image from 'Image'
+import placeholderSrc from 'media/images/recipe-placeholder.png'
 import css from './OrderCollage.css'
 
 class OrderCollage extends React.PureComponent {
@@ -12,7 +13,7 @@ class OrderCollage extends React.PureComponent {
     const recipeCollage = recipes.map((recipe) =>
       <div className={css.collageItem} key={recipe.get('recipeId')}>
         <div className={css.collageImage}>
-          <Image media={recipe.get('image')} />
+          <Image media={recipe.get('image') || placeholderSrc} />
         </div>
       </div>
     )

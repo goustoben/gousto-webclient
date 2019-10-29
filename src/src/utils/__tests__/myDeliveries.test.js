@@ -1,0 +1,254 @@
+import Immutable from 'immutable'
+import moment from 'moment'
+import { filterOrders, getOrderState, getDeliveryDayRescheduledReason, transformPendingOrders } from '../myDeliveries'
+
+describe('myDeliveries utils', () => {
+  const mockOrders = Immutable.fromJS({
+    '1234': {
+      id: '8360325',
+      state: 'committed',
+      phase: 'delivered',
+      prices: {
+        productTotal: '0.00',
+        recipeTotal: '47.75',
+        percentageOff: null,
+        deliveryTotal: '0.00',
+        grossTotal: '47.75',
+        total: '47.75',
+        totalDiscount: '0.000'
+      },
+      recipeItems: [
+        {
+          id: '32072784',
+          title: 'Indonesian-Style Prawn Curry & Green Bean Rice ',
+        },
+        {
+          id: '32072785',
+          title: 'Indian-Spiced Chicken Tray Bake With Spinach',
+        }
+      ],
+      productItems: [],
+      box: {
+        numPortions: '4',
+      },
+      period: {
+        id: 266,
+        whenStart: '2019-02-12T12:00:00+00:00',
+        whenCutoff: '2019-02-19T11:59:59+00:00'
+      },
+      deliveryDayId: '1653',
+      deliverySlotId: '11',
+      deliveryDate: '2019-02-19 00:00:00',
+      deliverySlot: {
+        deliveryStart: '08:00:00',
+        deliveryEnd: '18:59:59',
+      },
+      whenCutoff: '2019-02-16 11:59:59',
+      whenLive: '2019-02-05 12:00:00',
+      shippingAddress: {
+        id: '34820671',
+      }
+    },
+    '5678': {
+      id: '11922804',
+      state: 'pending',
+      phase: 'open',
+      prices: {
+        productTotal: '44.86',
+        recipeTotal: '47.75',
+        percentageOff: null,
+        deliveryTotal: '4.99',
+        grossTotal: '97.60',
+        total: '97.60',
+        totalDiscount: '0.000'
+      },
+      recipeItems: [
+        {
+          id: '46584179',
+          title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
+        },
+        {
+          id: '46584182',
+          title: 'Pasta Alla Genovese',
+        }
+      ],
+      productItems: [
+        {
+          id: '46584183',
+          quantity: '3',
+          listPrice: '29.97',
+          title: 'Joseph Joseph - Garlic Rocker (Green)',
+        }
+      ],
+      box: {
+        numPortions: '4',
+      },
+      period: {
+        whenStart: '2019-10-22T12:00:00+01:00',
+        whenCutoff: '2019-10-29T11:59:59+00:00'
+      },
+      deliveryDayId: '1903',
+      deliverySlotId: '6',
+      deliveryDate: '2019-10-26 00:00:00',
+      deliverySlot: {
+        deliveryStart: '08:00:00',
+        deliveryEnd: '19:00:00',
+      },
+      whenCutoff: '2019-10-23 11:59:59',
+      whenLive: '2019-10-15 12:00:00',
+      originalDeliveryDay: {
+        date: '2019-10-15 12:00:00',
+        unavailableReason: 'holiday'
+      },
+      shippingAddress: {
+        id: '34820671',
+      }
+    }
+  })
+
+  const transformedOrders = transformPendingOrders(mockOrders)
+
+  describe('filterOrders', () => {
+    test('should filter out all past orders', () => {
+
+      const result = filterOrders(mockOrders)
+
+      expect(result.size).toEqual(1)
+    })
+
+  })
+
+  describe('getOrderState', () => {
+
+    test('should return dispatched if state is committed and is day of delivery', () => {
+      const state = 'committed'
+      const deliveryDate = moment()
+      const result = getOrderState(state, deliveryDate)
+
+      expect(result).toEqual('dispatched')
+    })
+
+    test('should return confirmed if state is committed and is NOT day of delivery', () => {
+      const state = 'committed'
+      const deliveryDate = moment().add(1, 'd')
+      const result = getOrderState(state, deliveryDate)
+
+      expect(result).toEqual('confirmed')
+    })
+
+    test('should return menu open if state is pending and there are NO chosen recipe items', () => {
+      const state = 'pending'
+      const deliveryDate = moment()
+      const recipeItems = []
+
+      const result = getOrderState(state, deliveryDate, recipeItems)
+
+      expect(result).toEqual('menu open')
+    })
+
+    test('should return recipes chosen if state is pending and there are chosen recipe items', () => {
+      const state = 'pending'
+      const deliveryDate = moment()
+      const recipeItems = [{
+        id: 1
+      }]
+
+      const result = getOrderState(state, deliveryDate, recipeItems)
+
+      expect(result).toEqual('recipes chosen')
+    })
+
+    test('should return state if state is not pending or committed', () => {
+      const state = 'other'
+
+      const result = getOrderState(state)
+
+      expect(result).toEqual(state)
+    })
+  })
+
+  describe('getDeliveryDayRescheduledReason', () => {
+    test('should return rescheduled reason message if delivery day has been moved', () => {
+      const originalDeliveryDay = {
+        unavailableReason: 'holiday'
+      }
+
+      const result = getDeliveryDayRescheduledReason(originalDeliveryDay)
+
+      expect(result).toEqual('We\'ve had to change your regular delivery day due to the bank holiday.')
+    })
+
+    test('should return choose recipes message if delivery day has NOT been moved', () => {
+      const originalDeliveryDay = {
+        unavailableReason: 'other reason'
+      }
+
+      const result = getDeliveryDayRescheduledReason(originalDeliveryDay)
+
+      expect(result).toEqual('Choose recipes now.')
+    })
+
+    test('should return undefined if delivery day has not been moved', () => {
+      const result = getDeliveryDayRescheduledReason()
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  describe('transformPendingOrders', () => {
+    test('should return the correct mapping for orders', () => {
+      const result = Immutable.fromJS({
+        11922804: {
+          id: '11922804',
+          orderState: 'recipes chosen',
+          whenMenuOpen: '2019-10-15 12:00:00',
+          whenCutoff: '2019-10-23 11:59:59',
+          shippingAddressId: '34820671',
+          coreDeliveryDayId: '1903',
+          deliveryDay: '2019-10-26 00:00:00',
+          deliveryDayRescheduled: {
+            date: '2019-10-15 12:00:00',
+            unavailableReason: 'holiday'
+          },
+          deliveryDayRescheduledReason: "We've had to change your regular delivery day due to the bank holiday.",
+          deliverySlotId: '6',
+          deliverySlotStart: '08:00:00',
+          deliverySlotEnd: '19:00:00',
+          cancellable: true,
+          priceBreakdown: {
+            grossRecipesPrice: parseFloat('47.75'),
+            grossExtrasPrice: parseFloat('44.86'),
+            grossShippingPrice: parseFloat('4.99'),
+            grossOrderPrice: parseFloat('97.60'),
+            flatDiscountAmount: parseFloat('0.000'),
+            percentageDiscountAmount: parseFloat(null),
+            netOrderPrice: parseFloat('97.60')
+          },
+          recipes: [{
+            id: '46584179',
+            title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
+          },
+          {
+            id: '46584182',
+            title: 'Pasta Alla Genovese',
+          }],
+          products: {
+            total: 1,
+            elements: [{
+              id: '46584183',
+              unitPrice: '29.97' / '3',
+              quantity: '3',
+              title: 'Joseph Joseph - Garlic Rocker (Green)',
+            }]
+          },
+          portionsCount: '4',
+          availableFrom: '2019-10-22T12:00:00+01:00',
+          availableTo: '2019-10-29T11:59:59+00:00'
+        }
+      })
+
+      expect(Immutable.is(transformedOrders, result)).toEqual(true)
+    })
+  })
+})
+

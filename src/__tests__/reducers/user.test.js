@@ -919,4 +919,17 @@ describe('user reducer', () => {
       expect(result.get('unsubscribedFromEmail')).toBe(true)
     })
   })
+
+  describe('MYDELIVERIES_ORDERS', () => {
+    test('adds newOrders to user state', () => {
+      const initialState = defaultInitialState
+      const expectedState = Immutable.Map()
+
+      const result = user(initialState, {
+        type: actionTypes.MYDELIVERIES_ORDERS,
+        orders: Immutable.Map()
+      })
+      expect(Immutable.is(result.get('newOrders'), expectedState)).toBe(true)
+    })
+  })
 })

@@ -13,14 +13,16 @@ class MyDeliveries extends React.PureComponent {
   static propTypes = {
     isFetchingOrders: PropTypes.bool,
     isFetchingAddresses: PropTypes.bool,
-    didErrorFetchingOrders: PropTypes.string,
+    didErrorFetchingPendingOrders: PropTypes.string,
+    didErrorFetchingProjectedOrders: PropTypes.string,
     didErrorFetchingAddresses: PropTypes.string,
   }
 
   static defaultProps = {
     isFetchingOrders: false,
     isFetchingAddresses: false,
-    didErrorFetchingOrders: null,
+    didErrorFetchingPendingOrders: null,
+    didErrorFetchingProjectedOrders: null,
     didErrorFetchingAddresses: null,
   }
 
@@ -29,7 +31,7 @@ class MyDeliveries extends React.PureComponent {
   }
 
   static fetchOrdersAndAddresses = ({ store }) => {
-    store.dispatch(actions.userFetchOrders())
+    store.dispatch(actions.userLoadNewOrders())
     store.dispatch(actions.userLoadAddresses())
   }
 
@@ -57,12 +59,13 @@ class MyDeliveries extends React.PureComponent {
 
   renderOrders() {
     const {
-      didErrorFetchingOrders,
+      didErrorFetchingPendingOrders,
+      didErrorFetchingProjectedOrders,
       didErrorFetchingAddresses,
       isFetchingOrders,
       isFetchingAddresses,
     } = this.props
-    if (didErrorFetchingOrders !== null || didErrorFetchingAddresses !== null) {
+    if (didErrorFetchingPendingOrders !== null || didErrorFetchingProjectedOrders !== null || didErrorFetchingAddresses !== null) {
       return MyDeliveries.renderFetchError(this.retryFetch)
     }
     if (isFetchingOrders || isFetchingAddresses) {
@@ -78,6 +81,7 @@ class MyDeliveries extends React.PureComponent {
   }
 
   render() {
+
     return (
       <div className={accountCss.accountContainer} data-testing="myDeliveries">
         <div className={css.button}>
