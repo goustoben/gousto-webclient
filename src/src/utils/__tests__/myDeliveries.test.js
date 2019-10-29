@@ -1,4 +1,5 @@
 import Immutable from 'immutable'
+import moment from 'moment'
 import { filterOrders, getOrderState, getDeliveryDayRescheduledReason, transformPendingOrders } from '../myDeliveries'
 
 describe('myDeliveries utils', () => {
@@ -118,24 +119,73 @@ describe('myDeliveries utils', () => {
   })
 
   describe('getOrderState', () => {
-    const mockParams = mockOrders.toJS()['5678']
-    const { state, deliveryDate, recipeItems } = mockParams
 
-    test('should map the phases to its corresponding order state', () => {
+    test('should return dispatched if state is committed and is day of delivery', () => {
+      const state = 'committed'
+      const deliveryDate = moment()
+      const result = getOrderState(state, deliveryDate)
+
+      expect(result).toEqual('dispatched')
+    })
+
+    test('should return confirmed if state is committed and is NOT day of delivery', () => {
+      const state = 'committed'
+      const deliveryDate = moment().add(1, 'd')
+      const result = getOrderState(state, deliveryDate)
+
+      expect(result).toEqual('confirmed')
+    })
+
+    test('should return menu open if state is pending and there are NO chosen recipe items', () => {
+      const state = 'pending'
+      const deliveryDate = moment()
+      const recipeItems = []
+
+      const result = getOrderState(state, deliveryDate, recipeItems)
+
+      expect(result).toEqual('menu open')
+    })
+
+    test('should return recipes chosen if state is pending and there are chosen recipe items', () => {
+      const state = 'pending'
+      const deliveryDate = moment()
+      const recipeItems = [{
+        id: 1
+      }]
+
       const result = getOrderState(state, deliveryDate, recipeItems)
 
       expect(result).toEqual('recipes chosen')
+    })
+
+    test('should return state if state is not pending or committed', () => {
+      const state = 'other'
+
+      const result = getOrderState(state)
+
+      expect(result).toEqual(state)
     })
   })
 
   describe('getDeliveryDayRescheduledReason', () => {
     test('should return rescheduled reason message if delivery day has been moved', () => {
-      const mockParams = mockOrders.toJS()['5678']
-      const { originalDeliveryDay } = mockParams
+      const originalDeliveryDay = {
+        unavailableReason: 'holiday'
+      }
 
       const result = getDeliveryDayRescheduledReason(originalDeliveryDay)
 
       expect(result).toEqual('We\'ve had to change your regular delivery day due to the bank holiday.')
+    })
+
+    test('should return choose recipes message if delivery day has NOT been moved', () => {
+      const originalDeliveryDay = {
+        unavailableReason: 'other reason'
+      }
+
+      const result = getDeliveryDayRescheduledReason(originalDeliveryDay)
+
+      expect(result).toEqual('Choose recipes now.')
     })
 
     test('should return undefined if delivery day has not been moved', () => {
@@ -177,14 +227,10 @@ describe('myDeliveries utils', () => {
           recipes: [{
             id: '46584179',
             title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
-            image:
-              'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
           },
           {
             id: '46584182',
             title: 'Pasta Alla Genovese',
-            image:
-              'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
           }],
           products: {
             total: 1,
@@ -193,8 +239,6 @@ describe('myDeliveries utils', () => {
               unitPrice: '29.97' / '3',
               quantity: '3',
               title: 'Joseph Joseph - Garlic Rocker (Green)',
-              image:
-                'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
             }]
           },
           portionsCount: '4',
