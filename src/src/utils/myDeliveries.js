@@ -1,6 +1,14 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
+const getProjectedDeliveryDayRescheduledReason = (unavailableReason, humanWhenMenuLive) => {
+  if(unavailableReason === 'holiday') {
+    return "We've had to change your regular delivery day due to the bank holiday."
+  } else if(unavailableReason) {
+    return `Recipes available from ${humanWhenMenuLive}`
+  }
+}
+
 export const filterOrders = (orders) => (
   orders.filter(order => {
     const { phase } = order.toJS()
@@ -111,6 +119,42 @@ export const transformPendingOrders = (orders) => {
         portionsCount: box.numPortions,
         availableFrom: period.whenStart,
         availableTo: period.whenCutoff
+      })
+    )
+  }, new Immutable.Map())
+}
+
+export const transformProjectedDeliveries = (projectedDeliveries) => {
+
+  return projectedDeliveries.reduce((deliveryAccumulator, delivery) => {
+    const id = delivery.get('id')
+    const date = delivery.get('date')
+    const whenCutoff = delivery.get('whenCutoff')
+    const humanWhenMenuLive = delivery.get('humanWhenMenuLive')
+    const whenMenuLive = delivery.get('whenMenuLive')
+    const deliverySlot = delivery.get('deliverySlot')
+    const active = delivery.get('active')
+    const unavailableReason = delivery.get('unavailableReason')
+    const alternateDeliveryDay = delivery.get('alternateDeliveryDay')
+
+    const orderState = parseInt(active) === 1 ? 'scheduled' : 'cancelled'
+    const deliveryDayRescheduledReason = getProjectedDeliveryDayRescheduledReason(unavailableReason, humanWhenMenuLive)
+    const restorable = parseInt(active) === 0
+
+    return deliveryAccumulator.set(
+      id,
+      Immutable.Map({
+        id,
+        orderState,
+        deliveryDay: date,
+        whenCutoff,
+        whenMenuOpen: whenMenuLive,
+        deliverySlotStart: deliverySlot.get('deliveryStart'),
+        deliverySlotEnd: deliverySlot.get('deliveryEnd'),
+        deliveryDayRescheduledReason,
+        alternateDeliveryDay,
+        isProjected: true,
+        restorable
       })
     )
   }, new Immutable.Map())

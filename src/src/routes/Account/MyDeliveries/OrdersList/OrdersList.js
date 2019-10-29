@@ -12,9 +12,7 @@ const OrdersList = ({ orders, recipes, boxType }) => (
     <CancelledAllBoxesModal />
     {orders.size < 1 ? <NoOrders recipes={recipes} boxType={boxType} /> : null}
     {orders.toList().map((order) => (
-      <div key={order.get('id')}>
-        <Order order={order} />
-      </div>
+      <Order key={order.get('id')} order={order} />
     ))}
   </div>
 )
