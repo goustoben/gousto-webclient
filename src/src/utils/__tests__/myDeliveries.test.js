@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
-import { transformPendingOrders } from '../myDeliveries'
+import { filterOrders, getOrderState, getDeliveryDayRescheduledReason, transformPendingOrders } from '../myDeliveries'
 
-describe('transformPendingOrders', () => {
+describe('myDeliveries utils', () => {
   const mockOrders = Immutable.fromJS({
     '1234': {
       id: '8360325',
@@ -107,76 +107,104 @@ describe('transformPendingOrders', () => {
 
   const transformedOrders = transformPendingOrders(mockOrders)
 
-  test('should filter out all past orders', () => {
-    const result = transformedOrders.filter(order => {
-      return order.get('id') === '8360325'
+  describe('filterOrders', () => {
+    test('should filter out all past orders', () => {
+
+      const result = filterOrders(mockOrders)
+
+      expect(result.size).toEqual(1)
     })
 
-    expect(result.size).toEqual(0)
   })
 
-  test('should map the phases to its corresponding order state', () => {
-    expect(transformedOrders.getIn(['11922804', 'orderState'])).toEqual('recipes chosen')
+  describe('getOrderState', () => {
+    const mockParams = mockOrders.toJS()['5678']
+    const { state, deliveryDate, recipeItems } = mockParams
+
+    test('should map the phases to its corresponding order state', () => {
+      const result = getOrderState(state, deliveryDate, recipeItems)
+
+      expect(result).toEqual('recipes chosen')
+    })
   })
 
-  test('should return the correct mapping for orders', () => {
-    const result = Immutable.fromJS({
-      11922804: {
-        id: '11922804',
-        orderState: 'recipes chosen',
-        whenMenuOpen: '2019-10-15 12:00:00',
-        whenCutoff: '2019-10-23 11:59:59',
-        shippingAddressId: '34820671',
-        coreDeliveryDayId: '1903',
-        deliveryDay: '2019-10-26 00:00:00',
-        deliveryDayRescheduled: {
-          date: '2019-10-15 12:00:00',
-          unavailableReason: 'holiday'
-        },
-        deliveryDayRescheduledReason: "We've had to change your regular delivery day due to the bank holiday.",
-        deliverySlotId: '6',
-        deliverySlotStart: '08:00:00',
-        deliverySlotEnd: '19:00:00',
-        cancellable: true,
-        priceBreakdown: {
-          grossRecipesPrice: parseFloat('47.75'),
-          grossExtrasPrice: parseFloat('44.86'),
-          grossShippingPrice: parseFloat('4.99'),
-          grossOrderPrice: parseFloat('97.60'),
-          flatDiscountAmount: parseFloat('0.000'),
-          percentageDiscountAmount: parseFloat(null),
-          netOrderPrice: parseFloat('97.60')
-        },
-        recipes: [{
-          id: '46584179',
-          title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
-          image:
-            'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
-        },
-        {
-          id: '46584182',
-          title: 'Pasta Alla Genovese',
-          image:
-            'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
-        }],
-        products: {
-          total: 1,
-          elements: [{
-            id: '46584183',
-            unitPrice: '29.97' / '3',
-            quantity: '3',
-            title: 'Joseph Joseph - Garlic Rocker (Green)',
+  describe('getDeliveryDayRescheduledReason', () => {
+    test('should return rescheduled reason message if delivery day has been moved', () => {
+      const mockParams = mockOrders.toJS()['5678']
+      const { originalDeliveryDay } = mockParams
+
+      const result = getDeliveryDayRescheduledReason(originalDeliveryDay)
+
+      expect(result).toEqual('We\'ve had to change your regular delivery day due to the bank holiday.')
+    })
+
+    test('should return undefined if delivery day has not been moved', () => {
+      const result = getDeliveryDayRescheduledReason()
+
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  describe('transformPendingOrders', () => {
+    test('should return the correct mapping for orders', () => {
+      const result = Immutable.fromJS({
+        11922804: {
+          id: '11922804',
+          orderState: 'recipes chosen',
+          whenMenuOpen: '2019-10-15 12:00:00',
+          whenCutoff: '2019-10-23 11:59:59',
+          shippingAddressId: '34820671',
+          coreDeliveryDayId: '1903',
+          deliveryDay: '2019-10-26 00:00:00',
+          deliveryDayRescheduled: {
+            date: '2019-10-15 12:00:00',
+            unavailableReason: 'holiday'
+          },
+          deliveryDayRescheduledReason: "We've had to change your regular delivery day due to the bank holiday.",
+          deliverySlotId: '6',
+          deliverySlotStart: '08:00:00',
+          deliverySlotEnd: '19:00:00',
+          cancellable: true,
+          priceBreakdown: {
+            grossRecipesPrice: parseFloat('47.75'),
+            grossExtrasPrice: parseFloat('44.86'),
+            grossShippingPrice: parseFloat('4.99'),
+            grossOrderPrice: parseFloat('97.60'),
+            flatDiscountAmount: parseFloat('0.000'),
+            percentageDiscountAmount: parseFloat(null),
+            netOrderPrice: parseFloat('97.60')
+          },
+          recipes: [{
+            id: '46584179',
+            title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
             image:
               'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
-          }]
-        },
-        portionsCount: '4',
-        availableFrom: '2019-10-22T12:00:00+01:00',
-        availableTo: '2019-10-29T11:59:59+00:00'
-      }
-    })
+          },
+          {
+            id: '46584182',
+            title: 'Pasta Alla Genovese',
+            image:
+              'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
+          }],
+          products: {
+            total: 1,
+            elements: [{
+              id: '46584183',
+              unitPrice: '29.97' / '3',
+              quantity: '3',
+              title: 'Joseph Joseph - Garlic Rocker (Green)',
+              image:
+                'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
+            }]
+          },
+          portionsCount: '4',
+          availableFrom: '2019-10-22T12:00:00+01:00',
+          availableTo: '2019-10-29T11:59:59+00:00'
+        }
+      })
 
-    expect(Immutable.is(transformedOrders, result)).toEqual(true)
+      expect(Immutable.is(transformedOrders, result)).toEqual(true)
+    })
   })
 })
 

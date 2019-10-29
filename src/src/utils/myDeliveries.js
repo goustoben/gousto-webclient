@@ -1,13 +1,50 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
-export const transformPendingOrders = (orders) => {
-
-  const futureOrders = orders.filter(order => {
+export const filterOrders = (orders) => (
+  orders.filter(order => {
     const { phase } = order.toJS()
 
     return phase !== 'delivered'
   })
+)
+
+export const getOrderState = (state, deliveryDate, recipeItems) => {
+  const isDeliveryDay = moment().isSame(deliveryDate, 'day')
+
+  if (state === 'committed' && isDeliveryDay) {
+    return 'dispatched'
+  }
+
+  if (state === 'committed' && !isDeliveryDay) {
+    return 'confirmed'
+  }
+
+  if (state === 'pending' && !recipeItems.length) {
+    return 'menu open'
+  }
+
+  if (state === 'pending' && !!recipeItems.length) {
+    return 'recipes chosen'
+  }
+
+  return state
+}
+
+export const getDeliveryDayRescheduledReason = (originalDeliveryDay) => {
+
+  if (originalDeliveryDay) {
+    if (originalDeliveryDay.unavailableReason === 'holiday') {
+      return 'We\'ve had to change your regular delivery day due to the bank holiday.'
+    } else {
+      return 'Choose recipes now.'
+    }
+  }
+
+}
+
+export const transformPendingOrders = (orders) => {
+  const futureOrders = filterOrders(orders)
 
   return futureOrders.reduce((ordersAccumulator, order) => {
     const {
@@ -29,35 +66,9 @@ export const transformPendingOrders = (orders) => {
       shippingAddress
     } = order.toJS()
 
-    const isDeliveryDay = moment().isSame(deliveryDate, 'day')
-
-    let orderState = state
-
-    if (state === 'committed' && isDeliveryDay) {
-      orderState = 'dispatched'
-    }
-
-    if (state === 'committed' && !isDeliveryDay) {
-      orderState = 'confirmed'
-    }
-
-    if (state === 'pending' && !recipeItems.length) {
-      orderState = 'menu open'
-    }
-
-    if (state === 'pending' && !!recipeItems.length) {
-      orderState = 'recipes chosen'
-    }
-
-    let deliveryDayRescheduledReason = null
-
-    if (originalDeliveryDay) {
-      if (originalDeliveryDay.unavailableReason === 'holiday') {
-        deliveryDayRescheduledReason = 'We\'ve had to change your regular delivery day due to the bank holiday.'
-      } else {
-        deliveryDayRescheduledReason = 'Choose recipes now.'
-      }
-    }
+    const orderState = getOrderState(state, deliveryDate, recipeItems)
+    const deliveryDayRescheduledReason = getDeliveryDayRescheduledReason(originalDeliveryDay)
+    const cancellable = phase === 'awaiting_choices' || phase === 'open'
 
     return ordersAccumulator.set(
       id,
@@ -74,7 +85,7 @@ export const transformPendingOrders = (orders) => {
         deliverySlotId,
         deliverySlotStart: deliverySlot.deliveryStart,
         deliverySlotEnd: deliverySlot.deliveryEnd,
-        cancellable: phase === 'awaiting_choices' || phase === 'open',
+        cancellable,
         priceBreakdown: {
           grossRecipesPrice: parseFloat(prices.recipeTotal),
           grossExtrasPrice: parseFloat(prices.productTotal),
@@ -87,8 +98,6 @@ export const transformPendingOrders = (orders) => {
         recipes: recipeItems.map(item => ({
           id: item.id,
           title: item.title,
-          image:
-            'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
         })),
         products: {
           total: productItems.length,
@@ -97,8 +106,6 @@ export const transformPendingOrders = (orders) => {
             unitPrice: item.listPrice / item.quantity,
             quantity: item.quantity,
             title: item.title,
-            image:
-              'https://production-media.gousto.co.uk/cms/mood-image/1186---Annabels-Scrummy-Fish-Chowder-2-x300.jpg'
           }))
         },
         portionsCount: box.numPortions,
