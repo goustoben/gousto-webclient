@@ -38,7 +38,8 @@ describe('choosePlan actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.TEMP,
-        promoCode: ''
+        key: 'promoCode',
+        value: ''
       })
     })
   })
@@ -51,7 +52,8 @@ describe('choosePlan actions', () => {
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.TEMP,
-        promoCode: testPromoCode
+        key: 'promoCode',
+        value: testPromoCode
       })
     })
   })
