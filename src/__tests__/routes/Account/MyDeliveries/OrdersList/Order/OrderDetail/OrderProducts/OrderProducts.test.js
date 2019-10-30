@@ -69,8 +69,8 @@ describe('OrderProducts', () => {
       expect(wrapper.text()).toContain('£20.00')
     })
 
-    test('should render as many <ProductImage> as random products are passed, when no products are passed', () => {
-      wrapper = shallow(<OrderProducts randomProducts={randomProductsSample} />, {
+    test('should render no <ProductImage> when no products are passed', () => {
+      wrapper = shallow(<OrderProducts />, {
         context: {
           store: {
             subscribe: jest.fn(),
@@ -78,7 +78,7 @@ describe('OrderProducts', () => {
           }
         }
       })
-      expect(wrapper.find(ProductImage)).toHaveLength(7)
+      expect(wrapper.find(ProductImage)).toHaveLength(0)
     })
 
     test('should render a button', () => {

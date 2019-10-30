@@ -49,7 +49,6 @@ class Order extends React.PureComponent {
     addresses: PropTypes.instanceOf(Immutable.Map),
     orderDeliveryDaysFetchError: PropTypes.string,
     recipesPeriodStockFetchError: PropTypes.string,
-    randomProducts: PropTypes.instanceOf(Immutable.List),
   }
 
   static defaultProps = {
@@ -192,7 +191,6 @@ class Order extends React.PureComponent {
                 paymentDate={humanTimeFormat(this.props.orderWhenCutoff, 'dayAndMonth')}
                 recipes={this.props.recipes}
                 products={this.props.products.get('elements')}
-                randomProducts={this.props.randomProducts}
                 priceBreakdown={this.props.priceBreakdown}
                 deliveryDate={humanDeliveryDate}
                 deliveryTimeStart={humanDeliveryTimeStart}

@@ -20,7 +20,6 @@ class OrderDetail extends React.PureComponent {
     paymentDate: PropTypes.string,
     recipes: PropTypes.instanceOf(Immutable.List),
     products: PropTypes.instanceOf(Immutable.List),
-    randomProducts: PropTypes.instanceOf(Immutable.List),
     priceBreakdown: PropTypes.instanceOf(Immutable.Map),
     deliveryDate: PropTypes.string,
     deliveryTimeStart: PropTypes.string,
@@ -40,7 +39,6 @@ class OrderDetail extends React.PureComponent {
     paymentDate: '',
     recipes: Immutable.List([]),
     products: Immutable.List([]),
-    randomProducts: Immutable.List([]),
     priceBreakdown: Immutable.Map({}),
     deliveryDate: '',
     deliveryTimeStart: '',
@@ -69,12 +67,11 @@ class OrderDetail extends React.PureComponent {
             />
           </section>
           : null}
-        {this.props.orderState === 'recipes chosen' ?
+        {this.props.orderState === 'recipes chosen' && this.props.products.size ?
           <section className={css.openCardSection}>
             <OrderProducts
               orderId={this.props.orderId}
               products={this.props.products}
-              randomProducts={this.props.randomProducts}
             />
           </section>
           : null}

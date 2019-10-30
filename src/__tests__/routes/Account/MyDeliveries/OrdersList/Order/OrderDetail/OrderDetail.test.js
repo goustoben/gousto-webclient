@@ -14,8 +14,16 @@ describe('OrderDetail', () => {
   let sandbox
   let wrapper
   const periodMap = Immutable.fromJS({
-    id: 54,
+    id: 54
   })
+  const products = Immutable.fromJS([
+    {
+      id: '1'
+    },
+    {
+      id: '2'
+    },
+  ])
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create()
@@ -63,21 +71,40 @@ describe('OrderDetail', () => {
 
     test('should render a specific list of subcomponents when the order is confirmed', () => {
       wrapper = shallow(
-        <OrderDetail orderState="confirmed" period={periodMap} />,
+        <OrderDetail orderState="confirmed" period={periodMap} />
       )
       expect(wrapper.find(OrderRecipes)).toHaveLength(1)
       expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
       expect(wrapper.find(OrderDelivery)).toHaveLength(1)
     })
 
-    test('should render a specific list of subcomponents when the order is recipes chosen', () => {
-      wrapper = shallow(
-        <OrderDetail orderState="recipes chosen" period={periodMap} />,
-      )
-      expect(wrapper.find(OrderRecipes)).toHaveLength(1)
-      expect(wrapper.find(OrderProducts)).toHaveLength(1)
-      expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
-      expect(wrapper.find(OrderDelivery)).toHaveLength(1)
+    describe('when the order is recipes chosen', () => {
+      describe('and no products are passed', () => {
+        test('should render a specific list of subcomponents, not including OrderProducts', () => {
+          wrapper = shallow(
+            <OrderDetail orderState="recipes chosen" period={periodMap} />
+          )
+          expect(wrapper.find(OrderRecipes)).toHaveLength(1)
+          expect(wrapper.find(OrderProducts)).toHaveLength(0)
+          expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
+          expect(wrapper.find(OrderDelivery)).toHaveLength(1)
+        })
+      })
+      describe('and some products are passed', () => {
+        test('should render a specific list of subcomponents, including OrderProducts', () => {
+          wrapper = shallow(
+            <OrderDetail
+              orderState="recipes chosen"
+              period={periodMap}
+              products={products}
+            />
+          )
+          expect(wrapper.find(OrderRecipes)).toHaveLength(1)
+          expect(wrapper.find(OrderProducts)).toHaveLength(1)
+          expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
+          expect(wrapper.find(OrderDelivery)).toHaveLength(1)
+        })
+      })
     })
   })
 })
