@@ -19,7 +19,7 @@ const ReferAFriend = ({ referralDetails }) => {
 
   return (
     <div className={css.rafWrapper}>
-      <Image media={require('media/images/earn-reward-background.jpg')} className={css.rafImage} />
+      <div className={css.rafImageWrapper} />
       <div className={css.rafStampsWrapper}>
         <div className={css.rafStampDetails}>
           <div className={css.rafStamp}>
