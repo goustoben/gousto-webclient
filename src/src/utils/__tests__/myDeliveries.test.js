@@ -21,10 +21,12 @@ describe('myDeliveries utils', () => {
         {
           id: '32072784',
           title: 'Indonesian-Style Prawn Curry & Green Bean Rice ',
+          recipeId: '101',
         },
         {
           id: '32072785',
           title: 'Indian-Spiced Chicken Tray Bake With Spinach',
+          recipeId: '102',
         }
       ],
       productItems: [],
@@ -66,10 +68,12 @@ describe('myDeliveries utils', () => {
         {
           id: '46584179',
           title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
+          recipeId: '103',
         },
         {
           id: '46584182',
           title: 'Pasta Alla Genovese',
+          recipeId: '104',
         }
       ],
       productItems: [
@@ -229,10 +233,12 @@ describe('myDeliveries utils', () => {
               Immutable.Map({
                 id: '46584179',
                 title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
+                recipeId: '103',
               }),
               Immutable.Map({
                 id: '46584182',
                 title: 'Pasta Alla Genovese',
+                recipeId: '104',
               })
             ]
           ),

@@ -104,6 +104,7 @@ export const transformPendingOrders = (orders) => {
         recipes: recipeItems.map(item => (Immutable.Map({
           id: item.get('id'),
           title: item.get('title'),
+          recipeId: item.get('recipeId'),
         }))),
         products: Immutable.Map({
           total: productItems.size,
