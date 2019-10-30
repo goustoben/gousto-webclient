@@ -6,18 +6,21 @@ import css from './OrderPricing.css'
 import DiscountBadge from './DiscountBadge'
 
 const OrderPricing = ({ pricing, orderState }) => {
-  const grossOrderPrice = pricing.get('grossOrderPrice')
-  const netOrderPrice = pricing.get('netOrderPrice')
+  const grossOrderPrice = parseFloat(pricing.get('grossOrderPrice'))
+  const netOrderPrice = parseFloat(pricing.get('netOrderPrice'))
 
   return (
     <div className={css.pricingContainer}>
       {['recipes chosen', 'confirmed', 'dispatched', 'cancelled'].indexOf(orderState) > -1 ?
         <div>
-          <div className={css.fullPrice}>
-            £{parseFloat(grossOrderPrice).toFixed(2)}
-          </div>
+          {
+            netOrderPrice < grossOrderPrice &&
+            <div className={css.fullPrice}>
+              £{grossOrderPrice.toFixed(2)}
+            </div>
+          }
           <div className={css.total}>
-            £{parseFloat(netOrderPrice).toFixed(2)}
+            £{netOrderPrice.toFixed(2)}
           </div>
         </div>
         : null}
