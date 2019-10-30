@@ -10,8 +10,8 @@ describe('Refer A Friend', () => {
   })
   const wrapper = shallow(<ReferAFriend referralDetails={referralDetails} />)
 
-  it('should render an image', () => {
-    expect(wrapper.find('Image').length).toEqual(1)
+  it('should render an image div', () => {
+    expect(wrapper.find('.rafImageWrapper').length).toEqual(1)
   })
 
   it('should render 2 stamp elements', () => {
