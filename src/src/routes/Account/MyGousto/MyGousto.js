@@ -16,10 +16,12 @@ class MyGousto extends React.PureComponent {
     orders: PropTypes.instanceOf(Immutable.Map),
     nameFirst: PropTypes.string,
     referralDetails: PropTypes.instanceOf(Immutable.Map),
+    redirect: PropTypes.func,
   }
 
   static defaultProps = {
     userLoadOrders: () => { },
+    redirect: () => {},
   }
 
   componentDidMount() {
@@ -29,7 +31,7 @@ class MyGousto extends React.PureComponent {
   }
 
   render() {
-    const { card, orders, nameFirst, referralDetails } = this.props
+    const { card, orders, nameFirst, referralDetails, redirect } = this.props
     const headerTitle = `Hello ${nameFirst},`
 
     return (
@@ -46,7 +48,7 @@ class MyGousto extends React.PureComponent {
           <Cookbook />
         </Section>
         <Section title="Your Gousto wins" alternateColour>
-          <ReferAFriend referralDetails={referralDetails} />
+          <ReferAFriend referralDetails={referralDetails} redirect={redirect} />
         </Section>
       </div>
     )

@@ -4,11 +4,12 @@ import Immutable from 'immutable'
 import { ReferAFriend } from '../ReferAFriend'
 
 describe('Refer A Friend', () => {
+
   const referralDetails = Immutable.Map({
     referralCount: '2',
     referralCredit: '30',
   })
-  const wrapper = shallow(<ReferAFriend referralDetails={referralDetails} />)
+  let wrapper = shallow(<ReferAFriend referralDetails={referralDetails} />)
 
   it('should render an image div', () => {
     expect(wrapper.find('.rafImageWrapper').length).toEqual(1)
@@ -28,5 +29,15 @@ describe('Refer A Friend', () => {
 
   it('should render a shareExperience element', () => {
     expect(wrapper.find('.shareExperience').length).toEqual(1)
+  })
+
+  describe('onClick', () => {
+    it('should call redirect with /my-referrals', () => {
+      const redirectSpy = jest.fn()
+      wrapper = shallow(<ReferAFriend referralDetails={referralDetails} redirect={redirectSpy}/>)
+      wrapper.find('Button').simulate('click')
+      expect(redirectSpy).toHaveBeenCalledWith('/my-referrals')
+
+    })
   })
 })
