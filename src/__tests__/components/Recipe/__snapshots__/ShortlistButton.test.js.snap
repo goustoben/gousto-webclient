@@ -36,11 +36,6 @@ ShallowWrapper {
           className="heartIcon"
           fileName="icon_shortlist_heart_deselected"
         />,
-        <span
-          className="shortlistText"
-        >
-          Shortlist
-        </span>,
         false,
       ],
       "className": "shortlistButton",
@@ -65,18 +60,6 @@ ShallowWrapper {
         "rendered": null,
         "type": [Function],
       },
-      Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "host",
-        "props": Object {
-          "children": "Shortlist",
-          "className": "shortlistText",
-        },
-        "ref": null,
-        "rendered": "Shortlist",
-        "type": "span",
-      },
       false,
     ],
     "type": "button",
@@ -92,11 +75,6 @@ ShallowWrapper {
             className="heartIcon"
             fileName="icon_shortlist_heart_deselected"
           />,
-          <span
-            className="shortlistText"
-          >
-            Shortlist
-          </span>,
           false,
         ],
         "className": "shortlistButton",
@@ -120,18 +98,6 @@ ShallowWrapper {
           "ref": null,
           "rendered": null,
           "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "host",
-          "props": Object {
-            "children": "Shortlist",
-            "className": "shortlistText",
-          },
-          "ref": null,
-          "rendered": "Shortlist",
-          "type": "span",
         },
         false,
       ],
@@ -194,11 +160,6 @@ ShallowWrapper {
           className="heartIcon"
           fileName="icon_shortlist_heart_selected"
         />,
-        <span
-          className="shortlistText"
-        >
-          Shortlisted
-        </span>,
         false,
       ],
       "className": "shortlistButton shortlisted",
@@ -223,18 +184,6 @@ ShallowWrapper {
         "rendered": null,
         "type": [Function],
       },
-      Object {
-        "instance": null,
-        "key": undefined,
-        "nodeType": "host",
-        "props": Object {
-          "children": "Shortlisted",
-          "className": "shortlistText",
-        },
-        "ref": null,
-        "rendered": "Shortlisted",
-        "type": "span",
-      },
       false,
     ],
     "type": "button",
@@ -250,11 +199,6 @@ ShallowWrapper {
             className="heartIcon"
             fileName="icon_shortlist_heart_selected"
           />,
-          <span
-            className="shortlistText"
-          >
-            Shortlisted
-          </span>,
           false,
         ],
         "className": "shortlistButton shortlisted",
@@ -278,18 +222,6 @@ ShallowWrapper {
           "ref": null,
           "rendered": null,
           "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": undefined,
-          "nodeType": "host",
-          "props": Object {
-            "children": "Shortlisted",
-            "className": "shortlistText",
-          },
-          "ref": null,
-          "rendered": "Shortlisted",
-          "type": "span",
         },
         false,
       ],
