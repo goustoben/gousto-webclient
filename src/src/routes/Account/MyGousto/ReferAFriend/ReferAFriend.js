@@ -3,19 +3,25 @@ import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import Image from 'Image'
 import { Button } from 'goustouicomponents'
+import routes from 'config/routes'
 import Svg from 'Svg'
 import css from './ReferAFriend.css'
 
 const propTypes = {
   referralDetails: PropTypes.instanceOf(Immutable.Map),
+  redirect: PropTypes.func,
 }
 
 const defaultProps = {
   referralDetails: Immutable.Map({})
 }
 
-const ReferAFriend = ({ referralDetails }) => {
+const ReferAFriend = ({ referralDetails, redirect }) => {
   const { referralCount, referralCredit } = referralDetails && referralDetails.toJS()
+
+  const onClick = () => {
+    redirect(routes.client.myReferral)
+  }
 
   return (
     <div className={css.rafWrapper}>
@@ -39,7 +45,7 @@ const ReferAFriend = ({ referralDetails }) => {
       <div className={css.shareExperience}>
         <h3 className={css.shareHeading}>Share the Gousto experience</h3>
         <p>Refer a friend – and you both save</p>
-        <Button>Invite More Friends</Button>
+        <Button onClick={onClick}>Invite More Friends</Button>
       </div>
     </div>
   )
