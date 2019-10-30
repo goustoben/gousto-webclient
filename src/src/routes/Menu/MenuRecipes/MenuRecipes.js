@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import menu from 'config/menu'
 import moment from 'moment'
+import { CHRISTMAS_THEMATIC_NAME } from 'Recipe/CTAThematic/CTAThematic'
 import MenuNoResults from '../MenuNoResults'
 import FilterTagsNav from '../FilterTagsNav/FilterTagsNavContainer'
 import CollectionsNav from '../CollectionsNav'
@@ -64,11 +65,11 @@ class MenuRecipes extends PureComponent {
     const switchoverTime2 = moment(switchoverDate2)
 
     return (now.isSameOrAfter(switchoverTime2, 'hour')) ? (
-      <Banner type={'wagamama2'} collectionSlug={'gousto-x-wagamama'} setThematic={setThematic} />
+      <Banner type={'christmas2'} collectionSlug={CHRISTMAS_THEMATIC_NAME} setThematic={setThematic} />
     ) : (now.isSameOrAfter(switchoverTime1, 'hour')) ? (
-      <Banner type={'wagamama1'} />
+      <Banner type={'christmas1'} />
     ) :
-        <Banner imageName={'menu/10min-banner-gel-02.jpg'} type={'ten-min'} />
+        <Banner type={'wagamama2'} collectionSlug={'gousto-x-wagamama'} setThematic={setThematic} />
   }
 
   render() {
@@ -89,7 +90,7 @@ class MenuRecipes extends PureComponent {
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
-        {this.renderBanner(menu.wagamama.switchoverDateWeek1, menu.wagamama.switchoverDateWeek2)}
+        {this.renderBanner(menu.christmas.switchoverDateWeek1, menu.christmas.switchoverDateWeek2)}
         <SubHeader
           viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
           onToggleGridView={toggleGridView}

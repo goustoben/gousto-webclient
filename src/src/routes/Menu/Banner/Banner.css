@@ -19,42 +19,42 @@
 	background-size: cover;
 }
 
-.ten-min {
-	composes: container;
-	background-image: url('media/images/menu/10min-banner-mobile.jpg');
-
-	@media ScreenXXSMin {
-		background-image: url('media/images/menu/10min-banner-tablet.jpg');
-	}
-
-	@media ScreenMDMin {
-		background-image: url('media/images/menu/10min-banner-desktop.jpg');
-	}
-}
-
-.wagamama1 {
-	composes: container;
-	background-image: url('media/images/menu/wagamama_banner_mobile_no_click.jpg');
-
-	@media ScreenSMMin {
-		background-image: url('media/images/menu/wagamama_banner_tablet_no_click.jpg');
-	}
-
-	@media ScreenMLMin {
-		background-image: url('media/images/menu/wagamama_banner_desktop_no_click.jpg');
-	}
-}
-
 .wagamama2 {
 	composes: container;
 	background-image: url('media/images/menu/wagamama_banner_mobile_button.jpg');
 
-	@media ScreenSMMin {
+	@media ScreenXXSMin {
 		background-image: url('media/images/menu/wagamama_banner_tablet_button.jpg');
 	}
 
 	@media ScreenMLMin {
 		background-image: url('media/images/menu/wagamama_banner_desktop_button.jpg');
+	}
+}
+
+.christmas1 {
+	composes: container;
+	background-image: url('media/images/menu/christmas_banner_mobile_no_click.jpg');
+
+	@media ScreenXXSMin {
+		background-image: url('media/images/menu/christmas_banner_tablet_no_click.jpg');
+	}
+
+	@media ScreenMLMin {
+		background-image: url('media/images/menu/christmas_banner_desktop_no_click.jpg');
+	}
+}
+
+.christmas2 {
+	composes: container;
+	background-image: url('media/images/menu/christmas_banner_mobile_click.jpg');
+
+	@media ScreenXXSMin {
+		background-image: url('media/images/menu/christmas_banner_tablet_click.jpg');
+	}
+
+	@media ScreenMLMin {
+		background-image: url('media/images/menu/christmas_banner_desktop_click.jpg');
 	}
 }
 
