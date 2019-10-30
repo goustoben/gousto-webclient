@@ -7,7 +7,6 @@ function mapStateToProps(state, ownProps) {
   const order = ownProps.order
   const orderId = order.get('id')
   const products = order.get('products', Immutable.Map({}))
-  const randomProducts = products.get('elements', Immutable.List([])).size > 0 ? Immutable.List([]) : state.randomProducts
 
   return {
     userId: state.user.get('id'),
@@ -24,7 +23,6 @@ function mapStateToProps(state, ownProps) {
     orderWhenMenuOpen: order.get('whenMenuOpen'),
     recipes: order.get('recipes', Immutable.List([])),
     products,
-    randomProducts,
     collapsed: state.user.getIn(['orderCardsCollapsedStatus', orderId]),
     editDeliveryMode: state.user.getIn(['orderCardsEditStatus', orderId]),
     priceBreakdown: order.get('priceBreakdown', Immutable.Map({})),

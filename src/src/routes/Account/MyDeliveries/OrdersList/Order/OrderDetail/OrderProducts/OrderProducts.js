@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
-import classnames from 'classnames'
 
 import { Button } from 'goustouicomponents'
 import Link from 'Link'
@@ -28,23 +27,11 @@ class OrderProducts extends React.PureComponent {
         unitPrice: PropTypes.number.isRequired,
       })
     ),
-    randomProducts: ImmutablePropTypes.listOf(
-      ImmutablePropTypes.mapContains({
-        id: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        images: ImmutablePropTypes.mapContains({
-          [imagesWidth]: ImmutablePropTypes.mapContains({
-            src: PropTypes.string.isRequired,
-          }),
-        }),
-      })
-    ),
     orderId: PropTypes.string,
   }
 
   static defaultProps = {
     products: Immutable.List([]),
-    randomProducts: Immutable.List([]),
     orderId: '',
   }
 
@@ -62,23 +49,18 @@ class OrderProducts extends React.PureComponent {
   }
 
   render() {
-    const productsSize = this.props.products.size
+    const { products, orderId } = this.props
+    const productsSize = products.size
 
     return (
       <div>
-        <div className={`${css.header} ${css.hideInMobile}`}>
-          <Content contentKeys="mydeliveriesOrderOrderproductsHeader" >
-            <span>Fancy something extra?</span>
-          </Content>
-        </div>
-        <div className={`${css.header} ${css.hideInDesktop}`}>
+        <div className={css.header}>
           <Content contentKeys="mydeliveries_OrderOrderproductsTitle" >
             <span>Your extras</span>
           </Content>
         </div>
-        {productsSize > 0 ?
           <div>
-            {this.props.products.map(product =>
+            {products.map(product =>
               <div key={product.get('id')} className={css.productContainer}>
                 <div className={css.productImage}>
                   <ProductImage src={product.get('image')} alt={product.get('title')} />
@@ -91,17 +73,8 @@ class OrderProducts extends React.PureComponent {
               </div>
             )}
           </div>
-          :
-          <div className={css.randomProductsContainer}>
-            {this.props.randomProducts.map((product, index) =>
-              <div key={product.get('id')} className={classnames(css.randomProductImage, { [css.hideInMobile]: index > 3 })}>
-                <ProductImage src={product.getIn(['images', imagesWidth, 'src'])} alt={product.get('title')} />
-              </div>
-            )}
-          </div>
-        }
         <div className={css.buttonRow}>
-          <Link to={routes.client.orderConfirmation.replace(':orderId', this.props.orderId)} clientRouted={false}>
+          <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)} clientRouted={false}>
             <Button color={productsSize > 0 ? 'secondary' : 'primary'} noDecoration>
               {productsSize > 0 ? 'Edit extras' : 'Add extras'}
             </Button>

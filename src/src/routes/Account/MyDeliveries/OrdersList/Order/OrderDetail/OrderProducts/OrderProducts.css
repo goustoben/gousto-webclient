@@ -11,11 +11,6 @@
 	margin-bottom: SpacingXXL;
 }
 
-.randomProductsContainer {
-	margin-left: calc(0px - SpacingXXS);
-	margin-bottom: SpacingXXL;
-}
-
 .productImage {
 	width: 100px;
 	height: 85px;
@@ -55,14 +50,6 @@
 .price {
 	composes: textBold from 'styles/typography.css';
 	margin-top: auto;
-}
-
-.hideInMobile {
-	composes: hidden-xs-down from 'sass-loader!styles/bootstrap.scss';
-}
-
-.hideInDesktop {
-	composes: hidden-sm-up from 'sass-loader!styles/bootstrap.scss';
 }
 
 .buttonRow {
