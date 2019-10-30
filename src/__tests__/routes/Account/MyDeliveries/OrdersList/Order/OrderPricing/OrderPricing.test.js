@@ -31,6 +31,19 @@ describe('OrderPricing', () => {
       expect(wrapper.text()).toContain(pricing.get('netOrderPrice'))
     })
 
+    test('should render no gross order price when there is no discount and state is confirmed', () => {
+      const orderState = 'confirmed'
+      const pricing = Immutable.Map({
+        grossOrderPrice: 15,
+        netOrderPrice: 15,
+      })
+      wrapper = shallow(
+        <OrderPricing pricing={pricing} orderState={orderState} />,
+      )
+      expect(wrapper.type()).toEqual('div')
+      expect(wrapper.text()).toEqual(`£${pricing.get('grossOrderPrice')}.00`)
+    })
+
     test('should render no prices when state is scheduled', () => {
       const orderState = 'scheduled'
       wrapper = shallow(
