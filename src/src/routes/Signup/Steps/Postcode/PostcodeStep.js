@@ -41,7 +41,7 @@ class PostcodeStep extends React.PureComponent {
         <div className={css.fullWidth}>
           <div className={css.header}>
             <Image name="where-to-deliver" />
-            <h1 className={css.heading}>Where would you like your box delivered?</h1>
+            <h1 className={css.heading}>Where would you like your boxes delivered?</h1>
           </div>
           <div className={css.body}>
             <div className={postcodeCss.inputContainer}>
