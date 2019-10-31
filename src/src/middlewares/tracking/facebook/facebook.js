@@ -10,7 +10,8 @@ export const fbTracking = {
   getCallbacks,
   initiateCheckout,
   onLocationChange,
-  purchaseCompleted,
+  signupPurchaseCompleted,
+  customerPurchaseCompleted,
   showCollectionTracking,
   showRecipeTracking,
   Tracker,
@@ -94,12 +95,12 @@ function initiateCheckout(_, { basket }) {
 }
 
 /**
- * Purchase completed
+ * New customer signup order
  * @param _
  * @param basket
  * @param menuBoxPrices
  */
-function purchaseCompleted(_, { basket, pricing }) {
+function signupPurchaseCompleted(_, { basket, pricing }) {
   const recipes = basket.get('recipes')
   const recipesIds = Array.from(recipes.keys())
   const recipeCount = recipes.reduce((total, quantity) => (total + quantity), 0)
@@ -108,6 +109,27 @@ function purchaseCompleted(_, { basket, pricing }) {
 
   sendTrackingData('Purchase', {
     content_ids: recipesIds,
+    content_type: 'product',
+    num_items: recipeCount,
+    value: totalPrice,
+    currency: 'GBP',
+    order_id: orderId,
+  })
+}
+
+/**
+ * Existing customer order placed
+ * @param action
+ */
+const customerPurchaseCompleted = ({ order }) => {
+  const recipes = order.recipe_items
+  const recipeIds = recipes.map(recipe => recipe.id)
+  const recipeCount = order.box.num_recipes
+  const totalPrice = order.prices.total
+  const orderId = order.id.toString()
+
+  sendTrackingData('Purchase', {
+    content_ids: recipeIds,
     content_type: 'product',
     num_items: recipeCount,
     value: totalPrice,
@@ -139,8 +161,10 @@ function getCallbacks() {
     [actions.FILTERS_COLLECTION_CHANGE]: fbTracking.showCollectionTracking,
     [actions.BASKET_RECIPE_ADD]: fbTracking.addRecipeToBasket,
     [actions.BASKET_CHECKOUT]: fbTracking.initiateCheckout,
-    [actions.CHECKOUT_SIGNUP_SUCCESS]: fbTracking.purchaseCompleted,
+    [actions.CHECKOUT_SIGNUP_SUCCESS]: fbTracking.signupPurchaseCompleted,
     [actions.__REACT_ROUTER_LOCATION_CHANGE]: fbTracking.onLocationChange, // eslint-disable-line no-underscore-dangle
+    [actions.ORDER_CREATE_TRANSACTIONAL]: fbTracking.customerPurchaseCompleted,
+    [actions.ORDER_RECIPES_CHOSEN]: fbTracking.customerPurchaseCompleted,
   }
 }
 
