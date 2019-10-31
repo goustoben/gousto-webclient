@@ -9,12 +9,13 @@ import logger from 'utils/logger'
 import { getOrderDetails } from 'utils/basket'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot } from 'utils/deliveries'
 import { redirect } from 'utils/window'
-import { isNDDFeatureEnabled } from 'selectors/features'
+import {getNDDFeatureValue} from "../selectors/features";
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
 import { orderConfirmationRedirect } from './orderConfirmation'
 import actionTypes from './actionTypes'
+import { getDeliveryTariffId, getNDDFeatureFlagVal } from '../utils/deliveries'
 
 export const checkAllScheduledCancelled = (orders) => (
   !orders.some(order => (order.get('orderState') === 'scheduled'))
@@ -275,7 +276,7 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
     dispatch(statusActions.pending(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, true))
 
     const postcode = getState().user.getIn(['addresses', addressId, 'postcode'])
-    const isNDDExperiment = isNDDFeatureEnabled(getState())
+    const isNDDExperiment = getNDDFeatureFlagVal(getState().user, getNDDFeatureValue(getState()))
     const reqData = {
       'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
       'filters[cutoff_datetime_until]': cutoffDatetimeUntil,
@@ -283,6 +284,7 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
       direction: 'asc',
       postcode,
       ndd: isNDDExperiment ? 'true' : 'false',
+      delivery_tariff_id: getDeliveryTariffId(getState().user, getNDDFeatureValue(getState()))
     }
 
     try {

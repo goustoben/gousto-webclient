@@ -21,6 +21,8 @@ import {
   portionSizeSelectedTracking
 } from './basket'
 import actionTypes from './actionTypes'
+import {getDeliveryTariffId, getNDDFeatureFlagVal} from "../utils/deliveries";
+import {getNDDFeatureValue} from "../selectors/features";
 
 function basketDeliveryDaysReceive(days) {
   return {
@@ -83,7 +85,7 @@ const actions = {
         ? moment.utc(cutoffDatetimeUntil).endOf('day').toISOString()
         : getState().menuCutoffUntil
 
-      const isNDDExperiment = isNDDFeatureEnabled(getState())
+      const isNDDExperiment = getNDDFeatureFlagVal(getState().user, getNDDFeatureValue(getState()))
 
       const reqData = {
         'filters[cutoff_datetime_from]': moment.utc(cutoffDatetimeFrom).startOf('day').toISOString(),
@@ -91,6 +93,7 @@ const actions = {
         sort: 'date',
         direction: 'asc',
         ndd: isNDDExperiment ? 'true' : 'false',
+        delivery_tariff_id: getDeliveryTariffId(getState().user, getNDDFeatureValue(getState()))
       }
 
       if (postcode) {

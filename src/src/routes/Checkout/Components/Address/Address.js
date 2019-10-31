@@ -11,6 +11,8 @@ import DeliveryInfo from './DeliveryInfo'
 import Postcode from './Postcode'
 import AddressInputs from './AddressInputs'
 import css from './Address.css'
+import {getDeliveryTariffId} from "../../../../utils/deliveries";
+import {getNDDFeatureValue} from "../../../../selectors/features";
 
 class Address extends React.PureComponent {
   static propTypes = {
@@ -133,7 +135,8 @@ class Address extends React.PureComponent {
           postcode,
           'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
           'filters[cutoff_datetime_until]': menuCutoffUntil || menuCutoffUntilFallback,
-          ndd: isNDDExperiment.toString()
+          'ndd': isNDDExperiment.toString(),
+          'delivery_tariff_id': getDeliveryTariffId(this.state.user, getNDDFeatureValue(this.state)),
         }
 
         let { data: days } = await fetchDeliveryDays(null, reqData)

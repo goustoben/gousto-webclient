@@ -24,6 +24,10 @@ export const isNDDFeatureEnabled = ({ features, user }) => {
   return (features && features.getIn(['ndd', 'value'], false))
 }
 
+export const getNDDFeatureValue = ({ features }) => {
+  return features.getIn(['ndd', 'value'])
+}
+
 export const getDisabledSlots = ({ features }) => (
   features
     ? features.getIn(['disabledSlots', 'value'])

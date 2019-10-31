@@ -1,21 +1,14 @@
 import Immutable from 'immutable'
 
-import { getOrderDetails } from 'utils/basket'
-import { saveUserOrder, updateUserOrder } from 'apis/user'
-import {
-  saveOrder,
-  cancelOrder,
-  updateOrderAddress,
-  fetchOrder,
-  updateOrderItems,
-  orderCheckout,
-} from 'apis/orders'
-import { orderConfirmationRedirect } from 'actions/orderConfirmation'
+import {getOrderDetails} from 'utils/basket'
+import {saveUserOrder, updateUserOrder} from 'apis/user'
+import {cancelOrder, fetchOrder, orderCheckout, saveOrder, updateOrderAddress, updateOrderItems,} from 'apis/orders'
+import {orderConfirmationRedirect} from 'actions/orderConfirmation'
 import actionStatus from 'actions/status'
 import actionTypes from 'actions/actionTypes'
 import orderActions from '../order'
 import { fetchDeliveryDays } from 'apis/deliveries'
-import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, DeliveryTariffTypes } from 'utils/deliveries'
+import * as deliveriesUtils from 'utils/deliveries'
 
 jest.mock('apis/orders')
 jest.mock('actions/orderConfirmation')
@@ -23,13 +16,15 @@ jest.mock('actions/status')
 jest.mock('apis/user')
 jest.mock('utils/basket')
 
-jest.mock('utils/deliveries')
-
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
     data: [{id: 1}]
   })
 }))
+
+deliveriesUtils.getSlot = jest.fn()
+deliveriesUtils.getAvailableDeliveryDays = jest.fn()
+deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
 
 const { pending, error } = actionStatus
 
@@ -66,7 +61,7 @@ describe('order actions', () => {
       }),
     })
 
-    getSlot.mockReturnValue(Immutable.fromJS({
+    deliveriesUtils.getSlot.mockReturnValue(Immutable.fromJS({
       coreSlotId: '4',
       id: 'deliveries-uuid',
       daySlotLeadTimeId: 'day-slot-lead-time-uuid'
@@ -531,11 +526,11 @@ describe('order actions', () => {
       getStateSpy = jest.fn().mockReturnValue({
         user: Immutable.fromJS({
           addresses: {789: {postcode: 'AA11 2BB'}},
-          deliveryTariffId: DeliveryTariffTypes.FREE_NDD
+          deliveryTariffId: deliveriesUtils.DeliveryTariffTypes.FREE_NDD
         }),
         features: Immutable.fromJS({
           ndd: {
-            value: true,
+            value: deliveriesUtils.DeliveryTariffTypes.FREE_NDD,
             experiment: false,
           }
         }),
@@ -581,6 +576,12 @@ describe('order actions', () => {
         user: Immutable.fromJS({
           addresses: {789: {postcode: 'AA11 2BB'}},
         }),
+        features: Immutable.fromJS({
+          ndd: {
+            value: deliveriesUtils.DeliveryTariffTypes.NON_NDD,
+            experiment: false,
+          }
+        }),
       })
 
       const fetchedDays = { data: [{ id: '4' }, { id: '5' }, { id: '6' }] }
@@ -589,7 +590,7 @@ describe('order actions', () => {
         new Promise((resolve, reject) => { resolve(fetchedDays) })
       )
 
-      getAvailableDeliveryDays.mockReturnValue(
+      deliveriesUtils.getAvailableDeliveryDays.mockReturnValue(
         [{ id: '5' }, { id: '6' }]
       )
 
@@ -603,20 +604,21 @@ describe('order actions', () => {
         sort: 'date',
         direction: 'asc',
         postcode: 'AA11 2BB',
-        ndd: 'false'
+        ndd: 'false',
+        delivery_tariff_id: deliveriesUtils.DeliveryTariffTypes.NON_NDD,
       }
 
       expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull()
 
       expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
-      expect(getAvailableDeliveryDays.mock.calls[0][0]).toEqual([{ id: '4' }, { id: '5' }, { id: '6' }])
+      expect(deliveriesUtils.getAvailableDeliveryDays.mock.calls[0][0]).toEqual([{ id: '4' }, { id: '5' }, { id: '6' }])
       expect(dispatchSpy.mock.calls.length).toEqual(4)
       expect(dispatchSpy.mock.calls[2][0]).toEqual({
         type: actionTypes.ORDER_DELIVERY_DAYS_RECEIVE,
         orderId: '123',
         availableDays: [{ id: '5' }, { id: '6' }],
       })
-      expect(transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
+      expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
     })
 
     describe('if the feature is on for the user', () => {
@@ -631,12 +633,13 @@ describe('order actions', () => {
           sort: 'date',
           direction: 'asc',
           postcode: 'AA11 2BB',
-          ndd: 'true'
+          ndd: 'true',
+          delivery_tariff_id: deliveriesUtils.DeliveryTariffTypes.FREE_NDD,
         }
 
         expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull
         expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
-        expect(transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+        expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
       })
     })
   })
