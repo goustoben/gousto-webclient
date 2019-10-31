@@ -468,5 +468,5 @@ export function getDeliveryTariffId(user, nddExperimentVal) {
 export function getNDDFeatureFlagVal(user, nddExperimentVal) {
   const deliveryTariffId = getDeliveryTariffId(user, nddExperimentVal)
 
-  return (deliveryTariffId === DeliveryTariffTypes['NON_NDD']) ? false : true
+  return (deliveryTariffId !== DeliveryTariffTypes['NON_NDD'])
 }

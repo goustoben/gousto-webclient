@@ -19,6 +19,12 @@ jest.mock('selectors/features', () => ({
   getDisabledSlots: jest.fn()
 }))
 
+const userWithDeliveryTariff = (deliveryTariffId) => {
+  return {
+    delivery_tariff_id: deliveryTariffId,
+  }
+}
+
 describe('utils/deliveries', () => {
   describe('getSlot', () => {
     test('should return false if deliveryDays is not an Immutable object', () => {
@@ -2035,16 +2041,10 @@ describe('utils/deliveries', () => {
   })
 
   describe('getDeliveryTariffId', () => {
-    const getUser = (deliveryTariffId) => {
-      return {
-        delivery_tariff_id: deliveryTariffId,
-      }
-    }
-
     test('it should return a user\'s existing tariff ID', () => {
       const expectedTariff = DeliveryTariffTypes.PAID_NDD
 
-      const resolvedTariff = getDeliveryTariffId(getUser(expectedTariff), DeliveryTariffTypes.FREE_NDD)
+      const resolvedTariff = getDeliveryTariffId(userWithDeliveryTariff(expectedTariff), DeliveryTariffTypes.FREE_NDD)
       expect(resolvedTariff).toEqual(expectedTariff)
     })
 
@@ -2057,19 +2057,8 @@ describe('utils/deliveries', () => {
   })
 
   describe('getNDDFeatureFlagVal', () => {
-    const getUser = (deliveryTariffId) => {
-      return {
-        delivery_tariff_id: deliveryTariffId,
-      }
-    }
-
-    const nddTariffs = [
-      DeliveryTariffTypes.PAID_NDD,
-      DeliveryTariffTypes.FREE_NDD,
-    ]
-
     test('it should return true when user is already set to a free NDD tariff.', () => {
-      const user = getUser(DeliveryTariffTypes.FREE_NDD)
+      const user = userWithDeliveryTariff(DeliveryTariffTypes.FREE_NDD)
 
       const resolvedFeatureFlagValue = getNDDFeatureFlagVal(user, DeliveryTariffTypes.NON_NDD)
 
@@ -2077,29 +2066,39 @@ describe('utils/deliveries', () => {
     })
 
     test('it should return true when user is already set to a paid NDD tariff.', () => {
-      const user = getUser(DeliveryTariffTypes.PAID_NDD)
+      const user = userWithDeliveryTariff(DeliveryTariffTypes.PAID_NDD)
 
       const resolvedFeatureFlagValue = getNDDFeatureFlagVal(user, DeliveryTariffTypes.NON_NDD)
 
       expect(resolvedFeatureFlagValue).toEqual(true)
     })
 
-    test('it should return true when a new user is in the experiment.', () => {
-      const experimentValue = nddTariffs[Math.floor(Math.random() * nddTariffs.length)]
+    test('it should return true when a new user is on the free NDD tariff.', () => {
+      const experimentValue = DeliveryTariffTypes.FREE_NDD
 
       const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, experimentValue)
 
       expect(resolvedFeatureFlagValue).toEqual(true)
     })
 
-    test('it should return false when a new user is not in the experiment.', () => {
-      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, DeliveryTariffTypes.NON_NDD)
+    test('it should return true when a new user is on the paid NDD tariff.', () => {
+      const experimentValue = DeliveryTariffTypes.PAID_NDD
+
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, experimentValue)
+
+      expect(resolvedFeatureFlagValue).toEqual(true)
+    })
+
+    test('it should return true when a new user is on the paid NDD tariff.', () => {
+      const experimentValue = DeliveryTariffTypes.NON_NDD
+
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, experimentValue)
 
       expect(resolvedFeatureFlagValue).toEqual(false)
     })
 
     test('it should return false when an existing user is not in the experiment.', () => {
-      const user = getUser(DeliveryTariffTypes.NON_NDD)
+      const user = userWithDeliveryTariff(DeliveryTariffTypes.NON_NDD)
 
       const resolvedFeatureFlagValue = getNDDFeatureFlagVal(user, DeliveryTariffTypes.FREE_NDD)
 
