@@ -459,28 +459,14 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
 // Used both when users first arrive on the site and do not have a delivery_tariff_id
 // and by returning users with a delivery_tariff_id
 export function getDeliveryTariffId(user, nddExperimentVal) {
-  // If the user is logged in and has a delivery tariff
-  if (user && user.delivery_tariff_id) {
-    // Use it
-    return user.delivery_tariff_id
-  } else {
-    // Fall back to the ndd experiment value
-    return nddExperimentVal
-  }
+  // If the user has a delivery tariff, use it - otherwise use experiment value.
+  return (user && user.delivery_tariff_id) ? user.delivery_tariff_id : nddExperimentVal
 }
 
 // Used to determine whether to show and use NDD features for a new user without a delivery_tariff_id
 // or returning users with a delivery_tariff_id
 export function getNDDFeatureFlagVal(user, nddExperimentVal) {
-  // If the user is logged in and has a delivery tariff, use it
-  // Otherwise fall back on experiment value
-  const deliveryTariffId = (user && user.delivery_tariff_id) ? user.delivery_tariff_id : nddExperimentVal
+  const deliveryTariffId = getDeliveryTariffId(user, nddExperimentVal)
 
-  // If the delivery tariff is for no NDD
-  if (deliveryTariffId === DeliveryTariffTypes['NON_NDD']) {
-    // NDD feature OFF
-    return false
-  }
-  // Otherwise, NDD feature ON
-  return true
+  return (deliveryTariffId === DeliveryTariffTypes['NON_NDD']) ? false : true
 }
