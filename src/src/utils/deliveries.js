@@ -78,11 +78,11 @@ export function getCutoffDateTime(state) {
 }
 
 function getLandingOrder(userOrders, deliveryDays) {
-  const futureOrders = userOrders.filter(order => moment(order.get('whenCutoff')).isAfter(moment()))
+  const futureOrders = userOrders.filter(order => moment(order.get('shouldCutoffAt') || order.get('whenCutoff')).isAfter(moment()))
   const futureEmptyOrders = futureOrders.filter(order => order.get('recipeItems').size === 0)
   const futureCutoffOrders = userOrders
     .filter(order => moment(order.get('deliveryDate')).isAfter(moment()))
-    .filter(order => !moment(order.get('whenCutoff')).isAfter(moment()))
+    .filter(order => !moment(order.get('shouldCutoffAt') || order.get('whenCutoff')).isAfter(moment()))
   const currentWeeksCutoffOrders = futureCutoffOrders.filter(order => moment(order.get('deliveryDate')).isBefore(moment().add(1, 'week')))
 
   let nextEmptyOrder
