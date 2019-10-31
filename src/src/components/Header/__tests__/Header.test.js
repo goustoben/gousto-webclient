@@ -6,10 +6,6 @@ import { Header } from 'Header/Header'
 import routesConfig from 'config/routes'
 
 describe('Header', () => {
-  const PROPS = {
-    loadUserOrders: jest.fn(),
-  }
-
   const store = {
     serverError: false,
     auth: Immutable.Map({
@@ -30,11 +26,7 @@ describe('Header', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<Header {...PROPS} />, { context: { store } })
-  })
-
-  afterEach(() => {
-    PROPS.loadUserOrders.mockReset()
+    wrapper = shallow(<Header />, { context: { store } })
   })
 
   test('renders the <CookieBanner />', () => {
@@ -281,26 +273,6 @@ describe('Header', () => {
         }
       ]
       expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toEqual(expected)
-    })
-  })
-
-  describe('when shouldLoadOrders is true', () => {
-    beforeEach(() => {
-      wrapper = shallow(<Header {...PROPS} shouldLoadOrders />, { context: { store } })
-    })
-
-    test('calls the userLoadOrders function', () => {
-      expect(PROPS.loadUserOrders).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  describe('when shouldLoadOrders is false', () => {
-    beforeEach(() => {
-      wrapper.setProps({ shouldLoadOrders: false })
-    })
-
-    test('does not call the userLoadOrders function', () => {
-      expect(PROPS.loadUserOrders).not.toHaveBeenCalled()
     })
   })
 })
