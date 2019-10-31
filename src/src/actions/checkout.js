@@ -70,6 +70,7 @@ export function checkoutClearErrors() {
 
 export function checkoutAddressLookup(postcode) {
   return async (dispatch) => {
+    logger.error(`in address lookup action`)
     dispatch(pending(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, true))
     dispatch(error(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, null))
 
@@ -79,7 +80,9 @@ export function checkoutAddressLookup(postcode) {
     }
 
     try {
+      logger.error(`about to fetch address by postcode`)
       const lookupResults = await fetchAddressByPostcode(postcode)
+      logger.error(`fetch address by postcode results ${lookupResults}`)
 
       addresses.deliveryPoints = lookupResults.data.deliveryPoints || []
       addresses.town = lookupResults.data.town
@@ -91,6 +94,8 @@ export function checkoutAddressLookup(postcode) {
     } finally {
       dispatch(pending(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, false))
     }
+
+    logger.error(`END of address lookup action`)
 
     return addresses
   }
