@@ -12,8 +12,8 @@ import {
 } from 'utils/deliveries'
 import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
-import {getDisabledSlots} from 'selectors/features'
-import {DeliveryTariffTypes, getDeliveryTariffId, getNDDFeatureFlagVal} from '../deliveries'
+import { getDisabledSlots } from 'selectors/features'
+import { DeliveryTariffTypes, getDeliveryTariffId, getNDDFeatureFlagVal } from '../deliveries'
 
 jest.mock('selectors/features', () => ({
   getDisabledSlots: jest.fn()
@@ -2048,7 +2048,7 @@ describe('utils/deliveries', () => {
       expect(resolvedTariff).toEqual(expectedTariff)
     })
 
-    test('it should return a the experiment tariff without a user', () => {
+    test('it should return the experiment tariff without a user', () => {
       const expectedTariff = DeliveryTariffTypes.NON_NDD
 
       const resolvedTariff = getDeliveryTariffId(null, expectedTariff)
