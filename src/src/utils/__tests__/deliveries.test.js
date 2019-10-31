@@ -21,7 +21,7 @@ jest.mock('selectors/features', () => ({
 
 const userWithDeliveryTariff = (deliveryTariffId) => {
   return {
-    delivery_tariff_id: deliveryTariffId,
+    deliveryTariffId: deliveryTariffId,
   }
 }
 
