@@ -34,14 +34,14 @@ export const trackOrder = (orderAction, order) => (
           promoCode: prices.promo_code || basket.get('promoCode') || '',
         }
 
-        console.log(affiliateTracking) // eslint-disable-line no-console
         trackAffiliatePurchase(affiliateTracking)
       }
 
       if (actionType) {
-        console.log(actionType) // eslint-disable-line no-console
-        dispatch({ type: actionType })
-        // TODO: Hook up these actions to FB Purchase tracking
+        dispatch({
+          type: actionType,
+          order,
+        })
       }
     }
   }
