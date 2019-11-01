@@ -45,12 +45,13 @@ const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore,
               onClick={() => onClick(recipeIds)}
               view={view}
               key={index}
+              browserType={browser}
             />
           ))
       ))()}
 
       {emptyRecipes.fill(undefined).map((el, index) => (
-        <RecipeHolder view={view} key={index} />
+        <RecipeHolder view={view} key={index} browserType={browser}/>
       ))}
       {isDesktop ? <span className={css.arrowRight} /> : ''}
     </div>

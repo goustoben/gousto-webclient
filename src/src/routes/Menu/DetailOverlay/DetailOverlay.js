@@ -14,9 +14,10 @@ const propTypes = {
   numPortions: PropTypes.number.isRequired,
   recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
   position: PropTypes.number,
+  browserType: PropTypes.string.isRequired
 }
 
-const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, stock, position }) => {
+const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, stock, position, browserType }) => {
 
   const recipeId = menuRecipeDetailShow
   const detailRecipe = recipesStore.get(recipeId)
@@ -50,7 +51,7 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
           <Detail
             view={view}
             tag={getLowStockTag(stockRecipe, detailRecipe.getIn(['rating', 'count']))}
-            media={getFeaturedImage(detailRecipe, 'detail')}
+            media={getFeaturedImage(detailRecipe, 'detail', browserType)}
             images={images}
             title={detailRecipe.get('title', '')}
             count={detailRecipe.getIn(['rating', 'count'], 0)}

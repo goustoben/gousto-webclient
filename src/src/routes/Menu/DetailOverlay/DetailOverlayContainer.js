@@ -8,6 +8,7 @@ const mapStateToProps = (state, ownProps) => ({
   stock: state.menuRecipeStock,
   showOverlay: (!!ownProps.menuRecipeDetailShow && state.recipes.has(ownProps.menuRecipeDetailShow) && ownProps.showOverlay),
   position: getRecipePosition(state, ownProps.menuRecipeDetailShow),
+  browserType: state.request.get('browser')
 })
 
 const DetailOverlayContainer = connect(mapStateToProps, {})(DetailOverlay)

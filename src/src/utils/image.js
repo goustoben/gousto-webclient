@@ -43,11 +43,12 @@ export function getMenuRecipeImage(imageUrls, imageSize) {
   return outputImage.get('src')
 }
 
-export function getFeaturedImage(recipe, view) {
+export function getFeaturedImage(recipe, view, browserType) {
   const recipeImages = recipe.getIn(['media', 'images'], Immutable.List([]))
   const homepageImage = recipeImages.find(image => image.get('type') === 'homepage-image')
+  const shouldUseHomepageImage = view === 'featured' || (view === 'detail' && browserType === 'desktop')
 
-  if (view === 'featured' && homepageImage !== undefined) {
+  if (shouldUseHomepageImage && homepageImage !== undefined) {
     const homepageImageUrls = homepageImage.get('urls', Immutable.List([]))
 
     if (homepageImageUrls.size > 0) {

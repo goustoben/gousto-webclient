@@ -11,15 +11,15 @@ const getRecipeView = (mobileGridView, isFeatured, isFineDineIn) => {
   if (typeof (window) !== 'undefined' && window.innerWidth < 1025) {
     return 'grid'
   }
-  
+
   if (mobileGridView) {
     return 'gridSmall'
   }
-  
+
   if (isFeatured) {
     return 'featured'
   }
-  
+
   if (isFineDineIn) {
     return 'fineDineIn'
   }
@@ -29,13 +29,13 @@ const getRecipeView = (mobileGridView, isFeatured, isFineDineIn) => {
 
 const RecipeCard = ({
   recipe, index, mobileGridView, showDetailRecipe, isFeatured,
-  
-  numPortions, cutoffDate, features, allRecipesList, recipesStore
+
+  numPortions, cutoffDate, features, allRecipesList, recipesStore, browserType
 }) => {
   if (!recipe) {
     return null
   }
-  
+
   const recipeId = recipe.get('id')
   const range = getFoodBrand(recipe)
   const isFineDineIn = range.get('slug') === 'fine-dine-in'
@@ -43,13 +43,13 @@ const RecipeCard = ({
   const showShortlistFirstStep = index === 0
 
   const view = getRecipeView(mobileGridView, isFeatured, isFineDineIn)
-  
+
   return (
     <Recipe
       id={recipeId}
       position={index}
       title={formatRecipeTitle(recipe.get('title'), recipe.get('boxType', ''), recipe.get('dietType', ''))}
-      media={getFeaturedImage(recipe, view)}
+      media={getFeaturedImage(recipe, view, browserType)}
       url={recipe.get('url')}
       useWithin={recipe.get('shelfLifeDays')}
       cookingTime={numPortions === 2 ? recipe.get('cookingTime') : recipe.get('cookingTimeFamily')}
@@ -89,6 +89,7 @@ RecipeCard.propTypes = {
   allRecipesList: PropTypes.instanceOf(Immutable.List).isRequired,
   isFeatured: PropTypes.bool,
   cutoffDate: PropTypes.string,
+  browserType: PropTypes.string.isRequired
 }
 
 export { RecipeCard }
