@@ -4,16 +4,16 @@ import Immutable from 'immutable'
 import logger from 'utils/logger'
 import * as userApi from 'apis/user'
 import { customerSignup } from 'apis/customers'
+import { getDeliveryTariffId } from 'utils/deliveries'
 import * as ordersApi from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
 import * as addressApi from 'apis/addressLookup'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
-import { DeliveryTariffTypes } from 'utils/deliveries'
 import config from 'config/signup'
 import { getPaymentDetails } from 'selectors/payment'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-import { isChoosePlanEnabled, isNDDFeatureEnabled } from 'selectors/features'
+import { isChoosePlanEnabled, getNDDFeatureValue } from 'selectors/features'
 import { getUserRecentRecipesIds } from 'selectors/user'
 import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDeliveries'
 import statusActions from './status'
@@ -646,7 +646,7 @@ export function userSubscribe() {
           salutation_id: aboutYou.get('title'),
           marketing_do_allow_email: Number(aboutYou.get('allowEmail') || false),
           marketing_do_allow_thirdparty: Number(aboutYou.get('allowThirdPartyEmail') || false),
-          delivery_tariff_id: isNDDFeatureEnabled(state) ? DeliveryTariffTypes.FREE_NDD : DeliveryTariffTypes.NON_NDD
+          delivery_tariff_id: getDeliveryTariffId(null, getNDDFeatureValue(state)),
         },
         payment_method: {
           is_default: 1,

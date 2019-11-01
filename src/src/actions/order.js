@@ -7,15 +7,14 @@ import { fetchDeliveryDays } from 'apis/deliveries'
 import GoustoException from 'utils/GoustoException'
 import logger from 'utils/logger'
 import { getOrderDetails } from 'utils/basket'
-import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot } from 'utils/deliveries'
+import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { redirect } from 'utils/window'
-import { getNDDFeatureValue } from '../selectors/features'
+import { getNDDFeatureValue } from 'selectors/features'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
 import { orderConfirmationRedirect } from './orderConfirmation'
 import actionTypes from './actionTypes'
-import { getDeliveryTariffId, getNDDFeatureFlagVal } from '../utils/deliveries'
 
 export const checkAllScheduledCancelled = (orders) => (
   !orders.some(order => (order.get('orderState') === 'scheduled'))

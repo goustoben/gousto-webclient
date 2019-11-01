@@ -257,7 +257,7 @@ describe('user actions', () => {
 
           customerObject = {
             age_verified: 0,
-            delivery_tariff_id: value ? DeliveryTariffTypes.FREE_NDD : DeliveryTariffTypes.NON_NDD,
+            delivery_tariff_id: value,
             email: 'test_email@test.com',
             marketing_do_allow_email: 0,
             marketing_do_allow_thirdparty: 0,
@@ -271,8 +271,8 @@ describe('user actions', () => {
           }
         }
 
-        it('should call customerSignup with the correct delivery_tariff_id when NDD experiment is not defined', async () => {
-          setNddExperiment(false)
+        it('should call customerSignup with the correct delivery_tariff_id when not in NDD experiment', async () => {
+          setNddExperiment(DeliveryTariffTypes.NON_NDD)
 
           await userSubscribe()(dispatch, getState)
 
@@ -285,7 +285,7 @@ describe('user actions', () => {
         })
 
         it('should call customerSignup with the correct delivery_tariff_id when in NDD experiment', async () => {
-          setNddExperiment(true)
+          setNddExperiment(DeliveryTariffTypes.FREE_NDD)
 
           await userSubscribe()(dispatch, getState)
 

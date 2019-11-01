@@ -1,9 +1,10 @@
+import { getNDDFeatureValue } from 'selectors/features'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import moment from 'moment'
 import { okRecipes } from 'utils/basket'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
-import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots } from 'utils/deliveries'
+import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { addDisabledSlotIds } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
 import status from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
@@ -16,8 +17,6 @@ import {
   portionSizeSelectedTracking
 } from './basket'
 import actionTypes from './actionTypes'
-import { getDeliveryTariffId, getNDDFeatureFlagVal } from '../utils/deliveries'
-import { getNDDFeatureValue } from '../selectors/features'
 
 function basketDeliveryDaysReceive(days) {
   return {
