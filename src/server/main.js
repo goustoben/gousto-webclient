@@ -1,3 +1,5 @@
+import { experiment_setMenuServiceSegment } from './middleware/experiment_setMenuServiceSegment'
+
 const Koa = require('koa')
 const React = require('react')
 const convert = require('koa-convert')
@@ -139,6 +141,7 @@ if (__PROD__ && __ENV__ === 'local') { // required for local PROD build
   app.use(convert(koaMount('/', koaStatic('public'))))
 }
 
+app.use(experiment_setMenuServiceSegment)
 app.use(processRequest)
 
 const port = 8080
