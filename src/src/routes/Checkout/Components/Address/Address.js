@@ -124,7 +124,7 @@ class Address extends React.PureComponent {
   }
 
   checkCanDeliver = async postcode => {
-    const { deliveryDate, menuCutoffUntil, isNDDExperiment } = this.props
+    const { deliveryDate, menuCutoffUntil, isNDDExperiment, deliveryTariffId } = this.props
     let deliverable = false
 
     if (deliveryDate) {
@@ -136,7 +136,7 @@ class Address extends React.PureComponent {
           'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
           'filters[cutoff_datetime_until]': menuCutoffUntil || menuCutoffUntilFallback,
           'ndd': isNDDExperiment.toString(),
-          'delivery_tariff_id': getDeliveryTariffId(this.state.user, getNDDFeatureValue(this.state)),
+          'delivery_tariff_id': deliveryTariffId,
         }
 
         let { data: days } = await fetchDeliveryDays(null, reqData)

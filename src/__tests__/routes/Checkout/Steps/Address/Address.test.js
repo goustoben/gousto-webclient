@@ -82,6 +82,7 @@ describe('Address', () => {
         initialPostcode={'NW1 8RJ'}
         deliveryDate={'2019-09-01'}
         isDelivery
+        deliveryTariffId={'some-uuid'}
       />)
     })
 
@@ -111,7 +112,8 @@ describe('Address', () => {
         'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
         'filters[cutoff_datetime_until]': moment().startOf('day').add(30, 'days').toISOString(),
         postcode: 'NW1 8RJ',
-        ndd: 'true'
+        ndd: 'true',
+        delivery_tariff_id: 'some-uuid',
       }
 
       expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
