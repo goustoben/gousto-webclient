@@ -44,25 +44,26 @@ export function getMenuRecipeImage(imageUrls, imageSize) {
 }
 
 export function getFeaturedImage(recipe, view) {
-  let recipeImage
-  if (['featured', 'detail'].indexOf(view) > -1 && recipe.getIn(['media', 'images', 1, 'urls'], Immutable.List([])).size > 0
-   && recipe.getIn(['media', 'images', 1, 'type']) === 'homepage-image') {
-    recipeImage = recipe.getIn(['media', 'images', 1, 'urls'], Immutable.List([]))
-  }
+  const recipeImages = recipe.getIn(['media', 'images'], Immutable.List([]))
+  const homepageImage = recipeImages.find(image => image.get('type') === 'homepage-image')
 
-  if (!recipeImage) {
+  if (view === 'featured' && homepageImage !== undefined) {
+    const homepageImageUrls = homepageImage.get('urls', Immutable.List([]))
 
-    const moodImage = recipe.getIn(['media', 'images'], Immutable.List([])).find(image => image.get('type') === 'mood-image')
-    const moodImageUrls = moodImage ? moodImage.get('urls') : null
-    recipeImage = moodImageUrls || recipe.getIn(['media', 'images', 0, 'urls'], Immutable.List([]))
-
-    if(view === 'fineDineIn') {
-      return getFineDineInImage(recipe) || recipeImage
+    if (homepageImageUrls.size > 0) {
+      return homepageImageUrls
     }
-    
-    return recipeImage
   }
-  
+
+  const moodImage = recipeImages.find(image => image.get('type') === 'mood-image')
+  const moodImageUrls = moodImage ? moodImage.get('urls') : null
+  const firstImageUrls = recipeImages.getIn([0, 'urls'], Immutable.List([]))
+  const recipeImage = moodImageUrls || firstImageUrls
+
+  if (view === 'fineDineIn') {
+    return getFineDineInImage(recipe) || recipeImage
+  }
+
   return recipeImage
 }
 

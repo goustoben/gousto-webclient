@@ -79,9 +79,9 @@ describe('getFeaturedImage when there IS a homepage image', () => {
     )
   })
 
-  test('should return the homepage image if it is the detail image', () => {
+  test('should return the mood image if it is the detail image', () => {
     expect(JSON.stringify(getFeaturedImage(recipe, 'detail'))).toContain(
-      'homepage-image',
+      'mood-image',
     )
   })
 
