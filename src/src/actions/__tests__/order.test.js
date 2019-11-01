@@ -1,14 +1,13 @@
 import Immutable from 'immutable'
-
-import {getOrderDetails} from 'utils/basket'
-import {saveUserOrder, updateUserOrder} from 'apis/user'
-import {cancelOrder, fetchOrder, orderCheckout, saveOrder, updateOrderAddress, updateOrderItems,} from 'apis/orders'
-import {orderConfirmationRedirect} from 'actions/orderConfirmation'
+import { getOrderDetails } from 'utils/basket'
+import { saveUserOrder, updateUserOrder } from 'apis/user'
+import { cancelOrder, fetchOrder, orderCheckout, saveOrder, updateOrderAddress, updateOrderItems, } from 'apis/orders'
+import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 import actionStatus from 'actions/status'
 import actionTypes from 'actions/actionTypes'
-import orderActions from '../order'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
+import orderActions from '../order'
 
 jest.mock('apis/orders')
 jest.mock('actions/orderConfirmation')

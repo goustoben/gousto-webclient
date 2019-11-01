@@ -1,9 +1,7 @@
 import Immutable from 'immutable'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 import moment from 'moment'
-
 import Address from 'routes/Checkout/Components/Address/Address'
 import { Button } from 'goustouicomponents'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'

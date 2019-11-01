@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
-
 import { Button } from 'goustouicomponents'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveryUtils from 'utils/deliveries'
@@ -11,8 +10,6 @@ import DeliveryInfo from './DeliveryInfo'
 import Postcode from './Postcode'
 import AddressInputs from './AddressInputs'
 import css from './Address.css'
-import {getDeliveryTariffId} from "../../../../utils/deliveries";
-import {getNDDFeatureValue} from "../../../../selectors/features";
 
 class Address extends React.PureComponent {
   static propTypes = {

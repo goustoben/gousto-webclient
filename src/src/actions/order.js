@@ -9,7 +9,7 @@ import logger from 'utils/logger'
 import { getOrderDetails } from 'utils/basket'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot } from 'utils/deliveries'
 import { redirect } from 'utils/window'
-import {getNDDFeatureValue} from "../selectors/features";
+import { getNDDFeatureValue } from '../selectors/features'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
