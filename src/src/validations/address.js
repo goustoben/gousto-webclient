@@ -35,7 +35,7 @@ const rules = {
 
         logger.error(`deliverable (in validation) = ${deliverable}`)
         if (addressesFetched && !deliverable && (sectionName === 'delivery')) {
-          valid = { errorMessage: 'Sorry, we don\'t deliver to this postcode yet' }
+          valid = { errorMessage: `Welp, how about this info: FORM VALUES: ${JSON.stringify(formValues)}, SECTION NAME: ${JSON.stringify(sectionName)}` }
         }
 
         return valid
