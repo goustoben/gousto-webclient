@@ -684,7 +684,7 @@ function subscriptionPauseStart() {
     const subscriptionPauseOsrFeatureValue = isSubscriptionPauseOsrFeatureEnabled(getState())
     const osrOfferFeatureValue = isOsrOfferFeatureEnabled(getState())
     if (subscriptionPauseOsrFeatureValue) {
-      return getPauseRecoveryContent({enableOffer: osrOfferFeatureValue})(dispatch, getState)
+      return getPauseRecoveryContent(osrOfferFeatureValue)(dispatch, getState)
     }
     
     await dispatch(userActions.userLoadData())

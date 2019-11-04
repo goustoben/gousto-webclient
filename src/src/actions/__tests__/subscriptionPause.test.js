@@ -640,7 +640,7 @@ describe('Subscription action', () => {
           await subPauseActions.subscriptionPauseStart()(dispatch, getState)
 
           expect(getPauseRecoveryContent).toHaveBeenCalledTimes(1)
-          expect(getPauseRecoveryContent).toHaveBeenCalledWith({enableOffer: false})
+          expect(getPauseRecoveryContent).toHaveBeenCalledWith(false)
         })
       })
 
@@ -666,7 +666,7 @@ describe('Subscription action', () => {
           await subPauseActions.subscriptionPauseStart()(dispatch, getState)
 
           expect(getPauseRecoveryContent).toHaveBeenCalledTimes(1)
-          expect(getPauseRecoveryContent).toHaveBeenCalledWith({enableOffer: true})
+          expect(getPauseRecoveryContent).toHaveBeenCalledWith(true)
         })
       })
     })
