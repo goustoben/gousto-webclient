@@ -125,7 +125,6 @@ class Address extends React.PureComponent {
     const { deliveryDate, menuCutoffUntil, isNDDExperiment } = this.props
     let deliverable = false
 
-    logger.error(`deliveryDate = ${deliveryDate}`)
     if (deliveryDate) {
       try {
         const menuCutoffUntilFallback = moment().startOf('day').add(30, 'days')
@@ -137,11 +136,7 @@ class Address extends React.PureComponent {
           ndd: isNDDExperiment.toString()
         }
 
-        logger.error(`postcode = ${postcode}`)
-
         let { data: days } = await fetchDeliveryDays(null, reqData)
-
-        logger.error(`days = ${days}`)
 
         if (isNDDExperiment) {
           days = deliveryUtils.transformDaySlotLeadTimesToMockSlots(days)
@@ -160,21 +155,14 @@ class Address extends React.PureComponent {
       deliverable = true
     }
 
-    logger.error(`deliverable = ${deliverable}`)
-
     return deliverable
   }
 
   loadAddresses = async postcode => {
-    logger.error(`load addresses`)
     const checks = [this.props.checkoutAddressLookup(postcode)]
-    logger.error(`load addresses: after action called`)
     if (this.props.isDelivery) {
-      logger.error(`load addresses: is delivery`)
       checks.push(this.checkCanDeliver(postcode))
     }
-
-    logger.error(`load addresses: about to return`)
 
     return await Promise.all(checks)
   }

@@ -1,7 +1,6 @@
 import { addPrefix } from 'validations/util'
 import goustoStore from 'store'
 import { getFormValues, getFormMeta, getFormSyncErrors } from 'redux-form'
-import logger from 'utils/logger'
 
 const rules = {
   postcodeTemp: {
@@ -33,7 +32,6 @@ const rules = {
         const addressesFetched = formValues && formValues[sectionName] && formValues[sectionName].addressesFetched
         const deliverable = formValues && formValues[sectionName] && formValues[sectionName].deliverable
 
-        logger.error(`deliverable (in validation) = ${deliverable}`)
         if (addressesFetched && !deliverable && (sectionName === 'delivery')) {
           valid = { errorMessage: 'Sorry, we don\'t deliver to this postcode yet' }
         }
