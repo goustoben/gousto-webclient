@@ -51,6 +51,29 @@ jobs:
             - project
             - .circlerc
 
+  test-isomorphic-mocha:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run isomoprhic mocha tests
+          command: cd src && yarn run test:mocha
+
+  test-isomorphic-jest:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run isomoprhic jest tests
+          command: cd src && yarn run test:jest:ci
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .circlerc
+
   setup-remote-image-repositories:
     docker: *gousto_build_image_docker
     steps:
@@ -122,6 +145,15 @@ jobs:
           name: Run eslint
           command: cd src && yarn eslint --quiet
 
+  code-analysis:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Code analysis
+          command: source ~/.circlerc && /bin/bash ./ci_scripts/code-analysis.sh
+
   test-e2e-selenium:
     docker: *gousto_build_image
     steps:
@@ -160,11 +192,69 @@ workflows:
                 - /^env-.*/
                 - develop
                 - master
+      - test-isomorphic-mocha:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
+      - test-isomorphic-jest:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
+      - eslint-only-errors:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
+      - code-analysis:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              ignore:
+                - /^env-.*/
+                - develop
+                - master
 
   development-environment:
     jobs:
       - install-dependencies:
           context: gousto-beta-aws-app-circleci
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - test-isomorphic-mocha:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - test-isomorphic-jest:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
           filters:
             branches:
               only:
@@ -197,8 +287,32 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
+      - eslint-only-errors:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
+      - code-analysis:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - test-isomorphic-jest
+            - test-isomorphic-mocha
+            - eslint-only-errors
+          filters:
+            branches:
+              only:
+                - /^env-.*/
+                - develop
       - build-application:
           context: gousto-beta-aws-app-circleci
+          requires:
+            - test-isomorphic-mocha
+            - test-isomorphic-jest
+            - eslint-only-errors
           filters:
             branches:
               only:
@@ -208,6 +322,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - build-application
+            - code-analysis
           filters:
             branches:
               only:
@@ -218,6 +333,7 @@ workflows:
           requires:
             - build-nginx-image
             - build-webclient-image
+            - code-analysis
           filters:
             branches:
               only:
@@ -242,6 +358,22 @@ workflows:
             branches:
               only:
                 - master
+      - test-isomorphic-mocha:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - master
+      - test-isomorphic-jest:
+          context: gousto-prod-aws-app-circleci
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only:
+                - master
       - setup-remote-image-repositories:
           context: gousto-prod-aws-app-circleci
           requires:
@@ -268,6 +400,9 @@ workflows:
                 - master
       - build-application:
           context: gousto-prod-aws-app-circleci
+          requires:
+            - test-isomorphic-mocha
+            - test-isomorphic-jest
           filters:
             branches:
               only:
