@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 
 import actionTypes from 'actions/actionTypes'
 
-import logger, { warning } from 'utils/logger'
+import { warning } from 'utils/logger'
 import { getSlot } from 'utils/deliveries'
 import { redirect } from 'actions/redirect'
 import { pending, error } from 'actions/status'
@@ -56,7 +56,6 @@ jest.mock('actions/status', () => ({
 
 jest.mock('utils/logger', () => ({
   warning: jest.fn(),
-  error: jest.fn()
 }))
 
 jest.mock('actions/order', () => ({

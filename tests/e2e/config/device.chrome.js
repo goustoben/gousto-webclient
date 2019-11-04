@@ -5,7 +5,7 @@ module.exports = () => ({
   desiredCapabilities: {
     chromeOptions: {
       args: [
-        '--window-size=3000,3000'
+        '--window-size=1300,800'
       ]
     }
   }

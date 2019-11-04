@@ -52,7 +52,7 @@ module.exports = {
         setPostcode: function () {
           this
             .waitForElementVisible('@postcodeInput')
-            .setValue('@postcodeInput', 'W3 7UP')
+            .setValue('@postcodeInput', 'RH4 1EW')
 
           return this
         },

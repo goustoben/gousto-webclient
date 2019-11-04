@@ -80,7 +80,6 @@ class Address extends React.PureComponent {
     registerField(formName, `${sectionName}.addresses`, 'Field')
     registerField(formName, `${sectionName}.addressesFetched`, 'Field')
     registerField(formName, `${sectionName}.deliverable`, 'Field')
-    registerField(formName, `${sectionName}.gatherInfo`, 'Field')
     registerField(formName, `${sectionName}.confirmed`, 'Field')
   }
 
@@ -111,14 +110,13 @@ class Address extends React.PureComponent {
     }
 
     const { formName, sectionName, touch, change } = this.props
-    const [addressData, {deliverable, gatherInfo} ] = results // eslint-disable-line no-unused-vars
+    const [addressData, deliverable] = results // eslint-disable-line no-unused-vars
 
     this.setState({
       addressData,
     })
 
     change(formName, `${sectionName}.deliverable`, deliverable)
-    change(formName, `${sectionName}.gatherInfo`, gatherInfo)
     change(formName, `${sectionName}.addresses`, generateDropdownOptions(addressData))
     touch(formName, `${sectionName}.addresses`)
   }
@@ -126,14 +124,8 @@ class Address extends React.PureComponent {
   checkCanDeliver = async postcode => {
     const { deliveryDate, menuCutoffUntil, isNDDExperiment } = this.props
     let deliverable = false
-    let gatherInfo = {
-      initial: 'initial'
-    }
 
-    logger.error(`deliveryDate = ${deliveryDate}`)
     if (deliveryDate) {
-      gatherInfo.deliveryDate = deliveryDate
-
       try {
         const menuCutoffUntilFallback = moment().startOf('day').add(30, 'days')
           .toISOString()
@@ -144,29 +136,18 @@ class Address extends React.PureComponent {
           ndd: isNDDExperiment.toString()
         }
 
-        logger.error(`postcode = ${postcode}`)
-        gatherInfo.postcode = postcode
-
         let { data: days } = await fetchDeliveryDays(null, reqData)
-
-        logger.error(`days = ${days}`)
-        gatherInfo.days = days
 
         if (isNDDExperiment) {
           days = deliveryUtils.transformDaySlotLeadTimesToMockSlots(days)
         }
 
-        gatherInfo.daysDeliveryUtils = days
-
         const availableDeliveryDays = deliveryUtils.getAvailableDeliveryDays(days)
-
-        gatherInfo.finalCheck = { availableDeliveryDays }
 
         if (availableDeliveryDays && availableDeliveryDays[deliveryDate] && !availableDeliveryDays[deliveryDate].alternateDeliveryDay) {
           deliverable = true
         }
       } catch (error) {
-        gatherInfo.error = error
         logger.error(error)
         // deliverable = false
       }
@@ -174,23 +155,14 @@ class Address extends React.PureComponent {
       deliverable = true
     }
 
-    logger.error(`deliverable = ${deliverable}`)
-
-    return {
-      deliverable, gatherInfo
-    }
+    return deliverable
   }
 
   loadAddresses = async postcode => {
-    logger.error(`load addresses`)
     const checks = [this.props.checkoutAddressLookup(postcode)]
-    logger.error(`load addresses: after action called`)
     if (this.props.isDelivery) {
-      logger.error(`load addresses: is delivery`)
       checks.push(this.checkCanDeliver(postcode))
     }
-
-    logger.error(`load addresses: about to return`)
 
     return await Promise.all(checks)
   }
@@ -210,7 +182,6 @@ class Address extends React.PureComponent {
     change(formName, `${sectionName}.addressId`, 'placeholder')
     change(formName, `${sectionName}.addressesFetched`, false)
     change(formName, `${sectionName}.deliverable`, false)
-    change(formName, `${sectionName}.gatherInfo`, {})
     untouch(formName, `${sectionName}.addressId`)
 
     this.saveAddresses(await this.loadAddresses(postcode))
