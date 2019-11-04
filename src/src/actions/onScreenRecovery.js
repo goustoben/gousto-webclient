@@ -299,7 +299,7 @@ export const orderCancelStart = (
       triggered: true,
       orderId,
       deliveryDayId,
-      orderDate: orderDate,
+      orderDate,
       modalType: 'order',
     })
   }
