@@ -11,7 +11,7 @@ import windowUtil from 'utils/window'
 import routesConfig from 'config/routes'
 import Immutable from 'immutable'
 import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
-import { isSubscriptionPauseOsrFeatureEnabled } from 'selectors/features'
+import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled } from 'selectors/features'
 import statusActions from './status'
 import actionTypes from './actionTypes'
 
@@ -682,8 +682,9 @@ function subscriptionPauseLoadInitReasons() {
 function subscriptionPauseStart() {
   return async (dispatch, getState) => {
     const subscriptionPauseOsrFeatureValue = isSubscriptionPauseOsrFeatureEnabled(getState())
+    const osrOfferFeatureValue = isOsrOfferFeatureEnabled(getState())
     if (subscriptionPauseOsrFeatureValue) {
-      return getPauseRecoveryContent()(dispatch, getState)
+      return getPauseRecoveryContent({enableOffer: osrOfferFeatureValue})(dispatch, getState)
     }
     
     await dispatch(userActions.userLoadData())

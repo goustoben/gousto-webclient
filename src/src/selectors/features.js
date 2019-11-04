@@ -68,6 +68,10 @@ export const isSubscriptionPauseOsrFeatureEnabled = ({ features }) => (
   features && features.getIn(['subscriptionPauseOsr', 'value'], false)
 )
 
+export const isOsrOfferFeatureEnabled = ({ features }) => (
+  features && features.getIn(['enableOsrOffer', 'value'], false)
+)
+
 export const getAbandonBasket = ({ features }) => (
   features && features.getIn(['abandonBasket', 'value'], false)
 )
