@@ -35,7 +35,7 @@ const rules = {
 
         logger.error(`deliverable (in validation) = ${deliverable}`)
         if (addressesFetched && !deliverable && (sectionName === 'delivery')) {
-          valid = { errorMessage: `Welp, how about this info: FORM VALUES: ${JSON.stringify(formValues[sectionName])}, SECTION NAME: ${JSON.stringify(sectionName)}` }
+          valid = { errorMessage: `Welp, how about this info: FORM VALUES: ${JSON.stringify(formValues)}, SECTION NAME: ${JSON.stringify(sectionName)}` }
         }
 
         return valid
