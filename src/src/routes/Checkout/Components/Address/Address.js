@@ -124,10 +124,14 @@ class Address extends React.PureComponent {
   checkCanDeliver = async postcode => {
     const { deliveryDate, menuCutoffUntil, isNDDExperiment } = this.props
     let deliverable = false
+    let gatherInfo = {
+      initial: 'initial'
+    }
 
-    logger.error({message:`deliveryDate = ${deliveryDate}`})
-    console.log({message:`deliveryDate = ${deliveryDate}`}) //eslint-disable-line
+    logger.error(`deliveryDate = ${deliveryDate}`)
     if (deliveryDate) {
+      gatherInfo.deliveryDate = deliveryDate
+
       try {
         const menuCutoffUntilFallback = moment().startOf('day').add(30, 'days')
           .toISOString()
@@ -138,52 +142,53 @@ class Address extends React.PureComponent {
           ndd: isNDDExperiment.toString()
         }
 
-        logger.error({message:`postcode = ${postcode}`})
-        console.log(`postcode = ${postcode}`) //eslint-disable-line
+        logger.error(`postcode = ${postcode}`)
+        gatherInfo.postcode = postcode
 
         let { data: days } = await fetchDeliveryDays(null, reqData)
 
-        logger.error({message:`days = ${days}`})
-        console.log(`days = ${days}`) //eslint-disable-line
+        logger.error(`days = ${days}`)
+        gatherInfo.days = days
 
         if (isNDDExperiment) {
           days = deliveryUtils.transformDaySlotLeadTimesToMockSlots(days)
         }
 
+        gatherInfo.daysDeliveryUtils = days
+
         const availableDeliveryDays = deliveryUtils.getAvailableDeliveryDays(days)
+
+        gatherInfo.finalCheck = { availableDeliveryDays }
 
         if (availableDeliveryDays && availableDeliveryDays[deliveryDate] && !availableDeliveryDays[deliveryDate].alternateDeliveryDay) {
           deliverable = true
         }
       } catch (error) {
+        gatherInfo.error = error
         logger.error(error)
-        console.log(error) //eslint-disable-line
         // deliverable = false
       }
     } else {
       deliverable = true
     }
 
-    logger.error({message:`deliverable = ${deliverable}`})
-    console.log(`deliverable = ${deliverable}`) //eslint-disable-line
+    logger.error(`deliverable = ${deliverable}`)
 
-    return deliverable
+    return {
+      deliverable, gatherInfo
+    }
   }
 
   loadAddresses = async postcode => {
-    logger.error({message:`load addresses`})
-    console.log(`load addresses`) //eslint-disable-line
+    logger.error(`load addresses`)
     const checks = [this.props.checkoutAddressLookup(postcode)]
-    logger.error({message:`load addresses: after action called`})
-    console.log(`load addresses: after action called`) //eslint-disable-line
+    logger.error(`load addresses: after action called`)
     if (this.props.isDelivery) {
-      logger.error({message:`load addresses: is delivery`})
-      console.log(`load addresses: is delivery`) //eslint-disable-line
+      logger.error(`load addresses: is delivery`)
       checks.push(this.checkCanDeliver(postcode))
     }
 
-    logger.error({message:`load addresses: about to return`})
-    console.log(`load addresses: about to return`) //eslint-disable-line
+    logger.error(`load addresses: about to return`)
 
     return await Promise.all(checks)
   }
