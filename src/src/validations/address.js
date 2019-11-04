@@ -34,6 +34,7 @@ const rules = {
         const deliverable = formValues && formValues[sectionName] && formValues[sectionName].deliverable
 
         logger.error(`deliverable (in validation) = ${deliverable}`)
+        console.log(`deliverable (in validation) = ${deliverable}`) //eslint-disable-line
         if (addressesFetched && !deliverable && (sectionName === 'delivery')) {
           valid = { errorMessage: 'Sorry, we don\'t deliver to this postcode yet' }
         }
