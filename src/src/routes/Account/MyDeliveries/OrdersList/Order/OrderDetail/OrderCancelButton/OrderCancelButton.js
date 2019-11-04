@@ -12,22 +12,24 @@ class OrderCancelButton extends React.PureComponent {
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,
     orderState: PropTypes.string,
-    close: PropTypes.func,
     didCancelProjectedError: PropTypes.bool,
     projectedOrderCancel: PropTypes.func,
     cancelOrderModalToggleVisibility: PropTypes.func,
+    orderCancelStart: PropTypes.func,
     orderCancel: PropTypes.func,
+    deliveryDay: PropTypes.string,
   }
 
   static defaultProps = {
     orderId: '',
     deliveryDayId: '',
     orderState: '',
-    close: () => {},
     didCancelProjectedError: false,
-    projectedOrderCancel: () => {},
-    cancelOrderModalToggleVisibility: () => {},
-    orderCancel: () => {},
+    projectedOrderCancel: () => { },
+    cancelOrderModalToggleVisibility: () => { },
+    orderCancelStart: () => { },
+    orderCancel: () => { },
+    deliveryDay: ''
   }
 
   static contextTypes = {
@@ -39,18 +41,11 @@ class OrderCancelButton extends React.PureComponent {
       orderState,
       orderId,
       deliveryDayId,
-      close,
-      projectedOrderCancel,
-      cancelOrderModalToggleVisibility,
-      orderCancel,
+      orderCancelStart,
+      deliveryDay
     } = this.props
-    if (orderState === 'scheduled') {
-      projectedOrderCancel(orderId, deliveryDayId)
-    } else if (orderState === 'recipes chosen') {
-      cancelOrderModalToggleVisibility(true, orderId)
-    } else {
-      orderCancel(orderId)
-      close()
+    if (orderState !== 'scheduled') {
+      orderCancelStart(orderId, deliveryDayId, deliveryDay)
     }
   }
 

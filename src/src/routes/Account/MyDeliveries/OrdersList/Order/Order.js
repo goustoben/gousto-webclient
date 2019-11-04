@@ -49,6 +49,7 @@ class Order extends React.PureComponent {
     addresses: PropTypes.instanceOf(Immutable.Map),
     orderDeliveryDaysFetchError: PropTypes.string,
     recipesPeriodStockFetchError: PropTypes.string,
+    deliveryDay: PropTypes.string,
   }
 
   static defaultProps = {
@@ -77,6 +78,7 @@ class Order extends React.PureComponent {
     addresses: Immutable.Map({}),
     orderDeliveryDaysFetchError: null,
     recipesPeriodStockFetchError: null,
+    deliveryDay: ''
   }
 
   static contextTypes = {
@@ -97,7 +99,7 @@ class Order extends React.PureComponent {
   }
 
   render() {
-    let onClickFunction = () => {}
+    let onClickFunction = () => { }
     if (this.props.orderState !== 'cancelled') {
       onClickFunction = this.props.collapsed ? this.open : this.close
     }
@@ -203,6 +205,7 @@ class Order extends React.PureComponent {
                 addresses={this.props.addresses}
                 orderDeliveryDaysFetchError={this.props.orderDeliveryDaysFetchError}
                 recipesPeriodStockFetchError={this.props.recipesPeriodStockFetchError}
+                deliveryDay={this.props.deliveryDay}
               />
             </div>
             :

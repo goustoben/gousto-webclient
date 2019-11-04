@@ -16,7 +16,6 @@ class OrderDetail extends React.PureComponent {
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,
     orderState: PropTypes.string,
-    close: PropTypes.func,
     paymentDate: PropTypes.string,
     recipes: PropTypes.instanceOf(Immutable.List),
     products: PropTypes.instanceOf(Immutable.List),
@@ -29,13 +28,13 @@ class OrderDetail extends React.PureComponent {
     cancellable: PropTypes.bool,
     orderDeliveryDaysFetchError: PropTypes.string,
     recipesPeriodStockFetchError: PropTypes.string,
+    deliveryDay: PropTypes.string,
   }
 
   static defaultProps = {
     orderId: '',
     deliveryDayId: '',
     orderState: '',
-    close: () => {},
     paymentDate: '',
     recipes: Immutable.List([]),
     products: Immutable.List([]),
@@ -46,6 +45,7 @@ class OrderDetail extends React.PureComponent {
     whenCutoff: '',
     editDeliveryMode: false,
     cancellable: false,
+    deliveryDay: '',
   }
 
   static contextTypes = {
@@ -105,7 +105,7 @@ class OrderDetail extends React.PureComponent {
               orderId={this.props.orderId}
               deliveryDayId={this.props.deliveryDayId}
               orderState={this.props.orderState}
-              close={this.props.close}
+              deliveryDay={this.props.deliveryDay}
             />
           </section>
           : null}
