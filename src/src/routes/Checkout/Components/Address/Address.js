@@ -80,6 +80,7 @@ class Address extends React.PureComponent {
     registerField(formName, `${sectionName}.addresses`, 'Field')
     registerField(formName, `${sectionName}.addressesFetched`, 'Field')
     registerField(formName, `${sectionName}.deliverable`, 'Field')
+    registerField(formName, `${sectionName}.gatherInfo`, 'Field')
     registerField(formName, `${sectionName}.confirmed`, 'Field')
   }
 
@@ -110,13 +111,14 @@ class Address extends React.PureComponent {
     }
 
     const { formName, sectionName, touch, change } = this.props
-    const [addressData, deliverable] = results // eslint-disable-line no-unused-vars
+    const [addressData, {deliverable, gatherInfo} ] = results // eslint-disable-line no-unused-vars
 
     this.setState({
       addressData,
     })
 
     change(formName, `${sectionName}.deliverable`, deliverable)
+    change(formName, `${sectionName}.gatherInfo`, gatherInfo)
     change(formName, `${sectionName}.addresses`, generateDropdownOptions(addressData))
     touch(formName, `${sectionName}.addresses`)
   }
@@ -208,6 +210,7 @@ class Address extends React.PureComponent {
     change(formName, `${sectionName}.addressId`, 'placeholder')
     change(formName, `${sectionName}.addressesFetched`, false)
     change(formName, `${sectionName}.deliverable`, false)
+    change(formName, `${sectionName}.gatherInfo`, {})
     untouch(formName, `${sectionName}.addressId`)
 
     this.saveAddresses(await this.loadAddresses(postcode))
