@@ -32,11 +32,12 @@ const rules = {
 
         const addressesFetched = formValues && formValues[sectionName] && formValues[sectionName].addressesFetched
         const deliverable = formValues && formValues[sectionName] && formValues[sectionName].deliverable
+        const gatherInfo = formValues && formValues[sectionName] && formValues[sectionName].gatherInfo
 
         logger.error({message:`deliverable (in validation) = ${deliverable}`})
         console.log(`deliverable (in validation) = ${deliverable}`) //eslint-disable-line
         if (addressesFetched && !deliverable && (sectionName === 'delivery')) {
-          valid = { errorMessage: `Welp, how about this info: FORM VALUES: ${JSON.stringify(formValues[sectionName])}, SECTION NAME: ${JSON.stringify(sectionName)}` }
+          valid = { errorMessage: `Welp, how about this info: GATHER INFO: ${JSON.stringify(gatherInfo)}` }
         }
 
         return valid
