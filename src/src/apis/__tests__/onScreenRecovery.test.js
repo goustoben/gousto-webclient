@@ -62,7 +62,14 @@ describe('onScreenRecovery api', () => {
       const token = 'token'
       await fetchSubscriptionPauseContent(token)
       expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subpauseosrv1/subscriptionpauserecovery/1', null, 'GET')
+      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subpauseosrv1/subscriptionpauserecovery/1', {'enableOffer': undefined}, 'GET')
+    })
+
+    test('should fetch the correct url with enableOffer flag', async () => {
+      const token = 'token'
+      await fetchSubscriptionPauseContent(token, true)
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith('token', 'endpoint-subpauseosrv1/subscriptionpauserecovery/1', {'enableOffer': true}, 'GET')
     })
 
     test('should return the results of the fetch unchanged', async () => {
