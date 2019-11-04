@@ -199,6 +199,8 @@ workflows:
                 - develop
       - build-application:
           context: gousto-beta-aws-app-circleci
+          requires:
+            - setup-remote-image-repositories
           filters:
             branches:
               only:
