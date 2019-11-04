@@ -71,6 +71,7 @@ export function checkoutClearErrors() {
 export function checkoutAddressLookup(postcode) {
   return async (dispatch) => {
     logger.error(`in address lookup action`)
+    console.log(`in address lookup action`) //eslint-disable-line
     dispatch(pending(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, true))
     dispatch(error(actionTypes.CHECKOUT_ADDRESSES_RECEIVE, null))
 
@@ -81,8 +82,10 @@ export function checkoutAddressLookup(postcode) {
 
     try {
       logger.error(`about to fetch address by postcode`)
+      console.log(`about to fetch address by postcode`) //eslint-disable-line
       const lookupResults = await fetchAddressByPostcode(postcode)
       logger.error(`fetch address by postcode results ${lookupResults}`)
+      console.log(`fetch address by postcode results ${lookupResults}`) //eslint-disable-line
 
       addresses.deliveryPoints = lookupResults.data.deliveryPoints || []
       addresses.town = lookupResults.data.town
@@ -96,6 +99,7 @@ export function checkoutAddressLookup(postcode) {
     }
 
     logger.error(`END of address lookup action`)
+    console.log(`END of address lookup action`) //eslint-disable-line
 
     return addresses
   }
