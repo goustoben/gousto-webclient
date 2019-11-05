@@ -1,22 +1,29 @@
 import sinon from 'sinon'
 
 import {
-  getSlot,
-  getCutoffs,
-  getCutoffDateTime,
-  getLandingDay,
   cutoffDateTimeNow,
   getAvailableDeliveryDays,
-  transformDaySlotLeadTimesToMockSlots,
-  getSlotTimes
+  getCutoffDateTime,
+  getCutoffs,
+  getLandingDay,
+  getSlot,
+  getSlotTimes,
+  transformDaySlotLeadTimesToMockSlots
 } from 'utils/deliveries'
 import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import { getDisabledSlots } from 'selectors/features'
+import { DeliveryTariffTypes, getDeliveryTariffId, getNDDFeatureFlagVal } from '../deliveries'
 
 jest.mock('selectors/features', () => ({
   getDisabledSlots: jest.fn()
 }))
+
+const userWithDeliveryTariff = (deliveryTariffId) => {
+  return {
+    deliveryTariffId: deliveryTariffId,
+  }
+}
 
 describe('utils/deliveries', () => {
   describe('getSlot', () => {
@@ -2030,6 +2037,72 @@ describe('utils/deliveries', () => {
 
     test('should throw a GoustoException when no days with DSLTs passed', () => {
       expect(() => transformDaySlotLeadTimesToMockSlots(new Error('Is broke'))).toThrow(GoustoException)
+    })
+  })
+
+  describe('getDeliveryTariffId', () => {
+    test('it should return a user\'s existing tariff ID', () => {
+      const expectedTariff = DeliveryTariffTypes.PAID_NDD
+
+      const resolvedTariff = getDeliveryTariffId(userWithDeliveryTariff(expectedTariff), DeliveryTariffTypes.FREE_NDD)
+      expect(resolvedTariff).toEqual(expectedTariff)
+    })
+
+    test('it should return the experiment tariff without a user', () => {
+      const expectedTariff = DeliveryTariffTypes.NON_NDD
+
+      const resolvedTariff = getDeliveryTariffId(null, expectedTariff)
+      expect(resolvedTariff).toEqual(expectedTariff)
+    })
+  })
+
+  describe('getNDDFeatureFlagVal', () => {
+    test('it should return true when user is already set to a free NDD tariff.', () => {
+      const user = userWithDeliveryTariff(DeliveryTariffTypes.FREE_NDD)
+
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(user, DeliveryTariffTypes.NON_NDD)
+
+      expect(resolvedFeatureFlagValue).toEqual(true)
+    })
+
+    test('it should return true when user is already set to a paid NDD tariff.', () => {
+      const user = userWithDeliveryTariff(DeliveryTariffTypes.PAID_NDD)
+
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(user, DeliveryTariffTypes.NON_NDD)
+
+      expect(resolvedFeatureFlagValue).toEqual(true)
+    })
+
+    test('it should return true when a new user is on the free NDD tariff.', () => {
+      const experimentValue = DeliveryTariffTypes.FREE_NDD
+
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, experimentValue)
+
+      expect(resolvedFeatureFlagValue).toEqual(true)
+    })
+
+    test('it should return true when a new user is on the paid NDD tariff.', () => {
+      const experimentValue = DeliveryTariffTypes.PAID_NDD
+
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, experimentValue)
+
+      expect(resolvedFeatureFlagValue).toEqual(true)
+    })
+
+    test('it should return true when a new user is on the paid NDD tariff.', () => {
+      const experimentValue = DeliveryTariffTypes.NON_NDD
+
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, experimentValue)
+
+      expect(resolvedFeatureFlagValue).toEqual(false)
+    })
+
+    test('it should return false when an existing user is not in the experiment.', () => {
+      const user = userWithDeliveryTariff(DeliveryTariffTypes.NON_NDD)
+
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(user, DeliveryTariffTypes.FREE_NDD)
+
+      expect(resolvedFeatureFlagValue).toEqual(false)
     })
   })
 })

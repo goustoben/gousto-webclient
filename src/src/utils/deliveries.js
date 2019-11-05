@@ -5,8 +5,9 @@ import { getDisabledSlots } from 'selectors/features'
 import { formatAndValidateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
 
 export const DeliveryTariffTypes = {
+  NON_NDD: '9037a447-e11a-4960-ae69-d89a029569af',
   FREE_NDD: '823b18ef-5ca0-4a15-8f0f-4a363b319e29',
-  NON_NDD: '9037a447-e11a-4960-ae69-d89a029569af'
+  PAID_NDD: '435191b6-0fa0-422b-a5c0-0dc1dc65d888'
 }
 
 export function getSlot(deliveryDays, date, slotId) {
@@ -453,4 +454,19 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
       }))
     }
   })
+}
+
+// Used both when users first arrive on the site and do not have a delivery_tariff_id
+// and by returning users with a delivery_tariff_id
+export function getDeliveryTariffId(user, nddExperimentVal) {
+  // If the user has a delivery tariff, use it - otherwise use experiment value.
+  return (user && user.deliveryTariffId) ? user.deliveryTariffId : nddExperimentVal
+}
+
+// Used to determine whether to show and use NDD features for a new user without a delivery_tariff_id
+// or returning users with a delivery_tariff_id
+export function getNDDFeatureFlagVal(user, nddExperimentVal) {
+  const deliveryTariffId = getDeliveryTariffId(user, nddExperimentVal)
+
+  return (deliveryTariffId !== DeliveryTariffTypes['NON_NDD'])
 }
