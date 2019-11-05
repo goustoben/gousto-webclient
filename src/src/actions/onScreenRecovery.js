@@ -177,12 +177,12 @@ export const getSkipRecoveryContent = () => (
   }
 )
 
-export const getPauseRecoveryContent = () => (
+export const getPauseRecoveryContent = (enableOffer = false) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const modalType = 'subscription'
     try {
-      const { data } = await fetchSubscriptionPauseContent(accessToken)
+      const { data } = await fetchSubscriptionPauseContent(accessToken, enableOffer)
       if (data.intervene) {
         dispatch(modalVisibilityChange({
           data,

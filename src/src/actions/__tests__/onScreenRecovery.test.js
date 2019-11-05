@@ -805,7 +805,7 @@ describe('onScreenRecovery', () => {
 
       await getRecoveryContent()(dispatchSpy, getStateSpy)
 
-      expect(fetchSubscriptionPauseContent).toHaveBeenCalledWith('token')
+      expect(fetchSubscriptionPauseContent).toHaveBeenCalledWith('token', false)
     })
   })
 

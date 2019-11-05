@@ -635,10 +635,39 @@ describe('Subscription action', () => {
         })
       })
 
-      it('should call getPauseRecoveryContent', async function() {
-        await subPauseActions.subscriptionPauseStart()(dispatch, getState)
+      describe('when feature flag enableOsrOffer value is undefined', async function() {
+        it('should call getPauseRecoveryContent with false enableOffer', async function() {
+          await subPauseActions.subscriptionPauseStart()(dispatch, getState)
 
-        expect(getPauseRecoveryContent).toHaveBeenCalledTimes(1)
+          expect(getPauseRecoveryContent).toHaveBeenCalledTimes(1)
+          expect(getPauseRecoveryContent).toHaveBeenCalledWith(false)
+        })
+      })
+
+      describe('when feature flag enableOsrOffer value is true', async function() {
+        beforeEach(() => {
+          getState.mockReturnValueOnce({
+            features: Immutable.fromJS({
+              subscriptionPauseOsr: {experiment: false, value: true},
+              enableOsrOffer: {experiment: false, value: true},
+            }),
+            auth: Immutable.fromJS({ accessToken: 'token' }),
+            user: Immutable.fromJS({ id: '123' }),
+            subscriptionPause: Immutable.fromJS({
+              reasons: [
+                { id: 1, children: [] },
+                { id: 2, children: [] },
+              ],
+              startScreen: [],
+            }),
+          })
+        })
+        it('should call getPauseRecoveryContent with true enableOffer', async function() {
+          await subPauseActions.subscriptionPauseStart()(dispatch, getState)
+
+          expect(getPauseRecoveryContent).toHaveBeenCalledTimes(1)
+          expect(getPauseRecoveryContent).toHaveBeenCalledWith(true)
+        })
       })
     })
   })
