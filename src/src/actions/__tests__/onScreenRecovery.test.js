@@ -20,6 +20,7 @@ import {
   onKeep,
   onConfirm,
   getRecoveryContent,
+  orderCancelStart,
 } from 'actions/onScreenRecovery'
 
 jest.mock('actions/order', () => ({
@@ -134,7 +135,7 @@ describe('onScreenRecovery', () => {
         type: 'ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE',
         modalVisibility: false,
         orderId: '83632',
-        trackingData: expect.objectContaining({delivery_day_id: '123',})
+        trackingData: expect.objectContaining({ delivery_day_id: '123', })
       }))
     })
 
@@ -195,7 +196,7 @@ describe('onScreenRecovery', () => {
   })
 
   describe('cancelProjectedOrder', () => {
-    beforeEach(()=>{
+    beforeEach(() => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
           deliveryDayId: '1234',
@@ -747,7 +748,7 @@ describe('onScreenRecovery', () => {
   })
 
   describe('onConfirm', () => {
-    test('should call order cancel when modal type is "order"', async() => {
+    test('should call order cancel when modal type is "order"', async () => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
           modalType: 'order'
@@ -759,7 +760,7 @@ describe('onScreenRecovery', () => {
       expect(projectedOrderCancel).toHaveBeenCalled()
     })
 
-    test('should call pause subscription when modal type is "subscription"', async() => {
+    test('should call pause subscription when modal type is "subscription"', async () => {
       getStateSpy.mockReturnValue({
         onScreenRecovery: Immutable.Map({
           modalType: 'subscription'
@@ -805,6 +806,23 @@ describe('onScreenRecovery', () => {
       await getRecoveryContent()(dispatchSpy, getStateSpy)
 
       expect(fetchSubscriptionPauseContent).toHaveBeenCalledWith('token')
+    })
+  })
+
+  describe('orderCancelStart', () => {
+    const mockResponse = {
+      type: actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED,
+      triggered: true,
+      orderId: '12345',
+      deliveryDayId: '34567',
+      orderDate: '2019-11-17 00:00:00',
+      modalType: 'order',
+    }
+
+    test('should call dispatch with correct parameters', () => {
+      orderCancelStart('12345', '34567', '2019-11-17 00:00:00')(dispatchSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith(mockResponse)
     })
   })
 })

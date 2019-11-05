@@ -256,7 +256,7 @@ export const pauseSubscription = () => (
 export const onKeep = () => (
   async (dispatch, getState) => {
     const modalType = getState().onScreenRecovery.get('modalType')
-    if(modalType === 'order') {
+    if (modalType === 'order') {
       keepOrder()(dispatch, getState)
     } else if (modalType === 'subscription') {
       keepSubscription()(dispatch, getState)
@@ -267,7 +267,7 @@ export const onKeep = () => (
 export const onConfirm = () => (
   async (dispatch, getState) => {
     const modalType = getState().onScreenRecovery.get('modalType')
-    if(modalType === 'order') {
+    if (modalType === 'order') {
       cancelOrder()(dispatch, getState)
     } else if (modalType === 'subscription') {
       pauseSubscription()(dispatch, getState)
@@ -279,10 +279,28 @@ export const getRecoveryContent = () => (
   async (dispatch, getState) => {
     const modalType = getState().onScreenRecovery.get('modalType')
 
-    if(modalType === 'order'){
+    if (modalType === 'order') {
       getSkipRecoveryContent()(dispatch, getState)
     } else if (modalType === 'subscription') {
       getPauseRecoveryContent()(dispatch, getState)
     }
+  }
+)
+
+export const orderCancelStart = (
+  orderId,
+  deliveryDayId,
+  orderDate,
+) => (
+  (dispatch) => {
+
+    dispatch({
+      type: actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED,
+      triggered: true,
+      orderId,
+      deliveryDayId,
+      orderDate,
+      modalType: 'order',
+    })
   }
 )
