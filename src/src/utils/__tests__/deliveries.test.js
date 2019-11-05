@@ -18,9 +18,9 @@ import { DeliveryTariffTypes, getDeliveryTariffId, getNDDFeatureFlagVal } from '
 features.getDisabledSlots = jest.fn()
 
 const userWithDeliveryTariff = (deliveryTariffId) => {
-  return {
+  return Immutable.fromJS({
     deliveryTariffId: deliveryTariffId,
-  }
+  })
 }
 
 describe('utils/deliveries', () => {

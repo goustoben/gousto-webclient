@@ -460,7 +460,7 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
 // and by returning users with a delivery_tariff_id
 export function getDeliveryTariffId(user, nddExperimentVal) {
   // If the user has a delivery tariff, use it - otherwise use experiment value.
-  return (user && user.deliveryTariffId) ? user.deliveryTariffId : nddExperimentVal
+  return (user && user.get('deliveryTariffId')) ? user.get('deliveryTariffId') : nddExperimentVal
 }
 
 // Used to determine whether to show and use NDD features for a new user without a delivery_tariff_id
