@@ -275,7 +275,7 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
     dispatch(statusActions.pending(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, true))
 
     const postcode = getState().user.getIn(['addresses', addressId, 'postcode'])
-    const isNDDExperiment = getNDDFeatureFlagVal(getState().user, getNDDFeatureValue(getState()))
+    const isNDDExperiment = getNDDFeatureFlagVal(getState())
     const reqData = {
       'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
       'filters[cutoff_datetime_until]': cutoffDatetimeUntil,

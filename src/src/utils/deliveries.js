@@ -1,7 +1,7 @@
 import moment from 'moment'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import GoustoException from 'utils/GoustoException'
-import { getDisabledSlots } from 'selectors/features'
+import { getDisabledSlots, getNDDFeatureValue } from 'selectors/features'
 import { formatAndValidateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
 
 export const DeliveryTariffTypes = {
@@ -465,7 +465,9 @@ export function getDeliveryTariffId(user, nddExperimentVal) {
 
 // Used to determine whether to show and use NDD features for a new user without a delivery_tariff_id
 // or returning users with a delivery_tariff_id
-export function getNDDFeatureFlagVal(user, nddExperimentVal) {
+export function getNDDFeatureFlagVal(state) {
+  const { user } = state
+  const nddExperimentVal = getNDDFeatureValue(state)
   const deliveryTariffId = getDeliveryTariffId(user, nddExperimentVal)
 
   return (deliveryTariffId !== DeliveryTariffTypes['NON_NDD'])

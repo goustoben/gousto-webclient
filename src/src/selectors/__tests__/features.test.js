@@ -15,8 +15,6 @@ import {
   getNDDFeatureValue,
 } from 'selectors/features'
 
-import { DeliveryTariffTypes } from 'utils/deliveries'
-
 describe('when features are undefined', () => {
   const state = {}
 

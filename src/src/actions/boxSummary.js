@@ -79,7 +79,7 @@ const actions = {
         ? moment.utc(cutoffDatetimeUntil).endOf('day').toISOString()
         : getState().menuCutoffUntil
 
-      const isNDDExperiment = getNDDFeatureFlagVal(getState().user, getNDDFeatureValue(getState()))
+      const isNDDExperiment = getNDDFeatureFlagVal(getState())
 
       const reqData = {
         'filters[cutoff_datetime_from]': moment.utc(cutoffDatetimeFrom).startOf('day').toISOString(),

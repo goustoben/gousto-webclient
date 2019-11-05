@@ -27,7 +27,7 @@ function mapStateToProps(state, ownProps) {
     deliveryDate: state.basket.get('date'),
     menuCutoffUntil: state.menuCutoffUntil,
     cutOffDate: getCutoffDate(state),
-    isNDDExperiment: getNDDFeatureFlagVal(state.user, getNDDFeatureValue(state)),
+    isNDDExperiment: getNDDFeatureFlagVal(state),
     isMobile: state.request.get('browser') === 'mobile',
     deliveryTariffId: getDeliveryTariffId(state.user, getNDDFeatureValue(state)),
   }
