@@ -15,9 +15,9 @@ const OrderSideSwipe = ({
   for (let i = 0; i < maxRecipes; i++) {
     recipesRendered.push(
       <OrderRecipe
-        recipeImage={recipes.get(i) ? recipes.get(i).get('image') : ''}
-        recipeTitle={recipes.get(i) ? recipes.get(i).get('title') : ''}
-        key={recipes.get(i) ? recipes.get(i).get('recipeId') * i : i}
+        recipeImage={recipes.getIn([i, 'image'], '')}
+        recipeTitle={recipes.getIn([i, 'title'], '')}
+        key={recipes.getIn([i, 'id'], i)}
       />
     )
   }

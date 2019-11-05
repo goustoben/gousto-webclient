@@ -11,7 +11,7 @@ class OrderCollage extends React.PureComponent {
     const maxRecipes = ['confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? recipes.size : 4
     const blankCards = []
     const recipeCollage = recipes.map((recipe) =>
-      <div className={css.collageItem} key={recipe.get('recipeId')}>
+      <div className={css.collageItem} key={recipe.get('id')}>
         <div className={css.collageImage}>
           <Image media={recipe.get('image') || placeholderSrc} />
         </div>
