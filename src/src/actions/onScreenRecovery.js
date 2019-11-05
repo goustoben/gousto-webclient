@@ -291,6 +291,7 @@ export const orderCancelStart = (
   orderId,
   deliveryDayId,
   orderDate,
+  orderType
 ) => (
   (dispatch) => {
 
@@ -301,6 +302,7 @@ export const orderCancelStart = (
       deliveryDayId,
       orderDate,
       modalType: 'order',
+      orderType,
     })
   }
 )

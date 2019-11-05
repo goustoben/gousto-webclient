@@ -165,7 +165,7 @@ class Order extends React.PureComponent {
                 </div>
               </div>
 
-              {this.props.orderState !== 'cancelled' && this.props.orderState !== 'scheduled' ?
+              {this.props.orderState !== 'cancelled' ?
                 <div className={css.orderColRight}>
                   <OrderPricing
                     pricing={this.props.priceBreakdown}

@@ -152,7 +152,8 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
         deliveryDayRescheduledReason,
         alternateDeliveryDay,
         isProjected: true,
-        restorable
+        restorable,
+        cancellable: true,
       })
     )
   }, new Immutable.Map())
