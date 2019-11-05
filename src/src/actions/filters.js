@@ -18,6 +18,7 @@ import {
   trackRecipeFiltersApplied,
   trackCTAToAllRecipesClicked,
 } from './tracking'
+import { trackProductFiltering } from './products'
 
 const filtersVisibilityChange = (visible = true) => ({
   type: actionTypes.MENU_FILTERS_VISIBILITY_CHANGE,
@@ -223,6 +224,7 @@ export const filterMenuRevertFilters = () => (
 export const filterProductCategory = (category) => (
   (dispatch) => {
     dispatch({ type: 'FILTERS_PRODUCT_CATEGORY', value: category })
+    dispatch(trackProductFiltering(category))
   }
 )
 
