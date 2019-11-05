@@ -45,7 +45,9 @@ class OrderCancelButton extends React.PureComponent {
       deliveryDay
     } = this.props
     if (orderState !== 'scheduled') {
-      orderCancelStart(orderId, deliveryDayId, deliveryDay)
+      orderCancelStart(orderId, deliveryDayId, deliveryDay, "pending")
+    } else {
+      orderCancelStart(null, deliveryDayId, deliveryDay, "projected")
     }
   }
 
