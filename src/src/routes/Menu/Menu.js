@@ -65,7 +65,8 @@ class Menu extends React.PureComponent {
       portionSizeSelectedTracking,
       numPortions,
       productsLoadProducts,
-      productsLoadStock
+      productsLoadStock,
+      isAuthenticated
     } = this.props
 
     const { store } = this.context
@@ -94,6 +95,10 @@ class Menu extends React.PureComponent {
       menuLoadDays().then(() => {
         boxSummaryDeliveryDaysLoad()
       })
+    }
+
+    if (isAuthenticated) {
+      boxSummaryDeliveryDaysLoad()
     }
 
     if (!disabled && !menuLoadingBoxPrices) {
