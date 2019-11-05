@@ -11,7 +11,8 @@ const mapStateToProps = (state) => {
     cutoffDate: getCutoffDate(state),
     features: state.features,
     allRecipesList: state.menuRecipes,
-    recipesStore: state.recipes
+    recipesStore: state.recipes,
+    browserType: state.request.get('browser')
   }
 }
 

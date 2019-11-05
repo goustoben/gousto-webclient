@@ -7,7 +7,7 @@ import { getFeaturedImage } from 'utils/image'
 import { isMobile, DESKTOP_VIEW } from 'utils/view'
 import css from './RecipeHolder.css'
 
-const RecipeHolder = ({ recipe, view, onClick }) => {
+const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
   const isMobileView = isMobile(view)
 
   return (
@@ -23,7 +23,7 @@ const RecipeHolder = ({ recipe, view, onClick }) => {
     >
       {(recipe.size > 0) ?
         <Image
-          media={getFeaturedImage(recipe, '')}
+          media={getFeaturedImage(recipe, '', browserType)}
           className={classnames(
             { [css.recipeImg]: !isMobileView },
             { [css.imgMobile]: isMobileView }
@@ -38,6 +38,7 @@ RecipeHolder.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map),
   view: PropTypes.string,
   onClick: PropTypes.func,
+  browserType: PropTypes.string.isRequired
 }
 
 RecipeHolder.defaultProps = {
