@@ -45,8 +45,6 @@ class Header extends React.PureComponent {
     small: PropTypes.bool,
     abandonBasketFeature: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
-    shouldLoadOrders: PropTypes.bool,
-    loadUserOrders: PropTypes.func.isRequired,
     shouldRenderNewMenuDesign: PropTypes.bool
   }
 
@@ -60,7 +58,6 @@ class Header extends React.PureComponent {
     small: false,
     trackNavigationClick: () => { },
     abandonBasketFeature: false,
-    shouldLoadOrders: false,
     shouldRenderNewMenuDesign: false
   }
 
@@ -71,13 +68,6 @@ class Header extends React.PureComponent {
       mobileMenuOpen: false,
       loginPending: false,
       logoutPending: false,
-    }
-  }
-
-  componentDidMount() {
-    const { loadUserOrders, shouldLoadOrders } = this.props
-    if (shouldLoadOrders) {
-      loadUserOrders()
     }
   }
 
