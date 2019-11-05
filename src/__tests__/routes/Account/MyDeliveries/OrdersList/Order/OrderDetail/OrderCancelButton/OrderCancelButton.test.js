@@ -47,7 +47,24 @@ describe('OrderCancelButton', () => {
         />)
         wrapper.find(Button).simulate('click')
         expect(orderCancelStart).toHaveBeenCalled()
-        expect(orderCancelStart).toHaveBeenCalledWith('543', '34567', '2019-11-17 00:00:00')
+        expect(orderCancelStart).toHaveBeenCalledWith('543', '34567', '2019-11-17 00:00:00', 'pending')
+      })
+    })
+
+    describe('order is in state "scheduled"', () => {
+      it('should call the orderCancelStart function when clicking the Cancel Box button', () => {
+        const orderCancelStart = jest.fn()
+
+        wrapper = shallow(<OrderCancelButton
+          orderId="543"
+          orderState="scheduled"
+          deliveryDayId="34567"
+          deliveryDay="2019-11-17 00:00:00"
+          orderCancelStart={orderCancelStart}
+        />)
+        wrapper.find(Button).simulate('click')
+        expect(orderCancelStart).toHaveBeenCalled()
+        expect(orderCancelStart).toHaveBeenCalledWith(null, '34567', '2019-11-17 00:00:00', 'projected')
       })
     })
   })
