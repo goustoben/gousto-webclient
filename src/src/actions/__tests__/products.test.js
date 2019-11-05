@@ -1,10 +1,8 @@
 import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 import { fetchProducts } from 'apis/products'
-import productActions from '../products'
+import { productsLoadProducts, trackProductFiltering } from '../products'
 import statusActions from '../status'
-
-const { productsLoadProducts } = productActions
 
 jest.mock('apis/products', () => ({
   fetchProducts: jest.fn()
@@ -244,6 +242,20 @@ describe('productsLoadProducts', () => {
           reload: false,
         })
       })
+    })
+  })
+})
+
+describe('the trackProductFiltering action creator', () => {
+  const testCategoryId = 'test-category-id'
+
+  test('creates the correct action', () => {
+    expect(trackProductFiltering(testCategoryId)).toEqual({
+      type: actionTypes.PRODUCTS_FILTER_TRACKING,
+      trackingData: {
+        actionType: 'Products filtered',
+        categoryId: testCategoryId,
+      }
     })
   })
 })
