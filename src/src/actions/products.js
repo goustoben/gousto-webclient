@@ -171,6 +171,14 @@ export const productsLoadStock = (forceRefresh = false) => (
   }
 )
 
+export const trackProductFiltering = (categoryId) => ({
+  type: actionTypes.PRODUCTS_FILTER_TRACKING,
+  trackingData: {
+    actionType: 'Products filtered',
+    categoryId,
+  }
+})
+
 export const productsActions = {
   productDetailVisibilityChange,
   productsLoadCategories,
@@ -178,6 +186,7 @@ export const productsActions = {
   productsLoadRandomProducts,
   productsLoadProductsById,
   productsLoadStock,
+  trackProductFiltering,
 }
 
 export default productsActions

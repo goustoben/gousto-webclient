@@ -354,12 +354,27 @@ describe('filters actions', () => {
   })
 
   describe('filterProductCategory', () => {
-    test('should dispatch a FILTERS_PRODUCT_CATEGORY action', () => {
-      filterProductCategory('all-products')(dispatchSpy)
+    let dispatchSpyCalls
 
-      expect(dispatchSpy).toHaveBeenCalledWith({
+    beforeEach(() => {
+      filterProductCategory('all-products')(dispatchSpy)
+      dispatchSpyCalls = dispatchSpy.mock.calls
+    })
+
+    test('should dispatch a FILTERS_PRODUCT_CATEGORY action', () => {
+      expect(dispatchSpyCalls[0][0]).toEqual({
         type: actionTypes.FILTERS_PRODUCT_CATEGORY,
         value: 'all-products',
+      })
+    })
+
+    test('should dispatch a product filtering tracking action', () => {
+      expect(dispatchSpyCalls[1][0]).toEqual({
+        type: actionTypes.PRODUCTS_FILTER_TRACKING,
+        trackingData: {
+          actionType: 'Products filtered',
+          categoryId: 'all-products',
+        },
       })
     })
   })
