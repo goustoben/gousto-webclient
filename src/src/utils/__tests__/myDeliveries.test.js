@@ -2,6 +2,8 @@ import Immutable from 'immutable'
 import moment from 'moment'
 import { filterOrders, getOrderState, getDeliveryDayRescheduledReason, transformPendingOrders, transformProjectedDeliveries } from '../myDeliveries'
 
+jest.mock('moment')
+
 describe('myDeliveries utils', () => {
   const mockOrders = Immutable.fromJS({
     '1234': {
@@ -110,8 +112,6 @@ describe('myDeliveries utils', () => {
     }
   })
 
-  const transformedOrders = transformPendingOrders(mockOrders)
-
   describe('filterOrders', () => {
     test('should filter out all past orders', () => {
 
@@ -124,9 +124,23 @@ describe('myDeliveries utils', () => {
 
   describe('getOrderState', () => {
 
+    test('should return scheduled if phase is pre-menu', () => {
+      const state = 'pending'
+      const deliveryDate = '2019-11-06T00:00:00.000Z'
+      const recipeItems = Immutable.List()
+      const phase = 'pre-menu'
+      const result = getOrderState(state, deliveryDate, recipeItems, phase)
+
+      expect(result).toEqual('scheduled')
+    })
+
     test('should return dispatched if state is committed and is day of delivery', () => {
       const state = 'committed'
-      const deliveryDate = moment()
+      moment.mockReturnValue({
+        isSame: () => true
+      })
+
+      const deliveryDate = '2019-11-06T00:00:00.000Z'
       const result = getOrderState(state, deliveryDate)
 
       expect(result).toEqual('dispatched')
@@ -134,7 +148,11 @@ describe('myDeliveries utils', () => {
 
     test('should return confirmed if state is committed and is NOT day of delivery', () => {
       const state = 'committed'
-      const deliveryDate = moment().add(1, 'd')
+      moment.mockReturnValue({
+        isSame: () => false
+      })
+
+      const deliveryDate = '2019-11-07T00:00:00.000Z'
       const result = getOrderState(state, deliveryDate)
 
       expect(result).toEqual('confirmed')
@@ -142,8 +160,12 @@ describe('myDeliveries utils', () => {
 
     test('should return menu open if state is pending and there are NO chosen recipe items', () => {
       const state = 'pending'
-      const deliveryDate = moment()
-      const recipeItems = Immutable.List([])
+      const recipeItems = Immutable.List()
+      moment.mockReturnValue({
+        isSame: () => true
+      })
+
+      const deliveryDate = '2019-11-06T00:00:00.000Z'
 
       const result = getOrderState(state, deliveryDate, recipeItems)
 
@@ -152,10 +174,14 @@ describe('myDeliveries utils', () => {
 
     test('should return recipes chosen if state is pending and there are chosen recipe items', () => {
       const state = 'pending'
-      const deliveryDate = moment()
       const recipeItems = Immutable.List([{
         id: 1
       }])
+      moment.mockReturnValue({
+        isSame: () => true
+      })
+
+      const deliveryDate = '2019-11-06T00:00:00.000Z'
 
       const result = getOrderState(state, deliveryDate, recipeItems)
 
@@ -200,6 +226,12 @@ describe('myDeliveries utils', () => {
   })
 
   describe('transformPendingOrders', () => {
+    moment.mockReturnValue({
+      isSame: () => true
+    })
+
+    const transformedOrders = transformPendingOrders(mockOrders)
+
     test('should return the correct mapping for orders', () => {
       const result = Immutable.Map({
         11922804: Immutable.Map({

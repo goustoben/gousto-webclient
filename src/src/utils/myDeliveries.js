@@ -2,9 +2,11 @@ import Immutable from 'immutable'
 import moment from 'moment'
 
 const getProjectedDeliveryDayRescheduledReason = (unavailableReason, humanWhenMenuLive) => {
-  if(unavailableReason === 'holiday') {
+  if (unavailableReason === 'holiday') {
     return "We've had to change your regular delivery day due to the bank holiday."
-  } else if(unavailableReason) {
+  }
+
+  if (unavailableReason) {
     return `Recipes available from ${humanWhenMenuLive}`
   }
 }
@@ -17,8 +19,12 @@ export const filterOrders = (orders) => (
   })
 )
 
-export const getOrderState = (state, deliveryDate, recipeItems) => {
+export const getOrderState = (state, deliveryDate, recipeItems, phase) => {
   const isDeliveryDay = moment().isSame(deliveryDate, 'day')
+
+  if (phase === 'pre-menu') {
+    return 'scheduled'
+  }
 
   if (state === 'committed' && isDeliveryDay) {
     return 'dispatched'
@@ -72,7 +78,7 @@ export const transformPendingOrders = (orders) => {
     const period = order.get('period')
     const shippingAddress = order.get('shippingAddress')
 
-    const orderState = getOrderState(state, deliveryDate, recipeItems)
+    const orderState = getOrderState(state, deliveryDate, recipeItems, phase)
     const deliveryDayRescheduledReason = getDeliveryDayRescheduledReason(originalDeliveryDay)
     const cancellable = phase === 'awaiting_choices' || phase === 'open'
 
