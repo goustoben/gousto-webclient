@@ -12,6 +12,11 @@ import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
 import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
 import menuConfig from 'config/menu'
+import { activeMenuForDateTransformer } from 'apis/transformers/activeMenuForDate'
+import { dateTransformer } from 'apis/transformers/date'
+import { collectionsTransformer } from 'apis/transformers/collections'
+import { recipesTransformer } from 'apis/transformers/recipes'
+import { collectionRecipesTransformer } from 'apis/transformers/collectionRecipes'
 import statusActions from './status'
 import { redirect } from './redirect'
 import products from './products'
@@ -142,7 +147,7 @@ export function menuCollectionsReceive(collections) {
   }
 }
 
-export function menuLoadMenu(cutoffDateTime = null, background, transformedCollections, transformedRecipes, transformedCollectionRecipes) {
+export function menuLoadMenu(cutoffDateTime = null, background) {
   return async (dispatch, getState) => {
     const state = getState()
     const reqData = {
@@ -163,8 +168,29 @@ export function menuLoadMenu(cutoffDateTime = null, background, transformedColle
       const startTime = new Date()
 
       if (features.getIn(['collections', 'value']) || features.getIn(['forceCollections', 'value'])) {
-        await menuLoadCollections(date, background, transformedCollections)(dispatch, getState)
-        await menuLoadCollectionsRecipes(date, transformedRecipes, transformedCollectionRecipes)(dispatch, getState)
+        let menuData
+        const menuServiceData = getState().menuService.toJS()
+        if (menuServiceData && menuServiceData.data && menuServiceData.included) { // TODO: use cookie flag
+          const activeMenu = activeMenuForDateTransformer(menuServiceData, date)
+          const transformedDate = dateTransformer(menuServiceData)
+          const transformedCollections = collectionsTransformer(activeMenu, menuServiceData)
+          const transformedRecipes = recipesTransformer(activeMenu, menuServiceData)
+          const transformedCollectionRecipes = collectionRecipesTransformer(activeMenu)
+
+          menuData = {
+            transformedDate, //rename to cutoff date for last date on secondary menu ....
+            transformedCollections,
+            transformedRecipes,
+            transformedCollectionRecipes
+          }
+
+          await menuLoadCollections(date, background, menuData.transformedCollections)(dispatch, getState)
+          await menuLoadCollectionsRecipes(date, menuData.transformedRecipes, menuData.transformedCollectionRecipes)(dispatch, getState)
+        } else {
+          await menuLoadCollections(date, background)(dispatch, getState)
+          await menuLoadCollectionsRecipes(date)(dispatch, getState)
+        }
+
       } else {
         const { data: recipes } = await fetchRecipes(accessToken, '', reqData)
         dispatch(menuActions.menuReceiveMenu(recipes))
