@@ -1,5 +1,4 @@
-
-const collectionRecipesTransformer = (response) => {
+const collectionRecipesTransformer = (activeMenu) => {
   // TODO: which menu populates redux? is it based on dates?
 
   const getRecipeIds = (collectionRecipeData) => {
@@ -8,7 +7,7 @@ const collectionRecipesTransformer = (response) => {
     })
   }
 
-  const result = response.data[1]
+  const result = activeMenu
     .relationships.collections.data.reduce((acc, collection) => {
       if (!acc[collection.id]) {
         const recipesInCollection = getRecipeIds(collection.relationships.recipes.data)
