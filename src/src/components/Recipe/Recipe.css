@@ -13,7 +13,6 @@
 	composes: flex, verticalCenter from 'styles/flex.css';
 	background: White;
 	border-radius: 0;
-	height: fit-content;
 	vertical-align: top;
 	composes: inlineBlock from 'styles/display.css';
 	position: relative;
