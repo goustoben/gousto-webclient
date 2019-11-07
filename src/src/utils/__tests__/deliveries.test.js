@@ -2052,6 +2052,20 @@ describe('utils/deliveries', () => {
       const resolvedTariff = getDeliveryTariffId(null, expectedTariff)
       expect(resolvedTariff).toEqual(expectedTariff)
     })
+
+    test('it should return a default if invalid tariff ID is passed through as experiment value', () => {
+      const expectedTariff = DeliveryTariffTypes.NON_NDD
+
+      const resolvedTariff = getDeliveryTariffId(null, 'unknown-tariff')
+      expect(resolvedTariff).toEqual(expectedTariff)
+    })
+
+    test('it should return a default if invalid tariff ID neither arguments are provided', () => {
+      const expectedTariff = DeliveryTariffTypes.NON_NDD
+
+      const resolvedTariff = getDeliveryTariffId(null, null)
+      expect(resolvedTariff).toEqual(expectedTariff)
+    })
   })
 
   describe('getNDDFeatureFlagVal', () => {

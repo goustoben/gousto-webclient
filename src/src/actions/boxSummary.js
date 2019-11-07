@@ -74,7 +74,7 @@ const actions = {
     async (dispatch, getState) => {
       dispatch(status.error(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false))
 
-      const postcode = getState().basket.get('postcode') ? getState().basket.get('postcode') : null
+      const postcode = getState().basket.get('postcode') || null
       const cutoffUntil = cutoffDatetimeUntil
         ? moment.utc(cutoffDatetimeUntil).endOf('day').toISOString()
         : getState().menuCutoffUntil
@@ -87,7 +87,7 @@ const actions = {
           postcode,
           moment.utc(cutoffDatetimeFrom).startOf('day').toISOString(),
           cutoffUntil,
-          isNDDExperiment ? 'true' : 'false',
+          isNDDExperiment,
           getDeliveryTariffId(getState().user, getNDDFeatureValue(getState())),
         )
 

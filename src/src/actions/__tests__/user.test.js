@@ -271,30 +271,34 @@ describe('user actions', () => {
           }
         }
 
-        it('should call customerSignup with the correct delivery_tariff_id when not in NDD experiment', async () => {
-          setNddExperiment(DeliveryTariffTypes.NON_NDD)
+        describe('when not in NDD experiment', () => {
+          it('should call customerSignup with the correct delivery_tariff_id', async () => {
+            setNddExperiment(DeliveryTariffTypes.NON_NDD)
 
-          await userSubscribe()(dispatch, getState)
+            await userSubscribe()(dispatch, getState)
 
-          expect(customerSignup).toHaveBeenCalledWith(
-            null,
-            expect.objectContaining({
-              customer: customerObject,
-            }),
-          )
+            expect(customerSignup).toHaveBeenCalledWith(
+              null,
+              expect.objectContaining({
+                customer: customerObject,
+              }),
+            )
+          })
         })
 
-        it('should call customerSignup with the correct delivery_tariff_id when in NDD experiment', async () => {
-          setNddExperiment(DeliveryTariffTypes.FREE_NDD)
+        describe('when in NDD experiment', () => {
+          it('should call customerSignup with the correct delivery_tariff_id', async () => {
+            setNddExperiment(DeliveryTariffTypes.FREE_NDD)
 
-          await userSubscribe()(dispatch, getState)
+            await userSubscribe()(dispatch, getState)
 
-          expect(customerSignup).toHaveBeenCalledWith(
-            null,
-            expect.objectContaining({
-              customer: customerObject,
-            }),
-          )
+            expect(customerSignup).toHaveBeenCalledWith(
+              null,
+              expect.objectContaining({
+                customer: customerObject,
+              }),
+            )
+          })
         })
       })
     })

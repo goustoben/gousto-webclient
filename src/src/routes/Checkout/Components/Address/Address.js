@@ -125,13 +125,18 @@ class Address extends React.PureComponent {
     const { deliveryDate, menuCutoffUntil, isNDDExperiment, deliveryTariffId } = this.props
     let deliverable = false
 
+    const menuCutoffUntilFallback = moment()
+      .startOf('day')
+      .add(30, 'days')
+      .toISOString()
+
     if (deliveryDate) {
       try {
         let days = await getDeliveryDays(
           null,
           postcode,
-          null,
-          menuCutoffUntil,
+          moment().startOf('day').toISOString(),
+          menuCutoffUntil || menuCutoffUntilFallback,
           isNDDExperiment,
           deliveryTariffId,
         )

@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 const mockFetchDeliveryDays = jest.fn()
 
 jest.mock('apis/deliveries', () => ({
@@ -9,6 +7,7 @@ jest.mock('apis/deliveries', () => ({
 describe('delivery days', () => {
   describe('getDeliveryDays', () => {
     const { getDeliveryDays } = require('../deliveryDays')
+
     const days = [
       {
         id: 'day1',
