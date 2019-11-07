@@ -12,17 +12,15 @@ import {
 } from 'utils/deliveries'
 import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
-import { getDisabledSlots } from 'selectors/features'
+import * as features from 'selectors/features'
 import { DeliveryTariffTypes, getDeliveryTariffId, getNDDFeatureFlagVal } from '../deliveries'
 
-jest.mock('selectors/features', () => ({
-  getDisabledSlots: jest.fn()
-}))
+features.getDisabledSlots = jest.fn()
 
 const userWithDeliveryTariff = (deliveryTariffId) => {
-  return {
+  return Immutable.fromJS({
     deliveryTariffId: deliveryTariffId,
-  }
+  })
 }
 
 describe('utils/deliveries', () => {
@@ -667,7 +665,7 @@ describe('utils/deliveries', () => {
         })
       })
       test('should return the default delivery slot if not disabled', () => {
-        getDisabledSlots.mockImplementation(() => '')
+        features.getDisabledSlots.mockImplementation(() => '')
 
         const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
@@ -675,7 +673,7 @@ describe('utils/deliveries', () => {
       })
 
       test('should NOT return the default delivery slot if disabled', () => {
-        getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
+        features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
 
         const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
@@ -683,7 +681,7 @@ describe('utils/deliveries', () => {
       })
 
       test('should return nothing if the default delivery slot if disabled and all other slots are disabled', () => {
-        getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
+        features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22')
 
         const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
@@ -691,7 +689,7 @@ describe('utils/deliveries', () => {
       })
 
       test('should return first non blocked slot if the default delivery slot if disabled', () => {
-        getDisabledSlots.mockImplementation(() => '2017-01-01_18-22, 2017-01-01_08-19')
+        features.getDisabledSlots.mockImplementation(() => '2017-01-01_18-22, 2017-01-01_08-19')
 
         const result = getLandingDay(state, false, true, deliveryDaysWithDisabledSlotIds)
         const expected = { date: '2017-01-01', slotId: undefined }
@@ -2054,53 +2052,94 @@ describe('utils/deliveries', () => {
       const resolvedTariff = getDeliveryTariffId(null, expectedTariff)
       expect(resolvedTariff).toEqual(expectedTariff)
     })
+
+    test('it should return a default if invalid tariff ID is passed through as experiment value', () => {
+      const expectedTariff = DeliveryTariffTypes.NON_NDD
+
+      const resolvedTariff = getDeliveryTariffId(null, 'unknown-tariff')
+      expect(resolvedTariff).toEqual(expectedTariff)
+    })
+
+    test('it should return a default if invalid tariff ID neither arguments are provided', () => {
+      const expectedTariff = DeliveryTariffTypes.NON_NDD
+
+      const resolvedTariff = getDeliveryTariffId(null, null)
+      expect(resolvedTariff).toEqual(expectedTariff)
+    })
   })
 
   describe('getNDDFeatureFlagVal', () => {
     test('it should return true when user is already set to a free NDD tariff.', () => {
-      const user = userWithDeliveryTariff(DeliveryTariffTypes.FREE_NDD)
+      const state = {
+        user: userWithDeliveryTariff(DeliveryTariffTypes.FREE_NDD),
+        features: Immutable.Map({
+          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+        }),
+      }
 
-      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(user, DeliveryTariffTypes.NON_NDD)
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(state)
 
       expect(resolvedFeatureFlagValue).toEqual(true)
     })
 
     test('it should return true when user is already set to a paid NDD tariff.', () => {
-      const user = userWithDeliveryTariff(DeliveryTariffTypes.PAID_NDD)
+      const state = {
+        user: userWithDeliveryTariff(DeliveryTariffTypes.PAID_NDD),
+        features: Immutable.Map({
+          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+        }),
+      }
 
-      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(user, DeliveryTariffTypes.NON_NDD)
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(state)
 
       expect(resolvedFeatureFlagValue).toEqual(true)
     })
 
     test('it should return true when a new user is on the free NDD tariff.', () => {
-      const experimentValue = DeliveryTariffTypes.FREE_NDD
+      const state = {
+        features: Immutable.Map({
+          ndd: Immutable.Map({value: DeliveryTariffTypes.FREE_NDD}),
+        }),
+      }
 
-      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, experimentValue)
-
-      expect(resolvedFeatureFlagValue).toEqual(true)
-    })
-
-    test('it should return true when a new user is on the paid NDD tariff.', () => {
-      const experimentValue = DeliveryTariffTypes.PAID_NDD
-
-      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, experimentValue)
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(state)
 
       expect(resolvedFeatureFlagValue).toEqual(true)
     })
 
     test('it should return true when a new user is on the paid NDD tariff.', () => {
-      const experimentValue = DeliveryTariffTypes.NON_NDD
+      const state = {
+        features: Immutable.Map({
+          ndd: Immutable.Map({value: DeliveryTariffTypes.PAID_NDD}),
+        }),
+      }
 
-      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(null, experimentValue)
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(state)
+
+      expect(resolvedFeatureFlagValue).toEqual(true)
+    })
+
+    test('it should return false when a new user is on a non NDD tariff.', () => {
+      const state = {
+        features: Immutable.Map({
+          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+        }),
+      }
+
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(state)
 
       expect(resolvedFeatureFlagValue).toEqual(false)
     })
 
     test('it should return false when an existing user is not in the experiment.', () => {
-      const user = userWithDeliveryTariff(DeliveryTariffTypes.NON_NDD)
+      const state = {
+        user: userWithDeliveryTariff(DeliveryTariffTypes.NON_NDD),
+        features: Immutable.Map({
+          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+        }),
+      }
 
-      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(user, DeliveryTariffTypes.FREE_NDD)
+      const resolvedFeatureFlagValue = getNDDFeatureFlagVal(state)
 
       expect(resolvedFeatureFlagValue).toEqual(false)
     })

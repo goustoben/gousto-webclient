@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
-
 import { Button } from 'goustouicomponents'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveryUtils from 'utils/deliveries'
 import logger from 'utils/logger'
 import dottify from 'utils/dottify'
+import { getDeliveryDays } from 'apis/data/deliveryDays'
 import DeliveryInfo from './DeliveryInfo'
 import Postcode from './Postcode'
 import AddressInputs from './AddressInputs'
@@ -122,21 +122,24 @@ class Address extends React.PureComponent {
   }
 
   checkCanDeliver = async postcode => {
-    const { deliveryDate, menuCutoffUntil, isNDDExperiment } = this.props
+    const { deliveryDate, menuCutoffUntil, isNDDExperiment, deliveryTariffId } = this.props
     let deliverable = false
+
+    const menuCutoffUntilFallback = moment()
+      .startOf('day')
+      .add(30, 'days')
+      .toISOString()
 
     if (deliveryDate) {
       try {
-        const menuCutoffUntilFallback = moment().startOf('day').add(30, 'days')
-          .toISOString()
-        const reqData = {
+        let days = await getDeliveryDays(
+          null,
           postcode,
-          'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
-          'filters[cutoff_datetime_until]': menuCutoffUntil || menuCutoffUntilFallback,
-          ndd: isNDDExperiment.toString()
-        }
-
-        let { data: days } = await fetchDeliveryDays(null, reqData)
+          moment().startOf('day').toISOString(),
+          menuCutoffUntil || menuCutoffUntilFallback,
+          isNDDExperiment,
+          deliveryTariffId,
+        )
 
         if (isNDDExperiment) {
           days = deliveryUtils.transformDaySlotLeadTimesToMockSlots(days)

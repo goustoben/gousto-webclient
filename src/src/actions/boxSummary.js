@@ -1,15 +1,11 @@
-import { fetchDeliveryDays } from 'apis/deliveries'
+import { getDeliveryDays } from 'apis/data/deliveryDays'
+import { getNDDFeatureValue } from 'selectors/features'
 import moment from 'moment'
 import { okRecipes } from 'utils/basket'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
-import {
-  getAvailableDeliveryDays,
-  transformDaySlotLeadTimesToMockSlots,
-  getLandingDay
-} from 'utils/deliveries'
+import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { addDisabledSlotIds } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
-import { isNDDFeatureEnabled } from 'selectors/features'
 import status from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import {
@@ -78,28 +74,22 @@ const actions = {
     async (dispatch, getState) => {
       dispatch(status.error(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE, false))
 
-      const postcode = getState().basket.get('postcode')
+      const postcode = getState().basket.get('postcode') || null
       const cutoffUntil = cutoffDatetimeUntil
         ? moment.utc(cutoffDatetimeUntil).endOf('day').toISOString()
         : getState().menuCutoffUntil
 
-      const isNDDExperiment = isNDDFeatureEnabled(getState())
+      const isNDDExperiment = getNDDFeatureFlagVal(getState())
 
-      const reqData = {
-        'filters[cutoff_datetime_from]': moment.utc(cutoffDatetimeFrom).startOf('day').toISOString(),
-        'filters[cutoff_datetime_until]': cutoffUntil,
-        sort: 'date',
-        direction: 'asc',
-        ndd: isNDDExperiment ? 'true' : 'false',
-      }
-
-      if (postcode) {
-        reqData.postcode = postcode
-      }
-
-      const accessToken = getState().auth.get('accessToken')
       try {
-        let { data: days } = await fetchDeliveryDays(accessToken, reqData)
+        let days = await getDeliveryDays(
+          getState().auth.get('accessToken'),
+          postcode,
+          moment.utc(cutoffDatetimeFrom).startOf('day').toISOString(),
+          cutoffUntil,
+          isNDDExperiment,
+          getDeliveryTariffId(getState().user, getNDDFeatureValue(getState())),
+        )
 
         if (isNDDExperiment) {
           days = transformDaySlotLeadTimesToMockSlots(days)

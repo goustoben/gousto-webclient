@@ -16,12 +16,8 @@ export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
     : false
 )
 
-export const isNDDFeatureEnabled = ({ features, user }) => {
-  if (user && user.get('deliveryTariffId')) {
-    return user.get('deliveryTariffId') === DeliveryTariffTypes.FREE_NDD
-  }
-
-  return (features && features.getIn(['ndd', 'value'], false))
+export const getNDDFeatureValue = ({ features }) => {
+  return features.getIn(['ndd', 'value'])
 }
 
 export const getDisabledSlots = ({ features }) => (

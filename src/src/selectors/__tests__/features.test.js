@@ -11,11 +11,9 @@ import {
   getPromoBannerText,
   getPromoBannerCode,
   getShortlist,
-  isNDDFeatureEnabled,
   getCookingInstruction,
+  getNDDFeatureValue,
 } from 'selectors/features'
-
-import { DeliveryTariffTypes } from 'utils/deliveries'
 
 describe('when features are undefined', () => {
   const state = {}
@@ -272,96 +270,18 @@ describe('when features are defined', () => {
     })
   })
 
-  describe('isNDDFeatureEnabled', () => {
-    describe('when feature is not set AND users deliveryTariffId is free ndd', () => {
-      test('should return true', () => {
+  describe('getNDDFeatureValue', () => {
+    describe('when I get feature value with an NDD value in state', () => {
+      test('should return correct experiment value', () => {
         state = {
-          features: Immutable.Map({}),
-          user: Immutable.fromJS({
-            deliveryTariffId: DeliveryTariffTypes.FREE_NDD
+          features: Immutable.Map({
+            ndd: Immutable.fromJS({
+              value: 'something',
+            })
           })
         }
-        expect(isNDDFeatureEnabled(state)).toEqual(true)
-      })
-    })
-    describe('when feature is not set AND users deliveryTariffId is non ndd', () => {
-      test('should return false', () => {
-        state = {
-          features: Immutable.Map({}),
-          user: Immutable.fromJS({
-            deliveryTariffId: DeliveryTariffTypes.NON_NDD
-          })
-        }
-        expect(isNDDFeatureEnabled(state)).toEqual(false)
-      })
-    })
-    describe('when feature is not set AND users deliveryTariffId is not set', () => {
-      test('should return false', () => {
-        expect(isNDDFeatureEnabled(state)).toEqual(false)
-      })
-    })
-    describe('when feature is not set AND users is set but, users.deliveryTariffId is not set', () => {
-      test('should return false', () => {
-        state = {
-          features: Immutable.Map({}),
-          user: Immutable.fromJS({})
-        }
-        expect(isNDDFeatureEnabled(state)).toEqual(false)
-      })
-    })
-    describe('when feature is set and users deliveryTariffId is free ndd', () => {
-      test('should return true', () => {
-        state = {
-          features: Immutable.fromJS({
-            ndd: {
-              value: true
-            }
-          }),
-          user: Immutable.fromJS({
-            deliveryTariffId: DeliveryTariffTypes.FREE_NDD
-          })
-        }
-        expect(isNDDFeatureEnabled(state)).toEqual(true)
-      })
-    })
-    describe('when feature is set and users deliveryTariffId is non ndd', () => {
-      test('should return true', () => {
-        state = {
-          features: Immutable.fromJS({
-            ndd: {
-              value: true
-            }
-          }),
-          user: Immutable.fromJS({
-            deliveryTariffId: DeliveryTariffTypes.NON_NDD
-          })
-        }
-        expect(isNDDFeatureEnabled(state)).toEqual(false)
-      })
-    })
-    describe('when feature is set and users deliveryTariffId is not set', () => {
-      test('should return true', () => {
-        state = {
-          features: Immutable.fromJS({
-            ndd: {
-              value: true
-            }
-          })
-        }
-        expect(isNDDFeatureEnabled(state)).toEqual(true)
-      })
-    })
-    describe('when feature is set and user is set but user.deliveryTariffId is not set', () => {
-      test('should return true', () => {
-        state = {
-          features: Immutable.fromJS({
-            ndd: {
-              value: true
-            }
-          }),
-          user: Immutable.fromJS({})
-        }
-        expect(isNDDFeatureEnabled(state)).toEqual(true)
+
+        expect(getNDDFeatureValue(state)).toEqual('something')
       })
     })
   })

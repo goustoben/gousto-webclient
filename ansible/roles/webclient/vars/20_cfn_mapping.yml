@@ -20,7 +20,7 @@ admin_domain: "{{ environment_name }}-admin.{{ cfn_defaults_output_domain }}"
 core_domain: "{{ environment_name }}-core.{{ cfn_defaults_output_domain }}"
 products_domain: "{{ environment_name }}-products.{{ cfn_defaults_output_domain }}"
 auth_service_domain: "http://{{ environment_name }}-auth.{{ cfn_defaults_output_domain }}"
-optimizely_account: "{{ 3732210624 if environment_name == 'production' else 14571110311 if environment_name == 'radishes' else 14785300772 if environment_name == 'rockets' else 15910240385 if environment_name == 'haricots' else 7728010866 }}"
+optimizely_account: "{{ 3732210624 if environment_name == 'production' else 14571110311 if environment_name == 'radishes' else 14785300772 if environment_name == 'rockets' else 15910240385 if environment_name == 'haricots' else 16871517734 if environment_name == 'carrots' else 7728010866 }}"
 debug_passthrough: true
 api_verify_peer: false
 api_verify_host: false

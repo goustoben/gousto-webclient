@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 import { Map } from 'immutable'
-import { getFormSyncErrors, getFormAsyncErrors, getFormMeta, change, untouch, touch, registerField } from 'redux-form'
-
+import { change, getFormAsyncErrors, getFormMeta, getFormSyncErrors, registerField, touch, untouch } from 'redux-form'
 import { trackCheckoutButtonPressed } from 'actions/checkout'
-import { isNDDFeatureEnabled } from 'selectors/features'
 import actions from 'actions'
+import { getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
+import { getNDDFeatureValue } from 'selectors/features'
 import Address from '../../Address'
 
 function getCutoffDate(state) {
@@ -27,8 +27,9 @@ function mapStateToProps(state, ownProps) {
     deliveryDate: state.basket.get('date'),
     menuCutoffUntil: state.menuCutoffUntil,
     cutOffDate: getCutoffDate(state),
-    isNDDExperiment: isNDDFeatureEnabled(state),
-    isMobile: state.request.get('browser') === 'mobile'
+    isNDDExperiment: getNDDFeatureFlagVal(state),
+    isMobile: state.request.get('browser') === 'mobile',
+    deliveryTariffId: getDeliveryTariffId(state.user, getNDDFeatureValue(state)),
   }
 }
 

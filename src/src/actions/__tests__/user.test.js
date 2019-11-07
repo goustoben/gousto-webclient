@@ -257,7 +257,7 @@ describe('user actions', () => {
 
           customerObject = {
             age_verified: 0,
-            delivery_tariff_id: value ? DeliveryTariffTypes.FREE_NDD : DeliveryTariffTypes.NON_NDD,
+            delivery_tariff_id: value,
             email: 'test_email@test.com',
             marketing_do_allow_email: 0,
             marketing_do_allow_thirdparty: 0,
@@ -271,30 +271,34 @@ describe('user actions', () => {
           }
         }
 
-        it('should call customerSignup with the correct delivery_tariff_id when NDD experiment is not defined', async () => {
-          setNddExperiment(false)
+        describe('when not in NDD experiment', () => {
+          it('should call customerSignup with the correct delivery_tariff_id', async () => {
+            setNddExperiment(DeliveryTariffTypes.NON_NDD)
 
-          await userSubscribe()(dispatch, getState)
+            await userSubscribe()(dispatch, getState)
 
-          expect(customerSignup).toHaveBeenCalledWith(
-            null,
-            expect.objectContaining({
-              customer: customerObject,
-            }),
-          )
+            expect(customerSignup).toHaveBeenCalledWith(
+              null,
+              expect.objectContaining({
+                customer: customerObject,
+              }),
+            )
+          })
         })
 
-        it('should call customerSignup with the correct delivery_tariff_id when in NDD experiment', async () => {
-          setNddExperiment(true)
+        describe('when in NDD experiment', () => {
+          it('should call customerSignup with the correct delivery_tariff_id', async () => {
+            setNddExperiment(DeliveryTariffTypes.FREE_NDD)
 
-          await userSubscribe()(dispatch, getState)
+            await userSubscribe()(dispatch, getState)
 
-          expect(customerSignup).toHaveBeenCalledWith(
-            null,
-            expect.objectContaining({
-              customer: customerObject,
-            }),
-          )
+            expect(customerSignup).toHaveBeenCalledWith(
+              null,
+              expect.objectContaining({
+                customer: customerObject,
+              }),
+            )
+          })
         })
       })
     })
