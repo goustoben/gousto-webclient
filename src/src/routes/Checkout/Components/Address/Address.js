@@ -6,6 +6,7 @@ import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveryUtils from 'utils/deliveries'
 import logger from 'utils/logger'
 import dottify from 'utils/dottify'
+import { getDeliveryDays } from 'apis/data/deliveryDays'
 import DeliveryInfo from './DeliveryInfo'
 import Postcode from './Postcode'
 import AddressInputs from './AddressInputs'
@@ -126,17 +127,14 @@ class Address extends React.PureComponent {
 
     if (deliveryDate) {
       try {
-        const menuCutoffUntilFallback = moment().startOf('day').add(30, 'days')
-          .toISOString()
-        const reqData = {
+        let days = await getDeliveryDays(
+          null,
           postcode,
-          'filters[cutoff_datetime_from]': moment().startOf('day').toISOString(),
-          'filters[cutoff_datetime_until]': menuCutoffUntil || menuCutoffUntilFallback,
-          'ndd': isNDDExperiment.toString(),
-          'delivery_tariff_id': deliveryTariffId,
-        }
-
-        let { data: days } = await fetchDeliveryDays(null, reqData)
+          null,
+          menuCutoffUntil,
+          isNDDExperiment,
+          deliveryTariffId,
+        )
 
         if (isNDDExperiment) {
           days = deliveryUtils.transformDaySlotLeadTimesToMockSlots(days)

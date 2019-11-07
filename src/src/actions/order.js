@@ -1,9 +1,9 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
+import { getDeliveryDays } from 'apis/data/deliveryDays'
 import ordersApi from 'apis/orders'
 import * as userApi from 'apis/user'
-import { fetchDeliveryDays } from 'apis/deliveries'
 import GoustoException from 'utils/GoustoException'
 import logger from 'utils/logger'
 import { getOrderDetails } from 'utils/basket'
@@ -275,19 +275,18 @@ export const orderGetDeliveryDays = (cutoffDatetimeFrom, cutoffDatetimeUntil, ad
     dispatch(statusActions.pending(actionTypes.ORDER_DELIVERY_DAYS_RECEIVE, true))
 
     const postcode = getState().user.getIn(['addresses', addressId, 'postcode'])
-    const isNDDExperiment = getNDDFeatureFlagVal(getState())
-    const reqData = {
-      'filters[cutoff_datetime_from]': cutoffDatetimeFrom,
-      'filters[cutoff_datetime_until]': cutoffDatetimeUntil,
-      sort: 'date',
-      direction: 'asc',
-      postcode,
-      ndd: isNDDExperiment ? 'true' : 'false',
-      delivery_tariff_id: getDeliveryTariffId(getState().user, getNDDFeatureValue(getState()))
-    }
+    const isNDDExperiment = getNDDFeatureFlagVal(getState()) ? true : false
+    const deliveryTariffId = getDeliveryTariffId(getState().user, getNDDFeatureValue(getState()))
 
     try {
-      let { data: days } = await fetchDeliveryDays(null, reqData)
+      let days = await getDeliveryDays(
+        null,
+        postcode,
+        cutoffDatetimeFrom,
+        cutoffDatetimeUntil,
+        isNDDExperiment,
+        deliveryTariffId,
+      )
 
       if (isNDDExperiment) {
         days = transformDaySlotLeadTimesToMockSlots(days)

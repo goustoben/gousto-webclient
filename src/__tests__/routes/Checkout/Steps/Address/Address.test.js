@@ -112,6 +112,8 @@ describe('Address', () => {
         postcode: 'NW1 8RJ',
         ndd: 'true',
         delivery_tariff_id: 'some-uuid',
+        sort: 'date',
+        direction: 'asc',
       }
 
       expect(fetchDeliveryDays).toHaveBeenCalledTimes(1)
