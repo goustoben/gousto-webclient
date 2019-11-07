@@ -62,20 +62,17 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
   })
 
-export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId) => (
+export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, slotDate, availableDeliveryDays) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, null))
     dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, true))
 
-    const { basket, boxSummaryDeliveryDays } = getState()
-    const date = basket.get('date')
-    const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
-
+    const slot = getSlot(availableDeliveryDays, slotDate, slotId)
     try {
       const order = {
         delivery_day_id: coreDayId,
         delivery_slot_id: coreSlotId,
-        day_slot_lead_time_id: slot.get('daySlotLeadTimeId', '')
+        day_slot_lead_time_id: slot.get('daySlotLeadTimeId', ''),
       }
       const accessToken = getState().auth.get('accessToken')
       const { data: updatedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)

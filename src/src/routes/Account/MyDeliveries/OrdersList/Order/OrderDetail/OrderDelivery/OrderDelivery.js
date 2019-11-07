@@ -3,8 +3,9 @@ import React from 'react'
 import Immutable from 'immutable'
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
+import userActions from 'actions/user'
 import { Alert, Button } from 'goustouicomponents'
-import EditDelivery from './EditDelivery'
+import { EditDate } from './EditDate'
 
 import css from './OrderDelivery.css'
 
@@ -53,7 +54,7 @@ class OrderDelivery extends React.PureComponent {
       this.context.store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId)),
       this.context.store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo)),
     ])
-      .then(this.context.store.dispatch(actions.userOpenCloseEditSection(orderId, !editDeliveryMode)))
+      .then(this.context.store.dispatch(userActions.userOpenCloseEditSection(orderId, !editDeliveryMode)))
   }
 
   static constructShippingAddress(shippingAddressObj) {
@@ -75,7 +76,7 @@ class OrderDelivery extends React.PureComponent {
     return (
       <div data-testing="recipesDeliverySection">
         {this.props.editDeliveryMode && this.props.fetchSuccess ?
-          <EditDelivery
+          <EditDate
             editDeliveryMode={this.props.editDeliveryMode}
             orderId={this.props.orderId}
             availableFrom={this.props.availableFrom}
