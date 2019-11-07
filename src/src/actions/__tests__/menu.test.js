@@ -40,6 +40,10 @@ jest.mock('apis/recipes', () => ({
   })
 }))
 
+jest.mock('actions/menuActionHelper', () => ({
+  getStockAvailability: jest.fn()
+}))
+
 describe('menu actions', () => {
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'
   const menuActions = require('../menu')

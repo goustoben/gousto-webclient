@@ -20,6 +20,7 @@ import { collectionRecipesTransformer } from 'apis/transformers/collectionRecipe
 import statusActions from './status'
 import { redirect } from './redirect'
 import products from './products'
+import { getStockAvailability } from './menuActionHelper'
 
 import {
   basketReset,
@@ -55,6 +56,8 @@ const menuActions = {
   menuLoadCollectionsRecipes,
   menuReceiveBoxPrices
 }
+
+const useMenuService = false // TODO: use cookie flag
 
 export function menuReceiveMenu(recipes) {
   return ({
@@ -132,12 +135,26 @@ export function menuCutoffUntilReceive(cutoffUntil) {
 
 export function menuLoadDays() {
   return async (dispatch, getState) => {
+
+    if (useMenuService) {
+      menuServiceLoadDays(dispatch, getState)
+
+      return
+    }
+
     const accessToken = getState().auth.get('accessToken')
     const dates = await getAvailableDates(accessToken, false)
     const availableDays = dates.pop()
 
     dispatch(menuActions.menuCutoffUntilReceive(availableDays.until))
   }
+}
+
+export function menuServiceLoadDays(dispatch, getState) {
+  const menuServiceData = getState().menuService.toJS()
+  const transformedDate = dateTransformer(menuServiceData)
+
+  dispatch(menuActions.menuCutoffUntilReceive(transformedDate))
 }
 
 export function menuCollectionsReceive(collections) {
@@ -168,24 +185,16 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
       const startTime = new Date()
 
       if (features.getIn(['collections', 'value']) || features.getIn(['forceCollections', 'value'])) {
-        let menuData
-        const menuServiceData = getState().menuService.toJS()
-        if (menuServiceData && menuServiceData.data && menuServiceData.included) { // TODO: use cookie flag
+
+        if (useMenuService) {
+          const menuServiceData = getState().menuService.toJS()
           const activeMenu = activeMenuForDateTransformer(menuServiceData, date)
-          const transformedDate = dateTransformer(menuServiceData)
           const transformedCollections = collectionsTransformer(activeMenu, menuServiceData)
           const transformedRecipes = recipesTransformer(activeMenu, menuServiceData)
           const transformedCollectionRecipes = collectionRecipesTransformer(activeMenu)
 
-          menuData = {
-            transformedDate, //rename to cutoff date for last date on secondary menu ....
-            transformedCollections,
-            transformedRecipes,
-            transformedCollectionRecipes
-          }
-
-          await menuLoadCollections(date, background, menuData.transformedCollections)(dispatch, getState)
-          await menuLoadCollectionsRecipes(date, menuData.transformedRecipes, menuData.transformedCollectionRecipes)(dispatch, getState)
+          await menuLoadCollections(date, background, transformedCollections)(dispatch, getState)
+          await menuLoadCollectionsRecipes(date, transformedRecipes, transformedCollectionRecipes)(dispatch, getState)
         } else {
           await menuLoadCollections(date, background)(dispatch, getState)
           await menuLoadCollectionsRecipes(date)(dispatch, getState)
@@ -332,15 +341,20 @@ export function menuLoadStock(clearStock = true) {
     const accessToken = getState().auth.get('accessToken')
     const recipeStock = await getRecipeStock(accessToken, coreDayId, false)
 
-    const adjustedStock = {}
-    Object.values(recipeStock).forEach(stockEntry => {
-      const committed = stockEntry.committed === '1'
-      adjustedStock[stockEntry.recipeId] = {
-        2: committed ? parseInt(stockEntry.number, 10) : 1000,
-        4: committed ? parseInt(stockEntry.familyNumber, 10) : 1000,
-        committed,
-      }
-    })
+    let adjustedStock = {}
+
+    if (useMenuService) {
+      adjustedStock = getStockAvailability(getState, recipeStock)
+    } else {
+      Object.values(recipeStock).forEach(stockEntry => {
+        const committed = stockEntry.committed === '1'
+        adjustedStock[stockEntry.recipeId] = {
+          2: committed ? parseInt(stockEntry.number, 10) : 1000,
+          4: committed ? parseInt(stockEntry.familyNumber, 10) : 1000,
+          committed,
+        }
+      })
+    }
 
     const recipeStockChangeAction = clearStock ? menuReplaceRecipeStock : menuChangeRecipeStock
     dispatch(recipeStockChangeAction(adjustedStock))
