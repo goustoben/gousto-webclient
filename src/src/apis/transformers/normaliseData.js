@@ -4,7 +4,12 @@ export const normaliseData = (response) => {
   const normalised = {}
 
   included.forEach(row => {
-    normalised[row.id] = row
+
+    if(normalised[row.type] === undefined) {
+      normalised[row.type] = {}
+    }
+
+    normalised[row.type][row.id] = row
   })
 
   return normalised
