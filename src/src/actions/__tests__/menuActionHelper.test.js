@@ -1,5 +1,61 @@
 import Immutable from 'immutable'
-import { getStockAvailability } from 'actions/menuActionHelper'
+import { loadMenuCollectionsWithMenuService, getStockAvailability } from 'actions/menuActionHelper'
+import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
+
+const mockActiveMenuForDateTransformer = jest.fn()
+
+jest.mock('actions/menuCollections')
+
+jest.mock('apis/transformers/activeMenuForDate', () => ({
+  activeMenuForDateTransformer: () => {
+    return mockActiveMenuForDateTransformer
+  },
+}))
+
+jest.mock('apis/transformers/collections', () => ({
+  collectionsTransformer: () => {
+    return 'mock collection'
+  },
+}))
+
+jest.mock('apis/transformers/recipes', () => ({
+  recipesTransformer: () => {
+    return 'mock recipe'
+  },
+}))
+
+jest.mock('apis/transformers/collectionRecipes', () => ({
+  collectionRecipesTransformer: () => {
+    return 'mock collection recipes'
+  },
+}))
+
+describe('callMenuService', () => {
+  test('calls menuLoadCollections and menuLoadCollectionsRecipes with menuservice data', async () => {
+    const getState = () => {
+      return {
+        menuService: {
+          toJS: () => {
+            return 'fakeServiceData'
+          }
+        }
+      }
+    }
+
+    const dispatch = () => {}
+    const background = true
+
+    const mockMenuLoadDispatcher = jest.fn()
+    menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
+    menuLoadCollectionsRecipes.mockImplementation(() => (mockMenuLoadDispatcher))
+
+    await loadMenuCollectionsWithMenuService(getState, dispatch, 'any Date', background)
+
+    expect(menuLoadCollections).toHaveBeenCalledWith('any Date', background, 'mock collection')
+    expect(mockMenuLoadDispatcher).toHaveBeenCalledWith(dispatch, getState)
+    expect(menuLoadCollectionsRecipes).toHaveBeenCalledWith('any Date', 'mock recipe', 'mock collection recipes')
+  })
+})
 
 describe('getStockAvailability', () => {
   test('should set availablilty by mapping new ids to old ids', async () => {
@@ -33,3 +89,4 @@ describe('getStockAvailability', () => {
     })
   })
 })
+

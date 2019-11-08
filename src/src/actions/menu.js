@@ -12,15 +12,13 @@ import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
 import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
 import menuConfig from 'config/menu'
-import { activeMenuForDateTransformer } from 'apis/transformers/activeMenuForDate'
+import { menuServiceConfig } from 'config/menuService'
 import { dateTransformer } from 'apis/transformers/date'
-import { collectionsTransformer } from 'apis/transformers/collections'
-import { recipesTransformer } from 'apis/transformers/recipes'
-import { collectionRecipesTransformer } from 'apis/transformers/collectionRecipes'
+
 import statusActions from './status'
 import { redirect } from './redirect'
 import products from './products'
-import { getStockAvailability } from './menuActionHelper'
+import { getStockAvailability, loadMenuCollectionsWithMenuService } from './menuActionHelper'
 
 import {
   basketReset,
@@ -56,8 +54,6 @@ const menuActions = {
   menuLoadCollectionsRecipes,
   menuReceiveBoxPrices
 }
-
-const useMenuService = false // TODO: use cookie flag
 
 export function menuReceiveMenu(recipes) {
   return ({
@@ -135,6 +131,7 @@ export function menuCutoffUntilReceive(cutoffUntil) {
 
 export function menuLoadDays() {
   return async (dispatch, getState) => {
+    const useMenuService = menuServiceConfig.isEnabled
 
     if (useMenuService) {
       menuServiceLoadDays(dispatch, getState)
@@ -186,15 +183,10 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
 
       if (features.getIn(['collections', 'value']) || features.getIn(['forceCollections', 'value'])) {
 
-        if (useMenuService) {
-          const menuServiceData = getState().menuService.toJS()
-          const activeMenu = activeMenuForDateTransformer(menuServiceData, date)
-          const transformedCollections = collectionsTransformer(activeMenu, menuServiceData)
-          const transformedRecipes = recipesTransformer(activeMenu, menuServiceData)
-          const transformedCollectionRecipes = collectionRecipesTransformer(activeMenu)
+        const useMenuService = menuServiceConfig.isEnabled
 
-          await menuLoadCollections(date, background, transformedCollections)(dispatch, getState)
-          await menuLoadCollectionsRecipes(date, transformedRecipes, transformedCollectionRecipes)(dispatch, getState)
+        if (useMenuService) {
+          await loadMenuCollectionsWithMenuService(getState, dispatch, date, background)
         } else {
           await menuLoadCollections(date, background)(dispatch, getState)
           await menuLoadCollectionsRecipes(date)(dispatch, getState)
@@ -343,6 +335,7 @@ export function menuLoadStock(clearStock = true) {
 
     let adjustedStock = {}
 
+    const useMenuService = menuServiceConfig.isEnabled
     if (useMenuService) {
       adjustedStock = getStockAvailability(getState, recipeStock)
     } else {

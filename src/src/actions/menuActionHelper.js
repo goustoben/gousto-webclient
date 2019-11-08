@@ -1,3 +1,8 @@
+import { activeMenuForDateTransformer } from 'apis/transformers/activeMenuForDate'
+import { collectionsTransformer } from 'apis/transformers/collections'
+import { recipesTransformer } from 'apis/transformers/recipes'
+import { collectionRecipesTransformer } from 'apis/transformers/collectionRecipes'
+import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
 
 function getStockAvailability(getState, recipeStock) {
   const includedData = getState().recipes
@@ -21,4 +26,18 @@ function getStockAvailability(getState, recipeStock) {
   }, {})
 }
 
-export { getStockAvailability }
+const loadMenuCollectionsWithMenuService = async (getState, dispatch, date, background) => {
+  const menuServiceData = getState().menuService.toJS()
+  const activeMenu = activeMenuForDateTransformer(menuServiceData, date)
+  const transformedCollections = collectionsTransformer(activeMenu, menuServiceData)
+  const transformedRecipes = recipesTransformer(activeMenu, menuServiceData)
+  const transformedCollectionRecipes = collectionRecipesTransformer(activeMenu)
+
+  await menuLoadCollections(date, background, transformedCollections)(dispatch, getState)
+  await menuLoadCollectionsRecipes(date, transformedRecipes, transformedCollectionRecipes)(dispatch, getState)
+}
+
+export {
+  getStockAvailability,
+  loadMenuCollectionsWithMenuService
+}
