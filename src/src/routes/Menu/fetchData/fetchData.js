@@ -11,9 +11,15 @@ import { hasJustForYouCollection } from 'selectors/collections'
 import { isCollectionsFeatureEnabled } from 'selectors/features'
 import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
-import { menuLoadComplete } from 'actions/menu'
+import { menuLoadComplete, menuCutoffUntilReceive } from 'actions/menu'
+import { fetchMenus } from 'apis/menus'
 
+import { dateTransformer } from 'apis/transformers/date'
+import { collectionsTransformer } from 'apis/transformers/collections'
+import { recipesTransformer } from 'apis/transformers/recipes'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
+
+let menuData = {}
 
 const requiresMenuRecipesClear = (store, orderId) => {
   return (
@@ -53,7 +59,9 @@ const chooseFirstDate = async (store) => {
     await store.dispatch(actions.userLoadOrders())
   }
 
-  await store.dispatch(actions.menuLoadDays())
+  await store.dispatch(menuCutoffUntilReceive(menuData.newDate))
+
+  // await store.dispatch(actions.menuLoadDays())
   await store.dispatch(actions.boxSummaryDeliveryDaysLoad())
 
   const canLandOnOrder = store.getState().features.getIn(['landingOrder', 'value'], false)
@@ -113,7 +121,7 @@ const loadOrderAuthenticated = async (store, orderId) => {
     }
 
     await Promise.all([
-      store.dispatch(actions.menuLoadMenu()),
+      store.dispatch(actions.menuLoadMenu(undefined, undefined, menuData.newCollections)), // TODO:refactor undefineds
       store.dispatch(actions.menuLoadStock(true))
     ])
   } catch (e) {
@@ -125,7 +133,7 @@ const loadOrderAuthenticated = async (store, orderId) => {
   }
 }
 
-const loadWithoutOrder = async (store, query, background) => {
+const loadWithoutOrder = async (store, query, background, transformedCollection) => {
   const isAdmin = getIsAdmin(store.getState())
 
   if (store.getState().basket.get('orderId')) {
@@ -162,7 +170,7 @@ const loadWithoutOrder = async (store, query, background) => {
     cutoffDateTime = query.cutoffDate || store.getState().basket.get('date') || cutoffDateTimeNow()
   }
 
-  await store.dispatch(actions.menuLoadMenu(cutoffDateTime, background))
+  await store.dispatch(actions.menuLoadMenu(cutoffDateTime, background, transformedCollection))
 
   if (!browseMode) {
     await store.dispatch(actions.menuLoadStock(true))
@@ -248,6 +256,20 @@ const shouldFetchData = (store, params, force) => {
 
 // eslint-disable-next-line import/no-default-export
 export default async function fetchData({ store, query, params }, force, background) {
+  const useMenuService = true
+  const accessToken = store.getState().auth.get('accessToken')
+
+  if (useMenuService) {
+    const response = await fetchMenus(accessToken)
+    const newDate = dateTransformer(response)
+    const newCollections = collectionsTransformer(response)
+
+    menuData = {
+      newDate,
+      newCollections,
+    }
+  }
+
   const startTime = now()
 
   await applyForceCollectionsFeature(store)
@@ -269,7 +291,7 @@ export default async function fetchData({ store, query, params }, force, backgro
     if (params.orderId) {
       await loadOrder(store, params.orderId)
     } else {
-      await loadWithoutOrder(store, query, background)
+      await loadWithoutOrder(store, query, background, menuData.newCollections)
     }
 
     selectCollectionFromQuery(store, query)
