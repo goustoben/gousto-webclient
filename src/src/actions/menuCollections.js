@@ -8,7 +8,7 @@ import { collectionFilterChange } from 'actions/filters'
 import { menuLoadCollectionRecipes } from 'actions/menuLoadCollectionRecipes'
 import actionTypes from './actionTypes'
 
-export const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
+const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
   return async (dispatch, getState) => {
     const state = getState()
     const accessToken = state.auth.get('accessToken')
@@ -76,7 +76,7 @@ export const menuLoadCollections = (date, noUrlChange, transformedCollections) =
   }
 }
 
-export const menuLoadCollectionsRecipes = (date) => {
+const menuLoadCollectionsRecipes = (date, transformedRecipes, transformedCollectionRecipes) => {
   return (dispatch, getState) => {
     const allRecipesCollections = getState().menuCollections.filter(isAllRecipes)
     const ids = Array.from(getState().menuCollections.keys())
@@ -87,7 +87,7 @@ export const menuLoadCollectionsRecipes = (date) => {
     }
 
     return Promise.all(
-      ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
+      ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId, transformedRecipes, transformedCollectionRecipes)(dispatch, getState))
     )
       .then(() => {
         const state = getState()
@@ -98,4 +98,9 @@ export const menuLoadCollectionsRecipes = (date) => {
         })
       })
   }
+}
+
+export {
+  menuLoadCollections,
+  menuLoadCollectionsRecipes
 }

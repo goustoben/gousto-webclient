@@ -2,8 +2,24 @@ import { fetchCollectionRecipes } from 'apis/collections'
 import { menuReceiveCollectionRecipes, menuReceiveMenu } from 'actions/menu'
 
 // TODO [TR-432]: change menuLoadCollectionRecipes name as it clashes with menuLoadCollectionsRecipes
-export function menuLoadCollectionRecipes(date, collectionId, idsOnly) {
+export function menuLoadCollectionRecipes(date, collectionId, idsOnly, transformedRecipes, transformedCollectionRecipes) {
   return async (dispatch, getState) => {
+    if (transformedRecipes) {
+
+      if (transformedCollectionRecipes) {
+        const recipesInCollection = transformedCollectionRecipes[collectionId]
+
+        console.log('recipesInCollection', recipesInCollection) // eslint-disable-line
+
+        // filter recipes by collectionid
+        dispatch(menuReceiveCollectionRecipes(collectionId, recipesInCollection))
+      }
+
+      dispatch(menuReceiveMenu(transformedRecipes)) // TODO : should only be called once out side menuLoadCollectionRecipes
+
+      return
+    }
+
     const state = getState()
     const { features } = state
     const menuId = features.getIn(['menu_id', 'value'])
