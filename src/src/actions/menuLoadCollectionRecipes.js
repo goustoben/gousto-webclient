@@ -9,8 +9,6 @@ export function menuLoadCollectionRecipes(date, collectionId, idsOnly, transform
       if (transformedCollectionRecipes) {
         const recipesInCollection = transformedCollectionRecipes[collectionId]
 
-        console.log('recipesInCollection', recipesInCollection) // eslint-disable-line
-
         // filter recipes by collectionid
         dispatch(menuReceiveCollectionRecipes(collectionId, recipesInCollection))
       }
