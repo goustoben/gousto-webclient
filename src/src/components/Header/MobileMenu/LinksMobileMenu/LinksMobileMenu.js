@@ -10,6 +10,7 @@ const LinkMobileMenu = ({ isAuthenticated, customerLogin, trackNavigationClick }
     <Svg fileName='icon_menubar_account_link' className={cssMobile.accountIcon} />
     {isAuthenticated ?
       <Link
+        data-testing='linkMenuAccount'
         to={defaultMenuItems.myGousto.url}
         className={cssMobile.accountMenuItem}
         clientRouted={defaultMenuItems.myGousto.clientRouted}

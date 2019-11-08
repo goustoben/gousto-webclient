@@ -333,6 +333,9 @@ module.exports = {
         burgerMenuLogout: {
           selector: '*[data-testing="burgerMenuLogout"]',
         },
+        linkMenuAccount: {
+          selector: '*[data-testing="linkMenuAccount"]',
+        }
       },
       commands: [{
         openBurgerMenu: function () {
@@ -350,13 +353,18 @@ module.exports = {
             .click('@burgerMenuLogout')
           return this
         },
+        goToAccount: function () {
+          if (this.api.globals.browser === 'mobile') {
+            this.waitForElementVisible('@linkMenuAccount')
+              .click('@linkMenuAccount')
+          }
+        },
         checkUserLoggedIn: function () {
           if (this.api.globals.browser === 'mobile') {
             const shared = this.api.page.shared()
 
             shared.section.body.loginModalClosed()
-            this.openBurgerMenu()
-              .waitForElementVisible('@burgerMenuLogout')
+            this.waitForElementVisible('@linkMenuAccount', 15000)
           } else {
             this.waitForElementVisible('@myGoustoButtonLink', 15000)
             this.expect.element('@myGoustoButtonLink').to.be.visible.before()
