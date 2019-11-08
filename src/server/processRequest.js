@@ -98,12 +98,10 @@ const renderHTML = (store, renderProps, url, userAgent, noGTM = false) => {
 }
 
 const createCookies = (ctx, store) => {
-
   // todo: make sure cookie is correctly set up
   if (ctx.cookies && ctx.request && ctx.request.query && ctx.request.query.promo) {
     ctx.cookies.set('promo_url', ctx.request.query.promo)
     store.dispatch(basketActions.basketPromoCodeUrlChange(ctx.request.query.promo))
-
   }
 }
 
