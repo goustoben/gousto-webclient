@@ -45,7 +45,6 @@ class Header extends React.PureComponent {
     small: PropTypes.bool,
     abandonBasketFeature: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
-    shouldRenderNewMenuDesign: PropTypes.bool
   }
 
   static defaultProps = {
@@ -58,7 +57,6 @@ class Header extends React.PureComponent {
     small: false,
     trackNavigationClick: () => { },
     abandonBasketFeature: false,
-    shouldRenderNewMenuDesign: false
   }
 
   constructor(props) {
@@ -312,7 +310,6 @@ class Header extends React.PureComponent {
       path,
       trackNavigationClick,
       abandonBasketFeature,
-      shouldRenderNewMenuDesign,
       routing
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
@@ -383,7 +380,7 @@ class Header extends React.PureComponent {
                         this.hideMobileMenu()
                       }}
                       serverError={serverError}
-                      shouldRenderNewMenuDesign={shouldRenderNewMenuDesign && (pathName === '/menu')}
+                      shouldRenderNewMenuDesign={isAuthenticated && (pathName === '/menu')}
                     />
                   </div>
                 </div>
