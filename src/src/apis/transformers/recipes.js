@@ -1,7 +1,7 @@
 import { normaliseData } from './normaliseData'
 import { ingredientTransformer } from './recipes/ingredientTransformer'
 import { mediaTransformer } from './recipes/mediaTransformer'
-import { allergensTransformer, basicsTransformer, formatIngredients, shelfLifeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
+import { allergensTransformer, basicsTransformer, equpimentTransformer, formatIngredients, shelfLifeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
 
 const recipesTransformer = (activeMenu, response) => {
   const normalisedData = normaliseData(response)
@@ -30,7 +30,7 @@ const recipesTransformer = (activeMenu, response) => {
       cuisine: normalisedAttributes.cuisine.name,
       description: normalisedAttributes.description,
       dietType: normalisedAttributes.diet_type.slug,
-      equipment:normalisedAttributes.equipment,
+      equipment: equpimentTransformer(normalisedAttributes.equipment),
       fiveADay: normalisedAttributes.five_a_day,
       id: individualRecipeId, // Check having a different id isn't going to break things elsewhere
       ingredients: finalIngredients,
