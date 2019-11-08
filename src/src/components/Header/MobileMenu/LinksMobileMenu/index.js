@@ -1,0 +1,1 @@
+export { LinkMobileMenu } from './LinksMobileMenu'

@@ -20,7 +20,7 @@ import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
 import { deepCloneObject } from 'utils/deepClone'
-import { MobileWrapper } from './MobileMenu'
+import { MobileMenu } from './MobileMenu'
 import { defaultMenuItems } from './menuItemsHelper'
 import css from './Header.css'
 
@@ -368,7 +368,7 @@ class Header extends React.PureComponent {
                       {this.renderMenuItems(desktopMenuItems, hideNav)}
                       {this.renderAuthLink()}
                     </span>
-                    <MobileWrapper
+                    <MobileMenu
                       hideMobileMenu={this.hideMobileMenu}
                       onOpen={this.onOpen}
                       logoutFunc={this.logoutFunc}
