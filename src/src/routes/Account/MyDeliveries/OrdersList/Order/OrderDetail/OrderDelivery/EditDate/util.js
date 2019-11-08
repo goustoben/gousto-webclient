@@ -63,12 +63,7 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
   const daysWithStock = Object.entries(days).filter(([, day]) =>
     (!day.noStock && day.alternateDeliveryDay === null) || day.coreDayId === orderCoreDeliveryDayId
   )
-  const deliveryDaysOptions = [{
-    value: DEFAULT_MESSAGE_ID,
-    label: 'Please select a delivery date',
-    disabled: false,
-    icon: '',
-  }]
+  const deliveryDaysOptions = []
   deliveryDaysOptions.push(...daysWithStock.map(([, day]) => {
     const isDateTaken = takenDatesIds.some(takenDate => takenDate === day.coreDayId)
 
@@ -79,17 +74,10 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
       icon: isDateTaken ? 'full-box' : '',
     }
   }))
-  const slotsOptions = {}
-  const defaultSlotOption = {
-    value: DEFAULT_MESSAGE_ID,
-    coreSlotId: null,
-    label: 'Please select a delivery slot',
-    subLabel: '',
-    isDefaultSlot: false,
-  }
-  slotsOptions[DEFAULT_MESSAGE_ID] = [defaultSlotOption]
+  const slotsOptions = []
+
   daysWithStock.forEach(([, day]) => {
-    slotsOptions[day.coreDayId] = [defaultSlotOption]
+    slotsOptions[day.coreDayId] = []
     slotsOptions[day.coreDayId].push(...day.slots
       .filter(slot => !slot.noStock || (slot.id === orderDeliverySlotId && day.coreDayId === orderCoreDeliveryDayId))
       .map(slot => (

@@ -1,5 +1,9 @@
 @value ScreenXSMax from 'styles/screenSizes.css';
 
+.deliveryDetailsWrapper {
+	display: flex;
+}
+
 .bold {
 	composes: textBold from 'styles/typography.css';
 }
@@ -10,6 +14,7 @@
 
 .subSection {
 	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+	flex-basis: 50%;
 }
 
 .capitalize {

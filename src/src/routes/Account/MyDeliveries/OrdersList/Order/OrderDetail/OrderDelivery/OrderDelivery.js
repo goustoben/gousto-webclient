@@ -71,38 +71,33 @@ class OrderDelivery extends React.PureComponent {
   }
 
   render() {
-    const { recipesPeriodStockFetchError, orderDeliveryDaysFetchError } = this.props
+    const { recipesPeriodStockFetchError, orderDeliveryDaysFetchError, editDeliveryMode } = this.props
 
     return (
       <div data-testing="recipesDeliverySection">
-        {this.props.editDeliveryMode && this.props.fetchSuccess ?
-          <EditDate
-            editDeliveryMode={this.props.editDeliveryMode}
-            orderId={this.props.orderId}
-            availableFrom={this.props.availableFrom}
-            availableTo={this.props.availableTo}
-          />
-          :
-          <div>
-            <div className={`${css.header} ${css.bold}`}>
-              Delivery details
+        <div className={`${css.header} ${css.bold}`}>
+          Delivery details
+        </div>
+        <div className={css.deliveryDetailsWrapper}>
+          <div className={css.subSection}>
+          <div className={css.bold}>
+              Date and time
             </div>
-            <div className={css.subSection}>
-              <div className={css.bold}>
-                {this.props.date}
-              </div>
-              <div>
-                {this.props.timeStart} - {this.props.timeEnd}
-              </div>
+            <div className={css.bold}>
+              {this.props.date}
             </div>
-            <div className={css.subSection}>
-              <div className={`${css.capitalize} ${css.bold}`}>
-                {this.props.shippingAddressObj.get('name')}
-              </div>
-              <div>
-                {OrderDelivery.constructShippingAddress(this.props.shippingAddressObj)}
-              </div>
+            <div>
+              {this.props.timeStart} - {this.props.timeEnd}
             </div>
+
+            {editDeliveryMode && this.props.fetchSuccess &&
+              <EditDate
+                editDeliveryMode={editDeliveryMode}
+                orderId={this.props.orderId}
+                availableFrom={this.props.availableFrom}
+                availableTo={this.props.availableTo}
+              />
+            }
             {(recipesPeriodStockFetchError != null || orderDeliveryDaysFetchError != null) ?
               <div>
                 <Alert type="danger">
@@ -113,12 +108,21 @@ class OrderDelivery extends React.PureComponent {
             {['recipes chosen', 'menu open'].indexOf(this.props.orderState) > -1 ?
               <div className={css.button}>
                 <Button onClick={() => this.onClickFunction()} color={'secondary'} noDecoration>
-                  Edit details
+                  {editDeliveryMode ? 'Cancel' : 'Change'}
                 </Button>
               </div>
               : null}
           </div>
-        }
+
+          <div className={css.subSection}>
+            <div className={`${css.capitalize} ${css.bold}`}>
+              {this.props.shippingAddressObj.get('name')}
+            </div>
+            <div>
+              {OrderDelivery.constructShippingAddress(this.props.shippingAddressObj)}
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

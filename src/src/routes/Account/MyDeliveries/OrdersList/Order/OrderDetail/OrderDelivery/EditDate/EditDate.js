@@ -136,23 +136,12 @@ class EditDate extends React.PureComponent {
     const { deliveryDaysOptions, slotsOptions } = this.state
     let { selectedDeliveryDayId, selectedDeliverySlotId } = this.state
     const canSubmit = this.canSubmit(deliverySlotId, selectedDeliveryDayId, selectedDeliverySlotId)
-    if (!deliveryDaysOptions.some(option => option.value === selectedDeliveryDayId)) {
-      selectedDeliveryDayId = DEFAULT_MESSAGE_ID
-      selectedDeliverySlotId = DEFAULT_MESSAGE_ID
-    } else if (!slotsOptions[selectedDeliveryDayId].some(option => option.value === selectedDeliverySlotId)) {
-      selectedDeliverySlotId = DEFAULT_MESSAGE_ID
-    }
 
     return (
       <div className={css.editDeliveryOuterContainer}>
         <div className={css.editDeliveryInnerContainer}>
-          <div className={`${css.header} ${css.bold}`}>
-            <Content contentKeys="mydeliveriesOrderEditdeliveryTitle" >
-              <span>Delivery details</span>
-            </Content>
-          </div>
           <div className={css.row}>
-            <div className={css.firstDropDownContainer}>
+            <div className={css.dropDownContainer}>
               <DropdownInput
                 color="secondary"
                 options={deliveryDaysOptions}
@@ -161,26 +150,26 @@ class EditDate extends React.PureComponent {
                 value={selectedDeliveryDayId}
               />
             </div>
-            <DropdownInput
-              color="secondary"
-              options={slotsOptions[selectedDeliveryDayId]}
-              onChange={(slotId) => this.onSlotChange(slotId)}
-              className={css.slotsDropDown}
-              value={selectedDeliverySlotId}
-            />
+            <div className={css.dropDownContainer}>
+              <DropdownInput
+                color="secondary"
+                options={slotsOptions[selectedDeliveryDayId]}
+                onChange={(slotId) => this.onSlotChange(slotId)}
+                className={css.slotsDropDown}
+                value={selectedDeliverySlotId}
+              />
+            </div>
           </div>
           <div className={css.button}>
-            <Button onClick={() => this.onCancelFunction()} color="negative" noDecoration className={css.firstButton}>
-              Cancel changes
-            </Button>
             <Button
               onClick={() => this.onSubmitFunction(orderId, selectedDeliveryDayId, selectedDeliverySlotId)}
               color={'secondary'}
+              width="full"
               noDecoration
               pending={isPendingUpdateDayAndSlot}
               disabled={!canSubmit}
             >
-              Save changes
+              Set delivery slot
             </Button>
           </div>
         </div>
