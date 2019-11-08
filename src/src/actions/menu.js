@@ -142,7 +142,7 @@ export function menuCollectionsReceive(collections) {
   }
 }
 
-export function menuLoadMenu(cutoffDateTime = null, background) {
+export function menuLoadMenu(cutoffDateTime = null, background, transformedCollections) {
   return async (dispatch, getState) => {
     const state = getState()
     const reqData = {
@@ -163,7 +163,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
       const startTime = new Date()
 
       if (features.getIn(['collections', 'value']) || features.getIn(['forceCollections', 'value'])) {
-        await menuLoadCollections(date, background)(dispatch, getState)
+        await menuLoadCollections(date, background, transformedCollections)(dispatch, getState)
         await menuLoadCollectionsRecipes(date)(dispatch, getState)
       } else {
         const { data: recipes } = await fetchRecipes(accessToken, '', reqData)

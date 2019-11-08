@@ -8,7 +8,7 @@ import { collectionFilterChange } from 'actions/filters'
 import { menuLoadCollectionRecipes } from 'actions/menuLoadCollectionRecipes'
 import actionTypes from './actionTypes'
 
-export const menuLoadCollections = (date, noUrlChange) => {
+export const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
   return async (dispatch, getState) => {
     const state = getState()
     const accessToken = state.auth.get('accessToken')
@@ -24,7 +24,15 @@ export const menuLoadCollections = (date, noUrlChange) => {
       },
       ...experiments,
     }
-    const { data: collections } = await fetchCollections(accessToken, '', args)
+
+    let collections
+    if (transformedCollections) {
+      collections = transformedCollections
+    } else {
+      const response = await fetchCollections(accessToken, '', args)
+      collections = response.data
+    }
+
     const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
     if (recommendationCollection && recommendationCollection.properties) {
       const { tutorial, shortlist } = recommendationCollection.properties
