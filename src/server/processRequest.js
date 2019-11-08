@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const React = require('react')
 
 const { renderToString } = require('react-dom/server')
