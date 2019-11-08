@@ -17,6 +17,7 @@ import { fetchMenus } from 'apis/menus'
 import { dateTransformer } from 'apis/transformers/date'
 import { collectionsTransformer } from 'apis/transformers/collections'
 import { recipesTransformer } from 'apis/transformers/recipes'
+import { collectionRecipesTransformer } from 'apis/transformers/collectionRecipes'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
 let menuData = {}
@@ -121,7 +122,7 @@ const loadOrderAuthenticated = async (store, orderId) => {
     }
 
     await Promise.all([
-      store.dispatch(actions.menuLoadMenu(undefined, undefined, menuData.newCollections)), // TODO:refactor undefineds
+      store.dispatch(actions.menuLoadMenu(undefined, undefined, menuData.newCollections, menuData.newRecipes, menuData.newtransformedCollectionRecipes)), // TODO:refactor undefineds
       store.dispatch(actions.menuLoadStock(true))
     ])
   } catch (e) {
@@ -133,7 +134,7 @@ const loadOrderAuthenticated = async (store, orderId) => {
   }
 }
 
-const loadWithoutOrder = async (store, query, background, transformedCollection) => {
+const loadWithoutOrder = async (store, query, background, transformedCollections, transformedRecipes, transformedCollectionRecipes) => {
   const isAdmin = getIsAdmin(store.getState())
 
   if (store.getState().basket.get('orderId')) {
@@ -170,7 +171,7 @@ const loadWithoutOrder = async (store, query, background, transformedCollection)
     cutoffDateTime = query.cutoffDate || store.getState().basket.get('date') || cutoffDateTimeNow()
   }
 
-  await store.dispatch(actions.menuLoadMenu(cutoffDateTime, background, transformedCollection))
+  await store.dispatch(actions.menuLoadMenu(cutoffDateTime, background, transformedCollections, transformedRecipes, transformedCollectionRecipes))
 
   if (!browseMode) {
     await store.dispatch(actions.menuLoadStock(true))
@@ -243,13 +244,14 @@ const shouldFetchData = (store, params, force) => {
   const menuCollectionRecipes = store && store.getState().menuCollectionRecipes
   const threshold = (__DEV__) ? 4 : 8
   const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
+  const requiresClear = requiresMenuRecipesClear(store, params.orderId)
 
   return (
     force
     || !menuRecipes
     || (menuRecipes && menuRecipes.size <= threshold)
     || stale
-    || requiresMenuRecipesClear(store, params.orderId)
+    || requiresClear
     || !menuCollectionRecipes.size
   )
 }
@@ -263,10 +265,14 @@ export default async function fetchData({ store, query, params }, force, backgro
     const response = await fetchMenus(accessToken)
     const newDate = dateTransformer(response)
     const newCollections = collectionsTransformer(response)
+    const newRecipes = recipesTransformer(response)
+    const newtransformedCollectionRecipes = collectionRecipesTransformer(response)
 
     menuData = {
-      newDate,
+      newDate, //rename to cutoff date for last date on secondary menu ....
       newCollections,
+      newRecipes,
+      newtransformedCollectionRecipes
     }
   }
 
@@ -278,6 +284,7 @@ export default async function fetchData({ store, query, params }, force, backgro
   const shouldFetch = shouldFetchData(store, params, force)
 
   if (isPending || !shouldFetch) {
+
     return
   }
 
@@ -291,7 +298,7 @@ export default async function fetchData({ store, query, params }, force, backgro
     if (params.orderId) {
       await loadOrder(store, params.orderId)
     } else {
-      await loadWithoutOrder(store, query, background, menuData.newCollections)
+      await loadWithoutOrder(store, query, background, menuData.newCollections, menuData.newRecipes, menuData.newtransformedCollectionRecipes)
     }
 
     selectCollectionFromQuery(store, query)
