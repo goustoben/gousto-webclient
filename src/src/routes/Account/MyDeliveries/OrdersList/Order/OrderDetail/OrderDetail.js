@@ -85,7 +85,7 @@ class OrderDetail extends React.PureComponent {
           </section>
           : null}
         {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ?
-          <section className={this.props.editDeliveryMode && fetchSuccess ? css.openCardSectionNoBorder : css.openCardSection}>
+          <section className={css.openCardSection}>
             <OrderDelivery
               date={this.props.deliveryDate}
               timeStart={this.props.deliveryTimeStart}

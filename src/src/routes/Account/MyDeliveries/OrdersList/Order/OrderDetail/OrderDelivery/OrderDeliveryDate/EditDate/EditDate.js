@@ -6,26 +6,19 @@ import { Button } from 'goustouicomponents'
 import userActions from 'actions/user'
 import orderActions from 'actions/order'
 import DropdownInput from 'Form/Dropdown'
-import Content from 'containers/Content'
 import util, { DEFAULT_MESSAGE_ID } from './util'
 import css from './EditDate.css'
 
-const constructDropdownOptions = (props) => {
-  const { deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders } = props
-
-  return util.getDeliveryDaysAndSlotsOptions(deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders)
-}
 class EditDate extends React.PureComponent {
   static propTypes = {
     editDeliveryMode: PropTypes.bool,
     orderId: PropTypes.string,
-    deliveryDays: PropTypes.instanceOf(Immutable.Map),
+    deliveryDays: PropTypes.instanceOf(Immutable.List),
     recipesStock: PropTypes.instanceOf(Immutable.List),
     coreDeliveryDayId: PropTypes.string.isRequired,
     deliverySlotId: PropTypes.string.isRequired,
     isPendingUpdateDayAndSlot: PropTypes.bool,
-    isErrorUpdateDayAndSlot: PropTypes.string,
-    availableDeliveryDays: PropTypes.string
+    availableDeliveryDays: PropTypes.object
   }
 
   static defaultProps = {
@@ -38,7 +31,7 @@ class EditDate extends React.PureComponent {
     orders: Immutable.Map({}),
     isPendingUpdateDayAndSlot: false,
     isErrorUpdateDayAndSlot: null,
-    orderGetDeliveryDays: () => {}
+    orderGetDeliveryDays: () => { }
   }
 
   static contextTypes = {
@@ -57,34 +50,48 @@ class EditDate extends React.PureComponent {
     }
   }
 
+  componentDidMount() {
+    const { deliveryDaysOptions, slotsOptions } = this.constructDropdownOptions(this.props)
+    const { selectedDeliveryDayId, selectedDeliverySlotId } = this.constructDefaultDayAndSlot(deliveryDaysOptions, slotsOptions)
+
+    this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId })
+  }
+
   componentWillReceiveProps(nextProps) {
-    const { isPendingUpdateDayAndSlot, isErrorUpdateDayAndSlot, orderId, editDeliveryMode, deliveryDays, recipesStock } = this.props
-    const { store } = this.context
-    const isPending = isPendingUpdateDayAndSlot
-    const willBePending = nextProps.isPendingUpdateDayAndSlot
-    const postError = isErrorUpdateDayAndSlot !== null
-    if (isPending && !willBePending && !postError) {
-      store.dispatch(userActions.userOpenCloseEditSection(orderId, !editDeliveryMode))
-    }
+    const { deliveryDays, recipesStock } = this.props
+
     if (deliveryDays !== nextProps.deliveryDays || recipesStock !== nextProps.recipesStock) {
-      const { deliveryDaysOptions, slotsOptions } = constructDropdownOptions(nextProps)
-      let { selectedDeliveryDayId, selectedDeliverySlotId } = this.state
-      if (!deliveryDaysOptions.some(option => option.value === selectedDeliveryDayId)) {
-        selectedDeliveryDayId = deliveryDaysOptions[0] ? deliveryDaysOptions[0].value : ''
-      }
-      if (!slotsOptions[selectedDeliveryDayId]
-        || !slotsOptions[selectedDeliveryDayId].some(option => option.value === selectedDeliverySlotId)) {
-        selectedDeliverySlotId = slotsOptions[selectedDeliveryDayId] && slotsOptions[selectedDeliveryDayId][0] ? slotsOptions[selectedDeliveryDayId][0].value : ''
-      }
+      const { deliveryDaysOptions, slotsOptions } = this.constructDropdownOptions(this.props)
+      const { selectedDeliveryDayId, selectedDeliverySlotId } = this.constructDefaultDayAndSlot(deliveryDaysOptions, slotsOptions)
+
       this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId })
     }
+  }
+  constructDropdownOptions = ({ deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders }) => (
+    util.getDeliveryDaysAndSlotsOptions(deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders)
+  )
+
+  constructDefaultDayAndSlot = (deliveryDaysOptions, slotsOptions) => {
+    const { coreDeliveryDayId, deliverySlotId } = this.props
+
+    let selectedDeliveryDayId = coreDeliveryDayId
+    let selectedDeliverySlotId = deliverySlotId
+
+    if (!deliveryDaysOptions.some(option => option.value === selectedDeliveryDayId)) {
+      selectedDeliveryDayId = deliveryDaysOptions[0] ? deliveryDaysOptions[0].value : ''
+    }
+    if (!slotsOptions[selectedDeliveryDayId]
+      || !slotsOptions[selectedDeliveryDayId].some(option => option.value === selectedDeliverySlotId)) {
+      selectedDeliverySlotId = slotsOptions[selectedDeliveryDayId] && slotsOptions[selectedDeliveryDayId][0] ? slotsOptions[selectedDeliveryDayId][0].value : ''
+    }
+
+    return { selectedDeliveryDayId, selectedDeliverySlotId }
   }
 
   onCancelFunction() {
     const { orderId, editDeliveryMode } = this.props
     const { store } = this.context
     store.dispatch(userActions.userOpenCloseEditSection(orderId, !editDeliveryMode))
-
   }
 
   onSubmitFunction(orderId, selectedDeliveryDayId) {
@@ -132,9 +139,9 @@ class EditDate extends React.PureComponent {
   }
 
   render() {
-    const { deliverySlotId, isPendingUpdateDayAndSlot, orderId} = this.props
+    const { deliverySlotId, isPendingUpdateDayAndSlot, orderId } = this.props
     const { deliveryDaysOptions, slotsOptions } = this.state
-    let { selectedDeliveryDayId, selectedDeliverySlotId } = this.state
+    const { selectedDeliveryDayId, selectedDeliverySlotId } = this.state
     const canSubmit = this.canSubmit(deliverySlotId, selectedDeliveryDayId, selectedDeliverySlotId)
 
     return (
@@ -143,7 +150,6 @@ class EditDate extends React.PureComponent {
           <div className={css.row}>
             <div className={css.dropDownContainer}>
               <DropdownInput
-                color="secondary"
                 options={deliveryDaysOptions}
                 onChange={(dayId) => this.onDayChange(dayId, slotsOptions)}
                 className={css.daysDropDown}
@@ -152,7 +158,6 @@ class EditDate extends React.PureComponent {
             </div>
             <div className={css.dropDownContainer}>
               <DropdownInput
-                color="secondary"
                 options={slotsOptions[selectedDeliveryDayId]}
                 onChange={(slotId) => this.onSlotChange(slotId)}
                 className={css.slotsDropDown}

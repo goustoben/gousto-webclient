@@ -4,8 +4,7 @@ import Immutable from 'immutable'
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
 import userActions from 'actions/user'
-import { Alert, Button } from 'goustouicomponents'
-import { EditDate } from './EditDate'
+import { OrderDeliveryDate } from './OrderDeliveryDate'
 
 import css from './OrderDelivery.css'
 
@@ -48,13 +47,14 @@ class OrderDelivery extends React.PureComponent {
     store: PropTypes.object.isRequired,
   }
 
-  onClickFunction() {
+  onClickFunction = () => {
     const { availableFrom, availableTo, shippingAddressId, orderId, editDeliveryMode } = this.props
-    Promise.all([
-      this.context.store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId)),
-      this.context.store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo)),
-    ])
-      .then(this.context.store.dispatch(userActions.userOpenCloseEditSection(orderId, !editDeliveryMode)))
+    // Promise.all([
+    //   this.context.store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId)),
+    //   this.context.store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo)),
+    // ])
+    // .then()
+    this.context.store.dispatch(userActions.userOpenCloseEditSection(orderId, !editDeliveryMode))
   }
 
   static constructShippingAddress(shippingAddressObj) {
@@ -70,8 +70,30 @@ class OrderDelivery extends React.PureComponent {
     return shippingAddress
   }
 
+  componentDidMount() {
+    const { availableFrom, availableTo, shippingAddressId, orderId } = this.props
+    const { store } = this.context
+
+    store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId))
+    store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo))
+    //if error show error
+  }
+
   render() {
-    const { recipesPeriodStockFetchError, orderDeliveryDaysFetchError, editDeliveryMode } = this.props
+    const {
+      recipesPeriodStockFetchError,
+      orderDeliveryDaysFetchError,
+      editDeliveryMode,
+      date,
+      timeStart,
+      timeEnd,
+      orderState,
+      fetchSuccess,
+      orderId,
+      availableFrom,
+      availableTo
+    } = this.props
+    const editDateHasError = (recipesPeriodStockFetchError != null || orderDeliveryDaysFetchError != null)
 
     return (
       <div data-testing="recipesDeliverySection">
@@ -80,38 +102,19 @@ class OrderDelivery extends React.PureComponent {
         </div>
         <div className={css.deliveryDetailsWrapper}>
           <div className={css.subSection}>
-          <div className={css.bold}>
-              Date and time
-            </div>
-            <div className={css.bold}>
-              {this.props.date}
-            </div>
-            <div>
-              {this.props.timeStart} - {this.props.timeEnd}
-            </div>
-
-            {editDeliveryMode && this.props.fetchSuccess &&
-              <EditDate
-                editDeliveryMode={editDeliveryMode}
-                orderId={this.props.orderId}
-                availableFrom={this.props.availableFrom}
-                availableTo={this.props.availableTo}
-              />
-            }
-            {(recipesPeriodStockFetchError != null || orderDeliveryDaysFetchError != null) ?
-              <div>
-                <Alert type="danger">
-                  There was a problem editing your order. Please try again later.
-                </Alert>
-              </div>
-              : null}
-            {['recipes chosen', 'menu open'].indexOf(this.props.orderState) > -1 ?
-              <div className={css.button}>
-                <Button onClick={() => this.onClickFunction()} color={'secondary'} noDecoration>
-                  {editDeliveryMode ? 'Cancel' : 'Change'}
-                </Button>
-              </div>
-              : null}
+            <OrderDeliveryDate
+              editDeliveryMode={editDeliveryMode}
+              date={date}
+              timeStart={timeStart}
+              timeEnd={timeEnd}
+              orderState={orderState}
+              hasError={editDateHasError}
+              onClickFunction={this.onClickFunction}
+              fetchSuccess={fetchSuccess}
+              orderId={orderId}
+              availableFrom={availableFrom}
+              availableTo={availableTo}
+            />
           </div>
 
           <div className={css.subSection}>

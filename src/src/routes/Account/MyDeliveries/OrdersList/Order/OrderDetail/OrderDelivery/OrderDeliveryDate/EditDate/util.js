@@ -1,4 +1,5 @@
 import humanTimeFormat from 'utils/timeFormat'
+import moment from 'moment'
 
 export const DEFAULT_MESSAGE_ID = 'default-message'
 
@@ -69,7 +70,7 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
 
     return {
       value: day.coreDayId,
-      label: day.date,
+      label: moment(day.date).format('ddd D MMM'),
       disabled: isDateTaken,
       icon: isDateTaken ? 'full-box' : '',
     }
