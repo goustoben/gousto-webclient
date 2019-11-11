@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import { fetchRecipes } from 'apis/recipes'
+import { menuServiceConfig } from 'config/menuService'
 import actionTypes from '../actionTypes'
 
 const mockGetAvailableDates = jest.fn()
@@ -9,6 +10,7 @@ const mockGetCutoffDateTime = jest.fn()
 
 const mockDispatchMenuLoadCollections = jest.fn()
 const mockDispatchmenuLoadCollectionsRecipes = jest.fn()
+const mockLoadMenuCollectionsWithMenuService = jest.fn()
 
 jest.mock('apis/data', () => ({
   getAvailableDates: mockGetAvailableDates,
@@ -38,6 +40,11 @@ jest.mock('apis/recipes', () => ({
 
     return getData()
   })
+}))
+
+jest.mock('actions/menuActionHelper', () => ({
+  getStockAvailability: jest.fn(),
+  loadMenuCollectionsWithMenuService: mockLoadMenuCollectionsWithMenuService,
 }))
 
 describe('menu actions', () => {
@@ -87,6 +94,7 @@ describe('menu actions', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
+    menuServiceConfig.isEnabled = false
   })
 
   describe('menuLoadMenu', () => {
@@ -125,22 +133,49 @@ describe('menu actions', () => {
       expect(mockGetCutoffDateTime).toHaveBeenCalled()
     })
 
-    test('should load collections when collections.value is true', async () => {
-      const stateWithTrueCollectionValue = {
-        ...state,
-        features: Immutable.fromJS({
-          collections: {
-            value: true,
-          }
-        }),
-      }
+    describe('when useMenuService is true', () => {
 
-      const getStateForTest = () => stateWithTrueCollectionValue
+      test('should load collections when collections.value is true', async () => {
+        menuServiceConfig.isEnabled = true
 
-      await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
+        const stateWithTrueCollectionValue = {
+          ...state,
+          features: Immutable.fromJS({
+            collections: {
+              value: true,
+            }
+          }),
+        }
 
-      expect(mockDispatchMenuLoadCollections).toHaveBeenCalled()
-      expect(mockDispatchmenuLoadCollectionsRecipes).toHaveBeenCalled()
+        const getStateForTest = () => stateWithTrueCollectionValue
+
+        await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
+
+        expect(mockLoadMenuCollectionsWithMenuService).toHaveBeenCalled()
+      })
+    })
+
+    describe('when useMenuService is false', () => {
+
+      test('should load collections when collections.value is false', async () => {
+        menuServiceConfig.isEnabled = false
+
+        const stateWithTrueCollectionValue = {
+          ...state,
+          features: Immutable.fromJS({
+            collections: {
+              value: true,
+            }
+          }),
+        }
+
+        const getStateForTest = () => stateWithTrueCollectionValue
+
+        await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
+
+        expect(mockDispatchMenuLoadCollections).toHaveBeenCalled()
+        expect(mockDispatchmenuLoadCollectionsRecipes).toHaveBeenCalled()
+      })
     })
   })
 

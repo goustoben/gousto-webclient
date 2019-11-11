@@ -1,16 +1,16 @@
 import { normaliseData } from './normaliseData'
 
-const collectionsTransformer = (response) => {
-  const normalisedData = normaliseData(response)
-  const formattedData = response.data[0].relationships.collections.data.map((collection) => {
-    const normalisedAttributes = normalisedData.collections[collection.id].attributes
+const transformMenuCollections = (menu, normalisedData) => {
+  const formattedData = menu.relationships.collections.data.map((collection) => {
+
+    const normalisedAttributes = normalisedData.collection[collection.id].attributes
 
     return {
       colour: normalisedAttributes.colour,
-      default: normalisedAttributes.default,
-      description: normalisedAttributes.description,
+      //default: normalisedAttributes.default,
+      // description: normalisedAttributes.meta_description,
       id: collection.id,
-      isCookbook: normalisedAttributes.is_cookbook,
+      //isCookbook: normalisedAttributes.is_cookbook,
       order: normalisedAttributes.order,
       published: true,
       shortTitle: normalisedAttributes.short_title,
@@ -19,7 +19,12 @@ const collectionsTransformer = (response) => {
   })
 
   return formattedData
+}
 
+const collectionsTransformer = (activeMenu, response) => {
+  const normalisedData = normaliseData(response)
+
+  return transformMenuCollections(activeMenu, normalisedData)
 }
 
 export { collectionsTransformer }
