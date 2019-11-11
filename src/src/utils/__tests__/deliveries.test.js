@@ -1891,6 +1891,11 @@ describe('utils/deliveries', () => {
         date: '2016-06-30',
         slots: [{ whenCutoff: '2016-07-03' }, { whenCutoff: '2016-07-08' }],
       },
+      {
+        id: 'day3',
+        date: '2016-07-04',
+        slots: [{ whenCutoff: '2016-07-07', daySlotLeadTimeActive: false }, { whenCutoff: '2016-07-13', daySlotLeadTimeActive: false }],
+      },
     ]
 
     beforeEach(() => {
@@ -1909,7 +1914,7 @@ describe('utils/deliveries', () => {
         '2016-06-30': {
           id: 'day2',
           date: '2016-06-30',
-          slots: [{ whenCutoff: '2016-07-03' }, { whenCutoff: '2016-07-08' }],
+          slots: [{ whenCutoff: '2016-07-03' }, { whenCutoff: '2016-07-08'}],
         },
       })
     })
@@ -1939,6 +1944,74 @@ describe('utils/deliveries', () => {
           date: '2016-06-30',
           slots: [{ whenCutoff: '2016-07-08' }],
         },
+      })
+    })
+
+    test('should filter out inactive slots', async () => {
+      const result = getAvailableDeliveryDays(days)
+
+      expect(result).toEqual(expect.not.objectContaining({
+        '2016-07-04': {
+          id: 'day3',
+          date: '2016-07-04',
+          slots: [{ whenCutoff: '2016-07-07', daySlotLeadTimeActive: false }, { whenCutoff: '2016-07-13', daySlotLeadTimeActive: false }],
+        }
+      }))
+    })
+
+    describe('if the user has an order with a day slot lead time', () => {
+      test('should NOT filter out an inactive slot if order DLST is in days', async () => {
+        const daysWithDSLT = [
+          {
+            id: 'day1',
+            date: '2016-06-26',
+            slots: [
+              {
+                whenCutoff: '2016-07-01',
+                daySlotLeadTimeActive: true,
+                daySlotLeadTimeId: 'dslt1'
+              },
+              {
+                whenCutoff: '2016-07-05',
+                daySlotLeadTimeActive: true,
+                daySlotLeadTimeId: 'dslt2'
+              }
+            ],
+          },
+          {
+            id: 'day2',
+            date: '2016-06-30',
+            slots: [
+              {
+                whenCutoff: '2016-07-03',
+                daySlotLeadTimeActive: false,
+                daySlotLeadTimeId: 'dslt3'
+              },
+              {
+                whenCutoff: '2016-07-08',
+                daySlotLeadTimeActive: false,
+                daySlotLeadTimeId: 'dslt4'
+              }
+            ],
+          },
+        ]
+
+        const usersOrdersDSLT = ['dslt4']
+
+        const result = getAvailableDeliveryDays(daysWithDSLT, '2016-07-02', usersOrdersDSLT)
+
+        expect(result).toEqual({
+          '2016-06-26': {
+            id: 'day1',
+            date: '2016-06-26',
+            slots: [{ whenCutoff: '2016-07-05', daySlotLeadTimeActive: true, daySlotLeadTimeId: 'dslt2' }]
+          },
+          '2016-06-30': {
+            id: 'day2',
+            date: '2016-06-30',
+            slots: [{ whenCutoff: '2016-07-08', daySlotLeadTimeActive: false, daySlotLeadTimeId: 'dslt4' }]
+          }
+        })
       })
     })
   })
@@ -2008,7 +2081,8 @@ describe('utils/deliveries', () => {
               coreSlotId: "4",
               deliveryStartTime: "18:00:00",
               id: "dafe3372-12d1-11e6-bee5-06ddb628bdc5",
-              daySlotLeadTimeId: "7bdd00f7-af72-41af-8444-a35f1467be49"
+              daySlotLeadTimeId: "7bdd00f7-af72-41af-8444-a35f1467be49",
+              daySlotLeadTimeActive: true
             },
             {
               whenCutoff: "2014-01-14T11:59:59+00:00",
@@ -2019,6 +2093,7 @@ describe('utils/deliveries', () => {
               deliveryStartTime: "08:00:00",
               id: "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
               daySlotLeadTimeId: "386932e5-71bd-4610-b9a4-baae4bc91be9",
+              daySlotLeadTimeActive: true
             }
           ]
         },

@@ -412,11 +412,11 @@ export function getAvailableDeliveryDays(deliveryDays, cutoffDatetimeFrom, userO
     .map(day => {
       const newDay = day
       newDay.slots = day.slots.filter(slot => {
-        const isActive = slot.daySlotLeadTimeActive
-        const isOrderDSLT = userOrderDaySlotLeadTimeIds.indexOf(slot.daySlotLeadTimeId) > -1
+        const isActive = "daySlotLeadTimeActive" in slot ? slot.daySlotLeadTimeActive : true
+        const hasOrderWithDSLT = userOrderDaySlotLeadTimeIds.indexOf(slot.daySlotLeadTimeId) > -1
         const hasCorrectTime = moment(slot.whenCutoff).isAfter(cutoffDatetimeFromMoment)
 
-        return (isActive || isOrderDSLT) && hasCorrectTime
+        return (isActive || hasOrderWithDSLT) && hasCorrectTime
       })
 
       return newDay
