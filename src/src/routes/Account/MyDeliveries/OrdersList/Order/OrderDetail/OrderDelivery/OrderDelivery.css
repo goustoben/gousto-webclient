@@ -15,7 +15,7 @@
 
 .subSection {
 	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
-	flex-basis: 50%;
+	flex-basis: 100%;
 }
 
 .details {
@@ -34,11 +34,4 @@
 
 .capitalize {
 	text-transform: capitalize;
-}
-
-.button {
-	@media ScreenXSMax {
-		display: flex;
-		justify-content: flex-end;
-	}
 }

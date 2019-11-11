@@ -116,15 +116,6 @@ class OrderDelivery extends React.PureComponent {
               availableTo={availableTo}
             />
           </div>
-
-          <div className={css.subSection}>
-            <div className={`${css.capitalize} ${css.bold}`}>
-              {this.props.shippingAddressObj.get('name')}
-            </div>
-            <div>
-              {OrderDelivery.constructShippingAddress(this.props.shippingAddressObj)}
-            </div>
-          </div>
         </div>
       </div>
     )
