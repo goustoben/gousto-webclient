@@ -106,7 +106,7 @@ class Header extends React.PureComponent {
     closeBoxModalVisibilityChange(false)
   }
 
-  onOpen = (e) => {
+  onLoginClick = (e) => {
     const { loginVisibilityChange } = this.props
     e.stopPropagation()
     loginVisibilityChange(true)
@@ -185,7 +185,7 @@ class Header extends React.PureComponent {
     return { fromWizard, newPath }
   }
 
-  logoutFunc = () => {
+  onLogoutClick = () => {
     const { logoutUser } = this.props
     logoutUser()
   }
@@ -235,8 +235,8 @@ class Header extends React.PureComponent {
         role="button"
         tabIndex='0'
         className={css.linkDesktop}
-        onClick={this.logoutFunc}
-        onKeyDown={e => onEnter(e, this.logoutFunc)}
+        onClick={this.onLogoutClick}
+        onKeyDown={e => onEnter(e, this.onLogoutClick)}
         data-testing="logoutButton"
       >
         Logout
@@ -248,8 +248,8 @@ class Header extends React.PureComponent {
         role='button'
         tabIndex='0'
         className={classNames(css.authButtonsContainer, css[buttonState])}
-        onClick={e => { if (!isAuthenticated) { this.onOpen(e) } }}
-        onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onOpen() } })}
+        onClick={e => { if (!isAuthenticated) { this.onLoginClick(e) } }}
+        onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onLoginClick() } })}
       >
         {button}
         {isAuthenticated && logoutLink}
@@ -367,8 +367,8 @@ class Header extends React.PureComponent {
                     </span>
                     <MobileMenu
                       hideMobileMenu={this.hideMobileMenu}
-                      onOpen={this.onOpen}
-                      logoutFunc={this.logoutFunc}
+                      onLoginClick={this.onLoginClick}
+                      onLogoutClick={this.onLogoutClick}
                       showMobileMenu={this.showMobileMenu}
                       mobileMenuItems={mobileMenuItems}
                       mobileMenuOpen={mobileMenuOpen}

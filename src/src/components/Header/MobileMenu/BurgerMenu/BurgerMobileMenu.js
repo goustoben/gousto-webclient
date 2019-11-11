@@ -9,8 +9,8 @@ class BurgerMobileMenu extends React.PureComponent {
     show: PropTypes.bool.isRequired,
     menuItems: PropTypes.array.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    loginFunc: PropTypes.func.isRequired,
-    logoutFunc: PropTypes.func.isRequired,
+    onLoginClick: PropTypes.func.isRequired,
+    onLogoutClick: PropTypes.func.isRequired,
     hideNav: PropTypes.bool.isRequired,
     promoCodeUrl: PropTypes.string,
     trackNavigationClick: PropTypes.func,
@@ -85,7 +85,7 @@ class BurgerMobileMenu extends React.PureComponent {
     const isAuthenticated = this.props.isAuthenticated
     const testingId = isAuthenticated ? 'burgerMenuLogout' : 'burgerMenuLogin'
     const loginMenu = (
-      <span className={css.menuItem} onClick={(isAuthenticated) ? this.props.logoutFunc : this.props.loginFunc}>
+      <span className={css.menuItem} onClick={(isAuthenticated) ? this.props.onLogoutClick : this.props.onLoginClick}>
         <li className={css.borderListElement} data-testing={testingId}>
           {(isAuthenticated) ? 'Logout' : 'Login'}
         </li>

@@ -5,7 +5,7 @@ import Svg from 'Svg'
 import { defaultMenuItems } from '../../menuItemsHelper'
 import cssMobile from '../MobileMenu.css'
 
-const LinkMobileMenu = ({ isAuthenticated, customerLogin, trackNavigationClick }) => (
+const LinkMobileMenu = ({ isAuthenticated, onLoginClick, trackNavigationClick }) => (
   <span className={cssMobile.mobileMenuTestWrapper}>
     <Svg fileName='icon_menubar_account_link' className={cssMobile.accountIcon} />
     {isAuthenticated ?
@@ -18,7 +18,7 @@ const LinkMobileMenu = ({ isAuthenticated, customerLogin, trackNavigationClick }
       >
         Account
       </Link> :
-      <button type='button' className={cssMobile.accountMenuItem} onClick={customerLogin}>Log in</button>
+      <button type='button' className={cssMobile.accountMenuItem} onClick={onLoginClick}>Log in</button>
     }
     <Svg fileName='icon_menubar_help_link' className={cssMobile.accountIcon} />
     <Link
@@ -36,7 +36,7 @@ const LinkMobileMenu = ({ isAuthenticated, customerLogin, trackNavigationClick }
 
 LinkMobileMenu.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
-  customerLogin: PropTypes.func.isRequired,
+  onLoginClick: PropTypes.func.isRequired,
   trackNavigationClick: PropTypes.func.isRequired,
 }
 

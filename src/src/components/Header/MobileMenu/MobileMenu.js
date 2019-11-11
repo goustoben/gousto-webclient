@@ -17,8 +17,8 @@ class MobileMenu extends React.PureComponent {
       tracking: PropTypes.string
     })).isRequired,
     hideMobileMenu: PropTypes.func.isRequired,
-    onOpen: PropTypes.func.isRequired,
-    logoutFunc: PropTypes.func.isRequired,
+    onLoginClick: PropTypes.func.isRequired,
+    onLogoutClick: PropTypes.func.isRequired,
     showMobileMenu: PropTypes.func.isRequired,
     promoCodeUrl: PropTypes.string.isRequired,
     trackNavigationClick: PropTypes.func.isRequired,
@@ -33,8 +33,8 @@ class MobileMenu extends React.PureComponent {
       mobileMenuOpen,
       mobileMenuItems,
       hideMobileMenu,
-      onOpen,
-      logoutFunc,
+      onLoginClick,
+      onLogoutClick,
       showMobileMenu,
       promoCodeUrl,
       trackNavigationClick,
@@ -49,8 +49,8 @@ class MobileMenu extends React.PureComponent {
           onHide={hideMobileMenu}
           hideNav={hideNav}
           isAuthenticated={isAuthenticated}
-          loginFunc={onOpen}
-          logoutFunc={logoutFunc}
+          onLoginClick={onLoginClick}
+          onLogoutClick={onLogoutClick}
           promoCodeUrl={promoCodeUrl}
           trackNavigationClick={trackNavigationClick}
         />
@@ -64,10 +64,10 @@ class MobileMenu extends React.PureComponent {
       </span>
     )
   }
-  customerLogin = (e) => {
-    const { onOpen, trackNavigationClick } = this.props
+  onLoginClick = (e) => {
+    const { onLoginClick, trackNavigationClick } = this.props
     trackNavigationClick('New Login Clicked')
-    onOpen(e)
+    onLoginClick(e)
   }
 
   render() {
@@ -77,7 +77,7 @@ class MobileMenu extends React.PureComponent {
       <span className={css.linkMobileContainer}>
         {
           shouldRenderNewMenuDesign ?
-            <LinkMobileMenu isAuthenticated={isAuthenticated} trackNavigationClick={trackNavigationClick} customerLogin={this.customerLogin} />
+            <LinkMobileMenu isAuthenticated={isAuthenticated} trackNavigationClick={trackNavigationClick} onLoginClick={this.onLoginClick} />
             : this.renderBurgerMenu()
         }
       </span>

@@ -29,11 +29,11 @@ describe('BurgerMobileMenu', () => {
   describe('should render all items in the menu', () => {
     describe('when is authenticated', () => {
       test('should render all menu items provided as links', () => {
-        expect(wrapper.find(Link).length).toEqual(4)
-        expect(wrapper.find(Link).find({ to: '/home' }).length).toEqual(1)
-        expect(wrapper.find(Link).find({ to: '/menu' }).length).toEqual(1)
-        expect(wrapper.find(Link).find({ to: '/help' }).length).toEqual(1)
-        expect(wrapper.find(Link).find({ to: '/rate-my-recipes' }).length).toEqual(1)
+        expect(wrapper.find(Link)).toHaveLength(4)
+        expect(wrapper.find(Link).find({ to: '/home' })).toHaveLength(1)
+        expect(wrapper.find(Link).find({ to: '/menu' })).toHaveLength(1)
+        expect(wrapper.find(Link).find({ to: '/help' })).toHaveLength(1)
+        expect(wrapper.find(Link).find({ to: '/rate-my-recipes' })).toHaveLength(1)
       })
     })
   })

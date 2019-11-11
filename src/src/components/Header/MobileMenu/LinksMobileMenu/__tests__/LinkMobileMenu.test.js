@@ -2,12 +2,12 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import { LinkMobileMenu } from '../LinksMobileMenu'
 
-describe('Name of the group', () => {
+describe('LinkMobileMenu', () => {
   let wrapper
   const props = {
     isAuthenticated: false,
     trackNavigationClick: () => { },
-    customerLogin: () => { }
+    onLoginClick: () => { }
   }
   beforeEach(() => {
     wrapper = shallow(<LinkMobileMenu {...props} />)
@@ -23,19 +23,19 @@ describe('Name of the group', () => {
     })
 
     describe('when click on login button', () => {
-      const customerLoginSpy = jest.fn()
+      const onLoginClickSpy = jest.fn()
       beforeEach(() => {
         const newProps = {
           ...props,
           isAuthenticated: false,
-          customerLogin: customerLoginSpy
+          onLoginClick: onLoginClickSpy
         }
         wrapper = shallow(<LinkMobileMenu {...newProps} />)
       })
 
-      test('should call customerLoginSpy function', () => {
+      test('should call onLoginClick function', () => {
         wrapper.find('.accountMenuItem').simulate('click')
-        expect(customerLoginSpy).toHaveBeenCalled()
+        expect(onLoginClickSpy).toHaveBeenCalled()
       })
     })
 
