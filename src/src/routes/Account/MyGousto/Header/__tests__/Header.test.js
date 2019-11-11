@@ -113,12 +113,14 @@ describe('MyGousto - Header', () => {
     describe('and the most recent order > 7 days ago', () => {
       test('should link to general help contact page', () => {
         wrapper = mount(<Header orders={onlyOldOrders} />)
-        expect(wrapper.find('.headerText a').last().prop('href')).toContain(`/${config.routes.client.getHelp.contact}`)
+        const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
+        expect(linkUrl.includes(config.routes.client.getHelp.contact)).toBe(true)
       })
     })
     describe('and the most recent order < 7 days ago', () => {
       test('should link to help page with order id', () => {
-        expect(wrapper.find('.headerText a').last().prop('href')).toContain('?orderId=101')
+        const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
+        expect(linkUrl.includes('?orderId=101')).toBe(true)
       })
     })
   })

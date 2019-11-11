@@ -1,27 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import config from 'config'
+import { CardWithLink } from 'CardWithLink'
 import css from './Header.css'
 
 const noUpcomingOrders = () => (
   <p className={css.headerText}>
     Looks like you don’t have any recipe boxes ordered. To add one, simply
     choose recipes from
-    <a href={config.routes.client.menu}>
-      {' '}
-      this week’s menu&nbsp;
-      <span className={css.arrowRight} />
-    </a>
   </p>
 )
 
 const upcomingOrder = message => (
   <p className={css.headerText}>
     {message}
-    <a href={config.routes.client.myDeliveries}>
-      My Deliveries&nbsp;
-      <span className={css.arrowRight} />
-    </a>
   </p>
 )
 
@@ -34,19 +26,36 @@ const HeaderPresentation = ({
     ? getHelpQueryParam
     : `/${config.routes.client.getHelp.contact}`
 
+  const { client } = config.routes
+
   return (
-    <div>
-      {nextOrderMessage ? upcomingOrder(nextOrderMessage) : noUpcomingOrders()}
-      {previousOrderMessage && (
-        <p className={css.headerText}>
-          Your most recent box was delivered {previousOrderMessage}.
-          <a href={`${config.routes.client.getHelp.index}${getHelpUrlSuffix}`}>
-            {' '}
-            Get help with this box&nbsp;
-            <span className={css.arrowRight} />
-          </a>
-        </p>
-      )}
+    <div className={css.cardsContainer}>
+      {
+        nextOrderMessage ? (
+          <CardWithLink
+            linkLabel='View my deliveries'
+            linkUrl={client.myDeliveries}
+            clientRouted={false}
+          >
+            {upcomingOrder(nextOrderMessage)}
+          </CardWithLink>
+        ) : (
+          <CardWithLink linkLabel="View this week's menu" linkUrl={client.menu}>
+            {noUpcomingOrders()}
+          </CardWithLink>
+        )
+      }
+
+      <CardWithLink
+        linkLabel='Get help with this box'
+        linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
+      >
+        {previousOrderMessage && (
+          <p className={css.headerText}>
+            Your most recent box was delivered {previousOrderMessage}.
+          </p>
+        )}
+      </CardWithLink>
     </div>
   )
 }

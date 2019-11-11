@@ -1,8 +1,7 @@
 @value ScreenLGMin, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.css';
-@value Coconut, Mackerel, White from 'styles/colors.css';
+@value Coconut, Mackerel from 'styles/colors.css';
 
 .wrapper {
-  background-color: White;
   padding: 0 16px;
   width: 100%;
 }
@@ -71,10 +70,6 @@ h3.title {
   }
 }
 
-h2 > .titleText {
-  padding-right: 30px;
-}
-
-h3 > .titleText {
-  padding-right: 20px;
+.titleText {
+  padding-right: 1rem;
 }
