@@ -10,6 +10,7 @@ const propTypes = {
   timeStart: PropTypes.string,
   timeEnd: PropTypes.string,
   hasError: PropTypes.bool,
+  errorText: PropTypes.string,
   orderState: PropTypes.string,
   editDeliveryMode: PropTypes.bool,
   onClickFunction: PropTypes.func,
@@ -24,6 +25,7 @@ const OrderDeliveryDate = ({
   timeStart,
   timeEnd,
   hasError,
+  errorText,
   orderState,
   editDeliveryMode,
   onClickFunction,
@@ -59,11 +61,11 @@ const OrderDeliveryDate = ({
           availableTo={availableTo}
         />
       }
-      {hasError ?
+      {hasError &&
         <Alert type="danger">
-          There was a problem updating your order date. Please try again later.
+          { errorText }
         </Alert>
-        : null}
+      }
     </div>
 )
 

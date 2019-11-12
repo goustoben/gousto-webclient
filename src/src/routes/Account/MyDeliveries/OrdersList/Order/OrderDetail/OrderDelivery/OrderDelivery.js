@@ -74,9 +74,8 @@ class OrderDelivery extends React.PureComponent {
     const { availableFrom, availableTo, shippingAddressId, orderId } = this.props
     const { store } = this.context
 
-    store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId))
+    store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId)),
     store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo))
-    //if error show error
   }
 
   render() {
@@ -94,7 +93,9 @@ class OrderDelivery extends React.PureComponent {
       availableTo,
       hasUpdateDeliveryDayError
     } = this.props
-    // const editDateHasError =(recipesPeriodStockFetchError != null || orderDeliveryDaysFetchError != null)
+    const editDateHasError =(recipesPeriodStockFetchError != null || orderDeliveryDaysFetchError != null)
+    const errorText = hasUpdateDeliveryDayError ? "There was a problem updating your order date. Please try again later." :
+      "Whoops, something went wrong - please try again"
 
     return (
       <div data-testing="recipesDeliverySection">
@@ -109,7 +110,8 @@ class OrderDelivery extends React.PureComponent {
               timeStart={timeStart}
               timeEnd={timeEnd}
               orderState={orderState}
-              hasError={hasUpdateDeliveryDayError}
+              hasError={hasUpdateDeliveryDayError || editDateHasError}
+              errorText={errorText}
               onClickFunction={this.onClickFunction}
               fetchSuccess={fetchSuccess}
               orderId={orderId}
