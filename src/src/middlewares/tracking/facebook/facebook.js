@@ -5,18 +5,6 @@ import globals from 'config/globals'
 import * as routerTracking from './router'
 import utils from '../utils'
 
-export const fbTracking = {
-  addRecipeToBasket,
-  getCallbacks,
-  initiateCheckout,
-  onLocationChange,
-  signupPurchaseCompleted,
-  customerPurchaseCompleted,
-  showCollectionTracking,
-  showRecipeTracking,
-  Tracker,
-}
-
 /**
  * Send tracking data to Facebook pixel
  * @param eventName
@@ -157,14 +145,14 @@ function onLocationChange(action, state, prevState, pathname) {
 
 function getCallbacks() {
   return {
-    [actions.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE]: fbTracking.showRecipeTracking,
-    [actions.FILTERS_COLLECTION_CHANGE]: fbTracking.showCollectionTracking,
-    [actions.BASKET_RECIPE_ADD]: fbTracking.addRecipeToBasket,
-    [actions.BASKET_CHECKOUT]: fbTracking.initiateCheckout,
-    [actions.CHECKOUT_SIGNUP_SUCCESS]: fbTracking.signupPurchaseCompleted,
-    [actions.__REACT_ROUTER_LOCATION_CHANGE]: fbTracking.onLocationChange, // eslint-disable-line no-underscore-dangle
-    [actions.ORDER_CREATE_TRANSACTIONAL]: fbTracking.customerPurchaseCompleted,
-    [actions.ORDER_RECIPES_CHOSEN]: fbTracking.customerPurchaseCompleted,
+    [actions.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE]: showRecipeTracking,
+    [actions.FILTERS_COLLECTION_CHANGE]: showCollectionTracking,
+    [actions.BASKET_RECIPE_ADD]: addRecipeToBasket,
+    [actions.BASKET_CHECKOUT]: initiateCheckout,
+    [actions.CHECKOUT_SIGNUP_SUCCESS]: signupPurchaseCompleted,
+    [actions.__REACT_ROUTER_LOCATION_CHANGE]: onLocationChange, // eslint-disable-line no-underscore-dangle
+    [actions.ORDER_CREATE_TRANSACTIONAL]: customerPurchaseCompleted,
+    [actions.ORDER_RECIPES_CHOSEN]: customerPurchaseCompleted,
   }
 }
 
@@ -177,7 +165,7 @@ function getCallbacks() {
  */
 export default function Tracker(action, state = {}, prevState) {
   if (globals.client && windowUtils.getWindow().fbq) {
-    const callbacks = fbTracking.getCallbacks()
+    const callbacks = getCallbacks()
 
     if (action.type in callbacks) {
       callbacks[action.type](action, state, prevState, utils.getPathName({ prevState }))
