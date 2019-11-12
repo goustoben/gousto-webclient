@@ -68,8 +68,9 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
     dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, true))
 
     const slot = getSlot(availableDeliveryDays, slotDate, slotId)
-    const originalSlotId = getState().user.getIn([`newOrders, ${orderId}, deliverySlotId`])
-    const isCurrentPeriod = getState().user.getIn([`newOrders, ${orderId}, isCurrentPeriod`])
+
+    const originalSlotId = getState().user.getIn(['newOrders', orderId, 'deliverySlotId'])
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
     const trackingData = {
       order_id: orderId,
       isCurrentPeriod,

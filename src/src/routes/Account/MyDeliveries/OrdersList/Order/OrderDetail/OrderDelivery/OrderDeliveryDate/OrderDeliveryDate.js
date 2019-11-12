@@ -20,6 +20,14 @@ const propTypes = {
   availableTo: PropTypes.string
 }
 
+const defaultProps = {
+  hasError: false,
+  errorText: '',
+  onClickFunction: () => {},
+  fetchSuccess: true,
+
+}
+
 const OrderDeliveryDate = ({
   date,
   timeStart,
@@ -70,5 +78,6 @@ const OrderDeliveryDate = ({
 )
 
 OrderDeliveryDate.propTypes = propTypes
+OrderDeliveryDate.defaultProps = defaultProps
 
 export { OrderDeliveryDate }

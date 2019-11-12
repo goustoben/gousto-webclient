@@ -20,7 +20,6 @@ function mapStateToProps(state, ownProps) {
     deliverySlotId,
     shippingAddressId: shippingAddressId,
     isPendingUpdateDayAndSlot: state.pending.get(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT),
-    availableDeliveryDays: order.get('availableDeliveryDays'),
   }
 }
 

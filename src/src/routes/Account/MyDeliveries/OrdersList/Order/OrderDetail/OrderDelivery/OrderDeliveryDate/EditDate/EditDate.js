@@ -18,18 +18,14 @@ class EditDate extends React.PureComponent {
     coreDeliveryDayId: PropTypes.string.isRequired,
     deliverySlotId: PropTypes.string.isRequired,
     isPendingUpdateDayAndSlot: PropTypes.bool,
-    availableDeliveryDays: PropTypes.object,
     clearUpdateDateErrorAndPending: PropTypes.func,
   }
 
   static defaultProps = {
     editDeliveryMode: true,
     orderId: '',
-    shippingAddressId: '',
     deliveryDays: Immutable.Map({}),
-    recipes: Immutable.List([]),
     recipesStock: Immutable.List([]),
-    orders: Immutable.Map({}),
     isPendingUpdateDayAndSlot: false,
     orderGetDeliveryDays: () => { }
   }
@@ -52,28 +48,20 @@ class EditDate extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { deliveryDaysOptions, slotsOptions } = this.constructDropdownOptions(this.props)
-    const { selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate } = this.constructDefaultDayAndSlot(deliveryDaysOptions, slotsOptions)
-
-    this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate })
+    const { deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId } = this.props
+    this.setDayAndSlotOptionsAndSelected(deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId)
   }
 
   componentWillReceiveProps(nextProps) {
-    const { deliveryDays, recipesStock } = this.props
+    const { deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId } = this.props
 
     if (deliveryDays !== nextProps.deliveryDays || recipesStock !== nextProps.recipesStock) {
-      const { deliveryDaysOptions, slotsOptions } = this.constructDropdownOptions(this.props)
-      const { selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate } = this.constructDefaultDayAndSlot(deliveryDaysOptions, slotsOptions)
-
-      this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate })
+      this.setDayAndSlotOptionsAndSelected(nextProps.deliveryDays, nextProps.recipesStock, coreDeliveryDayId, deliverySlotId)
     }
   }
-  constructDropdownOptions = ({ deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders }) => (
-    util.getDeliveryDaysAndSlotsOptions(deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders)
-  )
 
-  constructDefaultDayAndSlot = (deliveryDaysOptions, slotsOptions) => {
-    const { coreDeliveryDayId, deliverySlotId } = this.props
+  setDayAndSlotOptionsAndSelected = (deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId) => {
+    const { deliveryDaysOptions, slotsOptions } = util.getDeliveryDaysAndSlotsOptions(deliveryDays, null, recipesStock, null, coreDeliveryDayId, deliverySlotId, null)
 
     let selectedDeliveryDayId = coreDeliveryDayId
     let selectedDeliverySlotId = deliverySlotId
@@ -88,31 +76,25 @@ class EditDate extends React.PureComponent {
 
     const selectedDeliveryDate = deliveryDaysOptions.find(day => day.value === selectedDeliveryDayId).date
 
-    return { selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate }
+    this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate })
   }
 
-  onCancelFunction() {
-    const { orderId, editDeliveryMode } = this.props
-    const { store } = this.context
-    store.dispatch(userActions.userOpenCloseEditSection(orderId, !editDeliveryMode))
-  }
-
-  onSubmitFunction(orderId, selectedDeliveryDayId) {
-    const { selectedDeliverySlotId, slotsOptions, selectedDeliveryDate } = this.state
-    const { deliverySlotId, availableDeliveryDays } = this.props
+  onSubmitFunction() {
+    const { selectedDeliverySlotId, selectedDeliveryDayId, slotsOptions, selectedDeliveryDate } = this.state
+    const { orderId, deliverySlotId, deliveryDays } = this.props
     const { store } = this.context
 
     if (selectedDeliverySlotId !== deliverySlotId) {
       const { uuid } = slotsOptions[selectedDeliveryDayId].find(slot => slot.value === selectedDeliverySlotId)
 
-      store.dispatch(orderActions.orderUpdateDayAndSlot(orderId, selectedDeliveryDayId, selectedDeliverySlotId, uuid, selectedDeliveryDate, availableDeliveryDays))
+      store.dispatch(orderActions.orderUpdateDayAndSlot(orderId, selectedDeliveryDayId, selectedDeliverySlotId, uuid, selectedDeliveryDate, deliveryDays))
     }
   }
 
-  canSubmit(orderDeliverySlotId, selectedDayId, selectedSlotId) {
+  canSubmit(deliverySlotId, selectedDayId, selectedSlotId) {
     const { selectedDeliverySlotId } = this.state
 
-    const slotChange = selectedDeliverySlotId !== orderDeliverySlotId
+    const slotChange = selectedDeliverySlotId !== deliverySlotId
 
     return slotChange && selectedDayId !== DEFAULT_MESSAGE_ID && selectedSlotId !== DEFAULT_MESSAGE_ID
   }
@@ -148,7 +130,7 @@ class EditDate extends React.PureComponent {
   }
 
   render() {
-    const { deliverySlotId, isPendingUpdateDayAndSlot, orderId } = this.props
+    const { deliverySlotId, isPendingUpdateDayAndSlot } = this.props
     const { deliveryDaysOptions, slotsOptions } = this.state
     const { selectedDeliveryDayId, selectedDeliverySlotId } = this.state
     const canSubmit = this.canSubmit(deliverySlotId, selectedDeliveryDayId, selectedDeliverySlotId)
@@ -176,7 +158,7 @@ class EditDate extends React.PureComponent {
           </div>
           <div className={css.button}>
             <Button
-              onClick={() => this.onSubmitFunction(orderId, selectedDeliveryDayId, selectedDeliverySlotId)}
+              onClick={() => this.onSubmitFunction()}
               color={'secondary'}
               width="full"
               noDecoration
