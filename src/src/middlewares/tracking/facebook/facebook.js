@@ -1,17 +1,17 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
-import actions from 'actions/actionTypes'
-import windowUtils from 'utils/window'
 import globals from 'config/globals'
-import * as routerTracking from './router'
-import utils from '../utils'
+import actions from 'actions/actionTypes'
+import { getPathName } from 'middlewares/tracking/utils'
+import { getWindow } from 'utils/window'
+import { getUserData } from './router'
 
 /**
  * Send tracking data to Facebook pixel
  * @param eventName
  * @param data
  */
-function sendTrackingData(eventName, data, trackType = 'track') {
-  windowUtils.getWindow().fbq(trackType, eventName, data)
+export const sendTrackingData = (eventName, data, trackType = 'track') => {
+  getWindow().fbq(trackType, eventName, data)
 }
 
 /**
@@ -19,7 +19,7 @@ function sendTrackingData(eventName, data, trackType = 'track') {
  * @param recipes
  * @param routing
  */
-function showRecipeTracking({ recipeId }, { recipes, routing }) {
+export const showRecipeTracking = ({ recipeId }, { recipes, routing }) => {
   if (recipeId) {
     const urlCollection = routing.locationBeforeTransitions.query
     const collection = urlCollection.collection || 'all-recipes'
@@ -38,7 +38,7 @@ function showRecipeTracking({ recipeId }, { recipes, routing }) {
  * @param collectionId
  * @param menuCollectionRecipes
  */
-function showCollectionTracking({ collectionName, collectionId }, { menuCollectionRecipes }) {
+export const showCollectionTracking = ({ collectionName, collectionId }, { menuCollectionRecipes }) => {
   const recipeIdsByCollection = menuCollectionRecipes.get(collectionId)
 
   if (recipeIdsByCollection) {
@@ -57,7 +57,7 @@ function showCollectionTracking({ collectionName, collectionId }, { menuCollecti
  * @param recipeId
  * @param recipes
  */
-function addRecipeToBasket({ recipeId }, { recipes }) {
+export const addRecipeToBasket = ({ recipeId }, { recipes }) => {
   const recipe = recipes.get(recipeId)
   if (recipe) {
     sendTrackingData('AddToCart', {
@@ -73,7 +73,7 @@ function addRecipeToBasket({ recipeId }, { recipes }) {
  * @param _
  * @param basket
  */
-function initiateCheckout(_, { basket }) {
+export const initiateCheckout = (_, { basket }) => {
   const recipesIds = Array.from(basket.get('recipes').keys())
 
   sendTrackingData('InitiateCheckout', {
@@ -88,7 +88,7 @@ function initiateCheckout(_, { basket }) {
  * @param basket
  * @param menuBoxPrices
  */
-function signupPurchaseCompleted(_, { basket, pricing }) {
+export const signupPurchaseCompleted = (_, { basket, pricing }) => {
   const recipes = basket.get('recipes')
   const recipesIds = Array.from(recipes.keys())
   const recipeCount = recipes.reduce((total, quantity) => (total + quantity), 0)
@@ -109,7 +109,7 @@ function signupPurchaseCompleted(_, { basket, pricing }) {
  * Existing customer order placed
  * @param action
  */
-const customerPurchaseCompleted = ({ order }) => {
+export const customerPurchaseCompleted = ({ order }) => {
   const recipes = order.recipe_items
   const recipeIds = recipes.map(recipe => recipe.id)
   const recipeCount = order.box.num_recipes
@@ -126,11 +126,11 @@ const customerPurchaseCompleted = ({ order }) => {
   })
 }
 
-function onLocationChange(action, state, prevState, pathname) {
-  const data = routerTracking.getUserData(action, state, prevState, pathname)
+export const onLocationChange = (action, state, prevState, pathname) => {
+  const data = getUserData(action, state, prevState, pathname)
 
   if (data) {
-    const fbq = windowUtils.getWindow().fbq
+    const { fbq } = getWindow()
     const fbState = fbq ? fbq.getState() : {}
 
     if (fbState.pixels && fbState.pixels.length) {
@@ -143,18 +143,16 @@ function onLocationChange(action, state, prevState, pathname) {
   }
 }
 
-function getCallbacks() {
-  return {
-    [actions.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE]: showRecipeTracking,
-    [actions.FILTERS_COLLECTION_CHANGE]: showCollectionTracking,
-    [actions.BASKET_RECIPE_ADD]: addRecipeToBasket,
-    [actions.BASKET_CHECKOUT]: initiateCheckout,
-    [actions.CHECKOUT_SIGNUP_SUCCESS]: signupPurchaseCompleted,
-    [actions.__REACT_ROUTER_LOCATION_CHANGE]: onLocationChange, // eslint-disable-line no-underscore-dangle
-    [actions.ORDER_CREATE_TRANSACTIONAL]: customerPurchaseCompleted,
-    [actions.ORDER_RECIPES_CHOSEN]: customerPurchaseCompleted,
-  }
-}
+export const getCallbacks = () => ({
+  [actions.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE]: showRecipeTracking,
+  [actions.FILTERS_COLLECTION_CHANGE]: showCollectionTracking,
+  [actions.BASKET_RECIPE_ADD]: addRecipeToBasket,
+  [actions.BASKET_CHECKOUT]: initiateCheckout,
+  [actions.CHECKOUT_SIGNUP_SUCCESS]: signupPurchaseCompleted,
+  [actions.__REACT_ROUTER_LOCATION_CHANGE]: onLocationChange, // eslint-disable-line no-underscore-dangle
+  [actions.ORDER_CREATE_TRANSACTIONAL]: customerPurchaseCompleted,
+  [actions.ORDER_RECIPES_CHOSEN]: customerPurchaseCompleted,
+})
 
 /**
  * Listener actions
@@ -164,11 +162,11 @@ function getCallbacks() {
  * @param prevState
  */
 export default function Tracker(action, state = {}, prevState) {
-  if (globals.client && windowUtils.getWindow().fbq) {
+  if (globals.client && getWindow().fbq) {
     const callbacks = getCallbacks()
 
     if (action.type in callbacks) {
-      callbacks[action.type](action, state, prevState, utils.getPathName({ prevState }))
+      callbacks[action.type](action, state, prevState, getPathName({ prevState }))
     }
   }
 }
