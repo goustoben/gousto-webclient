@@ -11,7 +11,7 @@ import { initialState as initialFeaturesState } from 'reducers/features'
 import { defaultState as defaultUserState } from 'reducers/user'
 import logger from 'utils/logger'
 import { getLandingDay } from 'utils/deliveries'
-import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
+import { fetchMenus } from 'apis/menus'
 import { menuServiceConfig } from 'config/menuService'
 
 import fetchData from '../fetchData'
@@ -605,10 +605,9 @@ describe('menu fetchData', () => {
     })
   })
 
-  describe('menuService fetchMenus', () => {
-    test('Menu service fetchMenus is called when config is enabled', async () => {
+  describe('menuservice fetchdata', () => {
+    test('Menu service is called when config is enabled', async () => {
       menuServiceConfig.isEnabled = true
-      const menuServiceFeatureFlag = false
 
       const orderId = '123'
       const paramsWithOrderId = {
@@ -616,14 +615,13 @@ describe('menu fetchData', () => {
         orderId
       }
 
-      await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
+      await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
       expect(fetchMenus).toHaveBeenCalled()
     })
 
-    test('Menu service fetchMenus is called when featureFlag is enabled', async () => {
+    test('Menu service is not called when config is disabled', async () => {
       menuServiceConfig.isEnabled = false
-      const menuServiceFeatureFlag = true
 
       const orderId = '123'
       const paramsWithOrderId = {
@@ -631,73 +629,9 @@ describe('menu fetchData', () => {
         orderId
       }
 
-      await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
-
-      expect(fetchMenus).toHaveBeenCalled()
-    })
-
-    test('Menu service fetchMenus is not called when config and featureFlag is disabled', async () => {
-      menuServiceConfig.isEnabled = false
-      const menuServiceFeatureFlag = false
-
-      const orderId = '123'
-      const paramsWithOrderId = {
-        ...params,
-        orderId
-      }
-
-      await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
+      await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
       expect(fetchMenus).not.toHaveBeenCalled()
     })
-  })
-
-  describe('menuService fetchMenusWithUserId', () => {
-    describe('fetchMenusWithUserId is called', () => {
-      beforeEach(() => {
-        state.auth = state.auth.set('isAuthenticated', false)
-        state.auth = state.auth.set('id', '')
-        state.auth = state.auth.set('accessToken', '')
-      })
-
-      test('fetchMenusWithUserId is not called when user logged out', async () => {
-        menuServiceConfig.isEnabled = false
-        const menuServiceFeatureFlag = false
-
-        const orderId = '123'
-        const paramsWithOrderId = {
-          ...params,
-          orderId
-        }
-
-        await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
-
-        expect(fetchMenusWithUserId).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('fetchMenusWithUserId is called', () => {
-      beforeEach(() => {
-        state.auth = state.auth.set('isAuthenticated', true)
-        state.auth = state.auth.set('id', 'test-id')
-        state.auth = state.auth.set('accessToken', 'test-token')
-      })
-      test('when config or featureflag is enabled and user logged in', async () => {
-
-        menuServiceConfig.isEnabled = true
-        const menuServiceFeatureFlag = true
-
-        const orderId = '123'
-        const paramsWithOrderId = {
-          ...params,
-          orderId
-        }
-
-        await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
-
-        expect(fetchMenusWithUserId).toHaveBeenCalled()
-      })
-    })
-
   })
 })

@@ -12,7 +12,7 @@ import { isCollectionsFeatureEnabled } from 'selectors/features'
 import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
-import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
+import { fetchMenus } from 'apis/menus'
 import { menuServiceConfig } from 'config/menuService'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
@@ -249,20 +249,12 @@ const shouldFetchData = (store, params, force) => {
 }
 
 // eslint-disable-next-line import/no-default-export
-export default async function fetchData({ store, query, params }, force, background, menuServiceFeatureFlag) {
+export default async function fetchData({ store, query, params }, force, background) {
   const accessToken = store.getState().auth.get('accessToken')
-  const useMenuService = menuServiceFeatureFlag || menuServiceConfig.isEnabled
+  const useMenuService = menuServiceConfig.isEnabled
 
   if (useMenuService) {
-    const isAuthenticated = getIsAuthenticated(store.getState())
-    const userId = store.getState().auth.get('id')
-    let response
-
-    if (isAuthenticated && userId) {
-      response = await fetchMenusWithUserId(accessToken, userId)
-    } else {
-      response = await fetchMenus(accessToken)
-    }
+    const response = await fetchMenus(accessToken)
 
     store.dispatch(actions.menuServiceDataReceived(response))
   }
