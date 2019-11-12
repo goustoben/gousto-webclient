@@ -87,10 +87,10 @@ class Header extends PureComponent {
       now.diff(moment(previousOrder.get('deliveryDate')), 'days', true) <
       ELIGIBILITY_DAYS &&
       `?orderId=${previousOrder.get('id')}`
-    const loading = nextOrder || previousOrder
+    const loaded = nextOrder || previousOrder
 
     return (
-      loading ?
+      loaded ?
         <HeaderPresentation
           nextOrderMessage={nextOrderMessage}
           previousOrderMessage={previousOrderMessage}
