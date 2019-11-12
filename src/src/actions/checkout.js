@@ -14,7 +14,7 @@ import { basketResetPersistent } from 'utils/basket'
 import { trackAffiliatePurchase } from 'actions/tracking'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
-import { isValidPromoCode, getPreviewOrderErrorName, getAffiliateTrackingData } from 'utils/order'
+import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 
 import actionTypes from './actionTypes'
 import {
@@ -226,18 +226,6 @@ export function checkoutSignup() {
   }
 }
 
-export const trackTransactionalOrder = ({ basket, prices }) => {
-  const orderId = basket.get('previewOrderId')
-  const promoCode = basket.get('promoCode')
-
-  trackAffiliatePurchase({
-    orderId,
-    total: prices.get('total', ''),
-    commissionGroup: 'EXISTING',
-    promoCode,
-  })
-}
-
 export const checkoutTransactionalOrder = (orderAction) => (
   async (dispatch, getState) => {
     await dispatch(checkoutCreatePreviewOrder())
@@ -260,8 +248,6 @@ export const checkoutTransactionalOrder = (orderAction) => (
       if (userStatus === 'onhold') {
         return dispatch(redirect(`${routes.client.myGousto}`))
       }
-
-      trackTransactionalOrder(getState())
 
       return dispatch(orderAssignToUser(orderAction, orderId))
     }

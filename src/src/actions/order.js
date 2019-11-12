@@ -6,15 +6,46 @@ import ordersApi from 'apis/orders'
 import * as userApi from 'apis/user'
 import GoustoException from 'utils/GoustoException'
 import logger from 'utils/logger'
+import { trackAffiliatePurchase } from 'actions/tracking'
 import { getOrderDetails } from 'utils/basket'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { redirect } from 'utils/window'
 import { getNDDFeatureValue } from 'selectors/features'
+import { orderTrackingActions } from 'config/order'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
 import { orderConfirmationRedirect } from './orderConfirmation'
 import actionTypes from './actionTypes'
+
+export const trackOrder = (orderAction, order) => (
+  (dispatch, getState) => {
+    if (Object.keys(orderTrackingActions).includes(orderAction)) {
+      const { actionType, trackAffiliate } = orderTrackingActions[orderAction]
+
+      if (trackAffiliate) {
+        const { basket } = getState()
+        const { id, prices } = order
+
+        const affiliateTracking = {
+          orderId: id,
+          total: prices.total || '',
+          commissionGroup: 'EXISTING',
+          promoCode: prices.promo_code || basket.get('promoCode') || '',
+        }
+
+        console.log(affiliateTracking) // eslint-disable-line no-console
+        trackAffiliatePurchase(affiliateTracking)
+      }
+
+      if (actionType) {
+        console.log(actionType) // eslint-disable-line no-console
+        dispatch({ type: actionType })
+        // TODO: Hook up these actions to FB Purchase tracking
+      }
+    }
+  }
+)
 
 export const checkAllScheduledCancelled = (orders) => (
   !orders.some(order => (order.get('orderState') === 'scheduled'))
@@ -53,6 +84,10 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
       const { data: savedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
 
       if (savedOrder && savedOrder.id) {
+        dispatch(trackOrder(
+          orderAction,
+          savedOrder,
+        ))
         dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
       }
     } catch (err) {
@@ -210,6 +245,10 @@ export const orderAssignToUser = (orderAction, existingOrderId) => (
       }
 
       if (savedOrder && savedOrder.id) {
+        dispatch(trackOrder(
+          orderAction,
+          savedOrder,
+        ))
         dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
       } else {
         throw new GoustoException('Order could not be assigned to user', {
