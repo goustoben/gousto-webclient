@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect'
+
 export const getUserFirstName = state => state.user.get('nameFirst')
 export const getReferralOffer = state => state.user.get('referralOffer')
 export const getReferralCode = state => state.user.getIn(['referralOffer', 'code'], '') || state.user.get('referral-code', '')
@@ -23,11 +25,17 @@ export const getUserRecentRecipesIds = ({ user }, number = 6) => {
   return Array.from(recipeIds)
 }
 
+export const getUsersOrdersDaySlotLeadTimeIds = createSelector(
+  getUserOrders,
+  orders => orders.map(order => order.get('daySlotLeadTimeId')).toArray()
+)
+
 export default {
   getUserFirstName,
   getReferralOffer,
   getReferralCode,
   getLoadingStateForOffer,
   getAgeVerified,
-  getUserOrders
+  getUserOrders,
+  getUsersOrdersDaySlotLeadTimeIds
 }
