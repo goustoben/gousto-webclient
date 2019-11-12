@@ -48,14 +48,15 @@ class EditDate extends React.PureComponent {
       selectedDeliverySlotId: deliverySlotId,
       deliveryDaysOptions: [],
       slotsOptions: {},
+      selectedDeliveryDate: ''
     }
   }
 
   componentDidMount() {
     const { deliveryDaysOptions, slotsOptions } = this.constructDropdownOptions(this.props)
-    const { selectedDeliveryDayId, selectedDeliverySlotId } = this.constructDefaultDayAndSlot(deliveryDaysOptions, slotsOptions)
+    const { selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate } = this.constructDefaultDayAndSlot(deliveryDaysOptions, slotsOptions)
 
-    this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId })
+    this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,9 +64,9 @@ class EditDate extends React.PureComponent {
 
     if (deliveryDays !== nextProps.deliveryDays || recipesStock !== nextProps.recipesStock) {
       const { deliveryDaysOptions, slotsOptions } = this.constructDropdownOptions(this.props)
-      const { selectedDeliveryDayId, selectedDeliverySlotId } = this.constructDefaultDayAndSlot(deliveryDaysOptions, slotsOptions)
+      const { selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate } = this.constructDefaultDayAndSlot(deliveryDaysOptions, slotsOptions)
 
-      this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId })
+      this.setState({ deliveryDaysOptions, slotsOptions, selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate })
     }
   }
   constructDropdownOptions = ({ deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders }) => (
@@ -86,7 +87,9 @@ class EditDate extends React.PureComponent {
       selectedDeliverySlotId = slotsOptions[selectedDeliveryDayId] && slotsOptions[selectedDeliveryDayId][0] ? slotsOptions[selectedDeliveryDayId][0].value : ''
     }
 
-    return { selectedDeliveryDayId, selectedDeliverySlotId }
+    const selectedDeliveryDate = deliveryDaysOptions.find(day => day.value === selectedDeliveryDayId).date
+
+    return { selectedDeliveryDayId, selectedDeliverySlotId, selectedDeliveryDate }
   }
 
   onCancelFunction() {

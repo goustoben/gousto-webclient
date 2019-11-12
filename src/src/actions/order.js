@@ -81,7 +81,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         type: actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT,
         orderId,
         coreDayId,
-        slotId,
+        slotId: coreSlotId,
         deliveryDay: updatedOrder.deliveryDate,
         deliverySlotStart: updatedOrder.deliverySlot.deliveryStart,
         deliverySlotEnd: updatedOrder.deliverySlot.deliveryEnd,
