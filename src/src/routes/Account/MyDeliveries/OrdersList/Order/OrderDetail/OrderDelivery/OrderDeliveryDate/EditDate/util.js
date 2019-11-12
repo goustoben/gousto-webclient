@@ -76,7 +76,7 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
       icon: isDateTaken ? 'full-box' : '',
     }
   }))
-  const slotsOptions = []
+  const slotsOptions = {}
 
   daysWithStock.forEach(([, day]) => {
     slotsOptions[day.coreDayId] = []
