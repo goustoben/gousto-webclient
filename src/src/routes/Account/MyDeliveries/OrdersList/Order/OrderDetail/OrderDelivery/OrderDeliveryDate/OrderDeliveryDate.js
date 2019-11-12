@@ -31,11 +31,7 @@ const OrderDeliveryDate = ({
   orderId,
   availableFrom,
   availableTo
-}) => {
-  console.log('fetchSuccess', fetchSuccess) //eslint-disable-line
-  console.log('editDeliveryMode', editDeliveryMode) //eslint-disable-line
-
-  return (
+}) => (
     <div>
       <div className={css.header}>
         <div className={css.details}>
@@ -55,13 +51,6 @@ const OrderDeliveryDate = ({
           </div>
           : null}
       </div>
-      {hasError ?
-        <div>
-          <Alert type="danger">
-            There was a problem editing your order. Please try again later.
-          </Alert>
-        </div>
-        : null}
       {editDeliveryMode && fetchSuccess &&
         <EditDate
           editDeliveryMode={editDeliveryMode}
@@ -70,9 +59,13 @@ const OrderDeliveryDate = ({
           availableTo={availableTo}
         />
       }
+      {hasError ?
+        <Alert type="danger">
+          There was a problem updating your order date. Please try again later.
+        </Alert>
+        : null}
     </div>
-  )
-}
+)
 
 OrderDeliveryDate.propTypes = propTypes
 

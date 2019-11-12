@@ -68,6 +68,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
     dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, true))
 
     const slot = getSlot(availableDeliveryDays, slotDate, slotId)
+
     try {
       const order = {
         delivery_day_id: coreDayId,
@@ -85,6 +86,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         deliverySlotStart: updatedOrder.deliverySlot.deliveryStart,
         deliverySlotEnd: updatedOrder.deliverySlot.deliveryEnd,
       })
+      dispatch(userActions.userOpenCloseEditSection(orderId, false))
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, err.message))
     } finally {

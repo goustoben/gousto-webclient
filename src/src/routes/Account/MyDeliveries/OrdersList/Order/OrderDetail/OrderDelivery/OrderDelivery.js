@@ -23,6 +23,7 @@ class OrderDelivery extends React.PureComponent {
     fetchSuccess: PropTypes.bool,
     recipesPeriodStockFetchError: PropTypes.object,
     orderDeliveryDaysFetchError: PropTypes.object,
+    hasUpdateDeliveryDayError: PropTypes.string,
   }
 
   static defaultProps = {
@@ -91,9 +92,10 @@ class OrderDelivery extends React.PureComponent {
       fetchSuccess,
       orderId,
       availableFrom,
-      availableTo
+      availableTo,
+      hasUpdateDeliveryDayError
     } = this.props
-    const editDateHasError = (recipesPeriodStockFetchError != null || orderDeliveryDaysFetchError != null)
+    // const editDateHasError =(recipesPeriodStockFetchError != null || orderDeliveryDaysFetchError != null)
 
     return (
       <div data-testing="recipesDeliverySection">
@@ -108,7 +110,7 @@ class OrderDelivery extends React.PureComponent {
               timeStart={timeStart}
               timeEnd={timeEnd}
               orderState={orderState}
-              hasError={editDateHasError}
+              hasError={hasUpdateDeliveryDayError}
               onClickFunction={this.onClickFunction}
               fetchSuccess={fetchSuccess}
               orderId={orderId}

@@ -71,6 +71,7 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
     return {
       value: day.coreDayId,
       label: moment(day.date).format('ddd D MMM'),
+      date: day.date,
       disabled: isDateTaken,
       icon: isDateTaken ? 'full-box' : '',
     }
