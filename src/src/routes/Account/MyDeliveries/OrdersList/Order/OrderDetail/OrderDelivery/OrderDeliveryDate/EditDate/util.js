@@ -85,6 +85,7 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
       .map(slot => (
         {
           value: slot.coreSlotId,
+          uuid: slot.id,
           label: `${humanTimeFormat(slot.deliveryStartTime, 'hour')} - ${humanTimeFormat(slot.deliveryEndTime, 'hour')}`,
           subLabel: slot.deliveryPrice === '0.00' ? 'Free' : `£${slot.deliveryPrice}`,
           isDefaultSlot: slot.isDefault,

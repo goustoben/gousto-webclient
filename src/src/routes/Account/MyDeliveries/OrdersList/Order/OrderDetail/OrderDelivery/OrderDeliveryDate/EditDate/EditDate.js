@@ -100,9 +100,9 @@ class EditDate extends React.PureComponent {
     const { store } = this.context
 
     if (selectedDeliverySlotId !== deliverySlotId) {
-      const { coreSlotId } = slotsOptions[selectedDeliveryDayId].find(slot => slot.value === selectedDeliverySlotId)
+      const { uuid } = slotsOptions[selectedDeliveryDayId].find(slot => slot.value === selectedDeliverySlotId)
 
-      store.dispatch(orderActions.orderUpdateDayAndSlot(orderId, selectedDeliveryDayId, coreSlotId, selectedDeliverySlotId, selectedDeliveryDate, availableDeliveryDays))
+      store.dispatch(orderActions.orderUpdateDayAndSlot(orderId, selectedDeliveryDayId, selectedDeliverySlotId, uuid, selectedDeliveryDate, availableDeliveryDays))
     }
   }
 
