@@ -84,8 +84,7 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
       .filter(slot => !slot.noStock || (slot.id === orderDeliverySlotId && day.coreDayId === orderCoreDeliveryDayId))
       .map(slot => (
         {
-          value: slot.id, // uuid
-          coreSlotId: slot.coreSlotId,
+          value: slot.coreSlotId,
           label: `${humanTimeFormat(slot.deliveryStartTime, 'hour')} - ${humanTimeFormat(slot.deliveryEndTime, 'hour')}`,
           subLabel: slot.deliveryPrice === '0.00' ? 'Free' : `£${slot.deliveryPrice}`,
           isDefaultSlot: slot.isDefault,
