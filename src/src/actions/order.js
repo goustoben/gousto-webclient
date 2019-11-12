@@ -69,9 +69,10 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
 
     const slot = getSlot(availableDeliveryDays, slotDate, slotId)
     const originalSlotId = getState().user.getIn([`newOrders, ${orderId}, deliverySlotId`])
+    const isCurrentPeriod = getState().user.getIn([`newOrders, ${orderId}, isCurrentPeriod`])
     const trackingData = {
       order_id: orderId,
-      menu: '',
+      isCurrentPeriod,
       original_deliveryslot_id: originalSlotId,
       new_deliveryslot_id: slotId,
     }
