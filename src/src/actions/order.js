@@ -454,6 +454,13 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
   }
 )
 
+export const clearUpdateDateErrorAndPending = () => (
+  (dispatch) => {
+    dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, null))
+    dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, null))
+  }
+)
+
 export default {
   orderCancel,
   orderCheckout,

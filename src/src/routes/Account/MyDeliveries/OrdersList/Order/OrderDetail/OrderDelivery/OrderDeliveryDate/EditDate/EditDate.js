@@ -18,7 +18,8 @@ class EditDate extends React.PureComponent {
     coreDeliveryDayId: PropTypes.string.isRequired,
     deliverySlotId: PropTypes.string.isRequired,
     isPendingUpdateDayAndSlot: PropTypes.bool,
-    availableDeliveryDays: PropTypes.object
+    availableDeliveryDays: PropTypes.object,
+    clearUpdateDateErrorAndPending: PropTypes.func,
   }
 
   static defaultProps = {
@@ -115,7 +116,7 @@ class EditDate extends React.PureComponent {
   }
 
   onDayChange(dayId, slotsOptions) {
-    const { coreDeliveryDayId, deliverySlotId } = this.props
+    const { coreDeliveryDayId, deliverySlotId, clearUpdateDateErrorAndPending } = this.props
     const { deliveryDaysOptions } = this.state
 
     let slotId, selectedDeliveryDate
@@ -123,7 +124,7 @@ class EditDate extends React.PureComponent {
       slotId = deliverySlotId
     } else {
       const defaultSlotOption = slotsOptions[dayId].find(slotOption => slotOption.isDefaultSlot)
-      selectedDeliveryDate = deliveryDaysOptions.find(day => day.value === dayId).label
+      selectedDeliveryDate = deliveryDaysOptions.find(day => day.value === dayId).date
       if (defaultSlotOption) {
         slotId = defaultSlotOption.value
       } else {
@@ -132,6 +133,7 @@ class EditDate extends React.PureComponent {
     }
 
     this.setState({ selectedDeliveryDayId: dayId, selectedDeliverySlotId: slotId, selectedDeliveryDate })
+    clearUpdateDateErrorAndPending()
   }
 
   onSlotChange(slotId) {

@@ -24,6 +24,7 @@ class OrderDelivery extends React.PureComponent {
     recipesPeriodStockFetchError: PropTypes.object,
     orderDeliveryDaysFetchError: PropTypes.object,
     hasUpdateDeliveryDayError: PropTypes.string,
+    clearUpdateDateErrorAndPending: PropTypes.func,
   }
 
   static defaultProps = {
@@ -49,13 +50,11 @@ class OrderDelivery extends React.PureComponent {
   }
 
   onClickFunction = () => {
-    const { availableFrom, availableTo, shippingAddressId, orderId, editDeliveryMode } = this.props
-    // Promise.all([
-    //   this.context.store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId)),
-    //   this.context.store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo)),
-    // ])
-    // .then()
+    const { availableFrom, availableTo, shippingAddressId, orderId, editDeliveryMode, clearUpdateDateErrorAndPending } = this.props
+
     this.context.store.dispatch(userActions.userOpenCloseEditSection(orderId, !editDeliveryMode))
+    clearUpdateDateErrorAndPending()
+
   }
 
   static constructShippingAddress(shippingAddressObj) {

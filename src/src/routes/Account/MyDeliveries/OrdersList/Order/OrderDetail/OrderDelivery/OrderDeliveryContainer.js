@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { clearUpdateDateErrorAndPending } from 'actions/order'
 import OrderDelivery from './OrderDelivery'
 
 function mapStateToProps(state, ownProps) {
@@ -13,6 +14,8 @@ function mapStateToProps(state, ownProps) {
   }
 }
 
-const OrderDeliveryContainer = connect(mapStateToProps, {})(OrderDelivery)
+const OrderDeliveryContainer = connect(mapStateToProps, {
+  clearUpdateDateErrorAndPending
+})(OrderDelivery)
 
 export default OrderDeliveryContainer
