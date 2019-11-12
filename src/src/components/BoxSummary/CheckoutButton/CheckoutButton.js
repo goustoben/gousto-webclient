@@ -35,12 +35,16 @@ class CheckoutButton extends React.Component {
   }
 
   static defaultProps = {
+    userOrders: [],
     addressId: '',
     promoCode: '',
     postcode: '',
     orderId: '',
+    recipes: [],
     view: '',
     onClick: () => {},
+    basketCheckedOut: () => {},
+    basketProceedToCheckout: () => {},
     boxSummaryVisibilityChange: () => {},
     checkoutTransactionalOrder: () => {},
   }
