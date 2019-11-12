@@ -2,20 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import config from 'config'
 import { CardWithLink } from 'CardWithLink'
+import { OrderDetails } from './OrderDetails/OrderDetails'
 import css from './Header.css'
-
-const noUpcomingOrders = () => (
-  <p className={css.headerText}>
-    No boxes scheduled
-  </p>
-)
-
-const upcomingOrder = (messagePrimary, messageSecondary) => (
-  <div>
-    <p className={css.headerText}>{messagePrimary}</p>
-    <p className={css.headerText}>{messageSecondary}</p>
-  </div>
-)
 
 const HeaderPresentation = ({
   nextOrderMessage,
@@ -27,38 +15,49 @@ const HeaderPresentation = ({
     : `/${config.routes.client.getHelp.contact}`
 
   const { client } = config.routes
+  const hasNextOrder = nextOrderMessage.secondary
+
+  const renderNextOrder = () => (
+    <CardWithLink
+      linkLabel='View my deliveries'
+      linkUrl={client.myDeliveries}
+      clientRouted={false}
+    >
+      <OrderDetails
+        heading='Your next box delivery'
+        messagePrimary={nextOrderMessage.primary}
+        messageSecondary={nextOrderMessage.secondary}
+      />
+    </CardWithLink>
+  )
+
+  const renderNoNextOrder = () => (
+    <CardWithLink
+      linkLabel="View this week's menu"
+      linkUrl={client.menu}
+    >
+      <OrderDetails
+        heading='Your next box delivery'
+        messagePrimary={nextOrderMessage.primary}
+      />
+    </CardWithLink>
+  )
 
   return (
     <div className={css.cardsContainer}>
-      {
-        nextOrderMessage.secondary ? (
-          <CardWithLink
-            linkLabel='View my deliveries'
-            linkUrl={client.myDeliveries}
-            clientRouted={false}
-          >
-            <p>Your next box delivery</p>
-            {upcomingOrder(nextOrderMessage.primary, nextOrderMessage.secondary)}
-          </CardWithLink>
-        ) : (
-          <CardWithLink linkLabel="View this week's menu" linkUrl={client.menu}>
-            <p>Your next box delivery</p>
-            {noUpcomingOrders()}
-          </CardWithLink>
-        )
-      }
+      {hasNextOrder ? renderNextOrder() : renderNoNextOrder()}
 
-      <CardWithLink
-        linkLabel='Get help with this box'
-        linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
-      >
-        <h4>Your most recent box delivery</h4>
-        {previousOrderMessage && (
-          <p className={css.headerText}>
-            {previousOrderMessage}
-          </p>
-        )}
-      </CardWithLink>
+      {previousOrderMessage && (
+        <CardWithLink
+          linkLabel='Get help with this box'
+          linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
+        >
+          <OrderDetails
+            heading='Your most recent box delivery'
+            messagePrimary={previousOrderMessage}
+          />
+        </CardWithLink>
+      )}
     </div>
   )
 }
