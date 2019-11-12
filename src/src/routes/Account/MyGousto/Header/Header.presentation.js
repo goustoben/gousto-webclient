@@ -68,7 +68,7 @@ HeaderPresentation.propTypes = {
     secondary: PropTypes.string,
   }),
   previousOrderMessage: PropTypes.string,
-  getHelpQueryParam: PropTypes.string,
+  getHelpQueryParam: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 }
 
 HeaderPresentation.defaultProps = {
