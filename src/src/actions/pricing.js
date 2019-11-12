@@ -1,6 +1,8 @@
 import pricingRequestApi from 'apis/pricing'
 import Immutable from 'immutable'
 import actionTypes from './actionTypes'
+import { getDeliveryTariffId, getSlot } from 'utils/deliveries'
+import { getNDDFeatureValue } from 'selectors/features'
 
 const pricingPending = () => ({
   type: actionTypes.PRICING_PENDING,
@@ -75,17 +77,31 @@ const getItems = (basket) => {
 const pricingActions = {
   pricingRequest() {
     return async (dispatch, getState) => {
-      const { basket } = getState()
-      const accessToken = getState().auth.get('accessToken')
-      const isAuthenticated = getState().auth.get('isAuthenticated')
+      const { basket, boxSummaryDeliveryDays, auth, features, user } = getState()
+      const accessToken = auth.get('accessToken')
+      const isAuthenticated = auth.get('isAuthenticated')
       const promoCode = basket.get('promoCode', false)
       const deliveryDate = basket.get('date', false)
       const deliverySlotId = basket.get('slotId', false)
-      const basketItems = getItems(basket)
-      const items = basketItems.all
       const tariffId = basket.get('tariffId', false)
       const shouldSendTariffId = !!tariffId && !isAuthenticated
-      const pricingRequestParams = [accessToken, items, deliveryDate, deliverySlotId, promoCode]
+      const basketItems = getItems(basket)
+      const items = basketItems.all
+      const slot = getSlot(boxSummaryDeliveryDays, deliveryDate, deliverySlotId)
+      const daySlotLeadTimeId = slot ? slot.get('daySlotLeadTimeId') : null
+      const nddFeatureValue = getNDDFeatureValue(getState())
+      const deliveryTariffId = getDeliveryTariffId(user, nddFeatureValue)
+
+      const pricingRequestParams = [
+        accessToken,
+        items,
+        deliveryDate,
+        deliverySlotId,
+        promoCode,
+        daySlotLeadTimeId,
+        deliveryTariffId
+      ]
+
       shouldSendTariffId && pricingRequestParams.push(tariffId)
 
       if (!deliverySlotId) {

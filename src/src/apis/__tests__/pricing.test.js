@@ -30,18 +30,31 @@ describe('pricing api', () => {
       const accessToken = 'token'
       const items = [ { id: '123' }, { id: '456' } ]
       const deliveryDate = '2019-09-10T00:00:00'
-      const deliverySlotId = '123'
+      const deliverySlotId = '234'
       const promocode = 'FREEFOODPLS'
-      const tariffId = '123'
+      const tariffId = '345'
+      const daySlotLeadTimeId = '456'
+      const deliveryTariffId = '567'
 
       const expectedReqData = {
         items,
         promo_code: promocode,
         delivery_slot_id: deliverySlotId,
         delivery_date: deliveryDate,
+        day_slot_lead_time_id: daySlotLeadTimeId,
+        delivery_tariff_id: deliveryTariffId,
         tariff_id: tariffId,
       }
-      await pricing(accessToken, items, deliveryDate, deliverySlotId, promocode, tariffId)
+      await pricing(
+        accessToken,
+        items,
+        deliveryDate,
+        deliverySlotId,
+        promocode,
+        daySlotLeadTimeId,
+        deliveryTariffId,
+        tariffId
+      )
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(accessToken, 'endpoint-core/prices', expectedReqData, 'GET')
     })

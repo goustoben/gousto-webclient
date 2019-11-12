@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 import pricing from 'apis/pricing'
 import actions from 'actions/pricing'
+import { DeliveryTariffTypes } from 'utils/deliveries'
 
 jest.mock('apis/pricing')
 
@@ -33,6 +34,22 @@ describe('pricing actions', () => {
     },
   }
 
+  const getBoxSummaryDeliveryDays = (date, slotId, daySlotLeadTimeId) => Immutable.fromJS({
+    [date]: {
+      slots: [{
+        id: slotId,
+        daySlotLeadTimeId
+      }]
+    }
+  })
+
+  const getFeatures = deliveryTariffId => Immutable.fromJS({
+    ndd: {
+      value: deliveryTariffId,
+      experiment: false,
+    }
+  })
+
   beforeEach(function () {
     dispatchSpy = jest.fn()
     getStateSpy = jest.fn()
@@ -47,6 +64,7 @@ describe('pricing actions', () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: { 123: 1 }, slotId: 124 }),
+        features: getFeatures('a1b2c3d4')
       })
 
       pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
@@ -67,6 +85,7 @@ describe('pricing actions', () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: { 123: 1, 234: 1 } }),
+        features: getFeatures('a1b2c3d4')
       })
 
       pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
@@ -87,6 +106,7 @@ describe('pricing actions', () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: { 123: 2 }, slotId: 124 }),
+        features: getFeatures('a1b2c3d4')
       })
 
       pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
@@ -105,9 +125,30 @@ describe('pricing actions', () => {
     })
 
     it('should return with the PRICING_SUCCESS action and data with store data set', async function () {
+      const accessToken = 'accessToken'
+      const date = '12-12-2029'
+      const slotId = 12
+      const promoCode = '1234'
+      const daySlotLeadTimeId = 987
+      const deliveryTariffId = DeliveryTariffTypes['FREE_NDD']
+
       getStateSpy.mockReturnValue({
-        auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
-        basket: Immutable.fromJS({ recipes: { 123: 1, 145: 1 }, promoCode: '1234', date: '12-12-2029', slotId: 12, numPortions: 2 }),
+        auth: Immutable.fromJS({
+          accessToken,
+          refreshToken: 'refreshToken'
+        }),
+        basket: Immutable.fromJS({
+          recipes: { 123: 1, 145: 1 },
+          promoCode,
+          date,
+          slotId,
+          numPortions: 2
+        }),
+        boxSummaryDeliveryDays: getBoxSummaryDeliveryDays(date, slotId, daySlotLeadTimeId),
+        features: getFeatures('a1b2c3d4'),
+        user: Immutable.fromJS({
+          deliveryTariffId
+        }),
       })
 
       pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
@@ -125,13 +166,42 @@ describe('pricing actions', () => {
       expect(pricing).toHaveBeenCalled()
 
       const recipeDataRequest = { 0: { id: '123', type: 'Recipe', quantity: 2 }, 1: { id: '145', type: 'Recipe', quantity: 2 } }
-      expect(pricing).toHaveBeenCalledWith('accessToken', recipeDataRequest, '12-12-2029', 12, '1234')
+      expect(pricing).toHaveBeenCalledWith(
+        accessToken,
+        recipeDataRequest,
+        date,
+        slotId,
+        promoCode,
+        daySlotLeadTimeId,
+        deliveryTariffId
+      )
     })
 
     it('will be called with tariffId if id is provided and user is not authenticated', async function () {
+      const accessToken = 'accessToken'
+      const date = '12-12-2029'
+      const slotId = 12
+      const promoCode = '1234'
+      const tariffId = '12345678'
+      const daySlotLeadTimeId = 987
+      const deliveryTariffId = DeliveryTariffTypes['PAID_NDD']
+
       getStateSpy.mockReturnValue({
-        auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken', isAuthenticated: false }),
-        basket: Immutable.fromJS({ recipes: { 123: 1, 145: 1 }, promoCode: '1234', date: '12-12-2029', slotId: 12, numPortions: 2, tariffId: '12345678' }),
+        auth: Immutable.fromJS({
+          accessToken,
+          refreshToken: 'refreshToken',
+          isAuthenticated: false
+        }),
+        basket: Immutable.fromJS({
+          recipes: { 123: 1, 145: 1 },
+          promoCode,
+          date,
+          slotId,
+          numPortions: 2,
+          tariffId
+        }),
+        boxSummaryDeliveryDays: getBoxSummaryDeliveryDays(date, slotId, daySlotLeadTimeId),
+        features: getFeatures(deliveryTariffId)
       })
 
       pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
@@ -139,7 +209,16 @@ describe('pricing actions', () => {
       await actions.pricingRequest()(dispatchSpy, getStateSpy)
 
       const recipeDataRequest = { 0: { id: '123', type: 'Recipe', quantity: 2 }, 1: { id: '145', type: 'Recipe', quantity: 2 } }
-      expect(pricing).toHaveBeenCalledWith('accessToken', recipeDataRequest, '12-12-2029', 12, '1234', '12345678')
+      expect(pricing).toHaveBeenCalledWith(
+        accessToken,
+        recipeDataRequest,
+        date,
+        slotId,
+        promoCode,
+        daySlotLeadTimeId,
+        deliveryTariffId,
+        tariffId
+      )
     })
 
     it('will request all basket items when recipes, products and the slotId are set', async function () {
@@ -151,6 +230,7 @@ describe('pricing actions', () => {
           slotId: 124,
           numPortions: 2,
         }),
+        features: getFeatures('a1b2c3d4')
       })
 
       pricing.mockReturnValue(Promise.resolve({ data: pricingData }))
@@ -170,6 +250,7 @@ describe('pricing actions', () => {
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: { 123: 1, 134: 1 }, slotId: 1 }),
+        features: getFeatures('a1b2c3d4')
       })
 
       pricing.mockReturnValue(Promise.reject('error from pricing endpoint'))
@@ -194,6 +275,7 @@ describe('pricing actions', () => {
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: ['123', 1] }),
         pricing: Immutable.fromJS({ prices: [1, 2, 3] }),
+        features: getFeatures('a1b2c3d4')
       })
 
       await actions.pricingClear()(dispatchSpy, getStateSpy)
@@ -209,6 +291,7 @@ describe('pricing actions', () => {
         auth: Immutable.fromJS({ accessToken: 'accessToken', refreshToken: 'refreshToken' }),
         basket: Immutable.fromJS({ recipes: ['123', 1] }),
         pricing: Immutable.fromJS({ prices: [] }),
+        features: getFeatures('a1b2c3d4')
       })
 
       await actions.pricingClear()(dispatchSpy, getStateSpy)
