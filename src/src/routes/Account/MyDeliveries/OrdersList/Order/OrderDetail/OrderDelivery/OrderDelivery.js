@@ -16,7 +16,6 @@ class OrderDelivery extends React.PureComponent {
     date: PropTypes.string,
     timeStart: PropTypes.string,
     timeEnd: PropTypes.string,
-    shippingAddressObj: PropTypes.instanceOf(Immutable.Map),
     editDeliveryMode: PropTypes.bool,
     orderState: PropTypes.string,
     orderId: PropTypes.string,
@@ -50,7 +49,7 @@ class OrderDelivery extends React.PureComponent {
   }
 
   onClickFunction = () => {
-    const { availableFrom, availableTo, shippingAddressId, orderId, editDeliveryMode, clearUpdateDateErrorAndPending } = this.props
+    const { orderId, editDeliveryMode, clearUpdateDateErrorAndPending } = this.props
 
     this.context.store.dispatch(userActions.userOpenCloseEditSection(orderId, !editDeliveryMode))
     clearUpdateDateErrorAndPending()

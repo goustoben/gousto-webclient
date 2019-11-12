@@ -13,7 +13,7 @@ class EditDate extends React.PureComponent {
   static propTypes = {
     editDeliveryMode: PropTypes.bool,
     orderId: PropTypes.string,
-    deliveryDays: PropTypes.instanceOf(Immutable.List),
+    deliveryDays: PropTypes.instanceOf(Immutable.Map),
     recipesStock: PropTypes.instanceOf(Immutable.List),
     coreDeliveryDayId: PropTypes.string.isRequired,
     deliverySlotId: PropTypes.string.isRequired,
