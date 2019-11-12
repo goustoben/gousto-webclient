@@ -64,6 +64,9 @@ const userActions = {
   userProspect,
   userOpenCloseOrderCard,
   userOpenCloseEditSection,
+  userTrackOpenEditSection,
+  userTrackDateSelected,
+  userTrackSlotSelected,
   userToggleExpiredBillingModal,
   userAddPaymentMethod,
   userLoadAddresses,
@@ -441,6 +444,51 @@ function userOpenCloseEditSection(orderId, editDeliveryMode) {
       type: actionTypes.USER_ORDER_EDIT_OPEN_CLOSE,
       orderId,
       editDeliveryMode
+    })
+  }
+}
+
+function userTrackOpenEditSection(orderId) {
+  return (dispatch, getState) => {
+    const originalSlotId = getState().user.getIn([`newOrders, ${orderId}, deliverySlotId`])
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: 'OrderDeliverySlot Edit',
+        menu: '',
+        order_id: orderId,
+        original_deliveryslot_id: originalSlotId,
+      }
+    })
+  }
+}
+
+function userTrackDateSelected(orderId, originalSlotId, newSlotId) {
+  return dispatch => {
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: 'OrderDeliveryDate Selected',
+        menu: '',
+        order_id: orderId,
+        original_deliveryslot_id: originalSlotId,
+        new_deliveryslot_id: newSlotId,
+      }
+    })
+  }
+}
+
+function userTrackSlotSelected(orderId, originalSlotId, newSlotId) {
+  return dispatch => {
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: 'OrderDeliverySlot Selected',
+        menu: '',
+        order_id: orderId,
+        original_deliveryslot_id: originalSlotId,
+        new_deliveryslot_id: newSlotId,
+      }
     })
   }
 }

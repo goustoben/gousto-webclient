@@ -68,6 +68,13 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
     dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, true))
 
     const slot = getSlot(availableDeliveryDays, slotDate, slotId)
+    const originalSlotId = getState().user.getIn([`newOrders, ${orderId}, deliverySlotId`])
+    const trackingData = {
+      order_id: orderId,
+      menu: '',
+      original_deliveryslot_id: originalSlotId,
+      new_deliveryslot_id: slotId,
+    }
 
     try {
       const order = {
@@ -76,6 +83,13 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         day_slot_lead_time_id: slot.get('daySlotLeadTimeId', ''),
       }
       const accessToken = getState().auth.get('accessToken')
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliverySlot SaveAttempt',
+          ...trackingData
+        }
+      })
       const { data: updatedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
       dispatch({
         type: actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT,
@@ -85,10 +99,22 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         deliveryDay: updatedOrder.deliveryDate,
         deliverySlotStart: updatedOrder.deliverySlot.deliveryStart,
         deliverySlotEnd: updatedOrder.deliverySlot.deliveryEnd,
+        trackingData: {
+          actionType: 'OrderDeliverySlot Saved',
+          ...trackingData
+        }
       })
       dispatch(userActions.userOpenCloseEditSection(orderId, false))
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, err.message))
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliverySlot SaveAttemptFailed',
+          error: err.meassage,
+          ...trackingData
+        }
+      })
     } finally {
       dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, false))
     }

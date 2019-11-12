@@ -118,7 +118,8 @@ class EditDate extends React.PureComponent {
   }
 
   onDayChange(dayId, slotsOptions) {
-    const { coreDeliveryDayId, deliverySlotId, clearUpdateDateErrorAndPending } = this.props
+    const { store } = this.context
+    const { coreDeliveryDayId, deliverySlotId, clearUpdateDateErrorAndPending, orderId } = this.props
     const { deliveryDaysOptions } = this.state
 
     let slotId, selectedDeliveryDate
@@ -136,10 +137,14 @@ class EditDate extends React.PureComponent {
 
     this.setState({ selectedDeliveryDayId: dayId, selectedDeliverySlotId: slotId, selectedDeliveryDate })
     clearUpdateDateErrorAndPending()
+    store.dispatch(userActions.userTrackDateSelected(orderId, deliverySlotId, slotId))
   }
 
   onSlotChange(slotId) {
+    const { store } = this.context
+    const { deliverySlotId, orderId } = this.props
     this.setState({ selectedDeliverySlotId: slotId })
+    store.dispatch(userActions.userTrackSlotSelected(orderId, deliverySlotId, slotId))
   }
 
   render() {
