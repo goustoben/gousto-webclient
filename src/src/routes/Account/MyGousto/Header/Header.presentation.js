@@ -6,21 +6,21 @@ import css from './Header.css'
 
 const noUpcomingOrders = () => (
   <p className={css.headerText}>
-    Looks like you don’t have any recipe boxes ordered. To add one, simply
-    choose recipes from
+    No boxes scheduled
   </p>
 )
 
-const upcomingOrder = message => (
-  <p className={css.headerText}>
-    {message}
-  </p>
+const upcomingOrder = (messagePrimary, messageSecondary) => (
+  <div>
+    <p className={css.headerText}>{messagePrimary}</p>
+    <p className={css.headerText}>{messageSecondary}</p>
+  </div>
 )
 
 const HeaderPresentation = ({
-  nextOrderMessage = null,
-  previousOrderMessage = null,
-  getHelpQueryParam = null
+  nextOrderMessage,
+  previousOrderMessage,
+  getHelpQueryParam,
 }) => {
   const getHelpUrlSuffix = getHelpQueryParam
     ? getHelpQueryParam
@@ -31,16 +31,18 @@ const HeaderPresentation = ({
   return (
     <div className={css.cardsContainer}>
       {
-        nextOrderMessage ? (
+        nextOrderMessage.secondary ? (
           <CardWithLink
             linkLabel='View my deliveries'
             linkUrl={client.myDeliveries}
             clientRouted={false}
           >
-            {upcomingOrder(nextOrderMessage)}
+            <p>Your next box delivery</p>
+            {upcomingOrder(nextOrderMessage.primary, nextOrderMessage.secondary)}
           </CardWithLink>
         ) : (
           <CardWithLink linkLabel="View this week's menu" linkUrl={client.menu}>
+            <p>Your next box delivery</p>
             {noUpcomingOrders()}
           </CardWithLink>
         )
@@ -50,9 +52,10 @@ const HeaderPresentation = ({
         linkLabel='Get help with this box'
         linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
       >
+        <h4>Your most recent box delivery</h4>
         {previousOrderMessage && (
           <p className={css.headerText}>
-            Your most recent box was delivered {previousOrderMessage}.
+            {previousOrderMessage}
           </p>
         )}
       </CardWithLink>
@@ -61,9 +64,21 @@ const HeaderPresentation = ({
 }
 
 HeaderPresentation.propTypes = {
-  nextOrderMessage: PropTypes.string,
+  nextOrderMessage: PropTypes.shape({
+    primary: PropTypes.string,
+    secondary: PropTypes.string,
+  }),
   previousOrderMessage: PropTypes.string,
-  getHelpQueryParam: PropTypes.string
+  getHelpQueryParam: PropTypes.string,
+}
+
+HeaderPresentation.defaultProps = {
+  nextOrderMessage: {
+    primary: null,
+    secondary: null,
+  },
+  previousOrderMessage: null,
+  getHelpQueryParam: null,
 }
 
 export { HeaderPresentation }

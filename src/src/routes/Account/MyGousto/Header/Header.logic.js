@@ -16,37 +16,37 @@ class Header extends PureComponent {
   }
 
   formatDeliveryDate = (order, now) => {
-    if (!order) return null
+    if (!order) {
+      return {
+        primary: 'No boxes scheduled',
+        secondary: '',
+      }
+    }
 
     const deliveryDay = order.get('deliveryDate').substring(0, 10)
-
     const start = moment(`${deliveryDay} ${order.getIn(['deliverySlot', 'deliveryStart'])}`)
     const end = moment(`${deliveryDay} ${order.getIn(['deliverySlot', 'deliveryEnd'])}`)
-
     const roundedEnd =
       end.minute() || end.second() || end.millisecond()
         ? end.add(1, 'h').startOf('hour')
         : end
+    const timeRange = `${start.format('ha')} - ${roundedEnd.format('ha')}`
 
     const date = moment(order.get('deliveryDate'))
+    const orderIsToday = now.format('YYMMDD') === date.format('YYMMDD')
 
-    if (now.format('YYMMDD') === date.format('YYMMDD')) {
-      return `Your recipe box will be delivered today, ${date.format('Do MMMM')}.  You can view more details in `
+    return {
+      primary: orderIsToday ? 'Today' : date.format('dddd Do MMMM'),
+      secondary: timeRange,
     }
-
-    return `Your next Gousto box will arrive on ${date.format('dddd, Do MMMM')} between ${start.format('ha')}-${roundedEnd.format('ha')}. See all the details or edit this box from `
   }
 
   formatPreviousBoxDate = order => {
     if (!order) return null
 
-    const yesterday = moment().subtract(1, 'day')
     const deliveryDate = moment(order.get('deliveryDate'))
 
-    return yesterday.isSame(deliveryDate, 'day')
-      ? 'yesterday'
-      : `on ${deliveryDate.format('dddd Do MMMM')}`
-
+    return deliveryDate.format('dddd Do MMMM')
   }
 
   findOrder = (orders, now, orderToFind) => {

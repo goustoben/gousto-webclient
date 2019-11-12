@@ -68,6 +68,16 @@ const onlyOldOrders = Immutable.fromJS({
     id: '100',
   }
 })
+const orderForToday = Immutable.fromJS({
+  100: {
+    deliveryDate: moment().format(deliveryDateFormat),
+    deliverySlot: {
+      deliveryEnd: '18:59:59',
+      deliveryStart: '08:00:00'
+    },
+    id: '100',
+  }
+})
 let wrapper
 
 describe('MyGousto - Header', () => {
@@ -83,22 +93,38 @@ describe('MyGousto - Header', () => {
   })
 
   describe('when a user has upcoming orders', () => {
+    let nextDeliveryCardText
+
     beforeEach(() => {
       wrapper = mount(<Header orders={upcomingOrders} />)
+      nextDeliveryCardText = wrapper.find('CardWithLink').first().find('.headerText')
     })
+
     test('should show the correct date of the next order to be delivered', () => {
-      const expectedDateString = moment().add(2, 'days').format('Do MMMM')
-      expect(wrapper.find('.headerText').first().text()).toContain(expectedDateString)
+      const expectedDateString = moment().add(2, 'days').format('dddd Do MMMM')
+      expect(nextDeliveryCardText.at(0).text()).toBe(expectedDateString)
     })
+
     test('should show the correct delivery times of the next order to be delivered', () => {
-      expect(wrapper.find('.headerText').first().text()).toContain('8am-7pm')
+      expect(nextDeliveryCardText.at(1).text()).toBe('8am - 7pm')
+    })
+
+    describe('and the next order is today', () => {
+      beforeEach(() => {
+        wrapper = mount(<Header orders={orderForToday} />)
+        nextDeliveryCardText = wrapper.find('CardWithLink').first().find('.headerText')
+      })
+
+      test('explicitly shows that the order is arriving today', () => {
+        expect(nextDeliveryCardText.at(0).text()).toBe('Today')
+      })
     })
   })
 
   describe('when a user has no upcoming orders', () => {
     test('should show the no upcoming orders message', () => {
       wrapper = mount(<Header orders={previousOrders} />)
-      expect(wrapper.find('.headerText').first().text()).toContain('Looks like you don’t have any recipe boxes ordered')
+      expect(wrapper.find('.headerText').first().text()).toContain('No boxes scheduled')
     })
   })
 
