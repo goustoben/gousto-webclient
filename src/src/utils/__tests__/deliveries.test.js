@@ -1,4 +1,5 @@
 import sinon from 'sinon'
+import moment from 'moment'
 
 import {
   cutoffDateTimeNow,
@@ -8,7 +9,10 @@ import {
   getLandingDay,
   getSlot,
   getSlotTimes,
-  transformDaySlotLeadTimesToMockSlots
+  transformDaySlotLeadTimesToMockSlots,
+  isSlotActive,
+  userHasOrderWithDSLT,
+  isSlotBeforeCutoffTime
 } from 'utils/deliveries'
 import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
@@ -2217,6 +2221,85 @@ describe('utils/deliveries', () => {
       const resolvedFeatureFlagValue = getNDDFeatureFlagVal(state)
 
       expect(resolvedFeatureFlagValue).toEqual(false)
+    })
+  })
+
+  describe('isSlotActive', () => {
+    test('should return true when day slot lead time is active', () => {
+      const slot = {
+        id: '123',
+        daySlotLeadTimeActive: true
+      }
+
+      expect(isSlotActive(slot)).toBeTruthy()
+    })
+
+    test('should return false when day slot lead time is inactive', () => {
+      const slot = {
+        id: '123',
+        daySlotLeadTimeActive: false
+      }
+
+      expect(isSlotActive(slot)).toBeFalsy()
+    })
+
+    test('should return a default true value when no day slot lead times present', () => {
+      const slot = {
+        id: '123'
+      }
+
+      expect(isSlotActive(slot)).toBeTruthy()
+    })
+  })
+
+  describe('userHasOrderWithDSLT', () => {
+    test('should return true when users orders dslt id is the same as the slots', () => {
+      const slot = {
+        id: '123',
+        daySlotLeadTimeId: 'a1b2c3d4'
+      }
+      const usersOrderDaySlotLeadTimeIds = ['a1b2c3d4']
+
+      expect(userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)).toBeTruthy()
+    })
+    test('should return false when users orders dslt id is not the same as the slots', () => {
+      const slot = {
+        id: '123',
+        daySlotLeadTimeId: 'a5b6c7d8'
+      }
+      const usersOrderDaySlotLeadTimeIds = ['a1b2c3d4']
+
+      expect(userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)).toBeFalsy()
+    })
+    test('should return false when slot does not have a dslt id', () => {
+      const slot = {
+        id: '123',
+      }
+      const usersOrderDaySlotLeadTimeIds = [null]
+
+      expect(userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)).toBeFalsy()
+    })
+  })
+
+  describe('isSlotBeforeCutoffTime', () => {
+    test('should return true if slots cutoff time is after provided cutoff time', () => {
+      const slot = {
+        whenCutoff: '2019-11-02 11:59:59'
+      }
+
+      const cutoffDatetimeFromMoment = moment('2019-11-01 11:59:59')
+
+      expect(isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)).toBeTruthy()
+    })
+
+    test('should return false if slots cutoff time is before provided cutoff time', () => {
+      const slot = {
+        whenCutoff: '2019-10-30 11:59:59'
+      }
+
+      const cutoffDatetimeFromMoment = moment('2019-11-01 11:59:59')
+
+      expect(isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)).toBeFalsy()
     })
   })
 })
