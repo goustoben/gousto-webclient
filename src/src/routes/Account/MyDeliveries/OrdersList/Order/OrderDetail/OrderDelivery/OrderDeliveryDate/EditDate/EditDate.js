@@ -31,7 +31,6 @@ class EditDate extends React.PureComponent {
     recipesStock: Immutable.List([]),
     orders: Immutable.Map({}),
     isPendingUpdateDayAndSlot: false,
-    isErrorUpdateDayAndSlot: null,
     orderGetDeliveryDays: () => { }
   }
 
