@@ -230,9 +230,19 @@ const shouldFetchData = (store, params, force) => {
 }
 
 // eslint-disable-next-line import/no-default-export
-export default async function fetchData({ store, query, params }, force, background, menuServiceFeatureFlag) {
+export default async function fetchData({ store, query, params }, force, background) {
   const accessToken = store.getState().auth.get('accessToken')
-  const useMenuService = menuServiceFeatureFlag || menuServiceConfig.isEnabled
+  const useMenuService = store.getState().features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
+
+  const startTime = now()
+
+  const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
+  const shouldFetch = shouldFetchData(store, params, force)
+
+  if (isPending || !shouldFetch) {
+
+    return
+  }
 
   if (useMenuService) {
     const isAuthenticated = getIsAuthenticated(store.getState())
@@ -246,16 +256,6 @@ export default async function fetchData({ store, query, params }, force, backgro
     }
 
     store.dispatch(actions.menuServiceDataReceived(response))
-  }
-
-  const startTime = now()
-
-  const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
-  const shouldFetch = shouldFetchData(store, params, force)
-
-  if (isPending || !shouldFetch) {
-
-    return
   }
 
   await store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, true))

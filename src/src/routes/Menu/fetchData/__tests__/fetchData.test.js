@@ -604,7 +604,6 @@ describe('menu fetchData', () => {
   describe('menuService fetchMenus', () => {
     test('Menu service fetchMenus is called when config is enabled', async () => {
       menuServiceConfig.isEnabled = true
-      const menuServiceFeatureFlag = false
 
       const orderId = '123'
       const paramsWithOrderId = {
@@ -612,14 +611,14 @@ describe('menu fetchData', () => {
         orderId
       }
 
-      await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
+      await fetchData({ store, query, params: paramsWithOrderId })
 
       expect(fetchMenus).toHaveBeenCalled()
     })
 
     test('Menu service fetchMenus is called when featureFlag is enabled', async () => {
       menuServiceConfig.isEnabled = false
-      const menuServiceFeatureFlag = true
+      state.features = state.features.setIn(['menuService', 'value'], true)
 
       const orderId = '123'
       const paramsWithOrderId = {
@@ -627,14 +626,14 @@ describe('menu fetchData', () => {
         orderId
       }
 
-      await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
+      await fetchData({ store, query, params: paramsWithOrderId })
 
       expect(fetchMenus).toHaveBeenCalled()
     })
 
     test('Menu service fetchMenus is not called when config and featureFlag is disabled', async () => {
       menuServiceConfig.isEnabled = false
-      const menuServiceFeatureFlag = false
+      state.features = state.features.setIn(['menuService', 'value'], false)
 
       const orderId = '123'
       const paramsWithOrderId = {
@@ -642,7 +641,7 @@ describe('menu fetchData', () => {
         orderId
       }
 
-      await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
+      await fetchData({ store, query, params: paramsWithOrderId })
 
       expect(fetchMenus).not.toHaveBeenCalled()
     })
