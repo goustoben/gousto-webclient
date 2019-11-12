@@ -131,9 +131,7 @@ export function menuCutoffUntilReceive(cutoffUntil) {
 
 export function menuLoadDays() {
   return async (dispatch, getState) => {
-    const { features } = getState()
-
-    const useMenuService = features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
+    const useMenuService = menuServiceConfig.isEnabled
 
     if (useMenuService) {
       menuServiceLoadDays(dispatch, getState)
@@ -185,7 +183,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
 
       if (features.getIn(['collections', 'value']) || features.getIn(['forceCollections', 'value'])) {
 
-        const useMenuService = features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
+        const useMenuService = menuServiceConfig.isEnabled
 
         if (useMenuService) {
           await loadMenuCollectionsWithMenuService(getState, dispatch, date, background)
@@ -325,7 +323,6 @@ export function menuClearStock() {
 export function menuLoadStock(clearStock = true) {
   return async (dispatch, getState) => {
     const state = getState()
-    const { features } = getState()
     const date = state.basket.get('date')
     const coreDayId = state.boxSummaryDeliveryDays.getIn([date, 'coreDayId'], '')
 
@@ -338,8 +335,7 @@ export function menuLoadStock(clearStock = true) {
 
     let adjustedStock = {}
 
-    const useMenuService = features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
-
+    const useMenuService = menuServiceConfig.isEnabled
     if (useMenuService) {
       adjustedStock = getStockAvailability(getState, recipeStock)
     } else {
