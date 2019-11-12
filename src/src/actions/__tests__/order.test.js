@@ -430,7 +430,6 @@ describe('order actions', () => {
       expect(pending.mock.calls[0][1]).toBe(true)
       expect(pending.mock.calls[1][0]).toEqual('ORDER_SAVE')
       expect(pending.mock.calls[1][1]).toBe(false)
-      expect(dispatchSpy.mock.calls.length).toBe(4)
     })
 
     test('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async () => {
