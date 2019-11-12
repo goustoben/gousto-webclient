@@ -1,14 +1,14 @@
 import { normaliseData } from './normaliseData'
 import { ingredientTransformer } from './recipes/ingredientTransformer'
 import { mediaTransformer } from './recipes/mediaTransformer'
-import { allergensTransformer, basicsTransformer, formatIngredients, shelfLifeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
+import { allergensTransformer, basicsTransformer, equpimentTransformer, formatIngredients, shelfLifeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
 
-const recipesTransformer = (response) => {
+const recipesTransformer = (activeMenu, response) => {
   const normalisedData = normaliseData(response)
-  const recipeList = response.data[0].relationships.recipes.data
+  const activeMenuRecipesIds = activeMenu.relationships.recipes.data.map((recipe) => recipe.id )
 
-  const formattedData = recipeList.map((individualRecipe) => {
-    const currentRecipe = normalisedData.recipe[individualRecipe.id]
+  const formattedData = activeMenuRecipesIds.map((individualRecipeId) => {
+    const currentRecipe = normalisedData.recipe[individualRecipeId]
     const normalisedAttributes = currentRecipe && currentRecipe.attributes
     const normalisedRelationships = currentRecipe && currentRecipe.relationships
 
@@ -26,12 +26,13 @@ const recipesTransformer = (response) => {
       boxType: normalisedAttributes.box_type.slug,
       cookingTime: normalisedAttributes.prep_times.for2,
       cookingTimeFamily: normalisedAttributes.prep_times.for4,
+      coreRecipeId: normalisedAttributes.core_recipe_id.toString(),
       cuisine: normalisedAttributes.cuisine.name,
       description: normalisedAttributes.description,
       dietType: normalisedAttributes.diet_type.slug,
-      equipment:normalisedAttributes.equipment,
+      equipment: equpimentTransformer(normalisedAttributes.equipment),
       fiveADay: normalisedAttributes.five_a_day,
-      id: individualRecipe.id,
+      id: individualRecipeId, // Check having a different id isn't going to break things elsewhere
       ingredients: finalIngredients,
       meals:[
         {
