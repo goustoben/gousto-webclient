@@ -25,15 +25,11 @@ export function snakeToCamelCase(text) {
   return text.replace(/"\w+?":/g, key => key.replace(/_\w/g, match => match[1].toUpperCase()))
 }
 
-export function JSONParse(text, convertToCamelCase) { // eslint-disable-line new-cap
+export function JSONParse(text) { // eslint-disable-line new-cap
   try {
-    if (convertToCamelCase) {
-      const camelCaseText = snakeToCamelCase(text)
+    const camelCaseText = snakeToCamelCase(text)
 
-      return JSON.parse(camelCaseText)
-    }
-
-    return JSON.parse(text)
+    return JSON.parse(camelCaseText)
   } catch (e) {
     logger.error({ message:`JSONParse failed with text: "${text}"`, errors:  [e] })
     throw new Error('An error occurred, please try again.')
@@ -42,7 +38,6 @@ export function JSONParse(text, convertToCamelCase) { // eslint-disable-line new
 
 export function processJSON([response, status]) {
   return new Promise((resolve, reject) => {
-
     const meta = response.meta || null
     if (response.status === 'ok') {
       let cbData = response
@@ -51,8 +46,6 @@ export function processJSON([response, status]) {
         if (response.result.data) {
           cbData = response.result.data
         }
-      } else if (response.data && response.included) {
-        return resolve({ response })
       } else if (response.data) {
         cbData = response.data
       }

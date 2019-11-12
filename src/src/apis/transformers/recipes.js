@@ -1,14 +1,14 @@
 import { normaliseData } from './normaliseData'
 import { ingredientTransformer } from './recipes/ingredientTransformer'
 import { mediaTransformer } from './recipes/mediaTransformer'
-import { allergensTransformer, basicsTransformer, equpimentTransformer, formatIngredients, shelfLifeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
+import { allergensTransformer, basicsTransformer, formatIngredients, shelfLifeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
 
-const recipesTransformer = (activeMenu, response) => {
+const recipesTransformer = (response) => {
   const normalisedData = normaliseData(response)
-  const activeMenuRecipesIds = activeMenu.relationships.recipes.data.map((recipe) => recipe.id )
+  const recipeList = response.data[0].relationships.recipes.data
 
-  const formattedData = activeMenuRecipesIds.map((individualRecipeId) => {
-    const currentRecipe = normalisedData.recipe[individualRecipeId]
+  const formattedData = recipeList.map((individualRecipe) => {
+    const currentRecipe = normalisedData.recipe[individualRecipe.id]
     const normalisedAttributes = currentRecipe && currentRecipe.attributes
     const normalisedRelationships = currentRecipe && currentRecipe.relationships
 
@@ -26,13 +26,12 @@ const recipesTransformer = (activeMenu, response) => {
       boxType: normalisedAttributes.box_type.slug,
       cookingTime: normalisedAttributes.prep_times.for2,
       cookingTimeFamily: normalisedAttributes.prep_times.for4,
-      coreRecipeId: normalisedAttributes.core_recipe_id.toString(),
       cuisine: normalisedAttributes.cuisine.name,
       description: normalisedAttributes.description,
       dietType: normalisedAttributes.diet_type.slug,
-      equipment: equpimentTransformer(normalisedAttributes.equipment),
+      equipment:normalisedAttributes.equipment,
       fiveADay: normalisedAttributes.five_a_day,
-      id: individualRecipeId, // Check having a different id isn't going to break things elsewhere
+      id: individualRecipe.id,
       ingredients: finalIngredients,
       meals:[
         {
