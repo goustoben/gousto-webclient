@@ -10,24 +10,29 @@ describe('OrderSideSwipe', () => {
   let sandbox
   const recipes = Immutable.fromJS([
     {
+      id: '001',
       image: 'http://image-url',
       title: 'A recipe title',
     },
     {
+      id: '002',
       image: 'http://image-url2',
       title: 'A recipe title 2',
     },
   ])
   const moreRecipes = Immutable.fromJS([
     {
+      id: '003',
       image: 'http://image-url',
       title: 'A recipe title',
     },
     {
+      id: '004',
       image: 'http://image-url2',
       title: 'A recipe title 2',
     },
     {
+      id: '005',
       image: 'http://image-url3',
       title: 'A recipe title 3',
     },
@@ -108,7 +113,7 @@ describe('OrderSideSwipe', () => {
       ).toBe('')
     })
 
-    test('should render no empty recipes if orderState= confimed of dispatched', () => {
+    test('should render no empty recipes if orderState is confirmed or dispatched', () => {
       wrapper = shallow(
         <OrderSideSwipe recipes={recipes} orderState="dispatched" />,
       )

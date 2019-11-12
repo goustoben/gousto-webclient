@@ -19,6 +19,12 @@
 	overflow: hidden;
 }
 
+.collageImage {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+
 .emptyItem {
 	composes: flex from 'styles/display.css';
 	composes: row center contentCenter verticalCenter from 'styles/flex.css';

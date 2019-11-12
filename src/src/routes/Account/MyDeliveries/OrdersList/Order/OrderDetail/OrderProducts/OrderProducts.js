@@ -10,6 +10,8 @@ import routes from 'config/routes'
 import actions from 'actions/products'
 import Content from 'containers/Content'
 
+import placeholderSrc from 'media/images/recipe-placeholder.png'
+
 import css from './OrderProducts.css'
 
 const imagesWidth = '100'
@@ -63,7 +65,7 @@ class OrderProducts extends React.PureComponent {
             {products.map(product =>
               <div key={product.get('id')} className={css.productContainer}>
                 <div className={css.productImage}>
-                  <ProductImage src={product.get('image')} alt={product.get('title')} />
+                  <ProductImage src={product.get('image') || placeholderSrc} alt={product.get('title')} />
                 </div>
                 <div className={css.productInfo}>
                   <div>{product.get('title')}</div>
