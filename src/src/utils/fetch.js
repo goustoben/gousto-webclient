@@ -6,21 +6,7 @@ import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store'
 
-export function fetchRaw(url, data ={}, options) {
-  return fetch(
-    options.accessToken,
-    url,
-    data,
-    options.method = 'GET',
-    options.cache = 'default',
-    options.headers = {},
-    options.timeout = null,
-    options.includeCookies = false,
-    options.includeExperiments = true,
-    options.convertToCamelCase = false)
-}
-
-export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'default', headers = {}, timeout = null, includeCookies = false, includeExperiments = true, convertToCamelCase = true) {
+export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'default', headers = {}, timeout = null, includeCookies = false, includeExperiments = true) {
   const requestData = {
     ...data,
   }
@@ -123,14 +109,10 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       return response
     })
     .then(response => response.text())
-    .then(response => [JSONParse(response, convertToCamelCase), responseStatus]) // eslint-disable-line new-cap
+    .then(response => [JSONParse(response), responseStatus]) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
       logger.notice({message: "[fetch end]", status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl: requestUrl, uuid: uuid})
-
-      if ( response.meta ) {
-        return { data: response.data, included: response.included }
-      }
 
       return { data: response, meta }
     })

@@ -33,12 +33,6 @@ const dietaryTagsTransformer = (dietaryArray) => {
   return newAttributes
 }
 
-const equpimentTransformer = (equipmentArray) => {
-  return equipmentArray.map((thing) => {
-    return thing.name
-  })
-}
-
 const foodBrandTransformer = (foodBrand) => {
   return [{
     name: foodBrand.name,
@@ -90,7 +84,6 @@ export {
   allergensTransformer,
   basicsTransformer,
   cropsTransformer,
-  equpimentTransformer,
   formatIngredients,
   imageUrlMap,
   shelfLifeTransformer,

@@ -12,8 +12,7 @@ import { isCollectionsFeatureEnabled } from 'selectors/features'
 import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
-import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
-import { menuServiceConfig } from 'config/menuService'
+
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
 const requiresMenuRecipesClear = (store, orderId) => {
@@ -126,7 +125,7 @@ const loadOrderAuthenticated = async (store, orderId) => {
   }
 }
 
-const loadWithoutOrder = async (store, query, background, transformedCollections, transformedRecipes, transformedCollectionRecipes) => {
+const loadWithoutOrder = async (store, query, background) => {
   const isAdmin = getIsAdmin(store.getState())
 
   if (store.getState().basket.get('orderId')) {
@@ -163,7 +162,7 @@ const loadWithoutOrder = async (store, query, background, transformedCollections
     cutoffDateTime = query.cutoffDate || store.getState().basket.get('date') || cutoffDateTimeNow()
   }
 
-  await store.dispatch(actions.menuLoadMenu(cutoffDateTime, background, transformedCollections, transformedRecipes, transformedCollectionRecipes))
+  await store.dispatch(actions.menuLoadMenu(cutoffDateTime, background))
 
   if (!browseMode) {
     await store.dispatch(actions.menuLoadStock(true))
@@ -236,37 +235,19 @@ const shouldFetchData = (store, params, force) => {
   const menuCollectionRecipes = store && store.getState().menuCollectionRecipes
   const threshold = (__DEV__) ? 4 : 8
   const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
-  const requiresClear = requiresMenuRecipesClear(store, params.orderId)
 
   return (
     force
     || !menuRecipes
     || (menuRecipes && menuRecipes.size <= threshold)
     || stale
-    || requiresClear
+    || requiresMenuRecipesClear(store, params.orderId)
     || !menuCollectionRecipes.size
   )
 }
 
 // eslint-disable-next-line import/no-default-export
-export default async function fetchData({ store, query, params }, force, background, menuServiceFeatureFlag) {
-  const accessToken = store.getState().auth.get('accessToken')
-  const useMenuService = menuServiceFeatureFlag || menuServiceConfig.isEnabled
-
-  if (useMenuService) {
-    const isAuthenticated = getIsAuthenticated(store.getState())
-    const userId = store.getState().auth.get('id')
-    let response
-
-    if (isAuthenticated && userId) {
-      response = await fetchMenusWithUserId(accessToken, userId)
-    } else {
-      response = await fetchMenus(accessToken)
-    }
-
-    store.dispatch(actions.menuServiceDataReceived(response))
-  }
-
+export default async function fetchData({ store, query, params }, force, background) {
   const startTime = now()
 
   await applyForceCollectionsFeature(store)
@@ -275,7 +256,6 @@ export default async function fetchData({ store, query, params }, force, backgro
   const shouldFetch = shouldFetchData(store, params, force)
 
   if (isPending || !shouldFetch) {
-
     return
   }
 

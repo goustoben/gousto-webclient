@@ -78,10 +78,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
-  menuService: {
-    experiment: false,
-    value: false,
-  },
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

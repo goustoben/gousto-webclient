@@ -8,7 +8,7 @@ import { collectionFilterChange } from 'actions/filters'
 import { menuLoadCollectionRecipes } from 'actions/menuLoadCollectionRecipes'
 import actionTypes from './actionTypes'
 
-const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
+export const menuLoadCollections = (date, noUrlChange) => {
   return async (dispatch, getState) => {
     const state = getState()
     const accessToken = state.auth.get('accessToken')
@@ -24,15 +24,7 @@ const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
       },
       ...experiments,
     }
-
-    let collections
-    if (transformedCollections) {
-      collections = transformedCollections
-    } else {
-      const response = await fetchCollections(accessToken, '', args)
-      collections = response.data
-    }
-
+    const { data: collections } = await fetchCollections(accessToken, '', args)
     const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
     if (recommendationCollection && recommendationCollection.properties) {
       const { tutorial, shortlist } = recommendationCollection.properties
@@ -76,7 +68,7 @@ const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
   }
 }
 
-const menuLoadCollectionsRecipes = (date, transformedRecipes, transformedCollectionRecipes) => {
+export const menuLoadCollectionsRecipes = (date) => {
   return (dispatch, getState) => {
     const allRecipesCollections = getState().menuCollections.filter(isAllRecipes)
     const ids = Array.from(getState().menuCollections.keys())
@@ -87,7 +79,7 @@ const menuLoadCollectionsRecipes = (date, transformedRecipes, transformedCollect
     }
 
     return Promise.all(
-      ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId, transformedRecipes, transformedCollectionRecipes)(dispatch, getState))
+      ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
     )
       .then(() => {
         const state = getState()
@@ -98,9 +90,4 @@ const menuLoadCollectionsRecipes = (date, transformedRecipes, transformedCollect
         })
       })
   }
-}
-
-export {
-  menuLoadCollections,
-  menuLoadCollectionsRecipes
 }

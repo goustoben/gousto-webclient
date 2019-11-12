@@ -11,8 +11,6 @@ import { initialState as initialFeaturesState } from 'reducers/features'
 import { defaultState as defaultUserState } from 'reducers/user'
 import logger from 'utils/logger'
 import { getLandingDay } from 'utils/deliveries'
-import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
-import { menuServiceConfig } from 'config/menuService'
 
 import fetchData from '../fetchData'
 
@@ -22,11 +20,8 @@ jest.mock('../utils')
 jest.mock('utils/deliveries')
 jest.mock('utils/logger')
 jest.mock('performance-now')
-jest.mock('apis/menus')
 
 describe('menu fetchData', () => {
-  menuServiceConfig.isEnabled = false
-
   let state = {
     auth: initialAuthState(),
     features: initialFeaturesState(),
@@ -84,12 +79,6 @@ describe('menu fetchData', () => {
     actions.basketRecipeAdd.mockReset()
     actions.featureSet.mockReset()
     actions.userLoadOrders.mockReset()
-
-    fetchMenus.mockReset()
-  })
-
-  afterEach(() => {
-    menuServiceConfig.isEnabled = false
   })
 
   describe('is pending', () => {
@@ -161,7 +150,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch menuLoadStock action', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that
+            // so making it return a symbol is an easy way to do that 
             const menuLoadStockResult = Symbol()
             actions.menuLoadStock.mockReturnValue(menuLoadStockResult)
 
@@ -186,7 +175,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch menuLoadOrderDetails', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that
+            // so making it return a symbol is an easy way to do that 
             const menuLoadOrderDetailsResult = Symbol()
 
             // use mockImplementation and only return the symbol if it's called with the expected orderId
@@ -244,7 +233,7 @@ describe('menu fetchData', () => {
 
             test('should dispatch featureSet menuRecipes action', async () => {
               // we need to test that dispatch is called with the **result** of the action creator
-              // so making it return a symbol is an easy way to do that
+              // so making it return a symbol is an easy way to do that 
               const featureSetResult = Symbol()
 
               // use mockImplementation and only return the symbol if it's called with the expected parameters
@@ -264,7 +253,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch menuLoadMenu', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that
+            // so making it return a symbol is an easy way to do that 
             const menuLoadMenuResult = Symbol()
 
             actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
@@ -276,7 +265,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch menuLoadStock', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that
+            // so making it return a symbol is an easy way to do that 
             const menuLoadStockResult = Symbol()
 
             actions.menuLoadStock.mockReturnValue(menuLoadStockResult)
@@ -324,7 +313,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch menuLoadDays action', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that
+            // so making it return a symbol is an easy way to do that 
             const menuLoadDaysResult = Symbol()
 
             actions.menuLoadDays.mockReturnValue(menuLoadDaysResult)
@@ -336,7 +325,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch boxSummaryDeliveryDaysLoad action', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that
+            // so making it return a symbol is an easy way to do that 
             const boxSummaryDeliveryDaysLoadResult = Symbol()
 
             actions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
@@ -444,7 +433,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch basketNumPortionChange', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that
+            // so making it return a symbol is an easy way to do that 
             const basketNumPortionChangeResult = Symbol()
 
             // use mockImplementation and only return the symbol if it's called with the expected parameters
@@ -484,7 +473,7 @@ describe('menu fetchData', () => {
 
         test('should dispatch menuLoadMenu', async () => {
           // we need to test that dispatch is called with the **result** of the action creator
-          // so making it return a symbol is an easy way to do that
+          // so making it return a symbol is an easy way to do that 
           const menuLoadMenuResult = Symbol()
 
           actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
@@ -589,7 +578,7 @@ describe('menu fetchData', () => {
         const secondTime = 2.3
 
         // Math.round(2.3 - 1)
-        const expectedValue = 1
+        const expectedValue = 1 
 
         now.mockReturnValueOnce(firstTime)
           .mockReturnValueOnce(secondTime)
@@ -603,101 +592,5 @@ describe('menu fetchData', () => {
         }])
       })
     })
-  })
-
-  describe('menuService fetchMenus', () => {
-    test('Menu service fetchMenus is called when config is enabled', async () => {
-      menuServiceConfig.isEnabled = true
-      const menuServiceFeatureFlag = false
-
-      const orderId = '123'
-      const paramsWithOrderId = {
-        ...params,
-        orderId
-      }
-
-      await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
-
-      expect(fetchMenus).toHaveBeenCalled()
-    })
-
-    test('Menu service fetchMenus is called when featureFlag is enabled', async () => {
-      menuServiceConfig.isEnabled = false
-      const menuServiceFeatureFlag = true
-
-      const orderId = '123'
-      const paramsWithOrderId = {
-        ...params,
-        orderId
-      }
-
-      await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
-
-      expect(fetchMenus).toHaveBeenCalled()
-    })
-
-    test('Menu service fetchMenus is not called when config and featureFlag is disabled', async () => {
-      menuServiceConfig.isEnabled = false
-      const menuServiceFeatureFlag = false
-
-      const orderId = '123'
-      const paramsWithOrderId = {
-        ...params,
-        orderId
-      }
-
-      await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
-
-      expect(fetchMenus).not.toHaveBeenCalled()
-    })
-  })
-
-  describe('menuService fetchMenusWithUserId', () => {
-    describe('fetchMenusWithUserId is called', () => {
-      beforeEach(() => {
-        state.auth = state.auth.set('isAuthenticated', false)
-        state.auth = state.auth.set('id', '')
-        state.auth = state.auth.set('accessToken', '')
-      })
-
-      test('fetchMenusWithUserId is not called when user logged out', async () => {
-        menuServiceConfig.isEnabled = false
-        const menuServiceFeatureFlag = false
-
-        const orderId = '123'
-        const paramsWithOrderId = {
-          ...params,
-          orderId
-        }
-
-        await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
-
-        expect(fetchMenusWithUserId).not.toHaveBeenCalled()
-      })
-    })
-
-    describe('fetchMenusWithUserId is called', () => {
-      beforeEach(() => {
-        state.auth = state.auth.set('isAuthenticated', true)
-        state.auth = state.auth.set('id', 'test-id')
-        state.auth = state.auth.set('accessToken', 'test-token')
-      })
-      test('when config or featureflag is enabled and user logged in', async () => {
-
-        menuServiceConfig.isEnabled = true
-        const menuServiceFeatureFlag = true
-
-        const orderId = '123'
-        const paramsWithOrderId = {
-          ...params,
-          orderId
-        }
-
-        await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
-
-        expect(fetchMenusWithUserId).toHaveBeenCalled()
-      })
-    })
-
   })
 })

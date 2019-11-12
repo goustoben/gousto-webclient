@@ -30,8 +30,8 @@ class Menu extends React.PureComponent {
 
   static defaultProps = defaultMenuPropTypes
 
-  static fetchData(args, force, undefined, menuServiceFeatureFlag) {
-    return fetchData(args, force, undefined, menuServiceFeatureFlag)
+  static fetchData(args, force) {
+    return fetchData(args, force)
   }
 
   state = {
@@ -65,8 +65,7 @@ class Menu extends React.PureComponent {
       portionSizeSelectedTracking,
       numPortions,
       productsLoadProducts,
-      productsLoadStock,
-      menuServiceFeatureFlag
+      productsLoadStock
     } = this.props
 
     const { store } = this.context
@@ -89,7 +88,7 @@ class Menu extends React.PureComponent {
 
     this.checkQueryParam()
 
-    Menu.fetchData({ store, query, params }, forceDataLoad, undefined, menuServiceFeatureFlag)
+    Menu.fetchData({ store, query, params }, forceDataLoad)
 
     if (boxSummaryDeliveryDays.size === 0 && !disabled) {
       menuLoadDays().then(() => {
@@ -128,7 +127,7 @@ class Menu extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isAuthenticated, orderId, menuLoadBoxPrices, menuVariation, tariffId, menuServiceFeatureFlag } = this.props
+    const { isAuthenticated, orderId, menuLoadBoxPrices, menuVariation, tariffId } = this.props
 
     // /menu-> /menu/:orderId
     const editingOrder = (nextProps.orderId || orderId) && nextProps.orderId !== orderId
@@ -139,7 +138,7 @@ class Menu extends React.PureComponent {
       const { store } = this.context
       const query = nextProps.query || {}
       const params = nextProps.params || {}
-      Menu.fetchData({ store, query, params }, true, undefined, menuServiceFeatureFlag)
+      Menu.fetchData({ store, query, params }, true)
     }
 
     if (!nextProps.disabled && !nextProps.menuLoadingBoxPrices && tariffId !== nextProps.tariffId) {

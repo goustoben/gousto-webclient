@@ -38,7 +38,6 @@ import cookies from './cookies'
 import onScreenRecovery from './onScreenRecovery'
 import { getHelp } from './getHelp'
 import { logger } from './logger'
-import { menuService } from './menuService'
 
 const reducers = {
   ...abandonBasket,
@@ -56,12 +55,11 @@ const reducers = {
   ...example,
   ...features,
   ...filters,
-  ...home,
   ...jobs,
   ...login,
   logger,
+  ...home,
   ...menu,
-  menuService: menuService,
   ...newsletter,
   orders,
   ...onScreenRecovery,
