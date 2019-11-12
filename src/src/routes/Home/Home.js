@@ -22,6 +22,7 @@ class Home extends React.Component {
     isAuthenticated: PropTypes.bool,
     variant: PropTypes.string,
     redirectLoggedInUser: PropTypes.func,
+    menuServiceFeatureFlag: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -34,11 +35,11 @@ class Home extends React.Component {
 
   componentDidMount() {
     const store = this.context.store
-    const { redirectLoggedInUser } = this.props
+    const { redirectLoggedInUser, menuServiceFeatureFlag } = this.props
     redirectLoggedInUser()
 
     this.prefetchTimer = setTimeout(() => {
-      menuFetchData({ store, query: {}, params: {} }, false, true)
+      menuFetchData({ store, query: {}, params: {} }, false, true, menuServiceFeatureFlag)
     }, 500)
 
     Home.fetchData({ store })

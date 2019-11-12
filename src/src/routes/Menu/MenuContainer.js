@@ -8,7 +8,7 @@ import actionTypes from 'actions/actionTypes'
 import { triggerMenuLoad } from 'actions/menu'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 
-import { getJfyTutorial } from 'selectors/features'
+import { getJfyTutorial, getMenuService } from 'selectors/features'
 import { getRecipeGroupFilter, getFoodBrandDetails } from 'selectors/filters'
 
 import Menu from './Menu'
@@ -98,7 +98,8 @@ function mapStateToProps(state, ownProps) {
       [state.basket.get('date'), 'coreDayId']
     ),
     addressId: state.basket.getIn(['address', 'id'], ''),
-    foodBrandDetails: (query && query.foodBrand) ? getFoodBrandDetails(state) : null
+    foodBrandDetails: (query && query.foodBrand) ? getFoodBrandDetails(state) : null,
+    menuServiceFeatureFlag: getMenuService(state)
   }
 }
 

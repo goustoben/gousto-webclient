@@ -103,3 +103,7 @@ export const getCookingInstruction = ({ features }) => (
 export const getNewMenuDesignFeatureEnabled = ({ features }) => (
   features && features.getIn(['renderNewMenuDesign', 'value'], false)
 )
+
+export const getMenuService = ({ features }) => (
+  features && features.getIn(['menuService', 'value'], false)
+)
