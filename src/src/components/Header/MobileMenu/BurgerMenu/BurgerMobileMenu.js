@@ -4,6 +4,17 @@ import classNames from 'classnames'
 import Link from 'Link'
 import css from '../MobileMenu.css'
 
+const getCssClassForMenuItem = (homeMenuItem, myGoustoMenuItem, isAuthenticated) => {
+
+  if (homeMenuItem && isAuthenticated) {
+    return css.borderListElement
+  } else if (myGoustoMenuItem || homeMenuItem) {
+    return css.listElement
+  }
+
+  return css.childListElement
+}
+
 class BurgerMobileMenu extends React.PureComponent {
   static propTypes = {
     show: PropTypes.bool.isRequired,
@@ -37,7 +48,7 @@ class BurgerMobileMenu extends React.PureComponent {
             className={css.menuItem}
             activeClassName={classNames(css.menuItem, css.disabled)}
             key={menuItem.name}
-            clientRouted={!Boolean(promoCodeUrl)}
+            clientRouted={!promoCodeUrl}
             onlyActiveOnIndex
           >
             <li className={isAuthenticated ? css.borderListElement : css.listElement}>
@@ -48,8 +59,7 @@ class BurgerMobileMenu extends React.PureComponent {
       }
 
       if (menuItem.disabled) {
-        const listType = homeMenuItem && isAuthenticated && css.borderListElement || (myGoustoMenuItem || homeMenuItem) && css.listElement
-          || css.childListElement
+        const listType = getCssClassForMenuItem(homeMenuItem, myGoustoMenuItem, isAuthenticated)
 
         return (
           <span className={classNames(css.menuItem, css.disabled)} key={menuItem.name}>
@@ -84,16 +94,16 @@ class BurgerMobileMenu extends React.PureComponent {
     const { show, isAuthenticated, hideNav, onLogoutClick, onLoginClick } = this.props
     const testingId = isAuthenticated ? 'burgerMenuLogout' : 'burgerMenuLogin'
     const loginMenu = (
-      <span role='button' tabIndex={0} className={css.menuItem} onClick={(isAuthenticated) ? onLogoutClick : onLoginClick} onKeyPress={(isAuthenticated) ? onLogoutClick : onLoginClick}>
+      <button type='button' className={css.menuItem} onClick={(isAuthenticated) ? onLogoutClick : onLoginClick}>
         <li className={css.borderListElement} data-testing={testingId}>
           {(isAuthenticated) ? 'Logout' : 'Login'}
         </li>
-      </span>
+      </button>
     )
 
     return (
       <div
-        className={classNames({ [css.hidden]: !show, [css.show]: show })}
+        className={classNames(css.defaultState, { [css.show]: show })}
         ref={ref => { this.domNode = ref }}
       >
         <ul className={css.list}>
