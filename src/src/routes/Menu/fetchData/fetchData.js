@@ -128,7 +128,7 @@ const loadOrderAuthenticated = async (store, orderId) => {
   }
 }
 
-const loadWithoutOrder = async (store, query, background, transformedCollections, transformedRecipes, transformedCollectionRecipes) => {
+const loadWithoutOrder = async (store, query, background) => {
   const isAdmin = getIsAdmin(store.getState())
 
   if (store.getState().basket.get('orderId')) {
@@ -165,7 +165,7 @@ const loadWithoutOrder = async (store, query, background, transformedCollections
     cutoffDateTime = query.cutoffDate || store.getState().basket.get('date') || cutoffDateTimeNow()
   }
 
-  await store.dispatch(actions.menuLoadMenu(cutoffDateTime, background, transformedCollections, transformedRecipes, transformedCollectionRecipes))
+  await store.dispatch(actions.menuLoadMenu(cutoffDateTime, background))
 
   if (!browseMode) {
     await store.dispatch(actions.menuLoadStock(true))
@@ -244,6 +244,8 @@ export default async function fetchData({ store, query, params }, force, backgro
     return
   }
 
+  await store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, true))
+
   if (useMenuService) {
     const isAuthenticated = getIsAuthenticated(store.getState())
     const userId = store.getState().auth.get('id')
@@ -257,8 +259,6 @@ export default async function fetchData({ store, query, params }, force, backgro
 
     store.dispatch(actions.menuServiceDataReceived(response))
   }
-
-  await store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, true))
 
   try {
     if (query.error) {
