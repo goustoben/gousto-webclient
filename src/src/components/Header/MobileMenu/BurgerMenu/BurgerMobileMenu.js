@@ -81,11 +81,10 @@ class BurgerMobileMenu extends React.PureComponent {
   }
 
   render() {
-    const show = this.props.show
-    const isAuthenticated = this.props.isAuthenticated
+    const { show, isAuthenticated, hideNav, onLogoutClick, onLoginClick } = this.props
     const testingId = isAuthenticated ? 'burgerMenuLogout' : 'burgerMenuLogin'
     const loginMenu = (
-      <span className={css.menuItem} onClick={(isAuthenticated) ? this.props.onLogoutClick : this.props.onLoginClick}>
+      <span role='button' tabIndex={0} className={css.menuItem} onClick={(isAuthenticated) ? onLogoutClick : onLoginClick} onKeyPress={(isAuthenticated) ? onLogoutClick : onLoginClick}>
         <li className={css.borderListElement} data-testing={testingId}>
           {(isAuthenticated) ? 'Logout' : 'Login'}
         </li>
@@ -98,7 +97,7 @@ class BurgerMobileMenu extends React.PureComponent {
         ref={ref => { this.domNode = ref }}
       >
         <ul className={css.list}>
-          {(!this.props.hideNav) ? this.renderMenuItems() : ''}
+          {(!hideNav) ? this.renderMenuItems() : ''}
           {loginMenu}
         </ul>
       </div>
