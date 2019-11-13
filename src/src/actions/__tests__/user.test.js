@@ -2,6 +2,7 @@ import Immutable from 'immutable'
 
 import { referAFriend } from 'apis/user'
 import { customerSignup } from 'apis/customers'
+import { fetchDeliveryConsignment } from 'apis/deliveries'
 
 import { DeliveryTariffTypes } from 'utils/deliveries'
 
@@ -13,6 +14,7 @@ import userActions, {
   trackingReferFriendSocialSharing,
   userLoadCookbookRecipes,
   userGetReferralDetails,
+  userLoadOrderTrackingInfo,
 } from 'actions/user'
 import recipeActions from 'actions/recipes'
 import actionTypes from 'actions/actionTypes'
@@ -44,6 +46,8 @@ jest.mock('apis/user', () => ({
 jest.mock('apis/customers', () => ({
   customerSignup: jest.fn()
 }))
+
+jest.mock('apis/deliveries')
 
 jest.mock('actions/recipes', () => ({
   recipesLoadRecipesById: jest.fn()
@@ -557,6 +561,82 @@ describe('user actions', () => {
           original_deliveryslot_id: 'slotid123',
           new_deliveryslot_id: 'slotid456'
         }
+      })
+    })
+  })
+
+  describe('userLoadOrderTrackingInfo', () => {
+    let dispatchSpy
+    let getStateSpy
+    let dispatchCalls
+    const EXAMPLE_TRACKING_URL = 'https://tracking-url-example.com'
+    const ORDER_ID = '12345'
+
+    beforeEach(() => {
+      dispatchSpy = jest.fn()
+      getStateSpy = jest.fn()
+      getStateSpy.mockReturnValue({
+        auth: Immutable.fromJS({
+          accessToken: 'user-access-token'
+        })
+      })
+    })
+
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    test('dispatches actions to reflect the request state', async () => {
+      fetchDeliveryConsignment.mockResolvedValue({
+        data: [{ trackingUrl: EXAMPLE_TRACKING_URL }]
+      })
+
+      await userLoadOrderTrackingInfo(ORDER_ID)(dispatchSpy, getStateSpy)
+      dispatchCalls = dispatchSpy.mock.calls
+
+      expect(dispatchCalls[0][0]).toEqual({
+        type: 'PENDING', key: actionTypes.USER_LOAD_ORDER_TRACKING, value: true
+      })
+      expect(dispatchCalls[1][0]).toEqual({
+        type: 'ERROR', key: actionTypes.USER_LOAD_ORDER_TRACKING, value: false
+      })
+      expect(dispatchCalls[dispatchCalls.length - 1][0]).toEqual({
+        type: 'PENDING', key: actionTypes.USER_LOAD_ORDER_TRACKING, value: false
+      })
+    })
+
+    describe('when the tracking URL is successfully loaded', () => {
+      beforeEach(async () => {
+        fetchDeliveryConsignment.mockResolvedValue({
+          data: [{ trackingUrl: EXAMPLE_TRACKING_URL }]
+        })
+
+        await userLoadOrderTrackingInfo(ORDER_ID)(dispatchSpy, getStateSpy)
+        dispatchCalls = dispatchSpy.mock.calls
+      })
+
+      test('dispatches an action to store the returned tracking URL', () => {
+        expect(dispatchCalls[2][0]).toEqual({
+          type: actionTypes.USER_LOAD_ORDER_TRACKING,
+          trackingUrl: 'https://tracking-url-example.com'
+        })
+      })
+    })
+
+    describe('when the tracking URL fails to load', () => {
+      beforeEach(async () => {
+        fetchDeliveryConsignment.mockResolvedValue(() => new Error(''))
+
+        await userLoadOrderTrackingInfo(ORDER_ID)(dispatchSpy, getStateSpy)
+        dispatchCalls = dispatchSpy.mock.calls
+      })
+
+      test('dispatches actions setting error to true', () => {
+        expect(dispatchCalls[2][0]).toEqual({
+          type: 'ERROR',
+          key: actionTypes.USER_LOAD_ORDER_TRACKING,
+          value: true,
+        })
       })
     })
   })

@@ -6,6 +6,7 @@ export const defaultState = Immutable.fromJS({
   ageVerified: false,
   orders: {},
   newOrders: {},
+  nextOrderTracking: '',
   projectedDeliveries: {},
   orderCardsCollapsedStatus: {},
   orderCardsEditStatus: {},
@@ -69,6 +70,10 @@ const user = {
       ), Immutable.Map({}))
 
       return state.set('newOrders', keyedorders)
+    }
+
+    case actionTypes.USER_LOAD_ORDER_TRACKING: {
+      return state.set('nextOrderTracking', action.trackingUrl)
     }
 
     case actionTypes.USER_LOAD_PROJECTED_DELIVERIES:
