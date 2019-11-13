@@ -1,1 +1,1 @@
-export { Header } from './Header.logic'
+export { HeaderContainer } from './HeaderContainer'

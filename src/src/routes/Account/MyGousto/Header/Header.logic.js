@@ -8,11 +8,31 @@ const ELIGIBILITY_DAYS = 7
 
 class Header extends PureComponent {
   static propTypes = {
-    orders: PropTypes.instanceOf(Immutable.Map({}))
+    orders: PropTypes.instanceOf(Immutable.Map),
+    loadOrderTrackingInfo: PropTypes.func,
+    nextOrderTracking: PropTypes.string,
   }
 
   static defaultProps = {
     orders: Immutable.Map({})
+  }
+
+  componentDidUpdate(prevProps) {
+    const { orders, loadOrderTrackingInfo } = this.props
+    if (prevProps.orders.size !== orders.size) {
+      const now = moment()
+      const nextOrder = this.findOrder(orders, now, 'next')
+
+      if (nextOrder) {
+        const date = moment(nextOrder.get('deliveryDate'))
+        const nextOrderIsToday = now.format('YYMMDD') === date.format('YYMMDD')
+
+        if (nextOrderIsToday) {
+          const nextOrderId = nextOrder.get('id')
+          loadOrderTrackingInfo(nextOrderId)
+        }
+      }
+    }
   }
 
   formatDeliveryDate = (order, now) => {
