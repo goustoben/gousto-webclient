@@ -142,6 +142,7 @@ module.exports = {
   },
   deliveries: {
     days: '/days',
+    consignments: '/consignments',
   },
   jobs: {
     openings: '/jobs#openings',

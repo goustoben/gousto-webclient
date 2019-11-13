@@ -1,5 +1,5 @@
 import fetch from 'utils/fetch'
-import { fetchDeliveryDays } from '../deliveries'
+import { fetchDeliveryDays, fetchDeliveryConsignment } from '../deliveries'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -19,7 +19,8 @@ jest.mock('config/routes', () => ({
     deliveries: 'v2',
   },
   deliveries: {
-    days: '/days'
+    days: '/days',
+    consignments: '/consignments',
   }
 }))
 
@@ -68,6 +69,24 @@ describe('deliveries api', () => {
 
     test('should return the results of the fetch unchanged', async () => {
       const result = await fetchDeliveryDays('token', {})
+      expect(result).toEqual(mockFetchResult)
+    })
+  })
+
+  describe('fetchDeliveryConsignment', () => {
+    test('should fetch from the correct URL', async () => {
+      const accessToken = 'token'
+      const orderId = '12345'
+      await fetchDeliveryConsignment(accessToken, orderId)
+
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(
+        accessToken, 'endpoint-deliveriesv2/consignments', {'filters[order_id]': '12345'}, 'GET'
+      )
+    })
+
+    test('should return the results of the fetch unchanged', async () => {
+      const result = await fetchDeliveryConsignment('token', {})
       expect(result).toEqual(mockFetchResult)
     })
   })

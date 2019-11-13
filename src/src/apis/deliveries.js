@@ -11,3 +11,13 @@ export function fetchDeliveryDays(accessToken, reqData) {
 
   return fetch(accessToken, `${endpoint('deliveries', routes.version.deliveries)}${routes.deliveries.days}`, data, 'GET')
 }
+
+export function fetchDeliveryConsignment(accessToken, orderId) {
+  const reqData = {
+    'filters[order_id]': orderId,
+  }
+
+  const url = `${endpoint('deliveries', routes.version.deliveries)}${routes.deliveries.consignments}`
+
+  return fetch(accessToken, url, reqData, 'GET')
+}
