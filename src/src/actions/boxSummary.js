@@ -1,5 +1,6 @@
 import { getDeliveryDays } from 'apis/data/deliveryDays'
 import { getNDDFeatureValue } from 'selectors/features'
+import { getUsersOrdersDaySlotLeadTimeIds } from 'selectors/user'
 import moment from 'moment'
 import { okRecipes } from 'utils/basket'
 import logger from 'utils/logger'
@@ -95,7 +96,7 @@ const actions = {
           days = transformDaySlotLeadTimesToMockSlots(days)
         }
 
-        const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom)
+        const availableDeliveryDays = getAvailableDeliveryDays(days, cutoffDatetimeFrom, getUsersOrdersDaySlotLeadTimeIds(getState()))
 
         dispatch(basketDeliveryDaysReceive(availableDeliveryDays))
       } catch (err) {

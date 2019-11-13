@@ -94,11 +94,16 @@ const loadOrder = async (store, orderId) => {
 
 const loadOrderAuthenticated = async (store, orderId) => {
   try {
-    const prevBasketRecipes = store.getState().basket.get('recipes')
+    const state = store.getState()
+
+    if (state.auth.get('isAuthenticated') && !state.user.get('email') && !state.auth.get('isAdmin')) {
+      await store.dispatch(actions.userLoadData())
+    }
+    const prevBasketRecipes = state.basket.get('recipes')
 
     await store.dispatch(actions.menuLoadOrderDetails(orderId))
 
-    const noOfOrderRecipes = store.getState().basket.get('recipes').size
+    const noOfOrderRecipes = state.basket.get('recipes').size
 
     if (noOfOrderRecipes === 0) {
       for (const [recipeId, qty] of prevBasketRecipes) {
@@ -111,7 +116,6 @@ const loadOrderAuthenticated = async (store, orderId) => {
     if (requiresMenuRecipesClear(store, orderId)) {
       await store.dispatch(actions.featureSet('menuRecipes', undefined, false))
     }
-
     await Promise.all([
       store.dispatch(actions.menuLoadMenu()),
       store.dispatch(actions.menuLoadStock(true))

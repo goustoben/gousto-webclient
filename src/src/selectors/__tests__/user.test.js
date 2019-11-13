@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { getUserRecentRecipesIds } from '../user'
+import { getUserRecentRecipesIds, getUsersOrdersDaySlotLeadTimeIds } from '../user'
 
 describe('user selectors', () => {
   describe('getUserRecentRecipesIds', () => {
@@ -37,6 +37,26 @@ describe('user selectors', () => {
     test('should return no duplicates', () => {
       expect(getUserRecentRecipesIds(state)).not.toEqual(['1', '2', '3', '4', '5', '5'])
       expect(getUserRecentRecipesIds(state)).toEqual(['1', '2', '3', '4', '5', '6'])
+    })
+  })
+
+  describe('getUsersOrdersDaySlotLeadTimeIds', () => {
+    test('should return an array of day slot lead time ids for the users orders', () => {
+      const state = {
+        user: Immutable.fromJS({
+          orders: {
+            1234: {
+              daySlotLeadTimeId: 'a1b2c3d4e5'
+            },
+            4567: {
+              daySlotLeadTimeId: 'a7b8c9d10e11'
+            }
+          }
+        })
+      }
+
+      expect(getUsersOrdersDaySlotLeadTimeIds(state)).toEqual(['a1b2c3d4e5', 'a7b8c9d10e11'])
+
     })
   })
 })

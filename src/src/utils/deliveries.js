@@ -78,11 +78,11 @@ export function getCutoffDateTime(state) {
 }
 
 function getLandingOrder(userOrders, deliveryDays) {
-  const futureOrders = userOrders.filter(order => moment(order.get('whenCutoff')).isAfter(moment()))
+  const futureOrders = userOrders.filter(order => moment(order.get('shouldCutoffAt') || order.get('whenCutoff')).isAfter(moment()))
   const futureEmptyOrders = futureOrders.filter(order => order.get('recipeItems').size === 0)
   const futureCutoffOrders = userOrders
     .filter(order => moment(order.get('deliveryDate')).isAfter(moment()))
-    .filter(order => !moment(order.get('whenCutoff')).isAfter(moment()))
+    .filter(order => !moment(order.get('shouldCutoffAt') || order.get('whenCutoff')).isAfter(moment()))
   const currentWeeksCutoffOrders = futureCutoffOrders.filter(order => moment(order.get('deliveryDate')).isBefore(moment().add(1, 'week')))
 
   let nextEmptyOrder
@@ -401,19 +401,18 @@ export function cutoffDateTimeNow() {
   )
 }
 
-export function getAvailableDeliveryDays(deliveryDays, cutoffDatetimeFrom) {
+export function getAvailableDeliveryDays(deliveryDays, cutoffDatetimeFrom, usersOrderDaySlotLeadTimeIds = []) {
   const cutoffDatetimeFromMoment = moment(cutoffDatetimeFrom)
 
   if (!deliveryDays || deliveryDays instanceof Error) {
     throw new GoustoException(deliveryDays)
   }
 
-  const availableDeliveryDays = deliveryDays.map(day => {
-    const newDay = day
-    newDay.slots = day.slots.filter(slot => moment(slot.whenCutoff).isAfter(cutoffDatetimeFromMoment))
-
-    return newDay
-  })
+  const availableDeliveryDays = deliveryDays
+    .map(day => ({
+      ...day,
+      slots: day.slots.filter(slot => isDeliverySlotAvailable(slot, cutoffDatetimeFromMoment, usersOrderDaySlotLeadTimeIds))
+    }))
     .filter(day => day.slots.length > 0)
 
   if (!availableDeliveryDays || availableDeliveryDays.length === 0) {
@@ -421,6 +420,23 @@ export function getAvailableDeliveryDays(deliveryDays, cutoffDatetimeFrom) {
   }
 
   return availableDeliveryDays.reduce((daysMap, day) => ({ ...daysMap, [day.date]: day }), {})
+}
+
+export function isDeliverySlotAvailable(slot, cutoffDatetimeFromMoment, usersOrderDaySlotLeadTimeIds) {
+  return (isSlotActive(slot) || userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)) &&
+    isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)
+}
+
+export function isSlotActive (slot) {
+  return "daySlotLeadTimeActive" in slot ? slot.daySlotLeadTimeActive : true
+}
+
+export function userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot) {
+  return usersOrderDaySlotLeadTimeIds.indexOf(slot.daySlotLeadTimeId) > -1
+}
+
+export function isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment) {
+  return moment(slot.whenCutoff).isAfter(cutoffDatetimeFromMoment)
 }
 
 export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
@@ -446,7 +462,8 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
         coreSlotId: dslt.coreSlotId,
         deliveryStartTime: dslt.startTime,
         id: dslt.slotId,
-        daySlotLeadTimeId: dslt.id
+        daySlotLeadTimeId: dslt.id,
+        daySlotLeadTimeActive: dslt.active
         // fields not available in current DSLT and not used in webclient:
         // - cutoffTime
         // - cutoffDay

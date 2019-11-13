@@ -1,4 +1,5 @@
 import sinon from 'sinon'
+import moment from 'moment'
 
 import {
   cutoffDateTimeNow,
@@ -8,7 +9,10 @@ import {
   getLandingDay,
   getSlot,
   getSlotTimes,
-  transformDaySlotLeadTimesToMockSlots
+  transformDaySlotLeadTimesToMockSlots,
+  isSlotActive,
+  userHasOrderWithDSLT,
+  isSlotBeforeCutoffTime
 } from 'utils/deliveries'
 import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
@@ -1891,6 +1895,11 @@ describe('utils/deliveries', () => {
         date: '2016-06-30',
         slots: [{ whenCutoff: '2016-07-03' }, { whenCutoff: '2016-07-08' }],
       },
+      {
+        id: 'day3',
+        date: '2016-07-04',
+        slots: [{ whenCutoff: '2016-07-07', daySlotLeadTimeActive: false }, { whenCutoff: '2016-07-13', daySlotLeadTimeActive: false }],
+      },
     ]
 
     beforeEach(() => {
@@ -1909,7 +1918,7 @@ describe('utils/deliveries', () => {
         '2016-06-30': {
           id: 'day2',
           date: '2016-06-30',
-          slots: [{ whenCutoff: '2016-07-03' }, { whenCutoff: '2016-07-08' }],
+          slots: [{ whenCutoff: '2016-07-03' }, { whenCutoff: '2016-07-08'}],
         },
       })
     })
@@ -1939,6 +1948,74 @@ describe('utils/deliveries', () => {
           date: '2016-06-30',
           slots: [{ whenCutoff: '2016-07-08' }],
         },
+      })
+    })
+
+    test('should filter out inactive slots', async () => {
+      const result = getAvailableDeliveryDays(days)
+
+      expect(result).toEqual(expect.not.objectContaining({
+        '2016-07-04': {
+          id: 'day3',
+          date: '2016-07-04',
+          slots: [{ whenCutoff: '2016-07-07', daySlotLeadTimeActive: false }, { whenCutoff: '2016-07-13', daySlotLeadTimeActive: false }],
+        }
+      }))
+    })
+
+    describe('if the user has an order with a day slot lead time', () => {
+      test('should NOT filter out an inactive slot if order DLST is in days', async () => {
+        const daysWithDSLT = [
+          {
+            id: 'day1',
+            date: '2016-06-26',
+            slots: [
+              {
+                whenCutoff: '2016-07-01',
+                daySlotLeadTimeActive: true,
+                daySlotLeadTimeId: 'dslt1'
+              },
+              {
+                whenCutoff: '2016-07-05',
+                daySlotLeadTimeActive: true,
+                daySlotLeadTimeId: 'dslt2'
+              }
+            ],
+          },
+          {
+            id: 'day2',
+            date: '2016-06-30',
+            slots: [
+              {
+                whenCutoff: '2016-07-03',
+                daySlotLeadTimeActive: false,
+                daySlotLeadTimeId: 'dslt3'
+              },
+              {
+                whenCutoff: '2016-07-08',
+                daySlotLeadTimeActive: false,
+                daySlotLeadTimeId: 'dslt4'
+              }
+            ],
+          },
+        ]
+
+        const usersOrdersDSLT = ['dslt4']
+
+        const result = getAvailableDeliveryDays(daysWithDSLT, '2016-07-02', usersOrdersDSLT)
+
+        expect(result).toEqual({
+          '2016-06-26': {
+            id: 'day1',
+            date: '2016-06-26',
+            slots: [{ whenCutoff: '2016-07-05', daySlotLeadTimeActive: true, daySlotLeadTimeId: 'dslt2' }]
+          },
+          '2016-06-30': {
+            id: 'day2',
+            date: '2016-06-30',
+            slots: [{ whenCutoff: '2016-07-08', daySlotLeadTimeActive: false, daySlotLeadTimeId: 'dslt4' }]
+          }
+        })
       })
     })
   })
@@ -2008,7 +2085,8 @@ describe('utils/deliveries', () => {
               coreSlotId: "4",
               deliveryStartTime: "18:00:00",
               id: "dafe3372-12d1-11e6-bee5-06ddb628bdc5",
-              daySlotLeadTimeId: "7bdd00f7-af72-41af-8444-a35f1467be49"
+              daySlotLeadTimeId: "7bdd00f7-af72-41af-8444-a35f1467be49",
+              daySlotLeadTimeActive: true
             },
             {
               whenCutoff: "2014-01-14T11:59:59+00:00",
@@ -2019,6 +2097,7 @@ describe('utils/deliveries', () => {
               deliveryStartTime: "08:00:00",
               id: "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
               daySlotLeadTimeId: "386932e5-71bd-4610-b9a4-baae4bc91be9",
+              daySlotLeadTimeActive: true
             }
           ]
         },
@@ -2142,6 +2221,85 @@ describe('utils/deliveries', () => {
       const resolvedFeatureFlagValue = getNDDFeatureFlagVal(state)
 
       expect(resolvedFeatureFlagValue).toEqual(false)
+    })
+  })
+
+  describe('isSlotActive', () => {
+    test('should return true when day slot lead time is active', () => {
+      const slot = {
+        id: '123',
+        daySlotLeadTimeActive: true
+      }
+
+      expect(isSlotActive(slot)).toBeTruthy()
+    })
+
+    test('should return false when day slot lead time is inactive', () => {
+      const slot = {
+        id: '123',
+        daySlotLeadTimeActive: false
+      }
+
+      expect(isSlotActive(slot)).toBeFalsy()
+    })
+
+    test('should return a default true value when no day slot lead times present', () => {
+      const slot = {
+        id: '123'
+      }
+
+      expect(isSlotActive(slot)).toBeTruthy()
+    })
+  })
+
+  describe('userHasOrderWithDSLT', () => {
+    test('should return true when users orders dslt id is the same as the slots', () => {
+      const slot = {
+        id: '123',
+        daySlotLeadTimeId: 'a1b2c3d4'
+      }
+      const usersOrderDaySlotLeadTimeIds = ['a1b2c3d4']
+
+      expect(userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)).toBeTruthy()
+    })
+    test('should return false when users orders dslt id is not the same as the slots', () => {
+      const slot = {
+        id: '123',
+        daySlotLeadTimeId: 'a5b6c7d8'
+      }
+      const usersOrderDaySlotLeadTimeIds = ['a1b2c3d4']
+
+      expect(userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)).toBeFalsy()
+    })
+    test('should return false when slot does not have a dslt id', () => {
+      const slot = {
+        id: '123',
+      }
+      const usersOrderDaySlotLeadTimeIds = [null]
+
+      expect(userHasOrderWithDSLT(usersOrderDaySlotLeadTimeIds, slot)).toBeFalsy()
+    })
+  })
+
+  describe('isSlotBeforeCutoffTime', () => {
+    test('should return true if slots cutoff time is after provided cutoff time', () => {
+      const slot = {
+        whenCutoff: '2019-11-02 11:59:59'
+      }
+
+      const cutoffDatetimeFromMoment = moment('2019-11-01 11:59:59')
+
+      expect(isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)).toBeTruthy()
+    })
+
+    test('should return false if slots cutoff time is before provided cutoff time', () => {
+      const slot = {
+        whenCutoff: '2019-10-30 11:59:59'
+      }
+
+      const cutoffDatetimeFromMoment = moment('2019-11-01 11:59:59')
+
+      expect(isSlotBeforeCutoffTime(slot, cutoffDatetimeFromMoment)).toBeFalsy()
     })
   })
 })

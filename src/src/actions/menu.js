@@ -239,7 +239,7 @@ export function menuLoadOrderDetails(orderId) {
     const accessToken = getState().auth.get('accessToken')
     const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
     dispatch(basketReset())
-    dispatch(menuActions.menuCutoffUntilReceive(order.whenCutoff))
+    dispatch(menuActions.menuCutoffUntilReceive(order.shouldCutoffAt))
 
     dispatch(basketDateChange(order.deliveryDate))
     dispatch(basketNumPortionChange(order.box.numPortions, orderId))

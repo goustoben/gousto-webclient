@@ -60,6 +60,7 @@ describe('menu fetchData', () => {
   actions.basketRecipeAdd = jest.fn()
   actions.featureSet = jest.fn()
   actions.userLoadOrders = jest.fn()
+  actions.userLoadData = jest.fn()
 
   beforeEach(() => {
     state = { ...originalState }
@@ -150,7 +151,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch menuLoadStock action', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that 
+            // so making it return a symbol is an easy way to do that
             const menuLoadStockResult = Symbol()
             actions.menuLoadStock.mockReturnValue(menuLoadStockResult)
 
@@ -175,7 +176,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch menuLoadOrderDetails', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that 
+            // so making it return a symbol is an easy way to do that
             const menuLoadOrderDetailsResult = Symbol()
 
             // use mockImplementation and only return the symbol if it's called with the expected orderId
@@ -187,7 +188,7 @@ describe('menu fetchData', () => {
 
             await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-            expect(store.dispatch.mock.calls[2]).toEqual([menuLoadOrderDetailsResult])
+            expect(store.dispatch.mock.calls[3]).toEqual([menuLoadOrderDetailsResult])
           })
 
           describe('menuLoadOrderDetails changes number of recipes in basket', () => {
@@ -219,9 +220,9 @@ describe('menu fetchData', () => {
 
               await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-              expect(store.dispatch.mock.calls[3]).toEqual([{ recipeId: '200' }])
-              expect(store.dispatch.mock.calls[4]).toEqual([{ recipeId: '250' }])
+              expect(store.dispatch.mock.calls[4]).toEqual([{ recipeId: '200' }])
               expect(store.dispatch.mock.calls[5]).toEqual([{ recipeId: '250' }])
+              expect(store.dispatch.mock.calls[6]).toEqual([{ recipeId: '250' }])
             })
           })
 
@@ -233,7 +234,7 @@ describe('menu fetchData', () => {
 
             test('should dispatch featureSet menuRecipes action', async () => {
               // we need to test that dispatch is called with the **result** of the action creator
-              // so making it return a symbol is an easy way to do that 
+              // so making it return a symbol is an easy way to do that
               const featureSetResult = Symbol()
 
               // use mockImplementation and only return the symbol if it's called with the expected parameters
@@ -247,32 +248,32 @@ describe('menu fetchData', () => {
 
               await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-              expect(store.dispatch.mock.calls[3]).toEqual([featureSetResult])
+              expect(store.dispatch.mock.calls[4]).toEqual([featureSetResult])
             })
           })
 
           test('should dispatch menuLoadMenu', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that 
+            // so making it return a symbol is an easy way to do that
             const menuLoadMenuResult = Symbol()
 
             actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
 
             await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-            expect(store.dispatch.mock.calls[3]).toEqual([menuLoadMenuResult])
+            expect(store.dispatch.mock.calls[4]).toEqual([menuLoadMenuResult])
           })
 
           test('should dispatch menuLoadStock', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that 
+            // so making it return a symbol is an easy way to do that
             const menuLoadStockResult = Symbol()
 
             actions.menuLoadStock.mockReturnValue(menuLoadStockResult)
 
             await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-            expect(store.dispatch.mock.calls[4]).toEqual([menuLoadStockResult])
+            expect(store.dispatch.mock.calls[5]).toEqual([menuLoadStockResult])
           })
         })
       })
@@ -313,7 +314,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch menuLoadDays action', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that 
+            // so making it return a symbol is an easy way to do that
             const menuLoadDaysResult = Symbol()
 
             actions.menuLoadDays.mockReturnValue(menuLoadDaysResult)
@@ -325,7 +326,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch boxSummaryDeliveryDaysLoad action', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that 
+            // so making it return a symbol is an easy way to do that
             const boxSummaryDeliveryDaysLoadResult = Symbol()
 
             actions.boxSummaryDeliveryDaysLoad.mockReturnValue(boxSummaryDeliveryDaysLoadResult)
@@ -433,7 +434,7 @@ describe('menu fetchData', () => {
 
           test('should dispatch basketNumPortionChange', async () => {
             // we need to test that dispatch is called with the **result** of the action creator
-            // so making it return a symbol is an easy way to do that 
+            // so making it return a symbol is an easy way to do that
             const basketNumPortionChangeResult = Symbol()
 
             // use mockImplementation and only return the symbol if it's called with the expected parameters
@@ -473,7 +474,7 @@ describe('menu fetchData', () => {
 
         test('should dispatch menuLoadMenu', async () => {
           // we need to test that dispatch is called with the **result** of the action creator
-          // so making it return a symbol is an easy way to do that 
+          // so making it return a symbol is an easy way to do that
           const menuLoadMenuResult = Symbol()
 
           actions.menuLoadMenu.mockReturnValue(menuLoadMenuResult)
@@ -578,7 +579,7 @@ describe('menu fetchData', () => {
         const secondTime = 2.3
 
         // Math.round(2.3 - 1)
-        const expectedValue = 1 
+        const expectedValue = 1
 
         now.mockReturnValueOnce(firstTime)
           .mockReturnValueOnce(secondTime)
