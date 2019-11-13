@@ -651,9 +651,6 @@ describe('order actions', () => {
   })
 
   describe('orderUpdateDayAndSlot', () => {
-    let orderId
-    let coreDayId
-    let coreSlotId
     let slotId
     let slotDate
     let availableDays
