@@ -21,7 +21,9 @@ describe('EditDate', function () {
     aaa: { coreDayId: '45' },
     bbb: { coreDayId: '46' },
   })
-  const recipesStock = Immutable.fromJS(['a', 'b'])
+  const recipesStock = Immutable.List(['a', 'b'])
+  const recipes = Immutable.List([{id:'1'}, {id:'2'}])
+  const orders = Immutable.List([{id:'1'}, {id:'2'}])
   const daysOptionsSample = [{
     value: '1241',
     label: '2018-02-11',
@@ -67,6 +69,9 @@ describe('EditDate', function () {
       coreDeliveryDayId="8"
       deliverySlotId="de03"
       recipesStock={recipesStock}
+      recipes={recipes}
+      orders={orders}
+      numPortions='2'
     />, { context: { store: { dispatch: dispatchSpy, getState: getStateSpy } } })
   })
 
@@ -123,7 +128,7 @@ describe('EditDate', function () {
     it('should call getDeliveryDaysAndSlotsOptions when deliveryDays prop is updated', function() {
       wrapper.setProps({ deliveryDays: newDeliveryDays }, () => {
         expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledTimes(2)
-        expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledWith(newDeliveryDays, null, recipesStock, null, '8', 'de03', null)
+        expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledWith(newDeliveryDays, recipes, recipesStock, '2', '8', 'de03', orders)
       })
     })
 
@@ -131,7 +136,7 @@ describe('EditDate', function () {
       const newRecipesStock = recipesStock.push('c')
       wrapper.setProps({ recipesStock: newRecipesStock })
       expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledTimes(2)
-      expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledWith(deliveryDays, null, newRecipesStock, null, '8', 'de03', null)
+      expect(getDeliveryDaysAndSlotsOptions).toHaveBeenCalledWith(deliveryDays, recipes, newRecipesStock, '2', '8', 'de03', orders)
     })
 
     it('should change the selected day to the first option when current selection is not available in the new props', function() {

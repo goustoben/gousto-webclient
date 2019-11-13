@@ -22,7 +22,7 @@ class OrderDelivery extends React.PureComponent {
     fetchSuccess: PropTypes.bool,
     recipesPeriodStockFetchError: PropTypes.object,
     orderDeliveryDaysFetchError: PropTypes.object,
-    hasUpdateDeliveryDayError: PropTypes.string,
+    hasUpdateDeliveryDayError: PropTypes.bool,
     clearUpdateDateErrorAndPending: PropTypes.func,
   }
 

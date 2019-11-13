@@ -19,6 +19,9 @@ class EditDate extends React.PureComponent {
     deliverySlotId: PropTypes.string.isRequired,
     isPendingUpdateDayAndSlot: PropTypes.bool,
     clearUpdateDateErrorAndPending: PropTypes.func,
+    recipes: PropTypes.instanceOf(Immutable.List),
+    orders: PropTypes.instanceOf(Immutable.Map),
+    portionsCount: PropTypes.string
   }
 
   static defaultProps = {
@@ -27,7 +30,10 @@ class EditDate extends React.PureComponent {
     deliveryDays: Immutable.Map({}),
     recipesStock: Immutable.List([]),
     isPendingUpdateDayAndSlot: false,
-    orderGetDeliveryDays: () => { }
+    orderGetDeliveryDays: () => { },
+    recipes: Immutable.List([]),
+    orders: Immutable.Map({}),
+    portionsCount: '2'
   }
 
   static contextTypes = {
@@ -48,20 +54,20 @@ class EditDate extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId } = this.props
-    this.setDayAndSlotOptionsAndSelected(deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId)
+    const { deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders } = this.props
+    this.setDayAndSlotOptionsAndSelected(deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders )
   }
 
   componentWillReceiveProps(nextProps) {
-    const { deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId } = this.props
+    const { deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders} = this.props
 
     if (deliveryDays !== nextProps.deliveryDays || recipesStock !== nextProps.recipesStock) {
-      this.setDayAndSlotOptionsAndSelected(nextProps.deliveryDays, nextProps.recipesStock, coreDeliveryDayId, deliverySlotId)
+      this.setDayAndSlotOptionsAndSelected(nextProps.deliveryDays, nextProps.recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders)
     }
   }
 
-  setDayAndSlotOptionsAndSelected = (deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId) => {
-    const { deliveryDaysOptions, slotsOptions } = util.getDeliveryDaysAndSlotsOptions(deliveryDays, null, recipesStock, null, coreDeliveryDayId, deliverySlotId, null)
+  setDayAndSlotOptionsAndSelected = (deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders) => {
+    const { deliveryDaysOptions, slotsOptions } = util.getDeliveryDaysAndSlotsOptions(deliveryDays, recipes, recipesStock, portionsCount, coreDeliveryDayId, deliverySlotId, orders)
 
     let selectedDeliveryDayId = coreDeliveryDayId
     let selectedDeliverySlotId = deliverySlotId

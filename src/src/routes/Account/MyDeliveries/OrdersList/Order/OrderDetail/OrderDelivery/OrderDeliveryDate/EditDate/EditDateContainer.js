@@ -11,15 +11,20 @@ function mapStateToProps(state, ownProps) {
   const deliveryDays = order.get('availableDeliveryDays')
   const coreDeliveryDayId = order.get('coreDeliveryDayId')
   const deliverySlotId = order.get('deliverySlotId')
+  const recipes = order.get('recipes')
+  const portionsCount = state.subscription.getIn(['box', 'numPortions'])
 
   return {
     orderId,
+    orders,
+    recipes,
     deliveryDays,
     recipesStock: state.recipesStock,
     coreDeliveryDayId,
     deliverySlotId,
     shippingAddressId: shippingAddressId,
     isPendingUpdateDayAndSlot: state.pending.get(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT),
+    portionsCount,
   }
 }
 
