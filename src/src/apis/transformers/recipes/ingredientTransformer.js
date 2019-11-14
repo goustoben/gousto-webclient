@@ -2,12 +2,14 @@ import { allergensTransformer, imageUrlMap} from './recipeHelpers'
 
 const images = (ingredient) => {
   if (ingredient && ingredient.attributes && ingredient.attributes.images && ingredient.attributes.images.length > 0) {
+    const image = ingredient.attributes.images[0]
+
     return [
       {
-        title: ingredient.attributes.images[0].title,
-        description: ingredient.attributes.images[0].title,
-        type: ingredient.attributes.images[0].type,
-        urls: imageUrlMap(ingredient.attributes.images[0].crops)
+        title: image.title || '',
+        description: image.title || '',
+        type: image.type || '',
+        urls: imageUrlMap(image.crops)
       }
     ]
   }
@@ -25,7 +27,7 @@ const ingredientTransformer = (ingredient) => {
     media:{
       images: images(ingredient)
     },
-    subIngredients: ingredient.attributes.sub_ingredients,
+    subIngredients: ingredient.attributes.sub_ingredients || '',
   }
 }
 

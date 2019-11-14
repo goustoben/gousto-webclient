@@ -1,7 +1,7 @@
 import { normaliseData } from './normaliseData'
 import { ingredientTransformer } from './recipes/ingredientTransformer'
 import { mediaTransformer } from './recipes/mediaTransformer'
-import { allergensTransformer, basicsTransformer, equpimentTransformer, formatIngredients, shelfLifeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
+import { allergensTransformer, basicsTransformer, equpimentTransformer, formatIngredients, roundelTransformer, shelfLifeTransformer, surchargeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
 
 const recipesTransformer = (activeMenu, response) => {
   const normalisedData = normaliseData(response)
@@ -23,25 +23,26 @@ const recipesTransformer = (activeMenu, response) => {
     return {
       allergens: allergensTransformer(normalisedAttributes.allergens),
       basics: basicsTransformer(normalisedAttributes.basics),
-      boxType: normalisedAttributes.box_type.slug,
+      boxType: normalisedAttributes.box_type ? normalisedAttributes.box_type.slug : "",
+      chef: roundelTransformer(normalisedAttributes.roundel),
       cookingTime: normalisedAttributes.prep_times.for2,
       cookingTimeFamily: normalisedAttributes.prep_times.for4,
       coreRecipeId: normalisedAttributes.core_recipe_id.toString(),
-      cuisine: normalisedAttributes.cuisine.name,
+      cuisine: normalisedAttributes.cuisine ? normalisedAttributes.cuisine.name : "",
       description: normalisedAttributes.description,
-      dietType: normalisedAttributes.diet_type.slug,
-      equipment: equpimentTransformer(normalisedAttributes.equipment),
+      dietType: normalisedAttributes.diet_type ? normalisedAttributes.diet_type.slug : "",
+      equipment: normalisedAttributes.equipment ? equpimentTransformer(normalisedAttributes.equipment) : [],
       fiveADay: normalisedAttributes.five_a_day,
-      id: individualRecipeId, // Check having a different id isn't going to break things elsewhere
+      id: individualRecipeId,
       ingredients: finalIngredients,
       meals:[
         {
           numPortions: 2,
-          surcharge: normalisedAttributes.surcharges.for2,
+          surcharge: normalisedAttributes.surcharges.for2 ? surchargeTransformer(normalisedAttributes.surcharges.for2.price.value) : null,
         },
         {
           numPortions: 4,
-          surcharge: normalisedAttributes.surcharges.for4,
+          surcharge: normalisedAttributes.surcharges.for4 ? surchargeTransformer(normalisedAttributes.surcharges.for4.price.value) : null,
         }
       ],
       nutritionalInformation: {
@@ -69,10 +70,10 @@ const recipesTransformer = (activeMenu, response) => {
         }
       },
       rating:{
-        count: normalisedAttributes.rating.count,
-        average: normalisedAttributes.rating.average,
+        count: normalisedAttributes.rating ? normalisedAttributes.rating.count : 0,
+        average: normalisedAttributes.rating ? normalisedAttributes.rating.average : 0,
       },
-      shelfLifeDays: shelfLifeTransformer(normalisedAttributes.shelf_life.min_days, normalisedAttributes.shelf_life.max_days),
+      shelfLifeDays: normalisedAttributes.shelf_life ? shelfLifeTransformer(normalisedAttributes.shelf_life.min_days, normalisedAttributes.shelf_life.max_days) : "",
       taxonomy: taxonomyTransformer(normalisedAttributes),
       title: normalisedAttributes.name,
       media: {
