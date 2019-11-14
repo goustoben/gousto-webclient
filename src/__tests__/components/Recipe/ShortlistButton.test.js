@@ -32,7 +32,7 @@ describe('<ShortlistButton />', () => {
       expect(wrapper).toMatchSnapshot()
     })
 
-    test('should show red heart (seleted) if recipeInShorlist is true', () => {
+    test('should show tick if recipeInShorlist is true', () => {
       wrapper = shallow(<ShortlistButton {...shortlistButtonProps} recipeInShortlist />)
 
       expect(wrapper).toMatchSnapshot()

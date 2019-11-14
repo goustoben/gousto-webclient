@@ -3,6 +3,7 @@
 
 .shortlistButton {
   composes: marginSMTop from 'sass-loader!styles/spacing.scss';
+  flex: 1;
   margin-right: 0.5rem;
   padding: 0;
   border: 1px solid Bluecheese;
@@ -10,6 +11,7 @@
   text-align: center;
   position: relative;
   background: White;
+  color: Bluecheese;
 }
 
 .shortlistButton:disabled {
@@ -25,13 +27,9 @@
   background: BluecheeseLighter;
 }
 
-.heartIcon {
-  height: 1rem;
-  width: 1.125rem;
-  display: inline-block;
-  vertical-align: middle;
-  margin-bottom: 0.125rem;
-  margin-right: 0.5rem;
+.checkmark {
+  width: 0.75rem;
+  height: 0.5rem;
   margin-left: 0.5rem;
 }
 
