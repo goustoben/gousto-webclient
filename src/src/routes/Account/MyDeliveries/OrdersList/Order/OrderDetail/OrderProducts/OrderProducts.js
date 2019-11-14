@@ -7,15 +7,11 @@ import { Button } from 'goustouicomponents'
 import Link from 'Link'
 import ProductImage from 'routes/Account/AccountComponents/ProductImage'
 import routes from 'config/routes'
-import actions from 'actions/products'
 import Content from 'containers/Content'
 
 import placeholderSrc from 'media/images/recipe-placeholder.png'
 
 import css from './OrderProducts.css'
-
-const imagesWidth = '100'
-const limit = 7
 
 class OrderProducts extends React.PureComponent {
 
@@ -35,19 +31,6 @@ class OrderProducts extends React.PureComponent {
   static defaultProps = {
     products: Immutable.List([]),
     orderId: '',
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
-  loadRandomProducts = ({ store }) => {
-    store.dispatch(actions.productsLoadRandomProducts(limit, [imagesWidth]))
-  }
-
-  componentDidMount() {
-    const store = this.context.store
-    this.loadRandomProducts({ store })
   }
 
   render() {
