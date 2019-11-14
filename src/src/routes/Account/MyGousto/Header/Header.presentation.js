@@ -2,11 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import config from 'config'
 import { CardWithLink } from 'CardWithLink'
+import { Button } from 'goustouicomponents'
 import { OrderDetails } from './OrderDetails/OrderDetails'
 import css from './Header.css'
 
 const HeaderPresentation = ({
   nextOrderMessage,
+  nextOrderTracking,
   previousOrderMessage,
   getHelpQueryParam,
 }) => {
@@ -29,6 +31,18 @@ const HeaderPresentation = ({
             <p className={css.message}><strong>{nextOrderMessage.primary}</strong></p>
             <p className={css.message}>{nextOrderMessage.secondary}</p>
           </div>
+          {nextOrderTracking && (
+            <div className={css.orderDetailsItem}>
+              <Button
+                width='full'
+                onClick={() => {
+                  window.open(nextOrderTracking, 'rel="noopener noreferrer"')
+                }}
+              >
+                Track my box
+              </Button>
+            </div>
+          )}
         </div>
       </OrderDetails>
     </CardWithLink>
@@ -74,6 +88,7 @@ HeaderPresentation.propTypes = {
     primary: PropTypes.string,
     secondary: PropTypes.string,
   }),
+  nextOrderTracking: PropTypes.string,
   previousOrderMessage: PropTypes.string,
   getHelpQueryParam: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 }
@@ -83,6 +98,7 @@ HeaderPresentation.defaultProps = {
     primary: null,
     secondary: null,
   },
+  nextOrderTracking: null,
   previousOrderMessage: null,
   getHelpQueryParam: null,
 }

@@ -119,6 +119,10 @@ describe('MyGousto - Header', () => {
       expect(nextDeliveryDetails.find('.message').last().text()).toBe('8am - 7pm')
     })
 
+    test('does not render a tracking button if a tracking URL is not available', () => {
+      expect(wrapper.find('CardWithLink').first().find('Button').exists()).toBe(false)
+    })
+
     describe('and the next order is today', () => {
       beforeEach(() => {
         wrapper = mount(
@@ -132,6 +136,35 @@ describe('MyGousto - Header', () => {
 
       test('explicitly shows that the order is arriving today', () => {
         expect(nextDeliveryDetails.find('.message').first().text()).toBe('Today')
+      })
+    })
+
+    describe('and a tracking URL is available for the next order', () => {
+      const TRACKING_URL = 'https://test-tracking-url/order-id'
+
+      beforeEach(() => {
+        wrapper = mount(
+          <Header
+            loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+            orders={upcomingOrders}
+            nextOrderTracking={TRACKING_URL}
+          />
+        )
+
+        global.open = jest.fn()
+      })
+
+      afterEach(() => {
+        jest.resetAllMocks()
+      })
+
+      test('renders a track my box button', () => {
+        expect(wrapper.find('CardWithLink').first().find('Button').text()).toBe('Track my box')
+      })
+
+      test('opens the tracking page in a new tab', () => {
+        wrapper.find('CardWithLink').find('SegmentPresentation').last().simulate('click')
+        expect(global.open).toHaveBeenCalledWith(TRACKING_URL, 'rel="noopener noreferrer"')
       })
     })
   })
