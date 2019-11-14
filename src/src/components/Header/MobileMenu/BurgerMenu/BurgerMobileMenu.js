@@ -17,13 +17,13 @@ const getCssClassForMenuItem = (homeMenuItem, myGoustoMenuItem, isAuthenticated)
 
 class BurgerMobileMenu extends React.PureComponent {
   static propTypes = {
-    show: PropTypes.bool.isRequired,
-    menuItems: PropTypes.array.isRequired,
+    hideNav: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+    menuItems: PropTypes.array.isRequired,
     onLoginClick: PropTypes.func.isRequired,
     onLogoutClick: PropTypes.func.isRequired,
-    hideNav: PropTypes.bool.isRequired,
     promoCodeUrl: PropTypes.string,
+    show: PropTypes.bool.isRequired,
     trackNavigationClick: PropTypes.func,
   }
   static defaultProps = {

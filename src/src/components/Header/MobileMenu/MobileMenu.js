@@ -7,51 +7,51 @@ import css from '../Header.css'
 
 class MobileMenu extends React.PureComponent {
   static propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
+    hideMobileMenu: PropTypes.func.isRequired,
     hideNav: PropTypes.bool.isRequired,
-    mobileMenuOpen: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
     mobileMenuItems: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
       url: PropTypes.string,
       clientRouted: PropTypes.bool,
       tracking: PropTypes.string
     })).isRequired,
-    hideMobileMenu: PropTypes.func.isRequired,
+    mobileMenuOpen: PropTypes.bool.isRequired,
     onLoginClick: PropTypes.func.isRequired,
     onLogoutClick: PropTypes.func.isRequired,
-    showMobileMenu: PropTypes.func.isRequired,
     promoCodeUrl: PropTypes.string.isRequired,
-    trackNavigationClick: PropTypes.func.isRequired,
     serverError: PropTypes.bool.isRequired,
     shouldRenderNewMenuDesign: PropTypes.bool.isRequired,
+    showMobileMenu: PropTypes.func.isRequired,
+    trackNavigationClick: PropTypes.func.isRequired,
   }
 
   renderBurgerMenu = () => {
     const {
-      isAuthenticated,
-      hideNav,
-      mobileMenuOpen,
-      mobileMenuItems,
       hideMobileMenu,
+      hideNav,
+      isAuthenticated,
+      mobileMenuItems,
+      mobileMenuOpen,
       onLoginClick,
       onLogoutClick,
-      showMobileMenu,
       promoCodeUrl,
+      serverError,
+      showMobileMenu,
       trackNavigationClick,
-      serverError
     } = this.props
 
     return (
       <span>
         <BurgerMobileMenu
-          menuItems={mobileMenuItems}
-          show={mobileMenuOpen}
-          onHide={hideMobileMenu}
           hideNav={hideNav}
           isAuthenticated={isAuthenticated}
+          menuItems={mobileMenuItems}
+          onHide={hideMobileMenu}
           onLoginClick={onLoginClick}
           onLogoutClick={onLogoutClick}
           promoCodeUrl={promoCodeUrl}
+          show={mobileMenuOpen}
           trackNavigationClick={trackNavigationClick}
         />
         <button
