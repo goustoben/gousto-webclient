@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Alert } from 'goustouicomponents'
 import { EditDate } from './EditDate'
-import { LinkButton } from './Link'
+import { LinkButton } from './LinkButton'
 import css from './OrderDeliveryDate.css'
 
 const propTypes = {

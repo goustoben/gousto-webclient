@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import css from './Link.css'
+import css from './LinkButton.css'
 
 const propTypes = {
   text: PropTypes.string.isRequired,
