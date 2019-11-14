@@ -751,6 +751,28 @@ describe('order actions', () => {
         }
       })
     })
+
+    it('should dispatch the SaveAttemptFailed action with the correct arguments if saveOrder fails', async () => {
+      const error = new Error("error message")
+
+      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(error))
+      ))
+
+      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliverySlot SaveAttemptFailed',
+          error: 'error message',
+          order_id: '12345',
+          isCurrentPeriod: true,
+          original_deliveryslot_id: 'deliverySlotId',
+          new_deliveryslot_id: 'slotid123'
+        }
+      })
+    })
   })
 
   describe('clearUpdateDateErrorAndPending', () => {

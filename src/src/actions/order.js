@@ -113,7 +113,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         type: actionTypes.TRACKING,
         trackingData: {
           actionType: 'OrderDeliverySlot SaveAttemptFailed',
-          error: err.meassage,
+          error: err.message,
           ...trackingData
         }
       })
