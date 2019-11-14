@@ -29,7 +29,6 @@ import {
   clearUpdateDateErrorAndPending,
 } from 'actions/order'
 
-
 jest.mock('apis/user')
 jest.mock('apis/orders')
 jest.mock('utils/basket')
