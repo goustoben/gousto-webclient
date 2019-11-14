@@ -1,0 +1,22 @@
+@value sizeXS from 'styles/typography.css';
+@value Mackerel, White from 'styles/colors.css';
+
+.cardWrapper {
+  background-color: White;
+  width: 100%;
+}
+
+.contentWrapper {
+  border-bottom: 1px solid Mackerel;
+  margin-bottom: 1rem;
+}
+
+.linkWrapper {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.arrowRight {
+  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+  font-size: sizeXS;
+}
