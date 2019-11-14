@@ -13,10 +13,12 @@ import actionTypes from 'actions/actionTypes'
 import { getOrderDetails } from 'utils/basket'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
+import { trackAffiliatePurchase } from 'actions/tracking'
 import { saveUserOrder, updateUserOrder } from 'apis/user'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
 
 import {
+  trackOrder,
   orderUpdate,
   orderCheckout,
   orderAssignToUser,
@@ -27,15 +29,32 @@ import {
   clearUpdateDateErrorAndPending,
 } from 'actions/order'
 
+
 jest.mock('apis/user')
 jest.mock('apis/orders')
 jest.mock('utils/basket')
 jest.mock('actions/status')
+jest.mock('actions/tracking')
 jest.mock('actions/orderConfirmation')
+
+jest.mock('config/order', () => ({
+  orderTrackingActions: {
+    'action-no-affiliate': {
+      actionType: 'A_TEST_ACTION',
+      trackAffiliate: false,
+    },
+    'affiliate-no-action': {
+      actionType: '',
+      trackAffiliate: true,
+    },
+  }
+}))
 
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
-    data: [{id: 1}]
+    data: [
+      {id: 1},
+    ]
   })
 }))
 
@@ -52,8 +71,8 @@ describe('order actions', () => {
   let coreSlotId
   let numPortions
   let orderAction
-  let dispatchSpy
-  let getStateSpy
+  let dispatch
+  const getState = jest.fn()
 
   beforeEach(() => {
     orderId = '12345'
@@ -62,10 +81,9 @@ describe('order actions', () => {
     coreSlotId = 8
     numPortions = 3
     orderAction = 'transaction'
-    dispatchSpy = jest.fn()
+    dispatch = jest.fn()
     fetchOrder.mockClear()
-
-    getStateSpy = () => ({
+    getState.mockReturnValue({
       auth: Immutable.Map({ accessToken: 'access-token' }),
       features: Immutable.Map({
         orderConfirmation: Immutable.Map({
@@ -89,12 +107,96 @@ describe('order actions', () => {
     jest.clearAllMocks()
   })
 
+  describe('trackOrder', () => {
+    beforeEach(() => {
+      getState.mockReturnValue({
+        basket: Immutable.Map({
+          promoCode: 'B4SK3T-ST4T3-PR0M0',
+        })
+      })
+    })
+
+    describe('when orderTrackingActions does not actionType', () => {
+      test('should not take any action', () => {
+        trackOrder('test', {})(dispatch, getState)
+
+        expect(getState).not.toHaveBeenCalled()
+        expect(dispatch).not.toHaveBeenCalled()
+        expect(trackAffiliatePurchase).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when orderTrackingActions contains actionType', () => {
+      let order = {
+        id: '735702932',
+        prices: {
+          total: 31.99,
+          promo_code: '',
+        }
+      }
+
+      describe('if affiliate is not configured to track', () => {
+        test('should not dispatch an affiliate tracking action', () => {
+          trackOrder('action-no-affiliate', order)(dispatch, getState)
+
+          expect(getState).not.toHaveBeenCalled()
+          expect(dispatch).toHaveBeenCalled()
+          expect(trackAffiliatePurchase).not.toHaveBeenCalled()
+        })
+      })
+
+      describe('if affiliate is configured to track', () => {
+        test('should dispatch an affiliate tracking action', () => {
+          trackOrder('affiliate-no-action', order)(dispatch, getState)
+
+          expect(getState).toHaveBeenCalled()
+          expect(dispatch).not.toHaveBeenCalled()
+          expect(trackAffiliatePurchase).toHaveBeenCalledWith({
+            orderId: '735702932',
+            total: 31.99,
+            promoCode: 'B4SK3T-ST4T3-PR0M0',
+            commissionGroup: 'EXISTING',
+          })
+        })
+      })
+
+      describe('if no action type is configured', () => {
+        test('should not dispatch an affiliate tracking action', () => {
+          trackOrder('affiliate-no-action', order)(dispatch, getState)
+
+          expect(getState).toHaveBeenCalled()
+          expect(dispatch).not.toHaveBeenCalled()
+          expect(trackAffiliatePurchase).toHaveBeenCalled()
+        })
+      })
+
+      describe('if an action type is configured', () => {
+        test('should not dispatch an affiliate tracking action', () => {
+          trackOrder('action-no-affiliate', order)(dispatch, getState)
+
+          expect(getState).not.toHaveBeenCalled()
+          expect(trackAffiliatePurchase).not.toHaveBeenCalled()
+          expect(dispatch).toHaveBeenCalledWith({
+            type: 'A_TEST_ACTION',
+            order: {
+              id: '735702932',
+              prices: {
+                promo_code: '',
+                total: 31.99,
+              }
+            },
+          })
+        })
+      })
+    })
+  })
+
   describe('orderUpdate', () => {
     test('should mark ORDER_SAVE as pending', async () => {
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve(resolve) })
       ))
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatchSpy, getStateSpy)
+      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
 
       expect(pending).toHaveBeenCalled()
       expect(pending.mock.calls[0][0]).toEqual('ORDER_SAVE')
@@ -109,7 +211,7 @@ describe('order actions', () => {
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve, reject) => { reject(err) })
       ))
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatchSpy, getStateSpy)
+      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
 
       expect(pending).toHaveBeenCalled()
       expect(pending.mock.calls[0][0]).toEqual('ORDER_SAVE')
@@ -124,11 +226,11 @@ describe('order actions', () => {
       expect(error.mock.calls[0][1]).toBe(null)
       expect(error.mock.calls[1][0]).toEqual('ORDER_SAVE')
       expect(error.mock.calls[1][1]).toEqual(err.message)
-      expect(dispatchSpy.mock.calls.length).toEqual(5)
+      expect(dispatch.mock.calls.length).toEqual(5)
     })
 
     test('should map the arguments through to saveOrder correctly', async () => {
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatchSpy, getStateSpy)
+      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
 
       expect(saveOrder).toHaveBeenCalledTimes(1)
       const order = {
@@ -154,7 +256,7 @@ describe('order actions', () => {
       saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
         new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
       ))
-      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatchSpy, getStateSpy)
+      await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
 
       expect(orderConfirmationRedirect).toHaveBeenCalledWith(
         '5678',
@@ -180,7 +282,7 @@ describe('order actions', () => {
     window.location.assign = jest.fn()
 
     test('api is being called correctly', async () => {
-      await orderCheckout(checkoutOrderApiParams)(dispatchSpy, getStateSpy)
+      await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
 
       expect(checkoutOrder).toHaveBeenCalledWith("access-token", {
         address_id: 'address-id',
@@ -203,7 +305,7 @@ describe('order actions', () => {
     })
 
     test('status is set to pending and no error', async () => {
-      await orderCheckout(checkoutOrderApiParams)(dispatchSpy, getStateSpy)
+      await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
       expect(pending).toHaveBeenCalled()
       expect(pending.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
       expect(pending.mock.calls[0][1]).toBe(true)
@@ -222,7 +324,7 @@ describe('order actions', () => {
 
       const result = await orderCheckout(
         checkoutOrderApiParams
-      )(dispatchSpy, getStateSpy)
+      )(dispatch, getState)
 
       expect(error.mock.calls[0][0]).toEqual('ORDER_CHECKOUT')
       expect(error.mock.calls[0][1]).toBe(null)
@@ -239,7 +341,7 @@ describe('order actions', () => {
         message: 'error api',
       })
 
-      await orderCheckout(checkoutOrderApiParams)(dispatchSpy, getStateSpy)
+      await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
 
       expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
       expect(error.mock.calls[1][1]).toBe('error api')
@@ -258,7 +360,7 @@ describe('order actions', () => {
 
       await orderCheckout(
         checkoutOrderApiParams
-      )(dispatchSpy, getStateSpy)
+      )(dispatch, getState)
 
       expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
       expect(error.mock.calls[1][1]).toBe('Error when saving the order')
@@ -274,7 +376,7 @@ describe('order actions', () => {
 
       await orderCheckout(
         checkoutOrderApiParams
-      )(dispatchSpy, getStateSpy)
+      )(dispatch, getState)
 
       expect(error.mock.calls[1][0]).toEqual('ORDER_CHECKOUT')
       expect(error.mock.calls[1][1]).toBe('Error when saving the order')
@@ -290,7 +392,7 @@ describe('order actions', () => {
 
       await orderCheckout(
         checkoutOrderApiParams
-      )(dispatchSpy, getStateSpy)
+      )(dispatch, getState)
 
       expect(window.location.assign).toHaveBeenCalledWith('redirect-url')
     })
@@ -301,7 +403,7 @@ describe('order actions', () => {
         message: 'error api',
       })
 
-      await orderCheckout(checkoutOrderApiParams)(dispatchSpy, getStateSpy)
+      await orderCheckout(checkoutOrderApiParams)(dispatch, getState)
 
       expect(window.location.assign).toHaveBeenCalledTimes(0)
     })
@@ -313,7 +415,7 @@ describe('order actions', () => {
         { id: "df0ddd72-beb3-11e5-8432-02fada0dd3b9", quantity: 1, type: "Product" },
         { id: "d533155a-7c4f-11e7-b81e-02e92c52d95a", quantity: 2, type: "Product" }
       ]
-      await orderUpdateProducts(orderId, itemChoices)(dispatchSpy, getStateSpy)
+      await orderUpdateProducts(orderId, itemChoices)(dispatch, getState)
 
       expect(updateOrderItems).toHaveBeenCalledWith(
         'access-token',
@@ -323,18 +425,18 @@ describe('order actions', () => {
     })
 
     test('when the api call succeeds it dispatches an action', async () => {
-      await orderUpdateProducts(orderId)(dispatchSpy, getStateSpy)
+      await orderUpdateProducts(orderId)(dispatch, getState)
 
-      expect(dispatchSpy).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_UPDATE_PRODUCTS
       })
     })
 
     test('when the api call errors it dispatches the error in an action', async () => {
       updateOrderItems.mockRejectedValue('error')
-      await orderUpdateProducts(orderId)(dispatchSpy, getStateSpy)
+      await orderUpdateProducts(orderId)(dispatch, getState)
 
-      expect(dispatchSpy).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_UPDATE_PRODUCTS,
         error: 'error',
       })
@@ -343,7 +445,7 @@ describe('order actions', () => {
 
   describe('orderHasAnyProducts', () => {
     test('api function is called with correct parameters', async () => {
-      await orderHasAnyProducts(orderId)(dispatchSpy, getStateSpy)
+      await orderHasAnyProducts(orderId)(dispatch, getState)
 
       expect(fetchOrder).toHaveBeenCalledWith(
         'access-token',
@@ -358,9 +460,9 @@ describe('order actions', () => {
         },
       }
       fetchOrder.mockResolvedValue(fetchOrderResult)
-      await orderHasAnyProducts(orderId)(dispatchSpy, getStateSpy)
+      await orderHasAnyProducts(orderId)(dispatch, getState)
 
-      expect(dispatchSpy).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
         hasProducts: false
       })
@@ -373,9 +475,9 @@ describe('order actions', () => {
         },
       }
       fetchOrder.mockResolvedValue(fetchOrderResult)
-      await orderHasAnyProducts(orderId)(dispatchSpy, getStateSpy)
+      await orderHasAnyProducts(orderId)(dispatch, getState)
 
-      expect(dispatchSpy).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
         hasProducts: true
       })
@@ -386,21 +488,21 @@ describe('order actions', () => {
         type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
         error: new Error('missing orderId')
       }
-      await orderHasAnyProducts('')(dispatchSpy, getStateSpy)
-      await orderHasAnyProducts(null)(dispatchSpy, getStateSpy)
-      await orderHasAnyProducts()(dispatchSpy, getStateSpy)
+      await orderHasAnyProducts('')(dispatch, getState)
+      await orderHasAnyProducts(null)(dispatch, getState)
+      await orderHasAnyProducts()(dispatch, getState)
 
-      expect(dispatchSpy).toHaveBeenNthCalledWith(1, errorAction)
-      expect(dispatchSpy).toHaveBeenNthCalledWith(2, errorAction)
-      expect(dispatchSpy).toHaveBeenNthCalledWith(3, errorAction)
+      expect(dispatch).toHaveBeenNthCalledWith(1, errorAction)
+      expect(dispatch).toHaveBeenNthCalledWith(2, errorAction)
+      expect(dispatch).toHaveBeenNthCalledWith(3, errorAction)
       expect(fetchOrder).not.toHaveBeenCalled()
     })
 
     test('when the api call throws an error, it dispatches the error in an action', async () => {
       fetchOrder.mockRejectedValue('error')
-      await orderHasAnyProducts(orderId)(dispatchSpy, getStateSpy)
+      await orderHasAnyProducts(orderId)(dispatch, getState)
 
-      expect(dispatchSpy).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
         error: 'error',
       })
@@ -434,7 +536,7 @@ describe('order actions', () => {
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve) => { resolve({ data: { id: '5678' } })})
       ))
-      await orderAssignToUser(orderAction)(dispatchSpy, getStateSpy)
+      await orderAssignToUser(orderAction)(dispatch, getState)
 
       expect(pending.mock.calls.length).toBe(2)
       expect(pending.mock.calls[0][0]).toEqual('ORDER_SAVE')
@@ -448,7 +550,7 @@ describe('order actions', () => {
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
         new Promise((resolve, reject) => { reject(err)})
       ))
-      await orderAssignToUser(orderAction)(dispatchSpy, getStateSpy)
+      await orderAssignToUser(orderAction)(dispatch, getState)
 
       expect(pending.mock.calls.length).toBe(3)
       expect(pending.mock.calls[0][0]).toEqual('ORDER_SAVE')
@@ -475,7 +577,7 @@ describe('order actions', () => {
         new Promise((resolve, reject) => { reject(orderUpdateErr)})
       ))
 
-      await orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
+      await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
       expect(error).toHaveBeenCalledWith("ORDER_SAVE", 'update-order-fail')
     })
@@ -486,7 +588,7 @@ describe('order actions', () => {
         new Promise((resolve, reject) => { reject(orderSaveErr)})
       ))
 
-      await orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
+      await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
       expect(updateUserOrder).toHaveBeenCalledWith('access-token', {
         recipe_choices: [
@@ -507,7 +609,7 @@ describe('order actions', () => {
         new Promise((resolve) => { resolve({ data: { id: '4321' } })})
       ))
 
-      await orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
+      await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
       expect(orderConfirmationRedirect).toHaveBeenCalledWith(
         '4321',
@@ -525,7 +627,7 @@ describe('order actions', () => {
         new Promise((resolve) => { resolve({ data: { id: '3456' } })})
       ))
 
-      await orderAssignToUser(orderAction, 'order-123')(dispatchSpy, getStateSpy)
+      await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
 
       expect(orderConfirmationRedirect).toHaveBeenCalledWith(
         '3456',
@@ -533,13 +635,14 @@ describe('order actions', () => {
       )
     })
   })
+
   describe('orderGetDeliveryDays', () => {
     const cutoffDatetimeFrom = '01-01-2017 10:00:01'
     const cutoffDatetimeUntil = '02-02-2017 14:23:34'
 
     beforeEach(() => {
       orderId = '123'
-      getStateSpy = jest.fn().mockReturnValue({
+      getState.mockReturnValue({
         user: Immutable.fromJS({
           addresses: {789: {postcode: 'AA11 2BB'}},
           deliveryTariffId: deliveriesUtils.deliveryTariffTypes.FREE_NDD
@@ -554,14 +657,14 @@ describe('order actions', () => {
     })
 
     it('should mark ORDER_DELIVERY_DAYS_RECEIVE as pending', async () => {
-      await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
+      await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
 
       expect(actionStatus.pending.mock.calls.length).toEqual(2)
       expect(actionStatus.pending.mock.calls[0][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
       expect(actionStatus.pending.mock.calls[0][1]).toBe(true)
       expect(actionStatus.pending.mock.calls[1][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
       expect(actionStatus.pending.mock.calls[1][1]).toBe(false)
-      expect(dispatchSpy.mock.calls.length).toEqual(4)
+      expect(dispatch.mock.calls.length).toEqual(4)
     })
 
     it('should mark ORDER_DELIVERY_DAYS_RECEIVE as errored if it errors', async () => {
@@ -571,7 +674,7 @@ describe('order actions', () => {
         new Promise((resolve, reject) => { reject(err) })
       )
 
-      await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
+      await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
 
       expect(actionStatus.pending.mock.calls.length).toEqual(2)
       expect(actionStatus.pending.mock.calls[0][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
@@ -584,11 +687,11 @@ describe('order actions', () => {
       expect(actionStatus.error.mock.calls[0][1]).toBeNull()
       expect(actionStatus.error.mock.calls[1][0]).toEqual('ORDER_DELIVERY_DAYS_RECEIVE')
       expect(actionStatus.error.mock.calls[1][1]).toEqual(err.message)
-      expect(dispatchSpy.mock.calls.length).toEqual(4)
+      expect(dispatch.mock.calls.length).toEqual(4)
     })
 
     it('should map the arguments through to fetchDeliveryDays and dispatch the action with the correct arguments', async () => {
-      getStateSpy = jest.fn().mockReturnValue({
+      getState.mockReturnValue({
         user: Immutable.fromJS({
           addresses: {789: {postcode: 'AA11 2BB'}},
         }),
@@ -610,7 +713,7 @@ describe('order actions', () => {
         [{ id: '5' }, { id: '6' }]
       )
 
-      await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
+      await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
 
       expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
 
@@ -628,8 +731,8 @@ describe('order actions', () => {
 
       expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
       expect(deliveriesUtils.getAvailableDeliveryDays.mock.calls[0][0]).toEqual([{ id: '4' }, { id: '5' }, { id: '6' }])
-      expect(dispatchSpy.mock.calls.length).toEqual(4)
-      expect(dispatchSpy.mock.calls[2][0]).toEqual({
+      expect(dispatch.mock.calls.length).toEqual(4)
+      expect(dispatch.mock.calls[2][0]).toEqual({
         type: actionTypes.ORDER_DELIVERY_DAYS_RECEIVE,
         orderId: '123',
         availableDays: [{ id: '5' }, { id: '6' }],
@@ -639,7 +742,7 @@ describe('order actions', () => {
 
     describe('if the feature is on for the user', () => {
       it('should fetch delivery days method should include ndd in its request', async () => {
-        await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatchSpy, getStateSpy)
+        await orderGetDeliveryDays(cutoffDatetimeFrom, cutoffDatetimeUntil, '789', orderId)(dispatch, getState)
 
         expect(fetchDeliveryDays.mock.calls.length).toEqual(1)
 
