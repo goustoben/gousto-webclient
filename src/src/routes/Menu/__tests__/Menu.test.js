@@ -213,28 +213,11 @@ describe('Menu', () => {
   describe('fadeCSS', () => {
     let wrapper
 
-    test('should render fade--recommendations', () => {
-      wrapper = shallow(
-        <Menu
-          {...requiredProps}
-          jfyTutorialFlag={false}
-          boxSummaryDeliveryDays={Immutable.Map()}
-          disabled={false}
-          isLoading
-          hasRecommendations
-        />,
-      )
-      const elementWithFadeCSS = wrapper.find('MenuRecipes')
-
-      expect(elementWithFadeCSS.prop('fadeCss')).toEqual('fade--recommendations')
-    })
-
     test('should render fadeOut', () => {
       wrapper = shallow(
         <Menu
           {...requiredProps}
           isLoading
-          hasRecommendations={false}
         />,
       )
       const elementWithFadeCSS = wrapper.find('MenuRecipes')
@@ -247,7 +230,6 @@ describe('Menu', () => {
         <Menu
           {...requiredProps}
           isLoading={false}
-          hasRecommendations={false}
         />,
       )
       const elementWithFadeCSS = wrapper.find('MenuRecipes')

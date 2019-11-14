@@ -52,8 +52,6 @@ class Menu extends React.PureComponent {
       storeOrderId,
       basketOrderLoaded,
       query,
-      triggerMenuLoad,
-      hasRecommendations,
       basketNumPortionChange,
       boxSummaryDeliveryDays,
       disabled,
@@ -78,10 +76,6 @@ class Menu extends React.PureComponent {
 
     const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId) || query.reload
     // TODO: Add back logic to check what needs to be reloaded
-
-    if (hasRecommendations) {
-      triggerMenuLoad()
-    }
 
     if (query && query.num_portions) {
       basketNumPortionChange(query.num_portions)
@@ -331,7 +325,6 @@ class Menu extends React.PureComponent {
     const {
       boxSummaryShow,
       forceLoad,
-      hasRecommendations,
       isAuthenticated,
       isLoading,
       jfyTutorialFlag,
@@ -347,9 +340,7 @@ class Menu extends React.PureComponent {
     const showSelectedPage = recipeGroupingSelected !== null && (!!query.foodBrand || !!query.thematic)
 
     let fadeCss = null
-    if (showLoading && hasRecommendations) {
-      fadeCss = css['fade--recommendations']
-    } else if (showLoading) {
+    if (showLoading) {
       fadeCss = css.fadeOut
     } else {
       fadeCss = css.willFade
@@ -389,7 +380,6 @@ class Menu extends React.PureComponent {
                 showLoading={showLoading}
                 mobileGridView={mobileGridView}
                 showDetailRecipe={this.showDetailRecipe}
-                hasRecommendations={hasRecommendations}
                 orderId={orderId}
                 toggleGridView={this.toggleGridView}
                 query={query}

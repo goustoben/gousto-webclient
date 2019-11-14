@@ -20,7 +20,6 @@ const propTypes = {
   menuRecipeDetailShow: PropTypes.string,
   orderId: PropTypes.string,
   isClient: PropTypes.bool,
-  hasRecommendations: PropTypes.bool,
   clearAllFilters: PropTypes.func,
   showDetailRecipe: PropTypes.func,
   setThematic: PropTypes.func,
@@ -83,7 +82,6 @@ class MenuRecipes extends PureComponent {
       isClient,
       clearAllFilters,
       showDetailRecipe,
-      hasRecommendations,
       orderId,
       toggleGridView,
     } = this.props
@@ -96,7 +94,7 @@ class MenuRecipes extends PureComponent {
           onToggleGridView={toggleGridView}
           orderId={orderId}
         />
-        <Loading loading={showLoading} hasRecommendations={hasRecommendations} />
+        <Loading loading={showLoading} />
         {!showLoading &&
           <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}
         {!showLoading && <FilterTagsNav />}

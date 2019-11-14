@@ -36,7 +36,6 @@ export const menuPropTypes = {
     borderColor: PropTypes.string,
   }),
   forceLoad: PropTypes.bool,
-  hasRecommendations: PropTypes.bool,
   isLoading: PropTypes.bool,
   jfyTutorialFlag: PropTypes.bool,
   loginVisibilityChange: PropTypes.func,
@@ -60,7 +59,6 @@ export const menuPropTypes = {
   shouldJfyTutorialBeVisible: PropTypes.func,
   storeOrderId: PropTypes.string,
   tariffId: PropTypes.number,
-  triggerMenuLoad: PropTypes.func,
 }
 
 export const defaultMenuPropTypes = {
@@ -83,7 +81,6 @@ export const defaultMenuPropTypes = {
   detailVisibilityChange: () => { },
   loginVisibilityChange: () => { },
   filterRecipeGrouping: () => { },
-  triggerMenuLoad: () => { },
   menuLoadDays: () => { },
   basketProducts: Immutable.Map(),
   boxSummaryDeliveryDays: Immutable.Map(),
@@ -100,7 +97,6 @@ export const defaultMenuPropTypes = {
   params: {},
   boxSummaryShow: false,
   foodBrandDetails: null,
-  hasRecommendations: false,
   jfyTutorialFlag: false,
   menuBrowseCTAShow: false,
   menuVariation: '',

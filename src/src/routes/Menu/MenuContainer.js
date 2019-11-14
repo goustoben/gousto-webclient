@@ -5,7 +5,6 @@ import moment from 'moment'
 import actions from 'actions'
 import { getSlot } from 'utils/deliveries'
 import actionTypes from 'actions/actionTypes'
-import { triggerMenuLoad } from 'actions/menu'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 
 import { getJfyTutorial } from 'selectors/features'
@@ -71,7 +70,6 @@ function mapStateToProps(state, ownProps) {
     menuCollectionRecipes: state.menuCollectionRecipes,
     menuBrowseCTAShow: state.menuBrowseCTAShow,
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
-    hasRecommendations: state.features.getIn(['justforyou_v2', 'value']),
     query: query || {},
     params: ownProps.params,
     storeOrderId: state.basket.get('orderId'),
@@ -113,7 +111,6 @@ const mapDispatchToProps = {
   boxSummaryDeliveryDaysLoad: actions.boxSummaryDeliveryDaysLoad,
   menuLoadDays: actions.menuLoadDays,
   loginVisibilityChange: actions.loginVisibilityChange,
-  triggerMenuLoad,
   portionSizeSelectedTracking: actions.portionSizeSelectedTracking,
   basketNumPortionChange: actions.basketNumPortionChange,
   shouldJfyTutorialBeVisible,
