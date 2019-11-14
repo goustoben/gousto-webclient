@@ -33,7 +33,7 @@ describe('menus', () => {
     test('should fetch the correct url', async () => {
       await fetchMenus('token')
       expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
-      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus', {}, { accessToken: 'token' })
+      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus', {include: 'ingredients'}, { accessToken: 'token' })
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -46,7 +46,7 @@ describe('menus', () => {
     test('should fetch the correct url', async () => {
       await fetchMenusWithUserId('token', 'e34rder')
       expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
-      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus?userId=e34rders', {}, { accessToken: 'token' })
+      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus', {include: 'ingredients', userId: 'e34rder'}, { accessToken: 'token' })
     })
 
     test('should return the results of the fetch unchanged', async () => {

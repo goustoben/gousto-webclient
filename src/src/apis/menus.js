@@ -9,7 +9,7 @@ export function fetchMenus(accessToken) {
     accessToken,
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, {}, options)
+  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients'}, options)
 }
 
 export function fetchMenusWithUserId(accessToken, userId) {
@@ -17,6 +17,6 @@ export function fetchMenusWithUserId(accessToken, userId) {
     accessToken,
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus?userId=${userId}s`, {}, options)
+  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients', userId: userId}, options)
 }
 
