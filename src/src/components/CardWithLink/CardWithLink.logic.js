@@ -8,7 +8,11 @@ const CardWithLink = ({ children, clientRouted, linkLabel, linkUrl }) => {
   return (
     <div className={css.cardWrapper}>
       <LayoutContentWrapper>
-        <div className={css.contentWrapper}>{children}</div>
+        <div className={css.contentWrapper}>
+          <LayoutContentWrapper>
+            {children}
+          </LayoutContentWrapper>
+        </div>
         <div className={css.linkWrapper}>
           <GoustoLink to={linkUrl} clientRouted={clientRouted}>
             {linkLabel}&nbsp;
