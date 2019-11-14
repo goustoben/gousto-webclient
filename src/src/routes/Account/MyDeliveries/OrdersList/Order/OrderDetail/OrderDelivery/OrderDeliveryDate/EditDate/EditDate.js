@@ -6,12 +6,11 @@ import { Button } from 'goustouicomponents'
 import userActions from 'actions/user'
 import orderActions from 'actions/order'
 import DropdownInput from 'Form/Dropdown'
-import util, { DEFAULT_MESSAGE_ID } from './util'
+import util from './util'
 import css from './EditDate.css'
 
 class EditDate extends React.PureComponent {
   static propTypes = {
-    editDeliveryMode: PropTypes.bool,
     orderId: PropTypes.string,
     deliveryDays: PropTypes.instanceOf(Immutable.Map),
     recipesStock: PropTypes.instanceOf(Immutable.List),
@@ -27,12 +26,12 @@ class EditDate extends React.PureComponent {
   static defaultProps = {
     editDeliveryMode: true,
     orderId: '',
-    deliveryDays: Immutable.Map({}),
-    recipesStock: Immutable.List([]),
+    deliveryDays: Immutable.Map(),
+    recipesStock: Immutable.List(),
     isPendingUpdateDayAndSlot: false,
     orderGetDeliveryDays: () => { },
-    recipes: Immutable.List([]),
-    orders: Immutable.Map({}),
+    recipes: Immutable.List(),
+    orders: Immutable.Map(),
     portionsCount: '2'
   }
 
@@ -99,10 +98,11 @@ class EditDate extends React.PureComponent {
 
   canSubmit(deliverySlotId, selectedDayId, selectedSlotId) {
     const { selectedDeliverySlotId } = this.state
+    const { coreDeliveryDayId } = this.props
 
     const slotChange = selectedDeliverySlotId !== deliverySlotId
 
-    return slotChange && selectedDayId !== DEFAULT_MESSAGE_ID && selectedSlotId !== DEFAULT_MESSAGE_ID
+    return slotChange && selectedDayId !== coreDeliveryDayId && selectedSlotId !== deliverySlotId
   }
 
   onDayChange(dayId, slotsOptions) {

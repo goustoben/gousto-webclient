@@ -25,7 +25,6 @@ const defaultProps = {
   errorText: '',
   onClickFunction: () => {},
   fetchSuccess: true,
-
 }
 
 const OrderDeliveryDate = ({
