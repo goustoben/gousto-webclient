@@ -41,23 +41,23 @@ class OrderProducts extends React.PureComponent {
       <div>
         <div className={css.header}>
           <Content contentKeys="mydeliveries_OrderOrderproductsTitle" >
-            <span>Your extras</span>
+            <span>Gousto Market</span>
           </Content>
         </div>
-          <div>
-            {products.map(product =>
-              <div key={product.get('id')} className={css.productContainer}>
-                <div className={css.productImage}>
-                  <ProductImage src={product.get('image') || placeholderSrc} alt={product.get('title')} />
-                </div>
-                <div className={css.productInfo}>
-                  <div>{product.get('title')}</div>
-                  <div>x {product.get('quantity')}</div>
-                  <div className={css.price}>£{product.get('unitPrice').toFixed(2)} each</div>
-                </div>
+        <div>
+          {products.map(product =>
+            <div key={product.get('id')} className={css.productContainer}>
+              <div className={css.productImage}>
+                <ProductImage src={product.get('image') || placeholderSrc} alt={product.get('title')} />
               </div>
-            )}
-          </div>
+              <div className={css.productInfo}>
+                <div>{product.get('title')}</div>
+                <div>x {product.get('quantity')}</div>
+                <div className={css.price}>£{product.get('unitPrice').toFixed(2)} each</div>
+              </div>
+            </div>
+          )}
+        </div>
         <div className={css.buttonRow}>
           <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)} clientRouted={false}>
             <Button color={productsSize > 0 ? 'secondary' : 'primary'} noDecoration>
