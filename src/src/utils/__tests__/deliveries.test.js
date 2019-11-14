@@ -17,7 +17,13 @@ import {
 import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import * as features from 'selectors/features'
-import { DeliveryTariffTypes, getDeliveryTariffId, getNDDFeatureFlagVal } from '../deliveries'
+import {
+  DeliveryTariffTypes,
+  getDeliveryTariffId,
+  getNDDFeatureFlagVal,
+  isDaySlotLeadTimeActive,
+  isFreeSlotAvailable
+} from '../deliveries'
 
 features.getDisabledSlots = jest.fn()
 
@@ -244,6 +250,90 @@ describe('utils/deliveries', () => {
       expect(result).toEqual(expected)
     })
   })
+
+  describe('isDaySlotLeadTimeActive', () => {
+    describe('without day slot lead time active key', () => {
+      test('should return true', () => {
+        const result = isDaySlotLeadTimeActive(Immutable.fromJS({}))
+        expect(result).toEqual(true)
+      })
+    })
+
+    describe('with slot lead time it should return correct value', () => {
+      test('should return false', () => {
+        const result = isDaySlotLeadTimeActive(Immutable.fromJS({
+          daySlotLeadTimeActive: false,
+        }))
+        expect(result).toEqual(false)
+      })
+    })
+  })
+
+  describe('isFreeSlotAvailable', () => {
+    describe('with free active slot', () => {
+      test('should return true', () => {
+        const slots = Immutable.fromJS([
+          {
+            id: 'free-active',
+            deliveryPrice: 0,
+            daySlotLeadTimeActive: true,
+          },
+        ])
+
+        const result = isFreeSlotAvailable(slots)
+
+        expect(result).toEqual(true)
+      })
+    })
+
+    describe('with free inactive slot', () => {
+      test('should return false', () => {
+        const slots = Immutable.fromJS([
+          {
+            id: 'free-inactive',
+            deliveryPrice: 0,
+            daySlotLeadTimeActive: false,
+          },
+        ])
+
+        const result = isFreeSlotAvailable(slots)
+
+        expect(result).toEqual(false)
+      })
+    })
+
+    describe('with paid active slot', () => {
+      test('should return false', () => {
+        const slots = Immutable.fromJS([
+          {
+            id: 'paid-active',
+            deliveryPrice: 0,
+            daySlotLeadTimeActive: false,
+          },
+        ])
+
+        const result = isFreeSlotAvailable(slots)
+
+        expect(result).toEqual(false)
+      })
+    })
+
+    describe('with free slot wihout active key', () => {
+      test('should return true', () => {
+        const slots = Immutable.fromJS([
+          {
+            id: 'paid-active',
+            deliveryPrice: 0,
+          },
+        ])
+
+        const result = isFreeSlotAvailable(slots)
+
+        expect(result).toEqual(true)
+      })
+    })
+  })
+
   describe('getLandingDay', () => {
     let state
     let date
@@ -290,6 +380,143 @@ describe('utils/deliveries', () => {
     })
 
     describe('with no date passed in', () => {
+      describe('with some priced and some free slots', () => {
+        beforeEach(() => {
+          Date.now = jest.fn(() => new Date('2019-12-01'))
+
+          deliveryDays = Immutable.fromJS({
+            '2019-12-02': {
+              isDefault: false,
+              date: '2019-12-02',
+              slots: [
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'asdf',
+                  deliveryPrice: 5,
+                },
+                {
+                  id: 'paid-2',
+                  whenCutoff: 'zxcvb',
+                  deliveryPrice: 2,
+                },
+              ],
+            },
+            '2019-12-20': {
+              date: '2019-12-20',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'free-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 0,
+                },
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                },
+              ],
+            },
+            '2019-12-10': {
+              date: '2019-12-10',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'free-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 0,
+                },
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                },
+              ],
+            },
+          })
+          state = Object.assign({}, state, {
+            boxSummaryDeliveryDays: deliveryDays,
+          })
+        })
+
+        test('should return closest day that has free slots available', () => {
+          const result = getLandingDay(state)
+          const expected = { date: '2019-12-10', slotId: 'free-1' }
+          expect(result).toEqual(expected)
+        })
+      })
+
+      describe('with some priced and some free slots, active and inactive', () => {
+        beforeEach(() => {
+          Date.now = jest.fn(() => new Date('2019-12-01'))
+
+          deliveryDays = Immutable.fromJS({
+            '2019-12-02': {
+              isDefault: false,
+              date: '2019-12-02',
+              slots: [
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'asdf',
+                  deliveryPrice: 5,
+                },
+                {
+                  id: 'paid-2',
+                  whenCutoff: 'zxcvb',
+                  deliveryPrice: 2,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+            '2019-12-20': {
+              date: '2019-12-20',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'free-1',
+                  whenCutoff: 'meme',
+                  deliveryPrice: 0,
+                  daySlotLeadTimeActive: true,
+                },
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+            '2019-12-10': {
+              date: '2019-12-10',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'free-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 0,
+                  daySlotLeadTimeActive: false,
+                },
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+          })
+          state = Object.assign({}, state, {
+            boxSummaryDeliveryDays: deliveryDays,
+          })
+        })
+
+        test('should return closest day that has active free slots available', () => {
+          const result = getLandingDay(state)
+          const expected = { date: '2019-12-20', slotId: 'free-1' }
+          expect(result).toEqual(expected)
+        })
+      })
+
       describe('with a default delivery day set', () => {
         beforeEach(() => {
           deliveryDays = Immutable.fromJS({
@@ -399,6 +626,7 @@ describe('utils/deliveries', () => {
                 {
                   id: '123-123-123',
                   whenCutoff: 'asdf',
+                  deliveryPrice: 0,
                 },
               ],
             },
@@ -409,6 +637,7 @@ describe('utils/deliveries', () => {
                 {
                   id: '321-321-321',
                   whenCutoff: 'qwerty',
+                  deliveryPrice: 0,
                 },
               ],
             },
@@ -419,6 +648,7 @@ describe('utils/deliveries', () => {
                 {
                   id: '456-456-456',
                   whenCutoff: 'zxcvb',
+                  deliveryPrice: 0,
                 },
               ],
             },
@@ -427,7 +657,7 @@ describe('utils/deliveries', () => {
             boxSummaryDeliveryDays: deliveryDays,
           })
         })
-        test('should return the first day available', () => {
+        test('should return the first free day available', () => {
           const result = getLandingDay(state, false, true)
           const expected = { date: '2014-12-12', slotId: '456-456-456' }
           expect(result).toEqual(expected)

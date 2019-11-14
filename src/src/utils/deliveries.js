@@ -277,6 +277,15 @@ function getLandingOrder(userOrders, deliveryDays) {
   }
 }
 
+export function isDaySlotLeadTimeActive(slot) {
+  // if there is no day slot lead time key, this means it's an old slot. So assume it's active.
+  return slot.get('daySlotLeadTimeActive', true)
+}
+
+export function isFreeSlotAvailable(slots) {
+  return slots.filter(slot => isDaySlotLeadTimeActive(slot) && slot.get('deliveryPrice', 0) === 0).size > 0
+}
+
 export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryDaysWithDisabledSlotIds) {
   const date = state.basket.get('date')
   const defaultDate = state.features.getIn(['default_day', 'value'])
@@ -334,17 +343,23 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
       day = deliveryDays.find(deliveryDay => deliveryDay.get('isDefault'))
     }
 
-    // if we don't have a default date fall back to the first date
-    if (!day) {
-      day = deliveryDays
-        .sort((a, b) => moment(a.get('date')).diff(moment(b.get('date'))))
-        .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
-        .first()
-    }
-
     // if we have none of the above get the first one
     if (!day) {
-      day = deliveryDays.filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay')).sort((a, b) => moment(a.get('date')).diff(moment(b.get('date')))).first()
+      day = deliveryDays
+        .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
+        .sort(
+          (d1, d2) => {
+            const diffToD1 = moment(d1.get('date')).diff(Date.now(), 'days')
+            const diffToD2 = moment(d2.get('date')).diff(Date.now(), 'days')
+
+            // we want to order all free slot to the begining and the rest at the end
+            const day1 = diffToD1 + (isFreeSlotAvailable(d1.get('slots', [])) ? 0 : 9999)
+            const day2 = diffToD2 + (isFreeSlotAvailable(d2.get('slots', [])) ? 0 : 9999)
+
+            return day1 > day2 ? 1 : -1
+          }
+        )
+        .first()
     }
   }
 
