@@ -32,20 +32,34 @@ ShallowWrapper {
     "nodeType": "host",
     "props": Object {
       "children": Array [
-        "Add to shortlist",
-        false,
+        <Svg
+          className="heartIcon"
+          fileName="icon_shortlist_heart_deselected"
+        />,
         false,
       ],
       "className": "shortlistButton",
-      "data-slug": "checkmark",
+      "data-slug": "heart",
       "disabled": false,
       "onClick": [Function],
+      "onKeyPress": [Function],
+      "tabIndex": 0,
       "type": "button",
     },
     "ref": null,
     "rendered": Array [
-      "Add to shortlist",
-      false,
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "className": "heartIcon",
+          "fileName": "icon_shortlist_heart_deselected",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
       false,
     ],
     "type": "button",
@@ -57,20 +71,34 @@ ShallowWrapper {
       "nodeType": "host",
       "props": Object {
         "children": Array [
-          "Add to shortlist",
-          false,
+          <Svg
+            className="heartIcon"
+            fileName="icon_shortlist_heart_deselected"
+          />,
           false,
         ],
         "className": "shortlistButton",
-        "data-slug": "checkmark",
+        "data-slug": "heart",
         "disabled": false,
         "onClick": [Function],
+        "onKeyPress": [Function],
+        "tabIndex": 0,
         "type": "button",
       },
       "ref": null,
       "rendered": Array [
-        "Add to shortlist",
-        false,
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "className": "heartIcon",
+            "fileName": "icon_shortlist_heart_deselected",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
         false,
       ],
       "type": "button",
@@ -96,7 +124,7 @@ ShallowWrapper {
 }
 `;
 
-exports[`<ShortlistButton /> Render should show tick if recipeInShorlist is true 1`] = `
+exports[`<ShortlistButton /> Render should show red heart (seleted) if recipeInShorlist is true 1`] = `
 ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <ShortlistButton
@@ -128,29 +156,29 @@ ShallowWrapper {
     "nodeType": "host",
     "props": Object {
       "children": Array [
-        "Shortlisted",
         <Svg
-          className="checkmark"
-          fileName="icon_tick_checkmark"
+          className="heartIcon"
+          fileName="icon_shortlist_heart_selected"
         />,
         false,
       ],
       "className": "shortlistButton shortlisted",
-      "data-slug": "checkmark",
+      "data-slug": "heart",
       "disabled": false,
       "onClick": [Function],
+      "onKeyPress": [Function],
+      "tabIndex": 0,
       "type": "button",
     },
     "ref": null,
     "rendered": Array [
-      "Shortlisted",
       Object {
         "instance": null,
         "key": undefined,
         "nodeType": "class",
         "props": Object {
-          "className": "checkmark",
-          "fileName": "icon_tick_checkmark",
+          "className": "heartIcon",
+          "fileName": "icon_shortlist_heart_selected",
         },
         "ref": null,
         "rendered": null,
@@ -167,29 +195,29 @@ ShallowWrapper {
       "nodeType": "host",
       "props": Object {
         "children": Array [
-          "Shortlisted",
           <Svg
-            className="checkmark"
-            fileName="icon_tick_checkmark"
+            className="heartIcon"
+            fileName="icon_shortlist_heart_selected"
           />,
           false,
         ],
         "className": "shortlistButton shortlisted",
-        "data-slug": "checkmark",
+        "data-slug": "heart",
         "disabled": false,
         "onClick": [Function],
+        "onKeyPress": [Function],
+        "tabIndex": 0,
         "type": "button",
       },
       "ref": null,
       "rendered": Array [
-        "Shortlisted",
         Object {
           "instance": null,
           "key": undefined,
           "nodeType": "class",
           "props": Object {
-            "className": "checkmark",
-            "fileName": "icon_tick_checkmark",
+            "className": "heartIcon",
+            "fileName": "icon_shortlist_heart_selected",
           },
           "ref": null,
           "rendered": null,

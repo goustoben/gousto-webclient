@@ -58,7 +58,7 @@ class Buttons extends React.Component {
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
     const { numPortions, qty, surchargePerPortion, view, changeTextForShortlistExperiment } = this.props
     const { tooltipVisible } = this.state
-    const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected', 'sentenceCaseSegment')
+    const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected')
     const addButtonText = (changeTextForShortlistExperiment ? 'Add to box' : 'Add Recipe')
 
     if (qty > 0) {
@@ -129,7 +129,7 @@ class Buttons extends React.Component {
           disabledClick={this.disabledClick}
           disabled={disabled}
           fill
-          className={this.getSurchargeGridClass('segment', 'sentenceCaseSegment')}
+          className={this.getSurchargeGridClass('segment')}
         >
           {view !== 'gridSmall' ? addButtonText : 'Add'}
           {surchargePerPortion && (

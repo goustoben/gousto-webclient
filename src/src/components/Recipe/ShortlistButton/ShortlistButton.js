@@ -72,7 +72,7 @@ class ShortlistButton extends React.PureComponent {
 
   render() {
     const { shortlistLimitReached, recipeInShortlist, showShortListTutorial, notInStock } = this.props
-    const shortlistButtonText = (recipeInShortlist ? 'Shortlisted' : 'Add to shortlist')
+    const heartIcon = recipeInShortlist ? 'icon_shortlist_heart_selected' : 'icon_shortlist_heart_deselected'
     const classes = classnames(
       css.shortlistButton,
       (recipeInShortlist ? css.shortlisted : null)
@@ -83,9 +83,8 @@ class ShortlistButton extends React.PureComponent {
     }
 
     return (
-      <button type='button' disabled={shortlistLimitReached && !recipeInShortlist} data-slug='checkmark' onClick={this.onShortlistClick} className={classes}>
-        {shortlistButtonText}
-        {recipeInShortlist && <Svg fileName={'icon_tick_checkmark'} className={css.checkmark} /> }
+      <button type="button" disabled={shortlistLimitReached && !recipeInShortlist} data-slug="heart" onClick={this.onShortlistClick} onKeyPress={this.onShortlistClick} className={classes} tabIndex={0}>
+        <Svg fileName={heartIcon} className={css.heartIcon} />
         {showShortListTutorial && <ShortlistTutorial />}
       </button>
     )
