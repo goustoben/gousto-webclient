@@ -3,7 +3,7 @@
 
 .header {
 	composes: textBold from 'styles/typography.css';
-	margin-bottom: SpacingXXL;
+	margin-bottom: 1rem;
 }
 
 .productContainer {
