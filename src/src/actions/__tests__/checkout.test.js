@@ -9,6 +9,7 @@ import { pending, error } from 'actions/status'
 import { createPreviewOrder } from 'apis/orders'
 import { orderAssignToUser } from 'actions/order'
 import { basketResetPersistent } from 'utils/basket'
+import { trackAffiliatePurchase } from 'actions/tracking'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 
 import {
@@ -60,6 +61,10 @@ jest.mock('utils/logger', () => ({
 
 jest.mock('actions/order', () => ({
   orderAssignToUser: jest.fn(),
+}))
+
+jest.mock('actions/tracking', () => ({
+  trackAffiliatePurchase: jest.fn(),
 }))
 
 const createState = (stateOverrides) => ({
@@ -379,6 +384,7 @@ describe('checkout actions', () => {
         }),
         pricing: Immutable.fromJS({
           prices: {
+            total: 31.99,
             grossTotal: 28.00,
             deliveryTotal: 2.99,
           }
@@ -417,6 +423,18 @@ describe('checkout actions', () => {
           shipping: 2.99,
           coupon: 'TEST123',
         })
+      })
+    })
+
+    test('should call trackAffiliatePurchase with order details', () => {
+      trackPurchase()(dispatch, getState)
+
+      expect(trackAffiliatePurchase).toHaveBeenCalled()
+      expect(trackAffiliatePurchase).toHaveBeenCalledWith({
+        orderId: 'test-order-id',
+        total: 31.99,
+        commissionGroup: 'FIRSTPURCHASE',
+        promoCode: 'TEST123',
       })
     })
   })
