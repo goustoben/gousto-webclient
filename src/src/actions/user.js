@@ -450,8 +450,9 @@ function userOpenCloseEditSection(orderId, editDeliveryMode) {
 
 function userTrackOpenEditSection(orderId) {
   return (dispatch, getState) => {
-    const originalSlotId = getState().user.getIn([`newOrders, ${orderId}, deliverySlotId`])
-    const isCurrentPeriod = getState().user.getIn([`newOrders, ${orderId}, isCurrentPeriod`])
+    const originalSlotId = getState().user.getIn(['newOrders', orderId, 'deliverySlotId'])
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
@@ -466,7 +467,7 @@ function userTrackOpenEditSection(orderId) {
 
 function userTrackDateSelected(orderId, originalSlotId, newSlotId) {
   return (dispatch, getState) => {
-    const isCurrentPeriod = getState().user.getIn([`newOrders, ${orderId}, isCurrentPeriod`])
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
@@ -482,7 +483,7 @@ function userTrackDateSelected(orderId, originalSlotId, newSlotId) {
 
 function userTrackSlotSelected(orderId, originalSlotId, newSlotId) {
   return (dispatch, getState) => {
-    const isCurrentPeriod = getState().user.getIn([`newOrders, ${orderId}, isCurrentPeriod`])
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
     dispatch({
       type: actionTypes.TRACKING,
       trackingData: {
