@@ -1,7 +1,5 @@
 import Immutable from 'immutable'
-import util, {
-  DEFAULT_MESSAGE_ID,
-} from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate//util'
+import util from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate//util'
 
 const orderDeliveryDays = Immutable.fromJS({
   aaa: {

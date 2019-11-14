@@ -5,7 +5,7 @@ import { Button } from 'goustouicomponents'
 import orderActions from 'actions/order'
 import { EditDate } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/EditDate.js'
 import DropdownInput from 'components/Form/Dropdown/DropdownInput'
-import { DEFAULT_MESSAGE_ID, getDeliveryDaysAndSlotsOptions } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/util.js'
+import { getDeliveryDaysAndSlotsOptions } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/util.js'
 
 jest.mock('routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/util.js', () => ({
   getDeliveryDaysAndSlotsOptions: jest.fn()
@@ -92,25 +92,6 @@ describe('EditDate', function () {
         .last()
         .prop('disabled')
       ).toEqual(false)
-    })
-
-    it('should render the submit button disabled when the selected day is the default message', function () {
-      wrapper.instance().onSlotChange('fg04')
-      wrapper.setState({ selectedDeliveryDayId: DEFAULT_MESSAGE_ID })
-      expect(wrapper.update()
-        .find(Button)
-        .last()
-        .prop('disabled')
-      ).toEqual(true)
-    })
-
-    it('should render the submit button disabled when the selected slot is the default message', function () {
-      wrapper.instance().onSlotChange(DEFAULT_MESSAGE_ID)
-      expect(wrapper.update()
-        .find(Button)
-        .last()
-        .prop('disabled')
-      ).toEqual(true)
     })
   })
 
