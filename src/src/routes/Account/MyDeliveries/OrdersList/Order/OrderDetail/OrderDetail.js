@@ -67,7 +67,7 @@ class OrderDetail extends React.PureComponent {
             />
           </section>
           : null}
-        {this.props.orderState === 'recipes chosen' && this.props.products.size ?
+        {this.props.orderState === 'recipes chosen' ?
           <section className={css.openCardSection}>
             <OrderProducts
               orderId={this.props.orderId}

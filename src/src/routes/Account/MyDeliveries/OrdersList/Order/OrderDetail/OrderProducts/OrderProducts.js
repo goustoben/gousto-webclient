@@ -10,6 +10,7 @@ import routes from 'config/routes'
 import Content from 'containers/Content'
 
 import placeholderSrc from 'media/images/recipe-placeholder.png'
+import marketPhotoSrc from 'media/photos/market-place-cover-photo.jpg'
 
 import css from './OrderProducts.css'
 
@@ -35,35 +36,42 @@ class OrderProducts extends React.PureComponent {
 
   render() {
     const { products, orderId } = this.props
-    const productsSize = products.size
 
     return (
-      <div>
-        <div className={css.header}>
-          <Content contentKeys="mydeliveries_OrderOrderproductsTitle" >
-            <span>Gousto Market</span>
-          </Content>
-        </div>
+      <div className={css.mainContainer}>
+        {products.size === 0 ? (<img className={css.marketImageRight} src={marketPhotoSrc} alt="Gousto Market products"/>) : null}
         <div>
-          {products.map(product =>
-            <div key={product.get('id')} className={css.productContainer}>
-              <div className={css.productImage}>
-                <ProductImage src={product.get('image') || placeholderSrc} alt={product.get('title')} />
-              </div>
-              <div className={css.productInfo}>
-                <div>{product.get('title')}</div>
-                <div>x {product.get('quantity')}</div>
-                <div className={css.price}>£{product.get('unitPrice').toFixed(2)} each</div>
-              </div>
+          <div className={css.header}>
+            <Content contentKeys="mydeliveries_OrderOrderproductsTitle" >
+              <span>Gousto Market</span>
+            </Content>
+          </div>
+          {products.size === 0 ? (
+            <div className={css.marketPromoContainer}>
+              <p className={css.marketPromoText}>Add desserts, drinks, snacks and more to your next box at no extra charge.</p>
+              <img className={css.marketImageFull} src={marketPhotoSrc} alt="Gousto Market products"/>
+              <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)} clientRouted={false}>
+                <Button color="secondary" width="full" noDecoration>
+                  Go to Gousto Market
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div>
+              {products.map(product =>
+                <div key={product.get('id')} className={css.productContainer}>
+                  <div className={css.productImage}>
+                    <ProductImage src={product.get('image') || placeholderSrc} alt={product.get('title')} />
+                  </div>
+                  <div className={css.productInfo}>
+                    <div>{product.get('title')}</div>
+                    <div>x {product.get('quantity')}</div>
+                    <div className={css.price}>£{product.get('unitPrice').toFixed(2)} each</div>
+                  </div>
+                </div>
+              )}
             </div>
           )}
-        </div>
-        <div className={css.buttonRow}>
-          <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)} clientRouted={false}>
-            <Button color={productsSize > 0 ? 'secondary' : 'primary'} noDecoration>
-              {productsSize > 0 ? 'Edit extras' : 'Add extras'}
-            </Button>
-          </Link>
         </div>
       </div>
     )
