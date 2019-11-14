@@ -1,8 +1,16 @@
 import Immutable from 'immutable'
 import moment from 'moment'
 
+import {
+  saveOrder,
+  fetchOrder,
+  cancelOrder,
+  checkoutOrder,
+  updateOrderItems,
+  updateOrderAddress,
+} from 'apis/orders'
+
 import { getDeliveryDays } from 'apis/data/deliveryDays'
-import ordersApi from 'apis/orders'
 import * as userApi from 'apis/user'
 import GoustoException from 'utils/GoustoException'
 import logger from 'utils/logger'
@@ -81,7 +89,7 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
 
     const accessToken = getState().auth.get('accessToken')
     try {
-      const { data: savedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
+      const { data: savedOrder } = await saveOrder(accessToken, orderId, order)
 
       if (savedOrder && savedOrder.id) {
         dispatch(trackOrder(
@@ -127,7 +135,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
           ...trackingData
         }
       })
-      const { data: updatedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
+      const { data: updatedOrder } = await saveOrder(accessToken, orderId, order)
       dispatch({
         type: actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT,
         orderId,
@@ -174,7 +182,7 @@ export const orderCheckout = ({
     const accessToken = getState().auth.get('accessToken')
 
     try {
-      const { data } = await ordersApi.orderCheckout(accessToken,
+      const { data } = await checkoutOrder(accessToken,
         {
           address_id: addressId,
           deliverypostcode: postcode,
@@ -322,7 +330,7 @@ export const orderAddressChange = (orderId, addressId) => (
       addressId,
     }
     try {
-      await ordersApi.updateOrderAddress(accessToken, orderId, addressId)
+      await updateOrderAddress(accessToken, orderId, addressId)
       dispatch({
         type: actionTypes.ORDER_ADDRESS_CHANGE,
         data,
@@ -381,7 +389,7 @@ export const orderUpdateProducts = (orderId, itemChoices) => (
     const reqData = { item_choices: itemChoices, restrict: "Product" }
 
     try {
-      await ordersApi.updateOrderItems(accessToken, orderId, reqData)
+      await updateOrderItems(accessToken, orderId, reqData)
       dispatch({
         type: actionTypes.ORDER_UPDATE_PRODUCTS,
       })
@@ -409,7 +417,7 @@ export const orderHasAnyProducts = (orderId) => (
         return dispatchError(new Error('missing orderId'))
       }
 
-      const response = await ordersApi.fetchOrder(accessToken, orderId)
+      const response = await fetchOrder(accessToken, orderId)
       const hasProducts = response.data.productItems.length > 0
       dispatch({
         type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
@@ -445,7 +453,7 @@ export const orderCancel = (orderId, deliveryDayId, variation) => (
     const offer = getState().onScreenRecovery.get('offer')
 
     try {
-      await ordersApi.cancelOrder(accessToken, orderId)
+      await cancelOrder(accessToken, orderId)
       dispatch({
         type: actionTypes.ORDER_CANCEL,
         orderId,

@@ -1,5 +1,15 @@
 import fetch from 'utils/fetch'
-import { orderCheckout, fetchOrder, createPreviewOrder, updateOrderItems, saveOrder, cancelOrder, cancelExistingOrders, updateOrderAddress } from '../orders'
+
+import {
+  saveOrder,
+  fetchOrder,
+  cancelOrder,
+  checkoutOrder,
+  updateOrderItems,
+  createPreviewOrder,
+  updateOrderAddress,
+  cancelExistingOrders,
+} from '../orders'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () =>
@@ -29,16 +39,16 @@ describe('orders api', () => {
     fetch.mockClear()
   })
 
-  describe('orderCheckout', () => {
+  describe('checkoutOrder', () => {
     test('should fetch the correct url', async () => {
       const reqData = { a: 1, b: 2 }
-      await orderCheckout('token', reqData)
+      await checkoutOrder('token', reqData)
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith('token', '/checkout', reqData, 'POST')
     })
 
     test('should return the results of the fetch unchanged', async () => {
-      const result = await orderCheckout('token', {})
+      const result = await checkoutOrder('token', {})
       expect(result).toEqual(mockFetchResult)
     })
   })

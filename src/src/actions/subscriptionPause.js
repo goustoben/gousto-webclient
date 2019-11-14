@@ -1,6 +1,6 @@
 import customersApi from 'apis/customers'
 import subscriptionApi from 'apis/subscription'
-import ordersApi from 'apis/orders'
+import { cancelExistingOrders } from 'apis/orders'
 import config from 'config/subscription'
 import logger from 'utils/logger'
 import redirectActions from 'actions/redirect'
@@ -221,7 +221,7 @@ function subscriptionPauseCancelPendingOrders() {
       const accessToken = getState().auth.get('accessToken')
 
       try {
-        await ordersApi.cancelExistingOrders(accessToken)
+        await cancelExistingOrders(accessToken)
         await dispatch(userActions.userLoadOrders())
       } catch (err) {
         throw new GoustoException(`${errorPrefix} cancel pending orders failed, ${err}`, {
@@ -686,7 +686,7 @@ function subscriptionPauseStart() {
     if (subscriptionPauseOsrFeatureValue) {
       return getPauseRecoveryContent(osrOfferFeatureValue)(dispatch, getState)
     }
-    
+
     await dispatch(userActions.userLoadData())
     dispatch(statusActions.pending(actionTypes.SUBSCRIPTION_PAUSE_START, true))
     dispatch(subPauseActions.subscriptionPauseReset())

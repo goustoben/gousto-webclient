@@ -2,17 +2,7 @@ import fetch from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
-const ordersApi = {
-  fetchOrder,
-  updateOrderItems,
-  saveOrder,
-  cancelOrder,
-  cancelExistingOrders,
-  updateOrderAddress,
-  orderCheckout,
-}
-
-export function orderCheckout(accessToken, reqData) {
+export function checkoutOrder(accessToken, reqData) {
   return fetch(accessToken, `${routes.client.checkout}`, reqData, 'POST')
 }
 
@@ -43,5 +33,3 @@ export function cancelExistingOrders(accessToken, reqData = {}) {
 export function updateOrderAddress(accessToken, orderId, addressId) {
   return fetch(accessToken, `${endpoint('core')}/order/${orderId}/change-address/`, { address_id: addressId }, 'PUT')
 }
-
-export default ordersApi
