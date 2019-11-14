@@ -14,11 +14,12 @@
   background-color: inherit;
   margin: 0 auto;
   max-width: 750px;
-  padding: 20px 0 40px;
+  padding: 1.5rem 0;
 
   @media ScreenMDMin {
     max-width: 970px;
   }
+
   @media ScreenLGMin {
     max-width: 1170px;
   }
@@ -31,7 +32,8 @@
 .title {
   background-color: inherit;
   position: relative;
-  margin: 0;
+  margin: 0 0 1.5rem;
+
   &:before {
     border-top: 1px solid Mackerel;
     top: 50%;
@@ -47,6 +49,7 @@
 .titleText {
   background-color: inherit;
   position: relative;
+  padding-right: 1rem;
 }
 
 h2.title {
@@ -54,7 +57,7 @@ h2.title {
   font-weight: 700;
   -webkit-font-smoothing: antialiased;
   font-size: 20px;
-  margin-bottom: 10px;
+
   @media ScreenSMMin {
     font-size: 32px;
   }
@@ -64,12 +67,8 @@ h3.title {
   font-size: 18px;
   font-weight: 500;
   padding-right: 20px;
-  margin-bottom: 20px;
+
   @media ScreenSMMin {
     font-size: 24px;
   }
-}
-
-.titleText {
-  padding-right: 1rem;
 }
