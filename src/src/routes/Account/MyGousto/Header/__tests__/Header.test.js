@@ -112,11 +112,11 @@ describe('MyGousto - Header', () => {
 
     test('should show the correct date of the next order to be delivered', () => {
       const expectedDateString = moment().add(2, 'days').format('dddd Do MMMM')
-      expect(nextDeliveryDetails.find('.messagePrimary').text()).toBe(expectedDateString)
+      expect(nextDeliveryDetails.find('.message').first().text()).toBe(expectedDateString)
     })
 
     test('should show the correct delivery times of the next order to be delivered', () => {
-      expect(nextDeliveryDetails.find('.messageSecondary').text()).toBe('8am - 7pm')
+      expect(nextDeliveryDetails.find('.message').last().text()).toBe('8am - 7pm')
     })
 
     describe('and the next order is today', () => {
@@ -131,7 +131,7 @@ describe('MyGousto - Header', () => {
       })
 
       test('explicitly shows that the order is arriving today', () => {
-        expect(nextDeliveryDetails.find('.messagePrimary').text()).toBe('Today')
+        expect(nextDeliveryDetails.find('.message').first().text()).toBe('Today')
       })
     })
   })
@@ -145,7 +145,7 @@ describe('MyGousto - Header', () => {
         />
       )
       const nextDeliveryDetails = wrapper.find('OrderDetails').first()
-      expect(nextDeliveryDetails.find('.messagePrimary').text()).toBe('No boxes scheduled')
+      expect(nextDeliveryDetails.find('.message').first().text()).toBe('No boxes scheduled')
     })
   })
 
@@ -164,7 +164,7 @@ describe('MyGousto - Header', () => {
 
     test('should show the correct date of the next order to be delivered', () => {
       const expectedDateString = moment().subtract(2, 'days').format('dddd Do MMMM')
-      expect(previousDeliveryDetails.find('.messagePrimary').text()).toContain(expectedDateString)
+      expect(previousDeliveryDetails.find('.message').first().text()).toContain(expectedDateString)
     })
 
     describe('and the most recent order > 7 days ago', () => {

@@ -94,7 +94,7 @@ class Header extends PureComponent {
   }
 
   render() {
-    const { orders } = this.props
+    const { orders, nextOrderTracking } = this.props
     const now = moment()
 
     const nextOrder = this.findOrder(orders, now, 'next')
@@ -113,6 +113,7 @@ class Header extends PureComponent {
       loaded ?
         <HeaderPresentation
           nextOrderMessage={nextOrderMessage}
+          nextOrderTracking={nextOrderTracking}
           previousOrderMessage={previousOrderMessage}
           getHelpQueryParam={getHelpQueryParam}
         />

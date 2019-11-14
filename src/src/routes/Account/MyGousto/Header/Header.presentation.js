@@ -23,11 +23,14 @@ const HeaderPresentation = ({
       linkUrl={client.myDeliveries}
       clientRouted={false}
     >
-      <OrderDetails
-        heading='Your next box delivery'
-        messagePrimary={nextOrderMessage.primary}
-        messageSecondary={nextOrderMessage.secondary}
-      />
+      <OrderDetails heading='Your next box delivery'>
+        <div className={css.nextOrder}>
+          <div className={css.orderDetailsItem}>
+            <p className={css.message}><strong>{nextOrderMessage.primary}</strong></p>
+            <p className={css.message}>{nextOrderMessage.secondary}</p>
+          </div>
+        </div>
+      </OrderDetails>
     </CardWithLink>
   )
 
@@ -36,10 +39,24 @@ const HeaderPresentation = ({
       linkLabel="View this week's menu"
       linkUrl={client.menu}
     >
-      <OrderDetails
-        heading='Your next box delivery'
-        messagePrimary={nextOrderMessage.primary}
-      />
+      <OrderDetails heading='Your next box delivery'>
+        <div className={css.orderDetailsItem}>
+          <p className={css.message}><strong>{nextOrderMessage.primary}</strong></p>
+        </div>
+      </OrderDetails>
+    </CardWithLink>
+  )
+
+  const renderPreviousOrder = () => (
+    <CardWithLink
+      linkLabel='Get help with this box'
+      linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
+    >
+      <OrderDetails heading='Your most recent box delivery'>
+        <div className={css.orderDetailsItem}>
+          <p className={css.message}><strong>{previousOrderMessage}</strong></p>
+        </div>
+      </OrderDetails>
     </CardWithLink>
   )
 
@@ -47,17 +64,7 @@ const HeaderPresentation = ({
     <div className={css.cardsContainer}>
       {hasNextOrder ? renderNextOrder() : renderNoNextOrder()}
 
-      {previousOrderMessage && (
-        <CardWithLink
-          linkLabel='Get help with this box'
-          linkUrl={`${client.getHelp.index}${getHelpUrlSuffix}`}
-        >
-          <OrderDetails
-            heading='Your most recent box delivery'
-            messagePrimary={previousOrderMessage}
-          />
-        </CardWithLink>
-      )}
+      {previousOrderMessage && renderPreviousOrder()}
     </div>
   )
 }
