@@ -1,5 +1,8 @@
 import actionTypes from 'actions/actionTypes'
-import { trackNotificationLinkClick } from 'actions/myGousto'
+import {
+  trackNotificationLinkClick,
+  trackNextBoxTrackingClick,
+} from 'actions/myGousto'
 
 describe('myGousto actions', () => {
   describe('trackNotificationLinkClick', () => {
@@ -12,6 +15,20 @@ describe('myGousto actions', () => {
           actionType: 'NotificationBanner Clicked',
           notification,
         },
+      })
+    })
+  })
+
+  describe('trackNextBoxTrackingClick', () => {
+    test('creates the tracking action', () => {
+      const orderId = '12345'
+
+      expect(trackNextBoxTrackingClick(orderId)).toEqual({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'TrackMyBox Clicked',
+          orderId,
+        }
       })
     })
   })
