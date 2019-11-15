@@ -4,7 +4,7 @@ import GoustoException from 'utils/GoustoException'
 import { getDisabledSlots, getNDDFeatureValue } from 'selectors/features'
 import { formatAndValidateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
 
-export const DeliveryTariffTypes = {
+export const deliveryTariffTypes = {
   NON_NDD: '9037a447-e11a-4960-ae69-d89a029569af',
   FREE_NDD: '823b18ef-5ca0-4a15-8f0f-4a363b319e29',
   PAID_NDD: '435191b6-0fa0-422b-a5c0-0dc1dc65d888'
@@ -277,6 +277,15 @@ function getLandingOrder(userOrders, deliveryDays) {
   }
 }
 
+export function isDaySlotLeadTimeActive(slot) {
+  // if there is no day slot lead time key, this means it's an old slot. So assume it's active.
+  return slot.get('daySlotLeadTimeActive', true)
+}
+
+export function isFreeSlotAvailable(slots) {
+  return slots.filter(slot => isDaySlotLeadTimeActive(slot) && slot.get('deliveryPrice', 0) == 0).size > 0
+}
+
 export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryDaysWithDisabledSlotIds) {
   const date = state.basket.get('date')
   const defaultDate = state.features.getIn(['default_day', 'value'])
@@ -334,17 +343,23 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
       day = deliveryDays.find(deliveryDay => deliveryDay.get('isDefault'))
     }
 
-    // if we don't have a default date fall back to the first date
-    if (!day) {
-      day = deliveryDays
-        .sort((a, b) => moment(a.get('date')).diff(moment(b.get('date'))))
-        .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
-        .first()
-    }
-
     // if we have none of the above get the first one
     if (!day) {
-      day = deliveryDays.filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay')).sort((a, b) => moment(a.get('date')).diff(moment(b.get('date')))).first()
+      day = deliveryDays
+        .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
+        .sort(
+          (comparisonDay1, comparisonDay2) => {
+            const diffToD1 = moment(comparisonDay1.get('date')).diff(Date.now(), 'days')
+            const diffToD2 = moment(comparisonDay2.get('date')).diff(Date.now(), 'days')
+
+            // we want to order all free slot to the begining and the rest at the end
+            const day1 = diffToD1 + (isFreeSlotAvailable(comparisonDay1.get('slots', [])) ? 0 : 9999)
+            const day2 = diffToD2 + (isFreeSlotAvailable(comparisonDay2.get('slots', [])) ? 0 : 9999)
+
+            return day1 > day2 ? 1 : -1
+          }
+        )
+        .first()
     }
   }
 
@@ -476,12 +491,12 @@ export function transformDaySlotLeadTimesToMockSlots(daysWithDSLTs) {
 // Used both when users first arrive on the site and do not have a delivery_tariff_id
 // and by returning users with a delivery_tariff_id
 export function getDeliveryTariffId(user, nddExperimentVal) {
-  const validTariffTypes = Object.values(DeliveryTariffTypes)
+  const validTariffTypes = Object.values(deliveryTariffTypes)
   // If the user has a delivery tariff, use it - otherwise use experiment value.
   const deliveryTariffId = (user && user.get('deliveryTariffId')) ? user.get('deliveryTariffId') : nddExperimentVal
 
   // This acts a fallback in case optimisely isn't running and the user doesn't have a persisted delivery tariff ID.
-  return validTariffTypes.includes(deliveryTariffId) ? deliveryTariffId : DeliveryTariffTypes.NON_NDD
+  return validTariffTypes.includes(deliveryTariffId) ? deliveryTariffId : deliveryTariffTypes.NON_NDD
 }
 
 // Used to determine whether to show and use NDD features for a new user without a delivery_tariff_id
@@ -491,5 +506,5 @@ export function getNDDFeatureFlagVal(state) {
   const nddExperimentVal = getNDDFeatureValue(state)
   const deliveryTariffId = getDeliveryTariffId(user, nddExperimentVal)
 
-  return (deliveryTariffId !== DeliveryTariffTypes['NON_NDD'])
+  return (deliveryTariffId !== deliveryTariffTypes['NON_NDD'])
 }

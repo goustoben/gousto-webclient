@@ -31,7 +31,7 @@ describe('boxSummary actions', () => {
         'filters[cutoff_datetime_until]': menuCutoffUntil,
         'sort': 'date',
         'ndd': 'false',
-        'delivery_tariff_id': deliveriesUtils.DeliveryTariffTypes.NON_NDD,
+        'delivery_tariff_id': deliveriesUtils.deliveryTariffTypes.NON_NDD,
       }
 
       const getStateSpy = jest.fn().mockReturnValue({
@@ -39,7 +39,7 @@ describe('boxSummary actions', () => {
         menuCutoffUntil,
         features: Immutable.fromJS({
           ndd: {
-            value: deliveriesUtils.DeliveryTariffTypes.NON_NDD,
+            value: deliveriesUtils.deliveryTariffTypes.NON_NDD,
             experiment: false,
           }
         }
@@ -59,14 +59,14 @@ describe('boxSummary actions', () => {
         'filters[cutoff_datetime_until]': '2017-12-30T23:59:59.999Z',
         'sort': 'date',
         'ndd': 'false',
-        'delivery_tariff_id': deliveriesUtils.DeliveryTariffTypes.NON_NDD,
+        'delivery_tariff_id': deliveriesUtils.deliveryTariffTypes.NON_NDD,
       }
 
       const getStateSpy = jest.fn().mockReturnValue({
         ...getStateArgs,
         features: Immutable.fromJS({
           ndd: {
-            value: deliveriesUtils.DeliveryTariffTypes.NON_NDD,
+            value: deliveriesUtils.deliveryTariffTypes.NON_NDD,
             experiment: false,
           }
         }
@@ -86,14 +86,14 @@ describe('boxSummary actions', () => {
         'filters[cutoff_datetime_until]': '2017-12-30T23:59:59.999Z',
         'sort': 'date',
         'ndd': 'true',
-        'delivery_tariff_id': deliveriesUtils.DeliveryTariffTypes.FREE_NDD,
+        'delivery_tariff_id': deliveriesUtils.deliveryTariffTypes.FREE_NDD,
       }
 
       const getStateSpy = jest.fn().mockReturnValue({
         ...getStateArgs,
         features: Immutable.fromJS({
           ndd: {
-            value: deliveriesUtils.DeliveryTariffTypes.FREE_NDD,
+            value: deliveriesUtils.deliveryTariffTypes.FREE_NDD,
             experiment: false,
           }
         }

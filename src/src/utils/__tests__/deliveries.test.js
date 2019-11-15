@@ -17,7 +17,13 @@ import {
 import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import * as features from 'selectors/features'
-import { DeliveryTariffTypes, getDeliveryTariffId, getNDDFeatureFlagVal } from '../deliveries'
+import {
+  deliveryTariffTypes,
+  getDeliveryTariffId,
+  getNDDFeatureFlagVal,
+  isDaySlotLeadTimeActive,
+  isFreeSlotAvailable
+} from '../deliveries'
 
 features.getDisabledSlots = jest.fn()
 
@@ -244,6 +250,90 @@ describe('utils/deliveries', () => {
       expect(result).toEqual(expected)
     })
   })
+
+  describe('isDaySlotLeadTimeActive', () => {
+    describe('without day slot lead time active key', () => {
+      test('should return true', () => {
+        const result = isDaySlotLeadTimeActive(Immutable.fromJS({}))
+        expect(result).toEqual(true)
+      })
+    })
+
+    describe('with day slot lead time active false ', () => {
+      test('should return false', () => {
+        const result = isDaySlotLeadTimeActive(Immutable.fromJS({
+          daySlotLeadTimeActive: false,
+        }))
+        expect(result).toEqual(false)
+      })
+    })
+  })
+
+  describe('isFreeSlotAvailable', () => {
+    describe('with free active slot', () => {
+      test('should return true', () => {
+        const slots = Immutable.fromJS([
+          {
+            id: 'free-active',
+            deliveryPrice: '0',
+            daySlotLeadTimeActive: true,
+          },
+        ])
+
+        const result = isFreeSlotAvailable(slots)
+
+        expect(result).toEqual(true)
+      })
+    })
+
+    describe('with free inactive slot', () => {
+      test('should return false', () => {
+        const slots = Immutable.fromJS([
+          {
+            id: 'free-inactive',
+            deliveryPrice: 0,
+            daySlotLeadTimeActive: false,
+          },
+        ])
+
+        const result = isFreeSlotAvailable(slots)
+
+        expect(result).toEqual(false)
+      })
+    })
+
+    describe('with paid active slot', () => {
+      test('should return false', () => {
+        const slots = Immutable.fromJS([
+          {
+            id: 'paid-active',
+            deliveryPrice: 2,
+            daySlotLeadTimeActive: true,
+          },
+        ])
+
+        const result = isFreeSlotAvailable(slots)
+
+        expect(result).toEqual(false)
+      })
+    })
+
+    describe('with free slot wihout active key', () => {
+      test('should return true', () => {
+        const slots = Immutable.fromJS([
+          {
+            id: 'paid-active',
+            deliveryPrice: 0,
+          },
+        ])
+
+        const result = isFreeSlotAvailable(slots)
+
+        expect(result).toEqual(true)
+      })
+    })
+  })
+
   describe('getLandingDay', () => {
     let state
     let date
@@ -290,6 +380,198 @@ describe('utils/deliveries', () => {
     })
 
     describe('with no date passed in', () => {
+      describe('with nearest slots paid', () => {
+        beforeEach(() => {
+          Date.now = jest.fn(() => new Date('2019-12-01'))
+
+          deliveryDays = Immutable.fromJS({
+            '2019-12-02': {
+              isDefault: false,
+              date: '2019-12-02',
+              slots: [
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'asdf',
+                  deliveryPrice: 5,
+                },
+                {
+                  id: 'paid-2',
+                  whenCutoff: 'zxcvb',
+                  deliveryPrice: 2,
+                },
+              ],
+            },
+            '2019-12-20': {
+              date: '2019-12-20',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'free-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 0,
+                },
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                },
+              ],
+            },
+            '2019-12-10': {
+              date: '2019-12-10',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'free-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 0,
+                },
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                },
+              ],
+            },
+          })
+          state = Object.assign({}, state, {
+            boxSummaryDeliveryDays: deliveryDays,
+          })
+        })
+
+        test('should return closest day that has free slots available', () => {
+          const result = getLandingDay(state)
+          const expected = { date: '2019-12-10', slotId: 'free-1' }
+          expect(result).toEqual(expected)
+        })
+      })
+
+      describe('with closest free slot inactive', () => {
+        beforeEach(() => {
+          Date.now = jest.fn(() => new Date('2019-12-01'))
+
+          deliveryDays = Immutable.fromJS({
+            '2019-12-02': {
+              isDefault: false,
+              date: '2019-12-02',
+              slots: [
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'asdf',
+                  deliveryPrice: .99,
+                  daySlotLeadTimeActive: true,
+                },
+                {
+                  id: 'paid-2',
+                  whenCutoff: 'zxcvb',
+                  deliveryPrice: .1,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+            '2019-12-20': {
+              date: '2019-12-20',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'free-1',
+                  whenCutoff: 'meme',
+                  deliveryPrice: 0,
+                  daySlotLeadTimeActive: true,
+                },
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+            '2019-12-10': {
+              date: '2019-12-10',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'free-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 0,
+                  daySlotLeadTimeActive: false,
+                },
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+          })
+          state = Object.assign({}, state, {
+            boxSummaryDeliveryDays: deliveryDays,
+          })
+        })
+
+        test('should return closest day that has active free slots available', () => {
+          const result = getLandingDay(state)
+          const expected = { date: '2019-12-20', slotId: 'free-1' }
+          expect(result).toEqual(expected)
+        })
+      })
+
+      describe('with only paid slots', () => {
+        beforeEach(() => {
+          Date.now = jest.fn(() => new Date('2019-12-01'))
+
+          deliveryDays = Immutable.fromJS({
+            '2019-12-02': {
+              isDefault: false,
+              date: '2019-12-02',
+              slots: [
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'asdf',
+                  deliveryPrice: 5,
+                  daySlotLeadTimeActive: true,
+                },
+                {
+                  id: 'paid-2',
+                  whenCutoff: 'zxcvb',
+                  deliveryPrice: 2,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+            '2019-12-20': {
+              date: '2019-12-20',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'meme',
+                  deliveryPrice: 3,
+                  daySlotLeadTimeActive: true,
+                },
+                {
+                  id: 'paid-2',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+          })
+          state = Object.assign({}, state, {
+            boxSummaryDeliveryDays: deliveryDays,
+          })
+        })
+
+        test('should return closest day available', () => {
+          const result = getLandingDay(state)
+          const expected = { date: '2019-12-02', slotId: 'paid-1' }
+          expect(result).toEqual(expected)
+        })
+      })
+
       describe('with a default delivery day set', () => {
         beforeEach(() => {
           deliveryDays = Immutable.fromJS({
@@ -389,7 +671,7 @@ describe('utils/deliveries', () => {
           })
         })
       })
-      describe('without a default delivery day set', () => {
+      describe('without a default delivery day set or dslt active state in slots', () => {
         beforeEach(() => {
           deliveryDays = Immutable.fromJS({
             '2016-03-02': {
@@ -399,6 +681,7 @@ describe('utils/deliveries', () => {
                 {
                   id: '123-123-123',
                   whenCutoff: 'asdf',
+                  deliveryPrice: 0,
                 },
               ],
             },
@@ -409,6 +692,7 @@ describe('utils/deliveries', () => {
                 {
                   id: '321-321-321',
                   whenCutoff: 'qwerty',
+                  deliveryPrice: 0,
                 },
               ],
             },
@@ -419,6 +703,7 @@ describe('utils/deliveries', () => {
                 {
                   id: '456-456-456',
                   whenCutoff: 'zxcvb',
+                  deliveryPrice: 0,
                 },
               ],
             },
@@ -427,7 +712,7 @@ describe('utils/deliveries', () => {
             boxSummaryDeliveryDays: deliveryDays,
           })
         })
-        test('should return the first day available', () => {
+        test('should return the first free day available', () => {
           const result = getLandingDay(state, false, true)
           const expected = { date: '2014-12-12', slotId: '456-456-456' }
           expect(result).toEqual(expected)
@@ -2119,28 +2404,28 @@ describe('utils/deliveries', () => {
 
   describe('getDeliveryTariffId', () => {
     test('it should return a user\'s existing tariff ID', () => {
-      const expectedTariff = DeliveryTariffTypes.PAID_NDD
+      const expectedTariff = deliveryTariffTypes.PAID_NDD
 
-      const resolvedTariff = getDeliveryTariffId(userWithDeliveryTariff(expectedTariff), DeliveryTariffTypes.FREE_NDD)
+      const resolvedTariff = getDeliveryTariffId(userWithDeliveryTariff(expectedTariff), deliveryTariffTypes.FREE_NDD)
       expect(resolvedTariff).toEqual(expectedTariff)
     })
 
     test('it should return the experiment tariff without a user', () => {
-      const expectedTariff = DeliveryTariffTypes.NON_NDD
+      const expectedTariff = deliveryTariffTypes.NON_NDD
 
       const resolvedTariff = getDeliveryTariffId(null, expectedTariff)
       expect(resolvedTariff).toEqual(expectedTariff)
     })
 
     test('it should return a default if invalid tariff ID is passed through as experiment value', () => {
-      const expectedTariff = DeliveryTariffTypes.NON_NDD
+      const expectedTariff = deliveryTariffTypes.NON_NDD
 
       const resolvedTariff = getDeliveryTariffId(null, 'unknown-tariff')
       expect(resolvedTariff).toEqual(expectedTariff)
     })
 
     test('it should return a default if invalid tariff ID neither arguments are provided', () => {
-      const expectedTariff = DeliveryTariffTypes.NON_NDD
+      const expectedTariff = deliveryTariffTypes.NON_NDD
 
       const resolvedTariff = getDeliveryTariffId(null, null)
       expect(resolvedTariff).toEqual(expectedTariff)
@@ -2150,9 +2435,9 @@ describe('utils/deliveries', () => {
   describe('getNDDFeatureFlagVal', () => {
     test('it should return true when user is already set to a free NDD tariff.', () => {
       const state = {
-        user: userWithDeliveryTariff(DeliveryTariffTypes.FREE_NDD),
+        user: userWithDeliveryTariff(deliveryTariffTypes.FREE_NDD),
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
         }),
       }
 
@@ -2163,9 +2448,9 @@ describe('utils/deliveries', () => {
 
     test('it should return true when user is already set to a paid NDD tariff.', () => {
       const state = {
-        user: userWithDeliveryTariff(DeliveryTariffTypes.PAID_NDD),
+        user: userWithDeliveryTariff(deliveryTariffTypes.PAID_NDD),
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
         }),
       }
 
@@ -2177,7 +2462,7 @@ describe('utils/deliveries', () => {
     test('it should return true when a new user is on the free NDD tariff.', () => {
       const state = {
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.FREE_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.FREE_NDD}),
         }),
       }
 
@@ -2189,7 +2474,7 @@ describe('utils/deliveries', () => {
     test('it should return true when a new user is on the paid NDD tariff.', () => {
       const state = {
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.PAID_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.PAID_NDD}),
         }),
       }
 
@@ -2201,7 +2486,7 @@ describe('utils/deliveries', () => {
     test('it should return false when a new user is on a non NDD tariff.', () => {
       const state = {
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
         }),
       }
 
@@ -2212,9 +2497,9 @@ describe('utils/deliveries', () => {
 
     test('it should return false when an existing user is not in the experiment.', () => {
       const state = {
-        user: userWithDeliveryTariff(DeliveryTariffTypes.NON_NDD),
+        user: userWithDeliveryTariff(deliveryTariffTypes.NON_NDD),
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
         }),
       }
 
