@@ -459,6 +459,7 @@ describe('utils/deliveries', () => {
                   id: 'paid-1',
                   whenCutoff: 'asdf',
                   deliveryPrice: 5,
+                  daySlotLeadTimeActive: true,
                 },
                 {
                   id: 'paid-2',
@@ -513,6 +514,60 @@ describe('utils/deliveries', () => {
         test('should return closest day that has active free slots available', () => {
           const result = getLandingDay(state)
           const expected = { date: '2019-12-20', slotId: 'free-1' }
+          expect(result).toEqual(expected)
+        })
+      })
+
+      describe('with only paid slots', () => {
+        beforeEach(() => {
+          Date.now = jest.fn(() => new Date('2019-12-01'))
+
+          deliveryDays = Immutable.fromJS({
+            '2019-12-02': {
+              isDefault: false,
+              date: '2019-12-02',
+              slots: [
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'asdf',
+                  deliveryPrice: 5,
+                  daySlotLeadTimeActive: true,
+                },
+                {
+                  id: 'paid-2',
+                  whenCutoff: 'zxcvb',
+                  deliveryPrice: 2,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+            '2019-12-20': {
+              date: '2019-12-20',
+              isDefault: false,
+              slots: [
+                {
+                  id: 'paid-1',
+                  whenCutoff: 'meme',
+                  deliveryPrice: 3,
+                  daySlotLeadTimeActive: true,
+                },
+                {
+                  id: 'paid-2',
+                  whenCutoff: 'qwerty',
+                  deliveryPrice: 2,
+                  daySlotLeadTimeActive: true,
+                },
+              ],
+            },
+          })
+          state = Object.assign({}, state, {
+            boxSummaryDeliveryDays: deliveryDays,
+          })
+        })
+
+        test('should return closest day available', () => {
+          const result = getLandingDay(state)
+          const expected = { date: '2019-12-02', slotId: 'paid-1' }
           expect(result).toEqual(expected)
         })
       })
@@ -616,7 +671,7 @@ describe('utils/deliveries', () => {
           })
         })
       })
-      describe('without a default delivery day set', () => {
+      describe('without a default delivery day set or dslt active state in slots', () => {
         beforeEach(() => {
           deliveryDays = Immutable.fromJS({
             '2016-03-02': {
