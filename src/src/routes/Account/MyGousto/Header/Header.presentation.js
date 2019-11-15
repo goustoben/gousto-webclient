@@ -98,13 +98,15 @@ HeaderPresentation.propTypes = {
 }
 
 HeaderPresentation.defaultProps = {
+  nextOrderId: null,
   nextOrderMessage: {
     primary: null,
     secondary: null,
   },
   nextOrderTracking: null,
   previousOrderMessage: null,
-  getHelpQueryParam: null,
+  getHelpQueryParam: false,
+  trackNextBoxTrackingClick: () => {},
 }
 
 export { HeaderPresentation }

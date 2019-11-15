@@ -15,7 +15,10 @@ class Header extends PureComponent {
   }
 
   static defaultProps = {
-    orders: Immutable.Map({})
+    orders: Immutable.Map({}),
+    loadOrderTrackingInfo: () => {},
+    nextOrderTracking: null,
+    trackNextBoxTrackingClick: () => {},
   }
 
   componentDidUpdate(prevProps) {
