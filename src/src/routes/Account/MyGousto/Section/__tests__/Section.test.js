@@ -29,6 +29,10 @@ describe('Section', () => {
       expect(wrapper.find('.title').exists()).toBe(false)
     })
 
+    test('has the paddingBottom class on the content', () => {
+      expect(wrapper.find('.content').hasClass('paddingBottom')).toBe(true)
+    })
+
     describe('and the title prop is passed', () => {
       beforeEach(() => {
         wrapper.setProps({ title: 'Hello world' })
@@ -46,6 +50,26 @@ describe('Section', () => {
         test('renders an h2 as the title element', () => {
           expect(wrapper.find('.title').type()).toBe('h2')
         })
+      })
+    })
+
+    describe('and the hasPaddingBottom prop is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hasPaddingBottom: true })
+      })
+
+      test('has the paddingBottom class on the content', () => {
+        expect(wrapper.find('.content').hasClass('paddingBottom')).toBe(true)
+      })
+    })
+
+    describe('and the hasPaddingBottom prop is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hasPaddingBottom: false })
+      })
+
+      test('does not have the paddingBottom class on the content', () => {
+        expect(wrapper.find('.content').hasClass('paddingBottom')).toBe(false)
       })
     })
   })

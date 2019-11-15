@@ -41,7 +41,7 @@ class MyGousto extends React.PureComponent {
             <Notification card={card} orders={orders} />
           </div>
         </div>
-        <Section title={headerTitle} largeTitle alternateColour>
+        <Section title={headerTitle} largeTitle alternateColour hasPaddingBottom={false}>
           <HeaderContainer orders={orders} />
         </Section>
         <Section title="Your recent cookbook" alternateColour>
