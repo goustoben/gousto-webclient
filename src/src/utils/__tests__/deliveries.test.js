@@ -307,8 +307,8 @@ describe('utils/deliveries', () => {
         const slots = Immutable.fromJS([
           {
             id: 'paid-active',
-            deliveryPrice: 0,
-            daySlotLeadTimeActive: false,
+            deliveryPrice: 2,
+            daySlotLeadTimeActive: true,
           },
         ])
 
