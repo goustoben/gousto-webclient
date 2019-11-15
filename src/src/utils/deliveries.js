@@ -283,7 +283,7 @@ export function isDaySlotLeadTimeActive(slot) {
 }
 
 export function isFreeSlotAvailable(slots) {
-  return slots.filter(slot => isDaySlotLeadTimeActive(slot) && parseInt(slot.get('deliveryPrice', 0)) === 0).size > 0
+  return slots.filter(slot => isDaySlotLeadTimeActive(slot) && slot.get('deliveryPrice', 0) == 0).size > 0
 }
 
 export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryDaysWithDisabledSlotIds) {

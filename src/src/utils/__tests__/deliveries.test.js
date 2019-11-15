@@ -458,13 +458,13 @@ describe('utils/deliveries', () => {
                 {
                   id: 'paid-1',
                   whenCutoff: 'asdf',
-                  deliveryPrice: 5,
+                  deliveryPrice: .99,
                   daySlotLeadTimeActive: true,
                 },
                 {
                   id: 'paid-2',
                   whenCutoff: 'zxcvb',
-                  deliveryPrice: 2,
+                  deliveryPrice: .1,
                   daySlotLeadTimeActive: true,
                 },
               ],
