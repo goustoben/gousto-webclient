@@ -145,14 +145,14 @@ class OrderConfirmation extends PureComponent {
               </VerticalStages>
             ) : (
                 <div>
-                  <div className={classnames(css.mobileShow, css.rafMobile)}>
-                    <ReferAFriend />
-                  </div>
                   <h3 className={css.marketPlaceTitle}>Gousto Market</h3>
                   <Market
                     ageVerified={ageVerified}
                     toggleAgeVerificationPopUp={this.toggleAgeVerificationPopUp}
                   />
+                  <div className={classnames(css.mobileShow, css.rafMobile)}>
+                    <ReferAFriend />
+                  </div>
                 </div>
             )}
 
