@@ -41,10 +41,15 @@ class OrderProducts extends React.PureComponent {
       <div className={css.mainContainer}>
         {products.size === 0 ? (<img className={css.marketImageRight} src={marketPhotoSrc} alt="Gousto Market products"/>) : null}
         <div>
-          <div className={css.header}>
+          <div className={css.headerRow}>
             <Content contentKeys="mydeliveries_OrderOrderproductsTitle" >
-              <span>Gousto Market</span>
+              <span className={css.header}>Gousto Market</span>
             </Content>
+            {products.size > 0 ? (
+              <Link className={css.editLink} to={routes.client.orderConfirmation.replace(':orderId', orderId)} clientRouted={false}>
+                Edit Items
+              </Link>
+            ) : null}
           </div>
           {products.size === 0 ? (
             <div className={css.marketPromoContainer}>

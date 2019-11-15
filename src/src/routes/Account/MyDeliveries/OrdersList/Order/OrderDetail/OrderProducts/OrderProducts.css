@@ -1,9 +1,18 @@
 @value ScreenXXSMax, ScreenXSMax, ScreenSMMin, ScreenXSMax from 'styles/screenSizes.css';
 @value SpacingXXS, SpacingSM, SpacingXXL from 'sass-loader!styles/spacing.scss';
 
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+}
+
 .header {
 	composes: textBold from 'styles/typography.css';
 	margin-bottom: 1rem;
+}
+
+.editLink {
+  text-transform: uppercase;
 }
 
 .productContainer {
