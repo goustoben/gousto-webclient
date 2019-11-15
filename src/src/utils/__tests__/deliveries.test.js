@@ -33,6 +33,10 @@ const userWithDeliveryTariff = (deliveryTariffId) => {
   })
 }
 
+const mockDate = dateString => {
+  Date.now = jest.fn(() => new Date(dateString))
+}
+
 describe('utils/deliveries', () => {
   describe('getSlot', () => {
     test('should return false if deliveryDays is not an Immutable object', () => {
@@ -382,7 +386,7 @@ describe('utils/deliveries', () => {
     describe('with no date passed in', () => {
       describe('with nearest slots paid', () => {
         beforeEach(() => {
-          Date.now = jest.fn(() => new Date('2019-12-01'))
+          mockDate('2019-12-01')
 
           deliveryDays = Immutable.fromJS({
             '2019-12-02': {
@@ -448,7 +452,7 @@ describe('utils/deliveries', () => {
 
       describe('with closest free slot inactive', () => {
         beforeEach(() => {
-          Date.now = jest.fn(() => new Date('2019-12-01'))
+          mockDate('2019-12-01')
 
           deliveryDays = Immutable.fromJS({
             '2019-12-02': {
@@ -520,7 +524,7 @@ describe('utils/deliveries', () => {
 
       describe('with only paid slots', () => {
         beforeEach(() => {
-          Date.now = jest.fn(() => new Date('2019-12-01'))
+          mockDate('2019-12-01')
 
           deliveryDays = Immutable.fromJS({
             '2019-12-02': {
@@ -1050,6 +1054,78 @@ describe('utils/deliveries', () => {
       test('should keep the selected date', () => {
         const result = getLandingDay(state, false, true)
         const expected = { date: '2017-01-01', slotId: '123-123-123' }
+        expect(result).toEqual(expected)
+      })
+    })
+
+    describe('when default day has only paid slots', () => {
+      beforeEach(() => {
+        mockDate('2019-12-01')
+
+        deliveryDays = Immutable.fromJS({
+          '2019-12-02': {
+            isDefault: true,
+            date: '2019-12-02',
+            slots: [
+              {
+                id: 'paid-1',
+                whenCutoff: 'asdf',
+                deliveryPrice: .99,
+                daySlotLeadTimeActive: true,
+              },
+              {
+                id: 'paid-2',
+                whenCutoff: 'zxcvb',
+                deliveryPrice: .1,
+                daySlotLeadTimeActive: true,
+              },
+            ],
+          },
+          '2019-12-20': {
+            date: '2019-12-20',
+            isDefault: false,
+            slots: [
+              {
+                id: 'free-1',
+                whenCutoff: 'meme',
+                deliveryPrice: 0,
+                daySlotLeadTimeActive: true,
+              },
+              {
+                id: 'paid-1',
+                whenCutoff: 'qwerty',
+                deliveryPrice: 0,
+                daySlotLeadTimeActive: true,
+              },
+            ],
+          },
+          '2019-12-10': {
+            date: '2019-12-10',
+            isDefault: false,
+            slots: [
+              {
+                id: 'free-1',
+                whenCutoff: 'qwerty',
+                deliveryPrice: 0,
+                daySlotLeadTimeActive: false,
+              },
+              {
+                id: 'paid-1',
+                whenCutoff: 'qwerty',
+                deliveryPrice: 2,
+                daySlotLeadTimeActive: true,
+              },
+            ],
+          },
+        })
+        state = Object.assign({}, state, {
+          boxSummaryDeliveryDays: deliveryDays,
+        })
+      })
+
+      test('should return closest day that has active free slots', () => {
+        const result = getLandingDay(state)
+        const expected = { date: '2019-12-20', slotId: 'free-1' }
         expect(result).toEqual(expected)
       })
     })
