@@ -83,8 +83,8 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
           return productsForSaleAccumulator
         }, [])
 
-        const shouldSortProducts = features.getIn(['sortMarketProducts', 'value'], false)
-        const productsToStore = shouldSortProducts ? sortProductsByPrice(productsToDisplay) : productsToDisplay
+        const shouldSortByPrice = features.getIn(['sortMarketProducts', 'value'], false)
+        const productsToStore = shouldSortByPrice ? sortProductsByPrice(productsToDisplay) : productsToDisplay
 
         dispatch({
           type: actionTypes.PRODUCTS_RECEIVE,
