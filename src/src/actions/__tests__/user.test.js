@@ -467,7 +467,7 @@ describe('user actions', () => {
     })
   })
 
-  describe('userTrackOpenEditSection', () => {
+  describe('userTrackToggleEditDateSection', () => {
     test('should dispatch a OrderDeliverySlot Edit tracking action', () => {
       const orderId = '12345'
       const dispatchSpy = jest.fn()
@@ -483,7 +483,7 @@ describe('user actions', () => {
         })
       })
 
-      userActions.userTrackOpenEditSection(orderId)(dispatchSpy, getStateSpy)
+      userActions.userTrackToggleEditDateSection(orderId)(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy).toHaveBeenCalledWith({
         type: actionTypes.TRACKING,

@@ -106,7 +106,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
           ...trackingData
         }
       })
-      dispatch(userActions.userOpenCloseEditSection(orderId, false))
+      dispatch(userActions.userToggleEditDateSection(orderId, false))
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, err.message))
       dispatch({

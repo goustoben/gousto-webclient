@@ -63,8 +63,8 @@ const userActions = {
   userVerifyAge,
   userProspect,
   userOpenCloseOrderCard,
-  userOpenCloseEditSection,
-  userTrackOpenEditSection,
+  userToggleEditDateSection,
+  userTrackToggleEditDateSection,
   userTrackDateSelected,
   userTrackSlotSelected,
   userToggleExpiredBillingModal,
@@ -438,7 +438,7 @@ function userOpenCloseOrderCard(orderId, isCollapsed) {
   }
 }
 
-function userOpenCloseEditSection(orderId, editDeliveryMode) {
+function userToggleEditDateSection(orderId, editDeliveryMode) {
   return dispatch => {
     dispatch({
       type: actionTypes.USER_ORDER_EDIT_OPEN_CLOSE,
@@ -448,7 +448,7 @@ function userOpenCloseEditSection(orderId, editDeliveryMode) {
   }
 }
 
-function userTrackOpenEditSection(orderId) {
+function userTrackToggleEditDateSection(orderId) {
   return (dispatch, getState) => {
     const originalSlotId = getState().user.getIn(['newOrders', orderId, 'deliverySlotId'])
     const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])

@@ -7,8 +7,8 @@ import orderActions from 'actions/order'
 import actions from 'actions/user'
 
 jest.mock('actions/user', () => ({
-  userTrackOpenEditSection: jest.fn(),
-  userOpenCloseEditSection: jest.fn()
+  userTrackToggleEditDateSection: jest.fn(),
+  userToggleEditDateSection: jest.fn()
 }))
 
 jest.mock('actions/order', () => ({
@@ -79,13 +79,13 @@ describe('OrderDelivery',() => {
     })
 
     describe('onClickFunction', () => {
-      test('should dispatch userTrackOpenEditSection if editDeliveryMode is false', () => {
+      test('should dispatch userTrackToggleEditDateSection if editDeliveryMode is false', () => {
         wrapper.instance().onClickFunction()
 
-        expect(actions.userTrackOpenEditSection).toHaveBeenCalled()
+        expect(actions.userTrackToggleEditDateSection).toHaveBeenCalled()
       })
 
-      test('should NOT dispatch userTrackOpenEditSection if editDeliveryMode is true', () => {
+      test('should NOT dispatch userTrackToggleEditDateSection if editDeliveryMode is true', () => {
         wrapper = shallow(<OrderDelivery
           date="Monday 17 August"
           timeStart="6am"
@@ -98,13 +98,13 @@ describe('OrderDelivery',() => {
         />,{context})
         wrapper.instance().onClickFunction()
 
-        expect(actions.userTrackOpenEditSection).not.toHaveBeenCalled()
+        expect(actions.userTrackToggleEditDateSection).not.toHaveBeenCalled()
       })
 
-      test('should dispatch userOpenCloseEditSection with orderId and !editDeliveryMode', () => {
+      test('should dispatch userToggleEditDateSection with orderId and !editDeliveryMode', () => {
         wrapper.instance().onClickFunction()
 
-        expect(actions.userOpenCloseEditSection).toHaveBeenCalledWith(8, true)
+        expect(actions.userToggleEditDateSection).toHaveBeenCalledWith(8, true)
       })
 
       test('should dispatch clearUpdateDateErrorAndPending', () => {

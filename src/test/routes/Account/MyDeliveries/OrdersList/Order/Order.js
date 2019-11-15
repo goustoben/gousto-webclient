@@ -19,7 +19,7 @@ describe('Order', function() {
   let sandbox
   let wrapper
   let userOpenCloseOrderCard
-  let userOpenCloseEditSection
+  let userToggleEditDateSection
   const context = {
     store: {
       getState: () => ({
@@ -35,7 +35,7 @@ describe('Order', function() {
     sandbox = sinon.sandbox.create()
     context.store.dispatch = sandbox.spy()
     userOpenCloseOrderCard = sandbox.spy(actions, 'userOpenCloseOrderCard')
-    userOpenCloseEditSection = sandbox.spy(actions, 'userOpenCloseEditSection')
+    userToggleEditDateSection = sandbox.spy(actions, 'userToggleEditDateSection')
   })
 
   afterEach(function(done) {
@@ -113,8 +113,8 @@ describe('Order', function() {
       expect(context.store.dispatch).to.have.been.calledTwice
       expect(userOpenCloseOrderCard).to.have.been.calledOnce
       expect(userOpenCloseOrderCard).calledWithExactly(orderIdSample, true)
-      expect(userOpenCloseEditSection).to.have.been.calledOnce
-      expect(userOpenCloseEditSection).calledWithExactly(orderIdSample, false)
+      expect(userToggleEditDateSection).to.have.been.calledOnce
+      expect(userToggleEditDateSection).calledWithExactly(orderIdSample, false)
     })
 
     it('should render <OrderButtonRestore> when the order is restorable', function() {

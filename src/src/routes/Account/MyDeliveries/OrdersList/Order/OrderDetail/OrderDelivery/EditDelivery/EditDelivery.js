@@ -68,7 +68,7 @@ class EditDelivery extends React.PureComponent {
     const willBePending = nextProps.isPendingUpdateDayAndSlot || nextProps.isPendingUpdateAddress
     const postError = this.props.isErrorUpdateDayAndSlot !== null || this.props.isErrorUpdateAddress !== null
     if (isPending && !willBePending && !postError) {
-      this.context.store.dispatch(userActions.userOpenCloseEditSection(this.props.orderId, !this.props.editDeliveryMode))
+      this.context.store.dispatch(userActions.userToggleEditDateSection(this.props.orderId, !this.props.editDeliveryMode))
     }
     if (this.props.deliveryDays !== nextProps.deliveryDays || this.props.recipesStock !== nextProps.recipesStock) {
       const { deliveryDaysOptions, slotsOptions } = this.constructDropdownOptions(nextProps)
@@ -91,7 +91,7 @@ class EditDelivery extends React.PureComponent {
   }
 
   onCancelFunction() {
-    this.context.store.dispatch(userActions.userOpenCloseEditSection(this.props.orderId, !this.props.editDeliveryMode))
+    this.context.store.dispatch(userActions.userToggleEditDateSection(this.props.orderId, !this.props.editDeliveryMode))
     this.context.store.dispatch(userActions.userPendingAddressFormData(null, this.props.orderId))
   }
 

@@ -52,9 +52,9 @@ class OrderDelivery extends React.PureComponent {
     const { orderId, editDeliveryMode, clearUpdateDateErrorAndPending } = this.props
 
     if (!editDeliveryMode) {
-      this.context.store.dispatch(userActions.userTrackOpenEditSection(orderId))
+      this.context.store.dispatch(userActions.userTrackToggleEditDateSection(orderId))
     }
-    this.context.store.dispatch(userActions.userOpenCloseEditSection(orderId, !editDeliveryMode))
+    this.context.store.dispatch(userActions.userToggleEditDateSection(orderId, !editDeliveryMode))
     clearUpdateDateErrorAndPending()
 
   }

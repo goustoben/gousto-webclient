@@ -95,7 +95,7 @@ class Order extends React.PureComponent {
 
   componentDidMount() {
     this.context.store.dispatch(actions.userOpenCloseOrderCard(this.props.orderId, true))
-    this.context.store.dispatch(actions.userOpenCloseEditSection(this.props.orderId, false))
+    this.context.store.dispatch(actions.userToggleEditDateSection(this.props.orderId, false))
   }
 
   render() {
