@@ -27,7 +27,7 @@ const AboutYouStep = ({ submit, userProspect, nextStepName, receiveRef, checkout
       <AboutYouSection receiveRef={receiveRef} />
       <CheckoutButton
         onClick={handleSubmit}
-        stepName={`next: ${nextStepName}`}
+        stepName={`Next: ${nextStepName}`}
       />
     </div>
   )
