@@ -1,9 +1,5 @@
-import sinon from 'sinon'
-
 import Immutable from 'immutable'
-import util, {
-  DEFAULT_MESSAGE_ID,
-} from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/EditDelivery/util'
+import util from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate//util'
 
 const orderDeliveryDays = Immutable.fromJS({
   aaa: {
@@ -118,43 +114,22 @@ describe('util', () => {
     )
 
     expect(deliveryDaysOptions).toEqual([
-      {
-        value: DEFAULT_MESSAGE_ID,
-        label: 'Please select a delivery date',
-        disabled: false,
-        icon: '',
-      },
-      { value: '46', label: '2017-02-06', disabled: true, icon: 'full-box' },
-      { value: '47', label: '2017-02-07', disabled: false, icon: '' },
+      { value: '46', label: 'Mon 6 Feb', date:'2017-02-06', disabled: true, icon: 'full-box' },
+      { value: '47', label: 'Tue 7 Feb', date: '2017-02-07', disabled: false, icon: '' },
     ])
+
     expect(slotsOptions).toEqual({
-      [DEFAULT_MESSAGE_ID]: [
-        {
-          value: DEFAULT_MESSAGE_ID,
-          coreSlotId: null,
-          label: 'Please select a delivery slot',
-          subLabel: '',
-          isDefaultSlot: false,
-        },
-      ],
       46: [
         {
-          value: DEFAULT_MESSAGE_ID,
-          coreSlotId: null,
-          label: 'Please select a delivery slot',
-          subLabel: '',
-          isDefaultSlot: false,
-        },
-        {
-          value: 'aaa3',
-          coreSlotId: 's3',
+          uuid: 'aaa3',
+          value: 's3',
           label: '8am - 6pm',
           subLabel: 'Free',
           isDefaultSlot: true,
         },
         {
-          value: 'aaa4',
-          coreSlotId: 's4',
+          uuid: 'aaa4',
+          value: 's4',
           label: '8am - 12pm',
           subLabel: '£1.99',
           isDefaultSlot: false,
@@ -162,22 +137,15 @@ describe('util', () => {
       ],
       47: [
         {
-          value: DEFAULT_MESSAGE_ID,
-          coreSlotId: null,
-          label: 'Please select a delivery slot',
-          subLabel: '',
-          isDefaultSlot: false,
-        },
-        {
-          value: 'aaa5',
-          coreSlotId: 's5',
+          uuid: 'aaa5',
+          value: 's5',
           label: '8am - 6pm',
           subLabel: 'Free',
           isDefaultSlot: true,
         },
         {
-          value: 'aaa6',
-          coreSlotId: 's6',
+          uuid: 'aaa6',
+          value: 's6',
           label: '8am - 12pm',
           subLabel: '£1.99',
           isDefaultSlot: false,

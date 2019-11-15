@@ -63,7 +63,10 @@ const userActions = {
   userVerifyAge,
   userProspect,
   userOpenCloseOrderCard,
-  userOpenCloseEditSection,
+  userToggleEditDateSection,
+  userTrackToggleEditDateSection,
+  userTrackDateSelected,
+  userTrackSlotSelected,
   userToggleExpiredBillingModal,
   userAddPaymentMethod,
   userLoadAddresses,
@@ -435,12 +438,61 @@ function userOpenCloseOrderCard(orderId, isCollapsed) {
   }
 }
 
-function userOpenCloseEditSection(orderId, editDeliveryMode) {
+function userToggleEditDateSection(orderId, editDeliveryMode) {
   return dispatch => {
     dispatch({
       type: actionTypes.USER_ORDER_EDIT_OPEN_CLOSE,
       orderId,
       editDeliveryMode
+    })
+  }
+}
+
+function userTrackToggleEditDateSection(orderId) {
+  return (dispatch, getState) => {
+    const originalSlotId = getState().user.getIn(['newOrders', orderId, 'deliverySlotId'])
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: 'OrderDeliverySlot Edit',
+        isCurrentPeriod,
+        order_id: orderId,
+        original_deliveryslot_id: originalSlotId,
+      }
+    })
+  }
+}
+
+function userTrackDateSelected(orderId, originalSlotId, newSlotId) {
+  return (dispatch, getState) => {
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: 'OrderDeliveryDate Selected',
+        isCurrentPeriod,
+        order_id: orderId,
+        original_deliveryslot_id: originalSlotId,
+        new_deliveryslot_id: newSlotId,
+      }
+    })
+  }
+}
+
+function userTrackSlotSelected(orderId, originalSlotId, newSlotId) {
+  return (dispatch, getState) => {
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: 'OrderDeliverySlot Selected',
+        isCurrentPeriod,
+        order_id: orderId,
+        original_deliveryslot_id: originalSlotId,
+        new_deliveryslot_id: newSlotId,
+      }
     })
   }
 }

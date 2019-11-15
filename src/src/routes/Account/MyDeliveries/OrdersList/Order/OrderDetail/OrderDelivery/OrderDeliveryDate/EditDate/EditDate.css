@@ -1,0 +1,23 @@
+@value ScreenXXSMax from 'styles/screenSizes.css';
+
+.row {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 0.625rem;
+
+	@media ScreenXXSMax {
+		display: block;
+	}
+}
+
+.dropDownContainer {
+	flex-basis: 49%;
+}
+
+.editDeliveryOuterContainer {
+	margin-top: 0.625rem;
+}
+
+.button {
+	margin-bottom: 0.625rem;
+}

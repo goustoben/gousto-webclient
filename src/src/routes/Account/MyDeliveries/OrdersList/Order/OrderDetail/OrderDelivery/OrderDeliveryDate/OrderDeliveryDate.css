@@ -1,24 +1,10 @@
 @value ScreenXSMax from 'styles/screenSizes.css';
 
-.deliveryDetailsWrapper {
-	display: flex;
-}
-
 .bold {
 	composes: textBold from 'styles/typography.css';
 }
 
 .header {
-	margin-bottom: 20px;
-	font-size: 1.125rem;
-}
-
-.subSection {
-	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
-	flex-basis: 100%;
-}
-
-.details {
 	display: flex;
 	justify-content: space-between;
 }
@@ -32,6 +18,8 @@
 	font-size: 0.875rem;
 }
 
-.capitalize {
-	text-transform: capitalize;
+.button {
+	@media ScreenXSMax {
+		display: block;
+	}
 }

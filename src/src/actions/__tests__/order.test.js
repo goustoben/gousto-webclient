@@ -14,7 +14,7 @@ import actionStatus from 'actions/status'
 import actionTypes from 'actions/actionTypes'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
-import orderActions from '../order'
+import orderActions, { orderUpdateDayAndSlot, clearUpdateDateErrorAndPending } from '../order'
 
 jest.mock('apis/orders')
 jest.mock('actions/orderConfirmation')
@@ -647,6 +647,147 @@ describe('order actions', () => {
         expect(fetchDeliveryDays.mock.calls[0][1]).toEqual(expectedReqData)
         expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
       })
+    })
+  })
+
+  describe('orderUpdateDayAndSlot', () => {
+    let slotId
+    let slotDate
+    let availableDays
+
+    beforeEach(() => {
+      orderId = '12345'
+      coreDayId = 3
+      coreSlotId = 8
+      slotId = 'slotid123'
+      slotDate = '2019-08-10'
+      availableDays = [{ id: '5' }, { id: '6' }]
+
+      getStateSpy = () => ({
+        auth: Immutable.Map({ accessToken: 'access-token' }),
+        user: Immutable.Map({
+          newOrders: Immutable.Map({
+            '12345': Immutable.Map({
+              deliverySlotId: 'deliverySlotId',
+              isCurrentPeriod: true
+            })
+          })
+        })
+      })
+    })
+
+    it('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as pending', async () => {
+      await orderUpdateDayAndSlot(orderId, coreSlotId, slotId, slotDate, availableDays)(dispatchSpy, getStateSpy)
+
+      expect(pending).toHaveBeenCalledTimes(2)
+      expect(pending.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
+      expect(pending.mock.calls[0][1]).toEqual(true)
+      expect(pending.mock.calls[1][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
+      expect(pending.mock.calls[1][1]).toEqual(false)
+    })
+
+    it('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as errored if it errors', async () => {
+      const err = new Error('oops')
+      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(err))
+      ))
+
+      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatchSpy, getStateSpy)
+
+      expect(pending).toHaveBeenCalledTimes(2)
+      expect(pending.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
+      expect(pending.mock.calls[0][1]).toEqual(true)
+      expect(pending.mock.calls[1][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
+      expect(pending.mock.calls[1][1]).toEqual(false)
+
+      expect(error).toHaveBeenCalledTimes(2)
+      expect(error.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
+      expect(error.mock.calls[0][1]).toEqual(null)
+      expect(error.mock.calls[1][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
+      expect(error.mock.calls[1][1]).toEqual(err.message)
+    })
+
+    it('should map the arguments through to saveOrder and dispatch the action with the correct arguments', async () => {
+      const updatedOrder = {
+        data: {
+          deliveryDate: '01-01-2017',
+          deliverySlot: {
+            deliveryStart: '05:00:00',
+            deliveryEnd: '07:00:00',
+          },
+        },
+      }
+      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+        new Promise(resolve => resolve(updatedOrder))
+      ))
+
+      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatchSpy, getStateSpy)
+
+      expect(saveOrder).toHaveBeenCalled()
+      const order = {
+        delivery_day_id: 3,
+        delivery_slot_id: 8,
+        day_slot_lead_time_id: 'day-slot-lead-time-uuid'
+      }
+
+      expect(saveOrder.mock.calls[0][0]).toEqual('access-token')
+      expect(saveOrder.mock.calls[0][1]).toEqual('12345')
+      expect(saveOrder.mock.calls[0][2]).toEqual(order)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT,
+        orderId: '12345',
+        coreDayId: 3,
+        slotId: 8,
+        deliveryDay: '01-01-2017',
+        deliverySlotStart: '05:00:00',
+        deliverySlotEnd: '07:00:00',
+        trackingData: {
+          actionType: 'OrderDeliverySlot Saved',
+          order_id: '12345',
+          isCurrentPeriod: true,
+          original_deliveryslot_id: 'deliverySlotId',
+          new_deliveryslot_id: 'slotid123'
+        }
+      })
+    })
+
+    it('should dispatch the SaveAttemptFailed action with the correct arguments if saveOrder fails', async () => {
+      const error = new Error("error message")
+
+      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(error))
+      ))
+
+      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliverySlot SaveAttemptFailed',
+          error: 'error message',
+          order_id: '12345',
+          isCurrentPeriod: true,
+          original_deliveryslot_id: 'deliverySlotId',
+          new_deliveryslot_id: 'slotid123'
+        }
+      })
+    })
+  })
+
+  describe('clearUpdateDateErrorAndPending', () => {
+    test('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as NOT pending', () => {
+      clearUpdateDateErrorAndPending()(dispatchSpy)
+
+      expect(pending.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
+      expect(pending.mock.calls[0][1]).toEqual(null)
+    })
+
+    test('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as NOT errored', () => {
+      clearUpdateDateErrorAndPending()(dispatchSpy)
+
+      expect(error.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
+      expect(error.mock.calls[0][1]).toEqual(null)
     })
   })
 })

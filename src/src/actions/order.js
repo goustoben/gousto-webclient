@@ -62,34 +62,61 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
     dispatch(statusActions.pending(actionTypes.ORDER_SAVE, false))
   })
 
-export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId) => (
+export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, slotDate, availableDeliveryDays) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, null))
     dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, true))
 
-    const { basket, boxSummaryDeliveryDays } = getState()
-    const date = basket.get('date')
-    const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
+    const slot = getSlot(availableDeliveryDays, slotDate, slotId)
+
+    const originalSlotId = getState().user.getIn(['newOrders', orderId, 'deliverySlotId'])
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+    const trackingData = {
+      order_id: orderId,
+      isCurrentPeriod,
+      original_deliveryslot_id: originalSlotId,
+      new_deliveryslot_id: slotId,
+    }
 
     try {
       const order = {
         delivery_day_id: coreDayId,
         delivery_slot_id: coreSlotId,
-        day_slot_lead_time_id: slot.get('daySlotLeadTimeId', '')
+        day_slot_lead_time_id: slot.get('daySlotLeadTimeId', ''),
       }
       const accessToken = getState().auth.get('accessToken')
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliverySlot SaveAttempt',
+          ...trackingData
+        }
+      })
       const { data: updatedOrder } = await ordersApi.saveOrder(accessToken, orderId, order)
       dispatch({
         type: actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT,
         orderId,
         coreDayId,
-        slotId,
+        slotId: coreSlotId,
         deliveryDay: updatedOrder.deliveryDate,
         deliverySlotStart: updatedOrder.deliverySlot.deliveryStart,
         deliverySlotEnd: updatedOrder.deliverySlot.deliveryEnd,
+        trackingData: {
+          actionType: 'OrderDeliverySlot Saved',
+          ...trackingData
+        }
       })
+      dispatch(userActions.userToggleEditDateSection(orderId, false))
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, err.message))
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliverySlot SaveAttemptFailed',
+          error: err.message,
+          ...trackingData
+        }
+      })
     } finally {
       dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, false))
     }
@@ -452,6 +479,13 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
     } finally {
       dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_CANCEL, false))
     }
+  }
+)
+
+export const clearUpdateDateErrorAndPending = () => (
+  (dispatch) => {
+    dispatch(statusActions.pending(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, null))
+    dispatch(statusActions.error(actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT, null))
   }
 )
 

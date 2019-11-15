@@ -1,4 +1,5 @@
 import humanTimeFormat from 'utils/timeFormat'
+import moment from 'moment'
 
 export const DEFAULT_MESSAGE_ID = 'default-message'
 
@@ -63,39 +64,28 @@ const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipes
   const daysWithStock = Object.entries(days).filter(([, day]) =>
     (!day.noStock && day.alternateDeliveryDay === null) || day.coreDayId === orderCoreDeliveryDayId
   )
-  const deliveryDaysOptions = [{
-    value: DEFAULT_MESSAGE_ID,
-    label: 'Please select a delivery date',
-    disabled: false,
-    icon: '',
-  }]
+  const deliveryDaysOptions = []
   deliveryDaysOptions.push(...daysWithStock.map(([, day]) => {
     const isDateTaken = takenDatesIds.some(takenDate => takenDate === day.coreDayId)
 
     return {
       value: day.coreDayId,
-      label: day.date,
+      label: moment(day.date).format('ddd D MMM'),
+      date: day.date,
       disabled: isDateTaken,
       icon: isDateTaken ? 'full-box' : '',
     }
   }))
   const slotsOptions = {}
-  const defaultSlotOption = {
-    value: DEFAULT_MESSAGE_ID,
-    coreSlotId: null,
-    label: 'Please select a delivery slot',
-    subLabel: '',
-    isDefaultSlot: false,
-  }
-  slotsOptions[DEFAULT_MESSAGE_ID] = [defaultSlotOption]
+
   daysWithStock.forEach(([, day]) => {
-    slotsOptions[day.coreDayId] = [defaultSlotOption]
+    slotsOptions[day.coreDayId] = []
     slotsOptions[day.coreDayId].push(...day.slots
       .filter(slot => !slot.noStock || (slot.id === orderDeliverySlotId && day.coreDayId === orderCoreDeliveryDayId))
       .map(slot => (
         {
-          value: slot.id, // uuid
-          coreSlotId: slot.coreSlotId,
+          value: slot.coreSlotId,
+          uuid: slot.id,
           label: `${humanTimeFormat(slot.deliveryStartTime, 'hour')} - ${humanTimeFormat(slot.deliveryEndTime, 'hour')}`,
           subLabel: slot.deliveryPrice === '0.00' ? 'Free' : `£${slot.deliveryPrice}`,
           isDefaultSlot: slot.isDefault,

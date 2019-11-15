@@ -1265,12 +1265,12 @@ describe('userData actions', function() {
     })
   })
 
-  describe('userOpenCloseEditSection', function() {
+  describe('userToggleEditDateSection', function() {
     const orderId = 'skdjfhs'
 
     it('fire USER_ORDER_EDIT_OPEN_CLOSE with orderId and a bool', async function() {
       const editDeliveryMode = false
-      await userActions.userOpenCloseEditSection(orderId, editDeliveryMode)(dispatchSpy, getStateSpy)
+      await userActions.userToggleEditDateSection(orderId, editDeliveryMode)(dispatchSpy, getStateSpy)
       expect(dispatchSpy.callCount).to.equal(1)
       expect(dispatchSpy.firstCall).to.be.calledWithExactly({
         type: actionTypes.USER_ORDER_EDIT_OPEN_CLOSE,

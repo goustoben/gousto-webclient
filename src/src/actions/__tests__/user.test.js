@@ -466,4 +466,98 @@ describe('user actions', () => {
       expect(logger.error).toHaveBeenCalled()
     })
   })
+
+  describe('userTrackToggleEditDateSection', () => {
+    test('should dispatch a OrderDeliverySlot Edit tracking action', () => {
+      const orderId = '12345'
+      const dispatchSpy = jest.fn()
+      const getStateSpy = () => ({
+        auth: Immutable.Map({ accessToken: 'access-token' }),
+        user: Immutable.Map({
+          newOrders: Immutable.Map({
+            '12345': Immutable.Map({
+              deliverySlotId: 'slotid123',
+              isCurrentPeriod: true
+            })
+          })
+        })
+      })
+
+      userActions.userTrackToggleEditDateSection(orderId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliverySlot Edit',
+          order_id: '12345',
+          isCurrentPeriod: true,
+          original_deliveryslot_id: 'slotid123',
+        }
+      })
+    })
+  })
+
+  describe('userTrackDateSelected', () => {
+    test('should dispatch a OrderDeliveryDate Selected tracking action', () => {
+      const orderId = '12345'
+      const originalSlotId = 'slotid123'
+      const newSlotId = 'slotid456'
+      const dispatchSpy = jest.fn()
+      const getStateSpy = () => ({
+        auth: Immutable.Map({ accessToken: 'access-token' }),
+        user: Immutable.Map({
+          newOrders: Immutable.Map({
+            '12345': Immutable.Map({
+              isCurrentPeriod: true
+            })
+          })
+        })
+      })
+
+      userActions.userTrackDateSelected(orderId, originalSlotId, newSlotId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliveryDate Selected',
+          order_id: '12345',
+          isCurrentPeriod: true,
+          original_deliveryslot_id: 'slotid123',
+          new_deliveryslot_id: 'slotid456'
+        }
+      })
+    })
+  })
+
+  describe('userTrackSlotSelected', () => {
+    test('should dispatch a OrderDeliverySlot Selected tracking action', () => {
+      const orderId = '12345'
+      const originalSlotId = 'slotid123'
+      const newSlotId = 'slotid456'
+      const dispatchSpy = jest.fn()
+      const getStateSpy = () => ({
+        auth: Immutable.Map({ accessToken: 'access-token' }),
+        user: Immutable.Map({
+          newOrders: Immutable.Map({
+            '12345': Immutable.Map({
+              isCurrentPeriod: true
+            })
+          })
+        })
+      })
+
+      userActions.userTrackSlotSelected(orderId, originalSlotId, newSlotId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliverySlot Selected',
+          order_id: '12345',
+          isCurrentPeriod: true,
+          original_deliveryslot_id: 'slotid123',
+          new_deliveryslot_id: 'slotid456'
+        }
+      })
+    })
+  })
 })
