@@ -2,7 +2,7 @@ import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 import pricing from 'apis/pricing'
 import actions from 'actions/pricing'
-import { DeliveryTariffTypes } from 'utils/deliveries'
+import { deliveryTariffTypes } from 'utils/deliveries'
 
 jest.mock('apis/pricing')
 
@@ -130,7 +130,7 @@ describe('pricing actions', () => {
       const slotId = 12
       const promoCode = '1234'
       const daySlotLeadTimeId = 987
-      const deliveryTariffId = DeliveryTariffTypes['FREE_NDD']
+      const deliveryTariffId = deliveryTariffTypes['FREE_NDD']
 
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({
@@ -184,7 +184,7 @@ describe('pricing actions', () => {
       const promoCode = '1234'
       const tariffId = '12345678'
       const daySlotLeadTimeId = 987
-      const deliveryTariffId = DeliveryTariffTypes['PAID_NDD']
+      const deliveryTariffId = deliveryTariffTypes['PAID_NDD']
 
       getStateSpy.mockReturnValue({
         auth: Immutable.fromJS({

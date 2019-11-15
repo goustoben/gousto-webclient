@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import { referAFriend } from 'apis/user'
 import { customerSignup } from 'apis/customers'
 
-import { DeliveryTariffTypes } from 'utils/deliveries'
+import { deliveryTariffTypes } from 'utils/deliveries'
 
 import userActions, {
   userReferAFriend,
@@ -273,7 +273,7 @@ describe('user actions', () => {
 
         describe('when not in NDD experiment', () => {
           it('should call customerSignup with the correct delivery_tariff_id', async () => {
-            setNddExperiment(DeliveryTariffTypes.NON_NDD)
+            setNddExperiment(deliveryTariffTypes.NON_NDD)
 
             await userSubscribe()(dispatch, getState)
 
@@ -288,7 +288,7 @@ describe('user actions', () => {
 
         describe('when in NDD experiment', () => {
           it('should call customerSignup with the correct delivery_tariff_id', async () => {
-            setNddExperiment(DeliveryTariffTypes.FREE_NDD)
+            setNddExperiment(deliveryTariffTypes.FREE_NDD)
 
             await userSubscribe()(dispatch, getState)
 

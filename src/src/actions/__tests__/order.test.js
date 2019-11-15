@@ -532,11 +532,11 @@ describe('order actions', () => {
       getStateSpy = jest.fn().mockReturnValue({
         user: Immutable.fromJS({
           addresses: {789: {postcode: 'AA11 2BB'}},
-          deliveryTariffId: deliveriesUtils.DeliveryTariffTypes.FREE_NDD
+          deliveryTariffId: deliveriesUtils.deliveryTariffTypes.FREE_NDD
         }),
         features: Immutable.fromJS({
           ndd: {
-            value: deliveriesUtils.DeliveryTariffTypes.FREE_NDD,
+            value: deliveriesUtils.deliveryTariffTypes.FREE_NDD,
             experiment: false,
           }
         }),
@@ -584,7 +584,7 @@ describe('order actions', () => {
         }),
         features: Immutable.fromJS({
           ndd: {
-            value: deliveriesUtils.DeliveryTariffTypes.NON_NDD,
+            value: deliveriesUtils.deliveryTariffTypes.NON_NDD,
             experiment: false,
           }
         }),
@@ -611,7 +611,7 @@ describe('order actions', () => {
         direction: 'asc',
         postcode: 'AA11 2BB',
         ndd: 'false',
-        delivery_tariff_id: deliveriesUtils.DeliveryTariffTypes.NON_NDD,
+        delivery_tariff_id: deliveriesUtils.deliveryTariffTypes.NON_NDD,
       }
 
       expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull()
@@ -640,7 +640,7 @@ describe('order actions', () => {
           direction: 'asc',
           postcode: 'AA11 2BB',
           ndd: 'true',
-          delivery_tariff_id: deliveriesUtils.DeliveryTariffTypes.FREE_NDD,
+          delivery_tariff_id: deliveriesUtils.deliveryTariffTypes.FREE_NDD,
         }
 
         expect(fetchDeliveryDays.mock.calls[0][0]).toBeNull

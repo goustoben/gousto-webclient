@@ -1,4 +1,4 @@
-import { DeliveryTariffTypes } from 'utils/deliveries'
+import { deliveryTariffTypes } from 'utils/deliveries'
 
 export const isCollectionsFeatureEnabled = ({ features }) => (
   features

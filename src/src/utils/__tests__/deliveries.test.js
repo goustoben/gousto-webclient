@@ -18,7 +18,7 @@ import GoustoException from 'utils/GoustoException'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import * as features from 'selectors/features'
 import {
-  DeliveryTariffTypes,
+  deliveryTariffTypes,
   getDeliveryTariffId,
   getNDDFeatureFlagVal,
   isDaySlotLeadTimeActive,
@@ -275,7 +275,7 @@ describe('utils/deliveries', () => {
         const slots = Immutable.fromJS([
           {
             id: 'free-active',
-            deliveryPrice: 0,
+            deliveryPrice: '0',
             daySlotLeadTimeActive: true,
           },
         ])
@@ -2404,28 +2404,28 @@ describe('utils/deliveries', () => {
 
   describe('getDeliveryTariffId', () => {
     test('it should return a user\'s existing tariff ID', () => {
-      const expectedTariff = DeliveryTariffTypes.PAID_NDD
+      const expectedTariff = deliveryTariffTypes.PAID_NDD
 
-      const resolvedTariff = getDeliveryTariffId(userWithDeliveryTariff(expectedTariff), DeliveryTariffTypes.FREE_NDD)
+      const resolvedTariff = getDeliveryTariffId(userWithDeliveryTariff(expectedTariff), deliveryTariffTypes.FREE_NDD)
       expect(resolvedTariff).toEqual(expectedTariff)
     })
 
     test('it should return the experiment tariff without a user', () => {
-      const expectedTariff = DeliveryTariffTypes.NON_NDD
+      const expectedTariff = deliveryTariffTypes.NON_NDD
 
       const resolvedTariff = getDeliveryTariffId(null, expectedTariff)
       expect(resolvedTariff).toEqual(expectedTariff)
     })
 
     test('it should return a default if invalid tariff ID is passed through as experiment value', () => {
-      const expectedTariff = DeliveryTariffTypes.NON_NDD
+      const expectedTariff = deliveryTariffTypes.NON_NDD
 
       const resolvedTariff = getDeliveryTariffId(null, 'unknown-tariff')
       expect(resolvedTariff).toEqual(expectedTariff)
     })
 
     test('it should return a default if invalid tariff ID neither arguments are provided', () => {
-      const expectedTariff = DeliveryTariffTypes.NON_NDD
+      const expectedTariff = deliveryTariffTypes.NON_NDD
 
       const resolvedTariff = getDeliveryTariffId(null, null)
       expect(resolvedTariff).toEqual(expectedTariff)
@@ -2435,9 +2435,9 @@ describe('utils/deliveries', () => {
   describe('getNDDFeatureFlagVal', () => {
     test('it should return true when user is already set to a free NDD tariff.', () => {
       const state = {
-        user: userWithDeliveryTariff(DeliveryTariffTypes.FREE_NDD),
+        user: userWithDeliveryTariff(deliveryTariffTypes.FREE_NDD),
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
         }),
       }
 
@@ -2448,9 +2448,9 @@ describe('utils/deliveries', () => {
 
     test('it should return true when user is already set to a paid NDD tariff.', () => {
       const state = {
-        user: userWithDeliveryTariff(DeliveryTariffTypes.PAID_NDD),
+        user: userWithDeliveryTariff(deliveryTariffTypes.PAID_NDD),
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
         }),
       }
 
@@ -2462,7 +2462,7 @@ describe('utils/deliveries', () => {
     test('it should return true when a new user is on the free NDD tariff.', () => {
       const state = {
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.FREE_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.FREE_NDD}),
         }),
       }
 
@@ -2474,7 +2474,7 @@ describe('utils/deliveries', () => {
     test('it should return true when a new user is on the paid NDD tariff.', () => {
       const state = {
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.PAID_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.PAID_NDD}),
         }),
       }
 
@@ -2486,7 +2486,7 @@ describe('utils/deliveries', () => {
     test('it should return false when a new user is on a non NDD tariff.', () => {
       const state = {
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
         }),
       }
 
@@ -2497,9 +2497,9 @@ describe('utils/deliveries', () => {
 
     test('it should return false when an existing user is not in the experiment.', () => {
       const state = {
-        user: userWithDeliveryTariff(DeliveryTariffTypes.NON_NDD),
+        user: userWithDeliveryTariff(deliveryTariffTypes.NON_NDD),
         features: Immutable.Map({
-          ndd: Immutable.Map({value: DeliveryTariffTypes.NON_NDD}),
+          ndd: Immutable.Map({value: deliveryTariffTypes.NON_NDD}),
         }),
       }
 
