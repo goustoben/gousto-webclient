@@ -61,7 +61,7 @@ class OrderCancelButton extends React.PureComponent {
             </Content>
           </Alert>
           : null}
-        <Button color={'negative'} onClick={this.handleCancelBox}>
+        <Button color={'negative'} onClick={this.handleCancelBox} className={css.cancelButton}>
           Cancel delivery
         </Button>
       </div>
