@@ -74,17 +74,17 @@ export const productsLoadProducts = (cutoffDate, periodId, {reload = false} = {}
       dispatch(statusActions.pending(actionTypes.PRODUCTS_RECEIVE, true))
       try {
         const { data: productsFromApi } = await fetchProducts(auth.get('accessToken'), cutoffDate, reqData)
-        const productsInStock = productsFromApi.reduce((productsInStockAccumulator, product) => {
+        const productsToDisplay = productsFromApi.reduce((productsForSaleAccumulator, product) => {
           product.stock = productsStock.get(product.id)
-          if (product.stock > 0 && product.isForSale) {
-            productsInStockAccumulator.push(product)
+          if (product.isForSale) {
+            productsForSaleAccumulator.push(product)
           }
 
-          return productsInStockAccumulator
+          return productsForSaleAccumulator
         }, [])
 
         const shouldSortProducts = features.getIn(['sortMarketProducts', 'value'], false)
-        const productsToStore = shouldSortProducts ? sortProductsByPrice(productsInStock) : productsInStock
+        const productsToStore = shouldSortProducts ? sortProductsByPrice(productsToDisplay) : productsToDisplay
 
         dispatch({
           type: actionTypes.PRODUCTS_RECEIVE,
