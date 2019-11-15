@@ -143,6 +143,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
     const active = delivery.get('active')
     const unavailableReason = delivery.get('unavailableReason')
     const alternateDeliveryDay = delivery.get('alternateDeliveryDay')
+    const deliveryDayId = delivery.get('id')
 
     const orderState = parseInt(active) === 1 ? 'scheduled' : 'cancelled'
     const deliveryDayRescheduledReason = getProjectedDeliveryDayRescheduledReason(unavailableReason, humanWhenMenuLive)
@@ -163,6 +164,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
         isProjected: true,
         restorable,
         cancellable: true,
+        deliveryDayId,
       })
     )
   }, new Immutable.Map())
