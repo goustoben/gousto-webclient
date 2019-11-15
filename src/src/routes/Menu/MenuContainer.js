@@ -70,6 +70,7 @@ function mapStateToProps(state, ownProps) {
     menuCollectionRecipes: state.menuCollectionRecipes,
     menuBrowseCTAShow: state.menuBrowseCTAShow,
     boxSummaryDeliveryDays: state.boxSummaryDeliveryDays,
+    hasTokenRefreshed: state.temp.get('tokenRefreshed'),
     query: query || {},
     params: ownProps.params,
     storeOrderId: state.basket.get('orderId'),
@@ -120,7 +121,8 @@ const mapDispatchToProps = {
   productsLoadStock: actions.productsLoadStock,
   orderCheckoutAction: actions.orderCheckout,
   filterRecipeGrouping: actions.filterRecipeGrouping,
-  selectCurrentCollection: actions.changeCollectionById
+  selectCurrentCollection: actions.changeCollectionById,
+  resetHasTokenRefreshedValue: actions.temp,
 }
 
 const MenuContainer = connect(mapStateToProps, mapDispatchToProps)(Menu)

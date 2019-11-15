@@ -52,6 +52,7 @@ class Menu extends React.PureComponent {
       storeOrderId,
       basketOrderLoaded,
       query,
+      hasTokenRefreshed,
       basketNumPortionChange,
       boxSummaryDeliveryDays,
       disabled,
@@ -64,7 +65,8 @@ class Menu extends React.PureComponent {
       numPortions,
       productsLoadProducts,
       productsLoadStock,
-      isAuthenticated
+      isAuthenticated,
+      resetHasTokenRefreshedValue
     } = this.props
 
     const { store } = this.context
@@ -74,7 +76,7 @@ class Menu extends React.PureComponent {
       basketOrderLoaded(params.orderId)
     }
 
-    const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId) || query.reload
+    const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId) || query.reload || hasTokenRefreshed
     // TODO: Add back logic to check what needs to be reloaded
 
     if (query && query.num_portions) {
@@ -82,6 +84,10 @@ class Menu extends React.PureComponent {
     }
 
     this.checkQueryParam()
+
+    if (hasTokenRefreshed) {
+      resetHasTokenRefreshedValue('tokenRefreshed', false)
+    }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)
 
