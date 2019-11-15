@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import Immutable from 'immutable'
 import userActions, { userFetchReferralOffer } from 'actions/user'
 import { locationQuery } from 'selectors/routing'
-import { getAgeVerified, getReferralOffer } from 'selectors/user'
+import { getAgeVerified } from 'selectors/user'
 import { isOrderConfirmationPageLoading } from 'selectors/orderConfirmation'
 import { getBasketOrderDetails, getShortlistUsed, getShortlistFeedbackViewed } from 'selectors/basket'
 import { getProductList2Columns } from 'selectors/features'
@@ -22,7 +21,6 @@ const mapStateToProps = (state) => {
     hasProductList2Columns: getProductList2Columns(state),
     headerDetails,
     isLoading,
-    rafOffer: getReferralOffer(state) || Immutable.Map(),
     showHeader,
     showShortlistFeedback: (getShortlistUsed(state) && !getShortlistFeedbackViewed(state)),
   })

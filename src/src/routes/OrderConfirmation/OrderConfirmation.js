@@ -7,7 +7,6 @@ import Overlay from 'Overlay'
 import Loading from 'Loading'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import {
-  ItemExpandable,
   LayoutPageWrapper,
   VerticalStages,
   VerticalStagesItem,
@@ -94,7 +93,6 @@ class OrderConfirmation extends PureComponent {
       hasProductList2Columns,
       headerDetails,
       isLoading,
-      rafOffer,
       showHeader,
     } = this.props
     const { hasConfirmedAge, showAgeVerification, showFeedback } = this.state
