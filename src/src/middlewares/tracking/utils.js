@@ -1,24 +1,19 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
-import windowUtils from 'utils/window'
+import { documentLocation } from 'utils/window'
 
 /**
  * Get pathname
  * @param prevState
  * @constructor
  */
-const getPathName = ({ prevState }) => {
+export const getPathName = ({ prevState }) => {
   let pathname
 
   try {
-    pathname = prevState.routing.locationBeforeTransitions.pathname
+    ({ pathname } = prevState.routing.locationBeforeTransitions)
   } catch (e) {
-    pathname = windowUtils.documentLocation().pathname
+    ({ pathname } = documentLocation())
   }
 
   return pathname
 }
-
-export default {
-  getPathName,
-}
-

@@ -1,9 +1,10 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
 import Immutable from 'immutable'
-import actions from 'actions/actionTypes'
-import windowUtils from 'utils/window'
+
 import globals from 'config/globals'
-import utils from '../utils'
+import windowUtils from 'utils/window'
+import actions from 'actions/actionTypes'
+import { getPathName } from 'middlewares/tracking/utils'
 
 export const pinterestTracking = {
   addRecipeToBasket,
@@ -111,7 +112,7 @@ export default function Tracker(action, state = {}, prevState) {
     const callbacks = pinterestTracking.getCallbacks()
 
     if (action.type in callbacks) {
-      callbacks[action.type](action, state, prevState, utils.getPathName({ prevState }))
+      callbacks[action.type](action, state, prevState, getPathName({ prevState }))
     }
   }
 }
