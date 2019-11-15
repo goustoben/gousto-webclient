@@ -259,7 +259,7 @@ describe('utils/deliveries', () => {
       })
     })
 
-    describe('with slot lead time it should return correct value', () => {
+    describe('with day slot lead time active false ', () => {
       test('should return false', () => {
         const result = isDaySlotLeadTimeActive(Immutable.fromJS({
           daySlotLeadTimeActive: false,
@@ -380,7 +380,7 @@ describe('utils/deliveries', () => {
     })
 
     describe('with no date passed in', () => {
-      describe('with some priced and some free slots', () => {
+      describe('with nearest slots paid', () => {
         beforeEach(() => {
           Date.now = jest.fn(() => new Date('2019-12-01'))
 
@@ -446,7 +446,7 @@ describe('utils/deliveries', () => {
         })
       })
 
-      describe('with some priced and some free slots, active and inactive', () => {
+      describe('with closest free slot inactive', () => {
         beforeEach(() => {
           Date.now = jest.fn(() => new Date('2019-12-01'))
 

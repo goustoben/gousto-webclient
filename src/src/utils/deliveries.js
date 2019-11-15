@@ -348,13 +348,13 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
       day = deliveryDays
         .filter(deliveryDay => !deliveryDay.get('alternateDeliveryDay'))
         .sort(
-          (d1, d2) => {
-            const diffToD1 = moment(d1.get('date')).diff(Date.now(), 'days')
-            const diffToD2 = moment(d2.get('date')).diff(Date.now(), 'days')
+          (comparisonDay1, comparisonDay2) => {
+            const diffToD1 = moment(comparisonDay1.get('date')).diff(Date.now(), 'days')
+            const diffToD2 = moment(comparisonDay2.get('date')).diff(Date.now(), 'days')
 
             // we want to order all free slot to the begining and the rest at the end
-            const day1 = diffToD1 + (isFreeSlotAvailable(d1.get('slots', [])) ? 0 : 9999)
-            const day2 = diffToD2 + (isFreeSlotAvailable(d2.get('slots', [])) ? 0 : 9999)
+            const day1 = diffToD1 + (isFreeSlotAvailable(comparisonDay1.get('slots', [])) ? 0 : 9999)
+            const day2 = diffToD2 + (isFreeSlotAvailable(comparisonDay2.get('slots', [])) ? 0 : 9999)
 
             return day1 > day2 ? 1 : -1
           }
