@@ -52,8 +52,7 @@ class Menu extends React.PureComponent {
       storeOrderId,
       basketOrderLoaded,
       query,
-      triggerMenuLoad,
-      hasRecommendations,
+      hasTokenRefreshed,
       basketNumPortionChange,
       boxSummaryDeliveryDays,
       disabled,
@@ -66,7 +65,8 @@ class Menu extends React.PureComponent {
       numPortions,
       productsLoadProducts,
       productsLoadStock,
-      isAuthenticated
+      isAuthenticated,
+      resetHasTokenRefreshedValue
     } = this.props
 
     const { store } = this.context
@@ -76,18 +76,18 @@ class Menu extends React.PureComponent {
       basketOrderLoaded(params.orderId)
     }
 
-    const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId) || query.reload
+    const forceDataLoad = (storeOrderId && storeOrderId !== params.orderId) || query.reload || hasTokenRefreshed
     // TODO: Add back logic to check what needs to be reloaded
-
-    if (hasRecommendations) {
-      triggerMenuLoad()
-    }
 
     if (query && query.num_portions) {
       basketNumPortionChange(query.num_portions)
     }
 
     this.checkQueryParam()
+
+    if (hasTokenRefreshed) {
+      resetHasTokenRefreshedValue('tokenRefreshed', false)
+    }
 
     Menu.fetchData({ store, query, params }, forceDataLoad)
 
@@ -331,7 +331,6 @@ class Menu extends React.PureComponent {
     const {
       boxSummaryShow,
       forceLoad,
-      hasRecommendations,
       isAuthenticated,
       isLoading,
       jfyTutorialFlag,
@@ -347,9 +346,7 @@ class Menu extends React.PureComponent {
     const showSelectedPage = recipeGroupingSelected !== null && (!!query.foodBrand || !!query.thematic)
 
     let fadeCss = null
-    if (showLoading && hasRecommendations) {
-      fadeCss = css['fade--recommendations']
-    } else if (showLoading) {
+    if (showLoading) {
       fadeCss = css.fadeOut
     } else {
       fadeCss = css.willFade
@@ -389,7 +386,6 @@ class Menu extends React.PureComponent {
                 showLoading={showLoading}
                 mobileGridView={mobileGridView}
                 showDetailRecipe={this.showDetailRecipe}
-                hasRecommendations={hasRecommendations}
                 orderId={orderId}
                 toggleGridView={this.toggleGridView}
                 query={query}

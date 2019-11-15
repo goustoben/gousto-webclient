@@ -213,28 +213,11 @@ describe('Menu', () => {
   describe('fadeCSS', () => {
     let wrapper
 
-    test('should render fade--recommendations', () => {
-      wrapper = shallow(
-        <Menu
-          {...requiredProps}
-          jfyTutorialFlag={false}
-          boxSummaryDeliveryDays={Immutable.Map()}
-          disabled={false}
-          isLoading
-          hasRecommendations
-        />,
-      )
-      const elementWithFadeCSS = wrapper.find('MenuRecipes')
-
-      expect(elementWithFadeCSS.prop('fadeCss')).toEqual('fade--recommendations')
-    })
-
     test('should render fadeOut', () => {
       wrapper = shallow(
         <Menu
           {...requiredProps}
           isLoading
-          hasRecommendations={false}
         />,
       )
       const elementWithFadeCSS = wrapper.find('MenuRecipes')
@@ -247,7 +230,6 @@ describe('Menu', () => {
         <Menu
           {...requiredProps}
           isLoading={false}
-          hasRecommendations={false}
         />,
       )
       const elementWithFadeCSS = wrapper.find('MenuRecipes')
@@ -634,6 +616,34 @@ describe('Menu', () => {
         test('redirect is being called when order checkout response is correct', () => {
           expect(window.location.assign).toHaveBeenCalledWith('summary-url')
         })
+      })
+    })
+
+    describe('when hasTokenRefreshed true', () => {
+      test('should call fetchData', async () => {
+        wrapper = await mount(
+          <Menu
+            {...requiredProps}
+            menuLoadBoxPrices={menuLoadBoxPrices}
+            hasTokenRefreshed
+          />,
+          mountOptions,
+        )
+        expect(fetchData).toHaveBeenCalled()
+      })
+
+      test('should call resetHasTokenRefreshedValue', async () => {
+        const resetHasTokenRefreshedValueSpy = jest.fn()
+        wrapper = await mount(
+          <Menu
+            {...requiredProps}
+            menuLoadBoxPrices={menuLoadBoxPrices}
+            hasTokenRefreshed
+            resetHasTokenRefreshedValue={resetHasTokenRefreshedValueSpy}
+          />,
+          mountOptions,
+        )
+        expect(resetHasTokenRefreshedValueSpy).toHaveBeenCalled()
       })
     })
   })

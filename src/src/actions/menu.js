@@ -421,21 +421,6 @@ export const forceMenuLoad = (forceLoad) => ({
   forceLoad,
 })
 
-export const triggerMenuLoad = () => (
-  (dispatch, getState) => {
-    const initialLoad = !getState().menu.get('jfyLoaded')
-
-    if (initialLoad) {
-      dispatch(forceMenuLoad(true))
-
-      setTimeout(
-        () => dispatch(forceMenuLoad(false)),
-        2500,
-      )
-    }
-  }
-)
-
 export const menuLoadComplete = (timeToLoadMs) => ({
   type: actionTypes.MENU_LOAD_COMPLETE,
   timeToLoadMs

@@ -6,7 +6,6 @@ import moment from 'moment'
 const menuInitialState = Immutable.Map({
   filtersMenuVisible: false,
   forceLoad: false,
-  jfyLoaded: false,
 })
 
 const menu = {
@@ -19,7 +18,7 @@ const menu = {
     }
 
     case actionTypes.MENU_FORCE_LOAD: {
-      return state.set('forceLoad', action.forceLoad).set('jfyLoaded', true)
+      return state.set('forceLoad', action.forceLoad)
     }
 
     default:

@@ -3,6 +3,7 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import routes from 'routes'
+import moment from 'moment'
 import AppContainer from 'containers/AppContainer'
 import transit from 'transit-immutable-js'
 import Cookies from 'utils/GoustoCookies'
@@ -20,6 +21,7 @@ import { clientAuthorise, refresh } from 'client/auth'
 import browserType from 'client/browserType'
 import logger from 'utils/logger'
 import { zeStart, zeChatButtonSetUp } from 'utils/zendesk'
+import { get } from './utils/cookieHelper2'
 import { configureStore } from './store'
 
 docReady('docReady', window)
@@ -57,7 +59,14 @@ processCookies(Cookies, store)
 const history = syncHistoryWithStore(browserHistory, store)
 
 window.docReady(() => {
+  const oauthTokenExpiry = get(Cookies, 'oauth_expiry')
+  const expiryDate = oauthTokenExpiry && oauthTokenExpiry.expires_at
+
   clientAuthorise(store)
+
+  if (moment(expiryDate).isBefore(moment())) {
+    store.dispatch(actions.temp('tokenRefreshed', true))
+  }
 
   const query = queryString.parse(window.location.search)
   processFeaturesQuery(query, store)
