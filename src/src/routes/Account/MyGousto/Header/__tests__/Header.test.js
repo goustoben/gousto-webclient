@@ -141,30 +141,40 @@ describe('MyGousto - Header', () => {
 
     describe('and a tracking URL is available for the next order', () => {
       const TRACKING_URL = 'https://test-tracking-url/order-id'
+      const mockTrackNextBoxTrackingClick = jest.fn()
 
       beforeEach(() => {
         wrapper = mount(
           <Header
             loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+            trackNextBoxTrackingClick={mockTrackNextBoxTrackingClick}
             orders={upcomingOrders}
             nextOrderTracking={TRACKING_URL}
           />
         )
-
-        global.open = jest.fn()
-      })
-
-      afterEach(() => {
-        jest.resetAllMocks()
       })
 
       test('renders a track my box button', () => {
         expect(wrapper.find('CardWithLink').first().find('Button').text()).toBe('Track my box')
       })
 
-      test('opens the tracking page in a new tab', () => {
-        wrapper.find('CardWithLink').find('SegmentPresentation').last().simulate('click')
-        expect(global.open).toHaveBeenCalledWith(TRACKING_URL, 'rel="noopener noreferrer"')
+      describe('and the tracking button is clicked', () => {
+        beforeEach(() => {
+          global.open = jest.fn()
+          wrapper.find('CardWithLink').find('SegmentPresentation').last().simulate('click')
+        })
+
+        afterEach(() => {
+          jest.resetAllMocks()
+        })
+
+        test('opens the tracking page in a new tab', () => {
+          expect(global.open).toHaveBeenCalledWith(TRACKING_URL, 'rel="noopener noreferrer"')
+        })
+
+        test('dispatches the tracking action', () => {
+          expect(mockTrackNextBoxTrackingClick).toHaveBeenCalledTimes(1)
+        })
       })
     })
   })
