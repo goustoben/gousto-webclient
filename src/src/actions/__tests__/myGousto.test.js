@@ -3,13 +3,10 @@ import { trackNotificationLinkClick } from 'actions/myGousto'
 
 describe('myGousto actions', () => {
   describe('trackNotificationLinkClick', () => {
-    const dispatch = jest.fn()
-
-    it('should call the tracking action with SubscriptionOption Selected', () => {
+    test('creates the tracking action', () => {
       const notification = 'test-notification'
-      trackNotificationLinkClick(notification)(dispatch)
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(trackNotificationLinkClick(notification)).toEqual({
         type: actionTypes.TRACKING,
         trackingData: {
           actionType: 'NotificationBanner Clicked',
