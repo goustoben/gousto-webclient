@@ -43,30 +43,9 @@
 	}
 }
 
-.randomProductImage {
-	width: 100px;
-	height: 85px;
-	display: inline-block;
-	margin-left: SpacingXXS;
-	margin-bottom: SpacingXXS;
-
-	@media ScreenXXSMax {
-		width: 70px;
-		height: 60px;
-	}
-}
-
 .price {
 	composes: textBold from 'styles/typography.css';
 	margin-top: auto;
-}
-
-.buttonRow {
-	display: flex;
-
-	@media ScreenXSMax {
-		justify-content: flex-end;
-	}
 }
 
 .mainContainer::after {
