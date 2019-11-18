@@ -46,7 +46,7 @@ class OrderProducts extends React.PureComponent {
               <span className={css.header}>Gousto Market</span>
             </Content>
             {products.size > 0 ? (
-              <Link className={css.editLink} to={routes.client.orderConfirmation.replace(':orderId', orderId)} clientRouted={false}>
+              <Link className={css.editLink} to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
                 Edit Items
               </Link>
             ) : null}
@@ -55,7 +55,7 @@ class OrderProducts extends React.PureComponent {
             <div className={css.marketPromoContainer}>
               <p className={css.marketPromoText}>Add desserts, drinks, snacks and more to your next box at no extra charge.</p>
               <img className={css.marketImageFull} src={marketPhotoSrc} alt="Gousto Market products"/>
-              <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)} clientRouted={false}>
+              <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
                 <Button color="secondary" width="full" noDecoration>
                   Go to Gousto Market
                 </Button>
