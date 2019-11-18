@@ -115,7 +115,7 @@ describe('order actions', () => {
       })
     })
 
-    describe('when orderTrackingActions does not actionType', () => {
+    describe('when the orderTrackingAction does not have an actionType', () => {
       test('should not take any action', () => {
         trackOrder('test', {})(dispatch, getState)
 
@@ -125,7 +125,7 @@ describe('order actions', () => {
       })
     })
 
-    describe('when orderTrackingActions contains actionType', () => {
+    describe('when the orderTrackingAction contains an actionType', () => {
       let order = {
         id: '735702932',
         prices: {
