@@ -1,52 +1,51 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import MobileMenu from 'Header/MobileMenu/MobileMenu'
-import Link from 'Link'
+import { MobileMenu } from '../MobileMenu'
 
-describe('MobileMenu', () => {
-  const menuItems = [
-    { name: 'Home', url: '/home', clientRouted: true },
-    { name: 'Choose Recipes', url: '/menu' },
-    { name: 'Help', url: '/help', clientRouted: false },
-    { name: 'Rate My Recipes', url: '/rate-my-recipes', clientRouted: false },
-  ]
+describe('MenuWrapper', () => {
   let wrapper
+  const props = {
+    isAuthenticated: false,
+    hideNav: false,
+    mobileMenuOpen: false,
+    mobileMenuItems: [{ name: '', url: '' }],
+    hideMobileMenu: false,
+    onOpen: () => { },
+    logoutFunc: () => { },
+    showMobileMenu: () => { },
+    promoCodeUrl: '',
+    trackNavigationClick: () => { },
+    serverError: false,
+  }
 
-  beforeEach(() => {
-    wrapper = shallow(
-      <MobileMenu
-        show
-        menuItems={menuItems}
-        isAuthenticated
-        loginFunc={jest.fn()}
-        logoutFunc={jest.fn()}
-        hideNav={false}
-        promoCodeUrl={""}
-      />
-    )
-  })
+  describe('when shouldRenderNewMenuDesign false', () => {
+    beforeEach(() => {
+      const newProps = {
+        ...props,
+        shouldRenderNewMenuDesign: false
+      }
+      wrapper = shallow(<MobileMenu {...newProps} />)
+    })
 
-  describe('should render all items in the menu', () => {
-    describe('when is authenticated', () => {
-      test('should render all menu items provided as links', () => {
-        expect(wrapper.find(Link).length).toEqual(4)
-        expect(wrapper.find(Link).find({ to: '/home' }).length).toEqual(1)
-        expect(wrapper.find(Link).find({ to: '/menu' }).length).toEqual(1)
-        expect(wrapper.find(Link).find({ to: '/help' }).length).toEqual(1)
-        expect(wrapper.find(Link).find({ to: '/rate-my-recipes' }).length).toEqual(1)
-      })
+    test('should render BurgerMobileMenu', () => {
+      expect(wrapper.find('BurgerMobileMenu').exists()).toBe(true)
+    })
+
+    test('should render burgerMenu button', () => {
+      expect(wrapper.find('[data-testing="burgerMenu"]').exists()).toBe(true)
     })
   })
 
-  describe('clicking the menu items', () => {
-    test('opens the Help link into a new tab', () => {
-      const helpLink = wrapper.findWhere(n => n.prop('to') === '/help')
-      expect(helpLink.prop('target')).toBe('_blank')
+  describe('when shouldRenderNewMenuDesign true', () => {
+    beforeEach(() => {
+      const newProps = {
+        ...props,
+        shouldRenderNewMenuDesign: true
+      }
+      wrapper = shallow(<MobileMenu {...newProps} />)
     })
-
-    test('does not open other links in a new tab', () => {
-      const linksWithNewTab = wrapper.findWhere(n => n.prop('target') === '_blank')
-      expect(linksWithNewTab).toHaveLength(1)
+    test('should render LinkMobileMenu', () => {
+      expect(wrapper.find('LinkMobileMenu').exists()).toBe(true)
     })
   })
 })

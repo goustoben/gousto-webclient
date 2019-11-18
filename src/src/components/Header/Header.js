@@ -20,7 +20,7 @@ import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
 import { onEnter } from 'utils/accessibility'
 import { deepCloneObject } from 'utils/deepClone'
-import { MobileWrapper } from './MobileMenu'
+import { MobileMenu } from './MobileMenu'
 import { defaultMenuItems } from './menuItemsHelper'
 import css from './Header.css'
 
@@ -45,7 +45,6 @@ class Header extends React.PureComponent {
     small: PropTypes.bool,
     abandonBasketFeature: PropTypes.bool,
     trackNavigationClick: PropTypes.func,
-    shouldRenderNewMenuDesign: PropTypes.bool
   }
 
   static defaultProps = {
@@ -58,7 +57,6 @@ class Header extends React.PureComponent {
     small: false,
     trackNavigationClick: () => { },
     abandonBasketFeature: false,
-    shouldRenderNewMenuDesign: false
   }
 
   constructor(props) {
@@ -108,7 +106,7 @@ class Header extends React.PureComponent {
     closeBoxModalVisibilityChange(false)
   }
 
-  onOpen = (e) => {
+  onLoginClick = (e) => {
     const { loginVisibilityChange } = this.props
     e.stopPropagation()
     loginVisibilityChange(true)
@@ -187,7 +185,7 @@ class Header extends React.PureComponent {
     return { fromWizard, newPath }
   }
 
-  logoutFunc = () => {
+  onLogoutClick = () => {
     const { logoutUser } = this.props
     logoutUser()
   }
@@ -237,8 +235,8 @@ class Header extends React.PureComponent {
         role="button"
         tabIndex='0'
         className={css.linkDesktop}
-        onClick={this.logoutFunc}
-        onKeyDown={e => onEnter(e, this.logoutFunc)}
+        onClick={this.onLogoutClick}
+        onKeyDown={e => onEnter(e, this.onLogoutClick)}
         data-testing="logoutButton"
       >
         Logout
@@ -250,8 +248,8 @@ class Header extends React.PureComponent {
         role='button'
         tabIndex='0'
         className={classNames(css.authButtonsContainer, css[buttonState])}
-        onClick={e => { if (!isAuthenticated) { this.onOpen(e) } }}
-        onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onOpen() } })}
+        onClick={e => { if (!isAuthenticated) { this.onLoginClick(e) } }}
+        onKeyDown={e => onEnter(e, () => { if (!isAuthenticated) { this.onLoginClick() } })}
       >
         {button}
         {isAuthenticated && logoutLink}
@@ -312,7 +310,6 @@ class Header extends React.PureComponent {
       path,
       trackNavigationClick,
       abandonBasketFeature,
-      shouldRenderNewMenuDesign,
       routing
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
@@ -368,10 +365,10 @@ class Header extends React.PureComponent {
                       {this.renderMenuItems(desktopMenuItems, hideNav)}
                       {this.renderAuthLink()}
                     </span>
-                    <MobileWrapper
+                    <MobileMenu
                       hideMobileMenu={this.hideMobileMenu}
-                      onOpen={this.onOpen}
-                      logoutFunc={this.logoutFunc}
+                      onLoginClick={this.onLoginClick}
+                      onLogoutClick={this.onLogoutClick}
                       showMobileMenu={this.showMobileMenu}
                       mobileMenuItems={mobileMenuItems}
                       mobileMenuOpen={mobileMenuOpen}
@@ -383,7 +380,7 @@ class Header extends React.PureComponent {
                         this.hideMobileMenu()
                       }}
                       serverError={serverError}
-                      shouldRenderNewMenuDesign={shouldRenderNewMenuDesign && (pathName === '/menu')}
+                      shouldRenderNewMenuDesign={isAuthenticated && (pathName === '/menu')}
                     />
                   </div>
                 </div>

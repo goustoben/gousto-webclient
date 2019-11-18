@@ -99,7 +99,3 @@ export const getProductList2Columns = ({ features }) => (
 export const getCookingInstruction = ({ features }) => (
   features && features.getIn(['showCookingInstruction', 'value'], false)
 )
-
-export const getNewMenuDesignFeatureEnabled = ({ features }) => (
-  features && features.getIn(['renderNewMenuDesign', 'value'], false)
-)

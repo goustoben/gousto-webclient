@@ -15,7 +15,7 @@
 	z-index: -1;
 }
 
-.hidden {
+.defaultState {
 	composes: container;
 	transform: translateX(100%);
 }
@@ -26,7 +26,7 @@
 	z-index: 2000;
 }
 
-span:target .hidden {
+button:target .defaultState {
 	transform: translateX(0);
 	z-index: 2000;
 }
@@ -48,7 +48,17 @@ span:target .hidden {
 	}
 }
 
+.removeButtonDesign {
+	margin: 0;
+	border: 0;
+	padding: 0;
+	background: none;
+}
+
 .menuItem {
+	width: 100%;
+	text-align: left;
+	composes: removeButtonDesign;
 	composes: menuItemBase;
 	composes: bodyFont noDecor textBoldHover textBoldActive textBoldFocus from 'styles/typography.css';
 	color: MainColor;
@@ -56,6 +66,10 @@ span:target .hidden {
 	cursor: pointer;
 
 	&.disabled, &:hover, &:focus, &:active {
+		& button { 
+			border: 0;
+		}
+		width: 100%;
 		color: MainColor;
 		border-color: MainColor;
 	}

@@ -33,8 +33,8 @@ describe('Header', () => {
     expect(wrapper.find('Connect(CookieBanner)').exists()).toBe(true)
   })
 
-  test('should render one <MobileWrapper />', () => {
-    expect(wrapper.find('MobileWrapper').exists()).toBe(true)
+  test('should render one <MobileMenu />', () => {
+    expect(wrapper.find('MobileMenu').exists()).toBe(true)
   })
 
   test('renders 5 <GoustoLink />s', () => {
@@ -227,7 +227,7 @@ describe('Header', () => {
         }
       ]
 
-      expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toEqual(expected)
+      expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
     })
   })
 
@@ -272,7 +272,7 @@ describe('Header', () => {
           "tracking": "FAQNavigation Clicked",
         }
       ]
-      expect(wrapper.find('MobileWrapper').prop('mobileMenuItems')).toEqual(expected)
+      expect(wrapper.find('MobileMenu').prop('mobileMenuItems')).toEqual(expected)
     })
   })
 })
