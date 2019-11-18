@@ -43,7 +43,7 @@ class SocialShareSheetCTA extends PureComponent {
     return (
       <div className={CTAContainerClasses}>
         <div className={CTAClasses} onClick={this.openShareSheet}>
-          <span className={css.shareYourLinkText}>SHARE YOUR LINK</span>
+          <span className={css.shareYourLinkText}>Share your link</span>
         </div>
         <Overlay open={isShareSheetOpen} from="bottom">
           <SocialShareSheet onClose={this.closeShareSheet} referralCode={referralCode} />
