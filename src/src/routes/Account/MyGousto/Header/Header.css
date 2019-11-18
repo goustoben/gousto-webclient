@@ -22,7 +22,7 @@
 }
 
 .cardsContainer > * {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   @media CardBreakpoint {
     width: calc(50% - 1rem)
