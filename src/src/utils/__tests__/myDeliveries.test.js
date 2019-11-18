@@ -398,6 +398,7 @@ describe('myDeliveries utils', () => {
             isProjected: true,
             restorable: false,
             cancellable: true,
+            deliveryDayId: '1917',
           }),
           1924: Immutable.fromJS({
             id: '1924',
@@ -429,6 +430,7 @@ describe('myDeliveries utils', () => {
             isProjected: true,
             restorable: false,
             cancellable: true,
+            deliveryDayId: '1924',
           })
         })
       )
