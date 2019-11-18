@@ -88,12 +88,11 @@ export const initiateCheckout = (_, { basket }) => {
  * @param basket
  * @param menuBoxPrices
  */
-export const signupPurchaseCompleted = (_, { basket, pricing }) => {
+export const signupPurchaseCompleted = ({ orderId }, { basket, pricing }) => {
   const recipes = basket.get('recipes')
   const recipesIds = Array.from(recipes.keys())
   const recipeCount = recipes.reduce((total, quantity) => (total + quantity), 0)
   const totalPrice = pricing.getIn(['prices', 'total'])
-  const orderId = basket.get('previewOrderId')
 
   sendTrackingData('Purchase', {
     content_ids: recipesIds,

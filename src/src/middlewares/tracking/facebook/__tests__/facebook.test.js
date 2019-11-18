@@ -124,25 +124,27 @@ describe('fbTracking', () => {
   })
 
   test('should call signupPurchaseCompleted with actions.CHECKOUT_SIGNUP_SUCCESS', () => {
-    const basket = Immutable.fromJS({
-      previewOrderId: '1',
-      recipes: {
+    const basket = Immutable.Map({
+      recipes: Immutable.Map({
         1: 1,
         2: 1,
-      },
+      }),
     })
-    const pricing = Immutable.fromJS({
-      prices: {
+    const pricing = Immutable.Map({
+      prices: Immutable.Map({
         total: 40,
-      },
+      }),
     })
 
-    Tracker(
-      {
-        type: actions.CHECKOUT_SIGNUP_SUCCESS,
-      },
-      { basket, pricing },
-    )
+    Tracker({
+      type: actions.CHECKOUT_SIGNUP_SUCCESS,
+      orderId: '1',
+    },
+    {
+      basket,
+      pricing,
+    })
+
     expect(fbq).toHaveBeenCalled()
     expect(fbq).toHaveBeenCalledWith('track', 'Purchase', {
       content_ids: ['1', '2'],

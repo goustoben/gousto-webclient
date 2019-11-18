@@ -201,7 +201,10 @@ export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => {
 }
 
 export function checkoutSignup() {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { basket } = getState()
+    const orderId = basket.get('previewOrderId')
+
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
 
@@ -210,7 +213,7 @@ export function checkoutSignup() {
       dispatch(trackSignupPageChange('Submit'))
       await dispatch(userSubscribe())
       await dispatch(checkoutActions.checkoutPostSignup())
-      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS }) // used for facebook tracking
+      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
