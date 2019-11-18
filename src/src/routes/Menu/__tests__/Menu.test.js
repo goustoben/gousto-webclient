@@ -618,34 +618,6 @@ describe('Menu', () => {
         })
       })
     })
-
-    describe('when hasTokenRefreshed true', () => {
-      test('should call fetchData', async () => {
-        wrapper = await mount(
-          <Menu
-            {...requiredProps}
-            menuLoadBoxPrices={menuLoadBoxPrices}
-            hasTokenRefreshed
-          />,
-          mountOptions,
-        )
-        expect(fetchData).toHaveBeenCalled()
-      })
-
-      test('should call resetHasTokenRefreshedValue', async () => {
-        const resetHasTokenRefreshedValueSpy = jest.fn()
-        wrapper = await mount(
-          <Menu
-            {...requiredProps}
-            menuLoadBoxPrices={menuLoadBoxPrices}
-            hasTokenRefreshed
-            resetHasTokenRefreshedValue={resetHasTokenRefreshedValueSpy}
-          />,
-          mountOptions,
-        )
-        expect(resetHasTokenRefreshedValueSpy).toHaveBeenCalled()
-      })
-    })
   })
 
   describe('check query param in componentDidMount', () => {
