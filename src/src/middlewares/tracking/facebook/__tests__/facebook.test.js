@@ -162,8 +162,8 @@ describe('fbTracking', () => {
       order: {
         id: 2,
         recipeItems: [
-          { id: '3' },
-          { id: '4' },
+          { recipeId: '3' },
+          { recipeId: '4' },
         ],
         box: {
           numRecipes: 2,

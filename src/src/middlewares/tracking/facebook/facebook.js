@@ -110,7 +110,7 @@ export const signupPurchaseCompleted = ({ orderId }, { basket, pricing }) => {
  */
 export const customerPurchaseCompleted = ({ order }) => {
   const recipes = order.recipeItems || []
-  const recipeIds = recipes.map(recipe => recipe.id)
+  const recipeIds = recipes.map(recipe => recipe.recipeId)
   const recipeCount = order.box.numRecipes
   const totalPrice = order.prices.total
   const orderId = order.id.toString()
