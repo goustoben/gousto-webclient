@@ -1,4 +1,4 @@
-@value ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenMDMin, ScreenXSMax from 'styles/screenSizes.css';
 @value White from 'styles/colors.css';
 
 .order {
@@ -35,7 +35,9 @@
 }
 
 .orderDetail {
-	margin-left: 190px;
+	@media ScreenMDMin {
+		margin-left: 190px;
+	}
 	@media ScreenXSMax {
 		padding-left: 0;
 		padding-right: 0;
