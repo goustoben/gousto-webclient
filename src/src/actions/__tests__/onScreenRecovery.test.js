@@ -189,9 +189,28 @@ describe('onScreenRecovery', () => {
       }))
     })
 
-    test('should redirect to my-deliveries', async () => {
+    test('should redirect to my-deliveries if forceRefresh is true', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '64521',
+          deliveryDayId: '123',
+          forceRefresh: true
+        })
+      })
       await cancelPendingOrder()(dispatchSpy, getStateSpy)
       expect(redirect).toHaveBeenCalledWith('/my-deliveries')
+    })
+
+    test('should NOT redirect to my-deliveries if forceRefresh is false', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          orderId: '64521',
+          deliveryDayId: '123',
+          forceRefresh: false
+        })
+      })
+      await cancelPendingOrder()(dispatchSpy, getStateSpy)
+      expect(redirect).not.toHaveBeenCalled()
     })
   })
 
@@ -217,9 +236,20 @@ describe('onScreenRecovery', () => {
       }))
     })
 
-    test('should redirect to my-deliveries', async () => {
-      await cancelProjectedOrder()(dispatchSpy, getStateSpy)
+    test('should redirect to my-deliveries if forceRefresh is true', async () => {
+      getStateSpy.mockReturnValue({
+        onScreenRecovery: Immutable.Map({
+          deliveryDayId: '1234',
+          forceRefresh: true
+        })
+      })
+      await cancelPendingOrder()(dispatchSpy, getStateSpy)
       expect(redirect).toHaveBeenCalledWith('/my-deliveries')
+    })
+
+    test('should NOT redirect to my-deliveries if forceRefresh is false', async () => {
+      await cancelPendingOrder()(dispatchSpy, getStateSpy)
+      expect(redirect).not.toHaveBeenCalled()
     })
   })
 
@@ -364,7 +394,6 @@ describe('onScreenRecovery', () => {
           status: 'projected',
         })(dispatchSpy, getStateSpy)
 
-        expect(dispatchSpy).toHaveBeenCalledTimes(1)
         expect(logger.error).toHaveBeenCalledWith(error)
       })
     })

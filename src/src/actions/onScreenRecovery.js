@@ -4,6 +4,7 @@ import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
 import subPauseActions from './subscriptionPause'
 import userActions from './user'
+import statusActions from './status'
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../apis/onScreenRecovery'
 
 export const modalVisibilityChange = ({
@@ -112,13 +113,16 @@ export const cancelPendingOrder = (variation = 'default') => (
   async (dispatch, getState) => {
     const orderId = getState().onScreenRecovery.get('orderId')
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
+    const forceRefresh = getState().onScreenRecovery.get('forceRefresh')
 
     try {
       await dispatch(orderCancel(orderId, deliveryDayId, variation))
     } catch (err) {
       logger.error(err)
     } finally {
-      dispatch(redirect('/my-deliveries'))
+      if (forceRefresh) {
+        dispatch(redirect('/my-deliveries'))
+      }
       modalVisibilityChange({ modalVisibility: false })(dispatch)
     }
   }
@@ -127,13 +131,16 @@ export const cancelPendingOrder = (variation = 'default') => (
 export const cancelProjectedOrder = (variation = 'default') => (
   async (dispatch, getState) => {
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
+    const forceRefresh = getState().onScreenRecovery.get('forceRefresh')
 
     try {
       await dispatch(projectedOrderCancel(deliveryDayId, deliveryDayId, variation))
     } catch (err) {
       logger.error(err)
     } finally {
-      dispatch(redirect('/my-deliveries'))
+      if (forceRefresh) {
+        dispatch(redirect('/my-deliveries'))
+      }
       modalVisibilityChange({ modalVisibility: false })(dispatch)
     }
   }
@@ -147,6 +154,8 @@ export const getSkipRecoveryContent = () => (
     const status = getState().onScreenRecovery.get('orderType')
     const modalType = 'order'
     const accessToken = getState().auth.get('accessToken')
+    dispatch(statusActions.pending(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, true))
+    dispatch(statusActions.error(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, null))
     try {
       const { data } = await fetchOrderSkipContent(accessToken, orderId, orderDate)
       if (data.intervene) {
@@ -173,6 +182,9 @@ export const getSkipRecoveryContent = () => (
       }))
 
       logger.error(err)
+      dispatch(statusActions.error(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, err))
+    } finally {
+      dispatch(statusActions.pending(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, false))
     }
   }
 )
@@ -181,6 +193,8 @@ export const getPauseRecoveryContent = (enableOffer = false) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
     const modalType = 'subscription'
+    dispatch(statusActions.pending(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, true))
+    dispatch(statusActions.error(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, null))
     try {
       const { data } = await fetchSubscriptionPauseContent(accessToken, enableOffer)
       if (data.intervene) {
@@ -217,6 +231,9 @@ export const getPauseRecoveryContent = (enableOffer = false) => (
       }
     } catch (err) {
       logger.error(err)
+      dispatch(statusActions.error(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, err))
+    } finally {
+      dispatch(statusActions.pending(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED, false))
     }
   }
 )

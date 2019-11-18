@@ -19,6 +19,7 @@ describe('onScreenRecovery reducer', () => {
     offer: null,
     valueProposition: null,
     callToActions: null,
+    forceRefresh: false,
   })
   describe('test initialState onScreenRecovery', () => {
     state = undefined
@@ -94,6 +95,19 @@ describe('onScreenRecovery reducer', () => {
         type: actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED,
         triggered: true,
         modalType: 'order',
+      }
+
+      const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)
+      expect(result.toJS()).toEqual(expect.objectContaining(expected))
+    })
+
+    test('onScreenRecovery dispatch trigger with forceRefresh', () => {
+      const expected = {
+        forceRefresh: true,
+      }
+      const actionToCall = {
+        type: actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED,
+        forceRefresh: true,
       }
 
       const result = onScreenRecovery.onScreenRecovery(initialState, actionToCall)

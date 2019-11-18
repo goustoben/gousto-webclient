@@ -11,29 +11,25 @@ class OrderCancelButton extends React.PureComponent {
   static propTypes = {
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,
+    osrOrderId: PropTypes.string,
+    osrDeliveryDayId: PropTypes.string,
     orderState: PropTypes.string,
     didCancelProjectedError: PropTypes.bool,
-    projectedOrderCancel: PropTypes.func,
-    cancelOrderModalToggleVisibility: PropTypes.func,
     orderCancelStart: PropTypes.func,
-    orderCancel: PropTypes.func,
     deliveryDay: PropTypes.string,
+    contentPending: PropTypes.bool
   }
 
   static defaultProps = {
     orderId: '',
     deliveryDayId: '',
+    osrOrderId: '',
+    osrDeliveryDayId: '',
     orderState: '',
     didCancelProjectedError: false,
-    projectedOrderCancel: () => { },
-    cancelOrderModalToggleVisibility: () => { },
     orderCancelStart: () => { },
-    orderCancel: () => { },
-    deliveryDay: ''
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
+    deliveryDay: '',
+    contentPending: false,
   }
 
   handleCancelBox = () => {
@@ -52,16 +48,22 @@ class OrderCancelButton extends React.PureComponent {
   }
 
   render() {
+    const { contentPending, didCancelProjectedError, deliveryDayId, orderId, osrDeliveryDayId, osrOrderId } = this.props
+
+    let pending = false
+    if(contentPending && deliveryDayId === osrDeliveryDayId) pending = true
+    if(contentPending && orderId === osrOrderId) pending = true
+
     return (
       <div className={css.button}>
-        {this.props.didCancelProjectedError ?
+        {didCancelProjectedError ?
           <Alert type="danger">
             <Content contentKeys="mydeliveriesOrderOrdercancelbuttonCancelprojectederror">
               <span>Whoops, there was a problem cancelling this order, please try again.</span>
             </Content>
           </Alert>
           : null}
-        <Button color={'negative'} onClick={this.handleCancelBox}>
+        <Button color='negative' onClick={this.handleCancelBox} className={css.cancelButton} pending={pending}>
           Cancel delivery
         </Button>
       </div>

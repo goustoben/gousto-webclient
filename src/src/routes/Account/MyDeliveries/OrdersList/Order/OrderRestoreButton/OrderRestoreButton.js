@@ -11,14 +11,18 @@ class OrderRestoreButton extends React.PureComponent {
     userId: PropTypes.string,
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,
+    osrOrderId: PropTypes.string,
     projectedOrderRestoreError: PropTypes.string,
+    pending: PropTypes.bool,
   }
 
   static defaultProps = {
     userId: '',
     orderId: '',
     deliveryDayId: '',
+    osrOrderId: '',
     projectedOrderRestoreError: null,
+    pending: false
   }
 
   static contextTypes = {
@@ -30,9 +34,12 @@ class OrderRestoreButton extends React.PureComponent {
   }
 
   render() {
+    const { pending, projectedOrderRestoreError, orderId, osrOrderId } = this.props
+    const isCurrentOrder = orderId === osrOrderId
+
     return (
       <div>
-        {this.props.projectedOrderRestoreError ?
+        {projectedOrderRestoreError ?
           <Alert type="danger">
             <Content contentKeys="mydeliveriesOrderOrderrestorebuttonRestoreprojectederror">
               <span>Whoops, there was a problem restoring this order, please try again.</span>
@@ -40,7 +47,7 @@ class OrderRestoreButton extends React.PureComponent {
           </Alert>
           : null}
         <div className={css.button}>
-          <Button onClick={() => this.handleRestoreBox()}>
+          <Button onClick={() => this.handleRestoreBox()} pending={pending && isCurrentOrder}>
             Restore delivery
           </Button>
         </div>
