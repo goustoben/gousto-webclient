@@ -55,7 +55,7 @@ class OrderCancelButton extends React.PureComponent {
             </Content>
           </Alert>
           : null}
-        <Button color={'negative'} onClick={this.handleCancelBox} className={css.cancelButton} pending={pending}>
+        <Button color='negative' onClick={this.handleCancelBox} className={css.cancelButton} pending={pending}>
           Cancel delivery
         </Button>
       </div>

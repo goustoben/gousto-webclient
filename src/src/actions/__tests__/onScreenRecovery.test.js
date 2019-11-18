@@ -210,7 +210,7 @@ describe('onScreenRecovery', () => {
         })
       })
       await cancelPendingOrder()(dispatchSpy, getStateSpy)
-      expect(redirect).not.toHaveBeenCalledWith('/my-deliveries')
+      expect(redirect).not.toHaveBeenCalled()
     })
   })
 
@@ -249,7 +249,7 @@ describe('onScreenRecovery', () => {
 
     test('should NOT redirect to my-deliveries if forceRefresh is false', async () => {
       await cancelPendingOrder()(dispatchSpy, getStateSpy)
-      expect(redirect).not.toHaveBeenCalledWith('/my-deliveries')
+      expect(redirect).not.toHaveBeenCalled()
     })
   })
 
