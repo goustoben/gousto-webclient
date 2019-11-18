@@ -123,7 +123,7 @@ describe('fbTracking', () => {
     })
   })
 
-  test('should call purchaseCompleted with actions.CHECKOUT_SIGNUP_SUCCESS', () => {
+  test('should call signupPurchaseCompleted with actions.CHECKOUT_SIGNUP_SUCCESS', () => {
     const basket = Immutable.fromJS({
       previewOrderId: '1',
       recipes: {
@@ -151,6 +151,35 @@ describe('fbTracking', () => {
       value: 40,
       currency: 'GBP',
       order_id: '1',
+    })
+  })
+
+  test('should call customerPurchaseCompleted with actions.ORDER_CREATE_TRANSACTIONAL', () => {
+    Tracker({
+      type: actions.ORDER_CREATE_TRANSACTIONAL,
+      order: {
+        id: 2,
+        recipeItems: [
+          { id: '3' },
+          { id: '4' },
+        ],
+        box: {
+          numRecipes: 2,
+        },
+        prices: {
+          total: '19.99',
+        }
+      }
+    })
+
+    expect(fbq).toHaveBeenCalled()
+    expect(fbq).toHaveBeenCalledWith('track', 'Purchase', {
+      content_ids: ['3', '4'],
+      content_type: 'product',
+      num_items: 2,
+      value: '19.99',
+      currency: 'GBP',
+      order_id: '2',
     })
   })
 
