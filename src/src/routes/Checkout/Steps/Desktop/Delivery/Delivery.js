@@ -21,7 +21,7 @@ const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFi
       <DeliverySection receiveRef={receiveRef} scrollToFirstMatchingRef={scrollToFirstMatchingRef} />
       {isAddressConfirmed && <CheckoutButton
         onClick={submit}
-        stepName={`next: ${nextStepName}`}
+        stepName={`Next: ${nextStepName}`}
       />}
     </div>
   )
