@@ -338,9 +338,10 @@ export function getLandingDay(state, currentSlot, cantLandOnOrderDate, deliveryD
       day = deliveryDays.find(deliveryDay => deliveryDay.get('date') === defaultDate)
     }
 
-    // if we don't have user orders or an explicit date fall back to the default date
+    // if we don't have user orders or an explicit date fall back to the default date, so long as that date has a free slot available.
     if (!day) {
-      day = deliveryDays.find(deliveryDay => deliveryDay.get('isDefault'))
+      const defaultDay = deliveryDays.find(deliveryDay => deliveryDay.get('isDefault'))
+      day = (defaultDay && isFreeSlotAvailable(defaultDay.get('slots'))) ? defaultDay : null
     }
 
     // if we have none of the above get the first one
