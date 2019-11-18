@@ -110,9 +110,9 @@ export const signupPurchaseCompleted = (_, { basket, pricing }) => {
  * @param action
  */
 export const customerPurchaseCompleted = ({ order }) => {
-  const recipes = order.recipe_items
+  const recipes = order.recipeItems || []
   const recipeIds = recipes.map(recipe => recipe.id)
-  const recipeCount = order.box.num_recipes
+  const recipeCount = order.box.numRecipes
   const totalPrice = order.prices.total
   const orderId = order.id.toString()
 
