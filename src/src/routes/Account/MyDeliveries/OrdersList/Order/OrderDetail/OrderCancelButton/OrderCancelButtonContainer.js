@@ -9,6 +9,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     didCancelProjectedError: error && error.orderId === ownProps.orderId,
+    pending: state.pending.get(actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED),
   }
 }
 

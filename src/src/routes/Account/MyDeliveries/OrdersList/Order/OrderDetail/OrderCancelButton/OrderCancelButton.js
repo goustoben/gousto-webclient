@@ -13,11 +13,9 @@ class OrderCancelButton extends React.PureComponent {
     deliveryDayId: PropTypes.string,
     orderState: PropTypes.string,
     didCancelProjectedError: PropTypes.bool,
-    projectedOrderCancel: PropTypes.func,
-    cancelOrderModalToggleVisibility: PropTypes.func,
     orderCancelStart: PropTypes.func,
-    orderCancel: PropTypes.func,
     deliveryDay: PropTypes.string,
+    pending: PropTypes.bool
   }
 
   static defaultProps = {
@@ -25,15 +23,9 @@ class OrderCancelButton extends React.PureComponent {
     deliveryDayId: '',
     orderState: '',
     didCancelProjectedError: false,
-    projectedOrderCancel: () => { },
-    cancelOrderModalToggleVisibility: () => { },
     orderCancelStart: () => { },
-    orderCancel: () => { },
-    deliveryDay: ''
-  }
-
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
+    deliveryDay: '',
+    pending: false,
   }
 
   handleCancelBox = () => {
@@ -52,16 +44,18 @@ class OrderCancelButton extends React.PureComponent {
   }
 
   render() {
+    const { pending, didCancelProjectedError } = this.props
+
     return (
       <div className={css.button}>
-        {this.props.didCancelProjectedError ?
+        {didCancelProjectedError ?
           <Alert type="danger">
             <Content contentKeys="mydeliveriesOrderOrdercancelbuttonCancelprojectederror">
               <span>Whoops, there was a problem cancelling this order, please try again.</span>
             </Content>
           </Alert>
           : null}
-        <Button color={'negative'} onClick={this.handleCancelBox} className={css.cancelButton}>
+        <Button color={'negative'} onClick={this.handleCancelBox} className={css.cancelButton} pending={pending}>
           Cancel delivery
         </Button>
       </div>
