@@ -12,6 +12,7 @@ class OrderRestoreButton extends React.PureComponent {
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,
     projectedOrderRestoreError: PropTypes.string,
+    pending: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -30,9 +31,11 @@ class OrderRestoreButton extends React.PureComponent {
   }
 
   render() {
+    const { pending, projectedOrderRestoreError } = this.props
+
     return (
       <div>
-        {this.props.projectedOrderRestoreError ?
+        {projectedOrderRestoreError ?
           <Alert type="danger">
             <Content contentKeys="mydeliveriesOrderOrderrestorebuttonRestoreprojectederror">
               <span>Whoops, there was a problem restoring this order, please try again.</span>
@@ -40,7 +43,7 @@ class OrderRestoreButton extends React.PureComponent {
           </Alert>
           : null}
         <div className={css.button}>
-          <Button onClick={() => this.handleRestoreBox()}>
+          <Button onClick={() => this.handleRestoreBox()} pending={pending}>
             Restore delivery
           </Button>
         </div>
