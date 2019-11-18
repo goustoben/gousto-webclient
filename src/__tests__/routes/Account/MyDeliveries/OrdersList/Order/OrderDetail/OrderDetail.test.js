@@ -79,31 +79,14 @@ describe('OrderDetail', () => {
     })
 
     describe('when the order is recipes chosen', () => {
-      describe('and no products are passed', () => {
-        test('should render a specific list of subcomponents, not including OrderProducts', () => {
-          wrapper = shallow(
-            <OrderDetail orderState="recipes chosen" period={periodMap} />
-          )
-          expect(wrapper.find(OrderRecipes)).toHaveLength(1)
-          expect(wrapper.find(OrderProducts)).toHaveLength(0)
-          expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
-          expect(wrapper.find(OrderDelivery)).toHaveLength(1)
-        })
-      })
-      describe('and some products are passed', () => {
-        test('should render a specific list of subcomponents, including OrderProducts', () => {
-          wrapper = shallow(
-            <OrderDetail
-              orderState="recipes chosen"
-              period={periodMap}
-              products={products}
-            />
-          )
-          expect(wrapper.find(OrderRecipes)).toHaveLength(1)
-          expect(wrapper.find(OrderProducts)).toHaveLength(1)
-          expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
-          expect(wrapper.find(OrderDelivery)).toHaveLength(1)
-        })
+      test('should render a specific list of subcomponents', () => {
+        wrapper = shallow(
+          <OrderDetail orderState="recipes chosen" period={periodMap} />
+        )
+        expect(wrapper.find(OrderRecipes)).toHaveLength(1)
+        expect(wrapper.find(OrderProducts)).toHaveLength(1)
+        expect(wrapper.find(OrderPricingDetail)).toHaveLength(1)
+        expect(wrapper.find(OrderDelivery)).toHaveLength(1)
       })
     })
   })
