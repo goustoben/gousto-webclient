@@ -8,6 +8,7 @@ function mapStateToProps(state, ownProps) {
   return {
     projectedOrderRestoreError: error && error.orderId === ownProps.orderId,
     pending: state.pending.get(actionTypes.PROJECTED_ORDER_RESTORE),
+    osrOrderId: state.temp.get('osrOrderId')
   }
 }
 

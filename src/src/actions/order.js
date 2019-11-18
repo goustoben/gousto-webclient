@@ -305,6 +305,7 @@ export const projectedOrderRestore = (orderId, userId, deliveryDayId) => (
   async (dispatch, getState) => {
     dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_RESTORE, null))
     dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_RESTORE, true))
+    dispatch(tempActions.temp('osrOrderId', orderId))
     const accessToken = getState().auth.get('accessToken')
     try {
       await userApi.restoreDelivery(accessToken, userId, deliveryDayId)
@@ -491,11 +492,6 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
       }
     }
 
-    const scrollToCurrentCard = () => {
-      window.location.hash = '' // This is because setting the location.hash to the existing value won't do anything
-      window.location.hash = `#order-${orderId}`
-    }
-
     dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, null))
     dispatch(statusActions.pending(actionTypes.PROJECTED_ORDER_CANCEL, true))
     const accessToken = getState().auth.get('accessToken')
@@ -519,7 +515,6 @@ export const projectedOrderCancel = (orderId, deliveryDayId, variation) => (
         }
       })
       dispatch(userActions.userOpenCloseOrderCard(orderId, true))
-      scrollToCurrentCard()
       showAllCancelledModalIfNecessary()
     } catch (err) {
       dispatch(statusActions.error(actionTypes.PROJECTED_ORDER_CANCEL, { error: err.message, orderId }))

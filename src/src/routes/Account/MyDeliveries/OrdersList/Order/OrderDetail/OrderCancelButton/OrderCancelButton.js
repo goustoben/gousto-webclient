@@ -11,21 +11,25 @@ class OrderCancelButton extends React.PureComponent {
   static propTypes = {
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,
+    osrOrderId: PropTypes.string,
+    osrDeliveryDayId: PropTypes.string,
     orderState: PropTypes.string,
     didCancelProjectedError: PropTypes.bool,
     orderCancelStart: PropTypes.func,
     deliveryDay: PropTypes.string,
-    pending: PropTypes.bool
+    contentPending: PropTypes.bool
   }
 
   static defaultProps = {
     orderId: '',
     deliveryDayId: '',
+    osrOrderId: '',
+    osrDeliveryDayId: '',
     orderState: '',
     didCancelProjectedError: false,
     orderCancelStart: () => { },
     deliveryDay: '',
-    pending: false,
+    contentPending: false,
   }
 
   handleCancelBox = () => {
@@ -44,7 +48,11 @@ class OrderCancelButton extends React.PureComponent {
   }
 
   render() {
-    const { pending, didCancelProjectedError } = this.props
+    const { contentPending, didCancelProjectedError, deliveryDayId, orderId, osrDeliveryDayId, osrOrderId } = this.props
+
+    let pending = false
+    if(contentPending && deliveryDayId === osrDeliveryDayId) pending = true
+    if(contentPending && orderId === osrOrderId) pending = true
 
     return (
       <div className={css.button}>
