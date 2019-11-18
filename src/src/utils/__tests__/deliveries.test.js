@@ -1118,9 +1118,10 @@ describe('utils/deliveries', () => {
             ],
           },
         })
-        state = Object.assign({}, state, {
+        state = {
+          ...state,
           boxSummaryDeliveryDays: deliveryDays,
-        })
+        }
       })
 
       test('should return closest day that has active free slots', () => {
