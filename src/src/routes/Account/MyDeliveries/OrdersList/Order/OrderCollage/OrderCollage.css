@@ -3,7 +3,7 @@
 
 .collageContainer {
 	composes: flex from 'styles/display.css';
-	composes: hidden-sm-down from 'sass-loader!styles/bootstrap.scss';
+	composes: hidden-md-down from 'sass-loader!styles/bootstrap.scss';
 	composes: wrap verticalCenter contentCenter spaceBetween row from 'styles/flex.css';
 	width: 190px;
 	composes: marginZeroTopBottom marginZeroLeftRight from 'sass-loader!styles/spacing.scss';

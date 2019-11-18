@@ -7,15 +7,12 @@ import { Button } from 'goustouicomponents'
 import Link from 'Link'
 import ProductImage from 'routes/Account/AccountComponents/ProductImage'
 import routes from 'config/routes'
-import actions from 'actions/products'
 import Content from 'containers/Content'
 
 import placeholderSrc from 'media/images/recipe-placeholder.png'
+import marketPhotoSrc from 'media/photos/market-place-cover-photo.jpg'
 
 import css from './OrderProducts.css'
-
-const imagesWidth = '100'
-const limit = 7
 
 class OrderProducts extends React.PureComponent {
 
@@ -37,50 +34,49 @@ class OrderProducts extends React.PureComponent {
     orderId: '',
   }
 
-  static contextTypes = {
-    store: PropTypes.object.isRequired,
-  }
-
-  loadRandomProducts = ({ store }) => {
-    store.dispatch(actions.productsLoadRandomProducts(limit, [imagesWidth]))
-  }
-
-  componentDidMount() {
-    const store = this.context.store
-    this.loadRandomProducts({ store })
-  }
-
   render() {
     const { products, orderId } = this.props
-    const productsSize = products.size
 
     return (
-      <div>
-        <div className={css.header}>
-          <Content contentKeys="mydeliveries_OrderOrderproductsTitle" >
-            <span>Your extras</span>
-          </Content>
-        </div>
-          <div>
-            {products.map(product =>
-              <div key={product.get('id')} className={css.productContainer}>
-                <div className={css.productImage}>
-                  <ProductImage src={product.get('image') || placeholderSrc} alt={product.get('title')} />
-                </div>
-                <div className={css.productInfo}>
-                  <div>{product.get('title')}</div>
-                  <div>x {product.get('quantity')}</div>
-                  <div className={css.price}>£{product.get('unitPrice').toFixed(2)} each</div>
-                </div>
-              </div>
-            )}
+      <div className={css.mainContainer}>
+        {products.size === 0 ? (<img className={css.marketImageRight} src={marketPhotoSrc} alt="Gousto Market products"/>) : null}
+        <div>
+          <div className={css.headerRow}>
+            <Content contentKeys="mydeliveries_OrderOrderproductsTitle" >
+              <span className={css.header}>Gousto Market</span>
+            </Content>
+            {products.size > 0 ? (
+              <Link className={css.editLink} to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
+                Edit Items
+              </Link>
+            ) : null}
           </div>
-        <div className={css.buttonRow}>
-          <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)} clientRouted={false}>
-            <Button color={productsSize > 0 ? 'secondary' : 'primary'} noDecoration>
-              {productsSize > 0 ? 'Edit extras' : 'Add extras'}
-            </Button>
-          </Link>
+          {products.size === 0 ? (
+            <div className={css.marketPromoContainer}>
+              <p className={css.marketPromoText}>Add desserts, drinks, snacks and more to your next box at no extra charge.</p>
+              <img className={css.marketImageFull} src={marketPhotoSrc} alt="Gousto Market products"/>
+              <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
+                <Button color="secondary" width="full" noDecoration>
+                  Go to Gousto Market
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div>
+              {products.map(product =>
+                <div key={product.get('id')} className={css.productContainer}>
+                  <div className={css.productImage}>
+                    <ProductImage src={product.get('image') || placeholderSrc} alt={product.get('title')} />
+                  </div>
+                  <div className={css.productInfo}>
+                    <div>{product.get('title')}</div>
+                    <div>x {product.get('quantity')}</div>
+                    <div className={css.price}>£{product.get('unitPrice').toFixed(2)} each</div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     )

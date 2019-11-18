@@ -2,8 +2,11 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import { Button } from 'goustouicomponents'
+import Link from 'Link'
 import OrderProducts from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderProducts'
 import ProductImage from 'routes/Account/AccountComponents/ProductImage'
+
+import marketPhotoSrc from 'media/photos/market-place-cover-photo.jpg'
 
 describe('OrderProducts', () => {
   let wrapper
@@ -11,15 +14,6 @@ describe('OrderProducts', () => {
     { id: '1', title: 'title 1', quantity: 4, unitPrice: 14.323, image: '' },
     { id: '2', title: 'title 2', quantity: 5, unitPrice: 15.0, image: '' },
     { id: '3', title: 'title 3', quantity: 6, unitPrice: 20, image: '' },
-  ])
-  const randomProductsSample = Immutable.fromJS([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
   ])
 
   describe('rendering', () => {
@@ -29,7 +23,6 @@ describe('OrderProducts', () => {
           orderId={'777'}
           products={productsSample}
           periodId={1}
-          randomProducts={randomProductsSample}
           store={{}}
         />,
         {
@@ -69,20 +62,34 @@ describe('OrderProducts', () => {
       expect(wrapper.text()).toContain('£20.00')
     })
 
-    test('should render no <ProductImage> when no products are passed', () => {
-      wrapper = shallow(<OrderProducts />, {
-        context: {
-          store: {
-            subscribe: jest.fn(),
-            dispatch: jest.fn(),
-          }
-        }
-      })
-      expect(wrapper.find(ProductImage)).toHaveLength(0)
+    test('should render the "Edit Items" link', () => {
+      const editItemsLink = wrapper.find(Link)
+      expect(editItemsLink).toHaveLength(1)
+      expect(editItemsLink.children().text()).toBe('Edit Items')
     })
 
-    test('should render a button', () => {
-      expect(wrapper.find(Button)).toHaveLength(1)
+    describe('when no products are passed',() => {
+      beforeEach(() => {
+        wrapper = shallow(<OrderProducts />, {
+          context: {
+            store: {
+              subscribe: jest.fn(),
+              dispatch: jest.fn(),
+            }
+          }
+        })
+      })
+
+      test('should render no <ProductImage>', () => {
+        expect(wrapper.find(ProductImage)).toHaveLength(0)
+      })
+
+      test('should render the market promo content', () => {
+        expect(wrapper.find('.marketPromoText').text()).toBe('Add desserts, drinks, snacks and more to your next box at no extra charge.')
+        expect(wrapper.find('img.marketImageRight').prop('src')).toBe(marketPhotoSrc)
+        expect(wrapper.find('img.marketImageFull').prop('src')).toBe(marketPhotoSrc)
+        expect(wrapper.find(Button).children().text()).toBe('Go to Gousto Market')
+      })
     })
   })
 })
