@@ -126,7 +126,7 @@ describe('order actions', () => {
     })
 
     describe('when the orderTrackingAction contains an actionType', () => {
-      let order = {
+      const order = {
         id: '735702932',
         prices: {
           total: 31.99,
@@ -705,7 +705,7 @@ describe('order actions', () => {
       const fetchedDays = { data: [{ id: '4' }, { id: '5' }, { id: '6' }] }
 
       fetchDeliveryDays.mockReturnValue(
-        new Promise((resolve, reject) => { resolve(fetchedDays) })
+        new Promise(resolve => { resolve(fetchedDays) })
       )
 
       deliveriesUtils.getAvailableDeliveryDays.mockReturnValue(
@@ -775,7 +775,7 @@ describe('order actions', () => {
       slotDate = '2019-08-10'
       availableDays = [{ id: '5' }, { id: '6' }]
 
-      getStateSpy = () => ({
+      getState.mockReturnValue({
         auth: Immutable.Map({ accessToken: 'access-token' }),
         user: Immutable.Map({
           newOrders: Immutable.Map({
@@ -789,7 +789,7 @@ describe('order actions', () => {
     })
 
     it('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as pending', async () => {
-      await orderUpdateDayAndSlot(orderId, coreSlotId, slotId, slotDate, availableDays)(dispatchSpy, getStateSpy)
+      await orderUpdateDayAndSlot(orderId, coreSlotId, slotId, slotDate, availableDays)(dispatch, getState)
 
       expect(pending).toHaveBeenCalledTimes(2)
       expect(pending.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
@@ -804,7 +804,7 @@ describe('order actions', () => {
         new Promise((resolve, reject) => reject(err))
       ))
 
-      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatchSpy, getStateSpy)
+      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatch, getState)
 
       expect(pending).toHaveBeenCalledTimes(2)
       expect(pending.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
@@ -833,7 +833,7 @@ describe('order actions', () => {
         new Promise(resolve => resolve(updatedOrder))
       ))
 
-      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatchSpy, getStateSpy)
+      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatch, getState)
 
       expect(saveOrder).toHaveBeenCalled()
       const order = {
@@ -846,7 +846,7 @@ describe('order actions', () => {
       expect(saveOrder.mock.calls[0][1]).toEqual('12345')
       expect(saveOrder.mock.calls[0][2]).toEqual(order)
 
-      expect(dispatchSpy).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ORDER_UPDATE_DELIVERY_DAY_AND_SLOT,
         orderId: '12345',
         coreDayId: 3,
@@ -871,9 +871,9 @@ describe('order actions', () => {
         new Promise((resolve, reject) => reject(error))
       ))
 
-      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatchSpy, getStateSpy)
+      await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatch, getState)
 
-      expect(dispatchSpy).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.TRACKING,
         trackingData: {
           actionType: 'OrderDeliverySlot SaveAttemptFailed',
@@ -889,14 +889,14 @@ describe('order actions', () => {
 
   describe('clearUpdateDateErrorAndPending', () => {
     test('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as NOT pending', () => {
-      clearUpdateDateErrorAndPending()(dispatchSpy)
+      clearUpdateDateErrorAndPending()(dispatch)
 
       expect(pending.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
       expect(pending.mock.calls[0][1]).toEqual(null)
     })
 
     test('should mark ORDER_UPDATE_DELIVERY_DAY_AND_SLOT as NOT errored', () => {
-      clearUpdateDateErrorAndPending()(dispatchSpy)
+      clearUpdateDateErrorAndPending()(dispatch)
 
       expect(error.mock.calls[0][0]).toEqual('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
       expect(error.mock.calls[0][1]).toEqual(null)
