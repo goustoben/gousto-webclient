@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 import actions from 'actions/actionTypes'
 import { getWindow } from 'utils/window'
