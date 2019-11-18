@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   const locationQueryParam = locationQuery(state)
   const order = getBasketOrderDetails(state)
   const headerDetails = !!order && getHeaderDetails(order)
-  const showHeader = (!!state.temp.get('showHeader') || !!(locationQueryParam && locationQueryParam['order_action'])) && !!headerDetails
+  const showHeader = !!(locationQueryParam && locationQueryParam['order_action']) && !!headerDetails
   const isLoading = !order || isOrderConfirmationPageLoading(state)
 
   return ({

@@ -5,7 +5,7 @@ import logger from 'utils/logger'
 import * as userApi from 'apis/user'
 import { customerSignup } from 'apis/customers'
 import { getDeliveryTariffId } from 'utils/deliveries'
-import * as ordersApi from 'apis/orders'
+import { cancelOrder, fetchOrder } from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
 import * as addressApi from 'apis/addressLookup'
 import GoustoException from 'utils/GoustoException'
@@ -99,7 +99,7 @@ function userOrderCancelNext(afterBoxNum = 1) {
 
         try {
           const accessToken = getState().auth.get('accessToken')
-          await ordersApi.cancelOrder(accessToken, orderToCancelId)
+          await cancelOrder(accessToken, orderToCancelId)
           dispatch({
             type: actionTypes.USER_UNLOAD_ORDERS,
             orderIds: [orderToCancelId]
@@ -245,7 +245,7 @@ function userLoadOrder(orderId, forceRefresh = false) {
     try {
       if (forceRefresh || getState().user.get('orders').find(order => order.get('id') === orderId) === undefined) {
         const accessToken = getState().auth.get('accessToken')
-        const { data: order } = await ordersApi.fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
+        const { data: order } = await fetchOrder(accessToken, orderId, { 'includes[]': 'shipping_address' })
 
         dispatch({
           type: actionTypes.USER_LOAD_ORDERS,

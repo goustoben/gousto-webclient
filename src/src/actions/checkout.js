@@ -11,9 +11,10 @@ import { createPreviewOrder } from 'apis/orders'
 import { fetchIntervals } from 'apis/customers'
 import GoustoException from 'utils/GoustoException'
 import { basketResetPersistent } from 'utils/basket'
+import { trackAffiliatePurchase } from 'actions/tracking'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
-import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 
 import actionTypes from './actionTypes'
 import {
@@ -200,7 +201,10 @@ export const fireCheckoutPendingEvent = (pendingName, checkoutValue = true) => {
 }
 
 export function checkoutSignup() {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const { basket } = getState()
+    const orderId = basket.get('previewOrderId')
+
     dispatch(error(actionTypes.CHECKOUT_SIGNUP, null))
     dispatch(pending(actionTypes.CHECKOUT_SIGNUP, true))
 
@@ -209,7 +213,7 @@ export function checkoutSignup() {
       dispatch(trackSignupPageChange('Submit'))
       await dispatch(userSubscribe())
       await dispatch(checkoutActions.checkoutPostSignup())
-      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS }) // used for facebook tracking
+      dispatch({ type: actionTypes.CHECKOUT_SIGNUP_SUCCESS, orderId }) // used for facebook tracking
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP} - ${err.message}`, errors: [err] })
       dispatch(error(actionTypes.CHECKOUT_SIGNUP, err.code))
@@ -274,6 +278,13 @@ export const trackPurchase = () => (
       })
       ga('gousto.send', 'pageview')
     }
+
+    trackAffiliatePurchase({
+      orderId,
+      total: prices.get('total', ''),
+      commissionGroup: 'FIRSTPURCHASE',
+      promoCode,
+    })
   }
 )
 

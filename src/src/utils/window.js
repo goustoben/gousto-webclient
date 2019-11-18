@@ -6,14 +6,9 @@ export function replace(path) {
   window.location.replace(path)
 }
 
-export function documentLocation() {
-  let location = {}
-  if (document) {
-    location = document.location
-  }
-
-  return location
-}
+export const documentLocation = () => (
+  (document) ? document.location : {}
+)
 
 export function getDocumentElement(id) {
   return document.getElementById(id)

@@ -4,7 +4,7 @@ import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
 import subPauseActions from 'actions/subscriptionPause'
 import statusActions from 'actions/status'
 import userActions from 'actions/user'
-import ordersApi from 'apis/orders'
+import { cancelExistingOrders } from 'apis/orders'
 import customersApi from 'apis/customers'
 import subscriptionApi from 'apis/subscription'
 import redirectActions from 'actions/redirect'
@@ -33,6 +33,9 @@ jest.mock('actions/onScreenRecovery', () => ({
 }))
 jest.mock('apis/subscription', () => ({
   deactivateSubscription: jest.fn()
+}))
+jest.mock('apis/orders', () => ({
+  cancelExistingOrders: jest.fn(),
 }))
 jest.mock('apis/customers', () => ({
   fetchPauseReasons: jest.fn()
@@ -2060,7 +2063,6 @@ describe('Subscription action', () => {
   describe('subscriptionPauseCancelPendingOrders', () => {
     let getState
     let dispatch
-    const cancelExistingOrdersSpy = jest.spyOn(ordersApi, 'cancelExistingOrders')
     const subscriptionPauseProceedSpy = jest.spyOn(subPauseActions, 'subscriptionPauseProceed')
     const subscriptionPauseTrackSpy = jest.spyOn(subPauseActions, 'subscriptionPauseTrack')
     const subscriptionPauseLoadErrorSpy = jest.spyOn(subPauseActions, 'subscriptionPauseLoadError')
@@ -2103,7 +2105,7 @@ describe('Subscription action', () => {
         }),
       })
       dispatch = jest.fn()
-      cancelExistingOrdersSpy.mockReturnValue(Promise.resolve('response from cancelExistingOrders'))
+      cancelExistingOrders.mockReturnValue(Promise.resolve('response from cancelExistingOrders'))
     })
 
     test('should call handle pending status', async () => {
@@ -2122,7 +2124,7 @@ describe('Subscription action', () => {
     test('should call cancelExistingOrders', async () => {
       await subPauseActions.subscriptionPauseCancelPendingOrders()(dispatch, getState)
 
-      expect(cancelExistingOrdersSpy).toHaveBeenCalledTimes(1)
+      expect(cancelExistingOrders).toHaveBeenCalledTimes(1)
     })
 
     test('should call userLoadOrders', async () => {
@@ -2157,7 +2159,7 @@ describe('Subscription action', () => {
           features: Immutable.fromJS({}),
           auth: Immutable.fromJS({ accessToken: 'token' }),
         })
-        cancelExistingOrdersSpy.mockReturnValue(Promise.reject('response from cancelExistingOrders'))
+        cancelExistingOrders.mockReturnValue(Promise.reject('response from cancelExistingOrders'))
 
         await subPauseActions.subscriptionPauseCancelPendingOrders()(dispatch, getState)
       })

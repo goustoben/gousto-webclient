@@ -2,16 +2,13 @@ import Immutable from 'immutable'
 import { push } from 'react-router-redux'
 
 import config from 'config/routes'
-import ordersApi from 'apis/orders'
+import { fetchOrder } from 'apis/orders'
 import logger from 'utils/logger'
 import userUtils from 'utils/user'
 import { basketOrderLoad } from 'actions/basket'
-import { getAffiliateTrackingData } from 'utils/order'
-import { trackAffiliatePurchase } from 'actions/tracking'
 import { productsLoadCategories, productsLoadProducts, productsLoadStock } from 'actions/products'
 import { orderCheckPossibleDuplicate } from './order'
 import recipeActions from './recipes'
-import tempActions from './temp'
 import actionTypes from './actionTypes'
 
 export const orderConfirmationRedirect = (orderId, orderAction) => (
@@ -19,28 +16,18 @@ export const orderConfirmationRedirect = (orderId, orderAction) => (
     const confirmationUrl = config.client.orderConfirmation.replace(':orderId', orderId)
     dispatch(orderCheckPossibleDuplicate(orderId))
     dispatch(push((orderAction) ? `${confirmationUrl}?order_action=${orderAction}` : confirmationUrl))
-    dispatch(tempActions.temp('showHeader', true))
   }
 )
 
 export const orderDetails = (orderId) => (
   async (dispatch, getState) => {
-    const { basket } = getState()
     const accessToken = getState().auth.get('accessToken')
     try {
       dispatch(productsLoadCategories())
       dispatch(productsLoadStock())
-      const { data: order } = await ordersApi.fetchOrder(accessToken, orderId)
+      const { data: order } = await fetchOrder(accessToken, orderId)
       const immutableOrderDetails = Immutable.fromJS(order)
       const orderRecipeIds = userUtils.getUserOrderRecipeIds(immutableOrderDetails)
-
-      trackAffiliatePurchase(
-        getAffiliateTrackingData(
-          'EXISTING',
-          immutableOrderDetails,
-          basket,
-        )
-      )
 
       dispatch(recipeActions.recipesLoadRecipesById(orderRecipeIds))
       await dispatch(productsLoadProducts(order.whenCutOff, order.periodId, {reload: true}))

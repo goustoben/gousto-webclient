@@ -35,12 +35,16 @@ class CheckoutButton extends React.Component {
   }
 
   static defaultProps = {
+    userOrders: [],
     addressId: '',
     promoCode: '',
     postcode: '',
     orderId: '',
+    recipes: [],
     view: '',
     onClick: () => {},
+    basketCheckedOut: () => {},
+    basketProceedToCheckout: () => {},
     boxSummaryVisibilityChange: () => {},
     checkoutTransactionalOrder: () => {},
   }
@@ -50,21 +54,16 @@ class CheckoutButton extends React.Component {
 
     const userOrder = userOrders.find(order => order.get('id') === orderId)
     const recipeAction = (userOrder && userOrder.get('recipeItems').size > 0) ? 'update' : 'choice'
-    const orderAction = orderId ? `recipe-${recipeAction}` : 'transaction'
+    const orderAction = orderId ? `recipe-${recipeAction}` : 'create'
 
     return orderAction
-  }
-
-  handleTransaction = () => {
-    const { checkoutTransactionalOrder } = this.props
-
-    checkoutTransactionalOrder()
   }
 
   handleClick = () => {
     const {
       basketCheckedOut, basketProceedToCheckout, boxSummaryVisibilityChange, deliveryDayId,
       isAuthenticated, numPortions, orderUpdate, orderId, onClick, recipes, view, slotId,
+      checkoutTransactionalOrder,
     } = this.props
 
     onClick()
@@ -76,7 +75,7 @@ class CheckoutButton extends React.Component {
     } else if (!isAuthenticated) {
       basketProceedToCheckout()
     } else {
-      this.handleTransaction()
+      checkoutTransactionalOrder('create')
     }
   }
 
