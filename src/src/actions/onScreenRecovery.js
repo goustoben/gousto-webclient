@@ -4,6 +4,7 @@ import { orderCancel, projectedOrderCancel } from './order'
 import { redirect } from './redirect'
 import subPauseActions from './subscriptionPause'
 import userActions from './user'
+import statusActions from './status'
 import { fetchOrderSkipContent, fetchSubscriptionPauseContent } from '../apis/onScreenRecovery'
 
 export const modalVisibilityChange = ({
@@ -112,13 +113,16 @@ export const cancelPendingOrder = (variation = 'default') => (
   async (dispatch, getState) => {
     const orderId = getState().onScreenRecovery.get('orderId')
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
+    const forceRefresh = getState().onScreenRecovery.get('forceRefresh')
 
     try {
       await dispatch(orderCancel(orderId, deliveryDayId, variation))
     } catch (err) {
       logger.error(err)
     } finally {
-      dispatch(redirect('/my-deliveries'))
+      if (forceRefresh) {
+        dispatch(redirect('/my-deliveries'))
+      }
       modalVisibilityChange({ modalVisibility: false })(dispatch)
     }
   }
@@ -127,13 +131,16 @@ export const cancelPendingOrder = (variation = 'default') => (
 export const cancelProjectedOrder = (variation = 'default') => (
   async (dispatch, getState) => {
     const deliveryDayId = getState().onScreenRecovery.get('deliveryDayId')
+    const forceRefresh = getState().onScreenRecovery.get('forceRefresh')
 
     try {
       await dispatch(projectedOrderCancel(deliveryDayId, deliveryDayId, variation))
     } catch (err) {
       logger.error(err)
     } finally {
-      dispatch(redirect('/my-deliveries'))
+      if (forceRefresh) {
+        dispatch(redirect('/my-deliveries'))
+      }
       modalVisibilityChange({ modalVisibility: false })(dispatch)
     }
   }

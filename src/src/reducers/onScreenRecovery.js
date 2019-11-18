@@ -23,6 +23,9 @@ const onScreenRecovery = {
       if (action.modalType) {
         newState = newState.set('modalType', action.modalType)
       }
+      if (action.forceRefresh) {
+        newState = newState.set('forceRefresh', action.forceRefresh)
+      }
 
       return newState
     }
@@ -86,6 +89,7 @@ export const initialState = () => Immutable.Map({
   offer: null,
   valueProposition: null,
   callToActions: null,
+  forceRefresh: false,
 })
 
 export default onScreenRecovery
