@@ -60,4 +60,9 @@
 .dismissButton {
   color: BlueBase;
   padding: 1rem;
+  background-color: transparent;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
 }
