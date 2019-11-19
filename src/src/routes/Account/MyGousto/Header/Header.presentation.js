@@ -7,10 +7,12 @@ import { OrderDetails } from './OrderDetails/OrderDetails'
 import css from './Header.css'
 
 const HeaderPresentation = ({
+  nextOrderId,
   nextOrderMessage,
   nextOrderTracking,
   previousOrderMessage,
   getHelpQueryParam,
+  trackNextBoxTrackingClick,
 }) => {
   const getHelpUrlSuffix = getHelpQueryParam
     ? getHelpQueryParam
@@ -36,6 +38,7 @@ const HeaderPresentation = ({
               <Button
                 width='full'
                 onClick={() => {
+                  trackNextBoxTrackingClick(nextOrderId)
                   window.open(nextOrderTracking, 'rel="noopener noreferrer"')
                 }}
               >
@@ -77,13 +80,13 @@ const HeaderPresentation = ({
   return (
     <div className={css.cardsContainer}>
       {hasNextOrder ? renderNextOrder() : renderNoNextOrder()}
-
       {previousOrderMessage && renderPreviousOrder()}
     </div>
   )
 }
 
 HeaderPresentation.propTypes = {
+  nextOrderId: PropTypes.string,
   nextOrderMessage: PropTypes.shape({
     primary: PropTypes.string,
     secondary: PropTypes.string,
@@ -91,16 +94,19 @@ HeaderPresentation.propTypes = {
   nextOrderTracking: PropTypes.string,
   previousOrderMessage: PropTypes.string,
   getHelpQueryParam: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  trackNextBoxTrackingClick: PropTypes.func,
 }
 
 HeaderPresentation.defaultProps = {
+  nextOrderId: null,
   nextOrderMessage: {
     primary: null,
     secondary: null,
   },
   nextOrderTracking: null,
   previousOrderMessage: null,
-  getHelpQueryParam: null,
+  getHelpQueryParam: false,
+  trackNextBoxTrackingClick: () => {},
 }
 
 export { HeaderPresentation }

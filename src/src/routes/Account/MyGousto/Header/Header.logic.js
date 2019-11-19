@@ -11,10 +11,14 @@ class Header extends PureComponent {
     orders: PropTypes.instanceOf(Immutable.Map),
     loadOrderTrackingInfo: PropTypes.func,
     nextOrderTracking: PropTypes.string,
+    trackNextBoxTrackingClick: PropTypes.func,
   }
 
   static defaultProps = {
-    orders: Immutable.Map({})
+    orders: Immutable.Map({}),
+    loadOrderTrackingInfo: () => {},
+    nextOrderTracking: null,
+    trackNextBoxTrackingClick: () => {},
   }
 
   componentDidUpdate(prevProps) {
@@ -94,7 +98,7 @@ class Header extends PureComponent {
   }
 
   render() {
-    const { orders, nextOrderTracking } = this.props
+    const { orders, nextOrderTracking, trackNextBoxTrackingClick } = this.props
     const now = moment()
 
     const nextOrder = this.findOrder(orders, now, 'next')
@@ -113,9 +117,11 @@ class Header extends PureComponent {
       loaded ?
         <HeaderPresentation
           nextOrderMessage={nextOrderMessage}
+          nextOrderId={nextOrder ? nextOrder.get('id') : null}
           nextOrderTracking={nextOrderTracking}
           previousOrderMessage={previousOrderMessage}
           getHelpQueryParam={getHelpQueryParam}
+          trackNextBoxTrackingClick={trackNextBoxTrackingClick}
         />
         : null
     )
