@@ -166,6 +166,19 @@ const createState = (stateOverrides) => ({
   ...stateOverrides,
 })
 
+const createPreviewOrderObj = (previewOrderOverrides) => ({
+  delivery_day_id: '253',
+  delivery_slot_id: '4',
+  recipe_choices: [
+    { id: 'recipe-id-1', quantity: 4, type: 'Recipe' },
+    { id: 'recipe-id-2', quantity: 4, type: 'Recipe' },
+    { id: 'recipe-id-2', quantity: 4, type: 'Recipe' },
+  ],
+  day_slot_lead_time_id: '',
+  delivery_tariff_id: '',
+  ...previewOrderOverrides
+})
+
 describe('checkout actions', () => {
   const dispatch = jest.fn()
   const getState = jest.fn()
@@ -175,17 +188,7 @@ describe('checkout actions', () => {
 
   beforeEach(() => {
     getState.mockReturnValue(createState())
-    previewOrder = {
-      delivery_day_id: '253',
-      delivery_slot_id: '4',
-      recipe_choices: [
-        { id: 'recipe-id-1', quantity: 4, type: 'Recipe' },
-        { id: 'recipe-id-2', quantity: 4, type: 'Recipe' },
-        { id: 'recipe-id-2', quantity: 4, type: 'Recipe' },
-      ],
-      day_slot_lead_time_id: '',
-      delivery_tariff_id: ''
-    }
+    previewOrder = createPreviewOrderObj()
     addressCollection = [{ 1: 'a' }, { 2: 'b' }]
     fetchAddressByPostcode.mockReturnValue(
       new Promise(resolve => {
@@ -318,8 +321,12 @@ describe('checkout actions', () => {
           getState,
         )
 
+        previewOrder = createPreviewOrderObj({
+          day_slot_lead_time_id: targetUuid
+        })
+
         expect(createPreviewOrder).toHaveBeenCalledTimes(1)
-        previewOrder.day_slot_lead_time_id = targetUuid
+
         expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
       })
     })
@@ -335,8 +342,11 @@ describe('checkout actions', () => {
           getState
         )
 
+        previewOrder = createPreviewOrderObj({
+          delivery_tariff_id: deliveryTariffId
+        })
+
         expect(createPreviewOrder).toHaveBeenCalledTimes(1)
-        previewOrder.delivery_tariff_id = deliveryTariffId
         expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
       })
     })
