@@ -3,7 +3,7 @@ import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 
 import { warning } from 'utils/logger'
-import { getSlot } from 'utils/deliveries'
+import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
 import { redirect } from 'actions/redirect'
 import { pending, error } from 'actions/status'
 import { createPreviewOrder } from 'apis/orders'
@@ -29,13 +29,11 @@ jest.mock('actions/login')
 jest.mock('actions/menu')
 jest.mock('actions/user')
 jest.mock('actions/basket')
+jest.mock('selectors/features')
+jest.mock('utils/deliveries')
 
 jest.mock('utils/basket', () => ({
   basketResetPersistent: jest.fn()
-}))
-
-jest.mock('utils/deliveries', () => ({
-  getSlot: jest.fn()
 }))
 
 jest.mock('actions/redirect', () => ({
@@ -185,7 +183,8 @@ describe('checkout actions', () => {
         { id: 'recipe-id-2', quantity: 4, type: 'Recipe' },
         { id: 'recipe-id-2', quantity: 4, type: 'Recipe' },
       ],
-      day_slot_lead_time_id: ''
+      day_slot_lead_time_id: '',
+      delivery_tariff_id: ''
     }
     addressCollection = [{ 1: 'a' }, { 2: 'b' }]
     fetchAddressByPostcode.mockReturnValue(
@@ -205,7 +204,6 @@ describe('checkout actions', () => {
         })
       }),
     )
-
     getSlot.mockReturnValue(
       Immutable.Map({
         coreSlotId: '4',
@@ -213,6 +211,7 @@ describe('checkout actions', () => {
         daySlotLeadTimeId: ''
       }),
     )
+    getDeliveryTariffId.mockReturnValue('')
   })
 
   afterEach(() => {
@@ -284,46 +283,62 @@ describe('checkout actions', () => {
         "Cannot read property 'getIn' of null",
       )
     })
-  })
 
-  describe('when daySlotLeadTimeId is present in box summary slots', () => {
-    const targetUuid = 'some-uuid'
+    describe('when daySlotLeadTimeId is present in box summary slots', () => {
+      const targetUuid = 'some-uuid'
 
-    beforeEach(() => {
-      getState.mockReturnValue(createState({
-        boxSummaryDeliveryDays: Immutable.fromJS({
-          '2016-11-21': {
-            id: '3e9a2572-a778-11e6-bb0f-080027596944',
-            date: '2016-11-21',
-            coreDayId: '253',
-            slots: [
-              {
-                coreSlotId: '4',
-                id: '3e952522-a778-11e6-8197-080027596944',
-                daySlotLeadTimeId: 'some-uuid' // targetUuid
-              },
-            ],
-          },
-        }),
-      }))
+      beforeEach(() => {
+        getState.mockReturnValue(createState({
+          boxSummaryDeliveryDays: Immutable.fromJS({
+            '2016-11-21': {
+              id: '3e9a2572-a778-11e6-bb0f-080027596944',
+              date: '2016-11-21',
+              coreDayId: '253',
+              slots: [
+                {
+                  coreSlotId: '4',
+                  id: '3e952522-a778-11e6-8197-080027596944',
+                  daySlotLeadTimeId: 'some-uuid' // targetUuid
+                },
+              ],
+            },
+          }),
+        }))
+      })
+
+      it('should call create preview order with day_slot_lead_time_id', async () => {
+        getSlot.mockReturnValue(Immutable.fromJS({
+          coreSlotId: '4',
+          id: '3e952522-a778-11e6-8197-080027596944',
+          daySlotLeadTimeId: targetUuid
+        }))
+
+        await checkoutCreatePreviewOrder()(
+          dispatch,
+          getState,
+        )
+
+        expect(createPreviewOrder).toHaveBeenCalledTimes(1)
+        previewOrder.day_slot_lead_time_id = targetUuid
+        expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
+      })
     })
 
-    it('should call create preview order with day_slot_lead_time_id', async () => {
+    describe('when deliveryTariffId is returned from state', () => {
+      const deliveryTariffId = 'delivery-tariff-uuid'
 
-      getSlot.mockReturnValue(Immutable.fromJS({
-        coreSlotId: '4',
-        id: '3e952522-a778-11e6-8197-080027596944',
-        daySlotLeadTimeId: targetUuid
-      }))
+      it('should call create preview order with delivery_tariff_id', async () => {
+        getDeliveryTariffId.mockReturnValue(deliveryTariffId)
 
-      await checkoutCreatePreviewOrder()(
-        dispatch,
-        getState,
-      )
+        await checkoutCreatePreviewOrder()(
+          dispatch,
+          getState
+        )
 
-      expect(createPreviewOrder).toHaveBeenCalledTimes(1)
-      previewOrder.day_slot_lead_time_id = targetUuid
-      expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
+        expect(createPreviewOrder).toHaveBeenCalledTimes(1)
+        previewOrder.delivery_tariff_id = deliveryTariffId
+        expect(createPreviewOrder).toHaveBeenCalledWith(previewOrder)
+      })
     })
   })
 
