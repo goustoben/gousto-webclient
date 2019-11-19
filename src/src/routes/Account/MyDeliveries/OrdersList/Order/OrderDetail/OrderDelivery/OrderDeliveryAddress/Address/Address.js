@@ -57,4 +57,4 @@ class Address extends React.PureComponent {
   }
 }
 
-export default Address
+export { Address }

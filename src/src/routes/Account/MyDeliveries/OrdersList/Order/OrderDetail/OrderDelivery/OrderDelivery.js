@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
 import userActions from 'actions/user'
+import { OrderDeliveryAddress } from './OrderDeliveryAddress'
 import { OrderDeliveryDate } from './OrderDeliveryDate'
 
 import css from './OrderDelivery.css'
@@ -13,6 +14,7 @@ class OrderDelivery extends React.PureComponent {
     availableFrom: PropTypes.string,
     availableTo: PropTypes.string,
     shippingAddressId: PropTypes.string,
+    addresses: PropTypes.instanceOf(Immutable.Map),
     date: PropTypes.string,
     timeStart: PropTypes.string,
     timeEnd: PropTypes.string,
@@ -23,7 +25,7 @@ class OrderDelivery extends React.PureComponent {
     recipesPeriodStockFetchError: PropTypes.object,
     orderDeliveryDaysFetchError: PropTypes.object,
     hasUpdateDeliveryDayError: PropTypes.bool,
-    clearUpdateDateErrorAndPending: PropTypes.func,
+    clearUpdateDateErrorAndPending: PropTypes.func
   }
 
   static defaultProps = {
@@ -36,27 +38,34 @@ class OrderDelivery extends React.PureComponent {
       line3: '',
       town: '',
       postcode: '',
-      name: '',
+      name: ''
     }),
     editDeliveryMode: false,
     orderState: '',
     orderId: '',
-    fetchSuccess: false,
+    fetchSuccess: false
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
   }
 
   onClickFunction = () => {
-    const { orderId, editDeliveryMode, clearUpdateDateErrorAndPending } = this.props
+    const {
+      orderId,
+      editDeliveryMode,
+      clearUpdateDateErrorAndPending
+    } = this.props
 
     if (!editDeliveryMode) {
-      this.context.store.dispatch(userActions.userTrackToggleEditDateSection(orderId))
+      this.context.store.dispatch(
+        userActions.userTrackToggleEditDateSection(orderId)
+      )
     }
-    this.context.store.dispatch(userActions.userToggleEditDateSection(orderId, !editDeliveryMode))
+    this.context.store.dispatch(
+      userActions.userToggleEditDateSection(orderId, !editDeliveryMode)
+    )
     clearUpdateDateErrorAndPending()
-
   }
 
   static constructShippingAddress(shippingAddressObj) {
@@ -73,14 +82,29 @@ class OrderDelivery extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { availableFrom, availableTo, shippingAddressId, orderId, orderState } = this.props
+    const {
+      availableFrom,
+      availableTo,
+      shippingAddressId,
+      orderId,
+      orderState,
+    } = this.props
     const { store } = this.context
 
     const isOrderPending = orderState == 'menu open' || orderState == 'recipes chosen'
 
     if (isOrderPending) {
-      store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId)),
-      store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo))
+      store.dispatch(
+        orderActions.orderGetDeliveryDays(
+          availableFrom,
+          availableTo,
+          shippingAddressId,
+          orderId
+        )
+      ),
+      store.dispatch(
+        recipesActions.recipesLoadStockByDate(availableFrom, availableTo)
+      )
     }
   }
 
@@ -97,17 +121,20 @@ class OrderDelivery extends React.PureComponent {
       orderId,
       availableFrom,
       availableTo,
-      hasUpdateDeliveryDayError
+      hasUpdateDeliveryDayError,
+      addresses,
+      shippingAddressId
     } = this.props
-    const editDateHasError =(recipesPeriodStockFetchError != null || orderDeliveryDaysFetchError != null)
-    const errorText = hasUpdateDeliveryDayError ? "There was a problem updating your order date. Please try again later." :
-      "Whoops, something went wrong - please try again"
+    const editDateHasError =
+      recipesPeriodStockFetchError != null ||
+      orderDeliveryDaysFetchError != null
+    const errorText = hasUpdateDeliveryDayError
+      ? 'There was a problem updating your order date. Please try again later.'
+      : 'Whoops, something went wrong - please try again'
 
     return (
       <div data-testing="recipesDeliverySection">
-        <div className={`${css.header} ${css.bold}`}>
-          Delivery details
-        </div>
+        <div className={`${css.header} ${css.bold}`}>Delivery details</div>
         <div className={css.deliveryDetailsWrapper}>
           <div className={css.subSection}>
             <OrderDeliveryDate
@@ -126,6 +153,12 @@ class OrderDelivery extends React.PureComponent {
             />
           </div>
         </div>
+        <OrderDeliveryAddress
+          addresses={addresses}
+          orderId={orderId}
+          orderState={orderState}
+          shippingAddressId={shippingAddressId}
+        />
       </div>
     )
   }

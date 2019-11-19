@@ -1,3 +1,4 @@
+import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import { clearUpdateDateErrorAndPending } from 'actions/order'
 import OrderDelivery from './OrderDelivery'
@@ -8,6 +9,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     shippingAddressObj: state.user.getIn(['addresses', shippingAddressId]),
+    addresses: state.user.get('addresses', Immutable.Map({})).filter((address) => address.get('type') === 'shipping'),
     availableFrom: order.get('availableFrom'),
     availableTo: order.get('availableTo'),
     hasUpdateDeliveryDayError: !!state.error.get('ORDER_UPDATE_DELIVERY_DAY_AND_SLOT')
