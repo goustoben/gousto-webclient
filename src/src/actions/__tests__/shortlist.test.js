@@ -131,7 +131,7 @@ describe('shortlist actions', () => {
             collection: 'ca8f71be-63ac-11e6-a693-068306404bab',
             type: actionTypes.SHORTLIST_RECIPE_ADD,
             trackingData: {
-              actionType: 'Shortlist Recipe Added',
+              actionType: 'Shortlist Recipe Added - Big button',
               recipeId: "123",
               view: 'grid',
               position: '20',

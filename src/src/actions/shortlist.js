@@ -39,7 +39,7 @@ export const shortlistRecipeAdd = (recipeId, force, recipeInfo) => (
           recipeId,
           ...recipeInfo,
           trackingData: {
-            actionType: 'Shortlist Recipe Added',
+            actionType: 'Shortlist Recipe Added - Big button',
             recipeId,
             view,
             position,
