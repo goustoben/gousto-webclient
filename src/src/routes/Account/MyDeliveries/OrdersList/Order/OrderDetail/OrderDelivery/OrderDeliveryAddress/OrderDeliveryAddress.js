@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import { Button } from 'goustouicomponents'
 import { LinkButton } from '../LinkButton'
 import { Address } from './Address'
 
@@ -10,6 +11,7 @@ class OrderDeliveryAddress extends React.PureComponent {
 
   static propTypes = {
     addresses: PropTypes.instanceOf(Immutable.Map),
+    orderAddressChange: PropTypes.func,
     orderId: PropTypes.string,
     orderState: PropTypes.string,
     shippingAddressId: PropTypes.string,
@@ -28,8 +30,14 @@ class OrderDeliveryAddress extends React.PureComponent {
     this.setState({selectedAddressId})
   }
 
+  handleSubmit() {
+    const { orderAddressChange, orderId } = this.props
+    const { selectedAddressId } = this.state
+    orderAddressChange(orderId, selectedAddressId)
+  }
+
   renderedAddresses() {
-    const { addresses, orderId, shippingAddressId } = this.props
+    const { addresses, orderId } = this.props
     const { selectedAddressId } = this.state
 
     return addresses.map(address => {
@@ -55,7 +63,9 @@ class OrderDeliveryAddress extends React.PureComponent {
   }
 
   render() {
-    const { orderState } = this.props
+    const { orderState, shippingAddressId } = this.props
+    const { selectedAddressId } = this.state
+    const submitDisabled = selectedAddressId === shippingAddressId
 
     return (
       <div>
@@ -72,6 +82,15 @@ class OrderDeliveryAddress extends React.PureComponent {
         </div>
         <div className={css.currentAddress}></div>
         {this.renderedAddresses()}
+        <Button
+          onClick={() => this.handleSubmit()}
+          color={'secondary'}
+          width="full"
+          noDecoration
+          disabled={submitDisabled}
+        >
+          Set Address
+        </Button>
       </div>
     )
   }
