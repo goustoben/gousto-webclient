@@ -47,7 +47,6 @@
 }
 
 .text {
-	text-transform: uppercase;
 	font-size: 14px;
 	composes: textBold from 'styles/typography.css';
 	align-self: center;
