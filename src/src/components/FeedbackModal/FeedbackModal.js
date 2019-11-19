@@ -65,7 +65,7 @@ class FeedbackModal extends PureComponent {
   getSubmitText = () => {
     const { feedbackSent } = this.state
 
-    return feedbackSent ? ('yes, that is fine').toUpperCase() : ('send feedback').toUpperCase()
+    return feedbackSent ? 'Yes, that is fine' : 'Send feedback'
   }
 
   render() {
@@ -87,7 +87,7 @@ class FeedbackModal extends PureComponent {
         <button type="button" className={css.submitButton} disabled={feedback.length < 1 && !feedbackSent} onClick={() => this.sendFeedback()}>
           {this.getSubmitText()}
         </button>
-        <button type="button" className={css.dismissButton} onClick={() => this.dismissModal()}>{('no thanks').toUpperCase()}</button>
+        <button type="button" className={css.dismissButton} onClick={() => this.dismissModal()}>No thanks</button>
       </div >
     )
   }
