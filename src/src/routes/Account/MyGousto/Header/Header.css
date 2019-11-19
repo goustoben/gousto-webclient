@@ -1,5 +1,7 @@
-@value ScreenSMMin, ScreenMDMin, ScreenLGMin from 'styles/screenSizes.css';
+@value ScreenXXSMin, ScreenMDMin from 'styles/screenSizes.css';
 @value sizeXXS, sizeXS from 'styles/typography.css';
+
+@value CardBreakpoint ScreenXXSMin;
 
 .headerText {
   font-size: 1.125rem;
@@ -13,16 +15,32 @@
 .cardsContainer {
   align-items: flex-start;
 
-  @media ScreenLGMin {
+  @media CardBreakpoint {
     display: flex;
     justify-content: space-between;
   }
 }
 
 .cardsContainer > * {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
-  @media ScreenLGMin {
+  @media CardBreakpoint {
     width: calc(50% - 1rem)
   }
+}
+
+.nextOrder {
+  @media ScreenMDMin {
+    display: flex;
+    align-items: flex-start;
+  }
+}
+
+.orderDetailsItem {
+  padding-bottom: 0.75rem;
+  flex-grow: 1;
+}
+
+.message {
+  margin-bottom: 0;
 }

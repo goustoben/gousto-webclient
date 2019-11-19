@@ -4,32 +4,73 @@ import { shallow } from 'enzyme'
 import { Section } from '../Section'
 
 describe('Section', () => {
-  let wrapper
+  describe('when children prop is not passed', () => {
+    let wrapper
 
-  it('should not render by default', () => {
-    wrapper = shallow(<Section />)
+    beforeEach(() => {
+      wrapper = shallow(<Section />)
+    })
 
-    expect(wrapper.html()).toBeNull()
+    test('should not render by default', () => {
+      expect(wrapper.html()).toBeNull()
+    })
   })
 
-  describe('with children', () => {
-    it('should render a title element which is a h2 if large prop is passed', () => {
-      wrapper = shallow(<Section title='Hello world' largeTitle><p>Section</p></Section>)
+  describe('when children prop is passed', () => {
+    let wrapper
 
-      expect(wrapper.find('h2').length).toEqual(1)
+    beforeEach(() => {
+      wrapper = shallow(
+        <Section><p>Section</p></Section>
+      )
     })
 
-    it('should render a title element which is a h3 if large prop is not passed', () => {
-      wrapper = shallow(<Section title='Hello world'><p>Section</p></Section>)
-
-      expect(wrapper.find('h3').length).toEqual(1)
+    test('does not render any title element', () => {
+      expect(wrapper.find('.title').exists()).toBe(false)
     })
 
-    it('should not render any title element if title prop is not passed', () => {
-      wrapper = shallow(<Section><p>Section</p></Section>)
+    test('has the paddingBottom class on the content', () => {
+      expect(wrapper.find('.content').hasClass('paddingBottom')).toBe(true)
+    })
 
-      expect(wrapper.find('h2').length).toEqual(0)
-      expect(wrapper.find('h3').length).toEqual(0)
+    describe('and the title prop is passed', () => {
+      beforeEach(() => {
+        wrapper.setProps({ title: 'Hello world' })
+      })
+
+      test('renders an h3 as the title element', () => {
+        expect(wrapper.find('.title').type()).toBe('h3')
+      })
+
+      describe('and the largeTitle prop is passed', () => {
+        beforeEach(() => {
+          wrapper.setProps({ largeTitle: true })
+        })
+
+        test('renders an h2 as the title element', () => {
+          expect(wrapper.find('.title').type()).toBe('h2')
+        })
+      })
+    })
+
+    describe('and the hasPaddingBottom prop is true', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hasPaddingBottom: true })
+      })
+
+      test('has the paddingBottom class on the content', () => {
+        expect(wrapper.find('.content').hasClass('paddingBottom')).toBe(true)
+      })
+    })
+
+    describe('and the hasPaddingBottom prop is false', () => {
+      beforeEach(() => {
+        wrapper.setProps({ hasPaddingBottom: false })
+      })
+
+      test('does not have the paddingBottom class on the content', () => {
+        expect(wrapper.find('.content').hasClass('paddingBottom')).toBe(false)
+      })
     })
   })
 })

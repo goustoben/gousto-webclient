@@ -3,12 +3,17 @@ import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import css from './Section.css'
 
-const propTypes = ({
+const propTypes = {
   title: PropTypes.string,
   largeTitle: PropTypes.bool,
   alternateColour: PropTypes.bool,
   children: PropTypes.node,
-})
+  hasPaddingBottom: PropTypes.bool,
+}
+
+const defaultProps = {
+  hasPaddingBottom: true,
+}
 
 const getTitleElement = (title, largeTitle) => {
   if (!title) return null
@@ -20,10 +25,10 @@ const getTitleElement = (title, largeTitle) => {
   }
 }
 
-const Section = ({ title, largeTitle, alternateColour, children }) => (
+const Section = ({ title, largeTitle, alternateColour, children, hasPaddingBottom }) => (
   (Children.count(children)) ? (
     <div className={classnames(css.wrapper, { [css.alternateBackground]: alternateColour })}>
-      <div className={css.content}>
+      <div className={classnames(css.content, { [css.paddingBottom]: hasPaddingBottom })}>
         {getTitleElement(title, largeTitle)}
         {children}
       </div>
@@ -32,5 +37,6 @@ const Section = ({ title, largeTitle, alternateColour, children }) => (
 )
 
 Section.propTypes = propTypes
+Section.defaultProps = defaultProps
 
 export { Section }

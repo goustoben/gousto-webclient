@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 
 import { Cookbook } from '../Cookbook'
 import { Notification } from '../Notification'
-import { Header } from '../Header'
+import { HeaderContainer } from '../Header'
 import { ReferAFriend } from '../ReferAFriend'
 import MyGousto from '../MyGousto'
 
@@ -30,7 +30,7 @@ describe('MyGousto', () => {
     })
 
     test('should render the header component', () => {
-      expect(wrapper.find(Header).length).toEqual(1)
+      expect(wrapper.find(HeaderContainer).length).toEqual(1)
     })
 
     test('should render the refer a friend component', () => {

@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import { Notification } from './Notification'
 import { Section } from './Section'
 import { Cookbook } from './Cookbook'
-import { Header } from './Header'
+import { HeaderContainer } from './Header'
 import { ReferAFriend } from './ReferAFriend'
 import css from './MyGousto.css'
 
@@ -41,8 +41,8 @@ class MyGousto extends React.PureComponent {
             <Notification card={card} orders={orders} />
           </div>
         </div>
-        <Section title={headerTitle} largeTitle alternateColour>
-          <Header orders={orders} />
+        <Section title={headerTitle} largeTitle alternateColour hasPaddingBottom={false}>
+          <HeaderContainer orders={orders} />
         </Section>
         <Section title="Your recent cookbook" alternateColour>
           <Cookbook />

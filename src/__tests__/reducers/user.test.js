@@ -932,4 +932,18 @@ describe('user reducer', () => {
       expect(Immutable.is(result.get('newOrders'), expectedState)).toBe(true)
     })
   })
+
+  describe('USER_LOAD_ORDER_TRACKING', () => {
+    test('adds the tracking URL to user state', () => {
+      const initialState = defaultInitialState
+      const EXAMPLE_TRACKING_URL = 'https://tracking-url-example.com'
+
+      const result = user(initialState, {
+        type: actionTypes.USER_LOAD_ORDER_TRACKING,
+        trackingUrl: EXAMPLE_TRACKING_URL,
+      })
+
+      expect(result.get('nextOrderTracking')).toBe(EXAMPLE_TRACKING_URL)
+    })
+  })
 })

@@ -3,7 +3,7 @@ import { mount } from 'enzyme'
 import Immutable from 'immutable'
 import moment from 'moment'
 import config from 'config'
-import { Header } from '..'
+import { Header } from '../Header.logic'
 
 const deliveryDateFormat = "YYYY-MM-DD HH:mm:ss"
 const upcomingOrders = Immutable.fromJS({
@@ -79,11 +79,16 @@ const orderForToday = Immutable.fromJS({
   }
 })
 let wrapper
+const mockLoadOrderTrackingInfo = jest.fn()
 
 describe('MyGousto - Header', () => {
   describe('when no orders are passed in', () => {
     beforeEach(() => {
-      wrapper = mount(<Header />)
+      wrapper = mount(
+        <Header
+          loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+        />
+      )
     })
 
     test('should not render any messages', () => {
@@ -96,36 +101,84 @@ describe('MyGousto - Header', () => {
     let nextDeliveryDetails
 
     beforeEach(() => {
-      wrapper = mount(<Header orders={upcomingOrders} />)
+      wrapper = mount(
+        <Header
+          loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+          orders={upcomingOrders}
+        />
+      )
       nextDeliveryDetails = wrapper.find('OrderDetails').first()
     })
 
     test('should show the correct date of the next order to be delivered', () => {
       const expectedDateString = moment().add(2, 'days').format('dddd Do MMMM')
-      expect(nextDeliveryDetails.find('.messagePrimary').text()).toBe(expectedDateString)
+      expect(nextDeliveryDetails.find('.message').first().text()).toBe(expectedDateString)
     })
 
     test('should show the correct delivery times of the next order to be delivered', () => {
-      expect(nextDeliveryDetails.find('.messageSecondary').text()).toBe('8am - 7pm')
+      expect(nextDeliveryDetails.find('.message').last().text()).toBe('8am - 7pm')
+    })
+
+    test('does not render a tracking button if a tracking URL is not available', () => {
+      expect(wrapper.find('CardWithLink').first().find('Button').exists()).toBe(false)
     })
 
     describe('and the next order is today', () => {
       beforeEach(() => {
-        wrapper = mount(<Header orders={orderForToday} />)
+        wrapper = mount(
+          <Header
+            loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+            orders={orderForToday}
+          />
+        )
         nextDeliveryDetails = wrapper.find('OrderDetails').first()
       })
 
       test('explicitly shows that the order is arriving today', () => {
-        expect(nextDeliveryDetails.find('.messagePrimary').text()).toBe('Today')
+        expect(nextDeliveryDetails.find('.message').first().text()).toBe('Today')
+      })
+    })
+
+    describe('and a tracking URL is available for the next order', () => {
+      const TRACKING_URL = 'https://test-tracking-url/order-id'
+
+      beforeEach(() => {
+        wrapper = mount(
+          <Header
+            loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+            orders={upcomingOrders}
+            nextOrderTracking={TRACKING_URL}
+          />
+        )
+
+        global.open = jest.fn()
+      })
+
+      afterEach(() => {
+        jest.resetAllMocks()
+      })
+
+      test('renders a track my box button', () => {
+        expect(wrapper.find('CardWithLink').first().find('Button').text()).toBe('Track my box')
+      })
+
+      test('opens the tracking page in a new tab', () => {
+        wrapper.find('CardWithLink').find('SegmentPresentation').last().simulate('click')
+        expect(global.open).toHaveBeenCalledWith(TRACKING_URL, 'rel="noopener noreferrer"')
       })
     })
   })
 
   describe('when a user has no upcoming orders', () => {
     test('should show the no upcoming orders message', () => {
-      wrapper = mount(<Header orders={previousOrders} />)
+      wrapper = mount(
+        <Header
+          loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+          orders={previousOrders}
+        />
+      )
       const nextDeliveryDetails = wrapper.find('OrderDetails').first()
-      expect(nextDeliveryDetails.find('.messagePrimary').text()).toBe('No boxes scheduled')
+      expect(nextDeliveryDetails.find('.message').first().text()).toBe('No boxes scheduled')
     })
   })
 
@@ -133,18 +186,28 @@ describe('MyGousto - Header', () => {
     let previousDeliveryDetails
 
     beforeEach(() => {
-      wrapper = mount(<Header orders={previousOrders} />)
+      wrapper = mount(
+        <Header
+          loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+          orders={previousOrders}
+        />
+      )
       previousDeliveryDetails = wrapper.find('OrderDetails').at(1)
     })
 
     test('should show the correct date of the next order to be delivered', () => {
       const expectedDateString = moment().subtract(2, 'days').format('dddd Do MMMM')
-      expect(previousDeliveryDetails.find('.messagePrimary').text()).toContain(expectedDateString)
+      expect(previousDeliveryDetails.find('.message').first().text()).toContain(expectedDateString)
     })
 
     describe('and the most recent order > 7 days ago', () => {
       test('should link to general help contact page', () => {
-        wrapper = mount(<Header orders={onlyOldOrders} />)
+        wrapper = mount(
+          <Header
+            loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+            orders={onlyOldOrders}
+          />
+        )
         const linkUrl = wrapper.find('CardWithLink').last().prop('linkUrl')
         expect(linkUrl.includes(config.routes.client.getHelp.contact)).toBe(true)
       })
@@ -160,8 +223,52 @@ describe('MyGousto - Header', () => {
 
   describe('when a user has no previously delivered orders', () => {
     test('does not show details of previous deliveries', () => {
-      wrapper = mount(<Header orders={upcomingOrders} />)
+      wrapper = mount(
+        <Header
+          loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+          orders={upcomingOrders}
+        />
+      )
       expect(wrapper.find('OrderDetails')).toHaveLength(1)
+    })
+  })
+
+  describe('fetching the tracking URL for an order', () => {
+    beforeEach(() => {
+      wrapper = mount(
+        <Header
+          loadOrderTrackingInfo={mockLoadOrderTrackingInfo}
+          orders={Immutable.Map({})}
+        />
+      )
+    })
+
+    afterEach(() => {
+      jest.resetAllMocks()
+    })
+
+    describe('when the user has an upcoming order', () => {
+      describe('and the order is due to be delivered today', () => {
+        test('fetches the tracking URL for the next order', () => {
+          wrapper.setProps({ orders: orderForToday })
+          expect(mockLoadOrderTrackingInfo).toHaveBeenCalledTimes(1)
+          expect(mockLoadOrderTrackingInfo).toHaveBeenCalledWith('100')
+        })
+      })
+
+      describe('and the order is not due to be delivered today', () => {
+        test('does not try to fetch the tracking URL for any orders', () => {
+          wrapper.setProps({ orders: upcomingOrders })
+          expect(mockLoadOrderTrackingInfo).toHaveBeenCalledTimes(0)
+        })
+      })
+    })
+
+    describe('when the user has no upcoming orders', () => {
+      test('does not try to fetch the tracking URL for any orders', () => {
+        wrapper.setProps({ orders: previousOrders })
+        expect(mockLoadOrderTrackingInfo).toHaveBeenCalledTimes(0)
+      })
     })
   })
 })

@@ -8,6 +8,7 @@ import { getDeliveryTariffId } from 'utils/deliveries'
 import { cancelOrder, fetchOrder } from 'apis/orders'
 import * as prospectApi from 'apis/prospect'
 import * as addressApi from 'apis/addressLookup'
+import { fetchDeliveryConsignment } from 'apis/deliveries'
 import GoustoException from 'utils/GoustoException'
 import { getAddress } from 'utils/checkout'
 import config from 'config/signup'
@@ -57,6 +58,7 @@ const userActions = {
   userLoadOrders,
   userFetchOrders,
   userLoadNewOrders,
+  userLoadOrderTrackingInfo,
   userLoadProjectedDeliveries,
   userReactivate,
   userPromoApplyCode,
@@ -855,5 +857,30 @@ export const userLoadCookbookRecipes = () => (dispatch, getState) => {
   const userRecipeIds = getUserRecentRecipesIds(getState(), 6)
   dispatch(recipeActions.recipesLoadRecipesById(userRecipeIds, true))
 }
+
+export const userLoadOrderTrackingInfo = (orderId) => (
+  async (dispatch, getState) => {
+    dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDER_TRACKING, true))
+    dispatch(statusActions.error(actionTypes.USER_LOAD_ORDER_TRACKING, false))
+    try {
+      const accessToken = getState().auth.get('accessToken')
+      const orderTracking = await fetchDeliveryConsignment(accessToken, orderId)
+      const { trackingUrl } = orderTracking.data[0]
+      dispatch({
+        type: actionTypes.USER_LOAD_ORDER_TRACKING,
+        trackingUrl,
+      })
+    } catch(err) {
+      dispatch(statusActions.error(actionTypes.USER_LOAD_ORDER_TRACKING, true))
+      dispatch({
+        type: actionTypes.USER_LOAD_ORDER_TRACKING,
+        trackingUrl: '',
+      })
+      logger.error({ message: `Failed to fetch tracking url for order ${orderId}`, errors: [err] })
+    } finally {
+      dispatch(statusActions.pending(actionTypes.USER_LOAD_ORDER_TRACKING, false))
+    }
+  }
+)
 
 export default userActions

@@ -2,30 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import css from './OrderDetails.css'
 
-const OrderDetails = ({
-  heading,
-  messagePrimary,
-  messageSecondary,
-}) => (
+const OrderDetails = ({ heading, children }) => (
   <div className={css.contentWrapper}>
-    <p>{heading}</p>
-    <p className={css.messagePrimary}>
-      {messagePrimary}
-    </p>
-    {messageSecondary && (
-      <p className={css.messageSecondary}>{messageSecondary}</p>
-    )}
+    <h2 className={css.heading}>{heading}</h2>
+    {children}
   </div>
 )
 
 OrderDetails.propTypes = {
   heading: PropTypes.string.isRequired,
-  messagePrimary: PropTypes.string.isRequired,
-  messageSecondary: PropTypes.string,
-}
-
-OrderDetails.defaultProps = {
-  messageSecondary: '',
+  children: PropTypes.node.isRequired,
 }
 
 export { OrderDetails }
