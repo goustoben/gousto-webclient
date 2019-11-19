@@ -32,14 +32,6 @@ class OrderDelivery extends React.PureComponent {
     date: '',
     timeStart: '',
     timeEnd: '',
-    shippingAddressObj: Immutable.Map({
-      line1: '',
-      line2: '',
-      line3: '',
-      town: '',
-      postcode: '',
-      name: ''
-    }),
     editDeliveryMode: false,
     orderState: '',
     orderId: '',
@@ -66,19 +58,6 @@ class OrderDelivery extends React.PureComponent {
       userActions.userToggleEditDateSection(orderId, !editDeliveryMode)
     )
     clearUpdateDateErrorAndPending()
-  }
-
-  static constructShippingAddress(shippingAddressObj) {
-    let shippingAddress = shippingAddressObj.get('line1')
-    const line2 = shippingAddressObj.get('line2')
-    const line3 = shippingAddressObj.get('line3')
-    const town = shippingAddressObj.get('town')
-    shippingAddress += line2 ? `, ${line2}` : ''
-    shippingAddress += line3 ? `, ${line3}` : ''
-    shippingAddress += town ? `, ${town}` : ''
-    shippingAddress += ` ${shippingAddressObj.get('postcode')}`
-
-    return shippingAddress
   }
 
   componentDidMount() {

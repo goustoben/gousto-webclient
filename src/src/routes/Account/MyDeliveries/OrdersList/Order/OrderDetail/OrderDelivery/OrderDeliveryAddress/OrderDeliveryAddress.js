@@ -24,8 +24,12 @@ class OrderDeliveryAddress extends React.PureComponent {
     }
   }
 
+  handleSelectAddress(selectedAddressId) {
+    this.setState({selectedAddressId})
+  }
+
   renderedAddresses() {
-    const { addresses, orderId } = this.props
+    const { addresses, orderId, shippingAddressId } = this.props
     const { selectedAddressId } = this.state
 
     return addresses.map(address => {
@@ -36,7 +40,9 @@ class OrderDeliveryAddress extends React.PureComponent {
         <Address
           key={addressId}
           addressName={address.get('name')}
-          address={address.get('line1')}
+          line1={address.get('line1')}
+          line2={address.get('line2')}
+          line3={address.get('line3')}
           town={address.get('town')}
           postcode={address.get('postcode')}
           orderId={orderId}

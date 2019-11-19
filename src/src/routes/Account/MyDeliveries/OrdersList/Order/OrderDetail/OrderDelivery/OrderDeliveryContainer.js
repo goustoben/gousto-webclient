@@ -8,7 +8,7 @@ function mapStateToProps(state, ownProps) {
   const shippingAddressId = order.get('shippingAddressId')
 
   return {
-    shippingAddressObj: state.user.getIn(['addresses', shippingAddressId]),
+    shippingAddressId,
     addresses: state.user.get('addresses', Immutable.Map({})).filter((address) => address.get('type') === 'shipping'),
     availableFrom: order.get('availableFrom'),
     availableTo: order.get('availableTo'),
