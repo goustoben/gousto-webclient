@@ -5,7 +5,7 @@ import logger from 'utils/logger'
 import routes from 'config/routes'
 import gaID from 'config/head/gaTracking'
 import Cookies from 'utils/GoustoCookies'
-import { getSlot } from 'utils/deliveries'
+import { getSlot, getDeliveryTariffId } from 'utils/deliveries'
 import { redirect } from 'actions/redirect'
 import { createPreviewOrder } from 'apis/orders'
 import { fetchIntervals } from 'apis/customers'
@@ -14,6 +14,7 @@ import { basketResetPersistent } from 'utils/basket'
 import { trackAffiliatePurchase } from 'actions/tracking'
 import { fetchAddressByPostcode } from 'apis/addressLookup'
 import { getAboutYouFormName, getDeliveryFormName } from 'selectors/checkout'
+import { getNDDFeatureValue } from 'selectors/features'
 import { isValidPromoCode, getPreviewOrderErrorName } from 'utils/order'
 
 import actionTypes from './actionTypes'
@@ -99,7 +100,7 @@ export function checkoutAddressLookup(postcode) {
 
 export function checkoutCreatePreviewOrder() {
   return async (dispatch, getState) => {
-    const { basket, boxSummaryDeliveryDays } = getState()
+    const { basket, boxSummaryDeliveryDays, user } = getState()
     const date = basket.get('date')
     const slotId = basket.get('slotId')
     const slot = getSlot(boxSummaryDeliveryDays, date, slotId)
@@ -115,6 +116,7 @@ export function checkoutCreatePreviewOrder() {
       const recipes = basket.get('recipes')
       const quantity = basket.get('numPortions')
       const daySlotLeadTimeId = slot.get('daySlotLeadTimeId', '')
+      const deliveryTariffId = getDeliveryTariffId(user, getNDDFeatureValue(getState()))
 
       const recipeChoices = (
         recipes.reduce((recipesArray, qty, id) => {
@@ -138,7 +140,8 @@ export function checkoutCreatePreviewOrder() {
         delivery_day_id: deliveryDayId,
         delivery_slot_id: deliverySlotId,
         recipe_choices: recipeChoices,
-        day_slot_lead_time_id: daySlotLeadTimeId
+        day_slot_lead_time_id: daySlotLeadTimeId,
+        delivery_tariff_id: deliveryTariffId
       }
 
       if (basket.get('orderId')) {
