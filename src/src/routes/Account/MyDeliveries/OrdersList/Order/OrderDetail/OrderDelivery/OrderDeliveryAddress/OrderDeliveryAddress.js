@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import { Button } from 'goustouicomponents'
+import { Alert, Button } from 'goustouicomponents'
 import { LinkButton } from '../LinkButton'
 import { Address } from './Address'
 
@@ -15,6 +15,8 @@ class OrderDeliveryAddress extends React.PureComponent {
     orderId: PropTypes.string,
     orderState: PropTypes.string,
     shippingAddressId: PropTypes.string,
+    hasError: PropTypes.bool,
+    isPendingUpdateAddress: PropTypes.bool,
   }
 
   constructor(props) {
@@ -22,18 +24,25 @@ class OrderDeliveryAddress extends React.PureComponent {
     const { shippingAddressId } = this.props
 
     this.state = {
+      editAddressOpen: false,
       selectedAddressId: shippingAddressId
     }
   }
 
-  handleSelectAddress(selectedAddressId) {
+  handleToggleButton = () => {
+    const { editAddressOpen } = this.state
+    this.setState({editAddressOpen: !editAddressOpen})
+  }
+
+  handleSelectAddress = (selectedAddressId) => {
     this.setState({selectedAddressId})
   }
 
-  handleSubmit() {
+  handleSubmit = async () => {
     const { orderAddressChange, orderId } = this.props
     const { selectedAddressId } = this.state
-    orderAddressChange(orderId, selectedAddressId)
+    await orderAddressChange(orderId, selectedAddressId)
+    this.setState({editAddressOpen: false})
   }
 
   renderedAddresses() {
@@ -63,8 +72,8 @@ class OrderDeliveryAddress extends React.PureComponent {
   }
 
   render() {
-    const { orderState, shippingAddressId } = this.props
-    const { selectedAddressId } = this.state
+    const { orderState, shippingAddressId, isPendingUpdateAddress, hasError } = this.props
+    const { editAddressOpen, selectedAddressId } = this.state
     const submitDisabled = selectedAddressId === shippingAddressId
 
     return (
@@ -73,24 +82,32 @@ class OrderDeliveryAddress extends React.PureComponent {
           <div className={`${css.bold} ${css.subHeader}`}>Delivery Address</div>
           {['recipes chosen', 'menu open'].indexOf(orderState) > -1 ? (
             <LinkButton
-              onClick={() => {}}
-              text={'Change'}
-              // onClick={onClickFunction}
-              // text={editDeliveryMode ? 'Cancel' : 'Change'}
+              onClick={this.handleToggleButton}
+              text={editAddressOpen ? 'Cancel' : 'Change'}
             />
           ) : null}
         </div>
-        <div className={css.currentAddress}></div>
-        {this.renderedAddresses()}
-        <Button
-          onClick={() => this.handleSubmit()}
-          color={'secondary'}
-          width="full"
-          noDecoration
-          disabled={submitDisabled}
-        >
-          Set Address
-        </Button>
+        <div className={css.currentAddress}>Current Address here</div>
+        {editAddressOpen &&
+          <div>
+            {this.renderedAddresses()}
+            <Button
+              onClick={this.handleSubmit}
+              color={'secondary'}
+              width="full"
+              noDecoration
+              pending={isPendingUpdateAddress}
+              disabled={submitDisabled}
+            >
+              Set Address
+            </Button>
+          </div>
+        }
+        {hasError &&
+          <Alert type="danger">
+            There was a problem updating your order address. Please contact customer care.
+          </Alert>
+        }
       </div>
     )
   }

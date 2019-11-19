@@ -26,7 +26,9 @@ class OrderDelivery extends React.PureComponent {
     orderDeliveryDaysFetchError: PropTypes.object,
     hasUpdateDeliveryDayError: PropTypes.bool,
     clearUpdateDateErrorAndPending: PropTypes.func,
-    orderAddressChange: PropTypes.func
+    orderAddressChange: PropTypes.func,
+    hasUpdateDeliveryAddressError: PropTypes.bool,
+    isPendingUpdateAddress: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -105,6 +107,8 @@ class OrderDelivery extends React.PureComponent {
       addresses,
       shippingAddressId,
       orderAddressChange,
+      hasUpdateDeliveryAddressError,
+      isPendingUpdateAddress,
     } = this.props
     const editDateHasError =
       recipesPeriodStockFetchError != null ||
@@ -140,6 +144,8 @@ class OrderDelivery extends React.PureComponent {
           orderState={orderState}
           shippingAddressId={shippingAddressId}
           orderAddressChange={orderAddressChange}
+          hasError={hasUpdateDeliveryAddressError}
+          isPendingUpdateAddress={isPendingUpdateAddress}
         />
       </div>
     )

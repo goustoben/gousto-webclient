@@ -323,8 +323,11 @@ export const projectedOrderRestore = (orderId, userId, deliveryDayId) => (
 
 export const orderAddressChange = (orderId, addressId) => (
   async (dispatch, getState) => {
-    dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, null))
-    dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, true))
+    dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, {
+      orderId: '',
+      errorMessage: ''
+    }))
+    dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, orderId))
     const accessToken = getState().auth.get('accessToken')
     const data = {
       orderId,
@@ -337,9 +340,12 @@ export const orderAddressChange = (orderId, addressId) => (
         data,
       })
     } catch (err) {
-      dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, err.message))
+      dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, {
+        orderId,
+        errorMessage: err.message
+      }))
     } finally {
-      dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, false))
+      dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, ''))
     }
   }
 )
