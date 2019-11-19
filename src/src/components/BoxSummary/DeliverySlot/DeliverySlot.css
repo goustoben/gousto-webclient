@@ -80,6 +80,7 @@
 
 .textInput {
 	composes: textBold from 'styles/typography.css';
+	composes: textUpper from 'styles/typography.css';
 }
 
 .cancelRow {
