@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
   return {
     step,
     show: shouldShow,
-    stepSelector: step === 1 ? "[data-slug='heart']" : step === 2 ? "[data-slug='box-summary-mobile']" : null
+    stepSelector: step === 1 ? "[data-slug='checkmark']" : step === 2 ? "[data-slug='box-summary-mobile']" : null
   }
 }
 
