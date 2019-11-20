@@ -188,7 +188,7 @@ describe('menu fetchData', () => {
 
             await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-            expect(store.dispatch.mock.calls[3]).toEqual([menuLoadOrderDetailsResult])
+            expect(store.dispatch.mock.calls[2]).toEqual([menuLoadOrderDetailsResult])
           })
 
           describe('menuLoadOrderDetails changes number of recipes in basket', () => {
@@ -220,9 +220,9 @@ describe('menu fetchData', () => {
 
               await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-              expect(store.dispatch.mock.calls[4]).toEqual([{ recipeId: '200' }])
+              expect(store.dispatch.mock.calls[3]).toEqual([{ recipeId: '200' }])
+              expect(store.dispatch.mock.calls[4]).toEqual([{ recipeId: '250' }])
               expect(store.dispatch.mock.calls[5]).toEqual([{ recipeId: '250' }])
-              expect(store.dispatch.mock.calls[6]).toEqual([{ recipeId: '250' }])
             })
           })
 
@@ -248,7 +248,7 @@ describe('menu fetchData', () => {
 
               await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-              expect(store.dispatch.mock.calls[4]).toEqual([featureSetResult])
+              expect(store.dispatch.mock.calls[3]).toEqual([featureSetResult])
             })
           })
 
@@ -261,7 +261,7 @@ describe('menu fetchData', () => {
 
             await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-            expect(store.dispatch.mock.calls[4]).toEqual([menuLoadMenuResult])
+            expect(store.dispatch.mock.calls[3]).toEqual([menuLoadMenuResult])
           })
 
           test('should dispatch menuLoadStock', async () => {
@@ -273,7 +273,7 @@ describe('menu fetchData', () => {
 
             await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
-            expect(store.dispatch.mock.calls[5]).toEqual([menuLoadStockResult])
+            expect(store.dispatch.mock.calls[4]).toEqual([menuLoadStockResult])
           })
         })
       })
@@ -382,7 +382,7 @@ describe('menu fetchData', () => {
 
                 await fetchData({ store, query, params }, false, false)
 
-                expect(store.dispatch.mock.calls[2]).toEqual([userLoadOrdersResult])
+                expect(store.dispatch.mock.calls[1]).toEqual([userLoadOrdersResult])
               })
             })
 
@@ -507,11 +507,11 @@ describe('menu fetchData', () => {
         test('should dispatch basketRecipeAdd for in stock recipes', async () => {
           await fetchData({ store, query: queryWithRecipes, params }, false, false)
 
-          expect(store.dispatch.mock.calls[8]).toEqual([{
+          expect(store.dispatch.mock.calls[7]).toEqual([{
             isMockBasketRecipeAdd: true,
             recipeId: '123'
           }])
-          expect(store.dispatch.mock.calls[9]).toEqual([{
+          expect(store.dispatch.mock.calls[8]).toEqual([{
             isMockBasketRecipeAdd: true,
             recipeId: '789'
           }])
@@ -528,10 +528,6 @@ describe('menu fetchData', () => {
           ...query,
           collection: collectionName
         }
-
-        beforeEach(() => {
-          state.features = state.features.setIn(['collections', 'value'], true)
-        })
 
         test('should call selectCollection with name from getPreselectedCollectionName', async () => {
           // mockImplementation is used here to ensure that queryName is passed correctly
@@ -556,7 +552,6 @@ describe('menu fetchData', () => {
 
         beforeEach(() => {
           state.menuCollections = state.menuCollections.set('123', Immutable.fromJS({ slug: 'recommendations' }))
-          state.features = state.features.setIn(['collections', 'value'], false)
           state.auth = state.auth.set('isAuthenticated', false)
         })
 

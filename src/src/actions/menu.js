@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import { fetchRecipes } from 'apis/recipes'
 import { getAvailableDates, getRecipeStock } from 'apis/data'
 
 import * as boxPricesApi from 'apis/boxPrices'
@@ -39,7 +38,6 @@ const menuActions = {
   menuLoadStock,
   menuLoadDays,
   menuRecipeDetailVisibilityChange,
-  menuFilterVegetarianChange,
   menuCollectionsReceive,
   menuAddEmptyStock,
   menuBrowseCTAVisibilityChange,
@@ -157,18 +155,10 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
 
     if (reqData['filters[available_on]']) {
       const date = reqData['filters[available_on]']
-      const accessToken = getState().auth.get('accessToken')
-      const { features } = getState()
-
       const startTime = new Date()
 
-      if (features.getIn(['collections', 'value']) || features.getIn(['forceCollections', 'value'])) {
-        await menuLoadCollections(date, background)(dispatch, getState)
-        await menuLoadCollectionsRecipes(date)(dispatch, getState)
-      } else {
-        const { data: recipes } = await fetchRecipes(accessToken, '', reqData)
-        dispatch(menuActions.menuReceiveMenu(recipes))
-      }
+      await menuLoadCollections(date, background)(dispatch, getState)
+      await menuLoadCollectionsRecipes(date)(dispatch, getState)
 
       logger.notice(`recipes fetch took ${new Date() - startTime}ms`)
 
@@ -376,13 +366,6 @@ export function menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClic
       const newLoc = { ...prevLoc, query }
       dispatch(push(newLoc))
     }
-  }
-}
-
-export function menuFilterVegetarianChange(filter) {
-  return {
-    type: actionTypes.MENU_FILTER_VEGETARIAN,
-    filter,
   }
 }
 

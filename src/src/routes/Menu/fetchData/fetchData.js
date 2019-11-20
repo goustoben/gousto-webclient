@@ -7,8 +7,6 @@ import actionTypes from 'actions/actionTypes'
 
 import { isFacebookUserAgent } from 'utils/request'
 import { getBasketDate } from 'selectors/basket'
-import { hasJustForYouCollection } from 'selectors/collections'
-import { isCollectionsFeatureEnabled } from 'selectors/features'
 import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
@@ -94,16 +92,16 @@ const loadOrder = async (store, orderId) => {
 
 const loadOrderAuthenticated = async (store, orderId) => {
   try {
-    const state = store.getState()
+    const { auth, user } = store.getState()
 
-    if (state.auth.get('isAuthenticated') && !state.user.get('email') && !state.auth.get('isAdmin')) {
+    if (auth.get('isAuthenticated') && !user.get('email') && !auth.get('isAdmin')) {
       await store.dispatch(actions.userLoadData())
     }
-    const prevBasketRecipes = state.basket.get('recipes')
+    const prevBasketRecipes = store.getState().basket.get('recipes')
 
     await store.dispatch(actions.menuLoadOrderDetails(orderId))
 
-    const noOfOrderRecipes = state.basket.get('recipes').size
+    const noOfOrderRecipes = store.getState().basket.get('recipes').size
 
     if (noOfOrderRecipes === 0) {
       for (const [recipeId, qty] of prevBasketRecipes) {
@@ -209,29 +207,8 @@ const addRecipesFromQuery = async (store, query) => {
 
 const selectCollectionFromQuery = (store, query) => {
   const state = store.getState()
-
-  if (isCollectionsFeatureEnabled(state) || hasJustForYouCollection(state)) {
-    const collectionName = getPreselectedCollectionName(state, query.collection)
-    selectCollection(state, collectionName, store.dispatch)
-  }
-}
-
-const applyForceCollectionsFeature = async (store) => {
-  const isAuthenticated = getIsAuthenticated(store.getState())
-
-  if (!isAuthenticated) {
-    return
-  }
-
-  if (store.getState().features.getIn(['forceCollections', 'value'])) {
-    return
-  }
-
-  /*
-  * TODO: remove forceCollections feature checks
-  * once something becomes default behavior, we should update the code rather than continue to drive it by feature flags
-  */
-  await store.dispatch(actions.featureSet('forceCollections', true))
+  const collectionName = getPreselectedCollectionName(state, query.collection)
+  selectCollection(state, collectionName, store.dispatch)
 }
 
 const shouldFetchData = (store, params, force) => {
@@ -253,8 +230,6 @@ const shouldFetchData = (store, params, force) => {
 // eslint-disable-next-line import/no-default-export
 export default async function fetchData({ store, query, params }, force, background) {
   const startTime = now()
-
-  await applyForceCollectionsFeature(store)
 
   const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
   const shouldFetch = shouldFetchData(store, params, force)

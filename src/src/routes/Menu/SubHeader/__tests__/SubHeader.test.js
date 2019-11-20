@@ -1,10 +1,9 @@
 import sinon from 'sinon'
 
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 
 import SubHeader from 'routes/Menu/SubHeader/SubHeader'
-import Vegetarian from 'routes/Menu/SubHeader/Vegetarian'
 import InfoToggle from 'routes/Menu/SubHeader/InfoToggle'
 import config from 'config/menu'
 
@@ -20,21 +19,8 @@ describe('SubHeader', () => {
       expect(wrapper.type()).toBe('div')
     })
 
-    test('should have vegetarian filters', () => {
-      expect(wrapper.find(Vegetarian)).toHaveLength(2)
-    })
-
     test('should 2 InfoToggles', () => {
       expect(wrapper.find(InfoToggle)).toHaveLength(2)
-    })
-
-    test('should render Vegetarian showVegetarianFilter by default', () => {
-      expect(wrapper.find(Vegetarian)).toHaveLength(2)
-    })
-
-    test('should not render any Vegetarian showVegetarianFilter = false', () => {
-      wrapper = shallow(<SubHeader showVegetarianFilter={false} />)
-      expect(wrapper.find(Vegetarian)).toHaveLength(0)
     })
   })
 

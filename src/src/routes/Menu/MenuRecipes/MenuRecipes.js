@@ -90,7 +90,6 @@ class MenuRecipes extends PureComponent {
       <div className={fadeCss} data-testing="menuRecipes">
         {this.renderBanner(menu.christmas.switchoverDateWeek1, menu.christmas.switchoverDateWeek2)}
         <SubHeader
-          viewIcon={(mobileGridView) ? 'iconSingleColumn' : 'iconDoubleColumn'}
           onToggleGridView={toggleGridView}
           orderId={orderId}
         />

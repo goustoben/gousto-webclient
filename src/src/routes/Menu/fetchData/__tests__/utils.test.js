@@ -20,61 +20,37 @@ describe('getPreselectedCollectionName', () => {
     features: {}
   }
 
-  describe('when collectionFreeze feature is set to non-empty string value', () => {
+  describe('when just for you collection is present', () => {
     beforeEach(() => {
-      state.features = Immutable.fromJS({
-        collectionFreeze: {
-          value: 'non-empty string'
-        }
+      state.menuCollections = Immutable.fromJS({
+        recommendations: { slug: 'recommendations' },
       })
     })
 
-    it('should return value of collectionFreeze', () => {
-      expect(getPreselectedCollectionName(state)).toEqual('non-empty string')
+    describe('when collection name from query param is empty', () => {
+      const collectionNameFormQueryParam = ''
+
+      it('should return recommendations collection short title', () => {
+        expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(recommendationsSlug)
+      })
+    })
+
+    describe('when collection name from query param is not empty', () => {
+      const collectionNameFormQueryParam = 'query-collection-name'
+
+      it('should return collection name from query param', () => {
+        expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(collectionNameFormQueryParam)
+      })
     })
   })
 
-  describe('when collectionFreeze feature is empty value', () => {
+  describe('when just for you collection is not present', () => {
     beforeEach(() => {
-      state.features = Immutable.fromJS({
-        collectionFreeze: {
-          value: ''
-        }
-      })
+      state.menuCollections = Immutable.fromJS({})
     })
 
-    describe('and just for you collection is present', () => {
-      beforeEach(() => {
-        state.menuCollections = Immutable.fromJS({
-          recommendations: { slug: 'recommendations' },
-        })
-      })
-
-      describe('and collection name from query param is empty', () => {
-        const collectionNameFormQueryParam = ''
-
-        it('should return recommendations collection short title', () => {
-          expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(recommendationsSlug)
-        })
-      })
-
-      describe('and collection name from query param is not empty', () => {
-        const collectionNameFormQueryParam = 'query-collection-name'
-
-        it('should return collection name from query param', () => {
-          expect(getPreselectedCollectionName(state, collectionNameFormQueryParam)).toEqual(collectionNameFormQueryParam)
-        })
-      })
-    })
-
-    describe('and just for you collection is not present', () => {
-      beforeEach(() => {
-        state.menuCollections = Immutable.fromJS({})
-      })
-
-      it('should return collection name from query param', () => {
-        expect(getPreselectedCollectionName(state, 'default-collection-name')).toEqual('default-collection-name')
-      })
+    it('should return collection name from query param', () => {
+      expect(getPreselectedCollectionName(state, 'default-collection-name')).toEqual('default-collection-name')
     })
   })
 })
@@ -194,7 +170,7 @@ describe('setSlotFromIds', () => {
     jest.clearAllMocks()
   })
   describe('when a valid day_id and slot_id are provided', () => {
-    it('should set the matching slot ID and the corresponding date',() => {
+    it('should set the matching slot ID and the corresponding date', () => {
       const slotId = '30ef5793-1fd2-4859-a11e-fe7eb8412305'
       const date = '2019-08-03'
       const coreSlotId = '5'
@@ -207,7 +183,7 @@ describe('setSlotFromIds', () => {
     })
   })
   describe('when a valid day_id is provided', () => {
-    it('should set the given date and reset the slot id',() => {
+    it('should set the given date and reset the slot id', () => {
       const dayId = '1801'
 
       setSlotFromIds(state, null, dayId, dispatchSpy)
@@ -217,7 +193,7 @@ describe('setSlotFromIds', () => {
     })
   })
   describe('when an invalid parameter is provided', () => {
-    it('should set redirect to menu',() => {
+    it('should set redirect to menu', () => {
       const slotId = 'invalid-id'
 
       setSlotFromIds(state, slotId, null, dispatchSpy)

@@ -139,33 +139,6 @@ describe('utils/collections', () => {
       const result = getCollectionIdWithName(undefined, undefined)
       expect(result).toEqual(null)
     })
-    describe('with the allowUnpub feature enabled', () => {
-      beforeEach(() => {
-        state = {
-          ...state,
-          features: Immutable.fromJS({ unpubCollections: { value: true } }),
-        }
-      })
-      test('should return the ID of an unpublished collection which has the name passed in', () => {
-        const result = getCollectionIdWithName(state, 'secret')
-        expect(result).toEqual('456')
-      })
-      describe('with the allowUnpub feature enabled and forceCollections enabled', () => {
-        beforeEach(() => {
-          state = {
-            ...state,
-            features: Immutable.fromJS({
-              unpubCollections: { value: true },
-              forceCollections: { value: true },
-            }),
-          }
-        })
-        test('should not return the ID of an unpublished collection which has the name passed in', () => {
-          const result = getCollectionIdWithName(state, 'secret')
-          expect(result).toEqual(null)
-        })
-      })
-    })
   })
 
   describe('getDefaultCollectionId', () => {
@@ -174,10 +147,12 @@ describe('utils/collections', () => {
     beforeEach(() => {
       state = {
         menuCollections: Immutable.fromJS([
-          { published: true,
+          {
+            published: true,
             shortTitle: 'something',
             slug: 'something',
-            id: '123' },
+            id: '123'
+          },
           {
             published: true,
             shortTitle: 'some&thi!ng@s0m3where strange',
@@ -202,7 +177,8 @@ describe('utils/collections', () => {
     test('should return first collection id if no collection default', () => {
       const newState = {
         menuCollections: Immutable.fromJS([
-          { published: true,
+          {
+            published: true,
             shortTitle: 'something',
             slug: 'something',
             id: '123',

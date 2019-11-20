@@ -1,10 +1,10 @@
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import moment from 'moment'
 import Immutable from 'immutable'
+chai.use(sinonChai)
 /* eslint-disable global-require */
 /* eslint-disable new-cap */
 describe('fetchData', function () {
@@ -29,7 +29,7 @@ describe('fetchData', function () {
     let pending
     let fetchData
 
-    beforeEach(function() {
+    beforeEach(function () {
       menuLoadOrderDetails = sinon.stub().returns(new Promise(resolve => { resolve() }))
       menuLoadBoxPrices = sinon.stub().returns(new Promise(resolve => { resolve() }))
       menuLoadMenu = sinon.stub().returns(new Promise(resolve => { resolve() }))
@@ -78,7 +78,7 @@ describe('fetchData', function () {
       }))
     })
 
-    it('should not dispatch any actions other than pending (redirect only on server)', async function() {
+    it('should not dispatch any actions other than pending (redirect only on server)', async function () {
       await fetchData({
         store: { dispatch, getState },
         query: {},
@@ -115,7 +115,7 @@ describe('fetchData', function () {
     let featureSet
     let temp
 
-    beforeEach(function() {
+    beforeEach(function () {
       menuLoadOrderDetails = sinon.stub().returns(new Promise(resolve => { resolve() }))
       menuLoadBoxPrices = sinon.stub().returns(new Promise(resolve => { resolve() }))
       menuLoadMenu = sinon.stub().returns(new Promise(resolve => { resolve() }))
@@ -171,13 +171,13 @@ describe('fetchData', function () {
       }))
     })
 
-    afterEach(function() {
+    afterEach(function () {
       clock.restore()
     })
 
     describe('editing an existing order', function () {
       describe('- logged in', function () {
-        it('should call dispatch 6 times by default', async function() {
+        it('should call dispatch 6 times by default', async function () {
           await fetchData({
             store: { dispatch, getState },
             query: {},
@@ -187,7 +187,7 @@ describe('fetchData', function () {
           expect(dispatch.callCount).to.equal(6)
         })
 
-        it('should call menuLoadOrderDetails', async function() {
+        it('should call menuLoadOrderDetails', async function () {
           await fetchData({
             store: { dispatch, getState },
             query: {},
@@ -199,7 +199,7 @@ describe('fetchData', function () {
           expect(menuLoadMenu).to.have.been.calledOnce
         })
 
-        it('should call menuLoadMenu', async function() {
+        it('should call menuLoadMenu', async function () {
           await fetchData({
             store: { dispatch, getState },
             query: {},
@@ -209,7 +209,7 @@ describe('fetchData', function () {
           expect(menuLoadMenu).to.have.been.calledOnce
         })
 
-        it('should call menuLoadStock', async function() {
+        it('should call menuLoadStock', async function () {
           await fetchData({
             store: { dispatch, getState },
             query: {},
@@ -220,7 +220,7 @@ describe('fetchData', function () {
           expect(menuLoadStock.getCall(0).args[0]).to.equal(true)
         })
 
-        it('should call featureSet 1 time, force enabling collections', async function() {
+        it('should call featureSet 1 time, force enabling collections', async function () {
           await fetchData({
             store: { dispatch, getState },
             query: {},
@@ -228,11 +228,10 @@ describe('fetchData', function () {
           })
 
           expect(featureSet).to.have.been.calledOnce
-          expect(featureSet.getCall(0).args[0]).to.equal('forceCollections')
           expect(featureSet.getCall(0).args[1]).to.equal(true)
         })
 
-        it('should call featureSet 1 additional time, reseting menuRecipes experiment, if editing order, basket has recipe choices & menuRecipes experiment is set', async function() {
+        it('should call featureSet 1 additional time, reseting menuRecipes experiment, if editing order, basket has recipe choices & menuRecipes experiment is set', async function () {
           getState = sinon.stub().returns(({
             basket: Immutable.fromJS({
               get: () => false,
@@ -261,7 +260,7 @@ describe('fetchData', function () {
     })
 
     describe('coming from the wizard', function () {
-      beforeEach(function() {
+      beforeEach(function () {
         getState = sinon.stub().returns(({
           basket: { get: () => false },
           boxSummaryDeliveryDays: Immutable.fromJS([{ date: '2016-05-26' }]),
@@ -270,7 +269,7 @@ describe('fetchData', function () {
           request: Immutable.Map({}),
         }))
       })
-      it('should load data, call dispatch 10 times', async function() {
+      it('should load data, call dispatch 10 times', async function () {
         await fetchData({
           store: { dispatch, getState },
           query: { date: '2016-06-26', num_portions: 2, slot_id: 'slot123', postcode: 'w3 6hx' },
@@ -280,7 +279,7 @@ describe('fetchData', function () {
         expect(dispatch.callCount).to.equal(10)
       })
 
-      it('should set date', async function() {
+      it('should set date', async function () {
         await fetchData({
           store: { dispatch, getState },
           query: { date: '2016-06-26', num_portions: 2, slot_id: 'slot123', postcode: 'w3 6hx' },
@@ -291,7 +290,7 @@ describe('fetchData', function () {
         expect(basketDateChange.getCall(0).args[0]).to.equal('2016-06-26')
       })
 
-      it('should set num portions', async function() {
+      it('should set num portions', async function () {
         await fetchData({
           store: { dispatch, getState },
           query: { date: '2016-06-26', num_portions: 2, slot_id: 'slot123', postcode: 'w3 6hx' },
@@ -302,7 +301,7 @@ describe('fetchData', function () {
         expect(basketNumPortionChange.getCall(0).args[0]).to.equal(2)
       })
 
-      it('should set slot id', async function() {
+      it('should set slot id', async function () {
         await fetchData({
           store: { dispatch, getState },
           query: { date: '2016-06-26', num_portions: 2, slot_id: 'slot123', postcode: 'w3 6hx' },
@@ -313,7 +312,7 @@ describe('fetchData', function () {
         expect(basketSlotChange.getCall(0).args[0]).to.equal('slot123')
       })
 
-      it('should call boxSummaryDeliveryDaysLoad', async function() {
+      it('should call boxSummaryDeliveryDaysLoad', async function () {
         await fetchData({
           store: { dispatch, getState },
           query: { date: '2016-06-26', num_portions: 2, slot_id: 'slot123', postcode: 'w3 6hx' },
@@ -323,7 +322,7 @@ describe('fetchData', function () {
         expect(boxSummaryDeliveryDaysLoad).to.have.been.calledOnce
       })
 
-      it('should call menuLoadMenu', async function() {
+      it('should call menuLoadMenu', async function () {
         await fetchData({
           store: { dispatch, getState },
           query: { date: '2016-06-26', num_portions: 2, slot_id: 'slot123', postcode: 'w3 6hx' },
@@ -333,7 +332,7 @@ describe('fetchData', function () {
         expect(menuLoadMenu).to.have.been.calledOnce
       })
 
-      it('should call basketPostcodeChangePure', async function() {
+      it('should call basketPostcodeChangePure', async function () {
         await fetchData({
           store: { dispatch, getState },
           query: { date: '2016-06-26', num_portions: 2, slot_id: 'slot123', postcode: 'w3 6hx' },
@@ -344,7 +343,7 @@ describe('fetchData', function () {
         expect(basketPostcodeChangePure.getCall(0).args[0]).to.equal('w3 6hx')
       })
 
-      it('should call menuLoadStock', async function() {
+      it('should call menuLoadStock', async function () {
         await fetchData({
           store: { dispatch, getState },
           query: { date: '2016-06-26', num_portions: 2, slot_id: 'slot123', postcode: 'w3 6hx' },
@@ -355,7 +354,7 @@ describe('fetchData', function () {
       })
 
       describe('with information already in the store', function () {
-        it('should not do anything', async function() {
+        it('should not do anything', async function () {
           getState = () => ({
             basket: Immutable.Map({
               date: '123',
@@ -379,7 +378,7 @@ describe('fetchData', function () {
       })
 
       describe('with default portions number already in the store', function () {
-        it('should change the number of portions', async function() {
+        it('should change the number of portions', async function () {
           getState = () => ({
             basket: Immutable.Map({
               date: '123',
@@ -414,7 +413,7 @@ describe('fetchData', function () {
         this.clock.restore()
       })
 
-      it('should only call menuLoadMenu, menuAddEmptyStock, and set temp cutoffDateTime', async function() {
+      it('should only call menuLoadMenu, menuAddEmptyStock, and set temp cutoffDateTime', async function () {
         getState = () => ({
           basket: Immutable.Map({}),
           features: Immutable.fromJS({
@@ -444,7 +443,7 @@ describe('fetchData', function () {
     })
 
     describe('non-browse mode /menu', function () {
-      it('should only call menuLoadMenu & menuAddEmptyStock', async function() {
+      it('should only call menuLoadMenu & menuAddEmptyStock', async function () {
         getState = () => ({
           basket: { get: () => false },
           features: Immutable.Map({}),
@@ -471,7 +470,7 @@ describe('fetchData', function () {
         expect(menuLoadMenu).to.have.been.calledOnce
         expect(menuLoadStock).to.have.been.calledOnce
       })
-      it('should show selected default day', async function() {
+      it('should show selected default day', async function () {
         getState = () => ({
           basket: { get: () => false },
           features: Immutable.Map({}),
@@ -506,7 +505,7 @@ describe('fetchData', function () {
     })
 
     describe('with a collection query', function () {
-      it('should dispatch a filterCollectionChange action with the id of the named collection', async function() {
+      it('should dispatch a filterCollectionChange action with the id of the named collection', async function () {
         getState = () => ({
           basket: { get: () => false },
           features: Immutable.fromJS({
@@ -543,7 +542,7 @@ describe('fetchData', function () {
         expect(filterCollectionChange).to.have.been.calledOnce
         expect(filterCollectionChange.getCall(0).args[0]).to.equal('123')
       })
-      it('should not dispatch a filterCollectionChange action with the id of the named collection if the collection is not published', async function() {
+      it('should not dispatch a filterCollectionChange action with the id of the named collection if the collection is not published', async function () {
         getState = () => ({
           basket: { get: () => false },
           features: Immutable.fromJS({
@@ -579,17 +578,9 @@ describe('fetchData', function () {
         expect(filterCollectionChange).not.to.have.been.called
       })
 
-      it('should dispatch a filterCollectionChange action with the id of the named collection if the collection is not published but the unpub_collections feature is enabled', async function() {
+      it('should dispatch a filterCollectionChange action with the id of the named collection if the collection is not published but the unpub_collections feature is enabled', async function () {
         getState = () => ({
           basket: { get: () => false },
-          features: Immutable.fromJS({
-            collections: {
-              value: true,
-            },
-            unpubCollections: {
-              value: true,
-            },
-          }),
           auth: Immutable.Map({}),
           boxSummaryDeliveryDays: Immutable.fromJS([{ date: '2016-05-26' }]),
           menuCollections: Immutable.OrderedMap({
@@ -617,48 +608,6 @@ describe('fetchData', function () {
 
         expect(filterCollectionChange).to.have.been.calledOnce
         expect(filterCollectionChange.getCall(0).args[0]).to.equal('123')
-      })
-    })
-
-    describe('with a collectionFreeze query', function () {
-      it('should call getCollectionIdWithName with forced collection name', async function () {
-        getState = () => ({
-          basket: { get: () => false },
-          features: Immutable.fromJS({
-            collections: {
-              value: true,
-            },
-            collectionFreeze: {
-              value: 'frozen',
-            },
-          }),
-          auth: Immutable.Map({}),
-          boxSummaryDeliveryDays: Immutable.fromJS([{ date: '2016-05-26' }]),
-          menuCollections: Immutable.OrderedMap({
-            123: Immutable.Map({ id: '123', shortTitle: 'a Collection', published: true }),
-            456: Immutable.Map({ id: '456', shortTitle: 'frozen', published: true }),
-          }),
-          menuCollectionRecipes: Immutable.fromJS({
-            123: ['', '', ''],
-            456: ['', '', ''],
-          }),
-          request: Immutable.Map({
-            browser: 'desktop',
-          }),
-        })
-        await fetchData({
-          store: {
-            dispatch,
-            getState,
-          },
-          query: {
-            collection: 'a-collection',
-          },
-          params: {},
-        })
-
-        expect(filterCollectionChange).to.have.been.calledOnce
-        expect(filterCollectionChange.getCall(0).args[0]).to.equal('456')
       })
     })
 

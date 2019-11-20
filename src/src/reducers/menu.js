@@ -162,15 +162,6 @@ const menu = {
     }
   },
 
-  menuFilterVegetarian: (state = false, action) => {
-    switch (action.type) {
-    case actionTypes.MENU_FILTER_VEGETARIAN:
-      return action.filter
-    default:
-      return state
-    }
-  },
-
   menuCollections: (state = Immutable.OrderedMap(), action) => {
     switch (action.type) {
     case actionTypes.MENU_COLLECTIONS_RECEIVE: {

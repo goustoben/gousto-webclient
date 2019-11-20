@@ -1,21 +1,21 @@
 // Root
-export const getStock = state => state.menuRecipeStock
-export const getBasket = state => state.basket
-export const getRecipes = state => state.recipes
-export const getMenuRecipeIds = state => state.menuRecipes
-export const getMenuRecipes = state => state.menuCollectionRecipes
-export const getMenuCollections = state => state.menuCollections
-export const getMenuCutoffUntil = state => state.menuCutoffUntil
-export const getRecieveMenuPending = state => state.menuRecieveMenuPending
-export const getBoxSummaryDeliveryDays = state => state.boxSummaryDeliveryDays
-export const getUserAgent = state => state.request.get('userAgent')
-export const getProductCategories = state => state.productsCategories
+export const getStock = ({ menuRecipeStock }) => menuRecipeStock
+export const getBasket = ({ basket }) => basket
+export const getRecipes = ({ recipes }) => recipes
+export const getMenuRecipeIds = ({ menuRecipes }) => menuRecipes
+export const getMenuRecipes = ({ menuCollectionRecipes }) => menuCollectionRecipes
+export const getMenuCollections = ({ menuCollections }) => menuCollections
+export const getMenuCutoffUntil = ({ menuCutoffUntil }) => menuCutoffUntil
+export const getRecieveMenuPending = ({ menuRecieveMenuPending }) => menuRecieveMenuPending
+export const getBoxSummaryDeliveryDays = ({ boxSummaryDeliveryDays }) => boxSummaryDeliveryDays
+export const getUserAgent = ({ request }) => request.get('userAgent')
+export const getProductCategories = ({ productsCategories }) => productsCategories
 
 export default {
   getStock,
   getBasket,
   getRecipes,
-  getUserAgent, 
+  getUserAgent,
   getMenuRecipes,
   getMenuCollections,
   getMenuCutoffUntil,
