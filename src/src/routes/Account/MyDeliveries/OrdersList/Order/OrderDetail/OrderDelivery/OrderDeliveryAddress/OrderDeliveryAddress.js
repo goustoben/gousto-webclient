@@ -45,6 +45,17 @@ class OrderDeliveryAddress extends React.PureComponent {
     this.setState({editAddressOpen: false})
   }
 
+  formatAddress = (address) => {
+    const formattedAddress = [address.get('line1')]
+
+    if(address.get('line2')) formattedAddress.push(address.get('line2'))
+    if(address.get('line3')) formattedAddress.push(address.get('line3'))
+
+    formattedAddress.push(address.get('town'), address.get('postcode'))
+
+    return formattedAddress.join(', ')
+  }
+
   renderedAddresses() {
     const { addresses, orderId } = this.props
     const { selectedAddressId } = this.state
@@ -57,11 +68,7 @@ class OrderDeliveryAddress extends React.PureComponent {
         <Address
           key={addressId}
           addressName={address.get('name')}
-          line1={address.get('line1')}
-          line2={address.get('line2')}
-          line3={address.get('line3')}
-          town={address.get('town')}
-          postcode={address.get('postcode')}
+          formattedAddress={this.formatAddress(address)}
           orderId={orderId}
           addressId={addressId}
           isSelected={isSelected}
@@ -72,14 +79,16 @@ class OrderDeliveryAddress extends React.PureComponent {
   }
 
   render() {
-    const { orderState, shippingAddressId, isPendingUpdateAddress, hasError } = this.props
+    const { addresses, orderState, shippingAddressId, isPendingUpdateAddress, hasError } = this.props
     const { editAddressOpen, selectedAddressId } = this.state
     const submitDisabled = selectedAddressId === shippingAddressId
+    const shippingAddress = addresses.find(address => address.get('id') === shippingAddressId)
+    const formattedShippingAddress = this.formatAddress(shippingAddress)
 
     return (
       <div>
         <div className={css.headerRow}>
-          <div className={`${css.bold} ${css.subHeader}`}>Delivery Address</div>
+          <div className={css.header}>Delivery address</div>
           {['recipes chosen', 'menu open'].indexOf(orderState) > -1 ? (
             <LinkButton
               onClick={this.handleToggleButton}
@@ -87,7 +96,9 @@ class OrderDeliveryAddress extends React.PureComponent {
             />
           ) : null}
         </div>
-        <div className={css.currentAddress}>Current Address here</div>
+        <div className={css.currentAddress}>
+          <p>{formattedShippingAddress}</p>
+        </div>
         {editAddressOpen &&
           <div>
             {this.renderedAddresses()}

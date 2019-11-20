@@ -2,3 +2,12 @@
   display: flex;
   justify-content: space-between;
 }
+
+.header {
+  composes: textBold from 'styles/typography.css';
+}
+
+.currentAddress {
+  font-size: 0.875rem;
+
+}
