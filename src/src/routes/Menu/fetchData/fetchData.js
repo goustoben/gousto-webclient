@@ -92,16 +92,16 @@ const loadOrder = async (store, orderId) => {
 
 const loadOrderAuthenticated = async (store, orderId) => {
   try {
-    const state = store.getState()
+    const { auth, user } = store.getState()
 
-    if (state.auth.get('isAuthenticated') && !state.user.get('email') && !state.auth.get('isAdmin')) {
+    if (auth.get('isAuthenticated') && !user.get('email') && !auth.get('isAdmin')) {
       await store.dispatch(actions.userLoadData())
     }
-    const prevBasketRecipes = state.basket.get('recipes')
+    const prevBasketRecipes = store.getState().basket.get('recipes')
 
     await store.dispatch(actions.menuLoadOrderDetails(orderId))
 
-    const noOfOrderRecipes = state.basket.get('recipes').size
+    const noOfOrderRecipes = store.getState().basket.get('recipes').size
 
     if (noOfOrderRecipes === 0) {
       for (const [recipeId, qty] of prevBasketRecipes) {
