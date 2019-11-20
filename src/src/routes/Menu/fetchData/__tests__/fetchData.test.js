@@ -552,7 +552,6 @@ describe('menu fetchData', () => {
 
         beforeEach(() => {
           state.menuCollections = state.menuCollections.set('123', Immutable.fromJS({ slug: 'recommendations' }))
-          state.features = state.features.setIn(['collections', 'value'], false)
           state.auth = state.auth.set('isAuthenticated', false)
         })
 

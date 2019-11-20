@@ -53,7 +53,6 @@ const processFeaturesQuery = (query, store) => {
     getFeatureValues(query)
       .map(({ feature, value }) => store.dispatch(actions.featureSet(feature, value)))
 
-    store.dispatch(actions.featureSet('forceCollections', true))
     store.dispatch(actions.featureSet('landingOrder', true))
 
     processExperimentsQuery(query, store)
