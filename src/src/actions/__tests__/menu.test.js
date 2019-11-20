@@ -61,11 +61,6 @@ describe('menu actions', () => {
         coreDayId: '001'
       }
     }),
-    features: Immutable.fromJS({
-      collections: {
-        value: false,
-      }
-    }),
   }
   const getState = () => state
 
@@ -93,31 +88,7 @@ describe('menu actions', () => {
     test('should call dispatch', async () => {
       await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledTimes(4)
-    })
-
-    test('should call menuRecieve actions in correct order', async () => {
-      await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getState)
-
-      expect(dispatch.mock.calls[0][0]).toEqual(menuActions.menuRecieveMenuPending(true))
-      expect(dispatch.mock.calls[1][0]).toEqual(menuActions.menuReceiveMenu([{ id: '1234' }]))
-      expect(dispatch.mock.calls[2][0]).toEqual(menuActions.menuRecieveMenuPending(false))
-    })
-
-    test ('should call basketLimitReached', async () => {
-      await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getState)
-      expect(mockLimitReached).toHaveBeenCalled()
-    })
-
-    test('should call fetchRecipes', async () => {
-      const expectedFetchRecipesArgs = [
-        'test', '', { "filters[available_on]": cutoffDateTime, "includes[]": ["ingredients", "allergens"] }
-      ]
-
-      await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getState)
-
-      expect(fetchRecipes).toHaveBeenCalledTimes(1)
-      expect(fetchRecipes).toHaveBeenCalledWith(...expectedFetchRecipesArgs)
+      expect(dispatch).toHaveBeenCalledTimes(3)
     })
 
     test('should use date from state when cutoffDateTime is null', async () => {

@@ -1,11 +1,5 @@
 import { deliveryTariffTypes } from 'utils/deliveries'
 
-export const isCollectionsFeatureEnabled = ({ features }) => (
-  features
-    ? (features.getIn(['collections', 'value']) || features.getIn(['forceCollections', 'value']))
-    : false
-)
-
 export const getCollectionFreezeValue = ({ features }) => (
   features ? features.getIn(['collectionFreeze', 'value']) : ''
 )
