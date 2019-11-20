@@ -1,6 +1,7 @@
 .headerRow {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
 
 .header {
@@ -8,6 +9,10 @@
 }
 
 .currentAddress {
-  font-size: 0.875rem;
+  margin-bottom: 1rem;
+}
 
+.currentAddress p {
+  font-size: 0.875rem;
+  margin-bottom: 0;
 }

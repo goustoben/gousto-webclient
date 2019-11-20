@@ -97,6 +97,7 @@ class OrderDeliveryAddress extends React.PureComponent {
           ) : null}
         </div>
         <div className={css.currentAddress}>
+          <p className={css.header}>{shippingAddress.get('name')}</p>
           <p>{formattedShippingAddress}</p>
         </div>
         {editAddressOpen &&
