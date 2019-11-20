@@ -5,30 +5,19 @@ import moment from 'moment'
 import config from 'config/menu'
 import { H3 } from 'Page/Header'
 import InfoToggle from './InfoToggle'
-import Vegetarian from './Vegetarian'
 import css from './SubHeader.css'
 
 class SubHeader extends React.PureComponent {
   static propTypes = {
-    filterVegetarian: PropTypes.bool,
-    onFilterVegetarianChange: PropTypes.func,
-    viewIcon: PropTypes.oneOf(['iconSingleColumn', 'iconDoubleColumn']),
-    onToggleGridView: PropTypes.func,
     fromJoin: PropTypes.bool,
     orderRecipesNo: PropTypes.number,
-    showVegetarianFilter: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
-    showFilters: PropTypes.bool,
   }
 
   static defaultProps = {
-    showVegetarianFilter: true,
     isAuthenticated: false,
     fromJoin: false,
-    viewIcon: 'iconSingleColumn',
-    onToggleGridView: () => {},
-    onFilterVegetarianChange: () => {},
-    filterVegetarian: false,
+    orderRecipesNo: 0
   }
 
   deliveryInfo = (mobile) => (
@@ -52,11 +41,13 @@ class SubHeader extends React.PureComponent {
   )
 
   notificationBanner = () => {
+    const { isAuthenticated } = this.props
     const info = config.notification.filter(message => moment().isBetween(message.isAfter, message.isBefore)).shift()
-    const showNotificaiton = info && (info.notifyGuests || this.props.isAuthenticated)
+    const showNotificaiton = info && (info.notifyGuests || isAuthenticated)
 
     return (
-      showNotificaiton ? <InfoToggle>
+      showNotificaiton &&
+      <InfoToggle>
         <div className={css.infoBanner}>
           {info.title}&nbsp;<span className={css.infoIcon} />
         </div>
@@ -66,28 +57,24 @@ class SubHeader extends React.PureComponent {
             {Object.keys(info.line2).map((line, i) => <li key={i}>{info.line2[line]}</li>)}
           </ul>
         </div>
-                         </InfoToggle> : null
+      </InfoToggle>
     )
   }
 
   render() {
+    const { fromJoin, orderRecipesNo } = this.props
+
     return (
       <div
         className={classnames(
-          css[this.props.fromJoin ? 'subHeaderSimple' : 'subHeader'],
+          css[fromJoin ? 'subHeaderSimple' : 'subHeader'],
           css.mobileHide,
         )}
       >
         <div className={css.subHeaderContent}>
-          <div className={css.filterMobile}>
-            {this.props.showVegetarianFilter ? <Vegetarian onFilterVegetarianChange={this.props.onFilterVegetarianChange} filterVegetarian={this.props.filterVegetarian} mobile /> : null}
-            <span onClick={this.props.onToggleGridView}>
-              View <span className={css[this.props.viewIcon]} />
-            </span>
-          </div>
           <div className={css.filter}>
             <h1 className={css.menuTitle}>
-              {this.props.orderRecipesNo > 0 ? 'Edit Recipes' : 'Choose Recipes'}
+              {orderRecipesNo > 0 ? 'Edit Recipes' : 'Choose Recipes'}
             </h1>
             <div>
               {this.notificationBanner()}
@@ -95,9 +82,6 @@ class SubHeader extends React.PureComponent {
             <div className={css.filterRight}>
               <div className={css.filterSection}>
                 {this.deliveryInfo()}
-              </div>
-              <div className={css.filterSection}>
-                {this.props.showVegetarianFilter ? <Vegetarian onFilterVegetarianChange={this.props.onFilterVegetarianChange} filterVegetarian={this.props.filterVegetarian} mobile={false} /> : null}
               </div>
             </div>
           </div>

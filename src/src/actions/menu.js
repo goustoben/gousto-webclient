@@ -379,13 +379,6 @@ export function menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClic
   }
 }
 
-export function menuFilterVegetarianChange(filter) {
-  return {
-    type: actionTypes.MENU_FILTER_VEGETARIAN,
-    filter,
-  }
-}
-
 export function menuAddEmptyStock() {
   return (dispatch, getState) => {
     const recipesIds = getState().menuRecipes

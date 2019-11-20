@@ -11,64 +11,64 @@ const menuInitialState = Immutable.Map({
 const menu = {
   menu: (state = menuInitialState, action) => {
     switch (action.type) {
-    case actionTypes.MENU_FILTERS_VISIBILITY_CHANGE: {
-      return state.merge({
-        filtersMenuVisible: action.visible,
-      })
-    }
+      case actionTypes.MENU_FILTERS_VISIBILITY_CHANGE: {
+        return state.merge({
+          filtersMenuVisible: action.visible,
+        })
+      }
 
-    case actionTypes.MENU_FORCE_LOAD: {
-      return state.set('forceLoad', action.forceLoad)
-    }
+      case actionTypes.MENU_FORCE_LOAD: {
+        return state.set('forceLoad', action.forceLoad)
+      }
 
-    default:
-      return state
+      default:
+        return state
     }
   },
 
   menuCutoffUntil: (state = '', action) => {
     switch (action.type) {
-    case actionTypes.MENU_CUTOFF_UNTIL_RECEIVE: {
-      return action.cutoffUntil
-    }
+      case actionTypes.MENU_CUTOFF_UNTIL_RECEIVE: {
+        return action.cutoffUntil
+      }
 
-    default:
-      return state
+      default:
+        return state
     }
   },
 
   menuCollectionRecipes: (state = Immutable.Map({}), action) => {
     switch (action.type) {
-    case actionTypes.MENU_COLLECTION_RECIPES_RECEIVE: {
-      return state.set(action.collectionId, Immutable.List(action.recipes.map(recipe => recipe.id)))
-    }
-    default:
-      return state
+      case actionTypes.MENU_COLLECTION_RECIPES_RECEIVE: {
+        return state.set(action.collectionId, Immutable.List(action.recipes.map(recipe => recipe.id)))
+      }
+      default:
+        return state
     }
   },
 
   menuRecipes: (state = Immutable.List(), action) => {
     switch (action.type) {
-    case actionTypes.RECIPES_RECEIVE: {
-      const newState = Immutable.List(action.recipes.map(recipe => recipe.id))
+      case actionTypes.RECIPES_RECEIVE: {
+        const newState = Immutable.List(action.recipes.map(recipe => recipe.id))
 
-      return newState
-    }
+        return newState
+      }
 
-    default:
-      return state
+      default:
+        return state
     }
   },
 
   menuRecipesUpdatedAt: (state = null, action) => {
     switch (action.type) {
-    case actionTypes.MENU_COLLECTION_RECIPES_RECEIVE:
-    case actionTypes.RECIPES_RECEIVE: {
-      return moment.now()
-    }
+      case actionTypes.MENU_COLLECTION_RECIPES_RECEIVE:
+      case actionTypes.RECIPES_RECEIVE: {
+        return moment.now()
+      }
 
-    default:
-      return state
+      default:
+        return state
     }
   },
 
@@ -99,91 +99,82 @@ const menu = {
     }
 
     switch (action.type) {
-    case actionTypes.MENU_RECIPE_STOCK_CLEAR:
-      return Immutable.Map({})
+      case actionTypes.MENU_RECIPE_STOCK_CLEAR:
+        return Immutable.Map({})
 
-    case actionTypes.MENU_RECIPE_STOCK_REPLACE: {
-      return loadStock(Immutable.Map({}), action)
-    }
-    case actionTypes.MENU_RECIPE_STOCK_CHANGE: {
-      return loadStock(state, action)
-    }
+      case actionTypes.MENU_RECIPE_STOCK_REPLACE: {
+        return loadStock(Immutable.Map({}), action)
+      }
+      case actionTypes.MENU_RECIPE_STOCK_CHANGE: {
+        return loadStock(state, action)
+      }
 
-    default:
-      return state
+      default:
+        return state
     }
   },
 
   menuRecipeStockUpdatedAt: (state = 0, action) => {
     switch (action.type) {
-    case actionTypes.MENU_RECIPE_STOCK_REPLACE:
-      return Date.now()
+      case actionTypes.MENU_RECIPE_STOCK_REPLACE:
+        return Date.now()
 
-    default:
-      return state
+      default:
+        return state
     }
   },
 
   menuBoxPrices: (state = Immutable.Map({}), action) => {
     switch (action.type) {
-    case actionTypes.MENU_BOX_PRICES_RECEIVE:
-      return Immutable.fromJS(action.prices)
+      case actionTypes.MENU_BOX_PRICES_RECEIVE:
+        return Immutable.fromJS(action.prices)
 
-    default:
-      return state
+      default:
+        return state
     }
   },
 
   menuBoxPricesTariff: (state = null, action) => {
     switch (action.type) {
-    case actionTypes.MENU_BOX_PRICES_RECEIVE:
-      return action.tariffId || null
+      case actionTypes.MENU_BOX_PRICES_RECEIVE:
+        return action.tariffId || null
 
-    default:
-      return state
+      default:
+        return state
     }
   },
 
   menuRecieveMenuPending: (state = false, action) => {
     switch (action.type) {
-    case actionTypes.MENU_RECIPES_RECEIVE_PENDING:
-      return action.pending
-    default:
-      return state
+      case actionTypes.MENU_RECIPES_RECEIVE_PENDING:
+        return action.pending
+      default:
+        return state
     }
   },
 
   menuBrowseCTAShow: (state = false, action) => {
     switch (action.type) {
-    case actionTypes.MENU_BROWSE_CTA_VISIBILITY_CHANGE:
-      return action.show
-    default:
-      return state
-    }
-  },
-
-  menuFilterVegetarian: (state = false, action) => {
-    switch (action.type) {
-    case actionTypes.MENU_FILTER_VEGETARIAN:
-      return action.filter
-    default:
-      return state
+      case actionTypes.MENU_BROWSE_CTA_VISIBILITY_CHANGE:
+        return action.show
+      default:
+        return state
     }
   },
 
   menuCollections: (state = Immutable.OrderedMap(), action) => {
     switch (action.type) {
-    case actionTypes.MENU_COLLECTIONS_RECEIVE: {
-      const collections = Immutable.fromJS(action.collections)
-      let newState = Immutable.OrderedMap()
-      collections.forEach(collection => {
-        newState = newState.set(collection.get('id'), collection)
-      })
+      case actionTypes.MENU_COLLECTIONS_RECEIVE: {
+        const collections = Immutable.fromJS(action.collections)
+        let newState = Immutable.OrderedMap()
+        collections.forEach(collection => {
+          newState = newState.set(collection.get('id'), collection)
+        })
 
-      return newState
-    }
-    default:
-      return state
+        return newState
+      }
+      default:
+        return state
     }
   },
 
