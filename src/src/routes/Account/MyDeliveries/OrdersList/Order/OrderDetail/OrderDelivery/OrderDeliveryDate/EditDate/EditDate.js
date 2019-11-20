@@ -162,18 +162,16 @@ class EditDate extends React.PureComponent {
               />
             </div>
           </div>
-          <div className={css.button}>
-            <Button
-              onClick={() => this.onSubmitFunction()}
-              color={'secondary'}
-              width="full"
-              noDecoration
-              pending={isPendingUpdateDayAndSlot}
-              disabled={!canSubmit}
-            >
-              Set delivery slot
-            </Button>
-          </div>
+          <Button
+            onClick={() => this.onSubmitFunction()}
+            color={'secondary'}
+            width="full"
+            noDecoration
+            pending={isPendingUpdateDayAndSlot}
+            disabled={!canSubmit}
+          >
+            Set delivery slot
+          </Button>
         </div>
       </div>
     )
