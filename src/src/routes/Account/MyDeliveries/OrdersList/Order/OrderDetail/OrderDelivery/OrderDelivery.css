@@ -9,12 +9,12 @@
 }
 
 .header {
-	margin-bottom: 20px;
+	margin-bottom: 1.25rem;
 	font-size: 1.125rem;
 }
 
 .subSection {
-	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
+	margin-bottom: 1.25rem;
 	flex-basis: 100%;
 }
 
