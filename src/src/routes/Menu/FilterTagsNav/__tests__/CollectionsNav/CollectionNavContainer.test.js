@@ -24,11 +24,6 @@ describe('CollectionsNavContainer', () => {
                 published: true,
               },
             }).toOrderedMap(),
-            features: Immutable.fromJS({
-              unpubCollections: {
-                value: false,
-              },
-            }),
             menuCollectionRecipes: Immutable.fromJS({
               a: ['', '', ''],
               b: ['', '', ''],
@@ -83,11 +78,6 @@ describe('CollectionsNavContainer', () => {
                 published: true,
               },
             }).toOrderedMap(),
-            features: Immutable.fromJS({
-              unpubCollections: {
-                value: false,
-              },
-            }),
             menuCollectionRecipes: Immutable.fromJS({
               a: ['', '', ''],
               b: ['', '', ''],

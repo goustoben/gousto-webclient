@@ -224,11 +224,6 @@ describe('menu actions', function () {
         getStateSpy = sinon.stub().returns({
           basket: Immutable.Map({ date: '2016-06-26' }),
           auth: Immutable.fromJS({ accessToken: 'blah', refreshToken: 'blabla' }),
-          features: Immutable.fromJS({
-            forceCollections: {
-              value: true,
-            },
-          }),
           menuCollections: Immutable.OrderedMap({
             123: Immutable.Map({ id: '123', shortTitle: 'a collection' }),
             456: Immutable.Map({ id: '456', shortTitle: 'all recipes' }),

@@ -2,18 +2,18 @@ import Immutable from 'immutable' /* eslint-disable new-cap */
 import chai, { expect } from 'chai'
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
-chai.use(sinonChai)
 
 import processFeaturesQuery from 'utils/processFeaturesQuery'
 import actions from 'actions'
+chai.use(sinonChai)
 
-describe('processFeaturesQuery', function() {
+describe('processFeaturesQuery', function () {
   let sandbox
   let featureSetSpy
   let store
   let dispatchSpy
 
-  beforeEach(function() {
+  beforeEach(function () {
     sandbox = sinon.sandbox.create()
     dispatchSpy = sandbox.spy()
     featureSetSpy = sandbox
@@ -27,11 +27,11 @@ describe('processFeaturesQuery', function() {
     }
   })
 
-  afterEach(function() {
+  afterEach(function () {
     sandbox.restore()
   })
 
-  it('should dispatch an featureSet action for each feature in the given query', function() {
+  it('should dispatch an featureSet action for each feature in the given query', function () {
     const query = {
       'features[]': ['a', 'b', 'c'],
     }
@@ -49,7 +49,7 @@ describe('processFeaturesQuery', function() {
     expect(featureSetSpy.getCall(2).args).to.deep.equal(['c', true])
   })
 
-  it('should dispatch an featureSet action for each feature in the given query', function() {
+  it('should dispatch an featureSet action for each feature in the given query', function () {
     const query = {
       'disabledFeatures[]': ['a', 'b', 'c'],
     }
@@ -67,7 +67,7 @@ describe('processFeaturesQuery', function() {
     expect(featureSetSpy.getCall(2).args).to.deep.equal(['c', false])
   })
 
-  it('should dispatch the disabled after the enabled', function() {
+  it('should dispatch the disabled after the enabled', function () {
     const query = {
       'features[]': ['a', 'b', 'c'],
       'disabledFeatures[]': ['a', 'b'],
@@ -88,7 +88,7 @@ describe('processFeaturesQuery', function() {
     expect(dispatchSpy.getCall(4).args[0]).to.equal('return from featureSetSpy')
   })
 
-  it('should dispatch a featureSet action with experiment set to true for each experiment in the given query', function() {
+  it('should dispatch a featureSet action with experiment set to true for each experiment in the given query', function () {
     const query = {
       'experiments[]': ['a', 'b', 'c'],
     }
@@ -99,7 +99,7 @@ describe('processFeaturesQuery', function() {
     expect(featureSetSpy).to.be.calledWithExactly('c', true, true)
   })
 
-  it('should cope with just enable one flag', function() {
+  it('should cope with just enable one flag', function () {
     const query = {
       'features[]': 'a',
     }
@@ -110,7 +110,7 @@ describe('processFeaturesQuery', function() {
     expect(dispatchSpy.getCall(0).args[0]).to.equal('return from featureSetSpy')
   })
 
-  it('should cope with just one disable flag', function() {
+  it('should cope with just one disable flag', function () {
     const query = {
       'disabledFeatures[]': 'a',
     }
@@ -123,7 +123,7 @@ describe('processFeaturesQuery', function() {
 
   })
 
-  it('should cope with an undefined, null, or empty query', function() {
+  it('should cope with an undefined, null, or empty query', function () {
     try {
       processFeaturesQuery(null, store)
     } catch (err) {
@@ -149,7 +149,7 @@ describe('processFeaturesQuery', function() {
     }
   })
 
-  it('should set feature flags with values', function() {
+  it('should set feature flags with values', function () {
     const query = {
       'features[a]': 'thing1',
       'features[b]': 'thing2',
@@ -163,7 +163,7 @@ describe('processFeaturesQuery', function() {
     expect(featureSetSpy.getCall(2).args).to.deep.equal(['c', 'thing3'])
   })
 
-  it('should set a mix of feature flags with values and booleans', function() {
+  it('should set a mix of feature flags with values and booleans', function () {
     const query = {
       'features[a]': 'thing1',
       'features[]': 'b',
@@ -184,14 +184,14 @@ describe('processFeaturesQuery', function() {
     expect(dispatchSpy.getCall(2).args[0]).to.equal('return from featureSetSpy')
   })
 
-  it('should set default menu experiment if undefined', function() {
+  it('should set default menu experiment if undefined', function () {
     const query = {}
     processFeaturesQuery(query, store)
     expect(featureSetSpy).to.be.calledWithExactly('menu', 'default', true)
     expect(dispatchSpy.getCall(0).args[0]).to.equal('return from featureSetSpy')
   })
 
-  it('should set menu experiment if defined', function() {
+  it('should set menu experiment if defined', function () {
     const query = {
       'experiments[menu]': 'my-menu'
     }
@@ -200,15 +200,14 @@ describe('processFeaturesQuery', function() {
     expect(dispatchSpy.getCall(0).args[0]).to.equal('return from featureSetSpy')
   })
 
-  it('should force enable collections for all users', function() {
+  it('should force enable collections for all users', function () {
     const query = {}
     processFeaturesQuery(query, store)
     expect(dispatchSpy.callCount).to.be.at.least(3)
     expect(featureSetSpy.callCount).to.be.at.least(3)
-    expect(featureSetSpy.getCall(0).args).to.deep.equal(['forceCollections', true])
   })
 
-  it('should force enable landingOrder for all users', function() {
+  it('should force enable landingOrder for all users', function () {
     const query = {}
     processFeaturesQuery(query, store)
     expect(dispatchSpy.callCount).to.be.at.least(3)
