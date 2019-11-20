@@ -1,42 +1,46 @@
-@value Bluecheese from 'styles/colors.css';
+@value Bluecheese, Coconut, White, Mackerel from 'styles/colors.css';
 
-.addressContainer {
-	padding-left: 20px;
-	align-self: center;
+.container {
+  border: Mackerel solid 1px;
+  display: flex;
+  padding: 1rem 0.75rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
 }
 
-.checkbox {
-	align-self: flex-start;
-	padding-top:5px;
+.containerSelected {
+  border-color: Bluecheese;
 }
 
-.square {
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	border: 1px solid #DBDBDB;
-	border-radius: 4px;
-	background-color: white;
-	cursor: pointer;
+.customRadio {
+  background-color: Coconut;
+  height: 1rem;
+  width: 1rem;
+  border: 1px solid Bluecheese;
+  border-radius: 50%;
+  margin-right: 0.75rem;
 }
 
-.deliveryContainer {
-	display: flex;
+.customRadioSelected {
+  box-shadow: inset 0 0 0 0.125rem White;
+  background-color: Bluecheese;
 }
 
-.name {
+.hiddenRadio {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+}
+
+.addressName {
 	composes: textBold from 'styles/typography.css';
-	margin-bottom: 0px;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-.tick {
-	color: Bluecheese;
-	font-size: 20px;
-	composes: fa-basic-class fa-check from 'styles/vendor/font-awesome-module.css';
-	padding-left: 5px;
-	padding-top: 3px;
-}
-
-.cantClick {
-	cursor: auto;
+.addressDetails {
+  font-size: 0.875rem;
+  margin-bottom: 0;
 }

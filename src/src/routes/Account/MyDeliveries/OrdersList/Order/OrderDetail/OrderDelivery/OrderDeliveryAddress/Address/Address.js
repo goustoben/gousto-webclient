@@ -37,30 +37,35 @@ const formatAddress = (line1, line2 , line3 , town, postcode) => {
   return address.join(', ')
 }
 
-const Address = ({selectAddress, isSelected, addressId, addressName, line1, line2, line3, town, postcode}) => {
-
-  return (
-    <div className={css.deliveryContainer}>
-      <div className={css.checkbox}>
-        <div
-          className={
-            classnames(
-              [css.square],
-              { [css.cantClick]: isSelected })
-          }
-          onClick={() => !isSelected && selectAddress(addressId) }
-        >
-          {isSelected ? <div className={css.tick}></div> : null}
-        </div>
-      </div>
-      <div className={css.addressContainer}>
-        <p className={css.name}>{addressName}</p>
-        <p>{formatAddress(line1, line2, line3, town, postcode)}</p>
-      </div>
+const Address = ({selectAddress, isSelected, addressId, addressName, line1, line2, line3, town, postcode}) => (
+  <label
+    htmlFor={addressId}
+    className={classnames(css.container, {
+      [css.containerSelected]: isSelected
+    })}
+    tabIndex="0"
+  >
+    <div className={css.radioContainer}>
+      <input
+        type="radio"
+        id={addressId}
+        checked={isSelected}
+        className={css.hiddenRadio}
+        onClick={() => !isSelected && selectAddress(addressId)}
+        tabIndex="-1"
+      />
+      <div
+        className={classnames(css.customRadio, {
+          [css.customRadioSelected]: isSelected
+        })}
+      />
     </div>
-  )
-
-}
+    <div className={css.addressContainer}>
+      <h3 className={css.addressName}>{addressName}</h3>
+      <p className={css.addressDetails}>{formatAddress(line1, line2, line3, town, postcode)}</p>
+    </div>
+  </label>
+)
 
 Address.propTypes = propTypes
 Address.defaultProps = defaultProps
