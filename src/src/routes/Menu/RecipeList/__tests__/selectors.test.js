@@ -5,13 +5,13 @@ import { getSortedRecipesForRecipeList } from '../selectors'
 jest.mock('routes/Menu/selectors/sorting')
 
 describe('RecipeList selectors', () => {
-  const collectionId = '6b045b7e-3691-4299-8953-d24a2afddad3'
+  const collectionId = 'collectionId'
   const recipe1Id = '1234'
   const recipe2Id = '4567'
 
   const state = {
     menuCollectionRecipes: Immutable.fromJS({
-      '6b045b7e-3691-4299-8953-d24a2afddad3': [
+      'collectionId': [
         recipe1Id
       ]
     })
@@ -29,9 +29,21 @@ describe('RecipeList selectors', () => {
         const props = {
           menuCurrentCollectionId: null
         }
-  
+
         const result = getSortedRecipesForRecipeList(state, props)
-  
+
+        expect(result).toEqual(recipes)
+      })
+    })
+
+    describe('wrong collection id provided', () => {
+      test('should return all recipes', () => {
+        const props = {
+          menuCurrentCollectionId: 'unexisting-collection-id'
+        }
+
+        const result = getSortedRecipesForRecipeList(state, props)
+
         expect(result).toEqual(recipes)
       })
     })
@@ -41,9 +53,9 @@ describe('RecipeList selectors', () => {
         const props = {
           menuCurrentCollectionId: collectionId
         }
-  
+
         const result = getSortedRecipesForRecipeList(state, props)
-  
+
         expect(result).toHaveLength(1)
         expect(result[0]).toEqual(recipes[0])
       })
