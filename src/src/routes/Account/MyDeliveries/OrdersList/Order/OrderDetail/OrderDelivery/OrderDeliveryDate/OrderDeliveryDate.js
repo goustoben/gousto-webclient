@@ -44,15 +44,15 @@ const OrderDeliveryDate = ({
     <div>
       <div className={css.header}>
         <div className={css.details}>
-          <div className={`${css.bold} ${css.subHeader}`}>
+          <p className={`${css.bold} ${css.subHeader}`}>
             Date and time
-          </div>
-          <div className={`${css.bold} ${css.dateTime}`}>
+          </p>
+          <p className={`${css.bold} ${css.dateTime}`}>
             {date}
-          </div>
-          <div className={css.dateTime}>
+          </p>
+          <p className={css.dateTime}>
             {timeStart} - {timeEnd}
-          </div>
+          </p>
         </div>
         {['recipes chosen', 'menu open'].indexOf(orderState) > -1 ?
           <div className={css.button}>
