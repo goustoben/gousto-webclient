@@ -29,6 +29,7 @@ yarn run deploy
 yarn run upload -- --upload_dir=${CI_BUILD_NUMBER}
 
 	cp package.json dist/package.json
+	cp bower.json dist/bower.json
 	rm -rf node_modules
 
 	cd dist
