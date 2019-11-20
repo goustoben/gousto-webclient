@@ -1,3 +1,5 @@
+@value sizeXS from 'styles/typography.css';
+
 .headerRow {
   display: flex;
   justify-content: space-between;
@@ -15,4 +17,15 @@
 .currentAddress p {
   font-size: 0.875rem;
   margin-bottom: 0;
+}
+
+.newAddressLink {
+  display: block;
+  padding: 0.75rem 0;
+  margin-bottom: 0.5rem;
+}
+
+.arrowRight {
+  composes: fa-basic-class fa-chevron-right from 'styles/vendor/font-awesome-module.css';
+  font-size: sizeXS;
 }

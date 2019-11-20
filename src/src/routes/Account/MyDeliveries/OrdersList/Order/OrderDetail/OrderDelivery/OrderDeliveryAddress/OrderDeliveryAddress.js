@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import { Alert, Button } from 'goustouicomponents'
+import config from 'config'
+import Link from 'Link'
 import { LinkButton } from '../LinkButton'
 import { Address } from './Address'
 
@@ -84,6 +86,7 @@ class OrderDeliveryAddress extends React.PureComponent {
     const submitDisabled = selectedAddressId === shippingAddressId
     const shippingAddress = addresses.find(address => address.get('id') === shippingAddressId)
     const formattedShippingAddress = this.formatAddress(shippingAddress)
+    const { client } = config.routes
 
     return (
       <div>
@@ -103,6 +106,10 @@ class OrderDeliveryAddress extends React.PureComponent {
         {editAddressOpen &&
           <div>
             {this.renderedAddresses()}
+            <Link className={css.newAddressLink} to={client.myDetails} clientRouted={false}>
+              Add new address to your account&nbsp;
+              <span className={css.arrowRight} />
+            </Link>
             <Button
               onClick={this.handleSubmit}
               color={'secondary'}
