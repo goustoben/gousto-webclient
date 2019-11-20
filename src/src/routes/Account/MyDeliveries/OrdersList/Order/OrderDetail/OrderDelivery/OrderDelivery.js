@@ -137,16 +137,18 @@ class OrderDelivery extends React.PureComponent {
               availableTo={availableTo}
             />
           </div>
+          <div className={css.subSection}>
+            <OrderDeliveryAddress
+              addresses={addresses}
+              orderId={orderId}
+              orderState={orderState}
+              shippingAddressId={shippingAddressId}
+              orderAddressChange={orderAddressChange}
+              hasError={hasUpdateDeliveryAddressError}
+              isPendingUpdateAddress={isPendingUpdateAddress}
+            />
+          </div>
         </div>
-        <OrderDeliveryAddress
-          addresses={addresses}
-          orderId={orderId}
-          orderState={orderState}
-          shippingAddressId={shippingAddressId}
-          orderAddressChange={orderAddressChange}
-          hasError={hasUpdateDeliveryAddressError}
-          isPendingUpdateAddress={isPendingUpdateAddress}
-        />
       </div>
     )
   }

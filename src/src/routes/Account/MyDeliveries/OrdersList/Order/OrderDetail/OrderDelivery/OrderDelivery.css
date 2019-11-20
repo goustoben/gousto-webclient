@@ -1,7 +1,12 @@
-@value ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
 
 .deliveryDetailsWrapper {
 	display: flex;
+	flex-wrap: wrap;
+
+	@media ScreenSMMin {
+		margin: 0 -1.5rem;
+	}
 }
 
 .bold {
@@ -14,8 +19,18 @@
 }
 
 .subSection {
+	width: 100%;
 	margin-bottom: 1.25rem;
-	flex-basis: 100%;
+
+	@media ScreenSMMin {
+		width: 50%;
+		padding: 0 1.5rem;
+		margin-bottom: 0;
+	}
+}
+
+.subSection:last-child {
+	margin-bottom: 0;
 }
 
 .details {
