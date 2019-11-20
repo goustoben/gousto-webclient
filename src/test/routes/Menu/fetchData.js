@@ -611,48 +611,6 @@ describe('fetchData', function () {
       })
     })
 
-    describe('with a collectionFreeze query', function () {
-      it('should call getCollectionIdWithName with forced collection name', async function () {
-        getState = () => ({
-          basket: { get: () => false },
-          features: Immutable.fromJS({
-            collections: {
-              value: true,
-            },
-            collectionFreeze: {
-              value: 'frozen',
-            },
-          }),
-          auth: Immutable.Map({}),
-          boxSummaryDeliveryDays: Immutable.fromJS([{ date: '2016-05-26' }]),
-          menuCollections: Immutable.OrderedMap({
-            123: Immutable.Map({ id: '123', shortTitle: 'a Collection', published: true }),
-            456: Immutable.Map({ id: '456', shortTitle: 'frozen', published: true }),
-          }),
-          menuCollectionRecipes: Immutable.fromJS({
-            123: ['', '', ''],
-            456: ['', '', ''],
-          }),
-          request: Immutable.Map({
-            browser: 'desktop',
-          }),
-        })
-        await fetchData({
-          store: {
-            dispatch,
-            getState,
-          },
-          query: {
-            collection: 'a-collection',
-          },
-          params: {},
-        })
-
-        expect(filterCollectionChange).to.have.been.calledOnce
-        expect(filterCollectionChange.getCall(0).args[0]).to.equal('456')
-      })
-    })
-
     describe('process recipe array in url', function () {
       const basketBase = Immutable.fromJS({
         get: () => false,

@@ -1,9 +1,5 @@
 import { deliveryTariffTypes } from 'utils/deliveries'
 
-export const getCollectionFreezeValue = ({ features }) => (
-  features ? features.getIn(['collectionFreeze', 'value']) : ''
-)
-
 export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
   features
     ? features.getIn(['nextDayDeliveryPaintedDoor', 'value'])

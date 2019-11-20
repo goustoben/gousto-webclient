@@ -1,8 +1,6 @@
 import Immutable from 'immutable'
 
 import {
-  isCollectionsFeatureEnabled,
-  getCollectionFreezeValue,
   getGoToMyGousto,
   getGoToMyDeliveries,
   getJfyTutorial,
@@ -15,14 +13,6 @@ import {
   getNDDFeatureValue,
 } from 'selectors/features'
 
-describe('when features are undefined', () => {
-  const state = {}
-
-  it('getCollectionFreezeValue should return empty string', () => {
-    expect(getCollectionFreezeValue(state)).toBe('')
-  })
-})
-
 describe('when features are defined', () => {
   let state = {}
 
@@ -30,18 +20,6 @@ describe('when features are defined', () => {
     state = {
       features: Immutable.Map({})
     }
-  })
-
-  describe('getCollectionFreezeValue', () => {
-    it('should return value of collection freeze', () => {
-      state.features = Immutable.fromJS({
-        collectionFreeze: {
-          value: 'test-value'
-        }
-      })
-
-      expect(getCollectionFreezeValue(state)).toEqual('test-value')
-    })
   })
 
   describe('getGoToMyGousto', () => {
