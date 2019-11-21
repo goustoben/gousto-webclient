@@ -5,7 +5,7 @@ import { allergensTransformer, basicsTransformer, equpimentTransformer, formatIn
 
 const recipesTransformer = (activeMenu, response) => {
   const normalisedData = normaliseData(response)
-  const activeMenuRecipesIds = activeMenu.relationships.recipes.data.map((recipe) => recipe.id )
+  const activeMenuRecipesIds = activeMenu.relationships.recipes.data.map((recipe) => recipe.core_recipe_id.toString() )
 
   const formattedData = activeMenuRecipesIds.map((individualRecipeId) => {
     const currentRecipe = normalisedData.recipe[individualRecipeId]

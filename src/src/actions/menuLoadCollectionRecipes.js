@@ -1,7 +1,6 @@
 import { fetchCollectionRecipes } from 'apis/collections'
 import { menuReceiveCollectionRecipes, menuReceiveMenu } from 'actions/menu'
 
-// TODO [TR-432]: change menuLoadCollectionRecipes name as it clashes with menuLoadCollectionsRecipes
 export function menuLoadCollectionRecipes(date, collectionId, idsOnly, transformedRecipes, transformedCollectionRecipesIds) {
   return async (dispatch, getState) => {
     if (transformedRecipes) {
@@ -14,7 +13,7 @@ export function menuLoadCollectionRecipes(date, collectionId, idsOnly, transform
 
             return transformedRecipes.find((recipe) => {
 
-              return recipe.id === recipeRelationship.id
+              return recipe.coreRecipeId === recipeRelationship.core_recipe_id.toString()
             })
           })
 
@@ -22,7 +21,9 @@ export function menuLoadCollectionRecipes(date, collectionId, idsOnly, transform
         }
       }
 
-      dispatch(menuReceiveMenu(transformedRecipes)) // TODO : should only be called once out side menuLoadCollectionRecipes
+      if (!idsOnly) {
+        dispatch(menuReceiveMenu(transformedRecipes))
+      }
 
       return
     }

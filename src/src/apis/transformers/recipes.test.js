@@ -25,7 +25,8 @@ describe('dateTransformer', () => {
                       "data": [
                         {
                           "type": "recipes",
-                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5"
+                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                          "core_recipe_id": 2106
                         },
                       ]
                     }
@@ -37,7 +38,8 @@ describe('dateTransformer', () => {
               "data": [
                 {
                   "type": "recipes",
-                  "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5"
+                  "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                  "core_recipe_id": 2106
                 }
               ]
             },
@@ -88,9 +90,6 @@ describe('dateTransformer', () => {
               }
             ],
             "description": "This mild chicken curry packs in flavours, no punches needed. Mild isn't a byword for boring, because its creamy sauce pairs perfectly with turmeric and sultana rice for a family-pleasing treat. ",
-            // "spice_level": {
-            //   "name": "mild"
-            // }, don't think we need
             "shelf_life": {
               "min_days": 2,
               "max_days": 3
@@ -229,7 +228,7 @@ describe('dateTransformer', () => {
               },
             ],
             "recipe_developer": {
-              "name": "Hannah Mariaux", //do we need this?
+              "name": "Hannah Mariaux",
             },
             "name": "Mild Chicken Curry",
             "surcharges": {
@@ -363,7 +362,7 @@ describe('dateTransformer', () => {
           }
         },
         {
-          "id": "488d5751-dcff-4985-88c0-bf745ff54904", //Looks like all ids are different
+          "id": "488d5751-dcff-4985-88c0-bf745ff54904",
           "type": "ingredient",
           "attributes": {
             "net_weight_mg": 4000,
@@ -423,7 +422,7 @@ describe('dateTransformer', () => {
 
     const expectedFormat = [
       {
-        "id":"3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+        "id":"2106",
         "title":"Mild Chicken Curry",
         "allergens":[
           "milk"
