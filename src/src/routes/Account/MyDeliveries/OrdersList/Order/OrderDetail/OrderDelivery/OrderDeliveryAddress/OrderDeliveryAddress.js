@@ -19,6 +19,8 @@ class OrderDeliveryAddress extends React.PureComponent {
     shippingAddressId: PropTypes.string,
     hasError: PropTypes.bool,
     isPendingUpdateAddress: PropTypes.bool,
+    userTrackToggleEditAddressSection: PropTypes.func,
+    userTrackAddressSelected: PropTypes.func,
   }
 
   constructor(props) {
@@ -32,12 +34,19 @@ class OrderDeliveryAddress extends React.PureComponent {
   }
 
   handleToggleButton = () => {
+    const { orderId, userTrackToggleEditAddressSection } = this.props
     const { editAddressOpen } = this.state
+    if (!editAddressOpen) {
+      userTrackToggleEditAddressSection(orderId)
+    }
     this.setState({editAddressOpen: !editAddressOpen})
   }
 
-  handleSelectAddress = (selectedAddressId) => {
-    this.setState({selectedAddressId})
+  handleSelectAddress = (newSelectedAddressId) => {
+    const { orderId, userTrackAddressSelected } = this.props
+    const { selectedAddressId } = this.state
+    this.setState({selectedAddressId: newSelectedAddressId})
+    userTrackAddressSelected(orderId, selectedAddressId, newSelectedAddressId)
   }
 
   handleSubmit = async () => {

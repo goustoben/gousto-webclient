@@ -1,1 +1,1 @@
-export { OrderDeliveryAddress } from './OrderDeliveryAddress'
+export { OrderDeliveryAddressContainer as OrderDeliveryAddress } from './OrderDeliveryAddressContainer'

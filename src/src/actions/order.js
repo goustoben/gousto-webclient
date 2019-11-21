@@ -323,6 +323,14 @@ export const projectedOrderRestore = (orderId, userId, deliveryDayId) => (
 
 export const orderAddressChange = (orderId, addressId) => (
   async (dispatch, getState) => {
+    const originalAddressId = getState().user.getIn(['newOrders', orderId, 'shippingAddressId'])
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+    const trackingData = {
+      order_id: orderId,
+      is_current_period: isCurrentPeriod,
+      original_deliveryaddress_id: originalAddressId,
+      new_deliveryaddress_id: addressId,
+    }
     dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, {
       orderId: '',
       errorMessage: ''
@@ -334,16 +342,35 @@ export const orderAddressChange = (orderId, addressId) => (
       addressId,
     }
     try {
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliveryAddress SaveAttempt',
+          ...trackingData
+        }
+      })
       await updateOrderAddress(accessToken, orderId, addressId)
       dispatch({
         type: actionTypes.ORDER_ADDRESS_CHANGE,
         data,
+        trackingData: {
+          actionType: 'OrderDeliveryAddress Saved',
+          ...trackingData
+        }
       })
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, {
         orderId,
         errorMessage: err.message
       }))
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliveryAddress SaveAttemptFailed',
+          error: err.message,
+          ...trackingData
+        }
+      })
     } finally {
       dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, ''))
     }

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
 import userActions from 'actions/user'
@@ -14,7 +13,6 @@ class OrderDelivery extends React.PureComponent {
     availableFrom: PropTypes.string,
     availableTo: PropTypes.string,
     shippingAddressId: PropTypes.string,
-    addresses: PropTypes.instanceOf(Immutable.Map),
     date: PropTypes.string,
     timeStart: PropTypes.string,
     timeEnd: PropTypes.string,
@@ -26,9 +24,6 @@ class OrderDelivery extends React.PureComponent {
     orderDeliveryDaysFetchError: PropTypes.object,
     hasUpdateDeliveryDayError: PropTypes.bool,
     clearUpdateDateErrorAndPending: PropTypes.func,
-    orderAddressChange: PropTypes.func,
-    hasUpdateDeliveryAddressError: PropTypes.bool,
-    isPendingUpdateAddress: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -104,11 +99,7 @@ class OrderDelivery extends React.PureComponent {
       availableFrom,
       availableTo,
       hasUpdateDeliveryDayError,
-      addresses,
       shippingAddressId,
-      orderAddressChange,
-      hasUpdateDeliveryAddressError,
-      isPendingUpdateAddress,
     } = this.props
     const editDateHasError =
       recipesPeriodStockFetchError != null ||
@@ -139,13 +130,9 @@ class OrderDelivery extends React.PureComponent {
           </div>
           <div className={css.subSection}>
             <OrderDeliveryAddress
-              addresses={addresses}
               orderId={orderId}
               orderState={orderState}
               shippingAddressId={shippingAddressId}
-              orderAddressChange={orderAddressChange}
-              hasError={hasUpdateDeliveryAddressError}
-              isPendingUpdateAddress={isPendingUpdateAddress}
             />
           </div>
         </div>

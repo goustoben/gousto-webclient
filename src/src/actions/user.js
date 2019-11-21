@@ -67,8 +67,10 @@ const userActions = {
   userOpenCloseOrderCard,
   userToggleEditDateSection,
   userTrackToggleEditDateSection,
+  userTrackToggleEditAddressSection,
   userTrackDateSelected,
   userTrackSlotSelected,
+  userTrackAddressSelected,
   userToggleExpiredBillingModal,
   userAddPaymentMethod,
   userLoadAddresses,
@@ -467,6 +469,23 @@ function userTrackToggleEditDateSection(orderId) {
   }
 }
 
+function userTrackToggleEditAddressSection(orderId) {
+  return (dispatch, getState) => {
+    const originalAddressId = getState().user.getIn(['newOrders', orderId, 'shippingAddressId'])
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: 'OrderDeliveryAddress Edit',
+        is_current_period: isCurrentPeriod,
+        order_id: orderId,
+        original_deliveryaddress_id: originalAddressId,
+      }
+    })
+  }
+}
+
 function userTrackDateSelected(orderId, originalSlotId, newSlotId) {
   return (dispatch, getState) => {
     const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
@@ -494,6 +513,22 @@ function userTrackSlotSelected(orderId, originalSlotId, newSlotId) {
         order_id: orderId,
         original_deliveryslot_id: originalSlotId,
         new_deliveryslot_id: newSlotId,
+      }
+    })
+  }
+}
+
+function userTrackAddressSelected(orderId, originalAddressId, newAddressId) {
+  return (dispatch, getState) => {
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+    dispatch({
+      type: actionTypes.TRACKING,
+      trackingData: {
+        actionType: 'OrderDeliveryAddress Selected',
+        is_current_period: isCurrentPeriod,
+        order_id: orderId,
+        original_deliveryslot_id: originalAddressId,
+        new_deliveryslot_id: newAddressId,
       }
     })
   }
