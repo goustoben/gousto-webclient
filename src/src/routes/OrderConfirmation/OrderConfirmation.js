@@ -20,7 +20,6 @@ import css from './OrderConfirmation.css'
 
 const propTypes = {
   ageVerified: PropTypes.bool.isRequired,
-  hasProductList2Columns: PropTypes.bool,
   headerDetails: PropTypes.oneOfType([
     PropTypes.shape({
       deliveryDate: PropTypes.string,
@@ -38,7 +37,6 @@ const propTypes = {
 }
 
 const defaultProps = {
-  hasProductList2Columns: false,
   headerDetails: {},
   showHeader: false,
   showShortlistFeedback: false,
@@ -90,7 +88,6 @@ class OrderConfirmation extends PureComponent {
   render() {
     const {
       ageVerified,
-      hasProductList2Columns,
       headerDetails,
       isLoading,
       showHeader,
@@ -119,7 +116,7 @@ class OrderConfirmation extends PureComponent {
             </Overlay>
 
             {showHeader ? (
-              <VerticalStages hasFullWidth={hasProductList2Columns}>
+              <VerticalStages hasFullWidth>
                 <VerticalStagesItem
                   title="Order created"
                   isCompleted

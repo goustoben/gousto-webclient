@@ -23,31 +23,29 @@
   @media ScreenMDMin {
     width: calc(50% - 10px);
   }
-}
 
-.productWrapper--fullWidth {
   @media FullWidthBreakpoint {
     width: calc(50% - 10px);
   }
 }
 
-.productWrapper--fullWidth .productTitle,
-.productWrapper--fullWidth .productPrice {
+.productWrapper .productTitle,
+.productWrapper .productPrice {
   @media FullWidthBreakpoint {
     font-size: 0.75rem;
   }
 }
 
-.productWrapper--fullWidth .productPrice {
+.productWrapper .productPrice {
   margin-bottom: 0.5rem;
 }
 
-.productWrapper--fullWidth .productContent {
+.productWrapper .productContent {
   flex-direction: column;
   flex-grow: 1;
 }
 
-.productWrapper--fullWidth .productDetails {
+.productWrapper .productDetails {
   @media FullWidthBreakpoint {
     justify-content: stretch;
   }
