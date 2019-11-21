@@ -80,7 +80,7 @@ module.exports = {
     applyIf: 'loggedOut',
     code: 'DTI-SB-P30M',
     banner: {
-      text: 'Click here to get 30% off all other boxes in your first month',
+      text: 'Click here to get 30% off all boxes in your first month',
       linkText: 'Claim discount',
     },
   },
