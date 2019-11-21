@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 import Overlay from 'Overlay'
 import configProducts from 'config/products'
 import ProductDetailContainer from '../ProductDetails'
