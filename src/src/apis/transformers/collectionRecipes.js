@@ -1,6 +1,4 @@
 const collectionRecipesTransformer = (activeMenu) => {
-  // TODO: which menu populates redux? is it based on dates?
-
   const getRecipeIds = (collectionRecipeData) => {
     return collectionRecipeData.map((recipe) => {
       return recipe

@@ -50,7 +50,13 @@ const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
       collections.filter(collection => (!['dairy-free', 'gluten-free'].includes(collection.slug)))
       :
       collections
-    dispatch(menuCollectionsReceive(collectionsFiltered))
+
+    if (transformedCollections) {
+      await dispatch(menuCollectionsReceive(collectionsFiltered))
+    } else {
+      dispatch(menuCollectionsReceive(collectionsFiltered))
+    }
+
     if (!noUrlChange) {
       let changeCollection = true
       const prevLoc = getState().routing.locationBeforeTransitions

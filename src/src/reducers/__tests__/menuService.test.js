@@ -1,4 +1,3 @@
-import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 import { menuService } from 'reducers/menuService'
 
@@ -11,9 +10,9 @@ describe('menuService', () => {
         response: { test: 'test' },
       })
 
-      const expectedResult = Immutable.Map({
+      const expectedResult = {
         test: 'test'
-      })
+      }
 
       expect(result).toEqual(expectedResult)
     })

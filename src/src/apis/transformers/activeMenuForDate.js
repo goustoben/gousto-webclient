@@ -6,6 +6,7 @@ export const activeMenuForDateTransformer = (response, date) => {
     })
   }
 
-  // TODO: we think that if today or no date is supplied we should return menu[0]
-  return response.data[0]
+  const defaultFallbackMenu = response.data[0]
+
+  return defaultFallbackMenu
 }

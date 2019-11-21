@@ -49,7 +49,7 @@ describe('callMenuService', () => {
     menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
     menuLoadCollectionsRecipes.mockImplementation(() => (mockMenuLoadDispatcher))
 
-    await loadMenuCollectionsWithMenuService(getState, dispatch, 'any Date', background)
+    await loadMenuCollectionsWithMenuService(dispatch, getState, 'any Date', background)
 
     expect(menuLoadCollections).toHaveBeenCalledWith('any Date', background, 'mock collection')
     expect(mockMenuLoadDispatcher).toHaveBeenCalledWith(dispatch, getState)

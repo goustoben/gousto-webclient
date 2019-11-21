@@ -183,7 +183,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
       const date = reqData['filters[available_on]']
       const startTime = new Date()
 
-      const useMenuService = getState().features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
+      const useMenuService = isMenuServiceActive(getState)
 
       if (useMenuService) {
         await loadMenuCollectionsWithMenuService(getState, dispatch, date, background)

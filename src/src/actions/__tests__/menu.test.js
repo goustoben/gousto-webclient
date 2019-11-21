@@ -68,6 +68,11 @@ describe('menu actions', () => {
         coreDayId: '001'
       }
     }),
+    features: Immutable.fromJS({
+      menuService: {
+        value: false
+      }
+    })
   }
   const getState = () => state
 

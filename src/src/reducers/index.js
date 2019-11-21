@@ -61,7 +61,7 @@ const reducers = {
   ...login,
   logger,
   ...menu,
-  menuService: menuService,
+  menuService,
   ...newsletter,
   orders,
   ...onScreenRecovery,
