@@ -49,7 +49,11 @@ const ProductPresentation = ({
         className={classnames(css.resetButtonStyle, css.productImage)}
         onClick={() => openDetailsScreen()}
       >
-        <img src={imgSource} alt={title} />
+        <img
+          className={classnames({ [css.fadedImage]: outOfStock })}
+          src={imgSource}
+          alt={title}
+        />
       </button>
       {lowStock && !outOfStock && <span className={css.productLowStock}>low stock</span>}
       <div className={css.productContent}>

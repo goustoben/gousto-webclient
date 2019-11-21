@@ -79,6 +79,10 @@
   left: 0;
 }
 
+.fadedImage {
+  opacity: 0.4;
+}
+
 .productContent {
   display: flex;
   justify-content: space-between;
