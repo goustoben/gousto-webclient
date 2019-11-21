@@ -117,20 +117,8 @@ describe('OrderConfirmation', () => {
       expect(wrapper.find('VerticalStagesItem').first().find('Connect(ReferAFriend)')).toHaveLength(1)
     })
 
-    describe('and the feature hasProductList2Columns is enabled', () => {
-      beforeEach(() => {
-        wrapper.setProps({ hasProductList2Columns: true })
-      })
-
-      test('the hasFullWidth prop passed to VerticalStages has the same value as hasProductList2Columns', () => {
-        expect(wrapper.find('VerticalStages').prop('hasFullWidth')).toBe(true)
-      })
-    })
-
-    describe('and the feature hasProductList2Columns is not enabled', () => {
-      test('the hasFullWidth prop passed to VerticalStages has the same value as hasProductList2Columns', () => {
-        expect(wrapper.find('VerticalStages').prop('hasFullWidth')).toBe(false)
-      })
+    test('the hasFullWidth prop passed to VerticalStages as true', () => {
+      expect(wrapper.find('VerticalStages').prop('hasFullWidth')).toBe(true)
     })
   })
 

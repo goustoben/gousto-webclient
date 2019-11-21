@@ -24,7 +24,6 @@ const propTypes = {
   onAdd: PropTypes.func,
   onRemove: PropTypes.func,
   openDetailsScreen: PropTypes.func,
-  hasProductList2Columns: PropTypes.bool,
 }
 
 const ProductPresentation = ({
@@ -41,7 +40,6 @@ const ProductPresentation = ({
   openDetailsScreen,
   ageVerificationPending,
   inProgress,
-  hasProductList2Columns,
 }) => (
     <div className={css.productDetails}>
       <button
@@ -60,11 +58,10 @@ const ProductPresentation = ({
             onClick={() => openDetailsScreen()}
           >
             <h3 className={css.productTitle}>{title}</h3>
-            {(!hasProductList2Columns) && <p className={css.productPrice}>£{listPrice}</p>}
           </button>
         </div>
         <div>
-          {(hasProductList2Columns) && <p className={css.productPrice}>£{listPrice}</p>}
+          <p className={css.productPrice}>£{listPrice}</p>
           <div
             className={css.productButtonWrapper}
             role="button"
@@ -72,7 +69,7 @@ const ProductPresentation = ({
           >
             <Buttons
               ageVerificationPending={ageVerificationPending}
-              fullWidth={hasProductList2Columns}
+              fullWidth
               inProgress={inProgress}
               isAgeVerificationRequired={isAgeVerificationRequired}
               isAvailable={!limitReached}

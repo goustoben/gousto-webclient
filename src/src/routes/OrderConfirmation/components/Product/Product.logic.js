@@ -32,11 +32,6 @@ const propTypes = {
   basketProductRemove: PropTypes.func,
   temp: PropTypes.func,
   orderConfirmationProductTracking: PropTypes.func,
-  hasProductList2Columns: PropTypes.bool,
-}
-
-const defaultProps = {
-  hasProductList2Columns: false,
 }
 
 class Product extends PureComponent {
@@ -140,23 +135,16 @@ class Product extends PureComponent {
 
   render() {
     const { showDetailsScreen } = this.state
-    const { hasProductList2Columns, toggleAgeVerificationPopUp } = this.props
+    const { toggleAgeVerificationPopUp } = this.props
     const productCardContent = this.getProductCardContent()
     const productDetails = this.getProductDetails()
-    const cssProductWrapper = classnames(
-      css.productWrapper,
-      {
-        [css['productWrapper--fullWidth']]: hasProductList2Columns,
-      }
-    )
 
     return (
-      <section className={cssProductWrapper}>
+      <section className={css.productWrapper}>
         <ProductPresentation
           onAdd={this.onAddProduct}
           onRemove={this.onRemoveProduct}
           toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
-          hasProductList2Columns={hasProductList2Columns}
           {...productCardContent}
         />
         <Overlay open={showDetailsScreen} onClose={this.toggleDetailsVisibility} >
@@ -172,6 +160,5 @@ class Product extends PureComponent {
 }
 
 Product.propTypes = propTypes
-Product.defaultProps = defaultProps
 
 export { Product }
