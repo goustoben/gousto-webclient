@@ -23,7 +23,7 @@ const ProductList = ({ orderId, products, number, onProductClick }) => (
         to={productsRoute.replace(':orderId', orderId)}
         clientRouted={false}
       >
-        BROWSE GOUSTO MARKET
+        Browse Gousto Market
       </LinkButton>
     </div>
   </article>
