@@ -65,7 +65,7 @@ export const transformPendingOrders = (orders) => {
     const state = order.get('state')
     const phase = order.get('phase')
     const whenLive = order.get('whenLive')
-    const whenCutoff = order.get('whenCutoff')
+    const shouldCutoffAt = order.get('shouldCutoffAt')
     const isCurrentPeriod = order.get('isCurrentPeriod')
     const deliveryDayId = order.get('deliveryDayId')
     const deliveryDate = order.get('deliveryDate')
@@ -89,7 +89,7 @@ export const transformPendingOrders = (orders) => {
         id,
         orderState,
         whenMenuOpen: whenLive,
-        whenCutoff,
+        whenCutoff: shouldCutoffAt,
         isCurrentPeriod,
         shippingAddressId: shippingAddress.get('id'),
         coreDeliveryDayId: deliveryDayId,
