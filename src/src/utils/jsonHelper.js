@@ -25,15 +25,14 @@ export function snakeToCamelCase(text) {
   return text.replace(/"\w+?":/g, key => key.replace(/_\w/g, match => match[1].toUpperCase()))
 }
 
-export function JSONParse(text, convertToCamelCase) { // eslint-disable-line new-cap
+export function JSONParse(text, useMenuService) { // eslint-disable-line new-cap
   try {
-    if (convertToCamelCase) {
-      const camelCaseText = snakeToCamelCase(text)
-
-      return JSON.parse(camelCaseText)
+    if (useMenuService) {
+      return JSON.parse(text)
     }
+    const camelCaseText = snakeToCamelCase(text)
 
-    return JSON.parse(text)
+    return JSON.parse(camelCaseText)
   } catch (e) {
     logger.error({ message:`JSONParse failed with text: "${text}"`, errors:  [e] })
     throw new Error('An error occurred, please try again.')
