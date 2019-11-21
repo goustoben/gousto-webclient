@@ -50,3 +50,14 @@
 .capitalize {
 	text-transform: capitalize;
 }
+
+.spinnerContainer {
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.spinner {
+	width: 75px;
+	height: 75px;
+}

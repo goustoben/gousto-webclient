@@ -12,7 +12,6 @@ import accountCss from '../Account/Account.css'
 class MyDeliveries extends React.PureComponent {
   static propTypes = {
     isFetchingOrders: PropTypes.bool,
-    isFetchingAddresses: PropTypes.bool,
     didErrorFetchingPendingOrders: PropTypes.string,
     didErrorFetchingProjectedOrders: PropTypes.string,
     didErrorFetchingAddresses: PropTypes.string,
@@ -62,13 +61,12 @@ class MyDeliveries extends React.PureComponent {
       didErrorFetchingPendingOrders,
       didErrorFetchingProjectedOrders,
       didErrorFetchingAddresses,
-      isFetchingOrders,
-      isFetchingAddresses,
+      isFetchingOrders
     } = this.props
     if (didErrorFetchingPendingOrders !== null || didErrorFetchingProjectedOrders !== null || didErrorFetchingAddresses !== null) {
       return MyDeliveries.renderFetchError(this.retryFetch)
     }
-    if (isFetchingOrders || isFetchingAddresses) {
+    if (isFetchingOrders) {
       return MyDeliveries.renderLoading
     }
 

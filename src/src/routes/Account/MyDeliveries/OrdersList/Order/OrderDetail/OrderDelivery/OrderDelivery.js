@@ -3,6 +3,7 @@ import React from 'react'
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
 import userActions from 'actions/user'
+import Loading from 'Loading'
 import { OrderDeliveryAddress } from './OrderDeliveryAddress'
 import { OrderDeliveryDate } from './OrderDeliveryDate'
 
@@ -24,6 +25,7 @@ class OrderDelivery extends React.PureComponent {
     orderDeliveryDaysFetchError: PropTypes.object,
     hasUpdateDeliveryDayError: PropTypes.bool,
     clearUpdateDateErrorAndPending: PropTypes.func,
+    addressLoading: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -100,6 +102,7 @@ class OrderDelivery extends React.PureComponent {
       availableTo,
       hasUpdateDeliveryDayError,
       shippingAddressId,
+      addressLoading
     } = this.props
     const editDateHasError =
       recipesPeriodStockFetchError != null ||
@@ -111,31 +114,37 @@ class OrderDelivery extends React.PureComponent {
     return (
       <div data-testing="recipesDeliverySection">
         <div className={`${css.header} ${css.bold}`}>Delivery details</div>
-        <div className={css.deliveryDetailsWrapper}>
-          <div className={css.subSection}>
-            <OrderDeliveryDate
-              editDeliveryMode={editDeliveryMode}
-              date={date}
-              timeStart={timeStart}
-              timeEnd={timeEnd}
-              orderState={orderState}
-              hasError={hasUpdateDeliveryDayError || editDateHasError}
-              errorText={errorText}
-              onClickFunction={this.onClickFunction}
-              fetchSuccess={fetchSuccess}
-              orderId={orderId}
-              availableFrom={availableFrom}
-              availableTo={availableTo}
-            />
+        {addressLoading ?
+          <div className={css.spinnerContainer}>
+            <Loading className={css.spinner}/>
           </div>
-          <div className={css.subSection}>
-            <OrderDeliveryAddress
-              orderId={orderId}
-              orderState={orderState}
-              shippingAddressId={shippingAddressId}
-            />
+          :
+          <div className={css.deliveryDetailsWrapper}>
+            <div className={css.subSection}>
+              <OrderDeliveryDate
+                editDeliveryMode={editDeliveryMode}
+                date={date}
+                timeStart={timeStart}
+                timeEnd={timeEnd}
+                orderState={orderState}
+                hasError={hasUpdateDeliveryDayError || editDateHasError}
+                errorText={errorText}
+                onClickFunction={this.onClickFunction}
+                fetchSuccess={fetchSuccess}
+                orderId={orderId}
+                availableFrom={availableFrom}
+                availableTo={availableTo}
+              />
+            </div>
+            <div className={css.subSection}>
+              <OrderDeliveryAddress
+                orderId={orderId}
+                orderState={orderState}
+                shippingAddressId={shippingAddressId}
+              />
+            </div>
           </div>
-        </div>
+        }
       </div>
     )
   }
