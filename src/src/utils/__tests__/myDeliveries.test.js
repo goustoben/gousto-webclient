@@ -24,12 +24,30 @@ describe('myDeliveries utils', () => {
           id: '32072784',
           title: 'Indonesian-Style Prawn Curry & Green Bean Rice ',
           recipeId: '101',
+          media: [
+            {
+              urls: [
+                { width: 50, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-1-x50.jpg' },
+                { width: 200, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-1-x200.jpg' },
+                { width: 400, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-1-x400.jpg' },
+              ]
+            }
+          ]
         },
         {
           id: '32072785',
           title: 'Indian-Spiced Chicken Tray Bake With Spinach',
           recipeId: '102',
-        }
+          media: [
+            {
+              urls: [
+                { width: 50, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-2-x50.jpg' },
+                { width: 200, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-2-x200.jpg' },
+                { width: 400, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-2-x400.jpg' },
+              ]
+            }
+          ]
+        },
       ],
       productItems: [],
       box: {
@@ -72,11 +90,29 @@ describe('myDeliveries utils', () => {
           id: '46584179',
           title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
           recipeId: '103',
+          media: [
+            {
+              urls: [
+                { width: 50, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-3-x50.jpg' },
+                { width: 200, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-3-x200.jpg' },
+                { width: 400, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-3-x400.jpg' },
+              ]
+            }
+          ]
         },
         {
           id: '46584182',
           title: 'Pasta Alla Genovese',
           recipeId: '104',
+          media: [
+            {
+              urls: [
+                { width: 50, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-4-x50.jpg' },
+                { width: 200, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-4-x200.jpg' },
+                { width: 400, src: 'https://cloud.com/cms/test-media/test-images/test-recipe-4-x400.jpg' },
+              ]
+            }
+          ]
         }
       ],
       productItems: [
@@ -85,6 +121,15 @@ describe('myDeliveries utils', () => {
           quantity: '3',
           listPrice: '29.97',
           title: 'Joseph Joseph - Garlic Rocker (Green)',
+          media: [
+            {
+              urls: [
+                { width: 50, src: 'https://cloud.com/cms/test-media/test-images/test-product-1-x50.jpg' },
+                { width: 200, src: 'https://cloud.com/cms/test-media/test-images/test-product-1-x200.jpg' },
+                { width: 400, src: 'https://cloud.com/cms/test-media/test-images/test-product-1-x400.jpg' },
+              ]
+            }
+          ]
         }
       ],
       box: {
@@ -228,11 +273,14 @@ describe('myDeliveries utils', () => {
   })
 
   describe('transformPendingOrders', () => {
+    let transformedOrders
     moment.mockReturnValue({
       isSame: () => true
     })
 
-    const transformedOrders = transformPendingOrders(mockOrders)
+    beforeEach(() => {
+      transformedOrders = transformPendingOrders(mockOrders)
+    })
 
     test('should return the correct mapping for orders', () => {
       const result = Immutable.Map({
@@ -269,11 +317,13 @@ describe('myDeliveries utils', () => {
                 id: '46584179',
                 title: 'Aubergine Yasai Curry With Sticky Rice & Edamame',
                 recipeId: '103',
+                image: 'https://cloud.com/cms/test-media/test-images/test-recipe-3-x200.jpg',
               }),
               Immutable.Map({
                 id: '46584182',
                 title: 'Pasta Alla Genovese',
                 recipeId: '104',
+                image: 'https://cloud.com/cms/test-media/test-images/test-recipe-4-x200.jpg',
               })
             ]
           ),
@@ -285,6 +335,7 @@ describe('myDeliveries utils', () => {
                 unitPrice: '29.97' / '3',
                 quantity: '3',
                 title: 'Joseph Joseph - Garlic Rocker (Green)',
+                image: 'https://cloud.com/cms/test-media/test-images/test-product-1-x200.jpg',
               })
             ])
           }),
@@ -294,6 +345,7 @@ describe('myDeliveries utils', () => {
         })
       })
 
+      expect(transformedOrders.toJS()).toEqual(result.toJS())
       expect(Immutable.is(transformedOrders, result)).toEqual(true)
     })
   })

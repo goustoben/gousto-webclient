@@ -113,6 +113,7 @@ export const transformPendingOrders = (orders) => {
           id: item.get('id'),
           title: item.get('title'),
           recipeId: item.get('recipeId'),
+          image: item.getIn(['media', 0, 'urls', 1, 'src'], ''),
         }))),
         products: Immutable.Map({
           total: productItems.size,
@@ -121,6 +122,7 @@ export const transformPendingOrders = (orders) => {
             unitPrice: item.get('listPrice') / item.get('quantity'),
             quantity: item.get('quantity'),
             title: item.get('title'),
+            image: item.getIn(['media', 0, 'urls', 1, 'src'], ''),
           })))
         }),
         portionsCount: box.get('numPortions'),
