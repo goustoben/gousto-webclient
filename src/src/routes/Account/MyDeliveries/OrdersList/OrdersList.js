@@ -1,14 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable' // eslint-disable no-caps
+import Immutable from 'immutable'
 import Order from './Order'
 import NoOrders from './NoOrders'
-import NewAddressModal from './NewAddressModal'
 import CancelledAllBoxesModal from './CancelledAllBoxesModal'
 
 const OrdersList = ({ orders, recipes, boxType }) => (
   <div>
-    <NewAddressModal />
     <CancelledAllBoxesModal />
     {orders.size < 1 ? <NoOrders recipes={recipes} boxType={boxType} /> : null}
     {orders.toList().map((order) => (

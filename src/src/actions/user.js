@@ -74,10 +74,6 @@ const userActions = {
   userToggleExpiredBillingModal,
   userAddPaymentMethod,
   userLoadAddresses,
-  userToggleNewAddressModal,
-  modalAddressLookup,
-  userAddNewAddress,
-  userPendingAddressFormData,
   userUnsubscribe,
   userFetchReferralOffer,
 }
@@ -604,80 +600,6 @@ function userLoadAddresses() {
     } finally {
       dispatch(statusActions.pending(actionTypes.USER_LOAD_ADDRESSES, false))
     }
-  }
-}
-
-function userToggleNewAddressModal(visibility, orderId) {
-  return dispatch => {
-    dispatch({
-      type: actionTypes.DELIVERY_ADDRESS_MODAL_VISIBILITY_CHANGE,
-      visibility,
-      orderId
-    })
-    if (visibility === false) {
-      dispatch(statusActions.error(actionTypes.MODAL_ADDRESSES_RECEIVE, false))
-      dispatch(statusActions.error(actionTypes.MODAL_FULL_ADDRESSES_RECEIVE, false))
-      dispatch(statusActions.error(actionTypes.USER_POST_NEW_ADDRESS, false))
-    }
-  }
-}
-
-function modalAddressLookup(postcode) {
-  // FIXME: this functionality has been broken by https://gousto.atlassian.net/browse/TECH-7254
-  return async dispatch => {
-    dispatch(statusActions.pending(actionTypes.MODAL_ADDRESSES_RECEIVE, true))
-    dispatch(statusActions.error(actionTypes.MODAL_ADDRESSES_RECEIVE, false))
-
-    try {
-      const { data = {} } = await addressApi.fetchAddressByPostcode(postcode)
-      dispatch({
-        type: actionTypes.MODAL_ADDRESSES_RECEIVE,
-        data
-      })
-    } catch (err) {
-      dispatch(statusActions.errorLoad(actionTypes.MODAL_ADDRESSES_RECEIVE, err))
-      throw err
-    } finally {
-      dispatch(statusActions.pending(actionTypes.MODAL_ADDRESSES_RECEIVE, false))
-    }
-  }
-}
-
-function userAddNewAddress(reqData, orderId) {
-  return async (dispatch, getState) => {
-    dispatch(statusActions.pending(actionTypes.USER_POST_NEW_ADDRESS, true))
-    dispatch(statusActions.error(actionTypes.USER_POST_NEW_ADDRESS, false))
-
-    try {
-      const accessToken = getState().auth.get('accessToken')
-      const userId = getState().user.get('id')
-      const { data = {} } = await userApi.addNewAddress(accessToken, userId, reqData)
-
-      dispatch({
-        type: actionTypes.USER_POST_NEW_ADDRESS,
-        data,
-        orderId
-      })
-    } catch (err) {
-      statusActions.errorLoad(actionTypes.USER_POST_NEW_ADDRESS, err)(dispatch)
-      throw err
-    } finally {
-      const postError = getState().error.get(actionTypes.USER_POST_NEW_ADDRESS)
-      dispatch(statusActions.pending(actionTypes.USER_POST_NEW_ADDRESS, false))
-      if (!postError) {
-        dispatch({ type: actionTypes.DELIVERY_ADDRESS_MODAL_VISIBILITY_CHANGE, visibility: false })
-      }
-    }
-  }
-}
-
-function userPendingAddressFormData(shippingAddressesId, orderId) {
-  return dispatch => {
-    dispatch({
-      type: actionTypes.SELECTED_ADDRESS_IN_NEW_ADDRESS_MODAL,
-      orderId,
-      shippingAddressesId
-    })
   }
 }
 

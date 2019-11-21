@@ -1,5 +1,5 @@
 import { fetch } from 'utils/fetch'
-import { applyPromo, fetchReferralOffer, fetchPromo, fetchUser, fetchShippingAddresses, fetchUserOrders, fetchUserOrdersNew, fetchUserProjectedDeliveries, saveUserOrder, updateUserOrder, skipDelivery, restoreDelivery, reactivate, userRateCount, checkDuplicateUser, verifyAge, referralDetails, referAFriend, addPaymentMethod, fetchUserAddresses, addNewAddress, deleteMarketingSubscription } from '../user'
+import { applyPromo, fetchReferralOffer, fetchPromo, fetchUser, fetchShippingAddresses, fetchUserOrders, fetchUserOrdersNew, fetchUserProjectedDeliveries, saveUserOrder, updateUserOrder, skipDelivery, restoreDelivery, reactivate, userRateCount, checkDuplicateUser, verifyAge, referralDetails, referAFriend, addPaymentMethod, fetchUserAddresses, deleteMarketingSubscription } from '../user'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () => ({
@@ -335,22 +335,6 @@ describe('user api', () => {
     })
   })
 
-  describe('addNewAddress', () => {
-    test('should fetch the correct url', async () => {
-      const accessToken = 'token'
-      const userId = '123'
-      const reqData = { a: 1, b: 2 }
-      await addNewAddress(accessToken, userId, reqData)
-      expect(fetch).toHaveBeenCalledTimes(1)
-      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-customersv2/customers/${userId}/addresses`, reqData, 'POST')
-    })
-
-    test('should return the results of the fetch unchanged', async () => {
-      const result = await addNewAddress('token', '123', {})
-      expect(result).toEqual(mockFetchResult)
-    })
-  })
-
   describe('deleteMarketingSubscription', () => {
     test('should fetch the correct url', async () => {
       const userId = '123'
@@ -359,7 +343,7 @@ describe('user api', () => {
       await deleteMarketingSubscription(userId, marketingType, marketingUnsubscribeToken)
       expect(fetch).toHaveBeenCalledTimes(1)
       expect(fetch).toHaveBeenCalledWith(
-        null, 
+        null,
         `endpoint-core/user/${userId}/marketing/${marketingType}`,
         { marketing_unsubscribe_token: marketingUnsubscribeToken },
         'DELETE'
