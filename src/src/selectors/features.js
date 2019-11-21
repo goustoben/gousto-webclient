@@ -82,10 +82,6 @@ export const isChoosePlanEnabled = ({ features }) => (
   features && features.getIn(['choosePlanRoute', 'value'], false)
 )
 
-export const getProductList2Columns = ({ features }) => (
-  features && features.getIn(['productList2Columns', 'value'], false)
-)
-
 export const getCookingInstruction = ({ features }) => (
   features && features.getIn(['showCookingInstruction', 'value'], false)
 )
