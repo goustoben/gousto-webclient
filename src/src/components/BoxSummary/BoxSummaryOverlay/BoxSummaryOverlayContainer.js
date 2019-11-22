@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
 import actionTypes from 'actions/actionTypes'
+import { getBasketDate, getNumPortions, getBasketRecipes } from 'selectors/basket'
 import { BoxSummaryOverlay } from './BoxSummaryOverlay'
 
 const mapStateToProps = (state) => ({
-  date: state.basket.get('date'),
-  numPortions: state.basket.get('numPortions'),
-  recipes: state.basket.get('recipes'),
+  date: getBasketDate(state),
+  numPortions: getNumPortions(state),
+  recipes: getBasketRecipes(state),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
 })
 

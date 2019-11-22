@@ -5,6 +5,7 @@ import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
 import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
 import { getShortlistTutorialFirstStep, getShortlistTutorialSecondStep } from 'selectors/tutorial'
+import { getBasketSlotId, getBasketDate, getNumPortions, getBasketOrderId, getBasketRecipes } from 'selectors/basket'
 import { isMobile } from 'utils/view'
 import BoxSummaryDesktop from './BoxSummary'
 
@@ -14,18 +15,18 @@ const shouldShortlistTutorialShow = (state) => (
 
 const mapStateToProps = (state) => ({
   isMobile: isMobile(state.request.get('browser')),
-  date: state.basket.get('date'),
-  numPortions: state.basket.get('numPortions'),
-  recipes: state.basket.get('recipes'),
+  date: getBasketDate(state),
+  numPortions: getNumPortions(state),
+  recipes: getBasketRecipes(state),
   showDetails: state.boxSummaryShow.get('show'),
-  slotId: state.basket.get('slotId'),
+  slotId: getBasketSlotId(state),
   userOrders: state.user.get('orders'),
   deliveryDays: state.boxSummaryDeliveryDays,
   menuRecipes: state.menuRecipes,
   stock: state.menuRecipeStock,
   boxSummaryCurrentView: getCurrentBoxSummaryView(state),
   menuRecipesStore: state.recipes,
-  orderId: state.basket.get('orderId'),
+  orderId: getBasketOrderId(state),
   disabled: state.auth.get('isAdmin'),
   basketCheckedOut: state.pending.get(actionTypes.BASKET_CHECKOUT),
   menuFetchPending: state.pending.get(actionTypes.MENU_FETCH_DATA),
