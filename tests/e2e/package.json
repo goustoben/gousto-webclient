@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/nightwatch --env=local:chrome",
-    "test:staging": "./node_modules/.bin/nightwatch --env=staging:chrome --verbose && ./node_modules/.bin/nightwatch --env=staging:iphone6 --verbose"
+    "test:staging:web": "./node_modules/.bin/nightwatch --env=staging:chrome --verbose",
+    "test:staging:mobile": "./node_modules/.bin/nightwatch --env=staging:iphone6 --verbose"
   },
   "author": "",
   "license": "ISC",
