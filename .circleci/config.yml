@@ -160,6 +160,15 @@ jobs:
           name: Run e2e selenium tests
           command: source ~/.circlerc && scripts/validate.sh
 
+  test-e2e-selenium-mobile:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run e2e selenium tests mobile
+          command: source ~/.circlerc && scripts/validate-mobile.sh
+
   deploy-application:
     docker: *gousto_build_image
     steps:
@@ -340,6 +349,14 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - deploy-application
+            - deploy-containers
+          filters:
+            branches:
+              only:
+                - develop
+      - test-e2e-selenium-mobile:
+          context: gousto-beta-aws-app-circleci
+          requires:
             - deploy-containers
           filters:
             branches:
