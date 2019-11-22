@@ -13,7 +13,7 @@ describe('OrderProducts', () => {
   const productsSample = Immutable.fromJS([
     { id: '1', title: 'title 1', quantity: 4, unitPrice: 14.323, image: '' },
     { id: '2', title: 'title 2', quantity: 5, unitPrice: 15.0, image: '' },
-    { id: '3', title: 'title 3', quantity: 6, unitPrice: 20, image: '' },
+    { id: '3', title: 'title 3', quantity: 6, unitPrice: 20, image: 'test.jpg' },
   ])
 
   describe('rendering', () => {
@@ -66,6 +66,16 @@ describe('OrderProducts', () => {
       const editItemsLink = wrapper.find(Link)
       expect(editItemsLink).toHaveLength(1)
       expect(editItemsLink.children().text()).toBe('Edit Items')
+    })
+
+    describe('images', () => {
+      test('when no source is passed, should render a placeholding image', () => {
+        expect(wrapper.find('ProductImage').first().prop('src')).toEqual('recipe-placeholder.png')
+      })
+
+      test('when a source is passed, should render an image', () => {
+        expect(wrapper.find('ProductImage').last().prop('src')).toEqual('test.jpg')
+      })
     })
 
     describe('when no products are passed',() => {
