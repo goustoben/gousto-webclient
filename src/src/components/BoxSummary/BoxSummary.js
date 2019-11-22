@@ -159,7 +159,7 @@ class BoxSummary extends React.Component {
     const numRecipes = this.numRecipes()
 
     return (
-      <div className={css.boxSummary} data-testing="menuBottomBarDesktop">
+      <div className={css.boxSummary} data-testing="boxSummary">
         <BoxSummaryBanner
           isMobile={isMobile}
           numRecipes={numRecipes}

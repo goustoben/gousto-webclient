@@ -24,7 +24,7 @@ const BoxSummaryDesktopBanner = ({
   openDetails
 }) => {
   return (
-    <div className={css.bardesktop} data-testing="menuBottomBarDesktop">
+    <div className={css.bardesktop}>
       <RecipeList view="desktop" recipes={recipes} menuRecipesStore={menuRecipesStore} maxRecipesNum={maxRecipesNum} />
       <span className={css.buttonsContainer}>
         {
