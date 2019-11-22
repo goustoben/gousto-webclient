@@ -31,6 +31,7 @@ const Address = ({selectAddress, isSelected, addressId, addressName, formattedAd
         type="radio"
         id={addressId}
         checked={isSelected}
+        readOnly
         className={css.hiddenRadio}
         onClick={() => !isSelected && selectAddress(addressId)}
         tabIndex="-1"
