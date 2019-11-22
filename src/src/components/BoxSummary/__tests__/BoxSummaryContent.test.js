@@ -2,12 +2,12 @@ import { shallow, mount } from 'enzyme'
 import React from 'react'
 import Immutable from 'immutable'
 
-import BoxSummary from 'BoxSummary/BoxSummary'
-import Details from 'BoxSummary/Details'
-import Postcode from 'BoxSummary/Postcode'
-import DeliverySlot from 'BoxSummary/DeliverySlot'
-
 import { boxSummaryViews } from 'utils/boxSummary'
+
+import { BoxSummaryContent as BoxSummary } from '../BoxSummaryContent/BoxSummaryContent'
+import Details from '../Details'
+import Postcode from '../Postcode'
+import DeliverySlot from '../DeliverySlot'
 
 describe('BoxSummary', () => {
   const recipes = Immutable.Map()

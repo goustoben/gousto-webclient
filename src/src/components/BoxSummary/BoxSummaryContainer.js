@@ -1,29 +1,46 @@
 import { connect } from 'react-redux'
-import { getCurrentBoxSummaryView } from 'utils/boxSummary'
+import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
-import pricing from 'actions/pricing'
-import BoxSummary from './BoxSummary'
+import { getCurrentBoxSummaryView } from 'utils/boxSummary'
+import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
+import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
+import { getShortlistTutorialFirstStep, getShortlistTutorialSecondStep } from 'selectors/tutorial'
+import { isMobile } from 'utils/view'
+import BoxSummaryDesktop from './BoxSummary'
 
-function mapStateToProps(state) {
-  return {
-    date: state.basket.get('date'),
-    orderId: state.basket.get('orderId'),
-    numPortions: state.basket.get('numPortions'),
-    recipes: state.basket.get('recipes'),
-    deliveryDays: state.boxSummaryDeliveryDays,
-    deliveryDaysError: state.error.get(actionTypes.BOXSUMMARY_DELIVERY_DAYS_RECEIVE),
-    postcode: state.basket.get('postcode'),
-    postcodePending: state.basket.get('postcodePending'),
-    slotId: state.basket.get('slotId'),
-    menuPending: state.menuRecieveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
-    boxSummaryCurrentView: getCurrentBoxSummaryView(state),
-    prices: state.pricing.get('prices'),
-    pricesLoading: state.pricing.get('pending'),
-  }
-}
+const shouldShortlistTutorialShow = (state) => (
+  getShortlistTutorialFirstStep(state) && !getShortlistTutorialSecondStep(state)
+)
 
-const BoxSummaryContainer = connect(mapStateToProps, {
-  loadPrices: pricing.pricingRequest.bind(pricing),
-})(BoxSummary)
+const mapStateToProps = (state) => ({
+  isMobile: isMobile(state.request.get('browser')),
+  date: state.basket.get('date'),
+  numPortions: state.basket.get('numPortions'),
+  recipes: state.basket.get('recipes'),
+  showDetails: state.boxSummaryShow.get('show'),
+  slotId: state.basket.get('slotId'),
+  userOrders: state.user.get('orders'),
+  deliveryDays: state.boxSummaryDeliveryDays,
+  menuRecipes: state.menuRecipes,
+  stock: state.menuRecipeStock,
+  boxSummaryCurrentView: getCurrentBoxSummaryView(state),
+  menuRecipesStore: state.recipes,
+  orderId: state.basket.get('orderId'),
+  disabled: state.auth.get('isAdmin'),
+  basketCheckedOut: state.pending.get(actionTypes.BASKET_CHECKOUT),
+  menuFetchPending: state.pending.get(actionTypes.MENU_FETCH_DATA),
+  hasUnavailableRecipes: Boolean(getUnavailableRecipeIds(state).size),
+  orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
+  pricingPending: state.pricing.get('pending'),
+  shouldShowTutorialStep2: shouldShortlistTutorialShow(state)
+})
 
-export default BoxSummaryContainer
+const BoxSummaryDesktopContainer = connect(mapStateToProps, {
+  boxDetailsVisibilityChange: actions.boxSummaryVisibilityChange,
+  basketRestorePreviousValues: actions.basketRestorePreviousValues,
+  boxSummaryNext: actions.boxSummaryNext,
+  incrementTutorialViewed,
+  tutorialTracking,
+})(BoxSummaryDesktop)
+
+export default BoxSummaryDesktopContainer
