@@ -9,7 +9,7 @@ import css from './BoxSummary.css'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
 
-class BoxSummary extends React.Component {
+class BoxSummary extends React.PureComponent {
   static propTypes = {
     isMobile: PropTypes.bool.isRequired,
     date: PropTypes.string,
