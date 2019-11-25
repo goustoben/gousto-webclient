@@ -41,7 +41,6 @@ module.exports = {
           },
           clickContinueButton: function () {
             this
-              .waitForElementPresent('@boxSummaryContinueButton')
               .api.execute(function () {
                 const continueButton = document.querySelector('[data-testing="boxSummaryContinueButton"]')
                 continueButton.click()
@@ -49,7 +48,6 @@ module.exports = {
           },
           clickDateOfExistingOrder: function () {
             this
-              .waitForElementPresent('@dateSlot')
               .api.execute(function () {
                 const getDateSlots = () => document.querySelectorAll("*[data-testing='dateSlot']")
                 let dates = Array.from(getDateSlots())

@@ -32,7 +32,7 @@ BoxSummaryNextButton.propTypes = {
 }
 
 BoxSummaryNextButton.defaultProps = {
-  view: 'desktop',
+  view: 'mobile',
   pricingPending: false,
 }
 
