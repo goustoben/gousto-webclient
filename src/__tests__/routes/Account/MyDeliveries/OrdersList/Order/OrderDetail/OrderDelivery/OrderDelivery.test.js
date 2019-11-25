@@ -58,13 +58,18 @@ describe('OrderDelivery',() => {
   })
 
   describe('componentDidMount', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
     test('should dispatch fetches for getting delivery days and stock if the order state is "menu open"',() => {
+      wrapper = shallow(<OrderDelivery
+        orderState="menu open"
+      />,{context})
       expect(orderActions.orderGetDeliveryDays).toHaveBeenCalled()
       expect(recipesActions.recipesLoadStockByDate).toHaveBeenCalled()
     })
 
     test('should dispatch fetches for getting delivery days and stock if the order state is "recipes chosen"',() => {
-      jest.clearAllMocks()
       wrapper = shallow(<OrderDelivery
         orderState="recipes chosen"
       />,{context})
@@ -73,7 +78,6 @@ describe('OrderDelivery',() => {
     })
 
     test('should NOT dispatch fetches for getting delivery days and stock if the order is NOT pending',() => {
-      jest.clearAllMocks()
       wrapper = shallow(<OrderDelivery
         orderState="scheduled"
       />,{context})
