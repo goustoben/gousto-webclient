@@ -52,7 +52,7 @@ describe('boxSummary actions', function () {
       const dispatchSpy = sinon.spy()
       const getStateSpy = sinon.stub().returns({
         basket: Immutable.Map({
-          recipes: Immutable.Map({123: 3, 456: 1}),
+          recipes: Immutable.Map({ 123: 3, 456: 1 }),
           numPortions: 2,
           limitReached: false,
         }),
@@ -89,7 +89,7 @@ describe('boxSummary actions', function () {
       const dispatchSpy = sinon.spy()
       const getStateSpy = sinon.stub().returns({
         basket: Immutable.Map({
-          recipes: Immutable.Map({123: 3, 456: 1}),
+          recipes: Immutable.Map({ 123: 3, 456: 1 }),
           numPortions: 2,
           limitReached: false,
         }),
@@ -192,27 +192,27 @@ describe('boxSummary actions', function () {
       dispatchSpy = sinon.spy()
     })
 
-    it('should call 6 dispatches', async function() {
+    it('should call 6 dispatches', async function () {
       await actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy.callCount).to.equal(6)
     })
 
-    it('should dispatch basket.basketDateChange, passing it\'s date arg', async function() {
+    it('should dispatch basket.basketDateChange, passing it\'s date arg', async function () {
       await actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       const basketDateChangeSpyArgs = basketDateChange.args[0]
       expect(basketDateChangeSpyArgs[0]).to.deep.equal('2017-01-01')
     })
 
-    it('should dispatch basket.basketSlotChange, passing it\'s slotId arg', async function() {
+    it('should dispatch basket.basketSlotChange, passing it\'s slotId arg', async function () {
       await actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       const basketSlotChangeArgs = basketSlotChange.args[0]
       expect(basketSlotChangeArgs[0]).to.deep.equal('big-long-uuid-here-123')
     })
 
-    it('should dispatch menu.menuLoadMenu and menu.menuLoadStock', async function() {
+    it('should dispatch menu.menuLoadMenu and menu.menuLoadStock', async function () {
       actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       const dispatchSpyArgs = dispatchSpy.args[3]
@@ -221,7 +221,7 @@ describe('boxSummary actions', function () {
       expect(menuLoadStockSpy).to.have.been.calledOnce
     })
 
-    it('should mark MENU_FETCH_DATA as pending', async function() {
+    it('should mark MENU_FETCH_DATA as pending', async function () {
       await actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       expect(pending).to.have.been.calledTwice

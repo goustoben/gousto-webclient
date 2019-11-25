@@ -7,7 +7,7 @@ import * as deliveriesUtils from 'utils/deliveries'
 
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
-    data: [{id: 1}]
+    data: [{ id: 1 }]
   })
 }))
 
@@ -155,7 +155,7 @@ describe('boxSummary actions', () => {
     })
     describe('with an order id in the temp state and a postcode in the basket state', () => {
       afterEach(() => {
-         jest.clearAllMocks()
+        jest.clearAllMocks()
       })
       test('should redirect the user to /order/:orderId', () => {
         boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
@@ -171,7 +171,7 @@ describe('boxSummary actions', () => {
         })
       })
       afterEach(() => {
-         jest.clearAllMocks()
+        jest.clearAllMocks()
       })
 
       describe('when hide box summary feature flag is present', () => {
@@ -236,7 +236,7 @@ describe('boxSummary actions', () => {
         })
       })
       afterEach(() => {
-         jest.clearAllMocks()
+        jest.clearAllMocks()
       })
       test('should dispatch a basketPostcodeChange action', () => {
         boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
@@ -261,7 +261,7 @@ describe('boxSummary actions', () => {
       })
       afterEach(() => {
         jest.clearAllMocks()
-     })
+      })
       test('should dispatch a basketPostcodeChange action', () => {
         boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
         expect(basketPostcodeChange).toHaveBeenCalledTimes(1)
@@ -285,7 +285,7 @@ describe('boxSummary actions', () => {
       })
       afterEach(() => {
         jest.clearAllMocks()
-     })
+      })
       test('should dispatch basketPostcodeChange and basketAddressChange actions', () => {
         boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
         expect(basketPostcodeChange).toHaveBeenCalledTimes(1)
