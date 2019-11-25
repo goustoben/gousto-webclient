@@ -129,7 +129,7 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       logger.notice({message: "[fetch end]", status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl: requestUrl, uuid: uuid})
 
       if ( useMenuService ) {
-        return { data: response.data, included: response.included }
+        return { data: response.data, included: response.included, meta: response.meta }
       }
 
       return { data: response, meta }
