@@ -65,7 +65,7 @@ describe('myDeliveries utils', () => {
         deliveryStart: '08:00:00',
         deliveryEnd: '18:59:59',
       },
-      whenCutoff: '2019-02-16 11:59:59',
+      shouldCutoffAt: '2019-02-16 11:59:59',
       whenLive: '2019-02-05 12:00:00',
       isCurrentPeriod: false,
       shippingAddress: {
@@ -146,7 +146,7 @@ describe('myDeliveries utils', () => {
         deliveryStart: '08:00:00',
         deliveryEnd: '19:00:00',
       },
-      whenCutoff: '2019-10-23 11:59:59',
+      shouldCutoffAt: '2019-10-23 11:59:59',
       whenLive: '2019-10-15 12:00:00',
       isCurrentPeriod: true,
       originalDeliveryDay: {
