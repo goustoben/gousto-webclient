@@ -8,8 +8,7 @@ import menu from 'config/menu'
 import { redirect } from 'utils/window'
 import browserHelper from 'utils/browserHelper'
 
-import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
-import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
+import { BoxSummaryContainer } from 'BoxSummary'
 import { RecipeMeta } from './RecipeMeta'
 import { FoodBrandPage } from './FoodBrandPage'
 import { ThematicsPage } from './ThematicsPage'
@@ -387,8 +386,7 @@ class Menu extends React.PureComponent {
             )}
           <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick} />
         </div>
-        <BoxSummaryMobile />
-        <BoxSummaryDesktop />
+        <BoxSummaryContainer />
         <RecipesInBasketProgress
           isAuthenticated={isAuthenticated}
           selectedRecipesCount={recipes.length}

@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getShortlist } from 'selectors/features'
+import { getBasketSlotId } from 'selectors/basket'
 import {
   getOkRecipeIds,
   getUnavailableRecipeIds,
@@ -15,7 +16,7 @@ const mapStateToProps = (state) => ({
   promoCode: state.basket.get('promoCode'),
   recipesStore: state.recipes,
   okRecipeIds: getOkRecipeIds(state),
-  slotId: state.basket.get('slotId'),
+  slotId: getBasketSlotId(state),
   menuFetchPending: state.pending.get(actionTypes.MENU_FETCH_DATA),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
   pricingPending: state.pricing.get('pending'),
