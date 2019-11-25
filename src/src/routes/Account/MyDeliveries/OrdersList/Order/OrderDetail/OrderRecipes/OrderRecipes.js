@@ -18,7 +18,7 @@ const OrderRecipes = ({
   portionsCount,
 }) => (
     <div>
-      <div className={`${css.headerRow} ${css.hideInMobile}`}>
+      <div className={css.headerRow}>
         <Content contentKeys="mydeliveriesOrderOrderrecipesTitle" >
           <span className={css.header}>Recipe box</span>
         </Content>

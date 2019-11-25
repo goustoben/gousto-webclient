@@ -1,19 +1,22 @@
 @value Bluecheese30, Blackberry from 'styles/colors.css';
 @value SpacingSM, SpacingLG from 'sass-loader!styles/spacing.scss';
-@value ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenXXSMax from 'styles/screenSizes.css';
+@value avenirHeavyFontStack from 'styles/typography.css';
 
 .recipe {
 	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
 	flex-basis: 48%;
 	white-space: normal;
 	display: flex;
-	flex-grow: 1;
-	min-width: 250px;
+
+	@media ScreenXXSMax {
+		flex-basis: 100%;
+	}
 }
 
 .image {
-	width: 100px;
-	height: 100px;
+	width: 6.25rem;
+	height: 6.25rem;
 	object-fit: cover;
 	margin-bottom: SpacingLG;
 
@@ -28,9 +31,9 @@
 }
 
 .recipeTitle {
-	font-weight: bold;
+	font-family: avenirHeavyFontStack;
 }
 
 .recipeDetails {
-	padding: 0 10px;
+	padding: 0 0.625rem;
 }

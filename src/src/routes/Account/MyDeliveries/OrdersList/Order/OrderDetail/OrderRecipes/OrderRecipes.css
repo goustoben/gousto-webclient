@@ -23,10 +23,7 @@
 	margin-bottom: 1rem;
 	display: flex;
 	justify-content: space-between;
-}
-
-.hideInMobile {
-	composes: hidden-xs-down from 'sass-loader!styles/bootstrap.scss';
+	font-size: 1.125rem;
 }
 
 .editLink {
