@@ -85,3 +85,7 @@ export const isChoosePlanEnabled = ({ features }) => (
 export const getCookingInstruction = ({ features }) => (
   features && features.getIn(['showCookingInstruction', 'value'], false)
 )
+
+export const getHideBoxSummary = ({ features }) => (
+  features && features.getIn(['hideBoxSummary', 'value'], false)
+)

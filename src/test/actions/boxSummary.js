@@ -52,7 +52,7 @@ describe('boxSummary actions', function () {
       const dispatchSpy = sinon.spy()
       const getStateSpy = sinon.stub().returns({
         basket: Immutable.Map({
-          recipes: Immutable.Map({123: 3, 456: 1}),
+          recipes: Immutable.Map({ 123: 3, 456: 1 }),
           numPortions: 2,
           limitReached: false,
         }),
@@ -89,7 +89,7 @@ describe('boxSummary actions', function () {
       const dispatchSpy = sinon.spy()
       const getStateSpy = sinon.stub().returns({
         basket: Immutable.Map({
-          recipes: Immutable.Map({123: 3, 456: 1}),
+          recipes: Immutable.Map({ 123: 3, 456: 1 }),
           numPortions: 2,
           limitReached: false,
         }),
@@ -192,27 +192,27 @@ describe('boxSummary actions', function () {
       dispatchSpy = sinon.spy()
     })
 
-    it('should call 6 dispatches', async function() {
+    it('should call 6 dispatches', async function () {
       await actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       expect(dispatchSpy.callCount).to.equal(6)
     })
 
-    it('should dispatch basket.basketDateChange, passing it\'s date arg', async function() {
+    it('should dispatch basket.basketDateChange, passing it\'s date arg', async function () {
       await actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       const basketDateChangeSpyArgs = basketDateChange.args[0]
       expect(basketDateChangeSpyArgs[0]).to.deep.equal('2017-01-01')
     })
 
-    it('should dispatch basket.basketSlotChange, passing it\'s slotId arg', async function() {
+    it('should dispatch basket.basketSlotChange, passing it\'s slotId arg', async function () {
       await actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       const basketSlotChangeArgs = basketSlotChange.args[0]
       expect(basketSlotChangeArgs[0]).to.deep.equal('big-long-uuid-here-123')
     })
 
-    it('should dispatch menu.menuLoadMenu and menu.menuLoadStock', async function() {
+    it('should dispatch menu.menuLoadMenu and menu.menuLoadStock', async function () {
       actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       const dispatchSpyArgs = dispatchSpy.args[3]
@@ -221,162 +221,10 @@ describe('boxSummary actions', function () {
       expect(menuLoadStockSpy).to.have.been.calledOnce
     })
 
-    it('should mark MENU_FETCH_DATA as pending', async function() {
+    it('should mark MENU_FETCH_DATA as pending', async function () {
       await actions.boxSummaryDeliverySlotChosen(args)(dispatchSpy, getStateSpy)
 
       expect(pending).to.have.been.calledTwice
-    })
-  })
-
-  describe('boxSummaryNext', function () {
-    let boxSummaryNext
-    let getStateSpy
-    let dispatchSpy
-    let pushSpy
-    let getLandingDaySpy
-    let basketAddressChange
-    let basketPostcodeChange
-    beforeEach(function () {
-      dispatchSpy = sinon.spy()
-      getStateSpy = sinon.spy()
-      basketPostcodeChange = sinon.spy()
-      basketAddressChange = sinon.spy()
-      pushSpy = sinon.spy()
-      getLandingDaySpy = sinon.stub().returns({
-        date: '',
-        orderId: '',
-        slotId: '',
-      })
-      boxSummaryNext = require('inject-loader?react-router-redux&utils/basket&./basket!actions/boxSummary')({
-        'react-router-redux': {
-          push: pushSpy,
-        },
-        './basket': {
-          basketAddressChange,
-          basketPostcodeChange,
-        },
-        'utils/deliveries': {
-          getLandingDay: getLandingDaySpy,
-        },
-      }).default.boxSummaryNext
-    })
-    describe('with an order id in the temp state and a postcode in the basket state', function () {
-      beforeEach(function () {
-        getStateSpy = sinon.stub().returns({
-          basket: Immutable.Map({
-            postcode: 'w3',
-            slotId: '',
-          }),
-          temp: Immutable.Map({
-            orderId: '12345',
-          }),
-          user: Immutable.Map({
-            orders: Immutable.List([]),
-          }),
-          features: Immutable.Map({}),
-          error: Immutable.Map({}),
-        })
-      })
-      it('should redirect the user to /order/:orderId', function () {
-        boxSummaryNext()(dispatchSpy, getStateSpy)
-        expect(pushSpy).to.have.been.calledOnce
-        expect(pushSpy.getCall(0).args[0]).equal('/menu/12345')
-        expect(dispatchSpy).to.have.been.calledTwice
-      })
-    })
-    describe('with no order id in the temp state but a postcode in the basket state', function () {
-      beforeEach(function () {
-        getStateSpy = sinon.stub().returns({
-          basket: Immutable.Map({
-            postcode: 'w3',
-            slotId: '',
-          }),
-          temp: Immutable.Map({
-          }),
-          user: Immutable.Map({
-            orders: Immutable.List([]),
-          }),
-          features: Immutable.Map({}),
-          error: Immutable.Map({}),
-        })
-      })
-      it('should dispatch a boxSummaryDeliverySlotChosen action', function () {
-        boxSummaryNext()(dispatchSpy, getStateSpy)
-        expect(dispatchSpy).to.have.been.calledOnce
-      })
-    })
-    describe('with no basket postcode, and a postcode in the temp state', function () {
-      beforeEach(function () {
-        getStateSpy = sinon.stub().returns({
-          basket: Immutable.Map({
-            postcode: '',
-          }),
-          temp: Immutable.Map({
-            postcode: 'w3',
-          }),
-          user: Immutable.Map({
-            orders: Immutable.List([]),
-          }),
-          features: Immutable.Map({}),
-          error: Immutable.Map({}),
-        })
-      })
-      it('should dispatch a basketPostcodeChange action', function () {
-        boxSummaryNext()(dispatchSpy, getStateSpy)
-        expect(basketPostcodeChange).to.have.been.calledOnce
-        expect(basketPostcodeChange.getCall(0).args[0]).to.equal('w3')
-      })
-    })
-    describe('with a basket postcode, and a postcode in the temp state, and a boxSummaryDeliveryDaysErr', function () {
-      beforeEach(function () {
-        getStateSpy = sinon.stub().returns({
-          basket: Immutable.Map({
-            postcode: 'asdfg',
-          }),
-          temp: Immutable.Map({
-            postcode: 'w3',
-          }),
-          user: Immutable.Map({
-            orders: Immutable.List([]),
-          }),
-          features: Immutable.Map({}),
-          error: Immutable.Map({
-            BOXSUMMARY_DELIVERY_DAYS_RECEIVE: 'error',
-          }),
-        })
-      })
-      it('should dispatch a basketPostcodeChange action', function () {
-        boxSummaryNext()(dispatchSpy, getStateSpy)
-        expect(basketPostcodeChange).to.have.been.calledOnce
-        expect(basketPostcodeChange.getCall(0).args[0]).to.equal('w3')
-      })
-    })
-    describe('with no basket postcode, and a chosen address in the basket state', function () {
-      beforeEach(function () {
-        getStateSpy = sinon.stub().returns({
-          basket: Immutable.Map({
-            postcode: '',
-            chosenAddress: Immutable.Map({
-              postcode: 'w4',
-            }),
-          }),
-          temp: Immutable.Map({
-            postcode: 'w3',
-          }),
-          user: Immutable.Map({
-            orders: Immutable.List([]),
-          }),
-          features: Immutable.Map({}),
-          error: Immutable.Map({}),
-        })
-      })
-      it('should dispatch basketPostcodeChange and basketAddressChange actions', function () {
-        boxSummaryNext()(dispatchSpy, getStateSpy)
-        expect(basketPostcodeChange).to.have.been.calledOnce
-        expect(basketPostcodeChange.getCall(0).args[0]).to.equal('w4')
-        expect(basketAddressChange).to.have.been.calledOnce
-        expect(Immutable.is(basketAddressChange.getCall(0).args[0], Immutable.Map({ postcode: 'w4' }))).to.equal(true)
-      })
     })
   })
 })

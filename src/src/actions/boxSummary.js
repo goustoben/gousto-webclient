@@ -1,5 +1,5 @@
 import { getDeliveryDays } from 'apis/data/deliveryDays'
-import { getNDDFeatureValue } from 'selectors/features'
+import { getNDDFeatureValue, getHideBoxSummary } from 'selectors/features'
 import { getUsersOrdersDaySlotLeadTimeIds } from 'selectors/user'
 import moment from 'moment'
 import { okRecipes } from 'utils/basket'
@@ -134,6 +134,9 @@ const actions = {
           dispatch(boxSummaryVisibilityChange(false))
         } else {
           dispatch(boxSummaryDeliverySlotChosen({ date: tempDate, slotId: tempSlotId }))
+          if (getHideBoxSummary(state) && getState().basket.get('recipes').size === 0) {
+            dispatch(boxSummaryVisibilityChange(false))
+          }
         }
       } else {
         const tempPostcode = state.temp.get('postcode', '')
