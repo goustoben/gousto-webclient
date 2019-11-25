@@ -80,7 +80,7 @@ class Order extends React.PureComponent {
     orderDeliveryDaysFetchError: null,
     recipesPeriodStockFetchError: null,
     deliveryDay: '',
-    portionsCount: '',
+    portionsCount: '2',
   }
 
   static contextTypes = {

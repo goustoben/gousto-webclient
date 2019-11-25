@@ -5,7 +5,7 @@
 
 .recipe {
 	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
-	flex-basis: 48%;
+	flex-basis: 50%;
 	white-space: normal;
 	display: flex;
 
@@ -31,7 +31,7 @@
 }
 
 .recipeTitle {
-	font-family: avenirHeavyFontStack;
+	composes: textBold from 'styles/typography.css';
 }
 
 .recipeDetails {

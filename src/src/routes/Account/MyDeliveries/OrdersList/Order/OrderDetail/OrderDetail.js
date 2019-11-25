@@ -47,7 +47,7 @@ class OrderDetail extends React.PureComponent {
     editDeliveryMode: false,
     cancellable: false,
     deliveryDay: '',
-    portionsCount: '',
+    portionsCount: '2',
   }
 
   static contextTypes = {

@@ -8,7 +8,7 @@ import routes from 'config/routes'
 import Content from 'containers/Content'
 
 import css from './OrderRecipes.css'
-import OrderSideSwipe from './OrderSideSwipe/OrderSideSwipe'
+import OrderRecipeBox from './OrderRecipeBox'
 
 const OrderRecipes = ({
   recipes,
@@ -30,7 +30,7 @@ const OrderRecipes = ({
           </div>
           : null}
       </div>
-      <OrderSideSwipe recipes={recipes} orderState={orderState} portionsCount={portionsCount} />
+      <OrderRecipeBox recipes={recipes} orderState={orderState} portionsCount={portionsCount} />
       {orderState === 'menu open' ?
         <div className={css.textRow}>
           <p className={css.subHeader}>
@@ -62,7 +62,7 @@ OrderRecipes.defaultProps = {
   orderId: '',
   orderState: '',
   whenCutoff: '',
-  portionsCount: '',
+  portionsCount: '2',
 }
 
 export default OrderRecipes

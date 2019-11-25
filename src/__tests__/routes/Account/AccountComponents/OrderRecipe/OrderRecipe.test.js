@@ -4,7 +4,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import OrderRecipe from 'routes/Account/AccountComponents/OrderRecipe'
 
-describe('OrderSideSwipe', () => {
+describe('OrderRecipeBox', () => {
   let sandbox
 
   beforeEach(() => {

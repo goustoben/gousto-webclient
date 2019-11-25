@@ -4,10 +4,10 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
 import placeholderSrc from 'media/images/recipe-placeholder.png'
 
-import css from './OrderSideSwipe.css'
+import css from './OrderRecipeBox.css'
 import OrderRecipe from '../../../../../../AccountComponents/OrderRecipe'
 
-const OrderSideSwipe = ({
+const OrderRecipeBox = ({
   recipes,
   orderState,
   portionsCount,
@@ -33,7 +33,7 @@ const OrderSideSwipe = ({
   )
 }
 
-OrderSideSwipe.propTypes = {
+OrderRecipeBox.propTypes = {
   recipes: ImmutablePropTypes.listOf(
     ImmutablePropTypes.contains({
       recipeImage: PropTypes.string,
@@ -44,10 +44,10 @@ OrderSideSwipe.propTypes = {
   portionsCount: PropTypes.string,
 }
 
-OrderSideSwipe.defaultProps = {
+OrderRecipeBox.defaultProps = {
   recipes: Immutable.List([]),
   orderState: '',
-  portionsCount: '',
+  portionsCount: '2',
 }
 
-export default OrderSideSwipe
+export default OrderRecipeBox

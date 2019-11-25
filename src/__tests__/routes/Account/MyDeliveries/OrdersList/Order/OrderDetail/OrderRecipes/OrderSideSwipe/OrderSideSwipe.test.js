@@ -3,10 +3,10 @@ import sinon from 'sinon'
 import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
-import OrderSideSwipe from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderRecipes/OrderSideSwipe'
+import OrderRecipeBox from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderRecipes/OrderRecipeBox'
 import OrderRecipe from 'routes/Account/AccountComponents/OrderRecipe'
 
-describe('OrderSideSwipe', () => {
+describe('OrderRecipeBox', () => {
   let sandbox
   const recipes = Immutable.fromJS([
     {
@@ -45,9 +45,9 @@ describe('OrderSideSwipe', () => {
     sandbox.restore()
   })
   describe('rendering', () => {
-    let wrapper = shallow(<OrderSideSwipe recipes={recipes} />)
+    let wrapper = shallow(<OrderRecipeBox recipes={recipes} />)
     const wrapperWithMoreRecipes = shallow(
-      <OrderSideSwipe recipes={moreRecipes} />,
+      <OrderRecipeBox recipes={moreRecipes} />,
     )
 
     test('should render a <div>', () => {
@@ -115,7 +115,7 @@ describe('OrderSideSwipe', () => {
 
     test('should render no empty recipes if orderState is confirmed or dispatched', () => {
       wrapper = shallow(
-        <OrderSideSwipe recipes={recipes} orderState="dispatched" />,
+        <OrderRecipeBox recipes={recipes} orderState="dispatched" />,
       )
       expect(
         wrapper

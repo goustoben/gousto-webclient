@@ -4,7 +4,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import OrderRecipes from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderRecipes'
-import OrderSideSwipe from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderRecipes/OrderSideSwipe'
+import OrderRecipeBox from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderRecipes/OrderRecipeBox'
 import Link from 'Link'
 
 describe('OrderRecipes', () => {
@@ -43,8 +43,8 @@ describe('OrderRecipes', () => {
       expect(wrapper.type()).toEqual('div')
     })
 
-    test('should render <OrderSideSwipe> passing the recipes as prop', () => {
-      const sideSwipe = wrapper.children(OrderSideSwipe)
+    test('should render <OrderRecipeBox> passing the recipes as prop', () => {
+      const sideSwipe = wrapper.children(OrderRecipeBox)
       expect(sideSwipe.prop('recipes')).toEqual(recipes)
     })
 
