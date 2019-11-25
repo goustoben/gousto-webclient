@@ -2,8 +2,8 @@ import routeConfig from 'config/routes'
 import Hubs from 'routes/Cookbook/Hubs'
 import Hub from 'routes/Cookbook/Hub'
 import MainLayout from 'layouts/MainLayout'
-const { match, createMemoryHistory } = require('react-router')
-const routes = require('../../src/routes').default(reduxStoreMock())
+import { match, createMemoryHistory } from 'react-router'
+import { routes } from '../../src/routes'
 
 function reduxStoreMock() {
   return {
@@ -13,12 +13,14 @@ function reduxStoreMock() {
   }
 }
 
+const currentRoutes = routes(reduxStoreMock())
+
 describe('router', () => {
   test('should display the cookbook hub page when /cookbook is called', () => {
     const path = routeConfig.client.cookbook
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         expect(error).toEqual(null)
 
@@ -32,7 +34,7 @@ describe('router', () => {
     const path = `${routeConfig.client.cookbook}/123`
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         expect(error).toEqual(null)
 

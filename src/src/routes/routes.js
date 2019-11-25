@@ -24,7 +24,7 @@ import OrderConfirmation from './OrderConfirmation'
 import PrivacyStatement from './PrivacyStatement'
 import ChoosePlan from './ChoosePlan'
 
-export default (store) => (
+const routes = (store) => (
   <Route path="/" component={Page}>
     {Home}
     {Signup}
@@ -54,3 +54,5 @@ export default (store) => (
     </Route>
   </Route>
 )
+
+export { routes }
