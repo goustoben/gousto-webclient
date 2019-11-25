@@ -47,7 +47,7 @@ describe('OrderDelivery',() => {
       timeEnd="3pm"
       shippingAddressObj={addressObjectMock}
       editDeliveryMode={false}
-      orderState="scheduled"
+      orderState="menu open"
       orderId={8}
       clearUpdateDateErrorAndPending={clearUpdateDateErrorAndPendingSpy}
     />,{context})
@@ -58,9 +58,32 @@ describe('OrderDelivery',() => {
   })
 
   describe('componentDidMount', () => {
-    test('should dispatch fetches for getting delivery days and stock',() => {
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
+    test('should dispatch fetches for getting delivery days and stock if the order state is "menu open"',() => {
+      wrapper = shallow(<OrderDelivery
+        orderState="menu open"
+      />,{context})
       expect(orderActions.orderGetDeliveryDays).toHaveBeenCalled()
       expect(recipesActions.recipesLoadStockByDate).toHaveBeenCalled()
+    })
+
+    test('should dispatch fetches for getting delivery days and stock if the order state is "recipes chosen"',() => {
+      wrapper = shallow(<OrderDelivery
+        orderState="recipes chosen"
+      />,{context})
+      expect(orderActions.orderGetDeliveryDays).toHaveBeenCalled()
+      expect(recipesActions.recipesLoadStockByDate).toHaveBeenCalled()
+    })
+
+    test('should NOT dispatch fetches for getting delivery days and stock if the order is NOT pending',() => {
+      wrapper = shallow(<OrderDelivery
+        orderState="scheduled"
+      />,{context})
+
+      expect(orderActions.orderGetDeliveryDays).not.toHaveBeenCalled()
+      expect(recipesActions.recipesLoadStockByDate).not.toHaveBeenCalled()
     })
   })
 

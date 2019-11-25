@@ -176,7 +176,8 @@ describe('myDeliveries utils', () => {
       const deliveryDate = '2019-11-06T00:00:00.000Z'
       const recipeItems = Immutable.List()
       const phase = 'pre-menu'
-      const result = getOrderState(state, deliveryDate, recipeItems, phase)
+      const cancellable = true
+      const result = getOrderState(state, deliveryDate, recipeItems, phase, cancellable)
 
       expect(result).toEqual('scheduled')
     })
@@ -188,7 +189,8 @@ describe('myDeliveries utils', () => {
       })
 
       const deliveryDate = '2019-11-06T00:00:00.000Z'
-      const result = getOrderState(state, deliveryDate)
+      const cancellable = false
+      const result = getOrderState(state, deliveryDate, undefined, undefined, cancellable)
 
       expect(result).toEqual('dispatched')
     })
@@ -200,7 +202,18 @@ describe('myDeliveries utils', () => {
       })
 
       const deliveryDate = '2019-11-07T00:00:00.000Z'
-      const result = getOrderState(state, deliveryDate)
+      const cancellable = false
+      const result = getOrderState(state, deliveryDate, undefined, undefined, cancellable)
+
+      expect(result).toEqual('confirmed')
+    })
+
+    test('should return confirmed if state is pending and the order is NOT cancellable', () => {
+      const state = 'pending'
+      const recipeItems = Immutable.List()
+      const deliveryDate = '2019-11-07T00:00:00.000Z'
+      const cancellable = false
+      const result = getOrderState(state, deliveryDate, recipeItems, undefined, cancellable)
 
       expect(result).toEqual('confirmed')
     })
@@ -213,8 +226,9 @@ describe('myDeliveries utils', () => {
       })
 
       const deliveryDate = '2019-11-06T00:00:00.000Z'
+      const cancellable = true
 
-      const result = getOrderState(state, deliveryDate, recipeItems)
+      const result = getOrderState(state, deliveryDate, recipeItems, undefined, cancellable)
 
       expect(result).toEqual('menu open')
     })
@@ -229,8 +243,9 @@ describe('myDeliveries utils', () => {
       })
 
       const deliveryDate = '2019-11-06T00:00:00.000Z'
+      const cancellable = true
 
-      const result = getOrderState(state, deliveryDate, recipeItems)
+      const result = getOrderState(state, deliveryDate, recipeItems, undefined, cancellable)
 
       expect(result).toEqual('recipes chosen')
     })

@@ -73,11 +73,15 @@ class OrderDelivery extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { availableFrom, availableTo, shippingAddressId, orderId } = this.props
+    const { availableFrom, availableTo, shippingAddressId, orderId, orderState } = this.props
     const { store } = this.context
 
-    store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId)),
-    store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo))
+    const isOrderPending = orderState == 'menu open' || orderState == 'recipes chosen'
+
+    if (isOrderPending) {
+      store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId)),
+      store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo))
+    }
   }
 
   render() {
