@@ -523,8 +523,8 @@ function userTrackAddressSelected(orderId, originalAddressId, newAddressId) {
         actionType: 'OrderDeliveryAddress Selected',
         is_current_period: isCurrentPeriod,
         order_id: orderId,
-        original_deliveryslot_id: originalAddressId,
-        new_deliveryslot_id: newAddressId,
+        original_deliveryaddress_id: originalAddressId,
+        new_deliveryaddress_id: newAddressId,
       }
     })
   }

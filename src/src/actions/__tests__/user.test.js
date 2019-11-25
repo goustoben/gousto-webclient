@@ -501,6 +501,36 @@ describe('user actions', () => {
     })
   })
 
+  describe('userTrackToggleEditAddressSection', () => {
+    test('should dispatch a OrderDeliveryAddress Edit tracking action', () => {
+      const orderId = '12345'
+      const dispatchSpy = jest.fn()
+      const getStateSpy = () => ({
+        auth: Immutable.Map({ accessToken: 'access-token' }),
+        user: Immutable.Map({
+          newOrders: Immutable.Map({
+            '12345': Immutable.Map({
+              shippingAddressId: 'addressid123',
+              isCurrentPeriod: true
+            })
+          })
+        })
+      })
+
+      userActions.userTrackToggleEditAddressSection(orderId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliveryAddress Edit',
+          order_id: '12345',
+          is_current_period: true,
+          original_deliveryaddress_id: 'addressid123',
+        }
+      })
+    })
+  })
+
   describe('userTrackDateSelected', () => {
     test('should dispatch a OrderDeliveryDate Selected tracking action', () => {
       const orderId = '12345'
@@ -637,6 +667,38 @@ describe('user actions', () => {
           key: actionTypes.USER_LOAD_ORDER_TRACKING,
           value: true,
         })
+      })
+    })
+  })
+
+  describe('userTrackAddressSelected', () => {
+    test('should dispatch a OrderDeliveryAddress Selected tracking action', () => {
+      const orderId = '12345'
+      const originalAddressId = 'addressid123'
+      const newAddressId = 'addressid456'
+      const dispatchSpy = jest.fn()
+      const getStateSpy = () => ({
+        auth: Immutable.Map({ accessToken: 'access-token' }),
+        user: Immutable.Map({
+          newOrders: Immutable.Map({
+            '12345': Immutable.Map({
+              isCurrentPeriod: true
+            })
+          })
+        })
+      })
+
+      userActions.userTrackAddressSelected(orderId, originalAddressId, newAddressId)(dispatchSpy, getStateSpy)
+
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliveryAddress Selected',
+          order_id: '12345',
+          is_current_period: true,
+          original_deliveryaddress_id: 'addressid123',
+          new_deliveryaddress_id: 'addressid456'
+        }
       })
     })
   })
