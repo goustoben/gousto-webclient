@@ -5,7 +5,6 @@ import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
 import { getDisabledSlots } from 'selectors/features'
-import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
 import DeliverySlot from './DeliverySlot'
 import { addDisabledSlotIds, formatAndValidateDisabledSlots } from './deliverySlotHelper'
 
@@ -33,10 +32,10 @@ function mapStateToProps(state) {
 
   return {
     address: state.basket.get('address'),
-    date: getBasketDate(state),
+    date: state.basket.get('date'),
     prevDate: state.basket.get('prevDate'),
     deliveryDays: deliveryDays,
-    postcode: getBasketPostcode(state),
+    postcode: state.basket.get('postcode'),
     menuPending: state.menuRecieveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
     prevSlotId: state.basket.get('prevSlotId'),
     userOrders: state.user.get('orders'),
@@ -46,7 +45,7 @@ function mapStateToProps(state) {
     tempDate,
     tempSlotId,
     tempOrderId,
-    numPortions: getNumPortions(state),
+    numPortions: state.basket.get('numPortions'),
     disabledSlots,
     isAuthenticated: state.auth.get('isAuthenticated'),
     isSubscriptionActive: state.user.getIn(['subscription', 'state']),

@@ -140,7 +140,7 @@ module.exports = {
     },
 
     boxSummaryDesktop: {
-      selector: '*[data-testing="boxSummary"]',
+      selector: '*[data-testing="menuBottomBarDesktop"]',
       elements: {
         menuPostcodeInput: {
           selector: '*[data-testing="menuPostcodeInput"]'
@@ -169,7 +169,7 @@ module.exports = {
     },
 
     bottomBar: {
-      selector: '*[data-testing="boxSummary"]',
+      selector: '*[data-testing="menuBottomBarDesktop"]',
 
       elements: {
         menuBrowseCTAButton: {
