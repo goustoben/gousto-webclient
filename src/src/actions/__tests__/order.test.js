@@ -27,6 +27,7 @@ import {
   orderGetDeliveryDays,
   orderUpdateDayAndSlot,
   clearUpdateDateErrorAndPending,
+  orderAddressChange,
 } from 'actions/order'
 
 jest.mock('apis/user')
@@ -632,6 +633,98 @@ describe('order actions', () => {
         '3456',
         'transaction',
       )
+    })
+  })
+
+  describe('orderAddressChange', () => {
+    let addressId
+
+    beforeEach(() => {
+      orderId = '12345'
+      addressId = '101'
+      getState.mockReturnValue({
+        auth: Immutable.Map({ accessToken: 'access-token' }),
+        user: Immutable.Map({
+          newOrders: Immutable.Map({
+            '12345': Immutable.Map({
+              shippingAddressId: '100',
+              isCurrentPeriod: true
+            })
+          })
+        })
+      })
+    })
+
+    it('should mark ORDER_ADDRESS_CHANGE as pending', async () => {
+      await orderAddressChange(orderId, addressId)(dispatch, getState)
+
+      expect(pending).toHaveBeenCalledTimes(2)
+      expect(pending.mock.calls[0][0]).toEqual('ORDER_ADDRESS_CHANGE')
+      expect(pending.mock.calls[0][1]).toEqual('12345')
+      expect(pending.mock.calls[1][0]).toEqual('ORDER_ADDRESS_CHANGE')
+      expect(pending.mock.calls[1][1]).toEqual('')
+    })
+
+    it('should call updateOrderAddress and dispatch the action with the correct arguments', async () => {
+      updateOrderAddress.mockReturnValueOnce(
+        new Promise(resolve => resolve())
+      )
+
+      await orderAddressChange(orderId, addressId)(dispatch, getState)
+
+      expect(updateOrderAddress).toHaveBeenCalled()
+      expect(updateOrderAddress.mock.calls[0][0]).toEqual('access-token')
+      expect(updateOrderAddress.mock.calls[0][1]).toEqual('12345')
+      expect(updateOrderAddress.mock.calls[0][2]).toEqual('101')
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.ORDER_ADDRESS_CHANGE,
+        data: {
+          orderId: '12345',
+          addressId: '101',
+        },
+        trackingData: {
+          actionType: 'OrderDeliveryAddress Saved',
+          order_id: '12345',
+          is_current_period: true,
+          original_deliveryaddress_id: '100',
+          new_deliveryaddress_id: '101'
+        }
+      })
+    })
+
+    describe('when updateOrderAddress call errors', () => {
+      beforeEach(() => {
+        const err = new Error('error message')
+        updateOrderAddress.mockReturnValueOnce(
+          new Promise((resolve, reject) => reject(err))
+        )
+      })
+      it('should mark ORDER_ADDRESS_CHANGE as errored', async () => {
+        await orderAddressChange(orderId, addressId)(dispatch, getState)
+
+        expect(error).toHaveBeenCalledTimes(2)
+        expect(error.mock.calls[0][0]).toEqual('ORDER_ADDRESS_CHANGE')
+        expect(error.mock.calls[0][1]).toEqual({orderId: '', errorMessage: ''})
+        expect(error.mock.calls[1][0]).toEqual('ORDER_ADDRESS_CHANGE')
+        expect(error.mock.calls[1][1]).toEqual({orderId: '12345', errorMessage: 'error message'})
+      })
+
+      it('should dispatch the SaveAttemptFailed action with the correct arguments', async () => {
+        await orderAddressChange(orderId, addressId)(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.TRACKING,
+          trackingData: {
+            actionType: 'OrderDeliveryAddress SaveAttemptFailed',
+            error: 'error message',
+            order_id: '12345',
+            is_current_period: true,
+            original_deliveryaddress_id: '100',
+            new_deliveryaddress_id: '101'
+          }
+        })
+      })
     })
   })
 
