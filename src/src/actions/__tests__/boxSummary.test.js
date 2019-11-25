@@ -1,4 +1,6 @@
 import Immutable from 'immutable'
+import * as reactRouterPush from 'react-router-redux'
+import basketActions from 'actions/basket'
 import boxSummary from 'actions/boxSummary'
 import { fetchDeliveryDays } from 'apis/deliveries'
 import * as deliveriesUtils from 'utils/deliveries'
@@ -9,6 +11,15 @@ jest.mock('apis/deliveries', () => ({
   })
 }))
 
+jest.mock('react-router-redux', () => ({
+  push: jest.fn()
+}))
+
+jest.mock('actions/basket', () => ({
+  basketAddressChange: jest.fn(),
+  basketPostcodeChange: jest.fn(),
+  portionSizeSelectedTracking: jest.fn()
+}))
 deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
 
 describe('boxSummary actions', () => {
@@ -23,7 +34,7 @@ describe('boxSummary actions', () => {
 
     const dispatchSpy = jest.fn()
 
-    it('should fetch delivery days with menu cutoff date', async () => {
+    test('should fetch delivery days with menu cutoff date', async () => {
       const menuCutoffUntil = '2017-12-30T00:00:00.000Z'
       const expectedRequestData = {
         'direction': 'asc',
@@ -52,7 +63,7 @@ describe('boxSummary actions', () => {
       expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
     })
 
-    it('should fetch delivery days with requested cut off dates', async () => {
+    test('should fetch delivery days with requested cut off dates', async () => {
       const expectedRequestData = {
         'direction': 'asc',
         'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
@@ -79,7 +90,7 @@ describe('boxSummary actions', () => {
       expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).not.toHaveBeenCalled()
     })
 
-    it('should fetch next day delivery days with requested cut off dates when feature flag is enabled', async () => {
+    test('should fetch next day delivery days with requested cut off dates when feature flag is enabled', async () => {
       const expectedRequestData = {
         'direction': 'asc',
         'filters[cutoff_datetime_from]': '2017-12-05T00:00:00.000Z',
@@ -104,6 +115,141 @@ describe('boxSummary actions', () => {
 
       expect(fetchDeliveryDays).toHaveBeenCalledWith('access token', expectedRequestData)
       expect(deliveriesUtils.transformDaySlotLeadTimesToMockSlots).toHaveBeenCalled()
+    })
+  })
+
+  describe('boxSummaryNext', () => {
+    let getStateSpy
+    let dispatchSpy
+    let pushSpy
+    let basketAddressChange
+    let basketPostcodeChange
+    const defaultProps = {
+      basket: Immutable.Map({
+        postcode: 'w3',
+        slotId: '',
+        recipes: Immutable.Map()
+      }),
+      temp: Immutable.Map({
+      }),
+      user: Immutable.Map({
+        orders: Immutable.List([]),
+      }),
+      features: Immutable.Map({}),
+      error: Immutable.Map({}),
+      boxSummaryDeliveryDays: Immutable.List([])
+    }
+    beforeEach(() => {
+      dispatchSpy = jest.fn()
+      getStateSpy = jest.fn()
+      basketPostcodeChange = jest.spyOn(basketActions, 'basketPostcodeChange')
+      basketAddressChange = jest.spyOn(basketActions, 'basketAddressChange')
+      pushSpy = jest.spyOn(reactRouterPush, 'push')
+      getStateSpy = jest.fn().mockReturnValue({
+        ...defaultProps,
+        temp: Immutable.Map({
+          orderId: '12345',
+        }),
+      })
+    })
+    describe('with an order id in the temp state and a postcode in the basket state', () => {
+      afterEach(() => {
+         jest.clearAllMocks()
+      })
+      test('should redirect the user to /order/:orderId', () => {
+        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        expect(pushSpy).toHaveBeenCalledTimes(1)
+        expect(pushSpy.mock.calls[0][0]).toEqual('/menu/12345')
+        expect(dispatchSpy).toHaveBeenCalledTimes(3)
+      })
+    })
+    describe('with no order id in the temp state but a postcode in the basket state', () => {
+      beforeEach(() => {
+        getStateSpy = jest.fn().mockReturnValue({
+          ...defaultProps,
+        })
+      })
+      afterEach(() => {
+         jest.clearAllMocks()
+      })
+
+
+      test('should dispatch a boxSummaryDeliverySlotChosen action', () => {
+        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        expect(dispatchSpy).toHaveBeenCalledTimes(2)
+      })
+    })
+
+    describe('with no basket postcode, and a postcode in the temp state', () => {
+      beforeEach(() => {
+        getStateSpy = jest.fn().mockReturnValue({
+          ...defaultProps,
+          basket: Immutable.Map({
+            postcode: '',
+          }),
+          temp: Immutable.Map({
+            postcode: 'w3',
+          }),
+        })
+      })
+      afterEach(() => {
+         jest.clearAllMocks()
+      })
+      test('should dispatch a basketPostcodeChange action', () => {
+        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        expect(basketPostcodeChange).toHaveBeenCalledTimes(1)
+        expect(basketPostcodeChange.mock.calls[0][0]).toEqual('w3')
+      })
+    })
+    describe('with a basket postcode, and a postcode in the temp state, and a boxSummaryDeliveryDaysErr', () => {
+      beforeEach(() => {
+        getStateSpy = jest.fn().mockReturnValue({
+          ...defaultProps,
+          basket: Immutable.Map({
+            postcode: 'asdfg',
+          }),
+          temp: Immutable.Map({
+            postcode: 'w3',
+          }),
+          error: Immutable.Map({
+            BOXSUMMARY_DELIVERY_DAYS_RECEIVE: 'error',
+          }),
+        })
+      })
+      afterEach(() => {
+        jest.clearAllMocks()
+     })
+      test('should dispatch a basketPostcodeChange action', () => {
+        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        expect(basketPostcodeChange).toHaveBeenCalledTimes(1)
+        expect(basketPostcodeChange.mock.calls[0][0]).toEqual('w3')
+      })
+    })
+    describe('with no basket postcode, and a chosen address in the basket state', () => {
+      beforeEach(() => {
+        getStateSpy = jest.fn().mockReturnValue({
+          ...defaultProps,
+          basket: Immutable.Map({
+            postcode: '',
+            chosenAddress: Immutable.Map({
+              postcode: 'w4',
+            }),
+          }),
+          temp: Immutable.Map({
+            postcode: 'w3',
+          }),
+        })
+      })
+      afterEach(() => {
+        jest.clearAllMocks()
+     })
+      test('should dispatch basketPostcodeChange and basketAddressChange actions', () => {
+        boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+        expect(basketPostcodeChange).toHaveBeenCalledTimes(1)
+        expect(basketPostcodeChange.mock.calls[0][0]).toEqual('w4')
+        expect(basketAddressChange).toHaveBeenCalledTimes(1)
+        expect(Immutable.is(basketAddressChange.mock.calls[0][0], Immutable.Map({ postcode: 'w4' }))).toEqual(true)
+      })
     })
   })
 })
