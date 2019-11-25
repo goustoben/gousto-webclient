@@ -13,9 +13,8 @@ jest.mock('utils/browserHelper', () => ({
   isChrome: () => { }
 }))
 jest.mock('actions/order')
-jest.mock('BoxSummary', () => ({
-  BoxSummaryContainer: () => <div />
-}))
+jest.mock('BoxSummary/BoxSummaryMobile', () => ('BoxSummaryMobile'))
+jest.mock('BoxSummary/BoxSummaryDesktop', () => ('BoxSummaryDesktop'))
 jest.mock('routes/Menu/DetailOverlay', () => ('DetailOverlay'))
 jest.mock('routes/Menu/JustForYouTutorial')
 jest.mock('../RecipeMeta', () => ({
@@ -119,8 +118,12 @@ describe('Menu', () => {
         expect(wrapper.type()).toBe('div')
       })
 
-      test('should render 1 BoxSummaryContainer', () => {
-        expect(wrapper.find('BoxSummaryContainer').length).toBe(1)
+      test('should render 1 BoxSummaryMobile', () => {
+        expect(wrapper.find('BoxSummaryMobile').length).toBe(1)
+      })
+
+      test('should render 1 BoxSummaryDesktop', () => {
+        expect(wrapper.find('BoxSummaryDesktop').length).toBe(1)
       })
 
       test('should not render JFY tutorial if feature flag is set to false', () => {
