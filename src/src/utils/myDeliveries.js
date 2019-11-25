@@ -19,7 +19,7 @@ export const filterOrders = (orders) => (
   })
 )
 
-export const getOrderState = (state, deliveryDate, recipeItems, phase) => {
+export const getOrderState = (state, deliveryDate, recipeItems, phase, cancellable) => {
   const isDeliveryDay = moment().isSame(deliveryDate, 'day')
 
   if (phase === 'pre-menu') {
@@ -30,7 +30,7 @@ export const getOrderState = (state, deliveryDate, recipeItems, phase) => {
     return 'dispatched'
   }
 
-  if (state === 'committed' && !isDeliveryDay) {
+  if ((state === 'committed' && !isDeliveryDay) || (state === 'pending' && !cancellable)) {
     return 'confirmed'
   }
 
@@ -79,9 +79,9 @@ export const transformPendingOrders = (orders) => {
     const period = order.get('period')
     const shippingAddress = order.get('shippingAddress')
 
-    const orderState = getOrderState(state, deliveryDate, recipeItems, phase)
-    const deliveryDayRescheduledReason = getDeliveryDayRescheduledReason(originalDeliveryDay)
     const cancellable = phase === 'awaiting_choices' || phase === 'open'
+    const orderState = getOrderState(state, deliveryDate, recipeItems, phase, cancellable)
+    const deliveryDayRescheduledReason = getDeliveryDayRescheduledReason(originalDeliveryDay)
 
     return ordersAccumulator.set(
       id,
