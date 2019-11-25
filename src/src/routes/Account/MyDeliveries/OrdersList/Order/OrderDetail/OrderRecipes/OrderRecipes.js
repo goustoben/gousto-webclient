@@ -15,6 +15,7 @@ const OrderRecipes = ({
   orderId,
   orderState,
   whenCutoff,
+  portionsCount,
 }) => (
     <div>
       <div className={`${css.headerRow} ${css.hideInMobile}`}>
@@ -29,7 +30,7 @@ const OrderRecipes = ({
           </div>
           : null}
       </div>
-      <OrderSideSwipe recipes={recipes} orderState={orderState} />
+      <OrderSideSwipe recipes={recipes} orderState={orderState} portionsCount={portionsCount} />
       {orderState === 'menu open' ?
         <div className={css.textRow}>
           <p className={css.subHeader}>
@@ -53,6 +54,7 @@ OrderRecipes.propTypes = {
   orderId: PropTypes.string,
   orderState: PropTypes.string,
   whenCutoff: PropTypes.string,
+  portionsCount: PropTypes.string,
 }
 
 OrderRecipes.defaultProps = {
@@ -60,6 +62,7 @@ OrderRecipes.defaultProps = {
   orderId: '',
   orderState: '',
   whenCutoff: '',
+  portionsCount: '',
 }
 
 export default OrderRecipes

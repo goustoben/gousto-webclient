@@ -29,6 +29,7 @@ class OrderDetail extends React.PureComponent {
     orderDeliveryDaysFetchError: PropTypes.string,
     recipesPeriodStockFetchError: PropTypes.string,
     deliveryDay: PropTypes.string,
+    portionsCount: PropTypes.string,
   }
 
   static defaultProps = {
@@ -46,6 +47,7 @@ class OrderDetail extends React.PureComponent {
     editDeliveryMode: false,
     cancellable: false,
     deliveryDay: '',
+    portionsCount: '',
   }
 
   static contextTypes = {
@@ -64,6 +66,7 @@ class OrderDetail extends React.PureComponent {
               orderId={this.props.orderId}
               orderState={this.props.orderState}
               whenCutoff={this.props.whenCutoff}
+              portionsCount={this.props.portionsCount}
             />
           </section>
           : null}

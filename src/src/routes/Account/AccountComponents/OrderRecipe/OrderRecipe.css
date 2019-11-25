@@ -4,18 +4,16 @@
 
 .recipe {
 	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
-	margin-right: SpacingLG;
-	width: 150px;
+	flex-basis: 48%;
 	white-space: normal;
-
-	@media ScreenXSMax {
-		margin-right: SpacingSM;
-	}
+	display: flex;
+	flex-grow: 1;
+	min-width: 250px;
 }
 
 .image {
-	width: 150px;
-	height: 150px;
+	width: 100px;
+	height: 100px;
 	object-fit: cover;
 	margin-bottom: SpacingLG;
 
@@ -27,4 +25,12 @@
 .blankImage {
 	border: 1px dashed Blackberry;
 	composes: hidden-xs-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.recipeTitle {
+	font-weight: bold;
+}
+
+.recipeDetails {
+	padding: 0 10px;
 }

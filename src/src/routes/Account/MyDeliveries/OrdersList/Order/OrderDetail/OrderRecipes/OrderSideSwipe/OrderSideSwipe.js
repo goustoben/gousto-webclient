@@ -10,6 +10,7 @@ import OrderRecipe from '../../../../../../AccountComponents/OrderRecipe'
 const OrderSideSwipe = ({
   recipes,
   orderState,
+  portionsCount,
 }) => {
   const maxRecipes = ['confirmed', 'dispatched'].indexOf(orderState) > -1 ? recipes.size : 4
   const recipesRendered = []
@@ -20,6 +21,7 @@ const OrderSideSwipe = ({
         recipeImage={recipeId ? recipes.getIn([i, 'image'], placeholderSrc) : ''}
         recipeTitle={recipes.getIn([i, 'title'], '')}
         key={recipeId || i}
+        servings={recipeId ? `${portionsCount} servings` : ''}
       />
     )
   }
@@ -39,11 +41,13 @@ OrderSideSwipe.propTypes = {
     })
   ),
   orderState: PropTypes.string,
+  portionsCount: PropTypes.string,
 }
 
 OrderSideSwipe.defaultProps = {
   recipes: Immutable.List([]),
   orderState: '',
+  portionsCount: '',
 }
 
 export default OrderSideSwipe

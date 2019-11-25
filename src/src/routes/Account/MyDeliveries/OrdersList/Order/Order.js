@@ -50,6 +50,7 @@ class Order extends React.PureComponent {
     orderDeliveryDaysFetchError: PropTypes.string,
     recipesPeriodStockFetchError: PropTypes.string,
     deliveryDay: PropTypes.string,
+    portionsCount: PropTypes.string,
   }
 
   static defaultProps = {
@@ -78,7 +79,8 @@ class Order extends React.PureComponent {
     addresses: Immutable.Map({}),
     orderDeliveryDaysFetchError: null,
     recipesPeriodStockFetchError: null,
-    deliveryDay: ''
+    deliveryDay: '',
+    portionsCount: '',
   }
 
   static contextTypes = {
@@ -206,6 +208,7 @@ class Order extends React.PureComponent {
                 orderDeliveryDaysFetchError={this.props.orderDeliveryDaysFetchError}
                 recipesPeriodStockFetchError={this.props.recipesPeriodStockFetchError}
                 deliveryDay={this.props.deliveryDay}
+                portionsCount={this.props.portionsCount}
               />
             </div>
             :
