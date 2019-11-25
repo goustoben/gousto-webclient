@@ -20,6 +20,7 @@ jest.mock('actions/basket', () => ({
   basketPostcodeChange: jest.fn(),
   portionSizeSelectedTracking: jest.fn()
 }))
+
 deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
 
 describe('boxSummary actions', () => {
@@ -173,6 +174,48 @@ describe('boxSummary actions', () => {
          jest.clearAllMocks()
       })
 
+      describe('when hide box summary feature flag is present', () => {
+        describe('and the basket is empty', () => {
+          beforeEach(() => {
+            getStateSpy = jest.fn().mockReturnValue({
+              ...defaultProps,
+              features: Immutable.fromJS({
+                hideBoxSummary: {
+                  value: true
+                }
+              })
+            })
+          })
+          test('should dispatch boxSummaryVisibilityChange(false)', () => {
+            boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+            expect(dispatchSpy).toHaveBeenCalledTimes(3)
+          })
+        })
+
+        describe('and the basket contains recipes', () => {
+          beforeEach(() => {
+            getStateSpy = jest.fn().mockReturnValue({
+              ...defaultProps,
+              basket: Immutable.Map({
+                postcode: 'w3',
+                slotId: '',
+                recipes: Immutable.Map({
+                  '123': 1
+                })
+              }),
+              features: Immutable.fromJS({
+                hideBoxSummary: {
+                  value: true
+                }
+              })
+            })
+          })
+          test('should dispatch boxSummaryVisibilityChange(false)', () => {
+            boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)
+            expect(dispatchSpy).toHaveBeenCalledTimes(2)
+          })
+        })
+      })
 
       test('should dispatch a boxSummaryDeliverySlotChosen action', () => {
         boxSummary.boxSummaryNext()(dispatchSpy, getStateSpy)

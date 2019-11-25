@@ -11,6 +11,7 @@ import {
   getShortlist,
   getCookingInstruction,
   getNDDFeatureValue,
+  getHideBoxSummary,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -209,6 +210,22 @@ describe('when features are defined', () => {
         }
 
         expect(getNDDFeatureValue(state)).toEqual('something')
+      })
+    })
+  })
+
+  describe('getHideBoxSummary', () => {
+    describe('when feature flag is set', () => {
+      test('should return true', () => {
+        state = {
+          features: Immutable.Map({
+            hideBoxSummary: Immutable.fromJS({
+              value: true
+            })
+          })
+        }
+
+        expect(getHideBoxSummary(state)).toEqual(true)
       })
     })
   })
