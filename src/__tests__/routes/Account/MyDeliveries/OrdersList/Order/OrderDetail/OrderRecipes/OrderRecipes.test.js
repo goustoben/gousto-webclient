@@ -35,6 +35,7 @@ describe('OrderRecipes', () => {
         orderId={orderId}
         orderState="menu open"
         whenCutoff="8 March"
+        portionsCount="2"
       />,
     )
 
@@ -54,7 +55,7 @@ describe('OrderRecipes', () => {
     })
 
     test('should render a <Link> pointing to /menu/{orderId} when state is menu open', () => {
-      const link = wrapper.children('div').children(Link)
+      const link = wrapper.find(Link)
       expect(link.prop('to')).toEqual(`/menu/${orderId}`)
     })
 
@@ -69,7 +70,7 @@ describe('OrderRecipes', () => {
       )
       expect(wrapper.text()).toContain('GoustoLink')
       expect(
-        wrapper.find(Link).props('children').children.props.children,
+        wrapper.find(Link).children().text(),
       ).toEqual('Choose recipes')
     })
 
@@ -84,7 +85,7 @@ describe('OrderRecipes', () => {
       )
       expect(wrapper.text()).toContain('GoustoLink')
       expect(
-        wrapper.find(Link).props('children').children.props.children,
+        wrapper.find(Link).children().text(),
       ).toEqual('Edit recipes')
     })
   })
