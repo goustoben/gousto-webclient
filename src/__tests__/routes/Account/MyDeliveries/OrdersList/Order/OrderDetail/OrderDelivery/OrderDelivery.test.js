@@ -4,6 +4,7 @@ import { shallow } from 'enzyme'
 import OrderDelivery from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDelivery'
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
+import { OrderDeliveryAddress } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryAddress'
 import actions from 'actions/user'
 
 jest.mock('actions/user', () => ({
@@ -97,8 +98,22 @@ describe('OrderDelivery',() => {
       expect(wrapper.text()).toContain('Delivery details')
     })
 
-    test('should render <OrderDeliveryDate/>', () => {
+    test('should render a loading spinner if addressLoading = true', () => {
+      wrapper = shallow(<OrderDelivery
+        addressLoading
+      />,{context})
+
+      expect(wrapper.find("Loading").length).toEqual(1)
+      expect(wrapper.find("OrderDeliveryDate").length).toEqual(0)
+      expect(wrapper.find(OrderDeliveryAddress).length).toEqual(0)
+    })
+
+    test('should render <OrderDeliveryDate/> if addressLoading = false ', () => {
       expect(wrapper.find("OrderDeliveryDate").length).toEqual(1)
+    })
+
+    test('should render <OrderDeliveryAddress/> if addressLoading = false ', () => {
+      expect(wrapper.find(OrderDeliveryAddress).length).toEqual(1)
     })
 
     describe('onClickFunction', () => {
