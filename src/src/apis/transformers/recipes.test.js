@@ -26,7 +26,7 @@ describe('dateTransformer', () => {
                         {
                           "type": "recipes",
                           "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
-                          "core_recipe_id": 2106
+                          "core_recipe_id": "2106"
                         },
                       ]
                     }
@@ -39,7 +39,7 @@ describe('dateTransformer', () => {
                 {
                   "type": "recipes",
                   "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
-                  "core_recipe_id": 2106
+                  "core_recipe_id": "2106"
                 }
               ]
             },
@@ -70,7 +70,7 @@ describe('dateTransformer', () => {
               "name": "India",
               "alpha2": "IN",
             },
-            "core_recipe_id": 2106,
+            "core_recipe_id": "2106",
             "basics": [
               {
                 "name": "Butter",

@@ -60,14 +60,14 @@ describe('collectionRecipesTransformer', () => {
     }
 
     const expectedResult = {
-      'a4f1eb8e-2eda-11e9-81ec-06399ef4685e': [{
+      "a4f1eb8e-2eda-11e9-81ec-06399ef4685e": [{
         "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
         "type": "recipes",
       }, {
         "id": "18cf8aef-b5a4-42a7-9db7-55481c9e7c978",
         "type": "recipes",
       }],
-      'e55383da-336d-11e9-b24d-06399ef4685e': [{
+      "e55383da-336d-11e9-b24d-06399ef4685e": [{
         "id": "db3bbabe-51b5-48ab-b567-b353850f900a",
         "type": "recipes",
       }, {
@@ -156,7 +156,7 @@ describe('collectionRecipesTransformer', () => {
     }
 
     const expectedResult = {
-      'a8c05b28-35a9-4608-b362-af57059057d3': [{
+      "a8c05b28-35a9-4608-b362-af57059057d3": [{
         "id": "1bdebc21-d962-4837-b116-057179c07a4e",
         "type": "recipes",
       }, {

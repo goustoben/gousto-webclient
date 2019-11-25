@@ -12,12 +12,11 @@ import GoustoException from 'utils/GoustoException'
 import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
 import menuConfig from 'config/menu'
 import { menuServiceConfig } from 'config/menuService'
-import { dateTransformer } from 'apis/transformers/date'
-
 import statusActions from './status'
 import { redirect } from './redirect'
 import products from './products'
 import { getStockAvailability, loadMenuCollectionsWithMenuService } from './menuActionHelper'
+import { menuServiceLoadDays } from './menuServiceLoadDays'
 
 import {
   basketReset,
@@ -152,13 +151,6 @@ export function menuLoadDays() {
   }
 }
 
-export function menuServiceLoadDays(dispatch, getState) {
-  const menuServiceData = getState().menuService.toJS()
-  const transformedDate = dateTransformer(menuServiceData)
-
-  dispatch(menuActions.menuCutoffUntilReceive(transformedDate))
-}
-
 export function menuCollectionsReceive(collections) {
   return {
     type: actionTypes.MENU_COLLECTIONS_RECEIVE,
@@ -186,7 +178,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
       const useMenuService = isMenuServiceActive(getState)
 
       if (useMenuService) {
-        await loadMenuCollectionsWithMenuService(getState, dispatch, date, background)
+        await loadMenuCollectionsWithMenuService(dispatch, getState, date, background)
       } else {
         await menuLoadCollections(date, background)(dispatch, getState)
         await menuLoadCollectionsRecipes(date)(dispatch, getState)

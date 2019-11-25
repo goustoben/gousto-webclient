@@ -12,6 +12,7 @@ import {
   getCookingInstruction,
   getNDDFeatureValue,
   getHideBoxSummary,
+  getMenuService
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -245,6 +246,25 @@ describe('when features are defined', () => {
         })
 
         expect(getCookingInstruction(state)).toEqual(true)
+      })
+    })
+  })
+
+  describe('getMenuService', () => {
+    describe('when feature is not set', () => {
+      test('should return false', () => {
+        expect(getMenuService(state)).toEqual(false)
+      })
+    })
+    describe('when feature is set', () => {
+      test('should return true', () => {
+        state.features = Immutable.fromJS({
+          menuService: {
+            value: true
+          }
+        })
+
+        expect(getMenuService(state)).toBe(true)
       })
     })
   })

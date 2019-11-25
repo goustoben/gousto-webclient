@@ -1,5 +1,4 @@
 import Immutable from 'immutable'
-import { fetchRecipes } from 'apis/recipes'
 import { menuServiceConfig } from 'config/menuService'
 import actionTypes from '../actionTypes'
 
@@ -11,6 +10,7 @@ const mockGetCutoffDateTime = jest.fn()
 const mockDispatchMenuLoadCollections = jest.fn()
 const mockDispatchmenuLoadCollectionsRecipes = jest.fn()
 const mockLoadMenuCollectionsWithMenuService = jest.fn()
+const mockMenuServiceLoadDays = jest.fn()
 
 jest.mock('apis/data', () => ({
   getAvailableDates: mockGetAvailableDates,
@@ -40,6 +40,10 @@ jest.mock('apis/recipes', () => ({
 
     return getData()
   })
+}))
+
+jest.mock('actions/menuServiceLoadDays', () => ({
+  menuServiceLoadDays: mockMenuServiceLoadDays,
 }))
 
 jest.mock('actions/menuActionHelper', () => ({
@@ -157,19 +161,29 @@ describe('menu actions', () => {
 
   describe('menuLoadDays', () => {
     const menuLoadDaysAction = menuActions.menuLoadDays()
+    describe('with menuService turned off', () => {
+      test('should call getAvailable with the access token', async () => {
+        await menuLoadDaysAction(dispatch, getState)
 
-    test('should call getAvailable with the access token', async () => {
-      await menuLoadDaysAction(dispatch, getState)
+        expect(mockGetAvailableDates).toHaveBeenCalledWith('test', false)
+      })
 
-      expect(mockGetAvailableDates).toHaveBeenCalledWith('test', false)
+      test('should dispatch an action with the until value of the last date', async () => {
+        await menuLoadDaysAction(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
+          cutoffUntil: '2019-10-22T00:00:00+01:00'
+        })
+      })
     })
 
-    test('should dispatch an action with the until value of the last date', async () => {
-      await menuLoadDaysAction(dispatch, getState)
+    describe('with menuService turned off', () => {
+      test('should call menuServiceLoadDays', async () => {
+        menuServiceConfig.isEnabled = true
+        await menuLoadDaysAction(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
-        cutoffUntil: '2019-10-22T00:00:00+01:00'
+        expect(mockMenuServiceLoadDays).toHaveBeenCalled()
       })
     })
   })
