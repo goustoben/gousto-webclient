@@ -82,6 +82,7 @@ const ProductPresentation = ({
               limitReached={limitReached}
               onAdd={onAdd}
               onRemove={onRemove}
+              outOfStock={outOfStock}
               productId={id}
               qty={qty}
               showPopUp

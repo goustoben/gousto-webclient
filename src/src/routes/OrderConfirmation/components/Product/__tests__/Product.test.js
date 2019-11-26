@@ -77,6 +77,7 @@ describe('Product component', () => {
 
   describe('add/remove product', () => {
     beforeEach(() => {
+      mockProduct.stock = 100
       wrapper = mount(<Product product={mockProduct} ageVerified limitReached={false} basketProductAdd={jest.fn()} basketProductRemove={jest.fn()} temp={jest.fn()} />)
     })
     test('should change the qty of the product', async() => {
