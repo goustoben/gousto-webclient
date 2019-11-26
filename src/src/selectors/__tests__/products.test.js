@@ -2,6 +2,7 @@ import { OrderedMap, fromJS } from 'immutable'
 import * as productUtils from 'utils/products'
 import {
   getProducts,
+  getDesserts,
   getCategoriesForNavBar,
   getProductsForMarket,
   getProductsInStock,
@@ -143,6 +144,36 @@ describe('the products selectors', () => {
       const result = getProductsForMarket(store)
       expect(Object.keys(result).join(',')).toBe(
         Object.keys(expectedResult).join(',')
+      )
+    })
+  })
+
+  describe('the getDesserts selector', () => {
+    test('products are returned with desserts only', () => {
+      const productsWithCategories = createOrderedMap({
+        'product6': {
+          title: 'Sixth product',
+          id: 'product6',
+          stock: 1,
+          categories: [{ id: 'fec10d0e-bf7d-11e5-90a9-02fada0dd3b9' }]
+        },
+        'product7': {
+          title: 'Seventh product',
+          id: 'product7',
+          stock: 1,
+          categories: [{ id: 'not-a-dessert' }]
+        },
+      })
+      expect(getDesserts({ products: productsWithCategories })).toEqual(
+        {
+          product6: {
+            id: 'product6',
+            stock: 1,
+            title: 'Sixth product',
+            categories: [{
+              id: 'fec10d0e-bf7d-11e5-90a9-02fada0dd3b9'
+            }],
+          }}
       )
     })
   })

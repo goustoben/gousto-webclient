@@ -31,7 +31,7 @@ module.exports = {
     validate: '/validate',
   },
   client: {
-    orderAddOns: '/order-add-ons',
+    orderAddOns: '/order-add-ons/:orderId',
     appsRedirect: '/apps',
     blog: '/blog',
     boxPrices: '/box-prices',

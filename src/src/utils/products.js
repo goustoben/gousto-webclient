@@ -6,6 +6,14 @@ export function isNotAGift(product) {
     .filter(tag => tag === 'gift').size === 0
 }
 
+export function getProductsByCategoryId(products, categoryId) {
+  return products.filter((product) => {
+    return product.get('categories').filter((category) => (
+      category.get('id') === categoryId
+    )).size > 0
+  })
+}
+
 export function getOneProductFromEachCategory(products, randomSeed) {
   return products.toList().groupBy((product) => {
     const category = product.get('categories').first()
