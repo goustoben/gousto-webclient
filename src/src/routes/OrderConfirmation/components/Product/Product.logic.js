@@ -106,6 +106,7 @@ class Product extends PureComponent {
     const imgSource = images && images['400']['src']
     const isAgeVerificationRequired = !ageVerified && ageRestricted
     const lowStock = (stock <= configProducts.lowStockThreshold)
+    const outOfStock = stock <= 0
 
     const inProgress = ageVerificationPending && id === productId
 
@@ -113,6 +114,7 @@ class Product extends PureComponent {
       id,
       title,
       lowStock,
+      outOfStock,
       listPrice,
       imgSource,
       limitReached,
