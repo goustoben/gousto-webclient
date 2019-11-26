@@ -1,5 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import menuFetchData from 'routes/Menu/fetchData'
 
 import { Cookbook } from '../Cookbook'
 import { Notification } from '../Notification'
@@ -7,12 +8,15 @@ import { HeaderContainer } from '../Header'
 import { ReferAFriend } from '../ReferAFriend'
 import MyGousto from '../MyGousto'
 
+jest.mock('routes/Menu/fetchData')
+
 describe('MyGousto', () => {
   let wrapper
   const userLoadOrdersSpy = jest.fn()
   const userGetReferralDetails = jest.fn()
 
   beforeEach(() => {
+    jest.useFakeTimers()
     wrapper = shallow(<MyGousto userLoadOrders={userLoadOrdersSpy} userGetReferralDetails={userGetReferralDetails} />)
   })
 
@@ -41,6 +45,11 @@ describe('MyGousto', () => {
   describe('componentDidMount', () => {
     test('should call userLoadOrders on mount', () => {
       expect(userLoadOrdersSpy).toHaveBeenCalled()
+    })
+
+    test('should pre-fetch menu data', () => {
+      jest.advanceTimersByTime(500)
+      expect(menuFetchData).toHaveBeenCalled()
     })
   })
 })

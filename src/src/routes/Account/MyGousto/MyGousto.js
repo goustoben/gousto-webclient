@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
+import menuFetchData from 'routes/Menu/fetchData'
 import { Notification } from './Notification'
 import { Section } from './Section'
 import { Cookbook } from './Cookbook'
@@ -24,10 +25,20 @@ class MyGousto extends React.PureComponent {
     redirect: () => {},
   }
 
+  static contextTypes = {
+    store: PropTypes.object.isRequired,
+  }
+
   componentDidMount() {
     const { userLoadOrders, userGetReferralDetails } = this.props
+    const { store } = this.context
+
     userLoadOrders()
     userGetReferralDetails()
+    
+    setTimeout(() => {
+      menuFetchData({ store, query: {}, params: {} }, false, true)
+    }, 500)
   }
 
   render() {
