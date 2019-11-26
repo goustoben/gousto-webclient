@@ -18,6 +18,7 @@ import { AttributeGrid } from 'Recipe/AttributeGrid'
 
 import { Pill } from 'goustouicomponents'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
+import { RecipeDisclaimer } from 'routes/Menu/RecipeDisclaimer'
 
 describe('<GridRecipe />', () => {
   describe('rendering', () => {
@@ -69,6 +70,11 @@ describe('<GridRecipe />', () => {
 
       expect(wrapper.find(TasteScore)).toHaveLength(1)
       expect(wrapper.find(TasteScore).prop('score')).toEqual(99)
+    })
+
+    test('should contain one recipe disclaimer ', () => {
+      expect(wrapper.find(RecipeDisclaimer)).toHaveLength(1)
+      expect(wrapper.find(RecipeDisclaimer).prop('id')).toEqual('1')
     })
 
     test('should contain one AttributeGrid component', () => {
