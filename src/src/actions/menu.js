@@ -11,12 +11,9 @@ import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
 import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
 import menuConfig from 'config/menu'
-import { menuServiceConfig } from 'config/menuService'
 import statusActions from './status'
 import { redirect } from './redirect'
 import products from './products'
-import { getStockAvailability, loadMenuCollectionsWithMenuService } from './menuActionHelper'
-import { menuServiceLoadDays } from './menuServiceLoadDays'
 
 import {
   basketReset,
@@ -50,12 +47,6 @@ const menuActions = {
   menuRecieveMenuPending,
   menuLoadCollectionsRecipes,
   menuReceiveBoxPrices
-}
-
-const isMenuServiceActive = (getState) => {
-  const { features } = getState()
-
-  return features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
 }
 
 export function menuReceiveMenu(recipes) {
@@ -134,15 +125,6 @@ export function menuCutoffUntilReceive(cutoffUntil) {
 
 export function menuLoadDays() {
   return async (dispatch, getState) => {
-
-    const useMenuService = isMenuServiceActive(getState)
-
-    if (useMenuService) {
-      menuServiceLoadDays(dispatch, getState)
-
-      return
-    }
-
     const accessToken = getState().auth.get('accessToken')
     const dates = await getAvailableDates(accessToken, false)
     const availableDays = dates.pop()
@@ -175,14 +157,8 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
       const date = reqData['filters[available_on]']
       const startTime = new Date()
 
-      const useMenuService = isMenuServiceActive(getState)
-
-      if (useMenuService) {
-        await loadMenuCollectionsWithMenuService(dispatch, getState, date, background)
-      } else {
-        await menuLoadCollections(date, background)(dispatch, getState)
-        await menuLoadCollectionsRecipes(date)(dispatch, getState)
-      }
+      await menuLoadCollections(date, background)(dispatch, getState)
+      await menuLoadCollectionsRecipes(date)(dispatch, getState)
 
       logger.notice(`recipes fetch took ${new Date() - startTime}ms`)
 
@@ -320,22 +296,15 @@ export function menuLoadStock(clearStock = true) {
     const accessToken = getState().auth.get('accessToken')
     const recipeStock = await getRecipeStock(accessToken, coreDayId, false)
 
-    let adjustedStock = {}
-
-    const useMenuService = isMenuServiceActive(getState)
-
-    if (useMenuService) {
-      adjustedStock = getStockAvailability(getState, recipeStock)
-    } else {
-      Object.values(recipeStock).forEach(stockEntry => {
-        const committed = stockEntry.committed === '1'
-        adjustedStock[stockEntry.recipeId] = {
-          2: committed ? parseInt(stockEntry.number, 10) : 1000,
-          4: committed ? parseInt(stockEntry.familyNumber, 10) : 1000,
-          committed,
-        }
-      })
-    }
+    const adjustedStock = {}
+    Object.values(recipeStock).forEach(stockEntry => {
+      const committed = stockEntry.committed === '1'
+      adjustedStock[stockEntry.recipeId] = {
+        2: committed ? parseInt(stockEntry.number, 10) : 1000,
+        4: committed ? parseInt(stockEntry.familyNumber, 10) : 1000,
+        committed,
+      }
+    })
 
     const recipeStockChangeAction = clearStock ? menuReplaceRecipeStock : menuChangeRecipeStock
     dispatch(recipeStockChangeAction(adjustedStock))

@@ -96,7 +96,7 @@ function mapStateToProps(state, ownProps) {
       [state.basket.get('date'), 'coreDayId']
     ),
     addressId: state.basket.getIn(['address', 'id'], ''),
-    foodBrandDetails: (query && query.foodBrand) ? getFoodBrandDetails(state) : null,
+    foodBrandDetails: (query && query.foodBrand) ? getFoodBrandDetails(state) : null
   }
 }
 

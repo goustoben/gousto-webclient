@@ -10,7 +10,6 @@ import browserHelper from 'utils/browserHelper'
 
 import BoxSummaryMobile from 'BoxSummary/BoxSummaryMobile'
 import BoxSummaryDesktop from 'BoxSummary/BoxSummaryDesktop'
-import { menuServiceConfig } from 'config/menuService'
 import { RecipeMeta } from './RecipeMeta'
 import { FoodBrandPage } from './FoodBrandPage'
 import { ThematicsPage } from './ThematicsPage'
@@ -70,8 +69,6 @@ class Menu extends React.PureComponent {
 
     const { store } = this.context
 
-    const useMenuService = store.getState().features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
-
     // if server rendered
     if (params.orderId && params.orderId === storeOrderId) {
       basketOrderLoaded(params.orderId)
@@ -86,11 +83,7 @@ class Menu extends React.PureComponent {
 
     this.checkQueryParam()
 
-    if (useMenuService) {
-      await Menu.fetchData({ store, query, params }, forceDataLoad)
-    } else {
-      Menu.fetchData({ store, query, params }, forceDataLoad)
-    }
+    Menu.fetchData({ store, query, params }, forceDataLoad)
 
     if (boxSummaryDeliveryDays.size === 0 && !disabled) {
       menuLoadDays().then(() => {
