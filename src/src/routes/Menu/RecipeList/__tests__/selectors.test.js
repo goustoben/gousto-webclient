@@ -17,20 +17,11 @@ describe('RecipeList selectors', () => {
     })
   }
 
-  let recipes
-
-  beforeEach (() => {
-    recipes = [
-      Immutable.fromJS({ id: recipe1Id }),
-      Immutable.fromJS({ id: recipe2Id })
-    ]
-
-    getRecipes.mockReturnValue(recipes)
-  })
-
-  afterEach (() => {
-    jest.clearAllMocks()
-  })
+  const recipes = [
+    Immutable.fromJS({ id: recipe1Id }),
+    Immutable.fromJS({ id: recipe2Id })
+  ]
+  getRecipes.mockReturnValue(recipes)
 
   describe('getSortedRecipesForRecipeList', () => {
     describe('no collection id provided', () => {
@@ -67,26 +58,6 @@ describe('RecipeList selectors', () => {
 
         expect(result).toHaveLength(1)
         expect(result[0]).toEqual(recipes[0])
-      })
-    })
-
-    describe('no recipe id', () => {
-      const recipesWithMissingId = [
-        Immutable.fromJS({ id: recipe1Id }),
-        Immutable.fromJS({ })
-      ]
-
-      getRecipes.mockReturnValue(recipesWithMissingId)
-
-      test('should return false', () => {
-        const props = {
-          menuCurrentCollectionId: collectionId
-        }
-
-        const result = getSortedRecipesForRecipeList(state, props)
-
-        expect(result).toHaveLength(1)
-        expect(result[0].get('id')).toEqual('1234')
       })
     })
   })
