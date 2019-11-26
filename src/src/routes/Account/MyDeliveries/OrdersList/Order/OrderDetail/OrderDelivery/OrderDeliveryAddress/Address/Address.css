@@ -33,7 +33,7 @@
 }
 
 .addressName {
-	composes: textBold from 'styles/typography.css';
+  composes: textBold from 'styles/typography.css';
   margin: 0;
   font-size: 1rem;
   line-height: 1rem;

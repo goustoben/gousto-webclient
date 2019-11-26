@@ -29,7 +29,7 @@ describe('Address', () => {
     it('should NOT call selectAddress when input clicked', () => {
       const input = wrapper.find('input')
       input.simulate('click')
-      expect(selectAddressMock).not.toBeCalled()
+      expect(selectAddressMock).not.toHaveBeenCalled()
     })
   })
 
@@ -47,7 +47,7 @@ describe('Address', () => {
     it('should call selectAddress when input clicked', () => {
       const input = wrapper.find('input')
       input.simulate('click')
-      expect(selectAddressMock).toBeCalledWith('33')
+      expect(selectAddressMock).toHaveBeenCalledWith('33')
     })
   })
 })

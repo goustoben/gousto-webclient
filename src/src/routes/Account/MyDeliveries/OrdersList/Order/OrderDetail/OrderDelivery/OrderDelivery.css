@@ -52,12 +52,12 @@
 }
 
 .spinnerContainer {
-  text-align: center;
-  padding-top: 15px;
-  padding-bottom: 15px;
+	text-align: center;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 
 .spinner {
-	width: 75px;
-	height: 75px;
+	width: 4.75rem;
+	height: 4.75rem;
 }
