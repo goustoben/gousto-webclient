@@ -40,8 +40,14 @@ describe('Product component', () => {
       expect(wrapper.find('.productLowStock').length).toBe(1)
     })
 
-    test('should NOT render low stock ribbon if stock more than lowStockThreshold', () => {
+    test('should not render low stock ribbon if stock more than lowStockThreshold', () => {
       mockProduct.stock = 12
+      wrapper = mount(<Product product={mockProduct} ageVerified />)
+      expect(wrapper.find('.productLowStock').length).toBe(0)
+    })
+
+    test('should not render the low stock ribbon if the product is out of stock', () => {
+      mockProduct.stock = 0
       wrapper = mount(<Product product={mockProduct} ageVerified />)
       expect(wrapper.find('.productLowStock').length).toBe(0)
     })

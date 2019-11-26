@@ -10,6 +10,7 @@ const propTypes = {
   listPrice: PropTypes.string,
   imgSource: PropTypes.string,
   lowStock: PropTypes.bool,
+  outOfStock: PropTypes.bool,
   isAgeVerificationRequired: PropTypes.bool,
   limitReached: PropTypes.oneOfType([
     PropTypes.shape({
@@ -31,6 +32,7 @@ const ProductPresentation = ({
   qty,
   title,
   lowStock,
+  outOfStock,
   onAdd,
   onRemove,
   listPrice,
@@ -49,7 +51,7 @@ const ProductPresentation = ({
       >
         <img src={imgSource} alt={title} />
       </button>
-      {lowStock && <span className={css.productLowStock}>low stock</span>}
+      {lowStock && !outOfStock && <span className={css.productLowStock}>low stock</span>}
       <div className={css.productContent}>
         <div className={css.productContentFirstColumn}>
           <button
