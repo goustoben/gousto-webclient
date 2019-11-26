@@ -6,7 +6,21 @@ import env from 'utils/env'
 import { JSONParse, processJSON } from 'utils/jsonHelper'
 import { getStore } from 'store'
 
-export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'default', headers = {}, timeout = null, includeCookies = false, includeExperiments = true) {
+export function fetchRaw(url, data ={}, options) {
+  return fetch(
+    options.accessToken,
+    url,
+    data,
+    options.method = 'GET',
+    options.cache = 'default',
+    options.headers = {},
+    options.timeout = null,
+    options.includeCookies = false,
+    options.includeExperiments = true,
+    options.useMenuService = true)
+}
+
+export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'default', headers = {}, timeout = null, includeCookies = false, includeExperiments = true, useMenuService = false) {
   const requestData = {
     ...data,
   }
@@ -109,10 +123,14 @@ export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'defa
       return response
     })
     .then(response => response.text())
-    .then(response => [JSONParse(response), responseStatus]) // eslint-disable-line new-cap
+    .then(response => [JSONParse(response, useMenuService), responseStatus]) // eslint-disable-line new-cap
     .then(processJSON) /* TODO - try refresh auth token and repeat request if successful */
     .then(({ response, meta }) => {
       logger.notice({message: "[fetch end]", status: responseStatus, elapsedTime: `${(new Date() - startTime)}ms`, requestUrl: requestUrl, uuid: uuid})
+
+      if ( useMenuService ) {
+        return { data: response.data, included: response.included, meta: response.meta }
+      }
 
       return { data: response, meta }
     })

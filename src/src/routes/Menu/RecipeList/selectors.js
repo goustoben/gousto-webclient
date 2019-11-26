@@ -19,6 +19,10 @@ export const getSortedRecipesForRecipeList = createSelector(
     const recipeIsInCollection = (recipe) => {
       const id = recipe.get('id')
 
+      if (!id) {
+        return false
+      }
+
       return recipesInCollection.includes(id)
     }
 

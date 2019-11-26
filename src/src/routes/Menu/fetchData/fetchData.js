@@ -10,7 +10,8 @@ import { getBasketDate } from 'selectors/basket'
 import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
-
+import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
+import { menuServiceConfig } from 'config/menuService'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
 const requiresMenuRecipesClear = (store, orderId) => {
@@ -216,29 +217,48 @@ const shouldFetchData = (store, params, force) => {
   const menuCollectionRecipes = store && store.getState().menuCollectionRecipes
   const threshold = (__DEV__) ? 4 : 8
   const stale = moment(store.getState().menuRecipesUpdatedAt).add(1, 'hour').isBefore(moment())
+  const requiresClear = requiresMenuRecipesClear(store, params.orderId)
 
   return (
     force
     || !menuRecipes
     || (menuRecipes && menuRecipes.size <= threshold)
     || stale
-    || requiresMenuRecipesClear(store, params.orderId)
+    || requiresClear
     || !menuCollectionRecipes.size
   )
 }
 
 // eslint-disable-next-line import/no-default-export
 export default async function fetchData({ store, query, params }, force, background) {
+  const accessToken = store.getState().auth.get('accessToken')
+  const useMenuService = store.getState().features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
+
   const startTime = now()
 
   const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
   const shouldFetch = shouldFetchData(store, params, force)
 
   if (isPending || !shouldFetch) {
+
     return
   }
 
   await store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, true))
+
+  if (useMenuService) {
+    const isAuthenticated = getIsAuthenticated(store.getState())
+    const userId = store.getState().auth.get('id')
+    let response
+
+    if (isAuthenticated && userId) {
+      response = await fetchMenusWithUserId(accessToken, userId)
+    } else {
+      response = await fetchMenus(accessToken)
+    }
+
+    store.dispatch(actions.menuServiceDataReceived(response))
+  }
 
   try {
     if (query.error) {

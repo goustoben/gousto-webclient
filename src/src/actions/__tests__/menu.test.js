@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { fetchRecipes } from 'apis/recipes'
+import { menuServiceConfig } from 'config/menuService'
 import actionTypes from '../actionTypes'
 
 const mockGetAvailableDates = jest.fn()
@@ -9,6 +9,8 @@ const mockGetCutoffDateTime = jest.fn()
 
 const mockDispatchMenuLoadCollections = jest.fn()
 const mockDispatchmenuLoadCollectionsRecipes = jest.fn()
+const mockLoadMenuCollectionsWithMenuService = jest.fn()
+const mockMenuServiceLoadDays = jest.fn()
 
 jest.mock('apis/data', () => ({
   getAvailableDates: mockGetAvailableDates,
@@ -40,6 +42,15 @@ jest.mock('apis/recipes', () => ({
   })
 }))
 
+jest.mock('actions/menuServiceLoadDays', () => ({
+  menuServiceLoadDays: mockMenuServiceLoadDays,
+}))
+
+jest.mock('actions/menuActionHelper', () => ({
+  getStockAvailability: jest.fn(),
+  loadMenuCollectionsWithMenuService: mockLoadMenuCollectionsWithMenuService,
+}))
+
 describe('menu actions', () => {
   const cutoffDateTime = '2019-09-01T10:00:00.000Z'
   const menuActions = require('../menu')
@@ -61,6 +72,11 @@ describe('menu actions', () => {
         coreDayId: '001'
       }
     }),
+    features: Immutable.fromJS({
+      menuService: {
+        value: false
+      }
+    })
   }
   const getState = () => state
 
@@ -82,6 +98,7 @@ describe('menu actions', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
+    menuServiceConfig.isEnabled = false
   })
 
   describe('menuLoadMenu', () => {
@@ -96,40 +113,77 @@ describe('menu actions', () => {
       expect(mockGetCutoffDateTime).toHaveBeenCalled()
     })
 
-    test('should load collections when collections.value is true', async () => {
-      const stateWithTrueCollectionValue = {
-        ...state,
-        features: Immutable.fromJS({
-          collections: {
-            value: true,
-          }
-        }),
-      }
+    describe('when useMenuService is true', () => {
 
-      const getStateForTest = () => stateWithTrueCollectionValue
+      test('should load collections when collections.value is true', async () => {
+        menuServiceConfig.isEnabled = true
 
-      await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
+        const stateWithTrueCollectionValue = {
+          ...state,
+          features: Immutable.fromJS({
+            collections: {
+              value: true,
+            }
+          }),
+        }
 
-      expect(mockDispatchMenuLoadCollections).toHaveBeenCalled()
-      expect(mockDispatchmenuLoadCollectionsRecipes).toHaveBeenCalled()
+        const getStateForTest = () => stateWithTrueCollectionValue
+
+        await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
+
+        expect(mockLoadMenuCollectionsWithMenuService).toHaveBeenCalled()
+      })
+    })
+
+    describe('when useMenuService is false', () => {
+
+      test('should load collections when collections.value is false', async () => {
+        menuServiceConfig.isEnabled = false
+
+        const stateWithTrueCollectionValue = {
+          ...state,
+          features: Immutable.fromJS({
+            collections: {
+              value: true,
+            }
+          }),
+        }
+
+        const getStateForTest = () => stateWithTrueCollectionValue
+
+        await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
+
+        expect(mockDispatchMenuLoadCollections).toHaveBeenCalled()
+        expect(mockDispatchmenuLoadCollectionsRecipes).toHaveBeenCalled()
+      })
     })
   })
 
   describe('menuLoadDays', () => {
     const menuLoadDaysAction = menuActions.menuLoadDays()
+    describe('with menuService turned off', () => {
+      test('should call getAvailable with the access token', async () => {
+        await menuLoadDaysAction(dispatch, getState)
 
-    test('should call getAvailable with the access token', async () => {
-      await menuLoadDaysAction(dispatch, getState)
+        expect(mockGetAvailableDates).toHaveBeenCalledWith('test', false)
+      })
 
-      expect(mockGetAvailableDates).toHaveBeenCalledWith('test', false)
+      test('should dispatch an action with the until value of the last date', async () => {
+        await menuLoadDaysAction(dispatch, getState)
+
+        expect(dispatch).toHaveBeenCalledWith({
+          type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
+          cutoffUntil: '2019-10-22T00:00:00+01:00'
+        })
+      })
     })
 
-    test('should dispatch an action with the until value of the last date', async () => {
-      await menuLoadDaysAction(dispatch, getState)
+    describe('with menuService turned off', () => {
+      test('should call menuServiceLoadDays', async () => {
+        menuServiceConfig.isEnabled = true
+        await menuLoadDaysAction(dispatch, getState)
 
-      expect(dispatch).toHaveBeenCalledWith({
-        type: actionTypes.MENU_CUTOFF_UNTIL_RECEIVE,
-        cutoffUntil: '2019-10-22T00:00:00+01:00'
+        expect(mockMenuServiceLoadDays).toHaveBeenCalled()
       })
     })
   })
