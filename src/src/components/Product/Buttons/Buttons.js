@@ -158,7 +158,7 @@ class Buttons extends React.PureComponent {
     const cssAddButton = classnames({ [css['addButton']]: !fullWidth })
     const cssBtnWrapper = classnames(
       css.btnWrapper, {
-        [css['btnWrapper--fullWidth']]: fullWidth,
+        [css['btnWrapper--fullWidth']]: (fullWidth || outOfStock),
       }
     )
     let segments
