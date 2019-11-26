@@ -1,23 +1,23 @@
 @value Bluecheese30, Blackberry from 'styles/colors.css';
 @value SpacingSM, SpacingLG from 'sass-loader!styles/spacing.scss';
-@value ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenXXSMax from 'styles/screenSizes.css';
+@value avenirHeavyFontStack from 'styles/typography.css';
 
 .recipe {
 	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
-	margin-right: SpacingLG;
-	width: 150px;
+	flex-basis: 50%;
 	white-space: normal;
+	display: flex;
 
-	@media ScreenXSMax {
-		margin-right: SpacingSM;
+	@media ScreenXXSMax {
+		flex-basis: 100%;
 	}
 }
 
 .image {
-	width: 150px;
-	height: 150px;
+	width: 6.25rem;
+	height: 6.25rem;
 	object-fit: cover;
-	border-radius: 50%;
 	margin-bottom: SpacingLG;
 
 	@media ScreenXSMax {
@@ -28,4 +28,12 @@
 .blankImage {
 	border: 1px dashed Blackberry;
 	composes: hidden-xs-down from 'sass-loader!styles/bootstrap.scss';
+}
+
+.recipeTitle {
+	composes: textBold from 'styles/typography.css';
+}
+
+.recipeDetails {
+	padding: 0 0.625rem;
 }

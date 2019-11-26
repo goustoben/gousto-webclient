@@ -13,13 +13,21 @@
 	composes: paddingMDTopBottom from 'sass-loader!styles/spacing.scss';
 }
 
+.headerRow {
+	display: flex;
+	justify-content: space-between;
+}
+
 .header {
 	composes: textBold from 'styles/typography.css';
 	margin-bottom: 1rem;
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.125rem;
 }
 
-.hideInMobile {
-	composes: hidden-xs-down from 'sass-loader!styles/bootstrap.scss';
+.editLink {
+  text-transform: uppercase;
 }
 
 .subHeader {

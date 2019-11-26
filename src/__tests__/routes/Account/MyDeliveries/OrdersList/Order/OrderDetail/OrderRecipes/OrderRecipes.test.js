@@ -4,7 +4,7 @@ import React from 'react'
 import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import OrderRecipes from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderRecipes'
-import OrderSideSwipe from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderRecipes/OrderSideSwipe'
+import OrderRecipeBox from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderRecipes/OrderRecipeBox'
 import Link from 'Link'
 
 describe('OrderRecipes', () => {
@@ -35,6 +35,7 @@ describe('OrderRecipes', () => {
         orderId={orderId}
         orderState="menu open"
         whenCutoff="8 March"
+        portionsCount="2"
       />,
     )
 
@@ -42,8 +43,8 @@ describe('OrderRecipes', () => {
       expect(wrapper.type()).toEqual('div')
     })
 
-    test('should render <OrderSideSwipe> passing the recipes as prop', () => {
-      const sideSwipe = wrapper.children(OrderSideSwipe)
+    test('should render <OrderRecipeBox> passing the recipes as prop', () => {
+      const sideSwipe = wrapper.children(OrderRecipeBox)
       expect(sideSwipe.prop('recipes')).toEqual(recipes)
     })
 
@@ -54,7 +55,7 @@ describe('OrderRecipes', () => {
     })
 
     test('should render a <Link> pointing to /menu/{orderId} when state is menu open', () => {
-      const link = wrapper.children('div').children(Link)
+      const link = wrapper.find(Link)
       expect(link.prop('to')).toEqual(`/menu/${orderId}`)
     })
 
@@ -69,7 +70,7 @@ describe('OrderRecipes', () => {
       )
       expect(wrapper.text()).toContain('GoustoLink')
       expect(
-        wrapper.find(Link).props('children').children.props.children,
+        wrapper.find(Link).children().text(),
       ).toEqual('Choose recipes')
     })
 
@@ -84,7 +85,7 @@ describe('OrderRecipes', () => {
       )
       expect(wrapper.text()).toContain('GoustoLink')
       expect(
-        wrapper.find(Link).props('children').children.props.children,
+        wrapper.find(Link).children().text(),
       ).toEqual('Edit recipes')
     })
   })

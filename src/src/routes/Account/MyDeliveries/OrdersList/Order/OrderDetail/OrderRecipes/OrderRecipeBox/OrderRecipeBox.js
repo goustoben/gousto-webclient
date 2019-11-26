@@ -4,12 +4,13 @@ import ImmutablePropTypes from 'react-immutable-proptypes'
 import Immutable from 'immutable'
 import placeholderSrc from 'media/images/recipe-placeholder.png'
 
-import css from './OrderSideSwipe.css'
+import css from './OrderRecipeBox.css'
 import OrderRecipe from '../../../../../../AccountComponents/OrderRecipe'
 
-const OrderSideSwipe = ({
+const OrderRecipeBox = ({
   recipes,
   orderState,
+  portionsCount,
 }) => {
   const maxRecipes = ['confirmed', 'dispatched'].indexOf(orderState) > -1 ? recipes.size : 4
   const recipesRendered = []
@@ -20,6 +21,7 @@ const OrderSideSwipe = ({
         recipeImage={recipeId ? recipes.getIn([i, 'image'], placeholderSrc) : ''}
         recipeTitle={recipes.getIn([i, 'title'], '')}
         key={recipeId || i}
+        servings={recipeId ? `${portionsCount} servings` : ''}
       />
     )
   }
@@ -31,7 +33,7 @@ const OrderSideSwipe = ({
   )
 }
 
-OrderSideSwipe.propTypes = {
+OrderRecipeBox.propTypes = {
   recipes: ImmutablePropTypes.listOf(
     ImmutablePropTypes.contains({
       recipeImage: PropTypes.string,
@@ -39,11 +41,13 @@ OrderSideSwipe.propTypes = {
     })
   ),
   orderState: PropTypes.string,
+  portionsCount: PropTypes.string,
 }
 
-OrderSideSwipe.defaultProps = {
+OrderRecipeBox.defaultProps = {
   recipes: Immutable.List([]),
   orderState: '',
+  portionsCount: '2',
 }
 
-export default OrderSideSwipe
+export default OrderRecipeBox
