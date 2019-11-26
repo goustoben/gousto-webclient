@@ -11,11 +11,12 @@
 
 .subHeader {
 	font-size: 1rem;
-	padding-bottom: 0.315rem;
+	margin-bottom: 0.5rem;
 }
 
 .dateTime {
 	font-size: 0.875rem;
+	margin-bottom: 0;
 }
 
 .button {

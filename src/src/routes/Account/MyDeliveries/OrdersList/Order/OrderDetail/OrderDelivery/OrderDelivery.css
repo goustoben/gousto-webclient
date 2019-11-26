@@ -1,7 +1,12 @@
-@value ScreenXSMax from 'styles/screenSizes.css';
+@value ScreenSMMin from 'styles/screenSizes.css';
 
 .deliveryDetailsWrapper {
 	display: flex;
+	flex-wrap: wrap;
+
+	@media ScreenSMMin {
+		margin: 0 -1.5rem;
+	}
 }
 
 .bold {
@@ -9,13 +14,23 @@
 }
 
 .header {
-	margin-bottom: 20px;
+	margin-bottom: 1.25rem;
 	font-size: 1.125rem;
 }
 
 .subSection {
-	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
-	flex-basis: 100%;
+	width: 100%;
+	margin-bottom: 1.25rem;
+
+	@media ScreenSMMin {
+		width: 50%;
+		padding: 0 1.5rem;
+		margin-bottom: 0;
+	}
+}
+
+.subSection:last-child {
+	margin-bottom: 0;
 }
 
 .details {
@@ -34,4 +49,15 @@
 
 .capitalize {
 	text-transform: capitalize;
+}
+
+.spinnerContainer {
+	text-align: center;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.spinner {
+	width: 4.75rem;
+	height: 4.75rem;
 }

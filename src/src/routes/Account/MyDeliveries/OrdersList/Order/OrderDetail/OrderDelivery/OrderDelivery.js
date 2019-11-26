@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'
 import recipesActions from 'actions/recipes'
 import orderActions from 'actions/order'
 import userActions from 'actions/user'
+import Loading from 'Loading'
+import { OrderDeliveryAddress } from './OrderDeliveryAddress'
 import { OrderDeliveryDate } from './OrderDeliveryDate'
 
 import css from './OrderDelivery.css'
@@ -24,63 +25,65 @@ class OrderDelivery extends React.PureComponent {
     orderDeliveryDaysFetchError: PropTypes.object,
     hasUpdateDeliveryDayError: PropTypes.bool,
     clearUpdateDateErrorAndPending: PropTypes.func,
+    addressLoading: PropTypes.bool,
   }
 
   static defaultProps = {
     date: '',
     timeStart: '',
     timeEnd: '',
-    shippingAddressObj: Immutable.Map({
-      line1: '',
-      line2: '',
-      line3: '',
-      town: '',
-      postcode: '',
-      name: '',
-    }),
     editDeliveryMode: false,
     orderState: '',
     orderId: '',
-    fetchSuccess: false,
+    fetchSuccess: false
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired,
+    store: PropTypes.object.isRequired
   }
 
   onClickFunction = () => {
-    const { orderId, editDeliveryMode, clearUpdateDateErrorAndPending } = this.props
+    const {
+      orderId,
+      editDeliveryMode,
+      clearUpdateDateErrorAndPending
+    } = this.props
 
     if (!editDeliveryMode) {
-      this.context.store.dispatch(userActions.userTrackToggleEditDateSection(orderId))
+      this.context.store.dispatch(
+        userActions.userTrackToggleEditDateSection(orderId)
+      )
     }
-    this.context.store.dispatch(userActions.userToggleEditDateSection(orderId, !editDeliveryMode))
+    this.context.store.dispatch(
+      userActions.userToggleEditDateSection(orderId, !editDeliveryMode)
+    )
     clearUpdateDateErrorAndPending()
-
-  }
-
-  static constructShippingAddress(shippingAddressObj) {
-    let shippingAddress = shippingAddressObj.get('line1')
-    const line2 = shippingAddressObj.get('line2')
-    const line3 = shippingAddressObj.get('line3')
-    const town = shippingAddressObj.get('town')
-    shippingAddress += line2 ? `, ${line2}` : ''
-    shippingAddress += line3 ? `, ${line3}` : ''
-    shippingAddress += town ? `, ${town}` : ''
-    shippingAddress += ` ${shippingAddressObj.get('postcode')}`
-
-    return shippingAddress
   }
 
   componentDidMount() {
-    const { availableFrom, availableTo, shippingAddressId, orderId, orderState } = this.props
+    const {
+      availableFrom,
+      availableTo,
+      shippingAddressId,
+      orderId,
+      orderState,
+    } = this.props
     const { store } = this.context
 
     const isOrderPending = orderState == 'menu open' || orderState == 'recipes chosen'
 
     if (isOrderPending) {
-      store.dispatch(orderActions.orderGetDeliveryDays(availableFrom, availableTo, shippingAddressId, orderId)),
-      store.dispatch(recipesActions.recipesLoadStockByDate(availableFrom, availableTo))
+      store.dispatch(
+        orderActions.orderGetDeliveryDays(
+          availableFrom,
+          availableTo,
+          shippingAddressId,
+          orderId
+        )
+      ),
+      store.dispatch(
+        recipesActions.recipesLoadStockByDate(availableFrom, availableTo)
+      )
     }
   }
 
@@ -97,35 +100,51 @@ class OrderDelivery extends React.PureComponent {
       orderId,
       availableFrom,
       availableTo,
-      hasUpdateDeliveryDayError
+      hasUpdateDeliveryDayError,
+      shippingAddressId,
+      addressLoading
     } = this.props
-    const editDateHasError =(recipesPeriodStockFetchError != null || orderDeliveryDaysFetchError != null)
-    const errorText = hasUpdateDeliveryDayError ? "There was a problem updating your order date. Please try again later." :
-      "Whoops, something went wrong - please try again"
+    const editDateHasError =
+      recipesPeriodStockFetchError != null ||
+      orderDeliveryDaysFetchError != null
+    const errorText = hasUpdateDeliveryDayError
+      ? 'There was a problem updating your order date. Please try again later.'
+      : 'Whoops, something went wrong - please try again'
 
     return (
       <div data-testing="recipesDeliverySection">
-        <div className={`${css.header} ${css.bold}`}>
-          Delivery details
-        </div>
-        <div className={css.deliveryDetailsWrapper}>
-          <div className={css.subSection}>
-            <OrderDeliveryDate
-              editDeliveryMode={editDeliveryMode}
-              date={date}
-              timeStart={timeStart}
-              timeEnd={timeEnd}
-              orderState={orderState}
-              hasError={hasUpdateDeliveryDayError || editDateHasError}
-              errorText={errorText}
-              onClickFunction={this.onClickFunction}
-              fetchSuccess={fetchSuccess}
-              orderId={orderId}
-              availableFrom={availableFrom}
-              availableTo={availableTo}
-            />
+        <div className={`${css.header} ${css.bold}`}>Delivery details</div>
+        {addressLoading ?
+          <div className={css.spinnerContainer}>
+            <Loading className={css.spinner}/>
           </div>
-        </div>
+          :
+          <div className={css.deliveryDetailsWrapper}>
+            <div className={css.subSection}>
+              <OrderDeliveryDate
+                editDeliveryMode={editDeliveryMode}
+                date={date}
+                timeStart={timeStart}
+                timeEnd={timeEnd}
+                orderState={orderState}
+                hasError={hasUpdateDeliveryDayError || editDateHasError}
+                errorText={errorText}
+                onClickFunction={this.onClickFunction}
+                fetchSuccess={fetchSuccess}
+                orderId={orderId}
+                availableFrom={availableFrom}
+                availableTo={availableTo}
+              />
+            </div>
+            <div className={css.subSection}>
+              <OrderDeliveryAddress
+                orderId={orderId}
+                orderState={orderState}
+                shippingAddressId={shippingAddressId}
+              />
+            </div>
+          </div>
+        }
       </div>
     )
   }

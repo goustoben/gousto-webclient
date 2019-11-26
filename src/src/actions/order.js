@@ -323,23 +323,56 @@ export const projectedOrderRestore = (orderId, userId, deliveryDayId) => (
 
 export const orderAddressChange = (orderId, addressId) => (
   async (dispatch, getState) => {
-    dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, null))
-    dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, true))
+    const originalAddressId = getState().user.getIn(['newOrders', orderId, 'shippingAddressId'])
+    const isCurrentPeriod = getState().user.getIn(['newOrders', orderId, 'isCurrentPeriod'])
+    const trackingData = {
+      order_id: orderId,
+      is_current_period: isCurrentPeriod,
+      original_deliveryaddress_id: originalAddressId,
+      new_deliveryaddress_id: addressId,
+    }
+    dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, {
+      orderId: '',
+      errorMessage: ''
+    }))
+    dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, orderId))
     const accessToken = getState().auth.get('accessToken')
     const data = {
       orderId,
       addressId,
     }
     try {
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliveryAddress SaveAttempt',
+          ...trackingData
+        }
+      })
       await updateOrderAddress(accessToken, orderId, addressId)
       dispatch({
         type: actionTypes.ORDER_ADDRESS_CHANGE,
         data,
+        trackingData: {
+          actionType: 'OrderDeliveryAddress Saved',
+          ...trackingData
+        }
       })
     } catch (err) {
-      dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, err.message))
+      dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, {
+        orderId,
+        errorMessage: err.message
+      }))
+      dispatch({
+        type: actionTypes.TRACKING,
+        trackingData: {
+          actionType: 'OrderDeliveryAddress SaveAttemptFailed',
+          error: err.message,
+          ...trackingData
+        }
+      })
     } finally {
-      dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, false))
+      dispatch(statusActions.pending(actionTypes.ORDER_ADDRESS_CHANGE, ''))
     }
   }
 )

@@ -6,11 +6,6 @@ const data = Immutable.fromJS({
   visibility: false,
 })
 
-const addressesInitialState = Immutable.fromJS({
-  craftyClicksAddresses: [],
-  craftyClicksFullAddressId: '1',
-})
-
 const account = {
   orderCancelledModalVisibility: (state = data, action) => {
     switch (action.type) {
@@ -23,30 +18,6 @@ const account = {
 
     default:
       return state
-    }
-  },
-
-  craftyClicksAddresses: (state = addressesInitialState, action) => {
-    if (!state) {
-      return addressesInitialState
-    }
-    switch (action.type) {
-    case actionTypes.MODAL_ADDRESSES_RECEIVE: {
-      const keyedAddresses = Immutable.fromJS(action.data.results)
-
-      return state
-        .set('craftyClicksAddresses', keyedAddresses)
-    }
-
-    case actionTypes.MODAL_FULL_ADDRESSES_RECEIVE: {
-      return state
-        .set('craftyClicksFullAddress', action.data.result)
-        .set('craftyClicksFullAddressId', action.id)
-    }
-
-    default: {
-      return state
-    }
     }
   },
 

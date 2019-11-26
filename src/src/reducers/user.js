@@ -11,10 +11,6 @@ export const defaultState = Immutable.fromJS({
   orderCardsCollapsedStatus: {},
   orderCardsEditStatus: {},
   addresses: {},
-  deliveryAddressModal: {
-    visibility: false,
-    orderId: null,
-  },
   cancelledAllBoxesModal: {
     visibility: false,
     pendingOrdersDates: {},
@@ -206,39 +202,6 @@ const user = {
       return state.set('addresses', keyedAddresses)
     }
 
-    case actionTypes.DELIVERY_ADDRESS_MODAL_VISIBILITY_CHANGE: {
-      return state
-        .setIn(['deliveryAddressModal', 'visibility'], action.visibility)
-        .setIn(['deliveryAddressModal', 'orderId'], action.orderId)
-    }
-
-    case actionTypes.USER_POST_NEW_ADDRESS: {
-      const newAddressData = Immutable.fromJS({
-        companyName: action.data.company_name,
-        county: action.data.county,
-        name: action.data.name,
-        postcode: action.data.postcode,
-        state: action.data.state,
-        town: action.data.town,
-        deleted: action.data.deleted,
-        customerId: action.data.customer_id,
-        deliveryInstructions: action.data.delivery_instructions,
-        type: action.data.type,
-        id: action.data.id,
-        line1: action.data.line1,
-        line2: action.data.line2,
-        line3: action.data.line3,
-      })
-
-      return state
-        .setIn(['addresses', action.data.id], newAddressData)
-        .setIn(['accountPendingFormData', action.orderId, 'shippingAddressId'], action.data.id)
-    }
-
-    case actionTypes.SELECTED_ADDRESS_IN_NEW_ADDRESS_MODAL: {
-      return state.setIn(['accountPendingFormData', action.orderId, 'shippingAddressId'], action.shippingAddressesId)
-    }
-
     case actionTypes.CANCELLED_ALL_BOXES_MODAL_VISIBILITY_CHANGE: {
       return state
         .setIn(['cancelledAllBoxesModal', 'visibility'], action.visibility)
@@ -250,7 +213,6 @@ const user = {
     }
 
     case actionTypes.MYDELIVERIES_ORDERS: {
-
       return state.set('newOrders', action.orders)
     }
 

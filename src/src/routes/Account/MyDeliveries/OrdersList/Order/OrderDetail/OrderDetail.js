@@ -103,7 +103,7 @@ class OrderDetail extends React.PureComponent {
           </section>
           : null}
         {this.props.cancellable && this.props.orderState !== 'cancelled' ?
-          <section className={this.props.editDeliveryMode && fetchSuccess ? css.openCardSectionNoBorder : css.openCardSection}>
+          <section className={css.openCardSection}>
             <OrderCancelButton
               orderId={this.props.orderId}
               deliveryDayId={this.props.deliveryDayId}

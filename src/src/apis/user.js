@@ -84,10 +84,6 @@ export function fetchUserAddresses(accessToken, userId) {
   return fetch(accessToken, `${endpoint('customers', routes.version.customers)}/customers/${userId}/addresses`, {}, 'GET')
 }
 
-export function addNewAddress(accessToken, userId, reqData) {
-  return fetch(accessToken, `${endpoint('customers', routes.version.customers)}/customers/${userId}/addresses`, reqData, 'POST')
-}
-
 export function deleteMarketingSubscription(authUserId, marketingType, marketingUnsubscribeToken) {
   return fetch(
     null,
