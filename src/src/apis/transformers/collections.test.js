@@ -59,6 +59,7 @@ describe('collectionTransformer', () => {
           "id": "a4f1eb8e-2eda-11e9-81ec-06399ef4685e",
           "type": "collection",
           "attributes": {
+            "description": "All the week's chicken recipes",
             "meta_title": null,
             "long_title": null,
             "meta_description": null,
@@ -74,6 +75,7 @@ describe('collectionTransformer', () => {
           "id": "bc5fc11e-afbf-11e8-9691-0645394f11eae",
           "type": "collection",
           "attributes": {
+            "description": "Easy, speedy recipes for busy days",
             "meta_title": null,
             "long_title": null,
             "meta_description": null,
@@ -389,9 +391,8 @@ describe('collectionTransformer', () => {
 
     const expectedFormat = [{
       "colour":"#D8A958",
-      //"default":false,
+      "description": "All the week's chicken recipes",
       "id":"a4f1eb8e-2eda-11e9-81ec-06399ef4685e",
-      //"isCookbook":false,
       "order":400,
       "published": true,
       "shortTitle":"Chicken",
@@ -399,10 +400,8 @@ describe('collectionTransformer', () => {
     },
     {
       "colour":"#6ACBB8",
-      // "default":false,
-      // "description":"This week’s selection for vegetarians",
+      "description": "Easy, speedy recipes for busy days",
       "id":"bc5fc11e-afbf-11e8-9691-0645394f11eae",
-      // "isCookbook":false,
       "order":200,
       "published": true,
       "shortTitle":"10-Minute Meals",

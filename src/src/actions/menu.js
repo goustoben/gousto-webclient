@@ -12,6 +12,7 @@ import GoustoException from 'utils/GoustoException'
 import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
 import menuConfig from 'config/menu'
 import { menuServiceConfig } from 'config/menuService'
+import { getMenuService } from 'selectors/features'
 import statusActions from './status'
 import { redirect } from './redirect'
 import products from './products'
@@ -53,9 +54,7 @@ const menuActions = {
 }
 
 const isMenuServiceActive = (getState) => {
-  const { features } = getState()
-
-  return features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
+  return getMenuService(getState()) || menuServiceConfig.isEnabled
 }
 
 export function menuReceiveMenu(recipes) {

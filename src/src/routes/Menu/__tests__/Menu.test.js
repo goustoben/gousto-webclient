@@ -52,8 +52,6 @@ describe('Menu', () => {
   let requiredProps
   let mountOptions
 
-  menuServiceConfig.isEnabled = false
-
   const getStateMock = () => ({
     features: Immutable.fromJS({
       menuService: {
@@ -63,8 +61,17 @@ describe('Menu', () => {
   })
 
   beforeEach(() => {
-    productsLoadStock = jest.fn()
-    productsLoadProducts = jest.fn()
+    menuServiceConfig.isEnabled = false
+    productsLoadStock = jest.fn().mockReturnValue(
+      new Promise(resolve => {
+        resolve()
+      })
+    )
+    productsLoadProducts = jest.fn().mockReturnValue(
+      new Promise(resolve => {
+        resolve()
+      })
+    )
     requiredProps = {
       basketNumPortionChange: () => { },
       basketOrderLoaded: () => { },
@@ -99,6 +106,11 @@ describe('Menu', () => {
         })
       )
     }
+  })
+
+  afterEach(() => {
+    menuServiceConfig.isEnabled = false
+    jest.clearAllMocks()
   })
 
   describe('rendering', () => {
@@ -356,7 +368,9 @@ describe('Menu', () => {
           mountOptions
         )
 
-        await expect(productsLoadStock).toHaveBeenCalled()
+        await Promise.resolve()
+        expect(fetchData).toHaveBeenCalledTimes(1)
+        expect(productsLoadStock).toHaveBeenCalled()
         expect(productsLoadProducts).toHaveBeenCalled()
         expect(productsLoadProducts).toHaveBeenCalledWith('2019-05-14 12:00:00')
       })

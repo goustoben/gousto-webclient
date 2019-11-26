@@ -25,10 +25,8 @@ const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
       ...experiments,
     }
 
-    let collections
-    if (transformedCollections) {
-      collections = transformedCollections
-    } else {
+    let collections = transformedCollections
+    if(!collections) {
       const response = await fetchCollections(accessToken, '', args)
       collections = response.data
     }
@@ -49,11 +47,7 @@ const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
       :
       collections
 
-    if (transformedCollections) {
-      await dispatch(menuCollectionsReceive(collectionsFiltered))
-    } else {
-      dispatch(menuCollectionsReceive(collectionsFiltered))
-    }
+    dispatch(menuCollectionsReceive(collectionsFiltered))
 
     if (!noUrlChange) {
       let changeCollection = true

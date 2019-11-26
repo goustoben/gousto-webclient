@@ -9,11 +9,9 @@ export const normaliseData = (response) => {
       normalised[row.type] = {}
     }
 
-    if (row.type === 'recipe') {
-      normalised[row.type][row.attributes.core_recipe_id.toString()] = row
-    } else {
-      normalised[row.type][row.id] = row
-    }
+    const id = (row.type === 'recipe') ? row.attributes.core_recipe_id.toString() : row.id
+    normalised[row.type][id] = row
+
   })
 
   return normalised

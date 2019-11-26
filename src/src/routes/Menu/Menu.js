@@ -65,11 +65,12 @@ class Menu extends React.PureComponent {
       productsLoadProducts,
       productsLoadStock,
       isAuthenticated,
+      shouldUseMenuService,
     } = this.props
 
     const { store } = this.context
 
-    const useMenuService = store.getState().features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
+    const useMenuService = shouldUseMenuService || menuServiceConfig.isEnabled
 
     // if server rendered
     if (params.orderId && params.orderId === storeOrderId) {

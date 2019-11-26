@@ -184,6 +184,8 @@ describe('menu actions', () => {
         await menuLoadDaysAction(dispatch, getState)
 
         expect(mockMenuServiceLoadDays).toHaveBeenCalled()
+
+        menuServiceConfig.isEnabled = false
       })
     })
   })

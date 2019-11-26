@@ -29,7 +29,7 @@ const recipesTransformer = (activeMenu, response) => {
       description: normalisedAttributes.description,
       dietType: normalisedAttributes.diet_type ? normalisedAttributes.diet_type.slug : "",
       equipment: normalisedAttributes.equipment ? equpimentTransformer(normalisedAttributes.equipment) : [],
-      fiveADay: normalisedAttributes.five_a_day,
+      fiveADay: normalisedAttributes.five_a_day ? normalisedAttributes.five_a_day : 0,
       healthKitchen: healthKitchenTransformer(normalisedAttributes.health_kitchen),
       id: individualRecipeId,
       ingredients: finalIngredients,

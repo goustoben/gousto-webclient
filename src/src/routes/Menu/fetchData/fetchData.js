@@ -12,6 +12,8 @@ import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
 import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
 import { menuServiceConfig } from 'config/menuService'
+import { menuServiceDataReceived } from 'actions/menuService'
+import { getMenuService } from 'selectors/features'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
 const requiresMenuRecipesClear = (store, orderId) => {
@@ -232,7 +234,7 @@ const shouldFetchData = (store, params, force) => {
 // eslint-disable-next-line import/no-default-export
 export default async function fetchData({ store, query, params }, force, background) {
   const accessToken = store.getState().auth.get('accessToken')
-  const useMenuService = store.getState().features.getIn(['menuService', 'value']) || menuServiceConfig.isEnabled
+  const useMenuService = getMenuService(store.getState()) || menuServiceConfig.isEnabled
 
   const startTime = now()
 
@@ -257,7 +259,7 @@ export default async function fetchData({ store, query, params }, force, backgro
       response = await fetchMenus(accessToken)
     }
 
-    store.dispatch(actions.menuServiceDataReceived(response))
+    store.dispatch(menuServiceDataReceived(response))
   }
 
   try {
