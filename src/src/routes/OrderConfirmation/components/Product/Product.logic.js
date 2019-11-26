@@ -125,6 +125,7 @@ class Product extends PureComponent {
       inProgress
     }
   }
+
   getProductDetails = () => {
     const { product } = this.props
 
