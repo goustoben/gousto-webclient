@@ -78,8 +78,18 @@ describe('Product component', () => {
   describe('add/remove product', () => {
     beforeEach(() => {
       mockProduct.stock = 100
-      wrapper = mount(<Product product={mockProduct} ageVerified limitReached={false} basketProductAdd={jest.fn()} basketProductRemove={jest.fn()} temp={jest.fn()} />)
+      wrapper = mount(
+        <Product
+          product={mockProduct}
+          ageVerified
+          limitReached={false}
+          basketProductAdd={jest.fn()}
+          basketProductRemove={jest.fn()}
+          temp={jest.fn()}
+        />
+      )
     })
+
     test('should change the qty of the product', async() => {
       wrapper.setProps({
         basket: Immutable.fromJS({
@@ -95,6 +105,7 @@ describe('Product component', () => {
           products: {}
         })
       })
+
       expect(wrapper.text()).toContain('Add')
     })
 
@@ -137,7 +148,16 @@ describe('Product component', () => {
 
   describe('toggle description popup', () => {
     beforeEach(() => {
-      wrapper = mount(<Product product={mockProduct} ageVerified limitReached={false} basketProductAdd={jest.fn()} basketProductRemove={jest.fn()} temp={jest.fn()}/>)
+      wrapper = mount(
+        <Product
+          product={mockProduct}
+          ageVerified
+          limitReached={false}
+          basketProductAdd={jest.fn()}
+          basketProductRemove={jest.fn()}
+          temp={jest.fn()}
+        />
+      )
     })
 
     test('should show description popup when click on the image', () => {
