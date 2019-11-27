@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 import classnames from 'classnames'
-import { RecipesCountButton } from 'RecipesCountButton'
 
 import { boxSummaryViews } from 'utils/boxSummary'
 import { isMobile, DESKTOP_VIEW } from 'utils/view'
@@ -15,7 +14,7 @@ const BoxSummaryButton = ({ view,
   showDetails,
   open, checkoutPending, boxSummaryCurrentView, menuRecipes,
   stock, numPortions, boxSummaryNext, fullWidth, pricingPending,
-  orderSavePending, basketPreviewOrderChangePending, showRecipeCountButton }) => {
+  orderSavePending, basketPreviewOrderChangePending }) => {
   const isMobileView = isMobile(view)
   const classes = [
     { [css.buttoncontainer]: isMobileView },
@@ -38,22 +37,18 @@ const BoxSummaryButton = ({ view,
     pricingPending, view, showDetails, boxSummaryNext, open
   }
 
-  const checkoutButton = showRecipeCountButton ?
-    (<RecipesCountButton />) :
-    (<BoxSummaryCheckoutButton {...checkoutButtonProps} />)
-
   return (
     <div className={classnames(...classes)}>
       {
-        (boxSummaryCurrentView === boxSummaryViews.DETAILS) ?
-          checkoutButton
-          :
-          <BoxSummaryNextButton {...nextButtonProps} />}
-    </div>)
+        (boxSummaryCurrentView === boxSummaryViews.DETAILS)
+          ? <BoxSummaryCheckoutButton {...checkoutButtonProps} />
+          : <BoxSummaryNextButton {...nextButtonProps} />
+      }
+    </div>
+  )
 }
 
 BoxSummaryButton.propTypes = {
-  showRecipeCountButton: PropTypes.bool,
   view: PropTypes.string,
   recipes: PropTypes.instanceOf(Immutable.Map),
   showDetails: PropTypes.bool.isRequired,
@@ -77,7 +72,6 @@ BoxSummaryButton.defaultProps = {
   showDetails: false,
   boxSummaryCurrentView: '',
   fullWidth: false,
-  showRecipeCountButton: false,
 }
 
 export default BoxSummaryButton

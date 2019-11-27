@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
-import { getShortlistUsed, getBasketRecipes, getNumPortions } from 'selectors/basket'
+import { getBasketRecipes, getNumPortions } from 'selectors/basket'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import BoxSummaryButton from './BoxSummaryButton'
 
@@ -10,7 +10,6 @@ function mapStateToProps(state) {
     recipes: getBasketRecipes(state),
     showDetails: state.boxSummaryShow.get('show') && state.boxSummaryShow.get('view') === 'desktop',
     boxSummaryCurrentView: getCurrentBoxSummaryView(state),
-    showRecipeCountButton: state.request.get('browser') === 'mobile' && getShortlistUsed(state) && !state.boxSummaryShow.get('show'),
     pricingPending: state.pricing.get('pending', false),
     orderSavePending: state.pending.get('ORDER_SAVE', false),
     basketPreviewOrderChangePending: state.pending.get('BASKET_PREVIEW_ORDER_CHANGE', false),
