@@ -737,7 +737,8 @@ describe('recipesTransformer', () => {
                 "data": [
                   {
                     "type": "recipes",
-                    "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5"
+                    "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                    "core_recipe_id": "7586"
                   }
                 ]
               },
@@ -768,6 +769,7 @@ describe('recipesTransformer', () => {
                 "slug": "gourmet",
               },
               "country_secondary": null,
+              "core_recipe_id": "7586",
               "gousto_reference": 1995,
               "difficulty_level": null,
               "images": [],
@@ -847,7 +849,7 @@ describe('recipesTransformer', () => {
         ]
       }
 
-      const result = recipesTransformer(menuServiceResponse)
+      const result = recipesTransformer(menuServiceResponse.data[0], menuServiceResponse)
       expect(result[0].healthKitchen).toEqual({
         disclaimer: "High in iron, magnesium and b vitamins, reducing tiredness and fatigue",
         micronutrients: [
