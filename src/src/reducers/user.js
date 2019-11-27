@@ -178,6 +178,7 @@ const user = {
         deliveryDay: action.deliveryDay,
         deliverySlotStart: action.deliverySlotStart,
         deliverySlotEnd: action.deliverySlotEnd,
+        shouldCutoffAt: action.shouldCutoffAt,
       })
     }
 

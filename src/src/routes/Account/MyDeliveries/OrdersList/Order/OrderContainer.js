@@ -19,7 +19,7 @@ function mapStateToProps(state, ownProps) {
     orderDeliveryTimeStart: order.get('deliverySlotStart'),
     orderDeliveryTimeEnd: order.get('deliverySlotEnd'),
     orderState: order.get('orderState'),
-    orderWhenCutoff: order.get('whenCutoff'),
+    orderShouldCutoffAt: order.get('shouldCutoffAt'),
     orderWhenCommitted: order.get('whenCommited'),
     orderWhenMenuOpen: order.get('whenMenuOpen'),
     recipes: order.get('recipes', Immutable.List([])),
