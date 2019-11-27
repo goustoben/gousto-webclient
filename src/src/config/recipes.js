@@ -53,8 +53,8 @@ const config = {
       textColor:"#F6323E"
     },
     'fine-dine-in': {
-      ribbonColor:"333D47",
-      borderColor:"282B2F",
+      ribbonColor:"#333D47",
+      borderColor:"#282B2F",
       textColor:"#FFFFFF"
     },
     'global-kitchen': {
@@ -63,8 +63,8 @@ const config = {
       textColor:"#FFFFFF"
     },
     'health-boost': {
-      ribbonColor:"47AC6A",
-      borderColor:"1E743C",
+      ribbonColor:"#47AC6A",
+      borderColor:"#1E743C",
       textColor:"#FFFFFF"
     },
     'modern-bistro': {
@@ -78,8 +78,8 @@ const config = {
       textColor:"#FFFFFF"
     },
     'default': {
-      ribbonColor:"333D47",
-      borderColor:"282B2F",
+      ribbonColor:"#333D47",
+      borderColor:"#282B2F",
       textColor:"#FFFFFF"
     },
   },

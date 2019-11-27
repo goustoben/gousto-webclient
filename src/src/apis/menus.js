@@ -1,14 +1,22 @@
-import fetch from 'utils/fetch'
+import { fetchRaw } from 'utils/fetch'
 import endpoint from 'config/endpoint'
 import routes from 'config/routes'
 
 const version = routes.version.menu
 
 export function fetchMenus(accessToken) {
-  return fetch(accessToken, `${endpoint('menu', version)}/menus`, {}, 'GET')
+  const options = {
+    accessToken,
+  }
+
+  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients'}, options)
 }
 
 export function fetchMenusWithUserId(accessToken, userId) {
-  return fetch(accessToken, `${endpoint('menu', version)}/menus?userId=${userId}`, {}, 'GET')
+  const options = {
+    accessToken,
+  }
+
+  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients', userId: userId}, options)
 }
 

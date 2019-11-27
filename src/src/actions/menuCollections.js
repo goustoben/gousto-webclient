@@ -8,7 +8,7 @@ import { collectionFilterChange } from 'actions/filters'
 import { menuLoadCollectionRecipes } from 'actions/menuLoadCollectionRecipes'
 import actionTypes from './actionTypes'
 
-export const menuLoadCollections = (date, noUrlChange) => {
+const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
   return async (dispatch, getState) => {
     const state = getState()
     const accessToken = state.auth.get('accessToken')
@@ -24,7 +24,15 @@ export const menuLoadCollections = (date, noUrlChange) => {
       },
       ...experiments,
     }
-    const { data: collections } = await fetchCollections(accessToken, '', args)
+
+    let collections
+    if (transformedCollections) {
+      collections = transformedCollections
+    } else {
+      const response = await fetchCollections(accessToken, '', args)
+      collections = response.data
+    }
+
     const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
     if (recommendationCollection && recommendationCollection.properties) {
       const { tutorial } = recommendationCollection.properties
@@ -40,7 +48,13 @@ export const menuLoadCollections = (date, noUrlChange) => {
       collections.filter(collection => (!['dairy-free', 'gluten-free'].includes(collection.slug)))
       :
       collections
-    dispatch(menuCollectionsReceive(collectionsFiltered))
+
+    if (transformedCollections) {
+      await dispatch(menuCollectionsReceive(collectionsFiltered))
+    } else {
+      dispatch(menuCollectionsReceive(collectionsFiltered))
+    }
+
     if (!noUrlChange) {
       let changeCollection = true
       const prevLoc = getState().routing.locationBeforeTransitions
@@ -66,7 +80,7 @@ export const menuLoadCollections = (date, noUrlChange) => {
   }
 }
 
-export const menuLoadCollectionsRecipes = (date) => {
+const menuLoadCollectionsRecipes = (date, transformedRecipes, transformedCollectionRecipes) => {
   return (dispatch, getState) => {
     const allRecipesCollections = getState().menuCollections.filter(isAllRecipes)
     const ids = Array.from(getState().menuCollections.keys())
@@ -77,7 +91,7 @@ export const menuLoadCollectionsRecipes = (date) => {
     }
 
     return Promise.all(
-      ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId)(dispatch, getState))
+      ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId, transformedRecipes, transformedCollectionRecipes)(dispatch, getState))
     )
       .then(() => {
         const state = getState()
@@ -88,4 +102,9 @@ export const menuLoadCollectionsRecipes = (date) => {
         })
       })
   }
+}
+
+export {
+  menuLoadCollections,
+  menuLoadCollectionsRecipes
 }

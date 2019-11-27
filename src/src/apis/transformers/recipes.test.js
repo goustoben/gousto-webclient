@@ -19,13 +19,14 @@ describe('recipesTransformer', () => {
               "data": [
                 {
                   "id": "a4f1eb8e-2eda-11e9-81ec-06399ef4685e",
-                  "type": "collections",
+                  "type": "collection",
                   "relationships": {
                     "recipes": {
                       "data": [
                         {
                           "type": "recipes",
-                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5"
+                          "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                          "core_recipe_id": "2106"
                         },
                       ]
                     }
@@ -37,7 +38,8 @@ describe('recipesTransformer', () => {
               "data": [
                 {
                   "type": "recipes",
-                  "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5"
+                  "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+                  "core_recipe_id": "2106"
                 }
               ]
             },
@@ -47,7 +49,7 @@ describe('recipesTransformer', () => {
       "included": [
         {
           "id": "a4f1eb8e-2eda-11e9-81ec-06399ef4685e",
-          "type": "collections",
+          "type": "collection",
           "attributes": {
             "meta_title": null,
             "long_title": null,
@@ -68,6 +70,7 @@ describe('recipesTransformer', () => {
               "name": "India",
               "alpha2": "IN",
             },
+            "core_recipe_id": "2106",
             "basics": [
               {
                 "name": "Butter",
@@ -87,9 +90,6 @@ describe('recipesTransformer', () => {
               }
             ],
             "description": "This mild chicken curry packs in flavours, no punches needed. Mild isn't a byword for boring, because its creamy sauce pairs perfectly with turmeric and sultana rice for a family-pleasing treat. ",
-            // "spice_level": {
-            //   "name": "mild"
-            // }, don't think we need
             "shelf_life": {
               "min_days": 2,
               "max_days": 3
@@ -228,7 +228,7 @@ describe('recipesTransformer', () => {
               },
             ],
             "recipe_developer": {
-              "name": "Hannah Mariaux", //do we need this?
+              "name": "Hannah Mariaux",
             },
             "name": "Mild Chicken Curry",
             "surcharges": {
@@ -362,7 +362,7 @@ describe('recipesTransformer', () => {
           }
         },
         {
-          "id": "488d5751-dcff-4985-88c0-bf745ff54904", //Looks like all ids are different
+          "id": "488d5751-dcff-4985-88c0-bf745ff54904",
           "type": "ingredient",
           "attributes": {
             "net_weight_mg": 4000,
@@ -422,9 +422,9 @@ describe('recipesTransformer', () => {
 
     const expectedFormat = [
       {
-        "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
-        "title": "Mild Chicken Curry",
-        "allergens": [
+        "id":"2106",
+        "title":"Mild Chicken Curry",
+        "allergens":[
           "milk"
         ],
         "basics": [
@@ -433,16 +433,17 @@ describe('recipesTransformer', () => {
           "Sugar",
           "Vegetable oil"
         ],
-        "boxType": "gourmet",
-        // "chef":null, //TODO: NEED FROM KUBA
-        "cookingTime": 25,
-        "cookingTimeFamily": 30,
-        "cuisine": "Indian",
-        "description": "This mild chicken curry packs in flavours, no punches needed. Mild isn't a byword for boring, because its creamy sauce pairs perfectly with turmeric and sultana rice for a family-pleasing treat. ",
-        "dietType": "meat",
-        "equipment": [],
-        "fiveADay": 2,
-        "ingredients": [ //reduced array to two ingredients for test data
+        "boxType":"gourmet",
+        // "chef":null,
+        "cookingTime":25,
+        "cookingTimeFamily":30,
+        "coreRecipeId": "2106",
+        "cuisine":"Indian",
+        "description":"This mild chicken curry packs in flavours, no punches needed. Mild isn't a byword for boring, because its creamy sauce pairs perfectly with turmeric and sultana rice for a family-pleasing treat. ",
+        "dietType":"meat",
+        "equipment":[],
+        "fiveADay":2,
+        "ingredients":[
           {
             "subIngredients": "brown onion",
             "media": {
@@ -476,22 +477,12 @@ describe('recipesTransformer', () => {
                 }
               ]
             },
-            // "energyKj":"150", don't use
-            // "additives":"", don't use
-            // "quantity":1,
-            // "energyKcal":"35", don't use
-            "name": "1 brown onion",
-            // "zone":"Ambient Normal (Small)", don't use
-            // "code":"I-02-SVG-VG-07", don't use
-            // "quantityUnit":"Each",
-            "allergens": [
+            "name":"1 brown onion",
+            "allergens":[
 
             ],
-            "label": "1 brown onion",
-            // "netWeight":"0.0800", don't use
-            // "volume":448, don't use
-            "id": "79dc3eeb-991b-4673-913e-fbdc339f1fcf", // TODO: check ids are correct vs old data
-            // "category":"Produce" don't use
+            "label":"1 brown onion",
+            "id":"79dc3eeb-991b-4673-913e-fbdc339f1fcf",
           },
           {
             "subIngredients": "Cornish cow's milk (100%)",
@@ -526,45 +517,30 @@ describe('recipesTransformer', () => {
                 }
               ]
             },
-            // "energyKj":"2413",don't use
-            // "additives":"",
-            // "quantity":2,
-            // "energyKcal":"586",don't use
-            "name": "40g Cornish clotted cream",
-            // "zone":"Chilled in insulation",don't use
-            // "code":"IQ-09-DAI-CR-11",don't use
-            // "quantityUnit":"Each",
-            "allergens": [
+            "name":"40g Cornish clotted cream",
+            "allergens":[
               "milk"
             ],
-            "label": "80g Cornish clotted cream",
-            // "netWeight":"0.0400",don't use
-            // "volume":147,don't use
-            "id": "488d5751-dcff-4985-88c0-bf745ff54904", // TODO: check ids are correct vs old data
-            // "category":"Dairy" don't use
+            "label":"80g Cornish clotted cream",
+            "id":"488d5751-dcff-4985-88c0-bf745ff54904",
           },
         ],
         "meals": [
           {
-            // "id":"3957", no longer needed
-            "numPortions": 2,
-            "surcharge": null,
-            // "ingredients":[] no longer needed
+            "numPortions":2,
+            "surcharge":null,
           },
           {
-            // "id":"3958", no longer needed
-            "numPortions": 4,
-            "surcharge": null,
-            // "ingredients":[] no longer needed
+            "numPortions":4,
+            "surcharge":null,
           }
         ],
         "media": {
           "images": [
             {
-              "title": "Mild Chicken Curry", //NEED FROM KUBA
-              // "description":"", no longer needed
-              "type": "mood-image",
-              "urls": [
+              "title":"Mild Chicken Curry",
+              "type":"mood-image",
+              "urls":[
                 {
                   "src": "https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x50.jpg",
                   "width": 50
@@ -592,10 +568,9 @@ describe('recipesTransformer', () => {
               ]
             },
             {
-              "title": "Mild Chicken Curry", //NEED FROM KUBA
-              // "description":"", no longer needed
-              "type": "homepage-image",
-              "urls": [
+              "title":"Mild Chicken Curry",
+              "type":"homepage-image",
+              "urls":[
                 {
                   "src": "https://production-media.gousto.co.uk/cms/homepage-image/1995-x50.jpg",
                   "width": 50
@@ -648,40 +623,34 @@ describe('recipesTransformer', () => {
             "fat": 29.062
           }
         },
-        // "range":"everyday_favourites", dont think we need
-        "rating": {
-          "count": 10375,
-          // "loveCount":9093, no longer need
-          "average": 4.44
+        "rating":{
+          "count":10375,
+          "average":4.44
         },
         "shelfLifeDays": "2-3",
         "taxonomy": [
           {
-            // "id":"1", no longer need
-            "name": "Dietary attributes",
-            "slug": "dietary-attributes",
-            "tags": [
+
+            "name":"Dietary attributes",
+            "slug":"dietary-attributes",
+            "tags":[
               {
-                // "id":"1", no longer need
-                "name": "Gluten free",
-                "slug": "gluten-free",
-                // "properties":null no longer need
+                "name":"Gluten free",
+                "slug":"gluten-free",
               }
             ]
           },
           {
-            // "id":"2", no longer need
-            "name": "Food Brands",
-            "slug": "food-brands",
-            "tags": [
+            "name":"Food Brands",
+            "slug":"food-brands",
+            "tags":[
               {
-                // "id":"3", no longer need
-                "name": "Everyday Favourites",
-                "slug": "everyday-favourites",
-                "properties": {
-                  "ribbonColor": "#F4EFE9",
-                  "borderColor": "#C6BEB4",
-                  "textColor": "#F6323E"
+                "name":"Everyday Favourites",
+                "slug":"everyday-favourites",
+                "properties":{
+                  "ribbonColor":"#F4EFE9",
+                  "borderColor":"#C6BEB4",
+                  "textColor":"#F6323E"
                 }
               }
             ]
@@ -691,7 +660,7 @@ describe('recipesTransformer', () => {
       }
     ]
 
-    const result = recipesTransformer(menuServiceResponse)
+    const result = recipesTransformer(menuServiceResponse.data[0], menuServiceResponse)
     expect(result).toEqual(expectedFormat)
   })
 

@@ -1,6 +1,6 @@
-import { ingredientTransformer } from './ingredientTransformer'
+import { ingredientTransformer, image } from './ingredientTransformer'
 
-describe('dateTransformer', () => {
+describe('ingredientTransformer', () => {
   test('should return recipe data', () => {
     const menuServiceIngredient = {
       "id": "488d5751-dcff-4985-88c0-bf745ff54904",
@@ -97,6 +97,54 @@ describe('dateTransformer', () => {
             ]
           }
         ]
+      },
+      "subIngredients":"Cornish cow's milk (100%)",
+    }
+
+    const result = ingredientTransformer(menuServiceIngredient)
+    expect(result).toEqual(expectedFormat)
+  })
+
+  test('if no images returns an empty array', () => {
+    const menuServiceIngredient = {
+      "id": "488d5751-dcff-4985-88c0-bf745ff54904",
+      "type": "ingredient",
+      "attributes": {
+        "net_weight_mg": 40000,
+        "sub_ingredients": "Cornish cow's milk (100%)",
+        "images": null,
+        "label": "Clotted cream (v) (40g)",
+        "allergens": [
+          {
+            "name": "milk",
+            "contain_type": "contains",
+            "slug": "milk"
+          }
+        ],
+        "dietary_claims": [
+          {
+            "name": "Gluten free",
+            "slug": "gluten-free"
+          },
+          {
+            "name": "Vegetarian",
+            "slug": "vegetarian"
+          }
+        ],
+        "name": "40g Cornish clotted cream"
+      },
+      "label": "80g Cornish clotted cream"
+    }
+
+    const expectedFormat = {
+      "allergens":[
+        "milk"
+      ],
+      "id":"488d5751-dcff-4985-88c0-bf745ff54904",
+      "label":"80g Cornish clotted cream",
+      "name":"40g Cornish clotted cream",
+      "media":{
+        "images":[]
       },
       "subIngredients":"Cornish cow's milk (100%)",
     }

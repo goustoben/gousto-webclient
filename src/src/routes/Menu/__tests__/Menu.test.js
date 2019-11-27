@@ -3,6 +3,7 @@ import { shallow, mount } from 'enzyme'
 import Immutable from 'immutable'
 
 import fetchData from 'routes/Menu/fetchData'
+import { menuServiceConfig } from 'config/menuService'
 
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
@@ -49,6 +50,17 @@ describe('Menu', () => {
   let productsLoadStock
   let productsLoadProducts
   let requiredProps
+  let mountOptions
+
+  menuServiceConfig.isEnabled = false
+
+  const getStateMock = () => ({
+    features: Immutable.fromJS({
+      menuService: {
+        value: false
+      }
+    })
+  })
 
   beforeEach(() => {
     productsLoadStock = jest.fn()
@@ -88,8 +100,19 @@ describe('Menu', () => {
       )
     }
   })
+
   describe('rendering', () => {
     let wrapper
+
+    mountOptions = {
+      context: {
+        store: {
+          dispatch: jest.fn(),
+          getState: getStateMock,
+        },
+      },
+    }
+
     afterEach(() => {
       jest.clearAllMocks()
     })
@@ -105,13 +128,7 @@ describe('Menu', () => {
             disabled={false}
             recipes={['25', '26', '27']}
           />,
-          {
-            context: {
-              store: {
-                dispatch: jest.fn()
-              }
-            }
-          }
+          mountOptions
         )
       })
 
@@ -137,6 +154,7 @@ describe('Menu', () => {
             recipes={['25', '26', '27']}
             jfyTutorialFlag
           />,
+          mountOptions
         )
         expect(wrapper.find(JustForYouTutorial).length).toBe(1)
       })
@@ -172,6 +190,7 @@ describe('Menu', () => {
           recipes={['25', '26', '27']}
           isLoading
         />,
+        mountOptions
       )
       expect(wrapper.find('MenuRecipes').prop('showLoading')).toBe(true)
     })
@@ -188,6 +207,7 @@ describe('Menu', () => {
           query={{ num_portions: '4' }}
           storeOrderId={'1234'}
         />,
+        mountOptions
       )
       expect(wrapper.find('MenuRecipes').prop('showLoading')).toBe(false)
     })
@@ -202,50 +222,22 @@ describe('Menu', () => {
           disabled={false}
           isLoading
         />,
+        mountOptions
       )
       expect(wrapper.find('MenuRecipes').prop('showLoading')).toBe(false)
-    })
-  })
-
-  describe('fadeCSS', () => {
-    let wrapper
-
-    test('should render fadeOut', () => {
-      wrapper = shallow(
-        <Menu
-          {...requiredProps}
-          isLoading
-        />,
-      )
-      const elementWithFadeCSS = wrapper.find('MenuRecipes')
-
-      expect(elementWithFadeCSS.prop('fadeCss')).toEqual('fadeOut')
-    })
-
-    test('should render willFade', () => {
-      wrapper = shallow(
-        <Menu
-          {...requiredProps}
-          isLoading={false}
-        />,
-      )
-      const elementWithFadeCSS = wrapper.find('MenuRecipes')
-
-      expect(elementWithFadeCSS.prop('fadeCss')).toEqual('willFade')
     })
   })
 
   describe('componentDidMount', () => {
     let menuLoadBoxPrices
     let basketNumPortionChangeSpy
-    let mountOptions
     let wrapper
 
     beforeEach(() => {
       mountOptions = {
         context: {
           store: {
-            getState: () => { },
+            getState: getStateMock,
             subscribe: () => { },
           },
         },
@@ -325,7 +317,7 @@ describe('Menu', () => {
         {
           context: {
             store: {
-              getState: () => { },
+              getState: getStateMock,
               subscribe: () => { }
             },
           },
@@ -348,6 +340,24 @@ describe('Menu', () => {
         )
 
         expect(productsLoadStock).toHaveBeenCalled()
+        expect(productsLoadProducts).toHaveBeenCalled()
+        expect(productsLoadProducts).toHaveBeenCalledWith('2019-05-14 12:00:00')
+      })
+
+      test('are called when cutOffDate is present and we are using menuService', async () => {
+        menuServiceConfig.isEnabled = true
+        wrapper = await mount(
+          <Menu
+            {...requiredProps}
+            cutOffDate="2019-05-14 12:00:00"
+            productsLoadStock={productsLoadStock}
+            productsLoadProducts={productsLoadProducts}
+          />,
+          mountOptions
+        )
+
+        await expect(productsLoadStock).toHaveBeenCalled()
+        expect(productsLoadProducts).toHaveBeenCalled()
         expect(productsLoadProducts).toHaveBeenCalledWith('2019-05-14 12:00:00')
       })
 
@@ -429,7 +439,7 @@ describe('Menu', () => {
           {
             context: {
               store: {
-                getState: () => { },
+                getState: getStateMock,
                 subscribe: () => { }
               },
             },
@@ -500,7 +510,7 @@ describe('Menu', () => {
             {
               context: {
                 store: {
-                  getState: () => { },
+                  getState: getStateMock,
                   subscribe: () => { }
                 },
               },
@@ -566,7 +576,7 @@ describe('Menu', () => {
             {
               context: {
                 store: {
-                  getState: () => { },
+                  getState: getStateMock,
                   subscribe: () => { }
                 },
               },
@@ -618,9 +628,11 @@ describe('Menu', () => {
   })
 
   describe('check query param in componentDidMount', () => {
+
     describe('when no foodBrand query param in URL', () => {
       test('should call filterRecipeGrouping with null if foodBrand is selected', async () => {
         const filterRecipeGrouping = jest.fn()
+
         await mount(
           <Menu
             {...requiredProps}
@@ -636,7 +648,7 @@ describe('Menu', () => {
           {
             context: {
               store: {
-                getState: () => ({}),
+                getState: getStateMock,
                 subscribe: () => { },
               },
             },
@@ -665,7 +677,7 @@ describe('Menu', () => {
           {
             context: {
               store: {
-                getState: () => ({}),
+                getState: getStateMock,
                 subscribe: () => { },
               },
             },
@@ -703,7 +715,7 @@ describe('Menu', () => {
           {
             context: {
               store: {
-                getState: () => ({}),
+                getState: getStateMock,
                 subscribe: () => { },
               },
             },
@@ -742,7 +754,7 @@ describe('Menu', () => {
           {
             context: {
               store: {
-                getState: () => ({}),
+                getState: getStateMock,
                 subscribe: () => { },
               },
             },
@@ -774,7 +786,7 @@ describe('Menu', () => {
         {
           context: {
             store: {
-              getState: () => { },
+              getState: getStateMock,
               subscribe: () => { }
             },
           },
@@ -867,6 +879,17 @@ describe('Menu', () => {
   })
 
   describe('componentWillReceiveProps', () => {
+    beforeEach(() => {
+      mountOptions = {
+        context: {
+          store: {
+            getState: getStateMock,
+            subscribe: () => { },
+          },
+        },
+      }
+    })
+
     afterEach(() => {
       jest.clearAllMocks()
     })
@@ -878,20 +901,43 @@ describe('Menu', () => {
           tariffId={1}
           menuVariation="menuA"
         />,
+        mountOptions
       )
       wrapper.instance().componentWillReceiveProps({ menuVariation: 'menuB' })
       expect(fetchData).toHaveBeenCalledTimes(2)
     })
 
-    test('should call menuLoadBoxPrices once if not disabled & tariffId has changed', () => {
+    test('should call menuLoadBoxPrices twice if not disabled & tariffId has changed and not using menuService', () => {
+      menuServiceConfig.isEnabled = false
       const menuLoadBoxPrices = jest.fn()
+
       const wrapper = shallow(
         <Menu
           {...requiredProps}
           menuLoadBoxPrices={menuLoadBoxPrices}
           tariffId={1}
         />,
+        mountOptions
       )
+
+      wrapper.setProps({ tariffId: 2 })
+      expect(menuLoadBoxPrices).toHaveBeenCalledTimes(2)
+      expect(menuLoadBoxPrices).toHaveBeenCalledWith()
+    })
+
+    test('should call menuLoadBoxPrices twice if not disabled & tariffId has changed and using menuService', async () => {
+      const menuLoadBoxPrices = jest.fn()
+      menuServiceConfig.isEnabled = true
+
+      const wrapper = await shallow(
+        <Menu
+          {...requiredProps}
+          menuLoadBoxPrices={menuLoadBoxPrices}
+          tariffId={1}
+        />,
+        mountOptions
+      )
+
       wrapper.setProps({ tariffId: 2 })
       expect(menuLoadBoxPrices).toHaveBeenCalledTimes(2)
       expect(menuLoadBoxPrices).toHaveBeenCalledWith()
@@ -910,6 +956,14 @@ describe('Menu', () => {
   })
 
   describe('Filtered Recipe Page ', () => {
+    mountOptions = {
+      context: {
+        store: {
+          getState: getStateMock,
+        },
+      },
+    }
+
     test('should render FoodBrandPage if foodBrand selected or query param foodBrand has a value ', () => {
       const wrapper = shallow(
         <Menu
@@ -923,7 +977,9 @@ describe('Menu', () => {
           query={{
             foodBrand: 'takeaway-night'
           }}
-        />)
+        />,
+        mountOptions
+      )
 
       expect(wrapper.find('FoodBrandPage')).toHaveLength(1)
       expect(wrapper.find('MenuRecipes')).toHaveLength(0)
@@ -942,7 +998,8 @@ describe('Menu', () => {
           query={{
             thematic: 'gousto-x-wagamama'
           }}
-        />)
+        />, mountOptions
+      )
       expect(wrapper.find('ThematicsPage')).toHaveLength(1)
       expect(wrapper.find('MenuRecipes')).toHaveLength(0)
     })
