@@ -13,7 +13,7 @@ import FeaturedRecipe from 'Recipe/FeaturedRecipe'
 
 import { Pill } from 'goustouicomponents'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
-import { RecipeDisclaimer } from 'routes/Menu/RecipeDisclaimer'
+import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 
 describe('<FeaturedRecipe />', () => {
   let wrapper
@@ -54,8 +54,8 @@ describe('<FeaturedRecipe />', () => {
   })
 
   test('should contain one recipe disclaimer ', () => {
-    expect(wrapper.find(RecipeDisclaimer)).toHaveLength(1)
-    expect(wrapper.find(RecipeDisclaimer).prop('id')).toEqual('1')
+    expect(wrapper.find(RecipeDisclaimerContainer)).toHaveLength(1)
+    expect(wrapper.find(RecipeDisclaimerContainer).prop('id')).toEqual('1')
   })
 
   test('should contain one TasteScore component', () => {

@@ -7,10 +7,10 @@ import DefaultDetail from 'Recipe/Detail/DefaultDetail'
 import { CookingInstructions } from 'Recipe/CookingInstructions'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
-import { RecipeDisclaimer } from 'routes/Menu/RecipeDisclaimer'
+import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 
 jest.mock('routes/Menu/RecipeDisclaimer', () => ({
-  RecipeDisclaimer: () => <div></div>
+  RecipeDisclaimerContainer: () => <div></div>
 }))
 
 describe('<DefaultDetail />', () => {
@@ -74,8 +74,8 @@ describe('<DefaultDetail />', () => {
   })
 
   test('should contain one recipe disclaimer ', () => {
-    expect(wrapper.find(RecipeDisclaimer)).toHaveLength(1)
-    expect(wrapper.find(RecipeDisclaimer).prop('id')).toEqual('123')
+    expect(wrapper.find(RecipeDisclaimerContainer)).toHaveLength(1)
+    expect(wrapper.find(RecipeDisclaimerContainer).prop('id')).toEqual('123')
   })
 
   describe('Equipment required', () => {

@@ -7,7 +7,7 @@ import { recipePropTypes } from 'Recipe'
 import RangeBadge from 'Recipe/RangeBadge'
 import { getChef } from 'utils/recipe'
 import { Pill } from 'goustouicomponents'
-import { RecipeDisclaimer } from 'routes/Menu/RecipeDisclaimer'
+import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import css from './FeaturedRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
@@ -67,7 +67,7 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
               </div>
               <RecommendedBadge isRecommendedRecipe={isRecommendedRecipe} features={features} />
               <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
-              <RecipeDisclaimer id={id} />
+              <RecipeDisclaimerContainer id={id} />
             </div>
             <div className={css.buttonContainer}>
               {showShortlistButton &&

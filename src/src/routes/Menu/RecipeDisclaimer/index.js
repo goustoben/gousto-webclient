@@ -1,1 +1,1 @@
-export { RecipeDisclaimerContainer as RecipeDisclaimer } from './RecipeDisclaimerContainer'
+export { RecipeDisclaimerContainer } from './RecipeDisclaimerContainer'

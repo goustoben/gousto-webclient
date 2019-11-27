@@ -5,7 +5,7 @@ import Immutable from 'immutable'
 import RangeBadge from 'Recipe/RangeBadge'
 import { recipePropTypes } from 'Recipe'
 import { Pill } from 'goustouicomponents'
-import { RecipeDisclaimer } from 'routes/Menu/RecipeDisclaimer'
+import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import css from './GridRecipe.css'
 import Chef from '../Chef'
 import Title from '../Title'
@@ -69,7 +69,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
           </div>
         </div>
         <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
-        <RecipeDisclaimer id={id} />
+        <RecipeDisclaimerContainer id={id} />
         <div className={css.buttonContainer}>
           {showShortlistButton &&
             <ShortlistButton id={id} stock={stock} view={view} position={position} showShortlistFirstStep={showShortlistFirstStep} />
