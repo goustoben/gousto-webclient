@@ -52,6 +52,24 @@ const formatIngredients = (normalisedRelationships, normalisedData) => {
   })
 }
 
+const healthKitchenTransformer = (healthKitchen) => {
+  if (!healthKitchen) {
+    return null
+  }
+
+  return {
+    disclaimer: healthKitchen.disclaimer,
+    micronutrients: healthKitchen.micronutrients.map(micronutrient => ({
+      name: micronutrient.name,
+      content: {
+        amount: micronutrient.content.amount,
+        unit: micronutrient.content.unit
+      },
+      nrvPercent: micronutrient.nrv_percent
+    }))
+  }
+}
+
 const imageUrlMap = (urls) => {
   const urlsMap = urls.map((url) => {
     return {
@@ -85,6 +103,7 @@ export {
   basicsTransformer,
   cropsTransformer,
   formatIngredients,
+  healthKitchenTransformer,
   imageUrlMap,
   shelfLifeTransformer,
   taxonomyTransformer

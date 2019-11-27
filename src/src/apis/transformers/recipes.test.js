@@ -1,6 +1,6 @@
 import { recipesTransformer } from './recipes'
 
-describe('dateTransformer', () => {
+describe('recipesTransformer', () => {
   test('should return recipe data', () => {
     const menuServiceResponse = {
       "status": "ok",
@@ -422,55 +422,55 @@ describe('dateTransformer', () => {
 
     const expectedFormat = [
       {
-        "id":"3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
-        "title":"Mild Chicken Curry",
-        "allergens":[
+        "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+        "title": "Mild Chicken Curry",
+        "allergens": [
           "milk"
         ],
-        "basics":[
+        "basics": [
           "Butter",
           "Salt",
           "Sugar",
           "Vegetable oil"
         ],
-        "boxType":"gourmet",
+        "boxType": "gourmet",
         // "chef":null, //TODO: NEED FROM KUBA
-        "cookingTime":25,
-        "cookingTimeFamily":30,
-        "cuisine":"Indian",
-        "description":"This mild chicken curry packs in flavours, no punches needed. Mild isn't a byword for boring, because its creamy sauce pairs perfectly with turmeric and sultana rice for a family-pleasing treat. ",
-        "dietType":"meat",
-        "equipment":[],
-        "fiveADay":2,
-        "ingredients":[ //reduced array to two ingredients for test data
+        "cookingTime": 25,
+        "cookingTimeFamily": 30,
+        "cuisine": "Indian",
+        "description": "This mild chicken curry packs in flavours, no punches needed. Mild isn't a byword for boring, because its creamy sauce pairs perfectly with turmeric and sultana rice for a family-pleasing treat. ",
+        "dietType": "meat",
+        "equipment": [],
+        "fiveADay": 2,
+        "ingredients": [ //reduced array to two ingredients for test data
           {
-            "subIngredients":"brown onion",
-            "media":{
-              "images":[
+            "subIngredients": "brown onion",
+            "media": {
+              "images": [
                 {
-                  "title":"Onion",
-                  "description":"Onion",
-                  "type":"ingredient-image",
-                  "urls":[
+                  "title": "Onion",
+                  "description": "Onion",
+                  "type": "ingredient-image",
+                  "urls": [
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x50.jpg",
-                      "width":50
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x50.jpg",
+                      "width": 50
                     },
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x200.jpg",
-                      "width":200
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x200.jpg",
+                      "width": 200
                     },
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x700.jpg",
-                      "width":700
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x700.jpg",
+                      "width": 700
                     },
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x1000.jpg",
-                      "width":1000
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x1000.jpg",
+                      "width": 1000
                     },
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x1500.jpg",
-                      "width":1500
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/onion-x1500.jpg",
+                      "width": 1500
                     }
                   ]
                 }
@@ -480,47 +480,47 @@ describe('dateTransformer', () => {
             // "additives":"", don't use
             // "quantity":1,
             // "energyKcal":"35", don't use
-            "name":"1 brown onion",
+            "name": "1 brown onion",
             // "zone":"Ambient Normal (Small)", don't use
             // "code":"I-02-SVG-VG-07", don't use
             // "quantityUnit":"Each",
-            "allergens":[
+            "allergens": [
 
             ],
-            "label":"1 brown onion",
+            "label": "1 brown onion",
             // "netWeight":"0.0800", don't use
             // "volume":448, don't use
-            "id":"79dc3eeb-991b-4673-913e-fbdc339f1fcf", // TODO: check ids are correct vs old data
+            "id": "79dc3eeb-991b-4673-913e-fbdc339f1fcf", // TODO: check ids are correct vs old data
             // "category":"Produce" don't use
           },
           {
-            "subIngredients":"Cornish cow's milk (100%)",
-            "media":{
-              "images":[
+            "subIngredients": "Cornish cow's milk (100%)",
+            "media": {
+              "images": [
                 {
-                  "title":"Cornish clotted cream",
-                  "description":"Cornish clotted cream",
-                  "type":"ingredient-image",
-                  "urls":[
+                  "title": "Cornish clotted cream",
+                  "description": "Cornish clotted cream",
+                  "type": "ingredient-image",
+                  "urls": [
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x50.jpg",
-                      "width":50
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x50.jpg",
+                      "width": 50
                     },
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x200.jpg",
-                      "width":200
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x200.jpg",
+                      "width": 200
                     },
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x700.jpg",
-                      "width":700
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x700.jpg",
+                      "width": 700
                     },
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x1000.jpg",
-                      "width":1000
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x1000.jpg",
+                      "width": 1000
                     },
                     {
-                      "src":"https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x1500.jpg",
-                      "width":1500
+                      "src": "https://s3-eu-west-1.amazonaws.com/s3-gousto-radishes-media/cms/ingredient-image/clotted-cream-2-x1500.jpg",
+                      "width": 1500
                     }
                   ]
                 }
@@ -530,102 +530,102 @@ describe('dateTransformer', () => {
             // "additives":"",
             // "quantity":2,
             // "energyKcal":"586",don't use
-            "name":"40g Cornish clotted cream",
+            "name": "40g Cornish clotted cream",
             // "zone":"Chilled in insulation",don't use
             // "code":"IQ-09-DAI-CR-11",don't use
             // "quantityUnit":"Each",
-            "allergens":[
+            "allergens": [
               "milk"
             ],
-            "label":"80g Cornish clotted cream",
+            "label": "80g Cornish clotted cream",
             // "netWeight":"0.0400",don't use
             // "volume":147,don't use
-            "id":"488d5751-dcff-4985-88c0-bf745ff54904", // TODO: check ids are correct vs old data
+            "id": "488d5751-dcff-4985-88c0-bf745ff54904", // TODO: check ids are correct vs old data
             // "category":"Dairy" don't use
           },
         ],
-        "meals":[
+        "meals": [
           {
             // "id":"3957", no longer needed
-            "numPortions":2,
-            "surcharge":null,
+            "numPortions": 2,
+            "surcharge": null,
             // "ingredients":[] no longer needed
           },
           {
             // "id":"3958", no longer needed
-            "numPortions":4,
-            "surcharge":null,
+            "numPortions": 4,
+            "surcharge": null,
             // "ingredients":[] no longer needed
           }
         ],
-        "media":{
-          "images":[
+        "media": {
+          "images": [
             {
-              "title":"Mild Chicken Curry", //NEED FROM KUBA
+              "title": "Mild Chicken Curry", //NEED FROM KUBA
               // "description":"", no longer needed
-              "type":"mood-image",
-              "urls":[
+              "type": "mood-image",
+              "urls": [
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x50.jpg",
-                  "width":50
+                  "src": "https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x50.jpg",
+                  "width": 50
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x200.jpg",
-                  "width":200
+                  "src": "https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x200.jpg",
+                  "width": 200
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x400.jpg",
-                  "width":400
+                  "src": "https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x400.jpg",
+                  "width": 400
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x700.jpg",
-                  "width":700
+                  "src": "https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x700.jpg",
+                  "width": 700
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x1000.jpg",
-                  "width":1000
+                  "src": "https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x1000.jpg",
+                  "width": 1000
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x1500.jpg",
-                  "width":1500
+                  "src": "https://production-media.gousto.co.uk/cms/mood-image/1995--Easy-Chicken-Curry-x1500.jpg",
+                  "width": 1500
                 }
               ]
             },
             {
-              "title":"Mild Chicken Curry", //NEED FROM KUBA
+              "title": "Mild Chicken Curry", //NEED FROM KUBA
               // "description":"", no longer needed
-              "type":"homepage-image",
-              "urls":[
+              "type": "homepage-image",
+              "urls": [
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/homepage-image/1995-x50.jpg",
-                  "width":50
+                  "src": "https://production-media.gousto.co.uk/cms/homepage-image/1995-x50.jpg",
+                  "width": 50
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/homepage-image/1995-x200.jpg",
-                  "width":200
+                  "src": "https://production-media.gousto.co.uk/cms/homepage-image/1995-x200.jpg",
+                  "width": 200
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/homepage-image/1995-x400.jpg",
-                  "width":400
+                  "src": "https://production-media.gousto.co.uk/cms/homepage-image/1995-x400.jpg",
+                  "width": 400
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/homepage-image/1995-x700.jpg",
-                  "width":700
+                  "src": "https://production-media.gousto.co.uk/cms/homepage-image/1995-x700.jpg",
+                  "width": 700
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/homepage-image/1995-x1000.jpg",
-                  "width":1000
+                  "src": "https://production-media.gousto.co.uk/cms/homepage-image/1995-x1000.jpg",
+                  "width": 1000
                 },
                 {
-                  "src":"https://production-media.gousto.co.uk/cms/homepage-image/1995-x1500.jpg",
-                  "width":1500
+                  "src": "https://production-media.gousto.co.uk/cms/homepage-image/1995-x1500.jpg",
+                  "width": 1500
                 }
               ]
             }
           ]
         },
-        "nutritionalInformation":{
-          "per100g":{
+        "nutritionalInformation": {
+          "per100g": {
             "carbs": 17.393,
             "carbsSugars": 4.631,
             "energyKcal": 165,
@@ -636,77 +636,303 @@ describe('dateTransformer', () => {
             "protein": 8.811,
             "salt": 0.518,
           },
-          "perPortion":{
-            "carbsSugars":20.758,
-            "protein":39.494,
-            "carbs":77.966,
-            "energyKj":3108,
-            "fatSaturates":16.922,
-            "energyKcal":739,
-            "fibre":5.154,
-            "salt":2.323,
-            "fat":29.062
+          "perPortion": {
+            "carbsSugars": 20.758,
+            "protein": 39.494,
+            "carbs": 77.966,
+            "energyKj": 3108,
+            "fatSaturates": 16.922,
+            "energyKcal": 739,
+            "fibre": 5.154,
+            "salt": 2.323,
+            "fat": 29.062
           }
         },
         // "range":"everyday_favourites", dont think we need
-        "rating":{
-          "count":10375,
+        "rating": {
+          "count": 10375,
           // "loveCount":9093, no longer need
-          "average":4.44
+          "average": 4.44
         },
-        "shelfLifeDays":"2-3",
-        "taxonomy":[
+        "shelfLifeDays": "2-3",
+        "taxonomy": [
           {
             // "id":"1", no longer need
-            "name":"Dietary attributes",
-            "slug":"dietary-attributes",
-            "tags":[
+            "name": "Dietary attributes",
+            "slug": "dietary-attributes",
+            "tags": [
               {
                 // "id":"1", no longer need
-                "name":"Gluten free",
-                "slug":"gluten-free",
+                "name": "Gluten free",
+                "slug": "gluten-free",
                 // "properties":null no longer need
               }
             ]
           },
           {
             // "id":"2", no longer need
-            "name":"Food Brands",
-            "slug":"food-brands",
-            "tags":[
+            "name": "Food Brands",
+            "slug": "food-brands",
+            "tags": [
               {
                 // "id":"3", no longer need
-                "name":"Everyday Favourites",
-                "slug":"everyday-favourites",
-                "properties":{
-                  "ribbonColor":"#F4EFE9",
-                  "borderColor":"#C6BEB4",
-                  "textColor":"#F6323E"
+                "name": "Everyday Favourites",
+                "slug": "everyday-favourites",
+                "properties": {
+                  "ribbonColor": "#F4EFE9",
+                  "borderColor": "#C6BEB4",
+                  "textColor": "#F6323E"
                 }
               }
             ]
           }
         ],
-        // "availability":[], no longer need
-        // "themed":false, no longer need
-        // "rangeId":19, no longer need
-        // "tags":[
-        //   "Not Healthy"
-        // ], no longer need
-        // "dishType":"Curry", no longer need
-        // "base":"Rice", no longer need
-        // "url":"https://radishes-frontend.gousto.info/cookbook/chicken-recipes/mild-chicken-curry", no longer need
-        // "goustoReference":"1995", no longer need
-        // "slug":"mild-chicken-curry", no longer need
-        // "tasteAward":false, no longer needed
-        // "isPublished":true, no longr need
-        // "isRecommended":false,
-        // "protein":"Chicken Breast", no longer need
+        "healthKitchen": null
       }
     ]
 
     const result = recipesTransformer(menuServiceResponse)
     expect(result).toEqual(expectedFormat)
+  })
+
+  describe('when given health kitchen recipe', () => {
+    test('should transform health kitchen information', () => {
+      const healthKitchenInfo = {
+        "disclaimer": "High in iron, magnesium and b vitamins, reducing tiredness and fatigue",
+        "micronutrients": [
+          {
+            "name": "Iron",
+            "content": {
+              "amount": 6.5,
+              "unit": "µg"
+            },
+            "nrv_percent": 46.4
+          },
+          {
+            "name": "Thiamin",
+            "content": {
+              "amount": 0.4,
+              "unit": "mg"
+            },
+            "nrv_percent": 36.5
+          },
+          {
+            "name": "Niacin",
+            "content": {
+              "amount": 18,
+              "unit": "mg"
+            },
+            "nrv_percent": 112.2
+          },
+          {
+            "name": "B6",
+            "content": {
+              "amount": 1.1,
+              "unit": "mg"
+            },
+            "nrv_percent": 77
+          },
+          {
+            "name": "Pantothenic acid",
+            "content": {
+              "amount": 3.1,
+              "unit": "mg"
+            },
+            "nrv_percent": 51.4
+          },
+          {
+            "name": "Magnesium",
+            "content": {
+              "amount": 197.5,
+              "unit": "mg"
+            },
+            "nrv_percent": 52.7
+          }
+        ]
+      }
+
+      const menuServiceResponse = {
+        "status": "ok",
+        "meta": {},
+        "data": [
+          {
+            "id": "295",
+            "type": "menus",
+            "attributes": {
+              "name": "default",
+              "is_default": true,
+              "core_menu_id": "295"
+            },
+            "relationships": {
+              "recipes": {
+                "data": [
+                  {
+                    "type": "recipes",
+                    "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5"
+                  }
+                ]
+              },
+            }
+          }
+        ],
+        "included": [
+          {
+            "id": "3a1f873f-8a62-4ca8-a842-32ca52bee9d5",
+            "type": "recipe",
+            "attributes": {
+              "country": {
+                "name": "India",
+                "alpha2": "IN",
+              },
+              "basics": [],
+              "description": "Foo",
+              "shelf_life": {
+                "min_days": 2,
+                "max_days": 3
+              },
+              "food_brand": {
+                "name": "Everyday Favourites",
+                "slug": "everyday-favourites"
+              },
+              "box_type": {
+                "name": "Gourmet",
+                "slug": "gourmet",
+              },
+              "country_secondary": null,
+              "gousto_reference": 1995,
+              "difficulty_level": null,
+              "images": [],
+              "five_a_day": 2,
+              "cuisine": {
+                "name": "Indian",
+                "slug": "indian",
+              },
+              "equipment": [],
+              "diet_type": {
+                "name": "Meat",
+                "slug": "meat"
+              },
+              "allergens": [],
+              "prep_times": {
+                "for2": 25,
+                "for4": 30
+              },
+              "dietary_claims": [
+                {
+                  "name": "Gluten free",
+                  "slug": "gluten-free"
+                },
+              ],
+              "recipe_developer": {
+                "name": "Hannah Mariaux", //do we need this?
+              },
+              "name": "Mild Chicken Curry",
+              "surcharges": {
+                "for2": null,
+                "for4": null
+              },
+              "dish_types": [
+                {
+                  "name": "Curry",
+                }
+              ],
+              "rating": {
+                "average": 4.44,
+                "count": 10375,
+                "love_count": 7383
+              },
+              "nutritional_information": {
+                "per_portion": {
+                  "fibre_mg": 5154,
+                  "protein_mg": 39494,
+                  "net_weight_mg": 726500,
+                  "energy_kj": 3108,
+                  "carbs_sugars_mg": 20758,
+                  "fat_saturates_mg": 16922,
+                  "carbs_mg": 77966,
+                  "salt_mg": 2323,
+                  "fat_mg": 29062,
+                  "energy_kcal": 739
+                },
+                "per_100g": {
+                  "fibre_mg": 1150,
+                  "protein_mg": 8811,
+                  "net_weight_mg": 726500,
+                  "energy_kj": 693,
+                  "carbs_sugars_mg": 4631,
+                  "fat_saturates_mg": 3775,
+                  "carbs_mg": 17393,
+                  "salt_mg": 518,
+                  "fat_mg": 6483,
+                  "energy_kcal": 165
+                }
+              },
+              "health_kitchen": healthKitchenInfo
+            },
+            "relationships": {
+              "ingredients": {
+                "data": []
+              }
+            }
+          }
+        ]
+      }
+
+      const result = recipesTransformer(menuServiceResponse)
+      expect(result[0].healthKitchen).toEqual({
+        disclaimer: "High in iron, magnesium and b vitamins, reducing tiredness and fatigue",
+        micronutrients: [
+          {
+            name: "Iron",
+            content: {
+              amount: 6.5,
+              unit: "µg"
+            },
+            nrvPercent: 46.4
+          },
+          {
+            name: "Thiamin",
+            content: {
+              amount: 0.4,
+              unit: "mg"
+            },
+            nrvPercent: 36.5
+          },
+          {
+            name: "Niacin",
+            content: {
+              amount: 18,
+              unit: "mg"
+            },
+            nrvPercent: 112.2
+          },
+          {
+            name: "B6",
+            content: {
+              amount: 1.1,
+              unit: "mg"
+            },
+            nrvPercent: 77
+          },
+          {
+            name: "Pantothenic acid",
+            content: {
+              amount: 3.1,
+              unit: "mg"
+            },
+            nrvPercent: 51.4
+          },
+          {
+            name: "Magnesium",
+            content: {
+              amount: 197.5,
+              unit: "mg"
+            },
+            nrvPercent: 52.7
+          }
+        ]
+      })
+    })
   })
 })
 
