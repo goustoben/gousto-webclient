@@ -25,8 +25,11 @@ export function snakeToCamelCase(text) {
   return text.replace(/"\w+?":/g, key => key.replace(/_\w/g, match => match[1].toUpperCase()))
 }
 
-export function JSONParse(text) { // eslint-disable-line new-cap
+export function JSONParse(text, useMenuService) { // eslint-disable-line new-cap
   try {
+    if (useMenuService) {
+      return JSON.parse(text)
+    }
     const camelCaseText = snakeToCamelCase(text)
 
     return JSON.parse(camelCaseText)
@@ -38,6 +41,7 @@ export function JSONParse(text) { // eslint-disable-line new-cap
 
 export function processJSON([response, status]) {
   return new Promise((resolve, reject) => {
+
     const meta = response.meta || null
     if (response.status === 'ok') {
       let cbData = response
@@ -46,6 +50,8 @@ export function processJSON([response, status]) {
         if (response.result.data) {
           cbData = response.result.data
         }
+      } else if (response.data && response.included) {
+        return resolve({ response })
       } else if (response.data) {
         cbData = response.data
       }

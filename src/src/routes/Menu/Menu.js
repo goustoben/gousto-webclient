@@ -9,6 +9,7 @@ import { redirect } from 'utils/window'
 import browserHelper from 'utils/browserHelper'
 
 import { BoxSummaryContainer } from 'BoxSummary'
+import { menuServiceConfig } from 'config/menuService'
 import { RecipeMeta } from './RecipeMeta'
 import { FoodBrandPage } from './FoodBrandPage'
 import { ThematicsPage } from './ThematicsPage'
@@ -64,9 +65,12 @@ class Menu extends React.PureComponent {
       productsLoadProducts,
       productsLoadStock,
       isAuthenticated,
+      shouldUseMenuService,
     } = this.props
 
     const { store } = this.context
+
+    const useMenuService = shouldUseMenuService || menuServiceConfig.isEnabled
 
     // if server rendered
     if (params.orderId && params.orderId === storeOrderId) {
@@ -82,7 +86,11 @@ class Menu extends React.PureComponent {
 
     this.checkQueryParam()
 
-    Menu.fetchData({ store, query, params }, forceDataLoad)
+    if (useMenuService) {
+      await Menu.fetchData({ store, query, params }, forceDataLoad)
+    } else {
+      Menu.fetchData({ store, query, params }, forceDataLoad)
+    }
 
     if (boxSummaryDeliveryDays.size === 0 && !disabled) {
       menuLoadDays().then(() => {

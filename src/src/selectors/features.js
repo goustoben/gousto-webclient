@@ -89,3 +89,7 @@ export const getCookingInstruction = ({ features }) => (
 export const getHideBoxSummary = ({ features }) => (
   features && features.getIn(['hideBoxSummary', 'value'], false)
 )
+
+export const getMenuService = ({ features }) => (
+  features && features.getIn(['menuService', 'value'], false)
+)

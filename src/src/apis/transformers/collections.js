@@ -1,25 +1,39 @@
 import { normaliseData } from './normaliseData'
 
-const collectionsTransformer = (response) => {
-  const normalisedData = normaliseData(response)
-  const formattedData = response.data[0].relationships.collections.data.map((collection) => {
-    const normalisedAttributes = normalisedData.collections[collection.id].attributes
+const transformMenuCollections = (menu, normalisedData, meta) => {
 
-    return {
-      colour: normalisedAttributes.colour,
-      default: normalisedAttributes.default,
-      description: normalisedAttributes.description,
-      id: collection.id,
-      isCookbook: normalisedAttributes.is_cookbook,
+  if (!menu && !menu.relationships && !menu.relationships.collections && !menu.relationships.collections.data) {
+    return
+  }
+
+  const formattedData = menu.relationships.collections.data.map((collectionItem) => {
+
+    const normalisedAttributes = normalisedData.collection[collectionItem.id].attributes
+
+    const collection = {
+      colour: normalisedAttributes.colour || '',
+      description: normalisedAttributes.description || '',
+      id: collectionItem.id,
       order: normalisedAttributes.order,
       published: true,
-      shortTitle: normalisedAttributes.short_title,
-      slug: normalisedAttributes.slug,
+      shortTitle: normalisedAttributes.short_title || '',
+      slug: normalisedAttributes.slug || '',
     }
+
+    if (normalisedAttributes.slug === 'recommendations') {
+      collection.properties = meta.recommendations
+    }
+
+    return collection
   })
 
   return formattedData
+}
 
+const collectionsTransformer = (activeMenu, response) => {
+  const normalisedData = normaliseData(response)
+
+  return transformMenuCollections(activeMenu, normalisedData, response.meta)
 }
 
 export { collectionsTransformer }
