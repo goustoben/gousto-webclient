@@ -29,6 +29,7 @@ const propTypes = {
   ageVerificationPending: PropTypes.bool,
   basketProductAdd: PropTypes.func,
   basketProductRemove: PropTypes.func,
+  numberOfColumnClass: PropTypes.string,
   temp: PropTypes.func,
   orderConfirmationProductTracking: PropTypes.func,
 }
@@ -137,12 +138,12 @@ class Product extends PureComponent {
 
   render() {
     const { showDetailsScreen } = this.state
-    const { toggleAgeVerificationPopUp } = this.props
+    const { toggleAgeVerificationPopUp, numberOfColumnClass } = this.props
     const productCardContent = this.getProductCardContent()
     const productDetails = this.getProductDetails()
 
     return (
-      <section className={css.productWrapper}>
+      <section className={`${css.productWrapper} ${css[numberOfColumnClass]}`}>
         <ProductPresentation
           onAdd={this.onAddProduct}
           onRemove={this.onRemoveProduct}

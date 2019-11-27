@@ -43,6 +43,7 @@ class OrderAddOns extends React.Component {
           ageVerified={ageVerified}
           productsCategories={productsCategories}
           toggleAgeVerificationPopUp={() => {}}
+          numberOfColumn="4"
         />
       </LayoutPageWrapper>
     )
