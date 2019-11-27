@@ -27,13 +27,11 @@ export const menuLoadCollections = (date, noUrlChange) => {
     const { data: collections } = await fetchCollections(accessToken, '', args)
     const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
     if (recommendationCollection && recommendationCollection.properties) {
-      const { tutorial, shortlist } = recommendationCollection.properties
+      const { tutorial } = recommendationCollection.properties
       // TODO [TR-432]: Feedback from James on branch #1151 - check new Jira ticket
       const tutorialEnabled = (tutorial && tutorial === 'jfy') || false
-      const shortlistEnabled = shortlist || false
 
       dispatch(featureSet('jfyTutorial', tutorialEnabled))
-      dispatch(featureSet('shortlist', shortlistEnabled))
     }
 
     // TODO: [TR-432]: Don't think we need this filterExperiment code anymore as we don't have this feature flag
