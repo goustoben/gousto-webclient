@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import Jobs from 'routes/Jobs/Jobs'
-const { match, createMemoryHistory } = require('react-router')
-const routes = require('../../src/routes').default(reduxStoreMock(true))
+import { match, createMemoryHistory } from 'react-router'
+import { routes } from '../../src/routes'
 
 function reduxStoreMock(isAuthenticated) {
   return {
@@ -15,12 +15,14 @@ function reduxStoreMock(isAuthenticated) {
   }
 }
 
+const currentRoutes = routes(reduxStoreMock(true))
+
 describe('router', () => {
   test('should display the jobs page when /jobs is called', () => {
     const path = '/jobs'
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         if (error) {
           throw error

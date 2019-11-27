@@ -3,7 +3,7 @@ const React = require('react')
 const { renderToString } = require('react-dom/server')
 const { match, RouterContext, createMemoryHistory } = require('react-router')
 const { syncHistoryWithStore } = require('react-router-redux')
-const mainRoutes = require('routes').default
+const { routes } = require('routes')
 const configureStore = require('store').configureStore
 const { ApolloProvider, getDataFromTree } = require('react-apollo')
 const apolloClient = require('apis/apollo').default
@@ -117,7 +117,7 @@ async function processRequest(ctx, next) {
     store.dispatch(loggerSetUuid(ctx.uuid))
   }
 
-  const routes = mainRoutes(store)
+  const currentRoutes = routes(store)
 
   if (ctx.cookies) {
     processCookies(ctx.cookies, store) // read auth cookies into the store
@@ -203,7 +203,7 @@ async function processRequest(ctx, next) {
         processFeaturesQuery(ctx.request.query, store)
       }
 
-      match({ history, routes, location: ctx.request.url }, (err, redirectLocation, renderProps) => {
+      match({ history, routes: currentRoutes, location: ctx.request.url }, (err, redirectLocation, renderProps) => {
         if (err) {
           reject(err)
         } else if (redirectLocation) {

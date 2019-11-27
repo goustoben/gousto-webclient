@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
-const { match, createMemoryHistory } = require('react-router')
-const routes = require('../../src/routes').default(reduxStoreMock(true))
+import { match, createMemoryHistory } from 'react-router'
+import { routes } from '../../src/routes'
 
 function reduxStoreMock(isAuthenticated) {
   return {
@@ -14,12 +14,14 @@ function reduxStoreMock(isAuthenticated) {
   }
 }
 
+const currentRoutes = routes(reduxStoreMock(true))
+
 describe('router', () => {
   test('should display the checkout when /checkout is called', () => {
     const path = '/checkout'
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         if (error) {
           throw error

@@ -4,8 +4,8 @@ import WelcomeImmediate from 'routes/Welcome/VariationImmediate'
 import WelcomeSubscription from 'routes/Welcome/VariationSubscription'
 import WelcomeStorytelling from 'routes/Welcome/VariationStorytelling'
 
-const { match, createMemoryHistory } = require('react-router')
-const mainRoutes = require('../../src/routes').default
+import { match, createMemoryHistory } from 'react-router'
+import { routes } from '../../src/routes'
 
 function reduxStoreMock(isAuthenticated) {
   return {
@@ -19,14 +19,14 @@ function reduxStoreMock(isAuthenticated) {
   }
 }
 
-const routes = mainRoutes(reduxStoreMock(true))
+const currentRoutes = routes(reduxStoreMock(true))
 
 describe('Welcome router', () => {
   test('should redirect to /welcome-to-gousto/* when /welcome-to-gousto-2/* is called', () => {
     const path = '/welcome-to-gousto-2/1'
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation) => {
         if (error) {
           throw error
@@ -40,7 +40,7 @@ describe('Welcome router', () => {
     const path = '/welcome-to-gousto/1'
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         if (error) {
           throw error
@@ -54,7 +54,7 @@ describe('Welcome router', () => {
     const path = '/welcome-to-gousto/why-gousto/1'
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         if (error) {
           throw error
@@ -67,7 +67,7 @@ describe('Welcome router', () => {
     const path = '/welcome-to-gousto/what-happens-next/1'
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         if (error) {
           throw error
@@ -80,7 +80,7 @@ describe('Welcome router', () => {
     const path = '/welcome-to-gousto/flexible-subscription/1'
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         if (error) {
           throw error
@@ -93,7 +93,7 @@ describe('Welcome router', () => {
     const path = '/welcome-to-gousto/our-story/1'
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         if (error) {
           throw error
@@ -106,7 +106,7 @@ describe('Welcome router', () => {
     const path = '/welcome-to-gousto/does-not-exist/1'
     const memoryHistory = createMemoryHistory(path)
     match(
-      { memoryHistory, routes, location: path },
+      { memoryHistory, routes: currentRoutes, location: path },
       (error, redirectLocation, renderProps) => {
         if (error) {
           throw error

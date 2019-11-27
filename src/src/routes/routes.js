@@ -23,8 +23,9 @@ import GetHelp from './GetHelp'
 import OrderConfirmation from './OrderConfirmation'
 import PrivacyStatement from './PrivacyStatement'
 import ChoosePlan from './ChoosePlan'
+import { OrderAddOns } from './OrderAddOns'
 
-export default (store) => (
+const routes = (store) => (
   <Route path="/" component={Page}>
     {Home}
     {Signup}
@@ -34,6 +35,7 @@ export default (store) => (
     {Join}
     {Cookbook}
     {Jobs}
+    {OrderAddOns}
     {ResetPassword}
     {Unsubscribe}
     {PrivacyStatement}
@@ -54,3 +56,5 @@ export default (store) => (
     </Route>
   </Route>
 )
+
+export { routes }
