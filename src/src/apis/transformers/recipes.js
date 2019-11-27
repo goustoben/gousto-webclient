@@ -1,7 +1,7 @@
 import { normaliseData } from './normaliseData'
 import { ingredientTransformer } from './recipes/ingredientTransformer'
 import { mediaTransformer } from './recipes/mediaTransformer'
-import { allergensTransformer, basicsTransformer, formatIngredients, shelfLifeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
+import { allergensTransformer, basicsTransformer, formatIngredients, shelfLifeTransformer, taxonomyTransformer, healthKitchenTransformer } from './recipes/recipeHelpers'
 
 const recipesTransformer = (response) => {
   const normalisedData = normaliseData(response)
@@ -14,9 +14,7 @@ const recipesTransformer = (response) => {
 
     const formattedIngredients = formatIngredients(normalisedRelationships, normalisedData)
 
-    const finalIngredients = formattedIngredients.map((ingredient) => {
-      return ingredientTransformer(ingredient)
-    })
+    const finalIngredients = formattedIngredients.map(ingredientTransformer)
 
     const nurtritionalInfo = normalisedAttributes.nutritional_information
 
@@ -76,7 +74,8 @@ const recipesTransformer = (response) => {
       title: normalisedAttributes.name,
       media: {
         images: mediaTransformer(normalisedAttributes.images, normalisedAttributes.name)
-      }
+      },
+      healthKitchen: healthKitchenTransformer(normalisedAttributes.health_kitchen)
     }
   })
 

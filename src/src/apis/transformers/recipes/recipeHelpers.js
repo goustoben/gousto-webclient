@@ -80,6 +80,24 @@ const taxonomyTransformer = (attributes) => {
   }]
 }
 
+const healthKitchenTransformer = (healthKitchen) => {
+  if (!healthKitchen) {
+    return null
+  }
+
+  return {
+    disclaimer: healthKitchen.disclaimer,
+    micronutrients: healthKitchen.micronutrients.map(micronutrient => ({
+      name: micronutrient.name,
+      content: {
+        amount: micronutrient.content.amount,
+        unit: micronutrient.content.unit
+      },
+      nrvPercent: micronutrient.nrv_percent
+    }))
+  }
+}
+
 export {
   allergensTransformer,
   basicsTransformer,
@@ -87,5 +105,6 @@ export {
   formatIngredients,
   imageUrlMap,
   shelfLifeTransformer,
-  taxonomyTransformer
+  taxonomyTransformer,
+  healthKitchenTransformer
 }
