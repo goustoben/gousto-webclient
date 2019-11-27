@@ -33,7 +33,17 @@ describe('menus', () => {
     test('should fetch the correct url', async () => {
       await fetchMenus('token')
       expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
-      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus', {include: 'ingredients'}, { accessToken: 'token' })
+      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus',
+        { include: 'ingredients' },
+        { accessToken: 'token' ,
+          cache: "default",
+          headers: {},
+          includeCookies: false,
+          includeExperiments: true,
+          method: "GET",
+          timeout: null,
+          useMenuService: true,
+        })
     })
 
     test('should return the results of the fetch unchanged', async () => {
@@ -46,7 +56,17 @@ describe('menus', () => {
     test('should fetch the correct url', async () => {
       await fetchMenusWithUserId('token', 'e34rder')
       expect(fetchModule.fetchRaw).toHaveBeenCalledTimes(1)
-      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus', {include: 'ingredients', userId: 'e34rder'}, { accessToken: 'token' })
+      expect(fetchModule.fetchRaw).toHaveBeenCalledWith('endpoint/menu/v1/menus',
+        { include: 'ingredients', userId: 'e34rder' },
+        { accessToken: 'token' ,
+          cache: "default",
+          headers: {},
+          includeCookies: false,
+          includeExperiments: true,
+          method: "GET",
+          timeout: null,
+          useMenuService: true,
+        })
     })
 
     test('should return the results of the fetch unchanged', async () => {

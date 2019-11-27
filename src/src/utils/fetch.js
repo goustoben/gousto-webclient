@@ -11,13 +11,13 @@ export function fetchRaw(url, data ={}, options) {
     options.accessToken,
     url,
     data,
-    'GET',
-    'default',
-    {},
-    null,
-    false,
-    true,
-    true)
+    options.method,
+    options.cache,
+    options.headers,
+    options.timeout,
+    options.includeCookies,
+    options.includeExperiments,
+    options.useMenuService)
 }
 
 export function fetch(accessToken, url, data = {}, method = 'GET', cache = 'default', headers = {}, timeout = null, includeCookies = false, includeExperiments = true, useMenuService = false) {

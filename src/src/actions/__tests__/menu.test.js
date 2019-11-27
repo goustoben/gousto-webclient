@@ -80,6 +80,8 @@ describe('menu actions', () => {
   }
   const getState = () => state
 
+  const initialValue = menuServiceConfig.enabled
+
   beforeEach(() => {
     mockGetAvailableDates.mockResolvedValue([
       { until: '2019-09-17T00:00:00+01:00' },
@@ -98,7 +100,7 @@ describe('menu actions', () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-    menuServiceConfig.isEnabled = false
+    menuServiceConfig.isEnabled = initialValue
   })
 
   describe('menuLoadMenu', () => {

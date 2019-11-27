@@ -4,19 +4,30 @@ import routes from 'config/routes'
 
 const version = routes.version.menu
 
+const options = {
+  method: 'GET',
+  cache: 'default',
+  headers: {},
+  timeout: null,
+  includeCookies: false,
+  includeExperiments: true,
+  useMenuService: true
+}
+
 export function fetchMenus(accessToken) {
-  const options = {
-    accessToken,
+  const fetchOptions = {
+    ...options,
+    accessToken
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients'}, options)
+  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients'}, fetchOptions)
 }
 
 export function fetchMenusWithUserId(accessToken, userId) {
-  const options = {
-    accessToken,
+  const fetchOptions = {
+    ...options,
+    accessToken
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients', userId: userId}, options)
+  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients', userId: userId}, fetchOptions)
 }
-
