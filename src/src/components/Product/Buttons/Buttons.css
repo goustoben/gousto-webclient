@@ -1,7 +1,7 @@
 @value ScreenMDMax, ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
 @value sizeMD, sizeXL from 'styles/typography.css';
 
-.buttonsContainer{
+.buttonsContainer {
 	display: flex;
 }
 

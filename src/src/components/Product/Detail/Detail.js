@@ -46,6 +46,7 @@ const Detail = ({
   onVisibilityChange,
   title,
   qty,
+  outOfStock,
   ...buttonProps
 }) => (
   <div className={css.fullHeight} onClick={() => { onVisibilityChange() }}>
@@ -66,7 +67,7 @@ const Detail = ({
               <span className={css.productDetailsPrice}>{formatPrice(listPrice)}</span>
               {buttonProps.onAdd || buttonProps.onRemove ?
                 <div className={css.detailButtons}>
-                  <Buttons {...buttonProps} qty={qty} />
+                  <Buttons {...buttonProps} qty={qty} outOfStock={outOfStock} />
                 </div> : null
               }
             </div>
