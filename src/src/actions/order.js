@@ -144,6 +144,7 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         deliveryDay: updatedOrder.deliveryDate,
         deliverySlotStart: slot.get('deliveryStartTime'),
         deliverySlotEnd: slot.get('deliveryEndTime'),
+        shouldCutoffAt: updatedOrder.shouldCutoffAt,
         trackingData: {
           actionType: 'OrderDeliverySlot Saved',
           ...trackingData
