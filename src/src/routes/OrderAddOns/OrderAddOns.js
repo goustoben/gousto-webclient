@@ -5,6 +5,7 @@ import {
   LayoutPageWrapper
 } from 'goustouicomponents'
 import { ProductList } from '../OrderConfirmation/components/ProductList'
+import { OrderAddOnsHeader } from './components/OrderAddOnsHeader'
 
 const propTypes = {
   orderDetails: PropTypes.func.isRequired,
@@ -22,6 +23,8 @@ const propTypes = {
   ageVerified: PropTypes.bool,
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
+  orderConfirmationRedirect: PropTypes.func.isRequired,
+  basketReset: PropTypes.func.isRequired,
 }
 
 class OrderAddOns extends React.Component {
@@ -32,11 +35,28 @@ class OrderAddOns extends React.Component {
   }
 
   render() {
-    const { products, basket, ageVerified, productsCategories } = this.props
+    const {
+      products,
+      basket,
+      ageVerified,
+      productsCategories,
+      orderId,
+      orderConfirmationRedirect,
+      basketReset,
+    } = this.props
+
+    const numberOfProducts = Object.keys(products).length
 
     return (
-      (Object.keys(products).length > 0) &&
+      (numberOfProducts > 0) &&
       <LayoutPageWrapper>
+        <OrderAddOnsHeader
+          numberOfProducts={numberOfProducts}
+          onClickSkip={() => {
+            basketReset()
+            orderConfirmationRedirect(orderId, 'choice')
+          }}
+        />
         <ProductList
           products={products}
           basket={basket}

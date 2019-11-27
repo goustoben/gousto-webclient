@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import { getBasket, getProductCategories } from 'selectors/root'
 import { getDesserts } from 'selectors/products'
 import { getAgeVerified } from 'selectors/user'
-import { orderDetails } from 'actions/orderConfirmation'
+import { orderDetails, orderConfirmationRedirect } from 'actions/orderConfirmation'
+import { basketReset } from 'actions/basket'
 import { OrderAddOns } from './OrderAddOns'
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,6 +20,8 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const OrderAddOnsContainer = connect(mapStateToProps, {
+  basketReset,
+  orderConfirmationRedirect,
   orderDetails,
 })(OrderAddOns)
 
