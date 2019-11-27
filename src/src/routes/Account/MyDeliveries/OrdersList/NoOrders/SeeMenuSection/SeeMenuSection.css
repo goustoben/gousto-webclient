@@ -1,6 +1,6 @@
 @value ScreenXSMax from 'styles/screenSizes.css';
 
-.horizontalScrollWrapper {
+.container {
 	composes: flex flexStart wrap from 'styles/flex.css';
 	composes: fullWidth from 'styles/positioning.css';
 }

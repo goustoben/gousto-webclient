@@ -16,7 +16,7 @@ const SeeMenuSection = ({ recipes, boxType }) => {
   )
 
   return (
-    <div className={css.horizontalScrollWrapper}>
+    <div className={css.container}>
       {recipeSection}
     </div>
   )

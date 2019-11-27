@@ -55,7 +55,7 @@ describe('SeeMenuSection', () => {
 
     test('should render a scroll wrapper', () => {
       wrapper = shallow(<SeeMenuSection recipes={recipes} boxType="gourmet" />)
-      const className = `.${css.horizontalScrollWrapper.split(' ').join('.')}`
+      const className = `.${css.container.split(' ').join('.')}`
       expect(wrapper.find(className)).toHaveLength(1)
     })
 
