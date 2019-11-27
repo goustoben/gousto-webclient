@@ -13,6 +13,7 @@ import { detailPropTypes } from 'Recipe/Detail/Detail'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
 import { CookingInstructions } from 'Recipe/CookingInstructions'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
+import { RecipeDisclaimer } from 'routes/Menu/RecipeDisclaimer'
 import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
@@ -57,6 +58,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
                 glutenFree={glutenFree}
                 dairyFree={dairyFree}
               />
+               <RecipeDisclaimer id={id} />
               {equipment && !!equipment.size && (
                 <p className={css.additionalInfo}>
                   Equipment required: {equipment.toJS().join(', ')}

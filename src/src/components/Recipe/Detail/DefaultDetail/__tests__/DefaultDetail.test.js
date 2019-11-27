@@ -7,10 +7,15 @@ import DefaultDetail from 'Recipe/Detail/DefaultDetail'
 import { CookingInstructions } from 'Recipe/CookingInstructions'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
+import { RecipeDisclaimer } from 'routes/Menu/RecipeDisclaimer'
+
+jest.mock('routes/Menu/RecipeDisclaimer', () => ({
+  RecipeDisclaimer: () => <div></div>
+}))
 
 describe('<DefaultDetail />', () => {
   const DEFAULT_DETAIL = (
-    <DefaultDetail 
+    <DefaultDetail
       allergens={Immutable.List(['allergens'])}
       cuisine='cuisine'
       cookingTime={123}
@@ -26,7 +31,7 @@ describe('<DefaultDetail />', () => {
         name:'name',
         subIngredients:'subIngredients',
       }])}
-      per100Grams={Immutable.Map({ 
+      per100Grams={Immutable.Map({
         carbs: 1,
         carbsSugars: 1,
         energyKj: 1,
@@ -37,7 +42,7 @@ describe('<DefaultDetail />', () => {
         protein: 1,
         salt: 1,
       })}
-      perPortion={Immutable.Map({ 
+      perPortion={Immutable.Map({
         carbs: 1,
         carbsSugars: 1,
         energyKj: 1,
@@ -63,9 +68,14 @@ describe('<DefaultDetail />', () => {
   })
 
   let wrapper
-  
+
   beforeEach(() => {
     wrapper = shallow(DEFAULT_DETAIL)
+  })
+
+  test('should contain one recipe disclaimer ', () => {
+    expect(wrapper.find(RecipeDisclaimer)).toHaveLength(1)
+    expect(wrapper.find(RecipeDisclaimer).prop('id')).toEqual('123')
   })
 
   describe('Equipment required', () => {
@@ -105,7 +115,7 @@ describe('<DefaultDetail />', () => {
       beforeEach(() => {
         wrapper.setProps({ youWillNeed: Immutable.List([]) })
       })
-      
+
       test('should not return the youWillNeed', () => {
         expect(wrapper.text()).not.toContain('spoon, fork')
       })
@@ -115,7 +125,7 @@ describe('<DefaultDetail />', () => {
   describe('<Ingredients />', () => {
     describe('when ingredients is not empty', () => {
       beforeEach(() => {
-        wrapper.setProps({ 
+        wrapper.setProps({
           ingredients: Immutable.fromJS([{
             allergens:'allergens',
             id:'id',
@@ -136,7 +146,7 @@ describe('<DefaultDetail />', () => {
       beforeEach(() => {
         wrapper.setProps({ ingredients: Immutable.fromJS([]) })
       })
-      
+
       test('should not return the <Ingredients />', () => {
         expect(wrapper.find('Ingredients').exists()).toBe(false)
       })
@@ -145,8 +155,8 @@ describe('<DefaultDetail />', () => {
 
   describe('When perPortion is not empty', () => {
     beforeEach(() => {
-      wrapper.setProps({ 
-        perPortion: Immutable.Map({ 
+      wrapper.setProps({
+        perPortion: Immutable.Map({
           carbs: 1,
           carbsSugars: 1,
           energyKj: 1,
@@ -231,7 +241,7 @@ describe('<DefaultDetail />', () => {
 
   describe('When ingredients is not empty', () => {
     beforeEach(() => {
-      wrapper.setProps({ 
+      wrapper.setProps({
         ingredients: Immutable.fromJS([{
           allergens:'allergens',
           id:'id',
@@ -270,7 +280,7 @@ describe('<DefaultDetail />', () => {
 
   describe('When allergens and ingredients is not empty', () => {
     beforeEach(() => {
-      wrapper.setProps({ 
+      wrapper.setProps({
         allergens: Immutable.List(['allergens']),
         ingredients: Immutable.fromJS([{
           allergens:'allergens',
@@ -310,7 +320,7 @@ describe('<DefaultDetail />', () => {
 
   describe('When allergens and ingredients is empty', () => {
     beforeEach(() => {
-      wrapper.setProps({ 
+      wrapper.setProps({
         allergens: Immutable.List([]),
         ingredients: Immutable.fromJS([])
       })
