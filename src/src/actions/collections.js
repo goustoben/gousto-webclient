@@ -50,12 +50,10 @@ export function collectionsLoadCollections({ date, limit, offset, type } = {}) {
         })
         const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
         if (recommendationCollection && recommendationCollection.properties) {
-          const { tutorial, shortlist } = recommendationCollection.properties
+          const { tutorial } = recommendationCollection.properties
           const tutorialEnabled = (tutorial && tutorial === 'jfy') || false
-          const shortlistEnabled = shortlist || false
 
           dispatch(featureSet('jfyTutorial', tutorialEnabled))
-          dispatch(featureSet('shortlist', shortlistEnabled))
         }
       } catch (err) {
         throw new GoustoException(`Failed to load collections with args: ${JSON.stringify(args)}`, {

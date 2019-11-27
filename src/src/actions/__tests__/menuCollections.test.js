@@ -15,7 +15,7 @@ jest.mock('utils/collections', () => ({
 }))
 
 jest.mock('actions/filters', () => ({
-  collectionFilterChange: jest.fn().mockReturnValue(()=> {}),
+  collectionFilterChange: jest.fn().mockReturnValue(() => { }),
 }))
 jest.mock('apis/collections', () => ({
   fetchCollections: jest.fn(),
@@ -106,29 +106,6 @@ describe('menu actions', () => {
           'jfyTutorial',
           true,
         )
-      })
-      describe('when recommendation collection props include shortlist true', () => {
-        test('should dispatch a featureSet containing shortlist value true', async () => {
-          fetchCollections.mockReturnValueOnce(Promise.resolve({
-            data: [{
-              id: 'recommended collection',
-              slug: 'recommendations',
-              properties: {
-                enabled: true,
-                limit: 25,
-                name: "Just For You",
-                tutorial: "jfy",
-                shortlist: true
-              }
-            }],
-          }))
-          await menuLoadCollections()(dispatch, getState)
-
-          expect(featureSet).toHaveBeenCalledWith(
-            'shortlist',
-            true,
-          )
-        })
       })
 
       test('should dispatch a featureSet containing jfy tutorial value false if tutorial null', async () => {
