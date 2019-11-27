@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
-import classnames from 'classnames'
 import Overlay from 'Overlay'
 import configProducts from 'config/products'
 import ProductDetailContainer from '../ProductDetails'
@@ -106,6 +105,7 @@ class Product extends PureComponent {
     const imgSource = images && images['400']['src']
     const isAgeVerificationRequired = !ageVerified && ageRestricted
     const lowStock = (stock <= configProducts.lowStockThreshold)
+    const outOfStock = stock <= 0
 
     const inProgress = ageVerificationPending && id === productId
 
@@ -113,6 +113,7 @@ class Product extends PureComponent {
       id,
       title,
       lowStock,
+      outOfStock,
       listPrice,
       imgSource,
       limitReached,
@@ -123,6 +124,7 @@ class Product extends PureComponent {
       inProgress
     }
   }
+
   getProductDetails = () => {
     const { product } = this.props
 

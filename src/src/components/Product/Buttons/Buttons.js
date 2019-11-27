@@ -35,6 +35,7 @@ class Buttons extends React.PureComponent {
     onAdd: () => { },
     onRemove: () => { },
     onVerifyAge: () => { },
+    outOfStock: false,
     qty: 0,
     showPopUp: false,
   }
@@ -149,7 +150,7 @@ class Buttons extends React.PureComponent {
   }
 
   render() {
-    const { qty, isAvailable, inProgress, ageVerificationPending, fullWidth } = this.props
+    const { qty, isAvailable, inProgress, ageVerificationPending, fullWidth, outOfStock } = this.props
     const { tooltipVisible } = this.state
     const tooltipMessage = !isAvailable ? this.getTooltipMessage() : ''
     const cssSegmentController = classnames({ [css['segmentControler']]: !fullWidth })
@@ -157,7 +158,7 @@ class Buttons extends React.PureComponent {
     const cssAddButton = classnames({ [css['addButton']]: !fullWidth })
     const cssBtnWrapper = classnames(
       css.btnWrapper, {
-        [css['btnWrapper--fullWidth']]: fullWidth,
+        [css['btnWrapper--fullWidth']]: (fullWidth || outOfStock),
       }
     )
     let segments
@@ -215,10 +216,21 @@ class Buttons extends React.PureComponent {
             width={'auto'}
             className={cssAddButton}
           >
-            Add
+            {outOfStock ? 'Sold out' : 'Add'}
           </Segment>
         </Tooltip>,
       ]
+    }
+
+    const isButtonDisabled = () => {
+      if (!inProgress && ageVerificationPending) {
+        return true
+      }
+      if (outOfStock) {
+        return true
+      }
+
+      return false
     }
 
     return (
@@ -229,7 +241,7 @@ class Buttons extends React.PureComponent {
           width="full"
           className={cssBtnWrapper}
           pending={inProgress}
-          disabled={!inProgress && ageVerificationPending}
+          disabled={isButtonDisabled()}
         >
           {segments}
         </Button>

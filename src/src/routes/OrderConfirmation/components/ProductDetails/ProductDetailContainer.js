@@ -21,7 +21,7 @@ function mapStateToProps(state, props) {
   const imgSource = images && images['400']['src']
   const ageVerified = getAgeVerified(state)
   const isAgeVerificationRequired = !ageVerified && ageRestricted
-  const outOfStock = productsStock.get(id, 0) === 0
+  const outOfStock = productsStock.get(id, 0) <= 0
   const limitReached = getProductLimitReached(id, basket, products, productsCategories)
 
   return {
