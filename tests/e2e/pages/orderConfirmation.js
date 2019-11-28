@@ -1,18 +1,18 @@
 module.exports = {
 	sections: {
 		orderConfirmationContainer: {
-      selector: '*[data-testing=orderConfirmationContainer]',
+			selector: '*[data-testing=orderConfirmationContainer]',
 
-      elements: {
-        header: {
+			elements: {
+				header: {
 					selector: '*[data-testing=orderConfirmationHeader]',
 				}
 			},
 
-      commands: [{
-				checkIfOrderConfirmationPageVisible: function () {
-					this
-						.waitForElementVisible('@header', 30000)
+			commands: [{
+				checkIfOrderConfirmationPageVisible: function (browser) {
+					browser
+						.assert.urlContains('order-confirmation');
 				},
 			}],
 		},
