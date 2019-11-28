@@ -55,14 +55,14 @@ describe('SeeMenuSection', () => {
 
     test('should render a scroll wrapper', () => {
       wrapper = shallow(<SeeMenuSection recipes={recipes} boxType="gourmet" />)
-      const className = `.${css.horizontalScrollWrapper.split(' ').join('.')}`
+      const className = `.${css.container.split(' ').join('.')}`
       expect(wrapper.find(className)).toHaveLength(1)
     })
 
-    test('should render no more than 5 recipes', () => {
+    test('should render no more than 6 recipes', () => {
       wrapper = shallow(<SeeMenuSection recipes={recipes} boxType="gourmet" />)
       const expected =
-        '<OrderRecipe /><OrderRecipe /><OrderRecipe /><OrderRecipe /><OrderRecipe />'
+        '<OrderRecipe /><OrderRecipe /><OrderRecipe /><OrderRecipe /><OrderRecipe /><OrderRecipe />'
       expect(wrapper.text()).toBe(expected)
     })
 

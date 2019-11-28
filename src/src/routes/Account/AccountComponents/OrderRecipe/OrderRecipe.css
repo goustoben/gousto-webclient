@@ -5,7 +5,7 @@
 
 .recipe {
 	composes: marginSMBottom from 'sass-loader!styles/spacing.scss';
-	flex-basis: 50%;
+	flex: 1 0 50%;
 	white-space: normal;
 	display: flex;
 
@@ -17,6 +17,7 @@
 .image {
 	width: 6.25rem;
 	height: 6.25rem;
+	flex-shrink: 0;
 	object-fit: cover;
 	margin-bottom: SpacingLG;
 
