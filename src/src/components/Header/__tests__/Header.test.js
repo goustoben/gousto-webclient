@@ -167,7 +167,7 @@ describe('Header', () => {
     test('renders menu items in correct order', () => {
       const expected = [
         {
-          "clientRouted": false,
+          "clientRouted": true,
           "name": 'My Gousto',
           "url": routesConfig.client.myGousto,
           "tracking": "MyGoustoNavigation Clicked",
@@ -191,7 +191,7 @@ describe('Header', () => {
           "tracking": "DetailsNavigation Clicked",
         },
         {
-          "clientRouted": false,
+          "clientRouted": true,
           "name": "Free Food",
           "url": routesConfig.client.myReferral,
           "tracking": "ReferAFriendNavigation Clicked",

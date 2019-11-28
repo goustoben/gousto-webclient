@@ -12,8 +12,8 @@ export const defaultMenuItems = {
     clientRouted: false,
     tracking: 'FAQNavigation Clicked'
   },
-  myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: false, tracking: 'MyGoustoNavigation Clicked' },
-  referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: false, tracking: 'ReferAFriendNavigation Clicked' },
+  myGousto: { name: 'My Gousto', url: clientRoutes.myGousto, clientRouted: true, tracking: 'MyGoustoNavigation Clicked' },
+  referFriend: { name: 'Free Food', url: clientRoutes.referFriend, clientRouted: true, tracking: 'ReferAFriendNavigation Clicked' },
   rateMyRecipes: { name: 'Rate My Recipes', url: clientRoutes.rateMyRecipes, clientRouted: false, tracking: 'RateMyRecipesNavigation Clicked' },
   deliveries: { name: 'Deliveries', url: clientRoutes.myDeliveries, clientRouted: false, tracking: 'DeliveriesNavigation Clicked' },
   subscription: { name: 'Subscription', url: clientRoutes.mySubscription, clientRouted: false, tracking: 'SubscriptionNavigation Clicked' },
