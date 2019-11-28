@@ -22,11 +22,17 @@ class Cookbook extends React.PureComponent {
     recipes: Immutable.List()
   }
 
+  componentDidMount() {
+    const { userLoadCookbookRecipes, orders } = this.props
+
+    if (orders.size) userLoadCookbookRecipes()
+  }
+
   componentDidUpdate(prevProps) {
     const { userLoadCookbookRecipes, orders } = this.props
     const isPrevOrderPropEqual = Immutable.is(prevProps.orders, orders)
 
-    if (orders && !isPrevOrderPropEqual) userLoadCookbookRecipes()
+    if (orders.size && !isPrevOrderPropEqual) userLoadCookbookRecipes()
   }
 
   renderRecipes() {
