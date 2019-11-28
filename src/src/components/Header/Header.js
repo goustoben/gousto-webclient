@@ -214,13 +214,15 @@ class Header extends React.PureComponent {
     } else if (isAuthenticated) {
       buttonState = 'loggedIn'
       button = (
-        <a
+        <Link
+          key={clientRoutes.myGousto}
+          to={clientRoutes.myGousto}
           className={css.btn}
-          href={clientRoutes.myGousto}
+          clientRouted
           data-testing="myGoustoButtonLink"
         >
           My Gousto
-        </a>
+        </Link>
       )
     } else {
       buttonState = 'loggedOut'

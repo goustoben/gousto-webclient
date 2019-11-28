@@ -15,7 +15,7 @@ const recipesLoadRecipesById = (recipeIds = [], isCookbook) => (
       try {
         const params = {
           includes: ['ingredients', 'allergens', 'taxonomy'],
-          'filters[recipe_ids]': newRecipeIds,
+          'filters[recipe_ids]': isCookbook ? recipeIds : newRecipeIds,
         }
         const accessToken = getState().auth.get('accessToken')
         const { data: recipes } = await fetchRecipes(accessToken, '', params)

@@ -101,9 +101,26 @@ describe('MyGousto', () => {
     })
   })
 
+  describe('componentDidMount', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
+
+    test('should call userLoadCookbookRecipes if order prop exists', () => {
+      wrapper = shallow(<Cookbook orders={orders} userLoadCookbookRecipes={userLoadCookbookRecipesSpy} />)
+      expect(userLoadCookbookRecipesSpy).toHaveBeenCalledTimes(1)
+    })
+
+    test('should not call userLoadCookbookRecipes if order does NOT prop exists', () => {
+      wrapper = shallow(<Cookbook userLoadCookbookRecipes={userLoadCookbookRecipesSpy} />)
+      expect(userLoadCookbookRecipesSpy).not.toHaveBeenCalled()
+    })
+  })
+
   describe('componentDidUpdate', () => {
     test('should call userLoadCookbookRecipes only on order prop update', () => {
       wrapper = shallow(<Cookbook userLoadCookbookRecipes={userLoadCookbookRecipesSpy} />)
+      jest.clearAllMocks()
 
       wrapper.setProps({ orders })
       wrapper.setProps({ orders })
