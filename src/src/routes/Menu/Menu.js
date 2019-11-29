@@ -9,7 +9,7 @@ import { redirect } from 'utils/window'
 import browserHelper from 'utils/browserHelper'
 
 import { BoxSummaryContainer } from 'BoxSummary'
-import { menuServiceConfig } from 'config/menuService'
+import { getMenuService } from 'selectors/features'
 import { RecipeMeta } from './RecipeMeta'
 import { FoodBrandPage } from './FoodBrandPage'
 import { ThematicsPage } from './ThematicsPage'
@@ -65,13 +65,11 @@ class Menu extends React.PureComponent {
       productsLoadProducts,
       productsLoadStock,
       isAuthenticated,
-      shouldUseMenuService,
     } = this.props
 
     const { store } = this.context
 
-    const useMenuService = shouldUseMenuService || menuServiceConfig.isEnabled
-
+    const useMenuService = getMenuService()
     // if server rendered
     if (params.orderId && params.orderId === storeOrderId) {
       basketOrderLoaded(params.orderId)
