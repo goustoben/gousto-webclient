@@ -34,7 +34,7 @@ class Order extends React.PureComponent {
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,
     orderState: PropTypes.string,
-    orderWhenCutoff: PropTypes.string,
+    orderShouldCutoffAt: PropTypes.string,
     orderWhenMenuOpen: PropTypes.string,
     products: ImmutablePropTypes.mapContains({
       total: PropTypes.number,
@@ -64,7 +64,7 @@ class Order extends React.PureComponent {
     orderId: '',
     deliveryDayId: '',
     orderState: '',
-    orderWhenCutoff: '',
+    orderShouldCutoffAt: '',
     orderWhenMenuOpen: '',
     products: Immutable.Map({
       total: 0,
@@ -152,7 +152,7 @@ class Order extends React.PureComponent {
                     :
                     <OrderStatus
                       orderState={this.props.orderState}
-                      whenCutoff={humanTimeFormat(this.props.orderWhenCutoff, 'timeLeft')}
+                      whenCutoff={humanTimeFormat(this.props.orderShouldCutoffAt, 'timeLeft')}
                       whenMenuOpen={humanTimeFormat(this.props.orderWhenMenuOpen, 'hourAndDay')}
                     />
                   }
@@ -192,7 +192,7 @@ class Order extends React.PureComponent {
                 deliveryDayId={this.props.deliveryDayId}
                 orderState={this.props.orderState}
                 close={this.close}
-                paymentDate={humanTimeFormat(this.props.orderWhenCutoff, 'dayAndMonth')}
+                paymentDate={humanTimeFormat(this.props.orderShouldCutoffAt, 'dayAndMonth')}
                 recipes={this.props.recipes}
                 products={this.props.products.get('elements')}
                 priceBreakdown={this.props.priceBreakdown}
@@ -200,7 +200,7 @@ class Order extends React.PureComponent {
                 deliveryTimeStart={humanDeliveryTimeStart}
                 deliveryTimeEnd={humanDeliveryTimeEnd}
                 editDeliveryMode={this.props.editDeliveryMode}
-                whenCutoff={humanTimeFormat(this.props.orderWhenCutoff, 'dayAndMonth')}
+                whenCutoff={humanTimeFormat(this.props.orderShouldCutoffAt, 'dayAndMonth')}
                 cancellable={this.props.cancellable}
                 restorable={this.props.restorable}
                 shippingAddressId={this.props.shippingAddressId}

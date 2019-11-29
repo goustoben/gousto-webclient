@@ -11,27 +11,32 @@ const NavBar = (props) => {
   const menuItems = [
     {
       pathName: config.client.myGousto,
+      clientRouted: true,
       item: (
         <span className={classnames(css.link, css.mobileHide)}>My Gousto</span>
       ),
     }, {
       pathName: (client && !legacy) ? config.client.myDeliveries2 : config.client.myDeliveries,
+      clientRouted: false,
       item: (
         <span className={css.link}>Deliveries</span>
       ),
     }, {
       pathName: config.client.mySubscription,
+      clientRouted: false,
       item: (
         <span className={css.link}>Subscription</span>
       ),
     }, {
       pathName: config.client.myDetails,
+      clientRouted: false,
       item: (
         <span className={css.link}>Details</span>
       ),
       className: css.noBorderRight,
     }, {
       pathName: config.client.myReferral,
+      clientRouted: true,
       item: (
         <span className={css.link}>
           <i className={`fa fa-heart ${css.mobileHide}`}></i> <span>{referFriendPlaceholderText}</span>
@@ -39,6 +44,7 @@ const NavBar = (props) => {
       ),
     }, {
       pathName: config.client.rateMyRecipes,
+      clientRouted: false,
       item: (
         <span className={css.mobileHide}>
           <span className={css.link}>
@@ -54,13 +60,13 @@ const NavBar = (props) => {
     <div className={css.navContainer}>
       <div className={css.navInner}>
         <ul className={css.nav}>
-          {menuItems.map((menuItem, index) => (
+          {menuItems.map((menuItem) => (
             <NavBarItem
-              key={index}
+              key={menuItem.pathName}
               pathName={menuItem.pathName}
               isActive={props.currentPath === menuItem.pathName}
               className={(menuItem.className) ? menuItem.className : ''}
-              clientRouted={(client && !legacy)}
+              clientRouted={menuItem.clientRouted}
             >
               {menuItem.item}
             </NavBarItem>

@@ -142,8 +142,9 @@ export const orderUpdateDayAndSlot = (orderId, coreDayId, coreSlotId, slotId, sl
         coreDayId,
         slotId: coreSlotId,
         deliveryDay: updatedOrder.deliveryDate,
-        deliverySlotStart: updatedOrder.deliverySlot.deliveryStart,
-        deliverySlotEnd: updatedOrder.deliverySlot.deliveryEnd,
+        deliverySlotStart: slot.get('deliveryStartTime'),
+        deliverySlotEnd: slot.get('deliveryEndTime'),
+        shouldCutoffAt: updatedOrder.shouldCutoffAt,
         trackingData: {
           actionType: 'OrderDeliverySlot Saved',
           ...trackingData
@@ -358,6 +359,7 @@ export const orderAddressChange = (orderId, addressId) => (
           ...trackingData
         }
       })
+
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, {
         orderId,

@@ -14,7 +14,11 @@ jest.mock('actions/menu', () => ({
   menuReceiveMenu: jest.fn(),
 }))
 
-describe('menuLoadCollectionRecipes', () => {
+afterEach(() => {
+  menuReceiveCollectionRecipes.mockClear()
+})
+
+describe('menuLoadCollectionRecipes without menuService', () => {
   const dispatch = jest.fn()
 
   const state = {
@@ -72,3 +76,63 @@ describe('menuLoadCollectionRecipes', () => {
     expect(menuReceiveMenu).toHaveBeenCalled()
   })
 })
+
+describe('menuLoadCollectionRecipes with menuService', () => {
+  const dispatch = jest.fn()
+
+  const state = {
+    auth: Immutable.fromJS({
+      accessToken: 'testAccessToken'
+    }),
+    features: Immutable.fromJS({
+      menu_id: {
+        value: false
+      }
+    })
+  }
+
+  const getState = () => state
+
+  test('should dispatch menuReceiveCollectionRecipes when recipes are returned if idsOnly is true', async () => {
+    const idsOnly = true
+
+    await menuLoadCollectionRecipes('testDate', 'testCollectionId1', idsOnly, transformedRecipes, transformedCollectionRecipesIds)(dispatch, getState)
+    expect(menuReceiveCollectionRecipes).toHaveBeenCalledWith("testCollectionId1", [{"coreRecipeId": "1234"}, {"coreRecipeId": "5678"}])
+  })
+
+  test('should dispatch menuReceiveMenu when recipes are returned if idsOnly is false', async () => {
+    const idsOnly = false
+
+    await menuLoadCollectionRecipes('testDate', 'testCollectionId', idsOnly, transformedRecipes, transformedCollectionRecipesIds)(dispatch, getState)
+    expect(menuReceiveMenu).toHaveBeenCalledWith([{"coreRecipeId": "1234"}, {"coreRecipeId": "5678"}, {"coreRecipeId": "9101"}])
+  })
+})
+
+const transformedRecipes = [
+  {coreRecipeId: '1234'},
+  {coreRecipeId: '5678'},
+  {coreRecipeId: '9101'},
+]
+
+const transformedCollectionRecipesIds = {
+  'testCollectionId1': [
+    {
+      core_recipe_id: 1234,
+      type: 'recipe'
+    },
+    {
+      core_recipe_id: 5678,
+      type: 'recipe'
+    }],
+  'testCollectionId2': [
+    {
+      core_recipe_id: 1234,
+      type: 'recipe'
+    },
+    {
+      core_recipe_id: 9101,
+      type: 'recipe'
+    }
+  ]
+}
+

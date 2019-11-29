@@ -303,7 +303,7 @@ describe('myDeliveries utils', () => {
           id: '11922804',
           orderState: 'recipes chosen',
           whenMenuOpen: '2019-10-15 12:00:00',
-          whenCutoff: '2019-10-23 11:59:59',
+          shouldCutoffAt: '2019-10-23 11:59:59',
           isCurrentPeriod: true,
           shippingAddressId: '34820671',
           coreDeliveryDayId: '1903',

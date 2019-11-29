@@ -10,13 +10,13 @@ const SeeMenuSection = ({ recipes, boxType }) => {
   if (boxType === 'vegetarian') {
     slicedRecipes = recipes.filter(recipe => recipe.get('dietType') === 'vegetarian')
   }
-  slicedRecipes = slicedRecipes.slice(0, 5)
+  slicedRecipes = slicedRecipes.slice(0, 6)
   const recipeSection = slicedRecipes.map((recipe) =>
     <OrderRecipe recipeTitle={recipe.get('title')} recipeImage={recipe.getIn(['media', 'images', 0, 'urls', 1, 'src'])} />
   )
 
   return (
-    <div className={css.horizontalScrollWrapper}>
+    <div className={css.container}>
       {recipeSection}
     </div>
   )

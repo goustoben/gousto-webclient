@@ -53,7 +53,7 @@ jest.mock('config/order', () => ({
 jest.mock('apis/deliveries', () => ({
   fetchDeliveryDays: jest.fn().mockReturnValue({
     data: [
-      {id: 1},
+      { id: 1 },
     ]
   })
 }))
@@ -483,7 +483,7 @@ describe('order actions', () => {
       })
     })
 
-    test('when the orderId is not empty, null or undefined, it dispatches an error in an action', async() => {
+    test('when the orderId is not empty, null or undefined, it dispatches an error in an action', async () => {
       const errorAction = {
         type: actionTypes.ORDER_HAS_ANY_PRODUCTS,
         error: new Error('missing orderId')
@@ -513,13 +513,13 @@ describe('order actions', () => {
     beforeEach(() => {
       recipes = [1, 2, 3, 4, 5]
       saveOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '5678' } })})
+        new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
       ))
       cancelOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve()})
+        new Promise((resolve) => { resolve() })
       ))
       updateOrderAddress.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve()})
+        new Promise((resolve) => { resolve() })
       ))
       getOrderDetails.mockReturnValue({
         recipe_choices: recipes.map(id => ({ id, type: 'Recipe', quantity: numPortions })),
@@ -534,7 +534,7 @@ describe('order actions', () => {
 
     test('should mark ORDER_SAVE as pending', async () => {
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '5678' } })})
+        new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
       ))
       await orderAssignToUser(orderAction)(dispatch, getState)
 
@@ -548,7 +548,7 @@ describe('order actions', () => {
     test('should mark ORDER_SAVE as errored with "save-order-fail" if it fails on saving order', async () => {
       const err = new Error('oops')
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(err)})
+        new Promise((resolve, reject) => { reject(err) })
       ))
       await orderAssignToUser(orderAction)(dispatch, getState)
 
@@ -571,10 +571,10 @@ describe('order actions', () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
       const orderUpdateErr = new Error('user already has an order for chosen delivery day')
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr)})
+        new Promise((resolve, reject) => { reject(orderSaveErr) })
       ))
       updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderUpdateErr)})
+        new Promise((resolve, reject) => { reject(orderUpdateErr) })
       ))
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
@@ -585,7 +585,7 @@ describe('order actions', () => {
     test('should call updateUserOrder with orderDetails & existingOrderId if saving order fails due to an order already existing on given day & existingOrderId is provided', async () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr)})
+        new Promise((resolve, reject) => { reject(orderSaveErr) })
       ))
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
@@ -606,7 +606,7 @@ describe('order actions', () => {
 
     test('should redirect the user to the order summary page if it succeeds on saving new order', async () => {
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '4321' } })})
+        new Promise((resolve) => { resolve({ data: { id: '4321' } }) })
       ))
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
@@ -620,11 +620,11 @@ describe('order actions', () => {
     test('should redirect the user to the order summary page if it succeeds on updating existing order', async () => {
       const orderSaveErr = new Error('user already has an order for chosen delivery day')
       saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve, reject) => { reject(orderSaveErr)})
+        new Promise((resolve, reject) => { reject(orderSaveErr) })
       ))
 
       updateUserOrder.mockImplementation(jest.fn().mockReturnValue(
-        new Promise((resolve) => { resolve({ data: { id: '3456' } })})
+        new Promise((resolve) => { resolve({ data: { id: '3456' } }) })
       ))
 
       await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
@@ -705,9 +705,9 @@ describe('order actions', () => {
 
         expect(error).toHaveBeenCalledTimes(2)
         expect(error.mock.calls[0][0]).toEqual('ORDER_ADDRESS_CHANGE')
-        expect(error.mock.calls[0][1]).toEqual({orderId: '', errorMessage: ''})
+        expect(error.mock.calls[0][1]).toEqual({ orderId: '', errorMessage: '' })
         expect(error.mock.calls[1][0]).toEqual('ORDER_ADDRESS_CHANGE')
-        expect(error.mock.calls[1][1]).toEqual({orderId: '12345', errorMessage: 'error message'})
+        expect(error.mock.calls[1][1]).toEqual({ orderId: '12345', errorMessage: 'error message' })
       })
 
       it('should dispatch the SaveAttemptFailed action with the correct arguments', async () => {
@@ -736,7 +736,7 @@ describe('order actions', () => {
       orderId = '123'
       getState.mockReturnValue({
         user: Immutable.fromJS({
-          addresses: {789: {postcode: 'AA11 2BB'}},
+          addresses: { 789: { postcode: 'AA11 2BB' } },
           deliveryTariffId: deliveriesUtils.deliveryTariffTypes.FREE_NDD
         }),
         features: Immutable.fromJS({
@@ -785,7 +785,7 @@ describe('order actions', () => {
     it('should map the arguments through to fetchDeliveryDays and dispatch the action with the correct arguments', async () => {
       getState.mockReturnValue({
         user: Immutable.fromJS({
-          addresses: {789: {postcode: 'AA11 2BB'}},
+          addresses: { 789: { postcode: 'AA11 2BB' } },
         }),
         features: Immutable.fromJS({
           ndd: {
@@ -916,15 +916,21 @@ describe('order actions', () => {
       const updatedOrder = {
         data: {
           deliveryDate: '01-01-2017',
-          deliverySlot: {
-            deliveryStart: '05:00:00',
-            deliveryEnd: '07:00:00',
-          },
+          shouldCutoffAt: '29-12-2016',
         },
       }
-      saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+
+      deliveriesUtils.getSlot.mockReturnValue(Immutable.fromJS({
+        coreSlotId: '4',
+        id: 'deliveries-uuid',
+        daySlotLeadTimeId: 'day-slot-lead-time-uuid',
+        deliveryStartTime: '05:00:00',
+        deliveryEndTime: '07:00:00',
+      }))
+
+      saveOrder.mockReturnValueOnce(
         new Promise(resolve => resolve(updatedOrder))
-      ))
+      )
 
       await orderUpdateDayAndSlot(orderId, coreDayId, coreSlotId, slotId, slotDate, availableDays)(dispatch, getState)
 
@@ -945,6 +951,7 @@ describe('order actions', () => {
         coreDayId: 3,
         slotId: 8,
         deliveryDay: '01-01-2017',
+        shouldCutoffAt: '29-12-2016',
         deliverySlotStart: '05:00:00',
         deliverySlotEnd: '07:00:00',
         trackingData: {

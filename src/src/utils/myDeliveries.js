@@ -89,7 +89,7 @@ export const transformPendingOrders = (orders) => {
         id,
         orderState,
         whenMenuOpen: whenLive,
-        whenCutoff: shouldCutoffAt,
+        shouldCutoffAt,
         isCurrentPeriod,
         shippingAddressId: shippingAddress.get('id'),
         coreDeliveryDayId: deliveryDayId,

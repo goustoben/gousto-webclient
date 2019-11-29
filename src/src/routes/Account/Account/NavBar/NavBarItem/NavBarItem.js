@@ -10,7 +10,7 @@ const NavBarItem = ({ isActive, children, className, pathName, clientRouted }) =
       <div className={classnames(className, { [css.bold]: isActive })}>{children}</div>
       :
       // `noDecoration` used here as some of the links can have badge and the badge need to stay without being underlined
-      <Link href={pathName} clientRouted={clientRouted} noDecoration >
+      <Link to={pathName} clientRouted={clientRouted} noDecoration >
         {children}
       </Link>
     }

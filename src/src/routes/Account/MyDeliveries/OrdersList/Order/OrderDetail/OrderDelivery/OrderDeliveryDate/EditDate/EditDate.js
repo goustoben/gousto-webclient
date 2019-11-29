@@ -54,11 +54,11 @@ class EditDate extends React.PureComponent {
 
   componentDidMount() {
     const { deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders } = this.props
-    this.setDayAndSlotOptionsAndSelected(deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders )
+    this.setDayAndSlotOptionsAndSelected(deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders)
   }
 
   componentWillReceiveProps(nextProps) {
-    const { deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders} = this.props
+    const { deliveryDays, recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders } = this.props
 
     if (deliveryDays !== nextProps.deliveryDays || recipesStock !== nextProps.recipesStock) {
       this.setDayAndSlotOptionsAndSelected(nextProps.deliveryDays, nextProps.recipesStock, coreDeliveryDayId, deliverySlotId, recipes, portionsCount, orders)
@@ -96,15 +96,6 @@ class EditDate extends React.PureComponent {
     }
   }
 
-  canSubmit(deliverySlotId, selectedDayId, selectedSlotId) {
-    const { selectedDeliverySlotId } = this.state
-    const { coreDeliveryDayId } = this.props
-
-    const slotChange = selectedDeliverySlotId !== deliverySlotId
-
-    return slotChange && selectedDayId !== coreDeliveryDayId && selectedSlotId !== deliverySlotId
-  }
-
   onDayChange(dayId, slotsOptions) {
     const { store } = this.context
     const { coreDeliveryDayId, deliverySlotId, clearUpdateDateErrorAndPending, orderId } = this.props
@@ -139,7 +130,7 @@ class EditDate extends React.PureComponent {
     const { deliverySlotId, isPendingUpdateDayAndSlot } = this.props
     const { deliveryDaysOptions, slotsOptions } = this.state
     const { selectedDeliveryDayId, selectedDeliverySlotId } = this.state
-    const canSubmit = this.canSubmit(deliverySlotId, selectedDeliveryDayId, selectedDeliverySlotId)
+    const canSubmit = selectedDeliverySlotId !== deliverySlotId
 
     return (
       <div className={css.editDeliveryOuterContainer}>

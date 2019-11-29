@@ -78,9 +78,9 @@ module.exports = {
   promo: {
     // loggedIn|loggedOut|any
     applyIf: 'loggedOut',
-    code: 'DTI-SB-P30M',
+    code: 'DTI-SB-20M',
     banner: {
-      text: 'Click here to get 30% off all boxes in your first month',
+      text: 'Click here to get 20% off all boxes in your first month',
       linkText: 'Claim discount',
     },
   },
