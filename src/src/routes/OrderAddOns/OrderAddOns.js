@@ -7,6 +7,7 @@ import {
 import { PageLoader } from 'PageLoader'
 import { ProductList } from '../OrderConfirmation/components/ProductList'
 import { OrderAddOnsHeader } from './components/OrderAddOnsHeader'
+import { OrderAddOnsFooter } from './components/OrderAddOnsFooter'
 
 const propTypes = {
   orderDetails: PropTypes.func.isRequired,
@@ -53,26 +54,33 @@ class OrderAddOns extends React.Component {
     } = this.props
 
     const numberOfProducts = Object.keys(products).length
+    const selectedProducts = basket.get('products')
 
     return isPageLoading ? <PageLoader /> : (
       (numberOfProducts > 0) &&
-      <LayoutPageWrapper>
-        <OrderAddOnsHeader
-          numberOfProducts={numberOfProducts}
-          onClickSkip={() => {
-            basketReset()
-            orderConfirmationRedirect(orderId, 'choice')
-          }}
-        />
-        <ProductList
-          products={products}
-          basket={basket}
-          ageVerified={ageVerified}
-          productsCategories={productsCategories}
-          toggleAgeVerificationPopUp={() => {}}
-          numberOfColumn="4"
-        />
-      </LayoutPageWrapper>
+      <div>
+        <LayoutPageWrapper>
+          <OrderAddOnsHeader
+            numberOfProducts={numberOfProducts}
+            onClickSkip={() => {
+              basketReset()
+              orderConfirmationRedirect(orderId, 'choice')
+            }}
+          />
+          <ProductList
+            products={products}
+            basket={basket}
+            ageVerified={ageVerified}
+            productsCategories={productsCategories}
+            toggleAgeVerificationPopUp={() => {}}
+            numberOfColumn="4"
+          />
+        </LayoutPageWrapper>
+
+        <OrderAddOnsFooter>
+          {selectedProducts.size ? <div /> : <div />}
+        </OrderAddOnsFooter>
+      </div>
     )
   }
 }

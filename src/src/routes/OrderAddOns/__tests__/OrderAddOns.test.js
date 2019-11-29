@@ -12,7 +12,9 @@ describe('the OrderAddOns component', () => {
       '12345': { id: '12345', title: 'First test product' }
     },
     ageVerified: true,
-    basket: Immutable.Map(),
+    basket: Immutable.fromJS({
+      products: {},
+    }),
     productsCategories: Immutable.Map(),
     orderConfirmationRedirect: jest.fn(),
     basketReset: jest.fn(),
