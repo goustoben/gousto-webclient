@@ -1,0 +1,18 @@
+@value ScreenXXSMin from 'styles/screenSizes.css';
+@value Blackberry from 'styles/colors.css';
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: Blackberry;
+}
+
+.footerContent {
+  display: flex;
+  justify-content: center;
+
+  @media ScreenXXSMin {
+    justify-content: flex-end;
+  }
+}
