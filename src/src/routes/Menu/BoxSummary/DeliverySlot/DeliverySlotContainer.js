@@ -5,9 +5,9 @@ import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
 import { getDisabledSlots } from 'selectors/features'
+import { addDisabledSlotIds, formatAndValidateDisabledSlots } from 'utils/deliverySlotHelper'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
 import DeliverySlot from './DeliverySlot'
-import { addDisabledSlotIds, formatAndValidateDisabledSlots } from './deliverySlotHelper'
 
 function mapStateToProps(state) {
   let disableNewDatePicker = !state.auth.get('isAuthenticated')

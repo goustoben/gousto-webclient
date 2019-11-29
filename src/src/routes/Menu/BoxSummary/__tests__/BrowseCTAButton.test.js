@@ -2,7 +2,7 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 import { Button, Segment } from 'goustouicomponents'
-import BrowseCTAButton from 'BoxSummary/BrowseCTAButton/BrowseCTAButton'
+import BrowseCTAButton from '../BrowseCTAButton/BrowseCTAButton'
 
 describe('BrowseCTAButton', () => {
   let boxSummaryShow, boxDetailsVisibilityChange, menuBrowseCTAVisibilityChange

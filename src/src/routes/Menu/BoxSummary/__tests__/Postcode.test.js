@@ -2,12 +2,12 @@ import { shallow, mount } from 'enzyme'
 import React from 'react'
 import Immutable from 'immutable'
 
-import Postcode from 'BoxSummary/Postcode/Postcode'
 import TextInput from 'Form/Input'
 import Form from 'Form'
 import DropdownInput from 'Form/Dropdown'
-import css from 'BoxSummary/Postcode/Postcode.css'
 import { LayoutContentWrapper, Button, Segment } from 'goustouicomponents'
+import css from '../Postcode/Postcode.css'
+import Postcode from '../Postcode/Postcode'
 
 describe('Postcode', () => {
   let wrapper

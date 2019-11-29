@@ -2,10 +2,9 @@ import { shallow } from 'enzyme'
 import React from 'react'
 
 import sinon from 'sinon'
-
-import SlotPicker from 'BoxSummary/DeliverySlot/SlotPicker'
-
 import { Button, Segment } from 'goustouicomponents'
+
+import SlotPicker from '../DeliverySlot/SlotPicker'
 
 describe('SlotPicker', () => {
   let wrapper

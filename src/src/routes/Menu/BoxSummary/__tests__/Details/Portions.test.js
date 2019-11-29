@@ -3,8 +3,8 @@ import React from 'react'
 
 import sinon from 'sinon'
 
-import Portions from 'BoxSummary/Details/Portions'
 import { Segment } from 'goustouicomponents'
+import Portions from '../Details/Portions'
 
 describe('Portions', () => {
 

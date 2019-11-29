@@ -3,8 +3,8 @@ import React from 'react'
 
 import Immutable from 'immutable'
 
-import RecipeList from 'BoxSummary/RecipeList/RecipeList'
-import RecipeHolder from 'BoxSummary/RecipeHolder'
+import RecipeList from '../RecipeList/RecipeList'
+import RecipeHolder from '../RecipeHolder'
 
 describe('RecipeList', () => {
   let menuRecipesStore

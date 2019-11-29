@@ -8,7 +8,7 @@ import menu from 'config/menu'
 import { redirect } from 'utils/window'
 import browserHelper from 'utils/browserHelper'
 
-import { BoxSummaryContainer } from 'BoxSummary'
+import { BoxSummaryContainer } from './BoxSummary'
 import { RecipeMeta } from './RecipeMeta'
 import { FoodBrandPage } from './FoodBrandPage'
 import { ThematicsPage } from './ThematicsPage'

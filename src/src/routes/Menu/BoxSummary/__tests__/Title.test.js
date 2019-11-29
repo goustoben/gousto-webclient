@@ -1,10 +1,10 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import Title from 'BoxSummary/Title/Title'
 import { Spinner } from 'goustouicomponents'
 import { MOBILE_VIEW } from 'utils/view'
-import Price from 'BoxSummary/Price'
+import Title from '../Title/Title'
+import Price from '../Price'
 
 describe('Title', () => {
   let wrapper

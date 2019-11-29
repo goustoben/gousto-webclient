@@ -4,8 +4,8 @@ import classNames from 'classnames'
 import moment from 'moment'/* eslint-disable new-cap */
 
 import { Spinner } from 'goustouicomponents'
-import Price from 'BoxSummary/Price'
 import { isMobile } from 'utils/view'
+import Price from '../Price'
 import css from './Title.css'
 
 class Title extends React.PureComponent {

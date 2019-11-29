@@ -3,7 +3,7 @@ import React from 'react'
 
 import sinon from 'sinon'
 
-import BrowseCTA from 'BoxSummary/BrowseCTA/BrowseCTA'
+import BrowseCTA from '../BrowseCTA/BrowseCTA'
 
 describe('BrowseCTA', () => {
   let menuBrowseCTAShow,

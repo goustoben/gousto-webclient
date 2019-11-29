@@ -2,8 +2,8 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
-import Price from 'BoxSummary/Price'
-import css from 'BoxSummary/Price/Price.css'
+import Price from '../Price'
+import css from '../Price/Price.css'
 
 describe('<Price />', () => {
   let [recipeTotal, recipeDiscount, recipeTotalDiscounted] = [39.99, 0.0, 39.99]

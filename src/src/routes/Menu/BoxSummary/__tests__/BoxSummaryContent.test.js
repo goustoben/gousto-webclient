@@ -9,7 +9,7 @@ import Details from '../Details'
 import Postcode from '../Postcode'
 import DeliverySlot from '../DeliverySlot'
 
-describe('BoxSummary', () => {
+describe('BoxSummaryContent', () => {
   const recipes = Immutable.Map()
 
   describe('boxSummaryCurrentView is boxSummaryViews.POSTCODE', () => {

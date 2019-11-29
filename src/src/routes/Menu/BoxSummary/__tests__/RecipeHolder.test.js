@@ -3,8 +3,8 @@ import React from 'react'
 
 import Immutable from 'immutable' // eslint-disable-line no-caps
 
-import RecipeHolder from 'BoxSummary/RecipeHolder'
 import Image from 'Image'
+import RecipeHolder from '../RecipeHolder'
 
 describe('RecipeHolder', () => {
   test('should return a span', () => {

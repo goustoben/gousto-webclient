@@ -6,7 +6,7 @@ import { okRecipes } from 'utils/basket'
 import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import { getAvailableDeliveryDays, getLandingDay, transformDaySlotLeadTimesToMockSlots, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
-import { addDisabledSlotIds } from 'BoxSummary/DeliverySlot/deliverySlotHelper'
+import { addDisabledSlotIds } from 'utils/deliverySlotHelper'
 import status from './status'
 import { menuLoadMenu, menuLoadStock } from './menu'
 import {

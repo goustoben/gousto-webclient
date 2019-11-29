@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Segment } from 'goustouicomponents'
-import Title from 'BoxSummary/Title'
-import Description from 'BoxSummary/Description'
+import Title from '../../Title'
+import Description from '../../Description'
 
 import css from './ExpandBoxSummaryButton.css'
 

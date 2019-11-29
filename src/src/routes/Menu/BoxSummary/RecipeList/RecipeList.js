@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import Immutable from 'immutable'/* eslint-disable new-cap */
-import RecipeHolder from 'BoxSummary/RecipeHolder'
 import { basketSum } from 'utils/basket'
 import logger from 'utils/logger'
+import RecipeHolder from '../RecipeHolder'
 import css from './RecipeList.css'
 
 const RecipeList = ({ maxRecipesNum, recipes, view, invisible, menuRecipesStore, detailVisibilityChange, boxDetailsVisibilityChange, browser, boxSummaryVisible }) => {

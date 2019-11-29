@@ -1,9 +1,7 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import sinon from 'sinon'
-
-import Description from 'BoxSummary/Description'
+import Description from '../Description'
 
 describe('Description', () => {
   test('should return a paragraph', () => {
