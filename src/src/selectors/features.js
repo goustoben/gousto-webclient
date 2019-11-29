@@ -1,4 +1,4 @@
-import { deliveryTariffTypes } from 'utils/deliveries'
+import { menuServiceConfig } from 'config/menuService'
 
 export const isNextDayDeliveryPaintedDoorFeatureEnabled = ({ features }) => (
   features
@@ -90,6 +90,11 @@ export const getHideBoxSummary = ({ features }) => (
   features && features.getIn(['hideBoxSummary', 'value'], false)
 )
 
-export const getMenuService = ({ features }) => (
-  features && features.getIn(['menuService', 'value'], false)
-)
+export const getMenuService = () => {
+  if (menuServiceConfig.isEnabled) {
+    return true
+  }
+  const b = document.cookie.match('(^|[^;]+)\\s*gousto_useNewMenuService\\s*=\\s*([^;]+)')
+
+  return b && b[2] === 'true'
+}

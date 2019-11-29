@@ -97,7 +97,6 @@ function mapStateToProps(state, ownProps) {
     ),
     addressId: state.basket.getIn(['address', 'id'], ''),
     foodBrandDetails: (query && query.foodBrand) ? getFoodBrandDetails(state) : null,
-    shouldUseMenuService: getMenuService(state)
   }
 }
 
