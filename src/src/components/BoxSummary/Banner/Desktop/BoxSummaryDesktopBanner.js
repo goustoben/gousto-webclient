@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { Tooltip } from 'goustouicomponents'
 import RecipeList from '../../RecipeList'
-import BoxSummaryButton from '../../BoxSummaryButton'
+import BannerButtonContainer from '../../BannerButton'
 import BrowseCTA from '../../BrowseCTA'
 import BrowseCTAButton from '../../BrowseCTAButton'
 
@@ -58,7 +58,7 @@ const BoxSummaryDesktopBanner = ({
                 overlayClassName={css.errorTooltipDesktop}
                 className={css.errorMessage}
               >
-                <BoxSummaryButton view="desktop" open={openDetails} />
+                <BannerButtonContainer view="desktop" open={openDetails} />
               </Tooltip>
             )
         }

@@ -1,36 +1,34 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 
-import CheckoutButton from 'BoxSummary/CheckoutButton/CheckoutButton'
+import { Checkout } from '../Checkout'
+import { BaseBannerButton } from '../../BaseBannerButton'
 
 describe('CheckoutButton', () => {
   let wrapper
 
   describe('when the button\'s nested child is clicked', () => {
-    const onClick = jest.fn()
-
     const wrapAndClick = (props) => {
+      const propsToPass = {
+        boxSummaryVisibilityChange: jest.fn(),
+        basketCheckedOut: jest.fn(),
+        basketProceedToCheckout: jest.fn(),
+        isAuthenticated: false,
+        menuRecipes: Immutable.List(),
+        numPortions: 0,
+        slotId: '',
+        stock: Immutable.Map({}),
+        ...props
+      }
+
       wrapper = shallow(
-        <CheckoutButton {...props} onClick={onClick}>
-          <Fragment>
-            <Fragment className="child" />
-          </Fragment>
-        </CheckoutButton>
+        <Checkout {...propsToPass} />
       )
-      const child = wrapper.find('.child')
+      const child = wrapper.find(BaseBannerButton)
 
-      child.simulate('click')
+      child.prop('onClick')()
     }
-
-    afterEach(() => {
-      onClick.mockClear()
-    })
-
-    test('should trigger the onClick handler', () => {
-      wrapAndClick()
-
-      expect(onClick).toHaveBeenCalled()
-    })
 
     describe('when orderId is set', () => {
       test('should trigger an orderUpdate', () => {

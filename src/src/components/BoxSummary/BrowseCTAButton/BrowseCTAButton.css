@@ -12,7 +12,7 @@
 }
 
 .mobile {
-	composes: coButtonSegment from '../BoxSummaryButton/BoxSummaryButton.css';
+	composes: coButtonSegment from '../BannerButton/BannerButton.css';
 	padding-left: 0;
 	padding-right: 0;
 }

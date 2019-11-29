@@ -7,7 +7,7 @@ import { MOBILE_VIEW } from 'utils/view'
 
 import { Tooltip } from 'goustouicomponents'
 import RecipeList from '../../RecipeList'
-import BoxSummaryButton from '../../BoxSummaryButton'
+import BannerButtonContainer from '../../BannerButton'
 import BrowseCTA from '../../BrowseCTA'
 import BrowseCTAButton from '../../BrowseCTAButton'
 
@@ -15,7 +15,7 @@ import { OpenBoxButton } from './OpenBoxButton'
 import Title from '../../Title'
 
 import css from './BoxSummaryMobileBanner.css'
-import boxSummaryButtonCss from '../../BoxSummaryButton/BoxSummaryButton.css'
+import bannerButtonCss from '../../BannerButton/BannerButton.css'
 import { boxSummaryBannerPropTypes } from '../propTypes'
 
 const BoxSummaryMobileBanner = ({
@@ -41,7 +41,7 @@ const BoxSummaryMobileBanner = ({
   }
 
   const handleMobileClick = (e) => {
-    if (e.target && e.target.className.indexOf(boxSummaryButtonCss.submitButton) === -1) {
+    if (e.target && e.target.className.indexOf(bannerButtonCss.submitButton) === -1) {
       openDetails()
       if (shouldShowTutorialStep2) {
         closeTutorialStep2()
@@ -89,7 +89,7 @@ const BoxSummaryMobileBanner = ({
               overlayClassName={css.errorTooltipDesktop}
               className={css.errorMessage}
             >
-              <BoxSummaryButton view={MOBILE_VIEW} open={openDetails} />
+              <BannerButtonContainer view={MOBILE_VIEW} open={openDetails} />
             </Tooltip>
           )
         }

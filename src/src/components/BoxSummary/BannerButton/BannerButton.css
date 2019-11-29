@@ -1,8 +1,13 @@
-.coButtonSegment, .coSpinnerContainer {
+.coButtonSegment {
 	padding-bottom: 44px;
 	padding-top: 4px;
 	padding-left: 25px;
 	padding-right: 25px;
+}
+
+.submitButton {
+	padding-top: 5px;
+	min-height: 52px;
 }
 
 .buttoncontainer {
@@ -15,14 +20,4 @@
 
 .coButton {
 	composes: marginMDLeftRight from 'sass-loader!styles/spacing.scss';
-}
-
-.submitButton {
-	padding-top: 5px;
-	min-height: 52px;
-}
-
-.coSpinner {
-	transform: none;
-	top: 7px;
 }
