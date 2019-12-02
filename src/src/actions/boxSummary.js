@@ -39,16 +39,14 @@ const boxSummaryDeliverySlotChosen = ({ date, slotId }) => (
   }
 )
 
-const boxSummaryVisibilityChange = (show, view) => (
+const boxSummaryVisibilityChange = (show) => (
   (dispatch, getState) => {
     dispatch({
       type: actionTypes.BOXSUMMARY_VISIBILITY_CHANGE,
       show,
-      view,
       trackingData: {
         actionType: actionTypes.BOXSUMMARY_VISIBILITY_CHANGE,
         show,
-        view,
       },
     })
     if (!show) {

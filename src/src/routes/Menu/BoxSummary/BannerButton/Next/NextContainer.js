@@ -4,7 +4,7 @@ import { Next } from './Next'
 
 const mapStateToProps = (state) => ({
   pricingPending: state.pricing.get('pending', false),
-  showDetails: state.boxSummaryShow.get('show') && state.boxSummaryShow.get('view') === 'desktop',
+  showDetails: state.boxSummaryShow.get('show'),
 })
 
 const NextContainer = connect(mapStateToProps, {
