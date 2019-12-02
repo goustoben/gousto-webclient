@@ -5,6 +5,11 @@ import Loading from 'routes/Menu/Loading'
 import { getProductLimitReached } from 'utils/basket'
 import { ProductListPresentation } from './ProductList.presentation'
 
+const availableNumberOfColumn = {
+  2: '',
+  4: 'fourColumn',
+}
+
 const propTypes = {
   basket: PropTypes.instanceOf(Immutable.Map),
   productsCategories: PropTypes.instanceOf(Immutable.Map),
@@ -12,10 +17,15 @@ const propTypes = {
     id: PropTypes.string,
   }),
   ageVerified: PropTypes.bool,
-  toggleAgeVerificationPopUp: PropTypes.func
+  toggleAgeVerificationPopUp: PropTypes.func,
+  numberOfColumn: PropTypes.oneOf(Object.keys(availableNumberOfColumn))
 }
 
-const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified }) => {
+const defaultProps = {
+  numberOfColumn: 2
+}
+
+const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified, numberOfColumn }) => {
 
   const isLimitReached = (product) => {
     const { id } = product
@@ -31,6 +41,7 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
         ageVerified={ageVerified}
         isLimitReached={isLimitReached}
         toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
+        numberOfColumnClass={availableNumberOfColumn[numberOfColumn]}
       /> :
         <Loading />
       }
@@ -38,5 +49,7 @@ const ProductList = ({ basket, products, productsCategories, toggleAgeVerificati
   )
 }
 
+ProductList.defaultProps = defaultProps
 ProductList.propTypes = propTypes
+
 export { ProductList }

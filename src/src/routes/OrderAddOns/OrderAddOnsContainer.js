@@ -1,9 +1,29 @@
 import { connect } from 'react-redux'
+import { getBasket, getProductCategories } from 'selectors/root'
+import { getDesserts } from 'selectors/products'
+import { getAgeVerified } from 'selectors/user'
+import { orderDetails, orderConfirmationRedirect } from 'actions/orderConfirmation'
+import { basketReset } from 'actions/basket'
 import { OrderAddOns } from './OrderAddOns'
 
-const mapStateToProps = () => ({})
+const mapStateToProps = (state, ownProps) => {
+  const { location } = ownProps
+  const orderId = location.pathname.split('/order-add-ons/')[1] || ''
 
-const OrderAddOnsContainer = connect(mapStateToProps, {})(OrderAddOns)
+  return {
+    ageVerified: getAgeVerified(state),
+    basket: getBasket(state),
+    orderId,
+    productsCategories: getProductCategories(state),
+    products: getDesserts(state),
+  }
+}
+
+const OrderAddOnsContainer = connect(mapStateToProps, {
+  basketReset,
+  orderConfirmationRedirect,
+  orderDetails,
+})(OrderAddOns)
 
 export {
   OrderAddOnsContainer
