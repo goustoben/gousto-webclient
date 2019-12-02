@@ -5,10 +5,11 @@ import Helmet from 'react-helmet'
 import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
+import { menuServiceConfig } from 'config/menuService'
 import { redirect } from 'utils/window'
 import browserHelper from 'utils/browserHelper'
 
-import { BoxSummaryContainer } from 'BoxSummary'
+import { BoxSummaryContainer } from './BoxSummary'
 import { getMenuService } from 'selectors/features'
 import { RecipeMeta } from './RecipeMeta'
 import { FoodBrandPage } from './FoodBrandPage'

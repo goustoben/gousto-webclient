@@ -2,7 +2,7 @@ import moment from 'moment'
 import Immutable from 'immutable' /* eslint-disable new-cap */
 import GoustoException from 'utils/GoustoException'
 import { getDisabledSlots, getNDDFeatureValue } from 'selectors/features'
-import { formatAndValidateDisabledSlots } from 'components/BoxSummary/DeliverySlot/deliverySlotHelper'
+import { formatAndValidateDisabledSlots } from './deliverySlotHelper'
 
 export const deliveryTariffTypes = {
   NON_NDD: '9037a447-e11a-4960-ae69-d89a029569af',
