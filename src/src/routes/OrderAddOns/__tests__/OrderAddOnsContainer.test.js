@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import { mount } from 'enzyme'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
-import basketReducer, { defaultState as basketDefaultState } from 'reducers/basket'
+import basketReducer, { initialState as basketDefaultState } from 'reducers/basket'
 import productsReducer from 'reducers/products'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import featuresReducer, { initialState as featuresDefaultState } from 'reducers/features'
@@ -44,7 +44,13 @@ describe('<OrderAddOnsContainer />', () => {
     ),
     {
       auth: authDefaultState(),
-      basket: basketDefaultState,
+      basket: Immutable.fromJS({
+        ...basketDefaultState().toJS(),
+        products: {
+          '2': 2
+        },
+        orderId: '123',
+      }),
       features: featuresDefaultState(),
       user: userDefaultState,
       pending: Immutable.Map()

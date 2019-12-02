@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import { OrderAddOns } from '../OrderAddOns'
 
 describe('the OrderAddOns component', () => {
+  const basketUpdateProducts = jest.fn()
   let wrapper
   const mockProps = {
     orderDetails: () => {},
@@ -18,6 +19,7 @@ describe('the OrderAddOns component', () => {
     productsCategories: Immutable.Map(),
     orderConfirmationRedirect: jest.fn(),
     basketReset: jest.fn(),
+    basketUpdateProducts,
   }
 
   beforeEach(() => {
@@ -31,7 +33,6 @@ describe('the OrderAddOns component', () => {
   test('should pass the number of products to the header', () => {
     expect(wrapper.find('OrderAddOnsHeader').prop('numberOfProducts')).toBe(Object.keys(mockProps.products).length)
   })
-
 
   describe('when the page is loading', () => {
     beforeEach(() => {
@@ -75,8 +76,10 @@ describe('the OrderAddOns component', () => {
         expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
       })
     })
+  })
 
-    describe('when clicking the continue without products button', () => {
+  describe('when clicking the continue without products button', () => {
+    describe('and products basket are empty', () => {
       beforeEach(() => {
         wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
       })
@@ -88,6 +91,42 @@ describe('the OrderAddOns component', () => {
       test('redirects to the order confirmation page', () => {
         const { orderConfirmationRedirect, orderId } = mockProps
         expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+      })
+    })
+
+    describe('and products basket are not empty', () => {
+      beforeEach(() => {
+        wrapper.setProps({
+          basket: Immutable.fromJS({ products: { '2': 2 }, orderId: '123' })
+        })
+
+        wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
+      })
+
+      test('basketUpdateProducts is being called correctly', () => {
+        expect(basketUpdateProducts).toHaveBeenCalledTimes(1)
+      })
+
+      test('not reset the basket', () => {
+        expect(mockProps.basketReset).not.toHaveBeenCalled()
+      })
+
+      test('redirects to the order confirmation page', () => {
+        const { orderConfirmationRedirect, orderId } = mockProps
+        expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+      })
+
+      describe('products has returned an error', () => {
+        beforeEach(() => {
+          basketUpdateProducts.mockRejectedValue('error')
+
+          wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
+        })
+
+        test('redirects to the order confirmation page', () => {
+          const { orderConfirmationRedirect, orderId } = mockProps
+          expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+        })
       })
     })
   })

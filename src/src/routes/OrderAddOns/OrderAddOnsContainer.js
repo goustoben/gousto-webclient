@@ -4,7 +4,7 @@ import { getDesserts } from 'selectors/products'
 import { getAgeVerified } from 'selectors/user'
 import { isOrderDetailsLoading } from 'selectors/orderConfirmation'
 import { orderDetails, orderConfirmationRedirect } from 'actions/orderConfirmation'
-import { basketReset } from 'actions/basket'
+import { basketReset, basketUpdateProducts } from 'actions/basket'
 import { OrderAddOns } from './OrderAddOns'
 
 const mapStateToProps = (state, ownProps) => {
@@ -23,6 +23,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const OrderAddOnsContainer = connect(mapStateToProps, {
   basketReset,
+  basketUpdateProducts,
   orderConfirmationRedirect,
   orderDetails,
 })(OrderAddOns)
