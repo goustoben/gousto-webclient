@@ -30,6 +30,17 @@ describe('the OrderAddOns component', () => {
     expect(wrapper.find('OrderAddOnsHeader').prop('numberOfProducts')).toBe(Object.keys(mockProps.products).length)
   })
 
+  describe('when the page is loading', () => {
+    beforeEach(() => {
+      wrapper.setProps({ isPageLoading: true })
+    })
+
+    test('renders only a PageLoader', () => {
+      expect(wrapper.find('PageLoader')).toHaveLength(1)
+      expect(wrapper.find('LayoutPageWrapper').exists()).toBe(false)
+    })
+  })
+
   describe('when skipping the page', () => {
     beforeEach(() => {
       const pageHeader = wrapper.find('OrderAddOnsHeader').dive()

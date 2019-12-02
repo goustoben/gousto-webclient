@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 import {
   LayoutPageWrapper
 } from 'goustouicomponents'
+import { PageLoader } from 'PageLoader'
 import { ProductList } from '../OrderConfirmation/components/ProductList'
 import { OrderAddOnsHeader } from './components/OrderAddOnsHeader'
 
@@ -25,6 +26,11 @@ const propTypes = {
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
   orderConfirmationRedirect: PropTypes.func.isRequired,
   basketReset: PropTypes.func.isRequired,
+  isPageLoading: PropTypes.bool,
+}
+
+const defaultProps = {
+  isPageLoading: false,
 }
 
 class OrderAddOns extends React.Component {
@@ -43,11 +49,12 @@ class OrderAddOns extends React.Component {
       orderId,
       orderConfirmationRedirect,
       basketReset,
+      isPageLoading,
     } = this.props
 
     const numberOfProducts = Object.keys(products).length
 
-    return (
+    return isPageLoading ? <PageLoader /> : (
       (numberOfProducts > 0) &&
       <LayoutPageWrapper>
         <OrderAddOnsHeader
@@ -71,6 +78,7 @@ class OrderAddOns extends React.Component {
 }
 
 OrderAddOns.propTypes = propTypes
+OrderAddOns.defaultProps = defaultProps
 
 export {
   OrderAddOns
