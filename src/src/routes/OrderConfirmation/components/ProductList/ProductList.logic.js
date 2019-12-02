@@ -22,7 +22,7 @@ const propTypes = {
 }
 
 const defaultProps = {
-  numberOfColumn: 2
+  numberOfColumn: '2'
 }
 
 const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified, numberOfColumn }) => {
