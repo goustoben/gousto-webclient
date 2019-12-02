@@ -1,1 +1,1 @@
-export default from './BannerButtonContainer'
+export { BannerButtonContainer } from './BannerButtonContainer'

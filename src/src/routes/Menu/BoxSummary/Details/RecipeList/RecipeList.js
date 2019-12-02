@@ -3,7 +3,6 @@ import React from 'react'
 import Immutable from 'immutable'
 import { LayoutContentWrapper } from 'goustouicomponents'
 import RecipeItem from 'Recipe/RecipeItem'
-import ShortlistItem from 'Recipe/ShortlistItem'
 import { isAvailableRecipeList } from 'utils/recipe'
 import { UnavailableMessage } from '../UnavailableMessage'
 import css from '../Details.css'
@@ -65,13 +64,6 @@ const RecipeList = ({
           )).toArray()}
         </div>
       </LayoutContentWrapper>
-      {shortlistFeatureEnabled &&
-        <ShortlistItem
-          available
-          numPortions={numPortions}
-          onImageClick={showRecipeDetailsOnClick}
-        />
-      }
     </div>
   )
 }

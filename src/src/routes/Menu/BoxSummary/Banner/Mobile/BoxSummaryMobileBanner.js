@@ -7,7 +7,7 @@ import { MOBILE_VIEW } from 'utils/view'
 
 import { Tooltip } from 'goustouicomponents'
 import RecipeList from '../../RecipeList'
-import BannerButtonContainer from '../../BannerButton'
+import { BannerButtonContainer } from '../../BannerButton'
 import BrowseCTA from '../../BrowseCTA'
 import BrowseCTAButton from '../../BrowseCTAButton'
 
