@@ -65,7 +65,7 @@ Checkout.propTypes = {
   menuRecipes: PropTypes.instanceOf(Immutable.List).isRequired,
   numPortions: PropTypes.number.isRequired,
   stock: PropTypes.instanceOf(Immutable.Map).isRequired,
-  view: PropTypes.string,
+  view: PropTypes.string.isRequired,
   recipes: PropTypes.instanceOf(Immutable.Map),
   checkoutPending: PropTypes.bool,
   pricingPending: PropTypes.bool,
@@ -84,7 +84,6 @@ Checkout.propTypes = {
 }
 
 Checkout.defaultProps = {
-  view: 'desktop',
   checkoutPending: false,
   pricingPending: false,
   orderSavePending: false,
