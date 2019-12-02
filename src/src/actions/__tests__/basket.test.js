@@ -995,6 +995,15 @@ describe('basket actions', () => {
       }])
     })
 
+    test('should dispatch a pricing pricingRequest action', () => {
+      const pricingRequestResponse = Symbol()
+      pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
+      
+      basketRecipeRemove('123')(dispatch, getStateSpy)
+
+      expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
+    })
+
     test('should map through the given view argument through to trackingData', function () {
       basketRecipeRemove('123', 'boxsummary')(dispatch, getStateSpy)
 

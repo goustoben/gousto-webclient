@@ -88,42 +88,4 @@ describe('BoxSummaryContent', () => {
 
     expect(loadPrices).toHaveBeenCalledTimes(1)
   })
-
-  test('should load prices when one of the observable props changes', () => {
-    const loadPrices = jest.fn()
-    const wrapper = mount(
-      <BoxSummary
-        view="desktop"
-        numPortions={2}
-        recipes={recipes}
-        showDetails={false}
-        boxDetailsVisibilityChange={() => { }}
-        postcode="W37UN"
-        slotId="slotId"
-        loadPrices={loadPrices}
-      />
-    )
-
-    expect(loadPrices).toHaveBeenCalledTimes(1)
-
-    wrapper.setProps({ date: '2017-10-23' })
-
-    expect(loadPrices).toHaveBeenCalledTimes(2)
-
-    wrapper.setProps({ numPortions: 4 })
-
-    expect(loadPrices).toHaveBeenCalledTimes(3)
-
-    wrapper.setProps({ orderId: '4' })
-
-    expect(loadPrices).toHaveBeenCalledTimes(4)
-
-    wrapper.setProps({ recipes: Immutable.Map({ 1: 123 }) })
-
-    expect(loadPrices).toHaveBeenCalledTimes(5)
-
-    wrapper.setProps({ date: '2017-10-21', numPortions: 2, orderId: '3', recipes: Immutable.Map({ 2: 43 }) })
-
-    expect(loadPrices).toHaveBeenCalledTimes(6)
-  })
 })
