@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import {
+  Button,
   LayoutPageWrapper
 } from 'goustouicomponents'
 import { PageLoader } from 'PageLoader'
@@ -41,15 +42,18 @@ class OrderAddOns extends React.Component {
     orderDetails(orderId)
   }
 
+  continueWithoutProducts = () => {
+    const { basketReset, orderConfirmationRedirect, orderId } = this.props
+    basketReset()
+    orderConfirmationRedirect(orderId, 'choice')
+  }
+
   render() {
     const {
       products,
       basket,
       ageVerified,
       productsCategories,
-      orderId,
-      orderConfirmationRedirect,
-      basketReset,
       isPageLoading,
     } = this.props
 
@@ -62,10 +66,7 @@ class OrderAddOns extends React.Component {
         <LayoutPageWrapper>
           <OrderAddOnsHeader
             numberOfProducts={numberOfProducts}
-            onClickSkip={() => {
-              basketReset()
-              orderConfirmationRedirect(orderId, 'choice')
-            }}
+            onClickSkip={this.continueWithoutProducts}
           />
           <ProductList
             products={products}
@@ -78,7 +79,13 @@ class OrderAddOns extends React.Component {
         </LayoutPageWrapper>
 
         <OrderAddOnsFooter>
-          {selectedProducts.size ? <div /> : <div />}
+          <Button onClick={this.continueWithoutProducts}>
+            {
+              selectedProducts.size ?
+                'Continue with items' :
+                'Continue without items'
+            }
+          </Button>
         </OrderAddOnsFooter>
       </div>
     )
