@@ -4,7 +4,7 @@ import React from 'react'
 import sinon from 'sinon'
 import { Button, Segment } from 'goustouicomponents'
 
-import SlotPicker from '../DeliverySlot/SlotPicker'
+import SlotPicker from '../../DeliverySlot/SlotPicker/SlotPicker'
 
 describe('SlotPicker', () => {
   let wrapper

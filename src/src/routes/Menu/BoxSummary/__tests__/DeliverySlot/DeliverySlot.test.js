@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
-import DeliverySlot from '../DeliverySlot/DeliverySlot.js'
+import DeliverySlot from '../../DeliverySlot/DeliverySlot'
 
 describe('DeliverySlot logic', () => {
   let deliveryDays, wrapper, disabledSlots, isAuthenticated, isSubscriptionActive

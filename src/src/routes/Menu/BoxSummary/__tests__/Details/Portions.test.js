@@ -4,7 +4,7 @@ import React from 'react'
 import sinon from 'sinon'
 
 import { Segment } from 'goustouicomponents'
-import Portions from '../Details/Portions'
+import Portions from '../../Details/Portions'
 
 describe('Portions', () => {
 
