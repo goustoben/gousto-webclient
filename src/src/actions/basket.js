@@ -3,6 +3,7 @@ import Immutable from 'immutable'
 
 import basketActions from 'actions/basket'
 import { shortlistRecipeRemove } from 'actions/shortlist'
+import pricingActions from 'actions/pricing'
 import { limitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
 import { getUserOrderById } from 'utils/user'
@@ -91,6 +92,8 @@ export const basketNumPortionChange = (numPortions) => (
         limitReached: reachedLimit,
       },
     })
+
+    dispatch(pricingActions.pricingRequest())
   }
 )
 
@@ -381,6 +384,8 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
         }
       }
     }
+
+    dispatch(pricingActions.pricingRequest())
   }
 )
 
@@ -424,6 +429,8 @@ export const basketRecipeRemove = (recipeId, view, position) => (
         },
       })
     }
+
+    dispatch(pricingActions.pricingRequest())
   }
 )
 
@@ -501,6 +508,8 @@ export const basketRestorePreviousValues = () => (
         address: prevAddress,
       })
     }
+
+    dispatch(pricingActions.pricingRequest())
   }
 )
 

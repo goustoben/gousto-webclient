@@ -33,18 +33,6 @@ class BoxSummaryContent extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    const observableProps = ['date', 'orderId', 'slotId', 'numPortions', 'recipes']
-
-    const shouldRefreshPrices = observableProps
-      .map(prop => this.props[prop] !== nextProps[prop])
-      .filter(needRefresh => needRefresh).length > 0
-
-    if (shouldRefreshPrices) {
-      this.props.loadPrices()
-    }
-  }
-
   render() {
     const { view = 'desktop', date, orderId, displayOptions, numPortions, recipes, boxSummaryCurrentView } = this.props
 

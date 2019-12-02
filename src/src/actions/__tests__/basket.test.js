@@ -1,5 +1,6 @@
 import Immutable from 'immutable'
 import basket from 'actions/basket'
+import pricingActions from 'actions/pricing'
 import actionTypes from 'actions/actionTypes'
 import orderConfirmationActions from 'actions/orderConfirmation'
 import { updateOrderItems } from 'apis/orders'
@@ -13,6 +14,13 @@ jest.mock('apis/orders', () => ({
 
 jest.mock('utils/logger', () => ({
   error: jest.fn()
+}))
+
+jest.mock('actions/pricing', () => ({
+  __esModule: true,
+  default: {
+    pricingRequest: jest.fn()
+  }
 }))
 
 jest.mock('utils/basket', () => ({
@@ -29,7 +37,7 @@ jest.mock('actions/orderConfirmation', () => ({
 describe('basket actions', () => {
   let dispatch = jest.fn()
   let getStateSpy = jest.fn()
-  const { portionSizeSelectedTracking, basketCheckedOut, basketOrderItemsLoad, basketProceedToCheckout, basketRecipeAdd, basketRecipeRemove } = basket
+  const { portionSizeSelectedTracking, basketCheckedOut, basketOrderItemsLoad, basketProceedToCheckout, basketRecipeAdd, basketRecipeRemove, basketNumPortionChange } = basket
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -53,6 +61,19 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledWith(numPortionChangeTracking)
     })
 
+  })
+
+  describe('basketNumPortionChange', () => {
+    test('should dispatch a pricing pricingRequest action', () => {
+      const pricingRequestResponse = Symbol()
+      pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
+
+      getStateSpy.mockReturnValue({ routing: { locationBeforeTransitions: { query: null } } })
+
+      basketNumPortionChange(2)(dispatch, getStateSpy)
+
+      expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
+    })
   })
 
   describe('basketCheckedOut', () => {
@@ -677,9 +698,9 @@ describe('basket actions', () => {
       basketRecipeAdd('123', undefined, undefined, { position: '57' })(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(4)
-      expect(dispatch.mock.calls).toHaveLength(2)
+      expect(dispatch.mock.calls).toHaveLength(3)
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[0]).toEqual([{
         type: actionTypes.BASKET_RECIPE_ADD,
         recipeId: '123',
         position: '57',
@@ -693,21 +714,21 @@ describe('basket actions', () => {
           source: 'test-food-brand',
           recipe_count: 2
         },
-      })
+      }])
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[1]).toEqual([{
         type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
         stock: { 123: { 2: -1 } },
-      })
+      }])
     })
 
     test('should map through the given view to the tracking data', function () {
       basketRecipeAdd('123', 'boxsummary')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(4)
-      expect(dispatch.mock.calls).toHaveLength(2)
+      expect(dispatch.mock.calls).toHaveLength(3)
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[0]).toEqual([{
         type: actionTypes.BASKET_RECIPE_ADD,
         recipeId: '123',
         trackingData: {
@@ -719,12 +740,12 @@ describe('basket actions', () => {
           source: 'test-food-brand',
           recipe_count: 2
         },
-      })
+      }])
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[1]).toEqual([{
         type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
         stock: { 123: { 2: -1 } },
-      })
+      }])
     })
 
     test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_ADD action types with correct recipe id and limit reached when there is stock, taking portion into consideration', function () {
@@ -750,8 +771,8 @@ describe('basket actions', () => {
       basketRecipeAdd('123')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(4)
-      expect(dispatch.mock.calls).toHaveLength(2)
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls).toHaveLength(3)
+      expect(dispatch.mock.calls[0]).toEqual([{
         type: actionTypes.BASKET_RECIPE_ADD,
         recipeId: '123',
         trackingData: {
@@ -763,22 +784,22 @@ describe('basket actions', () => {
           source: 'test-food-brand',
           recipe_count: 2
         },
-      })
+      }])
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[1]).toEqual([{
         type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
         stock: { 123: { 4: -1 } },
-      })
+      }])
     })
 
-    test('should dispatch 4 actions when portion limit is reached when there is stock', function () {
+    test('should dispatch 3 actions when portion limit is reached when there is stock', function () {
       basketRecipeAdd('123')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(4)
-      expect(dispatch.mock.calls).toHaveLength(2)
+      expect(dispatch.mock.calls).toHaveLength(3)
     })
 
-    test('should dispatch 4 actions when portion and recipe limit is reached when there is stock', function () {
+    test('should dispatch 3 actions when portion and recipe limit is reached when there is stock', function () {
       getStateSpy = jest.fn().mockReturnValue({
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1], ['111', 1], ['222', 1], ['333', 1]]),
@@ -801,10 +822,10 @@ describe('basket actions', () => {
       basketRecipeAdd('123')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(4)
-      expect(dispatch.mock.calls).toHaveLength(2)
+      expect(dispatch.mock.calls).toHaveLength(3)
     })
 
-    test('should NOT dispatch any actions when out of stock', function () {
+    test('should only dispatch pricing update action actions when out of stock', function () {
       getStateSpy = jest.fn().mockReturnValue({
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1]]),
@@ -824,10 +845,15 @@ describe('basket actions', () => {
           123: {},
         }),
       })
+
+      const pricingRequestResponse = Symbol()
+      pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
+
       basketRecipeAdd('123')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(3)
-      expect(dispatch.mock.calls).toHaveLength(0)
+      expect(dispatch.mock.calls).toHaveLength(1)
+      expect(dispatch.mock.calls[0]).toEqual([pricingRequestResponse])
     })
 
     test('should not run all it\'s checks or affect the stock or dispatch tracking data if the force parameter is set', function () {
@@ -835,17 +861,37 @@ describe('basket actions', () => {
         position: 3,
         collection: 'sa_dasdadsfrwe234rfds',
       })(dispatch, getStateSpy)
-      expect(dispatch.mock.calls).toHaveLength(2)
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls).toHaveLength(3)
+      expect(dispatch.mock.calls[0]).toEqual([{
         type: actionTypes.BASKET_RECIPE_ADD,
         recipeId: '123',
         position: 3,
         collection: 'sa_dasdadsfrwe234rfds',
-      })
-      expect(dispatch).toHaveBeenCalledWith({
+      }])
+      expect(dispatch.mock.calls[1]).toEqual([{
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: false,
+      }])
+    })
+
+    test('should dispatch a pricing pricingRequest action', () => {
+      const pricingRequestResponse = Symbol()
+      pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
+
+      getStateSpy.mockReturnValue({
+        basket: Immutable.Map({
+          recipes: Immutable.Map([['123', 1]]),
+          numPortions: 2,
+          limitReached: true,
+        })
       })
+
+      basketRecipeAdd('123', null, true, {
+        position: 3,
+        collection: 'a',
+      })(dispatch, getStateSpy)
+
+      expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
     })
 
     describe('when recipe in shortlist', () => {
@@ -916,9 +962,9 @@ describe('basket actions', () => {
       basketRecipeRemove('123')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(3)
-      expect(dispatch.mock.calls).toHaveLength(3)
+      expect(dispatch.mock.calls).toHaveLength(4)
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[0]).toEqual([{
         type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId: '123',
         trackingData: {
@@ -930,14 +976,14 @@ describe('basket actions', () => {
           source: 'test-food-brand',
           recipe_count: 0
         },
-      })
+      }])
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[1]).toEqual([{
         type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
         stock: { 123: { 2: 1 } },
-      })
+      }])
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[2]).toEqual([{
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: false,
         trackingData: {
@@ -946,16 +992,25 @@ describe('basket actions', () => {
           actionType: actionTypes.BASKET_LIMIT_REACHED,
           limitReached: false,
         },
-      })
+      }])
+    })
+
+    test('should dispatch a pricing pricingRequest action', () => {
+      const pricingRequestResponse = Symbol()
+      pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
+      
+      basketRecipeRemove('123')(dispatch, getStateSpy)
+
+      expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
     })
 
     test('should map through the given view argument through to trackingData', function () {
       basketRecipeRemove('123', 'boxsummary')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(3)
-      expect(dispatch.mock.calls).toHaveLength(3)
+      expect(dispatch.mock.calls).toHaveLength(4)
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[0]).toEqual([{
         type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId: '123',
         trackingData: {
@@ -967,14 +1022,14 @@ describe('basket actions', () => {
           source: 'test-food-brand',
           recipe_count: 0
         },
-      })
+      }])
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[1]).toEqual([{
         type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
         stock: { 123: { 2: 1 } },
-      })
+      }])
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[2]).toEqual([{
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: false,
         trackingData: {
@@ -983,7 +1038,7 @@ describe('basket actions', () => {
           actionType: actionTypes.BASKET_LIMIT_REACHED,
           limitReached: false,
         },
-      })
+      }])
     })
 
     test('should dispatch BASKET_LIMIT_REACHED, MENU_RECIPE_STOCK_CHANGE and BASKET_RECIPE_REMOVE when portion and recipe limit is reached', function () {
@@ -1003,9 +1058,9 @@ describe('basket actions', () => {
       basketRecipeRemove('123')(dispatch, getStateSpy)
 
       expect(getStateSpy.mock.calls).toHaveLength(3)
-      expect(dispatch.mock.calls).toHaveLength(3)
+      expect(dispatch.mock.calls).toHaveLength(4)
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[0]).toEqual([{
         type: actionTypes.BASKET_RECIPE_REMOVE,
         recipeId: '123',
         trackingData: {
@@ -1017,14 +1072,14 @@ describe('basket actions', () => {
           source: 'test-food-brand',
           recipe_count: 2
         },
-      })
+      }])
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[1]).toEqual([{
         type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
         stock: { 123: { 2: 1 } },
-      })
+      }])
 
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch.mock.calls[2]).toEqual([{
         type: actionTypes.BASKET_LIMIT_REACHED,
         limitReached: false,
         trackingData: {
@@ -1033,7 +1088,7 @@ describe('basket actions', () => {
           actionType: actionTypes.BASKET_LIMIT_REACHED,
           limitReached: false,
         },
-      })
+      }])
     })
   })
 })
