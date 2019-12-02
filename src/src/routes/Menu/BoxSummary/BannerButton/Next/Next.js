@@ -5,6 +5,7 @@ import { BaseBannerButton } from '../BaseBannerButton'
 const Next = ({ pricingPending, view, showDetails, boxSummaryNext, open }) => {
   return (
     <BaseBannerButton
+      view={view}
       pending={pricingPending}
       data-testing={`${view}BoxSummaryNextButton`}
       onClick={showDetails ? boxSummaryNext : open}
@@ -18,12 +19,11 @@ Next.propTypes = {
   boxSummaryNext: PropTypes.func.isRequired,
   open: PropTypes.func.isRequired,
   showDetails: PropTypes.bool.isRequired,
-  view: PropTypes.string,
+  view: PropTypes.string.isRequired,
   pricingPending: PropTypes.bool,
 }
 
 Next.defaultProps = {
-  view: 'mobile',
   pricingPending: false,
 }
 

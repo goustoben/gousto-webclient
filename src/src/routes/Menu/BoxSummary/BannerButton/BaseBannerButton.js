@@ -15,13 +15,13 @@ const BaseBannerButton = ({ view, pending, disabled, spinnerClassName, spinnerCo
       spinnerClassName={spinnerClassName}
       spinnerContainerClassName={spinnerContainerClassName}
       width="full"
-      onClick={onClick}
     >
       <Segment
         className={classnames({
           [css.submitButton]: isMobileView,
           [css.coButtonSegment]: !isMobileView,
         })}
+        onClick={onClick}
       >
         {children}
       </Segment>
@@ -43,7 +43,6 @@ BaseBannerButton.propTypes = {
 }
 
 BaseBannerButton.defaultProps = {
-  view: 'mobile',
   disabled: false,
   spinnerClassName: undefined,
   spinnerContainerClassName: undefined,

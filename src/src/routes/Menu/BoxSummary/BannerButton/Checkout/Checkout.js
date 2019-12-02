@@ -48,6 +48,7 @@ const Checkout = (props) => {
 
   return (
     <BaseBannerButton
+      view={view}
       data-testing={`${view}BoxSummaryButton`}
       disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
       pending={checkoutPending || pricingPending || basketPreviewOrderChangePending || orderSavePending}
