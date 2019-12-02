@@ -35,9 +35,21 @@ module.exports = {
 
       commands: [
         {
-          goFromMenuToCheckout: function () { clickElement.call(this, this.api.globals.browser === 'mobile' ? '@mobileMenuToCheckout' : '@desktopMenuToCheckout') },
+          goFromMenuToCheckout: function () {
+            const selector = this.api.globals.browser === 'mobile' ? '@mobileMenuToCheckout' : '@desktopMenuToCheckout'
+            this
+              .api.execute(function () {
+                const checkoutButton = document.querySelector(selector)
+                checkoutButton.click()
+              })
+          },
           clickNextButton: function () {
-            clickElement.call(this, this.api.globals.browser === 'mobile' ? '@mobileBoxSummaryNextButton' : '@desktopBoxSummaryNextButton')
+            const selector = this.api.globals.browser === 'mobile' ? '@mobileBoxSummaryNextButton' : '@desktopBoxSummaryNextButton'
+            this
+              .api.execute(function () {
+                const checkoutButton = document.querySelector(selector)
+                checkoutButton.click()
+              })
           },
           clickContinueButton: function () {
             this
