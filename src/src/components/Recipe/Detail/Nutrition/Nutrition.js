@@ -48,9 +48,6 @@ const NutritionInfo = ({ perPortion, per100Grams, restrictedView, inset }) => (
         </tr>
       </tbody>
     </table>
-    <div className={classnames(css.extraNutritionalInformation, inset && css.extraInfoMargins)}>
-      <span>&#42;Gousto’s nutritional information only applies to ingredients supplied by Gousto. The cooking process and additional ingredients added at home (listed under “What you’ll need”) will affect total values.</span>
-    </div>
   </div>
 )
 

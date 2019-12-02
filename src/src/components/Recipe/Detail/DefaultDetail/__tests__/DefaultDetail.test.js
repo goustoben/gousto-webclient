@@ -8,9 +8,14 @@ import { CookingInstructions } from 'Recipe/CookingInstructions'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
+import { RecipeMicronutrientsContainer } from 'routes/Menu/RecipeMicronutrients'
 
 jest.mock('routes/Menu/RecipeDisclaimer', () => ({
   RecipeDisclaimerContainer: () => <div></div>
+}))
+
+jest.mock('routes/Menu/RecipeMicronutrients', () => ({
+  RecipeMicronutrientsContainer: () => <div></div>
 }))
 
 describe('<DefaultDetail />', () => {
@@ -76,6 +81,17 @@ describe('<DefaultDetail />', () => {
   test('should contain one recipe disclaimer ', () => {
     expect(wrapper.find(RecipeDisclaimerContainer)).toHaveLength(1)
     expect(wrapper.find(RecipeDisclaimerContainer).prop('id')).toEqual('123')
+  })
+
+  test('should contain micronutrients if in health kitchen', () => {
+    expect(wrapper.find(RecipeMicronutrientsContainer)).toHaveLength(1)
+    expect(wrapper.find(RecipeMicronutrientsContainer).prop('id')).toEqual('123')
+  })
+  
+  test('should render calorie information', () => {
+    expect(wrapper.text()).toContain(
+      'Gousto’s nutritional information only applies to ingredients supplied by Gousto. The cooking process and additional ingredients added at home (listed under “What you’ll need”) will affect total values.',
+    )
   })
 
   describe('Equipment required', () => {

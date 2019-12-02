@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { getRecipeTitle, getRecipeURL, getRecipeImages, getDisclaimerForRecipeID } from '../recipe'
+import { getRecipeTitle, getRecipeURL, getRecipeImages, getDisclaimerForRecipeID, getMicronutrientsForRecipeID } from '../recipe'
 
 describe('the recipe selectors', () => {
   let recipe
@@ -43,7 +43,25 @@ describe('health kitchen recipe selectors', () => {
       recipes: Immutable.fromJS({
         1: {
           healthKitchen: {
-            disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue'
+            disclaimer: 'Iron, magnesium and B vitamins reducing tiredness and fatigue',
+            micronutrients: [
+              {
+                "name": "Iron",
+                "content": {
+                  "amount": 6.5,
+                  "unit": "µg"
+                },
+                "nrv_percent": 46.4
+              },
+              {
+                "name": "Magnesium",
+                "content": {
+                  "amount": 197.5,
+                  "unit": "mg"
+                },
+                "nrv_percent": 52.7
+              }
+            ]
           }
         }
       })
@@ -59,6 +77,19 @@ describe('health kitchen recipe selectors', () => {
       test('should not return the recipe disclaimer', () => {
         expect(getDisclaimerForRecipeID(state, '2')).toEqual(null)
       })
+    })
+  })
+
+  describe('getMicronutrientsForRecipeID', () => {
+    describe('when recipe is health kitchen', () => {
+      test('should return the recipe micronutrients', () => {
+        expect(getMicronutrientsForRecipeID(state, '1')).toEqual(state.recipes.getIn(['1', 'healthKitchen', 'micronutrients']))
+      })
+    })
+  })
+  describe('when recipe is not health kitchen', () => {
+    test('should not return the recipe micronutrients', () => {
+      expect(getDisclaimerForRecipeID(state, '2')).toEqual(null)
     })
   })
 })
