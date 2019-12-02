@@ -13,6 +13,7 @@ import logger from 'utils/logger'
 import { getLandingDay } from 'utils/deliveries'
 import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
 import { menuServiceConfig } from 'config/menuService'
+import { getMenuService } from 'selectors/features'
 
 import fetchData from '../fetchData'
 
@@ -23,6 +24,7 @@ jest.mock('utils/deliveries')
 jest.mock('utils/logger')
 jest.mock('performance-now')
 jest.mock('apis/menus')
+jest.mock('selectors/features')
 
 describe('menu fetchData', () => {
   menuServiceConfig.isEnabled = false
@@ -87,10 +89,11 @@ describe('menu fetchData', () => {
     actions.userLoadOrders.mockReset()
 
     fetchMenus.mockReset()
+    getMenuService.mockReset()
   })
 
   afterEach(() => {
-    menuServiceConfig.isEnabled = false
+    getMenuService.mockReturnValue(false)
   })
 
   describe('is pending', () => {
@@ -602,23 +605,8 @@ describe('menu fetchData', () => {
   })
 
   describe('menuService fetchMenus', () => {
-    test('Menu service fetchMenus is called when config is enabled', async () => {
-      menuServiceConfig.isEnabled = true
-
-      const orderId = '123'
-      const paramsWithOrderId = {
-        ...params,
-        orderId
-      }
-
-      await fetchData({ store, query, params: paramsWithOrderId })
-
-      expect(fetchMenus).toHaveBeenCalled()
-    })
-
-    test('Menu service fetchMenus is called when featureFlag is enabled', async () => {
-      menuServiceConfig.isEnabled = false
-      state.features = state.features.setIn(['menuService', 'value'], true)
+    test('Menu service fetchMenus is called when feature flag is enabled', async () => {
+      getMenuService.mockReturnValue(true)
 
       const orderId = '123'
       const paramsWithOrderId = {
@@ -678,9 +666,7 @@ describe('menu fetchData', () => {
         state.auth = state.auth.set('accessToken', 'test-token')
       })
       test('when config or featureflag is enabled and user logged in', async () => {
-
-        menuServiceConfig.isEnabled = true
-        const menuServiceFeatureFlag = true
+        getMenuService.mockReturnValue(true)
 
         const orderId = '123'
         const paramsWithOrderId = {
@@ -688,7 +674,7 @@ describe('menu fetchData', () => {
           orderId
         }
 
-        await fetchData({ store, query, params: paramsWithOrderId }, false, false, menuServiceFeatureFlag)
+        await fetchData({ store, query, params: paramsWithOrderId }, false, false)
 
         expect(fetchMenusWithUserId).toHaveBeenCalled()
       })

@@ -1,6 +1,6 @@
 @value avenirHeavyFontStack from 'styles/typography.css';
 @value DarkGrey, Mackerel, White, Radish from 'styles/colors.css';
-@value ScreenXSMax, ScreenMDMin from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenMDMin, ScreenSMMin from 'styles/screenSizes.css';
 
 @value FullWidthBreakpoint ScreenXSMax;
 
@@ -26,6 +26,12 @@
 
   @media FullWidthBreakpoint {
     width: calc(50% - 10px);
+  }
+}
+
+.fourColumn {
+  @media ScreenSMMin {
+    width: calc(25% - 10px);
   }
 }
 

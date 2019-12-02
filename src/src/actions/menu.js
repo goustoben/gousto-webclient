@@ -11,7 +11,6 @@ import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
 import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
 import menuConfig from 'config/menu'
-import { menuServiceConfig } from 'config/menuService'
 import { getMenuService } from 'selectors/features'
 import statusActions from './status'
 import { redirect } from './redirect'
@@ -51,10 +50,6 @@ const menuActions = {
   menuRecieveMenuPending,
   menuLoadCollectionsRecipes,
   menuReceiveBoxPrices
-}
-
-const isMenuServiceActive = (getState) => {
-  return getMenuService(getState()) || menuServiceConfig.isEnabled
 }
 
 export function menuReceiveMenu(recipes) {
@@ -134,7 +129,7 @@ export function menuCutoffUntilReceive(cutoffUntil) {
 export function menuLoadDays() {
   return async (dispatch, getState) => {
 
-    const useMenuService = isMenuServiceActive(getState)
+    const useMenuService = getMenuService()
 
     if (useMenuService) {
       menuServiceLoadDays(dispatch, getState)
@@ -174,7 +169,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
       const date = reqData['filters[available_on]']
       const startTime = new Date()
 
-      const useMenuService = isMenuServiceActive(getState)
+      const useMenuService = getMenuService()
 
       if (useMenuService) {
         await loadMenuCollectionsWithMenuService(dispatch, getState, date, background)
@@ -321,7 +316,7 @@ export function menuLoadStock(clearStock = true) {
 
     let adjustedStock = {}
 
-    const useMenuService = isMenuServiceActive(getState)
+    const useMenuService = getMenuService()
 
     if (useMenuService) {
       adjustedStock = getStockAvailability(getState, recipeStock)

@@ -22,6 +22,7 @@ export const orderConfirmationRedirect = (orderId, orderAction) => (
 export const orderDetails = (orderId) => (
   async (dispatch, getState) => {
     const accessToken = getState().auth.get('accessToken')
+
     try {
       dispatch(productsLoadCategories())
       dispatch(productsLoadStock())
