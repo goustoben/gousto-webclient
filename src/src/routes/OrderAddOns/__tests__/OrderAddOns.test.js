@@ -32,6 +32,7 @@ describe('the OrderAddOns component', () => {
     expect(wrapper.find('OrderAddOnsHeader').prop('numberOfProducts')).toBe(Object.keys(mockProps.products).length)
   })
 
+
   describe('when the page is loading', () => {
     beforeEach(() => {
       wrapper.setProps({ isPageLoading: true })
