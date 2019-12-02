@@ -64,7 +64,7 @@ describe('OrderConfirmation', () => {
     })
 
     test('shows the loading spinner', () => {
-      expect(wrapper.find('Loading').exists()).toBe(true)
+      expect(wrapper.find('PageLoader').exists()).toBe(true)
     })
   })
 

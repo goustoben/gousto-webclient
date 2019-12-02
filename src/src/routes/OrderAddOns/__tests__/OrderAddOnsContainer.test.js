@@ -1,5 +1,6 @@
 import React from 'react'
 import thunk from 'redux-thunk'
+import Immutable from 'immutable'
 import { mount } from 'enzyme'
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import authReducer, { initialState as authDefaultState } from 'reducers/auth'
@@ -7,6 +8,7 @@ import basketReducer, { defaultState as basketDefaultState } from 'reducers/bask
 import productsReducer from 'reducers/products'
 import userReducer, { defaultState as userDefaultState } from 'reducers/user'
 import featuresReducer, { initialState as featuresDefaultState } from 'reducers/features'
+import status from 'reducers/status'
 import { fetchOrder } from 'apis/orders'
 import { fetchProductCategories, fetchProductStock, fetchProducts } from 'apis/products'
 import { OrderAddOnsContainer } from '../OrderAddOnsContainer'
@@ -37,6 +39,7 @@ describe('<OrderAddOnsContainer />', () => {
         { ...featuresReducer },
         { ...productsReducer },
         { ...userReducer },
+        { ...status },
       )
     ),
     {
@@ -44,6 +47,7 @@ describe('<OrderAddOnsContainer />', () => {
       basket: basketDefaultState,
       features: featuresDefaultState(),
       user: userDefaultState,
+      pending: Immutable.Map()
     },
     compose(applyMiddleware(thunk))
   )

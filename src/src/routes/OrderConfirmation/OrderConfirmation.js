@@ -4,7 +4,7 @@ import classnames from 'classnames'
 import Immutable from 'immutable'
 import { FeedbackModal } from 'FeedbackModal'
 import Overlay from 'Overlay'
-import Loading from 'Loading'
+import { PageLoader } from 'PageLoader'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
 import {
   LayoutPageWrapper,
@@ -97,9 +97,7 @@ class OrderConfirmation extends PureComponent {
 
     return isLoading ?
       (
-        <div className={css.loadingContainer}>
-          <Loading className={css.loadingImage} />
-        </div>
+        <PageLoader />
       ) :
       (
         <LayoutPageWrapper padding='large-screens-only'>
