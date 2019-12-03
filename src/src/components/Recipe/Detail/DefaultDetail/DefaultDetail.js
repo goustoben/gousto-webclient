@@ -9,11 +9,14 @@ import AddButton from 'Recipe/AddButton'
 import RangeBadge from 'Recipe/RangeBadge'
 import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
+import { RecipeMicronutrientsContainer } from 'routes/Menu/RecipeMicronutrients'
 import { detailPropTypes } from 'Recipe/Detail/Detail'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
 import { CookingInstructions } from 'Recipe/CookingInstructions'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
+import { NutritionDisclaimerText } from 'Recipe/Detail/NutritionDisclaimerText'
+
 import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
@@ -21,7 +24,7 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  restrictedView, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton, showCookingInstruction }) => (
+  position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton, showCookingInstruction }) => (
     <div>
       <div className={css.container}>
         <div className={css.header}>
@@ -58,7 +61,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
                 glutenFree={glutenFree}
                 dairyFree={dairyFree}
               />
-               <RecipeDisclaimerContainer id={id} />
+              <RecipeDisclaimerContainer id={id} />
               {equipment && !!equipment.size && (
                 <p className={css.additionalInfo}>
                   Equipment required: {equipment.toJS().join(', ')}
@@ -79,7 +82,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
           {!!ingredients.size > 0 && (
             <div className={css.section}>
               <div className={css.sectionPanel}>
-                <Ingredients ingredients={ingredients} restrictedView={restrictedView} />
+                <Ingredients ingredients={ingredients} />
               </div>
             </div>
           )}
@@ -87,7 +90,9 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             {!!perPortion.size > 0 && (
               <div className={classnames(css.section, css.splitSection)}>
                 <div className={css.sectionPanel}>
-                  <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} restrictedView={restrictedView} />
+                  <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()}/>
+                  <RecipeMicronutrientsContainer id={id} />
+                  <NutritionDisclaimerText />
                 </div>
                 {showCookingInstruction &&
                   <div className={classnames(css.cookingInstructionsDesktop, css.sectionPanel)}>

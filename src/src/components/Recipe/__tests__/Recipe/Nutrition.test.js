@@ -66,10 +66,4 @@ describe('<Nutrition />', () => {
   test('should have a <tbody>', () => {
     expect(wrapper.find('tbody').length).toEqual(1)
   })
-
-  test('should render calorie information', () => {
-    expect(wrapper.text()).toContain(
-      'Gousto’s nutritional information only applies to ingredients supplied by Gousto. The cooking process and additional ingredients added at home (listed under “What you’ll need”) will affect total values.',
-    )
-  })
 })

@@ -5,11 +5,11 @@ import Immutable from 'immutable'/* eslint-disable new-cap */
 import css from './Ingredients.css'
 import Ingredient from './Ingredient.js'
 
-const Ingredients = ({ ingredients, restrictedView, inset }) => (
+const Ingredients = ({ ingredients, inset }) => (
   <div>
     <div className={inset && css.insetHeading}>
       <span className={css.heading}>In your box</span>
-      {!restrictedView && <div className={css.leadingText}>Ingredients for 2 people <span className={css.highlightText}>(double for 4)</span></div>}
+      <div className={css.leadingText}>Ingredients for 2 people <span className={css.highlightText}>(double for 4)</span></div>
     </div>
     <div className={css.ingredientsContainer}>
       {ingredients.map(ingredient => (
@@ -23,12 +23,10 @@ const Ingredients = ({ ingredients, restrictedView, inset }) => (
 
 Ingredients.propTypes = {
   ingredients: PropTypes.instanceOf(Immutable.List),
-  restrictedView: PropTypes.bool,
   inset: PropTypes.bool,
 }
 Ingredients.defaultProps = {
   ingredients: Immutable.List([]),
-  restrictedView: false,
   inset: true,
 }
 

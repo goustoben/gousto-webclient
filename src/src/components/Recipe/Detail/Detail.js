@@ -33,7 +33,6 @@ export const detailPropTypes = {
 
   menuRecipeDetailVisibilityChange: PropTypes.func,
   scrolledPastPoint: PropTypes.bool,
-  restrictedView: PropTypes.bool,
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
   showCookingInstruction: PropTypes.bool.isRequired,
@@ -41,10 +40,6 @@ export const detailPropTypes = {
 
 export class Detail extends React.Component {
   static propTypes = detailPropTypes
-
-  static defaultProps = {
-    restrictedView: false,
-  }
 
   constructor(props) {
     super(props)
