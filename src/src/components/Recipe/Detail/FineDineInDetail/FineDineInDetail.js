@@ -17,8 +17,8 @@ import IngredientsList from '../IngredientsList/IngredientsList'
 import Allergens from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
 
-const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, 
-  id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, restrictedView, 
+const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens,
+  id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment,
   position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew, showShortlistButton, showCookingInstruction }) => (
   <div>
     <div className={css.container}>
@@ -58,7 +58,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             dairyFree={dairyFree}
           />
           <hr className={css.rule} />
-          {!!ingredients.size > 0 && <Ingredients ingredients={ingredients} restrictedView={restrictedView} border={false} inset={false} />}
+          {!!ingredients.size > 0 && <Ingredients ingredients={ingredients} border={false} inset={false} />}
           <hr className={css.rule} />
           <div className={css.twoColumnContainer}>
             <div className={css.oneColumnContainer}>
@@ -76,7 +76,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
               )}
             </div>
             <div className={css.oneColumnContainer}>
-              {perPortion.size > 0 ? <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} restrictedView={restrictedView} inset={false} /> : null}
+              {perPortion.size > 0 ? <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} inset={false} /> : null}
             </div>
           </div>
           <hr className={css.rule} />

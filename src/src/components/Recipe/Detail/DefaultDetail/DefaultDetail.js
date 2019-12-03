@@ -23,7 +23,7 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  restrictedView, inset, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton, showCookingInstruction }) => (
+  inset, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton, showCookingInstruction }) => (
     <div>
       <div className={css.container}>
         <div className={css.header}>
@@ -81,7 +81,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
           {!!ingredients.size > 0 && (
             <div className={css.section}>
               <div className={css.sectionPanel}>
-                <Ingredients ingredients={ingredients} restrictedView={restrictedView} />
+                <Ingredients ingredients={ingredients} />
               </div>
             </div>
           )}
@@ -89,7 +89,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             {!!perPortion.size > 0 && (
               <div className={classnames(css.section, css.splitSection)}>
                 <div className={css.sectionPanel}>
-                  <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} restrictedView={restrictedView} />
+                  <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} />
                   <RecipeMicronutrientsContainer id={id} />
                   <div className={classnames(css.extraNutritionalInformation, inset && css.extraInfoMargins)}>
                     <span>&#42;Gousto’s nutritional information only applies to ingredients supplied by Gousto. The cooking process and additional ingredients added at home (listed under “What you’ll need”) will affect total values.</span>
