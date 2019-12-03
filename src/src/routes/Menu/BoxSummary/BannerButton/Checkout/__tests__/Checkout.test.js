@@ -7,23 +7,65 @@ import { BaseBannerButton } from '../../BaseBannerButton'
 
 describe('CheckoutButton', () => {
   let wrapper
+  let propsToPass
+
+  beforeEach(() => {
+    propsToPass = {
+      boxSummaryVisibilityChange: jest.fn(),
+      basketCheckedOut: jest.fn(),
+      basketProceedToCheckout: jest.fn(),
+      isAuthenticated: false,
+      menuRecipes: Immutable.List(),
+      numPortions: 0,
+      slotId: '',
+      stock: Immutable.Map({}),
+    }
+  })
+
+  describe('the button text', () => {
+    const wrap = (props) => {
+      const checkoutProps = { ...propsToPass, ...props }
+      wrapper = shallow(
+        <Checkout {...checkoutProps} />
+      )
+    }
+
+    describe('when the "isAddOnsFeatureFlagOn" is true and user is logged in', () => {
+      beforeEach(() => {
+        wrap({ isAddOnsFeatureFlagOn: true, isAuthenticated: true })
+      })
+
+      test('is Confirm', () => {
+        expect(wrapper.childAt(0).text()).toBe('Confirm')
+      })
+    })
+
+    describe('when the "isAddOnsFeatureFlagOn" is false and user is logged in', () => {
+      beforeEach(() => {
+        wrap({ isAddOnsFeatureFlagOn: false, isAuthenticated: true })
+      })
+
+      test('is Checkout', () => {
+        expect(wrapper.childAt(0).text()).toBe('Checkout')
+      })
+    })
+
+    describe('when the user is not logged in', () => {
+      beforeEach(() => {
+        wrap({ isAuthenticated: false })
+      })
+
+      test('is Checkout', () => {
+        expect(wrapper.childAt(0).text()).toBe('Checkout')
+      })
+    })
+  })
 
   describe('when the button\'s nested child is clicked', () => {
     const wrapAndClick = (props) => {
-      const propsToPass = {
-        boxSummaryVisibilityChange: jest.fn(),
-        basketCheckedOut: jest.fn(),
-        basketProceedToCheckout: jest.fn(),
-        isAuthenticated: false,
-        menuRecipes: Immutable.List(),
-        numPortions: 0,
-        slotId: '',
-        stock: Immutable.Map({}),
-        ...props
-      }
-
+      const checkoutProps = { ...propsToPass, ...props }
       wrapper = shallow(
-        <Checkout {...propsToPass} />
+        <Checkout {...checkoutProps} />
       )
       const child = wrapper.find(BaseBannerButton)
 

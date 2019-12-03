@@ -25,12 +25,24 @@ const getOrderAction = (userOrders, orderId) => {
 }
 
 const Checkout = (props) => {
-  const { view, recipes, menuRecipes, stock, numPortions, checkoutPending, pricingPending, basketPreviewOrderChangePending, orderSavePending } = props
+  const {
+    basketPreviewOrderChangePending,
+    checkoutPending,
+    isAddOnsFeatureFlagOn,
+    isAuthenticated,
+    menuRecipes,
+    numPortions,
+    orderSavePending,
+    pricingPending,
+    recipes,
+    stock,
+    view,
+  } = props
 
   const onClick = () => {
     const {
       basketCheckedOut, basketProceedToCheckout, boxSummaryVisibilityChange, deliveryDayId,
-      isAuthenticated, orderUpdate, orderId, slotId,
+      orderUpdate, orderId, slotId,
       checkoutTransactionalOrder, userOrders
     } = props
 
@@ -39,7 +51,7 @@ const Checkout = (props) => {
 
     if (orderId) {
       orderUpdate(orderId, formatRecipes(recipes), deliveryDayId, slotId, numPortions, getOrderAction(userOrders, orderId))
-    } else if (!isAuthenticated) {
+    } else if (!props.isAuthenticated) {
       basketProceedToCheckout()
     } else {
       checkoutTransactionalOrder('create')
@@ -56,7 +68,7 @@ const Checkout = (props) => {
       spinnerContainerClassName={css.coSpinnerContainer}
       onClick={onClick}
     >
-      Checkout
+      {isAddOnsFeatureFlagOn && isAuthenticated ? 'Confirm' : 'Checkout'}
     </BaseBannerButton>
   )
 }
@@ -80,7 +92,8 @@ Checkout.propTypes = {
   boxSummaryVisibilityChange: PropTypes.func.isRequired,
   checkoutTransactionalOrder: PropTypes.func,
   orderId: PropTypes.string,
-  userOrders: PropTypes.instanceOf(Immutable.Map).isRequired
+  userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
+  isAddOnsFeatureFlagOn: PropTypes.bool,
 }
 
 Checkout.defaultProps = {
@@ -90,6 +103,7 @@ Checkout.defaultProps = {
   recipes: Immutable.Map({}),
   basketPreviewOrderChangePending: false,
   userOrders: Immutable.Map({}),
+  isAddOnsFeatureFlagOn: false,
 }
 
 export { Checkout }

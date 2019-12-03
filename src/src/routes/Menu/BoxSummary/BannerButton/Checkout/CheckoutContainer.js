@@ -1,6 +1,7 @@
 import Immutable from 'immutable'
 import { connect } from 'react-redux'
 import actions from 'actions'
+import { getAddOnsBeforeOrderConfirmation } from 'selectors/features'
 import { getSlot } from 'utils/deliveries'
 import actionTypes from 'actions/actionTypes'
 import { checkoutTransactionalOrder } from 'actions/checkout'
@@ -34,6 +35,7 @@ const mapStateToProps = (state) => ({
   orderSavePending: state.pending.get('ORDER_SAVE', false),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE, null),
   basketPreviewOrderChangePending: state.pending.get('BASKET_PREVIEW_ORDER_CHANGE', false),
+  isAddOnsFeatureFlagOn: getAddOnsBeforeOrderConfirmation(state),
 })
 
 const CheckoutContainer = connect(mapStateToProps, {
