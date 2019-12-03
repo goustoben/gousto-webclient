@@ -12,7 +12,9 @@ function OrderAddOnsFooter({ children }) {
     <div className={css.footer}>
       <LayoutPageWrapper>
         <LayoutContentWrapper paddingHorizontal={false}>
-          <div className={css.footerContent}>{children}</div>
+          <div className={css.footerContentWrapper}>
+            <div className={css.footerContent}>{children}</div>
+          </div>
         </LayoutContentWrapper>
       </LayoutPageWrapper>
     </div>
