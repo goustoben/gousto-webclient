@@ -3,7 +3,7 @@ import React from 'react'
 import classnames from 'classnames'
 
 import { boxSummaryViews } from 'utils/boxSummary'
-import { isMobile, DESKTOP_VIEW } from 'utils/view'
+import { isMobile } from 'utils/view'
 import { CheckoutContainer } from './Checkout'
 import css from './BannerButton.css'
 import { NextContainer } from './Next'
@@ -29,14 +29,13 @@ const BannerButton = ({ view,
 }
 
 BannerButton.propTypes = {
-  view: PropTypes.string,
+  view: PropTypes.string.isRequired,
   open: PropTypes.func.isRequired,
   boxSummaryCurrentView: PropTypes.string,
   fullWidth: PropTypes.bool,
 }
 
 BannerButton.defaultProps = {
-  view: DESKTOP_VIEW,
   boxSummaryCurrentView: '',
   fullWidth: false,
 }

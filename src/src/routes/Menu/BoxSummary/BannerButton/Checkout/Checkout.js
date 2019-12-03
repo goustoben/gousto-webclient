@@ -49,7 +49,7 @@ const Checkout = (props) => {
   return (
     <BaseBannerButton
       view={view}
-      data-testing={`${view}BoxSummaryButton`}
+      dataTesting='boxSummaryButton'
       disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
       pending={checkoutPending || pricingPending || basketPreviewOrderChangePending || orderSavePending}
       spinnerClassName={css.coSpinner}
@@ -65,7 +65,7 @@ Checkout.propTypes = {
   menuRecipes: PropTypes.instanceOf(Immutable.List).isRequired,
   numPortions: PropTypes.number.isRequired,
   stock: PropTypes.instanceOf(Immutable.Map).isRequired,
-  view: PropTypes.string,
+  view: PropTypes.string.isRequired,
   recipes: PropTypes.instanceOf(Immutable.Map),
   checkoutPending: PropTypes.bool,
   pricingPending: PropTypes.bool,
@@ -84,7 +84,6 @@ Checkout.propTypes = {
 }
 
 Checkout.defaultProps = {
-  view: 'desktop',
   checkoutPending: false,
   pricingPending: false,
   orderSavePending: false,
