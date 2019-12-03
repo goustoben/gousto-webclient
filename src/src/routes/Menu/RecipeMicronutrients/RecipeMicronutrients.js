@@ -6,7 +6,7 @@ import css from './RecipeMicronutrients.css'
 
 const RecipeMicronutrients = ({ micronutrients, inset }) => {
   return !!micronutrients &&
-    <div className={css.micronutrientsWrapper} >
+    <div className={css.micronutrientsWrapper}>
       <table className={classnames(css.table, inset && css.tableMargins)}>
         <thead>
           <tr className={css.tableBorder}>
@@ -20,7 +20,7 @@ const RecipeMicronutrients = ({ micronutrients, inset }) => {
             return (
               <tr className={css.tableBorder}>
                 <td className={css.tablePadding}>{name}</td>
-                <td className={css.tablePadding}>{nrv_percent} %</td>
+                <td className={css.tablePadding}>{nrv_percent}</td>
                 <td className={css.tablePadding}>{content.amount} {content.unit}</td>
               </tr>
             )
@@ -32,6 +32,7 @@ const RecipeMicronutrients = ({ micronutrients, inset }) => {
 }
 
 RecipeMicronutrients.propTypes = {
+  inset: PropTypes.bool,
   micronutrients: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     nrv: PropTypes.number,
@@ -40,6 +41,10 @@ RecipeMicronutrients.propTypes = {
       unit: PropTypes.string
     })
   }))
+}
+
+RecipeMicronutrients.defaultProps = {
+  inset: true
 }
 
 export { RecipeMicronutrients }

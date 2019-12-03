@@ -1,6 +1,6 @@
 @value ScreenXXSMax, ScreenXSMax, ScreenSMMax, ScreenSMMin, ScreenXXSMin, ScreenMDMin, ScreenMDMax, ScreenLGMin from 'styles/screenSizes.css';
 @value White, Basa from 'styles/colors.css';
-@value SpacingXXL, SpacingLG, SpacingMD, SpacingSM, SpacingXXS from 'sass-loader!styles/spacing.scss';
+@value SpacingXXL, SpacingLG, SpacingMD, SpacingSM, SpacingXXS, marginSMLeftRight from 'sass-loader!styles/spacing.scss';
 
 .headerContentContainer {
   @media ScreenXXSMax {

@@ -129,6 +129,7 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
 
 DefaultDetail.propTypes = {
   ...detailPropTypes,
+  inset: PropTypes.bool,
   scrolledPastPoint: PropTypes.bool,
   isFoodBrandClickable: PropTypes.bool,
   showCookingInstruction: PropTypes.bool.isRequired,
@@ -136,7 +137,8 @@ DefaultDetail.propTypes = {
 
 DefaultDetail.defaultProps = {
   scrolledPastPoint: false,
-  fiveADay: 0
+  fiveADay: 0,
+  inset: true
 }
 
 export default DefaultDetail
