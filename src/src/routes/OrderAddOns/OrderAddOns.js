@@ -27,6 +27,7 @@ const propTypes = {
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
   orderConfirmationRedirect: PropTypes.func.isRequired,
+  basketUpdateProducts: PropTypes.func.isRequired,
   basketReset: PropTypes.func.isRequired,
   isPageLoading: PropTypes.bool,
 }
@@ -46,6 +47,22 @@ class OrderAddOns extends React.Component {
     const { basketReset, orderConfirmationRedirect, orderId } = this.props
     basketReset()
     orderConfirmationRedirect(orderId, 'choice')
+  }
+
+  onContinue = async () => {
+    const { basket, basketUpdateProducts, orderConfirmationRedirect, orderId } = this.props
+
+    try {
+      await basketUpdateProducts()
+
+      if (basket.get('products').size > 0) {
+        orderConfirmationRedirect(orderId, 'choice')
+      } else {
+        this.continueWithoutProducts()
+      }
+    } catch (err) {
+      this.continueWithoutProducts()
+    }
   }
 
   render() {
@@ -79,7 +96,7 @@ class OrderAddOns extends React.Component {
         </LayoutPageWrapper>
 
         <OrderAddOnsFooter>
-          <Button onClick={this.continueWithoutProducts}>
+          <Button className="ContinueButton" onClick={this.onContinue}>
             {
               selectedProducts.size ?
                 'Continue with items' :
