@@ -75,13 +75,15 @@ export function getCategoriesFromProducts(products) {
  * @return {Array}
  */
 export function sortProductsByPrice(products) {
-  const sortedProducts = products.sort((a, b) => a.listPrice - b.listPrice)
+  const sortedProducts = products.sort((a, b) => (
+    parseFloat(a.listPrice) - parseFloat(b.listPrice)
+  ))
 
   const freeProducts = []
   const productsWithPrice = []
 
   sortedProducts.forEach(product => {
-    if (product.listPrice <= '0.00') {
+    if (parseFloat(product.listPrice) <= 0) {
       freeProducts.push(product)
     } else {
       productsWithPrice.push(product)
