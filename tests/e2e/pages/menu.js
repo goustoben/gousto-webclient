@@ -16,7 +16,6 @@ module.exports = {
               .api.execute(function () {
                 const selectorValue = this.api.globals.browser === 'mobile' ? '[data-testing="mobileBoxSummaryButton"]' : '[data-testing="desktopBoxSummaryButton"]'
                 const checkoutButton = document.querySelector(selectorValue)
-                console.log('checkoutButton', checkoutButton)//eslint-disable-line
                 checkoutButton.click()
               })
           },
