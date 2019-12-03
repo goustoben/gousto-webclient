@@ -7,7 +7,7 @@ const Next = ({ pricingPending, view, showDetails, boxSummaryNext, open }) => {
     <BaseBannerButton
       view={view}
       pending={pricingPending}
-      data-testing='boxSummaryNextButton'
+      dataTesting='boxSummaryNextButton'
       onClick={showDetails ? boxSummaryNext : open}
     >
       Next
