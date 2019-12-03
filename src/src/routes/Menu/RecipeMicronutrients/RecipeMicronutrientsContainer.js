@@ -1,5 +1,3 @@
-import Immutable from 'immutable'
-
 import { connect } from 'react-redux'
 import { getMicronutrientsForRecipeID } from 'selectors/recipe'
 import { RecipeMicronutrients} from './RecipeMicronutrients'

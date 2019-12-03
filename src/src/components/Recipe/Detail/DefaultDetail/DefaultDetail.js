@@ -15,6 +15,7 @@ import { AttributeGrid } from 'Recipe/AttributeGrid'
 import { CookingInstructions } from 'Recipe/CookingInstructions'
 import { ShortlistButton } from 'Recipe/ShortlistButton'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
+import { NutritionDisclaimerText } from 'Recipe/Detail/NutritionDisclaimerText'
 
 import Allergens from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
@@ -23,7 +24,7 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  inset, position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton, showCookingInstruction }) => (
+  position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton, showCookingInstruction }) => (
     <div>
       <div className={css.container}>
         <div className={css.header}>
@@ -89,11 +90,9 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             {!!perPortion.size > 0 && (
               <div className={classnames(css.section, css.splitSection)}>
                 <div className={css.sectionPanel}>
-                  <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} />
+                  <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()}/>
                   <RecipeMicronutrientsContainer id={id} />
-                  <div className={classnames(css.extraNutritionalInformation, inset && css.extraInfoMargins)}>
-                    <span>&#42;Gousto’s nutritional information only applies to ingredients supplied by Gousto. The cooking process and additional ingredients added at home (listed under “What you’ll need”) will affect total values.</span>
-                  </div>
+                  <NutritionDisclaimerText />
                 </div>
                 {showCookingInstruction &&
                   <div className={classnames(css.cookingInstructionsDesktop, css.sectionPanel)}>
@@ -129,7 +128,6 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
 
 DefaultDetail.propTypes = {
   ...detailPropTypes,
-  inset: PropTypes.bool,
   scrolledPastPoint: PropTypes.bool,
   isFoodBrandClickable: PropTypes.bool,
   showCookingInstruction: PropTypes.bool.isRequired,
@@ -137,8 +135,7 @@ DefaultDetail.propTypes = {
 
 DefaultDetail.defaultProps = {
   scrolledPastPoint: false,
-  fiveADay: 0,
-  inset: true
+  fiveADay: 0
 }
 
 export default DefaultDetail

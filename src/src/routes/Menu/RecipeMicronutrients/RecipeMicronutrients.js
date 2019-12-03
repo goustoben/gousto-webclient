@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import css from './RecipeMicronutrients.css'
 
 const RecipeMicronutrients = ({ micronutrients, inset }) => {
-  return !!micronutrients &&
+  return !!micronutrients && (
     <div className={css.micronutrientsWrapper}>
       <table className={classnames(css.table, inset && css.tableMargins)}>
         <thead>
@@ -29,6 +29,7 @@ const RecipeMicronutrients = ({ micronutrients, inset }) => {
         </tbody>
       </table>
     </div>
+  )
 }
 
 RecipeMicronutrients.propTypes = {

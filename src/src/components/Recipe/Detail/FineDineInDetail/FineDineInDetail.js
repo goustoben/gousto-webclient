@@ -13,6 +13,7 @@ import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import Carousel from 'Recipe/Detail/Carousel'
 import { detailPropTypes } from 'Recipe/Detail/Detail'
+import { NutritionDisclaimerText } from 'Recipe/Detail/NutritionDisclaimerText'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import Allergens from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
@@ -77,6 +78,7 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
             </div>
             <div className={css.oneColumnContainer}>
               {perPortion.size > 0 ? <Nutrition perPortion={perPortion.toJS()} per100Grams={per100Grams.toJS()} inset={false} /> : null}
+              <NutritionDisclaimerText />
             </div>
           </div>
           <hr className={css.rule} />
