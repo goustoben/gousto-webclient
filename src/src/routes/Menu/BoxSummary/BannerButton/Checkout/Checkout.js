@@ -49,7 +49,7 @@ const Checkout = (props) => {
   return (
     <BaseBannerButton
       view={view}
-      dataTesting={`${view}BoxSummaryButton`}
+      dataTesting='boxSummaryButton'
       disabled={checkoutPending || (basketSum(okRecipes(recipes, menuRecipes, stock, numPortions)) < config.minRecipesNum)}
       pending={checkoutPending || pricingPending || basketPreviewOrderChangePending || orderSavePending}
       spinnerClassName={css.coSpinner}

@@ -14,8 +14,7 @@ module.exports = {
           goFromMenuToCheckout: function () {
             this
               .api.execute(function () {
-                const selectorValue = this.api.globals.browser === 'mobile' ? '[data-testing="mobileBoxSummaryButton"]' : '[data-testing="desktopBoxSummaryButton"]'
-                const checkoutButton = document.querySelector(selectorValue)
+                const checkoutButton = document.querySelector('[data-testing="boxSummaryButton"]')
                 checkoutButton.click()
               })
           },
