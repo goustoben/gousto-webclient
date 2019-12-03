@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { isMobile } from 'utils/view'
 import css from './BannerButton.css'
 
-const BaseBannerButton = ({ view, pending, disabled, spinnerClassName, spinnerContainerClassName, onClick, children }) => {
+const BaseBannerButton = ({ view, pending, disabled, spinnerClassName, spinnerContainerClassName, onClick, children, dataTesting }) => {
   const isMobileView = isMobile(view)
 
   return (
@@ -15,6 +15,7 @@ const BaseBannerButton = ({ view, pending, disabled, spinnerClassName, spinnerCo
       spinnerClassName={spinnerClassName}
       spinnerContainerClassName={spinnerContainerClassName}
       width="full"
+      data-testing={dataTesting}
     >
       <Segment
         className={classnames({
@@ -32,6 +33,7 @@ const BaseBannerButton = ({ view, pending, disabled, spinnerClassName, spinnerCo
 BaseBannerButton.propTypes = {
   view: PropTypes.string.isRequired,
   pending: PropTypes.bool.isRequired,
+  dataTesting: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.element,
@@ -39,7 +41,7 @@ BaseBannerButton.propTypes = {
   disabled: PropTypes.bool,
   spinnerClassName: PropTypes.string,
   spinnerContainerClassName: PropTypes.string,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 }
 
 BaseBannerButton.defaultProps = {

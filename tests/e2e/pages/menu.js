@@ -9,42 +9,19 @@ module.exports = {
     menuContainer: {
       selector: '*[data-testing="menuContainer"]',
 
-      elements: {
-        mobileMenuToCheckout: {
-          selector: '*[data-testing=mobileBoxSummaryButton]'
-        },
-        desktopMenuToCheckout: {
-          selector: '*[data-testing=desktopBoxSummaryButton]'
-        },
-        mobileBoxSummaryNextButton: {
-          selector: '*[data-testing="mobileBoxSummaryNextButton"]',
-        },
-        desktopBoxSummaryNextButton: {
-          selector: '*[data-testing="desktopBoxSummaryNextButton"]',
-        },
-        boxSummaryContinueButton: {
-          selector: '*[data-testing="boxSummaryContinueButton"]',
-        },
-        dateSlot: {
-          selector: '*[data-testing="dateSlot"]',
-        },
-        fullBoxIcon: {
-          selector: '*[data-testing="icon-full-box"]',
-        },
-      },
-
       commands: [
         {
           goFromMenuToCheckout: function () {
-            const selector = this.api.globals.browser === 'mobile' ? '@mobileMenuToCheckout' : '@desktopMenuToCheckout'
             this
               .api.execute(function () {
-                const checkoutButton = document.querySelector(selector)
+                const selectorValue = this.api.globals.browser === 'mobile' ? '[data-testing="mobileBoxSummaryButton"]' : '[data-testing="desktopBoxSummaryButton"]'
+                const checkoutButton = document.querySelector(selectorValue)
+                console.log('checkoutButton', checkoutButton)//eslint-disable-line
                 checkoutButton.click()
               })
           },
           clickNextButton: function () {
-            const selector = this.api.globals.browser === 'mobile' ? '@mobileBoxSummaryNextButton' : '@desktopBoxSummaryNextButton'
+            const selector = this.api.globals.browser === 'mobile' ? '[data-testing="mobileBoxSummaryNextButton"]' : '[data-testing="desktopBoxSummaryNextButton"]'
             this
               .api.execute(function () {
                 const checkoutButton = document.querySelector(selector)
@@ -112,12 +89,7 @@ module.exports = {
           this
             .waitForElementVisible('@featured')
             .waitForElementVisible('@recipe1Add')
-            // .click('@featured', function(click) { console.log(click) })
             .click('@recipe1Add')
-          // .click('@recipe1Add', function(click) { console.log(click.status) })
-          // .click('@recipe2Add', function(click) { console.log(click.status) })
-          // .click('@recipe2Add')
-          // .click('@menuBrowseCTAButton')
 
           return this
         },
@@ -199,7 +171,6 @@ module.exports = {
       this.section.bottomBar.clickBrowseCTA()
       this.section.boxSummaryDesktop
         .setPostcode(postcode)
-      // .submit()
     },
   }],
 }
