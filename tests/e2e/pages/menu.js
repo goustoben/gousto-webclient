@@ -19,10 +19,9 @@ module.exports = {
               })
           },
           clickNextButton: function () {
-            const selector = this.api.globals.browser === 'mobile' ? '[data-testing="mobileBoxSummaryNextButton"]' : '[data-testing="desktopBoxSummaryNextButton"]'
             this
               .api.execute(function () {
-                const checkoutButton = document.querySelector(selector)
+                const checkoutButton = document.querySelector('[data-testing="boxSummaryNextButton"]')
                 checkoutButton.click()
               })
           },
