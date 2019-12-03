@@ -12,7 +12,9 @@ describe('the OrderAddOns component', () => {
       '12345': { id: '12345', title: 'First test product' }
     },
     ageVerified: true,
-    basket: Immutable.Map(),
+    basket: Immutable.fromJS({
+      products: {},
+    }),
     productsCategories: Immutable.Map(),
     orderConfirmationRedirect: jest.fn(),
     basketReset: jest.fn(),
@@ -41,10 +43,9 @@ describe('the OrderAddOns component', () => {
     })
   })
 
-  describe('when skipping the page', () => {
+  describe('the continueWithoutProducts class method', () => {
     beforeEach(() => {
-      const pageHeader = wrapper.find('OrderAddOnsHeader').dive()
-      pageHeader.find('.skipButton').simulate('click')
+      wrapper.instance().continueWithoutProducts()
     })
 
     test('resets the basket', () => {
@@ -54,6 +55,39 @@ describe('the OrderAddOns component', () => {
     test('redirects to the order confirmation page', () => {
       const { orderConfirmationRedirect, orderId } = mockProps
       expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+    })
+  })
+
+  describe('skipping the page without products', () => {
+    describe('when clicking the skip link in the header', () => {
+      beforeEach(() => {
+        const pageHeader = wrapper.find('OrderAddOnsHeader').dive()
+        pageHeader.find('.skipButton').simulate('click')
+      })
+
+      test('resets the basket', () => {
+        expect(mockProps.basketReset).toHaveBeenCalledTimes(1)
+      })
+
+      test('redirects to the order confirmation page', () => {
+        const { orderConfirmationRedirect, orderId } = mockProps
+        expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+      })
+    })
+
+    describe('when clicking the continue without products button', () => {
+      beforeEach(() => {
+        wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
+      })
+
+      test('resets the basket', () => {
+        expect(mockProps.basketReset).toHaveBeenCalledTimes(1)
+      })
+
+      test('redirects to the order confirmation page', () => {
+        const { orderConfirmationRedirect, orderId } = mockProps
+        expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+      })
     })
   })
 })

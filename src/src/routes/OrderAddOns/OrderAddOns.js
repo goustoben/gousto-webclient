@@ -2,11 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import {
+  Button,
   LayoutPageWrapper
 } from 'goustouicomponents'
 import { PageLoader } from 'PageLoader'
 import { ProductList } from '../OrderConfirmation/components/ProductList'
 import { OrderAddOnsHeader } from './components/OrderAddOnsHeader'
+import { OrderAddOnsFooter } from './components/OrderAddOnsFooter'
 
 const propTypes = {
   orderDetails: PropTypes.func.isRequired,
@@ -40,39 +42,52 @@ class OrderAddOns extends React.Component {
     orderDetails(orderId)
   }
 
+  continueWithoutProducts = () => {
+    const { basketReset, orderConfirmationRedirect, orderId } = this.props
+    basketReset()
+    orderConfirmationRedirect(orderId, 'choice')
+  }
+
   render() {
     const {
       products,
       basket,
       ageVerified,
       productsCategories,
-      orderId,
-      orderConfirmationRedirect,
-      basketReset,
       isPageLoading,
     } = this.props
 
     const numberOfProducts = Object.keys(products).length
+    const selectedProducts = basket.get('products')
 
     return isPageLoading ? <PageLoader /> : (
       (numberOfProducts > 0) &&
-      <LayoutPageWrapper>
-        <OrderAddOnsHeader
-          numberOfProducts={numberOfProducts}
-          onClickSkip={() => {
-            basketReset()
-            orderConfirmationRedirect(orderId, 'choice')
-          }}
-        />
-        <ProductList
-          products={products}
-          basket={basket}
-          ageVerified={ageVerified}
-          productsCategories={productsCategories}
-          toggleAgeVerificationPopUp={() => {}}
-          numberOfColumn="4"
-        />
-      </LayoutPageWrapper>
+      <div>
+        <LayoutPageWrapper>
+          <OrderAddOnsHeader
+            numberOfProducts={numberOfProducts}
+            onClickSkip={this.continueWithoutProducts}
+          />
+          <ProductList
+            products={products}
+            basket={basket}
+            ageVerified={ageVerified}
+            productsCategories={productsCategories}
+            toggleAgeVerificationPopUp={() => {}}
+            numberOfColumn="4"
+          />
+        </LayoutPageWrapper>
+
+        <OrderAddOnsFooter>
+          <Button onClick={this.continueWithoutProducts}>
+            {
+              selectedProducts.size ?
+                'Continue with items' :
+                'Continue without items'
+            }
+          </Button>
+        </OrderAddOnsFooter>
+      </div>
     )
   }
 }
