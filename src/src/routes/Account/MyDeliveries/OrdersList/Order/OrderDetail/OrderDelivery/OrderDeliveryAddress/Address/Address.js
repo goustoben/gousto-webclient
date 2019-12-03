@@ -24,7 +24,6 @@ const Address = ({selectAddress, isSelected, addressId, addressName, formattedAd
     className={classnames(css.container, {
       [css.containerSelected]: isSelected
     })}
-    tabIndex="0"
   >
     <div className={css.radioContainer}>
       <input
@@ -34,7 +33,6 @@ const Address = ({selectAddress, isSelected, addressId, addressName, formattedAd
         readOnly
         className={css.hiddenRadio}
         onClick={() => !isSelected && selectAddress(addressId)}
-        tabIndex="-1"
       />
       <div
         className={classnames(css.customRadio, {

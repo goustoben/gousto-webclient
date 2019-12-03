@@ -34,7 +34,6 @@ const PlanOption = ({
       className={classnames(css.container, {
         [css.containerSelected]: selected
       })}
-      tabIndex="0"
     >
       <div className={css.radioContainer}>
         <input
@@ -43,7 +42,6 @@ const PlanOption = ({
           checked={selected}
           className={css.hiddenRadio}
           onClick={handleSelect}
-          tabIndex="-1"
         />
         <div
           className={classnames(css.customRadio, {
