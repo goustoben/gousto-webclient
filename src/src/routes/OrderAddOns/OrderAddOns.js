@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import {
-  Button,
+  CTA,
   LayoutPageWrapper
 } from 'goustouicomponents'
 import { PageLoader } from 'PageLoader'
@@ -96,13 +96,13 @@ class OrderAddOns extends React.Component {
         </LayoutPageWrapper>
 
         <OrderAddOnsFooter>
-          <Button className="ContinueButton" onClick={this.onContinue}>
+          <CTA className="ContinueButton" onClick={this.onContinue}>
             {
               selectedProducts.size ?
                 'Continue with items' :
                 'Continue without items'
             }
-          </Button>
+          </CTA>
         </OrderAddOnsFooter>
       </div>
     )

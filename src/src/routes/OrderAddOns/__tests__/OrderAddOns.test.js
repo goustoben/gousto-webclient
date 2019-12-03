@@ -81,7 +81,7 @@ describe('the OrderAddOns component', () => {
   describe('when clicking the continue without products button', () => {
     describe('and products basket are empty', () => {
       beforeEach(() => {
-        wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
+        wrapper.find('OrderAddOnsFooter').find('.ContinueButton').simulate('click')
       })
 
       test('resets the basket', () => {
@@ -100,7 +100,7 @@ describe('the OrderAddOns component', () => {
           basket: Immutable.fromJS({ products: { '2': 2 }, orderId: '123' })
         })
 
-        wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
+        wrapper.find('OrderAddOnsFooter').find('.ContinueButton').simulate('click')
       })
 
       test('basketUpdateProducts is being called correctly', () => {
@@ -120,7 +120,7 @@ describe('the OrderAddOns component', () => {
         beforeEach(() => {
           basketUpdateProducts.mockRejectedValue('error')
 
-          wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
+          wrapper.find('OrderAddOnsFooter').find('.ContinueButton').simulate('click')
         })
 
         test('redirects to the order confirmation page', () => {
