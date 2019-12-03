@@ -30,7 +30,8 @@
 	composes: borderNone from 'styles/borders.css';
 	composes: paragraphSM from 'styles/typography.css';
 	border-collapse: collapse;
-	width: 95%;
+	width: 100%;
+	table-layout: fixed;
 }
 
 .tableMargins {
