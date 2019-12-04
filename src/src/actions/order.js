@@ -18,12 +18,16 @@ import { trackAffiliatePurchase } from 'actions/tracking'
 import { getOrderDetails } from 'utils/basket'
 import { getAvailableDeliveryDays, transformDaySlotLeadTimesToMockSlots, getSlot, getDeliveryTariffId, getNDDFeatureFlagVal } from 'utils/deliveries'
 import { redirect } from 'utils/window'
-import { getNDDFeatureValue } from 'selectors/features'
+import {
+  getNDDFeatureValue,
+  getAddOnsBeforeOrderConfirmation,
+} from 'selectors/features'
 import { orderTrackingActions } from 'config/order'
 import userActions from './user'
 import tempActions from './temp'
 import statusActions from './status'
 import { orderConfirmationRedirect } from './orderConfirmation'
+import { orderAddOnRedirect } from './orderAddOn'
 import actionTypes from './actionTypes'
 
 export const trackOrder = (orderAction, order) => (
@@ -96,7 +100,13 @@ export const orderUpdate = (orderId, recipes, coreDayId, coreSlotId, numPortions
           orderAction,
           savedOrder,
         ))
-        dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
+
+        const isAddOnsFeatureFlagOn = getAddOnsBeforeOrderConfirmation(getState())
+        if(isAddOnsFeatureFlagOn) {
+          dispatch(orderAddOnRedirect(savedOrder.id, orderAction))
+        } else {
+          dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
+        }
       }
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_SAVE, err.message))
@@ -258,7 +268,12 @@ export const orderAssignToUser = (orderAction, existingOrderId) => (
           orderAction,
           savedOrder,
         ))
-        dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
+        const isAddOnsFeatureFlagOn = getAddOnsBeforeOrderConfirmation(getState())
+        if(isAddOnsFeatureFlagOn) {
+          dispatch(orderAddOnRedirect(savedOrder.id, orderAction))
+        } else {
+          dispatch(orderConfirmationRedirect(savedOrder.id, orderAction))
+        }
       } else {
         throw new GoustoException('Order could not be assigned to user', {
           error: 'assign-order-fail',
