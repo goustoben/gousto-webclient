@@ -16,6 +16,7 @@ import * as deliveriesUtils from 'utils/deliveries'
 import { trackAffiliatePurchase } from 'actions/tracking'
 import { saveUserOrder, updateUserOrder } from 'apis/user'
 import { orderConfirmationRedirect } from 'actions/orderConfirmation'
+import { orderAddOnRedirect } from 'actions/orderAddOn'
 
 import {
   trackOrder,
@@ -36,6 +37,7 @@ jest.mock('utils/basket')
 jest.mock('actions/status')
 jest.mock('actions/tracking')
 jest.mock('actions/orderConfirmation')
+jest.mock('actions/orderAddOn')
 
 jest.mock('config/order', () => ({
   orderTrackingActions: {
@@ -262,6 +264,36 @@ describe('order actions', () => {
         '5678',
         'something',
       )
+    })
+
+    describe('when addOnsBeforeOrderConfirmation feature flag is on', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          auth: Immutable.Map({ accessToken: 'access-token' }),
+          features: Immutable.Map({
+            addOnsBeforeOrderConfirmation: Immutable.Map({
+              value: true,
+            })
+          }),
+          basket: Immutable.Map({
+            date: '2019-10-11',
+            slotId: '4'
+          }),
+        })
+      })
+
+      test('should redirect the user the add ons page if it succeeds', async () => {
+        orderAction = 'something'
+        saveOrder.mockImplementation(jest.fn().mockReturnValueOnce(
+          new Promise((resolve) => { resolve({ data: { id: '5678' } }) })
+        ))
+        await orderUpdate(orderId, recipes, coreDayId, coreSlotId, numPortions, orderAction)(dispatch, getState)
+
+        expect(orderAddOnRedirect).toHaveBeenCalledWith(
+          '5678',
+          'something',
+        )
+      })
     })
   })
 
@@ -615,6 +647,36 @@ describe('order actions', () => {
         '4321',
         'transaction',
       )
+    })
+
+    describe('when addOnsBeforeOrderConfirmation feature flag is on', () => {
+      beforeEach(() => {
+        getState.mockReturnValue({
+          auth: Immutable.Map({ accessToken: 'access-token' }),
+          features: Immutable.Map({
+            addOnsBeforeOrderConfirmation: Immutable.Map({
+              value: true,
+            })
+          }),
+          basket: Immutable.Map({
+            date: '2019-10-11',
+            slotId: '4'
+          }),
+        })
+      })
+
+      test('should redirect the user the add ons page if it succeeds', async () => {
+        saveUserOrder.mockImplementation(jest.fn().mockReturnValue(
+          new Promise((resolve) => { resolve({ data: { id: '4321' } }) })
+        ))
+
+        await orderAssignToUser(orderAction, 'order-123')(dispatch, getState)
+
+        expect(orderAddOnRedirect).toHaveBeenCalledWith(
+          '4321',
+          'transaction',
+        )
+      })
     })
 
     test('should redirect the user to the order summary page if it succeeds on updating existing order', async () => {

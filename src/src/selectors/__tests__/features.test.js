@@ -11,7 +11,8 @@ import {
   getCookingInstruction,
   getNDDFeatureValue,
   getHideBoxSummary,
-  getMenuService
+  getMenuService,
+  getAddOnsBeforeOrderConfirmation,
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -226,6 +227,28 @@ describe('when features are defined', () => {
         })
 
         expect(getCookingInstruction(state)).toEqual(true)
+      })
+    })
+  })
+
+  describe('getAddOnsBeforeOrderConfirmation', () => {
+    describe('when feature is not set', () => {
+      test('should return false', () => {
+        expect(getAddOnsBeforeOrderConfirmation(state)).toEqual(false)
+      })
+    })
+
+    describe('when feature is set', () => {
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          addOnsBeforeOrderConfirmation: {
+            value: true
+          }
+        })
+      })
+
+      test('should return true', () => {
+        expect(getAddOnsBeforeOrderConfirmation(state)).toEqual(true)
       })
     })
   })

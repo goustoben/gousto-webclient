@@ -11,12 +11,14 @@ import { OrderAddOns } from './OrderAddOns'
 const mapStateToProps = (state, ownProps) => {
   const { location } = ownProps
   const orderId = location.pathname.split('/order-add-ons/')[1] || ''
+  const orderAction = location && location.query && location.query.order_action
 
   return {
     ageVerified: getAgeVerified(state),
     basket: getBasket(state),
     basketProductsCost: getBasketProductsCost(state),
     isPageLoading: isOrderDetailsLoading(state),
+    orderAction,
     orderId,
     productsCategories: getProductCategories(state),
     products: getDesserts(state),

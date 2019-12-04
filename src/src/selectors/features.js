@@ -86,6 +86,10 @@ export const getHideBoxSummary = ({ features }) => (
   features && features.getIn(['hideBoxSummary', 'value'], false)
 )
 
+export const getAddOnsBeforeOrderConfirmation = ({ features }) => (
+  features && features.getIn(['addOnsBeforeOrderConfirmation', 'value'], false)
+)
+
 export const getMenuService = () => {
   if (menuServiceConfig.isEnabled) {
     return true

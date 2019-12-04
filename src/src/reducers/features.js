@@ -74,6 +74,10 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
+  addOnsBeforeOrderConfirmation: {
+    experiment: false,
+    value: false,
+  }
 })
 
 const initialState = () => Immutable.fromJS(defaultFeatures())

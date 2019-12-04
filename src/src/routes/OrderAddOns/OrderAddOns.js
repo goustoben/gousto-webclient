@@ -31,11 +31,13 @@ const propTypes = {
   basketUpdateProducts: PropTypes.func.isRequired,
   basketReset: PropTypes.func.isRequired,
   isPageLoading: PropTypes.bool,
+  orderAction: PropTypes.string,
 }
 
 const defaultProps = {
   basketProductsCost: '0.00',
   isPageLoading: false,
+  orderAction: '',
 }
 
 class OrderAddOns extends React.Component {
@@ -46,19 +48,30 @@ class OrderAddOns extends React.Component {
   }
 
   continueWithoutProducts = () => {
-    const { basketReset, orderConfirmationRedirect, orderId } = this.props
+    const {
+      basketReset,
+      orderAction,
+      orderConfirmationRedirect,
+      orderId,
+    } = this.props
     basketReset()
-    orderConfirmationRedirect(orderId, 'choice')
+    orderConfirmationRedirect(orderId, orderAction)
   }
 
   onContinue = async () => {
-    const { basket, basketUpdateProducts, orderConfirmationRedirect, orderId } = this.props
+    const {
+      basket,
+      basketUpdateProducts,
+      orderAction,
+      orderConfirmationRedirect,
+      orderId,
+    } = this.props
 
     try {
       await basketUpdateProducts()
 
       if (basket.get('products').size > 0) {
-        orderConfirmationRedirect(orderId, 'choice')
+        orderConfirmationRedirect(orderId, orderAction)
       } else {
         this.continueWithoutProducts()
       }

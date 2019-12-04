@@ -57,10 +57,14 @@ describe('<OrderAddOnsContainer />', () => {
     },
     compose(applyMiddleware(thunk))
   )
-
+  const ORDER_ACTION = 'transaction'
+  const location = {
+    pathname: '/order-add-ons/123',
+    query: { order_action: ORDER_ACTION},
+  }
   const wrapper = mount(
     <OrderAddOnsContainer
-      location={{ pathname: '/order-add-ons/123' }}
+      location={location}
       store={store}
     />
   )
@@ -84,6 +88,10 @@ describe('<OrderAddOnsContainer />', () => {
   describe('when component mounts', () => {
     test('orderDetails action is called correctly', () => {
       expect(wrapper.find('OrderAddOns').prop('orderId')).toBe('123')
+    })
+
+    test('order_action query parameter is mapped to orderAction prop', () => {
+      expect(wrapper.find('OrderAddOns').prop('orderAction')).toBe(ORDER_ACTION)
     })
   })
 })
