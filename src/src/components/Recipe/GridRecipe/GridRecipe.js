@@ -17,10 +17,9 @@ import TasteScore from '../TasteScore'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
-import { ShortlistButton } from '../ShortlistButton'
 
 const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title, highlight, unhighlight, tasteScore, chef, view, detailHover, range, isRecommendedRecipe,
-  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew, showShortlistButton, showShortlistFirstStep }) => (
+  features, stock, averageRating, ratingCount, cookingTime, useWithin, equipment, inBasket, position, id, diet, fiveADay, isNew }) => (
     <div className={css.recipeDetails}>
       <span onClick={onClick} className={css.link}>
         <Image
@@ -71,9 +70,6 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
         <AttributeGrid maxNoAttributes={4} cookingTime={cookingTime} useWithin={useWithin} equipment={equipment} diet={diet} fiveADay={fiveADay} />
         <RecipeDisclaimerContainer id={id} />
         <div className={css.buttonContainer}>
-          {showShortlistButton &&
-            <ShortlistButton id={id} stock={stock} view={view} position={position} showShortlistFirstStep={showShortlistFirstStep} />
-          }
           <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
         </div>
         <DisabledOverlay stock={stock} inBasket={inBasket} />
@@ -108,8 +104,6 @@ GridRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
-  showShortlistButton: PropTypes.bool,
-  showShortlistFirstStep: PropTypes.bool,
 }
 
 GridRecipe.defaultProps = {
@@ -122,7 +116,6 @@ GridRecipe.defaultProps = {
   cookingTime: 0,
   features: Immutable.Map({}),
   useWithin: '',
-  showShortlistFirstStep: false
 }
 
 export default GridRecipe

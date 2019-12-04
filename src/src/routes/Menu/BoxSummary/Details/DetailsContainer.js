@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
-import { getShortlist } from 'selectors/features'
 import { getBasketSlotId } from 'selectors/basket'
 import {
   getOkRecipeIds,
@@ -22,7 +21,6 @@ const mapStateToProps = (state) => ({
   pricingPending: state.pricing.get('pending'),
   prices: state.pricing.get('prices'),
   unavailableRecipeIds: getUnavailableRecipeIds(state),
-  shortlistFeatureEnabled: getShortlist(state) && state.request.get('browser') === 'mobile'
 })
 
 const DetailsContainer = connect(mapStateToProps, {

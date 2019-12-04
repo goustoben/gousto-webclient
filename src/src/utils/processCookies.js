@@ -11,7 +11,6 @@ import cookieActions from 'actions/cookies'
 import trackingActions from 'actions/tracking'
 import { setTutorialViewed } from 'actions/tutorial'
 import { loadContentVariants } from 'actions/content'
-import { shortlistRecipeAdd, shortlistRecipesClear, shortlistRecipesPositionClear, shortlistFeedbackViewed } from 'actions/shortlist'
 import logger from 'utils/logger'
 import persist from 'actions/persist'
 import { get } from './cookieHelper2'
@@ -87,9 +86,6 @@ const processCookies = (cookies, store) => {
   const tracking = getCookieStoreValue(cookies, 'tracking')
   const cookiePolicy = get(cookies, 'cookie_policy')
   const appBannerDismissed = get(cookies, 'app_banner_dismissed')
-  let shortlistRecipes = getCookieStoreValue(cookies, 'basket_shortlist_shortlistRecipes')
-  let shortlistRecipesPosition = getCookieStoreValue(cookies, 'basket_shortlist_shortlistRecipesPositions')
-  const shortlistFeedbackViewedValue = getCookieStoreValue(cookies, 'basket_shortlist_shortlistFeedbackViewed')
 
   let features = getCookieStoreValue(cookies, 'features')
   let variants = getCookieStoreValue(cookies, 'variants')
@@ -226,32 +222,6 @@ const processCookies = (cookies, store) => {
         }
       })
     }
-
-    if (shortlistRecipes) {
-      shortlistRecipes = JSON.parse(shortlistRecipes)
-
-      if (Object.keys(shortlistRecipes).length > 0) {
-        store.dispatch(shortlistRecipesClear())
-      }
-      if (shortlistRecipesPosition) {
-        shortlistRecipesPosition = JSON.parse(shortlistRecipesPosition)
-
-        if (Object.keys(shortlistRecipesPosition).length > 0) {
-          store.dispatch(shortlistRecipesPositionClear())
-        }
-      }
-
-      Object.keys(shortlistRecipes).forEach((recipeId) => {
-        let recipeInfo = null
-        const index = Array.isArray(shortlistRecipesPosition) ? shortlistRecipesPosition.findIndex((el) => Object.keys(el).length > 0 && Object.keys(el)[0] === recipeId) : -1
-        if (index !== -1) {
-          recipeInfo = shortlistRecipesPosition[index][recipeId]
-          shortlistRecipesPosition.splice(index, 1)
-        }
-
-        store.dispatch(shortlistRecipeAdd(recipeId, true, recipeInfo))
-      })
-    }
   }
 
   if (features) {
@@ -306,10 +276,6 @@ const processCookies = (cookies, store) => {
     } catch (err) {
       logger.error({ message: 'error parsing variants cookie value', errors: [err] })
     }
-  }
-
-  if (shortlistFeedbackViewedValue) {
-    store.dispatch(shortlistFeedbackViewed(JSON.parse(shortlistFeedbackViewedValue)))
   }
 }
 

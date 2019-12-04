@@ -4,7 +4,7 @@ import userActions, { userFetchReferralOffer } from 'actions/user'
 import { locationQuery } from 'selectors/routing'
 import { getAgeVerified } from 'selectors/user'
 import { isOrderConfirmationPageLoading } from 'selectors/orderConfirmation'
-import { getBasketOrderDetails, getShortlistUsed, getShortlistFeedbackViewed } from 'selectors/basket'
+import { getBasketOrderDetails } from 'selectors/basket'
 import { OrderConfirmation } from './OrderConfirmation'
 import { getHeaderDetails } from './helper'
 
@@ -19,8 +19,7 @@ const mapStateToProps = (state) => {
     ageVerified: getAgeVerified(state),
     headerDetails,
     isLoading,
-    showHeader,
-    showShortlistFeedback: (getShortlistUsed(state) && !getShortlistFeedbackViewed(state)),
+    showHeader
   })
 }
 

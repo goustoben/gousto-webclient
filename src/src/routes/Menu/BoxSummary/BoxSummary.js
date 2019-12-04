@@ -27,9 +27,6 @@ class BoxSummary extends React.PureComponent {
     orderSaveError: PropTypes.string,
     maxRecipesNum: PropTypes.number,
     pricingPending: PropTypes.bool,
-    shouldShowTutorialStep2: PropTypes.bool,
-    incrementTutorialViewed: PropTypes.func,
-    tutorialTracking: PropTypes.func,
     deliveryDays: PropTypes.instanceOf(Immutable.Map),
     slotId: PropTypes.string,
   }
@@ -147,9 +144,6 @@ class BoxSummary extends React.PureComponent {
       menuRecipesStore,
       recipes,
       menuFetchPending,
-      incrementTutorialViewed,
-      tutorialTracking,
-      shouldShowTutorialStep2,
       deliveryDays,
       slotId,
       showDetails,
@@ -165,9 +159,6 @@ class BoxSummary extends React.PureComponent {
           numRecipes={numRecipes}
           expandWarning={!menuFetchPending && numRecipes !== basketSum(recipes)}
           onExpandClick={this.toggle}
-          incrementTutorialViewed={incrementTutorialViewed}
-          tutorialTracking={tutorialTracking}
-          shouldShowTutorialStep2={shouldShowTutorialStep2}
           date={date}
           deliveryDays={deliveryDays}
           slotId={slotId}

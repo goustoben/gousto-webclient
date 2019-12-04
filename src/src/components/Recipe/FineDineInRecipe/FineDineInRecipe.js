@@ -15,11 +15,10 @@ import TasteScore from '../TasteScore'
 import { RecipeAttribute } from '../RecipeAttribute'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
-import { ShortlistButton } from '../ShortlistButton'
 
 const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickable, highlight, unhighlight,
   tasteScore, title, view, detailHover, cookingTime, chef, isRecommendedRecipe,
-  features, stock, inBasket, position, id, range, showShortlistButton }) => {
+  features, stock, inBasket, position, id, range }) => {
   const image = media.find(url => url.get('width') === 700) || Immutable.Map({})
 
   return (
@@ -81,11 +80,6 @@ const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickabl
               </div>
             </div>
             <div className={css.buttonContainer}>
-              {showShortlistButton &&
-                <div>
-                  <ShortlistButton id={id} view={view} stock={stock} position={position} />
-                </div>
-              }
               <div className={css.addButton}>
                 <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
               </div>
@@ -123,7 +117,6 @@ FineDineInRecipe.propTypes = {
   tasteScore: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
-  showShortlistButton: PropTypes.bool,
 }
 
 FineDineInRecipe.defaultProps = {

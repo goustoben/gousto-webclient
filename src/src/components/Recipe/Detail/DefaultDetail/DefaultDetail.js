@@ -13,7 +13,6 @@ import { RecipeMicronutrientsContainer } from 'routes/Menu/RecipeMicronutrients'
 import { detailPropTypes } from 'Recipe/Detail/Detail'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
 import { CookingInstructions } from 'Recipe/CookingInstructions'
-import { ShortlistButton } from 'Recipe/ShortlistButton'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { NutritionDisclaimerText } from 'Recipe/Detail/NutritionDisclaimerText'
 
@@ -24,7 +23,7 @@ import css from './DefaultDetail.css'
 const DefaultDetail = ({ media, title, view, count, average, perPortion,
   per100Grams, ingredients, allergens, id, stock, inBasket, cookingTime,
   useWithin, description, youWillNeed, cuisine, diet, equipment, menuRecipeDetailVisibilityChange,
-  position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showShortlistButton, showCookingInstruction }) => (
+  position, surcharge, range, fiveADay, glutenFree, dairyFree, isNew, isFoodBrandClickable, showCookingInstruction }) => (
     <div>
       <div className={css.container}>
         <div className={css.header}>
@@ -116,9 +115,6 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
             )}
           </div>
           <div className={css.stickyContainer}>
-            {showShortlistButton &&
-              <ShortlistButton id={id} stock={stock} view={view} position={position} />
-            }
             <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
           </div>
         </div>

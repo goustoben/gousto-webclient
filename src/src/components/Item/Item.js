@@ -3,7 +3,6 @@ import React from 'react'
 import classnames from 'classnames'
 import Immutable from 'immutable'
 import GoustoImage from 'Image'
-import { MoveRecipeButton } from 'MoveRecipeButton'
 import { capitalizeFirstLetter } from 'utils/text'
 import css from './Item.css'
 
@@ -26,14 +25,11 @@ const quantityMessage = (gift, quantity, disclaimerKey, type) => {
 const Item = ({
   available,
   disclaimerKey,
-  fromBox,
   gift,
   media,
   onImageClick,
   onRemove,
   quantity,
-  recipeId,
-  showShortlistButton,
   title,
   type,
   url,
@@ -55,7 +51,6 @@ const Item = ({
           </a>
         </p>
       }
-      {showShortlistButton && <MoveRecipeButton recipeId={recipeId} fromBox={fromBox} />}
     </div>
     {(available && onRemove) ? <span className={css.minusIcon} onClick={onRemove} /> : null}
   </div>
@@ -81,15 +76,6 @@ Item.propTypes = {
   available: PropTypes.bool,
   gift: PropTypes.bool,
   url: PropTypes.string,
-  showShortlistButton: PropTypes.bool,
-  fromBox: PropTypes.bool,
-  recipeId: PropTypes.string,
-}
-
-Item.defaultProps = {
-  showShortlistButton: false,
-  fromBox: false,
-  recipeId: "",
 }
 
 export default Item

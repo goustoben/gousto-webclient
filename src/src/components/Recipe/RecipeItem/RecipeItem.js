@@ -12,7 +12,6 @@ const RecipeItem = (props) => (
     onRemove={props.onRemove}
     available={props.available}
     url={props.url}
-    showShortlistButton={props.showShortlistButton}
     onImageClick={props.onImageClick}
     recipeId={props.recipeId}
     fromBox={props.fromBox}
@@ -29,7 +28,6 @@ RecipeItem.propTypes = {
   ]),
   available: PropTypes.bool,
   url: PropTypes.string,
-  showShortlistButton: PropTypes.bool,
   onImageClick: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.oneOf([false]),
@@ -39,7 +37,6 @@ RecipeItem.propTypes = {
 }
 
 RecipeItem.defaultProps = {
-  showShortlistButton: false,
   onImageClick: false
 }
 

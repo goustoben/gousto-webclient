@@ -3,15 +3,9 @@ import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import { getUnavailableRecipeIds } from 'routes/Menu/selectors/basket'
-import { incrementTutorialViewed, tutorialTracking } from 'actions/tutorial'
-import { getShortlistTutorialFirstStep, getShortlistTutorialSecondStep } from 'selectors/tutorial'
 import { getBasketSlotId, getBasketDate, getNumPortions, getBasketOrderId, getBasketRecipes } from 'selectors/basket'
 import { isMobile } from 'utils/view'
 import BoxSummaryDesktop from './BoxSummary'
-
-const shouldShortlistTutorialShow = (state) => (
-  getShortlistTutorialFirstStep(state) && !getShortlistTutorialSecondStep(state)
-)
 
 const mapStateToProps = (state) => ({
   isMobile: isMobile(state.request.get('browser')),
@@ -33,15 +27,12 @@ const mapStateToProps = (state) => ({
   hasUnavailableRecipes: Boolean(getUnavailableRecipeIds(state).size),
   orderSaveError: state.error.get(actionTypes.ORDER_SAVE),
   pricingPending: state.pricing.get('pending'),
-  shouldShowTutorialStep2: shouldShortlistTutorialShow(state)
 })
 
 const BoxSummaryDesktopContainer = connect(mapStateToProps, {
   boxDetailsVisibilityChange: actions.boxSummaryVisibilityChange,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
   boxSummaryNext: actions.boxSummaryNext,
-  incrementTutorialViewed,
-  tutorialTracking,
 })(BoxSummaryDesktop)
 
 export default BoxSummaryDesktopContainer

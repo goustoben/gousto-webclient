@@ -26,8 +26,7 @@ jest.mock('actions/pricing', () => ({
 jest.mock('utils/basket', () => ({
   okRecipes: recipes => recipes,
   limitReached: () => false,
-  basketSumMock: () => false,
-  shortlistLimitReached: () => false
+  basketSumMock: () => false
 }))
 
 jest.mock('actions/orderConfirmation', () => ({
@@ -675,10 +674,7 @@ describe('basket actions', () => {
         basket: Immutable.Map({
           recipes: Immutable.Map([['123', 1]]),
           numPortions: 2,
-          limitReached: false,
-          shortlist: Immutable.fromJS({
-            shortlistRecipes: {}
-          })
+          limitReached: false
         }),
         filters: Immutable.Map({
           currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
@@ -892,53 +888,6 @@ describe('basket actions', () => {
       })(dispatch, getStateSpy)
 
       expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)
-    })
-
-    describe('when recipe in shortlist', () => {
-      test('should remove recipe from shortlist', () => {
-        getStateSpy = jest.fn().mockReturnValue({
-          basket: Immutable.Map({
-            recipes: Immutable.Map([['123', 1]]),
-            numPortions: 2,
-            limitReached: false,
-            shortlist: Immutable.fromJS({
-              shortlistRecipes: {
-                '123': 1
-              }
-            })
-          }),
-          filters: Immutable.Map({
-            currentCollectionId: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-            recipeGroup: {
-              slug: 'test-food-brand'
-            },
-          }),
-          menuRecipeStock: Immutable.fromJS({
-            123: { 2: 30 },
-          }),
-          menuRecipes: Immutable.fromJS({
-            123: {},
-          })
-        })
-
-        basketRecipeAdd('123', null, false)(dispatch, getStateSpy)
-        expect(dispatch).toHaveBeenCalledWith({
-          type: actionTypes.SHORTLIST_RECIPE_REMOVE,
-          recipeId: '123',
-          trackingData: {
-            actionType: 'Shortlist Recipe Remove',
-            recipeId: '123',
-            view: undefined,
-            collection: '1365e0ac-5b1a-11e7-a8dc-001c421e38fa',
-            source: 'test-food-brand',
-            shortlistRecipes: Immutable.Map({
-              '123': 1
-            }),
-            basketRecipes: Immutable.Map([['123', 1]]),
-            shortlistPosition: 1
-          }
-        })
-      })
     })
   })
 

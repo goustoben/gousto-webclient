@@ -15,9 +15,6 @@ jest.mock('config/storePersistence', () => ({
     basket_postcode: 7,
     basket_recipes: 7,
     basket_promoCode: 60,
-    basket_shortlist_shortlistRecipes: 7,
-    basket_shortlist_shortlistRecipesPositions: 7,
-    basket_shortlist_shortlistFeedbackViewed: 30,
   }
 }))
 jest.mock('utils/cookieHelper2')

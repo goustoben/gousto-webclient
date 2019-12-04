@@ -1,5 +1,5 @@
 import Immutable from 'immutable' /* eslint-disable new-cap */
-import { basketSum, okRecipes, getProductsQtyInCategory, limitReached, getProductLimitReached, shortlistLimitReached, getOrderDetails } from 'utils/basket'
+import { basketSum, okRecipes, getProductsQtyInCategory, limitReached, getProductLimitReached, getOrderDetails } from 'utils/basket'
 import * as basketProductLimits from 'utils/basketProductLimits'
 import { getSlot } from 'utils/deliveries'
 
@@ -300,40 +300,6 @@ describe('basket utils', function () {
       expect(getFirstProductCategoryAtLimitSpy).toHaveBeenCalledTimes(1)
       expect(getFirstProductCategoryAtLimitSpy.mock.calls[0]).toEqual(['product-3', basket, products, productsCategories])
       expect(result).toEqual({ type: 'category', value: 'category name' })
-    })
-  })
-
-  describe('shortlistLimitReached', () => {
-    let shortlist
-    let shortlistRecipes
-    let menuRecipes
-    let menuRecipeStock
-    const numPortions = 2
-    beforeEach(() => {
-      shortlistRecipes = Immutable.Map({ 456: 1, 567: 2, 678: 1 })
-      shortlist = Immutable.fromJS({
-        shortlistRecipes,
-      })
-      menuRecipes = Immutable.List(['456', '567', '678'])
-      menuRecipeStock = Immutable.fromJS({
-        456: { 2: 3000, 3: 1750 },
-        567: { 2: 3000, 3: 1750 },
-        678: { 2: 3000, 3: 1750 },
-      })
-    })
-
-    test('should return shortlistLimitReached false if we have less than 5 recipes', () => {
-      const limit = shortlistLimitReached(shortlist, menuRecipes, menuRecipeStock, numPortions)
-      expect(limit).toEqual(false)
-    })
-
-    test('should return shortlistLimitReached true if we have five or more recipes', () => {
-      shortlistRecipes = Immutable.Map({ 456: 20, 567: 5, 678: 25 })
-      shortlist = Immutable.fromJS({
-        shortlistRecipes,
-      })
-      const limit = shortlistLimitReached(shortlist, menuRecipes, menuRecipeStock, numPortions)
-      expect(limit).toEqual(true)
     })
   })
 })

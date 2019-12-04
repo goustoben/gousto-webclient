@@ -7,7 +7,6 @@ import FineDineInDetail from 'Recipe/Detail/FineDineInDetail'
 import { CookingInstructions } from 'Recipe/CookingInstructions'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import { NutritionDisclaimerText } from 'Recipe/Detail/NutritionDisclaimerText'
-import { ShortlistButton } from 'Recipe/ShortlistButton'
 
 describe('<FineDineInDetail />', () => {
   const FINE_DINE_IN_DETAIL = (
@@ -50,7 +49,6 @@ describe('<FineDineInDetail />', () => {
         salt: 1,
       })}
       showCookingInstruction={false}
-      showShortlistButton={false}
       title='title'
       useWithin='5 days'
       view='detail'
@@ -276,28 +274,6 @@ describe('<FineDineInDetail />', () => {
 
       test('should not return the <CookingInstructions />', () => {
         expect(wrapper.find(CookingInstructions).exists()).toBe(false)
-      })
-    })
-  })
-
-  describe('<ShortlistButton />', () => {
-    describe('when showShortlistButton is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showShortlistButton: true })
-      })
-
-      test('should return the <ShortlistButton />', () => {
-        expect(wrapper.find(ShortlistButton)).toHaveLength(1)
-      })
-    })
-
-    describe('when showShortlistButton is false', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showShortlistButton: false })
-      })
-
-      test('should not return the <ShortlistButton />', () => {
-        expect(wrapper.find(ShortlistButton).exists()).toBe(false)
       })
     })
   })
