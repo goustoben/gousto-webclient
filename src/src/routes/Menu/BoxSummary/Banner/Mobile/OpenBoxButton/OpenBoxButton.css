@@ -20,19 +20,6 @@
 	margin-top: -2.25rem;
 }
 
-.openButton {
-	border: 1px solid White;
-	border-radius: 1.25rem;
-	padding: 0.125rem 0.5rem;
-	background-color: Bluecheese;
-}
-
-.openButtonText {
-	font-family: bodyFontStackBold;
-	font-size: sizeXS;
-	padding-right: 0.25rem;
-}
-
 .arrowDown {
 	composes: fa-basic-class  fa-chevron-down from 'styles/vendor/font-awesome-module.css';
 }
