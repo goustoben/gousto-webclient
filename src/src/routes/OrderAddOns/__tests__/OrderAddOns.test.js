@@ -19,6 +19,7 @@ describe('the OrderAddOns component', () => {
     orderConfirmationRedirect: jest.fn(),
     basketReset: jest.fn(),
     basketUpdateProducts: jest.fn(),
+    orderAction: 'choice',
   }
 
   beforeEach(() => {
@@ -55,7 +56,7 @@ describe('the OrderAddOns component', () => {
 
     test('redirects to the order confirmation page', () => {
       const { orderConfirmationRedirect, orderId } = mockProps
-      expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+      expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, mockProps.orderAction)
     })
   })
 
@@ -71,7 +72,7 @@ describe('the OrderAddOns component', () => {
 
     test('redirects to the order confirmation page', () => {
       const { orderConfirmationRedirect, orderId } = mockProps
-      expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+      expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, mockProps.orderAction)
     })
   })
 
@@ -99,7 +100,7 @@ describe('the OrderAddOns component', () => {
 
       test('redirects to the order confirmation page', () => {
         const { orderConfirmationRedirect, orderId } = mockProps
-        expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+        expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, mockProps.orderAction)
       })
     })
   })
@@ -140,7 +141,7 @@ describe('the OrderAddOns component', () => {
 
       test('redirects to the order confirmation page', () => {
         const { orderConfirmationRedirect, orderId } = mockProps
-        expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+        expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, mockProps.orderAction)
       })
 
       describe('and products fail to be added', () => {
@@ -151,7 +152,7 @@ describe('the OrderAddOns component', () => {
 
         test('redirects to the order confirmation page', () => {
           const { orderConfirmationRedirect, orderId } = mockProps
-          expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+          expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, mockProps.orderAction)
         })
       })
     })
