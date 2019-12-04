@@ -1,3 +1,6 @@
+import { createSelector } from 'reselect'
+import { getProducts } from 'selectors/products'
+
 export const getBasketOrderId = state => state.basket.get('orderId')
 export const getBasketRecipes = state => state.basket.get('recipes')
 export const getBasketTotalRecipes = state => state.basket.get('recipes').reduce((acc, cur) => acc + cur)
@@ -18,3 +21,22 @@ export const getShortlistLimitReached = ({ basket }) => basket.getIn(['shortlist
 export const getShortlistRecipeIds = ({ basket }) => basket.getIn(['shortlist', 'shortlistRecipes'], null)
 export const getShortlistFeedbackViewed = ({ basket }) => basket.getIn(['shortlist', 'shortlistFeedbackViewed'], false)
 export const getShortlistUsed = ({ basket }) => basket.getIn(['shortlist', 'shortlistUsed'], false)
+
+export const getBasketProducts = ({ basket }) => basket.get('products')
+export const getBasketProductsCost = createSelector(
+  [getBasketProducts, getProducts],
+  (basketProducts, products) => {
+    const basketProductsCost = basketProducts.reduce((totalCost, productQuantity, productId) => {
+      if (products.size) {
+        const product = products.get(productId)
+        const listPrice = parseFloat(product.get('listPrice'))
+
+        totalCost += productQuantity * listPrice
+      }
+
+      return totalCost
+    }, 0)
+
+    return basketProductsCost.toFixed(2)
+  }
+)

@@ -9,10 +9,14 @@
 }
 
 .footerContent {
-  display: flex;
-  justify-content: center;
-
   @media ScreenXXSMin {
+    max-width: 20rem;
+  }
+}
+
+.footerContentWrapper{
+  @media ScreenXXSMin {
+    display: flex;
     justify-content: flex-end;
   }
 }

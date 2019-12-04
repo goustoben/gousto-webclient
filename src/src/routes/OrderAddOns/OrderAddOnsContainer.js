@@ -3,6 +3,7 @@ import { getBasket, getProductCategories } from 'selectors/root'
 import { getDesserts } from 'selectors/products'
 import { getAgeVerified } from 'selectors/user'
 import { isOrderDetailsLoading } from 'selectors/orderConfirmation'
+import { getBasketProductsCost } from 'selectors/basket'
 import { orderDetails, orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { basketReset, basketUpdateProducts } from 'actions/basket'
 import { OrderAddOns } from './OrderAddOns'
@@ -14,6 +15,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ageVerified: getAgeVerified(state),
     basket: getBasket(state),
+    basketProductsCost: getBasketProductsCost(state),
     isPageLoading: isOrderDetailsLoading(state),
     orderId,
     productsCategories: getProductCategories(state),

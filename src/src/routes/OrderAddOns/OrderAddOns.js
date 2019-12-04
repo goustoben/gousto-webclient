@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
 import {
-  Button,
+  CTA,
   LayoutPageWrapper
 } from 'goustouicomponents'
 import { PageLoader } from 'PageLoader'
@@ -25,6 +25,7 @@ const propTypes = {
   ).isRequired,
   ageVerified: PropTypes.bool,
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
+  basketProductsCost: PropTypes.string,
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
   orderConfirmationRedirect: PropTypes.func.isRequired,
   basketUpdateProducts: PropTypes.func.isRequired,
@@ -33,6 +34,7 @@ const propTypes = {
 }
 
 const defaultProps = {
+  basketProductsCost: '0.00',
   isPageLoading: false,
 }
 
@@ -69,13 +71,15 @@ class OrderAddOns extends React.Component {
     const {
       products,
       basket,
+      basketProductsCost,
       ageVerified,
       productsCategories,
       isPageLoading,
     } = this.props
 
     const numberOfProducts = Object.keys(products).length
-    const selectedProducts = basket.get('products')
+    const areProductsSelected = basket.get('products').size
+    const formattedProductsCost = `£${basketProductsCost}`
 
     return isPageLoading ? <PageLoader /> : (
       (numberOfProducts > 0) &&
@@ -96,13 +100,14 @@ class OrderAddOns extends React.Component {
         </LayoutPageWrapper>
 
         <OrderAddOnsFooter>
-          <Button className="ContinueButton" onClick={this.onContinue}>
-            {
-              selectedProducts.size ?
-                'Continue with items' :
-                'Continue without items'
-            }
-          </Button>
+          <CTA
+            className="ContinueButton"
+            extraInfo={areProductsSelected ? formattedProductsCost : null}
+            isFullWidth
+            onClick={this.onContinue}
+          >
+            {`Continue ${areProductsSelected ? 'with' : 'without'} items`}
+          </CTA>
         </OrderAddOnsFooter>
       </div>
     )

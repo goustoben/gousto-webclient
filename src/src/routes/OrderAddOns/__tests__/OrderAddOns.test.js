@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import { OrderAddOns } from '../OrderAddOns'
 
 describe('the OrderAddOns component', () => {
-  const basketUpdateProducts = jest.fn()
   let wrapper
   const mockProps = {
     orderDetails: () => {},
@@ -19,7 +18,7 @@ describe('the OrderAddOns component', () => {
     productsCategories: Immutable.Map(),
     orderConfirmationRedirect: jest.fn(),
     basketReset: jest.fn(),
-    basketUpdateProducts,
+    basketUpdateProducts: jest.fn(),
   }
 
   beforeEach(() => {
@@ -60,11 +59,38 @@ describe('the OrderAddOns component', () => {
     })
   })
 
-  describe('skipping the page without products', () => {
-    describe('when clicking the skip link in the header', () => {
+  describe('when skipping the page using the skip link', () => {
+    beforeEach(() => {
+      const pageHeader = wrapper.find('OrderAddOnsHeader').dive()
+      pageHeader.find('.skipButton').simulate('click')
+    })
+
+    test('resets the basket', () => {
+      expect(mockProps.basketReset).toHaveBeenCalledTimes(1)
+    })
+
+    test('redirects to the order confirmation page', () => {
+      const { orderConfirmationRedirect, orderId } = mockProps
+      expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
+    })
+  })
+
+  describe('when no products have been added', () => {
+    let continueButton
+
+    beforeEach(() => {
+      wrapper.setProps({ basket: Immutable.fromJS({ products: {} }) })
+      continueButton = wrapper.find('.ContinueButton')
+    })
+
+    test('continue button shows the correct copy without any price', () => {
+      expect(continueButton.children().text()).toBe('Continue without items')
+      expect(continueButton.prop('extraInfo')).toBe(null)
+    })
+
+    describe('and the continue button is clicked', () => {
       beforeEach(() => {
-        const pageHeader = wrapper.find('OrderAddOnsHeader').dive()
-        pageHeader.find('.skipButton').simulate('click')
+        continueButton.simulate('click')
       })
 
       test('resets the basket', () => {
@@ -78,36 +104,37 @@ describe('the OrderAddOns component', () => {
     })
   })
 
-  describe('when clicking the continue without products button', () => {
-    describe('and products basket are empty', () => {
-      beforeEach(() => {
-        wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
-      })
+  describe('when products have been added', () => {
+    let continueButton
 
-      test('resets the basket', () => {
-        expect(mockProps.basketReset).toHaveBeenCalledTimes(1)
+    beforeEach(() => {
+      wrapper.setProps({
+        basket: Immutable.fromJS({
+          products: {
+            'product2': 1,
+            'product4': 2,
+          }
+        }),
+        basketProductsCost: '8.00',
       })
-
-      test('redirects to the order confirmation page', () => {
-        const { orderConfirmationRedirect, orderId } = mockProps
-        expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
-      })
+      continueButton = wrapper.find('.ContinueButton')
     })
 
-    describe('and products basket are not empty', () => {
+    test('continue button shows the correct copy and price', () => {
+      expect(continueButton.children().text()).toBe('Continue with items')
+      expect(continueButton.prop('extraInfo')).toBe('£8.00')
+    })
+
+    describe('and the continue button is clicked', () => {
       beforeEach(() => {
-        wrapper.setProps({
-          basket: Immutable.fromJS({ products: { '2': 2 }, orderId: '123' })
-        })
-
-        wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
+        wrapper.find('OrderAddOnsFooter').find('.ContinueButton').simulate('click')
       })
 
-      test('basketUpdateProducts is being called correctly', () => {
-        expect(basketUpdateProducts).toHaveBeenCalledTimes(1)
+      test('basketUpdateProducts is called', () => {
+        expect(mockProps.basketUpdateProducts).toHaveBeenCalledTimes(1)
       })
 
-      test('not reset the basket', () => {
+      test('does not reset the basket', () => {
         expect(mockProps.basketReset).not.toHaveBeenCalled()
       })
 
@@ -116,11 +143,10 @@ describe('the OrderAddOns component', () => {
         expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, 'choice')
       })
 
-      describe('products has returned an error', () => {
+      describe('and products fail to be added', () => {
         beforeEach(() => {
-          basketUpdateProducts.mockRejectedValue('error')
-
-          wrapper.find('OrderAddOnsFooter').find('Button').simulate('click')
+          mockProps.basketUpdateProducts.mockRejectedValue('error')
+          wrapper.find('OrderAddOnsFooter').find('.ContinueButton').simulate('click')
         })
 
         test('redirects to the order confirmation page', () => {
