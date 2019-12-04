@@ -583,7 +583,7 @@ describe('menu fetchData', () => {
         })
       })
 
-      test('should dispatch menuLoadComplete action', async () => {
+      test('should dispatch menuLoadComplete action when menuService is false', async () => {
         const firstTime = 1
         const secondTime = 2.3
 
@@ -594,11 +594,36 @@ describe('menu fetchData', () => {
           .mockReturnValueOnce(secondTime)
           .mockReturnValue(999999)
 
+        getMenuService.mockReturnValue(false)
+
         await fetchData({ store, query, params }, false, false)
 
         expect(store.dispatch.mock.calls[5]).toEqual([{
           type: actionTypes.MENU_LOAD_COMPLETE,
-          timeToLoadMs: expectedValue
+          timeToLoadMs: expectedValue,
+          useMenuService: false
+        }])
+      })
+
+      test('should dispatch menuLoadComplete action when menuService is true', async () => {
+        const firstTime = 1
+        const secondTime = 2.3
+
+        // Math.round(2.3 - 1)
+        const expectedValue = 1
+
+        now.mockReturnValueOnce(firstTime)
+          .mockReturnValueOnce(secondTime)
+          .mockReturnValue(999999)
+
+        getMenuService.mockReturnValue(true)
+
+        await fetchData({ store, query, params }, false, false)
+
+        expect(store.dispatch.mock.calls[6]).toEqual([{
+          type: actionTypes.MENU_LOAD_COMPLETE,
+          timeToLoadMs: expectedValue,
+          useMenuService: true
         }])
       })
     })
