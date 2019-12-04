@@ -10,13 +10,6 @@ export default (store) => {
     promoAgeVerified: false,
     variants: false,
     basket: {
-      shortlist: {
-        shortlistRecipes: false,
-        shortlistRecipesPositions: false,
-        shortlistLimitReached: false,
-        shortlistFeedbackViewed: false,
-        shortlistUsed: false
-      }
     }
   }
 
@@ -37,13 +30,6 @@ export default (store) => {
         collection: true,
         promoCode: true,
         subscriptionOption: true,
-        shortlist: {
-          shortlistRecipes: false,
-          shortlistRecipesPositions: false,
-          shortlistLimitReached: false,
-          shortlistFeedbackViewed: false,
-          shortlistUsed: false
-        }
       },
       filters: {
         currentCollectionId: true,
@@ -66,7 +52,4 @@ export const cookieExpiries = {
   basket_postcode: 7,
   basket_recipes: 7,
   basket_promoCode: 60,
-  basket_shortlist_shortlistRecipes: 7,
-  basket_shortlist_shortlistRecipesPositions: 7,
-  basket_shortlist_shortlistFeedbackViewed: 30,
 }

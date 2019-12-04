@@ -8,9 +8,6 @@ import { BoxSummaryMobileBanner } from './Mobile/BoxSummaryMobileBanner'
 const BoxSummaryBanner = ({
   isMobile,
 
-  incrementTutorialViewed,
-  tutorialTracking,
-  shouldShowTutorialStep2,
   date,
   deliveryDays,
   slotId,
@@ -24,9 +21,6 @@ const BoxSummaryBanner = ({
   if (isMobile) {
     return (
       <BoxSummaryMobileBanner
-        incrementTutorialViewed={incrementTutorialViewed}
-        tutorialTracking={tutorialTracking}
-        shouldShowTutorialStep2={shouldShowTutorialStep2}
         date={date}
         deliveryDays={deliveryDays}
         slotId={slotId}
@@ -48,9 +42,6 @@ const BoxSummaryBanner = ({
 BoxSummaryBanner.propTypes = {
   isMobile: PropTypes.bool.isRequired,
 
-  shouldShowTutorialStep2: PropTypes.bool,
-  incrementTutorialViewed: PropTypes.func,
-  tutorialTracking: PropTypes.func,
   date: PropTypes.string,
   deliveryDays: PropTypes.instanceOf(Immutable.Map),
   slotId: PropTypes.string,

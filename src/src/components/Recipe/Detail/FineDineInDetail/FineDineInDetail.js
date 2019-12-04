@@ -8,7 +8,6 @@ import Rating from 'Recipe/Rating'
 import AddButton from 'Recipe/AddButton'
 import { AttributeGrid } from 'Recipe/AttributeGrid'
 import { CookingInstructions } from 'Recipe/CookingInstructions'
-import { ShortlistButton } from 'Recipe/ShortlistButton'
 import Ingredients from 'Recipe/Ingredients'
 import Nutrition from 'Recipe/Detail/Nutrition'
 import Carousel from 'Recipe/Detail/Carousel'
@@ -18,9 +17,9 @@ import IngredientsList from '../IngredientsList/IngredientsList'
 import Allergens from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
 
-const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens,
-  id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment,
-  position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew, showShortlistButton, showCookingInstruction }) => (
+const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens, 
+  id, stock, inBasket, cookingTime, useWithin, description, youWillNeed, cuisine, diet, equipment, 
+  position, surcharge, images, menuRecipeDetailVisibilityChange, fiveADay, dairyFree, glutenFree, isNew, showCookingInstruction }) => (
   <div>
     <div className={css.container}>
       <div className={css.carousel}>
@@ -101,9 +100,6 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
         </div>
       </div>
       <div className={css.stickyContainer}>
-        {showShortlistButton &&
-          <ShortlistButton id={id} stock={stock} view={view} position={position} />
-        }
         <AddButton id={id} stock={stock} inBasket={inBasket} view={view} surcharge={surcharge} position={position} />
       </div>
     </div>

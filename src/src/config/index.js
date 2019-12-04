@@ -12,7 +12,6 @@ export default {
   referral: require('./referral'),
   roundels: require('./roundels').default,
   routes: require('./routes'),
-  shortlist: require('./shortlist'),
   signup: require('./signup'),
   template: require('./template'),
 }

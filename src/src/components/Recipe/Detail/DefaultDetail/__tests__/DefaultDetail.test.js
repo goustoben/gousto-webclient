@@ -6,7 +6,6 @@ import { shallow } from 'enzyme'
 import DefaultDetail from 'Recipe/Detail/DefaultDetail'
 import { CookingInstructions } from 'Recipe/CookingInstructions'
 import Nutrition from 'Recipe/Detail/Nutrition'
-import { ShortlistButton } from 'Recipe/ShortlistButton'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { RecipeMicronutrientsContainer } from 'routes/Menu/RecipeMicronutrients'
 import { NutritionDisclaimerText } from '../../NutritionDisclaimerText'
@@ -60,7 +59,6 @@ describe('<DefaultDetail />', () => {
         salt: 1,
       })}
       showCookingInstruction={false}
-      showShortlistButton={false}
       title='title'
       useWithin='5 days'
       view='detail'
@@ -351,28 +349,6 @@ describe('<DefaultDetail />', () => {
 
     test('should not return the <CookingInstructions />', () => {
       expect(wrapper.find('.cookingInstructionsMobile').find(CookingInstructions).exists()).toBe(false)
-    })
-  })
-
-  describe('<ShortlistButton />', () => {
-    describe('when showShortlistButton is true', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showShortlistButton: true })
-      })
-
-      test('should return the <ShortlistButton />', () => {
-        expect(wrapper.find(ShortlistButton)).toHaveLength(1)
-      })
-    })
-
-    describe('when showShortlistButton is false', () => {
-      beforeEach(() => {
-        wrapper.setProps({ showShortlistButton: false })
-      })
-
-      test('should not return the <ShortlistButton />', () => {
-        expect(wrapper.find(ShortlistButton).exists()).toBe(false)
-      })
     })
   })
 })

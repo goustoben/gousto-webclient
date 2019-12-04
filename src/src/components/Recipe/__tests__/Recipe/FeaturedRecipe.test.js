@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { shallow } from 'enzyme'
-import Immutable from 'immutable'
 
 import Image from 'Recipe/Image'
 import Title from 'Recipe/Title'
@@ -12,7 +11,6 @@ import { AttributeGrid } from 'Recipe/AttributeGrid'
 import FeaturedRecipe from 'Recipe/FeaturedRecipe'
 
 import { Pill } from 'goustouicomponents'
-import { ShortlistButton } from 'Recipe/ShortlistButton'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 
 describe('<FeaturedRecipe />', () => {
@@ -80,10 +78,5 @@ describe('<FeaturedRecipe />', () => {
   test('should contain one Pill component and icon prop is true', () => {
     expect(wrapper.find(Pill).length).toBe(1)
     expect(wrapper.find(Pill).prop('icon')).toBe(true)
-  })
-
-  test('should contain one ShortlistButton if feature flag is showShortlistButton is true and onMobile is true', () => {
-    wrapper.setProps({ showShortlistButton: true })
-    expect(wrapper.find(ShortlistButton).length).toBe(1)
   })
 })

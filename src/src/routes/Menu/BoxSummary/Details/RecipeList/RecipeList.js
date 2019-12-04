@@ -15,7 +15,6 @@ const RecipeList = ({
   onRemove,
   orderSaveError,
   recipesStore,
-  shortlistFeatureEnabled,
   showRecipeDetailsOnClick,
   unavailableRecipeIds,
   basketRestorePreviousDate,
@@ -37,7 +36,6 @@ const RecipeList = ({
               numPortions={basketRecipes.get(recipe.get('id')) * numPortions}
               onImageClick={() => showRecipeDetailsOnClick(recipe.get('id'))}
               onRemove={() => onRemove(recipe.get('id'), 'boxSummaryMinus')}
-              showShortlistButton={shortlistFeatureEnabled}
               recipeId={recipe.get('id')}
               title={recipe.get('title')}
             />
@@ -76,7 +74,6 @@ RecipeList.propTypes = {
   onRemove: PropTypes.func,
   orderSaveError: PropTypes.string,
   recipesStore: PropTypes.instanceOf(Immutable.Map),
-  shortlistFeatureEnabled: PropTypes.bool,
   showRecipeDetailsOnClick: PropTypes.func,
   unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
   basketRestorePreviousDate: PropTypes.func,

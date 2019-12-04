@@ -57,7 +57,6 @@ describe('Details', () => {
       pricingPending: false,
       prices: Immutable.Map(),
       unavailableRecipeIds: Immutable.Map(),
-      shortlistFeatureEnabled: false,
       basketNumPortionChange: () => { },
       portionSizeSelectedTracking: () => { },
       basketRestorePreviousDate: () => { },

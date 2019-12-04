@@ -26,26 +26,13 @@ const BoxSummaryMobileBanner = ({
   errorText,
   openDetails,
 
-  incrementTutorialViewed,
-  tutorialTracking,
-  shouldShowTutorialStep2,
-
   date,
   deliveryDays,
   slotId
 }) => {
-  const closeTutorialStep2 = () => {
-    const tutorialName = 'shortlistStep2'
-    incrementTutorialViewed(tutorialName)
-    tutorialTracking(tutorialName, 1, true)
-  }
-
   const handleMobileClick = (e) => {
     if (e.target && e.target.className.indexOf(bannerButtonCss.submitButton) === -1) {
       openDetails()
-      if (shouldShowTutorialStep2) {
-        closeTutorialStep2()
-      }
     }
   }
 
@@ -99,9 +86,6 @@ const BoxSummaryMobileBanner = ({
 }
 
 BoxSummaryMobileBanner.propTypes = {
-  shouldShowTutorialStep2: PropTypes.bool,
-  incrementTutorialViewed: PropTypes.func,
-  tutorialTracking: PropTypes.func,
   date: PropTypes.string,
   deliveryDays: PropTypes.instanceOf(Immutable.Map),
   slotId: PropTypes.string,

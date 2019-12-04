@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import { getSurcharge, getSurchargePerPortion } from 'utils/recipe'
-import { getShortlist } from 'selectors/features'
 import Buttons from './Buttons'
 
 const mapStateToProps = (state, props) => {
@@ -17,7 +16,6 @@ const mapStateToProps = (state, props) => {
     limitReached: state.basket.get('limitReached'),
     disable: state.auth.get('isAdmin'),
     score: props.score,
-    changeTextForShortlistExperiment: getShortlist(state) && state.request.get('browser') === 'mobile',
   }
 }
 

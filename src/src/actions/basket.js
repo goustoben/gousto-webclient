@@ -2,7 +2,6 @@ import { push } from 'react-router-redux'
 import Immutable from 'immutable'
 
 import basketActions from 'actions/basket'
-import { shortlistRecipeRemove } from 'actions/shortlist'
 import pricingActions from 'actions/pricing'
 import { limitReached } from 'utils/basket'
 import { productCanBeAdded } from 'utils/basketProductLimits'
@@ -364,10 +363,6 @@ export const basketRecipeAdd = (recipeId, view, force, recipeInfo, maxRecipesNum
           },
         })
         state = getState()
-        const shortlistRecipes = state.basket.getIn(['shortlist', 'shortlistRecipes'])
-        if (shortlistRecipes && shortlistRecipes.has(recipeId)) {
-          shortlistRecipeRemove(recipeId, false, { view })(dispatch, getState)
-        }
 
         const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock, undefined, maxRecipesNum)
         if (reachedLimit) {

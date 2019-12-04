@@ -45,7 +45,6 @@ class Details extends React.Component {
     prices: PropTypes.instanceOf(Immutable.Map),
     unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
     showRecipeDetailsOnClick: PropTypes.func,
-    shortlistFeatureEnabled: PropTypes.bool
   }
 
   static defaultProps = {
@@ -55,7 +54,6 @@ class Details extends React.Component {
     prices: Immutable.Map({}),
     pricingPending: false,
     showRecipeDetailsOnClick: () => { },
-    shortlistFeatureEnabled: false
   }
 
   getCtaText = (numRecipes) => {

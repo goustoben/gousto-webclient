@@ -18,12 +18,11 @@ import TasteScore from '../TasteScore'
 import DisabledOverlay from '../DisabledOverlay'
 import RecommendedBadge from '../RecommendedBadge'
 import { AttributeGrid } from '../AttributeGrid'
-import { ShortlistButton } from '../ShortlistButton'
 
 const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, title,
   view, highlight, unhighlight, tasteScore, chef, tag, detailHover,
   description, range, isRecommendedRecipe, features, cookingTime,
-  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet, showShortlistButton }) => (
+  useWithin, equipment, id, stock, inBasket, position, fiveADay, diet }) => (
     <div>
       <div className={css.featuredRecipe}>
         <span onClick={onClick} className={css.link}>
@@ -70,9 +69,6 @@ const FeaturedRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media,
               <RecipeDisclaimerContainer id={id} />
             </div>
             <div className={css.buttonContainer}>
-              {showShortlistButton &&
-                <ShortlistButton view={view} id={id} stock={stock} position={position} />
-              }
               <div className={css.addButton}>
                 <AddButton id={id} stock={stock} inBasket={inBasket} view={view} position={position} score={tasteScore} />
               </div>
@@ -110,7 +106,6 @@ FeaturedRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
-  showShortlistButton: PropTypes.bool,
 }
 
 FeaturedRecipe.defaultProps = {

@@ -346,15 +346,6 @@ export function menuLoadStock(clearStock = true) {
         dispatch(menuChangeRecipeStock({ [recipeId]: { [numPortions]: -1 } }))
       }
     })
-
-    getState().basket.getIn(['shortlist', 'shortlistRecipes'], Immutable.Map({})).forEach((amount, recipeId) => {
-      for (let x = 0; x < amount; x++) {
-        dispatch({
-          type: actionTypes.MENU_RECIPE_STOCK_CHANGE,
-          stock: { [recipeId]: { [numPortions]: -1 } },
-        })
-      }
-    })
   }
 }
 

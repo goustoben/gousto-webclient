@@ -58,10 +58,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
-  shortlist: {
-    experiment: false,
-    value: false,
-  },
   ndd: {
     experiment: false,
     value: false,

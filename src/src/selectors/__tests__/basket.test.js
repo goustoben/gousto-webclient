@@ -10,10 +10,9 @@ import {
   getBasketOrderPromoCode,
   getSignupChosenCollection,
   getBasketOrderId,
-  getShortlistLimitReached,
   getBasketLimitReached,
-  getBasketProducts,
   getBasketProductsCost,
+  getBasketProducts
 } from '../basket'
 
 describe('the basket selectors', () => {
@@ -209,123 +208,95 @@ describe('the basket selectors', () => {
   })
 })
 
-describe('the shortlist selectors', () => {
-  describe('getShortlistLimitReached', () => {
-    describe('when there are no shortlist details in the state', () => {
-      const state = {
-        basket: Immutable.fromJS({
-          shortlist: Immutable.fromJS({
-            shortlistRecipes: Immutable.fromJS({
-              300: 1,
-              400: 1
-            }),
-            shortlistRecipesPositions: Immutable.fromJS([{
-              300: {
-                position: 1,
-                collection: 'collection1'
-              },
-              400: {
-                position: 2,
-                collection: 'collection2'
-              }
-            }]),
-            shortlistLimitReached: false
-          })
-        }),
-      }
-      test('returns null as default', () => {
-        expect(getShortlistLimitReached(state)).toBe(false)
-      })
-    })
-
-    describe('when shortlistLimitReached is false', () => {
-      const state = {
-        basket: Immutable.fromJS({
-          shortlist: Immutable.fromJS({
-            shortlistRecipes: Immutable.fromJS({
-              300: 1,
-            }),
-            shortlistRecipesPositions: Immutable.fromJS([{
-              300: {
-                position: 1,
-                collection: 'collection1'
-              },
-            }]),
-            shortlistLimitReached: true
-          })
-        }),
-      }
-      test('returns false', () => {
-        expect(getShortlistLimitReached(state)).toEqual(true)
-      })
-    })
+describe('the getBasketProducts selector', () => {
+  let state
+  const productsInBasket = Immutable.Map({
+    'product1': 1,
+    'product2': 3,
   })
 
-  describe('the getBasketProducts selector', () => {
-    let state
-    const productsInBasket = Immutable.Map({
-      'product1': 1,
-      'product2': 3,
-    })
+  beforeEach(() => {
+    state = {
+      basket: Immutable.fromJS({
+        products: productsInBasket,
+      })
+    }
+  })
 
+  test('returns the products in the basket', () => {
+    expect(getBasketProducts(state)).toEqual(productsInBasket)
+  })
+})
+
+describe('the getBasketProductsCost selector', () => {
+  let state
+
+  describe('when products havent been loaded into the store yet', () => {
     beforeEach(() => {
       state = {
         basket: Immutable.fromJS({
-          products: productsInBasket,
+          products: { 'product1': 1 }
+        }),
+        products: Immutable.Map()
+      }
+    })
+
+    test('returns zero', () => {
+      expect(getBasketProductsCost(state)).toBe('0.00')
+    })
+  })
+
+  describe('when there are no products in the basket', () => {
+    beforeEach(() => {
+      state = {
+        basket: Immutable.fromJS({
+          products: {}
+        }),
+        products: Immutable.fromJS({
+          'product1': {
+            listPrice: '5.00',
+          }
         })
       }
     })
 
-    test('returns the products in the basket', () => {
-      expect(getBasketProducts(state)).toEqual(productsInBasket)
+    test('returns zero', () => {
+      expect(getBasketProductsCost(state)).toBe('0.00')
     })
   })
 
-  describe('the getBasketProductsCost selector', () => {
-    let state
-
-    describe('when products havent been loaded into the store yet', () => {
-      beforeEach(() => {
-        state = {
-          basket: Immutable.fromJS({
-            products: { 'product1': 1 }
-          }),
-          products: Immutable.Map()
-        }
-      })
-
-      test('returns zero', () => {
-        expect(getBasketProductsCost(state)).toBe('0.00')
-      })
+  describe('when there are products in the basket', () => {
+    beforeEach(() => {
+      state = {
+        basket: Immutable.fromJS({
+          products: {
+            'product1': 1,
+            'product2': 1,
+          }
+        }),
+        products: Immutable.fromJS({
+          'product1': {
+            listPrice: '5.00',
+          },
+          'product2': {
+            listPrice: '6.50',
+          },
+        })
+      }
     })
 
-    describe('when there are no products in the basket', () => {
-      beforeEach(() => {
-        state = {
-          basket: Immutable.fromJS({
-            products: {}
-          }),
-          products: Immutable.fromJS({
-            'product1': {
-              listPrice: '5.00',
-            }
-          })
-        }
-      })
-
-      test('returns zero', () => {
-        expect(getBasketProductsCost(state)).toBe('0.00')
-      })
+    test('returns the total cost', () => {
+      expect(getBasketProductsCost(state)).toBe('11.50')
     })
 
-    describe('when there are products in the basket', () => {
+    describe('and there are products with multiple quantity', () => {
       beforeEach(() => {
         state = {
           basket: Immutable.fromJS({
             products: {
               'product1': 1,
-              'product2': 1,
-            }
+              'product2': 4,
+            },
           }),
           products: Immutable.fromJS({
             'product1': {
@@ -338,33 +309,8 @@ describe('the shortlist selectors', () => {
         }
       })
 
-      test('returns the total cost', () => {
-        expect(getBasketProductsCost(state)).toBe('11.50')
-      })
-
-      describe('and there are products with multiple quantity', () => {
-        beforeEach(() => {
-          state = {
-            basket: Immutable.fromJS({
-              products: {
-                'product1': 1,
-                'product2': 4,
-              },
-            }),
-            products: Immutable.fromJS({
-              'product1': {
-                listPrice: '5.00',
-              },
-              'product2': {
-                listPrice: '6.50',
-              },
-            })
-          }
-        })
-
-        test('returns the total ccost', () => {
-          expect(getBasketProductsCost(state)).toBe('31.00')
-        })
+      test('returns the total ccost', () => {
+        expect(getBasketProductsCost(state)).toBe('31.00')
       })
     })
   })

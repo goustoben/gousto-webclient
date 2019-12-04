@@ -2,18 +2,11 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { OpenBoxButton } from '../OpenBoxButton.logic'
 
-jest.mock('routes/Menu/ShortlistTutorial', () => ({
-  ShortlistTutorial: () => (<div />)
-}))
-
 describe('OpenBoxButton', () => {
   const props = {
     showDetails: false,
-    shouldShowTutorialStep2: false,
     showTextOnButton: false,
-    shortlistUsed: true,
     recipeNumber: 0,
-    shortlistRecipeNumber: 0,
   }
   const wrapper = mount(<OpenBoxButton {...props} />)
   describe('render', () => {
@@ -31,7 +24,7 @@ describe('OpenBoxButton', () => {
 
     describe('when showTextOnButton true', () => {
       wrapper.setProps({ showTextOnButton: true })
-      describe('and no recipes in shorlist or basket', () => {
+      describe('and no recipes in or basket', () => {
         test('should render text Box Summary on the button', () => {
           expect(wrapper.find('.openButtonText').text()).toEqual('BOX SUMMARY')
         })
@@ -45,26 +38,10 @@ describe('OpenBoxButton', () => {
       })
 
       describe('and 4 recipes in basket', () => {
-        test('should render text CHECKOUT on the button', () => {
+        test('should render text Review Recipes on the button', () => {
           wrapper.setProps({ recipeNumber: 4 })
-          expect(wrapper.find('.openButtonText').text()).toEqual('CHECKOUT')
+          expect(wrapper.find('.openButtonText').text()).toEqual('REVIEW RECIPES')
         })
-      })
-
-      describe('and 4 recipes in basket', () => {
-        describe('and shortlist used false', () => {
-          test('should render text Review Recipes on the button', () => {
-            wrapper.setProps({ recipeNumber: 4, shortlistUsed: false })
-            expect(wrapper.find('.openButtonText').text()).toEqual('REVIEW RECIPES')
-          })
-        })
-      })
-    })
-
-    describe('when shouldShowTutorialStep2 true', () => {
-      wrapper.setProps({ shouldShowTutorialStep2: true })
-      test('should render ShortlistTutorial', () => {
-        expect(wrapper.find('ShortlistTutorial')).toHaveLength(1)
       })
     })
   })

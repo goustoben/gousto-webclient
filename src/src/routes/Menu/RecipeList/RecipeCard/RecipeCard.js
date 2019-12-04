@@ -40,8 +40,6 @@ const RecipeCard = ({
   const range = getFoodBrand(recipe)
   const isFineDineIn = range.get('slug') === 'fine-dine-in'
 
-  const showShortlistFirstStep = index === 0
-
   const view = getRecipeView(mobileGridView, isFeatured, isFineDineIn)
 
   return (
@@ -68,7 +66,6 @@ const RecipeCard = ({
       tasteScore={recipe.getIn(['recommendationData', 'score'])}
       fiveADay={recipe.get('fiveADay')}
       diet={recipe.get('dietType')}
-      showShortlistFirstStep={showShortlistFirstStep}
     />
   )
 }

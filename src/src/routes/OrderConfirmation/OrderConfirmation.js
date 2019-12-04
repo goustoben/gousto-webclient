@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import Immutable from 'immutable'
-import { FeedbackModal } from 'FeedbackModal'
 import Overlay from 'Overlay'
 import { PageLoader } from 'PageLoader'
 import { AgeVerificationPopUp } from 'Product/AgeVerification'
@@ -32,14 +31,12 @@ const propTypes = {
   ]),
   rafOffer: PropTypes.instanceOf(Immutable.Map).isRequired,
   showHeader: PropTypes.bool.isRequired,
-  showShortlistFeedback: PropTypes.bool,
   userFetchReferralOffer: PropTypes.func,
 }
 
 const defaultProps = {
   headerDetails: {},
-  showHeader: false,
-  showShortlistFeedback: false,
+  showHeader: false
 }
 
 class OrderConfirmation extends PureComponent {
@@ -47,8 +44,7 @@ class OrderConfirmation extends PureComponent {
     super()
     this.state = {
       hasConfirmedAge: false,
-      showAgeVerification: false,
-      showFeedback: false
+      showAgeVerification: false
     }
   }
 
@@ -58,22 +54,9 @@ class OrderConfirmation extends PureComponent {
     userFetchReferralOffer()
   }
 
-  componentDidUpdate(prevProps) {
-    const { isLoading, showShortlistFeedback } = this.props
-    if (showShortlistFeedback && !isLoading && prevProps.isLoading) {
-      this.toggleShortlistFeedback()
-    }
-  }
-
   toggleAgeVerificationPopUp = () => {
     this.setState((prevState) => ({
       showAgeVerification: !prevState.showAgeVerification
-    }))
-  }
-
-  toggleShortlistFeedback = () => {
-    this.setState((prevState) => ({
-      showFeedback: !prevState.showFeedback
     }))
   }
 
@@ -92,7 +75,7 @@ class OrderConfirmation extends PureComponent {
       isLoading,
       showHeader,
     } = this.props
-    const { hasConfirmedAge, showAgeVerification, showFeedback } = this.state
+    const { hasConfirmedAge, showAgeVerification } = this.state
     const isUnderAge = hasConfirmedAge && !ageVerified
 
     return isLoading ?
@@ -152,9 +135,6 @@ class OrderConfirmation extends PureComponent {
             )}
 
             <AwinPixel />
-            <Overlay open={showFeedback}>
-              <FeedbackModal closeModal={() => this.toggleShortlistFeedback()} />
-            </Overlay>
           </div>
         </LayoutPageWrapper>
       )
