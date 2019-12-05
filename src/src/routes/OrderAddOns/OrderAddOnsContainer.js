@@ -6,6 +6,7 @@ import { isOrderDetailsLoading } from 'selectors/orderConfirmation'
 import { getBasketProductsCost } from 'selectors/basket'
 import { orderDetails, orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { basketReset, basketUpdateProducts } from 'actions/basket'
+import { trackContinueOrderAddOnsClick, trackSkipOrderAddOnsClick } from 'actions/orderAddOn'
 import { OrderAddOns } from './OrderAddOns'
 
 const mapStateToProps = (state, ownProps) => {
@@ -30,6 +31,8 @@ const OrderAddOnsContainer = connect(mapStateToProps, {
   basketUpdateProducts,
   orderConfirmationRedirect,
   orderDetails,
+  trackContinueOrderAddOnsClick,
+  trackSkipOrderAddOnsClick,
 })(OrderAddOns)
 
 export {

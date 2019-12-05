@@ -19,6 +19,8 @@ describe('the OrderAddOns component', () => {
     orderConfirmationRedirect: jest.fn(),
     basketReset: jest.fn(),
     basketUpdateProducts: jest.fn(),
+    trackContinueOrderAddOnsClick: jest.fn(),
+    trackSkipOrderAddOnsClick: jest.fn(),
     orderAction: 'choice',
   }
 
@@ -74,6 +76,10 @@ describe('the OrderAddOns component', () => {
       const { orderConfirmationRedirect, orderId } = mockProps
       expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, mockProps.orderAction)
     })
+
+    test('tracking is being called correctly', () => {
+      expect(mockProps.trackSkipOrderAddOnsClick).toHaveBeenCalledWith('123456')
+    })
   })
 
   describe('when no products have been added', () => {
@@ -101,6 +107,10 @@ describe('the OrderAddOns component', () => {
       test('redirects to the order confirmation page', () => {
         const { orderConfirmationRedirect, orderId } = mockProps
         expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, mockProps.orderAction)
+      })
+
+      test('tracking is being called without products', () => {
+        expect(mockProps.trackContinueOrderAddOnsClick).toHaveBeenCalledWith('123456', 0)
       })
     })
   })
@@ -142,6 +152,10 @@ describe('the OrderAddOns component', () => {
       test('redirects to the order confirmation page', () => {
         const { orderConfirmationRedirect, orderId } = mockProps
         expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, mockProps.orderAction)
+      })
+
+      test('tracking is being called with products', () => {
+        expect(mockProps.trackContinueOrderAddOnsClick).toHaveBeenCalledWith('123456', 2)
       })
 
       describe('and products fail to be added', () => {
