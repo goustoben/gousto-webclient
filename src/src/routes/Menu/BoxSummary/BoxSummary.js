@@ -5,6 +5,7 @@ import Immutable from 'immutable' // eslint-disable no-caps
 import config from 'config/basket'
 import { basketSum, okRecipes } from 'utils/basket'
 
+import Overlay from 'Overlay'
 import css from './BoxSummary.css'
 import { BoxSummaryOverlayContainer } from './BoxSummaryOverlay/BoxSummaryOverlayContainer'
 import { BoxSummaryBanner } from './Banner/BoxSummaryBanner'
@@ -75,9 +76,12 @@ class BoxSummary extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    const { boxDetailsVisibilityChange } = this.props
     if (this.hideTooltipDelay) {
       clearTimeout(this.hideTooltipDelay)
     }
+    boxDetailsVisibilityChange(false)
+    Overlay.forceCloseAll()
   }
 
   tooltipError() {
