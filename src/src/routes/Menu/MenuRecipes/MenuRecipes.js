@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import menu from 'config/menu'
 import moment from 'moment'
 import { CHRISTMAS_THEMATIC_NAME } from 'Recipe/CTAThematic/CTAThematic'
-import MenuNoResults from '../MenuNoResults'
-import FilterTagsNav from '../FilterTagsNav/FilterTagsNavContainer'
 import CollectionsNav from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import SubHeader from '../SubHeader'
@@ -20,7 +18,6 @@ const propTypes = {
   menuRecipeDetailShow: PropTypes.string,
   orderId: PropTypes.string,
   isClient: PropTypes.bool,
-  clearAllFilters: PropTypes.func,
   showDetailRecipe: PropTypes.func,
   setThematic: PropTypes.func,
   toggleGridView: PropTypes.func,
@@ -80,7 +77,6 @@ class MenuRecipes extends PureComponent {
       menuCurrentCollectionId,
       menuRecipeDetailShow,
       isClient,
-      clearAllFilters,
       showDetailRecipe,
       orderId,
       toggleGridView,
@@ -96,7 +92,6 @@ class MenuRecipes extends PureComponent {
         <Loading loading={showLoading} />
         {!showLoading &&
           <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}
-        {!showLoading && <FilterTagsNav />}
         {filteredRecipesNumber ?
           <RecipeGrid
             mobileGridView={mobileGridView}
@@ -106,7 +101,7 @@ class MenuRecipes extends PureComponent {
             isClient={isClient}
           />
           :
-          <MenuNoResults clearAllFilters={() => clearAllFilters()} />
+          null
         }
       </div>
     )

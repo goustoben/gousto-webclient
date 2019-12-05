@@ -11,7 +11,6 @@ describe('RecipeGrid', () => {
       showDetailRecipe={jest.fn()}
       menuCurrentCollectionId={''}
       menuRecipeDetailShow={''}
-      menuFilterExperiment
       isClient
     />
   )

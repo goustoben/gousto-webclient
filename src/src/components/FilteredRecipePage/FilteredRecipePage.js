@@ -15,7 +15,6 @@ const propTypes = {
   menuCurrentCollectionId: PropTypes.string,
   menuRecipeDetailShow: PropTypes.string,
   isClient: PropTypes.bool,
-  menuFilterExperiment: PropTypes.bool,
 }
 class FilteredRecipePage extends PureComponent {
 
@@ -39,7 +38,7 @@ class FilteredRecipePage extends PureComponent {
   }
 
   render() {
-    const { name, description, borderColor, removeRecipeFilter, mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow, menuFilterExperiment } = this.props
+    const { name, description, borderColor, removeRecipeFilter, mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow } = this.props
     const { containerHeight } = this.state
 
     return (
@@ -59,7 +58,6 @@ class FilteredRecipePage extends PureComponent {
             menuCurrentCollectionId={menuCurrentCollectionId}
             isClient={isClient}
             menuRecipeDetailShow={menuRecipeDetailShow}
-            menuFilterExperiment={menuFilterExperiment}
           />
         </div>
       </section>

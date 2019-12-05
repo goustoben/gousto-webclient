@@ -5,25 +5,9 @@ import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters'
 import { getCollectionDetailsBySlug } from 'selectors/collections'
 import actionTypes from './actionTypes'
 import {
-  trackRecipeFiltersOpened,
-  trackRecipeFiltersClosed,
-  trackRecipeFiltersCleared,
-  trackRecipeCollectionSelected,
-  trackRecipeTypeSelected,
-  trackRecipeTypeUnselected,
-  trackRecipeDietaryAttributeSelected,
-  trackRecipeDietaryAttributeUnselected,
-  trackRecipeTotalTimeSelected,
-  trackRecipeTotalTimeUnselected,
-  trackRecipeFiltersApplied,
   trackCTAToAllRecipesClicked,
 } from './tracking'
 import { trackProductFiltering } from './products'
-
-const filtersVisibilityChange = (visible = true) => ({
-  type: actionTypes.MENU_FILTERS_VISIBILITY_CHANGE,
-  visible,
-})
 
 const filtersCollectionChange = (collectionName, collectionId) => ({
   type: actionTypes.FILTERS_COLLECTION_CHANGE,
@@ -35,60 +19,9 @@ const filtersCollectionChange = (collectionName, collectionId) => ({
   },
 })
 
-const currentTotalTimeChange = (totalTime) => ({
-  type: actionTypes.FILTERS_TOTAL_TIME_CHANGE,
-  totalTime,
-})
-
-const filterNewRecipesChange = (newRecipesSelected) => ({
-  type: actionTypes.FILTERS_NEW_RECIPES_CHANGE,
-  trackingData: {
-    actionType: newRecipesSelected ? 'UNSELECT_FILTERS_NEW_RECIPES' : 'SELECT_FILTERS_NEW_RECIPES',
-  }
-})
-
-const filterMenuRevert = () => ({
-  type: actionTypes.FILTERS_RESET,
-})
-
-const filterMenuClose = () => (
-  (dispatch) => {
-    dispatch(filtersVisibilityChange(false))
-    dispatch(trackRecipeFiltersClosed())
-  }
-)
-
-const filterMenuApply = () => (
-  (dispatch, getState) => {
-    dispatch(filtersVisibilityChange(false))
-    dispatch(trackRecipeFiltersApplied(
-      getState().filters.get('currentCollectionId'),
-      Array.from(getState().filters.get('dietTypes', [])),
-      Array.from(getState().filters.get('dietaryAttributes', [])),
-      getState().filters.get('totalTime'),
-    ))
-  }
-)
-
-const filterCollectionChange = (collectionId) => (
-  (dispatch) => {
-    dispatch(collectionFilterChange(collectionId))
-    dispatch(trackRecipeCollectionSelected(collectionId))
-  }
-)
-
 export const collectionFilterIdRecieve = (collectionId) => ({
   type: actionTypes.FILTERS_COLLECTION_CHANGE,
   collectionId,
-})
-export const currentDietTypesChange = (dietTypes) => ({
-  type: actionTypes.FILTERS_DIET_TYPES_CHANGE,
-  dietTypes,
-})
-
-export const currentDietaryAttributesChange = (dietaryAttributes) => ({
-  type: actionTypes.FILTERS_DIETARY_ATTRIBUTES_CHANGE,
-  dietaryAttributes,
 })
 
 export const currentFoodBrandChange = (foodBrand) => ({
@@ -108,11 +41,6 @@ export const currentThematicChange = (thematic, onAction) => ({
     thematic: thematic !== null ? thematic.slug : '',
     onAction
   }
-})
-
-export const filtersClearAll = (collectionId) => ({
-  type: actionTypes.FILTERS_CLEAR_ALL,
-  collectionId,
 })
 
 export function collectionFilterChange(collectionId) {
@@ -152,97 +80,10 @@ export const changeCollectionToAllRecipesViaCTA = () => (
   }
 )
 
-export const filterMenuOpen = () => (
-  (dispatch) => {
-    dispatch(filtersVisibilityChange(true))
-    dispatch(trackRecipeFiltersOpened())
-  }
-)
-
-export const filterCurrentDietTypesChange = (dietType) => (
-  (dispatch, getState) => {
-    const dietTypes = getState().filters.get('dietTypes')
-    let newDietTypes
-
-    if (dietTypes.has(dietType)) {
-      newDietTypes = dietTypes.filterNot(dietTypeSelected => (dietTypeSelected === dietType))
-      dispatch(trackRecipeTypeUnselected(dietType))
-    } else {
-      newDietTypes = dietTypes.add(dietType)
-      dispatch(trackRecipeTypeSelected(dietType))
-    }
-    dispatch(currentDietTypesChange(newDietTypes))
-  }
-)
-
-export const filterCurrentTotalTimeChange = (totalTime) => (
-  (dispatch, getState) => {
-    const totalTimeSelected = getState().filters.get('totalTime')
-    if (totalTimeSelected === totalTime) {
-      dispatch(currentTotalTimeChange('0'))
-      dispatch(trackRecipeTotalTimeUnselected(totalTime))
-    } else {
-      dispatch(currentTotalTimeChange(totalTime))
-      dispatch(trackRecipeTotalTimeSelected(totalTime))
-    }
-  }
-)
-
-export const clearAllFilters = () => (
-  (dispatch, getState) => {
-    const getSelectedCollection = getState().filters.get('currentCollectionId') || getAllRecipesCollectionId(getState())
-    dispatch(filtersClearAll(getSelectedCollection))
-    dispatch(trackRecipeFiltersCleared())
-  }
-)
-
-export const filterDietaryAttributesChange = (dietaryAttribute) => (
-  (dispatch, getState) => {
-    const dietaryAttributes = getState().filters.get('dietaryAttributes')
-    let newDietaryAttributes
-
-    if (dietaryAttributes.has(dietaryAttribute)) {
-      newDietaryAttributes = dietaryAttributes.filterNot((_dietaryAttribute) => (
-        _dietaryAttribute === dietaryAttribute
-      ))
-      dispatch(trackRecipeDietaryAttributeUnselected(dietaryAttribute))
-    } else {
-      newDietaryAttributes = dietaryAttributes.add(dietaryAttribute)
-      dispatch(trackRecipeDietaryAttributeSelected(dietaryAttribute))
-    }
-    dispatch(currentDietaryAttributesChange(newDietaryAttributes))
-  }
-)
-
-export const filterMenuRevertFilters = () => (
-  (dispatch) => {
-    dispatch(filterMenuRevert())
-    dispatch(filtersVisibilityChange(false))
-  }
-)
-
 export const filterProductCategory = (category) => (
   (dispatch) => {
     dispatch({ type: 'FILTERS_PRODUCT_CATEGORY', value: category })
     dispatch(trackProductFiltering(category))
-  }
-)
-
-export const filterApply = (type, value) => (
-  (dispatch, getState) => {
-    const { filters } = getState()
-    const newRecipesSelected = filters.get('newRecipes')
-
-    switch (type) {
-    case 'totalTime':
-      dispatch(filterCurrentTotalTimeChange(value))
-      break
-    case 'newRecipes':
-      dispatch(filterNewRecipesChange(newRecipesSelected))
-      break
-    default:
-      break
-    }
   }
 )
 
@@ -314,19 +155,8 @@ export const filterRecipeGrouping = (recipeGrouping, location, onAction = null) 
 )
 
 export default {
-  filtersVisibilityChange,
-  filterMenuOpen,
-  filterMenuClose,
-  filterMenuApply,
-  clearAllFilters,
-  filterCollectionChange,
   collectionFilterChange,
   collectionFilterIdRecieve,
-  filterCurrentDietTypesChange,
-  filterDietaryAttributesChange,
-  filterCurrentTotalTimeChange,
-  filterMenuRevertFilters,
-  filterApply,
   currentFoodBrandChange,
   currentThematicChange,
   filterRecipeGrouping,

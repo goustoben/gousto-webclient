@@ -84,7 +84,6 @@ describe('basket actions', () => {
         orderId: '178',
       }),
       filters: Immutable.fromJS({
-        dietaryAttributes: []
       }),
       user: Immutable.fromJS({
         orders: {
@@ -153,7 +152,6 @@ describe('basket actions', () => {
           orderId: '178',
         }),
         filters: Immutable.fromJS({
-          dietaryAttributes: []
         }),
         user: Immutable.fromJS({
           orders: {
@@ -221,7 +219,6 @@ describe('basket actions', () => {
           orderId: '',
         }),
         filters: Immutable.fromJS({
-          dietaryAttributes: []
         }),
         user: Immutable.fromJS({
           orders: {
@@ -288,7 +285,6 @@ describe('basket actions', () => {
           orderId: '179',
         }),
         filters: Immutable.fromJS({
-          dietaryAttributes: []
         }),
         user: Immutable.fromJS({
           orders: {
@@ -344,7 +340,7 @@ describe('basket actions', () => {
       })
     })
 
-    test('should dispatch  BASKET_CHECKOUT tracking with dietaryAttributes', async () => {
+    test('should dispatch  BASKET_CHECKOUT tracking', async () => {
       getState = () => ({
         auth: Immutable.Map({
           isAuthenticated: true,
@@ -353,7 +349,6 @@ describe('basket actions', () => {
           orderId: '179',
         }),
         filters: Immutable.fromJS({
-          dietaryAttributes: ['gluten-free']
         }),
         user: Immutable.fromJS({
           orders: {
@@ -385,7 +380,6 @@ describe('basket actions', () => {
           actionType: 'BASKET_CHECKED_OUT',
           numRecipes: 2,
           view: 'grid',
-          dietary_attribute: ['gluten-free'],
         },
       })
     })
@@ -624,12 +618,11 @@ describe('basket actions', () => {
           orderId: '179',
         }),
         filters: Immutable.fromJS({
-          dietaryAttributes: ['dairy-free']
         }),
       })
     })
 
-    test('should track the dietary attribute for proceed to checkout', () => {
+    test('should dispatch a BASKET_CHECKOUT_PROCEED tracking action', () => {
       basketProceedToCheckout()(dispatch, getState)
       expect(dispatch.mock.calls[0][0]).toEqual({
         type: 'BASKET_CHECKOUT_PROCEED',
@@ -638,7 +631,6 @@ describe('basket actions', () => {
           basket: Immutable.fromJS({
             orderId: '179',
           }),
-          dietary_attribute: ['dairy-free'],
         },
       })
     })
@@ -649,7 +641,6 @@ describe('basket actions', () => {
           orderId: '179',
         }),
         filters: Immutable.fromJS({
-          dietaryAttributes: ['dairy-free']
         }),
         features: Immutable.fromJS({
           choosePlanRoute: {

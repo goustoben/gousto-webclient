@@ -3,10 +3,6 @@ import actionTypes from 'actions/actionTypes'
 
 export const initialState = () => Immutable.Map({
   currentCollectionId: '',
-  totalTime: '0',
-  dietTypes: Immutable.Set([]),
-  dietaryAttributes: Immutable.Set([]),
-  newRecipes: false,
   recipeGroup: null,
 })
 
@@ -22,43 +18,13 @@ const filters = {
     case actionTypes.FILTERS_COLLECTION_CHANGE: {
       return state.set('currentCollectionId', action.collectionId)
     }
-
-    case actionTypes.FILTERS_DIET_TYPES_CHANGE: {
-      return state.set('dietTypes', action.dietTypes)
-    }
-
-    case actionTypes.FILTERS_DIETARY_ATTRIBUTES_CHANGE: {
-      return state.set('dietaryAttributes', action.dietaryAttributes)
-    }
-
-    case actionTypes.FILTERS_TOTAL_TIME_CHANGE: {
-      return state.set('totalTime', action.totalTime)
-    }
-
-    case actionTypes.FILTERS_NEW_RECIPES_CHANGE: {
-      return state.set('newRecipes', !state.get('newRecipes'))
-    }
-
+    
     case actionTypes.FILTERS_FOOD_BRAND_CHANGE: {
       return state.set('recipeGroup', action.foodBrand)
     }
 
     case actionTypes.FILTERS_THEMATIC_CHANGE: {
       return state.set('recipeGroup', action.thematic)
-    }
-
-    case actionTypes.FILTERS_CLEAR_ALL: {
-      const newState = initialState()
-
-      return newState.set('currentCollectionId', action.collectionId)
-    }
-
-    case actionTypes.MENU_FILTERS_VISIBILITY_CHANGE: {
-      if (action.visible) {
-        previousState = state
-      }
-
-      return state
     }
 
     case actionTypes.FILTERS_RESET: {

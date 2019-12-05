@@ -6,10 +6,6 @@ describe('recipeGroupFilters', () => {
     const state = {
       filters: Immutable.Map({
         currentCollectionId: 'ca8f71be',
-        totalTime: '0',
-        dietTypes: Immutable.Set([]),
-        dietaryAttributes: Immutable.Set([]),
-        newRecipes: false,
         recipeGroup: {
           slug: "taste-of-japan"
         }
@@ -212,10 +208,6 @@ describe('recipeGroupFilters', () => {
     const state = {
       filters: Immutable.Map({
         currentCollectionId: 'ca8f71be',
-        totalTime: '0',
-        dietTypes: Immutable.Set([]),
-        dietaryAttributes: Immutable.Set([]),
-        newRecipes: false,
         recipeGroup: {
           slug: "global-kitchen"
         }

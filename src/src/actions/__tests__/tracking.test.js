@@ -4,16 +4,6 @@ import {
   trackFirstPurchase,
   setAffiliateSource,
   trackRecipeOrderDisplayed,
-  trackRecipeFiltersOpened,
-  trackRecipeFiltersClosed,
-  trackRecipeCollectionSelected,
-  trackRecipeFiltersApplied,
-  trackRecipeFiltersCleared,
-  trackRecipeTypeSelected,
-  trackRecipeTypeUnselected,
-  trackRecipeDietaryAttributeSelected,
-  trackRecipeDietaryAttributeUnselected,
-  trackRecipeTotalTimeSelected,
   trackAffiliatePurchase,
   trackUserAttributes
 } from 'actions/tracking'
@@ -159,13 +149,9 @@ describe('tracking actions', () => {
         '2018-05-04': Immutable.Map({ id: 'test-day-id' }),
       }),
       menu: Immutable.Map({
-        filtersMenuVisible: false,
       }),
       filters: Immutable.Map({
         currentCollectionId: '678',
-        totalTime: '20',
-        dietTypes: Immutable.Set(['meat']),
-        dietaryAttributes: Immutable.Set(['gluten-free']),
       }),
     }
 
@@ -199,46 +185,11 @@ describe('tracking actions', () => {
         originalOrder: ['3', '5', '2', '6'],
         displayedOrder: ['6', '3', '2'],
         collectionId: '678',
-        dietTypes: ['meat'],
-        dietaryAttributes: ['gluten-free'],
-        totalTime: '20',
         recommended: true,
         browseMode: false,
         deliveryDayId: 'test-day-id',
         orderId: '1234567',
       })
-    })
-
-    test('should not dispatch when overlaid with the filterMenu', () => {
-      state = {
-        basket: Immutable.Map({ date: '2018-05-04' }),
-        menuBrowseCtaShow: false,
-        recipes: Immutable.Map({
-          a: Immutable.Map({ isRecommended: true }),
-          b: Immutable.Map({ isRecommended: false }),
-        }),
-        boxSummaryDeliveryDays: Immutable.Map({
-          '2018-05-04': Immutable.Map({ id: 'test-day-id' }),
-        }),
-        menu: Immutable.Map({
-          filtersMenuVisible: true,
-        }),
-        filters: Immutable.Map({
-          currentCollectionId: '',
-          totalTime: '0',
-          dietTypes: Immutable.Set([]),
-          dietaryAttributes: Immutable.Set([]),
-        }),
-      }
-      getState.mockReturnValue(state)
-
-      trackRecipeOrderDisplayed(
-        originalOrder,
-        displayedOrder,
-        collectionId,
-      )(dispatch, getState)
-
-      expect(dispatch).not.toHaveBeenCalled()
     })
 
     describe('should dispatch recommended state', () => {
@@ -256,13 +207,9 @@ describe('tracking actions', () => {
             '2018-01-01': Immutable.Map({ id: 'test-day-id' }),
           }),
           menu: Immutable.Map({
-            filtersMenuVisible: false,
           }),
           filters: Immutable.Map({
             currentCollectionId: '910',
-            totalTime: '30',
-            dietTypes: Immutable.Set(['fish']),
-            dietaryAttributes: Immutable.Set(['dairy-free']),
           }),
         }
         getState.mockReturnValue(state)
@@ -286,13 +233,9 @@ describe('tracking actions', () => {
             '2018-04-04': Immutable.Map({ id: 'test-day-id' }),
           }),
           menu: Immutable.Map({
-            filtersMenuVisible: false,
           }),
           filters: Immutable.Map({
             currentCollectionId: '112',
-            totalTime: '10',
-            dietTypes: Immutable.Set(['vegan']),
-            dietaryAttributes: Immutable.Set(['gluten-free', 'dairy-free']),
           }),
         }
         getState.mockReturnValue(state)
@@ -300,169 +243,6 @@ describe('tracking actions', () => {
         trackRecipeOrderDisplayed(originalOrder, displayedOrder, collectionId)(dispatch, getState)
 
         expect(dispatch.mock.calls[0][0].recommended).toBeTruthy()
-      })
-    })
-  })
-
-  describe('trackRecipeFiltersOpened', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-    })
-
-    test('should dispatch a RECIPE_FILTERS_OPENED_TRACKING action', () => {
-      trackRecipeFiltersOpened()(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-
-      expect(dispatchCall).toMatchObject({ type: actionTypes.RECIPE_FILTERS_OPENED_TRACKING })
-    })
-  })
-
-  describe('trackRecipeFiltersClosed', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-    })
-
-    test('should dispatch a RECIPE_FILTERS_CLOSED_TRACKING action', () => {
-      trackRecipeFiltersClosed()(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-
-      expect(dispatchCall).toMatchObject({ type: actionTypes.RECIPE_FILTERS_CLOSED_TRACKING })
-    })
-  })
-
-  describe('trackRecipeCollectionSelected', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-    })
-
-    test('should dispatch a RECIPE_COLLECTION_SELECTED_TRACKING action', () => {
-      trackRecipeCollectionSelected()(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-
-      expect(dispatchCall).toMatchObject({ type: actionTypes.RECIPE_COLLECTION_SELECTED_TRACKING })
-    })
-
-    test('should pass its first parameter as collectionId', () => {
-      trackRecipeCollectionSelected('a-collection')(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-
-      expect(dispatchCall).toMatchObject({ collectionId: 'a-collection' })
-    })
-  })
-
-  describe('trackRecipeFiltersApplied', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-    })
-
-    test('should dispatch a RECIPE_FILTERS_APPLIED_TRACKING action', () => {
-      trackRecipeFiltersApplied()(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-
-      expect(dispatchCall).toMatchObject({ type: actionTypes.RECIPE_FILTERS_APPLIED_TRACKING })
-    })
-
-    test('should pass its first parameter as collectionId', () => {
-      trackRecipeFiltersApplied('b-collection')(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-
-      expect(dispatchCall).toMatchObject({ collectionId: 'b-collection' })
-    })
-
-    test('should pass its parameters as collectionId, dietTypes, dietaryAttributes, totalTime', () => {
-      trackRecipeFiltersApplied('b-collection', ['meat'], ['gluten-free'], '0')(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-
-      expect(dispatchCall).toEqual({
-        type: 'RECIPE_FILTERS_APPLIED_TRACKING',
-        collectionId: 'b-collection',
-        dietTypes: ['meat'],
-        dietaryAttributes: ['gluten-free'],
-        totalTime: '0',
-      })
-    })
-  })
-
-  describe('trackRecipeFiltersCleared', () => {
-    test('should dispatch a RECIPE_FILTERS_CLEARED_TRACKING action', () => {
-      dispatch = jest.fn()
-      trackRecipeFiltersCleared()(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-      expect(dispatchCall).toMatchObject({ type: actionTypes.RECIPE_FILTERS_CLEARED_TRACKING })
-    })
-  })
-
-  describe('trackRecipeTypeSelected', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-    })
-
-    test('should dispatch a RECIPE_FILTERS_DIET_TYPE_SELECTED_TRACKING action', () => {
-      trackRecipeTypeSelected('meat')(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-      expect(dispatchCall).toMatchObject({
-        type: actionTypes.RECIPE_FILTERS_DIET_TYPE_SELECTED_TRACKING,
-        dietType: 'meat'
-      })
-    })
-  })
-
-  describe('trackRecipeTypeUnselected', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-    })
-
-    test('should dispatch a RECIPE_FILTERS_DIET_TYPE_SELECTED_TRACKING action', () => {
-      trackRecipeTypeUnselected('meat')(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-      expect(dispatchCall).toMatchObject({
-        type: actionTypes.RECIPE_FILTERS_DIET_TYPE_UNSELECTED_TRACKING,
-        dietType: 'meat'
-      })
-    })
-  })
-
-  describe('trackRecipeDietaryAttributeSelected', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-    })
-
-    test('should dispatch a RECIPE_FILTERS_DIETARY_ATTRIBUTE_SELECTED_TRACKING action', () => {
-      trackRecipeDietaryAttributeSelected('gluten-free')(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-      expect(dispatchCall).toMatchObject({
-        type: actionTypes.RECIPE_FILTERS_DIETARY_ATTRIBUTE_SELECTED_TRACKING,
-        dietaryAttribute: 'gluten-free'
-      })
-    })
-  })
-
-  describe('trackRecipeDietaryAttributeUnselected', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-    })
-
-    test('should dispatch a RECIPE_FILTERS_DIETARY_ATTRIBUTE_UNSELECTED_TRACKING action', () => {
-      trackRecipeDietaryAttributeUnselected('gluten-free')(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-      expect(dispatchCall).toMatchObject({
-        type: actionTypes.RECIPE_FILTERS_DIETARY_ATTRIBUTE_UNSELECTED_TRACKING,
-        dietaryAttribute: 'gluten-free'
-      })
-    })
-  })
-
-  describe('trackRecipeTotalTimeSelected', () => {
-    beforeEach(() => {
-      dispatch = jest.fn()
-    })
-
-    test('should dispatch a RECIPE_FILTERS_TOTAL_TIME_SELECTED_TRACKING action', () => {
-      trackRecipeTotalTimeSelected('30')(dispatch)
-      const dispatchCall = dispatch.mock.calls[0][0]
-      expect(dispatchCall).toMatchObject({
-        type: actionTypes.RECIPE_FILTERS_TOTAL_TIME_SELECTED_TRACKING,
-        totalTime: '30'
       })
     })
   })
