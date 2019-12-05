@@ -5,12 +5,11 @@ import Helmet from 'react-helmet'
 import { forceCheck } from 'react-lazyload'
 
 import menu from 'config/menu'
-import { menuServiceConfig } from 'config/menuService'
 import { redirect } from 'utils/window'
 import browserHelper from 'utils/browserHelper'
 
-import { BoxSummaryContainer } from './BoxSummary'
 import { getMenuService } from 'selectors/features'
+import { BoxSummaryContainer } from './BoxSummary'
 import { RecipeMeta } from './RecipeMeta'
 import { FoodBrandPage } from './FoodBrandPage'
 import { ThematicsPage } from './ThematicsPage'
@@ -134,7 +133,8 @@ class Menu extends React.PureComponent {
     // user login
     const justLoggedIn = !isAuthenticated && nextProps.isAuthenticated
     const variationChanged = menuVariation !== nextProps.menuVariation
-    if (editingOrder || justLoggedIn || variationChanged) {
+    const nextCollectionRecipesEmpty = nextProps.menuCollectionRecipes && !nextProps.menuCollectionRecipes.size
+    if (editingOrder || justLoggedIn || variationChanged || nextCollectionRecipesEmpty) {
       const { store } = this.context
       const query = nextProps.query || {}
       const params = nextProps.params || {}
