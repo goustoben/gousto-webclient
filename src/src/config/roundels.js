@@ -360,6 +360,66 @@ const roundelsConfig = {
             "type": "headshot"
           }
         ]
+      },
+      {
+        "slug": "health-kitchen-healthy-heart",
+        "name": "Health Kitchen - Healthy heart",
+        "images": [
+          {
+            "url": "https://production-media.gousto.co.uk/cms/headshot-image/Health_Kitchen_Healthy_heart.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-healthy-immune-system",
+        "name": "Health Kitchen - Healthy immune system",
+        "images": [
+          {
+            "url": "https://production-media.gousto.co.uk/cms/headshot-image/Health_Kitchen_Healthy_immune_system.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-energy-enhancing",
+        "name": "Health Kitchen - Energy enhancing",
+        "images": [
+          {
+            "url": "https://production-media.gousto.co.uk/cms/headshot-image/Health_Kitchen_Energy_enhancing.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-healthy-skin-and-hair",
+        "name": "Health Kitchen - Healthy skin & hair",
+        "images": [
+          {
+            "url": "https://production-media.gousto.co.uk/cms/headshot-image/Health_Kitchen_Healthy_skin_and_hair.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-good-mood-food",
+        "name": "Health Kitchen - Good mood food",
+        "images": [
+          {
+            "url": "https://production-media.gousto.co.uk/cms/headshot-image/Health_Kitchen_Good_mood_food.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "health-kitchen-good-for-your-gut",
+        "name": "Health Kitchen - Good for your gut",
+        "images": [
+          {
+            "url": "https://production-media.gousto.co.uk/cms/headshot-image/Health_Kitchen_Good_for_your_gut.png",
+            "type": "headshot"
+          }
+        ]
       }
     ],
   }
