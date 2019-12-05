@@ -6,6 +6,7 @@ import { getPromoCode } from 'selectors/basket'
 import {
   getPromoBannerText,
   getPromoBannerCode,
+  getPromoBannerEnabled,
 } from 'selectors/features'
 
 import home from 'config/home'
@@ -26,10 +27,11 @@ const promoApplicable = (isAuthenticated, criteria) => {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const { linkText } = home.promo.banner
+  const enabled = getPromoBannerEnabled(state)
   const currentPromo = state.promoCurrent || ''
   const basketPromo = getPromoCode(state) || ''
   const isAuthenticated = state.auth.get('isAuthenticated')
-  const { linkText } = home.promo.banner
   const text = getPromoBannerText(state) || home.promo.banner.text
   const promoCode = getPromoBannerCode(state) || ownProps.promoCode || home.promo.code.toUpperCase()
   const queryStringPromo = (ownProps.location && ownProps.location.query && ownProps.location.query.promo_code) ? ownProps.location.query.promo_code : ''
@@ -38,7 +40,7 @@ const mapStateToProps = (state, ownProps) => {
   const hasCurrentPromo = currentPromo.length > 0
   const hasQueryStringPromo = queryStringPromo.length > 0
 
-  const hide = isAuthenticated || hasBasketPromo || hasQueryStringPromo || hasCurrentPromo || !promoCode
+  const hide = !enabled || isAuthenticated || hasBasketPromo || hasQueryStringPromo || hasCurrentPromo || !promoCode
 
   const canApplyPromo = !(hasQueryStringPromo) && promoCode && promoApplicable(isAuthenticated, home.promo.applyIf)
 

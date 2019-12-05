@@ -6,6 +6,7 @@ import {
   getJfyTutorial,
   getRafPositionOnWelcomePage,
   isDeliveryFrequencyFeatureEnabled,
+  getPromoBannerEnabled,
   getPromoBannerText,
   getPromoBannerCode,
   getCookingInstruction,
@@ -128,6 +129,30 @@ describe('when features are defined', () => {
 
       test('should return true', () => {
         expect(isDeliveryFrequencyFeatureEnabled(state)).toEqual(true)
+      })
+    })
+  })
+
+  describe('getPromoBannerEnabled', () => {
+    describe('when feature is not set', () => {
+      test('should return false', () => {
+        expect(getPromoBannerEnabled(state)).toEqual(false)
+      })
+    })
+
+    describe('when feature is set', () => {
+      const value = true
+
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          promoBanner: {
+            value,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(getPromoBannerEnabled(state)).toEqual(true)
       })
     })
   })
