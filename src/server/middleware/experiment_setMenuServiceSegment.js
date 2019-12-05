@@ -2,7 +2,7 @@ const COOKIE_NAME = 'gousto_useNewMenuService'
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000
 const TWELVE_HOURS_IN_MS = ONE_DAY_IN_MS / 2
 
-// const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+const getRandomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
 
 const shouldUseNewMenuService = (ctx) => {
   if (ctx.query.useNewMenuService === 'true') {
@@ -13,8 +13,11 @@ const shouldUseNewMenuService = (ctx) => {
     return false
   }
 
-  // uncomment when no longer limiting to Gousto employees
-  // return getRandomInt(0, 100) > 95
+  const result = getRandomInt(0, 100)
+  if (result < 5) {
+
+    return true
+  }
 
   return false
 }
@@ -22,6 +25,7 @@ const shouldUseNewMenuService = (ctx) => {
 const experiment_setMenuServiceSegment = async (ctx, next) => {
 
   if (!ctx.cookies) {
+
     await next()
 
     return
@@ -29,6 +33,7 @@ const experiment_setMenuServiceSegment = async (ctx, next) => {
 
   const isValidQueryStringValue = ctx.query.useNewMenuService === 'true' || ctx.query.useNewMenuService === 'false'
   if (ctx.cookies.get(COOKIE_NAME) === undefined || ctx.cookies.get(COOKIE_NAME) === '' || isValidQueryStringValue) {
+
     ctx.cookies.set(
       COOKIE_NAME,
       JSON.stringify(shouldUseNewMenuService(ctx)),
