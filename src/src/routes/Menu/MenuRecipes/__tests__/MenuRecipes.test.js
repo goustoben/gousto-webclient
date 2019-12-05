@@ -1,12 +1,10 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Immutable from 'immutable'
 import { MenuRecipes } from 'routes/Menu/MenuRecipes/MenuRecipes'
 import CollectionsNav from 'routes/Menu/CollectionsNav'
 import SubHeader from 'routes/Menu/SubHeader'
 import Loading from 'routes/Menu/Loading'
 import { Banner } from 'routes/Menu/Banner'
-import MenuNoResults from 'routes/Menu/MenuNoResults'
 import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 
 jest.mock('routes/Menu/SubHeader')
@@ -18,7 +16,6 @@ describe('initial render', () => {
 
     wrapper = shallow(
       <MenuRecipes
-        clearAllFilters={() => { }}
         orderId={''}
         basketNumPortionChange={jest.fn()}
         fadeCss={'fadeOut'}
@@ -58,7 +55,6 @@ describe('with the collections feature enabled', () => {
   test('should show a collections nav', () => {
     wrapper = shallow(
       <MenuRecipes
-        clearAllFilters={() => { }}
         orderId={''}
         basketNumPortionChange={jest.fn()}
         fadeCss={'fadeOut'}
@@ -82,7 +78,6 @@ describe('with the force collections feature enabled', () => {
   test('should show a collections nav', () => {
     wrapper = shallow(
       <MenuRecipes
-        clearAllFilters={() => { }}
         orderId={''}
         basketNumPortionChange={jest.fn()}
         fadeCss={'fadeOut'}
@@ -102,7 +97,6 @@ describe('with the force collections feature enabled', () => {
   test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
     wrapper = shallow(
       <MenuRecipes
-        clearAllFilters={() => { }}
         orderId={''}
         basketNumPortionChange={jest.fn()}
         fadeCss={'fadeOut'}
@@ -121,56 +115,6 @@ describe('with the force collections feature enabled', () => {
   })
 })
 
-describe('when filtering removes all recipes from the list', () => {
-  let wrapper
-  let getStateSpy
-  beforeEach(() => {
-    getStateSpy = jest.fn().mockReturnValue({
-      basket: Immutable.Map({
-      }),
-      filters: Immutable.Map({
-        currentCollectionId: '',
-        totalTime: '0',
-        dietTypes: Immutable.Set(['meat']),
-        dietaryAttributes: Immutable.Set(['gluten-free']),
-      }),
-      features: Immutable.Map({
-        filterMenu: Immutable.Map({
-          value: false,
-        })
-      }),
-      content: Immutable.Map({}),
-      menu: Immutable.Map({}),
-    })
-  })
-
-  test('should render MenuNoResults', () => {
-    wrapper = shallow(
-      <MenuRecipes
-        clearAllFilters={() => { }}
-        orderId={''}
-        basketNumPortionChange={jest.fn()}
-        fadeCss={'fadeOut'}
-        showLoading={false}
-        filteredRecipesNumber={0}
-        mobileGridView
-        menuCurrentCollectionId={''}
-        menuRecipeDetailShow={''}
-        isClient
-        showDetailRecipe={jest.fn()}
-        features={Immutable.Map({
-          currentCollectionId: '',
-          totalTime: '0',
-          dietTypes: Immutable.Set(['meat']),
-          dietaryAttributes: Immutable.Set(['gluten-free']),
-        })}
-      />,
-    )
-
-    expect(wrapper.find(MenuNoResults)).toHaveLength(1)
-  })
-})
-
 describe('selectCurrentCollection', () => {
   let wrapper
   let selectCurrentCollection
@@ -178,7 +122,6 @@ describe('selectCurrentCollection', () => {
     selectCurrentCollection = jest.fn()
     wrapper = shallow(
       <MenuRecipes
-        clearAllFilters={() => { }}
         orderId={''}
         basketNumPortionChange={jest.fn()}
         fadeCss={'fadeOut'}

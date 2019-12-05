@@ -327,15 +327,5 @@ describe('snowplowV2', function() {
       expect(recipeFiltersApplied).to.have.been.calledOnce
       expect(recipeFiltersApplied).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
     })
-
-    it('should call trackEventWithData with recipeCollectionSelected when action type is RECIPE_COLLECTION_SELECT_TRACKING', function () {
-      const recipeCollectionSelected = sinon.spy(recipesTracking, 'recipeCollectionSelected')
-      const action = {
-        type: actionTypes.RECIPE_COLLECTION_SELECTED_TRACKING,
-      }
-      snowplowV2(action, 'state', 'prevState')
-      expect(recipeCollectionSelected).to.have.been.calledOnce
-      expect(recipeCollectionSelected).to.have.been.calledWithExactly(action, 'state', 'prevState', '/test-path')
-    })
   })
 })

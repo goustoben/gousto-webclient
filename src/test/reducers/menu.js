@@ -333,23 +333,4 @@ describe('menu reducer', function () {
       expect(result).to.equal(987654321)
     })
   })
-
-  describe('menu', function () {
-    it('initial state', function () {
-      const initialState = Immutable.Map({
-        filtersMenuVisible: false,
-      })
-      expect(Immutable.is(menu.menu(undefined, {}), initialState)).to.equal(true)
-    })
-
-    it('menu filters Visibility Change', function () {
-      const state = Immutable.Map({
-        filtersMenuVisible: true,
-      })
-      expect(Immutable.is(menu.menu(undefined, {
-        type: actionTypes.MENU_FILTERS_VISIBILITY_CHANGE,
-        visible: true,
-      }), state)).to.equal(true)
-    })
-  })
 })

@@ -1033,9 +1033,6 @@ describe('menu actions', function () {
           },
         },
         features: Immutable.fromJS({
-          filterMenu: {
-            value: false,
-          },
         }),
       })
     })
@@ -1096,9 +1093,6 @@ describe('menu actions', function () {
           456: ['', '', ''],
         }),
         features: Immutable.fromJS({
-          filterMenu: {
-            value: false,
-          },
         }),
         auth: Immutable.fromJS({ accessToken: 'blah', refreshToken: 'blabla' }),
         routing: {

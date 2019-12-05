@@ -22,10 +22,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: true,
   },
-  filterMenu: {
-    experiment: false,
-    value: false,
-  },
   queueIt: {
     experiment: false,
     value: false,

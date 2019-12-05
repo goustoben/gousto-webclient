@@ -14,7 +14,6 @@ const mapStateToProps = (state) => {
     description: config.foodBrandDescription[selectedFoodBrand.slug],
     borderColor: selectedFoodBrand.borderColor,
     menuRecipeDetailShow: (query) ? query.recipeDetailId : '',
-    menuFilterExperiment: state.features.getIn(['filterMenu', 'value']),
   }
 }
 const FoodBrandPageContainer = connect(mapStateToProps, {

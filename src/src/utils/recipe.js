@@ -98,12 +98,6 @@ export function isNew(recipe) {
   return !hasBeenOnAPreviousMenu
 }
 
-export function filterRecipesByNew(recipes) {
-  const filteredRecipes = recipes.filter(recipe => isNew(recipe))
-
-  return filteredRecipes || Immutable.List([])
-}
-
 export function roundUp(value, precision = 0.01) {
   return Math.ceil(value / precision) * precision
 }

@@ -92,125 +92,17 @@ export const trackRecipeOrderDisplayed = (originalOrder, displayedOrder) => (
     const orderId = getState().basket.get('orderId')
     const browseMode = getState().menuBrowseCtaShow
     const recommended = getState().recipes.some(recipe => recipe.get('isRecommended', false))
-    const recipesVisible = !(getState().menu.get('filtersMenuVisible'))
     const collectionId = getState().filters.get('currentCollectionId')
-    const dietTypes = Array.from(getState().filters.get('dietTypes', []))
-    const dietaryAttributes = Array.from(getState().filters.get('dietaryAttributes', []))
-    const totalTime = getState().filters.get('totalTime')
 
-    if (recipesVisible) {
-      dispatch({
-        type: actionTypes.RECIPES_DISPLAYED_ORDER_TRACKING,
-        originalOrder,
-        displayedOrder,
-        collectionId,
-        dietTypes,
-        dietaryAttributes,
-        totalTime,
-        deliveryDayId,
-        orderId,
-        recommended,
-        browseMode,
-      })
-    }
-  }
-)
-
-export const trackRecipeFiltersOpened = () => (
-  (dispatch) => {
     dispatch({
-      type: actionTypes.RECIPE_FILTERS_OPENED_TRACKING,
-    })
-  }
-)
-
-export const trackRecipeFiltersClosed = () => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_FILTERS_CLOSED_TRACKING,
-    })
-  }
-)
-
-export const trackRecipeFiltersCleared = () => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_FILTERS_CLEARED_TRACKING,
-    })
-  }
-)
-
-export const trackRecipeCollectionSelected = (collectionId) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_COLLECTION_SELECTED_TRACKING,
+      type: actionTypes.RECIPES_DISPLAYED_ORDER_TRACKING,
+      originalOrder,
+      displayedOrder,
       collectionId,
-    })
-  }
-)
-
-export const trackRecipeTypeSelected = (dietType) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_FILTERS_DIET_TYPE_SELECTED_TRACKING,
-      dietType,
-    })
-  }
-)
-
-export const trackRecipeTypeUnselected = (dietType) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_FILTERS_DIET_TYPE_UNSELECTED_TRACKING,
-      dietType,
-    })
-  }
-)
-
-export const trackRecipeDietaryAttributeSelected = (dietaryAttribute) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_FILTERS_DIETARY_ATTRIBUTE_SELECTED_TRACKING,
-      dietaryAttribute,
-    })
-  }
-)
-
-export const trackRecipeDietaryAttributeUnselected = (dietaryAttribute) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_FILTERS_DIETARY_ATTRIBUTE_UNSELECTED_TRACKING,
-      dietaryAttribute,
-    })
-  }
-)
-
-export const trackRecipeTotalTimeSelected = (totalTime) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_FILTERS_TOTAL_TIME_SELECTED_TRACKING,
-      totalTime,
-    })
-  }
-)
-
-export const trackRecipeTotalTimeUnselected = (totalTime) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_FILTERS_TOTAL_TIME_UNSELECTED_TRACKING,
-      totalTime,
-    })
-  }
-)
-
-export const trackRecipeFiltersApplied = (collectionId, dietTypes, dietaryAttributes, totalTime) => (
-  (dispatch) => {
-    dispatch({
-      type: actionTypes.RECIPE_FILTERS_APPLIED_TRACKING,
-      collectionId,
-      dietTypes,
-      dietaryAttributes,
-      totalTime,
+      deliveryDayId,
+      orderId,
+      recommended,
+      browseMode,
     })
   }
 )

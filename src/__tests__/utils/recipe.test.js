@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
 
 import {
-  filterRecipesByNew,
   formatRecipeTitle,
   isNew,
   getCookingTime,
@@ -223,39 +222,6 @@ describe('recipes', () => {
 
       expect(isNew(recipe1)).toBe(false)
       expect(isNew(recipe2)).toBe(true)
-    })
-  })
-
-  describe('filterRecipesByNew', () => {
-    test('should only return recipes if they have an offset of 0 or a positive number', () => {
-      const recipes = Immutable.fromJS({
-        recipe1: {
-          availability: [
-            {
-              id: "123456789",
-              offset: -12,
-            },
-            {
-              id: "098765432",
-              offset: 0,
-            },
-          ]
-        },
-        recipe2: {
-          availability: [
-            {
-              id: "5454545454",
-              offset: 0,
-            },
-            {
-              id: "6767676767",
-              offset: 5,
-            },
-          ]
-        }
-      })
-
-      expect(filterRecipesByNew(recipes).size).toBe(1)
     })
   })
 

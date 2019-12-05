@@ -528,7 +528,7 @@ export const basketRestorePreviousDate = () => (
 export const basketCheckedOut = (numRecipes, view) => (
   (dispatch, getState) => {
 
-    const { auth, basket, user, pricing, temp, filters } = getState()
+    const { auth, basket, user, pricing, temp } = getState()
     const isAuthenticated = auth.get('isAuthenticated')
     const basketOrderId = basket.get('orderId')
     const editingBox = basket.get('editBox')
@@ -543,7 +543,6 @@ export const basketCheckedOut = (numRecipes, view) => (
     const editedGrossTotal = originalGrossTotal && grossTotal ? (grossTotal - originalGrossTotal).toFixed(2) : ''
     const editedNetTotal = originalNetTotal && orderTotal ? (orderTotal - originalNetTotal).toFixed(2) : ''
     const promoCode = prices && prices.get('promoCode')
-    const dietaryAttribute = filters.get('dietaryAttributes').toJS()
 
     try {
       dispatch(statusActions.pending(actionTypes.BASKET_CHECKOUT, true))
@@ -678,7 +677,6 @@ export const basketCheckedOut = (numRecipes, view) => (
           actionType: actionTypes.BASKET_CHECKED_OUT,
           numRecipes,
           view,
-          dietary_attribute: dietaryAttribute,
         },
       })
     }
@@ -694,14 +692,12 @@ export const basketCheckedOut = (numRecipes, view) => (
 
 export const basketProceedToCheckout = () => (
   async (dispatch, getState) => {
-    const { basket, filters } = getState()
-    const dietaryAttribute = filters.get('dietaryAttributes').toJS()
+    const { basket } = getState()
     dispatch({
       type: actionTypes.BASKET_CHECKOUT_PROCEED,
       trackingData: {
         actionType: actionTypes.BASKET_CHECKOUT_PROCEED,
         basket,
-        dietary_attribute: dietaryAttribute,
       },
     })
 
