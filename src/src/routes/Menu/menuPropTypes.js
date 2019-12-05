@@ -59,6 +59,7 @@ export const menuPropTypes = {
   storeOrderId: PropTypes.string,
   tariffId: PropTypes.number,
   userOrders: PropTypes.instanceOf(Immutable.Map).isRequired,
+  menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map)
 }
 
 export const defaultMenuPropTypes = {
@@ -101,4 +102,5 @@ export const defaultMenuPropTypes = {
   shouldJfyTutorialBeVisible: () => { },
   storeOrderId: '',
   tariffId: null,
+  menuCollectionRecipes: Immutable.Map()
 }
