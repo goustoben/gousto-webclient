@@ -32,6 +32,8 @@ const propTypes = {
   basketReset: PropTypes.func.isRequired,
   isPageLoading: PropTypes.bool,
   orderAction: PropTypes.string,
+  trackContinueOrderAddOnsClick: PropTypes.func.isRequired,
+  trackSkipOrderAddOnsClick: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -65,12 +67,16 @@ class OrderAddOns extends React.Component {
       orderAction,
       orderConfirmationRedirect,
       orderId,
+      trackContinueOrderAddOnsClick,
     } = this.props
+    const basketProductsLength = basket.get('products').size
+
+    trackContinueOrderAddOnsClick(orderId, basketProductsLength)
 
     try {
       await basketUpdateProducts()
 
-      if (basket.get('products').size > 0) {
+      if (basketProductsLength > 0) {
         orderConfirmationRedirect(orderId, orderAction)
       } else {
         this.continueWithoutProducts()
@@ -88,6 +94,8 @@ class OrderAddOns extends React.Component {
       ageVerified,
       productsCategories,
       isPageLoading,
+      orderId,
+      trackSkipOrderAddOnsClick
     } = this.props
 
     const numberOfProducts = Object.keys(products).length
@@ -100,7 +108,11 @@ class OrderAddOns extends React.Component {
         <LayoutPageWrapper>
           <OrderAddOnsHeader
             numberOfProducts={numberOfProducts}
-            onClickSkip={this.continueWithoutProducts}
+            onClickSkip={() => {
+              trackSkipOrderAddOnsClick(orderId)
+
+              this.continueWithoutProducts()
+            }}
           />
           <ProductList
             products={products}
