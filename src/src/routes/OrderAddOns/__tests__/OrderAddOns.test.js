@@ -123,7 +123,7 @@ describe('the OrderAddOns component', () => {
 
     test('continue button shows the correct copy and price', () => {
       expect(continueButton.children().text()).toBe('Continue with items')
-      expect(continueButton.prop('extraInfo')).toBe('£8.00')
+      expect(continueButton.prop('extraInfo')).toBe('+£8.00')
     })
 
     describe('and the continue button is clicked', () => {

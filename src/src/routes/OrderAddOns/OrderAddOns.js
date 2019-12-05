@@ -92,7 +92,7 @@ class OrderAddOns extends React.Component {
 
     const numberOfProducts = Object.keys(products).length
     const areProductsSelected = basket.get('products').size
-    const formattedProductsCost = `£${basketProductsCost}`
+    const formattedProductsCost = `+£${basketProductsCost}`
 
     return isPageLoading ? <PageLoader /> : (
       (numberOfProducts > 0) &&
