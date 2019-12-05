@@ -280,7 +280,7 @@ export default async function fetchData({ store, query, params }, force, backgro
 
     const timeTaken = Math.round(now() - startTime)
 
-    store.dispatch(menuLoadComplete(timeTaken))
+    store.dispatch(menuLoadComplete(timeTaken, useMenuService))
   } catch (e) {
     store.dispatch(actions.pending(actionTypes.MENU_FETCH_DATA, false))
     throw e

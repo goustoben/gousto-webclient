@@ -420,9 +420,10 @@ export const forceMenuLoad = (forceLoad) => ({
   forceLoad,
 })
 
-export const menuLoadComplete = (timeToLoadMs) => ({
+export const menuLoadComplete = (timeToLoadMs, useMenuService) => ({
   type: actionTypes.MENU_LOAD_COMPLETE,
-  timeToLoadMs
+  timeToLoadMs,
+  useMenuService
 })
 
 export default menuActions

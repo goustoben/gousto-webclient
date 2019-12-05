@@ -260,12 +260,13 @@ describe('menu actions', () => {
   })
 
   describe('menuLoadComplete', () => {
-    test('should return a MENU_LOAD_COMPLETE action with correct time to load', () => {
-      const result = menuActions.menuLoadComplete(12345)
+    test('should return a MENU_LOAD_COMPLETE action with correct time to load and menu service state', () => {
+      const result = menuActions.menuLoadComplete(12345, true)
 
       expect(result).toEqual({
         type: actionTypes.MENU_LOAD_COMPLETE,
-        timeToLoadMs: 12345
+        timeToLoadMs: 12345,
+        useMenuService: true
       })
     })
   })
