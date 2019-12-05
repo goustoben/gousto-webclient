@@ -75,9 +75,11 @@ class BoxSummary extends React.PureComponent {
   }
 
   componentWillUnmount() {
+    const { boxDetailsVisibilityChange } = this.props
     if (this.hideTooltipDelay) {
       clearTimeout(this.hideTooltipDelay)
     }
+    boxDetailsVisibilityChange(true)
   }
 
   tooltipError() {
