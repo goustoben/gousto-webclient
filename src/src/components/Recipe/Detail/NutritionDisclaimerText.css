@@ -1,0 +1,8 @@
+@value SpacingXXL, SpacingLG, SpacingMD, SpacingSM, SpacingXXS, marginSMLeftRight from 'sass-loader!styles/spacing.scss';
+.extraNutritionalInformation {
+	composes: textSM from 'styles/typography.css';
+}
+
+.extraInfoMargins {
+	composes: marginSMLeftRight from 'sass-loader!styles/spacing.scss';
+}
