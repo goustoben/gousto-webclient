@@ -4,7 +4,7 @@ import Immutable from 'immutable'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getLandingDay } from 'utils/deliveries'
-import { getDisabledSlots } from 'selectors/features'
+import { getDisabledSlots, getFullScreenBoxSummary } from 'selectors/features'
 import { addDisabledSlotIds, formatAndValidateDisabledSlots } from 'utils/deliverySlotHelper'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
 import DeliverySlot from './DeliverySlot'
@@ -50,6 +50,7 @@ function mapStateToProps(state) {
     disabledSlots,
     isAuthenticated: state.auth.get('isAuthenticated'),
     isSubscriptionActive: state.user.getIn(['subscription', 'state']),
+    shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
   }
 }
 

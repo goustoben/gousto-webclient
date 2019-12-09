@@ -108,7 +108,7 @@ describe('DeliverySlot logic', () => {
       const tempSlotIdSpy = jest.fn()
       const tempDateSpy = jest.fn()
       const tempOrderIdSpy = jest.fn()
-      disabledSlots=[]
+      disabledSlots = []
 
       wrapper = shallow(
         <DeliverySlot
@@ -239,6 +239,44 @@ describe('DeliverySlot logic', () => {
           clearPostcode={jest.fn()}
         />)
       expect(wrapper.find('.disabledSlotText').length).toEqual(0)
+    })
+  })
+
+  describe('Delivery slot buttons', () => {
+    describe('when shouldDisplayFullScreenBoxSummary is false', () => {
+      beforeAll(() => {
+        wrapper = shallow(
+          <DeliverySlot
+            deliveryDays={deliveryDays}
+            disabledSlots={disabledSlots}
+            deliverySlotChosen={jest.fn()}
+            isAuthenticated={isAuthenticated}
+            isSubscriptionActive={isSubscriptionActive}
+            tempDate='2019-03-03'
+            clearPostcode={jest.fn()}
+          />)
+      })
+      test('should NOT render sticky button', () => {
+        expect(wrapper.find('.stickyButton').exists()).toBe(false)
+      })
+    })
+    describe('when shouldDisplayFullScreenBoxSummary is true', () => {
+      beforeAll(() => {
+        wrapper = shallow(
+          <DeliverySlot
+            deliveryDays={deliveryDays}
+            disabledSlots={disabledSlots}
+            deliverySlotChosen={jest.fn()}
+            isAuthenticated={isAuthenticated}
+            isSubscriptionActive={isSubscriptionActive}
+            tempDate='2019-03-03'
+            clearPostcode={jest.fn()}
+            shouldDisplayFullScreenBoxSummary
+          />)
+      })
+      test('should render sticky button', () => {
+        expect(wrapper.find('.stickyButton').exists()).toBe(true)
+      })
     })
   })
 })
