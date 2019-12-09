@@ -71,6 +71,20 @@ jobs:
             - project
             - .circlerc
 
+  test-isomorphic-jest-coverage:
+    docker: *gousto_build_image
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Run isomoprhic jest tests with coverage
+          command: cd src && yarn run test:jest:ci:coverage
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+            - .circlerc
+
   setup-remote-image-repositories:
     docker: *gousto_build_image_docker
     steps:
@@ -208,7 +222,7 @@ workflows:
                 - /^env-.*/
                 - develop
                 - master
-      - test-isomorphic-jest:
+      - test-isomorphic-jest-coverage:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
@@ -232,6 +246,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
+            - test-isomorphic-jest-coverage
           filters:
             branches:
               ignore:
@@ -257,7 +272,7 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
-      - test-isomorphic-jest:
+      - test-isomorphic-jest-coverage:
           context: gousto-beta-aws-app-circleci
           requires:
             - install-dependencies
@@ -305,7 +320,7 @@ workflows:
       - code-analysis:
           context: gousto-beta-aws-app-circleci
           requires:
-            - test-isomorphic-jest
+            - test-isomorphic-jest-coverage
             - test-isomorphic-mocha
             - eslint-only-errors
           filters:
@@ -317,7 +332,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - test-isomorphic-mocha
-            - test-isomorphic-jest
+            - test-isomorphic-jest-coverage
             - eslint-only-errors
           filters:
             branches:
