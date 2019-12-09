@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
+import { getRecipesForGetHelp } from 'selectors/getHelp'
 import { RecipeCards } from './RecipeCards.logic'
 
 const mapStateToProps = (state) => {
   return {
-    recipes: state.getHelp.get('recipes').toJS(),
+    recipes: getRecipesForGetHelp(state),
     title: state.content.get('get-help_contact_pageheader_header')
     || 'Get help with your box',
   }
