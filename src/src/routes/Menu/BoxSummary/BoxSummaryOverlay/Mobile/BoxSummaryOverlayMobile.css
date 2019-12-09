@@ -29,6 +29,10 @@
 	min-height: calc( 100% - barMobileHeight );
 }
 
+.fullScreen {
+	height: 100%;
+}
+
 .mobileModalContent {
 	height: 100%;
 	min-height: 100%;

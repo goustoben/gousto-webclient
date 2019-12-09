@@ -10,4 +10,5 @@ export const boxSummaryOverlayPropTypes = {
   recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
   showDetails: PropTypes.bool.isRequired,
   orderSaveError: PropTypes.string,
+  shouldDisplayFullScreenBoxSummary: PropTypes.bool,
 }
