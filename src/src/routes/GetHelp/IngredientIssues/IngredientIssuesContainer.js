@@ -21,9 +21,9 @@ const mapStateToProps = (state) => {
       body: state.content.get('get-help_ingredientissues_pagecontent_copy')
       || 'Please let us know what was wrong with the ingredient(s)',
       button1Copy: state.content.get('get-help_ingredientissues_pagecontent_button1copy')
-      || 'back',
+      || 'Back',
       button2Copy: state.content.get('get-help_ingredientissues_pagecontent_button2copy')
-      || 'continue',
+      || 'Continue',
     },
     ingredients,
     issues,

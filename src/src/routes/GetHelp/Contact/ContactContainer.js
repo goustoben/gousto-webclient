@@ -11,9 +11,9 @@ const mapStateToProps = (state) => ({
     body: state.content.get('get-help_contact_pagecontent_copy')
     || 'Please get in touch so one of our customer care agents can help resolve your issue.',
     button1Copy: state.content.get('get-help_orderissues_pagecontent_button1copy')
-    || 'back',
+    || 'Back',
     button2Copy: state.content.get('get-help_orderissues_pagecontent_button2copy')
-    || 'done',
+    || 'Done',
     chatItem: state.content.get('get-help_orderissues_pagecontent_chatitem')
     || 'Start live chat',
     emailItem: state.content.get('get-help_orderissues_pagecontent_emailitem')
