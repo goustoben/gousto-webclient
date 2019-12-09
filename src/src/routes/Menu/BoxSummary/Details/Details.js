@@ -45,6 +45,7 @@ class Details extends React.Component {
     prices: PropTypes.instanceOf(Immutable.Map),
     unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
     showRecipeDetailsOnClick: PropTypes.func,
+    shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -62,9 +63,9 @@ class Details extends React.Component {
 
     if (numRecipes < maxRecipesNum) {
       if (numRecipes < minRecipesNum) {
-        text = 'Choose Recipes'
+        text = 'Choose recipes'
       } else {
-        text = 'Choose More Recipes'
+        text = 'Choose more recipes'
       }
     }
 
@@ -105,16 +106,19 @@ class Details extends React.Component {
       clearSlot,
       boxSummaryVisibilityChange,
       deliveryDays,
-      slotId
+      slotId,
+      shouldDisplayFullScreenBoxSummary
     } = this.props
     const numRecipes = basketSum(okRecipeIds)
     const ctaText = this.getCtaText(numRecipes)
     const displayCta = !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText
+    const btnClassName = shouldDisplayFullScreenBoxSummary ? css.stickyButton : css.ctaButton
+    const contentClass = shouldDisplayFullScreenBoxSummary ? css.marginBottom : css.content
 
     return (
       <div className={css[`supercontainer${view}`]}>
         <div className={css[`container${view}`]}>
-          <div className={css.content}>
+          <div className={contentClass}>
             <LayoutContentWrapper>
               <Heading center size="large" type="h2">Box Summary</Heading>
               <DateHeader
@@ -164,13 +168,14 @@ class Details extends React.Component {
               {this.renderPromoCodeMessage()}
               {
                 displayCta &&
-                <Button
-                  className={css.ctaButton}
-                  onClick={() => { boxSummaryVisibilityChange(false) }}
-                  width="full"
-                >
-                  {ctaText}
-                </Button>
+                <div className={btnClassName}>
+                  <Button
+                    onClick={() => { boxSummaryVisibilityChange(false) }}
+                    width="full"
+                  >
+                    {ctaText}
+                  </Button>
+                </div>
               }
             </LayoutContentWrapper>
           </div>

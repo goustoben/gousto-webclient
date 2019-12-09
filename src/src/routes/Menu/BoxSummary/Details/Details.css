@@ -1,4 +1,4 @@
-@value Bluecheese, DarkRadish from 'styles/colors.css';
+@value Bluecheese, DarkRadish, White, Mackerel from 'styles/colors.css';
 @value SpacingSM, SpacingXS from 'sass-loader!styles/spacing.scss';
 @value ScreenSMMin, HeightMDMax from 'styles/screenSizes.css';
 @value sizeXS, sizeXL, avenirHeavyFontStack from 'styles/typography.css';
@@ -98,4 +98,18 @@
 	width: 100%;
 	display: flex;
 	justify-content: center;
+}
+
+.stickyButton {
+	box-shadow: 0px -1px 10px Mackerel;
+	background-color: White;
+	position: fixed;
+	padding: 0.75rem 0.5rem;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.marginBottom {
+	margin-bottom: 4rem;
 }

@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getBasketSlotId } from 'selectors/basket'
+import { getFullScreenBoxSummary } from 'selectors/features'
 import {
   getOkRecipeIds,
   getUnavailableRecipeIds,
@@ -21,6 +22,7 @@ const mapStateToProps = (state) => ({
   pricingPending: state.pricing.get('pending'),
   prices: state.pricing.get('prices'),
   unavailableRecipeIds: getUnavailableRecipeIds(state),
+  shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
 })
 
 const DetailsContainer = connect(mapStateToProps, {

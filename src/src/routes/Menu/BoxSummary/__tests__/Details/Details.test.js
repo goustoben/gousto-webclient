@@ -111,5 +111,35 @@ describe('Details', () => {
         expect(wrapper.find('Receipt').exists()).toBe(true)
       })
     })
+
+    describe('Details cta buttons', () => {
+      describe('when shouldDisplayFullScreenBoxSummary is false', () => {
+        beforeAll(() => {
+          wrapper = shallow(
+            <Details
+              {...props}
+            />)
+        })
+        test('should NOT render sticky button', () => {
+          expect(wrapper.find('.stickyButton').exists()).toBe(false)
+        })
+      })
+      describe('when shouldDisplayFullScreenBoxSummary is true', () => {
+        beforeEach(() => {
+          wrapper = shallow(
+            <Details
+              {...props}
+              shouldDisplayFullScreenBoxSummary
+            />)
+        })
+        test('should render sticky button', () => {
+          expect(wrapper.find('.stickyButton').exists()).toBe(true)
+        })
+
+        test('should use marginBottom for wrapper', () => {
+          expect(wrapper.find('.marginBottom').exists()).toBe(true)
+        })
+      })
+    })
   })
 })
