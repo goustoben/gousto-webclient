@@ -54,6 +54,7 @@ module.exports = {
       ingredients: 'ingredients',
       ingredientIssues: 'ingredient-issues',
       ingredientReasons: 'ingredient-reasons',
+      recipeCards: 'recipe-cards',
     },
 
     help: '/help',
