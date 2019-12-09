@@ -5,6 +5,7 @@ import TextInput from 'Form/Input'
 import { Button, Heading, LayoutContentWrapper } from 'goustouicomponents'
 import { isMobile } from 'utils/view'
 import DropdownInput from 'Form/Dropdown'
+import { CancelButton } from '../CancelButton'
 import css from './Postcode.css'
 
 class Postcode extends React.Component {
@@ -27,6 +28,7 @@ class Postcode extends React.Component {
     setTempPostcode: PropTypes.func,
     boxSummaryNext: PropTypes.func,
     isVisible: PropTypes.bool,
+    shouldDisplayFullScreenBoxSummary: PropTypes.bool,
   }
 
   handleChange = (value) => {
@@ -85,38 +87,47 @@ class Postcode extends React.Component {
       }
     }
 
-    return (<span>
-      <div className={css.row}>
-        <p className={this.props.deliveryDaysError ? css.errorText : css.supportingText}>
-          {this.props.deliveryDaysError ? errMsg : 'Enter your Postcode:'}
-        </p>
-        <TextInput
-          isFixed
-          placeholder="Postcode"
-          onChange={this.handleChange}
-          color={this.props.deliveryDaysError ? 'primary' : 'secondary'}
-          minLength={5}
-          maxLength={8}
-          className={css.textInput}
-          value={this.props.tempPostcode}
-          textAlign="center"
-          autoFocus={this.props.isVisible && !isMobile(this.props.view)}
-          data-testing="menuPostcodeInput"
-        />
-      </div>
-      <div className={css.row}>
-        <p className={css.supportingText}>Your postcode will help us figure out which delivery slots are available in your area</p>
-      </div>
-            </span>)
+    return (
+      <span>
+        <div className={css.row}>
+          <p className={this.props.deliveryDaysError ? css.errorText : css.supportingText}>
+            {this.props.deliveryDaysError ? errMsg : 'Enter your Postcode:'}
+          </p>
+          <TextInput
+            isFixed
+            placeholder="Postcode"
+            onChange={this.handleChange}
+            color={this.props.deliveryDaysError ? 'primary' : 'secondary'}
+            minLength={5}
+            maxLength={8}
+            className={css.textInput}
+            value={this.props.tempPostcode}
+            textAlign="center"
+            autoFocus={this.props.isVisible && !isMobile(this.props.view)}
+            data-testing="menuPostcodeInput"
+          />
+        </div>
+        <div className={css.row}>
+          <p className={css.supportingText}>Your postcode will help us figure out which delivery slots are available in your area</p>
+        </div>
+      </span>
+    )
+  }
+
+  getIsDisabled = () => {
+    const { tempPostcode, chosenAddress, addresses } = this.props
+    if (addresses) {
+      return !chosenAddress
+    }
+
+    return tempPostcode ? tempPostcode.trim().length < 5 : true
   }
 
   render = () => {
-    let disabled
-    if (this.props.addresses) {
-      disabled = !this.props.chosenAddress
-    } else {
-      disabled = this.props.tempPostcode ? this.props.tempPostcode.trim().length < 5 : true
-    }
+    const { shouldDisplayFullScreenBoxSummary,
+      addresses, postcodePending,
+      basketRestorePreviousValues, prevPostcode } = this.props
+    const disabled = this.getIsDisabled()
 
     return (
       <LayoutContentWrapper>
@@ -125,20 +136,20 @@ class Postcode extends React.Component {
           <div className={css.row}>
             <p className={css.leadingText}>We deliver for free up to 7 days a week depending on where you live</p>
           </div>
-          {this.props.addresses ? this.savedAddresses() : this.noSavedAddresses()}
-          <Button
-            data-testing="menuSubmitPostcode"
-            disabled={disabled}
-            onClick={this.handleClick}
-            pending={this.props.postcodePending}
-            width="full"
-          >
-            {this.props.prevPostcode ? 'Show Delivery Slots' : 'Continue'}
-          </Button>
-          {this.props.prevPostcode ? (
-            <div className={css.cancelRow}>
-              <a onClick={this.props.basketRestorePreviousValues} className={css.cancelLink}>Cancel</a>
-            </div>
+          {addresses ? this.savedAddresses() : this.noSavedAddresses()}
+          <div className={shouldDisplayFullScreenBoxSummary && css.stickyButton}>
+            <Button
+              data-testing="menuSubmitPostcode"
+              disabled={disabled}
+              onClick={this.handleClick}
+              pending={postcodePending}
+              width="full"
+            >
+              {prevPostcode ? 'Show Delivery Slots' : 'Continue'}
+            </Button>
+          </div>
+          {prevPostcode ? (
+            <CancelButton basketRestorePreviousValues={basketRestorePreviousValues} />
           ) : null}
         </Form>
       </LayoutContentWrapper>

@@ -119,9 +119,8 @@ describe('Postcode', () => {
 
     test('should render a link with "Cancel" in it which calls the basketRestorePreviousValues prop on click', () => {
       const basketRestorePreviousValuesSpy = jest.fn()
-      wrapper = shallow(<Postcode basketRestorePreviousValues={basketRestorePreviousValuesSpy} prevPostcode="w30df" setTempPostcode={setTempPostcodeSpy} />)
-      expect(wrapper.find('a').text()).toEqual('Cancel')
-      wrapper.find('a').simulate('click')
+      wrapper = mount(<Postcode basketRestorePreviousValues={basketRestorePreviousValuesSpy} prevPostcode="w30df" setTempPostcode={setTempPostcodeSpy} />)
+      wrapper.find('CancelButton > div > button').simulate('click')
       expect(basketRestorePreviousValuesSpy).toHaveBeenCalled()
     })
   })
@@ -234,6 +233,26 @@ describe('Postcode', () => {
         wrapper = shallow(<Postcode addresses={addresses} basketChosenAddressChange={basketChosenAddressChangeSpy} setTempPostcode={setTempPostcodeSpy} />)
         expect(wrapper.find(Button).at(0).prop('disabled')).toEqual(true)
       })
+    })
+  })
+
+  describe('when fullScreenBoxSummary true', () => {
+    beforeEach(() => {
+      setTempPostcodeSpy = jest.fn()
+      wrapper = shallow(<Postcode setTempPostcode={setTempPostcodeSpy} shouldDisplayFullScreenBoxSummary />)
+    })
+    test('should render stickyButton', () => {
+      expect(wrapper.find('.stickyButton')).toHaveLength(1)
+    })
+  })
+
+  describe('when fullScreenBoxSummary false', () => {
+    beforeEach(() => {
+      setTempPostcodeSpy = jest.fn()
+      wrapper = shallow(<Postcode setTempPostcode={setTempPostcodeSpy} shouldDisplayFullScreenBoxSummary={false} />)
+    })
+    test('should NOT render stickyButton', () => {
+      expect(wrapper.find('.stickyButton').exists()).toBe(false)
     })
   })
 })
