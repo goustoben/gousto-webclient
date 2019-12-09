@@ -110,6 +110,11 @@
 	right: 0;
 }
 
+.stickyButton [data-testing="boxSummaryButton"] {
+	min-height: 2.5rem;
+	padding-top: 0;
+}
+
 .marginBottom {
 	margin-bottom: 4rem;
 }

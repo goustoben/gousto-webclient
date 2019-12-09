@@ -12,6 +12,7 @@ import css from './Details.css'
 import BoxProgressAlert from './BoxProgressAlert'
 import { RecipeList } from './RecipeList'
 import { DateHeader } from './DateHeader'
+import { CheckoutContainer } from '../BannerButton/Checkout'
 import {
   HIDE_CHOOSE_RECIPES_CTA,
   HIDE_RECIPE_LIST,
@@ -24,7 +25,6 @@ class Details extends React.Component {
     accessToken: PropTypes.string,
     basketNumPortionChange: PropTypes.func.isRequired,
     portionSizeSelectedTracking: PropTypes.func.isRequired,
-    basketRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
     basketRestorePreviousDate: PropTypes.func.isRequired,
     boxSummaryVisibilityChange: PropTypes.func.isRequired,
     clearSlot: PropTypes.func.isRequired,
@@ -62,10 +62,9 @@ class Details extends React.Component {
     let text = ''
 
     if (numRecipes < maxRecipesNum) {
+      text = 'Choose more recipes'
       if (numRecipes < minRecipesNum) {
         text = 'Choose recipes'
-      } else {
-        text = 'Choose more recipes'
       }
     }
 
@@ -107,13 +106,18 @@ class Details extends React.Component {
       boxSummaryVisibilityChange,
       deliveryDays,
       slotId,
-      shouldDisplayFullScreenBoxSummary
+      shouldDisplayFullScreenBoxSummary,
     } = this.props
     const numRecipes = basketSum(okRecipeIds)
     const ctaText = this.getCtaText(numRecipes)
-    const displayCta = !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText
-    const btnClassName = shouldDisplayFullScreenBoxSummary ? css.stickyButton : css.ctaButton
-    const contentClass = shouldDisplayFullScreenBoxSummary ? css.marginBottom : css.content
+    const showSecondCta = (numRecipes > 1 && numRecipes < 4) && shouldDisplayFullScreenBoxSummary
+    const displayCta = !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText && !showSecondCta
+    let btnClassName = css.ctaButton
+    let contentClass = css.content
+    if (shouldDisplayFullScreenBoxSummary) {
+      btnClassName = css.stickyButton
+      contentClass = css.marginBottom
+    }
 
     return (
       <div className={css[`supercontainer${view}`]}>
@@ -146,6 +150,15 @@ class Details extends React.Component {
             }
             <LayoutContentWrapper>
               <BoxProgressAlert numRecipes={numRecipes} />
+              {showSecondCta &&
+                <Button
+                  color="secondary"
+                  onClick={() => { boxSummaryVisibilityChange(false) }}
+                  width="full"
+                >
+                  {ctaText}
+                </Button>
+              }
               {
                 (pricingPending)
                   ? <div className={css.spinner}><Spinner color="black" /></div>
@@ -166,17 +179,18 @@ class Details extends React.Component {
                   />
               }
               {this.renderPromoCodeMessage()}
-              {
-                displayCta &&
-                <div className={btnClassName}>
-                  <Button
-                    onClick={() => { boxSummaryVisibilityChange(false) }}
-                    width="full"
-                  >
-                    {ctaText}
-                  </Button>
-                </div>
-              }
+              <div className={btnClassName}>
+                {
+                  displayCta ?
+                    <Button
+                      onClick={() => { boxSummaryVisibilityChange(false) }}
+                      width="full"
+                    >
+                      {ctaText}
+                    </Button> :
+                    <CheckoutContainer view={view} />
+                }
+              </div>
             </LayoutContentWrapper>
           </div>
         </div>
