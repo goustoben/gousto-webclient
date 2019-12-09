@@ -15,7 +15,7 @@ import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
 import { RecipeCards } from './RecipeCards'
 
-export default (store) => {
+const getHelpRoutes = (store) => {
   const onEnterHandler = (routes, replace, next) => {
     const redirectTo = '/'
 
@@ -43,3 +43,5 @@ export default (store) => {
     </Route>
   )
 }
+
+export default getHelpRoutes
