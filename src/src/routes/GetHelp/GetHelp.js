@@ -31,29 +31,45 @@ const propTypes = {
   isRequestPending: PropTypes.bool.isRequired,
   storeGetHelpOrderId: PropTypes.func.isRequired,
   loadOrderById: PropTypes.func.isRequired,
+  validateLatestOrder: PropTypes.func.isRequired,
 }
 
 class GetHelp extends PureComponent {
 
   componentDidMount = async () => {
-    const { storeGetHelpOrderId, orderId, user, loadOrderById } = this.props
+    const { storeGetHelpOrderId, orderId, user, loadOrderById, validateLatestOrder } = this.props
 
     if (orderId.length < 1) {
       return null
     }
 
-    storeGetHelpOrderId(orderId)
-
     try {
-      await loadOrderById({
+      const response = await validateLatestOrder({
         accessToken: user.accessToken,
-        orderId,
+        costumerId: user.id,
+        orderId: orderId,
       })
 
-      this.orderLoadComplete()
+      if (response && response.data) {
+        const { valid } = response.data
+
+        if (!valid) {
+          return browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
+        }
+      } else {
+        return browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
+      }
+
     } catch (error) {
       return browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
     }
+
+    storeGetHelpOrderId(orderId)
+
+    return loadOrderById({
+      accessToken: user.accessToken,
+      orderId,
+    }).then(this.orderLoadComplete)
   }
 
   orderLoadComplete = () => {
