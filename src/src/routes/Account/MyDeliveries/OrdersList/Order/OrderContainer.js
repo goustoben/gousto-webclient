@@ -1,10 +1,12 @@
-import { connect } from 'react-redux'
 import Immutable from 'immutable'
+import { connect } from 'react-redux'
+
 import actionTypes from 'actions/actionTypes'
+
 import Order from './Order'
 
 function mapStateToProps(state, ownProps) {
-  const order = ownProps.order
+  const { order } = ownProps
   const orderId = order.get('id')
   const products = order.get('products', Immutable.Map({}))
 
