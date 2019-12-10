@@ -41,7 +41,6 @@ describe('<Ingredients />', () => {
           recipes={recipes}
           content={content}
           storeSelectedIngredients={() => {}}
-          validateLatestOrder={() => {}}
           validateSelectedIngredients={() => {}}
         />
       )
@@ -106,9 +105,6 @@ describe('<Ingredients />', () => {
     let validateSelectedIngredients
     let storeSelectedIngredients
     let ContinueButton
-    const validateLatestOrderSpy = jest.fn().mockResolvedValue(
-      { data: { valid: true } }
-    )
 
     beforeEach(() => {
       storeSelectedIngredients = jest.fn()
@@ -121,7 +117,6 @@ describe('<Ingredients />', () => {
           recipes={recipes}
           content={content}
           storeSelectedIngredients={storeSelectedIngredients}
-          validateLatestOrder={validateLatestOrderSpy}
           validateSelectedIngredients={validateSelectedIngredients}
         />
       )
@@ -229,67 +224,6 @@ describe('<Ingredients />', () => {
         expect(storeSelectedIngredients).toHaveBeenCalledWith([
           { ingredientId: '2222', recipeId: '2' }
         ])
-      })
-    })
-
-    describe('when component mounts', () => {
-      test('calls validate order endpoint when order ID is present', () => {
-        expect(validateLatestOrderSpy).toHaveBeenCalledWith(
-          { accessToken: 'user-access-token', costumerId: '777', orderId: '888' }
-        )
-      })
-
-      describe('and order validation errors', () => {
-        beforeAll(() => {
-          browserHistory.push = jest.fn()
-        })
-
-        test('redirects to /contact if order validation request fails', () => {
-          validateLatestOrderSpy.mockImplementationOnce(() => {
-            throw new Error('error')
-          })
-
-          mount(
-            <Ingredients
-              order={order}
-              user={user}
-              recipes={recipes}
-              content={content}
-              storeSelectedIngredients={storeSelectedIngredients}
-              validateLatestOrder={validateLatestOrderSpy}
-              validateSelectedIngredients={validateSelectedIngredients}
-            />
-          )
-
-          expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
-        })
-
-      })
-
-      test('redirects to /contact when validation api returns false', async () => {
-        browserHistory.push = jest.fn()
-
-        const fetchPromise = Promise.resolve({ data: { valid: false } })
-
-        validateLatestOrderSpy.mockImplementationOnce(() => fetchPromise)
-
-        mount(
-          <Ingredients
-            order={order}
-            user={user}
-            recipes={recipes}
-            content={content}
-            storeSelectedIngredients={storeSelectedIngredients}
-            validateLatestOrder={validateLatestOrderSpy}
-            validateSelectedIngredients={validateSelectedIngredients}
-          />
-        )
-
-        return fetchPromise.then(async () => {
-          await fetchPromise
-
-          expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
-        })
       })
     })
   })
