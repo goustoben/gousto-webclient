@@ -47,6 +47,17 @@ describe('the OrderAddOns component', () => {
     })
   })
 
+  describe('when products fail to load', () => {
+    beforeEach(() => {
+      wrapper.setProps({ productsLoadError: true })
+    })
+
+    test('redirects to the order confirmation page', () => {
+      const { orderConfirmationRedirect, orderId, orderAction } = mockProps
+      expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, orderAction)
+    })
+  })
+
   describe('the continueWithoutProducts class method', () => {
     beforeEach(() => {
       wrapper.instance().continueWithoutProducts()
