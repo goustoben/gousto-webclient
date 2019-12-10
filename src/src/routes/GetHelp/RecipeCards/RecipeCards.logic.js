@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { browserHistory } from 'react-router'
+import { Item } from 'goustouicomponents'
 import { client } from 'config/routes'
 import { RecipeCardsPresentation } from './RecipeCards.presentation'
 
@@ -13,13 +15,14 @@ const propTypes = {
           id: PropTypes.string,
           label: PropTypes.string,
         })
-      )
+      ),
+      url: PropTypes.string,
     })
   ),
   title: PropTypes.string.isRequired,
 }
 
-const RecipeCards = ({ title }) => {
+const RecipeCards = ({ title, recipes }) => {
   const buttonLeftUrl = client.getHelp.index
 
   return (
@@ -27,7 +30,19 @@ const RecipeCards = ({ title }) => {
       title={title}
       buttonLeftUrl={buttonLeftUrl}
     >
-      <div />
+      {recipes.map(({ id, title: recipeTitle, url }) => (
+        <Item
+          key={id}
+          label={recipeTitle}
+          onClick={() => {
+            if (url.length) {
+              window.open(url, '_blank', 'noopener noreferrer')
+            } else {
+              browserHistory.push(`${buttonLeftUrl}/${client.getHelp.contact}`)
+            }
+          }}
+        />
+      ))}
     </RecipeCardsPresentation>
   )
 }
