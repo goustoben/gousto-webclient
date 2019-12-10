@@ -1,7 +1,13 @@
+import actionTypes from 'actions/actionTypes'
 import { createSelector } from 'reselect'
 import { getCategoriesFromProducts, getProductsByCategoryId } from 'utils/products'
 
 export const getProducts = state => state.products
+
+export const getProductsLoadError = state => (
+  Boolean(state.error.get(actionTypes.PRODUCTS_RECEIVE, null))
+)
+
 export const getCategoriesForNavBar = createSelector(
   getProducts,
   products => getCategoriesFromProducts(products)

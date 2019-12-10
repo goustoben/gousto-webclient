@@ -7,6 +7,7 @@ import {
   getProductsForMarket,
   getProductsInStock,
   getProductsOutOfStock,
+  getProductsLoadError,
 } from '../products'
 
 const createOrderedMap = targetObject => (
@@ -52,6 +53,49 @@ describe('the products selectors', () => {
   describe('the getProducts selector', () => {
     test('returns products from the store', () => {
       expect(getProducts(store)).toEqual(products)
+    })
+  })
+
+  describe('the getProductsLoadError selector', () => {
+    describe('when there is an error', () => {
+      beforeEach(() => {
+        store = {
+          ...store,
+          error: fromJS({ 'PRODUCTS_RECEIVE': 'Failed to fetch'})
+        }
+      })
+
+      test('returns true', () => {
+        expect(getProductsLoadError(store)).toBe(true)
+      })
+    })
+
+    describe('when there is no error', () => {
+      describe('and the error store is empty', () => {
+        beforeEach(() => {
+          store = {
+            ...store,
+            error: fromJS({})
+          }
+        })
+
+        test('returns false', () => {
+          expect(getProductsLoadError(store)).toBe(false)
+        })
+      })
+
+      describe('and the error store is not empty but has a null value', () => {
+        beforeEach(() => {
+          store = {
+            ...store,
+            error: fromJS({ 'PRODUCTS_RECEIVE': null })
+          }
+        })
+
+        test('returns false', () => {
+          expect(getProductsLoadError(store)).toBe(false)
+        })
+      })
     })
   })
 
