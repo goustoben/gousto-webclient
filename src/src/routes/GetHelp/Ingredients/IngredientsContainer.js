@@ -16,9 +16,9 @@ const mapStateToProps = (state) => {
       body: state.content.get('get-help_contact_pagecontent_copy')
       || 'Which ingredient(s) had an issue? Select meal to see ingredients.',
       button1Copy: state.content.get('get-help_orderissues_pagecontent_button1copy')
-      || 'back',
+      || 'Back',
       button2Copy: state.content.get('get-help_orderissues_pagecontent_button2copy')
-      || 'continue',
+      || 'Continue',
     }
   }
 }
