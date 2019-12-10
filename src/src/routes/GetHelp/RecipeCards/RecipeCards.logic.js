@@ -3,22 +3,11 @@ import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
 import { Item } from 'goustouicomponents'
 import { client } from 'config/routes'
+import { recipePropType } from '../getHelpPropTypes'
 import { RecipeCardsPresentation } from './RecipeCards.presentation'
 
 const propTypes = {
-  recipes: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-      ingredients: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string,
-          label: PropTypes.string,
-        })
-      ),
-      url: PropTypes.string,
-    })
-  ),
+  recipes: PropTypes.arrayOf(recipePropType).isRequired,
   title: PropTypes.string.isRequired,
 }
 

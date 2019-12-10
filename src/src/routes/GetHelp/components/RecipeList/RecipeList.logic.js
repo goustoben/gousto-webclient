@@ -1,21 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { InputCheck, ItemExpandable } from 'goustouicomponents'
+import { recipePropType } from '../../getHelpPropTypes'
 import { List } from "../List"
 
 const propTypes = {
-  recipes: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-      ingredients: PropTypes.arrayOf(
-        PropTypes.shape({
-          id: PropTypes.string,
-          label: PropTypes.string,
-        })
-      )
-    })
-  ).isRequired,
+  recipes: PropTypes.arrayOf(recipePropType).isRequired,
   onChange: PropTypes.func.isRequired,
   selectedIngredients: PropTypes.instanceOf(Map).isRequired,
 }
