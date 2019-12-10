@@ -8,7 +8,7 @@ import DropdownInput from 'Form/Dropdown'
 import { CancelButton } from '../CancelButton'
 import css from './Postcode.css'
 
-class Postcode extends React.Component {
+class Postcode extends React.PureComponent {
 
   static propTypes = {
     deliveryDaysError: PropTypes.oneOfType([
@@ -32,21 +32,24 @@ class Postcode extends React.Component {
   }
 
   handleChange = (value) => {
-    this.props.setTempPostcode(value)
+    const { setTempPostcode } = this.props
+    setTempPostcode(value)
   }
 
   handleAddressChange = (addressId) => {
-    const address = this.props.addresses.filter(addr => addr.get('id') === addressId).first()
+    const { addresses, basketChosenAddressChange } = this.props
+    const address = addresses.filter(addr => addr.get('id') === addressId).first()
     const postcode = address.get('postcode')
-    this.props.basketChosenAddressChange(address)
+    basketChosenAddressChange(address)
     this.handleChange(postcode)
   }
 
   handleClick = (e) => {
+    const { boxSummaryNext } = this.props
     if (e) {
       e.preventDefault()
     }
-    this.props.boxSummaryNext()
+    boxSummaryNext()
   }
 
   addressesToOptions = () => (
@@ -56,31 +59,40 @@ class Postcode extends React.Component {
     })).toArray()
   )
 
-  savedAddresses = () => (
-    <span>
-      <div className={css.row}>
-        <p className={this.props.deliveryDaysError ? css.errorText : css.supportingText}>
-          {this.props.deliveryDaysError ? 'There has been an error changing to that postcode, please try again or contact customer care' : 'Select delivery address:'}
-        </p>
-        <DropdownInput
-          color="secondary"
-          uppercase
-          options={this.addressesToOptions()}
-          onChange={this.handleAddressChange}
-          value={this.props.chosenAddress ? this.props.chosenAddress.get('id') : ''}
-        />
-      </div>
-      <div className={css.row}>
-        <p className={css.supportingText}>Want to have your box delivered to a new address? Visit 'My Details > My Delivery Address'</p>
-      </div>
-    </span>
-  )
+  savedAddresses = () => {
+    const { deliveryDaysError, chosenAddress } = this.props
+    const addressOption = chosenAddress ? chosenAddress.get('id') : ''
+
+    return (
+      <span>
+        <div className={css.row}>
+          <p className={deliveryDaysError ? css.errorText : css.supportingText}>
+            {deliveryDaysError ? 'There has been an error changing to that postcode, please try again or contact customer care' : 'Select delivery address:'}
+          </p>
+          <DropdownInput
+            color="secondary"
+            uppercase
+            options={this.addressesToOptions()}
+            onChange={this.handleAddressChange}
+            value={addressOption}
+          />
+        </div>
+        <div className={css.row}>
+          <p className={css.supportingText}>Want to have your box delivered to a new address? Visit 'My Details > My Delivery Address'</p>
+        </div>
+      </span>
+    )
+  }
 
   noSavedAddresses = () => {
+    const { deliveryDaysError, tempPostcode, isVisible, view } = this.props
+    const buttonColor = deliveryDaysError ? 'primary' : 'secondary'
+    const isAutofocus = isVisible && !isMobile(view)
+    const messageClass = deliveryDaysError ? css.errorText : css.supportingText
     let errMsg
 
-    if (this.props.deliveryDaysError) {
-      if (this.props.deliveryDaysError === 'do-not-deliver') {
+    if (deliveryDaysError) {
+      if (deliveryDaysError === 'do-not-deliver') {
         errMsg = 'Sorry, it looks like we don\'t currently deliver to your area.'
       } else {
         errMsg = 'Please enter a valid postcode'
@@ -90,20 +102,20 @@ class Postcode extends React.Component {
     return (
       <span>
         <div className={css.row}>
-          <p className={this.props.deliveryDaysError ? css.errorText : css.supportingText}>
-            {this.props.deliveryDaysError ? errMsg : 'Enter your Postcode:'}
+          <p className={messageClass}>
+            {deliveryDaysError ? errMsg : 'Enter your Postcode:'}
           </p>
           <TextInput
             isFixed
             placeholder="Postcode"
             onChange={this.handleChange}
-            color={this.props.deliveryDaysError ? 'primary' : 'secondary'}
+            color={buttonColor}
             minLength={5}
             maxLength={8}
             className={css.textInput}
-            value={this.props.tempPostcode}
+            value={tempPostcode}
             textAlign="center"
-            autoFocus={this.props.isVisible && !isMobile(this.props.view)}
+            autoFocus={isAutofocus}
             data-testing="menuPostcodeInput"
           />
         </div>
