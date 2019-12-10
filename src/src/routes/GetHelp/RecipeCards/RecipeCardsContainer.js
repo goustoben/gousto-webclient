@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getRecipesForGetHelp } from 'selectors/getHelp'
+import { trackRecipeCardClick } from 'actions/getHelp'
 import { RecipeCards } from './RecipeCards.logic'
 
 const mapStateToProps = (state) => {
@@ -10,7 +11,9 @@ const mapStateToProps = (state) => {
   }
 }
 
-const RecipeCardsContainer = connect(mapStateToProps)(RecipeCards)
+const RecipeCardsContainer = connect(mapStateToProps, {
+  trackRecipeCardClick,
+})(RecipeCards)
 
 export {
   RecipeCardsContainer

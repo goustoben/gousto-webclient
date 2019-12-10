@@ -34,14 +34,22 @@ describe('<RecipeCards />', () => {
   ]
 
   let wrapper
+  let trackRecipeCardClickMock
 
   beforeEach(() => {
+    trackRecipeCardClickMock = jest.fn()
+
     wrapper = mount(
       <RecipeCards
         recipes={TEST_RECIPES}
         title={TEST_TITLE}
+        trackRecipeCardClick={trackRecipeCardClickMock}
       />
     )
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
   })
 
   test('renders a page title', () => {
@@ -60,6 +68,14 @@ describe('<RecipeCards />', () => {
     beforeEach(() => {
       window.open = jest.fn()
       browserHistory.push = jest.fn()
+
+      wrapper = mount(
+        <RecipeCards
+          recipes={TEST_RECIPES}
+          title={TEST_TITLE}
+          trackRecipeCardClick={trackRecipeCardClickMock}
+        />
+      )
     })
 
     afterEach(() => {
@@ -74,19 +90,28 @@ describe('<RecipeCards />', () => {
       test('opens the url in a new tab', () => {
         expect(window.open).toHaveBeenCalledWith(TEST_RECIPES[0].url, '_blank', 'noopener noreferrer')
       })
+
+      test('should track that the user has clicked', () => {
+        expect(trackRecipeCardClickMock).toHaveBeenCalledWith(TEST_RECIPES[0].id)
+      })
     })
 
     describe('when the url does not exist for a recipe', () => {
+      let recipesNoUrl
+
       beforeEach(() => {
-        const recipesNoUrl = [
+        recipesNoUrl = [
           ...TEST_RECIPES,
           { id: '5', title: 'test 5', ingredients: [], url: '' }
         ]
+
+        trackRecipeCardClickMock = jest.fn()
 
         wrapper = mount(
           <RecipeCards
             recipes={recipesNoUrl}
             title={TEST_TITLE}
+            trackRecipeCardClick={trackRecipeCardClickMock}
           />
         )
 
@@ -95,6 +120,11 @@ describe('<RecipeCards />', () => {
 
       test('redirects to the contact page', () => {
         expect(browserHistory.push).toHaveBeenCalledWith(`${client.getHelp.index}/${client.getHelp.contact}`)
+      })
+
+      test('should track that the user has clicked', () => {
+        const lastRecipe = recipesNoUrl[recipesNoUrl.length - 1]
+        expect(trackRecipeCardClickMock).toHaveBeenCalledWith(lastRecipe.id)
       })
     })
   })
