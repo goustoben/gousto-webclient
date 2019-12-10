@@ -5,9 +5,10 @@ import TextInput from 'Form/Input'
 import { Button, Heading, LayoutContentWrapper } from 'goustouicomponents'
 import { isMobile } from 'utils/view'
 import DropdownInput from 'Form/Dropdown'
+import { CancelButton } from '../CancelButton'
 import css from './Postcode.css'
 
-class Postcode extends React.Component {
+class Postcode extends React.PureComponent {
 
   static propTypes = {
     deliveryDaysError: PropTypes.oneOfType([
@@ -27,24 +28,28 @@ class Postcode extends React.Component {
     setTempPostcode: PropTypes.func,
     boxSummaryNext: PropTypes.func,
     isVisible: PropTypes.bool,
+    shouldDisplayFullScreenBoxSummary: PropTypes.bool,
   }
 
   handleChange = (value) => {
-    this.props.setTempPostcode(value)
+    const { setTempPostcode } = this.props
+    setTempPostcode(value)
   }
 
   handleAddressChange = (addressId) => {
-    const address = this.props.addresses.filter(addr => addr.get('id') === addressId).first()
+    const { addresses, basketChosenAddressChange } = this.props
+    const address = addresses.filter(addr => addr.get('id') === addressId).first()
     const postcode = address.get('postcode')
-    this.props.basketChosenAddressChange(address)
+    basketChosenAddressChange(address)
     this.handleChange(postcode)
   }
 
   handleClick = (e) => {
+    const { boxSummaryNext } = this.props
     if (e) {
       e.preventDefault()
     }
-    this.props.boxSummaryNext()
+    boxSummaryNext()
   }
 
   addressesToOptions = () => (
@@ -54,69 +59,87 @@ class Postcode extends React.Component {
     })).toArray()
   )
 
-  savedAddresses = () => (
-    <span>
-      <div className={css.row}>
-        <p className={this.props.deliveryDaysError ? css.errorText : css.supportingText}>
-          {this.props.deliveryDaysError ? 'There has been an error changing to that postcode, please try again or contact customer care' : 'Select delivery address:'}
-        </p>
-        <DropdownInput
-          color="secondary"
-          uppercase
-          options={this.addressesToOptions()}
-          onChange={this.handleAddressChange}
-          value={this.props.chosenAddress ? this.props.chosenAddress.get('id') : ''}
-        />
-      </div>
-      <div className={css.row}>
-        <p className={css.supportingText}>Want to have your box delivered to a new address? Visit 'My Details > My Delivery Address'</p>
-      </div>
-    </span>
-  )
+  savedAddresses = () => {
+    const { deliveryDaysError, chosenAddress } = this.props
+    const addressOption = chosenAddress ? chosenAddress.get('id') : ''
+
+    return (
+      <span>
+        <div className={css.row}>
+          <p className={deliveryDaysError ? css.errorText : css.supportingText}>
+            {deliveryDaysError ? 'There has been an error changing to that postcode, please try again or contact customer care' : 'Select delivery address:'}
+          </p>
+          <DropdownInput
+            color="secondary"
+            uppercase
+            options={this.addressesToOptions()}
+            onChange={this.handleAddressChange}
+            value={addressOption}
+          />
+        </div>
+        <div className={css.row}>
+          <p className={css.supportingText}>Want to have your box delivered to a new address? Visit 'My Details > My Delivery Address'</p>
+        </div>
+      </span>
+    )
+  }
 
   noSavedAddresses = () => {
+    const { deliveryDaysError, tempPostcode, isVisible, view } = this.props
+    const buttonColor = deliveryDaysError ? 'primary' : 'secondary'
+    const isAutofocus = isVisible && !isMobile(view)
+    const messageClass = deliveryDaysError ? css.errorText : css.supportingText
     let errMsg
 
-    if (this.props.deliveryDaysError) {
-      if (this.props.deliveryDaysError === 'do-not-deliver') {
+    if (deliveryDaysError) {
+      if (deliveryDaysError === 'do-not-deliver') {
         errMsg = 'Sorry, it looks like we don\'t currently deliver to your area.'
       } else {
         errMsg = 'Please enter a valid postcode'
       }
     }
 
-    return (<span>
-      <div className={css.row}>
-        <p className={this.props.deliveryDaysError ? css.errorText : css.supportingText}>
-          {this.props.deliveryDaysError ? errMsg : 'Enter your Postcode:'}
-        </p>
-        <TextInput
-          isFixed
-          placeholder="Postcode"
-          onChange={this.handleChange}
-          color={this.props.deliveryDaysError ? 'primary' : 'secondary'}
-          minLength={5}
-          maxLength={8}
-          className={css.textInput}
-          value={this.props.tempPostcode}
-          textAlign="center"
-          autoFocus={this.props.isVisible && !isMobile(this.props.view)}
-          data-testing="menuPostcodeInput"
-        />
-      </div>
-      <div className={css.row}>
-        <p className={css.supportingText}>Your postcode will help us figure out which delivery slots are available in your area</p>
-      </div>
-            </span>)
+    return (
+      <span>
+        <div className={css.row}>
+          <p className={messageClass}>
+            {deliveryDaysError ? errMsg : 'Enter your Postcode:'}
+          </p>
+          <TextInput
+            isFixed
+            placeholder="Postcode"
+            onChange={this.handleChange}
+            color={buttonColor}
+            minLength={5}
+            maxLength={8}
+            className={css.textInput}
+            value={tempPostcode}
+            textAlign="center"
+            autoFocus={isAutofocus}
+            data-testing="menuPostcodeInput"
+          />
+        </div>
+        <div className={css.row}>
+          <p className={css.supportingText}>Your postcode will help us figure out which delivery slots are available in your area</p>
+        </div>
+      </span>
+    )
+  }
+
+  getIsDisabled = () => {
+    const { tempPostcode, chosenAddress, addresses } = this.props
+    if (addresses) {
+      return !chosenAddress
+    }
+
+    return tempPostcode ? tempPostcode.trim().length < 5 : true
   }
 
   render = () => {
-    let disabled
-    if (this.props.addresses) {
-      disabled = !this.props.chosenAddress
-    } else {
-      disabled = this.props.tempPostcode ? this.props.tempPostcode.trim().length < 5 : true
-    }
+    const { shouldDisplayFullScreenBoxSummary,
+      addresses, postcodePending,
+      basketRestorePreviousValues, prevPostcode } = this.props
+    const disabled = this.getIsDisabled()
 
     return (
       <LayoutContentWrapper>
@@ -125,21 +148,19 @@ class Postcode extends React.Component {
           <div className={css.row}>
             <p className={css.leadingText}>We deliver for free up to 7 days a week depending on where you live</p>
           </div>
-          {this.props.addresses ? this.savedAddresses() : this.noSavedAddresses()}
-          <Button
-            data-testing="menuSubmitPostcode"
-            disabled={disabled}
-            onClick={this.handleClick}
-            pending={this.props.postcodePending}
-            width="full"
-          >
-            {this.props.prevPostcode ? 'Show Delivery Slots' : 'Continue'}
-          </Button>
-          {this.props.prevPostcode ? (
-            <div className={css.cancelRow}>
-              <a onClick={this.props.basketRestorePreviousValues} className={css.cancelLink}>Cancel</a>
-            </div>
-          ) : null}
+          {addresses ? this.savedAddresses() : this.noSavedAddresses()}
+          <div className={shouldDisplayFullScreenBoxSummary && css.stickyButton}>
+            <Button
+              data-testing="menuSubmitPostcode"
+              disabled={disabled}
+              onClick={this.handleClick}
+              pending={postcodePending}
+              width="full"
+            >
+              {prevPostcode ? 'Show Delivery Slots' : 'Continue'}
+            </Button>
+          </div>
+          <CancelButton basketRestorePreviousValues={basketRestorePreviousValues} shouldShow={!!prevPostcode} />
         </Form>
       </LayoutContentWrapper>
     )

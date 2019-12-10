@@ -6,9 +6,11 @@ import { BoxSummaryContentContainer } from '../../BoxSummaryContent'
 import css from './BoxSummaryOverlayMobile.css'
 import { boxSummaryOverlayPropTypes } from '../propTypes'
 
-const BoxSummaryOverlayMobile = ({ onCloseClick, onToggleVisibility, showDetails, date, recipes, numPortions }) => {
+const BoxSummaryOverlayMobile = ({ onCloseClick, onToggleVisibility, showDetails, date, recipes, numPortions, shouldDisplayFullScreenBoxSummary }) => {
+  const classNameToApply = shouldDisplayFullScreenBoxSummary ? css.fullScreen : css.mobileOverlay
+
   return (
-    <Overlay open={showDetails} className={css.mobileOverlay} contentClassName={css.mobileModalContent} from="bottom">
+    <Overlay open={showDetails} className={classNameToApply} contentClassName={css.mobileModalContent} from="bottom">
       <div className={css.supercontainermobile}>
         <div className={css.detailContainermobile} data-testing="boxSummaryMobile">
           <div className={css.closeBtn} onClick={onCloseClick}></div>

@@ -102,3 +102,5 @@ export const getMenuService = () => {
 
   return b && b[2] === 'true'
 }
+
+export const getFullScreenBoxSummary = ({ features }) => (features && features.getIn(['fullScreenBoxSummary', 'value'], false))

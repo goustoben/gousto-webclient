@@ -12,6 +12,7 @@ import css from './Details.css'
 import BoxProgressAlert from './BoxProgressAlert'
 import { RecipeList } from './RecipeList'
 import { DateHeader } from './DateHeader'
+import { CheckoutContainer } from '../BannerButton/Checkout'
 import {
   HIDE_CHOOSE_RECIPES_CTA,
   HIDE_RECIPE_LIST,
@@ -24,7 +25,6 @@ class Details extends React.Component {
     accessToken: PropTypes.string,
     basketNumPortionChange: PropTypes.func.isRequired,
     portionSizeSelectedTracking: PropTypes.func.isRequired,
-    basketRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
     basketRestorePreviousDate: PropTypes.func.isRequired,
     boxSummaryVisibilityChange: PropTypes.func.isRequired,
     clearSlot: PropTypes.func.isRequired,
@@ -45,6 +45,7 @@ class Details extends React.Component {
     prices: PropTypes.instanceOf(Immutable.Map),
     unavailableRecipeIds: PropTypes.instanceOf(Immutable.Map),
     showRecipeDetailsOnClick: PropTypes.func,
+    shouldDisplayFullScreenBoxSummary: PropTypes.bool.isRequired,
   }
 
   static defaultProps = {
@@ -61,10 +62,9 @@ class Details extends React.Component {
     let text = ''
 
     if (numRecipes < maxRecipesNum) {
+      text = 'Choose more recipes'
       if (numRecipes < minRecipesNum) {
-        text = 'Choose Recipes'
-      } else {
-        text = 'Choose More Recipes'
+        text = 'Choose recipes'
       }
     }
 
@@ -105,16 +105,24 @@ class Details extends React.Component {
       clearSlot,
       boxSummaryVisibilityChange,
       deliveryDays,
-      slotId
+      slotId,
+      shouldDisplayFullScreenBoxSummary,
     } = this.props
     const numRecipes = basketSum(okRecipeIds)
     const ctaText = this.getCtaText(numRecipes)
-    const displayCta = !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText
+    const showSecondCta = (numRecipes > 1 && numRecipes < 4) && shouldDisplayFullScreenBoxSummary
+    const displayCta = !displayOptions.contains(HIDE_CHOOSE_RECIPES_CTA) && ctaText && !showSecondCta
+    let btnClassName = css.ctaButton
+    let contentClass = css.content
+    if (shouldDisplayFullScreenBoxSummary) {
+      btnClassName = css.stickyButton
+      contentClass = css.marginBottom
+    }
 
     return (
       <div className={css[`supercontainer${view}`]}>
         <div className={css[`container${view}`]}>
-          <div className={css.content}>
+          <div className={contentClass}>
             <LayoutContentWrapper>
               <Heading center size="large" type="h2">Box Summary</Heading>
               <DateHeader
@@ -142,6 +150,15 @@ class Details extends React.Component {
             }
             <LayoutContentWrapper>
               <BoxProgressAlert numRecipes={numRecipes} />
+              {showSecondCta &&
+                <Button
+                  color="secondary"
+                  onClick={() => { boxSummaryVisibilityChange(false) }}
+                  width="full"
+                >
+                  {ctaText}
+                </Button>
+              }
               {
                 (pricingPending)
                   ? <div className={css.spinner}><Spinner color="black" /></div>
@@ -162,16 +179,18 @@ class Details extends React.Component {
                   />
               }
               {this.renderPromoCodeMessage()}
-              {
-                displayCta &&
-                <Button
-                  className={css.ctaButton}
-                  onClick={() => { boxSummaryVisibilityChange(false) }}
-                  width="full"
-                >
-                  {ctaText}
-                </Button>
-              }
+              <div className={btnClassName}>
+                {
+                  displayCta ?
+                    <Button
+                      onClick={() => { boxSummaryVisibilityChange(false) }}
+                      width="full"
+                    >
+                      {ctaText}
+                    </Button> :
+                    <CheckoutContainer view={view} />
+                }
+              </div>
             </LayoutContentWrapper>
           </div>
         </div>

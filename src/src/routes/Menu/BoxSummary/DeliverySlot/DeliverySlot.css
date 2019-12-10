@@ -1,4 +1,4 @@
-@value Blackberry, Radish, BlueCheese, Haricot from 'styles/colors.css';
+@value Blackberry, Radish, BlueCheese, Haricot, Mackerel from 'styles/colors.css';
 @value SpacingSM, SpacingXS, SpacingXXS from 'sass-loader!styles/spacing.scss';
 @value sizeXS, sizeMD from 'styles/typography.css';
 
@@ -145,4 +145,13 @@
 	composes: paragraphXS textCenter from 'styles/typography.css';
 	font-weight: 500;
 	font-family: Avenir;
+}
+
+.stickyButton {
+	box-shadow: 0px -1px 10px Mackerel;
+	position: fixed;
+	width: 100%;
+	padding: 0.75rem 0.5rem;
+	bottom: 0;
+	left: 0;
 }

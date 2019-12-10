@@ -1,4 +1,4 @@
-@value Radish, Pepper from 'styles/colors.css';
+@value Radish, Pepper, Mackerel from 'styles/colors.css';
 
 .row {
 	composes: marginMDBottom from 'sass-loader!styles/spacing.scss';
@@ -28,15 +28,15 @@
 	color: Pepper;
 }
 
-.cancelRow {
-	composes: marginSMTop from 'sass-loader!styles/spacing.scss';
-	composes: textCenter from 'styles/typography.css';
-}
-.cancelLink {
-	composes: textSM textCenter from 'styles/typography.css';
-	cursor: pointer;
-}
-
 .hide {
 	composes: none from 'styles/display.css';
+}
+
+.stickyButton {
+	box-shadow: 0px -1px 10px Mackerel;
+	position: fixed;
+	width: 100%;
+	padding: 0.75rem 0.5rem;
+	bottom: 0;
+	left: 0;
 }

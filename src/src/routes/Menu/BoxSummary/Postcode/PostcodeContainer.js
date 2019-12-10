@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
+import { getFullScreenBoxSummary } from 'selectors/features'
 import Postcode from './Postcode'
 
 function mapStateToProps(state) {
@@ -26,6 +27,7 @@ function mapStateToProps(state) {
     chosenAddress,
     tempPostcode,
     isVisible: state.boxSummaryShow.get('show', false),
+    shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
   }
 }
 

@@ -12,8 +12,8 @@ import {
   getCookingInstruction,
   getNDDFeatureValue,
   getHideBoxSummary,
-  getMenuService,
   getAddOnsBeforeOrderConfirmation,
+  getFullScreenBoxSummary
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -274,6 +274,26 @@ describe('when features are defined', () => {
 
       test('should return true', () => {
         expect(getAddOnsBeforeOrderConfirmation(state)).toEqual(true)
+      })
+    })
+  })
+
+  describe('getFullScreenBoxSummary', () => {
+    describe('when is NOT set', () => {
+      test('should return false', () => {
+        expect(getFullScreenBoxSummary(state)).toBe(false)
+
+      })
+    })
+
+    describe('when is set', () => {
+      test('should return true', () => {
+        state.features = Immutable.fromJS({
+          fullScreenBoxSummary: {
+            value: true
+          }
+        })
+        expect(getFullScreenBoxSummary(state)).toBe(true)
       })
     })
   })
