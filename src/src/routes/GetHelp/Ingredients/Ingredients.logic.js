@@ -34,12 +34,38 @@ const propTypes = {
     button2Copy: PropTypes.string.isRequired,
   }).isRequired,
   storeSelectedIngredients: PropTypes.func.isRequired,
+  validateLatestOrder: PropTypes.func.isRequired,
   validateSelectedIngredients: PropTypes.func.isRequired,
 }
 
 class Ingredients extends PureComponent {
   state = {
     selectedIngredients: new Map()
+  }
+
+  componentDidMount = async () => {
+    const { validateLatestOrder, user, order } = this.props
+
+    try {
+      const response = await validateLatestOrder({
+        accessToken: user.accessToken,
+        costumerId: user.id,
+        orderId: order.id,
+      })
+
+      if (response && response.data) {
+        const { valid } = response.data
+
+        if (!valid) {
+          this.redirectToContactPage()
+        }
+      } else {
+        this.redirectToContactPage()
+      }
+
+    } catch (error) {
+      this.redirectToContactPage()
+    }
   }
 
   changeHandler = (checkboxId, isChecked) => {
@@ -86,8 +112,12 @@ class Ingredients extends PureComponent {
 
       browserHistory.push(`${client.getHelp.index}/${client.getHelp.ingredientIssues}`)
     } catch (error) {
-      browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
+      this.redirectToContactPage()
     }
+  }
+
+  redirectToContactPage = () => {
+    browserHistory.push(`${client.getHelp.index}/${client.getHelp.contact}`)
   }
 
   render() {
