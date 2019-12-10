@@ -13,8 +13,9 @@ import Confirmation from './Confirmation'
 import { Ingredients } from './Ingredients'
 import { IngredientIssues } from './IngredientIssues'
 import { IngredientReasons } from './IngredientReasons'
+import { RecipeCards } from './RecipeCards'
 
-export default (store) => {
+const getHelpRoutes = (store) => {
   const onEnterHandler = (routes, replace, next) => {
     const redirectTo = '/'
 
@@ -30,14 +31,17 @@ export default (store) => {
         onEnter={onEnterHandler}
       >
         <IndexRoute component={OrderIssueContainer} />
+        {Confirmation}
+        {Contact}
         {Ingredients}
         {IngredientIssues}
         {IngredientReasons}
+        {RecipeCards}
         {Refund}
-        {Contact}
-        {Confirmation}
         <Redirect to={configRoutes.client.login} />
       </Route>
     </Route>
   )
 }
+
+export default getHelpRoutes
