@@ -35,6 +35,7 @@ const propTypes = {
   orderAction: PropTypes.string,
   trackContinueOrderAddOnsClick: PropTypes.func.isRequired,
   trackSkipOrderAddOnsClick: PropTypes.func.isRequired,
+  trackErrorSkipOrderAddOns: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
@@ -52,8 +53,9 @@ class OrderAddOns extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { productsLoadError } = this.props
+    const { orderId, productsLoadError, trackErrorSkipOrderAddOns } = this.props
     if (productsLoadError || prevProps.productLoadError) {
+      trackErrorSkipOrderAddOns(orderId)
       this.continueWithoutProducts()
     }
   }
