@@ -3,6 +3,7 @@ import { getBasket, getProductCategories } from 'selectors/root'
 import {
   getCategoriesForNavBar,
   getProductsForMarket,
+  getProductsLoadError,
 } from 'selectors/products'
 import { getAgeVerified } from 'selectors/user'
 import { getBasketOrderDetails } from 'selectors/basket'
@@ -19,7 +20,7 @@ const mapStateToProps = (state) => {
     basket: getBasket(state),
     productsCategories: getProductCategories(state),
     products: getProductsForMarket(state),
-    productsLoadError: state.error.get('PRODUCTS_RECEIVE', null),
+    productsLoadError: getProductsLoadError(state),
     ageVerified: getAgeVerified(state),
     selectedCategory: state.filters.get('selectedCategory') || 'all-products',
     saving: state.pending.get(actionTypes.BASKET_CHECKOUT),
