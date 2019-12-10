@@ -133,8 +133,7 @@ class Menu extends React.PureComponent {
     // user login
     const justLoggedIn = !isAuthenticated && nextProps.isAuthenticated
     const variationChanged = menuVariation !== nextProps.menuVariation
-    const nextCollectionRecipesEmpty = nextProps.menuCollectionRecipes && !nextProps.menuCollectionRecipes.size
-    if (editingOrder || justLoggedIn || variationChanged || nextCollectionRecipesEmpty) {
+    if (editingOrder || justLoggedIn || variationChanged) {
       const { store } = this.context
       const query = nextProps.query || {}
       const params = nextProps.params || {}
