@@ -327,11 +327,7 @@ class DeliverySlot extends React.Component {
             {buttonText}
           </Button>
         </div>
-
-        {prevDate &&
-          <CancelButton basketRestorePreviousValues={basketRestorePreviousValues} />
-        }
-
+        <CancelButton basketRestorePreviousValues={basketRestorePreviousValues} shouldShow={!!prevDate} />
       </LayoutContentWrapper>
     )
   }

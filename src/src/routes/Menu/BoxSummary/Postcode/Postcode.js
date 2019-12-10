@@ -160,9 +160,7 @@ class Postcode extends React.PureComponent {
               {prevPostcode ? 'Show Delivery Slots' : 'Continue'}
             </Button>
           </div>
-          {prevPostcode ? (
-            <CancelButton basketRestorePreviousValues={basketRestorePreviousValues} />
-          ) : null}
+          <CancelButton basketRestorePreviousValues={basketRestorePreviousValues} shouldShow={!!prevPostcode} />
         </Form>
       </LayoutContentWrapper>
     )
