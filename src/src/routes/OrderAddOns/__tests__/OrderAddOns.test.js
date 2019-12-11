@@ -21,6 +21,7 @@ describe('the OrderAddOns component', () => {
     basketUpdateProducts: jest.fn(),
     trackContinueOrderAddOnsClick: jest.fn(),
     trackSkipOrderAddOnsClick: jest.fn(),
+    trackErrorSkipOrderAddOns: jest.fn(),
     orderAction: 'choice',
   }
 
@@ -44,6 +45,22 @@ describe('the OrderAddOns component', () => {
     test('renders only a PageLoader', () => {
       expect(wrapper.find('PageLoader')).toHaveLength(1)
       expect(wrapper.find('LayoutPageWrapper').exists()).toBe(false)
+    })
+  })
+
+  describe('when products fail to load', () => {
+    beforeEach(() => {
+      wrapper.setProps({ productsLoadError: true })
+    })
+
+    test('dispatches a tracking action', () => {
+      const { orderId, trackErrorSkipOrderAddOns } = mockProps
+      expect(trackErrorSkipOrderAddOns).toHaveBeenCalledWith(orderId)
+    })
+
+    test('redirects to the order confirmation page', () => {
+      const { orderConfirmationRedirect, orderId, orderAction } = mockProps
+      expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, orderAction)
     })
   })
 

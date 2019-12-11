@@ -1,12 +1,16 @@
 import { connect } from 'react-redux'
 import { getBasket, getProductCategories } from 'selectors/root'
-import { getDesserts } from 'selectors/products'
+import { getDesserts, getProductsLoadError } from 'selectors/products'
 import { getAgeVerified } from 'selectors/user'
 import { isOrderDetailsLoading } from 'selectors/orderConfirmation'
 import { getBasketProductsCost } from 'selectors/basket'
 import { orderDetails, orderConfirmationRedirect } from 'actions/orderConfirmation'
 import { basketReset, basketUpdateProducts } from 'actions/basket'
-import { trackContinueOrderAddOnsClick, trackSkipOrderAddOnsClick } from 'actions/orderAddOn'
+import {
+  trackContinueOrderAddOnsClick,
+  trackSkipOrderAddOnsClick,
+  trackErrorSkipOrderAddOns,
+} from 'actions/orderAddOn'
 import { OrderAddOns } from './OrderAddOns'
 
 const mapStateToProps = (state, ownProps) => {
@@ -23,6 +27,7 @@ const mapStateToProps = (state, ownProps) => {
     orderId,
     productsCategories: getProductCategories(state),
     products: getDesserts(state),
+    productsLoadError: getProductsLoadError(state),
   }
 }
 
@@ -33,6 +38,7 @@ const OrderAddOnsContainer = connect(mapStateToProps, {
   orderDetails,
   trackContinueOrderAddOnsClick,
   trackSkipOrderAddOnsClick,
+  trackErrorSkipOrderAddOns,
 })(OrderAddOns)
 
 export {

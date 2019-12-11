@@ -47,7 +47,7 @@ const propTypes = {
     })
   ).isRequired,
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
-  productsLoadError: PropTypes.string,
+  productsLoadError: PropTypes.bool,
   saveError: PropTypes.bool,
   saveRequired: PropTypes.bool,
   saving: PropTypes.bool,
@@ -61,6 +61,7 @@ const defaultProps = {
   ageVerified: false,
   filteredProducts: null,
   isOrderSummaryOpen: false,
+  productsLoadError: false,
   saveError: false,
   saveRequired: false,
   saving: false,

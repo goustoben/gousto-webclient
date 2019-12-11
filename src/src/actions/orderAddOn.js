@@ -17,6 +17,14 @@ export const trackSkipOrderAddOnsClick = orderId => ({
   }
 })
 
+export const trackErrorSkipOrderAddOns = orderId => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: 'TrackSkipOrderAddsOns Error',
+    orderId,
+  }
+})
+
 export const trackContinueOrderAddOnsClick = (orderId, numberOfProducts) => ({
   type: actionTypes.TRACKING,
   trackingData: {

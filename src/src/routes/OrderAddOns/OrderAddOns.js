@@ -27,6 +27,7 @@ const propTypes = {
   basket: PropTypes.instanceOf(Immutable.Map).isRequired,
   basketProductsCost: PropTypes.string,
   productsCategories: PropTypes.instanceOf(Immutable.Map).isRequired,
+  productsLoadError: PropTypes.bool,
   orderConfirmationRedirect: PropTypes.func.isRequired,
   basketUpdateProducts: PropTypes.func.isRequired,
   basketReset: PropTypes.func.isRequired,
@@ -34,12 +35,14 @@ const propTypes = {
   orderAction: PropTypes.string,
   trackContinueOrderAddOnsClick: PropTypes.func.isRequired,
   trackSkipOrderAddOnsClick: PropTypes.func.isRequired,
+  trackErrorSkipOrderAddOns: PropTypes.func.isRequired,
 }
 
 const defaultProps = {
   basketProductsCost: '0.00',
   isPageLoading: false,
   orderAction: '',
+  productsLoadError: false,
 }
 
 class OrderAddOns extends React.Component {
@@ -47,6 +50,14 @@ class OrderAddOns extends React.Component {
     const { orderDetails, orderId } = this.props
 
     orderDetails(orderId)
+  }
+
+  componentDidUpdate(prevProps) {
+    const { orderId, productsLoadError, trackErrorSkipOrderAddOns } = this.props
+    if (productsLoadError || prevProps.productLoadError) {
+      trackErrorSkipOrderAddOns(orderId)
+      this.continueWithoutProducts()
+    }
   }
 
   continueWithoutProducts = () => {
