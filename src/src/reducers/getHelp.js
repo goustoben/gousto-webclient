@@ -15,14 +15,14 @@ const getHelpInitialState = fromJS({
 const reduceRecipes = (recipes) => (
   Object.keys(recipes).map((recipeId) => {
     const recipe = recipes[recipeId]
-    const { id, title } = recipe
+    const { id, title, url } = recipe
     const ingredients = recipe.ingredients.map(
       ({ id: ingredientId, label: ingredientLabel }) => (
-        { id: ingredientId, label: ingredientLabel }
+        { id: ingredientId, label: ingredientLabel, url }
       )
     )
 
-    return { id, title, ingredients }
+    return { id, title, ingredients, url }
   })
 )
 
