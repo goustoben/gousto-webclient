@@ -69,6 +69,7 @@ export const transformPendingOrders = (orders) => {
     const isCurrentPeriod = order.get('isCurrentPeriod')
     const deliveryDayId = order.get('deliveryDayId')
     const deliveryDate = order.get('deliveryDate')
+    const humanDeliveryDay = order.get('humanDeliveryDate')
     const deliverySlotId = order.get('deliverySlotId')
     const deliverySlot = order.get('deliverySlot')
     const prices = order.get('prices')
@@ -94,6 +95,7 @@ export const transformPendingOrders = (orders) => {
         shippingAddressId: shippingAddress.get('id'),
         coreDeliveryDayId: deliveryDayId,
         deliveryDay: deliveryDate,
+        humanDeliveryDay,
         originalDeliveryDay,
         deliveryDayRescheduledReason,
         deliverySlotId,
@@ -146,6 +148,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
     const unavailableReason = delivery.get('unavailableReason')
     const alternateDeliveryDay = delivery.get('alternateDeliveryDay')
     const deliveryDayId = delivery.get('id')
+    const humanDeliveryDay = delivery.get('humanDate')
 
     const orderState = parseInt(active) === 1 ? 'scheduled' : 'cancelled'
     const deliveryDayRescheduledReason = getProjectedDeliveryDayRescheduledReason(unavailableReason, humanWhenMenuLive)
@@ -157,6 +160,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
         id,
         orderState,
         deliveryDay: date,
+        humanDeliveryDay,
         whenCutoff,
         whenMenuOpen: whenMenuLive,
         deliverySlotStart: deliverySlot.get('deliveryStart'),

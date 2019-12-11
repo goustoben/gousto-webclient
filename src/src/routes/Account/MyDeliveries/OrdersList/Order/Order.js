@@ -25,12 +25,11 @@ class Order extends React.PureComponent {
   static propTypes = {
     userId: PropTypes.string,
     collapsed: PropTypes.bool,
-    orderDateTime: PropTypes.string,
+    humanDeliveryDay: PropTypes.string,
     originalDeliveryDay: PropTypes.string,
     deliveryDayRescheduledReason: PropTypes.string,
     orderDeliveryTimeEnd: PropTypes.string,
     orderDeliveryTimeStart: PropTypes.string,
-    orderWhenCommitted: PropTypes.string,
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,
     orderState: PropTypes.string,
@@ -55,7 +54,7 @@ class Order extends React.PureComponent {
 
   static defaultProps = {
     userId: '',
-    orderDateTime: '',
+    humanDeliveryDay: '',
     originalDeliveryDay: null,
     deliveryDayRescheduledReason: null,
     orderDeliveryTimeEnd: '',
@@ -111,8 +110,8 @@ class Order extends React.PureComponent {
 
   render() {
     const {
-      collapsed, orderId, userId, deliveryDayId, orderState, orderDateTime, restorable, recipes, products,
-      originalDeliveryDay, orderDeliveryTimeStart, orderDeliveryTimeEnd, deliveryDayRescheduledReason,
+      collapsed, orderId, userId, deliveryDayId, orderState, restorable, recipes, products,
+      humanDeliveryDay, originalDeliveryDay, orderDeliveryTimeStart, orderDeliveryTimeEnd, deliveryDayRescheduledReason,
       orderShouldCutoffAt, orderWhenMenuOpen, priceBreakdown, editDeliveryMode, portionsCount,
       cancellable, deliveryDay, shippingAddressId, addresses, orderDeliveryDaysFetchError, recipesPeriodStockFetchError,
     } = this.props
@@ -121,7 +120,6 @@ class Order extends React.PureComponent {
     if (orderState !== 'cancelled') {
       onClickFunction = collapsed ? this.open : this.close
     }
-    const humanDeliveryDate = humanTimeFormat(orderDateTime, 'day')
     const humanDeliveryTimeStart = humanTimeFormat(orderDeliveryTimeStart, 'hour')
     const humanDeliveryTimeEnd = humanTimeFormat(orderDeliveryTimeEnd, 'hour')
 
@@ -145,7 +143,7 @@ class Order extends React.PureComponent {
                     />
                     : null}
                   <OrderDate
-                    date={humanDeliveryDate}
+                    date={humanDeliveryDay}
                   />
                   <OrderTime
                     start={humanDeliveryTimeStart}
@@ -207,7 +205,7 @@ class Order extends React.PureComponent {
                 recipes={recipes}
                 products={products.get('elements')}
                 priceBreakdown={priceBreakdown}
-                deliveryDate={humanDeliveryDate}
+                deliveryDate={humanDeliveryDay}
                 deliveryTimeStart={humanDeliveryTimeStart}
                 deliveryTimeEnd={humanDeliveryTimeEnd}
                 editDeliveryMode={editDeliveryMode}
