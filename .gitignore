@@ -13,6 +13,7 @@ tests/e2e/selenium-debug.log
 tests/e2e/reports
 tests/e2e/screenshots
 src/coverage/
+src/eslint-results.json
 yarn-error.log
 src/_coverage
 src/vendor
