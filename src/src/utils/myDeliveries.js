@@ -45,16 +45,14 @@ export const getOrderState = (state, deliveryDate, recipeItems, phase, cancellab
   return state
 }
 
-export const getDeliveryDayRescheduledReason = (originalDeliveryDay) => {
-
-  if (originalDeliveryDay && originalDeliveryDay.size) {
-    if (originalDeliveryDay.get('unavailableReason') === 'holiday') {
+export const getDeliveryDayRescheduledReason = (unavailableReason) => {
+  if (unavailableReason) {
+    if (unavailableReason === 'holiday') {
       return 'We\'ve had to change your regular delivery day due to the bank holiday.'
     } else {
       return 'Choose recipes now.'
     }
   }
-
 }
 
 export const transformPendingOrders = (orders) => {
@@ -77,12 +75,13 @@ export const transformPendingOrders = (orders) => {
     const productItems = order.get('productItems')
     const box = order.get('box')
     const originalDeliveryDay = order.getIn(['originalDeliveryDay', 'humanDate'], null)
+    const unavailableReason = order.getIn(['originalDeliveryDay', 'unavailableReason'], '')
     const period = order.get('period')
     const shippingAddress = order.get('shippingAddress')
 
     const cancellable = phase === 'awaiting_choices' || phase === 'open'
     const orderState = getOrderState(state, deliveryDate, recipeItems, phase, cancellable)
-    const deliveryDayRescheduledReason = getDeliveryDayRescheduledReason(originalDeliveryDay)
+    const deliveryDayRescheduledReason = getDeliveryDayRescheduledReason(unavailableReason)
 
     return ordersAccumulator.set(
       id,
