@@ -22,10 +22,18 @@ export function windowLocation() {
   return window.location
 }
 
+/**
+ * Opens new tab for Chrome, new window for Safari and Firefox.
+ */
+export function windowOpen(url) {
+  window.open(url, '_blank', 'noopener noreferrer')
+}
+
 export default {
   getWindow,
   documentLocation,
   redirect,
   windowLocation,
   getDocumentElement,
+  windowOpen,
 }
