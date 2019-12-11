@@ -94,7 +94,7 @@ jobs:
           name: Compare code health
           command: |
             cd src
-            node ./scripts/compare-code-health.js ${CODE_HEALTH_API_TOKEN} develop /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
+            node ./scripts/compare-code-health.js ${CODE_HEALTH_API_TOKEN} develop tmp/artifacts/${CODE_HEALTH_FILE_NAME}
 
   publish-code-health-artifact:
     docker: *gousto_build_image_docker
