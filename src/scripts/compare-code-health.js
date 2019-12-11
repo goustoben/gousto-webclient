@@ -11,7 +11,7 @@ if (process.argv.length !== 5) {
 const [, , argToken, argBranch, argCodeHealthFile] = process.argv
 
 const getCircleCIArtifactsUrl = (username, project, token, branch) => {
-  return `https://circleci.com/api/v1.1/project/github/${username}/${project}/latest/artifacts?circle-token=${token}&branch=${branch}`
+  return `https://circleci.com/api/v1.1/project/github/${username}/${project}/latest/artifacts?circle-token=${token}&branch=${branch}&filter=successful`
 }
 
 const getCoverageBenchmark = (token, branch, filePath) => {
