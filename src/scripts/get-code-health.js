@@ -1,9 +1,10 @@
 /* eslint-disable */
 const fs = require('fs')
 const path = require('path')
+const sanitiseFilePath = require('./sanitise-file-path')
 
 const sanitiseEslintFileResult = (file) => ({ 
-  filePath: file.filePath, 
+  filePath: sanitiseFilePath(file.filePath), 
   errorCount: file.errorCount, 
   warningCount: file.warningCount
 })
