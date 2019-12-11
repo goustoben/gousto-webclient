@@ -21,7 +21,7 @@ const getCoverageBenchmark = (token, branch, filePath) => {
         return reject(error)
       }
 
-      return resolve(body.coverage_pct)
+      return resolve(body.coveragePercent)
     }
 
     const getArtifactListCallback = (error, response, body) => {
@@ -54,14 +54,14 @@ const run = async () => {
   try {
     const benchmark = await getCoverageBenchmark(argToken, argBranch, argCodeHealthFile)
 
-    const { coverage_pct } = getCodeHealth()
+    const { coveragePercent } = getCodeHealth()
 
     console.log('=== Comparing code coverage ===')
     console.log(`Benchmark coverage: ${benchmark.toFixed(2)}%`)
-    console.log(`New coverage: ${coverage_pct.toFixed(2)}%`)
+    console.log(`New coverage: ${coveragePercent.toFixed(2)}%`)
     console.log('')
 
-    const difference = coverage_pct - benchmark
+    const difference = coveragePercent - benchmark
 
     console.log(`Difference in coverage: ${difference.toFixed(2)}%`)
     console.log('')

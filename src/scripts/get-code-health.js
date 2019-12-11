@@ -13,6 +13,6 @@ module.exports = () => {
   const coverageSummary = require(coveragePath)
   
   return {
-    coverage_pct: coverageSummary.total.lines.pct
+    coveragePercent: coverageSummary.total.lines.pct
   }
 }
