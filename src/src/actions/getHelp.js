@@ -52,6 +52,14 @@ const storeIngredientIssueDescriptions = (issueReasons) => ({
   issueReasons,
 })
 
+const trackRecipeCardClick = recipeId => ({
+  type: actionTypes.TRACKING,
+  trackingData: {
+    actionType: 'GetHelpRecipeCard Clicked',
+    recipeId,
+  }
+})
+
 const validateSelectedIngredients = ({
   accessToken,
   orderId,
@@ -195,4 +203,5 @@ export {
   fetchIngredientIssues,
   trackAcceptRefund,
   trackIngredientIssues,
+  trackRecipeCardClick,
 }

@@ -9,9 +9,10 @@ import { RecipeCardsPresentation } from './RecipeCards.presentation'
 const propTypes = {
   recipes: PropTypes.arrayOf(recipePropType).isRequired,
   title: PropTypes.string.isRequired,
+  trackRecipeCardClick: PropTypes.func.isRequired,
 }
 
-const RecipeCards = ({ title, recipes }) => {
+const RecipeCards = ({ recipes, title, trackRecipeCardClick }) => {
   const buttonLeftUrl = client.getHelp.index
 
   return (
@@ -23,6 +24,7 @@ const RecipeCards = ({ title, recipes }) => {
         <Item
           key={id}
           label={recipeTitle}
+          trackClick={() => trackRecipeCardClick(id)}
           onClick={() => {
             if (url.length) {
               window.open(url, '_blank', 'noopener noreferrer')
