@@ -1,5 +1,9 @@
 import { connect } from 'react-redux'
-import { validateSelectedIngredients, storeSelectedIngredients } from 'actions/getHelp'
+import {
+  validateLatestOrder,
+  validateSelectedIngredients,
+  storeSelectedIngredients
+} from 'actions/getHelp'
 import { Ingredients } from './Ingredients.logic'
 
 const mapStateToProps = (state) => {
@@ -24,6 +28,7 @@ const mapStateToProps = (state) => {
 }
 
 const IngredientsContainer = connect(mapStateToProps, {
+  validateLatestOrder,
   storeSelectedIngredients,
   validateSelectedIngredients
 })(Ingredients)
