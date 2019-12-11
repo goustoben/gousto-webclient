@@ -6,6 +6,8 @@ import config from 'config/signup'
 import routes from 'config/routes'
 import actions from 'actions'
 import { stepByName, stepBySlug, getPromocodeQueryParam } from 'utils/signup'
+import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
+
 import css from './Signup.css'
 
 import WelcomeStep from './Steps/Welcome'
@@ -56,6 +58,9 @@ class Signup extends React.PureComponent {
       .filter(step => step && availableSteps.includes(step))
 
     const firstStep = stepByName(steps.first())
+
+    // defensive code to ensure menu load days works below for deeplinks
+    await loadMenuServiceDataIfDeepLinked(store)
 
     if (!store.getState().menuCutoffUntil) {
       await store.dispatch(actions.menuLoadDays())

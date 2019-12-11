@@ -10,6 +10,7 @@ import { loadCheckoutScript } from 'routes/Checkout/loadCheckoutScript'
 import BoxDetails from 'routes/Checkout/Components/BoxDetails'
 import { CheckoutPayment } from 'routes/Checkout/Components/CheckoutPayment'
 import { menuLoadDays, boxSummaryDeliveryDaysLoad, checkoutCreatePreviewOrder, basketStepsOrderReceive, basketProceedToCheckout, menuLoadBoxPrices, pricingRequest, redirect, replace } from 'actions'
+import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 
 import Checkout from 'routes/Checkout/Checkout'
 
@@ -29,6 +30,8 @@ jest.mock('actions', () => ({
 jest.mock('routes/Checkout/loadCheckoutScript', () => ({
   loadCheckoutScript: jest.fn()
 }))
+
+jest.mock('utils/menuService')
 
 describe('Checkout', () => {
   let wrapper
@@ -122,6 +125,7 @@ describe('Checkout', () => {
     basketProceedToCheckout.mockClear()
     boxSummaryDeliveryDaysLoad.mockClear()
     checkoutCreatePreviewOrder.mockClear()
+    loadMenuServiceDataIfDeepLinked.mockClear()
   })
 
   describe('rendering', () => {
@@ -176,6 +180,7 @@ describe('Checkout', () => {
         query: { steps: 'boxdetails,aboutyou,payment,delivery' },
         params: { stepName: '' },
       })
+      expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
       expect(dispatch).toHaveBeenCalled()
       expect(menuLoadDays).toHaveBeenCalledTimes(4)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
@@ -206,6 +211,7 @@ describe('Checkout', () => {
         params: { stepName: '' },
       })
 
+      expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
       expect(dispatch).toHaveBeenCalled()
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
@@ -243,6 +249,7 @@ describe('Checkout', () => {
         params: { stepName: '' },
       })
 
+      expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
       expect(dispatch.mock.calls.length).toBeGreaterThan(4)
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
@@ -282,6 +289,7 @@ describe('Checkout', () => {
         params: { stepName: '' },
       })
 
+      expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
       expect(dispatch.mock.calls.length).toBeGreaterThan(4)
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)
@@ -317,6 +325,7 @@ describe('Checkout', () => {
         params: { stepName: '' },
       })
 
+      expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
       expect(dispatch.mock.calls.length).toBeGreaterThan(4)
       expect(menuLoadDays).toHaveBeenCalledTimes(3)
       expect(boxSummaryDeliveryDaysLoad).toHaveBeenCalledTimes(2)

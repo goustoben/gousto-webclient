@@ -10,6 +10,7 @@ import Overlay from 'Overlay'
 import { Div } from 'Page/Elements'
 import ProgressBar from 'ProgressBar'
 import { getPreviewOrderErrorName } from 'utils/order'
+import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 
 import css from './Checkout.css'
 import { loadCheckoutScript } from './loadCheckoutScript'
@@ -81,6 +82,9 @@ class Checkout extends React.PureComponent {
     if (!query.steps && firstStep && (!currentStep || currentStep !== firstStep)) {
       store.dispatch(actions.replace(`${routesConfig.client['check-out']}/${firstStep}`))
     }
+
+    // defensive code to ensure menu load days works below for deeplinks
+    await loadMenuServiceDataIfDeepLinked(store)
 
     if (!store.getState().boxSummaryDeliveryDays || (typeof store.getState().boxSummaryDeliveryDays === 'object' && store.getState().boxSummaryDeliveryDays.size === 0)) {
       await store.dispatch(actions.menuLoadDays())
