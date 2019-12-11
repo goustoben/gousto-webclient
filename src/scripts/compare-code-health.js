@@ -14,14 +14,14 @@ const getCircleCIArtifactsUrl = (username, project, token, branch) => {
   return `https://circleci.com/api/v1.1/project/github/${username}/${project}/latest/artifacts?circle-token=${token}&branch=${branch}&filter=successful`
 }
 
-const getCoverageBenchmark = (token, branch, filePath) => {
+const getCodeHealthBenchmark = (token, branch, filePath) => {
   return new Promise((resolve, reject) => {
     const getCodeHealthFileCallback = (error, response, body) => {
       if (error) {
         return reject(error)
       }
 
-      return resolve(body.coveragePercent)
+      return resolve(body)
     }
 
     const getArtifactListCallback = (error, response, body) => {
@@ -50,32 +50,46 @@ const getCoverageBenchmark = (token, branch, filePath) => {
   })
 }
 
+const compareCoverage = (benchmark, codeHealth) => {
+  console.log('=== Comparing code coverage ===')
+  console.log(`Benchmark coverage: ${benchmark.coveragePercent.toFixed(2)}%`)
+  console.log(`New coverage: ${codeHealth.coveragePercent.toFixed(2)}%`)
+  console.log('')
+
+  const difference = codeHealth.coveragePercent - benchmark.coveragePercent
+
+  console.log(`Difference in coverage: ${difference.toFixed(2)}%`)
+  console.log('')
+
+  const pass = (difference < 0)
+
+  if (pass) {
+    console.log(`Coverage did not decrease, check PASSED`)
+  } else {
+    console.log(`Coverage decreased, check FAILED`)
+  }
+
+  console.log('=== Finished comparing code coverage ===')
+  console.log('')
+
+  return pass
+}
+
 const run = async () => {
   try {
-    const benchmark = await getCoverageBenchmark(argToken, argBranch, argCodeHealthFile)
+    const benchmarkCodeHeath = await getCodeHealthBenchmark(argToken, argBranch, argCodeHealthFile)
+    const newCodeHealth = getCodeHealth()
 
-    const { coveragePercent } = getCodeHealth()
+    const codeCoverageCheckPass = compareCoverage(benchmarkCodeHeath, newCodeHealth)
 
-    console.log('=== Comparing code coverage ===')
-    console.log(`Benchmark coverage: ${benchmark.toFixed(2)}%`)
-    console.log(`New coverage: ${coveragePercent.toFixed(2)}%`)
-    console.log('')
-
-    const difference = coveragePercent - benchmark
-
-    console.log(`Difference in coverage: ${difference.toFixed(2)}%`)
-    console.log('')
-
-    if (difference < 0) {
-      console.log(`Coverage decreased, build FAILED`)
+    if (codeCoverageCheckPass) {
+      process.exit(0)
+    } else {
       process.exit(1)
     }
-
-    console.log(`Coverage did not decrease, build PASSED`)
-    process.exit(0)
   } catch (e) {
     console.log('error: ', e)
-    console.log('exiting safely, couldn\'t compare coverage')
+    console.log('exiting safely, couldn\'t perform checks')
     process.exit(0)
   }
 }
