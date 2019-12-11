@@ -85,6 +85,31 @@ jobs:
             - project
             - .circlerc
 
+  compare-code-health:
+    docker: *gousto_build_image_docker
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Compare code health
+          command: |
+            cd src
+            node ./scripts/compare-code-health.js ${CODE_HEALTH_API_TOKEN} develop /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
+
+  publish-code-health-artifact:
+    docker: *gousto_build_image_docker
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Publish code health artifact
+          command: |
+            cd src
+            mkdir /tmp/artifacts
+            node ./scripts/print-code-health.js > /tmp/artifacts/${CODE_HEALTH_FILE_NAME}
+      - store_artifacts:
+          path: /tmp/artifacts
+
   setup-remote-image-repositories:
     docker: *gousto_build_image_docker
     steps:
@@ -242,10 +267,9 @@ workflows:
                 - /^env-.*/
                 - develop
                 - master
-      - code-analysis:
+      - compare-code-health:
           context: gousto-beta-aws-app-circleci
           requires:
-            - install-dependencies
             - test-isomorphic-jest-coverage
           filters:
             branches:
@@ -374,6 +398,17 @@ workflows:
           requires:
             - deploy-application
             - deploy-containers
+          filters:
+            branches:
+              only:
+                - develop
+      - publish-code-health-artifact:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            # must run last so its the 'latest' build step, so we can get the artifact easily
+            # therefore we 'require' the e2e steps as they are the last steps
+            - test-e2e-selenium
+            - test-e2e-selenium-mobile
           filters:
             branches:
               only:
