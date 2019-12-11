@@ -26,7 +26,7 @@ class Order extends React.PureComponent {
     userId: PropTypes.string,
     collapsed: PropTypes.bool,
     orderDateTime: PropTypes.string,
-    deliveryDayRescheduled: PropTypes.string,
+    originalDeliveryDay: PropTypes.string,
     deliveryDayRescheduledReason: PropTypes.string,
     orderDeliveryTimeEnd: PropTypes.string,
     orderDeliveryTimeStart: PropTypes.string,
@@ -56,7 +56,7 @@ class Order extends React.PureComponent {
   static defaultProps = {
     userId: '',
     orderDateTime: '',
-    deliveryDayRescheduled: null,
+    originalDeliveryDay: null,
     deliveryDayRescheduledReason: null,
     orderDeliveryTimeEnd: '',
     orderDeliveryTimeStart: '',
@@ -112,20 +112,16 @@ class Order extends React.PureComponent {
   render() {
     const {
       collapsed, orderId, userId, deliveryDayId, orderState, orderDateTime, restorable, recipes, products,
-      deliveryDayRescheduled, orderDeliveryTimeStart, orderDeliveryTimeEnd, deliveryDayRescheduledReason,
+      originalDeliveryDay, orderDeliveryTimeStart, orderDeliveryTimeEnd, deliveryDayRescheduledReason,
       orderShouldCutoffAt, orderWhenMenuOpen, priceBreakdown, editDeliveryMode, portionsCount,
       cancellable, deliveryDay, shippingAddressId, addresses, orderDeliveryDaysFetchError, recipesPeriodStockFetchError,
     } = this.props
+
     let onClickFunction = () => { }
     if (orderState !== 'cancelled') {
       onClickFunction = collapsed ? this.open : this.close
     }
-    let humanDeliveryDate = humanTimeFormat(orderDateTime, 'day')
-    let humanOldDeliveryDate = null
-    if (deliveryDayRescheduled !== null) {
-      humanOldDeliveryDate = humanDeliveryDate
-      humanDeliveryDate = humanTimeFormat(deliveryDayRescheduled, 'day')
-    }
+    const humanDeliveryDate = humanTimeFormat(orderDateTime, 'day')
     const humanDeliveryTimeStart = humanTimeFormat(orderDeliveryTimeStart, 'hour')
     const humanDeliveryTimeEnd = humanTimeFormat(orderDeliveryTimeEnd, 'hour')
 
@@ -142,9 +138,9 @@ class Order extends React.PureComponent {
             <div className={css.orderMain}>
               <div className={css.orderColLeft}>
                 <div className={css.orderSummaryContainer}>
-                  {humanOldDeliveryDate !== null ?
+                  {originalDeliveryDay !== null ?
                     <OrderRescheduledNotification
-                      oldDeliveryDay={humanOldDeliveryDate}
+                      oldDeliveryDay={originalDeliveryDay}
                       reason={deliveryDayRescheduledReason}
                     />
                     : null}

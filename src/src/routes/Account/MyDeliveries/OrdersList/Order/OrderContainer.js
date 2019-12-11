@@ -16,7 +16,7 @@ function mapStateToProps(state, ownProps) {
     deliveryDayId: order.get('coreDeliveryDayId') || order.get('deliveryDayId'),
     deliveryDay: order.get('deliveryDay'),
     orderDateTime: order.get('deliveryDay'),
-    deliveryDayRescheduled: order.get('deliveryDayRescheduled'),
+    originalDeliveryDay: order.get('originalDeliveryDay'),
     deliveryDayRescheduledReason: order.get('deliveryDayRescheduledReason'),
     orderDeliveryTimeStart: order.get('deliverySlotStart'),
     orderDeliveryTimeEnd: order.get('deliverySlotEnd'),

@@ -75,7 +75,7 @@ export const transformPendingOrders = (orders) => {
     const recipeItems = order.get('recipeItems')
     const productItems = order.get('productItems')
     const box = order.get('box')
-    const originalDeliveryDay = order.get('originalDeliveryDay')
+    const originalDeliveryDay = order.getIn(['originalDeliveryDay', 'humanDate'], null)
     const period = order.get('period')
     const shippingAddress = order.get('shippingAddress')
 
@@ -94,7 +94,7 @@ export const transformPendingOrders = (orders) => {
         shippingAddressId: shippingAddress.get('id'),
         coreDeliveryDayId: deliveryDayId,
         deliveryDay: deliveryDate,
-        deliveryDayRescheduled: originalDeliveryDay,
+        originalDeliveryDay,
         deliveryDayRescheduledReason,
         deliverySlotId,
         deliverySlotStart: deliverySlot.get('deliveryStart'),
