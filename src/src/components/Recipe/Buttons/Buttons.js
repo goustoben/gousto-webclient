@@ -200,7 +200,7 @@ class Buttons extends React.Component {
   }
 
   render() {
-    const { outOfstock, limitReached, view } = this.props
+    const { outOfstock, limitReached, view, qty } = this.props
     const disabled = outOfstock || limitReached
     let tooltipMessage = ''
     if (outOfstock) {
@@ -213,7 +213,7 @@ class Buttons extends React.Component {
       <Button
         fill={false}
         className={css.btnWrapper}
-        data-testing="menuRecipeAdd"
+        data-testing={qty < 1 ? "menuRecipeAdd" : undefined}
         width="full"
       >
         {this.getSegments(
