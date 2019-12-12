@@ -40,6 +40,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
+          isValidateOrderLoading={false}
           storeSelectedIngredients={() => {}}
           validateLatestOrder={() => {}}
           validateSelectedIngredients={() => {}}
@@ -120,6 +121,7 @@ describe('<Ingredients />', () => {
           user={user}
           recipes={recipes}
           content={content}
+          isValidateOrderLoading={false}
           storeSelectedIngredients={storeSelectedIngredients}
           validateLatestOrder={validateLatestOrderSpy}
           validateSelectedIngredients={validateSelectedIngredients}
@@ -255,6 +257,7 @@ describe('<Ingredients />', () => {
               user={user}
               recipes={recipes}
               content={content}
+              isValidateOrderLoading={false}
               storeSelectedIngredients={storeSelectedIngredients}
               validateLatestOrder={validateLatestOrderSpy}
               validateSelectedIngredients={validateSelectedIngredients}
@@ -264,6 +267,20 @@ describe('<Ingredients />', () => {
           expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
         })
 
+      })
+
+      describe('and order validation is pending', () => {
+        beforeEach(() => {
+          wrapper.setProps({ isValidateOrderLoading: true })
+        })
+
+        test('the <IngredientsPresentation /> is not rendered', () => {
+          expect(wrapper.find('IngredientsPresentation').length).toBe(0)
+        })
+
+        test('the <Loading /> is being rendered', () => {
+          expect(wrapper.find('Loading').length).toBe(1)
+        })
       })
 
       test('redirects to /contact when validation api returns false', async () => {
@@ -279,6 +296,7 @@ describe('<Ingredients />', () => {
             user={user}
             recipes={recipes}
             content={content}
+            isValidateOrderLoading={false}
             storeSelectedIngredients={storeSelectedIngredients}
             validateLatestOrder={validateLatestOrderSpy}
             validateSelectedIngredients={validateSelectedIngredients}

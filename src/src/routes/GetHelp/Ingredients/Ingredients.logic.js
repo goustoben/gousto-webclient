@@ -2,12 +2,20 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
+import Loading from 'Loading'
 import { IngredientsPresentation } from './Ingredients.presentation'
 import { RecipeList } from '../components/RecipeList'
 
 import css from './Ingredients.css'
 
 const propTypes = {
+  content: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    button1Copy: PropTypes.string.isRequired,
+    button2Copy: PropTypes.string.isRequired,
+  }).isRequired,
+  isValidateOrderLoading: PropTypes.bool.isRequired,
   order: PropTypes.shape({
     id: PropTypes.string.isRequired
   }),
@@ -27,12 +35,6 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     accessToken: PropTypes.string.isRequired,
   }),
-  content: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-    button1Copy: PropTypes.string.isRequired,
-    button2Copy: PropTypes.string.isRequired,
-  }).isRequired,
   storeSelectedIngredients: PropTypes.func.isRequired,
   validateLatestOrder: PropTypes.func.isRequired,
   validateSelectedIngredients: PropTypes.func.isRequired,
@@ -121,26 +123,33 @@ class Ingredients extends PureComponent {
   }
 
   render() {
-    const { content, recipes } = this.props
+    const { content, recipes, isValidateOrderLoading } = this.props
     const { selectedIngredients } = this.state
     const hasSelectAnyIngredient = selectedIngredients.size > 0
     const buttonLeftUrl = client.getHelp.index
     const cssButton = css.button
 
     return (
-      <IngredientsPresentation
-        content={content}
-        buttonLeftUrl={buttonLeftUrl}
-        cssButton={cssButton}
-        cannotContinue={!hasSelectAnyIngredient}
-        continueClick={this.continueClickHandler}
-      >
-        <RecipeList
-          recipes={recipes}
-          selectedIngredients={selectedIngredients}
-          onChange={this.changeHandler}
-        />
-      </IngredientsPresentation>
+      (isValidateOrderLoading)
+        ? <div className={css.loading__container}>
+            <div className={css.loading__item}>
+              <Loading className={css.loading__image} />
+            </div>
+          </div>
+        :
+        <IngredientsPresentation
+          content={content}
+          buttonLeftUrl={buttonLeftUrl}
+          cssButton={cssButton}
+          cannotContinue={!hasSelectAnyIngredient}
+          continueClick={this.continueClickHandler}
+        >
+          <RecipeList
+            recipes={recipes}
+            selectedIngredients={selectedIngredients}
+            onChange={this.changeHandler}
+          />
+        </IngredientsPresentation>
     )
   }
 }

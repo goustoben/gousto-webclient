@@ -10,15 +10,12 @@ import contentReducer from 'reducers/content'
 import { getHelp, getHelpInitialState } from 'reducers/getHelp'
 import { IngredientsContainer } from 'routes/GetHelp/Ingredients/IngredientsContainer'
 
-import { validateIngredients } from 'apis/getHelp'
+import { validateIngredients, validateOrder } from 'apis/getHelp'
 
 jest.mock('apis/getHelp')
 
 describe('<IngredientsContainer />', () => {
-  let wrapper
-  let store
-
-  let initialState = {
+  const initialState = {
     auth: authDefaultState(),
     error: Map({}),
     pending: Map({}),
@@ -51,7 +48,10 @@ describe('<IngredientsContainer />', () => {
     })),
   }
 
-  describe('experiment is turned off', () => {
+  describe('order and ingredients are passing validation', () => {
+    let wrapper
+    let store
+
     beforeAll(() => {
       store = createStore(
         combineReducers(Object.assign(
@@ -66,17 +66,19 @@ describe('<IngredientsContainer />', () => {
         compose(applyMiddleware(thunk))
       )
 
-      const validateSelectedIngredients = jest.fn().mockResolvedValue({ valid: true })
+      validateIngredients.mockResolvedValue({ valid: true })
+      validateOrder.mockResolvedValue({ valid: true })
 
       wrapper = mount(
         <IngredientsContainer
           store={store}
-          validateSelectedIngredients={validateSelectedIngredients}
         />
       )
     })
 
     test('selected ingredientId, recipeId and label are set in the store', async () => {
+      await wrapper.update()
+
       const recipe = wrapper.find('ItemExpandable').at(0)
       recipe.find('Item').simulate('click')
 
@@ -89,14 +91,29 @@ describe('<IngredientsContainer />', () => {
       expect(store.getState().getHelp.get('selectedIngredients'))
         .toEqual(fromJS({"1917-aaa": {"ingredientId": "aaa", "label": "1 beef stock cube", "recipeId": "1917"}}))
     })
+
+    test('/v2/validate-ingredients endpoint is called correctly', async () => {
+      const recipe = wrapper.find('ItemExpandable').at(1)
+      recipe.find('Item').simulate('click')
+
+      const ingredientCheckbox = wrapper.find('input[type="checkbox"]').at(0)
+      ingredientCheckbox.simulate('change')
+
+      const ContinueButton = wrapper.find('Ingredients').find('BottomBar').find('Button').at(1)
+      await ContinueButton.prop('onClick')()
+
+      expect(validateIngredients).toHaveBeenCalledWith(
+        '',
+        { customer_id: 0, order_id: 6765330, ingredient_ids: [ 'aaa' ] }
+      )
+    })
   })
 
-  describe('experiment is turned on', () => {
-    beforeAll(() => {
-      initialState = {
-        ...initialState,
-      }
+  describe('order validation is loading', () => {
+    let wrapper
+    let store
 
+    beforeAll(() => {
       store = createStore(
         combineReducers(Object.assign(
           {},
@@ -110,30 +127,18 @@ describe('<IngredientsContainer />', () => {
         compose(applyMiddleware(thunk))
       )
 
-      const validateSelectedIngredients = jest.fn().mockResolvedValue({ valid: true })
+      validateIngredients.mockResolvedValue({ valid: true })
+      validateOrder.mockImplementationOnce(() => {})
 
       wrapper = mount(
         <IngredientsContainer
           store={store}
-          validateSelectedIngredients={validateSelectedIngredients}
         />
       )
     })
 
-    test('/v2/validate-ingredients endpoint is called correctly', async () => {
-      const recipe = wrapper.find('ItemExpandable').at(0)
-      recipe.find('Item').simulate('click')
-
-      const ingredientCheckbox = wrapper.find('input[type="checkbox"]').at(0)
-      ingredientCheckbox.simulate('change')
-
-      const ContinueButton = wrapper.find('Ingredients').find('BottomBar').find('Button').at(1)
-      await ContinueButton.prop('onClick')()
-
-      expect(validateIngredients).toHaveBeenCalledWith(
-        '',
-        { customer_id: 0, order_id: 6765330, ingredient_ids: [ 'aaa' ] }
-      )
+    test('the <IngredientsPresentation /> is not rendered', () => {
+      expect(wrapper.find('IngredientsPresentation').length).toBe(0)
     })
   })
 })
