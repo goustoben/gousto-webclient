@@ -54,18 +54,24 @@ class MenuRecipes extends PureComponent {
     }
   }
 
-  renderBanner = (switchoverDate1, switchoverDate2) => {
+  renderBanner = (switchoverDate1, switchoverDate2, switchoverDate3) => {
     const { setThematic } = this.props
     const now = moment()
     const switchoverTime1 = moment(switchoverDate1)
     const switchoverTime2 = moment(switchoverDate2)
+    const switchoverTime3 = moment(switchoverDate3)
 
-    return (now.isSameOrAfter(switchoverTime2, 'hour')) ? (
-      <Banner type={'christmas2'} collectionSlug={CHRISTMAS_THEMATIC_NAME} setThematic={setThematic} />
-    ) : (now.isSameOrAfter(switchoverTime1, 'hour')) ? (
-      <Banner type={'christmas1'} />
-    ) :
-        <Banner type={'wagamama2'} collectionSlug={'gousto-x-wagamama'} setThematic={setThematic} />
+    if (now.isSameOrAfter(switchoverTime3, 'hour')) {
+      return (<Banner type={'febyouary'} collectionSlug={'febyouary'} setThematic={setThematic} />)
+    }
+    if (now.isSameOrAfter(switchoverTime2, 'hour')) {
+      return (<Banner type={'janyoury2'} collectionSlug={'janyouary'} setThematic={setThematic} />)
+    }
+    if (now.isSameOrAfter(switchoverTime1, 'hour')) {
+      return (<Banner type={'janyoury1'} />)
+    }
+
+    return (<Banner type={'christmas2'} collectionSlug={CHRISTMAS_THEMATIC_NAME} setThematic={setThematic} />)
   }
 
   render() {
@@ -84,7 +90,7 @@ class MenuRecipes extends PureComponent {
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
-        {this.renderBanner(menu.christmas.switchoverDateWeek1, menu.christmas.switchoverDateWeek2)}
+        {this.renderBanner(menu.janyouary.switchoverDateWeek1, menu.janyouary.switchoverDateWeek2, menu.janyouary.switchoverDateWeek3)}
         <SubHeader
           onToggleGridView={toggleGridView}
           orderId={orderId}
