@@ -147,7 +147,14 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
     const unavailableReason = delivery.get('unavailableReason')
     const alternateDeliveryDay = delivery.get('alternateDeliveryDay')
     const deliveryDayId = delivery.get('id')
-    const humanDeliveryDay = delivery.get('humanDate')
+    let humanDeliveryDay = delivery.get('humanDate', null)
+    const humanAlternateDeliveryDay = delivery.getIn(['alternateDeliveryDay', 'humanDate'])
+
+    let originalDeliveryDay = null
+    if (humanAlternateDeliveryDay) {
+      originalDeliveryDay = humanDeliveryDay
+      humanDeliveryDay = humanAlternateDeliveryDay
+    }
 
     const orderState = parseInt(active) === 1 ? 'scheduled' : 'cancelled'
     const deliveryDayRescheduledReason = getProjectedDeliveryDayRescheduledReason(unavailableReason, humanWhenMenuLive)
@@ -159,6 +166,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
         id,
         orderState,
         deliveryDay: date,
+        originalDeliveryDay,
         humanDeliveryDay,
         whenCutoff,
         whenMenuOpen: whenMenuLive,
