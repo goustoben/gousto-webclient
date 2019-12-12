@@ -1,5 +1,5 @@
 /* eslint-disable */
-const getCodeHealth = require('./get-code-health')
+const getCodeHealth = require('./code-health-utils/get-code-health')
 
 const codeHealth = getCodeHealth()
 
