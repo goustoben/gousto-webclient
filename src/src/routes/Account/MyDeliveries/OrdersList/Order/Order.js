@@ -25,12 +25,11 @@ class Order extends React.PureComponent {
   static propTypes = {
     userId: PropTypes.string,
     collapsed: PropTypes.bool,
-    orderDateTime: PropTypes.string,
-    deliveryDayRescheduled: PropTypes.string,
+    humanDeliveryDay: PropTypes.string,
+    originalDeliveryDay: PropTypes.string,
     deliveryDayRescheduledReason: PropTypes.string,
     orderDeliveryTimeEnd: PropTypes.string,
     orderDeliveryTimeStart: PropTypes.string,
-    orderWhenCommitted: PropTypes.string,
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,
     orderState: PropTypes.string,
@@ -55,8 +54,8 @@ class Order extends React.PureComponent {
 
   static defaultProps = {
     userId: '',
-    orderDateTime: '',
-    deliveryDayRescheduled: null,
+    humanDeliveryDay: '',
+    originalDeliveryDay: null,
     deliveryDayRescheduledReason: null,
     orderDeliveryTimeEnd: '',
     orderDeliveryTimeStart: '',
@@ -88,94 +87,104 @@ class Order extends React.PureComponent {
   }
 
   open = () => {
-    this.context.store.dispatch(actions.userOpenCloseOrderCard(this.props.orderId, false))
+    const { orderId } = this.props
+    const { store } = this.context
+
+    store.dispatch(actions.userOpenCloseOrderCard(orderId, false))
   }
 
   close = () => {
-    this.context.store.dispatch(actions.userOpenCloseOrderCard(this.props.orderId, true))
+    const { orderId } = this.props
+    const { store } = this.context
+
+    store.dispatch(actions.userOpenCloseOrderCard(orderId, true))
   }
 
   componentDidMount() {
-    this.context.store.dispatch(actions.userOpenCloseOrderCard(this.props.orderId, true))
-    this.context.store.dispatch(actions.userToggleEditDateSection(this.props.orderId, false))
+    const { orderId } = this.props
+    const { store } = this.context
+
+    store.dispatch(actions.userOpenCloseOrderCard(orderId, true))
+    store.dispatch(actions.userToggleEditDateSection(orderId, false))
   }
 
   render() {
+    const {
+      collapsed, orderId, userId, deliveryDayId, orderState, restorable, recipes, products,
+      humanDeliveryDay, originalDeliveryDay, orderDeliveryTimeStart, orderDeliveryTimeEnd, deliveryDayRescheduledReason,
+      orderShouldCutoffAt, orderWhenMenuOpen, priceBreakdown, editDeliveryMode, portionsCount,
+      cancellable, deliveryDay, shippingAddressId, addresses, orderDeliveryDaysFetchError, recipesPeriodStockFetchError,
+    } = this.props
+
     let onClickFunction = () => { }
-    if (this.props.orderState !== 'cancelled') {
-      onClickFunction = this.props.collapsed ? this.open : this.close
+    if (orderState !== 'cancelled') {
+      onClickFunction = collapsed ? this.open : this.close
     }
-    let humanDeliveryDate = humanTimeFormat(this.props.orderDateTime, 'day')
-    let humanOldDeliveryDate = null
-    if (this.props.deliveryDayRescheduled !== null) {
-      humanOldDeliveryDate = humanDeliveryDate
-      humanDeliveryDate = humanTimeFormat(this.props.deliveryDayRescheduled, 'day')
-    }
-    const humanDeliveryTimeStart = humanTimeFormat(this.props.orderDeliveryTimeStart, 'hour')
-    const humanDeliveryTimeEnd = humanTimeFormat(this.props.orderDeliveryTimeEnd, 'hour')
+    const humanDeliveryTimeStart = humanTimeFormat(orderDeliveryTimeStart, 'hour')
+    const humanDeliveryTimeEnd = humanTimeFormat(orderDeliveryTimeEnd, 'hour')
 
     return (
-      <div className={css.orderWrap} id={`order-${this.props.orderId}`}>
+      <div className={css.orderWrap} id={`order-${orderId}`}>
         <div className={css.order}>
-          <span onClick={onClickFunction} data-testing={this.props.orderState === 'recipes chosen' ? 'recipesChosenCard' : ''} className={classNames(css.orderRow, { [css.link]: this.props.orderState !== 'cancelled' })}>
+          <span onClick={onClickFunction} data-testing={orderState === 'recipes chosen' ? 'recipesChosenCard' : ''} className={classNames(css.orderRow, { [css.link]: orderState !== 'cancelled' })}>
             <div>
               <OrderCollage
-                recipes={this.props.recipes}
-                orderState={this.props.orderState}
+                recipes={recipes}
+                orderState={orderState}
               />
             </div>
             <div className={css.orderMain}>
               <div className={css.orderColLeft}>
                 <div className={css.orderSummaryContainer}>
-                  {humanOldDeliveryDate !== null ?
+                  {originalDeliveryDay !== null ?
                     <OrderRescheduledNotification
-                      oldDeliveryDay={humanOldDeliveryDate}
-                      reason={this.props.deliveryDayRescheduledReason}
+                      oldDeliveryDay={originalDeliveryDay}
+                      reason={deliveryDayRescheduledReason}
                     />
                     : null}
                   <OrderDate
-                    date={humanDeliveryDate}
+                    date={humanDeliveryDay}
                   />
                   <OrderTime
                     start={humanDeliveryTimeStart}
                     end={humanDeliveryTimeEnd}
                   />
                   <OrderState
-                    orderState={this.props.orderState}
+                    orderState={orderState}
                   />
-                  {this.props.restorable ?
+                  {restorable ?
                     <OrderRestoreButton
-                      userId={this.props.userId}
-                      orderId={this.props.orderId}
-                      deliveryDayId={this.props.deliveryDayId}
+                      userId={userId}
+                      orderId={orderId}
+                      deliveryDayId={deliveryDayId}
                     />
                     :
                     <OrderStatus
-                      orderState={this.props.orderState}
-                      whenCutoff={humanTimeFormat(this.props.orderShouldCutoffAt, 'timeLeft')}
-                      whenMenuOpen={humanTimeFormat(this.props.orderWhenMenuOpen, 'hourAndDay')}
+                      orderState={orderState}
+                      whenCutoff={humanTimeFormat(orderShouldCutoffAt, 'timeLeft')}
+                      whenMenuOpen={humanTimeFormat(orderWhenMenuOpen, 'hourAndDay')}
                     />
                   }
                   <div>
-                    {this.props.recipes.size > 0 && ['cancelled', 'scheduled'].indexOf(this.props.orderState) < 0 ?
+                    {recipes.size > 0 && ['cancelled', 'scheduled'].indexOf(orderState) < 0 ?
                       <OrderItemSummary
-                        recipes={this.props.recipes}
-                        numberOfProducts={this.props.products.get('total')}
+                        recipes={recipes}
+                        numberOfProducts={products.get('total')}
                       />
                       : null}
                   </div>
                 </div>
               </div>
 
-              {this.props.orderState !== 'cancelled' ?
+              {orderState !== 'cancelled' ?
                 <div className={css.orderColRight}>
                   <OrderPricing
-                    pricing={this.props.priceBreakdown}
-                    orderState={this.props.orderState}
+                    pricing={priceBreakdown}
+                    orderState={orderState}
                   />
                   <div className={css.bottom}>
                     <OrderCollapseExpand
-                      collapsed={this.props.collapsed}
+                      collapsed={collapsed}
                       open={this.open}
                       close={this.close}
                     />
@@ -184,31 +193,31 @@ class Order extends React.PureComponent {
                 : null}
             </div>
           </span>
-          {!this.props.collapsed ?
+          {!collapsed ?
             <div className={classNames(css.orderRow, css.orderDetail)}>
               <OrderDetail
-                open={!this.props.collapsed}
-                orderId={this.props.orderId}
-                deliveryDayId={this.props.deliveryDayId}
-                orderState={this.props.orderState}
+                open={!collapsed}
+                orderId={orderId}
+                deliveryDayId={deliveryDayId}
+                orderState={orderState}
                 close={this.close}
-                paymentDate={humanTimeFormat(this.props.orderShouldCutoffAt, 'dayAndMonth')}
-                recipes={this.props.recipes}
-                products={this.props.products.get('elements')}
-                priceBreakdown={this.props.priceBreakdown}
-                deliveryDate={humanDeliveryDate}
+                paymentDate={humanTimeFormat(orderShouldCutoffAt, 'dayAndMonth')}
+                recipes={recipes}
+                products={products.get('elements')}
+                priceBreakdown={priceBreakdown}
+                deliveryDate={humanDeliveryDay}
                 deliveryTimeStart={humanDeliveryTimeStart}
                 deliveryTimeEnd={humanDeliveryTimeEnd}
-                editDeliveryMode={this.props.editDeliveryMode}
-                whenCutoff={humanTimeFormat(this.props.orderShouldCutoffAt, 'dayAndMonth')}
-                cancellable={this.props.cancellable}
-                restorable={this.props.restorable}
-                shippingAddressId={this.props.shippingAddressId}
-                addresses={this.props.addresses}
-                orderDeliveryDaysFetchError={this.props.orderDeliveryDaysFetchError}
-                recipesPeriodStockFetchError={this.props.recipesPeriodStockFetchError}
-                deliveryDay={this.props.deliveryDay}
-                portionsCount={this.props.portionsCount}
+                editDeliveryMode={editDeliveryMode}
+                whenCutoff={humanTimeFormat(orderShouldCutoffAt, 'dayAndMonth')}
+                cancellable={cancellable}
+                restorable={restorable}
+                shippingAddressId={shippingAddressId}
+                addresses={addresses}
+                orderDeliveryDaysFetchError={orderDeliveryDaysFetchError}
+                recipesPeriodStockFetchError={recipesPeriodStockFetchError}
+                deliveryDay={deliveryDay}
+                portionsCount={portionsCount}
               />
             </div>
             :

@@ -45,16 +45,14 @@ export const getOrderState = (state, deliveryDate, recipeItems, phase, cancellab
   return state
 }
 
-export const getDeliveryDayRescheduledReason = (originalDeliveryDay) => {
-
-  if (originalDeliveryDay && originalDeliveryDay.size) {
-    if (originalDeliveryDay.get('unavailableReason') === 'holiday') {
+export const getDeliveryDayRescheduledReason = (unavailableReason) => {
+  if (unavailableReason) {
+    if (unavailableReason === 'holiday') {
       return 'We\'ve had to change your regular delivery day due to the bank holiday.'
     } else {
       return 'Choose recipes now.'
     }
   }
-
 }
 
 export const transformPendingOrders = (orders) => {
@@ -69,19 +67,21 @@ export const transformPendingOrders = (orders) => {
     const isCurrentPeriod = order.get('isCurrentPeriod')
     const deliveryDayId = order.get('deliveryDayId')
     const deliveryDate = order.get('deliveryDate')
+    const humanDeliveryDay = order.get('humanDeliveryDate')
     const deliverySlotId = order.get('deliverySlotId')
     const deliverySlot = order.get('deliverySlot')
     const prices = order.get('prices')
     const recipeItems = order.get('recipeItems')
     const productItems = order.get('productItems')
     const box = order.get('box')
-    const originalDeliveryDay = order.get('originalDeliveryDay')
+    const originalDeliveryDay = order.getIn(['originalDeliveryDay', 'humanDate'], null)
+    const unavailableReason = order.getIn(['originalDeliveryDay', 'unavailableReason'], '')
     const period = order.get('period')
     const shippingAddress = order.get('shippingAddress')
 
     const cancellable = phase === 'awaiting_choices' || phase === 'open'
     const orderState = getOrderState(state, deliveryDate, recipeItems, phase, cancellable)
-    const deliveryDayRescheduledReason = getDeliveryDayRescheduledReason(originalDeliveryDay)
+    const deliveryDayRescheduledReason = getDeliveryDayRescheduledReason(unavailableReason)
 
     return ordersAccumulator.set(
       id,
@@ -94,7 +94,8 @@ export const transformPendingOrders = (orders) => {
         shippingAddressId: shippingAddress.get('id'),
         coreDeliveryDayId: deliveryDayId,
         deliveryDay: deliveryDate,
-        deliveryDayRescheduled: originalDeliveryDay,
+        humanDeliveryDay,
+        originalDeliveryDay,
         deliveryDayRescheduledReason,
         deliverySlotId,
         deliverySlotStart: deliverySlot.get('deliveryStart'),
@@ -146,6 +147,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
     const unavailableReason = delivery.get('unavailableReason')
     const alternateDeliveryDay = delivery.get('alternateDeliveryDay')
     const deliveryDayId = delivery.get('id')
+    const humanDeliveryDay = delivery.get('humanDate')
 
     const orderState = parseInt(active) === 1 ? 'scheduled' : 'cancelled'
     const deliveryDayRescheduledReason = getProjectedDeliveryDayRescheduledReason(unavailableReason, humanWhenMenuLive)
@@ -157,6 +159,7 @@ export const transformProjectedDeliveries = (projectedDeliveries) => {
         id,
         orderState,
         deliveryDay: date,
+        humanDeliveryDay,
         whenCutoff,
         whenMenuOpen: whenMenuLive,
         deliverySlotStart: deliverySlot.get('deliveryStart'),

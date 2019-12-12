@@ -140,6 +140,7 @@ describe('myDeliveries utils', () => {
         whenCutoff: '2019-10-29T11:59:59+00:00'
       },
       deliveryDayId: '1903',
+      humanDeliveryDate: 'Saturday 26th October',
       deliverySlotId: '6',
       deliveryDate: '2019-10-26 00:00:00',
       deliverySlot: {
@@ -151,6 +152,7 @@ describe('myDeliveries utils', () => {
       isCurrentPeriod: true,
       originalDeliveryDay: {
         date: '2019-10-15 12:00:00',
+        humanDate: 'Tuesday 15th October',
         unavailableReason: 'holiday'
       },
       shippingAddress: {
@@ -260,22 +262,20 @@ describe('myDeliveries utils', () => {
   })
 
   describe('getDeliveryDayRescheduledReason', () => {
-    test('should return rescheduled reason message if delivery day has been moved', () => {
-      const originalDeliveryDay = Immutable.Map({
-        unavailableReason: 'holiday'
-      })
+    let unavailableReason
 
-      const result = getDeliveryDayRescheduledReason(originalDeliveryDay)
+    test('should return rescheduled reason message if delivery day has been moved', () => {
+      unavailableReason = 'holiday'
+
+      const result = getDeliveryDayRescheduledReason(unavailableReason)
 
       expect(result).toEqual('We\'ve had to change your regular delivery day due to the bank holiday.')
     })
 
     test('should return choose recipes message if delivery day has NOT been moved', () => {
-      const originalDeliveryDay = Immutable.Map({
-        unavailableReason: 'other reason'
-      })
+      unavailableReason = 'other reason'
 
-      const result = getDeliveryDayRescheduledReason(originalDeliveryDay)
+      const result = getDeliveryDayRescheduledReason(unavailableReason)
 
       expect(result).toEqual('Choose recipes now.')
     })
@@ -308,10 +308,8 @@ describe('myDeliveries utils', () => {
           shippingAddressId: '34820671',
           coreDeliveryDayId: '1903',
           deliveryDay: '2019-10-26 00:00:00',
-          deliveryDayRescheduled: Immutable.Map({
-            date: '2019-10-15 12:00:00',
-            unavailableReason: 'holiday'
-          }),
+          humanDeliveryDay: 'Saturday 26th October',
+          originalDeliveryDay: 'Tuesday 15th October',
           deliveryDayRescheduledReason: "We've had to change your regular delivery day due to the bank holiday.",
           deliverySlotId: '6',
           deliverySlotStart: '08:00:00',
@@ -466,6 +464,7 @@ describe('myDeliveries utils', () => {
             restorable: false,
             cancellable: true,
             deliveryDayId: '1917',
+            humanDeliveryDay: 'Saturday 9th November',
           }),
           1924: Immutable.fromJS({
             id: '1924',
@@ -498,6 +497,7 @@ describe('myDeliveries utils', () => {
             restorable: false,
             cancellable: true,
             deliveryDayId: '1924',
+            humanDeliveryDay: 'Saturday 16th November',
           })
         })
       )

@@ -1,10 +1,12 @@
-import { connect } from 'react-redux'
 import Immutable from 'immutable'
+import { connect } from 'react-redux'
+
 import actionTypes from 'actions/actionTypes'
+
 import Order from './Order'
 
 function mapStateToProps(state, ownProps) {
-  const order = ownProps.order
+  const { order } = ownProps
   const orderId = order.get('id')
   const products = order.get('products', Immutable.Map({}))
 
@@ -13,8 +15,8 @@ function mapStateToProps(state, ownProps) {
     orderId,
     deliveryDayId: order.get('coreDeliveryDayId') || order.get('deliveryDayId'),
     deliveryDay: order.get('deliveryDay'),
-    orderDateTime: order.get('deliveryDay'),
-    deliveryDayRescheduled: order.get('deliveryDayRescheduled'),
+    humanDeliveryDay: order.get('humanDeliveryDay'),
+    originalDeliveryDay: order.get('originalDeliveryDay'),
     deliveryDayRescheduledReason: order.get('deliveryDayRescheduledReason'),
     orderDeliveryTimeStart: order.get('deliverySlotStart'),
     orderDeliveryTimeEnd: order.get('deliverySlotEnd'),
