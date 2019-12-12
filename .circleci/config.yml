@@ -82,8 +82,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project
-            - .circlerc
+            - project/src/coverage/
 
   compare-code-health:
     docker: *gousto_build_image_docker
@@ -183,8 +182,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project
-            - .circlerc
+            - project/src/eslint-results.json
 
   code-analysis:
     docker: *gousto_build_image
