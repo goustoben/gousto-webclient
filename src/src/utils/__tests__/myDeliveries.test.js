@@ -405,9 +405,20 @@ describe('myDeliveries utils', () => {
         dayOfWeek: 'Saturday',
         whenCutoff: '2019-11-13 11:59:59',
         deliverySlotId: '6',
-        alternateDeliveryDay: null,
         date: '2019-11-16 00:00:00',
         state: 'scheduled',
+        alternateDeliveryDay: {
+          alternateDeliveryDay: null,
+          date: '2019-11-17 00:00:00',
+          dayOfWeek: 'Saturday',
+          deliverySlotId: '13',
+          deliveryWeekId: '305',
+          humanDate: 'Sunday 17th November',
+          id: '1928',
+          isCutoff: false,
+          unavailable_reason: '',
+          whenCutoff: '2019-11-14 11:59:59',
+        },
         deliverySlot: {
           default: true,
           deliveryEnd: '19:00:00',
@@ -465,6 +476,7 @@ describe('myDeliveries utils', () => {
             cancellable: true,
             deliveryDayId: '1917',
             humanDeliveryDay: 'Saturday 9th November',
+            originalDeliveryDay: null,
           }),
           1924: Immutable.fromJS({
             id: '1924',
@@ -497,7 +509,8 @@ describe('myDeliveries utils', () => {
             restorable: false,
             cancellable: true,
             deliveryDayId: '1924',
-            humanDeliveryDay: 'Saturday 16th November',
+            humanDeliveryDay: 'Sunday 17th November',
+            originalDeliveryDay: 'Saturday 16th November',
           })
         })
       )
