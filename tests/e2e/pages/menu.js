@@ -32,6 +32,20 @@ module.exports = {
                 continueButton.click()
               })
           },
+          clickFoodBrandBanner: function () {
+            this
+              .api.execute(function () {
+                const foodBrandBanner = document.querySelector('[data-testing="foodBrandBanner"]')
+                foodBrandBanner.click()
+              })
+          },
+          clickBackToAllRecipesButton: function () {
+            this
+              .api.execute(function () {
+                const backToAllRecipesButton = document.querySelector('[data-testing="backToAllRecipes"]')
+                backToAllRecipesButton.click()
+              })
+          },
           clickDateOfExistingOrder: function () {
             this
               .api.execute(function () {
@@ -69,9 +83,6 @@ module.exports = {
         recipe2Add: {
           selector: '*[data-testing="menuRecipeAdd"]',
         },
-        iconOpenBoxSummary: {
-          selector: '*[data-testing="boxSummaryIcon"]'
-        }
       },
 
       commands: [{
@@ -82,26 +93,10 @@ module.exports = {
 
           return this
         },
-        addRecipe: function (numRecipes) {
-          this
-            .waitForElementVisible('@featured')
-            .waitForElementVisible('@recipe1Add')
-            .click('@recipe1Add')
-
-          return this
-        },
-        addTwoRecipe: function () {
-          this.api.execute(function () {
-            const getBoxSummary = () => document.querySelectorAll("*[data-testing='boxSummaryIcon']")
-            let boxSummaryButton = getBoxSummary()
-
-            boxSummaryButton[0].click()
-            boxSummaryButton[0].click()
-            const getButtons = () => document.querySelectorAll("*[data-testing='menuRecipeAdd']")
-            let addRecipeButtons = getButtons()
-
-            addRecipeButtons[0].click()
-            addRecipeButtons[1].click()
+        addRecipe: function () {
+          this.api.execute(function() {
+            const firstAddRecipe = document.querySelector("*[data-testing='menuRecipesList'] *[data-testing='menuRecipeAdd']")
+            firstAddRecipe.click()
           })
         },
         addRecipes: function () {

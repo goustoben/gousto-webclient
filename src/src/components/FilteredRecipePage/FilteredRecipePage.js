@@ -44,7 +44,7 @@ class FilteredRecipePage extends PureComponent {
     return (
       <section className={css.filteredRecipePageContainer}>
         <div id="filteredRecipePageTitleContainer" className={css.filteredRecipePageTitleContainer}>
-          <span className={css.backButton} role="button" tabIndex={0} onClick={removeRecipeFilter} onKeyPress={removeRecipeFilter}>
+          <span className={css.backButton} role="button" tabIndex={0} onClick={removeRecipeFilter} onKeyPress={removeRecipeFilter} data-testing='backToAllRecipes' >
             <span className={css.leftArrow}/><span className={css.underline}>Back <span className={css.hideOnMobile}>to All Recipes</span></span>
           </span>
           <h1>{name}</h1>

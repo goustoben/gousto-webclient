@@ -6,6 +6,7 @@ exports[`<RangeBadge /> snapshots should render when given a preconfigured range
 >
   <div
     className="ribbonText"
+    data-testing="foodBrandBanner"
     onClick={null}
     onKeyPress={null}
     role="button"
