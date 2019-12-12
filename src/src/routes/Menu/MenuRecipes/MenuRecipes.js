@@ -61,14 +61,17 @@ class MenuRecipes extends PureComponent {
     const switchoverTime2 = moment(switchoverDate2)
     const switchoverTime3 = moment(switchoverDate3)
 
-    return (now.isSameOrAfter(switchoverTime3, 'hour')) ? (
-      <Banner type={'febyouary'} collectionSlug={'febyouary'} setThematic={setThematic} />
-    ) : (now.isSameOrAfter(switchoverTime2, 'hour')) ? (
-      <Banner type={'janyoury2'} collectionSlug={'janyouary'} setThematic={setThematic} />
-    ) : (now.isSameOrAfter(switchoverTime1, 'hour')) ? (
-      <Banner type={'janyoury1'} />
-    ) :
-          <Banner type={'christmas2'} collectionSlug={CHRISTMAS_THEMATIC_NAME} setThematic={setThematic} />
+    if (now.isSameOrAfter(switchoverTime3, 'hour')) {
+      return (<Banner type={'febyouary'} collectionSlug={'febyouary'} setThematic={setThematic} />)
+    }
+    if (now.isSameOrAfter(switchoverTime2, 'hour')) {
+      return (<Banner type={'janyoury2'} collectionSlug={'janyouary'} setThematic={setThematic} />)
+    }
+    if (now.isSameOrAfter(switchoverTime1, 'hour')) {
+      return (<Banner type={'janyoury1'} />)
+    }
+
+    return (<Banner type={'christmas2'} collectionSlug={CHRISTMAS_THEMATIC_NAME} setThematic={setThematic} />)
   }
 
   render() {
