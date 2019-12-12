@@ -14,7 +14,7 @@ const shouldUseNewMenuService = (ctx) => {
   }
 
   const result = getRandomInt(0, 100)
-  if (result < 0) {
+  if (result < 10) {
 
     return true
   }
