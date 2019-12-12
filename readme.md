@@ -28,7 +28,7 @@ Why is this important? Imagine two developer working on the same file, one perso
 
 ### Terminal 1: Building
 
-Make sure to have the devbox-platform running with all dependencies installed before starting this step. 
+Make sure to have the devbox-platform running with all dependencies installed before starting this step.
 
 You need to build the application and run the watcher before running it into the devbox
 ```shell
@@ -124,12 +124,6 @@ Notes:
 You may need to get the latest version of watchman to run Jest's watch mode.
 ```shell
 brew install watchman
-```
-
-## Mocha
-```shell
-cd ~/code/goustowebclient/src
-yarn run test:mocha
 ```
 
 ### Running End-To-End tests

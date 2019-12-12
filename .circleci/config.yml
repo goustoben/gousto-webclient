@@ -48,15 +48,6 @@ jobs:
             - project
             - .circlerc
 
-  test-isomorphic-mocha:
-    docker: *gousto_build_image
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: Run isomoprhic mocha tests
-          command: cd src && yarn run test:mocha
-
   test-isomorphic-jest:
     docker: *gousto_build_image
     steps:
@@ -240,16 +231,6 @@ workflows:
                 - /^env-.*/
                 - develop
                 - master
-      - test-isomorphic-mocha:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
-          filters:
-            branches:
-              ignore:
-                - /^env-.*/
-                - develop
-                - master
       - test-isomorphic-jest-coverage:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -286,15 +267,6 @@ workflows:
     jobs:
       - install-dependencies:
           context: gousto-beta-aws-app-circleci
-          filters:
-            branches:
-              only:
-                - /^env-.*/
-                - develop
-      - test-isomorphic-mocha:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - install-dependencies
           filters:
             branches:
               only:
@@ -349,7 +321,6 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - test-isomorphic-jest-coverage
-            - test-isomorphic-mocha
             - eslint
           filters:
             branches:
@@ -359,7 +330,6 @@ workflows:
       - build-application:
           context: gousto-beta-aws-app-circleci
           requires:
-            - test-isomorphic-mocha
             - test-isomorphic-jest-coverage
             - eslint
           filters:
@@ -427,14 +397,6 @@ workflows:
             branches:
               only:
                 - master
-      - test-isomorphic-mocha:
-          context: gousto-prod-aws-app-circleci
-          requires:
-            - install-dependencies
-          filters:
-            branches:
-              only:
-                - master
       - test-isomorphic-jest:
           context: gousto-prod-aws-app-circleci
           requires:
@@ -470,7 +432,6 @@ workflows:
       - build-application:
           context: gousto-prod-aws-app-circleci
           requires:
-            - test-isomorphic-mocha
             - test-isomorphic-jest
           filters:
             branches:
