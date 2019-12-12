@@ -179,10 +179,7 @@ jobs:
           at: ~/
       - run:
           name: Run eslint
-          command: |
-            cd src
-            yarn --silent eslint -f json > eslint-results.json
-            node ./scripts/display-eslint-results.js
+          command: cd src && scripts/run-eslint-ci.sh
       - persist_to_workspace:
           root: ~/
           paths:
@@ -279,6 +276,7 @@ workflows:
           context: gousto-beta-aws-app-circleci
           requires:
             - test-isomorphic-jest-coverage
+            - eslint
           filters:
             branches:
               ignore:

@@ -55,8 +55,8 @@ const compareEslintResults = (benchmark, codeHealth) => {
     if (result.warningCount > benchmarkResult.warningCount) {
       increasedWarnings.push({
         filePath: sanitisedPath,
-        benchmarkWarnings: benchmarkResult.warningCount,
-        newWarnings: result.warningCount
+        benchmarkWarningCount: benchmarkResult.warningCount,
+        newWarningCount: result.warningCount
       })
     }
   })
@@ -72,7 +72,7 @@ const compareEslintResults = (benchmark, codeHealth) => {
 
     increasedWarnings.forEach(warning => {
       console.log(`File: ${warning.filePath}`)
-      console.log(`- Warnings increased from ${warning.benchmarkWarnings} to ${warning.newWarnings}`)
+      console.log(`- Warnings increased from ${warning.benchmarkWarningCount} to ${warning.newWarningCount}`)
 
       console.log('')
     })
