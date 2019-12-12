@@ -1,6 +1,7 @@
 /* eslint-disable */
-const request = require('request')
-const getCodeHealth = require('./get-code-health')
+const getCodeHealthBenchmark = require('./code-health-utils/get-benchmark-file')
+const getCodeHealth = require('./code-health-utils/get-code-health')
+const sanitiseFilePath = require('./code-health-utils/sanitise-file-path')
 
 if (process.argv.length !== 5) {
   console.log('error! missing arguments')
@@ -10,72 +11,97 @@ if (process.argv.length !== 5) {
 
 const [, , argToken, argBranch, argCodeHealthFile] = process.argv
 
-const getCircleCIArtifactsUrl = (username, project, token, branch) => {
-  return `https://circleci.com/api/v1.1/project/github/${username}/${project}/latest/artifacts?circle-token=${token}&branch=${branch}&filter=successful`
+const compareCoverage = (benchmark, codeHealth) => {
+  console.log('=== Comparing code coverage ===')
+  console.log(`Benchmark coverage: ${benchmark.coveragePercent.toFixed(3)}%`)
+  console.log(`New coverage: ${codeHealth.coveragePercent.toFixed(3)}%`)
+  console.log('')
+
+  const difference = codeHealth.coveragePercent - benchmark.coveragePercent
+
+  console.log(`Difference in coverage: ${difference.toFixed(3)}%`)
+  console.log('')
+
+  const pass = (difference >= 0)
+
+  if (pass) {
+    console.log(`Coverage did not decrease, check PASSED`)
+  } else {
+    console.log(`Coverage decreased, check FAILED`)
+  }
+
+  console.log('=== Finished comparing code coverage ===')
+  console.log('')
+
+  return pass
 }
 
-const getCoverageBenchmark = (token, branch, filePath) => {
-  return new Promise((resolve, reject) => {
-    const getCodeHealthFileCallback = (error, response, body) => {
-      if (error) {
-        return reject(error)
-      }
+const compareEslintResults = (benchmark, codeHealth) => {
+  if (Array.isArray(benchmark.lintResults) === false) {
+    console.log('No eslint results in benchmark, check PASSED')
+    return true
+  }
 
-      return resolve(body.coveragePercent)
+  const increasedWarnings = []
+
+  codeHealth.lintResults.forEach(result => {
+    const sanitisedPath = sanitiseFilePath(result.filePath)
+    const benchmarkResult = benchmark.lintResults.find(b => b.filePath === sanitisedPath)
+
+    if (!benchmarkResult) {
+      return
     }
 
-    const getArtifactListCallback = (error, response, body) => {
-      if (error) {
-        return reject(error)
-      }
-
-      const codeHealthFile = body.find(file => file.path === filePath)
-
-      if (!codeHealthFile) {
-        return reject(`No file '${filePath}' found`)
-      }
-
-      request(
-        `${codeHealthFile.url}?circle-token=${token}`,
-        { json: true },
-        getCodeHealthFileCallback
-      )
+    if (result.warningCount > benchmarkResult.warningCount) {
+      increasedWarnings.push({
+        filePath: sanitisedPath,
+        benchmarkWarningCount: benchmarkResult.warningCount,
+        newWarningCount: result.warningCount
+      })
     }
-
-    request(
-      getCircleCIArtifactsUrl('Gousto', 'gousto-webclient', token, branch),
-      { json: true },
-      getArtifactListCallback
-    )
   })
+
+  console.log('=== Comparing eslint warnings ===')
+
+  const pass = (increasedWarnings.length === 0)
+
+  if (pass) {
+    console.log('Warning count did not increase, check PASSED')
+  } else {
+    console.log('')
+
+    increasedWarnings.forEach(warning => {
+      console.log(`File: ${warning.filePath}`)
+      console.log(`- Warnings increased from ${warning.benchmarkWarningCount} to ${warning.newWarningCount}`)
+
+      console.log('')
+    })
+
+    console.log('Warning count increased, check FAILED')
+  }
+
+  console.log('')
+  console.log('=== Finished comparing eslint warnings ===')
+
+  return pass
 }
 
 const run = async () => {
   try {
-    const benchmark = await getCoverageBenchmark(argToken, argBranch, argCodeHealthFile)
+    const benchmarkCodeHeath = await getCodeHealthBenchmark(argToken, argBranch, argCodeHealthFile)
+    const newCodeHealth = getCodeHealth()
 
-    const { coveragePercent } = getCodeHealth()
+    const codeCoverageCheckPass = compareCoverage(benchmarkCodeHeath, newCodeHealth)
+    const eslintCheckPass = compareEslintResults(benchmarkCodeHeath, newCodeHealth)
 
-    console.log('=== Comparing code coverage ===')
-    console.log(`Benchmark coverage: ${benchmark.toFixed(2)}%`)
-    console.log(`New coverage: ${coveragePercent.toFixed(2)}%`)
-    console.log('')
-
-    const difference = coveragePercent - benchmark
-
-    console.log(`Difference in coverage: ${difference.toFixed(2)}%`)
-    console.log('')
-
-    if (difference < 0) {
-      console.log(`Coverage decreased, build FAILED`)
+    if (codeCoverageCheckPass && eslintCheckPass) {
+      process.exit(0)
+    } else {
       process.exit(1)
     }
-
-    console.log(`Coverage did not decrease, build PASSED`)
-    process.exit(0)
   } catch (e) {
     console.log('error: ', e)
-    console.log('exiting safely, couldn\'t compare coverage')
+    console.log('exiting safely, couldn\'t perform checks')
     process.exit(0)
   }
 }
