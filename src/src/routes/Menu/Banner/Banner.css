@@ -19,29 +19,42 @@
 	background-size: cover;
 }
 
-.wagamama2 {
+.febyouary {
 	composes: container;
-	background-image: url('media/images/menu/wagamama_banner_mobile_button.jpg');
+	background-image: url('media/images/menu/FebYouary_mobile_click.jpg');
 
 	@media ScreenXXSMin {
-		background-image: url('media/images/menu/wagamama_banner_tablet_button.jpg');
+		background-image: url('media/images/menu/FebYouary_tablet_click.jpg');
 	}
 
 	@media ScreenMLMin {
-		background-image: url('media/images/menu/wagamama_banner_desktop_button.jpg');
+		background-image: url('media/images/menu/FebYouary_desktop_click.jpg');
 	}
 }
 
-.christmas1 {
+.janyoury2 {
 	composes: container;
-	background-image: url('media/images/menu/christmas_banner_mobile_no_click.jpg');
+	background-image: url('media/images/menu/JanYouary_mobile_click.jpg');
 
 	@media ScreenXXSMin {
-		background-image: url('media/images/menu/christmas_banner_tablet_no_click.jpg');
+		background-image: url('media/images/menu/JanYouary_tablet_click.jpg');
 	}
 
 	@media ScreenMLMin {
-		background-image: url('media/images/menu/christmas_banner_desktop_no_click.jpg');
+		background-image: url('media/images/menu/JanYouary_desktop_click.jpg');
+	}
+}
+
+.janyoury1 {
+	composes: container;
+	background-image: url('media/images/menu/JanYouary_mobile_no_click.jpg');
+
+	@media ScreenXXSMin {
+		background-image: url('media/images/menu/JanYouary_tablet_no_click.jpg');
+	}
+
+	@media ScreenMLMin {
+		background-image: url('media/images/menu/JanYouary_desktop_no_click.jpg');
 	}
 }
 
