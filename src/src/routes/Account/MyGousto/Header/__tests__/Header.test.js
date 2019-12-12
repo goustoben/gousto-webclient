@@ -3,6 +3,7 @@ import { mount } from 'enzyme'
 import Immutable from 'immutable'
 import moment from 'moment'
 import config from 'config'
+import * as windowUtils from 'utils/window'
 import { Header } from '../Header.logic'
 
 const deliveryDateFormat = "YYYY-MM-DD HH:mm:ss"
@@ -160,7 +161,7 @@ describe('MyGousto - Header', () => {
 
       describe('and the tracking button is clicked', () => {
         beforeEach(() => {
-          global.open = jest.fn()
+          windowUtils.windowOpen = jest.fn()
           wrapper.find('CardWithLink').find('SegmentPresentation').last().simulate('click')
         })
 
@@ -169,7 +170,7 @@ describe('MyGousto - Header', () => {
         })
 
         test('opens the tracking page in a new tab', () => {
-          expect(global.open).toHaveBeenCalledWith(TRACKING_URL, 'rel="noopener noreferrer"')
+          expect(windowUtils.windowOpen).toHaveBeenCalledWith(TRACKING_URL)
         })
 
         test('dispatches the tracking action', () => {
