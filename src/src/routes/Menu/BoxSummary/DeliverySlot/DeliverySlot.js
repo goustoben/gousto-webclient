@@ -7,6 +7,7 @@ import Calendar from 'Form/Calendar'
 import DropdownInput from 'Form/Dropdown'
 import Svg from 'Svg'
 import { reminder } from 'config/freeDelivery'
+import { formatDeliveryTime } from 'utils/deliverySlot'
 import SlotPicker from './SlotPicker'
 import { CancelButton } from '../CancelButton'
 import css from './DeliverySlot.css'
@@ -62,7 +63,7 @@ class DeliverySlot extends React.Component {
     const slots = {}
     const {
       disableOnDelivery, availableDaysOnly, disabledSlots,
-      isAuthenticated, isSubscriptionActive
+      isAuthenticated, isSubscriptionActive, tempDate
     } = this.props
     let hasOrders = false
     let hasFullOrders = false
@@ -75,7 +76,7 @@ class DeliverySlot extends React.Component {
         const isSlotDisabled = disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')) ? true : false
 
         return {
-          label: this.formatTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime')),
+          label: formatDeliveryTime(slot.get('deliveryStartTime'), slot.get('deliveryEndTime'), tempDate),
           subLabel: (slot.get('deliveryPrice') === '0.00') ? 'Free' : `£${slot.get('deliveryPrice')}`,
           value: slot.get('id'),
           coreSlotId: slot.get('coreSlotId'),
@@ -159,10 +160,6 @@ class DeliverySlot extends React.Component {
     const { setTempSlotId } = this.props
     setTempSlotId(slotId)
   }
-
-  formatTime = (deliveryStartTime, deliveryEndTime) => (
-    `${moment(`${this.props.tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${this.props.tempDate} ${deliveryEndTime}`).format('ha')} `
-  )
 
   displayDatePicker = (slots, slotId, deliveryDays) => {
     const { disableNewDatePicker, tempDate, tempSlotId, tempOrderId } = this.props

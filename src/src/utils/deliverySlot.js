@@ -24,6 +24,10 @@ export const getDateOffset = date => {
   return adjustedOffset
 }
 
+export const formatDeliveryTime = (deliveryStartTime, deliveryEndTime, tempDate) => (
+  `${moment(`${tempDate} ${deliveryStartTime}`).format('ha')} - ${moment(`${tempDate} ${deliveryEndTime}`).format('ha')} `
+)
+
 /**
  * Temp methods only for NDD painted door
  */
