@@ -109,10 +109,6 @@ module.exports = {
     copy: 'Company pension',
   },
   {
-    title: 'child',
-    copy: 'Childcare vouchers',
-  },
-  {
     title: 'suitcase',
     copy: 'Buy up to 5 days extra\nholiday',
   },
@@ -127,10 +123,6 @@ module.exports = {
   {
     title: 'bicycle',
     copy: 'Cycle to work scheme',
-  },
-  {
-    title: 'star',
-    copy: 'Free Gousto jacket on\nwarehouse visit',
   },
   {
     title: 'bolt',

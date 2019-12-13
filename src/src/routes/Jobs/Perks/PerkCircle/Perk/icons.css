@@ -62,12 +62,12 @@
 	composes: fa-basic-class fa-glass from 'styles/vendor/font-awesome-module.css';
 }
 
-.child {
+.graduation {
 	composes: fontAwesomeBase;
-	composes: fa-basic-class fa-child from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-graduation-cap from 'styles/vendor/font-awesome-module.css';
 }
 
-.star {
+.calendarPlus {
 	composes: fontAwesomeBase;
-	composes: fa-basic-class fa-star from 'styles/vendor/font-awesome-module.css';
+	composes: fa-basic-class fa-calendar-plus-o from 'styles/vendor/font-awesome-module.css';
 }
