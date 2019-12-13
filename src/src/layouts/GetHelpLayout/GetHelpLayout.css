@@ -36,6 +36,8 @@
 }
 
 .bodyContent {
+	width: 100%;
+
 	@media ScreenXXSMin {
 		align-self: center;
 		width: 400px;
