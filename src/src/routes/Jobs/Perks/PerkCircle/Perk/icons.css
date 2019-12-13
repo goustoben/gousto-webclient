@@ -32,11 +32,6 @@
 	composes: fa-basic-class fa-users from 'styles/vendor/font-awesome-module.css';
 }
 
-.trophy {
-	composes: fontAwesomeBase;
-	composes: fa-basic-class fa-trophy from 'styles/vendor/font-awesome-module.css';
-}
-
 .suitcase {
 	composes: fontAwesomeBase;
 	composes: fa-basic-class fa-suitcase from 'styles/vendor/font-awesome-module.css';
@@ -60,6 +55,16 @@
 .glass {
 	composes: fontAwesomeBase;
 	composes: fa-basic-class fa-glass from 'styles/vendor/font-awesome-module.css';
+}
+
+.graduation {
+	composes: fontAwesomeBase;
+	composes: fa-basic-class fa-graduation-cap from 'styles/vendor/font-awesome-module.css';
+}
+
+.calendarPlus {
+	composes: fontAwesomeBase;
+	composes: fa-basic-class fa-calendar-plus-o from 'styles/vendor/font-awesome-module.css';
 }
 
 .graduation {
