@@ -362,6 +362,16 @@ const roundelsConfig = {
         ]
       },
       {
+        "slug": "christmas-delivery-dates",
+        "name": "Christmas Delivery Dates",
+        "images": [
+          {
+            "url": "https://production-media.gousto.co.uk/cms/headshot-image/Christmas_Dinner_Info_MenuGel_AW-01.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
         "slug": "health-kitchen-healthy-heart",
         "name": "Health Kitchen - Healthy heart",
         "images": [
