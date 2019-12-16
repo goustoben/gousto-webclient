@@ -109,12 +109,8 @@ module.exports = {
     copy: 'Company pension',
   },
   {
-    title: 'child',
-    copy: 'Childcare vouchers',
-  },
-  {
     title: 'suitcase',
-    copy: 'Buy up to 5 days extra\nholiday',
+    copy: '25 holidays, plus 1 day per year up to 30',
   },
   {
     title: 'cutlery',
@@ -122,15 +118,11 @@ module.exports = {
   },
   {
     title: 'calendar',
-    copy: 'Quarterly team events',
+    copy: 'Regular all-company socials',
   },
   {
     title: 'bicycle',
     copy: 'Cycle to work scheme',
-  },
-  {
-    title: 'star',
-    copy: 'Free Gousto jacket on\nwarehouse visit',
   },
   {
     title: 'bolt',
@@ -146,11 +138,19 @@ module.exports = {
   },
   {
     title: 'coffee',
-    copy: 'Free Coffee, Tea and\nHealthy Snacks',
+    copy: 'Free coffee, tea, healthy snacks and ice cream all year around',
   },
   {
     title: 'glass',
-    copy: 'Free beer, wine and\nsoft drinks on Friday!',
+    copy: 'Free beer, wine and\nsoft drinks on Friday',
+  },
+  {
+    title: 'graduation',
+    copy: 'Gousto Academy training courses',
+  },
+  {
+    title: 'calendarPlus',
+    copy: 'Option to carry over and buy up to 5 days holiday',
   }],
   openings: {
     All: [],
