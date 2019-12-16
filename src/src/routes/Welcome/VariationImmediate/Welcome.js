@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import shallowCompare from 'react-addons-shallow-compare'
 import actions from 'actions'
 import userUtils from 'utils/user'

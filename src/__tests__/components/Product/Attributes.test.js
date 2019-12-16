@@ -3,7 +3,7 @@ import React from 'react'
 import sinon from 'sinon'
 
 import { shallow } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import Attributes from 'Product/Attributes'
 
 describe('Product Attributes', () => {

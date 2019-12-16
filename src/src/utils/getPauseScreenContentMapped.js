@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 export default function getPauseScreenContentMapped(contentConfig = Immutable.List([]), contentFromStore = Immutable.Map({}), contextFromStore = Immutable.Map({})) {
   return contentConfig.reduce((workingContent, contentItemConfig) => {

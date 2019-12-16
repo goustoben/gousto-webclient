@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-caps */
+import Immutable from 'immutable'
 import actionTypes from 'actions/actionTypes'
 import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
 import subPauseActions from 'actions/subscriptionPause'

@@ -1,4 +1,4 @@
-import {fromJS} from 'immutable' /* eslint-disable new-cap */
+import {fromJS} from 'immutable'
 import actionTypes from 'actions/actionTypes'
 
 const logger = ( state = {uuid: ''}, action) => {

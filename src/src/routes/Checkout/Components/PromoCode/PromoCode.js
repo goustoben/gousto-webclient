@@ -4,7 +4,6 @@ import { Button, Segment } from 'goustouicomponents'
 import logger from 'utils/logger'
 import Immutable from 'immutable'
 import classNames from 'classnames'
-/* eslint-disable new-cap */
 import configCheckout from 'config/checkout'
 import css from './PromoCode.css'
 

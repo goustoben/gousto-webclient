@@ -1,6 +1,6 @@
 import sinon from 'sinon'
 
-import Immutable from 'immutable' // eslint-disable-line no-caps
+import Immutable from 'immutable'
 
 import React from 'react'
 import { shallow } from 'enzyme'

@@ -3,7 +3,7 @@ import React from 'react'
 
 import sinon from 'sinon'
 
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import DeliveryDetails from 'Receipt/DeliveryDetails'
 
 describe('DeliveryDetails', () => {

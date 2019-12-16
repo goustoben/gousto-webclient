@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import actions from 'actions'
 import DuplicateOrderModal from './DuplicateOrderModal'
 

@@ -1,7 +1,7 @@
 import sinon from 'sinon'
 
 import actionTypes from 'actions/actionTypes'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import status from 'reducers/status'
 
 describe('status reducers', () => {

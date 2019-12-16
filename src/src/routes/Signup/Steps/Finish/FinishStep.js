@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import moment from 'moment'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { getSlot } from 'utils/deliveries'
 import basketConfig from 'config/basket'
 import Button from '../../Button'

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable' // eslint-disable no-caps
+import Immutable from 'immutable'
 
 import { boxSummaryViews } from 'utils/boxSummary'
 import Details from '../Details'

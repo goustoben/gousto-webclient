@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { basketSum } from 'utils/basket'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import routes from 'config/routes'
 import config from 'config/basket'
 import Link from 'Link'

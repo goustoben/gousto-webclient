@@ -2,7 +2,7 @@ import sinon from 'sinon'
 
 import React from 'react'
 import { shallow } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 import Welcome from 'routes/Welcome/VariationStorytelling/Welcome'
 import SubHeader from 'routes/Welcome/SubHeader'

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import actions from 'actions/jobs'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import Link from 'Link'
 import Content from 'containers/Content'
 import css from './Openings.css'

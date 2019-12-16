@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Image from 'Image'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import Svg from 'Svg'
 import { getMenuRecipeImage } from 'utils/image'
 import css from './Ingredient.css'

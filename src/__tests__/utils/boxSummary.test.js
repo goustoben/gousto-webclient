@@ -1,7 +1,7 @@
 import sinon from 'sinon'
 
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 describe('utils/boxSummary', () => {
   describe('getCurrentBoxSummaryView', () => {

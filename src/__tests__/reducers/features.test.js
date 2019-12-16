@@ -2,7 +2,7 @@ import sinon from 'sinon'
 
 import featureToggles, { defaultFeatures } from 'reducers/features'
 import actionTypes from 'actions/actionTypes'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 describe('features reducers', () => {
   let clock

@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 export function getItemIds(itemSets, { endSet, startSet } = {}) {
   const startKey = startSet || 1

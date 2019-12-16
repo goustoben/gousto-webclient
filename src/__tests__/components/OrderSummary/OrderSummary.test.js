@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { shallow } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import OrderSummary from 'OrderSummary'
 import Receipt from 'Receipt'
 import SaveButton from 'OrderSummary/SaveButton'

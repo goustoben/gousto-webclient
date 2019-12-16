@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { mount } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import Image from 'Image'
 import CloseButton from 'Overlay/CloseButton'
 import Details from 'Product/Detail/Detail'

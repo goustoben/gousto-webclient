@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { getProductItemLimitReached, productsOverallLimitReached, getFirstProductCategoryAtLimit, productCanBeAdded } from 'utils/basketProductLimits'
 import * as basketUtils from 'utils/basket'
 
@@ -151,7 +151,7 @@ describe('basketProductLimits utils', function() {
       })
 
       basketUtils.getProductsQtyInCategory.mockReturnValue(3)
-      
+
       const result = getFirstProductCategoryAtLimit('product-1', basket, products, productsCategories)
       expect(result).toBe(false)
     })
@@ -253,7 +253,7 @@ describe('basketProductLimits utils', function() {
       const productsStock = Immutable.fromJS({
         'product-1': 999,
       })
-      
+
       expect(productCanBeAdded('product-1', 'basket', 'products', productsStock, 'productsCategories')).toBe(false)
     })
   })

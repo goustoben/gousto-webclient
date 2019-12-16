@@ -1,5 +1,5 @@
 import React from 'react'
-import Immutable from 'immutable' // eslint-disable-line no-caps
+import Immutable from 'immutable'
 import { shallow, mount } from 'enzyme'
 
 import OrderCollage from 'routes/Account/MyDeliveries/OrdersList/Order/OrderCollage'

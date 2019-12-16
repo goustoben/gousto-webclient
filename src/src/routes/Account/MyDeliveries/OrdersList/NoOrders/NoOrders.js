@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import Immutable from 'immutable' // eslint-disable no-caps
+import Immutable from 'immutable'
 import { Button } from 'goustouicomponents'
 import Link from 'Link'
 import routes from 'config/routes'

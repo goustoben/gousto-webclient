@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
-import moment from 'moment'/* eslint-disable new-cap */
+import moment from 'moment'
 
 import { Spinner } from 'goustouicomponents'
 import { isMobile } from 'utils/view'

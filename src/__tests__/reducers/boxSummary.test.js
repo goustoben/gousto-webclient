@@ -2,7 +2,7 @@ import sinon from 'sinon'
 
 import actionTypes from 'actions/actionTypes'
 import boxSummaryReducer from 'reducers/boxSummary'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 describe('boxSummary reducer', () => {
   describe('boxSummaryShow', () => {

@@ -1,7 +1,7 @@
 import sinon from 'sinon'
 
 import actionTypes from 'actions/actionTypes'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import homeReducer from 'reducers/home'
 
 describe('home reducer', () => {

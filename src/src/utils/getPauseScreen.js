@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import getPauseScreenFromConfig from 'utils/getPauseScreenFromConfig'
 import getPauseScreenContentMapped from 'utils/getPauseScreenContentMapped'
 import * as subUtils from 'utils/subscription'

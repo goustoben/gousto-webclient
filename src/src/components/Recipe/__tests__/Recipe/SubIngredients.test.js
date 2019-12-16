@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 import { isAllergen } from 'Recipe/Detail/SubIngredients/SubIngredients'
 

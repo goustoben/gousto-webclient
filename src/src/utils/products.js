@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import seedrandom from 'seedrandom'
 
 export function isNotAGift(product) {

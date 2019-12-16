@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { basketSum, okRecipes, getProductsQtyInCategory, limitReached, getProductLimitReached, getOrderDetails } from 'utils/basket'
 import * as basketProductLimits from 'utils/basketProductLimits'
 import { getSlot } from 'utils/deliveries'

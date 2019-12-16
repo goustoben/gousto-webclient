@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import Carousel from 'Carousel'
 import Recipe from 'Recipe'
 import { formatRecipeTitle } from 'utils/recipe'

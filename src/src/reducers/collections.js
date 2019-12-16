@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import types from "../actions/actionTypes"
 
 const collectionsReducer = {
