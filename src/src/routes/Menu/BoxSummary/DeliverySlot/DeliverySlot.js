@@ -154,13 +154,8 @@ class DeliverySlot extends React.Component {
     }
   }
 
-  handleSlotChange = (slotId) => {
-    const { setTempSlotId } = this.props
-    setTempSlotId(slotId)
-  }
-
   displayDatePicker = (slots, slotId, deliveryDays) => {
-    const { disableNewDatePicker, tempDate, tempSlotId, tempOrderId } = this.props
+    const { disableNewDatePicker, tempDate, tempSlotId, tempOrderId, setTempSlotId } = this.props
     const options = slots[tempDate] ? slots[tempDate] : []
 
     return disableNewDatePicker ?
@@ -181,7 +176,7 @@ class DeliverySlot extends React.Component {
               color="secondary"
               uppercase
               options={options}
-              onChange={this.handleSlotChange}
+              onChange={setTempSlotId}
               value={tempSlotId}
               className={css.dropdown}
             />
@@ -194,7 +189,7 @@ class DeliverySlot extends React.Component {
             <Calendar dates={deliveryDays} selected={tempDate} onClick={this.handleDateChange} />
           </div>
           <div className={tempOrderId ? css.disabledRow : css.row}>
-            <SlotPicker slots={slots} date={tempDate} slotId={slotId} onClick={this.handleSlotChange} />
+            <SlotPicker slots={slots} date={tempDate} slotId={slotId} onClick={setTempSlotId} />
           </div>
         </span>
       )
