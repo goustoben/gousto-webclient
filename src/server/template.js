@@ -1,5 +1,5 @@
-const head = require('./head').default
 const newAssetPath = require('utils/media').newAssetPath
+const head = require('./head').default
 const encodeState = require('./encodeState')
 
 const htmlTemplate = (reactHTML = '', initialState = {}, apolloState = {}, userAgent = '', noGTM = false, helmetHead) => (
