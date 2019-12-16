@@ -5,6 +5,7 @@ import { client } from 'config/routes'
 import Loading from 'Loading'
 import { IngredientsPresentation } from './Ingredients.presentation'
 import { RecipeList } from '../components/RecipeList'
+import { RecipeIngredients } from '../components/RecipeIngredients'
 
 import css from './Ingredients.css'
 
@@ -144,11 +145,12 @@ class Ingredients extends PureComponent {
           cannotContinue={!hasSelectAnyIngredient}
           continueClick={this.continueClickHandler}
         >
-          <RecipeList
-            recipes={recipes}
-            selectedIngredients={selectedIngredients}
-            onChange={this.changeHandler}
-          />
+          <RecipeList recipes={recipes}>
+            <RecipeIngredients
+              selectedIngredients={selectedIngredients}
+              onChange={this.changeHandler}
+            />
+          </RecipeList>
         </IngredientsPresentation>
     )
   }

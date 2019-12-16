@@ -133,7 +133,7 @@ describe('<Ingredients />', () => {
 
     describe('ingredients', () => {
       test('ingredients are unselected by default', () => {
-        const secondRecipe = getHelpLayout.find('Recipe').at(1)
+        const secondRecipe = getHelpLayout.find('ItemExpandable').at(1)
         secondRecipe.find('Item').simulate('click')
         const ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
 
@@ -143,7 +143,7 @@ describe('<Ingredients />', () => {
       })
 
       test('ingredients retain the selection state when thy are collapsed and then expanded', () => {
-        const secondRecipe = wrapper.find('Recipe').at(1)
+        const secondRecipe = wrapper.find('ItemExpandable').at(1)
         secondRecipe.find('Item').simulate('click')
         let ingredientsCheckboxes = wrapper.find('input[type="checkbox"]')
         ingredientsCheckboxes.at(1).simulate('change')
