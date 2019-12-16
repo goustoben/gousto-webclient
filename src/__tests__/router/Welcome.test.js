@@ -5,7 +5,7 @@ import WelcomeSubscription from 'routes/Welcome/VariationSubscription'
 import WelcomeStorytelling from 'routes/Welcome/VariationStorytelling'
 
 import { match, createMemoryHistory } from 'react-router'
-import { routes } from '../../src/routes'
+import { routes } from '../../routes'
 
 function reduxStoreMock(isAuthenticated) {
   return {

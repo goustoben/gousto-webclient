@@ -3,7 +3,7 @@ import Hubs from 'routes/Cookbook/Hubs'
 import Hub from 'routes/Cookbook/Hub'
 import MainLayout from 'layouts/MainLayout'
 import { match, createMemoryHistory } from 'react-router'
-import { routes } from '../../src/routes'
+import { routes } from '../../routes'
 
 function reduxStoreMock() {
   return {

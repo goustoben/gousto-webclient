@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import Jobs from 'routes/Jobs/Jobs'
 import { match, createMemoryHistory } from 'react-router'
-import { routes } from '../../src/routes'
+import { routes } from '../../routes'
 
 function reduxStoreMock(isAuthenticated) {
   return {

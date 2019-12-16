@@ -207,7 +207,7 @@
     "transform": {
       "^.+\\.js?$": "babel-jest",
       "\\.(gql|graphql)$": "jest-transform-graphql",
-      "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/.fileTransformer.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/jest/.fileTransformer.js"
     },
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js}",
@@ -221,7 +221,7 @@
       "<rootDir>/src",
       "<rootDir>/src/components"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/jest/.setup.js",
+    "setupTestFrameworkScriptFile": "<rootDir>/src/jest/.setup.js",
     "globals": {
       "__DEV__": false,
       "__PROD__": true,
