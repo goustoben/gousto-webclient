@@ -9,7 +9,13 @@ describe("Test", () => {
 
   it("can allow a user login", () => {
     cy.visit("/");
-    cy.contains('Login').click();
+    if (Cypress.env('MEDIA') === 'mobile') {
+      cy.get('button[data-testing="burgerMenu"]').click();
+      cy.get('li[data-testing="burgerMenuLogin"]').click();
+    } else {
+      cy.contains('Login').click();
+    }
+
     cy.get('form').within(($form) => {
       cy.get('input[name="email"]').eq(1).type('email@gmail.com', {force: true})
       cy.get('input[name="password"]').type('password', {force: true})

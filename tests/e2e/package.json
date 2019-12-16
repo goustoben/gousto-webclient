@@ -9,10 +9,10 @@
     "test:staging:web": "./node_modules/.bin/nightwatch --env=staging:chrome --verbose",
     "test:staging:mobile": "./node_modules/.bin/nightwatch --env=staging:iphone6 --verbose",
     "test:cypress:debug": "./node_modules/.bin/cypress open",
-    "test:cypress:web": "./node_modules/.bin/cypress run",
-    "test:cypress:mobile": "CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 ./node_modules/.bin/cypress open",
-    "test:staging:cypress:web": "CYPRESS_baseUrl=https://staging-frontend.gousto.info ./node_modules/.bin/cypress run",
-    "test:staging:cypress:mobile": "CYPRESS_baseUrl=https://staging-frontend.gousto.info CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 ./node_modules/.bin/cypress run"
+    "test:cypress:web": "CYPRESS_MEDIA=web ./node_modules/.bin/cypress run",
+    "test:cypress:mobile": "CYPRESS_MEDIA=mobile CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 ./node_modules/.bin/cypress open",
+    "test:staging:cypress:web": "CYPRESS_MEDIA=web CYPRESS_baseUrl=https://staging-frontend.gousto.info ./node_modules/.bin/cypress run",
+    "test:staging:cypress:mobile": "CYPRESS_MEDIA=mobile CYPRESS_baseUrl=https://staging-frontend.gousto.info CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 ./node_modules/.bin/cypress run"
   },
   "author": "",
   "license": "ISC",
