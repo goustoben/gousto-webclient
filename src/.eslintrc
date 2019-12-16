@@ -68,7 +68,6 @@
       "import/default" : 1,
       "import/no-extraneous-dependencies": 1,
       "import/named" : 1,
-      "import/order": 1,
       "react/jsx-key": 1,
       "react/prefer-stateless-function": 1,
       "react/require-default-props": 1,
