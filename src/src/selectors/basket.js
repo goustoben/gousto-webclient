@@ -35,3 +35,23 @@ export const getBasketProductsCost = createSelector(
     return basketProductsCost.toFixed(2)
   }
 )
+
+export default {
+  getBasketOrderId,
+  getBasketRecipes,
+  getBasketTotalRecipes,
+  getNumPortions,
+  getPromoCode,
+  getSignupChosenCollection,
+  getBasketOrderDetails,
+  getBasketOrderDetailId,
+  getBasketOrderPrices,
+  getBasketOrderTotal,
+  getBasketOrderPromoCode,
+  getBasketDate,
+  getBasketLimitReached,
+  getBasketSlotId,
+  getBasketPostcode,
+  getBasketProducts,
+  getBasketProductsCost,
+}
