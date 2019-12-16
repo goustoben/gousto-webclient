@@ -37,7 +37,6 @@ class DeliverySlot extends React.Component {
     setTempSlotId: PropTypes.func,
     setTempOrderId: PropTypes.func,
     boxSummaryNext: PropTypes.func,
-    displayOptions: PropTypes.instanceOf(Immutable.List),
     disabledSlots: PropTypes.arrayOf(PropTypes.string),
     isAuthenticated: PropTypes.bool,
     isSubscriptionActive: PropTypes.string,
@@ -52,7 +51,6 @@ class DeliverySlot extends React.Component {
     disableNewDatePicker: false,
     disableOnDelivery: false,
     basketRecipeNo: 0,
-    displayOptions: Immutable.List([]),
     disabledSlots: [],
     isAuthenticated: false,
     basketRestorePreviousValues: () => { },
@@ -249,7 +247,8 @@ class DeliverySlot extends React.Component {
   }
 
   render = () => {
-    const { displayOptions, numPortions,
+    const {
+      numPortions,
       disabledSlots, isAuthenticated,
       isSubscriptionActive, shouldDisplayFullScreenBoxSummary,
       boxSummaryNext, basketRestorePreviousValues,
@@ -267,7 +266,7 @@ class DeliverySlot extends React.Component {
     let deliveryCopy
     if (hasFullOrders) {
       deliveryCopy = <div><Svg fileName="icon_Booked-delivery" className={css.upcomingOrder} /><span> Upcoming delivery – recipes chosen</span></div>
-    } else if (!displayOptions.contains('hideDeliveryCopy')) {
+    } else {
       deliveryCopy = 'You choose how often you would like to receive boxes after checkout.'
     }
 
@@ -279,11 +278,9 @@ class DeliverySlot extends React.Component {
     return (
       <LayoutContentWrapper>
         <Heading center size="large" type="h2">Delivery Options</Heading>
-        {!displayOptions.contains('hideDeliveryCopy') &&
-          <div className={css.row}>
-            <p className={css.leadingText}>Our menus change weekly. Please select a date so we can show you the latest recipes</p>
-          </div>
-        }
+        <div className={css.row}>
+          <p className={css.leadingText}>Our menus change weekly. Please select a date so we can show you the latest recipes</p>
+        </div>
         <div className={tempOrderId ? css.disabledRow : css.row}>
           <Button
             fill={false}
