@@ -33,7 +33,7 @@ const OrderIssue = ({
       <ItemLink
         label={recipeCardItem}
         trackClick={trackClick(selectOrderIssue, 'recipe_card')}
-        to={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+        to={`${routes.getHelp.index}/${routes.getHelp.recipeCards}`}
         clientRouted
       />
       <ItemLink
