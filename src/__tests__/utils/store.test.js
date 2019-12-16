@@ -1,6 +1,6 @@
 import sinon from 'sinon'
 
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import * as storeUtils from 'utils/store'
 
 describe('utils/store', () => {

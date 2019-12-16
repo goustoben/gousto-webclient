@@ -2,7 +2,7 @@ import sinon from 'sinon'
 
 import { shallow, mount } from 'enzyme'
 import React from 'react'
-import Immutable from 'immutable' // eslint-disable-line no-caps
+import Immutable from 'immutable'
 import RecipeSummary from 'routes/Checkout/Components/RecipeSummary'
 import BoxDetails from 'routes/Checkout/Components/BoxDetails/BoxDetails'
 import Link from 'Link'

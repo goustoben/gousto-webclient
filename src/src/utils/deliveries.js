@@ -1,5 +1,5 @@
 import moment from 'moment'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import GoustoException from 'utils/GoustoException'
 import { getDisabledSlots, getNDDFeatureValue } from 'selectors/features'
 import { formatAndValidateDisabledSlots } from './deliverySlotHelper'

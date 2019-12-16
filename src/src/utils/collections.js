@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 export function isAllRecipes(collection) {
   return collection.get('shortTitle')

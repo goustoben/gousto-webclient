@@ -1,5 +1,5 @@
 import React from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 import ReasonsScreen from 'routes/Account/Subscription/SubscriptionPause/ReasonsScreen/ReasonsScreen'
 import { Cancel } from 'containers/SubscriptionPause/callsToAction'

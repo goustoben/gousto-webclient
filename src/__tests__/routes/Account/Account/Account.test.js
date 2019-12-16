@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import AccountComponent from 'routes/Account/Account/Account'
 import NavBar from 'routes/Account/Account/NavBar'
 import Banner from 'routes/Account/Account/Banner'

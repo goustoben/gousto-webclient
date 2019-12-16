@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 const ratingSort = (a, b) => b.getIn(['rating', 'average'], 0) - a.getIn(['rating', 'average'], 0)
 const isFeatured = (recipe, cutoffDate) => (

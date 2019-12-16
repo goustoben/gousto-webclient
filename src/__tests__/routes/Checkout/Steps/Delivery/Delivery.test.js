@@ -2,7 +2,7 @@ import sinon from 'sinon'
 
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { FormSection } from 'redux-form'
 import DeliveryComponent from 'routes/Checkout/Components/Delivery/Delivery'
 

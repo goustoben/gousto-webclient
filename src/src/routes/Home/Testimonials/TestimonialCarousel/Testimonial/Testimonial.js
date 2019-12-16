@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Svg from 'Svg'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import nl2br from 'react-nl2br'
 import css from './Testimonial.css'
 

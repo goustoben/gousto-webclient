@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 
 import Summary from 'routes/Checkout/Components/Summary/Summary'
-/* eslint-disable new-cap */
 import Link from 'Link'
 import { H3 } from 'Page/Header'
 import Receipt from 'Receipt/Receipt'

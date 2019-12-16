@@ -1,5 +1,5 @@
 import actionTypes from 'actions/actionTypes'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { isAdmin } from 'utils/auth'
 
 export const initialState = () => Immutable.fromJS({

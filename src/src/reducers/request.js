@@ -1,6 +1,5 @@
 import actionTypes from 'actions/actionTypes'
 import Immutable from 'immutable'
-/* eslint-disable new-cap */
 
 const initialState = () => Immutable.Map({ browser: 'desktop' })
 

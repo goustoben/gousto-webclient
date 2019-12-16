@@ -1,6 +1,6 @@
 import sinon from 'sinon'
 
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import features from 'actions/features'
 import actionTypes from 'actions/actionTypes'
 

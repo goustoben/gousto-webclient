@@ -3,7 +3,7 @@ import {
   getFeaturedImage,
   getRangeImages,
 } from 'utils/image'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 describe('getMenuRecipeImage', () => {
   let urls

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable' // eslint-disable no-caps
+import Immutable from 'immutable'
 
 import config from 'config/basket'
 import { basketSum, okRecipes } from 'utils/basket'

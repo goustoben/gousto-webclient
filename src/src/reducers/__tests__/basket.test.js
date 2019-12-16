@@ -1,5 +1,5 @@
 import actionTypes from 'actions/actionTypes'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import config from 'config'
 import basketReducer from 'reducers/basket'
 import logger from 'utils/logger'

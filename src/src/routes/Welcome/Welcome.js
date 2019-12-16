@@ -1,5 +1,5 @@
 import React from 'react'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { VerticalStages, VerticalStagesItem } from 'goustouicomponents'

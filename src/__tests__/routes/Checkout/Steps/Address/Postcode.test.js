@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { Field } from 'redux-form'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import Postcode from 'routes/Checkout/Components/Address/Postcode'
 
 describe('Postcode', () => {

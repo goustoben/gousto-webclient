@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import GoustoException from 'utils/GoustoException'
 
 export function pauseReasonsAreCategories(pauseReasons = Immutable.List([])) {

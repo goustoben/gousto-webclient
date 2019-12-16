@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Header } from 'Header'
 import Footer from 'Footer'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import classNames from 'classnames'
 import { Div } from 'Page/Elements'
 import css from './MainLayout.css'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 
 import config from 'config/routes'
 import { Div } from 'Page/Elements'
@@ -85,7 +85,7 @@ describe('Checkout', () => {
       }),
       error: Immutable.Map({}),
       form: {
-        
+
       }
     }
 
@@ -363,7 +363,7 @@ describe('Checkout', () => {
       )
 
       wrapper.instance().componentDidMount()
-      
+
       expect(QueueIt.validateUser).toHaveBeenCalled()
     })
 
@@ -417,12 +417,12 @@ describe('Checkout', () => {
 
       test('should render a CheckoutPayment component', () => {
         expect(wrapper.find(CheckoutPayment)).toHaveLength(1)
-        
+
       })
 
       test('should call loadCheckoutScript', () => {
         wrapper.instance().componentDidMount()
-          
+
         expect(loadCheckoutScript).toHaveBeenCalled()
       })
     })

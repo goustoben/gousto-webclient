@@ -1,4 +1,4 @@
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import types from "../actions/actionTypes"
 
 export const initialState = Immutable.fromJS({
@@ -86,7 +86,7 @@ const cookbookReducer = {
 
       return newState
     }
-    
+
     case types.COOKBOOK_FETCH_RECIPE_STEPS_BY_ID: {
       const { recipeId, recipeStepsById } = data
       let newState = state
@@ -97,7 +97,7 @@ const cookbookReducer = {
 
       return newState
     }
-    
+
     default:
       return state
     }

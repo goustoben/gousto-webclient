@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Immutable from 'immutable' // eslint-disable new-cap
+import Immutable from 'immutable'
 import ImageSelection from 'ImageSelection'
 import LinkButton from 'LinkButton'
 import SectionHeader from 'SectionHeader'

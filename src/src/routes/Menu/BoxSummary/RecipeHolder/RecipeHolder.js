@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Image from 'Image'
 import classnames from 'classnames'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { getFeaturedImage } from 'utils/image'
 import { isMobile, DESKTOP_VIEW } from 'utils/view'
 import css from './RecipeHolder.css'

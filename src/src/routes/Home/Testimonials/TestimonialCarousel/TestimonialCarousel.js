@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Carousel from 'Carousel'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import config from 'config/home'
 import Testimonial from './Testimonial'
 import css from './TestimonialCarousel.css'

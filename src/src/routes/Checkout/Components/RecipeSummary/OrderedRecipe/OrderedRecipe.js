@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import config from 'config/menu'
 import GoustoImage from 'Image'
 import css from './OrderedRecipe.css'

@@ -15,7 +15,7 @@ import {
   isSlotBeforeCutoffTime
 } from 'utils/deliveries'
 import GoustoException from 'utils/GoustoException'
-import Immutable from 'immutable' /* eslint-disable new-cap */
+import Immutable from 'immutable'
 import * as features from 'selectors/features'
 import {
   deliveryTariffTypes,

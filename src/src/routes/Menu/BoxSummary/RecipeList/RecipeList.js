@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import logger from 'utils/logger'
 import RecipeHolder from '../RecipeHolder'

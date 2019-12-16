@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 // import css from './RecipeSummary.css'
-import Immutable from 'immutable'/* eslint-disable new-cap */
+import Immutable from 'immutable'
 import { basketSum } from 'utils/basket'
 import recipesActions from 'actions/recipes'
 import { getFoodBrand } from 'utils/recipe'

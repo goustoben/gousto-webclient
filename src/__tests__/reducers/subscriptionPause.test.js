@@ -1,5 +1,5 @@
 import actionTypes from 'actions/actionTypes'
-import Immutable from 'immutable' /* eslint-disable new-caps */
+import Immutable from 'immutable'
 import subReducer, {
   subscriptionPauseInitialState,
 } from 'reducers/subscriptionPause'

@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import PropTypes from 'prop-types'
-/* eslint-disable new-cap */
 import React from 'react'
 import moment from 'moment'
 import DropdownInput from 'Form/Dropdown'
