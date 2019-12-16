@@ -9,7 +9,6 @@ import css from './TestimonialCarousel.css'
 const TestimonialCarousel = ({ testimonials = config.testimonials, showLink }) => (
   <div className={css.container}>
     <Carousel
-      dots
       adaptiveHeight={false}
       speed={400}
       useCSS
