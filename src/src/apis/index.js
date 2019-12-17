@@ -10,7 +10,7 @@ import * as orders from './orders'
 import * as products from './products'
 import * as recipes from './recipes'
 import * as user from './user'
-import workable from './workable'
+import * as workable from './workable'
 
 const apis = {
   ...addressLookup,

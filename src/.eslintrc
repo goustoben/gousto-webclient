@@ -65,7 +65,6 @@
       //beginning of warnings that are recommended as errors by our eslint plugins
       "import/no-dynamic-require" : 1,
       "import/no-self-import" : 1,
-      "import/default" : 1,
       "import/no-extraneous-dependencies": 1,
       "import/named" : 1,
       "react/jsx-key": 1,
