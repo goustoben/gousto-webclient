@@ -9,6 +9,7 @@ const Arrow = ({ direction, onClick }) => (
   <button
     className={classnames(css.arrow, css[direction])}
     onClick={onClick}
+    type="button"
   >
     <Icon
       name={`fa-chevron-${direction}`}
