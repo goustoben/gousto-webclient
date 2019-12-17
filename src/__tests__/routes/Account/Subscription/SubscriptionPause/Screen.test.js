@@ -45,7 +45,7 @@ describe('Screen', () => {
 
     test('should render a <ReasonsScreen> for type "reasonGrid" & spread screenData as props', () => {
       wrapper = shallow(
-        <Screen screenData="reasonGrid" screenData={{ a: 2, b: 3 }} />,
+        <Screen type="reasonGrid" screenData={{ a: 2, b: 3 }} />,
       )
       const reasonsScreen = wrapper.find(ReasonsScreen)
 
