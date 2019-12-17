@@ -14,7 +14,6 @@ class Login extends React.PureComponent {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     onInvalid: PropTypes.func,
-    isOpen: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
     isAuthenticating: PropTypes.bool,
     statusText: PropTypes.oneOfType([
@@ -107,7 +106,6 @@ class Login extends React.PureComponent {
       </div>
       <div>
         <TextInput
-          autoFocus={this.props.isOpen}
           name="email"
           color="gray"
           textAlign="left"

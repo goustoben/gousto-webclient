@@ -25,7 +25,6 @@ export class TextInput extends React.Component {
     required: PropTypes.bool,
     isFixed: PropTypes.bool,
     autocompleteOff: PropTypes.bool,
-    autoFocus: PropTypes.bool,
     value: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['password', 'text', 'email', 'tel', 'number']),
     pattern: PropTypes.string,
@@ -140,7 +139,6 @@ export class TextInput extends React.Component {
           autoComplete={(this.props.autocompleteOff) ? 'off' : 'on'}
           onFocus={(this.props.isFixed) ? this.scrollDisable : () => {}}
           onBlur={this.handleBlur}
-          autoFocus={this.props.autoFocus}
           ref={input => { this.input = input }}
           data-testing={this.props['data-testing']}
         />
