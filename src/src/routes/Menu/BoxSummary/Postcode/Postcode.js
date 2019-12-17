@@ -23,11 +23,9 @@ class Postcode extends React.PureComponent {
     basketRestorePreviousValues: PropTypes.func.isRequired,
     chosenAddress: PropTypes.object,
     basketChosenAddressChange: PropTypes.func.isRequired,
-    view: PropTypes.string,
     tempPostcode: PropTypes.string,
     setTempPostcode: PropTypes.func,
     boxSummaryNext: PropTypes.func,
-    isVisible: PropTypes.bool,
     shouldDisplayFullScreenBoxSummary: PropTypes.bool,
   }
 
@@ -85,9 +83,8 @@ class Postcode extends React.PureComponent {
   }
 
   noSavedAddresses = () => {
-    const { deliveryDaysError, tempPostcode, isVisible, view } = this.props
+    const { deliveryDaysError, tempPostcode } = this.props
     const buttonColor = deliveryDaysError ? 'primary' : 'secondary'
-    const isAutofocus = isVisible && !isMobile(view)
     const messageClass = deliveryDaysError ? css.errorText : css.supportingText
     let errMsg
 
@@ -115,7 +112,6 @@ class Postcode extends React.PureComponent {
             className={css.textInput}
             value={tempPostcode}
             textAlign="center"
-            autoFocus={isAutofocus}
             data-testing="menuPostcodeInput"
           />
         </div>

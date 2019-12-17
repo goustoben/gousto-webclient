@@ -25,7 +25,6 @@ export class TextInput extends React.Component {
     required: PropTypes.bool,
     isFixed: PropTypes.bool,
     autocompleteOff: PropTypes.bool,
-    autoFocus: PropTypes.bool,
     value: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['password', 'text', 'email', 'tel', 'number']),
     pattern: PropTypes.string,

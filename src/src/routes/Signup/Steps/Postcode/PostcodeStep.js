@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import actual from 'actual'
 import TextInput from 'Form/Input'
 import {reminder} from 'config/freeDelivery'
 import Button from '../../Button'
@@ -9,22 +8,6 @@ import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
 
 class PostcodeStep extends React.PureComponent {
-
-  state = {
-    postcodeAutoFocus: false,
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.active) {
-      if (__CLIENT__ && actual('width', 'px') > 1024) {
-        setTimeout(() => {
-          this.setState({
-            postcodeAutoFocus: true,
-          })
-        }, 600)
-      }
-    }
-  }
 
   render() {
     const {
@@ -49,7 +32,6 @@ class PostcodeStep extends React.PureComponent {
                 <div className={postcodeCss.left}>
                   <TextInput
                     isFixed
-                    autoFocus={this.state.postcodeAutoFocus}
                     placeholder="e.g. W3 7UP"
                     onChange={changeTempPostcode}
                     color={deliveryDaysError ? 'primary' : 'secondary'}
