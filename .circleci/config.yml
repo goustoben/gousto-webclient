@@ -317,6 +317,15 @@ workflows:
               only:
                 - /^env-.*/
                 - develop
+      - publish-code-health-artifact:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - test-isomorphic-jest-coverage
+            - eslint
+          filters:
+            branches:
+              only:
+                - develop
       - code-analysis:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -372,17 +381,6 @@ workflows:
           requires:
             - deploy-application
             - deploy-containers
-          filters:
-            branches:
-              only:
-                - develop
-      - publish-code-health-artifact:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            # must run last so its the 'latest' build step, so we can get the artifact easily
-            # therefore we 'require' the e2e steps as they are the last steps
-            - test-e2e-selenium
-            - test-e2e-selenium-mobile
           filters:
             branches:
               only:
