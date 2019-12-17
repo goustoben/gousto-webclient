@@ -6,6 +6,7 @@ import actionTypes from 'actions/actionTypes'
 import { getDisabledSlots, getFullScreenBoxSummary } from 'selectors/features'
 import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
+import { getBoxSummaryTextProps } from 'selectors/boxSummary'
 import DeliverySlot from './DeliverySlot'
 
 function mapStateToProps(state) {
@@ -38,6 +39,7 @@ function mapStateToProps(state) {
     isAuthenticated: state.auth.get('isAuthenticated'),
     isSubscriptionActive: state.user.getIn(['subscription', 'state']),
     shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
+    getBoxSummaryTextProps: (slots) => getBoxSummaryTextProps(state, tempDate, tempSlotId, tempOrderId, slots)
   }
 }
 

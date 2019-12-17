@@ -5,10 +5,11 @@ import DeliverySlot from '../../DeliverySlot/DeliverySlot'
 
 describe('DeliverySlot logic', () => {
   let deliveryDays, wrapper, disabledSlots, isAuthenticated, isSubscriptionActive
+  const getBoxSummaryTextProps = jest.fn()
 
   beforeEach(() => {
-    deliveryDays = Immutable.List([
-      Immutable.Map({
+    deliveryDays = Immutable.Map({
+      "2019-03-03": Immutable.Map({
         date: "2019-03-03",
         id: "djhdhds",
         slots: Immutable.List([
@@ -26,10 +27,16 @@ describe('DeliverySlot logic', () => {
           })
         ])
       })
-    ])
+    })
     disabledSlots = ['2019-03-03_08-19', '2019-02-04_08-12']
     isAuthenticated = true
     isSubscriptionActive = 'inactive'
+    getBoxSummaryTextProps.mockReturnValue({
+      deliveryLocationText: 'W140EE',
+      slotId: '123sddrdfst456',
+      buttonText: 'Chose recipes',
+      showWarning: false
+    })
   })
 
   describe('Render Function', () => {
@@ -42,8 +49,12 @@ describe('DeliverySlot logic', () => {
           isSubscriptionActive={isSubscriptionActive}
           tempDate='2019-03-03'
           clearPostcode={jest.fn()}
+          getBoxSummaryTextProps={getBoxSummaryTextProps}
+          basketRestorePreviousValues={() => { }}
+          boxSummaryNext={() => { }}
+          numPortions={2}
         />)
-      expect(wrapper.find('.disabledSlotText').text()).toContain('Unavailable due to high demand')
+      expect(wrapper.find('DeliverySupportingText').prop('doesDateHaveDisabledSlots')).toBe(true)
     })
 
     test('should show free delivery available reminder', () => {
@@ -55,6 +66,10 @@ describe('DeliverySlot logic', () => {
           isSubscriptionActive={isSubscriptionActive}
           tempDate='2019-03-03'
           clearPostcode={jest.fn()}
+          getBoxSummaryTextProps={getBoxSummaryTextProps}
+          basketRestorePreviousValues={() => { }}
+          boxSummaryNext={() => { }}
+          numPortions={2}
         />)
       expect(wrapper.find('.highlightText').text()).toContain('Free delivery available, 7 days a week')
     })
@@ -68,36 +83,12 @@ describe('DeliverySlot logic', () => {
           isSubscriptionActive="active"
           tempDate='2019-03-03'
           clearPostcode={jest.fn()}
+          getBoxSummaryTextProps={getBoxSummaryTextProps}
+          basketRestorePreviousValues={() => { }}
+          boxSummaryNext={() => { }}
+          numPortions={2}
         />)
-      expect(wrapper.find('.disabledSlotText').length).toEqual(0)
-    })
-
-    test('should NOT show limited availability text when doesDateHaveDisabledSlots is true but user is NOT logged in', () => {
-      wrapper = shallow(
-        <DeliverySlot
-          deliveryDays={deliveryDays}
-          disabledSlots={disabledSlots}
-          isAuthenticated={false}
-          isSubscriptionActive={isSubscriptionActive}
-          tempDate='2019-03-03'
-          clearPostcode={jest.fn()}
-        />)
-      expect(wrapper.find('.disabledSlotText').length).toEqual(0)
-    })
-
-    test('should NOT show limited availability text when doesDateHaveDisabledSlots is false', () => {
-      disabledSlots = []
-
-      wrapper = shallow(
-        <DeliverySlot
-          deliveryDays={deliveryDays}
-          disabledSlots={disabledSlots}
-          isAuthenticated={false}
-          isSubscriptionActive={isSubscriptionActive}
-          tempDate='2019-03-03'
-          clearPostcode={jest.fn()}
-        />)
-      expect(wrapper.find('.disabledSlotText').length).toEqual(0)
+      expect(wrapper.find('DeliverySupportingText').prop('doesDateHaveDisabledSlots')).toBe(false)
     })
   })
 
@@ -113,12 +104,17 @@ describe('DeliverySlot logic', () => {
             isSubscriptionActive={isSubscriptionActive}
             tempDate='2019-03-03'
             clearPostcode={jest.fn()}
+            getBoxSummaryTextProps={getBoxSummaryTextProps}
+            basketRestorePreviousValues={() => { }}
+            boxSummaryNext={() => { }}
+            numPortions={2}
           />)
       })
       test('should NOT render sticky button', () => {
         expect(wrapper.find('.stickyButton').exists()).toBe(false)
       })
     })
+
     describe('when shouldDisplayFullScreenBoxSummary is true', () => {
       beforeAll(() => {
         wrapper = shallow(
@@ -130,6 +126,10 @@ describe('DeliverySlot logic', () => {
             isSubscriptionActive={isSubscriptionActive}
             tempDate='2019-03-03'
             clearPostcode={jest.fn()}
+            getBoxSummaryTextProps={getBoxSummaryTextProps}
+            basketRestorePreviousValues={() => { }}
+            boxSummaryNext={() => { }}
+            numPortions={2}
             shouldDisplayFullScreenBoxSummary
           />)
       })
