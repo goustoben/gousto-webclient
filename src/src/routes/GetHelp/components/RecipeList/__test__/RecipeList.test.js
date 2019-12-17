@@ -1,65 +1,51 @@
 import React from 'react'
-import { mount } from 'enzyme'
-import { RecipeList } from 'routes/GetHelp/components/RecipeList'
+import { shallow } from 'enzyme'
+import { RecipeList } from '..'
 
-describe('<RecipeList />', () => {
-  const recipes = [
+describe('the RecipeList component', () => {
+  let wrapper
+  const TEST_RECIPES = [
     { id: '1', title: 'test 1', ingredients: [{ id: '1', label: 'test' }] },
     {
       id: '2',
       title: 'test 2',
       ingredients: [{ id: '2', label: 'test' }, { id: '2222', label: 'test2' }]
     },
-    { id: '3', title: 'test 3', ingredients: [{ id: '3', label: 'test' }] },
-    { id: '4', title: 'test 4', ingredients: [{ id: '4', label: 'test' }] },
   ]
 
-  describe('rendering', () => {
-    let wrapper
+  const mockChildProps = {
+    prop1: '1',
+    prop2: '2',
+  }
 
-    beforeAll(() => {
-      wrapper = mount(
-        <RecipeList
-          recipes={recipes}
-          selectedIngredients={new Map()}
-          onChange={() => {}}
-        />
-      )
-    })
+  const MockChildComponent = () => (
+    <div>Example recipe content</div>
+  )
 
-    test('recipe list is being rendered', () => {
-      expect(wrapper.find('List')).toHaveLength(1)
-    })
-
-    test('ingredients are invisible by default', () => {
-      expect(wrapper.find('InputCheck')).toHaveLength(0)
-    })
+  beforeEach(() => {
+    wrapper = shallow(
+      <RecipeList recipes={TEST_RECIPES}>
+        <MockChildComponent {...mockChildProps} />
+      </RecipeList>
+    )
   })
 
-  describe('behaviour', () => {
-    let wrapper
+  test('renders recipes as a list of  expandable items', () => {
+    const item = wrapper.find('ItemExpandable')
+    expect(item.length).toBe(TEST_RECIPES.length)
+    expect(item.first().prop('label')).toBe(TEST_RECIPES[0].title)
+  })
 
-    beforeEach(() => {
-      wrapper = mount(
-        <RecipeList
-          recipes={recipes}
-          selectedIngredients={new Map()}
-          onChange={() => {}}
-        />
-      )
-    })
+  test('uses the child components as the expanded content', () => {
+    expect(wrapper.find('ItemExpandable').find('MockChildComponent').length).toBe(TEST_RECIPES.length)
+  })
 
-    test('when clicking on a recipe item its ingredients appear/disappear', () => {
-      const secondRecipe = wrapper.find('Recipe').at(1)
-      secondRecipe.find('Item').simulate('click')
-      let ingredients = wrapper.find('InputCheck')
+  test('passes props to each child', () => {
+    const expectedProps = {
+      ...mockChildProps,
+      recipe: TEST_RECIPES[0],
+    }
 
-      expect(ingredients).toHaveLength(2)
-
-      secondRecipe.find('Item').simulate('click')
-      ingredients = wrapper.find('InputCheck')
-
-      expect(ingredients).toHaveLength(0)
-    })
+    expect(wrapper.find('MockChildComponent').first().props()).toEqual(expectedProps)
   })
 })
