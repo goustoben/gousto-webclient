@@ -11,6 +11,7 @@ import boxSummaryActions from 'actions/boxSummary'
 import { loadRecipes } from 'actions/recipes'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
+import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 import css from './AbandonBasketModal.css'
 
 class AbandonBasketModal extends PureComponent {
@@ -56,6 +57,10 @@ class AbandonBasketModal extends PureComponent {
       promises.push(store.dispatch(userActions.userLoadOrders()))
 
       if (!getBoxSummaryDeliveryDays(state).size) {
+
+        // defensive code to ensure menu load days works below for deeplinks
+        await loadMenuServiceDataIfDeepLinked(store)
+
         await store.dispatch(menuLoadDays())
         await store.dispatch(boxSummaryActions.boxSummaryDeliveryDaysLoad())
       }

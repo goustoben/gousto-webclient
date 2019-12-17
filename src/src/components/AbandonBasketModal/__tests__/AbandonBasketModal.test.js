@@ -8,6 +8,7 @@ import { menuLoadDays } from 'actions/menu'
 import boxSummaryActions from 'actions/boxSummary'
 import { loadRecipes } from 'actions/recipes'
 import userActions from 'actions/user'
+import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 import { AbandonBasketModal } from '../AbandonBasketModal'
 
 jest.mock('actions/menu', () => ({
@@ -25,6 +26,8 @@ jest.mock('actions/boxSummary', () => ({
 jest.mock('actions/user', () => ({
   userLoadOrders: jest.fn()
 }))
+
+jest.mock('utils/menuService')
 
 const recipes = Immutable.fromJS({
   1: {
@@ -165,6 +168,11 @@ describe('Abandon Basket Modal', () => {
     test('should call userLoadOrders if authenticated', () => {
       AbandonBasketModal.fetchData({ store })
       expect(userActions.userLoadOrders).toHaveBeenCalled()
+    })
+
+    test('should call loadMenuServiceDataIfDeepLinked if authenticated and no deliveryDays', () => {
+      AbandonBasketModal.fetchData({ store })
+      expect(loadMenuServiceDataIfDeepLinked).toHaveBeenCalled()
     })
 
     test('should call menuLoadDays if authenticated and no deliveryDays', () => {
