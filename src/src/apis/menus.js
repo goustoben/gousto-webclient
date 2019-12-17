@@ -14,13 +14,26 @@ const options = {
   useMenuService: true
 }
 
-export function fetchMenus(accessToken) {
+export function fetchMenus(accessToken, query) {
   const fetchOptions = {
     ...options,
     accessToken
   }
 
-  return fetchRaw(`${endpoint('menu', version)}/menus`, {include: 'ingredients'}, fetchOptions)
+  let adminLinkData
+  if(query && query['preview[auth_user_id]']) {
+    adminLinkData = {
+      'preview[menu_id]': query['preview[menu_id]'],
+      'preview[auth_user_id]': query['preview[auth_user_id]'],
+      'preview[expiry]': query['preview[expiry]'],
+      'preview[signature]': query['preview[signature]'],
+    }
+  }
+
+  return fetchRaw(`${endpoint('menu', version)}/menus`, {
+    include: 'ingredients',
+    ...adminLinkData,
+  }, fetchOptions)
 }
 
 export function fetchMenusWithUserId(accessToken, userId) {
