@@ -239,9 +239,9 @@ export default async function fetchData({ store, query, params }, force, backgro
 
   const isPending = store && store.getState().pending && store.getState().pending.get(actionTypes.MENU_FETCH_DATA)
   const shouldFetch = shouldFetchData(store, params, force)
+  const isAdminQuery = query && query['preview[auth_user_id]'] ? true : false
 
-  if (isPending || !shouldFetch) {
-
+  if (!isAdminQuery && (isPending || !shouldFetch)) {
     return
   }
 
@@ -255,7 +255,7 @@ export default async function fetchData({ store, query, params }, force, backgro
     if (isAuthenticated && userId) {
       response = await fetchMenusWithUserId(accessToken, userId)
     } else {
-      response = await fetchMenus(accessToken)
+      response = await fetchMenus(accessToken, query)
     }
 
     store.dispatch(menuServiceDataReceived(response))
