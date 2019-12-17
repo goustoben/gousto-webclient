@@ -411,8 +411,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop
-                - /^env-.*/
+                - env-rockets
       - test-e2e-cypress-mobile:
           context: gousto-beta-aws-app-circleci
           requires:
@@ -421,8 +420,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop
-                - /^env-.*/
+                - env-rockets
 
 
 
