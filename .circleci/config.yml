@@ -403,6 +403,26 @@ workflows:
             branches:
               only:
                 - develop
+      - test-e2e-cypress:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - deploy-application
+            - deploy-containers
+          filters:
+            branches:
+              only:
+                - develop
+                - /^env-.*/
+      - test-e2e-cypress-mobile:
+          context: gousto-beta-aws-app-circleci
+          requires:
+            - deploy-application
+            - deploy-containers
+          filters:
+            branches:
+              only:
+                - develop
+                - /^env-.*/
 
 
 
