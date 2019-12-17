@@ -7,6 +7,7 @@ import css from './Banner.css'
 const Banner = ({ hide, onClick, text, linkText }) => (
   <div
     role="button"
+    tabIndex="0"
     onClick={() => { onClick() }}
     className={classnames(
       css.container,
