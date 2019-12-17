@@ -103,7 +103,6 @@
       "jsx-a11y/anchor-has-content": 1,
       "jsx-a11y/no-noninteractive-element-interactions": 1,
       "jsx-a11y/interactive-supports-focus": 1,
-      "jsx-a11y/no-autofocus": 1,
       "no-useless-escape": 1,
       "no-extra-boolean-cast": 1,
       "no-unused-vars": 1,

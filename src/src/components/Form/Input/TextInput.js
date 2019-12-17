@@ -140,7 +140,6 @@ export class TextInput extends React.Component {
           autoComplete={(this.props.autocompleteOff) ? 'off' : 'on'}
           onFocus={(this.props.isFixed) ? this.scrollDisable : () => {}}
           onBlur={this.handleBlur}
-          autoFocus={this.props.autoFocus}
           ref={input => { this.input = input }}
           data-testing={this.props['data-testing']}
         />
