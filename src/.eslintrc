@@ -101,7 +101,6 @@
       "jsx-a11y/label-has-for": 1,
       "jsx-a11y/anchor-has-content": 1,
       "jsx-a11y/no-noninteractive-element-interactions": 1,
-      "jsx-a11y/interactive-supports-focus": 1,
       "no-useless-escape": 1,
       "no-extra-boolean-cast": 1,
       "no-unused-vars": 1,

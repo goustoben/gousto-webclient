@@ -5,6 +5,7 @@ exports[`Banner Initial Render should render with given text 1`] = `
   className="container link"
   onClick={[Function]}
   role="button"
+  tabIndex="0"
 >
   <p
     className="text"

@@ -22,6 +22,7 @@ const CookieBanner = ({ copy, isCookiePolicyAccepted, cookiePolicyAcceptanceChan
         </p>
         <a
           role="button"
+          tabIndex="0"
           className={css.button}
           data-testing="cookiePolicyBannerBtn"
           onClick={() => {
