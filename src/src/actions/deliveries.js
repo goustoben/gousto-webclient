@@ -106,7 +106,7 @@ export const trackDeliveryPreferenceModalClosed = (date, day_offset, delivery_sl
 export const preselectFreeDeliverySlot = (dispatch, getState) => {
   const slotId = getState().basket.get('slotId')
 
-  if (!!slotId) {
+  if (slotId) {
     return
   }
 
@@ -121,31 +121,33 @@ export const preselectFreeDeliverySlot = (dispatch, getState) => {
 }
 
 export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) => {
-  if (!orderId) {
-    const nonValidatedDisabledSlots = getDisabledSlots(getState())
-    const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
-    const { auth, user } = getState()
-    const { tempDate, tempSlotId, deliveryDays } = getTempDeliveryOptions(getState())
-    const helperProps = {
-      disabledSlots,
-      isAuthenticated: auth.get('isAuthenticated'),
-      isSubscriptionActive: user.getIn(['subscription', 'state'], false),
-      userOrders: user.get('orders'),
-      disableNewDatePicker: !auth.get('isAuthenticated'),
-      tempDate,
-      tempSlotId,
-      deliveryDays
-    }
-    const { slots } = getDeliveryDaysAndSlots(date, helperProps)
-    const unblockedSlots = slots[date].filter(slot => !slot.disabled)
-    const slotId = unblockedSlots[0] && unblockedSlots[0].value
-    dispatch(tempActions.temp('slotId', slotId))
-    dispatch(tempActions.temp('date', date))
-    dispatch(tempActions.temp('orderId', undefined))
-  } else {
+  if (orderId) {
     dispatch(tempActions.temp('date', date))
     dispatch(tempActions.temp('orderId', orderId))
+
+    return
   }
+
+  const nonValidatedDisabledSlots = getDisabledSlots(getState())
+  const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
+  const { auth, user } = getState()
+  const { tempDate, tempSlotId, deliveryDays } = getTempDeliveryOptions(getState())
+  const helperProps = {
+    disabledSlots,
+    isAuthenticated: auth.get('isAuthenticated'),
+    isSubscriptionActive: user.getIn(['subscription', 'state'], false),
+    userOrders: user.get('orders'),
+    disableNewDatePicker: !auth.get('isAuthenticated'),
+    tempDate,
+    tempSlotId,
+    deliveryDays
+  }
+  const { slots } = getDeliveryDaysAndSlots(date, helperProps)
+  const unblockedSlots = slots[date].filter(slot => !slot.disabled)
+  const slotId = unblockedSlots[0] && unblockedSlots[0].value
+  dispatch(tempActions.temp('slotId', slotId))
+  dispatch(tempActions.temp('date', date))
+  dispatch(tempActions.temp('orderId', undefined))
 }
 
 export default {
