@@ -202,6 +202,7 @@
       "^.+\\.(css|scss)$": "identity-obj-proxy"
     },
     "testPathIgnorePatterns": [
+      "./tests/",
       "libs/goustouicomponents"
     ],
     "transform": {
