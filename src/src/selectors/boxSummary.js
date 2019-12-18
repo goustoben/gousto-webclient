@@ -15,32 +15,32 @@ export const getBoxSummaryTextProps = (state, tempDate, tempSlotId, tempOrderId,
 
   let deliveryLocationText = address ? `Address: ${address.get('name')}` : `${postcode}`
   let slotId = tempSlotId
-  let chosenOrder
   let buttonText
   let showWarning = false
   buttonText = prevSlotId ? 'Update delivery date' : 'Continue'
   buttonText = shouldDisplayFullScreenBoxSummary ? 'Confirm date' : buttonText
-  if (tempOrderId) {
-    chosenOrder = userOrders.find(order => order.get('id') === tempOrderId, Immutable.Map())
 
-    const orderAddressName = chosenOrder.getIn(['shippingAddress', 'name'], null)
-    if (orderAddressName) {
-      deliveryLocationText = `Address: ${orderAddressName}`
-    }
-    try {
-      slotId = slots[tempDate].filter(slot => slot.coreSlotId === chosenOrder.get('deliverySlotId'))[0].value
-    } catch (err) {
-      // couldn't find slot id for that order on that date
-    }
+  if (!tempOrderId) {
+    return ({ deliveryLocationText, slotId, buttonText, showWarning })
+  }
 
-    const noOfRecipesInOrder = chosenOrder.get('recipeItems', Immutable.List()).size
-    if (noOfRecipesInOrder === 0) {
-      buttonText = 'Choose recipes'
-    } else {
-      buttonText = 'Edit recipes'
-      if (basketRecipeNo > 0) {
-        showWarning = true
-      }
+  const chosenOrder = userOrders.find(order => order.get('id') === tempOrderId, Immutable.Map())
+
+  const orderAddressName = chosenOrder.getIn(['shippingAddress', 'name'], null)
+  if (orderAddressName) {
+    deliveryLocationText = `Address: ${orderAddressName}`
+  }
+
+  const slotFind = slots[tempDate].filter(slot => slot.coreSlotId === chosenOrder.get('deliverySlotId'))
+  slotId = slotFind && slotFind.length && slotFind[0].value
+
+  const noOfRecipesInOrder = chosenOrder.get('recipeItems', Immutable.List()).size
+
+  buttonText = 'Choose recipes'
+  if (noOfRecipesInOrder > 0) {
+    buttonText = 'Edit recipes'
+    if (basketRecipeNo > 0) {
+      showWarning = true
     }
   }
 
