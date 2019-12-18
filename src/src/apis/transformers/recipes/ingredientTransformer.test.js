@@ -1,4 +1,4 @@
-import { ingredientTransformer, image } from './ingredientTransformer'
+import { ingredientTransformer } from './ingredientTransformer'
 
 describe('ingredientTransformer', () => {
   test('should return recipe data', () => {
