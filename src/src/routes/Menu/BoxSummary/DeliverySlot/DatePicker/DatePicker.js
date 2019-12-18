@@ -12,10 +12,10 @@ const DatePicker = (props) => {
     slots, slotId, deliveryDays, disableNewDatePicker, tempDate,
     tempSlotId, tempOrderId, setTempSlotId, handleDateChange, subLabelClassName
   } = props
-  const deliverySlotOptions = slots[tempDate] ? slots[tempDate] : []
+  const deliverySlotOptions = slots[tempDate] || []
 
-  return disableNewDatePicker ?
-    (
+  return disableNewDatePicker
+    ? (
       <div className={css.bsRow}>
         <div className={css.halfLeft}>
           <DropdownInput
@@ -39,8 +39,8 @@ const DatePicker = (props) => {
           />
         </div>
       </div>
-    ) :
-    (
+    )
+    : (
       <span>
         <div className={css.row}>
           <Calendar dates={deliveryDays} selected={tempDate} onClick={handleDateChange} />
@@ -58,8 +58,8 @@ DatePicker.propTypes = {
     value: PropTypes.string,
     coreSlotId: PropTypes.string,
     disabled: PropTypes.bool
-  }),
-  slotId: PropTypes.string,
+  }).isRequired,
+  slotId: PropTypes.string.isRequired,
   deliveryDays: PropTypes.arrayOf(PropTypes.shape({
     date: PropTypes.string,
     value: PropTypes.string,
@@ -70,16 +70,16 @@ DatePicker.propTypes = {
       PropTypes.oneOf([undefined])
     ]),
     orderEmpty: PropTypes.bool
-  })),
-  disableNewDatePicker: PropTypes.bool,
-  tempDate: PropTypes.string,
-  tempSlotId: PropTypes.string,
+  })).isRequired,
+  disableNewDatePicker: PropTypes.bool.isRequired,
+  tempDate: PropTypes.string.isRequired,
+  tempSlotId: PropTypes.string.isRequired,
   tempOrderId: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.oneOf([undefined])
-  ]),
-  subLabelClassName: PropTypes.string,
-  setTempSlotId: PropTypes.func,
-  handleDateChange: PropTypes.func
+  ]).isRequired,
+  subLabelClassName: PropTypes.string.isRequired,
+  setTempSlotId: PropTypes.func.isRequired,
+  handleDateChange: PropTypes.func.isRequired
 }
 export { DatePicker } 
