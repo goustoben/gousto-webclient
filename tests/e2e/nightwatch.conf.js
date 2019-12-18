@@ -11,7 +11,7 @@ cucumber({
 
 module.exports = {
   src_folders: [
-    'tests'
+    'tests/systemTests'
   ],
   output_folder: params.ARTIFACTS_PATH,
   page_objects_path: './pages',

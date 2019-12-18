@@ -7,7 +7,12 @@
     "test": "./node_modules/.bin/nightwatch --env=local:chrome",
     "test:mobile": "./node_modules/.bin/nightwatch --env=local:iphone6",
     "test:staging:web": "./node_modules/.bin/nightwatch --env=staging:chrome --verbose",
-    "test:staging:mobile": "./node_modules/.bin/nightwatch --env=staging:iphone6 --verbose"
+    "test:staging:mobile": "./node_modules/.bin/nightwatch --env=staging:iphone6 --verbose",
+    "test:cypress:debug": "./node_modules/.bin/cypress open",
+    "test:cypress:web": "CYPRESS_MEDIA=web ./node_modules/.bin/cypress run",
+    "test:cypress:mobile": "CYPRESS_MEDIA=mobile CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 ./node_modules/.bin/cypress run",
+    "test:staging:cypress:web": "CYPRESS_MEDIA=web ./node_modules/.bin/cypress run",
+    "test:staging:cypress:mobile": "CYPRESS_MEDIA=mobile CYPRESS_viewportWidth=375 CYPRESS_viewportHeight=667 ./node_modules/.bin/cypress run"
   },
   "author": "",
   "license": "ISC",
@@ -17,9 +22,12 @@
     "deepmerge": "^2.0.1",
     "faker": "^3.1.0",
     "immutable": "^3.8.1",
-    "randexp": "0.4.6",
     "nightwatch": "^0.9.9",
     "nightwatch-cucumber": "^8.2.10",
+    "randexp": "0.4.6",
     "selenium-download": "2.0.7"
+  },
+  "devDependencies": {
+    "cypress": "^3.7.0"
   }
 }
