@@ -120,15 +120,15 @@ const DeliveryStep = ({
     setTempSlotId(slotId)
   }
 
-  const onDayDropdownOpen = e => {
+  const onDayDropdownOpen = () => {
     trackDeliveryDayDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 
-  const onDayDropdownClose = e => {
+  const onDayDropdownClose = () => {
     trackDeliveryDayDropDownClosed(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 
-  const onSlotDropdownOpen = e => {
+  const onSlotDropdownOpen = () => {
     trackDeliverySlotDropDownOpened(tempDate, getDateOffset(tempDate), tempSlotId)
   }
 

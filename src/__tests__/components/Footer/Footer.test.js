@@ -3,7 +3,6 @@ import { shallow } from 'enzyme'
 
 import { AppStoreLinks } from 'components/AppStoreLinks'
 import css from 'components/Footer/Footer.css'
-import routesConfig from 'config/routes'
 import Footer from 'Footer/Footer'
 
 describe('<Footer />', () => {

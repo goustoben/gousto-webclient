@@ -105,11 +105,10 @@ const rules = {
 
 /**
  * Validation rules
- * @param formValues
  * @param formSectionName
  * @returns {{}}
  */
-export default formSectionName => formValues => (
+export default formSectionName => () => (
   addPrefix(formSectionName, {
     ...rules
   })

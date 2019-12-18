@@ -64,10 +64,9 @@ class Summary extends React.PureComponent {
   }
 
   render() {
-    const { prices, basketRecipes, browser, isLoading, routing, showAddPromocode } = this.props
+    const { prices, basketRecipes, isLoading, routing, showAddPromocode } = this.props
     const numRecipes = basketSum(basketRecipes)
 
-    const isMobile = browser === 'mobile'
     let currentStep
 
     if (routing && routing.locationBeforeTransitions) {

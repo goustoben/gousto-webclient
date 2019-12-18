@@ -1,7 +1,6 @@
 import { push } from 'react-router-redux'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
 import config from 'config/recipes'
-import { getAllRecipesCollectionId } from 'routes/Menu/selectors/filters'
 import { getCollectionDetailsBySlug } from 'selectors/collections'
 import actionTypes from './actionTypes'
 import {

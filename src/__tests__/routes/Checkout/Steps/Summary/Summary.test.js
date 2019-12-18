@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Immutable from 'immutable'
 import { shallow } from 'enzyme'
 
 import Summary from 'routes/Checkout/Components/Summary/Summary'
@@ -10,21 +9,8 @@ import Receipt from 'Receipt/Receipt'
 
 describe('Summary', () => {
   let wrapper
-  let store
 
   beforeEach(() => {
-    store = {
-      getState: () => ({
-        basket: {
-          get: () => {},
-        },
-        pricing: Immutable.Map({
-          prices: Immutable.Map({}),
-        }),
-      }),
-      subscribe: () => {},
-    }
-
     wrapper = shallow(<Summary />)
   })
 

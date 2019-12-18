@@ -77,7 +77,7 @@ const getItems = (basket) => {
 const pricingActions = {
   pricingRequest() {
     return async (dispatch, getState) => {
-      const { basket, boxSummaryDeliveryDays, auth, features, user } = getState()
+      const { basket, boxSummaryDeliveryDays, auth, user } = getState()
       const accessToken = auth.get('accessToken')
       const isAuthenticated = auth.get('isAuthenticated')
       const promoCode = basket.get('promoCode', false)

@@ -3,7 +3,6 @@ import React from 'react'
 import Immutable from 'immutable'
 import GoustoImage from 'Image'
 import OrderedRecipe from 'routes/Checkout/Components/RecipeSummary/OrderedRecipe'
-import css from 'routes/Checkout/Components/RecipeSummary/OrderedRecipe/OrderedRecipe.css'
 
 describe('OrderedRecipe', () => {
   const title = 'test'
@@ -11,8 +10,6 @@ describe('OrderedRecipe', () => {
   const stock = 1
   const media = Immutable.fromJS([''])
   const basics = ['test']
-  const pricePerServing = 5.0
-  const pricePerServingDiscounted = 3.83
 
   test('should return a div', () => {
     const wrapper = shallow(

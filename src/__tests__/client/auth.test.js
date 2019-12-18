@@ -1,18 +1,15 @@
 import sinon from 'sinon'
 
-import Immutable from 'immutable'
-
 import * as auth from 'client/auth'
 import * as clientAuthorise from 'utils/clientAuthorise'
 
 describe('client/auth', () => {
-  let store
-  let sandbox, authoriseStub
+  let sandbox
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create()
 
-    authoriseStub = sandbox
+    sandbox
       .stub(clientAuthorise, 'authorise')
       .returns(Promise.resolve('ok'))
   })

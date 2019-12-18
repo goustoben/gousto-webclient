@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Immutable from 'immutable'
-import Image from 'Image'
 import { Button } from 'goustouicomponents'
 import routes from 'config/routes'
 import Svg from 'Svg'

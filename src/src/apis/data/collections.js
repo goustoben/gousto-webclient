@@ -13,7 +13,7 @@ const createCollectionRecipesRequestData = (filters, idsOnly) => {
   return reqData
 }
 
-export const getCollections = async (accessToken, availableOn, includeJustForYou, useMenuService) => {
+export const getCollections = async (accessToken, availableOn, includeJustForYou) => {
   const reqData = {
     filters: {
       available_on: availableOn
@@ -27,19 +27,19 @@ export const getCollections = async (accessToken, availableOn, includeJustForYou
   }
 
   const { data } = await fetchCollections(accessToken, '', reqData)
-  
+
   return data
 }
 
-export const getCollectionRecipesForMenuId = async (accessToken, collectionId, menuId, idsOnly, useMenuService) => {
+export const getCollectionRecipesForMenuId = async (accessToken, collectionId, menuId, idsOnly) => {
   const reqData = createCollectionRecipesRequestData({ 'filters[menu_id]': menuId }, idsOnly)
-  
+
   const { data } = await fetchCollectionRecipes(accessToken, collectionId, reqData)
 
   return data
 }
 
-export const getCollectionRecipesForDate = async (accessToken, collectionId, date, idsOnly, useMenuService) => {
+export const getCollectionRecipesForDate = async (accessToken, collectionId, date, idsOnly) => {
   const reqData = createCollectionRecipesRequestData({ 'filters[available_on]': date }, idsOnly)
 
   const { data } = await fetchCollectionRecipes(accessToken, collectionId, reqData)

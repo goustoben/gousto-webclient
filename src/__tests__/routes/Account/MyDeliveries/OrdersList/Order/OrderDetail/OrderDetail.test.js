@@ -16,14 +16,6 @@ describe('OrderDetail', () => {
   const periodMap = Immutable.fromJS({
     id: 54
   })
-  const products = Immutable.fromJS([
-    {
-      id: '1'
-    },
-    {
-      id: '2'
-    },
-  ])
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create()

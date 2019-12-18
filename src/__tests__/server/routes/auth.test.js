@@ -1,4 +1,3 @@
-import Cookies from 'cookies-js'
 import { login, logout, refresh, identify, forget, validate } from 'server/routes/auth'
 import { getUserToken, refreshUserToken, validateUserPassword, identifyUser, forgetUserToken } from 'apis/auth'
 import { addSessionCookies, removeSessionCookies, getCookieValue } from 'server/routes/utils'

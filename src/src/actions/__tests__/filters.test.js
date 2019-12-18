@@ -1,6 +1,4 @@
 import Immutable from 'immutable'
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
 import actionTypes from 'actions/actionTypes'
 import { push } from 'react-router-redux'
 import { ALL_RECIPES_COLLECTION_ID } from 'config/collections'
