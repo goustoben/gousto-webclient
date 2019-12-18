@@ -71,13 +71,14 @@ describe('Delivery Slot Helper', () => {
 
   describe('getDeliveryDaysAndSlots', () => {
     let props
+    const dateToCheck = '2019-03-03'
     beforeEach(() => {
       props = {
         disabledSlots: ['2019-03-03_08-19', '2019-02-04_08-12'],
         isAuthenticated: true,
         isSubscriptionActive: 'inactive',
         tempDate: '2019-03-03',
-        userOrders: Immutable.List(),
+        userOrders: Immutable.Map(),
         tempSlotId: '',
         deliveryDays: Immutable.List([
           Immutable.Map({
@@ -101,34 +102,46 @@ describe('Delivery Slot Helper', () => {
         ])
       }
     })
-    test('should return a disabled slot when slot is in disabled list, user logged in and subscription paused', () => {
-      const dateToCheck = '2019-03-03'
-      const result = getDeliveryDaysAndSlots(dateToCheck, props)
-      const slotToCheck = result.slots[dateToCheck][0]
-      expect(slotToCheck.disabled).toEqual(true)
-    })
 
-    test('should NOT return a disabled slot when slot is in disabled list, user logged in but subscription is ACTIVE', () => {
-      const dateToCheck = '2019-03-03'
-      const newProps = { ...props, isSubscriptionActive: 'active' }
-      const result = getDeliveryDaysAndSlots(dateToCheck, newProps)
-      const slotToCheck = result.slots[dateToCheck][0]
-      expect(slotToCheck.disabled).toEqual(false)
-    })
+    describe('when slot is in disabled list', () => {
+      test('should return a disabled slot, user logged in and subscription paused', () => {
+        const result = getDeliveryDaysAndSlots(dateToCheck, props)
+        const slotToCheck = result.slots[dateToCheck][0]
+        expect(slotToCheck.disabled).toEqual(true)
+      })
 
-    test('should NOT return a disabled slot when slot is in disabled list but user NOT logged in', () => {
-      const dateToCheck = '2019-03-03'
-      const newProps = { ...props, isAuthenticated: false }
-      const result = getDeliveryDaysAndSlots(dateToCheck, newProps)
-      const slotToCheck = result.slots[dateToCheck][0]
-      expect(slotToCheck.disabled).toEqual(false)
-    })
+      describe('when user subscription is active', () => {
+        let result
+        beforeEach(() => {
+          const newProps = { ...props, isSubscriptionActive: 'active' }
+          result = getDeliveryDaysAndSlots(dateToCheck, newProps)
+        })
 
-    test('should NOT return a disabled slot when slot is NOT in disabled list', () => {
-      const dateToCheck = '2019-03-03'
-      const result = getDeliveryDaysAndSlots(dateToCheck, props)
-      const slotToCheck = result.slots[dateToCheck][1]
-      expect(slotToCheck.disabled).toEqual(false)
+        test('should NOT return a disabled slot', () => {
+          const slotToCheck = result.slots[dateToCheck][0]
+          expect(slotToCheck.disabled).toEqual(false)
+        })
+      })
+
+      describe('when user logged out', () => {
+        let result
+        beforeEach(() => {
+          const newProps = { ...props, isAuthenticated: false }
+          result = getDeliveryDaysAndSlots(dateToCheck, newProps)
+        })
+
+        test('should NOT return a disabled slot but user NOT logged in', () => {
+          const slotToCheck = result.slots[dateToCheck][0]
+          expect(slotToCheck.disabled).toEqual(false)
+        })
+      })
+    })
+    describe('when slot is NOT in disabled list', () => {
+      test('should NOT return a disabled slot', () => {
+        const result = getDeliveryDaysAndSlots(dateToCheck, props)
+        const slotToCheck = result.slots[dateToCheck][1]
+        expect(slotToCheck.disabled).toEqual(false)
+      })
     })
   })
 })

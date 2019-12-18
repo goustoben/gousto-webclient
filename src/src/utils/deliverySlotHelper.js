@@ -73,7 +73,6 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
   const deliveryDaysData = deliveryDaysFromProps.map(deliveryDay => {
     const date = deliveryDay.get('date')
     slots[date] = deliveryDay.get('slots').map(slot => {
-      // TODO: Write tests for the isSlotDisabled logic below
       const isSlotDisabled = disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')) ? true : false
 
       return {
