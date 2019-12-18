@@ -6,42 +6,30 @@ import DetailOverlay from '../DetailOverlay'
 
 import css from '../Menu.css'
 
-class RecipeGrid extends React.Component {
-  static propTypes = {
-    mobileGridView: PropTypes.bool,
-    showDetailRecipe: PropTypes.func,
-    menuCurrentCollectionId: PropTypes.string,
-    isClient: PropTypes.bool,
-    menuRecipeDetailShow: PropTypes.string,
-  }
+const RecipeGrid = ({ mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow }) => (
+  <div
+    className={css.menuContainer}
+    data-testing="menuRecipesList"
+  >
+    <RecipeList
+      mobileGridView={mobileGridView}
+      showDetailRecipe={showDetailRecipe}
+      menuCurrentCollectionId={menuCurrentCollectionId}
+    />
+    <p className={css.legal}>{menu.legal}</p>
+    <DetailOverlay
+      showOverlay={isClient}
+      menuRecipeDetailShow={menuRecipeDetailShow}
+    />
+  </div>
+)
 
-  render() {
-    const {
-      mobileGridView,
-      showDetailRecipe,
-      menuCurrentCollectionId,
-      isClient,
-      menuRecipeDetailShow,
-    } = this.props
-
-    return (
-      <div
-        className={css.menuContainer}
-        data-testing="menuRecipesList"
-      >
-        <RecipeList
-          mobileGridView={mobileGridView}
-          showDetailRecipe={showDetailRecipe}
-          menuCurrentCollectionId={menuCurrentCollectionId}
-        />
-        <p className={css.legal}>{menu.legal}</p>
-        <DetailOverlay
-          showOverlay={isClient}
-          menuRecipeDetailShow={menuRecipeDetailShow}
-        />
-      </div>
-    )
-  }
+RecipeGrid.propTypes = {
+  mobileGridView: PropTypes.bool,
+  showDetailRecipe: PropTypes.func,
+  menuCurrentCollectionId: PropTypes.string,
+  isClient: PropTypes.bool,
+  menuRecipeDetailShow: PropTypes.string,
 }
 
 export { RecipeGrid }
