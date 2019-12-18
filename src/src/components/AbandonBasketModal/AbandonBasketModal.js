@@ -11,6 +11,7 @@ import boxSummaryActions from 'actions/boxSummary'
 import { loadRecipes } from 'actions/recipes'
 import { getIsAuthenticated } from 'selectors/auth'
 import { getRecipes, getBoxSummaryDeliveryDays } from 'selectors/root'
+import { loadMenuServiceDataIfDeepLinked } from 'utils/menuService'
 import css from './AbandonBasketModal.css'
 
 class AbandonBasketModal extends PureComponent {
@@ -35,17 +36,12 @@ class AbandonBasketModal extends PureComponent {
     recipes: Immutable.Map(),
     orderDate: '',
     numPortions: 0,
-    isUserOrdersPending: true,
     trackAbandonBasketEligibility: () => { },
     trackAbandonBasketContinueToMenu: () => { }
   }
 
   static contextTypes = {
-    store: PropTypes.object.isRequired
-  }
-
-  state = {
-    showModal: false
+    store: PropTypes.instanceOf(Immutable.Map).isRequired
   }
 
   static fetchData = async ({ store }) => {
@@ -56,6 +52,9 @@ class AbandonBasketModal extends PureComponent {
       promises.push(store.dispatch(userActions.userLoadOrders()))
 
       if (!getBoxSummaryDeliveryDays(state).size) {
+        // defensive code to ensure menu load days works below for deeplinks
+        await loadMenuServiceDataIfDeepLinked(store)
+
         await store.dispatch(menuLoadDays())
         await store.dispatch(boxSummaryActions.boxSummaryDeliveryDaysLoad())
       }
@@ -66,6 +65,10 @@ class AbandonBasketModal extends PureComponent {
     }
 
     return Promise.all(promises)
+  }
+
+  state = {
+    showModal: false
   }
 
   async componentDidMount() {
@@ -130,7 +133,11 @@ class AbandonBasketModal extends PureComponent {
       <ModalPanel closePortal={this.closeModal} className={css.modalPanel}>
         <div className={css.modalContentWrapper}>
           <h2>We&#8217;ve saved your choices</h2>
-          <div className={css.modalContentSubTitle}>The recipes you chose are still available for delivery on the {moment(orderDate).format('Do MMMM')}:</div>
+          <div className={css.modalContentSubTitle}>
+            The recipes you chose are still available for delivery on the
+            {moment(orderDate).format('Do MMMM')}
+            :
+          </div>
           <div className={css.modalContentRecipes}>
             {recipeDetails.map(recipeDetail => {
               return (
