@@ -26,12 +26,12 @@ describe('router', () => {
   test('should 200 when given a known route', async () => {
     const ctx = {
       request: {
-        url: '/login',
-        path: '/login',
+        url: '/jobs',
+        path: '/jobs',
       },
       req: {
         headers: {
-          'user-agent': 'login',
+          'user-agent': 'jobs',
         },
       },
     }

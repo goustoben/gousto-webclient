@@ -1,7 +1,6 @@
 import {
   locationBeforeTransitions,
-  locationQuery,
-  locationAtMyGousto,
+  locationQuery
 } from '../routing'
 
 // Generates a store as it would look in envs other than local.
