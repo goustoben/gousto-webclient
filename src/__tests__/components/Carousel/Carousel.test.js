@@ -3,8 +3,6 @@ import { shallow } from 'enzyme'
 import Carousel from 'Carousel'
 import Slider from 'react-slick'
 
-import sinon from 'sinon'
-
 describe('Carousel', () => {
   test('should return div', () => {
     const wrapper = shallow(<Carousel />)

@@ -1,7 +1,5 @@
 import React from 'react'
 
-import sinon from 'sinon'
-
 import Title from 'Form/Calendar/Title'
 
 import { shallow } from 'enzyme'

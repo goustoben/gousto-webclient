@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import { shallow } from 'enzyme'
 import React from 'react'
 import Immutable from 'immutable'

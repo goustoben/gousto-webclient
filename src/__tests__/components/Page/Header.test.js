@@ -1,8 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import sinon from 'sinon'
-
 import { H1, H2, H3 } from 'Page/Header'
 
 describe('Header', () => {

@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import actionTypes from 'actions/actionTypes'
 import Immutable from 'immutable'
 import temp from 'reducers/temp'

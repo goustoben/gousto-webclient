@@ -1,8 +1,6 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import sinon from 'sinon'
-
 import Immutable from 'immutable'
 import ReceiptExtras from 'Receipt/ReceiptExtras/ReceiptExtras'
 import ReceiptLine from 'Receipt/ReceiptLine/ReceiptLine'

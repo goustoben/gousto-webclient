@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import { isActive, isSuspended, needsReactivating, isAdmin } from 'utils/auth'
 
 describe('auth utils', () => {

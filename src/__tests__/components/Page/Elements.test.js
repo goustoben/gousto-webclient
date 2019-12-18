@@ -1,8 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import sinon from 'sinon'
-
 import * as Elements from 'Page/Elements'
 
 describe('Page Elements', () => {

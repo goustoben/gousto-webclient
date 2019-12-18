@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 import NavBarItem from 'routes/Account/Account/NavBar/NavBarItem/NavBarItem'

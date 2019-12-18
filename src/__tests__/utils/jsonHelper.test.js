@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import { processJSON } from 'utils/jsonHelper'
 
 describe('JSON Helper', () => {

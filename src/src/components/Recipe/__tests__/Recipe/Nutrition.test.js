@@ -1,7 +1,5 @@
 import React from 'react'
 
-import sinon from 'sinon'
-
 import { shallow } from 'enzyme'
 
 import Nutrition from 'Recipe/Detail/Nutrition'

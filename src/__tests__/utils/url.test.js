@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import { slugify } from 'utils/url'
 
 describe('utils/url', () => {

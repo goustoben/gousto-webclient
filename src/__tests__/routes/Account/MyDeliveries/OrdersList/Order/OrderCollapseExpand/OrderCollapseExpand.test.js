@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 import OrderCollapseExpand from 'routes/Account/MyDeliveries/OrdersList/Order/OrderCollapseExpand'
