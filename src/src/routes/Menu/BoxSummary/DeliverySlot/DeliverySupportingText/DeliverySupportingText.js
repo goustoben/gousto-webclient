@@ -11,7 +11,7 @@ const DeliverySupportingText = ({ hasEmptyOrders, hasFullOrders, doesDateHaveDis
       <WarningExistingOrder tempDate={tempDate} />
     )
   }
-  let deliveryCopy
+  let deliveryCopy = 'You choose how often you would like to receive boxes after checkout.'
   if (hasFullOrders) {
     deliveryCopy = (
       <div>
@@ -19,9 +19,8 @@ const DeliverySupportingText = ({ hasEmptyOrders, hasFullOrders, doesDateHaveDis
         <span> Upcoming delivery – recipes chosen</span>
       </div>
     )
-  } else {
-    deliveryCopy = 'You choose how often you would like to receive boxes after checkout.'
   }
+
   let deliveryCopyEmpty
   if (hasEmptyOrders) {
     deliveryCopyEmpty = (
