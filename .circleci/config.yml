@@ -173,7 +173,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/eslint-results.json
+            - project/src/eslint-results.json
 
   code-analysis:
     docker: *gousto_build_image
