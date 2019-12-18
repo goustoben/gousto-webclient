@@ -430,6 +430,26 @@ const roundelsConfig = {
             "type": "headshot"
           }
         ]
+      },
+      {
+        "slug": "janyouary",
+        "name": "JanYOUary",
+        "images": [
+          {
+            "url": "https://production-media.gousto.co.uk/cms/headshot-image/602_Jan2020_MenuGels_JanYOUary_AW.png",
+            "type": "headshot"
+          }
+        ]
+      },
+      {
+        "slug": "febyouary",
+        "name": "FebYOUary",
+        "images": [
+          {
+            "url": "https://production-media.gousto.co.uk/cms/headshot-image/602_Jan2020_MenuGels_FebYOUary_AW.png",
+            "type": "headshot"
+          }
+        ]
       }
     ],
   }
