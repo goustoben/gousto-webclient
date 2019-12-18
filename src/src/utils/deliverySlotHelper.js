@@ -63,7 +63,7 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
   const {
     disabledSlots,
     isAuthenticated, isSubscriptionActive, tempDate, userOrders,
-    disableNewDatePicker, tempSlotId, deliveryDays: deliveryDaysFromProps
+    tempSlotId, deliveryDays: deliveryDaysFromProps
   } = props
   let hasOrders = false
   let hasFullOrders = false
@@ -107,7 +107,7 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
     let disabled = deliveryDay.get('alternateDeliveryDay') !== null
     let legacyData = {}
 
-    if (disableNewDatePicker) {
+    if (!isAuthenticated) {
       subLabelClassName = (hasOrdersToday) ? 'boxIcon' : ''
       legacyData = { label: moment(date).format('ddd D MMM'), ordered: hasOrdersToday }
       disabled = disabled || hasOrdersToday

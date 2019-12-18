@@ -78,7 +78,6 @@ describe('Delivery Slot Helper', () => {
         isSubscriptionActive: 'inactive',
         tempDate: '2019-03-03',
         userOrders: Immutable.List(),
-        disableNewDatePicker: false,
         tempSlotId: '',
         deliveryDays: Immutable.List([
           Immutable.Map({

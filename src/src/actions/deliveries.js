@@ -137,7 +137,6 @@ export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) =>
     isAuthenticated: auth.get('isAuthenticated'),
     isSubscriptionActive: user.getIn(['subscription', 'state'], false),
     userOrders: user.get('orders'),
-    disableNewDatePicker: !auth.get('isAuthenticated'),
     tempDate,
     tempSlotId,
     deliveryDays

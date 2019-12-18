@@ -5,6 +5,7 @@ import actions from 'actions'
 import actionTypes from 'actions/actionTypes'
 import { getDisabledSlots, getFullScreenBoxSummary } from 'selectors/features'
 import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
+import { getIsAuthenticated } from 'selectors/auth'
 import { getNumPortions, getBasketDate, getBasketPostcode } from 'selectors/basket'
 import { getBoxSummaryTextProps } from 'selectors/boxSummary'
 import DeliverySlot from './DeliverySlot'
@@ -28,7 +29,6 @@ function mapStateToProps(state) {
     menuPending: state.menuRecieveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
     prevSlotId: state.basket.get('prevSlotId'),
     userOrders: state.user.get('orders'),
-    disableNewDatePicker: !state.auth.get('isAuthenticated'),
     menuFetchDataPending: state.pending.get(actionTypes.MENU_FETCH_DATA, false),
     basketRecipeNo: state.basket.get('recipes', Immutable.Map({})).size,
     tempDate,
@@ -36,7 +36,7 @@ function mapStateToProps(state) {
     tempOrderId,
     numPortions: getNumPortions(state),
     disabledSlots,
-    isAuthenticated: state.auth.get('isAuthenticated'),
+    isAuthenticated: getIsAuthenticated(state),
     isSubscriptionActive: state.user.getIn(['subscription', 'state']),
     shouldDisplayFullScreenBoxSummary: getFullScreenBoxSummary(state),
     getBoxSummaryTextProps: (slots) => getBoxSummaryTextProps(state, tempDate, tempSlotId, tempOrderId, slots)
