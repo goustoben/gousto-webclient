@@ -212,7 +212,8 @@
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js}",
       "<rootDir>/server/**/*.{js}",
-      "!<rootDir>/src//scripts/**/*.{js}"
+      "!<rootDir>/src//scripts/**/*.{js}",
+      "!<rootDir>/src/**/config/*.{js}"
     ],
     "moduleDirectories": [
       "node_modules",
