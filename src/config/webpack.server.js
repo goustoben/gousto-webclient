@@ -29,7 +29,7 @@ const config = {
   target: 'node',
   entry: [
     'babel-polyfill',
-    './src/goustouicomponents.js',
+    './goustouicomponents.js',
     './server/main.js',
   ],
   output: {
@@ -50,7 +50,7 @@ const config = {
           fix: false
         },
         include: [
-          path.resolve(__dirname, '../src'),
+          path.resolve(__dirname, '../'),
           path.resolve(__dirname, '../server'),
         ],
       },
@@ -62,9 +62,9 @@ const config = {
           cacheDirectory: true,
         },
         include: [
-          path.resolve(__dirname, '../src'),
+          path.resolve(__dirname, '../'),
           path.resolve(__dirname, '../server'),
-          path.resolve(__dirname, '../libs/goustouicomponents/src'),
+          path.resolve(__dirname, '../../libs/goustouicomponents/src'),
         ],
       },
       {
@@ -139,12 +139,12 @@ const config = {
   ],
   resolve: {
     alias: {
-      spinkit: path.resolve(__dirname, '../node_modules/spinkit'),
+      spinkit: path.resolve(__dirname, '../../node_modules/spinkit'),
     },
     modules: [
-      path.resolve(__dirname, '../src'),
-      path.resolve(__dirname, '../src/components'),
-      path.resolve(__dirname, '../node_modules/spinkit'),
+      path.resolve(__dirname, '../'),
+      path.resolve(__dirname, '../components'),
+      path.resolve(__dirname, '../../node_modules/spinkit'),
     ],
     extensions: ['.js', '.json', '.css'],
   },

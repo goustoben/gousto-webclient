@@ -54,7 +54,7 @@ You can see the containers logs being redirected to this terminal (nginx and app
 ### [Local files needed](#local-files-needed)
 You will need to copy the `env.json.example` to `env.json` in `/src/config` with the correct values for your environment.
 
-You will also need to populate the checkout.com public key in `src/src/routes/Checkout/Components/CheckoutPayment/config.js`
+You will also need to populate the checkout.com public key in `src/routes/Checkout/Components/CheckoutPayment/config.js`
 
 Speak to members of your team to get these, or find them in circle ci.
 
@@ -128,7 +128,7 @@ brew install watchman
 
 ### Running End-To-End tests
 #### Local environment
-Ensure that you have local files set up as described in the [Local files needed](#local-files-needed) section, and that the [endpoint.js](https://github.com/Gousto/gousto-webclient/blob/develop/src/src/config/endpoint.js) file is pointing to the environment APIs that you wish to test against.
+Ensure that you have local files set up as described in the [Local files needed](#local-files-needed) section, and that the [endpoint.js](https://github.com/Gousto/gousto-webclient/blob/develop/src/config/endpoint.js) file is pointing to the environment APIs that you wish to test against.
 ```shell
 cd ~/code/goustowebclient/src
 yarn run build:e2e:local

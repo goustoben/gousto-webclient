@@ -77,11 +77,11 @@ const config = {
   entry: {
     main: [
       'babel-polyfill',
-      './src/client.js',
+      './client.js',
     ],
     legacy: [
       'babel-polyfill',
-      './src/legacy.js'
+      './legacy.js'
     ],
   },
   output: {
@@ -202,14 +202,14 @@ const config = {
   ],
   resolve: {
     alias: {
-      styles: path.resolve('./src/styles'),
-      jsdom: path.resolve('./fallbacks/jsdom')
+      styles: path.resolve(__dirname, '../styles'),
+      jsdom: path.resolve(__dirname, '../fallbacks/jsdom')
     },
     modules: [
-      path.resolve('./src'),
-      path.resolve('./src/components'),
-      path.resolve('./libs/goustouicomponents/src'),
-      path.resolve('./node_modules')
+      path.resolve(__dirname, '../'),
+      path.resolve(__dirname, '../components'),
+      path.resolve(__dirname, '../../libs/goustouicomponents/src'),
+      path.resolve(__dirname, '../../node_modules')
     ],
     extensions: ['.js', '.json', '.css', '.scss']
   },
