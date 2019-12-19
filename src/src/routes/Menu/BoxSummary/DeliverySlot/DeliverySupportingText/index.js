@@ -1,1 +1,0 @@
-export { DeliverySupportingText } from './DeliverySupportingText'
