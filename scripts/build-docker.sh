@@ -4,8 +4,6 @@
 ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
 echo "${ASSETS_BUCKET}"
 
-cd src
-
 # Sets env dependant variables
 envNameUppercase=$(echo $ENVIRONMENT | tr [a-z] [A-Z])
 checkoutComEnvName="CHECKOUTCOM_PK_$envNameUppercase"
