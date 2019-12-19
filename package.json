@@ -217,7 +217,7 @@
       "!<rootDir>/src/**/config/*.{js}"
     ],
     "moduleDirectories": [
-      "node_modules",
+      "<rootDir>/node_modules",
       "<rootDir>",
       "<rootDir>/src",
       "<rootDir>/src/components"
