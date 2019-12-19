@@ -20,18 +20,18 @@ jest.mock('../BoxSummary', () => ({
 jest.mock('routes/Menu/DetailOverlay', () => ('DetailOverlay'))
 jest.mock('routes/Menu/JustForYouTutorial')
 jest.mock('../RecipeMeta', () => ({
-  RecipeMeta: (props) => <div />
+  RecipeMeta: () => <div />
 }))
 jest.mock('../ThematicsPage', () => ({
-  ThematicsPage: (props) => 'FilteredRecipePage'
+  ThematicsPage: () => 'FilteredRecipePage'
 }))
 
 jest.mock('../FoodBrandPage', () => ({
-  FoodBrandPage: (props) => <div />
+  FoodBrandPage: () => <div />
 }))
 
 jest.mock('routes/Menu/MenuRecipes', () => ({
-  MenuRecipes: (props) => <div />
+  MenuRecipes: () => <div />
 }))
 
 jest.mock('react-lazyload', () => ({

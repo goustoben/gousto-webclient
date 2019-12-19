@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import auth from 'reducers/auth'
 import Immutable from 'immutable'
 

@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import temp from 'actions/temp'
 import actionTypes from 'actions/actionTypes'
 

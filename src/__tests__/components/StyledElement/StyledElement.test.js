@@ -1,7 +1,5 @@
 import React from 'react'
-import { shallow, mount, render } from 'enzyme'
-
-import sinon from 'sinon'
+import { shallow } from 'enzyme'
 
 import StyledElement from 'StyledElement'
 

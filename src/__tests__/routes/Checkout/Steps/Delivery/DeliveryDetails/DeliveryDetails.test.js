@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { shallow } from 'enzyme'
 import DeliveryDetailsComponent from 'routes/Checkout/Components/Delivery/DeliveryDetails/DeliveryDetails'

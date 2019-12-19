@@ -12,16 +12,6 @@ const generateRoutingStore = (path) => ({
   }
 })
 
-// Generates a store as it would look in local environment.
-const generateAlternateRoutingStore = (path) => ({
-  routing: {
-    locationBeforeTransitions: {
-      pathname: `/${path}`,
-      query: {},
-    }
-  }
-})
-
 describe('the routing selectors', () => {
   let store
   const PAGE_NAME = 'some-test-page'

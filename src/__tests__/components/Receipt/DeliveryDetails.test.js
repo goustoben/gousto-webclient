@@ -1,8 +1,6 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import sinon from 'sinon'
-
 import Immutable from 'immutable'
 import DeliveryDetails from 'Receipt/DeliveryDetails'
 

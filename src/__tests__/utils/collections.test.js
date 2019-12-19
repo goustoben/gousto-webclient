@@ -1,10 +1,7 @@
-import sinon from 'sinon'
-
 import Immutable from 'immutable'
 import {
   isAllRecipes,
   isDefault,
-  sortCollections,
   getCollectionIdWithName,
   getDefaultCollectionId,
 } from 'utils/collections'

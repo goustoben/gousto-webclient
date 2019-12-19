@@ -4,8 +4,6 @@ import Header from 'Overlay/Header'
 import Title from 'Overlay/Title'
 import CloseButton from 'Overlay/CloseButton'
 
-import sinon from 'sinon'
-
 describe('Overlay Header', () => {
   let wrapper
   let onClose

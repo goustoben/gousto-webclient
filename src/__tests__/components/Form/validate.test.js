@@ -1,5 +1,3 @@
-import React from 'react'
-
 import sinon from 'sinon'
 
 import validate from 'Form/validate'

@@ -2,7 +2,6 @@ import React from 'react'
 import sinon from 'sinon'
 import { shallow } from 'enzyme'
 
-import Link from 'Link'
 import CookieBanner from 'CookieBanner/CookieBanner'
 
 describe('CookieBanner', () => {

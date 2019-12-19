@@ -1,6 +1,4 @@
-import sinon from 'sinon'
-
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import React from 'react'
 import Immutable from 'immutable'
 import RecipeSummary from 'routes/Checkout/Components/RecipeSummary'

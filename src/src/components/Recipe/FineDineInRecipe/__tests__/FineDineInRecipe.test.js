@@ -7,9 +7,7 @@ import Immutable from 'immutable'
 import FineDineInRecipe from 'Recipe/FineDineInRecipe'
 
 describe('<FineDineInRecipe />', () => {
-  let wrapper
-    
-  const FINE_DINE_IN_RECIPE = <FineDineInRecipe 
+  const FINE_DINE_IN_RECIPE = <FineDineInRecipe
     id='id'
     cookingTime={1}
     features={Immutable.Map({})}
@@ -18,7 +16,7 @@ describe('<FineDineInRecipe />', () => {
   />
 
   beforeEach(() => {
-    wrapper = shallow(FINE_DINE_IN_RECIPE)
+    shallow(FINE_DINE_IN_RECIPE)
   })
 
   test('Render without crashing', () => {

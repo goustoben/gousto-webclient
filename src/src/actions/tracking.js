@@ -1,4 +1,4 @@
-/* global AWIN */
+// global AWIN
 import { getUserOrderById } from 'utils/user'
 import logger from 'utils/logger'
 import globals from 'config/globals'

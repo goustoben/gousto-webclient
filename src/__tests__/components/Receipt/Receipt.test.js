@@ -1,8 +1,6 @@
 import { shallow } from 'enzyme'
 import React from 'react'
 
-import sinon from 'sinon'
-
 import Immutable from 'immutable'
 import Receipt from 'Receipt/Receipt'
 import PromoCode from 'routes/Checkout/Components/PromoCode'

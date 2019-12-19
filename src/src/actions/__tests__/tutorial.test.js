@@ -9,7 +9,6 @@ import { tutorialViewedExpireTime } from 'config/cookies'
 import {
   shouldJfyTutorialBeVisible,
   setTutorialViewed,
-  incrementTutorialViewed,
   setTutorialVisible,
   tutorialTracking,
   persistTutorialViewed,

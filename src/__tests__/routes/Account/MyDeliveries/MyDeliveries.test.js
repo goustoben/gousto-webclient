@@ -1,6 +1,5 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import Immutable from 'immutable'
 
 import MyDeliveries from 'routes/Account/MyDeliveries/MyDeliveries'
 import userActions from 'actions/user'
@@ -14,11 +13,10 @@ describe('MyDeliveries', () => {
   const dispatchSpy = jest.fn()
   const getStateSpy = jest.fn()
   const context = { store: { dispatch: dispatchSpy, getState: getStateSpy } }
-  let wrapper
 
   describe('fetchOrdersAndAddresses', () => {
     beforeEach(() => {
-      wrapper = shallow(<MyDeliveries/>, { context })
+      shallow(<MyDeliveries/>, { context })
     })
 
     afterEach(() => {

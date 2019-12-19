@@ -1,8 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 
-import sinon from 'sinon'
-
 import Block from 'Page/Block'
 
 describe('Page Block', () => {

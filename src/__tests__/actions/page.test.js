@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import actionTypes from 'actions/actionTypes'
 import pageActions from 'actions/page'
 

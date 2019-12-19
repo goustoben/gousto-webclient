@@ -1,11 +1,8 @@
 import React from 'react'
 
-import sinon from 'sinon'
-
 import { shallow } from 'enzyme'
 
 import Rating from 'Recipe/Rating'
-import InfoBadge from 'Recipe/InfoBadge'
 
 describe('<Rating />', () => {
   let count

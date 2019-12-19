@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import { getColSizes } from 'styles/grid'
 
 describe('getColSizes', () => {

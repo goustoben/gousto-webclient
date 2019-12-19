@@ -2,7 +2,6 @@ import actions from 'actions/auth'
 import Immutable from 'immutable'
 import { redirect, documentLocation } from 'utils/window'
 
-const documentLocationMock = jest.fn()
 jest.mock('utils/window')
 
 describe('redirectLoggedInUser', () => {

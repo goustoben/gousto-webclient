@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, Route } from 'react-router'
+import { Route } from 'react-router'
 import routeConfig from 'config/routes'
 import SignupLayout from 'layouts/SignupLayout'
 import { isChoosePlanEnabled } from 'selectors/features'

@@ -214,7 +214,7 @@ describe('featuresLoadedFromStore', () => {
       },
     }
 
-    expect(featuresLoadedFromStore(featuresFailDisabled, store)).toBe(false)
+    expect(featuresLoadedFromStore(featuresFailSet, store)).toBe(false)
 
     const featuresFailFeatures = {
       enable: ['feature-1', 'feature-2'],

@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import React from 'react'
 import { Field } from 'redux-form'
 import { shallow } from 'enzyme'

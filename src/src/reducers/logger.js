@@ -1,4 +1,3 @@
-import {fromJS} from 'immutable'
 import actionTypes from 'actions/actionTypes'
 
 const logger = ( state = {uuid: ''}, action) => {

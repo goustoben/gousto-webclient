@@ -1,7 +1,5 @@
-import sinon from 'sinon'
-
 import React from 'react'
-import { shallow, mount } from 'enzyme'
+import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import DuplicateOrderModal from 'DuplicateOrderModal/DuplicateOrderModal'

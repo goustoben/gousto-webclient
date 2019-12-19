@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import dottify from 'utils/dottify'
 
 describe('dottify', () => {

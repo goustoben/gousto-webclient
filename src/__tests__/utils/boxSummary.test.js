@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import { getCurrentBoxSummaryView } from 'utils/boxSummary'
 import Immutable from 'immutable'
 

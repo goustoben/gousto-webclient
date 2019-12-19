@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import actionTypes from 'actions/actionTypes'
 import boxSummaryReducer from 'reducers/boxSummary'
 import Immutable from 'immutable'

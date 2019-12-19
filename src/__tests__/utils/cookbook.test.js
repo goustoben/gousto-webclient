@@ -1,5 +1,3 @@
-import sinon from 'sinon'
-
 import Immutable from 'immutable'
 import * as cookbookUtils from 'utils/cookbook'
 
