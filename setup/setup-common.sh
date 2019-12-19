@@ -28,6 +28,8 @@ CLOUDFRONT_URL=$(python /root/project/ci_scripts/describe_platform.py --name=con
 
 echo "CLOUDFRONT_URL: $CLOUDFRONT_URL"
 
+cd src
+
 # isomorphic: variables
 yarn config set gousto_webclient_environment_name "${ENVIRONMENT}"
 yarn config set gousto_webclient_domain "${DOMAIN}"
@@ -35,6 +37,8 @@ yarn config set gousto_webclient_client_protocol "${CLIENT_PROTOCOL}"
 yarn config set gousto_webclient_cloudfront_url "${CLOUDFRONT_URL}"
 
 yarn config set gousto_webclient_checkoutcom_pk "${CHECKOUTCOM_PK}"
+
+cd ../
 
 if [[ "$CLOUDFRONT_URL" =~ .*\.(gousto|s3|amazon)\.[a-z\.]*$ ]]
 then

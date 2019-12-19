@@ -29,19 +29,19 @@ jobs:
       - restore_cache:
           name: Restore isomorphic Yarn Package Cache
           keys:
-            - yarn-packages-isomorphic-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-isomorphic-v2-{{ .Branch }}-{{ checksum "src/yarn.lock" }}
             - yarn-packages-isomorphic-v2-{{ .Branch }}
             - yarn-packages-isomorphic-v2-master
             - yarn-packages-isomorphic-v2-
       - run:
           name: Install isomorphic yarn dependencies
-          command: yarn install
+          command: cd src && yarn install
 
       - save_cache:
           name: Save isomorphic Yarn Package Cache
-          key: yarn-packages-isomorphic-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: yarn-packages-isomorphic-v2-{{ .Branch }}-{{ checksum "src/yarn.lock" }}
           paths:
-            - node_modules/
+            - src/node_modules/
       - persist_to_workspace:
           root: ~/
           paths:
@@ -55,7 +55,7 @@ jobs:
           at: ~/
       - run:
           name: Run isomoprhic jest tests
-          command: yarn run test:jest:ci
+          command: cd src && yarn run test:jest:ci
       - persist_to_workspace:
           root: ~/
           paths:
@@ -69,11 +69,11 @@ jobs:
           at: ~/
       - run:
           name: Run isomoprhic jest tests with coverage
-          command: yarn run test:jest:ci:coverage
+          command: cd src && yarn run test:jest:ci:coverage
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/coverage/
+            - project/src/coverage/
 
   compare-code-health:
     docker: *gousto_build_image_docker

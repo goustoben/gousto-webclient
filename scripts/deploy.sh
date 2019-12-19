@@ -4,6 +4,8 @@
 ASSETS_BUCKET="s3-gousto-${ENVIRONMENT}-assets"
 echo "${ASSETS_BUCKET}"
 
+cd src
+
 # Sets env dependant variables
 envNameUppercase=$(echo $ENVIRONMENT | tr [a-z] [A-Z])
 checkoutComEnvName="CHECKOUTCOM_PK_$envNameUppercase"
@@ -43,5 +45,6 @@ yarn run upload -- --upload_dir=${CI_BUILD_NUMBER}
 
 	rm -rf node_modules
 
+	cd ..
 	# build service
 	python ./ci_scripts/deploy_service.py --service webclient

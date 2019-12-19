@@ -155,7 +155,7 @@ if (__HMR__) {
   const hotPort = port + 1
   const WebpackDevServer = require('webpack-dev-server')
   const webpack = require('webpack')
-  const config = require('../config/webpack.client.js')
+  const config = require('config/webpack.client.js')
   new WebpackDevServer(webpack(config), {
     port,
     hot: true,

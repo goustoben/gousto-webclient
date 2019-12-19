@@ -1,6 +1,6 @@
 import lookupService from '../../../server/service/addressLookup'
 import config from '../../../server/config/apis'
-jest.mock('utils/fetch')
+jest.mock('../../../src/utils/fetch')
 
 describe('server/service/addressLookup', () => {
   let fetchMock
@@ -13,7 +13,7 @@ describe('server/service/addressLookup', () => {
   }
 
   beforeEach(() => {
-    fetchMock = require('utils/fetch').default
+    fetchMock = require('../../../src/utils/fetch').default
     fetchMock.mockImplementation(() => dummyLookupResponse)
   })
 

@@ -6,24 +6,27 @@ build:
       context: .
       sync:
         manual:
-          - src: dist/**/*
+          - src: src/dist/**/*
             dest: dist
-            strip: dist/
-          - src: node_modules/**/*
+            strip: src/dist/
+          - src: src/node_modules/**/*
             dest: node_modules
-            strip: node_modules/
+            strip: src/node_modules/
           - src: src/config/**/*
             dest: config
             strip: src/config/
-          - src: public/**/*
+          - src: src/public/**/*
             dest: public
-            strip: public/
-          - src: process-docker.json
+            strip: src/public/
+          - src: src/process-docker.json
             dest: .
-          - src: manifest.json
+            strip: src/
+          - src: src/manifest.json
             dest: .
-          - src: ecs_start.sh
+            strip: src/
+          - src: src/ecs_start.sh
             dest: .
+            strip: src/
       docker:
         dockerfile: images/webclient/Dockerfile
     - image: local/webclient-webserver
