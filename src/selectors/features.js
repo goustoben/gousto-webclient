@@ -67,7 +67,7 @@ export const getWelcomePageAppPromo = ({ features }) => (
 )
 
 export const getPromoBannerEnabled = ({ features }) => (
-  features && features.getIn(['promoBanner', 'value'], false)
+  features && features.getIn(['promoBanner', 'value'], true)
 )
 
 export const getPromoBannerText = ({ features }) => (
