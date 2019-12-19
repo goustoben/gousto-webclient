@@ -35,7 +35,7 @@ jobs:
             - yarn-packages-isomorphic-v2-
       - run:
           name: Install isomorphic yarn dependencies
-          command: yarn install
+          command: cd src && yarn install
 
       - save_cache:
           name: Save isomorphic Yarn Package Cache
@@ -55,7 +55,7 @@ jobs:
           at: ~/
       - run:
           name: Run isomoprhic jest tests
-          command: yarn run test:jest:ci
+          command: cd src && yarn run test:jest:ci
       - persist_to_workspace:
           root: ~/
           paths:
@@ -69,7 +69,7 @@ jobs:
           at: ~/
       - run:
           name: Run isomoprhic jest tests with coverage
-          command: yarn run test:jest:ci:coverage
+          command: cd src && yarn run test:jest:ci:coverage
       - persist_to_workspace:
           root: ~/
           paths:
