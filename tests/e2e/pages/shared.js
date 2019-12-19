@@ -1,5 +1,5 @@
 const faker = require('faker')
-const webclient = require('../../../dist/webclient').default
+const webclient = require('../../../src/dist/webclient').default
 const Immutable = require('immutable')
 const RandExp = require('randexp')
 

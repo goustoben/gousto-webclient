@@ -13,16 +13,16 @@
     "start:dev": "nodemon dist/server.js -L",
     "start:devlocal": "nodemon dist/server.js",
     "start:hmr": "NODE_ENV=hmr yarn run build:server && yarn run start",
-    "watch:client": "webpack --watch --config src/config/webpack.client.js",
-    "watch:server": "webpack --watch --config src/config/webpack.server.js",
+    "watch:client": "webpack --watch --config config/webpack.client.js",
+    "watch:server": "webpack --watch --config config/webpack.server.js",
     "watch": "rm -rf dist/* && rm -rf public/* && run-p watch:client watch:server",
     "build:dev": "rm -rf dist/* && rm -rf public/* && run-p build:server build:client",
-    "build:client": "webpack --config src/config/webpack.client.js --config-name=client --bail",
-    "build:server": "webpack --config src/config/webpack.server.js --config-name=server --bail",
-    "build:client:prod": "rm -rf public/* && NODE_ENV=production webpack --config src/config/webpack.client.js --bail",
-    "build:server:prod": "rm -rf dist/* && NODE_ENV=production webpack --config src/config/webpack.server.js --bail",
-    "build:e2e": "NODE_ENV=staging webpack --config src/config/webpack.e2e.js --bail",
-    "build:e2e:local": "NODE_ENV=local webpack --config src/config/webpack.e2e.js --bail",
+    "build:client": "webpack --config config/webpack.client.js --config-name=client --bail",
+    "build:server": "webpack --config config/webpack.server.js --config-name=server --bail",
+    "build:client:prod": "rm -rf public/* && NODE_ENV=production webpack --config config/webpack.client.js --bail",
+    "build:server:prod": "rm -rf dist/* && NODE_ENV=production webpack --config config/webpack.server.js --bail",
+    "build:e2e": "NODE_ENV=staging webpack --config config/webpack.e2e.js --bail",
+    "build:e2e:local": "NODE_ENV=local webpack --config config/webpack.e2e.js --bail",
     "build": "rm -rf dist/* && rm -rf public/* && NODE_ENV=production run-p build:server build:client",
     "build:docker:dev": "rm -rf dist/* && rm -rf public/* && NODE_ENV=production npm_config_gousto_webclient_environment_name=local npm_config_gousto_webclient_domain=gousto.local run-p build:server build:client",
     "test:jest": "jest",
@@ -37,7 +37,7 @@
     "deploy": "yarn run deploy:sentry-upload && yarn run deploy:cleanup-assets",
     "upload": "gulp upload --cwd ./ --gulpfile node_modules/gousto-gulp/gulpfile.js/tasks/upload.js",
     "deploy:cleanup-assets": "cd public && rm -f *.js.map && cd ..",
-    "eslint": "node_modules/.bin/eslint ./src/"
+    "eslint": "node_modules/.bin/eslint ."
   },
   "dependencies": {
     "actual": "0.4.0",
@@ -202,13 +202,12 @@
       "^.+\\.(css|scss)$": "identity-obj-proxy"
     },
     "testPathIgnorePatterns": [
-      "./tests/",
       "libs/goustouicomponents"
     ],
     "transform": {
       "^.+\\.js?$": "babel-jest",
       "\\.(gql|graphql)$": "jest-transform-graphql",
-      "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/jest/.fileTransformer.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|ico|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/jest/.fileTransformer.js"
     },
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.{js}",
@@ -222,7 +221,7 @@
       "<rootDir>/src",
       "<rootDir>/src/components"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/src/jest/.setup.js",
+    "setupTestFrameworkScriptFile": "<rootDir>/jest/.setup.js",
     "globals": {
       "__DEV__": false,
       "__PROD__": true,

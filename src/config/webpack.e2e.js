@@ -29,7 +29,7 @@ const config = {
   target: 'node',
   entry: [
     'babel-polyfill',
-    './e2e.js',
+    './src/e2e.js',
   ],
   output: {
     path: path.resolve('./dist'),
@@ -47,7 +47,7 @@ const config = {
           cacheDirectory: true,
         },
         include: [
-          path.resolve(__dirname, '../'),
+          path.resolve(__dirname, '../src'),
           path.resolve(__dirname, '../server'),
         ],
       },
@@ -117,8 +117,8 @@ const config = {
   ],
   resolve: {
     modules: [
-      path.resolve(__dirname, '..'),
-      path.resolve(__dirname, '../components'),
+      path.resolve(__dirname, '../src'),
+      path.resolve(__dirname, '../src/components'),
     ],
     extensions: ['.js', '.json', '.css'],
   },
