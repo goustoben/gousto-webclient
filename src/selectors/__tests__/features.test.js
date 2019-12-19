@@ -135,13 +135,13 @@ describe('when features are defined', () => {
 
   describe('getPromoBannerEnabled', () => {
     describe('when feature is not set', () => {
-      test('should return false', () => {
-        expect(getPromoBannerEnabled(state)).toEqual(false)
+      test('should return true', () => {
+        expect(getPromoBannerEnabled(state)).toEqual(true)
       })
     })
 
-    describe('when feature is set', () => {
-      const value = true
+    describe('when feature is set to false', () => {
+      const value = false
 
       beforeEach(() => {
         state.features = Immutable.fromJS({
@@ -152,7 +152,7 @@ describe('when features are defined', () => {
       })
 
       test('should return value', () => {
-        expect(getPromoBannerEnabled(state)).toEqual(true)
+        expect(getPromoBannerEnabled(state)).toEqual(false)
       })
     })
   })
@@ -165,7 +165,7 @@ describe('when features are defined', () => {
     })
 
     describe('when feature is set', () => {
-      const value = 'Click here to get 30% off all boxes in your first month!'
+      const value = 'Click here to get 50% off your first box and 30% off all other boxes in your first month'
 
       beforeEach(() => {
         state.features = Immutable.fromJS({
