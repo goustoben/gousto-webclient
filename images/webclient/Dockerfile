@@ -8,8 +8,7 @@ RUN apt-get update && apt-get install -y \
     && pip install awscli --upgrade
 
 # APPLICATION RUNTIME DEPENDENCIES
-RUN npm install -g yarn \
-    && yarn global add pm2
+RUN yarn global add pm2
 
 # CREATE THE UNPRIVILEGED USER TO RUN PROCESSES
 RUN useradd -r -d /home/docker docker && usermod -aG sudo docker
