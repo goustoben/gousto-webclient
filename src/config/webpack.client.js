@@ -114,7 +114,7 @@ const config = {
           fix: false
         },
         include: [
-          path.resolve('./src')
+          path.resolve(__dirname, '../')
         ]
       },
       {
@@ -125,8 +125,8 @@ const config = {
           cacheDirectory: true,
         },
         include: [
-          path.resolve('./src'),
-          path.resolve('./libs/goustouicomponents/src')
+          path.resolve(__dirname, '../'),
+          path.resolve(__dirname, '../../libs/goustouicomponents/src'),
         ]
       },
       {
@@ -253,9 +253,7 @@ const config = {
 if (build === 'development') {
   config.devtool = 'source-map'
   config.plugins.push(
-    new SimpleProgressWebpackPlugin({ // Default options
-      format: 'compact'
-    }),
+    new SimpleProgressWebpackPlugin({ format: 'compact' }),
     new webpack.HotModuleReplacementPlugin()
   )
 } else if (build === 'production') {
@@ -264,6 +262,7 @@ if (build === 'development') {
   config.output.chunkFilename = '[name].bundle.[chunkhash].js'
 
   config.plugins.push(
+    new SimpleProgressWebpackPlugin({ format: 'expanded' }),
     new ExtractPlugin({ filename: '[name].[chunkhash].css', allChunks: true, ignoreOrder: true }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new TerserPlugin({
