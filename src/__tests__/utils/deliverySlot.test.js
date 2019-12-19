@@ -1,7 +1,8 @@
 import Immutable from 'immutable'
-import { toTimeRange, isAfterCutoff, getDateOffset, createNextDayDeliveryDays, formatDeliveryTime } from 'utils/deliverySlot'
+import { toTimeRange, isAfterCutoff, getDateOffset, createNextDayDeliveryDays } from 'utils/deliverySlot'
 
 describe('utils/deliverySlot', () => {
+
   describe('toTimeRange', () => {
     test('it should take in a deliverySlot and give out a time range', () => {
       const deliverySlot = Immutable.fromJS({
@@ -44,15 +45,6 @@ describe('utils/deliverySlot', () => {
       Date.now = jest.fn(() => new Date('2019-01-01T23:59:00').valueOf())
 
       expect(getDateOffset('2019-01-03')).toEqual(1)
-    })
-  })
-
-  describe('formatDeliveryTime', () => {
-    test('should return the time slot in the correct format', () => {
-      const startTime = '08:00:00'
-      const endTime = '19:00:00'
-      const tempDate = '2019-12-21'
-      expect(formatDeliveryTime(startTime, endTime, tempDate)).toEqual('8am - 7pm ')
     })
   })
 

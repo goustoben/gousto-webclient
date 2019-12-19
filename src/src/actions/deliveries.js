@@ -1,8 +1,5 @@
 import { basketSlotChange } from 'actions/basket'
-import tempActions from 'actions/temp'
 import { getSlot } from 'utils/deliveries'
-import { getDeliveryDaysAndSlots, formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
-import { getDisabledSlots } from 'selectors/features'
 import actionTypes from './actionTypes'
 
 export const trackDeliveryDayDropDownOpened = (date, day_offset, delivery_slot_id) => dispatch => {
@@ -106,7 +103,7 @@ export const trackDeliveryPreferenceModalClosed = (date, day_offset, delivery_sl
 export const preselectFreeDeliverySlot = (dispatch, getState) => {
   const slotId = getState().basket.get('slotId')
 
-  if (slotId) {
+  if (!!slotId) {
     return
   }
 
@@ -120,35 +117,6 @@ export const preselectFreeDeliverySlot = (dispatch, getState) => {
   dispatch(basketSlotChange(slotTimeId.get('id')))
 }
 
-export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) => {
-  if (orderId) {
-    dispatch(tempActions.temp('date', date))
-    dispatch(tempActions.temp('orderId', orderId))
-
-    return
-  }
-
-  const nonValidatedDisabledSlots = getDisabledSlots(getState())
-  const disabledSlots = formatAndValidateDisabledSlots(nonValidatedDisabledSlots)
-  const { auth, user } = getState()
-  const { tempDate, tempSlotId, deliveryDays } = getTempDeliveryOptions(getState())
-  const helperProps = {
-    disabledSlots,
-    isAuthenticated: auth.get('isAuthenticated'),
-    isSubscriptionActive: user.getIn(['subscription', 'state'], false),
-    userOrders: user.get('orders'),
-    tempDate,
-    tempSlotId,
-    deliveryDays
-  }
-  const { slots } = getDeliveryDaysAndSlots(date, helperProps)
-  const unblockedSlots = slots[date].filter(slot => !slot.disabled)
-  const slotId = unblockedSlots[0] && unblockedSlots[0].value
-  dispatch(tempActions.temp('slotId', slotId))
-  dispatch(tempActions.temp('date', date))
-  dispatch(tempActions.temp('orderId', undefined))
-}
-
 export default {
   trackDeliveryDayDropDownOpened,
   trackDeliveryDayDropDownClosed,
@@ -158,6 +126,5 @@ export default {
   trackDeliveryPreferenceModalViewed,
   trackDeliveryPreferenceSelected,
   trackDeliveryPreferenceModalClosed,
-  preselectFreeDeliverySlot,
-  setTempDeliveryOptions
+  preselectFreeDeliverySlot
 }
