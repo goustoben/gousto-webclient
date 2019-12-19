@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd src
-
 # isomorphic: build
 yarn run build
 
