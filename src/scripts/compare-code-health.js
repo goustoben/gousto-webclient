@@ -1,7 +1,9 @@
 /* eslint-disable */
+const readline = require('readline')
 const getCodeHealthBenchmark = require('./code-health-utils/get-benchmark-file')
 const getCodeHealth = require('./code-health-utils/get-code-health')
 const sanitiseFilePath = require('./code-health-utils/sanitise-file-path')
+const getFailureMessages = require('./code-health-utils/get-failure-messages')
 
 if (process.argv.length !== 5) {
   console.log('error! missing arguments')
@@ -11,94 +13,110 @@ if (process.argv.length !== 5) {
 
 const [, , argToken, argBranch, argCodeHealthFile] = process.argv
 
-const compareCoverage = (benchmark, codeHealth) => {
-  console.log('=== Comparing code coverage ===')
-  console.log(`Benchmark coverage: ${benchmark.coveragePercent.toFixed(3)}%`)
-  console.log(`New coverage: ${codeHealth.coveragePercent.toFixed(3)}%`)
-  console.log('')
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  terminal: false
+})
 
-  const difference = codeHealth.coveragePercent - benchmark.coveragePercent
+const parseGitDiffLine = (line) => {
+  const result = /^(\w{1})\s+(.+)$/.exec(line)
 
-  console.log(`Difference in coverage: ${difference.toFixed(3)}%`)
-  console.log('')
-
-  const pass = (difference >= 0)
-
-  if (pass) {
-    console.log(`Coverage did not decrease, check PASSED`)
-  } else {
-    console.log(`Coverage decreased, check FAILED`)
+  if (result === null) {
+    return null
   }
 
-  console.log('=== Finished comparing code coverage ===')
-  console.log('')
-
-  return pass
+  return {
+    status: result[1],
+    path: result[2]
+  }
 }
 
-const compareEslintResults = (benchmark, codeHealth) => {
-  if (Array.isArray(benchmark.lintResults) === false) {
-    console.log('No eslint results in benchmark, check PASSED')
-    return true
+const compareHealth = (status, path, benchmarkCodeHealth, newCodeHealth) => {
+  // skip deletions
+  if (status === 'D') {
+    return
   }
 
-  const increasedWarnings = []
+  const sanitisedPath = sanitiseFilePath(path)
+  const benchmark = benchmarkCodeHealth.files.find(f => f.path === sanitisedPath)
+  const newHealth = newCodeHealth.files.find(f => f.path === sanitisedPath)
 
-  codeHealth.lintResults.forEach(result => {
-    const sanitisedPath = sanitiseFilePath(result.filePath)
-    const benchmarkResult = benchmark.lintResults.find(b => b.filePath === sanitisedPath)
+  if (!newHealth) {
+    return null
+  }
 
-    if (!benchmarkResult) {
-      return
-    }
+  const details = {
+    path: sanitisedPath,
+    failures: getFailureMessages(benchmark, newHealth)
+  }
 
-    if (result.warningCount > benchmarkResult.warningCount) {
-      increasedWarnings.push({
-        filePath: sanitisedPath,
-        benchmarkWarningCount: benchmarkResult.warningCount,
-        newWarningCount: result.warningCount
-      })
-    }
-  })
+  if (details.failures.length === 0) {
+    return null
+  }
 
-  console.log('=== Comparing eslint warnings ===')
+  return details
+}
 
-  const pass = (increasedWarnings.length === 0)
+const printSuccess = () => {
+  console.log('No regressions in affected files, code health check passed!')
+}
 
-  if (pass) {
-    console.log('Warning count did not increase, check PASSED')
-  } else {
-    console.log('')
+const printFailures = (failures) => {
+  failures.forEach(failedFile => {
+    console.log(`${failedFile.path}:`)
 
-    increasedWarnings.forEach(warning => {
-      console.log(`File: ${warning.filePath}`)
-      console.log(`- Warnings increased from ${warning.benchmarkWarningCount} to ${warning.newWarningCount}`)
-
-      console.log('')
+    failedFile.failures.forEach(failure => {
+      console.log(` - ${failure}`)
     })
 
-    console.log('Warning count increased, check FAILED')
-  }
+    console.log('')
+  })
 
-  console.log('')
-  console.log('=== Finished comparing eslint warnings ===')
-
-  return pass
+  console.log(`Code health regressions in ${failures.length} files, code health check failed`)
 }
 
 const run = async () => {
   try {
-    const benchmarkCodeHeath = await getCodeHealthBenchmark(argToken, argBranch, argCodeHealthFile)
+    const benchmarkCodeHealth = await getCodeHealthBenchmark(argToken, argBranch, argCodeHealthFile)
+
+    if (!benchmarkCodeHealth.files) {
+      console.log('Benchmark is in old format, unable to compare health')
+      console.log('Exiting without failure')
+      process.exit(0)
+      return
+    }
+
     const newCodeHealth = getCodeHealth()
 
-    const codeCoverageCheckPass = compareCoverage(benchmarkCodeHeath, newCodeHealth)
-    const eslintCheckPass = compareEslintResults(benchmarkCodeHeath, newCodeHealth)
+    const failures = []
 
-    if (codeCoverageCheckPass && eslintCheckPass) {
-      process.exit(0)
-    } else {
-      process.exit(1)
-    }
+    rl.on('line', line => {
+      const parsed = parseGitDiffLine(line)
+
+      // skip this line if we can't parse it
+      if (parsed === null) {
+        return
+      }
+
+      const failure = compareHealth(parsed.status, parsed.path, benchmarkCodeHealth, newCodeHealth)
+
+      if (failure === null) {
+        return
+      }
+
+      failures.push(failure)
+    })
+
+    rl.on('close', () => {
+      if (failures.length === 0) {
+        printSuccess()
+        process.exit(0)
+      } else {
+        printFailures(failures)
+        process.exit(1)
+      }
+    })
   } catch (e) {
     console.log('error: ', e)
     console.log('exiting safely, couldn\'t perform checks')
