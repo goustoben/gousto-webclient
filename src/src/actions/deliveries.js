@@ -133,13 +133,13 @@ export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) =>
   const { auth, user } = getState()
   const { tempDate, tempSlotId, deliveryDays } = getTempDeliveryOptions(getState())
   const helperProps = {
-    deliveryDaysProps: disabledSlots,
+    disabledSlots,
     isAuthenticated: auth.get('isAuthenticated'),
     isSubscriptionActive: user.getIn(['subscription', 'state'], false),
     userOrders: user.get('orders'),
     tempDate,
     tempSlotId,
-    deliveryDays
+    deliveryDaysProps: deliveryDays
   }
   const { slots } = getDeliveryDaysAndSlots(date, helperProps)
   const unblockedSlots = slots[date].filter(slot => !slot.disabled)
