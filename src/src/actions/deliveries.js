@@ -133,7 +133,7 @@ export const setTempDeliveryOptions = (date, orderId) => (dispatch, getState) =>
   const { auth, user } = getState()
   const { tempDate, tempSlotId, deliveryDays } = getTempDeliveryOptions(getState())
   const helperProps = {
-    disabledSlots,
+    deliveryDaysProps: disabledSlots,
     isAuthenticated: auth.get('isAuthenticated'),
     isSubscriptionActive: user.getIn(['subscription', 'state'], false),
     userOrders: user.get('orders'),
