@@ -59,7 +59,7 @@ export class DropdownInput extends React.Component {
         label: (
           <span className={classNames(labelClassName, (option.labelClassName) ? option.labelClassName : '', { [css.disabled]: option.disabled })}>
             {option.label}
-            <span className={classNames(css.subLabel, subLabelClassName)}> {option.subLabel}</span>
+            <span className={classNames(css.subLabel, css[subLabelClassName])}> {option.subLabel}</span>
             {option.icon ? <span className={css[`icon-${option.icon}`]}></span> : null}
           </span>),
         disabled: option.disabled,
@@ -83,7 +83,7 @@ export class DropdownInput extends React.Component {
       [css.primary]: !error && color == 'primary',
       [css.secondary]: !error && color == 'secondary',
       [formsCss.inputError]: error,
-      [css.selectuppercase] : uppercase,
+      [css.selectuppercase]: uppercase,
     })
 
     return (
@@ -142,7 +142,7 @@ export class DropdownInput extends React.Component {
       [css.primary]: !error && color == 'primary',
       [css.secondary]: !error && color == 'secondary',
       [css.error]: error,
-      [css.selectuppercase] : uppercase,
+      [css.selectuppercase]: uppercase,
     })
 
     return (

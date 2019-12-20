@@ -3,17 +3,27 @@ import deliveries from 'actions/deliveries'
 import actionTypes from 'actions/actionTypes'
 import { basketSlotChange } from 'actions/basket'
 import { getSlot } from 'utils/deliveries'
+import { getTempDeliveryOptions, getDeliveryDaysAndSlots } from 'utils/deliverySlotHelper'
 
 jest.mock('utils/deliveries', () => ({
-  getSlot: jest.fn()
+  getSlot: jest.fn(),
 }))
 
 jest.mock('actions/basket', () => ({
   basketSlotChange: jest.fn()
 }))
 
-describe('delivery actions', () => {
+jest.mock('utils/deliverySlotHelper', () => ({
+  getTempDeliveryOptions: jest.fn(),
+  formatAndValidateDisabledSlots: jest.fn().mockReturnValue([]),
+  getDeliveryDaysAndSlots: jest.fn()
+}))
 
+jest.mock('selectors/features', () => ({
+  getDisabledSlots: jest.fn().mockReturnValue('')
+}))
+
+describe('delivery actions', () => {
   const dispatch = jest.fn()
 
   afterEach(() => {
@@ -182,6 +192,145 @@ describe('delivery actions', () => {
         deliveries.preselectFreeDeliverySlot(dispatch, getState)
         expect(basketSlotChange).toHaveBeenCalledWith('slotId')
       })
+    })
+  })
+
+  describe('setTempDeliveryOptions', () => {
+    let getState
+    beforeEach(() => {
+      getTempDeliveryOptions.mockReturnValue({
+        tempDate: '2019-03-03',
+        tempSlotId: '',
+        deliveryDays: Immutable.List([
+          Immutable.Map({
+            date: "2019-03-03",
+            id: "djhdhds",
+            slots: Immutable.List([
+              Immutable.Map({
+                deliveryStartTime: "08:00:00",
+                deliveryEndTime: "19:00:00",
+                id: "123sddrdfst456",
+                disabledSlotId: '2019-03-03_08-19'
+              }),
+              Immutable.Map({
+                deliveryStartTime: "18:00:00",
+                deliveryEndTime: "22:00:00",
+                id: "987sddrdfst456",
+                disabledSlotId: '2019-03-03_18-22'
+              })
+            ])
+          })
+        ])
+      })
+    })
+    test('should call setTempSlotId with the first slot in deliveryDays when first slot is not disabled', () => {
+      getState = () => ({
+        auth: Immutable.Map({
+          isAuthenticated: false,
+        }),
+        user: Immutable.fromJS({
+          subscription: {
+            state: ''
+          },
+          orders: []
+        })
+      })
+      getDeliveryDaysAndSlots.mockReturnValueOnce({
+        slots: {
+          '2019-03-03': [
+            {
+              coreSlotId: "1",
+              disabled: false,
+              label: "8am - 7pm ",
+              subLabel: "Free",
+              value: "123sddrdfst456",
+            },
+            {
+              coreSlotId: "2",
+              disabled: false,
+              label: "6pm - 10pm ",
+              subLabel: "Free",
+              value: "987sddrdfst456",
+            },
+          ]
+        }
+      })
+
+      deliveries.setTempDeliveryOptions('2019-03-03', '')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({ key: 'slotId', type: 'TEMP', value: '123sddrdfst456' })
+    })
+
+    test('should call setTempSlotId with the second slot in deliveryDays when first slot is disabled', () => {
+      getState = () => ({
+        auth: Immutable.Map({
+          isAuthenticated: false,
+        }),
+        user: Immutable.fromJS({
+          subscription: {
+            state: ''
+          },
+          orders: []
+        })
+      })
+      getDeliveryDaysAndSlots.mockReturnValue({
+        slots: {
+          '2019-03-03': [
+            {
+              coreSlotId: "1",
+              disabled: true,
+              label: "8am - 7pm ",
+              subLabel: "Free",
+              value: "123sddrdfst456",
+            },
+            {
+              coreSlotId: "2",
+              disabled: false,
+              label: "6pm - 10pm ",
+              subLabel: "Free",
+              value: "987sddrdfst456",
+            },
+          ]
+        }
+      })
+
+      deliveries.setTempDeliveryOptions('2019-03-03', '')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({ key: 'slotId', type: 'TEMP', value: '987sddrdfst456' })
+    })
+
+    test('should call setTempSlotId passing undefined when all slots are disabled', () => {
+      getState = () => ({
+        auth: Immutable.Map({
+          isAuthenticated: false,
+        }),
+        user: Immutable.fromJS({
+          subscription: {
+            state: ''
+          },
+          orders: []
+        })
+      })
+      getDeliveryDaysAndSlots.mockReturnValue({
+        slots: {
+          '2019-03-03': [
+            {
+              coreSlotId: "1",
+              disabled: true,
+              label: "8am - 7pm ",
+              subLabel: "Free",
+              value: "123sddrdfst456",
+            },
+            {
+              coreSlotId: "2",
+              disabled: true,
+              label: "6pm - 10pm ",
+              subLabel: "Free",
+              value: "987sddrdfst456",
+            },
+          ]
+        }
+      })
+      deliveries.setTempDeliveryOptions('2019-03-03', '')(dispatch, getState)
+      expect(dispatch).toHaveBeenCalledWith({ key: 'slotId', type: 'TEMP', value: undefined })
     })
   })
 })

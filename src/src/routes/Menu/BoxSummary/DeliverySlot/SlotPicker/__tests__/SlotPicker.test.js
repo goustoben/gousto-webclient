@@ -4,7 +4,7 @@ import React from 'react'
 import sinon from 'sinon'
 import { Button, Segment } from 'goustouicomponents'
 
-import SlotPicker from '../../DeliverySlot/SlotPicker/SlotPicker'
+import SlotPicker from '../SlotPicker'
 
 describe('SlotPicker', () => {
   let wrapper
@@ -85,7 +85,7 @@ describe('SlotPicker', () => {
     expect(onClick.callCount).toBe(1)
     expect(onClick.getCall(0).args[0]).toBe('234-234-234')
   })
-  
+
   test('should not render any lines when no slots are disabled', () => {
     expect(wrapper.find('.bigDisabledLine1').length).toEqual(0)
     expect(wrapper.find('.bigDisabledLine2').length).toEqual(0)
@@ -153,8 +153,9 @@ describe('SlotPicker', () => {
           slotId={slotId}
           onClick={onClick}
         />,
-      )})
-      
+      )
+    })
+
     test('should not call the onClick prop if slot is disabled', () => {
       wrapper
         .find(Segment)
@@ -162,8 +163,8 @@ describe('SlotPicker', () => {
         .simulate('click')
       expect(onClick.callCount).toBe(0)
     })
-    
-    test('should render one set of lines when one slot on one day is disabled', () => {          
+
+    test('should render one set of lines when one slot on one day is disabled', () => {
       expect(wrapper.find('.bigDisabledLine1').length).toEqual(1)
       expect(wrapper.find('.bigDisabledLine2').length).toEqual(1)
     })
