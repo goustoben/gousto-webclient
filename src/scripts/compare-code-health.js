@@ -109,13 +109,14 @@ const run = async () => {
     })
 
     rl.on('close', () => {
-      if (failures.length === 0) {
-        printSuccess()
-        process.exit(0)
-      } else {
+      if (failures.length > 0) {
         printFailures(failures)
         process.exit(1)
+        return
       }
+
+      printSuccess()
+      process.exit(0)
     })
   } catch (e) {
     console.log('error: ', e)
