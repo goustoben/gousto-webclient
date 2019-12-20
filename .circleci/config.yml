@@ -269,17 +269,17 @@ workflows:
                 - /^env-.*/
                 - develop
                 - master
-      - compare-code-health:
-          context: gousto-beta-aws-app-circleci
-          requires:
-            - test-isomorphic-jest-coverage
-            - eslint
-          filters:
-            branches:
-              ignore:
-                - /^env-.*/
-                - develop
-                - master
+#      - compare-code-health:
+#          context: gousto-beta-aws-app-circleci
+#          requires:
+#            - test-isomorphic-jest-coverage
+#            - eslint
+#          filters:
+#            branches:
+#              ignore:
+#                - /^env-.*/
+#                - develop
+#                - master
 
   development-environment:
     jobs:
