@@ -80,7 +80,7 @@ describe('Delivery Slot Helper', () => {
         tempDate: '2019-03-03',
         userOrders: Immutable.Map(),
         tempSlotId: '',
-        deliveryDays: Immutable.List([
+        deliveryDaysProps: Immutable.List([
           Immutable.Map({
             date: "2019-03-03",
             id: "djhdhds",
@@ -141,6 +141,51 @@ describe('Delivery Slot Helper', () => {
         const result = getDeliveryDaysAndSlots(dateToCheck, props)
         const slotToCheck = result.slots[dateToCheck][1]
         expect(slotToCheck.disabled).toEqual(false)
+      })
+
+      describe('when user has order with recipes', () => {
+        let result
+        beforeEach(() => {
+          const newProps = {
+            ...props,
+            userOrders: Immutable.fromJS({
+              1234: {
+                id: '1234',
+                deliveryDate: '2019-03-03',
+                recipeItems: [{
+                  id: 1,
+                },
+                {
+                  id: 2,
+                }]
+              }
+            }),
+          }
+          result = getDeliveryDaysAndSlots(dateToCheck, newProps)
+        })
+        test('should return icon full-box', () => {
+          expect(result.deliveryDays[0].icon).toEqual('full-box')
+        })
+      })
+
+      describe('when user has order with no recipes', () => {
+        let result
+        beforeEach(() => {
+          const newProps = {
+            ...props,
+            userOrders: Immutable.fromJS({
+              1234: {
+                id: '1234',
+                deliveryDate: '2019-03-03',
+                recipeItems: []
+              }
+            }),
+          }
+          result = getDeliveryDaysAndSlots(dateToCheck, newProps)
+        })
+        test('should return icon full-box', () => {
+          expect(result.deliveryDays[0].icon).toEqual('empty-box')
+        })
       })
     })
   })

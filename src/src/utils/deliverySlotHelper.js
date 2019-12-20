@@ -62,15 +62,16 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
   const slots = {}
   const {
     disabledSlots,
-    isAuthenticated, isSubscriptionActive, tempDate, userOrders,
-    tempSlotId, deliveryDays: deliveryDaysFromProps
+    isAuthenticated, isSubscriptionActive,
+    tempDate, userOrders,
+    tempSlotId, deliveryDaysProps
   } = props
   let hasOrders = false
   let hasFullOrders = false
   let hasEmptyOrders = false
   let subLabelClassName = ''
 
-  const deliveryDaysData = deliveryDaysFromProps.map(deliveryDay => {
+  const deliveryDaysData = deliveryDaysProps && deliveryDaysProps.map(deliveryDay => {
     const date = deliveryDay.get('date')
     slots[date] = deliveryDay.get('slots').map(slot => {
       const isSlotDisabled = disabledSlots && disabledSlots.includes(slot.get('disabledSlotId')) ? true : false
@@ -89,13 +90,14 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
     ).map(order => order.get('id'))
 
     const hasOrdersToday = orderIds.length > 0
-    let icon = hasOrdersToday > 0 ? 'full-box' : ''
-    const orderId = hasOrdersToday > 0 ? orderIds[0] : ''
+
+    let icon = hasOrdersToday ? 'full-box' : ''
+    const orderId = hasOrdersToday ? orderIds[0] : ''
 
     if (orderId) {
       const recipeItemsSize = userOrders.find(order => order.get('id') === orderId).get('recipeItems').size
       hasFullOrders = recipeItemsSize > 0
-      icon = recipeItemsSize === 0 ? 'empty-box' : ''
+      icon = recipeItemsSize === 0 ? 'empty-box' : icon
       hasEmptyOrders = recipeItemsSize === 0
     }
 
@@ -123,7 +125,7 @@ export const getDeliveryDaysAndSlots = (newDate, props) => {
     }
   })
 
-  const deliveryDays = deliveryDaysData.toArray().sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
+  const deliveryDays = deliveryDaysData && deliveryDaysData.toArray().sort((a, b) => moment.utc(a.value).diff(moment.utc(b.value)))
 
   let chosen
   if (slots[newDate]) {
