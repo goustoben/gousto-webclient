@@ -3,10 +3,10 @@ import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
 import Overlay from 'Overlay'
-import Detail from 'Recipe/Detail'
+import Detail from 'routes/Menu/Recipe/Detail'
 import DetailOverlay from 'routes/Menu/DetailOverlay/DetailOverlay'
 
-jest.mock('Recipe/Detail')
+jest.mock('routes/Menu/Recipe/Detail')
 
 describe('DetailOverlay', () => {
   let wrapper
@@ -37,7 +37,7 @@ describe('DetailOverlay', () => {
     wrapper = shallow(
       <DetailOverlay
         showOverlay
-        menuRecipeDetailShow={'1'}
+        menuRecipeDetailShow="1"
         recipesStore={recipesStore}
         numPortions={2}
         stock={stock}
@@ -45,7 +45,6 @@ describe('DetailOverlay', () => {
     )
 
     Detail.mockReturnValue(<div />)
-
   })
 
   test('should render 1 Overlay', () => {
@@ -61,7 +60,7 @@ describe('recipe detail overlay', () => {
   const wrapper = shallow(
     <DetailOverlay
       showOverlay={false}
-      menuRecipeDetailShow={'3231'}
+      menuRecipeDetailShow="3231"
       recipesStore={Immutable.Map({})}
       numPortions={2}
       stock={Immutable.Map({})}

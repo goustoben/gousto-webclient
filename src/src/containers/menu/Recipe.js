@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { connect } from 'react-redux'
-import Recipe from 'Recipe'
+import Recipe from 'routes/Menu/Recipe'
 import { isNew } from 'utils/recipe'
 import { filterRecipeGrouping } from 'actions/filters'
 import { getRecipeGroupFilter } from 'selectors/filters'
