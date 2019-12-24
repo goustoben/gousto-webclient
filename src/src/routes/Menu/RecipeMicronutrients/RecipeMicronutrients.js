@@ -16,12 +16,12 @@ const RecipeMicronutrients = ({ micronutrients, inset }) => {
           </tr>
         </thead>
         <tbody>
-          {micronutrients.map(({ name, nrv_percent, content }) => {
+          {micronutrients.map((micronutrient) => {
             return (
               <tr className={css.tableBorder}>
-                <td className={css.tablePadding}>{name}</td>
-                <td className={css.tablePadding}>{nrv_percent}</td>
-                <td className={css.tablePadding}>{content.amount} {content.unit}</td>
+                <td className={css.tablePadding}>{micronutrient.get('name')}</td>
+                <td className={css.tablePadding}>{micronutrient.get('nrvPercent')}</td>
+                <td className={css.tablePadding}>{micronutrient.getIn(['content', 'amount'])} {micronutrient.getIn(['content', 'unit'])}</td>
               </tr>
             )
           })}
