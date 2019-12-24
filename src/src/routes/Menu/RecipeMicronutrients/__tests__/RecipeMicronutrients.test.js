@@ -1,18 +1,19 @@
 import React from 'react'
 import { shallow } from 'enzyme'
+import Immutable from 'immutable'
 import { RecipeMicronutrients } from '../RecipeMicronutrients'
 
 describe('RecipeMicronutrients', () => {
   let wrapper
   describe('when the recipe contains micronutrients', () => {
-    const micronutrients = [
+    const micronutrients = Immutable.fromJS([
       {
         "name": "Iron",
         "content": {
           "amount": 6.5,
           "unit": "µg"
         },
-        "nrv_percent": 46.4
+        "nrvPercent": 46.4
       },
       {
         "name": "Magnesium",
@@ -20,9 +21,9 @@ describe('RecipeMicronutrients', () => {
           "amount": 197.5,
           "unit": "mg"
         },
-        "nrv_percent": 52.7
+        "nrvPercent": 52.7
       }
-    ]
+    ])
 
     beforeEach(() => {
       wrapper = shallow(
