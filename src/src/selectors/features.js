@@ -90,6 +90,10 @@ export const getAddOnsBeforeOrderConfirmation = ({ features }) => (
   features && features.getIn(['addOnsBeforeOrderConfirmation', 'value'], false)
 )
 
+export const getShowUserCredit = ({ features }) => (
+  features && features.getIn(['showUserCredit', 'value'], false)
+)
+
 export const getMenuService = () => {
   if (menuServiceConfig.isEnabled) {
     return true

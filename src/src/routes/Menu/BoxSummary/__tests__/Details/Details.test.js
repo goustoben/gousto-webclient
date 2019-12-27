@@ -69,9 +69,11 @@ describe('Details', () => {
       onRemove: () => { },
       view: 'mobile'
     }
+
     beforeEach(() => {
       wrapper = shallow(<Details {...props} />)
     })
+
     test('should render mobile view', () => {
       expect(wrapper.find('.supercontainermobile').exists()).toBe(true)
     })
@@ -114,6 +116,10 @@ describe('Details', () => {
       test('should render Receipt', () => {
         expect(wrapper.find('Receipt').exists()).toBe(true)
       })
+    })
+
+    describe('when the showUserCredit flag is enabled', () => {
+
     })
 
     describe('Details cta buttons', () => {
