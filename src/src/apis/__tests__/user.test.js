@@ -1,5 +1,28 @@
 import { fetch } from 'utils/fetch'
-import { applyPromo, fetchReferralOffer, fetchPromo, fetchUser, fetchShippingAddresses, fetchUserOrders, fetchUserOrdersNew, fetchUserProjectedDeliveries, saveUserOrder, updateUserOrder, skipDelivery, restoreDelivery, reactivate, userRateCount, checkDuplicateUser, verifyAge, referralDetails, referAFriend, addPaymentMethod, fetchUserAddresses, deleteMarketingSubscription } from '../user'
+import {
+  applyPromo,
+  fetchReferralOffer,
+  fetchPromo,
+  fetchUser,
+  fetchShippingAddresses,
+  fetchUserCredit,
+  fetchUserOrders,
+  fetchUserOrdersNew,
+  fetchUserProjectedDeliveries,
+  saveUserOrder,
+  updateUserOrder,
+  skipDelivery,
+  restoreDelivery,
+  reactivate,
+  userRateCount,
+  checkDuplicateUser,
+  verifyAge,
+  referralDetails,
+  referAFriend,
+  addPaymentMethod,
+  fetchUserAddresses,
+  deleteMarketingSubscription
+} from '../user'
 
 const mockFetchResult = { data: [1, 2, 3] }
 jest.mock('utils/fetch', () => ({
@@ -35,6 +58,21 @@ jest.mock('config/routes', () => ({
 describe('user api', () => {
   beforeEach(() => {
     fetch.mockClear()
+  })
+
+  describe('fetchUserCredit', () => {
+    test('should fetch the correct url', async () => {
+      const accessToken = 'token'
+
+      await fetchUserCredit(accessToken)
+      expect(fetch).toHaveBeenCalledTimes(1)
+      expect(fetch).toHaveBeenCalledWith(accessToken, `endpoint-core/user/current/balance`, {}, 'GET')
+    })
+
+    test('should return the results of the fetch unchanged', async () => {
+      const result = await fetchUserCredit('token')
+      expect(result).toEqual(mockFetchResult)
+    })
   })
 
   describe('applyPromo', () => {
