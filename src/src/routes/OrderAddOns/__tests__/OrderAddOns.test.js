@@ -181,9 +181,10 @@ describe('the OrderAddOns component', () => {
           wrapper.find('OrderAddOnsFooter').find('.ContinueButton').simulate('click')
         })
 
-        test('redirects to the order confirmation page', () => {
-          const { orderConfirmationRedirect, orderId } = mockProps
-          expect(orderConfirmationRedirect).toHaveBeenCalledWith(orderId, mockProps.orderAction)
+        test('showError is passed correctly to the footer', () => {
+          expect(
+            wrapper.find('OrderAddOnsFooter').prop('showError')
+          ).toBe(true)
         })
       })
     })

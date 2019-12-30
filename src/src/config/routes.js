@@ -172,5 +172,6 @@ module.exports = {
   zendesk: {
     link: 'https://gousto.zendesk.com/hc/en-gb/requests/new',
     faqs: 'https://gousto.zendesk.com/hc/en-gb',
+    contactUs: 'https://gousto.zendesk.com/hc/en-gb/articles/360034974753-Contact-us',
   },
 }

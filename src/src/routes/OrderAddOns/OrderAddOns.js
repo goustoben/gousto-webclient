@@ -47,6 +47,10 @@ const defaultProps = {
 }
 
 class OrderAddOns extends React.Component {
+  state = {
+    showError: false,
+  }
+
   componentDidMount() {
     const { orderDetails, orderId } = this.props
 
@@ -94,7 +98,9 @@ class OrderAddOns extends React.Component {
         this.continueWithoutProducts()
       }
     } catch (err) {
-      this.continueWithoutProducts()
+      this.setState({
+        showError: true,
+      })
     }
   }
 
@@ -109,6 +115,7 @@ class OrderAddOns extends React.Component {
       orderId,
       trackSkipOrderAddOnsClick
     } = this.props
+    const { showError } = this.state
 
     const numberOfProducts = Object.keys(products).length
     const areProductsSelected = basket.get('products').size
@@ -136,7 +143,7 @@ class OrderAddOns extends React.Component {
             />
           </LayoutPageWrapper>
 
-          <OrderAddOnsFooter>
+          <OrderAddOnsFooter showError={showError}>
             <CTA
               className="ContinueButton"
               extraInfo={areProductsSelected ? formattedProductsCost : null}
