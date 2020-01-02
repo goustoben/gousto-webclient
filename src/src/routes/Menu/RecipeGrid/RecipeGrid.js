@@ -6,13 +6,12 @@ import DetailOverlay from '../DetailOverlay'
 
 import css from '../Menu.css'
 
-const RecipeGrid = ({ mobileGridView, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow }) => (
+const RecipeGrid = ({ showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow }) => (
   <div
     className={css.menuContainer}
     data-testing="menuRecipesList"
   >
     <RecipeList
-      mobileGridView={mobileGridView}
       showDetailRecipe={showDetailRecipe}
       menuCurrentCollectionId={menuCurrentCollectionId}
     />
@@ -25,7 +24,6 @@ const RecipeGrid = ({ mobileGridView, showDetailRecipe, menuCurrentCollectionId,
 )
 
 RecipeGrid.propTypes = {
-  mobileGridView: PropTypes.bool,
   showDetailRecipe: PropTypes.func,
   menuCurrentCollectionId: PropTypes.string,
   isClient: PropTypes.bool,

@@ -6,18 +6,17 @@ import Immutable from 'immutable'
 import { CTAToAllRecipes } from 'routes/Menu/Recipe/CTAToAllRecipes'
 import { CTAThematic } from 'routes/Menu/Recipe/CTAThematic'
 import GridRecipe from 'routes/Menu/Recipe/GridRecipe'
-import SmallRecipe from 'routes/Menu/Recipe/SmallRecipe'
 import SimpleRecipe from 'routes/Menu/Recipe/SimpleRecipe'
 import FeaturedRecipe from 'routes/Menu/Recipe/FeaturedRecipe'
 import FineDineInRecipe from 'routes/Menu/Recipe/FineDineInRecipe'
-import css from './Recipe.css'
+import css from 'routes/Menu/Recipe/Recipe.css'
 
 const recipePropTypes = {
   title: PropTypes.string.isRequired,
   media: PropTypes.instanceOf(Immutable.List),
   onClick: PropTypes.func,
   stock: PropTypes.number,
-  view: PropTypes.oneOf(['grid', 'gridSmall', 'list', 'featured', 'simple', 'fineDineIn', 'ctaAllRecipe', 'ctaThematic']).isRequired,
+  view: PropTypes.oneOf(['grid', 'list', 'featured', 'simple', 'fineDineIn', 'ctaAllRecipe', 'ctaThematic']).isRequired,
   surcharge: PropTypes.number,
   range: PropTypes.instanceOf(Immutable.Map),
   collectionFilterChange: PropTypes.func,
@@ -47,8 +46,6 @@ class Recipe extends React.PureComponent {
     const { detailHover } = this.state
 
     switch (view) {
-    case 'gridSmall':
-      return <SmallRecipe {...this.props} />
     case 'featured':
       return <FeaturedRecipe {...this.props} highlight={this.highlight} unhighlight={this.unhighlight} detailHover={detailHover} />
     case 'simple':

@@ -13,14 +13,12 @@ const propTypes = {
   fadeCss: PropTypes.string,
   showLoading: PropTypes.bool,
   filteredRecipesNumber: PropTypes.number,
-  mobileGridView: PropTypes.bool,
   menuCurrentCollectionId: PropTypes.string,
   menuRecipeDetailShow: PropTypes.string,
   orderId: PropTypes.string,
   isClient: PropTypes.bool,
   showDetailRecipe: PropTypes.func,
   setThematic: PropTypes.func,
-  toggleGridView: PropTypes.func,
   selectCurrentCollection: PropTypes.func,
   detailVisibilityChange: PropTypes.func
 }
@@ -79,20 +77,17 @@ class MenuRecipes extends PureComponent {
       fadeCss,
       showLoading,
       filteredRecipesNumber,
-      mobileGridView,
       menuCurrentCollectionId,
       menuRecipeDetailShow,
       isClient,
       showDetailRecipe,
       orderId,
-      toggleGridView,
     } = this.props
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
         {this.renderBanner(menu.janyouary.switchoverDateWeek1, menu.janyouary.switchoverDateWeek2, menu.janyouary.switchoverDateWeek3)}
         <SubHeader
-          onToggleGridView={toggleGridView}
           orderId={orderId}
         />
         <Loading loading={showLoading} />
@@ -100,7 +95,6 @@ class MenuRecipes extends PureComponent {
           <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}
         {filteredRecipesNumber ?
           <RecipeGrid
-            mobileGridView={mobileGridView}
             showDetailRecipe={showDetailRecipe}
             menuCurrentCollectionId={menuCurrentCollectionId}
             menuRecipeDetailShow={menuRecipeDetailShow}

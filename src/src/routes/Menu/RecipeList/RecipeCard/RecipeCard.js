@@ -7,13 +7,9 @@ import { getFeaturedImage } from 'utils/image'
 import { formatRecipeTitle, getFoodBrand } from 'utils/recipe'
 import { isRecommendedRecipe } from 'utils/menu'
 
-const getRecipeView = (mobileGridView, isFeatured, isFineDineIn) => {
+const getRecipeView = (isFeatured, isFineDineIn) => {
   if (typeof (window) !== 'undefined' && window.innerWidth < 1025) {
     return 'grid'
-  }
-
-  if (mobileGridView) {
-    return 'gridSmall'
   }
 
   if (isFeatured) {
@@ -28,7 +24,7 @@ const getRecipeView = (mobileGridView, isFeatured, isFineDineIn) => {
 }
 
 const RecipeCard = ({
-  recipe, index, mobileGridView, showDetailRecipe, isFeatured,
+  recipe, index, showDetailRecipe, isFeatured,
 
   numPortions, cutoffDate, features, allRecipesList, recipesStore, browserType
 }) => {
@@ -40,7 +36,7 @@ const RecipeCard = ({
   const range = getFoodBrand(recipe)
   const isFineDineIn = range.get('slug') === 'fine-dine-in'
 
-  const view = getRecipeView(mobileGridView, isFeatured, isFineDineIn)
+  const view = getRecipeView(isFeatured, isFineDineIn)
 
   return (
     <Recipe
@@ -80,7 +76,6 @@ RecipeCard.propTypes = {
   index: PropTypes.number.isRequired,
   numPortions: PropTypes.number.isRequired,
   recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
-  mobileGridView: PropTypes.bool.isRequired,
   features: PropTypes.instanceOf(Immutable.Map).isRequired,
   showDetailRecipe: PropTypes.func.isRequired,
   allRecipesList: PropTypes.instanceOf(Immutable.List).isRequired,

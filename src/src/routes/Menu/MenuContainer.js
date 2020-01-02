@@ -104,7 +104,6 @@ const mapDispatchToProps = {
   detailVisibilityChange: actions.menuRecipeDetailVisibilityChange,
   boxDetailsVisibilityChange: actions.boxSummaryVisibilityChange,
   menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
-  menuMobileGridViewSet: actions.menuMobileGridViewSet,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,
   boxSummaryDeliveryDaysLoad: actions.boxSummaryDeliveryDaysLoad,
   menuLoadDays: actions.menuLoadDays,

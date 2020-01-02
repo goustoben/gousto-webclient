@@ -35,7 +35,6 @@ class Menu extends React.PureComponent {
   }
 
   state = {
-    mobileGridView: false,
     isClient: false,
     isChrome: false,
   }
@@ -265,17 +264,6 @@ class Menu extends React.PureComponent {
     return orderAction
   }
 
-  toggleGridView = () => {
-    const { menuMobileGridViewSet } = this.props
-    const { mobileGridView } = this.state
-    menuMobileGridViewSet(mobileGridView, !mobileGridView)
-    if (mobileGridView) {
-      this.setState({ mobileGridView: false })
-    } else {
-      this.setState({ mobileGridView: true })
-    }
-  }
-
   showDetailRecipe = (recipeId, isViewMoreDetailsClicked) => {
     const { boxSummaryShow, detailVisibilityChange } = this.props
     if (!boxSummaryShow) {
@@ -333,7 +321,7 @@ class Menu extends React.PureComponent {
       recipeGroupingSelected,
       recipes,
     } = this.props
-    const { mobileGridView, isChrome, isClient } = this.state
+    const { isChrome, isClient } = this.state
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
     const showLoading = isLoading && !overlayShow || forceLoad
     const showSelectedPage = recipeGroupingSelected !== null && (!!query.foodBrand || !!query.thematic)
@@ -364,12 +352,10 @@ class Menu extends React.PureComponent {
           {(showSelectedPage && recipeGroupingSelected.location === 'foodBrand') ?
             <FoodBrandPage
               showDetailRecipe={this.showDetailRecipe}
-              mobileGridView={mobileGridView}
               isClient={isClient}
             /> : ((showSelectedPage && recipeGroupingSelected.location === 'thematic') ?
               <ThematicsPage
                 showDetailRecipe={this.showDetailRecipe}
-                mobileGridView={mobileGridView}
                 isClient={isClient}
               />
               :
@@ -377,10 +363,8 @@ class Menu extends React.PureComponent {
                 isClient={isClient}
                 fadeCss={fadeCss}
                 showLoading={showLoading}
-                mobileGridView={mobileGridView}
                 showDetailRecipe={this.showDetailRecipe}
                 orderId={orderId}
-                toggleGridView={this.toggleGridView}
                 query={query}
               />
             )}

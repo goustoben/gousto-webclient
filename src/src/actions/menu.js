@@ -44,7 +44,6 @@ const menuActions = {
   menuCollectionsReceive,
   menuAddEmptyStock,
   menuBrowseCTAVisibilityChange,
-  menuMobileGridViewSet,
   menuReceiveCollectionRecipes,
   menuReceiveMenu,
   menuRecieveMenuPending,
@@ -401,17 +400,6 @@ export function menuBrowseCTAVisibilityChange(show) {
   return {
     type: actionTypes.MENU_BROWSE_CTA_VISIBILITY_CHANGE,
     show,
-  }
-}
-
-export function menuMobileGridViewSet(from, to) {
-  return {
-    type: actionTypes.MENU_MOBILE_GRID_VIEW_SET,
-    trackingData: {
-      actionType: actionTypes.MENU_MOBILE_GRID_VIEW_SET,
-      from,
-      to,
-    },
   }
 }
 

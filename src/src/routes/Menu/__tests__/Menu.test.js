@@ -81,7 +81,6 @@ describe('Menu', () => {
       disabled: false,
       isAuthenticated: false,
       menuLoadBoxPrices: () => { },
-      menuMobileGridViewSet: () => { },
       orderCheckoutAction: () => { },
       orderHasAnyProducts: () => { },
       orderUpdateProducts: () => { },
