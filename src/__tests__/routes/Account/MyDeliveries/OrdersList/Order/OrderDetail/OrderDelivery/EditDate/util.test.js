@@ -46,22 +46,29 @@ describe('util', () => {
         },
       })
 
-    const stateNDDTrue = {
-      features: Immutable.fromJS({
-        ndd: {
-          value: true,
-          experiment: true,
-        }
-      })
+    const props = {
+      orderId: 10,
     }
 
     it('should filter out ndd days when order has no recipes', () => {
-      const order = Immutable.fromJS({
-        id: 12996845,
-      })
+      const state = {
+        features: Immutable.Map({
+          ndd: Immutable.fromJS({
+            value: true,
+            experiment: true,
+          }),
+        }),
+        user: Immutable.fromJS({
+          newOrders: {
+            1: {},
+            10: {
+              availableDeliveryDays: availableDeliveryDays,
+            },
+          }
+        }),
+      }
 
-      const result = filterOutNDDOptionsWhenNoRecipes(stateNDDTrue, availableDeliveryDays, order)
-
+      const result = filterOutNDDOptionsWhenNoRecipes(state, props)
       expect(result.count()).toEqual(2)
 
       const expectedFirstDay = availableDeliveryDays.get('2019-12-28')
@@ -73,17 +80,30 @@ describe('util', () => {
     })
 
     it('should not filter days when recipes are chosen and NDD is true', () => {
-      const order = Immutable.fromJS({
-        id: 12996845,
-        recipes:
-          [
-            {id: '10763778'},
-            {id: '20763779'},
-            {id: '30763780'},
-          ],
-      })
+      const state = {
+        features: Immutable.Map({
+          ndd: Immutable.fromJS({
+            value: true,
+            experiment: true,
+          }),
+        }),
+        user: Immutable.fromJS({
+          newOrders: {
+            1: {},
+            10: {
+              availableDeliveryDays: availableDeliveryDays,
+              recipes:
+                [
+                  {id: '10763778'},
+                  {id: '20763779'},
+                  {id: '30763780'},
+                ],
+            },
+          }
+        }),
+      }
 
-      const result = filterOutNDDOptionsWhenNoRecipes(stateNDDTrue, availableDeliveryDays, order)
+      const result = filterOutNDDOptionsWhenNoRecipes(state, props)
       expect(result.count()).toEqual(3)
       expect(result).toEqual(availableDeliveryDays)
     })
@@ -119,11 +139,24 @@ describe('util', () => {
           },
         })
 
-      const order = Immutable.fromJS({
-        id: 12996845,
-      })
+      const state = {
+        features: Immutable.Map({
+          ndd: Immutable.fromJS({
+            value: true,
+            experiment: true,
+          }),
+        }),
+        user: Immutable.fromJS({
+          newOrders: {
+            1: {},
+            10: {
+              availableDeliveryDays: availableDeliveryDays,
+            },
+          }
+        }),
+      }
 
-      const result = filterOutNDDOptionsWhenNoRecipes(stateNDDTrue, availableDeliveryDays, order)
+      const result = filterOutNDDOptionsWhenNoRecipes(state, props)
       expect(result.count()).toEqual(2)
       expect(result).toEqual(availableDeliveryDays)
     })
