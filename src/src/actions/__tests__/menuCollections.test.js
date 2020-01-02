@@ -1,7 +1,6 @@
 import Immutable from 'immutable'
 
 import { fetchCollections } from 'apis/collections'
-import { featureSet } from 'actions/features'
 import { limitReached } from 'utils/basket'
 import { getCollectionIdWithName, getDefaultCollectionId, isAllRecipes } from 'utils/collections'
 import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
@@ -84,68 +83,6 @@ describe('menu actions', () => {
               'justforyou_v2': true,
             },
           })
-        )
-      })
-
-      test('should dispatch a featureSet containing jfy tutorial value true if tutorial jfy', async () => {
-        fetchCollections.mockReturnValueOnce(Promise.resolve({
-          data: [{
-            id: 'recommended collection',
-            slug: 'recommendations',
-            properties: {
-              enabled: true,
-              limit: 25,
-              name: "Just For You",
-              tutorial: "jfy"
-            }
-          }],
-        }))
-        await menuLoadCollections()(dispatch, getState)
-
-        expect(featureSet).toHaveBeenCalledWith(
-          'jfyTutorial',
-          true,
-        )
-      })
-
-      test('should dispatch a featureSet containing jfy tutorial value false if tutorial null', async () => {
-        fetchCollections.mockReturnValueOnce(Promise.resolve({
-          data: [{
-            id: 'recommended collection',
-            slug: 'recommendations',
-            properties: {
-              enabled: true,
-              limit: 25,
-              name: "Just For You",
-              tutorial: null
-            }
-          }],
-        }))
-        await menuLoadCollections()(dispatch, getState)
-
-        expect(featureSet).toHaveBeenCalledWith(
-          'jfyTutorial',
-          false,
-        )
-      })
-
-      test('should dispatch a featureSet containing jfy tutorial value false if not recommendations', async () => {
-        fetchCollections.mockReturnValueOnce(Promise.resolve({
-          data: [{
-            id: 'all recipes collection',
-            slug: 'all-recipes',
-            properties: {
-              enabled: true,
-              limit: 25,
-              name: "All Recipes",
-            }
-          }],
-        }))
-        await menuLoadCollections()(dispatch, getState)
-
-        expect(featureSet).toHaveBeenCalledWith(
-          'jfyTutorial',
-          false,
         )
       })
     })
@@ -239,11 +176,9 @@ describe('menu actions', () => {
         expect(getCollectionIdWithName).toHaveBeenCalled()
         expect(getDefaultCollectionId).toHaveBeenCalled()
         expect(collectionFilterChange).toHaveBeenCalledWith('fakeRecommendationsId')
-
       })
 
       test('should use the default collection id if no preferredCollectionId is provided', async () => {
-
         state = {
           ...state,
           menuCollections: Immutable.fromJS({
@@ -269,7 +204,6 @@ describe('menu actions', () => {
         await menuLoadCollections('a-date')(dispatch, getState2)
         expect(getDefaultCollectionId).toHaveBeenCalled()
         expect(collectionFilterChange).toHaveBeenCalledWith('defaultCollectionId')
-
       })
     })
   })

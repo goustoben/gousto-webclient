@@ -135,7 +135,6 @@ describe('Menu', () => {
           <Menu
             {...requiredProps}
             isLoading={false}
-            jfyTutorialFlag={false}
             boxSummaryDeliveryDays={Immutable.Map()}
             disabled={false}
             recipes={['25', '26', '27']}
@@ -152,11 +151,7 @@ describe('Menu', () => {
         expect(wrapper.find('BoxSummaryContainer').length).toBe(1)
       })
 
-      test('should not render JFY tutorial if feature flag is set to false', () => {
-        expect(wrapper.find(JustForYouTutorial).length).toBe(0)
-      })
-
-      test('should render JFY tutorial if feature flag is set to true', () => {
+      test('should render JFY tutorial', () => {
         wrapper = shallow(
           <Menu
             {...requiredProps}
@@ -164,7 +159,6 @@ describe('Menu', () => {
             boxSummaryDeliveryDays={Immutable.Map()}
             disabled={false}
             recipes={['25', '26', '27']}
-            jfyTutorialFlag
           />,
           mountOptions
         )
@@ -196,7 +190,6 @@ describe('Menu', () => {
       wrapper = shallow(
         <Menu
           {...requiredProps}
-          jfyTutorialFlag={false}
           boxSummaryDeliveryDays={Immutable.Map()}
           disabled={false}
           recipes={['25', '26', '27']}
@@ -212,12 +205,11 @@ describe('Menu', () => {
         <Menu
           {...requiredProps}
           isLoading={false}
-          jfyTutorialFlag={false}
           boxSummaryDeliveryDays={Immutable.Map()}
           disabled={false}
           numPortions={2}
           query={{ num_portions: '4' }}
-          storeOrderId={'1234'}
+          storeOrderId="1234"
         />,
         mountOptions
       )
@@ -229,7 +221,6 @@ describe('Menu', () => {
         <Menu
           {...requiredProps}
           menuBrowseCTAShow
-          jfyTutorialFlag={false}
           boxSummaryDeliveryDays={Immutable.Map()}
           disabled={false}
           isLoading
@@ -642,7 +633,6 @@ describe('Menu', () => {
   })
 
   describe('check query param in componentDidMount', () => {
-
     describe('when no foodBrand query param in URL', () => {
       test('should call filterRecipeGrouping with null if foodBrand is selected', async () => {
         const filterRecipeGrouping = jest.fn()
