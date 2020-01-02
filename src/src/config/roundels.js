@@ -402,7 +402,7 @@ const roundelsConfig = {
         ]
       },
       {
-        "slug": "health-kitchen-healthy-skin-and-hair",
+        "slug": "health-kitchen-healthy-skin-hair",
         "name": "Health Kitchen - Healthy skin & hair",
         "images": [
           {
