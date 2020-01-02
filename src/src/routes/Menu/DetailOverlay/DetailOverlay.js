@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Overlay from 'Overlay'
-import Detail from 'Recipe/Detail'
+import Detail from 'routes/Menu/Recipe/Detail'
 import Immutable from 'immutable'
 
 import { getLowStockTag, getSurcharge, getTaxonomyTags, getFoodBrand } from 'utils/recipe'
