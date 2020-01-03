@@ -14,30 +14,72 @@ import Info from 'routes/Menu/Recipe/Info'
 import Rating from 'routes/Menu/Recipe/Rating'
 import Tag from 'routes/Menu/Recipe/Tag'
 import Title from 'routes/Menu/Recipe/Title'
-import { RecipeAttribute } from 'routes/Menu/Recipe/RecipeAttribute'
 import { H1 } from 'Page/Header'
+
+jest.mock('utils/logger', () => ({
+  error: () => { }
+}))
+
+jest.mock('routes/Menu/Recipe/RecipeAttribute', () => ({
+  RecipeAttribute: () => (<div />)
+}))
 
 describe('Hub', () => {
   describe('rendering', () => {
     let wrapper
+    let requiredProps
 
-    beforeEach(() => {
+    beforeEach(async () => {
       const recipes = Immutable.fromJS([
         {
+          id: 1,
           slug: 'pasta',
           pasta: {},
+          title: 'pasta',
+          cookingTime: 20,
         },
       ])
       const collection = Immutable.fromJS({
         recipes: ['pasta'],
       })
-      wrapper = shallow(
-        <Hub recipes={recipes} collection={collection} slug="most-popular" />,
+      requiredProps = {
+        endSet: 3,
+        fetchSetData: () => { },
+        loadNextSet: () => { },
+        params: { collectionSlug: 'all-recipes' },
+        resetSets: () => { },
+        startSet: 1,
+        totalSets: 1,
+        recipesCollection: '',
+        stock: 10,
+      }
+
+      wrapper = await shallow(
+        <Hub recipes={recipes} collection={collection} {...requiredProps} />,
+        {
+          context: {
+            store: {
+              dispatch: () => { },
+              getState: () => ({
+                error: Immutable.Map({}),
+                collections: Immutable.Map({
+                  '1234': Immutable.Map({
+                    id: '1234',
+                    slug: 'all-recipes'
+                  })
+                })
+              })
+            }
+          }
+        }
       )
     })
 
+    afterEach(() => {
+      jest.restoreAllMocks()
+    })
+
     test('should render a <Section> by default', () => {
-      wrapper = shallow(<Hub />)
       expect(wrapper.type()).toBe(Section)
     })
 
@@ -147,7 +189,7 @@ describe('Hub', () => {
           .children(Row)
           .children(Col)
           .first()
-          .find(RecipeAttribute),
+          .find('RecipeAttribute'),
       ).toHaveLength(1)
     })
 
