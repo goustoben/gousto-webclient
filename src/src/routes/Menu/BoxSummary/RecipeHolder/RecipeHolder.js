@@ -21,14 +21,16 @@ const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
       )}
       onClick={onClick}
     >
-      {(recipe.size > 0) ?
-        <Image
-          media={getFeaturedImage(recipe, '', browserType)}
-          className={classnames(
-            { [css.recipeImg]: !isMobileView },
-            { [css.imgMobile]: isMobileView }
-          )}
-        />
+      {(recipe.size > 0)
+        ? (
+          <Image
+            media={getFeaturedImage(recipe, '', browserType)}
+            className={classnames(
+              { [css.recipeImg]: !isMobileView },
+              { [css.imgMobile]: isMobileView }
+            )}
+          />
+        )
         : 'Add Recipe'}
     </span>
   )
@@ -37,7 +39,7 @@ const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
 RecipeHolder.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map),
   view: PropTypes.string,
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
   browserType: PropTypes.string.isRequired
 }
 
