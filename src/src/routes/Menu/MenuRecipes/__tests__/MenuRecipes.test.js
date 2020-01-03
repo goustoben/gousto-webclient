@@ -21,7 +21,6 @@ describe('initial render', () => {
         fadeCss={'fadeOut'}
         showLoading={false}
         filteredRecipesNumber={30}
-        mobileGridView
         menuCurrentCollectionId={''}
         menuRecipeDetailShow={''}
         isClient
@@ -60,7 +59,6 @@ describe('with the collections feature enabled', () => {
         fadeCss={'fadeOut'}
         showLoading={false}
         filteredRecipesNumber={30}
-        mobileGridView
         menuCurrentCollectionId={''}
         menuRecipeDetailShow={''}
         isClient
@@ -83,7 +81,6 @@ describe('with the force collections feature enabled', () => {
         fadeCss={'fadeOut'}
         showLoading={false}
         filteredRecipesNumber={30}
-        mobileGridView
         menuCurrentCollectionId={''}
         menuRecipeDetailShow={''}
         isClient
@@ -102,7 +99,6 @@ describe('with the force collections feature enabled', () => {
         fadeCss={'fadeOut'}
         showLoading={false}
         filteredRecipesNumber={30}
-        mobileGridView
         menuCurrentCollectionId={''}
         menuRecipeDetailShow={''}
         isClient
@@ -127,7 +123,6 @@ describe('selectCurrentCollection', () => {
         fadeCss={'fadeOut'}
         showLoading={false}
         filteredRecipesNumber={30}
-        mobileGridView
         menuCurrentCollectionId={'123abc'}
         menuRecipeDetailShow={''}
         isClient

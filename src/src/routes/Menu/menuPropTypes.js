@@ -33,7 +33,6 @@ export const menuPropTypes = {
   menuLoadBoxPrices: PropTypes.func.isRequired,
   menuLoadDays: PropTypes.func,
   menuLoadingBoxPrices: PropTypes.bool,
-  menuMobileGridViewSet: PropTypes.func.isRequired,
   menuVariation: PropTypes.string,
   numPortions: PropTypes.number,
   orderCheckoutAction: PropTypes.func.isRequired,
@@ -81,7 +80,6 @@ export const defaultMenuPropTypes = {
   menuBrowseCTAVisibilityChange: () => { },
   menuLoadDays: () => { },
   menuLoadingBoxPrices: false,
-  menuMobileGridViewSet: () => { },
   menuVariation: '',
   numPortions: 2,
   orderCheckout: {

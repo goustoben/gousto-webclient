@@ -7,7 +7,6 @@ import DetailOverlay from 'routes/Menu/DetailOverlay'
 describe('RecipeGrid', () => {
   const wrapper = shallow(
     <RecipeGrid
-      mobileGridView
       showDetailRecipe={jest.fn()}
       menuCurrentCollectionId={''}
       menuRecipeDetailShow={''}

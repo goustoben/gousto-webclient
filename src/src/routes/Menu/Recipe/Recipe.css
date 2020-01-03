@@ -30,11 +30,6 @@
 	}
 }
 
-.gridSmall {
-	composes: grid;
-	width: calc(MobGridWidth - SpacingXS);
-}
-
 .simple {
 	composes: grid;
 	width: 100%;
@@ -62,7 +57,7 @@
 .ctaAllRecipe, .ctaThematic {
 	flex-basis: 100%;
 
-	@media ScreenSMMin {		
+	@media ScreenSMMin {
 		flex-basis: ColumnWidth;
 	}
 }

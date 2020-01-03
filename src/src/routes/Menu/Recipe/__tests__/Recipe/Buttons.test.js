@@ -134,17 +134,6 @@ describe('the Buttons component', () => {
         wrapper.find('Segment').forEach(segment => expect(segment.hasClass('segmentSelected')).toBe(false))
       })
 
-      describe('and viewing on a small grid view', () => {
-        beforeEach(() => {
-          wrapper.setProps({ view: 'gridSmall '})
-        })
-
-        test('shows only the number of servings when on small grid view', () => {
-          wrapper.setProps({ view: 'gridSmall' })
-          expect(wrapper.find('Segment').at(1).prop('children')[0]).toBe(totalPortions.toString())
-        })
-      })
-
       describe('and the selected recipe has a surcharge', () => {
         beforeEach(() => {
           wrapper.setProps({ surchargePerPortion: 2.99 })

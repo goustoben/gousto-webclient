@@ -1,7 +1,6 @@
 module.exports = {
   imageSize: {
     grid: 700,
-    gridSmall: 200,
     featured: 1000,
     list: 200,
     detail: 1000,

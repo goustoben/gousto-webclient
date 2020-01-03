@@ -3,7 +3,6 @@ import React from 'react'
 import { shallow } from 'enzyme'
 
 import GridRecipe from 'routes/Menu/Recipe/GridRecipe'
-import SmallRecipe from 'routes/Menu/Recipe/SmallRecipe'
 import SimpleRecipe from 'routes/Menu/Recipe/SimpleRecipe'
 import FeaturedRecipe from 'routes/Menu/Recipe/FeaturedRecipe'
 import FineDineInRecipe from 'routes/Menu/Recipe/FineDineInRecipe'
@@ -26,7 +25,6 @@ describe('Recipe', () => {
         Object.entries({
           grid: GridRecipe,
           featured: FeaturedRecipe,
-          gridSmall: SmallRecipe,
           simple: SimpleRecipe,
           fineDineIn: FineDineInRecipe,
           ctaAllRecipe: CTAToAllRecipes

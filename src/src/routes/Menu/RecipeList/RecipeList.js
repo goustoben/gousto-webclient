@@ -10,7 +10,6 @@ import { TabletRecipeList } from './TabletRecipeList/TabletRecipeList'
 class RecipeList extends React.PureComponent {
   static propTypes = {
     filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
-    mobileGridView: PropTypes.bool,
     showDetailRecipe: PropTypes.func,
     isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     collectionFilterChange: PropTypes.func,
@@ -51,7 +50,6 @@ class RecipeList extends React.PureComponent {
     const {
       recipes,
       browserType,
-      mobileGridView,
       showDetailRecipe,
       thematicName,
       isCurrentCollectionRecommendation,
@@ -63,7 +61,6 @@ class RecipeList extends React.PureComponent {
       return (
         <MobileRecipeList
           recipes={recipes}
-          mobileGridView={mobileGridView}
           showDetailRecipe={showDetailRecipe}
           thematicName={thematicName}
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
@@ -77,7 +74,6 @@ class RecipeList extends React.PureComponent {
       return (
         <TabletRecipeList
           recipes={recipes}
-          mobileGridView={mobileGridView}
           showDetailRecipe={showDetailRecipe}
           thematicName={thematicName}
           isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}
@@ -90,7 +86,6 @@ class RecipeList extends React.PureComponent {
     return (
       <DesktopRecipeList
         recipes={recipes}
-        mobileGridView={mobileGridView}
         showDetailRecipe={showDetailRecipe}
         thematicName={thematicName}
         isCurrentCollectionRecommendation={isCurrentCollectionRecommendation}

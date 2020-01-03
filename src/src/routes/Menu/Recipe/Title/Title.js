@@ -15,8 +15,7 @@ const Title = ({ headlineFont, title, view, mouseEnter, mouseLeave, linkUnderlin
     return (
       <h2
         className={classNames(
-          { [css.container]: view === 'gridSmall' },
-          { [css.containerLG]: (view !== 'gridSmall' & view !== 'featured') },
+          { [css.containerLG]: (view !== 'featured') },
           { [css.largeHeading]: view === 'featured' },
           { [css.detailHeading]: view === 'detail' },
           { [css.simpleHeading]: view === 'simple' },

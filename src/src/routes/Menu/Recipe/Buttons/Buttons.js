@@ -51,13 +51,13 @@ class Buttons extends React.Component {
   }
 
   getSegments = (tooltipMessage, tooltipWidth, disabled) => {
-    const { numPortions, qty, surchargePerPortion, view } = this.props
+    const { numPortions, qty, surchargePerPortion } = this.props
     const { tooltipVisible } = this.state
     const segmentSelectedClass = this.getSurchargeGridClass('segmentSelected', 'sentenceCaseSegment')
 
     if (qty > 0) {
       const totalQty = qty * numPortions
-      const defaultContent = view !== 'gridSmall' ? ' Servings Added' : ''
+      const defaultContent = ' Servings Added'
       const textContent = surchargePerPortion ? ' Added' : defaultContent
 
       return [
@@ -125,7 +125,7 @@ class Buttons extends React.Component {
           fill
           className={this.getSurchargeGridClass('segment', 'sentenceCaseSegment')}
         >
-          {view !== 'gridSmall' ? 'Add Recipe' : 'Add'}
+          Add Recipe
           {surchargePerPortion && (
             <div
               className={
@@ -200,7 +200,7 @@ class Buttons extends React.Component {
   }
 
   render() {
-    const { outOfstock, limitReached, view, qty } = this.props
+    const { outOfstock, limitReached, qty } = this.props
     const disabled = outOfstock || limitReached
     let tooltipMessage = ''
     if (outOfstock) {
@@ -218,7 +218,7 @@ class Buttons extends React.Component {
       >
         {this.getSegments(
           tooltipMessage,
-          (view === 'gridSmall') ? css.tooltipMobileGrid : css.tooltipWidth,
+          css.tooltipMobileGrid,
           disabled
         )}
       </Button>
