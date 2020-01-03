@@ -1,5 +1,8 @@
 import humanTimeFormat from 'utils/timeFormat'
 import moment from 'moment'
+import { getNDDFeatureValue } from 'selectors/features'
+import { createSelector } from 'reselect'
+import { getUserNewOrders } from 'selectors/user'
 
 export const DEFAULT_MESSAGE_ID = 'default-message'
 
@@ -48,8 +51,8 @@ const getTakenDatesIds = (orderDeliveryDays, orders, orderCoreDeliveryDayId) => 
   const takenDatesIds = []
   orders
     .filter(_order =>
-      _order.get('coreDeliveryDayId') !== orderCoreDeliveryDayId &&
-      orderDeliveryDays.some(orderDay => orderDay.get('coreDayId') === _order.get('coreDeliveryDayId'))
+      _order.get('coreDeliveryDayId') !== orderCoreDeliveryDayId
+      && orderDeliveryDays.some(orderDay => orderDay.get('coreDayId') === _order.get('coreDeliveryDayId'))
     )
     .valueSeq().forEach(_order => {
       takenDatesIds.push(_order.get('coreDeliveryDayId'))
@@ -57,6 +60,38 @@ const getTakenDatesIds = (orderDeliveryDays, orders, orderCoreDeliveryDayId) => 
 
   return takenDatesIds
 }
+
+const getOrderId = (state, editDateProps) => editDateProps.orderId
+const nddEnabled = (state) => getNDDFeatureValue(state)
+
+export const filterOutNDDOptionsWhenNoRecipes = createSelector(
+  [getOrderId, getUserNewOrders, nddEnabled],
+  (orderId, orders, ndd) => {
+    const order = orders.get(orderId.toString())
+    const deliveryDays = order.get('availableDeliveryDays')
+
+    if (!deliveryDays) {
+      return deliveryDays
+    }
+
+    const orderNoHasRecipes = (!(order.get('recipes')) || order.get('recipes').count() < 1)
+    let days
+
+    if (ndd && orderNoHasRecipes) {
+      // Remove NDD day options
+      days = deliveryDays.map(day => {
+        const filteredSlots = day.get('slots').filter(slot => !slot.get('daySlotLeadTimeIsExpress'))
+
+        return day.set('slots', filteredSlots)
+      })
+        .filter(day => day.get('slots').count() > 0)
+    } else {
+      days = deliveryDays
+    }
+
+    return days
+  }
+)
 
 const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipesStock, portionsPerRecipe, orderCoreDeliveryDayId, orderDeliverySlotId, orders) => {
   const takenDatesIds = getTakenDatesIds(orderDeliveryDays, orders, orderCoreDeliveryDayId)
