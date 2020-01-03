@@ -77,57 +77,6 @@ describe('collection actions', () => {
           isAuthenticated: true,
         }))
       })
-
-      describe('containing an enabled jfy tutorial', () => {
-        beforeEach(() => {
-          fetchCollections.mockReturnValue(Promise.resolve({
-            data: [{
-              id: 'recommended collection',
-              slug: 'recommendations',
-              properties: {
-                enabled: true,
-                limit: 25,
-                name: "Just For You",
-                tutorial: "jfy"
-              }
-            }]
-          }))
-        })
-
-        test('should dispatch a featureSet action', async () => {
-          await collectionsLoadCollections()(dispatch, getState)
-
-          expect(featureSet).toHaveBeenCalledWith(
-            'jfyTutorial',
-            true,
-          )
-        })
-      })
-
-      describe('containing a disabled jfy tutorial', () => {
-        beforeEach(() => {
-          fetchCollections.mockReturnValue(Promise.resolve({
-            data: [{
-              id: 'recommended collection',
-              slug: 'recommendations',
-              properties: {
-                enabled: true,
-                limit: 25,
-                name: "Just For You",
-              }
-            }]
-          }))
-        })
-
-        test('should dispatch a featureSet action', async () => {
-          await collectionsLoadCollections()(dispatch, getState)
-
-          expect(featureSet).toHaveBeenCalledWith(
-            'jfyTutorial',
-            false,
-          )
-        })
-      })
     })
 
     describe('when fetchCollections is not returning recommendations', () => {

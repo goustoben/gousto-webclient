@@ -3,7 +3,6 @@ import Immutable from 'immutable'
 import {
   getGoToMyGousto,
   getGoToMyDeliveries,
-  getJfyTutorial,
   getRafPositionOnWelcomePage,
   isDeliveryFrequencyFeatureEnabled,
   getPromoBannerEnabled,
@@ -58,24 +57,6 @@ describe('when features are defined', () => {
       state = Immutable.fromJS({})
 
       expect(getGoToMyDeliveries(state)).toEqual(false)
-    })
-  })
-
-  describe('getJfyTutorial', () => {
-    it('should return value of getJfyTutorial', () => {
-      state.features = Immutable.fromJS({
-        jfyTutorial: {
-          value: true
-        }
-      })
-
-      expect(getJfyTutorial(state)).toEqual(true)
-    })
-
-    it('should return false if features does not exist', () => {
-      state = Immutable.fromJS({})
-
-      expect(getJfyTutorial(state)).toEqual(false)
     })
   })
 
@@ -282,7 +263,6 @@ describe('when features are defined', () => {
     describe('when is NOT set', () => {
       test('should return false', () => {
         expect(getFullScreenBoxSummary(state)).toBe(false)
-
       })
     })
 

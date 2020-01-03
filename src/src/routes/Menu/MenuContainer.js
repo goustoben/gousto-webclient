@@ -7,7 +7,6 @@ import { getSlot } from 'utils/deliveries'
 import actionTypes from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 
-import { getJfyTutorial } from 'selectors/features'
 import { getRecipeGroupFilter, getFoodBrandDetails } from 'selectors/filters'
 
 import Menu from './Menu'
@@ -82,7 +81,6 @@ function mapStateToProps(state, ownProps) {
     menuVariation: state.features.getIn(['menuRecipes', 'value']),
     forceLoad: state.menu.get('forceLoad', false),
     numPortions: state.basket.get('numPortions'),
-    jfyTutorialFlag: getJfyTutorial(state),
     recipes: flattenRecipes(state.basket.get('recipes')),
     promoCode: state.basket.get('promoCode'),
     postcode: state.basket.get('postcode'),

@@ -42,10 +42,6 @@ const defaultFeatures = () => ({
     experiment: false,
     value: false,
   },
-  jfyTutorial: {
-    experiment: false,
-    value: false,
-  },
   rafAboveCarouselOnWelcomePage: {
     experiment: false,
     value: false,

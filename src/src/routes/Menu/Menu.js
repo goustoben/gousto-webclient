@@ -327,7 +327,6 @@ class Menu extends React.PureComponent {
       forceLoad,
       isAuthenticated,
       isLoading,
-      jfyTutorialFlag,
       menuBrowseCTAShow,
       orderId,
       query,
@@ -359,7 +358,7 @@ class Menu extends React.PureComponent {
           style={menu.helmet.style}
         />
         <RecipeMeta query={query} />
-        {jfyTutorialFlag ? <JustForYouTutorial /> : ''}
+        <JustForYouTutorial />
         <div className={classnames(css.container, overlayShowCSS)}>
 
           {(showSelectedPage && recipeGroupingSelected.location === 'foodBrand') ?

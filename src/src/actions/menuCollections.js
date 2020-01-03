@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 import { fetchCollections } from 'apis/collections'
-import { featureSet } from 'actions/features'
 import { limitReached } from 'utils/basket'
 import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { menuCollectionsReceive } from 'actions/menu'
@@ -26,28 +25,12 @@ const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
     }
 
     let collections = transformedCollections
-    if(!collections) {
+    if (!collections) {
       const response = await fetchCollections(accessToken, '', args)
       collections = response.data
     }
 
-    const recommendationCollection = collections.find(collection => collection.slug === 'recommendations')
-    if (recommendationCollection && recommendationCollection.properties) {
-      const { tutorial } = recommendationCollection.properties
-      // TODO [TR-432]: Feedback from James on branch #1151 - check new Jira ticket
-      const tutorialEnabled = (tutorial && tutorial === 'jfy') || false
-
-      dispatch(featureSet('jfyTutorial', tutorialEnabled))
-    }
-
-    // TODO: [TR-432]: Don't think we need this filterExperiment code anymore as we don't have this feature flag
-    const filterExperiment = state.features.getIn(['dietaryQuickFilter', 'value'])
-    const collectionsFiltered = filterExperiment ?
-      collections.filter(collection => (!['dairy-free', 'gluten-free'].includes(collection.slug)))
-      :
-      collections
-
-    dispatch(menuCollectionsReceive(collectionsFiltered))
+    dispatch(menuCollectionsReceive(collections))
 
     if (!noUrlChange) {
       let changeCollection = true

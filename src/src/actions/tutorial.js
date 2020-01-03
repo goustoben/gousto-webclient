@@ -8,22 +8,25 @@ export const shouldJfyTutorialBeVisible = () => (
   (dispatch, getState) => {
     const { menuCollections, tutorial } = getState()
 
-    const jfyCollectionLoaded = menuCollections.some(
+    const cfyCollectionLoaded = menuCollections.find(
       collection => collection.get('slug') === 'recommendations'
     )
 
-    const jfyTutorialSeen = Boolean(tutorial && tutorial.getIn(['viewed', 'justforyou']))
+    const tutorialNameIsCFY = cfyCollectionLoaded && cfyCollectionLoaded.getIn(['properties', 'tutorial'])
 
-    if (jfyCollectionLoaded && !jfyTutorialSeen) {
-      setTutorialVisible('justforyou', true)(dispatch)
-    } else {
-      setTutorialVisible('justforyou', false)(dispatch)
+    const jfyTutorialSeen = Boolean(tutorial && tutorial.getIn(['viewed', 'justforyou']))
+    let shouldTutorialBeVisible = false
+
+    if (tutorialNameIsCFY === 'jfy' && !jfyTutorialSeen) {
+      shouldTutorialBeVisible = true
     }
+
+    setTutorialVisible('justforyou', shouldTutorialBeVisible)(dispatch)
   }
 )
 
 export const setTutorialVisible = (name, value) => (
-  (dispatch)=> {
+  (dispatch) => {
     dispatch({
       type: actionTypes.SET_TUTORIAL_VISIBLE,
       name,

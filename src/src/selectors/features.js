@@ -28,10 +28,6 @@ export const getGoToMyDeliveries = ({ features }) => (
     : false
 )
 
-export const getJfyTutorial = ({ features }) => (
-  features ? features.getIn(['jfyTutorial', 'value']) : false
-)
-
 export const getRafPositionOnWelcomePage = ({ features }) => (
   features
     ? features.getIn(['rafAboveCarouselOnWelcomePage', 'value'])

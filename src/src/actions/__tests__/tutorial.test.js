@@ -92,7 +92,12 @@ describe('tutorial actions', () => {
     describe("when tutorial hasn't been seen and collection is present", () => {
       beforeEach(() => {
         getState.mockReturnValueOnce(getTutorialState({
-          collections: { slug: 'recommendations' },
+          collections: {
+            slug: 'recommendations',
+            properties: Immutable.Map({
+              tutorial: 'jfy'
+            })
+          },
           viewed: { justforyou: 0 },
         }))
       })
@@ -145,7 +150,7 @@ describe('tutorial actions', () => {
     })
   })
 
-  describe('persistTutorialViewed', ()=> {
+  describe('persistTutorialViewed', () => {
     const viewed = { justforyou: 2 }
     beforeEach(() => {
       getState.mockReturnValueOnce(getTutorialState({
