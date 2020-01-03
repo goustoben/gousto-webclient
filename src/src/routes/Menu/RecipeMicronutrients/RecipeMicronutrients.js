@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Immutable from 'immutable'
 import classnames from 'classnames'
 
 import css from './RecipeMicronutrients.css'
@@ -18,10 +19,14 @@ const RecipeMicronutrients = ({ micronutrients, inset }) => {
         <tbody>
           {micronutrients.map((micronutrient) => {
             return (
-              <tr className={css.tableBorder}>
+              <tr className={css.tableBorder} key={micronutrient.get('name')}>
                 <td className={css.tablePadding}>{micronutrient.get('name')}</td>
                 <td className={css.tablePadding}>{micronutrient.get('nrvPercent')}</td>
-                <td className={css.tablePadding}>{micronutrient.getIn(['content', 'amount'])} {micronutrient.getIn(['content', 'unit'])}</td>
+                <td className={css.tablePadding}>
+                  {micronutrient.getIn(['content', 'amount'])}
+                  {' '}
+                  {micronutrient.getIn(['content', 'unit'])}
+                </td>
               </tr>
             )
           })}
@@ -34,14 +39,7 @@ const RecipeMicronutrients = ({ micronutrients, inset }) => {
 
 RecipeMicronutrients.propTypes = {
   inset: PropTypes.bool,
-  micronutrients: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string,
-    nrv: PropTypes.number,
-    content: PropTypes.shape({
-      amount: PropTypes.number,
-      unit: PropTypes.string
-    })
-  }))
+  micronutrients: PropTypes.instanceOf(Immutable.List)
 }
 
 RecipeMicronutrients.defaultProps = {
