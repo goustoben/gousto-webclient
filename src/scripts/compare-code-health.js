@@ -1,5 +1,5 @@
 /* eslint-disable */
-const readline = require('readline')
+const concat = require('concat-stream')
 const getCodeHealthBenchmark = require('./code-health-utils/get-benchmark-file')
 const getCodeHealth = require('./code-health-utils/get-code-health')
 const sanitiseFilePath = require('./code-health-utils/sanitise-file-path')
@@ -12,12 +12,6 @@ if (process.argv.length !== 5) {
 }
 
 const [, , argToken, argBranch, argCodeHealthFile] = process.argv
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false
-})
 
 const parseGitDiffLine = (line) => {
   const result = /^(\w{1})\s+(.+)$/.exec(line)
@@ -76,7 +70,14 @@ const printFailures = (failures) => {
   console.log(`Code health regressions in ${failures.length} files, code health check failed`)
 }
 
-const run = async () => {
+const run = async (changedFiles) => {
+  if (changedFiles.length === 0) {
+    console.log('No changed files detected')
+    console.log('Exiting without failure')
+    process.exit(0)
+    return
+  }
+
   try {
     const benchmarkCodeHealth = await getCodeHealthBenchmark(argToken, argBranch, argCodeHealthFile)
 
@@ -91,14 +92,7 @@ const run = async () => {
 
     const failures = []
 
-    rl.on('line', line => {
-      const parsed = parseGitDiffLine(line)
-
-      // skip this line if we can't parse it
-      if (parsed === null) {
-        return
-      }
-
+    changedFiles.forEach(parsed => {
       const failure = compareHealth(parsed.status, parsed.path, benchmarkCodeHealth, newCodeHealth)
 
       if (failure === null) {
@@ -108,16 +102,14 @@ const run = async () => {
       failures.push(failure)
     })
 
-    rl.on('close', () => {
-      if (failures.length > 0) {
-        printFailures(failures)
-        process.exit(1)
-        return
-      }
+    if (failures.length > 0) {
+      printFailures(failures)
+      process.exit(1)
+      return
+    }
 
-      printSuccess()
-      process.exit(0)
-    })
+    printSuccess()
+    process.exit(0)
   } catch (e) {
     console.log('error: ', e)
     console.log('exiting safely, couldn\'t perform checks')
@@ -125,4 +117,12 @@ const run = async () => {
   }
 }
 
-run()
+process.stdin.pipe(concat(buf => {
+  const fullInput = buf.toString()
+
+  const changedFiles = fullInput.split('\n')
+    .map(parseGitDiffLine)
+    .filter(line => line !== null)
+
+  run(changedFiles)
+}))
