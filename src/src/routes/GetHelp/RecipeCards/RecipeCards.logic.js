@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
 import { Item } from 'goustouicomponents'
+import { windowOpen } from 'utils/window'
 import { client } from 'config/routes'
 import { recipePropType } from '../getHelpPropTypes'
 import { RecipeCardsPresentation } from './RecipeCards.presentation'
@@ -27,7 +28,7 @@ const RecipeCards = ({ recipes, title, trackRecipeCardClick }) => {
           trackClick={() => trackRecipeCardClick(id)}
           onClick={() => {
             if (url.length) {
-              window.open(url, '_blank', 'noopener noreferrer')
+              windowOpen(url)
             } else {
               browserHistory.push(`${buttonLeftUrl}/${client.getHelp.contact}`)
             }

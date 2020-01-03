@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import config from 'config'
 import { CardWithLink } from 'CardWithLink'
 import { Button } from 'goustouicomponents'
+import { windowOpen } from 'utils/window'
 import { OrderDetails } from './OrderDetails/OrderDetails'
 import css from './Header.css'
 
@@ -39,7 +40,7 @@ const HeaderPresentation = ({
                 width='full'
                 onClick={() => {
                   trackNextBoxTrackingClick(nextOrderId)
-                  window.open(nextOrderTracking, 'rel="noopener noreferrer"')
+                  windowOpen(nextOrderTracking)
                 }}
               >
                 Track my box

@@ -2,6 +2,7 @@ import React from 'react'
 import { mount } from 'enzyme'
 import { browserHistory } from 'react-router'
 import { client } from 'config/routes'
+import * as windowUtils from 'utils/window'
 import { RecipeCards } from '../RecipeCards.logic'
 
 describe('<RecipeCards />', () => {
@@ -66,7 +67,7 @@ describe('<RecipeCards />', () => {
 
   describe('clicking on a recipe from the list', () => {
     beforeEach(() => {
-      window.open = jest.fn()
+      windowUtils.windowOpen = jest.fn()
       browserHistory.push = jest.fn()
 
       wrapper = mount(
@@ -88,7 +89,7 @@ describe('<RecipeCards />', () => {
       })
 
       test('opens the url in a new tab', () => {
-        expect(window.open).toHaveBeenCalledWith(TEST_RECIPES[0].url, '_blank', 'noopener noreferrer')
+        expect(windowUtils.windowOpen).toHaveBeenCalledWith(TEST_RECIPES[0].url)
       })
 
       test('should track that the user has clicked', () => {
