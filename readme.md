@@ -55,12 +55,6 @@ You may need to get the latest version of watchman to run Jest's watch mode.
 brew install watchman
 ```
 
-#### Mocha
-```shell
-cd ~/code/goustowebclient/src
-yarn test:mocha
-```
-
 ### Running end-to-end tests
 You will need the following installed:
 1. Java Runtime. Check if already installed with `java --version`, and if not, install using homebrew:
