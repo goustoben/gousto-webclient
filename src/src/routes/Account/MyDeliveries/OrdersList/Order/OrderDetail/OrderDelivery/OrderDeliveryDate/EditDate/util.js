@@ -66,7 +66,7 @@ const nddEnabled = (state) => getNDDFeatureValue(state)
 
 export const filterOutNDDOptionsWhenNoRecipes = createSelector(
   [getOrderId, getUserNewOrders, nddEnabled],
-  (orderId, orders) => {
+  (orderId, orders, ndd) => {
     const order = orders.get(orderId.toString())
     const deliveryDays = order.get('availableDeliveryDays')
 
@@ -77,10 +77,10 @@ export const filterOutNDDOptionsWhenNoRecipes = createSelector(
     const orderNoHasRecipes = (!(order.get('recipes')) || order.get('recipes').count() < 1)
     let days
 
-    if (nddEnabled && orderNoHasRecipes) {
+    if (ndd && orderNoHasRecipes) {
       // Remove NDD day options
       days = deliveryDays.map(day => {
-        const filteredSlots = day.get('slots').filter(slot => !slot.get('day_slot_lead_time_is_express'))
+        const filteredSlots = day.get('slots').filter(slot => !slot.get('daySlotLeadTimeIsExpress'))
 
         return day.set('slots', filteredSlots)
       })

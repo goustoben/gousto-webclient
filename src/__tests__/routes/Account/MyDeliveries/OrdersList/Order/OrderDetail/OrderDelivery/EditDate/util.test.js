@@ -10,11 +10,11 @@ describe('util', () => {
           date: '2019-12-28',
           slots: [{
             id: 'd9dc1bf7-f6fc-4163-8df0-3f9701c418d9',
-            day_slot_lead_time_is_express: false,
+            daySlotLeadTimeIsExpress: false,
           },
           {
             id: '950007a3-2ceb-41dc-b184-01997628d2b6',
-            day_slot_lead_time_is_express: false,
+            daySlotLeadTimeIsExpress: false,
           }
           ],
         },
@@ -23,11 +23,11 @@ describe('util', () => {
           date: '2019-12-29',
           slots: [{
             id: '8f685f7a-6100-4861-a3b0-fa308270f6d0',
-            day_slot_lead_time_is_express: true,
+            daySlotLeadTimeIsExpress: true,
           },
           {
             id: '9e0a710d-a70e-41cd-9c2b-86a228aadb24',
-            day_slot_lead_time_is_express: true,
+            daySlotLeadTimeIsExpress: true,
           }
           ],
         },
@@ -36,11 +36,11 @@ describe('util', () => {
           date: '2019-12-30',
           slots: [{
             id: '5e016842-91c9-4558-bc1b-3b2c459e97ab',
-            day_slot_lead_time_is_express: true,
+            daySlotLeadTimeIsExpress: true,
           },
           {
             id: '5e016842-91c9-4558-bc1b-3b2c459e97ab',
-            day_slot_lead_time_is_express: false,
+            daySlotLeadTimeIsExpress: false,
           }
           ],
         },
@@ -116,11 +116,11 @@ describe('util', () => {
             date: '2019-12-28',
             slots: [{
               id: 'd9dc1bf7-f6fc-4163-8df0-3f9701c418d9',
-              day_slot_lead_time_is_express: false,
+              daySlotLeadTimeIsExpress: false,
             },
             {
               id: '950007a3-2ceb-41dc-b184-01997628d2b6',
-              day_slot_lead_time_is_express: false,
+              daySlotLeadTimeIsExpress: false,
             }
             ],
           },
@@ -129,11 +129,11 @@ describe('util', () => {
             date: '2019-12-29',
             slots: [{
               id: '8f685f7a-6100-4861-a3b0-fa308270f6d0',
-              day_slot_lead_time_is_express: false,
+              daySlotLeadTimeIsExpress: false,
             },
             {
               id: '9e0a710d-a70e-41cd-9c2b-86a228aadb24',
-              day_slot_lead_time_is_express: false,
+              daySlotLeadTimeIsExpress: false,
             }
             ],
           },
