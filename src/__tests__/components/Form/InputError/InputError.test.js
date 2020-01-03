@@ -7,7 +7,7 @@ describe('InputError', () => {
   let wrapper
 
   test('should return a <p> tag', () => {
-    wrapper = shallow(<InputError />)
+    wrapper = shallow(<InputError>No Message</InputError>)
     expect(wrapper.type()).toEqual('p')
   })
 

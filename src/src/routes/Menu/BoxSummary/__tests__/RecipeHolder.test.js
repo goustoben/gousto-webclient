@@ -8,7 +8,7 @@ import RecipeHolder from '../RecipeHolder'
 
 describe('RecipeHolder', () => {
   test('should return a span', () => {
-    const wrapper = shallow(<RecipeHolder />)
+    const wrapper = shallow(<RecipeHolder onClick={() => { }} browserType="mobile" />)
     expect(wrapper.type()).toBe('span')
   })
 
@@ -16,12 +16,12 @@ describe('RecipeHolder', () => {
     const recipe = Immutable.fromJS({
       media: { images: [{ urls: [{}, { src: 'test' }] }] },
     })
-    const wrapper = shallow(<RecipeHolder recipe={recipe} />)
+    const wrapper = shallow(<RecipeHolder onClick={() => { }} browserType="mobile" recipe={recipe} />)
     expect(wrapper.find(Image).length).toBe(1)
   })
 
   test('should say "Add Recipe" when no recipe is defined', () => {
-    const wrapper = shallow(<RecipeHolder />)
+    const wrapper = shallow(<RecipeHolder onClick={() => { }} browserType="mobile" />)
     expect(
       wrapper
         .find('span')
@@ -33,7 +33,7 @@ describe('RecipeHolder', () => {
 
   test('should not break if the recipe has no images', () => {
     const recipe = Immutable.fromJS({ media: { images: [] } })
-    const wrapper = shallow(<RecipeHolder recipe={recipe} />)
+    const wrapper = shallow(<RecipeHolder onClick={() => { }} browserType="mobile" recipe={recipe} />)
     expect(wrapper.type()).toBe('span')
     expect(wrapper.find(Image).length).toBe(1)
     expect(wrapper.find(Image).prop('media')).toEqual(Immutable.List([]))

@@ -57,35 +57,33 @@ class Hub extends React.PureComponent {
   static limit = 20
 
   static propTypes = {
-    collection: PropTypes.instanceOf(Immutable.Map),
     endSet: PropTypes.number.isRequired,
     fetchSetData: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool,
-    limit: PropTypes.number.isRequired,
-    loadedRecipesCollectionId: PropTypes.string,
-    loadSets: PropTypes.func.isRequired,
     loadNextSet: PropTypes.func.isRequired,
-    mobileFullWidth: PropTypes.bool,
     params: PropTypes.object.isRequired,
-    recipes: PropTypes.instanceOf(Immutable.List),
-    recipesCollection: PropTypes.string,
     resetSets: PropTypes.func.isRequired,
     startSet: PropTypes.number.isRequired,
-    stock: PropTypes.number,
     totalSets: PropTypes.number.isRequired,
+    recipesCollection: PropTypes.string.isRequired,
+    stock: PropTypes.number.isRequired,
+    collection: PropTypes.instanceOf(Immutable.Map),
+    mobileFullWidth: PropTypes.bool,
+    recipes: PropTypes.instanceOf(Immutable.List),
+    isLoading: PropTypes.bool,
   }
 
   static defaultProps = {
     collection: Immutable.Map({}),
     mobileFullWidth: true,
     recipes: Immutable.List([]),
+    isLoading: false
   }
 
   static async fetchData({ store, params, setNum = 1 }) {
     await store.dispatch(collectionActions.collectionsLoadCollectionBySlug(params.collectionSlug))
 
     if (store.getState().error.get(actionTypes.COLLECTIONS_RECIEVE_COLLECTIONS)) {
-      logger.error({message: `Cookbook hub not available for collection slug: ${params.collectionSlug}`})
+      logger.error({ message: `Cookbook hub not available for collection slug: ${params.collectionSlug}` })
 
       return store.dispatch(redirectActions.redirect(routesConfig.client.cookbook))
     }
@@ -214,7 +212,7 @@ class Hub extends React.PureComponent {
                 />
                 <RecipeAttribute name='cookingTime' value={cookingTime} icon='icon-time' />
               </span>
-             </div>}
+            </div>}
           </Info>
         </Link>
       </div>
@@ -259,10 +257,12 @@ class Hub extends React.PureComponent {
                 {this.renderRecipes()}
               </Row>
 
-              {endSet < totalSets &&
-                <Div margin={{ top: 'XXL', bottom: 'XXL' }}>
-                  <LoadMoreLink onClick={loadNextSet} />
-                </Div>
+              {endSet < totalSets
+                && (
+                  <Div margin={{ top: 'XXL', bottom: 'XXL' }}>
+                    <LoadMoreLink onClick={loadNextSet} />
+                  </Div>
+                )
               }
             </Col>
             <Col

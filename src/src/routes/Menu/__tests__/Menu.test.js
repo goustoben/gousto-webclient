@@ -7,7 +7,6 @@ import { menuServiceConfig } from 'config/menuService'
 
 import { forceCheck } from 'react-lazyload'
 import Menu from 'routes/Menu/Menu'
-import { JustForYouTutorial } from '../JustForYouTutorial'
 import { flattenRecipes } from '../MenuContainer'
 
 jest.mock('utils/browserHelper', () => ({
@@ -18,7 +17,7 @@ jest.mock('../BoxSummary', () => ({
   BoxSummaryContainer: () => <div />
 }))
 jest.mock('routes/Menu/DetailOverlay', () => ('DetailOverlay'))
-jest.mock('routes/Menu/JustForYouTutorial')
+jest.mock('routes/Menu/JustForYouTutorial', () => ({ JustForYouTutorial: () => <div /> }))
 jest.mock('../RecipeMeta', () => ({
   RecipeMeta: () => <div />
 }))
@@ -45,6 +44,8 @@ jest.mock('routes/Menu/fetchData', () => (
     })
   )
 ))
+
+jest.mock('react-helmet', () => () => <div />)
 
 describe('Menu', () => {
   let productsLoadStock
@@ -161,7 +162,7 @@ describe('Menu', () => {
           />,
           mountOptions
         )
-        expect(wrapper.find(JustForYouTutorial).length).toBe(1)
+        expect(wrapper.find('JustForYouTutorial').length).toBe(1)
       })
 
       describe('the RecipesInBasketProgress component', () => {

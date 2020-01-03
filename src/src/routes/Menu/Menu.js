@@ -349,24 +349,29 @@ class Menu extends React.PureComponent {
         <JustForYouTutorial />
         <div className={classnames(css.container, overlayShowCSS)}>
 
-          {(showSelectedPage && recipeGroupingSelected.location === 'foodBrand') ?
-            <FoodBrandPage
-              showDetailRecipe={this.showDetailRecipe}
-              isClient={isClient}
-            /> : ((showSelectedPage && recipeGroupingSelected.location === 'thematic') ?
-              <ThematicsPage
+          {(showSelectedPage && recipeGroupingSelected.location === 'foodBrand')
+            ? (
+              <FoodBrandPage
                 showDetailRecipe={this.showDetailRecipe}
                 isClient={isClient}
               />
-              :
-              <MenuRecipes
-                isClient={isClient}
-                fadeCss={fadeCss}
-                showLoading={showLoading}
-                showDetailRecipe={this.showDetailRecipe}
-                orderId={orderId}
-                query={query}
-              />
+            ) : ((showSelectedPage && recipeGroupingSelected.location === 'thematic')
+              ? (
+                <ThematicsPage
+                  showDetailRecipe={this.showDetailRecipe}
+                  isClient={isClient}
+                />
+              )
+              : (
+                <MenuRecipes
+                  isClient={isClient}
+                  fadeCss={fadeCss}
+                  showLoading={showLoading}
+                  showDetailRecipe={this.showDetailRecipe}
+                  orderId={orderId}
+                  query={query}
+                />
+              )
             )}
           <div className={overlayShow ? css.greyOverlayShow : css.greyOverlay} onClick={this.handleOverlayClick} />
         </div>

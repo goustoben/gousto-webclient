@@ -22,7 +22,15 @@ describe('The Openings component', () => {
         3: { title: 'another job2' },
         4: { title: 'another job3' },
       })
-      wrapper = shallow(<Openings jobs={jobs} depts={departments} />)
+      wrapper = shallow(<Openings jobs={jobs} depts={departments} />,
+        {
+          context: {
+            store: {
+              dispatch: () => { },
+              getState: () => { }
+            }
+          }
+        })
     })
 
     test('renders a pre-header', () => {
@@ -38,7 +46,15 @@ describe('The Openings component', () => {
     })
 
     test('renders one deptContainer with a jobSelector per department', () => {
-      wrapper = shallow(<Openings jobs={jobs} depts={departments} />)
+      wrapper = shallow(<Openings jobs={jobs} depts={departments} />,
+        {
+          context: {
+            store: {
+              dispatch: () => { },
+              getState: () => { }
+            }
+          }
+        })
       expect(wrapper.find('.jobSelector')).toHaveLength(departments.length - 1)
       expect(wrapper.find('.deptContainer')).toHaveLength(1)
     })
@@ -49,7 +65,15 @@ describe('The Openings component', () => {
           jobs={jobs}
           depts={departments}
           selectedDepartment={selectedDepartment}
-        />
+        />,
+        {
+          context: {
+            store: {
+              dispatch: () => { },
+              getState: () => { }
+            }
+          }
+        }
       )
       expect(wrapper.find('.activeJobSelector')).toHaveLength(1)
     })
@@ -66,7 +90,15 @@ describe('The Openings component', () => {
           jobs={jobs}
           depts={departments}
           selectedDepartment={selectedDepartment}
-        />
+        />,
+        {
+          context: {
+            store: {
+              dispatch: () => { },
+              getState: () => { }
+            }
+          }
+        }
       )
     })
 
@@ -97,7 +129,15 @@ describe('The Openings component', () => {
           depts={departments}
           selectedDepartment={selectedDepartment}
           selectDepartment={selectDepartment}
-        />
+        />,
+        {
+          context: {
+            store: {
+              dispatch: () => { },
+              getState: () => { }
+            }
+          }
+        }
       )
     })
     test('calls the function to filters jobs when a department is selected', () => {
