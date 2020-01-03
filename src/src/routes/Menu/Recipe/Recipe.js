@@ -9,7 +9,7 @@ import GridRecipe from 'routes/Menu/Recipe/GridRecipe'
 import SimpleRecipe from 'routes/Menu/Recipe/SimpleRecipe'
 import FeaturedRecipe from 'routes/Menu/Recipe/FeaturedRecipe'
 import FineDineInRecipe from 'routes/Menu/Recipe/FineDineInRecipe'
-import css from 'routes/Menu/Recipe/Recipe.css'
+import css from './Recipe.css'
 
 const recipePropTypes = {
   title: PropTypes.string.isRequired,

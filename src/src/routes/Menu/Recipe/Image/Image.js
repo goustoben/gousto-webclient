@@ -11,7 +11,6 @@ const Image = ({ media, title, view, mouseEnter, mouseLeave, maxMediaSize }) => 
     className={classnames(
       { [css[view]]: ['list', 'featured'].indexOf(view) !== -1 },
       { [css.grid]: ['list', 'featured', 'fineDineInDetail'].indexOf(view) === -1 },
-      { [css.gridSmall]: ['gridSmall'].indexOf(view) !== -1 },
       { [css.detail]: view === 'detail' },
       { [css.fineDineInDetail]: view === 'fineDineInDetail' },
       { [css.simple]: view === 'simple' },
