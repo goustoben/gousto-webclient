@@ -70,26 +70,23 @@ export const filterOutNDDOptionsWhenNoRecipes = createSelector(
     const order = orders.get(orderId.toString())
     const deliveryDays = order.get('availableDeliveryDays')
 
-    if (!deliveryDays) {
+    if (!deliveryDays || !ndd) {
       return deliveryDays
     }
 
     const orderNoHasRecipes = (!(order.get('recipes')) || order.get('recipes').count() < 1)
-    let days
 
-    if (ndd && orderNoHasRecipes) {
-      // Remove NDD day options
-      days = deliveryDays.map(day => {
-        const filteredSlots = day.get('slots').filter(slot => !slot.get('daySlotLeadTimeIsExpress'))
-
-        return day.set('slots', filteredSlots)
-      })
-        .filter(day => day.get('slots').count() > 0)
-    } else {
-      days = deliveryDays
+    if (!orderNoHasRecipes) {
+      return deliveryDays
     }
 
-    return days
+    // Remove NDD day options
+    return deliveryDays.map(day => {
+      const filteredSlots = day.get('slots').filter(slot => !slot.get('daySlotLeadTimeIsExpress'))
+
+      return day.set('slots', filteredSlots)
+    })
+      .filter(day => day.get('slots').count() > 0)
   }
 )
 
