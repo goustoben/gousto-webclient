@@ -79,6 +79,32 @@ describe('util', () => {
       expect(expectedSecondDay.get('slots').count()).toEqual(1)
     })
 
+    it('should return if delivery days aren\'t found', () => {
+      const state = {
+        features: Immutable.Map({
+          ndd: Immutable.fromJS({
+            value: true,
+            experiment: true,
+          }),
+        }),
+        user: Immutable.fromJS({
+          newOrders: {
+            10: {
+              recipes:
+                [
+                  {id: '10763778'},
+                  {id: '20763779'},
+                  {id: '30763780'},
+                ],
+            },
+          }
+        }),
+      }
+
+      const result = filterOutNDDOptionsWhenNoRecipes(state, props)
+      expect(result).toEqual(undefined)
+    })
+
     it('should not filter days when recipes are chosen and NDD is true', () => {
       const state = {
         features: Immutable.Map({
