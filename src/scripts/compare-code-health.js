@@ -29,7 +29,7 @@ const parseGitDiffLine = (line) => {
 const compareHealth = (status, path, benchmarkCodeHealth, newCodeHealth) => {
   // skip deletions
   if (status === 'D') {
-    return
+    return null
   }
 
   const sanitisedPath = sanitiseFilePath(path)
