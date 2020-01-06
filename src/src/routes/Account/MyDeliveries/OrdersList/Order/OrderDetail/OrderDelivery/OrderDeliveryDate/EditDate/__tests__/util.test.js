@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
-import { filterOutNDDOptionsWhenNoRecipes } from 'routes/Account/MyDeliveries/OrdersList/Order/OrderDetail/OrderDelivery/OrderDeliveryDate/EditDate/util'
+import { filterOutNDDOptionsWhenNoRecipes } from '../util'
 
-describe('util', () => {
+describe('OrderDelivery EditDate utils', () => {
   describe('filterOutNDDOptionsWhenNoRecipes', () => {
     const availableDeliveryDays = Immutable.fromJS(
       {
@@ -135,7 +135,7 @@ describe('util', () => {
     })
 
     it('should not filter when no express day slot lead times', () => {
-      const availableDeliveryDays = Immutable.fromJS(
+      const availableDeliveryDaysNoExpress = Immutable.fromJS(
         {
           '2019-12-28': {
             id: 'd71f9dea-7d6d-4419-b595-dddd3153b718',
@@ -176,7 +176,7 @@ describe('util', () => {
           newOrders: {
             1: {},
             10: {
-              availableDeliveryDays: availableDeliveryDays,
+              availableDeliveryDays: availableDeliveryDaysNoExpress,
             },
           }
         }),
@@ -184,7 +184,7 @@ describe('util', () => {
 
       const result = filterOutNDDOptionsWhenNoRecipes(state, props)
       expect(result.count()).toEqual(2)
-      expect(result).toEqual(availableDeliveryDays)
+      expect(result).toEqual(availableDeliveryDaysNoExpress)
     })
   })
 })
