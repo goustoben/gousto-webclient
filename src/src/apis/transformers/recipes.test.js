@@ -660,7 +660,19 @@ describe('recipesTransformer', () => {
       }
     ]
 
-    const result = recipesTransformer(menuServiceResponse.data[0], menuServiceResponse)
+    const brandData = {
+      data: {
+        foodBrandColours: [{
+          "slug": "everyday-favourites",
+          "theme": {
+            "ribbonColor": "#F4EFE9",
+            "borderColor": "#C6BEB4",
+            "textColor": "#F6323E"
+          }
+        }]
+      }
+    }
+    const result = recipesTransformer(menuServiceResponse.data[0], menuServiceResponse, brandData)
     expect(result).toEqual(expectedFormat)
   })
 

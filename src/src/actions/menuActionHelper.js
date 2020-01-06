@@ -29,10 +29,12 @@ function getStockAvailability(getState, recipeStock) {
 }
 
 const loadMenuCollectionsWithMenuService = async (dispatch, getState, date, background) => {
-  const menuServiceData = getState().menuService
+  const state = getState()
+  const menuServiceData = state.menuService
+  const brandData = state.brand
   const activeMenu = activeMenuForDateTransformer(menuServiceData, date)
   const transformedCollections = collectionsTransformer(activeMenu, menuServiceData)
-  const transformedRecipes = recipesTransformer(activeMenu, menuServiceData)
+  const transformedRecipes = recipesTransformer(activeMenu, menuServiceData, brandData)
   const transformedCollectionRecipes = collectionRecipesTransformer(activeMenu)
 
   await menuLoadCollections(date, background, transformedCollections)(dispatch, getState)

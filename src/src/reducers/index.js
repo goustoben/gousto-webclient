@@ -39,6 +39,7 @@ import onScreenRecovery from './onScreenRecovery'
 import { getHelp } from './getHelp'
 import { logger } from './logger'
 import { menuService } from './menuService'
+import { brand } from './brand'
 
 const reducers = {
   ...abandonBasket,
@@ -47,6 +48,7 @@ const reducers = {
   ...auth,
   ...basket,
   ...boxSummary,
+  brand,
   ...checkout,
   ...collections,
   ...cookbook,
