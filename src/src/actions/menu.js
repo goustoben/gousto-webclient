@@ -48,7 +48,8 @@ const menuActions = {
   menuReceiveMenu,
   menuRecieveMenuPending,
   menuLoadCollectionsRecipes,
-  menuReceiveBoxPrices
+  menuReceiveBoxPrices,
+  showDetailRecipe
 }
 
 export function menuReceiveMenu(recipes) {
@@ -127,7 +128,6 @@ export function menuCutoffUntilReceive(cutoffUntil) {
 
 export function menuLoadDays() {
   return async (dispatch, getState) => {
-
     const useMenuService = getMenuService()
 
     if (useMenuService) {
@@ -380,6 +380,16 @@ export function menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClic
     } else {
       const newLoc = { ...prevLoc, query }
       dispatch(push(newLoc))
+    }
+  }
+}
+
+export function showDetailRecipe(recipeId, isViewMoreDetailsClicked) {
+  return (dispatch, getState) => {
+    const { boxSummaryShow } = getState()
+
+    if (!boxSummaryShow.get('show')) {
+      menuRecipeDetailVisibilityChange(recipeId, isViewMoreDetailsClicked)(dispatch, getState)
     }
   }
 }

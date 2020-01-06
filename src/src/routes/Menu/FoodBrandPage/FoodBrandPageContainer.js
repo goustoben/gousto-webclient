@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import config from 'config/recipes'
 import { getRecipeGroupFilter } from 'selectors/filters'
 import { filterRecipeGrouping } from 'actions/filters'
+import { showDetailRecipe } from 'actions/menu'
 import { FilteredRecipePage } from '../FilteredRecipePage'
 
 const mapStateToProps = (state) => {
@@ -17,7 +18,8 @@ const mapStateToProps = (state) => {
   }
 }
 const FoodBrandPageContainer = connect(mapStateToProps, {
-  removeRecipeFilter: () => filterRecipeGrouping(null, 'foodBrand')
+  removeRecipeFilter: () => filterRecipeGrouping(null, 'foodBrand'),
+  showDetailRecipe
 })(FilteredRecipePage)
 
 export { FoodBrandPageContainer }

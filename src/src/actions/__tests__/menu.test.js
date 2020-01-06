@@ -116,7 +116,6 @@ describe('menu actions', () => {
     })
 
     describe('when useMenuService is true', () => {
-
       test('should load collections when collections.value is true', async () => {
         menuServiceConfig.isEnabled = true
 
@@ -138,7 +137,6 @@ describe('menu actions', () => {
     })
 
     describe('when useMenuService is false', () => {
-
       test('should load collections when collections.value is false', async () => {
         menuServiceConfig.isEnabled = false
 
@@ -267,6 +265,39 @@ describe('menu actions', () => {
         type: actionTypes.MENU_LOAD_COMPLETE,
         timeToLoadMs: 12345,
         useMenuService: true
+      })
+    })
+  })
+
+  describe('showDetailRecipe', () => {
+    describe('when boxSummaryShow is true', () => {
+      beforeAll(() => {
+        const stateWithTrueBoxSummaryShow = {
+          ...state,
+          boxSummaryShow: Immutable.fromJS({
+            show: false
+          }),
+          routing: {
+            locationBeforeTransitions: {
+              query: ''
+            }
+          }
+        }
+        const getStateForTest = () => stateWithTrueBoxSummaryShow
+
+        menuActions.showDetailRecipe('1234', false)(dispatch, getStateForTest)
+      })
+
+      test('should call menuRecipeDetailVisibilityChange', () => {
+        expect(dispatch).toHaveBeenCalledWith({
+          recipeId: '1234',
+          type: "MENU_RECIPE_DETAIL_VISIBILITY_CHANGE",
+          trackingData: {
+            actionType: "MENU_RECIPE_DETAIL_VISIBILITY_CHANGE",
+            recipeId: "1234",
+            show: true
+          },
+        })
       })
     })
   })

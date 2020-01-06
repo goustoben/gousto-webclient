@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { filterRecipeGrouping, changeCollectionById } from 'actions/filters'
-import { menuRecipeDetailVisibilityChange } from 'actions/menu'
+import { menuRecipeDetailVisibilityChange, showDetailRecipe } from 'actions/menu'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { getFilteredRecipeIds } from '../selectors/filters'
 import { getCurrentCollectionIsRecommendation } from '../selectors/menu'
@@ -30,6 +30,7 @@ const mapDispatchToProps = {
   setThematic: filterRecipeGrouping,
   selectCurrentCollection: changeCollectionById,
   detailVisibilityChange: menuRecipeDetailVisibilityChange,
+  showDetailRecipe
 }
 
 const MenuRecipesContainer = connect(mapStateToProps, mapDispatchToProps)(MenuRecipes)

@@ -101,7 +101,6 @@ function mapStateToProps(state, ownProps) {
 const mapDispatchToProps = {
   basketOrderLoaded: actions.basketOrderLoaded,
   menuLoadBoxPrices: actions.menuLoadBoxPrices,
-  detailVisibilityChange: actions.menuRecipeDetailVisibilityChange,
   boxDetailsVisibilityChange: actions.boxSummaryVisibilityChange,
   menuBrowseCTAVisibilityChange: actions.menuBrowseCTAVisibilityChange,
   basketRestorePreviousValues: actions.basketRestorePreviousValues,

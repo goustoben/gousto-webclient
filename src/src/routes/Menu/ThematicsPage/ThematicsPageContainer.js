@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { getRecipeGroupFilter } from 'selectors/filters'
 import { getCollectionDetailsBySlug } from 'selectors/collections'
 import { filterRecipeGrouping } from 'actions/filters'
+import { showDetailRecipe } from 'actions/menu'
 import { FilteredRecipePage } from '../FilteredRecipePage'
 
 const mapStateToProps = (state) => {
@@ -18,7 +19,8 @@ const mapStateToProps = (state) => {
   }
 }
 const ThematicsPage = connect(mapStateToProps, {
-  removeRecipeFilter: () => filterRecipeGrouping(null, 'thematic')
+  removeRecipeFilter: () => filterRecipeGrouping(null, 'thematic'),
+  showDetailRecipe
 })(FilteredRecipePage)
 
 export { ThematicsPage }
