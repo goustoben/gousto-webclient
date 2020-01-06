@@ -7,6 +7,7 @@ export const getLoadingStateForOffer = state => state.pending.get('USER_LOAD_REF
 export const getUserFromJoin = state => (!state.auth.get('isAuthenticated') ? state.persist.get('simpleHeader', false) : false)
 export const getAgeVerified = state => state.user.get('ageVerified')
 export const getUserOrders = ({ user }) => user.get('orders')
+export const getUserNewOrders = ({ user }) => user.get('newOrders')
 export const getUserRecentRecipesIds = ({ user }, number = 6) => {
   const recipeIds = new Set()
   const userOrders = user.get('orders')
