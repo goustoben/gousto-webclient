@@ -5,17 +5,16 @@ import { RecipeGrid } from 'routes/Menu/RecipeGrid'
 
 import css from './FilteredRecipePage.css'
 
-const propTypes = {
-  name: PropTypes.string,
-  description: PropTypes.string,
-  borderColor: PropTypes.string,
-  removeRecipeFilter: PropTypes.func,
-  showDetailRecipe: PropTypes.func,
-  menuCurrentCollectionId: PropTypes.string,
-  menuRecipeDetailShow: PropTypes.string,
-  isClient: PropTypes.bool,
-}
 class FilteredRecipePage extends PureComponent {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    borderColor: PropTypes.string.isRequired,
+    removeRecipeFilter: PropTypes.func.isRequired,
+    showDetailRecipe: PropTypes.func.isRequired,
+    menuCurrentCollectionId: PropTypes.string.isRequired,
+    menuRecipeDetailShow: PropTypes.string.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -25,7 +24,7 @@ class FilteredRecipePage extends PureComponent {
   }
 
   componentDidMount() {
-    this.setState({containerHeight: getElementHeight(window.document, "#filteredRecipePageTitleContainer")})
+    this.setState({ containerHeight: getElementHeight(window.document, "#filteredRecipePageTitleContainer") })
 
     window.scrollTo(0, 0)
   }
@@ -37,24 +36,27 @@ class FilteredRecipePage extends PureComponent {
   }
 
   render() {
-    const { name, description, borderColor, removeRecipeFilter, showDetailRecipe, menuCurrentCollectionId, isClient, menuRecipeDetailShow } = this.props
+    const { name, description, borderColor, removeRecipeFilter, showDetailRecipe, menuCurrentCollectionId, menuRecipeDetailShow } = this.props
     const { containerHeight } = this.state
 
     return (
       <section className={css.filteredRecipePageContainer}>
         <div id="filteredRecipePageTitleContainer" className={css.filteredRecipePageTitleContainer}>
-          <span className={css.backButton} role="button" tabIndex={0} onClick={removeRecipeFilter} onKeyPress={removeRecipeFilter} data-testing='backToAllRecipes' >
-            <span className={css.leftArrow}/><span className={css.underline}>Back <span className={css.hideOnMobile}>to All Recipes</span></span>
+          <span className={css.backButton} role="button" tabIndex={0} onClick={removeRecipeFilter} onKeyPress={removeRecipeFilter} data-testing='backToAllRecipes'>
+            <span className={css.leftArrow} />
+            <span className={css.underline}>
+              Back
+              <span className={css.hideOnMobile}>to All Recipes</span>
+            </span>
           </span>
           <h1>{name}</h1>
         </div>
         <p className={css.filteredRecipePageDescription}>{description}</p>
-        <div style={{top: containerHeight, background: borderColor}} className={css.border}/>
+        <div style={{ top: containerHeight, background: borderColor }} className={css.border} />
         <div className={css.filteredRecipePageRecipes}>
           <RecipeGrid
             showDetailRecipe={showDetailRecipe}
             menuCurrentCollectionId={menuCurrentCollectionId}
-            isClient={isClient}
             menuRecipeDetailShow={menuRecipeDetailShow}
           />
         </div>
@@ -62,6 +64,5 @@ class FilteredRecipePage extends PureComponent {
     )
   }
 }
-FilteredRecipePage.propTypes = propTypes
 
 export { FilteredRecipePage }
