@@ -2406,7 +2406,8 @@ describe('utils/deliveries', () => {
             startTime: "18:00:00",
             endTime: "22:00:00",
             deliveryPrice: "2.99",
-            shouldCutoffAt: "2014-01-14T11:59:59+00:00"
+            shouldCutoffAt: "2014-01-14T11:59:59+00:00",
+            isExpress: true,
           },
           {
             id: "386932e5-71bd-4610-b9a4-baae4bc91be9",
@@ -2420,7 +2421,8 @@ describe('utils/deliveries', () => {
             startTime: "08:00:00",
             endTime: "19:00:00",
             deliveryPrice: "0.00",
-            shouldCutoffAt: "2014-01-14T11:59:59+00:00"
+            shouldCutoffAt: "2014-01-14T11:59:59+00:00",
+            isExpress: false,
           }
         ]
       }
@@ -2448,7 +2450,8 @@ describe('utils/deliveries', () => {
               deliveryStartTime: "18:00:00",
               id: "dafe3372-12d1-11e6-bee5-06ddb628bdc5",
               daySlotLeadTimeId: "7bdd00f7-af72-41af-8444-a35f1467be49",
-              daySlotLeadTimeActive: true
+              daySlotLeadTimeActive: true,
+              daySlotLeadTimeIsExpress: true,
             },
             {
               whenCutoff: "2014-01-14T11:59:59+00:00",
@@ -2459,9 +2462,10 @@ describe('utils/deliveries', () => {
               deliveryStartTime: "08:00:00",
               id: "dafa1c2e-12d1-11e6-b5f6-06ddb628bdc5",
               daySlotLeadTimeId: "386932e5-71bd-4610-b9a4-baae4bc91be9",
-              daySlotLeadTimeActive: true
+              daySlotLeadTimeActive: true,
+              daySlotLeadTimeIsExpress: false,
             }
-          ]
+          ],
         },
       ]
 

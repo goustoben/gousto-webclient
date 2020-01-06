@@ -1,5 +1,8 @@
 import humanTimeFormat from 'utils/timeFormat'
 import moment from 'moment'
+import { getNDDFeatureValue } from 'selectors/features'
+import { createSelector } from 'reselect'
+import { getUserNewOrders } from 'selectors/user'
 
 export const DEFAULT_MESSAGE_ID = 'default-message'
 
@@ -57,6 +60,35 @@ const getTakenDatesIds = (orderDeliveryDays, orders, orderCoreDeliveryDayId) => 
 
   return takenDatesIds
 }
+
+const getOrderId = (state, editDateProps) => editDateProps.orderId
+const nddEnabled = (state) => getNDDFeatureValue(state)
+
+export const filterOutNDDOptionsWhenNoRecipes = createSelector(
+  [getOrderId, getUserNewOrders, nddEnabled],
+  (orderId, orders, ndd) => {
+    const order = orders.get(orderId.toString())
+    const deliveryDays = order.get('availableDeliveryDays')
+
+    if (!deliveryDays || !ndd) {
+      return deliveryDays
+    }
+
+    const orderNoHasRecipes = (!(order.get('recipes')) || order.get('recipes').count() < 1)
+
+    if (!orderNoHasRecipes) {
+      return deliveryDays
+    }
+
+    // Remove NDD day options
+    return deliveryDays.map(day => {
+      const filteredSlots = day.get('slots').filter(slot => !slot.get('daySlotLeadTimeIsExpress'))
+
+      return day.set('slots', filteredSlots)
+    })
+      .filter(day => day.get('slots').count() > 0)
+  }
+)
 
 const getDeliveryDaysAndSlotsOptions = (orderDeliveryDays, orderRecipes, recipesStock, portionsPerRecipe, orderCoreDeliveryDayId, orderDeliverySlotId, orders) => {
   const takenDatesIds = getTakenDatesIds(orderDeliveryDays, orders, orderCoreDeliveryDayId)
