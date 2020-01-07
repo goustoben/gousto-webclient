@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import menu from 'config/menu'
 import moment from 'moment'
-import { CHRISTMAS_THEMATIC_NAME } from 'routes/Menu/Recipe/CTAThematic/CTAThematic'
 import CollectionsNav from '../CollectionsNav'
 import { RecipeGrid } from '../RecipeGrid'
 import SubHeader from '../SubHeader'
@@ -24,7 +23,6 @@ const propTypes = {
 }
 
 class MenuRecipes extends PureComponent {
-
   componentWillReceiveProps(nextProps) {
     const { menuRecipeDetailShow } = this.props
     if (nextProps.menuRecipeDetailShow && !menuRecipeDetailShow) {
@@ -52,24 +50,15 @@ class MenuRecipes extends PureComponent {
     }
   }
 
-  renderBanner = (switchoverDate1, switchoverDate2, switchoverDate3) => {
-    const { setThematic } = this.props
+  renderBanner = (switchoverDate) => {
     const now = moment()
-    const switchoverTime1 = moment(switchoverDate1)
-    const switchoverTime2 = moment(switchoverDate2)
-    const switchoverTime3 = moment(switchoverDate3)
+    const switchoverTime = moment(switchoverDate)
 
-    if (now.isSameOrAfter(switchoverTime3, 'hour')) {
-      return (<Banner type={'febyouary'} collectionSlug={'febyouary'} setThematic={setThematic} />)
-    }
-    if (now.isSameOrAfter(switchoverTime2, 'hour')) {
-      return (<Banner type={'janyoury2'} collectionSlug={'janyouary'} setThematic={setThematic} />)
-    }
-    if (now.isSameOrAfter(switchoverTime1, 'hour')) {
-      return (<Banner type={'janyoury1'} />)
+    if (now.isSameOrAfter(switchoverTime, 'hour')) {
+      return (<Banner type='febyouary' />)
     }
 
-    return (<Banner type={'christmas2'} collectionSlug={CHRISTMAS_THEMATIC_NAME} setThematic={setThematic} />)
+    return (<Banner type='janyoury1' />)
   }
 
   render() {
@@ -86,22 +75,23 @@ class MenuRecipes extends PureComponent {
 
     return (
       <div className={fadeCss} data-testing="menuRecipes">
-        {this.renderBanner(menu.janyouary.switchoverDateWeek1, menu.janyouary.switchoverDateWeek2, menu.janyouary.switchoverDateWeek3)}
+        {this.renderBanner(menu.janyouary.switchoverDate)}
         <SubHeader
           orderId={orderId}
         />
         <Loading loading={showLoading} />
-        {!showLoading &&
-          <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}
-        {filteredRecipesNumber ?
-          <RecipeGrid
-            showDetailRecipe={showDetailRecipe}
-            menuCurrentCollectionId={menuCurrentCollectionId}
-            menuRecipeDetailShow={menuRecipeDetailShow}
-            isClient={isClient}
-          />
-          :
-          null
+        {!showLoading
+          && <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}
+        {filteredRecipesNumber
+          ? (
+            <RecipeGrid
+              showDetailRecipe={showDetailRecipe}
+              menuCurrentCollectionId={menuCurrentCollectionId}
+              menuRecipeDetailShow={menuRecipeDetailShow}
+              isClient={isClient}
+            />
+          )
+          : null
         }
       </div>
     )
