@@ -10,7 +10,7 @@ import { TabletRecipeList } from './TabletRecipeList/TabletRecipeList'
 class RecipeList extends React.PureComponent {
   static propTypes = {
     filteredRecipeIds: PropTypes.instanceOf(Immutable.List),
-    showDetailRecipe: PropTypes.func,
+    showDetailRecipe: PropTypes.func.isRequired,
     isCurrentCollectionRecommendation: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
     collectionFilterChange: PropTypes.func,
     thematicName: PropTypes.string,

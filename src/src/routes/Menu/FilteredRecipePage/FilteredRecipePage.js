@@ -11,9 +11,6 @@ class FilteredRecipePage extends PureComponent {
     description: PropTypes.string.isRequired,
     borderColor: PropTypes.string.isRequired,
     removeRecipeFilter: PropTypes.func.isRequired,
-    showDetailRecipe: PropTypes.func.isRequired,
-    menuCurrentCollectionId: PropTypes.string.isRequired,
-    menuRecipeDetailShow: PropTypes.string.isRequired,
   }
 
   constructor(props) {
@@ -36,7 +33,7 @@ class FilteredRecipePage extends PureComponent {
   }
 
   render() {
-    const { name, description, borderColor, removeRecipeFilter, showDetailRecipe, menuCurrentCollectionId, menuRecipeDetailShow } = this.props
+    const { name, description, borderColor, removeRecipeFilter } = this.props
     const { containerHeight } = this.state
 
     return (
@@ -54,11 +51,7 @@ class FilteredRecipePage extends PureComponent {
         <p className={css.filteredRecipePageDescription}>{description}</p>
         <div style={{ top: containerHeight, background: borderColor }} className={css.border} />
         <div className={css.filteredRecipePageRecipes}>
-          <RecipeGrid
-            showDetailRecipe={showDetailRecipe}
-            menuCurrentCollectionId={menuCurrentCollectionId}
-            menuRecipeDetailShow={menuRecipeDetailShow}
-          />
+          <RecipeGrid />
         </div>
       </section>
     )

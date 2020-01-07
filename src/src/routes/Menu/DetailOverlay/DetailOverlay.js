@@ -10,15 +10,20 @@ import { getFeaturedImage, getRangeImages } from 'utils/image'
 const propTypes = {
   showOverlay: PropTypes.bool,
   menuRecipeDetailShow: PropTypes.string,
-  stock: PropTypes.instanceOf(Immutable.Map),
+  position: PropTypes.number,
+  stock: PropTypes.instanceOf(Immutable.Map).isRequired,
   numPortions: PropTypes.number.isRequired,
   recipesStore: PropTypes.instanceOf(Immutable.Map).isRequired,
-  position: PropTypes.number,
   browserType: PropTypes.string.isRequired
 }
 
-const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, stock, position, browserType }) => {
+const defaultProps = {
+  showOverlay: false,
+  menuRecipeDetailShow: '',
+  position: null
+}
 
+const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPortions, stock, position, browserType }) => {
   const recipeId = menuRecipeDetailShow
   const detailRecipe = recipesStore.get(recipeId)
   let stockRecipe
@@ -86,5 +91,6 @@ const DetailOverlay = ({ showOverlay, menuRecipeDetailShow, recipesStore, numPor
 }
 
 DetailOverlay.propTypes = propTypes
+DetailOverlay.defaultProps = defaultProps
 
 export default DetailOverlay

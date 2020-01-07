@@ -14,7 +14,6 @@ class MenuRecipes extends PureComponent {
     showLoading: PropTypes.bool.isRequired,
     filteredRecipesNumber: PropTypes.number.isRequired,
     menuCurrentCollectionId: PropTypes.string.isRequired,
-    showDetailRecipe: PropTypes.func.isRequired,
     setThematic: PropTypes.func.isRequired,
     selectCurrentCollection: PropTypes.func.isRequired,
     detailVisibilityChange: PropTypes.func.isRequired,
@@ -71,8 +70,6 @@ class MenuRecipes extends PureComponent {
       showLoading,
       filteredRecipesNumber,
       menuCurrentCollectionId,
-      menuRecipeDetailShow,
-      showDetailRecipe,
       orderId,
     } = this.props
 
@@ -87,11 +84,7 @@ class MenuRecipes extends PureComponent {
           && <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}
         {filteredRecipesNumber
           ? (
-            <RecipeGrid
-              showDetailRecipe={showDetailRecipe}
-              menuCurrentCollectionId={menuCurrentCollectionId}
-              menuRecipeDetailShow={menuRecipeDetailShow}
-            />
+            <RecipeGrid />
           )
           : null
         }
