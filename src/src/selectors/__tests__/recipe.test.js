@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { getRecipeTitle, getRecipeURL, getRecipeImages, getDisclaimerForRecipeID, getMicronutrientsForRecipeID } from '../recipe'
+import { getRecipeTitle, getRecipeURL, getRecipeImages, getDisclaimerForRecipeID, getMicronutrientsForRecipeID, getRecipeIdFromUrl } from '../recipe'
 
 describe('the recipe selectors', () => {
   let recipe
@@ -32,6 +32,42 @@ describe('the recipe selectors', () => {
       expect(getRecipeImages(recipe)).toEqual(
         Immutable.fromJS([{ src: 'image src x50', width: 50 }])
       )
+    })
+  })
+  describe('getRecipeIdFromUrl', () => {
+    let state
+    describe('when recipe id in url', () => {
+      beforeEach(() => {
+        state = {
+          routing: {
+            locationBeforeTransitions: {
+              query: {
+                recipeDetailId: '1234'
+              }
+            }
+          }
+        }
+      })
+      test('should return recipe id', () => {
+        const result = getRecipeIdFromUrl(state)
+        expect(result).toEqual('1234')
+      })
+    })
+
+    describe('when recipe id NOT in url', () => {
+      beforeEach(() => {
+        state = {
+          routing: {
+            locationBeforeTransitions: {
+              query: {}
+            }
+          }
+        }
+      })
+      test('should return empty string', () => {
+        const result = getRecipeIdFromUrl(state)
+        expect(result).toEqual('')
+      })
     })
   })
 })
