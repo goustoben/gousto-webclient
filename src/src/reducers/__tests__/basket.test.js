@@ -511,31 +511,6 @@ describe('basket reducer', function () {
     })
   })
 
-  describe('FEATURE_SET action type', function () {
-    test('should set tariffId in the state to action value if action feature is "checkoutTariff"', function () {
-      const state = Immutable.Map({ tariffId: null })
-      const result = basket(state, {
-        type: actionTypes.FEATURE_SET,
-        feature: 'checkoutTariff',
-        value: 'new value',
-      })
-      const expected = Immutable.Map({ tariffId: 'new value' })
-
-      expect(Immutable.is(result, expected)).toEqual(true)
-    })
-
-    test('should NOT set tariffId in the state to action value if action feature is not "checkoutTariff"', function () {
-      const initState = Immutable.Map({ tariffId: null })
-      const result = basket(initState, {
-        type: actionTypes.FEATURE_SET,
-        feature: 'something',
-        value: 'new value',
-      })
-
-      expect(Immutable.is(result, initState)).toEqual(true)
-    })
-  })
-
   describe('BASKET_TARIFF_CHANGE action type', function () {
     test('should set tariffId in the state to action tariffId', function () {
       const state = Immutable.Map({ tariffId: null })

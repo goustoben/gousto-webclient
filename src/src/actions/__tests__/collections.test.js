@@ -1,6 +1,5 @@
 import Immutable from 'immutable'
 
-import { featureSet } from 'actions/features'
 import { fetchCollections } from 'apis/collections'
 
 import {
@@ -9,10 +8,6 @@ import {
 
 jest.mock('apis/collections', () => ({
   fetchCollections: jest.fn(),
-}))
-
-jest.mock('actions/features', () => ({
-  featureSet: jest.fn(),
 }))
 
 const createCollectionState = ({ isAuthenticated }) => ({
@@ -68,39 +63,6 @@ describe('collection actions', () => {
           '',
           {}
         )
-      })
-    })
-
-    describe('when fetchCollections returns recommendations', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(createCollectionState({
-          isAuthenticated: true,
-        }))
-      })
-    })
-
-    describe('when fetchCollections is not returning recommendations', () => {
-      beforeEach(() => {
-        getState.mockReturnValue(createCollectionState({
-          isAuthenticated: true,
-        }))
-        fetchCollections.mockReturnValue(Promise.resolve({
-          data: [{
-            id: 'all recipe collection',
-            slug: 'all-recipes',
-            properties: {
-              enabled: true,
-              limit: 25,
-              name: "All recipes",
-            }
-          }]
-        }))
-      })
-
-      test('should not dispatch a featureSet action', async () => {
-        await collectionsLoadCollections()(dispatch, getState)
-
-        expect(featureSet).not.toHaveBeenCalled()
       })
     })
   })

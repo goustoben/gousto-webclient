@@ -1,29 +1,27 @@
 import actionTypes from './actionTypes'
 
-export const featureSet = (feature, val, experiment = false) => (
-  (dispatch, getState) => {
-    let value = val
+export const featuresSet = (features) => {
+  return {
+    type: actionTypes.FEATURES_SET,
+    features: features.map(({feature, value, experiment}) => {
+      if (value === 'true') {
+        value = true
+      }
 
-    if (val === 'true') {
-      value = true
-    }
+      if (value === 'false') {
+        value = false
+      }
 
-    if (val === 'false') {
-      value = false
-    }
+      if (experiment === undefined) {
+        experiment = false
+      }
 
-    const isAuthenticated = getState().auth.get('isAuthenticated')
-
-    dispatch({
-      type: actionTypes.FEATURE_SET,
-      feature,
-      value,
-      experiment,
-      isAuthenticated,
+      return {
+        feature,
+        value,
+        experiment
+      }
     })
   }
-)
-
-export default {
-  featureSet,
 }
+

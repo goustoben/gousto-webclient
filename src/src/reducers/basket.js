@@ -265,16 +265,6 @@ const basket = {
       return newState
     }
 
-    case actionTypes.FEATURE_SET: {
-      let newState = state
-
-      if (!action.isAuthenticated && action.feature === 'checkoutTariff') {
-        newState = newState.set('tariffId', action.value)
-      }
-
-      return newState
-    }
-
     case actionTypes.USER_LOGGED_IN: {
       return state.set('tariffId', initialState().get('tariffId'))
     }

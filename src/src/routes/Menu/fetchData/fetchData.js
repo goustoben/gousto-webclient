@@ -113,9 +113,6 @@ const loadOrderAuthenticated = async (store, orderId) => {
       }
     }
 
-    if (requiresMenuRecipesClear(store, orderId)) {
-      await store.dispatch(actions.featureSet('menuRecipes', undefined, false))
-    }
     await Promise.all([
       store.dispatch(actions.menuLoadMenu()),
       store.dispatch(actions.menuLoadStock(true))
