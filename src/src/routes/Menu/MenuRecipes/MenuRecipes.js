@@ -14,7 +14,6 @@ class MenuRecipes extends PureComponent {
     showLoading: PropTypes.bool.isRequired,
     filteredRecipesNumber: PropTypes.number.isRequired,
     menuCurrentCollectionId: PropTypes.string.isRequired,
-    setThematic: PropTypes.func.isRequired,
     selectCurrentCollection: PropTypes.func.isRequired,
     detailVisibilityChange: PropTypes.func.isRequired,
     menuRecipeDetailShow: PropTypes.string,
