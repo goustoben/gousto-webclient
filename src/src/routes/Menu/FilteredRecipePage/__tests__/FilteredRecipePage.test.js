@@ -27,6 +27,9 @@ describe('Filtered Recipe Page', () => {
         />
       )
     })
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
     test('should render filtered recipe page with title', () => {
       expect(wrapper.find('h1').text()).toBe('Takeaway Night')
     })
@@ -46,6 +49,13 @@ describe('Filtered Recipe Page', () => {
     })
     test('should render Recipes in the RecipGrid component', () => {
       expect(wrapper.find(RecipeGrid)).toHaveLength(1)
+    })
+
+    describe('when component will unmount called', () => {
+      test('should call removeRecipeFilterMock', () => {
+        wrapper.unmount()
+        expect(removeRecipeFilterMock).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })
