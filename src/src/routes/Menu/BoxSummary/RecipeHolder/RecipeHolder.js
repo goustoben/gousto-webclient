@@ -39,13 +39,14 @@ const RecipeHolder = ({ recipe, view, onClick, browserType }) => {
 RecipeHolder.propTypes = {
   recipe: PropTypes.instanceOf(Immutable.Map),
   view: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   browserType: PropTypes.string.isRequired
 }
 
 RecipeHolder.defaultProps = {
   recipe: Immutable.Map({}),
   view: DESKTOP_VIEW,
+  onClick: () => { }
 }
 
 export default RecipeHolder
