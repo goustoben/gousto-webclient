@@ -51,8 +51,6 @@ module.exports = {
     { id: 'gluten-free', label: 'Gluten Free' },
   ],
   janyouary: {
-    switchoverDateWeek1: '2019-12-24T12:00:00+01:00',
-    switchoverDateWeek2: '2019-12-31T12:00:00+01:00',
-    switchoverDateWeek3: '2020-02-01T00:00:00+01:00',
+    switchoverDate: '2020-02-01T00:00:00+01:00',
   }
 }
