@@ -91,6 +91,10 @@ describe('Details', () => {
       expect(wrapper.find('DateHeader').exists()).toBe(true)
     })
 
+    test('user credit component is rendered', () => {
+      expect(wrapper.find('Connect(UserCreditMessage)').exists()).toBe(true)
+    })
+
     describe('when displayOptions empty', () => {
       test('should render recipeItems', () => {
         expect(wrapper.find('RecipeList').exists()).toBe(true)
@@ -116,10 +120,6 @@ describe('Details', () => {
       test('should render Receipt', () => {
         expect(wrapper.find('Receipt').exists()).toBe(true)
       })
-    })
-
-    describe('when the showUserCredit flag is enabled', () => {
-
     })
 
     describe('Details cta buttons', () => {
