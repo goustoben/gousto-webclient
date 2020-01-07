@@ -1,9 +1,7 @@
 import React from 'react'
-import { mount } from 'enzyme'
-import { browserHistory } from 'react-router'
-import { client } from 'config/routes'
-import * as windowUtils from 'utils/window'
+import { shallow } from 'enzyme'
 import { RecipeCards } from '../RecipeCards.logic'
+import { RecipeCardContent } from '../RecipeCardContent'
 
 describe('<RecipeCards />', () => {
   const TEST_TITLE = 'test title'
@@ -40,7 +38,7 @@ describe('<RecipeCards />', () => {
   beforeEach(() => {
     trackRecipeCardClickMock = jest.fn()
 
-    wrapper = mount(
+    wrapper = shallow(
       <RecipeCards
         recipes={TEST_RECIPES}
         title={TEST_TITLE}
@@ -57,76 +55,15 @@ describe('<RecipeCards />', () => {
     expect(wrapper.find('RecipeCardsPresentation').prop('title')).toBe(TEST_TITLE)
   })
 
-  test('renders a list of recipes as Items', () => {
-    expect(wrapper.find('Item')).toHaveLength(TEST_RECIPES.length)
+  test('passes the recipies to RecipeList component', () => {
+    expect(wrapper.find('RecipeList').prop('recipes')).toEqual(TEST_RECIPES)
   })
 
-  test('renders the recipes with correct names', () => {
-    expect(wrapper.find('Item').first().prop('label')).toBe(TEST_RECIPES[0].title)
+  test('passes RecipeCardContent as child to RecipeList', () => {
+    expect(wrapper.find('RecipeList').children().type()).toBe(RecipeCardContent)
   })
 
-  describe('clicking on a recipe from the list', () => {
-    beforeEach(() => {
-      windowUtils.windowOpen = jest.fn()
-      browserHistory.push = jest.fn()
-
-      wrapper = mount(
-        <RecipeCards
-          recipes={TEST_RECIPES}
-          title={TEST_TITLE}
-          trackRecipeCardClick={trackRecipeCardClickMock}
-        />
-      )
-    })
-
-    afterEach(() => {
-      jest.resetAllMocks()
-    })
-
-    describe('when the cookbook url exists for the recipe', () => {
-      beforeEach(() => {
-        wrapper.find('Item').first().simulate('click')
-      })
-
-      test('opens the url in a new tab', () => {
-        expect(windowUtils.windowOpen).toHaveBeenCalledWith(TEST_RECIPES[0].url)
-      })
-
-      test('should track that the user has clicked', () => {
-        expect(trackRecipeCardClickMock).toHaveBeenCalledWith(TEST_RECIPES[0].id)
-      })
-    })
-
-    describe('when the url does not exist for a recipe', () => {
-      let recipesNoUrl
-
-      beforeEach(() => {
-        recipesNoUrl = [
-          ...TEST_RECIPES,
-          { id: '5', title: 'test 5', ingredients: [], url: '' }
-        ]
-
-        trackRecipeCardClickMock = jest.fn()
-
-        wrapper = mount(
-          <RecipeCards
-            recipes={recipesNoUrl}
-            title={TEST_TITLE}
-            trackRecipeCardClick={trackRecipeCardClickMock}
-          />
-        )
-
-        wrapper.find('Item').last().simulate('click')
-      })
-
-      test('redirects to the contact page', () => {
-        expect(browserHistory.push).toHaveBeenCalledWith(`${client.getHelp.index}/${client.getHelp.contact}`)
-      })
-
-      test('should track that the user has clicked', () => {
-        const lastRecipe = recipesNoUrl[recipesNoUrl.length - 1]
-        expect(trackRecipeCardClickMock).toHaveBeenCalledWith(lastRecipe.id)
-      })
-    })
+  test('passes tracking function to RecipeCardContent', () => {
+    expect(wrapper.find('RecipeCardContent').prop('trackRecipeCardClick')).toEqual(trackRecipeCardClickMock)
   })
 })

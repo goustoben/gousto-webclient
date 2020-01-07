@@ -1,11 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router'
-import { Item } from 'goustouicomponents'
-import { windowOpen } from 'utils/window'
 import { client } from 'config/routes'
 import { recipePropType } from '../getHelpPropTypes'
 import { RecipeCardsPresentation } from './RecipeCards.presentation'
+import { RecipeCardContent } from './RecipeCardContent'
+import { RecipeList } from '../components/RecipeList'
 
 const propTypes = {
   recipes: PropTypes.arrayOf(recipePropType).isRequired,
@@ -21,20 +20,9 @@ const RecipeCards = ({ recipes, title, trackRecipeCardClick }) => {
       title={title}
       buttonLeftUrl={buttonLeftUrl}
     >
-      {recipes.map(({ id, title: recipeTitle, url }) => (
-        <Item
-          key={id}
-          label={recipeTitle}
-          trackClick={() => trackRecipeCardClick(id)}
-          onClick={() => {
-            if (url.length) {
-              windowOpen(url)
-            } else {
-              browserHistory.push(`${buttonLeftUrl}/${client.getHelp.contact}`)
-            }
-          }}
-        />
-      ))}
+      <RecipeList recipes={recipes}>
+        <RecipeCardContent trackRecipeCardClick={trackRecipeCardClick} />
+      </RecipeList>
     </RecipeCardsPresentation>
   )
 }

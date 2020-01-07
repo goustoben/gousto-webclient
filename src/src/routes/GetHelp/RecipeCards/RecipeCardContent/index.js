@@ -1,0 +1,1 @@
+export { RecipeCardContent } from './RecipeCardContent'
