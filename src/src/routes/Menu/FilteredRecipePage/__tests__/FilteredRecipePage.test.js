@@ -19,10 +19,10 @@ describe('Filtered Recipe Page', () => {
     beforeEach(() => {
       wrapper = shallow(
         <FilteredRecipePage
-          name={'Takeaway Night'}
-          description={'Super yummy food'}
-          borderColor={'blue'}
-          browser={'desktop'}
+          name="Takeaway Night"
+          description="Super yummy food"
+          borderColor="blue"
+          browser="desktop"
           removeRecipeFilter={removeRecipeFilterMock}
         />
       )
@@ -37,7 +37,7 @@ describe('Filtered Recipe Page', () => {
       expect(wrapper.find('.backButton').length).toBe(1)
     })
     test('should render filtered recipe page with colour border', () => {
-      expect(wrapper.find('.border').at(0).prop('style')).toEqual({"background": "blue", "top": {"elementHeight": "50px"}})
+      expect(wrapper.find('.border').at(0).prop('style')).toEqual({ "background": "blue", "top": { "elementHeight": "50px" } })
     })
     test('should call removeRecipeFilter when click on back button', () => {
       wrapper.find('.backButton').simulate('click')
