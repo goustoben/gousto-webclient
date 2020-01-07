@@ -3,7 +3,6 @@ import basket from './basket'
 import boxSummary from './boxSummary'
 import checkout from './checkout'
 import content from './content'
-import features from './features'
 import filters from './filters'
 import home from './home'
 import jobs from './jobs'
@@ -39,7 +38,6 @@ const actions = {
   ...collections,
   ...cookbook,
   ...content,
-  ...features,
   ...filters,
   ...home,
   ...jobs,

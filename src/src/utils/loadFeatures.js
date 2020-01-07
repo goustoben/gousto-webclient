@@ -1,32 +1,36 @@
-import actions from 'actions'
+import { featuresSet } from 'actions/features'
 import globals from 'config/globals'
 import windowUtils from 'utils/window'
 
+// eslint-disable-next-line import/no-default-export
 export default function loadFeatures({ enable, disable, set = {}, features = {}, experiments = {} } = {}, store) {
+  const featuresArr = []
   if (enable) {
     enable.forEach(feature => {
-      store.dispatch(actions.featureSet(feature, true))
+      featuresArr.push({ feature, value: true })
     })
   }
 
   if (disable) {
     disable.forEach(feature => {
-      store.dispatch(actions.featureSet(feature, false))
+      featuresArr.push({ feature, value: false })
     })
   }
 
   const featuresToSet = { ...set, ...features }
   if (featuresToSet) {
     Object.keys(featuresToSet).forEach(name => {
-      store.dispatch(actions.featureSet(name, featuresToSet[name]))
+      featuresArr.push({ feature: name, value: featuresToSet[name] })
     })
   }
 
   if (experiments) {
     Object.keys(experiments).forEach(name => {
-      store.dispatch(actions.featureSet(name, experiments[name], true))
+      featuresArr.push({ feature: name, value: experiments[name], experiment: true })
     })
   }
+
+  store.dispatch(featuresSet(featuresArr))
 
   const clientWindow = windowUtils.getWindow()
   const trackedExperiments = (clientWindow && clientWindow.__snowPlowTrackedExperiments) || {} // eslint-disable-line no-underscore-dangle

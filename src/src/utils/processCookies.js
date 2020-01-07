@@ -3,7 +3,7 @@ import { cookiePrefix } from 'config/storePersistence'
 import { appBannerDismiss } from 'actions/appBanner'
 import basketActions from 'actions/basket'
 import signupActions from 'actions/signup'
-import featureActions from 'actions/features'
+import { featuresSet } from 'actions/features'
 import promoActions from 'actions/promos'
 import authActions from 'actions/auth'
 import filterActions from 'actions/filters'
@@ -227,6 +227,7 @@ const processCookies = (cookies, store) => {
   if (features) {
     try {
       features = JSON.parse(features)
+      const featuresArr = []
       Object.keys(features).forEach((feature) => {
         const featureContent = features[feature]
         let experiment
@@ -239,9 +240,9 @@ const processCookies = (cookies, store) => {
           experiment = false
           value = featureContent
         }
-
-        store.dispatch(featureActions.featureSet(feature, value, experiment))
+        featuresArr.push({ feature, value, experiment })
       })
+      store.dispatch(featuresSet(featuresArr))
     } catch (err) {
       logger.error({ message: 'error parsing features cookie value', errors: [err] })
     }

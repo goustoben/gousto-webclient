@@ -1,4 +1,4 @@
-import actions from 'actions'
+import { featuresSet } from 'actions/features'
 
 const getFeatureValues = (query, keyword = 'features') => {
   const regex = new RegExp(`${keyword}\\[([\\w-]+)\]`)
@@ -19,27 +19,29 @@ const getFeatureValues = (query, keyword = 'features') => {
     .filter(feature => feature !== null)
 }
 
-function setFeatures(store, list, ...args) {
+function setFeatures(store, list, value, experiment = false) {
   const isArray = Array.isArray(list)
+  const featuresArr = []
 
-  return isArray
-    ? list.forEach(item => {
-      store.dispatch(actions.featureSet(item, ...args))
+  if (isArray) {
+    list.forEach(item => {
+      featuresArr.push({ feature: item, value, experiment })
     })
-    : store.dispatch(actions.featureSet(list, ...args))
+  } else {
+    featuresArr.push({ feature: list, value, experiment })
+  }
+
+  store.dispatch(featuresSet(featuresArr))
 }
 
 const processExperimentsQuery = (query, store) => {
   const experiments = query['experiments[]']
   if (experiments) setFeatures(store, experiments, true, true)
 
-  // select default menu if none provided
-  if (!query['experiments[menu]']) {
-    store.dispatch(actions.featureSet('menu', 'default', true))
-  }
+  const featureValues = getFeatureValues(query, 'experiments')
+    .map(({ feature, value }) => ({ feature, value, experiment: true }))
 
-  getFeatureValues(query, 'experiments')
-    .map(({ feature, value }) => store.dispatch(actions.featureSet(feature, value, true)))
+  store.dispatch(featuresSet(featureValues))
 }
 
 const processFeaturesQuery = (query, store) => {
@@ -50,10 +52,11 @@ const processFeaturesQuery = (query, store) => {
     if (enabledFeatures) setFeatures(store, enabledFeatures, true)
     if (disabledFeatures) setFeatures(store, disabledFeatures, false)
 
-    getFeatureValues(query)
-      .map(({ feature, value }) => store.dispatch(actions.featureSet(feature, value)))
+    const featureValues = getFeatureValues(query)
 
-    store.dispatch(actions.featureSet('landingOrder', true))
+    featureValues.push({ feature: 'landingOrder', value: true })
+
+    store.dispatch(featuresSet(featureValues))
 
     processExperimentsQuery(query, store)
   }

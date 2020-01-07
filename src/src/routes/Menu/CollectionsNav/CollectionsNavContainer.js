@@ -15,7 +15,6 @@ function mapStateToProps(state) {
 
 const CollectionsNavContainer = connect(mapStateToProps, {
   collectionFilterChange: actions.collectionFilterChange,
-  featureSet: actions.featureSet,
 })(CollectionsNav)
 
 export default CollectionsNavContainer

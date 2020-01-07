@@ -65,7 +65,6 @@ describe('menu fetchData', () => {
   actions.boxSummaryDeliveryDaysLoad = jest.fn()
   actions.basketNumPortionChange = jest.fn()
   actions.basketRecipeAdd = jest.fn()
-  actions.featureSet = jest.fn()
   actions.userLoadOrders = jest.fn()
   actions.userLoadData = jest.fn()
 
@@ -85,7 +84,7 @@ describe('menu fetchData', () => {
     actions.boxSummaryDeliveryDaysLoad.mockReset()
     actions.basketNumPortionChange.mockReset()
     actions.basketRecipeAdd.mockReset()
-    actions.featureSet.mockReset()
+
     actions.userLoadOrders.mockReset()
 
     fetchMenus.mockReset()
@@ -237,32 +236,6 @@ describe('menu fetchData', () => {
               expect(store.dispatch.mock.calls[3]).toEqual([{ recipeId: '200' }])
               expect(store.dispatch.mock.calls[4]).toEqual([{ recipeId: '250' }])
               expect(store.dispatch.mock.calls[5]).toEqual([{ recipeId: '250' }])
-            })
-          })
-
-          describe('requiresMenuRecipeClear', () => {
-            beforeEach(() => {
-              state.basket = state.basket.setIn(['recipes', '123'], 5)
-              state.features = state.features.setIn(['menuRecipes', 'experiment'], true)
-            })
-
-            test('should dispatch featureSet menuRecipes action', async () => {
-              // we need to test that dispatch is called with the **result** of the action creator
-              // so making it return a symbol is an easy way to do that
-              const featureSetResult = Symbol()
-
-              // use mockImplementation and only return the symbol if it's called with the expected parameters
-              // this would normally be accomplished using `toHaveBeenCalledWith`, but what we are actually
-              // testing is that the correct action is passed to dispatch
-              actions.featureSet.mockImplementation((feature, val, experiment) => {
-                if (feature === 'menuRecipes' && val === undefined && experiment === false) {
-                  return featureSetResult
-                }
-              })
-
-              await fetchData({ store, query, params: paramsWithOrderId }, false, false)
-
-              expect(store.dispatch.mock.calls[3]).toEqual([featureSetResult])
             })
           })
 

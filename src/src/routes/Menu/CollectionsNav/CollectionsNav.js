@@ -19,14 +19,13 @@ class CollectionsNav extends React.PureComponent {
     menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
     collectionFilterChange: PropTypes.func.isRequired,
     menuCurrentCollectionId: PropTypes.string,
-    featureSet: PropTypes.func.isRequired,
     features: PropTypes.instanceOf(Immutable.Map).isRequired,
     isPolicyAccepted: PropTypes.bool,
   }
 
   constructor(props) {
     super(props)
-    this.state = { 
+    this.state = {
       navBarOffsetTop: 0,
       scrolledPastPoint: false
     }
@@ -263,9 +262,6 @@ class CollectionsNav extends React.PureComponent {
     const { navBarOffsetTop } = this.state
     if (!collectionId) return
     this.props.collectionFilterChange(collectionId)
-    if (this.props.features && this.props.features.getIn(['menuStickyCollections', 'value'], false)) {
-      this.props.featureSet('preferredCollection', this.props.menuCollections.getIn([collectionId, 'slug'], ''))
-    }
     let position = 0
     if (document && document.body) {
       if (actual('width', 'px') < 768) {

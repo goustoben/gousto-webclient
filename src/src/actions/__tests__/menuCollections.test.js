@@ -19,9 +19,6 @@ jest.mock('actions/filters', () => ({
 jest.mock('apis/collections', () => ({
   fetchCollections: jest.fn(),
 }))
-jest.mock('actions/features', () => ({
-  featureSet: jest.fn(),
-}))
 jest.mock('actions/menuLoadCollectionRecipes', () => ({
   menuLoadCollectionRecipes: jest.fn().mockImplementation(() => {
     return () => {
