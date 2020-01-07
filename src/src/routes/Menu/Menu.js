@@ -35,13 +35,11 @@ class Menu extends React.PureComponent {
   }
 
   state = {
-    isClient: false,
     isChrome: false,
   }
 
   async componentDidMount() {
     this.setState({ // eslint-disable-line react/no-did-mount-set-state
-      isClient: true,
       isChrome: browserHelper.isChrome(),
     })
 
@@ -264,13 +262,6 @@ class Menu extends React.PureComponent {
     return orderAction
   }
 
-  showDetailRecipe = (recipeId, isViewMoreDetailsClicked) => {
-    const { boxSummaryShow, detailVisibilityChange } = this.props
-    if (!boxSummaryShow) {
-      detailVisibilityChange(recipeId, isViewMoreDetailsClicked)
-    }
-  }
-
   handleOverlayClick = () => {
     const { boxSummaryShow, boxDetailsVisibilityChange, basketRestorePreviousValues, menuBrowseCTAShow, menuBrowseCTAVisibilityChange } = this.props
     if (boxSummaryShow) {
@@ -321,7 +312,7 @@ class Menu extends React.PureComponent {
       recipeGroupingSelected,
       recipes,
     } = this.props
-    const { isChrome, isClient } = this.state
+    const { isChrome } = this.state
     const overlayShow = boxSummaryShow || menuBrowseCTAShow
     const showLoading = isLoading && !overlayShow || forceLoad
     const showSelectedPage = recipeGroupingSelected !== null && (!!query.foodBrand || !!query.thematic)
@@ -351,23 +342,15 @@ class Menu extends React.PureComponent {
 
           {(showSelectedPage && recipeGroupingSelected.location === 'foodBrand')
             ? (
-              <FoodBrandPage
-                showDetailRecipe={this.showDetailRecipe}
-                isClient={isClient}
-              />
+              <FoodBrandPage />
             ) : ((showSelectedPage && recipeGroupingSelected.location === 'thematic')
               ? (
-                <ThematicsPage
-                  showDetailRecipe={this.showDetailRecipe}
-                  isClient={isClient}
-                />
+                <ThematicsPage />
               )
               : (
                 <MenuRecipes
-                  isClient={isClient}
                   fadeCss={fadeCss}
                   showLoading={showLoading}
-                  showDetailRecipe={this.showDetailRecipe}
                   orderId={orderId}
                   query={query}
                 />

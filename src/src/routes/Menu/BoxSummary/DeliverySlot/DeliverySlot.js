@@ -19,7 +19,7 @@ class DeliverySlot extends React.PureComponent {
     disableOnDelivery: PropTypes.bool,
     getBoxSummaryTextProps: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
-    isSubscriptionActive: PropTypes.string.isRequired,
+    isSubscriptionActive: PropTypes.string,
     menuFetchDataPending: PropTypes.bool,
     menuPending: PropTypes.bool,
     numPortions: PropTypes.number.isRequired,
@@ -43,6 +43,7 @@ class DeliverySlot extends React.PureComponent {
     tempOrderId: '',
     tempSlotId: '',
     userOrders: Immutable.fromJS({}),
+    isSubscriptionActive: ''
   }
 
   render = () => {

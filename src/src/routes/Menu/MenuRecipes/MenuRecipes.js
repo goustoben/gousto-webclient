@@ -8,21 +8,23 @@ import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import { Banner } from '../Banner'
 
-const propTypes = {
-  fadeCss: PropTypes.string,
-  showLoading: PropTypes.bool,
-  filteredRecipesNumber: PropTypes.number,
-  menuCurrentCollectionId: PropTypes.string,
-  menuRecipeDetailShow: PropTypes.string,
-  orderId: PropTypes.string,
-  isClient: PropTypes.bool,
-  showDetailRecipe: PropTypes.func,
-  setThematic: PropTypes.func,
-  selectCurrentCollection: PropTypes.func,
-  detailVisibilityChange: PropTypes.func
-}
-
 class MenuRecipes extends PureComponent {
+  static propTypes = {
+    fadeCss: PropTypes.string.isRequired,
+    showLoading: PropTypes.bool.isRequired,
+    filteredRecipesNumber: PropTypes.number.isRequired,
+    menuCurrentCollectionId: PropTypes.string.isRequired,
+    selectCurrentCollection: PropTypes.func.isRequired,
+    detailVisibilityChange: PropTypes.func.isRequired,
+    menuRecipeDetailShow: PropTypes.string,
+    orderId: PropTypes.string,
+  }
+
+  static defaultProps = {
+    menuRecipeDetailShow: '',
+    orderId: null
+  }
+
   componentWillReceiveProps(nextProps) {
     const { menuRecipeDetailShow } = this.props
     if (nextProps.menuRecipeDetailShow && !menuRecipeDetailShow) {
@@ -67,9 +69,6 @@ class MenuRecipes extends PureComponent {
       showLoading,
       filteredRecipesNumber,
       menuCurrentCollectionId,
-      menuRecipeDetailShow,
-      isClient,
-      showDetailRecipe,
       orderId,
     } = this.props
 
@@ -84,12 +83,7 @@ class MenuRecipes extends PureComponent {
           && <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}
         {filteredRecipesNumber
           ? (
-            <RecipeGrid
-              showDetailRecipe={showDetailRecipe}
-              menuCurrentCollectionId={menuCurrentCollectionId}
-              menuRecipeDetailShow={menuRecipeDetailShow}
-              isClient={isClient}
-            />
+            <RecipeGrid />
           )
           : null
         }
@@ -97,7 +91,5 @@ class MenuRecipes extends PureComponent {
     )
   }
 }
-
-MenuRecipes.propTypes = propTypes
 
 export { MenuRecipes }

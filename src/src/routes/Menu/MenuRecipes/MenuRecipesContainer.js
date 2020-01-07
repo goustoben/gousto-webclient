@@ -29,7 +29,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = {
   setThematic: filterRecipeGrouping,
   selectCurrentCollection: changeCollectionById,
-  detailVisibilityChange: menuRecipeDetailVisibilityChange,
+  detailVisibilityChange: menuRecipeDetailVisibilityChange
 }
 
 const MenuRecipesContainer = connect(mapStateToProps, mapDispatchToProps)(MenuRecipes)

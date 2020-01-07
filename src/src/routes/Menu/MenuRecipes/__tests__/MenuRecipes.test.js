@@ -16,19 +16,17 @@ describe('initial render', () => {
 
     wrapper = shallow(
       <MenuRecipes
-        orderId={''}
+        orderId=""
         basketNumPortionChange={jest.fn()}
-        fadeCss={'fadeOut'}
+        fadeCss="fadeOut"
         showLoading={false}
         filteredRecipesNumber={30}
-        menuCurrentCollectionId={''}
-        menuRecipeDetailShow={''}
-        isClient
-        showDetailRecipe={jest.fn()}
+        menuCurrentCollectionId=""
+        menuRecipeDetailShow=""
         selectCurrentCollection={jest.fn()}
+        detailVisibilityChange={() => { }}
       />,
     )
-
   })
   test('should render 1 SubHeader', () => {
     expect(wrapper.find(SubHeader).length).toBe(1)
@@ -54,15 +52,14 @@ describe('with the collections feature enabled', () => {
   test('should show a collections nav', () => {
     wrapper = shallow(
       <MenuRecipes
-        orderId={''}
+        orderId=""
         basketNumPortionChange={jest.fn()}
-        fadeCss={'fadeOut'}
+        fadeCss="fadeOut"
         showLoading={false}
         filteredRecipesNumber={30}
-        menuCurrentCollectionId={''}
-        menuRecipeDetailShow={''}
-        isClient
-        showDetailRecipe={jest.fn()}
+        menuCurrentCollectionId=""
+        menuRecipeDetailShow=""
+        detailVisibilityChange={() => { }}
         selectCurrentCollection={jest.fn()}
       />,
     )
@@ -76,15 +73,14 @@ describe('with the force collections feature enabled', () => {
   test('should show a collections nav', () => {
     wrapper = shallow(
       <MenuRecipes
-        orderId={''}
+        orderId=""
         basketNumPortionChange={jest.fn()}
-        fadeCss={'fadeOut'}
+        fadeCss="fadeOut"
         showLoading={false}
         filteredRecipesNumber={30}
-        menuCurrentCollectionId={''}
-        menuRecipeDetailShow={''}
-        isClient
-        showDetailRecipe={jest.fn()}
+        menuCurrentCollectionId=""
+        menuRecipeDetailShow=""
+        detailVisibilityChange={() => { }}
         selectCurrentCollection={jest.fn()}
       />,
     )
@@ -94,15 +90,14 @@ describe('with the force collections feature enabled', () => {
   test('should still show the collections nav bar with the collectionsNav feature disabled', () => {
     wrapper = shallow(
       <MenuRecipes
-        orderId={''}
+        orderId=""
         basketNumPortionChange={jest.fn()}
-        fadeCss={'fadeOut'}
+        fadeCss="fadeOut"
         showLoading={false}
         filteredRecipesNumber={30}
-        menuCurrentCollectionId={''}
-        menuRecipeDetailShow={''}
-        isClient
-        showDetailRecipe={jest.fn()}
+        menuCurrentCollectionId=""
+        menuRecipeDetailShow=""
+        detailVisibilityChange={() => { }}
         selectCurrentCollection={jest.fn()}
       />,
     )
@@ -118,15 +113,14 @@ describe('selectCurrentCollection', () => {
     selectCurrentCollection = jest.fn()
     wrapper = shallow(
       <MenuRecipes
-        orderId={''}
+        orderId=""
         basketNumPortionChange={jest.fn()}
-        fadeCss={'fadeOut'}
+        fadeCss="fadeOut"
         showLoading={false}
         filteredRecipesNumber={30}
-        menuCurrentCollectionId={'123abc'}
-        menuRecipeDetailShow={''}
-        isClient
-        showDetailRecipe={jest.fn()}
+        menuCurrentCollectionId="123abc"
+        menuRecipeDetailShow=""
+        detailVisibilityChange={() => { }}
         selectCurrentCollection={selectCurrentCollection}
       />,
     )
@@ -142,5 +136,39 @@ describe('selectCurrentCollection', () => {
   test('should only call selectCurrentCollection if menuCollectionId changes', () => {
     wrapper.setProps({ menuCurrentCollectionId: '567xyz' })
     expect(selectCurrentCollection).toHaveBeenCalled()
+  })
+})
+
+describe('componentWillUnmount', () => {
+  const { addEventListener, removeEventListener } = window
+  const next = jest.fn()
+  let wrapper
+
+  beforeEach(() => {
+    window.document.addEventListener = jest.fn()
+    window.document.removeEventListener = jest.fn()
+
+    wrapper = shallow(
+      <MenuRecipes
+        fadeCss="fadeOut"
+        orderId=""
+        showLoading={false}
+        filteredRecipesNumber={30}
+        menuCurrentCollectionId="123abc"
+        menuRecipeDetailShow=""
+        selectCurrentCollection={() => { }}
+        detailVisibilityChange={() => { }}
+      />,
+    )
+  })
+
+  afterEach(() => {
+    next.mockClear()
+    window.document.addEventListener = addEventListener
+    window.document.removeEventListener = removeEventListener
+  })
+  test('should call removeEventListener', () => {
+    wrapper.unmount()
+    expect(window.document.removeEventListener).toHaveBeenCalled()
   })
 })
