@@ -10,6 +10,7 @@ import {
   checkCardExpiryDate,
   checkAmendedDeliveryDate,
   checkOrderAwaitingSelection,
+  checkSustainabilityPledge,
 } from './helpers'
 
 import { NotificationPresentation } from './Notification.presentation'
@@ -36,7 +37,7 @@ class NotificationLogic extends Component {
       checkAmendedDeliveryDate(orders),
       checkOrderAwaitingSelection(orders, now),
       checkRafOffer(now),
-      'sustainabilityPledge'
+      checkSustainabilityPledge(now),
     ].filter(notification => notification).map(notification => ({
       message: config[notification].message,
       type: config[notification].type,

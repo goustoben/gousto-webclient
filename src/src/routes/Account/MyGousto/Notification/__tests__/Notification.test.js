@@ -9,6 +9,7 @@ import {
   checkAmendedDeliveryDate,
   checkOrderAwaitingSelection,
   checkRafOffer,
+  checkSustainabilityPledge,
 } from '../helpers'
 
 import { NotificationLogic as Notification } from '../Notification.logic'
@@ -155,10 +156,36 @@ describe('Notification component', () => {
       expect(result).toEqual('referAFriend')
     })
 
-    it('should return undefined if if current date is not between start and end date', () => {
+    it('should return undefined if current date is not between start and end date', () => {
       config.referAFriend.endDate = '2019-01-01'
 
       const result = checkRafOffer(now)
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  describe('checkSustainabilityPledge', () => {
+    beforeEach(() => {
+      now = moment('2020-01-15')
+
+      config.sustainabilityPledge.startDate = '2020-01-01'
+      config.sustainabilityPledge.endDate = '3020-01-01'
+    })
+
+    afterEach(() => {
+      config.sustainabilityPledge.startDate = '2020-01-01'
+      config.sustainabilityPledge.endDate = '3020-01-01'
+    })
+
+    it('should show the sustainability pledge notification if current date is between start and end date', () => {
+      const result = checkSustainabilityPledge(now)
+      expect(result).toEqual('sustainabilityPledge')
+    })
+
+    it('should return undefined if current date is not between start and end date', () => {
+      config.sustainabilityPledge.endDate = '2019-01-01'
+
+      const result = checkSustainabilityPledge(now)
       expect(result).toEqual(undefined)
     })
   })
