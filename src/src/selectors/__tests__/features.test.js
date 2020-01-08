@@ -5,6 +5,7 @@ import {
   getGoToMyDeliveries,
   getRafPositionOnWelcomePage,
   isDeliveryFrequencyFeatureEnabled,
+  getWelcomePageAppPromo,
   getPromoBannerEnabled,
   getPromoBannerText,
   getPromoBannerCode,
@@ -110,6 +111,30 @@ describe('when features are defined', () => {
 
       test('should return true', () => {
         expect(isDeliveryFrequencyFeatureEnabled(state)).toEqual(true)
+      })
+    })
+  })
+
+  describe('getWelcomePageAppPromo', () => {
+    describe('when feature is not set', () => {
+      test('should return false', () => {
+        expect(getWelcomePageAppPromo(state)).toEqual(false)
+      })
+    })
+
+    describe('when feature is set to true', () => {
+      const value = true
+
+      beforeEach(() => {
+        state.features = Immutable.fromJS({
+          welcomePageAppPromo: {
+            value,
+          },
+        })
+      })
+
+      test('should return value', () => {
+        expect(getWelcomePageAppPromo(state)).toEqual(true)
       })
     })
   })

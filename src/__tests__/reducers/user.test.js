@@ -281,6 +281,43 @@ describe('user reducer', () => {
 
       expect(Immutable.is(result, expected)).toBe(true)
     })
+
+    test('should remove no orders from Immutable List of orders given an empty array', () => {
+      const initialState = defaultInitialState.merge(
+        Immutable.fromJS({
+          orders: [
+            { id: '1', name: 'one' },
+            { id: '2', name: 'two' },
+            { id: '3', name: 'three' },
+            { id: '4', name: 'four' },
+            { id: '5', name: 'five' },
+            { id: '6', name: 'six' },
+            { id: '7', name: 'seven' },
+          ],
+        }),
+      )
+
+      const result = user(initialState, {
+        type: actionTypes.USER_UNLOAD_ORDERS,
+        orderIds: [],
+      })
+
+      const expected = defaultInitialState.merge(
+        Immutable.fromJS({
+          orders: [
+            { id: '1', name: 'one' },
+            { id: '2', name: 'two' },
+            { id: '3', name: 'three' },
+            { id: '4', name: 'four' },
+            { id: '5', name: 'five' },
+            { id: '6', name: 'six' },
+            { id: '7', name: 'seven' },
+          ],
+        }),
+      )
+
+      expect(Immutable.is(result, expected)).toBe(true)
+    })
   })
 
   describe('USER_UNLOAD_PROJECTED_DELIVERIES action type', () => {
@@ -311,6 +348,43 @@ describe('user reducer', () => {
             2: { id: '2', name: 'two' },
             5: { id: '5', name: 'five' },
             6: { id: '6', name: 'six' },
+          },
+        }),
+      )
+
+      expect(Immutable.is(result, expected)).toBe(true)
+    })
+
+    test('should remove deliveries from Immutable map of projectedDeliveries given an empty array', () => {
+      const initialState = defaultInitialState.merge(
+        Immutable.fromJS({
+          projectedDeliveries: {
+            1: { id: '1', name: 'one' },
+            2: { id: '2', name: 'two' },
+            3: { id: '3', name: 'three' },
+            4: { id: '4', name: 'four' },
+            5: { id: '5', name: 'five' },
+            6: { id: '6', name: 'six' },
+            7: { id: '7', name: 'seven' },
+          },
+        }),
+      )
+
+      const result = user(initialState, {
+        type: actionTypes.USER_UNLOAD_PROJECTED_DELIVERIES,
+        deliveryDayIds: [],
+      })
+
+      const expected = defaultInitialState.merge(
+        Immutable.fromJS({
+          projectedDeliveries: {
+            1: { id: '1', name: 'one' },
+            2: { id: '2', name: 'two' },
+            3: { id: '3', name: 'three' },
+            4: { id: '4', name: 'four' },
+            5: { id: '5', name: 'five' },
+            6: { id: '6', name: 'six' },
+            7: { id: '7', name: 'seven' },
           },
         }),
       )
@@ -602,6 +676,31 @@ describe('user reducer', () => {
       })
 
       expect(Immutable.is(result, expected)).toBe(true)
+    })
+  })
+
+  describe('USER_LOAD_REFERRAL_OFFER', () => {
+    test('should set the referral offer prop', () => {
+      const state = Immutable.fromJS({})
+      const result = user(state, {
+        type: actionTypes.USER_LOAD_REFERRAL_OFFER,
+        referralOffer: {
+          creditFormatted: '£15',
+          firstBoxDiscountFormatted: '50%',
+          firstMonthDiscountFormatted: '30%',
+          expiry: ''
+        }
+      })
+      const expected = {
+        referralOffer: {
+          creditFormatted: '£15',
+          firstBoxDiscountFormatted: '50%',
+          firstMonthDiscountFormatted: '30%',
+          expiry: ''
+        }
+      }
+
+      expect(result.toJS()).toEqual(expected)
     })
   })
 
