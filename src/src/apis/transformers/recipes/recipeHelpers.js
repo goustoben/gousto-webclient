@@ -1,6 +1,3 @@
-import config from 'config/recipes'
-import roundelsConfig from 'config/roundels'
-
 // [TR-2087] - Used a forEach for all the below to catch any missing data that may be in normalisedRelationships but missing from normalisedData
 
 const allergensTransformer = (allergensArray) => {
@@ -37,19 +34,19 @@ const dietaryTagsTransformer = (dietaryArray) => {
   })
 }
 
-const equpimentTransformer = (equipmentArray) => {
+const equipmentTransformer = (equipmentArray) => {
   return equipmentArray.map((piece) => {
     return piece.name
   })
 }
 
-const foodBrandTransformer = (foodBrand) => {
-
+const foodBrandTransformer = (foodBrand, foodBrandColours = {}) => {
   if (foodBrand) {
     return [{
       name: foodBrand.name,
       slug: foodBrand.slug,
-      properties: config.foodBrandColours[foodBrand.slug] || config.foodBrandColours.default
+      properties: foodBrandColours[foodBrand.slug] || foodBrandColours.default
+
     }]
   }
 
@@ -59,7 +56,7 @@ const foodBrandTransformer = (foodBrand) => {
 const formatIngredients = (normalisedRelationships, normalisedData) => {
   const result = []
 
-  if (normalisedRelationships && normalisedRelationships.ingredients && normalisedRelationships.ingredients.data){
+  if (normalisedRelationships && normalisedRelationships.ingredients && normalisedRelationships.ingredients.data) {
     normalisedRelationships.ingredients.data.forEach((individualIngredient) => {
       if (normalisedData.ingredient && normalisedData.ingredient[individualIngredient.id]) {
         const currentIngredient = normalisedData.ingredient[individualIngredient.id]
@@ -105,9 +102,14 @@ const imageUrlMap = (urls) => {
   })
 }
 
-const roundelTransformer = (roundel) => {
-  if (roundel && roundel.slug) {
-    const match = roundelsConfig.data.roundels.find((item) => {
+const roundelTransformer = (roundel, brandData = {}) => {
+  if (roundel 
+    && roundel.slug 
+    && brandData.data
+    && brandData.data.roundels 
+    && brandData.data.roundels.length > 0) { 
+
+    const match = brandData.data.roundels.find((item) => {
       return item.slug === roundel.slug
     })
 
@@ -144,14 +146,14 @@ const shelfLifeTransformer = (minDays, maxDays) => {
 }
 
 const surchargeTransformer = (surcharge) => {
-  const decimalSurcharge = surcharge/ 100
+  const decimalSurcharge = surcharge / 100
 
   return {
     listPrice: decimalSurcharge
   }
 }
 
-const taxonomyTransformer = (attributes) => {
+const taxonomyTransformer = (attributes, foodBrandColours) => {
   return [{
     name: "Dietary attributes",
     slug: "dietary-attributes",
@@ -160,7 +162,7 @@ const taxonomyTransformer = (attributes) => {
   {
     name: "Food Brands",
     slug: "food-brands",
-    tags: foodBrandTransformer(attributes.food_brand)
+    tags: foodBrandTransformer(attributes.food_brand, foodBrandColours)
   }]
 }
 
@@ -168,7 +170,7 @@ export {
   allergensTransformer,
   basicsTransformer,
   cropsTransformer,
-  equpimentTransformer,
+  equipmentTransformer,
   formatIngredients,
   healthKitchenTransformer,
   imageUrlMap,

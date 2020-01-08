@@ -1,6 +1,7 @@
 module.exports = {
   version: {
     auth: 'v1.0.0',
+    brand: 'v1',
     collections: 'v1',
     complaints: 'v1',
     content: 'v1',

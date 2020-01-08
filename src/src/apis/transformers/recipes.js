@@ -1,11 +1,21 @@
 import { normaliseData } from './normaliseData'
 import { ingredientTransformer } from './recipes/ingredientTransformer'
 import { mediaTransformer } from './recipes/mediaTransformer'
-import { allergensTransformer, basicsTransformer, equpimentTransformer, formatIngredients, healthKitchenTransformer, roundelTransformer, shelfLifeTransformer, surchargeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
+import { allergensTransformer, basicsTransformer, equipmentTransformer, formatIngredients, healthKitchenTransformer, roundelTransformer, shelfLifeTransformer, surchargeTransformer, taxonomyTransformer } from './recipes/recipeHelpers'
 
-const recipesTransformer = (activeMenu, response) => {
+const recipesTransformer = (activeMenu, response, brandData = {}) => {
   const normalisedData = normaliseData(response)
   const activeMenuRecipesIds = activeMenu.relationships.recipes.data.map((recipe) => recipe.core_recipe_id.toString() )
+
+  let foodBrandColours = {}
+  if(brandData.data && brandData.data.foodBrandColours) {
+    foodBrandColours = brandData.data.foodBrandColours.reduce((acc, item) => {
+      return {
+        ...acc,
+        [item.slug]: item.theme
+      }
+    }, {})
+  }
 
   const formattedData = activeMenuRecipesIds.map((individualRecipeId) => {
     const currentRecipe = normalisedData.recipe[individualRecipeId]
@@ -21,14 +31,14 @@ const recipesTransformer = (activeMenu, response) => {
       allergens: allergensTransformer(normalisedAttributes.allergens),
       basics: basicsTransformer(normalisedAttributes.basics),
       boxType: normalisedAttributes.box_type ? normalisedAttributes.box_type.slug : "",
-      chef: roundelTransformer(normalisedAttributes.roundel),
+      chef: roundelTransformer(normalisedAttributes.roundel, brandData),
       cookingTime: normalisedAttributes.prep_times.for2,
       cookingTimeFamily: normalisedAttributes.prep_times.for4,
       coreRecipeId: normalisedAttributes.core_recipe_id.toString(),
       cuisine: normalisedAttributes.cuisine ? normalisedAttributes.cuisine.name : "",
       description: normalisedAttributes.description,
       dietType: normalisedAttributes.diet_type ? normalisedAttributes.diet_type.slug : "",
-      equipment: normalisedAttributes.equipment ? equpimentTransformer(normalisedAttributes.equipment) : [],
+      equipment: normalisedAttributes.equipment ? equipmentTransformer(normalisedAttributes.equipment) : [],
       fiveADay: normalisedAttributes.five_a_day ? normalisedAttributes.five_a_day : 0,
       healthKitchen: healthKitchenTransformer(normalisedAttributes.health_kitchen),
       id: individualRecipeId,
@@ -75,7 +85,7 @@ const recipesTransformer = (activeMenu, response) => {
         average: normalisedAttributes.rating ? normalisedAttributes.rating.average : 0,
       },
       shelfLifeDays: normalisedAttributes.shelf_life ? shelfLifeTransformer(normalisedAttributes.shelf_life.min_days, normalisedAttributes.shelf_life.max_days) : "",
-      taxonomy: taxonomyTransformer(normalisedAttributes),
+      taxonomy: taxonomyTransformer(normalisedAttributes, foodBrandColours),
       title: normalisedAttributes.name
     }
   })

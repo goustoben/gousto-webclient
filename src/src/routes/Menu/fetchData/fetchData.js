@@ -11,7 +11,9 @@ import { getIsAdmin, getIsAuthenticated } from 'selectors/auth'
 import { getLandingDay, cutoffDateTimeNow } from 'utils/deliveries'
 import { menuLoadComplete } from 'actions/menu'
 import { fetchMenus, fetchMenusWithUserId } from 'apis/menus'
+import { fetchBrandInfo } from 'apis/brand'
 import { menuServiceDataReceived } from 'actions/menuService'
+import { brandDataReceived } from 'actions/brand'
 import { getMenuService } from 'selectors/features'
 import { selectCollection, getPreselectedCollectionName, setSlotFromIds } from './utils'
 
@@ -247,16 +249,22 @@ export default async function fetchData({ store, query, params }, force, backgro
   if (useMenuService) {
     const isAuthenticated = getIsAuthenticated(store.getState())
     const userId = store.getState().auth.get('id')
-    let response
+
+    let fetchMenuPromise
 
     if (isAuthenticated && userId) {
-      response = await fetchMenusWithUserId(accessToken, userId)
+      fetchMenuPromise = fetchMenusWithUserId(accessToken, userId)
     } else {
-      response = await fetchMenus(accessToken, query)
+      fetchMenuPromise = fetchMenus(accessToken, query)
     }
 
-    store.dispatch(menuServiceDataReceived(response))
+    const menuResponse = await fetchMenuPromise
+
+    store.dispatch(menuServiceDataReceived(menuResponse))
   }
+
+  const brandResponse = await fetchBrandInfo()
+  store.dispatch(brandDataReceived(brandResponse))
 
   try {
     if (query.error) {
