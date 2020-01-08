@@ -39,6 +39,7 @@ const propTypes = {
 }
 
 const defaultProps = {
+  ageVerified: false,
   basketProductsCost: '0.00',
   isPageLoading: false,
   orderAction: '',
@@ -46,6 +47,10 @@ const defaultProps = {
 }
 
 class OrderAddOns extends React.Component {
+  state = {
+    showError: false,
+  }
+
   componentDidMount() {
     const { orderDetails, orderId } = this.props
 
@@ -93,7 +98,9 @@ class OrderAddOns extends React.Component {
         this.continueWithoutProducts()
       }
     } catch (err) {
-      this.continueWithoutProducts()
+      this.setState({
+        showError: true,
+      })
     }
   }
 
@@ -108,44 +115,46 @@ class OrderAddOns extends React.Component {
       orderId,
       trackSkipOrderAddOnsClick
     } = this.props
+    const { showError } = this.state
 
     const numberOfProducts = Object.keys(products).length
     const areProductsSelected = basket.get('products').size
     const formattedProductsCost = `+£${basketProductsCost}`
 
     return isPageLoading ? <PageLoader /> : (
-      (numberOfProducts > 0) &&
-      <div>
-        <LayoutPageWrapper>
-          <OrderAddOnsHeader
-            numberOfProducts={numberOfProducts}
-            onClickSkip={() => {
-              trackSkipOrderAddOnsClick(orderId)
+      (numberOfProducts > 0) && (
+        <div>
+          <LayoutPageWrapper>
+            <OrderAddOnsHeader
+              numberOfProducts={numberOfProducts}
+              onClickSkip={() => {
+                trackSkipOrderAddOnsClick(orderId)
 
-              this.continueWithoutProducts()
-            }}
-          />
-          <ProductList
-            products={products}
-            basket={basket}
-            ageVerified={ageVerified}
-            productsCategories={productsCategories}
-            toggleAgeVerificationPopUp={() => {}}
-            numberOfColumn="4"
-          />
-        </LayoutPageWrapper>
+                this.continueWithoutProducts()
+              }}
+            />
+            <ProductList
+              products={products}
+              basket={basket}
+              ageVerified={ageVerified}
+              productsCategories={productsCategories}
+              toggleAgeVerificationPopUp={() => {}}
+              numberOfColumn="4"
+            />
+          </LayoutPageWrapper>
 
-        <OrderAddOnsFooter>
-          <CTA
-            className="ContinueButton"
-            extraInfo={areProductsSelected ? formattedProductsCost : null}
-            isFullWidth
-            onClick={this.onContinue}
-          >
-            {`Continue ${areProductsSelected ? 'with' : 'without'} items`}
-          </CTA>
-        </OrderAddOnsFooter>
-      </div>
+          <OrderAddOnsFooter showError={showError}>
+            <CTA
+              className="ContinueButton"
+              extraInfo={areProductsSelected ? formattedProductsCost : null}
+              isFullWidth
+              onClick={this.onContinue}
+            >
+              {`Continue ${areProductsSelected ? 'with' : 'without'} items`}
+            </CTA>
+          </OrderAddOnsFooter>
+        </div>
+      )
     )
   }
 }

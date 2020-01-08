@@ -16,4 +16,28 @@ describe('the OrderAddOnsFooter component', () => {
   test('renders the children passed in', () => {
     expect(wrapper.contains(CHILDREN)).toBe(true)
   })
+
+  test('error message is not shown', () => {
+    expect(
+      wrapper.find('Alert').length
+    ).toBe(0)
+  })
+
+  describe('and showError is set to true', () => {
+    beforeEach(() => {
+      wrapper.setProps({ showError: true })
+    })
+
+    test('displays an error message', () => {
+      expect(
+        wrapper.find('Alert').find('p').exists()
+      ).toBe(true)
+    })
+
+    test('link points to zendesk contact us page', () => {
+      expect(
+        wrapper.find('Alert').find('a').prop('href')
+      ).toBe('https://gousto.zendesk.com/hc/en-gb/articles/360034974753-Contact-us')
+    })
+  })
 })
