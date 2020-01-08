@@ -6,6 +6,10 @@ export function applyPromo(accessToken, promoCode) {
   return fetch(accessToken, `${endpoint('core')}/user/current/applyPromotionCode/${promoCode}`, {}, 'POST')
 }
 
+export function fetchUserCredit(accessToken) {
+  return fetch(accessToken, `${endpoint('core')}/user/current/balance`, {}, 'GET')
+}
+
 export function fetchReferralOffer(accessToken) {
   return fetch(accessToken, `${endpoint('core')}/user/current/raf-campaign-details`, {}, 'GET')
 }

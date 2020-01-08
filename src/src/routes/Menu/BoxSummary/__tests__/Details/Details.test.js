@@ -69,9 +69,11 @@ describe('Details', () => {
       onRemove: () => { },
       view: 'mobile'
     }
+
     beforeEach(() => {
       wrapper = shallow(<Details {...props} />)
     })
+
     test('should render mobile view', () => {
       expect(wrapper.find('.supercontainermobile').exists()).toBe(true)
     })
@@ -87,6 +89,10 @@ describe('Details', () => {
 
     test('should render DateHeader', () => {
       expect(wrapper.find('DateHeader').exists()).toBe(true)
+    })
+
+    test('user credit component is rendered', () => {
+      expect(wrapper.find('Connect(UserCreditMessage)').exists()).toBe(true)
     })
 
     describe('when displayOptions empty', () => {

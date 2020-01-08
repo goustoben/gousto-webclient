@@ -45,6 +45,7 @@ const userLoadReferralDetails = referralDetails => ({
 
 const userActions = {
   checkCardExpiry,
+  userFetchCredit,
   userOrderCancelNext,
   userOrderSkipNextProjected,
   userSubscribe,
@@ -75,6 +76,28 @@ const userActions = {
   userLoadAddresses,
   userUnsubscribe,
   userFetchReferralOffer,
+}
+
+function userFetchCredit() {
+  return async (dispatch, getState) => {
+    const accessToken = getState().auth.get('accessToken')
+
+    try {
+      const { data: userCreditData } = await userApi.fetchUserCredit(accessToken)
+      const { balance: userCredit } = userCreditData
+
+      dispatch({
+        type: actionTypes.USER_CREDIT,
+        userCredit,
+      })
+    } catch (err) {
+      dispatch(statusActions.error(actionTypes.USER_CREDIT, err.message))
+      logger.error(err)
+      throw err
+    } finally {
+      dispatch(statusActions.pending(actionTypes.USER_CREDIT, false))
+    }
+  }
 }
 
 function userOrderCancelNext(afterBoxNum = 1) {

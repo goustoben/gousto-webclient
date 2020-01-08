@@ -24,6 +24,9 @@ const user = {
     case actionTypes.USER_AGE_VERIFY:
       return state.set('ageVerified', action.verified)
 
+    case actionTypes.USER_CREDIT:
+      return state.set('credit', action.userCredit)
+
     case actionTypes.USER_SUBSCRIBE:
       return state.merge(action.user)
 

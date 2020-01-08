@@ -9,6 +9,7 @@ import SaveButton from 'OrderSummary/SaveButton'
 import SectionHeader from 'SectionHeader'
 import classnames from 'classnames'
 import productUtils from 'utils/products'
+import { UserCreditMessage } from 'components/UserCreditMessage'
 import css from './OrderSummary.css'
 
 class OrderSummary extends React.PureComponent {
@@ -33,7 +34,6 @@ class OrderSummary extends React.PureComponent {
     surcharges: PropTypes.instanceOf(Immutable.List),
     orderNumber: PropTypes.string,
     orderSummaryCollapsed: PropTypes.bool,
-    isOrderConfirmation: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -43,7 +43,6 @@ class OrderSummary extends React.PureComponent {
     prices: Immutable.Map({}),
     orderNumber: '',
     orderSummaryCollapsed: true,
-    isOrderConfirmation: false,
   }
 
   state = {
@@ -51,6 +50,7 @@ class OrderSummary extends React.PureComponent {
   }
 
   asterisk = String.fromCharCode(42)
+
   onOrderSave = () => {
     const { isOrderConfirmation, onSave } = this.props
     onSave(isOrderConfirmation)
@@ -191,7 +191,7 @@ class OrderSummary extends React.PureComponent {
       saveRequired,
       saveError,
       orderSummaryCollapsed,
-      onOrderConfirmationMobile
+      onOrderConfirmationMobile,
     } = this.props
     const { orderSummaryOpen } = this.state
     let vatableItemsInOrder = false
@@ -246,6 +246,7 @@ class OrderSummary extends React.PureComponent {
               {vatableItemsInOrder ? <p className={css.disclaimer}>{this.asterisk} These items include VAT at 20%</p> : null}
             </Receipt>
           </div>
+          <UserCreditMessage />
           <div className={classnames({ [css.updateOrderButtonSummary]: onOrderConfirmationMobile })}>
             <SaveButton
               saving={saving}

@@ -69,6 +69,10 @@ const defaultFeatures = () => ({
   addOnsBeforeOrderConfirmation: {
     experiment: false,
     value: false,
+  },
+  showUserCredit: {
+    experiment: false,
+    value: false,
   }
 })
 

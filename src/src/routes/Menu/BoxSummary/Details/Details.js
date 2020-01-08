@@ -6,6 +6,7 @@ import { getSurchargeItems } from 'utils/pricing'
 
 import config from 'config'
 import { Button, Heading, LayoutContentWrapper, Spinner } from 'goustouicomponents'
+import { UserCreditMessage } from 'components/UserCreditMessage'
 import Receipt from 'Receipt'
 import Portions from './Portions'
 import css from './Details.css'
@@ -162,21 +163,26 @@ class Details extends React.Component {
               {
                 (pricingPending)
                   ? <div className={css.spinner}><Spinner color="black" /></div>
-                  : <Receipt
-                    dashPricing={numRecipes < config.basket.minRecipesNum}
-                    numRecipes={numRecipes}
-                    numPortions={numPortions}
-                    prices={prices}
-                    deliveryTotalPrice={prices.get('deliveryTotal')}
-                    surcharges={getSurchargeItems(prices.get('items'))}
-                    surchargeTotal={prices.get('surchargeTotal')}
-                    recipeTotalPrice={prices.get('recipeTotal')}
-                    totalToPay={prices.get('total')}
-                    recipeDiscountAmount={prices.get('recipeDiscount')}
-                    recipeDiscountPercent={prices.get('percentageOff')}
-                    extrasTotalPrice={prices.get('productTotal')}
-                    showTitleSection
-                  />
+                  : (
+                    <div>
+                      <Receipt
+                        dashPricing={numRecipes < config.basket.minRecipesNum}
+                        numRecipes={numRecipes}
+                        numPortions={numPortions}
+                        prices={prices}
+                        deliveryTotalPrice={prices.get('deliveryTotal')}
+                        surcharges={getSurchargeItems(prices.get('items'))}
+                        surchargeTotal={prices.get('surchargeTotal')}
+                        recipeTotalPrice={prices.get('recipeTotal')}
+                        totalToPay={prices.get('total')}
+                        recipeDiscountAmount={prices.get('recipeDiscount')}
+                        recipeDiscountPercent={prices.get('percentageOff')}
+                        extrasTotalPrice={prices.get('productTotal')}
+                        showTitleSection
+                      />
+                      <UserCreditMessage />
+                    </div>
+                  )
               }
               {this.renderPromoCodeMessage()}
               <div className={btnClassName}>
