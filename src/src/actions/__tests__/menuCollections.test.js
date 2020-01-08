@@ -3,8 +3,8 @@ import Immutable from 'immutable'
 import { fetchCollections } from 'apis/collections'
 import { limitReached } from 'utils/basket'
 import { getCollectionIdWithName, getDefaultCollectionId, isAllRecipes } from 'utils/collections'
-import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
-import { menuLoadCollectionRecipes } from 'actions/menuLoadCollectionRecipes'
+import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuCollections'
+import { loadRecipesForSingleCollection } from 'actions/loadRecipesForSingleCollection'
 import { collectionFilterChange } from 'actions/filters'
 
 jest.mock('utils/collections', () => ({
@@ -19,8 +19,8 @@ jest.mock('actions/filters', () => ({
 jest.mock('apis/collections', () => ({
   fetchCollections: jest.fn(),
 }))
-jest.mock('actions/menuLoadCollectionRecipes', () => ({
-  menuLoadCollectionRecipes: jest.fn().mockImplementation(() => {
+jest.mock('actions/loadRecipesForSingleCollection', () => ({
+  loadRecipesForSingleCollection: jest.fn().mockImplementation(() => {
     return () => {
       return Promise.resolve()
     }
@@ -205,7 +205,7 @@ describe('menu actions', () => {
     })
   })
 
-  describe('menuLoadCollectionsRecipes', () => {
+  describe('loadRecipesForAllCollections', () => {
     let getStateWithBasketItems
 
     beforeEach(() => {
@@ -227,11 +227,11 @@ describe('menu actions', () => {
       })
     })
 
-    test('calls menuLoadCollectionRecipes for each menuCollection in state', async () => {
-      await menuLoadCollectionsRecipes('a-date')(dispatch, getStateWithBasketItems)
+    test('calls loadRecipesForSingleCollection for each menuCollection in state', async () => {
+      await loadRecipesForAllCollections('a-date')(dispatch, getStateWithBasketItems)
 
       expect(isAllRecipes).toHaveBeenCalled()
-      expect(menuLoadCollectionRecipes).toHaveBeenCalled()
+      expect(loadRecipesForSingleCollection).toHaveBeenCalled()
       expect(limitReached).toHaveBeenCalled()
     })
   })

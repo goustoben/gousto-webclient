@@ -8,7 +8,7 @@ const mockLimitReached = jest.fn()
 const mockGetCutoffDateTime = jest.fn()
 
 const mockDispatchMenuLoadCollections = jest.fn()
-const mockDispatchmenuLoadCollectionsRecipes = jest.fn()
+const mockDispatchLoadRecipesForAllCollections = jest.fn()
 const mockLoadMenuCollectionsWithMenuService = jest.fn()
 const mockMenuServiceLoadDays = jest.fn()
 
@@ -29,8 +29,8 @@ jest.mock('actions/menuCollections', () => ({
   menuLoadCollections: () => {
     return mockDispatchMenuLoadCollections
   },
-  menuLoadCollectionsRecipes: () => {
-    return mockDispatchmenuLoadCollectionsRecipes
+  loadRecipesForAllCollections: () => {
+    return mockDispatchLoadRecipesForAllCollections
   }
 }))
 
@@ -154,7 +154,7 @@ describe('menu actions', () => {
         await menuActions.menuLoadMenu(cutoffDateTime)(dispatch, getStateForTest)
 
         expect(mockDispatchMenuLoadCollections).toHaveBeenCalled()
-        expect(mockDispatchmenuLoadCollectionsRecipes).toHaveBeenCalled()
+        expect(mockDispatchLoadRecipesForAllCollections).toHaveBeenCalled()
       })
     })
   })

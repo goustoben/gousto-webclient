@@ -134,8 +134,8 @@ class Details extends React.Component {
                 slotId={slotId}
               />
               {
-                !displayOptions.contains(HIDE_PORTIONS) &&
-                this.renderPortions(this.props)
+                !displayOptions.contains(HIDE_PORTIONS)
+                && this.renderPortions(this.props)
               }
             </LayoutContentWrapper>
             <LayoutContentWrapper>
@@ -146,12 +146,12 @@ class Details extends React.Component {
               }
             </LayoutContentWrapper>
             {
-              !displayOptions.contains(HIDE_RECIPE_LIST) &&
-              <RecipeList {...this.props} />
+              !displayOptions.contains(HIDE_RECIPE_LIST)
+              && <RecipeList {...this.props} />
             }
             <LayoutContentWrapper>
               <BoxProgressAlert numRecipes={numRecipes} />
-              {showSecondCta &&
+              {showSecondCta && (
                 <Button
                   color="secondary"
                   onClick={() => { boxSummaryVisibilityChange(false) }}
@@ -159,7 +159,7 @@ class Details extends React.Component {
                 >
                   {ctaText}
                 </Button>
-              }
+              )}
               {
                 (pricingPending)
                   ? <div className={css.spinner}><Spinner color="black" /></div>
@@ -187,14 +187,15 @@ class Details extends React.Component {
               {this.renderPromoCodeMessage()}
               <div className={btnClassName}>
                 {
-                  displayCta ?
+                  displayCta ? (
                     <Button
                       onClick={() => { boxSummaryVisibilityChange(false) }}
                       width="full"
                     >
                       {ctaText}
-                    </Button> :
-                    <CheckoutContainer view={view} />
+                    </Button>
+                  )
+                    : <CheckoutContainer view={view} />
                 }
               </div>
             </LayoutContentWrapper>

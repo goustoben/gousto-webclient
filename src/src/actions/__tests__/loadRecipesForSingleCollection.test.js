@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import { menuLoadCollectionRecipes } from 'actions/menuLoadCollectionRecipes'
+import { loadRecipesForSingleCollection } from 'actions/loadRecipesForSingleCollection'
 import { fetchCollectionRecipes } from 'apis/collections'
 import { menuReceiveCollectionRecipes, menuReceiveMenu } from 'actions/menu'
 
@@ -18,7 +18,7 @@ afterEach(() => {
   menuReceiveCollectionRecipes.mockClear()
 })
 
-describe('menuLoadCollectionRecipes without menuService', () => {
+describe('loadRecipesForSingleCollection without menuService', () => {
   const dispatch = jest.fn()
 
   const state = {
@@ -35,7 +35,7 @@ describe('menuLoadCollectionRecipes without menuService', () => {
   const getState = () => state
 
   test('should call fetchCollectionRecipes with reqData including filters available on date ', async () => {
-    await menuLoadCollectionRecipes('testDate', 'testCollectionId')(dispatch, getState)
+    await loadRecipesForSingleCollection('testDate', 'testCollectionId')(dispatch, getState)
 
     const expectedReqDataParams = {
       'filters[available_on]': 'testDate',
@@ -46,7 +46,7 @@ describe('menuLoadCollectionRecipes without menuService', () => {
 
   test('should call fetchCollectionRecipes with reqData including id if idsOnly is true', async() => {
     const idsOnly = true
-    await menuLoadCollectionRecipes('testDate', 'testCollectionId', idsOnly )(dispatch, getState)
+    await loadRecipesForSingleCollection('testDate', 'testCollectionId', idsOnly )(dispatch, getState)
 
     const expectedReqDataParams = {
       'filters[available_on]': 'testDate',
@@ -65,19 +65,19 @@ describe('menuLoadCollectionRecipes without menuService', () => {
       }
     })
 
-    await menuLoadCollectionRecipes('testDate', 'testCollectionId', idsOnly )(dispatch, getState)
+    await loadRecipesForSingleCollection('testDate', 'testCollectionId', idsOnly )(dispatch, getState)
     expect(menuReceiveCollectionRecipes).toHaveBeenCalled()
   })
 
   test('should dispatch menuReceiveMenu when recipes are returned if idsOnly is false', async () => {
     const idsOnly = false
 
-    await menuLoadCollectionRecipes('testDate', 'testCollectionId', idsOnly )(dispatch, getState)
+    await loadRecipesForSingleCollection('testDate', 'testCollectionId', idsOnly )(dispatch, getState)
     expect(menuReceiveMenu).toHaveBeenCalled()
   })
 })
 
-describe('menuLoadCollectionRecipes with menuService', () => {
+describe('loadRecipesForSingleCollection with menuService', () => {
   const dispatch = jest.fn()
 
   const state = {
@@ -96,14 +96,14 @@ describe('menuLoadCollectionRecipes with menuService', () => {
   test('should dispatch menuReceiveCollectionRecipes when recipes are returned if idsOnly is true', async () => {
     const idsOnly = true
 
-    await menuLoadCollectionRecipes('testDate', 'testCollectionId1', idsOnly, transformedRecipes, transformedCollectionRecipesIds)(dispatch, getState)
+    await loadRecipesForSingleCollection('testDate', 'testCollectionId1', idsOnly, transformedRecipes, transformedCollectionRecipesIds)(dispatch, getState)
     expect(menuReceiveCollectionRecipes).toHaveBeenCalledWith("testCollectionId1", [{"coreRecipeId": "1234"}, {"coreRecipeId": "5678"}])
   })
 
   test('should dispatch menuReceiveMenu when recipes are returned if idsOnly is false', async () => {
     const idsOnly = false
 
-    await menuLoadCollectionRecipes('testDate', 'testCollectionId', idsOnly, transformedRecipes, transformedCollectionRecipesIds)(dispatch, getState)
+    await loadRecipesForSingleCollection('testDate', 'testCollectionId', idsOnly, transformedRecipes, transformedCollectionRecipesIds)(dispatch, getState)
     expect(menuReceiveMenu).toHaveBeenCalledWith([{"coreRecipeId": "1234"}, {"coreRecipeId": "5678"}, {"coreRecipeId": "9101"}])
   })
 })

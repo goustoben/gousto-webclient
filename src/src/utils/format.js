@@ -22,7 +22,12 @@ export const formatLabelPlural = (string, numItem) => {
 
 export const formatDashOrPrice = (price, numRecipes, prices, dash = null) => {
   if (numRecipes < 2 || !prices) {
-    return <span>{pound}{dash}</span>
+    return (
+      <span>
+        {pound}
+        {dash}
+      </span>
+    )
   }
 
   return formatPrice(price)
@@ -33,7 +38,12 @@ export const formatDeliveryTotal = (prices, deliveryTotalPrice, dash = null) => 
     return parseFloat(deliveryTotalPrice) > 0 ? formatPrice(deliveryTotalPrice) : 'FREE'
   }
 
-  return <span>{pound}{dash}</span>
+  return (
+    <span>
+      {pound}
+      {dash}
+    </span>
+  )
 }
 
 export const formatRecipeDiscount = (recipeDiscountPercent) => {
