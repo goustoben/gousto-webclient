@@ -16,5 +16,12 @@ Array [
     "type": "info",
     "url": "my-referrals",
   },
+  Object {
+    "linkTrackingType": "sustainability_pledge",
+    "message": "And this is just the beginning. Find out more.",
+    "title": "We’ve solved our 50% pledge.",
+    "type": "info",
+    "url": "https://www.gousto.co.uk/unwrapped",
+  },
 ]
 `;
