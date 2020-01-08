@@ -36,6 +36,7 @@ class NotificationLogic extends Component {
       checkAmendedDeliveryDate(orders),
       checkOrderAwaitingSelection(orders, now),
       checkRafOffer(now),
+      'sustainabilityPledge'
     ].filter(notification => notification).map(notification => ({
       message: config[notification].message,
       type: config[notification].type,
