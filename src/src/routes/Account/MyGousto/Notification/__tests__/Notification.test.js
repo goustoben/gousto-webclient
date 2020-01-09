@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import Immutable from 'immutable'
 
 import { config } from '../config'
@@ -9,6 +9,7 @@ import {
   checkAmendedDeliveryDate,
   checkOrderAwaitingSelection,
   checkRafOffer,
+  checkSustainabilityPledge,
 } from '../helpers'
 
 import { NotificationLogic as Notification } from '../Notification.logic'
@@ -23,7 +24,6 @@ describe('Notification component', () => {
   let now
 
   describe('checkCardExpiryDate', () => {
-
     beforeEach(() => {
       now = moment('2019-08-15')
     })
@@ -59,7 +59,6 @@ describe('Notification component', () => {
     })
 
     it('should return undefined if there are no card details', () => {
-
       card = Immutable.Map({})
 
       const result = checkCardExpiryDate(card, now)
@@ -68,7 +67,6 @@ describe('Notification component', () => {
   })
 
   describe('checkAmendedDeliveryDate', () => {
-
     it('should return "Amend Delivery" if delivery date has been amended', () => {
       orders = Immutable.fromJS({
         1234: {
@@ -79,7 +77,6 @@ describe('Notification component', () => {
 
       const result = checkAmendedDeliveryDate(orders)
       expect(result).toEqual('amendDelivery')
-
     })
 
     it('should return undefined if no delivery dates have been amended', () => {
@@ -92,7 +89,6 @@ describe('Notification component', () => {
 
       const result = checkAmendedDeliveryDate(orders)
       expect(result).toEqual(undefined)
-
     })
 
     it('should return undefined if no orders', () => {
@@ -100,12 +96,10 @@ describe('Notification component', () => {
 
       const result = checkAmendedDeliveryDate(orders)
       expect(result).toEqual(undefined)
-
     })
   })
 
   describe('checkOrderAwaitingSelection', () => {
-
     beforeEach(() => {
       now = moment('2019-08-15')
     })
@@ -121,7 +115,6 @@ describe('Notification component', () => {
 
       const result = checkOrderAwaitingSelection(orders, now)
       expect(result).toEqual('selectOrder')
-
     })
 
     it('should return undefined if no upcoming orders are unselected', () => {
@@ -146,7 +139,6 @@ describe('Notification component', () => {
   })
 
   describe('checkRafOffer', () => {
-
     beforeEach(() => {
       now = moment('2019-08-15')
 
@@ -160,12 +152,11 @@ describe('Notification component', () => {
     })
 
     it('should show "Refer a friend" notification if current date is between start and end date', () => {
-
       const result = checkRafOffer(now)
       expect(result).toEqual('referAFriend')
     })
 
-    it('should return undefined if if current date is not between start and end date', () => {
+    it('should return undefined if current date is not between start and end date', () => {
       config.referAFriend.endDate = '2019-01-01'
 
       const result = checkRafOffer(now)
@@ -173,8 +164,28 @@ describe('Notification component', () => {
     })
   })
 
-  describe('notifications', () => {
+  describe('checkSustainabilityPledge', () => {
+    beforeEach(() => {
+      now = moment('2020-01-15')
 
+      config.sustainabilityPledge.startDate = '2020-01-01'
+      config.sustainabilityPledge.endDate = '3020-01-01'
+    })
+
+    it('should show the sustainability pledge notification if current date is between start and end date', () => {
+      const result = checkSustainabilityPledge(now)
+      expect(result).toEqual('sustainabilityPledge')
+    })
+
+    it('should return undefined if current date is not between start and end date', () => {
+      config.sustainabilityPledge.endDate = '2019-01-01'
+
+      const result = checkSustainabilityPledge(now)
+      expect(result).toEqual(undefined)
+    })
+  })
+
+  describe('notifications', () => {
     beforeEach(() => {
       const currentMonth = moment().format('YYYY-MM')
       config.referAFriend.startDate = '2019-01-01'
@@ -191,22 +202,14 @@ describe('Notification component', () => {
       })
     })
 
-    it('should order the notifications by type in the following order danger > warning > notify', () => {
-
-      wrapper = shallow(<Notification card={card} orders={orders} />)
-
-      expect(wrapper.instance().getNotifications()).toMatchSnapshot()
-    })
-
     it('should call tracking action on click if notification has linkTrackingType', () => {
       const mockTrackNotificationLinkClick = jest.fn()
       window.location.assign = jest.fn()
-      wrapper = mount(<Notification card={card} orders={orders} trackNotificationLinkClick={mockTrackNotificationLinkClick}/>)
+      wrapper = mount(<Notification card={card} orders={orders} trackNotificationLinkClick={mockTrackNotificationLinkClick} />)
 
       wrapper.find(`[href="my-referrals"]`).simulate('click')
       expect(mockTrackNotificationLinkClick).toHaveBeenCalledWith(config.referAFriend.linkTrackingType)
       expect(window.location.assign).toHaveBeenCalledWith(config.referAFriend.url)
     })
-
   })
 })

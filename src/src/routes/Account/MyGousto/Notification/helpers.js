@@ -45,6 +45,13 @@ export const checkRafOffer = (now) => {
   }
 }
 
+export const checkSustainabilityPledge = (now) => {
+  const { startDate, endDate } = config.sustainabilityPledge
+  const showBanner = moment(now).isBetween(startDate, endDate)
+
+  return showBanner ? 'sustainabilityPledge' : undefined
+}
+
 export const priority = (type = '') => {
   switch(type) {
   case 'danger':
