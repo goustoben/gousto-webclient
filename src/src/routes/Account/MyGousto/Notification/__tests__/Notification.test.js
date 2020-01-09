@@ -1,6 +1,6 @@
 import React from 'react'
 import moment from 'moment'
-import { shallow, mount } from 'enzyme'
+import { mount } from 'enzyme'
 import Immutable from 'immutable'
 
 import { config } from '../config'
@@ -172,11 +172,6 @@ describe('Notification component', () => {
       config.sustainabilityPledge.endDate = '3020-01-01'
     })
 
-    afterEach(() => {
-      config.sustainabilityPledge.startDate = '2020-01-01'
-      config.sustainabilityPledge.endDate = '3020-01-01'
-    })
-
     it('should show the sustainability pledge notification if current date is between start and end date', () => {
       const result = checkSustainabilityPledge(now)
       expect(result).toEqual('sustainabilityPledge')
@@ -205,12 +200,6 @@ describe('Notification component', () => {
           originalDeliveryDay: true,
         }
       })
-    })
-
-    it('should order the notifications by type in the following order danger > warning > notify', () => {
-      wrapper = shallow(<Notification card={card} orders={orders} />)
-
-      expect(wrapper.instance().getNotifications()).toMatchSnapshot()
     })
 
     it('should call tracking action on click if notification has linkTrackingType', () => {

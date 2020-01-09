@@ -38,7 +38,7 @@ const notificationConfig = ({
     title: 'We’ve solved our 50% pledge.',
     url: 'https://www.gousto.co.uk/unwrapped',
     linkTrackingType: 'sustainability_pledge',
-    startDate:'2020-01-01',
+    startDate:'2020-01-10',
     endDate:'2020-02-29',
   },
 })
