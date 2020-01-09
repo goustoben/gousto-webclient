@@ -4,7 +4,7 @@ import { limitReached } from 'utils/basket'
 import { isAllRecipes, getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
 import { menuCollectionsReceive } from 'actions/menu'
 import { collectionFilterChange } from 'actions/filters'
-import { menuLoadCollectionRecipes } from 'actions/menuLoadCollectionRecipes'
+import { loadRecipesForSingleCollection } from 'actions/loadRecipesForSingleCollection'
 import actionTypes from './actionTypes'
 
 const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
@@ -57,7 +57,7 @@ const menuLoadCollections = (date, noUrlChange, transformedCollections) => {
   }
 }
 
-const menuLoadCollectionsRecipes = (date, transformedRecipes, transformedCollectionRecipes) => {
+const loadRecipesForAllCollections = (date, transformedRecipes, transformedCollectionRecipes) => {
   return (dispatch, getState) => {
     const allRecipesCollections = getState().menuCollections.filter(isAllRecipes)
     const ids = Array.from(getState().menuCollections.keys())
@@ -68,7 +68,7 @@ const menuLoadCollectionsRecipes = (date, transformedRecipes, transformedCollect
     }
 
     return Promise.all(
-      ids.map(id => menuLoadCollectionRecipes(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId, transformedRecipes, transformedCollectionRecipes)(dispatch, getState))
+      ids.map(id => loadRecipesForSingleCollection(date, id, id !== allRecipesCollectionId || !allRecipesCollectionId, transformedRecipes, transformedCollectionRecipes)(dispatch, getState))
     )
       .then(() => {
         const state = getState()
@@ -83,5 +83,5 @@ const menuLoadCollectionsRecipes = (date, transformedRecipes, transformedCollect
 
 export {
   menuLoadCollections,
-  menuLoadCollectionsRecipes
+  loadRecipesForAllCollections
 }

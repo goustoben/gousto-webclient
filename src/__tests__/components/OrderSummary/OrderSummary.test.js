@@ -244,7 +244,7 @@ describe('OrderSummary SectionHeader', () => {
         numRecipes={2}
         products={{}}
         recipes={{}}
-        deliveryTotalPrice="2.50"
+        deliveryTotalPrice='2.50'
         onSave={() => { }}
       />,
     )
@@ -286,7 +286,7 @@ describe('OrderSummary footer', () => {
         numRecipes={2}
         products={{}}
         recipes={{}}
-        deliveryTotalPrice="2.50"
+        deliveryTotalPrice='2.50'
         onSave={() => { }}
         orderSummaryCollapsed
       />,

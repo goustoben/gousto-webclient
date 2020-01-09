@@ -26,7 +26,6 @@ jest.mock('apis/user', () => ({
   referAFriend: jest.fn(),
   referralDetails: jest.fn().mockImplementation(accessToken => {
     if (accessToken !== 'user-access-token') {
-
       return null
     }
 
@@ -64,6 +63,17 @@ jest.mock('utils/myDeliveries', () => ({
 
 describe('user actions', () => {
   const [dispatch, getState] = [jest.fn(), jest.fn()]
+
+  describe('userClearData', () => {
+    const dispatchSpy = jest.fn()
+
+    test('should dispatch action for USER_CLEAR_DATA', async () => {
+      userActions.userClearData()(dispatchSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.USER_CLEAR_DATA
+      })
+    })
+  })
 
   describe('userLoadNewOrders', () => {
     const dispatchSpy = jest.fn()
@@ -699,6 +709,18 @@ describe('user actions', () => {
           original_deliveryaddress_id: 'addressid123',
           new_deliveryaddress_id: 'addressid456'
         }
+      })
+    })
+  })
+
+  describe('userToggleExpiredBillingModal', () => {
+    const dispatchSpy = jest.fn()
+    const visibilty = true
+
+    test('should dispatch action for EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE', async () => {
+      userActions.userToggleExpiredBillingModal(visibilty)(dispatchSpy)
+      expect(dispatchSpy).toHaveBeenCalledWith({
+        type: actionTypes.EXPIRED_BILLING_MODAL_VISIBILITY_CHANGE, "visibility": true
       })
     })
   })

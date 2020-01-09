@@ -9,7 +9,7 @@ import logger from 'utils/logger'
 import { push } from 'react-router-redux'
 import { isFacebookUserAgent } from 'utils/request'
 import GoustoException from 'utils/GoustoException'
-import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
+import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuCollections'
 import menuConfig from 'config/menu'
 import { getMenuService } from 'selectors/features'
 import statusActions from './status'
@@ -47,7 +47,7 @@ const menuActions = {
   menuReceiveCollectionRecipes,
   menuReceiveMenu,
   menuRecieveMenuPending,
-  menuLoadCollectionsRecipes,
+  loadRecipesForAllCollections,
   menuReceiveBoxPrices,
   showDetailRecipe
 }
@@ -174,7 +174,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
         await loadMenuCollectionsWithMenuService(dispatch, getState, date, background)
       } else {
         await menuLoadCollections(date, background)(dispatch, getState)
-        await menuLoadCollectionsRecipes(date)(dispatch, getState)
+        await loadRecipesForAllCollections(date)(dispatch, getState)
       }
 
       logger.notice(`recipes fetch took ${new Date() - startTime}ms`)

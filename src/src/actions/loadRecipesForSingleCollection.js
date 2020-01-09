@@ -1,18 +1,15 @@
 import { fetchCollectionRecipes } from 'apis/collections'
 import { menuReceiveCollectionRecipes, menuReceiveMenu } from 'actions/menu'
 
-export function menuLoadCollectionRecipes(date, collectionId, idsOnly, transformedRecipes, transformedCollectionRecipesIds) {
+export function loadRecipesForSingleCollection(date, collectionId, idsOnly, transformedRecipes, transformedCollectionRecipesIds) {
   return async (dispatch, getState) => {
     if (transformedRecipes) {
-
       if (transformedCollectionRecipesIds) {
         const recipesInCollectionIds = transformedCollectionRecipesIds[collectionId]
 
         if (recipesInCollectionIds) {
           const recipesInCollection = recipesInCollectionIds.map((recipeRelationship) => {
-
             return transformedRecipes.find((recipe) => {
-
               return recipe.coreRecipeId === recipeRelationship.core_recipe_id.toString()
             })
           })
@@ -35,7 +32,7 @@ export function menuLoadCollectionRecipes(date, collectionId, idsOnly, transform
     const reqData = {
       includes: ['ingredients', 'allergens', 'taxonomy'],
     }
-    if (!!menuId) {
+    if (menuId) {
       reqData['filters[menu_id]'] = menuId
     } else {
       reqData['filters[available_on]'] = date

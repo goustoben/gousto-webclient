@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { loadMenuCollectionsWithMenuService, getStockAvailability } from 'actions/menuActionHelper'
-import { menuLoadCollections, menuLoadCollectionsRecipes } from 'actions/menuCollections'
+import { menuLoadCollections, loadRecipesForAllCollections } from 'actions/menuCollections'
 
 const mockActiveMenuForDateTransformer = jest.fn()
 
@@ -31,7 +31,7 @@ jest.mock('apis/transformers/collectionRecipes', () => ({
 }))
 
 describe('callMenuService', () => {
-  test('calls menuLoadCollections and menuLoadCollectionsRecipes with menuservice data', async () => {
+  test('calls menuLoadCollections and loadRecipesForAllCollections with menuservice data', async () => {
     const getState = () => {
       return {
         menuService: {
@@ -47,13 +47,13 @@ describe('callMenuService', () => {
 
     const mockMenuLoadDispatcher = jest.fn()
     menuLoadCollections.mockImplementation(() => (mockMenuLoadDispatcher))
-    menuLoadCollectionsRecipes.mockImplementation(() => (mockMenuLoadDispatcher))
+    loadRecipesForAllCollections.mockImplementation(() => (mockMenuLoadDispatcher))
 
     await loadMenuCollectionsWithMenuService(dispatch, getState, 'any Date', background)
 
     expect(menuLoadCollections).toHaveBeenCalledWith('any Date', background, 'mock collection')
     expect(mockMenuLoadDispatcher).toHaveBeenCalledWith(dispatch, getState)
-    expect(menuLoadCollectionsRecipes).toHaveBeenCalledWith('any Date', 'mock recipe', 'mock collection recipes')
+    expect(loadRecipesForAllCollections).toHaveBeenCalledWith('any Date', 'mock recipe', 'mock collection recipes')
   })
 })
 
