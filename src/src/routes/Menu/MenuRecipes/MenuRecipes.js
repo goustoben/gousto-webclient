@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import { Alert } from 'goustouicomponents'
 import PropTypes from 'prop-types'
 import menu from 'config/menu'
 import moment from 'moment'
@@ -7,6 +8,7 @@ import { RecipeGrid } from '../RecipeGrid'
 import SubHeader from '../SubHeader'
 import Loading from '../Loading'
 import { Banner } from '../Banner'
+import css from './MenuRecipes.css'
 
 class MenuRecipes extends PureComponent {
   static propTypes = {
@@ -78,6 +80,12 @@ class MenuRecipes extends PureComponent {
         <SubHeader
           orderId={orderId}
         />
+        <div className={css.stockAlert}>
+          <Alert type="warning">
+            <h4>Recipe rush</h4>
+            <p>If you&apos;ve got your eye on a sold out recipe, try changing your delivery day.</p>
+          </Alert>
+        </div>
         <Loading loading={showLoading} />
         {!showLoading
           && <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}

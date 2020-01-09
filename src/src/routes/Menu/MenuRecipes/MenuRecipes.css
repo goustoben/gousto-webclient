@@ -1,0 +1,16 @@
+@value ScreenXXSMin from 'styles/screenSizes.css';
+@value White from 'styles/colors.css';
+.stockAlert {
+  margin: 0 auto;
+  background-color: White;
+  padding: 0.125rem.5rem 0.25rem;
+  @media ScreenXXSMin {
+    max-width: 1600px;
+    padding-left: 1.75rem;
+    padding-right: 1.75rem;
+  }
+}
+
+.stockAlert :first-child {
+  margin-bottom: 0.5rem;
+}
