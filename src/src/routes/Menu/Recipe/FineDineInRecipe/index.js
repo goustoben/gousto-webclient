@@ -1,1 +1,1 @@
-export default from './FineDineInRecipe'
+export { FineDineInRecipe } from './FineDineInRecipe'

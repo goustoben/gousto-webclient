@@ -2,7 +2,7 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
-import InfoBadge from 'routes/Menu/Recipe/InfoBadge'
+import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
 
 describe('InfoBadge', () => {
   describe('rendering', () => {

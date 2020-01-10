@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Immutable from 'immutable'
 
-import InfoBadge from '../InfoBadge'
+import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
 
 const RecommendedBadge = ({ isRecommendedRecipe, features }) => (
   (isRecommendedRecipe && features.getIn(['recommendedBadge', 'value']))

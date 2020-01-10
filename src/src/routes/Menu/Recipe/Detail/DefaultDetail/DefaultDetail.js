@@ -16,7 +16,7 @@ import { CookingInstructions } from 'routes/Menu/Recipe/CookingInstructions'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'
 import { NutritionDisclaimerText } from 'routes/Menu/Recipe/Detail/NutritionDisclaimerText'
 
-import Allergens from '../Allergens/Allergens'
+import { Allergens } from '../Allergens/Allergens'
 import IngredientsList from '../IngredientsList/IngredientsList'
 import css from './DefaultDetail.css'
 
@@ -70,10 +70,12 @@ const DefaultDetail = ({ media, title, view, count, average, perPortion,
               {youWillNeed && !!youWillNeed.size && (
                 <p className={css.additionalInfo}>
                   What you&#8217;ll need:
-                  {youWillNeed.map((item, idx) => <span key={idx}>
-                    {item}
-                    {(youWillNeed.size - 1) !== idx && ', '}
-                  </span>)}
+                  {youWillNeed.map((item, idx) => (
+                    <span key={idx}>
+                      {item}
+                      {(youWillNeed.size - 1) !== idx && ', '}
+                    </span>
+                  ))}
                 </p>
               )}
               <span className={css.mobileHide}>

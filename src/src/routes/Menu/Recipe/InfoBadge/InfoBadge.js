@@ -31,4 +31,4 @@ InfoBadge.defaultProps = {
   inverse: false,
 }
 
-export default InfoBadge
+export { InfoBadge }

@@ -14,7 +14,7 @@ import Carousel from 'routes/Menu/Recipe/Detail/Carousel'
 import { detailPropTypes } from 'routes/Menu/Recipe/Detail/Detail'
 import { NutritionDisclaimerText } from 'routes/Menu/Recipe/Detail/NutritionDisclaimerText'
 import IngredientsList from '../IngredientsList/IngredientsList'
-import Allergens from '../Allergens/Allergens'
+import { Allergens } from '../Allergens/Allergens'
 import css from './FineDineInDetail.css'
 
 const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams, ingredients, allergens,
@@ -66,10 +66,12 @@ const FineDineInDetail = ({ title, view, count, average, perPortion, per100Grams
                   <div className={css.text}>
                     <p className={css.heading}>What you&#8217;ll need:</p>
                     <p>
-                      {youWillNeed.map((item, idx) => <span key={idx}>
+                      {youWillNeed.map((item, idx) => (
+                      <span key={idx}>
                         {item}
                         {(youWillNeed.size - 1) !== idx && ', '}
-                      </span>)}
+                      </span>
+                      ))}
                     </p>
                   </div>
                 )}

@@ -1,1 +1,1 @@
-export default from './Recipe'
+export { Recipe } from './Recipe'

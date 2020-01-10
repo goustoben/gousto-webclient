@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import Allergens from 'routes/Menu/Recipe/Detail/Allergens'
+import { Allergens } from 'routes/Menu/Recipe/Detail/Allergens'
 
 describe('<IngredientsList />', () => {
   let allergens

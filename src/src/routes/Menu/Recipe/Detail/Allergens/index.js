@@ -1,1 +1,1 @@
-export default from './Allergens'
+export { Allergens } from './Allergens'

@@ -106,6 +106,7 @@ FeaturedRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
+  view: PropTypes.string,
 }
 
 FeaturedRecipe.defaultProps = {
@@ -116,4 +117,4 @@ FeaturedRecipe.defaultProps = {
   fiveADay: 0,
 }
 
-export default FeaturedRecipe
+export { FeaturedRecipe }

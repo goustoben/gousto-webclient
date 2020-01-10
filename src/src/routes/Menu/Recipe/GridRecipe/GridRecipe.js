@@ -37,7 +37,7 @@ const GridRecipe = ({ onClick, selectFoodBrand, isFoodBrandClickable, media, tit
           icon
         >
           View details
-          </Pill>
+        </Pill>
       </div>
       <TasteScore className={css.score} score={tasteScore} />
       <div>
@@ -104,6 +104,7 @@ GridRecipe.propTypes = {
   fiveADay: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
+  view: PropTypes.string
 }
 
 GridRecipe.defaultProps = {
@@ -113,9 +114,6 @@ GridRecipe.defaultProps = {
   averageRating: 0,
   ratingCount: 0,
   fiveADay: 0,
-  cookingTime: 0,
-  features: Immutable.Map({}),
-  useWithin: '',
 }
 
-export default GridRecipe
+export { GridRecipe }
