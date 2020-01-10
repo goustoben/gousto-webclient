@@ -18,7 +18,6 @@ const images = (ingredient) => {
 }
 
 const ingredientTransformer = (ingredient) => {
-
   return {
     allergens: allergensTransformer(ingredient.attributes.allergens),
     id: ingredient.id,

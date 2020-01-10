@@ -20,5 +20,4 @@ describe('ReferAFriendModal', () => {
   it('should render a heading', () => {
     expect(wrapper.find('h4').text()).toEqual('Refer a friend - Get £15')
   })
-
 })

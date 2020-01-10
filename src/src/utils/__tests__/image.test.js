@@ -146,7 +146,6 @@ describe('getFeaturedImage when there IS NOT a homepage image', () => {
   })
 
   test('should return mood image if the home-page image doesn\'t exists end view is fineDineIn', () => {
-
     expect(JSON.stringify(getFeaturedImage(recipe, 'fineDineIn', 'desktop'))).toContain(
       'mood-image',
     )

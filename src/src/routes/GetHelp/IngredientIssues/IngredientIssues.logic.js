@@ -46,7 +46,6 @@ const propTypes = {
 }
 
 class IngredientIssues extends PureComponent {
-
   buttonLeftUrl = `${client.getHelp.index}/${client.getHelp.ingredients}`
 
   fetchData() {

@@ -135,7 +135,6 @@ export const transformPendingOrders = (orders) => {
 }
 
 export const transformProjectedDeliveries = (projectedDeliveries) => {
-
   return projectedDeliveries.reduce((deliveryAccumulator, delivery) => {
     const id = delivery.get('id')
     const date = delivery.get('date')

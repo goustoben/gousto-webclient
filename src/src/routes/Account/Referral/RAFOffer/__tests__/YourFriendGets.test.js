@@ -22,6 +22,5 @@ describe('YouGet', () => {
       expect(wrapper.find(Gel).last().length).toEqual(1)
       expect(wrapper.find(Gel).last().contains("30%")).toEqual(true)
     })
-
   })
 })

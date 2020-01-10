@@ -110,7 +110,6 @@ describe('recipes actions', () => {
     })
 
     describe('isCookbook = true', () => {
-
       test('should dispatch a COOKBOOK_RECIPES_RECEIVE action', async () => {
         await recipeActions.recipesLoadRecipesById(['1', '2', '3', '4'], true)(dispatchSpy, getStateSpy)
 
@@ -125,7 +124,6 @@ describe('recipes actions', () => {
           'filters[recipe_ids]': ['1', '2', '3', '4']
         })
       })
-
     })
   })
 })

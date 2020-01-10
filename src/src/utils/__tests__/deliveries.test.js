@@ -2383,7 +2383,6 @@ describe('utils/deliveries', () => {
   })
 
   describe('transformDaySlotLeadTimesToMockSlots', () => {
-
     // Arrange a minimal response from the delivery service days endpoint
     const daysFromDeliveryService = [
       {
@@ -2429,7 +2428,6 @@ describe('utils/deliveries', () => {
     ]
 
     test('should transform a dslt response to a mock slot', () => {
-
       const transformedMockSlot = transformDaySlotLeadTimesToMockSlots(daysFromDeliveryService)
 
       const expectedMockSlot = [

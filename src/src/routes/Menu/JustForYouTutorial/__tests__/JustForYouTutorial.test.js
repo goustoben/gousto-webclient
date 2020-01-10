@@ -56,7 +56,6 @@ describe('JustForYouTutorial Component', () => {
 
     expect(incrementTutorialViewed).toHaveBeenCalled()
   })
-
 })
 
 describe('Check browser to show JFY', () => {

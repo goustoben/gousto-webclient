@@ -95,7 +95,6 @@ describe('MyGousto - Header', () => {
     test('should not render any messages', () => {
       expect(wrapper.find('.headerText').length).toEqual(0)
     })
-
   })
 
   describe('when a user has upcoming orders', () => {

@@ -15,9 +15,7 @@ const shouldUseNewMenuService = (ctx) => {
 }
 
 const experiment_setMenuServiceSegment = async (ctx, next) => {
-
   if (!ctx.cookies) {
-
     await next()
 
     return
@@ -25,7 +23,6 @@ const experiment_setMenuServiceSegment = async (ctx, next) => {
 
   const isValidQueryStringValue = ctx.query.useNewMenuService === 'true' || ctx.query.useNewMenuService === 'false'
   if (ctx.cookies.get(COOKIE_NAME) === undefined || ctx.cookies.get(COOKIE_NAME) === '' || isValidQueryStringValue) {
-
     ctx.cookies.set(
       COOKIE_NAME,
       JSON.stringify(shouldUseNewMenuService(ctx)),

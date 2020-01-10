@@ -27,7 +27,6 @@ import css from './Header.css'
 const clientRoutes = config.routes.client
 
 class Header extends React.PureComponent {
-
   static propTypes = {
     logoutUser: PropTypes.func,
     serverError: PropTypes.bool,

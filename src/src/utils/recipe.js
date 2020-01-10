@@ -16,7 +16,6 @@ export function getStockTag(stock) {
 }
 
 export function getNewTag(ratingCount) {
-
   return ratingCount < 1 ? 'New Recipe' : ''
 }
 

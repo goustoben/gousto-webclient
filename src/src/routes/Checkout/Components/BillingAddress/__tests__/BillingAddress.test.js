@@ -57,7 +57,6 @@ describe('Billing Address', () => {
   })
 
   describe('rendering the component', () => {
-
     test('should render a <Div>', () => {
       expect(wrapper.type()).toEqual('div')
     })
@@ -79,7 +78,6 @@ describe('Billing Address', () => {
           />,
           { context }
         )
-
       })
 
       test('should render <Address>', () => {
@@ -108,7 +106,6 @@ describe('Billing Address', () => {
           />,
           { context }
         )
-
       })
 
       test('should not render <Address>', () => {

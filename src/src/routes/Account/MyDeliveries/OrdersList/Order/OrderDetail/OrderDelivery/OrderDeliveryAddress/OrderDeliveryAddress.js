@@ -10,7 +10,6 @@ import { Address } from './Address'
 import css from './OrderDeliveryAddress.css'
 
 class OrderDeliveryAddress extends React.PureComponent {
-
   static propTypes = {
     addresses: PropTypes.instanceOf(Immutable.Map),
     orderAddressChange: PropTypes.func,

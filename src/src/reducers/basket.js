@@ -63,7 +63,6 @@ const basket = {
     }
 
     switch (action.type) {
-
     case actionTypes.BASKET_ADDRESS_CHANGE: {
       let newState = state
       const prevAddress = state.get('address')

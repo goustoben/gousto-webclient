@@ -8,7 +8,6 @@ import postcodeCss from './PostcodeStep.css'
 import css from '../../Signup.css'
 
 class PostcodeStep extends React.PureComponent {
-
   render() {
     const {
       tempPostcode,

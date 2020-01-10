@@ -60,7 +60,6 @@ class Cookbook extends React.PureComponent {
     }
 
     return recipeCards
-
   }
 
   render() {

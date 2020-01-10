@@ -113,7 +113,6 @@ describe('CheckoutPayment', () => {
   })
 
   describe('user clicks on submit button', () => {
-    
     test('should call trackingOrderPlaceAttempt prop', () => {
       wrapper.find(SubmitButton).simulate('click')
 

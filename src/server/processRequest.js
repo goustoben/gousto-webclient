@@ -121,7 +121,6 @@ const experiment_setGoustoUseMenuServiceGlobalCookie = (ctx) => {
 
 /* eslint-disable no-param-reassign */
 async function processRequest(ctx, next) {
-
   if (ctx.request.url === '/500pagetest') {
     throw new Error('500 page test error')
   }
@@ -174,7 +173,6 @@ async function processRequest(ctx, next) {
   }
 
   if (ctx.request.path === '/header') {
-
     let simple = false
     let path = ''
     if (ctx.request.query) {

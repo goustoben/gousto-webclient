@@ -31,7 +31,6 @@ const defaultProps = {
 }
 
 class Referral extends Component {
-
   fetchReferralOffer = () => {
     const { userFetchReferralOffer } = this.props
     userFetchReferralOffer()

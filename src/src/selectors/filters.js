@@ -4,7 +4,6 @@ export const getCurrentCollectionId = state => state.filters.get('currentCollect
 export const getRecipeGroupFilter = state => state.filters.get('recipeGroup')
 
 export const getShortTitle = (menuCollections, currentCollectionId) => {
-
   return menuCollections.getIn([
     currentCollectionId,
     'shortTitle',

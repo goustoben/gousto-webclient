@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 import { getFilteredRecipeIds, getFilteredRecipes } from 'routes/Menu/selectors/filters.js'
 
 describe('filters', () => {
-
   describe('getFilteredRecipes', () => {
     describe('getFilteredRecipes without recipeGroup having thematics', () => {
       const state = {

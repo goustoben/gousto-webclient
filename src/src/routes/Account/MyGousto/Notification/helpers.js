@@ -25,7 +25,6 @@ export const checkAmendedDeliveryDate = (orders) => {
 }
 
 export const checkOrderAwaitingSelection = (orders, now) => {
-
   const notifications = orders
     .filter(order => order.get('state') === 'pending' && order.get('default') === '1')
     .filter(order => moment(order.get('whenCutoff')).isSame(now, 'day'))

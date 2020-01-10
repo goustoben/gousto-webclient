@@ -139,7 +139,6 @@ class CheckoutFrame extends React.Component {
     change(sectionName, `${sectionName}.token`, cardToken)
     cardTokenReady()
     trackingCardTokenisationSuccessfully()
-
   }
 
   frameActivated = () => {

@@ -266,7 +266,6 @@ describe('<Ingredients />', () => {
 
           expect(browserHistory.push).toHaveBeenCalledWith('/get-help/contact')
         })
-
       })
 
       describe('and order validation is pending', () => {

@@ -88,7 +88,6 @@ describe('<IngredientIssues />', () => {
       expect(getHelpLayout).toHaveLength(1)
       expect(BottomBar).toHaveLength(1)
       expect(BottomBar.find('Button')).toHaveLength(2)
-
     })
 
     test('header is rendering correctly', () => {

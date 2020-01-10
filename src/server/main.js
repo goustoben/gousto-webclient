@@ -63,7 +63,6 @@ app.use(async (ctx, next) => {
 
     await next()
   } catch (err) {
-
     if (err.networkError) {
       err.status = err.networkError.statusCode
     }

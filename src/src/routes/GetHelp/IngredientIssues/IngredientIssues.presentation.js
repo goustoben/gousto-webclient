@@ -48,7 +48,6 @@ const defaultProps = {
 }
 
 const renderIngredientsIssues = (ingredients, issues, subIssues, changeHandler) => {
-
   const renderedIngredients = Object.keys(ingredients).map((ingredientAndRecipeId) => {
     const optionSelected = issues && issues[0] && issues[0].id
     const ingredientLabel = ingredients[ingredientAndRecipeId].label

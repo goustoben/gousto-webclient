@@ -32,7 +32,6 @@ const onScreenRecovery = {
     case actionTypes.ORDER_SKIP_RECOVERY_MODAL_VISIBILITY_CHANGE: {
       let newState = state
       if (action.modalVisibility) {
-
         if (action.orderId) {
           newState = newState.set('orderId', action.orderId)
         }

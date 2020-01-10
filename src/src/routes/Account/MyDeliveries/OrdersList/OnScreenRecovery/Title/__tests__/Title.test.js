@@ -10,5 +10,4 @@ describe('Order Skip Recovery Model Title', () => {
 
     expect(wrapper.text()).toBe('Are you sure you want to skip?')
   })
-
 })

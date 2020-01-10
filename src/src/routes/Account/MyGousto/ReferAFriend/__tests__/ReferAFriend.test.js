@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import { ReferAFriend } from '../ReferAFriend'
 
 describe('Refer A Friend', () => {
-
   const referralDetails = Immutable.Map({
     referralCount: '2',
     referralCredit: '30',
@@ -37,7 +36,6 @@ describe('Refer A Friend', () => {
       wrapper = shallow(<ReferAFriend referralDetails={referralDetails} redirect={redirectSpy} />)
       wrapper.find('Button').simulate('click')
       expect(redirectSpy).toHaveBeenCalledWith('/my-referrals')
-
     })
   })
 })

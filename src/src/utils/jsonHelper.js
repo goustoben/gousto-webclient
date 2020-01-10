@@ -41,7 +41,6 @@ export function JSONParse(text, useMenuService) { // eslint-disable-line new-cap
 
 export function processJSON([response, status]) {
   return new Promise((resolve, reject) => {
-
     const meta = response.meta || null
     if (response.status === 'ok') {
       let cbData = response

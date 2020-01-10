@@ -56,7 +56,6 @@ describe('user selectors', () => {
       }
 
       expect(getUsersOrdersDaySlotLeadTimeIds(state)).toEqual(['a1b2c3d4e5', 'a7b8c9d10e11'])
-
     })
   })
 })

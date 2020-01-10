@@ -5,7 +5,6 @@ import Svg from 'Svg'
 import { RecipeAttribute } from '../RecipeAttribute'
 
 describe('Recipe Attribute', () => {
-
   test('should return a <div>', () => {
     const wrapper = shallow( <RecipeAttribute name='cookingTime' value={1} /> )
 
@@ -82,5 +81,4 @@ describe('Recipe Attribute', () => {
     const wrapper = shallow(<RecipeAttribute name='equipmentRequired' value={Immutable.fromJS(['Spoon', 'Egg Beater'])} view={'list'} />)
     expect(wrapper.find('span').text()).toContain('Spoon, Egg Beater')
   })
-
 })

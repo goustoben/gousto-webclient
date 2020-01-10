@@ -12,7 +12,6 @@ const propTypes = {
 }
 
 const RAFOffer = ({youGetOffer, offerColour, yourFriendFirstBoxOffer, yourFriendFirstMonthOffer}) => {
-
   return (
       <div className={css.rafOffer}>
         <YouGet youGetOffer={youGetOffer} offerColour={offerColour} />

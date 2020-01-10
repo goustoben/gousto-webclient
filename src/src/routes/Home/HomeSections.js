@@ -14,7 +14,6 @@ import EmailForm from './EmailForm'
 import css from './Home.css'
 
 class HomeSections extends Component {
-
   static propTypes = {
     modules: PropTypes.arrayOf(PropTypes.string),
     hero: PropTypes.object,

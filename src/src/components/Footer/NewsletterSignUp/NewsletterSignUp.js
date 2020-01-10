@@ -4,7 +4,6 @@ import { Button, Segment } from 'goustouicomponents'
 import css from './NewsletterSignUp.css'
 
 class NewsletterSignUp extends React.Component {
-
   static state = {
     email: null,
   }

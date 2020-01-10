@@ -91,5 +91,4 @@ describe('ChoosePlan', () => {
       expect(wrapper.find('Alert').length).toEqual(0)
     })
   })
-
 })

@@ -517,7 +517,6 @@ describe('checkout actions', () => {
         })
       })
     })
-
   })
 
   describe('checkoutSignup on MOBILE', () => {

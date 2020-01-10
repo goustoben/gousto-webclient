@@ -91,7 +91,6 @@ const recipesTransformer = (activeMenu, response, brandData = {}) => {
   })
 
   return formattedData
-
 }
 
 export { recipesTransformer }

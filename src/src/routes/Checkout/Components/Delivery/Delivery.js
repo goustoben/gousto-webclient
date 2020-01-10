@@ -87,7 +87,6 @@ class Delivery extends React.PureComponent {
   )
 
   render() {
-
     return (
       <div ref={el => { this.container = el }}>
         <Subscription sectionName={this.props.sectionName} />

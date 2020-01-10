@@ -24,5 +24,4 @@ describe('App Banner', () => {
       expect(mockAppBannerDismiss).toHaveBeenCalled()
     })
   })
-
 })

@@ -43,7 +43,6 @@ const defaultProps = {
 }
 
 class Market extends PureComponent {
-
   state = {
     filteredProducts: null,
     isOrderSummaryOpen: false,

@@ -47,7 +47,6 @@ jest.mock('utils/logger', () => ({
 }))
 
 describe('Subscription action', () => {
-
   afterEach(() => {
     jest.clearAllMocks()
   })

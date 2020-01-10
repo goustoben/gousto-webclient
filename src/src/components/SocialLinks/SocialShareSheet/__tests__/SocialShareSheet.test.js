@@ -43,6 +43,5 @@ describe('SocialShareSheet', () => {
     test('should render three LinkRow components', () => {
       expect(wrapper.find(LinkRow).length).toEqual(3)
     })
-
   })
 })

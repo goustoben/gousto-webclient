@@ -190,7 +190,6 @@ describe('basket utils', function () {
       const result = limitReached(basket, menuRecipes, menuRecipeStock, false, 12)
       expect(result).toBe(false)
     })
-
   })
 
   describe('getProductsQtyInCategory', function () {

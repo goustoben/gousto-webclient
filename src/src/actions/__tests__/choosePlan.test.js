@@ -32,7 +32,6 @@ describe('choosePlan actions', () => {
   })
 
   describe('clearTempPromoCode', () => {
-
     it('should dispatch a temp action with a blank promoCode', () => {
       clearTempPromoCode()(dispatch)
 

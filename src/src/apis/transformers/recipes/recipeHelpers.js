@@ -107,8 +107,7 @@ const roundelTransformer = (roundel, brandData = {}) => {
     && roundel.slug 
     && brandData.data
     && brandData.data.roundels 
-    && brandData.data.roundels.length > 0) { 
-
+    && brandData.data.roundels.length > 0) {
     const match = brandData.data.roundels.find((item) => {
       return item.slug === roundel.slug
     })

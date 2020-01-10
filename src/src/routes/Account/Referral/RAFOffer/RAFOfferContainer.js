@@ -11,7 +11,6 @@ const mapStateToProps = (state, ownProps) => {
     yourFriendFirstMonthOffer: offer.get('firstMonthDiscountFormatted'),
     offerColour: color,
   }
-
 }
 
 const RAFOfferContainer = connect(mapStateToProps)(RAFOffer)

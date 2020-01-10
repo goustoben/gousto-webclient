@@ -58,7 +58,7 @@
       "no-plusplus": [1, { "allowForLoopAfterthoughts": true }],
       "lines-between-class-members": 1,
       "comma-style": 1,
-      "padded-blocks": 1,
+      "padded-blocks": 2,
       "prefer-const": 1,
       "class-methods-use-this": 1,
       //end of gousto extended warnings

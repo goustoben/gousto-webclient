@@ -7,7 +7,6 @@ import css from './ExpectationsCarousel.css'
 import Circle from './Circle'
 
 class ExpectationsCarousel extends React.PureComponent {
-
   constructor(props) {
     super(props)
     this.state = {

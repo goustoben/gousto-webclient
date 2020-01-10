@@ -93,7 +93,6 @@ describe('filters actions', () => {
   })
 
   describe('changeCollectionById', () => {
-
     test('should dispatch one action', () => {
       changeCollectionById()(dispatchSpy, getStateSpy)
       expect(dispatchSpy.mock.calls.length).toBe(1)
@@ -111,7 +110,6 @@ describe('filters actions', () => {
   })
 
   describe('changeCollectionToAllRecipesViaCTA', () => {
-
     test('should dispatch two actions', () => {
       changeCollectionToAllRecipesViaCTA()(dispatchSpy, getStateSpy)
       expect(dispatchSpy.mock.calls.length).toBe(2)

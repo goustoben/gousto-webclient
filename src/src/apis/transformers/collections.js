@@ -1,13 +1,11 @@
 import { normaliseData } from './normaliseData'
 
 const transformMenuCollections = (menu, normalisedData, meta) => {
-
   if (!menu && !menu.relationships && !menu.relationships.collections && !menu.relationships.collections.data) {
     return
   }
 
   const formattedData = menu.relationships.collections.data.map((collectionItem) => {
-
     const normalisedAttributes = normalisedData.collection[collectionItem.id].attributes
 
     const collection = {

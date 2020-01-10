@@ -7,7 +7,6 @@ import Surcharge from './Surcharge'
 import css from './Buttons.css'
 
 class Buttons extends React.Component {
-
   static propTypes = {
     onAdd: PropTypes.func.isRequired,
     onRemove: PropTypes.func.isRequired,

@@ -8,7 +8,6 @@ import Unsubscribed from './Unsubscribed'
 import css from './Unsubscribe.css'
 
 class Unsubscribe extends React.PureComponent {
-
   static propTypes = {
     location: PropTypes.shape({
       query: PropTypes.shape({

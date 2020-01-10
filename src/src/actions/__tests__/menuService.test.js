@@ -13,6 +13,5 @@ describe('menuServiceDataReceived', () => {
         actionType: 'MENU_SERVICE_DATA_RECEIVED'
       }
     })
-
   })
 })

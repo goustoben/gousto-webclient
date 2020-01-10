@@ -11,7 +11,6 @@ import css from './ResetPassword.css'
 import FormAlert from './FormAlert'
 
 class ResetPassword extends React.PureComponent {
-
   static propTypes = {
     location: PropTypes.shape({
       query: PropTypes.shape({

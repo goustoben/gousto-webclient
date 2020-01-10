@@ -7,7 +7,6 @@ import Content from 'containers/Content'
 import css from './OrderCancelButton.css'
 
 class OrderCancelButton extends React.PureComponent {
-
   static propTypes = {
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,

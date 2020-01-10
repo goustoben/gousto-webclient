@@ -18,7 +18,6 @@ const prices = Immutable.Map({
 const basketRecipes = Immutable.Map({1234: '4'})
 
 describe('Summary Component', () => {
-
   beforeEach(() => {
     wrapper = shallow(<Summary prices={prices} basketRecipes={basketRecipes} />)
   })
@@ -43,13 +42,11 @@ describe('Summary Component', () => {
   })
 
   describe('links', () => {
-
     test('should render an edit order link', () => {
       expect(wrapper.find(Link).length).toEqual(1)
     })
 
     describe('showNoDiscountCTA feature flag is on', () => {
-
       test('should render a promo discount CTA if the user has no promo code', () => {
         wrapper = shallow(<Summary prices={prices} basketRecipes={basketRecipes} showNoDiscountCTA />)
         expect(wrapper.find('.noDiscountCTA').length).toEqual(1)

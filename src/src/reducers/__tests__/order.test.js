@@ -11,7 +11,6 @@ describe('orders state', () => {
   })
 
   describe('when action type is ORDER_UPDATE_PRODUCTS', () => {
-
     test('event dispatches when order update succeeds and it does not change the state', () => {
       window.dispatchEvent = jest.fn()
       const state = initialState()

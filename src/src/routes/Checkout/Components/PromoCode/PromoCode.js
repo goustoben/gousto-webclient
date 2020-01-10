@@ -77,7 +77,6 @@ class PromoCode extends React.PureComponent {
   promoCodeAdded = () => (this.props.promoCode && this.props.promoCodeApplied)
 
   promoCodeValidation = () => {
-
     const promoCodeValid = this.props.prices.get('promoCodeValid', false)
     if (promoCodeValid) {
       this.setState({ errorMsg: '', successMsg: configCheckout.errorMessage.promoCode.valid })

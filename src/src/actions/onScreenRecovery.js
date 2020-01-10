@@ -16,7 +16,6 @@ export const modalVisibilityChange = ({
   modalVisibility = true,
 }) => (
   (dispatch) => {
-
     const actionType = (status === 'pending') ? 'Order Cancel' : 'Order Skip'
 
     dispatch({
@@ -311,7 +310,6 @@ export const orderCancelStart = (
   orderType
 ) => (
   (dispatch) => {
-
     dispatch({
       type: actionTypes.ORDER_SKIP_RECOVERY_TRIGGERED,
       triggered: true,

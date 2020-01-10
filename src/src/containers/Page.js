@@ -12,7 +12,6 @@ import css from './Page.css'
 const imageUrl = require('media/photos/gousto-share-box.jpg')
 
 class Page extends React.PureComponent {
-
   static propTypes = {
     children: PropTypes.object.isRequired,
     email: PropTypes.string,

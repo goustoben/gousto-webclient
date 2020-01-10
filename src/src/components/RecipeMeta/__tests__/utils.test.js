@@ -13,7 +13,6 @@ describe('utils', () => {
   let recipe
 
   beforeEach(() => {
-
     recipe = Immutable.fromJS({
       id: '12345',
       title: 'test',
@@ -31,7 +30,6 @@ describe('utils', () => {
   })
 
   describe('getPortionPrice', () => {
-
     it('should return the default price if no surcharge', () => {
       getSurcharge.mockReturnValue(null)
 
@@ -57,7 +55,6 @@ describe('utils', () => {
   })
 
   describe('getMetaImageLink', () => {
-
     it('should get image link', () => {
       const imageLink = getMetaImageLink(recipe)
       expect(imageLink).toEqual('test url')
@@ -87,5 +84,4 @@ describe('utils', () => {
       expect(imageLink).toEqual(defaultMetaImageLink)
     })
   })
-
 })

@@ -141,7 +141,6 @@ export const loginRedirect = (location, userIsAdmin, features) => {
         if (isGoustoTarget) {
           destination = `${url.pathname}${url.search ? url.search : ''}`
         }
-
       } catch (err) {
         // do nothing
       }

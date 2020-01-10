@@ -59,7 +59,6 @@ describe('basket actions', () => {
       expect(dispatch).toHaveBeenCalledTimes(1)
       expect(dispatch).toHaveBeenCalledWith(numPortionChangeTracking)
     })
-
   })
 
   describe('basketNumPortionChange', () => {

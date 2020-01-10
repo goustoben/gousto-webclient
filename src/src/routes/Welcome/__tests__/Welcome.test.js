@@ -4,7 +4,6 @@ import Immutable from 'immutable'
 import Welcome from '../Welcome'
 
 describe('Welcome Page', () => {
-
   let context
   let wrapper
   const orderId = '1234'
@@ -16,7 +15,6 @@ describe('Welcome Page', () => {
   const params = { orderId: '1234'}
 
   beforeEach(function() {
-
     const store = {
       auth: Immutable.fromJS({ accessToken: 'access-token', isAuthenticated: true }),
       user: Immutable.fromJS({ nameFirst: 'User', ageVerified: false, orders: [] }),

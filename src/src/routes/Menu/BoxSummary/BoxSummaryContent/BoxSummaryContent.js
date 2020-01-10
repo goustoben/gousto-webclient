@@ -8,7 +8,6 @@ import Postcode from '../Postcode'
 import DeliverySlot from '../DeliverySlot'
 
 class BoxSummaryContent extends React.PureComponent {
-
   static propTypes = {
     displayOptions: PropTypes.instanceOf(Immutable.List),
     view: PropTypes.string,

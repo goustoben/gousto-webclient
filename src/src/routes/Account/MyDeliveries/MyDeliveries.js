@@ -79,7 +79,6 @@ class MyDeliveries extends React.PureComponent {
   }
 
   render() {
-
     return (
       <div className={accountCss.accountContainer} data-testing="myDeliveries">
         <div className={css.button}>

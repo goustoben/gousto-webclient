@@ -14,13 +14,11 @@ jest.mock('actions/checkout', () => ({
 }))
 
 describe('promo actions', () => {
-
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   describe('promoApplyCheckoutCode', () => {
-
     beforeEach(() => {
       promoApplyCheckoutCode()(dispatchSpy)
     })

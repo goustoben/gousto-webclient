@@ -8,7 +8,6 @@ import { getFoodBrand } from 'utils/recipe'
 import OrderedRecipe from './OrderedRecipe'
 
 class RecipeSummary extends React.PureComponent {
-
   static propTypes = {
     menuRecipesStore: PropTypes.instanceOf(Immutable.Map),
     recipes: PropTypes.instanceOf(Immutable.Map),

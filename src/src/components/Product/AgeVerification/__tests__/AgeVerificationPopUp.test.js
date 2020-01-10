@@ -21,7 +21,6 @@ describe('AgeVerificationPopUp Component', () => {
   })
 
   describe('given user has NOT confirmed age', () => {
-
     test('should render modal content with correct text', () => {
       expect(wrapper.find('ModalContent').text()).toEqual(modalText)
     })
@@ -44,7 +43,6 @@ describe('AgeVerificationPopUp Component', () => {
   })
 
   describe('given user has confirmed UNDER age', () => {
-
     beforeEach(() => {
       wrapper.setState({ hasSelectedUnder18: true })
     })
@@ -62,5 +60,4 @@ describe('AgeVerificationPopUp Component', () => {
       expect(onCloseSpy).toHaveBeenCalled()
     })
   })
-
 })

@@ -7,7 +7,6 @@ import { Segment } from 'goustouicomponents'
 import Portions from '../../Details/Portions'
 
 describe('Portions', () => {
-
   const onNumPortionChange = jest.fn()
   const trackNumPortionChange = jest.fn()
 

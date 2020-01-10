@@ -43,6 +43,5 @@ describe('ProductList component', () => {
       wrapper = mount(<ProductList {...propsProductList} />)
       expect(wrapper.find('Product').length).toBe(2)
     })
-
   })
 })
