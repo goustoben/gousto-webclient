@@ -94,7 +94,6 @@ describe('Order Skip Recovery Modal', () => {
   })
 
   describe('Alternative Render', () => {
-
     test('should call getRecoveryContent', () => {
       const getRecoveryContent = jest.fn()
       wrapper = shallow(

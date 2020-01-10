@@ -148,7 +148,6 @@ class Checkout extends React.PureComponent {
         checkoutScriptReady: true,
       })
     })
-
   }
 
   reloadCheckoutScript = () => {

@@ -11,7 +11,6 @@ import { PromoBanner } from './PromoBanner'
 import HomeSections from './HomeSections'
 
 class Home extends React.Component {
-
   static contextTypes = {
     store: PropTypes.object.isRequired,
   }

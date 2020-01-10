@@ -37,7 +37,6 @@ export const getFilteredFoodBrandRecipes = createSelector(
 export const getFilteredRecipesByCollectionsBySlug = createSelector(
   [getFilteredFoodBrandRecipes, getRecipesFilteredByCollectionSlug],
   (filteredFoodBrandRecipes, filteredCollectionRecipes) => {
-
     return filteredCollectionRecipes || filteredFoodBrandRecipes
   }
 )

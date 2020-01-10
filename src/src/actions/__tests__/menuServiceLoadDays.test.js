@@ -22,6 +22,5 @@ describe('menuServiceLoadDays', () => {
     menuServiceLoadDays(dispatch, getState)
 
     expect(menuCutoffUntilReceive).toHaveBeenCalledWith('2019-12-03T11:59:59+00:00')
-
   })
 })

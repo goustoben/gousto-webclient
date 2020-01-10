@@ -24,7 +24,6 @@ describe('Social Referral Helper', () => {
   })
 
   describe('getReferralLink', () => {
-
     test('should return correct referral link', () => {
       expect(getReferralLink(referralCode, firstName, UTM)).toEqual(`cook.gousto.co.uk/raf/?promo_code=TEST&name=FirstName&utm_source=test`)
     })

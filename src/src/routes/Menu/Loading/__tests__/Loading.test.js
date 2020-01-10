@@ -11,7 +11,6 @@ describe('Menu Loading', () => {
       const tree = renderer.create(<Loading loading hasRecommendations />).toJSON()
       expect(tree).toMatchSnapshot()
     })
-
   })
 
   describe('Alternative Rendering', () => {

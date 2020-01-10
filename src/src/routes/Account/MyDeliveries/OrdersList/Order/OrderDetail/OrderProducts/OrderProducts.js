@@ -15,7 +15,6 @@ import marketPhotoSrc from 'media/photos/market-place-cover-photo.jpg'
 import css from './OrderProducts.css'
 
 class OrderProducts extends React.PureComponent {
-
   static propTypes = {
     products: ImmutablePropTypes.listOf(
       ImmutablePropTypes.mapContains({

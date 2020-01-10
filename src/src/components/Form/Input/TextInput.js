@@ -6,7 +6,6 @@ import InputWrapper from 'Form/InputWrapper'
 import css from './input.css'
 
 export class TextInput extends React.Component {
-
   static propTypes = {
     additionalProps: PropTypes.object,
     onChange: PropTypes.func,

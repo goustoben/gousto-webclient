@@ -8,7 +8,6 @@ import css from './Openings.css'
 import JobCard from './JobCard/JobCard'
 
 class Openings extends React.PureComponent {
-
   static contextTypes = {
     store: PropTypes.object.isRequired,
   }

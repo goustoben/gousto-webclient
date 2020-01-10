@@ -45,7 +45,6 @@ class NotificationLogic extends Component {
       url: config[notification].url,
       linkTrackingType: config[notification].linkTrackingType,
     })).sort((a, b) => sortNotifications(a.type, b.type))
-
   }
 
   render() {

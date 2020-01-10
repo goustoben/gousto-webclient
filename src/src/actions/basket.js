@@ -527,7 +527,6 @@ export const basketRestorePreviousDate = () => (
 
 export const basketCheckedOut = (numRecipes, view) => (
   (dispatch, getState) => {
-
     const { auth, basket, user, pricing, temp } = getState()
     const isAuthenticated = auth.get('isAuthenticated')
     const basketOrderId = basket.get('orderId')
@@ -609,7 +608,6 @@ export const basketCheckedOut = (numRecipes, view) => (
               }
             })
           }
-
         } else if (editingBox) {
           dispatch({
             type: actionTypes.TRACKING,

@@ -65,7 +65,6 @@ class Ingredients extends PureComponent {
       } else {
         this.redirectToContactPage()
       }
-
     } catch (error) {
       this.redirectToContactPage()
     }

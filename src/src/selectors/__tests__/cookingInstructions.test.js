@@ -2,7 +2,6 @@ import Immutable from 'immutable'
 import { getRecipeSteps } from '../cookingInstructions'
 
 describe('cookingInstructions selectors', () => {
-
   describe('getRecipeSteps', () => {
     test('should return the recipesInstructions', () => {
       const state = {

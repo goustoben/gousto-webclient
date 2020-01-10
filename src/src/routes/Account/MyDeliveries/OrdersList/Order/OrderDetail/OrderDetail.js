@@ -11,7 +11,6 @@ import OrderPricingDetail from './OrderPricingDetail'
 import OrderDelivery from './OrderDelivery'
 
 class OrderDetail extends React.PureComponent {
-
   static propTypes = {
     orderId: PropTypes.string,
     deliveryDayId: PropTypes.string,

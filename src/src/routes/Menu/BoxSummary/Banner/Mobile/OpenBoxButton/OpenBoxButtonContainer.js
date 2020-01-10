@@ -5,7 +5,6 @@ const mapStateToProp = (state) => {
   return ({
     arrowUp: !state.boxSummaryShow.get('show'),
   })
-
 }
 const OpenBoxButtonContainer = connect(mapStateToProp)(OpenBoxButton)
 

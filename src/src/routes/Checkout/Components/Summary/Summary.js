@@ -15,7 +15,6 @@ import { basketSum } from 'utils/basket'
 import css from './Summary.css'
 
 class Summary extends React.PureComponent {
-
   static propTypes = {
     prices: PropTypes.instanceOf(Immutable.Map),
     basketRecipes: PropTypes.object,

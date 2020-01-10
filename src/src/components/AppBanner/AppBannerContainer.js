@@ -31,7 +31,6 @@ const mapStateToProps = state => {
     ratings,
     showAppBanner,
   }
-
 }
 
 const AppBannerContainer = connect(mapStateToProps, {

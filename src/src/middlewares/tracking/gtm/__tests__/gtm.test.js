@@ -1,7 +1,6 @@
 import { gtmMiddleware } from ".."
 
 describe('gtm middleware', () => {
-
   test('should push to gtm with correct data', () => {
     window.dataLayer = []
 

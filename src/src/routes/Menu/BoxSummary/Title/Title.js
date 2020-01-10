@@ -67,6 +67,5 @@ class Title extends React.PureComponent {
       </div>
     )
   }
-
 }
 export default Title

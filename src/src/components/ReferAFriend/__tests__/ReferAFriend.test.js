@@ -14,7 +14,6 @@ describe('Refer A Friend Logic', () => {
   })
 
   describe('Refer A Friend', () => {
-
     test('should call userReferAFriend action with the email', () => {
       const email = 'test email'
       wrapper.setState({ email: email })
@@ -25,7 +24,6 @@ describe('Refer A Friend Logic', () => {
   })
 
   describe('Handle Email Change', () => {
-    
     test('should set email in state to value passed in', () => {
       const email = '123@email.com'
       wrapper.instance().handleEmailChange(email)
@@ -52,7 +50,6 @@ describe('Refer A Friend Logic', () => {
   })
 
   describe('Handle Submit', () => {
-
     test('should set isEmailSent to true & no error message if the email is valid', () => {
       wrapper.setState({ isEmailValid: true })
 
@@ -64,7 +61,6 @@ describe('Refer A Friend Logic', () => {
 
       expect(wrapper.state().isEmailSent).toEqual(true)
       expect(wrapper.state().errorMessage).toEqual('')
-      
     })
 
     test('should call referAFriend when the email is valid', () => {
@@ -97,7 +93,6 @@ describe('Refer A Friend Logic', () => {
   })
 
   describe('Show Email Referral Form', () => {
-
     test('should reset the state to initial values', () => {
       wrapper.instance().showEmailReferralForm()
 
@@ -105,8 +100,6 @@ describe('Refer A Friend Logic', () => {
       expect(wrapper.state().isEmailSent).toEqual(false)
       expect(wrapper.state().isEmailValid).toEqual(false)
       expect(wrapper.state().errorMessage).toEqual('')
-
     })
   })
-
 })

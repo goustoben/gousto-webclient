@@ -23,7 +23,6 @@ describe('RAFOffer', () => {
   })
 
   describe('upon initial render', () => {
-
     it('should render 1 <YouGet> component', () => {
       expect(wrapper.find(YouGet))
     })

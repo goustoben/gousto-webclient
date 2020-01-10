@@ -5,7 +5,6 @@ import OrderSummary from 'OrderSummary'
 import actionTypes from 'actions/actionTypes'
 
 function mapStateToProps(state) {
-
   return {
     sectionTitle: 'Order Summary',
     prices: state.basket.getIn(['orderDetails', 'prices']),

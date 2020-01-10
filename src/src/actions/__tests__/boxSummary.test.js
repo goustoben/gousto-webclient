@@ -25,7 +25,6 @@ deliveriesUtils.transformDaySlotLeadTimesToMockSlots = jest.fn()
 
 describe('boxSummary actions', () => {
   describe('boxSummaryDeliveryDaysLoad', () => {
-
     const from = '2017-12-05'
     const to = '2017-12-30'
     const getStateArgs = {

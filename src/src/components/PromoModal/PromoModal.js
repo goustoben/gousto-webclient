@@ -8,7 +8,6 @@ import css from './PromoModal.css'
 import AgeVerify from './AgeVerify'
 
 class PromoModal extends React.Component {
-
   handleClick = () => {
     const { error, promoApply, justApplied } = this.props
 

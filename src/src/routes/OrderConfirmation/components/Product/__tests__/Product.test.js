@@ -195,6 +195,5 @@ describe('Product component', () => {
       wrapper.find('button.productInfo').simulate('click')
       expect(toggleAgeVerificationPopUpSpy).toHaveBeenCalled()
     })
-
   })
 })

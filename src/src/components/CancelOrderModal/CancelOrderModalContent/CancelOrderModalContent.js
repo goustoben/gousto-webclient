@@ -4,7 +4,6 @@ import { Alert, Button } from 'goustouicomponents'
 import css from './CancelOrderModalContent.css'
 
 class CancelOrderModalContent extends React.PureComponent {
-
   static propTypes = {
     orderId: PropTypes.string,
     didCancelOrderError: PropTypes.bool,

@@ -217,7 +217,6 @@ export const orderCheckout = ({
       else {
         throw { message: 'Error when saving the order' }
       }
-
     } catch (err) {
       if (err && err.redirected && err.url) {
         return redirect(err.url)
@@ -374,7 +373,6 @@ export const orderAddressChange = (orderId, addressId) => (
           ...trackingData
         }
       })
-
     } catch (err) {
       dispatch(statusActions.error(actionTypes.ORDER_ADDRESS_CHANGE, {
         orderId,

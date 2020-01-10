@@ -181,7 +181,6 @@ describe('CheckoutFrame', () => {
         expect(submitCard).not.toHaveBeenCalled()
       })
     })
-
   })
 
   describe('componentWillUnmount', () => {
@@ -250,7 +249,6 @@ describe('CheckoutFrame', () => {
     test('should call the cardTokenReady prop', () => {
       expect(wrapper.find('.framesContainer')).toHaveLength(1)
     })
-
   })
 
   describe('frameActivated', () => {

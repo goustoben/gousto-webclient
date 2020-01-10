@@ -1,9 +1,7 @@
 import Immutable from 'immutable'
 import { areExtrasIncluded, getSubscriptionOptionPrices } from '../pricing'
 describe('Pricing selectors', () => {
-
   describe('areExtrasIncluded', () => {
-
     test('should return true if there is a surcharge', () => {
       const mockState = {
         pricing: Immutable.fromJS({
@@ -63,7 +61,6 @@ describe('Pricing selectors', () => {
   })
 
   describe('getSubscriptionOptionsPrices', () => {
-
     const mockState = {
       pricing: Immutable.fromJS({
         prices: {

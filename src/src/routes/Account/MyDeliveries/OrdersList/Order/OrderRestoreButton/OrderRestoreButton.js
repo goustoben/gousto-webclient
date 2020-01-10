@@ -6,7 +6,6 @@ import Content from 'containers/Content'
 import css from './OrderRestoreButton.css'
 
 class OrderRestoreButton extends React.PureComponent {
-
   static propTypes = {
     userId: PropTypes.string,
     orderId: PropTypes.string,

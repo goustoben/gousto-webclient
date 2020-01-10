@@ -18,7 +18,6 @@ describe('Detail', () => {
   })
 
   describe('rendering', () => {
-
     beforeEach(() => {
       wrapper = shallow(<Detail media={media} range={range} useWithin="5 days" cookingTime={123} />)
     })
@@ -52,5 +51,4 @@ describe('Detail', () => {
 
     expect(menuRecipeDetailVisibilityChangeSpy).toHaveBeenCalledTimes(1)
   })
-
 })

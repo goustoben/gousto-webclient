@@ -60,6 +60,5 @@ describe('menuservice', () => {
       expect(getMenuService).toHaveBeenCalled()
       expect(menuFetchData).not.toHaveBeenCalled()
     })
-
   })
 })

@@ -14,7 +14,6 @@ const subscription = {
     }
 
     switch (action.type) {
-
     case actionTypes.SUBSCRIPTION_LOAD_DATA: {
       const subscriptionData = action.data
       let newState = state.set('subscription', Immutable.Map(subscriptionData.subscription))

@@ -149,7 +149,6 @@ describe('<IngredientIssuesContainer />', () => {
     })
 
     test('selected ingredient issues are changed in the store when selected', async() => {
-
       wrapper = mount(
         <IngredientIssuesContainer
           store={store}

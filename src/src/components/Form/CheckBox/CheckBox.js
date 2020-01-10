@@ -67,7 +67,6 @@ export class CheckBox extends React.PureComponent {
       </label>
     </span>
   )
-
 }
 
 export default InputWrapper(CheckBox)

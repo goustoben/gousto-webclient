@@ -58,7 +58,6 @@ describe('cutoff', () => {
       }
 
       expect(cutoff.getPreviousCutoffDate(state)).toEqual('2018-07-09T11:59:59+01:00')
-
     })
   })
 

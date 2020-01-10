@@ -6,7 +6,6 @@ import css from './ExpiredBillingModal.css'
 import BillingForm from './BillingForm'
 
 class ExpiredBillingModal extends React.PureComponent {
-
   static propTypes = {
     expiredBillingModalOpen: PropTypes.bool,
     closeExpiredBillingModal: PropTypes.func,

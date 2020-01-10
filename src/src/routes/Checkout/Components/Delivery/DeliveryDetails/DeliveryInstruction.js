@@ -12,7 +12,6 @@ import CheckoutTooltip from '../../CheckoutTooltip/CheckoutTooltip'
 const LEAVE_BOX_OPTIONS = configCheckout.leaveBoxOptions.map(option => ({ value: option, label: option }))
 
 class DeliveryInstruction extends React.PureComponent {
-
   static propTypes = {
     value: PropTypes.any,
     reset: PropTypes.func.isRequired,

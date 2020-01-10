@@ -23,7 +23,6 @@ const deliverySectionName = 'delivery'
 const DeliverySection = DeliveryContainer(deliverySectionName)
 
 const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, checkoutValid, receiveRef, scrollToFirstMatchingRef, browser, trackClick }) => {
-
   const isAddressConfirmed = formValues && formValues[deliverySectionName] && formValues[deliverySectionName].confirmed
   const handleSubmit = () => {
     if (checkoutValid) {

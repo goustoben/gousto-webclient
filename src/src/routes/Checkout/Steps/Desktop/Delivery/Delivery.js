@@ -13,7 +13,6 @@ const sectionName = 'delivery'
 const DeliverySection = DeliveryContainer(sectionName)
 
 const DeliveryStep = ({ submit, nextStepName, formValues, receiveRef, scrollToFirstMatchingRef }) => {
-
   const isAddressConfirmed = formValues && formValues[sectionName] && formValues[sectionName].confirmed
 
   return (

@@ -8,7 +8,6 @@ import actionTypes from 'actions/actionTypes'
 import Delivery from './Delivery'
 
 function mapStateToProps(sectionName) {
-
   return state => ({
     formName: getDeliveryFormName(state),
     sectionName,

@@ -163,16 +163,13 @@ describe('myDeliveries utils', () => {
 
   describe('filterOrders', () => {
     test('should filter out all past orders', () => {
-
       const result = filterOrders(mockOrders)
 
       expect(result.size).toEqual(1)
     })
-
   })
 
   describe('getOrderState', () => {
-
     test('should return scheduled if phase is pre-menu', () => {
       const state = 'pending'
       const deliveryDate = '2019-11-06T00:00:00.000Z'

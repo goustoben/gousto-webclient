@@ -5,7 +5,6 @@ import classnames from 'classnames'
 import css from './OrderSummary.css'
 
 class SaveButton extends React.PureComponent {
-
   static propTypes = {
     error: PropTypes.bool,
     onClick: PropTypes.func,

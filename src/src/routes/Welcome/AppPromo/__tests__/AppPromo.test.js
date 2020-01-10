@@ -7,15 +7,12 @@ describe('AppPromo', () => {
 
   beforeEach(() => {
     wrapper = shallow(<AppPromo />)
-
   })
   it('should render an image', () => {
-
     expect(wrapper.find('img').length).toEqual(1)
   })
 
   it('should render a ticklist', () => {
-
     expect(wrapper.find('TickList').length).toEqual(1)
   })
 
@@ -39,5 +36,4 @@ describe('AppPromo', () => {
     expect(wrapper.find('AppStoreLinks').length).toEqual(1)
     expect(wrapper.find('.desktopAppLink.hideElement').length).toEqual(0)
   })
-
 })

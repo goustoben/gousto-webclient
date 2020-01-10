@@ -8,7 +8,6 @@ import { CancelButton } from '../CancelButton'
 import css from './Postcode.css'
 
 class Postcode extends React.PureComponent {
-
   static propTypes = {
     deliveryDaysError: PropTypes.oneOfType([
       PropTypes.string,

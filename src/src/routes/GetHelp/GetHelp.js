@@ -34,7 +34,6 @@ const propTypes = {
 }
 
 class GetHelp extends PureComponent {
-
   componentDidMount = async () => {
     const { storeGetHelpOrderId, orderId, user, loadOrderById } = this.props
 

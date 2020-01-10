@@ -2,7 +2,6 @@ import { collectionsTransformer } from './collections'
 
 describe('collectionTransformer', () => {
   test('should transform data into format expected by UI', () => {
-
     const menuServiceResponse = {
       "status": "ok",
       "meta": {},

@@ -26,7 +26,6 @@ const defaultProps = {
 }
 
 const ProductList = ({ basket, products, productsCategories, toggleAgeVerificationPopUp, ageVerified, numberOfColumn }) => {
-
   const isLimitReached = (product) => {
     const { id } = product
     const limitReachedResult = getProductLimitReached(id, basket, Immutable.fromJS(products), productsCategories)

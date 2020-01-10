@@ -57,7 +57,6 @@ const defaultProps = {
 }
 
 class OnScreenRecovery extends React.PureComponent {
-
   componentDidUpdate(prevProps) {
     const { triggered, getRecoveryContent } = this.props
 

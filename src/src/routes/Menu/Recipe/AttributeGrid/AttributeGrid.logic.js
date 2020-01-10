@@ -6,7 +6,6 @@ import { recipePriorityOrder, detailedRecipePriorityOrder} from './config'
 import { RecipeAttribute } from '../RecipeAttribute'
 
 const AttributeGrid = ({maxNoAttributes, showDetailedRecipe, cookingTime, useWithin, equipment, diet, fiveADay, cals, cuisine, dairyFree, glutenFree}) => {
-
   const attributes = [
     { name: 'cookingTime', value: cookingTime, icon:'icon-time'},
     { name: 'useWithin', value: useWithin, icon:'icon-use-within'},

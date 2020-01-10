@@ -379,7 +379,6 @@ describe('Checkout', () => {
 
       expect(QueueIt.validateUser).not.toHaveBeenCalled()
     })
-
   })
 
   describe('componentWillReceiveProps', () => {
@@ -417,7 +416,6 @@ describe('Checkout', () => {
 
       test('should render a CheckoutPayment component', () => {
         expect(wrapper.find(CheckoutPayment)).toHaveLength(1)
-
       })
 
       test('should call loadCheckoutScript', () => {

@@ -8,7 +8,6 @@ import css from './Account.css'
 import Banner from './Banner'
 
 class Account extends React.PureComponent {
-
   static propTypes = {
     children: PropTypes.node,
     renderChildren: PropTypes.bool,
@@ -66,7 +65,6 @@ class Account extends React.PureComponent {
       </div>
     )
   }
-
 }
 
 export default Account

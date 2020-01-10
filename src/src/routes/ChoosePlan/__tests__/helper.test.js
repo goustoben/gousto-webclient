@@ -43,7 +43,5 @@ describe('Choose Plan Helper', () => {
         expect(result.pricePerPortion).toEqual('3.33')
       })
     })
-
   })
-
 })

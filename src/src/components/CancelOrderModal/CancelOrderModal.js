@@ -5,7 +5,6 @@ import Overlay from 'Overlay'
 import CancelOrderModalContent from './CancelOrderModalContent'
 
 class CancelOrderModal extends React.PureComponent {
-
   static propTypes = {
     close: PropTypes.func,
     cancelOrderModalOpen: PropTypes.bool,

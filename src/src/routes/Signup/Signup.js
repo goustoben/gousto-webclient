@@ -35,7 +35,6 @@ const components = {
 const availableSteps = Object.keys(components)
 
 class Signup extends React.PureComponent {
-
   static fetchData = async ({ store, params = {}, query = {} }) => {
     let steps = Immutable.List(config.defaultSteps)
     const querySteps = query.steps ? query.steps.split(',') : []

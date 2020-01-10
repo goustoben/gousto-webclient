@@ -2,7 +2,6 @@ import React from 'react'
 
 const withScroll = ({ propName, height }) => (Component) =>
   class WithScroll extends React.Component {
-
     constructor(props) {
       super(props)
       this.state = {

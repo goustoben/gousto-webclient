@@ -6,7 +6,6 @@ import { Tutorial, Step } from 'Tutorial'
 import css from './JustForYouTutorial.css'
 
 class JustForYouTutorial extends React.PureComponent {
-
   onCloseTutorial(step) {
     const { incrementTutorialViewed, tutorialTracking } = this.props
     const tutorialName = 'just_for_you'

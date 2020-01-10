@@ -293,7 +293,6 @@ function userLoadNewOrders() {
     const ordersCombined = pendingOrders.merge(projectedDeliveries)
 
     dispatch({ type: actionTypes.MYDELIVERIES_ORDERS, orders: ordersCombined })
-
   }
 }
 
@@ -800,7 +799,6 @@ export const userGetReferralDetails = () => {
 
       dispatch(userLoadReferralDetails(data))
     } catch (err) {
-
       logger.error({ message: `Failed to fetch referral details`, errors: [err] })
     }
   }

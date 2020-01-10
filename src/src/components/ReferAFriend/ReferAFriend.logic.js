@@ -6,7 +6,6 @@ import actionTypes from 'actions/actionTypes'
 import { ReferAFriendPresentation } from './ReferAFriend.presentation'
 
 class ReferAFriend extends PureComponent {
-
   static propTypes = {
     userReferAFriend: PropTypes.func.isRequired,
     trackingReferFriendSocialSharing: PropTypes.func.isRequired,

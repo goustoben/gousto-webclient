@@ -1,10 +1,8 @@
 import actionTypes from 'actions/actionTypes'
 
 const logger = ( state = {uuid: ''}, action) => {
-
   switch (action.type) {
   case actionTypes.LOGGER_SET_UUID: {
-
     return {
       ...state,
       uuid: action.uuid

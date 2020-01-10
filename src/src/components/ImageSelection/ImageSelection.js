@@ -8,7 +8,6 @@ const ImageSelection = ({ content, onImageClick }) => (
   <div className={css.scroll}>
     <div className={css.row}>
       {content.length > 0 && content.map(item => {
-
         const [imageId, imageTitle, images] = [
           item.get('id'),
           item.get('title'),

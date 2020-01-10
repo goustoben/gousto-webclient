@@ -9,7 +9,6 @@ import globalCss from './reactSelect.css' // eslint-disable-line no-unused-vars
 import css from './DropdownInput.css'
 
 export class DropdownInput extends React.Component {
-
   static propTypes = {
     additionalProps: PropTypes.object,
     options: PropTypes.array,

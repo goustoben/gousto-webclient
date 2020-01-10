@@ -9,7 +9,6 @@ import Home from "../Home/Home"
 import HomeSections from "../Home/HomeSections"
 
 class Join extends Home {
-
   static propTypes = {
     ...Home.propTypes,
     enableSubscription: PropTypes.bool,

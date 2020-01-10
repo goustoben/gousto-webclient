@@ -6,7 +6,6 @@ const sectionName = 'payment'
 let state = {}
 
 describe('is submitting', () => {
-
   test('should return true if the form "submitting" value is true', () => {
     state = {
       pending: Immutable.Map({
@@ -23,7 +22,6 @@ describe('is submitting', () => {
   })
 
   describe('when the form "submitting" value is false', () => {
-
     test('and "CHECKOUT_CARD_SUBMIT" is pending it should return true', () => {
       state = {
         pending: Immutable.Map({
@@ -53,11 +51,9 @@ describe('is submitting', () => {
       expect(isSubmitting(state)).toEqual(false)
     })
   })
-
 })
 
 describe('is billing address different', () => {
-
   beforeEach(()=>{
     formValues = {
       delivery: {},

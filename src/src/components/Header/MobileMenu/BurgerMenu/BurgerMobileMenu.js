@@ -5,7 +5,6 @@ import Link from 'Link'
 import css from '../MobileMenu.css'
 
 const getCssClassForMenuItem = (homeMenuItem, myGoustoMenuItem, isAuthenticated) => {
-
   if (homeMenuItem && isAuthenticated) {
     return css.borderListElement
   } else if (myGoustoMenuItem || homeMenuItem) {

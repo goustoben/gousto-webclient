@@ -608,7 +608,6 @@ describe('onScreenRecovery', () => {
     })
 
     describe('when the response is to *not* intervene', () => {
-
       test('should pause the subscription', async () => {
         fetchSubscriptionPauseContent.mockReturnValue(Promise.resolve({
           data: {

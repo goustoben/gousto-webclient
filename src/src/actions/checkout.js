@@ -310,7 +310,6 @@ export function checkoutPostSignup() {
       dispatch(tempActions.temp('originalGrossTotal', grossTotal))
       dispatch(tempActions.temp('originalNetTotal', netTotal))
       dispatch(trackPurchase())
-
     } catch (err) {
       logger.error({ message: `${actionTypes.CHECKOUT_SIGNUP_LOGIN} - ${err.message}`, errors: [err] })
       dispatch(error(actionTypes.CHECKOUT_SIGNUP_LOGIN, true))
