@@ -35,7 +35,7 @@ const RecipeCarousel = ({ homeCarouselRecipes, cutoffDate }) => (
       {
         orderRecipes(homeCarouselRecipes, cutoffDate)
           .map(recipe => (
-<div className={css.recipeContainer} key={recipe.get('id')}>
+            <div className={css.recipeContainer} key={recipe.get('id')}>
               <div className={css.recipe} key={recipe.get('id')}>
                 <Recipe
                   view="simple"
@@ -53,7 +53,7 @@ const RecipeCarousel = ({ homeCarouselRecipes, cutoffDate }) => (
                   maxMediaSize={400}
                 />
               </div>
-</div>
+            </div>
           )).toArray()
       }
     </Carousel>
