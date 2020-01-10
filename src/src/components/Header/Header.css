@@ -1,12 +1,27 @@
 @value White, Pomegranate, Blackberry from 'styles/colors.css';
 @value MainFontColor White;
 @value sizeXXL from 'styles/typography.css';
-@value ScreenXSMax, ScreenSMMax from 'styles/screenSizes.css';
+@value ScreenXSMax, ScreenSMMax, ScreenXXSMax from 'styles/screenSizes.css';
 @value SpacingSM from 'sass-loader!styles/spacing.scss';
 @value mobileLogoSize 25px;
 
 .header {
 	position: relative;
+}
+
+.headerRightContainer {
+	display: flex;
+	align-items: center;
+}
+
+.useAppCta { 
+	@media ScreenXXSMax {
+		margin-right: 0.63rem;
+		font-weight: bold;
+		display: block; 
+	}
+
+	display: none;
 }
 
 .smallContainer {

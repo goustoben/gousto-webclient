@@ -15,6 +15,7 @@ import Account from 'routes/Account/Account'
 import CancelOrderModal from 'CancelOrderModal'
 import ExpiredBillingModal from 'ExpiredBillingModal'
 import CookieBanner from 'CookieBanner'
+import { Button } from 'goustouicomponents'
 import { AppBanner } from 'AppBanner'
 import { AbandonBasketModal } from 'AbandonBasketModal'
 import { OnScreenRecovery } from 'routes/Account/MyDeliveries/OrdersList/OnScreenRecovery'
@@ -297,6 +298,12 @@ class Header extends React.PureComponent {
     })
   }
 
+  onUseAppClick = () => {
+    const { trackNavigationClick } = this.props
+    trackNavigationClick('UseAppHeaderCta Clicked')
+    window.location.assign('/apps')
+  }
+
   render() {
     const {
       fromJoin,
@@ -311,7 +318,7 @@ class Header extends React.PureComponent {
       path,
       trackNavigationClick,
       abandonBasketFeature,
-      routing
+      routing,
     } = this.props
     const pathName = routing && routing.locationBeforeTransitions && routing.locationBeforeTransitions.pathname
     const { mobileMenuOpen, loginPending } = this.state
@@ -352,20 +359,21 @@ class Header extends React.PureComponent {
             onClick={this.hideMobileMenu}
           />
           <header className={css.header}>
-            <div>
-              <div className={css.container}>
-                <div className={css.mainBar}>
-                  <div className={css.mainContent}>
-                    <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !Boolean(promoCodeUrl)} className={css.logoLink}>
-                      <span>
-                        <Svg fileName="gousto_logo" className={css.logoDesktop} />
-                      </span>
-                    </Link>
-                    {(path === '/menu') ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
-                    <span className={css.linkDesktopContainer}>
-                      {this.renderMenuItems(desktopMenuItems, hideNav)}
-                      {this.renderAuthLink()}
+            <div className={css.container}>
+              <div className={css.mainBar}>
+                <div className={css.mainContent}>
+                  <Link to={homeElementMobile.url} clientRouted={homeElementMobile.clientRouted && !Boolean(promoCodeUrl)} className={css.logoLink}>
+                    <span>
+                      <Svg fileName="gousto_logo" className={css.logoDesktop} />
                     </span>
+                  </Link>
+                  {(path === '/menu') ? <span className={css.menuTitle}>Choose Recipes</span> : ''}
+                  <span className={css.linkDesktopContainer}>
+                    {this.renderMenuItems(desktopMenuItems, hideNav)}
+                    {this.renderAuthLink()}
+                  </span>
+                  <div className={css.headerRightContainer}>
+                    {isAuthenticated && <Button color="secondary" className={css.useAppCta} onClick={this.onUseAppClick}>Use App</Button> }
                     <MobileMenu
                       hideMobileMenu={this.hideMobileMenu}
                       onLoginClick={this.onLoginClick}
