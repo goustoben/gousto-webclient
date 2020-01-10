@@ -172,3 +172,34 @@ describe('componentWillUnmount', () => {
     expect(window.document.removeEventListener).toHaveBeenCalled()
   })
 })
+
+describe('stockAlert', () => {
+  describe('when showStockAlert is true', () => {
+    let wrapper
+    beforeEach(() => {
+      SubHeader.mockReturnValue(<div />)
+
+      wrapper = shallow(
+      <MenuRecipes
+        orderId=""
+        basketNumPortionChange={jest.fn()}
+        fadeCss="fadeOut"
+        showLoading={false}
+        showStockAlert
+        filteredRecipesNumber={30}
+        menuCurrentCollectionId=""
+        menuRecipeDetailShow=""
+        selectCurrentCollection={jest.fn()}
+        detailVisibilityChange={() => { }}
+      />,
+      )
+    })
+    test('should show stock alert', () => {
+      expect(wrapper.find('Alert')).toHaveLength(1)
+    })
+    
+    test('should show stock alert with Recipe rush title', () => {
+      expect(wrapper.find('Alert > h4').text()).toEqual('Recipe rush')
+    })
+  })
+})
