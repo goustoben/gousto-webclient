@@ -68,7 +68,7 @@
       "import/no-extraneous-dependencies": 1,
       "react/jsx-key": 1,
       "react/require-default-props": 1,
-      "react/no-unused-prop-types": 1,
+      "react/no-unused-prop-types": 2,
       "react/destructuring-assignment": 1,
       "react/forbid-prop-types": 1,
       "react/no-deprecated": 1,
