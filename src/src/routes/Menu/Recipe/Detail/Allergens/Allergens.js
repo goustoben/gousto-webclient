@@ -37,4 +37,4 @@ Allergens.defaultProps = {
   inset: true,
 }
 
-export default Allergens
+export { Allergens }
