@@ -3,13 +3,24 @@ import React from 'react'
 import Immutable from 'immutable'
 import css from "./Allergens.css"
 
+export const allergenNamesInParentheses = (allergens) => {
+  const allergenString = allergens.join(", ")
+  const allergenText = `(${allergenString})`
+
+  return allergenText
+}
+
 const Allergens = ({ allergens, inset }) => (
   <div className={(inset) ? css.insetSection : css.section}>
     <h1 className={css.heading}>Allergens</h1>
     {(allergens.size > 0) ? (
       <dl>
-        <span>For allergens, see ingredients in
-          <span className={css.bold}> BOLD.</span>
+        <span>
+          For allergens, see ingredients in
+          <span className={css.bold}> BOLD. </span>
+          <span className={css.bold}>
+            {allergenNamesInParentheses(allergens)}
+          </span>
         </span>
       </dl>
     ) : null}
