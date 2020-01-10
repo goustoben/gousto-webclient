@@ -20,11 +20,13 @@ class MenuRecipes extends PureComponent {
     detailVisibilityChange: PropTypes.func.isRequired,
     menuRecipeDetailShow: PropTypes.string,
     orderId: PropTypes.string,
+    showStockAlert: PropTypes.bool
   }
 
   static defaultProps = {
     menuRecipeDetailShow: '',
-    orderId: null
+    orderId: null,
+    showStockAlert: false
   }
 
   componentWillReceiveProps(nextProps) {
@@ -72,6 +74,7 @@ class MenuRecipes extends PureComponent {
       filteredRecipesNumber,
       menuCurrentCollectionId,
       orderId,
+      showStockAlert
     } = this.props
 
     return (
@@ -80,12 +83,16 @@ class MenuRecipes extends PureComponent {
         <SubHeader
           orderId={orderId}
         />
-        <div className={css.stockAlert}>
-          <Alert type="warning">
-            <h4>Recipe rush</h4>
-            <p>If you&apos;ve got your eye on a sold out recipe, try changing your delivery day.</p>
-          </Alert>
-        </div>
+        {
+          showStockAlert
+          && (
+            <div className={css.stockAlert}>
+              <Alert type="warning">
+                <h4>Recipe rush</h4>
+                <p>If you&apos;ve got your eye on a sold out recipe, try changing your delivery day.</p>
+              </Alert>
+            </div>
+          )}
         <Loading loading={showLoading} />
         {!showLoading
           && <CollectionsNav menuCurrentCollectionId={menuCurrentCollectionId} />}

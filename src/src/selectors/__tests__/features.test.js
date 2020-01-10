@@ -13,7 +13,8 @@ import {
   getNDDFeatureValue,
   getHideBoxSummary,
   getAddOnsBeforeOrderConfirmation,
-  getFullScreenBoxSummary
+  getFullScreenBoxSummary,
+  getShowStockAlertFlag
 } from 'selectors/features'
 
 describe('when features are defined', () => {
@@ -299,6 +300,25 @@ describe('when features are defined', () => {
           }
         })
         expect(getFullScreenBoxSummary(state)).toBe(true)
+      })
+    })
+  })
+  
+  describe('getShowStockAlertFlag', () => {
+    describe('when is NOT set', () => {
+      test('should return false', () => {
+        expect(getShowStockAlertFlag(state)).toBe(false)
+      })
+    })
+
+    describe('when is set', () => {
+      test('should return true', () => {
+        state.features = Immutable.fromJS({
+          showStockAlert: {
+            value: true
+          }
+        })
+        expect(getShowStockAlertFlag(state)).toBe(true)
       })
     })
   })
