@@ -110,11 +110,6 @@ PostcodeStep.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
-  currentStepName: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
-  active: PropTypes.bool,
 }
 
 export default PostcodeStep

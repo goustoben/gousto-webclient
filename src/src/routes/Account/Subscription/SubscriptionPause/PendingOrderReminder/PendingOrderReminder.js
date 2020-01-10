@@ -67,15 +67,8 @@ const PendingOrderReminder = ({ pendingOrders = Immutable.Map({}), committedOrde
 
 PendingOrderReminder.propTypes = {
   pendingOrders: PropTypes.instanceOf(Immutable.Map),
-  close: PropTypes.func,
-  cancelPendingOrders: PropTypes.func,
   committedOrders: PropTypes.instanceOf(Immutable.Map),
   orderCancelPending: PropTypes.bool,
-}
-
-PendingOrderReminder.defaultProps = {
-  close: () => {},
-  cancelPendingOrders: () => {},
 }
 
 export default PendingOrderReminder

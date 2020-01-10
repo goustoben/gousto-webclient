@@ -20,8 +20,6 @@ Hero.propTypes = {
   imageUrl: PropTypes.string,
   headerText: PropTypes.string,
   style: PropTypes.object,
-  redirect: PropTypes.func,
-  dataTesting: PropTypes.string,
 }
 
 export default Hero

@@ -17,7 +17,6 @@ class Address extends React.PureComponent {
     sectionName: PropTypes.string,
     formErrors: PropTypes.object,
     formValues: PropTypes.object,
-    formFields: PropTypes.object,
     change: PropTypes.func,
     touch: PropTypes.func,
     untouch: PropTypes.func,
@@ -41,7 +40,6 @@ class Address extends React.PureComponent {
     sectionName: 'delivery',
     formErrors: {},
     formValues: {},
-    formFields: {},
     isNDDExperiment: false,
 
     change: () => { },

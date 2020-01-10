@@ -15,8 +15,6 @@ class PromoCode extends React.PureComponent {
     loadPrices: PropTypes.func.isRequired,
     basketPromoCodeChange: PropTypes.func.isRequired,
     basketPromoCodeAppliedChange: PropTypes.func.isRequired,
-    recipes: PropTypes.instanceOf(Immutable.Map),
-    numPortions: PropTypes.number,
     trackPromocodeChange: PropTypes.func,
   }
 
@@ -26,8 +24,6 @@ class PromoCode extends React.PureComponent {
     basketPromoCodeChange: () => { },
     basketPromoCodeAppliedChange: () => { },
     prices: Immutable.Map({}),
-    recipes: Immutable.Map({}),
-    numPortions: 2,
   }
 
   constructor(props) {

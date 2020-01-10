@@ -14,13 +14,11 @@ class MainLayout extends React.Component {
     disabled: PropTypes.bool.isRequired,
     orders: PropTypes.instanceOf(Immutable.Map),
     shippingAddresses: PropTypes.instanceOf(Immutable.List),
-    userLoadData: PropTypes.func.isRequired,
     userLoadOrders: PropTypes.func.isRequired,
     userFetchShippingAddresses: PropTypes.func.isRequired,
     userClearData: PropTypes.func.isRequired,
-    menuLoadingBoxPrices: PropTypes.bool,
+    menuLoadingBoxPrices: PropTypes.bool, //eslint-disable-line react/no-unused-prop-types
     menuLoadBoxPrices: PropTypes.func.isRequired,
-    location: PropTypes.object,
     route: PropTypes.shape({
       withRecipeBar: PropTypes.bool,
     }),

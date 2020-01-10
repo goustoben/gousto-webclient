@@ -17,7 +17,6 @@ class Postcode extends React.PureComponent {
     postcodePending: PropTypes.bool,
     prevPostcode: PropTypes.string,
     addresses: PropTypes.object,
-    address: PropTypes.object,
     basketRestorePreviousValues: PropTypes.func.isRequired,
     chosenAddress: PropTypes.object,
     basketChosenAddressChange: PropTypes.func.isRequired,

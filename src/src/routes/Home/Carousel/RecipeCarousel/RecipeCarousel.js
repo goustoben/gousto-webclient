@@ -63,7 +63,6 @@ const RecipeCarousel = ({ homeCarouselRecipes, cutoffDate }) => (
 RecipeCarousel.propTypes = {
   homeCarouselRecipes: PropTypes.instanceOf(Immutable.OrderedMap),
   cutoffDate: PropTypes.string,
-  redirect: PropTypes.func,
 }
 
 export default RecipeCarousel

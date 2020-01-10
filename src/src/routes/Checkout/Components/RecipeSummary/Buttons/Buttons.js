@@ -14,7 +14,7 @@ class Buttons extends React.Component {
     numPortions: PropTypes.number.isRequired,
     view: PropTypes.string,
     outOfstock: PropTypes.bool,
-    disabled: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool.isRequired, //eslint-disable-line react/no-unused-prop-types
     stock: PropTypes.number,
     showControl: PropTypes.bool,
   }

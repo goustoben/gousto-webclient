@@ -28,7 +28,6 @@ const Ingredient = ({ ingredient }) => {
 
 Ingredient.propTypes = {
   ingredient: PropTypes.instanceOf(Immutable.Map),
-  className: PropTypes.string,
 }
 
 export default Ingredient

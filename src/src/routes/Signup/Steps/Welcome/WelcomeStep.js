@@ -30,7 +30,6 @@ const WelcomeStep = ({ next }) => (
 
 WelcomeStep.propTypes = {
   next: PropTypes.func,
-  stepNumber: PropTypes.number.isRequired,
 }
 
 export default WelcomeStep

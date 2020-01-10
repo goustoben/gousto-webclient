@@ -6,13 +6,11 @@ import css from '../Delivery.css'
 
 class DeliveryPhoneNumber extends React.PureComponent {
   static propTypes = {
-    phone: PropTypes.string,
     receiveRef: PropTypes.func,
     sectionName: PropTypes.string,
   }
 
   static defaultProps = {
-    phone: '',
     receiveRef: () => {},
   }
 

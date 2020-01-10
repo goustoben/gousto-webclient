@@ -19,7 +19,6 @@ class CollectionsNav extends React.PureComponent {
     menuCollectionRecipes: PropTypes.instanceOf(Immutable.Map).isRequired,
     collectionFilterChange: PropTypes.func.isRequired,
     menuCurrentCollectionId: PropTypes.string,
-    features: PropTypes.instanceOf(Immutable.Map).isRequired,
     isPolicyAccepted: PropTypes.bool,
   }
 

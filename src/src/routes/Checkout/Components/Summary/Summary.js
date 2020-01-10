@@ -18,7 +18,6 @@ class Summary extends React.PureComponent {
   static propTypes = {
     prices: PropTypes.instanceOf(Immutable.Map),
     basketRecipes: PropTypes.object,
-    browser: PropTypes.string,
     routing: PropTypes.object,
     isLoading: PropTypes.bool,
     showNoDiscountCTA: PropTypes.bool,
