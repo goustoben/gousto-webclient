@@ -19,7 +19,7 @@ const OrderRecipes = ({
 }) => (
     <div>
       <div className={css.headerRow}>
-        <Content contentKeys="mydeliveriesOrderOrderrecipesTitle" >
+        <Content contentKeys="mydeliveriesOrderOrderrecipesTitle">
           <span className={css.header}>Recipe box</span>
         </Content>
         {['menu open', 'recipes chosen'].indexOf(orderState) > -1 ?
@@ -34,7 +34,7 @@ const OrderRecipes = ({
       {orderState === 'menu open' ?
         <div className={css.textRow}>
           <p className={css.subHeader}>
-            <Content contentKeys="mydeliveriesOrderOrderrecipesMessage" >
+            <Content contentKeys="mydeliveriesOrderOrderrecipesMessage">
               <span>You haven't chosen any recipes yet.</span>
             </Content>
           </p>

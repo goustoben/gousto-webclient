@@ -9,7 +9,7 @@ describe('AgeVerificationPopUp Component', () => {
   const onAgeConfirmationSpy = jest.fn()
 
   beforeEach(() => {
-    wrapper = mount(<AgeVerificationPopUp onClose={onCloseSpy} onAgeConfirmation={onAgeConfirmationSpy}/>)
+    wrapper = mount(<AgeVerificationPopUp onClose={onCloseSpy} onAgeConfirmation={onAgeConfirmationSpy} />)
   })
 
   afterEach(() => {

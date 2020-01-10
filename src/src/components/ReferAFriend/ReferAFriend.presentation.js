@@ -9,8 +9,8 @@ import css from './ReferAFriend.css'
 const propTypes = {
   isEmailSent: PropTypes.bool,
   handleSubmit: PropTypes.func.isRequired,
-  handleEmailChange: PropTypes.func.isRequired, 
-  email: PropTypes.string.isRequired, 
+  handleEmailChange: PropTypes.func.isRequired,
+  email: PropTypes.string.isRequired,
   errorMessage: PropTypes.string,
   showEmailReferralForm: PropTypes.func.isRequired,
 }
@@ -46,7 +46,7 @@ const ReferAFriendPresentation = ({isEmailSent, handleSubmit, handleEmailChange,
             </Form>
           </div>
         ) : (
-            <div >
+            <div>
               <p className={css.emailSentNotification}>An invitation has been sent to your friend!</p>
               <Button
                 onClick={showEmailReferralForm}

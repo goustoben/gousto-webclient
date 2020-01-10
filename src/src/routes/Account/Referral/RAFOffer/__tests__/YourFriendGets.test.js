@@ -8,7 +8,7 @@ describe('YouGet', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <YourFriendGets yourFriendFirstBoxOffer="50%" yourFriendFirstMonthOffer="30%"/>
+      <YourFriendGets yourFriendFirstBoxOffer="50%" yourFriendFirstMonthOffer="30%" />
     )
   })
 
@@ -16,12 +16,12 @@ describe('YouGet', () => {
     it('should render a Gel component with the yourFriendFirstBoxOffer as a child', () => {
       expect(wrapper.find(Gel).first().length).toEqual(1)
       expect(wrapper.find(Gel).first().contains("50%")).toEqual(true)
-    }) 
-    
+    })
+
     it('should render a Gel component with the yourFriendFirstMonthOffer as a child', () => {
       expect(wrapper.find(Gel).last().length).toEqual(1)
       expect(wrapper.find(Gel).last().contains("30%")).toEqual(true)
-    }) 
+    })
 
   })
 })

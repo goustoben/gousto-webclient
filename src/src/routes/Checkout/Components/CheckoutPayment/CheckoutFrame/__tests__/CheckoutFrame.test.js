@@ -171,7 +171,7 @@ describe('CheckoutFrame', () => {
       })
 
       test('should not call submitCard when not updated', () => {
-        wrapper = mount(<CheckoutFrame checkoutScriptReady submitCheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
+        wrapper = mount(<CheckoutFrame checkoutScriptReady submitCheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
         wrapper.setProps({ isSubmitCardEnabled: true })
 
         const submitCard = jest.fn()
@@ -378,7 +378,7 @@ describe('CheckoutFrame', () => {
 
   describe('submit card', () => {
     beforeEach(async () => {
-      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
 
       await wrapper.instance().submitCard()
     })
@@ -391,7 +391,7 @@ describe('CheckoutFrame', () => {
       Frames.submitCard.mockClear()
       Frames.submitCard.mockRejectedValue({})
 
-      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent}/>)
+      wrapper = mount(<CheckoutFrame disableCardSubmission={disableCardSubmission} fireCheckoutError={fireCheckoutError} fireCheckoutPendingEvent={fireCheckoutPendingEvent} />)
 
       await wrapper.instance().submitCard()
       expect(fireCheckoutError).toHaveBeenCalledWith(actionTypes.VALID_CARD_DETAILS_NOT_PROVIDED)

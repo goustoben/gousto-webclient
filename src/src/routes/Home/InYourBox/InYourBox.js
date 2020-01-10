@@ -18,7 +18,7 @@ const InYourBox = ({ redirect, inverse, ctaText, ctaUri }) => (
         <li className={css.listItem}><span className={css.tick} />Easy to follow recipe cards</li>
         <li className={css.listItem}><span className={css.tick} />Meals for 2 or 4 people</li>
       </ul>
-      <CTAHomepage width={240} onClick={() => { redirect(ctaUri) }} buttonContainer={false} >{ctaText}</CTAHomepage>
+      <CTAHomepage width={240} onClick={() => { redirect(ctaUri) }} buttonContainer={false}>{ctaText}</CTAHomepage>
     </div>
   </div>
 )

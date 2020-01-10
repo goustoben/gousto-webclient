@@ -150,7 +150,7 @@ class Product extends PureComponent {
           toggleAgeVerificationPopUp={toggleAgeVerificationPopUp}
           {...productCardContent}
         />
-        <Overlay open={showDetailsScreen} onClose={this.toggleDetailsVisibility} >
+        <Overlay open={showDetailsScreen} onClose={this.toggleDetailsVisibility}>
           <ProductDetailContainer
             {...productDetails}
             onAdd={this.onAddProduct}

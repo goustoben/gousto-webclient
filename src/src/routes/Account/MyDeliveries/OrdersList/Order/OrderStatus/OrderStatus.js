@@ -16,21 +16,21 @@ const OrderStatus = ({ orderState, whenCutoff, whenMenuOpen }) => (
       : null}
     {orderState === 'confirmed' ?
       <p className={css.orderStatus}>
-        <Content contentKeys="myDeliveriesOrderOrderStatusConfirmed" >
+        <Content contentKeys="myDeliveriesOrderOrderStatusConfirmed">
           <span>This box is being prepared</span>
         </Content>
       </p>
       : null}
     {orderState === 'dispatched' ?
       <p className={css.orderStatus}>
-        <Content contentKeys="myDeliveriesOrderOrderStatusDispatched" >
+        <Content contentKeys="myDeliveriesOrderOrderStatusDispatched">
           <span>This box is out for delivery</span>
         </Content>
       </p>
       : null}
     {orderState === 'cancelled' ?
       <p className={css.orderStatus}>
-        <Content contentKeys="myDeliveriesOrderOrderStatusCancelled" >
+        <Content contentKeys="myDeliveriesOrderOrderStatusCancelled">
           <span>You cannot restore this box. Please add a new one.</span>
         </Content>
       </p>

@@ -16,7 +16,7 @@ describe('Welcome Page', () => {
   const params = { orderId: '1234'}
 
   beforeEach(function() {
-    
+
     const store = {
       auth: Immutable.fromJS({ accessToken: 'access-token', isAuthenticated: true }),
       user: Immutable.fromJS({ nameFirst: 'User', ageVerified: false, orders: [] }),
@@ -36,7 +36,7 @@ describe('Welcome Page', () => {
 
   describe('when welcomePageAppPromo is true', () => {
     beforeEach(() => {
-      wrapper = shallow(<Welcome orderId={orderId} products={products} user={user} welcomePageAppPromo={welcomePageAppPromo} userFetchReferralOffer={userFetchReferralOffer} query={query} params={params}/>, { context })
+      wrapper = shallow(<Welcome orderId={orderId} products={products} user={user} welcomePageAppPromo={welcomePageAppPromo} userFetchReferralOffer={userFetchReferralOffer} query={query} params={params} />, { context })
     })
     it('should render Vertical Stages component', () => {
       expect(wrapper.find('VerticalStages').length).toEqual(1)

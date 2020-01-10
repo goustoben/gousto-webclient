@@ -34,7 +34,7 @@ describe('Refer A Friend', () => {
   describe('onClick', () => {
     it('should call redirect with /my-referrals', () => {
       const redirectSpy = jest.fn()
-      wrapper = shallow(<ReferAFriend referralDetails={referralDetails} redirect={redirectSpy}/>)
+      wrapper = shallow(<ReferAFriend referralDetails={referralDetails} redirect={redirectSpy} />)
       wrapper.find('Button').simulate('click')
       expect(redirectSpy).toHaveBeenCalledWith('/my-referrals')
 

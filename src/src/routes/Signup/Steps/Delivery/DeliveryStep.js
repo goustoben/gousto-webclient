@@ -209,13 +209,13 @@ const DeliveryStep = ({
           </div>
           <div className={css.modalrow}>
             <label className={css.label}>
-              <input className={css.radio} name="ndd" value="prefer ndd" type="radio" onClick={onClickNddPreference}/>
+              <input className={css.radio} name="ndd" value="prefer ndd" type="radio" onClick={onClickNddPreference} />
               <span>Fast delivery (24-48 hour) is very important to me</span>
             </label>
           </div>
           <div className={css.modalrow}>
             <label className={css.label}>
-            <input className={css.radio} name="ndd" value="fine without ndd" type="radio" onClick={onClickNddPreference}/>
+            <input className={css.radio} name="ndd" value="fine without ndd" type="radio" onClick={onClickNddPreference} />
               <span>I am OK with 3 day delivery</span>
             </label>
           </div>

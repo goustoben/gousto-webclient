@@ -45,7 +45,7 @@ describe('<RangeBadge />', () => {
           "textColor": "#FFFFFF"
         }
       })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={range} />)
       expect(wrapper.find('.rangeBadge').length).toEqual(1)
     })
     test('should render range badge for Everydays favorites', () => {
@@ -59,7 +59,7 @@ describe('<RangeBadge />', () => {
           "textColor": "#FFFFFF"
         }
       })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={range} />)
       expect(wrapper.find('.rangeBadge').length).toEqual(1)
     })
     test('should render range badge with text Everyday Favorites', () => {
@@ -73,7 +73,7 @@ describe('<RangeBadge />', () => {
           "textColor": "#FFFFFF"
         }
       })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={range} />)
       expect(wrapper.find('.foodBrandName').prop('children')).toEqual('everyday favourites')
     })
     test('should render range badge with text 10-MINUTES MEAL', () => {
@@ -87,7 +87,7 @@ describe('<RangeBadge />', () => {
           "textColor": "#FFFFFF"
         }
       })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={range} />)
       expect(wrapper.find('.foodBrandName').prop('children')).toEqual('10-MINUTE MEAL')
     })
   })

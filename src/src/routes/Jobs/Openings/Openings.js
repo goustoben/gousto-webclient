@@ -78,7 +78,7 @@ class Openings extends React.PureComponent {
 
     return (
       <div className={css.background}>
-        <div className={css.container} id="openings" >
+        <div className={css.container} id="openings">
           <div>
             <h2 className={css.preHeader}>
               <Content

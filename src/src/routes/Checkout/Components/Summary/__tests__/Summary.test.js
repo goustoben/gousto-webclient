@@ -56,7 +56,7 @@ describe('Summary Component', () => {
       })
 
       test('should render nothing if the user has a promo code', () => {
-        wrapper = shallow(<Summary prices={prices} basketRecipes={basketRecipes} showNoDiscountCTA promoCode='PROMO'/>)
+        wrapper = shallow(<Summary prices={prices} basketRecipes={basketRecipes} showNoDiscountCTA promoCode='PROMO' />)
         expect(wrapper.find('.noDiscountCTA').length).toEqual(0)
         expect(wrapper.find(Link).length).toEqual(0)
       })

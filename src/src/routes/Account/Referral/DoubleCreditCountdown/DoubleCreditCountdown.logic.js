@@ -15,7 +15,7 @@ class DoubleCreditCountdown extends PureComponent {
     this.state = {
       days: 0,
       hours: 0,
-      minutes: 1, 
+      minutes: 1,
     }
   }
 
@@ -24,12 +24,12 @@ class DoubleCreditCountdown extends PureComponent {
     const intervalId = setInterval(this.updateTime, 60000)
     this.setState({intervalId: intervalId})
   }
- 
+
   componentWillUnmount() {
     const { intervalId } = this.state
     clearInterval(intervalId)
   }
- 
+
   setInitialTime = () => {
     const { expiry } = this.props
     const { days, hours, minutes } = getTimeDifference(expiry)
@@ -52,7 +52,7 @@ class DoubleCreditCountdown extends PureComponent {
     const { days, hours, minutes } = this.state
     const offerExpired = isTimeInPast(days, hours, minutes)
 
-    return (offerExpired ? null : <DoubleCreditCountdownPresentation title={description} days={days} hours={hours} minutes={minutes}/>)
+    return (offerExpired ? null : <DoubleCreditCountdownPresentation title={description} days={days} hours={hours} minutes={minutes} />)
   }
 }
 

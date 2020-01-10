@@ -10,7 +10,7 @@ const Perk = ({ title, copy }) => (
     <div className={css.perkInner}>
       <div className={css.perkCircle}>
         <div className={css.perkVerticalCenter}>
-          <span className={classnames({ [icons[title]]: true })} ></span>
+          <span className={classnames({ [icons[title]]: true })}></span>
           <p className={css.circleCopy}>{reactnl2br(copy)}</p>
         </div>
       </div>

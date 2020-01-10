@@ -9,16 +9,16 @@ describe('ReferAFriendModal', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <ReferAFriendModal onClose={onClose} credit={'£15'}/>
+      <ReferAFriendModal onClose={onClose} credit={'£15'} />
     )
   })
 
   it('should render ReferAFriend component', () => {
     expect(wrapper.find(ReferAFriend).length).toEqual(1)
   })
-  
+
   it('should render a heading', () => {
     expect(wrapper.find('h4').text()).toEqual('Refer a friend - Get £15')
   })
-  
+
 })

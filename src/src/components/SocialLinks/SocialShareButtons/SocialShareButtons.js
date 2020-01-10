@@ -56,7 +56,7 @@ class SocialShareButtons extends PureComponent {
             credit={offerCredit}
           />
         </Overlay>
-      </section >
+      </section>
     )
   }
 }
