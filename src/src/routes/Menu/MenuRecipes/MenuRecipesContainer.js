@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { filterRecipeGrouping, changeCollectionById } from 'actions/filters'
 import { menuRecipeDetailVisibilityChange } from 'actions/menu'
 import { getCollectionIdWithName, getDefaultCollectionId } from 'utils/collections'
+import { getShowStockAlertFlag } from 'selectors/features'
 import { getFilteredRecipeIds } from '../selectors/filters'
 import { getCurrentCollectionIsRecommendation } from '../selectors/menu'
 
@@ -23,6 +24,7 @@ const mapStateToProps = (state, ownProps) => {
     filteredRecipesNumber: getFilteredRecipeIds(state).size,
     menuRecipeDetailShow: (ownProps.query) ? ownProps.query.recipeDetailId : '',
     menuCurrentCollectionId: collectionId,
+    showStockAlert: getShowStockAlertFlag(state)
   })
 }
 

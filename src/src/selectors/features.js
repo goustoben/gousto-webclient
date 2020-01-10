@@ -104,3 +104,5 @@ export const getMenuService = () => {
 }
 
 export const getFullScreenBoxSummary = ({ features }) => (features && features.getIn(['fullScreenBoxSummary', 'value'], false))
+
+export const getShowStockAlertFlag = ({ features }) => (features && features.getIn(['showStockAlert', 'value'], false))
