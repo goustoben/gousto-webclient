@@ -14,13 +14,10 @@ import DeliveryAddress from './DeliveryAddress'
 
 class Delivery extends React.PureComponent {
   static propTypes = {
-    onStepChange: PropTypes.func,
     formValues: PropTypes.object,
     formName: PropTypes.string,
     sectionName: PropTypes.string,
-    nextStepName: PropTypes.string,
     clearErrors: PropTypes.func,
-    manualSubmit: PropTypes.func,
     asyncValidate: PropTypes.func,
     change: PropTypes.func,
     receiveRef: PropTypes.func,
@@ -30,7 +27,6 @@ class Delivery extends React.PureComponent {
 
   static defaultProps = {
     clearErrors: () => {},
-    onStepChange: () => {},
     formValues: {},
     formName: '',
     sectionName: 'delivery',

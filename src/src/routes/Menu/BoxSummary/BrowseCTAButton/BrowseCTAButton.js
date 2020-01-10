@@ -39,7 +39,6 @@ const BrowseCTAButton = ({ menuBrowseCTAVisibilityChange, boxDetailsVisibilityCh
 
 BrowseCTAButton.propTypes = {
   boxDetailsVisibilityChange: PropTypes.func.isRequired,
-  menuBrowseCTAShow: PropTypes.bool,
   menuBrowseCTAVisibilityChange: PropTypes.func,
   boxSummaryShow: PropTypes.bool,
   disable: PropTypes.bool.isRequired,

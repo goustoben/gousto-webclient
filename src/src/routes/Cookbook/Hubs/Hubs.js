@@ -17,7 +17,6 @@ class Hubs extends React.PureComponent {
     endSet: PropTypes.number.isRequired,
     fetchSetData: PropTypes.func.isRequired,
     isLoading: PropTypes.bool,
-    loadSets: PropTypes.func.isRequired,
     loadNextSet: PropTypes.func.isRequired,
     startSet: PropTypes.number.isRequired,
     totalSets: PropTypes.number.isRequired,

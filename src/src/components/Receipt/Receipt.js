@@ -12,16 +12,11 @@ class Receipt extends React.Component {
   static propTypes = {
     prices: PropTypes.instanceOf(Immutable.Map),
     children: PropTypes.node,
-    extrasPrice: PropTypes.number,
-    numPortions: PropTypes.number,
     numRecipes: PropTypes.number,
     deliveryTotalPrice: PropTypes.string,
     shippingAddress: PropTypes.instanceOf(Immutable.Map),
     deliveryDate: PropTypes.string,
     deliverySlot: PropTypes.instanceOf(Immutable.Map),
-    deliveryTime: PropTypes.string,
-    vatableKey: PropTypes.string,
-    vatableItems: PropTypes.bool,
     surcharges: PropTypes.instanceOf(Immutable.List),
     surchargeTotal: PropTypes.string,
     totalToPay: PropTypes.string,
@@ -35,10 +30,7 @@ class Receipt extends React.Component {
   }
 
   static defaultProps = {
-    numPortions: 0,
     numRecipes: 0,
-    vatableKey: '*',
-    vatableItems: false,
     surcharges: Immutable.List([]),
     prices: Immutable.Map({}),
     surchargeTotal: '',
@@ -48,7 +40,6 @@ class Receipt extends React.Component {
     recipeDiscountAmount: '',
     recipeDiscountPercent: '',
     deliveryTotalPrice: '',
-    deliveryTime: '',
     showAddPromocode: false,
     showTitleSection: false,
     orderNumber: '',

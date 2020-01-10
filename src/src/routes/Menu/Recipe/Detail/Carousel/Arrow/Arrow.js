@@ -20,7 +20,6 @@ const Arrow = ({ direction, onClick }) => (
 
 Arrow.propTypes = {
   direction: PropTypes.string,
-  action: PropTypes.string,
   onClick: PropTypes.func,
 }
 

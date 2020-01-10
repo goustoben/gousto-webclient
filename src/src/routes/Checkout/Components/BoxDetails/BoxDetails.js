@@ -28,17 +28,12 @@ const BoxDetails = ({ maxRecipesNum, recipes }) => (
 
 BoxDetails.propTypes = {
   recipes: PropTypes.instanceOf(Immutable.Map),
-  redirect: PropTypes.func,
-  onSubmit: PropTypes.func,
-  nextStepName: PropTypes.string,
-  browser: PropTypes.string,
   maxRecipesNum: PropTypes.number,
 }
 
 BoxDetails.defaultProps = {
   maxRecipesNum: config.maxRecipesNum,
   recipes: Immutable.Map({}),
-  redirect: () => {},
 }
 
 export default BoxDetails

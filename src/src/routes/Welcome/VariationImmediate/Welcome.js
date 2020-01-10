@@ -141,13 +141,12 @@ Welcome.propTypes = {
   orderId: PropTypes.string.isRequired,
   productDetailId: PropTypes.string,
   products: PropTypes.instanceOf(Immutable.Map).isRequired,
-  productsLoadProducts: PropTypes.func.isRequired,
+  productsLoadProducts: PropTypes.func.isRequired, //eslint-disable-line react/no-unused-prop-types
   productsLoadProductsById: PropTypes.func.isRequired,
-  recipes: PropTypes.instanceOf(Immutable.Map).isRequired,
   recipesLoadRecipesById: PropTypes.func.isRequired,
   user: PropTypes.instanceOf(Immutable.Map).isRequired,
   userLoadOrders: PropTypes.func.isRequired,
-  contentLoadContentByPageSlug: PropTypes.func.isRequired,
+  contentLoadContentByPageSlug: PropTypes.func.isRequired, //eslint-disable-line react/no-unused-prop-types
 }
 
 export default Welcome

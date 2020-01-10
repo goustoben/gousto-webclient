@@ -33,7 +33,6 @@ const SubscriptionPauseImage = ({ photo, title, urls }) => {
 }
 
 SubscriptionPauseImage.propTypes = {
-  description: PropTypes.string,
   photo: PropTypes.string,
   title: PropTypes.string,
   urls: PropTypes.array,

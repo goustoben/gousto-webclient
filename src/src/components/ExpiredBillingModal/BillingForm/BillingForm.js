@@ -22,7 +22,6 @@ const divisor = String.fromCharCode(47)
 class BillingForm extends React.PureComponent {
   static propTypes = {
     isPosting: PropTypes.bool,
-    fetchError: PropTypes.func,
     submitCardDetails: PropTypes.func,
   }
 
@@ -170,11 +169,11 @@ class BillingForm extends React.PureComponent {
               </div>
               <div className={css.formItemCardType}>
                 <p className={css.inputTitle}>Card type</p>
-                <Dropdown 
-                  name="formCardType" 
-                  options={this.paymentOptions()} 
-                  value={card_type} 
-                  onChange={(e) => this.handleInputChange('card_type', e)} 
+                <Dropdown
+                  name="formCardType"
+                  options={this.paymentOptions()}
+                  value={card_type}
+                  onChange={(e) => this.handleInputChange('card_type', e)}
                   onBlur={() => this.validateOnBlur('cardTypeError', card_type)}
                 />
                 {cardTypeError ? <p className={css.errorMessage}>Card type is required</p> : null}
@@ -184,10 +183,10 @@ class BillingForm extends React.PureComponent {
               <div className={css.formItemSecurityCode}>
                 <p className={css.inputTitle}>Security code</p>
                 <div className={css.row}>
-                  <Input 
-                    name="formSecurityCode" 
-                    value={card_cvv2} 
-                    onChange={(e) => this.handleInputChange('card_cvv2', e)} 
+                  <Input
+                    name="formSecurityCode"
+                    value={card_cvv2}
+                    onChange={(e) => this.handleInputChange('card_cvv2', e)}
                     onBlur={() => this.validateOnBlur('securityCodeError', card_cvv2)}
                   />
                   <div className={css.securityCodeTooltip}>
@@ -208,12 +207,12 @@ class BillingForm extends React.PureComponent {
                 <p className={css.inputTitle}>Card expiry</p>
                 <div className={css.row}>
                   <div className={css.formCardMonth}>
-                    <Dropdown 
-                      name="cardExpiryMonth" 
-                      options={MONTHS} 
-                      value={formCardExpiryMonth} 
-                      className={css.formCardMonth} 
-                      onChange={(e) => this.handleInputChange('formCardExpiryMonth', e)} 
+                    <Dropdown
+                      name="cardExpiryMonth"
+                      options={MONTHS}
+                      value={formCardExpiryMonth}
+                      className={css.formCardMonth}
+                      onChange={(e) => this.handleInputChange('formCardExpiryMonth', e)}
                       onBlur={() => this.validateOnBlur('expiryMonthError', formCardExpiryMonth)}
                     />
                     {expiryMonthError ? <p className={[css.errorMessage, css.formCardMonth].join(' ')}>Expiry month is required</p> : null}

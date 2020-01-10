@@ -15,8 +15,7 @@ class Overlay extends React.Component {
     className: PropTypes.string,
     contentClassName: PropTypes.string,
     from: PropTypes.string,
-    legacy: PropTypes.bool,
-    resetScroll: PropTypes.bool,
+    resetScroll: PropTypes.bool, //eslint-disable-line react/no-unused-prop-types
   }
 
   static defaultProps = {

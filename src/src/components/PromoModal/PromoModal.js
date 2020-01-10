@@ -44,7 +44,6 @@ PromoModal.propTypes = {
   title: PropTypes.string,
   error: PropTypes.string,
   promoApply: PropTypes.func,
-  close: PropTypes.func,
   needsAgeVerification: PropTypes.bool,
   isAgeVerified: PropTypes.bool,
   buttonText: PropTypes.string,
