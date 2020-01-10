@@ -3,7 +3,7 @@
 .stockAlert {
   margin: 0 auto;
   background-color: White;
-  padding: 0.125rem.5rem 0.25rem;
+  padding: 0.125rem .5rem 0.25rem;
   @media ScreenXXSMin {
     max-width: 1600px;
     padding-left: 1.75rem;
