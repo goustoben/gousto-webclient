@@ -1,12 +1,11 @@
 import Immutable from 'immutable'
 import { connect } from 'react-redux'
-import Recipe from 'routes/Menu/Recipe'
+import { Recipe } from 'routes/Menu/Recipe'
 import { isNew } from 'utils/recipe'
 import { filterRecipeGrouping } from 'actions/filters'
 import { getRecipeGroupFilter } from 'selectors/filters'
 
 function mapStateToProps(state, ownProps) {
-
   return {
     isFoodBrandClickable: !getRecipeGroupFilter(state),
     isNew: isNew(Immutable.fromJS(ownProps)),

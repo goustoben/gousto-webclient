@@ -3,7 +3,7 @@ import { shallow } from 'enzyme'
 import renderer from 'react-test-renderer'
 import Immutable from 'immutable'
 import RangeBadge from 'routes/Menu/Recipe/RangeBadge'
-import InfoBadge from 'routes/Menu/Recipe/InfoBadge'
+import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
 
 describe('<RangeBadge />', () => {
   test('should not render by default', () => {
@@ -29,7 +29,6 @@ describe('<RangeBadge />', () => {
         .toJSON()
 
       expect(tree).toMatchSnapshot()
-
     })
   })
 
@@ -45,7 +44,7 @@ describe('<RangeBadge />', () => {
           "textColor": "#FFFFFF"
         }
       })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={range} />)
       expect(wrapper.find('.rangeBadge').length).toEqual(1)
     })
     test('should render range badge for Everydays favorites', () => {
@@ -59,7 +58,7 @@ describe('<RangeBadge />', () => {
           "textColor": "#FFFFFF"
         }
       })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={range} />)
       expect(wrapper.find('.rangeBadge').length).toEqual(1)
     })
     test('should render range badge with text Everyday Favorites', () => {
@@ -73,7 +72,7 @@ describe('<RangeBadge />', () => {
           "textColor": "#FFFFFF"
         }
       })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={range} />)
       expect(wrapper.find('.foodBrandName').prop('children')).toEqual('everyday favourites')
     })
     test('should render range badge with text 10-MINUTES MEAL', () => {
@@ -87,7 +86,7 @@ describe('<RangeBadge />', () => {
           "textColor": "#FFFFFF"
         }
       })
-      const wrapper = shallow(<RangeBadge range={range}/>)
+      const wrapper = shallow(<RangeBadge range={range} />)
       expect(wrapper.find('.foodBrandName').prop('children')).toEqual('10-MINUTE MEAL')
     })
   })

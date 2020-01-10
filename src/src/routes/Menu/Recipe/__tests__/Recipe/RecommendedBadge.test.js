@@ -3,7 +3,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Immutable from 'immutable'
 
-import InfoBadge from 'routes/Menu/Recipe/InfoBadge'
+import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
 
 import RecommendedBadge from 'routes/Menu/Recipe/RecommendedBadge'
 

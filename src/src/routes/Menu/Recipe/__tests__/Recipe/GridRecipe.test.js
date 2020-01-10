@@ -13,7 +13,7 @@ import TasteScore from 'routes/Menu/Recipe/TasteScore'
 import DisabledOverlay from 'routes/Menu/Recipe/DisabledOverlay'
 import RecommendedBadge from 'routes/Menu/Recipe/RecommendedBadge'
 
-import GridRecipe from 'routes/Menu/Recipe/GridRecipe'
+import { GridRecipe } from 'routes/Menu/Recipe/GridRecipe'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 
 import { Pill } from 'goustouicomponents'

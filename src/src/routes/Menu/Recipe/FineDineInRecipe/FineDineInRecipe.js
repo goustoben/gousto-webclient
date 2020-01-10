@@ -45,8 +45,7 @@ const FineDineInRecipe = ({ media, onClick, selectFoodBrand, isFoodBrandClickabl
           onKeyPress={onClick}
           onMouseEnter={highlight}
           onMouseLeave={unhighlight}
-        >
-        </div>
+        />
         <div className={css.recipeDetails}>
           <TasteScore className={css.score} score={tasteScore} />
           <div className={css.textContainer}>
@@ -117,6 +116,7 @@ FineDineInRecipe.propTypes = {
   tasteScore: PropTypes.number,
   isFoodBrandClickable: PropTypes.bool,
   selectFoodBrand: PropTypes.func,
+  view: PropTypes.string,
 }
 
 FineDineInRecipe.defaultProps = {
@@ -128,4 +128,4 @@ FineDineInRecipe.defaultProps = {
   media: Immutable.List([]),
 }
 
-export default FineDineInRecipe
+export { FineDineInRecipe }

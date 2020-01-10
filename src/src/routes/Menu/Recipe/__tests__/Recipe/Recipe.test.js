@@ -2,13 +2,13 @@ import React from 'react'
 
 import { shallow } from 'enzyme'
 
-import GridRecipe from 'routes/Menu/Recipe/GridRecipe'
+import { GridRecipe } from 'routes/Menu/Recipe/GridRecipe'
 import SimpleRecipe from 'routes/Menu/Recipe/SimpleRecipe'
-import FeaturedRecipe from 'routes/Menu/Recipe/FeaturedRecipe'
-import FineDineInRecipe from 'routes/Menu/Recipe/FineDineInRecipe'
+import { FeaturedRecipe }from 'routes/Menu/Recipe/FeaturedRecipe'
+import { FineDineInRecipe } from 'routes/Menu/Recipe/FineDineInRecipe'
 import { CTAToAllRecipes } from 'routes/Menu/Recipe/CTAToAllRecipes'
 
-import Recipe from 'routes/Menu/Recipe'
+import { Recipe } from 'routes/Menu/Recipe'
 import css from 'routes/Menu/Recipe/Recipe.css'
 
 describe('Recipe', () => {

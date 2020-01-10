@@ -1,1 +1,1 @@
-export default from './GridRecipe'
+export { GridRecipe } from './GridRecipe'

@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { InfoBadge } from 'routes/Menu/Recipe/InfoBadge'
 import css from './Rating.css'
-import InfoBadge from '../InfoBadge'
 
 class RecipeRating extends React.Component {
-
   static propTypes = {
     count: PropTypes.number,
     average: PropTypes.number,
@@ -43,7 +42,13 @@ class RecipeRating extends React.Component {
           <span className={css.starColor}>
             {this.showStar(this.props.average)}
           </span>
-          {this.props.view !== 'simple' ? <span className={css.description}> {this.props.count} reviews</span> : null}
+          {this.props.view !== 'simple' ? (
+            <span className={css.description}>
+              {this.props.count}
+              reviews
+            </span>
+          )
+            : null}
         </span>
       )
     }

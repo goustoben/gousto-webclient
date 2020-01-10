@@ -8,7 +8,7 @@ import ChefQuote from 'routes/Menu/Recipe/ChefQuote'
 import TasteScore from 'routes/Menu/Recipe/TasteScore'
 import { AttributeGrid } from 'routes/Menu/Recipe/AttributeGrid'
 
-import FeaturedRecipe from 'routes/Menu/Recipe/FeaturedRecipe'
+import { FeaturedRecipe } from 'routes/Menu/Recipe/FeaturedRecipe'
 
 import { Pill } from 'goustouicomponents'
 import { RecipeDisclaimerContainer } from 'routes/Menu/RecipeDisclaimer'

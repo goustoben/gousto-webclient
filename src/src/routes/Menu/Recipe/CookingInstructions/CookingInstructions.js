@@ -7,7 +7,6 @@ import { Button } from 'goustouicomponents'
 import css from './CookingInstructions.css'
 
 class CookingInstructions extends PureComponent {
-
   fetchRecipeSteps = () => {
     const { cookbookLoadRecipeStepsById, recipeId, recipeStepsById } = this.props
 
@@ -28,7 +27,7 @@ class CookingInstructions extends PureComponent {
     )
   }
 
-  cookingStep = ( recipeStep ) => {
+  cookingStep = (recipeStep) => {
     const images = recipeStep.get('media').get('images')
     const instruction = recipeStep.get('instruction')
     const instructionSanitize = DOMPurify.sanitize(instruction).replace(/&nbsp;/g, ' ')
@@ -51,7 +50,7 @@ class CookingInstructions extends PureComponent {
           {showNumber && <span className={css.stepNumber}>{stepNumber}</span>}
         </div>
         <div className={css.recipeInstruction}>
-          <div className={css.stepInstruction} dangerouslySetInnerHTML={{__html: instructionSanitize }} />
+          <div className={css.stepInstruction} dangerouslySetInnerHTML={{ __html: instructionSanitize }} />
         </div>
       </div>
     )
@@ -65,9 +64,12 @@ class CookingInstructions extends PureComponent {
         <div>
           <div className={css.insetHeading}>
             <span className={css.heading}>Cooking Instructions</span>
-            <div>Instructions for 2 people <span className={css.highlightText}>(double for 4)</span></div>
+            <div>
+              Instructions for 2 people
+              <span className={css.highlightText}>(double for 4)</span>
+            </div>
           </div>
-          { this.cookingSteps(recipeStepsById) }
+          {this.cookingSteps(recipeStepsById)}
         </div>
       )
     }

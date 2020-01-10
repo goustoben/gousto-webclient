@@ -5,10 +5,10 @@ import Immutable from 'immutable'
 
 import { CTAToAllRecipes } from 'routes/Menu/Recipe/CTAToAllRecipes'
 import { CTAThematic } from 'routes/Menu/Recipe/CTAThematic'
-import GridRecipe from 'routes/Menu/Recipe/GridRecipe'
+import { GridRecipe } from 'routes/Menu/Recipe/GridRecipe'
 import SimpleRecipe from 'routes/Menu/Recipe/SimpleRecipe'
-import FeaturedRecipe from 'routes/Menu/Recipe/FeaturedRecipe'
-import FineDineInRecipe from 'routes/Menu/Recipe/FineDineInRecipe'
+import { FeaturedRecipe } from 'routes/Menu/Recipe/FeaturedRecipe'
+import { FineDineInRecipe } from 'routes/Menu/Recipe/FineDineInRecipe'
 import css from './Recipe.css'
 
 const recipePropTypes = {
@@ -22,15 +22,13 @@ const recipePropTypes = {
   collectionFilterChange: PropTypes.func,
   id: PropTypes.string,
   thematicName: PropTypes.string,
-  selectedDate: PropTypes.string
+  selectedDate: PropTypes.string,
 }
 
 class Recipe extends React.PureComponent {
   static propTypes = recipePropTypes
 
   static defaultProps = {
-    title: '',
-    view: 'grid',
     collectionFilterChange: () => {},
   }
 
@@ -89,4 +87,4 @@ class Recipe extends React.PureComponent {
   }
 }
 
-export default Recipe
+export { Recipe }
