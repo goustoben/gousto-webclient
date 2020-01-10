@@ -31,7 +31,7 @@ const LinkMobileMenu = ({ isAuthenticated, onLoginClick, trackNavigationClick })
     >
       {defaultMenuItems.faq.name}
     </Link>
-  </span >
+  </span>
 )
 
 LinkMobileMenu.propTypes = {

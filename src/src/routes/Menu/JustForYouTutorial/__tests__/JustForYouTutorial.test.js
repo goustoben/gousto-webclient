@@ -28,7 +28,7 @@ describe('JustForYouTutorial Component', () => {
   })
 
   it('should not render if showTutorial is false', () => {
-    wrapper = shallow(<JustForYouTutorial showTutorial={false} incrementTutorialViewed={incrementTutorialViewed}/>)
+    wrapper = shallow(<JustForYouTutorial showTutorial={false} incrementTutorialViewed={incrementTutorialViewed} />)
 
     expect(wrapper.find('Portal').length).toEqual(0)
   })
@@ -60,7 +60,7 @@ describe('JustForYouTutorial Component', () => {
 })
 
 describe('Check browser to show JFY', () => {
-  let getState 
+  let getState
   let wrapper
   it('should not render JFY if browser Edge', () => {
     getState = () => ({
@@ -79,7 +79,7 @@ describe('Check browser to show JFY', () => {
         userAgent: 'Edge'
       }
       )})
-  
+
     wrapper = shallow(
         <JustForYouTutorialComponent />, {
           context: {
@@ -110,7 +110,7 @@ describe('Check browser to show JFY', () => {
         userAgent: 'Trident'
       }
       )})
-  
+
     wrapper = shallow(
         <JustForYouTutorialComponent />, {
           context: {
@@ -141,7 +141,7 @@ describe('Check browser to show JFY', () => {
         userAgent: 'Chrome'
       }
       )})
-  
+
     wrapper = shallow(
         <JustForYouTutorialComponent />, {
           context: {
@@ -172,7 +172,7 @@ describe('Check browser to show JFY', () => {
         userAgent: 'Chrome'
       }
       )})
-  
+
     wrapper = shallow(
         <JustForYouTutorialComponent />, {
           context: {

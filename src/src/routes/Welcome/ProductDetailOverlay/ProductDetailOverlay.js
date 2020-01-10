@@ -5,7 +5,7 @@ import ProductDetail from 'containers/Product/Detail'
 
 const ProductDetailOverlay = ({ onVisibilityChange, open, productId }) => (
   <Overlay open={open} onClick={() => { onVisibilityChange() }}>
-    <ProductDetail productId={productId}/>
+    <ProductDetail productId={productId} />
   </Overlay>
 )
 

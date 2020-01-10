@@ -16,7 +16,7 @@ describe('MyDeliveries', () => {
 
   describe('fetchOrdersAndAddresses', () => {
     beforeEach(() => {
-      shallow(<MyDeliveries/>, { context })
+      shallow(<MyDeliveries />, { context })
     })
 
     afterEach(() => {
@@ -69,7 +69,7 @@ describe('MyDeliveries', () => {
     })
 
     test('should render the Loading component instead of OrderList one when fetching orders is pending', () => {
-      wrapper = shallow(<MyDeliveries isFetchingOrders/>,{ context })
+      wrapper = shallow(<MyDeliveries isFetchingOrders />,{ context })
       expect(wrapper.find('Connect(OrdersList)').length).toEqual(0)
       expect(wrapper.find('Loading').length).toEqual(1)
     })

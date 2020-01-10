@@ -14,7 +14,7 @@ describe('RAFOffer', () => {
 
   beforeEach(() => {
     wrapper = shallow(
-      <RAFOffer userFetchReferralOffer={userFetchReferralOffer}/>
+      <RAFOffer userFetchReferralOffer={userFetchReferralOffer} />
     )
   })
 
@@ -27,7 +27,7 @@ describe('RAFOffer', () => {
     it('should render 1 <YouGet> component', () => {
       expect(wrapper.find(YouGet))
     })
-    
+
     it('should render 1 <YourFriendGets> component', () => {
       expect(wrapper.find(YourFriendGets))
     })

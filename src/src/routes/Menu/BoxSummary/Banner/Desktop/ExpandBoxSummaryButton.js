@@ -24,7 +24,7 @@ const ExpandBoxSummaryButton = ({ showDetails, pricingPending, numPortions, numR
             />
           </div>
           <span className={css.iconDesktop} data-testing={'boxSummaryIcon'}>
-            <span className={showDetails ? css.arrowDown : css.arrowUp} ></span>
+            <span className={showDetails ? css.arrowDown : css.arrowUp}></span>
           </span>
         </Segment>
       </Button>

@@ -74,7 +74,7 @@ class OnScreenRecovery extends React.PureComponent {
         <Header offer={offer} type={type} />
         <div className={css.container}>
           <ModalTitle>
-            <Title title={title}/>
+            <Title title={title} />
           </ModalTitle>
           <ModalContent>
             <Offer offer={offer} type={type} />

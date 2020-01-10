@@ -116,7 +116,7 @@ class OrderDelivery extends React.PureComponent {
         <div className={`${css.header} ${css.bold}`}>Delivery details</div>
         {addressLoading ?
           <div className={css.spinnerContainer}>
-            <Loading className={css.spinner}/>
+            <Loading className={css.spinner} />
           </div>
           :
           <div className={css.deliveryDetailsWrapper}>

@@ -6,7 +6,7 @@ describe('rendering', () => {
   let wrapper
 
   beforeEach(() => {
-    wrapper = shallow(<UserRAFLink isModal={false} referralCode="12345" >children</UserRAFLink>)
+    wrapper = shallow(<UserRAFLink isModal={false} referralCode="12345">children</UserRAFLink>)
   })
 
   describe('UserRAFLink', () => {

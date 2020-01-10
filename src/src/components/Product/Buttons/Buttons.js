@@ -170,7 +170,7 @@ class Buttons extends React.PureComponent {
           onClick={this.handleRemove}
           className={cssSegmentController}
         >
-          <Control placement="left" >-</Control>
+          <Control placement="left">-</Control>
         </Segment>,
         <Segment
           fill={false}

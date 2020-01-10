@@ -6,7 +6,7 @@ import config from 'config/routes'
 import css from './JobCard.css'
 
 const JobCard = ({ jobLink, isOdd, jobTitle, jobDepartment }) => (
-  <Link to={jobLink} clientRouted={false} target="_blank" noDecoration >
+  <Link to={jobLink} clientRouted={false} target="_blank" noDecoration>
     <div className={classnames(css.card, isOdd ? css.isOdd : css.isEven)}>
       <div>
         <div className={css.cardTitle}>
@@ -14,7 +14,7 @@ const JobCard = ({ jobLink, isOdd, jobTitle, jobDepartment }) => (
           <h2 className={css.jobDepartment}>{jobDepartment}</h2>
         </div>
         <div className={css.cardCTA}>
-          <div to={jobLink} className={css.jobCTA} target="_blank" >
+          <div to={jobLink} className={css.jobCTA} target="_blank">
             Read more
           </div>
           <span className={css.chevronRight} aria-hidden="true"></span>

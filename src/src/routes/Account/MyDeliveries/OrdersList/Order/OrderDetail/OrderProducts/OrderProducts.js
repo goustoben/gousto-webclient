@@ -39,10 +39,10 @@ class OrderProducts extends React.PureComponent {
 
     return (
       <div className={css.mainContainer}>
-        {products.size === 0 ? (<img className={css.marketImageRight} src={marketPhotoSrc} alt="Gousto Market products"/>) : null}
+        {products.size === 0 ? (<img className={css.marketImageRight} src={marketPhotoSrc} alt="Gousto Market products" />) : null}
         <div>
           <div className={css.headerRow}>
-            <Content contentKeys="mydeliveries_OrderOrderproductsTitle" >
+            <Content contentKeys="mydeliveries_OrderOrderproductsTitle">
               <span className={css.header}>Gousto Market</span>
             </Content>
             {products.size > 0 ? (
@@ -54,7 +54,7 @@ class OrderProducts extends React.PureComponent {
           {products.size === 0 ? (
             <div className={css.marketPromoContainer}>
               <p className={css.marketPromoText}>Add desserts, drinks, snacks and more to your next box at no extra charge.</p>
-              <img className={css.marketImageFull} src={marketPhotoSrc} alt="Gousto Market products"/>
+              <img className={css.marketImageFull} src={marketPhotoSrc} alt="Gousto Market products" />
               <Link to={routes.client.orderConfirmation.replace(':orderId', orderId)}>
                 <Button color="secondary" width="full" noDecoration>
                   Go to Gousto Market

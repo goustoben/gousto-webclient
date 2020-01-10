@@ -39,7 +39,7 @@ const mobileAppStoreCTAs = (device, trackWelcomeAppPromoClick) => (
     })}
     href={config.routes.client.appsRedirect}
   >
-    <Button className={css.getAppCTA} noDecoration >Get the app now</Button>
+    <Button className={css.getAppCTA} noDecoration>Get the app now</Button>
   </a>
 )
 
@@ -61,7 +61,7 @@ const AppPromo = ({ device, trackWelcomeAppPromoClick }) => {
             {desktopAppStoreCTAs(device, trackWelcomeAppPromoClick)}
           </div>
         </div>
-      </div >
+      </div>
     </div>
   )
 }

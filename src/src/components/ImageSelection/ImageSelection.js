@@ -18,7 +18,7 @@ const ImageSelection = ({ content, onImageClick }) => (
         const handleImageClick = () => onImageClick(imageId)
 
         return (
-          <div key={imageId} className={css.colSmall} >
+          <div key={imageId} className={css.colSmall}>
             <button
               type="button"
               className={css.imageContainer}

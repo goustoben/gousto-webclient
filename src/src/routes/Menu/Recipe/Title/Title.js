@@ -28,7 +28,7 @@ const Title = ({ headlineFont, title, view, mouseEnter, mouseLeave, linkUnderlin
         onMouseLeave={mouseLeave}
       >
         {recipeTitle}
-        {shouldAddRecipeIcon && <span className={classNames(css.icon, css.largeIcon)}/>}
+        {shouldAddRecipeIcon && <span className={classNames(css.icon, css.largeIcon)} />}
       </h2>
     )
   }

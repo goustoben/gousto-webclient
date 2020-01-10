@@ -12,7 +12,7 @@ const OrderState = ({ orderState }) => {
 
   return (
     <div className={css.orderStateWrap}>
-      <span className={css[iconClass]} ></span>
+      <span className={css[iconClass]}></span>
       <p className={css[stateClass]}>{state}</p>
     </div>
   )

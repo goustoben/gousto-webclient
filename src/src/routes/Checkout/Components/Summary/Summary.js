@@ -51,7 +51,7 @@ class Summary extends React.PureComponent {
         onClick={() => { promoApplyCheckoutCode() }}
         onKeyDown={e => { onEnter(e,promoApplyCheckoutCode) }}
       >
-        Enter your discount code above, or click here to get 30% off all boxes in your first month&nbsp;<span className={css.arrowRight}/>
+        Enter your discount code above, or click here to get 30% off all boxes in your first month&nbsp;<span className={css.arrowRight} />
       </div>
       )
     }
@@ -87,7 +87,7 @@ class Summary extends React.PureComponent {
         {
           (isLoading) ?
             <div className={css.loaderContainer}>
-              <Loading className={css.loadingImage}/>
+              <Loading className={css.loadingImage} />
             </div>
             :
             <div className={css.details}>

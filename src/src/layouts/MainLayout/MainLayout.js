@@ -84,7 +84,7 @@ class MainLayout extends React.Component {
       <Div className={footerBaseClass} backgroundColor="Coconut">
         <Header />
         {children}
-        <Div className={classNames({ [css.pullUp]: route.withRecipeBar })} >
+        <Div className={classNames({ [css.pullUp]: route.withRecipeBar })}>
           <Footer type={route.footerType} />
         </Div>
       </Div>

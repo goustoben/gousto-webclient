@@ -8,7 +8,7 @@ const SubHeader = ({ nameFirst, message, contentKeys }) => (
     contentKeys={contentKeys}
     propNames="title"
   >
-    <SectionHeader title={`Thanks ${nameFirst},`} contentSizeMax="LG" >
+    <SectionHeader title={`Thanks ${nameFirst},`} contentSizeMax="LG">
       <p>{message}</p>
     </SectionHeader>
   </Content>

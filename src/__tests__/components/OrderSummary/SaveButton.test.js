@@ -70,7 +70,7 @@ describe('SaveButton', () => {
     expect(wrapper.find('div').at(1).text()).toEqual('ERROR SAVING CHOICES')
   })
   test('should add updateOrderButton class to the wrapper when onOrderConfirmationMobile is true', () => {
-    const wrapper = shallow(<SaveButton onOrderConfirmationMobile/>)
+    const wrapper = shallow(<SaveButton onOrderConfirmationMobile />)
     expect(wrapper.find('.updateOrderButton').length).toEqual(1)
     wrapper.setProps({ onOrderConfirmationMobile: false })
     expect(wrapper.find('.updateOrderButton').length).toEqual(0)

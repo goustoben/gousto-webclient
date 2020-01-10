@@ -29,7 +29,7 @@ describe('Address', () => {
 
   beforeEach(() => {
     const selectedAddresses = Immutable.Map({})
-    wrapper = shallow(< Address
+    wrapper = shallow(<Address
       selectedAddress={selectedAddresses}
       registerField={jest.fn()}
       isNDDExperiment={false}
@@ -47,7 +47,7 @@ describe('Address', () => {
   describe('rendering', () => {
     beforeEach(() => {
       const selectedAddresses = Immutable.Map({})
-      wrapper = shallow(< Address
+      wrapper = shallow(<Address
         selectedAddress={selectedAddresses}
         registerField={jest.fn()}
         isNDDExperiment={false}
@@ -72,7 +72,7 @@ describe('Address', () => {
 
     beforeEach(() => {
       const selectedAddresses = Immutable.Map({})
-      wrapper = shallow(< Address
+      wrapper = shallow(<Address
         selectedAddress={selectedAddresses}
         registerField={jest.fn()}
         checkoutAddressLookup={jest.fn()}

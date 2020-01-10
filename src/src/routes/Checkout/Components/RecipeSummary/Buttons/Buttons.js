@@ -48,7 +48,7 @@ class Buttons extends React.Component {
         className={css.segmentSmall}
         fill={false}
       >
-        <Control placement="left" >-</Control>
+        <Control placement="left">-</Control>
       </Segment>
     </Tooltip>,
     segment,

@@ -14,7 +14,7 @@ const NoOrders = ({ recipes, boxType }) => (
     <div className={css.orderWrap}>
       <div className={classnames(css.order, css.noShadow)}>
         <p className={css.messageCopy}>
-          <Content contentKeys="myDeliveriesNoOrdersBaseMessage" >
+          <Content contentKeys="myDeliveriesNoOrdersBaseMessage">
             <span>You have no upcoming deliveries</span>
           </Content>
         </p>
@@ -24,7 +24,7 @@ const NoOrders = ({ recipes, boxType }) => (
       <div className={css.order}>
         <div>
           <p className={css.twrCopy}>
-            <Content contentKeys="myDeliveriesNoOrdersBaseCopy" >
+            <Content contentKeys="myDeliveriesNoOrdersBaseCopy">
               <span>Check out a selection of this week's menu</span>
             </Content>
           </p>

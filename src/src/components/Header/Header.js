@@ -344,7 +344,7 @@ class Header extends React.PureComponent {
       <div>
         <CookieBanner />
         <AppBanner />
-        {shouldShowAbandonBasketModal ? < AbandonBasketModal /> : null}
+        {shouldShowAbandonBasketModal ? <AbandonBasketModal /> : null}
         <span id={serverError ? 'mobileMenu' : null} data-testing="header">
           <button
             type="button"

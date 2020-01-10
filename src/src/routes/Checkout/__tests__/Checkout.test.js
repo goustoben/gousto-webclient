@@ -130,7 +130,7 @@ describe('Checkout', () => {
 
   describe('rendering', () => {
     beforeEach(() => {
-      wrapper = shallow(<Checkout trackSignupStep={jest.fn()}/>,
+      wrapper = shallow(<Checkout trackSignupStep={jest.fn()} />,
         { context })
     })
 
@@ -341,7 +341,7 @@ describe('Checkout', () => {
     beforeEach(() => {
       fetchData = Checkout.fetchData = jest.fn().mockReturnValue(Promise.resolve())
       wrapper = mount(
-        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature={false}/>,
+        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature={false} />,
         { context },
       )
       wrapper.instance().componentDidMount()
@@ -358,7 +358,7 @@ describe('Checkout', () => {
 
     test('should call QueueIt.validateUser if queueIt feature flag is set to true', () => {
       wrapper = mount(
-        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature/>,
+        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature />,
         { context },
       )
 
@@ -369,7 +369,7 @@ describe('Checkout', () => {
 
     test('should not call QueueIt.validateUser if queueIt feature flag is set to false', () => {
       wrapper = mount(
-        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature={false}/>,
+        <Checkout query={{ query: true }} params={{ params: true }} trackSignupStep={jest.fn()} queueItFeature={false} />,
         { context },
       )
 

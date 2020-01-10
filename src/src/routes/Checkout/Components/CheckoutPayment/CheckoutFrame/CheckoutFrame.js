@@ -168,7 +168,7 @@ class CheckoutFrame extends React.Component {
 
   render() {
     return (
-      <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form" >
+      <form ref={this.setPaymentFormRef} id="payment-form" name="payment-form">
         <div className={css.framesContainer} />
       </form>
     )
