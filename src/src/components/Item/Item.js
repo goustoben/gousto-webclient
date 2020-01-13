@@ -45,7 +45,7 @@ const Item = ({
       {quantityMessage(gift, quantity, disclaimerKey, type)}
       {gift && <p className={css.freeGift}>Free Gift!</p>}
       {url && (
-<p className={css.url}>
+        <p className={css.url}>
           <a className={css.view} href={url}>
             View {capitalizeFirstLetter(type)} <i className="fa fa-chevron-right" aria-hidden="true"></i>
           </a>

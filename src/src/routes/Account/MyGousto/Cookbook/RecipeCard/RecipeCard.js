@@ -38,9 +38,9 @@ const RecipeCard = ({ link, images, title }) => (
           lazy
         />
         {title && (
-<p className={css.title}>
+          <p className={css.title}>
             {title}&nbsp;
-          <span className={css.arrowRight} />
+            <span className={css.arrowRight} />
           </p>
         )}
       </div>

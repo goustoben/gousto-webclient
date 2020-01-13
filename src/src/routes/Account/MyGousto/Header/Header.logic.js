@@ -115,14 +115,14 @@ class Header extends PureComponent {
 
     return (
       loaded ? (
-<HeaderPresentation
-  nextOrderMessage={nextOrderMessage}
-  nextOrderId={nextOrder ? nextOrder.get('id') : null}
-  nextOrderTracking={nextOrderTracking}
-  previousOrderMessage={previousOrderMessage}
-  getHelpQueryParam={getHelpQueryParam}
-  trackNextBoxTrackingClick={trackNextBoxTrackingClick}
-/>
+        <HeaderPresentation
+          nextOrderMessage={nextOrderMessage}
+          nextOrderId={nextOrder ? nextOrder.get('id') : null}
+          nextOrderTracking={nextOrderTracking}
+          previousOrderMessage={previousOrderMessage}
+          getHelpQueryParam={getHelpQueryParam}
+          trackNextBoxTrackingClick={trackNextBoxTrackingClick}
+        />
       ): null
     )
   }

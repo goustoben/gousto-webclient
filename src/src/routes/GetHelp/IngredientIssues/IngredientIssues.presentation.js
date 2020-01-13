@@ -56,13 +56,13 @@ const renderIngredientsIssues = (ingredients, issues, subIssues, changeHandler) 
       <div key={ingredientAndRecipeId}>
         <p className={css.ingredientLabel}>{ingredientLabel}</p>
         {optionSelected && (
-<Dropdown
-  id={ingredientAndRecipeId}
-  options={issues}
-  groupedOptions={subIssues}
-  optionSelected={optionSelected}
-  onChange={(issueId) => changeHandler(ingredientAndRecipeId, issueId)}
-/>
+          <Dropdown
+            id={ingredientAndRecipeId}
+            options={issues}
+            groupedOptions={subIssues}
+            optionSelected={optionSelected}
+            onChange={(issueId) => changeHandler(ingredientAndRecipeId, issueId)}
+          />
         )}
       </div>
     )

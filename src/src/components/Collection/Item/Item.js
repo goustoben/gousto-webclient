@@ -33,14 +33,14 @@ const CollectionItem = ({ link, media, title }) => {
   )
 
   return link ? (
-<Link
-  noDecoration
-  to={link}
->
+    <Link
+      noDecoration
+      to={link}
+    >
       {CollectionContent}
     </Link>
   ): (
-<Div>
+    <Div>
       {CollectionContent}
     </Div>
   )}

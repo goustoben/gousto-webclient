@@ -112,10 +112,10 @@ class OrderDeliveryAddress extends React.PureComponent {
           <p>{formattedShippingAddress}</p>
         </div>
         {editAddressOpen && (
-<div>
+          <div>
             {this.renderedAddresses()}
             <Link className={css.newAddressLink} to={client.myDetails} clientRouted={false}>
-              Add new address to your account&nbsp;
+                Add new address to your account&nbsp;
               <span className={css.arrowRight} />
             </Link>
             <Button
@@ -126,13 +126,13 @@ class OrderDeliveryAddress extends React.PureComponent {
               pending={isPendingUpdateAddress}
               disabled={submitDisabled}
             >
-              Set Address
+                Set Address
             </Button>
           </div>
         )}
         {hasError && (
-<Alert type="danger">
-            There was a problem updating your order address. Please contact customer care.
+          <Alert type="danger">
+              There was a problem updating your order address. Please contact customer care.
           </Alert>
         )}
       </div>

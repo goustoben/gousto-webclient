@@ -81,7 +81,7 @@ class ResetPassword extends React.PureComponent {
             onEnter={() => this.validateAndSubmit(passwordValue)}
           />
           {isPasswordLengthError ? (
-<InputError>
+            <InputError>
               <Content contentKeys="newPasswordForm.resetPassword.resetPassword.lengthError">
                 <span>Password must be at least 8 characters</span>
               </Content>

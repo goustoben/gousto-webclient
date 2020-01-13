@@ -36,7 +36,7 @@ class CancelOrderModalContent extends React.PureComponent {
           Just double-checking – if you click yes, we can’t restore this delivery. Please confirm your choice:
         </div>
         {didCancelOrderError ? (
-<Alert type="danger">
+          <Alert type="danger">
             Whoops, there was a problem cancelling this order, please try again.
           </Alert>
         ): null}

@@ -28,9 +28,9 @@ describe('ModalContent', () => {
 
   test('ModalContent render childred', () => {
     wrapper = shallow(
-            <ModalContent>
-                <p>Child</p>
-            </ModalContent>
+      <ModalContent>
+        <p>Child</p>
+      </ModalContent>
     )
 
     const firstChildWrapper = wrapper.children()

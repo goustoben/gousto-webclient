@@ -18,7 +18,7 @@ const ReceiptExtras = ({ items, vatableDisclaimerKey }) => {
     <div>
       {items.size ? <ReceiptLine label="Extras" /> : null}
       {items.map((item, key) => (
-<ReceiptLine key={key} label={getLabel(item)} style="truncateLabel">
+        <ReceiptLine key={key} label={getLabel(item)} style="truncateLabel">
           {getCost(item)}
         </ReceiptLine>
       ))}

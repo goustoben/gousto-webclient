@@ -47,17 +47,17 @@ class SubHeader extends React.PureComponent {
 
     return (
       showNotificaiton && (
-<InfoToggle>
-        <div className={css.infoBanner}>
-          {info.title}&nbsp;<span className={css.infoIcon} />
-        </div>
-        <div className={css.infoBannerMessage}>
-          {info.line1}
-          <ul className={info.line2.length < 2 ? css.noBullet : ''}>
-            {Object.keys(info.line2).map((line, i) => <li key={i}>{info.line2[line]}</li>)}
-          </ul>
-        </div>
-      </InfoToggle>
+        <InfoToggle>
+          <div className={css.infoBanner}>
+            {info.title}&nbsp;<span className={css.infoIcon} />
+          </div>
+          <div className={css.infoBannerMessage}>
+            {info.line1}
+            <ul className={info.line2.length < 2 ? css.noBullet : ''}>
+              {Object.keys(info.line2).map((line, i) => <li key={i}>{info.line2[line]}</li>)}
+            </ul>
+          </div>
+        </InfoToggle>
       ))
   }
 

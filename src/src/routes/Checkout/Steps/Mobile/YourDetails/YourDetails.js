@@ -55,10 +55,10 @@ const YourDetailsStep = ({ submit, userProspect, nextStepName, formValues, check
         </Section>
       </SectionContainer>
       {isAddressConfirmed && (
-<CheckoutButton
-  onClick={handleSubmit}
-  stepName={`Next: ${nextStepName}`}
-/>
+        <CheckoutButton
+          onClick={handleSubmit}
+          stepName={`Next: ${nextStepName}`}
+        />
       )}
     </div>
   )

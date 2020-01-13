@@ -6,10 +6,10 @@ import configRoutes from 'config/routes'
 import { IngredientsContainer } from './IngredientsContainer'
 
 const Ingredients = (
-<Route
-  path={configRoutes.client.getHelp.ingredients}
-  component={IngredientsContainer}
-/>
+  <Route
+    path={configRoutes.client.getHelp.ingredients}
+    component={IngredientsContainer}
+  />
 )
 
 export {

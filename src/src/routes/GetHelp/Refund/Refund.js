@@ -153,11 +153,11 @@ class Refund extends PureComponent {
     const acceptButton = (didFetchError)
       ? null
       : (
-<Button
-  className={css.button}
-  color="primary"
-  onClick={() => this.onAcceptOffer()}
->
+        <Button
+          className={css.button}
+          color="primary"
+          onClick={() => this.onAcceptOffer()}
+        >
           {button2WithAmount}
         </Button>
       )
@@ -169,24 +169,24 @@ class Refund extends PureComponent {
       >
         {(isFetching)
           ? (
-<div className={css.center}>
+            <div className={css.center}>
               <Loading className={css.loading} />
             </div>
           )
           : (
-<div>
-            <p className={css.confirmationBody}>{getHelpLayoutbody}</p>
-            <p className={css.confirmationQuestion}>{confirmationContent}</p>
-            <BottomBar>
-              <BottomButton
-                color="secondary"
-                url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
-                clientRouted
-              >
-                {content.button1}
-              </BottomButton>
-              {acceptButton}
-            </BottomBar>
+            <div>
+              <p className={css.confirmationBody}>{getHelpLayoutbody}</p>
+              <p className={css.confirmationQuestion}>{confirmationContent}</p>
+              <BottomBar>
+                <BottomButton
+                  color="secondary"
+                  url={`${routes.getHelp.index}/${routes.getHelp.contact}`}
+                  clientRouted
+                >
+                  {content.button1}
+                </BottomButton>
+                {acceptButton}
+              </BottomBar>
             </div>
           )
         }

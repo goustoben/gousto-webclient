@@ -7,7 +7,7 @@ const UnavailableMessage = ({ unavailableRecipeList, menuFetchPending, orderSave
   const plural = unavailableRecipeList.size > 1
 
   return (unavailableRecipeList.size > 0 && !menuFetchPending) ? (
-<span className={css.notAvailableText}>
+    <span className={css.notAvailableText}>
       <span className={css.warningIcon}></span>
       The following {plural ? 'recipes are' : 'recipe is'} no longer available. Please choose {plural ? 'different recipes' : 'another recipe'}, or&nbsp;
       {

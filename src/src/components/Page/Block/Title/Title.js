@@ -5,7 +5,7 @@ import Icon from 'Icon'
 
 const Title = ({ children, iconAfter, iconBefore, headlineFont }) => (
   children ? (
-<H1 defaults="LG" headlineFont={headlineFont}>
+    <H1 defaults="LG" headlineFont={headlineFont}>
       {iconBefore && [
         <Icon
           key={0}

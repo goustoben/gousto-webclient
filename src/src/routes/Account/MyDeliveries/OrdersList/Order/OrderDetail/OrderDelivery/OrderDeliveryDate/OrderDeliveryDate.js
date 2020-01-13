@@ -41,39 +41,39 @@ const OrderDeliveryDate = ({
   availableFrom,
   availableTo
 }) => (
-    <div>
-      <div className={css.header}>
-        <div className={css.details}>
-          <p className={`${css.bold} ${css.subHeader}`}>
+  <div>
+    <div className={css.header}>
+      <div className={css.details}>
+        <p className={`${css.bold} ${css.subHeader}`}>
             Date and time
-          </p>
-          <p className={`${css.bold} ${css.dateTime}`}>
-            {date}
-          </p>
-          <p className={css.dateTime}>
-            {timeStart} - {timeEnd}
-          </p>
-        </div>
-        {['recipes chosen', 'menu open'].indexOf(orderState) > -1 ? (
-<div className={css.button}>
-            <LinkButton onClick={onClickFunction} text={editDeliveryMode ? 'Cancel' : 'Change'} />
-          </div>
-        ): null}
+        </p>
+        <p className={`${css.bold} ${css.dateTime}`}>
+          {date}
+        </p>
+        <p className={css.dateTime}>
+          {timeStart} - {timeEnd}
+        </p>
       </div>
-      {editDeliveryMode && fetchSuccess && (
-<EditDate
-  editDeliveryMode={editDeliveryMode}
-  orderId={orderId}
-  availableFrom={availableFrom}
-  availableTo={availableTo}
-/>
-      )}
-      {hasError && (
-<Alert type="danger">
-          { errorText }
-        </Alert>
-      )}
+      {['recipes chosen', 'menu open'].indexOf(orderState) > -1 ? (
+        <div className={css.button}>
+          <LinkButton onClick={onClickFunction} text={editDeliveryMode ? 'Cancel' : 'Change'} />
+        </div>
+      ): null}
     </div>
+    {editDeliveryMode && fetchSuccess && (
+      <EditDate
+        editDeliveryMode={editDeliveryMode}
+        orderId={orderId}
+        availableFrom={availableFrom}
+        availableTo={availableTo}
+      />
+    )}
+    {hasError && (
+      <Alert type="danger">
+        { errorText }
+      </Alert>
+    )}
+  </div>
 )
 
 OrderDeliveryDate.propTypes = propTypes

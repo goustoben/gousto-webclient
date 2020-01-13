@@ -137,10 +137,10 @@ class Order extends React.PureComponent {
               <div className={css.orderColLeft}>
                 <div className={css.orderSummaryContainer}>
                   {originalDeliveryDay !== null ? (
-<OrderRescheduledNotification
-  oldDeliveryDay={originalDeliveryDay}
-  reason={deliveryDayRescheduledReason}
-/>
+                    <OrderRescheduledNotification
+                      oldDeliveryDay={originalDeliveryDay}
+                      reason={deliveryDayRescheduledReason}
+                    />
                   ): null}
                   <OrderDate
                     date={humanDeliveryDay}
@@ -153,31 +153,31 @@ class Order extends React.PureComponent {
                     orderState={orderState}
                   />
                   {restorable ? (
-<OrderRestoreButton
-  userId={userId}
-  orderId={orderId}
-  deliveryDayId={deliveryDayId}
-/>
+                    <OrderRestoreButton
+                      userId={userId}
+                      orderId={orderId}
+                      deliveryDayId={deliveryDayId}
+                    />
                   ): (
-<OrderStatus
-  orderState={orderState}
-  whenCutoff={humanTimeFormat(orderShouldCutoffAt, 'timeLeft')}
-  whenMenuOpen={humanTimeFormat(orderWhenMenuOpen, 'hourAndDay')}
-/>
+                    <OrderStatus
+                      orderState={orderState}
+                      whenCutoff={humanTimeFormat(orderShouldCutoffAt, 'timeLeft')}
+                      whenMenuOpen={humanTimeFormat(orderWhenMenuOpen, 'hourAndDay')}
+                    />
                   )}
                   <div>
                     {recipes.size > 0 && ['cancelled', 'scheduled'].indexOf(orderState) < 0 ? (
-<OrderItemSummary
-  recipes={recipes}
-  numberOfProducts={products.get('total')}
-/>
+                      <OrderItemSummary
+                        recipes={recipes}
+                        numberOfProducts={products.get('total')}
+                      />
                     ): null}
                   </div>
                 </div>
               </div>
 
               {orderState !== 'cancelled' ? (
-<div className={css.orderColRight}>
+                <div className={css.orderColRight}>
                   <OrderPricing
                     pricing={priceBreakdown}
                     orderState={orderState}
@@ -194,7 +194,7 @@ class Order extends React.PureComponent {
             </div>
           </span>
           {!collapsed ? (
-<div className={classNames(css.orderRow, css.orderDetail)}>
+            <div className={classNames(css.orderRow, css.orderDetail)}>
               <OrderDetail
                 open={!collapsed}
                 orderId={orderId}

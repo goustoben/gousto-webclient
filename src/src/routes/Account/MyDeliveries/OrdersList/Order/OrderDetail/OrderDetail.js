@@ -59,7 +59,7 @@ class OrderDetail extends React.PureComponent {
     return (
       <div className={css.orderDetail}>
         {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
-<section className={css.openCardSection}>
+          <section className={css.openCardSection}>
             <OrderRecipes
               recipes={this.props.recipes}
               orderId={this.props.orderId}
@@ -70,7 +70,7 @@ class OrderDetail extends React.PureComponent {
           </section>
         ): null}
         {this.props.orderState === 'recipes chosen' ? (
-<section className={css.openCardSection}>
+          <section className={css.openCardSection}>
             <OrderProducts
               orderId={this.props.orderId}
               products={this.props.products}
@@ -78,7 +78,7 @@ class OrderDetail extends React.PureComponent {
           </section>
         ): null}
         {['recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
-<section className={css.openCardSection}>
+          <section className={css.openCardSection}>
             <OrderPricingDetail
               paymentDate={this.props.paymentDate}
               numberOfRecipes={this.props.recipes.size}
@@ -87,7 +87,7 @@ class OrderDetail extends React.PureComponent {
           </section>
         ): null}
         {['menu open', 'recipes chosen', 'confirmed', 'dispatched'].indexOf(this.props.orderState) > -1 ? (
-<section className={css.openCardSection}>
+          <section className={css.openCardSection}>
             <OrderDelivery
               date={this.props.deliveryDate}
               timeStart={this.props.deliveryTimeStart}
@@ -102,7 +102,7 @@ class OrderDetail extends React.PureComponent {
           </section>
         ): null}
         {this.props.cancellable && this.props.orderState !== 'cancelled' ? (
-<section className={css.openCardSection}>
+          <section className={css.openCardSection}>
             <OrderCancelButton
               orderId={this.props.orderId}
               deliveryDayId={this.props.deliveryDayId}

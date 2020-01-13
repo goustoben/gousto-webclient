@@ -19,7 +19,7 @@ const PendingOrderReminder = ({ pendingOrders = Immutable.Map({}), committedOrde
             date: moment(order.deliveryDate).format('dddd, Do MMMM'),
           }))
           .map(({ date }, i) => (
-          <p key={i}>It is too late to cancel your box arriving on {date}. This will be delivered as normal.</p>
+            <p key={i}>It is too late to cancel your box arriving on {date}. This will be delivered as normal.</p>
           ))
       }
       {pendingOrders.size > 0 && <p>You have already chosen recipes for {(pendingOrders.size > 1) ? 'these boxes' : 'this box'}:</p>}
@@ -42,7 +42,7 @@ const PendingOrderReminder = ({ pendingOrders = Immutable.Map({}), committedOrde
       {pendingOrders.size > 0 && <p>Do you wish to keep {pendingOrders.size > 1 ? 'these orders' : 'this order'}?</p>}
     </div>
     {pendingOrders.size > 0 ? (
-<div className={css.bottom}>
+      <div className={css.bottom}>
         <CallToAction
           fill={false}
           width="auto"
@@ -58,7 +58,7 @@ const PendingOrderReminder = ({ pendingOrders = Immutable.Map({}), committedOrde
         />
       </div>
     ): (
-<div>
+      <div>
         <CallToAction type="Dismiss" />
       </div>
     )}

@@ -10,7 +10,7 @@ const OrderCollage = ({ recipes, orderState }) => {
   const maxRecipes = ['confirmed', 'dispatched'].indexOf(orderState) > -1 ? recipes.size : 4
   const blankCards = []
   const recipeCollage = recipes.map((recipe) => (
-<div className={css.collageItem} key={recipe.get('id')}>
+    <div className={css.collageItem} key={recipe.get('id')}>
       <Image className={css.collageImage} media={recipe.get('image') || placeholderSrc} />
     </div>
   ))

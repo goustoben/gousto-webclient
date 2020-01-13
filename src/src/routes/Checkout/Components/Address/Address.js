@@ -299,10 +299,10 @@ class Address extends React.PureComponent {
     return (
       <div>
         {this.props.isDelivery && (
-<DeliveryInfo
-  deliveryDate={deliveryDate}
-  cutOffDate={cutOffDate}
-/>
+          <DeliveryInfo
+            deliveryDate={deliveryDate}
+            cutOffDate={cutOffDate}
+          />
         )}
         <Postcode
           postcodePending={this.props.addressesPending}
@@ -320,13 +320,13 @@ class Address extends React.PureComponent {
         {isAddressSelected && this.renderAddressInputs()}
         <br />
         {this.props.isDelivery && (
-<Button
-  data-testing="checkoutSelectAddressCTA"
-  disabled={false}
-  onClick={this.handleAddressConfirm}
-  pending={this.props.addressesPending}
-  width="full"
->
+          <Button
+            data-testing="checkoutSelectAddressCTA"
+            disabled={false}
+            onClick={this.handleAddressConfirm}
+            pending={this.props.addressesPending}
+            width="full"
+          >
             Use This Address
           </Button>
         )}

@@ -111,7 +111,7 @@ class Hubs extends React.PureComponent {
             fullBleedMobile
           />
           {endSet < totalSets && (
-<Div margin={{ top: 'XXL', bottom: 'XXL' }}>
+            <Div margin={{ top: 'XXL', bottom: 'XXL' }}>
               <LoadMoreLink onClick={loadNextSet} />
             </Div>
           )}

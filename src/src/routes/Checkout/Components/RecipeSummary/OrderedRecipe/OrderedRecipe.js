@@ -18,14 +18,14 @@ const OrderedRecipes = ({ title, recipeId, stock, media, basics, serving, featur
         {(range === 'fine-dine-in') ? <span className={css.detailsRow}><span className={css.fineDineIn}>Fine Dine In</span></span> : null}
         {(basics.size > 0 && view === 'boxdetails') ? <p className={css.details}><span className={css.basics}>You'll need: {basics.toJS().join(', ')}</span></p> : null}
         {(featureBtn) ? (
-<Button
-  view="checkout"
-  recipeId={recipeId}
-  outOfstock={stock <= config.stockThreshold && stock !== null}
-  stock={stock}
-  disabled={false}
-  showControl
-/>
+          <Button
+            view="checkout"
+            recipeId={recipeId}
+            outOfstock={stock <= config.stockThreshold && stock !== null}
+            stock={stock}
+            disabled={false}
+            showControl
+          />
         ):
           <span className={css.textSM}>{`${serving} Servings`}</span>
         }

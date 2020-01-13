@@ -63,7 +63,7 @@ class OrderProducts extends React.PureComponent {
           ) : (
             <div>
               {products.map(product => (
-<div key={product.get('id')} className={css.productContainer}>
+                <div key={product.get('id')} className={css.productContainer}>
                   <div className={css.productImage}>
                     <ProductImage src={product.get('image') || placeholderSrc} alt={product.get('title')} />
                   </div>

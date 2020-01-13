@@ -39,31 +39,31 @@ const Postcode = ({ postcodePending, onPostcodeLookup, postcodeTemp, addresses, 
       </div>
     </div>
     {(addresses.length > 0 && showDropdown) ? (
-<div>
-      <br />
-      <div className="deliveryDropdown" data-testing="checkoutAddressDropdown">
-        <Field
-          name="addressId"
-          component={ReduxFormInput}
-          options={
-            addresses.map(address => ({
-              value: address.id,
-              label: [...address.labels].reverse().join(', '),
-            }))
-          }
-          onChange={(event, addressId) => {
-            isMobile && trackClick('DeliveryAddress Selected')
-            onSelectedAddressChange(event, addressId)
-          }}
-          inputType="DropDown"
-          label="Select your address"
-          color="secondary"
-          mask
-          withRef
-          ref={receiveRef}
-        />
+      <div>
+        <br />
+        <div className="deliveryDropdown" data-testing="checkoutAddressDropdown">
+          <Field
+            name="addressId"
+            component={ReduxFormInput}
+            options={
+              addresses.map(address => ({
+                value: address.id,
+                label: [...address.labels].reverse().join(', '),
+              }))
+            }
+            onChange={(event, addressId) => {
+              isMobile && trackClick('DeliveryAddress Selected')
+              onSelectedAddressChange(event, addressId)
+            }}
+            inputType="DropDown"
+            label="Select your address"
+            color="secondary"
+            mask
+            withRef
+            ref={receiveRef}
+          />
+        </div>
       </div>
-                                              </div>
     ) : null}
   </div>
 )

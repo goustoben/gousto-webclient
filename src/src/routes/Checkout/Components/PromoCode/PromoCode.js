@@ -200,7 +200,7 @@ class PromoCode extends React.PureComponent {
           </div>
         </div>
         {(this.promoCodeAdded()) && (
-<div>
+          <div>
             {this.renderMessage()}
           </div>
         )}

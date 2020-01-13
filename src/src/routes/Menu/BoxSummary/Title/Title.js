@@ -58,11 +58,11 @@ class Title extends React.PureComponent {
                 </span>
               </div>
             ) : (
-<Price
-  recipeTotal={recipeTotal}
-  recipeDiscount={recipeDiscount}
-  recipeTotalDiscounted={recipeTotalDiscounted}
-/>
+              <Price
+                recipeTotal={recipeTotal}
+                recipeDiscount={recipeDiscount}
+                recipeTotalDiscounted={recipeTotalDiscounted}
+              />
             )
           }
         </div>

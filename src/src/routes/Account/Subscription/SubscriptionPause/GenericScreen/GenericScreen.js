@@ -15,31 +15,31 @@ export function renderContent(contents = []) {
     switch (type) {
     case 'copy': {
       component = (content.copy && (
-<ReactMarkdown
-  source={DOMPurify.sanitize(content.copy)}
-  className={css.copy}
-/>
+        <ReactMarkdown
+          source={DOMPurify.sanitize(content.copy)}
+          className={css.copy}
+        />
       ))
       break
     }
     case 'image': {
       component = (
-          <Image {...content.image} />
+        <Image {...content.image} />
       )
       break
     }
     case 'textarea': {
       component = (
-          <TextArea {...content} />
+        <TextArea {...content} />
       )
       break
     }
     case 'quote': {
       component = (
-          <div className={css.quoteBlock}>
-            <p className={css.quote}>{content.quote}</p>
-            <p className={css.quote}>-{content.quoteAuthor}</p>
-          </div>
+        <div className={css.quoteBlock}>
+          <p className={css.quote}>{content.quote}</p>
+          <p className={css.quote}>-{content.quoteAuthor}</p>
+        </div>
       )
       break
     }
@@ -48,14 +48,13 @@ export function renderContent(contents = []) {
     }
 
     return component ? (
-<div
-  className={css.contentItem}
-  key={key}
->
+      <div
+        className={css.contentItem}
+        key={key}
+      >
         {component}
       </div>
-    ):
-      null
+    ): null
   })
 }
 
@@ -79,7 +78,7 @@ const SubscriptionPauseGenericScreen = ({ actions = [], allowCancel, content = [
     </div>
 
     {allowCancel && (
-<div className={css.footer}>
+      <div className={css.footer}>
         <CallToAction type="CancelLink" />
       </div>
     )}

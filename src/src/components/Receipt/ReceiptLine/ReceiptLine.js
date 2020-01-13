@@ -5,11 +5,11 @@ import css from './ReceiptLine.css'
 
 const ReceiptLine = ({ label, children, style, showLineAbove }) => (
   <div>
-  {
-    showLineAbove
-      ? <div className={css.horizontalLineAbove}></div>
-      : null
-  }
+    {
+      showLineAbove
+        ? <div className={css.horizontalLineAbove}></div>
+        : null
+    }
     <p
       className={classnames(css.receiptLine,
         { [css.small]: style === 'small' },

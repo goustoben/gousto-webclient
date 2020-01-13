@@ -39,7 +39,7 @@ class OrderRestoreButton extends React.PureComponent {
     return (
       <div>
         {projectedOrderRestoreError ? (
-<Alert type="danger">
+          <Alert type="danger">
             <Content contentKeys="mydeliveriesOrderOrderrestorebuttonRestoreprojectederror">
               <span>Whoops, there was a problem restoring this order, please try again.</span>
             </Content>

@@ -12,10 +12,10 @@ const getLink = slug => `${routeConfig.client.cookbook}/${slug}`
 const CollectionList = ({ collections, colSizes, ...restProps }) => (
   <Row {...restProps}>
     {collections.map(collection => (
-<Col
-  key={collection.get('id')}
-  {...getColSizes(colSizes)}
->
+      <Col
+        key={collection.get('id')}
+        {...getColSizes(colSizes)}
+      >
         <CollectionItem
           link={getLink(collection.get('slug'))}
           media={collection.getIn(['media', 'images', 'urls'])}

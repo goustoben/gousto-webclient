@@ -35,14 +35,14 @@ class DeliveryAddressType extends React.PureComponent {
 
   render() {
     const inputSuffix = (
-<div className={css.checkoutTooltip}>
-      <CheckoutTooltip version="Desktop">
-        {configCheckout.tooltip.addressType}
-      </CheckoutTooltip>
-      <CheckoutTooltip version="Mobile" placement="top">
-        {configCheckout.tooltip.addressType}
-      </CheckoutTooltip>
-                         </div>
+      <div className={css.checkoutTooltip}>
+        <CheckoutTooltip version="Desktop">
+          {configCheckout.tooltip.addressType}
+        </CheckoutTooltip>
+        <CheckoutTooltip version="Mobile" placement="top">
+          {configCheckout.tooltip.addressType}
+        </CheckoutTooltip>
+      </div>
     )
 
     const showOtherInput = this.shouldShowOtherInput(this.props.value)
@@ -67,7 +67,7 @@ class DeliveryAddressType extends React.PureComponent {
           </div>
         </div>
         {showOtherInput && (
-<div className={classnames(css.row, css.deliveryField)}>
+          <div className={classnames(css.row, css.deliveryField)}>
             <div className={css.colMD}>
               <Field
                 name="customAddressType"

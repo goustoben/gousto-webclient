@@ -46,15 +46,16 @@ const ReferAFriendPresentation = ({isEmailSent, handleSubmit, handleEmailChange,
             </Form>
           </div>
         ) : (
-            <div>
-              <p className={css.emailSentNotification}>An invitation has been sent to your friend!</p>
-              <Button
-                onClick={showEmailReferralForm}
-                className={css.button}
-              >
+          <div>
+            <p className={css.emailSentNotification}>An invitation has been sent to your friend!</p>
+            <Button
+              onClick={showEmailReferralForm}
+              className={css.button}
+            >
                 Invite another friend
-              </Button>
-            </div>)
+            </Button>
+          </div>
+        )
       }
     </div>
   )

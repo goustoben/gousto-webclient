@@ -15,7 +15,7 @@ const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, 
     <h3 className={css.subHeader}>And the reviews are pouring in:</h3>
     <TestimonialCarousel showLink={showLink} />
     {enableStorystream && (
-<section className={css.storystreamContainer}>
+      <section className={css.storystreamContainer}>
         <Storystream {...props} />
       </section>
     )}

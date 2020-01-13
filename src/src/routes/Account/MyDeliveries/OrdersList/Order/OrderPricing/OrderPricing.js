@@ -12,13 +12,12 @@ const OrderPricing = ({ pricing, orderState }) => {
   return (
     <div className={css.pricingContainer}>
       {['recipes chosen', 'confirmed', 'dispatched', 'cancelled'].indexOf(orderState) > -1 ? (
-<div>
-          {
-            netOrderPrice < grossOrderPrice && (
-<div className={css.fullPrice}>
+        <div>
+          {netOrderPrice < grossOrderPrice && (
+            <div className={css.fullPrice}>
               £{grossOrderPrice.toFixed(2)}
             </div>
-            )}
+          )}
           <div className={css.total}>
             £{netOrderPrice.toFixed(2)}
           </div>

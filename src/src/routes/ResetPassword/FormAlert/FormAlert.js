@@ -17,7 +17,7 @@ const FormAlert = ({ errorResetPassword }) => {
           <span>{errorMessage.placeholder}</span>
         </Content>
         {errorResetPassword === 'password_token-invalid' ? (
-<span>
+          <span>
             &nbsp;Please&nbsp;
             <Link to={configRoutes.client.resetForm} clientRouted={false}>
               request a new link

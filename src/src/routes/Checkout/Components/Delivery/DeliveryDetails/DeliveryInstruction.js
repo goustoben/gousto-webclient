@@ -35,14 +35,14 @@ class DeliveryInstruction extends React.PureComponent {
 
   render() {
     const inputSuffix = (
-<div className={css.checkoutTooltip}>
-      <CheckoutTooltip version="Desktop">
-        {configCheckout.tooltip.leaveBox}
-      </CheckoutTooltip>
-      <CheckoutTooltip version="Mobile" placement="topRight">
-        {configCheckout.tooltip.leaveBox}
-      </CheckoutTooltip>
-                         </div>
+      <div className={css.checkoutTooltip}>
+        <CheckoutTooltip version="Desktop">
+          {configCheckout.tooltip.leaveBox}
+        </CheckoutTooltip>
+        <CheckoutTooltip version="Mobile" placement="topRight">
+          {configCheckout.tooltip.leaveBox}
+        </CheckoutTooltip>
+      </div>
     )
 
     const showOtherInput = this.shouldShowOtherInput(this.props.value)
@@ -68,7 +68,7 @@ class DeliveryInstruction extends React.PureComponent {
           </div>
         </div>
         {showOtherInput && (
-<div className={classnames(css.row, css.deliveryField)}>
+          <div className={classnames(css.row, css.deliveryField)}>
             <div className={css.colMD}>
               <Field
                 name="deliveryInstructionsCustom"

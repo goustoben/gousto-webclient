@@ -86,9 +86,9 @@ class ReduxFormInput extends React.PureComponent {
         <div className={css.flexRow}>
           {React.isValidElement(inputPrefix) && inputPrefix}
           {inputEl && (
-<div className={css.flexItem}>
-            {inputEl}
-                      </div>
+            <div className={css.flexItem}>
+              {inputEl}
+            </div>
           )}
           {React.isValidElement(inputSuffix) && inputSuffix}
         </div>

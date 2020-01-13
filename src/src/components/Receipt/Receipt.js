@@ -82,7 +82,7 @@ class Receipt extends React.Component {
           showAddPromocode && <PromoCode />
         }
         {shippingAddress && (
-<ReceiptLine label="Delivery" showLineAbove>
+          <ReceiptLine label="Delivery" showLineAbove>
             <DeliveryDetails
               address={shippingAddress}
               date={this.props.deliveryDate}

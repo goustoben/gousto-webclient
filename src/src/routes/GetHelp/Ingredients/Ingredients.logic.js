@@ -130,22 +130,20 @@ class Ingredients extends PureComponent {
     const cssButton = css.button
 
     return (
-      (isValidateOrderLoading)
-        ? (
-<div className={css.loading__container}>
-            <div className={css.loading__item}>
-              <Loading className={css.loading__image} />
-            </div>
+      (isValidateOrderLoading) ? (
+        <div className={css.loading__container}>
+          <div className={css.loading__item}>
+            <Loading className={css.loading__image} />
           </div>
-        )
-        : (
-<IngredientsPresentation
-  content={content}
-  buttonLeftUrl={buttonLeftUrl}
-  cssButton={cssButton}
-  cannotContinue={!hasSelectAnyIngredient}
-  continueClick={this.continueClickHandler}
->
+        </div>
+      ) : (
+        <IngredientsPresentation
+          content={content}
+          buttonLeftUrl={buttonLeftUrl}
+          cssButton={cssButton}
+          cannotContinue={!hasSelectAnyIngredient}
+          continueClick={this.continueClickHandler}
+        >
           <RecipeList recipes={recipes}>
             <RecipeIngredients
               selectedIngredients={selectedIngredients}
@@ -153,7 +151,8 @@ class Ingredients extends PureComponent {
             />
           </RecipeList>
         </IngredientsPresentation>
-        ))
+      )
+    )
   }
 }
 

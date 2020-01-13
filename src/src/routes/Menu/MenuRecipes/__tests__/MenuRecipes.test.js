@@ -180,18 +180,18 @@ describe('stockAlert', () => {
       SubHeader.mockReturnValue(<div />)
 
       wrapper = shallow(
-      <MenuRecipes
-        orderId=""
-        basketNumPortionChange={jest.fn()}
-        fadeCss="fadeOut"
-        showLoading={false}
-        showStockAlert
-        filteredRecipesNumber={30}
-        menuCurrentCollectionId=""
-        menuRecipeDetailShow=""
-        selectCurrentCollection={jest.fn()}
-        detailVisibilityChange={() => { }}
-      />,
+        <MenuRecipes
+          orderId=""
+          basketNumPortionChange={jest.fn()}
+          fadeCss="fadeOut"
+          showLoading={false}
+          showStockAlert
+          filteredRecipesNumber={30}
+          menuCurrentCollectionId=""
+          menuRecipeDetailShow=""
+          selectCurrentCollection={jest.fn()}
+          detailVisibilityChange={() => { }}
+        />,
       )
     })
     test('should show stock alert', () => {
