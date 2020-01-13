@@ -22,7 +22,7 @@ const menu = {
   menuCutoffUntil: (state = '', action) => {
     switch (action.type) {
     case actionTypes.MENU_CUTOFF_UNTIL_RECEIVE: {
-      return action.cutoffUntil
+      return action.cutoffUntil || state
     }
 
     default:
