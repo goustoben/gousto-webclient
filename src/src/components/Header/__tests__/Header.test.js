@@ -77,6 +77,49 @@ describe('Header', () => {
     expect(linksWithNewTab).toHaveLength(1)
   })
 
+  describe('use app cta', () => {
+    describe('when the user is logged in', () => {
+      beforeEach(() => {
+        wrapper.setProps({isAuthenticated:true})
+      })
+
+      test('then the use app cta should render', () => {
+        expect(wrapper.find('Button').findWhere(el => el.text() === 'Use App').exists()).toEqual(true)
+      })
+    })
+
+    describe('when the user is NOT logged in', () => {
+      beforeEach(() => {
+        wrapper.setProps({isAuthenticated:false})
+      })
+
+      test('then the use app cta should NOT render', () => {
+        expect(wrapper.find('Button').findWhere(el => el.text() === 'Use App').exists()).toEqual(false)
+      })
+    })
+
+    describe('when the user clicks', () => {
+      const trackNavigationClickSpy = jest.fn()
+      
+      beforeEach(() => { 
+        wrapper = shallow(<Header isAuthenticated trackNavigationClick={trackNavigationClickSpy} />, { context: { store } })
+
+        delete window.location
+        window.location = { assign: jest.fn() }
+
+        wrapper.find('Button').simulate('click')
+      })
+
+      test('then trackNavigationClick should be called', () => {
+        expect(trackNavigationClickSpy).toHaveBeenCalledWith('UseAppHeaderCta Clicked')
+      })
+  
+      test('then the user should be redirected to /apps', () => {
+        expect(window.location.assign).toHaveBeenCalledWith('/apps')
+      })
+    })
+  })
+
   describe('when abandonBasketFeature flag is set to true', () => {
     beforeEach(() => {
       wrapper.setProps({ abandonBasketFeature: true })
