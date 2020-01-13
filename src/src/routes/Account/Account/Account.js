@@ -16,16 +16,22 @@ class Account extends React.PureComponent {
     }).isRequired,
     rateRecipeCount: PropTypes.number,
     cardExpiryDate: PropTypes.string,
+    isAccountTabNameTest: PropTypes.bool,
   }
+
   static defaultProps = {
     renderChildren: false,
+    rateRecipeCount: 0,
+    cardExpiryDate: '',
+    isAccountTabNameTest: false,
   }
+
   static contextTypes = {
     store: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
-    const store = this.context.store
+    const { store } = this.context
     Promise.all([
       store.dispatch(userActions.userLoadData()),
       store.dispatch(userActions.userRecipeRatings()),
@@ -35,6 +41,8 @@ class Account extends React.PureComponent {
   }
 
   render() {
+    const { rateRecipeCount, cardExpiryDate, renderChildren, children, location, isAccountTabNameTest } = this.props
+
     const pageTitles = {
       '/my-gousto': 'My Gousto',
       '/my-deliveries': 'My Deliveries',
@@ -42,26 +50,13 @@ class Account extends React.PureComponent {
       '/my-details': 'My Details',
       '/my-referrals': 'Refer a Friend',
       '/rate-my-recipes': 'Rate my Recipes',
-      '/mydeliveries': 'My Deliveries',
     }
-
-    const newPages = [
-      '/mydeliveries',
-    ]
-
-    const oldPages = [
-      '/my-deliveries',
-      '/my-subscription',
-      '/my-details',
-      '/rate-my-recipes',
-    ]
 
     return (
       <div className={css.accountWrap}>
-        <NavBar currentPath={this.props.location.pathname} rateRecipeCount={this.props.rateRecipeCount} cardExpiryDate={this.props.cardExpiryDate} />
-        {newPages.indexOf(this.props.location.pathname) > -1 ? <Banner title={pageTitles[this.props.location.pathname]} /> : <div></div>}
-        {!this.props.renderChildren ? this.props.children : <div></div>}
-        {oldPages.indexOf(this.props.location.pathname) > -1 ? <Banner title={pageTitles[this.props.location.pathname]} /> : <div></div>}
+        <NavBar currentPath={location.pathname} rateRecipeCount={rateRecipeCount} cardExpiryDate={cardExpiryDate} isAccountTabNameTest={isAccountTabNameTest} />
+        {!renderChildren ? children : <div />}
+        {location.pathname != '/my-gousto' && <Banner title={pageTitles[location.pathname]} />}
       </div>
     )
   }

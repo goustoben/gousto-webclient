@@ -2,36 +2,61 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import classnames from 'classnames'
 import config from 'config/routes'
-import { client, legacy } from 'config/globals'
 import css from './NavBar.css'
 import NavBarItem from './NavBarItem/NavBarItem'
 
 const NavBar = (props) => {
-  const referFriendPlaceholderText = 'Free Food'
+  const { rateRecipeCount, isAccountTabNameTest } = props
+
+  let menuTitles = {
+    myGousto: 'My Gousto', 
+    myDeliveries: 'Deliveries',
+    mySubscription: 'Subscription',
+    myDetails: 'Details',
+    myReferral: 'Free Food'
+  }
+  
+  if (isAccountTabNameTest) {
+    menuTitles = {
+      ...menuTitles,
+      myDeliveries: 'Upcoming Deliveries',
+      mySubscription: 'Subscription Settings',
+      myDetails: 'Account Details',
+    }
+  } 
+
   const menuItems = [
     {
       pathName: config.client.myGousto,
       clientRouted: true,
       item: (
-        <span className={classnames(css.link, css.mobileHide)}>My Gousto</span>
+        <span className={classnames(css.link, css.mobileHide)}>
+          {menuTitles.myGousto}
+        </span>
       ),
     }, {
-      pathName: (client && !legacy) ? config.client.myDeliveries2 : config.client.myDeliveries,
+      pathName: config.client.myDeliveries,
       clientRouted: false,
       item: (
-        <span className={css.link}>Deliveries</span>
+        <span className={css.link}>
+          {menuTitles.myDeliveries}
+        </span>
       ),
     }, {
       pathName: config.client.mySubscription,
       clientRouted: false,
       item: (
-        <span className={css.link}>Subscription</span>
+        <span className={css.link}>
+          {menuTitles.mySubscription}
+        </span>
       ),
     }, {
       pathName: config.client.myDetails,
       clientRouted: false,
       item: (
-        <span className={css.link}>Details</span>
+        <span className={css.link}>
+          {menuTitles.myDetails}
+        </span>
       ),
       className: css.noBorderRight,
     }, {
@@ -39,7 +64,8 @@ const NavBar = (props) => {
       clientRouted: true,
       item: (
         <span className={css.link}>
-          <i className={`fa fa-heart ${css.mobileHide}`}></i> <span>{referFriendPlaceholderText}</span>
+          <i className={`fa fa-heart ${css.mobileHide}`} />
+          <span>{menuTitles.myReferral}</span>
         </span>
       ),
     }, {
@@ -50,7 +76,7 @@ const NavBar = (props) => {
           <span className={css.link}>
             Rate <span className={css.tabletHide}>My </span>Recipes
           </span>
-          {(props.rateRecipeCount > 0) ? <span className={css.badge}>{props.rateRecipeCount}</span> : null}
+          {(rateRecipeCount > 0) ? <span className={css.badge}>{rateRecipeCount}</span> : null}
         </span>
       ),
     },
@@ -80,11 +106,14 @@ const NavBar = (props) => {
 NavBar.propTypes = {
   currentPath: PropTypes.string,
   rateRecipeCount: PropTypes.number,
+  isAccountTabNameTest: PropTypes.bool,
+
 }
 
 NavBar.defaultProps = {
   currentPath: config.client.myGousto,
   rateRecipeCount: 0,
+  isAccountTabNameTest: false,
 }
 
 export default NavBar
