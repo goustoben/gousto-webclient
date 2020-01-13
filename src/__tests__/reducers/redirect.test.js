@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import redirect from 'reducers/redirect'
 
 describe('redirect reducer', () => {

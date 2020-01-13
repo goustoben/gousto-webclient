@@ -28,7 +28,7 @@ import tempActions from './temp'
 import statusActions from './status'
 import { orderConfirmationRedirect } from './orderConfirmation'
 import { orderAddOnRedirect } from './orderAddOn'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 export const trackOrder = (orderAction, order) => (
   (dispatch, getState) => {

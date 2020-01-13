@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 import { warning } from 'utils/logger'
 import { getSlot, getDeliveryTariffId } from 'utils/deliveries'

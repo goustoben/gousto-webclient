@@ -1,6 +1,6 @@
 /* eslint no-use-before-define: ["error", { "functions": false }] */
 import globals from 'config/globals'
-import actions from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { getPathName } from 'middlewares/tracking/utils'
 import { getWindow } from 'utils/window'
 import { getUserData } from './router'
@@ -143,14 +143,14 @@ export const onLocationChange = (action, state, prevState, pathname) => {
 }
 
 export const getCallbacks = () => ({
-  [actions.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE]: showRecipeTracking,
-  [actions.FILTERS_COLLECTION_CHANGE]: showCollectionTracking,
-  [actions.BASKET_RECIPE_ADD]: addRecipeToBasket,
-  [actions.BASKET_CHECKOUT]: initiateCheckout,
-  [actions.CHECKOUT_SIGNUP_SUCCESS]: signupPurchaseCompleted,
-  [actions.__REACT_ROUTER_LOCATION_CHANGE]: onLocationChange, // eslint-disable-line no-underscore-dangle
-  [actions.ORDER_CREATE_TRANSACTIONAL]: customerPurchaseCompleted,
-  [actions.ORDER_RECIPES_CHOSEN]: customerPurchaseCompleted,
+  [actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE]: showRecipeTracking,
+  [actionTypes.FILTERS_COLLECTION_CHANGE]: showCollectionTracking,
+  [actionTypes.BASKET_RECIPE_ADD]: addRecipeToBasket,
+  [actionTypes.BASKET_CHECKOUT]: initiateCheckout,
+  [actionTypes.CHECKOUT_SIGNUP_SUCCESS]: signupPurchaseCompleted,
+  [actionTypes.__REACT_ROUTER_LOCATION_CHANGE]: onLocationChange, // eslint-disable-line no-underscore-dangle
+  [actionTypes.ORDER_CREATE_TRANSACTIONAL]: customerPurchaseCompleted,
+  [actionTypes.ORDER_RECIPES_CHOSEN]: customerPurchaseCompleted,
 })
 
 /**

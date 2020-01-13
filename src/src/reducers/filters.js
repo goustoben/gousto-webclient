@@ -1,12 +1,12 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 export const initialState = () => Immutable.Map({
   currentCollectionId: '',
   recipeGroup: null,
 })
 
-let previousState = initialState()
+const previousState = initialState()
 
 const filters = {
   filters: (state, action) => {
@@ -18,7 +18,7 @@ const filters = {
     case actionTypes.FILTERS_COLLECTION_CHANGE: {
       return state.set('currentCollectionId', action.collectionId)
     }
-    
+
     case actionTypes.FILTERS_FOOD_BRAND_CHANGE: {
       return state.set('recipeGroup', action.foodBrand)
     }

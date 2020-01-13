@@ -1,11 +1,11 @@
 import Immutable from 'immutable'
-import types from "../actions/actionTypes"
+import { actionTypes } from "../actions/actionTypes"
 
 const collectionsReducer = {
   collections: (state = Immutable.OrderedMap({}), action) => {
     switch (action.type) {
-    case types.COOKBOOK_RECEIVE_COLLECTIONS:
-    case types.COLLECTIONS_RECEIVE_COLLECTIONS: {
+    case actionTypes.COOKBOOK_RECEIVE_COLLECTIONS:
+    case actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS: {
       return (action.collections || []).reduce((accumulator, collection) => {
         const newCollection = {
           ...collection,
@@ -16,8 +16,8 @@ const collectionsReducer = {
       }, state)
     }
 
-    case types.COOKBOOK_RECEIVE_COLLECTION_RECIPES:
-    case types.COLLECTIONS_RECEIVE_COLLECTION_RECIPES: {
+    case actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES:
+    case actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES: {
       const { collectionId, recipes = [] } = action
       const recipeIds = recipes.reduce((accumulator, currentRecipe) => (
         accumulator.push(currentRecipe.id)

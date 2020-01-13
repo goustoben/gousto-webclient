@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import actions from 'actions'
 import { getAddOnsBeforeOrderConfirmation } from 'selectors/features'
 import { getSlot } from 'utils/deliveries'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { checkoutTransactionalOrder } from 'actions/checkout'
 import { Checkout } from './Checkout'
 

@@ -3,7 +3,7 @@ import basketActions from 'actions/basket'
 import productActions from 'actions/products'
 import userUtils from 'utils/user'
 import OrderSummary from 'OrderSummary'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 function mapStateToProps(state) {
   const orderId = state.basket.get('orderId')

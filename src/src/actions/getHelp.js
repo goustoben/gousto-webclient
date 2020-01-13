@@ -6,7 +6,7 @@ import {
 import logger from 'utils/logger'
 import { fetchRecipes } from 'apis/recipes'
 import { fetchOrder } from 'apis/orders'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import statusActions from './status'
 
 /* action creators */

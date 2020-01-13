@@ -3,7 +3,7 @@ import { getFormValues, submit, getFormMeta, change } from 'redux-form'
 import { getDeliveryFormName } from 'selectors/checkout'
 
 import actions from 'actions'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 import Delivery from './Delivery'
 

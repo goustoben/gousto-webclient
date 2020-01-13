@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions/subscriptionPause'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import TextArea from './TextArea'
 
 const mapStateToProps = (state) => ({

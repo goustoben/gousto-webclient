@@ -2,7 +2,7 @@ import logger from 'utils/logger'
 import { fetchRecipes, fetchRecipesStockByDate } from 'apis/recipes'
 import { getCutoffDateTime, cutoffDateTimeNow } from 'utils/deliveries'
 import statusActions from './status'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const recipesLoadRecipesById = (recipeIds = [], isCookbook) => (
   async (dispatch, getState) => {

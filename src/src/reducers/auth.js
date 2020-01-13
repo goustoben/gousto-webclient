@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import { isAdmin } from 'utils/auth'
 
@@ -23,7 +23,7 @@ const auth = {
 
     switch (action.type) {
     case actionTypes.USER_IDENTIFIED: {
-      const user = action.user
+      const { user } = action
       let newState = state.set('id', user.id)
       newState = newState.set('email', user.email)
       newState = newState.set('name', user.name)

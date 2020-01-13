@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import actionsAuth from 'actions/auth'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import ResetPassword from './ResetPassword'
 
 const mapStateToProps = (state) => ({

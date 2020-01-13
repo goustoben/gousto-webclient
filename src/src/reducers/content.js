@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 const groupByKey = (data) => {
   const keyedObject = data.fields.reduce((collection, field) => {

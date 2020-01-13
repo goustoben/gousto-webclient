@@ -19,7 +19,7 @@ import { transformPendingOrders, transformProjectedDeliveries } from 'utils/myDe
 import statusActions from './status'
 import { basketAddressChange, basketChosenAddressChange, basketPostcodeChangePure, basketPreviewOrderChange } from './basket'
 import recipeActions from './recipes'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 import { trackFirstPurchase, trackUserAttributes } from './tracking'
 import { subscriptionLoadData } from './subscription'
 

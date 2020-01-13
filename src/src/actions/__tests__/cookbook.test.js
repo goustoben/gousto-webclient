@@ -1,5 +1,5 @@
 import actionStatus from 'actions/status'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import cookbookActions from 'actions/cookbook'
 import { fetchRecipeStepsById } from 'apis/recipes'
 

@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import basket from 'actions/basket'
 import pricingActions from 'actions/pricing'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import orderConfirmationActions from 'actions/orderConfirmation'
 import { updateOrderItems } from 'apis/orders'
 import utilsLogger from 'utils/logger'
@@ -937,7 +937,7 @@ describe('basket actions', () => {
     test('should dispatch a pricing pricingRequest action', () => {
       const pricingRequestResponse = Symbol()
       pricingActions.pricingRequest.mockReturnValue(pricingRequestResponse)
-      
+
       basketRecipeRemove('123')(dispatch, getStateSpy)
 
       expect(dispatch).toHaveBeenCalledWith(pricingRequestResponse)

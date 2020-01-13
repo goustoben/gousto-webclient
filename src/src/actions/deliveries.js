@@ -3,7 +3,7 @@ import tempActions from 'actions/temp'
 import { getSlot } from 'utils/deliveries'
 import { getDeliveryDaysAndSlots, formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getDisabledSlots } from 'selectors/features'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 export const trackDeliveryDayDropDownOpened = (date, day_offset, delivery_slot_id) => dispatch => {
   dispatch({

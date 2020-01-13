@@ -1,4 +1,4 @@
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const pageActions = {
   pageChange: newLocation => ({

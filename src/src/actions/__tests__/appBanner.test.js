@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { appBannerDismiss } from 'actions/appBanner'
 import * as cookieHelper from 'utils/cookieHelper2'
 

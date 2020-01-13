@@ -1,6 +1,6 @@
 import { fetchRecipes } from 'apis/recipes'
 import { cutoffDateTimeNow } from 'utils/deliveries'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const homeCarouselLoaded = recipes => ({
   type: actionTypes.HOME_CAROUSEL_LOADED,

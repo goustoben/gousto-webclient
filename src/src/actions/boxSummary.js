@@ -17,7 +17,7 @@ import {
   basketSlotChange,
   portionSizeSelectedTracking
 } from './basket'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 function basketDeliveryDaysReceive(days) {
   return {

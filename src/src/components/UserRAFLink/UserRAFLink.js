@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import actions from 'actions/user'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { getReferralLink } from 'components/SocialLinks/socialReferralHelper'
 import css from './UserRAFLink.css'
 
@@ -16,13 +16,6 @@ class UserRAFLink extends React.PureComponent {
     children: PropTypes.node.isRequired,
     trackingReferFriend: PropTypes.func,
     isModal: PropTypes.bool.isRequired,
-  }
-
-  static defaultProps = {
-    referralCode: '',
-    classContainer: '',
-    classLinkContainer: '',
-    isModal: false,
   }
 
   static fetchData = async ({ store }) => Promise.all([

@@ -2,7 +2,7 @@ import pricingRequestApi from 'apis/pricing'
 import Immutable from 'immutable'
 import { getDeliveryTariffId, getSlot } from 'utils/deliveries'
 import { getNDDFeatureValue } from 'selectors/features'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const pricingPending = () => ({
   type: actionTypes.PRICING_PENDING,

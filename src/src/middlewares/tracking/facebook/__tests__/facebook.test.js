@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import actions from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { getWindow } from 'utils/window'
 import { getUserData } from 'middlewares/tracking/facebook/router'
 import Tracker from 'middlewares/tracking/facebook/facebook'
@@ -46,7 +46,7 @@ describe('fbTracking', () => {
     }
     Tracker(
       {
-        type: actions.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
+        type: actionTypes.MENU_RECIPE_DETAIL_VISIBILITY_CHANGE,
         recipeId,
       },
       { recipes, routing },
@@ -66,7 +66,7 @@ describe('fbTracking', () => {
     })
     Tracker(
       {
-        type: actions.FILTERS_COLLECTION_CHANGE,
+        type: actionTypes.FILTERS_COLLECTION_CHANGE,
         collectionName: 'test-collection',
         collectionId: '1',
       },
@@ -81,7 +81,7 @@ describe('fbTracking', () => {
     })
   })
 
-  test('should call addRecipeToBasket with actions.BASKET_RECIPE_ADD', () => {
+  test('should call addRecipeToBasket with actionTypes.BASKET_RECIPE_ADD', () => {
     const recipeId = '1'
     const recipes = Immutable.fromJS({
       1: {
@@ -90,7 +90,7 @@ describe('fbTracking', () => {
     })
     Tracker(
       {
-        type: actions.BASKET_RECIPE_ADD,
+        type: actionTypes.BASKET_RECIPE_ADD,
         recipeId,
       },
       { recipes },
@@ -112,7 +112,7 @@ describe('fbTracking', () => {
     })
     Tracker(
       {
-        type: actions.BASKET_CHECKOUT,
+        type: actionTypes.BASKET_CHECKOUT,
       },
       { basket },
     )
@@ -137,7 +137,7 @@ describe('fbTracking', () => {
     })
 
     Tracker({
-      type: actions.CHECKOUT_SIGNUP_SUCCESS,
+      type: actionTypes.CHECKOUT_SIGNUP_SUCCESS,
       orderId: '1',
     },
     {
@@ -158,7 +158,7 @@ describe('fbTracking', () => {
 
   test('should call customerPurchaseCompleted with actions.ORDER_CREATE_TRANSACTIONAL', () => {
     Tracker({
-      type: actions.ORDER_CREATE_TRANSACTIONAL,
+      type: actionTypes.ORDER_CREATE_TRANSACTIONAL,
       order: {
         id: 2,
         recipeItems: [

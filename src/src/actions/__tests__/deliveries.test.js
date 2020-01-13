@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import deliveries from 'actions/deliveries'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { basketSlotChange } from 'actions/basket'
 import { getSlot } from 'utils/deliveries'
 import { getTempDeliveryOptions, getDeliveryDaysAndSlots } from 'utils/deliverySlotHelper'

@@ -1,6 +1,6 @@
 import { push } from 'react-router-redux'
 import config from 'config/routes'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 export const orderAddOnRedirect = (orderId, orderAction) => (
   (dispatch) => {

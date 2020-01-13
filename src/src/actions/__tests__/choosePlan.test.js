@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { basketPromoCodeChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import routes from 'config/routes'

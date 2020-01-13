@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 
 export const subscriptionPauseInitialState = Immutable.fromJS({
@@ -70,7 +70,7 @@ const subscriptionPause = {
     }
 
     case actionTypes.SUBSCRIPTION_PAUSE_REASONS_RECEIVE: {
-      const reasons = action.reasons
+      const { reasons } = action
       const filterInitial = reason => reason.initial
       let newState = state
       if (reasons.some(filterInitial)) {

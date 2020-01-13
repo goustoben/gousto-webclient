@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import logger from 'utils/logger'
 import { hasPropUpdated } from 'utils/react'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { publicKey } from '../config'
 import { getErrorType } from './utils'
 

@@ -1,5 +1,5 @@
 import newsletterSignup from 'apis/newsletter'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const newsletterSignupPending = () => ({
   type: actionTypes.NEWSLETTER_SIGNUP_PENDING,

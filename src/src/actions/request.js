@@ -1,4 +1,4 @@
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 export const setUserAgent = userAgent => ({
   type: actionTypes.BROWSER_SET_USER_AGENT,

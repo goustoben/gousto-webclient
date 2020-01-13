@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
 import subPauseActions from 'actions/subscriptionPause'
 import statusActions from 'actions/status'

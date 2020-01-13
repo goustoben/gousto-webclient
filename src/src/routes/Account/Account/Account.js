@@ -17,15 +17,17 @@ class Account extends React.PureComponent {
     rateRecipeCount: PropTypes.number,
     cardExpiryDate: PropTypes.string,
   }
+
   static defaultProps = {
     renderChildren: false,
   }
+
   static contextTypes = {
     store: PropTypes.object.isRequired,
   }
 
   componentDidMount() {
-    const store = this.context.store
+    const { store } = this.context
     Promise.all([
       store.dispatch(userActions.userLoadData()),
       store.dispatch(userActions.userRecipeRatings()),

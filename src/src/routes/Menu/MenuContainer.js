@@ -4,7 +4,7 @@ import moment from 'moment'
 
 import actions from 'actions'
 import { getSlot } from 'utils/deliveries'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { shouldJfyTutorialBeVisible } from 'actions/tutorial'
 
 import { getRecipeGroupFilter, getFoodBrandDetails } from 'selectors/filters'

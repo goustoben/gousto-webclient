@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import moment from 'moment'
 import logger from 'utils/logger'
 import basketConfig from 'config/basket'

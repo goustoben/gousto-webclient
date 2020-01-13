@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { menuService } from 'reducers/menuService'
 
 describe('menuService', () => {

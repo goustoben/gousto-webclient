@@ -13,7 +13,7 @@ import Immutable from 'immutable'
 import { getPauseRecoveryContent } from 'actions/onScreenRecovery'
 import { isSubscriptionPauseOsrFeatureEnabled, isOsrOfferFeatureEnabled } from 'selectors/features'
 import statusActions from './status'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const pauseModalTrackingPrefix = config.tracking.pauseModalPrefix
 

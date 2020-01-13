@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import actions from 'actions/user'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import BillingForm from './BillingForm'
 
 const mapStateToProps = (state) => ({

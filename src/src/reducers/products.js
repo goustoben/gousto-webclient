@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 const products = {
   products: (state = Immutable.Map({}), action) => {
@@ -10,7 +10,7 @@ const products = {
 
         let media = Immutable.List()
         Object.keys(product.images || []).forEach(size => {
-          if (!!product.images[size]) {
+          if (product.images[size]) {
             media = media.push(Immutable.fromJS({ src: product.images[size].url, width: product.images[size].width }))
           }
         })

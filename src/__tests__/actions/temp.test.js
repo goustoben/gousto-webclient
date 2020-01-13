@@ -1,5 +1,5 @@
 import temp from 'actions/temp'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 describe('temp action', () => {
   test('should return a TEMP action', () => {

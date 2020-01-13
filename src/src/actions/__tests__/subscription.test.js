@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { fetchSubscription } from 'apis/subscription'
 import { basketNumPortionChange } from 'actions/basket'
 import { notice } from 'utils/logger'

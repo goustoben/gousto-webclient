@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import * as stateUtils from 'routes/Checkout/utils/state'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import ErrorMessage from './ErrorMessage'
 
 function mapStateToProps(state, ownProps) {

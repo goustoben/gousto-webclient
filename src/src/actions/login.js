@@ -14,7 +14,7 @@ import pricingActions from './pricing'
 import statusActions from './status'
 
 import authActions from './auth'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const { pending, error } = statusActions
 const { redirect, documentLocation } = windowUtils

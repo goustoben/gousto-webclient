@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import configureMockStore from 'redux-mock-store'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { basketDateChange, basketSlotChange } from 'actions/basket'
 import { redirect } from 'actions/redirect'
 import { recommendationsSlug } from 'config/collections'

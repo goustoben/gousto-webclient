@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { fetchProducts } from 'apis/products'
 import { productsLoadProducts, trackProductFiltering } from '../products'
 import statusActions from '../status'

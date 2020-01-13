@@ -1,7 +1,7 @@
 import Immutable from 'immutable'
 import { push } from 'react-router-redux'
 
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { redirect } from 'utils/window'
 import { fetchOrder } from 'apis/orders'
 

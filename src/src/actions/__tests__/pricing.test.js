@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import pricing from 'apis/pricing'
 import actions from 'actions/pricing'
 import { deliveryTariffTypes } from 'utils/deliveries'

@@ -1,5 +1,5 @@
 import globals from 'config/globals'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import fbSettings from 'config/template'
 import defaultOffer from 'config/referral'
 

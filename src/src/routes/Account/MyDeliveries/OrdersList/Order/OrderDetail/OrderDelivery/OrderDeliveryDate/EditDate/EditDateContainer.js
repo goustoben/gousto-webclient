@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { orderGetDeliveryDays, clearUpdateDateErrorAndPending } from 'actions/order'
 import { EditDate } from './EditDate'
 import { filterOutNDDOptionsWhenNoRecipes } from './util'

@@ -16,7 +16,7 @@ import { redirect , documentLocation} from 'utils/window'
 import { getGoToMyGousto, getGoToMyDeliveries } from 'selectors/features'
 import statusActions from './status'
 import loginActions from './login'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 /* action creators */
 const userAuthenticated = (accessToken, refreshToken, expiresAt) => ({
