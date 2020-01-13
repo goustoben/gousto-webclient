@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 
 const errorsToCapture = [
@@ -69,7 +69,7 @@ const checkout = {
       return state.set('deliveryAddresses', Immutable.fromJS(addressList))
     }
 
-    case actionTypes.CHECKOUT_INTERVALS_RECIEVE: {
+    case actionTypes.CHECKOUT_INTERVALS_RECEIVE: {
       const { intervals } = action
 
       return state.set('intervals', Immutable.fromJS(intervals))

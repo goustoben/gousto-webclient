@@ -155,7 +155,7 @@ const processCookies = (cookies, store) => {
   }
 
   if (currentCollectionId) {
-    store.dispatch(filterActions.collectionFilterIdRecieve(currentCollectionId))
+    store.dispatch(filterActions.collectionFilterIdReceive(currentCollectionId))
   }
 
   if (recipeGroupSlug && recipeGroupName && recipeGroupBorderColor && recipeGroupBorderLocation) {
@@ -280,4 +280,4 @@ const processCookies = (cookies, store) => {
   }
 }
 
-export default processCookies
+export { processCookies }

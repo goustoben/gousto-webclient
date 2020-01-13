@@ -18,7 +18,7 @@ describe('menuServiceLoadDays', () => {
   }
 
   const getState = () => state
-  test('should dispatch menuCutoffUntilRecieve with the correct date', () => {
+  test('should dispatch menuCutoffUntilReceive with the correct date', () => {
     menuServiceLoadDays(dispatch, getState)
 
     expect(menuCutoffUntilReceive).toHaveBeenCalledWith('2019-12-03T11:59:59+00:00')

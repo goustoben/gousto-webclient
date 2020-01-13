@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import actions from 'actions/cookbook'
 import { addDataSets } from 'DataSetsComponent'
 import Hubs, { fetchData, fetchSetData, limit } from './Hubs'
@@ -11,7 +11,7 @@ function mapStateToProps({ cookbook, pending }) {
     collectionSets: cookbook.get('collectionSets'),
     endSet: cookbook.get('collectionsEndSet'),
     fetchSetData,
-    isLoading: pending.get(actionTypes.COOKBOOK_RECIEVE_COLLECTIONS) === endSet,
+    isLoading: pending.get(actionTypes.COOKBOOK_RECEIVE_COLLECTIONS) === endSet,
     limit,
     startSet: cookbook.get('collectionsStartSet'),
     totalSets: cookbook.get('collectionsTotalSets'),

@@ -12,8 +12,8 @@ describe('utils/boxSummary', () => {
           slotId: '123-uuid',
         }),
         boxSummaryDeliveryDaysErr: false,
-        menuRecieveMenuPending: false,
-        menuRecieveBoxPricesPending: false,
+        menuReceiveMenuPending: false,
+        menuReceiveBoxPricesPending: false,
         pending: Immutable.Map({}),
       }
     })
@@ -27,8 +27,8 @@ describe('utils/boxSummary', () => {
             slotId: '123-uuid',
           }),
           error: Immutable.Map({}),
-          menuRecieveMenuPending: false,
-          menuRecieveBoxPricesPending: false,
+          menuReceiveMenuPending: false,
+          menuReceiveBoxPricesPending: false,
           pending: Immutable.Map({}),
         }
       })
@@ -48,8 +48,8 @@ describe('utils/boxSummary', () => {
             slotId: '',
           }),
           error: Immutable.Map({}),
-          menuRecieveMenuPending: false,
-          menuRecieveBoxPricesPending: false,
+          menuReceiveMenuPending: false,
+          menuReceiveBoxPricesPending: false,
           pending: Immutable.Map({}),
         }
       })
@@ -69,8 +69,8 @@ describe('utils/boxSummary', () => {
             slotId: '123-uuid',
           }),
           error: Immutable.Map({}),
-          menuRecieveMenuPending: false,
-          menuRecieveBoxPricesPending: false,
+          menuReceiveMenuPending: false,
+          menuReceiveBoxPricesPending: false,
           pending: Immutable.Map({}),
         }
       })
@@ -90,8 +90,8 @@ describe('utils/boxSummary', () => {
             slotId: '123-uuid',
           }),
           error: Immutable.Map({}),
-          menuRecieveMenuPending: false,
-          menuRecieveBoxPricesPending: false,
+          menuReceiveMenuPending: false,
+          menuReceiveBoxPricesPending: false,
           pending: Immutable.Map({
             MENU_FETCH_DATA: true,
           }),

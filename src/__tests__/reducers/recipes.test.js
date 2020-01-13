@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 import recipesReducer from 'reducers/recipes'
 
@@ -37,10 +37,10 @@ describe('recipes reducer', () => {
     })
   })
 
-  describe('COLLECTIONS_RECIEVE_COLLECTION_RECIPES', () => {
+  describe('COLLECTIONS_RECEIVE_COLLECTION_RECIPES', () => {
     test('should load recipes into state', () => {
       const result = recipesReducer.recipes(Immutable.Map({}), {
-        type: actionTypes.COLLECTIONS_RECIEVE_COLLECTION_RECIPES,
+        type: actionTypes.COLLECTIONS_RECEIVE_COLLECTION_RECIPES,
         recipes: [
           { id: '1', title: 'recipe 1' },
           { id: '2', title: 'recipe 2' },

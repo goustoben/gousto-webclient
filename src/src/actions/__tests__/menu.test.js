@@ -1,6 +1,6 @@
 import Immutable from 'immutable'
 import { menuServiceConfig } from 'config/menuService'
-import actionTypes from '../actionTypes'
+import { actionTypes } from '../actionTypes'
 
 const mockGetAvailableDates = jest.fn()
 const mockGetRecipeStock = jest.fn()
@@ -246,8 +246,8 @@ describe('menu actions', () => {
     })
   })
 
-  describe('menuCutoffUntilRecieve', () => {
-    test('should return a MENU_CUTOFF_UNTIL_RECIEVE action with the first argument mapped through to the cutoffUntil property', () => {
+  describe('menuCutoffUntilReceive', () => {
+    test('should return a MENU_CUTOFF_UNTIL_RECEIVE action with the first argument mapped through to the cutoffUntil property', () => {
       const result = menuActions.menuCutoffUntilReceive('2020-06-26')
 
       expect(result).toEqual({

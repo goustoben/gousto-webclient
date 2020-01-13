@@ -17,7 +17,7 @@ export const initialState = Immutable.fromJS({
 const cookbookReducer = {
   cookbook: (state = initialState, { type, ...data }) => {
     switch (type) {
-    case types.COOKBOOK_RECIEVE_COLLECTIONS: {
+    case types.COOKBOOK_RECEIVE_COLLECTIONS: {
       const { setNum, collections = [], meta = {} } = data
       const { total = 0, limit = 1 } = meta
       const collectionIds = collections.reduce((accumulator, currentCollection) => (
@@ -30,7 +30,7 @@ const cookbookReducer = {
       return newState
     }
 
-    case types.COOKBOOK_RECIEVE_COLLECTION_RECIPES: {
+    case types.COOKBOOK_RECEIVE_COLLECTION_RECIPES: {
       const { collectionId, setNum, recipes = [], meta = {} } = data
       const { total = 0, limit = 1 } = meta
 

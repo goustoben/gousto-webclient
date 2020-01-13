@@ -1,5 +1,5 @@
 import Immutable from 'immutable'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import config from 'config/basket'
 import moment from 'moment'
 
@@ -137,7 +137,7 @@ const menu = {
     }
   },
 
-  menuRecieveMenuPending: (state = false, action) => {
+  menuReceiveMenuPending: (state = false, action) => {
     switch (action.type) {
     case actionTypes.MENU_RECIPES_RECEIVE_PENDING:
       return action.pending

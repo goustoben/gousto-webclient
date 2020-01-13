@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 
 export const getOrderValidationPendingState = ({ pending }) => (
   Boolean(pending.get(actionTypes.GET_HELP_VALIDATE_ORDER, null))

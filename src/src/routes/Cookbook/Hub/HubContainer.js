@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import actions from 'actions/cookbook'
 import * as cookbookUtils from 'utils/cookbook'
 import * as storeUtils from 'utils/store'
@@ -11,7 +11,7 @@ function mapStateToProps({ collections, cookbook, pending, recipes }, { params }
   const endSet = cookbook.get('recipesEndSet')
   const loadedRecipesIds = cookbookUtils.getItemIds(cookbook.get('recipeSets'), { endSet, startSet })
   const collectionIsLoading = pending.get(actionTypes.COLLECTIONS_RECEIVE_COLLECTIONS) === params.collectionSlug
-  const collectionRecipesAreLoading = pending.get(actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES) === endSet
+  const collectionRecipesAreLoading = pending.get(actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES) === endSet
 
   return {
     collection: collections.find(collectionItem => collectionItem.get('slug') === params.collectionSlug),

@@ -30,7 +30,7 @@ import {
   basketSlotChange
 } from './basket'
 import tempActions from './temp'
-import actionTypes from './actionTypes'
+import { actionTypes } from './actionTypes'
 
 const menuActions = {
   menuLoadMenu,
@@ -46,7 +46,7 @@ const menuActions = {
   menuBrowseCTAVisibilityChange,
   menuReceiveCollectionRecipes,
   menuReceiveMenu,
-  menuRecieveMenuPending,
+  menuReceiveMenuPending,
   loadRecipesForAllCollections,
   menuReceiveBoxPrices,
   showDetailRecipe
@@ -89,7 +89,7 @@ export function menuReplaceRecipeStock(stock) {
   })
 }
 
-export function menuRecieveMenuPending(pending) {
+export function menuReceiveMenuPending(pending) {
   return ({
     type: actionTypes.MENU_RECIPES_RECEIVE_PENDING,
     pending,
@@ -157,7 +157,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
     const reqData = {
       'includes[]': ['ingredients', 'allergens'],
     }
-    dispatch(menuActions.menuRecieveMenuPending(true))
+    dispatch(menuActions.menuReceiveMenuPending(true))
     if (cutoffDateTime !== null) {
       reqData['filters[available_on]'] = cutoffDateTime
     } else {
@@ -179,7 +179,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
 
       logger.notice(`recipes fetch took ${new Date() - startTime}ms`)
 
-      dispatch(menuActions.menuRecieveMenuPending(false))
+      dispatch(menuActions.menuReceiveMenuPending(false))
 
       const reachedLimit = limitReached(state.basket, state.menuRecipes, state.menuRecipeStock)
       dispatch({
@@ -187,7 +187,7 @@ export function menuLoadMenu(cutoffDateTime = null, background) {
         limitReached: reachedLimit,
       })
     } else {
-      dispatch(menuActions.menuRecieveMenuPending(false))
+      dispatch(menuActions.menuReceiveMenuPending(false))
       if (__SERVER__) {
         if (!isFacebookUserAgent(state.request.get('userAgent'))) {
           const error = new Error('Slot is not found in menuLoadMenu')

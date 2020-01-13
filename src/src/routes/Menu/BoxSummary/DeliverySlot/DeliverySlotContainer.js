@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import Immutable from 'immutable'
 import actions from 'actions'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import { getDisabledSlots, getFullScreenBoxSummary } from 'selectors/features'
 import { formatAndValidateDisabledSlots, getTempDeliveryOptions } from 'utils/deliverySlotHelper'
 import { getIsAuthenticated } from 'selectors/auth'
@@ -26,7 +26,7 @@ function mapStateToProps(state) {
     prevDate: state.basket.get('prevDate'),
     deliveryDays,
     postcode: getBasketPostcode(state),
-    menuPending: state.menuRecieveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
+    menuPending: state.menuReceiveMenuPending || state.pending.get(actionTypes.MENU_BOX_PRICES_RECEIVE, false),
     prevSlotId: state.basket.get('prevSlotId'),
     userOrders: state.user.get('orders'),
     menuFetchDataPending: state.pending.get(actionTypes.MENU_FETCH_DATA, false),

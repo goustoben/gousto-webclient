@@ -1,4 +1,4 @@
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import Immutable from 'immutable'
 
 const promos = {
@@ -12,7 +12,7 @@ const promos = {
   },
   promoStore: (state = Immutable.Map({}), action) => {
     switch (action.type) {
-    case actionTypes.PROMO_RECIEVE:
+    case actionTypes.PROMO_RECEIVE:
       return state.set(action.promo.code, Immutable.fromJS(action.promo))
 
     default:

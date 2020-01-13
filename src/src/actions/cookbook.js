@@ -1,7 +1,7 @@
 import GoustoException from 'utils/GoustoException'
 import * as collectionsApi from 'apis/collections'
 import { fetchRecipeStepsById } from 'apis/recipes'
-import actionTypes from 'actions/actionTypes'
+import { actionTypes } from 'actions/actionTypes'
 import statusActions from 'actions/status'
 
 const cookbookActions = {
@@ -38,8 +38,8 @@ function cookbookResetCollectionRecipes() {
 function cookbookLoadCollections({ limit, setNum = 1 } = {}) {
   return async (dispatch, getState) => {
     try {
-      dispatch(statusActions.pending(actionTypes.COOKBOOK_RECIEVE_COLLECTIONS, setNum))
-      dispatch(statusActions.error(actionTypes.COOKBOOK_RECIEVE_COLLECTIONS, null))
+      dispatch(statusActions.pending(actionTypes.COOKBOOK_RECEIVE_COLLECTIONS, setNum))
+      dispatch(statusActions.error(actionTypes.COOKBOOK_RECEIVE_COLLECTIONS, null))
       const accessToken = getState().auth.get('accessToken')
 
       const args = {
@@ -53,7 +53,7 @@ function cookbookLoadCollections({ limit, setNum = 1 } = {}) {
       try {
         const { data: collections, meta } = await collectionsApi.fetchCollections(accessToken, '', args)
         dispatch({
-          type: actionTypes.COOKBOOK_RECIEVE_COLLECTIONS,
+          type: actionTypes.COOKBOOK_RECEIVE_COLLECTIONS,
           collections,
           meta,
           setNum,
@@ -65,9 +65,9 @@ function cookbookLoadCollections({ limit, setNum = 1 } = {}) {
         })
       }
     } catch (err) {
-      dispatch(statusActions.errorLoad(actionTypes.COOKBOOK_RECIEVE_COLLECTIONS, err))
+      dispatch(statusActions.errorLoad(actionTypes.COOKBOOK_RECEIVE_COLLECTIONS, err))
     } finally {
-      dispatch(statusActions.pending(actionTypes.COOKBOOK_RECIEVE_COLLECTIONS, false))
+      dispatch(statusActions.pending(actionTypes.COOKBOOK_RECEIVE_COLLECTIONS, false))
     }
   }
 }
@@ -75,8 +75,8 @@ function cookbookLoadCollections({ limit, setNum = 1 } = {}) {
 function cookbookLoadCollectionRecipes(collectionId, { limit, setNum = 1 } = {}) {
   return async dispatch => {
     try {
-      dispatch(statusActions.pending(actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES, setNum))
-      dispatch(statusActions.error(actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES, null))
+      dispatch(statusActions.pending(actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES, setNum))
+      dispatch(statusActions.error(actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES, null))
 
       const args = {
         limit,
@@ -91,7 +91,7 @@ function cookbookLoadCollectionRecipes(collectionId, { limit, setNum = 1 } = {})
         const { data, meta } = await collectionsApi.fetchCollectionRecipes(null, collectionId, args, false)
 
         dispatch({
-          type: actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES,
+          type: actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES,
           collectionId,
           meta: meta.recipes,
           recipes: data.recipes,
@@ -104,9 +104,9 @@ function cookbookLoadCollectionRecipes(collectionId, { limit, setNum = 1 } = {})
         })
       }
     } catch (err) {
-      dispatch(statusActions.errorLoad(actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES, err))
+      dispatch(statusActions.errorLoad(actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES, err))
     } finally {
-      dispatch(statusActions.pending(actionTypes.COOKBOOK_RECIEVE_COLLECTION_RECIPES, false))
+      dispatch(statusActions.pending(actionTypes.COOKBOOK_RECEIVE_COLLECTION_RECIPES, false))
     }
   }
 }
