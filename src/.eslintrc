@@ -72,7 +72,6 @@
       "react/destructuring-assignment": 1,
       "react/forbid-prop-types": 1,
       "react/no-deprecated": 1,
-      "react/jsx-wrap-multilines": 1,
       "react/jsx-one-expression-per-line": 1,
       "react/jsx-closing-tag-location": 1,
       "react/self-closing-comp": 1,
