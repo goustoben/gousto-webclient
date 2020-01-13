@@ -12,11 +12,11 @@ const Testimonial = ({ testimonial, showLink }) => (
       <Svg fileName="icon-5-stars-trustpilot" className={css.starIcons} />
     </div>
     <div className={css.title}>
-      {showLink &&
-        <a href={testimonial.get('url')} className={css.link} target="_blank" rel="noopener noreferrer">
+      {showLink && (
+<a href={testimonial.get('url')} className={css.link} target="_blank" rel="noopener noreferrer">
           {testimonial.get('title')}
         </a>
-      }
+      )}
       {!showLink &&
         testimonial.get('title')
       }

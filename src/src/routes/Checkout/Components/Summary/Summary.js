@@ -76,19 +76,19 @@ class Summary extends React.PureComponent {
 
     return (
       <div className={css.summaryContainer}>
-        {!isLoading &&
-          <Alert type='info'>
+        {!isLoading && (
+<Alert type='info'>
             <PricePerServingMessage />
           </Alert>
-        }
+        )}
         <H3 headlineFont>Order total</H3>
         {
-          (isLoading) ?
-            <div className={css.loaderContainer}>
+          (isLoading) ? (
+<div className={css.loaderContainer}>
               <Loading className={css.loadingImage} />
             </div>
-            :
-            <div className={css.details}>
+          ): (
+<div className={css.details}>
               <Receipt
                 numRecipes={numRecipes}
                 prices={prices}
@@ -108,7 +108,7 @@ class Summary extends React.PureComponent {
                 }
               </div>
             </div>
-        }
+          )}
       </div>
     )
   }

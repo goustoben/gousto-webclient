@@ -9,11 +9,11 @@ import css from './OrderCollage.css'
 const OrderCollage = ({ recipes, orderState }) => {
   const maxRecipes = ['confirmed', 'dispatched'].indexOf(orderState) > -1 ? recipes.size : 4
   const blankCards = []
-  const recipeCollage = recipes.map((recipe) =>
-    <div className={css.collageItem} key={recipe.get('id')}>
+  const recipeCollage = recipes.map((recipe) => (
+<div className={css.collageItem} key={recipe.get('id')}>
       <Image className={css.collageImage} media={recipe.get('image') || placeholderSrc} />
     </div>
-  )
+  ))
   for (let i = recipes.size; i < maxRecipes; i++) {
     blankCards.push(
       <div className={css.empty} key={i}>

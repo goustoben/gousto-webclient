@@ -10,7 +10,8 @@ import Image from '../../Image'
 const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next }) => {
   const portions = [2, 4]
 
-  const renderButtons = () => (portions.map((value, index) => (<div className={index % 2 === 0 ? css.left : css.right} key={`${value}_portions_${index}`}>
+  const renderButtons = () => (portions.map((value, index) => (
+<div className={index % 2 === 0 ? css.left : css.right} key={`${value}_portions_${index}`}>
     <Button
       data-testing={`signupBoxSize${value}Portions`}
       fill={false}
@@ -19,7 +20,8 @@ const BoxSizeStep = ({ numPortionChange, numPortionChangeTracking, next }) => {
     >
       {`${value} People`}
     </Button>
-                                                               </div>)))
+                                                               </div>
+  )))
 
   return (
     <span className={signupCss.stepContainer} data-testing="signupBoxSizeStep">

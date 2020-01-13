@@ -20,7 +20,8 @@ const PeopleCookFor = ({ header, text, numPeopleChange, next }) => {
         </div>
         <div className={signupCss.body}>
           <div className={css.container}>
-            {buttonsSequence.map(el => (<div key={el} className={css.button}>
+            {buttonsSequence.map(el => (
+<div key={el} className={css.button}>
               <Button
                 fill={false}
                 width="full"
@@ -35,7 +36,8 @@ const PeopleCookFor = ({ header, text, numPeopleChange, next }) => {
                   {el}
                 </Segment>
               </Button>
-                                        </div>))}
+                                        </div>
+            ))}
           </div>
           <div className={css.link}>
             <span

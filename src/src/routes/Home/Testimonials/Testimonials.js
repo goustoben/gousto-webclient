@@ -14,11 +14,11 @@ const Testimonials = ({ redirect, enableStorystream, showLink, ctaText, ctaUri, 
     <ModuleHeader>Over 1 million meals delivered</ModuleHeader>
     <h3 className={css.subHeader}>And the reviews are pouring in:</h3>
     <TestimonialCarousel showLink={showLink} />
-    {enableStorystream &&
-      <section className={css.storystreamContainer}>
+    {enableStorystream && (
+<section className={css.storystreamContainer}>
         <Storystream {...props} />
       </section>
-    }
+    )}
 
     <CTAHomepage width={240} onClick={() => { redirect(ctaUri) }}>{ctaText}</CTAHomepage>
   </div>

@@ -36,16 +36,16 @@ const RecipesInBasketProgressContent = ({ selectedRecipesCount }) => {
   return (
     <div className={cardClasses}>
       <LayoutContentWrapper>
-        {isBasketFull ?
-          <Layout2Cells>
+        {isBasketFull ? (
+<Layout2Cells>
             <span className={css.iconProgressCompleted} />
             <BoxProgressMessage
               className={css.message}
               numRecipes={selectedRecipesCount}
             />
           </Layout2Cells>
-          :
-          <div className={css.cardContentWrapperPartial}>
+        ): (
+<div className={css.cardContentWrapperPartial}>
             <Layout2Cells>
               <p className={css.percentageNumber}>{percentage}%</p>
               <BoxProgressMessage
@@ -57,7 +57,7 @@ const RecipesInBasketProgressContent = ({ selectedRecipesCount }) => {
               <ProgressBar percentage={percentage} theme="transition-1" />
             </div>
           </div>
-        }
+        )}
       </LayoutContentWrapper>
     </div>
   )

@@ -54,25 +54,25 @@ const OrderDeliveryDate = ({
             {timeStart} - {timeEnd}
           </p>
         </div>
-        {['recipes chosen', 'menu open'].indexOf(orderState) > -1 ?
-          <div className={css.button}>
+        {['recipes chosen', 'menu open'].indexOf(orderState) > -1 ? (
+<div className={css.button}>
             <LinkButton onClick={onClickFunction} text={editDeliveryMode ? 'Cancel' : 'Change'} />
           </div>
-          : null}
+        ): null}
       </div>
-      {editDeliveryMode && fetchSuccess &&
-        <EditDate
-          editDeliveryMode={editDeliveryMode}
-          orderId={orderId}
-          availableFrom={availableFrom}
-          availableTo={availableTo}
-        />
-      }
-      {hasError &&
-        <Alert type="danger">
+      {editDeliveryMode && fetchSuccess && (
+<EditDate
+  editDeliveryMode={editDeliveryMode}
+  orderId={orderId}
+  availableFrom={availableFrom}
+  availableTo={availableTo}
+/>
+      )}
+      {hasError && (
+<Alert type="danger">
           { errorText }
         </Alert>
-      }
+      )}
     </div>
 )
 

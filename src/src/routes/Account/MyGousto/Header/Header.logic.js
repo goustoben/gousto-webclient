@@ -114,16 +114,16 @@ class Header extends PureComponent {
     const loaded = nextOrder || previousOrder
 
     return (
-      loaded ?
-        <HeaderPresentation
-          nextOrderMessage={nextOrderMessage}
-          nextOrderId={nextOrder ? nextOrder.get('id') : null}
-          nextOrderTracking={nextOrderTracking}
-          previousOrderMessage={previousOrderMessage}
-          getHelpQueryParam={getHelpQueryParam}
-          trackNextBoxTrackingClick={trackNextBoxTrackingClick}
-        />
-        : null
+      loaded ? (
+<HeaderPresentation
+  nextOrderMessage={nextOrderMessage}
+  nextOrderId={nextOrder ? nextOrder.get('id') : null}
+  nextOrderTracking={nextOrderTracking}
+  previousOrderMessage={previousOrderMessage}
+  getHelpQueryParam={getHelpQueryParam}
+  trackNextBoxTrackingClick={trackNextBoxTrackingClick}
+/>
+      ): null
     )
   }
 }

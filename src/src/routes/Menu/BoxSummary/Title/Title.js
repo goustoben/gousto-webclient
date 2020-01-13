@@ -57,11 +57,13 @@ class Title extends React.PureComponent {
                   <Spinner />
                 </span>
               </div>
-            ) : <Price
-              recipeTotal={recipeTotal}
-              recipeDiscount={recipeDiscount}
-              recipeTotalDiscounted={recipeTotalDiscounted}
-            />
+            ) : (
+<Price
+  recipeTotal={recipeTotal}
+  recipeDiscount={recipeDiscount}
+  recipeTotalDiscounted={recipeTotalDiscounted}
+/>
+            )
           }
         </div>
       </div>

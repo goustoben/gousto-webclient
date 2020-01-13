@@ -45,14 +45,16 @@ class BoxSummaryContent extends React.PureComponent {
       boxSummaryView = <DeliverySlot view={view} displayOptions={displayOptions} />
       break
     case boxSummaryViews.DETAILS:
-      boxSummaryView = (<Details
-        view={view}
-        displayOptions={displayOptions}
-        date={date}
-        orderId={orderId}
-        numPortions={numPortions}
-        basketRecipes={recipes}
-      />)
+      boxSummaryView = (
+<Details
+  view={view}
+  displayOptions={displayOptions}
+  date={date}
+  orderId={orderId}
+  numPortions={numPortions}
+  basketRecipes={recipes}
+/>
+      )
       break
     default:
       boxSummaryView = null

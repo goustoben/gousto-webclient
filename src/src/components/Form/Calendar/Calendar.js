@@ -118,7 +118,8 @@ const Calendar = ({ dates, selected, onClick }) => {
       <Title dates={dates} />
       <div className={css.grid}>
         {Object.keys(header).sort(getFistDayOfTheWeek).map(dayNo =>
-          (<div key={dayNo} className={css.column}>
+          (
+<div key={dayNo} className={css.column}>
             <div className={css.dayName}>{header[dayNo]}</div>
             {Object.keys(columns[dayNo]).filter(weekNo => noEmptyWeeks(weekNo, columns)).map((weekNo) => {
               const weekNoToUse = (bumpedIds.indexOf(`${weekNo}${dayNo}`) !== -1 && !columns[dayNo][weekNo]) ? minusOneWeek(weekNo) : weekNo
@@ -126,7 +127,8 @@ const Calendar = ({ dates, selected, onClick }) => {
 
               return <Day {...day} className={css.day} />
             })}
-           </div>),
+           </div>
+          ),
         )}
       </div>
     </div>)

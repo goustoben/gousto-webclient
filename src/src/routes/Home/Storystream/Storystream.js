@@ -2,7 +2,8 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import css from './Storystream.css'
 
-const Storystream = () => (<div>
+const Storystream = () => (
+<div>
   <Helmet
     script={[
       {
@@ -14,6 +15,7 @@ const Storystream = () => (<div>
   <div className={css.storystreamContainer}>
     <div id="StoryStreamWidgetApp" className="stry-widget" />
   </div>
-                           </div>)
+                           </div>
+)
 
 export default Storystream

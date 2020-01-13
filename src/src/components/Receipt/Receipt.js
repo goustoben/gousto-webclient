@@ -81,15 +81,15 @@ class Receipt extends React.Component {
         {
           showAddPromocode && <PromoCode />
         }
-        {shippingAddress &&
-          <ReceiptLine label="Delivery" showLineAbove>
+        {shippingAddress && (
+<ReceiptLine label="Delivery" showLineAbove>
             <DeliveryDetails
               address={shippingAddress}
               date={this.props.deliveryDate}
               slot={this.props.deliverySlot}
             />
           </ReceiptLine>
-        }
+        )}
         {
           orderNumber
             ? <ReceiptLine label="Order number" showLineAbove style="normal">{orderNumber}</ReceiptLine>

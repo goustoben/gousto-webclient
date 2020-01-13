@@ -66,17 +66,19 @@ class Unsubscribe extends React.PureComponent {
         <PageContent>
           {
             (!isUserUnsubscribed)
-              ? <Confirm
-                isError={!!error}
-                pending={pending}
-                unsubscribeClick={this.unsubscribeHander}
-                copy={{
-                  defaultError: copy.defaultError,
-                  body1: copy.body1,
-                  body2: copy.body2,
-                  button: copy.button,
-                }}
-              />
+              ? (
+<Confirm
+  isError={!!error}
+  pending={pending}
+  unsubscribeClick={this.unsubscribeHander}
+  copy={{
+    defaultError: copy.defaultError,
+    body1: copy.body1,
+    body2: copy.body2,
+    button: copy.button,
+  }}
+/>
+              )
               : <Unsubscribed copy={{ link: copy.link }} />
           }
         </PageContent>

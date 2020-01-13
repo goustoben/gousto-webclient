@@ -199,10 +199,11 @@ class PromoCode extends React.PureComponent {
             </Button>
           </div>
         </div>
-        {(this.promoCodeAdded()) &&
-          <div>
+        {(this.promoCodeAdded()) && (
+<div>
             {this.renderMessage()}
-          </div>}
+          </div>
+        )}
       </div>
     )
   }

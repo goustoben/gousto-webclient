@@ -37,11 +37,12 @@ const RecipeCard = ({ link, images, title }) => (
           placeholder={placeholderImage}
           lazy
         />
-        {title &&
-          <p className={css.title}>
+        {title && (
+<p className={css.title}>
             {title}&nbsp;
           <span className={css.arrowRight} />
-          </p>}
+          </p>
+        )}
       </div>
     </a>
   </Col>

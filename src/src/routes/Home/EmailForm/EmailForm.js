@@ -65,7 +65,8 @@ class EmailForm extends React.PureComponent {
         {
           !this.state.emailSubmitted
             ?
-            (<div>
+            (
+<div>
                 <P className={css.description}>
                   <Content
                     contentKeys="newsletterDescription"
@@ -96,19 +97,24 @@ class EmailForm extends React.PureComponent {
                     </Button>
                   </div>
                 </Form>
-             </div>)
-            : <P className={css.description}>
+             </div>
+            )
+            : (
+<P className={css.description}>
             <Content contentKeys="newsletterDescriptionSignup">
               <span>Wahoo! You’re now signed up.</span>
             </Content>
               </P>
+            )
         }
         {
           this.state.errorMessage
             ?
-            (<div className={css.row}>
+            (
+<div className={css.row}>
               <p className={css.errorMsg}>{this.state.errorMessage}</p>
-             </div>)
+             </div>
+            )
             : null
         }
         </div>

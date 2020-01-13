@@ -31,7 +31,8 @@ const ErrorPage = ({ status }) => {
   const httpStatus = errors[status] ? status : '404'
   const page = errors[httpStatus]
 
-  return (<div className={css.container}>
+  return (
+<div className={css.container}>
     <div className={css.row}>
       <div className={css.errorWrapSmall}>
         <div className={css.row}>
@@ -54,7 +55,8 @@ const ErrorPage = ({ status }) => {
         </div>
       </div>
     </div>
-          </div>)
+          </div>
+  )
 }
 
 ErrorPage.propTypes = {

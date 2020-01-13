@@ -65,21 +65,22 @@ const Detail = ({
 
             <div>
               <span className={css.productDetailsPrice}>{formatPrice(listPrice)}</span>
-              {buttonProps.onAdd || buttonProps.onRemove ?
-                <div className={css.detailButtons}>
+              {buttonProps.onAdd || buttonProps.onRemove ? (
+<div className={css.detailButtons}>
                   <Buttons {...buttonProps} qty={qty} outOfStock={outOfStock} />
-                </div> : null
+                </div>
+              ): null
               }
             </div>
 
           </div>
         </div>
 
-        {!!attributes.size &&
-          <div className={css.productDetailsAttributes}>
+        {!!attributes.size && (
+<div className={css.productDetailsAttributes}>
             <Attributes attributes={attributes} />
           </div>
-        }
+        )}
       </ModalContent>
     </div>
   </div>

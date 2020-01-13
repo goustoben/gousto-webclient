@@ -111,8 +111,8 @@ class OrderDeliveryAddress extends React.PureComponent {
           <p className={css.header}>{shippingAddress.get('name')}</p>
           <p>{formattedShippingAddress}</p>
         </div>
-        {editAddressOpen &&
-          <div>
+        {editAddressOpen && (
+<div>
             {this.renderedAddresses()}
             <Link className={css.newAddressLink} to={client.myDetails} clientRouted={false}>
               Add new address to your account&nbsp;
@@ -129,12 +129,12 @@ class OrderDeliveryAddress extends React.PureComponent {
               Set Address
             </Button>
           </div>
-        }
-        {hasError &&
-          <Alert type="danger">
+        )}
+        {hasError && (
+<Alert type="danger">
             There was a problem updating your order address. Please contact customer care.
           </Alert>
-        }
+        )}
       </div>
     )
   }

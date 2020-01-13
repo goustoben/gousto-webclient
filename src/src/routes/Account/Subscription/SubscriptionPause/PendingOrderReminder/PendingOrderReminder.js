@@ -41,8 +41,8 @@ const PendingOrderReminder = ({ pendingOrders = Immutable.Map({}), committedOrde
       }
       {pendingOrders.size > 0 && <p>Do you wish to keep {pendingOrders.size > 1 ? 'these orders' : 'this order'}?</p>}
     </div>
-    {pendingOrders.size > 0 ?
-      <div className={css.bottom}>
+    {pendingOrders.size > 0 ? (
+<div className={css.bottom}>
         <CallToAction
           fill={false}
           width="auto"
@@ -57,11 +57,11 @@ const PendingOrderReminder = ({ pendingOrders = Immutable.Map({}), committedOrde
           type="KeepPendingOrders"
         />
       </div>
-      :
-      <div>
+    ): (
+<div>
         <CallToAction type="Dismiss" />
       </div>
-    }
+    )}
   </div>
 )
 

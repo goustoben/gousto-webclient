@@ -35,11 +35,11 @@ class CancelOrderModalContent extends React.PureComponent {
         <div className={css.modalBodyText}>
           Just double-checking – if you click yes, we can’t restore this delivery. Please confirm your choice:
         </div>
-        {didCancelOrderError ?
-          <Alert type="danger">
+        {didCancelOrderError ? (
+<Alert type="danger">
             Whoops, there was a problem cancelling this order, please try again.
           </Alert>
-          : null}
+        ): null}
         <div className={css.bottom}>
           <Button onClick={close} color={'negative'} className={css.firstButton} noDecoration>
             Go Back

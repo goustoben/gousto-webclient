@@ -22,17 +22,17 @@ const OrderRecipes = ({
         <Content contentKeys="mydeliveriesOrderOrderrecipesTitle">
           <span className={css.header}>Recipe box</span>
         </Content>
-        {['menu open', 'recipes chosen'].indexOf(orderState) > -1 ?
-          <div className={css.buttonRow}>
+        {['menu open', 'recipes chosen'].indexOf(orderState) > -1 ? (
+<div className={css.buttonRow}>
             <Link className={css.editLink} to={`${routes.client.menu}/${orderId}`} clientRouted={false}>
               {orderState === 'recipes chosen' ? 'Edit recipes' : 'Choose recipes'}
             </Link>
           </div>
-          : null}
+        ): null}
       </div>
       <OrderRecipeBox recipes={recipes} orderState={orderState} portionsCount={portionsCount} />
-      {orderState === 'menu open' ?
-        <div className={css.textRow}>
+      {orderState === 'menu open' ? (
+<div className={css.textRow}>
           <p className={css.subHeader}>
             <Content contentKeys="mydeliveriesOrderOrderrecipesMessage">
               <span>You haven't chosen any recipes yet.</span>
@@ -40,7 +40,7 @@ const OrderRecipes = ({
           </p>
           <p>If you do not choose by <strong>{whenCutoff}</strong>, Gousto will send you a selection of recipes based on your subscription settings.</p>
         </div>
-        : null}
+      ): null}
     </div>
 )
 

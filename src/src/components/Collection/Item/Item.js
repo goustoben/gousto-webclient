@@ -32,17 +32,18 @@ const CollectionItem = ({ link, media, title }) => {
     </Block>
   )
 
-  return link ?
-    <Link
-      noDecoration
-      to={link}
-    >
+  return link ? (
+<Link
+  noDecoration
+  to={link}
+>
       {CollectionContent}
-    </Link> :
-    <Div>
+    </Link>
+  ): (
+<Div>
       {CollectionContent}
     </Div>
-}
+  )}
 
 CollectionItem.propTypes = {
   title: PropTypes.string,

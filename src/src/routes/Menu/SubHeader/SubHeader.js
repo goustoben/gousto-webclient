@@ -46,8 +46,8 @@ class SubHeader extends React.PureComponent {
     const showNotificaiton = info && (info.notifyGuests || isAuthenticated)
 
     return (
-      showNotificaiton &&
-      <InfoToggle>
+      showNotificaiton && (
+<InfoToggle>
         <div className={css.infoBanner}>
           {info.title}&nbsp;<span className={css.infoIcon} />
         </div>
@@ -58,7 +58,7 @@ class SubHeader extends React.PureComponent {
           </ul>
         </div>
       </InfoToggle>
-    )
+      ))
   }
 
   render() {

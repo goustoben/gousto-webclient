@@ -114,12 +114,12 @@ class OrderDelivery extends React.PureComponent {
     return (
       <div data-testing="recipesDeliverySection">
         <div className={`${css.header} ${css.bold}`}>Delivery details</div>
-        {addressLoading ?
-          <div className={css.spinnerContainer}>
+        {addressLoading ? (
+<div className={css.spinnerContainer}>
             <Loading className={css.spinner} />
           </div>
-          :
-          <div className={css.deliveryDetailsWrapper}>
+        ): (
+<div className={css.deliveryDetailsWrapper}>
             <div className={css.subSection}>
               <OrderDeliveryDate
                 editDeliveryMode={editDeliveryMode}
@@ -144,7 +144,7 @@ class OrderDelivery extends React.PureComponent {
               />
             </div>
           </div>
-        }
+        )}
       </div>
     )
   }
