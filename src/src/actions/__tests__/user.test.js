@@ -1,8 +1,9 @@
 import Immutable from 'immutable'
 
 import { referAFriend } from 'apis/user'
-import { customerSignup } from 'apis/customers'
+import customersApi, { customerSignup } from 'apis/customers'
 import { fetchDeliveryConsignment } from 'apis/deliveries'
+import prospectAPI from 'apis/prospect'
 
 import { deliveryTariffTypes } from 'utils/deliveries'
 
@@ -50,6 +51,10 @@ jest.mock('apis/deliveries')
 
 jest.mock('actions/recipes', () => ({
   recipesLoadRecipesById: jest.fn()
+}))
+
+jest.mock('apis/prospect', () => ({
+  storeProspect: jest.fn()
 }))
 
 jest.mock('utils/logger', () => ({
@@ -182,6 +187,8 @@ describe('user actions', () => {
           aboutyou: {
             values: {
               aboutyou: {
+                firstName: 'Barack',
+                lastName: 'Obama',
                 email: 'test_email@test.com'
               }
             }
@@ -275,9 +282,9 @@ describe('user actions', () => {
             email: 'test_email@test.com',
             marketing_do_allow_email: 0,
             marketing_do_allow_thirdparty: 0,
-            name_first: undefined,
+            name_first: 'Barack',
             promo_code: '',
-            name_last: undefined,
+            name_last: 'Obama',
             password: undefined,
             phone_number: '',
             salutation_id: undefined,
@@ -299,20 +306,273 @@ describe('user actions', () => {
             )
           })
         })
+      })
+    })
 
-        describe('when in NDD experiment', () => {
-          it('should call customerSignup with the correct delivery_tariff_id', async () => {
-            setNddExperiment(deliveryTariffTypes.FREE_NDD)
+    describe('trim function in reqdata', () => {
+      let expectedParam
+      const trimState = {
+        basket: Immutable.fromJS({}),
+        pricing: Immutable.fromJS({
+          prices: {
+            total: '24.55',
+            promoCode: false
+          }
+        }),
+        tracking: Immutable.fromJS({
+          asource: null
+        }),
+        request: Immutable.fromJS({
+          browser: 'desktop'
+        }),
+        features: Immutable.fromJS({
+          ndd: {
+            value: ''
+          }
+        }),
+        form: {
+          aboutyou: {
+            values: {
+              aboutyou: {
+                firstName: ' Barack ',
+                lastName: ' Obama ',
+                email: 'test_email@test.com'
+              }
+            }
+          },
+          delivery: {
+            values: {
+              delivery: {
+                companyName: 'My Address',
+                houseNo: '',
+                street: '',
+                line3: '',
+                town: '',
+                county: '',
+                postcode: ''
+              }
+            }
+          },
+          payment: {
+            values: {
+              payment: {
+                companyName: 'My Address',
+                houseNo: '',
+                street: '',
+                line3: '',
+                town: '',
+                county: '',
+                postcode: ''
+              }
+            }
+          }
+        }
+      }
 
-            await userSubscribe()(dispatch, getState)
+      beforeEach(() => {
+        expectedParam = {
+          order_id: undefined,
+          promocode: '',
+          customer: {
+            tariff_id: '',
+            phone_number: '',
+            email: 'test_email@test.com',
+            name_first: 'Barack',
+            name_last: 'Obama',
+            promo_code: '',
+            password: undefined,
+            age_verified: 0,
+            salutation_id: undefined,
+            marketing_do_allow_email: 0,
+            marketing_do_allow_thirdparty: 0,
+            delivery_tariff_id: '9037a447-e11a-4960-ae69-d89a029569af',
+          },
+          payment_method: {
+            is_default: 1,
+            type: 'card',
+            name: 'My Card',
+            card: {
+              active: 1,
+              card_token: undefined,
+              payment_provider: 'checkout',
+            }
+          },
+          addresses:  {
+            billing_address:  {
+              county: '',
+              line1: '',
+              line2: '',
+              line3: '',
+              name: 'My Address',
+              postcode: '',
+              town: '',
+              type: 'billing',
+            },
+            shipping_address: {
+              county: '',
+              delivery_instructions: undefined,
+              line1: '',
+              line2: '',
+              line3: '',
+              name: 'My Address',
+              postcode: '',
+              town: '',
+              type: 'shipping',
+            },
+          },
+          subscription: {
+            interval_id: 1,
+            delivery_slot_id: undefined,
+            box_id: undefined
+          }
+        }
+      })
+      describe('single word names', () => {
+        beforeEach(() => {
+          getState.mockReturnValue(trimState)
+        })
+        test('should trim whitespace from before and after the user name', async () => {
+          const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
+          await userActions.userSubscribe()(dispatch, getState)
+          expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
+        })
+      })
 
-            expect(customerSignup).toHaveBeenCalledWith(
-              null,
-              expect.objectContaining({
-                customer: customerObject,
-              }),
-            )
-          })
+      describe('multiple first names', () => {
+        const secondTrimState = {
+          ...trimState,
+          form: {
+            aboutyou: {
+              values: {
+                aboutyou: {
+                  firstName: ' Barack Chad ',
+                  lastName: ' Obama ',
+                  email: 'test_email@test.com',
+                  allowEmail: true,
+                }
+              }
+            },
+            delivery: {
+              values: {
+                delivery: {
+                  companyName: 'My Address',
+                  houseNo: '',
+                  street: '',
+                  line3: '',
+                  town: '',
+                  county: '',
+                  postcode: ''
+                }
+              }
+            },
+            payment: {
+              values: {
+                payment: {
+                  companyName: 'My Address',
+                  houseNo: '',
+                  street: '',
+                  line3: '',
+                  town: '',
+                  county: '',
+                  postcode: ''
+                }
+              }
+            }
+          }
+        }
+        beforeEach(() => {
+          getState.mockReturnValue(secondTrimState)
+        })
+        test('should allow a name to have a space in the middle', async () => {
+          const customerSignupSpy = jest.spyOn(customersApi, 'customerSignup')
+          await userActions.userSubscribe()(dispatch, getState)
+          expect(customerSignupSpy).toHaveBeenCalledWith(null, expectedParam)
+        })
+      })
+    })
+  })
+
+  describe('userProspect', () => {
+    const state = {
+      basket: Immutable.fromJS({
+        promoCode: '',
+        previewOrderId: ''
+      }),
+      routing: {
+        locationBeforeTransitions: {
+          pathname: '/'
+        },
+      },
+      request: Immutable.fromJS({
+        browser: 'desktop'
+      }),
+      form: {
+        aboutyou: {
+          values: {
+            aboutyou: {
+              firstName: ' Barack ',
+              lastName: ' Obama ',
+              email: 'test_email@test.com',
+              allowEmail: true,
+            }
+          }
+        },
+      }
+    }
+    beforeEach(() => {
+      getState.mockReturnValue(state)
+    })
+
+    describe('trim function in reqdata', () => {
+      describe('single word names', () => {
+        test('should trim whitespace from before and after the user name', async () => {
+          const expectedParam = {
+            email: 'test_email@test.com',
+            user_name_first: 'Barack',
+            user_name_last: 'Obama',
+            promocode: '',
+            allow_marketing_email: true,
+            preview_order_id: '',
+            step: ''
+          }
+          const storeProspectSpy = jest.spyOn(prospectAPI, 'storeProspect')
+          await userActions.userProspect()(dispatch, getState)
+          expect(storeProspectSpy).toHaveBeenCalledWith(expectedParam)
+        })
+      })
+
+      describe('multiple first names', () => {
+        const newState = {
+          ...state,
+          form: {
+            aboutyou: {
+              values: {
+                aboutyou: {
+                  firstName: ' Barack Chad ',
+                  lastName: ' Obama ',
+                  email: 'test_email@test.com',
+                  allowEmail: true,
+                }
+              }
+            },
+          }
+        }
+        beforeEach(() => {
+          getState.mockReturnValue(newState)
+        })
+        test('should allow a name to have a space in the middle', async () => {
+          const expectedParam = {
+            email: 'test_email@test.com',
+            user_name_first: 'Barack Chad',
+            user_name_last: 'Obama',
+            promocode: '',
+            allow_marketing_email: true,
+            preview_order_id: '',
+            step: ''
+          }
+          const storeProspectSpy = jest.spyOn(prospectAPI, 'storeProspect')
+          await userActions.userProspect()(dispatch, getState)
+          expect(storeProspectSpy).toHaveBeenCalledWith(expectedParam)
         })
       })
     })

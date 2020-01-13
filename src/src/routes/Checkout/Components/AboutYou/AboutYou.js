@@ -75,7 +75,8 @@ class AboutYou extends React.PureComponent {
                     if (isMobile) trackCheckoutButtonPressed('LogInCTA Clicked')
                   }}
                 >
-                  Log in here&nbsp;<span className={css.arrowRight} />
+                  Log in here&nbsp;
+                  <span className={css.arrowRight} />
                 </span>
               </p>
             </div>
@@ -205,4 +206,4 @@ class AboutYou extends React.PureComponent {
   }
 }
 
-export default AboutYou
+export { AboutYou }
